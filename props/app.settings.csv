@@ -1,30 +1,26 @@
-| Name           | Value                                    |
-| LlvmVer        | 14.0.5                                   |
-| NetFxVer       | 4.8                                      |
-| WinSdkVer      | 10.0.19041.0                             |
-| MsvcVer        | 14.32.31326                              |
-| SlnRoot        | d:/drives/z/dev/z0                       |
-| Repos          | f:/drives/y/repos                        |
-| Archives       | f:/archives                     |
+| Name           | Value
+| LlvmVer        | 14.0.5
+| NetFxVer       | 4.8
+| WinSdkVer      | 10.0.19041.0
+| MsvcVer        | 14.32.31326
+| SlnRoot        | b:/dev/z0
+| Repos          | b:/repos
+| Archives       | b:/archives
 | DevPacks       | f:/drives/y/archives/devpacks
-| Projects       | d:/drives/z/dev                          |
-| DevRoot        | d:/drives/z/dev                          |
-| z0             | d:/drives/z/dev/z0                       |
-| Toolbase       | d:/drives/z/dev/toolbase                 |
-| Control        | d:/drives/z/control                      |
-| DbRoot         | d:/drives/z/db                           |
-| DbTargets      | d:/drives/z/db/targets                   |
-| DbSources      | d:/drives/z/db/sources                   |
-| DbProjects     | d:/drives/z/db/projects                  |
-| DbCapture      | d:/drives/z/db/capture                   |
-| Logs           | d:/drives/z/db/logs                      |
-| EnvConfig      | d:/drives/z/db/env                       |
-| RepoDeps       | d:/repos                                 |
-| LlvmRoot       | d:/repos/llvm                            |
-| LlvmData       | d:/drives/z/dev/llvm.data                |
-| LlvmDist       | d:/drives/z/dev/llvm.data/deps/llvm.dist |
-| XedRoot        | d:/repos/xed                             |
-| Tools          | f:/drives/y/tools                        |
-| NUGET_PACKAGES | f:/drives/y/archives/nuget               |
-| CgRoot         | d:/drives/z/dev/z0/cg                    |
+| Projects       | b:/dev
+| DevRoot        | b:/dev   
+| z0             | b:/dev/z0
+| Toolbase       | b:/devops/modules/toolsets/global
+| Control        | b:/control                      |
+| DbRoot         | b:/db
+| DbTargets      | b:/db/targets
+| DbSources      | b:/db/sources
+| DbProjects     | b:/db/projects
+| DbCapture      | b:/db/capture
+| Logs           | b:/db/logs
+| EnvConfig      | b:/env
+| XedRoot        | d:/repos/xed
+| Tools          | b:/tools
+| NUGET_PACKAGES | f:/drives/y/archives/nuget
+| CgRoot         | b:/dev/z0/cg
 | Views          | d:/views

@@ -2,7 +2,6 @@
 
 set BuildTool=dotnet build
 set PackageTool=dotnet pack --include-symbols --include-source
-
 set BuildPrefix=z0
 set SlnVersion=0.0.1
 set VersionSuffix=3
@@ -117,13 +116,15 @@ set CleanBuild=rmdir %Artifacts% /s/q
 set CleanObj=rmdir %Artifacts%\obj /s/q
 set CleanBin=rmdir %Artifacts%\bin /s/q
 set CleanNugetDeps=rmdir %NuGetDeps% /s/q
-set AddSln=%~dp0sln-add.cmd
+set AddSlnProject=%SlnScripts%\sln-add.cmd
+set PackagePath=%PackageDist%\%BuildPrefix%.%ProjectId%.%SlnVersion%.nupkg
+
 set PublishLib=dotnet publish %ProjectPath% --output %ProjectDist% --configuration %Configuration% --framework %FrameworkMoniker% --version-suffix %VersionSuffix%
 set PublishShell=dotnet publish %ProjectPath% --output %ProjectDist% --configuration %Configuration% --framework %FrameworkMoniker% --version-suffix %VersionSuffix%
 set DeployShell=dotnet publish %ProjectPath% --output %ShellDeployment% --configuration %Configuration% --framework %FrameworkMoniker% --version-suffix %VersionSuffix%
 set PackageLib=dotnet pack %ProjectPath% --output %PackageDist% --configuration %Configuration% --version-suffix %VersionSuffix% %PackageFlags%
-set PackagePath=%PackageDist%\%BuildPrefix%.%ProjectId%.%SlnVersion%.nupkg
-set PublishSln=dotnet publish %RootSlnPath% --output %SlnDist% --version-suffix %VersionSuffix%
+set PackageSln=dotnet pack %ProjectSln% --output %PackagePath%
+set PublishSln=dotnet publish %RootSlnPath% --output %SlnDist% %PackageFlags% --version-suffix %VersionSuffix% 
 set RestoreProject=dotnet restore %ProjectPath% --packages %NuGetDeps% --use-current-runtime --verbosity normal --force-evaluate
 set ProjectNugetConfig=%ProjectRoot%\nuget.config
 set LocalRestore=dotnet restore %ProjectPath% --packages %NuGetDeps% --use-current-runtime --verbosity normal --force-evaluate --configfile %ProjectNugetConfig%

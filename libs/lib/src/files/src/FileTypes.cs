@@ -62,7 +62,7 @@ namespace Z0
             => FileTypes.kind(src.Ext);
 
         public static FileKind FileKind(this FS.FilePath src)
-            => FileTypes.kind(src.FileName.Ext);
+            => FileTypes.kind(src. FileName.Ext);
 
         public static string SrcId(this FS.FilePath src, params FileKind[] kinds)
             => src.FileName.SrcId(kinds);

@@ -3,10 +3,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
-    using NBK = NumericBaseKind;
-
     [SymSource(api_kinds, NBK.Base16), Flags]
     public enum FixedSubGridKind : uint
     {

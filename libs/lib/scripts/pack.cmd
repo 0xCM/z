@@ -1,3 +1,2 @@
 @echo off
-set PkgDst=j:\cache\dev
-dotnet pack %~dp0..\z0.lib.csproj -c Release --output j:\cache\dev
+dotnet pack --configuration Release --include-symbols --include-source --output B:\packages\dev --version-suffix 1

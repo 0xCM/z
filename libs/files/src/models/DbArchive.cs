@@ -141,26 +141,26 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static IFilteredArchive filter(FS.FolderPath root, string filter)
-            => new FilteredArchive(root, filter);
+        public static IFilteredArchive filter(FS.FolderPath src, string filter)
+            => new FilteredArchive(src, filter);
 
         [MethodImpl(Inline), Op]
-        public static IFilteredArchive filter(FS.FolderPath root, params FS.FileExt[] ext)
-            => new FilteredArchive(root, ext);
+        public static IFilteredArchive filter(FS.FolderPath src, params FS.FileExt[] ext)
+            => new FilteredArchive(src, ext);
 
         public static FS.Files search(FS.FolderPath src, FS.FileExt[] ext, uint limit = 0)
             => limit != 0 ? match(src, limit, ext) : match(src, ext);
 
-        public static FS.Files match(FS.FolderPath root, uint max, params FS.FileExt[] ext)
+        public static FS.Files match(FS.FolderPath src, uint max, params FS.FileExt[] ext)
         {
-            var files = filter(root, ext).Files().Take(max).Array();
+            var files = filter(src, ext).Files().Take(max).Array();
             Array.Sort(files);
             return files;
         }
 
-        public static FS.Files match(FS.FolderPath root, params FS.FileExt[] ext)
+        public static FS.Files match(FS.FolderPath src, params FS.FileExt[] ext)
         {
-            var files = filter(root, ext).Files().Array();
+            var files = filter(src, ext).Files().Array();
             Array.Sort(files);
             return files;
         }

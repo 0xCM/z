@@ -1,30 +1,35 @@
-call %~dp0config.cmd
-
+set Area=libs
 set ProjectId=lib
-set WsId=lib
-call %AddSln%
-
-set ProjectId=api.contracts
-call %AddSln%
-
-set ProjectId=nats
-call %AddSln%
-
-set ProjectId=interop
-call %AddSln%
+call %~dp0..\config.cmd
+set AddProject=%SlnScripts%\sln-add.cmd
 
 set ProjectId=literals
-call %AddSln%
+call %AddProject%
+
+set ProjectId=interop
+call %AddProject%
+
+set ProjectId=sys
+call %AddProject%
+
+set ProjectId=clr.msil
+call %AddProject%
+
+set ProjectId=clr.models
+call %AddProject%
 
 set ProjectId=clr.query
-call %AddSln%
+call %AddProject%
 
-set ProjectId=part
-call %AddSln%
+set ProjectId=text
+call %AddProject%
 
-set ProjectId=monadic
-call %AddSln%
+set ProjectId=bit
+call %AddProject%
 
+set ProjectId=imagine
+call %AddProject%
 
-
+set ProjectId=lib
+call %AddProject%
 

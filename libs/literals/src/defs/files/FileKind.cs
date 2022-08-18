@@ -4,18 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static ApiAtomic;
-
-    [SymSource(files)]
-    public enum FileSort : byte
-    {
-        None,
-
-        Document,
-
-        binary
-    }
-
     [SymSource(files)]
     public enum FileKind : uint
     {

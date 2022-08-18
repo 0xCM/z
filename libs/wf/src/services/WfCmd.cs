@@ -14,8 +14,9 @@ namespace Z0
 
         ProjectScripts ProjectScripts => Wf.ProjectScripts();
 
-        void CatalogFiles(FS.FolderPath src)
+        void _CatalogFiles(CmdArgs args)
         {
+            var src = FS.dir(arg(args,0));
             var files = FS.listing(src);
             var name = Archives.identifier(src);
             var records = AppDb.Catalogs("files").Table<ListedFile>(name);
@@ -34,7 +35,7 @@ namespace Z0
 
         [CmdOp("files")]
         void CatalogFiles(CmdArgs args)
-            => CatalogFiles(FS.dir(arg(args,0)));
+            => _CatalogFiles(args);
 
         void CalcRelativePaths()
         {
@@ -122,10 +123,14 @@ namespace Z0
             CmdScripts.start(cmd);
         }
 
+
+        static FS.Files launchers()
+            => DbArchive.match(AppDb.Control("launch").Root, FS.Ps1, FS.Cmd);
+
         [CmdOp("launchers")]
         protected void Launchers(CmdArgs args)
         {
-            var src = AppDb.Control().Sources("launch").Files(FileKind.Ps1);
+            var src = launchers();
             var emitter = text.emitter();
             iter(src, file => emitter.AppendLine(file.ToUri()));
             var data = emitter.Emit();
@@ -136,19 +141,39 @@ namespace Z0
         [CmdOp("launch")]
         protected void LaunchTargets(CmdArgs args)
         {
-            var scripts = args.Map(x => AppDb.Control().Sources("launch").Path(FS.file(x.Value, FileKind.Ps1)));
-            iter(scripts, script => {
-                Status($"Launching target defined by {script.ToUri()}", FlairKind.Running);
-                var cmd = CmdScripts.pwsh(script);
-                CmdScripts.start(cmd);
-                Status($"Launch script {script.ToUri()} executing", FlairKind.Ran);
-            });
+            var src = launchers().Map(x => (x.FileName,x)).ToDictionary();
+            foreach(var arg in args)
+            {
+                var file = FS.file(arg.Value,FileKind.Cmd);
+                var path = FS.FilePath.Empty;
+                if(src.TryGetValue(file, out path))
+                {
+                    CmdScripts.start(CmdScripts.create(path));
+                }
+                else
+                {
+                    file = FS.file(arg.Value,FileKind.Ps1);
+                    if(src.TryGetValue(file, out path))
+                    {
+                        CmdScripts.start(CmdScripts.create(path));
+                    }
+                    else
+                    {
+                        Error($"Launcher '{arg} not found");
+                    }
+                }
+
+                if(path.IsNonEmpty)                
+                    Status($"Script {path.ToUri()} executing", FlairKind.Ran);
+
+            }
         }
 
-        [CmdOp("settings")]
+        [CmdOp("app/settings")]
         void ReadSettings(CmdArgs args)
         {
-            var src = AppSettings.load();
+            var src = AppSettings.load(Emitter);
+            iter(src, setting => Write(setting.Format()));
 
             //iter(src, setting => Write(setting.Format()));
         }
@@ -265,6 +290,18 @@ namespace Z0
         [CmdOp("env/cwd")]
         void Cwd()
             => Write(FS.dir(Environment.CurrentDirectory)); 
+
+        const string RegKey = @"HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment";
+
+        static CmdScript unset(CmdArg src)
+            => CmdScripts.create("unset", $"reg delete {RegKey} /F /V {src.Value}");
+
+        [CmdOp("env/unset")]
+        void Unset(CmdArgs args)
+        {
+            var scripts = map(args,unset);
+            iter(scripts, script => CmdScripts.run(script));
+        }
 
         [CmdOp("memory/query")]
         void QueryMemory(CmdArgs args)

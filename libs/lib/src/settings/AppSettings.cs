@@ -4,11 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
     
     public sealed class AppSettings : SettingLookup<Name,string>
     {
-        static AppSettings _Service = AppSettings.load();
+        static AppSettings _Service = load(path());
 
         public static ref readonly AppSettings Service()
             => ref _Service;
@@ -30,13 +30,6 @@ namespace Z0
 
         }
 
-        public override string Format()
-        {
-            var dst = text.emitter();            
-            iter(Data, s => dst.AppendLine(s));
-            return dst.Emit();
-        }
-
         public static AppSettings load(FS.FilePath src)
         {
             var data = src.ReadLines(true);
@@ -48,16 +41,32 @@ namespace Z0
                 Require.equal(parts.Length,2);
                 seek(dst,i-1)= new Setting(text.trim(sys.skip(parts,0)), text.trim(sys.skip(parts,1)));
             }
+
             return new AppSettings(dst);
+        }
+
+        public static AppSettings load(FS.FilePath src, WfEmit channel)
+        {
+            var flow = channel.Running($"Loading application settings from {src.ToUri()}");
+            var dst = load(src);
+            channel.Ran(flow,$"Read {dst.Length} settings from {src.ToUri()}");
+            return dst;
         }
 
         public string Find(Name name)
             => Find(name, EmptyString);
 
-        public static AppSettings load()
-            => load(path());
+        public static AppSettings load(WfEmit channel)
+            => load(path(), channel);
 
         public static FS.FilePath path()
             => FS.path(sys.controller().Location).FolderPath + FS.file("app.settings", FileKind.Csv);
+
+        public override string Format()
+        {
+            var dst = text.emitter();            
+            iter(Data, s => dst.AppendLine(s));
+            return dst.Emit();
+        }
     }
 }

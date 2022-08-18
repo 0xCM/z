@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static sys;
+
     public class SettingLookup<K,V> : ReadOnlySeq<Setting<K,V>>, ILookup<K,V>
         where K : unmanaged, IExpr, IDataType<K>
     {
@@ -17,7 +19,7 @@ namespace Z0
         public SettingLookup(Setting<K,V>[] data)
             : base(data)
         {
-            var dst = core.dict<K,V>();
+            var dst = dict<K,V>();
             core.iter(data, s => dst.TryAdd(s.Name,s.Value));
             Lookup = dst;
         }

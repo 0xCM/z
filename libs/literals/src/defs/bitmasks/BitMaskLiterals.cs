@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [LiteralProvider("bitmasks")]
+    [LiteralProvider(bitmasks)]
     public readonly partial struct BitMaskLiterals
     {
 

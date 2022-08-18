@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <ProjectReference Include="$(ClrQuery)" />
-    <ProjectReference Include="$(Imagine)" />
     <ProjectReference Include="$(Bit)" />
   </ItemGroup>
 

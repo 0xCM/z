@@ -4,5 +4,5 @@
         "Configuration": "Release"
     },
     "omnisharp.enableDecompilationSupport": true,
-    "omnisharp.defaultLaunchSolution": "../z0.lib.sln"
+    "omnisharp.defaultLaunchSolution": "z0.lib.sln"
 }

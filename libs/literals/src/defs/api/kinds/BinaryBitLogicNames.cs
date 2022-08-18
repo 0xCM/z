@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [LiteralProvider]
+    [LiteralProvider(api)]
     public readonly struct BinaryBitLogicNames
     {
         public const string @false = "false";

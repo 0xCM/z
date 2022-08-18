@@ -1,0 +1,63 @@
+{
+ "name": "lib",
+ "deps": {
+  "refs": [
+   {
+    "prefix": "z0",
+    "name": "literals",
+    "kind": "csproj"
+   },
+   {
+    "prefix": "z0",
+    "name": "interop",
+    "kind": "csproj"
+   },
+   {
+    "prefix": "z0",
+    "name": "clr.msil",
+    "kind": "csproj"
+   },
+   {
+    "prefix": "z0",
+    "name": "sys",
+    "kind": "csproj"
+   },
+   {
+    "prefix": "z0",
+    "name": "bit",
+    "kind": "csproj"
+   },
+   {
+    "prefix": "z0",
+    "name": "text",
+    "kind": "csproj"
+   },
+   {
+    "prefix": "z0",
+    "name": "imagine",
+    "kind": "csproj"
+   },
+   {
+    "prefix": "z0",
+    "name": "clr.models",
+    "kind": "csproj"
+   },
+   {
+    "prefix": "z0",
+    "name": "clr.query",
+    "kind": "csproj"
+   }
+  ]
+ },
+ "files": [
+  "z0.literals.csproj",
+  "z0.interop.csproj",
+  "z0.clr.msil.csproj",
+  "z0.sys.csproj",
+  "z0.bit.csproj",
+  "z0.text.csproj",
+  "z0.imagine.csproj",
+  "z0.clr.models.csproj",
+  "z0.clr.query.csproj"
+ ]
+}

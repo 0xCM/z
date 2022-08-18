@@ -1,40 +1,34 @@
 {
 	"folders": [
 		{
-			"path": "..\\..\\props"
+			"path": "../../props"
 		},
 		{
-			"path": "..\\literals"
+			"path": "../literals"
 		},
 		{
-			"path": "..\\interop"
+			"path": "../interop"
 		},
 		{
-			"path": "..\\api.contracts"
+			"path": "../sys"
 		},
 		{
-			"path": "..\\nats"
+			"path": "../clr.msil"
 		},
 		{
-			"path": "..\\part"
+			"path": "../bit"
 		},
 		{
-			"path": "..\\sys"
+			"path": "../text"
 		},
 		{
-			"path": "..\\text"
+			"path": "../imagine"
 		},
 		{
-			"path": "..\\imagine"
+			"path": "../clr.models"
 		},
 		{
-			"path": "..\\api.identity"
-		},
-		{
-			"path": "..\\clr.models"
-		},
-		{
-			"path": "..\\clr.query"
+			"path": "../clr.query"
 		},
 		{
 			"path": "."

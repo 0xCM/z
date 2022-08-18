@@ -11,6 +11,15 @@ namespace Z0
 
         static AppDb AppDb => AppDb.Service;
 
+        public static CmdLine create(FS.FilePath src)
+        {
+            if(src.Is(FileKind.Cmd))
+                return cmd(src);
+            else if(src.Is(FileKind.Ps1))
+                return pwsh(src);
+            else
+                return sys.@throw<CmdLine>();
+        }
 
         [MethodImpl(Inline), Op]
         public static CmdScript create(Name name, CmdScriptExpr src)
