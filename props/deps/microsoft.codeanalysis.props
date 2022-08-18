@@ -1,0 +1,14 @@
+<Project>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis" Version="$(CodeAnalysisVer)" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Scripting" Version="$(CodeAnalysisVer)" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="$(CodeAnalysisVer)" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="$(CodeAnalysisVer)" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="$(CodeAnalysisVer)" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Features" Version="$(CodeAnalysisVer)" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Features" Version="$(CodeAnalysisVer)" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Compilers" Version="$(CodeAnalysisVer)" />
+  </ItemGroup>
+
+</Project>

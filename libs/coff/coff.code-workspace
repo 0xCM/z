@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "../lib"
+		},
+		{
+			"path": "../alloc"
+		},
+		{
+			"path": "../native"
+		},
+		{
+			"path": "."
+		},
+		{
+			"path": "../asm.models"
+		},
+		{
+			"path": "../diagnostics"
+		}
+	],
+	"settings": {}
+}

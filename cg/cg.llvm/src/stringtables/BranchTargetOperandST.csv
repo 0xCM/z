@@ -1,0 +1,8 @@
+Table                    | Index        | Content
+BranchTargetOperandST    | 0            | brtarget
+BranchTargetOperandST    | 1            | brtarget16
+BranchTargetOperandST    | 2            | brtarget32
+BranchTargetOperandST    | 3            | brtarget8
+BranchTargetOperandST    | 4            | i16imm_brtarget
+BranchTargetOperandST    | 5            | i32imm_brtarget
+BranchTargetOperandST    | 6            | i64i32imm_brtarget

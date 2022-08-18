@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>$(FrameworkMoniker)</TargetFramework>
+    <ShellId>asm.checks</ShellId>
+    <AssemblyName>$(ShellId)</AssemblyName>
+    <ShellRoot>$(LibsRoot)</ShellRoot>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+  </PropertyGroup>
+
+  <Import Project="$(ProjectProps)shells.props"/>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
+    <ProjectReference Include="$(AsmSvc)" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,28 @@
+<Project>
+  <PropertyGroup>
+    <FrameworkMoniker>net6.0</FrameworkMoniker>
+    <OptimizeImplicitlyTriggeredBuild>True</OptimizeImplicitlyTriggeredBuild>
+    <PublishRelease>true</PublishRelease>
+    <PackRelease>true</PackRelease>
+    <TargetFramework>$(FrameworkMoniker)</TargetFramework>
+    <Platforms>x64</Platforms>
+    <TieredCompilation>false</TieredCompilation>
+    <TieredCompilationQuickJit>false</TieredCompilationQuickJit>
+    <TieredCompilationQuickJitForLoops>false</TieredCompilationQuickJitForLoops>
+    <Deterministic>true</Deterministic>
+    <Optimize>true</Optimize>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <FileAlignment>4096</FileAlignment>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <IncludeSymbols>true</IncludeSymbols>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <EnablePreviewFeatures>true</EnablePreviewFeatures>
+    <LangVersion>preview</LangVersion>
+    <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>NU5104;SYSLIB0023;CA1416;RS1024;1591;1572;1573;1701;1702;1712;1711;1570;1571;1574;1710;8321;NETSDK1057;0169;0414;0219;649;8632;SYSLIB0001;IDE0060;IDE0059;MSB3026;CS0067;IDE1006;CS8597;CS8600;CS8601;CS8602;CS8603;CS8604;CS8605;CS8614;CS8618;CS8619;CS8620;CS8622;CS8624;CS8625;CS8629;CS8675;CS8714;CS8765;CS8766;CS8767;CS8769</NoWarn>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>$(FrameworkMoniker)</TargetFramework>
+    <UserSecretsId>dotnet-z0.workers-2BAED327-27AB-40E4-97E3-63FB9B91B894</UserSecretsId>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <AssemblyName>zwf</AssemblyName>
+  </PropertyGroup>
+
+  <Import Project="$(ProjectProps)usings.props"/>
+  <Import Project="$(ProjectProps)shells.props"/>
+
+  <ItemGroup>
+    <ProjectReference Include="$(Archives)" />
+  </ItemGroup>
+
+</Project>

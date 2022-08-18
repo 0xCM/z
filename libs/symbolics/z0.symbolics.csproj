@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <DebugSymbols>true</DebugSymbols>
+    <TargetFramework>$(FrameworkMoniker)</TargetFramework>
+  </PropertyGroup>
+
+  <Import Project="$(ProjectProps)usings.props"/>
+
+  <ItemGroup>
+    <ProjectReference Include="$(ZLib)" />
+    <ProjectReference Include="$(Containers)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="assets/**/*.*" />
+  </ItemGroup>
+</Project>

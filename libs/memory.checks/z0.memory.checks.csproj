@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <TargetFramework>$(FrameworkMoniker)</TargetFramework>
+    <AssemblyName>zmemc</AssemblyName>
+    <ShellRoot>$(LibsRoot)</ShellRoot>
+  </PropertyGroup>
+
+  <Import Project="$(ProjectProps)shells.props"/>
+  <Import Project="$(ProjectProps)usings.props"/>
+
+  <ItemGroup>
+    <ProjectReference Include="$(Queues)" />
+    <ProjectReference Include="$(Archives)" />
+    <ProjectReference Include="$(Wf)" />
+    <ProjectReference Include="$(Alloc)" />
+    <ProjectReference Include="$(MemorySvc)" />
+  </ItemGroup>
+
+</Project>

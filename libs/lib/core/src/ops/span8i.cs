@@ -1,0 +1,28 @@
+//-----------------------------------------------------------------------------
+// Copyright   :  (c) Chris Moore, 2020
+// License     :  MIT
+//-----------------------------------------------------------------------------
+namespace Z0
+{
+    partial struct core
+    {
+        /// <summary>
+        /// Creates a u16 span from a T-cell reference
+        /// </summary>
+        /// <param name="src">The reference cell</param>
+        /// <typeparam name="T">The cell type</typeparam>
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static Span<sbyte> span8i<T>(in T src)
+            where T : struct
+                => recover<sbyte>(bytes(src));
+
+        /// <summary>
+        /// Creates a u16 span from a T-cell reference
+        /// </summary>
+        /// <param name="src">The reference cell</param>
+        /// <typeparam name="T">The cell type</typeparam>
+        [MethodImpl(Inline), Op]
+        public static ReadOnlySpan<sbyte> span8i(ReadOnlySpan<byte> src)
+            => recover<sbyte>(src);
+    }
+}

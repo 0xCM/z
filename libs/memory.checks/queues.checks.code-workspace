@@ -1,0 +1,41 @@
+{
+	"folders": [
+		{
+			"path": "../imagine"
+		},
+		{
+			"path": "../lib"
+		},
+		{
+			"path": "../alloc"
+		},
+		{
+			"path": "../containers"
+		},
+		{
+			"path": "../symbolics"
+		},
+		{
+			"path": "../memory"
+		},
+		{
+			"path": "../native"
+		},
+		{
+			"path": "../wf"
+		},
+		{
+			"path": "../memory.svc"
+		},
+		{
+			"path": "../cmd.specs"
+		},
+		{
+			"path": "../archives"
+		},
+		{
+			"path": "."
+		},
+	],
+	"settings": {}
+}

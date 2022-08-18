@@ -1,0 +1,38 @@
+{
+	"folders": [
+		{
+			"path": "..\\..\\props"
+		},
+		{
+			"path": "..\\literals"
+		},
+		{
+			"path": "..\\interop"
+		},
+		{
+			"path": "..\\api.contracts"
+		},
+		{
+			"path": "..\\nats"
+		},
+		{
+			"path": "..\\part"
+		},
+		{
+			"path": "..\\sys"
+		},
+		{
+			"path": "..\\imagine"
+		},
+		{
+			"path": "..\\clr.models"
+		},
+		{
+			"path": "."
+		},
+		{
+			"path": "..\\lib"
+		}
+	],
+	"settings": {}
+}

@@ -1,0 +1,35 @@
+{
+	"folders": [
+		
+		{
+			"path": "../../libs/lib"
+		},
+		{
+			"path": "../../libs/digital"
+		},
+		{
+			"path": "../../libs/containers"
+		},
+		{
+			"path": "../../libs/symbolics"
+		},
+		{
+			"path": "../../libs/cmd.specs"
+		},
+		{
+			"path": "../../libs/files"
+		},
+		{
+			"path": "../../libs/wf"
+		},
+		{
+			"path": "../../libs/archives"
+		},
+		{
+			"path": "."
+		},
+	],
+	"settings": {
+		"powershell.cwd": "d:\\Drives\\Z\\dev\\z0\\libs\\wf"
+	}
+}

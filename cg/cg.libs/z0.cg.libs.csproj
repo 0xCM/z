@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>$(FrameworkMoniker)</TargetFramework>
+  </PropertyGroup>
+
+  <Import Project="$(ProjectProps)usings.props"/>
+
+  <ItemGroup>
+    <ProjectReference Include="$(CgCommon)" />
+    <ProjectReference Include="$(CgIntel)" />
+    <ProjectReference Include="$(CgLlvm)" />
+    <ProjectReference Include="$(AsmCore)" />
+    <ProjectReference Include="$(Heaps)" />
+  </ItemGroup>
+
+</Project>

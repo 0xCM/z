@@ -1,0 +1,35 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "..\\cli"
+		},
+		{
+			"path": "..\\clr.query"
+		},
+		{
+			"path": "..\\clr.cil"
+		},
+		{
+			"path": "..\\clr.models"
+		},
+		{
+			"path": "..\\api.md"
+		},
+		{
+			"path": "..\\lib"
+		},
+		{
+			"path": "..\\dynamic"
+		},
+		{
+			"path": "..\\imagine"
+		},
+		{
+			"path": "..\\literals"
+		}
+	],
+	"settings": {}
+}

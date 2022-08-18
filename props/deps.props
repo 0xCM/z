@@ -1,0 +1,7 @@
+<Project>
+  <Import Project="deps/llvm.sharp.props"/>
+  <Import Project="deps/microsoft.codeanalysis.props"/>
+  <Import Project="deps/microsoft.dia.props"/>
+  <Import Project="deps/microsoft.diagnostics.props"/>
+  <Import Project="deps/microsoft.extensions.props"/>
+</Project>

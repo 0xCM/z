@@ -1,0 +1,44 @@
+{
+	"folders": [
+		{
+			"path": "..\\..\\props"
+		},
+		{
+			"path": "..\\literals"
+		},
+		{
+			"path": "..\\interop"
+		},
+		{
+			"path": "..\\api.contracts"
+		},
+		{
+			"path": "..\\nats"
+		},
+		{
+			"path": "..\\part"
+		},
+		{
+			"path": "..\\sys"
+		},
+		{
+			"path": "..\\text"
+		},
+		{
+			"path": "..\\imagine"
+		},
+		{
+			"path": "..\\api.identity"
+		},
+		{
+			"path": "..\\clr.models"
+		},
+		{
+			"path": "..\\clr.query"
+		},
+		{
+			"path": "."
+		},
+	],
+	"settings": {}
+}

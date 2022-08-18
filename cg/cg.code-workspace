@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "..\\libs\\lang"
+		},
+		{
+			"path": "..\\props"
+		}
+	],
+	"settings": {}
+}

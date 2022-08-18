@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>$(FrameworkMoniker)</TargetFramework>
+  </PropertyGroup>
+
+  <Import Project="$(ImportDefs)microsoft.diagnostics.props"/>
+  <Import Project="$(ImportDefs)microsoft.codeanalysis.props"/>
+  <Import Project="$(ProjectProps)usings.props"/>
+
+  <ItemGroup>
+    <ProjectReference Include="$(Diagnostics)"/>
+    <ProjectReference Include="$(ApiMd)"/>
+    <ProjectReference Include="$(Lang)"/>
+    <ProjectReference Include="$(Bits)"/>
+    <ProjectReference Include="$(ClrCil)"/>
+  </ItemGroup>
+
+</Project>

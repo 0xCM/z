@@ -1,0 +1,3 @@
+select vdisk file="C:\Work\lib\vhdx\Drive00.vhdx"
+attach vdisk
+exit

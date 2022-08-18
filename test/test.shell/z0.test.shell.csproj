@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <AssemblyName>ztest</AssemblyName>
+    <TargetFramework>$(FrameworkMoniker)</TargetFramework>
+  </PropertyGroup>
+
+  <Import Project="$(ProjectProps)shells.props"/>
+
+  <ItemGroup>
+    <ProjectReference Include="$(TestUnits)" />
+    <ProjectReference Include="$(TestChecks)" />
+    <ProjectReference Include="$(Bits)" />
+  </ItemGroup>
+</Project>

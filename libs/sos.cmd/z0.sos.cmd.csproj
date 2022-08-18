@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
+
+  <Import Project="$(ImportDefs)microsoft.diagnostics.props"/>
+  <Import Project="$(ImportDefs)microsoft.codeanalysis.props"/>
+  <Import Project="$(ImportDefs)microsoft.dia.props"/>
+  <Import Project="$(ProjectProps)usings.props"/>
+
+  <ItemGroup>
+    <ProjectReference Include="$(ApiMd)" />
+  </ItemGroup>
+
+</Project>

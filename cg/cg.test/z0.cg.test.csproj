@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(FrameworkMoniker)</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>cgtest</AssemblyName>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+  </PropertyGroup>
+
+  <Import Project="$(ImportDefs)shells.props"/>
+
+  <ItemGroup>
+    <ProjectReference Include="$(CgLibs)" />
+    <ProjectReference Include="$(AsmCore)" />
+    <ProjectReference Include="$(Numbers)" />
+    <ProjectReference Include="$(Lang)" />
+  </ItemGroup>
+
+</Project>

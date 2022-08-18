@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <DebugSymbols>true</DebugSymbols>
+    <TargetFramework>$(FrameworkMoniker)</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(Memory)" />
+    <ProjectReference Include="$(EMath)" />
+    <ProjectReference Include="$(Native)" />
+    <ProjectReference Include="$(Archives)" />
+    <ProjectReference Include="$(Coff)" />
+  </ItemGroup>
+
+</Project>

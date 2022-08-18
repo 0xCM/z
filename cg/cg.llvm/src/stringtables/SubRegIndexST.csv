@@ -1,0 +1,11 @@
+Table                    | Index        | Content
+SubRegIndexST            | 0            | sub_16bit
+SubRegIndexST            | 1            | sub_16bit_hi
+SubRegIndexST            | 2            | sub_32bit
+SubRegIndexST            | 3            | sub_8bit
+SubRegIndexST            | 4            | sub_8bit_hi
+SubRegIndexST            | 5            | sub_8bit_hi_phony
+SubRegIndexST            | 6            | sub_mask_0
+SubRegIndexST            | 7            | sub_mask_1
+SubRegIndexST            | 8            | sub_xmm
+SubRegIndexST            | 9            | sub_ymm

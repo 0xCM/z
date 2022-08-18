@@ -1,0 +1,11 @@
+Table                    | Index        | Content
+ImmTypeST                | 0            | Imm16
+ImmTypeST                | 1            | Imm16PCRel
+ImmTypeST                | 2            | Imm32
+ImmTypeST                | 3            | Imm32PCRel
+ImmTypeST                | 4            | Imm32S
+ImmTypeST                | 5            | Imm64
+ImmTypeST                | 6            | Imm8
+ImmTypeST                | 7            | Imm8PCRel
+ImmTypeST                | 8            | Imm8Reg
+ImmTypeST                | 9            | NoImm

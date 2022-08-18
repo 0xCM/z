@@ -1,0 +1,97 @@
+<Project>
+
+   <Import Project="projects.core.props"/>
+   <Import Project="projects.wf.props"/>
+   <Import Project="projects.shells.props"/>
+
+  <PropertyGroup>
+    <ApiCode>$(SlnLibs)api.code\z0.api.code.csproj</ApiCode>
+    <Assets>$(SlnLibs)assets\z0.assets.csproj</Assets>
+    <Agents>$(SlnLibs)agents\z0.agents.csproj</Agents>
+
+    <Alloc>$(SlnLibs)alloc\z0.alloc.csproj</Alloc>
+
+    <ApiMd>$(SlnLibs)api.md\z0.api.md.csproj</ApiMd>
+    <ApiChecks>$(SlnLibs)api.checks\z0.api.checks.csproj</ApiChecks>
+
+    <Asm>$(SlnLibs)asm\z0.asm.csproj</Asm>
+    <AsmCore>$(SlnLibs)asm.core\z0.asm.core.csproj</AsmCore>
+    <AsmModels>$(SlnLibs)asm.models\z0.asm.models.csproj</AsmModels>
+    <AsmPrototypes>$(SlnLibs)asm.prototypes\z0.asm.prototypes.csproj</AsmPrototypes>
+    <AsmSvc>$(SlnLibs)asm.svc\z0.asm.svc.csproj</AsmSvc>
+
+    <Archives>$(SlnLibs)archives\z0.archives.csproj</Archives>
+
+    <Bit>$(SlnLibs)bit\z0.bit.csproj</Bit>
+    <Bits>$(SlnLibs)bits\z0.bits.csproj</Bits>
+    <Builds>$(SlnLibs)builds\z0.builds.csproj</Builds>
+
+    <Cli>$(SlnLibs)cli\z0.cli.csproj</Cli>
+    <ClrCil>$(SlnLibs)clr.cil\z0.clr.cil.csproj</ClrCil>
+
+    <Commands>$(SlnLibs)commands\z0.commands.csproj</Commands>
+    <Calcs>$(SlnLibs)calcs\z0.calcs.csproj</Calcs>
+    <Circuits>$(SlnLibs)circuits\z0.circuits.csproj</Circuits>
+
+    <CmdActions>$(SlnLibs)cmd.actions\z0.cmd.actions.csproj</CmdActions>
+    <CmdExec>$(SlnLibs)cmd.exec\z0.cmd.exec.csproj</CmdExec>
+    <CmdTools>$(SlnLibs)cmd.tools\z0.cmd.tools.csproj</CmdTools>
+    <CmdFlows>$(SlnLibs)cmd.flows\z0.cmd.flows.csproj</CmdFlows>
+    <CmdChecks>$(SlnLibs)cmd.checks\z0.cmd.checks.csproj</CmdChecks>
+
+    <Coff>$(SlnLibs)coff\z0.coff.csproj</Coff>
+
+    <Db>$(SlnLibs)db\z0.db.csproj</Db>
+    <Diagnostics>$(SlnLibs)diagnostics\z0.diagnostics.csproj</Diagnostics>
+    <Dynamic>$(SlnLibs)dynamic\z0.dynamic.csproj</Dynamic>
+
+    <EMath>$(SlnLibs)emath\z0.emath.csproj</EMath>
+
+    <Fsm>$(SlnLibs)fsm\z0.fsm.csproj</Fsm>
+    <Files>$(SlnLibs)files\z0.files.csproj</Files>
+
+    <Heaps>$(SlnLibs)heaps\z0.heaps.csproj</Heaps>
+
+    <IntelSvc>$(SlnLibs)intel.svc\z0.intel.svc.csproj</IntelSvc>
+    <LlvmTools>$(SlnLibs)llvm.tools\z0.llvm.tools.csproj</LlvmTools>
+    <LlvmSvc>$(SlnLibs)llvm.svc\z0.llvm.svc.csproj</LlvmSvc>
+    <Lang>$(SlnLibs)lang\z0.lang.csproj</Lang>
+    <Lines>$(SlnLibs)lines\z0.lines.csproj</Lines>
+    <Linq>$(SlnLibs)linq\z0.linq.csproj</Linq>
+
+    <Machines>$(SlnLibs)machines\z0.machines.csproj</Machines>
+
+    <Memory>$(SlnLibs)memory\z0.memory.csproj</Memory>
+    <MemorySvc>$(SlnLibs)memory.svc\z0.memory.svc.csproj</MemorySvc>
+    <MemoryChecks>$(SlnLibs)memory.checks\z0.memory.checks.csproj</MemoryChecks>
+    <MemoryModels>$(SlnLibs)memory.models\z0.memory.models.csproj</MemoryModels>
+
+    <Native>$(SlnLibs)native\z0.native.csproj</Native>
+
+    <Numbers>$(SlnLibs)numbers\z0.numbers.csproj</Numbers>
+    
+    <Polyrand>$(SlnLibs)polyrand\z0.polyrand.csproj</Polyrand>
+    <Queues>$(SlnLibs)queues\z0.queues.csproj</Queues>
+
+    <Rules>$(SlnLibs)rules\z0.rules.csproj</Rules>
+    <Render>$(SlnLibs)render\z0.render.csproj</Render>
+
+    <SosCmd>$(SlnLibs)sos.cmd\z0.sos.cmd.csproj</SosCmd>
+
+    <Validity>$(SlnLibs)validity\z0.validity.csproj</Validity>
+
+    <Tools>$(SlnLibs)tools\z0.tools.csproj</Tools>
+
+    <Tuples>$(SlnLibs)tuples\z0.tuples.csproj</Tuples>
+
+    <TestChecks>$(TestRoot)test.checks\z0.test.checks.csproj</TestChecks>
+    <TestUnits>$(TestRoot)test.units\z0.test.units.csproj</TestUnits>
+
+    <CgCommon>$(CgRoot)cg.common\z0.cg.common.csproj</CgCommon>
+    <CgLlvm>$(CgRoot)cg.llvm\z0.cg.llvm.csproj</CgLlvm>
+    <CgIntel>$(CgRoot)cg.intel\z0.cg.intel.csproj</CgIntel>
+    <CgLibs>$(CgRoot)cg.libs\z0.cg.libs.csproj</CgLibs>
+
+  </PropertyGroup>
+
+</Project>

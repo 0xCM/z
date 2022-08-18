@@ -1,0 +1,41 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "..\\api.cmd"
+		},
+		{
+			"path": "..\\api.code"
+		},
+		{
+			"path": "..\\api.md"
+		},
+		{
+			"path": "..\\archives"
+		},
+		{
+			"path": "..\\wf"
+		},
+		{
+			"path": "..\\cli"
+		},
+		{
+			"path": "..\\api.specs"
+		},
+		{
+			"path": "..\\..\\props"
+		},
+		{
+			"path": "..\\cmd.svc"
+		},
+		{
+			"path": "..\\cmd.tools"
+		},
+		{
+			"path": "..\\cmd.exec"
+		}
+	],
+	"settings": {}
+}

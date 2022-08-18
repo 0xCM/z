@@ -1,0 +1,108 @@
+deno 1.24.2
+A modern JavaScript and TypeScript runtime
+
+Docs: https://deno.land/manual@v1.24.2
+Modules: https://deno.land/std/ https://deno.land/x/
+Bugs: https://github.com/denoland/deno/issues
+
+To start the REPL:
+
+  deno
+
+To execute a script:
+
+  deno run https://deno.land/std/examples/welcome.ts
+
+To evaluate code in the shell:
+
+  deno eval "console.log(30933 + 404)"
+
+USAGE:
+    deno [OPTIONS] [SUBCOMMAND]
+
+OPTIONS:
+    -h, --help
+            Print help information
+
+    -q, --quiet
+            Suppress diagnostic output
+
+        --unstable
+            Enable unstable features and APIs
+
+    -V, --version
+            Print version information
+
+SUBCOMMANDS:
+    bench
+            Run benchmarks
+    bundle
+            Bundle module and dependencies into single file
+    cache
+            Cache the dependencies
+    check
+            Type-check the dependencies
+    compile
+            UNSTABLE: Compile the script into a self contained executable
+    completions
+            Generate shell completions
+    coverage
+            Print coverage reports
+    doc
+            Show documentation for a module
+    eval
+            Eval script
+    fmt
+            Format source files
+    help
+            Print this message or the help of the given subcommand(s)
+    info
+            Show info about cache or info related to source file
+    install
+            Install script as an executable
+    lint
+            Lint source files
+    lsp
+            Start the language server
+    repl
+            Read Eval Print Loop
+    run
+            Run a JavaScript or TypeScript program
+    task
+            Run a task defined in the configuration file
+    test
+            Run tests
+    types
+            Print runtime TypeScript declarations
+    uninstall
+            Uninstall a script previously installed with deno install
+    upgrade
+            Upgrade deno executable to given version
+    vendor
+            Vendor remote modules into a local directory
+
+ENVIRONMENT VARIABLES:
+    DENO_AUTH_TOKENS     A semi-colon separated list of bearer tokens and
+                         hostnames to use when fetching remote modules from
+                         private repositories
+                         (e.g. "abcde12345@deno.land;54321edcba@github.com")
+    DENO_TLS_CA_STORE    Comma-separated list of order dependent certificate
+                         stores. Possible values: "system", "mozilla".
+                         Defaults to "mozilla".
+    DENO_CERT            Load certificate authority from PEM encoded file
+    DENO_DIR             Set the cache directory
+    DENO_INSTALL_ROOT    Set deno install's output directory
+                         (defaults to $HOME/.deno/bin)
+    DENO_NO_PROMPT       Set to disable permission prompts on access
+                         (alternative to passing --no-prompt on invocation)
+    DENO_WEBGPU_TRACE    Directory to use for wgpu traces
+    DENO_JOBS            Number of parallel workers used for the --parallel
+                         flag with the test subcommand. Defaults to number
+                         of available CPUs.
+    HTTP_PROXY           Proxy address for HTTP requests
+                         (module downloads, fetch)
+    HTTPS_PROXY          Proxy address for HTTPS requests
+                         (module downloads, fetch)
+    NO_COLOR             Set to disable color
+    NO_PROXY             Comma-separated list of hosts which do not use a proxy
+                         (module downloads, fetch)

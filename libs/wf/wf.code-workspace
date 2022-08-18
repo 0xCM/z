@@ -1,0 +1,35 @@
+{
+	"folders": [
+        {
+            "path": "../literals"
+        },
+        {
+            "path": "../api.contracts"
+        },
+        {
+            "path": "../sys"
+        },
+        {
+            "path": "../imagine"
+        },
+        {
+            "path": "../lib"
+        },
+        {
+            "path": "..\\containers"
+        },
+        {
+            "path": "..\\symbolics"
+        },
+        {
+            "path": "..\\files"
+        },
+        {
+            "path": "..\\digital"
+        },
+        {
+            "path": "."
+        },
+    ],
+	"settings": {}
+}

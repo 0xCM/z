@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <DebugSymbols>true</DebugSymbols>
+    <TargetFramework>$(FrameworkMoniker)</TargetFramework>
+  </PropertyGroup>
+
+  <Import Project="$(ProjectProps)usings.props"/>
+
+  <ItemGroup>
+    <ProjectReference Include="$(Files)" />
+    <ProjectReference Include="$(Containers)" />
+    <ProjectReference Include="$(Symbolics)" />
+    <ProjectReference Include="$(CmdSpecs)" />
+  </ItemGroup>
+
+</Project>

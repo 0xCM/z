@@ -1,0 +1,13 @@
+<Project>
+    <PropertyGroup>
+        <Literals>$(SlnLibs)literals\z0.literals.csproj</Literals>
+        <Sys>$(SlnLibs)sys\z0.sys.csproj</Sys>
+        <Text>$(SlnLibs)text\z0.text.csproj</Text>
+        <ClrMsil>$(SlnLibs)clr.msil\z0.clr.msil.csproj</ClrMsil>
+        <ClrQuery>$(SlnLibs)clr.query\z0.clr.query.csproj</ClrQuery>
+        <ClrModels>$(SlnLibs)clr.models\z0.clr.models.csproj</ClrModels>
+        <Imagine>$(SlnLibs)imagine\z0.imagine.csproj</Imagine>
+        <Events>$(SlnLibs)events\z0.events.csproj</Events>
+        <ZLib>$(SlnLibs)lib\z0.lib.csproj</ZLib>
+    </PropertyGroup>
+</Project>

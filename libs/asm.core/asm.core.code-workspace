@@ -1,0 +1,50 @@
+{
+	"folders": [
+		{
+			"path": "../literals"
+		},
+		{
+			"path": "../part"
+		},
+		{
+			"path": "../sys"
+		},
+		{
+			"path": "../imagine"
+		},
+		{
+			"path": "../lib"
+		},
+		{
+			"path": "../emath"
+		},
+		{
+			"path": "../native"
+		},
+		{
+			"path": "../assets"
+		},
+		{
+			"path": "../containers"
+		},
+		{
+			"path": "../digital"
+		},
+		{
+			"path": "../numbers"
+		},
+		{
+			"path": "../bits"
+		},
+		{
+			"path": "../asm.models"
+		},
+		{
+			"path": "../asm.operands"
+		},
+		{
+			"path": "."
+		},
+	],
+	"settings": {}
+}

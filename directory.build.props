@@ -1,0 +1,7 @@
+<Project>
+  <PropertyGroup>
+    <SlnRoot>$(MSBuildThisFileDirectory)</SlnRoot>
+    <Configuration>Release</Configuration>
+  </PropertyGroup>
+  <Import Project="props/common.props"/>
+</Project>

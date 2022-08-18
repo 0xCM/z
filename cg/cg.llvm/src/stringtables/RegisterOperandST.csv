@@ -1,0 +1,9 @@
+Table                    | Index        | Content
+RegisterOperandST        | 0            | GR16orGR32orGR64
+RegisterOperandST        | 1            | GR32orGR64
+RegisterOperandST        | 2            | RSTi
+RegisterOperandST        | 3            | VK16Pair
+RegisterOperandST        | 4            | VK1Pair
+RegisterOperandST        | 5            | VK2Pair
+RegisterOperandST        | 6            | VK4Pair
+RegisterOperandST        | 7            | VK8Pair

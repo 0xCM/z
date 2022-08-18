@@ -1,0 +1,28 @@
+digraph D {
+
+    "assets" -> "tools"
+    "api.code" -> {"asm.models", "api.md"}
+    "api.md" -> {"symbols", "calcs", "flows", "archives"}
+    "asm.models" -> {"symbols", "containers"}
+
+    "containers" -> zlib
+
+    "db" -> {containers, zlib}
+
+    "flows" -> {templates, containers, native, db}
+
+    "graphs" -> zlib
+
+    "lang" -> symbols, containers
+
+    "memory" -> "native"
+
+    numbers -> {symbols, containers, memory}
+    native -> zlib
+
+    "services" -> {"graphs", "tools"}
+    "symbols" -> {"assets", "services"}
+
+    "tools" -> {"graphs", "containers", "memory", "templates", "flows"}
+    "templates" -> zlib
+}

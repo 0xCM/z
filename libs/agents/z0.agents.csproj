@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(ImportDefs)microsoft.diagnostics.props"/>
+
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>$(FrameworkMoniker)</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(Archives)" />
+  </ItemGroup>
+
+</Project>

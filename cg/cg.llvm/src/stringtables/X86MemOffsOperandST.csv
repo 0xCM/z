@@ -1,0 +1,12 @@
+Table                    | Index        | Content
+X86MemOffsOperandST      | 0            | offset16_16
+X86MemOffsOperandST      | 1            | offset16_32
+X86MemOffsOperandST      | 2            | offset16_8
+X86MemOffsOperandST      | 3            | offset32_16
+X86MemOffsOperandST      | 4            | offset32_32
+X86MemOffsOperandST      | 5            | offset32_64
+X86MemOffsOperandST      | 6            | offset32_8
+X86MemOffsOperandST      | 7            | offset64_16
+X86MemOffsOperandST      | 8            | offset64_32
+X86MemOffsOperandST      | 9            | offset64_64
+X86MemOffsOperandST      | 10           | offset64_8

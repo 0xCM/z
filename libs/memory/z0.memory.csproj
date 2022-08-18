@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>$(FrameworkMoniker)</TargetFramework>
+  </PropertyGroup>
+
+  <Import Project="$(ProjectProps)usings.props"/>
+
+  <ItemGroup>
+    <ProjectReference Include="$(Native)" />
+    <ProjectReference Include="$(Numbers)" />
+    <ProjectReference Include="$(Files)" />
+    <ProjectReference Include="$(MemoryModels)" />
+    <ProjectReference Include="$(Symbolics)" />
+  </ItemGroup>
+
+</Project>

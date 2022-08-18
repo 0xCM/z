@@ -1,0 +1,13 @@
+//-----------------------------------------------------------------------------
+// Copyright   :  (c) Chris Moore, 2020
+// License     :  MIT
+//-----------------------------------------------------------------------------
+namespace Z0
+{
+    partial struct FS
+    {
+        [Op]
+        public static bool matches(FS.FileName name, FS.FileExt ext)
+            => name.Format().EndsWith(ext.Name, NoCase);
+    }
+}

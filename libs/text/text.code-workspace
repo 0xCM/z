@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "..\\sys"
+		},
+		{
+			"path": "..\\literals"
+		}
+	],
+	"settings": {}
+}

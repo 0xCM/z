@@ -1,0 +1,9 @@
+<Project>
+  <Import Project="version.props"/>
+  <Import Project="versions.props"/>
+  <Import Project="locations.props"/>
+  <Import Project="build.props"/>
+  <Import Project="projects.props"/>
+  <Import Project="deps/microsoft.extensions.props"/>
+  <Import Project="deps/quickgraph.props"/>
+</Project>

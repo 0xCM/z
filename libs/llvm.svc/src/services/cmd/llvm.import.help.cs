@@ -1,0 +1,16 @@
+//-----------------------------------------------------------------------------
+// Copyright   :  (c) Chris Moore, 2020
+// License     :  MIT
+//-----------------------------------------------------------------------------
+namespace Z0.llvm
+{
+    partial class LlvmCmd
+    {
+        [CmdOp("llvm/import/help")]
+        Outcome ImportHelp(CmdArgs args)
+        {
+            Importer.ImportToolHelp();
+            return true;
+        }
+    }
+}

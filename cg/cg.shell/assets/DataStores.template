@@ -1,0 +1,8 @@
+namespace Z0
+{
+    [ApiHost]
+    public readonly partial struct DataStores
+    {
+        const NumericKind Closure = UnsignedInts;
+    }
+}

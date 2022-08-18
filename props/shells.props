@@ -1,0 +1,5 @@
+<Project>
+  <ItemGroup>
+    <EmbeddedResource Include="$(ProjectProps)app.settings.csv"  CopyToOutputDirectory="Always" />
+  </ItemGroup>
+</Project>

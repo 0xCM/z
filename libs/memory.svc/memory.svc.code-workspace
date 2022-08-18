@@ -1,0 +1,26 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "..\\memory"
+		},
+		{
+			"path": "..\\native"
+		},
+		{
+			"path": "..\\numbers"
+		},
+		{
+			"path": "..\\containers"
+		},
+		{
+			"path": "..\\digital"
+		},
+		{
+			"path": "..\\lib"
+		}
+	],
+	"settings": {}
+}

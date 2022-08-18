@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <DebugSymbols>true</DebugSymbols>
+    <TargetFramework>$(FrameworkMoniker)</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(Bits)" />
+    <ProjectReference Include="$(Circuits)" />
+    <ProjectReference Include="$(Archives)" />
+    <ProjectReference Include="$(Polyrand)" />
+    <ProjectReference Include="$(Wf)" />
+  </ItemGroup>
+
+</Project>

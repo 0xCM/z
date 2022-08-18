@@ -1,0 +1,12 @@
+<Project>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.DiaSymReader.PortablePdb" Version="$(MsDiaVer)">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>  
+
+    <PackageReference Include="Microsoft.FileFormats" Version="1.0.161401" />
+    <PackageReference Include="Microsoft.SymbolStore" Version="1.0.161401" />
+
+  </ItemGroup>
+</Project>

@@ -1,0 +1,36 @@
+export type ChipCode = 
+    | 'adl'
+    | 'bdw'
+    | 'clx'
+    | 'cnl'
+    | 'cpx'
+    | 'future'
+    | 'glm'
+    | 'glp'
+    | 'hsw'
+    | 'icl'
+    | 'icl-server'
+    | 'ivb'
+    | 'knl'
+    | 'knm'
+    | 'mrm'
+    | 'nhm'
+    | 'pentium3'
+    | 'pentium4'
+    | 'pentium4p'
+    | 'pnr'
+    | 'quark'
+    | 'skl'
+    | 'skx'
+    | 'slm'
+    | 'slt'
+    | 'snb'
+    | 'spr'
+    | 'tgl'
+    | 'tnt'
+    | 'wsm'
+
+export function path<T>(tools:T, chip:ChipCode)
+{
+    return `${tools}/sde/misc/cpuid/${chip}/cpuid.def`
+}

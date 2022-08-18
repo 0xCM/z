@@ -1,0 +1,8 @@
+<Project>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Diagnostics.Runtime" Version="2.2.332302" />
+    <PackageReference Include="Microsoft.Diagnostics.Runtime.Utilities" Version=" 2.0.230301" />
+    <PackageReference Include="Microsoft.Diagnostics.Tracing.TraceEvent" Version="2.0.44" />
+  </ItemGroup>
+</Project>

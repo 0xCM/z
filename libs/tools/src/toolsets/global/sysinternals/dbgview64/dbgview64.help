@@ -1,0 +1,53 @@
+DebugView supports several command-line options that let you modify its behavior when it starts. Several are relevant 
+when starting DebugView as a client on a system that will send debug output across the network to a DebugView instance 
+that displays the output on another computer, and are described in the Remote Monitoring section. However, others 
+modify the behavior of DebugView when you run it to display output, and are useful if you want to execute DebugView 
+from a batch file or logon script and want it to capture debug output as soon as it starts. You can have DebugView 
+display all of its command-line options by using the /? option. 
+
+Here are the command-line options supported when you run DebugView in non-client mode:
+
+debugview [/f] [/t] [/l Logfile [/a]  [[/m nnn [/w]] | [/n [/x]]] [/h nn]] [Logfile]
+
+The /f option has DebugView skip the filter confirmation dialog when filters were active the previous execution. 
+
+The /t option has DebugView launch into the system tray, rather than as a window. This has DebugView capture debug 
+output as soon as it starts while not taking up screen real-estate. DebugView's tray behavior is further described 
+in the Running in the Tray section.
+
+The /l option directs DebugView to begin writing output to the indicated logfile as soon as DebugView executes. 
+The /m option allows you to specify a size limit (in MB) for the log file, and the /a option has DebugView append 
+to the logfile if it already exists, rather than overwrite it and /w has the log file wrap when it reaches the maximum 
+size you specify. The /n switch has DebugView create a new log file, named with the date, each day. If you 
+include /x with /n the display clears when a new log file is created.
+
+Finally, the /h switch controls the history depth, which is the count of most recent output lines shown in the DebugView display. 
+
+Remote Monitoring Startup 
+DebugView has advanced remote monitoring capabilities that allow you to view debug output generated on remote systems from a central location. The remote systems must be accessible via TCP/IP. DebugView lets you monitor multiple remote systems simultaneously, using a hot-key or a menu selection to switch between them. If both the computer you are running the DebugView GUI on (the server) and the system you want to monitor (the client) are running Windows NT/2K, and they are in the same Network Neighborhood, then DebugView will automatically install its client software on the client. For all other combinations you must manually install and start DebugView’s client software on the client. 
+
+Manual Client Startup 
+If either the server or the client is running Windows 9x, or the server and client are not mutually accessible via the Windows Network Neighborhood, then you must manually start the DebugView client on the client computer. To do this, run the DebugView program on the client and specify “/c” as a command-line argument: 
+
+dbgview /c [/t] [/s] [/e] [/g]
+
+The DebugView client window will appear and indicate that it is waiting for a connection from the DebugView server. 
+
+After you have started the DebugView client use the Computer|Connect menu item or Ctrl+R hot-key sequence of the DebugView server to open a computer connection dialog. In the dialog enter the name or IP address of the client computer. If the client computer is in the server’s Network Neighborhood you can also use the browse button in the dialog to open a view of the Network Neighborhood and visually select the client computer. 
+
+If you want to run the client in a “headless” mode, specify “/s” (silent) in addition to the “/c” command-line argument when you start the DebugView client. This will cause the DebugView client to not display a window, and to remain active until the current user logs out, silently connecting with and disconnecting from DebugView servers. 
+
+Use the “/e” option when starting the client if you want it to notify you when server connections break. When a server connection is broken and this switch is specified you must close the notification window before the client will accept further connections. 
+
+The "/t" option has the DebugView client run in the tray. The client presents a gray tray icon when there's no connection to a server and a colored icon when a server is connected. You can open the client window by double clicking the tray icon and store it back in the tray by minimizing the client window.
+
+If you are running DebugView from a non-console login on a system with Terminal Services you can direct the DebugView client to capture global (console) debug output with the /g switch.
+
+If you specify “/?” DebugView will tell you its supported command-line options. 
+
+Automatic Client Startup 
+Automatic startup is not supported on the Alpha. 
+
+If both the client and server are running Windows NT/2K and are in the same Network Neighborhood, there is no need for you to install the DebugView client on the client computer. Instead, specify the client computer name or address in the connection dialog as you would if you were connecting to a manually started DebugView client, and DebugView will automatically install and start the DebugView client on the client computer. When you disconnect from the client DebugView uninstalls its client software for you. In case you want to clean up client files yourself after a non-graceful exit of the server, the files DebugView installs on the client are placed in <winnt>\system32 and include dbgvsvc.exe and dbgv.sys. 
+
+The DebugView server will always attempt an automatic install, and if that fails it falls back on trying to connect to a manually installed client. 

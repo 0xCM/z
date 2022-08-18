@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(FrameworkMoniker)</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>zcg</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="assets/**/*.*" />
+    <ProjectReference Include="$(Lang)" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "../imagine"
+		},
+		{
+			"path": "../alloc"
+		},
+		{
+			"path": "../lib"
+		},
+		{
+			"path": "."
+		},
+	],
+	"settings": {}
+}

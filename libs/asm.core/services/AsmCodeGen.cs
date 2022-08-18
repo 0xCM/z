@@ -1,0 +1,70 @@
+//-----------------------------------------------------------------------------
+// Copyright   :  (c) Chris Moore, 2020
+// License     :  MIT
+//-----------------------------------------------------------------------------
+namespace Z0.Asm
+{
+    using static core;
+
+    public class SdmCodeGen : WfSvc<SdmCodeGen>
+    {
+        IntelSdm Sdm => Service(Wf.IntelSdm);
+
+        const string TargetNamespace = "Z0.Asm";
+
+        const string AsmSigTableName = "AsmSigST";
+
+        const string MnemonicNameProvider = "AsmMnemonicNames";
+
+        CsLang CsLang => Service(Wf.CsLang);
+
+        public void Emit()
+        {
+            var dst = AppDb.CgStage(CgTarget.Intel.ToString());
+            GenMnemonicNames(dst);
+            GenFormKinds(dst);
+            GenSigStrings(dst);
+        }
+
+        public void GenMnemonicNames(IDbTargets dst)
+        {
+            var src = Sdm.CalcMnemonics().Select(x => x.Format(MnemonicCase.Lowercase));
+            CsLang.LiteralProviders().Emit(TargetNamespace,
+                Literals.seq(MnemonicNameProvider, src.View),
+                CsLang.SourceFile(MnemonicNameProvider, dst)
+                );
+        }
+
+        public void GenFormKinds(IDbTargets dst)
+        {
+            var descriptors = Sdm.CalcFormDescriptors();
+            var src = descriptors.CalcSymbols();
+            var buffer = text.buffer();
+            var margin = 0u;
+            buffer.IndentLineFormat(margin, "namespace {0}", TargetNamespace);
+            buffer.IndentLine(margin, Chars.LBrace);
+            margin += 4;
+            CsRender.@enum(margin, src, buffer);
+            margin -=4;
+            buffer.Indent(margin, Chars.RBrace);
+            CsLang.EmitFile(buffer.Emit(), SdmFormDescriptors.FormKindName, dst);
+        }
+
+        public void GenSigStrings(IDbTargets dst)
+        {
+            var forms = Sdm.CalcFormDescriptors();
+            var keys = forms.Keys;
+            var count = keys.Length + 1;
+            var sigs = alloc<string>(count);
+            for(var i=0; i<count; i++)
+            {
+                if(i==0)
+                    seek(sigs,i) = EmptyString;
+                else
+                    seek(sigs,i) = forms[keys[i-1]].Sig.Format();
+            }
+
+            CsLang.EmitStringTable(TargetNamespace, AsmSigTableName, SdmFormDescriptors.FormKindName, sigs, false, dst);
+        }
+    }
+}
