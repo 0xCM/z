@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     /// <summary>
     /// Defines a set of symbols over which strings may be formed

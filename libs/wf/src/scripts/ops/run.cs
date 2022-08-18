@@ -34,7 +34,7 @@ namespace Z0
         public static void run(CmdScript src)
         {
             var ts = timestamp();
-            using var status = StatusLog(ts,src.Name.Format()).AsciWriter();
+            using var status = StatusLog(ts, src.Name.Format()).AsciWriter();
 
             void OnStatus(in string msg)
                 => status.AppendLine(msg);
@@ -49,7 +49,7 @@ namespace Z0
             catch(Exception e)
             {
                 ErrorLog(ts,src.Name).Append(e.ToString());
-            }
+            }            
         }
 
         [Op]

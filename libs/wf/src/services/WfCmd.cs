@@ -228,22 +228,22 @@ namespace Z0
         void EmitEnv(CmdArgs args)
         {
             var dst = AppDb.App("env").Root;
-            EnvVars.emit(Emitter,EnvVarKind.Process, dst);
-            EnvVars.emit(Emitter,EnvVarKind.User, dst);
-            EnvVars.emit(Emitter,EnvVarKind.Machine, dst);
+            Env.emit(Emitter,EnvVarKind.Process, dst);
+            Env.emit(Emitter,EnvVarKind.User, dst);
+            Env.emit(Emitter,EnvVarKind.Machine, dst);
         }
 
         [CmdOp("env/machine")]
         void EmitMachineEnv()
-            => EnvVars.emit(Emitter, EnvVarKind.Machine, AppDb.Env().Root);
+            => Env.emit(Emitter, EnvVarKind.Machine, AppDb.Env().Root);
 
         [CmdOp("env/user")]
         void EmitUserEnv()
-            => EnvVars.emit(Emitter, EnvVarKind.User, AppDb.Env().Root);
+            => Env.emit(Emitter, EnvVarKind.User, AppDb.Env().Root);
 
         [CmdOp("env/process")]
         void EmitProcessEnv()
-            => EnvVars.emit(Emitter, EnvVarKind.Process, AppDb.Env().Root);
+            => Env.emit(Emitter, EnvVarKind.Process, AppDb.Env().Root);
 
         [CmdOp("env/pid")]
         void ProcessId()
@@ -294,14 +294,29 @@ namespace Z0
         const string RegKey = @"HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment";
 
         static CmdScript unset(CmdArg src)
-            => CmdScripts.create("unset", $"reg delete {RegKey} /F /V {src.Value}");
+            => CmdScripts.create("unset", $"reg delete \"{RegKey}\" /F /V {src.Value}");
+
+        static Task<ExecToken> start(CmdScript src, WfEmit channel)
+        {
+            ExecToken run()
+            {
+                var flow = channel.Running($"Executing script {src.Name}");
+                CmdScripts.run(src);                
+                return channel.Ran(flow, $"Completed script execution {src.Name}");
+            }
+            return sys.start(run);
+
+        }
+
+        void ExecUnset(CmdArgs args)
+        {
+            var scripts = map(args,unset);
+            iter(scripts, script => start(script,Emitter));
+        }
 
         [CmdOp("env/unset")]
         void Unset(CmdArgs args)
-        {
-            var scripts = map(args,unset);
-            iter(scripts, script => CmdScripts.run(script));
-        }
+            => ExecUnset(args);
 
         [CmdOp("memory/query")]
         void QueryMemory(CmdArgs args)
