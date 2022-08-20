@@ -254,6 +254,8 @@ namespace Z0
 
         public const string common = nameof(common);
 
+        public const string modules = nameof(modules);
+
         public const string sdm = nameof(sdm);
 
         public const string intel = nameof(intel);

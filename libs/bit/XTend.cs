@@ -8,10 +8,4 @@ namespace Z0
     {
         const NumericKind Closure = NumericKind.UnsignedInts;
     }
-
-    partial class Root
-    {
-        
-    }
 }
-

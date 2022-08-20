@@ -4,17 +4,19 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    using static Spans;
+    using static sys;
 
     [ApiHost]
     public class DbArchives : AppService<DbArchives>
     {
+        public static IDbArchive Env
+            => data(env, () => (IDbArchive)(new DbArchive(FS.dir(Environment.GetEnvironmentVariable(SettingNames.EnvRoot)))));
+
         public static ModuleArchive modules()
             => ModuleArchives.archive(FS.path(ExecutingPart.Assembly.Location).FolderPath);
 
         public static Assembly[] parts()
-            => data("modules",() => modules().ManagedDll().Where(x => x.FileName.StartsWith("z0")).Select(x => x.Load()).Unwrap().Distinct().Unwrap());
+            => data(ApiAtomic.modules,() => modules().ManagedDll().Where(x => x.FileName.StartsWith("z0")).Select(x => x.Load()).Unwrap().Distinct().Unwrap());
 
         public static LineMap<string> map<T>(Index<TextLine> lines, Index<T> relations)
             where T : struct, ILineRelations<T>

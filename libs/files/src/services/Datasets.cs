@@ -4,9 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    using static Arrays;
+    using static sys;
 
+    [ApiHost, Free]
     public class Datasets
     {
         [MethodImpl(Inline), Op]
@@ -167,7 +167,7 @@ namespace Z0
 
             void Recalc()
             {
-                Slots = mapi(Widths, (i,w) => RpOps.slot((byte)i, (short)-w));
+                Slots = mapi(Widths.View, (i,w) => RpOps.slot((byte)i, (short)-w));
                 RenderPattern = Slots.Intersperse(Sep).Concat();
             }
 

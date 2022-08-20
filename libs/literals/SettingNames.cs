@@ -35,6 +35,7 @@ namespace Z0
 
         public const string LlvmRoot = nameof(LlvmRoot);
 
+        public const string EnvRoot = nameof(EnvRoot);
         public const string DevRoot = nameof(DevRoot);
 
         public const string Toolbase = nameof(Toolbase);

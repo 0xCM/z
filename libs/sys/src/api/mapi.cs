@@ -44,5 +44,5 @@ namespace Z0
                 seek(dst, i)= f((int)i, skip(src, i));
             return dst;
         }
-    }
+     }
 }

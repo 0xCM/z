@@ -34,13 +34,13 @@ using NK = Z0.NumericKind;
 
 namespace Z0
 {
-    partial struct Root
-    {
+    // partial struct Root
+    // {
 
-        public const string EmptyString = "";
+    //     public const string EmptyString = "";
 
-        public const MethodImplOptions Inline = MethodImplOptions.AggressiveInlining;
+    //     public const MethodImplOptions Inline = MethodImplOptions.AggressiveInlining;
 
-        public const NK UnsignedInts = NK.UnsignedInts;
-    }
+    //     public const NK UnsignedInts = NK.UnsignedInts;
+    // }
 }
