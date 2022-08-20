@@ -10,6 +10,8 @@ namespace Z0
     [ApiHost]
     public readonly partial struct bit : IEquatable<bit>, IComparable<bit>
     {        
+        public const MethodImplOptions Inline = MethodImplOptions.AggressiveInlining;
+
         public const uint SZ = PrimalSizes.U1;
 
         const NumericKind Closure = NumericKind.UnsignedInts;

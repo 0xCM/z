@@ -4,8 +4,19 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using K = NumericWidth;
+
     partial struct ApiIdentity
     {
+        static K numeric(Type t)
+        {
+            var k = NumericKinds.kind(t);
+            if(k != 0)
+                return (K)(uint)k;
+            else
+                return K.None;
+        }
+
         /// <summary>
         /// Divines the bit-width of a specified type, if possible
         /// </summary>
@@ -18,7 +29,7 @@ namespace Z0
             else if(t.IsSpanBlock())
                 return Widths.segmented(t);
             if(NumericKinds.test(t))
-                return (NativeTypeWidth)Widths.numeric(t);
+                return (NativeTypeWidth)numeric(t);
             else
                 return t.Tag<WidthAttribute>().MapValueOrDefault(a => a.TypeWidth, NativeTypeWidth.None);
         }

@@ -1,0 +1,18 @@
+//-----------------------------------------------------------------------------
+// Copyright   :  (c) Chris Moore, 2020
+// License     :  MIT
+//-----------------------------------------------------------------------------
+namespace Z0
+{
+    public class SourceContainers
+    {
+        
+
+    }
+
+    public abstract record class SourceContainer<C>
+    {
+
+        
+    }
+}

@@ -12,7 +12,6 @@
   <Import Project="$(ProjectProps)shells.props"/>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
     <ProjectReference Include="$(AsmSvc)" />
   </ItemGroup>
 

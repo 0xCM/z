@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
+    [SymSource(asm)]
     public enum BranchTargetKind : byte
     {
         None = 0,

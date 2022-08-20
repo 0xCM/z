@@ -4,9 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using static Spans;
-    using static Arrays;
-    using static Algs;
+    using static sys;
 
     [ApiHost]
     public class AsmBytes

@@ -81,25 +81,6 @@ namespace Z0
             return dst.ToArray();
         }
 
-        public static Assembly[] assemblies(Assembly control, ReadOnlySpan<PartId> ids)
-        {
-            var candidates = libs(FS.path(control.Location).FolderPath);
-            var dst = list<Assembly>();
-            var names = ids.Select(x => x.PartName().Format()).ToHashSet();
-            foreach(var path in candidates)
-            {
-                var name = path.FileName.Name.Format();
-                if(text.begins(name,"z0."))
-                {
-                    name = text.remove(name,"z0.");
-                    if(names.Contains(name))
-                        dst.Add(Assembly.LoadFrom(path.Name));
-                }                
-            }
-
-            return dst.Array();
-        }
-
         public static IApiCatalog catalog(Assembly[] src)
         {
             var count = src.Length;

@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Arrays;
-    using static Algs;
+    using static sys;
 
     public readonly record struct BinaryCode : IDataType<BinaryCode>
     {

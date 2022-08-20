@@ -5,7 +5,8 @@
 namespace Z0
 {
     using static Algs;
-    public unsafe readonly record struct SourceText : ILocatedSource<SourceText,char>
+
+    public unsafe readonly record struct SourceText : ILoadedSource<SourceText,char>
     {
         public readonly MemoryAddress Address;
 

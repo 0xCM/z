@@ -8,7 +8,7 @@ namespace Z0
 
     using SZ = NativeSizeCode;
 
-    [Flags]
+    [Flags,SymSource(asm)]
     public enum AsmOpKind : ushort
     {
         None,

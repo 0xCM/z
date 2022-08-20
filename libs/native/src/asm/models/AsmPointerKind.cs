@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    [SymSource("asm")]
+    [SymSource(asm)]
     public enum AsmPointerKind : byte
     {
         [Symbol("byte")]

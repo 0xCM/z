@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [SymSource("asm")]
+    [SymSource(asm)]
     public enum AsmModifierKind : byte
     {
         None = 0,

@@ -6,7 +6,7 @@ namespace Z0.Asm
 {
     using static core;
 
-    using K = JmpKind;
+    using K = AsmJmpKind;
 
     public sealed class AsmJmpPipe : AppService<AsmJmpPipe>
     {
@@ -60,7 +60,7 @@ namespace Z0.Asm
         }
 
         [Op]
-        static ref AsmJmpRow jmprow(in ApiInstruction src, JmpKind jk, out AsmJmpRow dst)
+        static ref AsmJmpRow jmprow(in ApiInstruction src, AsmJmpKind jk, out AsmJmpRow dst)
         {
             dst.SourcePart = src.Part;
             dst.Block = src.BaseAddress;
@@ -75,7 +75,7 @@ namespace Z0.Asm
         }
 
         [Op]
-        static ref JmpKind classify(IceMnemonic src, out JmpKind kind)
+        static ref AsmJmpKind classify(IceMnemonic src, out AsmJmpKind kind)
         {
             kind = K.None;
             switch(src)

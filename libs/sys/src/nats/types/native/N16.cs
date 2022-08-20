@@ -5,6 +5,7 @@
 namespace Z0
 {
     using N = N16;
+    
     public readonly struct N16 :
         INativeNatural,
         INatNumber<N>,

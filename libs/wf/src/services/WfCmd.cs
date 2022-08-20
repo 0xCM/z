@@ -224,7 +224,7 @@ namespace Z0
             return result;
         }
 
-        [CmdOp("env")]
+        [CmdOp("env/report")]
         void EmitEnv(CmdArgs args)
         {
             var dst = AppDb.App("env").Root;

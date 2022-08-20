@@ -8,9 +8,10 @@ namespace Z0
 
     public class Env
     {
-        public static void emit(WfEmit emitter, EnvVarKind kind, FS.FolderPath dst)
+        public static ExecToken emit(WfEmit emitter, EnvVarKind kind, FS.FolderPath dst)
         {
             var vars = EnvVars.Empty;
+            var token = ExecToken.Empty;
             switch(kind)
             {
                 case EnvVarKind.Machine:
@@ -27,11 +28,12 @@ namespace Z0
             if(vars.IsNonEmpty)
             {
                 vars.Iter(v => emitter.Write(v.Format()));
-                emit(emitter, vars, kind, dst);
+                token = emit(emitter, vars, kind, dst);
             }
+            return token;
         }
 
-        public static ExecToken emit(WfEmit channel, EnvVars src, EnvVarKind kind, FS.FolderPath dst)
+        static ExecToken emit(WfEmit channel, EnvVars src, EnvVarKind kind, FS.FolderPath dst)
         {
             var name =  $"{ExecutingPart.Name}.{EnumRender.format(kind)}";
             var table = dst + FS.file($"{name}.settings",FileKind.Csv);

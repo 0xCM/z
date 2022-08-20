@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Asm;
-    
     /// <summary>
     /// Represents an asm statement together with its context and encoding
     /// </summary>

@@ -9,7 +9,7 @@ namespace Z0
     [Record(TableId), StructLayout(LayoutKind.Sequential,Pack=1)]
     public struct AsmBranchTarget
     {
-        public const string TableId = "asm.branch";
+        const string TableId = "asm.branch";
 
         /// <summary>
         /// The target address

@@ -17,22 +17,6 @@ namespace Z0
             => ref Add(ref As<T,byte>(ref first(src)), (int)count);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref ushort seek16<T>(Span<T> src, ulong count)
-            => ref Add(ref As<T,ushort>(ref first(src)), (int)count);
-
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref short seek16i<T>(Span<T> src, ulong count)
-            => ref Add(ref As<T,short>(ref first(src)), (int)count);
-
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref uint seek32<T>(Span<T> src, ulong count)
-            => ref Add(ref As<T,uint>(ref first(src)), (int)count);
-
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref int seek32i<T>(Span<T> src, ulong count)
-            => ref Add(ref As<T,int>(ref first(src)), (int)count);
-
-        [MethodImpl(Inline), Op, Closures(Closure)]
         public static ref ulong seek64<T>(Span<T> src, ulong count)
             => ref Add(ref As<T,ulong>(ref first(src)), (int)count);
 

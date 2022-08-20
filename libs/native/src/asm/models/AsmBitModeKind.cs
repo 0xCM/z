@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    [Flags]
+    [Flags,SymSource(asm)]
     public enum AsmBitModeKind : byte
     {
         None = 0,

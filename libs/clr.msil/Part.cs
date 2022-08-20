@@ -14,10 +14,4 @@ namespace Z0
 {
     class SymbolicQuery{}
 
-    class Root
-    {
-
-        public const MethodImplOptions Inline = MethodImplOptions.AggressiveInlining;
-
-    }
 }

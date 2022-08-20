@@ -23,49 +23,58 @@ namespace Z0
             Disposables.Add(dispenser);
         }
 
+        [MethodImpl(Inline)]
         public ref readonly EncodedMembers Transmit(in EncodedMembers src)
         {
             return ref src;
         }
 
+        [MethodImpl(Inline)]
         public ref readonly Seq<CollectedHost> Transmit(in Seq<CollectedHost> src)
         {
             return ref src;
         }
 
+        [MethodImpl(Inline)]
         public ref readonly ApiMembers TransmitResolved(in ApiMembers src)
         {
             return ref src;
         }
 
+        [MethodImpl(Inline)]
         public ref readonly ReadOnlySeq<ApiCatalogEntry> TransmitRebased(in ReadOnlySeq<ApiCatalogEntry> src)
         {
             return ref src;
         }
 
+        [MethodImpl(Inline)]
         public ref readonly ReadOnlySeq<ApiCatalogEntry> TransmitReloaded(in ReadOnlySeq<ApiCatalogEntry> src)
         {
             return ref src;
         }
 
+        [MethodImpl(Inline)]
         public ref readonly ApiMemberCode TransmitReloaded(in ApiMemberCode src)
         {
             Disposables.Add(src);
             return ref src;
         }
 
+        [MethodImpl(Inline)]
         public ref readonly ReadOnlySeq<ApiEncoded> Transmit(in ReadOnlySeq<ApiEncoded> src)
         {
             _Encoded = src;
             return ref src;
         }
 
+        [MethodImpl(Inline)]
         public ref readonly Assembly Transmit(in Assembly src)
         {
             _Parts.Add(src);
             return ref src;
         }
 
+        [MethodImpl(Inline)]
         public void Captured(IApiPartCatalog src)
         {
 

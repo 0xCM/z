@@ -19,5 +19,13 @@
         "titleBar.inactiveForeground": "#15202b99",
         "commandCenter.border": "#15202b99"
     },
-    "peacock.color": "#61dafb"
+    "peacock.color": "#61dafb",
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "B:\\archives\\BROWSER01.DB",
+            "name": "cpp-llvm"
+        }
+    ]
 }

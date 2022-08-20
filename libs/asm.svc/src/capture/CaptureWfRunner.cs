@@ -111,7 +111,7 @@ namespace Z0
                 Regions.EmitRegions(Process.GetCurrentProcess(), Target);
 
             if(Settings.EmitContext)
-                RuntimeContext.emit(Target,Emitter);
+                RuntimeContext.emit(Emitter,Target);
 
             if(Settings.RunChecks)
             {

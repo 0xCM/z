@@ -33,7 +33,7 @@ namespace Z0
         {
             var src = FS.path(ExecutingPart.Assembly.Location).FolderPath;
             var settings = new CaptureWfSettings();
-            var parts = list<PartId>();
+            var parts = hashset<PartId>();
             iter(args, arg => {
                 if(PartNames.parse(arg.Value, out var name))
                     parts.Add(name);
@@ -43,8 +43,10 @@ namespace Z0
 
             settings.Parts = parts.ToSeq();
 
-            var selected = ApiRuntime.assemblies(sys.controller(), settings.Parts.View); 
-            runner(this, settings, dst, transport).Run(ApiRuntime.catalog(selected));
+            var location = FS.path(ExecutingPart.Assembly.Location).FolderPath;
+            var assemblies = ApiRuntime.assemblies(location).Where(a => parts.Contains(a.Id()));
+            var catalog = ApiRuntime.catalog(assemblies);
+            runner(this, settings, dst, transport).Run(catalog);
         }
 
         public void Run(CmdArgs args)
@@ -55,7 +57,12 @@ namespace Z0
             if(args.Count != 0)
                 CollectSelected(args, transport,dst);
             else
-                runner(this, settings, dst, transport).Run(ApiRuntime.catalog(ApiRuntime.assemblies(FS.path(ExecutingPart.Assembly.Location).FolderPath)));
+            {
+                var location = FS.path(ExecutingPart.Assembly.Location).FolderPath;
+                var assemblies = ApiRuntime.assemblies(location);
+                var catalog = ApiRuntime.catalog(assemblies);
+                runner(this,settings, dst, transport).Run(catalog);
+            }
         }
 
         static SettingsStore Store = new();

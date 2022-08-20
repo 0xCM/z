@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
+    using static sys;
 
     /// <summary>
     /// Defines a list of <typeparamref name='T'/> over an unmanaged buffer
@@ -41,7 +41,7 @@ namespace Z0
         public Span<byte> Bytes
         {
             [MethodImpl(Inline)]
-            get => cover(Base.Pointer<byte>(), Size);
+            get => Algs.cover(Base.Pointer<byte>(), Size);
         }
 
         public ref T this[uint index]

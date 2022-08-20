@@ -6,7 +6,7 @@ namespace Z0.Asm
 {
     using P = Pow2x32;
 
-    [Flags, SymSource("asm.opcodes")]
+    [Flags, SymSource(asm)]
     public enum AsmOcFlags : uint
     {
         None = 0,

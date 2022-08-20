@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    [StructLayout(LayoutKind.Sequential,Pack=1)]
     public readonly record struct CapturedAccessor
     {
         public readonly ApiEncoded Member;

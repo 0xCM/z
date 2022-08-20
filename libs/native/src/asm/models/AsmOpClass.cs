@@ -6,7 +6,7 @@ namespace Z0
 {
     using static Pow2x8;
 
-    [Flags,SymSource("asm")]
+    [Flags,SymSource(asm)]
     public enum AsmOpClass : byte
     {
         None = 0,

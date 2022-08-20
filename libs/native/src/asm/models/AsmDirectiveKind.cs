@@ -7,7 +7,7 @@ namespace Z0
     // Classifies assembler directives
     // https://github.com/llvm/llvm-project/blob/a8cfa4b9bda3014a88e089cadcc6d366317aec5b/llvm/lib/MC/MCParser/AsmParser.cpp
 
-    [SymSource("coff")]
+    [SymSource(asm)]
     public enum AsmDirectiveKind : byte
     {
         DK_NO_DIRECTIVE, // Placeholder

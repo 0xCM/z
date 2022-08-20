@@ -17,8 +17,8 @@ namespace Z0
             if(count == 0)
                 return true;
 
-            ref readonly var a = ref Spans.first(src);
-            ref readonly var b = ref Spans.first(dst);
+            ref readonly var a = ref first(src);
+            ref readonly var b = ref first(dst);
             for(var i=0; i<count; i++)
                 if(!sys.skip(a,i).Equals(sys.skip(b,i)))
                     return false;

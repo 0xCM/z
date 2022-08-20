@@ -8,7 +8,6 @@ namespace Z0
     {
         public static ExecToken emit(ProcessAdapter src, WfEmit channel, IDbArchive dst)
         {
-            //var process = Process.GetCurrentProcess().Adapt();
             var map = ImageMemory.map(src);
             channel.FileEmit(map.ToString(), dst.Path("process.image", FileKind.Map));            
             modules(src, channel, dst);
@@ -27,8 +26,16 @@ namespace Z0
             return channel.EmittedBytes(running, path.Size);
         }
 
-        public static ExecToken emit(IApiPack dst, WfEmit channel)
+        public static void env(WfEmit channel, IApiPack dst)
         {
+            Env.emit(channel,EnvVarKind.Process, dst.Context().Root);
+            Env.emit(channel,EnvVarKind.User, dst.Context().Root);
+            Env.emit(channel,EnvVarKind.Machine, dst.Context().Root);
+        }
+
+        public static ExecToken emit(WfEmit channel, IApiPack dst)
+        {
+            env(channel,dst);
             var map = ImageMemory.map();
             channel.FileEmit(map.ToString(), dst.Context().Path("process.image", FileKind.Map));            
             return emit(Process.GetCurrentProcess(), dst, channel);
