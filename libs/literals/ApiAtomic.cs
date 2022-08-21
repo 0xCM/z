@@ -4,534 +4,539 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using S = System.String;
+
     [LiteralProvider(api)]
     public readonly struct ApiAtomic
     {
         const string Dot = ".";
 
-        public const string Dash = "-";
+        internal const string text = nameof(text);
 
-        public const string Slash = "/";
+        public const S Dash = "-";
 
-        public const string d0 ="0";
+        public const S Slash = "/";
 
-        public const string d1 ="1";
+        public const S d0 ="0";
 
-        public const string d2 ="2";
+        public const S d1 ="1";
 
-        public const string d3 ="3";
+        public const S d2 ="2";
 
-        public const string d4 ="4";
+        public const S d3 ="3";
 
-        public const string d5 = "5";
+        public const S d4 ="4";
 
-        public const string d6 = "6";
+        public const S d5 = "5";
 
-        public const string d7 = "7";
+        public const S d6 = "6";
 
-        public const string d8 = "8";
+        public const S d7 = "7";
 
-        public const string d9 = "9";
+        public const S d8 = "8";
 
-        public const string app = nameof(app);
+        public const S d9 = "9";
 
-        public const string x32 = nameof(x32);
+        public const S app = nameof(app);
 
-        public const string x64 = nameof(x64);
+        public const S x32 = nameof(x32);
 
-        public const string alg = nameof(alg);
+        public const S x64 = nameof(x64);
 
-        public const string asm = nameof(asm);
+        public const S alg = nameof(alg);
 
-        public const string bc = nameof(bc);
+        public const S asm = nameof(asm);
 
-        public const string bv = nameof(bv);
+        public const S bc = nameof(bc);
 
-        public const string dot = nameof(dot);
+        public const S bv = nameof(bv);
 
-        public const string kvp = nameof(kvp);
+        public const S dot = nameof(dot);
 
-        public const string log = nameof(log);
+        public const S kvp = nameof(kvp);
 
-        public const string release = nameof(release);
+        public const S log = nameof(log);
 
-        public const string reloc = nameof(reloc);
+        public const S release = nameof(release);
 
-        public const string syn = nameof(syn);
+        public const S reloc = nameof(reloc);
 
-        public const string net = nameof(net);
+        public const S syn = nameof(syn);
 
-        public const string qualified = "{0}.{1}";
+        public const S net = nameof(net);
 
-        public const string @default = "default";
+        public const S qualified = "{0}.{1}";
 
-        public const string csv = nameof(csv);
+        public const S @default = "default";
 
-        public const string projects = nameof(projects);
+        public const S csv = nameof(csv);
 
-        public const string gen = nameof(gen);
+        public const S projects = nameof(projects);
 
-        public const string env = nameof(env);
+        public const S gen = nameof(gen);
 
-        public const string control = nameof(control);
+        public const S env = nameof(env);
 
-        public const string contracts = nameof(contracts);
+        public const S control = nameof(control);
 
-        public const string imports = nameof(imports);
+        public const S contracts = nameof(contracts);
 
-        public const string impl = nameof(impl);
-        public const string api = nameof(api);
+        public const S imports = nameof(imports);
 
-        public const string bin = nameof(bin);
+        public const S impl = nameof(impl);
+        public const S api = nameof(api);
 
-        public const string cmd = nameof(cmd);
+        public const S bin = nameof(bin);
 
-        public const string coff = nameof(coff);
+        public const S cmd = nameof(cmd);
 
-        public const string txt = nameof(txt);
+        public const S coff = nameof(coff);
 
-        public const string xml = nameof(xml);
+        public const S txt = nameof(txt);
 
-        public const string zip = nameof(zip);
+        public const S xml = nameof(xml);
 
-        public const string headers = nameof(headers);
+        public const S zip = nameof(zip);
 
-        public const string header = nameof(header);
+        public const S headers = nameof(headers);
 
-        public const string builds = nameof(builds);
+        public const S header = nameof(header);
 
-        public const string build = nameof(build);
+        public const S builds = nameof(builds);
 
-        public const string cil = nameof(cil);
+        public const S build = nameof(build);
 
-        public const string docs = nameof(docs);
+        public const S cil = nameof(cil);
 
-        public const string classes = nameof(classes);
+        public const S docs = nameof(docs);
 
-        public const string lists = nameof(lists);
+        public const S classes = nameof(classes);
 
-        public const string lib = nameof(lib);
+        public const S lists = nameof(lists);
 
-        public const string mc = nameof(mc);
+        public const S lib = nameof(lib);
 
-        public const string stage = nameof(stage);
+        public const S mc = nameof(mc);
 
-        public const string sources = nameof(sources);
+        public const S stage = nameof(stage);
 
-        public const string tables = nameof(tables);
+        public const S sources = nameof(sources);
 
-        public const string targets = nameof(targets);
+        public const S tables = nameof(tables);
 
-        public const string tools = nameof(tools);
+        public const S targets = nameof(targets);
 
-        public const string toolset = nameof(toolset);
+        public const S tools = nameof(tools);
 
-        public const string status = nameof(status);
+        public const S toolset = nameof(toolset);
 
-        public const string tooling = nameof(tooling);
+        public const S status = nameof(status);
 
-        public const string help = nameof(help);
+        public const S tooling = nameof(tooling);
 
-        public const string hex = nameof(hex);
+        public const S help = nameof(help);
 
-        public const string jobs = nameof(jobs);
+        public const S hex = nameof(hex);
 
-        public const string map = nameof(map);
+        public const S jobs = nameof(jobs);
 
-        public const string capture = nameof(capture);
+        public const S map = nameof(map);
 
-        public const string logs = nameof(logs);
+        public const S capture = nameof(capture);
 
-        public const string refs = nameof(refs);
+        public const S logs = nameof(logs);
 
-        public const string refdata = nameof(refdata);
+        public const S refs = nameof(refs);
 
-        public const string reports = nameof(reports);
+        public const S refdata = nameof(refdata);
 
-        public const string events = nameof(events);
+        public const S reports = nameof(reports);
 
-        public const string etl = nameof(etl);
+        public const S events = nameof(events);
 
-        public const string queue = nameof(queue);
+        public const S etl = nameof(etl);
 
-        public const string parsed = nameof(parsed);
+        public const S queue = nameof(queue);
 
-        public const string il = nameof(il);
+        public const S parsed = nameof(parsed);
 
-        public const string tar = nameof(tar);
+        public const S il = nameof(il);
 
-        public const string gz = nameof(gz);
+        public const S tar = nameof(tar);
 
-        public const string extracts = nameof(extracts);
+        public const S gz = nameof(gz);
 
-        public const string xed = nameof(xed);
+        public const S extracts = nameof(extracts);
 
-        public const string output = nameof(output);
+        public const S xed = nameof(xed);
 
-        public const string dotout = Dot + "out";
+        public const S output = nameof(output);
 
-        public const string digits = nameof(digits);
+        public const S dotout = Dot + "out";
 
-        public const string props = nameof(props);
+        public const S digits = nameof(digits);
 
-        public const string @decimal = nameof(@decimal);
+        public const S props = nameof(props);
 
-        public const string binary = nameof(binary);
+        public const S @decimal = nameof(@decimal);
 
-        public const string octal = nameof(octal);
+        public const S binary = nameof(binary);
 
-        public const string input = nameof(input);
+        public const S octal = nameof(octal);
 
-        public const string imm = nameof(imm);
+        public const S input = nameof(input);
 
-        public const string tmp = nameof(tmp);
+        public const S imm = nameof(imm);
 
-        public const string data = nameof(data);
+        public const S tmp = nameof(tmp);
 
-        public const string dumps = nameof(dumps);
+        public const S data = nameof(data);
 
-        public const string context = nameof(context);
+        public const S dumps = nameof(dumps);
 
-        public const string source = nameof(source);
+        public const S context = nameof(context);
 
-        public const string src = nameof(src);
+        public const S source = nameof(source);
 
-        public const string commands = nameof(commands);
+        public const S src = nameof(src);
 
-        public const string apps = nameof(apps);
+        public const S commands = nameof(commands);
 
-        public const string tests = nameof(tests);
+        public const S apps = nameof(apps);
 
-        public const string settings = nameof(settings);
+        public const S tests = nameof(tests);
 
-        public const string z0 = nameof(z0);
+        public const S settings = nameof(settings);
 
-        public const string cases = nameof(cases);
+        public const S z0 = nameof(z0);
 
-        public const string catalogs = nameof(catalogs);
+        public const S cases = nameof(cases);
 
-        public const string current = nameof(current);
+        public const S catalogs = nameof(catalogs);
 
-        public const string codegen = nameof(codegen);
+        public const S current = nameof(current);
 
-        public const string dotnet = nameof(dotnet);
+        public const S codegen = nameof(codegen);
 
-        public const string symbols = nameof(symbols);
+        public const S dotnet = nameof(dotnet);
 
-        public const string limits = nameof(limits);
+        public const S symbols = nameof(symbols);
 
-        public const string images = nameof(images);
+        public const S limits = nameof(limits);
 
-        public const string steps = nameof(steps);
+        public const S images = nameof(images);
 
-        public const string show = nameof(show);
+        public const S steps = nameof(steps);
 
-        public const string external = nameof(external);
+        public const S show = nameof(show);
 
-        public const string manuals = nameof(manuals);
+        public const S external = nameof(external);
 
-        public const string models = nameof(models);
+        public const S manuals = nameof(manuals);
 
-        public const string labs = nameof(labs);
+        public const S models = nameof(models);
 
-        public const string obj = nameof(obj);
+        public const S labs = nameof(labs);
 
-        public const string exe = nameof(exe);
+        public const S obj = nameof(obj);
 
-        public const string cpp = nameof(cpp);
+        public const S exe = nameof(exe);
 
-        public const string scripts = nameof(scripts);
+        public const S cpp = nameof(cpp);
 
-        public const string datasets = nameof(datasets);
+        public const S scripts = nameof(scripts);
 
-        public const string imported = nameof(imported);
+        public const S datasets = nameof(datasets);
 
-        public const string bitfields = nameof(bitfields);
+        public const S imported = nameof(imported);
 
-        public const string toolbase = nameof(toolbase);
+        public const S bitfields = nameof(bitfields);
 
-        public const string toolsets = nameof(toolsets);
+        public const S toolbase = nameof(toolbase);
 
-        public const string common = nameof(common);
+        public const S toolsets = nameof(toolsets);
 
-        public const string modules = nameof(modules);
+        public const S common = nameof(common);
 
-        public const string sdm = nameof(sdm);
+        public const S modules = nameof(modules);
 
-        public const string intel = nameof(intel);
+        public const S sdm = nameof(sdm);
 
-        public const string config = nameof(config);
+        public const S intel = nameof(intel);
 
-        public const string polybits = "polybits";
+        public const S config = nameof(config);
 
-        public const string detail = nameof(detail);
+        public const S polybits = "polybits";
 
-        public const string enc = nameof(enc);
+        public const S detail = nameof(detail);
 
-        public const string mlir = nameof(mlir);
+        public const S enc = nameof(enc);
 
-        public const string mir = nameof(mir);
+        public const S mlir = nameof(mlir);
 
-        public const string ll = nameof(ll);
+        public const S mir = nameof(mir);
 
-        public const string c = nameof(c);
+        public const S ll = nameof(ll);
 
-        public const string cs = nameof(cs);
+        public const S c = nameof(c);
 
-        public const string csproj = nameof(csproj);
+        public const S cs = nameof(cs);
 
-        public const string cfg = nameof(cfg);
+        public const S csproj = nameof(csproj);
 
-        public const string h = nameof(h);
+        public const S cfg = nameof(cfg);
 
-        public const string dat = nameof(dat);
+        public const S h = nameof(h);
 
-        public const string def = nameof(def);
+        public const S dat = nameof(dat);
 
-        public const string dll = nameof(dll);
+        public const S def = nameof(def);
 
-        public const string deps = nameof(deps);
+        public const S dll = nameof(dll);
 
-        public const string dmp = nameof(dmp);
+        public const S deps = nameof(deps);
 
-        public const string error = nameof(error);
+        public const S dmp = nameof(dmp);
 
-        public const string lang = nameof(lang);
+        public const S error = nameof(error);
 
-        public const string i = nameof(i);
+        public const S lang = nameof(lang);
 
-        public const string ii = nameof(ii);
+        public const S i = nameof(i);
 
-        public const string idx = nameof(idx);
+        public const S ii = nameof(ii);
 
-        public const string list = nameof(list);
+        public const S idx = nameof(idx);
 
-        public const string md = nameof(md);
+        public const S list = nameof(list);
 
-        public const string pdb = nameof(pdb);
+        public const S md = nameof(md);
 
-        public const string o = nameof(o);
+        public const S pdb = nameof(pdb);
 
-        public const string obi = nameof(obi);
+        public const S o = nameof(o);
 
-        public const string ops = nameof(ops);
+        public const S obi = nameof(obi);
 
-        public const string sln = nameof(sln);
+        public const S ops = nameof(ops);
 
-        public const string ico = nameof(ico);
+        public const S sln = nameof(sln);
 
-        public const string bmp = nameof(bmp);
-        public const string svg = nameof(svg);
+        public const S ico = nameof(ico);
 
-        public const string bitmap = nameof(bitmap);
+        public const S bmp = nameof(bmp);
+        public const S svg = nameof(svg);
 
-        public const string sorted = nameof(sorted);
+        public const S bitmap = nameof(bitmap);
 
-        public const string ps1 = nameof(ps1);
+        public const S sorted = nameof(sorted);
 
-        public const string s = nameof(s);
+        public const S ps1 = nameof(ps1);
 
-        public const string sh = nameof(sh);
+        public const S s = nameof(s);
 
-        public const string statements = nameof(statements);
+        public const S sh = nameof(sh);
 
-        public const string sym = nameof(sym);
+        public const S statements = nameof(statements);
 
-        public const string sql = nameof(sql);
+        public const S sym = nameof(sym);
 
-        public const string summary = nameof(summary);
+        public const S sql = nameof(sql);
 
-        public const string semantic = nameof(semantic);
+        public const S summary = nameof(summary);
 
-        public const string admin = nameof(admin);
+        public const S semantic = nameof(semantic);
 
-        public const string inventory = nameof(inventory);
+        public const S admin = nameof(admin);
 
-        public const string tok = nameof(tok);
+        public const S inventory = nameof(inventory);
 
-        public const string yaml = nameof(yaml);
+        public const S tok = nameof(tok);
 
-        public const string bat = nameof(bat);
+        public const S yaml = nameof(yaml);
 
-        public const string bits = nameof(bits);
+        public const S bat = nameof(bat);
 
-        public const string inc = nameof(inc);
+        public const S bits = nameof(bits);
 
-        public const string include = nameof(include);
+        public const S inc = nameof(inc);
 
-        public const string includes = nameof(includes);
+        public const S include = nameof(include);
 
-        public const string td = nameof(td);
+        public const S includes = nameof(includes);
 
-        public const string win = nameof(win);
+        public const S td = nameof(td);
 
-        public const string ws = nameof(ws);
+        public const S win = nameof(win);
 
-        public const string xpack = nameof(xpack);
+        public const S ws = nameof(ws);
 
-        public const string json = nameof(json);
+        public const S xpack = nameof(xpack);
 
-        public const string xarray = nameof(xarray);
+        public const S json = nameof(json);
 
-        public const string machine = nameof(machine);
+        public const S xarray = nameof(xarray);
 
-        public const string msil = nameof(msil);
+        public const S machine = nameof(machine);
 
-        public const string located = nameof(located);
+        public const S msil = nameof(msil);
 
-        public const string queries = nameof(queries);
+        public const S sized = nameof(sized);
+        public const S located = nameof(located);
 
-        public const string tokens = nameof(tokens);
+        public const S queries = nameof(queries);
 
-        public const string wsl = nameof(wsl);
+        public const S tokens = nameof(tokens);
 
-        public const string samples = nameof(samples);
+        public const S wsl = nameof(wsl);
 
-        public const string unicode = nameof(unicode);
+        public const S samples = nameof(samples);
 
-        public const string utf8 = nameof(utf8);
+        public const S unicode = nameof(unicode);
 
-        public const string utf16 = nameof(utf16);
+        public const S utf8 = nameof(utf8);
 
-        public const string asci7 = nameof(asci7);
+        public const S utf16 = nameof(utf16);
 
-        public const string llvm = nameof(llvm);
+        public const S asci7 = nameof(asci7);
 
-        public const string dev = nameof(dev);
+        public const S llvm = nameof(llvm);
 
-        public const string vars = nameof(vars);
+        public const S dev = nameof(dev);
 
-        public const string views = nameof(views);
+        public const S vars = nameof(vars);
 
-        public const string records = nameof(records);
+        public const S views = nameof(views);
 
-        public const string files = nameof(files);
+        public const S records = nameof(records);
 
-        public const string kinds = nameof(kinds);
+        public const S files = nameof(files);
 
-        public const string numeric = nameof(numeric);
+        public const S kinds = nameof(kinds);
 
-        public const string bitmasks = nameof(bitmasks);
+        public const S numeric = nameof(numeric);
 
-        public const string perms =  nameof(perms);
+        public const S bitmasks = nameof(bitmasks);
 
-        public const string blends = nameof(blends);
+        public const S perms =  nameof(perms);
 
-        public const string pow2 = nameof(pow2);
+        public const S blends = nameof(blends);
 
-        public const string toml = nameof(toml);
+        public const S pow2 = nameof(pow2);
 
-        public const string chars = nameof(chars);
+        public const S toml = nameof(toml);
 
-        public const string clr = nameof(clr);
+        public const S chars = nameof(chars);
 
-        public const string comments = nameof(comments);
+        public const S clr = nameof(clr);
 
-        public const string arrangements = nameof(arrangements);
+        public const S comments = nameof(comments);
 
-        public const string dis = nameof(dis);
+        public const S arrangements = nameof(arrangements);
 
-        public const string exports = nameof(exports);
+        public const S dis = nameof(dis);
 
-        public const string loadconfig = nameof(loadconfig);
+        public const S exports = nameof(exports);
 
-        public const string impl_map = impl + Dot + map;
-        public const string disasm = dis + Dot + asm;
+        public const S loadconfig = nameof(loadconfig);
 
-        public const string located_hex = located + Dot + hex;
+        public const S impl_map = impl + Dot + map;
+        public const S disasm = dis + Dot + asm;
 
-        public const string ildat = il + Dot + csv;
+        public const S located_hex = located + Dot + hex;
 
-        public const string decimal_digits = @decimal + Dot + digits;
+        public const S ildat = il + Dot + csv;
 
-        public const string hex_digits = digits + Dot + hex;
+        public const S decimal_digits = @decimal + Dot + digits;
 
-        public const string binary_digits = digits + Dot + binary;
+        public const S hex_digits = digits + Dot + hex;
 
-        public const string octal_digits =  octal + Dot + digits;
+        public const S binary_digits = digits + Dot + binary;
 
-        public const string api_classes = api + Dot + classes;
+        public const S octal_digits =  octal + Dot + digits;
 
-        public const string api_contracts = api + Dot + contracts;
+        public const S api_classes = api + Dot + classes;
 
-        public const string deps_list = deps + Dot + list;
+        public const S api_contracts = api + Dot + contracts;
 
-        public const string api_kinds = api + Dot + kinds;
+        public const S deps_list = deps + Dot + list;
 
-        public const string llvm_mc = llvm + Dot + mc;
+        public const S api_kinds = api + Dot + kinds;
 
-        public const string net60 = net + Dot + d6 + Dot + d0;
+        public const S llvm_mc = llvm + Dot + mc;
 
-        public const string net50 = net + Dot + d5 + Dot + d0;
+        public const S net60 = net + Dot + d6 + Dot + d0;
 
-        public const string ildata = il + Dot + csv;
+        public const S net50 = net + Dot + d5 + Dot + d0;
 
-        public const string asmcsv = asm + Dot + csv;
+        public const S ildata = il + Dot + csv;
 
-        public const string asmsrc = asm + Dot + src;
+        public const S asmcsv = asm + Dot + csv;
 
-        public const string djson = deps + Dot + json;
+        public const S asmsrc = asm + Dot + src;
 
-        public const string dotbuild = Dot + build;
+        public const S djson = deps + Dot + json;
 
-        public const string dotcmd = Dot + cmd;
+        public const S dotbuild = Dot + build;
 
-        public const string cjson = config + Dot + json;
+        public const S dotcmd = Dot + cmd;
 
-        public const string cildata = nameof(cil) + Dot + data;
+        public const S cjson = config + Dot + json;
 
-        public const string coffheader = coff + Dot + header;
+        public const S cildata = nameof(cil) + Dot + data;
 
-        public const string coffreloc = coff + Dot + reloc;
+        public const S coffheader = coff + Dot + header;
 
-        public const string coffexports = coff + Dot + exports;
+        public const S coffreloc = coff + Dot + reloc;
 
-        public const string encasm = enc + Dot + asm;
+        public const S coffexports = coff + Dot + exports;
 
-        public const string hexdat = hex + Dot + dat;
+        public const S encasm = enc + Dot + asm;
 
-        public const string llasm = ll + Dot + asm;
+        public const S hexdat = hex + Dot + dat;
 
-        public const string llbc = ll + Dot + bc;
+        public const S llasm = ll + Dot + asm;
 
-        public const string mcasm = mc + Dot + asm;
+        public const S llbc = ll + Dot + bc;
 
-        public const string opsasm = ops + Dot + asm;
+        public const S mcasm = mc + Dot + asm;
 
-        public const string objasm = obj + Dot + asm;
+        public const S opsasm = ops + Dot + asm;
 
-        public const string objyaml = obj + Dot + yaml;
+        public const S objasm = obj + Dot + asm;
 
-        public const string objhex = obj + Dot + hex;
+        public const S objyaml = obj + Dot + yaml;
 
-        public const string pcsv = CharText.p + Dot + csv;
+        public const S objhex = obj + Dot + hex;
 
-        public const string sjson = settings + Dot + json;
+        public const S pcsv = CharText.p + Dot + csv;
 
-        public const string synasm = syn + Dot + asm;
+        public const S sjson = settings + Dot + json;
 
-        public const string synasmlog = syn + Dot + asm + Dot + log;
+        public const S synasm = syn + Dot + asm;
 
-        public const string wslogs = ws + Slash + logs;
+        public const S synasmlog = syn + Dot + asm + Dot + log;
 
-        public const string win_x64 = win + Dash + x64;
+        public const S wslogs = ws + Slash + logs;
 
-        public const string deps_json = deps + Dot + json;
+        public const S win_x64 = win + Dash + x64;
 
-        public const string xcsv = CharText.x + Dot + csv;
+        public const S deps_json = deps + Dot + json;
 
-        public const string xeddisasm = xed + Dot + "disasm";
+        public const S xcsv = CharText.x + Dot + csv;
 
-        public const string xeddisasm_raw = xeddisasm + Dot + txt;
+        public const S xeddisasm = xed + Dot + "disasm";
 
-        public const string xeddisasm_summary = xeddisasm + Dot + summary + Dot + csv;
+        public const S xeddisasm_raw = xeddisasm + Dot + txt;
 
-        public const string xeddisasm_semantic = xeddisasm + Dot + semantic + Dot + txt;
+        public const S xeddisasm_summary = xeddisasm + Dot + summary + Dot + csv;
 
-        public const string xeddisasm_detail = xeddisasm + Dot + detail;
+        public const S xeddisasm_semantic = xeddisasm + Dot + semantic + Dot + txt;
 
-        public const string yamltok = yaml + Dot + tok;
+        public const S xeddisasm_detail = xeddisasm + Dot + detail;
 
-        public const string cmdkvp = cmd + Dot + kvp;
+        public const S yamltok = yaml + Dot + tok;
+
+        public const S cmdkvp = cmd + Dot + kvp;
     }
 }

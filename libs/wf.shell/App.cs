@@ -10,7 +10,6 @@ namespace Z0
         public static ICmdProvider[] providers(IWfRuntime wf)
             => new ICmdProvider[]{
                 wf.WfCmd(),
-                wf.ArchiveCmd(),
             };
 
         public static AppCmd commands(IWfRuntime wf)

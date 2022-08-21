@@ -8,7 +8,6 @@ namespace Z0
 
     using static Windows.Kernel32;
     using static Algs;
-    using static Spans;
 
     [ApiHost]
     public unsafe readonly partial struct MemorySections

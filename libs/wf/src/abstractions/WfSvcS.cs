@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     public abstract class WfSvc<S> : AppService<S>, IWfSvc<S>
         where S : WfSvc<S>, new()

@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static System.Runtime.Intrinsics.Vector128;
-    using static Algs;
+    using static sys;
 
     /// <summary>
     /// Defines a reference to a runtime memory segment

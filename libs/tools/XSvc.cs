@@ -8,8 +8,8 @@ namespace Z0
     {
         class ServiceCache : AppServices<ServiceCache>
         {
-            public ToolCmdSvc ToolCmd(IWfRuntime wf)
-                => Service<ToolCmdSvc>(wf);
+            public ToolCmd ToolCmd(IWfRuntime wf)
+                => Service<ToolCmd>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;

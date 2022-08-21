@@ -20,7 +20,6 @@ namespace Z0
                 wf.LlvmCmd(),
                 wf.RoslynCmd(),
                 wf.IntelInxCmd(),
-                wf.ArchiveCmd(),
                 wf.MemCmd(),
                 wf.Machines(),
                 wf.ProjectCmd(),
@@ -60,4 +59,6 @@ namespace Z0
             RunCmd("project", CmdArgs.create(new CmdArg[]{new CmdArg(EmptyString, "mc.models")}));
         }
     }
+
+    
 }

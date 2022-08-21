@@ -14,5 +14,15 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static string ifempty(string src, string replace)
             => empty(src) ? replace ?? EmptyString : src;
+
+        [MethodImpl(Inline)]
+        public static T ifempty<T>(T src, T replace)
+            where T : INullity
+                =>  src.IsEmpty ? replace : src;
+
+        [MethodImpl(Inline)]
+        public static T ifempty<T>(T src, Func<T> replace)
+            where T : INullity
+                =>  src.IsEmpty ? replace() : src;            
     }
 }
