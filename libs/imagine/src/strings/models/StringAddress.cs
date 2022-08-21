@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
+    using static sys;
 
     using api = MemoryStrings;
 
@@ -69,7 +69,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public uint Render(ref uint i, Span<char> dst)
-            => MemoryStrings.render(this, ref i, dst);
+            => api.render(this, ref i, dst);
 
         [MethodImpl(Inline)]
         public unsafe string Format()

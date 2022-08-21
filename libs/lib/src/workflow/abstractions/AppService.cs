@@ -1,0 +1,103 @@
+//-----------------------------------------------------------------------------
+// Copyright   :  (c) Chris Moore, 2020
+// License     :  MIT
+//-----------------------------------------------------------------------------
+namespace Z0
+{
+    using static sys;
+
+    [WfService]
+    public abstract class AppService : IAppService
+    {
+        public IWfRuntime Wf {get; private set;}
+
+        public IWfMsg WfMsg {get; private set;}
+
+        public abstract Type HostType {get;}
+
+        public WfEmit Emitter {get; private set;}
+
+        public abstract T Service<T>(Func<T> factory);
+
+        public void Init(IWfRuntime wf)
+        {
+            Wf = wf;
+            Emitter = WfEmit.create(wf, HostType);            
+            WfMsg = new WfMsgSvc(wf, HostType); 
+            var flow = Emitter.Creating(HostType);
+            OnInit();
+            Initialized();
+            Emitter.Created(flow);
+        }
+
+        FS.Files _Files;
+
+        protected IApiCatalog ApiCatalog => Wf.ApiCatalog;
+
+        protected FS.Files Files()
+            => _Files;
+
+        protected FS.Files Files(FS.Files src, bool write = true)
+        {
+            _Files = src;
+            if(write)
+                iter(src, path => Emitter.Write(path.ToUri()));
+            return Files();
+        }
+
+        protected virtual void OnInit()
+        {
+
+        }
+
+        protected virtual void Initialized()
+        {
+
+        }
+
+        protected virtual void Disposing() { }
+
+        public void Dispose()
+        {
+            Disposing();
+            Wf.Disposed();
+        }
+
+        public void InstallChannel(WfEmit channel)
+        {
+            Emitter = channel;   
+        }
+
+        public static ref readonly AppData AppData
+        {
+            [MethodImpl(Inline)]
+            get => ref _AppData;
+        }
+
+        protected static bool PllExec
+        {
+            [MethodImpl(Inline)]
+            get => AppData.PllExec();
+        }
+
+        protected static CmdArg arg(in CmdArgs src, int index)
+            => Cmd.arg(src, index);
+
+        protected static ref readonly T arg<T>(in CmdArgs src, int index, out T dst)
+        {
+            var data = Cmd.arg(src,index).Value;
+            if(typeof(T) == typeof(bit))
+                dst = @as<bit,T>(bit.parse(data));
+            else
+                dst = @throw<T>();
+            return ref dst;
+        }
+
+        static AppData  _AppData;
+        
+        static AppService()
+        {
+            _AppData = Z0.AppData.get();
+        }
+    }
+}

@@ -4,7 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
+    using static sys;
+
     public readonly struct CmdLinePart : IExpr
     {
         public readonly string Content;
@@ -22,13 +23,13 @@ namespace Z0
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => sys.empty(Content);
+            get => empty(Content);
         }
 
         public bool IsNonEmpty
         {
             [MethodImpl(Inline)]
-            get => sys.nonempty(Content);
+            get => nonempty(Content);
         }
 
         [MethodImpl(Inline)]

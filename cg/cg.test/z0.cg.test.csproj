@@ -7,7 +7,7 @@
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
 
-  <Import Project="$(ImportDefs)shells.props"/>
+  <Import Project="$(ProjectProps)shells.props"/>
 
   <ItemGroup>
     <ProjectReference Include="$(CgLibs)" />

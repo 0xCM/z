@@ -8,20 +8,17 @@ namespace Z0
 
     public class WfEmit
     {
-        public readonly IWfRuntime Wf;
+        public static WfEmit create(IWfRuntime wf, WfHost host)
+            => new WfEmit(wf, host);
+            
+        readonly IWfRuntime Wf;
 
-        readonly Type HostType;
+        readonly WfHost Host;
 
-        public WfEmit(IWfRuntime wf, Type host)
+        WfEmit(IWfRuntime wf, WfHost host)
         {
             Wf = wf;
-            HostType = host;
-        }
-
-        public WfEmit(IWfSvc svc)
-        {
-            Wf = svc.Wf;
-            HostType = svc.HostType;
+            Host = host;
         }
 
         public void Dispose()
@@ -29,35 +26,39 @@ namespace Z0
 
         }
 
+        public EventId Raise<E>(E e)
+            where E : IWfEvent
+                => Wf.Raise(e);
+
         public void Babble<T>(T content)
-            => Wf.Babble(HostType, content);
+            => Wf.Babble(Host, content);
 
         public void Babble(string pattern, params object[] args)
-            => Wf.Babble(HostType, string.Format(pattern,args));
+            => Wf.Babble(Host, string.Format(pattern,args));
 
         public void Status<T>(T content, FlairKind flair = FlairKind.Status)
-            => Wf.Status(HostType, content, flair);
+            => Wf.Status(Host, content, flair);
 
         public void Status(ReadOnlySpan<char> src, FlairKind flair = FlairKind.Status)
-            => Wf.Status(HostType, new string(src), flair);
+            => Wf.Status(Host, new string(src), flair);
 
         public void Status(FlairKind flair, string pattern, params object[] args)
-            => Wf.Status(HostType, string.Format(pattern, args));
+            => Wf.Status(Host, string.Format(pattern, args));
 
         public void Status(string pattern, params object[] args)
-            => Wf.Status(HostType, string.Format(pattern, args));
+            => Wf.Status(Host, string.Format(pattern, args));
 
         public void Warn<T>(T content, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
             => Wf.Warn(content, caller, file, line);
 
         public void Error<T>(T content, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
-            => Wf.Error(HostType, core.require(content), caller, file, line);
+            => Wf.Error(Host, core.require(content), caller, file, line);
 
         public void Write<T>(T content)
-            => Wf.Data(HostType, content);
+            => Wf.Data(Host, content);
 
         public void Write<T>(T content, FlairKind flair)
-            => Wf.Data(HostType, content, flair);
+            => Wf.Data(Host, content, flair);
 
         public void Row<T>(T content)
             => Wf.Row(content);
@@ -66,13 +67,19 @@ namespace Z0
             => Wf.Row(content, flair);
 
         public void Write(string content, FlairKind flair)
-            => Wf.Data(HostType, content, flair);
+            => Wf.Data(Host, content, flair);
 
         public void Write<T>(string name, T value, FlairKind flair)
-            => Wf.Data(HostType, RpOps.attrib(name, value), flair);
+            => Wf.Data(Host, RpOps.attrib(name, value), flair);
 
         public void Write<T>(string name, T value)
-            => Wf.Data(HostType, RpOps.attrib(name, value));
+            => Wf.Data(Host, RpOps.attrib(name, value));
+
+        public WfExecFlow<Type> Creating(Type service)
+            => Wf.Creating(service);
+
+        public ExecToken Created(WfExecFlow<Type> flow)
+            => Wf.Created(flow);
 
         public ExecToken Completed<T>(WfExecFlow<T> flow, Type host, Exception e, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine]int? line = null)
             => Wf.Completed(flow,host,e, caller, file, line);
@@ -81,31 +88,31 @@ namespace Z0
             => Wf.Completed(flow,host,e, origin);
 
         public WfExecFlow<T> Running<T>(T msg)
-            => Wf.Running(HostType, msg);
+            => Wf.Running(Host, msg);
 
         public WfExecFlow<string> Running([CallerName] string msg = null)
-            => Wf.Running(HostType, msg);
+            => Wf.Running(Host, msg);
 
         public ExecToken Ran<T>(WfExecFlow<T> flow, [CallerName] string msg = null)
-            => Wf.Ran(HostType, flow.WithMsg(msg));
+            => Wf.Ran(Host, flow.WithMsg(msg));
 
         public ExecToken Ran<T>(WfExecFlow<T> flow, string msg, FlairKind flair = FlairKind.Ran)
-            => Wf.Ran(HostType, flow.WithMsg(msg), flair);
+            => Wf.Ran(Host, flow.WithMsg(msg), flair);
 
         public ExecToken Ran<T,D>(WfExecFlow<T> src, D data, FlairKind flair = FlairKind.Ran)
             => Wf.Ran(src, data, flair);
 
         public FileWritten EmittingFile(FS.FilePath dst)
-            => Wf.EmittingFile(HostType, dst);
+            => Wf.EmittingFile(Host, dst);
 
         public ExecToken EmittedFile(FileWritten flow, Count count)
-            => Wf.EmittedFile(HostType, flow, count);
+            => Wf.EmittedFile(Host, flow, count);
 
         public ExecToken EmittedFile(FileWritten flow, int count)
-            => Wf.EmittedFile(HostType, flow, count);
+            => Wf.EmittedFile(Host, flow, count);
 
         public ExecToken EmittedFile(FileWritten flow, uint count)
-            => Wf.EmittedFile(HostType, flow, count);
+            => Wf.EmittedFile(Host, flow, count);
 
         public ExecToken EmittedFile<T>(FileWritten flow, T msg)
             => Wf.EmittedFile(flow, msg);
@@ -118,11 +125,11 @@ namespace Z0
 
         public WfTableFlow<T> EmittingTable<T>(FS.FilePath dst)
             where T : struct
-                => Wf.EmittingTable<T>(HostType, dst);
+                => Wf.EmittingTable<T>(Host, dst);
 
         public ExecToken EmittedTable<T>(WfTableFlow<T> flow, Count count, FS.FilePath? dst = null)
             where T : struct
-                => Wf.EmittedTable(HostType, flow,count, dst);
+                => Wf.EmittedTable(Host, flow,count, dst);
 
         public ExecToken TableEmit<T>(ReadOnlySpan<T> rows, FS.FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci, 
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
@@ -168,10 +175,10 @@ namespace Z0
         public ExecToken TableEmit<T>(ReadOnlySpan<T> src, ReadOnlySpan<byte> widths, TextEncodingKind encoding, FS.FilePath dst)
             where T : struct
         {
-            var flow = Wf.EmittingTable<T>(HostType, dst);
+            var flow = Wf.EmittingTable<T>(Host, dst);
             var spec = Tables.rowspec<T>(widths, z16);
             var count = Tables.emit(src, spec, encoding, dst);
-            return Wf.EmittedTable(HostType, flow,count);
+            return Wf.EmittedTable(Host, flow,count);
         }
 
         public ExecToken FileEmit<T>(T src, Count count, FS.FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)

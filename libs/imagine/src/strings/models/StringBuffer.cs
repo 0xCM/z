@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    using static Spans;
+    using static sys;
 
     using api = StringBuffers;
 
@@ -18,7 +17,7 @@ namespace Z0
         public static StringBuffer buffer(ReadOnlySpan<string> src)
         {
             var count = (uint)src.Length;
-            var dst = StringBuffers.buffer(api.length(src) + count);
+            var dst = api.buffer(api.length(src) + count);
             var counter = 0u;
             for(var i=0; i<count; i++)
             {
@@ -126,14 +125,5 @@ namespace Z0
             [MethodImpl(Inline)]
             get => Buffer.Width;
         }
-
-        // public StringAllocator StringAllocator()
-        //     => new StringAllocator(this);
-
-        // public LabelAllocator LabelAllocator()
-        //     => new LabelAllocator(this);
-
-        // public SourceAllocator SourceAllocator()
-        //     => new SourceAllocator(this);
     }
 }

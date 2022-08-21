@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    using static Spans;
+    using static sys;
 
     using api = StringRefs;
 
@@ -22,7 +21,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public StringRefs(ReadOnlySpan<C> src)
         {
-            BaseAddress = address(Spans.first(src));
+            BaseAddress = address(first(src));
             Length = (uint)src.Length;
         }
 

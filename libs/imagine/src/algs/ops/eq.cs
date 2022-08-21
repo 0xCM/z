@@ -14,7 +14,7 @@ namespace Z0
             if(count != b.Length)
                 return false;
             for(var i=0u; i<count; i++)
-                if(!Spans.skip(a, i).Equals(Spans.skip(b, i)))
+                if(!sys.skip(a, i).Equals(sys.skip(b, i)))
                     return false;
             return true;
         }
@@ -31,7 +31,7 @@ namespace Z0
                 return true;
 
             for(var i=0; i<count; i++)
-                if(!comparer.Equals(Spans.skip(a,i), Spans.skip(b,i)))
+                if(!comparer.Equals(sys.skip(a,i), sys.skip(b,i)))
                     return false;
 
             return true;

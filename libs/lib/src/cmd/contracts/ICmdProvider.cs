@@ -7,8 +7,6 @@ namespace Z0
     [Free]
     public interface ICmdProvider
     {
-        IAppCommands Actions {get;}
-
-        Name Name => GetType().DisplayName();
+        
     }
 }

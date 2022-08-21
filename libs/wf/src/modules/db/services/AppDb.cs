@@ -14,77 +14,91 @@ namespace Z0
 
         public static AppDb Service => Instance;
 
-        readonly ProjectSettings WsArchives;
+        readonly AppSettings _Settings;
 
-        public IDbSources Settings()
-            => DbRoot().Sources("settings");
+        public IDbArchive EnvRoot()
+            => Datasets.archive(folder(_Settings.Setting(Names.EnvRoot)));
 
-        public FS.FilePath Settings(string name, FileKind kind)
-            => Settings().Path(name,kind);
+        public IDbArchive Control()
+            => EnvRoot().Scoped("control");
+
+        public IDbArchive DbRoot()
+            => EnvRoot().Scoped("db");
+
+        public IDbArchive Dev()
+            => EnvRoot().Scoped("dev");
+
+        public IDbArchive Archives()
+            => EnvRoot().Scoped("archives");
+
+        public IDbArchive Tools()
+            => EnvRoot().Scoped("tools");
+
+        public IDbArchive Repos()
+            => EnvRoot().Scoped("repos");
+
+        public IDbArchive DbIn()
+            => DbRoot().Scoped("sources");
+
+        public IDbArchive DbOut()
+            => DbRoot().Scoped("targets");
+
+        public IDbArchive Logs()
+            => DbRoot().Scoped("logs");
+
+        public IDbArchive AsmDb()
+            => DbOut().Scoped("asm.db");
+
+        public IDbArchive Capture()
+            => DbRoot().Scoped("capture");
+
+        public IDbArchive EnvSpecs()
+            => DbRoot().Scoped("env");
+
+        public IDbArchive AppData()
+            => DbRoot().Scoped("apps").Scoped(ExecutingPart.Id.Format());
+
+        public IDbArchive AppData(string scope)
+            => AppData().Scoped(scope);
+
+        public IDbArchive Settings()
+            => DbRoot().Scoped("settings");
+
+        public IDbArchive Catalogs()
+            => DbRoot().Scoped("catalogs");
+
+        public IDbArchive DbOut(string scope)
+            => DbOut().Scoped(scope);
+
+        public IDbArchive ApiTargets()
+            => DbOut().Scoped("api");
+
+        public IDbArchive ApiTargets(string scope)
+            => DbOut($"api/{scope}");
+
+        public IDbArchive EtlTargets(ProjectId project)
+            => DbOut().Scoped("projects").Scoped(project.Format());
+
+        public IDbArchive SlnRoot()
+            => Dev().Scoped("z0");
 
         public IDbArchive Jobs()
             => DbRoot().Scoped("jobs");
-            
+
         public IDbArchive Jobs(string scope)
             => Jobs().Scoped(scope);
 
-        public FS.FilePath Settings<T>()
-            where T : struct
-                => Settings().Table<T>();
-
-        public IDbArchive AsmDb()
-            => Datasets.archive(DbOut().Targets("asm.db"));
+        public IDbArchive EnvConfig()
+            => DbRoot().Scoped("env");
 
         public IDbArchive AsmDb(string scope)
             => AsmDb().Scoped(scope);
 
-        public FS.FilePath SettingsPath(string name, FileKind kind)
+        public FS.FilePath Settings(string name, FileKind kind)
             => Settings().Path(name,kind);
 
-        public FS.FilePath SettingsPath<S>(FileKind kind)
-            => Settings().Path(Z0.Settings.name<S>(), kind);
-
-        public IDbArchive Archives()
-            => Datasets.archive(setting(WsArchives.Path(Names.Archives), FS.dir));
-
         public IDbArchive Archive(string name)
-            => Datasets.archive(Archives().Sources(name).Root);
-
-        public IDbSources LlvmRoot()
-            => Datasets.archive(setting(WsArchives.Path(Names.LlvmRoot), FS.dir));
-
-        public IDbSources LlvmDist()
-            => Datasets.archive(setting(WsArchives.Path(Names.LlvmDist), FS.dir));
-
-        public IDbTargets DbOut()
-            => Datasets.archive(setting(WsArchives.Path(Names.DbTargets), FS.dir));
-
-        public IDbArchive Repos()
-            => Datasets.archive(setting(WsArchives.Path(Names.Repos), FS.dir));
-
-        public IDbArchive Symbols()
-            => Datasets.archive(setting(WsArchives.Path(Names.Repos), FS.dir));
-
-        public IDbArchive Env()
-            => Datasets.archive(DbRoot().Targets("env"));
-
-        public IDbArchive Repos(string scope)
-            => Repos().Scoped(scope);
-
-        public IDbTargets DbOut(string scope)
-            => DbOut().Targets(scope);
-
-        public IDbTargets Apps()
-            => DbRoot().Targets("apps");
-
-        public IDbTargets Commands()
-            => DbRoot().Targets("commands");
-
-        public IDbArchive Catalogs()
-            => Datasets.archive(DbRoot().Sources("catalogs"));
-
-        public IDbArchive SlnRoot()
-            => Datasets.archive(setting(WsArchives.Path(Names.SlnRoot), FS.dir));
+            => Archives().Scoped(name);
 
         public IDbArchive ProjectRoot<T>(string area, T name)
             => SlnRoot().Scoped($"{area}/{name}");
@@ -95,89 +109,36 @@ namespace Z0
         public IDbArchive Catalogs(string scope)
             => Catalogs().Scoped(scope);
 
-        public IDbTargets Commands(string scope)
-            => Commands().Targets(scope);
-        
-        public IDbTargets App(PartId part)
-            => Apps().Targets(part.Format());
+        public IDbArchive DbIn(string scope)
+            => DbIn().Scoped(scope);
 
-        public IDbTargets App()
-            => Apps().Targets(ExecutingPart.Id.Format());
-
-        public IDbTargets App(string scope)
-            => App().Targets(scope);
-
-        public IDbTargets App(PartId part, string scope)
-            => App(part).Targets(scope);
-
-        public IDbSources DbIn()
-            => Datasets.archive(setting(WsArchives.Path(Names.DbSources), FS.dir));
-
-        public IDbSources DbCapture()
-            => Datasets.archive(setting(WsArchives.Path(Names.DbCapture), FS.dir));
-
-        public IDbSources DbIn(string scope)
-            => DbIn().Sources(scope);
-
-        public IDbTargets Logs()
-            => Datasets.archive(setting(WsArchives.Path(Names.Logs), FS.dir));
-
-        public IDbArchive DbRoot()
-            => Datasets.archive(setting(WsArchives.Path(Names.DbRoot), FS.dir));
-
-        public IDbTargets Logs(string scope)
-            => Logs().Targets(scope);
-
-        public IDbArchive Control()
-            => new DbArchive(setting(WsArchives.Path(Names.Control), FS.dir));
+        public IDbArchive Logs(string scope)
+            => Logs().Scoped(scope);
 
         public IDbArchive Control(string scope)
-            => Datasets.archive(Control().Sources(scope));
+            => Control().Scoped(scope);
 
-        public IDbArchive Tools()
-            => Datasets.archive(setting(WsArchives.Path(Names.Tools), FS.dir));        
+        public IDbArchive Dev(string scope)
+            => Dev().Scoped(scope);
 
-        public IDbSources Tools(string scope)
-            => Tools().Sources(scope);
-
-        public IDbArchive Views()
-            => Datasets.archive(setting(WsArchives.Path(Names.Views), FS.dir));
-
-        public IDbArchive Toolsets()
-            => Views(toolsets);
-
-        public IDbArchive Toolset(string name)
-            => Datasets.archive(Views(toolsets).Sources(name));
-
-        public IDbArchive Views(string scope)
-            => Datasets.archive(Views().Sources(scope));
-
-        public IDbArchive Toolbase()
-            => Toolset(toolbase);
-
-        public IDbArchive Toolbase(string scope)
-            => Datasets.archive(Toolbase().Sources(scope));
+        public IDbArchive Tools(string scope)
+            => Tools().Scoped(scope);
             
-        public IDbSources Dev()
-            => new DbSources(setting(WsArchives.Path(Names.DevRoot), FS.dir));
+        public IDbArchive CgRoot()
+            => Dev().Scoped("z0/cg");
 
-        public IDbSources Dev(string scope)
-            => Dev().Sources(scope);
+        public IDbArchive CgStage()
+            => DbOut("cgstage");
 
-        public IDbTargets CgRoot()
-            => new DbTargets(setting(WsArchives.Path(Names.CgRoot), FS.dir));
+        public IDbArchive CgStage(string scope)
+            => DbOut("cgstage").Scoped(scope);
 
-        public IDbArchive Capture()
-            => Datasets.archive(setting(WsArchives.Path(Names.DbCapture), FS.dir));
-
-        public IDbSources EnvConfig()
-            => new DbSources(setting(WsArchives.Path(Names.EnvConfig), FS.dir));
+        public FS.FilePath Settings<T>()
+            where T : struct
+                => Settings().Table<T>();
 
         public IProjectWorkspace EtlSource(ProjectId src)
             => ProjectWorkspace.load(Dev($"llvm.models/{src}"), src);
-
-        public IDbTargets EtlTargets(ProjectId project)
-            => DbOut().Targets("projects").Targets(project.Format());
 
         public FS.FilePath EtlTable<T>(ProjectId project)
             where T : struct
@@ -186,21 +147,18 @@ namespace Z0
         public FS.FilePath EtlTable(ProjectId project, string name)
             => EtlTargets(project).Path($"{project}.{name}", FileKind.Csv);
 
-        public IDbTargets CgStage()
-            => DbOut("cgstage");
+        public IDbArchive Toolbase()
+            => Datasets.archive(folder(_Settings.Setting(Names.Toolbase)));  
 
-        public IDbTargets CgStage(string scope)
-            => DbOut("cgstage").Targets(scope);
+        public IDbArchive Toolbase(string scope)
+            => Datasets.archive(Toolbase().Sources(scope));
 
-        public IDbTargets ApiTargets()
-            => DbOut().Targets("api");
-
-        public IDbTargets ApiTargets(string scope)
-            => DbOut($"api/{scope}");
+        public IDbArchive LlvmRoot()
+            => Datasets.archive(folder(_Settings.Setting(Names.LlvmRoot)));
 
         AppDb()
         {
-            WsArchives = ProjectSettings.load();
+            _Settings = AppSettings.Default;
         }
 
         static AppDb Instance;

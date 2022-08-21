@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class CmdUriSeq : Seq<CmdUriSeq, CmdUri>
+    public class CmdUriSeq : Seq<CmdUriSeq,CmdUri>
     {
         public CmdUriSeq()
         {

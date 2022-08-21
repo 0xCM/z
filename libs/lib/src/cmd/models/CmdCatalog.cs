@@ -14,18 +14,9 @@ namespace Z0
             get => ref Data;
         }
 
-        public CmdCatalog(ReadOnlySeq<CmdUri> defs)
+        public CmdCatalog(ReadOnlySeq<CmdCatalogEntry> src)
         {
-            Index<CmdCatalogEntry> entries = sys.alloc<CmdCatalogEntry>(defs.Count);
-            for(var i=0; i<defs.Count; i++)
-            {
-                ref readonly var uri = ref defs[i];
-                ref var entry = ref entries[i];
-                entry.Uri = uri;
-                entry.Hash = uri.Hash;
-                entry.Name = uri.Name;
-            }
-            Data = entries.Sort().Resequence();
+            Data = src;
         }
     }
 }

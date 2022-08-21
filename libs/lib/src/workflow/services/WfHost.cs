@@ -6,7 +6,7 @@ namespace Z0
 {
     public readonly struct WfHost : IWfHost<WfHost>
     {
-        public Type Type {get;}
+        public readonly Type Type {get;}
 
         [MethodImpl(Inline)]
         public WfHost(Type type)

@@ -87,7 +87,7 @@ namespace Z0
             return ref dst;
         }
 
-        MultiParser Mp() => state(nameof(Mp), () => new MultiParser(discover(Wf.Components)));
+        MultiParser Mp() => data(nameof(Mp), () => new MultiParser(discover(Wf.Components)));
 
         [MethodImpl(Inline)]
         public static SeqSplitter<T> splitter<T>(T delimiter)

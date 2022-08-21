@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
+    using static sys;
 
     [StructLayout(LayoutKind.Sequential, Pack=1)]
     public readonly record struct MemoryString<K> : IMemoryString<K>
@@ -33,13 +33,13 @@ namespace Z0
         public ReadOnlySpan<byte> Bytes
         {
             [MethodImpl(Inline)]
-            get => Spans.recover<K,byte>(Cells);
+            get => recover<K,byte>(Cells);
         }
 
         public byte CellSize
         {
             [MethodImpl(Inline)]
-            get => (byte)Sized.size<K>();
+            get => (byte)size<K>();
         }
 
         public uint CellCount

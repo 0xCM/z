@@ -9,9 +9,6 @@ namespace Z0
     [ApiHost]
     public class DbArchives : AppService<DbArchives>
     {
-        public static IDbArchive Env
-            => data(env, () => (IDbArchive)(new DbArchive(FS.dir(Environment.GetEnvironmentVariable(SettingNames.EnvRoot)))));
-
         public static ModuleArchive modules()
             => ModuleArchives.archive(FS.path(ExecutingPart.Assembly.Location).FolderPath);
 

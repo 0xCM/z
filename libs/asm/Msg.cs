@@ -61,7 +61,6 @@ namespace Z0
 
         public static MsgPattern<Count,Count,FS.FileUri> ParsedStatements => "Parsed {0} full rows and {1} partial rows from {2}";
 
-
         public static MsgPattern<FS.FileUri> LoadingStatements
             => "Loading statements from {0}";
 

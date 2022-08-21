@@ -10,6 +10,8 @@ namespace Z0
     {
         PartName AppName {get;}
 
+        ReadOnlySeq<string> Args {get;}
+
         IApiCatalog ApiCatalog {get;}
 
         IEventBroker EventBroker {get;}
@@ -28,8 +30,7 @@ namespace Z0
 
         void RedirectEmissions(IWfEmissionLog dst);
 
-        WfEmit Emitter(Type host)
-            => new WfEmit(this, host);
+        WfEmit Emitter {get;}
 
         WfEventLogger EventLogger
             => x => Raise(x);

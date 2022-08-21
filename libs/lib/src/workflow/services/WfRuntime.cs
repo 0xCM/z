@@ -19,19 +19,24 @@ namespace Z0
 
         public IWfEmissionLog Emissions {get; private set;}
 
+        public WfEmit Emitter {get;}
+
         TokenDispenser Tokens;
+    
+        public ReadOnlySeq<string> Args {get;}
 
         [MethodImpl(Inline)]
         public WfRuntime(WfInit init)
         {
+            Args = init.Args;
             Tokens = init.Tokens;
             EventBroker = init.EventBroker;
             Host = init.Host;
             Verbosity = LogLevel.Status;
-            //Settings = init.Settings;
             ApiCatalog = init.ApiCatalog;
             AppName = ExecutingPart.Assembly.PartName();
             Emissions = init.EmissionLog;           
+            Emitter = WfEmit.create(this, init.Host);
         }
 
         public IEventSink EventSink
@@ -61,6 +66,7 @@ namespace Z0
             EventBroker.Dispose();
             Emissions?.Dispose();
         }
+        
         string ITextual.Format()
             => AppName.Format();
     }

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
+    using static sys;
  
     partial class Cmd
     {
@@ -19,14 +19,6 @@ namespace Z0
             }
 
             return dst.Emit();
-        }
-
-        public static AppCommands join(IAppCommands[] src)
-        {
-            var dst = dict<string,IAppCmdRunner>();
-            foreach(var a in src)
-                iter(a.Invokers,  a => dst.TryAdd(a.CmdName, a));
-            return new AppCommands(dst);
         }
     }
 }

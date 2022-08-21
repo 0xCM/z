@@ -7,8 +7,6 @@ namespace Z0
     [Free]
     public interface IApiCatalog
     {
-        //Index<IApiPartCatalog> PartCatalogs(params PartId[] parts);
-
         ApiPartCatalogs PartCatalogs {get;}
         
         Index<IApiHost> PartHosts(params PartId[] parts);

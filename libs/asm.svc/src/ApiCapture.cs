@@ -78,7 +78,7 @@ namespace Z0
         }
 
         ClrEventListener OpenEventLog(Timestamp ts)
-            => ClrEventListener.create(AppDb.App().Path($"clr.events.{ts}", FileKind.Log));
+            => ClrEventListener.create(AppDb.AppData().Path($"clr.events.{ts}", FileKind.Log));
 
         void EmitAsm(ICompositeDispenser symbols, PartId part, ReadOnlySeq<ApiEncoded> src, IApiPack dst)
         {

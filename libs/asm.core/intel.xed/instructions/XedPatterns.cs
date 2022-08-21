@@ -12,11 +12,5 @@ namespace Z0
             [MethodImpl(Inline)]
             get => AppData.get();
         }
-
-        bool PllExec
-        {
-            [MethodImpl(Inline)]
-            get => AppData.PllExec();
-        }
     }
 }

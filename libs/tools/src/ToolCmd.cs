@@ -8,18 +8,45 @@ namespace Z0
 
     public sealed class ToolCmd : AppCmdService<ToolCmd>
     {
+        ImageRegions Regions => Wf.ImageRegions();
+
         public static ICmdProvider[] providers(IWfRuntime wf)
             => new ICmdProvider[]{
                 wf.WfCmd(),
                 wf.BuildCmd(),
                 };
 
-        public static ToolCmd commands(IWfRuntime wf)
-            => create(wf, providers(wf));
+
+        [CmdOp("memory/regions")]
+        void EmitRegions()
+            => Regions.EmitRegions(Process.GetCurrentProcess(), ApiPacks.create());
+
+        [CmdOp("api/emit/impls")]
+        void EmitImplMaps()
+        {
+            var src = Clr.impls(Parts.Lib.Assembly, Parts.Lib.Assembly);
+            using var writer = AppDb.ApiTargets().Path("api.impl.maps", FileKind.Map).Utf8Writer();
+            for(var i=0; i<src.Count; i++)
+                src[i].Render(s => writer.WriteLine(s));
+        }
+
+        // public static ToolCmd commands(IWfRuntime wf)
+        //     => create(wf, providers(wf));
 
         Tooling Tooling => Wf.Tooling();
 
         static readonly Toolbase TB = new();
+
+        [CmdOp("env/modules")]
+        void ListModules()
+        {
+            var src = ImageMemory.modules(ExecutingPart.Process);
+            var dst = AppDb.AppData().Targets(tables).Path($"process.modules.{timestamp()}", FileKind.Csv);
+            var formatter = Tables.formatter<ProcessModuleRow>();
+            for(var i=0; i<src.Length; i++)
+                Row(formatter.Format(src[i]));
+            TableEmit(src, dst);
+        }
 
         [CmdOp("tools")]
         void ListTools()

@@ -4,23 +4,17 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Spans;
-    using static Arrays;
-    using static Algs;
-
+    using static sys;
+ 
     partial class Cmd
     {
         [Op]
-        public static AppCmdRunner runner(string name, object host, MethodInfo method)
-            => new AppCmdRunner(name,host,method);
-
-        [Op]
-        public static Index<AppCmdRunner> runners(object host)
+        public static ReadOnlySeq<AppCmdRunner> runners(object host)
         {
-            var methods = host.GetType().Methods().Tagged<CmdOpAttribute>();
-            var buffer = sys.alloc<AppCmdRunner>(methods.Length);
-            runners(host, methods,buffer);
-            return buffer;
+            var methods = host.GetType().DeclaredInstanceMethods().Tagged<CmdOpAttribute>();
+            var dst = alloc<AppCmdRunner>(methods.Length);
+            runners(host, methods, dst);
+            return dst;
         }
 
         static void runners(object host, ReadOnlySpan<MethodInfo> src, Span<AppCmdRunner> dst)

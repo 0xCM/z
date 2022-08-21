@@ -1,3 +1,4 @@
 @echo off
 call %~dp0..\config.cmd
-call %RestoreDeps%
+echo SlnRestore:%SlnRestore%
+call %SlnRestore%

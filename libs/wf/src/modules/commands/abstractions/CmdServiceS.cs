@@ -4,25 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class CmdService<S> : WfSvc<CmdService<S>>, ICmdProvider, ICmdService
+    public abstract class CmdService<S> : WfSvc<S>, ICmdProvider, ICmdService
         where S : CmdService<S>, new()
     {
-        public new static S create(IWfRuntime wf)
-        {
-            var svc = new S();
-            svc.Dispatcher = Cmd.dispatcher(svc, wf.Emitter(svc.GetType()), svc.Actions);
-            svc.Init(wf);
-            return svc;
-        }
+        public abstract IAppCmdDispatcher Dispatcher {get;}
 
-        public virtual IAppCmdDispatcher Dispatcher {get;protected set;}
-
-        public IAppCommands Actions {get;}
-
-        public CmdService()
-        {
-           Actions = AppCommands.discover((S)this);
-        }
+        [CmdOp("commands")]
+        protected void EmitCommands()
+            => Cmd.emit(Cmd.catalog(Dispatcher), AppDb.AppData().Path(ExecutingPart.Id.PartName().Format() + ".commands", FileKind.Csv), Emitter);
 
         public void RunCmd(string name)
         {
@@ -35,10 +24,6 @@ namespace Z0
         {
             Dispatcher.Dispatch(name, args);
         }
-
-        [CmdOp("commands")]
-        protected void EmitCommands()
-            => Cmd.emit(Cmd.catalog(Dispatcher), AppDb.App().Path(ExecutingPart.Id.PartName().Format() + ".commands", FileKind.Csv), Emitter);
 
         public bool Dispatch(AppCmdSpec cmd)
             => Dispatcher.Dispatch(cmd.Name, cmd.Args);
@@ -57,7 +42,9 @@ namespace Z0
             }
         }
 
-        protected void LoadProject(string name)
-            => Dispatcher?.Dispatch("project", CmdArgs.create(new CmdArg[]{new CmdArg(EmptyString, name)}));
+        protected abstract void Install(ReadOnlySeq<ICmdProvider> providers);
+
+        void ICmdService.Install(ReadOnlySeq<ICmdProvider> providers)
+            => Install(providers);
     }
 }

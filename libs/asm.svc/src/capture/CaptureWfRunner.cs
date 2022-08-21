@@ -20,12 +20,12 @@ namespace Z0
 
         readonly CaptureTransport Transport;
 
-        public CaptureWfRunner(IWfSvc svc, CaptureWfSettings settings, IApiPack dst, CaptureTransport transport)
+        public CaptureWfRunner(IWfRuntime wf, CaptureWfSettings settings, IApiPack dst, CaptureTransport transport)
         {
-            Wf = svc.Wf;
+            Wf = wf;
             Target = dst;
             Settings = settings;
-            Emitter = svc.Emitter;
+            Emitter = wf.Emitter;
             Transport = transport;
             Wf.RedirectEmissions(Loggers.emission(Target.Path("capture.emissions", FileKind.Csv)));
         }

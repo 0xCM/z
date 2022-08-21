@@ -9,15 +9,15 @@ namespace Z0
     {
         [MethodImpl(Inline), Op]
         public static Hash32 hash(string src)
-            => sys.hash(sys.empty(src) ? EmptyString : src);
+            => MarvinHash.marvin(src);
 
         [MethodImpl(Inline), Op]
         public static Hash32 hash(ReadOnlySpan<char> src)
-            => sys.hash(src);
+            => MarvinHash.marvin(src);
 
         [MethodImpl(Inline), Op]
         public static Hash32 hash(ReadOnlySpan<byte> src)
-            => sys.hash(src);
+            => MarvinHash.marvin(src);
 
         [MethodImpl(Inline)]
         public static Hash32 bytehash<C>(C src)
@@ -30,7 +30,7 @@ namespace Z0
             const NumericKind Closure = UnsignedInts;
         }
 
-       internal const uint K = 0xA5555529;
+        internal const uint K = 0xA5555529;
 
         internal const uint FnvOffsetBias = 2166136261;
 

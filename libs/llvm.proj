@@ -1,0 +1,7 @@
+<Project>
+    <ItemGroup>
+        <ProjectReference Include="llvm.models/z0.llvm.models.csproj" />
+        <ProjectReference Include="llvm.svc/z0.llvm.svc.csproj" />
+        <ProjectReference Include="llvm.tools/z0.llvm.tools.csproj" />
+    </ItemGroup>
+</Project>

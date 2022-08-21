@@ -4,8 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface ICmdService : IAppService, ICmdProvider, ICmdRunner
+    public interface ICmdService : IAppService, ICmdRunner, ICmdProvider
     {
-
+        void Install(ReadOnlySeq<ICmdProvider> providers);
     }
 }

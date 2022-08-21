@@ -6,10 +6,6 @@ namespace Z0
 {
     partial class Cmd
     {
-        /// <summary>
-        /// Creates a <see cref='CmdLine'/> that represents 'pwsh.exe /c '<paramref name='spec'/>'
-        /// </summary>
-        /// <param name="spec">The command to execute</param>
         [Op]
         public static CmdLine pwsh(string spec)
             => $"pwsh.exe {spec}";

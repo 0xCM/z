@@ -128,7 +128,7 @@ namespace Z0
         [CmdOp("gen/cs/keywords")]
         void GenCsKeywords()
         {
-            var src = AppDb.App().Path("ms.cs.keywords", FileKind.List);
+            var src = AppDb.AppData().Path("ms.cs.keywords", FileKind.List);
             const string FieldName = "CsKeywordList";
             if(!src.Exists)
             {

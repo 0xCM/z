@@ -7,6 +7,10 @@ namespace Z0
     partial class Cmd
     {
         [Op]
+        public static void parse(ReadOnlySpan<TextLine> src, out ReadOnlySpan<CmdFlow> dst)
+            => dst = flows(src);
+
+        [Op]
         public static bool parse(ReadOnlySpan<char> src, out AppCmdSpec dst)
         {
             var i = SQ.index(src, Chars.Space);

@@ -38,10 +38,6 @@ namespace Z0
             return src.FolderPath + stamped;
         }
 
-        public static IDbArchive Service() => _Service;
-
-        static IDbArchive _Service = archive(FS.dir(AppSettings.Service().Find(SettingNames.DbRoot)));
-
         public static CmdProcess robocopy(FS.FolderPath src, FS.FolderPath dst)
         {
             var spec = $"robocopy {src} {dst} /e";

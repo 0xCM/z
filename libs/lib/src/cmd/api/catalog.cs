@@ -4,9 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Spans;
-    using static Arrays;
-    using static Algs;
+    using static sys;
 
     partial class Cmd
     {
@@ -14,22 +12,24 @@ namespace Z0
         {
             ref readonly var defs = ref src.Commands.Defs;
             var count = defs.Count;
-            var dst = sys.alloc<CmdUri>(count);
+            var dst = alloc<CmdUri>(count);
             for(var i=0; i<count; i++)
                 seek(dst,i) = defs[i].Uri;
-            return new CmdCatalog(dst);
+            return new CmdCatalog(entries(dst));
         }
 
-        public static SettingLookup<Name,asci64> commands(IAppCmdDispatcher src)
+        static ReadOnlySeq<CmdCatalogEntry> entries(CmdUriSeq src)    
         {
-            var actions = src.Commands.Specs.Index().Sort().Index();
-            var part = src.Controller;
-            var count = actions.Count;
-            var dst = sys.alloc<Setting<Name,asci64>>(count);
-            var settings = Settings.asci(dst);
-            for(var i=0; i<actions.Count; i++)
-                seek(dst,i) = Settings.asci(string.Format("{0}[{1:D3}]", part, i), (asci64)actions[i]);
-            return Settings.asci(dst);
-        }
+            var entries = alloc<CmdCatalogEntry>(src.Count);
+            for(var i=0; i<src.Count; i++)
+            {
+                ref readonly var uri = ref src[i];
+                ref var entry = ref seek(entries,i);
+                entry.Uri = uri;
+                entry.Hash = uri.Hash;
+                entry.Name = uri.Name;
+            }
+            return entries.Sort().Resequence();        
+        }        
     }
 }

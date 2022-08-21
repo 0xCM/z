@@ -6,41 +6,13 @@ namespace Z0
 {
     using static core;
 
-    public sealed class Reactor : GlobalService<Reactor,int>
+    public sealed class Reactor : AppService<Reactor>
     {
         CmdFlows Flows;
 
-        public static void dispatch(string[] args)
+        protected override void Initialized()
         {
-            // try
-            // {
-            //     var parts = ApiRuntime.parts();
-            //     term.inform(AppMsg.status(TextProp.define("PartCount", parts.Catalog.Components.Length)));
-            //     using var wf = ApiRuntime.create(parts, args);
-            //     if(args.Length == 0)
-            //     {
-            //         wf.Status("usage: run <command> [options]");
-            //         var settings = wf.Settings;
-            //         wf.Data(settings.Format());
-            //     }
-            //     else
-            //     {
-            //         wf.Status("Dispatching");
-            //         Reactor.create(wf).Dispatch(args);
-            //     }
-
-            // }
-            // catch(Exception e)
-            // {
-            //     term.error(e);
-            // }
-        }
-
-        protected override Reactor Init(out int state)
-        {
-            state = 0;
             Flows = CmdFlows.flows(Wf, Cmd.reactors(Wf));
-            return this;
         }
 
         public void Dispatch(CmdLine src)

@@ -59,7 +59,11 @@ namespace Z0
             => new TermLog(src);
 
         [MethodImpl(Inline), Op]
-        public static LogSettings configure(string name = EmptyString)
-            => new LogSettings(ExecutingPart.Assembly.Id(), FS.dir("d:/views/db/logs"), name);
+        public static LogSettings configure(string name, FS.FolderPath dst)
+            => new LogSettings(ExecutingPart.Assembly.Id(), dst, name);
+
+        [MethodImpl(Inline), Op]
+        public static LogSettings configure(PartId part, FS.FolderPath dst)
+            => new LogSettings(part, dst, EmptyString);
     }
 }

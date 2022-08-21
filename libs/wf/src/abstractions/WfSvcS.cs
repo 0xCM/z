@@ -13,38 +13,7 @@ namespace Z0
 
         public FileCatalog ProjectFiles { get; protected set; }
 
-        protected static bool PllExec
-        {
-            [MethodImpl(Inline)]
-            get => AppData.get().PllExec();
-        }
-
         protected OmniScript OmniScript => Wf.OmniScript();
-
-        protected WfSvc()
-        {
-
-        }
-
-        public WfEmit Emitter {get; private set;}
-
-        protected override void OnInit()
-        {            
-            Emitter = new WfEmit(Wf,typeof(S));
-        }
-
-        protected static CmdArg arg(in CmdArgs src, int index)
-            => Cmd.arg(src, index);
-
-        protected static ref readonly T arg<T>(in CmdArgs src, int index, out T dst)
-        {
-            var data = Cmd.arg(src,index).Value;
-            if(typeof(T) == typeof(bit))
-                dst = @as<bit,T>(bit.parse(data));
-            else
-                dst = sys.@throw<T>();
-            return ref dst;
-        }
 
         protected static AppDb AppDb => AppDb.Service;
 

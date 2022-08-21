@@ -15,5 +15,4 @@ namespace Z0
         public static void Main(params string[] args)
             => run(commands, args);
     }
-
 }

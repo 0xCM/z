@@ -49,7 +49,7 @@ namespace Z0
             if(result)
             {
                 var listing = FS.listing(pack.Files());
-                var dst = AppDb.App().PrefixedTable<ListedFile>($"api.pack.{pack.Timestamp}");
+                var dst = AppDb.AppData().PrefixedTable<ListedFile>($"api.pack.{pack.Timestamp}");
                 TableEmit(listing, dst);
             }
 

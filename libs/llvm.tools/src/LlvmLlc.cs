@@ -16,7 +16,7 @@ namespace Z0.llvm
 
         }
 
-        Outcome BuildLlc(IProjectWsObsolete project, Paired<FS.FilePath,Index<string>> spec)
+        Outcome BuildLlc(IProjectWorkspace project, Paired<FS.FilePath,Index<string>> spec)
         {
             var isets = spec.Right;
             var path = spec.Left;
@@ -45,10 +45,10 @@ namespace Z0.llvm
             return result;
         }
 
-        FS.Files Sources(IProjectWsObsolete project)
+        FS.Files Sources(IProjectWorkspace project)
         {
             var result = Outcome.Success;
-            var dir = project.Subdir("src");
+            var dir = project.Scoped("src");
             var files = FS.Files.Empty;
             if(!dir.Exists)
             {
@@ -56,13 +56,13 @@ namespace Z0.llvm
             }
             else
             {
-                files = dir.Files(true, FS.ext("ll"));
+                files = dir.Files(FS.ext("ll"));
             }
 
             return files;
         }
 
-        public void BuildLlc(IProjectWsObsolete project)
+        public void BuildLlc(IProjectWorkspace project)
         {
             var result = Outcome.Success;
             var src = Sources(project);

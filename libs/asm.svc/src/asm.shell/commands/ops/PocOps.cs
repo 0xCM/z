@@ -19,7 +19,7 @@ namespace Z0.Asm
 
         void EmitBitMasks()
         {
-            var dst = AppDb.App(ApiAtomic.logs).Path("bitmasks", FileKind.Csv);
+            var dst = AppDb.AppData(ApiAtomic.logs).Path("bitmasks", FileKind.Csv);
             var src = BitMask.masks(typeof(BitMaskLiterals));
             var formatter = Tables.formatter<BitMaskInfo>();
             for(var i=0; i<src.Count; i++)
@@ -262,7 +262,7 @@ namespace Z0.Asm
             var result = Outcome.Success;
             var records = AsmTables.LoadHostAsmRows(FS.Files.Empty);
             var blocks = AsmTables.DistillBlocks(records);
-            AsmTables.EmitBlocks(blocks, AppDb.App().Table<AsmDataBlock>("api/asm"));
+            AsmTables.EmitBlocks(blocks, AppDb.AppData().Table<AsmDataBlock>("api/asm"));
             return result;
         }
 

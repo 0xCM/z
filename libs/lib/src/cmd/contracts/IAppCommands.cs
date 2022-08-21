@@ -7,8 +7,6 @@ namespace Z0
     [Free]
     public interface IAppCommands
     {
-        IEnumerable<string> Specs {get;}
-
         bool Find(string spec, out IAppCmdRunner runner);
 
         ref readonly ReadOnlySeq<AppCmdDef> Defs {get;}

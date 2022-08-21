@@ -5,8 +5,11 @@
     <TargetFramework>$(FrameworkMoniker)</TargetFramework>
   </PropertyGroup>
 
+  <!-- <Import Project="$(ProjectProps)usings.props"/> -->
+
   <ItemGroup>
-    <ProjectReference Include="$(AsmCore)" />
+    <ProjectReference Include="../asm.core/z0.asm.core.csproj" />
+    <ProjectReference Include="../llvm.models/z0.llvm.models.csproj" />
   </ItemGroup>
 
 </Project>

@@ -10,14 +10,9 @@ namespace Z0
         {
             public ImageRegions ImageRegions(IWfRuntime wf)
                 => Service<ImageRegions>(wf);
-
-
-            public MemCmd MemCmd(IWfRuntime wf)
-                => Service<MemCmd>(wf);
-
+        
             public MemoryChecks MemoryChecks(IWfRuntime wf)
                 => Service<MemoryChecks>(wf);
-
         }
 
         static ServiceCache Services => ServiceCache.Instance;
@@ -25,10 +20,7 @@ namespace Z0
         public static ImageRegions ImageRegions(this IWfRuntime wf)
             => Services.ImageRegions(wf);
 
-        public static MemCmd MemCmd(this IWfRuntime wf)
-            => Services.MemCmd(wf);
-
-       public static MemoryChecks MemoryChecks(this IWfRuntime wf)
+        public static MemoryChecks MemoryChecks(this IWfRuntime wf)
             => Services.MemoryChecks(wf);
     }
 }

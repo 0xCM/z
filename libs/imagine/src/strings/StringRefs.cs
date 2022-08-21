@@ -4,10 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    using static Spans;
-
-    using api = StringRefs;
+    using static sys;
 
     /// <summary>
     /// Defines a character string over an embedded resource
@@ -108,11 +105,11 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public StringRef Word(ulong index, ulong length)
-            => api.word(this, index, length);
+            => word(this, index, length);
 
         [MethodImpl(Inline)]
         public StringRef Word(long index, long length)
-            => api.word(this, index, length);
+            => word(this, index, length);
 
         public ref readonly char this[ulong index]
         {
@@ -129,17 +126,17 @@ namespace Z0
         public StringRef this[long offset, long length]
         {
             [MethodImpl(Inline)]
-            get => api.word(this, offset, length);
+            get => word(this, offset, length);
         }
 
         public StringRef this[ulong offset, ulong length]
         {
             [MethodImpl(Inline)]
-            get => api.word(this, offset, length);
+            get => word(this, offset, length);
         }
 
         public string Format()
-            => sys.@string(View);
+            => @string(View);
 
 
         public override string ToString()

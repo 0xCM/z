@@ -10,6 +10,6 @@
   <Import Project="$(ProjectProps)usings.props"/>
 
   <ItemGroup>
-    <ProjectReference Include="$(Tools)" />
+    <ProjectReference Include="../tools/z0.tools.csproj" />
   </ItemGroup>
 </Project>

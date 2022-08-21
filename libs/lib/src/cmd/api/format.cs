@@ -4,13 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Spans;
-    using static Arrays;
-    using static Algs;
+    using static sys;
 
     partial class Cmd
     {
-         public static string format<T>(ICmd<T> src)
+        public static string format<T>(ICmd<T> src)
             where T : ICmd<T>, new()
         {
             var buffer = text.emitter();
@@ -22,18 +20,6 @@ namespace Z0
 
             buffer.Append(Chars.RParen);
             return buffer.Emit();
-        }
-
-        public static void render(TypedReference src, ReadOnlySpan<ClrFieldAdapter> fields, ITextEmitter dst)
-        {
-            var count = fields.Length;
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var field = ref skip(fields,i);
-                dst.AppendFormat(RP.Assign, field.Name, field.GetValueDirect(src));
-                if(i != count - 1)
-                    dst.Append(", ");
-            }
         }
 
         public static string format(AppCmdSpec src)

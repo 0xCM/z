@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IWfEmissionLog : IDisposable
+    public interface IWfEmissionLog : IExpr, IDisposable
     {
         void Close();
 

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
+    using static sys;
 
     public unsafe readonly record struct Label : IMemoryString<Label,char>
     {
@@ -61,7 +61,7 @@ namespace Z0
         public ReadOnlySpan<char> Cells
         {
             [MethodImpl(Inline)]
-            get => Algs.cover(Address.Pointer<char>(), Length);
+            get => cover(Address.Pointer<char>(), Length);
         }
 
         public Hash32 Hash
@@ -83,13 +83,13 @@ namespace Z0
         }
 
         public bool Equals(Label src)
-            => Algs.eq(Cells,src.Cells);
+            => eq(Cells,src.Cells);
 
         public int CompareTo(Label src)
             => Cells.CompareTo(src.Cells, StringComparison.InvariantCulture);
 
         public string Format()
-            => new string(Cells);
+            => @string(Cells);
 
         public override string ToString()
             => Format();

@@ -121,6 +121,9 @@ public enum PartId : byte
     [Symbol("llvm.tools")]
     LlvmTools,
 
+    [Symbol("llvm.models")]
+    LlvmModels,
+
     [Symbol("llvm.labs")]
     LlvmLabs,
 

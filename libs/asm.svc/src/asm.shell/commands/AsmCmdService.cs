@@ -47,7 +47,7 @@ namespace Z0.Asm
             var i = 0u;
             var count = AsmPrefixTests.rex(src, ref i, buffer);
             var filtered = slice(buffer,0,count);
-            var dst = AppDb.App().Path(FS.file("asm.rex", FS.Csv));
+            var dst = AppDb.AppData().Path(FS.file("asm.rex", FS.Csv));
             TableEmit(@readonly(filtered), dst);
             return result;
         }

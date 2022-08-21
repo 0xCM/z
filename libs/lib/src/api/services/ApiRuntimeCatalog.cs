@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     public class ApiRuntimeCatalog : IApiCatalog
     {
@@ -35,9 +35,7 @@ namespace Z0
 
         Index<string> _ComponentNames;
 
-        object locker;
-
-        public ApiRuntimeCatalog(Index<IPart> parts, Index<Assembly> components, ApiPartCatalogs catalogs, Index<IApiHost> hosts, Index<PartId> partIds, Index<MethodInfo> ops)
+        internal ApiRuntimeCatalog(Index<IPart> parts, Index<Assembly> components, ApiPartCatalogs catalogs, Index<IApiHost> hosts, Index<PartId> partIds, Index<MethodInfo> ops)
         {
             _Parts = parts;
             _PartComponents = components;
@@ -45,7 +43,6 @@ namespace Z0
             _ApiHosts = hosts;
             _PartIdentities = partIds;
             _ComponentNames = components.Select(x => x.GetName().Name);
-            locker = new();
         }
 
         public ApiPartCatalogs PartCatalogs

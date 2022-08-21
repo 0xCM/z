@@ -46,8 +46,6 @@
     <ProjectReference Include="$(IntelSvc)" />
 
     <ProjectReference Include="$(Lang)" />
-    <ProjectReference Include="$(LlvmTools)" />
-    <ProjectReference Include="$(LlvmSvc)" />
 
     <ProjectReference Include="$(Linq)" />
 
@@ -74,6 +72,9 @@
 
     <ProjectReference Include="$(Validity)" />
 
+    <ProjectReference Include="../libs/llvm.models/z0.llvm.models.csproj" />
+    <ProjectReference Include="../libs/llvm.tools/z0.llvm.tools.csproj" />
+    <ProjectReference Include="../libs/llvm.svc/z0.llvm.svc.csproj" />
   </ItemGroup>
 
 </Project>

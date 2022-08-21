@@ -6,13 +6,41 @@ namespace Z0
 {
     using Windows;
 
-    using static Algs;
+    using static sys;
 
     public class WfCmd : AppCmdService<WfCmd>
     {
         WsRegistry WsRegistry => Wf.WsRegistry();
 
         ProjectScripts ProjectScripts => Wf.ProjectScripts();
+
+        [CmdOp("jobs/run")]
+        Outcome RunJobs(CmdArgs args)
+        {
+            var result = Outcome.Success;
+            RunJobs(arg(args,0));
+            return result;
+        }
+
+        void RunJobs(string match)
+        {
+            var paths = AppDb.Service.Jobs().Files();
+            var counter = 0u;
+            for(var i=0; i<paths.Count; i++)
+            {
+                ref readonly var path = ref paths[i];
+                if(path.FileName.Format().StartsWith(match))
+                {
+                    var dispatching = Running(string.Format("Dispatching job {0} defined by {1}", counter, path.ToUri()));
+                    DispatchJobs(path);
+                    Ran(dispatching, string.Format("Dispatched job {0}", counter));
+                    counter++;
+                }
+            }
+
+            if(counter == 0)
+                Warn($"No jobs identified by '{match}'");
+        }
 
         [CmdOp("archives/zip")]        
         void CreateZip(CmdArgs args)
@@ -101,7 +129,6 @@ namespace Z0
             Archives.robocopy(src,dst);
         }
 
-
         [CmdOp("cmd")]
         protected void RunCmd(CmdArgs args)
             => CmdScripts.start(args);
@@ -123,7 +150,7 @@ namespace Z0
                 emitter.Append(args[i].Value);
             }
             
-            var cmd = Cmd.cmdline(path, CmdKind.Tool, emitter.Emit());        
+            var cmd = Cmd.cmd(path, CmdKind.Tool, emitter.Emit());        
             CmdScripts.start(cmd, Emitter);        
         }
 
@@ -155,7 +182,7 @@ namespace Z0
             iter(src, file => emitter.AppendLine(file.ToUri()));
             var data = emitter.Emit();
             Emitter.Row(data);
-            Emitter.FileEmit(data, AppDb.App().Path("launchers", FileKind.List));
+            Emitter.FileEmit(data, AppDb.AppData().Path("launchers", FileKind.List));
         }
 
         [CmdOp("launch")]
@@ -201,7 +228,7 @@ namespace Z0
         [CmdOp("services")]
         void GetServices()
         {
-            Write(ServiceSpecs.discover(ApiCatalog.Components));
+            Write(ApiRuntime.services(ApiCatalog.Components));
         }
 
         [CmdOp("setting")]
@@ -209,7 +236,7 @@ namespace Z0
         {
             var name = arg(args,0).Value;
             var result = Outcome.Success;
-            if(AppSettings.Service().Find(name, out var value))
+            if(AppSettings.Default.Find(name, out var value))
             {
                 Write($"{name}:{value}");
             }
@@ -247,7 +274,7 @@ namespace Z0
         [CmdOp("env/report")]
         void EmitEnv(CmdArgs args)
         {
-            var dst = AppDb.App("env").Root;
+            var dst = AppDb.AppData("env").Root;
             Env.emit(Emitter,EnvVarKind.Process, dst);
             Env.emit(Emitter,EnvVarKind.User, dst);
             Env.emit(Emitter,EnvVarKind.Machine, dst);
@@ -255,15 +282,15 @@ namespace Z0
 
         [CmdOp("env/machine")]
         void EmitMachineEnv()
-            => Env.emit(Emitter, EnvVarKind.Machine, AppDb.Env().Root);
+            => Env.emit(Emitter, EnvVarKind.Machine, AppDb.EnvSpecs().Root);
 
         [CmdOp("env/user")]
         void EmitUserEnv()
-            => Env.emit(Emitter, EnvVarKind.User, AppDb.Env().Root);
+            => Env.emit(Emitter, EnvVarKind.User, AppDb.EnvSpecs().Root);
 
         [CmdOp("env/process")]
         void EmitProcessEnv()
-            => Env.emit(Emitter, EnvVarKind.Process, AppDb.Env().Root);
+            => Env.emit(Emitter, EnvVarKind.Process, AppDb.EnvSpecs().Root);
 
         [CmdOp("env/pid")]
         void ProcessId()

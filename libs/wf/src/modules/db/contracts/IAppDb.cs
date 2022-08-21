@@ -4,20 +4,22 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IAppDb : IDbSettings, IEtlDb
+    public interface IAppDb : IEtlDb
     {
-        IDbSources DbIn();
+        IDbArchive Settings();        
+
+        IDbArchive DbIn();
 
         IDbArchive DbRoot();
 
-        IDbSources DbIn(string scope);
+        IDbArchive DbIn(string scope);
 
-        IDbTargets DbOut();
+        IDbArchive DbOut();
 
-        IDbTargets DbOut(string scope);
+        IDbArchive DbOut(string scope);
 
-        IDbTargets Logs();
+        IDbArchive Logs();
 
-        IDbTargets Logs(string scope);
+        IDbArchive Logs(string scope);
     }
 }

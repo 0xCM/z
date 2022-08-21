@@ -7,7 +7,7 @@ namespace Z0
     public abstract class AppCmdShell<S> : AppShell<S>
         where S : AppCmdShell<S>, new()
     {
-        IAppCmdSvc CmdService;
+        protected IAppCmdSvc CmdService;
 
         protected static void run(Func<IWfRuntime,IAppCmdSvc> f, params string[] args)
         {
@@ -16,11 +16,25 @@ namespace Z0
             app.Run();
         }
 
-        protected static void run(Func<IWfRuntime,IAppCmdSvc> f, bool catalog, params string[] args)
+        protected static void run(Func<IWfRuntime,IAppCmdSvc> factory, bool catalog, params string[] args)
         {
             using var app = shell(catalog, args);
-            app.CmdService = f(app.Wf);
+            app.CmdService = factory(app.Wf);
             app.Run();
+        }
+
+        protected static void run<C>(Func<IWfRuntime,IAppCmdSvc> factory, C context, IRunnable<C> runnable, params string[] args)
+        {
+            using var app = shell(args);
+            app.CmdService = factory(app.Wf);
+            runnable.Run(context);
+        }
+
+        protected static void run(Func<IWfRuntime,IAppCmdSvc> factory, IRunnable<S> runnable, params string[] args)
+        {
+            using var app = shell(args);
+            app.CmdService = factory(app.Wf);
+            runnable.Run(app);
         }
 
         protected override void Disposing()

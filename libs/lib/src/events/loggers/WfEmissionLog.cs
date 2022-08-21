@@ -26,6 +26,22 @@ namespace Z0
             FS.write(Formatter.FormatHeader() + Eol, Stream);
         }
 
+        public bool IsEmpty
+        {
+            get => Target.IsEmpty;
+        }
+
+        public bool IsNonEmpty
+        {
+            get => Target.IsNonEmpty;
+        }
+
+        public string Format()
+            => Target.ToUri().Format();
+        
+        public override string ToString()
+            => Format();
+
         public void Close()
         {
             if(!Closed)

@@ -8,73 +8,46 @@ namespace Z0
     public abstract class AppCmdService<T> : CmdService<T>, IAppCmdSvc
         where T : AppCmdService<T>, new()
     {
-        protected virtual void PublishCommands()
+        public static T create(IWfRuntime wf, params ICmdProvider[] src)
         {
-
-        }
-
-        public static T create(IWfRuntime wf, ICmdProvider[] src)
-        {
+            var emitter = wf.Emitter;
             var service = new T();            
-            var emitter = wf.Emitter(service.GetType());
-            wf.Babble($"Created emitter");
-            var dispatcher = Cmd.dispatcher(service, emitter, src);
-            ApiGlobals.Instance.Inject(dispatcher);
-            wf.Babble($"Injected dispatcher");
+            var running = emitter.Running($"Creating {typeof(T).DisplayName()} service with controller ${ExecutingPart.Assembly.GetSimpleName()} with image {FS.path(ExecutingPart.Assembly.Location).ToUri()}");
+            service._Providers = src;
             service.Init(wf);
             wf.Babble($"Initialized application command service");
-            service.PublishCommands();
             wf.Babble($"Published commands");
+            wf.Ran(running);
             return service;
         }
 
-        public static new T create(IWfRuntime wf)
+        protected virtual string PromptTitle {get;}
+
+        ReadOnlySeq<ICmdProvider> _Providers = new();
+
+        protected override void Install(ReadOnlySeq<ICmdProvider> src)
         {
-            var service = new T();            
-            var emitter = wf.Emitter(service.GetType());
-            var dispatcher = Cmd.dispatcher(service, emitter, sys.empty<ICmdProvider>());
-            ApiGlobals.Instance.Inject(dispatcher);
-            service.AppInit(wf);
-            service.PublishCommands();            
-            return service;
+            _Providers = src;
+            _Dispatcher = Cmd.dispatcher((T)this, Emitter, src);
         }
+
+        IAppCmdDispatcher _Dispatcher;
 
         protected AppCmdService()
         {
             PromptTitle = "cmd";
         }
 
-        public override IAppCmdDispatcher Dispatcher => ApiGlobals.Instance.Injected<AppCmdDispatcher>();
-
-        [CmdOp("jobs/run")]
-        Outcome RunJobs(CmdArgs args)
+        public override IAppCmdDispatcher Dispatcher
         {
-            var result = Outcome.Success;
-            RunJobs(arg(args,0));
-            return result;
+            get => _Dispatcher;
         }
 
-        public virtual void RunJobs(string match)
+        public ref readonly ReadOnlySeq<ICmdProvider> Providers
         {
-            var paths = AppDb.Service.Jobs().Files();
-            var counter = 0u;
-            for(var i=0; i<paths.Count; i++)
-            {
-                ref readonly var path = ref paths[i];
-                if(path.FileName.Format().StartsWith(match))
-                {
-                    var dispatching = Running(string.Format("Dispatching job {0} defined by {1}", counter, path.ToUri()));
-                    DispatchJobs(path);
-                    Ran(dispatching, string.Format("Dispatched job {0}", counter));
-                    counter++;
-                }
-            }
-
-            if(counter == 0)
-                Warn($"No jobs identified by '{match}'");
+            [MethodImpl(Inline)]
+            get => ref _Providers;
         }
-
-        protected virtual string PromptTitle {get;}
 
         string Prompt()
             => string.Format("{0}> ", PromptTitle);
@@ -91,7 +64,6 @@ namespace Z0
                 Error($"ParseFailure:{input}");
                 return AppCmdSpec.Empty;
             }
-            //return ShellCmd.parse(input);
         }
 
         public virtual void Run()

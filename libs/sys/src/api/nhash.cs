@@ -9,6 +9,11 @@ namespace Z0
     partial class sys
     {
         [MethodImpl(Inline)]
+        public static Hash32 nhash<T>(T src)
+            where T : unmanaged
+                => G.native(src);
+
+        [MethodImpl(Inline)]
         public static Hash32 nhash<A,B>(A a, B b)
             where A : unmanaged
             where B : unmanaged

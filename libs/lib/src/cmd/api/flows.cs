@@ -4,23 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Spans;
-    using static Arrays;
-    using static Algs;
+    using static sys;
 
     partial class Cmd
     {
-        [MethodImpl(Inline)]
-        public static FileFlow flow(in CmdFlow src)
-            => new FileFlow(flow(src.Tool, src.SourcePath.ToUri(), src.TargetPath.ToUri()));
-
-        [MethodImpl(Inline)]
-        public static DataFlow<Actor,S,T> flow<S,T>(Tool tool, S src, T dst)
-            => new DataFlow<Actor,S,T>(FlowId.identify(tool,src,dst), tool,src,dst);
-
-        public static void parse(ReadOnlySpan<TextLine> src, out ReadOnlySpan<CmdFlow> dst)
-            => dst = flows(src);
-
         public static ReadOnlySpan<CmdFlow> flows(ReadOnlySpan<TextLine> src)
         {
             var count = src.Length;

@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    using static Spans;
+    using static sys;
 
     [StructLayout(StructLayout,Pack=1, Size=Size)]
     public unsafe readonly struct MemoryStrings
@@ -106,20 +105,20 @@ namespace Z0
         /// <param name="offset"></param>
         [MethodImpl(Inline), Op]
         public static MemoryAddress address(MemoryStrings src, uint index)
-            => Algs.address(chars(src, index));
+            => sys.address(chars(src, index));
 
         [MethodImpl(Inline), Op]
         public static StringAddress address(string src)
-            => new StringAddress(Algs.address(src));
+            => new StringAddress(sys.address(src));
 
         [MethodImpl(Inline), Op]
         public static StringAddress address(ReadOnlySpan<char> src)
-            => new StringAddress(Algs.address(src));
+            => new StringAddress(sys.address(src));
 
         [MethodImpl(Inline), Op]
         public static StringAddress address<T>(ReadOnlySpan<T> src)
             where T : unmanaged
-                => new StringAddress(Algs.address(src));
+                => new StringAddress(sys.address(src));
 
         [MethodImpl(Inline)]
         public static MemoryString<K> @string<K>(in MemoryStrings<K> src, K index)

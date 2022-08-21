@@ -12,12 +12,9 @@ namespace Z0
 
         readonly WfEmit Emit;
 
-        readonly asci32 Provider;
-
         [MethodImpl(Inline)]
-        public AppCmdDispatcher(asci32 provider, IAppCommands lookup, WfEmit emit)
+        public AppCmdDispatcher(IAppCommands lookup, WfEmit emit)
         {
-            Provider = provider;
             _Commands = lookup;
             Fallback = NotFound;
             Emit = emit;

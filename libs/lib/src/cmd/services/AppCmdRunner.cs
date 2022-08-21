@@ -9,44 +9,11 @@ namespace Z0
 
     public class AppCmdRunner : IAppCmdRunner
     {
-        public static CmdActorKind classify(MethodInfo src)
-        {
-            var dst = CmdActorKind.None;
-            var arity = src.ArityValue();
-            var @void = src.HasVoidReturn();
-            switch(arity)
-            {
-                case 0:
-                    switch(@void)
-                    {
-                        case false:
-                            dst = CmdActorKind.Pure;
-                        break;
-                        case true:
-                            dst = CmdActorKind.Emitter;
-                        break;
-                    }
-                break;
-                case 1:
-                    switch(@void)
-                    {
-                        case true:
-                            dst = CmdActorKind.Receiver;
-                        break;
-                        case false:
-                            dst = CmdActorKind.Func;
-                        break;
-                    }
-                break;
-            }
-            return dst;
-        }
-
         public readonly AppCmdDef Def;
 
         public AppCmdRunner(string name, object host, MethodInfo method)
         {
-            Def = new AppCmdDef(name, classify(method), Require.notnull(method), Require.notnull(host));
+            Def = new AppCmdDef(name, Cmd.classify(method), Require.notnull(method), Require.notnull(host));
         }
 
         public ref readonly object Host

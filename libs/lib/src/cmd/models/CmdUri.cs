@@ -4,47 +4,28 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
+    using static sys;
 
-    public record struct CmdUri
+    public sealed record class CmdUri
     {
-        readonly Seq<object> Components;
+        public readonly string Part;
+
+        public readonly string Host;
+
+        public readonly string Name;
+
+        public readonly CmdKind Kind;
 
         public readonly Hash32 Hash;
-
-        public ref CmdKind Kind 
-        {
-            [MethodImpl(Inline)]
-            get => ref @as<object,CmdKind>(Components[0]);
-        }
-
-        public ref string Part 
-        {
-            [MethodImpl(Inline)]
-            get => ref @as<object,string>(Components[1]);
-        }
-
-        public ref string Host 
-        {
-            [MethodImpl(Inline)]
-            get => ref @as<object,string>(Components[2]);
-        }
-
-        public ref string Name 
-        {
-            [MethodImpl(Inline)]
-            get => ref @as<object,string>(Components[3]);
-        }
 
         [MethodImpl(Inline)]
         internal CmdUri(CmdKind kind, string? part, string? host, string? name)
         {
-            Components = sys.alloc<object>(6);
-            Hash = hash(part) | hash(host) | hash(name) | (Hash32)(byte)kind;
             Kind = kind;
-            Part = ifempty(part,EmptyString);
-            Host = ifempty(host,EmptyString);
-            Name = ifempty(name,EmptyString);
+            Part = part ?? EmptyString;
+            Host = host ?? EmptyString;
+            Name = name ?? EmptyString;
+            Hash = hash(Part) | hash(Host) | hash(Name) | (Hash32)(byte)Kind;
         }
 
         public bool Equals(CmdUri src)

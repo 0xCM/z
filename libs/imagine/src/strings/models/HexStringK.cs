@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    using static Spans;
+    using static sys;
 
     /// <summary>
     /// Defines a sequence of K-kinded hex chars
@@ -21,7 +20,7 @@ namespace Z0
         public HexString(string src)
         {
             var _src = src ?? EmptyString;
-            BaseAddress = Pointers.pchar(_src);
+            BaseAddress = pchar(_src);
             Size = _src.Length * 2;
         }
 
@@ -66,16 +65,16 @@ namespace Z0
         public unsafe string Text
         {
             [MethodImpl(Inline)]
-            get => View.ToString();
+            get => @string(View);
         }
 
         [MethodImpl(Inline)]
         public unsafe ReadOnlySpan<char> Chars(K index)
-            => cover((char*)(BaseAddress + uint8(index)*8), 2);
+            => cover((char*)(BaseAddress + u8(index)*8), 2);
 
         [MethodImpl(Inline)]
         public unsafe string String(K index)
-            => @as<char,string>(@ref<char>((char*)(BaseAddress + uint8(index)*8)));
+            => @as<char,string>(@ref<char>((char*)(BaseAddress + u8(index)*8)));
 
         /// <summary>
         /// Reveals the character data identified by a string reference
