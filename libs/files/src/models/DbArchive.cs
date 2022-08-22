@@ -4,11 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
+    using static sys;
 
     public readonly record struct DbArchive : IDbArchive
     {
-        public FS.FolderPath Root {get;}
+        public readonly FS.FolderPath Root;
 
         [MethodImpl(Inline)]
         public DbArchive(FS.FolderPath root)
@@ -22,6 +22,15 @@ namespace Z0
             Root = root.Root;
         }
 
+        public bool Exists
+        {
+            [MethodImpl(Inline)]
+            get => Root.Exists;
+        }
+
+        FS.FolderPath IRootedArchive.Root 
+            => Root;
+
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
@@ -34,16 +43,16 @@ namespace Z0
         public bool Equals(DbArchive src)
             => Root == src.Root;
 
-        public IDbArchive Scoped(string scope)
-            => Datasets.archive(Root + FS.folder(scope));
-
         public string Format()
             => Root.Format();
 
         public override string ToString()
             => Format();
 
-        public IDbTargets Logs()
+        public DbArchive Scoped(string scope)
+            => Datasets.archive(new DbArchive(Root + FS.folder(scope)));
+
+        public DbArchive Logs()
             => Targets("logs");
 
         public FS.FilePath Log(string name, FileKind kind)
@@ -52,17 +61,26 @@ namespace Z0
         public int CompareTo(DbArchive src)
             => Root.CompareTo(src.Root);
 
-        public IDbTargets Targets()
-            => new DbTargets(Root);
+        public DbArchive Targets()
+            => Root;
 
-        public IDbTargets Targets(string scope)
-            => new DbTargets(Root, scope);
+        public DbArchive Targets(string scope)
+            => Datasets.archive((new DbTargets(Root, scope)).Root);
 
-        public IDbSources Sources()
-            => new DbSources(Root);
+        public DbArchive Sources()
+            => Root;
 
-        public IDbSources Sources(string scope)
-            => new DbSources(Root, scope);
+        public DbArchive Sources(string scope)
+            => Root + FS.folder(scope);
+
+        public FolderPaths Folders(bool recurse = false)
+            => Root.Folders(recurse);
+
+        public FS.FolderPath Folder(string match)
+            => Root.Folder(match);
+
+        public FS.Files Files()
+            => Root.Files(true);
 
         public FS.Files Files(bool recursive)
             => Root.Files(recursive);

@@ -4,12 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static EnvFolders;
+    //using static EnvFolders;
+    using static ApiAtomic;
 
     public readonly struct SymbolArchives : ISymbolArchives
     {
-        public static SymbolArchives create(IDbArchive src)
-            => new SymbolArchives(src.Root);
+        public static SymbolArchives create(FS.FolderPath src)
+            => new SymbolArchives(src);
 
         public FS.FolderPath Root {get;}
 
@@ -17,6 +18,16 @@ namespace Z0
         {
             Root = root;
         }
+
+
+        public DbArchive DotNet()
+            => Root + FS.folder(dotnet);
+
+        public DbArchive DotNet(string name)
+            => DotNet().Scoped(name);
+
+        public DbArchive DotNet(byte major, byte minor, byte revision)
+            => DotNet(FS.FolderName.version(major, minor, revision).Format());
 
         public FS.FolderPath SymbolCacheRoot()
             => Root;

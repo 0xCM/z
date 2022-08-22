@@ -6,7 +6,7 @@ namespace Z0
 {
     using System.Text;
 
-    using static core;
+    using static sys;
 
     using C = AsciCode;
 

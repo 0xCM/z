@@ -8,8 +8,6 @@ namespace Z0
     {
         FS.FolderPath Root {get;}
 
-        DbArchive DbFiles => Root;
-
         bool INullity.IsEmpty
             => Root.IsEmpty;
 
@@ -22,26 +20,25 @@ namespace Z0
         bool IExistential.Exists
             => Root.Exists;
 
+        DbArchive DbFiles => Root;
+
         IDbTargets Logs()
             => Targets("logs");
 
         IDbSources Sources()
             => DbFiles.Sources();
 
-        IDbTargets Targets()
-            => DbFiles.Targets();
+        DbArchive Targets()
+            => Datasets.archive(DbFiles.Targets());
 
-        IDbSources Sources(string scope)
-            => DbFiles.Sources(scope);
+        DbArchive Sources(string scope)
+            => Datasets.archive(DbFiles.Sources(scope));
 
-        IDbTargets Targets(string scope)
-            => DbFiles.Targets(scope);
+        DbArchive Targets(string scope)
+            => Datasets.archive(DbFiles.Targets(scope));
 
-        IDbArchive Scoped(string name)
+        DbArchive Scoped(string name)
             => Datasets.archive(DbFiles.Sources(name));
-
-        IDbArchive Scoped(FS.RelativePath src)
-            => Datasets.archive(Root + src);
 
         FS.FilePath Table<T>()
             where T : struct

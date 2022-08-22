@@ -4,6 +4,6 @@
   <Import Project="locations.props"/>
   <Import Project="build.props"/>
   <Import Project="projects.props"/>
-  <Import Project="deps/microsoft.extensions.props"/>
+  <Import Project="deps/microsoft.common.props"/>
   <Import Project="deps/quickgraph.props"/>
 </Project>

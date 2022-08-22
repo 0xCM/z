@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     partial class Algs
     {
         /// <summary>
@@ -119,22 +117,6 @@ namespace Z0
             var count = min(a.Length, b.Length);
             for(var i=0u; i<count; i++)
                 Spans.seek(dst,i) = f(Spans.skip(a,i), Spans.skip(b,i));
-            return dst;
-        }
-
-        /// <summary>
-        /// Iterates a pair of readonly spans in tandem, invoking a function for each cell pair and deposits the result to an allocated target
-        /// </summary>
-        /// <param name="x">The first operand</param>
-        /// <param name="y">The second operand</param>
-        /// <param name="f">The action to invoke</param>
-        /// <typeparam name="S">The cell type of the first operand</typeparam>
-        /// <typeparam name="T">The cell type of the second operand</typeparam>
-        public static Span<R> map<S,T,R>(ReadOnlySpan<S> a, ReadOnlySpan<T> b, Func<S,T,R> f)
-        {
-            var count = min(a.Length, b.Length);
-            var dst = sys.alloc<R>(count);
-            map(a,b,f,dst);
             return dst;
         }
 

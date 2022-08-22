@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using api = MsgOps;
+
     public readonly struct RenderWidth : ITextual
     {
         public readonly ushort Value;
@@ -17,7 +19,7 @@ namespace Z0
             => Value.ToString();
 
         public string Pattern()
-            => RpOps.pad(-(int)Value);
+            => api.pad(-(int)Value);
 
         [MethodImpl(Inline)]
         public static implicit operator RenderWidth(int src)

@@ -24,7 +24,7 @@ namespace Z0
         /// <param name="dst">The target array</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Options), Op, Closures(Closure)]
-        public static T[] clear<T>(T[] dst)
+        public static T[] clear<T>(T[]? dst)
         {
             if(dst == null)
                 return empty<T>();

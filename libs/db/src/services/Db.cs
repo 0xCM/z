@@ -6,7 +6,7 @@ namespace Z0
 {
     using System.IO.Compression;
 
-    using static Algs;
+    using static sys;
 
     public sealed record class Db : ApiSet<Db>
     {
@@ -14,7 +14,7 @@ namespace Z0
 
         static AppDb db => AppDb.Service;
 
-        static IDbArchive root => db.DbRoot();
+        static DbArchive root => db.DbRoot();
 
         static Type Host => typeof(Db);
 

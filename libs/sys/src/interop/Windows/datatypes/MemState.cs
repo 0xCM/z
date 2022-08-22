@@ -3,7 +3,7 @@
 // See the LICENSE file in the project root for more information.
 namespace Windows
 {
-    [Flags]
+    [Flags, SymSource(interop)]
     public enum MemState : uint
     {
         /// <summary>

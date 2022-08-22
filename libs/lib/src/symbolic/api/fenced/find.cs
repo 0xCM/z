@@ -4,19 +4,21 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static sys;
+
     partial class Fenced
     {
         [Op]
         public static bool find(string src, Fence<char> fence, out Pair<int> location)
         {
             location = Tuples.pair((int)NotFound,(int)NotFound);
-            if(text.nonempty(src))
+            if(nonempty(src))
             {
-                var chars = Spans.span(src);
+                var chars = span(src);
                 var count = chars.Length;
                 for(var i=0; i<count; i++)
                 {
-                    ref readonly var c = ref Spans.skip(chars,i);
+                    ref readonly var c = ref skip(chars,i);
                     if(location.Left == NotFound)
                     {
                         if(c == fence.Left)

@@ -1,7 +1,8 @@
 {
     "msbuild": {
         "enabled": true,
-        "Configuration": "Release"
+        "Configuration": "Release",
+        "MSBuildSDKsPath": "./artifacts/deps/dotnet/sdk/6.0.303"
     },
     "FileOptions": {
         "ExcludeSearchPatterns": ["artifacts"]

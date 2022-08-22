@@ -15,6 +15,9 @@ namespace Z0
         public static MsgPattern<FS.FileUri> FileExists
             => "The path {0} exists and yet it shold not";
 
+        public static MsgPattern<FS.FileUri> FileMissing
+            => "The path {0} does not exist and yet it should";
+
         public static MsgPattern<ByteSize,FS.FileUri> EmittedBytes
             => "Emitted {0} bytes to {1}";
 

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
+    using static sys;
 
     public readonly struct Key<A,B> : IHashed
     {
@@ -45,6 +45,5 @@ namespace Z0
         [MethodImpl(Inline)]
         public static implicit operator Key<A,B>(Paired<A,B> src)
             => new Key<A,B>(src);
-
     }
 }

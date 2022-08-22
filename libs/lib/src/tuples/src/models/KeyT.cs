@@ -15,7 +15,7 @@ namespace Z0
         public Key(T src)
         {
             Value = src;
-            Hash = Algs.hash(src);
+            Hash = sys.nhash(src);
         }
 
         [MethodImpl(Inline)]

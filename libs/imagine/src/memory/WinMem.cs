@@ -69,8 +69,8 @@ namespace Z0
         /// https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualquery
         /// </remarks>
         [MethodImpl(Inline), Op]
-        public static void vquery(MemoryAddress @base, ref BasicMemoryInfo dst)
-            => VirtualQuery((IntPtr)@base, ref dst, (UIntPtr)Sized.size<BasicMemoryInfo>());
+        public static void vquery(MemoryAddress @base, ref MEMORY_BASIC_INFORMATION dst)
+            => VirtualQuery((IntPtr)@base, ref dst, (UIntPtr)sys.size<MEMORY_BASIC_INFORMATION>());
 
         /// <summary>
         /// Specifies the protection level for a page segment
@@ -149,7 +149,7 @@ namespace Z0
         public static extern IntPtr GetProcessHeap();
 
         [DllImport(Kernel, SetLastError = true), Free]
-        static extern UIntPtr VirtualQuery(IntPtr address, ref BasicMemoryInfo lpBuffer, UIntPtr dwLength);
+        static extern UIntPtr VirtualQuery(IntPtr address, ref MEMORY_BASIC_INFORMATION lpBuffer, UIntPtr dwLength);
 
         /// <summary>
         /// Retrieves information about a range of pages within the virtual address space of a specified proces.

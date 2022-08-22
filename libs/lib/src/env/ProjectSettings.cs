@@ -35,14 +35,14 @@ namespace Z0
             _Default = load();
         }
 
-        public Setting Path(string name)
+        public Setting Setting(string name)
         {
-            var dst = Setting.Empty;
+            var dst = Z0.Setting.Empty;
             var result = Data.Find(name, out dst);
             if(result)
                 return dst;
             else
-                return Setting.Empty;
+                return Z0.Setting.Empty;
         }
 
         public string Format()

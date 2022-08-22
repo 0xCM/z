@@ -72,9 +72,10 @@
 
     <ProjectReference Include="$(Validity)" />
 
-    <ProjectReference Include="../libs/llvm.models/z0.llvm.models.csproj" />
-    <ProjectReference Include="../libs/llvm.tools/z0.llvm.tools.csproj" />
-    <ProjectReference Include="../libs/llvm.svc/z0.llvm.svc.csproj" />
+    <ProjectReference Include="$(SlnLibs)llvm.models/z0.llvm.models.csproj" />
+    <ProjectReference Include="$(SlnLibs)llvm.tools/z0.llvm.tools.csproj" />
+    <ProjectReference Include="$(SlnLibs)llvm.svc/z0.llvm.svc.csproj" />
+
   </ItemGroup>
 
 </Project>

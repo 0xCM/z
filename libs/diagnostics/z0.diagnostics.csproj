@@ -5,7 +5,6 @@
     <TargetFramework>$(FrameworkMoniker)</TargetFramework>
   </PropertyGroup>
 
-  <Import Project="$(ImportDefs)microsoft.codeanalysis.props"/>
   <Import Project="$(ImportDefs)microsoft.diagnostics.props"/>
 
   <ItemGroup>

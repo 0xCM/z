@@ -6,17 +6,26 @@ namespace Z0
 {
     public class ProjectScripts : WfSvc<ProjectScripts>
     {
-        public Task<ExecToken> Start(CmdArgs spec)
+        public Task<ExecToken> Start(CmdArgs args)
         {
-            var project = arg(spec, 0).Value;
-            var script = arg(spec, 1).Value;
-            var path = AppDb.ProjectLib(project).Scoped(scripts).Path(script,FileKind.Cmd);
+            var project = arg(args, 0).Value;
+            var script = arg(args, 1).Value;
+            var path = AppDb.ProjectLib(project).Scoped(scripts).Path(script, FileKind.Cmd);
             return CmdScripts.start(Cmd.cmd(path, CmdKind.Cmd, EmptyString), Emitter);
         }
 
-        public FS.Files List(CmdArgs args)
+        public static Task<ExecToken> start(string project, string script, WfEmit channel)
         {
-            return AppDb.ProjectLib(arg(args, 0).Value).Scoped(scripts).Files();
+            var path = AppDb.ProjectLib(project).Scoped(scripts).Path(script, FileKind.Cmd);
+            if(!path.Exists)
+            {
+                sys.@throw(AppMsg.FileMissing.Format(path));
+            }
+            var task =  CmdScripts.start(Cmd.cmd(path, CmdKind.Cmd, EmptyString), channel);
+            return task;
         }
+
+        public FS.Files List(CmdArgs args)
+            => AppDb.ProjectLib(arg(args, 0).Value).Scoped(scripts).Files();
     }
 }

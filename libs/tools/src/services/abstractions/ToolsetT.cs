@@ -36,7 +36,7 @@ namespace Z0
         }
 
         public IToolWs Tool(Tool tool)
-            => new ToolWs(tool, Location.Sources(tool.Name));
+            => new ToolWs(tool, Location.Sources(tool.Name).Root);
 
         public ReadOnlySeq<IToolWs> Tools()
         {

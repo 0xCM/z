@@ -7,7 +7,7 @@ namespace Z0
     public class DotNetSymbols : AppService<DotNetSymbols>
     {
         SymbolArchives Symbols(FS.FolderPath src) 
-            => SymbolArchives.create(Datasets.archive(src));
+            => SymbolArchives.create(src);
 
         IDumpArchive Dumps(FS.FolderPath src)  
             => new DumpArchive(src);

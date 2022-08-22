@@ -4,11 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
-
     /// <summary>
     /// Defines a pattern to service as a projection domain for render patterns
     /// </summary>
@@ -26,7 +21,7 @@ namespace Z0
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => string.IsNullOrEmpty(Content);
+            get => sys.empty(Content);
         }
 
         public bool IsNonEmpty

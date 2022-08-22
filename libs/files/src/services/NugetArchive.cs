@@ -4,12 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Settings;
-
     public sealed class NugetArchive : DbArchive<NugetArchive>
     {
-        static IDbArchive NUGET_PACKAGES()
-            => Datasets.archive(setting(ProjectSettings.Default.Path("NUGET_PACKAGES"), FS.dir));
+        static DbArchive NUGET_PACKAGES()
+            => FS.dir(ProjectSettings.Default.Setting("NUGET_PACKAGES").ValueText);
 
         public NugetArchive(IDbArchive home)
             : base(home)

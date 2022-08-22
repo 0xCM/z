@@ -4,6 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using api = MsgOps;
+
+
     public readonly struct MsgPattern<T> : IMsgPattern<MsgPattern<T>,T>
     {
         public string PatternText {get;}
@@ -16,7 +19,7 @@ namespace Z0
             => string.Format(PatternText, $"<{src}>");
 
         public MsgCapture Capture(in T src)
-            => MsgOps.message(this, $"<{src}>");
+            => api.message(this, $"<{src}>");
 
         [MethodImpl(Inline)]
         public static implicit operator MsgPattern<T>(string src)

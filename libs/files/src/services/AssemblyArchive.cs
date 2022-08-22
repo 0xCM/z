@@ -36,7 +36,7 @@ namespace Z0
             }
         }
 
-        public readonly IDbArchive Root;
+        public readonly DbArchive Root;
 
         public readonly Assembly Component;
 
@@ -45,7 +45,7 @@ namespace Z0
         public AssemblyArchive(FS.FilePath src)
             : base(true)
         {
-            Root = Datasets.archive(src.FolderPath);
+            Root = src.FolderPath;
             Component = LoadFromAssemblyPath(src.Name);
             Dependencies = deps(this, Component);
         }

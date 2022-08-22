@@ -6,7 +6,7 @@ namespace Z0
 {
     public class RuntimeContext
     {
-        public static ExecToken emit(ProcessAdapter src, WfEmit channel, IDbArchive dst)
+        public static ExecToken emit(ProcessAdapter src, WfEmit channel, DbArchive dst)
         {
             var map = ImageMemory.map(src);
             channel.FileEmit(map.ToString(), dst.Path("process.image", FileKind.Map));            
@@ -14,10 +14,10 @@ namespace Z0
             return dump(src,channel,dst);
         }
 
-        static ExecToken modules(ProcessAdapter src, WfEmit channel, IDbArchive dst)
+        static ExecToken modules(ProcessAdapter src, WfEmit channel, DbArchive dst)
             => channel.TableEmit(ImageMemory.modules(src), dst.Table<ProcessModuleRow>());
 
-        public static ExecToken dump(ProcessAdapter src, WfEmit channel, IDbTargets dst)
+        public static ExecToken dump(ProcessAdapter src, WfEmit channel, DbArchive dst)
         {
             var name = $"{src.ProcessName}.{src.Id}.{core.timestamp()}";
             var path = dst.Path(name, FileKind.Dmp);

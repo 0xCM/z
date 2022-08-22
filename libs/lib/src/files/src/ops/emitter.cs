@@ -6,6 +6,9 @@ namespace Z0
 {
     using System.Text;
 
+    using static sys;
+
+
     partial struct FS
     {
         public static void emit<T>(Type host, T src, FS.FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)

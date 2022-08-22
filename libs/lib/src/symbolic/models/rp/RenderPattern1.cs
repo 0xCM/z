@@ -4,6 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using api = MsgOps;
+
+
     public readonly struct RenderPattern<T> : IFormatPattern<RenderPattern<T>,T>
     {
         public string PatternText {get;}
@@ -18,7 +21,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public RenderCapture Capture(in T src)
-            => MsgOps.render(this, src);
+            => api.render(this, src);
 
         [MethodImpl(Inline)]
         public static implicit operator RenderPattern<T>(string src)

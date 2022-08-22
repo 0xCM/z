@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
+    using static sys;
     public readonly record struct ApiUri<T> : IApiUri<ApiUri<T>>
         where T : IEquatable<T>, IComparable<T>
     {
@@ -19,13 +19,13 @@ namespace Z0
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => sys.empty(UriText);
+            get => empty(UriText);
         }
 
         public bool IsNonEmpty
         {
             [MethodImpl(Inline)]
-            get => sys.nonempty(UriText);
+            get => nonempty(UriText);
         }
 
         [MethodImpl(Inline)]

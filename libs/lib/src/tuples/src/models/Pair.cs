@@ -7,7 +7,7 @@ namespace Z0
     /// <summary>
     /// An homogenous mutable 2-tuple
     /// </summary>
-    public struct Pair<T> : ITupledPair<Pair<T>,T>
+    public record struct Pair<T> : ITupledPair<Pair<T>,T>
     {
         /// <summary>
         /// The first member
@@ -70,9 +70,6 @@ namespace Z0
         public override int GetHashCode()
             => HashCode.Combine(Left,Right);
 
-        public override bool Equals(object obj)
-            => obj is Pair<T> x && Equals(x);
-
         public override string ToString()
             => Format();
 
@@ -94,13 +91,5 @@ namespace Z0
         [MethodImpl(Inline)]
         public static implicit operator Pair<T>((T a, T b) src)
             => new Pair<T>(src.a, src.b);
-
-        [MethodImpl(Inline)]
-        public static bool operator ==(Pair<T> x, Pair<T> y)
-            => x.Equals(y);
-
-        [MethodImpl(Inline)]
-        public static bool operator !=(Pair<T> x, Pair<T> y)
-            => x.Equals(y);
     }
 }

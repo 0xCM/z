@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <Import Project="$(ImportDefs)microsoft.diagnostics.props"/>
-  <Import Project="$(ImportDefs)microsoft.codeanalysis.props"/>
   <Import Project="$(ProjectProps)usings.props"/>
 
   <ItemGroup>

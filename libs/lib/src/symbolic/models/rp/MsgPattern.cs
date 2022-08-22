@@ -6,7 +6,7 @@ namespace Z0
 {
     public readonly struct MsgPattern
     {
-        public string PatternText {get;}
+        public readonly string PatternText;
 
         [MethodImpl(Inline)]
         public MsgPattern(string src)

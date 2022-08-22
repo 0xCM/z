@@ -1,7 +1,6 @@
 @echo off
 echo Level:%~dp0
 call %~dp0..\config.cmd
-set EnvFile=%~dp0artifacts\%ProjectId%.env
 set BuildPrefix=z0
 set SlnVersion=0.0.1
 set ArchName=x64
@@ -13,8 +12,14 @@ set RuntimeMoniker=%OsName%-%ArchName%
 set VersionSuffix=3
 set SlnId=z0
 
+set EnvFile=%~dp0artifacts\%ProjectId%.env
+echo # %ProjectId% env>%EnvFile%
+
 set Archives=%EnvRoot%\archives
 echo Archives=%Archives%>>%EnvFile%
+
+set PackageOut=%EnvRoot%\packages\%SlnId%
+echo PackageOut=%PackageOut%>>%EnvFile%
 
 set RepoArchives=%Archives%\repos
 echo RepoArchives=%RepoArchives%>>%EnvFile%
@@ -31,7 +36,12 @@ echo SlnRoot=%SlnRoot%>>%EnvFile%
 set Artifacts=%SlnRoot%\artifacts
 echo Artifacts=%Artifacts%>>%EnvFile%
 
+set SlnArtifacts=%SlnRoot%\artifacts
+echo SlnArtifacts=%SlnArtifacts%>>%EnvFile%
+
 set SlnLibs=%SlnRoot%\libs
+echo SlnLibs=%SlnLibs%>>%EnvFile%
+
 set SlnShells=%SlnRoot%\shells
 set SlnTests=%SlnRoot%\test
 
@@ -88,16 +98,25 @@ set ProjectPath=%ProjectRoot%\%BuildPrefix%.%ProjectId%.csproj
 echo ProjectPath=%ProjectPath%>>%EnvFile%
 
 set ProjectSln=%ProjectRoot%\%BuildPrefix%.%ProjectId%.sln
+echo ProjectSln=%ProjectSln%>>%EnvFile%
+
 set ProjectBin=%Artifacts%\bin\%BuildPrefix%.%ProjectId%
 set ProjectObj=%Artifacts%\obj\%BuildPrefix%.%ProjectId%
+
 set ProjectShell=%ProjectBin%\%ConfigName%\%FrameworkMoniker%\%RuntimeMoniker%\%ShellId%.exe
-set ProjectPubs=%Distributions%\%ProjectId%
-set PublishedShell=%ProjectPubs%\%ShellId%.exe
+echo ProjectShell=%ProjectShell%>>%EnvFile%
+
+set ProjectDist=%Distributions%\%ProjectId%
+echo ProjectDist=%ProjectDist%>>%EnvFile%
+
+set PublishedShell=%ProjectDist%\%ShellId%.exe
 set DeployedShell=%Deployments%\%ProjectId%\%ShellId%.exe
 set BuildProps=/p:Configuration=%ConfigName% /p:Platform=%PlatformName%
 set SlnPath=%SlnArea%\z0.%Area%.sln
 
 set BuildLogs=%Artifacts%\logs
+echo BuildLogs=%BuildLogs%>>%EnvFile%
+
 set LibName=z0.%ProjectId%.dll
 set TestLog=%BuildLogs%\z0.%ProjectId%.tests.trx
 set RootSlnLogPath=%BuildLogs%\%BuildPrefix%.sln.binlog
@@ -155,10 +174,11 @@ echo PackageLib=%PackageLib%>>%EnvFile%
 set PackageSln=dotnet pack %ProjectSln% --output %PackagePath%
 echo PackageSln=%PackageSln%>>%EnvFile%
 
-set PublishSln=dotnet publish %RootSlnPath% --output %SlnDist% %PackageFlags% --version-suffix %VersionSuffix% 
+: set PublishSln=dotnet publish %RootSlnPath% --output %SlnDist% %PackageFlags% --version-suffix %VersionSuffix% 
 
 set RestoreProject=dotnet restore %ProjectPath% --packages %NuGetDeps% --use-current-runtime --verbosity normal --force-evaluate
 echo RestoreProject=%RestoreProject%>>%EnvFile%
+
 set ProjectNugetConfig=%ProjectRoot%\nuget.config
 set LocalRestore=dotnet restore %ProjectPath% --packages %NuGetDeps% --use-current-runtime --verbosity normal --force-evaluate --configfile %ProjectNugetConfig%
 set MimeTypes=%EnvSite%\mime.types
@@ -166,8 +186,8 @@ set MimeTypes=%EnvSite%\mime.types
 set ServeSite=http-server %SlnRoot% --port 48005 --ext txt --mimetypes %MimeTypes% --gzip --brotli -o
 echo ServeSite=%ServeSite%>>%EnvFile%
 
-set NativeShellPath=%Artifacts%\bin\%BuildPrefix%.%ProjectId%\%ConfigName%\%FrameworkMoniker%\%RuntimeMoniker%\%ExeName%
-echo NativeShellPath=%NativeShellPath%>>%EnvFile%
+set ShellPath=%Artifacts%\bin\%BuildPrefix%.%ProjectId%\%ConfigName%\%FrameworkMoniker%\%RuntimeMoniker%\%ShellId%.exe`
+echo ShellPath=%ShellPath%>>%EnvFile%
 
 set RunToolOptions=--project %ProjectPath% --framework %FrameworkMoniker% --configuration %ConfigName% --runtime %RuntimeMoniker% --verbosity normal --self-contained
 set RunTool=dotnet run %RunToolOptions%

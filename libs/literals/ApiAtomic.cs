@@ -369,6 +369,8 @@ namespace Z0
 
         public const S win = nameof(win);
 
+        public const S interop = nameof(interop);
+
         public const S ws = nameof(ws);
 
         public const S xpack = nameof(xpack);

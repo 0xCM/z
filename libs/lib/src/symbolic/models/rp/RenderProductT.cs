@@ -4,6 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using api = MsgOps;
+
+
     public readonly struct RenderProduct<T> : IRenderProduct<T>
     {
         public IFormatPattern Pattern {get;}

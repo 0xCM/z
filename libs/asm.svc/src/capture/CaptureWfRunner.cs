@@ -43,7 +43,7 @@ namespace Z0
 
         ApiPacks ApiPacks => Wf.ApiPacks();
 
-        ImageRegions Regions => Wf.ImageRegions();
+        ProcessMemory Regions => Wf.ProcessMemory();
 
         Cli Cli => Wf.Cli();
 

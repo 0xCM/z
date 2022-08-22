@@ -10,7 +10,7 @@ namespace Z0
     {
         Tool Tool {get;}
         
-        IDbArchive Location  {get;}
+        DbArchive Location  {get;}
 
         bool INullity.IsEmpty
             => Tool.IsEmpty;
@@ -27,11 +27,11 @@ namespace Z0
         FS.FilePath EnvPath()
             => Location.Path(Tool.Name, FileKind.Env);
 
-        IDbArchive Docs()
-            => new DbArchive(Location.Sources(docs));
+        DbArchive Docs()
+            => Location.Sources(docs);
 
-        IDbArchive Scripts()
-            => new DbArchive(Location.Sources(scripts));
+        DbArchive Scripts()
+            => Location.Sources(scripts);
 
         FS.FilePath ConfigScript(string name, FileKind kind)
             => Location.Path(FS.file(name,kind));

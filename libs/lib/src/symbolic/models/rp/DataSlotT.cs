@@ -6,9 +6,9 @@ namespace Z0
 {
     public readonly struct DataSlot<T>
     {
-        public byte Index {get;}
+        public readonly byte Index;
 
-        public short Pad {get;}
+        public readonly short Pad;
 
         [MethodImpl(Inline)]
         public DataSlot(byte index, short pad)
@@ -18,7 +18,7 @@ namespace Z0
         }
 
         public string Format()
-            => string.Format(RpOps.slot(Index,Pad));
+            => string.Format(RP.slot(Index,Pad));
 
         public override string ToString()
             => Format();

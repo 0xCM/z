@@ -8,6 +8,21 @@ namespace Z0
 
     public class MsgOps
     {
+        [MethodImpl(Inline), Op]
+        public static string pad(int pad)
+            => pad == 0 ? "{0}" : "{0," + pad.ToString() + "}";
+        public const char PropertySep = Chars.Colon;
+
+
+        /// <summary>
+        /// Defines the format pattern '{n,pad}'
+        /// </summary>
+        /// <param name="n">The zero-based slot index</param>
+        /// <param name="pad">The pad width specifier</param>
+        [MethodImpl(Inline), Op]
+        public static string pad(uint n, int pad)
+            => "{0" + n.ToString() + "," + pad.ToString() + "}";
+
          public static string pattern(VarContextKind vck)
             => vck switch
             {

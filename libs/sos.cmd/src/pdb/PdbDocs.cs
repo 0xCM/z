@@ -5,12 +5,11 @@
 namespace Z0
 {
     using Microsoft.DiaSymReader;
-    using static Algs;
 
     public class PdbDocs
     {
         [MethodImpl(Inline), Op]        
-        public static SymbolArchives symbols(IDbArchive root)
+        public static SymbolArchives symbols(FS.FolderPath root)
             => SymbolArchives.create(root);
 
         [MethodImpl(Inline), Op]        

@@ -20,10 +20,10 @@ namespace Z0
         public static string identifier(FS.FolderPath src)
             => src.Format(PathSeparator.FS).Replace(Chars.FSlash, Chars.Dot).Replace(Chars.Colon, Chars.Dot).Replace("..", ".");
 
-        public static IDbArchive archive(FS.FolderPath root)
+        public static DbArchive archive(FS.FolderPath root)
             => new DbArchive(root);
 
-        public static IDbArchive archive(Timestamp ts, IDbArchive dst)
+        public static DbArchive archive(Timestamp ts, DbArchive dst)
             => dst.Scoped(ts.Format());
 
         public static FS.FileName timestamped(string name, FS.FileExt ext)

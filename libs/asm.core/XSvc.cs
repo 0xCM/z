@@ -82,10 +82,6 @@ namespace Z0
             public AsmFlowCmd AsmFlowCmd(IWfRuntime wf)
                 => Service<AsmFlowCmd>(wf);
 
-            public MemoryChecks MemoryChecks(IWfRuntime wf)
-                => Service<MemoryChecks>(wf);
-
- 
         }
 
         static Svc Services => Svc.Instance;
@@ -162,7 +158,5 @@ namespace Z0
          public static CultProcessor CultProcessor(this IWfRuntime wf)
             => Services.CultProcessor(wf);
 
-         public static MemoryChecks MemoryChecks(this IWfRuntime wf)
-            => Services.MemoryChecks(wf);         
     }
 }

@@ -19,6 +19,14 @@ namespace Z0
 
         Index<ToolConfig> Configs;
 
+        // public ToolWs(Tool tool, FS.FolderPath home)
+        //     : base(home)
+        // {
+        //     Tool = tool;
+        //     ConfigLookup = dict<Actor,ToolConfig>();
+        //     Configs = array<ToolConfig>();
+        // }
+
         public ToolWs(Tool tool, FS.FolderPath home)
             : base(home)
         {
@@ -27,15 +35,15 @@ namespace Z0
             Configs = array<ToolConfig>();
         }
 
-        public ToolWs(Tool tool, IRootedArchive home)
-            : base(home)
-        {
-            Tool = tool;
-            ConfigLookup = dict<Actor,ToolConfig>();
-            Configs = array<ToolConfig>();
-        }
+        // public ToolWs(Tool tool, IDbArchive home)
+        //     : base(home)
+        // {
+        //     Tool = tool;
+        //     ConfigLookup = dict<Actor,ToolConfig>();
+        //     Configs = array<ToolConfig>();
+        // }
 
-        public IDbArchive Location
+        public DbArchive Location
             => new DbArchive(Root);
 
         public FS.FolderPath ToolDocs(Tool tool)

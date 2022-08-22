@@ -3,18 +3,20 @@
 // See the LICENSE file in the project root for more information.
 namespace Windows
 {
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe struct MEMORY_BASIC_INFORMATION
-    {
-        public ulong BaseAddress;
+    using Z0;
 
-        public ulong AllocationBase;
+    [StructLayout(LayoutKind.Sequential,Pack=1)]
+    public record struct MEMORY_BASIC_INFORMATION
+    {
+        public MemoryAddress BaseAddress;
+
+        public MemoryAddress AllocationBase;
 
         public PageProtection AllocationProtect;
 
         public ushort PartitionId;
 
-        public ulong RegionSize;
+        public ByteSize RegionSize;
 
         public MemState State;
 

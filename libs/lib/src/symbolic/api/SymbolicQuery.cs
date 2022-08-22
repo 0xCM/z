@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     [ApiHost]
     public readonly partial struct SymbolicQuery
     {

@@ -8,6 +8,7 @@ namespace Z0
     using System.IO;
 
     using I0 = System.IO;
+
     partial struct FS
     {
         [MethodImpl(Inline), Op]

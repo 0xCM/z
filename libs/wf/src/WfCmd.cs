@@ -172,7 +172,7 @@ namespace Z0
 
 
         static FS.Files launchers()
-            => DbArchive.match(AppDb.Control("launch").Root, FS.Ps1, FS.Cmd);
+            => DbArchive.match(AppDb.Control("launch").Root, FS.Ps1);
 
         [CmdOp("launchers")]
         protected void Launchers(CmdArgs args)
@@ -191,28 +191,17 @@ namespace Z0
             var src = launchers().Map(x => (x.FileName,x)).ToDictionary();
             foreach(var arg in args)
             {
-                var file = FS.file(arg.Value,FileKind.Cmd);
+                var file = FS.file(arg.Value,FileKind.Ps1);
                 var path = FS.FilePath.Empty;
                 if(src.TryGetValue(file, out path))
                 {
                     CmdScripts.start(CmdScripts.create(path));
+                    Status($"Script {path.ToUri()} executing", FlairKind.Ran);
                 }
                 else
                 {
-                    file = FS.file(arg.Value,FileKind.Ps1);
-                    if(src.TryGetValue(file, out path))
-                    {
-                        CmdScripts.start(CmdScripts.create(path));
-                    }
-                    else
-                    {
-                        Error($"Launcher '{arg} not found");
-                    }
+                    Warn($"Launcher for {file} not found");
                 }
-
-                if(path.IsNonEmpty)                
-                    Status($"Script {path.ToUri()} executing", FlairKind.Ran);
-
             }
         }
 
@@ -221,8 +210,6 @@ namespace Z0
         {
             var src = AppSettings.load(Emitter);
             iter(src, setting => Write(setting.Format()));
-
-            //iter(src, setting => Write(setting.Format()));
         }
 
         [CmdOp("services")]
@@ -385,7 +372,7 @@ namespace Z0
                 }
             }
 
-            var basic = BasicMemoryInfo.Empty;
+            var basic = default(MEMORY_BASIC_INFORMATION);
             WinMem.vquery(@base, ref basic);
             Write(basic.ToString());
         }

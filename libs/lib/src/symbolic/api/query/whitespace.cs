@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     using C = AsciCode;
 
@@ -23,7 +23,7 @@ namespace Z0
             var current = 0u;
             for(var pos=0u; pos<count; pos++)
             {
-                if(!SQ.eol(skip(src, pos), skip(src, pos + 1)))
+                if(!eol(skip(src, pos), skip(src, pos + 1)))
                     current++;
                 else
                 {

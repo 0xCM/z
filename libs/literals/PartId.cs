@@ -383,6 +383,9 @@ public enum PartId : byte
     [Symbol("workers")]
     Workers,
 
+    [Symbol("z")]
+    Z,
+
     [Symbol("<0>")]
     Extern00 = 0xE0,
 

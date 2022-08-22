@@ -7,7 +7,7 @@ namespace Z0
     /// <summary>
     /// An homogenous immutable 3-tuple
     /// </summary>
-    public readonly struct ConstTriple<T> : ITriple<ConstTriple<T>, T>
+    public readonly record struct ConstTriple<T> : ITriple<ConstTriple<T>, T>
     {
         /// <summary>
         /// The first member
@@ -58,13 +58,12 @@ namespace Z0
         public string Format(TupleFormatKind style)
             => style == TupleFormatKind.Coordinate ? $"({First},{Second},{Third})" : $"{First}x{Second}x{Third}";
 
-        public string Format() => Format(TupleFormatKind.Coordinate);
+        public string Format() 
+            => Format(TupleFormatKind.Coordinate);
 
         public override int GetHashCode()
-            => Algs.hash(First,Second,Third);
+            => sys.hash(First, Second, Third);
 
-        public override bool Equals(object obj)
-            => obj is ConstTriple<T> x && Equals(x);
 
         public override string ToString()
             => Format();
@@ -87,17 +86,8 @@ namespace Z0
             get => Third;
         }
 
-
         [MethodImpl(Inline)]
         public static implicit operator ConstTriple<T>((T a, T b, T c) src)
             => new ConstTriple<T>(src.a,src.b,src.c);
-
-        [MethodImpl(Inline)]
-        public static bool operator ==(in ConstTriple<T> a, in ConstTriple<T> b)
-            => a.Equals(b);
-
-        [MethodImpl(Inline)]
-        public static bool operator !=(in ConstTriple<T> a, in ConstTriple<T> b)
-            => a.Equals(b);
     }
 }

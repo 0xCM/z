@@ -3,7 +3,10 @@
 // See the LICENSE file in the project root for more information.
 namespace Windows
 {
-    [Flags]
+    /// <summary>
+    /// https://docs.microsoft.com/en-us/windows/win32/memory/memory-protection-constants
+    /// </summary>
+    [Flags, SymSource(interop)]
     public enum PageProtection : uint
     {
         /// <summary>
@@ -32,7 +35,7 @@ namespace Windows
         /// Enables execute access to the committed region of pages. An attempt to write to the committed region results in
         /// an access violation. This flag is not supported by the CreateFileMapping function.
         /// </summary>
-        Execute = 0x10,
+        PageExecute = 0x10,
 
         /// <summary>
         /// Enables execute or read-only access to the committed region of pages. An attempt to write to the committed region
@@ -54,7 +57,7 @@ namespace Windows
         /// <summary>
         /// Pages in the region become guard pages. Any attempt to access a guard page causes the system to raise a STATUS_GUARD_PAGE_VIOLATION exception and turn off the guard page status. Guard pages thus act as a one-time access alarm.
         /// </summary>
-        Guard = 0x100,
+        PageGuard = 0x100,
 
         /// <summary>
         /// Sets all pages to be non-cachable.

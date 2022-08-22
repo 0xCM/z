@@ -6,20 +6,20 @@ namespace Z0
 {
     public interface IAppDb : IEtlDb
     {
-        IDbArchive Settings();        
+        DbArchive Settings();        
 
-        IDbArchive DbIn();
+        DbArchive DbIn();
 
-        IDbArchive DbRoot();
+        DbArchive DbRoot();
 
-        IDbArchive DbIn(string scope);
+        DbArchive DbIn(string scope);
 
-        IDbArchive DbOut();
+        DbArchive DbOut();
 
-        IDbArchive DbOut(string scope);
+        DbArchive DbOut(string scope);
 
-        IDbArchive Logs();
+        DbArchive Logs();
 
-        IDbArchive Logs(string scope);
+        DbArchive Logs(string scope);
     }
 }

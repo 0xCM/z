@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static sys;
+
     partial class Fenced
     {
         /// <summary>
@@ -19,9 +21,9 @@ namespace Z0
             {
                 var leftIndex = -1;
                 var rightIndex = -1;
-                var chars = Spans.span(src.Trim());
+                var chars = span(src.Trim());
                 var count = chars.Length;
-                return Spans.first(chars) == left && Spans.skip(chars, count - 1) == right;
+                return first(chars) == left && skip(chars, count - 1) == right;
             }
 
             return false;

@@ -4,19 +4,22 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    
+    using static sys;
+    using static DbCmdNames;
+
     class DbCmd : AppCmdService<DbCmd>
     {
-        [CmdOp("db/purge")]
+        DbArchive Root => AppDb.DbRoot();
+
+        [CmdOp(purge)]
         void Purge(CmdArgs args)
         {
             var src = FS.relative(arg(args,0).Value);
             var flow = Running("db/purge");
-            Db.purge(AppDb.DbRoot().Root, src, Emitter).ContinueWith(x => Ran(flow));
+            Db.purge(Root.Root, src, Emitter).ContinueWith(x => Ran(flow));
         }
 
-        [CmdOp("db/archive")]
+        [CmdOp(archive)]
         void Zip(CmdArgs args)
         {
             var folder = arg(args,0).Value;
@@ -32,12 +35,17 @@ namespace Z0
             Db.start(cmd, Emitter);            
         }
 
-        [CmdOp("db/jobs")]
+        [CmdOp(jobs)]
         void Jobs(CmdArgs args)
         {
             var src = AppDb.Jobs("queue");
             iter(src.Files(), file => Write(file.ToUri()));
         }
 
+        [CmdOp(scripts)]
+        void Scripts()
+        {
+            
+        }
     }
 }
