@@ -8,18 +8,11 @@ namespace Z0
 
     public sealed class ToolCmd : AppCmdService<ToolCmd>
     {
-        ImageRegions Regions => Wf.ImageRegions();
-
         public static ICmdProvider[] providers(IWfRuntime wf)
             => new ICmdProvider[]{
                 wf.WfCmd(),
                 wf.BuildCmd(),
                 };
-
-
-        [CmdOp("memory/regions")]
-        void EmitRegions()
-            => Regions.EmitRegions(Process.GetCurrentProcess(), ApiPacks.create());
 
         [CmdOp("api/emit/impls")]
         void EmitImplMaps()
@@ -30,29 +23,18 @@ namespace Z0
                 src[i].Render(s => writer.WriteLine(s));
         }
 
-        // public static ToolCmd commands(IWfRuntime wf)
-        //     => create(wf, providers(wf));
+        public new static ToolCmd create(IWfRuntime wf)
+            => create(wf, providers(wf));
 
         Tooling Tooling => Wf.Tooling();
 
         static readonly Toolbase TB = new();
 
-        [CmdOp("env/modules")]
-        void ListModules()
-        {
-            var src = ImageMemory.modules(ExecutingPart.Process);
-            var dst = AppDb.AppData().Targets(tables).Path($"process.modules.{timestamp()}", FileKind.Csv);
-            var formatter = Tables.formatter<ProcessModuleRow>();
-            for(var i=0; i<src.Length; i++)
-                Row(formatter.Format(src[i]));
-            TableEmit(src, dst);
-        }
-
         [CmdOp("tools")]
         void ListTools()
         {
             var tools = TB.Tools();
-            var dst = AppDb.App().Path("tools",FileKind.Env);
+            var dst = AppDb.Dev("toolsets").Path("tools",FileKind.Env);
             var emitting = Emitter.EmittingFile(dst);
             var counter = 0u;
             var indent = 0u;

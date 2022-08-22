@@ -44,9 +44,9 @@ namespace Z0
             get => DbMap.FileSize;
         }
 
-        public MemDb(FS.FilePath store)
+        public MemDb(FS.FilePath path)
         {
-            var spec = MemoryFileSpec.init(store.CreateParentIfMissing());
+            var spec = MemoryFileSpec.init(path.CreateParentIfMissing());
             spec.EnableAccessReadWrite();
             spec.EnableModeOpenOrCreate();
             spec.Stream = true;
@@ -54,9 +54,9 @@ namespace Z0
             Description = DbMap.Description;
         }
 
-        public MemDb(FS.FilePath store, ByteSize size)
+        public MemDb(FS.FilePath path, ByteSize size)
         {
-            var spec = MemoryFileSpec.init(store.CreateParentIfMissing());
+            var spec = MemoryFileSpec.init(path.CreateParentIfMissing());
             spec.Capacity = size;
             spec.EnableAccessReadWrite();
             spec.EnableModeOpenOrCreate();

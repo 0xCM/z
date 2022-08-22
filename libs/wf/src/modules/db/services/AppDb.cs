@@ -55,6 +55,12 @@ namespace Z0
         public IDbArchive EnvSpecs()
             => DbRoot().Scoped("env");
 
+        public IDbArchive DevOps()
+            => EnvRoot().Scoped("devops");
+
+        public IDbArchive DevOps(string scope)
+            => DevOps().Scoped(scope);
+
         public IDbArchive AppData()
             => DbRoot().Scoped("apps").Scoped(ExecutingPart.Id.Format());
 

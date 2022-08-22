@@ -4,9 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    using static Arrays;
-    using static Spans;
+    using static sys;
+    
+    using System.Diagnostics;
 
     public class MemoryChecks : AppCmdService<MemoryChecks>
     {
@@ -15,6 +15,24 @@ namespace Z0
         {
             CheckStringAllocator(Emitter);
             CheckLabelAllocator(Emitter);
+        }
+
+        [CmdOp("memory/regions")]
+        void EmitRegions()
+            => Regions.EmitRegions(Process.GetCurrentProcess(), ApiPacks.create());
+
+        ImageRegions Regions => Wf.ImageRegions();
+
+
+        [CmdOp("env/modules")]
+        void ListModules()
+        {
+            var src = ImageMemory.modules(ExecutingPart.Process);
+            var dst = AppDb.AppData().Targets(ApiAtomic.tables).Path($"process.modules.{timestamp()}", FileKind.Csv);
+            var formatter = Tables.formatter<ProcessModuleRow>();
+            for(var i=0; i<src.Length; i++)
+                Row(formatter.Format(src[i]));
+            TableEmit(src, dst);
         }
 
         static void CheckStringAllocator(WfEmit channel)
@@ -69,8 +87,6 @@ namespace Z0
             if(result)
                 channel.Status($"Verified {count} label allocations");
         }
-
-
     }
     partial class AsmCheckCmd
     {

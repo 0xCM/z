@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    using static Spans;
+    using static sys;
 
     [ApiHost]
     public readonly struct MemoryFiles
@@ -14,7 +13,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static MemoryFile map(FS.FilePath path)
-            => new MemoryFile(path,false);
+            => new MemoryFile(path, false);
 
         [MethodImpl(Inline), Op]
         public static MemoryFile map(FS.FilePath path, bool stream)
@@ -70,7 +69,7 @@ namespace Z0
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Span<T> slice<T>(in MemoryFile src, uint index)
-            => core.cover<T>(src.BaseAddress, src.FileSize/size<T>());
+            => sys.cover<T>(src.BaseAddress, src.FileSize/size<T>());
 
         /// <summary>
         /// Presents file content as a <typeparamref name='T'/> sequence of length <paramref name='count'/> beginning at a <typeparamref name='T'/> measured offset
@@ -81,7 +80,7 @@ namespace Z0
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Span<T> slice<T>(in MemoryFile src, uint index, uint count)
-            => core.slice(edit<T>(src), index, count);
+            => sys.slice(edit<T>(src), index, count);
 
         /// <summary>
         /// Reveeals the <typeparamref name='T'/> cells at a specified index
@@ -90,15 +89,15 @@ namespace Z0
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static ref T seek<T>(in MemoryFile src, uint index)
-            => ref core.first(slice<T>(src, index));
+            => ref sys.first(slice<T>(src, index));
 
         [MethodImpl(Inline), Op]
         public static ReadOnlySpan<byte> view(MemoryAddress @base, ulong offset, ByteSize size)
-            => core.cover<byte>(@base + offset, size);
+            => sys.cover<byte>(@base + offset, size);
 
         [MethodImpl(Inline), Op]
         public static ReadOnlySpan<byte> view(in MemoryFile src)
-            => core.cover<byte>(src.BaseAddress, src.FileSize);
+            => cover<byte>(src.BaseAddress, src.FileSize);
 
         /// <summary>
         /// Presents file content as a readonly sequence of <typeparamref name='T'/> cells
@@ -106,7 +105,7 @@ namespace Z0
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static ReadOnlySpan<T> view<T>(in MemoryFile src)
-            => core.cover<T>(src.BaseAddress, src.FileSize/size<T>());
+            => cover<T>(src.BaseAddress, src.FileSize/size<T>());
 
         /// <summary>
         /// Presents file content as a readonly <typeparamref name='T'/> sequence beginning at a <typeparamref name='T'/> measured offset and continuing to the end of the file
@@ -115,11 +114,11 @@ namespace Z0
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static ReadOnlySpan<T> view<T>(in MemoryFile src, uint index)
-            => Spans.slice(view<T>(src), index);
+            => sys.slice(view<T>(src), index);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static ReadOnlySpan<T> view<T>(in MemoryFile src, uint index, uint count)
-            => Spans.slice(view<T>(src), index, count);
+            => sys.slice(view<T>(src), index, count);
 
         [Op]
         public static MemoryFileInfo describe(MemoryFile src)

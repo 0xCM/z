@@ -7,10 +7,6 @@ namespace Z0
 {
     public partial class XedPatterns : AppService<XedPatterns>
     {
-        static AppData AppData
-        {
-            [MethodImpl(Inline)]
-            get => AppData.get();
-        }
+
     }
 }

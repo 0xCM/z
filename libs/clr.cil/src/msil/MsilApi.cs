@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.Reflection.Metadata;
     using static System.Reflection.Metadata.ILOpCode;
 
     using K = System.Reflection.Metadata.ILOpCode;
@@ -13,9 +12,9 @@ namespace Z0
     public readonly partial struct MsilApi
     {
         [Op]
-        public static string keyword(ILOpCode opcode)
+        public static string keyword(ILOpCode src)
         {
-            switch (opcode)
+            switch (src)
             {
                 case Nop: return "nop";
                 case Break: return "break";
@@ -239,6 +238,5 @@ namespace Z0
 
             return EmptyString;
         }
-
     }
 }

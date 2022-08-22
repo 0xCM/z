@@ -1,6 +1,5 @@
 @echo off
-set ProjectId=db.shell
+set ProjectId=clr.checks
 set Area=libs
-set ShellId=db
 call %~dp0..\config.cmd
 

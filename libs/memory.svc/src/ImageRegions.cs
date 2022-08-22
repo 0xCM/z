@@ -6,7 +6,7 @@ namespace Z0
 {
     using Windows;
 
-    using static core;
+    using static sys;
 
     [Free]
     public class ImageRegions : WfSvc<ImageRegions>
@@ -166,6 +166,5 @@ namespace Z0
             public Index<ProcessMemoryRegion> Emit()
                 => Accepted;
         }
-
     }
 }

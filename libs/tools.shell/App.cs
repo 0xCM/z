@@ -8,6 +8,6 @@ namespace Z0
     sealed class App : AppCmdShell<App>
     {
         public static void Main(params string[] args)
-            => run(wf => ToolCmd.commands(wf), args);
+            => run(wf => ToolCmd.create(wf), args);
     }
 }
