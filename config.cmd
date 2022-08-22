@@ -193,3 +193,10 @@ set RunToolOptions=--project %ProjectPath% --framework %FrameworkMoniker% --conf
 set RunTool=dotnet run %RunToolOptions%
 
 echo RunTool=%RunTool%>>%EnvFile%
+
+set GitPush=git push -u origin main -v
+: echo GitPush=%GitPush%>>%EnvFile%
+
+: git remote add origin https://github.com/0xCM/z.git
+: git branch -M main
+: git push -u origin main
