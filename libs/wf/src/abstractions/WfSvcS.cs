@@ -9,7 +9,7 @@ namespace Z0
     public abstract class WfSvc<S> : AppService<S>, IWfSvc<S>
         where S : WfSvc<S>, new()
     {
-        ConcurrentDictionary<ProjectId, FileFlowContext> _Context = new();
+        ConcurrentDictionary<ProjectId, ProjectContext> _Context = new();
 
         public FileCatalog ProjectFiles { get; protected set; }
 
@@ -19,7 +19,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public IProjectWorkspace Project()
-            => WfSvc.project();
+            => Projects.project();
 
         protected void Try(Action f, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
         {
@@ -33,10 +33,10 @@ namespace Z0
             }
         }
 
-        protected FileFlowContext Context()
+        protected ProjectContext Context()
         {
             var project = Project();
-            return _Context.GetOrAdd(project.ProjectId, _ => FlowContext.create(project));
+            return _Context.GetOrAdd(project.ProjectId, _ => Projects.context(project));
         }
 
         [CmdOp("project/home")]
@@ -64,12 +64,12 @@ namespace Z0
             else
             {
                 Status($"Loading project from {ws.Home()}");
-                WfSvc.project(ws);
-                ProjectFiles = FileCatalog.load(WfSvc.project().ProjectFiles().Storage.ToSortedSpan());
+                Projects.project(ws);
+                ProjectFiles = FileCatalog.load(Projects.project().ProjectFiles().Storage.ToSortedSpan());
                 var dir = ws.Home();
                 if (dir.Exists)
                     Files(ws.SourceFiles());
-                Status($"Project={WfSvc.project()}");
+                Status($"Project={Projects.project()}");
             }
             return result;
         }

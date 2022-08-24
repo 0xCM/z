@@ -5,7 +5,7 @@
 namespace Z0
 {
     [StructLayout(LayoutKind.Sequential,Pack=1), Settings(Id)]
-    public struct CliEmissionSettings : IWfSettings<CliEmissionSettings>
+    public record struct CliEmissionSettings : IWfSettings<CliEmissionSettings>
     {
         const string Id = "cli.options";
 

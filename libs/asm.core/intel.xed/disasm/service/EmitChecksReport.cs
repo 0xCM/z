@@ -15,10 +15,10 @@ namespace Z0
 
     partial class XedDisasmSvc
     {
-        public void EmitChecksReport(FileFlowContext context, Document src)
+        public void EmitChecksReport(ProjectContext context, Document src)
             => EmitChecksReport(context, src.Detail);
 
-        void EmitChecksReport(FileFlowContext context, Detail doc)
+        void EmitChecksReport(ProjectContext context, Detail doc)
         {
             const string RenderPattern = "{0,-24} | {1}";
             ref readonly var file = ref doc.DataFile;

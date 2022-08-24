@@ -30,7 +30,6 @@ namespace Z0
             return svc;
         }
 
-
         public void Emit(IApiPack dst)
         {
             Target = dst;
@@ -75,8 +74,8 @@ namespace Z0
 
         public void EmitAssets()
         {
-            AssetTargets.Delete();
-            EmitAssetEntries(EmitAssets(CalcAssets()));
+            //AssetTargets.Delete();
+            //EmitAssetEntries(EmitAssets(CalcAssets()));
         }
 
         public void EmitApiLiterals()

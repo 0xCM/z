@@ -65,7 +65,8 @@ namespace Z0
         void _CatalogFiles(CmdArgs args)
         {
             var src = FS.dir(arg(args,0));
-            var files = FS.listing(src);
+            var filter = args.Count > 1 ? args[1].Value : EmptyString;
+            var files = FS.listing(src,true);
             var name = Archives.identifier(src);
             var records = AppDb.Catalogs("files").Table<ListedFile>(name);
             Emitter.TableEmit(files, records);            

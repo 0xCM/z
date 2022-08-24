@@ -6,7 +6,7 @@ namespace Z0
 {
     partial class XedDisasm
     {
-        public static Index<FileRef> sources(FileFlowContext context)
+        public static Index<FileRef> sources(ProjectContext context)
             => context.Docs(FileKind.XedRawDisasm);
     }
 }

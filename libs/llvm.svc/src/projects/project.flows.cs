@@ -12,7 +12,7 @@ namespace Z0
         Outcome ProjectFlows(CmdArgs args)
         {
             var project = Project();
-            var context = FlowContext.create(project);
+            var context = Z0.Projects.context(project);
             var index = context.Flows;
             var kinds = array(FileKind.ObjAsm, FileKind.XedRawDisasm, FileKind.McAsm, FileKind.Sym);
             var buffer = list<FileRef>();

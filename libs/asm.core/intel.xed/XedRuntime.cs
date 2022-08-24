@@ -9,7 +9,6 @@ namespace Z0
     using static XedPatterns;
     using static XedModels;
     using static core;
-    using static XedOps;
     using static XedImport;
 
     using I = XedRecord;
@@ -35,18 +34,6 @@ namespace Z0
         public XedDisasmSvc Disasm => Wf.XedDisasm(this);
 
         public XedImport Import => Wf.XedImport(this);
-
-        ConcurrentDictionary<uint,IMachine> Machines = new();
-
-        public bool Machine(uint id, out IMachine dst)
-            => Machines.TryGetValue(id, out dst);
-
-        public IMachine Machine()
-        {
-            var m =  XedOps.machine(this);
-            Machines.TryAdd(m.Id,m);
-            return m;
-        }
 
         Alloc _Alloc;
 

@@ -22,7 +22,7 @@ namespace Z0
                 => Source = FS.path(src.Replace("file:///", EmptyString).Name);
 
             public FileUri LineRef(uint line)
-                =>  new FileUri(path(string.Format("{0}#{1}", this,line)));
+                => new FileUri(path(string.Format("{0}#{1}", this,line)));
             public string Format()
                 => string.Format("file:///{0}", Source.Format());
 

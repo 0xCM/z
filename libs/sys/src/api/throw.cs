@@ -14,8 +14,6 @@ namespace Z0
         public static void @throw(string msg)
             => throw new Exception(msg);
 
-        //public static void @throw<T>(MsgPattern<T> msg,)        
-
         [MethodImpl(Options), Op]
         public static void @throw(string msg, string caller, int? line, string path)
             => throw new Exception(string.Format("{0}:{1} {2} {3}",msg, caller, line, path));

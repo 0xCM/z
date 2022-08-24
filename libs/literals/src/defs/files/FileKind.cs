@@ -12,6 +12,9 @@ namespace Z0
         [Symbol(asm,"Formatted x86 assembly")]
         Asm,
 
+        [Symbol(db,"A Sqlite database file")]
+        Db,
+
         [Symbol(disasm, "An assembly file produced via a disassembly process")]
         DisAsm,
 

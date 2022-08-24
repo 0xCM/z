@@ -43,7 +43,7 @@ namespace Z0
         }
 
 
-        public static Outcome parse(FileFlowContext context, in FileRef src, out Index<ObjDumpRow> dst)
+        public static Outcome parse(ProjectContext context, in FileRef src, out Index<ObjDumpRow> dst)
             => new ObjDumpParser().Parse(context, src, out dst);
 
         public static Outcome parse(string src, ref uint seq, out ObjSymRow dst)

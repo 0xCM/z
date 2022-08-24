@@ -55,6 +55,8 @@ namespace Z0
 
         public const S kvp = nameof(kvp);
 
+        public const S db = nameof(db);
+
         public const S log = nameof(log);
 
         public const S release = nameof(release);

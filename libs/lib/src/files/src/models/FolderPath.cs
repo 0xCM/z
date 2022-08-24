@@ -126,7 +126,10 @@ namespace Z0
                 => (this + FS.folder(scope)).Files(recurse).Where(f => kinds.Contains(f.FileKind()));
 
             public FS.Files Files(bool recurse, params FileKind[] kinds)
-                => Files(recurse).Where(f => kinds.Contains(f.FileKind()));
+            {
+                var search = Files(recurse);
+                return search.Where(f => kinds.Contains(f.FileKind()));
+            }
 
             public FS.Files Files(bool recurse)
                 => Exists ? files(Directory.EnumerateFiles(Name, SearchAll, option(recurse)).Map(path)) : FS.Files.Empty;

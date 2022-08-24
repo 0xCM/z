@@ -9,7 +9,7 @@ namespace Z0
 
     partial class XedDisasm
     {
-        public static Index<DataFile> datafiles(FileFlowContext context, bool pll = true)
+        public static Index<DataFile> datafiles(ProjectContext context, bool pll = true)
         {
             var src = sources(context);
             var dst = sys.bag<DataFile>();

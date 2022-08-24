@@ -10,7 +10,7 @@ namespace Z0
 
     partial class AsmObjects
     {
-        public static AsmCodeBlocks blocks(FileFlowContext context, in FileRef file, ref uint seq, Index<ObjDumpRow> src, Alloc dispenser)
+        public static AsmCodeBlocks blocks(ProjectContext context, in FileRef file, ref uint seq, Index<ObjDumpRow> src, Alloc dispenser)
         {
             var blocks = src.GroupBy(x => x.BlockAddress).Array();
             var blockbuffer = alloc<AsmCodeBlock>(blocks.Length);

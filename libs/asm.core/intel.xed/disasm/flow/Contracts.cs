@@ -16,7 +16,7 @@ namespace Z0
 
         public delegate void FieldReceiver(uint seq, in Fields src);
 
-        public delegate void FileReceiver(FileFlowContext context, in FileRef src);
+        public delegate void FileReceiver(ProjectContext context, in FileRef src);
 
         public interface IFlow
         {
@@ -25,7 +25,7 @@ namespace Z0
 
         public interface ITarget
         {
-            DisasmToken Starting(FileFlowContext context, in FileRef src);
+            DisasmToken Starting(ProjectContext context, in FileRef src);
 
             void Finished(DisasmToken token);
 

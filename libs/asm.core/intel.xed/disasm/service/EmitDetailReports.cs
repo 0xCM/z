@@ -10,7 +10,7 @@ namespace Z0
 
     partial class XedDisasmSvc
     {
-        public void EmitDetailReport(FileFlowContext context, Document doc)
+        public void EmitDetailReport(ProjectContext context, Document doc)
         {
             //var targets = context.ProjectDatasets("xed.disasm");
             //var targets = context.ProjectDatasets("xed.disasm");

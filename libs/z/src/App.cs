@@ -15,7 +15,6 @@ namespace Z0
             run(wf => AppCmd.service(wf), false, args);
         }
 
-
         void EmitCatalog(AppCmd service)
         {
             var counter = 0u;

@@ -28,6 +28,7 @@ namespace Z0
             [MethodImpl(Inline)]
             get => Label.IsNonEmpty;
         }
+        
         public string Format()
             => string.Format("{0}:{1}", Label, Value);
 

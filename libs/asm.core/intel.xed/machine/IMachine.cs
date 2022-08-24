@@ -4,17 +4,18 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XedRules;
-
-    partial class XedOps
+    public interface IMachine : IDisposable
     {
-        public interface IMachine : IDisposable
-        {
-            uint Id {get;}
+        uint Id {get;}
 
-            void Load(InstPattern src);
+        void Reset();
+    }
+    
+    public interface IMachine<S> : IMachine
+    {
+        void Run(S spec);
 
-            void Reset();
-        }
+        Task Start(S spec)
+            => sys.start(() => Run(spec));
     }
 }

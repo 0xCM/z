@@ -73,7 +73,7 @@ namespace Z0
                     Handle(skip(fields,i), state);
             }
 
-            void OnBegin(FileFlowContext context, in FileRef src)
+            void OnBegin(ProjectContext context, in FileRef src)
             {
                 Output.Clear();
             }

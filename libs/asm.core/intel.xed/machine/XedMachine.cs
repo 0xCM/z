@@ -4,13 +4,147 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
     using static XedRules;
     using static XedModels;
     using static MachineModes;
 
-    public partial class XedMachine : IDisposable
+    public abstract class MachineState : IDisposable
     {
+        protected MachineState(uint machine)
+        {
+            Machine = machine;
+        }
+
+        public readonly uint Machine;
+
+        protected abstract void Disposing();
+
+        void IDisposable.Dispose()
+        {
+            Disposing();
+        }
+    }
+
+    public abstract class MachineState<C> : MachineState
+    {
+        C _Context;
+
+        protected MachineState(uint machine, C context)
+            : base(machine)
+        {
+
+        }
+
+        public ref readonly C Context 
+        {
+            [MethodImpl(Inline)]
+            get => ref _Context;
+        }
+    }
+
+    public abstract class MachineState<S,C> : MachineState<C>
+        where S : MachineState<S,C>
+    {
+        public readonly uint MachineId;
+
+        protected MachineState(uint machine, C context)
+            : base(machine,context)
+        {
+            MachineId = machine;
+        }
+    }
+
+    public class XedMachine : IDisposable
+    {
+        class MachineState
+        {
+            MachineMode _Mode;
+
+            AddressingKind _AddressingMode;
+
+            uint _Id;
+
+            public MachineState(uint id)
+            {
+                _Id = id;
+                Reset();
+            }
+
+            public void Reset()
+            {
+
+            }
+
+            public ref readonly uint Id
+            {
+                [MethodImpl(Inline)]
+                get => ref _Id;
+            }
+
+            [MethodImpl(Inline)]
+            public ref AddressingKind Addressing()
+                => ref _AddressingMode;
+
+            [MethodImpl(Inline)]
+            public ref MachineMode Mode()
+                => ref _Mode;
+        }
+
+        public class Channel : IDisposable
+        {
+            public static Channel create(XedMachine machine, Action<object> status)
+                => new Channel(machine,status);
+
+            object LogLocker = new();
+
+            ProjectLog _Log;
+
+            ProjectLog Log
+            {
+                get
+                {
+                    lock(LogLocker)
+                    {
+                        if(_Log == null)
+                            _Log = Projects.log(Ws, $"xed.machine.{Machine.Id}", FileKind.Csv);
+                    }
+                    return _Log;
+                }
+            }
+
+            readonly XedMachine Machine;
+
+            readonly IProjectWorkspace Ws;
+
+            readonly FS.FolderPath OutDir;
+
+            readonly Action<object> Status;
+
+            public Channel(XedMachine machine, Action<object> status)
+            {
+                Machine = machine;
+                Ws = machine.Ws;
+                Status = status;
+                OutDir = Ws.BuildOut();
+            }
+
+            public void Dispose()
+            {
+                lock(LogLocker)
+                    if(_Log != null)
+                        _Log.Dispose();
+            }
+
+            public void Flush()
+            {
+                lock(LogLocker)
+                {
+                    if(_Log != null)
+                        _Log.Flush();
+                }
+            }
+        }        
         ConstLookup<ushort,InstGroupMember> _GroupMemberLookup;
 
         SortedLookup<AsmInstClass,Index<InstGroupMember>> _ClassGroupLookup;
@@ -57,9 +191,7 @@ namespace Z0
 
         readonly IProjectWorkspace Ws;
 
-        readonly Emitter _Emitter;
-
-        readonly IWfRuntime Wf;
+        readonly Channel _Emitter;
 
         static int Seq;
 
@@ -74,7 +206,7 @@ namespace Z0
             get => ref State().Id;
         }
 
-        public Emitter Emissions
+        public Channel Emissions
         {
             [MethodImpl(Inline)]
             get => _Emitter;
@@ -91,11 +223,10 @@ namespace Z0
         internal XedMachine(XedRuntime xed)
         {
             Xed = xed;
-            Wf = xed.Wf;
-            Ws = ProjectWorkspace.load(AppDb.DbOut().Root, Identifier);
+            Ws = Projects.load(AppDb.DbOut().Root, Identifier);
             RuntimeState = new(NextId());
             RuleTables = Xed.Views.RuleTables;
-            _Emitter = Emitter.create(this, StatusWriter);
+            _Emitter = Channel.create(this, StatusWriter);
             LoadLookups();
         }
 

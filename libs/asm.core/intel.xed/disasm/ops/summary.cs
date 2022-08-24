@@ -11,7 +11,7 @@ namespace Z0
 
     partial class XedDisasm
     {
-        public static XedDisasmSummary summary(FileFlowContext context, in DataFile src)
+        public static XedDisasmSummary summary(ProjectContext context, in DataFile src)
         {
             var lines = sys.bag<XedDisasmLines>();
             summary(src.Source, context.Root(src.Source), src.Blocks, lines).Require();

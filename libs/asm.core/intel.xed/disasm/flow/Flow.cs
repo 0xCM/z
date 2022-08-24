@@ -14,10 +14,10 @@ namespace Z0
     {
         readonly struct Flow : IFlow
         {
-            readonly FileFlowContext Context;
+            readonly ProjectContext Context;
 
             [MethodImpl(Inline)]
-            public Flow(FileFlowContext context)
+            public Flow(ProjectContext context)
             {
                 Context = context;
             }

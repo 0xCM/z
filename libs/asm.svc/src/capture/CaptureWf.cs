@@ -29,33 +29,11 @@ namespace Z0
         static CaptureWfRunner runner(IWfRuntime wf, CaptureWfSettings settings, IApiPack dst, CaptureTransport transport)
             => new CaptureWfRunner(wf, settings, dst, transport);
 
-        // void CollectSelected(CmdArgs args, CaptureTransport transport, IApiPack dst)
-        // {
-        //     var src = FS.path(ExecutingPart.Assembly.Location).FolderPath;
-        //     var settings = new CaptureWfSettings();
-        //     var parts = hashset<PartId>();
-        //     iter(args, arg => {
-        //         if(PartNames.parse(arg.Value, out var name))
-        //             parts.Add(name);
-        //         else
-        //             Warn($"{arg.Value} is not a part");
-        //     });
-
-        //     settings.Parts = parts.ToSeq();
-
-        //     var location = FS.path(ExecutingPart.Assembly.Location).FolderPath;
-        //     var assemblies = ApiRuntime.assemblies(location).Where(a => parts.Contains(a.Id()));
-        //     var catalog = ApiRuntime.catalog(assemblies);
-        //     runner(Wf, settings, dst, transport).Run(catalog);
-        // }
-
         public static ReadOnlySeq<ApiEncoded> run(IWfRuntime wf, CmdArgs args)
         {
             var collected = ReadOnlySeq<ApiEncoded>.Empty;
             var channel = wf.Emitter;
-            var dst = ApiPacks.create(sys.timestamp());
             var catalog = default(IApiCatalog);
-            using var transport = new CaptureTransport(Dispense.composite(), wf.Emitter);
             var settings = new CaptureWfSettings();
             if(args.Count != 0)
             {
@@ -75,25 +53,18 @@ namespace Z0
             {
                 catalog = ApiRuntime.catalog(ApiRuntime.colocated(ExecutingPart.Assembly));
             }
-            collected = runner(wf, settings, dst, transport).Run(catalog);
+
+            using var transport = new CaptureTransport(Dispense.composite(), wf.Emitter);
+            channel.Row((settings as ISettings).Format());
+            var ts = sys.timestamp();
+            var exec = runner(wf, settings, ApiPacks.create(ts), transport);
+            collected = exec.Run(catalog);
             return collected;
         }
 
         public void Run(CmdArgs args)
         {
-            run(Wf,args);
-            // var dst = ApiPacks.create(sys.timestamp());
-            // using var transport = new CaptureTransport(Dispense.composite(), Emitter);
-            // var settings = new CaptureWfSettings();
-            // if(args.Count != 0)
-            //     CollectSelected(args, transport,dst);
-            // else
-            // {
-            //     var location = FS.path(ExecutingPart.Assembly.Location).FolderPath;
-            //     var assemblies = ApiRuntime.assemblies(location);
-            //     var catalog = ApiRuntime.catalog(assemblies);
-            //     runner(Wf,settings, dst, transport).Run(catalog);
-            // }
+            run(Wf, args);
         }
 
         static SettingsStore Store = new();

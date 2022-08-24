@@ -1,13 +1,25 @@
 {
 	"folders": [
 		{
+			"path": "../literals"
+		},
+		{
+			"path": "../sys"
+		},
+		{
+			"path": "../bit"
+		},
+		{
+			"path": "../text"
+		},
+		{
 			"path": "../imagine"
 		},
 		{
-			"path": "../alloc"
+			"path": "../lib"
 		},
 		{
-			"path": "../lib"
+			"path": "../alloc"
 		},
 		{
 			"path": "."

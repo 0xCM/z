@@ -144,7 +144,7 @@ namespace Z0
                 => Settings().Table<T>();
 
         public IProjectWorkspace EtlSource(ProjectId src)
-            => ProjectWorkspace.load(Dev($"llvm.models/{src}").Root, src);
+            => Projects.load(Dev($"llvm.models/{src}").Root, src);
 
         public FS.FilePath EtlTable<T>(ProjectId project)
             where T : struct

@@ -63,27 +63,34 @@ namespace Z0
             return Emitter.TableEmit(Transport.Transmit(buffer).View, dst.Table<EncodedMember>());
         }
 
-        Seq<CollectedHost> Capture(IApiCatalog catalog, ReadOnlySeq<Assembly> src)
-        {
+        Seq<CollectedHost> Capture(IApiCatalog src)
+        {            
             var dst = sys.bag<CollectedHost>();
-            var ids = Settings.Parts.IsEmpty ? src.Select(x => x.Id()).Where(x => x != 0).ToSeq() : Settings.Parts;
-            var running = Emitter.Running($"Running capture workflow: {ids.Delimit()}");
-            Capture(catalog, ids.View, dst);
-            var collected = Transport.Transmit(dst.ToSeq());
+            var ids = Settings.Parts.ToHashSet();
+            var parts = src.PartCatalogs.Select(x => x as IApiPartCatalog).Where(x => ids.Contains(x.PartId));
+            var running = Emitter.Running($"Running capture workflow: {parts.Select(x => x.Component.PartName()).Delimit()}");
+            iter(parts, p => Capture(p, Dispenser, dst, Emitter), Settings.PllExec);            
+            var collected = Transport.Transmit(dst.ToSeq());        
             Emitter.Ran(running, $"Captured {collected.Count} hosts");
             return collected;
         }
 
-        Seq<CollectedHost> Capture(IApiCatalog src)
+        void Capture(IApiPartCatalog src, ICompositeDispenser dispenser, ConcurrentBag<CollectedHost> dst, WfEmit log)
         {
-            var dst = sys.bag<CollectedHost>();
-            var parts = src.PartCatalogs;
-            var ids = parts.Select(x => x.PartId);
-            var running = Emitter.Running($"Running capture workflow: {ids.Delimit()}");
-            Capture(src, ids.View, dst);
-            var collected = Transport.Transmit(dst.ToSeq());
-            Emitter.Ran(running, $"Captured {collected.Count} hosts");
-            return collected;
+            var tmp = sys.bag<CollectedHost>();
+            ApiCode.gather(src, dispenser, tmp, log, Settings.PllExec);
+            var code = tmp.ToArray();
+            ApiCodeSvc.Emit(src.PartId, code, Target, Settings.PllExec);
+            EmitAsm(dispenser, code);
+
+            iter(tmp, x =>  {
+                
+                Cli.EmitMsil(x,Target);
+                dst.Add(x);
+
+                }
+            );
+            Transport.Transmit(src.Component);
         }
 
         public ReadOnlySeq<ApiEncoded> Run(IApiCatalog src)
@@ -120,56 +127,6 @@ namespace Z0
 
             ApiPacks.Link(Target);
             return blocks;
-        }
-
-        ExecToken Capture(IApiCatalog catalog, ReadOnlySpan<PartId> src, ConcurrentBag<CollectedHost> dst)
-        {
-            const string On = "concurrent execution enabled";
-            const string Off = "concurrent execution disabled";
-            var pll = Settings.PllExec;
-            var pllmsg = pll ? On : Off;
-            var running = Emitter.Running($"Capturing {src.Length} parts with concurrent execution {pllmsg}:{src.Delimit().Format()}");
-            iter(src, id => Capture(catalog, id, dst), pll);
-            return Emitter.Ran(running);
-        }
-
-        void Capture(IApiCatalog src, PartId id, ConcurrentBag<CollectedHost> dst)
-        {        
-            var result = find(src, id, out var pc);
-            if(result)
-                Capture(pc, Dispenser, dst, Emitter);
-            else
-                Emitter.Warn($"Part identifier {id} not found");
-        }
-
-
-        void Capture(IApiPartCatalog src, ICompositeDispenser dispenser, ConcurrentBag<CollectedHost> dst, WfEmit log)
-        {
-            var tmp = sys.bag<CollectedHost>();
-            ApiCode.gather(src, dispenser, tmp, log, Settings.PllExec);
-            var code = tmp.ToArray();
-            ApiCodeSvc.Emit(src.PartId, code, Target, Settings.PllExec);
-            EmitAsm(dispenser, code);
-
-            iter(tmp, x =>  {
-                
-                Cli.EmitMsil(x,Target);
-                dst.Add(x);
-
-                }
-            );
-            Transport.Transmit(src.Component);
-        }
-
-        static bool find(IApiCatalog src, PartId id, out IApiPartCatalog dst)
-        {
-            var matched = src.PartCatalogs.Where(x => x.PartId == id).ToSeq();
-            if(matched.IsNonEmpty)
-                dst = matched.First;
-            else
-                dst = null;
-
-            return dst != null;
         }
 
         void EmitAsm(ICompositeDispenser symbols, ReadOnlySeq<CollectedHost> src)

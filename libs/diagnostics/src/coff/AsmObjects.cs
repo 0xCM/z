@@ -29,7 +29,7 @@ namespace Z0
         IDbTargets EtlTargets(ProjectId project)
             => AppDb.EtlTargets(project);
 
-        public void RunEtl(FileFlowContext context)
+        public void RunEtl(ProjectContext context)
         {
             var project = context.Project.ProjectId;
             EtlTargets(project).Delete();
@@ -52,7 +52,7 @@ namespace Z0
         public McAsmDoc CalcMcAsmDoc(in FileRef src)
             => new LlvmAsmParser().ParseMcAsmDoc(src);
 
-        public Index<McAsmDoc> CollectSyntaxDocs(FileFlowContext context)
+        public Index<McAsmDoc> CollectSyntaxDocs(ProjectContext context)
         {
             var src = SynAsmSources(context.Project).View;
             var count = src.Length;
@@ -148,7 +148,7 @@ namespace Z0
         public FS.FilePath AsmInstructionTable(ProjectId project)
             => EtlContext.table<AsmInstructionRow>(project);
 
-        public Index<AsmInstructionRow> CollectMcInstructions(FileFlowContext context)
+        public Index<AsmInstructionRow> CollectMcInstructions(ProjectContext context)
         {
             var project = context.Project;
             var result = Outcome.Success;
@@ -195,10 +195,10 @@ namespace Z0
         public FS.FilePath AsmRowPath(ProjectId project, string origin)
             => AppDb.EtlTargets(project).Targets("asm.csv").Path(origin, FileKind.Csv);
 
-        public void EmitObjSyms(FileFlowContext context, ReadOnlySpan<ObjSymRow> src)
+        public void EmitObjSyms(ProjectContext context, ReadOnlySpan<ObjSymRow> src)
             => TableEmit(src, AppDb.EtlTargets(context.Project.ProjectId).Table<ObjSymRow>());
 
-        public Index<ObjSymRow> CalcObjSyms(FileFlowContext context)
+        public Index<ObjSymRow> CalcObjSyms(ProjectContext context)
         {
             var result = Outcome.Success;
             var project = context.Project;
@@ -228,7 +228,7 @@ namespace Z0
             return buffer.ToArray();
         }
 
-        public Index<ObjDumpRow> CalcObjRows(FileFlowContext context)
+        public Index<ObjDumpRow> CalcObjRows(ProjectContext context)
         {
             var project = context.Project;
             var src = project.OutFiles(FileKind.ObjAsm).Storage.Sort().Index();
@@ -258,7 +258,7 @@ namespace Z0
             return buffer.ToArray().Sort().Resequence();
         }
 
-        public void EmitRecoded(FileFlowContext context, ReadOnlySeq<AsmCodeBlocks> blocks)
+        public void EmitRecoded(ProjectContext context, ReadOnlySeq<AsmCodeBlocks> blocks)
         {
             RecodedTargets(context.Project.ProjectId).Clear();
             for(var i=0; i<blocks.Count; i++)
@@ -291,7 +291,7 @@ namespace Z0
             EmittedFile(emitting,counter);
         }
 
-        public Index<AsmCodeBlocks> EmitAsmRows(FileFlowContext context, Alloc alloc)
+        public Index<AsmCodeBlocks> EmitAsmRows(ProjectContext context, Alloc alloc)
         {
             var files = context.Files.Docs(FileKind.ObjAsm);
             var count = files.Count;
@@ -311,7 +311,7 @@ namespace Z0
             return dst.ToArray();
         }
 
-        public void EmitAsmRows(FileFlowContext context, in AsmCodeBlocks src, FS.FilePath dst)
+        public void EmitAsmRows(ProjectContext context, in AsmCodeBlocks src, FS.FilePath dst)
         {
             var buffer = alloc<AsmCodeRow>(src.LineCount);
             var k=0u;
@@ -347,7 +347,7 @@ namespace Z0
         public FS.FilePath AsmSyntaxTable(ProjectId project)
             => EtlContext.table<AsmSyntaxRow>(project);
 
-        public Index<AsmSyntaxRow> CollectAsmSyntax(FileFlowContext context)
+        public Index<AsmSyntaxRow> CollectAsmSyntax(ProjectContext context)
         {
             var project = context.Project;
             var logs = project.OutFiles(FileKind.SynAsmLog).View;
@@ -389,7 +389,7 @@ namespace Z0
                 return text.trim(text.despace(src));
         }
 
-        void ParseAsmSyntaxRows(FileFlowContext context, in FileRef src, List<AsmSyntaxRow> dst)
+        void ParseAsmSyntaxRows(ProjectContext context, in FileRef src, List<AsmSyntaxRow> dst)
         {
             const string EntryMarker = "note: parsed instruction:";
             const string EncodingMarker = "# encoding:";

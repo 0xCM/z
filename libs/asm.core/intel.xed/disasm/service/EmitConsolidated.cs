@@ -12,7 +12,7 @@ namespace Z0
 
     partial class XedDisasmSvc
     {
-        void EmitConsolidated(FileFlowContext context, Index<Document> src)
+        void EmitConsolidated(ProjectContext context, Index<Document> src)
         {
             var summaries = sys.bag<XedDisasmRow>();
             var details = sys.bag<DetailBlock>();
@@ -27,13 +27,13 @@ namespace Z0
                 () => EmitConsolidated(context, summaries.ToArray()));
         }
 
-        void EmitOpClasses(FileFlowContext context, Index<Document> src)
+        void EmitOpClasses(ProjectContext context, Index<Document> src)
         {
             var target = EtlContext.table<InstOpClass>(context.Project.ProjectId, disasm);
             TableEmit(XedDisasm.opclasses(src).View, target);
         }
 
-        void EmitConsolidated(FileFlowContext context, Index<DetailBlock> src)
+        void EmitConsolidated(ProjectContext context, Index<DetailBlock> src)
         {
             var target = EtlContext.table<DetailBlockRow>(context.Project.ProjectId);
             var buffer = text.buffer();
@@ -44,7 +44,7 @@ namespace Z0
             EmittedFile(emitting, src.Count);
         }
 
-        void EmitConsolidated(FileFlowContext context, Index<XedDisasmRow> src)
+        void EmitConsolidated(ProjectContext context, Index<XedDisasmRow> src)
             => TableEmit(resequence(src), EtlContext.table<XedDisasmRow>(context.Project.ProjectId));
     }
 }

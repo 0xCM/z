@@ -44,7 +44,7 @@ namespace Z0
             N = LineNumber.Empty;
         }
 
-        public Outcome Parse(FileFlowContext context, in FileRef src, List<ObjDumpRow> dst)
+        public Outcome Parse(ProjectContext context, in FileRef src, List<ObjDumpRow> dst)
         {
             var result = Outcome.Success;
             var path = src.Path;
@@ -137,7 +137,7 @@ namespace Z0
             return result;
         }
 
-        public Outcome Parse(FileFlowContext context, in FileRef src, out Index<ObjDumpRow> dst)
+        public Outcome Parse(ProjectContext context, in FileRef src, out Index<ObjDumpRow> dst)
         {
             Reset(src);
             var result = Parse(context, src, Buffer);

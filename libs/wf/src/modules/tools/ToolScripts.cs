@@ -131,7 +131,7 @@ namespace Z0
             }
 
             if(flows.Count != 0)
-                TableEmit(flows.ViewDeposited(), BuildContext.path(project));
+                TableEmit(flows.ViewDeposited(), Projects.build(project));
         }
     }
 }

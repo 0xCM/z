@@ -4,10 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Asm;
-
-    using static Spans;
-    using static Algs;
+    using static sys;
 
     [ApiHost]
     public class ApiNative

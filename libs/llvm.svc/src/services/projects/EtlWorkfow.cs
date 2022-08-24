@@ -8,7 +8,7 @@ namespace Z0
     {
         public void Etl(IProjectWorkspace project)
         {
-            var context = FlowContext.create(project);
+            var context = Projects.context(project);
             AsmObjects.RunEtl(context);
             XedDisasm.Collect(context);
         }
