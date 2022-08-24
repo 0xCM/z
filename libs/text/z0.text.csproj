@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(Sys)" />
+    <ProjectReference Include="../sys/z0.sys.csproj" />
+    <ProjectReference Include="../bit/z0.bit.csproj" />
   </ItemGroup>
 
 </Project>

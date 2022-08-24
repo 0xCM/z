@@ -46,8 +46,8 @@ public enum PartId : byte
     [Symbol("symbols")]
     Symbols,
 
-    [Symbol("cmd.actions")]
-    CmdActions,
+    [Symbol("cmd.models")]
+    CmdModels,
 
     [Symbol("cmd.specs")]
     CmdSpecs,

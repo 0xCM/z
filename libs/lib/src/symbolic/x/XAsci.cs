@@ -21,6 +21,5 @@ namespace Z0
 
         public static string Format(this ReadOnlySpan<AsciSymbol> src)
             => Asci.format(src);
-
     }
 }

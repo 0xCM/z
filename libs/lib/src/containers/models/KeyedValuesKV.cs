@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
-
+    using static sys;
     /// <summary>
     /// Defines a T-value index together with a comanion K-index ,
     /// where each K-value i is either obtained directly from the caller or by
@@ -29,7 +28,7 @@ namespace Z0
             {
                 ref readonly var value = ref skip(values,i);
                 var key = kf(value);
-                seek(edit,i) = kvp(key,value);
+                seek(edit,i) = Lookups.kvp(key,value);
             }
         }
 
@@ -63,7 +62,7 @@ namespace Z0
             {
                 ref readonly var value = ref skip(src,i);
                 var key = kf(value);
-                seek(edit, i) = kvp(key, value);
+                seek(edit, i) = Lookups.kvp(key, value);
             }
         }
 

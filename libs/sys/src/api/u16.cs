@@ -15,10 +15,6 @@ namespace Z0
         public static ref ushort u16<T>(in T src)
             => ref @as<T,ushort>(src);
 
-        [MethodImpl(Inline)]
-        public static ref ushort uint16<T>(in T src)
-             => ref @as<T,ushort>(src);
-
         /// <summary>
         /// Presents the bytespan head as a reference to an unsigned 32-bit uinteger
         /// </summary>

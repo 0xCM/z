@@ -1,14 +1,17 @@
 {
 	"folders": [
 		{
+			"path": "../literals"
+		},
+		{
+			"path": "../sys"
+		},
+		{
+			"path": "../bit"
+		},
+		{
 			"path": "."
 		},
-		{
-			"path": "..\\sys"
-		},
-		{
-			"path": "..\\literals"
-		}
 	],
 	"settings": {}
 }

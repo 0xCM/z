@@ -29,7 +29,7 @@ namespace Z0
             where T : ISequential<T>
         {
             for(var i=0u; i<src.Length; i++)
-                Arrays.seek(src,i).Seq = i;
+                sys.seek(src,i).Seq = i;
             return src;
         }
 
@@ -38,7 +38,7 @@ namespace Z0
             where T : ISequential<T>
         {
             for(var i=0u; i<src.Length; i++)
-                Spans.seek(src,i).Seq = i;
+                sys.seek(src,i).Seq = i;
             return src;
         }
     }

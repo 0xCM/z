@@ -89,7 +89,7 @@ namespace Z0
         public Span<byte> Edit
         {
             [MethodImpl(Inline)]
-            get => core.bytes(Storage);
+            get => sys.bytes(Storage);
         }
 
         public ReadOnlySpan<byte> View

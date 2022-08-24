@@ -43,7 +43,6 @@ namespace Z0
             [MethodImpl(Inline)]
             public static TypeKind operator>(TypeKind a, TypeKind b)
                 =>  new TypeKind($"{a} > {b}");
-
         }
     }
 }

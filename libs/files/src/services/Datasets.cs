@@ -163,7 +163,7 @@ namespace Z0
 
             void Recalc()
             {
-                Slots = mapi(Widths.View, (i,w) => RpOps.slot((byte)i, (short)-w));
+                Slots = mapi(Widths, (i,w) => RP.slot((byte)i, (short)-w));
                 RenderPattern = Slots.Intersperse(Sep).Concat();
             }
 

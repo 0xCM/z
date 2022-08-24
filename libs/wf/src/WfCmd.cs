@@ -258,6 +258,13 @@ namespace Z0
             return result;
         }
 
+        [CmdOp("env")]
+        void EnvQuery(CmdArgs args)
+        {
+            var name = arg(args,0).Value;
+            
+
+        }
         [CmdOp("env/report")]
         void EmitEnv(CmdArgs args)
         {

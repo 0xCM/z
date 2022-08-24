@@ -135,7 +135,6 @@ namespace Z0
             where T : unmanaged
                 => alg.hash.calc(src);
 
-
         [MethodImpl(Inline)]
         public static Hash64 hash64<X,Y>(X x, Y y)
             => alg.ghash.calc64(x,y);

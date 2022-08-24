@@ -190,11 +190,11 @@ namespace Z0
             if(typeof(S) == typeof(byte))
                 return force<T>(uint8(src));
             else if(typeof(S) == typeof(ushort))
-                return force<T>(uint16(src));
+                return force<T>(sys.uint16(src));
             else if(typeof(S) == typeof(uint))
-                return force<T>(uint32(src));
+                return force<T>(sys.uint32(src));
             else if(typeof(S) == typeof(ulong))
-                return force<T>(uint64(src));
+                return force<T>(sys.uint64(src));
             else
                 return force_i<S,T>(src);
         }

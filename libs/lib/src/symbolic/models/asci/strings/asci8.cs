@@ -9,7 +9,6 @@ namespace Z0
     using W = W64;
     using S = System.UInt64;
     using C = AsciCode;
-
     using api = Asci;
 
     /// <summary>
@@ -89,11 +88,11 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public asci8(string src)
-            => Storage = Asci.encode(n,src).Storage;
+            => Storage = api.encode(n,src).Storage;
 
         [MethodImpl(Inline)]
         public asci8(ReadOnlySpan<char> src)
-            => Storage = Asci.encode(n,src).Storage;
+            => Storage = api.encode(n,src).Storage;
 
         public bool IsBlank
         {
@@ -149,7 +148,7 @@ namespace Z0
         public Span<byte> Edit
         {
             [MethodImpl(Inline)]
-            get => core.bytes(Storage);
+            get => sys.bytes(Storage);
         }
 
         public ReadOnlySpan<byte> View

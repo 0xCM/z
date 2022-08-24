@@ -50,7 +50,7 @@ namespace Z0.llvm
                     {
                         name = text.trim(text.inside(content, j + Marker.Length - 1, lt));
                         var bounds = text.enclosed(content,0, (Chars.Lt, Chars.Gt));
-                        parameters = text.inside(content, bounds.Min - 1, bounds.Max + 1).Replace(Chars.Pipe,Chars.Caret);
+                        parameters = text.inside(content, bounds.Left - 1, bounds.Right + 1).Replace(Chars.Pipe,Chars.Caret);
                     }
                     else
                         name = text.trim(text.inside(content, j + Marker.Length - 1, k));

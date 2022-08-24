@@ -43,7 +43,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public asci32(ReadOnlySpan<byte> src)
         {
-            Storage = cpu.vload(w, first(src));
+            Storage = cpu.vload(w, sys.first(src));
         }
 
         [MethodImpl(Inline)]
@@ -250,6 +250,5 @@ namespace Z0
         static N n => default;
 
         static W w => default;
-
     }
 }

@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    using static Spans;
+    using static sys;
 
     partial class XTend
     {
@@ -23,6 +22,6 @@ namespace Z0
         [Op, Closures(Closure)]
         public static T[] Distinct<T>(this Span<T> src)
             where T : IEquatable<T>
-                => Algs.@readonly(src).Distinct();
+                => sys.@readonly(src).Distinct();
     }
 }
