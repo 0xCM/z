@@ -4,6 +4,9 @@
     <OutputType>Exe</OutputType>
     <AssemblyName>z</AssemblyName>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <StartupObject>Z0.App</StartupObject>
+    <RootNamespace>z0</RootNamespace>
+    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
   </PropertyGroup>
 
   <Import Project="$(ProjectProps)/shells.props" />
