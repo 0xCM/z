@@ -7,7 +7,7 @@ namespace Z0
     using Windows;
 
     using static Windows.Kernel32;
-    using static Algs;
+    using static sys;
 
     [ApiHost]
     public unsafe readonly partial struct MemorySections
@@ -17,7 +17,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public static ReadOnlySpan<T> view<T>(MemorySeg src)
             where T : unmanaged
-                => Algs.cover(src.BaseAddress.Ref<T>(), capacity<T>(src));
+                => sys.cover(src.BaseAddress.Ref<T>(), capacity<T>(src));
 
         [MethodImpl(Inline)]
         public static uint capacity<T>(MemorySeg src)
@@ -27,7 +27,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static Span<T> edit<T>(MemoryRange src)
             where T : unmanaged
-                => Algs.cover(src.Min.Ref<T>(), capacity<T>(src));
+                => sys.cover(src.Min.Ref<T>(), capacity<T>(src));
 
         [MethodImpl(Inline)]
         public static MemoryRange range(MemoryAddress min, MemoryAddress max)

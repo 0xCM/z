@@ -53,7 +53,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public Span<byte> Slice(uint index, uint offset, uint length)
-            => Spans.slice(Edit(index), offset, length);
+            => sys.slice(Edit(index), offset, length);
 
         public void Clear()
         {

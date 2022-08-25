@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Spans;
+    using static sys;
 
     partial class XTend
     {
@@ -18,7 +18,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public static Span<byte> Bytes<T>(this Span<T> src, int offset, int ? length = null)
             where T : struct
-                => Algs.bytes(src, offset, length);
+                => sys.bytes(src, offset, length);
 
         /// <summary>
         /// Presents a span of generic values as a span of bytes
@@ -28,7 +28,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public static Span<byte> Bytes<T>(this Span<T> src)
             where T : struct
-                => Algs.bytes(src);
+                => sys.bytes(src);
 
         /// <summary>
         /// Presents a readonly span of generic values as a span of readonly bytes
@@ -38,6 +38,6 @@ namespace Z0
         [MethodImpl(Inline)]
         public static ReadOnlySpan<byte> Bytes<T>(this ReadOnlySpan<T> src)
             where T : struct
-                => Algs.bytes(src);
+                => sys.bytes(src);
     }
 }

@@ -41,7 +41,7 @@ namespace Z0
         public Span<byte> Bytes
         {
             [MethodImpl(Inline)]
-            get => Algs.cover(Base.Pointer<byte>(), Size);
+            get => sys.cover(Base.Pointer<byte>(), Size);
         }
 
         public ref T this[uint index]

@@ -56,13 +56,13 @@ namespace Z0
 
         public string Format()
         {
-            var dst = TextFormat.emitter();
+            var dst = new StringBuilder();
             dst.Append(Offset.FormatHex());
-            dst.AppendSpace();
+            dst.Append(Chars.Space);
             dst.Append((char)Sign);
-            dst.AppendSpace();
+            dst.Append(Chars.Space);
             dst.Append(Chars.x);
-            return dst.Emit();
+            return dst.ToString();
         }
 
         public override string ToString()

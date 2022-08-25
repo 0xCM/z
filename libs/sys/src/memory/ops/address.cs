@@ -33,11 +33,11 @@ namespace Z0
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static unsafe MemoryAddress address<T>(Span<T> src)
-            => new MemoryAddress(Pointers.pvoid(Spans.first(src)));
+            => new MemoryAddress(Pointers.pvoid(sys.first(src)));
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static unsafe MemoryAddress address<T>(ReadOnlySpan<T> src)
-            => new MemoryAddress(Pointers.pvoid(Spans.first(src)));
+            => new MemoryAddress(Pointers.pvoid(sys.first(src)));
 
         /// <summary>
         /// Derives the address of a <see cref='Type'/> from the value of its <see cref='Type.TypeHandle' />
@@ -71,7 +71,7 @@ namespace Z0
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Op]
         public static unsafe MemoryAddress address<T>(T[] src)
-            => Pointers.pvoid(Arrays.first(src));
+            => Pointers.pvoid(sys.first(src));
 
         /// <summary>
         /// Determines the address of a cell in an array
@@ -81,6 +81,6 @@ namespace Z0
         /// <typeparam name="T">The stored type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static unsafe MemoryAddress address<T>(T[] src, int index)
-            => Pointers.pvoid(Arrays.seek(src,index));
+            => Pointers.pvoid(sys.seek(src,index));
     }
 }

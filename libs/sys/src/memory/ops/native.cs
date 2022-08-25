@@ -4,9 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    using static Spans;
-    using static Arrays;
+    // using static Algs;
+    // using static Spans;
+    // using static Arrays;
 
     unsafe partial struct memory
     {
@@ -21,7 +21,7 @@ namespace Z0
         {
             var tokens = new BufferToken[count];
             for(var i=0; i<count; i++)
-                seek(tokens,i) = (IntPtr.Add(@base, (int)size*i), size);
+                sys.seek(tokens,i) = (IntPtr.Add(@base, (int)size*i), size);
             return tokens;
         }
 
@@ -36,7 +36,7 @@ namespace Z0
         {
             var tokens = new BufferToken[count];
             for(var i=0u; i<count; i++)
-                seek(tokens,i) = (@base + (size*i), size);
+                sys.seek(tokens,i) = (@base + (size*i), size);
             return tokens;
         }
 
@@ -62,7 +62,7 @@ namespace Z0
             var count = sizes.Length;
             var dst = new NativeBuffer[count];
             for(var i=0; i<count; i++)
-                seek(dst,i) = native(skip(sizes,i));
+                sys.seek(dst,i) = native(sys.skip(sizes,i));
             return new NativeBufferSeq(dst);
         }
 
@@ -74,7 +74,7 @@ namespace Z0
         public static NativeBuffer<T> native<T>(uint count)
             where T : unmanaged
         {
-            ByteSize sz = count*size<T>();
+            ByteSize sz = count*sys.size<T>();
             var buffer = new NativeBuffer<T>((liberate(Marshal.AllocHGlobal((int)sz), sz), sz));
             buffer.Clear();
             return buffer;

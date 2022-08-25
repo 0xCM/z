@@ -19,7 +19,7 @@ namespace Z0
 
         Span<T> Storage<T>()
             where T : unmanaged
-                => Spans.recover<T>(Storage());
+                => sys.recover<T>(Storage());
 
         Descriptor Descriptor()
             => new Descriptor(Index, Base(), Capacity());

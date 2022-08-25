@@ -43,9 +43,9 @@ namespace Z0
             return this;
         }
 
-        [MethodImpl(Inline)]
-        public static implicit operator Span<byte>(BufferToken src)
-            => Algs.edit(src);
+        // [MethodImpl(Inline)]
+        // public static implicit operator Span<byte>(BufferToken src)
+        //     => src.Address.Pointer<byte>();
 
         [MethodImpl(Inline)]
         public static implicit operator BufferToken((IntPtr handle, uint size) src)

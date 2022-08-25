@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
+    using static sys;
 
     /// <summary>
     /// Specifies a block of memory along with the base address from which it originated

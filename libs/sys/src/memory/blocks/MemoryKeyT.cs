@@ -58,7 +58,7 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => Algs.hash((uint)Min, (uint)Max);
+            get => sys.hash((uint)Min, (uint)Max);
         }
 
         public override int GetHashCode()
