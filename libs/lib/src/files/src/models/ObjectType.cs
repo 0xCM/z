@@ -4,16 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
-
     partial struct FS
     {
-        public readonly struct ObjectType : IType<ObjectKind>
+        public readonly struct ObjectType : IType<FileObjectKind>
         {
-            public ObjectKind Kind {get;}
+            public FileObjectKind Kind {get;}
 
             [MethodImpl(Inline)]
-            public ObjectType(ObjectKind kind)
+            public ObjectType(FileObjectKind kind)
             {
                 Kind = kind;
             }
@@ -24,11 +22,11 @@ namespace Z0
                 => Name;
 
             [MethodImpl(Inline)]
-            public static implicit operator ObjectType(ObjectKind kind)
+            public static implicit operator ObjectType(FileObjectKind kind)
                 => new ObjectType(kind);
 
             [MethodImpl(Inline)]
-            public static implicit operator ObjectKind(ObjectType type)
+            public static implicit operator FileObjectKind(ObjectType type)
                 => type.Kind;
         }
     }

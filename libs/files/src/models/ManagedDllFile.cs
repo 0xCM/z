@@ -32,7 +32,7 @@ namespace Z0
             get => Path.FileName;
         }
 
-        public FS.FileExt DefaultExt
+        public FileExt DefaultExt
             => FS.Dll;
 
         public FileModuleKind ModuleKind

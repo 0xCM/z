@@ -26,7 +26,7 @@ namespace Z0
         public static DbArchive archive(Timestamp ts, DbArchive dst)
             => dst.Scoped(ts.Format());
 
-        public static FS.FileName timestamped(string name, FS.FileExt ext)
+        public static FS.FileName timestamped(string name, FileExt ext)
             => FS.file(string.Format("{0}.{1}", name, (Timestamp.now()).Format()),ext);
 
         [Op]

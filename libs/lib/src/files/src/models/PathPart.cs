@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
+    using static sys;
 
     /// <summary>
     /// Defines the content of file path component
@@ -76,7 +76,6 @@ namespace Z0
             [MethodImpl(Inline)]
             get => Length != 0;
         }
-
 
         public static PathPart Empty
         {

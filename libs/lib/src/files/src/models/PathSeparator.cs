@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    [SymSource("files")]
     public enum PathSeparator : ushort
     {
         FS = '/',

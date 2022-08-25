@@ -7,7 +7,7 @@ namespace Z0
     partial struct FS
     {
         [MethodImpl(Inline), Op]
-        public static FS.FileExt combine(FS.FileExt x1, FS.FileExt x2)
+        public static FileExt combine(FileExt x1, FileExt x2)
             => x1 + x2;
 
         [Op]

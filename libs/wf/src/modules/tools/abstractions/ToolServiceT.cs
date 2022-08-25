@@ -35,13 +35,13 @@ namespace Z0
         protected static FS.FilePath output(FS.FolderPath dir, FS.FileName name)
             => dir + name;
 
-        protected static FS.FileName file(string src, FS.FileExt ext)
+        protected static FS.FileName file(string src, FileExt ext)
             => FS.file(src, ext);
 
         protected static FS.FileName binfile(string name)
             => FS.file(name, FS.Bin);
 
-        protected FS.FileName ToolFile(string name, string type, FS.FileExt ext)
+        protected FS.FileName ToolFile(string name, string type, FileExt ext)
             => FS.file(string.Format("{0}.{1}.{2}", name, Id, type), ext);
 
         protected FS.FileName ToolFile(string name, string type, FileKind kind)

@@ -7,7 +7,7 @@ namespace Z0
     partial struct FS
     {
         [MethodImpl(Inline), Op]
-        public static ObjectType type(ObjectKind kind)
+        public static ObjectType type(FileObjectKind kind)
             => new ObjectType(kind);
     }
 }

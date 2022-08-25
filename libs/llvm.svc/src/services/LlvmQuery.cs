@@ -23,7 +23,7 @@ namespace Z0.llvm
         public uint FileEmit<T>(string name, ReadOnlySpan<T> src)
             => FileEmit(src, name, string.Empty);
 
-        public void FileEmit(string data, string name, FS.FileExt ext)
+        public void FileEmit(string data, string name, FileExt ext)
             => FileEmit(data, 0, Paths.QueryOut().Path(FS.file(name, ext)));
 
         public uint FileEmit<T>(ReadOnlySpan<T> src, string name, string tag = EmptyString)

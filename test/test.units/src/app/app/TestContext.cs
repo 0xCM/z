@@ -146,7 +146,7 @@ namespace Z0
         protected virtual FS.FolderPath UnitDataDir
             => AppDb.Logs($"test/{GetType().Name}").Root;
 
-        protected static FS.FileExt LogExt => FS.Log;
+        protected static FileExt LogExt => FS.Log;
 
         protected string CaseName<C>(string root, C t = default)
             where C : unmanaged
@@ -177,17 +177,17 @@ namespace Z0
             => UnitPath(filename).Writer(append);
 
         [MethodImpl(Inline)]
-        protected FS.FilePath CasePath(FS.FileExt ext, [CallerName] string caller = null, bool append = false)
+        protected FS.FilePath CasePath(FileExt ext, [CallerName] string caller = null, bool append = false)
             => UnitPath(FS.file(caller, ext));
 
         [MethodImpl(Inline)]
-        protected FS.FilePath CasePath(string CaseName, FS.FileExt? ext = null)
+        protected FS.FilePath CasePath(string CaseName, FileExt? ext = null)
             => UnitPath(FS.file(CaseName, ext ?? FS.ext("csv")));
 
-        protected StreamWriter CaseWriter(FS.FileExt ext, [CallerName] string caller = null, bool append = false)
+        protected StreamWriter CaseWriter(FileExt ext, [CallerName] string caller = null, bool append = false)
             => CasePath(caller, ext).Writer(append);
 
-        protected StreamWriter CaseWriter(string CaseName, FS.FileExt? ext = null, bool append = false)
+        protected StreamWriter CaseWriter(string CaseName, FileExt? ext = null, bool append = false)
             => CasePath(CaseName, ext).Writer(append);
 
         protected BenchmarkRecord Benchmark(long opcount, Duration time, [CallerName] string label = null)

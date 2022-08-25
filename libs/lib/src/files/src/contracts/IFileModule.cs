@@ -8,7 +8,6 @@ namespace Z0
     public interface IFileModule : IFile
     {
         FileModuleKind ModuleKind {get;}
-
     }
 
     [Free]

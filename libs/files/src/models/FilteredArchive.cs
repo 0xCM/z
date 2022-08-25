@@ -10,18 +10,18 @@ namespace Z0
 
         public string TextFilter {get;}
 
-        public Index<FS.FileExt> ExtFilter {get;}
+        public Index<FileExt> ExtFilter {get;}
 
         [MethodImpl(Inline)]
         public FilteredArchive(FS.FolderPath root, string filter)
         {
             Root = root;
             TextFilter = filter;
-            ExtFilter = Index<FS.FileExt>.Empty;
+            ExtFilter = Index<FileExt>.Empty;
         }
 
         [MethodImpl(Inline)]
-        public FilteredArchive(FS.FolderPath root, FS.FileExt[] ext)
+        public FilteredArchive(FS.FolderPath root, FileExt[] ext)
         {
             Root = root;
             TextFilter = EmptyString;

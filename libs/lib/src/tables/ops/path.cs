@@ -27,7 +27,7 @@ namespace Z0
         public static FS.FolderPath subdir(FS.FolderPath dir, string subject)
             => dir + FS.folder(subject);
 
-        public static FS.FolderPath subdir(FS.FolderPath dir, FS.FolderName subject)
+        public static FS.FolderPath subdir(FS.FolderPath dir, FolderName subject)
             => dir + subject;
 
         public static FS.FolderPath subdir(FS.FolderPath dir, TableId id)

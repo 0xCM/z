@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
+    using static sys;
 
     [StructLayout(StructLayout,Size=8)]
     public struct LineStats

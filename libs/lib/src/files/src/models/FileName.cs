@@ -53,7 +53,7 @@ namespace Z0
                 get => FS.file(Path.GetFileNameWithoutExtension(Name));
             }
 
-            public FileName WithExtension(FS.FileExt ext)
+            public FileName WithExtension(FileExt ext)
                 => this + ext;
 
             /// <summary>

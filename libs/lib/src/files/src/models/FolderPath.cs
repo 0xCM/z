@@ -57,7 +57,7 @@ namespace Z0
                 //     Name = name;
             }
 
-            public FS.FolderName FolderName
+            public FolderName FolderName
             {
                 [MethodImpl(Inline)]
                 get => FS.folder(Info.Name);
@@ -110,7 +110,7 @@ namespace Z0
             public FS.Files Match(string pattern, bool recurse)
                 => Exists ? files(Directory.EnumerateFiles(Name, pattern, option(recurse)).Map(path)) : FS.Files.Empty;
 
-            public FS.Files Match(string pattern, FS.FileExt ext, bool recurse)
+            public FS.Files Match(string pattern, FileExt ext, bool recurse)
                 => Exists ? Files(ext, recurse).Where(f => f.Name.Contains(pattern)) : FS.Files.Empty;
 
             public FS.Files Match(string pattern, FileKind kind, bool recurse)

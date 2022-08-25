@@ -7,11 +7,11 @@ namespace Z0
     partial class XTend
     {
         [Op]
-        public static FS.FileName ToFileName(this OpIdentity src, FS.FileExt ext)
+        public static FS.FileName ToFileName(this OpIdentity src, FileExt ext)
             => FS.file(LegalIdentityBuilder.file(src), ext);
 
         [Op]
-        public static FS.FileName ToFileName(this OpIdentity src, string suffix, FS.FileExt ext)
+        public static FS.FileName ToFileName(this OpIdentity src, string suffix, FileExt ext)
             => FS.file(LegalIdentityBuilder.file(src) + suffix, ext);
     }
 }

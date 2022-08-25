@@ -4,26 +4,21 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
-
     public struct PathVar
     {
-        public NameOld Name {get;}
+        public @string Name {get;}
 
         FS.FilePath _Value;
 
         [MethodImpl(Inline)]
-        public PathVar(NameOld name)
+        public PathVar(@string name)
         {
             Name = name;
             _Value = FS.FilePath.Empty;
         }
 
         [MethodImpl(Inline)]
-        public PathVar(NameOld name, FS.FilePath value)
+        public PathVar(@string name, FS.FilePath value)
         {
             Name = name;
             _Value = value;
@@ -45,7 +40,7 @@ namespace Z0
             => new PathVar(name);
 
         [MethodImpl(Inline)]
-        public static implicit operator PathVar(NameOld name)
+        public static implicit operator PathVar(@string name)
             => new PathVar(name);
     }
 }

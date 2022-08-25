@@ -4,37 +4,33 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct FS
+    [SymSource("files")]
+    public enum FileObjectKind : byte
     {
-        [SymSource("files")]
-        public enum ObjectKind : byte
-        {
-            None = 0,
+        None = 0,
 
-            [Symbol("vol")]
-            Volume,
+        [Symbol("vol")]
+        Volume,
 
-            [Symbol("drive")]
-            Drive,
+        [Symbol("drive")]
+        Drive,
 
-            [Symbol("dir")]
-            Directory,
+        [Symbol("dir")]
+        Directory,
 
-            [Symbol("folder")]
-            FolderName,
+        [Symbol("folder")]
+        FolderName,
 
-            [Symbol("filename")]
-            FileName,
+        [Symbol("filename")]
+        FileName,
 
-            [Symbol("path")]
-            FilePath,
+        [Symbol("path")]
+        FilePath,
 
-            [Symbol("ext")]
-            FileExt,
+        [Symbol("ext")]
+        FileExt,
 
-            [Symbol("uri")]
-            Uri
-
-        }
+        [Symbol("uri")]
+        Uri
     }
 }

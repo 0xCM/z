@@ -20,7 +20,7 @@ namespace Z0
             => text.remove(src.Text.Replace('\\', '/'), "file:///");
 
         [Op]
-        public static string SearchPattern(FS.FileExt[] src)
+        public static string SearchPattern(FileExt[] src)
             => string.Join(";*.", src.Select(e => e.Name));
     }
 }

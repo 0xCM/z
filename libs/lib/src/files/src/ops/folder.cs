@@ -15,7 +15,7 @@ namespace Z0
             => folder(a) + folder(b);
 
         [Op]
-        public static FS.FolderName folder(PartId part)
+        public static FolderName folder(PartId part)
             => folder(part.Format());
 
         [MethodImpl(Inline), Op]

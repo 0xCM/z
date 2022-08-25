@@ -16,7 +16,7 @@ namespace Z0
         public FS.FolderPath SourceDir;
 
         [Render(16)]
-        public Index<FS.FileExt> Extensions;
+        public Index<FileExt> Extensions;
 
         [Render(16)]
         public bool FileUriMode;

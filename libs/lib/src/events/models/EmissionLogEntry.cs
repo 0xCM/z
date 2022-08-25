@@ -19,7 +19,7 @@ namespace Z0
         public Count Quantity;
 
         [Render(24)]
-        public FS.FileExt FileType;
+        public FileExt FileType;
 
         [Render(1)]
         public FileUri Target;

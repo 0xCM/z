@@ -9,18 +9,18 @@ namespace Z0
         public static ApiPartFiles part(IApiPack src, PartId part)
             => ApiPartFiles.create(src,part);
             
-        public static FS.FileName filename(ApiHostUri host, FS.FileExt ext)
+        public static FS.FileName filename(ApiHostUri host, FileExt ext)
             => FS.file(host.Id.Format(), ext);
 
-        public static FS.FileName filename(ApiHostUri host, FS.FileExt a, FS.FileExt b)
+        public static FS.FileName filename(ApiHostUri host, FileExt a, FileExt b)
             => FS.file(text.concat(host.Id.Format(), a), b);
 
         [MethodImpl(Inline), Op]
-        public static FS.FolderName folder(ApiHostUri host)
+        public static FolderName folder(ApiHostUri host)
             => FS.folder(host.HostName);
 
         [MethodImpl(Inline), Op]
-        public static FS.FolderName folder(PartId part)
+        public static FolderName folder(PartId part)
             => FS.folder(part.Format());
     }    
 

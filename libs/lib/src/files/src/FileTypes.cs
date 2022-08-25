@@ -24,7 +24,7 @@ namespace Z0
             return kind;
         }
 
-        public static FileKind kind(FS.FileExt src)
+        public static FileKind kind(FileExt src)
         {
             var dst = FileKind.None;
             var symbols = Symbols.index<FileKind>();
@@ -32,7 +32,7 @@ namespace Z0
             return dst;
         }
 
-        public static FS.FileExt ext(FileKind src)
+        public static FileExt ext(FileKind src)
             => FS.ext(format(src));
 
         public static string format(FileKind src)
@@ -48,13 +48,13 @@ namespace Z0
 
     public static class XFiles
     {
-        public static FS.FileExt Ext(this FileKind src)
+        public static FileExt Ext(this FileKind src)
             => FileTypes.ext(src);
 
         public static string Format(this FileKind src)
             => FileTypes.format(src);
 
-        public static FileKind FileKind(this FS.FileExt src)
+        public static FileKind FileKind(this FileExt src)
             => FileTypes.kind(src);
 
         public static FileKind FileKind(this FS.FileName src)

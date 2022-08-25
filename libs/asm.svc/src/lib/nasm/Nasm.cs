@@ -14,7 +14,7 @@ namespace Z0
         public FS.FilePath ListPath(FS.FolderPath dst, Identifier name)
             => dst + FS.file(name + ".bin", ListingExt);
 
-        public FS.FileExt ListingExt
+        public FileExt ListingExt
             => FS.ext("list") + FS.Asm;
 
         public Index<AssembledAsm> LoadAssembledAsm(FS.FolderPath src, Identifier listname)

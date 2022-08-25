@@ -6,7 +6,6 @@ namespace Z0
 {
     using static FS;
 
-
     public readonly record struct FileUri : IFsEntry<FileUri>
     {
         readonly FilePath Source;
@@ -65,7 +64,7 @@ namespace Z0
                 var i = text.index(src,Chars.Hash);
                 if(i > 0)
                 {
-                    return path(text.left(src,i));
+                    return FS.path(text.left(src,i));
                 }
                 else
                     return this;

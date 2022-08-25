@@ -167,7 +167,7 @@ namespace Z0
             var obj = src.Obj();
             var sid = Identifier.Empty;
             var cmd = DumpBin.CmdName.None;
-            var ext = FS.FileExt.Empty;
+            var ext = FileExt.Empty;
 
             cmd = DumpBin.CmdName.EmitHeaders;
             paths.Add(GenScript(cmd, dll, FileKind.Dll, dst));

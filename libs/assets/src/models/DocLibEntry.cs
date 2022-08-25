@@ -14,7 +14,7 @@ namespace Z0
             Name = name;
         }
 
-        public FS.FileExt Type
+        public FileExt Type
             => FS.file(Name.Format()).Ext;
 
         public string Format()

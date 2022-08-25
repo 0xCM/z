@@ -27,7 +27,7 @@ namespace Z0
             => DotNet().Scoped(name);
 
         public DbArchive DotNet(byte major, byte minor, byte revision)
-            => DotNet(FS.FolderName.version(major, minor, revision).Format());
+            => DotNet(FolderName.version(major, minor, revision).Format());
 
         public FS.FolderPath SymbolCacheRoot()
             => Root;
@@ -42,6 +42,6 @@ namespace Z0
             => DotNetSymSources().Sources(name);
 
         public IDbSources DotNetSymbolSource(byte major, byte minor, byte revision)
-            => DotNetSymbolSource(FS.FolderName.version(major, minor, revision).Format());
+            => DotNetSymbolSource(FolderName.version(major, minor, revision).Format());
     }
 }

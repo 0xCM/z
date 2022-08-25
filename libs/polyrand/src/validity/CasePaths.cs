@@ -38,10 +38,10 @@ namespace Z0
             => CaseDir + @case;
 
         [MethodImpl(Inline)]
-        public FS.FilePath CasePath(FS.FileExt? ext = null, [CallerName] string caller = null)
+        public FS.FilePath CasePath(FileExt? ext = null, [CallerName] string caller = null)
             => CasePath(FS.file(caller,  ext ?? DefaultExt));
 
-        FS.FileExt DefaultExt
+        FileExt DefaultExt
         {
             [MethodImpl(Inline)]
             get => FS.Csv;

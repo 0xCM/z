@@ -100,7 +100,7 @@ namespace Z0
         public FS.Files Files(FileKind kind, bool recurse = true)
             => Root.Files(kind.Ext(), recurse);
 
-        public FS.Files Files(FS.FileExt ext, bool recurse = true)
+        public FS.Files Files(FileExt ext, bool recurse = true)
             => Root.Files(ext, recurse);
 
         public Deferred<FS.FilePath> Enumerate(bool recursive = true)
@@ -163,20 +163,20 @@ namespace Z0
             => new FilteredArchive(src, filter);
 
         [MethodImpl(Inline), Op]
-        public static IFilteredArchive filter(FS.FolderPath src, params FS.FileExt[] ext)
+        public static IFilteredArchive filter(FS.FolderPath src, params FileExt[] ext)
             => new FilteredArchive(src, ext);
 
-        public static FS.Files search(FS.FolderPath src, FS.FileExt[] ext, uint limit = 0)
+        public static FS.Files search(FS.FolderPath src, FileExt[] ext, uint limit = 0)
             => limit != 0 ? match(src, limit, ext) : match(src, ext);
 
-        public static FS.Files match(FS.FolderPath src, uint max, params FS.FileExt[] ext)
+        public static FS.Files match(FS.FolderPath src, uint max, params FileExt[] ext)
         {
             var files = filter(src, ext).Files().Take(max).Array();
             Array.Sort(files);
             return files;
         }
 
-        public static FS.Files match(FS.FolderPath src, params FS.FileExt[] ext)
+        public static FS.Files match(FS.FolderPath src, params FileExt[] ext)
         {
             var files = filter(src, ext).Files().Array();
             Array.Sort(files);

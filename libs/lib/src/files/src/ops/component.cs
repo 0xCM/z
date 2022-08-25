@@ -7,11 +7,11 @@ namespace Z0
     partial struct FS
     {
         [Op]
-        public static FS.FileName component(PartId part, FS.FileExt ext)
+        public static FS.FileName component(PartId part, FileExt ext)
             => FS.file(string.Format("z0.{0}", part.Format()), ext);
 
         [Op]
-        public static FS.FileName component(PartId part, FS.FileExt x1, FS.FileExt x2)
+        public static FS.FileName component(PartId part, FileExt x1, FileExt x2)
             => FS.file(string.Format("z0.{0}", part.Format()), x1, x2);
     }
 }

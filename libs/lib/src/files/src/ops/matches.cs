@@ -7,7 +7,7 @@ namespace Z0
     partial struct FS
     {
         [Op]
-        public static bool matches(FS.FileName name, FS.FileExt ext)
+        public static bool matches(FS.FileName name, FileExt ext)
             => name.Format().EndsWith(ext.Name, NoCase);
     }
 }

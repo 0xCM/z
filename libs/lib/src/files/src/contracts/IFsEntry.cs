@@ -11,7 +11,7 @@ namespace Z0
         PathPart ILocatable<PathPart>.Location
             => Name;
         Hash32 IHashed.Hash
-            => HashCodes.hash(Name.Format());
+            => sys.hash(Name.Format());
 
         bool INullity.IsEmpty
             => Name.IsEmpty;

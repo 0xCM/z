@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
-
     public readonly struct FolderFiles : IIndex<FS.FilePath>
     {
         public readonly FS.FolderPath Location;
@@ -66,10 +64,7 @@ namespace Z0
             get => ref Data[index];
         }
 
-        // public FolderFiles Filter(FileKind kind)
-        //     => new FolderFiles(Location, Data.Where(x => FileTypes.kind(x.Ext) == kind));
-
-        public FolderFiles Filter(FS.FileExt ext)
+        public FolderFiles Filter(FileExt ext)
             => new FolderFiles(Location, Data.Where(x => x.Ext == ext));
 
         public FolderFiles Filter(string pattern)

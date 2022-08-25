@@ -29,10 +29,10 @@ namespace Z0
             return dst.ToArray();
         }
 
-        FS.FolderPath ImmSubDir(FS.FolderName name)
+        FS.FolderPath ImmSubDir(FolderName name)
             => (Root + name);
 
-        FS.FolderPath ImmSubDir(FS.FolderPath root, FS.FolderName name)
+        FS.FolderPath ImmSubDir(FS.FolderPath root, FolderName name)
             => (Root + name);
 
         FS.FilePath HexImmPath(PartId owner, ApiHostUri host, OpIdentity id, bool refined)

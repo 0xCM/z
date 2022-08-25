@@ -12,10 +12,10 @@ namespace Z0
 
             public readonly PathPart Name;
 
-            public readonly ObjectKind Kind;
+            public readonly FileObjectKind Kind;
 
             [MethodImpl(Inline)]
-            public FsEntry(PathPart name, ObjectKind kind)
+            public FsEntry(PathPart name, FileObjectKind kind)
             {
                 Name = name;
                 Kind = kind;

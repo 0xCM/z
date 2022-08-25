@@ -18,7 +18,7 @@ namespace Z0
         public FileModuleKind ModuleKind
             => FileModuleKind.Obj;
 
-        public FS.FileExt DefaultExt
+        public FileExt DefaultExt
             =>  FS.Obj;
 
         [MethodImpl(Inline)]

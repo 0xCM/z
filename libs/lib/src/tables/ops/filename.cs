@@ -9,14 +9,14 @@ namespace Z0
         public static FS.FileName filename(TableId id)
             => filename(id, FS.Csv);
 
-        public static FS.FileName filename(TableId id, FS.FileExt ext)
+        public static FS.FileName filename(TableId id, FileExt ext)
             => FS.file(id.Format(), ext);
 
         public static FS.FileName filename<T>()
             where T : struct
                 => filename<T>(FS.Csv);
 
-        public static FS.FileName filename<T>(FS.FileExt ext)
+        public static FS.FileName filename<T>(FileExt ext)
             where T : struct
                 => filename(identify<T>());
 

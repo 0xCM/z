@@ -166,7 +166,7 @@ namespace Z0.Asm
             }
         }
 
-        FS.FolderName TargetFolder
+        FolderName TargetFolder
             => FS.folder("asmcat");
 
         static bool mode64(string src)

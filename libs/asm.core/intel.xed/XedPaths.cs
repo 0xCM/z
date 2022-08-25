@@ -191,10 +191,10 @@ namespace Z0
             return Sources() + name;
         }
 
-        public FS.FilePath RuleTarget(string name, FS.FileExt ext)
+        public FS.FilePath RuleTarget(string name, FileExt ext)
             => RuleTargets().Path(FS.file("xed.rules." + name, ext));
 
-        public FS.FilePath Target(string name, FS.FileExt ext)
+        public FS.FilePath Target(string name, FileExt ext)
             => Output() + FS.file(name, ext);
 
         public FS.FolderPath DocTargets()

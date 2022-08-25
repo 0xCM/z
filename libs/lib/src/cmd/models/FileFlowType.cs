@@ -28,10 +28,10 @@ namespace Z0
         dynamic IArrow.Target
             => TargetKind;
 
-        FS.FileExt SourceExt
+        FileExt SourceExt
             => SourceKind.Ext();
 
-        FS.FileExt TargetExt
+        FileExt TargetExt
             => TargetKind.Ext();
 
         IActor IFlowType.Actor

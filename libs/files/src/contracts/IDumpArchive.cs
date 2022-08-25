@@ -15,7 +15,7 @@ namespace Z0
             => DumpTargets(dotnet);
 
         FS.FolderPath DotNetTargets(byte major, byte minor, byte revision)
-            => DotNetTargets().Targets(FS.FolderName.version(major, minor, revision).Format()).Root;
+            => DotNetTargets().Targets(FolderName.version(major, minor, revision).Format()).Root;
 
         FS.FilePath Table<T>(ProcDumpName id)
             where T : struct

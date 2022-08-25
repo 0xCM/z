@@ -24,7 +24,7 @@ namespace Z0
         public FileModuleKind ModuleKind
             => FileModuleKind.NativeLib;
 
-        public FS.FileExt DefaultExt
+        public FileExt DefaultExt
             =>  FS.Lib;
 
         [MethodImpl(Inline)]

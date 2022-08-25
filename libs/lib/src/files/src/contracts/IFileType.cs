@@ -17,10 +17,10 @@ namespace Z0
         string IExpr.Format()
             => Name;
 
-        Index<FS.FileExt> DefaultExtensions {get;}
+        Index<FileExt> DefaultExtensions {get;}
 
-        FS.FileExt PrimaryExtension
-            => DefaultExtensions.IsNonEmpty ?  DefaultExtensions.First : FS.FileExt.Empty;
+        FileExt PrimaryExtension
+            => DefaultExtensions.IsNonEmpty ?  DefaultExtensions.First : FileExt.Empty;
     }
 
     public interface IFileType<K> : IFileType, IKinded<K>
