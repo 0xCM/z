@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     using B = CharBlock16;
     using api = CharBlocks;
@@ -12,7 +12,7 @@ namespace Z0
     /// <summary>
     /// Defines a character block b with capacity(b) = 16x16u
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, Pack=2), DataWidth(Size*8,Size*8)]
+    [StructLayout(LayoutKind.Sequential, Pack=2)]
     public struct CharBlock16 : ICharBlock<B>
     {
         /// <summary>

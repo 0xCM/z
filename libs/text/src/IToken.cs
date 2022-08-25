@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     [Free]
     public interface IToken
@@ -48,5 +48,4 @@ namespace Z0
     {
         uint Id {get;}
     }
-
 }

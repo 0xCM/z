@@ -22,7 +22,7 @@ namespace Z0
         public Kb Size;
 
         [Render(180)]
-        public FS.FileUri Path;
+        public FileUri Path;
 
         [Render(24)]
         public Timestamp CreateTS;

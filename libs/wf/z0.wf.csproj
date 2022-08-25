@@ -9,10 +9,10 @@
   <Import Project="$(ProjectProps)usings.props"/>
 
   <ItemGroup>
-    <ProjectReference Include="$(Files)" />
-    <ProjectReference Include="$(Containers)" />
-    <ProjectReference Include="$(Symbolics)" />
-    <ProjectReference Include="$(CmdSpecs)" />
+    <ProjectReference Include="../files/z0.files.csproj" />
+    <ProjectReference Include="../containers/z0.containers.csproj" />
+    <ProjectReference Include="../symbolics/z0.symbolics.csproj" />
+    <ProjectReference Include="../cmd.specs/z0.cmd.specs.csproj" />
   </ItemGroup>
 
 </Project>

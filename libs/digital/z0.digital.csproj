@@ -8,7 +8,7 @@
   <Import Project="$(ProjectProps)usings.props"/>
 
   <ItemGroup>
-    <ProjectReference Include="$(ZLib)" />
+    <ProjectReference Include="../lib/z0.lib.csproj" />
   </ItemGroup>
 
 </Project>

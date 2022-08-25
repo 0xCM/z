@@ -16,7 +16,7 @@ namespace Z0
                 dst = SettingType.Bool;
             else if(src == typeof(string))
                 dst = SettingType.String;
-            else if(src == typeof(FS.FilePath) || src == typeof(FS.FileUri))
+            else if(src == typeof(FS.FilePath) || src == typeof(FileUri))
                 dst = SettingType.File;
             else if(src == typeof(FS.FolderPath))
                 dst = SettingType.Folder;

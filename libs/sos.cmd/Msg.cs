@@ -7,9 +7,9 @@ namespace Z0
 {
     struct Msg
     {
-        public static MsgPattern<FS.FileUri> CreatingPdbReader => "Creating pdb reader for {0}";
+        public static MsgPattern<FileUri> CreatingPdbReader => "Creating pdb reader for {0}";
 
-        public static MsgPattern<FS.FileUri> CreatedPdbReader => "Created pdb reader for {0}";
+        public static MsgPattern<FileUri> CreatedPdbReader => "Created pdb reader for {0}";
 
         public static MsgPattern<string> ReadingPdb => "Reading {0} pdb";
 

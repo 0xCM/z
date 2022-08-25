@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    
     [StructLayout(LayoutKind.Sequential)]
     public record struct ProcessContext
     {

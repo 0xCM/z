@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
+    using static sys;
 
     public interface ISymKey : ITextual
     {
@@ -24,6 +24,6 @@ namespace Z0
             => Value.ToString();
 
         uint ISymKey.Value
-            => core.bw32(Value);
+            => bw32(Value);
     }
 }

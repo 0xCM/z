@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     public interface ICharBlock : ICharSeq<char>, IStorageBlock, ICharSeq
     {

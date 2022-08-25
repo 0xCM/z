@@ -71,7 +71,7 @@ namespace Z0.llvm
         {
             var result = Outcome.Success;
             var count = src.Length;
-            var flows = new DataList<Arrow<FS.FileUri>>();
+            var flows = new DataList<Arrow<FileUri>>();
             for(var i=0; i<count; i++)
                 EmitStringTable(skip(src,i), staged, true);
         }

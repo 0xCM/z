@@ -46,7 +46,7 @@ namespace Z0
         public AsmExpr Asm;
 
         [Render(1)]
-        public FS.FileUri Source;
+        public FileUri Source;
 
         public int CompareTo(XedDisasmRow src)
         {

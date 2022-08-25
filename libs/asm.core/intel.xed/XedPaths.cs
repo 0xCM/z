@@ -127,18 +127,18 @@ namespace Z0
         public FS.FilePath DisasmOpsPath(ProjectId project, in FileRef src)
             => DisasmTargets(project).Path(FS.file(string.Format("{0}.ops", src.Path.FileName.WithoutExtension.Format()), FS.Txt));
 
-        public FS.FileUri RulePage(RuleSig sig)
+        public FileUri RulePage(RuleSig sig)
             => RulePages().Path(FS.file(sig.Format(), FS.Csv));
 
-        public FS.FileUri CheckedRulePage(RuleSig sig)
+        public FileUri CheckedRulePage(RuleSig sig)
         {
             var uri = RulePage(sig);
-            return uri.Path.Exists ? uri : FS.FileUri.Empty;
+            return uri.Path.Exists ? uri : FileUri.Empty;
         }
 
-        public FS.FileUri CheckedTableDef(RuleName rule, bit decfirst, out RuleSig sig)
+        public FileUri CheckedTableDef(RuleName rule, bit decfirst, out RuleSig sig)
         {
-            var dst = FS.FileUri.Empty;
+            var dst = FileUri.Empty;
             if(decfirst)
             {
                 sig = new RuleSig(RuleTableKind.DEC, rule);

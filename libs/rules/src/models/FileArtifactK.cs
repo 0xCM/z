@@ -7,12 +7,12 @@ namespace Z0
     public readonly struct FileArtifact<K> : IFileArtifact<FileArtifact<K>,K>
         where K : unmanaged
     {
-        public readonly FS.FileUri Source;
+        public readonly FileUri Source;
 
         public readonly K Kind;
 
         [MethodImpl(Inline)]
-        public FileArtifact(K kind, FS.FileUri location)
+        public FileArtifact(K kind, FileUri location)
         {
             Kind = kind;
             Source = location;
@@ -21,7 +21,7 @@ namespace Z0
         public PathPart Name
             => Source.Format();
 
-        FS.FileUri IArtifact<K, FS.FileUri>.Location
+        FileUri IArtifact<K, FileUri>.Location
             => Source;
 
         K IArtifact<K>.Kind
@@ -34,7 +34,7 @@ namespace Z0
             => Format();
 
         [MethodImpl(Inline)]
-        public static implicit operator FileArtifact<K>((K kind, FS.FileUri locator) src)
+        public static implicit operator FileArtifact<K>((K kind, FileUri locator) src)
             => new FileArtifact<K>(src.kind, src.locator);
     }
 }

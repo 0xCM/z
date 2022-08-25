@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     [Free]
     public unsafe interface ISTRes
@@ -33,7 +33,7 @@ namespace Z0
         ReadOnlySpan<char> this[K k]
         {
             [MethodImpl(Inline)]
-            get => this[core.bw32(k)];
+            get => this[bw32(k)];
         }
     }
 

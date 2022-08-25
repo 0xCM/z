@@ -40,7 +40,7 @@ namespace Z0
         /// <summary>
         /// The image source path
         /// </summary>
-        public FS.FileUri ImagePath;
+        public FileUri ImagePath;
 
         [MethodImpl(Inline)]
         public ImageLocation(string name, MemoryAddress entry, MemoryAddress @base, ByteSize size, FS.FilePath path)

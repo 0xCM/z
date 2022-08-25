@@ -14,19 +14,19 @@ namespace Z0
     partial struct Tables
     {
         [MethodImpl(Inline), Op]
-        public static MsgPattern<FS.FileUri> processing(FS.FilePath src)
+        public static MsgPattern<FileUri> processing(FS.FilePath src)
             => "Processing records from {0}";
 
         [MethodImpl(Inline), Op]
-        public static MsgPattern<TableId,FS.FileUri> processing(TableId table, FS.FilePath src)
+        public static MsgPattern<TableId,FileUri> processing(TableId table, FS.FilePath src)
             => "Processing {0} records from {1}";
 
         [MethodImpl(Inline), Op]
-        public static MsgPattern<Count,FS.FileUri> imported(Count count, FS.FilePath src)
+        public static MsgPattern<Count,FileUri> imported(Count count, FS.FilePath src)
             => "Imported {0} records from {1}";
 
         [MethodImpl(Inline), Op]
-        public static MsgPattern<Count,FS.FileUri> emitted(Count count, FS.FilePath dst)
+        public static MsgPattern<Count,FileUri> emitted(Count count, FS.FilePath dst)
             => "Emitted {0} records to {1}";
     }
 }

@@ -4,22 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     public struct UnicodeLine : IComparable<UnicodeLine>
     {
         [Op]
         public static string format(in UnicodeLine src)
             => string.Format("{0}:{1}", src.LineNumber, new string(src.View));
-
-        [MethodImpl(Inline), Op]
-        public static void convert(in AsciLineCover src, uint line, Span<char> buffer, out UnicodeLine dst)
-        {
-            var count = src.Length;
-            for(var i=0u; i<count; i++)
-                seek(buffer, i) = (char)skip(src.Codes,i);
-            dst = new UnicodeLine(line, text.format(buffer));
-        }
 
         [MethodImpl(Inline), Op]
         public static bool empty(ReadOnlySpan<char> src, uint offset)

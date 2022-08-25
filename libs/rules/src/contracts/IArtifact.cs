@@ -29,7 +29,7 @@ namespace Z0
             => Location;
     }
 
-    public interface IFileArtifact<H,K> : IArtifact<K,FS.FileUri>, IFsEntry<H>
+    public interface IFileArtifact<H,K> : IArtifact<K,FileUri>, IFsEntry<H>
         where K : unmanaged
         where H : struct, IFileArtifact<H,K>
     {

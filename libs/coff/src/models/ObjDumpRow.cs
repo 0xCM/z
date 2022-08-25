@@ -55,7 +55,7 @@ namespace Z0
         public AsmInlineComment Comment;
 
         [Render(1)]
-        public FS.FileUri Source;
+        public FileUri Source;
 
         public string DocName
             => Source.Path.FileName.Format();

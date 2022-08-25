@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     public readonly struct SymKey : ISymKey<SymKey,uint>
     {
         [Parser]

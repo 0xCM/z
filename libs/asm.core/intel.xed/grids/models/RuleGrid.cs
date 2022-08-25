@@ -22,7 +22,7 @@ namespace Z0
 
             public readonly ushort CellCount;
 
-            public readonly FS.FileUri TablePath;
+            public readonly FileUri TablePath;
 
             [MethodImpl(Inline)]
             public RuleGrid(RuleSig sig, ushort rows, byte cols, Index<GridCell> cells)

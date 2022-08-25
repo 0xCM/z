@@ -128,7 +128,7 @@ namespace Z0
             var dst = list<ObjBlock>();
             var size = 0u;
             var number = 0u;
-            var source = FS.FileUri.Empty;
+            var source = FileUri.Empty;
             for(var i=0; i<count; i++)
             {
                 ref readonly var row = ref src[i];

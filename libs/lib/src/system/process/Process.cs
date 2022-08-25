@@ -232,7 +232,7 @@ namespace Z0
             get => new ProcessModule(Subject.MainModule);
         }
 
-        public FS.FileUri Uri
+        public FileUri Uri
         {
             [MethodImpl(Inline)]
             get => MainModule.Path;

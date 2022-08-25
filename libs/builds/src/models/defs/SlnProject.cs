@@ -8,7 +8,7 @@ namespace Z0
     {
         public record class SlnProject
         {
-            public FS.FileUri Path;
+            public FileUri Path;
 
             public string ProjectName;
 

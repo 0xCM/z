@@ -16,7 +16,7 @@ namespace Z0
 
         public static MsgPattern<Count,Count> UnexpectedFieldCount => "{0} fields were expected and yet {1} were found";
 
-        public static MsgPattern<FS.FileUri> CouldNotParseDocument => "Could not parse {0}";
+        public static MsgPattern<FileUri> CouldNotParseDocument => "Could not parse {0}";
 
         public static MsgPattern<TextRow,string> CouldNotParseStatementRow => "Could not parse statement from {0}: {1}";
 

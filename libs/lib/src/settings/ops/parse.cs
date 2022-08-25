@@ -129,7 +129,7 @@ namespace Z0
                 }
                 else if(type == typeof(FS.FilePath))
                     dst = FS.path(src);
-                else if(type == typeof(FS.FileUri))
+                else if(type == typeof(FileUri))
                     dst =  FS.uri(src);
                 else if(type == typeof(FS.FolderPath))
                     dst = FS.dir(src);

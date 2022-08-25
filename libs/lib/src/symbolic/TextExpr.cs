@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    using static Spans;
+    using static sys;
 
     /// <summary>
     /// Defines the root <see cref='ITextExpr'/> abstraction

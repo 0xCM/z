@@ -11,14 +11,14 @@ namespace Z0
         [Cmd(N.mklink)]
         public struct MkLinkCmd : IToolCmd<MkLink,MkLinkCmd>
         {            
-            public FS.FileUri Source;
+            public FileUri Source;
 
-            public FS.FileUri Target;
+            public FileUri Target;
             
             public Flag Flags;
 
             [MethodImpl(Inline)]
-            public MkLinkCmd(Flag flags, FS.FileUri src, FS.FileUri dst)
+            public MkLinkCmd(Flag flags, FileUri src, FileUri dst)
             {
                 Flags = flags;
                 Source = src;

@@ -64,7 +64,7 @@ namespace Z0
 
             public string Format()
             {
-                var uri = FS.FileUri.Empty;
+                var uri = FileUri.Empty;
                 var sig = RuleSig.Empty;
                 var detail = EmptyString;
                 var bw = BitWidth.ToString();

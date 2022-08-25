@@ -8,9 +8,7 @@ namespace Z0
 
     using Windows;
 
-    using static Algs;
-    using static Spans;
-    using static Arrays;
+    using static sys;
 
     public unsafe class ProcessSegments
     {

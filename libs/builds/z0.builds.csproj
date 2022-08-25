@@ -9,7 +9,7 @@
   <Import Project="$(ImportDefs)microsoft.build.props" />
 
   <ItemGroup>
-    <ProjectReference Include="$(Wf)" />
+    <ProjectReference Include="../wf/z0.wf.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <DebugSymbols>true</DebugSymbols>
+    <TargetFramework>$(FrameworkMoniker)</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../sys/z0.sys.csproj" />
+    <ProjectReference Include="../bit/z0.bit.csproj" />
+  </ItemGroup>
+
+</Project>

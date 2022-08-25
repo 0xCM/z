@@ -16,9 +16,9 @@ namespace Z0
         static FileFlow flow(in CmdFlow src)
             => new FileFlow(flow(src.Tool, src.SourcePath.ToUri(), src.TargetPath.ToUri()));
 
-        ConstLookup<FS.FileUri,List<FS.FileUri>> Children;
+        ConstLookup<FileUri,List<FileUri>> Children;
 
-        ConstLookup<FS.FileUri,FS.FileUri> Ancestors;
+        ConstLookup<FileUri,FileUri> Ancestors;
 
         public readonly FileCatalog Files;
 
@@ -27,8 +27,8 @@ namespace Z0
             Files = files;
             var count = src.Length;
             var flows = sys.alloc<FileFlow>(count);
-            var lookup = dict<FS.FileUri,List<FS.FileUri>>();
-            var lineage = dict<FS.FileUri,FS.FileUri>();
+            var lookup = dict<FileUri,List<FileUri>>();
+            var lineage = dict<FileUri,FileUri>();
 
             for(var i=0; i<count; i++)
             {
@@ -104,7 +104,7 @@ namespace Z0
             }
         }
 
-        public bool Source(FS.FileUri target, out FileRef prior)
+        public bool Source(FileUri target, out FileRef prior)
         {
             if(Ancestors.Find(target, out var uri))
             {

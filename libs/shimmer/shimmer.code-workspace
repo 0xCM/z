@@ -1,0 +1,56 @@
+{
+	"folders": [
+		{
+			"path": "../bit"
+		},
+		{
+			"path": "../sys"
+		},
+		{
+			"path": "../text"
+		},
+		{
+			"path": "../clr.models"
+		},
+		{
+			"path": "../clr.query"
+		},
+		{
+			"path": "../alloc"
+		},
+		{
+			"path": "../native"
+		},
+		{
+			"path": "../lib"
+		},
+		{
+			"path": "../containers"
+		},
+		{
+			"path": "../symbolics"
+		},
+		{
+			"path": "../cmd.specs"
+		},
+		{
+			"path": "../digital"
+		},
+		{
+			"path": "../files"
+		},
+		{
+			"path": "../wf"
+		},
+		{
+			"path": "../builds"
+		},
+		{
+			"path": "../tools"
+		},
+		{
+			"path": "."
+		},
+	],
+	"settings": {}
+}

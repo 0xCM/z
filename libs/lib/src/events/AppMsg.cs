@@ -12,16 +12,16 @@ namespace Z0
     {
         public readonly AppMsgData Data;
 
-        public static MsgPattern<FS.FileUri> FileExists
+        public static MsgPattern<FileUri> FileExists
             => "The path {0} exists and yet it shold not";
 
-        public static MsgPattern<FS.FileUri> FileMissing
+        public static MsgPattern<FileUri> FileMissing
             => "The path {0} does not exist and yet it should";
 
-        public static MsgPattern<ByteSize,FS.FileUri> EmittedBytes
+        public static MsgPattern<ByteSize,FileUri> EmittedBytes
             => "Emitted {0} bytes to {1}";
 
-        public static MsgPattern<FS.FileUri,Count,Count> CsvHeaderMismatch
+        public static MsgPattern<FileUri,Count,Count> CsvHeaderMismatch
             => "The records defined in {0} require {0} fields but {1} were found in the source";
 
         public static MsgPattern<Count,Count,string> CsvDataMismatch
@@ -33,16 +33,16 @@ namespace Z0
         public static MsgPattern<Count,Count,string> CellCountMismatch
             => "The target requires {0} fields but {1} were found in {2}";
 
-        public static RenderPattern<TableId,Count,FS.FileUri> EmittedTable
+        public static RenderPattern<TableId,Count,FileUri> EmittedTable
             => "Emitted <{1}> <{0}> rows to {2}";
 
-        public static RenderPattern<TableId,FS.FileUri> EmittingTable
+        public static RenderPattern<TableId,FileUri> EmittingTable
             => "Emitting <{0}> to {1}";
 
-        public static RenderPattern<FS.FileUri> EmittingFile
+        public static RenderPattern<FileUri> EmittingFile
             => "Emitting {0}";
 
-        public static RenderPattern<FS.FileUri> EmittedFile
+        public static RenderPattern<FileUri> EmittedFile
             => "Emitted {0}";
 
         public static RenderPattern<object> UnhandledCase
@@ -54,7 +54,7 @@ namespace Z0
             return msg.Capture(input,capacity);
         }
 
-        public static RenderPattern<Count,FS.FileUri> EmittedFileLines
+        public static RenderPattern<Count,FileUri> EmittedFileLines
             => "Emitted <{0}> lines to {1}";
 
         public static MsgPattern<string,string> ParseFailure

@@ -1,0 +1,11 @@
+@echo off
+call %~dp0..\config.cmd
+set ExeName=ztool.exe
+set ProjectId=tools.shell
+set Artifacts=%EnvRoot%\dev\z0\artifacts
+set BuildPrefix=z0
+set Configuration=Release
+set FrameworkMoniker=net6.0
+set RuntimeIdentifier=win-x64
+set ShellPath=%Artifacts%\bin\%BuildPrefix%.%ProjectId%\%Configuration%\%FrameworkMoniker%\%RuntimeIdentifier%\%ExeName%
+call %RunTool%

@@ -6,16 +6,16 @@ namespace Z0
 {
     partial struct Markdown
     {
-        public readonly record struct AbsoluteLink : ILink<AbsoluteLink,LinkTarget<FS.FileUri>>
+        public readonly record struct AbsoluteLink : ILink<AbsoluteLink,LinkTarget<FileUri>>
         {
             public readonly Label Label;
 
-            public readonly LinkTarget<FS.FileUri> Target;
+            public readonly LinkTarget<FileUri> Target;
 
             public readonly bool Bare;
 
             [MethodImpl(Inline)]
-            public AbsoluteLink(Label label, LinkTarget<FS.FileUri> target, bool bare)
+            public AbsoluteLink(Label label, LinkTarget<FileUri> target, bool bare)
             {
                 Label = label;
                 Target = target;
@@ -25,7 +25,7 @@ namespace Z0
             Label ILabeled.Label
                 => Label;
 
-            LinkTarget<FS.FileUri> ILink<LinkTarget<FS.FileUri>>.Target
+            LinkTarget<FileUri> ILink<LinkTarget<FileUri>>.Target
                 => Target;
 
             public string Format()

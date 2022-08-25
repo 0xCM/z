@@ -91,7 +91,7 @@ namespace Z0
             => new AbsoluteLink(label, dst.ToUri(), false);
 
         [MethodImpl(Inline), Op]
-        public static AbsoluteLink link(Label label, FS.FileUri dst)
+        public static AbsoluteLink link(Label label, FileUri dst)
             => new AbsoluteLink(label, dst, false);
 
         [MethodImpl(Inline), Op]

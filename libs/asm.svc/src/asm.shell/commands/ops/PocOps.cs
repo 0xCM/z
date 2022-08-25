@@ -205,7 +205,7 @@ namespace Z0.Asm
             return true;
         }
 
-        MsgPattern<Count,FS.FileUri> EmittedInstructions
+        MsgPattern<Count,FileUri> EmittedInstructions
             => "Emitted {0} instructions to {1}";
 
         Outcome GenAsm2(CmdArgs args)

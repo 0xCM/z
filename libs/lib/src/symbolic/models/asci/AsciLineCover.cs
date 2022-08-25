@@ -4,11 +4,19 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Spans;
-    using static Algs;
+    using static sys;
 
     public ref struct AsciLineCover
     {
+        [MethodImpl(Inline), Op]
+        public static void unicode(in AsciLineCover src, uint line, Span<char> buffer, out UnicodeLine dst)
+        {
+            var count = src.Length;
+            for(var i=0u; i<count; i++)
+                seek(buffer, i) = (char)skip(src.Codes,i);
+            dst = new UnicodeLine(line, text.format(buffer));
+        }
+
         /// <summary>
         /// The line content
         /// </summary>
@@ -92,32 +100,6 @@ namespace Z0
             var i=0u;
             return Asci.render(this, ref i, dst);
         }
-
-        // public static uint render(in AsciLineCover src, ref uint i, Span<char> dst)
-        // {
-        //     var i0 = i;
-        //     if(src.IsNonEmpty)
-        //         text.render(src.Codes, ref i, dst);
-        //     return i - i0;
-        // }
-
-        // [Op]
-        // public static string format<T>(in AsciLineCover<T> src)
-        //     where T : unmanaged
-        // {
-        //     Span<char> buffer = stackalloc char[src.RenderLength];
-        //     var i=0u;
-        //     text.render(recover<T,AsciCode>(src.View), ref i, buffer);
-        //     return text.format(buffer);
-        // }
-
-        // public static string format(in AsciLineCover src)
-        // {
-        //     Span<char> buffer = stackalloc char[src.RenderLength];
-        //     var i=0u;
-        //     text.render(src.Codes, ref i, buffer);
-        //     return text.format(buffer);
-        // }
 
         public string Format()
             => Asci.format(this);
