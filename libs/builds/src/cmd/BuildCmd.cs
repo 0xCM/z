@@ -23,8 +23,7 @@ namespace Z0
             });
         }
 
-
-        [CmdOp("projects/cfg")]
+        [CmdOp("build/projects")]
         void ProjectCfg()
         {
             var path = AppDb.Dev("z0").Sources("props").Path("projects",FileKind.Props);
@@ -56,6 +55,8 @@ namespace Z0
             var data = dst.Map(x => x.Format()).Concat("\n");
             var cfg = AppDb.DbOut("cfg").Path("projects", FileKind.Cfg);
             FileEmit(data, cfg);
+            var config = Settings.cfg(cfg);
+            iter(config, entry => Emitter.Row($"dotnet sln add {FS.path(new string(entry.Value))}"));
 
             //Emitter.FileEmit()
         }

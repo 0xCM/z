@@ -13,127 +13,51 @@ set FrameworkMoniker=net6.0
 set PlatformName="Any CPU"
 set RuntimeMoniker=%OsName%-%ArchName%
 set VersionSuffix=3
-
-set EnvFile=%~dp0artifacts\%ProjectId%.env
-echo # %ProjectId% env>%EnvFile%
-
 set MimeTypes=%EnvSite%\mime.types
-
 set Archives=%PArchives%
-
 set PackageOut=%EnvRoot%\packages\%SlnId%
-
 set RepoArchives=%Archives%\repos
-
 set DevArchives=%Archives%\%EnvPartition%
-
 set RepoArchive=%RepoArchives%\%SlnId%.zip
-
 set SlnArchive=%DevArchives%\%SlnId%
-
 set CommitLog=%RepoArchives%\%SlnId%.commit.log
-
 set SlnRoot=%EnvRoot%\%EnvPartition%\%SlnId%
-
 set Artifacts=%SlnRoot%\artifacts
-
 set SlnArtifacts=%SlnRoot%\artifacts
-
+set SlnBin=%Artifacts%\bin
+set SlnDeps=%Artifacts%\deps
+set SlnObj=%Artifacts%\obj
+set SlnLogs=%Artifacts%\logs
 set SlnLibs=%SlnRoot%\libs
-
 set SlnTests=%SlnRoot%\test
-
 set SlnArea=%SlnRoot%\%Area%
-
 set ShellPath=%Artifacts%\bin\%BuildPrefix%.%ProjectId%\%ConfigName%\%FrameworkMoniker%\%RuntimeMoniker%\%ShellId%.exe
-
 set ExternalDeps=%Artifacts%\deps
-
 set NetSdk=%ExternalDeps%\dotnet
-
 set DOTNET_ROOT=%NetSdk%
-
 set PATH=%DOTNET_ROOT%;%PATH%
-
 set Reports=%Artifacts%\reports
-
 set Distributions=%Artifacts%\dist
-
 set Deployments=%EnvRoot%\tools\z0
-
-set NuGetDeps=%ExternalDeps%\nuget
-
+set NuGetDeps=%SlnDeps%\nuget
 set SlnDist=%Distributions%\%SlnId%
-
 set BuildLogs=%Artifacts%\logs
-
 set SlnScripts=%SlnRoot%\scripts
-
 set SlnProps=%SlnRoot%\props
-
 set AppSettings=%SlnProps%\app.settings.csv
-
 set ProjectRoot=%SlnRoot%\%Area%\%ProjectId%
-
 set ProjectScripts=%ProjectRoot%\scripts
-
 set ProjectPath=%ProjectRoot%\%BuildPrefix%.%ProjectId%.csproj
-
 set ProjectSln=%ProjectRoot%\%BuildPrefix%.%ProjectId%.sln
-
 set ProjectBin=%Artifacts%\bin\%BuildPrefix%.%ProjectId%
-
 set ProjectObj=%Artifacts%\obj\%BuildPrefix%.%ProjectId%
-
 set ProjectShell=%ProjectBin%\%ConfigName%\%FrameworkMoniker%\%RuntimeMoniker%\%ShellId%.exe
-
 set ProjectDist=%Distributions%\%ProjectId%
-
 set PublishedShell=%ProjectDist%\%ShellId%.exe
 
 set DeployedShell=%Deployments%\%ProjectId%\%ShellId%.exe
-echo Deployments=%Deployments%>>%EnvFile%
-echo MimeTypes=%MimeTypes%>>%EnvFile%
-echo Archives=%Archives%>>%EnvFile%
-echo PackageOut=%PackageOut%>>%EnvFile%
-echo RepoArchives=%RepoArchives%>>%EnvFile%
-echo DevArchives=%DevArchives%>>%EnvFile%
-echo RepoArchive=%RepoArchive%>>%EnvFile%
-echo SlnArchive=%SlnArchive%>>%EnvFile%
-echo CommitLog=%CommitLog%>>%EnvFile%
-echo SlnRoot=%SlnRoot%>>%EnvFile%
-echo Artifacts=%Artifacts%>>%EnvFile%
-echo SlnArtifacts=%SlnArtifacts%>>%EnvFile%
-echo SlnLibs=%SlnLibs%>>%EnvFile%
-echo SlnArea=%SlnArea%>>%EnvFile%
-echo ShellPath=%ShellPath%>>%EnvFile%
-echo ExternalDeps=%ExternalDeps%>>%EnvFile%
-echo NetSdk=%NetSdk%>>%EnvFile%
-echo DOTNET_ROOT=%DOTNET_ROOT%>>%EnvFile%
-echo PATH=%PATH%>>%EnvFile%
-echo Reports=%Reports%>>%EnvFile%
-echo Distributions=%Distributions%>>%EnvFile%
-echo NugetDeps=%NugetDeps%>>%EnvFile%
-echo SlnDist=%SlnDist%>>%EnvFile%
-echo BuildLogs=%BuildLogs%>>%EnvFile%
-echo SlnScripts=%SlnScripts%>>%EnvFile%
-echo SlnProps=%SlnProps%>>%EnvFile%
-echo AppSettings=%AppSettings%>>%EnvFile%
-echo ProjectRoot=%ProjectRoot%>>%EnvFile%
-echo ProjectScripts=%ProjectScripts%>>%EnvFile%
-echo ProjectPath=%ProjectPath%>>%EnvFile%
-echo ProjectSln=%ProjectSln%>>%EnvFile%
-echo ProjectBin=%ProjectBin%>>%EnvFile%
-echo ProjectObj=%ProjectObj%>>%EnvFile%
-echo ProjectShell=%ProjectShell%>>%EnvFile%
-echo ProjectDist=%ProjectDist%>>%EnvFile%
-echo DeployedShell=%DeployedShell%>>%EnvFile%
-echo BuildLogs=%BuildLogs%>>%EnvFile%
-
 set SlnPath=%SlnArea%\z0.%Area%.sln
-
 set BuildLogs=%Artifacts%\logs
-
 set LibName=z0.%ProjectId%.dll
 set TestLog=%BuildLogs%\z0.%ProjectId%.tests.trx
 set RootSlnLogPath=%BuildLogs%\%BuildPrefix%.sln.binlog
@@ -165,7 +89,6 @@ set DllShellBin=%TargetBuildRoot%
 set DllShellPath=%DllShellBin%\z0.%ProjectId%.exe
 set shell=%ShellExePath%
 set dllshell=%DllShellPath%
-
 set ShellDeployment=%Deployments%\%ShellId%
 set CleanBuild=rmdir %Artifacts% \s\q
 set CleanObj=rmdir %Artifacts%\obj \s\q
@@ -174,7 +97,6 @@ set CleanNugetDeps=rmdir %NuGetDeps% \s\q
 set AddSlnProject=%SlnScripts%\sln-add.cmd
 
 set ProjectDist=%Distributions%\%ProjectId%
-echo ProjectDist=%ProjectDist%>>%EnvFile%
 
 set PublishLib=dotnet publish %ProjectPath% --output %ProjectDist% --configuration %ConfigName% --framework %FrameworkMoniker% --version-suffix %VersionSuffix%
 set PublishShell=dotnet publish %ProjectPath% --output %ProjectDist% --configuration %ConfigName% --framework %FrameworkMoniker% --version-suffix %VersionSuffix%
@@ -190,8 +112,53 @@ set RunTool=dotnet run %RunToolOptions%
 set GitPush=git push -u origin main -v
 set CleanBin=rmdir %ProjectBin% /s/q
 set CleanObj=rmdir %ProjectObj% /s/q
+set CleanSlnBin=rmdir %SlnBin% /s/q
+set CleanSlnObj=rmdir %SlnObj% /s/q
+set CleanSlnLogs=rmdir %SlnLogs% /s/q
 
-: echo GitPush=%GitPush%>>%EnvFile%
+set CfgFile=%Artifacts%\%ProjectId%.cfg
+echo # %ProjectId% env>%CfgFile%
+echo Deployments=%Deployments%>>%CfgFile%
+echo MimeTypes=%MimeTypes%>>%CfgFile%
+echo Archives=%Archives%>>%CfgFile%
+echo PackageOut=%PackageOut%>>%CfgFile%
+echo RepoArchives=%RepoArchives%>>%CfgFile%
+echo DevArchives=%DevArchives%>>%CfgFile%
+echo RepoArchive=%RepoArchive%>>%CfgFile%
+echo SlnArchive=%SlnArchive%>>%CfgFile%
+echo CommitLog=%CommitLog%>>%CfgFile%
+echo SlnRoot=%SlnRoot%>>%CfgFile%
+echo SlnBin=%SlnBin%>>%CfgFile%
+echo SlnObj=%SlnObj%>>%CfgFile%
+echo SlnLogs=%SlnLogs%>>%CfgFile%
+echo SlnLibs=%SlnLibs%>>%CfgFile%
+echo SlnArea=%SlnArea%>>%CfgFile%
+echo ShellPath=%ShellPath%>>%CfgFile%
+echo ExternalDeps=%ExternalDeps%>>%CfgFile%
+echo NetSdk=%NetSdk%>>%CfgFile%
+echo DOTNET_ROOT=%DOTNET_ROOT%>>%CfgFile%
+echo PATH=%PATH%>>%CfgFile%
+echo Reports=%Reports%>>%CfgFile%
+echo Distributions=%Distributions%>>%CfgFile%
+echo NugetDeps=%NugetDeps%>>%CfgFile%
+echo SlnDist=%SlnDist%>>%CfgFile%
+echo BuildLogs=%BuildLogs%>>%CfgFile%
+echo SlnScripts=%SlnScripts%>>%CfgFile%
+echo SlnProps=%SlnProps%>>%CfgFile%
+echo AppSettings=%AppSettings%>>%CfgFile%
+echo ProjectRoot=%ProjectRoot%>>%CfgFile%
+echo ProjectScripts=%ProjectScripts%>>%CfgFile%
+echo ProjectPath=%ProjectPath%>>%CfgFile%
+echo ProjectSln=%ProjectSln%>>%CfgFile%
+echo ProjectBin=%ProjectBin%>>%CfgFile%
+echo ProjectObj=%ProjectObj%>>%CfgFile%
+echo ProjectShell=%ProjectShell%>>%CfgFile%
+echo ProjectDist=%ProjectDist%>>%CfgFile%
+echo DeployedShell=%DeployedShell%>>%CfgFile%
+echo BuildLogs=%BuildLogs%>>%CfgFile%
+echo ProjectDist=%ProjectDist%>>%CfgFile%
+
+: echo GitPush=%GitPush%>>%CfgFile%
 : git remote add origin https://github.com/0xCM/z.git
 : git branch -M main
 : git push -u origin main

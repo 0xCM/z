@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
+    [StructLayout(LayoutKind.Sequential)]
     public record struct CfgEntry
     {
         public readonly ReadOnlySeq<char> Name;
@@ -15,10 +14,14 @@ namespace Z0
         [MethodImpl(Inline)]
         public CfgEntry(string name, string value)
         {
-            Name = name.Array();
-            Value = value.Array();
+            Name = name.ToCharArray();
+            Value = value.ToCharArray();
         }
-    }
 
-    //public class CfgSet : Seq<CfgSet,
+        public string Format()
+            => $"{new string(Name.Storage)}={new string(Value.Storage)}";
+
+        public override string ToString()
+            => Format();
+    }
 }
