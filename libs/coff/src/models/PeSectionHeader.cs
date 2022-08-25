@@ -10,7 +10,7 @@ namespace Z0
         const string TableId = "section.headers";
 
         [Render(64)]
-        public FS.FileName File;
+        public FileName File;
 
         [Render(16)]
         public string SectionName;

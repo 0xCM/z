@@ -329,7 +329,7 @@ namespace Z0
         static string HeaderSep
             => new string('-',80);
 
-        static FS.FileName filename<W,M,N,T>(string label, W w, M m = default, N n = default, T t = default)
+        static FileName filename<W,M,N,T>(string label, W w, M m = default, N n = default, T t = default)
             where W : unmanaged, ITypeNat
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat

@@ -52,10 +52,10 @@ namespace Z0
         Hash32 IHashed.Hash 
             => Hash;
 
-        public FS.FileName FileName(FileExt ext)
+        public FileName FileName(FileExt ext)
             => FS.file(string.Format("{0}.{1}", Part.Format(), HostName), ext);
 
-        public FS.FileName FileName(FileKind kind)
+        public FileName FileName(FileKind kind)
             => FS.file(string.Format("{0}.{1}", Part.Format(), HostName), kind.Ext());
 
         [MethodImpl(Inline)]

@@ -18,7 +18,7 @@ namespace Z0
         public static ToolScript DumpLib(FilePath input, IDbTargets dst)
             => Tooling.script(dst.Path("dump-lib",FileKind.Cmd), vars(input.FolderPath, input.FileName, dst.Root));
 
-        static CmdVars vars(FolderPath SrcDir, FS.FileName SrcFile, FolderPath DstDir)
+        static CmdVars vars(FolderPath SrcDir, FileName SrcFile, FolderPath DstDir)
             => CmdVars.load(
                 ("SrcDir", SrcDir.Format(PathSeparator.BS)),
                 ("SrcFile", SrcFile.Format()),

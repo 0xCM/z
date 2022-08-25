@@ -106,10 +106,10 @@ namespace Z0
         public Deferred<FilePath> Enumerate(bool recursive = true)
             => Root.EnumerateFiles(recursive);
 
-        public FS.FileName File(string name, FileKind kind)
+        public FileName File(string name, FileKind kind)
             => FS.file(name, kind.Ext());
 
-        public FS.FileName File(string @class, string name, FileKind kind)
+        public FileName File(string @class, string name, FileKind kind)
             => FS.file(string.Format("{0}.{1}", @class, name), kind.Ext());
 
         public FilePath Path(string name, FileKind kind)
@@ -118,7 +118,7 @@ namespace Z0
         public FilePath Path(string @class, string name, FileKind kind)
             => new DbSources(Root, @class).Root + File(@class, name,kind);
 
-        public FilePath Path(FS.FileName file)
+        public FilePath Path(FileName file)
             => Root + file;
 
         public FilePath Table<T>()
@@ -133,7 +133,7 @@ namespace Z0
             where T : struct
                 => Root + Tables.filename<T>(prefix);
 
-        public static FS.FileName file(string @class, string name, FileKind kind)
+        public static FileName file(string @class, string name, FileKind kind)
             => FS.file(string.Format("{0}.{1}", @class, name), kind.Ext());
 
         [Op]

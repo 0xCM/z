@@ -78,7 +78,7 @@ namespace Z0
                 Output.Clear();
             }
 
-            FS.FileName TargetFile()
+            FileName TargetFile()
                 => FS.file(string.Format("{0}.{1}", text.left(CurrentFile.Path.FileName.Format(), Chars.Dot), "xed.disasm.flow"), FS.Txt);
 
             FilePath TargetPath()

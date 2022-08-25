@@ -32,7 +32,7 @@ namespace Z0
         /// <summary>
         /// The executable filename without the directory path
         /// </summary>
-        public FS.FileName ToolExe;
+        public FileName ToolExe;
 
         /// <summary>
         /// The tool installation directory where the <see cref='ToolExe'/> is found

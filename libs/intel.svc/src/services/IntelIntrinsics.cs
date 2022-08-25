@@ -83,12 +83,12 @@ namespace Z0
 
         const string sigs = intrinsics + sep + nameof(sigs);
 
-        public static FS.FileName AlgFile => FS.file(algs, FS.Txt);
+        public static FileName AlgFile => FS.file(algs, FS.Txt);
 
-        public static FS.FileName DataFile => FS.file(intrinsics, FS.Csv);
+        public static FileName DataFile => FS.file(intrinsics, FS.Csv);
 
-        public static FS.FileName XmlFile => FS.file(intrinsics, FS.Xml);
+        public static FileName XmlFile => FS.file(intrinsics, FS.Xml);
 
-        public static FS.FileName DeclFile = FS.file(intrinsics, FS.H);
+        public static FileName DeclFile = FS.file(intrinsics, FS.H);
     }
 }

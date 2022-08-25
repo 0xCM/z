@@ -112,22 +112,22 @@ namespace Z0
             return CmdScripts.expr(pattern);
         }
 
-        public static FS.FileName scriptfile(FileKind kind)
+        public static FileName scriptfile(FileKind kind)
             => kind switch {
                     FileKind.Obj => FS.file("dump-obj", FileKind.Cmd),
                     FileKind.Exe => FS.file("dump-exe", FileKind.Cmd),
                     FileKind.Lib => FS.file("dump-lib", FileKind.Cmd),
                     FileKind.Dll => FS.file("dump-dll", FileKind.Cmd),
-                    _ => FS.FileName.Empty
+                    _ => FileName.Empty
             };
 
-        public static FS.FileName scriptfile(FileModuleKind kind)
+        public static FileName scriptfile(FileModuleKind kind)
             => kind switch {
                     FileModuleKind.Obj => FS.file("dump-obj", FileKind.Cmd),
                     FileModuleKind.Exe => FS.file("dump-exe", FileKind.Cmd),
                     FileModuleKind.Lib => FS.file("dump-lib", FileKind.Cmd),
                     FileModuleKind.Dll => FS.file("dump-dll", FileKind.Cmd),
-                    _ => FS.FileName.Empty
+                    _ => FileName.Empty
             };
 
         public void DumpModules(IDbSources src, string tag, FileKind kind)

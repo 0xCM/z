@@ -7,7 +7,7 @@ namespace Z0
     partial struct FS
     {
         [Op]
-        public static FS.FileName partfile(PartId part, FileExt ext)
+        public static FileName partfile(PartId part, FileExt ext)
             => file(part.Format(), ext);
     }
 }

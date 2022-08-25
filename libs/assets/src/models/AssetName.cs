@@ -49,10 +49,10 @@ namespace Z0
         public int CompareTo(AssetName src)
             => FullName.CompareTo(src.FullName);
 
-        public FS.FileName FileName
+        public FileName FileName
             => FS.file(FullName.ReplaceAny(Path.GetInvalidPathChars(), Chars.Underscore));
 
-        public FS.FileName ShortFileName
+        public FileName ShortFileName
             => FS.file(ShortName.ReplaceAny(Path.GetInvalidPathChars(), Chars.Underscore));
 
         public static AssetName Empty => new AssetName(EmptyString, EmptyString);

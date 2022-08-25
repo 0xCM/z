@@ -30,11 +30,11 @@ namespace Z0
 
             public string ProjectId;
 
-            public FS.FileName ProjectFile;
+            public FileName ProjectFile;
 
             public FilePath ProjectPath;
 
-            public FS.FileName ProjectTargetName;
+            public FileName ProjectTargetName;
 
             public FolderPath ProjectBinDir;
 

@@ -33,7 +33,7 @@ namespace Z0
             public static void render(ReadOnlySpan<SqlCmd> src, ITextEmitter dst)
                 => iter(src, cmd => render(cmd,dst));
 
-            static Identifier identifier(Identifier? id, FS.FileName file)
+            static Identifier identifier(Identifier? id, FileName file)
                 => id != null ? id.Value.Format() : file.WithoutExtension.Format();
         }
     }

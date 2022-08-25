@@ -20,7 +20,7 @@ namespace Z0
         protected FolderPath Deployment
             => Deployments.Folder(Id.Format());
 
-        public FilePath Script(FolderPath dir, FS.FileName name)
+        public FilePath Script(FolderPath dir, FileName name)
             => dir + name;
 
         public virtual FilePath ToolPath()
@@ -29,22 +29,22 @@ namespace Z0
         protected static string format(FilePath src)
             => src.Format(PathSeparator.BS);
 
-        protected static FilePath input(FolderPath dir, FS.FileName name)
+        protected static FilePath input(FolderPath dir, FileName name)
             => dir + name;
 
-        protected static FilePath output(FolderPath dir, FS.FileName name)
+        protected static FilePath output(FolderPath dir, FileName name)
             => dir + name;
 
-        protected static FS.FileName file(string src, FileExt ext)
+        protected static FileName file(string src, FileExt ext)
             => FS.file(src, ext);
 
-        protected static FS.FileName binfile(string name)
+        protected static FileName binfile(string name)
             => FS.file(name, FS.Bin);
 
-        protected FS.FileName ToolFile(string name, string type, FileExt ext)
+        protected FileName ToolFile(string name, string type, FileExt ext)
             => FS.file(string.Format("{0}.{1}.{2}", name, Id, type), ext);
 
-        protected FS.FileName ToolFile(string name, string type, FileKind kind)
+        protected FileName ToolFile(string name, string type, FileKind kind)
             => FS.file(string.Format("{0}.{1}.{2}", name, Id, type), kind.Ext());
     }
 }

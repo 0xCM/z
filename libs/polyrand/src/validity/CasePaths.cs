@@ -34,7 +34,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public FilePath CasePath(FS.FileName @case)
+        public FilePath CasePath(FileName @case)
             => CaseDir + @case;
 
         [MethodImpl(Inline)]

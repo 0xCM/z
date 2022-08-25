@@ -17,7 +17,7 @@ namespace Z0
 
         public FolderPath SrcDir;
 
-        public FS.FileName SrcFile;
+        public FileName SrcFile;
 
         public FolderPath DstDir;
 

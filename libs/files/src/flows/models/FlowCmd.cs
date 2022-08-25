@@ -44,10 +44,10 @@ namespace Z0
             get => WsId.Hash | Actor.Hash | SrcId.Hash | DstId.Hash | HashCodes.hash((byte)SrcKind, (byte)(DstKind));
         }
 
-        public FS.FileName SrcFile 
+        public FileName SrcFile 
             => FS.file(SrcId,SrcKind);
 
-        public FS.FileName DstFile 
+        public FileName DstFile 
             => FS.file(DstId,DstKind);
 
         public string Format()

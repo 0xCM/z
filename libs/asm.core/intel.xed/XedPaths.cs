@@ -78,17 +78,17 @@ namespace Z0
         public FilePath FormCatalogPath()
             => Imports().Path(FS.file(Tables.identify<FormImport>().Format(), FS.Csv));
 
-        static FS.FileName EncInstDef = FS.file("all-enc-instructions", FS.Txt);
+        static FileName EncInstDef = FS.file("all-enc-instructions", FS.Txt);
 
-        static FS.FileName DecInstDef = FS.file("all-dec-instructions", FS.Txt);
+        static FileName DecInstDef = FS.file("all-dec-instructions", FS.Txt);
 
-        static FS.FileName EncRuleTable = FS.file("all-enc-patterns", FS.Txt);
+        static FileName EncRuleTable = FS.file("all-enc-patterns", FS.Txt);
 
-        static FS.FileName DecRuleTable = FS.file("all-dec-patterns", FS.Txt);
+        static FileName DecRuleTable = FS.file("all-dec-patterns", FS.Txt);
 
-        static FS.FileName EncDecRuleTable = FS.file("all-enc-dec-patterns", FS.Txt);
+        static FileName EncDecRuleTable = FS.file("all-enc-dec-patterns", FS.Txt);
 
-        static FS.FileName Suffixed<T>(string suffix)
+        static FileName Suffixed<T>(string suffix)
             where T : struct
                 => Tables.filename<T>().ChangeExtension(FS.ext(string.Format("{0}.{1}", suffix, FS.Csv)));
 
@@ -102,7 +102,7 @@ namespace Z0
         public AbsoluteLink MarkdownLink(RuleSig sig)
             => Markdown.link(string.Format("{0}::{1}()", sig.TableKind, sig.TableName), RulePage(sig));
 
-        public static RuleTableKind tablekind(FS.FileName src)
+        public static RuleTableKind tablekind(FileName src)
         {
             return srckind(src) switch
             {
@@ -185,7 +185,7 @@ namespace Z0
             {
                 RuleTableKind.ENC => EncRuleTable,
                 RuleTableKind.DEC => DecRuleTable,
-                _ => FS.FileName.Empty
+                _ => FileName.Empty
             };
 
             return Sources() + name;
@@ -203,7 +203,7 @@ namespace Z0
         public FilePath DocTarget(string name, FileKind kind)
             => DocTargets() + FS.file(string.Format("xed.docs.{0}", name), kind.Ext());
 
-        public static XedDocKind srckind(FS.FileName src)
+        public static XedDocKind srckind(FileName src)
         {
             if(src == EncInstDef)
                 return XedDocKind.EncInstDef;
@@ -241,7 +241,7 @@ namespace Z0
                 XedDocKind.FormData => FS.file("xed-idata", FS.Txt),
                 XedDocKind.ChipData => FS.file("xed-cdata", FS.Txt),
                 XedDocKind.RuleSeq => FS.file("all-enc-patterns", FS.Txt),
-                _ => FS.FileName.Empty
+                _ => FileName.Empty
             });
 
 

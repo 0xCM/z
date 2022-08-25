@@ -30,7 +30,7 @@ namespace Z0
             Queue = EventQueue.allocate(GetType(), EventRaised);
         }
 
-        FS.FileName FileName(string suffix, FileKind kind)
+        FileName FileName(string suffix, FileKind kind)
             => FS.file(string.Format("{0}.{1}",SvcName, suffix), kind.Ext());
 
         FilePath EventLogPath

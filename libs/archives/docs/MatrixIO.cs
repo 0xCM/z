@@ -17,7 +17,7 @@ namespace Z0
         /// <typeparam name="N">The column count type</typeparam>
         /// <typeparam name="T">The element type</typeparam>
         [MethodImpl(Inline)]
-        public static FS.FileName filename<M,N,T>(int? index = null)
+        public static FileName filename<M,N,T>(int? index = null)
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
             where T : unmanaged

@@ -16,7 +16,7 @@ namespace Z0
             => new NativeModule(Kernel32, LoadLibrary(Kernel32));
 
         [MethodImpl(Inline), Op]
-        public static NativeModule load(FS.FileName src)
+        public static NativeModule load(FileName src)
             => new NativeModule(Kernel32, LoadLibrary(src.Name));
 
         [MethodImpl(Inline), Op]

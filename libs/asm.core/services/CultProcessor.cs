@@ -291,7 +291,7 @@ namespace Z0
         static string[] operands(string instruction)
             => instruction.RightOfFirst(Chars.Space).Split(Chars.Comma).Select(x => x.Trim());
 
-        static FS.FileName DetailFile(AsmMnemonic src)
+        static FileName DetailFile(AsmMnemonic src)
             => FS.file(string.Format("cult.{0}", src.Format(MnemonicCase.Lowercase)), FS.Asm);
 
         static Identifier identify(in CultSummaryRecord src)

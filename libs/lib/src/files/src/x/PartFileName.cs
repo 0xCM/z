@@ -7,11 +7,11 @@ namespace Z0
     partial class XTend
     {
         [Op]
-        public static FS.FileName Component(this PartId part, FileExt ext)
+        public static FileName Component(this PartId part, FileExt ext)
             => FS.component(part, ext);
 
         [Op]
-        public static FS.FileName Component(this PartId part, FileExt x1, FileExt x2)
+        public static FileName Component(this PartId part, FileExt x1, FileExt x2)
             => FS.component(part, x1, x2);
     }
 }

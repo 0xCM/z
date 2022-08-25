@@ -17,9 +17,9 @@ namespace Z0
         {
         }
 
-        static FS.FileName BuildRespack => FS.file("build-respack", FS.Cmd);
+        static FileName BuildRespack => FS.file("build-respack", FS.Cmd);
 
-        static FS.FileName PackRespack => FS.file("deploy-respack", FS.Cmd);
+        static FileName PackRespack => FS.file("deploy-respack", FS.Cmd);
 
         void RunScripts()
         {

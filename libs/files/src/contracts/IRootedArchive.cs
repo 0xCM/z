@@ -79,13 +79,13 @@ namespace Z0
         FS.Files Files(string scope, params FileKind[] kinds)
             => DbFiles.Files(scope, true, kinds);
 
-        FS.FileName File(string name, FileKind kind)
+        FileName File(string name, FileKind kind)
             => DbFiles.File(name, kind);
 
         FilePath Path(string name, FileKind kind)
             => DbFiles.Path(name, kind);
 
-        FilePath Path(FS.FileName file)
+        FilePath Path(FileName file)
             => DbFiles.Path(file);
 
         FilePath Path(string @class, string name, FileKind kind)

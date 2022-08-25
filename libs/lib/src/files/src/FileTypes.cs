@@ -57,7 +57,7 @@ namespace Z0
         public static FileKind FileKind(this FileExt src)
             => FileTypes.kind(src);
 
-        public static FileKind FileKind(this FS.FileName src)
+        public static FileKind FileKind(this FileName src)
             => FileTypes.kind(src.Ext);
 
         public static FileKind FileKind(this FilePath src)
@@ -66,7 +66,7 @@ namespace Z0
         public static string SrcId(this FilePath src, params FileKind[] kinds)
             => src.FileName.SrcId(kinds);
 
-        public static string SrcId(this FS.FileName src, params FileKind[] kinds)
+        public static string SrcId(this FileName src, params FileKind[] kinds)
         {
             var file = src.Format();
             var count = kinds.Length;

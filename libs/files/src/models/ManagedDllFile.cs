@@ -26,7 +26,7 @@ namespace Z0
             Name = name;
         }
 
-        public FS.FileName FileName
+        public FileName FileName
         {
             [MethodImpl(Inline)]
             get => Path.FileName;

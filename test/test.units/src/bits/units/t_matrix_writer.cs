@@ -45,7 +45,7 @@ namespace Z0.Test
         void check64f(uint count, N5 m, N5 n)
             => check_emission(count, m, n, z64);
 
-        public FS.FileName filename<M,N,T>(uint i, M m = default, N n = default, T t = default)
+        public FileName filename<M,N,T>(uint i, M m = default, N n = default, T t = default)
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
             where T : unmanaged

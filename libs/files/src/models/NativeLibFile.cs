@@ -15,7 +15,7 @@ namespace Z0
         public NativeLibFile(FilePath path)
             => Path = path;
 
-        public FS.FileName FileName
+        public FileName FileName
         {
             [MethodImpl(Inline)]
             get => Path.FileName;

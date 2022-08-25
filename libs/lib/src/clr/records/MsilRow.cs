@@ -12,7 +12,7 @@ namespace Z0
         public const byte FieldCount = 8;
 
         [Render(32)]
-        public FS.FileName ImageName;
+        public FileName ImageName;
 
         [Render(12)]
         public CliToken Token;

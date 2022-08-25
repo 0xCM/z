@@ -7,7 +7,7 @@ namespace Z0
     partial struct FS
     {
         [Op]
-        public static FS.FileName hostfile(ApiHostUri uri, FileExt ext)
+        public static FileName hostfile(ApiHostUri uri, FileExt ext)
             => file(string.Format("{0}.{1}", uri.Part.Format(), uri.HostName), ext);
     }
 }

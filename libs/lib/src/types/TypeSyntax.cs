@@ -125,7 +125,7 @@ namespace Z0
 
         public const string ConstSpan = "cspan<t:{0}>";
 
-        public const string FileName = "fs.filename";
+        public const string FileName = "FileName";
 
         public const string FileExt = "fs.ext";
 

@@ -9,10 +9,10 @@ namespace Z0
         public static ApiPartFiles part(IApiPack src, PartId part)
             => ApiPartFiles.create(src,part);
             
-        public static FS.FileName filename(ApiHostUri host, FileExt ext)
+        public static FileName filename(ApiHostUri host, FileExt ext)
             => FS.file(host.Id.Format(), ext);
 
-        public static FS.FileName filename(ApiHostUri host, FileExt a, FileExt b)
+        public static FileName filename(ApiHostUri host, FileExt a, FileExt b)
             => FS.file(text.concat(host.Id.Format(), a), b);
 
         [MethodImpl(Inline), Op]

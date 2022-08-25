@@ -10,7 +10,7 @@ namespace Z0
             where T : struct
                 => Z0.TableId.identify<T>().Identifier.Format();
 
-        FS.FileName TableFile<T>()
+        FileName TableFile<T>()
             where T : struct
                 => FS.file(TableId<T>(), FileKind.Csv);
     }

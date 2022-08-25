@@ -92,16 +92,16 @@ namespace Z0
         FilePath AsmExtractPath(ApiHostUri src)
             => ExtractPath(src, FileKind.Asm);
 
-        FS.FileName RegionFile()
+        FileName RegionFile()
             => FS.file("memory.regions", FileKind.Csv);
 
-        FS.FileName RegionHashFile()
+        FileName RegionHashFile()
             => FS.file("memory.regions.hash", FileKind.Csv);
 
-        FS.FileName PartitionFile()
+        FileName PartitionFile()
             => FS.file("process.partitions", FileKind.Csv);
 
-        FS.FileName PartitionHashFile()
+        FileName PartitionHashFile()
             => FS.file("process.partitions.hash", FileKind.Csv);
 
         FilePath PartitionPath()
@@ -119,7 +119,7 @@ namespace Z0
         FilePath ProcessModules()
             => Context().Path("process.modules", FileKind.Csv);
 
-        FS.FileName DumpFile(Process process)
+        FileName DumpFile(Process process)
             => FS.file(ProcDumpName.create(process,Timestamp).Format(false), FileKind.Dmp);
 
         FilePath DumpPath(Process process)

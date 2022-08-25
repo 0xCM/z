@@ -170,10 +170,10 @@ namespace Z0
             => GetCasePaths();
 
         [MethodImpl(Inline)]
-        protected FilePath UnitPath(FS.FileName name)
+        protected FilePath UnitPath(FileName name)
             => UnitDataDir + name;
 
-        protected StreamWriter UnitWriter(FS.FileName filename, bool append = false)
+        protected StreamWriter UnitWriter(FileName filename, bool append = false)
             => UnitPath(filename).Writer(append);
 
         [MethodImpl(Inline)]

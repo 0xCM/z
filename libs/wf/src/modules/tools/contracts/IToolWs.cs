@@ -39,7 +39,7 @@ namespace Z0
         FilePath Script(string name, FileKind kind)
             => Scripts().Path(name,kind);
 
-        FilePath Script(FS.FileName file)
+        FilePath Script(FileName file)
             => Scripts().Path(file);
     }
 }

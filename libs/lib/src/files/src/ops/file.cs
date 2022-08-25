@@ -30,10 +30,10 @@ namespace Z0
             => file(string.Format("{0}.{1}", host.Part.Format(), host.HostName), ext);
 
         [Op]
-        public static FS.FileName file(ApiHostUri host, string subject, FileExt ext)
+        public static FileName file(ApiHostUri host, string subject, FileExt ext)
             => FS.file(string.Format("{0}.{1}.{2}", host.Part.Format(), host.HostName, subject), ext);
 
-        public static FS.FileName file(ApiHostUri host, FileKind kind)
+        public static FileName file(ApiHostUri host, FileKind kind)
             => file(host,kind.Ext());
 
         [Op]

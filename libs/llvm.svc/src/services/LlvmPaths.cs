@@ -64,7 +64,7 @@ namespace Z0.llvm
         public FilePath QueryOut(string name, FileKind kind)
             => QueryOut(FS.file(name,kind));
 
-        public FilePath QueryOut(FS.FileName file)
+        public FilePath QueryOut(FileName file)
             => QueryOut().Path(file);
 
         public FilePath LineMap(string name)
