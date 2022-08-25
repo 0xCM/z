@@ -12,7 +12,7 @@ namespace Z0
 
         IRecordFormatter<Entry> EntryFormatter = Tables.formatter<Entry>();
 
-        public void Register(Name name, FS.FolderPath location)
+        public void Register(Name name, FolderPath location)
         {
             using var writer = RegistryPath.Writer();
             writer.AppendLine(EntryFormatter.Format(new Entry(name,new Uri(location.ToUri().Format()))));

@@ -10,7 +10,7 @@ namespace Z0
 
     partial struct FS
     {
-        public static void clear(FS.FolderPath src, bool recurse = false)
+        public static void clear(FolderPath src, bool recurse = false)
         {
             if(Directory.Exists(src.Name))
             {
@@ -19,7 +19,7 @@ namespace Z0
             }
         }
 
-        public static List<FilePath> clear(FS.FolderPath src, List<FilePath> dst, bool recurse = false)
+        public static List<FilePath> clear(FolderPath src, List<FilePath> dst, bool recurse = false)
         {
             if(Directory.Exists(src.Name))
             {

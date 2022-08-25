@@ -8,10 +8,10 @@ namespace Z0
     {
         public ProjectId ProjectId {get;}
 
-        public FS.FolderPath Root {get;}
+        public FolderPath Root {get;}
 
         [MethodImpl(Inline)]
-        public ProjectWorkspace(FS.FolderPath src, ProjectId id)
+        public ProjectWorkspace(FolderPath src, ProjectId id)
         {
             Root = src;
             ProjectId = id;

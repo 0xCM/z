@@ -82,7 +82,7 @@ namespace Z0
         public static Assembly[] colocated(Assembly src)
             => assemblies(FS.path(src.Location).FolderPath);
 
-        public static Assembly[] assemblies(FS.FolderPath src)
+        public static Assembly[] assemblies(FolderPath src)
         {
             var dst = list<Assembly>();
             var candidates = libs(src);
@@ -174,7 +174,7 @@ namespace Z0
         static Type[] SvcHostTypes(Assembly src)
             => src.GetTypes().Where(t => t.Tagged<FunctionalServiceAttribute>());
 
-        static IApiCatalog catalog(FS.FolderPath src, PartId[] parts)
+        static IApiCatalog catalog(FolderPath src, PartId[] parts)
             => catalog(ApiRuntime.parts(src, parts));
 
         [Op]
@@ -229,7 +229,7 @@ namespace Z0
             return index;
         }
 
-        static FolderFiles libs(FS.FolderPath src)
+        static FolderFiles libs(FolderPath src)
         {            
             var candidates = src.Files(FileKind.Dll);
             var dst = list<FilePath>();
@@ -245,7 +245,7 @@ namespace Z0
             return new FolderFiles(src, dst.Array());
         }
 
-        static IPart[] parts(FS.FolderPath src, ReadOnlySpan<PartId> ids)
+        static IPart[] parts(FolderPath src, ReadOnlySpan<PartId> ids)
         {
             var count = ids.Length;
             var dst = list<IPart>();
@@ -260,7 +260,7 @@ namespace Z0
             return dst.ToArray();
         }
 
-        static ReadOnlySpan<Paired<PartId,FilePath>> PartPaths(FS.FolderPath dir)
+        static ReadOnlySpan<Paired<PartId,FilePath>> PartPaths(FolderPath dir)
         {
             var dst = list<Paired<PartId,FilePath>>();
             var symbols = Symbols.index<PartId>().View;

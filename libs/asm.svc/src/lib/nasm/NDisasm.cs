@@ -23,12 +23,12 @@ namespace Z0
             return CmdScripts.create(name, body);
         }
 
-        public FilePath Job(Bitness mode, FS.FolderPath input, FS.FolderPath output)
+        public FilePath Job(Bitness mode, FolderPath input, FolderPath output)
         {
             var src = input.Files(FS.Bin);
             var _scripts = scripts(mode, src, output);
             var count = _scripts.Length;
-            var scriptDir = FS.FolderPath.Empty + FS.folder(Id.Format());
+            var scriptDir = FolderPath.Empty + FS.folder(Id.Format());
             scriptDir.Clear();
 
             var paths = span<FilePath>(count);
@@ -45,7 +45,7 @@ namespace Z0
             return runner;
         }
 
-        public static ReadOnlySpan<CmdScript> scripts(Bitness mode, ReadOnlySpan<FilePath> src, FS.FolderPath dst)
+        public static ReadOnlySpan<CmdScript> scripts(Bitness mode, ReadOnlySpan<FilePath> src, FolderPath dst)
         {
             var count = src.Length;
             var buffer = alloc<CmdScript>(count);

@@ -102,10 +102,10 @@ namespace Z0
             return (uint)offset;
         }
 
-        public void DumpImages(FS.FolderPath src, FS.FolderPath dst, bool pll = true)
+        public void DumpImages(FolderPath src, FolderPath dst, bool pll = true)
             => iter(src.Files(FS.Dll), file => DumpImage(file,dst), pll);
 
-        public void DumpImage(FilePath src, FS.FolderPath dst)
+        public void DumpImage(FilePath src, FolderPath dst)
         {
             using var file = MemoryFiles.map(src);
             var target = dst + FS.file(file.Path.FileName.Name, FS.Hex);

@@ -43,7 +43,7 @@ namespace Z0
             => new WfEmissionLog(dst);
 
         [MethodImpl(Inline), Op]
-        public static IWorkerLog worker(FS.FolderPath home)
+        public static IWorkerLog worker(FolderPath home)
             => new WorkerLog(new LogSettings(home));
 
         [MethodImpl(Inline), Op]
@@ -59,11 +59,11 @@ namespace Z0
             => new TermLog(src);
 
         [MethodImpl(Inline), Op]
-        public static LogSettings configure(string name, FS.FolderPath dst)
+        public static LogSettings configure(string name, FolderPath dst)
             => new LogSettings(ExecutingPart.Assembly.Id(), dst, name);
 
         [MethodImpl(Inline), Op]
-        public static LogSettings configure(PartId part, FS.FolderPath dst)
+        public static LogSettings configure(PartId part, FolderPath dst)
             => new LogSettings(part, dst, EmptyString);
     }
 }

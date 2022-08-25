@@ -7,9 +7,9 @@ namespace Z0
     public abstract class Workspace<T>
         where T : Workspace<T>
     {
-        public FS.FolderPath Root {get;}
+        public FolderPath Root {get;}
 
-        protected Workspace(FS.FolderPath root)
+        protected Workspace(FolderPath root)
         {
             Root = root;
         }

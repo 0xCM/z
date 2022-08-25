@@ -27,7 +27,7 @@ namespace Z0
             get => _Segments.View;
         }
 
-        public ByteSize Traverse(MemoryAddress @base, FS.FolderPath dst)
+        public ByteSize Traverse(MemoryAddress @base, FolderPath dst)
             => new ProcessSegments(@base, dst).Traverse(Segments);
 
         public uint SegmentCount

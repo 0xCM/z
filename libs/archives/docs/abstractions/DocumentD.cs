@@ -16,7 +16,7 @@ namespace Z0
 
         protected Document()
         {
-            Location = FS.FsEntry.Empty;
+            Location = FsEntry.Empty;
         }
 
         public abstract D Load();

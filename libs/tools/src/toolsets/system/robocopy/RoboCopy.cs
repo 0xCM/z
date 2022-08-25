@@ -8,7 +8,7 @@ namespace Z0
 
     partial class Tools
     {
-        public static object robocopy(FS.FolderPath src, FS.FolderPath dst)
+        public static object robocopy(FolderPath src, FolderPath dst)
             => (src,dst);
 
         public sealed partial class RoboCopy : Tool<RoboCopy>

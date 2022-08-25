@@ -9,7 +9,7 @@ namespace Z0
         /// <summary>
         /// The working folder, if any
         /// </summary>
-        public readonly FS.FolderPath WorkingDir;
+        public readonly FolderPath WorkingDir;
 
         /// <summary>
         /// Environment variables to use, if any
@@ -17,7 +17,7 @@ namespace Z0
         public readonly EnvVars<string> EnvVars;
 
         [MethodImpl(Inline)]
-        public CmdContext(FS.FolderPath wd, params EnvVar<string>[] src)
+        public CmdContext(FolderPath wd, params EnvVar<string>[] src)
         {
             WorkingDir = wd;
             EnvVars = src;

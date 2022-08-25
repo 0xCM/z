@@ -21,7 +21,7 @@ namespace Z0
 
         Index<char> HexCharBuffer;
 
-        FS.FolderPath DetailRoot;
+        FolderPath DetailRoot;
 
         const string Tool = "cult";
 
@@ -142,7 +142,7 @@ namespace Z0
             }
         }
 
-        void EmitDetails(FS.FolderPath dir, in CultSummaryRecord summary)
+        void EmitDetails(FolderPath dir, in CultSummaryRecord summary)
         {
             var mnemonic = summary.Mnemonic.Format(MnemonicCase.Lowercase);
             var path = dir + DetailFile(mnemonic);

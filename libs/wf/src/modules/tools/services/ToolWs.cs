@@ -9,7 +9,7 @@ namespace Z0
 
     public sealed class ToolWs : Workspace<ToolWs>, IToolWs
     {
-        public FS.FolderPath ToolHome(Tool tool)
+        public FolderPath ToolHome(Tool tool)
             => Root + FS.folder(tool.Format());
 
         public FilePath ConfigScript(Tool tool)
@@ -19,7 +19,7 @@ namespace Z0
 
         Index<ToolConfig> Configs;
 
-        // public ToolWs(Tool tool, FS.FolderPath home)
+        // public ToolWs(Tool tool, FolderPath home)
         //     : base(home)
         // {
         //     Tool = tool;
@@ -27,7 +27,7 @@ namespace Z0
         //     Configs = array<ToolConfig>();
         // }
 
-        public ToolWs(Tool tool, FS.FolderPath home)
+        public ToolWs(Tool tool, FolderPath home)
             : base(home)
         {
             Tool = tool;
@@ -46,16 +46,16 @@ namespace Z0
         public DbArchive Location
             => new DbArchive(Root);
 
-        public FS.FolderPath ToolDocs(Tool tool)
+        public FolderPath ToolDocs(Tool tool)
             => ToolHome(tool) + FS.folder(docs);
 
-        public FS.FolderPath Logs(Tool tool)
+        public FolderPath Logs(Tool tool)
             => ToolHome(tool) + FS.folder(logs);
 
         public FilePath ConfigPath(Tool tool)
             => ToolHome(tool) + FS.file(tool.Format(), FileKind.Config);
 
-        public FS.FolderPath Scripts(Tool tool)
+        public FolderPath Scripts(Tool tool)
             => ToolHome(tool) + FS.folder(scripts);
 
         public FilePath Script(Tool tool, string name)

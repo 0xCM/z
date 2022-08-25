@@ -15,11 +15,11 @@ namespace Z0
 
         public FilePath DstPath;
 
-        public FS.FolderPath SrcDir;
+        public FolderPath SrcDir;
 
         public FS.FileName SrcFile;
 
-        public FS.FolderPath DstDir;
+        public FolderPath DstDir;
 
         public @string SrcId;
 

@@ -20,7 +20,7 @@ namespace Z0
         public static ProjectLog log(IProjectWorkspace project, string name, FileKind kind = FileKind.Log, bool overwrite = true)
             => log(target(project,name,kind), overwrite);
 
-        public static IProjectWorkspace load(FS.FolderPath root, ProjectId id)
+        public static IProjectWorkspace load(FolderPath root, ProjectId id)
             => new ProjectWorkspace(root, id);
 
         public static IProjectWorkspace load(IRootedArchive root, ProjectId id)

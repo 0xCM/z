@@ -34,7 +34,7 @@ namespace Z0
         }
 
         [Api]
-        public static Task<ExecToken> purge(FS.FolderPath src, FS.RelativePath scope, WfEmit channel)
+        public static Task<ExecToken> purge(FolderPath src, FS.RelativePath scope, WfEmit channel)
         {
             var uri = $"{app}://{group}/purge?src={src}&scope={scope}";
             var running = channel.Running(uri);

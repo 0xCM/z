@@ -11,7 +11,7 @@ namespace Z0
 
         public Assembly Source;
 
-        public FS.FolderPath Target;
+        public FolderPath Target;
 
         public utf8 Match;
 

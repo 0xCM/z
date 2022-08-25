@@ -40,7 +40,7 @@ namespace Z0.Asm
             return count;
         }
 
-        public ReadOnlySpan<HostAsmRecord> EmitHostAsm(ReadOnlySpan<ApiHostBlocks> src, FS.FolderPath root)
+        public ReadOnlySpan<HostAsmRecord> EmitHostAsm(ReadOnlySpan<ApiHostBlocks> src, FolderPath root)
         {
             root.Delete();
 
@@ -69,7 +69,7 @@ namespace Z0.Asm
             return records.ViewDeposited();
         }
 
-        // public ReadOnlySpan<HostAsmRecord> EmitHostAsm(ReadOnlySpan<ApiCodeBlock> src, FS.FolderPath dst)
+        // public ReadOnlySpan<HostAsmRecord> EmitHostAsm(ReadOnlySpan<ApiCodeBlock> src, FolderPath dst)
         // {
         //     var count = src.Length;
         //     var buffer = list<HostAsmRecord>();
@@ -96,7 +96,7 @@ namespace Z0.Asm
             return buffer;
         }
 
-        public void EmitHostAsm(ReadOnlySpan<HostAsmRecord> src, FS.FolderPath root)
+        public void EmitHostAsm(ReadOnlySpan<HostAsmRecord> src, FolderPath root)
         {
             ClearTarget();
 
@@ -219,10 +219,10 @@ namespace Z0.Asm
             }
         }
 
-        FilePath AsmSrcPath(ApiHostUri host, FS.FolderPath root)
+        FilePath AsmSrcPath(ApiHostUri host, FolderPath root)
             => FilePath.Empty;
 
-        FilePath AsmTablePath(ApiHostUri host, FS.FolderPath root)
+        FilePath AsmTablePath(ApiHostUri host, FolderPath root)
             => FilePath.Empty;
 
         uint BuildHostAsm(in ApiHostBlocks src, List<HostAsmRecord> dst)

@@ -16,7 +16,7 @@ namespace Z0
 
             public string DeclaringType;
 
-            public FS.FolderPath Target;
+            public FolderPath Target;
 
             [MethodImpl(Inline)]
             public EnumReplicantSpec WithNamespace(string ns)
@@ -33,7 +33,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public static ref EnumReplicantSpec replicant(FS.FolderPath target, out EnumReplicantSpec dst, string ns = null, string type = null)
+        public static ref EnumReplicantSpec replicant(FolderPath target, out EnumReplicantSpec dst, string ns = null, string type = null)
         {
             dst.Namespace = ns ?? EmptyString;
             dst.DeclaringType = type ?? EmptyString;
@@ -41,7 +41,7 @@ namespace Z0
             return ref dst;
         }
 
-        public void EmitReplicants(EnumReplicantSpec spec, Type[] enums, FS.FolderPath dst)
+        public void EmitReplicants(EnumReplicantSpec spec, Type[] enums, FolderPath dst)
         {
             var types = enums.GroupBy(x => x.Namespace).Map(x => (x.Key, x.ToArray())).ToDictionary();
             var namespaces = types.Keys.ToIndex();

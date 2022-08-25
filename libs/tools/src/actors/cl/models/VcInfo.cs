@@ -6,13 +6,13 @@ namespace Z0
 {
     public struct VcInfo
     {
-        public FS.FolderPath VsRoot;
+        public FolderPath VsRoot;
 
-        public FS.FolderPath ToolRoot;
+        public FolderPath ToolRoot;
 
         public Version128 Version;
 
-        public FS.FolderPath ToolVersionRoot;
+        public FolderPath ToolVersionRoot;
 
         public static VcInfo Empty
             => default;

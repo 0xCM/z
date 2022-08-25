@@ -17,7 +17,7 @@ namespace Z0
         /// <summary>
         /// The tool control base directory
         /// </summary>
-        public FS.FolderPath Toolbase;
+        public FolderPath Toolbase;
 
         /// <summary>
         /// The group to which the tool belongs, if any
@@ -37,7 +37,7 @@ namespace Z0
         /// <summary>
         /// The tool installation directory where the <see cref='ToolExe'/> is found
         /// </summary>
-        public FS.FolderPath InstallBase;
+        public FolderPath InstallBase;
 
         /// <summary>
         /// The full path to the tool, computed from the <see cref='ToolExe'/> and <see cref='InstallBase'/>
@@ -47,22 +47,22 @@ namespace Z0
         /// <summary>
         /// The toolspace directory
         /// </summary>
-        public FS.FolderPath ToolHome;
+        public FolderPath ToolHome;
 
         /// <summary>
         /// The tool log directory with default location {ToolHome}/logs
         /// </summary>
-        public FS.FolderPath ToolLogs;
+        public FolderPath ToolLogs;
 
         /// <summary>
         /// The tool documentation directory with default location {ToolHome}/docs
         /// </summary>
-        public FS.FolderPath ToolDocs;
+        public FolderPath ToolDocs;
 
         /// <summary>
         /// The tool script directory with default location {ToolHome}/scripts
         /// </summary>
-        public FS.FolderPath ToolScripts;
+        public FolderPath ToolScripts;
 
         /// <summary>
         /// The path to the tool configuration log, typically {ToolLogs}/config.log

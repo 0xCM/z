@@ -18,7 +18,7 @@ namespace Z0.Asm
             FileEmit(buffer.Emit(), src.Length, dst);
         }
 
-        public static Index<CpuIdRow> import(FS.FolderPath srcdir)
+        public static Index<CpuIdRow> import(FolderPath srcdir)
         {
             //2 space-separated 32-bit hex numbers
             const byte InLength = 2*8 + 1;
@@ -192,7 +192,7 @@ namespace Z0.Asm
             return dst.Index();
         }
 
-        public Index<CpuIdRow> Import(FS.FolderPath src, FilePath records, FilePath bits)
+        public Index<CpuIdRow> Import(FolderPath src, FilePath records, FilePath bits)
         {
             var data = CpuIdSvc.import(src);
             EmitRecords(data, records);

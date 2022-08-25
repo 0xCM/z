@@ -6,11 +6,11 @@ namespace Z0
 {
     public class DumpArchive : IDumpArchive
     {
-        public DumpArchive(FS.FolderPath root)
+        public DumpArchive(FolderPath root)
         {
             Root = root;
         }
 
-        public FS.FolderPath Root {get;}
+        public FolderPath Root {get;}
     }
 }

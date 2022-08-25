@@ -6,11 +6,11 @@ namespace Z0
 {
     public class ApiPack : IApiPack
     {
-        public readonly FS.FolderPath Root;
+        public readonly FolderPath Root;
 
         public readonly Timestamp Timestamp;
 
-        public ApiPack(FS.FolderPath root, Timestamp ts)
+        public ApiPack(FolderPath root, Timestamp ts)
         {
             Root = root;
             Timestamp = ts;
@@ -19,7 +19,7 @@ namespace Z0
         Timestamp IApiPack.Timestamp 
             => Timestamp;
 
-        FS.FolderPath IRootedArchive.Root 
+        FolderPath IRootedArchive.Root 
             => Root;
 
         public string Format()

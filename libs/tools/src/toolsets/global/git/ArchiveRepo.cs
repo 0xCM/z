@@ -5,20 +5,20 @@
 namespace Z0
 {
     [Cmd(CmdId)]
-    public struct ArchiveRepo : IFlowCmd<FS.FolderPath,FilePath>
+    public struct ArchiveRepo : IFlowCmd<FolderPath,FilePath>
     {
         const string CmdId = "repo/archive";
 
         public Actor Actor;
 
-        public FS.FolderPath Source;
+        public FolderPath Source;
 
         public FilePath Target;
 
-        FS.FolderPath IFlowCmd<FS.FolderPath, FilePath>.Source
+        FolderPath IFlowCmd<FolderPath, FilePath>.Source
             => Source;
 
-        FilePath IFlowCmd<FS.FolderPath, FilePath>.Target
+        FilePath IFlowCmd<FolderPath, FilePath>.Target
             => Target;
 
         IActor IFlowCmd.Actor

@@ -10,7 +10,7 @@ namespace Z0.Asm
     {
         ApiResProvider ApiResProvider => Service(Wf.ApiResProvider);
 
-        public ReadOnlySpan<MemorySeg> Emit(FS.FolderPath dst)
+        public ReadOnlySpan<MemorySeg> Emit(FolderPath dst)
         {
             var asmpath = dst + FS.file("respack",FS.Asm);
             var hexpath = asmpath.ChangeExtension(FS.Hex);

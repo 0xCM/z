@@ -24,9 +24,9 @@ namespace Z0
 
             public string ProjectFramework;
 
-            public FS.FolderPath SlnRoot;
+            public FolderPath SlnRoot;
 
-            public FS.FolderPath SlnBuildRoot;
+            public FolderPath SlnBuildRoot;
 
             public string ProjectId;
 
@@ -36,9 +36,9 @@ namespace Z0
 
             public FS.FileName ProjectTargetName;
 
-            public FS.FolderPath ProjectBinDir;
+            public FolderPath ProjectBinDir;
 
-            public FS.FolderPath ProjectObjDir;
+            public FolderPath ProjectObjDir;
 
             public FilePath ProjectTargetPath;
         }

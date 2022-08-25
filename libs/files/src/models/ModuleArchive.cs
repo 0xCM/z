@@ -6,10 +6,10 @@ namespace Z0
 {
     public readonly struct ModuleArchive
     {
-        public readonly FS.FolderPath Root {get;}
+        public readonly FolderPath Root {get;}
 
         [MethodImpl(Inline)]
-        public ModuleArchive(FS.FolderPath root)
+        public ModuleArchive(FolderPath root)
         {
             Root = root;
         }

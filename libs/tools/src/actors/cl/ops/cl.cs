@@ -9,7 +9,7 @@ namespace Z0
     partial struct Vc
     {
         [Op]
-        public static VcInfo vcinfo(FS.FolderPath vsroot)
+        public static VcInfo vcinfo(FolderPath vsroot)
         {
             var dst = VcInfo.Empty;
             dst.VsRoot = vsroot;

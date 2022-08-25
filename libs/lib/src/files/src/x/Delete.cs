@@ -22,7 +22,7 @@ namespace Z0
         /// Consigns the folder and its contents to oblivion
         /// </summary>
         /// <param name="recursive">How sure are you?</param>
-        public static Option<int> Delete(this FS.FolderPath src, bool recursive = true)
+        public static Option<int> Delete(this FolderPath src, bool recursive = true)
         {
             try
             {
@@ -37,10 +37,10 @@ namespace Z0
             }
         }
 
-        public static void Delete(this FS.FolderPath[] paths)
+        public static void Delete(this FolderPath[] paths)
             => iter(paths, path => path.Delete(true));
 
-        public static void Delete(this IEnumerable<FS.FolderPath> paths)
+        public static void Delete(this IEnumerable<FolderPath> paths)
             => iter(paths, path => path.Delete(true));
     }
 }

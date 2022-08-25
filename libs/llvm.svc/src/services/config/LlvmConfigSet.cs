@@ -38,10 +38,10 @@ namespace Z0.llvm
             return result;
         }
 
-        public bool BinDir(out FS.FolderPath dst)
+        public bool BinDir(out FolderPath dst)
             => Get(K.BinDir, out dst);
 
-        public bool LibDir(out FS.FolderPath dst)
+        public bool LibDir(out FolderPath dst)
             => Get(K.LibDir, out dst);
 
         public IReadOnlyCollection<KeyValuePair<K, dynamic>> Items

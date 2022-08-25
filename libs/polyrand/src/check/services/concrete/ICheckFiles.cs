@@ -13,7 +13,7 @@ namespace Z0
         void Exists(FilePath path, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
             => path.Exists.OnNone(() => throw AppException.define($"The file {path} does not exist", caller, file,line));
 
-        void Exists(FS.FolderPath path, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
+        void Exists(FolderPath path, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
             => path.Exists.OnNone(() => throw AppException.define($"The folder {path} does not exist", caller, file,line));
     }
 }

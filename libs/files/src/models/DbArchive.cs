@@ -8,10 +8,10 @@ namespace Z0
 
     public readonly record struct DbArchive : IDbArchive
     {
-        public readonly FS.FolderPath Root;
+        public readonly FolderPath Root;
 
         [MethodImpl(Inline)]
-        public DbArchive(FS.FolderPath root)
+        public DbArchive(FolderPath root)
         {
             Root = root;
         }
@@ -28,7 +28,7 @@ namespace Z0
             get => Root.Exists;
         }
 
-        FS.FolderPath IRootedArchive.Root 
+        FolderPath IRootedArchive.Root 
             => Root;
 
         public Hash32 Hash
@@ -76,7 +76,7 @@ namespace Z0
         public FolderPaths Folders(bool recurse = false)
             => Root.Folders(recurse);
 
-        public FS.FolderPath Folder(string match)
+        public FolderPath Folder(string match)
             => Root.Folder(match);
 
         public FS.Files Files()
@@ -159,24 +159,24 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static IFilteredArchive filter(FS.FolderPath src, string filter)
+        public static IFilteredArchive filter(FolderPath src, string filter)
             => new FilteredArchive(src, filter);
 
         [MethodImpl(Inline), Op]
-        public static IFilteredArchive filter(FS.FolderPath src, params FileExt[] ext)
+        public static IFilteredArchive filter(FolderPath src, params FileExt[] ext)
             => new FilteredArchive(src, ext);
 
-        public static FS.Files search(FS.FolderPath src, FileExt[] ext, uint limit = 0)
+        public static FS.Files search(FolderPath src, FileExt[] ext, uint limit = 0)
             => limit != 0 ? match(src, limit, ext) : match(src, ext);
 
-        public static FS.Files match(FS.FolderPath src, uint max, params FileExt[] ext)
+        public static FS.Files match(FolderPath src, uint max, params FileExt[] ext)
         {
             var files = filter(src, ext).Files().Take(max).Array();
             Array.Sort(files);
             return files;
         }
 
-        public static FS.Files match(FS.FolderPath src, params FileExt[] ext)
+        public static FS.Files match(FolderPath src, params FileExt[] ext)
         {
             var files = filter(src, ext).Files().Array();
             Array.Sort(files);
@@ -184,11 +184,11 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public static implicit operator DbArchive(FS.FolderPath src)
+        public static implicit operator DbArchive(FolderPath src)
             => new DbArchive(src);
 
         [MethodImpl(Inline)]
-        public static implicit operator FS.FolderPath(DbArchive src)
+        public static implicit operator FolderPath(DbArchive src)
             => src.Root;
     }
 }

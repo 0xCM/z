@@ -17,12 +17,12 @@ namespace Z0
             {
                 var parts = text.split(src, sep);
                 var count = parts.Length;
-                dst = sys.alloc<FS.FolderPath>(count);
+                dst = sys.alloc<FolderPath>(count);
                 for(var j=0; j<count; j++)
                     dst[j] = FS.dir(skip(parts,j));
             }
             else
-                dst = new FolderPaths(new FS.FolderPath[]{FS.dir(src)});
+                dst = new FolderPaths(new FolderPath[]{FS.dir(src)});
             return result;
         }
 

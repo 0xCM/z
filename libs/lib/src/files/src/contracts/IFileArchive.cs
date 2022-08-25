@@ -10,7 +10,7 @@ namespace Z0
     [Free]
     public interface IFileArchive : ITablePaths, IExpr
     {
-        FS.FolderPath Root {get;}
+        FolderPath Root {get;}
 
         bool INullity.IsEmpty
             => Root.IsEmpty;
@@ -18,7 +18,7 @@ namespace Z0
         bool INullity.IsNonEmpty
             => Root.IsNonEmpty;
             
-        FS.FolderPath Subdir(string scope)
+        FolderPath Subdir(string scope)
             => Root + FS.folder(scope);
 
         string IExpr.Format()

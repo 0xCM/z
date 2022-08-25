@@ -9,7 +9,7 @@ namespace Z0
     {
         const string CmdId = "archive";
 
-        public FS.FolderPath Source;
+        public FolderPath Source;
 
         public FilePath Target;
     }

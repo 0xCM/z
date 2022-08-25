@@ -9,18 +9,18 @@ namespace Z0
         public readonly DbArchive DbFiles {get;}
 
         [MethodImpl(Inline)]
-        public DbTargets(FS.FolderPath root, string scope)
+        public DbTargets(FolderPath root, string scope)
         {
             DbFiles = root + FS.folder(scope);
         }
 
         [MethodImpl(Inline)]
-        public DbTargets(FS.FolderPath root)
+        public DbTargets(FolderPath root)
         {
             DbFiles = root;
         }
 
-        public FS.FolderPath Root
+        public FolderPath Root
             => DbFiles;
 
         public string Format()
@@ -29,6 +29,6 @@ namespace Z0
         public override string ToString()
             => Format();
 
-        public static DbTargets Empty => new DbTargets(FS.FolderPath.Empty);
+        public static DbTargets Empty => new DbTargets(FolderPath.Empty);
     }
 }

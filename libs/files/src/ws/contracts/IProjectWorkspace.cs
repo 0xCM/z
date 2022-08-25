@@ -16,10 +16,10 @@ namespace Z0
         FS.Files SourceFiles(FileKind kind, bool recurse = true)
             => Home().Sources("src").Files(kind, recurse);
 
-        FS.FolderPath SrcDir()
+        FolderPath SrcDir()
             => Home().Sources("src").Root;
 
-        FS.FolderPath SrcDir(string name)
+        FolderPath SrcDir(string name)
             => SrcDir() + FS.folder(Name);
 
         FS.Files Scripts()
@@ -31,7 +31,7 @@ namespace Z0
         FS.Files ProjectFiles()
             => Home().Root.AllFiles;
         
-        FS.FolderPath BuildOut()
+        FolderPath BuildOut()
             => Root + FS.folder(".out");
 
         FS.Files OutFiles(FileKind kind)

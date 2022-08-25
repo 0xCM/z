@@ -11,7 +11,7 @@ namespace Z0
         public static FilePath Path(this Assembly src)
             => FS.path(src.Location);
 
-        public static FS.FolderPath Folder(this Assembly src)
+        public static FolderPath Folder(this Assembly src)
             => src.Path().FolderPath;
 
         public static void Append(this FilePath dst, params string[] src)

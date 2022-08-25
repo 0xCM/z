@@ -13,9 +13,9 @@ namespace Z0
 
         public static MsgPattern<Count> CreatingStatements => "Creating {0} statements";
 
-        public static MsgPattern<FS.FolderPath> ObliteratingDirectory => "Obliterating the directory {0}";
+        public static MsgPattern<FolderPath> ObliteratingDirectory => "Obliterating the directory {0}";
 
-        public static MsgPattern<FS.FolderPath> ObliteratedDirectory => "Consigned the directory {0} to oblivion";
+        public static MsgPattern<FolderPath> ObliteratedDirectory => "Consigned the directory {0} to oblivion";
 
         public static MsgPattern<ApiHostUri> EmittingHostRoutines => "Emitting {0} routines";
 
@@ -73,7 +73,7 @@ namespace Z0
         public static MsgPattern<Count,FileUri> ProcessedStatements
             => "Processed {0} statements from {1}";
 
-        public static MsgPattern<FS.FolderPath> CapturingRoutines => "Capturing routines from {0}";
+        public static MsgPattern<FolderPath> CapturingRoutines => "Capturing routines from {0}";
 
         public static MsgPattern<Count,Count> CapturedRoutines => "Captured {0} routines from {1} hosts";
 

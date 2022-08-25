@@ -14,7 +14,7 @@ namespace Z0
 
         public readonly IDbArchive Home;
 
-        FS.FolderPath IRootedArchive.Root 
+        FolderPath IRootedArchive.Root 
             => Home.Root;
     }
 }

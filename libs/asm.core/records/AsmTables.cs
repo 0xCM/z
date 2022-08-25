@@ -168,7 +168,7 @@ namespace Z0.Asm
             return records;
         }
 
-        public Index<HostAsmRecord> LoadHostAsmRows(FS.FolderPath src, bool pll = true, bool sort = true)
+        public Index<HostAsmRecord> LoadHostAsmRows(FolderPath src, bool pll = true, bool sort = true)
             => LoadHostAsmRows(src.Files(FS.Csv, true), pll, sort);
 
         public Index<AsmDetailRow> LoadAsmDetails(FS.Files src)

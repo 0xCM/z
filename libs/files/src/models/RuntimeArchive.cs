@@ -18,13 +18,13 @@ namespace Z0
         public static IRuntimeArchive load()
             => new RuntimeArchive(FS.dir(RuntimeEnvironment.GetRuntimeDirectory()));
 
-        public static IRuntimeArchive load(FS.FolderPath src)
+        public static IRuntimeArchive load(FolderPath src)
             => new RuntimeArchive(src);
 
         public static IRuntimeArchive load(Assembly src)
             => new RuntimeArchive(FS.path(src.Location).FolderPath);
 
-        public FS.FolderPath Root {get;}
+        public FolderPath Root {get;}
 
         public FS.Files Files {get;}
 
@@ -41,7 +41,7 @@ namespace Z0
             => new RuntimeAssembly(component, path);
 
         [MethodImpl(Inline)]
-        internal RuntimeArchive(FS.FolderPath root)
+        internal RuntimeArchive(FolderPath root)
         {
             Root = root;
             Files = root.Files(false, Exe, Dll, Pdb, Json, Xml).Where(x => !x.Name.Contains("System.Private.CoreLib"));

@@ -6,7 +6,8 @@ namespace Z0
 {
     using System.Collections;
 
-    using static core;
+    using static sys;
+    
 
     partial struct FS
     {

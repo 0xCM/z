@@ -29,7 +29,7 @@ namespace Z0
             // iter(pack, line => Write(line));
         }
 
-        ReadOnlySpan<ApiHostRes> Emit(ReadOnlySpan<ApiHostBlocks> src, FS.FolderPath dst, bool build = true)
+        ReadOnlySpan<ApiHostRes> Emit(ReadOnlySpan<ApiHostBlocks> src, FolderPath dst, bool build = true)
         {
             var running = Running();
             var count = src.Length;
@@ -52,7 +52,7 @@ namespace Z0
             return buffer;
         }
 
-        ApiHostRes Emit(in ApiHostBlocks src, FS.FolderPath dst)
+        ApiHostRes Emit(in ApiHostBlocks src, FolderPath dst)
         {
             var target = dst + ApiFiles.filename(src.Host, FS.Cs);
             var flow = EmittingFile(target);

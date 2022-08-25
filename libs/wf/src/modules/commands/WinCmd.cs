@@ -7,7 +7,7 @@ namespace Z0
     public readonly struct WinCmd
     {
         [Op]
-        public static CmdLine dir(FS.FolderPath src)
+        public static CmdLine dir(FolderPath src)
             => string.Format("cmd /c dir {0} /s/b", src.Format(PathSeparator.BS));
 
         [Op]

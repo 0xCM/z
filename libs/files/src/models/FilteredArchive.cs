@@ -6,14 +6,14 @@ namespace Z0
 {
     public readonly struct FilteredArchive : IFilteredArchive
     {
-        public FS.FolderPath Root {get;}
+        public FolderPath Root {get;}
 
         public string TextFilter {get;}
 
         public Index<FileExt> ExtFilter {get;}
 
         [MethodImpl(Inline)]
-        public FilteredArchive(FS.FolderPath root, string filter)
+        public FilteredArchive(FolderPath root, string filter)
         {
             Root = root;
             TextFilter = filter;
@@ -21,14 +21,14 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public FilteredArchive(FS.FolderPath root, FileExt[] ext)
+        public FilteredArchive(FolderPath root, FileExt[] ext)
         {
             Root = root;
             TextFilter = EmptyString;
             ExtFilter = ext;
         }
 
-        public Index<FS.FolderPath> Directories()
+        public Index<FolderPath> Directories()
             => Root.SubDirs(true);
 
         public Deferred<FilePath> Files()

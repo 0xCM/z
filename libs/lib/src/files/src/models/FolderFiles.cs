@@ -6,11 +6,11 @@ namespace Z0
 {
     public readonly struct FolderFiles : IIndex<FilePath>
     {
-        public readonly FS.FolderPath Location;
+        public readonly FolderPath Location;
 
         public readonly FS.Files Files;
 
-        public FolderFiles(FS.FolderPath dir, FilePath[] files)
+        public FolderFiles(FolderPath dir, FilePath[] files)
         {
             Location = dir;
             Files = files;

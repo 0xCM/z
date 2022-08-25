@@ -9,7 +9,7 @@ namespace Z0
     public sealed record class Archives : ApiSet<Archives>
     {
         [Api]
-        public static ExecToken zip(FS.FolderPath src, FilePath dst, WfEmit channel)
+        public static ExecToken zip(FolderPath src, FilePath dst, WfEmit channel)
         {
             var uri = $"app://archives/zip?src={src}?dst={dst.ToUri()}";
             var flow = channel.EmittingFile(dst);
@@ -17,10 +17,10 @@ namespace Z0
             return channel.EmittedBytes(flow, dst.Size);
         }
 
-        public static string identifier(FS.FolderPath src)
+        public static string identifier(FolderPath src)
             => src.Format(PathSeparator.FS).Replace(Chars.FSlash, Chars.Dot).Replace(Chars.Colon, Chars.Dot).Replace("..", ".");
 
-        public static DbArchive archive(FS.FolderPath root)
+        public static DbArchive archive(FolderPath root)
             => new DbArchive(root);
 
         public static DbArchive archive(Timestamp ts, DbArchive dst)
@@ -38,14 +38,14 @@ namespace Z0
             return src.FolderPath + stamped;
         }
 
-        public static CmdProcess robocopy(FS.FolderPath src, FS.FolderPath dst)
+        public static CmdProcess robocopy(FolderPath src, FolderPath dst)
         {
             var spec = $"robocopy {src} {dst} /e";
             var cmd = Cmd.cmd(spec);
             return Cmd.process(cmd);
         }
 
-        public static Outcome timestamp(FS.FolderPath src, out Timestamp dst)
+        public static Outcome timestamp(FolderPath src, out Timestamp dst)
         {
             dst = Timestamp.Zero;
             if(src.IsEmpty)

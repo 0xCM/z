@@ -11,16 +11,16 @@ namespace Z0
     {
         readonly BitFormatter<byte> BitFormat;
 
-        public FilePath ListPath(FS.FolderPath dst, Identifier name)
+        public FilePath ListPath(FolderPath dst, Identifier name)
             => dst + FS.file(name + ".bin", ListingExt);
 
         public FileExt ListingExt
             => FS.ext("list") + FS.Asm;
 
-        public Index<AssembledAsm> LoadAssembledAsm(FS.FolderPath src, Identifier listname)
+        public Index<AssembledAsm> LoadAssembledAsm(FolderPath src, Identifier listname)
             => Assembled(LoadListedBlocks(ListPath(src, listname)));
 
-        public NasmCaseScript CreateCaseScript(Identifier name, FS.FolderPath dst)
+        public NasmCaseScript CreateCaseScript(Identifier name, FolderPath dst)
         {
             var @case = new NasmCase();
             @case.CaseId = name;

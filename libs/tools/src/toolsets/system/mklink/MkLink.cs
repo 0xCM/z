@@ -8,7 +8,7 @@ namespace Z0
 
     partial class Tools
     {
-        public static MkLinkCmd mklink(FS.FolderPath src, FS.FolderPath dst)
+        public static MkLinkCmd mklink(FolderPath src, FolderPath dst)
             => new MkLinkCmd(MkLinkCmd.Flag.Directory, src.ToUri(), dst.ToUri());
                     
         public sealed class MkLink : Tool<MkLink>, ICmdRender<MkLinkCmd>

@@ -6,15 +6,15 @@ namespace Z0
 {
     using api = Includes;
 
-    public readonly struct IncludePath : ITextual, IIndex<FS.FolderPath>
+    public readonly struct IncludePath : ITextual, IIndex<FolderPath>
     {
-        internal readonly Index<FS.FolderPath> Data;
+        internal readonly Index<FolderPath> Data;
 
         [MethodImpl(Inline)]
-        public IncludePath(params FS.FolderPath[] src)
+        public IncludePath(params FolderPath[] src)
             => Data = src;
 
-        public ReadOnlySpan<FS.FolderPath> Entries
+        public ReadOnlySpan<FolderPath> Entries
         {
             [MethodImpl(Inline)]
             get =>  Data;
@@ -26,7 +26,7 @@ namespace Z0
             get => Data.Count;
         }
 
-        public FS.FolderPath[] Storage
+        public FolderPath[] Storage
         {
             [MethodImpl(Inline)]
             get => Data.Storage;
@@ -45,15 +45,15 @@ namespace Z0
             => api.concat(a,b);
 
         [MethodImpl(Inline)]
-        public static IncludePath operator +(IncludePath a, FS.FolderPath b)
+        public static IncludePath operator +(IncludePath a, FolderPath b)
             => api.concat(a,b);
 
         [MethodImpl(Inline)]
-        public static IncludePath operator +(FS.FolderPath a, IncludePath b)
+        public static IncludePath operator +(FolderPath a, IncludePath b)
             => api.concat(a,b);
 
         [MethodImpl(Inline)]
-        public static implicit operator IncludePath(FS.FolderPath[] src)
+        public static implicit operator IncludePath(FolderPath[] src)
             => new IncludePath(src);
     }
 }

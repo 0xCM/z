@@ -8,19 +8,19 @@ namespace Z0
 
     public class BitGridEmitter
     {
-        // public static string export<M,N,T>(BitGrid16<M,N,T> g, FS.FolderPath dir, bool showrow = false, [CallerName] string label = null)
+        // public static string export<M,N,T>(BitGrid16<M,N,T> g, FolderPath dir, bool showrow = false, [CallerName] string label = null)
         //     where M: unmanaged, ITypeNat
         //     where N: unmanaged, ITypeNat
         //     where T: unmanaged
         //         => export<M,N>(g.Content, dir, showrow, label);
 
-        // public static string export<M,N,T>(BitGrid32<M,N,T> g, FS.FolderPath dir, bool showrow = false, [CallerName] string label = null)
+        // public static string export<M,N,T>(BitGrid32<M,N,T> g, FolderPath dir, bool showrow = false, [CallerName] string label = null)
         //     where M: unmanaged, ITypeNat
         //     where N: unmanaged, ITypeNat
         //     where T: unmanaged
         //         => export<M,N>(g.Content, dir, showrow, label);
 
-        // public static string export<M,N,T>(BitGrid64<M,N,T> g, FS.FolderPath dir, bool showrow = false, [CallerName] string label = null)
+        // public static string export<M,N,T>(BitGrid64<M,N,T> g, FolderPath dir, bool showrow = false, [CallerName] string label = null)
         //     where M: unmanaged, ITypeNat
         //     where N: unmanaged, ITypeNat
         //     where T: unmanaged
@@ -35,7 +35,7 @@ namespace Z0
         /// <typeparam name="M">The row count type</typeparam>
         /// <typeparam name="N">The col count type</typeparam>
         /// <typeparam name="T">The cell type</typeparam>
-        public static string export<M,N,T>(BitGrid128<M,N,T> g, FS.FolderPath dir, bool showrow = false, [CallerName] string label = null)
+        public static string export<M,N,T>(BitGrid128<M,N,T> g, FolderPath dir, bool showrow = false, [CallerName] string label = null)
             where M: unmanaged, ITypeNat
             where N: unmanaged, ITypeNat
             where T: unmanaged
@@ -50,25 +50,25 @@ namespace Z0
         /// <typeparam name="M">The row count type</typeparam>
         /// <typeparam name="N">The col count type</typeparam>
         /// <typeparam name="T">The cell type</typeparam>
-        public static string export<M,N,T>(BitGrid256<M,N,T> g, FS.FolderPath dir, bool showrow = false, [CallerName] string label = null)
+        public static string export<M,N,T>(BitGrid256<M,N,T> g, FolderPath dir, bool showrow = false, [CallerName] string label = null)
             where M: unmanaged, ITypeNat
             where N: unmanaged, ITypeNat
             where T: unmanaged
                 => export<M,N,T>(g.Data, dir, showrow, label);
 
-        // public static string export<M,N,T>(SubGrid16<M,N,T> g, FS.FolderPath dir, bool showrow = false,  [CallerName] string label = null)
+        // public static string export<M,N,T>(SubGrid16<M,N,T> g, FolderPath dir, bool showrow = false,  [CallerName] string label = null)
         //     where M: unmanaged, ITypeNat
         //     where N: unmanaged, ITypeNat
         //     where T: unmanaged
         //         => export<M,N>(g.Data, dir, showrow, label);
 
-        // public static string export<M,N,T>(SubGrid32<M,N,T> g, FS.FolderPath dir, bool showrow = false, [CallerName] string label = null)
+        // public static string export<M,N,T>(SubGrid32<M,N,T> g, FolderPath dir, bool showrow = false, [CallerName] string label = null)
         //     where M: unmanaged, ITypeNat
         //     where N: unmanaged, ITypeNat
         //     where T: unmanaged
         //         => export<M,N>(g.Data, dir, showrow, label);
 
-        // public static string export<M,N,T>(SubGrid64<M,N,T> g, FS.FolderPath dir, bool showrow = false, [CallerName] string label = null)
+        // public static string export<M,N,T>(SubGrid64<M,N,T> g, FolderPath dir, bool showrow = false, [CallerName] string label = null)
         //     where M: unmanaged, ITypeNat
         //     where N: unmanaged, ITypeNat
         //     where T: unmanaged
@@ -83,7 +83,7 @@ namespace Z0
         /// <typeparam name="M">The row count type</typeparam>
         /// <typeparam name="N">The col count type</typeparam>
         /// <typeparam name="T">The cell type</typeparam>
-        public static string export<M,N,T>(SubGrid128<M,N,T> g, FS.FolderPath dir, bool showrow = false, [CallerName] string label = null)
+        public static string export<M,N,T>(SubGrid128<M,N,T> g, FolderPath dir, bool showrow = false, [CallerName] string label = null)
             where M: unmanaged, ITypeNat
             where N: unmanaged, ITypeNat
             where T: unmanaged
@@ -98,7 +98,7 @@ namespace Z0
         /// <typeparam name="M">The row count type</typeparam>
         /// <typeparam name="N">The col count type</typeparam>
         /// <typeparam name="T">The cell type</typeparam>
-        public static string export<M,N,T>(SubGrid256<M,N,T> g, FS.FolderPath dir, bool showrow = false, [CallerName] string label = null)
+        public static string export<M,N,T>(SubGrid256<M,N,T> g, FolderPath dir, bool showrow = false, [CallerName] string label = null)
             where M: unmanaged, ITypeNat
             where N: unmanaged, ITypeNat
             where T: unmanaged
@@ -348,7 +348,7 @@ namespace Z0
         /// <typeparam name="M">The row count type</typeparam>
         /// <typeparam name="N">The col count type</typeparam>
         /// <typeparam name="T">The cell type</typeparam>
-        static StreamWriter writer<W,M,N,T>(FS.FolderPath dir, [CallerName] string label = null, W w = default, M m = default, N n = default, T t = default)
+        static StreamWriter writer<W,M,N,T>(FolderPath dir, [CallerName] string label = null, W w = default, M m = default, N n = default, T t = default)
             where W: unmanaged, ITypeNat
             where M: unmanaged, ITypeNat
             where N: unmanaged, ITypeNat
@@ -364,7 +364,7 @@ namespace Z0
         /// <typeparam name="M">The row count type</typeparam>
         /// <typeparam name="N">The col count type</typeparam>
         /// <typeparam name="T">The cell type</typeparam>
-        static string export<M,N>(FS.FolderPath dir, ushort g, bool showrow = false, string label = null)
+        static string export<M,N>(FolderPath dir, ushort g, bool showrow = false, string label = null)
             where M: unmanaged, ITypeNat
             where N: unmanaged, ITypeNat
         {
@@ -384,7 +384,7 @@ namespace Z0
         /// <typeparam name="M">The row count type</typeparam>
         /// <typeparam name="N">The col count type</typeparam>
         /// <typeparam name="T">The cell type</typeparam>
-        static string export<M,N>(FS.FolderPath dir, uint g, bool showrow = false, string label = null)
+        static string export<M,N>(FolderPath dir, uint g, bool showrow = false, string label = null)
             where M: unmanaged, ITypeNat
             where N: unmanaged, ITypeNat
         {
@@ -404,7 +404,7 @@ namespace Z0
         /// <typeparam name="M">The row count type</typeparam>
         /// <typeparam name="N">The col count type</typeparam>
         /// <typeparam name="T">The cell type</typeparam>
-        static string export<M,N>(FS.FolderPath dir, ulong g, bool showrow = false, string label = null)
+        static string export<M,N>(FolderPath dir, ulong g, bool showrow = false, string label = null)
             where M: unmanaged, ITypeNat
             where N: unmanaged, ITypeNat
         {
@@ -424,7 +424,7 @@ namespace Z0
         /// <typeparam name="M">The row count type</typeparam>
         /// <typeparam name="N">The col count type</typeparam>
         /// <typeparam name="T">The cell type</typeparam>
-        static string export<M,N,T>(Vector128<T> g, FS.FolderPath dir, bool showrow = false, string label = null)
+        static string export<M,N,T>(Vector128<T> g, FolderPath dir, bool showrow = false, string label = null)
             where M: unmanaged, ITypeNat
             where N: unmanaged, ITypeNat
             where T: unmanaged
@@ -445,7 +445,7 @@ namespace Z0
         /// <typeparam name="M">The row count type</typeparam>
         /// <typeparam name="N">The col count type</typeparam>
         /// <typeparam name="T">The cell type</typeparam>
-        static string export<M,N,T>(Vector256<T> g, FS.FolderPath dir, bool showrow = false, string label = null)
+        static string export<M,N,T>(Vector256<T> g, FolderPath dir, bool showrow = false, string label = null)
             where M: unmanaged, ITypeNat
             where N: unmanaged, ITypeNat
             where T: unmanaged

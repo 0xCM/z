@@ -37,7 +37,7 @@ namespace Z0
         public void EmitApiMetadump(IApiPack dst)
             => EmitApiMetadump(dst.Metadata("metadump"));
 
-        public void EmitMetadump(ReadOnlySpan<Assembly> src, FS.FolderPath dst, bool clear = true)
+        public void EmitMetadump(ReadOnlySpan<Assembly> src, FolderPath dst, bool clear = true)
         {
             if(clear)
                 dst.Clear();

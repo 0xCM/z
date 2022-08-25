@@ -9,7 +9,7 @@ namespace Z0
         public static GridWriter Create()
             => default(GridWriter);
 
-        public void Save(int segwidth, int kMinSegs, int mkMaxSgs, FS.FolderPath dst)
+        public void Save(int segwidth, int kMinSegs, int mkMaxSgs, FolderPath dst)
         {
             var filename = FS.file($"GridMap{segwidth}.csv");
             var dstpath = dst + filename;

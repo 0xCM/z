@@ -18,7 +18,7 @@ namespace Z0
         public C Content {get; protected set;}
 
         protected Document(C content)
-            : base(FS.FsEntry.Empty)
+            : base(FsEntry.Empty)
         {
             Content = content;
         }

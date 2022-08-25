@@ -8,7 +8,7 @@ namespace Z0
 
     public class Env
     {
-        public static ExecToken emit(WfEmit emitter, EnvVarKind kind, FS.FolderPath dst)
+        public static ExecToken emit(WfEmit emitter, EnvVarKind kind, FolderPath dst)
         {
             var vars = EnvVars.Empty;
             var token = ExecToken.Empty;
@@ -33,7 +33,7 @@ namespace Z0
             return token;
         }
 
-        static ExecToken emit(WfEmit channel, EnvVars src, EnvVarKind kind, FS.FolderPath dst)
+        static ExecToken emit(WfEmit channel, EnvVars src, EnvVarKind kind, FolderPath dst)
         {
             var name =  $"{ExecutingPart.Name}.{EnumRender.format(kind)}";
             var table = dst + FS.file($"{name}.settings",FileKind.Csv);

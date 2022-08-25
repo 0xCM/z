@@ -170,7 +170,7 @@ namespace Z0
         public FilePath ScriptPath(Actor tool, string name, FileKind kind)
             => Home(tool).Script(name, kind);
 
-        public Outcome Run(IToolWs tool, string name, FilePath src, FS.FolderPath dst)
+        public Outcome Run(IToolWs tool, string name, FilePath src, FolderPath dst)
         {
             var cmd = new CmdLine(tool.Script(name, FileKind.Cmd).Format(PathSeparator.BS));
             var vars = WsCmdVars.create();
@@ -221,9 +221,9 @@ namespace Z0
             return Settings.parse(path.ReadNumberedLines(), Chars.Eq);
         }
 
-        public ConstLookup<Actor,ToolProfile> InferProfiles(FS.FolderPath src)
+        public ConstLookup<Actor,ToolProfile> InferProfiles(FolderPath src)
         {
-            var @base = FS.FolderPath.Empty;
+            var @base = FolderPath.Empty;
             var members = Index<Actor>.Empty;
             var config = src + FS.file("toolset", FS.Settings);
             if(!config.Exists)
@@ -253,7 +253,7 @@ namespace Z0
             return LoadProfileLookup(src);
         }
 
-        public FilePath ToolPath(FS.FolderPath root, Tool tool)
+        public FilePath ToolPath(FolderPath root, Tool tool)
         {
             if(LoadProfileLookup(root).Find(tool, out var profile))
                 return profile.Path;
@@ -285,7 +285,7 @@ namespace Z0
             return dst.ToIndex();
         }
 
-        public ConstLookup<Actor,FilePath> CalcHelpPaths(FS.FolderPath src)
+        public ConstLookup<Actor,FilePath> CalcHelpPaths(FolderPath src)
         {
             var dst = new Lookup<Actor,FilePath>();
             var profiles = LoadProfileLookup(src).Values;
@@ -396,7 +396,7 @@ namespace Z0
             return dst;
         }
 
-        public ConstLookup<Actor,ToolProfile> LoadProfileLookup(FS.FolderPath dir)
+        public ConstLookup<Actor,ToolProfile> LoadProfileLookup(FolderPath dir)
         {
             var running = Running(string.Format("Loading tool profiles from {0}", dir));
             var sources = dir.Match("tool.profiles", FS.Csv, true);

@@ -82,7 +82,7 @@ namespace Z0
                 => FS.file(string.Format("{0}.{1}", text.left(CurrentFile.Path.FileName.Format(), Chars.Dot), "xed.disasm.flow"), FS.Txt);
 
             FilePath TargetPath()
-                => FS.FolderPath.Empty + FS.folder("xed.disasm") + TargetFile();
+                => FolderPath.Empty + FS.folder("xed.disasm") + TargetFile();
 
             void OnEnd(DisasmToken src)
                 => FileEmit(Output.Emit(), 0, TargetPath());

@@ -22,15 +22,15 @@ namespace Z0
 
         MemoryAddress ProcessBase;
 
-        FS.FolderPath OutDir;
+        FolderPath OutDir;
 
-        public ProcessSegments(FS.FolderPath dst)
+        public ProcessSegments(FolderPath dst)
         {
             OutDir = dst;
             ProcessBase = process().Handle.ToPointer();
         }
 
-        public ProcessSegments(MemoryAddress @base, FS.FolderPath dst)
+        public ProcessSegments(MemoryAddress @base, FolderPath dst)
         {
             OutDir = dst;
             ProcessBase = @base;
@@ -102,7 +102,7 @@ namespace Z0
             return total;
         }
 
-        static FilePath path(FS.FolderPath dir, MemoryAddress @base)
+        static FilePath path(FolderPath dir, MemoryAddress @base)
             => dir + FS.file(string.Format("x{0}", @base.Format()), FS.Bin);
 
         [MethodImpl(Inline)]

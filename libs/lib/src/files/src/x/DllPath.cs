@@ -7,7 +7,7 @@ namespace Z0
     partial class XTend
     {
         [Op]
-        public static FilePath DllPath(this AssemblyName src, FS.FolderPath dir)
+        public static FilePath DllPath(this AssemblyName src, FolderPath dir)
             => dir + FS.file(src.SimpleName(), FS.Dll);
 
         [MethodImpl(Inline), Op]

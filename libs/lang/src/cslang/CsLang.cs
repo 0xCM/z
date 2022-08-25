@@ -128,13 +128,13 @@ namespace Z0
         string TargetExpr(CgTarget target)
             => TargetExpressions[target];
 
-        public FS.FolderPath CgRoot
+        public FolderPath CgRoot
             => AppDb.CgRoot().Root;
 
-        public FS.FolderPath ProjectRoot(CgTarget target)
+        public FolderPath ProjectRoot(CgTarget target)
             => CgRoot + FS.folder(TargetExpr(target));
 
-        public FS.FolderPath SourceRoot(CgTarget target)
+        public FolderPath SourceRoot(CgTarget target)
             => ProjectRoot(target) + FS.folder("src");
 
         public FilePath SourceFile(string name, IDbTargets dst)
@@ -146,10 +146,10 @@ namespace Z0
         public FilePath SourceFile(string name, string scope, IDbTargets dst)
             => dst.Targets(scope).Path(FS.file(name, FS.Cs));
 
-        public FilePath DataFile(FS.FolderPath dst, string name)
+        public FilePath DataFile(FolderPath dst, string name)
             => dst + FS.file(name, FS.Csv);
 
-        public FilePath SourceFile(FS.FolderPath dst ,string name)
+        public FilePath SourceFile(FolderPath dst ,string name)
             => dst + FS.file(name, FS.Cs);
 
         public FilePath DataFile(string name, string scope, CgTarget target)

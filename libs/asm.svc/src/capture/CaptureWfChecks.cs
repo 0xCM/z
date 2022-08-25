@@ -89,7 +89,7 @@ namespace Z0
             }
         }
 
-        public static FilePath csv(FS.FolderPath src, ApiHostUri host)
+        public static FilePath csv(FolderPath src, ApiHostUri host)
             => src + host.FileName(FS.PCsv);
 
         void CheckSize(ApiMemberCode src)
@@ -107,7 +107,7 @@ namespace Z0
             Require.equal((ByteSize)size, src.CodeSize);
         }
 
-        void PackHex(FS.FolderPath src, ApiHostUri host)
+        void PackHex(FolderPath src, ApiHostUri host)
         {
             var counter = 0u;
             var memory = ApiCode.memory( src + host.FileName(FileKind.Csv));
@@ -125,7 +125,7 @@ namespace Z0
             }
         }
 
-        void CheckPackedHex(FS.FolderPath src)
+        void CheckPackedHex(FolderPath src)
         {
             var ext = FS.ext(FS.ext("parsed"), FS.XPack);
             var files = src.Files(ext).ToReadOnlySpan();

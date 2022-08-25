@@ -47,10 +47,10 @@ namespace Z0
         public override string ToString()
             => Format();
 
-        public FilePath Path(FS.FolderPath dst)
+        public FilePath Path(FolderPath dst)
             => dst + FS.file(Name.Format(), FS.Asm);
 
-        public FilePath Save(FS.FolderPath dst)
+        public FilePath Save(FolderPath dst)
         {
             var path = Path(dst);
             Save(path);

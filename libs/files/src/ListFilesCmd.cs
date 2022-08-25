@@ -13,7 +13,7 @@ namespace Z0
         public string ListName;
 
         [Render(48)]
-        public FS.FolderPath SourceDir;
+        public FolderPath SourceDir;
 
         [Render(16)]
         public Index<FileExt> Extensions;

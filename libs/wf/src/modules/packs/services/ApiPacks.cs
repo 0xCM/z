@@ -34,7 +34,7 @@ namespace Z0
             return slice(@readonly(dst.Seal()),0,counter).ToArray();
         }
 
-        public static bool parse(FS.FolderPath src, out Timestamp ts)
+        public static bool parse(FolderPath src, out Timestamp ts)
         {
             ts = default;
             var fmt = src.Format(PathSeparator.FS);
@@ -44,7 +44,7 @@ namespace Z0
             return Time.parse(fmt.RightOfIndex(idx), out ts);
         }
 
-        public static bool parse(FS.FolderPath src, out ApiPack dst)
+        public static bool parse(FolderPath src, out ApiPack dst)
         {
             dst = default;
             var fmt = src.Format(PathSeparator.FS);
@@ -55,14 +55,14 @@ namespace Z0
             if(result)
                 dst = new ApiPack(src,ts);
             else
-                dst = new ApiPack(FS.FolderPath.Empty, Timestamp.Zero);
+                dst = new ApiPack(FolderPath.Empty, Timestamp.Zero);
             return result;
         }
 
         public IApiPack Current()
             => discover().Last;
 
-        Arrow<FS.FolderPath,FS.FolderPath> Link(Timestamp ts)
+        Arrow<FolderPath,FolderPath> Link(Timestamp ts)
         {
             var capture = AppDb.Capture();
             var src = capture.Root + FS.folder(current);
@@ -72,7 +72,7 @@ namespace Z0
             return (src,dst);
         }
 
-        public Arrow<FS.FolderPath,FS.FolderPath> Link(IApiPack dst)
+        public Arrow<FolderPath,FolderPath> Link(IApiPack dst)
             => Link(dst.Timestamp);
     }
 }

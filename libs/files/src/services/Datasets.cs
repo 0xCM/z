@@ -10,7 +10,7 @@ namespace Z0
     public class Datasets
     {
         [MethodImpl(Inline), Op]
-        public static DbArchive archive(FS.FolderPath home)
+        public static DbArchive archive(FolderPath home)
             => new DbArchive(home);
 
         [MethodImpl(Inline)]

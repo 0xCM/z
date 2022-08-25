@@ -10,7 +10,7 @@ namespace Z0
             where K : unmanaged
                 => EmitStringTable(spec,SourceFile(spec.TableName, "stringtables", dst), DataFile(spec.TableName, "stringtables", dst));
 
-        public StringTable EmitStringTable<K>(SymbolStrings<K> spec, FS.FolderPath dst)
+        public StringTable EmitStringTable<K>(SymbolStrings<K> spec, FolderPath dst)
             where K : unmanaged
                 => EmitStringTable(spec,SourceFile(dst, spec.TableName), DataFile(dst, spec.TableName));
 

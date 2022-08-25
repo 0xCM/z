@@ -22,7 +22,7 @@ namespace Z0
             ErrorPath = errors;
         }
 
-        public LogSettings(FS.FolderPath root)
+        public LogSettings(FolderPath root)
         {
             var ts = sys.timestamp();
             var control = ExecutingPart.Assembly;
@@ -31,7 +31,7 @@ namespace Z0
             ErrorPath = root + FS.folder(control.Format()) + FS.file($"{id}.errors.{ts}", FS.Log);
         }
 
-        public LogSettings(PartId control, FS.FolderPath root, string name)
+        public LogSettings(PartId control, FolderPath root, string name)
         {
             var id = text.empty(name) ? control.Format() : $"{control.Format()}.{name}";
             var ts = sys.timestamp();

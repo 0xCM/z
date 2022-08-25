@@ -4,24 +4,24 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed record class AppEnv : AppSettings<AppEnv,FS.FolderPath>
+    public sealed record class AppEnv : AppSettings<AppEnv,FolderPath>
     {
         public static AppEnv Default => new();
 
-        public readonly FS.FolderPath EnvRoot;
+        public readonly FolderPath EnvRoot;
 
         public AppEnv()
         {
             EnvRoot = FS.dir(Environment.GetEnvironmentVariable(SettingNames.EnvRoot));
         }
 
-        public AppEnv(FS.FolderPath src)
+        public AppEnv(FolderPath src)
         {
             EnvRoot = src;
         }
 
-        public FS.FolderPath DbRoot() => EnvRoot + FS.folder("db");
+        public FolderPath DbRoot() => EnvRoot + FS.folder("db");
 
-        public FS.FolderPath Logs() => DbRoot() + FS.folder("logs");
+        public FolderPath Logs() => DbRoot() + FS.folder("logs");
     }
 }

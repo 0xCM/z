@@ -112,7 +112,7 @@ namespace Z0
             writer.Write(src.Emit());
         }
 
-        public static void Pipe<T>(this FS.FolderPath Db, ReadOnlySpan<T> src, string channel = null)
+        public static void Pipe<T>(this FolderPath Db, ReadOnlySpan<T> src, string channel = null)
             where T : ITextual
         {
             var count = src.Length;
@@ -125,7 +125,7 @@ namespace Z0
             }
         }
 
-        public static void Pipe<S,T>(this FS.FolderPath root, ReadOnlySpan<S> src, Func<S,T> converter, string channel = null)
+        public static void Pipe<S,T>(this FolderPath root, ReadOnlySpan<S> src, Func<S,T> converter, string channel = null)
             where T : ITextual
         {
             var count = src.Length;

@@ -8,13 +8,13 @@ namespace Z0
     {
         public Name WsId;
 
-        public FS.FolderPath Root;
+        public FolderPath Root;
 
-        public FS.FolderPath Docs;
+        public FolderPath Docs;
 
-        public FS.FolderPath Help;
+        public FolderPath Help;
 
-        public FS.FolderPath Lists;
+        public FolderPath Lists;
 
         public FilePath ToolList;
 

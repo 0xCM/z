@@ -51,7 +51,7 @@ namespace Z0
         public static PdbSymbolSource source(FilePath pe)
             => new PdbSymbolSource(pe, pe.ChangeExtension(FS.Pdb));
 
-        public static DirectorySymbolStore store(FS.FolderPath src, WfEmit channel)
+        public static DirectorySymbolStore store(FolderPath src, WfEmit channel)
             => new DirectorySymbolStore(tracer(channel), null, src.Name);
 
         public static SymbolStoreFile file(FilePath src)

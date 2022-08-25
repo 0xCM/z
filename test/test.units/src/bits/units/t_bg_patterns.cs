@@ -8,7 +8,7 @@ namespace Z0
 
     public class t_bg_patterns : t_bits<t_bg_patterns>
     {
-        // FS.FolderPath OutDir => AppDb.Service.Targets().Root;
+        // FolderPath OutDir => AppDb.Service.Targets().Root;
 
         // public void stripes_12x12()
         //     => export(OutDir, GridPatterns.stripes(n256,n12,n12,z16));

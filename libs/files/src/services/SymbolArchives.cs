@@ -9,12 +9,12 @@ namespace Z0
 
     public readonly struct SymbolArchives : ISymbolArchives
     {
-        public static SymbolArchives create(FS.FolderPath src)
+        public static SymbolArchives create(FolderPath src)
             => new SymbolArchives(src);
 
-        public FS.FolderPath Root {get;}
+        public FolderPath Root {get;}
 
-        public SymbolArchives(FS.FolderPath root)
+        public SymbolArchives(FolderPath root)
         {
             Root = root;
         }
@@ -29,10 +29,10 @@ namespace Z0
         public DbArchive DotNet(byte major, byte minor, byte revision)
             => DotNet(FolderName.version(major, minor, revision).Format());
 
-        public FS.FolderPath SymbolCacheRoot()
+        public FolderPath SymbolCacheRoot()
             => Root;
 
-        public FS.FolderPath DefaultSymbolCache()
+        public FolderPath DefaultSymbolCache()
             => SymbolCacheRoot() + FS.folder(@default);
 
         public IDbSources DotNetSymSources()

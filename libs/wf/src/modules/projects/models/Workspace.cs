@@ -10,7 +10,7 @@ namespace Z0
     {
         readonly IDbArchive Archive;
 
-        public FS.FolderPath Root {get;}
+        public FolderPath Root {get;}
 
         public readonly ReadOnlySeq<IWorkspace> Deps;
 

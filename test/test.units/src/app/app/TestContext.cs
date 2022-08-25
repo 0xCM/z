@@ -143,7 +143,7 @@ namespace Z0
         protected PartName TestApp
             => (PartId)((ulong)Assembly.GetEntryAssembly().Id());
 
-        protected virtual FS.FolderPath UnitDataDir
+        protected virtual FolderPath UnitDataDir
             => AppDb.Logs($"test/{GetType().Name}").Root;
 
         protected static FileExt LogExt => FS.Log;

@@ -117,7 +117,7 @@ namespace Z0
 
             readonly IProjectWorkspace Ws;
 
-            readonly FS.FolderPath OutDir;
+            readonly FolderPath OutDir;
 
             readonly Action<object> Status;
 

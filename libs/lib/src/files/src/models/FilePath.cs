@@ -142,7 +142,7 @@ namespace Z0
         public bool IsNot(FileExt x1, FileExt x2)
             => !Is(x1,x2);
 
-        public RelativeFilePath Relative(FS.FolderPath src)
+        public RelativeFilePath Relative(FolderPath src)
             => FS.relative(src, this);
 
         public FilePath WithoutExtension
@@ -166,7 +166,7 @@ namespace Z0
         public string ReadUnicode()
             => File.ReadAllText(Name, Encoding.Unicode);
 
-        public RelativeFilePath RelativeTo(FS.FolderPath src)
+        public RelativeFilePath RelativeTo(FolderPath src)
             => relative(src, this);
 
         [MethodImpl(Inline)]

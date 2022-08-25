@@ -6,16 +6,16 @@ namespace Z0
 {
     public readonly struct ImmArchive : IImmArchive
     {
-        public FS.FolderPath Root {get;}
+        public FolderPath Root {get;}
 
         [MethodImpl(Inline)]
-        public ImmArchive(FS.FolderPath src)
+        public ImmArchive(FolderPath src)
         {
             Root = src;
         }
 
         [MethodImpl(Inline)]
-        public static implicit operator ImmArchive(FS.FolderPath src)
+        public static implicit operator ImmArchive(FolderPath src)
             => new ImmArchive(src);
     }
 }

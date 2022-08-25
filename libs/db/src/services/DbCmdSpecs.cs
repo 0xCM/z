@@ -8,7 +8,7 @@ namespace Z0
     public class DbCmdSpecs
     {
         [MethodImpl(Inline)]
-        public static ArchiveCmd archive(FS.FolderPath src, FilePath dst)
+        public static ArchiveCmd archive(FolderPath src, FilePath dst)
         {
             Algs.noinit(out ArchiveCmd cmd);
             cmd.Source = src;

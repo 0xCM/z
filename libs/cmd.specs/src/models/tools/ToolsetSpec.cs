@@ -8,9 +8,9 @@ namespace Z0
     {
         public readonly NameOld Name;
 
-        public readonly FS.FolderPath Home;
+        public readonly FolderPath Home;
 
-        public ToolsetSpec(string name, FS.FolderPath home)
+        public ToolsetSpec(string name, FolderPath home)
         {
             Name = name;
             Home = home;

@@ -14,7 +14,7 @@ namespace Z0
         IDbTargets DotNetTargets()
             => DumpTargets(dotnet);
 
-        FS.FolderPath DotNetTargets(byte major, byte minor, byte revision)
+        FolderPath DotNetTargets(byte major, byte minor, byte revision)
             => DotNetTargets().Targets(FolderName.version(major, minor, revision).Format()).Root;
 
         FilePath Table<T>(ProcDumpName id)

@@ -6,21 +6,21 @@ namespace Z0
 {
     partial class ApiCmdDefs
     {
-        public struct PublishFiles : IFlowCmd<FS.FolderPath,FS.FolderPath>
+        public struct PublishFiles : IFlowCmd<FolderPath,FolderPath>
         {
             public Actor Actor;
 
-            public FS.FolderPath Source;
+            public FolderPath Source;
 
-            public FS.FolderPath Target;
+            public FolderPath Target;
 
             IActor IFlowCmd.Actor
                 => Actor;
 
-            FS.FolderPath IFlowCmd<FS.FolderPath, FS.FolderPath>.Source
+            FolderPath IFlowCmd<FolderPath, FolderPath>.Source
                 => Source;
 
-            FS.FolderPath IFlowCmd<FS.FolderPath, FS.FolderPath>.Target
+            FolderPath IFlowCmd<FolderPath, FolderPath>.Target
                 => Target;
         }
     }

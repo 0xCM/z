@@ -140,7 +140,7 @@ namespace Z0
             dst.Append(Term());
         }
 
-        public void EmitSymbolSpan<E>(Identifier name, FS.FolderPath dst)
+        public void EmitSymbolSpan<E>(Identifier name, FolderPath dst)
             where E : unmanaged, Enum
         {
             var path = dst + FS.file(name.Format(), FS.Cs);

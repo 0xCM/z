@@ -11,7 +11,7 @@ namespace Z0
         /// </summary>
         /// <param name="root">The archive root</param>
         [MethodImpl(Inline), Op]
-        public static ModuleArchive archive(FS.FolderPath root)
+        public static ModuleArchive archive(FolderPath root)
             => new ModuleArchive(root);
     }
 }

@@ -41,10 +41,10 @@ namespace Z0
         void DefineCaseScript(CmdArgs args)
             => DefineCaseScript(arg(args,0));
 
-        FS.FolderPath CaseDir<T>(T subject)
+        FolderPath CaseDir<T>(T subject)
             => AppDb.AppData().Root + FS.folder(ApiAtomic.cases) + FS.folder(string.Format("{0}", subject));
 
-        FS.FolderPath CaseDir<T,D>(T subject, D discriminator)
+        FolderPath CaseDir<T,D>(T subject, D discriminator)
             => CaseDir(subject) + FS.folder(string.Format("{0}", discriminator));
 
         public string DefineCaseScript(string opcode)
@@ -56,7 +56,7 @@ namespace Z0
             return content;
         }
 
-        public XedScriptSpec DefineScript(string name, FS.FolderPath dst)
+        public XedScriptSpec DefineScript(string name, FolderPath dst)
         {
             var @case = new XedScriptSpec();
             @case.Name = name;

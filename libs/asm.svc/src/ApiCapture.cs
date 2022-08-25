@@ -18,7 +18,7 @@ namespace Z0
             CheckPackedHex(src.Root);
         }
 
-        void CheckPackedHex(FS.FolderPath src)
+        void CheckPackedHex(FolderPath src)
         {
             var ext = FS.ext(FS.ext("parsed"), FS.XPack);
             var files = src.Files(ext).ToReadOnlySpan();
@@ -41,10 +41,10 @@ namespace Z0
             }
         }
 
-        public static FilePath csv(FS.FolderPath src, ApiHostUri host)
+        public static FilePath csv(FolderPath src, ApiHostUri host)
             => src + host.FileName(FS.PCsv);
 
-        void PackHex(FS.FolderPath src, ApiHostUri host)
+        void PackHex(FolderPath src, ApiHostUri host)
         {
             var counter = 0u;
             var memory = ApiCode.memory(csv(src, host));

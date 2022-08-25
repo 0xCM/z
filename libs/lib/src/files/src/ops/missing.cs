@@ -11,7 +11,7 @@ namespace Z0
             => Msg.DoesNotExist.Format(src);
 
         [Op]
-        public static string missing(FS.FolderPath src)
+        public static string missing(FolderPath src)
             => Msg.DirDoesNotExist.Format(src);
     }
 }

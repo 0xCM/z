@@ -9,13 +9,13 @@ namespace Z0
         public readonly DbArchive DbFiles {get;}
 
         [MethodImpl(Inline)]
-        public DbSources(FS.FolderPath root, string scope)
+        public DbSources(FolderPath root, string scope)
         {
             DbFiles = root + FS.folder(scope);
         }
 
         [MethodImpl(Inline)]
-        public DbSources(FS.FolderPath root)
+        public DbSources(FolderPath root)
         {
             DbFiles = root;
         }
@@ -26,7 +26,7 @@ namespace Z0
             DbFiles = new DbArchive(root.Root);
         }
 
-        public FS.FolderPath Root
+        public FolderPath Root
             => DbFiles;
 
         public string Format()
@@ -35,9 +35,9 @@ namespace Z0
         public override string ToString()
             => Format();
 
-        public static implicit operator FS.FolderPath(DbSources src)
+        public static implicit operator FolderPath(DbSources src)
             => src.DbFiles;
 
-        public static DbSources Empty => new DbSources(FS.FolderPath.Empty);
+        public static DbSources Empty => new DbSources(FolderPath.Empty);
     }
 }

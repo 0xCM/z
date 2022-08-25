@@ -10,12 +10,12 @@ namespace Z0
 
         public readonly Count MaxLineCount;
 
-        public readonly FS.FolderPath TargetDir;
+        public readonly FolderPath TargetDir;
 
         public readonly TextEncodingKind TargetEncoding;
 
         [MethodImpl(Inline)]
-        public FileSplitSpec(FilePath src, Count maxlines, FS.FolderPath dst, TextEncodingKind encoding)
+        public FileSplitSpec(FilePath src, Count maxlines, FolderPath dst, TextEncodingKind encoding)
         {
             SourcePath = src;
             MaxLineCount = maxlines;

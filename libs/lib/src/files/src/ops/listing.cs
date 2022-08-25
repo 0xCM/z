@@ -8,10 +8,10 @@ namespace Z0
 
     partial struct FS
     {
-        public static ListedFiles listing(FS.FolderPath src, bool recurse)
+        public static ListedFiles listing(FolderPath src, bool recurse)
             => src.Files(recurse).Select(listing).Array();
 
-        public static ListedFiles listing(FS.FolderPath src, bool recurse, params FileKind[] kinds)
+        public static ListedFiles listing(FolderPath src, bool recurse, params FileKind[] kinds)
             => src.Files(recurse,kinds).Select(listing).Array();
 
         public static ListedFiles listing(ReadOnlySpan<FilePath> src)

@@ -24,7 +24,7 @@ namespace Z0
         public static ReadOnlySeq<Assembly> deps(AssemblyArchive archive, Assembly src)
             => deps(archive, src, src.Path().FolderPath).Distinct().ToSeq();
 
-        public static IEnumerable<Assembly> deps(AssemblyArchive archive, Assembly src, FS.FolderPath location)
+        public static IEnumerable<Assembly> deps(AssemblyArchive archive, Assembly src, FolderPath location)
         {
             var names = src.ReferenceNames();
             foreach(var name in names)

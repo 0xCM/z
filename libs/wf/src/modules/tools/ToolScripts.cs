@@ -8,7 +8,7 @@ namespace Z0
 
     public class ToolScripts : WfSvc<ToolScripts>
     {
-        public FS.FolderPath CleanOutDir(IProjectWorkspace project)
+        public FolderPath CleanOutDir(IProjectWorkspace project)
             => project.BuildOut().Clear(true);
 
         public void BuildAsm(IProjectWorkspace src)

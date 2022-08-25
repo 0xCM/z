@@ -11,14 +11,14 @@ namespace Z0
             => FS.path(part.Owner.Location);
 
         [Op]
-        public static FS.FolderPath Clear(this FS.FolderPath src, bool recurse = false)
+        public static FolderPath Clear(this FolderPath src, bool recurse = false)
         {
             FS.clear(src, recurse);
             return src;
         }
 
         [Op]
-        public static List<FilePath> Clear(this FS.FolderPath src, List<FilePath> dst, bool recurse = false)
+        public static List<FilePath> Clear(this FolderPath src, List<FilePath> dst, bool recurse = false)
             => FS.clear(src, dst, recurse);
 
         public static FilePath CopyTo(this FilePath src, FilePath dst, bool overwrite = true)
@@ -33,7 +33,7 @@ namespace Z0
         }
 
         [Op]
-        public static FilePath CopyTo(this FilePath src, FS.FolderPath dst, bool overwrite = true)
+        public static FilePath CopyTo(this FilePath src, FolderPath dst, bool overwrite = true)
         {
             if(src.Exists)
             {

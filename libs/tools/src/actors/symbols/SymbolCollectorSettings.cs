@@ -46,7 +46,7 @@ namespace Z0
         public FilePath ServerPath;
 
         [CmdArg("--output")]
-        public FS.FolderPath Target;
+        public FolderPath Target;
         
         [CmdFlag("--timeout")]
         public TimeSpan? Timeout;

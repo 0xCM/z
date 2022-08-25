@@ -9,25 +9,25 @@ namespace Z0
     {
         public PartId PartId {get;}
 
-        public FS.FolderPath Root {get;}
+        public FolderPath Root {get;}
 
         public Type UnitType {get;}
 
         [MethodImpl(Inline)]
-        public CasePaths(FS.FolderPath root, PartId part, Type subject)
+        public CasePaths(FolderPath root, PartId part, Type subject)
         {
             PartId = part;
             Root = root;
             UnitType = subject;
         }
 
-        FS.FolderPath PartDir
+        FolderPath PartDir
         {
             [MethodImpl(Inline)]
             get => Root + FS.folder(PartId.Format());
         }
 
-        FS.FolderPath CaseDir
+        FolderPath CaseDir
         {
             [MethodImpl(Inline)]
             get => PartDir + FS.folder(UnitType.Name);

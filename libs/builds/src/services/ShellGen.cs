@@ -10,7 +10,7 @@ namespace Z0
     {
         public class ShellGen : AppService<ShellGen>
         {
-            public void Generate(ShellSpec spec, FS.FolderPath dst)
+            public void Generate(ShellSpec spec, FolderPath dst)
             {
                 var project = new NetCoreProject(spec.ProjectName, spec.AssemblyName);
                 // project.Props.WithOutputType("Exe").WithRuntimeIdentifier("win-x64");

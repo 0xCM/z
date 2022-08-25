@@ -17,11 +17,11 @@ namespace Z0
 
         public readonly struct SvcState
         {
-            public readonly FS.FolderPath XedSources;
+            public readonly FolderPath XedSources;
 
-            public readonly FS.FolderPath XedTargets;
+            public readonly FolderPath XedTargets;
 
-            public SvcState(FS.FolderPath src, FS.FolderPath dst)
+            public SvcState(FolderPath src, FolderPath dst)
             {
                 XedSources = src;
                 XedTargets = dst;
@@ -30,10 +30,10 @@ namespace Z0
 
         readonly SvcState State;
 
-        public FS.FolderPath Sources()
+        public FolderPath Sources()
             => State.XedSources;
 
-        public FS.FolderPath Output()
+        public FolderPath Output()
             => State.XedTargets;
 
         public IDbTargets Targets()
@@ -197,7 +197,7 @@ namespace Z0
         public FilePath Target(string name, FileExt ext)
             => Output() + FS.file(name, ext);
 
-        public FS.FolderPath DocTargets()
+        public FolderPath DocTargets()
             => Output() + FS.folder("docs");
 
         public FilePath DocTarget(string name, FileKind kind)

@@ -9,7 +9,7 @@ namespace Z0
     partial struct FS
     {
         [Op]
-        public static Outcome symlink(FS.FolderPath src, FS.FolderPath dst, bool deleteExising = false)
+        public static Outcome symlink(FolderPath src, FolderPath dst, bool deleteExising = false)
         {
             try
             {
@@ -53,6 +53,6 @@ namespace Z0
 
         static MsgPattern<FileUri, FileUri, string> FileLinkCreationFailed => "Failed to create link {0} -> {1}:{2}";
 
-        static MsgPattern<FS.FolderPath, FS.FolderPath, string> DirectoryLinkCreationFailed => "Failed to create link {0} -> {1}:{2}";
+        static MsgPattern<FolderPath, FolderPath, string> DirectoryLinkCreationFailed => "Failed to create link {0} -> {1}:{2}";
     }
 }

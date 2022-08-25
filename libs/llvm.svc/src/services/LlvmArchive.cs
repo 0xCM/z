@@ -37,7 +37,7 @@ namespace Z0
         public FS.Files Files(FileKind kind)
             => Root.Files(kind);
 
-        FS.FolderPath IRootedArchive.Root
+        FolderPath IRootedArchive.Root
         {
             [MethodImpl(Inline)]
             get => Root.Root;

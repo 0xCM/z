@@ -11,7 +11,7 @@ namespace Z0
     {
         public void EmitSummaryReport(ProjectContext context, Document doc)
         {
-            var outdir = FS.FolderPath.Empty;
+            var outdir = FolderPath.Empty;
             ref readonly var summary = ref doc.Summary;
             ref readonly var origin = ref summary.Origin;
             TableEmit(summary.Rows, outdir + origin.Path.FileName.WithoutExtension + FS.ext("xed.disasm.summary.csv"));

@@ -80,7 +80,7 @@ namespace Z0
             => VarName.CompareTo(src.VarName);
 
         [MethodImpl(Inline)]
-        public EnvVar<FS.FolderPath> AsFolderPath()
+        public EnvVar<FolderPath> AsFolderPath()
             => new(VarName,FS.dir(VarValue));
 
         [MethodImpl(Inline)]

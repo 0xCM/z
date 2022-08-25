@@ -131,7 +131,7 @@ namespace Z0
                     dst = FS.path(src);
                 else if(type == typeof(FileUri))
                     dst =  FS.uri(src);
-                else if(type == typeof(FS.FolderPath))
+                else if(type == typeof(FolderPath))
                     dst = FS.dir(src);
                 else if(type.IsPrimalNumeric())
                     numeric(input, type, out dst);

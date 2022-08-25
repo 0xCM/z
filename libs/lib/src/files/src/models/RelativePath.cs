@@ -86,7 +86,7 @@ namespace Z0
                 => relative(Z0.RpOps.format("{0}/{1}", a.Name, b.Name));
 
             [MethodImpl(Inline)]
-            public static FS.FolderPath operator +(FolderPath a, RelativePath b)
+            public static FolderPath operator +(FolderPath a, RelativePath b)
                 => FS.dir(Z0.RpOps.format("{0}/{1}", a.Name, b.Name));
 
             [MethodImpl(Inline)]

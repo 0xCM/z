@@ -8,9 +8,9 @@ namespace Z0
     {
         public ClrAssemblyName AssemblyName;
 
-        public FS.FolderPath NetHostPath;
+        public FolderPath NetHostPath;
 
-        public FS.FolderPath PlatformPath;
+        public FolderPath PlatformPath;
 
         public string Source;
 
@@ -26,6 +26,6 @@ namespace Z0
 
         public string CommandOverride;
 
-        public Index<FS.FolderPath> UserIncludes;
+        public Index<FolderPath> UserIncludes;
     }
 }

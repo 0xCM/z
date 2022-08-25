@@ -43,10 +43,10 @@ namespace Z0
             PbChecks.create(Wf).Run();
         }
 
-        public Index<BfModel> BvEmit(DbSources sources, string filter, FS.FolderPath dst)
+        public Index<BfModel> BvEmit(DbSources sources, string filter, FolderPath dst)
             => BvEmit(PolyBits.bitvectors(sources, filter), dst);
 
-        public Index<BfModel> BvEmit(Index<BfModel> src, FS.FolderPath dst)
+        public Index<BfModel> BvEmit(Index<BfModel> src, FolderPath dst)
         {
             dst.Clear();
             var count = src.Count;

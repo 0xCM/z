@@ -8,7 +8,7 @@ namespace Z0.Asm
 
     public sealed class AsmCallPipe : WfSvc<AsmCallPipe>
     {
-        public Index<AsmCallRow> EmitRows(ReadOnlySpan<ApiPartRoutines> src, FS.FolderPath dir)
+        public Index<AsmCallRow> EmitRows(ReadOnlySpan<ApiPartRoutines> src, FolderPath dir)
         {
             var dst = sys.bag<AsmCallRow>();
             var count = src.Length;

@@ -27,7 +27,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">The source directory</param>
         [Op]
-        public static MappedFiles map(FS.FolderPath src)
+        public static MappedFiles map(FolderPath src)
         {
             var files = src.EnumerateFiles(false).Array();
             if(files.Length != 0)

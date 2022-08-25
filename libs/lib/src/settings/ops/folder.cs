@@ -7,7 +7,7 @@ namespace Z0
     partial class Settings
     {
         [MethodImpl(Inline), Op]
-        public static FS.FolderPath folder(in Setting src)
+        public static FolderPath folder(in Setting src)
             => FS.dir(src.ValueText);
     }
 }

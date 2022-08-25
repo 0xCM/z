@@ -28,7 +28,7 @@ namespace Z0
             public ByteSpanSpec Emit(uint indent, Identifier name, string data, ITextBuffer dst)
                 => GSpanRes.ascirender(indent, name, data, dst);
 
-            public static void Emit(FS.FolderPath root)
+            public static void Emit(FolderPath root)
             {
                 var dst = root + FS.file("asci", FS.Txt);
                 using var writer = dst.Writer();

@@ -17,10 +17,10 @@ namespace Z0
         protected virtual IDbSources Deployments
             => AppDb.Toolbase();
 
-        protected FS.FolderPath Deployment
+        protected FolderPath Deployment
             => Deployments.Folder(Id.Format());
 
-        public FilePath Script(FS.FolderPath dir, FS.FileName name)
+        public FilePath Script(FolderPath dir, FS.FileName name)
             => dir + name;
 
         public virtual FilePath ToolPath()
@@ -29,10 +29,10 @@ namespace Z0
         protected static string format(FilePath src)
             => src.Format(PathSeparator.BS);
 
-        protected static FilePath input(FS.FolderPath dir, FS.FileName name)
+        protected static FilePath input(FolderPath dir, FS.FileName name)
             => dir + name;
 
-        protected static FilePath output(FS.FolderPath dir, FS.FileName name)
+        protected static FilePath output(FolderPath dir, FS.FileName name)
             => dir + name;
 
         protected static FS.FileName file(string src, FileExt ext)

@@ -11,21 +11,21 @@ namespace Z0
     {
         public static IncludePath concat(IncludePath a, IncludePath b)
         {
-            var dst = alloc<FS.FolderPath>(a.EntryCount + b.EntryCount);
+            var dst = alloc<FolderPath>(a.EntryCount + b.EntryCount);
             concat(a,b,dst);
             return dst;
         }
 
-        public static IncludePath concat(IncludePath a, FS.FolderPath b)
+        public static IncludePath concat(IncludePath a, FolderPath b)
         {
-            var dst = alloc<FS.FolderPath>(a.EntryCount + 1);
+            var dst = alloc<FolderPath>(a.EntryCount + 1);
             concat(a, include(b), dst);
             return dst;
         }
 
-        public static IncludePath concat(FS.FolderPath a, IncludePath b)
+        public static IncludePath concat(FolderPath a, IncludePath b)
         {
-            var dst = alloc<FS.FolderPath>(b.EntryCount + 1);
+            var dst = alloc<FolderPath>(b.EntryCount + 1);
             concat(include(a), b, dst);
             return dst;
         }
@@ -55,7 +55,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static IncludePath include(params FS.FolderPath[] src)
+        public static IncludePath include(params FolderPath[] src)
             => src;
     }
 }

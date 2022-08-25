@@ -18,7 +18,7 @@ namespace Z0
                 dst = SettingType.String;
             else if(src == typeof(FilePath) || src == typeof(FileUri))
                 dst = SettingType.File;
-            else if(src == typeof(FS.FolderPath))
+            else if(src == typeof(FolderPath))
                 dst = SettingType.Folder;
             return dst;
         }

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed class FolderPaths : Seq<FolderPaths,FS.FolderPath>
+    public sealed class FolderPaths : Seq<FolderPaths,FolderPath>
     {
         public FolderPaths()
         {
@@ -12,7 +12,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public FolderPaths(FS.FolderPath[] src)
+        public FolderPaths(FolderPath[] src)
             : base(src)
         {
 
@@ -22,11 +22,11 @@ namespace Z0
             => FS.format(this);
 
         [MethodImpl(Inline)]
-        public static implicit operator FolderPaths(FS.FolderPath[] src)
+        public static implicit operator FolderPaths(FolderPath[] src)
             => new FolderPaths(src);
 
         [MethodImpl(Inline)]
-        public static implicit operator FS.FolderPath[](FolderPaths src)
+        public static implicit operator FolderPath[](FolderPaths src)
             => src.Storage;
     }
 }

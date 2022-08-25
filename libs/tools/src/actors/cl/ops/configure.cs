@@ -10,7 +10,7 @@ namespace Z0
 
     partial struct Vc
     {
-        public static CmdLine cl(ClCmdInfo cmdinfo, FS.FolderPath vsdir)
+        public static CmdLine cl(ClCmdInfo cmdinfo, FolderPath vsdir)
         {
             var winSdk = WinSdk.latest();
             var vcToolDir = Vc.vcinfo(vsdir).ToolVersionRoot;

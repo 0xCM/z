@@ -31,13 +31,13 @@ namespace Z0.Asm
         }
 
         public Index<AsmDetailRow> Emit(ReadOnlySpan<ApiCodeBlock> src)
-            => Emit(src, FS.FolderPath.Empty);
+            => Emit(src, FolderPath.Empty);
 
         [MethodImpl(Inline), Op, Closures(UInt64k)]
         public static AsmRowSet<T> rowset<T>(T key, AsmDetailRow[] src)
             => new AsmRowSet<T>(key,src);
 
-        public Index<AsmDetailRow> Emit(ReadOnlySpan<ApiCodeBlock> src, FS.FolderPath dst)
+        public Index<AsmDetailRow> Emit(ReadOnlySpan<ApiCodeBlock> src, FolderPath dst)
         {
             var rows = BuildRows(src);
             var rowsets = rows.GroupBy(x => x.Mnemonic).Select(x => rowset(x.Key, x.Array())).Array().ToReadOnlySpan();
@@ -58,7 +58,7 @@ namespace Z0.Asm
             return dst.ToArray();
         }
 
-        uint Emit(in AsmRowSet<AsmMnemonic> src, FS.FolderPath dst)
+        uint Emit(in AsmRowSet<AsmMnemonic> src, FolderPath dst)
             => Emit(src, DetailPath(dst, src));
 
         uint Emit(in AsmRowSet<AsmMnemonic> src, FilePath dst)
@@ -81,7 +81,7 @@ namespace Z0.Asm
             return count;
         }
 
-        FilePath DetailPath(FS.FolderPath dir, in AsmRowSet<AsmMnemonic> src)
+        FilePath DetailPath(FolderPath dir, in AsmRowSet<AsmMnemonic> src)
             => AppDb.Service.ApiTargets().Table<AsmDetailRow>();
 
         Index<AsmDetailRow> BuildRows(in ApiCodeBlock src)

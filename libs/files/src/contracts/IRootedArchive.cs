@@ -4,9 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IRootedArchive : IExistential, ILocatable<FS.FolderPath>
+    public interface IRootedArchive : IExistential, ILocatable<FolderPath>
     {
-        FS.FolderPath Root {get;}
+        FolderPath Root {get;}
 
         bool INullity.IsEmpty
             => Root.IsEmpty;
@@ -14,7 +14,7 @@ namespace Z0
         bool INullity.IsNonEmpty
             => Root.IsNonEmpty;
 
-        FS.FolderPath ILocatable<FS.FolderPath>.Location
+        FolderPath ILocatable<FolderPath>.Location
             => Root;
 
         bool IExistential.Exists
@@ -64,7 +64,7 @@ namespace Z0
         FolderPaths Folders(bool recurse = false)
             => Root.Folders(recurse);
 
-        FS.FolderPath Folder(string match)
+        FolderPath Folder(string match)
             => Root.Folder(match);
 
         FS.Files Files(FileKind kind)

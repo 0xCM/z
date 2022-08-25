@@ -9,11 +9,11 @@ namespace Z0
     public class PdbDocs
     {
         [MethodImpl(Inline), Op]        
-        public static SymbolArchives symbols(FS.FolderPath root)
+        public static SymbolArchives symbols(FolderPath root)
             => SymbolArchives.create(root);
 
         [MethodImpl(Inline), Op]        
-        public static FS.Files pdbfiles(FS.FolderPath src)
+        public static FS.Files pdbfiles(FolderPath src)
             => src.Files(FS.Pdb, true);
 
         [MethodImpl(Inline), Op]

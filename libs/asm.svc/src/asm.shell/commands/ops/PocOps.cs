@@ -59,7 +59,7 @@ namespace Z0.Asm
 
         Outcome AsmConfig(CmdArgs args)
         {
-            var result = OmniScript.Run(FS.FolderPath.Empty + FS.file("log-config",FileKind.Cmd), out var response);
+            var result = OmniScript.Run(FolderPath.Empty + FS.file("log-config",FileKind.Cmd), out var response);
             if(result.Fail)
                 return result;
 
@@ -252,7 +252,7 @@ namespace Z0.Asm
         Outcome UnpackRespack(CmdArgs args)
         {
             var unpacker = ApiResPackUnpacker.create(Wf);
-            var dst = FS.FolderPath.Empty;
+            var dst = FolderPath.Empty;
             unpacker.Emit(dst);
             return true;
         }
@@ -475,7 +475,7 @@ namespace Z0.Asm
 
         void ConvertPdbXml()
         {
-            var dir = FS.FolderPath.Empty;
+            var dir = FolderPath.Empty;
             var file = PartId.AsmCore.Component(FS.Pdb, FS.Xml);
             var srcPath = dir + file;
             var buffer = text.buffer();

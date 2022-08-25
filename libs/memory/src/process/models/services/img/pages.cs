@@ -8,7 +8,7 @@ namespace Z0
 
     partial class ImageMemory
     {
-        static FileUri Nul => FS.FolderPath.Empty +  FS.file("dev",FS.ext("null"));
+        static FileUri Nul => FolderPath.Empty +  FS.file("dev",FS.ext("null"));
 
         public static ReadOnlySeq<ProcessMemoryRegion> pages(ReadOnlySpan<MemoryRangeInfo> src)
         {

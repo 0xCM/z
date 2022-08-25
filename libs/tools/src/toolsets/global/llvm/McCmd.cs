@@ -75,7 +75,7 @@ namespace Z0
         public bit ShowEncoding = 0;
 
         [CmdFlag("--fdebug-compilation-dir={0}")]
-        public FS.FolderPath DebugCompliationDir = FS.FolderPath.Empty;
+        public FolderPath DebugCompliationDir = FolderPath.Empty;
 
         public LlvmMc Tool
             => Tools.llvm_mc;
