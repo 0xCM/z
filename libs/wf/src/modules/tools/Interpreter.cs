@@ -10,17 +10,15 @@ namespace Z0
 
     public class Interpreter : IDisposable
     {
-        public static Interpreter create(FilePath exe, string args, Action<string> status, Action<string> error, Action<int> exit)
-            => new Interpreter(exe, args, status, error, exit);
+        public static Interpreter create(WfEmit channel, FilePath path, params string[] args)
+            => new Interpreter(channel, path, args);
 
-        Interpreter(FilePath exe, string args, Action<string> status, Action<string> error, Action<int> exit)
+        Interpreter(WfEmit channel, FilePath path, string[] args)
         {
-            StatusReceiver = status;
-            ErrorReceiver = error;
-            ExitReceiver = exit;
+            Channel = channel;
             Tokens = TokenDispenser.create();
             Worker = new Process();
-            var start = new ProcessStartInfo(exe.Name, args)
+            var start = new ProcessStartInfo(path.Format(), text.join(Chars.Space,args))
             {
                 UseShellExecute = false,
                 RedirectStandardError = true,
@@ -33,39 +31,39 @@ namespace Z0
             Worker.StartInfo = start;
             Worker.OutputDataReceived += OnStatus;
             Worker.ErrorDataReceived += OnError;
-            Worker.EnableRaisingEvents = true;
             Worker.Exited += OnExit;
+            Worker.EnableRaisingEvents = true;
         }
+
+        readonly WfEmit Channel;
 
         Process Worker;
 
         TokenDispenser Tokens;
 
-        Action<string> StatusReceiver;
-
-        Action<string> ErrorReceiver;
-
-        Action<int> ExitReceiver;
-
-        bool Running;
-
-        void OnStatus(object src, DataReceivedEventArgs e)
+        void OnStatus(object _, DataReceivedEventArgs e)
         {
             if(e != null && nonempty(e.Data))
-                StatusReceiver(e.Data);
+            {
+                Channel.Status(e.Data);
+            }
         }
 
-        void OnError(object src, DataReceivedEventArgs e)
+        void OnError(object _, DataReceivedEventArgs e)
         {
             if(e != null && nonempty(e.Data))
-                ErrorReceiver(e.Data);
+            {
+                Channel.Status(e.Data);
+            }
         }
 
-        void OnExit(object sender, EventArgs e)
+        void OnExit(object _, EventArgs e)
         {
             Running = false;
-            ExitReceiver(Worker.ExitCode);
+            Channel.Status($"Exit code {Worker.ExitCode}");
         }
+
+        bool Running;
 
         public void Start()
         {
@@ -80,29 +78,19 @@ namespace Z0
             Worker.Dispose();
         }
 
-        public Outcome Submit(string cmd)
+        public void Submit(string cmd)
         {
-            var result = Outcome.Success;
             try
             {
-                start(() => Dispatch(cmd));
+                start(() => Worker.StandardInput.WriteLine(cmd));
             }
             catch(Exception e)
             {
-                result = e;
+                Channel.Error(e);
             }
-            return result;
         }
 
-        public Outcome WaitForExit()
-        {
-            var result = Worker.WaitForExit(5000);
-            return result ? Outcome.Success : (false, "Worker would not stop");
-        }
-
-        void Dispatch(string cmd)
-        {
-            Worker.StandardInput.WriteLine(cmd);
-        }
+        public bool WaitForExit(Duration time)
+            => Worker.WaitForExit((int)time.Ms);
     }
 }

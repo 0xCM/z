@@ -1,6 +1,7 @@
 @echo off
 call %~dp0..\config.cmd
 
+dotnet sln add B:/dev/z0/libs/z/z0.z.csproj
 dotnet sln add B:/dev/z0/libs/literals/z0.literals.csproj
 dotnet sln add B:/dev/z0/libs/sys/z0.sys.csproj
 dotnet sln add B:/dev/z0/libs/text/z0.text.csproj
@@ -51,7 +52,6 @@ dotnet sln add B:/dev/z0/libs/linq/z0.linq.csproj
 dotnet sln add B:/dev/z0/libs/dynamic/z0.dynamic.csproj
 dotnet sln add B:/dev/z0/libs/heaps/z0.heaps.csproj
 dotnet sln add B:/dev/z0/libs/intel.svc/z0.intel.svc.csproj
-dotnet sln add B:/dev/z0/libs/llvm.tools/z0.llvm.tools.csproj
 dotnet sln add B:/dev/z0/libs/memory.svc/z0.memory.svc.csproj
 dotnet sln add B:/dev/z0/libs/queues/z0.queues.csproj
 dotnet sln add B:/dev/z0/libs/render/z0.render.csproj
@@ -65,15 +65,3 @@ dotnet sln add B:/dev/z0/cg/cg.intel/z0.cg.intel.csproj
 dotnet sln add B:/dev/z0/cg/cg.libs/z0.cg.libs.csproj
 dotnet sln add B:/dev/z0/test/test.checks/z0.test.checks.csproj
 dotnet sln add B:/dev/z0/test/test.units/z0.test.units.csproj
-
-: dotnet sln add B:/dev/z0/libs/wf.shell/z0.wf.shell.csproj
-@REM dotnet sln add B:/dev/z0/libs/api.checks/z0.api.checks.csproj
-@REM dotnet sln add B:/dev/z0/libs/cmd.checks/z0.cmd.checks.csproj
-@REM dotnet sln add B:/dev/z0/libs/memory.checks/z0.memory.checks.csproj
-@REM dotnet sln add B:/dev/z0/libs/shell.cmd/z0.shell.cmd.csproj
-@REM dotnet sln add B:/dev/z0/libs/workers/z0.workers.csproj
-@REM dotnet sln add B:/dev/z0/test/test.shell/z0.test.shell.csproj
-@REM dotnet sln add B:/dev/z0/cg/cg.shell/z0.cg.shell.csproj
-@REM dotnet sln add B:/dev/z0/cg/cg.test/z0.cg.test.csproj
-
-

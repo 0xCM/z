@@ -66,7 +66,7 @@ namespace Z0
             try
             {
                 var cmd = new CmdLine(string.Format("{0} \"{1}\"", src.Format(PathSeparator.BS), args.Format()));
-                var process = Cmd.process(cmd);
+                var process = CmdLauncher.start(cmd);
                 var outcome = process.Wait();
                 var lines =  Lines.read(process.Output);
                 if(dst.IsNonEmpty)
@@ -102,7 +102,7 @@ namespace Z0
             using var writer = AppDb.Logs("scripts").Path(script,FileKind.Log).Writer();
             try
             {
-                var process = vars != null ? Cmd.process(cmd, vars) : Cmd.process(cmd);
+                var process = vars != null ? Cmd.process(cmd, vars) : CmdLauncher.start(cmd);
                 process.Wait();
                 var lines =  Lines.read(process.Output);
                 iter(lines, line => writer.WriteLine(line));
@@ -120,7 +120,7 @@ namespace Z0
         {
             try
             {
-                var process = Cmd.process(cmd);
+                var process = CmdLauncher.start(cmd);
                 process.Wait();
                 return Lines.read(process.Output);
             }
@@ -141,7 +141,7 @@ namespace Z0
             var result = Outcome.Success;
             try
             {
-                var proc = Cmd.process(cmd, vars, status, error);
+                var proc = CmdLauncher.start(cmd, vars, status, error);
                 var outcome = proc.Wait();
                 var lines =  Lines.read(proc.Output);
                 if(log.IsNonEmpty)

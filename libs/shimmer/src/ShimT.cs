@@ -18,7 +18,7 @@ namespace Z0
 
         public virtual Task<int> Start()
         {
-            return default;
+            return sys.start(() => 0);
         }
     }
 

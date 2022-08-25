@@ -111,6 +111,10 @@ namespace Z0
             => init(ticks);
 
         [MethodImpl(Inline)]
+        public static explicit operator int(Duration src)
+            => (int)src.Ticks;
+
+        [MethodImpl(Inline)]
         public static Duration operator +(Duration a, Duration b)
             => new Duration(a.Ticks + b.Ticks);
 

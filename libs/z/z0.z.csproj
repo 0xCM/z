@@ -14,7 +14,7 @@
   <Import Project="$(ProjectProps)/usings.props" />
 
   <ItemGroup>
-    <ProjectReference Include="../../cg/cg.libs/z0.cg.libs.csproj" />
+    <ProjectReference Include="$(CgLibs)" />
     <ProjectReference Include="../../test/test.checks/z0.test.checks.csproj" />
     <ProjectReference Include="../../test/test.units/z0.test.units.csproj" />
   </ItemGroup>

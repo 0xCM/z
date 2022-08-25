@@ -9,9 +9,9 @@
 
   <ItemGroup>
      <EmbeddedResource Include="patterns/**/*.*" />
-     <ProjectReference Include="../builds/z0.builds.csproj"/>
-     <ProjectReference Include="../native/z0.native.csproj"/>
-     <ProjectReference Include="../wf/z0.wf.csproj"/>
+     <ProjectReference Include="$(Builds)"/>
+     <ProjectReference Include="$(Native)"/>
+     <ProjectReference Include="$(Wf)"/>
   </ItemGroup>
 
 </Project>

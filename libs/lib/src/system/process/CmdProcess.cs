@@ -21,22 +21,6 @@ namespace Z0
     /// </summary>
     public sealed class CmdProcess : ICmdProcess<CmdProcess>
     {
-        public static void include(CmdVars? src, CmdProcessOptions dst)
-        {
-            if(src != null)
-            {
-                var count = src.Count;
-                for(var i=0; i<count; i++)
-                {
-                    ref readonly var v = ref src[i];
-                    if(v.IsNonEmpty && v.Name.IsNonEmpty)
-                    {
-                        dst.AddEnvironmentVariable(v.Name,v.Value);
-                    }
-                }
-            }
-        }
-
         readonly CmdLine _commandLine;
 
         readonly StringBuilder _output;

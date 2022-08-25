@@ -69,11 +69,11 @@
     <ProjectReference Include="$(SosCmd)" />
 
     <ProjectReference Include="$(Tuples)" />
+    <ProjectReference Include="$(Tools)" />
 
     <ProjectReference Include="$(Validity)" />
 
     <ProjectReference Include="$(SlnLibs)\llvm.models\z0.llvm.models.csproj" />
-    <ProjectReference Include="$(SlnLibs)\llvm.tools\z0.llvm.tools.csproj" />
     <ProjectReference Include="$(SlnLibs)\llvm.svc\z0.llvm.svc.csproj" />
 
   </ItemGroup>

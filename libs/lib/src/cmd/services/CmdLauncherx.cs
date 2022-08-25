@@ -4,9 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
-    partial class Cmd
+    public class CmdLauncher
     {
         static void include(CmdVars? src, CmdProcessOptions dst)
         {
@@ -23,11 +21,11 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static CmdProcess process(CmdLine cmd)
+        public static CmdProcess start(CmdLine cmd)
             => new CmdProcess(cmd);
 
         [Op]
-        public static CmdProcess process(CmdLine cmd, CmdVars? vars)
+        public static CmdProcess start(CmdLine cmd, CmdVars? vars)
         {
             var options = new CmdProcessOptions();
             include(vars, options);
@@ -35,7 +33,7 @@ namespace Z0
         }
 
         [Op]
-        public static CmdProcess process(CmdLine cmd, CmdVars? vars, Receiver<string> status, Receiver<string> error)
+        public static CmdProcess start(CmdLine cmd, CmdVars? vars, Receiver<string> status, Receiver<string> error)
         {
             var options = new CmdProcessOptions();
             include(vars, options);
@@ -44,7 +42,7 @@ namespace Z0
         }
 
         [Op]
-        public static CmdProcess process(CmdLine cmd, Receiver<string> status, Receiver<string> error)
+        public static CmdProcess start(CmdLine cmd, Receiver<string> status, Receiver<string> error)
         {
             var options = new CmdProcessOptions();
             options.WithReceivers(status, error);
@@ -52,22 +50,22 @@ namespace Z0
         }
 
         [Op]
-        public static CmdProcess process(CmdLine cmd, TextWriter dst)
+        public static CmdProcess start(CmdLine cmd, TextWriter dst)
             => new CmdProcess(cmd, new CmdProcessOptions(dst));
 
         [Op]
-        public static CmdProcess process(CmdLine cmd, TextWriter dst, Receiver<string> status, Receiver<string> error)
+        public static CmdProcess start(CmdLine cmd, TextWriter dst, Receiver<string> status, Receiver<string> error)
         {
             var options = new CmdProcessOptions(dst);
             options.WithReceivers(status, error);
             return new CmdProcess(cmd, options);
         }
 
-        public static CmdProcess process(FilePath path, CmdKind kind, string args)
-            => CmdLauncher.start(Cmd.cmd(path,kind,args));
+        public static CmdProcess start(FilePath path, CmdKind kind, string args)
+            => start(Cmd.cmd(path,kind,args));
 
         [Op]
-        public static CmdProcess process(CmdLine command, CmdProcessOptions config)
+        public static CmdProcess start(CmdLine command, CmdProcessOptions config)
             => new CmdProcess(command, config);        
     }
 }

@@ -42,7 +42,7 @@ namespace Z0
         {
             var spec = $"robocopy {src} {dst} /e";
             var cmd = Cmd.cmd(spec);
-            return Cmd.process(cmd);
+            return CmdLauncher.start(cmd);
         }
 
         public static Outcome timestamp(FolderPath src, out Timestamp dst)

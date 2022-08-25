@@ -32,5 +32,10 @@ namespace Z0
 
 
         }
+
+        public override Task<int> Start()
+        {
+            return sys.start(() => 0);
+        }
     }    
 }
