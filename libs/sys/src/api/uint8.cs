@@ -9,6 +9,15 @@ namespace Z0
     partial class sys
     {        
         /// <summary>
+        /// Presents a parametric source to a <see cref='byte'/>
+        /// </summary>
+        /// <param name="src">The source value</param>
+        /// <typeparam name="T">The source type</typeparam>
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static byte uint8<T>(T src)
+            => As<T,byte>(ref src);
+
+        /// <summary>
         /// Presents a parametric source reference to a <see cref='byte'/>
         /// </summary>
         /// <param name="src">The source value</param>

@@ -11,7 +11,6 @@ namespace Z0
     using W = W3;
     using T = System.Byte;
     using N = N3;
-    using api = BitNumbers;
 
     /// <summary>
     /// Represents a value in the range [<see cef='MinLiteral'/>, <see cref='MaxValue'/>]

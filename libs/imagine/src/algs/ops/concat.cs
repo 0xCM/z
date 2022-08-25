@@ -16,11 +16,11 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static uint cells<T>(T[][] src)
         {
-            var members = Spans.span(src);
+            var members = sys.span(src);
             var terms = members.Length;
             var items = 0u;
             for(var i=0u; i<terms; i++)
-                items += (uint)Spans.skip(members,i).Length;
+                items += (uint)sys.skip(members,i).Length;
             return items;
         }
 
@@ -72,14 +72,14 @@ namespace Z0
         {
             var total = src.Sum(x => x.Length);
             var buffer = new T[total];
-            ref var dst = ref Arrays.first(buffer);
+            ref var dst = ref sys.first(buffer);
             var counter = 0;
             for(var i=0; i<src.Length; i++)
             {
-                ref readonly var arr = ref Arrays.skip(src,i);
+                ref readonly var arr = ref sys.skip(src,i);
                 var len = arr.Length;
                 for(var j = 0; j<len; j++)
-                    sys.seek(dst, counter++) = Arrays.skip(arr,j);
+                    sys.seek(dst, counter++) = sys.skip(arr,j);
             }
             return buffer;
         }

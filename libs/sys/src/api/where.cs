@@ -6,19 +6,6 @@ namespace Z0
 {
     partial class sys
     {
-        // [Op,Closures(Closure)]
-        // public static T[] where<T>(T[] src, Func<T,bool> f)
-        // {
-        //     Span<T> dst = new T[count(src,f)];
-        //     var k = 0;
-        //     for(var i=0; i<src.Length; i++)
-        //     {
-        //         if(f(skip(src,i)))
-        //             seek(dst,k++) = skip(src,i);
-        //     }
-        //     return slice(dst,0,k).ToArray();
-        // }
-
         /// <summary>
         /// Allocates and populates a new array by filtering the source array with a specified predicate
         /// </summary>

@@ -1,0 +1,54 @@
+USAGE: clang-query.exe [options] <source0> [... <sourceN>]
+
+OPTIONS:
+
+Color Options:
+
+  This option category has no options.
+
+General options:
+
+  This option category has no options.
+
+Generic Options:
+
+  -h                          - Alias for --help
+  --help                      - Display available options (--help-hidden for more)
+  --help-hidden               - Display all available options
+  --help-list                 - Display list of available options (--help-list-hidden for more)
+  --help-list-hidden          - Display list of all available options
+  --print-all-options         - Print all option values after command line parsing
+  --print-options             - Print non-default options after command line parsing
+  --version                   - Display the version of this program
+
+clang-query options:
+
+  -c <command>                - Specify command to run
+  --extra-arg=<string>        - Additional argument to append to the compiler command line
+  --extra-arg-before=<string> - Additional argument to prepend to the compiler command line
+  -f <file>                   - Read commands from file
+  -p <string>                 - Build path
+  --preload=<file>            - Preload commands from file and start interactive mode
+  --use-color                 - Use colors in detailed AST output. If not set, colors
+                                will be used if the terminal connected to
+                                standard output supports colors.
+
+-p <build-path> is used to read a compile command database.
+
+	For example, it can be a CMake build directory in which a file named
+	compile_commands.json exists (use -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+	CMake option to get this output). When no build path is specified,
+	a search for compile_commands.json will be attempted through all
+	parent paths of the first input file . See:
+	https://clang.llvm.org/docs/HowToSetupToolingForLLVM.html for an
+	example of setting up Clang Tooling on a source tree.
+
+<source0> ... specify the paths of source files. These paths are
+	looked up in the compile command database. If the path of a file is
+	absolute, it needs to point into CMake's source tree. If the path is
+	relative, the current working directory needs to be in the CMake
+	source tree and the file must be in a subdirectory of the current
+	working directory. "./" prefixes in the relative files will be
+	automatically removed, but the rest of a relative path must be a
+	suffix of a path in the compile command database.
+

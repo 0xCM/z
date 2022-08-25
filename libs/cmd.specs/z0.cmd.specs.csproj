@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../symbolics/z0.symbolics.csproj" />
+    <ProjectReference Include="$(Symbolics)" />
   </ItemGroup>
 
 </Project>

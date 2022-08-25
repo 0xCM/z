@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static SFx;
-
     partial struct CalcHosts
     {
         public readonly struct VByteSwap128<T> : IUnaryOp128D<T>

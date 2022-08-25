@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
-    using static Numeric;
+    using static sys;
 
     partial class gbits
     {
@@ -24,9 +23,9 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(byte))
-                return force<T>(math.cimpl(force<T,uint>(a), force<T,uint>(b)));
+                return Numeric.force<T>(math.cimpl(uint32(a), uint32(b)));
             else if(typeof(T) == typeof(ushort))
-                return force<T>(math.cimpl(force<T,uint>(a), force<T,uint>(b)));
+                return Numeric.force<T>(math.cimpl(uint32(a), uint32(b)));
             else if(typeof(T) == typeof(uint))
                 return generic<T>(math.cimpl(uint32(a), uint32(b)));
             else if(typeof(T) == typeof(ulong))
@@ -40,9 +39,9 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(sbyte))
-                return force<T>(math.cimpl(force<T,int>(a), force<T,int>(b)));
+                return Numeric.force<T>(math.cimpl(int32(a), int32(b)));
             else if(typeof(T) == typeof(short))
-                return force<T>(math.cimpl(force<T,int>(a), force<T,int>(b)));
+                return Numeric.force<T>(math.cimpl(int32(a), int32(b)));
             else if(typeof(T) == typeof(int))
                 return generic<T>(math.cimpl(int32(a), int32(b)));
             else if(typeof(T) == typeof(long))

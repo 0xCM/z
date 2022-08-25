@@ -79,11 +79,11 @@ namespace Z0
             => files.Map(f => link(f.FileName.WithoutExtension.Format(),f));
 
         [MethodImpl(Inline), Op]
-        public static RelativeLink link(Label label, FS.RelativeFilePath src)
+        public static RelativeLink link(Label label, RelativeFilePath src)
             => new RelativeLink(label, src);
 
         [MethodImpl(Inline), Op]
-        public static RelativeLink link(FS.RelativeFilePath src)
+        public static RelativeLink link(RelativeFilePath src)
             => new RelativeLink(src.File.Format(), src);
 
         [MethodImpl(Inline), Op]

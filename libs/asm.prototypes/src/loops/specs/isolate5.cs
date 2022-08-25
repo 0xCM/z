@@ -4,11 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    unsafe partial struct LoopModels
+    unsafe partial struct AsmLoops
     {
         /// <summary>
         /// isl/test_inputs/codegen/isolate5.c
         /// </summary>
+        [Op]
         public static void isolate5(ref Receiver2 A, ref Receiver2 B)
         {
             for (int c0 = 0; c0 <= 9; c0 += 1)

@@ -7,8 +7,6 @@ namespace Z0
 {
     using static SFx;
 
-    using K = ApiClasses;
-
     partial struct CalcHosts
     {
         [Closures(Integers), Bsrl]

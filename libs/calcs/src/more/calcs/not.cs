@@ -15,7 +15,7 @@ namespace Z0
             where T : unmanaged
                 => default(Not<T>);
 
-        [MethodImpl(Inline), Factory(Not), Closures(UnsignedInts)]
+        [MethodImpl(Inline), Factory(Not), Closures(Closure)]
         public static BvNot<T> bvnot<T>()
             where T : unmanaged
                 => sfunc<BvNot<T>>();

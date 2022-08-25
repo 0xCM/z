@@ -37,7 +37,7 @@ namespace Z0
         {
             var name =  $"{ExecutingPart.Name}.{EnumRender.format(kind)}";
             var table = dst + FS.file($"{name}.settings",FileKind.Csv);
-            var env = dst + FS.file($"{name}", FileKind.Env);
+            var env = dst + FS.file($"{name}", FileKind.Cfg);
             using var writer = env.AsciWriter();
             for(var i=0; i<src.Count; i++)
                 writer.WriteLine(src[i].Format());

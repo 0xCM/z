@@ -9,6 +9,30 @@ namespace Z0
     [ApiHost]
     public readonly struct TextGrids
     {
+        public static void profiles(FilePath src, Lookup<Actor,ToolProfile> dst, WfEmit channel)
+        {
+            var content = src.ReadUnicode();
+            var result = TextGrids.parse(content, out var grid);
+            if(result)
+            {
+                if(grid.ColCount != ToolProfile.FieldCount)
+                    channel.Error(Tables.FieldCountMismatch.Format(ToolProfile.FieldCount, grid.ColCount));
+                else
+                {
+                    var count = grid.RowCount;
+                    for(var i=0; i<count; i++)
+                    {
+                        result = Cmd.parse(grid[i], out ToolProfile profile);
+                        if(result)
+                            dst.Include(profile.Id, profile);
+                        else
+                            break;
+                    }
+                }
+            }
+        }
+
+
         [MethodImpl(Inline), Op]
         public static TextGrid<B> grid<B>(uint width, ReadOnlySpan<B> src)
             where B : unmanaged, IStorageBlock<B>

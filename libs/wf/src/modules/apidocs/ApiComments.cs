@@ -9,7 +9,7 @@ namespace Z0
     using System.Linq;
 
     using static ApiAtomic;
-    using static core;
+    using static sys;
 
     using CT = ApiCommentTarget;
 

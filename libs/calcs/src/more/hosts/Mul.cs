@@ -4,9 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
-    using K = ApiClasses;
-
     partial struct CalcHosts
     {
         [Closures(AllNumeric), Mul]

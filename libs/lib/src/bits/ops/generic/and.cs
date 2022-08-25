@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
     using static Numeric;
 
     using BL = math;
@@ -47,7 +47,7 @@ namespace Z0
             else if(typeof(T) == typeof(short))
                 return force<T>(BL.and(force<T,int>(a), force<T,int>(b)));
             else if(typeof(T) == typeof(int))
-                 return generic<T>(BL.and(int32(a), int32(b)));
+                 return generic<T>(BL.and(sys.int32(a), sys.int32(b)));
             else if(typeof(T) == typeof(long))
                  return generic<T>(BL.and(int64(a), int64(b)));
             else

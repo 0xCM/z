@@ -19,5 +19,17 @@ namespace Z0
                     dst.Append(", ");
             }
         }
+
+        [Op]
+        public static void render(ToolCmdArgs src, ITextEmitter dst)
+        {
+            var count = src.Count;
+            for(var i=0u; i<count; i++)
+            {
+                dst.Append(src[i].Format());
+                if(i != count - 1)
+                    dst.Append(Space);
+            }
+        }
     }
 }

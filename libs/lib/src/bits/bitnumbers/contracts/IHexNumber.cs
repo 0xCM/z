@@ -20,10 +20,10 @@ namespace Z0
         where F : unmanaged, IHexNumber<F,K>
     {
         BitWidth ISized.BitWidth
-            => Sized.width<F>();
+            => sys.width<F>();
 
         ByteSize ISized.ByteCount
-            => Sized.size<F>();
+            => sys.size<F>();
     }
 
     public interface IHexNumber<F,W,K> : IHexNumber, IDataType<F>

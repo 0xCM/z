@@ -15,5 +15,12 @@ namespace Z0
                 seek(dst,i) = new CmdArg(skip(src,i));
             return CmdArgs.create(dst);
         }
+
+        public static ToolCmdArgs args<T>(T src)
+            where T : struct, IToolCmd
+        {
+            var fields = typeof(T).DeclaredInstanceFields();
+            return fields.Select(f => new ToolCmdArg(f.Name, f.GetValue(src)?.ToString() ?? EmptyString));
+        }
     }
 }

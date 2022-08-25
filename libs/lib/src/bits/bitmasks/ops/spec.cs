@@ -11,7 +11,7 @@ namespace Z0
             where F : unmanaged, ITypeNat
             where D : unmanaged, ITypeNat
             where T : unmanaged
-                => new MaskSpec(m, NumericKinds.kind<T>(), (uint)TypeNats.value<F>(), (uint)TypeNats.value<D>());
+                => new MaskSpec(m, NumericKinds.kind<T>(), (uint)Typed.value<F>(), (uint)Typed.value<D>());
 
         [MethodImpl(Inline)]
         public static JsbMask<F,D,T> jsbspec<F,D,T>(F f = default, D d = default, T t = default)

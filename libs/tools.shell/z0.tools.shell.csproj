@@ -6,7 +6,7 @@
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
 
-  <Import Project="$(ProjectProps)shells.props"/>
+  <Import Project="$(ProjectProps)\shells.props"/>
   <Import Project="$(ProjectProps)\usings.props"/>
 
   <ItemGroup>

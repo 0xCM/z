@@ -4,12 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
     using static CalcHosts;
-    using static core;
+    using static sys;
     using static ApiClassKind;
 
     partial struct Calcs

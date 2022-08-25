@@ -6,9 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../clr.query/z0.clr.query.csproj" />
-    <ProjectReference Include="../bit/z0.bit.csproj" />
-    <ProjectReference Include="../cmd.models/z0.cmd.models.csproj" />
+    <ProjectReference Include="$(ClrQuery)" />
+    <ProjectReference Include="$(Bit)" />
+    <ProjectReference Include="$(ClrModels)" />
+    <ProjectReference Include="$(Imagine)" />
   </ItemGroup>
 
 </Project>

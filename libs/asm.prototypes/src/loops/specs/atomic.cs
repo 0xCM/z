@@ -4,8 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    unsafe partial struct LoopModels
+    unsafe partial struct AsmLoops
     {
+        [Op]
         public static void atomic(ref Receiver1 a, ref Receiver1 b)
         {
             for (int c0 = 0; c0 <= 10; c0 += 1)

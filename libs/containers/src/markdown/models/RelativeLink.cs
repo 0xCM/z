@@ -6,14 +6,14 @@ namespace Z0
 {
     partial struct Markdown
     {
-        public readonly record struct RelativeLink : ILink<RelativeLink,LinkTarget<FS.RelativeFilePath>>
+        public readonly record struct RelativeLink : ILink<RelativeLink,LinkTarget<RelativeFilePath>>
         {
             public readonly Label Label;
 
-            public readonly LinkTarget<FS.RelativeFilePath> Target;
+            public readonly LinkTarget<RelativeFilePath> Target;
 
             [MethodImpl(Inline)]
-            public RelativeLink(Label label, LinkTarget<FS.RelativeFilePath> target)
+            public RelativeLink(Label label, LinkTarget<RelativeFilePath> target)
             {
                 Label = label;
                 Target = target;
@@ -28,7 +28,7 @@ namespace Z0
             Label ILabeled.Label
                 => Label;
 
-            LinkTarget<FS.RelativeFilePath> ILink<LinkTarget<FS.RelativeFilePath>>.Target
+            LinkTarget<RelativeFilePath> ILink<LinkTarget<RelativeFilePath>>.Target
                 => Target;
         }
     }

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Sized;
+    using static sys;
 
     partial class gbits
     {

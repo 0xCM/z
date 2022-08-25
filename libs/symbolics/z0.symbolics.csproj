@@ -9,8 +9,8 @@
   <Import Project="$(ProjectProps)\usings.props"/>
 
   <ItemGroup>
-    <ProjectReference Include="../lib/z0.lib.csproj" />
-    <ProjectReference Include="../containers/z0.containers.csproj" />
+    <ProjectReference Include="$(ZLib)" />
+    <ProjectReference Include="$(Containers)" />
   </ItemGroup>
 
   <ItemGroup>

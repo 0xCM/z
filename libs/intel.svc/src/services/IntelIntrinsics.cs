@@ -6,7 +6,7 @@ namespace Z0
 {
     using static Z0.Parts.IntelIntrinsics;
     using static IntrinsicsDoc;
-    using static core;
+    using static sys;
 
     public partial class IntelInx : WfSvc<IntelInx>
     {
@@ -16,7 +16,7 @@ namespace Z0
             => AppDb.DbIn("intel");
 
         IDbTargets Targets()
-            => AppDb.DbOut("intrinsics");
+            => AppDb.AsmDb("intrinsics");
 
         FilePath XmlSource()
             => Sources().Path(XmlFile);

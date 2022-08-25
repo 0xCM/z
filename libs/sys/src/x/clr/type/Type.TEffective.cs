@@ -6,6 +6,8 @@ namespace Z0
 {
     partial class ClrQuery
     {
+        const NumericKind Closure = UnsignedInts;
+
         /// <summary>
         /// If the source type is a type reference, returns the referenced type; otherwise, returns the original type
         /// </summary>

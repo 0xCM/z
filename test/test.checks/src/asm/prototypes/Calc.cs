@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using Free = System.Security.SuppressUnmanagedCodeSecurityAttribute;
-
     partial struct AsmPrototypes
     {
         [Free]
@@ -65,6 +63,5 @@ namespace Z0.Asm
             public byte Sub(byte a, byte b)
                 => math.sub(a,b);
         }
-
     }
 }

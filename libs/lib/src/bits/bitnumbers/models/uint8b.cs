@@ -11,7 +11,6 @@ namespace Z0
     using K = BitSeq8;
     using T = System.Byte;
     using N = N8;
-    using api = BitNumbers;
 
     /// <summary>
     /// Represents the value of a type-level octet and thus is an integer in the range [0,255]

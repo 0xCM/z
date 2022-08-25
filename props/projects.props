@@ -61,7 +61,6 @@
     <Memory>$(SlnLibs)\memory\z0.memory.csproj</Memory>
     <MemorySvc>$(SlnLibs)\memory.svc\z0.memory.svc.csproj</MemorySvc>
     <MemoryChecks>$(SlnLibs)\memory.checks\z0.memory.checks.csproj</MemoryChecks>
-    <MemoryModels>$(SlnLibs)\memory.models\z0.memory.models.csproj</MemoryModels>
 
     <Native>$(SlnLibs)\native\z0.native.csproj</Native>
 

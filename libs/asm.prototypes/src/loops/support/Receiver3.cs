@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    unsafe partial struct LoopModels
+    unsafe partial struct AsmLoops
     {
         /// <summary>
         /// Receives 3-D loop variables

@@ -11,7 +11,6 @@ namespace Z0
     using K = BitSeq7;
     using T = System.Byte;
     using N = N7;
-    using api = BitNumbers;
 
     /// <summary>
     /// Represents a value in the range [<see cef='MinLiteral'/>, <see cref='MaxValue'/>]

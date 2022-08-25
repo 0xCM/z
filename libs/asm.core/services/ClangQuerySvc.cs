@@ -27,7 +27,7 @@ namespace Z0.llvm
         }
 
         FilePath NextOutFile()
-            => AppDb.EtlSource("llvm.data").BuildOut() + FS.file(string.Format("QueryOut{0}", Sequence++), FS.ext("tree"));
+            => AppDb.AppData("clang-query").Path(string.Format("QueryOut{0}", Sequence++), FileKind.Log);
 
         void CloseQuery()
         {
@@ -48,23 +48,34 @@ namespace Z0.llvm
             Write(string.Format("Sending query output to {0}", QueryFile.ToUri()));
         }
 
-        // protected Outcome Dispatch(string command, CmdArgs args)
-        // {
-        //     QueryBegin();
-        //     var query = string.Format("{0} {1}", command, args.Format());
-        //     QueryWriter.WriteLine(string.Format("query:{0}", query));
-        //     return Controller.Submit(query);
-        // }
+        Outcome Dispatch(string command, CmdArgs args)
+        {
+            QueryBegin();
+            var query = string.Format("{0} {1}", command, args.Format());
+            QueryWriter.WriteLine(string.Format("query:{0}", query));
+            return Controller.Submit(query);
+        }
 
-        // void SelectSource()
-        // {
-        //     QueryBegin();
-        //     var src = FS.path(@"J:\llvm\source\llvm\lib\Target\X86\X86InstrInfo.cpp");
-        //     var args = string.Format("-p \"{0}\" \"{1}\"", LlvmWs.BuildRoot.Format(PathSeparator.FS), src.Format(PathSeparator.FS));
-        //     Controller = Interpreter.create(ToolPath, args, OnStatus, OnError, OnExit);
-        //     Controller.Start();
-        //     Controller.Submit("set output dump");
-        // }
+        DbArchive LlvmRoot => FS.dir("v:/repos/llvm");
+
+        DbArchive LlvmRepo => LlvmRoot.Scoped("llvm-project");
+
+        DbArchive LlvmBuild => LlvmRoot.Scoped("build");
+
+        DbArchive LlvmBin => LlvmBuild.Scoped("bin");
+
+        FilePath CompileCommands => LlvmBuild.Path("compile_commands", FileKind.Json);
+
+        void SelectSource()
+        {
+            QueryBegin();
+            var src = LlvmRepo.Path("llvm/include/llvm/Support/DJB.h", FileKind.H);
+            var tool = LlvmBin.Path("clang-query",FileKind.Exe);
+            var args = string.Format("-p=\"{0}\" \"{1}\"", CompileCommands, src);
+            Controller = Interpreter.create(tool, args, OnStatus, OnError, OnExit);
+            Controller.Start();
+            Controller.Submit("set output dump");
+        }
 
         void OnStatus(string msg)
         {

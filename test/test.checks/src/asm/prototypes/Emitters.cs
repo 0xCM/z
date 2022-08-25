@@ -4,11 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using static core;
-    using static Root;
+    using static sys;
 
     partial struct AsmPrototypes
     {
@@ -59,7 +55,6 @@ namespace Z0.Asm
             public static ulong emit64u_2()
                 => BitMaskLiterals.Central64x16x8;
         }
-
 
         [ApiHost(prototypes + "refemtter8")]
         public ref struct RefEmitter8

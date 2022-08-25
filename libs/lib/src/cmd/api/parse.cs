@@ -24,5 +24,24 @@ namespace Z0
             }
             return true;
         }
+
+        public static Outcome parse(in TextRow src, out ToolProfile dst)
+        {
+            var result = Outcome.Success;
+            dst = default;
+            if(src.CellCount != ToolProfile.FieldCount)
+                result = (false,Tables.FieldCountMismatch.Format(ToolProfile.FieldCount, src.CellCount));
+            else
+            {
+                var i=0;
+                dst.Id = src[i++].Text;
+                dst.Modifier = src[i++].Text;
+                dst.HelpCmd = src[i++].Text;
+                dst.Memberhisp = src[i++].Text;
+                dst.Path = FS.path(src[i++]);
+            }
+            return result;
+        } 
+
     }
 }

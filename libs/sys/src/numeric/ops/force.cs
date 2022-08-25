@@ -6,7 +6,6 @@ namespace Z0
 {
     using static System.Runtime.CompilerServices.Unsafe;
 
-    using static ScalarCast;
     using static sys;
 
     public partial struct Numeric
@@ -188,7 +187,7 @@ namespace Z0
         static T force_u<S,T>(S src)
         {
             if(typeof(S) == typeof(byte))
-                return force<T>(uint8(src));
+                return force<T>(sys.uint8(src));
             else if(typeof(S) == typeof(ushort))
                 return force<T>(sys.uint16(src));
             else if(typeof(S) == typeof(uint))
@@ -205,11 +204,11 @@ namespace Z0
             if(typeof(S) == typeof(sbyte))
                 return force<T>(int8(src));
             else if(typeof(S) == typeof(short))
-                return force<T>(int16(src));
+                return force<T>(sys.int16(src));
             else if(typeof(S) == typeof(int))
-                return force<T>(int32(src));
+                return force<T>(sys.int32(src));
             else if(typeof(S) == typeof(long))
-                return force<T>(int64(src));
+                return force<T>(sys.int64(src));
             else
                 return force_x<S,T>(src);
         }

@@ -34,7 +34,7 @@ namespace Z0
         void ListTools()
         {
             var tools = TB.Tools();
-            var dst = AppDb.Dev("toolsets").Path("tools",FileKind.Env);
+            var dst = AppDb.Dev("toolsets").Path("tools",FileKind.Cfg);
             var emitting = Emitter.EmittingFile(dst);
             var counter = 0u;
             var indent = 0u;
@@ -60,11 +60,11 @@ namespace Z0
                     emitter.AppendLine("},");
                 }
 
-                var envpath = tool.Location.Path(tool.Name, FileKind.Env);
-                if(envpath.Exists)
+                var cfgpath = tool.Location.Path(tool.Name, FileKind.Cfg);
+                if(cfgpath.Exists)
                 {
-                    emitter.AppendLine($"ConfigPath={text.quote(envpath.ToUri())},");
-                    var settings = Tooling.settings(envpath);
+                    emitter.AppendLine($"ConfigPath={text.quote(cfgpath.ToUri())},");
+                    var settings = Cmd.settings(cfgpath);
                     emitter.WriteLine("Settings={");
                     indent += 4;
                     emitter.Write(settings.Format(indent));
@@ -84,17 +84,13 @@ namespace Z0
 
         }
 
-        [CmdOp("tools/env")]
-        void ShowToolEnv()
-            => iter(Tooling.LoadEnv(), s => Write(s));
-
         [CmdOp("tool/script")]
         Outcome ToolScript(CmdArgs args)
             => Tooling.RunScript(arg(args,0).Value, arg(args,1).Value);
 
         [CmdOp("tool/setup")]
         void ConfigureTool(CmdArgs args)
-            => Tooling.Setup(Tooling.tool(args));
+            => Tooling.Setup(Cmd.tool(args));
 
         [CmdOp("tool/docs")]
         void ToolDocs(CmdArgs args)
@@ -104,8 +100,8 @@ namespace Z0
         void ToolConfig(CmdArgs args)
         {
             var tool = TB.Tool(arg(args,0).Value);
-            var path = tool.EnvPath();
-            var settings = Tooling.settings(path);
+            var path = tool.CfgPath();
+            var settings = Cmd.settings(path);
             Row(settings.Format());
         }
 

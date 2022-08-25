@@ -4,12 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Spans;
-    using static Arrays;
-    using static Algs;
-
     partial class Cmd
     {
-
+        [Op, Closures(UInt64k)]
+        public static Tool tool(CmdArgs args, byte index = 0)
+            => arg(args,index).Value;
     }
 }

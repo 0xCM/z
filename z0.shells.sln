@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{B3B62F5C-6CD7-4892-A869-09F66380E929}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "z0.z", "libs\z\z0.z.csproj", "{0D680766-C550-44A0-9124-1ABD41E24616}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "z0.tools.shell", "libs\tools.shell\z0.tools.shell.csproj", "{4F69C519-9A0D-4E7D-B699-10D255D8CDA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "z0.shimmer", "libs\shimmer\z0.shimmer.csproj", "{2452D504-B6AC-4AD7-ADDB-0468E7EF7640}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0D680766-C550-44A0-9124-1ABD41E24616}.Release|Any CPU.ActiveCfg = Release|x64
+		{0D680766-C550-44A0-9124-1ABD41E24616}.Release|Any CPU.Build.0 = Release|x64
+		{4F69C519-9A0D-4E7D-B699-10D255D8CDA8}.Release|Any CPU.ActiveCfg = Release|x64
+		{4F69C519-9A0D-4E7D-B699-10D255D8CDA8}.Release|Any CPU.Build.0 = Release|x64
+		{2452D504-B6AC-4AD7-ADDB-0468E7EF7640}.Release|Any CPU.ActiveCfg = Release|x64
+		{2452D504-B6AC-4AD7-ADDB-0468E7EF7640}.Release|Any CPU.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0D680766-C550-44A0-9124-1ABD41E24616} = {B3B62F5C-6CD7-4892-A869-09F66380E929}
+		{4F69C519-9A0D-4E7D-B699-10D255D8CDA8} = {B3B62F5C-6CD7-4892-A869-09F66380E929}
+		{2452D504-B6AC-4AD7-ADDB-0468E7EF7640} = {B3B62F5C-6CD7-4892-A869-09F66380E929}
+	EndGlobalSection
+EndGlobal

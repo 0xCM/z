@@ -12,7 +12,43 @@ namespace Z0
         /// Computes the bit-width of a parametrically-identified type
         /// </summary>
         /// <typeparam name="T">The source type</typeparam>
-        public static ulong width<T>()
+        public static BitWidth width<T>()
             => ((ulong)SizeOf<T>())*8ul;
+
+        /// <summary>
+        /// Computes the bit-width of a parametrically-identified type
+        /// </summary>
+        /// <param name="w">The result width selector</param>
+        /// <typeparam name="T">The source type</typeparam>
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static byte width<T>(W8 w)
+            => (byte)(width<T>());
+
+        /// <summary>
+        /// Computes the bit-width of a parametrically-identified type
+        /// </summary>
+        /// <param name="w">The result width selector</param>
+        /// <typeparam name="T">The source type</typeparam>
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static ushort width<T>(W16 w)
+            => (ushort)(width<T>());
+
+        /// <summary>
+        /// Computes the bit-width of a parametrically-identified type
+        /// </summary>
+        /// <param name="w">The result width selector</param>
+        /// <typeparam name="T">The source type</typeparam>
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static uint width<T>(W32 w)
+            => (uint)(width<T>());
+
+        /// <summary>
+        /// Computes the bit-width of a parametrically-identified type
+        /// </summary>
+        /// <param name="w">The result width selector</param>
+        /// <typeparam name="T">The source type</typeparam>
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static ulong width<T>(W64 w)
+            => (ulong)(width<T>());            
     }
 }

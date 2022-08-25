@@ -19,7 +19,7 @@ namespace Z0
                 var project = BuildSvc.LoadProject(file);
                 var data = project.Format();    
                 Write(data);
-                FileEmit(data, AppDb.AppData("build/libs").Path(file.FileName.WithoutExtension.Format(), FileKind.Env), (ByteSize)data.Length);
+                FileEmit(data, AppDb.AppData("build/libs").Path(file.FileName.WithoutExtension.Format(), FileKind.Cfg), (ByteSize)data.Length);
             });
         }
 
@@ -75,7 +75,7 @@ namespace Z0
                 var project = BuildSvc.LoadProject(file);
                 var data = project.Format();    
                 Write(data);
-                FileEmit(data, AppDb.AppData("build/env").Path(file.FileName.WithoutExtension.Format(), FileKind.Env), (ByteSize)data.Length);
+                FileEmit(data, AppDb.AppData("build/env").Path(file.FileName.WithoutExtension.Format(), FileKind.Cfg), (ByteSize)data.Length);
             });
         }
 
@@ -89,7 +89,7 @@ namespace Z0
             var project = BuildSvc.LoadProject(src);
             var data = project.Format();
             Write(data);
-            FileEmit(data, AppDb.AppData().Path(src.FileName.WithoutExtension.Format(), FileKind.Env), (ByteSize)data.Length);
+            FileEmit(data, AppDb.AppData().Path(src.FileName.WithoutExtension.Format(), FileKind.Cfg), (ByteSize)data.Length);
         }
 
         [CmdOp("build/slninfo")]
@@ -100,7 +100,7 @@ namespace Z0
             var sln = Build.sln(src);
             var data = sln.ToString();
             Write(data);
-            FileEmit(data, AppDb.AppData().Path(src.FileName.WithoutExtension.Format(), FileKind.Env), (ByteSize)data.Length);
+            FileEmit(data, AppDb.AppData().Path(src.FileName.WithoutExtension.Format(), FileKind.Cfg), (ByteSize)data.Length);
         }
     }
 }

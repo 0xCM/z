@@ -16,9 +16,10 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static uint uint32<T>(T src)
             => As<T,uint>(ref src);
-        // [MethodImpl(Inline), Op, Closures(Closure)]
-        // public static ref uint uint32<T>(ref T src)
-        //     => ref As<T,uint>(ref src);
+
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static ref uint uint32<T>(ref T src)
+            => ref As<T,uint>(ref src);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static ref T uint32<T>(in uint src, out T dst)

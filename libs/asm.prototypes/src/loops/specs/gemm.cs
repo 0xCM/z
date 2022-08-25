@@ -4,9 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
-    unsafe partial struct LoopModels
+    unsafe partial struct AsmLoops
     {
         /// <summary>
         /// isl/test_inputs/codegen/gemm.c
@@ -24,15 +24,15 @@ namespace Z0
 
         public static void gemm(in Limits3 n, int* pDst00, int* pDst01,  int* pDst10, int* pDst11, int* pDst13)
         {
-            var S_2 = LoopReceivers.create(pDst00, pDst01);
-            var S_4 = LoopReceivers.create(pDst10, pDst11, pDst13);
+            var S_2 = LoopReceivers.r2(pDst00, pDst01);
+            var S_4 = LoopReceivers.r3(pDst10, pDst11, pDst13);
             gemm(n, ref S_2, ref S_4);
         }
 
         public static void gemm(in Limits3 n, Span<int> dst00, Span<int> dst01, Span<int> dst10, Span<int> dst11, Span<int> dst12)
         {
-            var S_2 = LoopReceivers.create(pfirst(dst00), pfirst(dst01));
-            var S_4 = LoopReceivers.create(pfirst(dst10), pfirst(dst11), pfirst(dst12));
+            var S_2 = LoopReceivers.r2(pfirst(dst00), pfirst(dst01));
+            var S_4 = LoopReceivers.r3(pfirst(dst10), pfirst(dst11), pfirst(dst12));
             gemm(n, ref S_2, ref S_4);
         }
     }
