@@ -99,10 +99,10 @@ namespace Z0
         }
 
         [Op]
-        public static LineCount count(FS.FilePath src)
+        public static LineCount count(FilePath src)
             => (src, count(src.ReadBytes()));
 
-        public static void emit(ReadOnlySpan<LineStats> src, FS.FilePath dst)
+        public static void emit(ReadOnlySpan<LineStats> src, FilePath dst)
         {
             using var writer = dst.AsciWriter();
             writer.WriteLine(LineStats.Header);
@@ -131,7 +131,7 @@ namespace Z0
         }
 
         [Op]
-        public static Index<LineCount> count(ReadOnlySpan<FS.FilePath> src)
+        public static Index<LineCount> count(ReadOnlySpan<FilePath> src)
         {
             var dst = bag<LineCount>();
             iter(src, path => dst.Add(count(path)), true);
@@ -254,7 +254,7 @@ namespace Z0
             return length;
         }
 
-        public static void load(FS.FilePath src)
+        public static void load(FilePath src)
         {
             using var map = MemoryFiles.map(src);
             var data = map.View<AsciSymbol>();

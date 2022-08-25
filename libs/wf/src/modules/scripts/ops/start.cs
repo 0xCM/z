@@ -8,7 +8,7 @@ namespace Z0
 
     partial class CmdScripts
     {
-        public static Task<FS.FilePath> start(CmdArgs args)
+        public static Task<FilePath> start(CmdArgs args)
         {
             var count = Demand.gt(args.Count,0u);
             var spec = text.emitter();
@@ -45,7 +45,7 @@ namespace Z0
             return sys.start(run);
         }
 
-        public static Task<FS.FilePath> start(CmdLine cmd)
+        public static Task<FilePath> start(CmdLine cmd)
         {
             static void OnError(in string src)
                 => term.emit(Events.error(typeof(CmdScripts), src, Events.originate(typeof(CmdScript))));
@@ -53,7 +53,7 @@ namespace Z0
             static void OnStatus(in string src)
                 => term.emit(Events.data(src,FlairKind.Babble));
 
-            FS.FilePath run()
+            FilePath run()
             {
                 var log = AppDb.Logs("procs").Path(Algs.timestamp().Format(),FileKind.Log);
                 using var writer = log.AsciWriter();

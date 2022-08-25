@@ -26,7 +26,7 @@ namespace Z0
             public static Index<TableCriteria> criteria(RuleTableKind kind)
                 => criteria(XedPaths.Service.RuleSource(kind));
 
-            public static Index<TableCriteria> criteria(FS.FilePath src)
+            public static Index<TableCriteria> criteria(FilePath src)
             {
                 var skip = hashset("XED_RESET");
                 using var reader = src.Utf8LineReader();

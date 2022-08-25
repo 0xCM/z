@@ -12,7 +12,7 @@ namespace Z0
 
     partial struct FS
     {
-        public static uint render(ReadOnlySpan<FS.FilePath> src, ITextBuffer dst)
+        public static uint render(ReadOnlySpan<FilePath> src, ITextBuffer dst)
         {
             var count = (uint)src.Length;
             dst.AppendLine(string.Format("{0,-6} | {1}", "Seq", "Path"));

@@ -22,10 +22,10 @@ namespace Z0
         public readonly Timestamp Timestamp;
 
         [Render(1)]
-        public readonly FS.FilePath Path;
+        public readonly FilePath Path;
 
         [MethodImpl(Inline)]
-        public FileRef(uint seq, uint docid, FileKind kind, FS.FilePath path)
+        public FileRef(uint seq, uint docid, FileKind kind, FilePath path)
         {
             Seq = seq;
             DocId = docid;
@@ -79,7 +79,7 @@ namespace Z0
         FileKind IFileRef.Kind
             => Kind;
 
-        FS.FilePath IFileRef.Path
+        FilePath IFileRef.Path
             => Path;
 
         public static FileRef Empty => default;

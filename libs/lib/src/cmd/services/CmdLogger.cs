@@ -8,12 +8,12 @@ namespace Z0
 
     public readonly struct CmdLogger : IDisposable
     {
-        readonly FS.FilePath Target;
+        readonly FilePath Target;
 
         readonly Stream LogStream;
 
         [MethodImpl(Inline)]
-        public CmdLogger(FS.FilePath dst)
+        public CmdLogger(FilePath dst)
         {
             Target = dst;
             LogStream = new FileStream(dst.EnsureParentExists().Name, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite);;

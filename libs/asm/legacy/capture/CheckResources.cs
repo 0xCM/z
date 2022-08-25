@@ -23,10 +23,10 @@ namespace Z0
 
         readonly WfHost Host;
 
-        readonly FS.FilePath Source;
+        readonly FilePath Source;
 
         [MethodImpl(Inline)]
-        public CheckResourcesStep(IWfRuntime wf, WfHost host, FS.FilePath src)
+        public CheckResourcesStep(IWfRuntime wf, WfHost host, FilePath src)
         {
             Wf = wf;
             Host = host;

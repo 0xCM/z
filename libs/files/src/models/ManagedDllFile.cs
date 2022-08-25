@@ -12,7 +12,7 @@ namespace Z0
         /// <summary>
         /// The file's path
         /// </summary>
-        public FS.FilePath Path {get;}
+        public FilePath Path {get;}
 
         /// <summary>
         /// The assembly name
@@ -20,7 +20,7 @@ namespace Z0
         public AssemblyName Name {get;}
 
         [MethodImpl(Inline)]
-        public ManagedDllFile(FS.FilePath path, AssemblyName name)
+        public ManagedDllFile(FilePath path, AssemblyName name)
         {
             Path = path;
             Name = name;

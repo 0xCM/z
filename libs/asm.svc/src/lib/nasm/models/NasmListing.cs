@@ -8,12 +8,12 @@ namespace Z0
 
     public readonly struct NasmListing : IRenderCapable<NasmListing>
     {
-        public FS.FilePath Source {get;}
+        public FilePath Source {get;}
 
         public Index<NasmListLine> Lines {get;}
 
         [MethodImpl(Inline)]
-        public NasmListing(FS.FilePath src, Index<NasmListLine> lines)
+        public NasmListing(FilePath src, Index<NasmListLine> lines)
         {
             Source = src;
             Lines = lines;

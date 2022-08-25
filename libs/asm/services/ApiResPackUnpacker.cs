@@ -75,7 +75,7 @@ namespace Z0.Asm
             return deposited;
         }
 
-        void EmitHexPack(ReadOnlySpan<MemorySeg> src, FS.FilePath dst)
+        void EmitHexPack(ReadOnlySpan<MemorySeg> src, FilePath dst)
         {
             var flow= EmittingFile(dst);
             var count = src.Length;
@@ -90,7 +90,7 @@ namespace Z0.Asm
             EmittedFile(flow, count);
         }
 
-        void EmitHexArrays(ReadOnlySpan<MemorySeg> src, FS.FilePath dst)
+        void EmitHexArrays(ReadOnlySpan<MemorySeg> src, FilePath dst)
         {
             var flow = EmittingFile(dst);
             var count = src.Length;

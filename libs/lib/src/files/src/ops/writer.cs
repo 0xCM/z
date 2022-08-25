@@ -9,15 +9,15 @@ namespace Z0
     partial struct FS
     {
         [MethodImpl(Inline), Op]
-        public static StreamWriter writer(FS.FilePath dst, FileWriteMode mode, Encoding encoding)
+        public static StreamWriter writer(FilePath dst, FileWriteMode mode, Encoding encoding)
             => new StreamWriter(dst.CreateParentIfMissing().Name.Format(), mode == FileWriteMode.Append, encoding);
 
         [Op]
-        public static StreamWriter writer(FS.FilePath dst, TextEncodingKind encoding)
+        public static StreamWriter writer(FilePath dst, TextEncodingKind encoding)
             => writer(dst, FileWriteMode.Overwrite, encoding.ToSystemEncoding());
 
         [Op]
-        public static StreamWriter writer(FS.FilePath dst, FileWriteMode mode, TextEncodingKind encoding)
+        public static StreamWriter writer(FilePath dst, FileWriteMode mode, TextEncodingKind encoding)
             => writer(dst, mode, encoding.ToSystemEncoding());
     }
 }

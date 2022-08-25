@@ -31,7 +31,7 @@ namespace Z0
         public Index<FS.FolderPath> Directories()
             => Root.SubDirs(true);
 
-        public Deferred<FS.FilePath> Files()
+        public Deferred<FilePath> Files()
             =>  ExtFilter.IsNonEmpty
             ?  Root.EnumerateFiles(ExtFilter, true)
             :  Root.EnumerateFiles(TextFilter, true);

@@ -6,7 +6,7 @@ namespace Z0
 {
     public class OmniScript : WfSvc<OmniScript>
     {
-        public Outcome Run(FS.FilePath src, CmdVars vars, bool quiet, out ReadOnlySpan<TextLine> response)
+        public Outcome Run(FilePath src, CmdVars vars, bool quiet, out ReadOnlySpan<TextLine> response)
             => CmdScripts.run(
                 new CmdLine(src.Format(PathSeparator.BS)),
                 vars,
@@ -17,7 +17,7 @@ namespace Z0
         public Outcome Run(string content, out ReadOnlySpan<TextLine> response)
             => CmdScripts.run(Cmd.cmd(content), ReceiveCmdStatusQuiet, ReceiveCmdError, out response);
 
-        public Outcome Run(FS.FilePath src, out ReadOnlySpan<TextLine> response)
+        public Outcome Run(FilePath src, out ReadOnlySpan<TextLine> response)
             => CmdScripts.run(new CmdLine(src.Format(PathSeparator.BS)), CmdVars.Empty, ReceiveCmdStatusQuiet, ReceiveCmdError, out response);
 
         public Outcome Run(CmdLine cmd, CmdVars vars, out ReadOnlySpan<TextLine> response)

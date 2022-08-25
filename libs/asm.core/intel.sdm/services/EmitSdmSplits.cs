@@ -16,7 +16,7 @@ namespace Z0.Asm
             return true;
         }
 
-        public Outcome VerifyLinedDoc(FS.FilePath src, TextEncodingKind encoding)
+        public Outcome VerifyLinedDoc(FilePath src, TextEncodingKind encoding)
         {
             var outcome = Outcome.Success;
             using var reader = src.LineReader(encoding);
@@ -33,7 +33,7 @@ namespace Z0.Asm
             return outcome;
         }
 
-        public ReadOnlySpan<DocSplitSpec> LoadSplitSpecs(FS.FilePath src)
+        public ReadOnlySpan<DocSplitSpec> LoadSplitSpecs(FilePath src)
         {
             var outcome = DocSplits.load(src, out var specs);
             if(outcome.Fail)
@@ -41,7 +41,7 @@ namespace Z0.Asm
             return specs;
         }
 
-        public Outcome CombineDocs(ReadOnlySpan<FS.FilePath> src, FS.FilePath dst, Pair<TextEncodingKind> encoding)
+        public Outcome CombineDocs(ReadOnlySpan<FilePath> src, FilePath dst, Pair<TextEncodingKind> encoding)
         {
             var count = src.Length;
             var result = Outcome.Success;
@@ -79,7 +79,7 @@ namespace Z0.Asm
             return result;
         }
 
-        public Outcome<uint> CreateLinedDoc(FS.FilePath src, FS.FilePath dst, Pair<TextEncodingKind> encoding)
+        public Outcome<uint> CreateLinedDoc(FilePath src, FilePath dst, Pair<TextEncodingKind> encoding)
         {
             var flow = Wf.Running(string.Format("{0} => {1}", src.ToUri(), dst.ToUri()));
             var outcome = Lines.copy(src,dst,encoding);
@@ -104,7 +104,7 @@ namespace Z0.Asm
             dst.Deposit(range);
         }
 
-        void Emit(in LineRange src, FS.FilePath dst)
+        void Emit(in LineRange src, FilePath dst)
         {
             var emitting = Wf.EmittingFile(dst);
             using var writer = dst.Writer(TextEncodingKind.Unicode);

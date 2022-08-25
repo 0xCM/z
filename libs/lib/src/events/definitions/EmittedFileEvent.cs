@@ -11,12 +11,12 @@ namespace Z0
 
         public EventId EventId {get;}
 
-        public FS.FilePath Path {get;}
+        public FilePath Path {get;}
 
         public Count LineCount {get;}
 
         [MethodImpl(Inline)]
-        public EmittedFileEvent(Type host, FS.FilePath dst, Count count = default)
+        public EmittedFileEvent(Type host, FilePath dst, Count count = default)
         {
             EventId = EventId.define(host, Kind);
             LineCount = count;

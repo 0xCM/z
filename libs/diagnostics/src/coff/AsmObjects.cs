@@ -75,7 +75,7 @@ namespace Z0
         public Index<ObjSymRow> LoadObjSyms(IProjectWorkspace project)
             => LoadObjSyms(AppDb.EtlTable<ObjSymRow>(project.ProjectId));
 
-        public Index<ObjSymRow> LoadObjSyms(FS.FilePath src)
+        public Index<ObjSymRow> LoadObjSyms(FilePath src)
         {
             const byte FieldCount = ObjSymRow.FieldCount;
             var result = Outcome.Success;
@@ -145,7 +145,7 @@ namespace Z0
             return buffer;
         }
 
-        public FS.FilePath AsmInstructionTable(ProjectId project)
+        public FilePath AsmInstructionTable(ProjectId project)
             => EtlContext.table<AsmInstructionRow>(project);
 
         public Index<AsmInstructionRow> CollectMcInstructions(ProjectContext context)
@@ -189,10 +189,10 @@ namespace Z0
         public IDbTargets RecodedTargets(ProjectId id)
             => AppDb.EtlTargets("mc.recoded").Targets(id.Format());
 
-        public FS.FilePath RecodedTarget(ProjectId project, string origin)
+        public FilePath RecodedTarget(ProjectId project, string origin)
             => RecodedTargets(project).Path(origin, FileKind.Asm);
 
-        public FS.FilePath AsmRowPath(ProjectId project, string origin)
+        public FilePath AsmRowPath(ProjectId project, string origin)
             => AppDb.EtlTargets(project).Targets("asm.csv").Path(origin, FileKind.Csv);
 
         public void EmitObjSyms(ProjectContext context, ReadOnlySpan<ObjSymRow> src)
@@ -311,7 +311,7 @@ namespace Z0
             return dst.ToArray();
         }
 
-        public void EmitAsmRows(ProjectContext context, in AsmCodeBlocks src, FS.FilePath dst)
+        public void EmitAsmRows(ProjectContext context, in AsmCodeBlocks src, FilePath dst)
         {
             var buffer = alloc<AsmCodeRow>(src.LineCount);
             var k=0u;
@@ -344,7 +344,7 @@ namespace Z0
             TableEmit(buffer, dst);
         }
 
-        public FS.FilePath AsmSyntaxTable(ProjectId project)
+        public FilePath AsmSyntaxTable(ProjectId project)
             => EtlContext.table<AsmSyntaxRow>(project);
 
         public Index<AsmSyntaxRow> CollectAsmSyntax(ProjectContext context)
@@ -470,7 +470,7 @@ namespace Z0
         public Index<AsmSyntaxRow> LoadAsmSyntax(ProjectId project)
             => LoadSyntaxRows(AsmSyntaxTable(project));
 
-        Index<AsmSyntaxRow> LoadSyntaxRows(FS.FilePath src)
+        Index<AsmSyntaxRow> LoadSyntaxRows(FilePath src)
         {
             const byte FieldCount = AsmSyntaxRow.FieldCount;
             using var reader = src.Utf8LineReader();
@@ -510,7 +510,7 @@ namespace Z0
                 if(empty(hex))
                 {
                     dst.Encoded = AsmHexCode.Empty;
-                    dst.Source = FS.FilePath.Empty;
+                    dst.Source = FilePath.Empty;
                     continue;
                 }
 

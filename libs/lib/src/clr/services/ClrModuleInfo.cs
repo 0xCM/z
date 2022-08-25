@@ -9,11 +9,11 @@ namespace Z0
     {
         public const string TableId = "clr.modules";
 
-        public FS.FilePath ImgPath;
+        public FilePath ImgPath;
 
-        public FS.FilePath PdbPath;
+        public FilePath PdbPath;
 
-        public FS.FilePath XmlPath;
+        public FilePath XmlPath;
 
         public ByteSize MetadatSize;
     }

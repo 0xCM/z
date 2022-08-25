@@ -55,7 +55,7 @@ namespace Z0
         public DbArchive Logs()
             => Targets("logs");
 
-        public FS.FilePath Log(string name, FileKind kind)
+        public FilePath Log(string name, FileKind kind)
             => Logs().Path(name,kind);
 
         public int CompareTo(DbArchive src)
@@ -103,7 +103,7 @@ namespace Z0
         public FS.Files Files(FileExt ext, bool recurse = true)
             => Root.Files(ext, recurse);
 
-        public Deferred<FS.FilePath> Enumerate(bool recursive = true)
+        public Deferred<FilePath> Enumerate(bool recursive = true)
             => Root.EnumerateFiles(recursive);
 
         public FS.FileName File(string name, FileKind kind)
@@ -112,24 +112,24 @@ namespace Z0
         public FS.FileName File(string @class, string name, FileKind kind)
             => FS.file(string.Format("{0}.{1}", @class, name), kind.Ext());
 
-        public FS.FilePath Path(string name, FileKind kind)
+        public FilePath Path(string name, FileKind kind)
             => Root + FS.file(name, kind.Ext());
 
-        public FS.FilePath Path(string @class, string name, FileKind kind)
+        public FilePath Path(string @class, string name, FileKind kind)
             => new DbSources(Root, @class).Root + File(@class, name,kind);
 
-        public FS.FilePath Path(FS.FileName file)
+        public FilePath Path(FS.FileName file)
             => Root + file;
 
-        public FS.FilePath Table<T>()
+        public FilePath Table<T>()
             where T : struct
                 => Root + Tables.filename<T>();
 
-        public FS.FilePath Table<T>(ProjectId id)
+        public FilePath Table<T>(ProjectId id)
             where T : struct
                 => Root + Tables.filename<T>(id.Format());
 
-        public FS.FilePath PrefixedTable<T>(string prefix)
+        public FilePath PrefixedTable<T>(string prefix)
             where T : struct
                 => Root + Tables.filename<T>(prefix);
 
@@ -137,7 +137,7 @@ namespace Z0
             => FS.file(string.Format("{0}.{1}", @class, name), kind.Ext());
 
         [Op]
-        public static Outcome<FileEmission> emissions(FS.Files src, bool uri, FS.FilePath dst)
+        public static Outcome<FileEmission> emissions(FS.Files src, bool uri, FilePath dst)
         {
             var counter  = 0;
             try

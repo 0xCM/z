@@ -10,7 +10,7 @@ namespace Z0
 
     public class TypeList : Seq<TypeList,TypeListEntry>
     {
-        public static TypeList materialize(FS.FilePath src)
+        public static TypeList materialize(FilePath src)
         {
             var lines = src.ReadLines(skipBlank:true);
             var count = lines.Count;
@@ -24,7 +24,7 @@ namespace Z0
             return new (dst);
         }
 
-        public static void serialize(ReadOnlySpan<Type> src, FS.FilePath dst)
+        public static void serialize(ReadOnlySpan<Type> src, FilePath dst)
         {
             var emitter = text.emitter();
             for(var i=0; i<src.Length; i++)

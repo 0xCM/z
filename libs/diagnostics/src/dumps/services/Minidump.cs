@@ -8,12 +8,12 @@ namespace Z0
 
     public sealed partial class Minidump : IDisposable
     {
-        public static Minidump open(FS.FilePath src)
+        public static Minidump open(FilePath src)
             => new Minidump(src);
 
         readonly MemoryFile Source;
 
-        Minidump(FS.FilePath src)
+        Minidump(FilePath src)
         {
             Source = MemoryFiles.map(src);
         }

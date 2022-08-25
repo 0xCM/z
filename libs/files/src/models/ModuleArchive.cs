@@ -35,7 +35,7 @@ namespace Z0
         public ReadOnlySeq<ObjFile> Obj()
             => ObjFiles().Array();
 
-        public bool IsManaged(FS.FilePath src, out AssemblyName name)
+        public bool IsManaged(FilePath src, out AssemblyName name)
             => FS.managed(src, out name);
 
         IEnumerable<ObjFile> ObjFiles()

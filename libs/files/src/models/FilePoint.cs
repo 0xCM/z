@@ -7,19 +7,19 @@ namespace Z0
     public readonly struct FilePoint
     {
         [MethodImpl(Inline), Op]
-        public static FilePoint point(FS.FilePath path, LineOffset offset)
+        public static FilePoint point(FilePath path, LineOffset offset)
             => new FilePoint(path,offset);
 
         [MethodImpl(Inline), Op]
-        public static FilePoint point(FS.FilePath path, LineNumber line, uint col)
+        public static FilePoint point(FilePath path, LineNumber line, uint col)
             => new FilePoint(path, (line,col));
 
-        public FS.FilePath Path {get;}
+        public FilePath Path {get;}
 
         public LineOffset Location {get;}
 
         [MethodImpl(Inline)]
-        public FilePoint(FS.FilePath path, LineOffset loc)
+        public FilePoint(FilePath path, LineOffset loc)
         {
             Path = path;
             Location = loc;
@@ -32,13 +32,13 @@ namespace Z0
             => Format();
 
         [MethodImpl(Inline)]
-        public static implicit operator FilePoint((FS.FilePath path, LineOffset loc) src)
+        public static implicit operator FilePoint((FilePath path, LineOffset loc) src)
             => new FilePoint(src.path,src.loc);
 
         public static FilePoint Empty
         {
             [MethodImpl(Inline)]
-            get => new FilePoint(FS.FilePath.Empty, LineOffset.Empty);
+            get => new FilePoint(FilePath.Empty, LineOffset.Empty);
         }
     }
 }

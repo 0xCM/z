@@ -9,10 +9,10 @@ namespace Z0
     /// </summary>
     public readonly struct ObjFile : IFileModule<ObjFile>
     {
-        public FS.FilePath Path {get;}
+        public FilePath Path {get;}
 
         [MethodImpl(Inline)]
-        public ObjFile(FS.FilePath path)
+        public ObjFile(FilePath path)
             => Path = path;
 
         public FileModuleKind ModuleKind

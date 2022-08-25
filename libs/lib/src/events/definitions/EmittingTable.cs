@@ -15,12 +15,12 @@ namespace Z0
 
         public TableId TableId {get;}
 
-        public FS.FilePath Target {get;}
+        public FilePath Target {get;}
 
         public FlairKind Flair => FlairKind.Running;
 
         [MethodImpl(Inline)]
-        public EmittingTableEvent(Type host, Type table, FS.FilePath target)
+        public EmittingTableEvent(Type host, Type table, FilePath target)
         {
             EventId = EventId.define(host, Kind);
             TableId = Tables.identify(table);

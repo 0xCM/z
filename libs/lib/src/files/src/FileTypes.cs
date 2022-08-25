@@ -9,7 +9,7 @@ namespace Z0
 
     public class FileTypes
     {
-        public static FileKind kind(FS.FilePath src)
+        public static FileKind kind(FilePath src)
         {
             var name = src.FileName.Format().ToLower();
             var kind = FileKind.None;
@@ -60,10 +60,10 @@ namespace Z0
         public static FileKind FileKind(this FS.FileName src)
             => FileTypes.kind(src.Ext);
 
-        public static FileKind FileKind(this FS.FilePath src)
+        public static FileKind FileKind(this FilePath src)
             => FileTypes.kind(src. FileName.Ext);
 
-        public static string SrcId(this FS.FilePath src, params FileKind[] kinds)
+        public static string SrcId(this FilePath src, params FileKind[] kinds)
             => src.FileName.SrcId(kinds);
 
         public static string SrcId(this FS.FileName src, params FileKind[] kinds)

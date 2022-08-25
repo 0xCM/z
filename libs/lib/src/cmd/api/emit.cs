@@ -8,7 +8,7 @@ namespace Z0
  
     partial class Cmd
     {
-        public static void emit(ICmdSource src, WfEmit channel, FS.FilePath dst)
+        public static void emit(ICmdSource src, WfEmit channel, FilePath dst)
         {
             var flow = channel.EmittingFile(dst);
             var commands = src.Commands;
@@ -24,7 +24,7 @@ namespace Z0
             channel.EmittedFile(flow, src.Count);
         }
 
-        public static void emit(CmdCatalog src, FS.FilePath dst, WfEmit channel)
+        public static void emit(CmdCatalog src, FilePath dst, WfEmit channel)
         {
             var data = src.Entries;
             iter(data, x => channel.Row(x.Uri.Name));

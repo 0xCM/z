@@ -49,7 +49,7 @@ namespace Z0
             return new CmdProcess(cmd, options);
         }
 
-        public static CmdProcess process(FS.FilePath path, CmdKind kind, string args)
+        public static CmdProcess process(FilePath path, CmdKind kind, string args)
             => process(Cmd.cmd(path,kind,args));
 
         [Op]

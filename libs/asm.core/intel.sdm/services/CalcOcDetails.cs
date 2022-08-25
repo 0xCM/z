@@ -35,7 +35,7 @@ namespace Z0.Asm
             return slice(outgoing, 0, j).ToArray();
         }
 
-        Index<SdmOpCodeDetail> CalcOcDetails(ReadOnlySpan<FS.FilePath> src)
+        Index<SdmOpCodeDetail> CalcOcDetails(ReadOnlySpan<FilePath> src)
         {
             var result = Outcome.Success;
             var count = src.Length;

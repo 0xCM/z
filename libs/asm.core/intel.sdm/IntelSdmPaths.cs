@@ -12,7 +12,7 @@ namespace Z0.Asm
         public IDbTargets Output()
             => AppDb.AsmDb("sdm");
 
-        public FS.FilePath SdmTable<T>()
+        public FilePath SdmTable<T>()
             where T : struct
                 => Output().Table<T>();
 
@@ -28,55 +28,55 @@ namespace Z0.Asm
         public IDbTargets Logs()
             => AppDb.Logs("intel.sdm");
 
-        public FS.FilePath SigFixupConfig()
+        public FilePath SigFixupConfig()
             => Settings().Path("asm.sigs.fixups", FileKind.Map);
 
-        public FS.FilePath SigNormalConfig()
+        public FilePath SigNormalConfig()
             => Settings().Path("asm.sigs.normalize", FileKind.Map);
 
-        public FS.FilePath OcFixupConfig()
+        public FilePath OcFixupConfig()
             => Settings().Path("asm.opcodes.fixups", FileKind.Map);
 
-        public FS.FilePath SplitConfig()
+        public FilePath SplitConfig()
             => Settings().Path(FS.file("sdm.splits", FS.Csv));
 
-        public FS.FilePath SdmSrcVol(byte vol)
+        public FilePath SdmSrcVol(byte vol)
             => Sources().Path(FS.file(string.Format("intel-sdm-vol{0}", vol), FS.Txt));
 
-        public FS.FilePath SdmDstVol(byte vol)
+        public FilePath SdmDstVol(byte vol)
             => Output().Path(FS.file(string.Format("intel-sdm-vol{0}-{1}", vol, "lined"), FS.Txt));
 
-        public FS.FilePath TocImportDoc()
+        public FilePath TocImportDoc()
             => Output().Path(FS.file("sdm.toc", FS.Txt));
 
-        public FS.FilePath ProcessLog(string name)
+        public FilePath ProcessLog(string name)
             => Logs().Path(name,FileKind.Log);
 
-        public ReadOnlySeq<FS.FilePath> TocPaths()
+        public ReadOnlySeq<FilePath> TocPaths()
             => Output().Files().Where(f => IsTocPart(f)).Array().Sort();
 
-        public FS.FilePath TocDst()
+        public FilePath TocDst()
             => Output().Table<TocEntry>(sdm);
 
-        public FS.FilePath FormDetailDst()
+        public FilePath FormDetailDst()
             => Output().Table<SdmFormDetail>(sdm);
 
-        public FS.FilePath CharMapDst()
+        public FilePath CharMapDst()
             => Output().Path(FS.file("sdm.charmap", FS.Config));
 
-        public FS.FilePath UnmappedCharLog()
+        public FilePath UnmappedCharLog()
             => Logs().Path("sdm.unmapped", FileKind.Log);
 
-        public FS.FilePath SdmSrcPath()
+        public FilePath SdmSrcPath()
             => Sources().Path(FS.file("intel-sdm", FS.Txt));
 
         public IDbSources CsvSources()
             => Sources().Sources("sdm.instructions");
 
-        public FS.FilePath TokensDst(string sort)
+        public FilePath TokensDst(string sort)
             => Output().Path(sort,FileKind.Csv);
 
-        static bool IsTocPart(FS.FilePath src)
+        static bool IsTocPart(FilePath src)
         {
             var f = src.FileName.Format();
             if(src.Ext == FS.Txt)

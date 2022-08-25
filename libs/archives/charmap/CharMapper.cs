@@ -8,10 +8,10 @@ namespace Z0
 
     public sealed class CharMapper : AppService<CharMapper>
     {
-        ReadOnlySeq<CharMapEntry<char>> Unmapped(FS.FilePath src, in CharMap<char> map)
+        ReadOnlySeq<CharMapEntry<char>> Unmapped(FilePath src, in CharMap<char> map)
             => Unmapped(src, TextEncodings.Asci);
 
-        ReadOnlySeq<CharMapEntry<char>> Unmapped(FS.FilePath src, AsciPoints target)
+        ReadOnlySeq<CharMapEntry<char>> Unmapped(FilePath src, AsciPoints target)
         {
             var map = CharMaps.create(TextEncodings.Unicode, target);
             var flow = Running(string.Format("Searching {0} for unmapped characters", src.ToUri()));
@@ -24,7 +24,7 @@ namespace Z0
             return pairs;
         }
 
-        public void LogUnmapped(in CharMap<char> map, FS.FilePath src, FS.FilePath dst)
+        public void LogUnmapped(in CharMap<char> map, FilePath src, FilePath dst)
         {
             var unmapped = Unmapped(src, map);
             var pairs = unmapped.View.Map(CharMaps.format);
@@ -34,7 +34,7 @@ namespace Z0
                 writer.WriteLine(skip(pairs,i));
         }
 
-        public void Emit(in CharMap<char> src, FS.FilePath dst)
+        public void Emit(in CharMap<char> src, FilePath dst)
         {
             var emitting = EmittingFile(dst);
             using var writer = dst.Writer();

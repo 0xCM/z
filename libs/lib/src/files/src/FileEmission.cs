@@ -12,12 +12,12 @@ namespace Z0
         /// <summary>
         /// The emission target
         /// </summary>
-        public readonly FS.FilePath Target;
+        public readonly FilePath Target;
 
         public readonly uint Count;
 
         [MethodImpl(Inline)]
-        public FileEmission(FS.FilePath target, Count count)
+        public FileEmission(FilePath target, Count count)
         {
             Target = target;
             Count = count;

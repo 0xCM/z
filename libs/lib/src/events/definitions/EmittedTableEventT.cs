@@ -14,7 +14,7 @@ namespace Z0
 
         public Count RowCount {get;}
 
-        public FS.FilePath Target {get;}
+        public FilePath Target {get;}
 
         public TableId TableId => TableId.identify(typeof(T));
 
@@ -27,11 +27,11 @@ namespace Z0
         {
             EventId = EventId.Empty;
             RowCount = 0;
-            Target = FS.FilePath.Empty;
+            Target = FilePath.Empty;
         }
 
         [MethodImpl(Inline)]
-        public EmittedTableEvent(Type host, Count count, FS.FilePath target)
+        public EmittedTableEvent(Type host, Count count, FilePath target)
         {
             EventId = EventId.define(host, Kind);
             RowCount = count;

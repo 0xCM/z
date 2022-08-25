@@ -7,14 +7,14 @@ namespace Z0
     /// <summary>
     /// Defines a link between an identified resource and an emission target
     /// </summary>
-    public readonly struct ResEmission : IFlow<Asset,FS.FilePath>
+    public readonly struct ResEmission : IFlow<Asset,FilePath>
     {
         public readonly Asset Source;
 
-        public readonly FS.FilePath Target;
+        public readonly FilePath Target;
 
         [MethodImpl(Inline)]
-        public ResEmission(Asset src, FS.FilePath dst)
+        public ResEmission(Asset src, FilePath dst)
         {
             Source = src;
             Target = dst;
@@ -22,10 +22,10 @@ namespace Z0
 
         public bool IsEmpty => Source.IsEmpty || Target.IsEmpty;
 
-        Asset IArrow<Asset, FS.FilePath>.Source
+        Asset IArrow<Asset, FilePath>.Source
             => Source;
 
-        FS.FilePath IArrow<Asset, FS.FilePath>.Target
+        FilePath IArrow<Asset, FilePath>.Target
             => Target;
 
         public string Format()
@@ -35,11 +35,11 @@ namespace Z0
             => Format();
 
         [MethodImpl(Inline)]
-        public static implicit operator ResEmission(Arrow<Asset,FS.FilePath> link)
+        public static implicit operator ResEmission(Arrow<Asset,FilePath> link)
             => new ResEmission(link.Source, link.Target);
 
         [MethodImpl(Inline)]
-        public static implicit operator Arrow<Asset,FS.FilePath>(ResEmission src)
+        public static implicit operator Arrow<Asset,FilePath>(ResEmission src)
             => new ResEmission(src.Source, src.Target);
     }
 }

@@ -29,7 +29,7 @@ namespace Z0
 
         public static MsgPattern<Count,Count> ParsedHosts => "Parsed {0} members from {1} hosts";
 
-        public static RenderPattern<Count,FS.FilePath> LoadedForms => "Loaded {0} forms from {1}";
+        public static RenderPattern<Count,FilePath> LoadedForms => "Loaded {0} forms from {1}";
 
         public static MsgPattern<string,string> ParseFailure => "Parsing {0} from '{1}' failed";
 
@@ -51,13 +51,13 @@ namespace Z0
 
         public static MsgPattern<ApiHostUri,Count> CreatedHostCatalog => "Created {0} catalog with {1} members";
 
-        public static MsgPattern<ApiHostUri,FS.FilePath> HostFileMissing => "The {0} file {1} does not exist";
+        public static MsgPattern<ApiHostUri,FilePath> HostFileMissing => "The {0} file {1} does not exist";
 
         public static RenderPattern<Count> IndexingPartFiles => "Indexing {0} partfile datasets";
 
-        public static RenderPattern<FS.FilePath> IndexingCodeBlocks => "Indexing code blocks from {0}";
+        public static RenderPattern<FilePath> IndexingCodeBlocks => "Indexing code blocks from {0}";
 
-        public static RenderPattern<Count,FS.FilePath> AbsorbedCodeBlocks => "Absorbed {0} code blocks from {1}";
+        public static RenderPattern<Count,FilePath> AbsorbedCodeBlocks => "Absorbed {0} code blocks from {1}";
 
         public static RenderPattern<OpUri> Unbased => "The block {0} has no base addressed";
 

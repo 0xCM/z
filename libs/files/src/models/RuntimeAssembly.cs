@@ -10,10 +10,10 @@ namespace Z0
     {
         public readonly Assembly Component;
 
-        public readonly FS.FilePath Path;
+        public readonly FilePath Path;
 
         [MethodImpl(Inline)]
-        public RuntimeAssembly(Assembly src, FS.FilePath path)
+        public RuntimeAssembly(Assembly src, FilePath path)
         {
             Component = Require.notnull(src);
             Path = path;

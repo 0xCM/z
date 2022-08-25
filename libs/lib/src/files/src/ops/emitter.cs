@@ -11,7 +11,7 @@ namespace Z0
 
     partial struct FS
     {
-        public static void emit<T>(Type host, T src, FS.FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)
+        public static void emit<T>(Type host, T src, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)
         {
             using var writer = dst.Writer(encoding);
             var data = $"{src}";
@@ -19,13 +19,13 @@ namespace Z0
             term.emit(Events.emittedFile(host, dst, (ByteSize)data.Length));
         }
 
-        public static ITextEmitter emitter(FS.FilePath dst, FileWriteMode mode, TextEncodingKind encoding)
+        public static ITextEmitter emitter(FilePath dst, FileWriteMode mode, TextEncodingKind encoding)
             => writer(dst,mode,encoding).Emitter();
 
-        public static ITextEmitter emitter(FS.FilePath dst, TextEncodingKind encoding)
+        public static ITextEmitter emitter(FilePath dst, TextEncodingKind encoding)
             => writer(dst, encoding).Emitter();
 
-        public static ITextEmitter emitter(FS.FilePath dst, FileWriteMode mode, Encoding encoding)
+        public static ITextEmitter emitter(FilePath dst, FileWriteMode mode, Encoding encoding)
             => writer(dst,mode,encoding).Emitter();
     }
 }

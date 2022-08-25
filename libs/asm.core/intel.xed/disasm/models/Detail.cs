@@ -49,7 +49,7 @@ namespace Z0
                 get => ref Blocks[i];
             }
 
-            public FS.FilePath Path
+            public FilePath Path
             {
                 [MethodImpl(Inline)]
                 get => DataFile.Source.Path;

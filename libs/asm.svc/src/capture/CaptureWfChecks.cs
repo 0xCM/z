@@ -89,7 +89,7 @@ namespace Z0
             }
         }
 
-        public static FS.FilePath csv(FS.FolderPath src, ApiHostUri host)
+        public static FilePath csv(FS.FolderPath src, ApiHostUri host)
             => src + host.FileName(FS.PCsv);
 
         void CheckSize(ApiMemberCode src)

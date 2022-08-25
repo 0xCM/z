@@ -4,12 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly record struct ImagePath : IFile<FS.FilePath>
+    public readonly record struct ImagePath : IFile<FilePath>
     {
-        public FS.FilePath Path {get;}
+        public FilePath Path {get;}
 
         [MethodImpl(Inline)]
-        public ImagePath(FS.FilePath src)
+        public ImagePath(FilePath src)
         {
             Path = src;
         }
@@ -32,7 +32,7 @@ namespace Z0
             get => Path.Hash;
         }
 
-        public FS.FilePath Location
+        public FilePath Location
         {
             [MethodImpl(Inline)]
             get => Path;
@@ -51,11 +51,11 @@ namespace Z0
             => Format();
 
         [MethodImpl(Inline)]
-        public static implicit operator ImagePath(FS.FilePath src)
+        public static implicit operator ImagePath(FilePath src)
             => new ImagePath(src);
 
         [MethodImpl(Inline)]
-        public static implicit operator FS.FilePath(ImagePath src)
+        public static implicit operator FilePath(ImagePath src)
             => src.Path;
     }
 }

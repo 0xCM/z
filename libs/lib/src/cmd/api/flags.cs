@@ -8,7 +8,7 @@ namespace Z0
  
     partial class Cmd
     {
-        public static ReadOnlySeq<CmdFlagSpec> flags(FS.FilePath src)
+        public static ReadOnlySeq<CmdFlagSpec> flags(FilePath src)
         {
             var k = z16;
             var dst = list<CmdFlagSpec>();

@@ -6,7 +6,7 @@ namespace Z0
 {
     public sealed class AsmSyntaxDoc : TableDoc<AsmSyntaxRow>
     {
-        public AsmSyntaxDoc(FS.FilePath src, AsmSyntaxRow[] rows)
+        public AsmSyntaxDoc(FilePath src, AsmSyntaxRow[] rows)
             : base(src,rows)
         {
 

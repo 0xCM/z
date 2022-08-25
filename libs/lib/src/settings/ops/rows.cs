@@ -10,7 +10,7 @@ namespace Z0
 
     partial class Settings
     {
-        public static SettingLookup rows(FS.FilePath src)
+        public static SettingLookup rows(FilePath src)
         {
             var formatter = Tables.formatter<Setting>();
             var data = src.ReadLines(true);

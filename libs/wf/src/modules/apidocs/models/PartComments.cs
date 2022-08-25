@@ -12,9 +12,9 @@ namespace Z0
             {
                 public PartId Part;
 
-                public FS.FilePath XmlPath;
+                public FilePath XmlPath;
 
-                public FS.FilePath CsvPath;
+                public FilePath CsvPath;
 
                 public List<string> CsvRowData;
 

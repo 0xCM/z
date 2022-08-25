@@ -15,7 +15,7 @@ namespace Z0
     {
         readonly MemoryFileSpec Spec;
 
-        public readonly FS.FilePath Path;
+        public readonly FilePath Path;
 
         readonly MemoryMappedFile File;
 
@@ -47,7 +47,7 @@ namespace Z0
                 ViewStream = null;
         }
 
-        internal MemoryFile(FS.FilePath path, bool stream = false)
+        internal MemoryFile(FilePath path, bool stream = false)
         {
             Path = path;
             FileSize = (ulong)Path.Info.Length;

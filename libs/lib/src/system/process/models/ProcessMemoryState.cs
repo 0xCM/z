@@ -99,6 +99,6 @@ namespace Z0
         /// The path of the process image
         /// </summary>
         [Render(1)]
-        public FS.FilePath ImagePath;
+        public FilePath ImagePath;
     }
 }

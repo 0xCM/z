@@ -22,13 +22,13 @@ namespace Z0
         public Index<FileRef> Docs(FileKind kind)
             => Files.Docs(kind);
 
-        public FileRef Doc(FS.FilePath path)
+        public FileRef Doc(FilePath path)
             => Files[path];
 
         public FileRef Doc(Hex32 id)
             => Files[id];
 
-        public FileRef Root(FS.FilePath dst)
+        public FileRef Root(FilePath dst)
         {
             if(Flows.Root(dst, out var src))
                 return src;

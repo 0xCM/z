@@ -16,7 +16,7 @@ namespace Z0
 
         public string OutputName;
 
-        public FS.FilePath OutputPath;
+        public FilePath OutputPath;
 
         public string RuntimeID;
 

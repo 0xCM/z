@@ -12,7 +12,7 @@ namespace Z0
     {
         public readonly bool IsPortable;
 
-        public readonly FS.FilePath PePath;
+        public readonly FilePath PePath;
 
         readonly ReadOnlySpan<byte> PeData;
 
@@ -24,7 +24,7 @@ namespace Z0
 
         public readonly MemoryStream PeStream;
 
-        public readonly FS.FilePath PdbPath;
+        public readonly FilePath PdbPath;
 
         public readonly MemoryStream PdbStream;
 
@@ -44,8 +44,8 @@ namespace Z0
         {
             RuntimeLoaded = true;
             Streams = false;
-            PePath = FS.FilePath.Empty;
-            PdbPath = FS.FilePath.Empty;
+            PePath = FilePath.Empty;
+            PdbPath = FilePath.Empty;
             PeData = pe;
             PdbData = pdb;
             PeStream = default;
@@ -56,7 +56,7 @@ namespace Z0
             PdbKind = PdbQuery.pdbkind(PdbData);
         }
 
-        public PdbSymbolSource(FS.FilePath pe, FS.FilePath pdb)
+        public PdbSymbolSource(FilePath pe, FilePath pdb)
         {
             RuntimeLoaded = false;
             Streams = true;

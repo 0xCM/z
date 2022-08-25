@@ -6,19 +6,19 @@ namespace Z0
 {
     public abstract class FileData<T>
     {
-        readonly Dictionary<FS.FilePath,T> Data;
+        readonly Dictionary<FilePath,T> Data;
 
         public FileData()
         {
             Data = new();
         }
 
-        protected FileData(Dictionary<FS.FilePath,T> src)
+        protected FileData(Dictionary<FilePath,T> src)
         {
             Data = src;
         }
 
-        public ICollection<FS.FilePath> Paths
+        public ICollection<FilePath> Paths
         {
             [MethodImpl(Inline)]
             get => Data.Keys;
@@ -30,16 +30,16 @@ namespace Z0
             get => (uint)Data.Count;
         }
 
-        public T this[FS.FilePath path]
+        public T this[FilePath path]
         {
             [MethodImpl(Inline)]
             get => Data[path];
         }
 
-        public ConstLookup<FS.FilePath,T> ToLookup()
+        public ConstLookup<FilePath,T> ToLookup()
             => Data;
 
-        public Index<Paired<FS.FilePath,T>> Entries
+        public Index<Paired<FilePath,T>> Entries
             => Data.Map(x => core.paired(x.Key,x.Value));
     }
 }

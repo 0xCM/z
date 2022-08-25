@@ -101,7 +101,7 @@ namespace Z0
             EmitConditionDocs(Conditions.jcc32(), AppDb.ApiTargets("asm.docs").Path("jcc32", FileKind.Txt));
         }
 
-        uint EmitConditionDocs<T>(ReadOnlySpan<T> src, FS.FilePath dst)
+        uint EmitConditionDocs<T>(ReadOnlySpan<T> src, FilePath dst)
             where T : IConditional
         {
             var emitting = EmittingFile(dst);

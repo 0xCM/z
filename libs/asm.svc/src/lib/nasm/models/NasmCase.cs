@@ -11,10 +11,10 @@ namespace Z0
 
         public Identifier CaseId;
 
-        public FS.FilePath SourcePath;
+        public FilePath SourcePath;
 
-        public FS.FilePath BinPath;
+        public FilePath BinPath;
 
-        public FS.FilePath ListPath;
+        public FilePath ListPath;
     }
 }

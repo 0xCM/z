@@ -10,13 +10,13 @@ namespace Z0
     {
         readonly FileStream Stream;
 
-        readonly FS.FilePath Target;
+        readonly FilePath Target;
 
         readonly IRecordFormatter<EmissionLogEntry> Formatter;
 
         bool Closed;
 
-        public WfEmissionLog(FS.FilePath dst)
+        public WfEmissionLog(FilePath dst)
         {
             Closed = false;
             Target = dst;

@@ -110,7 +110,7 @@ namespace Z0
             Xed.RunEtl();
         }
 
-        void GenRuleNames(FS.FilePath path)
+        void GenRuleNames(FilePath path)
         {
             var assets = AsmCaseAssets.create();
             var header = assets.XedFileHeader().Utf8();

@@ -6,9 +6,9 @@ namespace Z0
 {
     public struct PdbReaderStats : IRecord<PdbReaderStats>
     {
-        public FS.FilePath Assembly;
+        public FilePath Assembly;
 
-        public FS.FilePath Pdb;
+        public FilePath Pdb;
 
         public uint SeqPointCount;
 

@@ -86,7 +86,7 @@ namespace Z0.Asm
         }
 
 
-        public static Outcome<uint> load(FS.FilePath src, Span<ProcessAsmRecord> dst)
+        public static Outcome<uint> load(FilePath src, Span<ProcessAsmRecord> dst)
         {
             var counter = 1u;
             var i = 0u;
@@ -108,7 +108,7 @@ namespace Z0.Asm
             return i;
         }
 
-        public static Index<ProcessAsmRecord> records(FS.FilePath src)
+        public static Index<ProcessAsmRecord> records(FilePath src)
         {
             var count = Lines.count(src,TextEncodingKind.Asci) - 1;
             var dst = alloc<ProcessAsmRecord>(count);
@@ -119,7 +119,7 @@ namespace Z0.Asm
         public static Index<ProcessAsmRecord> records(IApiPack src)
             => records(src.Archive().ProcessAsmPath());
 
-        public static ProcessAsmBuffers load(FS.FilePath path)
+        public static ProcessAsmBuffers load(FilePath path)
         {
             var count = Lines.count(path,TextEncodingKind.Asci) - 1;
             var buffer = alloc<ProcessAsmRecord>(count);

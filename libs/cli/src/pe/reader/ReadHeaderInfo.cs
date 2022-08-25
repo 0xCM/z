@@ -9,7 +9,7 @@ namespace Z0
 
     partial class PeReader
     {
-        public static ReadOnlySeq<PeSectionHeader> headers(PEReader src, FS.FilePath path)
+        public static ReadOnlySeq<PeSectionHeader> headers(PEReader src, FilePath path)
         {
             var headers = src.PEHeaders;
             var pe = headers.PEHeader;

@@ -102,7 +102,7 @@ namespace Z0
             return total;
         }
 
-        static FS.FilePath path(FS.FolderPath dir, MemoryAddress @base)
+        static FilePath path(FS.FolderPath dir, MemoryAddress @base)
             => dir + FS.file(string.Format("x{0}", @base.Format()), FS.Bin);
 
         [MethodImpl(Inline)]

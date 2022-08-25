@@ -49,7 +49,7 @@ namespace Z0
             Emit(src, dst.Table<ApiCatalogEntry>());
         }
 
-        public Index<ApiCatalogEntry> Emit(ApiMembers src, FS.FilePath dst)
+        public Index<ApiCatalogEntry> Emit(ApiMembers src, FilePath dst)
         {
             var records = rebase(src.BaseAddress, src.View);
             TableEmit(records, dst);
@@ -86,13 +86,13 @@ namespace Z0
         // public Index<MemberCodeBlock> Correlate()
         //     => Correlate(ApiRuntimeCatalog.PartCatalogs());
 
-        // public Index<MemberCodeBlock> Correlate(FS.FilePath dst)
+        // public Index<MemberCodeBlock> Correlate(FilePath dst)
         //     => Correlate(ApiRuntimeCatalog.PartCatalogs(), dst);
 
         // public Index<MemberCodeBlock> Correlate(ReadOnlySpan<IApiPartCatalog> src)
-        //     => Correlate(src, FS.FilePath.Empty);
+        //     => Correlate(src, FilePath.Empty);
 
-        // public Index<MemberCodeBlock> Correlate(ReadOnlySpan<IApiPartCatalog> src, FS.FilePath path)
+        // public Index<MemberCodeBlock> Correlate(ReadOnlySpan<IApiPartCatalog> src, FilePath path)
         // {
         //     var flow = Running(Msg.CorrelatingParts.Format(src.Length));
         //     var count = src.Length;
@@ -107,7 +107,7 @@ namespace Z0
         //         for(var j=0; j<hosts.Length; j++)
         //         {
         //             ref readonly var srcHost = ref skip(hosts,j);
-        //             var hexpath = FS.FilePath.Empty;
+        //             var hexpath = FilePath.Empty;
         //             if(hexpath.Exists)
         //             {
         //                 Require.invariant(ApiRuntimeCatalog.FindHost(srcHost.HostUri, out var host));

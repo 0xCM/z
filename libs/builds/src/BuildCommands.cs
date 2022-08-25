@@ -8,7 +8,7 @@ namespace Z0
 
     public class BuildCommands
     {
-        public static BuildProjectCmd project(FS.FilePath src)
+        public static BuildProjectCmd project(FilePath src)
         {
             var dst = new BuildProjectCmd();
             dst.Platform = "Any Cpu";

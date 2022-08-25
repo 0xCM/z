@@ -12,10 +12,10 @@ namespace Z0
         const string CmdName = "xedtool.cmd";
 
         [CmdArg("<src>")]
-        public FS.FilePath Source;
+        public FilePath Source;
 
         [CmdArg("<dst>")]
-        public FS.FilePath Target;
+        public FilePath Target;
 
         [CmdArg("-{0}")]
         public InputKind InputKind;
@@ -26,10 +26,10 @@ namespace Z0
         [CmdArg("-{0}")]
         public Mode Mode;
 
-        FS.FilePath IFlowCmd<FS.FilePath, FS.FilePath>.Source
+        FilePath IFlowCmd<FilePath, FilePath>.Source
             => Source;
 
-        FS.FilePath IFlowCmd<FS.FilePath, FS.FilePath>.Target
+        FilePath IFlowCmd<FilePath, FilePath>.Target
             => Target;
     }
 }

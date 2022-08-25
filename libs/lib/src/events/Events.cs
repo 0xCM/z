@@ -101,41 +101,41 @@ namespace Z0
             => new EventOrigin(name, new CallingMember(caller, file, line ?? 0));
 
         [Op, Closures(Closure)]
-        public static EmittingFileEvent emittingFile(Type host, FS.FilePath dst)
+        public static EmittingFileEvent emittingFile(Type host, FilePath dst)
             => new EmittingFileEvent(host, dst);
 
         [Op]
-        public static EmittedFileEvent emittedFile(Type host, FS.FilePath path, Count count)
+        public static EmittedFileEvent emittedFile(Type host, FilePath path, Count count)
             => new EmittedFileEvent(host, path, count);
 
         [Op]
-        public static EmittedFileEvent emittedFile(Type host, FS.FilePath path)
+        public static EmittedFileEvent emittedFile(Type host, FilePath path)
             => new EmittedFileEvent(host, path);
 
         [Op]
-        public static EmittedFileEvent emittedFile(Type host, FS.FilePath path, ByteSize size)
+        public static EmittedFileEvent emittedFile(Type host, FilePath path, ByteSize size)
             => new EmittedFileEvent(host, path, (uint)size);
 
         [Op]
-        public static EmittedFileEvent<T> emittedFile<T>(Type host, FS.FilePath path, T msg)
+        public static EmittedFileEvent<T> emittedFile<T>(Type host, FilePath path, T msg)
             => new EmittedFileEvent<T>(host, path, msg);
 
         [Op]
-        public static EmittingTableEvent emittingTable(Type host, Type src, FS.FilePath dst)
+        public static EmittingTableEvent emittingTable(Type host, Type src, FilePath dst)
             => new EmittingTableEvent(host, src, dst);
 
         [Op, Closures(Closure)]
-        public static EmittingTableEvent<T> emittingTable<T>(Type host, FS.FilePath dst)
+        public static EmittingTableEvent<T> emittingTable<T>(Type host, FilePath dst)
             where  T : struct
                 => new EmittingTableEvent<T>(host, dst);
 
         [Op, Closures(Closure)]
-        public static EmittedTableEvent<T> emittedTable<T>(Type host, Count count, FS.FilePath dst)
+        public static EmittedTableEvent<T> emittedTable<T>(Type host, Count count, FilePath dst)
             where  T : struct
                 => new EmittedTableEvent<T>(host, count, dst);
 
         [Op]
-        public static EmittedTableEvent emittedTable(Type host, TableId table, Count count, FS.FilePath dst)
+        public static EmittedTableEvent emittedTable(Type host, TableId table, Count count, FilePath dst)
             => new EmittedTableEvent(host, table, count, dst);
 
         [Op, Closures(Closure)]

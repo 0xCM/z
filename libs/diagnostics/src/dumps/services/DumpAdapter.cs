@@ -11,16 +11,16 @@ namespace Z0
 
     public class DumpAdapter : IDisposable
     {
-        public static DumpAdapter create(FS.FilePath src)
+        public static DumpAdapter create(FilePath src)
             => new DumpAdapter(src);
 
-        public FS.FilePath DumpPath {get;}
+        public FilePath DumpPath {get;}
 
         DataTarget Target;
 
         ClrRuntime Runtime;
 
-        DumpAdapter(FS.FilePath src)
+        DumpAdapter(FilePath src)
         {
             DumpPath = src;
             Target = DataTarget.LoadDump(src.Name);

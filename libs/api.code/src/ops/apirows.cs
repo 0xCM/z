@@ -8,7 +8,7 @@ namespace Z0
 
     partial class ApiCode
     {
-        public static Index<ApiCodeRow> apirows(FS.FilePath src)
+        public static Index<ApiCodeRow> apirows(FilePath src)
         {
             var result = Outcome.Success;
             var data = src.ReadLines().Storage.Skip(1);

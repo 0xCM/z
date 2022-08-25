@@ -43,7 +43,7 @@ namespace Z0
             await Log.WriteLineAsync(buffer.Emit());
         }
 
-        public static ClrEventListener create(FS.FilePath log)
+        public static ClrEventListener create(FilePath log)
             => new ClrEventListener(log);
 
         HashSet<string> EventNames;
@@ -55,7 +55,7 @@ namespace Z0
         void Emit(EventWrittenEventArgs e)
             => EmitAsync(e).Wait();
 
-        public ClrEventListener(FS.FilePath dst)
+        public ClrEventListener(FilePath dst)
             : this("MethodLoad_V1","MethodLoadVerbose_V1","MethodJitInliningSucceeded", "MethodJitInliningFailed")
         {
             Log = dst.AsciWriter();

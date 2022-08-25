@@ -11,13 +11,13 @@ namespace Z0
 
         public EventId EventId {get;}
 
-        public FS.FilePath Path {get;}
+        public FilePath Path {get;}
 
         public EventPayload<T> Payload {get;}
 
 
         [MethodImpl(Inline)]
-        public EmittedFileEvent(Type host, FS.FilePath dst, T msg)
+        public EmittedFileEvent(Type host, FilePath dst, T msg)
         {
             EventId = EventId.define(host, Kind);
             Payload = msg;

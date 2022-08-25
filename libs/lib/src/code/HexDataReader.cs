@@ -8,7 +8,7 @@ namespace Z0
 
     public class HexDataReader : AppService<HexDataReader>
     {
-        public HexFileStats Stats(FS.FilePath src)
+        public HexFileStats Stats(FilePath src)
         {
             using var reader = src.LineReader(TextEncodingKind.Asci);
             var line = TextLine.Empty;
@@ -41,7 +41,7 @@ namespace Z0
             return stats;
         }
 
-        public Index<HexFileStats> Stats(ReadOnlySpan<FS.FilePath> src)
+        public Index<HexFileStats> Stats(ReadOnlySpan<FilePath> src)
         {
             var count = src.Length;
             var dst = alloc<HexFileStats>(count);
@@ -75,7 +75,7 @@ namespace Z0
             return i - offset;
         }
 
-        public Index<HexDataRow> Read(FS.FilePath src)
+        public Index<HexDataRow> Read(FilePath src)
         {
             var lines = src.ReadNumberedLines();
             var count = lines.Count;

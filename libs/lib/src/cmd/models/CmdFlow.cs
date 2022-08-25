@@ -21,13 +21,13 @@ namespace Z0
         public @string TargetName;
 
         [Render(80)]
-        public FS.FilePath SourcePath;
+        public FilePath SourcePath;
 
         [Render(1)]
-        public FS.FilePath TargetPath;
+        public FilePath TargetPath;
 
         [MethodImpl(Inline)]
-        public CmdFlow(Tool tool, FS.FilePath src, FS.FilePath dst)
+        public CmdFlow(Tool tool, FilePath src, FilePath dst)
         {
             Tool = tool;
             SourceName = src.FileName.Format();
@@ -45,7 +45,7 @@ namespace Z0
         public static CmdFlow Empty
         {
             [MethodImpl(Inline)]
-            get => new CmdFlow(Tool.Empty, FS.FilePath.Empty, FS.FilePath.Empty);
+            get => new CmdFlow(Tool.Empty, FilePath.Empty, FilePath.Empty);
         }
     }
 }

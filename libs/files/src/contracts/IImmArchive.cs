@@ -35,16 +35,16 @@ namespace Z0
         FS.FolderPath ImmSubDir(FS.FolderPath root, FolderName name)
             => (Root + name);
 
-        FS.FilePath HexImmPath(PartId owner, ApiHostUri host, OpIdentity id, bool refined)
+        FilePath HexImmPath(PartId owner, ApiHostUri host, OpIdentity id, bool refined)
             => ImmSubDir(FS.folder(owner.Format(), host.HostName)) + id.ToFileName(refined ? "r" : EmptyString, FS.Hex);
 
-        FS.FilePath HexImmPath(FS.FolderPath root, PartId owner, ApiHostUri host, OpIdentity id, bool refined)
+        FilePath HexImmPath(FS.FolderPath root, PartId owner, ApiHostUri host, OpIdentity id, bool refined)
             => ImmSubDir(root, FS.folder(owner.Format(), host.HostName)) + id.ToFileName(refined ? "r" : EmptyString, FS.Hex);
 
-        FS.FilePath AsmImmPath(PartId owner, ApiHostUri host, OpIdentity id, bool refined)
+        FilePath AsmImmPath(PartId owner, ApiHostUri host, OpIdentity id, bool refined)
             => ImmSubDir(FS.folder(owner.Format(), host.HostName)) + id.ToFileName(refined ? "r" : EmptyString, FS.Asm);
 
-        FS.FilePath AsmImmPath(FS.FolderPath root, PartId owner, ApiHostUri host, OpIdentity id, bool refined)
+        FilePath AsmImmPath(FS.FolderPath root, PartId owner, ApiHostUri host, OpIdentity id, bool refined)
             => ImmSubDir(root, FS.folder(owner.Format(), host.HostName)) + id.ToFileName(refined ? "r" : EmptyString, FS.Asm);
     }
 }

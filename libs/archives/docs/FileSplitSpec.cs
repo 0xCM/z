@@ -6,7 +6,7 @@ namespace Z0
 {
     public readonly struct FileSplitSpec
     {
-        public readonly FS.FilePath SourcePath;
+        public readonly FilePath SourcePath;
 
         public readonly Count MaxLineCount;
 
@@ -15,7 +15,7 @@ namespace Z0
         public readonly TextEncodingKind TargetEncoding;
 
         [MethodImpl(Inline)]
-        public FileSplitSpec(FS.FilePath src, Count maxlines, FS.FolderPath dst, TextEncodingKind encoding)
+        public FileSplitSpec(FilePath src, Count maxlines, FS.FolderPath dst, TextEncodingKind encoding)
         {
             SourcePath = src;
             MaxLineCount = maxlines;

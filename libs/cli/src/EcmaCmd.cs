@@ -61,10 +61,10 @@ namespace Z0
         void EmitHeaders()
             => CliEmitter.EmitSectionHeaders(Dst);
 
-        static FS.FilePath EcmaArchive(FS.FilePath src)
+        static FilePath EcmaArchive(FilePath src)
             => AppDb.Archive("ecma").Path(src.FileName.WithExtension(FS.ext($"{src.Hash}.txt")));
 
-        void EmitMetadumps(ItemList<uint,FS.FilePath> src)        
+        void EmitMetadumps(ItemList<uint,FilePath> src)        
         {
             iter(src, file => {
                 if(file.Value.IsNot(FS.ext("resources.dll")))
@@ -75,7 +75,7 @@ namespace Z0
                     }            }, PllExec);
         }
 
-        static Outcome<FS.FilePath> parse(string src)
+        static Outcome<FilePath> parse(string src)
             => FS.path(src);
 
         [CmdOp("ecma/dump")]

@@ -8,10 +8,10 @@ namespace Z0
     {
         internal struct ShimCode
         {
-            public FS.FilePath TargetPath;
+            public FilePath TargetPath;
 
             [MethodImpl(Inline)]
-            public ShimCode(FS.FilePath dst)
+            public ShimCode(FilePath dst)
             {
                 TargetPath = dst;
             }

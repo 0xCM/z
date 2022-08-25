@@ -54,7 +54,7 @@ namespace Z0
         public FS.Files MetadataFiles(IApiPack src)
             => src.Metadata().Files(FileKind.MsilDat);
 
-        public Index<MsilRow> LoadMetadata(FS.FilePath src)
+        public Index<MsilRow> LoadMetadata(FilePath src)
         {
             var flow = Wf.Running(src.ToUri());
             var dst = Lists.list<MsilRow>();
@@ -81,7 +81,7 @@ namespace Z0
             return dst.Emit();
         }
 
-        public void EmitCode(ReadOnlySpan<MsilRow> src, FS.FilePath dst)
+        public void EmitCode(ReadOnlySpan<MsilRow> src, FilePath dst)
         {
             var count = src.Length;
             if(count == 0)
@@ -108,7 +108,7 @@ namespace Z0
             Wf.EmittedFile(flow, count);
         }
 
-        public void EmitCode(Index<MemberCodeBlock> src, FS.FilePath path)
+        public void EmitCode(Index<MemberCodeBlock> src, FilePath path)
         {
             var count = src.Count;
             var builder = text.build();
@@ -160,7 +160,7 @@ namespace Z0
             dst.AppendLine();
         }
 
-        public Index<MsilCapture> EmitData(Index<MemberCodeBlock> src, FS.FilePath dst)
+        public Index<MsilCapture> EmitData(Index<MemberCodeBlock> src, FilePath dst)
         {
             var count = src.Count;
             var buffer = alloc<MsilCapture>(count);

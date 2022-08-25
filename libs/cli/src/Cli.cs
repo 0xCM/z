@@ -55,7 +55,7 @@ namespace Z0
         {
             var buffer = text.buffer();
             var k = 0u;
-            var emitted = cdict<ApiHostUri,FS.FilePath>();
+            var emitted = cdict<ApiHostUri,FilePath>();
             for(var i=0; i<src.Length; i++)
             {
                 ref readonly var host = ref skip(src, i);
@@ -238,7 +238,7 @@ namespace Z0
             return buffer;
         }
 
-        public static void visualize(FS.FilePath src, FS.FilePath dst)
+        public static void visualize(FilePath src, FilePath dst)
             => Mdv.run(src.Name, dst.Name);
 
         /// <summary>

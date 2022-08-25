@@ -7,11 +7,11 @@ namespace Z0
     [StructLayout(LayoutKind.Sequential, Pack=1)]
     public readonly struct CoffObject
     {
-        public readonly FS.FilePath Path;
+        public readonly FilePath Path;
 
         public readonly BinaryCode Data;
 
-        public CoffObject(FS.FilePath path, BinaryCode data)
+        public CoffObject(FilePath path, BinaryCode data)
         {
             Path = path;
             Data = data;
@@ -60,6 +60,6 @@ namespace Z0
         }
 
         public static CoffObject Empty
-            => new CoffObject(FS.FilePath.Empty, BinaryCode.Empty);
+            => new CoffObject(FilePath.Empty, BinaryCode.Empty);
     }
 }

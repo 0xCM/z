@@ -9,14 +9,14 @@ namespace Z0
         /// <summary>
         /// The status log path
         /// </summary>
-        public readonly FS.FilePath StatusPath;
+        public readonly FilePath StatusPath;
 
         /// <summary>
         /// The error log path
         /// </summary>
-        public readonly FS.FilePath ErrorPath;
+        public readonly FilePath ErrorPath;
 
-        public LogSettings(FS.FilePath status, FS.FilePath errors)
+        public LogSettings(FilePath status, FilePath errors)
         {
             StatusPath = status;
             ErrorPath = errors;

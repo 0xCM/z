@@ -8,10 +8,10 @@ namespace Z0.Asm
 
     public class CpuIdSvc : WfSvc<CpuIdSvc>
     {
-        public void EmitRecords(ReadOnlySpan<CpuIdRow> src, FS.FilePath dst)
+        public void EmitRecords(ReadOnlySpan<CpuIdRow> src, FilePath dst)
             => TableEmit(src,dst);
 
-        public void EmitBits(ReadOnlySpan<CpuIdRow> src, FS.FilePath dst)
+        public void EmitBits(ReadOnlySpan<CpuIdRow> src, FilePath dst)
         {
             var buffer = text.emitter();
             regvals(src, buffer);
@@ -162,7 +162,7 @@ namespace Z0.Asm
             return outcome;
         }
 
-        public static Index<CpuIdRow> LoadImports(FS.FilePath src)
+        public static Index<CpuIdRow> LoadImports(FilePath src)
         {
             const byte FieldCount = CpuIdRow.FieldCount;
             const char Delimiter = Chars.Pipe;
@@ -192,7 +192,7 @@ namespace Z0.Asm
             return dst.Index();
         }
 
-        public Index<CpuIdRow> Import(FS.FolderPath src, FS.FilePath records, FS.FilePath bits)
+        public Index<CpuIdRow> Import(FS.FolderPath src, FilePath records, FilePath bits)
         {
             var data = CpuIdSvc.import(src);
             EmitRecords(data, records);

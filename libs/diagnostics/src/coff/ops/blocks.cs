@@ -92,7 +92,7 @@ namespace Z0
             return buffer;
         }
 
-        public static Index<ObjBlock> blocks(FS.FilePath path)
+        public static Index<ObjBlock> blocks(FilePath path)
         {
             var lines = path.ReadLines(true);
             var reader = lines.Storage.Reader();

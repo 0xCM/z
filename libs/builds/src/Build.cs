@@ -31,7 +31,7 @@ namespace Z0
             where T : struct, IProjectProperty<T>
                 => new Property<T>(src);
         [Op]
-        public static ProjectSpec project(FS.FilePath src)
+        public static ProjectSpec project(FilePath src)
             => new(E.Project.FromFile(src.Name, new D.ProjectOptions {
 
             }));
@@ -46,7 +46,7 @@ namespace Z0
             return dst.Emit();
         }
 
-        public static Solution sln(FS.FilePath src)
+        public static Solution sln(FilePath src)
         {
             var sln = new Solution();
             var data = C.SolutionFile.Parse(src.Name);

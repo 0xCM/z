@@ -38,11 +38,11 @@ namespace Z0
 
         object CreateLock = new();
 
-        public readonly FS.FilePath Path;
+        public readonly FilePath Path;
 
         readonly bool Overwrite;
 
-        internal ProjectLog(FS.FilePath dst, bool overwrite)
+        internal ProjectLog(FilePath dst, bool overwrite)
         {
             Overwrite = overwrite;
             Path = dst;

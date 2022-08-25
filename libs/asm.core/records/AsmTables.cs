@@ -41,7 +41,7 @@ namespace Z0.Asm
             return count;
         }
 
-        static Outcome<uint> rows(FS.FilePath src, ConcurrentBag<HostAsmRecord> dst)
+        static Outcome<uint> rows(FilePath src, ConcurrentBag<HostAsmRecord> dst)
         {
             const byte FieldCount = HostAsmRecord.FieldCount;
             var result = TextGrids.load(src, out var doc);
@@ -75,7 +75,7 @@ namespace Z0.Asm
             return results.ToArray();
         }
 
-        public Outcome LoadHostRecords(FS.FilePath src, out HostAsmRecord[] dst)
+        public Outcome LoadHostRecords(FilePath src, out HostAsmRecord[] dst)
         {
             var result = TextGrids.load(src, out var doc);
             dst = sys.empty<HostAsmRecord>();
@@ -130,7 +130,7 @@ namespace Z0.Asm
             return slice(@readonly(buffer), 0, key);
         }
 
-        public void EmitBlocks(ReadOnlySpan<AsmDataBlock> src, FS.FilePath dst)
+        public void EmitBlocks(ReadOnlySpan<AsmDataBlock> src, FilePath dst)
         {
             TableEmit(src, dst);
         }
@@ -201,7 +201,7 @@ namespace Z0.Asm
             return records.Emit();
         }
 
-        Outcome<Count> LoadDetails(FS.FilePath path, DataList<AsmDetailRow> dst)
+        Outcome<Count> LoadDetails(FilePath path, DataList<AsmDetailRow> dst)
         {
             var rowtype = path.FileName.WithoutExtension.Format().RightOfLast(Chars.Dot);
             var flow = Running(string.Format("Loading {0} rows from {1}", rowtype, path.ToUri()));

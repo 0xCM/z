@@ -43,7 +43,7 @@ namespace Z0
         public FileUri ImagePath;
 
         [MethodImpl(Inline)]
-        public ImageLocation(string name, MemoryAddress entry, MemoryAddress @base, ByteSize size, FS.FilePath path)
+        public ImageLocation(string name, MemoryAddress entry, MemoryAddress @base, ByteSize size, FilePath path)
         {
             ImagePath = path;
             ImageName = name;

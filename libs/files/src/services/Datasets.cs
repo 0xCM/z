@@ -21,7 +21,7 @@ namespace Z0
         static void AppendLine(TableColumns cols, object[] args, ITextBuffer dst)
             => dst.AppendLine(cols.Format(args));
 
-        public static void emit<T>(TableColumns cols, T[] rows, FS.FilePath dst)
+        public static void emit<T>(TableColumns cols, T[] rows, FilePath dst)
         {
             var count = rows.Length;
             if(count != 0)

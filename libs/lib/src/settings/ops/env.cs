@@ -8,7 +8,7 @@ namespace Z0
 
     partial class Settings
     {
-        public static EnvVars<string> env(FS.FilePath src, char sep = Chars.Eq)
+        public static EnvVars<string> env(FilePath src, char sep = Chars.Eq)
         {
             var k = z16;
             var dst = list<EnvVar<string>>();

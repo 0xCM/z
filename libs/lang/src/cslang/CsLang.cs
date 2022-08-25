@@ -47,7 +47,7 @@ namespace Z0
             TargetExpressions = targets;
         }
 
-        public void EmitSymSpan<E>(FS.FilePath dst)
+        public void EmitSymSpan<E>(FilePath dst)
             where E : unmanaged, Enum
         {
             var result = Outcome.Success;
@@ -102,7 +102,7 @@ namespace Z0
             dst.Append("};");
         }
 
-        public Index<Type> LoadTypes(FS.FilePath src)
+        public Index<Type> LoadTypes(FilePath src)
         {
             var running = Running(string.Format("Loading enum types from {0}", src.ToUri()));
             var buffer = list<Type>();
@@ -137,25 +137,25 @@ namespace Z0
         public FS.FolderPath SourceRoot(CgTarget target)
             => ProjectRoot(target) + FS.folder("src");
 
-        public FS.FilePath SourceFile(string name, IDbTargets dst)
+        public FilePath SourceFile(string name, IDbTargets dst)
             => dst.Path(FS.file(name, FS.Cs));
 
-        public FS.FilePath SourceFile(string name, string scope, CgTarget target)
+        public FilePath SourceFile(string name, string scope, CgTarget target)
             => SourceRoot(target) + FS.folder(scope) + FS.file(name, FS.Cs);
 
-        public FS.FilePath SourceFile(string name, string scope, IDbTargets dst)
+        public FilePath SourceFile(string name, string scope, IDbTargets dst)
             => dst.Targets(scope).Path(FS.file(name, FS.Cs));
 
-        public FS.FilePath DataFile(FS.FolderPath dst, string name)
+        public FilePath DataFile(FS.FolderPath dst, string name)
             => dst + FS.file(name, FS.Csv);
 
-        public FS.FilePath SourceFile(FS.FolderPath dst ,string name)
+        public FilePath SourceFile(FS.FolderPath dst ,string name)
             => dst + FS.file(name, FS.Cs);
 
-        public FS.FilePath DataFile(string name, string scope, CgTarget target)
+        public FilePath DataFile(string name, string scope, CgTarget target)
             => SourceRoot(target) + FS.folder(scope) + FS.file(name, FS.Csv);
 
-        public FS.FilePath DataFile(string name, string scope, IDbTargets dst)
+        public FilePath DataFile(string name, string scope, IDbTargets dst)
             => dst.Targets(scope).Path(FS.file(name, FS.Csv));
 
         public void EmitFile(string src, string name, IDbTargets dst)

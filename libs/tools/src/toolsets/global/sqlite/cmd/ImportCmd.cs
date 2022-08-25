@@ -13,12 +13,12 @@ namespace Z0
             {
                 const string CmdName=".import";
 
-                public FS.FilePath Source;
+                public FilePath Source;
 
                 public TableId Target;
 
                 [MethodImpl(Inline)]
-                public ImportCmd(FS.FilePath src, TableId dst)
+                public ImportCmd(FilePath src, TableId dst)
                 {
                     Source = src;
                     Target = dst;

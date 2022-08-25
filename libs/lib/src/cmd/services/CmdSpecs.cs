@@ -32,7 +32,7 @@ namespace Z0
             return true;
         }
 
-        public static ReadOnlySpan<CmdOption> options(FS.FilePath src)
+        public static ReadOnlySpan<CmdOption> options(FilePath src)
         {
             var dst = list<CmdOption>();
             using var reader = src.Utf8LineReader();

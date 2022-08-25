@@ -58,7 +58,7 @@ namespace Z0.llvm
             return result;
         }
 
-        public static Index<TestResult> logs(FS.FilePath src)
+        public static Index<TestResult> logs(FilePath src)
         {
             using var reader = src.Utf8LineReader();
             var entries = list<TestResult>();

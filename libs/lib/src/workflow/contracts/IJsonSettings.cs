@@ -9,7 +9,7 @@ namespace Z0
     /// </summary>
     public interface IJsonSettings : IEnumerable<ISetting>, ITextual
     {
-        FS.FilePath SourcePath {get;}
+        FilePath SourcePath {get;}
 
         Option<string> Setting(string name);
 

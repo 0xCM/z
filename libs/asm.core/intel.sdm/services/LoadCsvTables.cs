@@ -27,7 +27,7 @@ namespace Z0.Asm
         public ReadOnlySpan<Table> LoadCsvTables()
             => LoadCsvTables(SdmPaths.CsvSources().Files(FS.Csv).ToReadOnlySpan());
 
-        public ReadOnlySpan<Table> LoadCsvTables(ReadOnlySpan<FS.FilePath> src)
+        public ReadOnlySpan<Table> LoadCsvTables(ReadOnlySpan<FilePath> src)
         {
             var filecount = src.Length;
             var dst = list<Table>();
@@ -37,7 +37,7 @@ namespace Z0.Asm
             return dst.ViewDeposited();
         }
 
-        public ReadOnlySpan<Table> LoadCsvTables(FS.FilePath src)
+        public ReadOnlySpan<Table> LoadCsvTables(FilePath src)
         {
             var result = Outcome.Success;
             var foundtable = false;

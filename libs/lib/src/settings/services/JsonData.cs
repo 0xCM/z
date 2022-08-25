@@ -23,7 +23,7 @@ namespace Z0
             return adapter.Adapt(src);
         }
 
-        public static IJsonSettings settings(FS.FilePath src)
+        public static IJsonSettings settings(FilePath src)
             => JsonSettings.load(src);
 
         public static string format<S>(S src)
@@ -47,7 +47,7 @@ namespace Z0
             return dst.Emit();
         }
 
-        public static void Save(SettingLookup src, FS.FilePath dst)
+        public static void Save(SettingLookup src, FilePath dst)
         {
             const string indent = "    ";
 
@@ -98,7 +98,7 @@ namespace Z0
         public static JsonText serialize<T>(T src, bool indented = true)
             => JsonSerializer.Serialize(src, new JsonSerializerOptions{WriteIndented = indented});
 
-        public static void absorb(FS.FilePath src, Dictionary<string,string> dst)
+        public static void absorb(FilePath src, Dictionary<string,string> dst)
         {
             var settings = new Dictionary<string,string>();
             var ignore = new char[]{Chars.Quote, Chars.Comma};
@@ -118,7 +118,7 @@ namespace Z0
             }
         }
 
-        public static T materialize2<T>(FS.FilePath src)
+        public static T materialize2<T>(FilePath src)
             where T : struct
         {
             var kvp = new Dictionary<string,string>();
@@ -137,7 +137,7 @@ namespace Z0
         }
 
         [Op, Closures(Closure)]
-        public static JsonText serialize<T>(T src, FS.FilePath dst, bool indented = true)
+        public static JsonText serialize<T>(T src, FilePath dst, bool indented = true)
         {
             var data = serialize(src, indented);
             using var writer = dst.Writer();
@@ -153,7 +153,7 @@ namespace Z0
         }
 
         [Op, Closures(Closure)]
-        public static T materialize<T>(FS.FilePath src)
+        public static T materialize<T>(FilePath src)
         {
             using var reader = src.Utf8Reader();
             var data = reader.ReadToEnd();

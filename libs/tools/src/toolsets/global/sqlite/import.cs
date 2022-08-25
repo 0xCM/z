@@ -10,7 +10,7 @@ namespace Z0
     {
         partial class Sqlite
         {
-            public static SqlCmd import(FS.FilePath src)
+            public static SqlCmd import(FilePath src)
                 => string.Format(".import {0} {1}", src.Format(PathSeparator.FS), identifier(null, src.FileName));
 
             public static Index<SqlCmd> import(FS.Files src)

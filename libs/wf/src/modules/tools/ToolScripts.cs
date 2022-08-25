@@ -20,7 +20,7 @@ namespace Z0
         public void BuildCpp(IProjectWorkspace src, bool runexe = false)
             => RunBuildScripts(src, FileKind.Cpp, src.Script("build-cpp"), runexe);
 
-        public void RunBuildScripts(IProjectWorkspace project, FileKind kind, FS.FilePath script, bool runexe)
+        public void RunBuildScripts(IProjectWorkspace project, FileKind kind, FilePath script, bool runexe)
         {
             if(!script.Exists)
                 sys.@throw(AppMsg.NotFound.Format(script));
@@ -43,7 +43,7 @@ namespace Z0
             }
         }
 
-        Outcome RunToolScript(FS.FilePath src, CmdVars vars, bool quiet, out ReadOnlySpan<CmdFlow> flows)
+        Outcome RunToolScript(FilePath src, CmdVars vars, bool quiet, out ReadOnlySpan<CmdFlow> flows)
         {
             flows = default;
             var result = Outcome.Success;
@@ -86,7 +86,7 @@ namespace Z0
             Write(src, FlairKind.Error);
         }
 
-        Outcome RunProjectScript(IProjectWorkspace project, string srcid, FS.FilePath script, bool quiet, out ReadOnlySpan<CmdFlow> flows)
+        Outcome RunProjectScript(IProjectWorkspace project, string srcid, FilePath script, bool quiet, out ReadOnlySpan<CmdFlow> flows)
         {
             var result = Outcome.Success;
             var vars = WsCmdVars.create();
@@ -94,7 +94,7 @@ namespace Z0
             return RunToolScript(script, vars.ToCmdVars(), quiet, out flows);
         }
 
-        Outcome<Index<CmdFlow>> RunScript(IProjectWorkspace project, FS.FilePath script, string srcid)
+        Outcome<Index<CmdFlow>> RunScript(IProjectWorkspace project, FilePath script, string srcid)
         {
             var cmdflows = list<CmdFlow>();
             var result = RunProjectScript(project, srcid, script, true, out var flows);
@@ -109,7 +109,7 @@ namespace Z0
             return result;
         }
 
-        void RunBuildScript(IProjectWorkspace project, FileKind kind, FS.FilePath script, Action<CmdFlow> receiver)
+        void RunBuildScript(IProjectWorkspace project, FileKind kind, FilePath script, Action<CmdFlow> receiver)
         {
             var flows = list<CmdFlow>();
             var files = project.SourceFiles(kind, false);

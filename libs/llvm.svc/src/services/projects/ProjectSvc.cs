@@ -17,7 +17,7 @@ namespace Z0
 
         CoffServices Coff => Wf.CoffServices();
 
-        public FS.FilePath AsmSyntaxTable(ProjectId project)
+        public FilePath AsmSyntaxTable(ProjectId project)
             => EtlContext.table<AsmSyntaxRow>(project);
 
         public void BuildLlc(IProjectWorkspace project, LlvmSubtarget subtarget, bool runexe = false)

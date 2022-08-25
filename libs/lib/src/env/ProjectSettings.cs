@@ -12,7 +12,7 @@ namespace Z0
             get => ref _Default;
         }
 
-        static FS.FilePath path()
+        static FilePath path()
             => FS.path(ExecutingPart.Assembly.Location).FolderPath + FS.file("app.settings", FileKind.Csv);
 
         public static ProjectSettings load()

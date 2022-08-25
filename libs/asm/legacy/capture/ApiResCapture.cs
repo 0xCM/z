@@ -18,7 +18,7 @@ namespace Z0.Asm
             FormatConfig = AsmFormatConfig.@default(out var _);
         }
 
-        public void Emit(ReadOnlySpan<CapturedApiRes> src, FS.FilePath dst)
+        public void Emit(ReadOnlySpan<CapturedApiRes> src, FilePath dst)
         {
             const ulong Cut = 0x55005500550;
             const string Sep = RpOps.SpacePipe;

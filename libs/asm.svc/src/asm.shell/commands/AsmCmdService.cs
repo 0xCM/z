@@ -64,7 +64,7 @@ namespace Z0.Asm
         }
 
 
-        Outcome BuildAsmExe(string SrcId, FS.FilePath script)
+        Outcome BuildAsmExe(string SrcId, FilePath script)
         {
             const string ScriptId = "build-exe";
             var result = Outcome.Success;

@@ -34,11 +34,11 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public FS.FilePath CasePath(FS.FileName @case)
+        public FilePath CasePath(FS.FileName @case)
             => CaseDir + @case;
 
         [MethodImpl(Inline)]
-        public FS.FilePath CasePath(FileExt? ext = null, [CallerName] string caller = null)
+        public FilePath CasePath(FileExt? ext = null, [CallerName] string caller = null)
             => CasePath(FS.file(caller,  ext ?? DefaultExt));
 
         FileExt DefaultExt

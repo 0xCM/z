@@ -4,25 +4,25 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct FolderFiles : IIndex<FS.FilePath>
+    public readonly struct FolderFiles : IIndex<FilePath>
     {
         public readonly FS.FolderPath Location;
 
         public readonly FS.Files Files;
 
-        public FolderFiles(FS.FolderPath dir, FS.FilePath[] files)
+        public FolderFiles(FS.FolderPath dir, FilePath[] files)
         {
             Location = dir;
             Files = files;
         }
 
-        public Index<FS.FilePath> Data
+        public Index<FilePath> Data
         {
             [MethodImpl(Inline)]
             get => Files.Storage;
         }
 
-        public FS.FilePath[] Storage
+        public FilePath[] Storage
         {
             [MethodImpl(Inline)]
             get => Data.Storage;
@@ -52,13 +52,13 @@ namespace Z0
             get => Data.Count;
         }
 
-        public ref readonly FS.FilePath this[uint index]
+        public ref readonly FilePath this[uint index]
         {
             [MethodImpl(Inline)]
             get => ref Data[index];
         }
 
-        public ref readonly FS.FilePath this[int index]
+        public ref readonly FilePath this[int index]
         {
             [MethodImpl(Inline)]
             get => ref Data[index];
@@ -91,7 +91,7 @@ namespace Z0
             => src.Files;
 
         [MethodImpl(Inline)]
-        public static implicit operator FS.FilePath[](FolderFiles src)
+        public static implicit operator FilePath[](FolderFiles src)
             => src.Storage;
     }
 }

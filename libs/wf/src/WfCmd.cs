@@ -193,7 +193,7 @@ namespace Z0
             foreach(var arg in args)
             {
                 var file = FS.file(arg.Value,FileKind.Ps1);
-                var path = FS.FilePath.Empty;
+                var path = FilePath.Empty;
                 if(src.TryGetValue(file, out path))
                 {
                     CmdScripts.start(CmdScripts.create(path));

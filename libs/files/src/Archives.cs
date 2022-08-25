@@ -9,7 +9,7 @@ namespace Z0
     public sealed record class Archives : ApiSet<Archives>
     {
         [Api]
-        public static ExecToken zip(FS.FolderPath src, FS.FilePath dst, WfEmit channel)
+        public static ExecToken zip(FS.FolderPath src, FilePath dst, WfEmit channel)
         {
             var uri = $"app://archives/zip?src={src}?dst={dst.ToUri()}";
             var flow = channel.EmittingFile(dst);
@@ -30,7 +30,7 @@ namespace Z0
             => FS.file(string.Format("{0}.{1}", name, (Timestamp.now()).Format()),ext);
 
         [Op]
-        public static FS.FilePath timestamped(FS.FilePath src)
+        public static FilePath timestamped(FilePath src)
         {
             var name = src.FileName.WithoutExtension;
             var ext = src.Ext;

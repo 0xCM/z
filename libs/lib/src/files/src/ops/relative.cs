@@ -11,7 +11,7 @@ namespace Z0
             => new RelativePath(name);
 
         [Op]
-        public static RelativeFilePath relative(FS.FolderPath root, FS.FilePath src)
+        public static RelativeFilePath relative(FS.FolderPath root, FilePath src)
             => new RelativeFilePath(relative(Path.GetRelativePath(root.Format(), src.Format())));
     }
 }

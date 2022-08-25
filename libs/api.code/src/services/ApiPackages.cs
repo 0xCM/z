@@ -20,7 +20,7 @@ namespace Z0
         public FS.FolderPath ResPackDir()
             => Root + FS.folder("respack");
 
-        public FS.FilePath ResPackLib()
+        public FilePath ResPackLib()
             => ResPackDir() + FS.file("z0.respack", FS.Dll);
 
         [MethodImpl(Inline)]

@@ -12,7 +12,7 @@ namespace Z0.Asm
     {
         AsmDecoder Decoder => Service(Wf.AsmDecoder);
 
-        public AsmHostRoutines EmitHostRoutines(ApiHostUri host, ReadOnlySpan<MemberCodeBlock> src, FS.FilePath dst)
+        public AsmHostRoutines EmitHostRoutines(ApiHostUri host, ReadOnlySpan<MemberCodeBlock> src, FilePath dst)
         {
             var flow = Running(Msg.EmittingHostRoutines.Format(host));
             var decoded = Decoder.Decode(host, src);
@@ -21,7 +21,7 @@ namespace Z0.Asm
             return decoded;
         }
 
-        Count Emit(ApiHostUri uri, ReadOnlySpan<AsmMemberRoutine> src, FS.FilePath dst)
+        Count Emit(ApiHostUri uri, ReadOnlySpan<AsmMemberRoutine> src, FilePath dst)
         {
             var count = src.Length;
             if(count != 0)
@@ -107,10 +107,10 @@ namespace Z0.Asm
             var host = ApiHostUri.Empty;
             var counter = 0u;
             var tableWriter = default(StreamWriter);
-            var tablePath = FS.FilePath.Empty;
+            var tablePath = FilePath.Empty;
             var tableFlow = default(WfTableFlow<HostAsmRecord>);
             var asmWriter = default(StreamWriter);
-            var asmPath = FS.FilePath.Empty;
+            var asmPath = FilePath.Empty;
             var asmFlow = default(FileWritten);
             var buffer = text.buffer();
 
@@ -143,13 +143,13 @@ namespace Z0.Asm
                     EmittedFile(asmFlow, counter);
 
                     host = statement.OpUri.Host;
-                    tablePath = FS.FilePath.Empty;
+                    tablePath = FilePath.Empty;
 
                     tableWriter = tablePath.Writer();
                     tableWriter.WriteLine(formatter.FormatHeader());
                     tableFlow = EmittingTable<HostAsmRecord>(tablePath);
 
-                    asmPath =  FS.FilePath.Empty;
+                    asmPath =  FilePath.Empty;
                     asmWriter = asmPath.Writer();
                     asmFlow = EmittingFile(asmPath);
 
@@ -183,7 +183,7 @@ namespace Z0.Asm
 
         void EmitHostAsmDoc(ApiHostUri host, ReadOnlySpan<HostAsmRecord> src)
         {
-            var dst = FS.FilePath.Empty;
+            var dst = FilePath.Empty;
             var flow = EmittingFile(dst);
             var count = src.Length;
             using var asmwriter = dst.Writer();
@@ -202,7 +202,7 @@ namespace Z0.Asm
 
         void EmitHostAsmRecords(ApiHostUri host, ReadOnlySpan<HostAsmRecord> src)
         {
-            var dst = FS.FilePath.Empty;
+            var dst = FilePath.Empty;
             var flow = EmittingTable<HostAsmRecord>(dst);
             EmittedTable(flow, Tables.emit(src, HostAsmRecord.RenderWidths, dst));
         }
@@ -219,11 +219,11 @@ namespace Z0.Asm
             }
         }
 
-        FS.FilePath AsmSrcPath(ApiHostUri host, FS.FolderPath root)
-            => FS.FilePath.Empty;
+        FilePath AsmSrcPath(ApiHostUri host, FS.FolderPath root)
+            => FilePath.Empty;
 
-        FS.FilePath AsmTablePath(ApiHostUri host, FS.FolderPath root)
-            => FS.FilePath.Empty;
+        FilePath AsmTablePath(ApiHostUri host, FS.FolderPath root)
+            => FilePath.Empty;
 
         uint BuildHostAsm(in ApiHostBlocks src, List<HostAsmRecord> dst)
         {

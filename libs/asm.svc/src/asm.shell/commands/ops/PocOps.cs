@@ -43,12 +43,12 @@ namespace Z0.Asm
         {
             var result = Outcome.Success;
             var id = arg(args,0).Value;
-            var script = FS.FilePath.Empty;
+            var script = FilePath.Empty;
             result = BuildAsmExe(id,script);
             if(result.Fail)
                 return result;
             //var exe = AsmWs.ExePath(id);
-            var exe = FS.FilePath.Empty;
+            var exe = FilePath.Empty;
             var clock = Time.counter(true);
             var process = Process.Start(exe.Format());
             process.WaitForExit();
@@ -480,7 +480,7 @@ namespace Z0.Asm
             var srcPath = dir + file;
             var buffer = text.buffer();
 
-            var dstPath = FS.FilePath.Empty;
+            var dstPath = FilePath.Empty;
             using var writer = dstPath.Writer();
 
             const string Pattern = "{0}/{1}:{2}";

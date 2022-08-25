@@ -39,7 +39,7 @@ namespace Z0
             }
         }
 
-        public uint Load(FS.FilePath src, List<ApiExtractBlock> dst)
+        public uint Load(FilePath src, List<ApiExtractBlock> dst)
         {
             var lines = src.ReadLines().View;
             var count = lines.Length;

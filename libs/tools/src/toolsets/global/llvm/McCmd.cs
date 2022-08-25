@@ -9,7 +9,7 @@ namespace Z0
     partial class XTend
     {
         [MethodImpl(Inline)]
-        public static McCmd Command(this LlvmMc tool, FS.FilePath src, FS.FilePath dst)
+        public static McCmd Command(this LlvmMc tool, FilePath src, FilePath dst)
         {
             var cmd = new McCmd();
             cmd.Source = src;
@@ -27,10 +27,10 @@ namespace Z0
         }
 
         [CmdArg("<src>")]
-        public FS.FilePath Source = FS.FilePath.Empty;
+        public FilePath Source = FilePath.Empty;
 
         [CmdArg("-o {0}")]
-        public FS.FilePath Target = FS.FilePath.Empty;
+        public FilePath Target = FilePath.Empty;
 
         [CmdFlag("--assemble")]
         public bit Assemble = 0;
@@ -80,10 +80,10 @@ namespace Z0
         public LlvmMc Tool
             => Tools.llvm_mc;
 
-        FS.FilePath IFlowCmd<FS.FilePath, FS.FilePath>.Source
+        FilePath IFlowCmd<FilePath, FilePath>.Source
             => Source;
 
-        FS.FilePath IFlowCmd<FS.FilePath, FS.FilePath>.Target
+        FilePath IFlowCmd<FilePath, FilePath>.Target
             => Target;
         public static McCmd Empty => default;
     }

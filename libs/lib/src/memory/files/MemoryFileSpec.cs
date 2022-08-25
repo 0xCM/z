@@ -16,7 +16,7 @@ namespace Z0
     public record struct MemoryFileSpec
     {
         [MethodImpl(Inline)]
-        public static MemoryFileSpec init(FS.FilePath src)
+        public static MemoryFileSpec init(FilePath src)
         {
             var dst = new MemoryFileSpec();
             dst.Path = src;
@@ -32,7 +32,7 @@ namespace Z0
         /// <summary>
         /// The file location
         /// </summary>
-        public FS.FilePath Path = FS.FilePath.Empty;
+        public FilePath Path = FilePath.Empty;
 
         /// <summary>
         /// If specified, the name to expose for cross-process access; if unspecified access is only available within the creating process

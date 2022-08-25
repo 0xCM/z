@@ -13,12 +13,12 @@ namespace Z0
 
         public EventId EventId {get;}
 
-        public FS.FilePath Target {get;}
+        public FilePath Target {get;}
 
         public FlairKind Flair => FlairKind.Running;
 
         [MethodImpl(Inline)]
-        public EmittingFileEvent(Type host, FS.FilePath dst)
+        public EmittingFileEvent(Type host, FilePath dst)
         {
             EventId = EventId.define(host, Kind);
             Target = dst;

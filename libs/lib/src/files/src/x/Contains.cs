@@ -15,7 +15,7 @@ namespace Z0
         /// <param name="match">The substring to match</param>
         /// <param name="lineNumber">The line number of the first match, if found</param>
         [Op]
-        public static bool Contains(this FS.FilePath file, string match, out uint lineNumber)
+        public static bool Contains(this FilePath file, string match, out uint lineNumber)
         {
             lineNumber = 0u;
             using var reader = file.Utf8Reader();
@@ -36,7 +36,7 @@ namespace Z0
         /// <param name="predicate">The adjudicating predicate</param>
         /// <param name="lineNumber">The line number of the first match, if found</param>
         [Op]
-        public static bool Contains(this FS.FilePath file, Func<string,bool> predicate, out uint lineNumber)
+        public static bool Contains(this FilePath file, Func<string,bool> predicate, out uint lineNumber)
         {
             lineNumber = 0u;
             using var reader = file.Utf8Reader();

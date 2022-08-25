@@ -25,7 +25,7 @@ namespace Z0
 
         const string Tool = "cult";
 
-        //FS.FilePath SummaryPath;
+        //FilePath SummaryPath;
 
         // public CultProcessor()
         // {
@@ -62,7 +62,7 @@ namespace Z0
             }
         }
 
-        void RunEtl(FS.FilePath src)
+        void RunEtl(FilePath src)
         {            
             var targets = AppDb.AsmDb().Targets(Tool);
             AsmLines = new();
@@ -109,7 +109,7 @@ namespace Z0
             return j;
         }
 
-        void EmitSummary(FS.FilePath dst)
+        void EmitSummary(FilePath dst)
             => TableEmit(Summaries.ViewDeposited(), dst);
 
         void Process(uint batch, uint counter, ReadOnlySpan<TextLine> input, Span<CultRecord> output)

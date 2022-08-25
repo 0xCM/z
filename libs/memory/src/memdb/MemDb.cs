@@ -44,7 +44,7 @@ namespace Z0
             get => DbMap.FileSize;
         }
 
-        public MemDb(FS.FilePath path)
+        public MemDb(FilePath path)
         {
             var spec = MemoryFileSpec.init(path.CreateParentIfMissing());
             spec.EnableAccessReadWrite();
@@ -54,7 +54,7 @@ namespace Z0
             Description = DbMap.Description;
         }
 
-        public MemDb(FS.FilePath path, ByteSize size)
+        public MemDb(FilePath path, ByteSize size)
         {
             var spec = MemoryFileSpec.init(path.CreateParentIfMissing());
             spec.Capacity = size;
@@ -100,7 +100,7 @@ namespace Z0
         public static Index<MemoryFileInfo> Allocated()
             => Opened.Values.Map(x => x.Description);
 
-        static readonly ConcurrentDictionary<FS.FilePath,MemDb> Opened = new();
+        static readonly ConcurrentDictionary<FilePath,MemDb> Opened = new();
 
         const byte ObjTypeCount = 24;
 

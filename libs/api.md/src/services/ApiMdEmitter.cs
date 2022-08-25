@@ -172,7 +172,7 @@ namespace Z0
             FileEmit(dst.Emit(), src.Length, path);
         }
 
-        void EmitApiDeps(Assembly src, FS.FilePath dst)
+        void EmitApiDeps(Assembly src, FilePath dst)
         {
             var deps = JsonDeps.load(src);
             var buffer = list<string>();

@@ -34,7 +34,7 @@ namespace Z0
 
         public FlairKind Flair => FlairKind.Babble;
 
-        public FileChangeEvent(FS.FilePath path, FileChangeKind kind)
+        public FileChangeEvent(FilePath path, FileChangeKind kind)
         {
             ChangeKind = kind;
             EventId = $"File{kind}";

@@ -12,10 +12,10 @@ namespace Z0
 
             public readonly int Revision;
 
-            public readonly FS.FilePath Path;
+            public readonly FilePath Path;
 
             [MethodImpl(Inline)]
-            public PdbInfo(Guid id, int rev, FS.FilePath path)
+            public PdbInfo(Guid id, int rev, FilePath path)
             {
                 Id = id;
                 Revision = rev;
@@ -31,7 +31,7 @@ namespace Z0
             public static PdbInfo Empty
             {
                 [MethodImpl(Inline)]
-                get => new PdbInfo(Guid.Empty, 0, FS.FilePath.Empty);
+                get => new PdbInfo(Guid.Empty, 0, FilePath.Empty);
             }
 
             public string Format()

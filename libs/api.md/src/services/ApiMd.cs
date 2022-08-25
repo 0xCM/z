@@ -52,7 +52,7 @@ namespace Z0
         public new ApiMdEmitter Emitter()
             => ApiMdEmitter.create(Wf, this);
 
-        public Index<SymLiteralRow> LoadSymLits(FS.FilePath src)
+        public Index<SymLiteralRow> LoadSymLits(FilePath src)
         {
             using var reader = src.TableReader<SymLiteralRow>(Symbolic.parse);
             var header = reader.Header.Split(Chars.Tab);
@@ -136,7 +136,7 @@ namespace Z0
             return dst.ToArray();
         }
 
-        internal void EmitEnums(ReadOnlySpan<ClrEnumRecord> src, FS.FilePath dst)
+        internal void EmitEnums(ReadOnlySpan<ClrEnumRecord> src, FilePath dst)
             => TableEmit(src,dst);
 
         internal static uint CountFields(Index<Type> tables)

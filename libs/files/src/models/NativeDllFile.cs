@@ -11,13 +11,13 @@ namespace Z0
     /// </summary>
     public readonly struct NativeDllFile : IFileModule<NativeDllFile>
     {
-        public FS.FilePath Path {get;}
+        public FilePath Path {get;}
 
         public FileModuleKind ModuleKind
             => FileModuleKind.NativeDll;
 
         [MethodImpl(Inline)]
-        public NativeDllFile(FS.FilePath path)
+        public NativeDllFile(FilePath path)
             => Path = path;
 
         public FS.FileName FileName

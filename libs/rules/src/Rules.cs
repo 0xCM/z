@@ -28,7 +28,7 @@ namespace Z0
             return matched;
         }
 
-        public static void emit(ReadOnlySpan<IProduction> src, FS.FilePath dst)
+        public static void emit(ReadOnlySpan<IProduction> src, FilePath dst)
         {
             var count = src.Length;
             using var writer = dst.Utf8Writer();
@@ -36,7 +36,7 @@ namespace Z0
                 writer.WriteLine(skip(src,i).Format());
         }
 
-        public static TextReplace replace(FS.FilePath src)
+        public static TextReplace replace(FilePath src)
         {
             const string Sep = " -> ";
             var dst = dict<string,string>();
@@ -71,7 +71,7 @@ namespace Z0
             return buffer;
         }
 
-        public static TextMap textmap(FS.FilePath src)
+        public static TextMap textmap(FilePath src)
         {
             const string Sep = " -> ";
             var dst = dict<string,string>();

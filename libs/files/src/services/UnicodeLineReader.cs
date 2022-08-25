@@ -9,7 +9,7 @@ namespace Z0
     partial class XTend
     {
         [Op]
-        public static UnicodeLineReader UnicodeLineReader(this FS.FilePath src)
+        public static UnicodeLineReader UnicodeLineReader(this FilePath src)
             => new UnicodeLineReader(src.UnicodeReader());
     }
 

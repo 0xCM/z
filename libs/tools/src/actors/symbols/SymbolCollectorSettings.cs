@@ -43,7 +43,7 @@ namespace Z0
         public Uri InternalServer;
 
         [CmdArg("--server-path")]
-        public FS.FilePath ServerPath;
+        public FilePath ServerPath;
 
         [CmdArg("--output")]
         public FS.FolderPath Target;
@@ -52,6 +52,6 @@ namespace Z0
         public TimeSpan? Timeout;
                 
         [CmdArg("--cache-directory")]
-        public FS.FilePath Cache;        
+        public FilePath Cache;        
     }
 }

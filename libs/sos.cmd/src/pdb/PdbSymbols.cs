@@ -13,7 +13,7 @@ namespace Z0
         public static PdbReader reader(PdbSymbolSource src)
             => PdbReader.create(src);
 
-        public static PdbReader reader(FS.FilePath pe, FS.FilePath pdb)
+        public static PdbReader reader(FilePath pe, FilePath pdb)
         {
             if(!pe.Exists)
                 Throw.sourced(FS.Msg.DoesNotExist.Format(pe));
@@ -40,7 +40,7 @@ namespace Z0
         /// <param name="pe">The pe file path</param>
         /// <param name="pdb">The pdb file path</param>
         [Op]
-        public static PdbSymbolSource source(FS.FilePath pe, FS.FilePath pdb)
+        public static PdbSymbolSource source(FilePath pe, FilePath pdb)
             => new PdbSymbolSource(pe, pdb);
 
         /// <summary>
@@ -48,13 +48,13 @@ namespace Z0
         /// </summary>
         /// <param name="pe">The pe file path</param>
         [Op]
-        public static PdbSymbolSource source(FS.FilePath pe)
+        public static PdbSymbolSource source(FilePath pe)
             => new PdbSymbolSource(pe, pe.ChangeExtension(FS.Pdb));
 
         public static DirectorySymbolStore store(FS.FolderPath src, WfEmit channel)
             => new DirectorySymbolStore(tracer(channel), null, src.Name);
 
-        public static SymbolStoreFile file(FS.FilePath src)
+        public static SymbolStoreFile file(FilePath src)
             => new SymbolStoreFile(src.Stream(), src.FileName.Name);
 
         public static KeyGenerator keygen(SymbolStoreFile src, WfEmit channel)

@@ -18,12 +18,12 @@ namespace Z0
 
         public ReadOnlySeq<ProcessPartition> Partitions;
 
-        public FS.FilePath PartitionPath;
+        public FilePath PartitionPath;
 
         public ReadOnlySeq<ProcessMemoryRegion> Regions;
 
-        public FS.FilePath RegionPath;
+        public FilePath RegionPath;
 
-        public FS.FilePath DumpPath;
+        public FilePath DumpPath;
     }
 }

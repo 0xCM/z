@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IFileMapper<T> : IMapper<FS.FilePath,T>
+    public interface IFileMapper<T> : IMapper<FilePath,T>
     {
         
     }

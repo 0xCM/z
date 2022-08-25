@@ -10,10 +10,10 @@ namespace Z0
     public struct LlcCmd : IToolFlowCmd<LlcCmd,Llc>
     {
         [CmdArg("<src>")]
-        public FS.FilePath Source;
+        public FilePath Source;
 
         [CmdArg("-o {0}")]
-        public FS.FilePath Target;
+        public FilePath Target;
 
         [CmdArg("--filetype={0}")]
         public string FileType;
@@ -45,10 +45,10 @@ namespace Z0
         public Llc Tool
             => Tools.llc;
 
-        FS.FilePath IFlowCmd<FS.FilePath, FS.FilePath>.Source
+        FilePath IFlowCmd<FilePath, FilePath>.Source
             => Source;
 
-        FS.FilePath IFlowCmd<FS.FilePath, FS.FilePath>.Target
+        FilePath IFlowCmd<FilePath, FilePath>.Target
             => Target;
     }
 }

@@ -15,7 +15,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">The path to the file</param>
         [Op]
-        public static FS.FilePath Delete(this FS.FilePath src)
+        public static FilePath Delete(this FilePath src)
             => FS.delete(src);
 
         /// <summary>

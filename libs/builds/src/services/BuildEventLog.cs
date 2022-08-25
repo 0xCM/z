@@ -9,7 +9,7 @@ namespace Z0
 
     public class BuildEventLog : Logger
     {
-        FS.FilePath LogPath;
+        FilePath LogPath;
 
         public override void Initialize(IEventSource src)
         {

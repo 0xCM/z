@@ -11,7 +11,7 @@ namespace Z0
 
         static AppDb AppDb => AppDb.Service;
 
-        public static CmdLine create(FS.FilePath src)
+        public static CmdLine create(FilePath src)
         {
             if(src.Is(FileKind.Cmd))
                 return cmd(src);
@@ -25,10 +25,10 @@ namespace Z0
         public static CmdScript create(Name name, CmdScriptExpr src)
             => new CmdScript(name, src);
 
-        public static CmdLine pwsh(FS.FilePath src)
+        public static CmdLine pwsh(FilePath src)
             => string.Format("pwsh.exe {0}", src.Format(PathSeparator.BS));
 
-        public static CmdLine cmd(FS.FilePath src)
+        public static CmdLine cmd(FilePath src)
             => string.Format("cmd.exe /c {0}", src.Format(PathSeparator.BS));
 
         [MethodImpl(Inline), Op]

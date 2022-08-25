@@ -9,7 +9,7 @@ namespace Z0
 
     partial class ApiCode
     {
-        public static Index<ApiCatalogEntry> catalog(FS.FilePath src, WfEmit channel)
+        public static Index<ApiCatalogEntry> catalog(FilePath src, WfEmit channel)
         {
             var rows = list<ApiCatalogEntry>();
             using var reader = src.Utf8Reader();

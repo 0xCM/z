@@ -72,7 +72,7 @@ namespace Z0
             return dst;
         }
 
-        static Outcome parse(FS.FilePath src, out Seq<EncodedMember> dst)
+        static Outcome parse(FilePath src, out Seq<EncodedMember> dst)
         {
             var result = Outcome.Success;
             var lines = src.ReadLines(true);

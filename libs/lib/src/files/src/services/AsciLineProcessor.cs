@@ -47,7 +47,7 @@ namespace Z0
             return true;
         }
 
-        Outcome TransformData<T>(ReadOnlySpan<byte> src, Func<MemoryAddress,uint,T> f, FS.FilePath dst)
+        Outcome TransformData<T>(ReadOnlySpan<byte> src, Func<MemoryAddress,uint,T> f, FilePath dst)
         {
             var lines = LineCount(src);
             var size = (ByteSize)src.Length;

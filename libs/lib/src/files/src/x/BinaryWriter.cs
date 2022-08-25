@@ -10,7 +10,7 @@ namespace Z0
 
     partial class XTend
     {
-        public static BinaryWriter BinaryWriter(this FS.FilePath dst)
+        public static BinaryWriter BinaryWriter(this FilePath dst)
             => new BinaryWriter(File.Open(dst.EnsureParentExists().Name, FileMode.Create), Encoding.ASCII);
     }
 }

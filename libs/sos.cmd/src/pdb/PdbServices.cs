@@ -13,13 +13,13 @@ namespace Z0
     {
         PdbIndexBuilder PdbIndexBuilder => Wf.PdbIndexBuilder();
 
-        public FS.FilePath IndexAssemblies()
+        public FilePath IndexAssemblies()
             => IndexAssemblies(DbArchives.parts());
 
-        public FS.FilePath IndexAssemblies(Assembly[] src)
+        public FilePath IndexAssemblies(Assembly[] src)
             => PdbIndexBuilder.IndexComponents(src, new PdbIndex());
 
-        public void IndexSymbols(ReadOnlySpan<ResolvedPart> src, FS.FilePath dst)
+        public void IndexSymbols(ReadOnlySpan<ResolvedPart> src, FilePath dst)
         {
             var count = src.Length;
             var emitting = EmittingFile(dst);
@@ -59,7 +59,7 @@ namespace Z0
             return counter;
         }
 
-        public FS.FilePath EmitPdbInfo(Assembly src)
+        public FilePath EmitPdbInfo(Assembly src)
         {
             var _name = src.GetSimpleName();
             var module = src.ManifestModule;
@@ -79,7 +79,7 @@ namespace Z0
                 ref readonly var pdbMethod = ref skip(pdbMethods,i);
                 var info = pdbMethod.Describe();
                 var docview = info.Documents.View;
-                var doc = docview.Length >=1 ? first(docview).Path : FS.FilePath.Empty;
+                var doc = docview.Length >=1 ? first(docview).Path : FilePath.Empty;
                 var token = info.Token;
                 var mb = Clr.method(module,token);
                 var sig = mb is MethodInfo method ? method.DisplaySig().Format() : EmptyString;
@@ -92,7 +92,7 @@ namespace Z0
         }
 
 
-        public PdbSymbolSource SymbolSource(FS.FilePath module)
+        public PdbSymbolSource SymbolSource(FilePath module)
             => PdbSymbols.source(module);
 
         public static unsafe Outcome srclink(ISymUnmanagedReader5 src, out Span<byte> dst)

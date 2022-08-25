@@ -102,7 +102,7 @@ namespace Z0
         public ExecToken Ran<T,D>(WfExecFlow<T> src, D data, FlairKind flair = FlairKind.Ran)
             => Wf.Ran(src, data, flair);
 
-        public FileWritten EmittingFile(FS.FilePath dst)
+        public FileWritten EmittingFile(FilePath dst)
             => Wf.EmittingFile(Host, dst);
 
         public ExecToken EmittedFile(FileWritten flow, Count count)
@@ -123,15 +123,15 @@ namespace Z0
         public ExecToken EmittedBytes(FileWritten flow, ByteSize size)
             => EmittedFile(flow, AppMsg.EmittedBytes.Capture(size, flow.Target));
 
-        public WfTableFlow<T> EmittingTable<T>(FS.FilePath dst)
+        public WfTableFlow<T> EmittingTable<T>(FilePath dst)
             where T : struct
                 => Wf.EmittingTable<T>(Host, dst);
 
-        public ExecToken EmittedTable<T>(WfTableFlow<T> flow, Count count, FS.FilePath? dst = null)
+        public ExecToken EmittedTable<T>(WfTableFlow<T> flow, Count count, FilePath? dst = null)
             where T : struct
                 => Wf.EmittedTable(Host, flow,count, dst);
 
-        public ExecToken TableEmit<T>(ReadOnlySpan<T> rows, FS.FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci, 
+        public ExecToken TableEmit<T>(ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci, 
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
                 where T : struct
         {
@@ -140,27 +140,27 @@ namespace Z0
             return EmittedTable(emitting, rows.Length);
         }
 
-        public ExecToken TableEmit<T>(Index<T> rows, FS.FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci, 
+        public ExecToken TableEmit<T>(Index<T> rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci, 
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
                 where T : struct
                     => TableEmit(rows.View, dst, encoding, rowpad, fk);
 
-        public ExecToken TableEmit<T>(T[] rows, FS.FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci, 
+        public ExecToken TableEmit<T>(T[] rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci, 
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
                 where T : struct
                     => TableEmit(@readonly(rows), dst, encoding, rowpad, fk);
 
-        public ExecToken TableEmit<T>(ReadOnlySeq<T> src, FS.FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci, 
+        public ExecToken TableEmit<T>(ReadOnlySeq<T> src, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci, 
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
                 where T : struct
                     => TableEmit(src.View, dst, encoding, rowpad, fk);
 
-        public ExecToken TableEmit<T>(Seq<T> src, FS.FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci, 
+        public ExecToken TableEmit<T>(Seq<T> src, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci, 
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
                 where T : struct
                     => TableEmit(src.View, dst, encoding, rowpad, fk);
 
-         public ExecToken TableEmit<T>(ReadOnlySpan<T> rows, FS.FilePath dst, TextEncodingKind encoding)
+         public ExecToken TableEmit<T>(ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding)
             where T : struct
         {
             var emitting = EmittingTable<T>(dst);
@@ -172,7 +172,7 @@ namespace Z0
             return EmittedTable(emitting, rows.Length, dst);
         }
 
-        public ExecToken TableEmit<T>(ReadOnlySpan<T> src, ReadOnlySpan<byte> widths, TextEncodingKind encoding, FS.FilePath dst)
+        public ExecToken TableEmit<T>(ReadOnlySpan<T> src, ReadOnlySpan<byte> widths, TextEncodingKind encoding, FilePath dst)
             where T : struct
         {
             var flow = Wf.EmittingTable<T>(Host, dst);
@@ -181,7 +181,7 @@ namespace Z0
             return Wf.EmittedTable(Host, flow,count);
         }
 
-        public ExecToken FileEmit<T>(T src, Count count, FS.FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)
+        public ExecToken FileEmit<T>(T src, Count count, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)
         {
             var emitting = EmittingFile(dst);
             using var emitter = dst.Writer(encoding);
@@ -189,7 +189,7 @@ namespace Z0
             return EmittedFile(emitting, count);
         }
 
-        public ExecToken FileEmit<T>(T src, FS.FilePath dst, ByteSize size, TextEncodingKind encoding = TextEncodingKind.Asci)
+        public ExecToken FileEmit<T>(T src, FilePath dst, ByteSize size, TextEncodingKind encoding = TextEncodingKind.Asci)
         {
             var emitting = EmittingFile(dst);
             using var emitter = dst.Writer(encoding);
@@ -197,7 +197,7 @@ namespace Z0
             return EmittedFile(emitting, size);
         }
 
-        public ExecToken FileEmit<T>(T src, FS.FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)
+        public ExecToken FileEmit<T>(T src, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)
         {
             var emitting = EmittingFile(dst);
             using var emitter = dst.Writer(encoding);
@@ -205,7 +205,7 @@ namespace Z0
             return EmittedFile(emitting, 0);
         }
 
-        public ExecToken FileEmit<T>(T src, string msg, FS.FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)
+        public ExecToken FileEmit<T>(T src, string msg, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)
         {
             var emitting = EmittingFile(dst);
             Write(string.Format("{0,-12} | {1}", "Emitting", dst.ToUri()), FlairKind.Running);
@@ -216,7 +216,7 @@ namespace Z0
             return EmittedFile(emitting, 0);
         }
 
-        public ExecToken FileEmit<T>(ReadOnlySpan<T> lines, FS.FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)
+        public ExecToken FileEmit<T>(ReadOnlySpan<T> lines, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)
         {
             var emitting = EmittingFile(dst);
             using var writer = dst.Writer(encoding);
@@ -226,7 +226,7 @@ namespace Z0
             return EmittedFile(emitting, count);
         }
 
-        public ExecToken FileEmit(string src, Count count, FS.FilePath dst, TextEncodingKind encoding = TextEncodingKind.Utf8)
+        public ExecToken FileEmit(string src, Count count, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Utf8)
         {
             var emitting = EmittingFile(dst);
             using var writer = dst.Writer(encoding);

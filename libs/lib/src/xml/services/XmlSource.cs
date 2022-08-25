@@ -22,11 +22,11 @@ namespace Z0
 
         bool TriggerCompletion;
 
-        public static XmlSource create(FS.FilePath src)
+        public static XmlSource create(FilePath src)
             => new XmlSource(src);
 
         [MethodImpl(Inline)]
-        public XmlSource(FS.FilePath path)
+        public XmlSource(FilePath path)
         {
             Source = path.Utf8Reader();
             var settings = new SysXml.XmlReaderSettings();

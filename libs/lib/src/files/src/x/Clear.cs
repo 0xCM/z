@@ -7,7 +7,7 @@ namespace Z0
     partial class XTend
     {
         [Op]
-        public static FS.FilePath PartPath(this IPart part)
+        public static FilePath PartPath(this IPart part)
             => FS.path(part.Owner.Location);
 
         [Op]
@@ -18,12 +18,12 @@ namespace Z0
         }
 
         [Op]
-        public static List<FS.FilePath> Clear(this FS.FolderPath src, List<FS.FilePath> dst, bool recurse = false)
+        public static List<FilePath> Clear(this FS.FolderPath src, List<FilePath> dst, bool recurse = false)
             => FS.clear(src, dst, recurse);
 
-        public static FS.FilePath CopyTo(this FS.FilePath src, FS.FilePath dst, bool overwrite = true)
+        public static FilePath CopyTo(this FilePath src, FilePath dst, bool overwrite = true)
         {
-            var result = FS.FilePath.Empty;
+            var result = FilePath.Empty;
             if(src.Exists)
             {
                 File.Copy(src.Name, dst.CreateParentIfMissing().Name, overwrite);
@@ -33,7 +33,7 @@ namespace Z0
         }
 
         [Op]
-        public static FS.FilePath CopyTo(this FS.FilePath src, FS.FolderPath dst, bool overwrite = true)
+        public static FilePath CopyTo(this FilePath src, FS.FolderPath dst, bool overwrite = true)
         {
             if(src.Exists)
             {
@@ -43,7 +43,7 @@ namespace Z0
                 return path;
             }
             else
-                return FS.FilePath.Empty;
+                return FilePath.Empty;
         }
 
         [Op]

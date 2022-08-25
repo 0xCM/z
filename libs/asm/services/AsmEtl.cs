@@ -9,7 +9,7 @@ namespace Z0.Asm
     [ApiHost]
     public class AsmEtl : AppService<AsmEtl>
     {
-        public static ReadOnlySpan<TextLine> emit(SortedSpan<AsmThumbprint> src, FS.FilePath dst)
+        public static ReadOnlySpan<TextLine> emit(SortedSpan<AsmThumbprint> src, FilePath dst)
         {
             var count = src.Length;
             var lines = span<TextLine>(count);
@@ -23,7 +23,7 @@ namespace Z0.Asm
             return lines;
         }
 
-        public SortedSpan<AsmThumbprint> EmitThumbprints(ReadOnlySpan<HostAsmRecord> src, FS.FilePath dst)
+        public SortedSpan<AsmThumbprint> EmitThumbprints(ReadOnlySpan<HostAsmRecord> src, FilePath dst)
         {
             var distinct = AsmThumbprint.distinct(src);
             emit(distinct, dst);
@@ -31,7 +31,7 @@ namespace Z0.Asm
         }
 
         [Op]
-        public Outcome EmitThumbprints(Index<AsmThumbprint> src, FS.FilePath dst)
+        public Outcome EmitThumbprints(Index<AsmThumbprint> src, FilePath dst)
         {
             var count = src.Length;
             src.Sort();

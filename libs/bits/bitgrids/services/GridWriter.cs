@@ -16,7 +16,7 @@ namespace Z0
             Save(segwidth,kMinSegs,mkMaxSgs, dstpath);
         }
 
-        public void Save(int segwidth, int kMinSegs, int mkMaxSgs, FS.FilePath path)
+        public void Save(int segwidth, int kMinSegs, int mkMaxSgs, FilePath path)
         {
             using var writer = path.Writer();
             var buffer = text.buffer();

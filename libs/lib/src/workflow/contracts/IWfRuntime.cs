@@ -92,11 +92,11 @@ namespace Z0
         WfExecFlow<T> Flow<T>(T data)
             => new WfExecFlow<T>(this, data, NextExecToken());
 
-        WfTableFlow<T> TableFlow<T>(FS.FilePath dst)
+        WfTableFlow<T> TableFlow<T>(FilePath dst)
             where T : struct
                 => new WfTableFlow<T>(this, dst, NextExecToken());
 
-        FileWritten Flow(FS.FilePath dst)
+        FileWritten Flow(FilePath dst)
             => new FileWritten(this, dst, NextExecToken());
 
         EventId Raise<E>(in E e)
@@ -154,21 +154,21 @@ namespace Z0
             return Completed(flow);
         }
 
-        WfTableFlow<T> EmittingTable<T>(FS.FilePath dst)
+        WfTableFlow<T> EmittingTable<T>(FilePath dst)
             where T : struct
         {
             signal(this).EmittingTable<T>(dst);
             return Emissions.LogEmission(TableFlow<T>(dst));
         }
 
-        WfTableFlow<T> EmittingTable<T>(WfHost host, FS.FilePath dst)
+        WfTableFlow<T> EmittingTable<T>(WfHost host, FilePath dst)
             where T : struct
         {
             signal(this, host).EmittingTable<T>(dst);
             return Emissions.LogEmission(TableFlow<T>(dst));
         }
 
-        ExecToken EmittedTable<T>(WfTableFlow<T> flow, Count count, FS.FilePath? dst = null)
+        ExecToken EmittedTable<T>(WfTableFlow<T> flow, Count count, FilePath? dst = null)
             where T : struct
         {
             var completed = Completed(flow);
@@ -178,7 +178,7 @@ namespace Z0
             return completed;
         }
 
-        ExecToken EmittedTable<T>(WfHost host, WfTableFlow<T> flow, Count count, FS.FilePath? dst = null)
+        ExecToken EmittedTable<T>(WfHost host, WfTableFlow<T> flow, Count count, FilePath? dst = null)
             where T : struct
         {
             var completed = Completed(flow);
@@ -188,13 +188,13 @@ namespace Z0
             return completed;
         }
 
-        FileWritten EmittingFile(FS.FilePath dst)
+        FileWritten EmittingFile(FilePath dst)
         {
             signal(this).EmittingFile(dst);
             return Emissions.LogEmission(Flow(dst));
         }
 
-        FileWritten EmittingFile(WfHost host, FS.FilePath dst)
+        FileWritten EmittingFile(WfHost host, FilePath dst)
         {
             signal(this, host).EmittingFile(dst);
             return Emissions.LogEmission(Flow(dst));

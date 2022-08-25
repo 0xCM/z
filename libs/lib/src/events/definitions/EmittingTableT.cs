@@ -14,7 +14,7 @@ namespace Z0
 
         public EventId EventId {get;}
 
-        public FS.FilePath Target {get;}
+        public FilePath Target {get;}
 
         public readonly string HostName;
 
@@ -23,7 +23,7 @@ namespace Z0
         public TableId Table => TableId.identify<T>();
 
         [MethodImpl(Inline)]
-        public EmittingTableEvent(Type host, FS.FilePath dst)
+        public EmittingTableEvent(Type host, FilePath dst)
         {
             HostName = host.DisplayName();
             EventId = EventId.define(host, Kind);

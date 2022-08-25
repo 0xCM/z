@@ -8,10 +8,10 @@ namespace Z0
     {
         public readonly ToolIdOld Id;
 
-        public readonly FS.FilePath Path;
+        public readonly FilePath Path;
 
         [MethodImpl(Inline)]
-        public ToolDeployment(ToolIdOld id, FS.FilePath path)
+        public ToolDeployment(ToolIdOld id, FilePath path)
         {
             Id = id;
             Path = path;
@@ -24,7 +24,7 @@ namespace Z0
             => Format();
 
         [MethodImpl(Inline)]
-        public static implicit operator ToolDeployment((ToolIdOld id, FS.FilePath path) src)
+        public static implicit operator ToolDeployment((ToolIdOld id, FilePath path) src)
             => new ToolDeployment(src.id, src.path);
     }
 }

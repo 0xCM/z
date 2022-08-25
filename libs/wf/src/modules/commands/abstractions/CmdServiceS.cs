@@ -28,7 +28,7 @@ namespace Z0
         public bool Dispatch(AppCmdSpec cmd)
             => Dispatcher.Dispatch(cmd.Name, cmd.Args);
 
-        public void DispatchJobs(FS.FilePath src)
+        public void DispatchJobs(FilePath src)
         {
             var lines = src.ReadNumberedLines(true);
             var count = lines.Count;

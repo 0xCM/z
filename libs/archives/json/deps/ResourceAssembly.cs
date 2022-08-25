@@ -10,7 +10,7 @@ namespace Z0
         {
             public string Locale;
 
-            public FS.FilePath Path;
+            public FilePath Path;
         }
     }
 }

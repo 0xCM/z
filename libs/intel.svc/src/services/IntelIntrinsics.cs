@@ -18,13 +18,13 @@ namespace Z0
         IDbTargets Targets()
             => AppDb.DbOut("intrinsics");
 
-        FS.FilePath XmlSource()
+        FilePath XmlSource()
             => Sources().Path(XmlFile);
 
-        FS.FilePath DeclPath()
+        FilePath DeclPath()
             => Targets().Path(DeclFile);
 
-        FS.FilePath AlgPath()
+        FilePath AlgPath()
             => Targets().Path(AlgFile);
 
         XmlDoc LoadDocXml()

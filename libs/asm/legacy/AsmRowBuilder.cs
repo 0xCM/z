@@ -61,7 +61,7 @@ namespace Z0.Asm
         uint Emit(in AsmRowSet<AsmMnemonic> src, FS.FolderPath dst)
             => Emit(src, DetailPath(dst, src));
 
-        uint Emit(in AsmRowSet<AsmMnemonic> src, FS.FilePath dst)
+        uint Emit(in AsmRowSet<AsmMnemonic> src, FilePath dst)
         {
             var count = src.Count;
             if(count != 0)
@@ -81,7 +81,7 @@ namespace Z0.Asm
             return count;
         }
 
-        FS.FilePath DetailPath(FS.FolderPath dir, in AsmRowSet<AsmMnemonic> src)
+        FilePath DetailPath(FS.FolderPath dir, in AsmRowSet<AsmMnemonic> src)
             => AppDb.Service.ApiTargets().Table<AsmDetailRow>();
 
         Index<AsmDetailRow> BuildRows(in ApiCodeBlock src)

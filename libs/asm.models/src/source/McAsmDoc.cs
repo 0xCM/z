@@ -9,7 +9,7 @@ namespace Z0
     /// </summary>
     public class McAsmDoc
     {
-        public FS.FilePath Path {get;}
+        public FilePath Path {get;}
 
         ConstLookup<LineNumber,AsmDirective> _Directives;
 

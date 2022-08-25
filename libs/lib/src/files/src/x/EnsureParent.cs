@@ -6,7 +6,7 @@ namespace Z0
 {
     partial class XTend
     {
-        public static FS.FilePath EnsureParentExists(this FS.FilePath src)
+        public static FilePath EnsureParentExists(this FilePath src)
         {
             if(src.IsEmpty)
                 sys.@throw("The source path is unspecified");
@@ -17,7 +17,7 @@ namespace Z0
             return src;
         }
 
-        public static FS.FilePath CreateParentIfMissing(this FS.FilePath src)
+        public static FilePath CreateParentIfMissing(this FilePath src)
             => src.EnsureParentExists();
     }
 }

@@ -6,7 +6,7 @@ namespace Z0
 {
     public class ToolHelpDoc
     {
-        FS.FilePath Source;
+        FilePath Source;
 
         TextBlock Data;
 
@@ -18,10 +18,10 @@ namespace Z0
         {
             IsEmpty = true;
             Data = EmptyString;
-            Source = FS.FilePath.Empty;
+            Source = FilePath.Empty;
         }
 
-        public ToolHelpDoc(Actor tool, FS.FilePath path)
+        public ToolHelpDoc(Actor tool, FilePath path)
         {
             Source = path;
             Tool = tool;
@@ -29,7 +29,7 @@ namespace Z0
             Data = EmptyString;
         }
 
-        public ToolHelpDoc(Actor tool, FS.FilePath src, string data)
+        public ToolHelpDoc(Actor tool, FilePath src, string data)
         {
             Tool = tool;
             Source = src;

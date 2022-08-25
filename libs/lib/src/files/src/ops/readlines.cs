@@ -12,7 +12,7 @@ namespace Z0
         public static Index<TextLine> readlines(FilePath src, bool skipBlank = false)
             => readlines(src, TextEncodingKind.Utf8, skipBlank);
 
-        public static Index<TextLine> readlines(FS.FilePath src, TextEncodingKind encoding, bool skipBlank = false)
+        public static Index<TextLine> readlines(FilePath src, TextEncodingKind encoding, bool skipBlank = false)
         {
             using var reader = src.Reader(encoding);
             var buffer = list<TextLine>();
@@ -35,7 +35,7 @@ namespace Z0
             return buffer.ToArray();
         }
 
-        public static void readlines(FS.FilePath src, Func<TextLine,bool> dst, TextEncodingKind encoding, bool skipBlank = false)
+        public static void readlines(FilePath src, Func<TextLine,bool> dst, TextEncodingKind encoding, bool skipBlank = false)
         {
             using var reader = src.Reader(encoding);
             var content = reader.ReadLine();

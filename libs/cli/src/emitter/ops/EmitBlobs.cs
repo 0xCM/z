@@ -11,7 +11,7 @@ namespace Z0
         public void EmitBlobs(IApiPack dst)
             => iter(ApiMd.Assemblies, c => EmitBlobs(c, dst.Metadata(CliSections.Blobs).PrefixedTable<CliBlob>(c.GetSimpleName())), true);
 
-        public void EmitBlobs(Assembly src, FS.FilePath dst)
+        public void EmitBlobs(Assembly src, FilePath dst)
         {
             var flow = EmittingTable<CliBlob>(dst);
             var reader = CliReader.create(src);

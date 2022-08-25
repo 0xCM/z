@@ -10,12 +10,12 @@ namespace Z0
 
         public ExecToken Token {get;}
 
-        public FS.FilePath Target {get;}
+        public FilePath Target {get;}
 
         public Count EmissionCount {get;}
 
         [MethodImpl(Inline)]
-        internal FileWritten(IWfRuntime wf, FS.FilePath dst, in ExecToken token, uint count = 0)
+        internal FileWritten(IWfRuntime wf, FilePath dst, in ExecToken token, uint count = 0)
         {
             Wf = wf;
             Token = token;

@@ -8,28 +8,28 @@ namespace Z0
     {
         public @string Name {get;}
 
-        FS.FilePath _Value;
+        FilePath _Value;
 
         [MethodImpl(Inline)]
         public PathVar(@string name)
         {
             Name = name;
-            _Value = FS.FilePath.Empty;
+            _Value = FilePath.Empty;
         }
 
         [MethodImpl(Inline)]
-        public PathVar(@string name, FS.FilePath value)
+        public PathVar(@string name, FilePath value)
         {
             Name = name;
             _Value = value;
         }
 
         [MethodImpl(Inline)]
-        public FS.FilePath Value()
+        public FilePath Value()
             => _Value;
 
         [MethodImpl(Inline)]
-        public PathVar Assign(FS.FilePath src)
+        public PathVar Assign(FilePath src)
         {
             _Value = src;
             return this;

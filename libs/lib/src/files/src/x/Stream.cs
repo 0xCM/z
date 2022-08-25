@@ -15,7 +15,7 @@ namespace Z0
         /// <param name="mode"></param>
         /// <param name="access"></param>
         /// <param name="share"></param>
-        public static FileStream Stream(this FS.FilePath path,
+        public static FileStream Stream(this FilePath path,
             FileMode mode = FileMode.OpenOrCreate,
             FileAccess access = FileAccess.ReadWrite,
             FileShare share = FileShare.ReadWrite)

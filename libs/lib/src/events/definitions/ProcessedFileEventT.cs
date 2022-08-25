@@ -18,14 +18,14 @@ namespace Z0
 
         public EventId EventId {get;}
 
-        public FS.FilePath SourcePath {get;}
+        public FilePath SourcePath {get;}
 
         public T Data {get;}
 
         public FlairKind Flair => FlairKind.Processed;
 
         [MethodImpl(Inline)]
-        public ProcessedFileEvent(WfStepId step, FS.FilePath src, T data, PartToken ct)
+        public ProcessedFileEvent(WfStepId step, FilePath src, T data, PartToken ct)
         {
             EventId = (Kind, step, ct);
             SourcePath = src;

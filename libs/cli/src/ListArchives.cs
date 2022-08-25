@@ -10,10 +10,10 @@ namespace Z0
     {
         public delegate Outcome<T> ItemParser<T>(string src);
 
-        public static ItemList<uint,string> load(FS.FilePath src, WfEmit channel)
+        public static ItemList<uint,string> load(FilePath src, WfEmit channel)
             => load(src, trim, channel);
 
-        public static ItemList<uint,T> load<T>(FS.FilePath src, ItemParser<T> parser, WfEmit channel)
+        public static ItemList<uint,T> load<T>(FilePath src, ItemParser<T> parser, WfEmit channel)
         {
             var dst = list<ListItem<uint,T>>();
             var counter = 0u;

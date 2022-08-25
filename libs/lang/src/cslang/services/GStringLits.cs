@@ -12,7 +12,7 @@ namespace Z0
     {
         public class GStringLits : AppService<GStringLits>
         {
-            public void Emit(string name, ReadOnlySpan<char> src, FS.FilePath dst)
+            public void Emit(string name, ReadOnlySpan<char> src, FilePath dst)
             {
                 var emitting = EmittingFile(dst);
                 using var writer = dst.AsciWriter();
@@ -63,7 +63,7 @@ namespace Z0
                     writer.Write((char)c);
             }
 
-            public void Emit(string name, ReadOnlySpan<string> src, FS.FilePath dst)
+            public void Emit(string name, ReadOnlySpan<string> src, FilePath dst)
             {
                 var emitting = EmittingFile(dst);
                 using var writer = dst.AsciWriter();

@@ -63,10 +63,10 @@ namespace Z0.Asm
             return SortedSpans.define(records);
         }
 
-        public void EmitProcessAsm(SortedReadOnlySpan<ProcessAsmRecord> src, FS.FilePath dst)
+        public void EmitProcessAsm(SortedReadOnlySpan<ProcessAsmRecord> src, FilePath dst)
             => TableEmit(src.View, dst, rowpad: ProcessAsmRecord.RowPad);
 
-        public ReadOnlySpan<ProcessAsmRecord> EmitProcessAsm(ReadOnlySpan<AsmRoutine> src, FS.FilePath dst)
+        public ReadOnlySpan<ProcessAsmRecord> EmitProcessAsm(ReadOnlySpan<AsmRoutine> src, FilePath dst)
         {
             var rows = BuildProcessAsm(src);
             EmitProcessAsm(rows, dst);

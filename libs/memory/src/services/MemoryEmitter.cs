@@ -15,17 +15,17 @@ namespace Z0
         public static void emit(MemoryRange src, StreamWriter dst, byte bpl)
             => HexDataFormatter.create(src.Min, bpl).FormatLines(cover<byte>(src.Min, src.ByteCount), line => dst.WriteLine(line));
 
-        public static void emit(MemoryRange src, FS.FilePath dst, byte bpl)
+        public static void emit(MemoryRange src, FilePath dst, byte bpl)
         {
             using var writer = dst.Writer();
             emit(src, writer, bpl);
         }
 
-        public static void emit(MemoryAddress @base, ByteSize size, FS.FilePath dst, byte bpl = Bpl)
+        public static void emit(MemoryAddress @base, ByteSize size, FilePath dst, byte bpl = Bpl)
             => emit((@base,  @base + size), dst, bpl);
 
         [Op]
-        public unsafe static uint emit2(MemorySeg src, FS.FilePath dst)
+        public unsafe static uint emit2(MemorySeg src, FilePath dst)
         {
             var line = text.emitter();
             using var writer = dst.Writer();
@@ -68,7 +68,7 @@ namespace Z0
         }
 
         [Op]
-        public unsafe static uint emit(MemorySeg src, uint bpl, FS.FilePath dst)
+        public unsafe static uint emit(MemorySeg src, uint bpl, FilePath dst)
         {
             var line = text.emitter();
             using var writer = dst.Writer();
@@ -105,7 +105,7 @@ namespace Z0
         public void DumpImages(FS.FolderPath src, FS.FolderPath dst, bool pll = true)
             => iter(src.Files(FS.Dll), file => DumpImage(file,dst), pll);
 
-        public void DumpImage(FS.FilePath src, FS.FolderPath dst)
+        public void DumpImage(FilePath src, FS.FolderPath dst)
         {
             using var file = MemoryFiles.map(src);
             var target = dst + FS.file(file.Path.FileName.Name, FS.Hex);
@@ -140,13 +140,13 @@ namespace Z0
             }
         }
 
-        public static void EmitPaged(MemoryRange src, FS.FilePath dst, byte bpl = Bpl)
+        public static void EmitPaged(MemoryRange src, FilePath dst, byte bpl = Bpl)
         {
             using var writer = dst.Writer();
             EmitPaged(src, writer, bpl);
         }
 
-        public static void EmitPaged(MemoryAddress @base, ByteSize size, FS.FilePath dst, byte bpl = Bpl)
+        public static void EmitPaged(MemoryAddress @base, ByteSize size, FilePath dst, byte bpl = Bpl)
             => EmitPaged((@base,  @base + size), dst, bpl);
     }
 }

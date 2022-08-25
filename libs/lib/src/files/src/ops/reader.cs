@@ -9,7 +9,7 @@ namespace Z0
     partial struct FS
     {
         [Op]
-        public static StreamReader reader(FS.FilePath src, Encoding encoding)
+        public static StreamReader reader(FilePath src, Encoding encoding)
             => new StreamReader(src.Name.Format(), encoding);
 
         /// <summary>
@@ -17,7 +17,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">The file path</param>
         [Op]
-        public static StreamReader reader(FS.FilePath src, TextEncodingKind encoding)
+        public static StreamReader reader(FilePath src, TextEncodingKind encoding)
             => reader(src, encoding.ToSystemEncoding());
     }
 }

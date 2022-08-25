@@ -15,7 +15,7 @@ namespace Z0
             => drive(src.Format(), out dst);
 
         [Op]
-        public static Outcome drive(FS.FilePath src, out Drive dst)
+        public static Outcome drive(FilePath src, out Drive dst)
             => drive(src.Format(), out dst);
 
          /// <summary>

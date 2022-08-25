@@ -50,7 +50,7 @@ namespace Z0
             return regions;
         }
 
-        public Count EmitRegions(ReadOnlySeq<ProcessMemoryRegion> src, FS.FilePath dst)
+        public Count EmitRegions(ReadOnlySeq<ProcessMemoryRegion> src, FilePath dst)
         {
             var flow = EmittingTable<ProcessMemoryRegion>(dst);
             var count = Tables.emit(src.View,dst);
@@ -202,7 +202,7 @@ namespace Z0
             return dst.ViewDeposited();
         }
 
-        public void Emit(ReadOnlySpan<AddressBankEntry> src, FS.FilePath dst)
+        public void Emit(ReadOnlySpan<AddressBankEntry> src, FilePath dst)
             => TableEmit(src,dst);
 
         public ReadOnlySeq<ProcessPartition> EmitPartitions(Process process, IApiPack dst)
@@ -225,7 +225,7 @@ namespace Z0
             => TableEmit(addresses(src).Segments, dst.Context().Table<ProcessSegment>());
 
 
-        ReadOnlySeq<AddressHash> EmitHashes(ReadOnlySpan<MemoryAddress> addresses, FS.FilePath dst)
+        ReadOnlySeq<AddressHash> EmitHashes(ReadOnlySpan<MemoryAddress> addresses, FilePath dst)
         {
             var count = (uint)addresses.Length;
             var buffer = alloc<AddressHash>(count);
@@ -240,7 +240,7 @@ namespace Z0
             return LoadRegions(src.RegionPath());
         }
 
-        public Outcome<Index<ProcessMemoryRegion>> LoadRegions(FS.FilePath src)
+        public Outcome<Index<ProcessMemoryRegion>> LoadRegions(FilePath src)
         {
             var tid = Tables.identify<ProcessMemoryRegion>();
             var flow = Running(string.Format("Reading {0} records from {1}", tid, src.ToUri()));

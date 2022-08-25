@@ -13,7 +13,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">The paths to search</param>
         /// <param name="subdir">The root folder</param>
-        public static ReadOnlySpan<FS.FilePath> segment(ReadOnlySpan<FS.FilePath> src, FS.FolderPath subdir)
+        public static ReadOnlySpan<FilePath> segment(ReadOnlySpan<FilePath> src, FS.FolderPath subdir)
         {
             var count = src.Length;
             var j0 = 0u;

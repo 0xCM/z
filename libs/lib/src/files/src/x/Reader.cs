@@ -14,19 +14,19 @@ namespace Z0
         /// </summary>
         /// <param name="src">The file path</param>
         [Op]
-        public static StreamReader Utf8Reader(this FS.FilePath src)
+        public static StreamReader Utf8Reader(this FilePath src)
             => FS.reader(src, Encoding.UTF8);
 
         [Op]
-        public static StreamReader Reader(this FS.FilePath src, TextEncodingKind encoding)
+        public static StreamReader Reader(this FilePath src, TextEncodingKind encoding)
             => FS.reader(src, encoding);
 
         [Op]
-        public static StreamReader AsciReader(this FS.FilePath src)
+        public static StreamReader AsciReader(this FilePath src)
             => FS.reader(src, Encoding.ASCII);
 
         [Op]
-        public static StreamReader UnicodeReader(this FS.FilePath src)
+        public static StreamReader UnicodeReader(this FilePath src)
             => FS.reader(src, Encoding.Unicode);
     }
 }

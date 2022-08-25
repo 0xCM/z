@@ -63,19 +63,19 @@ namespace Z0
         public IDbTargets RulePages()
             => RuleTargets().Targets("pages");
 
-        public FS.FilePath Table<T>()
+        public FilePath Table<T>()
             where T : struct
                 => Targets().Table<T>();
 
-        public FS.FilePath Table<T>(string suffix)
+        public FilePath Table<T>(string suffix)
             where T : struct
                 => Targets().Path(Suffixed<T>(suffix));
 
-        public FS.FilePath RuleTable<T>()
+        public FilePath RuleTable<T>()
             where T : struct
                 => RuleTargets().Table<T>();
 
-        public FS.FilePath FormCatalogPath()
+        public FilePath FormCatalogPath()
             => Imports().Path(FS.file(Tables.identify<FormImport>().Format(), FS.Csv));
 
         static FS.FileName EncInstDef = FS.file("all-enc-instructions", FS.Txt);
@@ -92,11 +92,11 @@ namespace Z0
             where T : struct
                 => Tables.filename<T>().ChangeExtension(FS.ext(string.Format("{0}.{1}", suffix, FS.Csv)));
 
-        public FS.FilePath DbTable<T>()
+        public FilePath DbTable<T>()
             where T : struct
                  => DbTargets().Root + Tables.filename<T>("xed.db");
 
-        public FS.FilePath DbTarget(string name, FileKind kind)
+        public FilePath DbTarget(string name, FileKind kind)
             => DbTargets().Root + FS.file(string.Format("xed.db.{0}",name), kind.Ext());
 
         public AbsoluteLink MarkdownLink(RuleSig sig)
@@ -115,16 +115,16 @@ namespace Z0
         public IDbTargets DisasmTargets(ProjectId project)
             => AppDb.EtlTargets(project).Targets("xed.disasm");
 
-        public FS.FilePath DisasmDetailPath(ProjectId project, in FileRef src)
+        public FilePath DisasmDetailPath(ProjectId project, in FileRef src)
             => DisasmTargets(project).Path(FS.file(string.Format("{0}.details", src.Path.FileName.WithoutExtension), FS.Csv));
 
-        public FS.FilePath DisasmFieldsPath(ProjectId project, in FileRef src)
+        public FilePath DisasmFieldsPath(ProjectId project, in FileRef src)
             => DisasmTargets(project).Path(FS.file(string.Format("{0}.fields", src.Path.FileName.WithoutExtension), FS.Txt));
 
-        public FS.FilePath DisasmChecksPath(ProjectId project, in FileRef src)
+        public FilePath DisasmChecksPath(ProjectId project, in FileRef src)
             => DisasmTargets(project).Path(FS.file(string.Format("{0}.checks", src.Path.FileName.WithoutExtension), FS.Txt));
 
-        public FS.FilePath DisasmOpsPath(ProjectId project, in FileRef src)
+        public FilePath DisasmOpsPath(ProjectId project, in FileRef src)
             => DisasmTargets(project).Path(FS.file(string.Format("{0}.ops", src.Path.FileName.WithoutExtension.Format()), FS.Txt));
 
         public FileUri RulePage(RuleSig sig)
@@ -162,24 +162,24 @@ namespace Z0
             return dst;
         }
 
-        public FS.FilePath RuleSpecs()
+        public FilePath RuleSpecs()
             => RuleTargets().Path(FS.file("xed.rules.specs", FS.Csv));
 
-        public FS.FilePath InstTable<T>()
+        public FilePath InstTable<T>()
             where T : struct
                 => InstTargets().Path(Tables.filename<T>());
 
-        public FS.FilePath InstTable<T>(string suffix)
+        public FilePath InstTable<T>(string suffix)
             where T : struct
                 => InstTargets().Path(Suffixed<T>(suffix));
 
-        public FS.FilePath InstTarget(string name, FileKind kind)
+        public FilePath InstTarget(string name, FileKind kind)
             => InstTargets().Path(FS.file(string.Format("xed.inst.{0}", name), kind.Ext()));
 
-        public FS.FilePath InstPagePath(InstIsa src)
+        public FilePath InstPagePath(InstIsa src)
             => InstPages().Path(FS.file(text.ifempty(src.Format(), "UNKNOWN"), FS.Txt));
 
-        public FS.FilePath RuleSource(RuleTableKind kind)
+        public FilePath RuleSource(RuleTableKind kind)
         {
             var name = kind switch
             {
@@ -191,16 +191,16 @@ namespace Z0
             return Sources() + name;
         }
 
-        public FS.FilePath RuleTarget(string name, FileExt ext)
+        public FilePath RuleTarget(string name, FileExt ext)
             => RuleTargets().Path(FS.file("xed.rules." + name, ext));
 
-        public FS.FilePath Target(string name, FileExt ext)
+        public FilePath Target(string name, FileExt ext)
             => Output() + FS.file(name, ext);
 
         public FS.FolderPath DocTargets()
             => Output() + FS.folder("docs");
 
-        public FS.FilePath DocTarget(string name, FileKind kind)
+        public FilePath DocTarget(string name, FileKind kind)
             => DocTargets() + FS.file(string.Format("xed.docs.{0}", name), kind.Ext());
 
         public static XedDocKind srckind(FS.FileName src)
@@ -219,16 +219,16 @@ namespace Z0
                 return 0;
         }
 
-        public FS.FilePath SourcePath(string name, FileKind kind)
+        public FilePath SourcePath(string name, FileKind kind)
             => Sources() + FS.file(name,kind.Ext());
 
-        public FS.FilePath CpuIdSource()
+        public FilePath CpuIdSource()
             => SourcePath("all-cpuid", FileKind.Txt);
 
-        public FS.FilePath ChipMapSource()
+        public FilePath ChipMapSource()
             => SourcePath("xed-cdata", FileKind.Txt);
 
-        public FS.FilePath DocSource(XedDocKind kind)
+        public FilePath DocSource(XedDocKind kind)
             => Sources() + (kind switch{
                 XedDocKind.EncInstDef => EncInstDef,
                 XedDocKind.DecInstDef => DecInstDef,

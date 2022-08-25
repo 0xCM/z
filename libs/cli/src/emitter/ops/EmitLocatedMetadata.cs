@@ -8,7 +8,7 @@ namespace Z0
 
     partial class CliEmitter
     {
-        public void EmitLocatedMetadata(Assembly src, uint bpl, FS.FilePath dst)
+        public void EmitLocatedMetadata(Assembly src, uint bpl, FilePath dst)
         {
             try
             {

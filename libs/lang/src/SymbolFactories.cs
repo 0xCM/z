@@ -9,7 +9,7 @@ namespace Z0
 
     public class SymbolFactories : WfSvc<SymbolFactories>
     {
-        public void Emit(string ns, string name, ReadOnlySpan<Type> enums, FS.FilePath dst)
+        public void Emit(string ns, string name, ReadOnlySpan<Type> enums, FilePath dst)
         {
             var flow = EmittingFile(dst);
             var buffer = text.buffer();

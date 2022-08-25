@@ -16,7 +16,7 @@ namespace Z0.llvm
 
         }
 
-        Outcome BuildLlc(IProjectWorkspace project, Paired<FS.FilePath,Index<string>> spec)
+        Outcome BuildLlc(IProjectWorkspace project, Paired<FilePath,Index<string>> spec)
         {
             var isets = spec.Right;
             var path = spec.Left;
@@ -80,11 +80,11 @@ namespace Z0.llvm
             }
         }
 
-        static Pairings<FS.FilePath,Index<string>> isets(ReadOnlySpan<FS.FilePath> src)
+        static Pairings<FilePath,Index<string>> isets(ReadOnlySpan<FilePath> src)
         {
             var count = src.Length;
 
-            var dst = alloc<Paired<FS.FilePath,Index<string>>>(count);
+            var dst = alloc<Paired<FilePath,Index<string>>>(count);
             var empty = Index<string>.Empty;
             for(var i=0; i<count; i++)
             {

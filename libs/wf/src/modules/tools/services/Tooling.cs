@@ -14,7 +14,7 @@ namespace Z0
     {
         const byte FieldCount = ToolProfile.FieldCount;
 
-        public static SettingLookup lookup(FS.FilePath src, char sep = Chars.Eq)
+        public static SettingLookup lookup(FilePath src, char sep = Chars.Eq)
             => Settings.lookup(src, sep);
 
         public static string format<T,C>(C src)
@@ -59,7 +59,7 @@ namespace Z0
             }
         }
 
-        public static ToolSettings settings(FS.FilePath src)
+        public static ToolSettings settings(FilePath src)
         {
             var data = Settings.env(src);
             var dst = new ToolSettings();
@@ -139,16 +139,16 @@ namespace Z0
             return fields.Select(f => new ToolCmdArg(f.Name, f.GetValue(src)?.ToString() ?? EmptyString));
         }
      
-        public static ToolScript script(FS.FilePath script, CmdVars vars)
+        public static ToolScript script(FilePath script, CmdVars vars)
             => new ToolScript(script, vars);
 
         public static Tool tool(CmdArgs args, byte index = 0)
             => arg(args,index).Value;
 
-        public FS.FilePath ConfigScript(Tool tool)
+        public FilePath ConfigScript(Tool tool)
             => Home(tool).ConfigScript(ApiAtomic.config, FileKind.Cmd);
 
-        public FS.FilePath Script(Tool tool, string name, FileKind kind)
+        public FilePath Script(Tool tool, string name, FileKind kind)
             => Home(tool).Script(name, kind);
         public IDbArchive Docs(Tool tool)
             => Home(tool).Docs();
@@ -167,10 +167,10 @@ namespace Z0
         public IDbArchive ToolBase
             => AppDb.Toolbase();
 
-        public FS.FilePath ScriptPath(Actor tool, string name, FileKind kind)
+        public FilePath ScriptPath(Actor tool, string name, FileKind kind)
             => Home(tool).Script(name, kind);
 
-        public Outcome Run(IToolWs tool, string name, FS.FilePath src, FS.FolderPath dst)
+        public Outcome Run(IToolWs tool, string name, FilePath src, FS.FolderPath dst)
         {
             var cmd = new CmdLine(tool.Script(name, FileKind.Cmd).Format(PathSeparator.BS));
             var vars = WsCmdVars.create();
@@ -192,7 +192,7 @@ namespace Z0
             return Settings.parse(path.ReadNumberedLines(), Chars.Colon);
         }
 
-        void LoadProfiles(FS.FilePath src, Lookup<Actor,ToolProfile> dst)
+        void LoadProfiles(FilePath src, Lookup<Actor,ToolProfile> dst)
         {
             var content = src.ReadUnicode();
             var result = TextGrids.parse(content, out var grid);
@@ -253,12 +253,12 @@ namespace Z0
             return LoadProfileLookup(src);
         }
 
-        public FS.FilePath ToolPath(FS.FolderPath root, Tool tool)
+        public FilePath ToolPath(FS.FolderPath root, Tool tool)
         {
             if(LoadProfileLookup(root).Find(tool, out var profile))
                 return profile.Path;
             else
-                return FS.FilePath.Empty;
+                return FilePath.Empty;
         }
 
         public SettingLookup Setup(Tool tool)
@@ -285,9 +285,9 @@ namespace Z0
             return dst.ToIndex();
         }
 
-        public ConstLookup<Actor,FS.FilePath> CalcHelpPaths(FS.FolderPath src)
+        public ConstLookup<Actor,FilePath> CalcHelpPaths(FS.FolderPath src)
         {
-            var dst = new Lookup<Actor,FS.FilePath>();
+            var dst = new Lookup<Actor,FilePath>();
             var profiles = LoadProfileLookup(src).Values;
             var count = profiles.Length;
             for(var i=0; i<count; i++)

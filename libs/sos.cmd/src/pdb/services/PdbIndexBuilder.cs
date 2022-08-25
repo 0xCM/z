@@ -46,7 +46,7 @@ namespace Z0
             return stats;
         }
 
-        public FS.FilePath IndexComponents(ReadOnlySpan<Assembly> src, PdbIndex dst)
+        public FilePath IndexComponents(ReadOnlySpan<Assembly> src, PdbIndex dst)
         {
             var count = src.Length;
             var flow = Running(Msg.IndexingPdbFiles.Format(count));

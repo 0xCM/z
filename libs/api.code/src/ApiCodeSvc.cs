@@ -14,11 +14,11 @@ namespace Z0
         public Index<ApiCodeRow> EmitApiHex(ApiHostUri uri, ReadOnlySpan<MemberCodeBlock> src, IApiPack dst)
             => EmitApiCode(uri, src, dst.HexExtractPath(uri));
 
-        public ConstLookup<FS.FilePath,MemoryBlocks> LoadMemoryBlocks(FS.Files src)
+        public ConstLookup<FilePath,MemoryBlocks> LoadMemoryBlocks(FS.Files src)
         {
             var flow = Running(string.Format("Loading {0} packs", src.Length));
-            var lookup = new Lookup<FS.FilePath,MemoryBlocks>();
-            var errors = new Lookup<FS.FilePath,Outcome>();
+            var lookup = new Lookup<FilePath,MemoryBlocks>();
+            var errors = new Lookup<FilePath,Outcome>();
             iter(src, path => lookup.Include(path, ApiCode.memory(path)), true);
             var result = lookup.Seal();
             var count = result.EntryCount;
@@ -41,7 +41,7 @@ namespace Z0
         }
 
         [Op]
-        public Index<ApiCodeRow> EmitApiCode(ApiHostUri uri, ReadOnlySpan<MemberCodeBlock> src, FS.FilePath dst)
+        public Index<ApiCodeRow> EmitApiCode(ApiHostUri uri, ReadOnlySpan<MemberCodeBlock> src, FilePath dst)
         {
             var count = src.Length;
             if(count != 0)
@@ -75,7 +75,7 @@ namespace Z0
             EmitHex(src.Blocks, dst.HexExtractPath(src.Host));
         }
 
-        ByteSize EmitHex(ReadOnlySeq<ApiEncoded> src, FS.FilePath dst)
+        ByteSize EmitHex(ReadOnlySeq<ApiEncoded> src, FilePath dst)
         {
             var count = src.Count;
             var emitting = EmittingFile(dst);
@@ -84,7 +84,7 @@ namespace Z0
             return size;
         }
 
-        ReadOnlySeq<EncodedMember> Emit(ReadOnlySeq<ApiEncoded> src, FS.FilePath hex, FS.FilePath csv)
+        ReadOnlySeq<EncodedMember> Emit(ReadOnlySeq<ApiEncoded> src, FilePath hex, FilePath csv)
         {
             var collected = src;
             var count = collected.Count;
@@ -106,7 +106,7 @@ namespace Z0
         }
 
         [Op]
-        ReadOnlySeq<ApiHexIndexRow> EmitIndex(SortedReadOnlySpan<ApiCodeBlock> src, FS.FilePath dst)
+        ReadOnlySeq<ApiHexIndexRow> EmitIndex(SortedReadOnlySpan<ApiCodeBlock> src, FilePath dst)
         {
             var flow = EmittingTable<ApiHexIndexRow>(dst);
             var blocks = src.View;

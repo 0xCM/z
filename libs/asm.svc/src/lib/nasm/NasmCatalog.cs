@@ -26,7 +26,7 @@ namespace Z0
             return default;
         }
 
-        public ReadOnlySpan<NasmInstruction> ParseInstructions(FS.FilePath src)
+        public ReadOnlySpan<NasmInstruction> ParseInstructions(FilePath src)
         {
             const uint FirstLine = 70;
             var widths = SourceWidths;
@@ -84,7 +84,7 @@ namespace Z0
                 AppDb.AsmDb().Targets("asm.refs").Table<NasmInstruction>()
                 );
 
-        ReadOnlySpan<NasmInstruction> ImportInstructions(FS.FilePath src, FS.FilePath dst)
+        ReadOnlySpan<NasmInstruction> ImportInstructions(FilePath src, FilePath dst)
         {
             var instructions = ParseInstructions(src);
             TableEmit(instructions, dst, ASCI);
@@ -94,7 +94,7 @@ namespace Z0
         // public ReadOnlySpan<NasmInstruction> LoadInstructionImports()
         //     => LoadInstructionImports(AppDb.DbOut().Targets("asm.refs").Table<NasmInstruction>());
 
-        // public ReadOnlySpan<NasmInstruction> LoadInstructionImports(FS.FilePath src)
+        // public ReadOnlySpan<NasmInstruction> LoadInstructionImports(FilePath src)
         // {
         //     using var reader = src.AsciLineReader();
         //     var counter = 0u;

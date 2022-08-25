@@ -10,7 +10,7 @@ namespace Z0
     {
         public class GLiteralProvider : AppService<GLiteralProvider>
         {
-            public void Emit<T>(Identifier ns, LiteralSeq<T> literals, FS.FilePath dst)
+            public void Emit<T>(Identifier ns, LiteralSeq<T> literals, FilePath dst)
                 where T : IComparable<T>, IEquatable<T>
             {
                 var buffer = text.buffer();

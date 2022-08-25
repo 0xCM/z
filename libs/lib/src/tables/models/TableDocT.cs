@@ -8,9 +8,9 @@ namespace Z0
     {
         protected readonly Index<T> Data;
 
-        public FS.FilePath Location {get;}
+        public FilePath Location {get;}
 
-        protected TableDoc(FS.FilePath path, T[] rows)
+        protected TableDoc(FilePath path, T[] rows)
         {
             Location = path;
             Data = rows;
@@ -50,7 +50,7 @@ namespace Z0
     public abstract class TableDoc<D,T> : TableDoc<T>
         where D : TableDoc<D,T>
     {
-        protected TableDoc(FS.FilePath path, T[] rows)
+        protected TableDoc(FilePath path, T[] rows)
             : base(path,rows)
         {
 

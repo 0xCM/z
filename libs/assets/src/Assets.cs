@@ -181,7 +181,7 @@ namespace Z0
             where T : unmanaged
                 => section(member.Address.Pointer<T>(), i0, i1);
 
-        public static Outcome<Count> structured(Asset src, string delimiter, ReadOnlySpan<byte> widths, FS.FilePath dst)
+        public static Outcome<Count> structured(Asset src, string delimiter, ReadOnlySpan<byte> widths, FilePath dst)
         {
             var data = text.utf8(src.Bytes());
             var result = TextGrids.parse(data, out var doc);

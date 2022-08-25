@@ -8,7 +8,7 @@ namespace Z0
 
     partial struct FS
     {
-        public static Index<string> readtext(FS.FilePath src, TextEncodingKind encoding, bool skipBlank = false)
+        public static Index<string> readtext(FilePath src, TextEncodingKind encoding, bool skipBlank = false)
         {
             using var reader = src.Reader(encoding);
             var buffer = list<string>();

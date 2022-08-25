@@ -11,6 +11,6 @@ namespace Z0
 
         public FS.FolderPath Source;
 
-        public FS.FilePath Target;
+        public FilePath Target;
     }
 }

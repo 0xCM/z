@@ -92,7 +92,7 @@ namespace Z0
         public void Flush(Exception e, IMessageSink target)
             => Queue.Flush(e, target);
 
-        public void Emit(FS.FilePath dst)
+        public void Emit(FilePath dst)
             => Queue.Emit(dst);
 
         /// <summary>
@@ -170,18 +170,18 @@ namespace Z0
             => GetCasePaths();
 
         [MethodImpl(Inline)]
-        protected FS.FilePath UnitPath(FS.FileName name)
+        protected FilePath UnitPath(FS.FileName name)
             => UnitDataDir + name;
 
         protected StreamWriter UnitWriter(FS.FileName filename, bool append = false)
             => UnitPath(filename).Writer(append);
 
         [MethodImpl(Inline)]
-        protected FS.FilePath CasePath(FileExt ext, [CallerName] string caller = null, bool append = false)
+        protected FilePath CasePath(FileExt ext, [CallerName] string caller = null, bool append = false)
             => UnitPath(FS.file(caller, ext));
 
         [MethodImpl(Inline)]
-        protected FS.FilePath CasePath(string CaseName, FileExt? ext = null)
+        protected FilePath CasePath(string CaseName, FileExt? ext = null)
             => UnitPath(FS.file(CaseName, ext ?? FS.ext("csv")));
 
         protected StreamWriter CaseWriter(FileExt ext, [CallerName] string caller = null, bool append = false)

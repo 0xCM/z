@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Free]
-    public interface IToolFlowCmd : ICmd, IFlowCmd<FS.FilePath,FS.FilePath>
+    public interface IToolFlowCmd : ICmd, IFlowCmd<FilePath,FilePath>
     {
 
 
@@ -19,7 +19,7 @@ namespace Z0
     }
 
     [Free]
-    public interface IToolFlowCmd<C,T> : IToolFlowCmd<C>, IToolFlowCmd<C,T,FS.FilePath,FS.FilePath>
+    public interface IToolFlowCmd<C,T> : IToolFlowCmd<C>, IToolFlowCmd<C,T,FilePath,FilePath>
         where C : struct, IToolFlowCmd<C,T>
         where T : ITool, new()
     {

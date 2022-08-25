@@ -11,9 +11,9 @@ namespace Z0
 
         public Name ShimName;
 
-        public FS.FilePath ShimPath;
+        public FilePath ShimPath;
 
-        public FS.FilePath TargetPath;
+        public FilePath TargetPath;
 
         Name IKeyed<Name>.Key 
             => ShimName;

@@ -60,7 +60,7 @@ namespace Z0
         public static ListItem untype<T>(ListItem<T> src)
             => new ListItem(src.Key, text.trim(src.Value?.ToString() ?? EmptyString));
 
-        public static Outcome list(FS.FilePath src, bool header, char sep, IParser<object> parser, out ListItem[] dst)
+        public static Outcome list(FilePath src, bool header, char sep, IParser<object> parser, out ListItem[] dst)
         {
             dst = array<ListItem>();
             var buffer = core.list<ListItem>();

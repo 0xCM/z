@@ -8,7 +8,7 @@ namespace Z0
     {
         public record struct RuntimeFileInfo
         {
-            public FS.FilePath Path;
+            public FilePath Path;
 
             public string AssemblyVersion;
 

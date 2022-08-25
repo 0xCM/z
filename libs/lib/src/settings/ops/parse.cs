@@ -127,7 +127,7 @@ namespace Z0
                     if(BitParser.parse(input, out bit x))
                         dst = x;
                 }
-                else if(type == typeof(FS.FilePath))
+                else if(type == typeof(FilePath))
                     dst = FS.path(src);
                 else if(type == typeof(FileUri))
                     dst =  FS.uri(src);

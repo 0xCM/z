@@ -9,7 +9,7 @@ namespace Z0
 
     public readonly struct DocSplits
     {
-        public static LineRange split(FS.FilePath src, TextEncodingKind encoding, in DocSplitSpec spec, IReceiver<LineRange> dst)
+        public static LineRange split(FilePath src, TextEncodingKind encoding, in DocSplitSpec spec, IReceiver<LineRange> dst)
         {
             using var reader = src.Reader(encoding);
             var counter = 1u;
@@ -29,7 +29,7 @@ namespace Z0
             return range;
         }
 
-        public static Outcome load(FS.FilePath src, out RecordSet<DocSplitSpec> dst)
+        public static Outcome load(FilePath src, out RecordSet<DocSplitSpec> dst)
         {
             dst = RecordSet<DocSplitSpec>.Empty;
 

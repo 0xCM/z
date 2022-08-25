@@ -33,10 +33,10 @@ namespace Z0
 
         public sealed class MethodLoad : Observer<MethodLoadEvent>
         {
-            public static MethodLoad observe(FS.FilePath dst)
+            public static MethodLoad observe(FilePath dst)
                 => new MethodLoad(dst);
 
-            public MethodLoad(FS.FilePath log)
+            public MethodLoad(FilePath log)
                 : base(MethodLoadEvent.Keyword, MethodLoadEvent.EventName, Demand.nonempty(log))
             {
 

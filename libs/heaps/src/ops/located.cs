@@ -13,7 +13,7 @@ namespace Z0
         /// Reconsitiutes a <see cref='MemoryHeap'/> from a representation serialized  as <see cref='FileKind.LocatedHex'/>
         /// </summary>
         /// <param name="src"></param>
-        public static MemoryHeap located(FS.FilePath src)
+        public static MemoryHeap located(FilePath src)
         {
             var data = span<byte>(src.Size);
             var offsets = list<Address32>();

@@ -6,6 +6,6 @@ namespace Z0
 {
     public interface IFilteredArchive
     {
-        Deferred<FS.FilePath> Files();
+        Deferred<FilePath> Files();
     }
 }

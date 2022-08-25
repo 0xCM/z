@@ -18,7 +18,7 @@ namespace Z0
             EmitRowStats(ApiMd.Assemblies, dst.Metadata().Table<CliRowStats>());
         }
 
-        public void EmitRowStats(ReadOnlySpan<Assembly> src, FS.FilePath dst)
+        public void EmitRowStats(ReadOnlySpan<Assembly> src, FilePath dst)
         {
             var buffer = bag<CliRowStats>();
             stats(src,buffer);

@@ -24,7 +24,7 @@ namespace Z0
         Name INamed.Name 
             => Location.Root.FolderName.Format();
             
-        FS.FilePath EnvPath()
+        FilePath EnvPath()
             => Location.Path(Tool.Name, FileKind.Env);
 
         DbArchive Docs()
@@ -33,13 +33,13 @@ namespace Z0
         DbArchive Scripts()
             => Location.Sources(scripts);
 
-        FS.FilePath ConfigScript(string name, FileKind kind)
+        FilePath ConfigScript(string name, FileKind kind)
             => Location.Path(FS.file(name,kind));
 
-        FS.FilePath Script(string name, FileKind kind)
+        FilePath Script(string name, FileKind kind)
             => Scripts().Path(name,kind);
 
-        FS.FilePath Script(FS.FileName file)
+        FilePath Script(FS.FileName file)
             => Scripts().Path(file);
     }
 }

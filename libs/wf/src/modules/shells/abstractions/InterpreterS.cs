@@ -66,7 +66,7 @@ namespace Z0
         protected virtual string StartupArgs {get;}
             = EmptyString;
 
-        protected abstract FS.FilePath ExePath {get;}
+        protected abstract FilePath ExePath {get;}
 
         public Task RunAsync()
         {

@@ -44,10 +44,10 @@ namespace Z0
         IDbTargets Metadata(string scope)
             => Metadata().Targets(scope);
 
-        FS.FilePath ExtractPath(PartId part, FileKind kind)
+        FilePath ExtractPath(PartId part, FileKind kind)
             => Extracts().Path(FS.file(part.Format(), kind));
 
-        FS.FilePath ExtractPath(ApiHostUri host, FileKind kind)
+        FilePath ExtractPath(ApiHostUri host, FileKind kind)
             => Extracts().Path(FS.file(host, kind));
 
         FS.Files HexExtracts()
@@ -71,25 +71,25 @@ namespace Z0
         IApiPackArchive Archive()
             => ApiPackArchive.create(Root);
 
-        FS.FilePath HexExtractPath(PartId src)
+        FilePath HexExtractPath(PartId src)
             => ExtractPath(src, FileKind.HexDat);
 
-        FS.FilePath CsvExtractPath(PartId part)
+        FilePath CsvExtractPath(PartId part)
             => ExtractPath(part, FileKind.Csv);
 
-        FS.FilePath AsmExtractPath(PartId part)
+        FilePath AsmExtractPath(PartId part)
             => ExtractPath(part, FileKind.Asm);
 
-        FS.FilePath MsilPath(ApiHostUri host)
+        FilePath MsilPath(ApiHostUri host)
             => Extracts().Path(FS.hostfile(host,FileKind.Il.Ext()));
 
-        FS.FilePath HexExtractPath(ApiHostUri src)
+        FilePath HexExtractPath(ApiHostUri src)
             => ExtractPath(src, FileKind.HexDat);
 
-        FS.FilePath CsvExtractPath(ApiHostUri src)
+        FilePath CsvExtractPath(ApiHostUri src)
             => ExtractPath(src, FileKind.Csv);
 
-        FS.FilePath AsmExtractPath(ApiHostUri src)
+        FilePath AsmExtractPath(ApiHostUri src)
             => ExtractPath(src, FileKind.Asm);
 
         FS.FileName RegionFile()
@@ -104,25 +104,25 @@ namespace Z0
         FS.FileName PartitionHashFile()
             => FS.file("process.partitions.hash", FileKind.Csv);
 
-        FS.FilePath PartitionPath()
+        FilePath PartitionPath()
             => Context().Path(PartitionFile());
 
-        FS.FilePath RegionPath()
+        FilePath RegionPath()
             => Context().Path(RegionFile());
 
-        FS.FilePath RegionHashPath()
+        FilePath RegionHashPath()
             => Context().Path(RegionHashFile());
 
-        FS.FilePath PartitionHashPath()
+        FilePath PartitionHashPath()
             => Context().Path(PartitionHashFile());
 
-        FS.FilePath ProcessModules()
+        FilePath ProcessModules()
             => Context().Path("process.modules", FileKind.Csv);
 
         FS.FileName DumpFile(Process process)
             => FS.file(ProcDumpName.create(process,Timestamp).Format(false), FileKind.Dmp);
 
-        FS.FilePath DumpPath(Process process)
+        FilePath DumpPath(Process process)
             => Context().Path(DumpFile(process)).CreateParentIfMissing();
     }
 }

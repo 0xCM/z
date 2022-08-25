@@ -7,7 +7,7 @@ namespace Z0
     partial struct FS
     {
         [Op]
-        public static string missing(FS.FilePath src)
+        public static string missing(FilePath src)
             => Msg.DoesNotExist.Format(src);
 
         [Op]

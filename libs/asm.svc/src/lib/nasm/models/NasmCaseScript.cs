@@ -8,10 +8,10 @@ namespace Z0
     {
         public NasmCase Case {get;}
 
-        public FS.FilePath Path {get;}
+        public FilePath Path {get;}
 
         [MethodImpl(Inline)]
-        public NasmCaseScript(NasmCase @case, FS.FilePath path)
+        public NasmCaseScript(NasmCase @case, FilePath path)
         {
             Case = @case;
             Path = path;

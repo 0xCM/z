@@ -10,7 +10,7 @@ namespace Z0
 
         DbArchive EtlTargets(ProjectId src);
 
-        FS.FilePath EtlTable<T>(ProjectId project)
+        FilePath EtlTable<T>(ProjectId project)
             where T : struct;
     }
 }

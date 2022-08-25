@@ -44,7 +44,7 @@ namespace Z0
             return emit(channel, records(src, name).View, table, ASCI);
         }
 
-        static ExecToken emit<T>(WfEmit emitter, ReadOnlySpan<T> src, FS.FilePath dst, TextEncodingKind encoding, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular, string delimiter = " | ")
+        static ExecToken emit<T>(WfEmit emitter, ReadOnlySpan<T> src, FilePath dst, TextEncodingKind encoding, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular, string delimiter = " | ")
             where T : struct
         {
             var emitting = emitter.EmittingTable<T>(dst);

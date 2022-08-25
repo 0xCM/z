@@ -36,7 +36,7 @@ namespace Z0
                 }
             }
 
-            FS.FilePath LogPath;
+            FilePath LogPath;
 
             readonly IRecordFormatter<E> Formatter;
 
@@ -54,7 +54,7 @@ namespace Z0
                 }
             }
 
-            protected Observer(uint keyword, string @event, FS.FilePath log)
+            protected Observer(uint keyword, string @event, FilePath log)
             {
                 LogPath = log;
                 EventKeyword = keyword;

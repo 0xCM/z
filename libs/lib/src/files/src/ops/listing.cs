@@ -14,10 +14,10 @@ namespace Z0
         public static ListedFiles listing(FS.FolderPath src, bool recurse, params FileKind[] kinds)
             => src.Files(recurse,kinds).Select(listing).Array();
 
-        public static ListedFiles listing(ReadOnlySpan<FS.FilePath> src)
+        public static ListedFiles listing(ReadOnlySpan<FilePath> src)
             => src.Select(listing);
 
-        public static ListedFile listing(FS.FilePath src)
+        public static ListedFile listing(FilePath src)
         {
             var dst = new ListedFile();
             var info = new FileInfo(src.Name);

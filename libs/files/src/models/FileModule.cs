@@ -9,12 +9,12 @@ namespace Z0
     /// </summary>
     public readonly struct FileModule : IFileModule<FileModule>
     {
-        public FS.FilePath Path {get;}
+        public FilePath Path {get;}
 
         public FileModuleKind ModuleKind {get;}
 
         [MethodImpl(Inline)]
-        public FileModule(FS.FilePath src, FileModuleKind kind)
+        public FileModule(FilePath src, FileModuleKind kind)
         {
             Path = src;
             ModuleKind = kind;

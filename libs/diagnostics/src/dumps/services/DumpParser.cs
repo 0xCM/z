@@ -23,7 +23,7 @@ namespace Z0
             Emit(id, src.MethodTables);
         }
 
-        public void ParseDump(FS.FilePath src)
+        public void ParseDump(FilePath src)
         {
             using var dataTarget = DataTarget.LoadDump(src.Name);
             using var runtime = dataTarget.ClrVersions.Single().CreateRuntime();

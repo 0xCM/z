@@ -11,7 +11,7 @@ namespace Z0
 
     partial struct Tables
     {
-        public static void emit<T>(IWfEventTarget log, ReadOnlySpan<T> rows, FS.FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
+        public static void emit<T>(IWfEventTarget log, ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
                 where T : struct
         {
@@ -26,7 +26,7 @@ namespace Z0
              log.Deposit(emitted);
         }
 
-        public static ExecToken emit<T>(WfEmit channel, ReadOnlySpan<T> rows, FS.FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
+        public static ExecToken emit<T>(WfEmit channel, ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
                 where T : struct
         {
@@ -39,7 +39,7 @@ namespace Z0
              return channel.EmittedTable(emitting, rows.Length, dst);
         }
 
-        public static void emit<T>(ReadOnlySpan<T> rows, FS.FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
+        public static void emit<T>(ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
                 where T : struct
         {
@@ -68,7 +68,7 @@ namespace Z0
         }
 
         [Op, Closures(Closure)]
-        public static Count emit<T>(ReadOnlySpan<T> src, RowFormatSpec spec, Encoding encoding, FS.FilePath dst)
+        public static Count emit<T>(ReadOnlySpan<T> src, RowFormatSpec spec, Encoding encoding, FilePath dst)
             where T : struct
         {
             using var writer = dst.Writer(encoding);
@@ -76,17 +76,17 @@ namespace Z0
         }
 
         [Op, Closures(Closure)]
-        public static Count emit<T>(ReadOnlySpan<T> src, RowFormatSpec spec, TextEncodingKind encoding, FS.FilePath dst)
+        public static Count emit<T>(ReadOnlySpan<T> src, RowFormatSpec spec, TextEncodingKind encoding, FilePath dst)
             where T : struct
                 => emit(src, spec, encoding.ToSystemEncoding(), dst);
 
         [Op, Closures(Closure)]
-        public static Count emit<T>(ReadOnlySpan<T> src, RowFormatSpec spec, FS.FilePath dst)
+        public static Count emit<T>(ReadOnlySpan<T> src, RowFormatSpec spec, FilePath dst)
             where T : struct
                 => emit(src, spec, TextEncodingKind.Utf8, dst);
 
         [Op, Closures(Closure)]
-        public static Count emit<T>(ReadOnlySpan<T> src, Encoding encoding, FS.FilePath dst)
+        public static Count emit<T>(ReadOnlySpan<T> src, Encoding encoding, FilePath dst)
             where T : struct
         {
             using var writer = dst.Writer(encoding);
@@ -94,17 +94,17 @@ namespace Z0
         }
 
         [Op, Closures(Closure)]
-        public static Count emit<T>(ReadOnlySpan<T> src, FS.FilePath dst)
+        public static Count emit<T>(ReadOnlySpan<T> src, FilePath dst)
             where T : struct
                 => emit(src, Encoding.UTF8, dst);
 
         [Op, Closures(Closure)]
-        public static Count emit<T>(ReadOnlySpan<T> src, ReadOnlySpan<byte> widths, FS.FilePath dst)
+        public static Count emit<T>(ReadOnlySpan<T> src, ReadOnlySpan<byte> widths, FilePath dst)
             where T : struct
                 => emit(src, widths, z16, Encoding.UTF8, dst);
 
         [Op, Closures(Closure)]
-        public static Count emit<T>(ReadOnlySpan<T> src, ReadOnlySpan<byte> widths, ushort rowpad, Encoding encoding, FS.FilePath dst)
+        public static Count emit<T>(ReadOnlySpan<T> src, ReadOnlySpan<byte> widths, ushort rowpad, Encoding encoding, FilePath dst)
             where T : struct
                 => emit(src, rowspec<T>(widths, rowpad), dst);
 

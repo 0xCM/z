@@ -7,7 +7,7 @@ namespace Z0
     partial class Lines
     {
         [Op]
-        public static uint count(FS.FilePath src, TextEncodingKind encoding)
+        public static uint count(FilePath src, TextEncodingKind encoding)
         {
             var counter = 0u;
             using var reader = src.Reader(encoding);

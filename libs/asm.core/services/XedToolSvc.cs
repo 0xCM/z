@@ -14,11 +14,11 @@ namespace Z0
 
         public string Name;
 
-        public FS.FilePath InputPath;
+        public FilePath InputPath;
 
-        public FS.FilePath SummaryPath;
+        public FilePath SummaryPath;
 
-        public FS.FilePath DetailPath;
+        public FilePath DetailPath;
     }
 
     public sealed partial class XedToolCmd : ToolService<XedToolCmd>

@@ -18,8 +18,8 @@ namespace Z0
         public CommentDataset Calc()
         {
             var targets = AppDb.ApiTargets(comments);
-            var dllPaths = list<FS.FilePath>();
-            var xmlData = new Dictionary<FS.FilePath, Dictionary<string,string>>();
+            var dllPaths = list<FilePath>();
+            var xmlData = new Dictionary<FilePath, Dictionary<string,string>>();
             var archive = sys.controller().RuntimeArchive();
             var dllFiles = archive.DllFiles();
             var xmlFiles = archive.XmlFiles;
@@ -35,9 +35,9 @@ namespace Z0
                 }
             }
 
-            var lookup = new Dictionary<FS.FilePath, Dictionary<string,ApiComment>>();
-            var csvRowFormat = dict<FS.FilePath,List<string>>();
-            var csvRows = dict<FS.FilePath,List<ApiComment>>();
+            var lookup = new Dictionary<FilePath, Dictionary<string,ApiComment>>();
+            var csvRowFormat = dict<FilePath,List<string>>();
+            var csvRows = dict<FilePath,List<ApiComment>>();
             var formatter = Tables.formatter<ApiComment>();
             foreach(var part in xmlData.Keys)
             {
@@ -74,7 +74,7 @@ namespace Z0
         {
             var targets = dst;
             var src = Pull(dst);
-            var lookup = new Dictionary<FS.FilePath, Dictionary<string,ApiComment>>();
+            var lookup = new Dictionary<FilePath, Dictionary<string,ApiComment>>();
             var formatter = Tables.formatter<ApiComment>();
             foreach(var part in src.Keys)
             {
@@ -103,7 +103,7 @@ namespace Z0
         // {
         //     var targets = dst.Comments();
         //     var src = Pull(dst.Targets());
-        //     var lookup = new Dictionary<FS.FilePath, Dictionary<string,ApiComment>>();
+        //     var lookup = new Dictionary<FilePath, Dictionary<string,ApiComment>>();
         //     var formatter = Tables.formatter<ApiComment>();
         //     foreach(var part in src.Keys)
         //     {
@@ -186,11 +186,11 @@ namespace Z0
                 _ => ApiCommentTarget.None,
             };
 
-        ConstLookup<FS.FilePath, Dictionary<string,string>> Pull(IDbTargets dst)
+        ConstLookup<FilePath, Dictionary<string,string>> Pull(IDbTargets dst)
         {
             var archive = sys.controller().RuntimeArchive();
             var paths = archive.XmlFiles();
-            var lookup = cdict<FS.FilePath, Dictionary<string,string>>();
+            var lookup = cdict<FilePath, Dictionary<string,string>>();
             var t = default(ApiComment);
             iter(paths, path => {
                 var data = ParseXmlFile(path, dst, out var packpath);
@@ -202,11 +202,11 @@ namespace Z0
             return lookup;
         }
 
-        Dictionary<string,string> ParseXmlFile(FS.FilePath src, IDbTargets dst, out FS.FilePath target)
+        Dictionary<string,string> ParseXmlFile(FilePath src, IDbTargets dst, out FilePath target)
         {
             var data = src.ReadText();
             var parsed = ParseXmlData(data);
-            target = FS.FilePath.Empty;
+            target = FilePath.Empty;
             if(parsed.Count != 0)
             {
                 target = dst.Targets().Path(FS.file($"{src.FileName.WithoutExtension}.{comments}", FileKind.Xml));

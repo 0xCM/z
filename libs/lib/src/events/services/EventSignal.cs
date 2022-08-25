@@ -68,14 +68,14 @@ namespace Z0
             return ev;
         }
 
-        public EmittingTableEvent EmittingTable(Type table, FS.FilePath dst)
+        public EmittingTableEvent EmittingTable(Type table, FilePath dst)
         {
             var ev = emittingTable(Source.Type, table, dst);
             Raise(ev);
             return ev;
         }
 
-        public EmittingTableEvent<T> EmittingTable<T>(FS.FilePath dst)
+        public EmittingTableEvent<T> EmittingTable<T>(FilePath dst)
             where T : struct
         {
             var ev = emittingTable<T>(Source.Type, dst);
@@ -83,7 +83,7 @@ namespace Z0
             return ev;
         }
 
-        public EmittedTableEvent<T> EmittedTable<T>(Count count, FS.FilePath dst)
+        public EmittedTableEvent<T> EmittedTable<T>(Count count, FilePath dst)
             where T : struct
         {
             var e = emittedTable<T>(Source.Type, count, dst);
@@ -91,21 +91,21 @@ namespace Z0
             return e;
         }
 
-        public EmittedTableEvent EmittedTable(Type table, Count count, FS.FilePath dst)
+        public EmittedTableEvent EmittedTable(Type table, Count count, FilePath dst)
         {
             var ev = emittedTable(Source.Type, TableId.identify(table), count, dst);
             Raise(ev);
             return ev;
         }
 
-        public EmittingFileEvent EmittingFile(FS.FilePath dst)
+        public EmittingFileEvent EmittingFile(FilePath dst)
         {
             var ev = emittingFile(Source.Type, dst);
             Raise(ev);
             return ev;
         }
 
-        public EmittedFileEvent EmittedFile(Count count, FS.FilePath dst)
+        public EmittedFileEvent EmittedFile(Count count, FilePath dst)
         {
             var ev = emittedFile(Source.Type, dst, count);
             Raise(ev);
@@ -119,7 +119,7 @@ namespace Z0
             return ev;
         }
 
-        public EmittedFileEvent<T> EmittedFile<T>(FS.FilePath dst, T msg)
+        public EmittedFileEvent<T> EmittedFile<T>(FilePath dst, T msg)
         {
             var ev = emittedFile(Source.Type, dst, msg);
             Raise(ev);

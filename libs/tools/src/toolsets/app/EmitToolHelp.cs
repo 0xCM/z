@@ -12,7 +12,7 @@ namespace Z0
 
             public asci32 HelpKind;
 
-            public FS.FilePath Target;
+            public FilePath Target;
 
             //public ToolCmdArgs Args;
         }

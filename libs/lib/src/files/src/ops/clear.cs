@@ -19,7 +19,7 @@ namespace Z0
             }
         }
 
-        public static List<FS.FilePath> clear(FS.FolderPath src, List<FS.FilePath> dst, bool recurse = false)
+        public static List<FilePath> clear(FS.FolderPath src, List<FilePath> dst, bool recurse = false)
         {
             if(Directory.Exists(src.Name))
             {
@@ -31,7 +31,7 @@ namespace Z0
 
         public static FS.Files clear(FS.Files src)
         {
-            var dst = list<FS.FilePath>();
+            var dst = list<FilePath>();
             foreach(var file in src)
             {
                 if(file.Exists)

@@ -185,7 +185,7 @@ namespace Z0
         }
 
         [Parser]
-        public static Outcome parse(string src, out FS.FilePath dst)
+        public static Outcome parse(string src, out FilePath dst)
         {
             dst = FS.path(src);
             return true;

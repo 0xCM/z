@@ -19,7 +19,7 @@ namespace Z0
             var stores = assets.DataStoresTemplate().Utf8();
             var store = assets.DataStoreTemplate().Utf8();
             //var path = AppDb.CgStagePath("DataStores", FileKind.Cs);
-            var path = FS.FilePath.Empty;
+            var path = FilePath.Empty;
 
             var buffer = text.buffer();
             buffer.AppendLine(stores);

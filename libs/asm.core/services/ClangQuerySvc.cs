@@ -12,7 +12,7 @@ namespace Z0.llvm
 
         Interpreter Controller;
 
-        FS.FilePath QueryFile;
+        FilePath QueryFile;
 
         StreamWriter QueryWriter;
 
@@ -26,7 +26,7 @@ namespace Z0.llvm
             Counter = 0;
         }
 
-        FS.FilePath NextOutFile()
+        FilePath NextOutFile()
             => AppDb.EtlSource("llvm.data").BuildOut() + FS.file(string.Format("QueryOut{0}", Sequence++), FS.ext("tree"));
 
         void CloseQuery()

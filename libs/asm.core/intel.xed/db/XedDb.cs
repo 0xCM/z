@@ -11,12 +11,12 @@ namespace Z0
     {
         static XedPaths Paths => XedPaths.Service;
 
-        static ConcurrentDictionary<FS.FilePath,MemoryFile> _MemoryFiles = new();
+        static ConcurrentDictionary<FilePath,MemoryFile> _MemoryFiles = new();
 
-        static FS.FilePath InstDumpSource()
+        static FilePath InstDumpSource()
             => Paths.Sources() + FS.file("xed-dump", FileKind.Txt.Ext());
 
-        public static MemoryFile MemoryFile(FS.FilePath src)
+        public static MemoryFile MemoryFile(FilePath src)
             => _MemoryFiles.GetOrAdd(src, path => path.MemoryMap(true));
 
         public static MemoryFile InstDumpFile()

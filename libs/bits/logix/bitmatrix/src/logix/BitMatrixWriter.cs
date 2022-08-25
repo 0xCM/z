@@ -8,12 +8,12 @@ namespace Z0
 
     public readonly struct BitMatrixWriter : IBitMatrixWriter<BitMatrixWriter>
     {
-        public FS.FilePath TargetPath {get;}
+        public FilePath TargetPath {get;}
 
         readonly StreamWriter Stream;
 
         [MethodImpl(Inline)]
-        internal BitMatrixWriter(FS.FilePath dst)
+        internal BitMatrixWriter(FilePath dst)
         {
             TargetPath = dst;
             Stream = TargetPath.EnsureParentExists().Writer();
@@ -27,7 +27,7 @@ namespace Z0
         BitMatrixWriter(StreamWriter dst)
         {
             Stream = dst;
-            TargetPath = FS.FilePath.Empty;
+            TargetPath = FilePath.Empty;
         }
 
         public void Dispose()

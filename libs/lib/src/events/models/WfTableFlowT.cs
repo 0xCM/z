@@ -11,12 +11,12 @@ namespace Z0
 
         public readonly ExecToken Token;
 
-        public readonly FS.FilePath Target;
+        public readonly FilePath Target;
 
         public readonly Count EmissionCount;
 
         [MethodImpl(Inline)]
-        internal WfTableFlow(IWfRuntime wf, FS.FilePath dst, in ExecToken token, uint count = 0)
+        internal WfTableFlow(IWfRuntime wf, FilePath dst, in ExecToken token, uint count = 0)
         {
             Wf = wf;
             Token = token;

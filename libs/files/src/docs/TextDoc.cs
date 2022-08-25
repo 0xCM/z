@@ -8,7 +8,7 @@ namespace Z0
 
     public sealed class TextDoc
     {
-        public FS.FilePath Location {get;}
+        public FilePath Location {get;}
 
         Index<TextLine> Data;
 
@@ -19,13 +19,13 @@ namespace Z0
 
         public TextDoc()
         {
-            Location = FS.FilePath.Empty;
+            Location = FilePath.Empty;
             Data = sys.empty<TextLine>();
         }
 
         public TextDoc(TextBlock src)
         {
-            Location = FS.FilePath.Empty;
+            Location = FilePath.Empty;
             var lines = text.split(src.Text, Chars.NL).Select(x => x.Trim());
             var count = lines.Length;
             Data = alloc<TextLine>(count);
@@ -33,13 +33,13 @@ namespace Z0
                 Data[i] = (i+1, skip(lines,i));
         }
 
-        public TextDoc(FS.FilePath src)
+        public TextDoc(FilePath src)
         {
             Location = src;
             Data = sys.empty<TextLine>();
         }
 
-        public TextDoc(FS.FilePath src, TextLine[] data)
+        public TextDoc(FilePath src, TextLine[] data)
         {
             Location = src;
             Data = data;

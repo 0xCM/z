@@ -9,10 +9,10 @@ namespace Z0
     /// </summary>
     public readonly struct NativeLibFile : IFileModule<NativeLibFile>
     {
-        public FS.FilePath Path {get;}
+        public FilePath Path {get;}
 
         [MethodImpl(Inline)]
-        public NativeLibFile(FS.FilePath path)
+        public NativeLibFile(FilePath path)
             => Path = path;
 
         public FS.FileName FileName

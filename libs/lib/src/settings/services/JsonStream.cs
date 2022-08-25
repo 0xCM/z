@@ -14,7 +14,7 @@ namespace Z0
 
     public ref struct JsonStream
     {
-        public static JsonStream create(FS.FilePath src)
+        public static JsonStream create(FilePath src)
             => new JsonStream(src.Utf8Reader());
 
         readonly JsonReaderState State;

@@ -8,19 +8,19 @@ namespace Z0
 
     partial struct Tables
     {
-        public static FS.FilePath path(FS.FolderPath dir, Type t)
+        public static FilePath path(FS.FolderPath dir, Type t)
             => t.Tag<RecordAttribute>().MapValueOrElse(a => dir + FS.file(a.TableId, FS.Csv), () => dir + FS.file(t.Name, FS.Csv));
 
-        public static FS.FilePath path(FS.FolderPath dir, Type t, string subject)
+        public static FilePath path(FS.FolderPath dir, Type t, string subject)
             => t.Tag<RecordAttribute>().MapValueOrElse(
                     a => dir + FS.file(string.Format("{0}.{1}", a.TableId, subject), FS.Csv),
                     () => dir + FS.file(string.Format("{0}.{1}", t.Name, subject), FS.Csv));
 
-        public static FS.FilePath path<T>(FS.FolderPath dir)
+        public static FilePath path<T>(FS.FolderPath dir)
             where T : struct
                 => path(dir, typeof(T));
 
-        public static FS.FilePath path<T>(FS.FolderPath dir, string subject)
+        public static FilePath path<T>(FS.FolderPath dir, string subject)
             where T : struct
                 => path(dir, typeof(T), subject);
 
@@ -40,11 +40,11 @@ namespace Z0
             where T : struct
                 => subdir(dir, typeof(T));
 
-        public static FS.FilePath subpath<T>(FS.FolderPath dir, string subject)
+        public static FilePath subpath<T>(FS.FolderPath dir, string subject)
             where T : struct
                 => subpath(dir, identify<T>(), subject);
 
-        public static FS.FilePath subpath<S>(FS.FolderPath dir, TableId id, S subject)
+        public static FilePath subpath<S>(FS.FolderPath dir, TableId id, S subject)
             => dir + FS.folder(id.Format()) + FS.file(string.Format(EnvFolders.qualified, id, subject), FS.Csv);
     }
 }

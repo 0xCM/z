@@ -29,15 +29,15 @@ namespace Z0.llvm
         public IDbTargets Tables()
             => Targets(tables);
 
-        public FS.FilePath DbTable<T>()
+        public FilePath DbTable<T>()
             where T : struct
                 => Tables().Table<T>();
 
-        public FS.FilePath DbTable<T>(string prefix)
+        public FilePath DbTable<T>(string prefix)
             where T : struct
                 => Tables().PrefixedTable<T>(prefix);
 
-        public FS.FilePath DbTable(string id)
+        public FilePath DbTable(string id)
             => Tables().Path(FS.file(id, FS.Csv));
 
         public IDbTargets LineMaps()
@@ -46,10 +46,10 @@ namespace Z0.llvm
         public IDbTargets ToolImports()
             => Targets(tools);
 
-        public FS.FilePath RecordMap(string project, string kind)
+        public FilePath RecordMap(string project, string kind)
             => Targets("maps").Path($"{project}.{kind}",FileKind.Map);
 
-        public FS.FilePath RecordSource(string project, string kind)
+        public FilePath RecordSource(string project, string kind)
             => Sources("records").Path($"{project}.{kind}", FileKind.Txt);
 
         public ListedFiles RecordFiles()
@@ -61,19 +61,19 @@ namespace Z0.llvm
         public IDbTargets QueryOut()
             => Targets(queries);
 
-        public FS.FilePath QueryOut(string name, FileKind kind)
+        public FilePath QueryOut(string name, FileKind kind)
             => QueryOut(FS.file(name,kind));
 
-        public FS.FilePath QueryOut(FS.FileName file)
+        public FilePath QueryOut(FS.FileName file)
             => QueryOut().Path(file);
 
-        public FS.FilePath LineMap(string name)
+        public FilePath LineMap(string name)
             => LineMaps().Path(name, FileKind.Map);
 
-        public FS.FilePath LineMap(string project, string name)
+        public FilePath LineMap(string project, string name)
             => LineMaps().Path($"{project}.{name}", FileKind.Map);
 
-        public FS.FilePath TableGenHeader(LlvmTargetName target, string kind)
+        public FilePath TableGenHeader(LlvmTargetName target, string kind)
             => LlvmSources(include).Path($"{target}.{kind}", FileKind.H);
 
         public FS.Files TableGenHeaders(LlvmTargetName target)
@@ -94,13 +94,13 @@ namespace Z0.llvm
         public IDbSources SourceSettings()
             => Sources("settings");
 
-        public FS.FilePath RecordSet(string project, string name)
+        public FilePath RecordSet(string project, string name)
             => Records(project).Path($"{project}.{name}.records", FileKind.Txt);
 
-        public FS.FilePath RecordSet(string project, LlvmTargetName target)
+        public FilePath RecordSet(string project, LlvmTargetName target)
             => Records(project).Path($"{project}.{target}.records", FileKind.Txt);
 
-        public FS.FilePath File(string scope, string name, FileKind kind)
+        public FilePath File(string scope, string name, FileKind kind)
             => Targets(scope).Path(name, kind);
 
         public FS.Files Lists()
@@ -109,7 +109,7 @@ namespace Z0.llvm
         public Index<string> ListNames()
             => Lists().Map(x => x.FileName.WithoutExtension.Format().Remove("llvm.lists."));
 
-        public FS.FilePath ListTargetPath(string name)
+        public FilePath ListTargetPath(string name)
             => DbTable(string.Format("llvm.lists.{0}", name));
 
         public IDbTargets CodeGen()

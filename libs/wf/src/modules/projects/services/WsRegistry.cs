@@ -8,7 +8,7 @@ namespace Z0
 
     public class WsRegistry : WfSvc<WsRegistry>
     {
-        FS.FilePath RegistryPath => AppDb.Settings("workspaces", FileKind.Csv);
+        FilePath RegistryPath => AppDb.Settings("workspaces", FileKind.Csv);
 
         IRecordFormatter<Entry> EntryFormatter = Tables.formatter<Entry>();
 

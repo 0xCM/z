@@ -11,7 +11,7 @@ namespace Z0
     [ApiHost]
     public sealed class RenderPatternEmitter : AppService<RenderPatternEmitter>
     {
-        public void Emit(Type src, FS.FilePath dst)
+        public void Emit(Type src, FilePath dst)
         {
             var flow = EmittingFile(dst);
             using var writer = dst.Writer();

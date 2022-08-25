@@ -7,7 +7,7 @@ namespace Z0
     partial class XTend
     {
         [MethodImpl(Inline), Op]
-        public static FS.FilePath[] Exclude(this FS.FilePath[] src, string match)
+        public static FilePath[] Exclude(this FilePath[] src, string match)
             => FS.exclude(src,match);
     }
 }

@@ -16,7 +16,7 @@ namespace Z0
 
             const char FieldDelimiter = Chars.Space;
 
-            public static Index<FormImport> calc(FS.FilePath path)
+            public static Index<FormImport> calc(FilePath path)
             {
                 var src = CalcFormSources(path);
                 var count = src.Count;
@@ -142,7 +142,7 @@ namespace Z0
                 return result;
             }
 
-            static Index<FormSource> CalcFormSources(FS.FilePath src)
+            static Index<FormSource> CalcFormSources(FilePath src)
             {
                 const char CommentMarker = Chars.Hash;
                 var tableid = Tables.identify<FormSource>();

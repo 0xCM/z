@@ -11,7 +11,7 @@ namespace Z0
     partial class XTend
     {
         [Op]
-        public static LineReader Utf8LineReader(this FS.FilePath src)
+        public static LineReader Utf8LineReader(this FilePath src)
             => new LineReader(src.Utf8Reader());
 
         [MethodImpl(Inline), Op]
@@ -19,7 +19,7 @@ namespace Z0
             => new LineReader(src);
 
         [Op]
-        public static LineReader LineReader(this FS.FilePath src, TextEncodingKind encoding)
+        public static LineReader LineReader(this FilePath src, TextEncodingKind encoding)
             => src.Reader(encoding).ToLineReader();
     }
 

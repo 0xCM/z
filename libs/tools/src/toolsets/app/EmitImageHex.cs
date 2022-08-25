@@ -7,23 +7,23 @@ namespace Z0
     partial class ApiCmdDefs
     {
         [Cmd(CmdId,"Accepts a binary image and produces FileKind.Hex file")]
-        public struct EmitImageHex : IFlowCmd<FS.FilePath,FS.FilePath>
+        public struct EmitImageHex : IFlowCmd<FilePath,FilePath>
         {
             const string CmdId = "image/emit/hex";
 
             public Actor Actor;
 
-            public FS.FilePath Source;
+            public FilePath Source;
 
-            public FS.FilePath Target;
+            public FilePath Target;
 
             IActor IFlowCmd.Actor
                 => Actor;
 
-            FS.FilePath IFlowCmd<FS.FilePath, FS.FilePath>.Source
+            FilePath IFlowCmd<FilePath, FilePath>.Source
                 => Source;
 
-            FS.FilePath IFlowCmd<FS.FilePath, FS.FilePath>.Target
+            FilePath IFlowCmd<FilePath, FilePath>.Target
                 => Target;
         }
     }

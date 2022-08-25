@@ -9,7 +9,7 @@ namespace Z0
     public static partial class XTend
     {
         [MethodImpl(Inline)]
-        public static LlcCmd Command(this Llc tool, FS.FilePath src, FS.FilePath dst)
+        public static LlcCmd Command(this Llc tool, FilePath src, FilePath dst)
         {
             var cmd = new LlcCmd();
             cmd.Source = src;

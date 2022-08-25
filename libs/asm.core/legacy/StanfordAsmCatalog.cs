@@ -81,7 +81,7 @@ namespace Z0.Asm
             return dst.ToSeq().Sort();
         }
 
-        public ReadOnlySpan<StanfordInstruction> LoadSource(FS.FilePath src)
+        public ReadOnlySpan<StanfordInstruction> LoadSource(FilePath src)
         {
             var lines = src.ReadNumberedLines();
             var foundheader = false;

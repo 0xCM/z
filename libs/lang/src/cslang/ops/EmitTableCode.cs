@@ -16,7 +16,7 @@ namespace Z0
             FileEmit(emitter.Emit(), src.Count, path);
         }
 
-        public void EmitTableCode<K>(SymbolStrings<K> spec, FS.FilePath dst)
+        public void EmitTableCode<K>(SymbolStrings<K> spec, FilePath dst)
             where K : unmanaged
         {
             var emitter = text.emitter();

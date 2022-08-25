@@ -10,10 +10,10 @@ namespace Z0
 
     public class Interpreter : IDisposable
     {
-        public static Interpreter create(FS.FilePath exe, string args, Action<string> status, Action<string> error, Action<int> exit)
+        public static Interpreter create(FilePath exe, string args, Action<string> status, Action<string> error, Action<int> exit)
             => new Interpreter(exe, args, status, error, exit);
 
-        Interpreter(FS.FilePath exe, string args, Action<string> status, Action<string> error, Action<int> exit)
+        Interpreter(FilePath exe, string args, Action<string> status, Action<string> error, Action<int> exit)
         {
             StatusReceiver = status;
             ErrorReceiver = error;

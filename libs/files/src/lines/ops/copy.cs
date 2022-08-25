@@ -8,7 +8,7 @@ namespace Z0
     {
         static MsgPattern<Count,LineNumber,string> BadLineNumber => "BadLineNumber(counter{0} != line{1}, content{2})";
 
-        public static Outcome<uint> copy(FS.FilePath src, FS.FilePath dst, Pair<TextEncodingKind> encoding)
+        public static Outcome<uint> copy(FilePath src, FilePath dst, Pair<TextEncodingKind> encoding)
         {
             var outcome = Outcome.Success;
             using var reader = src.LineReader(encoding.Left);

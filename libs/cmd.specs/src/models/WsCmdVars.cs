@@ -11,9 +11,9 @@ namespace Z0
 
         public @string Actor;
 
-        public FS.FilePath SrcPath;
+        public FilePath SrcPath;
 
-        public FS.FilePath DstPath;
+        public FilePath DstPath;
 
         public FS.FolderPath SrcDir;
 

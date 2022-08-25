@@ -11,7 +11,7 @@ namespace Z0
     {
         readonly BitFormatter<byte> BitFormat;
 
-        public FS.FilePath ListPath(FS.FolderPath dst, Identifier name)
+        public FilePath ListPath(FS.FolderPath dst, Identifier name)
             => dst + FS.file(name + ".bin", ListingExt);
 
         public FileExt ListingExt
@@ -30,7 +30,7 @@ namespace Z0
             return CreateCaseScript(@case, Script(dst, FS.file(name.Format(), FS.Cmd)));
         }
 
-        public NasmCaseScript CreateCaseScript(NasmCase src, FS.FilePath dst)
+        public NasmCaseScript CreateCaseScript(NasmCase src, FilePath dst)
         {
             var buffer = text.buffer();
             buffer.AppendLine("@echo off");
@@ -77,7 +77,7 @@ namespace Z0
         }
  
          [Op]
-        public NasmListing ReadListing(FS.FilePath src)
+        public NasmListing ReadListing(FilePath src)
         {
             var flow = Wf.Running(ReadingNasmListing.Format(src));
             var dst = list<NasmListLine>();
@@ -176,7 +176,7 @@ namespace Z0
         }
 
 
-        public Index<NasmCodeBlock> LoadListedBlocks(FS.FilePath path)
+        public Index<NasmCodeBlock> LoadListedBlocks(FilePath path)
         {
             if(!path.Exists)
             {

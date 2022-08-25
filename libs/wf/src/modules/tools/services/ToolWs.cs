@@ -12,7 +12,7 @@ namespace Z0
         public FS.FolderPath ToolHome(Tool tool)
             => Root + FS.folder(tool.Format());
 
-        public FS.FilePath ConfigScript(Tool tool)
+        public FilePath ConfigScript(Tool tool)
             => ToolHome(tool) + FS.file(ApiAtomic.config, FS.Cmd);
 
         Dictionary<Actor,ToolConfig> ConfigLookup;
@@ -52,16 +52,16 @@ namespace Z0
         public FS.FolderPath Logs(Tool tool)
             => ToolHome(tool) + FS.folder(logs);
 
-        public FS.FilePath ConfigPath(Tool tool)
+        public FilePath ConfigPath(Tool tool)
             => ToolHome(tool) + FS.file(tool.Format(), FileKind.Config);
 
         public FS.FolderPath Scripts(Tool tool)
             => ToolHome(tool) + FS.folder(scripts);
 
-        public FS.FilePath Script(Tool tool, string name)
+        public FilePath Script(Tool tool, string name)
             => Scripts(tool) + FS.file(name, FS.Cmd);
 
-        public FS.FilePath Inventory()
+        public FilePath Inventory()
             => Root + FS.folder(admin) + FS.file(inventory, FS.Txt);
 
         public ReadOnlySpan<ToolConfig> Configured

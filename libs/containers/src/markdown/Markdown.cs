@@ -87,7 +87,7 @@ namespace Z0
             => new RelativeLink(src.File.Format(), src);
 
         [MethodImpl(Inline), Op]
-        public static AbsoluteLink link(Label label, FS.FilePath dst)
+        public static AbsoluteLink link(Label label, FilePath dst)
             => new AbsoluteLink(label, dst.ToUri(), false);
 
         [MethodImpl(Inline), Op]
@@ -95,7 +95,7 @@ namespace Z0
             => new AbsoluteLink(label, dst, false);
 
         [MethodImpl(Inline), Op]
-        public static AbsoluteLink link(FS.FilePath dst, bool bare = true)
+        public static AbsoluteLink link(FilePath dst, bool bare = true)
             => new AbsoluteLink(dst.FileName.WithoutExtension.Format(), dst.ToUri(), bare);
     }
 }

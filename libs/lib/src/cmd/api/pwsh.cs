@@ -10,10 +10,10 @@ namespace Z0
         public static CmdLine pwsh(string spec)
             => $"pwsh.exe {spec}";
 
-        public static CmdLine pwsh(FS.FilePath src, string args)
+        public static CmdLine pwsh(FilePath src, string args)
             => string.Format("pwsh.exe {0} {1}", src.Format(PathSeparator.BS), args);
 
-        public static CmdLine pwsh(FS.FilePath src)
+        public static CmdLine pwsh(FilePath src)
             => string.Format("pwsh.exe {0}", src.Format(PathSeparator.BS));
     }
 }

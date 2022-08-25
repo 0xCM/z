@@ -148,7 +148,7 @@ namespace Z0
                 => new Files(src.Storage);
 
             [MethodImpl(Inline)]
-            public static implicit operator ReadOnlySpan<FS.FilePath>(FS.Files src)
+            public static implicit operator ReadOnlySpan<FilePath>(FS.Files src)
                 => src.View;
 
             public static Files Empty

@@ -15,7 +15,7 @@ namespace Z0
 
         }
 
-        public static CmdScript script(Bitness mode, FS.FilePath src, FS.FilePath dst)
+        public static CmdScript script(Bitness mode, FilePath src, FilePath dst)
         {
             const string Pattern = "{0} -b {1} -p intel {2} > {3}";
             var name = src.FileName.WithoutExtension.Format();
@@ -23,7 +23,7 @@ namespace Z0
             return CmdScripts.create(name, body);
         }
 
-        public FS.FilePath Job(Bitness mode, FS.FolderPath input, FS.FolderPath output)
+        public FilePath Job(Bitness mode, FS.FolderPath input, FS.FolderPath output)
         {
             var src = input.Files(FS.Bin);
             var _scripts = scripts(mode, src, output);
@@ -31,7 +31,7 @@ namespace Z0
             var scriptDir = FS.FolderPath.Empty + FS.folder(Id.Format());
             scriptDir.Clear();
 
-            var paths = span<FS.FilePath>(count);
+            var paths = span<FilePath>(count);
             var runner = scriptDir + FS.file("run", FS.Cmd);
             using var writer = runner.Writer();
             for(var i=0; i<count; i++)
@@ -45,7 +45,7 @@ namespace Z0
             return runner;
         }
 
-        public static ReadOnlySpan<CmdScript> scripts(Bitness mode, ReadOnlySpan<FS.FilePath> src, FS.FolderPath dst)
+        public static ReadOnlySpan<CmdScript> scripts(Bitness mode, ReadOnlySpan<FilePath> src, FS.FolderPath dst)
         {
             var count = src.Length;
             var buffer = alloc<CmdScript>(count);

@@ -8,9 +8,9 @@ namespace Z0
 
     internal class WorkerLog : IWorkerLog
     {
-        public readonly FS.FilePath StatusPath;
+        public readonly FilePath StatusPath;
 
-        public readonly FS.FilePath ErrorPath;
+        public readonly FilePath ErrorPath;
 
         readonly FileStream Status;
 

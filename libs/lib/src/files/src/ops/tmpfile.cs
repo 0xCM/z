@@ -8,7 +8,7 @@ namespace Z0
 
     partial struct FS
     {
-        public static FS.FilePath tmpfile()
+        public static FilePath tmpfile()
             => FS.dir(Path.GetTempPath()) + FS.file(string.Format("{0}.{1}", controller().PartName(), timestamp()));
     }
 }

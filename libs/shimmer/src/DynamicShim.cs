@@ -8,9 +8,9 @@ namespace Z0
 
     public sealed class DynamicShim : Shim<DynamicShim>
     {    
-        static FS.FilePath path()
+        static FilePath path()
         {
-            var dst = FS.FilePath.Empty;
+            var dst = FilePath.Empty;
             var args = Environment.GetCommandLineArgs();
             if (args.Length != 0)
                 dst = FS.path(first(args));

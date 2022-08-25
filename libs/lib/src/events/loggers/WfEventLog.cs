@@ -10,9 +10,9 @@ namespace Z0
 
     struct WfEventLog : IWfEventLog
     {
-        public FS.FilePath StatusPath {get;}
+        public FilePath StatusPath {get;}
 
-        public FS.FilePath ErrorPath {get;}
+        public FilePath ErrorPath {get;}
 
         readonly FileStream Status;
 

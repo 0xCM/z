@@ -75,13 +75,13 @@ namespace Z0
         static Type CharSpanAcessorType
             => typeof(ReadOnlySpan<char>);
 
-        public FS.FilePath ResPackPath()
-            => FS.FilePath.Empty;
+        public FilePath ResPackPath()
+            => FilePath.Empty;
 
         public MemoryFile MapResPack()
             => MemoryFiles.map(ResPackPath());
 
-        public ReadOnlySpan<SpanResAccessor> SpanAccessors(FS.FilePath src)
+        public ReadOnlySpan<SpanResAccessor> SpanAccessors(FilePath src)
         {
             var flow = Running(LoadingSpanAccessors.Format(src));
             if(!src.Exists)
@@ -95,7 +95,7 @@ namespace Z0
         public ReadOnlySpan<SpanResAccessor> ResPackAccessors()
             => SpanAccessors(ResPackPath());
 
-        public ReadOnlySpan<SpanResAccessor> ResPackAccessors(FS.FilePath src)
+        public ReadOnlySpan<SpanResAccessor> ResPackAccessors(FilePath src)
             => SpanAccessors(src);
 
         static MsgPattern<FileUri> LoadingSpanAccessors => "Loading respack accessors from {0}";

@@ -8,13 +8,13 @@ namespace Z0
 
     public class Projects
     {
-        public static FS.FilePath build(IProjectWorkspace src)
+        public static FilePath build(IProjectWorkspace src)
             => src.BuildOut() + FS.file($"{src.ProjectId}.build.flows",FileKind.Csv);
 
-        static FS.FilePath target(IProjectWorkspace project, string name, FileKind kind = FileKind.Log)
+        static FilePath target(IProjectWorkspace project, string name, FileKind kind = FileKind.Log)
             => project.BuildOut()+ FS.file(name, kind.Ext());
 
-        public static ProjectLog log(FS.FilePath dst, bool overwrite = true)
+        public static ProjectLog log(FilePath dst, bool overwrite = true)
             => new (dst, overwrite);
 
         public static ProjectLog log(IProjectWorkspace project, string name, FileKind kind = FileKind.Log, bool overwrite = true)

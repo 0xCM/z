@@ -8,10 +8,10 @@ namespace Z0
 
     partial class CmdScripts
     {
-        static FS.FilePath ErrorLog(Timestamp ts, string name)
+        static FilePath ErrorLog(Timestamp ts, string name)
             => AppDb.Logs("process").Path($"{name}.errors.{ts}", FileKind.Log);
 
-        static FS.FilePath StatusLog(Timestamp ts, string name)
+        static FilePath StatusLog(Timestamp ts, string name)
             => AppDb.Logs("process").Path($"{name}.{ts}", FileKind.Log);
 
         public static Outcome run(CmdLine cmd, CmdVars vars, out ReadOnlySpan<TextLine> response)
@@ -54,13 +54,13 @@ namespace Z0
 
         [Op]
         public static Outcome run(CmdLine cmd, CmdVars vars, Receiver<string> status, Receiver<string> error, out ReadOnlySpan<TextLine> response)
-            => run(cmd, vars, FS.FilePath.Empty, status,error, out response);
+            => run(cmd, vars, FilePath.Empty, status,error, out response);
 
         [Op]
         public static Outcome run(CmdLine cmd, Receiver<string> status, Receiver<string> error, out ReadOnlySpan<TextLine> response)
-            => run(cmd, CmdVars.Empty, FS.FilePath.Empty, status,error, out response);
+            => run(cmd, CmdVars.Empty, FilePath.Empty, status,error, out response);
 
-        public static Outcome run(FS.FilePath src, CmdArgs args, FS.FilePath dst)
+        public static Outcome run(FilePath src, CmdArgs args, FilePath dst)
         {
             var result = Outcome.Success;
             try
@@ -134,7 +134,7 @@ namespace Z0
         }
 
         [Op]
-        public static Outcome run(CmdLine cmd, CmdVars vars, FS.FilePath log, Receiver<string> status, Receiver<string> error, out ReadOnlySpan<TextLine> response)
+        public static Outcome run(CmdLine cmd, CmdVars vars, FilePath log, Receiver<string> status, Receiver<string> error, out ReadOnlySpan<TextLine> response)
         {
             response = sys.empty<TextLine>();
             var result = Outcome.Success;

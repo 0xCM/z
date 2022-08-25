@@ -20,7 +20,7 @@ namespace Z0
                 Emit(fields, dst.Metadata(CliSections.Literals).Path(FS.file(src.GetSimpleName(), FileKind.Csv)));
         }
 
-        void Emit(ReadOnlySpan<FieldRef> src, FS.FilePath dst)
+        void Emit(ReadOnlySpan<FieldRef> src, FilePath dst)
         {
             const string Sep = "| ";
 

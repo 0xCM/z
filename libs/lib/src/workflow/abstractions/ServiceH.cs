@@ -81,7 +81,7 @@ namespace Z0
         protected RanEvent<RunningEvent> Ran(RunningEvent e)
             => Signal.Ran(e);
 
-        protected EmittingFileEvent Emitting(FS.FilePath src)
+        protected EmittingFileEvent Emitting(FilePath src)
             => Signal.EmittingFile(src);
 
         protected EmittedFileEvent Emitted(EmittingFileEvent e, Count metric)

@@ -9,7 +9,7 @@ namespace Z0
     {
         IReadOnlyList<IAppMsg> Dequeue();
 
-        void Emit(FS.FilePath dst);
+        void Emit(FilePath dst);
 
         IReadOnlyList<IAppMsg> Flush(Exception e);
 

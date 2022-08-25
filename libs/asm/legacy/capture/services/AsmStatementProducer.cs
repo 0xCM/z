@@ -9,7 +9,7 @@ namespace Z0.Asm
 
     public sealed class AsmStatementProducer : WfSvc<AsmStatementProducer>
     {
-        // public uint Produce(ReadOnlySpan<AsmMemberRoutine> src, FS.FilePath dst)
+        // public uint Produce(ReadOnlySpan<AsmMemberRoutine> src, FilePath dst)
         // {
         //     var count = src.Length;
         //     var flow = EmittingFile(dst);
@@ -52,10 +52,10 @@ namespace Z0.Asm
         //     return counter;
         // }
 
-        // public void Produce(FS.FilePath dst, params PartId[] parts)
+        // public void Produce(FilePath dst, params PartId[] parts)
         //     => Produce(run(Wf, parts, CaptureWorkflowOptions.EmitImm), dst);
 
-        // uint Produce(Index<AsmHostRoutines> src, FS.FilePath dst)
+        // uint Produce(Index<AsmHostRoutines> src, FilePath dst)
         //     => Produce(src.SelectMany(x => x.Storage), dst);
 
         // static void FormatHeader(in AsmMemberRoutine src, ITextBuffer dst)

@@ -6,7 +6,7 @@ namespace Z0
 {
     partial class Tools
     {
-        public static McCmd cmd(AsmToMcAsm kind, FS.FilePath src, FS.FilePath dst)
+        public static McCmd cmd(AsmToMcAsm kind, FilePath src, FilePath dst)
         {
             var cmd = McCmd.Empty;
             cmd.Source = src;
@@ -20,7 +20,7 @@ namespace Z0
             return cmd;
         }
 
-        public static McCmd cmd(SToAsm kind, FS.FilePath src, FS.FilePath dst)
+        public static McCmd cmd(SToAsm kind, FilePath src, FilePath dst)
         {
             var cmd = McCmd.Empty;
             cmd.Source = src;

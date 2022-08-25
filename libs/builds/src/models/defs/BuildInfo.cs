@@ -32,7 +32,7 @@ namespace Z0
 
             public FS.FileName ProjectFile;
 
-            public FS.FilePath ProjectPath;
+            public FilePath ProjectPath;
 
             public FS.FileName ProjectTargetName;
 
@@ -40,7 +40,7 @@ namespace Z0
 
             public FS.FolderPath ProjectObjDir;
 
-            public FS.FilePath ProjectTargetPath;
+            public FilePath ProjectTargetPath;
         }
     }
 }

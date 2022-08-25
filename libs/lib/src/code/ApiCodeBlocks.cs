@@ -26,14 +26,14 @@ namespace Z0
         }
 
         [Op]
-        public static ByteSize emit(in MemoryBlock src, FS.FilePath dst)
+        public static ByteSize emit(in MemoryBlock src, FilePath dst)
         {
             using var writer = dst.Writer();
             return ApiCodeBlocks.emit(src, 0, writer);
         }
 
         [Op]
-        public static ByteSize emit(MemoryBlocks src, FS.FilePath dst)
+        public static ByteSize emit(MemoryBlocks src, FilePath dst)
         {
             using var writer = dst.Writer();
             return emit(src, writer);

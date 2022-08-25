@@ -34,7 +34,7 @@ namespace Z0
         public static AppSettings load(WfEmit channel)
             => load(path(), channel);
 
-        public static FS.FilePath path()
+        public static FilePath path()
             => FS.path(sys.controller().Location).FolderPath + FS.file("app.settings", FileKind.Csv);
 
         public static ref readonly AppSettings Default
@@ -60,7 +60,7 @@ namespace Z0
 
         }
 
-        public static AppSettings load(FS.FilePath src)
+        public static AppSettings load(FilePath src)
         {
             var data = src.ReadLines(true);
             var dst = sys.alloc<Setting>(data.Length - 1);
@@ -75,7 +75,7 @@ namespace Z0
             return new AppSettings(dst);
         }
 
-        public static AppSettings load(FS.FilePath src, WfEmit channel)
+        public static AppSettings load(FilePath src, WfEmit channel)
         {
             var flow = channel.Running($"Loading application settings from {src.ToUri()}");
             var dst = load(src);

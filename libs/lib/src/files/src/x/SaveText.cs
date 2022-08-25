@@ -6,7 +6,7 @@ namespace Z0
 {
     partial class XTend
     {
-        public static Outcome Save(this FS.FilePath dst, string src)
+        public static Outcome Save(this FilePath dst, string src)
         {
             try
             {

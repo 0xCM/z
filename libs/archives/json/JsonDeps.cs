@@ -35,7 +35,7 @@ namespace Z0
             => parse(src.Path().ChangeExtension(FileKind.JsonDeps));
 
         [Op]
-        public static JsonDepsSources parse(FS.FilePath src)
+        public static JsonDepsSources parse(FilePath src)
             => new JsonDepsSources(context(src.ReadText()));
 
         internal static M.DependencyContext context(JsonText src)

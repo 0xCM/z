@@ -21,7 +21,7 @@ namespace Z0
 
         public static MsgPattern<Count,Count> ParsedHosts => "Parsed {0} members from {1} hosts";
 
-        public static RenderPattern<Count,FS.FilePath> LoadedForms => "Loaded {0} forms from {1}";
+        public static RenderPattern<Count,FilePath> LoadedForms => "Loaded {0} forms from {1}";
 
         public static MsgPattern<string,string> ParseFailure => "Parsing {0} from '{1}' failed";
 

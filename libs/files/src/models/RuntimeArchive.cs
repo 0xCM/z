@@ -37,7 +37,7 @@ namespace Z0
             => new RuntimeAssembly(component, FS.path(component.Location));
 
         [MethodImpl(Inline)]
-        public static RuntimeAssembly assembly(Assembly component, FS.FilePath path)
+        public static RuntimeAssembly assembly(Assembly component, FilePath path)
             => new RuntimeAssembly(component, path);
 
         [MethodImpl(Inline)]

@@ -37,14 +37,14 @@ namespace Z0.llvm
         public void Emit(ReadOnlySpan<LlvmAsmVariation> src)
             => TableEmit(src, LlvmPaths.DbTable<LlvmAsmVariation>());
 
-        public FS.FilePath EmitList(LlvmList src)
+        public FilePath EmitList(LlvmList src)
         {
             var dst = LlvmPaths.ListTargetPath(src.Name);
             EmitList(src,dst);
             return dst;
         }
 
-        public void EmitList(LlvmList src, FS.FilePath dst)
+        public void EmitList(LlvmList src, FilePath dst)
             => TableEmit(src.Items, dst);
 
         public void Emit(RegIdentifiers src)

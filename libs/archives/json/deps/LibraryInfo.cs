@@ -20,7 +20,7 @@ namespace Z0
 
             public bool Serviceable;
 
-            public FS.FilePath Path;
+            public FilePath Path;
 
             public string HashPath;
 
@@ -28,7 +28,7 @@ namespace Z0
 
             public Seq<string> Assemblies;
 
-            public Seq<FS.FilePath> ReferencePaths;
+            public Seq<FilePath> ReferencePaths;
         }
     }
 }

@@ -232,7 +232,7 @@ namespace Z0
         static FolderFiles libs(FS.FolderPath src)
         {            
             var candidates = src.Files(FileKind.Dll);
-            var dst = list<FS.FilePath>();
+            var dst = list<FilePath>();
             foreach(var file in candidates)
             {
                 if(file.FileName.Contains("System.Private.CoreLib"))
@@ -260,9 +260,9 @@ namespace Z0
             return dst.ToArray();
         }
 
-        static ReadOnlySpan<Paired<PartId,FS.FilePath>> PartPaths(FS.FolderPath dir)
+        static ReadOnlySpan<Paired<PartId,FilePath>> PartPaths(FS.FolderPath dir)
         {
-            var dst = list<Paired<PartId,FS.FilePath>>();
+            var dst = list<Paired<PartId,FilePath>>();
             var symbols = Symbols.index<PartId>().View;
             var count = symbols.Length;
             for(var i=0; i<count; i++)
@@ -277,7 +277,7 @@ namespace Z0
         /// Attempts to resolve a part from an assembly file path
         /// </summary>
         [Op]
-        static Option<IPart> load(FS.FilePath src)
+        static Option<IPart> load(FilePath src)
             => from c in assembly(src)
             from t in resolve(c)
             from p in resolve(t)
@@ -285,7 +285,7 @@ namespace Z0
             select part;
 
         [Op]
-        static Option<Assembly> assembly(FS.FilePath src)
+        static Option<Assembly> assembly(FilePath src)
         {
             try
             {

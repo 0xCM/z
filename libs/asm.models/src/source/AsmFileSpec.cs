@@ -47,17 +47,17 @@ namespace Z0
         public override string ToString()
             => Format();
 
-        public FS.FilePath Path(FS.FolderPath dst)
+        public FilePath Path(FS.FolderPath dst)
             => dst + FS.file(Name.Format(), FS.Asm);
 
-        public FS.FilePath Save(FS.FolderPath dst)
+        public FilePath Save(FS.FolderPath dst)
         {
             var path = Path(dst);
             Save(path);
             return path;
         }
 
-        public uint Save(FS.FilePath dst)
+        public uint Save(FilePath dst)
         {
             using var writer = dst.AsciWriter();
             writer.WriteLine(Format());

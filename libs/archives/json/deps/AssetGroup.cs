@@ -10,7 +10,7 @@ namespace Z0
         {
             public string Runtime;
 
-            public Seq<FS.FilePath> AssetPaths;
+            public Seq<FilePath> AssetPaths;
 
             public Seq<RuntimeFileInfo> RuntimeFiles;
         }

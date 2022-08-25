@@ -8,10 +8,10 @@ namespace Z0
     public struct ReadObjCmd : IToolFlowCmd<ReadObjCmd>
     {
         [CmdArg("<src>")]
-        public FS.FilePath Source;
+        public FilePath Source;
 
         [CmdArg("<dst>")]
-        public FS.FilePath Target;
+        public FilePath Target;
 
         [CmdFlag("--coff-tls-directory")]
         public bit CoffTlsDirectory;
@@ -58,10 +58,10 @@ namespace Z0
         [CmdFlag("--version-info")]
         public bit VersionInfo;
 
-        FS.FilePath IFlowCmd<FS.FilePath, FS.FilePath>.Source
+        FilePath IFlowCmd<FilePath, FilePath>.Source
             => Source;
 
-        FS.FilePath IFlowCmd<FS.FilePath, FS.FilePath>.Target
+        FilePath IFlowCmd<FilePath, FilePath>.Target
             => Target;
     }
 }

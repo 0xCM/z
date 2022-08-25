@@ -13,6 +13,6 @@ namespace Z0
 
         public Hex32 TotalSize;
 
-        public FS.FilePath Path;
+        public FilePath Path;
     }
 }

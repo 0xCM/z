@@ -26,7 +26,7 @@ namespace Z0
             get => Algs.hash(Name);
         }
 
-        public FS.FilePath Path
+        public FilePath Path
         {
             [MethodImpl(Inline)]
             get => FS.path(Name);

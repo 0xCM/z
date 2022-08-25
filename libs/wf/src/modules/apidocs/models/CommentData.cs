@@ -8,11 +8,11 @@ namespace Z0
     {
         public partial class CommentDataset
         {
-            public readonly SortedLookup<FS.FilePath,TargetXml> XmlLookup;
+            public readonly SortedLookup<FilePath,TargetXml> XmlLookup;
 
-            public readonly SortedLookup<FS.FilePath,TargetComments> TargetCommentLookup;
+            public readonly SortedLookup<FilePath,TargetComments> TargetCommentLookup;
 
-            public readonly SortedLookup<FS.FilePath,Index<ApiComment>> CsvLookup;
+            public readonly SortedLookup<FilePath,Index<ApiComment>> CsvLookup;
 
             public readonly Index<TargetComments> Comments;
 
@@ -23,9 +23,9 @@ namespace Z0
             public readonly FS.Files Sources;
 
             public CommentDataset(
-                    Dictionary<FS.FilePath, Dictionary<string,string>> xml,
-                    Dictionary<FS.FilePath, Dictionary<string,ApiComment>> comments,
-                    Dictionary<FS.FilePath, List<ApiComment>> csvFormat,
+                    Dictionary<FilePath, Dictionary<string,string>> xml,
+                    Dictionary<FilePath, Dictionary<string,ApiComment>> comments,
+                    Dictionary<FilePath, List<ApiComment>> csvFormat,
                     FS.Files dlls
                     )
             {

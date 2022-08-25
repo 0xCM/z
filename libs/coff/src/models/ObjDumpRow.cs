@@ -75,7 +75,7 @@ namespace Z0
             dst.IP = 0;
             dst.Encoded = BinaryCode.Empty;
             dst.Asm = EmptyString;
-            dst.Source = FS.FilePath.Empty;
+            dst.Source = FilePath.Empty;
             dst.Comment = AsmInlineComment.Empty;
             return dst;
         }

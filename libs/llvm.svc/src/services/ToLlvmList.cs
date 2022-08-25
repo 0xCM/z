@@ -11,7 +11,7 @@ namespace Z0.llvm
 
     public static partial class XTend
     {
-        public static LlvmList ToLlvmList(this LlvmListItem[] items, FS.FilePath path)
+        public static LlvmList ToLlvmList(this LlvmListItem[] items, FilePath path)
             => new LlvmList(path,items);
     }
 

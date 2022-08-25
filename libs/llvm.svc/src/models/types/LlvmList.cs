@@ -13,7 +13,7 @@ namespace Z0.llvm
         public readonly string Name;
 
         [MethodImpl(Inline)]
-        public LlvmList(FS.FilePath path, LlvmListItem[] items)
+        public LlvmList(FilePath path, LlvmListItem[] items)
         {
             Name = path.FileName.WithoutExtension.Format().Remove("llvm.lists.");
             Data = items;
@@ -64,13 +64,13 @@ namespace Z0.llvm
             => (Name, this.Map(x => x.Value));
 
         [MethodImpl(Inline)]
-        public static implicit operator LlvmList((FS.FilePath path, LlvmListItem[] items) src)
+        public static implicit operator LlvmList((FilePath path, LlvmListItem[] items) src)
             => new LlvmList(src.path, src.items);
 
         [MethodImpl(Inline)]
         public static implicit operator LlvmList((string name, LlvmListItem[] items) src)
             => new LlvmList(src.name, src.items);
 
-        public static LlvmList Empty => new LlvmList(FS.FilePath.Empty, sys.empty<LlvmListItem>());
+        public static LlvmList Empty => new LlvmList(FilePath.Empty, sys.empty<LlvmListItem>());
     }
 }

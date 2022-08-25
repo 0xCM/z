@@ -80,7 +80,7 @@ namespace Z0
             return CmdScripts.create(name, emitter.Emit());
         }
 
-        public CmdScriptExpr Expr(CmdName name, FS.FilePath src, IDbTargets dst)
+        public CmdScriptExpr Expr(CmdName name, FilePath src, IDbTargets dst)
         {
             var subdir = dst.Root + FS.folder(src.FileName.WithoutExtension.Name);
             subdir.Create();
@@ -158,9 +158,9 @@ namespace Z0
             }
         }
 
-        public ReadOnlySeq<FS.FilePath> GenScripts(IModuleArchive src, IDbTargets dst)
+        public ReadOnlySeq<FilePath> GenScripts(IModuleArchive src, IDbTargets dst)
         {
-            var paths = list<FS.FilePath>();
+            var paths = list<FilePath>();
             var exe = src.NativeExe();
             var lib = src.Lib();
             var dll = src.NativeDll();
@@ -190,7 +190,7 @@ namespace Z0
             return paths.ToArray();
         }
 
-        FS.FilePath GenScript<T>(CmdName cmd, ReadOnlySeq<T> src, FileKind kind, IDbTargets dst)
+        FilePath GenScript<T>(CmdName cmd, ReadOnlySeq<T> src, FileKind kind, IDbTargets dst)
             where T : IFileModule
         {
             var script = Script(ScriptId(cmd, kind), cmd, src, dst);

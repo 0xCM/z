@@ -6,7 +6,7 @@ namespace Z0
 {
     public readonly struct ExeFile : IFsEntry<ExeFile>
     {
-        public FS.FilePath Path {get;}
+        public FilePath Path {get;}
 
         public PathPart Name
         {
@@ -44,15 +44,15 @@ namespace Z0
             => Hash;
 
         [MethodImpl(Inline)]
-        public ExeFile(FS.FilePath src)
+        public ExeFile(FilePath src)
             => Path = src;
 
         [MethodImpl(Inline)]
-        public static implicit operator ExeFile(FS.FilePath src)
+        public static implicit operator ExeFile(FilePath src)
             => new ExeFile(src);
 
         [MethodImpl(Inline)]
-        public static implicit operator FS.FilePath(ExeFile src)
+        public static implicit operator FilePath(ExeFile src)
             => src.Path;
     }
 }

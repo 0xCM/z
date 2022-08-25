@@ -16,7 +16,7 @@ namespace Z0
         /// <param name="access">The stream access spec</param>
         /// <param name="share">Sharing options</param>
         [MethodImpl(Inline), Op]
-        public static FileStream stream(FS.FilePath src, 
+        public static FileStream stream(FilePath src, 
             FileMode mode = FileMode.OpenOrCreate,
             FileAccess access = FileAccess.Write, 
             FileShare share = FileShare.Read) 

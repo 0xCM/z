@@ -13,11 +13,11 @@ namespace Z0.Asm
             var dst = sys.bag<AsmCallRow>();
             var count = src.Length;
             for(var i=0; i<count; i++)
-                EmitRows(skip(src,i), dst, FS.FilePath.Empty);
+                EmitRows(skip(src,i), dst, FilePath.Empty);
             return dst.Index().Sort();
         }
 
-        public Index<AsmCallRow> EmitRows(ReadOnlySpan<AsmRoutine> src, FS.FilePath dst)
+        public Index<AsmCallRow> EmitRows(ReadOnlySpan<AsmRoutine> src, FilePath dst)
         {
             var instructions = list<ApiInstruction>();
             iter(src, routine => instructions.AddRange(routine.Instructions));
@@ -27,7 +27,7 @@ namespace Z0.Asm
             return calls;
         }
 
-        void EmitRows(in ApiPartRoutines src, ConcurrentBag<AsmCallRow> dst, FS.FilePath path)
+        void EmitRows(in ApiPartRoutines src, ConcurrentBag<AsmCallRow> dst, FilePath path)
         {
             var calls = BuildRows(src.Instructions());
             iter(calls, call => dst.Add(call));

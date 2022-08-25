@@ -82,7 +82,7 @@ namespace Z0
             }
         }
 
-        public void ParseDump(FS.FilePath src)
+        public void ParseDump(FilePath src)
             => Wf.DumpParser().ParseDump(src);
 
         protected override void Disposing()

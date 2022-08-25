@@ -12,7 +12,7 @@ namespace Z0
 
     public interface IBitMatrixServices
     {
-        IBitMatrixWriter Writer(FS.FilePath dst)
+        IBitMatrixWriter Writer(FilePath dst)
             => new BitMatrixWriter(dst);
     }
 

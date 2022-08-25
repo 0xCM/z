@@ -8,7 +8,7 @@ namespace Z0
 
     partial class CliEmitter
     {
-        public ExecToken EmitMetadump(FS.FilePath src, FS.FilePath dst)
+        public ExecToken EmitMetadump(FilePath src, FilePath dst)
         {
             var token = ExecToken.Empty;
             try

@@ -28,6 +28,6 @@ namespace Z0
         public FileAttributes Attributes;
 
         [Render(1)]
-        public FS.FilePath Path;
+        public FilePath Path;
     }
 }

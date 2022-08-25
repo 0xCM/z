@@ -12,6 +12,6 @@ namespace Z0
         /// <summary>
         /// The script path
         /// </summary>
-        public FS.FilePath ScriptPath;
+        public FilePath ScriptPath;
    }
 }

@@ -8,14 +8,14 @@ namespace Z0
 
     public class CaptureWf : WfSvc<CaptureWf>
     {
-        public class SettingsStore : Repository<FS.FilePath, CaptureWfSettings, FS.FilePath>
+        public class SettingsStore : Repository<FilePath, CaptureWfSettings, FilePath>
         {
-            public override CaptureWfSettings Load(FS.FilePath key)
+            public override CaptureWfSettings Load(FilePath key)
             {
                 throw new NotImplementedException();
             }
 
-            public override void Store(CaptureWfSettings src, FS.FilePath dst)
+            public override void Store(CaptureWfSettings src, FilePath dst)
             {
                 
             }
@@ -72,10 +72,10 @@ namespace Z0
         public static CaptureWfSettings settings()   
             => new();
 
-        public static CaptureWfSettings settings(FS.FilePath src)   
+        public static CaptureWfSettings settings(FilePath src)   
             => Store.Load(src);
 
-        public static void store(CaptureWfSettings src, FS.FilePath dst)
+        public static void store(CaptureWfSettings src, FilePath dst)
             => Store.Store(src,dst);
     }
 }

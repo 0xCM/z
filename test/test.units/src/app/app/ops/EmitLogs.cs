@@ -15,7 +15,7 @@ namespace Z0
             var basename = AppName;
             var results = SortResults();
 
-            FS.FilePath CaseLogSummary()
+            FilePath CaseLogSummary()
                 => AppDb.Logs("test").Path(FS.file(AppName, FS.Csv));
 
             if(results.Any())
@@ -27,7 +27,7 @@ namespace Z0
             }
         }
 
-        void EmitTestCaseLog(FS.FilePath dst, TestCaseRecord[] records)
+        void EmitTestCaseLog(FilePath dst, TestCaseRecord[] records)
         {
             if(records.Length != 0)
                 Tables.emit(@readonly(records), dst);

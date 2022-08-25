@@ -23,27 +23,27 @@ namespace Z0.Asm
 
         readonly Type Refinement;
 
-        readonly FS.FilePath TargetFile;
+        readonly FilePath TargetFile;
 
         public FlairKind Flair {get;}
 
         [MethodImpl(Inline)]
-        public static SpecializedImmEvent refined(WfStepId step, ApiHostUri uri, bool generic, Type refinement, FS.FilePath dst)
+        public static SpecializedImmEvent refined(WfStepId step, ApiHostUri uri, bool generic, Type refinement, FilePath dst)
             => new SpecializedImmEvent(step, uri, generic, ImmRefinementKind.Refined, refinement, dst);
 
         [MethodImpl(Inline)]
-        public static SpecializedImmEvent literal(WfStepId step, ApiHostUri uri, bool generic, FS.FilePath dst)
+        public static SpecializedImmEvent literal(WfStepId step, ApiHostUri uri, bool generic, FilePath dst)
             => new SpecializedImmEvent(step, uri, generic, ImmRefinementKind.Unrefined, typeof(void), dst);
 
         [MethodImpl(Inline)]
-        public static SpecializedImmEvent define(WfStepId step, ApiHostUri uri, bool generic, FS.FilePath dst, Type refinement)
+        public static SpecializedImmEvent define(WfStepId step, ApiHostUri uri, bool generic, FilePath dst, Type refinement)
             => new SpecializedImmEvent(step, uri, generic,
                 refinement != null ? ImmRefinementKind.Refined : ImmRefinementKind.Unrefined,
                 refinement,
                 dst);
 
         [MethodImpl(Inline)]
-        public SpecializedImmEvent(WfStepId step, ApiHostUri uri, bool generic, ImmRefinementKind source, Type refinement, FS.FilePath dst)
+        public SpecializedImmEvent(WfStepId step, ApiHostUri uri, bool generic, ImmRefinementKind source, Type refinement, FilePath dst)
         {
             EventId = EventId.define(EventName, step);
             Host = uri;

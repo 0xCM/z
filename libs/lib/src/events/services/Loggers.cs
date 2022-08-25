@@ -33,13 +33,13 @@ namespace Z0
         public static IWfEmissionLog emission(Assembly src, Timestamp ts)
             => new WfEmissionLog(emissions(src,ts));
 
-        static FS.FilePath emissions(Assembly src, Timestamp ts)
+        static FilePath emissions(Assembly src, Timestamp ts)
         {
             var name = src.Id().Format();
             return FS.path($"d:/views/db/logs/{name}/emissions/{name}.emissions.{ts}");
         }
 
-        public static IWfEmissionLog emission(FS.FilePath dst)
+        public static IWfEmissionLog emission(FilePath dst)
             => new WfEmissionLog(dst);
 
         [MethodImpl(Inline), Op]

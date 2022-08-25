@@ -8,11 +8,11 @@ namespace Z0
     {
         static AppDb AppDb => AppDb.Service;
 
-        public static FS.FilePath table<T>(ProjectId src)
+        public static FilePath table<T>(ProjectId src)
             where T : struct
                 => AppDb.EtlTargets(src).Path(FS.file(string.Format("{0}.{1}", src, TableId.identify<T>()),FS.Csv));
 
-        public static FS.FilePath table<T>(ProjectId src, string scope)
+        public static FilePath table<T>(ProjectId src, string scope)
             where T : struct
                 => AppDb.EtlTargets(src).Targets(scope).Path(FS.file(string.Format("{0}.{1}", src, TableId.identify<T>()),FS.Csv));
     }

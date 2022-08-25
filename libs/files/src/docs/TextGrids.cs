@@ -18,7 +18,7 @@ namespace Z0
             => text.nonempty(src) ? spec.SplitClean ? src.SplitClean(spec.Delimiter) : src.Split(spec.Delimiter) : sys.empty<string>();
 
         [Op]
-        public static Outcome<Count> normalize(string data, string delimiter, ReadOnlySpan<byte> widths, FS.FilePath dst)
+        public static Outcome<Count> normalize(string data, string delimiter, ReadOnlySpan<byte> widths, FilePath dst)
         {
             var result = parse(data, out var doc);
             var fieldCount = widths.Length;
@@ -54,7 +54,7 @@ namespace Z0
             return (true, count);
         }
 
-        public static Outcome load(FS.FilePath src, TextEncodingKind encoding, out TextGrid dst)
+        public static Outcome load(FilePath src, TextEncodingKind encoding, out TextGrid dst)
         {
             dst = TextGrid.Empty;
             if(!src.Exists)
@@ -73,10 +73,10 @@ namespace Z0
             }
         }
 
-        public static Outcome load(FS.FilePath src, out TextGrid dst)
+        public static Outcome load(FilePath src, out TextGrid dst)
             => load(src, TextDocFormat.Structured(), out dst);
 
-        public static Outcome load(FS.FilePath src, TextDocFormat format, out TextGrid dst)
+        public static Outcome load(FilePath src, TextDocFormat format, out TextGrid dst)
         {
             dst = TextGrid.Empty;
             if(!src.Exists)
@@ -96,7 +96,7 @@ namespace Z0
         }
 
 
-        public static ReadOnlySpan<TextGrid> load(ReadOnlySpan<FS.FilePath> src)
+        public static ReadOnlySpan<TextGrid> load(ReadOnlySpan<FilePath> src)
         {
             var dst = sys.bag<TextGrid>();
             iter(src, path => {
@@ -316,7 +316,7 @@ namespace Z0
             }
         }
 
-        public static ParseResult<string,TextGrid> parse(FS.FilePath src, TextDocFormat? format = null)
+        public static ParseResult<string,TextGrid> parse(FilePath src, TextDocFormat? format = null)
         {
             using var reader = src.Utf8Reader();
             return parse(reader, format).Select(doc => ParseResult.parsed(src.Name.Format(), doc)).Value;

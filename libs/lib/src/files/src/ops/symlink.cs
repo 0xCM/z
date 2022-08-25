@@ -29,7 +29,7 @@ namespace Z0
         }
 
         [Op]
-        public static Outcome<Arrow<FS.FilePath>> symlink(FS.FilePath link, FS.FilePath dst, bool deleteExising = false)
+        public static Outcome<Arrow<FilePath>> symlink(FilePath link, FilePath dst, bool deleteExising = false)
         {
             try
             {

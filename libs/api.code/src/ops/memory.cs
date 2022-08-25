@@ -36,7 +36,7 @@ namespace Z0
             return new MemoryBlocks(dst);
         }
 
-        public static MemoryBlocks memory(FS.FilePath src)
+        public static MemoryBlocks memory(FilePath src)
         {
             var dst = MemoryBlocks.Empty;
             var result = Outcome<MemoryBlocks>.Success;

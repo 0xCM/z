@@ -20,7 +20,7 @@ namespace Z0
         public void EmitAssemblyRefs(ReadOnlySpan<Assembly> src, IApiPack dst)
             => EmitAssemblyRefs(src, dst.Metadata().Table<AssemblyRefInfo>());
 
-        public void EmitAssemblyRefs(ReadOnlySpan<Assembly> src, FS.FilePath dst)
+        public void EmitAssemblyRefs(ReadOnlySpan<Assembly> src, FilePath dst)
         {
             var count = src.Length;
             var counter = 0u;

@@ -56,7 +56,7 @@ namespace Z0
         {
             var src = ObjHex(context.Project.ProjectId).Files(FileKind.HexDat);
             var count = src.Length;
-            var dst = dict<FS.FilePath,Index<HexDataRow>>(count);
+            var dst = dict<FilePath,Index<HexDataRow>>(count);
             for(var i=0; i<count; i++)
                 dst[src[i]] = HexReader.Read(src[i]);
 
@@ -67,7 +67,7 @@ namespace Z0
         {
             var files = context.Files.Docs(FileKind.Obj, FileKind.O);
             var count = files.Count;
-            var dst = dict<FS.FilePath,CoffObject>(count);
+            var dst = dict<FilePath,CoffObject>(count);
             for(var i=0; i<count; i++)
             {
                 ref readonly var file = ref files[i];

@@ -13,12 +13,12 @@ namespace Z0
 
         public EventId EventId {get;}
 
-        public FS.FilePath SourcePath {get;}
+        public FilePath SourcePath {get;}
 
         public FlairKind Flair => FlairKind.Processed;
 
         [MethodImpl(Inline)]
-        public ProcessedFileEvent(Type host, FS.FilePath src)
+        public ProcessedFileEvent(Type host, FilePath src)
         {
             EventId = EventId.define(host, Kind);
             SourcePath = src;

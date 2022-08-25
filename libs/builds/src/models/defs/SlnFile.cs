@@ -11,7 +11,7 @@ namespace Z0
         /// </summary>
         public readonly record struct SlnFile : IFsEntry<SlnFile>
         {
-            public readonly FS.FilePath Path;
+            public readonly FilePath Path;
 
             public PathPart Name
             {
@@ -20,7 +20,7 @@ namespace Z0
             }
 
             [MethodImpl(Inline)]
-            public SlnFile(FS.FilePath src)
+            public SlnFile(FilePath src)
                 => Path = src;
 
             [MethodImpl(Inline)]
@@ -31,11 +31,11 @@ namespace Z0
                 => Format();
 
             [MethodImpl(Inline)]
-            public static implicit operator SlnFile(FS.FilePath src)
+            public static implicit operator SlnFile(FilePath src)
                 => new SlnFile(src);
 
             [MethodImpl(Inline)]
-            public static implicit operator FS.FilePath(SlnFile src)
+            public static implicit operator FilePath(SlnFile src)
                 => src.Path;
         }
     }

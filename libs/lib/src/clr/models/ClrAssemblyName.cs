@@ -18,7 +18,7 @@ namespace Z0
 
         ClrAssemblyName()
         {
-            CodeBase = FS.FilePath.Empty;
+            CodeBase = FilePath.Empty;
             FullName = EmptyString;
             SimpleName = EmptyString;
             Version = default;

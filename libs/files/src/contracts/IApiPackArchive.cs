@@ -9,13 +9,13 @@ namespace Z0
         IDbTargets Tables()
             => new DbTargets(Root);
 
-        FS.FilePath ProcessAsmPath()
+        FilePath ProcessAsmPath()
             => Tables().Path(FS.file("asm.statements", FileKind.Csv));
 
-        FS.FilePath AsmCallsPath()
+        FilePath AsmCallsPath()
             => Tables().Path(FS.file("asm.calls", FileKind.Csv));
 
-        FS.FilePath JmpTarget()
+        FilePath JmpTarget()
             => Tables().Path(FS.file("asm.jumps", FileKind.Csv));
 
         IDbTargets DetailTables()

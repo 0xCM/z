@@ -9,7 +9,7 @@ namespace Z0
 
     partial class Settings
     {
-        public static T load<T>(FS.FilePath src)
+        public static T load<T>(FilePath src)
             where T : ISettings<T>, new()
                 => load<T>(lookup(src, Chars.Eq));
 

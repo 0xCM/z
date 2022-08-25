@@ -15,7 +15,7 @@ namespace Z0
         /// <param name="src"></param>
         /// <param name="dst"></param>
         [Op]
-        public static ByteSize hexdat(ReadOnlySpan<ApiEncoded> src, FS.FilePath dst)
+        public static ByteSize hexdat(ReadOnlySpan<ApiEncoded> src, FilePath dst)
         {
             var options = HexFormatOptions.define();
             using var writer = dst.AsciWriter();
@@ -31,7 +31,7 @@ namespace Z0
         }
 
         [Op]
-        public static Outcome hexdat(FS.FilePath src, out BinaryCode dst)
+        public static Outcome hexdat(FilePath src, out BinaryCode dst)
         {
             var result = Outcome.Success;
             var cells = src.ReadLines().SelectMany(x => text.split(x,Chars.Space));

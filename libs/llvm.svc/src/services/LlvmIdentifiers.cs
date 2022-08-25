@@ -8,7 +8,7 @@ namespace Z0.llvm
 
     public readonly struct LlvmIdentifiers
     {
-        public static ListItem<T,string>[] discover<T>(FS.FilePath header, string marker)
+        public static ListItem<T,string>[] discover<T>(FilePath header, string marker)
             where T : unmanaged
         {
             var items = list<ListItem<T,string>>();

@@ -6,10 +6,10 @@ namespace Z0
 {
     public class AssemblyArchives
     {
-        public static Assembly[] assemblies(FS.FilePath[] src)
+        public static Assembly[] assemblies(FilePath[] src)
             => src.Where(x => FS.managed(x)).Map(assembly).Where(x => x.IsSome()).Select(x => x.Value);
 
-        static Option<Assembly> assembly(FS.FilePath src)
+        static Option<Assembly> assembly(FilePath src)
         {
             try
             {

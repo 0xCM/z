@@ -4,18 +4,18 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct NasmListFile : IFile<FS.FilePath>
+    public readonly struct NasmListFile : IFile<FilePath>
     {
-        public FS.FilePath Location {get;}
+        public FilePath Location {get;}
 
         [MethodImpl(Inline)]
-        public NasmListFile(FS.FilePath target)
+        public NasmListFile(FilePath target)
         {
             Location = target;
         }
 
         [MethodImpl(Inline)]
-        public static implicit operator NasmListFile(FS.FilePath src)
+        public static implicit operator NasmListFile(FilePath src)
             => new NasmListFile(src);
     }
 }

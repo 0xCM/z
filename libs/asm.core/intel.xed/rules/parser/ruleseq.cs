@@ -17,7 +17,7 @@ namespace Z0
             public static Index<RuleSeq> ruleseq()
                 => ruleseq(XedPaths.Service.DocSource(XedDocKind.RuleSeq));
 
-            public static Index<RuleSeq> ruleseq(FS.FilePath src)
+            public static Index<RuleSeq> ruleseq(FilePath src)
                 => ruleseq(src.ReadNumberedLines());
 
             static public Index<RuleSeq> ruleseq(ReadOnlySpan<TextLine> src)

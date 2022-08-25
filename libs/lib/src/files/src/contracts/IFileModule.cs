@@ -11,12 +11,12 @@ namespace Z0
     }
 
     [Free]
-    public interface IFileModule<T> : IFileModule, IFile<FS.FilePath>
+    public interface IFileModule<T> : IFileModule, IFile<FilePath>
         where T : struct, IFileModule<T>
     {
-        FS.FilePath Path {get;}
+        FilePath Path {get;}
 
-        FS.FilePath ILocatable<FS.FilePath>.Location
+        FilePath ILocatable<FilePath>.Location
             => Path;
     }
 }

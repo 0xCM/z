@@ -12,7 +12,7 @@ namespace Z0
         /// <summary>
         /// The path to the represented file
         /// </summary>
-        public readonly FS.FilePath Path {get;}
+        public readonly FilePath Path {get;}
 
         /// <summary>
         /// The assembly name
@@ -20,7 +20,7 @@ namespace Z0
         public readonly AssemblyName Name {get;}
 
         [MethodImpl(Inline)]
-        public ManagedExeFile(FS.FilePath path, AssemblyName name)
+        public ManagedExeFile(FilePath path, AssemblyName name)
         {
             Path = path;
             Name = name;

@@ -11,15 +11,15 @@ namespace Z0
             => string.Format("cmd.exe /c {0}", spec);
 
         [Op]
-        public static CmdLine cmd(FS.FilePath src, string args)
+        public static CmdLine cmd(FilePath src, string args)
             => string.Format("cmd.exe /c {0} {1}", src.Format(PathSeparator.BS), args);
 
         [Op]
-        public static CmdLine cmd(FS.FilePath src)
+        public static CmdLine cmd(FilePath src)
             => string.Format("cmd.exe /c {0}", src.Format(PathSeparator.BS));
 
         [Op]
-        public static CmdLine cmd(FS.FilePath path, CmdKind kind)
+        public static CmdLine cmd(FilePath path, CmdKind kind)
         {
             return kind switch{
                 CmdKind.Cmd => cmd(path),
@@ -30,7 +30,7 @@ namespace Z0
         }
 
         [Op]
-        public static CmdLine cmd(FS.FilePath path, CmdKind kind, string args)
+        public static CmdLine cmd(FilePath path, CmdKind kind, string args)
         {
             return kind switch{
                 CmdKind.Cmd => cmd(path, args),

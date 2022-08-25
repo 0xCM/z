@@ -8,10 +8,10 @@ namespace Z0
 
     public class FileCatalog
     {
-        public static Hex32 docid(FS.FilePath src)
+        public static Hex32 docid(FilePath src)
             => (Hex32)hash(src.ToUri().Format());
 
-        public static FileCatalog load(SortedReadOnlySpan<FS.FilePath> src)
+        public static FileCatalog load(SortedReadOnlySpan<FilePath> src)
         {
             var dst = new FileCatalog();
             for(var i=0u; i<src.Count; i++)
@@ -29,7 +29,7 @@ namespace Z0
 
         readonly PllMap<FileRef,uint> PathMap;
 
-        readonly PllMap<FS.FilePath,FileRef> PathRefs;
+        readonly PllMap<FilePath,FileRef> PathRefs;
 
         FileCatalog()
         {
@@ -53,7 +53,7 @@ namespace Z0
         public Index<FileRef> Docs()
             => map(IdMap.Keys, k => Doc(k)).Sort().Resequence();
 
-        public FileRef Doc(FS.FilePath path)
+        public FileRef Doc(FilePath path)
         {
             PathRefs.Find(path, out var fref);
             return fref;
@@ -65,7 +65,7 @@ namespace Z0
             return fref;
         }
 
-        public FileRef this[FS.FilePath path]
+        public FileRef this[FilePath path]
         {
             [MethodImpl(Inline)]
             get => Doc(path);

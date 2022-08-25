@@ -18,10 +18,10 @@ namespace Z0
 
         readonly PEReader Reader;
 
-        readonly FS.FilePath Source;
+        readonly FilePath Source;
 
         [MethodImpl(Inline)]
-        internal PeTables(PEReader src, FS.FilePath path)
+        internal PeTables(PEReader src, FilePath path)
         {
             Reader = src;
             Source = path;
@@ -45,7 +45,7 @@ namespace Z0
             => PeReader.headers(Reader,Source);
 
         [Op]
-        public static PeTables open(FS.FilePath src)
+        public static PeTables open(FilePath src)
         {
             var reader = new PEReader(File.OpenRead(src.Name));
             return new PeTables(reader, src);
@@ -66,7 +66,7 @@ namespace Z0
             => RpOps.format(OffsetPatternText, src.Name, src.Value);
 
         [Op]
-        public static void save(ReadOnlySpan<PeFieldOffset> src, FS.FilePath dst)
+        public static void save(ReadOnlySpan<PeFieldOffset> src, FilePath dst)
         {
             using var writer = dst.Writer();
             var l = labels(default(PeFieldOffset));

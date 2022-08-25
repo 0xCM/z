@@ -23,7 +23,7 @@ namespace Z0
         }
 
         [Op]
-        public static ApiHostBlocks apiblocks(ApiHostUri host, FS.FilePath src)
+        public static ApiHostBlocks apiblocks(ApiHostUri host, FilePath src)
             => new ApiHostBlocks(host, apiblocks(src));
 
         [Op]
@@ -31,7 +31,7 @@ namespace Z0
             => apicode(src.HexExtracts(), pll);
 
         [Op]
-        public static Index<ApiCodeBlock> apiblocks(FS.FilePath src)
+        public static Index<ApiCodeBlock> apiblocks(FilePath src)
         {
             var rows = apirows(src);
             var count = rows.Count;

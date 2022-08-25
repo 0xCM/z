@@ -14,7 +14,7 @@ namespace Z0
             where K : unmanaged
                 => EmitStringTable(spec,SourceFile(dst, spec.TableName), DataFile(dst, spec.TableName));
 
-        public StringTable EmitStringTable<K>(SymbolStrings<K> spec, FS.FilePath code, FS.FilePath data)
+        public StringTable EmitStringTable<K>(SymbolStrings<K> spec, FilePath code, FilePath data)
             where K : unmanaged
         {
             var def = StringTables.create(spec);

@@ -43,26 +43,26 @@ namespace Z0
         /// <param name="image">The assembly path</param>
         /// <param name="pdb">The pdb path</param>
         [Op]
-        public static Assembly load(FS.FilePath image, FS.FilePath pdb)
+        public static Assembly load(FilePath image, FilePath pdb)
             => Assembly.Load(image.ReadBytes(), pdb.ReadBytes());
 
         [MethodImpl(Inline), Op]
-        public static FS.FilePath location(ClrAssembly src)
+        public static FilePath location(ClrAssembly src)
             => FS.path(src.Definition.Location);
 
         [Op]
-        public static ref readonly FS.FilePath xmlpath(ClrAssembly src, out FS.FilePath dst)
+        public static ref readonly FilePath xmlpath(ClrAssembly src, out FilePath dst)
         {
             var candidate = FS.path(Path.ChangeExtension(src.Definition.Location, FS.Xml.Name));
-            dst = candidate.Exists ? candidate : FS.FilePath.Empty;
+            dst = candidate.Exists ? candidate : FilePath.Empty;
             return ref dst;
         }
 
         [Op]
-        public static ref readonly FS.FilePath pdbpath(ClrAssembly src, out FS.FilePath dst)
+        public static ref readonly FilePath pdbpath(ClrAssembly src, out FilePath dst)
         {
             var candidate = FS.path(Path.ChangeExtension(src.Definition.Location, FS.Pdb.Name));
-            dst = candidate.Exists ? candidate : FS.FilePath.Empty;
+            dst = candidate.Exists ? candidate : FilePath.Empty;
             return ref dst;
         }
 
@@ -76,7 +76,7 @@ namespace Z0
         }
 
         [Op]
-        public static bool valid(FS.FilePath src)
+        public static bool valid(FilePath src)
         {
             try
             {

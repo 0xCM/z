@@ -10,7 +10,7 @@ namespace Z0
     [ApiHost, Free]
     public unsafe class ClrMemoryMap : IDisposable
     {
-        public static ClrMemoryMap create(FS.FilePath src)
+        public static ClrMemoryMap create(FilePath src)
             => new ClrMemoryMap(src);
 
         readonly MemoryFile Source;
@@ -25,7 +25,7 @@ namespace Z0
 
         public readonly PEMemoryBlock MtadataBlock;
 
-        public ClrMemoryMap(FS.FilePath src)
+        public ClrMemoryMap(FilePath src)
         {
             Require.invariant(src.IsNonEmpty);
             Source = MemoryFiles.map(src);
@@ -82,6 +82,6 @@ namespace Z0
         }
 
         public static ClrMemoryMap Empty
-            => new ClrMemoryMap(FS.FilePath.Empty);
+            => new ClrMemoryMap(FilePath.Empty);
     }
 }

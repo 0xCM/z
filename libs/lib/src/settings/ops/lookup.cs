@@ -14,7 +14,7 @@ namespace Z0
             where T : new()
                 => new (typeof(T).PublicInstanceFields().Select(f => new Setting(f.Name, f.GetValue(src))));
  
-        public static SettingLookup lookup(FS.FilePath src, char sep)
+        public static SettingLookup lookup(FilePath src, char sep)
         {
             var dst = list<Setting>();
             var line = AsciLineCover.Empty;

@@ -16,9 +16,9 @@ namespace Z0.llvm
 
         readonly List<AsmInlineComment> Comments;
 
-        FS.FilePath CurrentSource;
+        FilePath CurrentSource;
 
-        FS.FilePath PriorSource;
+        FilePath PriorSource;
 
         uint LineCount;
 
@@ -43,8 +43,8 @@ namespace Z0.llvm
 
         void Init()
         {
-            CurrentSource = FS.FilePath.Empty;
-            PriorSource = FS.FilePath.Empty;
+            CurrentSource = FilePath.Empty;
+            PriorSource = FilePath.Empty;
             Comments.Clear();
             LineCount = 0;
             CurrentBlockLabel = AsmBlockLabel.Empty;

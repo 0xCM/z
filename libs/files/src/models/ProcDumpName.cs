@@ -8,7 +8,7 @@ namespace Z0
 
     public readonly struct ProcDumpName : IIdentified
     {
-        public static ProcDumpName from(FS.FilePath src)
+        public static ProcDumpName from(FilePath src)
         {
             if(src.IsEmpty)
                 return Empty;

@@ -30,7 +30,7 @@ namespace Z0.Asm
             return dst;
         }
 
-        public ReadOnlySpan<StanfordFormInfo> LoadFormInfo(FS.FilePath src)
+        public ReadOnlySpan<StanfordFormInfo> LoadFormInfo(FilePath src)
         {
             var dst = list<StanfordFormInfo>();
             if(src.Exists)

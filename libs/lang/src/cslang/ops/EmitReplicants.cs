@@ -48,10 +48,10 @@ namespace Z0
             iter(namespaces, ns => EmitReplicants(spec.WithNamespace(ns), types[ns]), true);
         }
 
-        static FS.FilePath ReplicantCodePath(EnumReplicantSpec spec, string ns)
+        static FilePath ReplicantCodePath(EnumReplicantSpec spec, string ns)
             => spec.Target + FS.file(string.Format("{0}.{1}", ns, text.ifempty(spec.DeclaringType, "EnumDefs")), FS.Cs);
 
-        static FS.FilePath ReplicantDataPath(EnumReplicantSpec spec, string ns)
+        static FilePath ReplicantDataPath(EnumReplicantSpec spec, string ns)
             => spec.Target + FS.file(string.Format("{0}.{1}", ns, text.ifempty(spec.DeclaringType, "EnumDefs")), FS.Csv);
 
         void EmitReplicants(EnumReplicantSpec spec, Type[] types)

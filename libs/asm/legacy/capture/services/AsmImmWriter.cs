@@ -25,7 +25,7 @@ namespace Z0.Asm
             Config = AsmFormatConfig.@default(out var _);
         }
 
-        public Option<FS.FilePath> SaveAsmImm(OpIdentity id, AsmRoutine[] src, bool append, bool refined)
+        public Option<FilePath> SaveAsmImm(OpIdentity id, AsmRoutine[] src, bool append, bool refined)
         {
             var dst = Target.AsmImmPath(Uri.Part, Uri, id, refined);
             using var writer = dst.Writer(append);

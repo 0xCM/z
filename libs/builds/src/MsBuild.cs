@@ -16,13 +16,13 @@ namespace Z0
     {
         const NumericKind Closure = UnsignedInts;
 
-        ConcurrentDictionary<FS.FilePath, ProjectSpec> ProjectLookup = new();
+        ConcurrentDictionary<FilePath, ProjectSpec> ProjectLookup = new();
 
         [MethodImpl(Inline), Op]
         internal static B.Property property(E.ProjectProperty src)
             => new B.Property(src);
 
-        public ProjectSpec LoadProject(FS.FilePath src)
+        public ProjectSpec LoadProject(FilePath src)
             => ProjectLookup.GetOrAdd(src, Build.project);
 
         [MethodImpl(Inline), Op]

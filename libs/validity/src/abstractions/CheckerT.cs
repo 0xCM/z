@@ -33,14 +33,14 @@ namespace Z0
         FS.FileName FileName(string suffix, FileKind kind)
             => FS.file(string.Format("{0}.{1}",SvcName, suffix), kind.Ext());
 
-        FS.FilePath EventLogPath
+        FilePath EventLogPath
             => AppDb.Logs("checks").Path(FileName("logs", FileKind.Log));
 
-        FS.FilePath TablePath<R>()
+        FilePath TablePath<R>()
             where R : struct
                 => AppDb.Logs("checks").PrefixedTable<R>(SvcName);
 
-        FS.FilePath TablePath<R>(string label)
+        FilePath TablePath<R>(string label)
             where R : struct
                 => AppDb.Logs("checks").PrefixedTable<R>(SvcName + $".{label}");
 

@@ -6,9 +6,9 @@ namespace Z0
 {
     public struct BdDisasmCmd
     {
-        public FS.FilePath ToolPath;
+        public FilePath ToolPath;
 
-        public FS.FilePath BinPath;
+        public FilePath BinPath;
 
         public Bitness AsmBitMode;
 
@@ -16,7 +16,7 @@ namespace Z0
 
         public bool EmitDetails;
 
-        public FS.FilePath OutputPath;
+        public FilePath OutputPath;
 
         public string CmdName
         {

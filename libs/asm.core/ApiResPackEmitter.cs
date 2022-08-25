@@ -61,7 +61,7 @@ namespace Z0
             return emission;
         }
 
-        ApiHostRes Emit(in ApiHostBlocks src, FS.FilePath target)
+        ApiHostRes Emit(in ApiHostBlocks src, FilePath target)
         {
             if(empty(src.Host.HostName))
             {

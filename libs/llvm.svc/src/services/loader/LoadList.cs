@@ -11,7 +11,7 @@ namespace Z0.llvm
         public LlvmList LoadList(string id)
             => LoadList(LlvmPaths.ListTargetPath(id));
 
-        LlvmList LoadList(FS.FilePath src)
+        LlvmList LoadList(FilePath src)
         {
             var dst = list<LlvmListItem>();
             using var reader = src.Utf8LineReader();

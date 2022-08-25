@@ -10,12 +10,12 @@ namespace Z0
         {
             public class TargetXml : Dictionary<string,string>
             {
-                public static TargetXml create(FS.FilePath path, Dictionary<string,string> src)
+                public static TargetXml create(FilePath path, Dictionary<string,string> src)
                     => new(path,src);
 
-                public readonly FS.FilePath SourcePath;
+                public readonly FilePath SourcePath;
 
-                public TargetXml(FS.FilePath path, Dictionary<string,string> src)
+                public TargetXml(FilePath path, Dictionary<string,string> src)
                     : base(src)
                 {
                     SourcePath = path;

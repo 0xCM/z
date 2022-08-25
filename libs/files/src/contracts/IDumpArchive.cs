@@ -17,11 +17,11 @@ namespace Z0
         FS.FolderPath DotNetTargets(byte major, byte minor, byte revision)
             => DotNetTargets().Targets(FolderName.version(major, minor, revision).Format()).Root;
 
-        FS.FilePath Table<T>(ProcDumpName id)
+        FilePath Table<T>(ProcDumpName id)
             where T : struct
                 => Root + Tables.filename<T>(id.Format());
 
-        FS.FilePath Table<T>(string name, Timestamp ts)
+        FilePath Table<T>(string name, Timestamp ts)
             where T : struct
                 => Root + Tables.filename<T>(ProcDumpName.create(name,ts).Format());
     }

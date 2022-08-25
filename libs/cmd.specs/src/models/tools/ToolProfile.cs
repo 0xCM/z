@@ -24,6 +24,6 @@ namespace Z0
         public Actor Memberhisp;
 
         [Render(1)]
-        public FS.FilePath Path;
+        public FilePath Path;
     }
 }

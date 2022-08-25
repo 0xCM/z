@@ -33,7 +33,7 @@ namespace Z0
 
         public static MsgPattern<C> MarkerCodeNotFound => "Markier '{0}' not found";
 
-        public Outcome ParseRawData(FS.FilePath src)
+        public Outcome ParseRawData(FilePath src)
         {
             const string Marker = "RAW DATA #";
             var result = Outcome.Success;
@@ -108,7 +108,7 @@ namespace Z0
             return true;
         }
 
-        public void ParseDisassembly(FS.FilePath src, FS.FilePath dst)
+        public void ParseDisassembly(FilePath src, FilePath dst)
         {
             using var map = MemoryFiles.map(src);
             var flow = EmittingFile(dst);
@@ -116,7 +116,7 @@ namespace Z0
             EmittedFile(flow, 0);
         }
 
-        Outcome TransformData(ReadOnlySpan<byte> src, FS.FilePath dst)
+        Outcome TransformData(ReadOnlySpan<byte> src, FilePath dst)
         {
             var lines = LineCount(src);
             var size = (ByteSize)src.Length;

@@ -10,7 +10,7 @@ namespace Z0
 
     partial class AsmObjects
     {
-        public static Index<ObjDumpRow> rows(FS.FilePath src)
+        public static Index<ObjDumpRow> rows(FilePath src)
         {
             var result = TextGrids.load(src, TextEncodingKind.Asci, out var grid);
             if(result.Fail)

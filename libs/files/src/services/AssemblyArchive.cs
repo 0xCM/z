@@ -15,10 +15,10 @@ namespace Z0
         public static AssemblyArchive rooted(Assembly src)
             => new AssemblyArchive(src.Path());
 
-        public static AssemblyArchive rooted(FS.FilePath src)
+        public static AssemblyArchive rooted(FilePath src)
             => new AssemblyArchive(src);
 
-        public static Assembly load(AssemblyArchive archive, FS.FilePath src)
+        public static Assembly load(AssemblyArchive archive, FilePath src)
             => archive.LoadFromAssemblyPath(src.Name);
 
         public static ReadOnlySeq<Assembly> deps(AssemblyArchive archive, Assembly src)
@@ -42,7 +42,7 @@ namespace Z0
 
         public readonly ReadOnlySeq<Assembly> Dependencies;
 
-        public AssemblyArchive(FS.FilePath src)
+        public AssemblyArchive(FilePath src)
             : base(true)
         {
             Root = src.FolderPath;

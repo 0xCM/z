@@ -8,7 +8,7 @@ namespace Z0
     partial struct FS
     {
         [Op]
-        public static Outcome<FileEmission> emissions(FS.Files src, bool uri, FS.FilePath dst)
+        public static Outcome<FileEmission> emissions(FS.Files src, bool uri, FilePath dst)
         {
             var counter  = 0;
             try

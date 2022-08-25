@@ -6,11 +6,11 @@ namespace Z0
 {
     public abstract class Shim
     {
-        public FS.FilePath TargetPath {get;}
+        public FilePath TargetPath {get;}
 
         public ReadOnlySeq<string> Args {get;}
 
-        protected Shim(FS.FilePath target, ReadOnlySeq<string> args)
+        protected Shim(FilePath target, ReadOnlySeq<string> args)
         {
             TargetPath = target;
             Args = args;
@@ -25,7 +25,7 @@ namespace Z0
     public abstract class Shim<T> : Shim
         where T : Shim<T>, new()
     {
-        protected Shim(FS.FilePath target, ReadOnlySeq<string> args)
+        protected Shim(FilePath target, ReadOnlySeq<string> args)
             : base(target,args)
         {
 

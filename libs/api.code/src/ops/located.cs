@@ -13,13 +13,13 @@ namespace Z0
 
     partial class ApiCode
     {
-        public static void located(IDbArchive src, IHeapReceiver<FS.FilePath> receiver)
+        public static void located(IDbArchive src, IHeapReceiver<FilePath> receiver)
             => iter(src.Files(FileKind.LocatedHex), file => located(file, receiver), PllExec);   
 
-        public static void located(FS.FilePath src, IHeapReceiver<FS.FilePath> receiver)
+        public static void located(FilePath src, IHeapReceiver<FilePath> receiver)
             => receiver.Receive(src, Heaps.located(src));               
 
-        public static void located(FS.FilePath src, Receiver<HexCsvRow> dst)
+        public static void located(FilePath src, Receiver<HexCsvRow> dst)
         {
             var pos = 0u;
             using var reader = src.AsciReader();

@@ -10,7 +10,7 @@ namespace Z0
 
     public class DumpEmitter
     {
-        public static void emit(Process src, FS.FilePath dst)
+        public static void emit(Process src, FilePath dst)
         {
             var e = default(MINIDUMP_EXCEPTION_INFORMATION );
             using (var stream = new FileStream(dst.Format(PathSeparator.BS), FileMode.Create, FileAccess.ReadWrite, FileShare.None))

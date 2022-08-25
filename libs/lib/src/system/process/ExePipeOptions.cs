@@ -17,7 +17,7 @@ namespace Z0
             dst.StdOutPipeName = EmptyString;
             dst.StdErrPipeName = EmptyString;
             dst.PidPipeName = EmptyString;
-            dst.ExePath = FS.FilePath.Empty;
+            dst.ExePath = FilePath.Empty;
             dst.ControllerName = "control";
             dst.ExeArgs = new();
             return dst;
@@ -33,7 +33,7 @@ namespace Z0
 
         public string PidPipeName;
 
-        public FS.FilePath ExePath;
+        public FilePath ExePath;
 
         public string ControllerName;
 

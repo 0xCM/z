@@ -12,11 +12,11 @@ namespace Z0
         const NumericKind Closure = UnsignedInts;
 
         [MethodImpl(Inline), Op]
-        public static MemoryFile map(FS.FilePath path)
+        public static MemoryFile map(FilePath path)
             => new MemoryFile(path, false);
 
         [MethodImpl(Inline), Op]
-        public static MemoryFile map(FS.FilePath path, bool stream)
+        public static MemoryFile map(FilePath path, bool stream)
             => new MemoryFile(path, stream);
 
         public static MemoryFile map(MemoryFileSpec spec)

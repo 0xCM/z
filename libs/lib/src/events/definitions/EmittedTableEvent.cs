@@ -19,12 +19,12 @@ namespace Z0
 
         public Count RowCount {get;}
 
-        public FS.FilePath Target {get;}
+        public FilePath Target {get;}
 
         public FlairKind Flair => FlairKind.Ran;
 
         [MethodImpl(Inline)]
-        public EmittedTableEvent(EventId id, TableId table, Count count, FS.FilePath dst)
+        public EmittedTableEvent(EventId id, TableId table, Count count, FilePath dst)
         {
             EventId = id;
             TableId = table;
@@ -33,7 +33,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public EmittedTableEvent(Type host, TableId table, Count count, FS.FilePath target)
+        public EmittedTableEvent(Type host, TableId table, Count count, FilePath target)
         {
             EventId = EventId.define(host, Kind);
             TableId = table;

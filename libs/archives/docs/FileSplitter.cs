@@ -17,7 +17,7 @@ namespace Z0
             {
                 var flow = Wf.Running(Msg.SplittingFile.Format(spec.SourcePath.ToUri(), spec.TargetEncoding, spec.MaxLineCount));
                 using var reader = spec.SourcePath.Reader(spec.TargetEncoding);
-                var paths = list<FS.FilePath>();
+                var paths = list<FilePath>();
                 var subcount = 0u;
                 var linecount = 0u;
                 var splitcount = 0u;
@@ -69,7 +69,7 @@ namespace Z0
             }
         }
 
-        FS.FilePath NextPath(in FileSplitSpec spec, ref uint part)
+        FilePath NextPath(in FileSplitSpec spec, ref uint part)
             => (spec.TargetDir + spec.SourcePath.FileName.WithoutExtension + FS.ext(string.Format("{0:D3}{1}", part++, spec.SourcePath.FileName.FileExt)));
     }
 }

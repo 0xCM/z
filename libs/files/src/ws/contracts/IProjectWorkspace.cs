@@ -25,7 +25,7 @@ namespace Z0
         FS.Files Scripts()
             => Home().Sources("scripts").Files();
 
-        FS.FilePath Script(string name)
+        FilePath Script(string name)
             => Home().Sources("scripts").Path(name, FileKind.Cmd);
 
         FS.Files ProjectFiles()

@@ -9,7 +9,7 @@ namespace Z0
     partial class XTend
     {
         [Op]
-        public static AsciLineReader AsciLineReader(this FS.FilePath src)
+        public static AsciLineReader AsciLineReader(this FilePath src)
             => new AsciLineReader(src.AsciReader());
     }
 

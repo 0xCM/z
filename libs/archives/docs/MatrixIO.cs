@@ -37,7 +37,7 @@ namespace Z0
         /// <typeparam name="M">The row count type</typeparam>
         /// <typeparam name="N">The column count type</typeparam>
         /// <typeparam name="T">The element type</typeparam>
-        public static Matrix256<M,N,T> blockread<M,N,T>(FS.FilePath src)
+        public static Matrix256<M,N,T> blockread<M,N,T>(FilePath src)
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
             where T : unmanaged
@@ -107,7 +107,7 @@ namespace Z0
             dst.Flush();
         }
 
-        public static Matrix256<M,N,T> read<M,N,T>(FS.FilePath src, M m = default, N n = default, T t = default)
+        public static Matrix256<M,N,T> read<M,N,T>(FilePath src, M m = default, N n = default, T t = default)
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
             where T : unmanaged
@@ -118,7 +118,7 @@ namespace Z0
             return dst;
         }
 
-        public static Matrix256<M,N,T> write<M,N,T>(in Matrix256<M,N,T> src, FS.FilePath dst, M m = default, N n = default, T t = default)
+        public static Matrix256<M,N,T> write<M,N,T>(in Matrix256<M,N,T> src, FilePath dst, M m = default, N n = default, T t = default)
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
             where T : unmanaged

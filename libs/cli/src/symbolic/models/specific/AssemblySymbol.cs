@@ -182,11 +182,11 @@ namespace Z0.Roslyn
         public override string ToString()
             => Format();
 
-        public ReadOnlySpan<FS.FilePath> GetReferencePaths(FS.FolderPath root)
+        public ReadOnlySpan<FilePath> GetReferencePaths(FS.FolderPath root)
         {
             var refs = GetReferences();
             var count = refs.Length;
-            var buffer = span<FS.FilePath>(count);
+            var buffer = span<FilePath>(count);
             var counter = 0u;
             for(var i=0; i<count; i++)
             {
@@ -196,7 +196,7 @@ namespace Z0.Roslyn
             return slice(buffer,0,counter);
         }
 
-        public bool Resolve(AssemblyIdentity src, FS.FolderPath root, out FS.FilePath dst)
+        public bool Resolve(AssemblyIdentity src, FS.FolderPath root, out FilePath dst)
         {
             dst = root + FS.file(src.Name, FS.Dll);
             return dst.Exists;

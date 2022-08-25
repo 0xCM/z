@@ -11,7 +11,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">The file path</param>
         [Op]
-        public static byte[] bytes(FS.FilePath src)
+        public static byte[] bytes(FilePath src)
             => src.Exists ? File.ReadAllBytes(src.Name) : sys.empty<byte>();
     }
 }

@@ -9,7 +9,7 @@ namespace Z0
     [ApiHost,Free]
     public class CoffObjects : WfSvc<CoffObjects>
     {
-        public static Index<ObjDumpRow> rows(FS.FilePath src)
+        public static Index<ObjDumpRow> rows(FilePath src)
         {
             var result = TextGrids.load(src, TextEncodingKind.Asci, out var grid);
             if(result.Fail)
@@ -221,7 +221,7 @@ namespace Z0
             => new CoffObject(fref.Path, fref.Path.ReadBytes());
 
         [MethodImpl(Inline), Op]
-        public static CoffObject load(FS.FilePath path)
+        public static CoffObject load(FilePath path)
             => new CoffObject(path, path.ReadBytes());
 
         [MethodImpl(Inline), Op]

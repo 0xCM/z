@@ -59,7 +59,7 @@ namespace Z0
         public void Notify(string msg, LogLevel? severity = null)
             => Deposit(AppMsg.define($"{msg}", severity ?? LogLevel.Babble));
 
-        public void Emit(FS.FilePath dst)
+        public void Emit(FilePath dst)
         {
             try
             {

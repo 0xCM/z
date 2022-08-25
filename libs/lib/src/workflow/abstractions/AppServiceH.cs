@@ -96,17 +96,17 @@ namespace Z0
         protected void Write<T>(T content)
             => Emitter.Write(content);
 
-        protected FileWritten EmittingFile(FS.FilePath dst)
+        protected FileWritten EmittingFile(FilePath dst)
             => Emitter.EmittingFile(dst);
 
         public ExecToken EmittedFile(FileWritten flow, Count count)
             => Emitter.EmittedFile(flow,count);
 
-        protected WfTableFlow<T> EmittingTable<T>(FS.FilePath dst)
+        protected WfTableFlow<T> EmittingTable<T>(FilePath dst)
             where T : struct
                 => Emitter.EmittingTable<T>(dst);
 
-        protected ExecToken EmittedTable<T>(WfTableFlow<T> flow, Count count, FS.FilePath? dst = null)
+        protected ExecToken EmittedTable<T>(WfTableFlow<T> flow, Count count, FilePath? dst = null)
             where T : struct
                 => Emitter.EmittedTable(flow,count, dst);
 

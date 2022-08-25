@@ -100,7 +100,7 @@ namespace Z0
         public DbArchive AsmDb(string scope)
             => AsmDb().Scoped(scope);
 
-        public FS.FilePath Settings(string name, FileKind kind)
+        public FilePath Settings(string name, FileKind kind)
             => Settings().Path(name,kind);
 
         public DbArchive Archive(string name)
@@ -139,18 +139,18 @@ namespace Z0
         public DbArchive CgStage(string scope)
             => DbOut("cgstage").Scoped(scope);
 
-        public FS.FilePath Settings<T>()
+        public FilePath Settings<T>()
             where T : struct
                 => Settings().Table<T>();
 
         public IProjectWorkspace EtlSource(ProjectId src)
             => Projects.load(Dev($"llvm.models/{src}").Root, src);
 
-        public FS.FilePath EtlTable<T>(ProjectId project)
+        public FilePath EtlTable<T>(ProjectId project)
             where T : struct
                 => EtlTargets(project).Table<T>(project.Format());
 
-        public FS.FilePath EtlTable(ProjectId project, string name)
+        public FilePath EtlTable(ProjectId project, string name)
             => EtlTargets(project).Path($"{project}.{name}", FileKind.Csv);
 
         public DbArchive Toolbase()

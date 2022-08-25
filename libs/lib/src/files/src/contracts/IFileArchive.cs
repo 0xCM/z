@@ -24,7 +24,7 @@ namespace Z0
         string IExpr.Format()
             => Root.Format();
 
-        FS.FilePath TablePath<T>(string scope)
+        FilePath TablePath<T>(string scope)
             where T : struct
                 => Subdir(scope) + TableFile<T>();
     }

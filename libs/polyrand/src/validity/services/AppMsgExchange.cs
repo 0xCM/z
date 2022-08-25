@@ -37,7 +37,7 @@ namespace Z0
         public IReadOnlyList<IAppMsg> Dequeue()
             => Queue.Dequeue();
 
-        public void Emit(FS.FilePath dst)
+        public void Emit(FilePath dst)
             => Queue.Emit(dst);
 
         public IReadOnlyList<IAppMsg> Flush(Exception e)

@@ -16,12 +16,12 @@ namespace Z0
 
         public FS.FolderPath Lists;
 
-        public FS.FilePath ToolList;
+        public FilePath ToolList;
 
-        public FS.FilePath LibList;
+        public FilePath LibList;
 
-        public FS.FilePath IncludeList;
+        public FilePath IncludeList;
 
-        public FS.FilePath HelpList;
+        public FilePath HelpList;
     }
 }

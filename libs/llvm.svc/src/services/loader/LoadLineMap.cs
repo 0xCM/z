@@ -20,7 +20,7 @@ namespace Z0.llvm
         static bool parse(string src, out LineInterval<string> dst)
             => Lines.parse(src, new NameParser(), out dst);
 
-        public LineMap<string> LoadLineMap(FS.FilePath src)
+        public LineMap<string> LoadLineMap(FilePath src)
         {
             using var reader = src.Utf8LineReader();
             var lines = reader.ReadAll();

@@ -42,7 +42,7 @@ namespace Z0
         /// <summary>
         /// The full path to the tool, computed from the <see cref='ToolExe'/> and <see cref='InstallBase'/>
         /// </summary>
-        public FS.FilePath ToolPath;
+        public FilePath ToolPath;
 
         /// <summary>
         /// The toolspace directory
@@ -67,26 +67,26 @@ namespace Z0
         /// <summary>
         /// The path to the tool configuration log, typically {ToolLogs}/config.log
         /// </summary>
-        public FS.FilePath ToolConfigLog;
+        public FilePath ToolConfigLog;
 
         /// <summary>
         /// The path to the tool execution log, typically {ToolLogs}/{ToolId}-run.log
         /// </summary>
-        public FS.FilePath ToolRunLog;
+        public FilePath ToolRunLog;
 
         /// <summary>
         /// The path to the tool command log, typically {ToolLogs}/{ToolId}-cmd.log
         /// </summary>
-        public FS.FilePath ToolCmdLog;
+        public FilePath ToolCmdLog;
 
         /// <summary>
         /// The path to the primary tool help file, typically {ToolHome}/docs/{ToolId}.help
         /// </summary>
-        public FS.FilePath ToolHelpPath;
+        public FilePath ToolHelpPath;
 
         /// <summary>
         /// The path to the defalt tool output directory
         /// </summary>
-        public FS.FilePath ToolOut;
+        public FilePath ToolOut;
     }
 }

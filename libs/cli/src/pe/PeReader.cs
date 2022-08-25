@@ -26,10 +26,10 @@ namespace Z0
         }
 
         [Op]
-        public static PeReader create(FS.FilePath src)
+        public static PeReader create(FilePath src)
             => new PeReader(src);
 
-        readonly FS.FilePath Source;
+        readonly FilePath Source;
 
         readonly FileStream Stream;
 
@@ -89,7 +89,7 @@ namespace Z0
         CliReader CliReader()
             => Z0.CliReader.create(MetadataBlock);
 
-        public PeReader(FS.FilePath src)
+        public PeReader(FilePath src)
         {
             Source = src;
             Stream = File.OpenRead(src.Name);
@@ -140,7 +140,7 @@ namespace Z0
         }
 
         public static FileModuleInfo describe(PEReader reader)
-            => new FileModuleInfo(ReadPeInfo(reader), ReadCoffInfo(reader), headers(reader, FS.FilePath.Empty));
+            => new FileModuleInfo(ReadPeInfo(reader), ReadCoffInfo(reader), headers(reader, FilePath.Empty));
 
         public PEHeaders PeHeaders
         {

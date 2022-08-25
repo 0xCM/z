@@ -40,15 +40,15 @@ namespace Z0
         DbArchive Scoped(string name)
             => Datasets.archive(DbFiles.Sources(name));
 
-        FS.FilePath Table<T>()
+        FilePath Table<T>()
             where T : struct
                 => DbFiles.Table<T>();
 
-        FS.FilePath Table<T>(ProjectId id)
+        FilePath Table<T>(ProjectId id)
             where T : struct
                 => DbFiles.Table<T>(id);
 
-        FS.FilePath PrefixedTable<T>(string prefix)
+        FilePath PrefixedTable<T>(string prefix)
             where T : struct
                 => DbFiles.PrefixedTable<T>(prefix);
 
@@ -82,13 +82,13 @@ namespace Z0
         FS.FileName File(string name, FileKind kind)
             => DbFiles.File(name, kind);
 
-        FS.FilePath Path(string name, FileKind kind)
+        FilePath Path(string name, FileKind kind)
             => DbFiles.Path(name, kind);
 
-        FS.FilePath Path(FS.FileName file)
+        FilePath Path(FS.FileName file)
             => DbFiles.Path(file);
 
-        FS.FilePath Path(string @class, string name, FileKind kind)
+        FilePath Path(string @class, string name, FileKind kind)
             => DbFiles.Path(@class, name, kind);
 
         string IExpr.Format()

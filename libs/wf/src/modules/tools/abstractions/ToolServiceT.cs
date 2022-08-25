@@ -20,19 +20,19 @@ namespace Z0
         protected FS.FolderPath Deployment
             => Deployments.Folder(Id.Format());
 
-        public FS.FilePath Script(FS.FolderPath dir, FS.FileName name)
+        public FilePath Script(FS.FolderPath dir, FS.FileName name)
             => dir + name;
 
-        public virtual FS.FilePath ToolPath()
+        public virtual FilePath ToolPath()
             => Deployment +  FS.file(string.Format("{0}.{1}", Id, FS.Exe));
 
-        protected static string format(FS.FilePath src)
+        protected static string format(FilePath src)
             => src.Format(PathSeparator.BS);
 
-        protected static FS.FilePath input(FS.FolderPath dir, FS.FileName name)
+        protected static FilePath input(FS.FolderPath dir, FS.FileName name)
             => dir + name;
 
-        protected static FS.FilePath output(FS.FolderPath dir, FS.FileName name)
+        protected static FilePath output(FS.FolderPath dir, FS.FileName name)
             => dir + name;
 
         protected static FS.FileName file(string src, FileExt ext)

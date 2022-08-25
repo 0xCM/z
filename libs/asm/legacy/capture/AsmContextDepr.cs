@@ -46,7 +46,7 @@ namespace Z0.Asm
         public IReadOnlyList<IAppMsg> Flush(Exception e)
             => MessageQueue.Flush(e);
 
-        public void Emit(FS.FilePath dst)
+        public void Emit(FilePath dst)
             => MessageQueue.Emit(dst);
     }
 }

@@ -67,7 +67,7 @@ namespace Z0
         public Index<FileRef> Sources()
             => map(Children.Keys, x => Files.Doc(x.Path));
 
-        public bool Root(FS.FilePath dst, out FileRef source)
+        public bool Root(FilePath dst, out FileRef source)
         {
             var buffer = core.list<FileRef>();
             var target = Files[dst];
@@ -85,7 +85,7 @@ namespace Z0
             }
         }
 
-        public Index<FileRef> Lineage(FS.FilePath dst)
+        public Index<FileRef> Lineage(FilePath dst)
         {
             var buffer = core.list<FileRef>();
             var target = Files[dst];
@@ -118,7 +118,7 @@ namespace Z0
             }
         }
 
-        public Index<FileRef> Targets(FS.FilePath src)
+        public Index<FileRef> Targets(FilePath src)
         {
             if(Children.Find(src, out var targets))
                 return core.map(targets, x => Files.Doc(x.Path));

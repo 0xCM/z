@@ -11,9 +11,9 @@ namespace Z0
     {
         public const string CmdName = "build";
 
-        public FS.FilePath ProjectPath;
+        public FilePath ProjectPath;
 
-        public FS.FilePath LogFile;
+        public FilePath LogFile;
 
         public string Configuration;
 

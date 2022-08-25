@@ -26,7 +26,7 @@ namespace Z0
             return count;
         }
 
-        public static void store(ReadOnlySpan<Setting> src, FS.FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)
+        public static void store(ReadOnlySpan<Setting> src, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)
         {
             var emitter = text.emitter();
             Tables.emit(src, emitter);
@@ -34,7 +34,7 @@ namespace Z0
             writer.Write(emitter.Emit());
         }
 
-        public static void store<T>(ReadOnlySpan<Setting<T>> src, FS.FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)
+        public static void store<T>(ReadOnlySpan<Setting<T>> src, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)
         {
             var emitter = text.emitter();
             Tables.emit(src, emitter);

@@ -28,6 +28,6 @@ namespace Z0
         public ListFormatKind ListFormat;
 
         [Render(1)]
-        public FS.FilePath TargetPath;
+        public FilePath TargetPath;
     }
 }

@@ -8,6 +8,6 @@ namespace Z0
 
     public interface IEmissionLog : IDisposable, IEventSink<EmittedFileEvent>, IEventSink<EmittedTableEvent>
     {
-        FS.FilePath TargetPath {get;}
+        FilePath TargetPath {get;}
     }
 }

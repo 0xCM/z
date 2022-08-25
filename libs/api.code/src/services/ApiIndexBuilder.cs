@@ -21,7 +21,7 @@ namespace Z0
 
         ApiCodeLookup UriCode;
 
-        public static ReadOnlySpan<ApiCodeRow> ReadRows(FS.FilePath src)
+        public static ReadOnlySpan<ApiCodeRow> ReadRows(FilePath src)
         {
             var data = src.ReadLines().Storage.ToReadOnlySpan();
             var count = data.Length - 1;

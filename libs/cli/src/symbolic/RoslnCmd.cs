@@ -43,7 +43,7 @@ namespace Z0.Roslyn
             dst.Methods = CaSymbols.convert<MethodSymbol>(collected);
         }
 
-        public static MetadataReference reference(FS.FilePath src)
+        public static MetadataReference reference(FilePath src)
         {
             var xml = src.ChangeExtension(FS.Xml);
             var doc = XmlDocProvider.create(xml);
@@ -66,7 +66,7 @@ namespace Z0.Roslyn
                 return MetadataReference.CreateFromFile(path.Name, props);
         }
 
-        public static Index<MetadataReference> refs(ReadOnlySpan<FS.FilePath> src)
+        public static Index<MetadataReference> refs(ReadOnlySpan<FilePath> src)
         {
             var count = src.Length;
             var dst = alloc<MetadataReference>(count);
