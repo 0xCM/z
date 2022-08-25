@@ -59,8 +59,6 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public unsafe static T* gptr<T>(ReadOnlySpan<T> src)
             where T : unmanaged
-                => (T*)AsPointer(ref sys.edit(Spans.first(src)));
-
-
+                => (T*)AsPointer(ref sys.edit(sys.first(src)));
     }
 }

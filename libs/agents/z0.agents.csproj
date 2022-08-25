@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="$(ImportDefs)microsoft.diagnostics.props"/>
-
-
+  <Import Project="$(ImportDefs)\microsoft.diagnostics.props"/>
+  
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>$(FrameworkMoniker)</TargetFramework>

@@ -5,7 +5,7 @@
     <TargetFramework>$(FrameworkMoniker)</TargetFramework>
   </PropertyGroup>
 
-  <Import Project="$(ImportDefs)microsoft.build.props"/>
+  <Import Project="$(ImportDefs)\microsoft.build.props"/>
 
   <ItemGroup>
     <ProjectReference Include="$(Assets)" />

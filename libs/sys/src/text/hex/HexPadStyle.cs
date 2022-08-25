@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    [SymSource("hex")]
     public enum HexPadStyle : byte
     {
         Unpadded,

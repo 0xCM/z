@@ -33,7 +33,6 @@ namespace Z0
         [Op]
         public static ProjectSpec project(FilePath src)
             => new(E.Project.FromFile(src.Name, new D.ProjectOptions {
-
             }));
 
         public static string format(ProjectSpec src)
@@ -45,6 +44,9 @@ namespace Z0
                 dst.Append(src.Items[i].Format());
             return dst.Emit();
         }
+
+        public static ReadOnlySeq<ProjectItem> items(ProjectSpec src, Func<ProjectItem,bool> predicate)
+            => src.Items.Where(predicate);
 
         public static Solution sln(FilePath src)
         {

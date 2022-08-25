@@ -22,6 +22,6 @@ namespace Z0
         /// </remarks>
         [MethodImpl(Inline), Op]
         public static unsafe char* pchar(string src)
-            => gptr(Spans.first(Spans.span(src)));
+            => gptr(sys.first(sys.span(src)));
     }
 }

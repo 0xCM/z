@@ -7,7 +7,7 @@
     <AssemblyName>workers</AssemblyName>
   </PropertyGroup>
 
-  <Import Project="$(ProjectProps)usings.props"/>
+  <Import Project="$(ProjectProps)\usings.props"/>
   <Import Project="$(ProjectProps)shells.props"/>
 
   <ItemGroup>

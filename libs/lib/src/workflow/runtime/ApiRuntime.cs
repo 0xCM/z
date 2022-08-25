@@ -102,14 +102,14 @@ namespace Z0
             var parts = list<IPart>();
             for(var i=0; i<count; i++)
             {
-                if(load(skip(src,i), out var part))
-                    parts.Add(part);
+                if(part(skip(src,i), out var p))
+                    parts.Add(p);
             }
 
             return catalog(parts.Array());
         }
 
-        static bool load(Assembly src, out IPart dst)
+        public static bool part(Assembly src, out IPart dst)
         {
             var attempt = src.GetTypes().Where(t => t.Reifies<IPart>() && !t.IsAbstract).Map(t => (IPart)Activator.CreateInstance(t)).ToArray();
             if(attempt.Length != 0)
@@ -123,7 +123,7 @@ namespace Z0
                  return false;
             }
         }
-
+        
         public static ApiPartCatalog catalog(Assembly src)
             => new ApiPartCatalog(src.Id(), src, complete(src), hosts(src), SvcHostTypes(src));
 

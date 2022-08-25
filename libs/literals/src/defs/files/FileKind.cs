@@ -60,6 +60,9 @@ namespace Z0
         [Symbol(config, "A text file with colon-delimited key-value lines")]
         Config,
 
+        [Symbol(cfg, "A text file where each line binds a name to a value")]
+        Cfg,
+
         [Symbol(ps1, "A powershell script")]
         Ps1,
 

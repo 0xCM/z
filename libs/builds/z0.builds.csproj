@@ -5,8 +5,8 @@
     <TargetFramework>$(FrameworkMoniker)</TargetFramework>
   </PropertyGroup>
 
-  <Import Project="$(ProjectProps)usings.props" />
-  <Import Project="$(ImportDefs)microsoft.build.props" />
+  <Import Project="$(ProjectProps)\usings.props" />
+  <Import Project="$(ImportDefs)\microsoft.build.props" />
 
   <ItemGroup>
     <ProjectReference Include="../wf/z0.wf.csproj" />

@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static System.Runtime.CompilerServices.Unsafe;
-    using static Algs;
+    using static sys;
 
     unsafe partial struct memory
     {

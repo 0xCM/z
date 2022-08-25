@@ -6,16 +6,14 @@
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
 
-  <Import Project="$(ProjectProps)shells.props"/>
-  <Import Project="$(ProjectProps)libs.props"/>
-  <Import Project="$(ProjectProps)usings.props"/>
+  <Import Project="$(ProjectProps)/shells.props" />
+  <Import Project="$(ProjectProps)/libs.props" />
+  <Import Project="$(ProjectProps)/usings.props" />
 
   <ItemGroup>
-    <ProjectReference Include="$(TestChecks)" />
-    <ProjectReference Include="$(TestUnits)" />
-    <ProjectReference Include="$(Cli)" />
-    <ProjectReference Include="$(CgLibs)" />
-    <ProjectReference Include="$(Tools)" />
+    <ProjectReference Include="../../cg/cg.libs/z0.cg.libs.csproj" />
+    <ProjectReference Include="../../test/test.checks/z0.test.checks.csproj" />
+    <ProjectReference Include="../../test/test.units/z0.test.units.csproj" />
   </ItemGroup>
 
 </Project>

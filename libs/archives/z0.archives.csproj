@@ -4,7 +4,7 @@
     <OutputType>Library</OutputType>
   </PropertyGroup>
 
-  <Import Project="$(ProjectProps)usings.props"/>
+  <Import Project="$(ProjectProps)\usings.props"/>
 
   <ItemGroup>
     <ProjectReference Include="$(Containers)" />

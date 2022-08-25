@@ -1,7 +1,9 @@
 <Project>
   <PropertyGroup>
-    <SlnRoot>$(MSBuildThisFileDirectory)</SlnRoot>
+    <SlnId>z0</SlnId>
+    <EnvSegment>dev</EnvSegment>
     <Configuration>Release</Configuration>
   </PropertyGroup>
+  <Import Project="props/locations.props"/>
   <Import Project="props/common.props"/>
 </Project>

@@ -4,12 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Reflection;
     using System.Reflection.Emit;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
 
     /// <summary>
     /// Encloses a generic delegate that was manufactured dynamically

@@ -5,6 +5,7 @@
 namespace Z0
 {
     using System.IO;
+
     using static FS;
 
     public readonly struct FileName : IFsEntry<FileName>
@@ -135,10 +136,6 @@ namespace Z0
 
         public int CompareTo(FileName src)
             => Name.CompareTo(src.Name);
-
-        [MethodImpl(Inline)]
-        public FileNameTS WithTimestamp(Timestamp? ts = null)
-            => new FileNameTS(this, ts ?? Timestamp.now());
 
         [MethodImpl(Inline)]
         public static FileName operator +(FileName a, FileExt b)

@@ -14,7 +14,7 @@ namespace Z0
         public static unsafe bool liberate(ReadOnlySpan<byte> src, out byte* pDst)
         {
             var size = (ulong)src.Length;
-            ref var cell = ref sys.edit(Spans.first(src));
+            ref var cell = ref sys.edit(sys.first(src));
             var pCell = sys.refptr(ref cell);
             if(liberate(pCell, size))
             {
@@ -34,7 +34,7 @@ namespace Z0
         /// <param name="src">The buffer to let it be what it wants</param>
         [MethodImpl(Inline), Op]
         public static unsafe byte* liberate(Span<byte> src)
-            => liberate((byte*)sys.refptr(ref Spans.first(src)), src.Length);
+            => liberate((byte*)sys.refptr(ref sys.first(src)), src.Length);
 
         /// <summary>
         /// This may not be the best idea to solve your problem
@@ -42,7 +42,7 @@ namespace Z0
         /// <param name="src">The buffer to let it be what it wants</param>
         [MethodImpl(Inline), Op]
         public static unsafe byte* liberate(ReadOnlySpan<byte> src)
-            => liberate<byte>(ref sys.edit(Spans.first(src)), src.Length);
+            => liberate<byte>(ref sys.edit(sys.first(src)), src.Length);
 
         /// <summary>
         /// Enables execution over a specified memory range

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
+    using static sys;
 
     class BuildCmd : AppCmdService<BuildCmd>
     {
@@ -21,6 +21,43 @@ namespace Z0
                 Write(data);
                 FileEmit(data, AppDb.AppData("build/libs").Path(file.FileName.WithoutExtension.Format(), FileKind.Env), (ByteSize)data.Length);
             });
+        }
+
+
+        [CmdOp("projects/cfg")]
+        void ProjectCfg()
+        {
+            var path = AppDb.Dev("z0").Sources("props").Path("projects",FileKind.Props);
+            var project = BuildSvc.LoadProject(path);
+            ref readonly var props = ref project.Props;
+            var dst = list<Build.Property>();
+            var j = -1;
+            for(var i=0; i<props.Count; i++)
+            {
+                ref readonly var prop = ref props[i];
+                var desc = prop.Format();
+                if(prop.Name == "Literals")
+                {
+                    j=i;
+                    break;
+                }
+            }
+
+            if(j > 0)
+            {
+                for(var i=j; i<props.Count; i++)
+                {
+                    if(props[i].Name != "MSBuildAllProjects")
+                        dst.Add(props[i]);
+                }
+            }
+
+            iter(dst, prop => Emitter.Write(prop.Format()));
+            var data = dst.Map(x => x.Format()).Concat("\n");
+            var cfg = AppDb.DbOut("cfg").Path("projects", FileKind.Cfg);
+            FileEmit(data, cfg);
+
+            //Emitter.FileEmit()
         }
 
         [CmdOp("build/props")]

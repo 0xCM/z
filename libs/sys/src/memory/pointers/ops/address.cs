@@ -17,11 +17,11 @@ namespace Z0
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static unsafe MemoryAddress address<T>(Span<T> src)
-            => new MemoryAddress(pvoid(Spans.first(src)));
+            => new MemoryAddress(pvoid(sys.first(src)));
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static unsafe MemoryAddress address<T>(ReadOnlySpan<T> src)
-            => new MemoryAddress(pvoid(Spans.first(src)));
+            => new MemoryAddress(pvoid(sys.first(src)));
 
         /// <summary>
         /// Derives the address of a <see cref='Type'/> from the value of its <see cref='Type.TypeHandle' />

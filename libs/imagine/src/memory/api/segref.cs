@@ -5,9 +5,11 @@
 namespace Z0
 {
     using static Sized;
-    using static Spans;
-    using static Arrays;
+    // using static Spans;
+    // using static Arrays;
 
+    using static sys;
+    
     partial struct memory
     {
         [MethodImpl(Inline), Op, Closures(Closure)]
@@ -139,7 +141,7 @@ namespace Z0
             var d = delimiter ?? 0;
             for(var i=0u; i<m; i++)
             {
-                var c = skip(src,i).Edit;
+                var c = sys.skip(src,i).Edit;
                 var p = c.Length;
 
                 for(var j=0u; j<p && o<n; j++, o++)

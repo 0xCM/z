@@ -35,10 +35,11 @@ namespace Z0
             var channel = wf.Emitter;
             var catalog = default(IApiCatalog);
             var settings = new CaptureWfSettings();
+            var assemblies = list<Assembly>();
+            var parts = hashset<PartId>();
             if(args.Count != 0)
             {
                 var src = FS.path(ExecutingPart.Assembly.Location).FolderPath;
-                var parts = hashset<PartId>();
                 iter(args, arg => {
                     if(PartNames.parse(arg.Value, out var name))
                         parts.Add(name);
@@ -51,7 +52,17 @@ namespace Z0
             }
             else
             {
-                catalog = ApiRuntime.catalog(ApiRuntime.colocated(ExecutingPart.Assembly));
+                var search = ApiRuntime.colocated(ExecutingPart.Assembly);
+                foreach(var a in search)
+                {
+                    if(ApiRuntime.part(a, out IPart part))
+                    {
+                        parts.Add(part.Id);
+                        assemblies.Add(a);
+                    }
+                }
+                settings.Parts = parts.ToSeq();
+                catalog = ApiRuntime.catalog(assemblies.ToArray());
             }
 
             using var transport = new CaptureTransport(Dispense.composite(), wf.Emitter);

@@ -1,17 +1,18 @@
 <Project>
   <PropertyGroup>
-    <SlnLibs>$(SlnRoot)libs\</SlnLibs>
-    <ProjectProps>$(SlnRoot)props\</ProjectProps>
-    <ImportDefs>$(ProjectProps)deps\</ImportDefs>
-    <EnvConfig>$(SlnRoot)env\</EnvConfig>
-    <SlnBuild>$(SlnRoot)artifacts\</SlnBuild>
-    <SlnBin>$(SlnBuild)bin\</SlnBin>
-    <LogRoot>$(SlnBuild)logs\</LogRoot>
-    <ShellCommon>$(SlnRoot)shells\</ShellCommon>
-    <CgRoot>$(SlnRoot)cg\</CgRoot>
-    <TestRoot>$(SlnRoot)test\</TestRoot>
-    <OutputPath>$(SlnBuild)bin\$(MsBuildProjectName)\$(Configuration)\</OutputPath>
-    <IntermediateRoot>$(SlnBuild)obj\$(MsBuildProjectName)\$(Configuration)\</IntermediateRoot>
+    <SlnRoot>$(EnvRoot)\$(EnvSegment)\$(SlnId)</SlnRoot>
+    <SlnLibs>$(SlnRoot)\libs</SlnLibs>
+    <ProjectProps>$(SlnRoot)\props</ProjectProps>
+    <ImportDefs>$(ProjectProps)\deps</ImportDefs>
+    <EnvConfig>$(SlnRoot)\env</EnvConfig>
+    <SlnBuild>$(SlnRoot)\artifacts</SlnBuild>
+    <SlnBin>$(SlnBuild)\bin</SlnBin>
+    <LogRoot>$(SlnBuild)\logs</LogRoot>
+    <ShellCommon>$(SlnRoot)\shells</ShellCommon>
+    <CgRoot>$(SlnRoot)\cg</CgRoot>
+    <TestRoot>$(SlnRoot)\test</TestRoot>
+    <OutputPath>$(SlnBuild)\bin\$(MsBuildProjectName)\$(Configuration)</OutputPath>
+    <IntermediateRoot>$(SlnBuild)\obj\$(MsBuildProjectName)\$(Configuration)</IntermediateRoot>
     <IntermediateBuildDir>$(IntermediateRoot)</IntermediateBuildDir>
     <BaseIntermediateOutputPath>$(IntermediateRoot)</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(IntermediateRoot)</IntermediateOutputPath>

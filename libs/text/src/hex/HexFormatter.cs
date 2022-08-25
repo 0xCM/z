@@ -6,11 +6,13 @@ namespace Z0
 {
     using System.Text;
 
-    using static Spans;
-    using static Arrays;
+    // using static Spans;
+    // using static Arrays;
     using static Scalars;
     using static Sized;
 
+    //using static sys;
+    
     using static HexFormatSpecs;
     using static HexOptionData;
 
@@ -91,7 +93,7 @@ namespace Z0
                 return 0;
 
             for(var i=0u; i<max; i++)
-                if(skip(src,i) == 0)
+                if(sys.skip(src,i) == 0)
                     return i;
             return max;
         }
@@ -111,7 +113,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static bool HasPostspec(ReadOnlySpan<char> src)
-            => src.Length > 0 && skip(src, src.Length - 1) == 'h';
+            => src.Length > 0 && sys.skip(src, src.Length - 1) == 'h';
 
         [MethodImpl(Inline)]
         public static bool HasSpec(ReadOnlySpan<char> src)
@@ -119,7 +121,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static ReadOnlySpan<char> ClearPrespec(ReadOnlySpan<char> src)
-            => HasPrespec(src) ? slice(src,2) : src;
+            => HasPrespec(src) ? sys.slice(src,2) : src;
 
         [Op, Closures(Closure)]
         public static string format<T>(ReadOnlySpan<T> src, in HexFormatOptions config)
@@ -129,7 +131,7 @@ namespace Z0
             var count = src.Length;
             for(var i = 0; i<count; i++)
             {
-                var formatted = format(skip(src,i), config.ZeroPad, config.Specifier, config.Uppercase, config.PreSpec);
+                var formatted = format(sys.skip(src,i), config.ZeroPad, config.Specifier, config.Uppercase, config.PreSpec);
                 result.Append(formatted);
                 if(i != count - 1)
                     result.Append(config.ValueDelimiter);
@@ -205,7 +207,7 @@ namespace Z0
             var count = src.Length;
             for(var i = 0; i<count; i++)
             {
-                result.Append(format(skip(src,i), true, prespec, uppercase:uppercase, prespec:true));
+                result.Append(format(sys.skip(src,i), true, prespec, uppercase:uppercase, prespec:true));
                 if(i != count - 1)
                     result.Append(sep);
             }
@@ -247,7 +249,7 @@ namespace Z0
 
             for(var i=0; i<count; i++)
             {
-                var value = skip(src,i).ToString(spec);
+                var value = sys.skip(src,i).ToString(spec);
                 var padded = config.ZeroPad ? value.PadLeft(2, Chars.D0) : value;
                 dst.Append(string.Concat(pre, padded, post));
                 if(config.DelimitSegs && i != count - 1)
@@ -480,32 +482,31 @@ namespace Z0
 
         [Op]
         public static string bytes(ushort src)
-            => format(Algs.bytes(src), HexDataOptions);
+            => format(sys.bytes(src), HexDataOptions);
 
         [Op]
         public static string bytes(short src)
-            => format(Algs.bytes(src), HexDataOptions);
+            => format(sys.bytes(src), HexDataOptions);
 
         [Op]
         public static string bytes(int src)
-            => format(Algs.bytes(src), HexDataOptions);
+            => format(sys.bytes(src), HexDataOptions);
 
         [Op]
         public static string bytes(uint src)
-            => format(Algs.bytes(src), HexDataOptions);
+            => format(sys.bytes(src), HexDataOptions);
 
         [Op]
         public static string bytes(long src)
-            => format(Algs.bytes(src), HexDataOptions);
+            => format(sys.bytes(src), HexDataOptions);
 
         [Op]
         public static string bytes(ulong src)
-            => format(Algs.bytes(src), HexDataOptions);
+            => format(sys.bytes(src), HexDataOptions);
 
         public static string bytes<T>(T src)
             where T : unmanaged
-                => format(Algs.bytes(src), HexDataOptions);
-
+                => format(sys.bytes(src), HexDataOptions);
 
         public interface ISystemFormatter<T>
             where T : struct

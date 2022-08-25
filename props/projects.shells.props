@@ -1,9 +1,9 @@
 <Project>
     <PropertyGroup>
-        <CgShell>$(CgRoot)cg.shell\z0.cg.shell.csproj</CgShell>
-        <CgTest>$(CgRoot)cg.test\z0.cg.test.csproj</CgTest>        
-        <ShellCmd>$(SlnLibs)shell.cmd\z0.shell.cmd.csproj</ShellCmd>
-        <TestShell>$(TestRoot)test.shell\z0.test.shell.csproj</TestShell>
-        <WfWorkers>$(SlnLibs)wf.workers\z0.wf.workers.csproj</WfWorkers>
+        <CgShell>$(CgRoot)\cg.shell\z0.cg.shell.csproj</CgShell>
+        <CgTest>$(CgRoot)\cg.test\z0.cg.test.csproj</CgTest>        
+        <ShellCmd>$(SlnLibs)\shell.cmd\z0.shell.cmd.csproj</ShellCmd>
+        <TestShell>$(TestRoot)\test.shell\z0.test.shell.csproj</TestShell>
+        <WfWorkers>$(SlnLibs)\wf.workers\z0.wf.workers.csproj</WfWorkers>
     </PropertyGroup>
 </Project>
