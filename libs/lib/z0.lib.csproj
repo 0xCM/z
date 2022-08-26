@@ -10,6 +10,7 @@
     <ProjectReference Include="$(Bit)" />
     <ProjectReference Include="$(ClrModels)" />
     <ProjectReference Include="$(Imagine)" />
+    <ProjectReference Include="$(Math)" />
   </ItemGroup>
 
 </Project>

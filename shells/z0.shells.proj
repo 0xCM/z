@@ -1,0 +1,11 @@
+<Project>
+  <Import Project="../cg/cg.test/z0.cg.test.csproj"/>
+  <Import Project="../libs/clr.checks/z0.clr.checks.csproj"/>
+  <Import Project="../libs/cmd.checks/z0.cmd.checks.csproj"/>
+  <Import Project="../libs/shell/z0.shell.csproj"/>
+  <Import Project="../libs/shimmer/z0.shimmer.csproj"/>
+  <Import Project="../libs/wf.shell/z0.wf.shell.csproj"/>
+  <Import Project="../libs/workers/z0.workers.csproj"/>
+  <Import Project="../libs/z/z0.z.csproj"/>
+  <Import Project="../test/test.shell/z0.test.shell.csproj"/>
+</Project>

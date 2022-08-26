@@ -1,7 +1,5 @@
 <Project>
-
   <ItemGroup>
-    <EmbeddedResource Include="$(ProjectProps)app.settings.csv"  CopyToOutputDirectory="Always" />
+    <EmbeddedResource Include="$(SlnRoot)\props\app.settings.csv"  CopyToOutputDirectory="Always" />
   </ItemGroup>
-
 </Project>

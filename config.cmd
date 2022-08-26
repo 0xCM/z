@@ -73,7 +73,7 @@ set BuildTool=dotnet build
 set BuildProps=/p:Configuration=%ConfigName% /p:Platform=%PlatformName%
 set BuildProject=%BuildTool% %ProjectPath% %BuildProps% %BuildLogSpec%; %BuildOptions%
 set BuildSln=%BuildTool% %SlnPath% %BuildProps% %BuildLogSpec%; %BuildOptions%
-set BuildShells=%BuildTool% %~dp0z0.shells.sln %BuildProps% -bl:%BuildLogs%\z0.shells.binlog; %BuildOptions%
+set BuildShells=%BuildTool% %SlnRoot%\shells\z0.shells.sln %BuildProps% -bl:%BuildLogs%\z0.shells.binlog; %BuildOptions%
 set BuildProjectSln=%BuildTool% %ProjectSln% %BuildProps% %BuildLogSpec%; %BuildOptions%
 set Packages=%Artifacts%\packages
 set PackageFlags=--include-symbols --include-source

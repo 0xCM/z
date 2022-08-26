@@ -57,6 +57,7 @@
     <Linq>$(SlnLibs)\linq\z0.linq.csproj</Linq>
 
     <Machines>$(SlnLibs)\machines\z0.machines.csproj</Machines>
+    <Math>$(SlnLibs)\math\z0.math.csproj</Math>
 
     <Memory>$(SlnLibs)\memory\z0.memory.csproj</Memory>
     <MemorySvc>$(SlnLibs)\memory.svc\z0.memory.svc.csproj</MemorySvc>

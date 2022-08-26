@@ -9,7 +9,7 @@
     <ShellRoot>$(LibsRoot)</ShellRoot>
   </PropertyGroup>
 
-  <Import Project="$(ProjectProps)\shells.props"/>
+  <Import Project="$(ProjectProps)\settings.props"/>
   <Import Project="$(ProjectProps)\usings.props"/>
 
   <ItemGroup>

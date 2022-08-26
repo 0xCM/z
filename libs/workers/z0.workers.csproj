@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <Import Project="$(ProjectProps)\usings.props"/>
-  <Import Project="$(ProjectProps)shells.props"/>
+  <Import Project="$(ProjectProps)\settings.props"/>
 
   <ItemGroup>
     <ProjectReference Include="../archives/z0.archives.csproj" />

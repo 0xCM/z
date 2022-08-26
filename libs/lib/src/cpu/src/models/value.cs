@@ -4,9 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Refs;
-    using static Spans;
-    using static Scalars;
+    using static sys;
 
     using M = math;
 

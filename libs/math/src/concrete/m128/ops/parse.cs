@@ -6,7 +6,7 @@ namespace Z0
 {
     using System.Globalization;
 
-    using static core;
+    using static sys;
 
     partial struct Math128
     {

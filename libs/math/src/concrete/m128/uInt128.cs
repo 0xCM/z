@@ -32,7 +32,7 @@ namespace Z0
             => src is uint128 x && Equals(x);
 
         public override int GetHashCode()
-            => (int)alg.hash.combine(Lo,Hi);
+            => sys.hash(Lo,Hi);
 
         public string Format()
         {

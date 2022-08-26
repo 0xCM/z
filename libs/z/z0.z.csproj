@@ -9,7 +9,7 @@
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
   </PropertyGroup>
 
-  <Import Project="$(ProjectProps)/shells.props" />
+  <Import Project="$(ProjectProps)\settings.props"/>
   <Import Project="$(ProjectProps)/libs.props" />
   <Import Project="$(ProjectProps)/usings.props" />
 

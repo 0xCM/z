@@ -5,7 +5,7 @@
     <TargetFramework>$(FrameworkMoniker)</TargetFramework>
   </PropertyGroup>
 
-  <Import Project="$(ProjectProps)\shells.props"/>
+  <Import Project="$(ProjectProps)\settings.props"/>
   <Import Project="$(ProjectProps)\usings.props"/>
 
   <ItemGroup>
