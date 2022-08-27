@@ -4,9 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Spans;
-    using static Algs;
-    using static Arrays;
+    using static sys;
     using static HexOptionData;
 
     partial struct Hex

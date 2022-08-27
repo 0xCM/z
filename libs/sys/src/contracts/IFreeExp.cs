@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static System.Runtime.CompilerServices.Unsafe;
-
     /// <summary>
     /// Characterizes an unmanaged expression reification with unmanaged <typeparamref name='T'/> operands
     /// </summary>
@@ -17,7 +15,7 @@ namespace Z0
         where T : unmanaged
     {
         uint IFreeExpr.Size
-            => (uint)SizeOf<T>();
+            => (uint)sys.size<T>();
     }
 
     /// <summary>

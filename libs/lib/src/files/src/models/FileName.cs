@@ -56,9 +56,6 @@ namespace Z0
         public FileName WithExtension(FileExt ext)
             => this + ext;
 
-        /// <summary>
-        /// Specifies the file's owning part, if any
-        /// </summary>
         public PartId Owner
             => part(this);
 

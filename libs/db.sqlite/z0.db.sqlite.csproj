@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>$(FrameworkMoniker)</TargetFramework>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="$(Bit)" />
+    <ProjectReference Include="$(Sys)" />
+    <ProjectReference Include="$(Text)" />
+  </ItemGroup>
+
+</Project>

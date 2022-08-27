@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     partial struct Clr
     {
         [MethodImpl(Inline), Op]

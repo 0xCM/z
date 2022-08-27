@@ -1,0 +1,36 @@
+{
+	"folders": [
+		{
+			"path": "../sys"
+		},
+		{
+			"path": "../bit"
+		},
+		{
+			"path": "../text"
+		},
+		{
+			"path": "../math"
+		},
+		{
+			"path": "../imagine"
+		},
+		{
+			"path": "../clr.query"
+		},
+		{
+			"path": "../clr.models"
+		},
+
+		{
+			"path": "../lib"
+		},
+		{
+			"path": "../digital"
+		},
+		{
+			"path": "."
+		},
+	]
+
+}

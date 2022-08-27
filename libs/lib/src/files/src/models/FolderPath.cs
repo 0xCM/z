@@ -9,20 +9,6 @@ namespace Z0
 
     using static FS;
 
-    public class FileQuery : Deferred<FileQuery,FilePath>
-    {
-        public FileQuery()
-        {
-
-        }
-
-        public FileQuery(IEnumerable<FilePath> src)
-            : base(src)
-        {
-
-        }
-    }
-
     public readonly struct FolderPath : IFsEntry<FolderPath>
     {
         const string FolderJoinPattern = "{0}/{1}";
@@ -64,7 +50,7 @@ namespace Z0
 
         public FolderPath(PathPart name)
         {
-            Name = normalize(name.EndsWith(Chars.FSlash) || name.EndsWith(Chars.BSlash) ? name.RemoveLast() : name);
+            Name = PathPart.normalize(name.EndsWith(Chars.FSlash) || name.EndsWith(Chars.BSlash) ? name.RemoveLast() : name);
         }
 
         public FolderName FolderName

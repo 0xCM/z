@@ -5,7 +5,6 @@
 namespace Z0
 {
     using K = BitShiftClass;
-    using Free = System.Security.SuppressUnmanagedCodeSecurityAttribute;
 
     /// <summary>
     /// Characterizes a bitshift operation classifier

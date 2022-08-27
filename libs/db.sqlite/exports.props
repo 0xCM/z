@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <DbSqlite>$(SlnLibs)\db.sqlite\z0.db.sqlite.csproj</DbSqlite>
+  </PropertyGroup>
+</Project>

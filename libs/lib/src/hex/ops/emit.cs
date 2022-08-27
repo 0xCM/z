@@ -4,9 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Arrays;
-    using static Spans;
-    using static Algs;
+    using static sys;
 
     public readonly struct HexLine
     {

@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static HexFormatSpecs;
-    using static core;
+    using static sys;
 
     partial struct Hex
     {

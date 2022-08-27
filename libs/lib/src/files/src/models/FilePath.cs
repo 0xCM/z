@@ -15,7 +15,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public FilePath(PathPart name)
-            => Name = normalize(name);
+            => Name = PathPart.normalize(name);
 
         public Drive Drive
         {
@@ -97,30 +97,19 @@ namespace Z0
             get => Info.Length;
         }
 
-        /// <summary>
-        /// Specifies the file's owning part, if any
-        /// </summary>
-        public PartId Owner
-        {
-            [MethodImpl(Inline)]
-            get => FileName.Owner;
-        }
+        // public PartId Owner
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => FileName.Owner;
+        // }
 
-        /// <summary>
-        /// Determines whether the filename is of the form {owner}.{host}.{*}
-        /// </summary>
-        /// <param name="owner">The owner to test</param>
-        [MethodImpl(Inline)]
-        public bool IsHost(ApiHostUri host)
-            => FileName.IsHost(host);
+        // [MethodImpl(Inline)]
+        // public bool IsHost(ApiHostUri host)
+        //     => FileName.IsHost(host);
 
-        /// <summary>
-        /// Determines whether the filename is of the form {owner}.{.}.{*}
-        /// </summary>
-        /// <param name="owner">The owner to test</param>
-        [MethodImpl(Inline)]
-        public bool IsOwner(PartId part)
-            => FileName.IsOwner(part);
+        // [MethodImpl(Inline)]
+        // public bool IsOwner(PartId part)
+        //     => FileName.IsOwner(part);
 
         [MethodImpl(Inline)]
         public bool Is(FileExt ext)

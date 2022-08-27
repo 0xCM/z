@@ -8,7 +8,7 @@ namespace Z0
     using K = UInt16;
     //using W = W14;
 
-    using static core;
+    using static sys;
 
     [DataWidth(Width,StorageWidth)]
     public readonly struct Hex14 : IEquatable<Hex14>, IComparable<Hex14>

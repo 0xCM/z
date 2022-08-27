@@ -5,9 +5,6 @@
 namespace Z0
 {
     using static Sized;
-    // using static Spans;
-    // using static Arrays;
-
     using static sys;
     
     partial struct memory

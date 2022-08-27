@@ -4,8 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public partial interface IEnvPaths : ITablePaths
-    {
+    // public partial interface IEnvPaths : ITablePaths
+    // {
         
-    }
+    // }
 }

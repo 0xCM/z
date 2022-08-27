@@ -242,6 +242,9 @@ public enum PartId : byte
     [Symbol("db.shell")]
     DbShell,
 
+    [Symbol("db.sqlite")]
+    DbSqlite,
+
     [Symbol("literals")]
     Literals,
 

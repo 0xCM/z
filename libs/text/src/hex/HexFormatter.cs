@@ -6,13 +6,9 @@ namespace Z0
 {
     using System.Text;
 
-    // using static Spans;
-    // using static Arrays;
     using static Scalars;
     using static Sized;
 
-    //using static sys;
-    
     using static HexFormatSpecs;
     using static HexOptionData;
 
