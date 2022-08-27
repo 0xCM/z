@@ -29,7 +29,7 @@ namespace Z0
         public XedDb With(XedRuntime xed)
         {
             Xed = xed;
-            _Store = MemDb.open(AppDb.DbOut("memdb").Path("runtime", FileKind.Bin), new Gb(1));
+            _Store = MemDb.open(AppDb.DbTargets("memdb").Path("runtime", FileKind.Bin), new Gb(1));
             return this;
         }
 

@@ -14,23 +14,6 @@ namespace Z0
         static FilePath StatusLog(Timestamp ts, string name)
             => AppDb.Logs("process").Path($"{name}.{ts}", FileKind.Log);
 
-        public static Outcome run(CmdLine cmd, CmdVars vars, out ReadOnlySpan<TextLine> response)
-        {
-            response = sys.empty<TextLine>();
-            var result = Outcome.Success;
-            try
-            {
-                var process = Cmd.process(cmd, vars);
-                process.Wait();
-                response = Lines.read(process.Output);
-            }
-            catch(Exception e)
-            {
-                result = e;
-            }
-            return result;
-        }
-
         public static void run(CmdScript src)
         {
             var ts = timestamp();
@@ -59,28 +42,6 @@ namespace Z0
         [Op]
         public static Outcome run(CmdLine cmd, Receiver<string> status, Receiver<string> error, out ReadOnlySpan<TextLine> response)
             => run(cmd, CmdVars.Empty, FilePath.Empty, status,error, out response);
-
-        public static Outcome run(FilePath src, CmdArgs args, FilePath dst)
-        {
-            var result = Outcome.Success;
-            try
-            {
-                var cmd = new CmdLine(string.Format("{0} \"{1}\"", src.Format(PathSeparator.BS), args.Format()));
-                var process = CmdLauncher.start(cmd);
-                var outcome = process.Wait();
-                var lines =  Lines.read(process.Output);
-                if(dst.IsNonEmpty)
-                {
-                    using var writer = dst.AsciWriter();
-                    iter(lines, line => writer.WriteLine(line));
-                }
-            }
-            catch(Exception e)
-            {
-                result = e;
-            }
-            return result;
-        }
 
         public static ReadOnlySpan<TextLine> run(CmdLine cmd, CmdVars vars)
         {

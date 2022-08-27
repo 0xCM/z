@@ -23,12 +23,12 @@ namespace Z0
         [Op, Closures(Closure)]
         public static string join<T>(char sep, ReadOnlySpan<T> src)
         {
-            var dst = buffer();
+            var dst = emitter();
             var count = src.Length;
             var last = count - 1;
             for(var i=0; i<count; i++)
             {
-                dst.Append(skip(src,i).ToString());
+                dst.Append(Require.notnull(skip(src,i)));
                 if(i != last)
                     dst.Append(sep);
             }
@@ -43,7 +43,7 @@ namespace Z0
             var last = count - 1;
             for(var i=0; i<count; i++)
             {
-                dst.Append(skip(src,i).ToString());
+                dst.Append(Require.notnull(skip(src,i)));
                 if(i != last)
                     dst.Append(sep);
             }

@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     public interface ISpanSorter<T>
         where T : IComparable<T>
     {

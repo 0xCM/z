@@ -4,8 +4,29 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static FS;
+    
     public readonly struct ModuleArchive
     {
+        /// <summary>
+        /// Searches the source for managed modules
+        /// </summary>
+        /// <param name="src">The directory to search to search</param>
+        /// <param name="dst">The buffer to populate</param>
+        /// <param name="recurse">Specifies whether subdirectories should be searched</param>
+        [Op]
+        public static Files managed(FolderPath src, bool recurse = false, bool dll = true, bool exe = true)
+        {
+            var dst = Files.Empty;
+            if(dll && exe)
+                dst = FS.files(src, recurse, Dll, Exe).Array().Where(FS.managed);
+            else if(!exe && dll)
+                dst = FS.files(src, recurse, Dll).Array().Where(FS.managed);
+            else if(exe && !dll)
+                dst = FS.files(src, recurse, Exe).Array().Where(FS.managed);
+            return dst;
+        }
+
         public readonly FolderPath Root {get;}
 
         [MethodImpl(Inline)]

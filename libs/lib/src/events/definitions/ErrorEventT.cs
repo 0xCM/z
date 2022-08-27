@@ -53,13 +53,19 @@ namespace Z0
         public string Format()
         {
             var dst = text.emitter();
-            if(Exception.IsSome())
-                format(Exception.Value, this, dst);
-            else
-                dst.AppendFormat(string.Format(RpOps.PSx3, EventId, Payload, Origin));
+            dst.AppendLine(string.Format(RpOps.PSx2, EventId, Origin));
+            dst.AppendLine($"{Payload}");
             return dst.Emit();
-
         }
+        // {
+        //     var dst = text.emitter();
+        //     if(Exception.IsSome())
+        //         format(Exception.Value, this, dst);
+        //     else
+        //         dst.AppendFormat(string.Format(RpOps.PSx3, EventId, Payload, Origin));
+        //     return dst.Emit();
+
+        // }
 
         public override string ToString()
             => Format();

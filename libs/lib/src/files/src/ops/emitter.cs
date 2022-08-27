@@ -6,8 +6,6 @@ namespace Z0
 {
     using System.Text;
 
-    using static sys;
-
 
     partial struct FS
     {

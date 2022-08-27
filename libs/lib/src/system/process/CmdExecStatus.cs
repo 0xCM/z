@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [Record(TableId)]
+    [Record(TableId), StructLayout(StructLayout)]
     public record struct CmdExecStatus
     {
         public const string TableId = "cmd.status";

@@ -53,7 +53,7 @@ namespace Z0
 
             iter(dst, prop => Emitter.Write(prop.Format()));
             var data = dst.Map(x => x.Format()).Concat("\n");
-            var cfg = AppDb.DbOut("cfg").Path("projects", FileKind.Cfg);
+            var cfg = AppDb.DbTargets("cfg").Path("projects", FileKind.Cfg);
             FileEmit(data, cfg);
             var config = Settings.cfg(cfg);
             iter(config, entry => Emitter.Row($"dotnet sln add {FS.path(new string(entry.Value))}"));

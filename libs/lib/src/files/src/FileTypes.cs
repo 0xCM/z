@@ -9,6 +9,9 @@ namespace Z0
 
     public class FileTypes
     {
+        public static bool @is(FilePath src, params FileKind[] kinds)
+            => kinds.Where(x => src.Is(x)).Length != 0;
+            
         public static FileKind kind(FilePath src)
         {
             var name = src.FileName.Format().ToLower();
@@ -22,6 +25,14 @@ namespace Z0
                 }
             }
             return kind;
+        }
+
+        public static FileKind kind(string src)
+        {
+            var dst = FileKind.None;
+            var symbols = Symbols.index<FileKind>();
+            symbols.ExprKind(src.ToLower(), out dst);
+            return dst;
         }
 
         public static FileKind kind(FileExt src)

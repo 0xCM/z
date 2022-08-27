@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-     using static Algs;
+    using static sys;
 
     public struct NativeCell<T>
     {

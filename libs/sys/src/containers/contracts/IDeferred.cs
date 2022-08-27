@@ -7,19 +7,26 @@ namespace Z0
     using System.Linq;
     using System.Collections;
 
+    public interface IComputable<T>
+    {
+        T Compute();
+    }
 
     /// <summary>
     /// Characterizes a container over discrete/enumerable content which need not be finite
     /// </summary>
     /// <typeparam name="T">The element type</typeparam>
     [Free]
-    public interface IDeferred<T> : IContented<IEnumerable<T>>, IEnumerable<T>
+    public interface IDeferred<T> : IContented<IEnumerable<T>>, IEnumerable<T>, IComputable<ReadOnlySeq<T>>
     {
         IEnumerator IEnumerable.GetEnumerator()
             => Content.GetEnumerator();
 
         IEnumerator<T> IEnumerable<T>.GetEnumerator()
             => Content.ToList().GetEnumerator();
+
+        ReadOnlySeq<T> IComputable<ReadOnlySeq<T>>.Compute()
+            => Content.Array();
     }
 
     /// <summary>

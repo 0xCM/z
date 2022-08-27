@@ -40,6 +40,58 @@ namespace Z0
         /// </summary>
         public Process Process {get;}
 
+        public static CmdExecStatus run(CmdArgs spec, Action<string> status, Action<string> error)
+        {
+            var values = spec.Values();
+            var name = values.First;
+            var args = values.ToSpan().Slice(1).ToArray();
+            var psi = new ProcessStartInfo(values.First, text.join(Chars.Space,args))
+            {
+                UseShellExecute = false,
+                RedirectStandardError = true,
+                RedirectStandardOutput = true,
+                ErrorDialog = false,
+                CreateNoWindow = true,
+                RedirectStandardInput = false,
+                WorkingDirectory = "C:\\temp"
+            };
+
+            void OnStatus(object sender, DataReceivedEventArgs e)
+            {
+                if(sys.nonempty(e.Data))
+                    status(e.Data);
+            }
+    
+            void OnError(object sender, DataReceivedEventArgs e)
+            {
+                if(sys.nonempty(e.Data))
+                    error(e.Data);
+            }
+
+            var outcome = default(CmdExecStatus);
+            try
+            {                
+                using var process = sys.process(psi);
+                process.OutputDataReceived += OnStatus;
+                process.ErrorDataReceived += OnError;
+                process.Start();
+                outcome.StartTime = sys.now();
+                outcome.Id = process.Id;
+                process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
+                process.WaitForExitAsync().Wait();                
+                outcome.HasExited = true;
+                outcome.ExitTime = sys.now();
+                outcome.Duration = outcome.ExitTime - outcome.StartTime;
+                outcome.ExitCode = process.ExitCode;
+            }
+            catch(Exception e)
+            {
+                error(e.ToString());
+            }
+            return outcome;
+        }
+
         /// <summary>
         /// Launch a new command and returns the Command object that can be used to monitor
         /// the restult.  It does not wait for the command to complete, however you
@@ -255,6 +307,7 @@ namespace Z0
                 return _output.ToString();
             }
         }
+
 
         void HandleStdEvent(object sender, DataReceivedEventArgs e)
         {

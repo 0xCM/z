@@ -38,7 +38,7 @@ namespace Z0
             {
                 var asset = Assets.Algorithms();
                 Utf8.decode(asset.ResBytes, out var doc);
-                FileEmit(doc, AppDb.DbOut("intrinsics").Path(algs,FileKind.Txt), TextEncodingKind.Utf8);
+                FileEmit(doc, AppDb.DbTargets("intrinsics").Path(algs,FileKind.Txt), TextEncodingKind.Utf8);
             }
 
         }

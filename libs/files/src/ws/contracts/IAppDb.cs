@@ -16,7 +16,7 @@ namespace Z0
 
         DbArchive DbOut();
 
-        DbArchive DbOut(string scope);
+        DbArchive DbTargets(string scope);
 
         DbArchive Logs();
 

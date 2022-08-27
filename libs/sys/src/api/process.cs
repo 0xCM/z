@@ -4,12 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
-    partial class Cmd
+    partial class sys
     {
-        [Op]
-        public static AppCmdRunner runner(string name, object host, MethodInfo method)
-            => new AppCmdRunner(name, host, method);
+        public static Process process(ProcessStartInfo spec)
+            => new Process{StartInfo = spec};
     }
 }

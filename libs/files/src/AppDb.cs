@@ -73,14 +73,14 @@ namespace Z0
         public DbArchive Catalogs()
             => DbRoot().Scoped("catalogs");
 
-        public DbArchive DbOut(string scope)
+        public DbArchive DbTargets(string scope)
             => DbOut().Scoped(scope);
 
         public DbArchive ApiTargets()
             => DbOut().Scoped("api");
 
         public DbArchive ApiTargets(string scope)
-            => DbOut($"api/{scope}");
+            => DbTargets($"api/{scope}");
 
         public DbArchive EtlTargets(ProjectId project)
             => DbOut().Scoped("projects").Scoped(project.Format());
@@ -134,10 +134,10 @@ namespace Z0
             => Dev().Scoped("z0/cg");
 
         public DbArchive CgStage()
-            => DbOut("cgstage");
+            => DbTargets("cgstage");
 
         public DbArchive CgStage(string scope)
-            => DbOut("cgstage").Scoped(scope);
+            => DbTargets("cgstage").Scoped(scope);
 
         public FilePath Settings<T>()
             where T : struct

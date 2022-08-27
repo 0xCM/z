@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    
     /// <summary>
     /// Defines a T-value index together with a comanion K-index ,
     /// where each K-value i is either obtained directly from the caller or by

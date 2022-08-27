@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct core
+    partial class sys
     {
         [MethodImpl(Inline)]
         public static void broadcast<K,T>(T src, Index<K,T> dst)
@@ -13,7 +13,7 @@ namespace Z0
                 seek(edit,i) = src;
         }
 
-        [MethodImpl(Inline)]
+        [MethodImpl(Inline), Op, Closures(Closure)]
         public static void broadcast<T>(T src, Index<T> dst)
         {
             var edit = dst.Edit;
@@ -21,14 +21,14 @@ namespace Z0
                 seek(edit,i) = src;
         }
 
-        [MethodImpl(Inline)]
+        [MethodImpl(Inline), Op, Closures(Closure)]
         public static void broadcast<T>(T src, Span<T> dst)
         {
             for(var i=0; i<dst.Length; i++)
                 seek(dst,i) = src;
         }
 
-        [MethodImpl(Inline)]
+        [MethodImpl(Inline), Op, Closures(Closure)]
         public static void broadcast<T>(T src, T[] dst)
         {
             for(var i=0; i<dst.Length; i++)

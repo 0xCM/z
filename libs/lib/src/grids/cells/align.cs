@@ -4,11 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
-
     partial struct CellCalcs
     {
         [MethodImpl(Inline), Op, Closures(Integers8x64k)]

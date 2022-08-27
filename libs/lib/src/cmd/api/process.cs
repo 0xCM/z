@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     partial class Cmd
     {
         static void include(CmdVars? src, CmdProcessOptions dst)
@@ -22,9 +20,9 @@ namespace Z0
             }
         }
 
-        [MethodImpl(Inline), Op]
-        public static CmdProcess process(CmdLine cmd)
-            => new CmdProcess(cmd);
+        // [MethodImpl(Inline), Op]
+        // public static CmdProcess process(CmdLine cmd)
+        //     => new CmdProcess(cmd);
 
         [Op]
         public static CmdProcess process(CmdLine cmd, CmdVars? vars)
@@ -34,14 +32,14 @@ namespace Z0
             return new CmdProcess(cmd, options);
         }
 
-        [Op]
-        public static CmdProcess process(CmdLine cmd, CmdVars? vars, Receiver<string> status, Receiver<string> error)
-        {
-            var options = new CmdProcessOptions();
-            include(vars, options);
-            options.WithReceivers(status, error);
-            return new CmdProcess(cmd, options);
-        }
+        // [Op]
+        // public static CmdProcess process(CmdLine cmd, CmdVars? vars, Receiver<string> status, Receiver<string> error)
+        // {
+        //     var options = new CmdProcessOptions();
+        //     include(vars, options);
+        //     options.WithReceivers(status, error);
+        //     return new CmdProcess(cmd, options);
+        // }
 
         [Op]
         public static CmdProcess process(CmdLine cmd, Receiver<string> status, Receiver<string> error)
@@ -51,23 +49,23 @@ namespace Z0
             return new CmdProcess(cmd, options);
         }
 
-        [Op]
-        public static CmdProcess process(CmdLine cmd, TextWriter dst)
-            => new CmdProcess(cmd, new CmdProcessOptions(dst));
+        // [Op]
+        // public static CmdProcess process(CmdLine cmd, TextWriter dst)
+        //     => new CmdProcess(cmd, new CmdProcessOptions(dst));
 
-        [Op]
-        public static CmdProcess process(CmdLine cmd, TextWriter dst, Receiver<string> status, Receiver<string> error)
-        {
-            var options = new CmdProcessOptions(dst);
-            options.WithReceivers(status, error);
-            return new CmdProcess(cmd, options);
-        }
+        // [Op]
+        // public static CmdProcess process(CmdLine cmd, TextWriter dst, Receiver<string> status, Receiver<string> error)
+        // {
+        //     var options = new CmdProcessOptions(dst);
+        //     options.WithReceivers(status, error);
+        //     return new CmdProcess(cmd, options);
+        // }
 
-        public static CmdProcess process(FilePath path, CmdKind kind, string args)
-            => CmdLauncher.start(Cmd.cmd(path,kind,args));
+        // public static CmdProcess process(FilePath path, CmdKind kind, string args)
+        //     => CmdLauncher.start(Cmd.cmd(path,kind,args));
 
-        [Op]
-        public static CmdProcess process(CmdLine command, CmdProcessOptions config)
-            => new CmdProcess(command, config);        
+        // [Op]
+        // public static CmdProcess process(CmdLine command, CmdProcessOptions config)
+        //     => new CmdProcess(command, config);        
     }
 }

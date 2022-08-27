@@ -4,7 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
+
     public readonly ref struct SortedSpan<T>
     {
         readonly Span<T> Data;

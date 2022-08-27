@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     public class BucketList<T>
     {
@@ -60,6 +60,5 @@ namespace Z0
             }
             return dst.Emit();
         }
-
     }
 }

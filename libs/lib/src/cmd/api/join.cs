@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
- 
     partial class Cmd
     {
         public static string join(CmdArgs args)

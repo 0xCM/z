@@ -9,7 +9,7 @@ namespace Z0.llvm
     public class LlvmPaths : WfSvc<LlvmPaths>
     {
         public IDbTargets Targets()
-            => AppDb.DbOut(llvm);
+            => AppDb.DbTargets(llvm);
 
         public IDbTargets Targets(string scope)
             => Targets().Targets(scope);

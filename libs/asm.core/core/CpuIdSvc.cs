@@ -206,7 +206,7 @@ namespace Z0.Asm
         void EmitBits(ReadOnlySpan<CpuIdRow> src)
         {
             var result = Outcome.Success;
-            var dst = AppDb.DbOut("sde").Path("sde.cpuid.bits", FileKind.Csv);
+            var dst = AppDb.DbTargets("sde").Path("sde.cpuid.bits", FileKind.Csv);
             var emitting = EmittingFile(dst);
             EmitBits(src,dst);
             EmittedFile(emitting,src.Length);
@@ -215,7 +215,7 @@ namespace Z0.Asm
         void EmitRows(ReadOnlySpan<CpuIdRow> src)
         {
             var result = Outcome.Success;
-            var dst = AppDb.DbOut("sde").Table<CpuIdRow>("records");
+            var dst = AppDb.DbTargets("sde").Table<CpuIdRow>("records");
             EmitRecords(src,dst);
         }
 

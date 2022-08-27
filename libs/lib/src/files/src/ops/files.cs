@@ -7,10 +7,12 @@ namespace Z0
     using System.Linq;
     using System.IO;
 
-    using I0 = System.IO;
-
     partial struct FS
     {
+        [Op]
+        public static FS.Files files(FolderPath src, bool recurse, params FileKind[] kinds)
+            => src.Files(recurse).Where(f => kinds.Contains(f.FileKind()));
+
         [MethodImpl(Inline), Op]
         public static Files files(params FilePath[] src)
             => new Files(src);

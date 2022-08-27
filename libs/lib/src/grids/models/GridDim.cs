@@ -5,33 +5,15 @@
 namespace Z0
 {
     using static CharText;
-    using static core;
 
     using api = CellCalcs;
 
     /// <summary>
     /// Defines grid dimensions based on specification without parametrization
     /// </summary>
-    [StructLayout(LayoutKind.Sequential), DataTypeAttributeD("dim")]
+    [StructLayout(LayoutKind.Sequential)]
     public readonly struct GridDim : IEquatable<GridDim>
     {
-        [Parser]
-        public static Outcome parse(string s, out GridDim dst)
-        {
-            dst = GridDim.Empty;
-
-            var n = 0u;
-            var parts = @readonly(s.Split('x'));
-            if(parts.Length == 2)
-            {
-                if(DataParser.parse(skip(parts,0), out uint m) && DataParser.parse(skip(parts,1), out n))
-                {
-                    dst = new GridDim(m, n);
-                    return true;
-                }
-            }
-            return false;
-        }
 
         /// <summary>
         /// The number of grid rows

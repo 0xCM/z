@@ -62,6 +62,23 @@ namespace Z0
             iter(src.Files(true), file => Write(file.ToUri()));
         }
         
+        static FS.Files search(CmdArgs args)
+        {
+            var src = FS.dir(arg(args,0));
+            if(args.Count > 1)
+            {
+                var kinds = args.Values().Span().Slice(1).Select(x => FS.kind(FS.ext(x))).Where(x => x!=0);
+                iter(kinds, kind => term.babble(kind));
+                var query = FS.query(src,true,kinds); 
+                return query.Compute().Storage;
+            }
+            else
+            {
+                return src.Files(true);
+            }
+            
+        }
+
         void _CatalogFiles(CmdArgs args)
         {
             var src = FS.dir(arg(args,0));
@@ -84,7 +101,24 @@ namespace Z0
 
         [CmdOp("files")]
         void CatalogFiles(CmdArgs args)
-            => _CatalogFiles(args);
+        {
+            var src = FS.dir(args[0].Value);
+            var files = FS.listing(search(args));
+            var name = Archives.identifier(src);
+            var records = AppDb.Catalogs("files").Table<ListedFile>(name);
+            Emitter.TableEmit(files, records);            
+            var list = AppDb.Catalogs("files").Path(name,FileKind.List);
+            var flow = Emitter.EmittingFile(list);
+            using var writer = list.Utf8Writer();
+            var counter = 0u;
+            foreach(var file in files)
+            {
+                writer.AppendLine(file.Path);
+                counter++;
+            }
+            Emitter.EmittedFile(flow,counter);
+
+        }
 
         void CalcRelativePaths()
         {
@@ -128,6 +162,13 @@ namespace Z0
             var dst = AppDb.Tools("z0/cmd").Targets().Root;
             var src = ExecutingPart.Assembly.Path().FolderPath;
             Archives.robocopy(src,dst);
+        }
+
+        [CmdOp("help")]
+        void GetHelp(CmdArgs args)
+        {
+            var dst = AppDb.DbTargets("tools/help").Path(FS.file($"{args[0].Value}.{timestamp()}", FileKind.Help));                    
+            Cmd.run(args, dst, Emitter);
         }
 
         [CmdOp("cmd")]
@@ -332,12 +373,6 @@ namespace Z0
         [CmdOp("env/cwd")]
         void Cwd()
             => Write(FS.dir(Environment.CurrentDirectory)); 
-
-        [CmdOp("env/publish")]
-        void PublishEnv()
-        {
-
-        }
 
         const string RegKey = @"HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment";
 

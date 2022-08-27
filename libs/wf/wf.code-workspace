@@ -4,9 +4,6 @@
             "path": "../literals"
         },
         {
-            "path": "../api.contracts"
-        },
-        {
             "path": "../sys"
         },
         {

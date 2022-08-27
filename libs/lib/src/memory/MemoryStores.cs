@@ -4,10 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    using static Spans;
-    using static Arrays;
-
+    using static sys;
+    
     [ApiHost]
     public class MemoryStores
     {
@@ -81,7 +79,7 @@ namespace Z0
             var dst = new MemorySymbol();
             dst.Key = key;
             dst.Address = seg.BaseAddress;
-            dst.HashCode = core.hash(name);
+            dst.HashCode = sys.hash(name);
             dst.Size = seg.Size;
             dst.Expr = name.Content;
             return dst;
@@ -94,7 +92,7 @@ namespace Z0
             var chars = address.Chars;
             dst.Key = key;
             dst.Address = address;
-            dst.HashCode = core.hash(chars);
+            dst.HashCode = sys.hash(chars);
             dst.Size = chars.Length*2;
             dst.Expr = text.format(chars);
             return dst;

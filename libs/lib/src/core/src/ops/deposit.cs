@@ -56,19 +56,6 @@ namespace Z0
             return ref cVal;
         }
 
-        [MethodImpl(Inline), Op, Closures(Int8x16x32k)]
-        public static ref uint deposit<T>(in T src, out uint dst)
-            where T : unmanaged
-        {
-            dst = 0u;
-            if(typeof(T) == typeof(byte) || typeof(T) == typeof(sbyte))
-                deposit(w8, src, ref dst);
-            else if(typeof(T) == typeof(ushort) || typeof(T) == typeof(short) || typeof(T) == typeof(char))
-                deposit(w16, src, ref dst);
-            else if(typeof(T) == typeof(uint) || typeof(T) == typeof(int))
-                deposit(w32, src, ref dst);
-            return ref dst;
-        }
 
         [MethodImpl(Inline), Op, Closures(Integers)]
         public static ref ulong deposit<T>(in T src, out ulong dst)

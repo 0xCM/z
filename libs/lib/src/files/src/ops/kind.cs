@@ -4,12 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
-    partial class Cmd
+    partial struct FS
     {
-        [Op]
-        public static AppCmdRunner runner(string name, object host, MethodInfo method)
-            => new AppCmdRunner(name, host, method);
+        public static FileKind kind(FileExt src)
+            => FileTypes.kind(src);
+
+        public static FileKind kind(FilePath src)
+            => FileTypes.kind(src);
     }
 }

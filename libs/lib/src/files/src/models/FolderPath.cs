@@ -9,6 +9,20 @@ namespace Z0
 
     using static FS;
 
+    public class FileQuery : Deferred<FileQuery,FilePath>
+    {
+        public FileQuery()
+        {
+
+        }
+
+        public FileQuery(IEnumerable<FilePath> src)
+            : base(src)
+        {
+
+        }
+    }
+
     public readonly struct FolderPath : IFsEntry<FolderPath>
     {
         const string FolderJoinPattern = "{0}/{1}";
@@ -16,7 +30,6 @@ namespace Z0
         const string FileJoinPattern = "{0}/{1}";
 
         const string SearchAll = "*.*";
-
 
         public PathPart Name {get;}
 
@@ -52,10 +65,6 @@ namespace Z0
         public FolderPath(PathPart name)
         {
             Name = normalize(name.EndsWith(Chars.FSlash) || name.EndsWith(Chars.BSlash) ? name.RemoveLast() : name);
-            // if(name.EndsWith(Chars.FSlash) || name.EndsWith(Chars.BSlash))
-            //     Name = name.RemoveLast();
-            // else
-            //     Name = name;
         }
 
         public FolderName FolderName
@@ -127,37 +136,34 @@ namespace Z0
             => (this + FS.folder(scope)).Files(recurse).Where(f => kinds.Contains(f.FileKind()));
 
         public FS.Files Files(bool recurse, params FileKind[] kinds)
-        {
-            var search = Files(recurse);
-            return search.Where(f => kinds.Contains(f.FileKind()));
-        }
+            => files(this, recurse, kinds);
 
         public FS.Files Files(bool recurse)
-            => Exists ? files(Directory.EnumerateFiles(Name, SearchAll, option(recurse)).Map(path)) : FS.Files.Empty;
+            => Exists ? Directory.EnumerateFiles(Name, SearchAll, option(recurse)).Map(path) : FS.Files.Empty;
 
-        /// <summary>
-        /// Nonrecursively enumerates part-owned folder files
-        /// </summary>
-        /// <param name="part">The owning part</param>
-        /// <param name="ext">The extension to match</param>
-        public FS.Files Files(PartId part, FileExt ext)
-            => Files(ext).Where(f => f.IsOwner(part));
+        // /// <summary>
+        // /// Nonrecursively enumerates part-owned folder files
+        // /// </summary>
+        // /// <param name="part">The owning part</param>
+        // /// <param name="ext">The extension to match</param>
+        // public FS.Files Files(PartId part, FileExt ext)
+        //     => Files(ext).Where(f => f.IsOwner(part));
 
-        /// <summary>
-        /// Enumerates part-owned folder files
-        /// </summary>
-        /// <param name="part">The owning part</param>
-        /// <param name="ext">The extension to match</param>
-        public FS.Files Files(PartId part, FileExt ext, bool recurse)
-            => Files(ext, recurse).Where(f => f.IsOwner(part));
+        // /// <summary>
+        // /// Enumerates part-owned folder files
+        // /// </summary>
+        // /// <param name="part">The owning part</param>
+        // /// <param name="ext">The extension to match</param>
+        // public FS.Files Files(PartId part, FileExt ext, bool recurse)
+        //     => Files(ext, recurse).Where(f => f.IsOwner(part));
 
-        /// <summary>
-        /// Nonrecursively enumerates host-owned folder files
-        /// </summary>
-        /// <param name="part">The owning part</param>
-        /// <param name="ext">The extension to match</param>
-        public FS.Files Files(ApiHostUri host, FileExt ext, bool recurse)
-            => Files(ext, recurse).Where(f => f.IsHost(host));
+        // /// <summary>
+        // /// Nonrecursively enumerates host-owned folder files
+        // /// </summary>
+        // /// <param name="part">The owning part</param>
+        // /// <param name="ext">The extension to match</param>
+        // public FS.Files Files(ApiHostUri host, FileExt ext, bool recurse)
+        //     => Files(ext, recurse).Where(f => f.IsHost(host));
 
         public Index<FolderPath> SubDirs(bool recurse = false)
             => Directory.Exists(Name)
@@ -165,16 +171,16 @@ namespace Z0
             : sys.empty<FolderPath>();
 
         public Deferred<FilePath> EnumerateFiles(bool recurse)
-            => Algs.defer(EnumerateFiles(this, recurse));
+            => sys.defer(EnumerateFiles(this, recurse));
 
         public Deferred<FilePath> EnumerateFiles(FileExt[] ext, bool recurse)
-            => Algs.defer(EnumerateFiles(this, recurse, ext));
+            => sys.defer(EnumerateFiles(this, recurse, ext));
 
         public Deferred<FilePath> EnumerateFiles(FileExt ext, bool recurse)
-            => Algs.defer(EnumerateFiles(this, ext, recurse));
+            => sys.defer(EnumerateFiles(this, ext, recurse));
 
         public Deferred<FilePath> EnumerateFiles(string pattern, bool recurse)
-            => Algs.defer(EnumerateFiles(this, pattern, recurse));
+            => sys.defer(EnumerateFiles(this, pattern, recurse));
 
         /// <summary>
         /// Creates the represented directory in the file system if it doesn't exist
