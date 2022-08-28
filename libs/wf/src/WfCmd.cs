@@ -152,10 +152,6 @@ namespace Z0
         void ShowThread()
             => Write(string.Format("ThreadId:{0}", Kernel32.GetCurrentThreadId()));
 
-        [CmdOp("env/exe")]
-        void ProcessOrigin()
-            => Write(FS.path(Environment.ProcessPath));
-
         [CmdOp("app/deploy")]
         void Deploy()
         {
@@ -169,6 +165,14 @@ namespace Z0
         {
             var dst = AppDb.DbTargets("tools/help").Path(FS.file($"{args[0].Value}.{timestamp()}", FileKind.Help));                    
             Cmd.run(args, dst, Emitter);
+        }
+
+        [CmdOp("exe")]
+        void RunExe(CmdArgs args)
+        {
+            var src = FS.path(args[0]);
+            var dst =  AppDb.Logs("exe").Path($"{src.FileName.WithoutExtension}.{timestamp()}", FileKind.Log);
+            Cmd.run(src, dst, Emitter);
         }
 
         [CmdOp("cmd")]

@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Events>$(MsBuildThisFileDirectory)z0.events.csproj</Events>
+  </PropertyGroup>
+</Project>

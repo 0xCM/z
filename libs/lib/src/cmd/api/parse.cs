@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static sys;
+
     partial class Cmd
     {
         [Op]
@@ -15,7 +17,7 @@ namespace Z0
         {
             var i = SQ.index(src, Chars.Space);
             if(i < 0)
-                dst = new AppCmdSpec(sys.@string(src), CmdArgs.Empty);
+                dst = new AppCmdSpec(@string(src), CmdArgs.Empty);
             else
             {
                 var name = sys.@string(SQ.left(src,i));

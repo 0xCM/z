@@ -47,8 +47,6 @@
     <Fsm>$(SlnLibs)\fsm\z0.fsm.csproj</Fsm>
     <Files>$(SlnLibs)\files\z0.files.csproj</Files>
 
-    <Heaps>$(SlnLibs)\heaps\z0.heaps.csproj</Heaps>
-
     <IntelSvc>$(SlnLibs)\intel.svc\z0.intel.svc.csproj</IntelSvc>
     <LlvmTools>$(SlnLibs)\llvm.tools\z0.llvm.tools.csproj</LlvmTools>
     <LlvmSvc>$(SlnLibs)\llvm.svc\z0.llvm.svc.csproj</LlvmSvc>
@@ -65,8 +63,6 @@
 
     <Native>$(SlnLibs)\native\z0.native.csproj</Native>
 
-    <Numbers>$(SlnLibs)\numbers\z0.numbers.csproj</Numbers>
-    
     <Polyrand>$(SlnLibs)\polyrand\z0.polyrand.csproj</Polyrand>
     <Queues>$(SlnLibs)\queues\z0.queues.csproj</Queues>
 

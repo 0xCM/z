@@ -8,7 +8,10 @@ namespace Z0
 
     partial class Cmd
     {
-        public static ExecToken run(CmdArgs spec, FilePath dst, WfEmit channel)
+        public static ExecToken run(FilePath src, FilePath dst, WfEmit channel, bool babble = true)
+            => run(args(src), dst, channel);
+
+        public static ExecToken run(CmdArgs spec, FilePath dst, WfEmit channel, bool babble = true)
         {
             var running = channel.Running($"Executing command '{spec}");
             var token = ExecToken.Empty;
@@ -18,7 +21,11 @@ namespace Z0
             void OnData(string src)
             {
                 if(nonempty(src))
+                {
                     buffer.Add(src);
+                    if(babble)
+                        channel.Row(src);
+                }
             }
 
             void OnError(string src)
@@ -33,7 +40,7 @@ namespace Z0
                 var outcome = run(spec, OnData, OnError);
                 var @event = outcome.ExitCode != 0 ? 
                     (IWfEvent)Events.error(typeof(CmdScript), $"Process exited with code {outcome.ExitCode}") 
-                    :  (IWfEvent)Events.babble(typeof(CmdScript), $"Process completed:{outcome}");
+                    : (IWfEvent)Events.babble(typeof(CmdScript), $"Process completed:{outcome}");
 
                 channel.Raise(@event);
                 channel.FileEmit(text.join('\n', buffer.ViewDeposited()), dst);                
@@ -51,6 +58,7 @@ namespace Z0
             var values = spec.Values();
             var name = values.First;
             var args = values.ToSpan().Slice(1).ToArray();
+            var wd = FS.dir($"c:/temp/cmd.run.{timestamp()}").Create();
             var psi = new ProcessStartInfo(values.First, text.join(Chars.Space,args))
             {
                 UseShellExecute = false,
@@ -59,7 +67,7 @@ namespace Z0
                 ErrorDialog = false,
                 CreateNoWindow = true,
                 RedirectStandardInput = false,
-                WorkingDirectory = "C:\\temp"
+                WorkingDirectory = wd.Format(PathSeparator.BS)
             };
 
             void OnStatus(object sender, DataReceivedEventArgs e)

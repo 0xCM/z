@@ -9,25 +9,9 @@ namespace Z0
     partial class Cmd
     {
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static CmdArg<T> arg<T>(uint index, T value)
-            => (index,value);
-
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static CmdArg<T> arg<T>(uint index, string name, T value)
-            => new CmdArg<T>(index, name, value);
-
-        [MethodImpl(Inline), Op]
-        public static CmdArg arg(string name, string value)
-            => new CmdArg(name,value);
-
-        [MethodImpl(Inline), Op]
-        public static CmdArg arg(string name)
-            => new CmdArg(name);
-
-        [MethodImpl(Inline), Op]
-        public static CmdArg arg(uint index, string name, string value)
-            => new CmdArg(index, name, value);
-
+        public static CmdArg<T> arg<T>(T value)
+            where T : ICmdArg<T>, IEquatable<T>, IComparable<T>
+                => value;
         [Op]
         public static CmdArg arg(CmdArgs src, int index)
         {

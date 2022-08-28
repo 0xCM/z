@@ -4,6 +4,9 @@
     <EnvSegment>dev</EnvSegment>
     <Configuration>Release</Configuration>
   </PropertyGroup>
+
   <Import Project="props/locations.props"/>
   <Import Project="props/common.props"/>
+  <Import Project="projects.proj"/>
+
 </Project>

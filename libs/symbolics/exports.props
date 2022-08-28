@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Symbolics>$(MsBuildThisFileDirectory)z0.symbolics.csproj</Symbolics>
+  </PropertyGroup>
+</Project>

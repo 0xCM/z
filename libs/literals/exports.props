@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Literals>$(MsBuildThisFileDirectory)z0.literals.csproj</Literals>
+  </PropertyGroup>
+</Project>

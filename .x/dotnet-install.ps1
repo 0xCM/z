@@ -99,7 +99,7 @@ param(
    [string]$Version="6.0.303",
    [switch]$Internal,
    [string]$JSonFile,
-   [Alias('i')][string]$InstallDir="artifacts/deps/dotnet",
+   [Alias('i')][string]$InstallDir="$env:Z0/artifacts/deps/dotnet",
    [string]$Architecture="<auto>",
    [string]$Runtime,
    [Obsolete("This parameter may be removed in a future version of this script. The recommended alternative is '-Runtime dotnet'.")]

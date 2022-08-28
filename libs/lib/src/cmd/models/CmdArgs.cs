@@ -25,7 +25,7 @@ namespace Z0
         {
             if(Count > 0)
             {
-                var dst = TextFormat.emitter();
+                var dst = text.emitter();
                 for(var i=0; i<Count; i++)
                 {
                     dst.Append(this[i].Value);

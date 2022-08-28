@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Bit>$(MsBuildThisFileDirectory)z0.clr.query.csproj</Bit>
+  </PropertyGroup>
+</Project>

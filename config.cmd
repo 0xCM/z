@@ -13,6 +13,7 @@ set FrameworkMoniker=net6.0
 set PlatformName="Any CPU"
 set RuntimeMoniker=%OsName%-%ArchName%
 set VersionSuffix=3
+set SlnRoot=%Z0%
 set MimeTypes=%EnvSite%\mime.types
 set Archives=%PArchives%
 set PackageOut=%EnvRoot%\packages\%SlnId%
@@ -21,7 +22,6 @@ set DevArchives=%Archives%\%EnvPartition%
 set RepoArchive=%RepoArchives%\%SlnId%.zip
 set SlnArchive=%DevArchives%\%SlnId%
 set CommitLog=%RepoArchives%\%SlnId%.commit.log
-set SlnRoot=%EnvRoot%\%EnvPartition%\%SlnId%
 set Artifacts=%SlnRoot%\artifacts
 set SlnArtifacts=%SlnRoot%\artifacts
 set SlnBin=%Artifacts%\bin
@@ -117,6 +117,8 @@ set CleanSlnObj=rmdir %SlnObj% /s/q
 set CleanSlnLogs=rmdir %SlnLogs% /s/q
 
 set CfgFile=%Artifacts%\%ProjectId%.cfg
+
+: mkdir %Artifacts% 1>nul 2>nul
 echo # %ProjectId% env>%CfgFile%
 echo Deployments=%Deployments%>>%CfgFile%
 echo MimeTypes=%MimeTypes%>>%CfgFile%

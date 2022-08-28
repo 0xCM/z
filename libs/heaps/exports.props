@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Heaps>$(MsBuildThisFileDirectory)z0.heaps.csproj</Heaps>
+  </PropertyGroup>
+</Project>
