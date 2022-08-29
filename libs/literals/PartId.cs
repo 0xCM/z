@@ -385,23 +385,5 @@ public enum PartId : byte
     Workers,
 
     [Symbol("z")]
-    Z,
-
-    [Symbol("<0>")]
-    Extern00 = 0xE0,
-
-    [Symbol("<1>")]
-    Extern01,
-
-    [Symbol("<2>")]
-    Extern02,
-
-    [Symbol("<3>")]
-    Extern03,
-
-    [Symbol("<4>")]
-    Extern04,
-
-    [Symbol("<5>")]
-    Extern05,    
+    Z, 
 }

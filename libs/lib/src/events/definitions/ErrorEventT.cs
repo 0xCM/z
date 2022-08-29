@@ -41,15 +41,6 @@ namespace Z0
             Origin = source;
         }
 
-        [MethodImpl(Inline)]
-        public ErrorEvent(string label, T msg,  EventOrigin source)
-        {
-            EventId = (EventName, label, PartToken.Default);
-            Exception = Option.none<Exception>();
-            Payload = msg;
-            Origin = source;
-        }
-
         public string Format()
         {
             var dst = text.emitter();
@@ -57,15 +48,6 @@ namespace Z0
             dst.AppendLine($"{Payload}");
             return dst.Emit();
         }
-        // {
-        //     var dst = text.emitter();
-        //     if(Exception.IsSome())
-        //         format(Exception.Value, this, dst);
-        //     else
-        //         dst.AppendFormat(string.Format(RpOps.PSx3, EventId, Payload, Origin));
-        //     return dst.Emit();
-
-        // }
 
         public override string ToString()
             => Format();
@@ -78,7 +60,7 @@ namespace Z0
 
             var exception = error.Payload;
             var eType = exception.GetType();
-            var outer = string.Format(ErrorTrace, error.EventId, error.Payload, error.Origin, eType.Name, e0.Message, e0.StackTrace);
+            var outer = sys.format(ErrorTrace, error.EventId, error.Payload, error.Origin, eType.Name, e0.Message, e0.StackTrace);
             dst.AppendLine(outer);
 
             int level = 0;
@@ -86,7 +68,7 @@ namespace Z0
             var e1 = e0.InnerException;
             while (e1 != null)
             {
-                dst.AppendLine(string.Format(InnerTrace, error.EventId, error.Payload, error.Origin, level, eType.Name, e1.Message, e1.StackTrace));
+                dst.AppendLine(sys.format(InnerTrace, error.EventId, error.Payload, error.Origin, level, eType.Name, e1.Message, e1.StackTrace));
                 e1 = e1.InnerException;
                 level += 1;
             }

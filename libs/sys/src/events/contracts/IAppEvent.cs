@@ -34,13 +34,9 @@ namespace Z0
     /// that describes an occurrence of something interesting
     /// </summary>
     [Free]
-    public interface IAppEvent : ITextual, IChronic
+    public interface IAppEvent : IEvent
     {
-        FlairKind Flair
-            => FlairKind.Status;
 
-        bool IsError
-            => Flair == FlairKind.Error;
     }
 
     /// <summary>

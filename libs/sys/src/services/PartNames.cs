@@ -38,12 +38,8 @@ namespace Z0
             {
                 ref readonly var field = ref Fields[i];
                 var symbol = SymbolAttribute.symbol(field);
-                var value = field.GetRawConstantValue();
-                
-
+                var value = field.GetRawConstantValue();                
             }
-
-
 
         }
 
@@ -71,10 +67,6 @@ namespace Z0
             return dst.IsNonEmpty;
         }
 
-        [MethodImpl(Inline), Op]
-        public static bool external(PartId src)
-            => src >= PartId.Extern00;
-
         static string env(string name) 
             => Environment.GetEnvironmentVariable(name) ?? EmptyString;
 
@@ -84,18 +76,10 @@ namespace Z0
             var dst = EmptyString;
             var lookup = names();
             var name = PartName.Empty;
-            if(external(part))
-            {
-                name = new PartName(part, env(part.ToString()));
+            if(lookup.TryGetValue(part, out name))
                 dst = name.Format();
-            }
             else
-            {
-                if(lookup.TryGetValue(part, out name))
-                    dst = name.Format();
-                else
-                    dst = part.ToString().ToLower();
-            }
+                dst = part.ToString().ToLower();
             return dst;
         }
 

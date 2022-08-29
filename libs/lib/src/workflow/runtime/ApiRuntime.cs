@@ -38,7 +38,7 @@ namespace Z0
             {
                 var ts = now();
                 var clock = Time.counter(true);
-                term.emit(Events.running(factory, InitializingRuntime.Format()));
+                term.emit(Events.running(factory, InitializingRuntime));
                 var settings = AppEnv.Default;
                 var control = ExecutingPart.Assembly;
                 var id = control.Id();

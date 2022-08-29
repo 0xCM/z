@@ -6,8 +6,6 @@ namespace Z0
 {
     using System.IO;
 
-    using static Root;
-
     struct WfEventLog : IWfEventLog
     {
         public FilePath StatusPath {get;}
@@ -72,7 +70,7 @@ namespace Z0
             {
                 if(e.IsError)
                     ErrorPath.AppendLines(e.Format());
-                FS.write(format(e), Status);
+                FS.write(e.Format(), Status);
             }
             catch(Exception error)
             {
@@ -105,7 +103,7 @@ namespace Z0
                     FS.write(summary(error), Status);
                 }
                 else
-                    FS.write(format(e), Status);
+                    FS.write(e.Format(), Status);
             }
             catch(Exception error)
             {

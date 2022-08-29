@@ -17,42 +17,34 @@ namespace Z0
         {
             if(recursion > 2)
                 return $"Recursive fail for {src.Name}";
-            try
-            {
-                if(src.IsGenericMethodParameter || src.IsGenericParameter || src.IsGenericTypeParameter)
-                    return src.Name;
-
-                if(src == null)
-                    sys.@throw(new ArgumentNullException(nameof(src)));
-
-                if(Attribute.IsDefined(src, typeof(DisplayNameAttribute)))
-                    return src.GetCustomAttribute<DisplayNameAttribute>().DisplayName;
-
-                if(src.IsEnum && src.IsConcrete())
-                    return src.Name;
-
-                if(src.IsPointer)
-                    return $"{src.GetElementType().DisplayName(recursion + 1)}*";
-
-                if(src.IsSystemDefined())
-                {
-                    var kw = CsData.keyword(src);
-                    return string.IsNullOrWhiteSpace(kw) ? src.Name : kw;
-                }
-
-                if(src.IsGenericType && !src.IsRef())
-                    return src.FormatGeneric();
-
-                if(src.IsRef())
-                    return src.GetElementType().DisplayName(recursion + 1);
-
+            if(src.IsGenericMethodParameter || src.IsGenericParameter || src.IsGenericTypeParameter)
                 return src.Name;
 
-            }
-            catch(Exception)
+            if(src == null)
+                sys.@throw(new ArgumentNullException(nameof(src)));
+
+            if(Attribute.IsDefined(src, typeof(DisplayNameAttribute)))
+                return src.GetCustomAttribute<DisplayNameAttribute>().DisplayName;
+
+            if(src.IsEnum && src.IsConcrete())
+                return src.Name;
+
+            if(src.IsPointer)
+                return $"{src.GetElementType().DisplayName(recursion + 1)}*";
+
+            if(src.IsSystemDefined())
             {
-                return $"Error:{src}";
+                var kw = CsData.keyword(src);
+                return string.IsNullOrWhiteSpace(kw) ? src.Name : kw;
             }
+
+            if(src.IsGenericType && !src.IsRef())
+                return src.FormatGeneric();
+
+            if(src.IsRef())
+                return src.GetElementType().DisplayName(recursion + 1);
+
+            return src.Name;
         }
 
         [Op]

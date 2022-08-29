@@ -211,7 +211,7 @@ namespace Z0
 
         protected const string InitializingRuntime = "Initializing runtime";
         
-        protected static RenderPattern<Duration> InitializedRuntime => "Initialized runtime:{1}";
+        protected static RenderPattern<Duration> InitializedRuntime => "Initialized runtime:{0}";
 
         protected static RenderPattern<LogSettings> ConfiguredAppLogs => "Configured app logs:{0}";
 

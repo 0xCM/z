@@ -7,7 +7,7 @@ namespace Z0
     [Free]
     public interface IErrorEvent : ILevelEvent
     {
-        bool IAppEvent.IsError
+        bool IEvent.IsError
             => true;
     }
 }

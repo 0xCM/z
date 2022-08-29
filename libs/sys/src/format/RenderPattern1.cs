@@ -6,7 +6,6 @@ namespace Z0
 {
     using api = MsgOps;
 
-
     public readonly struct RenderPattern<T> : IFormatPattern<RenderPattern<T>,T>
     {
         public string PatternText {get;}
