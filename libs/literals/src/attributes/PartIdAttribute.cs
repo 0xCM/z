@@ -13,9 +13,18 @@ public class PartIdAttribute : Attribute
             return PartId.None;
     }
 
+    public readonly string Name;
+
+    public PartIdAttribute(string id)
+    {
+        Name = id;
+    }
+
     public PartIdAttribute(object id)
     {
         Id = (PartId)id;
+        Name = Id.ToString();
+        
     }
 
     public PartId Id {get;}

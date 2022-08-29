@@ -6,7 +6,7 @@ namespace Z0
 {
     using Msil;
 
-    using static core;
+    using static sys;
 
     [ApiHost]
     public readonly partial struct Cil

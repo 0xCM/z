@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     partial class ByteBlocks
     {
@@ -18,16 +18,16 @@ namespace Z0
             seek(dst, 1) = (char)(byte)(input >> 8);
             seek(dst, 2) = (char)(byte)(input >> 16);
             seek(dst, 3) = (char)(byte)(input >> 24);
-            return core.cover(dst, 4);
+            return cover(dst, 4);
         }
 
         [MethodImpl(Inline), Op]
         public static ReadOnlySpan<char> inflate16u(in ByteBlock8 src)
-            => recover<char>(core.bytes(cpu.vlo(vpack.vinflate256x16u(cpu.vbytes(w128, u64(src))))));
+            => recover<char>(bytes(cpu.vlo(vpack.vinflate256x16u(cpu.vbytes(w128, u64(src))))));
 
         [MethodImpl(Inline), Op]
         public static ReadOnlySpan<char> inflate16u(in ByteBlock16 src)
-            => recover<char>(core.bytes(cpu.vlo(vpack.vinflate256x16u(cpu.vbytes(w128, u64(src))))));
+            => recover<char>(bytes(cpu.vlo(vpack.vinflate256x16u(cpu.vbytes(w128, u64(src))))));
 
         [MethodImpl(Inline), Op]
         public static ReadOnlySpan<char> inflate16u(in ByteBlock32 src)

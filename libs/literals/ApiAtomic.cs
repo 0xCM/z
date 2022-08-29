@@ -444,6 +444,11 @@ namespace Z0
 
         public const S loadconfig = nameof(loadconfig);
 
+        public const S ecma = nameof(ecma);
+        public const S cli = nameof(cli);
+
+        public const S ecma_cli = ecma + Dot + cli;
+        
         public const S impl_map = impl + Dot + map;
         public const S disasm = dis + Dot + asm;
 

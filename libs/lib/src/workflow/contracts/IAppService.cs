@@ -13,7 +13,7 @@ namespace Z0
 
         T Service<T>(Func<T> factory);
 
-        IWfMsg WfMsg {get;}
+        //IWfMsg WfMsg {get;}
 
         void Init(IWfRuntime wf);
 

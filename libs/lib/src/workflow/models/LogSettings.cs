@@ -40,7 +40,7 @@ namespace Z0
         }
 
         public string Format()
-            => $"{nameof(StatusPath)}:{StatusPath.ToUri()}" + " | " + $"{nameof(ErrorPath)}:{ErrorPath.ToUri()}";
+            => StatusPath.ToUri().Format();
 
         public override string ToString()
             => Format();

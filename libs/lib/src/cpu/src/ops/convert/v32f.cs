@@ -4,12 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-    using System.Runtime.Intrinsics;
-
-    using static Root;
-
     partial struct gcpu
     {
         /// <summary>
@@ -38,7 +32,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public static Vector128<float> v32f<T>(Vector128<T> x)
             where T : unmanaged
-                => gcpu.v32f(x);
+                => x.AsSingle();
 
         [MethodImpl(Inline)]
         public static Vector256<float> v32f<T>(Vector256<T> x)

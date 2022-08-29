@@ -8,6 +8,7 @@ namespace Z0
 
     partial class XApi
     {
+        const NumericKind Closure = UnsignedInts;
         [Op]
         public static ApiHostUri ApiHostUri(this Type host)
         {

@@ -21,7 +21,7 @@ namespace Z0
         where C : ICmd<C>, new()
     {
         CmdId ICmd.CmdId
-            => Cmd.identify<C>();
+            => CmdId.identify<C>();
 
         new T Tool => new T();
 

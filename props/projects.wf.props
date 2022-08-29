@@ -1,10 +1,4 @@
 <Project>
     <PropertyGroup>
-        <Containers>$(SlnLibs)\containers\z0.containers.csproj</Containers>
-        <Symbolics>$(SlnLibs)\symbolics\z0.symbolics.csproj</Symbolics>
-        <CmdSpecs>$(SlnLibs)\cmd.specs\z0.cmd.specs.csproj</CmdSpecs>
-        <Digital>$(SlnLibs)\digital\z0.digital.csproj</Digital>
-        <Wf>$(SlnLibs)\wf\z0.wf.csproj</Wf>
-        <WfShell>$(SlnLibs)\wf.shell\z0.wf.shell.csproj</WfShell>
     </PropertyGroup>
 </Project>

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     using B = ByteBlock16;
     using api = Storage;
@@ -12,8 +12,7 @@ namespace Z0
     /// <summary>
     /// Defines 16 bytes of storage
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, Size = (int)Size, Pack=1), DataTypeAttributeD("block<n:16,t:u8>")]
-    [DataWidth(Width)]
+    [StructLayout(LayoutKind.Sequential, Size = (int)Size, Pack=1)]
     public struct ByteBlock16 : IStorageBlock<B>, IEquatable<B>
     {
         public const ushort Size = 16;

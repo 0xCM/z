@@ -3,7 +3,7 @@
 // See the LICENSE file in the project root for more information.
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     using C = System.Reflection.Metadata.ILOpCode;
     using CT = Cil.OpCodeType;

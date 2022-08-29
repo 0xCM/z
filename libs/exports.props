@@ -1,0 +1,16 @@
+<Project>
+
+   <Import Project="literals/exports.props"/>
+   <Import Project="sys/exports.props"/>
+   <Import Project="bit/exports.props"/>
+   <Import Project="text/exports.props"/>
+   <Import Project="clr.query/exports.props"/>
+   <Import Project="lib/exports.props"/>
+   <Import Project="api.specs/exports.props"/>
+
+   <Import Project="db.sqlite/exports.props"/>
+   <Import Project="heaps/exports.props"/>
+   <Import Project="numbers/exports.props"/>
+   <Import Project="symbolics/exports.props"/>
+
+</Project>

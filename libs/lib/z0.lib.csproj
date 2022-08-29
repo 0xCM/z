@@ -1,16 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="imports.props"/>
+
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>$(FrameworkMoniker)</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="$(ClrQuery)" />
-    <ProjectReference Include="$(Bit)" />
-    <ProjectReference Include="$(ClrModels)" />
-    <ProjectReference Include="$(Imagine)" />
-    <ProjectReference Include="$(Math)" />
-  </ItemGroup>
 
 </Project>

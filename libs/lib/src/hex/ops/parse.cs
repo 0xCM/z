@@ -7,7 +7,7 @@ namespace Z0
     using System.Globalization;
 
     using static Msg;
-    using static core;
+    using static sys;
  
     partial struct Hex
     {

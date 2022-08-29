@@ -4,13 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     [ApiHost]
     public readonly partial struct Storage
     {
         const NumericKind Closure = UnsignedInts;
-
 
         [MethodImpl(Inline), Op]
         public static CharBlock1 chars(N1 n)

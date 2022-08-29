@@ -11,7 +11,7 @@ namespace Z0
     {
         public IWfRuntime Wf {get; private set;}
 
-        public IWfMsg WfMsg {get; private set;}
+        //public IWfMsg WfMsg {get; private set;}
 
         public abstract Type HostType {get;}
 
@@ -23,7 +23,7 @@ namespace Z0
         {
             Wf = wf;
             Emitter = WfEmit.create(wf, HostType);            
-            WfMsg = new WfMsgSvc(wf, HostType); 
+            //WfMsg = new WfMsgSvc(wf, HostType); 
             var flow = Emitter.Creating(HostType);
             OnInit();
             Initialized();
@@ -50,10 +50,7 @@ namespace Z0
 
         }
 
-        protected virtual void Initialized()
-        {
-
-        }
+        protected virtual void Initialized() { }
 
         protected virtual void Disposing() { }
 

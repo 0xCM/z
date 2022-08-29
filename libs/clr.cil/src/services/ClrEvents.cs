@@ -6,7 +6,7 @@ namespace Z0
 {
     using System.Diagnostics.Tracing;
 
-    using static core;
+    using static sys;
 
     using Level = System.Diagnostics.Tracing.EventLevel;
 

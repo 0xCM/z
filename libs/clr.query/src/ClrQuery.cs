@@ -7,6 +7,6 @@ namespace Z0
     [ApiHost]
     public static partial class ClrQuery
     {
-        const NumericKind Closure = UnsignedInts;
+        //const NumericKind Closure = UnsignedInts;
     }
 }

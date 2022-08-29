@@ -1,8 +1,4 @@
 <Project>
     <PropertyGroup>
-        <ClrMsil>$(SlnLibs)\clr.msil\z0.clr.msil.csproj</ClrMsil>
-        <ClrModels>$(SlnLibs)\clr.models\z0.clr.models.csproj</ClrModels>
-        <Imagine>$(SlnLibs)\imagine\z0.imagine.csproj</Imagine>
-        <ZLib>$(SlnLibs)\lib\z0.lib.csproj</ZLib>
     </PropertyGroup>
 </Project>

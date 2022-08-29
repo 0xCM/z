@@ -10,12 +10,13 @@ namespace Z0
             where T : ICmdService, new()
         {
             var emitter = Require.notnull(wf.Emitter);
-            var msg = $"Creating {typeof(T).DisplayName()} service with controller {ExecutingPart.Assembly.GetSimpleName()} with image {FS.path(ExecutingPart.Assembly.Location).ToUri()}";
+            var name = $"clr:://z0/{typeof(T).Assembly.GetSimpleName()}/{typeof(T).DisplayName()}";
+            var msg = $"Creating {name}";
             var service = new T();            
             var running = emitter.Running(msg);
             service.Init(wf);
             service.Install(Require.notnull(src));
-            wf.Ran(running);
+            wf.Ran(running, $"Created {name}");
             return service;
         }
     }

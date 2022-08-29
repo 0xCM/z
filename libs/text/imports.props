@@ -1,0 +1,8 @@
+<Project>
+
+  <ItemGroup>
+    <ProjectReference Include="$(Sys)" />
+    <ProjectReference Include="../bit/z0.bit.csproj" />
+  </ItemGroup>
+
+</Project>

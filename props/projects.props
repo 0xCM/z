@@ -1,9 +1,16 @@
 <Project>
 
-   <Import Project="projects.core.props"/>
-   <Import Project="projects.wf.props"/>
-
   <PropertyGroup>
+    <Containers>$(SlnLibs)\containers\z0.containers.csproj</Containers>
+    <Symbolics>$(SlnLibs)\symbolics\z0.symbolics.csproj</Symbolics>
+    <CmdSpecs>$(SlnLibs)\cmd.specs\z0.cmd.specs.csproj</CmdSpecs>
+    <Digital>$(SlnLibs)\digital\z0.digital.csproj</Digital>
+    <Wf>$(SlnLibs)\wf\z0.wf.csproj</Wf>
+    <WfShell>$(SlnLibs)\wf.shell\z0.wf.shell.csproj</WfShell>
+
+    <Imagine>$(SlnLibs)\imagine\z0.imagine.csproj</Imagine>
+    <ZLib>$(SlnLibs)\lib\z0.lib.csproj</ZLib>
+
     <ApiCode>$(SlnLibs)\api.code\z0.api.code.csproj</ApiCode>
     <Assets>$(SlnLibs)\assets\z0.assets.csproj</Assets>
     <Agents>$(SlnLibs)\agents\z0.agents.csproj</Agents>
@@ -19,7 +26,6 @@
 
     <Archives>$(SlnLibs)\archives\z0.archives.csproj</Archives>
 
-    <Bit>$(SlnLibs)\bit\z0.bit.csproj</Bit>
     <Bits>$(SlnLibs)\bits\z0.bits.csproj</Bits>
     <Builds>$(SlnLibs)\builds\z0.builds.csproj</Builds>
 
