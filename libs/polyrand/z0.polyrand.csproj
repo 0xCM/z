@@ -1,13 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="imports.props"/>
+  <Import Project="$(ProjectProps)\usings.props"/>
+
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <DebugSymbols>true</DebugSymbols>
     <TargetFramework>$(FrameworkMoniker)</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="$(Dynamic)" />
-  </ItemGroup>
 
 </Project>

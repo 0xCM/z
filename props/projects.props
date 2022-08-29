@@ -69,7 +69,6 @@
 
     <Native>$(SlnLibs)\native\z0.native.csproj</Native>
 
-    <Polyrand>$(SlnLibs)\polyrand\z0.polyrand.csproj</Polyrand>
     <Queues>$(SlnLibs)\queues\z0.queues.csproj</Queues>
 
     <Rules>$(SlnLibs)\rules\z0.rules.csproj</Rules>

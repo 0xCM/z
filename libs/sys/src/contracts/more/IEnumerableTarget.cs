@@ -4,9 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [ApiHost]
-    public static partial class XTend
+    public interface IEnumerableTarget<T> : IEnumerable<T>, IEnumerator<T>
     {
-        const NumericKind Closure = UnsignedInts;
+
     }
 }

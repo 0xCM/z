@@ -4,9 +4,15 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [ApiHost]
-    public static partial class XTend
+    public interface IProcessor
     {
-        const NumericKind Closure = UnsignedInts;
+
+    }
+
+    public interface IProcessor<S,T> : IProcessor
+    {
+        Task Process(S src, T dst, CancellationToken cancel);
+
+        void Process(S src, T dst);
     }
 }

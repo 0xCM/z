@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Polyrand>$(MsBuildThisFileDirectory)z0.polyrand.csproj</Polyrand>
+  </PropertyGroup>
+</Project>

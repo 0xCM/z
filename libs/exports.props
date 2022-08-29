@@ -7,6 +7,7 @@
    <Import Project="clr.query/exports.props"/>
    <Import Project="lib/exports.props"/>
    <Import Project="api.specs/exports.props"/>
+   <Import Project="polyrand/exports.props"/>
 
    <Import Project="db.sqlite/exports.props"/>
    <Import Project="heaps/exports.props"/>
