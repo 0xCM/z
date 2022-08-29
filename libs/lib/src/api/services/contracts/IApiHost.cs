@@ -9,7 +9,8 @@ namespace Z0
     {
         Type HostType {get;}
 
-        bool FindMethod(OpUri uri, out MethodInfo method);
+        PartName PartName 
+            => HostType.Assembly.PartName();
 
         Identifier HostName
             => HostUri.HostName;

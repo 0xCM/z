@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
+    using static sys;
 
     public readonly record struct BinaryLiteral<T> : ILiteral<BinaryLiteral<T>,T>
         where T : unmanaged

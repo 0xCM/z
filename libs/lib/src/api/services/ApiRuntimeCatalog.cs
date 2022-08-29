@@ -14,11 +14,6 @@ namespace Z0
         Index<IPart> _Parts;
 
         /// <summary>
-        /// The dataset part identities
-        /// </summary>
-        Index<PartId> _PartIdentities;
-
-        /// <summary>
         /// The part components included in the datset
         /// </summary>
         Index<Assembly> _PartComponents;
@@ -35,13 +30,12 @@ namespace Z0
 
         Index<string> _ComponentNames;
 
-        internal ApiRuntimeCatalog(Index<IPart> parts, Index<Assembly> components, ApiPartCatalogs catalogs, Index<IApiHost> hosts, Index<PartId> partIds, Index<MethodInfo> ops)
+        internal ApiRuntimeCatalog(Index<IPart> parts, Index<Assembly> components, ApiPartCatalogs catalogs, Index<IApiHost> hosts, Index<MethodInfo> ops)
         {
             _Parts = parts;
             _PartComponents = components;
             _Catalogs = catalogs;
             _ApiHosts = hosts;
-            _PartIdentities = partIds;
             _ComponentNames = components.Select(x => x.GetName().Name);
         }
 
@@ -63,39 +57,39 @@ namespace Z0
             get => _PartComponents;
         }
 
-        public bool PartCatalog(PartId id, out IApiPartCatalog dst)
-        {
-            var matched = _Catalogs.Where(x => x.PartId == id);
-            if(matched.IsNonEmpty)
-            {
-                dst = matched.First;
-            }
-            else
-            {
-                dst = null;
-            }
+        // public bool PartCatalog(PartName id, out IApiPartCatalog dst)
+        // {
+        //     var matched = _Catalogs.Where(x => x.PartName == id);
+        //     if(matched.IsNonEmpty)
+        //     {
+        //         dst = matched.First;
+        //     }
+        //     else
+        //     {
+        //         dst = null;
+        //     }
 
-            return dst != null;
-        }
+        //     return dst != null;
+        // }
 
-        public bool FindPart(PartId id, out IPart dst)
-        {
-            var count = _Parts.Length;
-            var src = _Parts.View;
-            dst = default;
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var part = ref skip(src,i);
-                if(part.Id == id)
-                {
-                    dst = part;
-                    return true;
-                }
-            }
-            return false;
-        }
+        // public bool FindPart(PartName id, out IPart dst)
+        // {
+        //     var count = _Parts.Length;
+        //     var src = _Parts.View;
+        //     dst = default;
+        //     for(var i=0; i<count; i++)
+        //     {
+        //         ref readonly var part = ref skip(src,i);
+        //         if(part.PartName == id)
+        //         {
+        //             dst = part;
+        //             return true;
+        //         }
+        //     }
+        //     return false;
+        // }
 
-        public bool Assembly(PartId id, out Assembly dst)
+        public bool Assembly(PartName part, out Assembly dst)
         {
             var src = _PartComponents.View;
             var count = src.Length;
@@ -103,7 +97,7 @@ namespace Z0
             for(var i=0; i<count; i++)
             {
                 ref readonly var component = ref skip(src,i);
-                if(component.Id() == id)
+                if(component.PartName() == part)
                 {
                     dst = component;
                     return true;
@@ -112,21 +106,18 @@ namespace Z0
             return false;
         }
 
-        public Index<IApiHost> PartHosts(params PartId[] parts)
+        public Index<IApiHost> PartHosts(params PartName[] parts)
         {
             if(parts.Length == 0)
                 return _ApiHosts;
             else
                 return  from h in _ApiHosts
-                        where parts.Contains(h.PartId)
+                        where parts.Contains(h.PartName)
                         select h;
         }
 
         IPart[] IApiCatalog.Parts
             => _Parts;
-
-        PartId[] IApiCatalog.PartIdentities
-            => _PartIdentities;
 
         public static IApiCatalog Empty =>
             new ApiRuntimeCatalog(
@@ -134,7 +125,6 @@ namespace Z0
                     sys.empty<Assembly>(),
                     ApiPartCatalogs.Empty,
                     sys.empty<IApiHost>(),
-                    sys.empty<PartId>(),
                     sys.empty<MethodInfo>()
                     );        
     }

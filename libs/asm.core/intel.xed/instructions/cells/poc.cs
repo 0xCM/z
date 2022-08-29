@@ -23,7 +23,7 @@ namespace Z0
             buffer.Sort(new PatternOrder(true));
 
             var oc = XedOpCode.Empty;
-            var @class = AsmInstClass.Empty;
+            var @class = AmsInstClass.Empty;
             var oci = z8;
             for(var i=0u; i<count; i++)
             {

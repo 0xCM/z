@@ -79,7 +79,7 @@ namespace Z0
                 get => ref Seq.Mode;
             }
 
-            public ref readonly AsmInstClass Class
+            public ref readonly AmsInstClass Class
             {
                 [MethodImpl(Inline)]
                 get => ref Seq.Instruction;

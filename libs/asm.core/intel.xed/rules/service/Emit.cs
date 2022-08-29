@@ -38,7 +38,6 @@ namespace Z0
         void EmitRuleDeps()
             => Emit(CalcFieldDeps());
 
-
         public void EmitCatalog(Index<InstPattern> patterns, RuleTables rules)
         {
             exec(PllExec,

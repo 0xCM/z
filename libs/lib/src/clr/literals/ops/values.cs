@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     partial struct ClrLiterals
     {
@@ -35,7 +35,7 @@ namespace Z0
             for(var i=0u; i<count; i++)
             {
                 ref readonly var field = ref skip(fields,i);
-                seek(target,i) = paired(field, field.GetValueDirect(tRef));
+                seek(target,i) = Tuples.paired(field, field.GetValueDirect(tRef));
             }
         }
 
@@ -53,7 +53,7 @@ namespace Z0
             for(var i=0u; i<fields.Count; i++)
             {
                 ref readonly var field = ref fields[i];
-                seek(dst,i) = paired(field, (T)field.GetValueDirect(tRef));
+                seek(dst,i) = Tuples.paired(field, (T)field.GetValueDirect(tRef));
             }
             return dst;
         }

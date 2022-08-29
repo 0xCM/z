@@ -7,7 +7,7 @@ namespace Z0
     using D = DecimalDigitFacets;
     using C = AsciCode;
 
-    using static core;
+    using static sys;
 
     /// <summary>
     /// Defines operations over character digits

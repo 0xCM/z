@@ -28,7 +28,7 @@ namespace Z0
 
             public MemoryAddress IP;
 
-            public AsmInstClass InstClass;
+            public AmsInstClass InstClass;
 
             public AsmHexCode Encoded;
 

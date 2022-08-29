@@ -36,7 +36,7 @@ namespace Z0
             var catalog = default(IApiCatalog);
             var settings = new CaptureWfSettings();
             var assemblies = list<Assembly>();
-            var parts = hashset<PartId>();
+            var parts = hashset<PartName>();
             if(args.Count != 0)
             {
                 var src = FS.path(ExecutingPart.Assembly.Location).FolderPath;
@@ -57,7 +57,7 @@ namespace Z0
                 {
                     if(ApiRuntime.part(a, out IPart part))
                     {
-                        parts.Add(part.Id);
+                        parts.Add(part.Name);
                         assemblies.Add(a);
                     }
                 }

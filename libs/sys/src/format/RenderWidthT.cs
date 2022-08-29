@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using api = MsgOps;
-
     public readonly struct RenderWidth<T> : ITextual
         where T : unmanaged
     {

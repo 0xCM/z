@@ -4,10 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     using static CodeGenerator;
-    using static core;
+    using static sys;
 
     public sealed class ApiResPackEmitter : WfSvc<ApiResPackEmitter>
     {

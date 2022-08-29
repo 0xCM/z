@@ -1,0 +1,11 @@
+<Project>
+
+  <ItemGroup>
+    <ProjectReference Include="$(Native)" />
+    <ProjectReference Include="$(Numbers)" />
+    <ProjectReference Include="$(Files)" />
+    <ProjectReference Include="$(MemoryModels)" />
+    <ProjectReference Include="$(Symbolics)" />
+  </ItemGroup>
+
+</Project>

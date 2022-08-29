@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using X = HexDigitFacets;
+    using XF = HexDigitFacets;
 
     partial struct Hex
     {
@@ -14,7 +14,7 @@ namespace Z0
         /// <param name="c">The character to test</param>
         [MethodImpl(Inline), Op]
         public static bool scalar(AsciCode c)
-            => (HexDigitCode)c >= X.MinScalarCode && (HexDigitCode)c <= X.MaxScalarCode;
+            => (HexDigitCode)c >= XF.MinScalarCode && (HexDigitCode)c <= XF.MaxScalarCode;
 
         /// <summary>
         /// Determines whether a character corresponds to one of the lower hex codes

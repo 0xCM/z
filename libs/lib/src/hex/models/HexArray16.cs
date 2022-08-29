@@ -8,7 +8,9 @@ namespace Z0
 
     public struct HexArray16
     {
-        ByteBlock16 Data;
+        ulong Lo;
+
+        ulong Hi;
 
         public uint Count => 16;
 
@@ -17,7 +19,7 @@ namespace Z0
         public ref byte First
         {
             [MethodImpl(Inline)]
-            get => ref Data.First;
+            get => ref sys.first(Bytes);
         }
 
         public ref byte this[int index]
@@ -35,7 +37,7 @@ namespace Z0
         public Span<byte> Bytes
         {
             [MethodImpl(Inline)]
-            get => Data.Bytes;
+            get => bytes(this);
         }
 
         [MethodImpl(Inline)]

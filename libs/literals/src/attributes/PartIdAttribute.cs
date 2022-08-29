@@ -13,6 +13,14 @@ public class PartIdAttribute : Attribute
             return PartId.None;
     }
 
+    public static string name(Assembly src)
+    {
+        if(src != null && Attribute.IsDefined(src, typeof(PartIdAttribute)))
+            return ((PartIdAttribute)Attribute.GetCustomAttribute(src, typeof(PartIdAttribute))).Name;
+        else
+            return EmptyString;
+    }
+
     public readonly string Name;
 
     public PartIdAttribute(string id)

@@ -347,8 +347,8 @@ namespace Z0
             [RuleField(K.ERROR, 1, typeof(M.ErrorKind))]
             public ErrorKind ERROR;
 
-            [RuleField(K.ICLASS, 16, typeof(M.InstClassType))]
-            public InstClassType ICLASS;
+            [RuleField(K.ICLASS, 16, typeof(AsmInstKind))]
+            public AsmInstKind ICLASS;
 
             [RuleField(K.CHIP, 8, typeof(M.ChipCode))]
             public ChipCode CHIP;

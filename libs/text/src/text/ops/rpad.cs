@@ -9,7 +9,7 @@ namespace Z0
     partial class text
     {
         [MethodImpl(Inline), Op]
-        public static string rpad(string src, int count, char c)
+        public static string rpad(string src, int count, char c = Chars.Space)
             => src.PadRight(count, c);
 
         [MethodImpl(Inline), Op]

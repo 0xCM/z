@@ -31,11 +31,11 @@ namespace Z0.Asm
 
         bool Append = true;
 
-        public void Emit(Index<PartId> parts, IApiPack dst)
+        public void Emit(Index<PartName> parts, IApiPack dst)
         {
-            var selected = parts.Length == 0 ? Wf.ApiCatalog.PartIdentities : parts.Storage;
-            EmitUnrefined(selected, dst);
-            EmitRefined(selected, dst);
+            //var selected = parts.Length == 0 ? Wf.ApiCatalog.PartIdentities : parts.Storage;
+            EmitUnrefined(parts, dst);
+            EmitRefined(parts, dst);
         }
 
         public void Emit(ReadOnlySpan<IApiHost> hosts, IApiPack pack)
@@ -66,7 +66,7 @@ namespace Z0.Asm
             }
         }
 
-        ReadOnlySpan<AsmRoutine> EmitLiteral(byte[] imm8, Index<PartId> parts, IApiPack dst)
+        ReadOnlySpan<AsmRoutine> EmitLiteral(byte[] imm8, Index<PartName> parts, IApiPack dst)
         {
             if(imm8.Length != 0)
                 return EmitUnrefined(Exchange, imm8.ToImm8Values(ImmRefinementKind.Unrefined), parts, dst);
@@ -74,13 +74,13 @@ namespace Z0.Asm
                 return default;
         }
 
-        ReadOnlySpan<AsmRoutine> EmitUnrefined(Index<PartId> parts, IApiPack dst)
+        ReadOnlySpan<AsmRoutine> EmitUnrefined(Index<PartName> parts, IApiPack dst)
             => EmitLiteral(new byte[]{2,4,6,8,10,12}, parts, dst);
 
         CaptureExchange Exchange
             => Capture.exchange(Buffer.Storage);
 
-        ReadOnlySpan<AsmRoutine> EmitRefined(Index<PartId> parts, IApiPack dst)
+        ReadOnlySpan<AsmRoutine> EmitRefined(Index<PartName> parts, IApiPack dst)
             => EmitRefined(Exchange, parts, dst);
 
         ParameterInfo RefiningParameter(MethodInfo src)
@@ -147,10 +147,10 @@ namespace Z0.Asm
             return routines.ViewDeposited();
         }
 
-        Index<IApiHost> Hosts(Index<PartId> parts)
+        Index<IApiHost> Hosts(Index<PartName> parts)
             => Wf.ApiCatalog.PartHosts(parts);
 
-        ReadOnlySpan<AsmRoutine> EmitUnrefined(in CaptureExchange exchange, Index<Imm8R> imm8, Index<PartId> parts, IApiPack dst)
+        ReadOnlySpan<AsmRoutine> EmitUnrefined(in CaptureExchange exchange, Index<Imm8R> imm8, Index<PartName> parts, IApiPack dst)
         {
             var routines = list<AsmRoutine>();
             routines.AddRange(EmitUnrefinedDirect(exchange, imm8, parts, dst));
@@ -158,7 +158,7 @@ namespace Z0.Asm
             return routines.ViewDeposited();
         }
 
-        ReadOnlySpan<AsmRoutine> EmitRefined(in CaptureExchange exchange, Index<PartId> parts, IApiPack dst)
+        ReadOnlySpan<AsmRoutine> EmitRefined(in CaptureExchange exchange, Index<PartName> parts, IApiPack dst)
         {
             var routines = list<AsmRoutine>();
             var hosts = Hosts(parts);
@@ -171,7 +171,7 @@ namespace Z0.Asm
             return routines.ViewDeposited();
         }
 
-        Index<AsmRoutine> EmitUnrefinedDirect(in CaptureExchange exchange, Index<Imm8R> imm8, Index<PartId> parts, IApiPack dst)
+        Index<AsmRoutine> EmitUnrefinedDirect(in CaptureExchange exchange, Index<Imm8R> imm8, Index<PartName> parts, IApiPack dst)
         {
             var routines = list<AsmRoutine>();
             foreach(var host in Hosts(parts))
@@ -202,7 +202,7 @@ namespace Z0.Asm
             return routines.ToArray();
         }
 
-        Index<AsmRoutine> EmitUnrefinedGeneric(in CaptureExchange exchange, Index<Imm8R> imm8, Index<PartId> parts, IApiPack dst)
+        Index<AsmRoutine> EmitUnrefinedGeneric(in CaptureExchange exchange, Index<Imm8R> imm8, Index<PartName> parts, IApiPack dst)
         {
             var routines = list<AsmRoutine>();
             foreach(var host in Hosts(parts))

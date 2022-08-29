@@ -34,7 +34,7 @@ namespace Z0
             }
             else
             {
-                dst.InstClass = AsmInstClass.Empty;
+                dst.InstClass = AmsInstClass.Empty;
                 dst.InstSig = Instruction.Empty;
                 dst.InstForm = InstForm.Empty ;
                 dst.FormId = 0;

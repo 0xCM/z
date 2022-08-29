@@ -16,7 +16,7 @@ namespace Z0
 
         uint Counter;
 
-        readonly Tables.RowParser<T> Parser;
+        readonly RowParser<T> Parser;
 
         public TableReader(FilePath src, bool header = true)
         {
@@ -27,7 +27,7 @@ namespace Z0
             Parser = DefaultParser;
         }
 
-        public TableReader(FilePath src, Tables.RowParser<T> parser, bool header = true)
+        public TableReader(FilePath src, RowParser<T> parser, bool header = true)
         {
             Stream = src.Utf8Reader();
             if(header)

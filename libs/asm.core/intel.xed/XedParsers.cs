@@ -46,7 +46,7 @@ namespace Z0
 
         static readonly EnumParser<FpuRegId> FpuRegs = new();
 
-        static readonly EnumParser<InstClassType> Classes = new();
+        static readonly EnumParser<AsmInstKind> Classes = new();
 
         static readonly EnumParser<InstFormType> Forms = new();
 
@@ -440,19 +440,19 @@ namespace Z0
             }
         }
 
-        public static bool parse(string src, out InstClassType dst)
+        public static bool parse(string src, out AsmInstKind dst)
             => Classes.Parse(src, out dst);
 
-        public static bool parse(string src, out AsmInstClass dst)
+        public static bool parse(string src, out AmsInstClass dst)
         {
-            if(parse(src, out InstClassType @class))
+            if(parse(src, out AsmInstKind @class))
             {
                 dst = @class;
                 return true;
             }
             else
             {
-                dst = AsmInstClass.Empty;
+                dst = AmsInstClass.Empty;
                 return false;
             }
         }

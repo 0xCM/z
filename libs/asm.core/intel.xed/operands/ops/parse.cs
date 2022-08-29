@@ -288,7 +288,7 @@ namespace Z0
 
                 case K.ICLASS:
                 {
-                    if(XedParsers.parse(value, out InstClassType x))
+                    if(XedParsers.parse(value, out AsmInstKind x))
                     {
                         dst = new (field, (ushort)x);
                         result = true;

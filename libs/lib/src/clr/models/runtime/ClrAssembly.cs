@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Spans;
+    using static sys;
 
     public readonly struct ClrAssembly : IRuntimeObject<ClrAssembly,Assembly>
     {

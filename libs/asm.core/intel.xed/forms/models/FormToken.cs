@@ -5,8 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
-    using static XedRules;
+    using static sys;
 
     partial class XedForms
     {
@@ -24,10 +23,10 @@ namespace Z0
             }
 
             [MethodImpl(Inline)]
-            public FormToken(AsmInstClass value)
+            public FormToken(AmsInstClass value)
             {
                 var data = ByteBlock16.Empty;
-                @as<AsmInstClass>(data.First) = value;
+                @as<AmsInstClass>(data.First) = value;
                 data[15] = (byte)FormTokenKind.InstClass;
                 Data = data;
             }
@@ -83,8 +82,8 @@ namespace Z0
                 => ref @as<Hex16>(Data.First);
 
             [MethodImpl(Inline)]
-            public ref readonly AsmInstClass InstClassValue()
-                => ref @as<AsmInstClass>(Data.First);
+            public ref readonly AmsInstClass InstClassValue()
+                => ref @as<AmsInstClass>(Data.First);
 
             public bool IsEmpty
             {

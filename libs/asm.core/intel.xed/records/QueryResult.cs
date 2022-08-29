@@ -5,8 +5,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     using static XedRules;
 
     partial struct XedModels
@@ -22,7 +20,7 @@ namespace Z0
             public string SearchPattern;
 
             [Render(18)]
-            public AsmInstClass InstClass;
+            public AmsInstClass InstClass;
 
             [Render(64)]
             public InstForm InstForm;

@@ -94,7 +94,7 @@ namespace Z0
                 () => Views.Store(I.OpWidths, XedOps.Widths),
                 () => Import.CalcInstImports(data => blocks = data),
                 () => Import.CalcFormImports(data => forms = data),
-                () => XedRules.CalcChipMap(data =>  chips = data)
+                () => XedChips.calc(data =>  chips = data)
                 );
 
             Views.Store(I.InstImports, blocks);

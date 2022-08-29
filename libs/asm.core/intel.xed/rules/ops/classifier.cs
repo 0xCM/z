@@ -7,7 +7,7 @@ namespace Z0
 {
     partial class XedRules
     {
-        public static AsmInstClass classifier(AsmInstClass src)
+        public static AmsInstClass classifier(AmsInstClass src)
         {
             var dst = src;
             var name = src.Format();

@@ -8,7 +8,7 @@ namespace Z0
     {
         [MethodImpl(Inline)]
         public static EventId define(string name, WfStepId step)
-            => new EventId(name, step, PartToken.Default);
+            => new EventId(name, step);
 
         [MethodImpl(Inline)]
         public static EventId define(Type host, EventKind kind)
@@ -32,7 +32,7 @@ namespace Z0
             Identifier = string.Format("{0} | {1,-18} | {2,-16} | {3,-24}", Ts, kind, host.Assembly.Id().Format(), host.DisplayName());
         }
 
-        EventId(string name, WfStepId step, PartToken ct, Timestamp? ts = null)
+        EventId(string name, WfStepId step, Timestamp? ts = null)
         {
             Ts = ts ?? Timestamp.now();
             Identifier = string.Format(PatternBase + " | {2,-24}", Ts, name, step);

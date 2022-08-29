@@ -36,7 +36,7 @@ namespace Z0
                 get => ref Inst.InstForm;
             }
 
-            public AsmInstClass Classifier
+            public AmsInstClass Classifier
             {
                 [MethodImpl(Inline)]
                 get => Inst.Classifier;

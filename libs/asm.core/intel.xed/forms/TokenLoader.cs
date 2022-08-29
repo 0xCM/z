@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
     using static XedModels;
 
     using TK = XedForms.FormTokenKind;
@@ -14,7 +14,7 @@ namespace Z0
     {
         public readonly struct TokenLoader
         {
-            public static TokenDataset load()
+            public static XedFormTokens load()
             {
                 var index = alloc<FormToken>(TokenCount);
                 var i=0u;
@@ -88,12 +88,12 @@ namespace Z0
                 names[tk] = RepNames;
 
                 tk = TK.InstClass;
-                var @classes = Symbols.index<InstClassType>().Kinds;
+                var @classes = Symbols.index<AsmInstKind>().Kinds;
                 tokens(@classes, ref i, index);
                 names[tk] = map(@classes, c => c.ToString()).ToHashSet();
 
                 var ti = index.Sort();
-                return new TokenDataset(ti, offsets(ti), Symbols.index<FormTokenKind>().Kinds.ToArray(), names);
+                return new XedFormTokens(ti, offsets(ti), Symbols.index<FormTokenKind>().Kinds.ToArray(), names);
             }
 
             static Index<FormTokenKind,uint> offsets(Index<FormToken> src)
@@ -113,21 +113,6 @@ namespace Z0
                 return dst;
             }
 
-            // static Index<string> L0 =
-            //         RegClassNames
-            //         + OpClassNames
-            //         + AddressClasses
-            //         + CpuidNames
-            //         + InstCategories
-            //         + NonTerms
-            //         + FieldNames
-            //         + IsaKinds
-            //         + Gp64RegLits
-            //         + Reg32
-            //         + SegRegs
-            //         + RepNames
-            //         ;
-
             [MethodImpl(Inline)]
             static uint tokens(FormTokenKind kind, HashSet<string> names, ref uint i, Index<FormToken> dst)
             {
@@ -139,7 +124,7 @@ namespace Z0
             }
 
             [MethodImpl(Inline)]
-            static uint tokens(ReadOnlySpan<InstClassType> classes, ref uint i, Index<FormToken> dst)
+            static uint tokens(ReadOnlySpan<AsmInstKind> classes, ref uint i, Index<FormToken> dst)
             {
                 var i0 = i;
                 for(var j=0; j<classes.Length; j++, i++)
@@ -187,7 +172,7 @@ namespace Z0
                 + Gp8RegLitNames.Count + Gp16RegLitNames.Count + Gp32RegLitNames.Count + Gp64RegLitNames.Count + RegIndexNames.Count
                 + IsaKindNames.Count + CpuidNames.Count
                 + NonTermNames.Count + FieldNames.Count + InstCategoryNames.Count + RepNames.Count
-                + (int)Symbols.index<InstClassType>().Count;
+                + (int)Symbols.index<AsmInstKind>().Count;
 
 
             const FormTokenKind LastKind = FormTokenKind.Hex16Lit;

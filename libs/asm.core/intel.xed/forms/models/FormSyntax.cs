@@ -9,7 +9,7 @@ namespace Z0
     {
         public readonly struct FormSyntax
         {
-            readonly Index<FormToken> Tokens;
+            readonly ReadOnlySeq<FormToken> Tokens;
 
             [MethodImpl(Inline)]
             public FormSyntax(FormToken[] src)

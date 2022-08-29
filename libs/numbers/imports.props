@@ -1,0 +1,10 @@
+<Project>
+
+  <ItemGroup>
+    <ProjectReference Include="$(ZLib)" />
+    <ProjectReference Include="$(Containers)" />
+    <ProjectReference Include="$(Symbolics)" />
+    <ProjectReference Include="$(Digital)" />
+  </ItemGroup>
+
+</Project>

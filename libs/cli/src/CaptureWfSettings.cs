@@ -23,7 +23,7 @@ namespace Z0
 
         public bit PurgeTarget;
 
-        public Seq<PartId> Parts;
+        public Seq<PartName> Parts;
 
         public CliEmissionSettings CliEmissions;
 
@@ -37,7 +37,7 @@ namespace Z0
             RunChecks = false;
             PurgeTarget = false;
             CliEmissions = CliEmissionSettings.Default;
-            Parts = sys.empty<PartId>();
+            Parts = sys.empty<PartName>();
         }
 
         public static IWfSettings<CaptureWfSettings> Default

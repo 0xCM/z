@@ -6,13 +6,42 @@ namespace Z0
 {
     using api = MsgOps;
 
-    public readonly struct RenderWidth : ITextual
+    public readonly record struct RenderWidth : IDataType<RenderWidth>, IDataString
     {
         public readonly ushort Value;
 
         [MethodImpl(Inline)]
         public RenderWidth(ushort value)
             => Value = value;
+
+        public Hash32 Hash
+        {
+            [MethodImpl(Inline)]
+            get => Value;
+        }
+
+        public bool IsEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Value == 0;
+        }
+
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Value != 0;
+        }
+
+        public override int GetHashCode()
+            => Hash;
+
+        [MethodImpl(Inline)]
+        public bool Equals(RenderWidth src)
+            => Value == src.Value;
+
+        [MethodImpl(Inline)]
+        public int CompareTo(RenderWidth src)
+            => Value.CompareTo(src.Value);
 
         [MethodImpl(Inline)]
         public string Format()

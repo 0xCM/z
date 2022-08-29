@@ -9,8 +9,6 @@ namespace Z0
     /// </summary>
     public readonly struct ApiHost : IApiHost, IComparable<ApiHost>
     {
-        public readonly PartId PartId {get;}
-
         public readonly Type HostType {get;}
 
         public readonly Identifier HostName {get;}
@@ -21,12 +19,14 @@ namespace Z0
 
         readonly Dictionary<string,MethodInfo> Index {get;}
 
+        public readonly PartName PartName {get;}
+
         [MethodImpl(Inline)]
-        public ApiHost(Type type, string name, PartId part, ApiHostUri uri, MethodInfo[] methods, Dictionary<string,MethodInfo> index)
+        public ApiHost(Type type, string name, PartName part, ApiHostUri uri, MethodInfo[] methods, Dictionary<string,MethodInfo> index)
         {
+            PartName = part;
             HostType = type;
             HostName = name;
-            PartId = part;
             HostUri = uri;
             Methods = methods;
             Index = index;
@@ -81,6 +81,6 @@ namespace Z0
             => !a.Equals(b);
 
         public static ApiHost Empty
-            => new ApiHost(typeof(void), EmptyString, 0, ApiHostUri.Empty, sys.empty<MethodInfo>(), new());
+            => new ApiHost(typeof(void), EmptyString, PartName.Empty, ApiHostUri.Empty, sys.empty<MethodInfo>(), new());
     }
 }

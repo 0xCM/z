@@ -6,7 +6,6 @@ namespace Z0
 {
     using Z0.Asm;
 
-    using static core;
     using static Delegates;
 
     public class ApiCaptureRunner : WfSvc<ApiCaptureRunner>
@@ -15,7 +14,7 @@ namespace Z0
 
         ApiCatalogs ApiCatalogs => Service(Wf.ApiCatalogs);
 
-        public void EmitImm(Index<PartId> parts, IApiPack dst)
+        public void EmitImm(Index<PartName> parts, IApiPack dst)
         {
             var flow = Running("EmitImm");
             ImmEmitter.Emit(parts, dst);

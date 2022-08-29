@@ -8,7 +8,6 @@ namespace Z0
     using C = DecimalDigitCode;
     using V = DecimalDigitValue;
     using D = DecimalDigit;
-    using A = AsciCode;
     using T = System.Byte;
     using B = Base10;
 

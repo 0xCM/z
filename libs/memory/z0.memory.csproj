@@ -5,14 +5,10 @@
     <TargetFramework>$(FrameworkMoniker)</TargetFramework>
   </PropertyGroup>
 
+  <Import Project="imports.props"/>
   <Import Project="$(ProjectProps)\usings.props"/>
 
   <ItemGroup>
-    <ProjectReference Include="$(Native)" />
-    <ProjectReference Include="$(Numbers)" />
-    <ProjectReference Include="$(Files)" />
-    <ProjectReference Include="$(MemoryModels)" />
-    <ProjectReference Include="$(Symbolics)" />
   </ItemGroup>
 
 </Project>

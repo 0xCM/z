@@ -7,8 +7,7 @@ namespace Z0
 {
     using static XedRules;
     using static XedModels;
-    using static XedImport;
-    using static MemDb;
+    using static XedImport;    
     using static core;
 
     public class XedViews

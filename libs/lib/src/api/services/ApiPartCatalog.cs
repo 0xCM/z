@@ -12,7 +12,7 @@ namespace Z0
         /// <summary>
         /// The identity of the assembly that defines and owns the catalog
         /// </summary>
-        public PartId PartId {get;}
+        public PartName PartName {get;}
 
         /// <summary>
         /// The assembly that defines and owns the catalog
@@ -34,12 +34,11 @@ namespace Z0
         /// </summary>
         public Index<MethodInfo> Methods {get;}
 
-        public ApiPartCatalog(PartId part, Assembly component, Index<ApiCompleteType> types, IApiHost[] apihosts, Type[] svchosts)
+        public ApiPartCatalog(PartName part, Assembly component, Index<ApiCompleteType> types, IApiHost[] apihosts, Type[] svchosts)
         {
-            PartId = part;
+            PartName = part;
             Component = component;
             ApiTypes = types;
-            //OperationHosts = apihosts.Map(h => (IApiHost)h);
             ApiHosts = apihosts;
             Methods = apihosts.SelectMany(x => x.Methods);
         }
@@ -48,6 +47,6 @@ namespace Z0
         /// Specifies whether the catalog contains content from an identified assembly
         /// </summary>
         public bool IsIdentified
-            => PartId != 0;
+            => PartName.IsNonEmpty;
     }
 }

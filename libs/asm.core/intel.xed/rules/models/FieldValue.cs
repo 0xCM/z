@@ -108,7 +108,7 @@ namespace Z0
             }
 
             [MethodImpl(Inline)]
-            public FieldValue(FieldKind kind, InstClassType data)
+            public FieldValue(FieldKind kind, AsmInstKind data)
             {
                 Field = kind;
                 Data = (ushort)data;
@@ -212,8 +212,8 @@ namespace Z0
                 => new FieldSeg(Field, (SegVar)Data);
 
             [MethodImpl(Inline)]
-            public AsmInstClass ToInstClass()
-                => (InstClassType)Data;
+            public AmsInstClass ToInstClass()
+                => (AsmInstKind)Data;
 
             [MethodImpl(Inline)]
             public ChipCode ToChip()
@@ -292,7 +292,7 @@ namespace Z0
                 => src.ToMode();
 
             [MethodImpl(Inline)]
-            public static implicit operator InstClassType(FieldValue src)
+            public static implicit operator AsmInstKind(FieldValue src)
                 => src.ToInstClass();
 
             [MethodImpl(Inline)]

@@ -286,7 +286,7 @@ namespace Z0
                 get => ref Form;
             }
 
-            public ref readonly AsmInstClass InstClass
+            public ref readonly AmsInstClass InstClass
             {
                 [MethodImpl(Inline)]
                 get => ref View.iclass(Operands);
@@ -456,11 +456,11 @@ namespace Z0
 
             ConstLookup<ushort,InstGroupMember> _GroupMemberLookup;
 
-            SortedLookup<AsmInstClass,Index<InstGroupMember>> _ClassGroupLookup;
+            SortedLookup<AmsInstClass,Index<InstGroupMember>> _ClassGroupLookup;
 
-            SortedLookup<AsmInstClass,Index<InstPattern>> _ClassPatternLookup;
+            SortedLookup<AmsInstClass,Index<InstPattern>> _ClassPatternLookup;
 
-            SortedLookup<AsmInstClass,Index<InstForm>> _ClassFormLookup;
+            SortedLookup<AmsInstClass,Index<InstForm>> _ClassFormLookup;
         }
     }
 }

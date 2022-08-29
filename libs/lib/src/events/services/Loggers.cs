@@ -43,20 +43,12 @@ namespace Z0
             => new WfEmissionLog(dst);
 
         [MethodImpl(Inline), Op]
-        public static IWorkerLog worker(FolderPath home)
-            => new WorkerLog(new LogSettings(home));
-
-        [MethodImpl(Inline), Op]
         public static IWorkerLog worker(LogSettings config)
             => new WorkerLog(config);
 
         [MethodImpl(Inline), Op]
         public static IWfEventLog events(LogSettings config)
             => new WfEventLog(config);
-
-        [MethodImpl(Inline), Op]
-        public static IEventSink term(string src)
-            => new TermLog(src);
 
         [MethodImpl(Inline), Op]
         public static LogSettings configure(string name, FolderPath dst)

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
+    using static sys;
 
     public readonly struct ClrEnumInfo<E>
         where E : unmanaged, Enum

@@ -8,7 +8,6 @@ namespace Z0
     using C = HexDigitCode;
     using V = HexDigitValue;
     using D = HexDigit;
-    using A = AsciCode;
     using T = System.Byte;
     using B = Base16;
 

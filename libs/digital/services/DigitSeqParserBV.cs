@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     public abstract class DigitSeqParser<B,V> : BasedParser<B>, ISpanSeqParser<char,V>
         where B : unmanaged, INumericBase

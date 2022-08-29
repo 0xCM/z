@@ -28,9 +28,11 @@ namespace Z0
     using HDV = HexDigitValue;
     using HLS = HexLowerSym;
     using HUS = HexUpperSym;
+    using XF = HexSymFacet;
+    using XDF = HexDigitFacets;
 
     partial struct Digital
-    {
+    {       
         /// <summary>
         /// Converts a character in the inclusive range [0,9] to the corresponding number in the same range
         /// </summary>
@@ -101,7 +103,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static bool digit(Base10 @base, char c, out DDV dst)
         {
-            if(Digital.test(@base, c))
+            if(test(@base, c))
             {
                 dst = (DDV)((DDC)c - DDF.MinCode);
                 return true;
@@ -149,11 +151,71 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static HDV digit(Base16 @base, char src)
-            => Hex.digit(src);
+        {
+            if(number(src))
+                return (HDV)((XF)src - XF.NumberOffset);
+            else
+            {
+                if(hexupper(src))
+                    return (HDV)((XF)src - XF.LetterOffsetUp);
+                else
+                    return (HDV)((XF)src - XF.LetterOffsetLo);
+            }
+        }
 
         [MethodImpl(Inline), Op]
         public static HDV digit(Base16 @base, AsciCode src)
-            => Hex.digit(src);
+        {
+            if(number(src))
+                return (HDV)((XF)src - XF.NumberOffset);
+            else
+            {
+                if(hexupper(src))
+                    return (HDV)((XF)src - XF.LetterOffsetUp);
+                else
+                    return (HDV)((XF)src - XF.LetterOffsetLo);
+            }
+        }
+
+        /// <summary>
+        /// Determines whether a character is one of [0..9]
+        /// </summary>
+        /// <param name="c">The character to test</param>
+        [MethodImpl(Inline)]
+        static bool hexscalar(char c)
+            => (XF)c >= XF.FirstNumber && (XF)c <= XF.LastNumber;
+
+        /// <summary>
+        /// Determines whether a character is one of [0..9]
+        /// </summary>
+        /// <param name="c">The character to test</param>
+        [MethodImpl(Inline)]
+        static bool hexscalar(AsciCode c)
+            => (XF)c >= XF.FirstNumber && (XF)c <= XF.LastNumber;
+
+        /// <summary>
+        /// Determines whether a character corresponds to one of the uppercase hex code characters
+        /// </summary>
+        /// <param name="c">The character to test</param>
+        [MethodImpl(Inline)]
+        static bool hexupper(char c)
+            => (XF)c >= XF.FirstLetterUp && (XF)c <= XF.LastLetterUp;
+
+        /// <summary>
+        /// Determines whether a character corresponds to one of the uppercase hex code characters
+        /// </summary>
+        /// <param name="c">The character to test</param>
+        [MethodImpl(Inline)]
+        static bool hexupper(AsciCode c)
+            => (XF)c >= XF.FirstLetterUp && (XF)c <= XF.LastLetterUp;
+
+        /// <summary>
+        /// Determines whether a character corresponds to one of the lowercase hex code characters
+        /// </summary>
+        /// <param name="c">The character to test</param>
+        [MethodImpl(Inline)]
+        static bool hexlower(char c)
+            => (XF)c >= XF.FirstLetterLo && (XF)c <= XF.LastLetterUp;
 
         [MethodImpl(Inline), Op]
         public static bool digit(Base16 @base, char c, out HDV dst)

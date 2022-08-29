@@ -33,7 +33,7 @@ namespace Z0
 
             public MemoryAddress IP;
 
-            public AsmInstClass Instruction;
+            public AmsInstClass Instruction;
 
             public AsmHexCode Encoded;
 

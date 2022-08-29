@@ -108,7 +108,7 @@ namespace Z0
             }
         }
 
-        public ReadOnlySpan<ApiMemberInfo> ResolveParts(params PartId[] parts)
+        public ReadOnlySpan<ApiMemberInfo> ResolveParts(params PartName[] parts)
         {
             var count = parts.Length;
             var buffer = list<ResolvedPart>();
@@ -155,10 +155,10 @@ namespace Z0
             return counter;
         }
 
-        public ResolvedPart ResolvePart(PartId id)
+        public ResolvedPart ResolvePart(PartName name)
         {
-            if(Wf.ApiCatalog.FindPart(id, out var part))
-                return ResolvePart(part.Owner, out _);
+            if(Wf.ApiCatalog.Assembly(name, out var a))
+                return ResolvePart(a, out _);
             else
                 return ResolvedPart.Empty;
         }

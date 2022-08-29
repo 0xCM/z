@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     public struct RowPoint<T> : IPoint<RowPoint<T>,T>
         where T : unmanaged

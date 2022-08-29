@@ -18,13 +18,13 @@ namespace Z0
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => core.bw64(Value) == 0;
+            get => sys.bw64(Value) == 0;
         }
 
         public bool IsNonEmpty
         {
             [MethodImpl(Inline)]
-            get => core.bw64(Value) != 0;
+            get => sys.bw64(Value) != 0;
         }
 
         public override string ToString()

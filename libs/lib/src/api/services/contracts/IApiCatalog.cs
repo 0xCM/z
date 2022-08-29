@@ -9,20 +9,14 @@ namespace Z0
     {
         ApiPartCatalogs PartCatalogs {get;}
         
-        Index<IApiHost> PartHosts(params PartId[] parts);
+        Index<IApiHost> PartHosts(params PartName[] parts);
 
         IPart[] Parts {get;}
 
-        PartId[] PartIdentities {get;}
-
         Index<Assembly> Components {get;}
 
-        ReadOnlySpan<string> ComponentNames {get;}
+        //bool FindPart(PartId id, out IPart dst);
 
-        bool PartCatalog(PartId part, out IApiPartCatalog catalog);
-
-        bool FindPart(PartId id, out IPart dst);
-
-        bool Assembly(PartId id, out Assembly dst);
+        bool Assembly(PartName id, out Assembly dst);
     }
 }

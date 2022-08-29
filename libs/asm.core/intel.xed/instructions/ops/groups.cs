@@ -11,11 +11,11 @@ namespace Z0
 
     partial class XedPatterns
     {
-        public static SortedLookup<AsmInstClass,InstGroup> groups(Index<InstPattern> src)
+        public static SortedLookup<AmsInstClass,InstGroup> groups(Index<InstPattern> src)
         {
-            var dst = dict<AsmInstClass,Index<InstPattern>>();
+            var dst = dict<AmsInstClass,Index<InstPattern>>();
             var patterns = list<InstPattern>();
-            var @class = AsmInstClass.Empty;
+            var @class = AmsInstClass.Empty;
             var count = src.Count;
             for(var i=0; i<count; i++)
             {
@@ -38,7 +38,7 @@ namespace Z0
                     dst.Add(@class, patterns.ToIndex().Sort());
             }
 
-            var groups = dict<AsmInstClass,InstGroup>();
+            var groups = dict<AmsInstClass,InstGroup>();
             var classes = dst.Keys.Array();
             for(var i=0; i<classes.Length; i++)
             {
@@ -49,10 +49,10 @@ namespace Z0
             return groups;
         }
 
-        public static InstGroup group(AsmInstClass @class, Index<InstPattern> src)
+        public static InstGroup group(AmsInstClass @class, Index<InstPattern> src)
             => new InstGroup(@class, members(@class, src));
 
-        public static Index<InstGroupMember> members(AsmInstClass @class, Index<InstPattern> src)
+        public static Index<InstGroupMember> members(AmsInstClass @class, Index<InstPattern> src)
         {
             var opcode = XedOpCode.Empty;
             var count = src.Count;

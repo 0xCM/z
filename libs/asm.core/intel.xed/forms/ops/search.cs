@@ -16,7 +16,7 @@ namespace Z0
             var types = Symbols.index<InstFormType>();
             var cats = Symbols.index<CategoryKind>();
             var _isa = Symbols.index<InstIsaKind>();
-            var classes = Symbols.index<InstClassType>();
+            var classes = Symbols.index<AsmInstKind>();
             var extensions = Symbols.index<ExtensionKind>();
             var count = src.Length;
             var dst = list<QueryResult>();

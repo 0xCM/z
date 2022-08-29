@@ -9,7 +9,7 @@ namespace Z0
 
     public class XedLimits
     {
-        public const InstClassType MaxIClassMember = InstClassType.XTEST;
+        public const AsmInstKind MaxIClassMember = AsmInstKind.XTEST;
 
         public Hex12 MaxIClass => (ushort)MaxIClassMember;
 

@@ -41,7 +41,7 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => alg.ghash.calc(Value);
+            get => nhash(Value);
         }
 
         public int CompareTo(BitNumber<T> src)

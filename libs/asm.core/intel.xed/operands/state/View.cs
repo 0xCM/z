@@ -53,8 +53,8 @@ namespace Z0
                 => ref @as<XedVexClass>(src.VEXVALID);
 
             [MethodImpl(Inline), Op]
-            public static ref readonly AsmInstClass iclass(in OperandState src)
-                => ref @as<InstClassType,AsmInstClass>(src.ICLASS);
+            public static ref readonly AmsInstClass iclass(in OperandState src)
+                => ref @as<AsmInstKind,AmsInstClass>(src.ICLASS);
 
             [MethodImpl(Inline), Op]
             public static ref readonly BCastKind broadcast(in OperandState src)

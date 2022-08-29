@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     public struct MultiPoint<T> : IPoint<MultiPoint<T>,Point<T>>
         where T : unmanaged

@@ -66,8 +66,7 @@ namespace Z0
         Seq<CollectedHost> Capture(IApiCatalog src)
         {            
             var dst = sys.bag<CollectedHost>();
-            var ids = Settings.Parts.ToHashSet();
-            var parts = src.PartCatalogs.Select(x => x as IApiPartCatalog).Where(x => ids.Contains(x.PartId));
+            var parts = src.PartCatalogs.Select(x => x as IApiPartCatalog);
             var running = Emitter.Running($"Running capture workflow: {parts.Select(x => x.Component.PartName()).Delimit()}");
             iter(parts, p => Capture(p, Dispenser, dst, Emitter), Settings.PllExec);            
             var collected = Transport.Transmit(dst.ToSeq());        
@@ -80,14 +79,12 @@ namespace Z0
             var tmp = sys.bag<CollectedHost>();
             ApiCode.gather(src, dispenser, tmp, log, Settings.PllExec);
             var code = tmp.ToArray();
-            ApiCodeSvc.Emit(src.PartId, code, Target, Settings.PllExec);
+            ApiCodeSvc.Emit(src.PartName, code, Target, Settings.PllExec);
             EmitAsm(dispenser, code);
 
-            iter(tmp, x =>  {
-                
+            iter(tmp, x =>  {                
                 Cli.EmitMsil(x,Target);
                 dst.Add(x);
-
                 }
             );
             Transport.Transmit(src.Component);

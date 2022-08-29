@@ -108,12 +108,12 @@ namespace Z0
             => Value.CompareTo(src.Value);
 
         [MethodImpl(Inline)]
-        public static implicit operator H(Bit32 src)
+        public static implicit operator H(bit src)
             => new H((byte)(src ? 1 : 0));
 
         [MethodImpl(Inline)]
         public static implicit operator H(bool src)
-            => new H(core.@byte(src));
+            => new H(sys.@byte(src));
 
         [MethodImpl(Inline)]
         public static implicit operator H(K src)

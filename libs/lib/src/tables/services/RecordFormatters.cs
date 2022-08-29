@@ -59,16 +59,6 @@ namespace Z0
                 dst[i] = dst.Fields[i].Definition.GetValueDirect(tr);
         }
 
-        // internal static string format(in RowFormatSpec spec, object[] buffer, in DynamicRow src)
-        // {
-        //     var content = src.Format(spec.Pattern, buffer);
-        //     var pad = spec.RowPad;
-        //     if(pad == 0)
-        //         return content;
-        //     else
-        //         return content.PadRight(pad);
-        // }
-
         internal static string format(in RowFormatSpec spec, RenderBuffers buffers, in DynamicRow src)
         {
             var content = src.Format(spec.Pattern, buffers);

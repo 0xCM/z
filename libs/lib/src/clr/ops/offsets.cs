@@ -9,6 +9,10 @@ namespace Z0
     partial struct Clr
     {
         [Op]
+        public static ushort offset(Type host, FieldInfo field)
+            => (ushort)Marshal.OffsetOf(host, field.Name);
+
+        [Op]
         public static void offsets(Type src, Span<ushort> dst)
         {
             var fields = span(src.DeclaredFields());

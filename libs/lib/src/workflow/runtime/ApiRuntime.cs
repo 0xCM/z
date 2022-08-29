@@ -8,15 +8,22 @@ namespace Z0
 
     public class ApiRuntime : ApiRuntime<ApiRuntime>
     {        
-        protected static IApiCatalog match(Assembly control, string[] args)
+        static IApiCatalog match(Assembly control, string[] args)
         {
-            var dir = FS.path(control.Location).FolderPath;
+            var candidates = colocated(control);
             if(args.Length == 0)
-                return catalog(dir, assemblies(dir).Select(x => x.Id()));
+                return catalog(candidates);
             else
             {
-                var ids = parts(args);
-                return ids.Length == 0 ? catalog(dir, sys.array<PartId>(control.Id())) : catalog(dir,ids);
+                var match = args.ToHashSet();
+                var matched = list<Assembly>();
+                foreach(var a in candidates)
+                {
+                    var name = a.PartName();
+                    if(match.Contains(name.Format()))
+                        matched.Add(a);
+                }
+                return catalog(matched.ToArray());
             }
         }
 
@@ -76,9 +83,7 @@ namespace Z0
                 ref readonly var type = ref types[i];
                 var factories = type.PublicInstanceMethods().Concrete().Where(m => m.ReturnType.Reifies<IAppService>());
                 if(factories.Length != 0)
-                {
                     dst.Add(new AppServiceSpec(type,factories));
-                }                
             }
 
             return dst.Array();
@@ -94,11 +99,24 @@ namespace Z0
             foreach(var path in candidates)
             {
                 var assembly = Assembly.LoadFrom(path.Name);
-                if(assembly.Id() != 0)
+                if(assembly.PartName().IsNonEmpty)
                     dst.Add(assembly);
             }
 
             return dst.ToArray();
+        }
+
+        static IApiCatalog catalog(IPart[] src)
+        {
+            var catalogs = src.Select(x => catalog(x.Owner)).Where(c => c.IsIdentified);
+            var dst = new ApiRuntimeCatalog(
+                src,
+                src.Select(p => p.Owner),
+                new ApiPartCatalogs(catalogs),
+                catalogs.SelectMany(c => c.ApiHosts.Storage).Where(h => nonempty(h.HostUri.HostName)),
+                catalogs.SelectMany(x => x.Methods)
+                );
+            return dst;
         }
 
         public static IApiCatalog catalog(Assembly[] src)
@@ -116,10 +134,10 @@ namespace Z0
 
         public static bool part(Assembly src, out IPart dst)
         {
-            var attempt = src.GetTypes().Where(t => t.Reifies<IPart>() && !t.IsAbstract).Map(t => (IPart)Activator.CreateInstance(t)).ToArray();
+            var attempt = src.GetTypes().Where(t => t.Reifies<IPart>() && !t.IsAbstract).Map(t => (IPart)Activator.CreateInstance(t));
             if(attempt.Length != 0)
             {
-                dst = attempt.First();
+                dst = sys.first(attempt);
                 return true;
             }
             else

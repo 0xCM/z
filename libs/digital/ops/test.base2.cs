@@ -7,7 +7,7 @@ namespace Z0
     using B = BinaryDigitFacets;
     using C = AsciCode;
 
-    using static Spans;
+    using static sys;
 
     /// <summary>
     /// Defines operations over character digits

@@ -464,7 +464,7 @@ namespace Z0
                     break;
                     case C.InstClass:
                     {
-                        var x = @as<InstClassType>(data);
+                        var x = @as<AsmInstKind>(data);
                         dst = XedRender.format(x);
                     }
                     break;

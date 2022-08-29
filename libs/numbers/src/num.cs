@@ -27,17 +27,17 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static num<T> zero<T>()
             where T : unmanaged
-                => new num<T>(core.zero<T>());
+                => new num<T>(sys.zero<T>());
 
         [MethodImpl(Inline), One, Closures(Closure)]
         public static num<T> one<T>()
             where T : unmanaged
-                => new num<T>(core.one<T>());
+                => new num<T>(sys.one<T>());
 
         [MethodImpl(Inline), Ones, Closures(Closure)]
         public static num<T> ones<T>()
             where T : unmanaged
-                => new num<T>(core.ones<T>());
+                => new num<T>(sys.ones<T>());
 
         [MethodImpl(Inline), Add, Closures(Closure)]
         public static num<T> add<T>(num<T> a, num<T> b)

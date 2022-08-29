@@ -9,7 +9,7 @@ namespace Z0
     {
         public struct InstDef : IComparable<InstDef>
         {
-            public AsmInstClass InstClass;
+            public AmsInstClass InstClass;
 
             public Index<InstPatternSpec> PatternSpecs;
 

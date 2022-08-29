@@ -5,80 +5,34 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
+    using static XedForms;
 
-    partial class XedForms
+    public readonly record struct FormToken<T>
+        where T : unmanaged
     {
-        public readonly record struct FormToken<T>
-            where T : unmanaged
+        readonly ByteBlock16 Data;
+
+        [MethodImpl(Inline)]
+        public FormToken(ByteBlock16 data)
         {
-            readonly ByteBlock16 Data;
-
-            [MethodImpl(Inline)]
-            public FormToken(ByteBlock16 data)
-            {
-                Data = data;
-            }
-
-            public T Value
-            {
-                [MethodImpl(Inline)]
-                get => @as<T>(Data.First);
-            }
-
-            public FormTokenKind Kind
-            {
-                [MethodImpl(Inline)]
-                get => (FormTokenKind)Data[15];
-            }
-
-            [MethodImpl(Inline)]
-            public static implicit operator FormToken<T>(FormToken src)
-                => new FormToken<T>(@as<FormToken,ByteBlock16>(src));
+            Data = data;
         }
 
-        public readonly struct InstClassToken
+        public T Value
         {
-            readonly ByteBlock16 Data;
-
             [MethodImpl(Inline)]
-            public InstClassToken(ByteBlock16 data)
-            {
-                Data = data;
-            }
+            get => @as<T>(Data.First);
         }
 
-        public readonly struct Hex8Token
+        public FormTokenKind Kind
         {
-            readonly ByteBlock16 Data;
-
             [MethodImpl(Inline)]
-            public Hex8Token(ByteBlock16 data)
-            {
-                Data = data;
-            }
+            get => (FormTokenKind)Data[15];
         }
 
-        public readonly struct Hex16Token
-        {
-            readonly ByteBlock16 Data;
-
-            [MethodImpl(Inline)]
-            public Hex16Token(ByteBlock16 data)
-            {
-                Data = data;
-            }
-        }
-
-        public readonly struct NamedToken
-        {
-            readonly ByteBlock16 Data;
-
-            [MethodImpl(Inline)]
-            public NamedToken(ByteBlock16 data)
-            {
-                Data = data;
-            }
-        }
+        [MethodImpl(Inline)]
+        public static implicit operator FormToken<T>(FormToken src)
+            => new FormToken<T>(@as<FormToken,ByteBlock16>(src));
     }
 }

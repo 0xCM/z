@@ -24,7 +24,7 @@ namespace Z0
             public InstForm InstForm;
 
             [Render(20)]
-            public AsmInstClass InstClass;
+            public AmsInstClass InstClass;
 
             [Render(16)]
             public CategoryKind Category;

@@ -21,11 +21,6 @@ namespace Z0
         Index<ApiCompleteType> ApiTypes {get;}
 
         /// <summary>
-        /// The identity of the assembly that defines and owns the catalog
-        /// </summary>
-        PartId PartId {get;}
-
-        /// <summary>
         /// The api hosts known to the catalog, including both operation and data type hosts
         /// </summary>
         ApiHosts ApiHosts {get;}
@@ -36,8 +31,15 @@ namespace Z0
         Index<MethodInfo> Methods {get;}
 
         /// <summary>
+        /// The identity of the assembly that defines and owns the catalog
+        /// </summary>
+        PartName PartName 
+            => Component.PartName();
+
+        /// <summary>
         /// Specifies whether the catalog contains content from an identified assembly
         /// </summary>
-        bool IsIdentified {get;}
+        bool IsIdentified 
+            => PartName.IsNonEmpty;
     }
 }

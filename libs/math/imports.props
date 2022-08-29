@@ -1,0 +1,9 @@
+<Project>
+
+  <ItemGroup>
+    <ProjectReference Include="$(Bit)" />
+    <ProjectReference Include="$(Sys)" />
+    <ProjectReference Include="$(Text)" />
+  </ItemGroup>
+
+</Project>

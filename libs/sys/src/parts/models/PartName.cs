@@ -17,6 +17,13 @@ namespace Z0
             PartExpr = EmptyString;
         }
 
+        [MethodImpl(Inline)]
+        public PartName(string expr)
+        {
+            PartExpr = expr;
+            PartId = 0;
+        }
+
         public PartName(PartId id)
         {
             PartId = id;
@@ -30,23 +37,28 @@ namespace Z0
             PartExpr = name;
         }
 
+        public Hash32 Hash
+        {
+            [MethodImpl(Inline)]
+            get => sys.hash(PartExpr);
+        }
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => PartId == 0;
+            get => sys.empty(PartExpr);
         }
 
         public bool IsNonEmpty
         {
             [MethodImpl(Inline)]
-            get => PartId != 0;
+            get => sys.nonempty(PartExpr);
         }
 
         public override int GetHashCode()
-            => (int)PartId;
+            => Hash;
 
         public bool Equals(PartName src)
-            => PartId == src.PartId && PartExpr == src.PartExpr;
+            => PartExpr == src.PartExpr;
 
         public int CompareTo(PartName src)
             => PartExpr.CompareTo(src.PartExpr);
@@ -57,6 +69,10 @@ namespace Z0
 
         public override string ToString()
             => Format();
+
+        [MethodImpl(Inline)]
+        public static implicit operator PartName(string name)
+            => new PartName(name);
 
         [MethodImpl(Inline)]
         public static implicit operator PartName(PartId id)

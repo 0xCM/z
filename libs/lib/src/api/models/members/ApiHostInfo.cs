@@ -11,7 +11,7 @@ namespace Z0
     {
         public ApiHostUri HostUri {get;}
 
-        public PartId PartId {get;}
+        public PartName PartName {get;}
 
         public Index<MethodInfo> Methods {get;}
 
@@ -20,11 +20,11 @@ namespace Z0
         Dictionary<string,MethodInfo> Index {get;}
 
         [MethodImpl(Inline)]
-        public ApiHostInfo(Type host, ApiHostUri uri, PartId part, MethodInfo[] methods, Dictionary<string,MethodInfo> index)
+        public ApiHostInfo(Type host, ApiHostUri uri, PartName part, MethodInfo[] methods, Dictionary<string,MethodInfo> index)
         {
             HostType = host;
             HostUri = uri;
-            PartId = part;
+            PartName = part;
             Methods = methods;
             Index = index;
         }
