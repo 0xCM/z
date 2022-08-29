@@ -209,7 +209,7 @@ namespace Z0
             return index;
         }
 
-        protected static MsgPattern InitializingRuntime => "Initializing runtime";
+        protected const string InitializingRuntime = "Initializing runtime";
         
         protected static RenderPattern<Duration> InitializedRuntime => "Initialized runtime:{1}";
 
