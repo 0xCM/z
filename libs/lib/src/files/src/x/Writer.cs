@@ -49,10 +49,10 @@ namespace Z0
 
         [Op]
         public static void AppendLines(this FilePath dst, string src)
-            => File.AppendAllLines(dst.EnsureParentExists().Name, core.array(src), Encoding.UTF8);
+            => File.AppendAllLines(dst.EnsureParentExists().Name, sys.array(src), Encoding.UTF8);
 
         [Op]
         public static void AppendLines(this FilePath dst, string src, Encoding encoding)
-            => File.AppendAllLines(dst.EnsureParentExists().Name, core.array(src), encoding);
+            => File.AppendAllLines(dst.EnsureParentExists().Name, sys.array(src), encoding);
     }
 }

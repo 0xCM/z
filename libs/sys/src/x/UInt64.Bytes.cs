@@ -4,16 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
-    using static core;
+    using static sys;
 
     partial class XTend
     {
         [MethodImpl(Inline), Op]
-        public static unsafe Span<byte> Bytes(this ushort src)
+        public static unsafe Span<byte> Bytes(this ulong src)
             => bytes(src);
     }
 }

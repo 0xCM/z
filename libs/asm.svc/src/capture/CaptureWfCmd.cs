@@ -28,7 +28,7 @@ namespace Z0
         void Captured()
         {
             var src = ApiPacks.Current();
-            var files = ApiFiles.part(src,PartId.AsmCore);
+            var files = ApiPartFiles.create(src,PartId.AsmCore);
             iter(files.Hex(), path => Write(path.ToUri()));            
         }
 

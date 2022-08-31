@@ -67,13 +67,6 @@ namespace Z0
         public bool IsOwner(PartId id)
             => id == Owner;
 
-        /// <summary>
-        /// Determines whether the name of a file is of the form {owner}.{host}.{*}
-        /// </summary>
-        /// <param name="host">The owner to test</param>
-        public bool IsHost(ApiHostUri host)
-            => Name.Text.StartsWith(string.Concat(host.Part.Format(), Chars.Dot, host.HostName.ToLower(), Chars.Dot));
-
         public FileName ChangeExtension(FileExt ext)
             => FS.file(Path.GetFileNameWithoutExtension(Name), ext);
 

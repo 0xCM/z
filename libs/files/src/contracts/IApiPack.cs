@@ -48,7 +48,7 @@ namespace Z0
             => Extracts().Path(FS.file(part.Format(), kind));
 
         FilePath ExtractPath(ApiHostUri host, FileKind kind)
-            => Extracts().Path(FS.file(host, kind));
+            => Extracts().Path(ApiFiles.file(host, kind));
 
         Files HexExtracts()
             => Extracts().Files(FileKind.HexDat);
@@ -81,7 +81,7 @@ namespace Z0
             => ExtractPath(part, FileKind.Asm);
 
         FilePath MsilPath(ApiHostUri host)
-            => Extracts().Path(FS.hostfile(host,FileKind.Il.Ext()));
+            => Extracts().Path(ApiFiles.hostfile(host,FileKind.Il.Ext()));
 
         FilePath HexExtractPath(ApiHostUri src)
             => ExtractPath(src, FileKind.HexDat);

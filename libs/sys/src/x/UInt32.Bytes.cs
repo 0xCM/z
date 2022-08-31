@@ -4,8 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public static partial class ClrQuery
+    using static sys;
+
+    partial class XTend
     {
-        const NumericKind Closure = UnsignedInts;
+        [MethodImpl(Inline), Op]
+        public static unsafe Span<byte> Bytes(this uint src)
+            => bytes(src);
     }
 }

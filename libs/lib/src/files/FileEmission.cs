@@ -6,8 +6,7 @@ namespace Z0
 {
     using System.Text;
 
-
-    partial struct FS
+    public class FileEmissions
     {
         public static void emit<T>(Type host, T src, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)
         {
@@ -18,12 +17,12 @@ namespace Z0
         }
 
         public static ITextEmitter emitter(FilePath dst, FileWriteMode mode, TextEncodingKind encoding)
-            => writer(dst,mode,encoding).Emitter();
+            => FS.writer(dst,mode,encoding).Emitter();
 
         public static ITextEmitter emitter(FilePath dst, TextEncodingKind encoding)
-            => writer(dst, encoding).Emitter();
+            => FS.writer(dst, encoding).Emitter();
 
         public static ITextEmitter emitter(FilePath dst, FileWriteMode mode, Encoding encoding)
-            => writer(dst,mode,encoding).Emitter();
+            => FS.writer(dst,mode,encoding).Emitter();        
     }
 }

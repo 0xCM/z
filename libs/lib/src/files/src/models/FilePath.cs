@@ -206,7 +206,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static FilePath operator +(FilePath a, FileExt b)
-            => new FilePath(RpOps.format("{0}.{1}", a.Name, b.Name));
+            => new FilePath(RP.format("{0}.{1}", a.Name, b.Name));
 
         public static FilePath Empty
         {

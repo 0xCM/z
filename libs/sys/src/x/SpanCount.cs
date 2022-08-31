@@ -14,7 +14,7 @@ namespace Z0
         /// <typeparam name="T">The element type</typeparam>
         [MethodImpl(Inline)]
         public static int Count<T>(this ReadOnlySpan<T> src, Func<T,bool> f)
-            => core.count(src, f);
+            => (int)sys.count(src, f);
 
         /// <summary>
         /// Counts the number of values in the source that satisfy the predicate

@@ -5,8 +5,7 @@
 
 namespace Z0
 {
-    using static Algs;
-    using static Spans;
+    using static sys;
 
     partial class XTend
     {
@@ -64,7 +63,7 @@ namespace Z0
         public static string Delimit<T>(this ReadOnlySpan<T> src, string sep, short pad = 0)
         {
             var dst = text.buffer();
-            var slot = RpOps.slot(0,pad);
+            var slot = RP.slot(0,pad);
             for(var i=0; i<src.Length; i++)
             {
                 if(i != 0)

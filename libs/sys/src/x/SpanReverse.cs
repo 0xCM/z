@@ -4,9 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Linq;
-
     partial class XTend
     {
         /// <summary>
@@ -17,7 +14,7 @@ namespace Z0
         [Op, Closures(Closure)]
         public static Span<T> Reverse<T>(this ReadOnlySpan<T> src)
         {
-            var dst = src.ToSpan();
+            var dst = src.ToArray();
             dst.Reverse();
             return dst;
         }

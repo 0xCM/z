@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     partial class XTend
     {
@@ -42,8 +42,6 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static ref T Last<T>(this Span<T> src)
         {
-            if(src.IsEmpty)
-                Errors.ThrowEmptySpan();
             return ref seek(src, (uint)(src.Length - 1));
         }
     }

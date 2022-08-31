@@ -8,6 +8,7 @@ namespace Z0
 
     partial struct bit
     {
+        [Op]
         public static string format(ReadOnlySpan<bit> src)
         {
             var count = (int)src.Length;
