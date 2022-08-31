@@ -39,13 +39,13 @@ namespace Z0
             Location = dir;
         }
 
-        public FS.Files Asm()
+        public Files Asm()
             => Location.AsmExtracts(Part);
 
-        public FS.Files Msil()
+        public Files Msil()
             => Location.MsilExtracts(Part);
 
-        public FS.Files Hex()
+        public Files Hex()
             => Location.HexExtracts(Part);
     }
 }

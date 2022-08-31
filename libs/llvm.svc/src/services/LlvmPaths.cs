@@ -76,7 +76,7 @@ namespace Z0.llvm
         public FilePath TableGenHeader(LlvmTargetName target, string kind)
             => LlvmSources(include).Path($"{target}.{kind}", FileKind.H);
 
-        public FS.Files TableGenHeaders(LlvmTargetName target)
+        public Files TableGenHeaders(LlvmTargetName target)
             => LlvmSources(include).Files(FileKind.H).Where(f => f.FileName.StartsWith($"{target}."));
 
         public IDbSources LlvmRoot
@@ -103,7 +103,7 @@ namespace Z0.llvm
         public FilePath File(string scope, string name, FileKind kind)
             => Targets(scope).Path(name, kind);
 
-        public FS.Files Lists()
+        public Files Lists()
             => Tables().Files(FileKind.Csv).Where(f => f.FileName.StartsWith("llvm.lists."));
 
         public Index<string> ListNames()

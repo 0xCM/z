@@ -63,7 +63,7 @@ namespace Z0
             return counter;
         }
 
-        public ReadOnlySpan<ApiExtractBlock> Load(FS.Files src)
+        public ReadOnlySpan<ApiExtractBlock> Load(Files src)
         {
             var dst = list<ApiExtractBlock>();
             var counter = 0u;

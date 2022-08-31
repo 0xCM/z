@@ -26,7 +26,7 @@ namespace Z0
 
         public FolderPath Root {get;}
 
-        public FS.Files Files {get;}
+        public Files Files {get;}
 
         [Op]
         public static string format(RuntimeAssembly src)

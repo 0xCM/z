@@ -66,7 +66,7 @@ namespace Z0.Asm
             return counter;
         }
 
-        static Index<Outcome<uint>> rows(FS.Files src, ConcurrentBag<HostAsmRecord> dst)
+        static Index<Outcome<uint>> rows(Files src, ConcurrentBag<HostAsmRecord> dst)
         {
             var results = sys.bag<Outcome<uint>>();
             iter(src, path => {
@@ -135,7 +135,7 @@ namespace Z0.Asm
             TableEmit(src, dst);
         }
 
-        public Index<HostAsmRecord> LoadHostAsmRows(FS.Files src, bool pll = true, bool sort = true)
+        public Index<HostAsmRecord> LoadHostAsmRows(Files src, bool pll = true, bool sort = true)
         {
             const string TableId = HostAsmRecord.TableId;
             var counter = 0u;
@@ -171,7 +171,7 @@ namespace Z0.Asm
         public Index<HostAsmRecord> LoadHostAsmRows(FolderPath src, bool pll = true, bool sort = true)
             => LoadHostAsmRows(src.Files(FS.Csv, true), pll, sort);
 
-        public Index<AsmDetailRow> LoadAsmDetails(FS.Files src)
+        public Index<AsmDetailRow> LoadAsmDetails(Files src)
         {
             var records = Lists.list<AsmDetailRow>(Pow2.T18);
             var paths = src;
@@ -190,7 +190,7 @@ namespace Z0.Asm
             return records.Emit();
         }
 
-        public Index<AsmDetailRow> LoadDetails(FS.Files src, AsmMnemonic monic)
+        public Index<AsmDetailRow> LoadDetails(Files src, AsmMnemonic monic)
         {
             var file = src.FirstOrDefault(f => f.FileName.Contains(monic.Format()));
             if(file.IsEmpty)

@@ -27,7 +27,7 @@ namespace Z0
             return dst;
         }
 
-        public static FS.Files clear(FS.Files src)
+        public static Files clear(Files src)
         {
             var dst = list<FilePath>();
             foreach(var file in src)

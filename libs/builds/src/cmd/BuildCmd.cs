@@ -65,7 +65,7 @@ namespace Z0
         void BuildProps(CmdArgs args)
         {
             var sources = AppDb.Dev("z0").Sources("props");
-            var files = FS.Files.Empty;
+            var files = Z0.Files.Empty;
             if(args.Count == 0)
                 files = sources.Files(FileKind.Props, true);
             else

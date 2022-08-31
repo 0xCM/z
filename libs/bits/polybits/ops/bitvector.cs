@@ -22,7 +22,7 @@ namespace Z0
             }
         }
 
-        public static Index<BfModel> bitvectors(FS.Files src)
+        public static Index<BfModel> bitvectors(Files src)
         {
             var items = sys.empty<ListItem>();
             var counter = 0u;

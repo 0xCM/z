@@ -21,7 +21,7 @@ namespace Z0
         public static FileUri[] ToUri(this ReadOnlySpan<FilePath> src)
             => src.Map(x => x.ToUri());
 
-        public static FileUri[] ToUri(this FS.Files src)
+        public static FileUri[] ToUri(this Files src)
             => src.Map(x => x.ToUri());
     }
 }

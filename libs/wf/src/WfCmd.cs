@@ -62,7 +62,7 @@ namespace Z0
             iter(src.Files(true), file => Write(file.ToUri()));
         }
         
-        static FS.Files search(CmdArgs args)
+        static Files search(CmdArgs args)
         {
             var src = FS.dir(arg(args,0));
             if(args.Count > 1)
@@ -217,7 +217,7 @@ namespace Z0
         }
 
 
-        static FS.Files launchers()
+        static Files launchers()
             => DbArchive.match(AppDb.Control("launch").Root, FS.Ps1);
 
         [CmdOp("launchers")]

@@ -8,7 +8,7 @@ namespace Z0
     {
         public readonly FolderPath Location;
 
-        public readonly FS.Files Files;
+        public readonly Files Files;
 
         public FolderFiles(FolderPath dir, FilePath[] files)
         {
@@ -87,7 +87,7 @@ namespace Z0
             => Format();
 
         [MethodImpl(Inline)]
-        public static implicit operator FS.Files(FolderFiles src)
+        public static implicit operator Files(FolderFiles src)
             => src.Files;
 
         [MethodImpl(Inline)]

@@ -139,13 +139,13 @@ namespace Z0.llvm
                 break;
                 case K.Libs:
                 {
-                    FS.Files data = content.Split(Chars.Space).Select(x => x.Trim()).Where(nonempty).Select(FS.path);
+                    Files data = content.Split(Chars.Space).Select(x => x.Trim()).Where(nonempty).Select(FS.path);
                     dst.Set(kind, data);
                 }
                 break;
                 case K.LibFiles:
                 {
-                    FS.Files data = content.Split(Chars.Space).Select(x => x.Trim()).Where(nonempty).Select(FS.path);
+                    Files data = content.Split(Chars.Space).Select(x => x.Trim()).Where(nonempty).Select(FS.path);
                     dst.Set(kind, data);
                 }
                 break;

@@ -48,7 +48,7 @@ namespace Z0
 
         public ApiBlockIndex IndexApiBlocks()
         {
-            var src = FS.Files.Empty;
+            var src = Z0.Files.Empty;
             var count = src.Length;
             var flow = Running(Msg.IndexingPartFiles.Format(count));
 

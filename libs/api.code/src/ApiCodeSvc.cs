@@ -14,7 +14,7 @@ namespace Z0
         public Index<ApiCodeRow> EmitApiHex(ApiHostUri uri, ReadOnlySpan<MemberCodeBlock> src, IApiPack dst)
             => EmitApiCode(uri, src, dst.HexExtractPath(uri));
 
-        public ConstLookup<FilePath,MemoryBlocks> LoadMemoryBlocks(FS.Files src)
+        public ConstLookup<FilePath,MemoryBlocks> LoadMemoryBlocks(Files src)
         {
             var flow = Running(string.Format("Loading {0} packs", src.Length));
             var lookup = new Lookup<FilePath,MemoryBlocks>();

@@ -52,13 +52,13 @@ namespace Z0
             where T : struct
                 => DbFiles.PrefixedTable<T>(prefix);
 
-        FS.Files Files()
+        Files Files()
             => DbFiles.Files(true);
 
-        FS.Files Files(bool recurse)
+        Files Files(bool recurse)
             => DbFiles.Files(recurse);
 
-        FS.Files Files(FileExt ext)
+        Files Files(FileExt ext)
             => DbFiles.Files(ext);
 
         FolderPaths Folders(bool recurse = false)
@@ -67,16 +67,16 @@ namespace Z0
         FolderPath Folder(string match)
             => Root.Folder(match);
 
-        FS.Files Files(FileKind kind)
+        Files Files(FileKind kind)
             => DbFiles.Files(kind, true);
 
-        FS.Files Files(FileKind kind, bool recurse)
+        Files Files(FileKind kind, bool recurse)
             => DbFiles.Files(kind, recurse);
 
-        FS.Files Files(params FileKind[] kinds)
+        Files Files(params FileKind[] kinds)
             => DbFiles.Files(true, kinds);
 
-        FS.Files Files(string scope, params FileKind[] kinds)
+        Files Files(string scope, params FileKind[] kinds)
             => DbFiles.Files(scope, true, kinds);
 
         FileName File(string name, FileKind kind)

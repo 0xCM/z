@@ -22,19 +22,19 @@ namespace Z0
         public IDbSources BuildRoot()
             => Root.Sources(build);
 
-        public FS.Files BuildFiles()
+        public Files BuildFiles()
             => BuildRoot().Files();
 
-        public FS.Files BuildFiles(FileKind kind)
+        public Files BuildFiles(FileKind kind)
             => BuildRoot().Files(kind);
 
-        public FS.Files BuildFiles(params FileKind[] kinds)
+        public Files BuildFiles(params FileKind[] kinds)
             => BuildRoot().Files(kinds);
 
-        public FS.Files Files()
+        public Files Files()
             => Root.Files();
 
-        public FS.Files Files(FileKind kind)
+        public Files Files(FileKind kind)
             => Root.Files(kind);
 
         FolderPath IRootedArchive.Root

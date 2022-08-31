@@ -30,14 +30,14 @@ namespace Z0
             Emitter.Created(flow);
         }
 
-        FS.Files _Files;
+        Files _Files;
 
         protected IApiCatalog ApiCatalog => Wf.ApiCatalog;
 
-        protected FS.Files Files()
+        protected Files Files()
             => _Files;
 
-        protected FS.Files Files(FS.Files src, bool write = true)
+        protected Files Files(Files src, bool write = true)
         {
             _Files = src;
             if(write)

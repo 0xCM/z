@@ -65,11 +65,11 @@ namespace Z0
         public FilePath[] Files(FileKind kind, bool recurse = false)
             => Files(this, kind.Ext(), recurse);
 
-        public FS.Files Files(bool recurse, params FileExt[] ext)
+        public Files Files(bool recurse, params FileExt[] ext)
             => Files(this, recurse, ext);
 
-        public FS.Files TopFiles
-            => Directory.Exists(Name) ? files(Directory.EnumerateFiles(Name).Map(path)) : FS.Files.Empty;
+        public Files TopFiles
+            => Directory.Exists(Name) ? files(Directory.EnumerateFiles(Name).Map(path)) : Z0.Files.Empty;
 
         public FolderPaths Folders(string match, bool recurse)
             => Directory.Exists(Name) ? Directory.EnumerateDirectories(Name, match, options(recurse)).Array().Select(FS.dir) : FolderPaths.Empty;
@@ -89,7 +89,7 @@ namespace Z0
         /// <summary>
         /// Recursively enumerates all files in the folder
         /// </summary>
-        public FS.Files AllFiles
+        public Files AllFiles
             => Files(true);
 
         FilePath[] Match(string pattern = null)
@@ -103,36 +103,36 @@ namespace Z0
         public FolderPath Subdir(string name)
             => this + FS.folder(name);
 
-        public FS.Files Match(string pattern, bool recurse)
-            => Exists ? files(Directory.EnumerateFiles(Name, pattern, option(recurse)).Map(path)) : FS.Files.Empty;
+        public Files Match(string pattern, bool recurse)
+            => Exists ? files(Directory.EnumerateFiles(Name, pattern, option(recurse)).Map(path)) : Z0.Files.Empty;
 
-        public FS.Files Match(string pattern, FileExt ext, bool recurse)
-            => Exists ? Files(ext, recurse).Where(f => f.Name.Contains(pattern)) : FS.Files.Empty;
+        public Files Match(string pattern, FileExt ext, bool recurse)
+            => Exists ? Files(ext, recurse).Where(f => f.Name.Contains(pattern)) : Z0.Files.Empty;
 
-        public FS.Files Match(string pattern, FileKind kind, bool recurse)
-            => Exists ? Files(kind.Ext(), recurse).Where(f => f.Name.Contains(pattern)) : FS.Files.Empty;
+        public Files Match(string pattern, FileKind kind, bool recurse)
+            => Exists ? Files(kind.Ext(), recurse).Where(f => f.Name.Contains(pattern)) : Z0.Files.Empty;
 
-        public FS.Files Files(string scope, bool recurse)
+        public Files Files(string scope, bool recurse)
             => (this + FS.folder(scope)).Files(recurse);
 
-        public FS.Files Files(string scope, bool recurse, FileKind kind)
+        public Files Files(string scope, bool recurse, FileKind kind)
             => (this + FS.folder(scope)).Files(recurse).Where(f => f.Is(kind));
 
-        public FS.Files Files(string scope, bool recurse, params FileKind[] kinds)
+        public Files Files(string scope, bool recurse, params FileKind[] kinds)
             => (this + FS.folder(scope)).Files(recurse).Where(f => kinds.Contains(f.FileKind()));
 
-        public FS.Files Files(bool recurse, params FileKind[] kinds)
+        public Files Files(bool recurse, params FileKind[] kinds)
             => files(this, recurse, kinds);
 
-        public FS.Files Files(bool recurse)
-            => Exists ? Directory.EnumerateFiles(Name, SearchAll, option(recurse)).Map(path) : FS.Files.Empty;
+        public Files Files(bool recurse)
+            => Exists ? Directory.EnumerateFiles(Name, SearchAll, option(recurse)).Map(path) : Z0.Files.Empty;
 
         // /// <summary>
         // /// Nonrecursively enumerates part-owned folder files
         // /// </summary>
         // /// <param name="part">The owning part</param>
         // /// <param name="ext">The extension to match</param>
-        // public FS.Files Files(PartId part, FileExt ext)
+        // public Files Files(PartId part, FileExt ext)
         //     => Files(ext).Where(f => f.IsOwner(part));
 
         // /// <summary>
@@ -140,7 +140,7 @@ namespace Z0
         // /// </summary>
         // /// <param name="part">The owning part</param>
         // /// <param name="ext">The extension to match</param>
-        // public FS.Files Files(PartId part, FileExt ext, bool recurse)
+        // public Files Files(PartId part, FileExt ext, bool recurse)
         //     => Files(ext, recurse).Where(f => f.IsOwner(part));
 
         // /// <summary>
@@ -148,7 +148,7 @@ namespace Z0
         // /// </summary>
         // /// <param name="part">The owning part</param>
         // /// <param name="ext">The extension to match</param>
-        // public FS.Files Files(ApiHostUri host, FileExt ext, bool recurse)
+        // public Files Files(ApiHostUri host, FileExt ext, bool recurse)
         //     => Files(ext, recurse).Where(f => f.IsHost(host));
 
         public Index<FolderPath> SubDirs(bool recurse = false)

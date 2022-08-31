@@ -65,7 +65,7 @@ namespace Z0
         public static SectionLink link(Name dst)
             => new SectionLink(label(dst.Content), dst);
 
-        public static Index<RelativeLink> links(FolderPath @base, FS.Files files)
+        public static Index<RelativeLink> links(FolderPath @base, Files files)
         {
             var relative = files.Map(f => f.Relative(@base));
             var count = relative.Length;
@@ -75,7 +75,7 @@ namespace Z0
             return dst;
         }
 
-        public static Index<AbsoluteLink> links(FS.Files files)
+        public static Index<AbsoluteLink> links(Files files)
             => files.Map(f => link(f.FileName.WithoutExtension.Format(),f));
 
         [MethodImpl(Inline), Op]

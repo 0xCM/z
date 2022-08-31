@@ -10,7 +10,7 @@ namespace Z0
     {
         static ConcurrentDictionary<string,Action> _Lookup = new ConcurrentDictionary<string, Action>();
 
-        public static CmdResult<ListFilesCmd,FS.Files> exec(ListFilesCmd cmd)
+        public static CmdResult<ListFilesCmd,Files> exec(ListFilesCmd cmd)
         {
             var _list = Z0.DbArchive.search(cmd.SourceDir, cmd.Extensions, cmd.EmissionLimit);
             var outcome = Z0.DbArchive.emissions(_list, cmd.FileUriMode, cmd.TargetPath);

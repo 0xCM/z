@@ -79,28 +79,28 @@ namespace Z0
         public FolderPath Folder(string match)
             => Root.Folder(match);
 
-        public FS.Files Files()
+        public Files Files()
             => Root.Files(true);
 
-        public FS.Files Files(bool recursive)
+        public Files Files(bool recursive)
             => Root.Files(recursive);
 
-        public FS.Files Files(string scope, bool recursive)
+        public Files Files(string scope, bool recursive)
             => Root.Files(recursive);
 
-        public FS.Files Files(string scope, bool recurse, FileKind kind)
+        public Files Files(string scope, bool recurse, FileKind kind)
             => Root.Files(scope, recurse, kind);
 
-        public FS.Files Files(bool recurse, params FileKind[] kinds)
+        public Files Files(bool recurse, params FileKind[] kinds)
             => Root.Files(recurse, kinds);
 
-        public FS.Files Files(string scope, bool recurse, params FileKind[] kinds)
+        public Files Files(string scope, bool recurse, params FileKind[] kinds)
             => Root.Files(scope, recurse, kinds);
 
-        public FS.Files Files(FileKind kind, bool recurse = true)
+        public Files Files(FileKind kind, bool recurse = true)
             => Root.Files(kind.Ext(), recurse);
 
-        public FS.Files Files(FileExt ext, bool recurse = true)
+        public Files Files(FileExt ext, bool recurse = true)
             => Root.Files(ext, recurse);
 
         public Deferred<FilePath> Enumerate(bool recursive = true)
@@ -137,7 +137,7 @@ namespace Z0
             => FS.file(string.Format("{0}.{1}", @class, name), kind.Ext());
 
         [Op]
-        public static Outcome<FileEmission> emissions(FS.Files src, bool uri, FilePath dst)
+        public static Outcome<FileEmission> emissions(Files src, bool uri, FilePath dst)
         {
             var counter  = 0;
             try
@@ -166,17 +166,17 @@ namespace Z0
         public static IFilteredArchive filter(FolderPath src, params FileExt[] ext)
             => new FilteredArchive(src, ext);
 
-        public static FS.Files search(FolderPath src, FileExt[] ext, uint limit = 0)
+        public static Files search(FolderPath src, FileExt[] ext, uint limit = 0)
             => limit != 0 ? match(src, limit, ext) : match(src, ext);
 
-        public static FS.Files match(FolderPath src, uint max, params FileExt[] ext)
+        public static Files match(FolderPath src, uint max, params FileExt[] ext)
         {
             var files = filter(src, ext).Files().Take(max).Array();
             Array.Sort(files);
             return files;
         }
 
-        public static FS.Files match(FolderPath src, params FileExt[] ext)
+        public static Files match(FolderPath src, params FileExt[] ext)
         {
             var files = filter(src, ext).Files().Array();
             Array.Sort(files);

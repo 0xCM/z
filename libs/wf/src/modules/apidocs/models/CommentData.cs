@@ -18,15 +18,15 @@ namespace Z0
 
             public readonly Index<TargetXml> Xml;
 
-            public FS.Files XmlSources;
+            public Files XmlSources;
 
-            public readonly FS.Files Sources;
+            public readonly Files Sources;
 
             public CommentDataset(
                     Dictionary<FilePath, Dictionary<string,string>> xml,
                     Dictionary<FilePath, Dictionary<string,ApiComment>> comments,
                     Dictionary<FilePath, List<ApiComment>> csvFormat,
-                    FS.Files dlls
+                    Files dlls
                     )
             {
                 XmlLookup = xml.Map(x => (x.Key, TargetXml.create(x.Key, x.Value))).ToDictionary();

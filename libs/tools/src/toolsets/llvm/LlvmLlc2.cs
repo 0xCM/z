@@ -45,11 +45,11 @@ namespace Z0.llvm
             return result;
         }
 
-        FS.Files Sources(IProjectWorkspace project)
+        Files Sources(IProjectWorkspace project)
         {
             var result = Outcome.Success;
             var dir = project.Scoped("src");
-            var files = FS.Files.Empty;
+            var files = Z0.Files.Empty;
             if(!dir.Exists)
             {
                 Error(string.Format("The project directory '{0}' does not exist", dir));

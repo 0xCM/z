@@ -66,7 +66,7 @@ namespace Z0.llvm
 
         public Index<LlvmList> EmitLists(Index<LlvmEntity> entities)
         {
-            FS.Files paths = LlvmPaths.ListNames().Map(x => LlvmPaths.ListTargetPath(x));
+            Files paths = LlvmPaths.ListNames().Map(x => LlvmPaths.ListTargetPath(x));
             paths.Delete();
             return EmitLists(entities, DataProvider.ConfiguredListNames());
         }

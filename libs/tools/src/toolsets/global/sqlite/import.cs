@@ -13,7 +13,7 @@ namespace Z0
             public static SqlCmd import(FilePath src)
                 => string.Format(".import {0} {1}", src.Format(PathSeparator.FS), identifier(null, src.FileName));
 
-            public static Index<SqlCmd> import(FS.Files src)
+            public static Index<SqlCmd> import(Files src)
             {
                 var count = src.Length;
                 var buffer = sys.alloc<SqlCmd>(count);

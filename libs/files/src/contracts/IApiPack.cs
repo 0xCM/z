@@ -50,22 +50,22 @@ namespace Z0
         FilePath ExtractPath(ApiHostUri host, FileKind kind)
             => Extracts().Path(FS.file(host, kind));
 
-        FS.Files HexExtracts()
+        Files HexExtracts()
             => Extracts().Files(FileKind.HexDat);
 
-        FS.Files HexExtracts(PartId part)
+        Files HexExtracts(PartId part)
             => HexExtracts().Where(path => path.FileName.StartsWith($"{part.PartName().Format()}."));
 
-        FS.Files AsmExtracts()
+        Files AsmExtracts()
             => Extracts().Files(FileKind.Asm);
 
-        FS.Files AsmExtracts(PartId part)
+        Files AsmExtracts(PartId part)
             => AsmExtracts().Where(path => path.FileName.StartsWith($"{part.PartName().Format()}."));
 
-        FS.Files MsilExtracts()
+        Files MsilExtracts()
             => Extracts().Files(FileKind.Il);
 
-        FS.Files MsilExtracts(PartId part)
+        Files MsilExtracts(PartId part)
             => MsilExtracts().Where(path => path.FileName.StartsWith($"{part.PartName().Format()}."));
 
         IApiPackArchive Archive()

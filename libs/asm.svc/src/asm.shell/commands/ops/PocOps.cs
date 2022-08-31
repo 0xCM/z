@@ -260,7 +260,7 @@ namespace Z0.Asm
         Outcome EmitApiAsm(CmdArgs args)
         {
             var result = Outcome.Success;
-            var records = AsmTables.LoadHostAsmRows(FS.Files.Empty);
+            var records = AsmTables.LoadHostAsmRows(Z0.Files.Empty);
             var blocks = AsmTables.DistillBlocks(records);
             AsmTables.EmitBlocks(blocks, AppDb.AppData().Table<AsmDataBlock>("api/asm"));
             return result;

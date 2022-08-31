@@ -8,12 +8,12 @@ namespace Z0
     {
         public readonly FileSplitSpec Spec;
 
-        public readonly FS.Files TargetFiles;
+        public readonly Files TargetFiles;
 
         public readonly Count TotalLineCount;
 
         [MethodImpl(Inline)]
-        public FileSplitInfo(FileSplitSpec spec, FS.Files dst, Count total)
+        public FileSplitInfo(FileSplitSpec spec, Files dst, Count total)
         {
             Spec = spec;
             TargetFiles = dst;

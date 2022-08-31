@@ -13,7 +13,7 @@ namespace Z0
             => SymbolArchives.create(root);
 
         [MethodImpl(Inline), Op]        
-        public static FS.Files pdbfiles(FolderPath src)
+        public static Files pdbfiles(FolderPath src)
             => src.Files(FS.Pdb, true);
 
         [MethodImpl(Inline), Op]

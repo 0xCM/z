@@ -10,7 +10,7 @@ namespace Z0.llvm
     {
         LlvmPaths Paths => Service(Wf.LlvmPaths);
 
-        public void Emit(string name, FS.Files src)
+        public void Emit(string name, Files src)
             => FileEmit(name, @readonly(src.View.Map(x => x.ToUri())));
 
         public void Emit(ListedFiles src, string name, bool display = true)

@@ -103,7 +103,7 @@ namespace Z0
             return dst;
         }
 
-        public FS.Files SynAsmSources(IProjectWorkspace src)
+        public Files SynAsmSources(IProjectWorkspace src)
             => src.OutFiles(FileKind.SynAsm);
 
         public CoffSymIndex LoadSymbols(ProjectId id)

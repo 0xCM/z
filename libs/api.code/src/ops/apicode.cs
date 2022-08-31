@@ -22,7 +22,7 @@ namespace Z0
         }
 
         [Op]
-        public static SortedIndex<ApiCodeBlock> apicode(FS.Files src, bool pll = true)
+        public static SortedIndex<ApiCodeBlock> apicode(Files src, bool pll = true)
         {
             var dst = bag<ApiCodeBlock>();
             iter(src, file => iter(apirows(file), row => dst.Add(apiblock(row))), pll);

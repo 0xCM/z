@@ -47,7 +47,7 @@ namespace Z0
         }
 
         [Op]
-        public static FS.Files Clear(this FS.Files src)
+        public static Files Clear(this Files src)
             => FS.clear(src);
 
     }
