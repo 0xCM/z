@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
+    using static sys;
 
     public readonly struct Utf16Point : INatBytes<Utf16Point,N2>
     {

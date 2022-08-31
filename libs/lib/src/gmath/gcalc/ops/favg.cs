@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     partial struct gcalc
     {
@@ -13,9 +13,9 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(float))
-                return generic<T>(math.avg(core.float32(src), @checked));
+                return generic<T>(math.avg(float32(src), @checked));
             else if(typeof(T) == typeof(double))
-                return generic<T>(math.avg(core.float64(src), @checked));
+                return generic<T>(math.avg(float64(src), @checked));
             else
                 throw no<T>();
         }

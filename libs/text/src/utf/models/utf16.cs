@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using api = Utf16;
+    using static sys;
 
     public readonly struct utf16 : IComparable<utf16>, IEquatable<utf16>
     {
@@ -32,12 +32,6 @@ namespace Z0
             get => Content;
         }
 
-        // public Span<char> Edit
-        // {
-        //     [MethodImpl(Inline)]
-        //     get => edit(View);
-        // }
-
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
@@ -50,10 +44,10 @@ namespace Z0
             get => Length != 0;
         }
 
-        public uint Hash
+        public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => api.hash(this);
+            get => hash(View);
         }
 
         [MethodImpl(Inline)]

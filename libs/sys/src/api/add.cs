@@ -10,21 +10,21 @@ namespace Z0
 
     partial class sys
     {
-        /// <summary>
-        /// Atomically add a source value to a target
-        /// </summary>
-        /// <param name="src">The value to increment in-place</param>
-        [MethodImpl(Inline), Op]
-        public static long add(ref long dst, long src)
-            => Interlocked.Add(ref dst, src);
+        // /// <summary>
+        // /// Atomically add a source value to a target
+        // /// </summary>
+        // /// <param name="src">The value to increment in-place</param>
+        // [MethodImpl(Inline), Op]
+        // public static long add(ref long dst, long src)
+        //     => Interlocked.Add(ref dst, src);
 
-        /// <summary>
-        /// Atomically add a source value to a target
-        /// </summary>
-        /// <param name="src">The value to increment in-place</param>
-        [MethodImpl(Inline), Op]
-        public static long add(ref int dst, int src)
-            => Interlocked.Add(ref dst, src);
+        // /// <summary>
+        // /// Atomically add a source value to a target
+        // /// </summary>
+        // /// <param name="src">The value to increment in-place</param>
+        // [MethodImpl(Inline), Op]
+        // public static long add(ref int dst, int src)
+        //     => Interlocked.Add(ref dst, src);
 
         /// <summary>
         /// Adds an offset to a reference

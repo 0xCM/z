@@ -6,20 +6,11 @@ namespace Z0
 {
     using System.Text;
 
-    using static Algs;
-    using static Spans;
+    using static sys;
 
     [ApiHost("utf16.svc")]
     public readonly unsafe struct Utf16
     {
-        [MethodImpl(Inline), Op]
-        public static uint hash(utf16p src)
-            => alg.hash.marvin(src.View);
-
-        [MethodImpl(Inline), Op]
-        public static uint hash(utf16 src)
-            => alg.hash.marvin(src.View);
-
         [MethodImpl(Inline), Op]
         public static TextEncoding encoding()
             => new TextEncoding(Encoding.Unicode);

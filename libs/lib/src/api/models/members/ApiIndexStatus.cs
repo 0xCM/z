@@ -9,7 +9,7 @@ namespace Z0
     {
         public const string TableId = "api-index.status";
 
-        public PartId[] Parts;
+        public PartName[] Parts;
 
         public ApiHostUri[] Hosts;
 

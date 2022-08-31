@@ -8,14 +8,11 @@ namespace Z0
 
     public readonly struct PartUriAddresses
     {
-        public readonly PartId[] Parts;
-
         readonly LU Data;
 
         [MethodImpl(Inline)]
-        public PartUriAddresses(PartId[] parts, LU src)
+        public PartUriAddresses(LU src)
         {
-            Parts = parts;
             Data = src;
         }
 
@@ -40,7 +37,7 @@ namespace Z0
         public static PartUriAddresses Empty
         {
             [MethodImpl(Inline)]
-            get => new PartUriAddresses(core.array<PartId>(), new LU());
+            get => new PartUriAddresses(new LU());
         }
     }
 }

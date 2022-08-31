@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
+    using static sys;
 
     using api = Utf8;
 
@@ -53,10 +53,10 @@ namespace Z0
             get => Data.IsNonEmpty;
         }
 
-        public uint Hash
+        public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => api.hash(this);
+            get => hash(View);
         }
 
         [MethodImpl(Inline)]

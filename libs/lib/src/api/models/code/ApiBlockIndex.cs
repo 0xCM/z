@@ -25,22 +25,9 @@ namespace Z0
             UriCode = code;
         }
 
-        public bool IsEmpty
-        {
-            [MethodImpl(Inline)]
-            get => Parts.Count == 0;
-        }
-
-        public bool IsNonEmpty
-        {
-            [MethodImpl(Inline)]
-            get => Parts.Count != 0;
-        }
-
         public ApiIndexMetrics CalcMetrics()
         {
             var stats = default(ApiIndexMetrics);
-            stats.PartCount = Parts.Count;
             stats.HostCount = Hosts.Count;
             stats.AddressCount = Addresses.Count;
             stats.BlockCount = Blocks.Count;
@@ -48,9 +35,6 @@ namespace Z0
             stats.ByteCount = Blocks.Storage.Sum(x => x.Length);
             return stats;
         }
-
-        public Index<PartId> Parts
-            => CodeAddresses.Parts;
 
         /// <summary>
         /// The number of indexed functions

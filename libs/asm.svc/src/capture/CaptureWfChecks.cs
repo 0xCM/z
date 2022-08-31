@@ -140,7 +140,7 @@ namespace Z0
 
                 var part = skip(elements,0);
                 var id = ApiParsers.part(part);
-                if(id == 0)
+                if(id.IsEmpty)
                     continue;
 
                 var uri = ApiIdentity.host(id, skip(elements,1));

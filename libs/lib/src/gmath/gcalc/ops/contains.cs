@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
     using static gmath;
 
     partial struct gcalc
@@ -35,7 +34,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(UInt32k)]
         public static bit contains<T>(Span<T> xs, T match)
             where T : unmanaged
-                => contains(first(xs), match, (uint)xs.Length);
+                => contains(sys.first(xs), match, (uint)xs.Length);
 
         /// <summary>
         ///  Adapted from corefx repo
@@ -65,7 +64,7 @@ namespace Z0
             while (length > 0)
             {
                 length -= 1;
-                if (eq(match, add(src, index)))
+                if (eq(match, sys.add(src, index)))
                     return true;
                 index += 1;
             }

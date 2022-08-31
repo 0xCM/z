@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
+    using static sys;
 
     using api = Utf16;
 
@@ -57,7 +57,7 @@ namespace Z0
         public uint Hash
         {
             [MethodImpl(Inline)]
-            get => api.hash(this);
+            get => hash(View);
         }
 
 

@@ -10,21 +10,17 @@ namespace Z0
 
     public readonly struct PartCodeIndex
     {
-        public Index<PartId> Parts {get;}
-
         readonly ApiHostCodeLookup Data;
 
         [MethodImpl(Inline)]
-        public PartCodeIndex(PartId[] parts, ApiHostCodeLookup src)
+        public PartCodeIndex(ApiHostCodeLookup src)
         {
-            Parts = parts;
             Data = src;
         }
 
         [MethodImpl(Inline)]
-        public PartCodeIndex(PartId[] parts, LU src)
+        public PartCodeIndex(LU src)
         {
-            Parts = parts;
             Data = ApiHostCodeLookup.create(src);
         }
 
@@ -63,7 +59,7 @@ namespace Z0
         public static PartCodeIndex Empty
         {
             [MethodImpl(Inline)]
-            get => new PartCodeIndex(core.array<PartId>(), ApiHostCodeLookup.Empty);
+            get => new PartCodeIndex(ApiHostCodeLookup.Empty);
         }
 
         static PartCodeIndexEntry[] entries(in PartCodeIndex src)

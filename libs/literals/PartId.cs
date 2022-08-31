@@ -22,6 +22,9 @@ public enum PartId : byte
     [Symbol("api.svc")]
     ApiSvc,
 
+    [Symbol("process")]
+    Process,
+
     [Symbol("asm.prototypes")]
     AsmPrototypes,
 
@@ -106,10 +109,6 @@ public enum PartId : byte
     [Symbol("clr.query")]
     ClrQuery,
 
-
-    [Symbol("clr.models")]
-    ClrModels,
-
     [Symbol("clr.cil")]
     ClrCil,
 
@@ -118,9 +117,6 @@ public enum PartId : byte
 
     [Symbol("llvm.models")]
     LlvmModels,
-
-    [Symbol("llvm.labs")]
-    LlvmLabs,
 
     [Symbol("llvm.svc")]
     LlvmSvc,

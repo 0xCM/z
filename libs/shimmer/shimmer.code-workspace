@@ -1,6 +1,9 @@
 {
 	"folders": [
 		{
+			"path": "../sys"
+		},
+		{
 			"path": "../bit"
 		},
 		{
@@ -8,9 +11,6 @@
 		},
 		{
 			"path": "../text"
-		},
-		{
-			"path": "../clr.models"
 		},
 		{
 			"path": "../clr.query"

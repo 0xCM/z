@@ -295,7 +295,7 @@ namespace Z0
                 if(result)
                 {
                     ref readonly var src = ref address.Ref<byte>();
-                    var data = Algs.cover(src,size);
+                    var data = sys.cover(src,size);
                     var hex = data.FormatHex();
                     Write(string.Format("{0,-16}: {1}", address, hex));
                 }
@@ -303,14 +303,7 @@ namespace Z0
             }
             return result;
         }
-
-        [CmdOp("env")]
-        void EnvQuery(CmdArgs args)
-        {
-            var name = arg(args,0).Value;
-            
-
-        }
+        
         [CmdOp("env/report")]
         void EmitEnv(CmdArgs args)
         {

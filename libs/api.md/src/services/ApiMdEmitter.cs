@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     public class ApiMdEmitter : WfSvc<ApiMdEmitter>
     {
@@ -30,10 +30,10 @@ namespace Z0
             return svc;
         }
 
-        public void Emit(IApiPack dst)
+        public void Emit(IApiCatalog catalog, IApiPack dst)
         {
             Target = dst;
-            var src = Md.Assemblies;
+            var src = catalog.Components;
             var symlits = Symbolic.symlits(src);
             exec(true,
                 EmitDataFlows,

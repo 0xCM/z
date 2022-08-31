@@ -7,11 +7,11 @@ namespace Z0
 {
     public readonly struct ProcessExitStatus
     {
-        public int Code {get;}
+        public readonly int Code;
 
-        public bool Started {get;}
+        public readonly bool Started;
 
-        public bool TimedOut {get;}
+        public readonly bool TimedOut;
 
         public bool Succeeded
         {
@@ -25,6 +25,7 @@ namespace Z0
             get => Code != 0 || !Started || TimedOut;
         }
 
+        [MethodImpl(Inline)]
         public ProcessExitStatus(int code, bool started = true, bool timedOut = false)
         {
             Code = code;

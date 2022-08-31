@@ -15,8 +15,6 @@ namespace Z0
 
         Index<Assembly> Components {get;}
 
-        //bool FindPart(PartId id, out IPart dst);
-
         bool Assembly(PartName id, out Assembly dst);
     }
 }

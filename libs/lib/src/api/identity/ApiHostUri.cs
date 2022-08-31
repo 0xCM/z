@@ -8,7 +8,7 @@ namespace Z0
 
     public readonly record struct ApiHostUri : IApiUri<ApiHostUri>
     {
-        public readonly PartId Part {get;}
+        public readonly PartName Part {get;}
 
         public readonly string HostName {get;}
 
@@ -17,11 +17,11 @@ namespace Z0
         public readonly Hash32 Hash;
 
         [MethodImpl(Inline)]
-        public ApiHostUri(PartId owner, string name)
+        public ApiHostUri(PartName owner, string name)
         {
             Part = owner;
             HostName = text.ifempty(OpIdentity.safe(name),  "__empty__");
-            UriText = owner != 0 ? string.Format("{0}{1}{2}", Part.Format(), IDI.UriPathSep, HostName) : HostName;
+            UriText = owner.IsNonEmpty ? string.Format("{0}{1}{2}", Part.Format(), IDI.UriPathSep, HostName) : HostName;
             Hash = hash(UriText);
         }
 

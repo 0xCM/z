@@ -8,7 +8,7 @@ namespace Z0
     /// Represents the least 8 bits of a unicode code point which, by definition of the encoding, is equivalent to the 7 ascii bits.
     /// </summary>
     [ApiComplete]
-    public readonly struct Utf8Point : IEquatable<Utf8Point>, IComparable<Utf8Point>
+    public readonly record struct Utf8Point : IDataType<Utf8Point>, IDataString
     {
         public readonly byte Code;
 
@@ -23,6 +23,24 @@ namespace Z0
         [MethodImpl(Inline)]
         public char ToChar()
             => (char)Code;
+
+        public Hash32 Hash
+        {
+            [MethodImpl(Inline)]
+            get => Code;
+        }
+
+        public bool IsEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Code == 0;
+        }
+
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Code != 0;
+        }
 
         public bool IsSymbol
         {
@@ -80,13 +98,10 @@ namespace Z0
         public int CompareTo(Utf8Point b)
             => Code.CompareTo(b.Code);
 
-        public override bool Equals(object obj)
-            => obj is Utf8Point p && Equals(p);
 
         public override int GetHashCode()
-            => Code;
+            => Hash;
 
-        [Ignore]
         public string Format()
         {
             var num = Code.ToString("0x");
@@ -132,14 +147,6 @@ namespace Z0
             => From((a.Code + b.Code) % 128);
 
         [MethodImpl(Inline)]
-        public static bool operator == (Utf8Point a, Utf8Point b)
-            => a.Code == b.Code;
-
-        [MethodImpl(Inline)]
-        public static bool operator != (Utf8Point a, Utf8Point b)
-            => a.Code != b.Code;
-
-        [MethodImpl(Inline)]
         public static bool operator < (Utf8Point a, Utf8Point b)
             => a.Code < b.Code;
 
@@ -166,6 +173,5 @@ namespace Z0
         public static Utf8Point MinValue => From(0);
 
         public static Utf8Point MaxValue => From(127);
-
     }
 }

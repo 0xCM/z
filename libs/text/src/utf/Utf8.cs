@@ -6,19 +6,11 @@ namespace Z0
 {
     using System.Text;
 
-    using static core;
+    using static sys;
 
     [ApiHost("utf8.svc")]
     public readonly unsafe struct Utf8
     {
-        [MethodImpl(Inline), Op]
-        public static uint hash(utf8 src)
-            => alg.hash.marvin(src.View);
-
-        [MethodImpl(Inline), Op]
-        public static uint hash(utf8p src)
-            => alg.hash.marvin(src.View);
-
         [MethodImpl(Inline), Op]
         public static TextEncoding encoding()
             => new TextEncoding(Encoding.UTF8);

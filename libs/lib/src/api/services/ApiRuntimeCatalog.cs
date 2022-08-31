@@ -57,38 +57,6 @@ namespace Z0
             get => _PartComponents;
         }
 
-        // public bool PartCatalog(PartName id, out IApiPartCatalog dst)
-        // {
-        //     var matched = _Catalogs.Where(x => x.PartName == id);
-        //     if(matched.IsNonEmpty)
-        //     {
-        //         dst = matched.First;
-        //     }
-        //     else
-        //     {
-        //         dst = null;
-        //     }
-
-        //     return dst != null;
-        // }
-
-        // public bool FindPart(PartName id, out IPart dst)
-        // {
-        //     var count = _Parts.Length;
-        //     var src = _Parts.View;
-        //     dst = default;
-        //     for(var i=0; i<count; i++)
-        //     {
-        //         ref readonly var part = ref skip(src,i);
-        //         if(part.PartName == id)
-        //         {
-        //             dst = part;
-        //             return true;
-        //         }
-        //     }
-        //     return false;
-        // }
-
         public bool Assembly(PartName part, out Assembly dst)
         {
             var src = _PartComponents.View;

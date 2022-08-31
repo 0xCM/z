@@ -11,30 +11,30 @@ namespace Z0
         readonly string Operation;
 
         [MethodImpl(Inline)]
-        public static ApiPath define(PartId part)
+        public static ApiPath define(PartName part)
             => new ApiPath(part);
 
         [MethodImpl(Inline)]
-        public static ApiPath define(PartId part, string host)
+        public static ApiPath define(PartName part, string host)
             => new ApiPath(part, host);
 
-        [MethodImpl(Inline)]
-        public static ApiPath define(ApiHostUri host)
-            => new ApiPath(host);
+        // [MethodImpl(Inline)]
+        // public static ApiPath define(ApiHostUri host)
+        //     => new ApiPath(host);
+
+        // [MethodImpl(Inline)]
+        // public static ApiPath define(ApiHostUri host, string op)
+        //     => new ApiPath(host, op);
 
         [MethodImpl(Inline)]
-        public static ApiPath define(ApiHostUri host, string op)
-            => new ApiPath(host, op);
-
-        [MethodImpl(Inline)]
-        public ApiPath(PartId part)
+        public ApiPath(PartName part)
         {
             Host = new ApiHostUri(part, EmptyString);
             Operation = EmptyString;
         }
 
         [MethodImpl(Inline)]
-        public ApiPath(PartId part, string host)
+        public ApiPath(PartName part, string host)
         {
             Host = new ApiHostUri(part, host);
             Operation = EmptyString;

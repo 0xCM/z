@@ -8,6 +8,9 @@ namespace Z0
 
     public class ApiRuntime : ApiRuntime<ApiRuntime>
     {        
+        public static IApiCatalog catalog()
+            => catalog(colocated(ExecutingPart.Assembly));
+
         static IApiCatalog match(Assembly control, string[] args)
         {
             var candidates = colocated(control);

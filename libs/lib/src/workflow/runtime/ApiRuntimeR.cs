@@ -52,7 +52,7 @@ namespace Z0
         [Op]
         protected static Index<ApiCompleteType> complete(Assembly src)
         {
-            var part = src.Id();
+            var part = src.PartName();
             var types = span(src.GetTypes().Where(t => t.Tagged<ApiCompleteAttribute>()));
             var count = types.Length;
             var buffer = sys.alloc<ApiCompleteType>(count);
@@ -68,10 +68,6 @@ namespace Z0
             return buffer;
         }
 
-        /// <summary>
-        /// Searches an assembly for types tagged with the <see cref="ApiHostAttribute"/>
-        /// </summary>
-        /// <param name="src">The assembly to search</param>
         [Op]
         protected static Index<Type> ApiHostTypes(Assembly src)
             => src.GetTypes().Where(IsApiHost);

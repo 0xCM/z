@@ -10,13 +10,13 @@ namespace Z0
 
         Cli Cli => Wf.Cli();
 
-        public void Emit(CliEmissionSettings options, IApiPack dst)
+        public void Emit(IApiCatalog src, CliEmissionSettings options, IApiPack dst)
         {
             if(options.EmitAssemblyRefs)
-                EmitAssemblyRefs(dst);
+                EmitAssemblyRefs(src.Components, dst);
 
             if(options.EmitFieldMetadata)
-                EmitFieldMetadata(dst);
+                EmitFieldMetadata(src.Components, dst);
 
             if(options.EmitApiMetadump)
                 EmitApiMetadump(dst);

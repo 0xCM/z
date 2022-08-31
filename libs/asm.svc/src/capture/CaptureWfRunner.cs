@@ -30,6 +30,43 @@ namespace Z0
             Wf.RedirectEmissions(Loggers.emission(Target.Path("capture.emissions", FileKind.Csv)));
         }
 
+        public ReadOnlySeq<ApiEncoded> Run(IApiCatalog src)
+        {
+            var collected = Capture(src);
+            var blocks = collected.SelectMany(x => x.Blocks).Sort();
+            EmitMemberIndex(blocks, Target);
+
+            if(Settings.EmitCatalog)
+            {
+                var members = Transport.TransmitResolved(ApiQuery.members(collected.SelectMany(x => x.Resolved.Members)));
+                var rebased = Transport.TransmitRebased(ApiCode.catalog(members));
+                var path = Target.Table<ApiCatalogEntry>();
+                Emitter.TableEmit(rebased, path, UTF8);
+                Transport.TransmitReloaded(ApiCode.catalog(path, Emitter));
+            }
+
+            if(Settings.EmitMetadata)
+            {
+                ApiMd.Emitter().Emit(src, Target);
+                CliEmitter.Emit(src, Settings.CliEmissions, Target);
+            }
+
+            if(Settings.EmitRegions)
+                Regions.EmitRegions(Process.GetCurrentProcess(), Target);
+
+            if(Settings.EmitContext)
+                RuntimeContext.emit(Emitter,Target);
+
+            if(Settings.RunChecks)
+            {
+                
+            }
+
+            ApiPacks.Link(Target);
+            return blocks;
+        }
+
+
         ICompositeDispenser Dispenser
             => Transport.Dispenser;
 
@@ -90,41 +127,6 @@ namespace Z0
             Transport.Transmit(src.Component);
         }
 
-        public ReadOnlySeq<ApiEncoded> Run(IApiCatalog src)
-        {
-            var collected = Capture(src);
-            var blocks = collected.SelectMany(x => x.Blocks).Sort();
-            EmitMemberIndex(blocks, Target);
-
-            if(Settings.EmitCatalog)
-            {
-                var members = Transport.TransmitResolved(ApiQuery.members(collected.SelectMany(x => x.Resolved.Members)));
-                var rebased = Transport.TransmitRebased(ApiCode.catalog(members));
-                var path = Target.Table<ApiCatalogEntry>();
-                Emitter.TableEmit(rebased, path, UTF8);
-                Transport.TransmitReloaded(ApiCode.catalog(path, Emitter));
-            }
-
-            if(Settings.EmitMetadata)
-            {
-                ApiMd.Emitter().Emit(Target);
-                CliEmitter.Emit(Settings.CliEmissions, Target);
-            }
-
-            if(Settings.EmitRegions)
-                Regions.EmitRegions(Process.GetCurrentProcess(), Target);
-
-            if(Settings.EmitContext)
-                RuntimeContext.emit(Emitter,Target);
-
-            if(Settings.RunChecks)
-            {
-                
-            }
-
-            ApiPacks.Link(Target);
-            return blocks;
-        }
 
         void EmitAsm(ICompositeDispenser symbols, ReadOnlySeq<CollectedHost> src)
         {

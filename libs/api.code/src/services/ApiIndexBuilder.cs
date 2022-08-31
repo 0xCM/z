@@ -108,7 +108,7 @@ namespace Z0
             dst.Hosts = UriCode.Keys.Select(x => x.Host).Distinct().Array();
             dst.Addresses = CodeAddress.Keys.Array();
             dst.MemberCount = (uint)CodeAddress.Keys.Count;
-            dst.Encoded = new PartCodeAddresses(dst.Parts, CodeAddress.ToKVPairs());
+            dst.Encoded = new PartCodeAddresses(CodeAddress.ToKVPairs());
             return dst;
         }
 
@@ -122,9 +122,9 @@ namespace Z0
                 .Select(x => (new ApiHostBlocks(x.Key, x.Select(y => y.Code).ToArray()))).Array();
 
             return new ApiBlockIndex(
-                   new PartCodeAddresses(parts, memories),
-                   new PartUriAddresses(parts, AddressUri),
-                   new PartCodeIndex(parts, code.Select(x => (x.Host, x)).ToDictionary()),
+                   new PartCodeAddresses(memories),
+                   new PartUriAddresses(AddressUri),
+                   new PartCodeIndex(code.Select(x => (x.Host, x)).ToDictionary()),
                    UriCode
                    );
         }

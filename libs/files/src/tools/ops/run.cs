@@ -27,7 +27,7 @@ namespace Z0
 
             try
             {
-                var process = Cmd.process(src.ToCmdLine(), OnStatus, OnError).Wait();
+                var process = CmdLauncher.process(src.ToCmdLine(), OnStatus, OnError).Wait();
             }
             catch(Exception e)
             {
@@ -47,7 +47,7 @@ namespace Z0
         {
             try
             {
-                var process = Cmd.process(cmd, vars);
+                var process = CmdLauncher.process(cmd, vars);
                 process.Wait();
                 return Lines.read(process.Output);
             }
@@ -63,7 +63,7 @@ namespace Z0
             using var writer = AppDb.Logs("scripts").Path(script,FileKind.Log).Writer();
             try
             {
-                var process = vars != null ? Cmd.process(cmd, vars) : CmdLauncher.start(cmd);
+                var process = vars != null ? CmdLauncher.process(cmd, vars) : CmdLauncher.start(cmd);
                 process.Wait();
                 var lines =  Lines.read(process.Output);
                 iter(lines, line => writer.WriteLine(line));

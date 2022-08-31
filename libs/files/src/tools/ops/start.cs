@@ -32,7 +32,7 @@ namespace Z0
                 var result = Outcome.Success;
                 try
                 {
-                    var process = Cmd.process(cmd, vars);
+                    var process = CmdLauncher.process(cmd, vars);
                     process.Wait();
                     iter(Lines.read(process.Output), receiver);
                 }
@@ -61,7 +61,7 @@ namespace Z0
                 {
                     term.print();
                     term.emit(Events.running(typeof(Cmd), $"'{cmd}"));
-                    var process = Cmd.process(cmd, OnStatus, OnError);
+                    var process = CmdLauncher.process(cmd, OnStatus, OnError);
                     var outcome = process.Wait();
                     var lines =  Lines.read(process.Output);
                     iter(lines, line => writer.WriteLine(line));
@@ -93,7 +93,7 @@ namespace Z0
                 using var logger = log.AsciWriter();
                 try
                 {
-                    var process = Cmd.process(cmd, OnStatus, OnError);
+                    var process = CmdLauncher.process(cmd, OnStatus, OnError);
                     var outcome = process.Wait();
                     var lines =  Lines.read(process.Output);
                     iter(lines, line => logger.WriteLine(line));

@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Processs>$(MsBuildThisFileDirectory)z0.process.csproj</Processs>
+  </PropertyGroup>
+</Project>

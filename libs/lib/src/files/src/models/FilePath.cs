@@ -97,20 +97,6 @@ namespace Z0
             get => Info.Length;
         }
 
-        // public PartId Owner
-        // {
-        //     [MethodImpl(Inline)]
-        //     get => FileName.Owner;
-        // }
-
-        // [MethodImpl(Inline)]
-        // public bool IsHost(ApiHostUri host)
-        //     => FileName.IsHost(host);
-
-        // [MethodImpl(Inline)]
-        // public bool IsOwner(PartId part)
-        //     => FileName.IsOwner(part);
-
         [MethodImpl(Inline)]
         public bool Is(FileExt ext)
             => Name.Text.EndsWith(ext.Name.Text, NoCase);

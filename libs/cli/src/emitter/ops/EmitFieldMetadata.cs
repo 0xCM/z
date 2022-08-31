@@ -4,16 +4,15 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    using static Spans;
+    using static sys;
 
     partial class CliEmitter
     {
-        public void EmitFieldMetadata(IApiPack dst)
+        public void EmitFieldMetadata(ReadOnlySpan<Assembly> src, IApiPack dst)
         {
             var count = 0u;
-            var flow = Running(ApiMd.Assemblies.Length);
-            iter(ApiMd.Assemblies, part => EmitFieldMetadata(part,dst), true);
+            var flow = Running(src.Length);
+            iter(src, part => EmitFieldMetadata(part,dst), true);
             Ran(flow, count);
         }
 
@@ -85,6 +84,5 @@ namespace Z0
                 Error(e);
             }
         }
-
     }
 }

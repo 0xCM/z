@@ -16,7 +16,7 @@ namespace Z0
         }
 
         public override int GetHashCode()
-            => sys.i32(Value.Data);
+            => sys.i32(Value);
 
         [MethodImpl(Inline)]
         public bool Equals(Hash<T> src)

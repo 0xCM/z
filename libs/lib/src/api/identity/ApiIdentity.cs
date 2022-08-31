@@ -45,11 +45,11 @@ namespace Z0
         //     => new OpUri(host, opid, BuildUriText(ApiUriScheme.Located, host, group, opid));
 
         [Op]
-        public static string QueryText(ApiUriScheme scheme, PartId part, string host, string group)
+        public static string QueryText(ApiUriScheme scheme, PartName part, string host, string group)
             => $"{scheme.Format()}{IDI.EndOfScheme}{part.Format()}{IDI.UriPathSep}{host}{IDI.UriQuery}{group}";
 
         [Op]
-        public static string FullUriText(ApiUriScheme scheme, PartId part, string host, string group, OpIdentity opid)
+        public static string FullUriText(ApiUriScheme scheme, PartName part, string host, string group, OpIdentity opid)
             => $"{scheme.Format()}{IDI.EndOfScheme}{part.Format()}{IDI.UriPathSep}{host}{IDI.UriQuery}{group}{IDI.UriFragment}{opid.IdentityText}";
 
         public static ApiUriScheme scheme(string src)
@@ -66,7 +66,7 @@ namespace Z0
             if(count != 2)
                 return failure.WithReason(string.Concat("Component count ", count," != ", 2));
 
-            if(!ApiParsers.part(skip(parts,0), out PartId owner))
+            if(!ApiParsers.part(skip(parts,0), out PartName owner))
                 return failure.WithReason("Invalid part");
 
             var host = skip(parts,1);

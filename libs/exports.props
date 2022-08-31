@@ -11,6 +11,7 @@
    <Import Project="memory/exports.props"/>
    <Import Project="numbers/exports.props"/>
    <Import Project="polyrand/exports.props"/>
+   <Import Project="process/exports.props"/>
    <Import Project="sys/exports.props"/>
    <Import Project="symbolics/exports.props"/>
    <Import Project="text/exports.props"/>

@@ -8,15 +8,12 @@ namespace Z0
 
     public readonly struct PartCodeAddresses
     {
-        public readonly Index<PartId> Parts;
-
         readonly KVP Data;
 
         [MethodImpl(Inline)]
-        public PartCodeAddresses(PartId[] parts, KVP src)
+        public PartCodeAddresses(KVP src)
         {
             Data = src;
-            Parts = parts;
         }
 
         public Index<ApiCodeBlock> Code
@@ -46,7 +43,7 @@ namespace Z0
         public static PartCodeAddresses Empty
         {
             [MethodImpl(Inline)]
-            get => new PartCodeAddresses(core.array<PartId>(), KVP.Empty);
+            get => new PartCodeAddresses(KVP.Empty);
         }
     }
 }

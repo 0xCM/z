@@ -15,11 +15,25 @@ namespace Z0
 
         ApiMd ApiMd => Wf.ApiMd();
 
+        public void EmitCatalog(IApiCatalog src)
+        {
+            var dst = ApiPacks.create();
+            ApiMd.Emitter().Emit(src,dst);
+            CliEmitter.Emit(src, CliEmissionSettings.Default, dst);
+        }
+
         public static unsafe PEReader PeReader(MemorySeg src)
             => new PEReader(src.BaseAddress.Pointer<byte>(), src.Size);
 
         static IApiPack Dst
             => ApiPacks.create();
+
+        [CmdOp("api/emit")]
+        void ApiEmit()
+        {
+            var src = ApiRuntime.catalog();
+            EmitCatalog(src);
+        }
 
         [CmdOp("ecma/emit/hex")]
         void EmitApiHex()
@@ -49,9 +63,9 @@ namespace Z0
         void EmitIlDat()
             => CliEmitter.EmitIlDat(Dst);
 
-        [CmdOp("ecma/emit/fields")]
-        void EmitFields()
-            => CliEmitter.EmitFieldMetadata(Dst);
+        // [CmdOp("ecma/emit/fields")]
+        // void EmitFields()
+        //     => CliEmitter.EmitFieldMetadata(Dst);
 
         [CmdOp("ecma/emit/literals")]
         void EmitLiterals()

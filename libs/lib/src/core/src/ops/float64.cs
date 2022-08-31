@@ -36,6 +36,26 @@ namespace Z0
                 => As<T?, double?>(ref src);
 
         /// <summary>
+        /// Presents a readonly span of generic values as a readonly span of 32-bit floats
+        /// </summary>
+        /// <param name="src">The source span</param>
+        /// <typeparam name="T">The source value type</typeparam>
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static Span<float> float32<T>(Span<T> src)
+            where T : unmanaged
+                => recover<T,float>(src);
+
+        /// <summary>
+        /// Presents a readonly span of generic values as a readonly span of 32-bit floats
+        /// </summary>
+        /// <param name="src">The source span</param>
+        /// <typeparam name="T">The source value type</typeparam>
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static ReadOnlySpan<float> float32<T>(ReadOnlySpan<T> src)
+            where T : unmanaged
+                => recover<T,float>(src);
+
+        /// <summary>
         /// Presents a span of generic values as a span of 64-bit floats
         /// </summary>
         /// <param name="src">The source span</param>
@@ -54,5 +74,15 @@ namespace Z0
         public static ReadOnlySpan<double> float64<T>(ReadOnlySpan<T> src)
             where T : struct
                 => recover<T,double>(src);
+
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static Span<decimal> float128<T>(Span<T> src)
+            where T : struct
+                => recover<T,decimal>(src);
+
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static ReadOnlySpan<decimal> float128<T>(ReadOnlySpan<T> src)
+            where T : struct
+                => recover<T,decimal>(src);                
     }
 }

@@ -3,8 +3,7 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0
-{
-    
+{   
     [StructLayout(LayoutKind.Sequential)]
     public record struct ProcessContext
     {
@@ -18,12 +17,12 @@ namespace Z0
 
         public ReadOnlySeq<ProcessPartition> Partitions;
 
-        public FilePath PartitionPath;
+        public @string PartitionPath;
 
         public ReadOnlySeq<ProcessMemoryRegion> Regions;
 
-        public FilePath RegionPath;
+        public @string RegionPath;
 
-        public FilePath DumpPath;
+        public @string DumpPath;
     }
 }
