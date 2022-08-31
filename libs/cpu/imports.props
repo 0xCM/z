@@ -1,0 +1,13 @@
+<Project>
+
+  <ItemGroup>
+    <ProjectReference Include="$(ZLib)" />
+    <ProjectReference Include="$(Expr)" />
+    <ProjectReference Include="$(Rules)" />
+    <ProjectReference Include="$(Numbers)" />
+    <ProjectReference Include="$(Native)" />
+    <ProjectReference Include="$(Files)" />
+    <ProjectReference Include="$(Polyrand)" />
+  </ItemGroup>
+
+</Project>

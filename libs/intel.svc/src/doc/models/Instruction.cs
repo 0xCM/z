@@ -4,18 +4,15 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XedModels;
-    using static XedRules;
-
     partial class IntrinsicsDoc
     {
         public readonly struct Instruction
         {
             public const string ElementName = "instruction";
 
-            public readonly string name;
+            public readonly @string name;
 
-            public readonly string form;
+            public readonly @string form;
 
             public readonly InstFormType xed;
 

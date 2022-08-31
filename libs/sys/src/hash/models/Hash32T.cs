@@ -30,6 +30,7 @@ namespace Z0
 
         public override int GetHashCode()
             => (int)Primitive;
+
         public int CompareTo(Hash32<T> src)
             => Primitive.CompareTo(src.Primitive);
 

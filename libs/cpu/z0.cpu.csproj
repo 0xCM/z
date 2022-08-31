@@ -5,10 +5,7 @@
     <TargetFramework>$(FrameworkMoniker)</TargetFramework>
   </PropertyGroup>
 
+  <Import Project="imports.props"/>
   <Import Project="$(ProjectProps)\usings.props"/>
-
-  <ItemGroup>
-    <ProjectReference Include="$(Sys)" />
-  </ItemGroup>
 
 </Project>

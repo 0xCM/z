@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
+    using static sys;
 
     /// <summary>
     /// Defines the content of a set of binary resources for an api host

@@ -50,25 +50,6 @@ namespace Z0
             checker.Validate();
         }
 
-        void Run(N3 n)
-        {
-            LogHeader(MethodInfo.GetCurrentMethod(), n);
-            var provider = PageBank16x4x4.allocated();
-            var block = provider.Block(n0);
-            var segsize = 32;
-            uint count = block.Size/segsize;
-            ref var src = ref block.Segment<Cell256>(0);
-            for(var i=0u; i<count; i++)
-                seek(src,i) = i;
-
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var j = ref first(recover<uint>(skip(src,i).Bytes));
-                Log(string.Format("{0:D4}:{1}",i, j.FormatHex()));
-            }
-
-            Log(block.Describe());
-        }
 
         void Run(N4 n)
         {
@@ -95,26 +76,6 @@ namespace Z0
             Log(bitstring);
         }
 
-        void Run(N8 n)
-        {
-            LogHeader(MethodInfo.GetCurrentMethod(), n);
-            var buffer = PageBank16x4x4.allocated();
-            var block = buffer.Block(n0);
-            var segsize = size<Cell256>();
-            uint count = block.Size/segsize;
-            ref var src = ref block.Segment<Cell256>(0);
-            for(var i=0u; i<count; i++)
-                seek(src,i) = i;
-
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var j = ref first(recover<uint>(skip(src,i).Bytes));
-                Log(string.Format("{0:D4}:{1}",i, j.FormatHex()));
-            }
-
-            Log(block.Describe());
-        }
-
         void Run(N9 n)
         {
             LogHeader(MethodInfo.GetCurrentMethod(), n);
@@ -135,6 +96,24 @@ namespace Z0
             Log(string.Format("Align({0}) = {1}", a, b));
         }
 
+        public void CheckSymNames()
+        {
+            var result = Outcome.Success;
+            var classifier = Classifiers.classifier<AsciLetterLoSym,byte>();
+            var symbols = Symbols.index<AsciLetterLoSym>();
+            var classes = classifier.Classes;
+            var count = classes.Length;
+            for(var i=0u; i<count; i++)
+            {
+                ref readonly var c = ref skip(classes,i);
+                ref readonly var s = ref symbols[i];
+                Z0.Require.equal(c.Index, i);
+                Z0.Require.equal(s.Key.Value, c.Index);
+                Z0.Require.equal(s.Expr.Format(), c.Symbol.Format());
+                Z0.Require.equal(s.Name, c.Name.Format());
+            }
+        }
+
         void Run(N18 n)
         {
             LogHeader(MethodInfo.GetCurrentMethod(), n);
@@ -148,12 +127,6 @@ namespace Z0
             var chars = slice(buffer.Data,0,count);
             var fmt = text.format(chars);
             Log(fmt);
-        }
-
-        void Run(N24 n)
-        {
-            LogHeader(MethodInfo.GetCurrentMethod(), n);
-            CalcBuilder.create(Wf).Calc(w128);
         }
 
         void Run(N25 n)
@@ -215,14 +188,8 @@ namespace Z0
                     case 1:
                         Run(n1);
                     break;
-                    case 3:
-                        Run(n3);
-                    break;
                     case 4:
                         Run(n4);
-                    break;
-                    case 8:
-                        Run(n8);
                     break;
                     case 9:
                         Run(n9);
@@ -232,9 +199,6 @@ namespace Z0
                     break;
                     case 18:
                         Run(n18);
-                    break;
-                    case 24:
-                        Run(n24);
                     break;
                     case 25:
                         Run(n25);

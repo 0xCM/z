@@ -14,9 +14,5 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static ref sbyte i8<T>(in T src)
             => ref @as<T,sbyte>(src);
-
-        [MethodImpl(Inline)]
-        public static ref sbyte int8<T>(in T src)
-             => ref i8(src);
     }
 }

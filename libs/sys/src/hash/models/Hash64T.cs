@@ -15,12 +15,6 @@ namespace Z0
         public Hash64(T value)
             => Value = value;
 
-        public ulong Primitive
-        {
-            [MethodImpl(Inline)]
-            get => u64(Value);
-        }
-
         public string Format()
             => u64(Value).ToString("X");
 
@@ -29,7 +23,6 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator Hash64(Hash64<T> src)
-            => new Hash64(src.Primitive);
+            => new Hash64(u64(src.Value));
     }
-
 }

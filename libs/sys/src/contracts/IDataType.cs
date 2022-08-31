@@ -10,7 +10,7 @@ namespace Z0
     }
 
     [Free]
-    public interface IDataType<T> : IDataType, IEquatable<T>, IComparable<T>, IHashed<T>
+    public interface IDataType<T> : IDataType, IEquatable<T>, IComparable<T>, IHashed
         where T : IDataType<T>
     {
 

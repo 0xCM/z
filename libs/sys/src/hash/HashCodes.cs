@@ -7,6 +7,42 @@ namespace Z0
     [Free,ApiHost]
     public partial class HashCodes
     {
+        public static string format<H,V>(H src)
+            where H : unmanaged, IHashCode<H,V>
+            where V : unmanaged
+        {
+            var value = src.Value;
+            var dst = EmptyString;
+            switch((byte)src.ByteCount)
+            {
+                case 1:
+                {
+                    var x = sys.@as<V,byte>(src.Value);
+                    dst = x.FormatHex(zpad:true, specifier:true, uppercase:true);
+                }
+                break;
+                case 2:
+                {
+                    var x = sys.@as<V,ushort>(src.Value);
+                    dst = x.FormatHex(zpad:true, specifier:true, uppercase:true);
+                }
+                break;
+                case 4:
+                {
+                    var x = sys.@as<V,uint>(src.Value);
+                    dst = x.FormatHex(zpad:true, specifier:true, uppercase:true);
+                }
+                break;
+                case 8:
+                {
+                    var x = sys.@as<V,ulong>(src.Value);
+                    dst = x.FormatHex(zpad:true, specifier:true, uppercase:true);
+                }
+                break;
+            }
+            return dst;
+        }
+
         [MethodImpl(Inline), Op]
         public static Hash32 hash(string src)
             => MarvinHash.marvin(src);

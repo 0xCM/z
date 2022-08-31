@@ -4,9 +4,34 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static System.Runtime.CompilerServices.Unsafe;
+
     partial class sys
     {
-       [MethodImpl(Inline), Op, Closures(Closure)]
+        [MethodImpl(Inline), Op, Closures(AllNumeric)]
+        public static decimal float128<T>(T src)
+            => As<T,decimal>(ref src);
+
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static ref T float128<T>(in decimal src, out T dst)
+        {
+            dst = @as<decimal,T>(src);
+            return ref dst;
+        }
+
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static ref decimal float128<T>(in T src, out decimal dst)
+        {
+            dst = @as<T,decimal>(src);
+            return ref dst;
+        }
+
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static decimal? float128<T>(T? src)
+            where T : unmanaged
+                => As<T?,decimal?>(ref src);
+
+        [MethodImpl(Inline), Op, Closures(Closure)]
         public static Span<decimal> float128<T>(Span<T> src)
             where T : struct
                 => recover<T,decimal>(src);

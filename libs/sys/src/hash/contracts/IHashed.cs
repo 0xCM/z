@@ -7,6 +7,7 @@ namespace Z0
     /// <summary>
     /// Characterizes a hash code provider
     /// </summary>
+    [Free]
     public interface IHashed
     {
         /// <summary>
@@ -18,9 +19,17 @@ namespace Z0
             => Hash;
     }
 
-    public interface IHashed<T> : IHashed
-        where T : IHashed<T>
+    [Free]
+    public interface IHashed<C> : IHashed
+        where C : unmanaged, IHashCode
     {
-
+        new C Hash {get;}
     }
+
+    // public interface IHashed<H,T>
+    //     where H : IHashed<H,T>
+    //     where T : unmanaged, IHashCode<T>
+    // {
+
+    // }
 }

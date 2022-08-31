@@ -2,11 +2,11 @@
 
   <ItemGroup>
     <ProjectReference Include="$(Sys)" />
-    <ProjectReference Include="$(ClrQuery)" />
     <ProjectReference Include="$(Bit)" />
-    <ProjectReference Include="$(Imagine)" />
     <ProjectReference Include="$(Math)" />
+    <ProjectReference Include="$(ClrQuery)" />
     <ProjectReference Include="$(ApiSpecs)" />
+    <ProjectReference Include="$(Imagine)" />
   </ItemGroup>
 
 </Project>

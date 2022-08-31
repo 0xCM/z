@@ -4,12 +4,15 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly record struct Hash32 : IHashCode<Hash32,uint>
+    using H = Hash32;
+    using V = System.UInt32;
+
+    public readonly record struct Hash32 : IHashCode<H,V>
     {
-        public readonly uint Value;
+        public readonly V Value;
 
         [MethodImpl(Inline)]
-        public Hash32(uint value)
+        public Hash32(V value)
             => Value = value;
 
         [MethodImpl(Inline)]

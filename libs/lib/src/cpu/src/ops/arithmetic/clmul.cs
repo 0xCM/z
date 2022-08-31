@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     using static System.Runtime.Intrinsics.X86.Pclmulqdq;
 
     partial struct cpu

@@ -13,7 +13,7 @@ namespace Z0
         public uint Seq;
 
         [Render(12)]
-        public readonly uint DocId;
+        public readonly Hex32 DocId;
 
         [Render(12)]
         public readonly FileKind Kind;

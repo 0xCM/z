@@ -37,5 +37,4 @@ namespace Z0
         public static implicit operator Hash8(Hash8<T> src)
             => new Hash8(src.Primitive);
     }
-
 }

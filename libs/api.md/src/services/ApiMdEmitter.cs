@@ -269,7 +269,7 @@ namespace Z0
                 for(var j=0; j<count; j++)
                 {
                     ref readonly var asset = ref assets[j];
-                    FileEmit(Assets.utf8(asset), targets.Path(asset.Name.ShortFileName), TextEncodingKind.Utf8);
+                    FileEmit(Assets.utf8(asset), targets.Path(FS.file(asset.Name.ShortFileName)), TextEncodingKind.Utf8);
                     counter++;
                 }
             }

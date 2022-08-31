@@ -3,6 +3,7 @@
    <Import Project="api.specs/exports.props"/>
    <Import Project="bit/exports.props"/>
    <Import Project="clr.query/exports.props"/>
+   <Import Project="cpu/exports.props"/>
    <Import Project="db.sqlite/exports.props"/>
    <Import Project="heaps/exports.props"/>
    <Import Project="literals/exports.props"/>

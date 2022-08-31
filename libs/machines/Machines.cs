@@ -153,79 +153,6 @@ namespace Z0
             return result;
         }
 
-        void Run(N3 n)
-        {
-            var bank = PageBank16x4x4.allocated();
-            var size = PageBank16x4x4.BlockSize;
-            var w = w128;
-            var cells = size/size<Cell128>();
-
-            var left = bank.Block(n0);
-            Random.Fill(left.Bytes);
-            var right = bank.Block(n1);
-            Random.Fill(right.Bytes);
-
-            var dst = bank.Block(n2);
-            or(left, right, dst);
-
-            ref var lCell = ref left.Segment<Cell128>(0);
-            ref var rCell = ref right.Segment<Cell128>(0);
-            ref var target = ref dst.Segment<Cell128>(0);
-
-            for(var i=0u; i<cells; i++)
-            {
-                ref readonly var a = ref skip(lCell,i);
-                ref readonly var b = ref skip(rCell,i);
-                ref readonly var result = ref skip(target,i);
-                Wf.Data(string.Format("{0:D6} {1}([{2}],[{3}]) = {4}", i, "or", a.V32u.FormatHex(), b.V32u.FormatHex(), result.V32u.FormatHex()));
-            }
-        }
-
-        void or(in MemoryPage lhs, in MemoryPage rhs, in MemoryPage dst)
-        {
-            var size = lhs.Size;
-            var w = w128;
-            var cells = size/size<Cell128>();
-            ref var left = ref lhs.Segment<Cell128>(0);
-            ref var right = ref rhs.Segment<Cell128>(1);
-            ref var target = ref dst.Segment<Cell128>(2);
-            var f = Calcs.vor<uint>(w);
-            for(var i=0u; i<cells; i++)
-            {
-                ref var a = ref seek(left,i);
-                //a = cpu.vbroadcast(w, i);
-                ref var b = ref seek(right,i);
-                //b = cpu.vbroadcast(w, i + Pow2.T12);
-                seek(target,i) = f.Invoke(a,b);
-            }
-        }
-
-        void Run(N5 n)
-        {
-            var bank = PageBank16x4x4.allocated();
-            var size = PageBank16x4x4.BlockSize;
-            var w = w128;
-            var left = bank.Block(n0);
-            Random.Fill(left.Bytes);
-            var right = bank.Block(n1);
-            Random.Fill(right.Bytes);
-
-            var dst = bank.Block(n2);
-            or(left, right, dst);
-
-            ref var lCell = ref left.Segment<Cell128>(0);
-            ref var rCell = ref right.Segment<Cell128>(0);
-            ref var target = ref dst.Segment<Cell128>(0);
-
-            var cells = left.Size/size<Cell128>();
-            for(var i=0u; i<cells; i++)
-            {
-                ref readonly var a = ref skip(lCell,i);
-                ref readonly var b = ref skip(rCell,i);
-                ref readonly var result = ref skip(target,i);
-                Wf.Data(string.Format("{0:D6} {1}([{2}],[{3}]) = {4}", i, "or", a.V32u.FormatHex(), b.V32u.FormatHex(), result.V32u.FormatHex()));
-            }
-        }
 
         public void Run(N10 n)
         {
@@ -328,6 +255,174 @@ namespace Z0
             }
         }
 
+        sealed class Buffer1 : PageBank16x4x4<Buffer1>
+        {
+
+
+        }
+
+        sealed class Buffer2 : PageBank16x4x4<Buffer2>
+        {
+
+
+        }
+
+        sealed class Buffer3 : PageBank16x4x4<Buffer3>
+        {
+
+
+        }
+
+        public void Calc(W128 w)
+        {
+            var flow = Wf.Running(w.ToString());
+            var size = RunCalc(w);
+            Wf.Ran(flow, size);
+        }
+
+        [Op]
+        ByteSize RunCalc(W128 w)
+        {
+            var buffer = Buffer3.allocated();
+            var sizes = 0ul;
+            var cells = Buffer3.BlockSize/w.DataSize;
+            ref var left = ref buffer.Block(n0).Segment<Cell128>(0);
+            ref var right = ref buffer.Block(n1).Segment<Cell128>(1);
+            ref var target = ref buffer.Block(n2).Segment<Cell128>(2);
+            var f = Calcs.vor<uint>(w);
+            for(var i=0u; i<cells; i++)
+            {
+                ref var a = ref seek(left,i);
+                a = cpu.vbroadcast(w,i);
+                ref var b = ref seek(right,i);
+                b = cpu.vbroadcast(w,i + Pow2.T12);
+                seek(target,i) = f.Invoke(a,b);
+                sizes += 3*16;
+            }
+            return sizes;
+        }
+
+        void Run(N3 n, ref Buffer1 buffer)
+        {
+            LogHeader(MethodInfo.GetCurrentMethod(), n);
+            var block = buffer.Block(n0);
+            var segsize = 32;
+            uint count = block.Size/segsize;
+            ref var src = ref block.Segment<Cell256>(0);
+            for(var i=0u; i<count; i++)
+                seek(src,i) = i;
+
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var j = ref first(recover<uint>(skip(src,i).Bytes));
+                Write(string.Format("{0:D4}:{1}",i, j.FormatHex()));
+            }
+
+            Row(block.Describe());
+        }
+
+        void LogHeader<N>(MethodBase src, N n)
+            where N : unmanaged, ITypeNat
+        {
+            Row(string.Format("{0} {1} ", src.Name, n).PadRight(80,Chars.Dash));
+        }
+
+
+        void Run(N8 n, ref Buffer1 buffer)
+        {
+            LogHeader(MethodInfo.GetCurrentMethod(), n);
+            var block = buffer.Block(n0);
+            var segsize = size<Cell256>();
+            uint count = block.Size/segsize;
+            ref var src = ref block.Segment<Cell256>(0);
+            for(var i=0u; i<count; i++)
+                seek(src,i) = i;
+
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var j = ref first(recover<uint>(skip(src,i).Bytes));
+                Write(string.Format("{0:D4}:{1}",i, j.FormatHex()));
+            }
+
+            Write(block.Describe());
+        }
+
+
+        void Run(N3 n)
+        {
+            var bank = Buffer1.allocated();
+            var size = Buffer1.BlockSize;
+            var w = w128;
+            var cells = size/size<Cell128>();
+
+            var left = bank.Block(n0);
+            Random.Fill(left.Bytes);
+            var right = bank.Block(n1);
+            Random.Fill(right.Bytes);
+
+            var dst = bank.Block(n2);
+            or(left, right, dst);
+
+            ref var lCell = ref left.Segment<Cell128>(0);
+            ref var rCell = ref right.Segment<Cell128>(0);
+            ref var target = ref dst.Segment<Cell128>(0);
+
+            for(var i=0u; i<cells; i++)
+            {
+                ref readonly var a = ref skip(lCell,i);
+                ref readonly var b = ref skip(rCell,i);
+                ref readonly var result = ref skip(target,i);
+                Wf.Data(string.Format("{0:D6} {1}([{2}],[{3}]) = {4}", i, "or", a.V32u.FormatHex(), b.V32u.FormatHex(), result.V32u.FormatHex()));
+            }
+        }
+
+        void or(in MemoryPage lhs, in MemoryPage rhs, in MemoryPage dst)
+        {
+            var size = lhs.Size;
+            var w = w128;
+            var cells = size/size<Cell128>();
+            ref var left = ref lhs.Segment<Cell128>(0);
+            ref var right = ref rhs.Segment<Cell128>(1);
+            ref var target = ref dst.Segment<Cell128>(2);
+            var f = Calcs.vor<uint>(w);
+            for(var i=0u; i<cells; i++)
+            {
+                ref var a = ref seek(left,i);
+                //a = cpu.vbroadcast(w, i);
+                ref var b = ref seek(right,i);
+                //b = cpu.vbroadcast(w, i + Pow2.T12);
+                seek(target,i) = f.Invoke(a,b);
+            }
+        }
+
+        void Run(N5 n)
+        {
+            var bank = Buffer2.allocated();
+            var size = Buffer2.BlockSize;
+            var w = w128;
+            var left = bank.Block(n0);
+            Random.Fill(left.Bytes);
+            var right = bank.Block(n1);
+            Random.Fill(right.Bytes);
+
+            var dst = bank.Block(n2);
+            or(left, right, dst);
+
+            ref var lCell = ref left.Segment<Cell128>(0);
+            ref var rCell = ref right.Segment<Cell128>(0);
+            ref var target = ref dst.Segment<Cell128>(0);
+
+            var cells = left.Size/size<Cell128>();
+            for(var i=0u; i<cells; i++)
+            {
+                ref readonly var a = ref skip(lCell,i);
+                ref readonly var b = ref skip(rCell,i);
+                ref readonly var result = ref skip(target,i);
+                Wf.Data(string.Format("{0:D6} {1}([{2}],[{3}]) = {4}", i, "or", a.V32u.FormatHex(), b.V32u.FormatHex(), result.V32u.FormatHex()));
+            }
+        }
+
+
         [CmdOp("machine/run/cmd")]
         Outcome Run(CmdArgs args)
         {
@@ -335,12 +430,6 @@ namespace Z0
             {
                 switch(n)
                 {
-                    case 3:
-                        Run(n3);
-                    break;
-                    case 5:
-                        Run(n5);
-                    break;
                     case 10:
                         Run(n10);
                     break;

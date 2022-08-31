@@ -25,13 +25,5 @@ namespace Z0.Parts
 {
     public sealed class IntelIntrinsics : Part<IntelIntrinsics>
     {
-        public static PartAssets AssetData = new();
-
-        public sealed class PartAssets : Assets<PartAssets>
-        {
-            public Asset Csv() => Asset("intrinsics.csv");
-
-            public Asset Algorithms() => Asset("intrinsics.algorithms.txt");
-        }
     }
 }

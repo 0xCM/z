@@ -59,7 +59,7 @@ namespace Z0
                 dst.LogConfig.ErrorPath.CreateParentIfMissing();
                 dst.LogConfig.StatusPath.CreateParentIfMissing();
                 term.emit(Events.babble(factory, ConfiguredAppLogs.Format(dst.LogConfig)));
-                dst.Tokens = TokenDispenser.create();
+                dst.Tokens = TokenDispenser.Service;
                 dst.EventBroker = Events.broker(dst.LogConfig);
                 term.emit(Events.babble(factory, "Created event broker"));
                 dst.Host = new WfHost(typeof(WfRuntime));

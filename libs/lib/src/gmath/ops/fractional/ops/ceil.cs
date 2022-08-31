@@ -4,12 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
-    using static core;
-
+    using static sys;
     partial struct gfp
     {
         [MethodImpl(Inline), Ceil, Closures(Floats)]

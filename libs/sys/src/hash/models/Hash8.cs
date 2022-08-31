@@ -4,9 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly record struct Hash8 : IHashCode<Hash8,byte>
+    using api = HashCodes;
+
+    using H = Hash8;
+    using V = System.Byte;
+
+    public readonly record struct Hash8 : IHashCode<H,V>
     {
-        public byte Value {get;}
+        public readonly byte Value;
 
         [MethodImpl(Inline)]
         public Hash8(byte value)
@@ -17,6 +22,9 @@ namespace Z0
             [MethodImpl(Inline)]
             get => Value;
         }
+
+        byte IHashCode<byte>.Value 
+            => Value;
 
         [MethodImpl(Inline)]
         public bool Equals(Hash8 src)
@@ -30,7 +38,7 @@ namespace Z0
             => Value;
 
         public string Format()
-            => Value.FormatHex(zpad:true, specifier:true, uppercase:true);
+            => api.format<Hash8,byte>(this);
 
         public override string ToString()
             => Format();

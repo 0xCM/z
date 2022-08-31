@@ -12,8 +12,18 @@ namespace Z0
     using D = System.Diagnostics;
     using A = ProcessAdapter;
 
+    using static sys;
+
     public sealed class ProcessAdapter : Adapter<A,S>
     {
+        ConcurrentBag<Action<EventArgs>> ExitHandlers = new();
+
+        ConcurrentBag<Action<EventArgs>> DataHandlers = new();
+
+        ConcurrentBag<Action<EventArgs>> ErrorHandlers = new();
+
+        ConcurrentBag<Action<EventArgs>> DisposalHandlers = new();
+
         public ProcessAdapter()
         {}
 
@@ -21,13 +31,57 @@ namespace Z0
         public ProcessAdapter(S subject)
             : base(subject)
         {
-
+            subject.Exited += OnExit;
+            subject.ErrorDataReceived += OnErrorData;
+            subject.OutputDataReceived += OnOutputData;
+            subject.Disposed += OnDisposed;
         }
 
         public MemoryAddress BaseAddress
         {
             [MethodImpl(Inline)]
             get => MainModule.BaseAddress;
+        }
+
+        void OnExit(object sender, EventArgs args)
+            => sys.iter(ExitHandlers, h => start(() => h));
+
+        void OnErrorData(object sender, EventArgs args)
+            => sys.iter(ErrorHandlers, h => start(() => h));
+
+        void OnOutputData(object sender, EventArgs args)
+            => iter(DataHandlers, h => start(() => h)); 
+
+        void OnDisposed(object sender, EventArgs args)
+            => iter(DisposalHandlers, h => start(() => h));
+
+        public A WithExitHandler(params Action<EventArgs>[] handlers)
+        {
+            iter(handlers, h => ExitHandlers.Add(h));
+            return this;
+        }
+
+        public A WithDataHandlers(params Action<EventArgs>[] handlers)
+        {
+            iter(handlers, h => DataHandlers.Add(h));
+            return this;
+        }
+
+        public A WithErrorHandlers(params Action<EventArgs>[] handlers)
+        {
+            iter(handlers, h => ErrorHandlers.Add(h));
+            return this;
+        }
+
+        public A WithDisposalHandlers(params Action<EventArgs>[] handlers)
+        {
+            iter(handlers, h => DisposalHandlers.Add(h));
+            return this;
+        }
+
+        public void Close()
+        {
+            Subject.Close();
         }
 
         //
@@ -956,6 +1010,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public void WaitForExit()
             => Subject.WaitForExit();
+
 
         //
         // Summary:

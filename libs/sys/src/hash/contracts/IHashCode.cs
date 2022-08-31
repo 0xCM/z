@@ -4,34 +4,42 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static sys;
+
     [Free]
-    public interface IHashCode : IExpr
+    public interface IHashCode : IExpr, ISized
     {
         ReadOnlySpan<byte> Data {get;}
 
+        ByteSize ISized.ByteCount
+            => Data.Length;
+
+        BitWidth ISized.BitWidth
+            => Data.Length*8;
+
         bool INullity.IsEmpty
-            => sys.bw64u(Data) == 0;
+            => bw64u(Data) == 0;
         bool INullity.IsNonEmpty
-            => sys.bw64u(Data) != 0;
+            => bw64u(Data) != 0;
     }
 
     [Free]
-    public interface IHashCode<T> : IHashCode
-        where T : unmanaged
+    public interface IHashCode<V> : IHashCode
+        where V : unmanaged
      {
-         T Value {get;}
+         V Value {get;}
 
         string IExpr.Format()
             => Value.ToString();
 
         ReadOnlySpan<byte> IHashCode.Data
-            => sys.bytes(Value);
+            => bytes(Value);
      }
 
     [Free]
-    public interface IHashCode<H,T> : IHashCode<T>, IEquatable<H>, IComparable<H>
-        where H : unmanaged, IHashCode<H,T>
-        where T : unmanaged
+    public interface IHashCode<H,V> : IHashCode<V>
+        where H : unmanaged, IHashCode<H,V>
+        where V : unmanaged
     {
 
     }

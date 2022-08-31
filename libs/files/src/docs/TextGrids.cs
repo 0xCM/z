@@ -12,7 +12,7 @@ namespace Z0
         public static void profiles(FilePath src, Lookup<Actor,ToolProfile> dst, WfEmit channel)
         {
             var content = src.ReadUnicode();
-            var result = TextGrids.parse(content, out var grid);
+            var result = parse(content, out var grid);
             if(result)
             {
                 if(grid.ColCount != ToolProfile.FieldCount)

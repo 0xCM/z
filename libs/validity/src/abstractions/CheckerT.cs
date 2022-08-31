@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     [Checker]
     public abstract class Checker<T> : AppCmdService<T>, IChecker

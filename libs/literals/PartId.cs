@@ -206,8 +206,8 @@ public enum PartId : byte
     [Symbol("diagnosics")]
     Diagnostics,
 
-    [Symbol("graphs")]
-    Graphs,
+    [Symbol("cpu")]
+    Cpu,
 
     [Symbol("cpu.test")]
     CpuTest,

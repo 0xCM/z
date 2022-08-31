@@ -4,8 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Scalars;
-
+    using static sys;
+    
     using H = HashCodes;
     using G = HashCodes.Generic;
 

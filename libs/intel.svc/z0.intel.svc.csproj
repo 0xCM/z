@@ -8,5 +8,6 @@
   <ItemGroup>
     <EmbeddedResource Include="assets/**/*.*" />
     <ProjectReference Include="$(AsmCore)" />
+    <ProjectReference Include="$(Cpu)" />
   </ItemGroup>
 </Project>
