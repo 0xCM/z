@@ -14,6 +14,12 @@ namespace Z0
             where N : unmanaged, ITypeNat
                 => AsciG.parse(src, n, out dst);
 
+        public static bool parse(string src, out PartName dst)
+        {
+            dst = text.trim(src);
+            return true;
+        }
+
         public static bool parse(string src, out DataSize dst)
             => Sizes.parse(src, out dst);
 

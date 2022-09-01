@@ -153,7 +153,6 @@ namespace Z0
             return result;
         }
 
-
         public void Run(N10 n)
         {
             var stack = StackMachines.create(Pow2.T08);

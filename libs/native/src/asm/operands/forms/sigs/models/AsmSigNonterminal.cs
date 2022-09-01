@@ -7,18 +7,20 @@ namespace Z0.Asm
     [Record(TableId)]
     public struct AsmSigNonterminal
     {
-        public const string TableId = "sdm.sigs.nonterminal";
+        const string TableId = "sdm.sigs.nonterminal";
 
         public const byte FieldCount = 4;
 
+        [Render(12)]
         public AsmSigToken Source;
 
+        [Render(12)]
         public AsmSigToken Term1;
 
+        [Render(12)]
         public AsmSigToken Term2;
 
-        public AsmSigToken Term3;
-
-        public static ReadOnlySpan<byte> RenderWidths => new byte[FieldCount] {12,12,12,12};
+        [Render(12)]
+        public AsmSigToken Term3;        
     }
 }

@@ -4,10 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
+    using static sys;
+
     using F = RFlagBits;
     using I = RFlagIndex;
-    using static core;
-
+    
     [ApiComplete]
     public struct RFlags : IEquatable<RFlags>
     {

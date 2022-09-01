@@ -6,9 +6,9 @@ namespace Z0
 {
     using Asm;
 
-    using static core;
+    using static sys;
 
-    [StructLayout(LayoutKind.Sequential, Pack=1), DataTypeAttributeD("asm.sig.expr")]
+    [StructLayout(LayoutKind.Sequential, Pack=1)]
     public struct AsmSigExpr : IEquatable<AsmSigExpr>
     {
         public const byte MaxOpCount = 5;

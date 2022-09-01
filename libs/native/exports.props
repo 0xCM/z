@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Natve>$(MsBuildThisFileDirectory)z0.native.csproj</Natve>
+  </PropertyGroup>
+</Project>

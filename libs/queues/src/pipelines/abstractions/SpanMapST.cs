@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     public sealed class SpanProjector<S,T> : SpanProjector<SpanProjector<S,T>,S,T>
     {
         ISpanMap<S,T> Map;

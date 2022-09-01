@@ -1,15 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="imports.props"/>
+  <Import Project="$(ProjectProps)\usings.props"/>
+
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>$(FrameworkMoniker)</TargetFramework>
   </PropertyGroup>
-
-  <Import Project="$(ProjectProps)\usings.props"/>
-
-  <ItemGroup>
-    <ProjectReference Include="../alloc/z0.alloc.csproj" />
-    <ProjectReference Include="../lib/z0.lib.csproj" />
-  </ItemGroup>
 
 </Project>

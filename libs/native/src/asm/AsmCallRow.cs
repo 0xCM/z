@@ -4,9 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Z0.Asm;
-
-    using static core;
+    using static sys;
 
     [Record(TableId), StructLayout(LayoutKind.Sequential)]
     public struct AsmCallRow : IComparableRecord<AsmCallRow>
@@ -17,7 +15,7 @@ namespace Z0
         {
             var cells = row.Cells;
             var k = 0;
-            DataParser.eparse(skip(cells, k++).Text, out record.SourcePart);
+            DataParser.parse(skip(cells, k++).Text, out record.SourcePart);
             DataParser.parse(skip(cells, k++).Text, out record.Block);
             DataParser.parse(skip(cells, k++).Text, out record.Source);
             DataParser.parse(skip(cells, k++).Text, out record.Target);
@@ -32,7 +30,7 @@ namespace Z0
         /// The invoking part
         /// </summary>
         [Render(16)]
-        public PartId SourcePart;
+        public PartName SourcePart;
 
         /// <summary>
         /// The block base address

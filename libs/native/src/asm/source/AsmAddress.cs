@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using static core;
+    using static sys;
 
     /// <summary>
     /// Represents an operand expression of the form BaseReg + IndexReg*Scale + Displacement
