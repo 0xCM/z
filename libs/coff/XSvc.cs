@@ -9,9 +9,21 @@ namespace Z0
     {
         sealed class ServiceCache : AppServices<ServiceCache>
         {
+            public CoffServices CoffServices(IWfRuntime wf)
+                => Service<CoffServices>(wf);
+
+            public AsmObjects AsmObjects(IWfRuntime wf)
+                => Service<AsmObjects>(wf);
+
 
         }
 
         static ServiceCache Services => ServiceCache.Instance;
+
+        public static CoffServices CoffServices(this IWfRuntime wf)
+            => Services.CoffServices(wf);
+
+        public static AsmObjects AsmObjects(this IWfRuntime wf)
+            => Services.AsmObjects(wf);
     }
 }

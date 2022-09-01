@@ -10,7 +10,6 @@
     <ProjectReference Include="$(Bits)" />
     <ProjectReference Include="$(Memory)" />
     <ProjectReference Include="$(Fsm)" />
-    <ProjectReference Include="$(AsmModels)" />
     <ProjectReference Include="$(Symbolics)" />
     <ProjectReference Include="$(Polyrand)" />
     <ProjectReference Include="$(Validity)" />
