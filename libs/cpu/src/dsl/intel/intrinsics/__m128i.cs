@@ -9,7 +9,7 @@ namespace Z0.dsl.intel
     public struct __m128i<T>
         where T : unmanaged
     {
-        internal Cell128<T> Data;
+        Cell128<T> Data;
 
         [MethodImpl(Inline)]
         public __m128i(Vector128<T> src)
