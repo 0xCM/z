@@ -6,6 +6,27 @@ namespace Z0
 {
     public class ListedFiles : SortedSeq<ListedFile>
     {
+        public static ListedFiles listing(FolderPath src, bool recurse)
+            => src.Files(recurse).Select(listing).Array();
+
+        public static ListedFiles listing(FolderPath src, bool recurse, params FileKind[] kinds)
+            => src.Files(recurse,kinds).Select(listing).Array();
+
+        public static ListedFiles listing(ReadOnlySpan<FilePath> src)
+            => src.Select(listing);
+
+        public static ListedFile listing(FilePath src)
+        {
+            var dst = new ListedFile();
+            var info = new FileInfo(src.Name);
+            dst.Size = ((ByteSize)info.Length).Kb;
+            dst.CreateTS = info.CreationTime;
+            dst.UpdateTS = info.LastWriteTime;
+            dst.Path = src;
+            dst.Attributes = info.Attributes;
+            return dst;
+        }
+
         [Op]
         public static string format(ListedFiles src)
         {

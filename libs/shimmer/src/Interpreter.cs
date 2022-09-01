@@ -4,9 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [ApiHost("alg.range")]
-    public readonly struct range
+    public class Interpreter
     {
 
+        public void Run()
+        {
+            
+        }
     }
 }

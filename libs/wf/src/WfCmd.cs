@@ -83,7 +83,7 @@ namespace Z0
         {
             var src = FS.dir(arg(args,0));
             var filter = args.Count > 1 ? args[1].Value : EmptyString;
-            var files = FS.listing(src,true);
+            var files = ListedFiles.listing(src,true);
             var name = Archives.identifier(src);
             var records = AppDb.Catalogs("files").Table<ListedFile>(name);
             Emitter.TableEmit(files, records);            
@@ -103,7 +103,7 @@ namespace Z0
         void CatalogFiles(CmdArgs args)
         {
             var src = FS.dir(args[0].Value);
-            var files = FS.listing(search(args));
+            var files = ListedFiles.listing(search(args));
             var name = Archives.identifier(src);
             var records = AppDb.Catalogs("files").Table<ListedFile>(name);
             Emitter.TableEmit(files, records);            

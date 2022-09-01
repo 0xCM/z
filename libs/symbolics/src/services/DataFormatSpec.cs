@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Spans;
+    using static sys;
 
     [StructLayout(LayoutKind.Sequential, Pack=1)]
     public readonly partial struct DataFormatSpec

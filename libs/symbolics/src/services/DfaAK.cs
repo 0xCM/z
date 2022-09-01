@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Root;
-
     public abstract class Dfa<A,K>
         where A : unmanaged
         where K : unmanaged

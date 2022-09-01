@@ -40,6 +40,6 @@ namespace Z0
             => Data;
 
         public Index<Paired<FilePath,T>> Entries
-            => Data.Map(x => core.paired(x.Key,x.Value));
+            => Data.Map(x => Tuples.paired(x.Key,x.Value));
     }
 }

@@ -9,7 +9,6 @@ namespace Z0
     {
         const NumericKind Closure = UnsignedInts;
 
-
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static RenderPattern<T,T> neq<T>()
             where T : unmanaged

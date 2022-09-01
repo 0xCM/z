@@ -27,7 +27,7 @@ namespace Z0
         {
             if(name.IsNonEmpty)
             {
-                ref readonly var c = ref core.first(name.Text);
+                ref readonly var c = ref sys.first(name.Text);
                 if(c == (char)PathSeparator.BS || c == (char)PathSeparator.FS)
                     Name = text.slice(name.Text,1);
                 else
@@ -75,23 +75,23 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static RelativePath operator +(RelativePath a, RelativePath b)
-            => relative(Z0.RpOps.format("{0}/{1}", a.Name, b.Name));
+            => relative(string.Format("{0}/{1}", a.Name, b.Name));
 
         [MethodImpl(Inline)]
         public static RelativePath operator +(RelativePath a, FolderName b)
-            => relative(Z0.RpOps.format("{0}/{1}", a.Name, b.Name));
+            => relative(string.Format("{0}/{1}", a.Name, b.Name));
 
         [MethodImpl(Inline)]
         public static RelativePath operator +(FolderName a, RelativePath b)
-            => relative(Z0.RpOps.format("{0}/{1}", a.Name, b.Name));
+            => relative(string.Format("{0}/{1}", a.Name, b.Name));
 
         [MethodImpl(Inline)]
         public static FolderPath operator +(FolderPath a, RelativePath b)
-            => FS.dir(Z0.RpOps.format("{0}/{1}", a.Name, b.Name));
+            => FS.dir(string.Format("{0}/{1}", a.Name, b.Name));
 
         [MethodImpl(Inline)]
         public static RelativeFilePath operator +(RelativePath a, FileName b)
-            => new RelativeFilePath(relative(Z0.RpOps.format("{0}/{1}", a.Name, b.Name)));
+            => new RelativeFilePath(relative(RP.format("{0}/{1}", a.Name, b.Name)));
 
         public static RelativePath Empty
         {

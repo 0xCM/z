@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Dispatcher>$(MsBuildThisFileDirectory)z0.dispatcher.csproj</Dispatcher>
+  </PropertyGroup>
+</Project>

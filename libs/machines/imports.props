@@ -1,0 +1,8 @@
+<Project>
+
+  <ItemGroup>
+    <ProjectReference Include="$(AsmCore)" />
+    <ProjectReference Include="$(Queues)" />
+  </ItemGroup>
+
+</Project>

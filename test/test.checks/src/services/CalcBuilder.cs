@@ -4,9 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Root;
-    using static core;
-
     [ApiHost]
     public class CalcBuilder : AppService<CalcBuilder>
     {

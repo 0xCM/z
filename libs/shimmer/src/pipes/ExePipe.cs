@@ -91,7 +91,6 @@ namespace Z0
             ExeErrStream = Process.StandardError;
         }
 
-
         public void Run()
         {
             IsRunning = true;
