@@ -6,9 +6,8 @@ namespace Z0
 {
     using Asm;
 
-    using static Spans;
-    using static Sized;
-
+    using static sys;
+    
     [ApiComplete]
     public class AsmHexWriter
     {

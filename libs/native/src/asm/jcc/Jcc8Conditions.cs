@@ -4,12 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    [StructLayout(LayoutKind.Sequential, Pack=1), DataTypeAttributeD("asm.conditions.jcc32")]
-    public struct Jcc32Conditions : IConditional
+    [StructLayout(LayoutKind.Sequential, Pack=1), DataTypeAttributeD("asm.conditions.jcc8")]
+    public struct Jcc8Conditions : IConditional
     {
-        public JccInfo<Jcc32Code> Primary;
+        public JccInfo<Jcc8Code> Primary;
 
-        public JccInfo<Jcc32AltCode> Alt;
+        public JccInfo<Jcc8AltCode> Alt;
 
         public CharBlock64 PrimaryInfo;
 
@@ -40,7 +40,7 @@ namespace Z0.Asm
         }
 
         public string Format(bit alt)
-            => Conditions.format(this,alt);
+            => Jcc8.format(this,alt);
 
         public override string ToString()
             => Format(false);

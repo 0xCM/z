@@ -38,5 +38,4 @@ namespace Z0.Asm
         public static implicit operator SizeOverrideCode(SizeOverride src)
             => src.Code;
     }
-
 }

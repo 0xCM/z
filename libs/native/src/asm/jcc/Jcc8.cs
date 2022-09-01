@@ -15,6 +15,18 @@ namespace Z0.Asm
         public static Jcc8 define(Jcc8AltCode code, Disp8 disp)
             => new Jcc8(code, disp);
 
+        [Op]
+        public static string format(in Jcc8Conditions src, bit alt)
+        {
+            const string Pattern = "{0,-4} rel{1} [{2}:{3}b] => {4}";
+            var dst = EmptyString;
+            if(alt)
+                dst =  string.Format(Pattern, src.Alt.Name, src.Alt.Size.Width, HexFormatter.asmhex(src.Alt.Encoding), BitRender.format8x4(src.Alt.Encoding), src.AltInfo);
+            else
+                dst = string.Format(Pattern, src.Primary.Name, src.RelWidth, HexFormatter.asmhex(src.Encoding), text.format(src.Bitstring), src.PrimaryInfo);
+            return dst;
+        }
+
         readonly byte Data;
 
         public readonly Disp8 Disp;

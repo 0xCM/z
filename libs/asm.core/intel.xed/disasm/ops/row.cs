@@ -167,7 +167,7 @@ namespace Z0
 
             }
             else if(state.VEXVALID == (byte)XedVexClass.EVV)
-                dst.Evex = AsmPrefix.evex(slice(prefix,legacyskip));
+                dst.Evex = EvexPrefix.define(slice(prefix,legacyskip));
 
             if(state.IMM0)
                 dst.Imm = asm.imm(code, state.POS_IMM, state.IMM0SIGNED, Sizes.native(state.IMM_WIDTH));

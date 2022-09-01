@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using static core;
+    using static sys;
 
     using F = RexFields;
 
@@ -23,7 +23,6 @@ namespace Z0.Asm
             BitRender.render8x4(src.Encoded, ref  i, dst);
             return i-i0;
         }
-
         public static uint table(ITextBuffer dst)
         {
             static string describe(RexPrefix src)
@@ -116,7 +115,7 @@ namespace Z0.Asm
             => Data;
 
         public string Format()
-            => AsmBytes.format(this);
+            => AsmPrefixByte.format(this);
 
         public string ToBitString()
             => BitRender.format8x4(Data);

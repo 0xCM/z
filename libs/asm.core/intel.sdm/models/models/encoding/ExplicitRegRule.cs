@@ -4,10 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using System.Runtime.CompilerServices;
-
-    using static Root;
-
     partial struct SdmModels
     {
         public readonly struct ExplicitRegRule : IEncodingRule<ExplicitRegRule>
