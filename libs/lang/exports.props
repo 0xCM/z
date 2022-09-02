@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Lang>$(MsBuildThisFileDirectory)z0.lang.csproj</Lang>
+  </PropertyGroup>
+</Project>

@@ -44,7 +44,7 @@
 
     <ProjectReference Include="$(IntelSvc)" />
 
-    <ProjectReference Include="$(Lang)" />
+    <ProjectReference Include="$(LangEmit)" />
 
     <ProjectReference Include="$(Linq)" />
 

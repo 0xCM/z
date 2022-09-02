@@ -16,6 +16,7 @@
     <ProjectReference Include="$(Lang)" />
     <ProjectReference Include="$(Rules)" />
     <ProjectReference Include="$(Archives)" />
+    <ProjectReference Include="$(LangEmit)" />
 
   </ItemGroup>
 </Project>

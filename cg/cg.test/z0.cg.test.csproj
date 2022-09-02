@@ -13,7 +13,7 @@
     <ProjectReference Include="$(CgLibs)" />
     <ProjectReference Include="$(AsmCore)" />
     <ProjectReference Include="$(Numbers)" />
-    <ProjectReference Include="$(Lang)" />
+    <ProjectReference Include="$(LangEmit)" />
   </ItemGroup>
 
 </Project>

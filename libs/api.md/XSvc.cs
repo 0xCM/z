@@ -8,8 +8,8 @@ namespace Z0
     {
         sealed class Svc : AppServices<Svc>
         {
-            public ApiCmd ApiCmd(IWfRuntime wf)
-                => Service<ApiCmd>(wf);
+            public IAppCmdSvc ApiCmd(IWfRuntime wf)
+                => Service<ApiMdCmd>(wf);
 
             public ApiMd ApiMetadata(IWfRuntime wf)
                 => Service<ApiMd>(wf);
@@ -20,7 +20,7 @@ namespace Z0
         public static ApiMd ApiMd(this IWfRuntime wf)
             => Services.ApiMetadata(wf);
 
-        public static ApiCmd ApiCmd(this IWfRuntime wf)
+        public static IAppCmdSvc ApiCmd(this IWfRuntime wf)
             => Services.ApiCmd(wf);
     }
 }

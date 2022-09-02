@@ -11,7 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="$(Diagnostics)"/>
     <ProjectReference Include="$(ApiMd)"/>
-    <ProjectReference Include="$(Lang)"/>
+    <ProjectReference Include="$(LangEmit)" />
     <ProjectReference Include="$(Bits)"/>
     <ProjectReference Include="$(ClrCil)"/>
   </ItemGroup>

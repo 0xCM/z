@@ -8,8 +8,4 @@
     <TargetFramework>$(FrameworkMoniker)</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-      <EmbeddedResource Include="assets/**/*.*" />
-  </ItemGroup>
-
 </Project>

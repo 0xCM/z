@@ -380,6 +380,9 @@ public enum PartId : byte
     [Symbol("workers")]
     Workers,
 
+    [Symbol("lang.emit")]
+    LangEmit,
+
     [Symbol("z")]
     Z, 
 }

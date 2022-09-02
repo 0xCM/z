@@ -9,6 +9,7 @@
    <Import Project="db.sqlite/exports.props"/>
    <Import Project="heaps/exports.props"/>
    <Import Project="hex/exports.props"/>
+   <Import Project="lang.emit/exports.props"/>
    <Import Project="literals/exports.props"/>
    <Import Project="lib/exports.props"/>
    <Import Project="math/exports.props"/>

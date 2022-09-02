@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "../sys"
+		},
+		{
+			"path": "../bit"
+		},
+		{
+			"path": "../text"
+		},
+		{
+			"path": "."
+		},
+	],
+	"settings": {}
+}

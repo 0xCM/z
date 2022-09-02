@@ -8,7 +8,6 @@ namespace Z0
 
     public sealed record class Archives : ApiSet<Archives>
     {
-        [Api]
         public static ExecToken zip(FolderPath src, FilePath dst, WfEmit channel)
         {
             var uri = $"app://archives/zip?src={src}?dst={dst.ToUri()}";
