@@ -32,16 +32,10 @@ global using CallerLine = System.Runtime.CompilerServices.CallerLineNumberAttrib
 using NK = Z0.NumericKind;
 
 [assembly: PartId(PartId.Text)]
-
-namespace Z0
+namespace Z0.Parts
 {
-    // partial struct Root
-    // {
+    public sealed class Text : Part<Text>
+    {
 
-    //     public const string EmptyString = "";
-
-    //     public const MethodImplOptions Inline = MethodImplOptions.AggressiveInlining;
-
-    //     public const NK UnsignedInts = NK.UnsignedInts;
-    // }
+    }
 }

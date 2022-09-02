@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     [ApiHost]
     public readonly partial struct Rules
@@ -91,7 +91,7 @@ namespace Z0
                 dst[source] = target;
             }
             var lu = dst.ToConstLookup();
-            return new TextMap(lu, core.map(lu.Entries, e => production(e.Key, e.Value)));
+            return new TextMap(lu, sys.map(lu.Entries, e => production(e.Key, e.Value)));
         }
 
         static IProduction production(string src, string dst)

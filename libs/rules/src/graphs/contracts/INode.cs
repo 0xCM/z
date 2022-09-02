@@ -27,6 +27,6 @@ namespace Z0
         new K Index {get;}
 
         uint INode.Index
-            => Sized.bw32(Index);
+            => sys.bw32(Index);
     }
 }

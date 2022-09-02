@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     partial class XTend
     {
         [MethodImpl(Inline), Op]

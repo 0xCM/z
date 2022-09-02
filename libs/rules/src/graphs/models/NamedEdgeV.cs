@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
+    using static sys;
 
     public sealed record class NamedEdge<V> : IEdge<V>, IEquatable<NamedEdge<V>>
         where V : IEquatable<V>, IExpr, IHashed

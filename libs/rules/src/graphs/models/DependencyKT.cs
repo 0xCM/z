@@ -37,7 +37,7 @@ namespace Z0
         ulong KindValue
         {
             [MethodImpl(Inline)]
-            get => core.bw64(Kind);
+            get => sys.bw64(Kind);
         }
 
         public bool Equals(Dependency<K,T> src)

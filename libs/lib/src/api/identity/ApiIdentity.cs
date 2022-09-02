@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     partial class XTend
     {
@@ -39,10 +39,6 @@ namespace Z0
         [Op]
         public static OpUri hex(ApiHostUri host, string group, OpIdentity opid)
             => new OpUri(host, opid, BuildUriText(ApiUriScheme.Hex, host, group, opid));
-
-        // [MethodImpl(Inline), Op]
-        // public static OpUri located(ApiHostUri host, string group, OpIdentity opid)
-        //     => new OpUri(host, opid, BuildUriText(ApiUriScheme.Located, host, group, opid));
 
         [Op]
         public static string QueryText(ApiUriScheme scheme, PartName part, string host, string group)

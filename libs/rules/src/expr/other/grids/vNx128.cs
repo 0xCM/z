@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Expr
 {
-    using static core;
+    using static sys;
 
     /// <summary>
     /// Represents a finite sequence of 128-bit values

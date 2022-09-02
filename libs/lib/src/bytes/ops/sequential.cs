@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    unsafe partial  class Bytes
+    unsafe partial class Bytes
     {
         /// <summary>
         /// Returns a sequence of 8-bit values selected from an 8-bit domain

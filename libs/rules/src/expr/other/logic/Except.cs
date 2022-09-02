@@ -15,7 +15,7 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public Except(IExpr[] choices)
-                => _Terms = core.hashset(choices);
+                => _Terms = sys.hashset(choices);
 
             public IReadOnlyCollection<IExpr> Terms
             {

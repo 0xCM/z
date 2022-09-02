@@ -28,6 +28,9 @@ public enum PartId : byte
     [Symbol("asm.prototypes")]
     AsmPrototypes,
 
+    [Symbol("hex")]
+    Hex,
+
     [Symbol("asm.checks")]
     AsmChecks,
 

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     [StructLayout(LayoutKind.Sequential, Pack=1)]
     public readonly record struct FlowId : IEquatable<FlowId>, IHashed, IComparable<FlowId>
@@ -27,7 +27,7 @@ namespace Z0
             ActorId = actor;
             SourceId = src;
             TargetId = dst;
-            Hash = alg.hash.combine(actor, src, dst);
+            Hash = hash(actor, src, dst);
         }
 
         [MethodImpl(Inline)]

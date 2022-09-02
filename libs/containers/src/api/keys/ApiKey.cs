@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     /// <summary>
     /// Defines a 128-bit bitfield that identifies an api operation along with its operands

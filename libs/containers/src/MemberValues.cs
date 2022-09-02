@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     public readonly struct MemberValue
     {
@@ -22,31 +22,6 @@ namespace Z0
 
     public readonly struct MemberValues
     {
-        // ReadOnlySeq<Y> Select<Y>(Func<T,Y> f)
-        //     => Seq.select(View, f);
-
-        // ReadOnlySeq<Z> SelectMany<Y,Z>(Func<T,ReadOnlySeq<Y>> lift, Func<T,Y,Z> project)
-        //      => Seq.map(View, lift, project);
-
-        // ReadOnlySeq<Y> SelectMany<Y>(Func<T,ReadOnlySeq<Y>> lift)
-        //      => Seq.map(View, lift);
-
-        // ReadOnlySeq<T> Where(Func<T,bool> predicate)
-        //     => Seq.where(View, predicate);
-
-
-        // new Seq<Y> Select<Y>(Func<T,Y> f)
-        //     => Seq.select(View, f);
-
-        // Seq<Z> SelectMany<Y,Z>(Func<T,Seq<Y>> lift, Func<T,Y,Z> project)
-        //      => Seq.map(Edit, lift, project);
-
-        // Seq<Y> SelectMany<Y>(Func<T,Seq<Y>> lift)
-        //      => Seq.map(Edit, lift);
-
-        // new Seq<T> Where(Func<T,bool> predicate)
-        //     => Seq.where(Edit, predicate);
-
         public static MemberValues extract<T>(T src)
         {
             var props = @readonly(typeof(T).DeclaredInstanceProperties());

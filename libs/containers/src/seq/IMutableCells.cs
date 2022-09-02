@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     public interface IMutableCells<T> : ICellSeq<T>
     {

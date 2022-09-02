@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     public class NaturalSeq<N,T> : Seq<NaturalSeq<N,T>,T>
         where T : IEquatable<T>

@@ -21,7 +21,7 @@ namespace Z0
                 Right = b;
             }
 
-            public bool IsEmpty => core.bw64(Left) == 0 || core.bw64(Right) == 0;
+            public bool IsEmpty => sys.bw64(Left) == 0 || sys.bw64(Right) == 0;
 
             T IFreeCmpPred<Eq<T>,T>.Left
                 => Left;

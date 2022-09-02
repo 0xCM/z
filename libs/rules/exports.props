@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Rules>$(MsBuildThisFileDirectory)z0.rules.csproj</Rules>
+  </PropertyGroup>
+</Project>

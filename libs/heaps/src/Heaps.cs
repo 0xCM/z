@@ -4,9 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Spans;
-    using static Algs;
-
+    using static sys;
+    
     [Free, ApiHost]
     public partial class Heaps
     {

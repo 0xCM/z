@@ -1,0 +1,8 @@
+<Project>
+
+  <ItemGroup>
+    <ProjectReference Include="$(Cells)" />
+    <ProjectReference Include="$(ZLib)" />
+  </ItemGroup>
+
+</Project>

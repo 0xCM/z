@@ -6,7 +6,7 @@ namespace Z0
 {
     using System.Threading.Tasks;
 
-    using static core;
+    using static sys;
 
     using Asm;
 

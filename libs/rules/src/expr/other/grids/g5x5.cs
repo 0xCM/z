@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Expr
 {
-    using static core;
+    using static sys;
     using static expr;
 
     [StructLayout(LayoutKind.Sequential, Pack=1), DataTypeAttributeD("g5x5<t:{0}>")]

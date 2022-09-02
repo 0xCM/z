@@ -6,7 +6,7 @@ namespace Z0
 {
     using static System.Runtime.Intrinsics.X86.Bmi1;
     using static System.Runtime.Intrinsics.X86.Bmi1.X64;
-    using static core;
+    using static sys;
 
     unsafe partial class Bytes
     {

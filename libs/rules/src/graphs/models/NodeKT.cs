@@ -51,6 +51,6 @@ namespace Z0
         /// <param name="src">The source vertex</param>
         [MethodImpl(Inline)]
         public static implicit operator Node<T>(in Node<K,T> src)
-            => new Node<T>(core.bw32(src.Index), src.Payload);
+            => new Node<T>(sys.bw32(src.Index), src.Payload);
     }
 }

@@ -13,7 +13,6 @@ namespace Z0
     using M = XedModels;
     using R = XedRules;
 
-
     public class XedMachines : IDisposable
     {        
         static IMachine allocate(XedRuntime xed)
@@ -84,7 +83,6 @@ namespace Z0
 
             f(machine);
         }
-
 
         internal class MachineState : IMachine<InstPattern>
         {

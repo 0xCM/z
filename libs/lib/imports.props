@@ -7,6 +7,8 @@
     <ProjectReference Include="$(ClrQuery)" />
     <ProjectReference Include="$(ApiSpecs)" />
     <ProjectReference Include="$(Imagine)" />
+    <ProjectReference Include="$(Hex)" />
+    <ProjectReference Include="$(Cells)" />
   </ItemGroup>
 
 </Project>

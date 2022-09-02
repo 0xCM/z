@@ -6,54 +6,7 @@ namespace Z0
 {
     using static sys;
     using static XedRules;
-    using static XedModels;
     using static MachineModes;
-
-    public abstract class MachineState : IDisposable
-    {
-        protected MachineState(uint machine)
-        {
-            Machine = machine;
-        }
-
-        public readonly uint Machine;
-
-        protected abstract void Disposing();
-
-        void IDisposable.Dispose()
-        {
-            Disposing();
-        }
-    }
-
-    public abstract class MachineState<C> : MachineState
-    {
-        C _Context;
-
-        protected MachineState(uint machine, C context)
-            : base(machine)
-        {
-
-        }
-
-        public ref readonly C Context 
-        {
-            [MethodImpl(Inline)]
-            get => ref _Context;
-        }
-    }
-
-    public abstract class MachineState<S,C> : MachineState<C>
-        where S : MachineState<S,C>
-    {
-        public readonly uint MachineId;
-
-        protected MachineState(uint machine, C context)
-            : base(machine,context)
-        {
-            MachineId = machine;
-        }
-    }
 
     public class XedMachine : IDisposable
     {
@@ -98,35 +51,10 @@ namespace Z0
 
             object LogLocker = new();
 
-            ProjectLog _Log;
-
-            ProjectLog Log
-            {
-                get
-                {
-                    lock(LogLocker)
-                    {
-                        if(_Log == null)
-                            _Log = Projects.log(Ws, $"xed.machine.{Machine.Id}", FileKind.Csv);
-                    }
-                    return _Log;
-                }
-            }
-
-            readonly XedMachine Machine;
-
-            readonly IProjectWorkspace Ws;
-
-            readonly FolderPath OutDir;
-
-            readonly Action<object> Status;
+            TaskLog _Log;
 
             public Channel(XedMachine machine, Action<object> status)
             {
-                Machine = machine;
-                Ws = machine.Ws;
-                Status = status;
-                OutDir = Ws.BuildOut();
             }
 
             public void Dispose()
@@ -145,6 +73,7 @@ namespace Z0
                 }
             }
         }        
+
         ConstLookup<ushort,InstGroupMember> _GroupMemberLookup;
 
         SortedLookup<AmsInstClass,Index<InstGroupMember>> _ClassGroupLookup;
@@ -187,8 +116,6 @@ namespace Z0
 
         MachineState RuntimeState;
 
-        readonly RuleTables RuleTables;
-
         readonly IProjectWorkspace Ws;
 
         readonly Channel _Emitter;
@@ -225,7 +152,6 @@ namespace Z0
             Xed = xed;
             Ws = Projects.load(AppDb.DbOut().Root, Identifier);
             RuntimeState = new(NextId());
-            RuleTables = Xed.Views.RuleTables;
             _Emitter = Channel.create(this, StatusWriter);
             LoadLookups();
         }

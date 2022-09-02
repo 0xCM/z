@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Hex>$(MsBuildThisFileDirectory)z0.hex.csproj</Hex>
+  </PropertyGroup>
+</Project>

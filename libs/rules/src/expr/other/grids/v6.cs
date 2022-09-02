@@ -9,7 +9,7 @@ namespace Z0.Expr
     using System.Runtime.InteropServices;
 
     using static Root;
-    using static core;
+    using static sys;
     using static expr;
 
     /// <summary>

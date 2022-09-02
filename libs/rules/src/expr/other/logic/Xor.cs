@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-     using Z0.Ops;
-
     partial class LogicOps
     {
         public class Xor : BinaryOpExpr<Xor,IBooleanExpr,LogicExprKind>, ILogicOp

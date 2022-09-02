@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Expr
 {
-    using static core;
+    using static sys;
     using static expr;
 
     public struct vector<N,T> : IVector<T>

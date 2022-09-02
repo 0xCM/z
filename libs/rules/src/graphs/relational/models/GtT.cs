@@ -14,7 +14,7 @@ namespace Z0
 
             public readonly T Right;
 
-            public bool IsEmpty => core.bw64(Left) == 0 || core.bw64(Right) == 0;
+            public bool IsEmpty => sys.bw64(Left) == 0 || sys.bw64(Right) == 0;
 
             [MethodImpl(Inline)]
             public Gt(T a, T b)
