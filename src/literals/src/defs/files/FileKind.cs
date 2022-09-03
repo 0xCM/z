@@ -241,7 +241,7 @@ namespace Z0
         [Symbol(help, "A plaintext tool help document")]
         Help,
 
-        [Symbol(dot, "A .dot graph document")]
+        [Symbol(dotfile, "A .dot graph document")]
         Dot,
 
         [Symbol(kvp, "A text file where each line defines a key-value pair")]

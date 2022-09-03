@@ -70,8 +70,8 @@ namespace Z0
         public override int GetHashCode()
             => Hash;
 
-        public string Format()        
-            => Data.ToString();
+        public virtual string Format()        
+            => Text;
 
         public override string ToString()
             => Format();

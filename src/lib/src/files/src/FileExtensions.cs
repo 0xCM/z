@@ -210,7 +210,7 @@ namespace Z0
         public static FileExt Cfg => ext(cfg);
 
         /// <summary>
-        /// Defines the <see cref='dot'/> <see cref='FileExt'/>
+        /// Defines the <see cref='dotfile'/> <see cref='FileExt'/>
         /// </summary>
         public static FileExt Dot => ext("dot");
 

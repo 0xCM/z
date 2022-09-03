@@ -23,6 +23,7 @@ global using System.IO;
 global using CC = System.Runtime.InteropServices.CallingConvention;
 global using Fp = System.Runtime.InteropServices.UnmanagedFunctionPointerAttribute;
 
+global using Z0;
 global using static Z0.Root;
 global using static Z0.ApiAtomic;
 
@@ -42,9 +43,4 @@ namespace Z0.Parts
     {
 
     }
-}
-
-namespace Z0
-{
-
 }

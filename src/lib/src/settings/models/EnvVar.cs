@@ -18,7 +18,7 @@ namespace Z0
         public readonly EnvVarKind Kind;
 
         [Render(64)]
-        public readonly Name VarName;
+        public readonly string VarName;
 
         /// <summary>
         /// The environment variable value
@@ -27,7 +27,7 @@ namespace Z0
         public readonly string VarValue;
 
         [MethodImpl(Inline)]
-        public EnvVar(EnvVarKind kind, Name name, string value)
+        public EnvVar(EnvVarKind kind, string name, string value)
         {
             Kind = kind;
             VarName = name;
@@ -37,19 +37,19 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => VarName.Hash | hash(VarValue);
+            get => sys.hash(VarName) | hash(VarValue);
         }
 
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => VarName.IsEmpty;
+            get => sys.empty(VarName);
         }
 
         public bool IsNonEmpty
         {
             [MethodImpl(Inline)]
-            get => VarName.IsNonEmpty;
+            get => sys.nonempty(VarName);
         }
 
         public bool Contains(string match)
@@ -63,7 +63,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public string Format()
-            => sys.nonempty(VarValue) ? string.Format("{0}={1}", VarName, VarValue) : $"{VarName.Format()}=";
+            => sys.nonempty(VarValue) ? string.Format("{0}={1}", VarName, VarValue) : $"{VarName}=";
 
 
         public override string ToString()
@@ -87,7 +87,7 @@ namespace Z0
         public static implicit operator string(EnvVar src)
             => src.VarValue;
 
-        Name IVarValue.VarName
+        string IVarValue.VarName
             => VarName;
 
         object IVarValue.VarValue

@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    using static Arrays;
+    using static sys;
 
     partial class ApiCode
     {
@@ -22,8 +21,8 @@ namespace Z0
                     rows.Add(row);
                 else
                 {
-                    channel.Error(typeof(ApiCatalogs), outcome.Message);
-                    return array<ApiCatalogEntry>();
+                    channel.Error(outcome.Message);
+                    return empty<ApiCatalogEntry>();
                 }
                 line = reader.ReadLine();
             }

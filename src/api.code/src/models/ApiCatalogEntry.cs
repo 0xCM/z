@@ -7,7 +7,7 @@ namespace Z0
     [Record(TableId), StructLayout(LayoutKind.Sequential)]
     public struct ApiCatalogEntry
     {
-        public const string TableId = "api.catalog";
+        const string TableId = "api.catalog";
 
         public const byte FieldCount = 8;
 

@@ -6,8 +6,7 @@ namespace Z0
 {
     using System.Linq;
 
-
-    using static core;
+    using static sys;
 
     public class ApiIndexBuilder : AppService<ApiIndexBuilder>
     {
@@ -91,7 +90,7 @@ namespace Z0
             var a = CodeAddress.TryAdd(src.BaseAddress, src);
             var b = AddressUri.TryAdd(src.BaseAddress, src.OpUri);
             var c = UriCode.TryAdd(src.OpUri, src);
-            return triple(a,b,c);
+            return Tuples.triple(a,b,c);
         }
 
         void Include(ReadOnlySpan<ApiCodeRow> src)

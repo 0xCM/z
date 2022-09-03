@@ -6,10 +6,10 @@ namespace Z0
 {
     public readonly record struct Tool : ITool, IDataString<Tool>
     {
-        public readonly Name Name;
+        public readonly @string Name;
 
         [MethodImpl(Inline)]
-        public Tool(Name name)
+        public Tool(@string name)
         {
             Name = name;
         }
@@ -55,7 +55,7 @@ namespace Z0
         public override string ToString()
             => Format();
 
-        Name INamed.Name 
+        @string INamed.Name 
             => Name;
 
         [MethodImpl(Inline)]

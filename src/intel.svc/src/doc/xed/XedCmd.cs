@@ -9,7 +9,7 @@ namespace Z0
 
     public class XedCmd : AppCmdService<XedCmd>
     {
-        XedRuntime Xed => ApiGlobals.Instance.Injected<XedRuntime>();
+        XedRuntime Xed => GlobalServices.Instance.Injected<XedRuntime>();
 
         XedPaths XedPaths => Wf.XedPaths();
 

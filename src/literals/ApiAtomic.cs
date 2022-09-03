@@ -9,7 +9,7 @@ namespace Z0
     [LiteralProvider(api)]
     public readonly struct ApiAtomic
     {
-        const string Dot = ".";
+        public const string dot = ".";
 
         internal const string text = nameof(text);
 
@@ -37,6 +37,8 @@ namespace Z0
 
         public const S d9 = "9";
 
+        public const S globals = nameof(globals);
+
         public const S app = nameof(app);
 
         public const S x32 = nameof(x32);
@@ -51,8 +53,8 @@ namespace Z0
 
         public const S bv = nameof(bv);
 
-        public const S dot = nameof(dot);
-
+        public const S dotfile = "dot";
+        
         public const S kvp = nameof(kvp);
 
         public const S db = nameof(db);
@@ -173,8 +175,6 @@ namespace Z0
         public const S xed = nameof(xed);
 
         public const S output = nameof(output);
-
-        public const S dotout = Dot + "out";
 
         public const S digits = nameof(digits);
 
@@ -447,105 +447,105 @@ namespace Z0
         public const S ecma = nameof(ecma);
         public const S cli = nameof(cli);
 
-        public const S ecma_cli = ecma + Dot + cli;
+        public const S ecma_cli = ecma + dot + cli;
         
-        public const S impl_map = impl + Dot + map;
-        public const S disasm = dis + Dot + asm;
+        public const S impl_map = impl + dot + map;
+        public const S disasm = dis + dot + asm;
 
-        public const S located_hex = located + Dot + hex;
+        public const S located_hex = located + dot + hex;
 
-        public const S ildat = il + Dot + csv;
+        public const S ildat = il + dot + csv;
 
-        public const S decimal_digits = @decimal + Dot + digits;
+        public const S decimal_digits = @decimal + dot + digits;
 
-        public const S hex_digits = digits + Dot + hex;
+        public const S hex_digits = digits + dot + hex;
 
-        public const S binary_digits = digits + Dot + binary;
+        public const S binary_digits = digits + dot + binary;
 
-        public const S octal_digits =  octal + Dot + digits;
+        public const S octal_digits =  octal + dot + digits;
 
-        public const S api_classes = api + Dot + classes;
+        public const S api_classes = api + dot + classes;
 
-        public const S api_contracts = api + Dot + contracts;
+        public const S api_contracts = api + dot + contracts;
 
-        public const S deps_list = deps + Dot + list;
+        public const S deps_list = deps + dot + list;
 
-        public const S api_kinds = api + Dot + kinds;
+        public const S api_kinds = api + dot + kinds;
 
-        public const S llvm_mc = llvm + Dot + mc;
+        public const S llvm_mc = llvm + dot + mc;
 
-        public const S net60 = net + Dot + d6 + Dot + d0;
+        public const S net60 = net + dot + d6 + dot + d0;
 
-        public const S net50 = net + Dot + d5 + Dot + d0;
+        public const S net50 = net + dot + d5 + dot + d0;
 
-        public const S ildata = il + Dot + csv;
+        public const S ildata = il + dot + csv;
 
-        public const S asmcsv = asm + Dot + csv;
+        public const S asmcsv = asm + dot + csv;
 
-        public const S asmsrc = asm + Dot + src;
+        public const S asmsrc = asm + dot + src;
 
-        public const S djson = deps + Dot + json;
+        public const S djson = deps + dot + json;
 
-        public const S dotbuild = Dot + build;
+        public const S dotbuild = dot + build;
 
-        public const S dotcmd = Dot + cmd;
+        public const S dotcmd = dot + cmd;
 
-        public const S cjson = config + Dot + json;
+        public const S cjson = config + dot + json;
 
-        public const S cildata = nameof(cil) + Dot + data;
+        public const S cildata = nameof(cil) + dot + data;
 
-        public const S coffheader = coff + Dot + header;
+        public const S coffheader = coff + dot + header;
 
-        public const S coffreloc = coff + Dot + reloc;
+        public const S coffreloc = coff + dot + reloc;
 
-        public const S coffexports = coff + Dot + exports;
+        public const S coffexports = coff + dot + exports;
 
-        public const S encasm = enc + Dot + asm;
+        public const S encasm = enc + dot + asm;
 
-        public const S hexdat = hex + Dot + dat;
+        public const S hexdat = hex + dot + dat;
 
-        public const S llasm = ll + Dot + asm;
+        public const S llasm = ll + dot + asm;
 
-        public const S llbc = ll + Dot + bc;
+        public const S llbc = ll + dot + bc;
 
-        public const S mcasm = mc + Dot + asm;
+        public const S mcasm = mc + dot + asm;
 
-        public const S opsasm = ops + Dot + asm;
+        public const S opsasm = ops + dot + asm;
 
-        public const S objasm = obj + Dot + asm;
+        public const S objasm = obj + dot + asm;
 
-        public const S objyaml = obj + Dot + yaml;
+        public const S objyaml = obj + dot + yaml;
 
-        public const S objhex = obj + Dot + hex;
+        public const S objhex = obj + dot + hex;
 
-        public const S pcsv = CharText.p + Dot + csv;
+        public const S pcsv = CharText.p + dot + csv;
 
-        public const S sjson = settings + Dot + json;
+        public const S sjson = settings + dot + json;
 
-        public const S synasm = syn + Dot + asm;
+        public const S synasm = syn + dot + asm;
 
-        public const S synasmlog = syn + Dot + asm + Dot + log;
+        public const S synasmlog = syn + dot + asm + dot + log;
 
         public const S wslogs = ws + Slash + logs;
 
         public const S win_x64 = win + Dash + x64;
 
-        public const S deps_json = deps + Dot + json;
+        public const S deps_json = deps + dot + json;
 
-        public const S xcsv = CharText.x + Dot + csv;
+        public const S xcsv = CharText.x + dot + csv;
 
-        public const S xeddisasm = xed + Dot + "disasm";
+        public const S xeddisasm = xed + dot + "disasm";
 
-        public const S xeddisasm_raw = xeddisasm + Dot + txt;
+        public const S xeddisasm_raw = xeddisasm + dot + txt;
 
-        public const S xeddisasm_summary = xeddisasm + Dot + summary + Dot + csv;
+        public const S xeddisasm_summary = xeddisasm + dot + summary + dot + csv;
 
-        public const S xeddisasm_semantic = xeddisasm + Dot + semantic + Dot + txt;
+        public const S xeddisasm_semantic = xeddisasm + dot + semantic + dot + txt;
 
-        public const S xeddisasm_detail = xeddisasm + Dot + detail;
+        public const S xeddisasm_detail = xeddisasm + dot + detail;
 
-        public const S yamltok = yaml + Dot + tok;
+        public const S yamltok = yaml + dot + tok;
 
-        public const S cmdkvp = cmd + Dot + kvp;
+        public const S cmdkvp = cmd + dot + kvp;
     }
 }

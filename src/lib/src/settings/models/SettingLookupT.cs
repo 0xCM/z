@@ -6,7 +6,7 @@ namespace Z0
 {
     using api = Settings;
 
-    public class SettingLookup<T> : Seq<SettingLookup<T>,Setting>, ILookup<Name,Setting>
+    public class SettingLookup<T> : Seq<SettingLookup<T>,Setting>, ILookup<@string,Setting>
         where T : new()
     {
         public SettingLookup()
@@ -21,7 +21,7 @@ namespace Z0
 
         }
 
-        public bool Find(Name key, out Setting setting)
+        public bool Find(@string key, out Setting setting)
             => api.search(this, key, out setting);
 
         // public override string Format()

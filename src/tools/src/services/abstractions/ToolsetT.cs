@@ -11,7 +11,7 @@ namespace Z0
 
         public IDbArchive Location {get;}
 
-        public Name Name {get;}
+        public @string Name {get;}
 
         public Hash32 Hash
         {

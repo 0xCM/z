@@ -14,5 +14,13 @@ namespace Z0
         public const string EnvRoot = nameof(EnvRoot);
         
         public const string Toolbase = nameof(Toolbase);        
+
+        public const string DbRoot = nameof(DbRoot);
+
+        public const string DevRoot = nameof(DevRoot);
+
+        public const string DevOps = nameof(DevOps);
+
+        public const string Control = nameof(Control);
     }
 }

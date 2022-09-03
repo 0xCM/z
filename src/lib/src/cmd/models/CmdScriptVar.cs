@@ -12,7 +12,7 @@ namespace Z0
         /// <summary>
         /// The variable symbol
         /// </summary>
-        public Name VarName {get;}
+        public string VarName {get;}
 
         /// <summary>
         /// The variable value, possibly empty
@@ -20,14 +20,14 @@ namespace Z0
         public string VarValue {get;set;}
 
         [MethodImpl(Inline)]
-        public CmdScriptVar(Name name, string value)
+        public CmdScriptVar(string name, string value)
         {
             VarName = name;
             VarValue = value;
         }
 
         [MethodImpl(Inline)]
-        public CmdScriptVar(Name name)
+        public CmdScriptVar(string name)
         {
             VarName = name;
             VarValue = EmptyString;
@@ -45,10 +45,10 @@ namespace Z0
             => Format();
 
         public string Resolve(VarContextKind vck)
-            => string.Format(RpOps.pattern(vck), VarValue);
+            => string.Format(RP.pattern(vck), VarValue);
 
         [MethodImpl(Inline)]
-        public static implicit operator CmdScriptVar((Name symbol, string value) src)
+        public static implicit operator CmdScriptVar((string symbol, string value) src)
             => new CmdScriptVar(src.symbol, src.value);
     }
 }

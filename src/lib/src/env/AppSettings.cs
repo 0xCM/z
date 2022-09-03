@@ -6,27 +6,6 @@ namespace Z0
 {
     using static sys;
     
-    public interface IDataSource
-    {
-
-
-    }
-    
-    public interface IDataSource<T> : IDataSource
-        where T : IEquatable<T>, IComparable<T>, new()
-    {
-
-
-    }
-    
-    public abstract record class AppSettings<S,T>
-        where S : AppSettings<S,T>, new()
-        where T : IEquatable<T>, IComparable<T>, new()
-    {
-        
-    }
-
-
     public sealed class AppSettings : SettingLookup<Name,string>
     {
         static AppSettings _Service = load(path());

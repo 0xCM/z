@@ -9,7 +9,7 @@ namespace Z0
     {
         const NumericKind Closure = UnsignedInts;
         [Op]
-        public static bool search(SettingLookup src, Name key, out Setting value)
+        public static bool search(SettingLookup src, string key, out Setting value)
         {
             value = Setting.Empty;
             var result = false;

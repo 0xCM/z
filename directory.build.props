@@ -5,7 +5,7 @@
     <Configuration>Release</Configuration>
   </PropertyGroup>
 
-  <Import Project="projects.proj"/>
+  <Import Project="exports.props"/>
   <Import Project="props/locations.props"/>
   <Import Project="props/common.props"/>
 

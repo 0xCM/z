@@ -4,8 +4,18 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class ApiGlobals : AppServices<ApiGlobals>
+    using static sys;
+
+    public interface IDataSource
     {
+
+
+    }
+    
+    public interface IDataSource<T> : IDataSource
+        where T : IEquatable<T>, IComparable<T>, new()
+    {
+
 
     }
 }

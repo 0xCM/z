@@ -6,10 +6,10 @@ namespace Z0
 {
     public readonly record struct Actor : IDataType<Actor>, IActor
     {
-        public readonly Name Name;
+        public readonly @string Name;
 
         [MethodImpl(Inline)]
-        public Actor(Name name)
+        public Actor(@string name)
         {
             Name = name;
         }
@@ -32,7 +32,7 @@ namespace Z0
             get => Name.Hash;
         }
 
-        Name INamed.Name 
+        @string INamed.Name 
             => Name;
 
         public override int GetHashCode()
@@ -57,10 +57,9 @@ namespace Z0
             => new Actor(src);
 
         [MethodImpl(Inline)]
-        public static implicit operator Actor(Name src)
+        public static implicit operator Actor(@string src)
             => new Actor(src);
 
         public static Actor Empty => default;
-
     }
 }

@@ -34,10 +34,7 @@ namespace Z0
             => new WfEmissionLog(emissions(src,ts));
 
         static FilePath emissions(Assembly src, Timestamp ts)
-        {
-            var name = src.Id().Format();
-            return FS.path($"d:/views/db/logs/{name}/emissions/{name}.emissions.{ts}");
-        }
+            => AppEnv.Cfg.DbRoot() + FS.folder($"logs/{src.PartName()}") + FS.file($"{src.PartName()}.emissions.{ts}.csv");
 
         public static IWfEmissionLog emission(FilePath dst)
             => new WfEmissionLog(dst);

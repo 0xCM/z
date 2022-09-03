@@ -1,0 +1,33 @@
+<Project>
+
+   <Import Project="src/api.specs/exports.props"/>
+   <Import Project="src/bit/exports.props"/>
+
+   <Import Project="src/cg/cg.common/exports.props"/>
+   <Import Project="src/cg/cg.intel/exports.props"/>
+   <Import Project="src/cg/cg.libs/exports.props"/>
+   <Import Project="src/cg/cg.llvm/exports.props"/>
+   <Import Project="src/cg/cg.shell/exports.props"/>
+   <Import Project="src/cg/cg.test/exports.props"/>
+
+   <Import Project="src/clr.query/exports.props"/>
+   <Import Project="src/containers/exports.props"/>
+   <Import Project="src/cells/exports.props"/>
+   <Import Project="src/cpu/exports.props"/>
+   <Import Project="src/db.sqlite/exports.props"/>
+   <Import Project="src/heaps/exports.props"/>
+   <Import Project="src/hex/exports.props"/>
+   <Import Project="src/lang.emit/exports.props"/>
+   <Import Project="src/literals/exports.props"/>
+   <Import Project="src/lib/exports.props"/>
+   <Import Project="src/math/exports.props"/>
+   <Import Project="src/memory/exports.props"/>
+   <Import Project="src/numbers/exports.props"/>
+   <Import Project="src/rules/exports.props"/>
+   <Import Project="src/polyrand/exports.props"/>
+   <Import Project="src/process/exports.props"/>
+   <Import Project="src/sys/exports.props"/>
+   <Import Project="src/symbolics/exports.props"/>
+   <Import Project="src/text/exports.props"/>
+
+</Project>

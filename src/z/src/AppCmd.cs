@@ -44,7 +44,7 @@ namespace Z0
 
         public static AppCmd service(IWfRuntime wf)
         {
-            ApiGlobals.Instance.Inject(wf.XedRuntime());
+            GlobalServices.Instance.Inject(wf.XedRuntime());
             var flow = wf.Running("Creating application host");
             var providers = AppCmd.providers(wf);
             var cmd = Cmd.service<AppCmd>(wf, providers);

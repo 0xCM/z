@@ -96,7 +96,7 @@ namespace Z0
             => Services.IntelSdm(wf);
 
         public static XedRuntime XedRuntime(this IWfRuntime wf)
-            => ApiGlobals.Instance.Service<XedRuntime>(wf);
+            => GlobalServices.Instance.Service<XedRuntime>(wf);
 
         public static XedImport XedImport(this IWfRuntime wf, XedRuntime xed)
             => Services.XedImport(wf, xed);

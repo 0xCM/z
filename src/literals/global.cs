@@ -2,10 +2,12 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+global using static global.literals;
+namespace global
 {
-    // public partial interface IEnvPaths : ITablePaths
-    // {
-        
-    // }
+    [ApiHost(ApiName)]
+    public partial class literals
+    {
+        public const string ApiName = globals + dot + nameof(literals);
+    }
 }

@@ -21,7 +21,7 @@ namespace Z0
         /// The setting name
         /// </summary>
         [Render(32)]
-        public readonly Name Name;
+        public readonly @string Name;
 
         /// <summary>
         /// The setting value
@@ -30,7 +30,7 @@ namespace Z0
         public readonly T Value;
 
         [MethodImpl(Inline)]
-        public Setting(Name name, T value)
+        public Setting(@string name, T value)
         {
             Name = name;
             Value = value;
@@ -38,7 +38,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public Setting(Name name, SettingType type, T value)
+        public Setting(@string name, SettingType type, T value)
         {
             Name = name;
             Value = value;

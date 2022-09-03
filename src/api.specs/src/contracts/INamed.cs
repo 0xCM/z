@@ -9,11 +9,10 @@ namespace Z0
     /// </summary>
     public interface INamed : IDataString
     {
-        Name Name {get;}
+        @string Name {get;}
 
         string IExpr.Format()
             => Name.Format();
-
     }
 
     [Free]
@@ -22,7 +21,7 @@ namespace Z0
     {
         new T Name {get;}
 
-        Name INamed.Name
-            => new Name(Name.Format());
+        @string INamed.Name
+            => Name.Format();
     }
 }

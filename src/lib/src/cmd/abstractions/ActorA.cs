@@ -8,7 +8,7 @@ namespace Z0
     public abstract class Actor<A> : IActor
         where A : Actor<A>, new()
     {
-        public Name Name {get;}
+        public @string Name {get;}
 
         static A _Instance = new();
 
@@ -18,7 +18,7 @@ namespace Z0
             get => ref _Instance;
         }
 
-        protected Actor(Name name)
+        protected Actor(@string name)
         {
             Name = name;
         }

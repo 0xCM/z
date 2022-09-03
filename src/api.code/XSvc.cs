@@ -19,9 +19,6 @@ namespace Z0
 
             public ApiPacks ApiPacks(IWfRuntime wf)
                 => Service<ApiPacks>(wf);
-
-            public ApiCatalogs ApiCatalogs(IWfRuntime wf)
-                => Service<ApiCatalogs>(wf);
         }
 
         static Svc Services => Svc.Instance;
@@ -37,8 +34,5 @@ namespace Z0
 
         public static ApiPacks ApiPacks(this IWfRuntime wf)
             => Services.ApiPacks(wf);
-
-        public static ApiCatalogs ApiCatalogs(this IWfRuntime wf)
-            => Services.ApiCatalogs(wf);
    }
 }

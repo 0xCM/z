@@ -5,17 +5,23 @@
 namespace Z0
 {
     [Free]
-    public interface IVarValue : ITextual
+    public interface IVarValue : IExpr
     {
-        Name VarName {get;}
+        string VarName {get;}
 
         object VarValue {get;}
 
-        string Format(VarContextKind vck)
-            => VarName.Format();
+        bool INullity.IsEmpty
+            => sys.empty(VarName) || VarValue == null;
 
-        string ITextual.Format()
-            => VarValue?.ToString();
+        bool INullity.IsNonEmpty
+            => sys.nonempty(VarName) && VarValue != null;
+
+        string Format(VarContextKind vck)
+            => VarName ?? EmptyString;
+
+        string IExpr.Format()
+            => VarValue != null ? VarValue.ToString() : EmptyString;
     }
 
     [Free]

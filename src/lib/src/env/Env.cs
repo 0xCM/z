@@ -6,6 +6,7 @@ namespace Z0
 {
     using static sys;
 
+    [ApiHost]
     public class Env
     {
         public static ExecToken emit(WfEmit emitter, EnvVarKind kind, FolderPath dst)
@@ -91,7 +92,7 @@ namespace Z0
             for(var i=0; i<src.Count; i++)
             {
                 ref readonly var v = ref src[i];
-                var vName = v.VarName.Format();
+                var vName = v.VarName;
                 var vValue = v.VarValue;
 
                 if(v.Contains(Sep))

@@ -27,7 +27,7 @@ namespace Z0
         {
             public static EmptyActor Instance = new();
 
-            public Name Name => asci64.Null;
+            public @string Name => @string.Empty;
 
             public Hash32 Hash => 0;
 

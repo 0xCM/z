@@ -7,12 +7,12 @@ namespace Z0
     [StructLayout(StructLayout)]
     public readonly record struct Setting64 : IDataType<Setting64>, IDataString<Setting64>
     {
-        public readonly Name Name;
+        public readonly @string Name;
 
         public readonly asci64 Value;
 
         [MethodImpl(Inline)]
-        public Setting64(Name name, asci64 value)
+        public Setting64(@string name, asci64 value)
         {
             Name = name;
             Value = value;
@@ -59,7 +59,7 @@ namespace Z0
             => Format();
 
         [MethodImpl(Inline)]
-        public static implicit operator Setting64 ((Name name, asci64 value) src)
+        public static implicit operator Setting64 ((@string name, asci64 value) src)
             => new Setting64(src.name,src.value);
 
         public static Setting64 Empty => default;

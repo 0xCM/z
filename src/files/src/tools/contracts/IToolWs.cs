@@ -21,7 +21,7 @@ namespace Z0
         Hash32 IHashed.Hash
             => Tool.Hash;
             
-        Name INamed.Name 
+        @string INamed.Name 
             => Location.Root.FolderName.Format();
             
         FilePath CfgPath()

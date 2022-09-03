@@ -13,7 +13,7 @@ namespace Z0
         public uint Seq;
 
         [Render(32)]
-        public Name Name;
+        public @string Name;
 
         [Render(16)]
         public Hash32 Hash;
@@ -32,5 +32,8 @@ namespace Z0
 
         public int CompareTo(CmdCatalogEntry src)
             => Name.CompareTo(src.Name);
+
+        public override string ToString()
+            => Uri.Format();
     }
 }

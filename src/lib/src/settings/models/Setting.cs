@@ -16,13 +16,13 @@ namespace Z0
         public readonly SettingType Type;
 
         [Render(32)]
-        public readonly Name Name;
+        public readonly @string Name;
 
         [Render(1)]
         public readonly object Value;
 
         [MethodImpl(Inline)]
-        public Setting(Name name, object value)
+        public Setting(@string name, object value)
         {
             Type = api.type(value);
             Name = name;
@@ -30,7 +30,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public Setting(Name name, SettingType type, object value)
+        public Setting(@string name, SettingType type, object value)
         {
             Name = name;
             Type = api.type(value);
@@ -52,7 +52,7 @@ namespace Z0
             get => hash(Name) | (Hash32)(Value?.GetHashCode() ?? 0);
         }
 
-        Name INamed.Name
+        @string INamed.Name
             => Name;
 
         string ISetting.Value

@@ -6,22 +6,24 @@ namespace Z0
 {
     public sealed record class AppEnv : AppSettings<AppEnv,FolderPath>
     {
-        public static AppEnv Default => new();
+        public static ref readonly AppEnv Cfg => ref Instance;
+        
+        readonly FolderPath _DbRoot;
 
-        public readonly FolderPath EnvRoot;
+        readonly FolderPath _DevRoot;
 
         public AppEnv()
         {
-            EnvRoot = FS.dir(Environment.GetEnvironmentVariable(SettingNames.EnvRoot));
+            _DbRoot = FS.dir(Environment.GetEnvironmentVariable(SettingNames.DbRoot));
+            _DevRoot = FS.dir(Environment.GetEnvironmentVariable(SettingNames.DevRoot));
         }
 
-        public AppEnv(FolderPath src)
-        {
-            EnvRoot = src;
-        }
-
-        public FolderPath DbRoot() => EnvRoot + FS.folder("db");
+        public FolderPath DbRoot() => _DbRoot;
 
         public FolderPath Logs() => DbRoot() + FS.folder("logs");
+
+        public FolderPath DevRoot() => _DevRoot;
+
+        static AppEnv Instance = new();        
     }
 }

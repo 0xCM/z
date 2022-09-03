@@ -4,8 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial interface IEnvPaths
+    public abstract record class AppSettings<S,T>
+        where S : AppSettings<S,T>, new()
+        where T : IEquatable<T>, IComparable<T>, new()
     {
-
+        
     }
 }

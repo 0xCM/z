@@ -64,7 +64,7 @@ namespace Z0
         Arrow<FolderPath,FolderPath> Link(Timestamp ts)
         {
             var capture = AppDb.Capture();
-            var src = capture.Root + FS.folder(current);
+            var src = capture.Root + FS.folder("current");
             var dst = discover().Last.Root;
             FS.symlink(src,dst,true).Require();
             Status($"symlink:{src} -> {dst}");

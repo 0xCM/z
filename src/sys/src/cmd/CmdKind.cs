@@ -31,3 +31,20 @@ namespace Z0
         Wsl,
     }
 }
+
+namespace global
+{
+    partial class sys
+    {
+        public static string format(CmdKind src)
+            => src switch{
+                CmdKind.App => "app",
+                CmdKind.Tool => "tool",
+                CmdKind.Ws => "ws",
+                CmdKind.Cmd => "cmd",
+                CmdKind.Pwsh => "pwsh",
+                CmdKind.Wsl => "wsl",
+                _ => ""
+            };
+    }
+}

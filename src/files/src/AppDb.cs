@@ -17,16 +17,19 @@ namespace Z0
         readonly AppSettings _Settings;
 
         public DbArchive EnvRoot()
-            => folder(_Settings.Setting(Names.EnvRoot));
+            => folder(_Settings.Setting(SettingNames.EnvRoot));
 
         public DbArchive Control()
-            => EnvRoot().Scoped("control");
+            => folder(_Settings.Setting(SettingNames.Control));
 
         public DbArchive DbRoot()
-            => EnvRoot().Scoped("db");
+            => folder(_Settings.Setting(SettingNames.DbRoot));
 
         public DbArchive Dev()
-            => EnvRoot().Scoped("dev");
+            => folder(_Settings.Setting(SettingNames.DevRoot));
+
+        public DbArchive DevOps()
+            => folder(_Settings.Setting(SettingNames.DevOps));
 
         public DbArchive Archives()
             => EnvRoot().Scoped("archives");
@@ -54,9 +57,6 @@ namespace Z0
 
         public DbArchive EnvSpecs()
             => DbRoot().Scoped("env");
-
-        public DbArchive DevOps()
-            => EnvRoot().Scoped("devops");
 
         public DbArchive DevOps(string scope)
             => DevOps().Scoped(scope);

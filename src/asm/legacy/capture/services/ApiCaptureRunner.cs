@@ -12,8 +12,6 @@ namespace Z0
     {
         ApiImmEmitter ImmEmitter => Service(Wf.ImmEmitter);
 
-        ApiCatalogs ApiCatalogs => Service(Wf.ApiCatalogs);
-
         public void EmitImm(Index<PartName> parts, IApiPack dst)
         {
             var flow = Running("EmitImm");

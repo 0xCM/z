@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
+    using static sys;
 
     public readonly record struct Setting<K,V> : IComparable<Setting<K,V>>, IDataType<Setting<K,V>>, ISetting<K,V>
         where K : unmanaged, IDataType, IExpr, IComparable<K>

@@ -8,7 +8,7 @@ namespace Z0
     public abstract class Tool<T> : Actor<T>, ITool
         where T : Tool<T>, new()
     {
-        protected Tool(Name name)
+        protected Tool(@string name)
             : base(name)
         {
             ToolId = name;
