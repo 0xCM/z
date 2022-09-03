@@ -1,0 +1,13 @@
+<Project>
+
+  <ItemGroup>
+    <ProjectReference Include="$(Wf)" />
+    <ProjectReference Include="$(ShellCmd)" />
+    <ProjectReference Include="$(CgLibs)" />
+    <ProjectReference Include="$(TestChecks)" />
+    <ProjectReference Include="$(TestUnits)" />
+    <ProjectReference Include="$(SosCmd)" />
+    <ProjectReference Include="$(Cli)" />
+  </ItemGroup>
+
+</Project>

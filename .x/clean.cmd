@@ -1,6 +1,6 @@
 @echo off
 set ProjectId=z
-set Area=libs
+set Area=src
 call %~dp0..\config.cmd
 %CleanSlnBin%
 %CleanSlnObj%

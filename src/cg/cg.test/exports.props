@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <CgTest>$(MsBuildThisFileDirectory)z0.cg.test.csproj</CgTest>
+  </PropertyGroup>
+</Project>

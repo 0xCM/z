@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Shell>$(MsBuildThisFileDirectory)z0.shell.csproj</Shell>
+  </PropertyGroup>
+</Project>

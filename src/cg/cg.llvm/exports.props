@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <CgLlvm>$(MsBuildThisFileDirectory)z0.cg.llvm.csproj</CgLlvm>
+  </PropertyGroup>
+</Project>

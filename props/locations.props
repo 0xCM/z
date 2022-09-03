@@ -1,16 +1,15 @@
 <Project>
   <PropertyGroup>
     <SlnRoot>$(Z0)</SlnRoot>
-    <SlnLibs>$(SlnRoot)\libs</SlnLibs>
+    <SlnLibs>$(SlnRoot)\src</SlnLibs>
     <ProjectProps>$(SlnRoot)\props</ProjectProps>
     <ImportDefs>$(ProjectProps)\deps</ImportDefs>
     <EnvConfig>$(SlnRoot)\env</EnvConfig>
     <SlnBuild>$(SlnRoot)\artifacts</SlnBuild>
     <SlnBin>$(SlnBuild)\bin</SlnBin>
     <LogRoot>$(SlnBuild)\logs</LogRoot>
-    <ShellCommon>$(SlnRoot)\shells</ShellCommon>
-    <CgRoot>$(SlnRoot)\cg</CgRoot>
-    <TestRoot>$(SlnRoot)\test</TestRoot>
+    <CgRoot>$(SlnLibs)\cg</CgRoot>
+    <TestRoot>$(SlnLibs)\test</TestRoot>
     <OutputPath>$(SlnBuild)\bin\$(MsBuildProjectName)\$(Configuration)</OutputPath>
     <IntermediateRoot>$(SlnBuild)\obj\$(MsBuildProjectName)\$(Configuration)</IntermediateRoot>
     <IntermediateBuildDir>$(IntermediateRoot)</IntermediateBuildDir>

@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <CgLibs>$(MsBuildThisFileDirectory)z0.cg.libs.csproj</CgLibs>
+  </PropertyGroup>
+</Project>

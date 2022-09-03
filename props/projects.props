@@ -85,16 +85,16 @@
     <ShellCmd>$(SlnLibs)\shell.cmd\z0.shell.cmd.csproj</ShellCmd>
     <Workers>$(SlnLibs)\workers\z0.workers.csproj</Workers>
 
-    <TestChecks>$(SlnRoot)\test\test.checks\z0.test.checks.csproj</TestChecks>
-    <TestUnits>$(SlnRoot)\test\test.units\z0.test.units.csproj</TestUnits>
-    <TestShell>$(SlnRoot)\test\test.shell\z0.test.shell.csproj</TestShell>
+    <TestChecks>$(SlnLibs)\test\test.checks\z0.test.checks.csproj</TestChecks>
+    <TestUnits>$(SlnLibs)\test\test.units\z0.test.units.csproj</TestUnits>
+    <TestShell>$(SlnLibs)\test\test.shell\z0.test.shell.csproj</TestShell>
 
-    <CgCommon>$(SlnRoot)\cg\cg.common\z0.cg.common.csproj</CgCommon>
-    <CgLlvm>$(SlnRoot)\cg\cg.llvm\z0.cg.llvm.csproj</CgLlvm>
-    <CgIntel>$(SlnRoot)\cg\cg.intel\z0.cg.intel.csproj</CgIntel>
-    <CgLibs>$(SlnRoot)\cg\cg.libs\z0.cg.libs.csproj</CgLibs>
-    <CgShell>$(SlnRoot)\cg\cg.shell\z0.cg.shell.csproj</CgShell>
-    <CgTest>$(SlnRoot)\cg\cg.test\z0.cg.test.csproj</CgTest>    
+    <CgCommon>$(SlnLibs)\cg\cg.common\z0.cg.common.csproj</CgCommon>
+    <CgLlvm>$(SlnLibs)\cg\cg.llvm\z0.cg.llvm.csproj</CgLlvm>
+    <CgIntel>$(SlnLibs)\cg\cg.intel\z0.cg.intel.csproj</CgIntel>
+    <CgLibs>$(SlnLibs)\cg\cg.libs\z0.cg.libs.csproj</CgLibs>
+    <CgShell>$(SlnLibs)\cg\cg.shell\z0.cg.shell.csproj</CgShell>
+    <CgTest>$(SlnLibs)\cg\cg.test\z0.cg.test.csproj</CgTest>    
   </PropertyGroup>
 
 </Project>

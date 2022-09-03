@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <CgIntel>$(MsBuildThisFileDirectory)z0.cg.intel.csproj</CgIntel>
+  </PropertyGroup>
+</Project>
