@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <ApiCode>$(MsBuildThisFileDirectory)z0.api.code.csproj</ApiCode>
+  </PropertyGroup>
+</Project>

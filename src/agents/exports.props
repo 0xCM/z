@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Agents>$(MsBuildThisFileDirectory)z0.agents.csproj</Agents>
+  </PropertyGroup>
+</Project>

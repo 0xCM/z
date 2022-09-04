@@ -1,9 +1,9 @@
 <Project>
 
+  <Import Project="$(ImportDefs)\microsoft.diagnostics.props"/>
+
   <ItemGroup>
     <ProjectReference Include="$(Archives)" />
-    <ProjectReference Include="$(Agents)" />
-    <ProjectReference Include="$(Queues)" />
   </ItemGroup>
 
 </Project>

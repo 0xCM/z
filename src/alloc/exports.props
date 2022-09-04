@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Alloc>$(MsBuildThisFileDirectory)z0.alloc.csproj</Alloc>
+  </PropertyGroup>
+</Project>

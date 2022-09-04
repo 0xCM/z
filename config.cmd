@@ -1,9 +1,7 @@
 @echo off
 echo Level:%~dp0
 call %~dp0..\config.cmd
-
 set EnvPartition=dev
-: set SlnId=z0
 set BuildPrefix=z0
 set SlnVersion=0.0.1
 set ArchName=x64
@@ -15,7 +13,7 @@ set RuntimeMoniker=%OsName%-%ArchName%
 set VersionSuffix=3
 set SlnRoot=%Z0%
 set MimeTypes=%EnvSite%\mime.types
-set Archives=%PArchives%
+set Archives=%EnvP%\archives
 set PackageOut=%EnvRoot%\packages\%SlnId%
 set RepoArchives=%Archives%\repos
 set DevArchives=%Archives%\%EnvPartition%
@@ -108,8 +106,7 @@ set PublishLib=dotnet publish %ProjectPath% --output %ProjectDist% --configurati
 set PublishShell=dotnet publish %ProjectPath% --output %ProjectDist% --configuration %ConfigName% --framework %FrameworkMoniker% --version-suffix %VersionSuffix%
 set DeployShell=%~dp0scripts\shell-deploy.cmd
 set ShellRetract=%~dp0scripts\shell-retract.cmd
-set SlnPubRetract=rmdir %PublishedSln% 2>null
-
+set SlnPubRetract=rmdir %PublishedSln%
 set PackageLib=dotnet pack %ProjectPath% --output %PackageDist% --configuration %ConfigName% --version-suffix %VersionSuffix% %PackageFlags%
 set PackageSln=dotnet pack %ProjectSln% --output %PackagePath%
 set RestoreProject=dotnet restore %ProjectPath% --packages %NuGetDeps% --use-current-runtime --verbosity normal --force-evaluate
@@ -124,11 +121,9 @@ set CleanObj=rmdir %ProjectObj% /s/q
 set CleanSlnBin=rmdir %SlnBin% /s/q
 set CleanSlnObj=rmdir %SlnObj% /s/q
 set CleanSlnLogs=rmdir %SlnLogs% /s/q
-
 set CfgFile=%Artifacts%\%ProjectId%.cfg
 set DeployCfg=%SlnRoot%\deploy\deploy.cfg
-: mkdir %Artifacts% 1>nul 2>nul
-echo # %ProjectId% env>%CfgFile%
+echo # %ProjectId% >%CfgFile%
 echo Deployments=%Deployments%>>%CfgFile%
 echo MimeTypes=%MimeTypes%>>%CfgFile%
 echo Archives=%Archives%>>%CfgFile%
