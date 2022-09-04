@@ -37,6 +37,6 @@ namespace Z0
         public SectionCharacteristics SectionFlags;
 
         [Render(1)]
-        public FileUri FullPath;
+        public _FileUri FullPath;
     }
 }

@@ -71,9 +71,9 @@ namespace Z0
 
         public static MsgPattern<dynamic,dynamic> JittedParts => "Jitted {0} members from {1} parts";
 
-        public static MsgPattern<FileUri> LoadingApiCatalog => "Loading api catalog from {0}";
+        public static MsgPattern<_FileUri> LoadingApiCatalog => "Loading api catalog from {0}";
 
-        public static MsgPattern<Count,FileUri> LoadedApiCatalog => "Loaded {0} catalog entries from {1}";
+        public static MsgPattern<Count,_FileUri> LoadedApiCatalog => "Loaded {0} catalog entries from {1}";
 
         public static MsgPattern<Assembly,uint> EmittingResources => "Emitting {1} {0} resources";
 

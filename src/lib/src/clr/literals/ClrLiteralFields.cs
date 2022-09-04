@@ -14,7 +14,7 @@ namespace Z0
         [Op]
         public static void strings(Type host, FieldInfo[] src, Span<string> dst)
         {
-            var @base = core.address(host);
+            var @base = sys.address(host);
             var count = src.Length;
             var offset = MemoryAddress.Zero;
 

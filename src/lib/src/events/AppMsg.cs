@@ -12,16 +12,16 @@ namespace Z0
     {
         public readonly AppMsgData Data;
 
-        public static MsgPattern<FileUri> FileExists
+        public static MsgPattern<_FileUri> FileExists
             => "The path {0} exists and yet it shold not";
 
-        public static MsgPattern<FileUri> FileMissing
+        public static MsgPattern<_FileUri> FileMissing
             => "The path {0} does not exist and yet it should";
 
-        public static MsgPattern<ByteSize,FileUri> EmittedBytes
+        public static MsgPattern<ByteSize,_FileUri> EmittedBytes
             => "Emitted {0} bytes to {1}";
 
-        public static MsgPattern<FileUri,Count,Count> CsvHeaderMismatch
+        public static MsgPattern<_FileUri,Count,Count> CsvHeaderMismatch
             => "The records defined in {0} require {0} fields but {1} were found in the source";
 
         public static MsgPattern<Count,Count,string> CsvDataMismatch
@@ -33,16 +33,16 @@ namespace Z0
         public static MsgPattern<Count,Count,string> CellCountMismatch
             => "The target requires {0} fields but {1} were found in {2}";
 
-        public static RenderPattern<TableId,Count,FileUri> EmittedTable
+        public static RenderPattern<TableId,Count,_FileUri> EmittedTable
             => "Emitted <{1}> <{0}> rows to {2}";
 
-        public static RenderPattern<TableId,FileUri> EmittingTable
+        public static RenderPattern<TableId,_FileUri> EmittingTable
             => "Emitting <{0}> to {1}";
 
-        public static RenderPattern<FileUri> EmittingFile
+        public static RenderPattern<_FileUri> EmittingFile
             => "Emitting {0}";
 
-        public static RenderPattern<FileUri> EmittedFile
+        public static RenderPattern<_FileUri> EmittedFile
             => "Emitted {0}";
 
         public static RenderPattern<object> UnhandledCase
@@ -54,7 +54,7 @@ namespace Z0
             return msg.Capture(input,capacity);
         }
 
-        public static RenderPattern<Count,FileUri> EmittedFileLines
+        public static RenderPattern<Count,_FileUri> EmittedFileLines
             => "Emitted <{0}> lines to {1}";
 
         public static MsgPattern<string,string> ParseFailure

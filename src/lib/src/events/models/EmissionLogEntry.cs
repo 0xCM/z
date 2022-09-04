@@ -22,7 +22,7 @@ namespace Z0
         public FileExt FileType;
 
         [Render(1)]
-        public FileUri Target;
+        public _FileUri Target;
     }
 
     public enum EmissionEventKind : byte

@@ -23,7 +23,7 @@ namespace Z0
                 Rules = rules.Map(r => new RuleSig(kind,r));
             }
 
-            FileUri Uri(RuleSig src)
+            _FileUri Uri(RuleSig src)
                 => XedPaths.Service.RulePage(src);
 
             public string Format()

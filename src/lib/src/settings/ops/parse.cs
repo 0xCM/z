@@ -129,7 +129,7 @@ namespace Z0
                 }
                 else if(type == typeof(FilePath))
                     dst = FS.path(src);
-                else if(type == typeof(FileUri))
+                else if(type == typeof(_FileUri))
                     dst =  FS.uri(src);
                 else if(type == typeof(FolderPath))
                     dst = FS.dir(src);

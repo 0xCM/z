@@ -5,12 +5,12 @@
 namespace Windows
 {
     [StructLayout(LayoutKind.Sequential, Pack=1)]
-    public struct IMAGE_NT_HEADERS64
+    public struct IMAGE_NT_HEADERS32
     {
         public uint Signature;
 
-        public CoffHeader FileHeader;
+        public Z0.CoffHeader FileHeader;
 
-        public IMAGE_OPTIONAL_HEADER64 OptionalHeader;
+        public IMAGE_OPTIONAL_HEADER32 OptionalHeader;
     }
 }

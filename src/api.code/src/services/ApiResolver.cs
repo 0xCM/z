@@ -212,9 +212,9 @@ namespace Z0
         {
             counter = 0u;
             var location = FS.path(src.Location);
-            var id = src.Id();
+            var name = src.PartName();
             var catalog = ApiRuntime.catalog(src);
-            var flow = Wf.Running(string.Format("Resolving part {0}", id));
+            var flow = Wf.Running(string.Format("Resolving part {0}", name));
             var hosts = list<ResolvedHost>();
             foreach(var host in catalog.ApiTypes)
             {
@@ -242,8 +242,8 @@ namespace Z0
                 }
             }
 
-            var result = new ResolvedPart(id, location, hosts.ToArray());
-            Wf.Ran(flow, string.Format("Resolved {0} members from {1}", counter, id));
+            var result = new ResolvedPart(name, location, hosts.ToArray());
+            Wf.Ran(flow, string.Format("Resolved {0} members from {1}", counter, name));
             return result;
         }
 

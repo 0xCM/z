@@ -8,7 +8,7 @@ namespace Z0
 
     public sealed record class ClrAssemblyName : IDataType<ClrAssemblyName>
     {
-        public readonly FileUri CodeBase;
+        public readonly LocalUri CodeBase;
 
         public readonly string FullName;
 

@@ -51,7 +51,7 @@ namespace Z0
             }
         }
 
-        static MsgPattern<FileUri, FileUri, string> FileLinkCreationFailed => "Failed to create link {0} -> {1}:{2}";
+        static MsgPattern<_FileUri, _FileUri, string> FileLinkCreationFailed => "Failed to create link {0} -> {1}:{2}";
 
         static MsgPattern<FolderPath, FolderPath, string> DirectoryLinkCreationFailed => "Failed to create link {0} -> {1}:{2}";
     }

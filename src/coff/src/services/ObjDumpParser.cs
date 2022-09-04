@@ -12,7 +12,7 @@ namespace Z0
     {
         const string SectionMarker = "Disassembly of section ";
 
-        FileUri Source;
+        _FileUri Source;
 
         ObjDumpRow Row;
 

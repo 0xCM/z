@@ -201,8 +201,8 @@ namespace Z0
             => quote ? text.dquote(Name.Format(sep)) : Name.Format(sep);
 
         [MethodImpl(Inline)]
-        public FileUri ToUri()
-            => new FileUri(this);
+        public _FileUri ToUri()
+            => new _FileUri(this);
 
         [MethodImpl(Inline)]
         public static FilePath operator +(FilePath a, FileExt b)
@@ -213,5 +213,8 @@ namespace Z0
             [MethodImpl(Inline)]
             get => new FilePath(PathPart.Empty);
         }
+
+        public static implicit operator LocalUri(FilePath src)
+            => new LocalUri(src.ToUri().Format());
     }
 }

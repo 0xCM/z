@@ -221,8 +221,8 @@ namespace Z0
         public FolderPath Replace(string src, string dst)
             => new FolderPath(Name.Replace(src,dst));
 
-        public FileUri ToUri()
-            => new FileUri(this);
+        public _FileUri ToUri()
+            => new _FileUri(this);
         public static FolderPath Empty
             => new FolderPath(PathPart.Empty);
 

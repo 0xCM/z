@@ -4,30 +4,30 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly record struct UriFlow<T> : IFlow<FileUri,FileUri>
+    public readonly record struct UriFlow<T> : IFlow<_FileUri,_FileUri>
         where T : ITool, new()
     {
         public readonly T Actor;
 
-        public readonly FileUri Source;
+        public readonly _FileUri Source;
 
-        public readonly FileUri Target;
+        public readonly _FileUri Target;
 
         [MethodImpl(Inline)]
-        public UriFlow(FileUri src, FileUri dst)
+        public UriFlow(_FileUri src, _FileUri dst)
         {
             Actor = new();
             Source = src;
             Target = dst;
         }
 
-        FileUri IArrow<FileUri, FileUri>.Source 
+        _FileUri IArrow<_FileUri, _FileUri>.Source 
             => Source;
 
-        FileUri IArrow<FileUri, FileUri>.Target 
+        _FileUri IArrow<_FileUri, _FileUri>.Target 
             => Target;
 
-        public static implicit operator UriFlow<T>((FileUri a, FileUri b) src)
+        public static implicit operator UriFlow<T>((_FileUri a, _FileUri b) src)
             => new UriFlow<T>(src.a, src.b);
     }
 }

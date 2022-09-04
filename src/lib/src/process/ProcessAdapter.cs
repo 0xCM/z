@@ -286,7 +286,7 @@ namespace Z0
             get => new ProcessModule(Subject.MainModule);
         }
 
-        public FileUri Uri
+        public _FileUri Uri
         {
             [MethodImpl(Inline)]
             get => MainModule.Path;

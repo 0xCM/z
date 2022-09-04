@@ -5,7 +5,6 @@
 namespace Z0
 {
     using static HandleFormatKind;
-    using static Refs;
 
     public enum HandleFormatKind
     {
@@ -56,6 +55,5 @@ namespace Z0
         [MethodImpl(Inline)]
         public static implicit operator HandleAdapter(RuntimeMethodHandle src)
             => new HandleAdapter(src);
-
     }
 }

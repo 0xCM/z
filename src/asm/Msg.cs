@@ -19,7 +19,7 @@ namespace Z0
 
         public static MsgPattern<ApiHostUri> EmittingHostRoutines => "Emitting {0} routines";
 
-        public static MsgPattern<Count,ApiHostUri,FileUri> EmittedHostRoutines => "Emitted {0} {1} routines to {2}";
+        public static MsgPattern<Count,ApiHostUri,_FileUri> EmittedHostRoutines => "Emitted {0} {1} routines to {2}";
 
         public static MsgPattern<Count> CreatingAsmRowsFromBlocks => "Creating AsmRows for {0} blocks";
 
@@ -59,18 +59,18 @@ namespace Z0
 
         public static MsgPattern<ApiHostUri,Count> CreatedApiStatements => "Created {0} {1} host api statement";
 
-        public static MsgPattern<Count,Count,FileUri> ParsedStatements => "Parsed {0} full rows and {1} partial rows from {2}";
+        public static MsgPattern<Count,Count,_FileUri> ParsedStatements => "Parsed {0} full rows and {1} partial rows from {2}";
 
-        public static MsgPattern<FileUri> LoadingStatements
+        public static MsgPattern<_FileUri> LoadingStatements
             => "Loading statements from {0}";
 
-        public static MsgPattern<Count,FileUri> LoadedStatments
+        public static MsgPattern<Count,_FileUri> LoadedStatments
             => "Loading {0} statements from {1}";
 
-        public static MsgPattern<Count,FileUri> ProcessingStatments
+        public static MsgPattern<Count,_FileUri> ProcessingStatments
             => "Processing {0} statements from {1}";
 
-        public static MsgPattern<Count,FileUri> ProcessedStatements
+        public static MsgPattern<Count,_FileUri> ProcessedStatements
             => "Processed {0} statements from {1}";
 
         public static MsgPattern<FolderPath> CapturingRoutines => "Capturing routines from {0}";

@@ -13,7 +13,7 @@ namespace Z0
 
         public Name Group;
 
-        public FileUri ToolEnv;
+        public _FileUri ToolEnv;
 
         public FolderPath InstallBase;
 

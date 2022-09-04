@@ -98,8 +98,8 @@ namespace Z0
         public ReadOnlySpan<SpanResAccessor> ResPackAccessors(FilePath src)
             => SpanAccessors(src);
 
-        static MsgPattern<FileUri> LoadingSpanAccessors => "Loading respack accessors from {0}";
+        static MsgPattern<_FileUri> LoadingSpanAccessors => "Loading respack accessors from {0}";
 
-        static MsgPattern<Count,FileUri> LoadedSpanAccessors => "Loaded {0} respack accessors from {1}";
+        static MsgPattern<Count,_FileUri> LoadedSpanAccessors => "Loaded {0} respack accessors from {1}";
     }
 }

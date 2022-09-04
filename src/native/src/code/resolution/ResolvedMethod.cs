@@ -15,20 +15,6 @@ namespace Z0
                 src.Method.DisplaySig()
             );
 
-        // public static ApiMemberInfo describe(in ResolvedMethod src)
-        // {
-        //     var dst = new ApiMemberInfo();
-        //     var msil = ClrDynamic.msil(src.EntryPoint, src.Uri, src.Method);
-        //     dst.EntryPoint = src.EntryPoint;
-        //     dst.ApiKind = src.Method.ApiClass();
-        //     dst.CliSig = msil.CliSig;
-        //     dst.DisplaySig = src.Method.DisplaySig().Format();
-        //     dst.Token = msil.Token;
-        //     dst.Uri = src.Uri.Format();
-        //     dst.MsilCode = msil.CliCode;
-        //     return dst;
-        // }
-
         public readonly OpUri Uri;
 
         public readonly MethodInfo Method;

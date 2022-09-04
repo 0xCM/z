@@ -353,7 +353,7 @@ namespace Z0.Roslyn
         public string Format()
         {
             var locations = Locations;
-            var location = default(FileUri);
+            var location = default(_FileUri);
             if(locations.Length != 0)
             {
                 var loc = first(locations);

@@ -41,7 +41,7 @@ namespace Z0
         public @string Name;
 
         [Render(1)]
-        public FileUri Source;
+        public _FileUri Source;
 
         public AsmRowKey RowKey
         {

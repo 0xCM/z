@@ -31,7 +31,7 @@ namespace Z0
         public Version128 Version;
 
         [Render(1)]
-        public FileUri ImagePath;
+        public _FileUri ImagePath;
 
         uint ISequential.Seq
         {

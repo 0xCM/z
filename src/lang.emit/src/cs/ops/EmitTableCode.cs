@@ -33,7 +33,7 @@ namespace Z0
             FileEmit(emitter.Emit(), src.Length, path);
         }
 
-        FileUri EmitTableCode(StringTableSpec syntax, ItemList<string> src, CgTarget cgdst)
+        _FileUri EmitTableCode(StringTableSpec syntax, ItemList<string> src, CgTarget cgdst)
         {
             var dst = SourceFile(syntax.TableName, "stringtables", cgdst);
             var emitter = text.emitter();

@@ -6,7 +6,7 @@ namespace Z0
 {
     public readonly struct ResolvedPart
     {
-        public readonly PartId Part;
+        public readonly PartName Part;
 
         public readonly FilePath Location;
 
@@ -14,7 +14,7 @@ namespace Z0
 
         public readonly uint MethodCount;
 
-        public ResolvedPart(PartId part, FilePath location, Index<ResolvedHost> hosts)
+        public ResolvedPart(PartName part, FilePath location, Index<ResolvedHost> hosts)
         {
             Part = part;
             Location = location;
@@ -25,7 +25,7 @@ namespace Z0
         public static ResolvedPart Empty
         {
             [MethodImpl(Inline)]
-            get => new ResolvedPart(0, FilePath.Empty, core.array<ResolvedHost>());
+            get => new ResolvedPart(PartName.Empty, FilePath.Empty, sys.empty<ResolvedHost>());
         }
     }
 }

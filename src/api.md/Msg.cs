@@ -15,9 +15,9 @@ namespace Z0
 
         public static MsgPattern<string> CorrelatingOperations => "Correlating {0} operations";
 
-        public static MsgPattern<FileUri> LoadingApiCatalog => "Loading api catalog from {0}";
+        public static MsgPattern<_FileUri> LoadingApiCatalog => "Loading api catalog from {0}";
 
-        public static MsgPattern<Count,FileUri> LoadedApiCatalog => "Loaded {0} catalog entries from {1}";
+        public static MsgPattern<Count,_FileUri> LoadedApiCatalog => "Loaded {0} catalog entries from {1}";
 
         public static MsgPattern<string> ChipCodeNotFound => "Code for chip {0} not found";
 

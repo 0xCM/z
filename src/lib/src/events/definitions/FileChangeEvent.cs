@@ -26,7 +26,7 @@ namespace Z0
             return dst;
         }
         
-        public readonly FileUri File;
+        public readonly _FileUri File;
 
         public readonly FileChangeKind ChangeKind;
 

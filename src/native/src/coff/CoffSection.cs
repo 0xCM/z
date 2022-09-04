@@ -46,7 +46,7 @@ namespace Z0
         public ImageSectionFlags Flags;
 
         [Render(1)]
-        public FileUri Source;
+        public _FileUri Source;
 
         public int CompareTo(CoffSection src)
         {

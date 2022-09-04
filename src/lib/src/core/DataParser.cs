@@ -198,7 +198,7 @@ namespace Z0
         }
 
         [Parser]
-        public static Outcome parse(string src, out FileUri dst)
+        public static Outcome parse(string src, out _FileUri dst)
         {
             dst = FS.path(src);
             return true;

@@ -9,19 +9,19 @@ namespace Z0
 
     partial class XFs
     {
-        public static FileUri[] ToUri(this Span<FilePath> src)
+        public static _FileUri[] ToUri(this Span<FilePath> src)
             => src.Map(x => x.ToUri());
 
-        public static FileUri[] ToUri(this Index<FilePath> src)
+        public static _FileUri[] ToUri(this Index<FilePath> src)
             => src.Map(x => x.ToUri());
 
-        public static FileUri[] ToUri(this FilePath[] src)
+        public static _FileUri[] ToUri(this FilePath[] src)
             => src.Map(x => x.ToUri());
 
-        public static FileUri[] ToUri(this ReadOnlySpan<FilePath> src)
+        public static _FileUri[] ToUri(this ReadOnlySpan<FilePath> src)
             => src.Map(x => x.ToUri());
 
-        public static FileUri[] ToUri(this Files src)
+        public static _FileUri[] ToUri(this Files src)
             => src.Map(x => x.ToUri());
     }
 }

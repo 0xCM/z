@@ -16,7 +16,7 @@ namespace Z0.Asm
 
         public static MsgPattern<Count> ParsingDocs => "Parsing {0} documents";
 
-        public static MsgPattern<FileUri,string> FileParseError => "Error parsing {0}:{1}";
+        public static MsgPattern<_FileUri,string> FileParseError => "Error parsing {0}:{1}";
 
         public AsmTables()
         {

@@ -37,7 +37,7 @@ namespace Z0
         public AsmHexCode Encoded;
 
         [Render(1)]
-        public FileUri Source;
+        public _FileUri Source;
 
         public AsmRowKey Key
         {

@@ -2,12 +2,12 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace global.cmd
 {
-    partial struct FS
+    public struct LaunchProcess
     {
-        [MethodImpl(Inline), Op]
-        public static _FileUri uri(string name)
-            => path(name).ToUri();
+
+        public LocalUri Target;
     }
+    
 }

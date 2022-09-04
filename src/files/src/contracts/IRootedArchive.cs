@@ -94,7 +94,7 @@ namespace Z0
         string IExpr.Format()
             => DbFiles.Format();
 
-        Deferred<FileUri> Enumerate()
+        Deferred<_FileUri> Enumerate()
             => from f in DbFiles.Enumerate(true) select f.ToUri();
     }
 }

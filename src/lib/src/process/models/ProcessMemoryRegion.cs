@@ -38,7 +38,7 @@ namespace Z0
         public MemState State;
 
         [Render(1)]
-        public FileUri ImagePath;
+        public _FileUri ImagePath;
 
         uint ISequential.Seq
         {

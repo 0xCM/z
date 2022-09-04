@@ -30,7 +30,7 @@ namespace Z0
         public ByteSize BlockSize;
 
         [Render(1)]
-        public FileUri Source;
+        public _FileUri Source;
 
         public AsmRowKey RowKey
         {

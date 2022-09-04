@@ -38,7 +38,7 @@ namespace Z0
             get => Archive;
         }
 
-        public Deferred<FileUri> Members()
-            => IsNonEmpty ? Location.Enumerate() : sys.defer<FileUri>();
+        public Deferred<_FileUri> Members()
+            => IsNonEmpty ? Location.Enumerate() : sys.defer<_FileUri>();
     }
 }

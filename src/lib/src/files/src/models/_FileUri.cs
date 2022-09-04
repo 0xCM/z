@@ -6,7 +6,7 @@ namespace Z0
 {
     using static FS;
 
-    public readonly record struct FileUri : IFsEntry<FileUri>
+    public readonly record struct _FileUri : IFsEntry<_FileUri>
     {
         readonly FilePath Source;
 
@@ -14,15 +14,15 @@ namespace Z0
             => Format();
 
         [MethodImpl(Inline)]
-        public FileUri(FilePath src)
+        public _FileUri(FilePath src)
             => Source = src.Replace("file:///", EmptyString);
 
         [MethodImpl(Inline)]
-        public FileUri(FolderPath src)
+        public _FileUri(FolderPath src)
             => Source = FS.path(src.Replace("file:///", EmptyString).Name);
 
-        public FileUri LineRef(uint line)
-            => new FileUri(path(string.Format("{0}#{1}", this,line)));
+        public _FileUri LineRef(uint line)
+            => new _FileUri(path(string.Format("{0}#{1}", this,line)));
         public string Format()
             => string.Format("file:///{0}", Source.Format());
 
@@ -32,7 +32,7 @@ namespace Z0
         public string MarkdownBullet(string label = null)
             => string.Format("* {0}", Source.ToUri().FormatMarkdown(label));
 
-        public bool Equals(FileUri src)
+        public bool Equals(_FileUri src)
             => Source.Equals(src.Source);
 
         public bool IsEmpty
@@ -56,7 +56,7 @@ namespace Z0
         public override int GetHashCode()
             => Hash;
 
-        public FileUri WithoutLine
+        public _FileUri WithoutLine
         {
             get
             {
@@ -77,17 +77,21 @@ namespace Z0
         public override string ToString()
             => Format();
 
-        public int CompareTo(FileUri src)
+        public int CompareTo(_FileUri src)
             => Source.CompareTo(src.Source);
 
         [MethodImpl(Inline)]
-        public static implicit operator FileUri(FilePath src)
-            => new FileUri(src);
+        public static implicit operator _FileUri(FilePath src)
+            => new _FileUri(src);
 
         [MethodImpl(Inline)]
-        public static explicit operator FilePath(FileUri src)
+        public static explicit operator FilePath(_FileUri src)
             => src.Path;
 
-        public static FileUri Empty => new FileUri(FilePath.Empty);
+        [MethodImpl(Inline)]
+        public static implicit operator LocalUri(_FileUri src)
+            => new LocalUri(src.Format());
+
+        public static _FileUri Empty => new _FileUri(FilePath.Empty);
     }
 }
