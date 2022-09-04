@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Hub>$(MsBuildThisFileDirectory)z0.hub.csproj</Hub>
+  </PropertyGroup>
+</Project>

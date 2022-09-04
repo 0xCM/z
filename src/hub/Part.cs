@@ -2,19 +2,15 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+[assembly: PartId("hub")]
+namespace Z0.Parts
 {
-    partial class ApiCmdDefs
+    public sealed class Hub : Part<Hub>
     {
-        public struct EmitToolHelp
+        [ModuleInitializer]
+        internal static void Init()
         {
-            public Actor ToolId;
-
-            public @string HelpKind;
-
-            public FilePath Target;
-
-            //public ToolCmdArgs Args;
+            
         }
     }
 }

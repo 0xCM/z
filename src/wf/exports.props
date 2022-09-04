@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Wf>$(MsBuildThisFileDirectory)z0.wf.csproj</Wf>
+  </PropertyGroup>
+</Project>

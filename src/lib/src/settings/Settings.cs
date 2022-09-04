@@ -27,7 +27,7 @@ namespace Z0
         }
 
         public static FilePath path()
-            => FS.path(ExecutingPart.Assembly.Location).FolderPath + FS.file($"{ExecutingPart.Id.Format()}.settings", FileKind.Csv);
+            => FS.path(ExecutingPart.Assembly.Location).FolderPath + FS.file($"{ExecutingPart.Name.Format()}.settings", FileKind.Csv);
 
         public static Settings64 from(params Setting64[] src)
             => new Settings64(src);

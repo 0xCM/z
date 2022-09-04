@@ -9,6 +9,8 @@ namespace Z0
     {
         public PartId Id {get;}
 
+        public PartName Name {get;}
+
         public static Assembly Assembly
             => typeof(P).Assembly;
 
@@ -24,6 +26,7 @@ namespace Z0
         {
             Owner = typeof(P).Assembly;
             Id =  PartIdAttribute.id(Owner);
+            Name = PartIdAttribute.name(Owner);
         }
 
         public virtual IExecutor Executor

@@ -308,9 +308,9 @@ namespace Z0
         void EmitEnv(CmdArgs args)
         {
             var dst = AppDb.AppData("env").Root;
-            Env.emit(Emitter,EnvVarKind.Process, dst);
-            Env.emit(Emitter,EnvVarKind.User, dst);
-            Env.emit(Emitter,EnvVarKind.Machine, dst);
+            Env.emit(Emitter, EnvVarKind.Process, dst);
+            Env.emit(Emitter, EnvVarKind.User, dst);
+            Env.emit(Emitter, EnvVarKind.Machine, dst);
         }
 
         [CmdOp("env/machine")]

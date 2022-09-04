@@ -84,14 +84,6 @@ namespace Z0
 
         }
 
-        // [CmdOp("clang/query")]
-        // void RunClanqQuery(CmdArgs args)
-        // {
-        //     var service = ClangQuery.create(Wf);
-        //     var path = service.LlvmRepo.Scoped("llvm/include/llvm/Support").Path("DJB", FileKind.H);
-        //     service.QueryFile(path);
-        // }
-
         [CmdOp("tool/script")]
         Outcome ToolScript(CmdArgs args)
             => Tooling.RunScript(arg(args,0).Value, arg(args,1).Value);

@@ -6,6 +6,8 @@ namespace Z0
 {
     using S = System.String;
 
+    using static ReflectionFlags;
+
     [LiteralProvider(api)]
     public readonly struct ApiAtomic
     {
@@ -547,5 +549,26 @@ namespace Z0
         public const S yamltok = yaml + dot + tok;
 
         public const S cmdkvp = cmd + dot + kvp;
+    }
+
+    static class XLiterals
+    {
+        [Op]
+        public static FieldInfo[] LiteralFields(this Type src)
+            => src.GetFields(BF_Declared).Where(x => x.IsLiteral).ToArray();
+
+        public static bool LiteralField(this Type src, string name, out FieldInfo field)
+        {
+            var result = src.GetFields(BF_Declared).Where(x => x.IsLiteral && x.Name == name).ToArray();
+            if(result.Length != 0)
+            {
+                field = result[0];
+            }
+            else
+            {
+                field = null;
+            }
+            return field != null;
+        }
     }
 }

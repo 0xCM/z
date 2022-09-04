@@ -4,15 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IAppCmdDispatcher
+    sealed class WfShellCmd : AppCmdService<WfShellCmd>
     {
-        Outcome Dispatch(string action, CmdArgs args);
 
-        Outcome Dispatch(string action);
-
-        IAppCommands Commands {get;}
-
-        PartName Controller 
-            => ExecutingPart.Name;
     }
 }

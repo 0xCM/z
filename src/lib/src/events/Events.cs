@@ -14,7 +14,7 @@ namespace Z0
         const NumericKind Closure = UInt64k;
 
         static string prefix(object title, Type host, string caller)
-            => string.Concat(ExecutingPart.Id.Format(), Chars.FSlash, host.Name, Chars.FSlash, caller, Chars.LBrace, title, Chars.RBrace).PadRight(60);
+            => string.Concat(ExecutingPart.Name.Format(), Chars.FSlash, host.Name, Chars.FSlash, caller, Chars.LBrace, title, Chars.RBrace).PadRight(60);
 
         static IAppMsg message(object title, object msg, Type host, string caller, FlairKind flair)
             => AppMsg.colorize(string.Concat(prefix(title, host, caller), Chars.Pipe, Chars.Space, msg), flair);

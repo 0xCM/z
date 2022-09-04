@@ -94,12 +94,17 @@ set CleanObj=rmdir %Artifacts%\obj \s\q
 set CleanBin=rmdir %Artifacts%\bin \s\q
 set CleanNugetDeps=rmdir %NuGetDeps% \s\q
 set AddSlnProject=%SlnScripts%\sln-add.cmd
-
 set ProjectDist=%Distributions%\%ProjectId%
+set DeployedShellPath=%ShellDeployment%\%ShellId%.exe
+set DeployedShellLink=%Deployments%\%ShellId%.exe
 
 set PublishLib=dotnet publish %ProjectPath% --output %ProjectDist% --configuration %ConfigName% --framework %FrameworkMoniker% --version-suffix %VersionSuffix%
 set PublishShell=dotnet publish %ProjectPath% --output %ProjectDist% --configuration %ConfigName% --framework %FrameworkMoniker% --version-suffix %VersionSuffix%
-set DeployShell=dotnet publish %ProjectPath% --output %ShellDeployment% --configuration %ConfigName% --framework %FrameworkMoniker% --version-suffix %VersionSuffix%
+set DeployShell=%~dp0scripts\shell-deploy.cmd
+set ShellRetract=%~dp0scripts\shell-retract.cmd
+set CreateShellDeploymentLink=mklink %DeployedShellLink% %DeployedShellPath%
+set DeleteShellDeploymentLink=del %DeployedShellLink%
+
 set PackageLib=dotnet pack %ProjectPath% --output %PackageDist% --configuration %ConfigName% --version-suffix %VersionSuffix% %PackageFlags%
 set PackageSln=dotnet pack %ProjectSln% --output %PackagePath%
 set RestoreProject=dotnet restore %ProjectPath% --packages %NuGetDeps% --use-current-runtime --verbosity normal --force-evaluate

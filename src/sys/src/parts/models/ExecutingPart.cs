@@ -10,7 +10,7 @@ namespace Z0
     {
         public static ref readonly Assembly Assembly => ref _Component;
 
-        public static ref readonly PartId Id => ref _Id;
+        //public static ref readonly PartId Id => ref _Id;
 
         public static ref readonly PartName Name => ref _Name;
 
@@ -26,7 +26,7 @@ namespace Z0
         {
             _Component = Assembly.GetEntryAssembly();
             _Id = PartIdAttribute.id(_Component);
-            _Name = _Id.PartName();
+            _Name = PartIdAttribute.name(_Component);
         }
     }
 }

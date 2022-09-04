@@ -62,7 +62,7 @@ namespace Z0
             => DevOps().Scoped(scope);
 
         public DbArchive AppData()
-            => DbRoot().Scoped("apps").Scoped(ExecutingPart.Id.Format());
+            => DbRoot().Scoped("apps").Scoped(ExecutingPart.Name.Format());
 
         public DbArchive AppData(string scope)
             => AppData().Scoped(scope);

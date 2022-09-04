@@ -11,7 +11,7 @@ namespace Z0
 
         [CmdOp("commands")]
         protected void EmitCommands()
-            => Cmd.emit(Cmd.catalog(Dispatcher), AppDb.AppData().Path(ExecutingPart.Id.PartName().Format() + ".commands", FileKind.Csv), Emitter);
+            => Cmd.emit(Cmd.catalog(Dispatcher), AppDb.AppData().Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv), Emitter);
 
         public void RunCmd(string name)
         {
