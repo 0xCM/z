@@ -8,7 +8,7 @@ namespace Z0
     {
         public readonly ApiExtractBlock Block;
 
-        public readonly OpUri OpUri;
+        public readonly _OpUri OpUri;
 
         public readonly ApiMember Member;
 
@@ -47,7 +47,7 @@ namespace Z0
             get => Block.Origin;
         }
 
-        public ApiHostUri Host
+        public _ApiHostUri Host
         {
             [MethodImpl(Inline)]
             get => Member.Host;

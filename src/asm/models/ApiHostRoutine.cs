@@ -11,7 +11,7 @@ namespace Z0.Asm
     /// </summary>
     public readonly struct ApiHostRoutine
     {
-        public OpIdentity OpId {get;}
+        public _OpIdentity OpId {get;}
 
         public Index<ApiInstruction> Instructions {get;}
 
@@ -32,7 +32,7 @@ namespace Z0.Asm
             }
             else
             {
-                OpId = OpIdentity.Empty;
+                OpId = _OpIdentity.Empty;
                 Instructions = default;
                 HostAddress = default;
                 BaseAddress = default;

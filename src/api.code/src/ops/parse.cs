@@ -16,8 +16,8 @@ namespace Z0
         {
             var count = src.Length;
             var buffer = span<byte>(Pow2.T16);
-            var host = ApiHostUri.Empty;
-            var dst = dict<ApiHostUri,CollectedCodeExtracts>();
+            var host = _ApiHostUri.Empty;
+            var dst = dict<_ApiHostUri,CollectedCodeExtracts>();
             var max = ByteSize.Zero;
             for(var i=0; i<count; i++)
             {
@@ -46,7 +46,7 @@ namespace Z0
             return parse(dst, log);
         }
 
-        static ConcurrentDictionary<ApiToken,ApiEncoded> parse(Dictionary<ApiHostUri,CollectedCodeExtracts> src, WfEmit log)
+        static ConcurrentDictionary<ApiToken,ApiEncoded> parse(Dictionary<_ApiHostUri,CollectedCodeExtracts> src, WfEmit log)
         {
             var flow = log.Running(Msg.ParsingHosts.Format(src.Count));
             var buffer = sys.alloc<byte>(Pow2.T14);

@@ -12,7 +12,7 @@ namespace Z0
         /// <summary>
         /// The name of the measured operation
         /// </summary>
-        public readonly OpIdentity OpId;
+        public readonly _OpIdentity OpId;
 
         /// <summary>
         /// Either the invocation count or the number of discrete operations performed
@@ -27,23 +27,23 @@ namespace Z0
         public static BenchmarkRecord Empty => new BenchmarkRecord(0, Duration.Zero,string.Empty);
 
         [MethodImpl(Inline)]
-        public static BenchmarkRecord Capture(OpIdentity op, long opcount, in SystemCounter clock)
+        public static BenchmarkRecord Capture(_OpIdentity op, long opcount, in SystemCounter clock)
             => new BenchmarkRecord(op, opcount, clock.Elapsed());
 
         [MethodImpl(Inline)]
-        public static implicit operator BenchmarkRecord(in (OpIdentity op, long opcount, SystemCounter clock)  src)
+        public static implicit operator BenchmarkRecord(in (_OpIdentity op, long opcount, SystemCounter clock)  src)
             => Capture(src.op,src.opcount, src.clock);
 
         [MethodImpl(Inline)]
         public static implicit operator BenchmarkRecord((string opName, long opCount, SystemCounter clock) src)
-            => Capture(OpIdentity.define(src.opName), src.opCount, src.clock);
+            => Capture(_OpIdentity.define(src.opName), src.opCount, src.clock);
 
         [MethodImpl(Inline)]
         public static BenchmarkRecord Define(long count, Duration timing, string label)
-            => new BenchmarkRecord(OpIdentity.define(label), count, timing);
+            => new BenchmarkRecord(_OpIdentity.define(label), count, timing);
 
         [MethodImpl(Inline)]
-        BenchmarkRecord(OpIdentity id, long opcount, Duration elapsed)
+        BenchmarkRecord(_OpIdentity id, long opcount, Duration elapsed)
         {
             OpId = id;
             OpCount = opcount;
@@ -53,7 +53,7 @@ namespace Z0
         [MethodImpl(Inline)]
         BenchmarkRecord(long count, Duration timing, string Label)
         {
-            this.OpId = OpIdentity.define(Label ?? "?");
+            this.OpId = _OpIdentity.define(Label ?? "?");
             this.OpCount = count;
             this.Timing = timing;
         }

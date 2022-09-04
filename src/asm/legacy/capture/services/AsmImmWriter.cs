@@ -10,14 +10,14 @@ namespace Z0.Asm
     {
         public IWfRuntime Wf {get;}
 
-        public ApiHostUri Uri {get;}
+        public _ApiHostUri Uri {get;}
 
         readonly IImmArchive Target;
 
         readonly AsmFormatConfig Config;
 
         [MethodImpl(Inline)]
-        public AsmImmWriter(IWfRuntime wf, in ApiHostUri host, IApiPack dst)
+        public AsmImmWriter(IWfRuntime wf, in _ApiHostUri host, IApiPack dst)
         {
             Wf = wf;
             Uri = host;
@@ -25,7 +25,7 @@ namespace Z0.Asm
             Config = AsmFormatConfig.@default(out var _);
         }
 
-        public Option<FilePath> SaveAsmImm(OpIdentity id, AsmRoutine[] src, bool append, bool refined)
+        public Option<FilePath> SaveAsmImm(_OpIdentity id, AsmRoutine[] src, bool append, bool refined)
         {
             var dst = Target.AsmImmPath(Uri.Part, Uri, id, refined);
             using var writer = dst.Writer(append);
@@ -38,7 +38,7 @@ namespace Z0.Asm
             return dst;
         }
 
-        public ApiCodeset SaveHexImm(OpIdentity id, AsmRoutine[] src, bool append, bool refined)
+        public ApiCodeset SaveHexImm(_OpIdentity id, AsmRoutine[] src, bool append, bool refined)
         {
             if(src.Length == 0)
                 return ApiCodeset.Empty;

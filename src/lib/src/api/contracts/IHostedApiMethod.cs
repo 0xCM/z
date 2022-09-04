@@ -9,7 +9,7 @@ namespace Z0
     {
         new IApiHost Host {get;}
 
-        ApiHostUri IApiMethod.Host
+        _ApiHostUri IApiMethod.Host
             => Host.HostUri;
     }
 }

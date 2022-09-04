@@ -15,6 +15,6 @@ namespace Z0
 
         public MemoryAddress RuntimeAddress;
 
-        public OpUri Id;
+        public _OpUri Id;
     }
 }

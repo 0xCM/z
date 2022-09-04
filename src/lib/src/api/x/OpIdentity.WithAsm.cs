@@ -11,7 +11,7 @@ namespace Z0
         /// Enables the assembly indicator
         /// </summary>
         [Op]
-        public static OpIdentity WithAsm(this OpIdentity src)
+        public static _OpIdentity WithAsm(this _OpIdentity src)
         {
             if(src.IdentityText.Contains(IDI.AsmLocator))
                 return src;

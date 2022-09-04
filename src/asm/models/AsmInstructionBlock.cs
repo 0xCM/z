@@ -22,7 +22,7 @@ namespace Z0.Asm
         public ApiCodeBlock Code {get;}
 
         [MethodImpl(Inline)]
-        internal AsmInstructionBlock(OpUri uri, IceInstruction[] src, BinaryCode code)
+        internal AsmInstructionBlock(_OpUri uri, IceInstruction[] src, BinaryCode code)
         {
             _Instructions = src;
             if(_Instructions.IsNonEmpty)
@@ -31,7 +31,7 @@ namespace Z0.Asm
                 Code = ApiCodeBlock.Empty;
         }
 
-        public OpUri Uri => Code.OpUri;
+        public _OpUri Uri => Code.OpUri;
 
         public ReadOnlySpan<IceInstruction> Instructions
         {
@@ -104,6 +104,6 @@ namespace Z0.Asm
             => src._Instructions;
 
         public static AsmInstructionBlock Empty
-            => new AsmInstructionBlock(OpUri.Empty, sys.empty<IceInstruction>(), BinaryCode.Empty);
+            => new AsmInstructionBlock(_OpUri.Empty, sys.empty<IceInstruction>(), BinaryCode.Empty);
     }
 }

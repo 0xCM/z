@@ -14,7 +14,7 @@ namespace Z0
 
             public static Bfly<N,T> Op => default;
 
-            public OpIdentity Id
+            public _OpIdentity Id
                 => SFxIdentity.identity<N,T>(Name);
 
             [MethodImpl(Inline)]

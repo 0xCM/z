@@ -11,7 +11,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">The source delegate</param>
         [Op]
-        public static OpIdentity identify(Delegate src)
+        public static _OpIdentity identify(Delegate src)
             => identify(src.Method);
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">The source method</param>
         [Op]
-        public static OpIdentity identify(MethodInfo src)
+        public static _OpIdentity identify(MethodInfo src)
         {
             if(src.IsOpenGeneric())
                 return generic(src).Generalize();
@@ -40,7 +40,7 @@ namespace Z0
         }
 
         [Op]
-        static OpIdentity identify(MethodInfo src, NumericKind k)
+        static _OpIdentity identify(MethodInfo src, NumericKind k)
         {
             var t = k.ToSystemType();
             if(src.IsOpenGeneric() && t.IsNonEmpty())

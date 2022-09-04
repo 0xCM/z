@@ -7,7 +7,7 @@ namespace Z0
     partial class Dynop
     {
         [Op]
-        internal static CellDelegate EmitCellular(this IntPtr src, OpIdentity id, Type functype, Type result, params Type[] args)
+        internal static CellDelegate EmitCellular(this IntPtr src, _OpIdentity id, Type functype, Type result, params Type[] args)
         {
             var method = new DynamicMethod(id, result, args, functype.Module);
             var g = method.GetILGenerator();

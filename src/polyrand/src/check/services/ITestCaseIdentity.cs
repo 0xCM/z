@@ -12,7 +12,7 @@ namespace Z0
         /// Produces a test case name predicated on an operation identity
         /// </summary>
         /// <param name="id">Identifies the operation under test</param>
-        string name(OpIdentity id)
+        string name(_OpIdentity id)
             => TestCaseIdentity.from(HostType, id);
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Z0
         /// </summary>
         /// <param name="f">The left operation</param>
         /// <param name="g">The right operation</param>
-        string match(OpIdentity f, OpIdentity g)
+        string match(_OpIdentity f, _OpIdentity g)
             => TestCaseIdentity.match(HostType, f, g);
     }
 }

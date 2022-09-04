@@ -40,13 +40,13 @@ namespace Z0
     /// Characterizes a service that attempts to assign a reasonable identity to a method
     /// </summary>
     [Free]
-    public interface IMethodIdentityDiviner : IIdentityDiviner<MethodInfo,OpIdentity>
+    public interface IMethodIdentityDiviner : IIdentityDiviner<MethodInfo,_OpIdentity>
     {
 
     }
 
     [Free]
-    public interface IDelegateIdentityDiviner : IIdentityDiviner<Delegate,OpIdentity>
+    public interface IDelegateIdentityDiviner : IIdentityDiviner<Delegate,_OpIdentity>
     {
 
     }
@@ -54,7 +54,7 @@ namespace Z0
     [Free]
     public interface IMultiDiviner : ITypeIdentityDiviner, IMethodIdentityDiviner, IDelegateIdentityDiviner
     {
-        OpIdentity Identify(MethodInfo src)
+        _OpIdentity Identify(MethodInfo src)
             => DivineIdentity(src);
 
         TypeIdentity Identify(Type src)

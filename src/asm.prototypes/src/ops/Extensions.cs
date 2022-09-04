@@ -14,7 +14,7 @@ namespace Z0.Asm
         [ApiHost(prototypes + extensions)]
         public readonly struct Extensions
         {
-            public static ApiHostUri Uri => typeof(Extensions).ApiHostUri();
+            public static _ApiHostUri Uri => typeof(Extensions).ApiHostUri();
 
             [MethodImpl(Inline), Op]
             public static ushort extend_u16(byte u8)

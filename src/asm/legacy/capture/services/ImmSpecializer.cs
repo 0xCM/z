@@ -30,7 +30,7 @@ namespace Z0.Asm
             Dynamic = Dynops.Dynexus;
         }
 
-        public Option<AsmRoutine> UnaryOp(in CaptureExchange exchange, MethodInfo src, OpIdentity id, byte imm8)
+        public Option<AsmRoutine> UnaryOp(in CaptureExchange exchange, MethodInfo src, _OpIdentity id, byte imm8)
         {
             var width = VK.width(src.ReturnType);
             var f = Dynamic.CreateUnaryOp(width, src, imm8).OnNone(() => OnEmbeddingFailure(src));
@@ -43,7 +43,7 @@ namespace Z0.Asm
                 return Option.none<AsmRoutine>();
         }
 
-        public AsmRoutine[] UnaryOps(in CaptureExchange exchange, MethodInfo src, OpIdentity id, params Imm8R[] imm8r)
+        public AsmRoutine[] UnaryOps(in CaptureExchange exchange, MethodInfo src, _OpIdentity id, params Imm8R[] imm8r)
         {
             var count = imm8r.Length;
             var buffer = alloc<AsmRoutine>(count);
@@ -54,7 +54,7 @@ namespace Z0.Asm
             return buffer;
         }
 
-        public Option<AsmRoutine> BinaryOp(in CaptureExchange exchange, MethodInfo src, OpIdentity id, byte imm8)
+        public Option<AsmRoutine> BinaryOp(in CaptureExchange exchange, MethodInfo src, _OpIdentity id, byte imm8)
         {
             var width = VK.width(src.ReturnType);
             var f = Dynamic.CreateBinaryOp(width,src, imm8).OnNone(() => OnEmbeddingFailure(src));
@@ -67,7 +67,7 @@ namespace Z0.Asm
                 return Option.none<AsmRoutine>();
         }
 
-        public AsmRoutine[] BinaryOps(in CaptureExchange exchange, MethodInfo src, OpIdentity id, params Imm8R[] imm8r)
+        public AsmRoutine[] BinaryOps(in CaptureExchange exchange, MethodInfo src, _OpIdentity id, params Imm8R[] imm8r)
         {
             var count = imm8r.Length;
             var buffer = alloc<AsmRoutine>(count);
@@ -150,7 +150,7 @@ namespace Z0.Asm
         //     return buffer;
         // }
 
-        static void OnCaptureFailed(OpIdentity id)
+        static void OnCaptureFailed(_OpIdentity id)
             => term.error($"Capture failure for {id}");
 
         static void OnEmbeddingFailure(MethodInfo src)

@@ -7,7 +7,7 @@ namespace Z0
     public readonly struct V128Imm8UnaryResolver<T> : IImm8UnaryResolver128<T>
         where T : unmanaged
     {
-        OpIdentity id => default;
+        _OpIdentity id => default;
 
         public Type Host {get;}
 
@@ -19,7 +19,7 @@ namespace Z0
         public DynamicDelegate<UnaryOp<Vector128<T>>> @delegate(byte count)
             => Dynop.EmbedVUnaryOpImm<T>(VK.vk128<T>(), id, gApiMethod(VK.vk128<T>(), id.Name),count);
 
-        public DynamicDelegate<UnaryOp<Vector128<T>>> @delegate(byte count, OpIdentity id)
+        public DynamicDelegate<UnaryOp<Vector128<T>>> @delegate(byte count, _OpIdentity id)
             => Dynop.EmbedVUnaryOpImm<T>(VK.vk128<T>(), id, gApiMethod(VK.vk128<T>(), id.Name),count);
 
         static string name(ApiClassKind k)

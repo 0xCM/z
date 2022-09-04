@@ -3,6 +3,7 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 global using static global.literals;
+global using static global.sys;
 namespace global
 {
     [ApiComplete(ApiName)]

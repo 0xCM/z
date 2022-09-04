@@ -61,7 +61,7 @@ namespace Z0
         public string Bitstring;
 
         [Render(80)]
-        public OpUri OpUri;
+        public _OpUri OpUri;
 
         [MethodImpl(Inline)]
         public ref readonly AsmHexCode AsmHex(out AsmHexCode hex)

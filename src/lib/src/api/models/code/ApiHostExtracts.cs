@@ -6,12 +6,12 @@ namespace Z0
 {
     public readonly struct ApiHostExtracts : IIndex<ApiMemberExtract>
     {
-        public ApiHostUri Host {get;}
+        public _ApiHostUri Host {get;}
 
         readonly Index<ApiMemberExtract> Blocks;
 
         [MethodImpl(Inline)]
-        public ApiHostExtracts(ApiHostUri host, Index<ApiMemberExtract> blocks)
+        public ApiHostExtracts(_ApiHostUri host, Index<ApiMemberExtract> blocks)
         {
             Host = host;
             Blocks = blocks;

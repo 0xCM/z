@@ -10,7 +10,7 @@ namespace Z0
         /// Assigns host-independent api member identity to a nongeneric method
         /// </summary>
         /// <param name="src">The source method</param>
-        public static OpIdentity nongeneric(MethodInfo src)
+        public static _OpIdentity nongeneric(MethodInfo src)
         {
             if(src.IsGenericMethod || src.IsConstructedGenericMethod || src.IsGenericMethodDefinition)
                 Throw.e(AppErrors.GenericMethod(src));

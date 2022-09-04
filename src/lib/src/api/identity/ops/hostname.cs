@@ -6,11 +6,11 @@ namespace Z0
 {
     partial struct ApiIdentity
     {
-        public static ApiHostUri host(Type t)
-            => new ApiHostUri(t.Assembly.Id(), hostname(t));
+        public static _ApiHostUri host(Type t)
+            => new _ApiHostUri(t.Assembly.Id(), hostname(t));
 
-        public static ApiHostUri host(PartId part, string name)
-            => new ApiHostUri(part,name);
+        public static _ApiHostUri host(PartId part, string name)
+            => new _ApiHostUri(part,name);
 
         public static string hostname(Type t)
         {

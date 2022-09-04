@@ -10,7 +10,7 @@ namespace Z0
     [Free, SFx]
     public interface IBlockedFunc : IFunc
     {
-        OpIdentity IFunc.Id => OpIdentity.Empty;
+        _OpIdentity IFunc.Id => _OpIdentity.Empty;
     }
 
     /// <summary>

@@ -14,22 +14,22 @@ namespace Z0
 
     public readonly struct ApiMemberIndex : IApiOpIndex<ApiMember>
     {
-        readonly Dictionary<OpIdentity,ApiMember> Data;
+        readonly Dictionary<_OpIdentity,ApiMember> Data;
 
-        readonly OpIdentity[] Duplicates;
+        readonly _OpIdentity[] Duplicates;
 
         [MethodImpl(Inline)]
-        public ApiMemberIndex(Dictionary<OpIdentity, ApiMember> index, OpIdentity[] duplicates)
+        public ApiMemberIndex(Dictionary<_OpIdentity, ApiMember> index, _OpIdentity[] duplicates)
         {
             Data = index;
             Duplicates = duplicates;
         }
 
         [MethodImpl(Inline)]
-        public bool Lookup(OpIdentity id, out ApiMember dst)
+        public bool Lookup(_OpIdentity id, out ApiMember dst)
             => Data.TryGetValue(id, out dst);
 
-        public ApiMember this[OpIdentity id]
+        public ApiMember this[_OpIdentity id]
         {
             [MethodImpl(Inline)]
             get
@@ -44,19 +44,19 @@ namespace Z0
         public int EntryCount
             => Data.Count;
 
-        public IEnumerable<(OpIdentity, ApiMember)> Enumerated
+        public IEnumerable<(_OpIdentity, ApiMember)> Enumerated
             => Data.Select(kvp => (kvp.Key, kvp.Value));
 
-        public IEnumerable<OpIdentity> Keys
+        public IEnumerable<_OpIdentity> Keys
             => Data.Keys;
 
-        public IReadOnlyList<OpIdentity> DuplicateKeys
+        public IReadOnlyList<_OpIdentity> DuplicateKeys
             => Duplicates;
 
-        IEnumerable<KeyedValue<OpIdentity,ApiMember>> KeyedValues
+        IEnumerable<KeyedValue<_OpIdentity,ApiMember>> KeyedValues
             => Data.Select(x => kvp(x.Key, x.Value));
 
-        public IEnumerator<KeyedValue<OpIdentity, ApiMember>> GetEnumerator()
+        public IEnumerator<KeyedValue<_OpIdentity, ApiMember>> GetEnumerator()
             => KeyedValues.GetEnumerator();
     }
 }

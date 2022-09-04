@@ -8,7 +8,7 @@ namespace Z0
 
     partial class XTend
     {
-        public static OpUri Uri(this MethodInfo src)
+        public static _OpUri Uri(this MethodInfo src)
             => ApiIdentity.from(src);
     }
 
@@ -20,7 +20,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">The source identity</param>
         [MethodImpl(Inline), Op]
-        public static Option<byte> imm8(OpIdentity src)
+        public static Option<byte> imm8(_OpIdentity src)
         {
             if(src.HasImm && byte.TryParse(src.IdentityText.RightOfLast(IDI.Imm), out var immval))
                 return immval;
@@ -29,31 +29,31 @@ namespace Z0
         }
 
         [Op]
-        public static OpUri from(MethodInfo src)
+        public static _OpUri from(MethodInfo src)
             => define(ApiUriScheme.Located, ApiIdentity.host(src.DeclaringType), src.Name, ApiIdentity.identify(src));
 
         [Op]
-        public static OpUri define(ApiUriScheme scheme, ApiHostUri host, string group, OpIdentity opid)
-            => new OpUri(host, opid, BuildUriText(scheme, host, group, opid));
+        public static _OpUri define(ApiUriScheme scheme, _ApiHostUri host, string group, _OpIdentity opid)
+            => new _OpUri(host, opid, BuildUriText(scheme, host, group, opid));
 
         [Op]
-        public static OpUri hex(ApiHostUri host, string group, OpIdentity opid)
-            => new OpUri(host, opid, BuildUriText(ApiUriScheme.Hex, host, group, opid));
+        public static _OpUri hex(_ApiHostUri host, string group, _OpIdentity opid)
+            => new _OpUri(host, opid, BuildUriText(ApiUriScheme.Hex, host, group, opid));
 
         [Op]
         public static string QueryText(ApiUriScheme scheme, PartName part, string host, string group)
             => $"{scheme.Format()}{IDI.EndOfScheme}{part.Format()}{IDI.UriPathSep}{host}{IDI.UriQuery}{group}";
 
         [Op]
-        public static string FullUriText(ApiUriScheme scheme, PartName part, string host, string group, OpIdentity opid)
+        public static string FullUriText(ApiUriScheme scheme, PartName part, string host, string group, _OpIdentity opid)
             => $"{scheme.Format()}{IDI.EndOfScheme}{part.Format()}{IDI.UriPathSep}{host}{IDI.UriQuery}{group}{IDI.UriFragment}{opid.IdentityText}";
 
         public static ApiUriScheme scheme(string src)
             => Enum.TryParse(typeof(ApiUriScheme), src, true, out var result) ? (ApiUriScheme)result : ApiUriScheme.None;
 
-        public static ParseResult<ApiHostUri> host(string src)
+        public static ParseResult<_ApiHostUri> host(string src)
         {
-            var failure = ParseResult.unparsed<ApiHostUri>(src);
+            var failure = ParseResult.unparsed<_ApiHostUri>(src);
             if(blank(src))
                 return failure;
 
@@ -69,78 +69,26 @@ namespace Z0
             if(blank(host))
                 return failure.WithReason("Host unspecified");
 
-            return ParseResult.parsed(src, new ApiHostUri(owner, host));
+            return ParseResult.parsed(src, new _ApiHostUri(owner, host));
         }
 
-        // public static Outcome host(string src, out ApiHostUri dst)
-        // {
-        //     var result = Outcome.Success;
-        //     dst = ApiHostUri.Empty;
-        //     if(blank(src))
-        //         return (false, "Empty input");
-
-        //     var parts = src.SplitClean(IDI.UriPathSep);
-        //     var count = parts.Length;
-        //     if(count != 2)
-        //         return (false,string.Concat("Component count ", count," != ", 2));
-
-        //     Enum.TryParse(skip(parts,0), true, out PartId part);
-        //     if(part == 0)
-        //         return (false, string.Format("Invalid part '{0}'", skip(parts,0)));
-
-        //     var host = skip(parts,1);
-        //     if(blank(host))
-        //         return (false, "Host unspecified");
-
-        //     dst = new ApiHostUri(part,host);
-
-        //     return result;
-        // }
-
-        // public static Outcome host2(string uri, out ApiHostUri dst)
-        // {
-        //     const string UriMarker = "://";
-        //     var result = Outcome.Failure;
-        //     dst = ApiHostUri.Empty;
-        //     var i = text.index(uri,UriMarker);
-        //     if(i > 0)
-        //     {
-        //         var j = text.index(uri, Chars.Question);
-        //         if(j > i)
-        //         {
-        //             var x = text.inside(uri,i + UriMarker.Length - 1, j);
-        //             var components = text.split(x,Chars.FSlash);
-        //             if(components.Length == 2)
-        //             {
-        //                 var part = ApiParsers.part(skip(components,0));
-        //                 dst = ApiIdentity.host(part, skip(components,1));
-        //                 result = true;
-        //             }
-        //         }
-        //     }
-        //     return result;
-        // }
-
-        // public static OpIdentity opid_define(string src)
-        //     => new OpIdentity(OpIdentity.safe(src));
-
         [Op]
-        public static OpIdentity opid(string src)
+        public static _OpIdentity opid(string src)
         {
             try
             {
                 if(empty(src))
-                    return OpIdentity.Empty;
+                    return _OpIdentity.Empty;
 
-                var name = OpIdentity.safe(text.trim(src.TakeBefore(IDI.PartSep)));
+                var name = _OpIdentity.safe(text.trim(src.TakeBefore(IDI.PartSep)));
                 var suffixed = src.Contains(IDI.SuffixSep);
                 var suffix = text.trim(suffixed ? src.TakeAfter(IDI.SuffixSep) : EmptyString);
                 var _generic = src.TakeAfter(IDI.PartSep);
                 var generic =  nonempty(_generic) ? _generic[0] == IDI.Generic : false;
                 var imm = suffix.Contains(IDI.Imm);
-                var components = core.map(src.SplitClean(IDI.PartSep), OpIdentity.safe);
-                var data = OpIdentity.safe(text.trim(src));
-                return new OpIdentity(data, name, suffix, generic, imm, components);
+                var components = core.map(src.SplitClean(IDI.PartSep), _OpIdentity.safe);
+                var data = _OpIdentity.safe(text.trim(src));
+                return new _OpIdentity(data, name, suffix, generic, imm, components);
             }
             catch(Exception)
             {
@@ -148,19 +96,19 @@ namespace Z0
             }
         }
 
-        public static ParseResult<OpUri> parse(string src)
+        public static ParseResult<_OpUri> parse(string src)
         {
             var parts = src.SplitClean(IDI.EndOfScheme);
             var msg = string.Empty;
             if(parts.Length != 2)
-                return ParseResult.unparsed<OpUri>(src, $"Splitting on {IDI.EndOfScheme} produced {parts.Length} pieces");
+                return ParseResult.unparsed<_OpUri>(src, $"Splitting on {IDI.EndOfScheme} produced {parts.Length} pieces");
 
             var uriScheme = scheme(parts[0]);
             var rest = parts[1];
             var pathText = rest.TakeBefore(IDI.UriQuery);
             var path = host(pathText);
             if(path.Failed)
-                return ParseResult.unparsed<OpUri>(src, $"{path.Message}");
+                return ParseResult.unparsed<_OpUri>(src, $"{path.Message}");
 
             var id = opid(rest.TakeAfter(IDI.UriFragment));
             var group = rest.Between(IDI.UriQuery,IDI.UriFragment);
@@ -169,7 +117,7 @@ namespace Z0
         }
 
         [Parser]
-        public static Outcome parse(string src, out OpUri dst)
+        public static Outcome parse(string src, out _OpUri dst)
         {
             var result = parse(src);
             if(result)
@@ -179,7 +127,7 @@ namespace Z0
             }
             else
             {
-                dst = OpUri.Empty;
+                dst = _OpUri.Empty;
                 return false;
             }
         }
@@ -211,7 +159,7 @@ namespace Z0
         /// <param name="group"></param>
         /// <param name="opid"></param>
         [Op]
-        static string BuildUriText(ApiUriScheme scheme, ApiHostUri host, string group, OpIdentity opid)
+        static string BuildUriText(ApiUriScheme scheme, _ApiHostUri host, string group, _OpIdentity opid)
             => (opid.IsEmpty
                 ? QueryText(scheme, host.Part, host.HostName, group)
                 : FullUriText(scheme, host.Part, host.HostName, group, opid)).Trim();

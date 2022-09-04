@@ -20,7 +20,7 @@ namespace Z0
         public DynamicFunctions(IMethodBodyEmitter emitter)
             => BodyEmitter = emitter;
 
-        public CellDelegate Emit(OpIdentity id, Type functype, Type result, Type[] args, MemoryAddress dst)
+        public CellDelegate Emit(_OpIdentity id, Type functype, Type result, Type[] args, MemoryAddress dst)
         {
             var method = new DynamicMethod(id, result, args, functype.Module);
             var g = BodyEmitter.Emit(method);
@@ -30,7 +30,7 @@ namespace Z0
             return CellDelegates.define(id, dst, method, method.CreateDelegate(functype));
         }
 
-        public CellDelegate Emit(OpIdentity id, Type functype, Type result, Type[] args, Span<byte> buffer)
+        public CellDelegate Emit(_OpIdentity id, Type functype, Type result, Type[] args, Span<byte> buffer)
         {
             var method = new DynamicMethod(id, result, args, functype.Module);
             var g = BodyEmitter.Emit(method);

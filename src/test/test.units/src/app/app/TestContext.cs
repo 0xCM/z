@@ -152,7 +152,7 @@ namespace Z0
             where C : unmanaged
                 => Context.name<C>(root);
 
-        protected string CaseName(OpIdentity id)
+        protected string CaseName(_OpIdentity id)
             => Context.name(id);
 
         protected string CaseName<W,C>([CallerName] string label = null, W w = default, C t = default, bool generic = true)

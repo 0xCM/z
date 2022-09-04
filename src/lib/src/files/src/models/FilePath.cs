@@ -214,7 +214,7 @@ namespace Z0
             get => new FilePath(PathPart.Empty);
         }
 
-        public static implicit operator LocalUri(FilePath src)
-            => new LocalUri(src.ToUri().Format());
+        public static implicit operator FileUri(FilePath src)
+            => new FileUri(src.ToUri().Format());
     }
 }

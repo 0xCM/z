@@ -61,7 +61,7 @@ namespace Z0
         {
             var buffer = text.buffer();
             var k = 0u;
-            var emitted = cdict<ApiHostUri,FilePath>();
+            var emitted = cdict<_ApiHostUri,FilePath>();
             for(var i=0; i<src.Length; i++)
             {
                 ref readonly var host = ref skip(src, i);

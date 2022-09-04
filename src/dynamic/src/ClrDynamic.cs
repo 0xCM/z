@@ -26,7 +26,7 @@ namespace Z0
         }
 
         [Op]
-        public static ApiMsil msil(MemoryAddress @base, OpUri uri, MethodInfo src)
+        public static ApiMsil msil(MemoryAddress @base, _OpUri uri, MethodInfo src)
             => new ApiMsil(src.MetadataToken, @base, src.DisplaySig(), uri, src.ResolveSignature(), src.GetMethodBody().GetILAsByteArray(), src.GetMethodImplementationFlags());
 
         [MethodImpl(Inline), Op]

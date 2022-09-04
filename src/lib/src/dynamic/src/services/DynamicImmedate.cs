@@ -18,7 +18,7 @@ namespace Z0
                 owner: owner,
                 skipVisibility: false);
 
-        public static DynamicDelegate EmbedV128UnaryOpImm(MethodInfo src, byte imm8, OpIdentity id)
+        public static DynamicDelegate EmbedV128UnaryOpImm(MethodInfo src, byte imm8, _OpIdentity id)
         {
             Require.invariant(src.ReturnType.IsVector(), () => $"Method {src.Name} does not return a vector value");
             var tCell = src.ReturnType.SuppliedTypeArgs().Single();
@@ -31,7 +31,7 @@ namespace Z0
             return Delegates.dynamic(idTarget, wrapped, target, tWrapper);
         }
 
-        public static DynamicDelegate EmbedV256UnaryOpImm(MethodInfo src, byte imm8, OpIdentity id)
+        public static DynamicDelegate EmbedV256UnaryOpImm(MethodInfo src, byte imm8, _OpIdentity id)
         {
             Require.invariant(src.ReturnType.IsVector(), () => $"Method {src.Name} does not return a vector value");
             var tCell = src.ReturnType.SuppliedTypeArgs().Single();
@@ -44,7 +44,7 @@ namespace Z0
             return Delegates.dynamic(idTarget, wrapped, target, tWrapper);
         }
 
-        public static DynamicDelegate EmbedV128BinaryOpImm(MethodInfo src, byte imm8, OpIdentity id)
+        public static DynamicDelegate EmbedV128BinaryOpImm(MethodInfo src, byte imm8, _OpIdentity id)
         {
             Require.invariant(src.ReturnType.IsVector(), () => $"Method {src.Name} does not return a vector value");
             var tCell = src.ReturnType.SuppliedTypeArgs().Single();
@@ -57,7 +57,7 @@ namespace Z0
             return Delegates.dynamic(idTarget, wrapped, target, tWrapper);
         }
 
-        public static DynamicDelegate EmbedV256BinaryOpImm(MethodInfo src, byte imm8, OpIdentity id)
+        public static DynamicDelegate EmbedV256BinaryOpImm(MethodInfo src, byte imm8, _OpIdentity id)
         {
             Require.invariant(src.ReturnType.IsVector(), () => $"Method {src.Name} does not return a vector value");
             var tCell = src.ReturnType.SuppliedTypeArgs().Single();
@@ -70,7 +70,7 @@ namespace Z0
             return Delegates.dynamic(idTarget, wrapped, target, tWrapper);
         }
 
-        public static Option<DynamicDelegate> EmbedVUnaryOpImm(MethodInfo src, byte imm8, OpIdentity id)
+        public static Option<DynamicDelegate> EmbedVUnaryOpImm(MethodInfo src, byte imm8, _OpIdentity id)
         {
             try
             {
@@ -88,19 +88,19 @@ namespace Z0
             }
         }
 
-        public static Option<DynamicDelegate> EmbedVUnaryOpImm(W128 w, MethodInfo src, byte imm8, OpIdentity id)
+        public static Option<DynamicDelegate> EmbedVUnaryOpImm(W128 w, MethodInfo src, byte imm8, _OpIdentity id)
             => Option.Try(() => EmbedV128UnaryOpImm(src, imm8, id));
 
-        public static Option<DynamicDelegate> EmbedVUnaryOpImm(W256 w, MethodInfo src, byte imm8, OpIdentity id)
+        public static Option<DynamicDelegate> EmbedVUnaryOpImm(W256 w, MethodInfo src, byte imm8, _OpIdentity id)
             => Option.Try(() => EmbedV256UnaryOpImm(src, imm8, id));
 
-        public static Option<DynamicDelegate> EmbedVBinaryOpImm(W128 w, MethodInfo src, byte imm8, OpIdentity id)
+        public static Option<DynamicDelegate> EmbedVBinaryOpImm(W128 w, MethodInfo src, byte imm8, _OpIdentity id)
             => Option.Try(() => EmbedV128BinaryOpImm(src, imm8, id));
 
-        public static Option<DynamicDelegate> EmbedVBinaryOpImm(W256 w, MethodInfo src, byte imm8, OpIdentity id)
+        public static Option<DynamicDelegate> EmbedVBinaryOpImm(W256 w, MethodInfo src, byte imm8, _OpIdentity id)
             => Option.Try(() => EmbedV256BinaryOpImm(src, imm8, id));
 
-        public static DynamicDelegate<UnaryOp<Vector128<T>>> EmbedVUnaryOpImm<T>(Vec128Kind<T> k, OpIdentity id, MethodInfo src, byte imm8)
+        public static DynamicDelegate<UnaryOp<Vector128<T>>> EmbedVUnaryOpImm<T>(Vec128Kind<T> k, _OpIdentity id, MethodInfo src, byte imm8)
             where T : unmanaged
         {
             var wrapped = src.Reify(typeof(T));
@@ -111,7 +111,7 @@ namespace Z0
             return Delegates.dynamic<UnaryOp<Vector128<T>>>(idTarget, wrapped, target);
         }
 
-        public static DynamicDelegate<UnaryOp<Vector256<T>>> EmbedVUnaryOpImm<T>(Vec256Kind<T> k, OpIdentity id, MethodInfo src, byte imm8)
+        public static DynamicDelegate<UnaryOp<Vector256<T>>> EmbedVUnaryOpImm<T>(Vec256Kind<T> k, _OpIdentity id, MethodInfo src, byte imm8)
             where T : unmanaged
         {
             var wrapped = src.Reify(typeof(T));
@@ -122,7 +122,7 @@ namespace Z0
             return Delegates.dynamic<UnaryOp<Vector256<T>>>(idTarget, wrapped, target);
         }
 
-        public static DynamicDelegate<BinaryOp<Vector128<T>>> EmbedVBinaryOpImm<T>(Vec128Kind<T> k, OpIdentity id, MethodInfo src, byte imm8)
+        public static DynamicDelegate<BinaryOp<Vector128<T>>> EmbedVBinaryOpImm<T>(Vec128Kind<T> k, _OpIdentity id, MethodInfo src, byte imm8)
             where T : unmanaged
         {
             var wrapped = src.Reify(typeof(T));
@@ -133,7 +133,7 @@ namespace Z0
             return Delegates.dynamic<BinaryOp<Vector128<T>>>(idTarget, wrapped, target);
         }
 
-        public static DynamicDelegate<UnarySpanOp128<T>> EmbedBlockedUnaryOpImm<T>(W128 w, OpIdentity id, MethodInfo src, byte imm8)
+        public static DynamicDelegate<UnarySpanOp128<T>> EmbedBlockedUnaryOpImm<T>(W128 w, _OpIdentity id, MethodInfo src, byte imm8)
             where T : unmanaged
         {
             var wrapped = src.Reify(typeof(T));

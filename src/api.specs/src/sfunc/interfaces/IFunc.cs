@@ -20,8 +20,8 @@ namespace Z0
         /// <summary>
         /// The operation identity
         /// </summary>
-        OpIdentity Id
-            => OpIdentity.define(Name);
+        _OpIdentity Id
+            => _OpIdentity.define(Name);
     }
 
     /// <summary>

@@ -21,7 +21,7 @@ namespace Z0
         /// <param name="t">An operand type representative to aid type inference</param>
         /// <typeparam name="T">The operand type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static UnaryOp<T> unary<T>(D.UnaryOp<T> f, OpIdentity id, T t = default)
+        public static UnaryOp<T> unary<T>(D.UnaryOp<T> f, _OpIdentity id, T t = default)
             => new UnaryOp<T>(f,id);
 
         /// <summary>

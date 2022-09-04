@@ -14,7 +14,7 @@ namespace Z0.Asm
         /// <summary>
         /// The defining host
         /// </summary>
-        public ApiHostUri Uri {get;}
+        public _ApiHostUri Uri {get;}
 
         /// <summary>
         /// The base address of the first member, where members are ordered by their individual base addresses
@@ -32,7 +32,7 @@ namespace Z0.Asm
         public uint InstructionCount {get;}
 
         [MethodImpl(Inline)]
-        public ApiHostRoutines(ApiHostUri host, ApiHostRoutine[] src)
+        public ApiHostRoutines(_ApiHostUri host, ApiHostRoutine[] src)
         {
             Uri = host;
             Members = src.OrderBy(x => x.BaseAddress).ToArray();

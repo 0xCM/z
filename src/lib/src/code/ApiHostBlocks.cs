@@ -15,7 +15,7 @@ namespace Z0
         /// <summary>
         /// The defining host
         /// </summary>
-        public readonly ApiHostUri Host;
+        public readonly _ApiHostUri Host;
 
         /// <summary>
         /// The host-owned code
@@ -23,7 +23,7 @@ namespace Z0
         readonly ApiCodeBlock[] Data;
 
         [MethodImpl(Inline)]
-        public ApiHostBlocks(ApiHostUri host, ApiCodeBlock[] code)
+        public ApiHostBlocks(_ApiHostUri host, ApiCodeBlock[] code)
         {
             Host = host;
             Data = core.require(code).OrderBy(x => x.BaseAddress);
@@ -95,7 +95,7 @@ namespace Z0
         public static ApiHostBlocks Empty
         {
             [MethodImpl(Inline)]
-            get => new ApiHostBlocks(ApiHostUri.Empty, core.array<ApiCodeBlock>());
+            get => new ApiHostBlocks(_ApiHostUri.Empty, core.array<ApiCodeBlock>());
         }
     }
 }

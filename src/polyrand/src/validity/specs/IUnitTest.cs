@@ -10,7 +10,7 @@ namespace Z0
 
         void InjectShell(IWfRuntime wf);
 
-        ApiHostUri Host
+        _ApiHostUri Host
             => HostType.ApiHostUri();
     }
 }

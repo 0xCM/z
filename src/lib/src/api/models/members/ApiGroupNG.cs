@@ -14,7 +14,7 @@ namespace Z0
         /// <summary>
         /// The group identity
         /// </summary>
-        public readonly OpIdentity GroupId {get;}
+        public readonly _OpIdentity GroupId {get;}
 
         /// <summary>
         /// The delcaring host
@@ -27,7 +27,7 @@ namespace Z0
         public readonly Index<ApiMethodNG> Members {get;}
 
         [MethodImpl(Inline)]
-        public ApiGroupNG(OpIdentity group, IApiHost host, IEnumerable<ApiMethodNG> members)
+        public ApiGroupNG(_OpIdentity group, IApiHost host, IEnumerable<ApiMethodNG> members)
         {
             GroupId = group;
             Host = host;

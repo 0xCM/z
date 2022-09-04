@@ -34,7 +34,7 @@ namespace Z0
         /// <summary>
         /// The generalized identity
         /// </summary>
-        public OpIdentity Id
+        public _OpIdentity Id
             => GenericId.Generalize();
 
         /// <summary>

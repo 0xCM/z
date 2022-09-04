@@ -13,7 +13,7 @@ namespace Z0
             => new ApiCodeBlock(src.Address, src.Uri, src.Data);
             
         [Op]
-        public static ReadOnlySeq<ApiHostBlocks> apiblocks(FolderPath src, ReadOnlySpan<ApiHostUri> hosts)
+        public static ReadOnlySeq<ApiHostBlocks> apiblocks(FolderPath src, ReadOnlySpan<_ApiHostUri> hosts)
         {
             var dst = bag<ApiHostBlocks>();
             iter(hosts, host => dst.Add(apiblocks(host, src + host.FileName(FileKind.Csv))), AppData.get().PllExec());
@@ -21,7 +21,7 @@ namespace Z0
         }
 
         [Op]
-        public static ApiHostBlocks apiblocks(ApiHostUri host, FilePath src)
+        public static ApiHostBlocks apiblocks(_ApiHostUri host, FilePath src)
             => new ApiHostBlocks(host, apiblocks(src));
 
         [Op]

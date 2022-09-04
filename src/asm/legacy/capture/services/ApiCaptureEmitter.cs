@@ -21,20 +21,20 @@ namespace Z0
             
         }
 
-        public Index<ApiCodeRow> EmitApiHex(ApiHostUri host, Index<MemberCodeBlock> src, IApiPack dst)
+        public Index<ApiCodeRow> EmitApiHex(_ApiHostUri host, Index<MemberCodeBlock> src, IApiPack dst)
             => ApiCode.EmitApiHex(host, src.View, dst);
 
-        public Count EmitMsilCode(ApiHostUri host, Index<MemberCodeBlock> src, FilePath dst)
+        public Count EmitMsilCode(_ApiHostUri host, Index<MemberCodeBlock> src, FilePath dst)
         {
             if(src.Count != 0)
                 IlPipe.EmitCode(src, dst);
             return src.Count;
         }
 
-        public Index<MsilCapture> EmitMsilData(ApiHostUri host, Index<MemberCodeBlock> src, FilePath dst)
+        public Index<MsilCapture> EmitMsilData(_ApiHostUri host, Index<MemberCodeBlock> src, FilePath dst)
             => IlPipe.EmitData(src, dst);
 
-        public Index<ApiExtractRow> EmitExtracts(ApiHostUri host, Index<ApiMemberExtract> src, FilePath dst)
+        public Index<ApiExtractRow> EmitExtracts(_ApiHostUri host, Index<ApiMemberExtract> src, FilePath dst)
         {
             var count = src.Length;
             var blocks = src.Map(x => x.Block);
@@ -44,7 +44,7 @@ namespace Z0
             return emitted;
         }
 
-        AsmHostRoutines DecodeMembers(ApiHostUri host, Index<MemberCodeBlock> src, Index<ApiMemberExtract> extracts, FilePath dst)
+        AsmHostRoutines DecodeMembers(_ApiHostUri host, Index<MemberCodeBlock> src, Index<ApiMemberExtract> extracts, FilePath dst)
         {
             var decoded = HostEmitter.EmitHostRoutines(host, src, dst);
             if(decoded.Count != 0)

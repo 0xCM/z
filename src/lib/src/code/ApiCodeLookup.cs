@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class ApiCodeLookup : ConcurrentDictionary<OpUri,ApiCodeBlock>
+    public class ApiCodeLookup : ConcurrentDictionary<_OpUri,ApiCodeBlock>
     {
         public static ApiCodeLookup Empty => new ApiCodeLookup();
     }

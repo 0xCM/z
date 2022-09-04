@@ -24,10 +24,10 @@ namespace Z0.Asm
             get => Data.Select(x => x.Member);
         }
 
-        public ApiHostUri Host
+        public _ApiHostUri Host
         {
             [MethodImpl(Inline)]
-            get => Data.IsNonEmpty ? Data.First.Member.Host : ApiHostUri.Empty;
+            get => Data.IsNonEmpty ? Data.First.Member.Host : _ApiHostUri.Empty;
         }
 
         public uint Count

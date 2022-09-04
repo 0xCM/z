@@ -37,7 +37,7 @@ namespace Z0
             => create<T>(name, (MemoryAddress)pCode, out _);
 
         [Op, Closures(UInt64k)]
-        public static unsafe BinaryOp<T> create<T>(OpIdentity id, ReadOnlySpan<byte> code)
+        public static unsafe BinaryOp<T> create<T>(_OpIdentity id, ReadOnlySpan<byte> code)
             => create<T>(id.Format(), memory.liberate(code), out _);
 
         [Op, Closures(UInt64k)]

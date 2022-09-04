@@ -12,7 +12,7 @@ namespace Z0
     public readonly struct ClrJit
     {
         [Op]
-        public static ApiMember member(MethodInfo src, ApiHostUri host)
+        public static ApiMember member(MethodInfo src, _ApiHostUri host)
         {
             var uri = ApiIdentity.define(ApiUriScheme.Located, host, src.Name, MultiDiviner.Service.Identify(src));
             var address = jit(src);
@@ -20,7 +20,7 @@ namespace Z0
         }
 
         [Op]
-        public static ApiMember member(MethodInfo src, OpUri uri)
+        public static ApiMember member(MethodInfo src, _OpUri uri)
         {
             var address = ClrJit.jit(src);
             return new ApiMember(uri, src, address, ClrDynamic.msil(address, uri, src));

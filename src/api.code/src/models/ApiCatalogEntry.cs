@@ -25,6 +25,6 @@ namespace Z0
 
         public string HostName;
 
-        public OpUri OpUri;
+        public _OpUri OpUri;
     }
 }

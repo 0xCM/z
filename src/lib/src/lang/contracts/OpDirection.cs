@@ -6,7 +6,7 @@ namespace Z0
 {
     using NBK = NumericBaseKind;
 
-    [SymSource(api_contracts, NBK.Base16), Flags]
+    [SymSource("api", NBK.Base16), Flags]
     public enum OpDirection : byte
     {
         None = 0,

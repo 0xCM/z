@@ -6,7 +6,7 @@ namespace Z0
 {
     using System.Linq;
 
-    using LU = System.Collections.Generic.Dictionary<ApiHostUri,ApiHostBlocks>;
+    using LU = System.Collections.Generic.Dictionary<_ApiHostUri,ApiHostBlocks>;
 
     public readonly struct PartCodeIndex
     {
@@ -27,7 +27,7 @@ namespace Z0
         public PartCodeIndexEntry[] Entries
             => entries(this);
 
-        public bool HostCode(ApiHostUri host, out ApiHostBlocks code)
+        public bool HostCode(_ApiHostUri host, out ApiHostBlocks code)
         {
             if(Data.TryGetValue(host, out code))
                 return true;
@@ -44,13 +44,13 @@ namespace Z0
             get => Data.Count;
         }
 
-        public ApiHostUri[] Hosts
+        public _ApiHostUri[] Hosts
         {
             [MethodImpl(Inline)]
             get => Data.Keys.ToArray();
         }
 
-        public Index<ApiCodeBlock> this[ApiHostUri src]
+        public Index<ApiCodeBlock> this[_ApiHostUri src]
         {
             [MethodImpl(Inline)]
             get => Data[src].Blocks;

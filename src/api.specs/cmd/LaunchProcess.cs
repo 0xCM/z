@@ -7,7 +7,7 @@ namespace global.cmd
     public struct LaunchProcess
     {
 
-        public LocalUri Target;
+        public FileUri Target;
     }
     
 }

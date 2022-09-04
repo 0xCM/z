@@ -15,6 +15,6 @@ namespace Z0.Asm
         /// <param name="exchange">The selected exchange</param>
         /// <param name="id">The operation identity to confer</param>
         /// <param name="src">The dynamic delegate to capture</param>
-        Option<ApiCaptureBlock> Capture(in CaptureExchange exchange, OpIdentity id, in DynamicDelegate src);
+        Option<ApiCaptureBlock> Capture(in CaptureExchange exchange, _OpIdentity id, in DynamicDelegate src);
     }
 }

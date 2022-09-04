@@ -11,14 +11,14 @@ namespace Z0.Asm
 
     public readonly struct CapturedApiRes
     {
-        public ApiHostUri ApiHost {get;}
+        public _ApiHostUri ApiHost {get;}
 
         public SpanResAccessor Accessor {get;}
 
         public AsmRoutineCode Code {get;}
 
         [MethodImpl(Inline)]
-        public CapturedApiRes(ApiHostUri host, in SpanResAccessor accessor, in AsmRoutineCode code)
+        public CapturedApiRes(_ApiHostUri host, in SpanResAccessor accessor, in AsmRoutineCode code)
         {
             ApiHost = host;
             Accessor = accessor;

@@ -71,7 +71,7 @@ namespace Z0
 
         public string Bitstring;
 
-        public OpUri OpUri;
+        public _OpUri OpUri;
 
         public bool IsValid()
             => Expression.IsValid;

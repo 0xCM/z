@@ -4,14 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public struct LegalIdentityBuilder : IIdentityBuilder<string,OpIdentity>
+    public struct LegalIdentityBuilder : IIdentityBuilder<string,_OpIdentity>
     {
         [MethodImpl(Inline)]
         public static LegalIdentityBuilder service(LegalIdentityOptions options)
             => new LegalIdentityBuilder(options);
 
         [Op]
-        public static string legalize(in OpIdentity src, in LegalIdentityOptions options)
+        public static string legalize(in _OpIdentity src, in LegalIdentityOptions options)
         {
             var length = src.IdentityText.Length;
             Span<char> dst = stackalloc char[length];
@@ -71,18 +71,18 @@ namespace Z0
         LegalIdentityOptions Options;
 
         [MethodImpl(Inline)]
-        public static string code(OpIdentity src)
+        public static string code(_OpIdentity src)
             => new LegalIdentityBuilder(CreateCodeOptions()).Build(src);
 
         [MethodImpl(Inline)]
-        public static string file(OpIdentity src)
+        public static string file(_OpIdentity src)
             => new LegalIdentityBuilder(CreateFileOptions()).Build(src);
 
         [MethodImpl(Inline)]
         internal LegalIdentityBuilder(LegalIdentityOptions options)
             => Options = options;
 
-        public string Build(OpIdentity src)
+        public string Build(_OpIdentity src)
             => LegalIdentityBuilder.legalize(src,Options);
 
         [MethodImpl(Inline)]

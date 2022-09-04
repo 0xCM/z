@@ -17,7 +17,7 @@ namespace Z0
 
         public ByteSize Size;
 
-        public OpUri Uri;
+        public _OpUri Uri;
 
         public BinaryCode Encoded;
     }

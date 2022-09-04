@@ -81,7 +81,7 @@ namespace Z0
         }
 
         [Op]
-        public static ApiMemberCode load(IApiPack src, ICompositeDispenser symbols, ApiHostUri host, WfEmit channel)
+        public static ApiMemberCode load(IApiPack src, ICompositeDispenser symbols, _ApiHostUri host, WfEmit channel)
         {
             load(src, host, channel, out var seq, out var code);
             return members(symbols, seq, code);
@@ -95,7 +95,7 @@ namespace Z0
         }
 
         [Op]
-        public static void load(IApiPack src, ApiHostUri host, WfEmit channel, out Seq<EncodedMember> index, out BinaryCode data)
+        public static void load(IApiPack src, _ApiHostUri host, WfEmit channel, out Seq<EncodedMember> index, out BinaryCode data)
         {
             hexdat(src.HexExtractPath(host), out data).Require();
             parse(src.CsvExtractPath(host), out index).Require();

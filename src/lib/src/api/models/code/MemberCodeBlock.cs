@@ -59,7 +59,7 @@ namespace Z0
             get => Member.CliSig;
         }
 
-        public OpUri OpUri
+        public _OpUri OpUri
         {
             [MethodImpl(Inline)]
             get => Encoded.OpUri;
@@ -110,13 +110,13 @@ namespace Z0
         public ApiClassKind KindId
              => Member.ApiClass;
 
-        public OpIdentity Id
+        public _OpIdentity Id
             => Member.Id;
 
-        public OpUri Uri
+        public _OpUri Uri
             => Member.OpUri;
 
-        public ApiHostUri Host
+        public _ApiHostUri Host
              => Uri.Host;
 
         public MethodInfo Method

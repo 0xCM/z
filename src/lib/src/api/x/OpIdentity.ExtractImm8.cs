@@ -11,7 +11,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">The source identity</param>
         [MethodImpl(Inline), Op]
-        public static Option<byte> ExtractImm8(this OpIdentity src)
+        public static Option<byte> ExtractImm8(this _OpIdentity src)
             => ApiIdentity.imm8(src);
     }
 }

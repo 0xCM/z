@@ -7,12 +7,12 @@ namespace Z0
     [Free]
     public interface IApiMethod : ITextual
     {
-        OpIdentity Id {get;}
+        _OpIdentity Id {get;}
 
         /// <summary>
         /// The globally-unique host uri
         /// </summary>
-        ApiHostUri Host {get;}
+        _ApiHostUri Host {get;}
 
         /// <summary>
         /// The hosted method
@@ -33,7 +33,7 @@ namespace Z0
 
         /// The globally-unique operation uri
         /// </summary>
-        OpUri OpUri
+        _OpUri OpUri
             => ApiIdentity.hex(Host, Method.Name, Id);
 
         ClrMethodArtifact Metadata

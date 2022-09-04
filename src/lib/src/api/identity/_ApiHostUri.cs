@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public readonly record struct ApiHostUri : IApiUri<ApiHostUri>
+    public readonly record struct _ApiHostUri : IApiUri<_ApiHostUri>
     {
         public readonly PartName Part {get;}
 
@@ -17,10 +17,10 @@ namespace Z0
         public readonly Hash32 Hash;
 
         [MethodImpl(Inline)]
-        public ApiHostUri(PartName owner, string name)
+        public _ApiHostUri(PartName owner, string name)
         {
             Part = owner;
-            HostName = text.ifempty(OpIdentity.safe(name),  "__empty__");
+            HostName = text.ifempty(_OpIdentity.safe(name),  "__empty__");
             UriText = owner.IsNonEmpty ? string.Format("{0}{1}{2}", Part.Format(), IDI.UriPathSep, HostName) : HostName;
             Hash = hash(UriText);
         }
@@ -29,7 +29,7 @@ namespace Z0
             => IsEmpty ? "__empty__" : string.Format("{0}.{1}", Part.Format(), HostName);
 
         [MethodImpl(Inline)]
-        ApiHostUri(string name)
+        _ApiHostUri(string name)
         {
             Part = PartId.None;
             HostName = EmptyString;
@@ -63,11 +63,11 @@ namespace Z0
             => UriText ?? EmptyString;
 
         [MethodImpl(Inline)]
-        public bool Equals(ApiHostUri src)
+        public bool Equals(_ApiHostUri src)
             => string.Equals(UriText, src.UriText, NoCase);
 
         [MethodImpl(Inline)]
-        public int CompareTo(ApiHostUri src)
+        public int CompareTo(_ApiHostUri src)
             => UriText?.CompareTo(src.UriText) ?? int.MaxValue;
 
         public override int GetHashCode()
@@ -76,7 +76,7 @@ namespace Z0
         public override string ToString()
             => Format();
 
-        public static ApiHostUri Empty
-            => new ApiHostUri(EmptyString);
+        public static _ApiHostUri Empty
+            => new _ApiHostUri(EmptyString);
     }
 }

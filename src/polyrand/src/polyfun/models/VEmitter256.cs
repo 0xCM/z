@@ -17,7 +17,7 @@ namespace Z0
         public VEmitter256(ISource src)
             => Source = src;
 
-        public OpIdentity Id
+        public _OpIdentity Id
             => SFxIdentity.identity(Name, Kind);
 
         [MethodImpl(Inline)]

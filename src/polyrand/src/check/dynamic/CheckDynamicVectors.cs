@@ -51,7 +51,7 @@ namespace Z0
             return Match<T>(f, g, bits.OpUri.OpId);
         }
 
-        public TestCaseRecord Match<T>(BinaryOp<Vector128<T>> f, BinaryOp128 g, OpIdentity id)
+        public TestCaseRecord Match<T>(BinaryOp<Vector128<T>> f, BinaryOp128 g, _OpIdentity id)
             where T : unmanaged
         {
             var w = w128;
@@ -70,7 +70,7 @@ namespace Z0
             return TestCaseRecord.define(TestCaseIdentity.NumericName<T>(Host, id), success, clock);
         }
 
-        public TestCaseRecord Match<T>(BinaryOp<Vector256<T>> f, BinaryOp256 g, OpIdentity id)
+        public TestCaseRecord Match<T>(BinaryOp<Vector256<T>> f, BinaryOp256 g, _OpIdentity id)
             where T : unmanaged
         {
             var w = w256;

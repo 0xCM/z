@@ -12,7 +12,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">The constructed method</param>
         [Op]
-        public static OpIdentity constructed(MethodInfo src)
+        public static _OpIdentity constructed(MethodInfo src)
         {
             if(!src.IsConstructedGenericMethod)
                 Throw.e(AppErrors.NonGenericMethod(src));

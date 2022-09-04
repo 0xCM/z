@@ -14,7 +14,7 @@ namespace Z0
 
             public const string Name = "dot";
 
-            public OpIdentity Id
+            public _OpIdentity Id
                 => SFxIdentity.identity<T>(Name);
 
             [MethodImpl(Inline)]

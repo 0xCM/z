@@ -119,7 +119,7 @@ namespace Z0.Asm
         }
 
         [Op]
-        public static AsmInlineComment bytespan(OpUri uri, BinaryCode src)
+        public static AsmInlineComment bytespan(_OpUri uri, BinaryCode src)
             => new AsmInlineComment(AsmCommentMarker.Hash, SpanResFormatter.format(ByteSpans.specify(uri, src)));
 
         [Op]

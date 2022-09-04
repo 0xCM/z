@@ -11,7 +11,7 @@ namespace Z0
 
         public PartName[] Parts;
 
-        public ApiHostUri[] Hosts;
+        public _ApiHostUri[] Hosts;
 
         public MemoryAddress[] Addresses;
 

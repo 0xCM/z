@@ -333,7 +333,7 @@ namespace Z0
             return counter;
         }
 
-        OpUri MemberUri(ApiHostUri host, MethodInfo method)
+        _OpUri MemberUri(_ApiHostUri host, MethodInfo method)
             => ApiIdentity.define(ApiUriScheme.Located, host, method.Name, Identity.Identify(method));
     }
 }

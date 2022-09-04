@@ -13,12 +13,12 @@ namespace Z0
     {
         public readonly struct UnaryPredicate<T> : IFunc<T,bit>
         {
-            public OpIdentity Id {get;}
+            public _OpIdentity Id {get;}
 
             readonly Z0.UnaryPredicate<T> F;
 
             [MethodImpl(Inline)]
-            internal UnaryPredicate(Z0.UnaryPredicate<T> f, OpIdentity id)
+            internal UnaryPredicate(Z0.UnaryPredicate<T> f, _OpIdentity id)
             {
                 F = f;
                 Id = id;

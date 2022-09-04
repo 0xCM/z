@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed record class OpUri : IApiUri<OpUri>
+    public sealed record class _OpUri : IApiUri<_OpUri>
     {
         /// <summary>
         /// The full uri in the form {scheme}://{hostpath}/{opid}
@@ -14,27 +14,27 @@ namespace Z0
         /// <summary>
         /// The host fragment, of the form {assembly_short_name}/{hostname}
         /// </summary>
-        public readonly ApiHostUri Host;
+        public readonly _ApiHostUri Host;
 
         /// <summary>
         /// Defines host-relative identity in the form, for example, {opname}_{typewidth}X{segwidth}{u | i | f}
         /// </summary>
-        public readonly OpIdentity OpId;
+        public readonly _OpIdentity OpId;
 
         public readonly Hash32 Hash;
 
-        OpUri()
+        _OpUri()
         {
             UriText = EmptyString;
-            Host = ApiHostUri.Empty;
-            OpId = OpIdentity.Empty;
+            Host = _ApiHostUri.Empty;
+            OpId = _OpIdentity.Empty;
         }
 
-        public OpUri(in ApiHostUri host, in OpIdentity opid, string uritext)
+        public _OpUri(in _ApiHostUri host, in _OpIdentity opid, string uritext)
         {
             Host = host;
             OpId = opid;
-            UriText = OpIdentity.safe(Require.notnull(uritext));
+            UriText = _OpIdentity.safe(Require.notnull(uritext));
             Hash = Algs.hash(UriText);
         }
 
@@ -72,10 +72,10 @@ namespace Z0
         public string Format()
             => Content;
 
-        public int CompareTo(OpUri src)
+        public int CompareTo(_OpUri src)
             => Content.CompareTo(src.Content);
 
-        public bool Equals(OpUri src)
+        public bool Equals(_OpUri src)
             => Content.Equals(src.Content, NoCase);
 
  
@@ -85,8 +85,8 @@ namespace Z0
         /// <summary>
         /// Emptiness of nothing
         /// </summary>
-        public static OpUri Empty
-            => new OpUri();
+        public static _OpUri Empty
+            => new _OpUri();
 
         string IApiUri.UriText
             => UriText;

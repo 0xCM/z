@@ -87,7 +87,7 @@ namespace Z0
         /// <param name="fId">The identity of the first operator</param>
         /// <param name="g">The second operator</param>
         /// <param name="gId">The identity of the second operator</param>
-        TestCaseRecord Match(UnaryOp8 f, OpIdentity fId, UnaryOp8 g, OpIdentity gId)
+        TestCaseRecord Match(UnaryOp8 f, _OpIdentity fId, UnaryOp8 g, _OpIdentity gId)
         {
             var w = w8;
             void check()
@@ -110,7 +110,7 @@ namespace Z0
         /// <param name="fId">The identity of the first operator</param>
         /// <param name="g">The second operator</param>
         /// <param name="gId">The identity of the second operator</param>
-        TestCaseRecord Match(UnaryOp16 f, OpIdentity fId, UnaryOp16 g, OpIdentity gId)
+        TestCaseRecord Match(UnaryOp16 f, _OpIdentity fId, UnaryOp16 g, _OpIdentity gId)
         {
             var w = w16;
             void check()
@@ -135,7 +135,7 @@ namespace Z0
         /// <param name="fId">The identity of the first operator</param>
         /// <param name="g">The second operator</param>
         /// <param name="gId">The identity of the second operator</param>
-        TestCaseRecord Match(UnaryOp32 f, OpIdentity fId, UnaryOp32 g, OpIdentity gId)
+        TestCaseRecord Match(UnaryOp32 f, _OpIdentity fId, UnaryOp32 g, _OpIdentity gId)
         {
             var w = w32;
             void check()
@@ -160,7 +160,7 @@ namespace Z0
         /// <param name="fId">The identity of the first operator</param>
         /// <param name="g">The second operator</param>
         /// <param name="gId">The identity of the second operator</param>
-        TestCaseRecord Match(UnaryOp64 f, OpIdentity fId, UnaryOp64 g, OpIdentity gId)
+        TestCaseRecord Match(UnaryOp64 f, _OpIdentity fId, UnaryOp64 g, _OpIdentity gId)
         {
             var w = w64;
             void check()
@@ -185,7 +185,7 @@ namespace Z0
         /// <param name="fId">The identity of the first operator</param>
         /// <param name="g">The second operator</param>
         /// <param name="gId">The identity of the second operator</param>
-        TestCaseRecord Match(UnaryOp128 f, OpIdentity fId, UnaryOp128 g, OpIdentity gId)
+        TestCaseRecord Match(UnaryOp128 f, _OpIdentity fId, UnaryOp128 g, _OpIdentity gId)
         {
             var w = w128;
             void check()
@@ -210,7 +210,7 @@ namespace Z0
         /// <param name="fId">The identity of the first operator</param>
         /// <param name="g">The second operator</param>
         /// <param name="gId">The identity of the second operator</param>
-        TestCaseRecord Match(UnaryOp256 f, OpIdentity fId, UnaryOp256 g, OpIdentity gId)
+        TestCaseRecord Match(UnaryOp256 f, _OpIdentity fId, UnaryOp256 g, _OpIdentity gId)
         {
             var w = w256;
             void check()

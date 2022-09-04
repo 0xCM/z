@@ -6,14 +6,14 @@ namespace Z0
 {   
     using static UriSchemes;
 
-    public sealed record class LocalUri : Uri<LocalUri,Local>
+    public sealed record class FileUri : Uri<FileUri,Local>
     {
-        public LocalUri()
+        public FileUri()
         {
 
         }
 
-        public LocalUri(string src)
+        public FileUri(string src)
             : base(src)
         {
 

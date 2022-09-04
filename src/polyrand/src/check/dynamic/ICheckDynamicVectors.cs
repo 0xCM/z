@@ -34,7 +34,7 @@ namespace Z0
         /// <param name="fId">The identity of the first operator</param>
         /// <param name="g">The second operator, considered as the operation under test</param>
         /// <param name="gId">The identity of the second operator</param>
-        TestCaseRecord Match<T>(BinaryOp<Vector128<T>> f, BinaryOp128 g, OpIdentity name)
+        TestCaseRecord Match<T>(BinaryOp<Vector128<T>> f, BinaryOp128 g, _OpIdentity name)
             where T : unmanaged
         {
             void check()
@@ -52,7 +52,7 @@ namespace Z0
             return TestAction(check, name);
         }
 
-        TestCaseRecord Match<T>(BinaryOp<Vector256<T>> f, BinaryOp256 g, OpIdentity name)
+        TestCaseRecord Match<T>(BinaryOp<Vector256<T>> f, BinaryOp256 g, _OpIdentity name)
             where T : unmanaged
         {
             void check()
@@ -70,7 +70,7 @@ namespace Z0
             return TestAction(check, name);
         }
 
-        TestCaseRecord Match<T>(BinaryOp<Vector128<T>> f, OpIdentity fId, BinaryOp128 g, OpIdentity gId)
+        TestCaseRecord Match<T>(BinaryOp<Vector128<T>> f, _OpIdentity fId, BinaryOp128 g, _OpIdentity gId)
             where T : unmanaged
         {
             var w = w128;
@@ -89,7 +89,7 @@ namespace Z0
             return TestAction(check, match(fId, gId));
         }
 
-        TestCaseRecord Match<T>(BinaryOp<Vector256<T>> f, OpIdentity fId, BinaryOp256 g, OpIdentity gId)
+        TestCaseRecord Match<T>(BinaryOp<Vector256<T>> f, _OpIdentity fId, BinaryOp256 g, _OpIdentity gId)
             where T : unmanaged
         {
             var w = w256;

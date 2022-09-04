@@ -25,7 +25,7 @@ namespace Z0
                                 where g.Count() > 1
                                 select g.Key).ToHashSet();
 
-                var dst = new Dictionary<OpIdentity,ApiCodeBlock>();
+                var dst = new Dictionary<_OpIdentity,ApiCodeBlock>();
                 if(duplicates.Count() != 0)
                     dst = blocks.Where(i => !duplicates.Contains(i.OpId.IdentityText)).ToDictionary();
                 else
@@ -40,7 +40,7 @@ namespace Z0
         }
 
         [Op, Closures(UInt64k)]
-        public static ApiOpIndex<ApiMember> create(IEnumerable<(OpIdentity,ApiMember)> src)
+        public static ApiOpIndex<ApiMember> create(IEnumerable<(_OpIdentity,ApiMember)> src)
         {
             var items = src.ToArray();
             var identities = items.Select(x => x.Item1).ToArray();
@@ -48,7 +48,7 @@ namespace Z0
                              where g.Count() > 1
                              select g.Key).ToHashSet();
 
-            var dst = new Dictionary<OpIdentity,ApiMember>();
+            var dst = new Dictionary<_OpIdentity,ApiMember>();
             if(duplicates.Count() != 0)
                 dst = items.Where(i => !duplicates.Contains(i.Item1.IdentityText)).ToDictionary();
             else

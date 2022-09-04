@@ -11,12 +11,12 @@ namespace Z0
     {
         public readonly MemoryAddress Location;
 
-        public readonly OpUri Uri;
+        public readonly _OpUri Uri;
 
         public readonly @string Sig;
 
         [MethodImpl(Inline)]
-        public MethodEntryPoint(MemoryAddress address, OpUri uri, @string sig)
+        public MethodEntryPoint(MemoryAddress address, _OpUri uri, @string sig)
         {
             Location = address;
             Uri = Require.notnull(uri);
@@ -35,6 +35,6 @@ namespace Z0
             get => Location != 0;
         }
 
-        public static MethodEntryPoint Empty => new MethodEntryPoint(0,OpUri.Empty, EmptyString);
+        public static MethodEntryPoint Empty => new MethodEntryPoint(0,_OpUri.Empty, EmptyString);
     }
 }

@@ -240,7 +240,7 @@ namespace Z0.Asm
             return routines.ToArray();
         }
 
-        Index<AsmRoutine> EmitUnrefinedUnary(in CaptureExchange exchange, OpIdentity gid, Index<ApiMethodNG> methods, Index<Imm8R> imm8, IAsmImmWriter dst)
+        Index<AsmRoutine> EmitUnrefinedUnary(in CaptureExchange exchange, _OpIdentity gid, Index<ApiMethodNG> methods, Index<Imm8R> imm8, IAsmImmWriter dst)
         {
             var generic = false;
             var routines = list<AsmRoutine>();
@@ -261,7 +261,7 @@ namespace Z0.Asm
             return routines.ToArray();
         }
 
-        Index<AsmRoutine> EmitUnrefinedBinary(in CaptureExchange exchange, OpIdentity gid, Index<ApiMethodNG> methods, Index<Imm8R> imm8, IAsmImmWriter dst)
+        Index<AsmRoutine> EmitUnrefinedBinary(in CaptureExchange exchange, _OpIdentity gid, Index<ApiMethodNG> methods, Index<Imm8R> imm8, IAsmImmWriter dst)
         {
             var generic = false;
             var routines = core.list<AsmRoutine>();

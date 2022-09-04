@@ -7,7 +7,7 @@ namespace Z0
     /// <summary>
     /// Specifies host-independent api member identity
     /// </summary>
-    public class OpIdentity : IMethodIdentity<OpIdentity>
+    public class _OpIdentity : IMethodIdentity<_OpIdentity>
     {
         /// <summary>
         /// Determines whether a type is classified as an intrinsic vector
@@ -27,8 +27,8 @@ namespace Z0
         public static string safe(string src)
             => (src ?? EmptyString).Replace(Chars.Lt, IDI.TypeArgsOpen).Replace(Chars.Gt, IDI.TypeArgsClose).Replace(Chars.Pipe, Chars.Caret);
 
-        public static OpIdentity define(string src)
-            => new OpIdentity(safe(src));
+        public static _OpIdentity define(string src)
+            => new _OpIdentity(safe(src));
 
         /// <summary>
         /// The operation identifier
@@ -60,7 +60,7 @@ namespace Z0
         /// </summary>
         public string[] Components {get;}
 
-        public OpIdentity(string data, string name, string suffix, bool generic, bool imm, string[] components)
+        public _OpIdentity(string data, string name, string suffix, bool generic, bool imm, string[] components)
         {
             IdentityText = data;
             Name = name;
@@ -71,7 +71,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public OpIdentity(string data)
+        public _OpIdentity(string data)
         {
             IdentityText = data;
             Name = EmptyString;
@@ -96,11 +96,11 @@ namespace Z0
         public override int GetHashCode()
             => IdentityText.GetHashCode();
 
-        public bool Equals(OpIdentity src)
+        public bool Equals(_OpIdentity src)
             => string.Equals(IdentityText, src.IdentityText, StringComparison.InvariantCultureIgnoreCase);
 
         public override bool Equals(object src)
-            => src is OpIdentity x && Equals(x);
+            => src is _OpIdentity x && Equals(x);
 
         public string Format()
             => IdentityText;
@@ -109,18 +109,18 @@ namespace Z0
             => IdentityText;
 
         [MethodImpl(Inline)]
-        public static implicit operator string(OpIdentity src)
+        public static implicit operator string(_OpIdentity src)
             => src.IdentityText;
 
         [MethodImpl(Inline)]
-        public static bool operator==(OpIdentity a, OpIdentity b)
+        public static bool operator==(_OpIdentity a, _OpIdentity b)
             => a.Equals(b);
 
         [MethodImpl(Inline)]
-        public static bool operator!=(OpIdentity a, OpIdentity b)
+        public static bool operator!=(_OpIdentity a, _OpIdentity b)
             => !a.Equals(b);
 
-        public static OpIdentity Empty
-            => new OpIdentity(EmptyString);
+        public static _OpIdentity Empty
+            => new _OpIdentity(EmptyString);
     }
 }

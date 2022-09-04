@@ -13,9 +13,9 @@ namespace Z0
 
         public static MsgPattern<string> ChipCodeNotFound => "Code for chip {0} not found";
 
-        public static MsgPattern<ApiHostUri> ParsingHostMembers => "Parsing {0} members";
+        public static MsgPattern<_ApiHostUri> ParsingHostMembers => "Parsing {0} members";
 
-        public static MsgPattern<Count,ApiHostUri> ParsedHostMembers => "Parsed {0} {1} members";
+        public static MsgPattern<Count,_ApiHostUri> ParsedHostMembers => "Parsed {0} {1} members";
 
         public static MsgPattern<Count> ParsingHosts => "Parsing {0} hosts";
 

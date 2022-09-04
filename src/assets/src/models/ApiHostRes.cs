@@ -11,12 +11,12 @@ namespace Z0
     /// </summary>
     public readonly struct ApiHostRes
     {
-        public readonly ApiHostUri Host;
+        public readonly _ApiHostUri Host;
 
         public readonly Index<BinaryResSpec> Data;
 
         [MethodImpl(Inline)]
-        public ApiHostRes(ApiHostUri host, BinaryResSpec[] src)
+        public ApiHostRes(_ApiHostUri host, BinaryResSpec[] src)
         {
             Host = host;
             Data = src;
@@ -35,6 +35,6 @@ namespace Z0
         }
 
         public static ApiHostRes Empty
-            => new ApiHostRes(ApiHostUri.Empty, array<BinaryResSpec>());
+            => new ApiHostRes(_ApiHostUri.Empty, array<BinaryResSpec>());
     }
 }

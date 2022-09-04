@@ -16,12 +16,12 @@ namespace Z0
         /// </summary>
         public readonly struct Func<R> : IFunc<R>
         {
-            public OpIdentity Id {get;}
+            public _OpIdentity Id {get;}
 
             internal readonly System.Func<R> F;
 
             [MethodImpl(Inline)]
-            internal Func(System.Func<R> f, OpIdentity id)
+            internal Func(System.Func<R> f, _OpIdentity id)
             {
                 F = f;
                 Id = id;

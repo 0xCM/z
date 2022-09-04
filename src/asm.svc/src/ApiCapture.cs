@@ -41,10 +41,10 @@ namespace Z0
             }
         }
 
-        public static FilePath csv(FolderPath src, ApiHostUri host)
+        public static FilePath csv(FolderPath src, _ApiHostUri host)
             => src + host.FileName(FS.PCsv);
 
-        void PackHex(FolderPath src, ApiHostUri host)
+        void PackHex(FolderPath src, _ApiHostUri host)
         {
             var counter = 0u;
             var memory = ApiCode.memory(csv(src, host));

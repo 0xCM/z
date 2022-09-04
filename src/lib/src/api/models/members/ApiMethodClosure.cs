@@ -17,7 +17,7 @@ namespace Z0
         /// <summary>
         /// The closure identity
         /// </summary>
-        public OpIdentity Id {get;}
+        public _OpIdentity Id {get;}
 
         /// <summary>
         /// The primal kind over which the subject operation was closed
@@ -42,7 +42,7 @@ namespace Z0
         /// <param name="kind">The primal kind over which the subject was closed</param>
         /// <param name="closed">The closed method</param>
         [MethodImpl(Inline)]
-        public ApiMethodClosure(IApiHost host, OpIdentity id, NumericKind kind, MethodInfo method)
+        public ApiMethodClosure(IApiHost host, _OpIdentity id, NumericKind kind, MethodInfo method)
         {
             Host = host;
             Id = id;

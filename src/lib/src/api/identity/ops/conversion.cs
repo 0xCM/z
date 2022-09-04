@@ -6,7 +6,7 @@ namespace Z0
 {
     partial struct ApiIdentity
     {
-        public static OpIdentity conversion(MethodInfo src)
+        public static _OpIdentity conversion(MethodInfo src)
         {
             var input = src.Parameters();
             if(input.Length == 1)

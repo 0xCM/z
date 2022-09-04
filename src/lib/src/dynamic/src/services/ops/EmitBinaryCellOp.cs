@@ -70,31 +70,31 @@ namespace Z0
             => buffer.Load(src.Encoded).EmitBinaryCellOp(w, src.Id);
 
         [Op]
-        internal static CellDelegate EmitBinaryCellOp(this IBufferToken dst, OpIdentity id, Type operatorType, Type operandType)
+        internal static CellDelegate EmitBinaryCellOp(this IBufferToken dst, _OpIdentity id, Type operatorType, Type operandType)
             => dst.Handle.EmitCellular(id,functype:operatorType, result:operandType, args: array(operandType, operandType));
 
         [Op]
-        internal static BinaryOp8 EmitBinaryCellOp(this IBufferToken buffer, N8 w,OpIdentity id)
+        internal static BinaryOp8 EmitBinaryCellOp(this IBufferToken buffer, N8 w,_OpIdentity id)
             => (BinaryOp8)buffer.EmitBinaryCellOp(id, typeof(BinaryOp8), typeof(Cell8));
 
         [Op]
-        internal static BinaryOp16 EmitBinaryCellOp(this IBufferToken buffer, N16 w, OpIdentity id)
+        internal static BinaryOp16 EmitBinaryCellOp(this IBufferToken buffer, N16 w, _OpIdentity id)
             => (BinaryOp16)buffer.EmitBinaryCellOp(id, typeof(BinaryOp16), typeof(Cell16));
 
         [Op]
-        internal static BinaryOp32 EmitBinaryCellOp(this IBufferToken buffer, N32 w, OpIdentity id)
+        internal static BinaryOp32 EmitBinaryCellOp(this IBufferToken buffer, N32 w, _OpIdentity id)
             => (BinaryOp32)buffer.EmitBinaryCellOp(id, typeof(BinaryOp32), typeof(Cell32));
 
         [Op]
-        internal static BinaryOp64 EmitBinaryCellOp(this IBufferToken buffer, N64 w, OpIdentity id)
+        internal static BinaryOp64 EmitBinaryCellOp(this IBufferToken buffer, N64 w, _OpIdentity id)
             => (BinaryOp64)buffer.EmitBinaryCellOp(id, typeof(BinaryOp64), typeof(Cell64));
 
         [Op]
-        internal static BinaryOp128 EmitBinaryCellOp(this IBufferToken buffer, N128 w, OpIdentity id)
+        internal static BinaryOp128 EmitBinaryCellOp(this IBufferToken buffer, N128 w, _OpIdentity id)
             => (BinaryOp128)buffer.EmitBinaryCellOp(id, typeof(BinaryOp128), typeof(Cell128));
 
         [Op]
-        internal static BinaryOp256 EmitBinaryCellOp(this IBufferToken buffer, N256 w, OpIdentity id)
+        internal static BinaryOp256 EmitBinaryCellOp(this IBufferToken buffer, N256 w, _OpIdentity id)
             => (BinaryOp256)buffer.EmitBinaryCellOp(id, typeof(BinaryOp256), typeof(Cell256));
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Z0
         public static BinaryOp<F> EmitBinaryCellOp<F>(this BufferToken buffer, ApiCodeBlock src)
             => (BinaryOp<F>)buffer.Load(src.Encoded).EmitBinaryCellOp(src.Id, typeof(BinaryOp<F>), typeof(F));
 
-        internal static BinaryOp<T> EmitBinaryCellOp<T>(this IBufferToken dst, OpIdentity id)
+        internal static BinaryOp<T> EmitBinaryCellOp<T>(this IBufferToken dst, _OpIdentity id)
             where T : unmanaged
                 => (BinaryOp<T>)dst.EmitBinaryCellOp(id,typeof(BinaryOp<T>), typeof(T));
     }

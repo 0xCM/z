@@ -12,7 +12,7 @@ namespace Z0.Asm
     {
         AsmDecoder Decoder => Service(Wf.AsmDecoder);
 
-        public AsmHostRoutines EmitHostRoutines(ApiHostUri host, ReadOnlySpan<MemberCodeBlock> src, FilePath dst)
+        public AsmHostRoutines EmitHostRoutines(_ApiHostUri host, ReadOnlySpan<MemberCodeBlock> src, FilePath dst)
         {
             var flow = Running(Msg.EmittingHostRoutines.Format(host));
             var decoded = Decoder.Decode(host, src);
@@ -21,7 +21,7 @@ namespace Z0.Asm
             return decoded;
         }
 
-        Count Emit(ApiHostUri uri, ReadOnlySpan<AsmMemberRoutine> src, FilePath dst)
+        Count Emit(_ApiHostUri uri, ReadOnlySpan<AsmMemberRoutine> src, FilePath dst)
         {
             var count = src.Length;
             if(count != 0)
@@ -104,7 +104,7 @@ namespace Z0.Asm
             var formatter = Tables.formatter<HostAsmRecord>(HostAsmRecord.RenderWidths);
             var statements = src;
             var count = statements.Length;
-            var host = ApiHostUri.Empty;
+            var host = _ApiHostUri.Empty;
             var counter = 0u;
             var tableWriter = default(StreamWriter);
             var tablePath = FilePath.Empty;
@@ -181,7 +181,7 @@ namespace Z0.Asm
             // Ran(flow, Msg.ObliteratedDirectory.Format(dir));
         }
 
-        void EmitHostAsmDoc(ApiHostUri host, ReadOnlySpan<HostAsmRecord> src)
+        void EmitHostAsmDoc(_ApiHostUri host, ReadOnlySpan<HostAsmRecord> src)
         {
             var dst = FilePath.Empty;
             var flow = EmittingFile(dst);
@@ -200,7 +200,7 @@ namespace Z0.Asm
             EmittedFile(flow, count);
         }
 
-        void EmitHostAsmRecords(ApiHostUri host, ReadOnlySpan<HostAsmRecord> src)
+        void EmitHostAsmRecords(_ApiHostUri host, ReadOnlySpan<HostAsmRecord> src)
         {
             var dst = FilePath.Empty;
             var flow = EmittingTable<HostAsmRecord>(dst);
@@ -219,10 +219,10 @@ namespace Z0.Asm
             }
         }
 
-        FilePath AsmSrcPath(ApiHostUri host, FolderPath root)
+        FilePath AsmSrcPath(_ApiHostUri host, FolderPath root)
             => FilePath.Empty;
 
-        FilePath AsmTablePath(ApiHostUri host, FolderPath root)
+        FilePath AsmTablePath(_ApiHostUri host, FolderPath root)
             => FilePath.Empty;
 
         uint BuildHostAsm(in ApiHostBlocks src, List<HostAsmRecord> dst)

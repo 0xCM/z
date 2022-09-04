@@ -10,7 +10,7 @@ namespace Z0
         /// Identifies a method
         /// </summary>
         /// <param name="m">The method to identify</param>
-        public static OpIdentity Identify(this MethodInfo m)
+        public static _OpIdentity Identify(this MethodInfo m)
             => ApiIdentity.identify(m);
     }
 }

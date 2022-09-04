@@ -13,7 +13,7 @@ namespace Z0
 
         public readonly Identifier HostName {get;}
 
-        public readonly ApiHostUri HostUri {get;}
+        public readonly _ApiHostUri HostUri {get;}
 
         public readonly Index<MethodInfo> Methods {get;}
 
@@ -22,7 +22,7 @@ namespace Z0
         public readonly PartName PartName {get;}
 
         [MethodImpl(Inline)]
-        public ApiHost(Type type, string name, PartName part, ApiHostUri uri, MethodInfo[] methods, Dictionary<string,MethodInfo> index)
+        public ApiHost(Type type, string name, PartName part, _ApiHostUri uri, MethodInfo[] methods, Dictionary<string,MethodInfo> index)
         {
             PartName = part;
             HostType = type;
@@ -32,7 +32,7 @@ namespace Z0
             Index = index;
         }
 
-        public bool FindMethod(OpUri uri, out MethodInfo method)
+        public bool FindMethod(_OpUri uri, out MethodInfo method)
             => Index.TryGetValue(uri.OpId.IdentityText, out method);
 
         public bool IsEmpty
@@ -69,7 +69,7 @@ namespace Z0
             => src is ApiHost t && Equals(t);
 
         [MethodImpl(Inline)]
-        public static implicit operator ApiHostUri(ApiHost src)
+        public static implicit operator _ApiHostUri(ApiHost src)
             => src.HostUri;
 
         [MethodImpl(Inline)]
@@ -81,6 +81,6 @@ namespace Z0
             => !a.Equals(b);
 
         public static ApiHost Empty
-            => new ApiHost(typeof(void), EmptyString, PartName.Empty, ApiHostUri.Empty, sys.empty<MethodInfo>(), new());
+            => new ApiHost(typeof(void), EmptyString, PartName.Empty, _ApiHostUri.Empty, sys.empty<MethodInfo>(), new());
     }
 }

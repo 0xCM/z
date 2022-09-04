@@ -21,7 +21,7 @@ namespace Z0
             {
                 var keyed = src.Storage.Where(x => x.HostUri.IsNonEmpty).Select(x => (x.HostUri, x)).ToReadOnlySpan();
                 var count = keyed.Length;
-                var dst = dict<ApiHostUri,List<ApiCodeBlock>>();
+                var dst = dict<_ApiHostUri,List<ApiCodeBlock>>();
                 for(var i=0; i<count; i++)
                 {
                     ref readonly var code = ref skip(keyed,i);

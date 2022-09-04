@@ -89,8 +89,8 @@ namespace Z0
             => src.Path;
 
         [MethodImpl(Inline)]
-        public static implicit operator LocalUri(_FileUri src)
-            => new LocalUri(src.Format());
+        public static implicit operator FileUri(_FileUri src)
+            => new FileUri(src.Format());
 
         public static _FileUri Empty => new _FileUri(FilePath.Empty);
     }
