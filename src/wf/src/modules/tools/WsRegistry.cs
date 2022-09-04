@@ -15,7 +15,7 @@ namespace Z0
         public void Register(Name name, FolderPath location)
         {
             using var writer = RegistryPath.Writer();
-            writer.AppendLine(EntryFormatter.Format(new Entry(name,new Uri(location.ToUri().Format()))));
+            writer.AppendLine(EntryFormatter.Format(new Entry(name,new FileUri(location.ToUri().Format()))));
         }
 
         public ReadOnlySpan<Entry> Entries()
@@ -29,7 +29,7 @@ namespace Z0
                 var parts = text.split(line, Chars.Pipe);
                 if(parts.Length != 2)
                     sys.@throw("Parse failure");                    
-                dst.Add(new Entry(skip(parts,0), new Uri(skip(parts,1))));
+                dst.Add(new Entry(skip(parts,0), new FileUri(skip(parts,1))));
                 line = reader.ReadLine();
             }
             return dst.ViewDeposited();
@@ -39,10 +39,10 @@ namespace Z0
         {
             public readonly Name Name;
 
-            public readonly Uri Location;
+            public readonly FileUri Location;
 
             [MethodImpl(Inline)]
-            public Entry(Name name, Uri loc)
+            public Entry(Name name, FileUri loc)
             {
                 Name = name;
                 Location = loc;

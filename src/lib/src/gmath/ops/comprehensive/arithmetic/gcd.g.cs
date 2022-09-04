@@ -4,12 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
-    using static core;
-
+    using static sys;
     partial class gmath
     {
         [MethodImpl(Inline), Closures(Integers)]
@@ -85,8 +80,5 @@ namespace Z0
             else
                 throw Unsupported.define<T>();
         }
-
-
    }
-
 }

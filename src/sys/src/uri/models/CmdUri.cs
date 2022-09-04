@@ -4,9 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    /// <summary>
+    /// Identifies a command handler
+    /// </summary>
     public sealed record class CmdUri : Uri<CmdUri,UriSchemes.Cmd>
     {
-        public readonly @string Part;
+        public readonly @string Scope;
 
         public readonly @string Host;
 
@@ -16,19 +19,19 @@ namespace Z0
 
         public CmdUri()
         {
-            Part = EmptyString;
+            Scope = EmptyString;
             Host = EmptyString;
             Name = EmptyString;
             Kind = 0;
         }
 
         [MethodImpl(Inline)]
-        public CmdUri(CmdKind kind, string? part, string? host, string? name)
-            : base(_format(kind,part,host,name))
+        public CmdUri(CmdKind kind, string? scope, string? host, string? name)
+            : base(_format(kind,scope,host,name))
 
         {
             Kind = kind;
-            Part = part ?? EmptyString;
+            Scope = scope ?? EmptyString;
             Host = host ?? EmptyString;
             Name = name ?? EmptyString;
         }

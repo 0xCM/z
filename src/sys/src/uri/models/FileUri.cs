@@ -4,9 +4,19 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
+    using static UriSchemes;
 
-    unsafe partial class Bytes
+    public sealed record class FileUri : Uri<FileUri,Local>
     {
+        public FileUri()
+        {
+
+        }
+
+        public FileUri(string src)
+            : base(src)
+        {
+
+        }
     }
 }

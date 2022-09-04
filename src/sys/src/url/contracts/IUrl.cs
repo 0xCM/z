@@ -4,13 +4,23 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Numeric;
-
-    partial class gmath
+    public interface IUrl
     {
-        [MethodImpl(Inline), Op, Closures(Integers)]
-        public static bit ispow2<T>(T src)
-            where T : unmanaged
-                => math.ispow2(force<T,ulong>(src));
+
+    }
+    
+    public interface IUrl<I> : IUrl
+        where I : IUri
+    {
+
+
+    }
+
+    public abstract record class Url<U,I>
+        where U : Url<U,I>, new()
+        where I : IUri
+    {
+
+
     }
 }

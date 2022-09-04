@@ -6,9 +6,6 @@ namespace Z0
 {
     using static ScalarCast;
     using static sys;
-    // using static Spans;
-    // using static Arrays;
-    // using static Sized;
 
     [ApiHost]
     public readonly struct Sizes
@@ -66,22 +63,6 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static ByteSize size(Kb src)
             => new ByteSize((uint64(src.Count) * BytesPerKb) + uint64(src.Rem)/BitsPerByte);
-
-        // [MethodImpl(Inline), Op]
-        // public static ByteSize align(ByteSize src, ulong factor)
-        //     => src + (src % factor);
-
-        // [MethodImpl(Inline), Op]
-        // public static ByteSize align(ByteSize src, long factor)
-        //     => src + (src % factor);
-
-        // [MethodImpl(Inline), Op]
-        // public static BitWidth align(BitWidth src, ulong factor)
-        //     => src + (src % factor);
-
-        // [MethodImpl(Inline), Op]
-        // public static BitWidth align(BitWidth src, long factor)
-        //     => src + (src % factor);
 
         [MethodImpl(Inline), Op]
         public static BitWidth bits(Kb src)

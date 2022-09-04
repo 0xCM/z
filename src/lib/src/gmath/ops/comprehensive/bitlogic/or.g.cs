@@ -5,8 +5,7 @@
 namespace Z0
 {
     using static Numeric;
-    using static Refs;
-    using static ScalarCast;
+    using static sys;
 
     partial class gmath
     {

@@ -2,20 +2,16 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
-{   
-    public interface IUri
+namespace global.project
+{
+    public class project
     {
-        string SchemeName {get;}
+        
     }
-
-
-    public interface IUri<S> : IUri
-        where S : IUriScheme
+    
+    public struct ProjectDef
     {
-        S Scheme {get;}
+        
 
-        string IUri.SchemeName 
-            => Scheme.Name;
     }
 }

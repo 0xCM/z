@@ -2,12 +2,13 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace global.cmd
+namespace Z0
 {
-    public struct LaunchProcess
+    using static UriSchemes;
+
+    public abstract record class LocalUri<U> : Uri<U,Local>
+        where U : LocalUri<U>,new()
     {
 
-        public FileUri Target;
     }
-    
 }

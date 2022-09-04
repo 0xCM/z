@@ -4,19 +4,17 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {   
-    using static UriSchemes;
-
-    public sealed record class FileUri : Uri<FileUri,Local>
+    public interface IUri
     {
-        public FileUri()
-        {
+        string SchemeName {get;}
+    }
 
-        }
+    public interface IUri<S> : IUri
+        where S : IUriScheme
+    {
+        S Scheme {get;}
 
-        public FileUri(string src)
-            : base(src)
-        {
-
-        }
+        string IUri.SchemeName 
+            => Scheme.Name;
     }
 }
