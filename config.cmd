@@ -3,7 +3,7 @@ echo Level:%~dp0
 call %~dp0..\config.cmd
 
 set EnvPartition=dev
-set SlnId=z0
+: set SlnId=z0
 set BuildPrefix=z0
 set SlnVersion=0.0.1
 set ArchName=x64
@@ -72,6 +72,7 @@ set BuildProps=/p:Configuration=%ConfigName% /p:Platform=%PlatformName%
 set BuildProject=%BuildTool% %ProjectPath% %BuildProps% %BuildLogSpec%; %BuildOptions%
 set BuildSln=%BuildTool% %SlnPath% %BuildProps% %BuildLogSpec%; %BuildOptions%
 set BuildShells=%BuildTool% %SlnRoot%\shells\z0.shells.sln %BuildProps% -bl:%BuildLogs%\z0.shells.binlog; %BuildOptions%
+set BuildDeployment=%BuildTool% %~dp0deploy\z0.deploy.sln %BuildProps% -bl:%BuildLogs%\z0.deploy.binlog; %BuildOptions%
 set BuildProjectSln=%BuildTool% %ProjectSln% %BuildProps% %BuildLogSpec%; %BuildOptions%
 set Packages=%Artifacts%\packages
 set PackageFlags=--include-symbols --include-source
@@ -96,14 +97,18 @@ set CleanNugetDeps=rmdir %NuGetDeps% \s\q
 set AddSlnProject=%SlnScripts%\sln-add.cmd
 set ProjectDist=%Distributions%\%ProjectId%
 set DeployedShellPath=%ShellDeployment%\%ShellId%.exe
-set DeployedShellLink=%Deployments%\%ShellId%.exe
-
+set SlnDeployment=%Deployments%\bin
+set DeploySln=%SlnScripts%\sln-deploy.cmd
+set CleanSlnDist=rmdir %Artifacts%\dist /s/q
+set CleanSlnBin=rmdir %Artifacts%\bin /s/q
+set CleanSlnObj=rmdir %Artifacts%\obj /s/q
+set PublishedSln=%Artifacts%\public\bin
+set SlnPublish=dotnet publish %~dp0deploy/z0.deploy.sln --output %PublishedSln% --configuration %ConfigName% --framework %FrameworkMoniker% --version-suffix %VersionSuffix%
 set PublishLib=dotnet publish %ProjectPath% --output %ProjectDist% --configuration %ConfigName% --framework %FrameworkMoniker% --version-suffix %VersionSuffix%
 set PublishShell=dotnet publish %ProjectPath% --output %ProjectDist% --configuration %ConfigName% --framework %FrameworkMoniker% --version-suffix %VersionSuffix%
 set DeployShell=%~dp0scripts\shell-deploy.cmd
 set ShellRetract=%~dp0scripts\shell-retract.cmd
-set CreateShellDeploymentLink=mklink %DeployedShellLink% %DeployedShellPath%
-set DeleteShellDeploymentLink=del %DeployedShellLink%
+set SlnPubRetract=rmdir %PublishedSln% 2>null
 
 set PackageLib=dotnet pack %ProjectPath% --output %PackageDist% --configuration %ConfigName% --version-suffix %VersionSuffix% %PackageFlags%
 set PackageSln=dotnet pack %ProjectSln% --output %PackagePath%
@@ -121,7 +126,7 @@ set CleanSlnObj=rmdir %SlnObj% /s/q
 set CleanSlnLogs=rmdir %SlnLogs% /s/q
 
 set CfgFile=%Artifacts%\%ProjectId%.cfg
-
+set DeployCfg=%SlnRoot%\deploy\deploy.cfg
 : mkdir %Artifacts% 1>nul 2>nul
 echo # %ProjectId% env>%CfgFile%
 echo Deployments=%Deployments%>>%CfgFile%

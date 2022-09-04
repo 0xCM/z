@@ -6,7 +6,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <AssemblyName>hub</AssemblyName>
+    <AssemblyName>zhub</AssemblyName>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
 
