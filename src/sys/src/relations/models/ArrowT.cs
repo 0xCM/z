@@ -17,20 +17,14 @@ namespace Z0
             Target = dst;
         }
 
-        public string IdentityText
-        {
-            [MethodImpl(Inline)]
-            get => string.Format(RP.Arrow, Source, Target);
-        }
-
         T IArrow<T,T>.Source
             => Source;
 
         T IArrow<T,T>.Target
             => Target;
-
+        
         public string Format()
-            => IdentityText;
+            => $"{Source} -> {Target}";
 
         public override string ToString()
             => Format();

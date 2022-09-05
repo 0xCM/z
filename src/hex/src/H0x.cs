@@ -4,10 +4,32 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static sys;
+    using static HexCharData;
+
     using XF = HexDigitFacets;
 
-    partial struct Hex
+    using H = HexCharData;
+
+    [ApiHost]
+    public partial class H0x
     {
+        /// <summary>
+        /// Determines whether a character corresponds to one of the lower hex codes
+        /// </summary>
+        /// <param name="c">The character to test</param>
+        [MethodImpl(Inline), Op]
+        public static bool scalar(AsciCode c)
+            => (HexDigitCode)c >= XF.MinScalarCode && (HexDigitCode)c <= XF.MaxScalarCode;
+
+        /// <summary>
+        /// Determines whether a character corresponds to one of the lower hex codes
+        /// </summary>
+        /// <param name="c">The character to test</param>
+        [MethodImpl(Inline), Op]
+        public static bool scalar(char c)
+            => scalar((AsciCode)c);
+
         /// <summary>
         /// Determines whether a character corresponds to one of the lowercase hex code characters
         /// </summary>

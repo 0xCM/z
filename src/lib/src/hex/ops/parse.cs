@@ -8,7 +8,7 @@ namespace Z0
 
     using static Msg;
     using static sys;
- 
+
     partial struct Hex
     {
         public static Outcome<uint> parse(string src, out HexArray16 dst)
@@ -17,85 +17,45 @@ namespace Z0
             return hexbytes(src, dst.Bytes);
         }
 
-        [Parser]
-        public static bool parse(string src, out Hash8 dst)
-        {
-            var result = Hex8.parse(src, out var hex);
-            dst = 0;
-            if(result)
-                dst = (byte)hex;
-            return result;
-        }
-
-        [Parser]
-        public static bool parse(string src, out Hash16 dst)
-        {
-            var result = Hex16.parse(src, out var hex);
-            dst = 0;
-            if(result)
-                dst = (ushort)hex;
-            return result;
-        }
-
-        [Parser]
-        public static bool parse(string src, out Hash32 dst)
-        {
-            var result = Hex32.parse(src, out var hex);
-            dst = 0;
-            if(result)
-                dst = (uint)hex;
-            return result;
-        }
-
-        [Parser]
-        public static bool parse(string src, out Hash64 dst)
-        {
-            var result = Hex64.parse(src, out var hex);
-            dst = 0;
-            if(result)
-                dst = (ulong)hex;
-            return result;
-        }
-
         [MethodImpl(Inline), Op]
         public static byte combine(HexDigitValue lo, HexDigitValue hi)
             => (byte)((byte)hi << 4 | (byte)lo);
 
         public static bool parse64u(string src, out ulong dst)
-            => ulong.TryParse(clear(src), NumberStyles.HexNumber, null,  out dst);
+            => ulong.TryParse(HexParser.clear(src), NumberStyles.HexNumber, null,  out dst);
 
         public static bool parse32u(string src, out uint dst)
-            => uint.TryParse(clear(src), NumberStyles.HexNumber, null,  out dst);
+            => uint.TryParse(HexParser.clear(src), NumberStyles.HexNumber, null,  out dst);
 
         public static bool parse16u(string src, out ushort dst)
-            => ushort.TryParse(clear(src), NumberStyles.HexNumber, null, out dst);
+            => ushort.TryParse(HexParser.clear(src), NumberStyles.HexNumber, null, out dst);
 
         public static bool parse8u(string src, out byte dst)
-            => byte.TryParse(clear(src), NumberStyles.HexNumber, null, out dst);
+            => byte.TryParse(HexParser.clear(src), NumberStyles.HexNumber, null, out dst);
 
         public static bool parse8i(string src, out sbyte dst)
-            => sbyte.TryParse(clear(src), NumberStyles.HexNumber, null, out dst);
+            => sbyte.TryParse(HexParser.clear(src), NumberStyles.HexNumber, null, out dst);
 
         public static bool parse16i(string src, out short dst)
-            => short.TryParse(clear(src), NumberStyles.HexNumber, null, out dst);
+            => short.TryParse(HexParser.clear(src), NumberStyles.HexNumber, null, out dst);
 
         public static bool parse32i(string src, out int dst)
-            => int.TryParse(clear(src), NumberStyles.HexNumber, null, out dst);
+            => int.TryParse(HexParser.clear(src), NumberStyles.HexNumber, null, out dst);
 
         public static bool parse64i(string src, out long dst)
-            => long.TryParse(clear(src), NumberStyles.HexNumber, null, out dst);
+            => long.TryParse(HexParser.clear(src), NumberStyles.HexNumber, null, out dst);
 
         public static bool parse8u(ReadOnlySpan<char> src, out byte dst)
-            => byte.TryParse(clear(src), NumberStyles.HexNumber, null,  out dst);
+            => byte.TryParse(HexParser.clear(src), NumberStyles.HexNumber, null,  out dst);
 
         public static bool parse16u(ReadOnlySpan<char> src, out ushort dst)
-            => ushort.TryParse(clear(src), NumberStyles.HexNumber, null,  out dst);
+            => ushort.TryParse(HexParser.clear(src), NumberStyles.HexNumber, null,  out dst);
 
         public static bool parse32u(ReadOnlySpan<char> src, out uint dst)
-            => uint.TryParse(clear(src), NumberStyles.HexNumber, null,  out dst);
+            => uint.TryParse(HexParser.clear(src), NumberStyles.HexNumber, null,  out dst);
 
         public static bool parse64u(ReadOnlySpan<char> src, out ulong dst)
-            => ulong.TryParse(clear(src), NumberStyles.HexNumber, null,  out dst);
+            => ulong.TryParse(HexParser.clear(src), NumberStyles.HexNumber, null,  out dst);
 
         public static Outcome parse(string src, out BinaryCode dst)
         {

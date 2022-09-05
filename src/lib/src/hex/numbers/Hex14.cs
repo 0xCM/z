@@ -13,18 +13,6 @@ namespace Z0
     [DataWidth(Width,StorageWidth)]
     public readonly struct Hex14 : IEquatable<Hex14>, IComparable<Hex14>
     {
-        [Parser]
-        public static bool parse(ReadOnlySpan<char> src, out Hex14 dst)
-        {
-            dst = Zero;
-            var storage = z32;
-            var buffer = bytes(storage);
-            var result = Hex.parse(src, buffer);
-            if(result && storage <= MaxValue)
-                dst = (Hex14)storage;
-            return result;
-        }
-
         public const byte Width = 14;
 
         const byte StorageWidth = 16;

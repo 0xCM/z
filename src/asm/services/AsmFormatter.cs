@@ -124,7 +124,7 @@ namespace Z0.Asm
 
         [Op]
         public static AsmInlineComment hexarray(BinaryCode src)
-            => new AsmInlineComment(AsmCommentMarker.Hash, Hex.hexarray(src).Format(true));
+            => new AsmInlineComment(AsmCommentMarker.Hash, HexArray.from(src).Format(true));
 
         [Op]
         public static string format(MemoryAddress @base, in AsmInstructionInfo src, in AsmFormatConfig config)

@@ -40,6 +40,5 @@ namespace Z0
             [MethodImpl(Options), Op]
             get => Process.GetCurrentProcess().Handle;
         }
-
     }
 }

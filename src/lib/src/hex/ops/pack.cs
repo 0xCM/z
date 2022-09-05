@@ -19,8 +19,8 @@ namespace Z0
             for(var i=0; i<count; i++)
             {
                 ref readonly var b = ref skip(src,i);
-                seek(dst,j++) = hexchar(LowerCase, b, 1);
-                seek(dst,j++) = hexchar(LowerCase, b, 0);
+                seek(dst,j++) = H0x.hexchar(LowerCase, b, 1);
+                seek(dst,j++) = H0x.hexchar(LowerCase, b, 0);
             }
             return j;
         }
@@ -33,8 +33,8 @@ namespace Z0
             for(var i=0; i<count; i++)
             {
                 ref readonly var b = ref skip(src,i);
-                seek(dst,j++) = hexchar(LowerCase, b, 1);
-                seek(dst,j++) = hexchar(LowerCase, b, 0);
+                seek(dst,j++) = H0x.hexchar(LowerCase, b, 1);
+                seek(dst,j++) = H0x.hexchar(LowerCase, b, 0);
             }
             return j;
         }        

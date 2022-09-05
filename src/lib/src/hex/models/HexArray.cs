@@ -9,6 +9,34 @@ namespace Z0
     [ApiHost]
     public readonly struct HexArray
     {
+        [MethodImpl(Inline), Op]
+        public static HexArray from(byte[] src)
+            => new HexArray(src);
+
+        [MethodImpl(Inline), Op]
+        public static HexArray16 from(ReadOnlySpan<byte> src, N16 n)
+        {
+            var size = src.Length;
+            if(size <= 16)
+                return @as<HexArray16>(first(src));
+            else
+            {
+                var dst = HexArray16.Empty;
+                store(src, ref dst);
+                return dst;
+            }
+        }        
+
+        [MethodImpl(Inline), Op]
+        public static ref HexArray16 store(ReadOnlySpan<byte> src, ref HexArray16 dst)
+        {
+            ref var target = ref @as<HexArray16,byte>(dst);
+            var count = min(src.Length, 16);
+            for(var i=0; i<count; i++)
+                seek(target,i) = skip(src,i);
+            return ref dst;
+        }
+
         [MethodImpl(Inline)]
         public static HexArray cover(byte[] src)
             => new HexArray(src);

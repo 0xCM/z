@@ -7,7 +7,11 @@ namespace Z0
     using static sys;
     using static HexCharData;
 
-    partial struct Hex
+    using XF = HexDigitFacets;
+
+    using H = HexCharData;
+
+    partial class H0x
     {
         [MethodImpl(Inline), Op]
         public static HexDigitSym symbol(LowerCased casing, byte index)
@@ -56,5 +60,17 @@ namespace Z0
             else
                 throw no<C>();
         }
+
+        [MethodImpl(Inline)]
+        public static HexDigitSym symbol<C>(C @case, byte index)
+            where C : unmanaged, ILetterCase
+        {
+            if(typeof(C) == typeof(LowerCased))
+                return symbol(LowerCase,index);
+            else if(typeof(C) == typeof(UpperCased))
+                return symbol(UpperCase,index);
+            else
+                throw no<C>();
+        }         
     }
 }

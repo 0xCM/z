@@ -9,5 +9,11 @@ namespace Z0
     public static partial class XTend
     {
         const NumericKind Closure = Root.UnsignedInts;
+
+        public static void Require(this bool src)
+        {
+            if(!src)
+                sys.@throw("Fail");
+        }
     }
 }

@@ -6,7 +6,7 @@ namespace Z0
 {
     public readonly record struct RowKey : IRowKey<RowKey,uint>
     {
-        public uint Value {get;}
+        public readonly uint Value;
 
         [MethodImpl(Inline)]
         public RowKey(uint value)
@@ -20,6 +20,15 @@ namespace Z0
         public int CompareTo(RowKey src)
             => Value.CompareTo(src.Value);
 
+        public bool IsEmpty 
+            => false;
+
+        public bool IsNonEmpty 
+            => true;
+
+        uint IRowKey<uint>.Value
+            => Value;
+
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
@@ -28,6 +37,12 @@ namespace Z0
 
         public override int GetHashCode()
             => Hash;
+
+        public string Format()
+            => $"{Value}";
+
+        public override string ToString()
+            => Format();
 
         [MethodImpl(Inline)]
         public static implicit operator RowKey(uint value)

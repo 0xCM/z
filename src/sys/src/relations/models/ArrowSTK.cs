@@ -33,11 +33,11 @@ namespace Z0
             Target = dst;
         }
 
-        public string IdentityText
-        {
-            [MethodImpl(Inline)]
-            get => string.Format(RP.Arrow, Source, Target);
-        }
+        public string Format()
+            => $"{Kind}:{Source} -> {Target}";
+
+        public override string ToString()
+            => Format();
 
         K IArrow<S, T, K>.Kind
             => Kind;

@@ -9,11 +9,17 @@ namespace Z0
     public readonly record struct RowKey<K> : IRowKey<RowKey<K>,K>
         where K : unmanaged
     {
-        public K Value {get;}
+        public readonly K Value;
 
         [MethodImpl(Inline)]
         public RowKey(K value)
             => Value = value;
+
+        public bool IsEmpty 
+            => false;
+
+        public bool IsNonEmpty 
+            => true;
 
         public Hash32 Hash
         {
@@ -23,6 +29,15 @@ namespace Z0
 
         public override int GetHashCode()
             => Hash;
+
+        public string Format()
+            => $"{Value}";
+
+        public override string ToString()
+            => Format();
+
+        K IRowKey<K>.Value
+            => Value;
 
         [MethodImpl(Inline)]
         public int CompareTo(RowKey<K> src)

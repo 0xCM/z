@@ -24,7 +24,7 @@ namespace Z0
             dst = default;
             if(IsHexLiteral(src))
             {
-                result = Hex8.parse(src, out Hex8 n);
+                result = HexParser.parse(src, out Hex8 n);
                 dst = n;
             }
             else if(IsBinaryLiteral(src))
@@ -47,7 +47,7 @@ namespace Z0
 
             if(IsHexLiteral(src))
             {
-                result = Hex8.parse(src, out Hex8 n);
+                result = HexParser.parse(src, out Hex8 n);
                 dst = @as<Hex8,T>(n);
             }
             else if(IsBinaryLiteral(src))

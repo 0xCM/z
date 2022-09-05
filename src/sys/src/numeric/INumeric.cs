@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Sized;
-    using static Refs;
+    using static sys;
 
     [Free]
     public interface INumeric : ISized, IDataType

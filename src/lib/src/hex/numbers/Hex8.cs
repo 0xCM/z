@@ -11,22 +11,6 @@ namespace Z0
     [DataWidth(Width)]
     public readonly struct Hex8 : IHexNumber<H,W,K>
     {
-        [Parser]
-        public static bool parse(string src, out Hex8 dst)
-        {
-            var outcome = Hex.parse8u(src, out var x);
-            dst = x;
-            return outcome;
-        }
-
-        [Parser]
-        public static bool parse(ReadOnlySpan<char> src, out Hex8 dst)
-        {
-            var outcome = Hex.parse8u(src, out var x);
-            dst = x;
-            return outcome;
-        }
-
         public const byte Width = 8;
 
         public const byte MaxValue = Pow2.T08m1;

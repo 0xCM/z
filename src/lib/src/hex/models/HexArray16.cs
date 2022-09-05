@@ -6,6 +6,8 @@ namespace Z0
 {
     using static sys;
 
+    using api = HexArray;
+
     public struct HexArray16
     {
         ulong Lo;
@@ -44,21 +46,21 @@ namespace Z0
         public static implicit operator HexArray16(ReadOnlySpan<byte> src)
         {
             var dst = Empty;
-            return Hex.store(src, ref dst);
+            return api.store(src, ref dst);
         }
 
         [MethodImpl(Inline)]
         public static implicit operator HexArray16(Span<byte> src)
         {
             var dst = Empty;
-            return Hex.store(src, ref dst);
+            return api.store(src, ref dst);
         }
 
         [MethodImpl(Inline)]
         public static implicit operator HexArray16(byte[] src)
         {
             var dst = Empty;
-            return Hex.store(src, ref dst);
+            return api.store(src, ref dst);
         }
 
         [MethodImpl(Inline)]

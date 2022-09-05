@@ -7,8 +7,7 @@ namespace Z0
     using static sys;
     using static HexFormatSpecs;
 
-    using X = HexDigitFacets;
-    using D = HexDigitFacets;
+    using XF = HexDigitFacets;
 
     partial struct Hex
     {
@@ -84,12 +83,12 @@ namespace Z0
 
             if(scalar(c))
             {
-                dst = (HexDigitValue)((HexDigitCode)c - D.MinScalarCode);
+                dst = (HexDigitValue)((HexDigitCode)c - XF.MinScalarCode);
                 result = true;
             }
             else if(upper(c))
             {
-                dst = (HexDigitValue)((HexDigitCode)c - D.MinLetterCodeU + 0xA);
+                dst = (HexDigitValue)((HexDigitCode)c - XF.MinLetterCodeU + 0xA);
                 result = true;
             }
             else
@@ -103,12 +102,12 @@ namespace Z0
             var result = false;
             if(scalar(c))
             {
-                dst = (HexDigitValue)((HexDigitCode)c - D.MinScalarCode);
+                dst = (HexDigitValue)((HexDigitCode)c - XF.MinScalarCode);
                 result = true;
             }
             else if(lower(c))
             {
-                dst = (HexDigitValue)((HexDigitCode)c - D.MinLetterCodeL + 0xa);
+                dst = (HexDigitValue)((HexDigitCode)c - XF.MinLetterCodeL + 0xa);
                 result = true;
             }
             else
@@ -121,17 +120,17 @@ namespace Z0
         {
             if(scalar(c))
             {
-                dst = (HexDigitValue)((HexDigitCode)c - X.MinScalarCode);
+                dst = (HexDigitValue)((HexDigitCode)c - XF.MinScalarCode);
                 return true;
             }
             else if(upper(c))
             {
-                dst = (HexDigitValue)((HexDigitCode)c - X.MinLetterCodeU + 0xA);
+                dst = (HexDigitValue)((HexDigitCode)c - XF.MinLetterCodeU + 0xA);
                 return true;
             }
             else if(lower(c))
             {
-                dst = (HexDigitValue)((HexDigitCode)c - X.MinLetterCodeL + 0xa);
+                dst = (HexDigitValue)((HexDigitCode)c - XF.MinLetterCodeL + 0xa);
                 return true;
             }
             dst = (HexDigitValue)byte.MaxValue;
@@ -221,7 +220,7 @@ namespace Z0
 
         public static bool parse(ReadOnlySpan<AsciCode> src, out MemoryAddress dst)
         {
-            var result = parse(clear(src), out Hex64 x64);
+            var result = parse(HexParser.clear(src), out Hex64 x64);
             if(result)
             {
                 dst = x64;

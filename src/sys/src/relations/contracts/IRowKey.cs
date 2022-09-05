@@ -18,7 +18,7 @@ namespace Z0
             => Value;
     }
 
-    public interface IRowKey<H,K> : IRowKey<K>, IEquatable<H>, IComparable<H>
+    public interface IRowKey<H,K> : IRowKey<K>, IDataType<H>
         where K : unmanaged
         where H : unmanaged, IRowKey<H,K>
     {

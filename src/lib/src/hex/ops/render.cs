@@ -215,8 +215,8 @@ namespace Z0
             for(var i=0; i<size; i++)
             {
                 ref readonly var b = ref skip(src,i);
-                seek(dst,j++) = hexchar(@case, b, 0);
-                seek(dst,j++) = hexchar(@case, b, 1);
+                seek(dst,j++) = H0x.hexchar(@case, b, 0);
+                seek(dst,j++) = H0x.hexchar(@case, b, 1);
                 seek(dst,j++) = Chars.Space;
             }
             return j;
@@ -470,8 +470,8 @@ namespace Z0
             for(var i=0; i<count && j<max; i++)
             {
                 ref readonly var b = ref skip(src,i);
-                seek(dst,j++) = hexchar(@case, b, 1);
-                seek(dst,j++) = hexchar(@case, b, 0);
+                seek(dst,j++) = H0x.hexchar(@case, b, 1);
+                seek(dst,j++) = H0x.hexchar(@case, b, 0);
                 if(i != count-1)
                     seek(dst,j++) = Chars.Space;
             }

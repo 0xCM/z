@@ -18,6 +18,7 @@ global using System.Threading.Tasks;
 global using System.Xml;
 global using System.Globalization;
 global using System.Text;
+global using Z0;
 
 global using static Z0.Root;
 global using Free = System.Security.SuppressUnmanagedCodeSecurityAttribute;

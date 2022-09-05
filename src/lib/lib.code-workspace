@@ -1,9 +1,6 @@
 {
 	"folders": [
 		{
-			"path": "../../props"
-		},
-		{
 			"path": "../literals"
 		},
 		{
@@ -13,7 +10,7 @@
 			"path": "../sys"
 		},
 		{
-			"path": "../clr.msil"
+			"path": "../hex"
 		},
 		{
 			"path": "../bit"
@@ -22,10 +19,10 @@
 			"path": "../text"
 		},
 		{
-			"path": "../imagine"
+			"path": "../cells"
 		},
 		{
-			"path": "../clr.models"
+			"path": "../imagine"
 		},
 		{
 			"path": "../clr.query"

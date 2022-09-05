@@ -41,26 +41,26 @@ namespace Z0
         public static bool parse(string src, out uint8b dst)
             => uint8b.parse(src, out dst);
 
-        public static Outcome parse(string src, out Hex4 dst)
-            => Hex4.parse(src, out dst);
+        public static bool parse(string src, out Hex4 dst)
+            => HexParser.parse(src, out dst);
 
-        public static Outcome parse(string src, out Hex8 dst)
-            => Hex8.parse(src, out dst);
+        public static bool parse(string src, out Hex8 dst)
+            => HexParser.parse(src, out dst);
 
-        public static Outcome parse(string src, out Hex16 dst)
-            => Hex16.parse(src, out dst);
+        public static bool parse(string src, out Hex16 dst)
+            => HexParser.parse(src, out dst);
 
-        public static Outcome parse(string src, out Hex32 dst)
-            => Hex32.parse(src, out dst);
+        public static bool parse(string src, out Hex32 dst)
+            => HexParser.parse(src, out dst);
 
-        public static Outcome parse(string src, out Hex64 dst)
-            => Hex64.parse(src, out dst);
+        public static bool parse(string src, out Hex64 dst)
+            => HexParser.parse(src, out dst);
 
-        public static Outcome parse(ReadOnlySpan<char> src, out Hex32 dst)
-            => Hex32.parse(src, out dst);
+        public static bool parse(ReadOnlySpan<char> src, out Hex32 dst)
+            => HexParser.parse(src, out dst);
 
-        public static Outcome parse(ReadOnlySpan<char> src, out Hex64 dst)
-            => Hex64.parse(src, out dst);
+        public static bool parse(ReadOnlySpan<char> src, out Hex64 dst)
+            => HexParser.parse(src, out dst);
 
         public static Outcome parse(string src, out SymVal dst)
             => SymVal.parse(src, out dst);

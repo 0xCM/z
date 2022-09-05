@@ -30,9 +30,8 @@ namespace Z0
         T IArrow<S,T>.Target
             => Target;
 
-        [MethodImpl(Inline)]
         public string Format()
-            => string.Format(RP.Arrow, Source, Target);
+            => $"{Source} -> {Target}";
 
         public override string ToString()
             => Format();

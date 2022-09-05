@@ -4,12 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly record struct RowSequence : IComparable<RowSequence>, IEquatable<RowSequence>
+    public readonly record struct RowSeq : IComparable<RowSeq>, IEquatable<RowSeq>
     {
         public readonly uint Value;
 
         [MethodImpl(Inline)]
-        public RowSequence(uint src)
+        public RowSeq(uint src)
         {
             Value = src;
         }
@@ -21,7 +21,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public bool Equals(RowSequence src)
+        public bool Equals(RowSeq src)
             => Value == src.Value;
 
         [MethodImpl(Inline)]
@@ -35,15 +35,15 @@ namespace Z0
         public override string ToString()
             => Format();
 
-        public int CompareTo(RowSequence other)
+        public int CompareTo(RowSeq other)
             => Value.CompareTo(other.Value);
 
         [MethodImpl(Inline)]
-        public static implicit operator RowSequence(uint src)
-            => new RowSequence(src);
+        public static implicit operator RowSeq(uint src)
+            => new RowSeq(src);
 
         [MethodImpl(Inline)]
-        public static implicit operator RowSequence(int src)
-            => new RowSequence((uint)src);
+        public static implicit operator RowSeq(int src)
+            => new RowSeq((uint)src);
     }
 }

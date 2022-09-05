@@ -37,7 +37,7 @@ namespace Z0
         /// <param name="src">The source digit</param>
         [MethodImpl(Inline), Op]
         public static char @char(UpperCased @case, HexDigitValue src)
-            => Hex.hexchar(@case,src);
+            => H0x.hexchar(@case,src);
 
         /// <summary>
         /// Computes the symbolic representation of a <see cref='HexDigitValue'/> chosen from [0..9] and [a..f]
@@ -46,6 +46,6 @@ namespace Z0
         /// <param name="src">The source digit</param>
         [MethodImpl(Inline), Op]
         public static char @char(LowerCased @case, HexDigitValue src)
-            => Hex.hexchar(@case,src);
+            => H0x.hexchar(@case,src);
     }
 }

@@ -16,7 +16,7 @@ namespace Z0
         [Op]
         public static ByteSize emit(Index<MemorySeg> src, StreamWriter dst)
         {
-            var buffer = Spans.span<char>(src.Select(x => (uint)x.Size).Storage.Max()*2);
+            var buffer = sys.span<char>(src.Select(x => (uint)x.Size).Storage.Max()*2);
             var total = 0u;
             for(var i=0u; i<src.Count;i++)
             {
