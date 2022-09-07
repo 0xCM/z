@@ -136,8 +136,8 @@ public enum PartId : byte
     [Symbol("circuits")]
     Circuits,
 
-    [Symbol("text.sized")]
-    SizedText,
+    [Symbol("zcmd")]
+    ZCmd,
 
     [Symbol("tuples")]
     Tuples,

@@ -43,7 +43,7 @@ namespace Z0
                 EmitApiLiterals,
                 () => EmitApiDeps(Target),
                 EmitParsers,
-                EmitApiDeps,
+                //EmitApiDeps,
                 EmitApiTables,
                 EmitApiTokens,
                 EmitCmdDefs,
@@ -133,7 +133,13 @@ namespace Z0
             => Comments.Collect(dst);
 
         void EmitApiDeps(IApiPack dst)
-            => iter(sys.array(ExecutingPart.Assembly), a => EmitApiDeps(a,Target.Runtime().Path($"{a.GetSimpleName()}", FileKind.DepsList)), true);
+        {
+            var src = ExecutingPart.Assembly;
+            var path = Target.Runtime().Path($"{src.GetSimpleName()}", FileKind.DepsList);
+            if(path.Exists)
+                EmitApiDeps(src, path);
+            //iter(sys.array(ExecutingPart.Assembly), a => EmitApiDeps(a,Target.Runtime().Path($"{a.GetSimpleName()}", FileKind.DepsList)), true);
+        }
 
         ReadOnlySeq<ApiCmdRow> CalcCmdDefs()
             => CmdTypes.rows(CmdTypes.discover(Md.Assemblies));

@@ -2,10 +2,10 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-[assembly: PartId(PartId.Z)]
+[assembly: PartId(PartId.ZCmd)]
 namespace Z0.Parts
 {
-    public sealed class Z : Part<Z>
+    public sealed class ZCmd : Part<ZCmd>
     {
         [ModuleInitializer]
         internal static void Init()

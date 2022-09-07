@@ -1,11 +1,14 @@
 <Project>
 
    <Import Project="src/agents/exports.props"/>
-   <Import Project="src/alloc/exports.props"/>
-   
+   <Import Project="src/alloc/exports.props"/>   
    <Import Project="src/api.code/exports.props"/>
    <Import Project="src/api.specs/exports.props"/>
+   <Import Project="src/asm/exports.props"/>
+   <Import Project="src/asm.core/exports.props"/>
+
    <Import Project="src/bit/exports.props"/>
+   <Import Project="src/bits/exports.props"/>
 
    <Import Project="src/cg/cg.common/exports.props"/>
    <Import Project="src/cg/cg.intel/exports.props"/>
@@ -17,6 +20,7 @@
    <Import Project="src/containers/exports.props"/>
    <Import Project="src/cells/exports.props"/>
    <Import Project="src/cpu/exports.props"/>
+   <Import Project="src/cmd/exports.props"/>
 
    <Import Project="src/db.sqlite/exports.props"/>
    <Import Project="src/dispatcher/exports.props"/>

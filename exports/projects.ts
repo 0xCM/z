@@ -1,0 +1,1 @@
+export type Agents = '{SlnRoot}/src/agents/z0.agents.csproj'

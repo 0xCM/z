@@ -1,9 +1,9 @@
 <Project>
 
   <ItemGroup>
-    <ProjectReference Include="../src/z/z0.z.csproj" />
-    <ProjectReference Include="../src/dispatcher/z0.dispatcher.csproj" />
-    <ProjectReference Include="../src/hub/z0.hub.csproj" />
+    <ProjectReference Include="$(ZCmd)" />
+    <ProjectReference Include="$(Dispatcher)" />
+    <ProjectReference Include="$(Hub)" />
   </ItemGroup>
 
 </Project>

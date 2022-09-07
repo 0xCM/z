@@ -6,8 +6,6 @@ namespace Z0
 {
     class ApiMdCmd : AppCmdService<ApiMdCmd>
     {
-        ApiMd ApiMd => Wf.ApiMd();
-
         [CmdOp("api/packs/list")]
         void ListApiPacks()
         {

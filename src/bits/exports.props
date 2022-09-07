@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Bits>$(MsBuildThisFileDirectory)z0.bits.csproj</Bits>
+  </PropertyGroup>
+</Project>

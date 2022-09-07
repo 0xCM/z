@@ -1,0 +1,10 @@
+<Project>
+
+  <ItemGroup>
+    <ProjectReference Include="$(Containers)" />
+    <ProjectReference Include="$(Digital)" />
+    <ProjectReference Include="$(CmdSpecs)" />
+    <ProjectReference Include="$(Wf)" />
+  </ItemGroup>
+
+</Project>

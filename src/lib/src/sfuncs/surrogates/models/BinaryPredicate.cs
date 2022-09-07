@@ -4,11 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
-
     partial class Surrogates
     {
         public readonly struct BinaryPredicate<T> : IFunc<T,T,bit>

@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <ZCmd>$(MsBuildThisFileDirectory)z0.cmd.csproj</ZCmd>
+  </PropertyGroup>
+</Project>
