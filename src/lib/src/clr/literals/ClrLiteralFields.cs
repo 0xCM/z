@@ -27,6 +27,7 @@ namespace Z0
                     offset += ClrFields.primal(@base, offset, f).DataSize;
             }
         }
+
         [MethodImpl(Inline), Op]
         public static string @string(FieldInfo f)
             => sys.constant<string>(f);

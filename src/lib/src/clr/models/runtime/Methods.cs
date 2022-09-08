@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [Domain(typeof(MethodInfo))]
     public readonly struct Methods : IIndex<MethodInfo>
     {
         readonly Index<MethodInfo> Data;

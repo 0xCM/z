@@ -11,14 +11,14 @@ namespace Z0
     {
         public readonly Tool Tool;
 
-        public readonly Name Type;
+        public readonly string Type;
         
         public readonly ToolCmdArgs Args;
 
         public readonly CmdId CmdId;
 
         [MethodImpl(Inline)]
-        public ToolCmdSpec(Tool tool, Name type, params ToolCmdArg[] args)
+        public ToolCmdSpec(Tool tool, string type, params ToolCmdArg[] args)
         {            
             Tool = tool;
             Type = type;
@@ -29,7 +29,7 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => Tool.Hash | Type.Hash | Args.Hash;
+            get => Tool.Hash | (Hash32)sys.hash(Type) | Args.Hash;
         }
 
         public override int GetHashCode()
@@ -53,7 +53,7 @@ namespace Z0
         Tool IToolCmd.Tool
              => Tool;
 
-        Name IToolCmd.Type 
+        string IToolCmd.Type 
             => Type;
 
         CmdId ICmd.CmdId 

@@ -20,7 +20,7 @@ namespace Z0
         {
             if(!IsBinaryLiteral(target))
                 return NumericLiteral.Empty;
-            return ClrLiterals.numeric(base2, target.Name, value, target.Tag<BinaryLiteralAttribute>().Value.Text);
+            return NumericLiterals.numeric(base2, target.Name, value, target.Tag<BinaryLiteralAttribute>().Value.Text);
         }
 
         [MethodImpl(Inline), Op]

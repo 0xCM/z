@@ -28,7 +28,7 @@ namespace Z0
             => _Lookup.TryGetValue(cmd.WorkflowName, out handler);
 
         [Op]
-        public static bool find(NameOld name, out RunWf cmd)
+        public static bool find(string name, out RunWf cmd)
         {
             if(_Lookup.ContainsKey(name))
             {

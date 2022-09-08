@@ -119,37 +119,13 @@ namespace Z0
             => (this + FS.folder(scope)).Files(recurse).Where(f => f.Is(kind));
 
         public Files Files(string scope, bool recurse, params FileKind[] kinds)
-            => (this + FS.folder(scope)).Files(recurse).Where(f => kinds.Contains(f.FileKind()));
+            => (this + FS.folder(scope)).Files(recurse).Where(f => FileTypes.@is(f,kinds));
 
         public Files Files(bool recurse, params FileKind[] kinds)
-            => files(this, recurse, kinds);
+            => Files(true).Where(f => FileTypes.@is(f,kinds));
 
         public Files Files(bool recurse)
             => Exists ? Directory.EnumerateFiles(Name, SearchAll, option(recurse)).Map(path) : Z0.Files.Empty;
-
-        // /// <summary>
-        // /// Nonrecursively enumerates part-owned folder files
-        // /// </summary>
-        // /// <param name="part">The owning part</param>
-        // /// <param name="ext">The extension to match</param>
-        // public Files Files(PartId part, FileExt ext)
-        //     => Files(ext).Where(f => f.IsOwner(part));
-
-        // /// <summary>
-        // /// Enumerates part-owned folder files
-        // /// </summary>
-        // /// <param name="part">The owning part</param>
-        // /// <param name="ext">The extension to match</param>
-        // public Files Files(PartId part, FileExt ext, bool recurse)
-        //     => Files(ext, recurse).Where(f => f.IsOwner(part));
-
-        // /// <summary>
-        // /// Nonrecursively enumerates host-owned folder files
-        // /// </summary>
-        // /// <param name="part">The owning part</param>
-        // /// <param name="ext">The extension to match</param>
-        // public Files Files(ApiHostUri host, FileExt ext, bool recurse)
-        //     => Files(ext, recurse).Where(f => f.IsHost(host));
 
         public Index<FolderPath> SubDirs(bool recurse = false)
             => Directory.Exists(Name)

@@ -4,9 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    using static Arrays;
-    using static Spans;
+    using static sys;
 
     public class TypeList : Seq<TypeList,TypeListEntry>
     {

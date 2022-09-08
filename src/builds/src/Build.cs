@@ -91,7 +91,6 @@ namespace Z0
             return ref dst;
         }
 
-
         /// <summary>
         /// Adapted from https://github.com/dotnet/core-setup/blob/master/src/corehost/cli/fxr/fx_ver.cpp
         /// </summary>
@@ -112,6 +111,5 @@ namespace Z0
 
             return 0;
         }
-
     }
 }

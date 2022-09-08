@@ -9,10 +9,10 @@ namespace Z0
     {
         public const string CmdName = "run-wf";
 
-        public NameOld WorkflowName;
+        public @string WorkflowName;
 
         [MethodImpl(Inline)]
-        public RunWf(NameOld name)
+        public RunWf(@string name)
             => WorkflowName = name;
 
         [MethodImpl(Inline)]
@@ -30,7 +30,7 @@ namespace Z0
             => new RunWf(name);
 
         [MethodImpl(Inline)]
-        public static implicit operator RunWf(NameOld name)
+        public static implicit operator RunWf(@string name)
             => new RunWf(name);
 
         public static bool operator ==(RunWf a, RunWf b)
@@ -39,6 +39,6 @@ namespace Z0
         public static bool operator !=(RunWf a, RunWf b)
             => !a.Equals(b);
 
-        public static RunWf Empty => new RunWf(NameOld.Empty);
+        public static RunWf Empty => new RunWf(@string.Empty);
     }
 }

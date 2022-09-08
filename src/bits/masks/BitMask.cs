@@ -26,7 +26,7 @@ namespace Z0
                 else if(IsBinaryLiteral(field))
                     dst.Add(BitMaskData.describe(binaryliteral(field,vRaw)));
                 else
-                    dst.Add(BitMaskData.describe(ClrLiterals.numeric(base2, field.Name, vRaw, BitRender.format(vRaw, tc))));
+                    dst.Add(BitMaskData.describe(NumericLiterals.numeric(base2, field.Name, vRaw, BitRender.format(vRaw, tc))));
             }
             return dst.ToArray();
         }
@@ -56,12 +56,12 @@ namespace Z0
                     var nbk = NumericBases.kind(nbi);
 
                     if(nbi != 0)
-                        seek(dst, i) = BitMaskData.describe(ClrLiterals.numeric(nbk, src.Name, value, component.Substring(1)));
+                        seek(dst, i) = BitMaskData.describe(NumericLiterals.numeric(nbk, src.Name, value, component.Substring(1)));
                     else
                     {
                         nbi = NumericBases.indicator(component[length - 1]);
                         nbi = nbi != 0 ? nbi : NumericBaseIndicator.Base2;
-                        seek(dst, i) = BitMaskData.describe(ClrLiterals.numeric(nbk, src.Name, value, component.Substring(0, length - 1)));
+                        seek(dst, i) = BitMaskData.describe(NumericLiterals.numeric(nbk, src.Name, value, component.Substring(0, length - 1)));
                     }
                 }
                 else

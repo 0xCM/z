@@ -1,6 +1,6 @@
 @echo off
 echo Level:%~dp0
-set ProjectId=z
-set ShellId=z
+set ProjectId=cmd
+set ShellId=zcmd
 set Area=src
 call %~dp0..\config.cmd

@@ -32,7 +32,7 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => HashCodes.hash(Format());
+            get => sys.hash(Format());
         }
 
         public override int GetHashCode()

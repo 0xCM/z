@@ -4,9 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.Runtime.CompilerServices;
-    using System.Reflection;
-
     partial class XTend
     {
         public static CliSig ResolveSignature(this MethodInfo src)

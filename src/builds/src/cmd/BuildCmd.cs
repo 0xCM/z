@@ -10,6 +10,21 @@ namespace Z0
     {
         MsBuild BuildSvc => Wf.BuildSvc();
 
+        //ConcurrentDictionary<
+
+        [CmdOp("projects/list")]
+        void ListProjects(CmdArgs args)
+        {
+            var scope = arg(args,0).Value;
+            var files = AppDb.Dev(scope).Files().Where(x => FileTypes.@is(x,FileKind.CsProj));
+            iter(files, file => Write(file.ToUri()));
+
+            var uri = Cmd.uri((MethodInfo)MethodInfo.GetCurrentMethod());
+            
+
+            //iter(files, file => Write(file.ToUri()));
+        }
+
         [CmdOp("build/libs")]
         void LoadProjects()
         {
@@ -76,6 +91,20 @@ namespace Z0
                 var data = project.Format();    
                 Write(data);
                 FileEmit(data, AppDb.AppData("build/env").Path(file.FileName.WithoutExtension.Format(), FileKind.Cfg), (ByteSize)data.Length);
+            });
+        }
+
+        [CmdOp("build/exports")]
+        void BuildExports(CmdArgs args)
+        {
+            var files = AppDb.Dev("z0").Sources("src").Files().Where(x => x.FileName == FS.file("exports", FileKind.Props));
+            iter(files, file =>{
+                Write(file.ToUri());
+                var name = $"{file.FolderName}.exports";
+                var path = AppDb.AppData("build/exports").Path(name, FileKind.Cfg);
+                var project = BuildSvc.LoadProject(file);
+                var data = project.Format();
+                FileEmit(data, path, (ByteSize)data.Length);
             });
         }
 
