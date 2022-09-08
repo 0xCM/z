@@ -14,6 +14,12 @@ namespace Z0
             public string Name => nameof(File);
 
             public UriPartKind Kind => UriPartKind.Scheme;
+
+            public string Format()
+                => Name;
+
+            public override string ToString()
+                => Format();
         }
 
         /// <summary>
@@ -24,6 +30,12 @@ namespace Z0
             public string Name => nameof(Data);
 
             public UriPartKind Kind => UriPartKind.Scheme;
+
+            public string Format()
+                => Name;
+
+            public override string ToString()
+                => Format();
         }
 
         public readonly struct Doc : IUriScheme
@@ -31,6 +43,12 @@ namespace Z0
             public string Name => nameof(Doc);
 
             public UriPartKind Kind => UriPartKind.Scheme;
+
+            public string Format()
+                => Name;
+
+            public override string ToString()
+                => Format();
         }
 
         public readonly struct Cmd : IUriScheme
@@ -38,6 +56,12 @@ namespace Z0
             public string Name => nameof(Cmd);
 
             public UriPartKind Kind => UriPartKind.Scheme;
+
+            public string Format()
+                => Name;
+
+            public override string ToString()
+                => Format();
         }
 
         public readonly struct Tool : IUriScheme
@@ -45,6 +69,12 @@ namespace Z0
             public string Name => nameof(Tool);
 
             public UriPartKind Kind => UriPartKind.Scheme;
+
+            public string Format()
+                => Name;
+
+            public override string ToString()
+                => Format();
         }
 
         public readonly struct Machine : IUriScheme
@@ -52,6 +82,12 @@ namespace Z0
             public string Name => nameof(Machine);
 
             public UriPartKind Kind => UriPartKind.Scheme;
+
+            public string Format()
+                => Name;
+
+            public override string ToString()
+                => Format();
         }
 
         public readonly struct Local : IUriScheme
@@ -59,6 +95,12 @@ namespace Z0
             public string Name => nameof(Local);
 
             public UriPartKind Kind => UriPartKind.Scheme;
+
+            public string Format()
+                => Name;
+
+            public override string ToString()
+                => Format();
         }       
     }
 }

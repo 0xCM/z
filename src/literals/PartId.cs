@@ -58,6 +58,9 @@ public enum PartId : byte
     [Symbol("cmd.specs")]
     CmdSpecs,
 
+    [Symbol("bit.render")]
+    BitRender,
+
     [Symbol("cmd.exec")]
     CmdExec,
 
@@ -129,6 +132,9 @@ public enum PartId : byte
 
     [Symbol("llvm.checks")]
     LlvmChecks,
+
+    [Symbol("bitmasks")]
+    BitMasks,
 
     [Symbol("coff")]
     Coff,

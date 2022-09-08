@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using static core;
+    using static sys;
     using static RuntimeModeKind;
     using static OpszKind;
 
@@ -17,16 +17,16 @@ namespace Z0.Asm
 
         const byte MaxRexCode = 0x4F;
 
-        public static ReadOnlySpan<ProcessAsmRecord> vex(ProcessAsmBuffers src)
-        {
-            var counter = 0u;
-            var records = src.Records();
-            var buffer = src.Selected();
-            buffer.Clear();
-            var i = 0u;
-            var count = vex(records, ref i, buffer);
-            return slice(buffer,0,count);
-        }
+        // public static ReadOnlySpan<ProcessAsmRecord> vex(ProcessAsmBuffers src)
+        // {
+        //     var counter = 0u;
+        //     var records = src.Records();
+        //     var buffer = src.Selected();
+        //     buffer.Clear();
+        //     var i = 0u;
+        //     var count = vex(records, ref i, buffer);
+        //     return slice(buffer,0,count);
+        // }
 
         [MethodImpl(Inline), Op]
         public static bit rex(in AsmOpCodeString src)

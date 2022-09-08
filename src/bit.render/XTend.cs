@@ -4,13 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
-    using static bit;
-
-    using C = AsciCode;
-
-    partial struct BitRender
+    public static partial class XTend
     {
-
+        const NumericKind Closure = NumericKind.UnsignedInts;
     }
 }

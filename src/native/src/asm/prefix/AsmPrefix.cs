@@ -5,13 +5,48 @@
 namespace Z0.Asm
 {
     using static sys;
+    using static AsmPrefixCodes;
 
     using C = AsmPrefixCode;
     using K = AsmPrefixKind;
     using L = AsmPrefixClass;
 
-    public readonly struct AsmPrefixCalcs
-    {
+    [ApiHost, Free]
+    public class AsmPrefix
+    {        
+        [MethodImpl(Inline), Op]
+        public static SizeOverride opsz()
+            => SizeOverrideCode.OPSZ;
+
+        [MethodImpl(Inline), Op]
+        public static SizeOverride adsz()
+            => SizeOverrideCode.ADSZ;
+
+        [MethodImpl(Inline), Op]
+        public static SizeOverride szov(bit ad)
+            => ad ? adsz() : opsz();
+
+        [MethodImpl(Inline), Op]
+        public static LockPrefix @lock()
+            =>  LockPrefixCode.LOCK;
+
+        [MethodImpl(Inline), Op]
+        public static RepPrefix repz()
+            => RepPrefixCode.REPZ;
+
+        [MethodImpl(Inline), Op]
+        public static RepPrefix repnz()
+            => RepPrefixCode.REPNZ;
+
+        [MethodImpl(Inline), Op]
+        public static RepPrefix rep(bit z)
+            => z ?repz() : repnz();
+
+        [MethodImpl(Inline), Op]
+        public static RexPrefix rex(bit w, bit r, bit x, bit b)
+            => new (w,r,x,b);
+
+        [Op]
         public static AsmPrefixKind kinds(ReadOnlySpan<byte> src)
         {
             var count = src.Length;
@@ -25,6 +60,7 @@ namespace Z0.Asm
             return result;
         }
 
+        [Op]
         public static AsmPrefixClass @class(AsmPrefixCode src)
             => src switch
             {
@@ -52,6 +88,7 @@ namespace Z0.Asm
                 _ => L.None,
             };
 
+        [Op]
         public static AsmPrefixClass @class(AsmPrefixKind src)
             => src switch
             {
@@ -85,6 +122,7 @@ namespace Z0.Asm
                 _ => L.None,
             };
 
+        [Op]
         public static AsmPrefixKind kind(AsmPrefixCode code)
             => code switch
             {
@@ -119,6 +157,7 @@ namespace Z0.Asm
                 _ => K.None,
             };
 
+        [Op]
         public static AsmPrefixCode code(byte src)
             => src switch
             {
@@ -149,6 +188,6 @@ namespace Z0.Asm
                 0xC5 => C.VexC5,
 
                 _ => C.None,
-            };
+            };            
     }
 }

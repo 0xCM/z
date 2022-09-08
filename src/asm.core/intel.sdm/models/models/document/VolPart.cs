@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using System.Runtime.InteropServices;
-
     partial struct SdmModels
     {
         /// <summary>

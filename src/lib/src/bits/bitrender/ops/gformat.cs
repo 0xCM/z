@@ -6,8 +6,7 @@ namespace Z0
 {
     using System.Text;
 
-    using static Refs;
-    using static Spans;
+    using static sys;
 
     partial struct BitRender
     {

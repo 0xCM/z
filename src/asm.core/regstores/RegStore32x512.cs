@@ -7,7 +7,7 @@ namespace Z0
     using Asm;
     using Asm.Operands;
 
-    using static core;
+    using static sys;
 
     public struct RegStore32x512
     {

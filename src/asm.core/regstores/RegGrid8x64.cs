@@ -6,7 +6,7 @@ namespace Z0
 {
     using Asm;
 
-    using static core;
+    using static sys;
 
     public struct RegGrid8x64
     {
@@ -25,7 +25,7 @@ namespace Z0
         public AsmRegValue<ulong> this[byte index]
         {
             [MethodImpl(Inline)]
-            get => paired(RegName(index), RegVal(index));
+            get => Tuples.paired(RegName(index), RegVal(index));
 
             [MethodImpl(Inline)]
             set => Define(index, value.Name, value.Value);

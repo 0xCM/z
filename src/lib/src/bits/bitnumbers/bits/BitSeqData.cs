@@ -10,23 +10,23 @@ namespace Z0
         public unsafe static ReadOnlySpan<char> chars(byte value)
         {
             var pFirst = pchar(value);
-            return core.cover(pFirst, 8);
+            return sys.cover(pFirst, 8);
         }
 
         [MethodImpl(Inline), Op]
         public unsafe static ReadOnlySpan<bit> bits(byte value)
         {
             var pFirst = pbyte(value);
-            return core.recover<bit>(core.cover(pFirst, 8));
+            return sys.recover<bit>(sys.cover(pFirst, 8));
         }
 
         [MethodImpl(Inline), Op]
         static unsafe char* pchar(byte value)
-            => (char*)core.gptr(core.skip(core.first(BitCharData), 16*value));
+            => (char*)sys.gptr(sys.skip(sys.first(BitCharData), 16*value));
 
         [MethodImpl(Inline), Op]
         static unsafe byte* pbyte(byte value)
-            => core.gptr(core.skip(core.first(BitSeqData), 8*value));
+            => sys.gptr(sys.skip(sys.first(BitSeqData), 8*value));
 
         static ReadOnlySpan<byte> W1
             => new byte[2]{0b00,0b01};

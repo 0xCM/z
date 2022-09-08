@@ -23,6 +23,7 @@ namespace Z0.Asm
             BitRender.render8x4(src.Encoded, ref  i, dst);
             return i-i0;
         }
+
         public static uint table(ITextBuffer dst)
         {
             static string describe(RexPrefix src)

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using static core;
+    using static sys;
 
     [StructLayout(LayoutKind.Sequential, Pack=1)]
     public readonly struct JccInfo<K>

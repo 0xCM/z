@@ -17,7 +17,7 @@ namespace Z0.Asm
 
         public RexPrefix Rex;
 
-        public VexPrefix Vex;
+        public uint Vex;
 
         public EvexPrefix Evex;
 

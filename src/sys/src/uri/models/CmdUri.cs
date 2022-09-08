@@ -36,6 +36,9 @@ namespace Z0
             Name = name ?? EmptyString;
         }
 
+        public override string ToString()
+            => format(this);
+
         static string _format(CmdKind kind, string part, string host, string name)
             => $"{format(kind)}://{part}/{host}?name={name}";
     }

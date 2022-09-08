@@ -46,5 +46,9 @@ namespace global
                 CmdKind.Wsl => "wsl",
                 _ => ""
             };
+
+
+        public static string format(CmdUri src)
+            => $"{format(src.Kind)}://{src.Scope}/{src.Host}?name={src.Name}";
     }
 }

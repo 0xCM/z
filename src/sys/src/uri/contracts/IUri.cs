@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {   
-    public interface IUri
+    public interface IUri : IExpr
     {
         string SchemeName {get;}
     }

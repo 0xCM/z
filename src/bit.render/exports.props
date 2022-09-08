@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <BitRender>$(MsBuildThisFileDirectory)z0.bit.render.csproj</BitRender>
+  </PropertyGroup>
+</Project>

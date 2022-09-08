@@ -6,11 +6,12 @@
    <Import Project="src/api.md/exports.props"/>
    <Import Project="src/api.specs/exports.props"/>
    <Import Project="src/archives/exports.props"/>
-
    <Import Project="src/asm/exports.props"/>
    <Import Project="src/asm.core/exports.props"/>
 
    <Import Project="src/bit/exports.props"/>
+   <Import Project="src/bit.render/exports.props"/>
+   <Import Project="src/bitmasks/exports.props"/>
    <Import Project="src/blocks/exports.props"/>
    <Import Project="src/bits/exports.props"/>
 

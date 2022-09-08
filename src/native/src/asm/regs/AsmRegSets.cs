@@ -6,7 +6,7 @@ namespace Z0.Asm
 {
     using System.IO;
 
-    using static core;
+    using static sys;
     using static RegFacets;
     using static RegClassCode;
     using static AsmRegBits;
