@@ -6,7 +6,7 @@ namespace Z0
 {
     using api = Heaps;
 
-    using static Spans;
+    using static sys;
 
     public readonly ref struct BinaryHeap
     {

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     [ApiHost]
     public readonly struct BitParser
@@ -35,7 +35,7 @@ namespace Z0
             dst = alloc<bit>(src.Length);
             var count = parse(src,dst);
             if(count >= 0)
-                dst = core.slice(dst, 0, count);
+                dst = slice(dst, 0, count);
             else
                 dst = default;
             return count;
@@ -160,38 +160,6 @@ namespace Z0
             }
             return result ? counter : -1;
         }
-
-        // public static bool parse<T>(string src, out bits<T> dst)
-        //     where T : unmanaged
-        // {
-        //     var result = true;
-        //     var input = text.trim(text.despace(src));
-        //     var content = input;
-        //     if(text.fenced(input, RenderFence.Embraced))
-        //         result = text.unfence(src, RenderFence.Embraced, out content);
-        //     else if(text.fenced(input, RenderFence.Bracketed))
-        //         result = text.unfence(src, RenderFence.Bracketed, out content);
-        //     var sep = text.contains(src, Chars.Space) ? Chars.Space : Chars.Comma;
-        //     var parts = text.split(content, sep);
-        //     var n = (uint)parts.Length;
-        //     var storage = default(T);
-        //     var target = bytes(storage);
-        //     var size = target.Length;
-        //     var k = 0u;
-        //     for(var i=0; i<size; i++)
-        //     {
-        //         ref var b = ref seek(target,i);
-        //         for(byte j=0; j<8 && k < n; j++, k++)
-        //         {
-        //             ref readonly var part = ref skip(parts,k);
-        //             if(bit.digit(part, out BinaryDigit d))
-        //                 b |= (Bytes.sll((byte)d,j));
-        //         }
-        //     }
-
-        //     dst = new bits<T>(n,storage);
-        //     return result;
-        // }
 
         [Parser]
         public static bool parse(string src, out bit dst)

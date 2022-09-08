@@ -24,7 +24,7 @@ namespace Z0
         {
             var matches = Components.Filter(name);
             if(matches.Count == 0)
-                Errors.Throw(string.Format("The assembly {0}, loaded from {1}, does not contain a resource with identifier {2}", DataSource.GetSimpleName(), DataSource.Location, name));
+                sys.@throw(string.Format("The assembly {0}, loaded from {1}, does not contain a resource with identifier {2}", DataSource.GetSimpleName(), DataSource.Location, name));
 
             return ref matches[0];
         }

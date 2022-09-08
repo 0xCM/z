@@ -1,5 +1,6 @@
 @echo off
 call %~dp0..\config.cmd
+: rmdir %Deployments% /s/q
 call %DeploySln%
 : robocopy %~dp0..\artifacts %InstallBase% /e
 

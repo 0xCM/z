@@ -3,11 +3,15 @@
    <Import Project="src/agents/exports.props"/>
    <Import Project="src/alloc/exports.props"/>   
    <Import Project="src/api.code/exports.props"/>
+   <Import Project="src/api.md/exports.props"/>
    <Import Project="src/api.specs/exports.props"/>
+   <Import Project="src/archives/exports.props"/>
+
    <Import Project="src/asm/exports.props"/>
    <Import Project="src/asm.core/exports.props"/>
 
    <Import Project="src/bit/exports.props"/>
+   <Import Project="src/blocks/exports.props"/>
    <Import Project="src/bits/exports.props"/>
 
    <Import Project="src/cg/cg.common/exports.props"/>
@@ -29,6 +33,7 @@
    <Import Project="src/hex/exports.props"/>
    <Import Project="src/hub/exports.props"/>
 
+   <Import Project="src/lang/exports.props"/>
    <Import Project="src/lang.emit/exports.props"/>
    <Import Project="src/literals/exports.props"/>
    <Import Project="src/lib/exports.props"/>

@@ -13,8 +13,8 @@ namespace Z0
             public CsLang CsLang(IWfRuntime wf)
                 => Service<CsLang>(wf);
 
-            public GStringLits GenLiterals(IWfRuntime wf)
-                => Service<GStringLits>(wf);
+            public StringLitEmitter GenLiterals(IWfRuntime wf)
+                => Service<StringLitEmitter>(wf);
 
             public GAsciLookup GenAsciLookups(IWfRuntime wf)
                 => Service<GAsciLookup>(wf);
@@ -38,7 +38,7 @@ namespace Z0
         public static CsLang CsLang(this IWfRuntime wf)
             => Services.CsLang(wf);
 
-        public static GStringLits GenLiterals(this IWfRuntime wf)
+        public static StringLitEmitter GenLiterals(this IWfRuntime wf)
             => Services.GenLiterals(wf);
 
         public static GAsciLookup GenAsciLookups(this IWfRuntime wf)

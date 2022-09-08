@@ -7,7 +7,7 @@ namespace Z0
     [Free]
     public interface IVar : IExpr
     {
-        Name Name {get;}
+        @string Name {get;}
 
         bool IsNamed
             => Name.IsNonEmpty;

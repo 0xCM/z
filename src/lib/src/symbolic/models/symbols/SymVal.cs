@@ -10,7 +10,7 @@ namespace Z0
         public static Outcome parse(string src, out SymVal dst)
         {
             dst = default;
-            var result = DataParser.parse(src, out ulong x);
+            var result = NumericParser.parse(src, out ulong x);
             if(result)
                 dst = x;
             return result;

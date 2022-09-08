@@ -5,17 +5,17 @@
 namespace Z0
 {
     [Entity(EntityKind)]
-    public record struct ToolShimSpec : IEntity<ToolShimSpec,Name>
+    public record struct ToolShimSpec : IEntity<ToolShimSpec,@string>
     {       
         const string EntityKind = "tools.shims.spec";
 
-        public Name ShimName;
+        public @string ShimName;
 
         public FilePath ShimPath;
 
         public FilePath TargetPath;
 
-        Name IKeyed<Name>.Key 
+        @string IKeyed<@string>.Key 
             => ShimName;
     }   
 }

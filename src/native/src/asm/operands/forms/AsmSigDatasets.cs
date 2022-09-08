@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using static core;
+    using static sys;
     using static AsmSigTokens;
     using static AsmSigTokens.BCastComposite;
     using static AsmSigTokens.KRmToken;

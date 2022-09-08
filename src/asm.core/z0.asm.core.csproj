@@ -17,6 +17,6 @@
     <ProjectReference Include="$(Rules)" />
     <ProjectReference Include="$(Archives)" />
     <ProjectReference Include="$(LangEmit)" />
-
+    <ProjectReference Include="$(Coff)" />
   </ItemGroup>
 </Project>

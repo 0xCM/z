@@ -12,7 +12,7 @@ namespace Z0
     [StructLayout(LayoutKind.Sequential, Pack=1)]
     public class Var : IVar
     {
-        public readonly Name Name;
+        public readonly @string Name;
 
         readonly Func<object> Resolver;
 
@@ -27,7 +27,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public Var(Name name, Type type, Func<object> resolver)
+        public Var(string name, Type type, Func<object> resolver)
         {
             Name = name;
             ValueType = type;
@@ -40,7 +40,7 @@ namespace Z0
             get => Name.IsEmpty;
         }
 
-        Name IVar.Name
+        @string IVar.Name
             => Name;
 
         public bool IsEmpty
@@ -58,7 +58,7 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => HashCodes.hash(Name);
+            get => Name.Hash;
         }
 
         [MethodImpl(Inline)]

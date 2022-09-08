@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using static core;
+    using static sys;
     using static Asm.AsmRegOps;
 
     partial class AsmCases

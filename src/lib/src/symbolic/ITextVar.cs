@@ -9,7 +9,7 @@ namespace Z0
         ITextVarExpr Expr {get;}
 
         bool INullity.IsEmpty
-            => text.empty(Value);
+            => sys.empty(Value);
     }
 
     public interface ITextVar<K> : ITextVar

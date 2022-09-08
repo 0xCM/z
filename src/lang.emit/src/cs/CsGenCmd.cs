@@ -8,6 +8,6 @@ namespace Z0
     {
         [CmdOp("gen/cs/shim")]
         void GenToolShim(CmdArgs args)
-            => ShimGen.gen(ShimGen.bind(args, out _));
+            => ShimEmitter.gen(ShimEmitter.bind(args, out _));
     }
 }

@@ -13,7 +13,7 @@ namespace Z0
     public class Var<T> : IVar<T>
         where T : IEquatable<T>, IComparable<T>
     {
-        public readonly Name Name;
+        public readonly @string Name;
 
         readonly Func<T> Resolver;
 
@@ -28,7 +28,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public Var(Name name, Func<T> resolver)
+        public Var(string name, Func<T> resolver)
         {
             Name = name;
             Resolver = resolver;
@@ -41,9 +41,8 @@ namespace Z0
             get => Name.IsEmpty;
         }
 
-        Name IVar.Name
+        @string IVar.Name
             => Name;
-
 
         public bool IsEmpty
         {

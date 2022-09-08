@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
     using static CsPatterns;
 
     public readonly struct SpanResFormatter
@@ -73,7 +73,7 @@ namespace Z0
         {
             dst.Append("public");
             dst.Append(Chars.Space);
-            dst.Append(src.IsStatic ? RpOps.rspace("static") : EmptyString);
+            dst.Append(src.IsStatic ? text.rspace("static") : EmptyString);
             dst.Append(ReadOnlySpanTypePattern.Format(src.CellType));
             dst.Append(Chars.Space);
             dst.Append(src.Name);
@@ -92,13 +92,13 @@ namespace Z0
             dst.Append(Term());
         }
 
-        public static void render<T>(uint margin, SymSpanSpec<T> src, ITextBuffer dst)
+        public static void render<T>(uint margin, SymSpan<T> src, ITextBuffer dst)
             where T : unmanaged
         {
             var tmp = text.buffer();
             tmp.Append("public");
             tmp.Append(Chars.Space);
-            tmp.Append(src.IsStatic ? RpOps.rspace("static") : EmptyString);
+            tmp.Append(src.IsStatic ? text.rspace("static") : EmptyString);
             tmp.Append(ReadOnlySpanTypePattern.Format(src.CellType));
             tmp.Append(Chars.Space);
             tmp.Append(src.Name);
@@ -113,7 +113,7 @@ namespace Z0
         {
             dst.Append("public");
             dst.Append(Chars.Space);
-            dst.Append(src.IsStatic ? RpOps.rspace("static") : EmptyString);
+            dst.Append(src.IsStatic ? text.rspace("static") : EmptyString);
             dst.Append(ReadOnlySpanTypePattern.Format(src.CellType));
             dst.Append(Chars.Space);
             dst.Append(src.Name);
@@ -121,7 +121,5 @@ namespace Z0
             dst.Append(string.Concat(string.Format("new {0}", src.CellType), text.bracket(src.Data.Length), text.embrace(payload)));
             dst.Append(Term());
         }
-
-
     }
 }

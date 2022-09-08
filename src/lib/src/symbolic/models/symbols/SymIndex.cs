@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     public class SymIndex : ISymIndex
     {
@@ -28,7 +28,6 @@ namespace Z0
             _SymbolMap = new();
             _ValueMap = new();
             _Values = Index<SymVal>.Empty;
-
         }
 
         [MethodImpl(Inline)]

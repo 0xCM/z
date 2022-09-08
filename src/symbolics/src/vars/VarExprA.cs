@@ -9,14 +9,13 @@ namespace Z0
     public class VarExpr<T> : IVarExpr<T>
         where T : IEquatable<T>, IComparable<T>, new()
     {
-        public readonly Name VarName;
+        public readonly @string VarName;
 
         public readonly AsciFence Fence;
 
         public readonly AsciSymbol Prefix;
 
         T _Value;
-
 
         [MethodImpl(Inline)]
         public VarExpr(AsciSymbol prefix)
@@ -43,7 +42,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public VarExpr(Name name, AsciSymbol prefix)
+        public VarExpr(string name, AsciSymbol prefix)
         {
             VarName = name;
             Prefix = prefix;
@@ -51,7 +50,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public VarExpr(Name name, AsciFence fence)
+        public VarExpr(string name, AsciFence fence)
         {
             VarName = name;
             Fence = fence;
@@ -59,7 +58,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public VarExpr(Name name, AsciSymbol prefix, AsciFence fence)
+        public VarExpr(string name, AsciSymbol prefix, AsciFence fence)
         {
             VarName = name;
             Prefix = prefix;

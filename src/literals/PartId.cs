@@ -40,6 +40,9 @@ public enum PartId : byte
     [Symbol("asm.core")]
     AsmCore,
 
+    [Symbol("blocks")]
+    Blocks,
+
     [Symbol("asm.models")]
     AsmModels,
 

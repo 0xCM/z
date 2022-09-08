@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     [ApiHost]
     public class ByteSpans
@@ -18,7 +18,7 @@ namespace Z0
 
         public static string bytespan(BinaryResSpec src, int level = 2)
             => text.concat("public static ReadOnlySpan<byte> ",
-            src.Identifier,
+            src.Name,
             Space,
             " => ",
             Space,
@@ -34,14 +34,14 @@ namespace Z0
             => new ByteSpanSpec(name, data, @static);
 
         [MethodImpl(Inline)]
-        public static SymSpanSpec<E> specify<E>(Identifier name)
+        public static SymSpan<E> specify<E>(Identifier name)
             where E : unmanaged, Enum
                 => specify<E>(name, Symbols.index<E>().View);
 
         [MethodImpl(Inline)]
-        public static SymSpanSpec<E> specify<E>(Identifier name, ReadOnlySpan<Sym<E>> literals, bool @static = true)
+        public static SymSpan<E> specify<E>(Identifier name, ReadOnlySpan<Sym<E>> literals, bool @static = true)
             where E : unmanaged, Enum
-                => new SymSpanSpec<E>(name, literals, @static);
+                => new SymSpan<E>(name, literals, @static);
         [Op]
         public static ByteSpanSpec specify(_OpUri uri, BinaryCode data, bool @static = true)
             => new ByteSpanSpec(LegalIdentityBuilder.code(uri.OpId), data, @static);
@@ -116,16 +116,6 @@ namespace Z0
                 seek(dst,i) = new BinaryResSpec(LegalIdentityBuilder.code(code.Id), code.Encoded);
             }
             return new ApiHostRes(src.Host, buffer);
-        }
-
-        [MethodImpl(Inline), Op]
-        public static ByteSize size(ReadOnlySpan<ByteSpanSpec> src)
-        {
-            var size = ByteSize.Zero;
-            var count = src.Length;
-            for(var i=0; i<count; i++)
-                size += skip(src,i).DataSize;
-            return size;
         }
     }
 }

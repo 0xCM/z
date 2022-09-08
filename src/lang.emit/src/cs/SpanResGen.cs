@@ -40,7 +40,7 @@ namespace Z0
             return dst.Emit();
         }
 
-        public static string format<T>(SymSpanSpec<T> src)
+        public static string format<T>(SymSpan<T> src)
             where T : unmanaged
         {
             var dst = text.buffer();
@@ -110,7 +110,7 @@ namespace Z0
             dst.Append(Term());
         }
 
-        public static void render<T>(uint margin, SymSpanSpec<T> src, ITextBuffer dst)
+        public static void render<T>(uint margin, SymSpan<T> src, ITextBuffer dst)
             where T : unmanaged
         {
             var tmp = text.buffer();
@@ -230,7 +230,7 @@ namespace Z0
         }
 
         [Op]
-        public static void symrender<T>(uint indent, SymSpanSpec<T> spec, ITextBuffer dst, bool compact)
+        public static void symrender<T>(uint indent, SymSpan<T> spec, ITextBuffer dst, bool compact)
             where T : unmanaged
         {
             var payload = text.buffer();
@@ -250,7 +250,7 @@ namespace Z0
             dst.IndentLine(indent, assignment);
         }
 
-        static void sympayload<T>(uint indent, in SymSpanSpec<T> spec, ITextBuffer dst, bool compact)
+        static void sympayload<T>(uint indent, in SymSpan<T> spec, ITextBuffer dst, bool compact)
             where T : unmanaged
         {
             dst.Append(Open());

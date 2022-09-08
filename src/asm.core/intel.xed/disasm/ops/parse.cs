@@ -68,7 +68,7 @@ namespace Z0
             var data = span(src);
 
             var idx = text.trim(text.left(src,2));
-            result = DataParser.parse(idx, out dst.Index);
+            result = NumericParser.parse(idx, out dst.Index);
             if(result.Fail)
                 return (false,AppMsg.ParseFailure.Format(nameof(dst.Index), idx));
 

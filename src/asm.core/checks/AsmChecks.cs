@@ -206,7 +206,7 @@ namespace Z0
             if(enc1 != enc2)
                 Error(string.Format("Encoding mismatch '{0}' != '{1}'", enc1, enc2));
 
-            var box = new AsmIpBox(Base, uint.MaxValue);
+            var box = new RipBox(Base, uint.MaxValue);
             if(!box.IP(Source))
                 Error("Ip out of range");
 

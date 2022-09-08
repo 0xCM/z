@@ -4,12 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
-    using static core;
-
     public readonly struct SymPair<K>
         where K : unmanaged
     {
@@ -34,6 +28,6 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator Pair<Sym<K>>(SymPair<K> src)
-            => pair(src.Left, src.Right);
+            => Tuples.pair(src.Left, src.Right);
     }
 }

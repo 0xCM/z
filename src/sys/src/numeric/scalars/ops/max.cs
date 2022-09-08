@@ -45,6 +45,5 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static double max(double a, double b)
             => a > b ? a : b;
-
     }
 }

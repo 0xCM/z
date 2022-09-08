@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     [StructLayout(StructLayout), Record(TableId)]
     public struct SymInfo

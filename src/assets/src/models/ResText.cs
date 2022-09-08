@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using api = TextAssets;
+   using api = TextAssets;
 
     public readonly record struct ResText
     {

@@ -199,8 +199,7 @@ namespace Z0
             return true;
         }
 
- 
-         [CmdOp("gen/bytes")]
+        [CmdOp("gen/bytes")]
         Outcome BytesEmit(CmdArgs args)
         {
             var dst = text.emitter();

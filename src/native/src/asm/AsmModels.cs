@@ -6,7 +6,6 @@ namespace Z0
 {
     public class AsmModels : AppService<AsmModels>
     {
-
         static EnumRender<AsmSigTokenKind> SigTokenRender = new();
 
         static EnumParser<AsmSigTokenKind> SigTokenParser = new();

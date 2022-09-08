@@ -6,7 +6,7 @@ namespace Z0
 {
     using api = Heaps;
 
-    using static core;
+    using static sys;
 
     public readonly ref struct BinaryHeap<T>
         where T : unmanaged

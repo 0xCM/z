@@ -6,7 +6,7 @@ namespace Z0
 {
     using System.IO;
 
-    using static core;
+    using static sys;
 
     using static MsBuild;
 
@@ -65,14 +65,14 @@ namespace Z0
             dst.WriteLine(buffer.Emit());
         }
 
-        public GStringLits StringLits()
+        public StringLitEmitter StringLits()
             => Wf.GenLiterals();
 
         public GAsciLookup AsciLookups()
             => Service(Wf.GenAsciLookups);
 
-        public GInterface Interfaces()
-            => Service(() => GInterface.create(Wf));
+        public InterfaceEmitter Interfaces()
+            => Service(() => InterfaceEmitter.create(Wf));
 
         public GBinaryKind BinaryKinds(uint max = 0xFF)
             => new GBinaryKind(max);
@@ -83,8 +83,8 @@ namespace Z0
         public GHexStrings HexStrings()
             => Service(() => GHexStrings.create(Wf));
 
-        public GSwitchMap SwitchMap()
-            => Service(()=> GSwitchMap.create(Wf));
+        public SwitchMapEmitter SwitchMap()
+            => Service(()=> SwitchMapEmitter.create(Wf));
 
         public GSpanRes SpanRes()
             => Service(() => GSpanRes.create(Wf));

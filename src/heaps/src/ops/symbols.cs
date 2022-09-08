@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Spans;
-    using static Refs;
+    using static sys;
 
     partial class Heaps
     {

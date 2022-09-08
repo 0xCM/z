@@ -79,10 +79,10 @@ namespace Z0
             for(var i=0; i<resources.Count; i++)
             {
                 ref readonly var res = ref resources[i];
-                if(!members.Contains(res.Identifier))
+                if(!members.Contains(res.Name))
                 {
                     EmitMember(writer, ByteSpans.bytespan(res));
-                    members.Add(res.Identifier);
+                    members.Add(res.Name);
                 }
             }
             CloseTypeDeclaration(writer);

@@ -14,7 +14,6 @@ namespace Z0
         public static void emit(SymHeap src, FilePath dst, IWfEventTarget log)
             => Tables.emit(log, Heaps.records(src).View, dst, TextEncodingKind.Unicode);
 
-
         [MethodImpl(Inline), Op]
         public static MemoryHeap memory(MemoryAddress @base, Span<byte> data, Span<Address32> offsets)
             => new MemoryHeap(@base, data,offsets);
@@ -24,7 +23,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static Span<char> expr(SymHeap src, uint index)
-            => core.slice(src.Expr.Edit, src.ExprOffsets[index], src.ExprLengths[index]);
+            => sys.slice(src.Expr.Edit, src.ExprOffsets[index], src.ExprLengths[index]);
 
         [MethodImpl(Inline)]
         public static ref HeapEntry<K,O,L> convert<K,O,L>(ReadOnlySpan<byte> src, out HeapEntry<K,O,L> dst)

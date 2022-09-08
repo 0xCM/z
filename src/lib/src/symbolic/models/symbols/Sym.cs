@@ -73,13 +73,13 @@ namespace Z0
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => text.empty(Name);
+            get => sys.empty(Name);
         }
 
         public bool IsNonEmpty
         {
             [MethodImpl(Inline)]
-            get => text.nonempty(Name);
+            get => sys.nonempty(Name);
         }
 
         public static Sym Empty

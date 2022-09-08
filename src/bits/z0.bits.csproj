@@ -13,6 +13,7 @@
     <ProjectReference Include="$(Memory)" />
     <ProjectReference Include="$(Calcs)" />
     <ProjectReference Include="$(Validity)" />
+    <ProjectReference Include="$(Rules)" />
   </ItemGroup>
 
 </Project>
