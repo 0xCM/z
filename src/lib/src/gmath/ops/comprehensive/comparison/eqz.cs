@@ -16,7 +16,7 @@ namespace Z0
         /// <typeparam name="T">The numeric type</typeparam>
         [MethodImpl(Inline), Eqz, Closures(AllNumeric)]
         public static T eqz<T>(T a, T b)
-            where T : unmanaged
-                => gmath.mul(convert<T>((uint)eq(a,b)), core.ones<T>());
+            where T : unmanaged, IEquatable<T>, IComparable<T>
+                => gmath.mul(convert<T>((uint)eq(a,b)), ones<T>());
     }
 }

@@ -6,7 +6,7 @@ namespace Z0
 {
     using System.Linq;
 
-    using static core;
+    using static sys;
 
     /// <summary>
     /// Defines identity for a pair NxT or MxNxT where M and N are natural types and T is numeric

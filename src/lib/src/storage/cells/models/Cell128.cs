@@ -194,6 +194,7 @@ namespace Z0
         public Vector128<T> ToVector<T>()
             where T : struct
                 => Data.As<ulong,T>();
+
         public string Format()
             => Content.ToString();
 
@@ -257,7 +258,7 @@ namespace Z0
         public static implicit operator Vector128<uint>(Cell128 x)
             => x.Data.AsUInt32();
 
-       [MethodImpl(Inline)]
+        [MethodImpl(Inline)]
         public static implicit operator Vector128<long>(Cell128 x)
             => x.Data.AsInt64();
 

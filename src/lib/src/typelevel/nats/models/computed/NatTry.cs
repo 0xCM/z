@@ -4,11 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
     using static TypeNats;
-    using static Root;
 
     /// <summary>
     /// Defines proof attempts for type naturals

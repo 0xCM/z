@@ -13,9 +13,9 @@ namespace Z0
     {
         internal int Counter;
 
-        public T Min {get;}
+        public readonly T Min;
 
-        public T Max {get;}
+        public readonly T Max;
 
         [MethodImpl(Inline)]
         public Bin(in ClosedInterval<T> domain, uint count = 0)

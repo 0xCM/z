@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    
     partial class gmath
     {
         [MethodImpl(Inline), Closures(Integers)]

@@ -37,7 +37,7 @@ namespace Z0
         public static void fill<N,T>(in NatSpan<N,T> dst, T data)
             where N : unmanaged, ITypeNat
             where T : unmanaged
-                => NatSpans.broadcast(data, dst);
+                => broadcast(data, dst);
 
         [MethodImpl(Inline)]
         public static NatSpan<N,T> parts<N,T>(N n, params T[] cells)

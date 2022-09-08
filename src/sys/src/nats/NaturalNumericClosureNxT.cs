@@ -4,12 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Reflection;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
-
     public readonly struct NaturalNumericClosure<N,T>
         where N : unmanaged, ITypeNat
         where T : unmanaged
@@ -21,6 +15,6 @@ namespace Z0
             => Definition = def;
 
         public NaturalNumericClosure Untyped
-            => new NaturalNumericClosure(Definition, null, TypeNats.nat64u<N>(), typeof(T).NumericKind());
+            => new NaturalNumericClosure(Definition, null, sys.nat64u<N>(), typeof(T).NumericKind());
     }
 }

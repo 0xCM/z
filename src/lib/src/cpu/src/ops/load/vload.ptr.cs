@@ -8,7 +8,7 @@ namespace Z0
     using static System.Runtime.Intrinsics.X86.Sse3;
     using static System.Runtime.Intrinsics.X86.Sse2;
     using static System.Runtime.Intrinsics.X86.Avx;
-    using static core;
+    using static sys;
 
     partial struct gcpu
     {

@@ -66,8 +66,8 @@ namespace Z0
                 c.Collect(skip(in src,i));
 
             var avg = gcalc.avg(data);
-            var min = gcalc.min(data.ReadOnly());
-            var max = gcalc.max(data.ReadOnly());
+            var min = gmath.min(data.ReadOnly());
+            var max = gmath.max(data.ReadOnly());
 
             Claim.almost(min, c.Min);
             Claim.almost(max, c.Max);
@@ -85,8 +85,8 @@ namespace Z0
                 c.Collect(skip(in src,i));
 
             var msAvg = gcalc.avg(data);
-            var min = gcalc.min(data.ReadOnly());
-            var max = gcalc.max(data.ReadOnly());
+            var min = gmath.min(data.ReadOnly());
+            var max = gmath.max(data.ReadOnly());
 
             var usAvg1 = gcalc.avgz(data);
             var usAvg2 = avg(data);
@@ -109,8 +109,8 @@ namespace Z0
                 c.Collect(skip(in src,i));
 
             var msAvg = gcalc.avg(data);
-            var min = gcalc.min(data.ReadOnly());
-            var max = gcalc.max(data.ReadOnly());
+            var min = gmath.min(data.ReadOnly());
+            var max = gmath.max(data.ReadOnly());
 
             var usAvg1 = gcalc.avgz(data);
             var usAvg2 = avg(data);
@@ -133,8 +133,8 @@ namespace Z0
                 c.Collect(skip(in src,i));
 
             var msAvg = gcalc.avg(data);
-            var min = gcalc.min(data.ReadOnly());
-            var max = gcalc.max(data.ReadOnly());
+            var min = gmath.min(data.ReadOnly());
+            var max = gmath.max(data.ReadOnly());
 
             Claim.almost(min, c.Min);
             Claim.almost(max, c.Max);

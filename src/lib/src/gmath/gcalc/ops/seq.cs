@@ -4,13 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
     using static gmath;
 
     partial struct gcalc
     {
         [Op, Closures(Closure)]
         public static SeqTerms<T> seq<T>(ReadOnlySpan<T> src)
+            where T : unmanaged, IEquatable<T>, IComparable<T>
         {
             var count = src.Length;
             if(count != 0)
@@ -26,7 +27,7 @@ namespace Z0
         }
 
         public static SeqTerms<T> seq<T>(Interval<T> limits)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>, IComparable<T>
         {
             var min = limits.LeftClosed ? limits.Left : inc(limits.Left);
             var max = limits.RightClosed ? inc(limits.Right) : limits.Right;
@@ -44,7 +45,7 @@ namespace Z0
         }
 
         public static SeqTerms<Pair<T>> seq<T>(T i0, T i1, T j0, T j1)
-            where T : unmanaged, IEquatable<T>
+            where T : unmanaged, IEquatable<T>, IComparable<T>
         {
             var dst = default(SeqTerms<Pair<T>>);
             if(lt(i0,i1) && lt(j0,j1))
@@ -60,7 +61,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static uint seq<T>(T i0, T i1, T j0, T j1, SeqTerms<Pair<T>> dst)
-            where T : unmanaged, IEquatable<T>
+            where T : unmanaged, IEquatable<T>, IComparable<T>
         {
             var i = i0;
             var j = j0;
@@ -69,7 +70,7 @@ namespace Z0
             {
                 while(lt(j, j1))
                 {
-                    dst[k] = (k, pair(i,j));
+                    dst[k] = (k, Tuples.pair(i,j));
                     k++;
                     inc(ref j);
                 }

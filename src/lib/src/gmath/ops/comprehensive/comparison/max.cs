@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     partial class gmath
     {
@@ -12,6 +12,30 @@ namespace Z0
         public static T max<T>(T a, T b)
             where T : unmanaged
                 => max_u(a,b);
+
+        /// <summary>
+        /// Finds a numeric cell of maximal value
+        /// </summary>
+        /// <param name="src">The source span</param>
+        /// <typeparam name="T">The numeric type</typeparam>
+        [MethodImpl(Inline), Max, Closures(AllNumeric)]
+        public static T max<T>(ReadOnlySpan<T> src)
+            where T : unmanaged
+        {
+            var count = src.Length;
+            if(count == 0)
+                return default;
+
+            ref readonly var a = ref first(src);
+            var result = a;
+            for(var i=1; i<count; i++)
+            {
+                ref readonly var test = ref skip(a, i);
+                if(gt(test, result))
+                    result = test;
+            }
+            return result;
+        }
 
         [MethodImpl(Inline)]
         static T max_u<T>(T a, T b)

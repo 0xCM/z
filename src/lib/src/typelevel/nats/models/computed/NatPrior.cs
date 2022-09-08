@@ -4,12 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
-    using static core;
-
+    using static sys;
+    
     /// <summary>
     /// Captures evidence that k1 - 1 = k2
     /// </summary>

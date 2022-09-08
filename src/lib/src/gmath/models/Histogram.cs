@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     public struct Histogram<T>
         where T : unmanaged, IEquatable<T>, IComparable<T>
     {

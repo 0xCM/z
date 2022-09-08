@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     public readonly struct NonZero<T> : INonZero<NonZero<T>,T>, IEquatable<T>
         where T : unmanaged

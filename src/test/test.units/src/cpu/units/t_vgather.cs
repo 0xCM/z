@@ -62,7 +62,7 @@ namespace Z0
             var cells = BufferSize/size<T>();
             var domain = bounds<T>(cells);
 
-            var data = gcalc.increments(span<T>(cells));
+            var data = Partitions.increments(span<T>(cells));
             ref readonly var src = ref first(data);
 
             for(var i = 0; i<RepCount; i++)
@@ -79,7 +79,7 @@ namespace Z0
             var count = BufferSize/size<T>();
             var domain = bounds<T>(count);
 
-            var data = gcalc.increments(span<T>(count));
+            var data = Partitions.increments(span<T>(count));
             ref readonly var src = ref first(data);
 
             for(var i = 0; i<RepCount; i++)

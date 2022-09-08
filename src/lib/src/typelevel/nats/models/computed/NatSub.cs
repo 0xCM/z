@@ -4,9 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
     /// <summary>
     /// Encodes a natural number k := k1 - k2
     /// </summary>

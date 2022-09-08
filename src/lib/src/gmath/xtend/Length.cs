@@ -15,6 +15,6 @@ namespace Z0
         [MethodImpl(Inline)]
         public static T Length<T>(this Interval<T> src)
             where T : unmanaged
-                => gcalc.length(src);
+                => Partitions.length(src);
     }
 }

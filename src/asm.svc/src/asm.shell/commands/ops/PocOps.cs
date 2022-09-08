@@ -311,7 +311,7 @@ namespace Z0.Asm
             void EmitTerms()
             {
                 var sorted = Terms.Map(x => (x.Key, x.Value)).OrderBy(x => x.Value);
-                var max = gcalc.max(sorted.Select(x => x.Value).ToReadOnlySpan());
+                var max = gmath.max(sorted.Select(x => x.Value).ToReadOnlySpan());
                 var dst = targets.Path(input.FileName.ChangeExtension(FS.ext("terms")));
                 var emitting = EmittingFile(dst);
                 using var writer = dst.Utf8Writer();

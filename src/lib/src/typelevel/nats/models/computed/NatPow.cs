@@ -4,11 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
     using System.Linq;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
 
     /// <summary>
     /// Encodes a natural number k := b^e

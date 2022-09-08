@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     /// <summary>
     /// Defines a span of natural length N
@@ -34,7 +34,7 @@ namespace Z0
         public uint Count
         {
             [MethodImpl(Inline)]
-            get => TypeNats.nat32u<N>();
+            get => nat32u<N>();
         }
 
         public N NatCount
@@ -76,7 +76,7 @@ namespace Z0
         public int Length
         {
             [MethodImpl(Inline)]
-            get => TypeNats.nat32i<N>();
+            get => nat32i<N>();
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Z0
         /// </summary>
         [MethodImpl(Inline)]
         public ref S Cell<S>(ulong index)
-            => ref Unsafe.Add(ref core.@as<T,S>(First), (int)index);
+            => ref Unsafe.Add(ref @as<T,S>(First), (int)index);
 
         [MethodImpl(Inline)]
         public Span<T>.Enumerator GetEnumerator()
