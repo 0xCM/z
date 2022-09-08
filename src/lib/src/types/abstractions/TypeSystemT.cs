@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     public abstract class TypeSystem<T> : ITypeSystem
         where T : TypeSystem<T>, new()
     {

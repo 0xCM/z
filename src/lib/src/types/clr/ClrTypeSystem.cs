@@ -4,11 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     using PK = PrimalKind;
     using EK = ClrEnumKind;
-
 
     public sealed partial class ClrTypeSystem : TypeSystem<ClrTypeSystem,PK>
     {

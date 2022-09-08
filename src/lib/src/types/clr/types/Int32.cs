@@ -6,7 +6,6 @@ namespace Z0
 {
     partial class ClrTypeSystem
     {
-        [DataTypeAttributeD("clr.i32",true)]
         public readonly struct Int32 : IType<PrimalKind>
         {
             public Identifier Name => nameof(Int32);

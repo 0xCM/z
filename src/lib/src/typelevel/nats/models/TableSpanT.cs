@@ -94,11 +94,5 @@ namespace Z0
             for(var i=0; i<count; i++)
                 f(skip(src,i));
         }
-
-        // public string Format()
-        //     => Seq.delimit(Chars.Comma, 0, View).Format();
-
-        // public override string ToString()
-        //     => Format();
     }
 }

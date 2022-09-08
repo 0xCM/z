@@ -14,7 +14,6 @@ namespace Z0
     [StructLayout(LayoutKind.Sequential)]
     public readonly struct GridDim : IEquatable<GridDim>
     {
-
         /// <summary>
         /// The number of grid rows
         /// </summary>

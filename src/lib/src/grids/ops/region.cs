@@ -13,7 +13,5 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static GridRegion region(uint upper, uint left, uint lower, uint right)
             => new GridRegion(point(upper,left), point(lower,right));
-
-
     }
 }

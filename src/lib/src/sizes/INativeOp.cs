@@ -18,9 +18,9 @@ namespace Z0
         where T : unmanaged
     {
         NativeSize INativeOpValue.Size
-            => Sizes.native(core.width<T>());
+            => Sizes.native(sys.width<T>());
 
         ReadOnlySpan<byte> INativeOpValue.Data
-            => core.bytes(Value);
+            => sys.bytes(Value);
     }
 }

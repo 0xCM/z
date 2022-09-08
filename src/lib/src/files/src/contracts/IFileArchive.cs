@@ -20,6 +20,7 @@ namespace Z0
         FileName TableFile<T>()
             where T : struct
                 => FS.file(TableId<T>(), FileKind.Csv);
+
         bool INullity.IsEmpty
             => Root.IsEmpty;
 

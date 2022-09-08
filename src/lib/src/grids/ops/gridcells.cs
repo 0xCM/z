@@ -4,11 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
-    using static core;
+    using static sys;
 
     partial struct grids
     {
@@ -53,6 +49,5 @@ namespace Z0
             where N : unmanaged, ITypeNat
             where T : unmanaged
                 => gridcells((uint)nat64u(m), (uint)nat64u(n), width<T>());
-
     }
 }

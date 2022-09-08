@@ -6,7 +6,6 @@ namespace Z0
 {
     partial class ClrTypeSystem
     {
-        [DataTypeAttributeD("clr.i8",true)]
         public readonly struct SByte : IType<PrimalKind>
         {
             public Identifier Name => nameof(SByte);

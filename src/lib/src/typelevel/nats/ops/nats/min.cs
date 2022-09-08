@@ -4,10 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
     using static TypeNats;
 
     partial class NatCalc
@@ -19,6 +15,6 @@ namespace Z0
         public static ulong min<K1,K2>(K1 k1 = default, K2 k2 = default)
             where K1 : unmanaged, ITypeNat
             where K2 : unmanaged, ITypeNat
-                => core.min(value(k1), value(k2));
+                => sys.min(value(k1), value(k2));
     }
 }

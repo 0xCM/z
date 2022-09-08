@@ -26,53 +26,6 @@ namespace Z0
             where T : unmanaged
                 =>  @as<T[],Points<X0,X1,X2,T>>(values);
 
-
-        [MethodImpl(Inline)]
-        public static Point<X0,X1,T> point<X0,X1,T>(X0 x0, X1 x1, T value)
-            where X0 : unmanaged, ITypeNat
-            where X1 : unmanaged, ITypeNat
-            where T : unmanaged
-                => value;
-
-        [MethodImpl(Inline)]
-        public static Point<X0,X1,X2,T> point<X0,X1,X2,T>(X0 x0, X1 x1, X2 x2, T value)
-            where X0 : unmanaged, ITypeNat
-            where X1 : unmanaged, ITypeNat
-            where X2 : unmanaged, ITypeNat
-            where T : unmanaged
-                => value;
-
-        [MethodImpl(Inline)]
-        public static Point<X0,X1,T> point<X0,X1,T>(Dim<X0,X1,T> dim, T value)
-            where X0 : unmanaged, ITypeNat
-            where X1 : unmanaged, ITypeNat
-            where T : unmanaged
-                => value;
-
-        [MethodImpl(Inline)]
-        public static Point<X0,X1,X2,T> point<X0,X1,X2,T>(Dim<X0,X1,X2,T> dim, T value)
-            where X0 : unmanaged, ITypeNat
-            where X1 : unmanaged, ITypeNat
-            where X2 : unmanaged, ITypeNat
-            where T : unmanaged
-                => value;
-
-        [MethodImpl(Inline)]
-        public static Dim<X0,X1,T> dim<X0,X1,T>(X0 x0, X1 x1, T t = default)
-            where X0 : unmanaged, ITypeNat
-            where X1 : unmanaged, ITypeNat
-            where T : unmanaged
-                => default;
-
-        [MethodImpl(Inline)]
-        public static Dim<X0,X1,X2,T> dim<X0,X1,X2,T>(X0 x0, X1 x1, X2 x2, T t = default)
-            where X0 : unmanaged, ITypeNat
-            where X1 : unmanaged, ITypeNat
-            where X2 : unmanaged, ITypeNat
-            where T : unmanaged
-                => default;
-
-
         /// <summary>
         /// Returns the numeric value represented by a natural type
         /// </summary>

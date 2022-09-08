@@ -6,7 +6,6 @@ namespace Z0
 {
     partial class ClrTypeSystem
     {
-        [DataTypeAttributeD("clr.double",true)]
         public readonly struct Double : IType<PrimalKind>
         {
             public Identifier Name => nameof(Double);

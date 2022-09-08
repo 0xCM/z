@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     [StructLayout(StructLayout,Pack=1, Size=4)]
     public readonly record struct TypeKey : IComparable<TypeKey>

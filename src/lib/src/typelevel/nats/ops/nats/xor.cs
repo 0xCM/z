@@ -4,10 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
     using static TypeNats;
 
     partial class NatCalc
@@ -29,6 +25,5 @@ namespace Z0
             where K1 : unmanaged, ITypeNat
             where K2 : unmanaged, ITypeNat
                 => value(k1) ^ value(k2);
-
     }
 }

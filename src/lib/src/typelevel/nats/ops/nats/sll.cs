@@ -16,6 +16,5 @@ namespace Z0
             where X : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
                 => value(x) << (int)value(n);
-
     }
 }

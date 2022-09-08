@@ -16,7 +16,7 @@ namespace Z0
         /// <typeparam name="T">The primal numeric type over which the interval is defined</typeparam>
         [MethodImpl(Inline), Op, Closures(Integers)]
         public static bit contains<T>(Interval<T> src, T point)
-            where T : unmanaged, IEquatable<T>, IComparable<T>
+            where T : unmanaged
         {
             switch(src.Kind)
             {
@@ -33,7 +33,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op, Closures(UInt32k)]
         public static bit contains<T>(Span<T> xs, T match)
-            where T : unmanaged, IEquatable<T>, IComparable<T>
+            where T : unmanaged
                 => contains(sys.first(xs), match, (uint)xs.Length);
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Z0
         /// </summary>
         [MethodImpl(Inline), Op, Closures(UInt32k)]
         public static bit contains<T>(in T src, T match, uint length)
-            where T : unmanaged, IEquatable<T>, IComparable<T>
+            where T : unmanaged
         {
             var index = 0u;
 

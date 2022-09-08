@@ -135,7 +135,6 @@ namespace Z0
         public static implicit operator byte(H src)
             => (byte)src.Value;
 
-
         [MethodImpl(Inline)]
         public static explicit operator sbyte(H src)
             => (sbyte)src.Value;

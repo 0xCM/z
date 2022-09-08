@@ -8,5 +8,4 @@ namespace Z0
     {
         T Map(S src);
     }
-
 }
