@@ -41,7 +41,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public bool Equals(Drive src)
-            =>  text.equals(Name.ToString(), src.Name.ToString(), NoCase);
+            =>  string.Equals(Name.ToString(), src.Name.ToString(), NoCase);
 
         [MethodImpl(Inline)]
         public string Format()

@@ -20,7 +20,7 @@ namespace Z0
         /// <param name="type">The comparison type</param>
         [MethodImpl(Inline), Op]
         public static bool equals(string a, string b, StringComparison type)
-            => string.Equals(a,b, type);
+            => string.Equals(a, b, type);
 
         /// <summary>
         /// Performs a case-insensitive comparison on two source strings

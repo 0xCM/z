@@ -8,9 +8,9 @@ namespace Z0
         where T : Tool<T,L>, new()
         where L : IExpr
     {
-        public Name Name {get;}
+        public @string Name {get;}
 
-        protected Tool(Name name)
+        protected Tool(string name)
         {
             Name = name;
         }

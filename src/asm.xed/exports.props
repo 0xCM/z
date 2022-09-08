@@ -1,5 +1,5 @@
 <Project>
   <PropertyGroup>
-    <Cells>$(MsBuildThisFileDirectory)z0.asm.xed.csproj</Cells>
+    <AsmXed>$(MsBuildThisFileDirectory)z0.asm.xed.csproj</AsmXed>
   </PropertyGroup>
 </Project>

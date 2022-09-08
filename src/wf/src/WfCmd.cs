@@ -75,8 +75,7 @@ namespace Z0
             else
             {
                 return src.Files(true);
-            }
-            
+            }            
         }
 
         void _CatalogFiles(CmdArgs args)

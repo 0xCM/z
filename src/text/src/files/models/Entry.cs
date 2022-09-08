@@ -4,9 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
-    
     public readonly record struct FsEntry : IFsEntry<FsEntry>
     {
         const string FormatPattern = "{0}: {1}";

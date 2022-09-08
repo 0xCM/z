@@ -4,9 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    using static Spans;
-    using static Arrays;
+    using static sys;
 
     [ApiHost]
     public partial class Symbolic

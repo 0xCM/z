@@ -4,11 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    using static Spans;
-    using static Arrays;
+    using static sys;
 
-    public partial class Symbolic
+    partial class Symbolic
     {
         public static Index<SymKindRow> symkinds<K>()
             where K : unmanaged, Enum

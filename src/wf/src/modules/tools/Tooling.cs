@@ -83,7 +83,7 @@ namespace Z0
         public FilePath ToolPath(FolderPath root, Tool tool)
         {
             if(LoadProfileLookup(root).Find(tool, out var profile))
-                return profile.Path;
+                return profile.Executable;
             else
                 return FilePath.Empty;
         }
@@ -141,7 +141,7 @@ namespace Z0
                 ref readonly var tool = ref profile.Id;
                 if(profile.HelpCmd.IsEmpty)
                     continue;
-                dst.Add(Cmd.cmd(tool, string.Format("{0} {1}", profile.Path.Format(PathSeparator.BS), profile.HelpCmd)));
+                dst.Add(Cmd.cmd(tool, string.Format("{0} {1}", profile.Executable.ToFilePath().Format(PathSeparator.BS), profile.HelpCmd)));
             }
             dst.Sort();
             return dst.ToArray();

@@ -5,8 +5,7 @@
 namespace Z0
 {   
     public class UriSchemes
-    {
-        
+    {        
         /// <summary>
         /// https://en.wikipedia.org/wiki/File_URI_scheme
         /// </summary>

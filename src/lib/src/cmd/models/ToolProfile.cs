@@ -21,9 +21,9 @@ namespace Z0
         public CmdArg HelpCmd;
 
         [Render(32)]
-        public Actor Memberhisp;
+        public Actor Membership;
 
         [Render(1)]
-        public FilePath Path;
+        public FileUri Executable;
     }
 }

@@ -9,6 +9,9 @@ namespace Z0
 
     partial class XFs
     {
+        public static FilePath ToFilePath(this FileUri src)
+            => src;
+            
         public static _FileUri[] ToUri(this Span<FilePath> src)
             => src.Map(x => x.ToUri());
 

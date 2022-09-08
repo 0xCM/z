@@ -208,13 +208,16 @@ namespace Z0
         public static FilePath operator +(FilePath a, FileExt b)
             => new FilePath(RP.format("{0}.{1}", a.Name, b.Name));
 
+        public static implicit operator FileUri(FilePath src)
+            => new FileUri(src.ToUri().Format());
+
+        public static implicit operator FilePath(FileUri src)
+            => new FilePath(src.Format());
+
         public static FilePath Empty
         {
             [MethodImpl(Inline)]
             get => new FilePath(PathPart.Empty);
         }
-
-        public static implicit operator FileUri(FilePath src)
-            => new FileUri(src.ToUri().Format());
     }
 }
