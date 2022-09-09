@@ -233,7 +233,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static string format(U src)
-            => BitRender.gformat(src.Value, BitFormat.limited(U.Width, U.Width));
+            => BitRender.gformat(src.Value, BitFormatter.limited(U.Width, U.Width));
 
         [MethodImpl(Inline)]
         public static string format(U src, BitFormat config)

@@ -8,22 +8,24 @@ namespace Z0
 
     partial class CmdScripts
     {
-        static FilePath ErrorLog(Timestamp ts, string name)
-            => AppDb.Logs("process").Path($"{name}.errors.{ts}", FileKind.Log);
+        // static FilePath ErrorLog(Timestamp ts, string name)
+        //     => AppDb.Logs("process").Path($"{name}.errors.{ts}", FileKind.Log);
 
-        static FilePath StatusLog(Timestamp ts, string name)
-            => AppDb.Logs("process").Path($"{name}.{ts}", FileKind.Log);
+        // static FilePath StatusLog(Timestamp ts, string name)
+        //     => AppDb.Logs("process").Path($"{name}.{ts}", FileKind.Log);
 
         public static void run(CmdScript src)
         {
             var ts = timestamp();
-            using var status = StatusLog(ts, src.Name.Format()).AsciWriter();
-
+            var logs = AppDb.Logs("process").Root;
+            var errors = ProcessLogs.errors(logs, ts, src.Name.Format());
+            using var status = ProcessLogs.status(logs, ts, src.Name.Format()).AsciWriter();
+            
             void OnStatus(in string msg)
                 => status.AppendLine(msg);
 
             void OnError(in string msg)
-                => ErrorLog(ts,src.Name).Append(msg);
+                => errors.Append(msg);
 
             try
             {
@@ -31,7 +33,7 @@ namespace Z0
             }
             catch(Exception e)
             {
-                ErrorLog(ts,src.Name).Append(e.ToString());
+                errors.Append(e.ToString());
             }            
         }
 

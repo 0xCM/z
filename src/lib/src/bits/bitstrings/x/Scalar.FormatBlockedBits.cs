@@ -23,15 +23,15 @@ namespace Z0
             => api.blocked(src, config);
 
         public static string FormatBlockedBits(this byte src, int width)
-            => api.blocked(src, BitFormat.blocked(width));
+            => api.blocked(src, BitFormatter.blocked(width));
 
         public static string FormatBlockedBits(this ushort src, int width)
-            => api.blocked(src, BitFormat.blocked(width));
+            => api.blocked(src, BitFormatter.blocked(width));
 
         public static string FormatBlockedBits(this uint src, int width)
-            => api.blocked(src, BitFormat.blocked(width));
+            => api.blocked(src, BitFormatter.blocked(width));
 
         public static string FormatBlockedBits(this ulong src, int width)
-            => api.blocked(src, BitFormat.blocked(width));
+            => api.blocked(src, BitFormatter.blocked(width));
     }
 }

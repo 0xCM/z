@@ -13,7 +13,7 @@ namespace Z0
         [Op, Closures(Closure)]
         public static string gformat<T>(T src)
             where T : struct
-                => gformat(src, BitFormat.configure());
+                => gformat(src, BitFormatter.configure());
 
         [Op, Closures(Closure)]
         public static string gformat<T>(T src, in BitFormat config)
@@ -26,7 +26,7 @@ namespace Z0
         {
             var dst = new StringBuilder();
             var cells = src.Length;
-            var cfg = config ?? BitFormat.configure();
+            var cfg = config ?? BitFormatter.configure();
             for(var i=0; i<cells; i++)
                 dst.Append(gformat<T>(skip(src,i), cfg));
             return dst.ToString();
@@ -35,7 +35,7 @@ namespace Z0
         [Op, Closures(Closure)]
         public static string gformat<T>(T src, int? digits = null)
             where T : unmanaged
-                => gformat(src, digits != null ? BitFormat.limited((uint)digits.Value, digits.Value) : BitFormat.configure());
+                => gformat(src, digits != null ? BitFormatter.limited((uint)digits.Value, digits.Value) : BitFormatter.configure());
 
         /// <summary>
         /// Formats a named bitfield segment
@@ -45,6 +45,6 @@ namespace Z0
         [Op, Closures(Closure)]
         public static string gformat<T>(T src, string name, int? zpad = null)
             where T : unmanaged
-                => string.Concat(name, Chars.Colon, formatter<T>(BitFormat.limited((uint)Widths.effective(src), zpad)).Format(src));
+                => string.Concat(name, Chars.Colon, formatter<T>(BitFormatter.limited((uint)Widths.effective(src), zpad)).Format(src));
     }
 }

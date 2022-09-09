@@ -15,5 +15,4 @@ namespace Z0
         public static byte offmod(uint w, uint index)
 			=> (byte)(index % w);
     }
-
 }

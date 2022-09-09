@@ -9,6 +9,6 @@ namespace Z0
         [MethodImpl(Inline), Closures(Closure)]
         public static BitFormatter<T> formatter<T>(BitFormat? config = null)
             where T : struct
-                => new BitFormatter<T>(config ?? BitFormat.configure());
+                => new BitFormatter<T>(config ?? BitFormatter.configure());
     }
 }

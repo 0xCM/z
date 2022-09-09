@@ -1,5 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="$(ProjectProps)\usings.props"/>
+  <Import Project="imports.props"/>
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>$(FrameworkMoniker)</TargetFramework>
@@ -7,16 +9,5 @@
 
   <ItemGroup>
     <EmbeddedResource Include="assets/**/*.*" />
-    <PackageReference Include="Iced" Version="1.4.0" />
-    <ProjectReference Include="$(Bits)" />
-    <ProjectReference Include="$(Assets)" />
-    <ProjectReference Include="$(Numbers)" />
-    <ProjectReference Include="$(AsmModels)" />
-    <ProjectReference Include="$(Diagnostics)" />
-    <ProjectReference Include="$(Lang)" />
-    <ProjectReference Include="$(Rules)" />
-    <ProjectReference Include="$(Archives)" />
-    <ProjectReference Include="$(LangEmit)" />
-    <ProjectReference Include="$(Coff)" />
   </ItemGroup>
 </Project>

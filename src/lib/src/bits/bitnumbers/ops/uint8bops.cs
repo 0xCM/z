@@ -180,7 +180,7 @@ namespace Z0
         }
 
         static BitFormat FormatConfig8
-            => BitFormat.limited(U.Width,U.Width);
+            => BitFormatter.limited(U.Width,U.Width);
 
         [MethodImpl(Inline)]
         public static string format(U src)

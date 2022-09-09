@@ -20,7 +20,7 @@ namespace Z0
             {
                 MaxValue = max;
                 MaxBitCount = effwidth(MaxValue);
-                Formatter = BitRender.formatter<byte>(BitFormat.limited(MaxBitCount, MaxBitCount));
+                Formatter = BitRender.formatter<byte>(BitFormatter.limited(MaxBitCount, MaxBitCount));
             }
 
             BitFormatter<byte> Formatter {get;}

@@ -31,6 +31,8 @@
    <Import Project="src/db.sqlite/exports.props"/>
    <Import Project="src/dispatcher/exports.props"/>
 
+   <Import Project="src/files/exports.props"/>
+
    <Import Project="src/heaps/exports.props"/>
    <Import Project="src/hex/exports.props"/>
    <Import Project="src/hub/exports.props"/>

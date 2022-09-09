@@ -276,7 +276,7 @@ namespace Z0
 
         public static string format(ReadOnlySpan<bit> src, BitFormat? fmt = null)
         {
-            var options = fmt ?? BitFormat.configure();
+            var options = fmt ?? BitFormatter.configure();
             var blocked = options.BlockWidth != 0;
             var blocks = (uint)(blocked ? src.Length/options.BlockWidth : 0);
             var bitcount = length(src,options);

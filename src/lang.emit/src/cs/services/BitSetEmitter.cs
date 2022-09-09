@@ -9,7 +9,7 @@ namespace Z0
         public class BitSetEmitter : CodeGenerator
         {
             protected string TypeDigits(byte m, byte n)
-                => BitRender.gformat(n, BitFormat.limited(m,m));
+                => BitRender.gformat(n, BitFormatter.limited(m,m));
 
             protected string TypeName(byte m, byte n)
                 => text.concat(AsciLetterUpSym.B, TypeDigits(m,n));

@@ -236,7 +236,7 @@ namespace Z0
             => new U((byte)src,false);
 
         static BitFormat FormatConfig5
-            => BitFormat.limited(U.Width,U.Width);
+            => BitFormatter.limited(U.Width,U.Width);
 
         [MethodImpl(Inline)]
         public static string format(U src)

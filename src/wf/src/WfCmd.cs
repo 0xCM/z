@@ -8,6 +8,14 @@ namespace Z0
 
     using static sys;
 
+    public class Launchers : WfSvc<Launchers>
+    {
+
+        static FilePaths paths()
+            => DbArchive.match(AppDb.Control("launch").Root, FS.Cmd);
+
+    }
+
     public class WfCmd : AppCmdService<WfCmd>
     {
         WsRegistry WsRegistry => Wf.WsRegistry();
@@ -383,7 +391,6 @@ namespace Z0
                 return channel.Ran(flow, $"Completed script execution {src.Name}");
             }
             return sys.start(run);
-
         }
 
         void ExecUnset(CmdArgs args)

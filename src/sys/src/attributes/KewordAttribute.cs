@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     /// <summary>
     /// Applied to a function to denote inclusion as a keword within the DSL
     /// </summary>

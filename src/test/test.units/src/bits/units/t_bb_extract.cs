@@ -103,7 +103,7 @@ namespace Z0
 
             var bSpan1 = BitSpans.parse(sLit);
             var bSpan2 = BitSpans.create(bLit);
-            Claim.eq(sLit, bSpan2.Format(BitFormat.configure(true)));
+            Claim.eq(sLit, bSpan2.Format(BitFormatter.configure(true)));
 
 
             var bvz = SpanBlocks.literals(n256,bLit);

@@ -57,7 +57,7 @@ namespace Z0
         public static string format8x8x3(byte[,] src)
         {
             var dst = text.build();
-            var config = BitFormat.limited(3);
+            var config = BitFormatter.limited(3);
             var formatter = BitRender.formatter<byte>(config);
             for(var i=0; i<7; i++)
             {

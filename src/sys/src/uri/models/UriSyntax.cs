@@ -4,46 +4,30 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static SyntaxModels;
-
-    public interface ISyntaxNode
-    {
-        NodeName Name {get;}
-    }
-    
-    public interface ISyntaxNode<S> : ISyntaxNode
-        where S : ISyntaxNode<S>, new()
-    {
-
-
-    }
-
+    // URI = scheme ":" ["//" authority] path ["?" query] ["#" fragment]
     public class UriSynax
     {
-        public class Scheme
+        public class Scheme : ISyntaxNode<Scheme>
         {
 
         }
 
-        public class Authority
-        {
-
-
-        }
-
-        public class Query
+        public class Authority : ISyntaxNode<Authority>
         {
 
 
         }
 
-        public class Fragment 
+        public class Query : ISyntaxNode<Query>
+        {
+
+
+        }
+
+        public class Fragment  : ISyntaxNode<Fragment>
         {
 
 
         }
     }
-
-    // URI = scheme ":" ["//" authority] path ["?" query] ["#" fragment]
-
 }

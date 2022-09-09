@@ -238,7 +238,7 @@ namespace Z0
             => a.Value == b.Value;
 
         static BitFormat FormatConfig24
-            => BitFormat.limited(U.PackedWidth, U.PackedWidth);
+            => BitFormatter.limited(U.PackedWidth, U.PackedWidth);
 
         [MethodImpl(Inline)]
         public static string format(U src)

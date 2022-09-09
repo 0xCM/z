@@ -5,7 +5,7 @@
 namespace Z0.Asm
 {
     using static Chars;
-    using static core;
+    using static sys;
 
     public readonly struct AsmThumbprint : IComparable<AsmThumbprint>, IEquatable<AsmThumbprint>
     {

@@ -11,27 +11,27 @@ namespace Z0
     partial class XTend
     {
         public static string FormatBits(this byte src, BitFormat? config = null)
-            => api.gformat(src, config ?? BitFormat.configure());
+            => api.gformat(src, config ?? BitFormatter.configure());
 
         public static string FormatBits(this sbyte src, BitFormat? config = null)
-            => api.gformat(src, config ?? BitFormat.configure());
+            => api.gformat(src, config ?? BitFormatter.configure());
 
         public static string FormatBits(this short src, BitFormat? config = null)
-            => api.gformat(src, config ?? BitFormat.configure());
+            => api.gformat(src, config ?? BitFormatter.configure());
 
         public static string FormatBits(this ushort src, BitFormat? config = null)
-            => api.gformat(src, config ?? BitFormat.configure());
+            => api.gformat(src, config ?? BitFormatter.configure());
         public static string FormatBits(this uint src, BitFormat? config = null)
-            => api.gformat(src, config ?? BitFormat.configure());
+            => api.gformat(src, config ?? BitFormatter.configure());
 
         public static string FormatBits(this int src, BitFormat? config = null)
-            => api.gformat(src, config ?? BitFormat.configure());
+            => api.gformat(src, config ?? BitFormatter.configure());
 
         public static string FormatBits(this ulong src, BitFormat? config = null)
-            => api.gformat(src, config ?? BitFormat.configure());
+            => api.gformat(src, config ?? BitFormatter.configure());
 
         public static string FormatBits(this long src, BitFormat? config = null)
-            => api.gformat(src, config ?? BitFormat.configure());
+            => api.gformat(src, config ?? BitFormatter.configure());
 
         public static string Format(this byte src, NumericBaseKind @base)
             => @base switch{

@@ -4,7 +4,7 @@
   <Import Project="imports.props" />
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <AssemblyName>deploy</AssemblyName>
+    <AssemblyName>zpub</AssemblyName>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <StartupObject>Z0.App</StartupObject>
     <RootNamespace>Z0</RootNamespace>

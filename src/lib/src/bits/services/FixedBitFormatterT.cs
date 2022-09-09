@@ -7,26 +7,26 @@ namespace Z0
     /// <summary>
     /// Defines a bit formatter that always produces a bitstring with a fixed length for a given T-value, zero padded as necessary
     /// </summary>
-    public readonly struct FixedBitFormatter<T> : IFixedBitFormatter<T>
+    public class FixedBitFormatter<T> : IFixedBitFormatter<T>
         where T : struct
     {
         readonly BitFormat Config;
 
-        readonly BitFormatter<T> _Formatter;
-
         [MethodImpl(Inline)]
-        public FixedBitFormatter(byte width)
+        public FixedBitFormatter(uint width)
         {
-            Config = BitFormat.limited(width, width);
-            _Formatter = new BitFormatter<T>(Config);
+            Config = BitFormatter.limited(width, (int)width);
         }
 
-        public uint FixedWidth
+        public ref readonly uint Width
         {
             [MethodImpl(Inline)]
-            get => Config.MaxBitCount;
+            get => ref Config.MaxBitCount;
         }
 
+        uint IFixedBitFormatter.FixedWidth
+            => Width;
+            
         public string Format(ReadOnlySpan<byte> src)
             => BitRender.format(src, Config);
 

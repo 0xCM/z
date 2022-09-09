@@ -39,7 +39,7 @@ namespace Z0
         public static string format(uint8b src)
             => Instance.Format(src);
 
-        public static FixedBitFormatter Service => Instance;
+        public static ref readonly FixedBitFormatter Service => ref Instance;
 
         public static FixedBitFormatter create()
             => Instance;

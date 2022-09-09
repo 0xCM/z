@@ -117,48 +117,7 @@ set CleanObj=rmdir %ProjectObj% /s/q
 set CleanSlnBin=rmdir %SlnBin% /s/q
 set CleanSlnObj=rmdir %SlnObj% /s/q
 set CleanSlnLogs=rmdir %SlnLogs% /s/q
+set ArchiveSln=robocopy %SlnRoot% %DevArchives%\z0 /xd %SlnRoot%\.git /v /e /fp /log:%DevArchives%\z0.archive.log
+set ArchiveRepo=git archive -v -o %RepoArchive% HEAD
 set CfgFile=%Artifacts%\%ProjectId%.cfg
 set DeployCfg=%SlnRoot%\deploy\deploy.cfg
-@REM echo # %ProjectId% >%CfgFile%
-@REM echo Deployments=%Deployments%>>%CfgFile%
-@REM echo MimeTypes=%MimeTypes%>>%CfgFile%
-@REM echo Archives=%Archives%>>%CfgFile%
-@REM echo PackageOut=%PackageOut%>>%CfgFile%
-@REM echo RepoArchives=%RepoArchives%>>%CfgFile%
-@REM echo DevArchives=%DevArchives%>>%CfgFile%
-@REM echo RepoArchive=%RepoArchive%>>%CfgFile%
-@REM echo SlnArchive=%SlnArchive%>>%CfgFile%
-@REM echo CommitLog=%CommitLog%>>%CfgFile%
-@REM echo SlnRoot=%SlnRoot%>>%CfgFile%
-@REM echo SlnBin=%SlnBin%>>%CfgFile%
-@REM echo SlnObj=%SlnObj%>>%CfgFile%
-@REM echo SlnLogs=%SlnLogs%>>%CfgFile%
-@REM echo SlnArea=%SlnArea%>>%CfgFile%
-@REM echo ShellPath=%ShellPath%>>%CfgFile%
-@REM echo NetSdk=%NetSdk%>>%CfgFile%
-@REM echo DOTNET_ROOT=%DOTNET_ROOT%>>%CfgFile%
-@REM echo PATH=%PATH%>>%CfgFile%
-@REM echo Reports=%Reports%>>%CfgFile%
-@REM echo Distributions=%Distributions%>>%CfgFile%
-@REM echo NugetDeps=%NugetDeps%>>%CfgFile%
-@REM echo SlnDist=%SlnDist%>>%CfgFile%
-@REM echo BuildLogs=%BuildLogs%>>%CfgFile%
-@REM echo SlnScripts=%SlnScripts%>>%CfgFile%
-@REM echo SlnProps=%SlnProps%>>%CfgFile%
-@REM echo AppSettings=%AppSettings%>>%CfgFile%
-@REM echo ProjectRoot=%ProjectRoot%>>%CfgFile%
-@REM echo ProjectScripts=%ProjectScripts%>>%CfgFile%
-@REM echo ProjectPath=%ProjectPath%>>%CfgFile%
-@REM echo ProjectSln=%ProjectSln%>>%CfgFile%
-@REM echo ProjectBin=%ProjectBin%>>%CfgFile%
-@REM echo ProjectObj=%ProjectObj%>>%CfgFile%
-@REM echo ProjectShell=%ProjectShell%>>%CfgFile%
-@REM echo ProjectDist=%ProjectDist%>>%CfgFile%
-@REM echo DeployedShell=%DeployedShell%>>%CfgFile%
-@REM echo BuildLogs=%BuildLogs%>>%CfgFile%
-@REM echo ProjectDist=%ProjectDist%>>%CfgFile%
-
-: echo GitPush=%GitPush%>>%CfgFile%
-: git remote add origin https://github.com/0xCM/z.git
-: git branch -M main
-: git push -u origin main

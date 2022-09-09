@@ -26,7 +26,7 @@ namespace Z0
         {
             var v0 = vmask.veven<byte>(w128, n2, n2);
             var v0bits = v0.ToBitSpan();
-            var options = BitFormat.configure();
+            var options = BitFormatter.configure();
             options.BlockWidth = 8;
             Write(v0bits.Format(options));
             var v1 = vmask.veven<byte>(w256, n2, n2);

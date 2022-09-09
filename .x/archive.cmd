@@ -1,3 +1,6 @@
 @echo off
-call %~dp0_archive-files.cmd
-call %~dp0_archive-repo.cmd
+set SlnId=z0
+set ProjectId=z0
+call %~dp0..\config.cmd
+call %ArchiveRepo%
+call %ArchiveSln%

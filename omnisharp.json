@@ -2,7 +2,7 @@
     "msbuild": {
         "enabled": true,
         "Configuration": "Release",
-        "MSBuildSDKsPath": "./artifacts/deps/dotnet/sdk/6.0.303",
+        "MSBuildSDKsPath": "${DOTNET_ROOT}/sdk/6.0.303",
 		"omnisharp.disableMSBuildDiagnosticWarning": true
     },
     "omnisharp.disableMSBuildDiagnosticWarning": true,

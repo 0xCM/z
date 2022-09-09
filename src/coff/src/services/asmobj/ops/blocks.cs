@@ -7,7 +7,7 @@ namespace Z0
     using Asm;
     using System.Linq;
 
-    using static core;
+    using static sys;
 
     partial class AsmObjects
     {
