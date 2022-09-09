@@ -10,7 +10,6 @@ namespace Z0
     [Free]
     public interface IFileArchive : IExpr
     {
-
         FolderPath Root {get;}
 
         string TableId<T>()

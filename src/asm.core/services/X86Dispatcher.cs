@@ -31,6 +31,7 @@ namespace Z0.Asm
             [MethodImpl(Inline)]
             get => ref Receivers.First;
         }
+
         public bool Create<T>(byte slot)
             where T : unmanaged
         {

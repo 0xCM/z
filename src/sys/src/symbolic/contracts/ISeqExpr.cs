@@ -3,7 +3,7 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0
-{
+{    
     [Free]
     public interface ISeqExpr<T> : IExpr
         where T : IExpr

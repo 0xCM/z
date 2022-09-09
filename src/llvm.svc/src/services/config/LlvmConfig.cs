@@ -2,11 +2,12 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.llvm
+namespace Z0
 {
-    using static core;
+    using static sys;
 
-    using K = llvm.LlvmConfigKind;
+    using llvm;
+    using K = LlvmConfigKind;
 
     public sealed class LlvmConfigSvc : ToolService<LlvmConfigSvc>
     {
@@ -135,12 +136,6 @@ namespace Z0.llvm
                 {
                     var data = content.Split(Chars.Space).Select(x => x.Trim()).Where(nonempty).Delimit(Chars.Semicolon);;
                     dst.Set(kind,data);
-                }
-                break;
-                case K.Libs:
-                {
-                    Files data = content.Split(Chars.Space).Select(x => x.Trim()).Where(nonempty).Select(FS.path);
-                    dst.Set(kind, data);
                 }
                 break;
                 case K.LibFiles:

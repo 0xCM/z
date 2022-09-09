@@ -8,5 +8,6 @@ copy %SlnSrc% %SlnDst%
 set Sources=%~dp0../../src
 dotnet sln %SlnDst% add %Sources%/cmd/z0.cmd.csproj
 dotnet sln %SlnDst% add %Sources%/hub/z0.hub.csproj
+dotnet sln %SlnDst% add %Sources%/wf.shell/z0.wf.shell.csproj
 dotnet sln %SlnDst% add %Sources%/dispatcher/z0.dispatcher.csproj
 dotnet sln %SlnDst% add %~dp0..\z0.deploy.csproj

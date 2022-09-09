@@ -15,7 +15,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <FileAlignment>4096</FileAlignment>
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>embedded</DebugType>
+    <!-- <DebugType>embedded</DebugType> -->
     <IncludeSymbols>true</IncludeSymbols>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <EnablePreviewFeatures>true</EnablePreviewFeatures>

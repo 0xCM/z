@@ -8,6 +8,8 @@ namespace Z0.llvm
 
     public partial class LlvmCmd : AppCmdService<LlvmCmd>
     {
+        const string llvm = nameof(llvm);
+        
         LlvmDataImporter Importer => Wf.LlvmDataImporter();
 
         LlvmPaths Paths => Wf.LlvmPaths();

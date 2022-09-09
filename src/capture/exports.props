@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Capture>$(MsBuildThisFileDirectory)z0.capture.csproj</Capture>
+  </PropertyGroup>
+</Project>

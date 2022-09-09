@@ -25,6 +25,6 @@ namespace Z0
         new C Code {get;}
 
         uint ILetter.Code
-            => core.bw32(Code);
+            => sys.bw32(Code);
     }
 }

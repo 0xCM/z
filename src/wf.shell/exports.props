@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <WfShell>$(MsBuildThisFileDirectory)z0.wf.shell.csproj</WfShell>
+  </PropertyGroup>
+</Project>

@@ -126,12 +126,16 @@ namespace Z0
 
         public virtual string Delimiter => Eol;
 
-        public virtual Fence<char>? Fence => (Chars.LBrace,Chars.RBrace);
+        public virtual Fence<char>? Fence 
+            => (Chars.LBrace,Chars.RBrace);
 
-        public virtual int CellPad => 0;
+        public virtual int CellPad 
+            => 0;
 
+        public virtual string FormatItem(T src)
+            => src?.ToString() ?? EmptyString;
         public virtual string Format()
-            => Seq.format(Data.Storage, Delimiter);
+            => Seq.format(Data.Storage, FormatItem, Delimiter);
 
         public override string ToString()
             => Format();
@@ -144,19 +148,7 @@ namespace Z0
 
         public Seq<Y> Cast<Y>()
             => Seq.cast<T,Y>(Storage);
- 
         
         public static S Empty => new ();
-    }
-
-    partial class XTend
-    {
-        public static Seq<T> Sort<T>(this Seq<T> src)
-            where T : IComparable<T>
-                => src.Storage.Sort();
-
-        public static ReadOnlySeq<T> Sort<T>(this ReadOnlySeq<T> src)
-            where T : IComparable<T>                
-                => src.Storage.Sort();
     }
 }

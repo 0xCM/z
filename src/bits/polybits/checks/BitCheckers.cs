@@ -24,7 +24,7 @@ namespace Z0
         }
 
         static Union<T> union<T>(params T[] src)
-            where T : IExprDeprecated
+            where T : IExpr
                 => new Union<T>(src);
 
         public Outcome Case1()

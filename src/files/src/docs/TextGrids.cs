@@ -56,7 +56,7 @@ namespace Z0
                 => new TextGrid<B>(width,src);
 
         public static ReadOnlySpan<string> split(string src, in TextDocFormat spec)
-            => text.nonempty(src) ? spec.SplitClean ? src.SplitClean(spec.Delimiter) : src.Split(spec.Delimiter) : sys.empty<string>();
+            => sys.nonempty(src) ? spec.SplitClean ? src.SplitClean(spec.Delimiter) : src.Split(spec.Delimiter) : sys.empty<string>();
 
         [Op]
         public static Outcome<Count> normalize(string data, string delimiter, ReadOnlySpan<byte> widths, FilePath dst)

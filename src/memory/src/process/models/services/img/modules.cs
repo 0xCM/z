@@ -11,7 +11,7 @@ namespace Z0
         {
             var modules = src.Modules;
             var count = modules.Count;
-            var buffer = Seq.alloc<ProcessModuleRow>(count);
+            var buffer = Seq.create<ProcessModuleRow>(count);
             for(var i=0u; i<count; i++)
             {
                 ref readonly var module = ref modules[i];

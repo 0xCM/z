@@ -19,6 +19,7 @@ namespace Z0
 
         public bool IsEmpty => false;
 
+        public bool IsNonEmpty => !IsEmpty;
         T IValued<T>.Value
             => Value;
 

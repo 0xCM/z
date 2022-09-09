@@ -1,7 +1,5 @@
 <Project>
-
   <Import Project="$(ImportDefs)\microsoft.build.props"/>
-
   <ItemGroup>
     <ProjectReference Include="$(Assets)" />
     <ProjectReference Include="$(Memory)" />
@@ -9,5 +7,4 @@
     <ProjectReference Include="$(Builds)" />
     <ProjectReference Include="$(Lang)" />
   </ItemGroup>
-
 </Project>

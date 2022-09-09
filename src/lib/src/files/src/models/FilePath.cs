@@ -11,6 +11,9 @@ namespace Z0
 
     public readonly struct FilePath : IFsEntry<FilePath>
     {
+        public static RelativeFilePath relative(FolderPath root, FilePath src)
+            => new RelativeFilePath(new RelativePath(Path.GetRelativePath(root.Format(), src.Format())));
+
         public PathPart Name {get;}
 
         [MethodImpl(Inline)]
@@ -21,7 +24,7 @@ namespace Z0
         {
             get
             {
-                if(drive(this, out var dst))
+                if(Drive.drive(Name, out var dst))
                     return dst;
                 else
                     return Drive.Empty;
@@ -55,19 +58,19 @@ namespace Z0
         public FileName FileName
         {
             [MethodImpl(Inline)]
-            get => file(Path.GetFileName(Name));
+            get => new (Path.GetFileName(Name));
         }
 
         public FileExt Ext
         {
             [MethodImpl(Inline)]
-            get => FS.ext(Path.GetExtension(Name).TrimStart('.'));
+            get => new (Path.GetExtension(Name).TrimStart('.'));
         }
 
         public FolderPath FolderPath
         {
             [MethodImpl(Inline)]
-            get => dir(Path.GetDirectoryName(Name));
+            get => new (Path.GetDirectoryName(Name));
         }
 
         public FolderName FolderName
@@ -118,7 +121,7 @@ namespace Z0
             => !Is(x1,x2);
 
         public RelativeFilePath Relative(FolderPath src)
-            => FS.relative(src, this);
+            => relative(src, this);
 
         public FilePath WithoutExtension
             => FolderPath + FileName.WithoutExtension;

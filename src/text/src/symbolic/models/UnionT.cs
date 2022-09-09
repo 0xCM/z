@@ -8,7 +8,7 @@ namespace Z0
     /// Defines a term sequence t0...tn-1
     /// </summary>
     public readonly struct Union<T> : ISeqExpr<T>, IExpr
-        where T : IExprDeprecated
+        where T : IExpr
     {
         readonly Index<T> _Data;
 

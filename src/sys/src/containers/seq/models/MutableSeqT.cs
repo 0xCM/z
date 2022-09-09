@@ -11,10 +11,6 @@ namespace Z0
     /// </summary>
     public struct MutableSeq<T> : IIndex<T>
     {
-        [MethodImpl(Inline)]
-        public static MutableSeq<X> concat<X>(MutableSeq<X> head, MutableSeq<X> tail)
-            => new MutableSeq<X>(sys.array(head.Storage.Concat(tail.Storage)));
-
         T[] Data;
 
         [MethodImpl(Inline)]
@@ -116,7 +112,7 @@ namespace Z0
             => Data.Equals(src.Data);
 
         public MutableSeq<T> Concat(MutableSeq<T> tail)
-            => concat(this, tail);
+            => Seq.concat(this, tail);
 
         public MutableSeq<Y> Select<Y>(Func<T,Y> project)
              => mutable(
@@ -149,15 +145,8 @@ namespace Z0
         public static implicit operator T[](MutableSeq<T> src)
             => src.Data;
 
-        static Span<T> EmptyTermSeq
-        {
-            [MethodImpl(Inline)]
-            get => Span<T>.Empty;
-        }
-
         [MethodImpl(Inline)]
         static MutableSeq<X> mutable<X>(IEnumerable<X> src)
             => new MutableSeq<X>(src.Array());
-
     }
 }

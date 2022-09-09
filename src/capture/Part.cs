@@ -2,12 +2,11 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+[assembly: PartId(PartId.Capture)]
+namespace Z0.Parts
 {
-    public interface ILiteralExpr<T> : IExprDeprecated
+    public sealed class Capture : Part<Capture>
     {
-        Identifier Name {get;}
 
-        Constant<T> Value {get;}
     }
 }

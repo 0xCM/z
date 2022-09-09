@@ -2,16 +2,13 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.llvm
+namespace Z0
 {
     [SymSource(nameof(llvm))]
     public enum LlvmConfigKind : byte
     {
         [Symbol("version", "LLVM version")]
         Version,
-
-        [Symbol("libs", "Libraries needed to link against LLVM components")]
-        Libs,
 
         [Symbol("includedir", "Directory containing LLVM headers")]
         IncludeDir,

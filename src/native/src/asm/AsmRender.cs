@@ -4,14 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class AsmRender : WfSvc<AsmRender>
+    public class AsmRender
     {
         public static string format(in EncodingOffsets src)
         {
             if(src.IsEmpty)
                 return EmptyString;
 
-            var dst = text.buffer();
+            var dst = text.emitter();
             dst.Append(Chars.LBrace);
             dst.AppendFormat("{0}={1}", "opcode", src.OpCode);
             if(src.ModRm > 0)

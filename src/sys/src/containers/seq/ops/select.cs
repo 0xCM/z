@@ -4,9 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    // using static Spans;
-    // using static Arrays;
-
+    using static sys;
     partial struct Seq
     {
         [Op, Closures(Closure)]
@@ -14,7 +12,7 @@ namespace Z0
         {
             var dst = sys.alloc<T>(src.Length);
             for(var i=0; i<src.Length; i++)
-                sys.seek(dst,i) = f(src[i]);
+                seek(dst,i) = f(src[i]);
             return dst;
         }
 
@@ -23,92 +21,8 @@ namespace Z0
         {
             var dst = sys.alloc<T>(src.Length);
             for(var i=0; i<src.Length; i++)
-                sys.seek(dst,i) = f(src[i]);
+                seek(dst,i) = f(src[i]);
             return dst;
-        }
-
-        public static Seq<Y> map<X,Y>(ReadOnlySpan<X> src, Func<X,Y> f)
-            => select(src,f);
-
-        public static Seq<Y> map<X,Y>(Span<X> src, Func<X,Y> f)
-            => select(src,f);
-
-        public static Seq<Z> map<X,Y,Z>(ReadOnlySpan<X> src, Func<X,ReadOnlySeq<Y>> lift, Func<X,Y,Z> project)
-        {
-            var dst = sys.list<Z>();
-            for(var i=0; i<src.Length; i++)
-            {
-                ref readonly var x = ref sys.skip(src, i);
-                var y = lift(x);
-                for(var j=0; j<y.Count; j++)
-                    dst.Add(project(x,y[j]));
-            }
-            return dst.ToArray();
-        }
-
-        public static Seq<Z> map<X,Y,Z>(ReadOnlySpan<X> src, Func<X,Seq<Y>> lift, Func<X,Y,Z> project)
-        {
-            var dst = sys.list<Z>();
-            for(var i=0; i<src.Length; i++)
-            {
-                ref readonly var x = ref sys.skip(src,i);
-                var y = lift(x);
-                for(var j=0; j<y.Count; j++)
-                    dst.Add(project(x,y[j]));
-            }
-            return dst.ToArray();
-        }
-
-        public static Seq<Y> map<X,Y>(ReadOnlySpan<X> src, Func<X,ReadOnlySeq<Y>> lift)
-        {
-            var dst = sys.list<Y>();
-            for(var i=0; i<src.Length; i++)
-            {
-                ref readonly var x = ref sys.skip(src,i);
-                var y = lift(x);
-                for(var j=0; j<y.Count; j++)
-                    dst.Add(y[j]);
-            }
-            return dst.ToArray();
-        }
-
-        public static Seq<Y> map<X,Y>(Span<X> src, Func<X,Seq<Y>> lift)
-        {
-            var dst = sys.list<Y>();
-            for(var i=0; i<src.Length; i++)
-            {
-                ref readonly var x = ref sys.skip(src,i);
-                var y = lift(x);
-                for(var j=0; j<y.Count; j++)
-                    dst.Add(y[j]);
-            }
-            return dst.ToArray();
-        }
-
-        [Op, Closures(Closure)]
-        public static Seq<X> where<X>(ReadOnlySpan<X> src, Func<X,bool> f)
-        {
-            var dst = sys.list<X>();
-            for(var i=0; i<src.Length; i++)
-            {
-                ref readonly var x = ref sys.skip(src,i);
-                if(f(x))
-                    dst.Add(x);
-            }
-            return dst.ToArray();
-        }
-
-        [Op, Closures(Closure)]
-        public static Seq<X> where<X>(Span<X> src, Func<X,bool> f)
-        {
-            var dst = sys.list<X>();
-            for(var i=0; i<src.Length; i++)
-            {
-                ref readonly var x = ref sys.skip(src,i);
-                if(f(x))
-                    dst.Add(x);
-            }
-            return dst.ToArray();
         }
 
         /// <summary>
@@ -141,7 +55,7 @@ namespace Z0
         {
             var count = (byte)indices.Length;
             for(byte i=0; i<count; i++)
-                sys.seek(dst,i) = sys.skip(src, sys.@as<I,byte>(sys.skip(indices,i)));
+                seek(dst,i) = skip(src, sys.@as<I,byte>(skip(indices,i)));
         }
 
         [MethodImpl(Inline)]
@@ -150,7 +64,7 @@ namespace Z0
         {
             var count = (ushort)indices.Length;
             for(ushort i=0; i<count; i++)
-                sys.seek(dst,i) = sys.skip(src, sys.@as<I,ushort>(sys.skip(indices,i)));
+                seek(dst,i) = skip(src, sys.@as<I,ushort>(skip(indices,i)));
         }
 
         [MethodImpl(Inline)]
@@ -159,7 +73,7 @@ namespace Z0
         {
             var count = (uint)indices.Length;
             for(uint i=0; i<count; i++)
-                sys.seek(dst,i) = sys.skip(src, sys.@as<I,uint>(sys.skip(indices,i)));
+                seek(dst,i) = skip(src, sys.@as<I,uint>(skip(indices,i)));
         }
 
         [MethodImpl(Inline)]
@@ -168,7 +82,7 @@ namespace Z0
         {
             var count = (ulong)indices.Length;
             for(ulong i=0; i<count; i++)
-                sys.seek(dst,i) = sys.skip(src, sys.@as<I,ulong>(sys.skip(indices,i)));
+                seek(dst,i) = skip(src, sys.@as<I,ulong>(skip(indices,i)));
         }
     }
 }

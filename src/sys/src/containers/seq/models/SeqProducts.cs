@@ -14,7 +14,7 @@ namespace Z0
             var dst = alloc<Paired<T,Index<T>>>(count);
             for(var i=0; i<count; i++)
                 seek(dst,i) = (a[i], b);
-            return new ListProduct<T>(a,b,dst);
+            return new ListProduct<T>(a, b, dst);
         }
 
         public static SeqProduct<T> mul<T>(Index<T> a, Index<T> b)
@@ -26,7 +26,7 @@ namespace Z0
             var k=0u;
             for(var i=0; i<kA; i++)
             for(var j=0; j<kB; j++)
-                seek(buffer,k++) = (a[i], b[j]);
+                seek(buffer, k++) = (a[i], b[j]);
             return new SeqProduct<T>(a,b,buffer);
         }
 

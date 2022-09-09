@@ -158,7 +158,7 @@ namespace Z0
         public static ReadOnlySeq<ProcessPartition> partitions(ReadOnlySeq<ImageLocation> src)
         {
             var count = src.Count;
-            var buffer = Seq.alloc<ProcessPartition>(count);
+            var buffer = Seq.create<ProcessPartition>(count);
             for(var i=0u; i<count; i++)
             {
                 ref readonly var image = ref src[i];

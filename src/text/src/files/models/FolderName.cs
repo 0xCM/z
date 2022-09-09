@@ -4,18 +4,16 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static FS;
-
     public readonly struct FolderName : IFsEntry<FolderName>
     {
         public static FolderName version(byte major, byte minor, byte revision)
-            => FS.folder(string.Format("{0}.{1}.{2}", major, minor, revision));
-
-        [MethodImpl(Inline)]
-        public static FolderName operator +(FolderName a, FolderName b)
-            => folder(string.Format("{0}/{1}", a.Name, b.Name));
+            => new (string.Format("{0}.{1}.{2}", major, minor, revision));
 
         public PathPart Name {get;}
+
+        [MethodImpl(Inline)]
+        public FolderName(PathPart name)
+            => Name = name;
 
         public bool IsEmpty
         {
@@ -29,12 +27,6 @@ namespace Z0
             get => Name.IsNonEmpty;
         }
 
-        public static FolderName Empty
-        {
-            [MethodImpl(Inline)]
-            get => new FolderName(PathPart.Empty);
-        }
-
         [MethodImpl(Inline)]
         public FolderName Replace(char src, char dst)
             => new FolderName(Name.Replace(src,dst));
@@ -42,10 +34,6 @@ namespace Z0
         [MethodImpl(Inline)]
         public FolderName Replace(string src, string dst)
             => new FolderName(Name.Replace(src,dst));
-
-        [MethodImpl(Inline)]
-        public FolderName(PathPart name)
-            => Name = name;
 
         public Hash32 Hash
         {
@@ -68,5 +56,15 @@ namespace Z0
 
         public override string ToString()
             => Format();
+
+        [MethodImpl(Inline)]
+        public static FolderName operator +(FolderName a, FolderName b)
+            => new (string.Format("{0}/{1}", a.Name, b.Name));
+
+        public static FolderName Empty
+        {
+            [MethodImpl(Inline)]
+            get => new FolderName(PathPart.Empty);
+        }
     }
 }

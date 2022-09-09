@@ -10,18 +10,6 @@ namespace Z0
     {
         public PathPart Name {get;}
 
-        public bool IsEmpty
-        {
-            [MethodImpl(Inline)]
-            get => Name.IsEmpty;
-        }
-
-        public bool IsNonEmpty
-        {
-            [MethodImpl(Inline)]
-            get => Name.IsNonEmpty;
-        }
-
         [MethodImpl(Inline)]
         public RelativePath(PathPart name)
         {
@@ -37,6 +25,18 @@ namespace Z0
             {
                 Name = PathPart.Empty;
             }
+        }
+
+        public bool IsEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Name.IsEmpty;
+        }
+
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Name.IsNonEmpty;
         }
 
         public Hash32 Hash
@@ -75,15 +75,15 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static RelativePath operator +(RelativePath a, RelativePath b)
-            => relative(string.Format("{0}/{1}", a.Name, b.Name));
+            => new (string.Format("{0}/{1}", a.Name, b.Name));
 
         [MethodImpl(Inline)]
         public static RelativePath operator +(RelativePath a, FolderName b)
-            => relative(string.Format("{0}/{1}", a.Name, b.Name));
+            => new (string.Format("{0}/{1}", a.Name, b.Name));
 
         [MethodImpl(Inline)]
         public static RelativePath operator +(FolderName a, RelativePath b)
-            => relative(string.Format("{0}/{1}", a.Name, b.Name));
+            => new (string.Format("{0}/{1}", a.Name, b.Name));
 
         [MethodImpl(Inline)]
         public static FolderPath operator +(FolderPath a, RelativePath b)

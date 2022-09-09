@@ -4,14 +4,16 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static sys;
+
     public struct JmpStub<T>
         where T : unmanaged
     {
-        public MemoryRange Location {get; private set;}
+        public MemoryRange Location;
 
         [MethodImpl(NotInline)]
         ulong Jump(T a0)
-            => Algs.timestamp();
+            => timestamp();
 
         public MemoryRange Init()
         {

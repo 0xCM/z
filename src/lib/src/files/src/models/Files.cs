@@ -8,7 +8,6 @@ namespace Z0
 
     using static sys;
     
-
     public readonly struct Files : IIndex<FilePath>
     {
         public readonly Index<FilePath> Data;
@@ -153,5 +152,4 @@ namespace Z0
         public static Files Empty
             => new Files(sys.empty<FilePath>());
     }
-
 }

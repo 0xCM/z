@@ -6,7 +6,7 @@ namespace Z0
 {
     using Asm;
 
-    using static core;
+    using static sys;
 
     using K = AsmOcTokenKind;
     using P = Pow2x32;
@@ -46,9 +46,8 @@ namespace Z0
         {
             var a = Intervals.closed(2u, 12u).Partition();
             var b = Intervals.closed(33u, 41u).Partition();
-            var c = SeqProducts.mul(a,b);
+            var c = Seq.mul(a,b);
             Write(SeqProducts.format(c));
-
             return true;
         }
 

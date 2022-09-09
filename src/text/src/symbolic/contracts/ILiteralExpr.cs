@@ -4,9 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [Free]
-    public interface IExpr : INullity
+    public interface ILiteralExpr<T> : IExpr
     {
-        string Format();
+        Identifier Name {get;}
+
+        Constant<T> Value {get;}
     }
 }

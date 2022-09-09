@@ -215,9 +215,8 @@ namespace Z0
             CmdScripts.start(cmd);
         }
 
-
         static Files launchers()
-            => DbArchive.match(AppDb.Control("launch").Root, FS.Ps1);
+            => DbArchive.match(AppDb.Control("launch").Root, FS.Cmd);
 
         [CmdOp("launchers")]
         protected void Launchers(CmdArgs args)
@@ -229,16 +228,14 @@ namespace Z0
             Emitter.Row(data);
             Emitter.FileEmit(data, AppDb.AppData().Path("launchers", FileKind.List));
         }
-
         
-
         [CmdOp("launch")]
         protected void LaunchTargets(CmdArgs args)
         {
             var src = launchers().Map(x => (x.FileName,x)).ToDictionary();
             foreach(var arg in args)
             {
-                var file = FS.file(arg.Value,FileKind.Ps1);
+                var file = FS.file(arg.Value, FileKind.Cmd);
                 var path = FilePath.Empty;
                 if(src.TryGetValue(file, out path))
                 {

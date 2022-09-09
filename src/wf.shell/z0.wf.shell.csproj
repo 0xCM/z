@@ -1,5 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="$(ProjectProps)\settings.props"/>
+  <Import Project="$(ProjectProps)\usings.props"/>
+  <Import Project="imports.props"/>
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <ShellId>zwf</ShellId>
@@ -8,12 +10,4 @@
     <AssemblyName>$(ShellId)</AssemblyName>
     <ShellRoot>$(LibsRoot)</ShellRoot>
   </PropertyGroup>
-
-  <Import Project="$(ProjectProps)\settings.props"/>
-  <Import Project="$(ProjectProps)\usings.props"/>
-
-  <ItemGroup>
-    <ProjectReference Include="$(Wf)" />
-  </ItemGroup>
-
 </Project>

@@ -21,6 +21,18 @@ namespace Z0
             Value = value;
         }
 
+        public bool IsEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Value.IsEmpty;
+        }
+
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Value.IsEmpty;
+        }
+
         Identifier ILiteralExpr<T>.Name
             => Name;
 

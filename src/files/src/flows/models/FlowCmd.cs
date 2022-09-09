@@ -10,25 +10,25 @@ namespace Z0
         const string TableId = "ws.cmdflows";
 
         [Render(16)]
-        public readonly Name WsId;
+        public readonly @string WsId;
 
         [Render(16)]
         public readonly Actor Actor;
 
         [Render(32)]
-        public readonly Name SrcId;
+        public readonly @string SrcId;
 
         [Render(12)]
         public readonly FileKind SrcKind;
 
         [Render(32)]
-        public readonly Name DstId;
+        public readonly @string DstId;
 
         [Render(12)]
         public readonly FileKind DstKind;
 
         [MethodImpl(Inline)]
-        public FlowCmd(Name ws, Actor actor, Name src, FileKind kSrc, Name dst, FileKind kDst)
+        public FlowCmd(string ws, Actor actor, string src, FileKind kSrc, string dst, FileKind kDst)
         {
             WsId = ws;
             Actor = actor;

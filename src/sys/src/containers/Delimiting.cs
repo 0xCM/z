@@ -13,15 +13,6 @@ namespace Z0
         static string pad(int pad)
             => pad == 0 ? "{0}" : "{0," + pad.ToString() + "}";
 
-        /// <summary>
-        /// Defines the format pattern '{n,pad}'
-        /// </summary>
-        /// <param name="n">The zero-based slot index</param>
-        /// <param name="pad">The pad width specifier</param>
-        [Op]
-        static string pad(uint n, int pad)
-            => "{0" + n.ToString() + "," + pad.ToString() + "}";
-
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static DelimitedSpan<T> delimit<T>(char delimiter, int pad, Span<T> src)
             => new DelimitedSpan<T>(src, delimiter, pad);
@@ -40,6 +31,20 @@ namespace Z0
                 if(i!=0)
                     dst.Append(sep);
                 dst.AppendFormat(Delimiting.pad(pad), sys.skip(src,i));
+            }
+            return dst.ToString();
+        }
+
+        [Op, Closures(Closure)]
+        public static string delimit<T>(ReadOnlySpan<T> src, Func<T,string> formatter, string sep, int pad = 0)
+        {
+            var dst = new StringBuilder();
+            var count = src.Length;
+            for(var i=0; i<count; i++)
+            {
+                if(i!=0)
+                    dst.Append(sep);
+                dst.AppendFormat(Delimiting.pad(pad), formatter(sys.skip(src,i)));
             }
             return dst.ToString();
         }

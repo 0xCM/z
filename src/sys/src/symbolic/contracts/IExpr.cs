@@ -5,6 +5,12 @@
 namespace Z0
 {
     [Free]
+    public interface IExpr : INullity
+    {
+        string Format();
+    }
+        
+    [Free]
     public interface IExpr<K> : IExpr, IKinded<K>
         where K : unmanaged
     {

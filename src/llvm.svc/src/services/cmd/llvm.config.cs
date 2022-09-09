@@ -4,16 +4,18 @@
 //-----------------------------------------------------------------------------
 namespace Z0.llvm
 {
+    using static sys;
+
     partial class LlvmCmd
     {
         [CmdOp("llvm/config")]
-        Outcome CollectConfig(CmdArgs args)
+        void CollectConfig()
         {
            var config = Config.CollectSettings();
            var items = config.Items;
-           foreach(var item in items)
-               Write(string.Format("{0}:{1}", item.Key, item.Value));
-           return true;
+           var dst = text.emitter();
+           iter(items, item => dst.AppendLine($"{item.Key}={item.Value}"));
+           FileEmit(dst.Emit(), items.Count, AppDb.DbTargets(llvm).Path(llvm, FileKind.Cfg));               
         }
     }
 }

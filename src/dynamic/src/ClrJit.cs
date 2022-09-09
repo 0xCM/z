@@ -22,7 +22,7 @@ namespace Z0
         [Op]
         public static ApiMember member(MethodInfo src, _OpUri uri)
         {
-            var address = ClrJit.jit(src);
+            var address = jit(src);
             return new ApiMember(uri, src, address, ClrDynamic.msil(address, uri, src));
         }
 
@@ -47,23 +47,6 @@ namespace Z0
 
             return dst;
         }
-
-        // [Op]
-        // public static ApiMembers jit(IPart src, IWfEventTarget log)
-        // {
-        //     var buffer = list<ApiMember>();
-        //     var catalog = ApiRuntime.catalog(src.Owner);
-
-        //     var types = catalog.ApiTypes;
-        //     foreach(var t in types)
-        //         buffer.AddRange(ClrJit.jit(t));
-
-        //     var hosts = catalog.ApiHosts;
-        //     foreach(var h in hosts)
-        //         buffer.AddRange(ClrJit.members(h, log));
-
-        //     return ApiQuery.members(buffer.ToArray());
-        // }
 
         [Op]
         public static ApiMembers jit(IPart src, WfEmit log)
@@ -337,6 +320,6 @@ namespace Z0
         }
 
         static HashSet<string> CommonExclusions
-            = Algs.hashset(Algs.array("ToString","GetHashCode", "Equals", "ToString"));
+            = sys.hashset(sys.array("ToString","GetHashCode", "Equals", "ToString"));
     }
 }

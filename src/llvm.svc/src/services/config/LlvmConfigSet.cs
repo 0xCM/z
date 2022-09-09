@@ -2,9 +2,9 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.llvm
+namespace Z0
 {
-    using K = llvm.LlvmConfigKind;
+    using K = LlvmConfigKind;
 
     public class LlvmConfigSet
     {

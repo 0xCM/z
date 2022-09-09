@@ -4,23 +4,23 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public record class UriFlow  : IFlow<_FileUri,_FileUri>
+    public record class UriFlow  : IFlow<FileUri,FileUri>
     {
-        public readonly _FileUri Source;
+        public readonly FileUri Source;
 
-        public readonly _FileUri Target;
+        public readonly FileUri Target;
 
         [MethodImpl(Inline)]
-        public UriFlow(_FileUri src, _FileUri dst)
+        public UriFlow(FileUri src, FileUri dst)
         {
             Source = src;
             Target = dst;
         }
 
-        _FileUri IArrow<_FileUri, _FileUri>.Source 
+        FileUri IArrow<FileUri, FileUri>.Source 
             => Source;
 
-        _FileUri IArrow<_FileUri, _FileUri>.Target 
+        FileUri IArrow<FileUri, FileUri>.Target 
             => Target;
     }
 }

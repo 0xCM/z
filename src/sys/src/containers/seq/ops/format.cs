@@ -11,5 +11,8 @@ namespace Z0
 
         public static string format<T>(T[] src, string delimiter = ",", int pad = 0)
             => Delimiting.delimit(sys.@readonly(src), delimiter, pad);
+
+        public static string format<T>(T[] src, Func<T,string> formatter, string delimiter = ",", int pad = 0)
+            => Delimiting.delimit(sys.@readonly(src), formatter, delimiter, pad);
     }
 }

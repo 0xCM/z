@@ -23,7 +23,7 @@ namespace Z0
         {
             get
             {
-                if(drive(this, out var dst))
+                if(Drive.drive(Name, out var dst))
                     return dst;
                 else
                     return Drive.Empty;

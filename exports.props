@@ -22,6 +22,7 @@
    <Import Project="src/cg/cg.shell/exports.props"/>
    <Import Project="src/cg/cg.test/exports.props"/>
    <Import Project="src/clr.query/exports.props"/>
+   <Import Project="src/capture/exports.props"/>
    <Import Project="src/containers/exports.props"/>
    <Import Project="src/cells/exports.props"/>
    <Import Project="src/cpu/exports.props"/>
@@ -49,6 +50,7 @@
    <Import Project="src/polyrand/exports.props"/>
    <Import Project="src/process/exports.props"/>
 
+   <Import Project="src/shell/exports.props"/>
    <Import Project="src/sys/exports.props"/>
    <Import Project="src/symbolics/exports.props"/>
 

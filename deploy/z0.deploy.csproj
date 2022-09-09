@@ -1,13 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(ProjectProps)\settings.props"/>
   <Import Project="$(ProjectProps)\usings.props" />
-
-  <ItemGroup>
-    <ProjectReference Include="$(ZCmd)" />
-    <ProjectReference Include="$(Dispatcher)" />
-    <ProjectReference Include="$(Hub)" />
-  </ItemGroup>
-
+  <Import Project="imports.props" />
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <AssemblyName>deploy</AssemblyName>
