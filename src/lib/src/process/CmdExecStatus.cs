@@ -11,14 +11,16 @@ namespace Z0
 
         public int Id;
 
-        public DateTime StartTime;
+        public Timestamp StartTime;
 
         public bool HasExited;
 
-        public DateTime ExitTime;
+        public Timestamp ExitTime;
 
         public TimeSpan Duration;
 
         public int ExitCode;
+
+        public static CmdExecStatus Empty => default;
     }
 }

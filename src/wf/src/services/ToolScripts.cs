@@ -50,7 +50,7 @@ namespace Z0
             if(!src.Exists)
                 return (false, FS.missing(src));
 
-            result = CmdScripts.run(
+            result = ProcExec.run(
                 new CmdLine(src.Format(PathSeparator.BS)),
                 vars,
                 quiet ? ReceiveCmdStatusQuiet : ReceiveCmdStatus, ReceiveCmdError,

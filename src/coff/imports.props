@@ -1,0 +1,7 @@
+<Project>
+  <ItemGroup>
+    <ProjectReference Include="$(Native)" />
+    <ProjectReference Include="$(Digital)" />
+    <ProjectReference Include="$(Wf)" />
+  </ItemGroup>
+</Project>

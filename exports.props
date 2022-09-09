@@ -27,6 +27,7 @@
    <Import Project="src/cells/exports.props"/>
    <Import Project="src/cpu/exports.props"/>
    <Import Project="src/cmd/exports.props"/>
+   <Import Project="src/coff/exports.props"/>
 
    <Import Project="src/db.sqlite/exports.props"/>
    <Import Project="src/dispatcher/exports.props"/>

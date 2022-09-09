@@ -32,7 +32,7 @@ namespace Z0
             var file = FS.file($"{scope}.{name}", FileKind.Zip);
             var cmd = DbCmdSpecs.archive(src, AppDb.Archive(scope).Path(file));
             
-            Db.start(cmd, Emitter);            
+            Db.zip(cmd, Emitter);            
         }
 
         [CmdOp(jobs)]

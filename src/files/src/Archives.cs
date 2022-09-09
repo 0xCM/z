@@ -37,12 +37,6 @@ namespace Z0
             return src.FolderPath + stamped;
         }
 
-        public static CmdProcess robocopy(FolderPath src, FolderPath dst)
-        {
-            var spec = $"robocopy {src} {dst} /e";
-            var cmd = Cmd.cmd(spec);
-            return CmdLauncher.start(cmd);
-        }
 
         public static Outcome timestamp(FolderPath src, out Timestamp dst)
         {

@@ -19,8 +19,8 @@ namespace Z0
         {
             const string Pattern = "{0} -b {1} -p intel {2} > {3}";
             var name = src.FileName.WithoutExtension.Format();
-            var body = CmdScripts.expr(string.Format(Pattern, (byte)mode, "ndisasm", src.Format(PathSeparator.BS), dst.Format(PathSeparator.BS)));
-            return CmdScripts.create(name, body);
+            var body = Cmd.expr(string.Format(Pattern, (byte)mode, "ndisasm", src.Format(PathSeparator.BS), dst.Format(PathSeparator.BS)));
+            return ProcExec.script(name, body);
         }
 
         public FilePath Job(Bitness mode, FolderPath input, FolderPath output)

@@ -4,5 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
+    partial class Cmd
+    {
+        [MethodImpl(Inline), Op]
+        public static ScriptTemplate template(string name, string content)
+            => new ScriptTemplate(name, content);
+    }
 }

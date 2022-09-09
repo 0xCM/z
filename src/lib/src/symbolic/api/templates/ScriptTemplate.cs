@@ -6,6 +6,8 @@ namespace Z0
 {
     public class ScriptTemplate : TextTemplate
     {
+        public static ScriptTemplate create(string name, string content)
+            => new ScriptTemplate(name, content);
         public string Name {get;}
 
         [MethodImpl(Inline)]

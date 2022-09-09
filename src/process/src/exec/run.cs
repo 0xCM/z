@@ -6,20 +6,13 @@ namespace Z0
 {
     using static sys;
 
-    partial class CmdScripts
+    partial record class ProcExec
     {
-        // static FilePath ErrorLog(Timestamp ts, string name)
-        //     => AppDb.Logs("process").Path($"{name}.errors.{ts}", FileKind.Log);
-
-        // static FilePath StatusLog(Timestamp ts, string name)
-        //     => AppDb.Logs("process").Path($"{name}.{ts}", FileKind.Log);
-
-        public static void run(CmdScript src)
+        public static CmdExecStatus run(CmdScript src)
         {
             var ts = timestamp();
-            var logs = AppDb.Logs("process").Root;
-            var errors = ProcessLogs.errors(logs, ts, src.Name.Format());
-            using var status = ProcessLogs.status(logs, ts, src.Name.Format()).AsciWriter();
+            var errors = ProcessLogs.errors(ts, src.Name.Format());
+            using var status = ProcessLogs.status(ts, src.Name.Format()).AsciWriter();
             
             void OnStatus(in string msg)
                 => status.AppendLine(msg);
@@ -27,29 +20,28 @@ namespace Z0
             void OnError(in string msg)
                 => errors.Append(msg);
 
+            var result = CmdExecStatus.Empty;
             try
             {
-                var process = CmdLauncher.process(src.ToCmdLine(), OnStatus, OnError).Wait();
+                var process = CmdProcess.create(src.ToCmdLine(), OnStatus, OnError);
+                CmdProcess.status(process, ref result);
+                result = process.Wait();
             }
             catch(Exception e)
             {
                 errors.Append(e.ToString());
-            }            
+                result.ExitCode = -1;
+                result.ExitTime = timestamp();
+                result.Duration = result.ExitTime - result.StartTime;
+            }       
+            return result;     
         }
-
-        [Op]
-        public static Outcome run(CmdLine cmd, CmdVars vars, Receiver<string> status, Receiver<string> error, out ReadOnlySpan<TextLine> response)
-            => run(cmd, vars, FilePath.Empty, status,error, out response);
-
-        [Op]
-        public static Outcome run(CmdLine cmd, Receiver<string> status, Receiver<string> error, out ReadOnlySpan<TextLine> response)
-            => run(cmd, CmdVars.Empty, FilePath.Empty, status,error, out response);
 
         public static ReadOnlySpan<TextLine> run(CmdLine cmd, CmdVars vars)
         {
             try
             {
-                var process = CmdLauncher.process(cmd, vars);
+                var process = CmdProcess.create(cmd, vars);
                 process.Wait();
                 return Lines.read(process.Output);
             }
@@ -65,7 +57,7 @@ namespace Z0
             using var writer = AppDb.Logs("scripts").Path(script,FileKind.Log).Writer();
             try
             {
-                var process = vars != null ? CmdLauncher.process(cmd, vars) : CmdLauncher.start(cmd);
+                var process = vars != null ? CmdProcess.create(cmd, vars) : CmdProcess.create(cmd);
                 process.Wait();
                 var lines =  Lines.read(process.Output);
                 iter(lines, line => writer.WriteLine(line));
@@ -79,11 +71,20 @@ namespace Z0
             }
         }
 
+        [Op]
+        public static Outcome run(CmdLine cmd, CmdVars vars, Receiver<string> status, Receiver<string> error, out ReadOnlySpan<TextLine> response)
+            => run(cmd, vars, FilePath.Empty, status,error, out response);
+
+        [Op]
+        public static Outcome run(CmdLine cmd, Receiver<string> status, Receiver<string> error, out ReadOnlySpan<TextLine> response)
+            => run(cmd, CmdVars.Empty, FilePath.Empty, status,error, out response);
+
+
         public static ReadOnlySpan<TextLine> run(CmdLine cmd, Action<Exception> onerror = null)
         {
             try
             {
-                var process = CmdLauncher.start(cmd);
+                var process = CmdProcess.create(cmd);
                 process.Wait();
                 return Lines.read(process.Output);
             }
@@ -104,7 +105,7 @@ namespace Z0
             var result = Outcome.Success;
             try
             {
-                var proc = CmdLauncher.start(cmd, vars, status, error);
+                var proc = CmdProcess.create(cmd, vars, status, error);
                 var outcome = proc.Wait();
                 var lines =  Lines.read(proc.Output);
                 if(log.IsNonEmpty)

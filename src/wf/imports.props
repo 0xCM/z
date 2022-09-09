@@ -1,6 +1,7 @@
 <Project>
   <ItemGroup>
     <ProjectReference Include="$(Files)" />
+    <ProjectReference Include="$(Process)" />
     <ProjectReference Include="$(Containers)" />
     <ProjectReference Include="$(Symbolics)" />
     <ProjectReference Include="$(CmdSpecs)" />

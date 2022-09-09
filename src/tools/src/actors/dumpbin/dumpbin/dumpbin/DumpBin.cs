@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
     using static DumpBinScripts;
 
     [ApiHost]
@@ -77,7 +77,7 @@ namespace Z0
             var emitter = text.emitter();
             foreach(var module in src)
                 emitter.AppendLine(Expr(cmd, module.Location, output).Format());
-            return CmdScripts.create(name, emitter.Emit());
+            return ProcExec.script(name, emitter.Emit());
         }
 
         public CmdScriptExpr Expr(CmdName name, FilePath src, IDbTargets dst)
@@ -91,25 +91,25 @@ namespace Z0
             switch(name)
             {
                 case CmdName.EmitAsm:
-                    pattern = CmdScripts.template("dumpbin.disasm", string.Format("dumpbin /DISASM:{2} /OUT:{1} {0}", source, target, "NOBYTES"));
+                    pattern = ScriptTemplate.create("dumpbin.disasm", string.Format("dumpbin /DISASM:{2} /OUT:{1} {0}", source, target, "NOBYTES"));
                     break;
                 case CmdName.EmitRawData:
-                    pattern = CmdScripts.template("dumpbin.rawdata", string.Format("dumpbin /RAWDATA:1,32 /OUT:{1} {0}", source, target));
+                    pattern = ScriptTemplate.create("dumpbin.rawdata", string.Format("dumpbin /RAWDATA:1,32 /OUT:{1} {0}", source, target));
                     break;
                 case CmdName.EmitHeaders:
-                    pattern = CmdScripts.template("dumpbin.headers", string.Format("dumpbin /HEADERS /OUT:{1} {0}", source, target));
+                    pattern = ScriptTemplate.create("dumpbin.headers", string.Format("dumpbin /HEADERS /OUT:{1} {0}", source, target));
                     break;
                 case CmdName.EmitRelocations:
-                    pattern = CmdScripts.template("dumpbin.relocations", string.Format("dumpbin /RELOCATIONS /OUT:{1} {0}", src.Format(PS), output.Format(PS)));
+                    pattern = ScriptTemplate.create("dumpbin.relocations", string.Format("dumpbin /RELOCATIONS /OUT:{1} {0}", src.Format(PS), output.Format(PS)));
                     break;
                 case CmdName.EmitExports:
-                    pattern = CmdScripts.template("dumpbin.exports", string.Format("dumpbin /EXPORTS /OUT:{1} {0}", source, target));
+                    pattern = ScriptTemplate.create("dumpbin.exports", string.Format("dumpbin /EXPORTS /OUT:{1} {0}", source, target));
                     break;
                 case CmdName.EmitLoadConfig:
-                    pattern = CmdScripts.template("dumpbin.loadconfig", string.Format("dumpbin /LOADCONFIG /OUT:{1} {0}", src.Format(PS), output.Format(PS)));
+                    pattern = ScriptTemplate.create("dumpbin.loadconfig", string.Format("dumpbin /LOADCONFIG /OUT:{1} {0}", src.Format(PS), output.Format(PS)));
                     break;
             }
-            return CmdScripts.expr(pattern);
+            return Cmd.expr(pattern);
         }
 
         public static FileName scriptfile(FileKind kind)
@@ -133,7 +133,6 @@ namespace Z0
         public void DumpModules(IDbSources src, string tag, FileKind kind)
         {
             var script = scriptfile(kind);
-
             var fk = kind switch{
                 FileKind.Obj => FileKind.Obj,
                 FileKind.Exe => FileKind.Exe,
@@ -154,7 +153,7 @@ namespace Z0
                 vars.DstDir = dst.Root;
                 vars.SrcDir = path.FolderPath;
                 vars.SrcFile = path.FileName;
-                CmdScripts.start(cmd, vars.ToCmdVars(), response => {});
+                ProcExec.start(cmd, vars.ToCmdVars(), response => {}, Emitter);
             }
         }
 

@@ -6,40 +6,66 @@ namespace Z0
 {
     using static sys;
 
-    partial class CmdScripts
+    partial record class ProcExec
     {
-        public static Task<FilePath> start(CmdArgs args)
+        public static Task<ExecToken> start(CmdArgs args, WfEmit channel)
         {
-            var count = Demand.gt(args.Count,0u);
-            var spec = text.emitter();
-            for(var i=0; i<args.Count; i++)
+            void status(in string src)
             {
-                if(i != 0)
-                    spec.Append(Chars.Space);
-                spec.Append(args[i].Value);
+                channel.Write(src);
             }
 
-            return start(Cmd.cmd(spec.Emit()));
-        }
-
-        public static Task start(ReadOnlySeq<CmdScript> src, bool pll)
-            => sys.start(() => iter(src, run, pll));
-
-        public static Task start(CmdLine cmd, CmdVars vars, Action<TextLine> receiver)
-        {
-            void run()
+            void error(in string src)
             {
-                var result = Outcome.Success;
+                channel.Error(src);
+            }
+
+            ExecToken run()
+            {
+                var ran = ExecToken.Empty;
+                var data = text.emitter();
+                iter(args, arg => data.Append($" {arg}"));
+                var command = cmd(data.Emit());
+                var running = channel.Running($"Executing '{command}'");
                 try
                 {
-                    var process = CmdLauncher.process(cmd, vars);
+                    var process = CmdProcess.create(command, status, error);
                     process.Wait();
-                    iter(Lines.read(process.Output), receiver);
+                    var lines =  Lines.read(process.Output);
+                    iter(lines, line => channel.Row(line));
+                    ran = channel.Ran(running, $"Executed {text.quote(command)}");
                 }
                 catch(Exception e)
                 {
-                    result = e;
+                    ran = channel.Ran(running,$"error:cmd='{command}, description='{e}'");
                 }
+
+                term.write("cmd> ", (FlairKind)ConsoleColor.Cyan);
+                return ran;
+            }
+            return sys.start(run);
+        }
+
+        public static Task<ExecToken> start(CmdLine cmd, CmdVars vars, Action<TextLine> receiver, WfEmit channel)
+        {
+            ExecToken run()
+            {
+                var ran = ExecToken.Empty;
+                var running = channel.Running($"Executing '{cmd}'");
+                try
+                {
+                    var process = CmdProcess.create(cmd, vars);
+                    process.Wait();
+                    iter(Lines.read(process.Output), receiver);
+                    ran = channel.Ran(running, $"Executed {text.quote(cmd)}");
+                }
+                catch(Exception e)
+                {
+                    ran = channel.Ran(running,$"error:cmd='{cmd}, description='{e}'");
+                }
+
+                term.write("cmd> ", (FlairKind)ConsoleColor.Cyan);
+                return ran;
 
             }
             return sys.start(run);
@@ -48,20 +74,20 @@ namespace Z0
         public static Task<FilePath> start(CmdLine cmd)
         {
             static void OnError(in string src)
-                => term.emit(Events.error(typeof(CmdScripts), src, Events.originate(typeof(CmdScript))));
+                => term.emit(Events.error(typeof(ProcExec), src, Events.originate(typeof(CmdScript))));
 
             static void OnStatus(in string src)
                 => term.emit(Events.data(src,FlairKind.Babble));
 
             FilePath run()
             {
-                var log = AppDb.Logs("procs").Path(Algs.timestamp().Format(),FileKind.Log);
+                var log = AppDb.Logs("procs").Path(sys.timestamp().Format(),FileKind.Log);
                 using var writer = log.AsciWriter();
                 try
                 {
                     term.print();
                     term.emit(Events.running(typeof(Cmd), $"'{cmd}"));
-                    var process = CmdLauncher.process(cmd, OnStatus, OnError);
+                    var process = CmdProcess.create(cmd, OnStatus, OnError);
                     var outcome = process.Wait();
                     var lines =  Lines.read(process.Output);
                     iter(lines, line => writer.WriteLine(line));
@@ -74,7 +100,7 @@ namespace Z0
                 term.write("cmd> ", (FlairKind)ConsoleColor.Cyan);
                 return log;
             }
-            return Algs.start(run);
+            return sys.start(run);
         }
 
         public static Task<ExecToken> start(CmdLine cmd, WfEmit channel)
@@ -88,12 +114,12 @@ namespace Z0
             ExecToken run()
             {
                 var running = channel.Running($"Executing '{cmd}'");
-                var log = AppDb.Logs("procs").Path(timestamp().Format(),FileKind.Log);
+                var log = ProcessLogs.status(timestamp(), cmd.Format());
                 var ran = ExecToken.Empty;
                 using var logger = log.AsciWriter();
                 try
                 {
-                    var process = CmdLauncher.process(cmd, OnStatus, OnError);
+                    var process = CmdProcess.create(cmd, OnStatus, OnError);
                     var outcome = process.Wait();
                     var lines =  Lines.read(process.Output);
                     iter(lines, line => logger.WriteLine(line));

@@ -6,7 +6,7 @@ namespace Z0
 {
     public readonly struct CmdScript
     {
-        public readonly Name Name;
+        public readonly @string Name;
 
         readonly CmdScriptExpr Data;
 
@@ -18,7 +18,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public CmdScript(Name name, CmdScriptExpr src)
+        public CmdScript(string name, CmdScriptExpr src)
         {
             Name = name;
             Data = src;

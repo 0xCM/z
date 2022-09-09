@@ -8,13 +8,6 @@ namespace Z0
 
     using static sys;
 
-    public class Launchers : WfSvc<Launchers>
-    {
-
-        static FilePaths paths()
-            => DbArchive.match(AppDb.Control("launch").Root, FS.Cmd);
-
-    }
 
     public class WfCmd : AppCmdService<WfCmd>
     {
@@ -55,7 +48,10 @@ namespace Z0
         {
             var src = FS.dir(arg(args,0));
             var dst = AppDb.Archive(arg(args,1)).Path(src.FolderName.Format(),FileKind.Zip);
-            Archives.zip(src, dst, Emitter);
+            var cmd = new ArchiveCmd();
+            cmd.Source = src;
+            cmd.Target = dst;
+            Db.zip(cmd, Emitter);
         }
 
         [CmdOp("archives")]        
@@ -164,7 +160,7 @@ namespace Z0
         {
             var dst = AppDb.Tools("z0/cmd").Targets().Root;
             var src = ExecutingPart.Assembly.Path().FolderPath;
-            Archives.robocopy(src,dst);
+            Db.robocopy(src,dst);
         }
 
         [CmdOp("help")]
@@ -184,7 +180,7 @@ namespace Z0
 
         [CmdOp("cmd")]
         protected void RunCmd(CmdArgs args)
-            => CmdScripts.start(args);
+            => ProcExec.start(args, Emitter);
 
         // tool ilc help
         [CmdOp("tool")]
@@ -204,7 +200,7 @@ namespace Z0
             }
             
             var cmd = Cmd.cmd(path, CmdKind.Tool, emitter.Emit());        
-            CmdScripts.start(cmd, Emitter);        
+            ProcExec.start(cmd, Emitter);        
         }
 
         [CmdOp("cmd/copy")]
@@ -212,7 +208,7 @@ namespace Z0
         {
             var src = FS.dir(arg(args,0).Value);
             var dst = FS.dir(arg(args,1).Value);
-            Archives.robocopy(src,dst);
+            Db.robocopy(src,dst);
         }
 
         [CmdOp("pwsh")]
@@ -220,7 +216,7 @@ namespace Z0
         {
             var cmd = Cmd.pwsh(Cmd.join(args));
             Status($"Executing '{cmd}'");
-            CmdScripts.start(cmd);
+            ProcExec.start(cmd);
         }
 
         static Files launchers()
@@ -247,7 +243,7 @@ namespace Z0
                 var path = FilePath.Empty;
                 if(src.TryGetValue(file, out path))
                 {
-                    CmdScripts.start(CmdScripts.create(path));
+                    ProcExec.start(ProcExec.cmdline(path));
                     Status($"Script {path.ToUri()} executing", FlairKind.Ran);
                 }
                 else
@@ -380,14 +376,14 @@ namespace Z0
         const string RegKey = @"HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment";
 
         static CmdScript unset(CmdArg src)
-            => CmdScripts.create("unset", $"reg delete \"{RegKey}\" /F /V {src.Value}");
+            => ProcExec.script("unset", $"reg delete \"{RegKey}\" /F /V {src.Value}");
 
         static Task<ExecToken> start(CmdScript src, WfEmit channel)
         {
             ExecToken run()
             {
                 var flow = channel.Running($"Executing script {src.Name}");
-                CmdScripts.run(src);                
+                ProcExec.run(src);                
                 return channel.Ran(flow, $"Completed script execution {src.Name}");
             }
             return sys.start(run);

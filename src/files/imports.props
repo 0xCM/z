@@ -1,6 +1,5 @@
 <Project>
   <ItemGroup>
     <ProjectReference Include="$(ZLib)" />
-    <ProjectReference Include="$(Process)" />
   </ItemGroup>
 </Project>

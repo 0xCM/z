@@ -73,6 +73,9 @@ namespace Z0
         public static implicit operator Timestamp(DateTime src)
             => new Timestamp((ulong)src.Ticks);
 
+        public static Duration operator -(Timestamp a, Timestamp  b)
+            => b.Ticks - a.Ticks;
+
         [MethodImpl(Inline)]
         public static bool operator <(Timestamp a, Timestamp b)
             => a.Ticks < b.Ticks;

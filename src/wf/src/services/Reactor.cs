@@ -4,9 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
-    public sealed class Reactor : AppService<Reactor>
+    public sealed class Reactor : WfSvc<Reactor>
     {
         CmdFlows Flows;
 

@@ -12,14 +12,18 @@ namespace Z0
     {
         const string group = "db";
 
-        static AppDb db => AppDb.Service;
-
-        static DbArchive root => db.DbRoot();
-
         static Type Host => typeof(Db);
 
         [Api]
-        public static Task<ExecToken> start(ArchiveCmd cmd, WfEmit channel)
+        public static CmdProcess robocopy(FolderPath src, FolderPath dst)
+        {
+            var spec = $"robocopy {src} {dst} /e";
+            var cmd = Cmd.cmd(spec);
+            return CmdProcess.create(cmd);
+        }
+
+        [Api]
+        public static Task<ExecToken> zip(ArchiveCmd cmd, WfEmit channel)
         {
             var uri = $"{app}://{group}/{cmd}";
             var running = channel.Running(uri);
@@ -42,7 +46,7 @@ namespace Z0
             var actor = "rmdir";
             var flags = "/s/q";
             var spec = Cmd.cmd($"{actor} {scoped.Format(PathSeparator.BS,true)} {flags}");
-            return CmdScripts.start(spec,channel);           
+            return ProcExec.start(spec,channel);           
         }
     }
 }

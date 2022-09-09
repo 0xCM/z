@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     public sealed class WfReactor: CmdReactor<WfReactor,RunWf,CmdResult>
     {

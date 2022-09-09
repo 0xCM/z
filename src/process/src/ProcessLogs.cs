@@ -4,14 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     public class ProcessLogs
     {
-        public static FilePath errors(FolderPath root, Timestamp ts, string name)
-            => root + FS.file($"{name}.errors.{ts}",FileKind.Log);
+        static AppDb AppDb => AppDb.Service;
 
-        public static FilePath status(FolderPath root, Timestamp ts, string name)
-            => root + FS.file($"{name}.{ts}", FileKind.Log);
+        public static FilePath errors(Timestamp ts, string name)
+            => AppDb.Logs("process").Path(FS.file($"{name}.errors.{ts}",FileKind.Log));
+
+        public static FilePath status(Timestamp ts, string name)
+            => AppDb.Logs("process").Path(FS.file($"{name}.{ts}", FileKind.Log));
     }
 }

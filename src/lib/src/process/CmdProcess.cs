@@ -21,6 +21,47 @@ namespace Z0
     /// </summary>
     public sealed class CmdProcess : ICmdProcess<CmdProcess>
     {
+        public static ref CmdExecStatus status(CmdProcess src, ref CmdExecStatus dst)
+        {
+            dst.Id = src.Process.Id;
+            dst.StartTime = src.StartTime;
+            dst.HasExited = src.Finished;
+            if(src.Finished)
+            {
+                dst.ExitTime = src.ExitTime;
+                dst.Duration = dst.ExitTime - dst.StartTime;
+                dst.ExitCode = src.ExitCode;
+            }
+            return ref dst;
+        }
+
+        [Op]
+        public static CmdProcess create(CmdLine cmd)
+            => new CmdProcess(cmd);
+        [Op]
+        public static CmdProcess create(CmdLine cmd, CmdVars? vars, Receiver<string> status, Receiver<string> error)
+        {
+            var options = new CmdProcessOptions();
+            include(vars, options);
+            options.WithReceivers(status, error);
+            return new CmdProcess(cmd, options);
+        }
+
+        [Op]
+        public static CmdProcess create(CmdLine cmd, Receiver<string> status, Receiver<string> error)
+        {
+            var options = new CmdProcessOptions();
+            options.WithReceivers(status, error);
+            return new CmdProcess(cmd, options);
+        }       
+
+        [Op]
+        public static CmdProcess create(CmdLine cmd, CmdVars? vars)
+        {
+            var options = new CmdProcessOptions();
+            include(vars, options);
+            return new CmdProcess(cmd, options);
+        }
 
         static void include(CmdVars? src, CmdProcessOptions dst)
         {
@@ -36,24 +77,21 @@ namespace Z0
             }
         }
 
+        // [Op]
+        // public static CmdProcess process(CmdLine cmd, CmdVars? vars)
+        // {
+        //     var options = new CmdProcessOptions();
+        //     include(vars, options);
+        //     return new CmdProcess(cmd, options);
+        // }
 
-        [Op]
-        public static CmdProcess process(CmdLine cmd, CmdVars? vars)
-        {
-            var options = new CmdProcessOptions();
-            include(vars, options);
-            return new CmdProcess(cmd, options);
-        }
-
-
-        [Op]
-        public static CmdProcess process(CmdLine cmd, Receiver<string> status, Receiver<string> error)
-        {
-            var options = new CmdProcessOptions();
-            options.WithReceivers(status, error);
-            return new CmdProcess(cmd, options);
-        }
-
+        // [Op]
+        // public static CmdProcess process(CmdLine cmd, Receiver<string> status, Receiver<string> error)
+        // {
+        //     var options = new CmdProcessOptions();
+        //     options.WithReceivers(status, error);
+        //     return new CmdProcess(cmd, options);
+        // }
  
         readonly CmdLine _commandLine;
 
@@ -271,7 +309,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public ref CmdExecStatus Status(ref CmdExecStatus dst)
+        ref CmdExecStatus Status(ref CmdExecStatus dst)
         {
             dst.Id = Process.Id;
             dst.StartTime = Process.StartTime;
