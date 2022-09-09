@@ -6,14 +6,14 @@ namespace Z0
 {
     public readonly struct ResolvedHost : IComparable<ResolvedHost>
     {
-        public readonly _ApiHostUri Host;
+        public readonly ApiHostUri Host;
 
         public readonly Index<ResolvedMethod> Methods;
 
         public readonly MemoryAddress BaseAddress;
 
         [MethodImpl(Inline)]
-        public ResolvedHost(_ApiHostUri uri, MemoryAddress @base, Index<ResolvedMethod> methods)
+        public ResolvedHost(ApiHostUri uri, MemoryAddress @base, Index<ResolvedMethod> methods)
         {
             Host = uri;
             Methods = methods;
@@ -64,7 +64,7 @@ namespace Z0
         public static ResolvedHost Empty
         {
             [MethodImpl(Inline)]
-            get => new ResolvedHost(_ApiHostUri.Empty, default, sys.empty<ResolvedMethod>());
+            get => new ResolvedHost(ApiHostUri.Empty, default, sys.empty<ResolvedMethod>());
         }
     }
 }

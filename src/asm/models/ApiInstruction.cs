@@ -35,13 +35,13 @@ namespace Z0.Asm
             get => Encoded.OpUri.Part;
         }
 
-        public _OpUri Uri
+        public OpUri Uri
         {
             [MethodImpl(Inline)]
             get => Encoded.OpUri;
         }
 
-        public _OpIdentity OpId
+        public OpIdentity OpId
         {
             [MethodImpl(Inline)]
             get => Encoded.OpId;

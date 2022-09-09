@@ -11,12 +11,12 @@ namespace Z0
         /// </summary>
         public readonly struct Emitter<T> : ISFxEmitter<T>
         {
-            public _OpIdentity Id {get;}
+            public OpIdentity Id {get;}
 
             readonly Z0.Producer<T> F;
 
             [MethodImpl(Inline)]
-            public Emitter(Z0.Producer<T> f, _OpIdentity id)
+            public Emitter(Z0.Producer<T> f, OpIdentity id)
             {
                 F = f;
                 Id = id;

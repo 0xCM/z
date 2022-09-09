@@ -59,7 +59,7 @@ namespace Z0
             return AppMsg.colorize(msg, FlairKind.Status);
         }
 
-        static AppMsg PostUnit(_ApiHostUri host, TimeSpan elapsed, DateTime start, DateTime end)
+        static AppMsg PostUnit(ApiHostUri host, TimeSpan elapsed, DateTime start, DateTime end)
         {
             var msg = text.join(FieldSep,
                 FormatName(host.Format()),

@@ -27,6 +27,8 @@ namespace Z0
 
             public override string ToString()
                 => Format();
+
+            public static DocSig Empty => new DocSig(Return.Empty, EmptyString, new());
         }
     }
 }

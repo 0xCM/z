@@ -35,12 +35,12 @@ namespace Z0
         /// <param name="fId">The identity of the first operator</param>
         /// <param name="g">The second operator, considered as the operation under test</param>
         /// <param name="gId">The identity of the second operator</param>
-        public static ApiEvalResult<ApiEvalExecutorContext> validate(ApiEvalExecutorContext context, BinaryOp8 f, _OpUri fUri, BinaryOp8 g, _OpUri gUri)
+        public static ApiEvalResult<ApiEvalExecutorContext> validate(ApiEvalExecutorContext context, BinaryOp8 f, OpUri fUri, BinaryOp8 g, OpUri gUri)
         {
             return exec(context, () => check(context, f, g), fUri, gUri);
         }
 
-        public static ApiEvalResult<ApiEvalExecutorContext> exec(ApiEvalExecutorContext context, Action action, _OpUri f, _OpUri g)
+        public static ApiEvalResult<ApiEvalExecutorContext> exec(ApiEvalExecutorContext context, Action action, OpUri f, OpUri g)
         {
             var clock = Time.counter(true);
             try

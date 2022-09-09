@@ -10,10 +10,10 @@ namespace Z0
         {
             readonly Z0.BinaryOp<T> F;
 
-            public _OpIdentity Id {get;}
+            public OpIdentity Id {get;}
 
             [MethodImpl(Inline)]
-            internal BinaryOp(Z0.BinaryOp<T> f, _OpIdentity id)
+            internal BinaryOp(Z0.BinaryOp<T> f, OpIdentity id)
             {
                 F = f;
                 Id = id;

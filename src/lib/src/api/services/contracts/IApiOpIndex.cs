@@ -24,28 +24,28 @@ namespace Z0
         /// <summary>
         /// The item keys
         /// </summary>
-        IEnumerable<_OpIdentity> Keys {get;}
+        IEnumerable<OpIdentity> Keys {get;}
 
         /// <summary>
         /// Duplicate keys found the source that were rejected from the index
         /// </summary>
-        IReadOnlyList<_OpIdentity> DuplicateKeys {get;}
+        IReadOnlyList<OpIdentity> DuplicateKeys {get;}
 
         /// <summary>
         /// Looks up the index item and blows up if item does not exist
         /// </summary>
-        T this[_OpIdentity id] {get;}
+        T this[OpIdentity id] {get;}
 
         /// <summary>
         /// A server version of the lookup indexer that returns an optional value, thus allowing
         /// for the possibility that the id doesn't identify anything in the index
         /// </summary>
         /// <param name="id"></param>
-        bool Lookup(_OpIdentity id, out T value);
+        bool Lookup(OpIdentity id, out T value);
 
         /// <summary>
         /// Enumerates the key/value index pairs
         /// </summary>
-        IEnumerable<(_OpIdentity, T)> Enumerated {get;}
+        IEnumerable<(OpIdentity, T)> Enumerated {get;}
     }
 }

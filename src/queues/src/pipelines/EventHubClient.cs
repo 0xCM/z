@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct EventHubClient : IEventHubClient
+    public class EventHubClient : IEventHubClient
     {
         public IEventHub Hub {get;}
 

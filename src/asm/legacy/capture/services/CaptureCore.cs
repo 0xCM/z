@@ -11,11 +11,11 @@ namespace Z0.Asm
         const string CaptureAddressMismatch = "The parsed address does not match the extration address";
 
         [MethodImpl(Inline)]
-        static ApiCaptureResult capture(in CaptureExchange exchange, _OpIdentity id, IntPtr src)
+        static ApiCaptureResult capture(in CaptureExchange exchange, OpIdentity id, IntPtr src)
             => divine(exchange.Buffer, id, src.ToPointer<byte>());
 
         [Op]
-        static ApiCaptureBlock capture(_OpIdentity id, MethodInfo method, CodeBlock raw, CodeBlock parsed, ExtractTermCode term)
+        static ApiCaptureBlock capture(OpIdentity id, MethodInfo method, CodeBlock raw, CodeBlock parsed, ExtractTermCode term)
         {
             var dst = new ApiCaptureBlock();
             dst.Raw = raw;
@@ -29,7 +29,7 @@ namespace Z0.Asm
             return dst;
         }
 
-        public Option<ApiCaptureBlock> Capture(in CaptureExchange exchange, _OpIdentity id, in DynamicDelegate src)
+        public Option<ApiCaptureBlock> Capture(in CaptureExchange exchange, OpIdentity id, in DynamicDelegate src)
         {
             try
             {
@@ -46,7 +46,7 @@ namespace Z0.Asm
         }
 
         [Op]
-        public static unsafe ApiCaptureResult divine(Span<byte> dst, _OpIdentity id, byte* pSrc)
+        public static unsafe ApiCaptureResult divine(Span<byte> dst, OpIdentity id, byte* pSrc)
         {
             var limit = dst.Length - 1;
             var start = (long)pSrc;
@@ -68,7 +68,7 @@ namespace Z0.Asm
         }
 
         [Op, MethodImpl(Inline)]
-        static unsafe byte step(Span<byte> dst, _OpIdentity id, ref int offset, ref long location, ref byte* pSrc)
+        static unsafe byte step(Span<byte> dst, OpIdentity id, ref int offset, ref long location, ref byte* pSrc)
         {
             var code = Unsafe.Read<byte>(pSrc++);
             dst[offset++] = code;
@@ -179,7 +179,7 @@ namespace Z0.Asm
             && e.x == e.y;
 
         [Op, MethodImpl(Inline)]
-        static ApiCaptureResult summarize(Span<byte> src, _OpIdentity id, ExtractTermCode tc, long start, long end, int delta)
+        static ApiCaptureResult summarize(Span<byte> src, OpIdentity id, ExtractTermCode tc, long start, long end, int delta)
         {
             var outcome = CaptureOutcome.create(tc, start, end, delta);
             var raw = src.Slice(0, (int)(end - start)).ToArray();

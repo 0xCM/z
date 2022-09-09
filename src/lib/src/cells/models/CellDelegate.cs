@@ -9,7 +9,7 @@ namespace Z0
     public readonly struct CellDelegate
     {
         [MethodImpl(Inline)]
-        public static CellDelegate define(_OpIdentity id, MemoryAddress src, DynamicMethod enclosure, Delegate dynop)
+        public static CellDelegate define(OpIdentity id, MemoryAddress src, DynamicMethod enclosure, Delegate dynop)
             => new CellDelegate(id.Format(), src,enclosure,dynop);
 
         [MethodImpl(Inline)]

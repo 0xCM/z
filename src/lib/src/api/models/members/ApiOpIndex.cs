@@ -9,19 +9,19 @@ namespace Z0
 
     using static core;
 
-    public readonly struct ApiOpIndex<T> : IEnumerable<KeyedValue<_OpIdentity,T>>, IApiOpIndex<T>
+    public readonly struct ApiOpIndex<T> : IEnumerable<KeyedValue<OpIdentity,T>>, IApiOpIndex<T>
     {
-        public readonly Dictionary<_OpIdentity,T> HashTable;
+        public readonly Dictionary<OpIdentity,T> HashTable;
 
-        public readonly _OpIdentity[] Duplicates;
+        public readonly OpIdentity[] Duplicates;
 
-        public ApiOpIndex(Dictionary<_OpIdentity,T> index, _OpIdentity[] duplicates)
+        public ApiOpIndex(Dictionary<OpIdentity,T> index, OpIdentity[] duplicates)
         {
             HashTable = index;
             Duplicates = duplicates;
         }
 
-        public bool Lookup(_OpIdentity id, out T value)
+        public bool Lookup(OpIdentity id, out T value)
         {
             if(HashTable.TryGetValue(id, out value))
                 return true;
@@ -29,7 +29,7 @@ namespace Z0
                 return false;
         }
 
-        public T this[_OpIdentity id]
+        public T this[OpIdentity id]
         {
             get
             {
@@ -43,28 +43,28 @@ namespace Z0
         public int EntryCount
             => HashTable.Count;
 
-        public IEnumerable<(_OpIdentity, T)> Enumerated
+        public IEnumerable<(OpIdentity, T)> Enumerated
             => HashTable.Select(kvp => (kvp.Key, kvp.Value));
 
-        public IEnumerable<_OpIdentity> Keys
+        public IEnumerable<OpIdentity> Keys
             => HashTable.Keys;
 
-        public IReadOnlyList<_OpIdentity> DuplicateKeys
+        public IReadOnlyList<OpIdentity> DuplicateKeys
             => Duplicates;
 
         public IEnumerable<T> Values
             => HashTable.Values;
 
-        IEnumerable<KeyedValue<_OpIdentity,T>> KeyedValues
+        IEnumerable<KeyedValue<OpIdentity,T>> KeyedValues
             => HashTable.Select(x => kvp(x.Key, x.Value));
 
-        public IEnumerator<KeyedValue<_OpIdentity,T>> GetEnumerator()
+        public IEnumerator<KeyedValue<OpIdentity,T>> GetEnumerator()
             => KeyedValues.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator()
             => GetEnumerator();
 
        public static ApiOpIndex<T> Empty
-            => new ApiOpIndex<T>(new Dictionary<_OpIdentity,T>(), sys.empty<_OpIdentity>());
+            => new ApiOpIndex<T>(new Dictionary<OpIdentity,T>(), sys.empty<OpIdentity>());
     }
 }

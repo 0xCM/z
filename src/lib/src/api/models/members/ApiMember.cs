@@ -9,7 +9,7 @@ namespace Z0
     /// </summary>
     public class ApiMember : IApiMember<ApiMember>
     {
-        public readonly _OpUri OpUri;
+        public readonly OpUri OpUri;
 
         public readonly MethodInfo Method;
 
@@ -19,7 +19,7 @@ namespace Z0
 
         public readonly ClrMethodArtifact Metadata;
 
-        public ApiMember(_OpUri uri, MethodInfo method, MemoryAddress address, ApiMsil msil)
+        public ApiMember(OpUri uri, MethodInfo method, MemoryAddress address, ApiMsil msil)
         {
             OpUri =  Require.notnull(uri);
             Method = Require.notnull(method);
@@ -28,7 +28,7 @@ namespace Z0
             Metadata = method.Artifact();
         }
 
-        public _OpIdentity Id
+        public OpIdentity Id
         {
             [MethodImpl(Inline)]
             get => OpUri.OpId;
@@ -40,7 +40,7 @@ namespace Z0
             get => Msil.BaseAddress;
         }
 
-        public _ApiHostUri Host
+        public ApiHostUri Host
         {
             [MethodImpl(Inline)]
             get => OpUri.Host;
@@ -75,7 +75,7 @@ namespace Z0
             => BaseAddress.CompareTo(src.BaseAddress);
 
         public static ApiMember Empty
-            => new ApiMember(_OpUri.Empty, EmptyVessels.EmptyMethod, 0, ApiMsil.Empty);
+            => new ApiMember(OpUri.Empty, EmptyVessels.EmptyMethod, 0, ApiMsil.Empty);
 
         ApiMsil IApiMember.Msil
             => Msil;

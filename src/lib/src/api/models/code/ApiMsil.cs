@@ -19,7 +19,7 @@ namespace Z0
         /// <summary>
         /// The operation identity
         /// </summary>
-        public readonly _OpUri Uri;
+        public readonly OpUri Uri;
 
         /// <summary>
         /// The code's base address
@@ -27,7 +27,7 @@ namespace Z0
         public readonly MemoryAddress BaseAddress;
 
         [MethodImpl(Inline)]
-        public ApiMsil(CliToken token, MemoryAddress @base, MethodDisplaySig dispSig, _OpUri uri, CliSig cliSig, BinaryCode data, MethodImplAttributes impl)
+        public ApiMsil(CliToken token, MemoryAddress @base, MethodDisplaySig dispSig, OpUri uri, CliSig cliSig, BinaryCode data, MethodImplAttributes impl)
         {
             Source = MsilCode.define(token,cliSig, data, impl);
             BaseAddress = @base;
@@ -72,6 +72,6 @@ namespace Z0
         }
 
         public static ApiMsil Empty
-            => new ApiMsil(CliToken.Empty, MemoryAddress.Zero, MethodDisplaySig.Empty, _OpUri.Empty, CliSig.Empty, BinaryCode.Empty, 0);
+            => new ApiMsil(CliToken.Empty, MemoryAddress.Zero, MethodDisplaySig.Empty, OpUri.Empty, CliSig.Empty, BinaryCode.Empty, 0);
     }
 }

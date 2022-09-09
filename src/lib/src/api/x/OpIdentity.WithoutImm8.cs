@@ -10,7 +10,7 @@ namespace Z0
         /// Clears an attached immediate suffix, if any
         /// </summary>
         [Op]
-        public static _OpIdentity WithoutImm8(this _OpIdentity src)
+        public static OpIdentity WithoutImm8(this OpIdentity src)
         {
             var perhaps = src.ExtractImm8();
             if(!perhaps)

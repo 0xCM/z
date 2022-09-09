@@ -14,7 +14,7 @@ namespace Z0
         /// <summary>
         /// The operation identity
         /// </summary>
-        public readonly _OpIdentity Id {get;}
+        public readonly OpIdentity Id {get;}
 
         /// <summary>
         /// The concrete method that defines the operation
@@ -28,14 +28,14 @@ namespace Z0
             => false;
 
         [MethodImpl(Inline)]
-        public ApiMethodNG(IApiHost host, _OpIdentity id, MethodInfo method)
+        public ApiMethodNG(IApiHost host, OpIdentity id, MethodInfo method)
         {
             Host = host;
             Id = id;
             Method = method;
         }
 
-        _ApiHostUri IApiMethod.Host
+        ApiHostUri IApiMethod.Host
             => Host.HostUri;
 
         public override string ToString()

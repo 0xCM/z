@@ -9,9 +9,9 @@ namespace Z0
     {
         public static MsgPattern<string> ChipCodeNotFound => "Code for chip {0} not found";
 
-        public static MsgPattern<_ApiHostUri> ParsingHostMembers => "Parsing {0} members";
+        public static MsgPattern<ApiHostUri> ParsingHostMembers => "Parsing {0} members";
 
-        public static MsgPattern<Count,_ApiHostUri> ParsedHostMembers => "Parsed {0} {1} members";
+        public static MsgPattern<Count,ApiHostUri> ParsedHostMembers => "Parsed {0} {1} members";
 
         public static MsgPattern<Count> ParsingHosts => "Parsing {0} hosts";
 
@@ -27,23 +27,23 @@ namespace Z0
 
         public static MsgPattern<string> NotFound => "'{0}' not found";
 
-        public static MsgPattern<_ApiHostUri> ExtractingHost => "Extracting {0} members";
+        public static MsgPattern<ApiHostUri> ExtractingHost => "Extracting {0} members";
 
-        public static MsgPattern<Count,_ApiHostUri> ExtractedHost => "Extracted {0} members from {1}";
+        public static MsgPattern<Count,ApiHostUri> ExtractedHost => "Extracted {0} members from {1}";
 
         const NumericKind Closure = Root.UnsignedInts;
 
         public static MsgPattern<Count,Count,string> FieldCountMismatch => "{0} fields were found while {1} were expected: {2}";
 
-        public static MsgPattern<_ApiHostUri,uint,uint> IndexedHost => "{0,-30} | {1}/{2}";
+        public static MsgPattern<ApiHostUri,uint,uint> IndexedHost => "{0,-30} | {1}/{2}";
 
         public static MsgPattern<uint> IndexingHosts => "Indexing {0} hosts";
 
-        public static MsgPattern<_ApiHostUri> CreatingHostCatalog => "Creating {0} catalog";
+        public static MsgPattern<ApiHostUri> CreatingHostCatalog => "Creating {0} catalog";
 
-        public static MsgPattern<_ApiHostUri,Count> CreatedHostCatalog => "Created {0} catalog with {1} members";
+        public static MsgPattern<ApiHostUri,Count> CreatedHostCatalog => "Created {0} catalog with {1} members";
 
-        public static MsgPattern<_ApiHostUri,FilePath> HostFileMissing => "The {0} file {1} does not exist";
+        public static MsgPattern<ApiHostUri,FilePath> HostFileMissing => "The {0} file {1} does not exist";
 
         public static RenderPattern<Count> IndexingPartFiles => "Indexing {0} partfile datasets";
 
@@ -51,9 +51,9 @@ namespace Z0
 
         public static RenderPattern<Count,FilePath> AbsorbedCodeBlocks => "Absorbed {0} code blocks from {1}";
 
-        public static RenderPattern<_OpUri> Unbased => "The block {0} has no base addressed";
+        public static RenderPattern<OpUri> Unbased => "The block {0} has no base addressed";
 
-        public static RenderPattern<_OpUri> DuplicateUri => "The uri {0} has been duplicated";
+        public static RenderPattern<OpUri> DuplicateUri => "The uri {0} has been duplicated";
 
         public static string Unparsed<T>(T src) => unparsed<T>().Format(src);
 

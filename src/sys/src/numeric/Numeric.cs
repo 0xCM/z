@@ -5,12 +5,21 @@
 namespace Z0
 {
     using static System.Runtime.CompilerServices.Unsafe;
-
     using static sys;
 
     public partial struct Numeric
     {
         const NumericKind Closure = UnsignedInts;
+
+        [MethodImpl(Inline)]
+        public static @float<F,P> @float<F,P>(F value, P precision = default)
+            where F : unmanaged, IEquatable<F>, IComparable<F>
+            where P : unmanaged, ITypeNat
+                => value;
+
+        [MethodImpl(Inline), Op]
+        public static @float<float,N4> float4(float src)
+            => src;
 
         /// <summary>
         /// Presents a parametric reference as a <see cref='char'/> reference

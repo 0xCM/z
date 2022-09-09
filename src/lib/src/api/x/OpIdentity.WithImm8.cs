@@ -12,7 +12,7 @@ namespace Z0
         /// <param name="src">The source identity</param>
         /// <param name="immval">The immediate value to attach</param>
         [Op]
-        public static _OpIdentity WithImm8(this _OpIdentity src, byte immval)
+        public static OpIdentity WithImm8(this OpIdentity src, byte immval)
             => ApiIdentity.opid(string.Concat(src.WithoutImm8().IdentityText, ApiIdentity.Imm8Suffix(immval)));
     }
 }

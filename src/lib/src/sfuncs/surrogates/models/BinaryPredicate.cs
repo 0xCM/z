@@ -10,10 +10,10 @@ namespace Z0
         {
             readonly Z0.BinaryPredicate<T> F;
 
-            public _OpIdentity Id {get;}
+            public OpIdentity Id {get;}
 
             [MethodImpl(Inline)]
-            internal BinaryPredicate(Z0.BinaryPredicate<T> f, _OpIdentity id)
+            internal BinaryPredicate(Z0.BinaryPredicate<T> f, OpIdentity id)
             {
                 F = f;
                 Id = id;

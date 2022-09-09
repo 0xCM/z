@@ -96,7 +96,7 @@ namespace Z0
                 process.WaitForExitAsync().Wait();                
                 outcome.HasExited = true;
                 outcome.ExitTime = sys.now();
-                outcome.Duration = outcome.ExitTime - outcome.StartTime;
+                outcome.Duration = (ulong)outcome.ExitTime - (ulong)outcome.StartTime;
                 outcome.ExitCode = process.ExitCode;
             }
             catch(Exception e)

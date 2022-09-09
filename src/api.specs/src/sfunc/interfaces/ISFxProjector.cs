@@ -20,8 +20,8 @@ namespace Z0
     [Free, SFx]
     public interface ISFxProjector<A,B> : ISFxProjector, IFunc<A,B>
     {
-        _OpIdentity IFunc.Id
-            => _OpIdentity.define(string.Format("map<{0},{1}>", typeof(A).Name, typeof(B).Name));
+        OpIdentity IFunc.Id
+            => OpIdentity.define(string.Format("map<{0},{1}>", typeof(A).Name, typeof(B).Name));
 
         dynamic ISFxProjector.Invoke(dynamic src)
             => Invoke((A)src);

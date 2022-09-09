@@ -9,7 +9,6 @@ namespace Z0
     [ApiHost]
     public readonly partial struct Pipelines
     {
-
         const NumericKind Closure = UnsignedInts;
 
         static T identity<T>(T src)

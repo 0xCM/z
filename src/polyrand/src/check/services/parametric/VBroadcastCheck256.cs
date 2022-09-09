@@ -14,7 +14,7 @@ namespace Z0
 
         public const string Name = "vbroadcast_check";
 
-        public _OpIdentity Id
+        public OpIdentity Id
             => SFxIdentity.identity(Name,VKind);
 
         public bit Invoke(S a, Vector256<T> x)

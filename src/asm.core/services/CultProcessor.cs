@@ -6,16 +6,13 @@ namespace Z0
 {
     using Z0.Asm;
 
-    //using static core;
-
-    using static Algs;
-    using static Spans;
+    using static sys;
 
     public class CultProcessor : WfSvc<CultProcessor>, IEtlService
     {
         const uint BatchSize = Pow2.T16;
 
-        List<CultSummaryRecord> Summaries;
+        List<CultSummary> Summaries;
 
         List<AsmSourceLine> AsmLines;
 
@@ -23,27 +20,11 @@ namespace Z0
 
         FolderPath DetailRoot;
 
-        const string Tool = "cult";
-
-        //FilePath SummaryPath;
-
-        // public CultProcessor()
-        // {
-        //     Summaries = new();
-        //     AsmLines = new();
-        //     HexCharBuffer = sys.alloc<char>(HexBufferLength);
-        // }
-
-        // protected override void OnInit()
-        // {
-        //     var targets = AppDb.DbOut().Targets(Tool.Format());
-        //     DetailRoot = targets.Root + FS.folder("details");
-        //     SummaryPath = targets.Root + FS.file(Tool.Format() + ".summary", FS.Csv);
-        // }
+        const string cult = nameof(cult);
 
         public void RunEtl()
         {
-            var src = AppDb.DbIn().Path("cult", FileKind.Asm);
+            var src = AppDb.DbIn().Path(cult, FileKind.Asm);
             if(!src.Exists)
                 Emitter.Error($"{src.ToUri()} has gone missing");
             else
@@ -51,7 +32,12 @@ namespace Z0
                 var running = Emitter.Running($"Importing {src.ToUri()}");
                 try
                 {
-                    RunEtl(src);
+                    var targets = AppDb.AsmDb().Targets(cult);
+                    AsmLines = new();
+                    Summaries = new();
+                    DetailRoot = targets.Root + FS.folder("details");
+                    HexCharBuffer = sys.alloc<char>(HexBufferLength);
+                    RunEtl(src, targets);
                 }
                 catch(Exception e)
                 {
@@ -62,13 +48,13 @@ namespace Z0
             }
         }
 
-        void RunEtl(FilePath src)
+        void RunEtl(FilePath src, IDbArchive dst)
         {            
-            var targets = AppDb.AsmDb().Targets(Tool);
-            AsmLines = new();
-            Summaries = new();
-            DetailRoot = targets.Root + FS.folder("details");
-            HexCharBuffer = sys.alloc<char>(HexBufferLength);
+            //var targets = AppDb.AsmDb().Targets(cult);
+            // AsmLines = new();
+            // Summaries = new();
+            // DetailRoot = targets.Root + FS.folder("details");
+            // HexCharBuffer = sys.alloc<char>(HexBufferLength);
             var output = span<CultRecord>(BatchSize);
             var input = span<TextLine>(BatchSize);
             using var reader = src.AsciReader();
@@ -94,7 +80,7 @@ namespace Z0
             if(current != 0)
                 Process(batch, counter, input, output);
 
-            EmitSummary(targets.Root + FS.file(Tool + ".summary", FS.Csv));
+            EmitSummary(dst.Root + FS.file(cult + ".summary", FS.Csv));
         }
 
         uint Parse(ReadOnlySpan<TextLine> src, Span<CultRecord> dst)
@@ -112,10 +98,10 @@ namespace Z0
         void EmitSummary(FilePath dst)
             => TableEmit(Summaries.ViewDeposited(), dst);
 
-        void Process(uint batch, uint counter, ReadOnlySpan<TextLine> input, Span<CultRecord> output)
+        void Process(uint batch, uint counter, ReadOnlySpan<TextLine> src, Span<CultRecord> dst)
         {
             var processing = Running(ProcessingBatch.Format(batch, counter));
-            var parsed = slice(output, 0, Parse(input, output));
+            var parsed = slice(dst, 0, Parse(src, dst));
             Process(parsed);
             Ran(processing, ProcessedBatch.Format(batch, counter, parsed.Length, BatchSize));
         }
@@ -142,7 +128,7 @@ namespace Z0
             }
         }
 
-        void EmitDetails(FolderPath dir, in CultSummaryRecord summary)
+        void EmitDetails(FolderPath dir, in CultSummary summary)
         {
             var mnemonic = summary.Mnemonic.Format(MnemonicCase.Lowercase);
             var path = dir + DetailFile(mnemonic);
@@ -163,46 +149,47 @@ namespace Z0
             }
         }
 
-        bool Parse(TextLine src, out CultRecord dst)
+        public bool Parse(TextLine src, out CultRecord dst)
         {
-            var content = src.Content ?? EmptyString;
-            var parts = @readonly(content.Split(Chars.Semicolon));
-            if(text.nonempty(content))
-            {
-                if(parts.Length == 2)
-                    return ParseStatement(src, parts, out dst);
-                else if(content.Contains(Chars.Colon))
-                {
-                    if(content.Contains(SummaryMarker))
-                        return ParseSummary(src, out dst);
-                    else
-                    {
-                        if(!content.ContainsAny(NonLabels))
-                        {
-                            var identifier = text.trim(content.LeftOfFirst(Chars.Colon));
-                            if(text.nonempty(identifier))
-                                return ParseLabel(src, identifier, out dst);
-                        }
-                    }
-                }
-            }
-
             dst = CultRecord.Empty;
-            return false;
+            var result = true;
+            var content = text.ifempty(src.Content,EmptyString);
+            dst.LineNumber = src.LineNumber;
+            var i = text.index(content, ": Lat:");
+            var j = text.index(content, Chars.Colon);
+            var k = text.index(content, Chars.Semicolon);
+            if(i > 0)
+            {
+                ParseSummary(src, out dst);
+            }
+            else if(j > 0)
+            {                
+                var identifier = text.trim(content.LeftOfFirst(Chars.Colon));
+                if(text.nonempty(identifier))
+                    ParseLabel(src, identifier, out dst);
+
+            }
+            else if(k > 0)
+            {
+                var parts = @readonly(content.Split(Chars.Semicolon));
+                ParseStatement(src, parts, out dst);
+            }
+            
+            return result;
         }
 
-        CultSummaryRecord Summarize(in CultRecord record)
+        static CultSummary Summarize(in CultRecord src)
         {
-            var summary = new CultSummaryRecord();
-            metrics(record, out summary.Lat, out summary.Rcp);
-            summary.Instruction = record.Comment.Format().LeftOfFirst(Chars.Colon).Trim();
-            summary.Mnemonic = monic(summary.Instruction);
-            summary.LineNumber = record.LineNumber;
-            summary.Id = identify(summary);
-            return summary;
+            var dst = new CultSummary();
+            metrics(src, out dst.Lat, out dst.Rcp);
+            dst.Instruction = src.Comment.Format().LeftOfFirst(Chars.Colon).Trim();
+            dst.Mnemonic = monic(dst.Instruction);
+            dst.LineNumber = src.LineNumber;
+            dst.Id = identify(dst);
+            return dst;
         }
 
-        bool ParseLabel(TextLine src, string name, out CultRecord dst)
+        static bool ParseLabel(TextLine src, string name, out CultRecord dst)
         {
             dst.LineNumber = src.LineNumber;
             dst.Label = name;
@@ -214,8 +201,8 @@ namespace Z0
 
         bool ParseStatement(TextLine src, ReadOnlySpan<string> parts, out CultRecord dst)
         {
-            var statement = skip(parts,0).Remove(RexRemove);
-            var comment = skip(parts,1);
+            var statement = skip(parts, 0).Remove(RexRemove);
+            var comment = skip(parts, 1);
             var bitstring = RP.Error;
             var formatted = FormatBytes(comment, out var count);
             if(Hex.hexdata(formatted, out var parsed))
@@ -232,7 +219,7 @@ namespace Z0
             return true;
         }
 
-        bool ParseSummary(TextLine src, out CultRecord dst)
+        static bool ParseSummary(TextLine src, out CultRecord dst)
         {
             dst.LineNumber = src.LineNumber;
             dst.Statement = TextBlock.Empty;
@@ -278,7 +265,6 @@ namespace Z0
                 }
             }
             size = m;
-
             if(size == 0)
               return default;
             else
@@ -294,7 +280,7 @@ namespace Z0
         static FileName DetailFile(AsmMnemonic src)
             => FS.file(string.Format("cult.{0}", src.Format(MnemonicCase.Lowercase)), FS.Asm);
 
-        static Identifier identify(in CultSummaryRecord src)
+        static Identifier identify(in CultSummary src)
         {
             var individuals = operands(src.Instruction);
             var joined = individuals.Length != 0 ? individuals.Join(Chars.Underscore) : EmptyString;
@@ -311,26 +297,19 @@ namespace Z0
 
         static void metrics(in CultRecord src, out string lat, out string rcp)
         {
-            var content = src.Comment.Format().RightOfFirst(Chars.Colon).Remove(LatencyMarker).Replace(RcpMarker,"|").SplitClean("|");
+            var content = src.Comment.Format().RightOfFirst(Chars.Colon).Remove(LatMarker).Replace(RcpMarker,"|").SplitClean("|");
+            lat = EmptyString;
+            rcp = EmptyString;
             if(content.Length == 2)
             {
                 lat = content[0].Trim();
                 rcp = content[1].Trim();
             }
-            else
-            {
-                lat = EmptyString;
-                rcp = EmptyString;
-            }
         }
-
-        string[] NonLabels = sys.array("In", " ", "VendorName", "ModelId", "FamilyId", "SteppingId", "Codename", "CpuDetect");
 
         const byte HexBufferLength = 128;
 
-        const string SummaryMarker = ": Lat";
-
-        const string LatencyMarker = "Lat:";
+        const string LatMarker = "Lat:";
 
         const string RcpMarker = "Rcp:";
 

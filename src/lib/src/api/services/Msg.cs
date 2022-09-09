@@ -11,13 +11,13 @@ namespace Z0
     {
         public static MsgPattern<Count,Count,string> FieldCountMismatch => "{0} fields were found while {1} were expected: {2}";
 
-        public static MsgPattern<_ApiHostUri,uint,uint> IndexedHost => "{0,-30} | {1}/{2}";
+        public static MsgPattern<ApiHostUri,uint,uint> IndexedHost => "{0,-30} | {1}/{2}";
 
         public static MsgPattern<uint> IndexingHosts => "Indexing {0} hosts";
 
-        public static MsgPattern<_ApiHostUri> CreatingHostCatalog => "Creating {0} catalog";
+        public static MsgPattern<ApiHostUri> CreatingHostCatalog => "Creating {0} catalog";
 
-        public static MsgPattern<_ApiHostUri,Count> CreatedHostCatalog => "Created {0} catalog with {1} members";
+        public static MsgPattern<ApiHostUri,Count> CreatedHostCatalog => "Created {0} catalog with {1} members";
 
 
         public static string Unparsed<T>(T src) => unparsed<T>().Format(src);

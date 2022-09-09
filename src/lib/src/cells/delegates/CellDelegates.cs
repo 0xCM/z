@@ -13,7 +13,7 @@ namespace Z0
         const NumericKind Closure = Integers;
 
         [MethodImpl(Inline)]
-        public static CellDelegate define(_OpIdentity id, MemoryAddress src, DynamicMethod enclosure, Delegate dynop)
+        public static CellDelegate define(OpIdentity id, MemoryAddress src, DynamicMethod enclosure, Delegate dynop)
             => CellDelegate.define(id, src, enclosure, dynop);
 
         [MethodImpl(Inline)]

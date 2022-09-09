@@ -10,15 +10,15 @@ namespace Z0
     partial struct SFx
     {
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static S.Action<A0> surrogate<A0>(_OpIdentity id, R.Action<A0> src)
+        public static S.Action<A0> surrogate<A0>(OpIdentity id, R.Action<A0> src)
             => new S.Action<A0>(id, src);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static S.Action<A0,A1> surrogate<A0,A1>(_OpIdentity id, R.Action<A0,A1> src)
+        public static S.Action<A0,A1> surrogate<A0,A1>(OpIdentity id, R.Action<A0,A1> src)
             => new S.Action<A0,A1>(id, src);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static S.Action<A0,A1,A3> surrogate<A0,A1,A3>(_OpIdentity id, R.Action<A0,A1,A3> src)
+        public static S.Action<A0,A1,A3> surrogate<A0,A1,A3>(OpIdentity id, R.Action<A0,A1,A3> src)
             => new S.Action<A0,A1,A3>(id, src);
 
         [MethodImpl(Inline), Op, Closures(Closure)]

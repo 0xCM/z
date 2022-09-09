@@ -114,7 +114,7 @@ namespace Z0
         /// <param name="fId">The identity of the first operator</param>
         /// <param name="g">The second operator, considered as the operation under test</param>
         /// <param name="gId">The identity of the second operator</param>
-        public TimedEval CheckMatch(BinaryOp8 f, _OpUri fUri, BinaryOp8 g, _OpUri gUri)
+        public TimedEval CheckMatch(BinaryOp8 f, OpUri fUri, BinaryOp8 g, OpUri gUri)
             => ApiEvaluate.validate(Context, f, fUri, g, gUri);
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Z0
         /// <param name="fId">The identity of the first operator</param>
         /// <param name="g">The second operator, considered as the operation under test</param>
         /// <param name="gId">The identity of the second operator</param>
-        public TimedEval CheckMatch(BinaryOp16 f, _OpUri fUri, BinaryOp16 g, _OpUri gUri)
+        public TimedEval CheckMatch(BinaryOp16 f, OpUri fUri, BinaryOp16 g, OpUri gUri)
         {
             var w = n16;
             void check()
@@ -147,7 +147,7 @@ namespace Z0
         /// <param name="fId">The identity of the first operator</param>
         /// <param name="g">The second operator, considered as the operation under test</param>
         /// <param name="gId">The identity of the second operator</param>
-        public TimedEval CheckMatch(BinaryOp32 f, _OpUri fUri, BinaryOp32 g, _OpUri gUri)
+        public TimedEval CheckMatch(BinaryOp32 f, OpUri fUri, BinaryOp32 g, OpUri gUri)
         {
             var w = n32;
             void check()
@@ -170,7 +170,7 @@ namespace Z0
         /// <param name="fId">The identity of the first operator</param>
         /// <param name="g">The second operator, considered as the operation under test</param>
         /// <param name="gId">The identity of the second operator</param>
-        public TimedEval CheckMatch(BinaryOp64 f, _OpUri fUri, BinaryOp64 g, _OpUri gUri)
+        public TimedEval CheckMatch(BinaryOp64 f, OpUri fUri, BinaryOp64 g, OpUri gUri)
         {
             var w = n64;
             void check()
@@ -193,7 +193,7 @@ namespace Z0
         /// <param name="fId">The identity of the first operator</param>
         /// <param name="g">The second operator, considered as the operation under test</param>
         /// <param name="gId">The identity of the second operator</param>
-        public TimedEval CheckMatch(BinaryOp128 f, _OpUri fUri, BinaryOp128 g, _OpUri gUri)
+        public TimedEval CheckMatch(BinaryOp128 f, OpUri fUri, BinaryOp128 g, OpUri gUri)
         {
             var w = n128;
             void check()
@@ -216,7 +216,7 @@ namespace Z0
         /// <param name="fId">The identity of the first operator</param>
         /// <param name="g">The second operator, considered as the operation under test</param>
         /// <param name="gId">The identity of the second operator</param>
-        public TimedEval CheckMatch(BinaryOp256 f, _OpUri fUri, BinaryOp256 g, _OpUri gUri)
+        public TimedEval CheckMatch(BinaryOp256 f, OpUri fUri, BinaryOp256 g, OpUri gUri)
         {
             var w = n256;
 
@@ -233,7 +233,7 @@ namespace Z0
             return ExecAction(check, fUri, gUri);
         }
 
-        public TimedEval ExecAction(Action action, _OpUri f, _OpUri g)
+        public TimedEval ExecAction(Action action, OpUri f, OpUri g)
         {
 
             var clock = Time.counter(true);

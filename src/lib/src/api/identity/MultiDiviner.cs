@@ -13,10 +13,10 @@ namespace Z0
             => ApiIdentity.identify(src);
 
         [MethodImpl(Inline)]
-        public _OpIdentity DivineIdentity(MethodInfo src)
+        public OpIdentity DivineIdentity(MethodInfo src)
             => ApiIdentity.identify(src);
 
-        public _OpIdentity DivineIdentity(Delegate src)
+        public OpIdentity DivineIdentity(Delegate src)
             => ApiIdentity.identify(src);
 
         [MethodImpl(Inline)]

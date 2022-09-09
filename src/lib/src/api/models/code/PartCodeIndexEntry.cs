@@ -11,12 +11,12 @@ namespace Z0
 
     public readonly struct PartCodeIndexEntry
     {
-        public _ApiHostUri Host {get;}
+        public ApiHostUri Host {get;}
 
         public ApiHostBlocks Code {get;}
 
         [MethodImpl(Inline)]
-        public PartCodeIndexEntry(_ApiHostUri host, in ApiHostBlocks code)
+        public PartCodeIndexEntry(ApiHostUri host, in ApiHostBlocks code)
         {
             Host = host;
             Code = code;

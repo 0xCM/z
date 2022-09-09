@@ -4,9 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
     public class ServiceAttribute : Attribute
     {

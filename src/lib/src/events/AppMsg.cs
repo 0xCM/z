@@ -66,7 +66,7 @@ namespace Z0
         public static MsgPattern<dynamic> NotFound
             => "{0} not found";
 
-        public static MsgPattern<_ApiHostUri> HostNotFound
+        public static MsgPattern<ApiHostUri> HostNotFound
             => "Host {0} not found";
 
         public static MsgPattern<string,Fence<char>> FenceNotFound

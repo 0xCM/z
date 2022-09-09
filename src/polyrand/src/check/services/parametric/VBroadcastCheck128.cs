@@ -14,7 +14,7 @@ namespace Z0
 
         public Vec128Kind<T> VKind => default;
 
-        public _OpIdentity Id
+        public OpIdentity Id
             => SFxIdentity.identity(Name,VKind);
 
         public bit Invoke(S a, Vector128<T> x)

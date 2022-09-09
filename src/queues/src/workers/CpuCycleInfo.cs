@@ -6,7 +6,7 @@ namespace Z0
 {
     using api = CpuWorkers;
 
-    public struct CpuCycleInfo : ITextual
+    public struct CpuCycleInfo : IExpr
     {
         public uint CpuCore;
 
@@ -22,7 +22,12 @@ namespace Z0
         public string Format()
             => api.format(this);
 
+        public bool IsEmpty
+            => false;
 
+        public bool IsNonEmpty
+            => true;
+            
         public override string ToString()
             => Format();
     }

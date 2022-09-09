@@ -15,7 +15,7 @@ namespace Z0.Asm
 
         public AsmHexCode StubCode;
 
-        public _OpUri Uri;
+        public OpUri Uri;
 
         public JmpStub Stub;
 

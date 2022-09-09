@@ -14,7 +14,7 @@ namespace Z0
 
             public const string Name = "bitslice";
 
-            public _OpIdentity Id
+            public OpIdentity Id
                 => SFxIdentity.identity<T>(Name);
 
             public T Invoke(T a, byte k1, byte k2)

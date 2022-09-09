@@ -34,7 +34,7 @@ namespace Z0
         /// <param name="t">A primal cell type representative</param>
         /// <typeparam name="W">The bit width type</typeparam>
         /// <typeparam name="T">The cell type</typeparam>
-        public static _OpIdentity identity<W,T>(string opname, W w = default, T t = default, bool generic = true)
+        public static OpIdentity identity<W,T>(string opname, W w = default, T t = default, bool generic = true)
             where W : unmanaged, ITypeNat
             where T : unmanaged
                 => Builder.build(opname, (NativeTypeWidth)TypeNats.value<W>(), NumericKinds.kind<T>(), generic);
@@ -46,7 +46,7 @@ namespace Z0
         /// <param name="t">A primal type representative</param>
         /// <typeparam name="T">The primal type</typeparam>
         [Op, Closures(Closure)]
-        public static _OpIdentity identity<T>(string opname)
+        public static OpIdentity identity<T>(string opname)
             => Builder.NumericOp(opname, typeof(T).NumericKind());
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Z0
         /// <param name="t">A primal type representative</param>
         /// <typeparam name="T">The primal type</typeparam>
         [Op, Closures(Closure)]
-        public static _OpIdentity identity<T>(string opname, Vec128Kind<T> k)
+        public static OpIdentity identity<T>(string opname, Vec128Kind<T> k)
             where T : unmanaged
                 => Builder.build(opname, (NativeTypeWidth)k.Width, typeof(T).NumericKind(), true);
 
@@ -67,7 +67,7 @@ namespace Z0
         /// <param name="t">A primal type representative</param>
         /// <typeparam name="T">The primal type</typeparam>
         [Op, Closures(Closure)]
-        public static _OpIdentity identity<T>(string opname, Vec256Kind<T> k)
+        public static OpIdentity identity<T>(string opname, Vec256Kind<T> k)
             where T : unmanaged
                 => Builder.build(opname, (NativeTypeWidth)k.Width, typeof(T).NumericKind(), true);
 
@@ -78,7 +78,7 @@ namespace Z0
         /// <param name="t">A primal type representative</param>
         /// <typeparam name="T">The primal type</typeparam>
         [Op, Closures(Closure)]
-        public static _OpIdentity identity<T>(string opname, Vec512Kind<T> k)
+        public static OpIdentity identity<T>(string opname, Vec512Kind<T> k)
             where T : unmanaged
                 => Builder.build(opname, (NativeTypeWidth)k.Width, typeof(T).NumericKind(), true);
         const NumericKind Closure = AllNumeric;

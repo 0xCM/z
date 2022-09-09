@@ -8,12 +8,12 @@ namespace Z0
     {
         public readonly struct UnaryOp<T> : IUnaryOp<T>
         {
-            public _OpIdentity Id {get;}
+            public OpIdentity Id {get;}
 
             readonly Z0.UnaryOp<T> F;
 
             [MethodImpl(Inline)]
-            internal UnaryOp(Z0.UnaryOp<T> f, _OpIdentity id)
+            internal UnaryOp(Z0.UnaryOp<T> f, OpIdentity id)
             {
                 F = f;
                 Id = id;

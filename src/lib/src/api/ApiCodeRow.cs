@@ -19,7 +19,7 @@ namespace Z0
 
         public uint CodeSize;
 
-        public _OpUri Uri;
+        public OpUri Uri;
 
         public BinaryCode Data;
 

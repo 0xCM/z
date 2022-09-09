@@ -15,7 +15,7 @@ namespace Z0
         /// <summary>
         /// The delegate identity
         /// </summary>
-        public _OpIdentity Id {get;}
+        public OpIdentity Id {get;}
 
         /// <summary>
         /// The method invoked by the dynamic operator that provides the substance of the operation
@@ -33,7 +33,7 @@ namespace Z0
         public D Operation {get;}
 
         [MethodImpl(Inline)]
-        public DynamicDelegate(_OpIdentity id, MethodInfo src, DynamicMethod dst, D op)
+        public DynamicDelegate(OpIdentity id, MethodInfo src, DynamicMethod dst, D op)
         {
             Id = id;
             Source = src;

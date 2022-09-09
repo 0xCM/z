@@ -15,14 +15,14 @@ namespace Z0
                 src.Method.DisplaySig()
             );
 
-        public readonly _OpUri Uri;
+        public readonly OpUri Uri;
 
         public readonly MethodInfo Method;
 
         public readonly MemoryAddress EntryPoint;
 
         [MethodImpl(Inline)]
-        public ResolvedMethod(MethodInfo method, _OpUri uri, MemoryAddress address)
+        public ResolvedMethod(MethodInfo method, OpUri uri, MemoryAddress address)
         {
             Uri = uri;
             Method = method;

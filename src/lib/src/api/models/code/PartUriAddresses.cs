@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using LU = System.Collections.Generic.Dictionary<MemoryAddress,_OpUri>;
+    using LU = System.Collections.Generic.Dictionary<MemoryAddress,OpUri>;
 
     public readonly struct PartUriAddresses
     {
@@ -16,7 +16,7 @@ namespace Z0
             Data = src;
         }
 
-        public Index<_OpUri> Identities
+        public Index<OpUri> Identities
         {
             [MethodImpl(Inline)]
             get => Data.Values.Array();

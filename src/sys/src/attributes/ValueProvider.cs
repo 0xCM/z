@@ -2,8 +2,6 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-using System;
-
 /// <summary>
 /// Applied to a class or struct to indicate that the target provides invariant static values of homogenous type
 /// </summary>

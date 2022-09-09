@@ -17,7 +17,7 @@ namespace Z0
 
         public Timestamp ExitTime;
 
-        public TimeSpan Duration;
+        public Duration Duration;
 
         public int ExitCode;
 

@@ -11,7 +11,7 @@ namespace Z0
     public abstract class PageBank16x4x4<H>
         where H : PageBank16x4x4<H>, new()         
     {
-        public static PageBank16x4x4<H> allocated()
+        public static H allocated()
             => Instance;
 
         public const uint BlockCount = 8;

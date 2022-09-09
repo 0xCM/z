@@ -6,12 +6,12 @@ namespace Z0
 {
     public class ApiHostMembers
     {
-        public readonly _ApiHostUri Host;
+        public readonly ApiHostUri Host;
 
         public readonly ApiMembers Members;
 
         [MethodImpl(Inline)]
-        public ApiHostMembers(_ApiHostUri host, ApiMembers members)
+        public ApiHostMembers(ApiHostUri host, ApiMembers members)
         {
             Host = host;
             Members = members;

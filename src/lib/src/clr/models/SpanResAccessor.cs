@@ -23,13 +23,13 @@ namespace Z0
             get => Member.Uri.Part;
         }
 
-        public _ApiHostUri Host
+        public ApiHostUri Host
         {
             [MethodImpl(Inline)]
             get => Member.Uri.Host;
         }
 
-        public _OpIdentity OpId
+        public OpIdentity OpId
         {
             [MethodImpl(Inline)]
             get => Member.Uri.OpId;

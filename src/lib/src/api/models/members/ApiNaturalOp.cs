@@ -38,10 +38,10 @@ namespace Z0
         /// <summary>
         /// The generalized identity
         /// </summary>
-        public _OpIdentity Id
+        public OpIdentity Id
             => GenericId.Generalize();
 
-        _ApiHostUri IApiMethod.Host
+        ApiHostUri IApiMethod.Host
                 => Host.HostUri;
     }
 }

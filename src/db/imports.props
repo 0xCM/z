@@ -1,0 +1,6 @@
+<Project>
+  <ItemGroup>
+    <ProjectReference Include="$(Archives)" />
+    <ProjectReference Include="$(Wf)" />
+  </ItemGroup>
+</Project>

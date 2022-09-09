@@ -14,12 +14,12 @@ namespace Z0
 
         public string Name {get;}
 
-        public _ApiHostUri HostUri {get;}
+        public ApiHostUri HostUri {get;}
 
         Dictionary<string,MethodInfo> Index {get;}
 
         [MethodImpl(Inline)]
-        public ApiCompleteType(Type type, string name, PartId part, _ApiHostUri uri, Index<MethodInfo> methods, Dictionary<string,MethodInfo> index)
+        public ApiCompleteType(Type type, string name, PartId part, ApiHostUri uri, Index<MethodInfo> methods, Dictionary<string,MethodInfo> index)
         {
             HostType = type;
             Name = name;
@@ -29,7 +29,7 @@ namespace Z0
             Index = index;
         }
 
-        public bool FindMethod(_OpUri uri, out MethodInfo method)
+        public bool FindMethod(OpUri uri, out MethodInfo method)
             => Index.TryGetValue(uri.OpId.IdentityText, out method);
 
         [MethodImpl(Inline)]
@@ -54,7 +54,7 @@ namespace Z0
             => src is ApiCompleteType t && Equals(t);
 
         [MethodImpl(Inline)]
-        public static implicit operator _ApiHostUri(ApiCompleteType src)
+        public static implicit operator ApiHostUri(ApiCompleteType src)
             => src.HostUri;
 
         [MethodImpl(Inline)]

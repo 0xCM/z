@@ -22,6 +22,7 @@
    <Import Project="src/cg/cg.shell/exports.props"/>
    <Import Project="src/cg/cg.test/exports.props"/>
    <Import Project="src/clr.query/exports.props"/>
+   <Import Project="src/clr.cil/exports.props"/>
    <Import Project="src/capture/exports.props"/>
    <Import Project="src/containers/exports.props"/>
    <Import Project="src/cells/exports.props"/>
@@ -29,8 +30,10 @@
    <Import Project="src/cmd/exports.props"/>
    <Import Project="src/coff/exports.props"/>
 
+   <Import Project="src/db/exports.props"/>
    <Import Project="src/db.sqlite/exports.props"/>
    <Import Project="src/dispatcher/exports.props"/>
+   <Import Project="src/diagnostics/exports.props"/>
 
    <Import Project="src/files/exports.props"/>
 

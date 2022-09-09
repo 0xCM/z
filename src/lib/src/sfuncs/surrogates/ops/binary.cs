@@ -31,7 +31,7 @@ namespace Z0
         /// <param name="t">An operand type representative to aid type inference</param>
         /// <typeparam name="T">The operand type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static BinaryOp<T> binary<T>(D.BinaryOp<T> f, _OpIdentity id, T t = default)
+        public static BinaryOp<T> binary<T>(D.BinaryOp<T> f, OpIdentity id, T t = default)
             => new BinaryOp<T>(f,id);
     }
 }

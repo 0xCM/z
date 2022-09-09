@@ -8,7 +8,7 @@ namespace Z0
 
     public readonly struct ApiHosts : IIndex<IApiHost>
     {
-        static bool host(ApiHosts src, _ApiHostUri uri, out IApiHost host)
+        static bool host(ApiHosts src, ApiHostUri uri, out IApiHost host)
         {   var count = src.Count;
             for(var i=0; i<count; i++)
             {
@@ -85,7 +85,7 @@ namespace Z0
         public bool Host(Type t, out IApiHost h)
             => host(this, t, out h);
 
-        public bool Host(_ApiHostUri uri, out IApiHost h)
+        public bool Host(ApiHostUri uri, out IApiHost h)
             => host(this, uri, out h);
 
         public string Format()

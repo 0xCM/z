@@ -78,14 +78,14 @@ namespace Z0
             get => Target.Name;
         }
 
-        public _ApiHostUri Host
+        public ApiHostUri Host
         {
             get
             {
                 if(ApiIdentity.parse(Uri.Format(), out var uri))
                     return uri.Host;
                 else
-                    return _ApiHostUri.Empty;
+                    return ApiHostUri.Empty;
             }
         }
 

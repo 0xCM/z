@@ -6,14 +6,14 @@ namespace Z0
 {
     public readonly struct JittedMethod : IComparable<JittedMethod>
     {
-        public _ApiHostUri Host {get;}
+        public ApiHostUri Host {get;}
 
         public MethodInfo Method {get;}
 
         public MemoryAddress Location {get;}
 
         [MethodImpl(Inline)]
-        public JittedMethod(_ApiHostUri host, MethodInfo method, MemoryAddress location = default)
+        public JittedMethod(ApiHostUri host, MethodInfo method, MemoryAddress location = default)
         {
             Host = host;
             Method = method;

@@ -89,8 +89,8 @@ namespace Z0
             }
         }
 
-        public static FilePath csv(FolderPath src, _ApiHostUri host)
-            => src + host.FileName(FS.PCsv);
+        public static FilePath csv(FolderPath src, ApiHostUri host)
+            => src + FS.hostfile(host,FS.PCsv);
 
         void CheckSize(ApiMemberCode src)
         {
@@ -107,10 +107,10 @@ namespace Z0
             Require.equal((ByteSize)size, src.CodeSize);
         }
 
-        void PackHex(FolderPath src, _ApiHostUri host)
+        void PackHex(FolderPath src, ApiHostUri host)
         {
             var counter = 0u;
-            var memory = ApiCode.memory( src + host.FileName(FileKind.Csv));
+            var memory = ApiCode.memory( src + FS.hostfile(host,FileKind.Csv));
             var blocks = memory.Sort().View;
             var buffer = span<char>(Pow2.T16);
             var dir = AppDb.ApiTargets("capture.test").Targets(string.Format("{0}.{1}", host.Part.Format(), host.HostName)).Root;

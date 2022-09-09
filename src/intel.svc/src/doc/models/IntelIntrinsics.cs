@@ -108,20 +108,23 @@ namespace Z0
         public Index<IntelIntrinsicRecord> EmitRecords(Index<IntrinsicDef> src)
         {
             var dst = alloc<IntelIntrinsicRecord>(src.Count);
-            records(src, Emitter, dst);
-            TableEmit(dst.Sort().Resequence(), Targets().Table<IntelIntrinsicRecord>());
+            records(src, Emitter, Targets().Table<IntelIntrinsicRecord>(), dst);
             return dst;
         }
 
-        public static void records(ReadOnlySpan<IntrinsicDef> src, WfEmit channel, Span<IntelIntrinsicRecord> dst)
-        {
-            for(var i=0; i< src.Length; i++)
+        public static void records(ReadOnlySpan<IntrinsicDef> src, WfEmit channel, FilePath path, Span<IntelIntrinsicRecord> dst)
+        {            
+            for(var i=0; i<src.Length; i++)
                 record(skip(src,i), channel, out seek(dst,i));
+            
+            dst.Sort();
+            dst.Resequence();
+            channel.TableEmit(@readonly(dst), path);            
         }
 
-        static void record(in IntrinsicDef src, WfEmit channel,  out IntelIntrinsicRecord dst)
+        static void record(in IntrinsicDef src, WfEmit channel, out IntelIntrinsicRecord dst)
         {
-            dst = default;
+            dst = IntelIntrinsicRecord.Empty;
             try
             {
                 dst.Key = 0;
@@ -130,20 +133,12 @@ namespace Z0
                 dst.Types = src.types;
                 dst.Category = src.category;
                 dst.Signature = src.Sig();
-
-                if(instruction(src, out var inst))
+                if(instruction(src, out Instruction inst))
                 {
                     dst.InstSig = inst;
                     dst.InstForm = inst.xed;
                     dst.FormId = (ushort)inst.xed;
                     dst.InstClass = inst.InstClass;
-                }
-                else
-                {
-                    dst.InstClass = AmsInstClass.Empty;
-                    dst.InstSig = Instruction.Empty;
-                    dst.InstForm = InstForm.Empty ;
-                    dst.FormId = 0;
                 }
             }
             catch (Exception e)
@@ -176,7 +171,6 @@ namespace Z0
             EmitDeclarations(parsed);
             return parsed;
         }
-
 
         const int MaxDefCount = Pow2.T13;
 

@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <ClrCil>$(MsBuildThisFileDirectory)z0.clr.cil.csproj</ClrCil>
+  </PropertyGroup>
+</Project>

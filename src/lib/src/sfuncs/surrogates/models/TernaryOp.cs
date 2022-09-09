@@ -10,10 +10,10 @@ namespace Z0
         {
             readonly Z0.TernaryOp<T> F;
 
-            public _OpIdentity Id {get;}
+            public OpIdentity Id {get;}
 
             [MethodImpl(Inline)]
-            internal TernaryOp(Z0.TernaryOp<T> f, _OpIdentity id)
+            internal TernaryOp(Z0.TernaryOp<T> f, OpIdentity id)
             {
                 F = f;
                 Id = id;

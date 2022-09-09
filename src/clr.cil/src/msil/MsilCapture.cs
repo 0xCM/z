@@ -18,7 +18,7 @@ namespace Z0
         public MemoryAddress BaseAddress;
 
         [Render(80)]
-        public _OpUri Uri;
+        public OpUri Uri;
 
         [Render(1)]
         public BinaryCode Encoded;

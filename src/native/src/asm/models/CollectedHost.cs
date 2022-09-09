@@ -16,7 +16,7 @@ namespace Z0
             Blocks = blocks;
         }
 
-        public _ApiHostUri Host
+        public ApiHostUri Host
         {
             [MethodImpl(Inline)]
             get => Resolved.Host;

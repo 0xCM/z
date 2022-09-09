@@ -13,7 +13,7 @@ namespace Z0
         /// <summary>
         /// The operation uri
         /// </summary>
-        public readonly _OpUri OpUri;
+        public readonly OpUri OpUri;
 
         /// <summary>
         /// The encoded operation data
@@ -21,20 +21,20 @@ namespace Z0
         public readonly CodeBlock Code;
 
         [MethodImpl(Inline)]
-        public ApiCodeBlock(MemoryAddress @base, _OpUri uri, BinaryCode src)
+        public ApiCodeBlock(MemoryAddress @base, OpUri uri, BinaryCode src)
         {
             OpUri = uri;
             Code = new CodeBlock(@base, src);
         }
 
         [MethodImpl(Inline)]
-        public ApiCodeBlock(_OpUri uri, in CodeBlock code)
+        public ApiCodeBlock(OpUri uri, in CodeBlock code)
         {
             OpUri = uri;
             Code = code;
         }
 
-        public _ApiHostUri HostUri
+        public ApiHostUri HostUri
         {
             [MethodImpl(Inline)]
             get => OpUri.Host;
@@ -77,7 +77,7 @@ namespace Z0
             get => new MemoryRange(BaseAddress, (ByteSize)Length);
         }
 
-        public _OpIdentity OpId
+        public OpIdentity OpId
         {
              [MethodImpl(Inline)]
              get => OpUri.OpId;
@@ -131,7 +131,7 @@ namespace Z0
         /// <summary>
         /// The identifier of the defined operation
         /// </summary>
-        public _OpIdentity Id
+        public OpIdentity Id
         {
             [MethodImpl(Inline)]
             get => OpUri.OpId;
@@ -171,7 +171,7 @@ namespace Z0
         public static ApiCodeBlock Empty
         {
             [MethodImpl(Inline)]
-            get => new ApiCodeBlock(MemoryAddress.Zero, _OpUri.Empty, BinaryCode.Empty);
+            get => new ApiCodeBlock(MemoryAddress.Zero, OpUri.Empty, BinaryCode.Empty);
         }
     }
 }

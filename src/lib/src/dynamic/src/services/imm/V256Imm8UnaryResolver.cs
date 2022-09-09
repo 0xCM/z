@@ -14,7 +14,7 @@ namespace Z0
             Host = host;
         }
 
-        _OpIdentity id => default;
+        OpIdentity id => default;
 
         public DynamicDelegate<UnaryOp<Vector256<T>>> @delegate(byte count)
             => Dynop.EmbedVUnaryOpImm<T>(VK.vk256<T>(), id, gApiMethod(VK.vk256<T>(), id.Name),count);

@@ -7,7 +7,7 @@ namespace Z0
     public readonly struct ApiCaptureResult
     {
         [MethodImpl(Inline), Op]
-        public static ApiCaptureResult create(_OpIdentity id, ExtractTermCode term, MemoryRange range, CodeBlockPair pair)
+        public static ApiCaptureResult create(OpIdentity id, ExtractTermCode term, MemoryRange range, CodeBlockPair pair)
             => new ApiCaptureResult(term, range, pair);
 
         /// <summary>

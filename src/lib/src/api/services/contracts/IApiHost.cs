@@ -15,7 +15,7 @@ namespace Z0
         Identifier HostName
             => HostUri.HostName;
 
-        _ApiHostUri HostUri
+        ApiHostUri HostUri
             => HostType.ApiHostUri();
 
         PartId PartId

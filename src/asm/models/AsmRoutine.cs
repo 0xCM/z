@@ -12,7 +12,7 @@ namespace Z0.Asm
         /// <summary>
         /// The defining operation uri
         /// </summary>
-        public readonly _OpUri Uri;
+        public readonly OpUri Uri;
 
         /// <summary>
         /// The source member signature
@@ -40,7 +40,7 @@ namespace Z0.Asm
         public readonly Func<AsmRoutine,string> AsmRender;
 
         [MethodImpl(Inline)]
-        public AsmRoutine(_OpUri uri, @string sig, ApiCodeBlock code, ExtractTermCode term, Index<ApiInstruction> instructions, Func<AsmRoutine,string> render = null)
+        public AsmRoutine(OpUri uri, @string sig, ApiCodeBlock code, ExtractTermCode term, Index<ApiInstruction> instructions, Func<AsmRoutine,string> render = null)
         {
             Uri = uri;
             DisplaySig = sig;
@@ -79,6 +79,6 @@ namespace Z0.Asm
             => InstructionCount != 0;
 
         public static AsmRoutine Empty
-            => new AsmRoutine(_OpUri.Empty, @string.Empty, ApiCodeBlock.Empty, 0, Index<ApiInstruction>.Empty);
+            => new AsmRoutine(OpUri.Empty, @string.Empty, ApiCodeBlock.Empty, 0, Index<ApiInstruction>.Empty);
     }
 }

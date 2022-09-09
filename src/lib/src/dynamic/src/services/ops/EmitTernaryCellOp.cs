@@ -11,7 +11,7 @@ namespace Z0
     partial class Dynop
     {
         [Op]
-        internal static CellDelegate EmitTernaryCellOp(this IBufferToken dst, _OpIdentity id, Type operatorType, Type operandType)
+        internal static CellDelegate EmitTernaryCellOp(this IBufferToken dst, OpIdentity id, Type operatorType, Type operandType)
             => dst.Handle.EmitCellular(id, functype:operatorType, result:operandType, args: array(operandType, operandType, operandType));
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace Z0
         public static TernaryOp<F> EmitTernaryCellOp<F>(this BufferToken dst, ApiCodeBlock src)
             => (TernaryOp<F>)dst.Handle.EmitCellular(src.Id, typeof(TernaryOp<F>), typeof(F), typeof(F), typeof(F), typeof(F));
 
-        internal static TernaryOp<T> EmitTernaryCellOp<T>(this IBufferToken dst, _OpIdentity id)
+        internal static TernaryOp<T> EmitTernaryCellOp<T>(this IBufferToken dst, OpIdentity id)
             where T : unmanaged
                 => (TernaryOp<T>)dst.EmitTernaryCellOp(id,typeof(TernaryOp<T>), typeof(T));
     }

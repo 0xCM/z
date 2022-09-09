@@ -1,11 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(ProjectProps)\usings.props"/>
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>$(FrameworkMoniker)</TargetFramework>
   </PropertyGroup>
-
-  <Import Project="$(ProjectProps)\usings.props"/>
 
   <ItemGroup>
     <ProjectReference Include="$(ClrCil)" />

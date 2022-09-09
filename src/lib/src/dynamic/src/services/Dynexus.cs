@@ -31,7 +31,7 @@ namespace Z0
             => Diviner = diviner;
 
         [MethodImpl(Inline)]
-        _OpIdentity Identify(MethodInfo src)
+        OpIdentity Identify(MethodInfo src)
             => Diviner.Identify(src);
 
         U Unary => default;
@@ -131,91 +131,91 @@ namespace Z0
             => EmitTernaryOp<T>(src.Id, dst.Load(src.Encoded));
 
         [MethodImpl(Inline)]
-        UnaryOp8 Emit(_OpIdentity id, U f, W8 w, BufferToken dst)
+        UnaryOp8 Emit(OpIdentity id, U f, W8 w, BufferToken dst)
             => (UnaryOp8)Emit(id, f, typeof(UnaryOp8), typeof(Cell8), dst);
 
         [MethodImpl(Inline)]
-        UnaryOp16 Emit(_OpIdentity id, U f, W16 w, BufferToken dst)
+        UnaryOp16 Emit(OpIdentity id, U f, W16 w, BufferToken dst)
             => (UnaryOp16)Emit(id, f, typeof(UnaryOp16), typeof(Cell16), dst);
 
         [MethodImpl(Inline)]
-        UnaryOp32 Emit(_OpIdentity id, U f, W32 w, BufferToken dst)
+        UnaryOp32 Emit(OpIdentity id, U f, W32 w, BufferToken dst)
             => (UnaryOp32)Emit(id, f, typeof(UnaryOp32), typeof(Cell32), dst);
 
         [MethodImpl(Inline)]
-        UnaryOp64 Emit(_OpIdentity id, U f, W64 w, BufferToken dst)
+        UnaryOp64 Emit(OpIdentity id, U f, W64 w, BufferToken dst)
             => (UnaryOp64)Emit(id, f, typeof(UnaryOp64), typeof(Cell64), dst);
 
         [MethodImpl(Inline)]
-        UnaryOp128 Emit(BufferToken dst, _OpIdentity id, U f, N128 w)
+        UnaryOp128 Emit(BufferToken dst, OpIdentity id, U f, N128 w)
             => (UnaryOp128)Emit(id, f, typeof(UnaryOp128), typeof(Cell128), dst);
 
         [MethodImpl(Inline)]
-        UnaryOp256 Emit(BufferToken dst, _OpIdentity id, U f, N256 w)
+        UnaryOp256 Emit(BufferToken dst, OpIdentity id, U f, N256 w)
             => (UnaryOp256)Emit(id, f, typeof(UnaryOp256), typeof(Cell256), dst);
 
         [MethodImpl(Inline)]
-        BinaryOp8 Emit(BufferToken dst, _OpIdentity id, B f, W8 w)
+        BinaryOp8 Emit(BufferToken dst, OpIdentity id, B f, W8 w)
             => (BinaryOp8)Emit(id, f, typeof(BinaryOp8), typeof(Cell8), dst);
 
         [MethodImpl(Inline)]
-        BinaryOp16 Emit(BufferToken dst, _OpIdentity id, B f, W16 w)
+        BinaryOp16 Emit(BufferToken dst, OpIdentity id, B f, W16 w)
             => (BinaryOp16)Emit(id, f, typeof(BinaryOp16), typeof(Cell16), dst);
 
         [MethodImpl(Inline)]
-        BinaryOp32 Emit(BufferToken dst, _OpIdentity id, B f, W32 w)
+        BinaryOp32 Emit(BufferToken dst, OpIdentity id, B f, W32 w)
             => (BinaryOp32)Emit(id, f, typeof(BinaryOp32), typeof(Cell32), dst);
 
         [MethodImpl(Inline)]
-        BinaryOp64 Emit(BufferToken dst, _OpIdentity id, B f, W64 w)
+        BinaryOp64 Emit(BufferToken dst, OpIdentity id, B f, W64 w)
             => (BinaryOp64)Emit(id, f, typeof(BinaryOp64), typeof(Cell64), dst);
 
         [MethodImpl(Inline)]
-        BinaryOp128 Emit(_OpIdentity id, B f, N128 w, BufferToken dst)
+        BinaryOp128 Emit(OpIdentity id, B f, N128 w, BufferToken dst)
             => (BinaryOp128)Emit(id, f, typeof(BinaryOp128), typeof(Cell128), dst);
 
         [MethodImpl(Inline)]
-        BinaryOp256 Emit(_OpIdentity id, B f, N256 w, BufferToken dst)
+        BinaryOp256 Emit(OpIdentity id, B f, N256 w, BufferToken dst)
             => (BinaryOp256)Emit(id, f, typeof(BinaryOp256), typeof(Cell256), dst);
 
         [MethodImpl(Inline)]
-        CellDelegate Emit(_OpIdentity id, U f, Type operatorType, Type operandType, BufferToken dst)
+        CellDelegate Emit(OpIdentity id, U f, Type operatorType, Type operandType, BufferToken dst)
             => Emit(id, functype:operatorType, result:operandType,
                     args:core.array(operandType, operandType), dst.Handle);
 
         [MethodImpl(Inline)]
-        CellDelegate Emit(_OpIdentity id, B f, Type operatorType, Type operandType, BufferToken dst)
+        CellDelegate Emit(OpIdentity id, B f, Type operatorType, Type operandType, BufferToken dst)
             => Emit(id, functype:operatorType, result:operandType,
                     args:core.array(operandType, operandType), dst.Handle);
 
         [MethodImpl(Inline)]
-        UnaryOp<T> EmitUnaryOp<T>(_OpIdentity id, BufferToken dst)
+        UnaryOp<T> EmitUnaryOp<T>(OpIdentity id, BufferToken dst)
             where T : unmanaged
                 => (UnaryOp<T>)EmitUnaryOp(id, typeof(UnaryOp<T>), typeof(T), dst);
 
         [MethodImpl(Inline)]
-        BinaryOp<T> EmitBinaryOp<T>(_OpIdentity id, BufferToken dst)
+        BinaryOp<T> EmitBinaryOp<T>(OpIdentity id, BufferToken dst)
             where T : unmanaged
                 => (BinaryOp<T>)EmitBinaryOp(id, typeof(BinaryOp<T>), typeof(T), dst);
 
         [MethodImpl(Inline)]
-        TernaryOp<T> EmitTernaryOp<T>(_OpIdentity id, BufferToken dst)
+        TernaryOp<T> EmitTernaryOp<T>(OpIdentity id, BufferToken dst)
             where T : unmanaged
                 => (TernaryOp<T>)EmitTernaryOp(id,typeof(TernaryOp<T>), typeof(T), dst);
 
         [MethodImpl(Inline)]
-        CellDelegate EmitUnaryOp(_OpIdentity id, Type operatorType, Type operandType, BufferToken dst)
+        CellDelegate EmitUnaryOp(OpIdentity id, Type operatorType, Type operandType, BufferToken dst)
             => Emit(id, functype: operatorType, result: operandType, args: core.array(operandType), dst.Handle);
 
         [MethodImpl(Inline)]
-        CellDelegate EmitBinaryOp(_OpIdentity id, Type operatorType, Type operandType, BufferToken dst)
+        CellDelegate EmitBinaryOp(OpIdentity id, Type operatorType, Type operandType, BufferToken dst)
             => Emit(id, functype:operatorType, result:operandType, args: core.array(operandType, operandType), dst.Handle);
 
         [MethodImpl(Inline)]
-        CellDelegate EmitTernaryOp(_OpIdentity id, Type operatorType, Type operandType, BufferToken dst)
+        CellDelegate EmitTernaryOp(OpIdentity id, Type operatorType, Type operandType, BufferToken dst)
             => Emit(id, functype:operatorType, result:operandType, args: core.array(operandType, operandType, operandType), dst.Handle);
 
-        CellDelegate Emit(_OpIdentity id, Type functype, Type result, Type[] args, IntPtr dst)
+        CellDelegate Emit(OpIdentity id, Type functype, Type result, Type[] args, IntPtr dst)
         {
             var method = new DynamicMethod(id, result, args, functype.Module);
             var g = method.GetILGenerator();

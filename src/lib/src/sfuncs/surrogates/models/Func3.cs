@@ -13,10 +13,10 @@ namespace Z0
         {
             readonly System.Func<X0,X1,X2,R> F;
 
-            public _OpIdentity Id {get;}
+            public OpIdentity Id {get;}
 
             [MethodImpl(Inline)]
-            internal Func(System.Func<X0,X1,X2,R> f, _OpIdentity id)
+            internal Func(System.Func<X0,X1,X2,R> f, OpIdentity id)
             {
                 F = f;
                 Id = id;

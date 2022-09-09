@@ -78,7 +78,7 @@ namespace Z0
         /// <summary>
         /// Operation identifiers, each of which are associated with one or more code blocks
         /// </summary>
-        public Index<_OpUri> Identities
+        public Index<OpUri> Identities
         {
             [MethodImpl(Inline)]
             get => UriLocations.Identities;
@@ -87,7 +87,7 @@ namespace Z0
         /// <summary>
         /// Hosts with at least one archived code block
         /// </summary>
-        public Index<_ApiHostUri> Hosts
+        public Index<ApiHostUri> Hosts
         {
             [MethodImpl(Inline)]
             get => PartIndex.Hosts;
@@ -96,7 +96,7 @@ namespace Z0
         /// <summary>
         /// Hosts with at least one archived code block
         /// </summary>
-        public Index<_ApiHostUri> NonemptyHosts
+        public Index<ApiHostUri> NonemptyHosts
         {
             [MethodImpl(Inline)]
             get => PartIndex.Hosts.Where(h => h.IsNonEmpty);
@@ -107,13 +107,13 @@ namespace Z0
             => CodeAddresses[location];
 
         [MethodImpl(Inline)]
-        public bool Code(_OpUri uri, out ApiCodeBlock dst)
+        public bool Code(OpUri uri, out ApiCodeBlock dst)
         {
             return UriCode.TryGetValue(uri, out dst);
         }
 
         [MethodImpl(Inline)]
-        public ApiHostBlocks HostCodeBlocks(_ApiHostUri host)
+        public ApiHostBlocks HostCodeBlocks(ApiHostUri host)
         {
             if(PartIndex.HostCode(host, out var code))
                 return code;
@@ -131,7 +131,7 @@ namespace Z0
             get => Code(location);
         }
 
-        public ApiHostBlocks this[_ApiHostUri id]
+        public ApiHostBlocks this[ApiHostUri id]
         {
             [MethodImpl(Inline)]
             get => HostCodeBlocks(id);

@@ -17,9 +17,9 @@ namespace Z0
 
         public static MsgPattern<FolderPath> ObliteratedDirectory => "Consigned the directory {0} to oblivion";
 
-        public static MsgPattern<_ApiHostUri> EmittingHostRoutines => "Emitting {0} routines";
+        public static MsgPattern<ApiHostUri> EmittingHostRoutines => "Emitting {0} routines";
 
-        public static MsgPattern<Count,_ApiHostUri,_FileUri> EmittedHostRoutines => "Emitted {0} {1} routines to {2}";
+        public static MsgPattern<Count,ApiHostUri,_FileUri> EmittedHostRoutines => "Emitted {0} {1} routines to {2}";
 
         public static MsgPattern<Count> CreatingAsmRowsFromBlocks => "Creating AsmRows for {0} blocks";
 
@@ -31,9 +31,9 @@ namespace Z0
 
         public static MsgPattern<Count,PartName,ApiDecoderStats> DecodedPartRoutines => "Decoded {0} {1} routines | {2}";
 
-        public static MsgPattern<_ApiHostUri> DecodingHostRoutines => "Decoding {0} routines";
+        public static MsgPattern<ApiHostUri> DecodingHostRoutines => "Decoding {0} routines";
 
-        public static MsgPattern<Count,_ApiHostUri> DecodedHostRoutines => "Decoded {0} {1} routines";
+        public static MsgPattern<Count,ApiHostUri> DecodedHostRoutines => "Decoded {0} {1} routines";
 
         public static MsgPattern<Count,Count> DecodedMachine => "Decoded {0} routines from {1} parts";
 
@@ -41,7 +41,7 @@ namespace Z0
 
         public static MsgPattern<Count> CollectedBitstrings => "Collecting {0} distinct bitstrings";
 
-        public static MsgPattern<Count,_ApiHostUri> DecodedHostMembers => "Decoded {0} {1} members";
+        public static MsgPattern<Count,ApiHostUri> DecodedHostMembers => "Decoded {0} {1} members";
 
         public static MsgPattern<Count> ExtractingResolved => "Extracting data for {0} resolved parts";
 
@@ -49,15 +49,15 @@ namespace Z0
 
         public static MsgPattern<Count> CreatedStatements => "Created {0} statements";
 
-        public static MsgPattern<_OpUri> TerminalNotFound => "Terminal for {0} not found";
+        public static MsgPattern<OpUri> TerminalNotFound => "Terminal for {0} not found";
 
-        public static MsgPattern<_ApiHostUri,Count> RunningHostEmissionWorkflow => "Running {0} emission workflow for {1} members";
+        public static MsgPattern<ApiHostUri,Count> RunningHostEmissionWorkflow => "Running {0} emission workflow for {1} members";
 
-        public static MsgPattern<Count,_ApiHostUri> ParsedExtractBlocks => "Parsed {0} {1} extract blocks";
+        public static MsgPattern<Count,ApiHostUri> ParsedExtractBlocks => "Parsed {0} {1} extract blocks";
 
-        public static MsgPattern<_ApiHostUri> CreatingApiStatements => "Creating {0} host api statements";
+        public static MsgPattern<ApiHostUri> CreatingApiStatements => "Creating {0} host api statements";
 
-        public static MsgPattern<_ApiHostUri,Count> CreatedApiStatements => "Created {0} {1} host api statement";
+        public static MsgPattern<ApiHostUri,Count> CreatedApiStatements => "Created {0} {1} host api statement";
 
         public static MsgPattern<Count,Count,_FileUri> ParsedStatements => "Parsed {0} full rows and {1} partial rows from {2}";
 

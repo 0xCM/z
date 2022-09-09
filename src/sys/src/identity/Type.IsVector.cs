@@ -12,6 +12,6 @@ namespace Z0
         /// <param name="t">The type to test</param>
         [Op]
         public static bool IsVector(this Type t)
-            => _OpIdentity.IsVector(t);
+            => OpIdentity.IsVector(t);
     }
 }

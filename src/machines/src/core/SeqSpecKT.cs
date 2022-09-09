@@ -13,7 +13,7 @@ namespace Z0
         where T : unmanaged
         where K : unmanaged
     {
-        public ulong Compute(Action<K,T> receiver)
+        public ulong Compute(Action<K,T> dst)
         {
             var counter=0ul;
             var j = default(K);
@@ -21,7 +21,7 @@ namespace Z0
             for(;;)
             {
                  @continue = Next(ref j, out var t);
-                 receiver(j, t);
+                 dst(j, t);
                  counter++;
                  if(!@continue)
                     break;
@@ -30,36 +30,5 @@ namespace Z0
         }
 
         protected abstract bool Next(ref K k, out T dst);
-    }
-
-    public readonly partial struct SeqSpecs
-    {
-        public static FiniteSeq32u finite(Interval<uint> limits, Func<uint,uint> rule)
-            => new FiniteSeq32u(limits,rule);
-
-        public sealed class FiniteSeq32u : SeqSpec<uint, uint>
-        {
-            public Interval<uint> Limits;
-
-            public uint Min {get;}
-
-            public uint Max {get;}
-
-            readonly Func<uint,uint> Rule;
-
-            public FiniteSeq32u(Interval<uint> limits, Func<uint,uint> rule)
-            {
-                Limits = limits;
-                Min = Limits.LeftClosed ? Limits.Left : Limits.Left + 1;
-                Max = Limits.RightClosed ? Limits.Right : Limits.Right - 1u;
-                Rule = rule;
-            }
-
-            protected override bool Next(ref uint k, out uint dst)
-            {
-                dst = Rule(k++);
-                return k < Max;
-            }
-        }
     }
 }

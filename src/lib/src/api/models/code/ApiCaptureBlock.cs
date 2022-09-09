@@ -13,7 +13,7 @@ namespace Z0
 
         public CodeBlock Parsed;
 
-        public _OpUri OpUri;
+        public OpUri OpUri;
 
         public MethodInfo Method;
 
@@ -53,7 +53,7 @@ namespace Z0
              get => new ApiCodeBlock(BaseAddress, OpUri, Parsed);
         }
 
-        public _OpIdentity MemberId
+        public OpIdentity MemberId
         {
             [MethodImpl(Inline)]
             get => OpUri.OpId;

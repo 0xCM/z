@@ -14,13 +14,13 @@ namespace Z0
             readonly System.Func<X0,X1,R> F;
 
             [MethodImpl(Inline)]
-            internal Func(System.Func<X0,X1,R> f, _OpIdentity id)
+            internal Func(System.Func<X0,X1,R> f, OpIdentity id)
             {
                 F = f;
                 Id = id;
             }
 
-            public _OpIdentity Id {get;}
+            public OpIdentity Id {get;}
 
             [MethodImpl(Inline)]
             public R Invoke(X0 x0, X1 x1)

@@ -47,7 +47,7 @@ namespace Z0
         FilePath ExtractPath(PartId part, FileKind kind)
             => Extracts().Path(FS.file(part.Format(), kind));
 
-        FilePath ExtractPath(_ApiHostUri host, FileKind kind)
+        FilePath ExtractPath(ApiHostUri host, FileKind kind)
             => Extracts().Path(ApiFiles.file(host, kind));
 
         Files HexExtracts()
@@ -80,16 +80,16 @@ namespace Z0
         FilePath AsmExtractPath(PartId part)
             => ExtractPath(part, FileKind.Asm);
 
-        FilePath MsilPath(_ApiHostUri host)
+        FilePath MsilPath(ApiHostUri host)
             => Extracts().Path(ApiFiles.hostfile(host,FileKind.Il.Ext()));
 
-        FilePath HexExtractPath(_ApiHostUri src)
+        FilePath HexExtractPath(ApiHostUri src)
             => ExtractPath(src, FileKind.HexDat);
 
-        FilePath CsvExtractPath(_ApiHostUri src)
+        FilePath CsvExtractPath(ApiHostUri src)
             => ExtractPath(src, FileKind.Csv);
 
-        FilePath AsmExtractPath(_ApiHostUri src)
+        FilePath AsmExtractPath(ApiHostUri src)
             => ExtractPath(src, FileKind.Asm);
 
         FileName RegionFile()

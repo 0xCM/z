@@ -7,7 +7,7 @@ namespace Z0
     public interface IMessageSink : ISink<IAppMsg>
     {
         void Deposit(IEnumerable<IAppMsg> msg)
-            => Algs.iter(msg, Deposit);
+            => sys.iter(msg, Deposit);
 
         void Notify(string msg, LogLevel? kind = null)
             => Deposit(AppMsg.define(msg, kind ?? LogLevel.Status));

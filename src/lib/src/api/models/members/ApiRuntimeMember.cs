@@ -25,7 +25,7 @@ namespace Z0
         public MethodDisplaySig DisplaySig;
 
         [Render(1)]
-        public _OpUri Uri;
+        public OpUri Uri;
 
         [MethodImpl(Inline)]
         public int CompareTo(ApiRuntimeMember src)

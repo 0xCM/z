@@ -125,7 +125,7 @@ namespace Z0.Asm
             return routine(uri, src.Sig.Format(), asm, r => AsmFormatter.format(r, AsmFormatter.header(src), AsmFormat));
         }
 
-        public AsmHostRoutines Decode(_ApiHostUri uri, ReadOnlySpan<MemberCodeBlock> src)
+        public AsmHostRoutines Decode(ApiHostUri uri, ReadOnlySpan<MemberCodeBlock> src)
         {
             try
             {
@@ -235,7 +235,7 @@ namespace Z0.Asm
         Outcome Decode(ApiCodeBlock src, Action<IceInstruction> f, out IceInstructionList dst)
             => Decode(src.OpUri, new CodeBlock(src.BaseAddress, src.Data), f, out dst);
 
-        Outcome Decode(_OpUri uri, BinaryCode code, MemoryAddress @base, out AsmInstructionBlock dst)
+        Outcome Decode(OpUri uri, BinaryCode code, MemoryAddress @base, out AsmInstructionBlock dst)
         {
             dst = AsmInstructionBlock.Empty;
             if(code.IsEmpty)
@@ -247,7 +247,7 @@ namespace Z0.Asm
             }
         }
 
-        Outcome Decode(_OpUri uri, CodeBlock src, Action<Asm.IceInstruction> f, out IceInstructionList dst)
+        Outcome Decode(OpUri uri, CodeBlock src, Action<Asm.IceInstruction> f, out IceInstructionList dst)
         {
             dst = IceInstructionList.Empty;
             try
@@ -299,7 +299,7 @@ namespace Z0.Asm
             return decoder;
         }
 
-        static AsmRoutine routine(_OpUri uri, string sig, ApiBlockAsm src, Func<AsmRoutine,string> render = null, bool check = false)
+        static AsmRoutine routine(OpUri uri, string sig, ApiBlockAsm src, Func<AsmRoutine,string> render = null, bool check = false)
         {
             var count = src.InstructionCount;
             var buffer = new AsmInstructionInfo[count];

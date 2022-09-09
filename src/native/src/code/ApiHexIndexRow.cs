@@ -25,6 +25,6 @@ namespace Z0
         public string MethodName;
 
         [Render(120)]
-        public _OpUri Uri;
+        public OpUri Uri;
     }
 }

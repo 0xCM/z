@@ -26,10 +26,10 @@ namespace Z0
         {
             readonly D.SpanProducer<T> F;
 
-            public _OpIdentity Id {get;}
+            public OpIdentity Id {get;}
 
             [MethodImpl(Inline)]
-            public SpanProducer(D.SpanProducer<T> f, _OpIdentity id)
+            public SpanProducer(D.SpanProducer<T> f, OpIdentity id)
             {
                 F = f;
                 Id = id;

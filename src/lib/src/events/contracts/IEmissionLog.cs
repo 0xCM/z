@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     public interface IEmissionLog : IDisposable, IEventSink<EmittedFileEvent>, IEventSink<EmittedTableEvent>
     {
         FilePath TargetPath {get;}

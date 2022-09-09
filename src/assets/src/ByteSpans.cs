@@ -43,7 +43,7 @@ namespace Z0
             where E : unmanaged, Enum
                 => new SymSpan<E>(name, literals, @static);
         [Op]
-        public static ByteSpanSpec specify(_OpUri uri, BinaryCode data, bool @static = true)
+        public static ByteSpanSpec specify(OpUri uri, BinaryCode data, bool @static = true)
             => new ByteSpanSpec(LegalIdentityBuilder.code(uri.OpId), data, @static);
 
         public static Index<ReflectedByteSpan> reflected(Type[] src)

@@ -16,7 +16,7 @@ namespace Z0
         /// <param name="dst">The dynamic method</param>
         /// <typeparam name="D">The target delegate type</typeparam>
         [MethodImpl(Inline)]
-        public static DynamicDelegate<D> dynamic<D>(_OpIdentity id, MethodInfo src, DynamicMethod dst)
+        public static DynamicDelegate<D> dynamic<D>(OpIdentity id, MethodInfo src, DynamicMethod dst)
             where D : Delegate
                 => new DynamicDelegate<D>(id, src, dst, (D)dst.CreateDelegate(typeof(D)));
 
@@ -28,7 +28,7 @@ namespace Z0
         /// <param name="dst">The dynamic method</param>
         /// <param name="@delegate">The target delegate type</param>
         [MethodImpl(Inline), Op]
-        public static DynamicDelegate dynamic(_OpIdentity id, MethodInfo src, DynamicMethod dst, Type @delegate)
+        public static DynamicDelegate dynamic(OpIdentity id, MethodInfo src, DynamicMethod dst, Type @delegate)
             => new DynamicDelegate(id, src, dst, dst.CreateDelegate(@delegate));
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Z0
         /// <param name="dst">The dynamic method</param>
         /// <param name="@delegate">The target delegate type</param>
         [MethodImpl(Inline), Op]
-        public static DynamicDelegate dynamic(_OpIdentity id, MethodInfo src, DynamicMethod dst, Delegate op)
+        public static DynamicDelegate dynamic(OpIdentity id, MethodInfo src, DynamicMethod dst, Delegate op)
             => new DynamicDelegate(id, src, dst, op);
     }
 }

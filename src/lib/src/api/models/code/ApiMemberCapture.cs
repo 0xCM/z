@@ -20,7 +20,7 @@ namespace Z0
             Code = code;
         }
 
-        public _OpUri Uri
+        public OpUri Uri
         {
             [MethodImpl(Inline)]
             get => Member.OpUri;

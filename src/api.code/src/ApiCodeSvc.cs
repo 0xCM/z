@@ -11,7 +11,7 @@ namespace Z0
         public ReadOnlySeq<ApiHexIndexRow> EmitHexIndex(SortedIndex<ApiCodeBlock> src, IApiPack dst)
             => EmitIndex(SortedSpans.define(src.Storage), dst.Targets().Path("api.index", FileKind.Csv));
 
-        public Index<ApiCodeRow> EmitApiHex(_ApiHostUri uri, ReadOnlySpan<MemberCodeBlock> src, IApiPack dst)
+        public Index<ApiCodeRow> EmitApiHex(ApiHostUri uri, ReadOnlySpan<MemberCodeBlock> src, IApiPack dst)
             => EmitApiCode(uri, src, dst.HexExtractPath(uri));
 
         public ConstLookup<FilePath,MemoryBlocks> LoadMemoryBlocks(Files src)
@@ -41,7 +41,7 @@ namespace Z0
         }
 
         [Op]
-        public Index<ApiCodeRow> EmitApiCode(_ApiHostUri uri, ReadOnlySpan<MemberCodeBlock> src, FilePath dst)
+        public Index<ApiCodeRow> EmitApiCode(ApiHostUri uri, ReadOnlySpan<MemberCodeBlock> src, FilePath dst)
         {
             var count = src.Length;
             if(count != 0)

@@ -10,29 +10,29 @@ namespace Z0
     {
         const NumericKind Closure = UnsignedInts;
         [Op]
-        public static _ApiHostUri ApiHostUri(this Type host)
+        public static ApiHostUri ApiHostUri(this Type host)
         {
             if(host != null)
             {
                 var tag = host.Tag<ApiHostAttribute>();
                 var name = ifempty(tag.MapValueOrDefault(x => x.HostName), host.Name).ToLower();
                 var owner = host.Assembly.Id();
-                return new _ApiHostUri(owner, name);
+                return new ApiHostUri(owner, name);
             }
             else
-                return Z0._ApiHostUri.Empty;
+                return Z0.ApiHostUri.Empty;
         }
 
-        public static _ApiHostUri[] ApiHostUri(this Assembly src)
+        public static ApiHostUri[] ApiHostUri(this Assembly src)
         {
-            var dst = new List<_ApiHostUri>();
+            var dst = new List<ApiHostUri>();
             var types = src.Types().Tagged<ApiHostAttribute>();
             foreach(var t in types)
                 dst.Add(t.ApiHostUri());
             return dst.ToArray();
         }
 
-        public static _ApiHostUri[] ApiHostUri(this Assembly[] src)
+        public static ApiHostUri[] ApiHostUri(this Assembly[] src)
             => src.SelectMany(x => x.ApiHostUri());
     }
 }

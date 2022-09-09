@@ -26,7 +26,7 @@ namespace Z0
         /// Produces a test case identifier predicated on a parametrically-specialized label
         /// <param name="label">The case label</param>
         /// <typeparam name="T">The label specialization type</typeparam>
-        public static _OpIdentity NumericId<T>([CallerName] string label = null)
+        public static OpIdentity NumericId<T>([CallerName] string label = null)
             where T : unmanaged
                 => ApiIdentityBuilder.numeric($"{label}", typeof(T).NumericKind());
 
@@ -57,7 +57,7 @@ namespace Z0
         /// </summary>
         /// <param name="f">The left operation</param>
         /// <param name="g">The right operation</param>
-        public string match(_OpIdentity f, _OpIdentity g)
+        public string match(OpIdentity f, OpIdentity g)
              => match(HostType,f,g);
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Z0
         /// </summary>
         /// <param name="id">Identity of the operation under test</param>
         [Op]
-        public static string from(_OpUri uri)
+        public static string from(OpUri uri)
             => $"{uri.Part.Format()}{IDI.UriPathSep}{uri.Host.HostName}{IDI.UriPathSep}{uri.OpId}";
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Z0
         /// </summary>
         /// <param name="id">Identity of the operation under test</param>
         [Op]
-        public static string from(_ApiHostUri host, _OpIdentity id)
+        public static string from(ApiHostUri host, OpIdentity id)
             => $"{host.Part.Format()}{IDI.UriPathSep}{host.HostName}{IDI.UriPathSep}{id}";
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Z0
         /// </summary>
         /// <param name="id">Identity of the operation under test</param>
         [Op]
-        public static string from(Type host, _OpIdentity id)
+        public static string from(Type host, OpIdentity id)
             => $"{PartNames.name(host)}{IDI.UriPathSep}{host.Name}{IDI.UriPathSep}{id.IdentityText}";
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Z0
         /// </summary>
         /// <param name="f">The left operation</param>
         /// <param name="g">The right operation</param>
-        public static string match(Type host, _OpIdentity f, _OpIdentity g)
+        public static string match(Type host, OpIdentity f, OpIdentity g)
              => identify(host, $"{f.IdentityText}_vs_{g.IdentityText}");
    }
 }

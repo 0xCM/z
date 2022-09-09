@@ -54,5 +54,23 @@ namespace Z0
                 result = Name.CompareTo(src.Name);
             return result;
         }
+
+        public static IntelIntrinsicRecord empty()
+        {
+            var dst = default(IntelIntrinsicRecord);
+            dst.Key = 0;
+            dst.Name = EmptyString;
+            dst.CpuId = new (sys.empty<CpuId>());
+            dst.FormId = 0;
+            dst.InstForm = InstForm.Empty;
+            dst.InstClass = AmsInstClass.Empty;
+            dst.InstSig = Instruction.Empty;
+            dst.Types = new (sys.empty<InstructionType>());
+            dst.Category = EmptyString;
+            dst.Signature = DocSig.Empty;
+            return dst;
+        }
+
+        public static IntelIntrinsicRecord Empty => empty();
     }
 }

@@ -7,7 +7,7 @@ namespace Z0
     [StructLayout(LayoutKind.Sequential)]
     public readonly record struct ApiCodeBlockHeader
     {
-        public readonly _OpUri Uri;
+        public readonly OpUri Uri;
 
         public readonly @string DisplaySig;
 
@@ -16,7 +16,7 @@ namespace Z0
         public readonly ExtractTermCode TermCode;
 
         [MethodImpl(Inline)]
-        public ApiCodeBlockHeader(_OpUri uri, string sig, CodeBlock code, ExtractTermCode term)
+        public ApiCodeBlockHeader(OpUri uri, string sig, CodeBlock code, ExtractTermCode term)
         {
             Uri = uri;
             DisplaySig = sig;

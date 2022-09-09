@@ -31,7 +31,7 @@ namespace Z0
         /// <param name="t">An operand type representative to aid type inference</param>
         /// <typeparam name="T">The operand type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static UnaryPredicate<T> predicate<T>(D.UnaryPredicate<T> f, _OpIdentity id, T t = default)
+        public static UnaryPredicate<T> predicate<T>(D.UnaryPredicate<T> f, OpIdentity id, T t = default)
             => new UnaryPredicate<T>(f, id);
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Z0
         /// <param name="t">An operand type representative to aid type inference</param>
         /// <typeparam name="T">The operand type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static BinaryPredicate<T> predicate<T>(D.BinaryPredicate<T> f, _OpIdentity id, T t = default)
+        public static BinaryPredicate<T> predicate<T>(D.BinaryPredicate<T> f, OpIdentity id, T t = default)
             => new BinaryPredicate<T>(f,id);
     }
 }

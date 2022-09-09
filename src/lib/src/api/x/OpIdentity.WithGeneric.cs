@@ -13,7 +13,7 @@ namespace Z0
         /// Enables the generic indicator
         /// </summary>
         [Op]
-        public static _OpIdentity WithGeneric(this _OpIdentity src)
+        public static OpIdentity WithGeneric(this OpIdentity src)
         {
             if(src.Components.Skip(1).First()[0] == IDI.Generic)
                 return src;

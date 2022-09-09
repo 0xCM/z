@@ -53,14 +53,14 @@ namespace Z0
                 dst.tech = EmptyString;
                 dst.name = EmptyString;
                 dst.content = EmptyString;
-                dst.types = new InstructionTypes();
-                dst.CPUID = new CpuIdMembership();
+                dst.types = new ();
+                dst.CPUID = new ();
                 dst.category = EmptyString;
                 dst.@return = Return.Empty;
-                dst.parameters = new Parameters();
+                dst.parameters = new ();
                 dst.description = EmptyString;
-                dst.operation = new Operation(list<TextLine>());
-                dst.instructions = new Instructions();
+                dst.operation = new (list<TextLine>());
+                dst.instructions = new ();
                 dst.header = EmptyString;
                 return dst;
             }
