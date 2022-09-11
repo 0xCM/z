@@ -8,6 +8,7 @@ namespace Z0
 
     using api = Sized;
 
+
     public readonly struct NativeSize
     {
         public static NativeSize W8 => N.W8;

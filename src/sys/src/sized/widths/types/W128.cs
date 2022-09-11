@@ -15,7 +15,7 @@ namespace Z0
     /// <summary>
     /// Defines a type-level representation of <see cref='DW.W128'/> with a <see cref='TypeSign'/> classifier
     /// </summary>
-    public readonly struct W128 : IVectorWidth<W>, WType<W>
+    public readonly struct W128 : IVectorWidth<W>, INativeSize<W>
     {
         public const DW Width = DW.W128;
 

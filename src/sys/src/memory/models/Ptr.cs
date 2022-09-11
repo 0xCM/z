@@ -32,6 +32,11 @@ namespace Z0
             => P == src.P;
 
         [MethodImpl(Inline)]
+        public Ptr<T> Cast<T>()
+            where T : unmanaged
+                => (T*)P;
+
+        [MethodImpl(Inline)]
         public string Format()
             => Address.Format();
 

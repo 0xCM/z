@@ -53,7 +53,7 @@ namespace Z0
     /// <typeparam name="K">The scalar result type</typeparam>
     [Free, SFx]
     public interface IVScalarFunc<W,V,T,K> : IFunc<V,K>
-        where W : unmanaged, WType<W>
+        where W : unmanaged, INativeSize<W>
         where V : struct
         where T : unmanaged
         where K : unmanaged

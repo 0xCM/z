@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Free = System.Security.SuppressUnmanagedCodeSecurityAttribute;
-
     [Free]
     public interface IBlockRelay128<S,T> : IBlockSource128<S>, IBlockSink128<T>
         where S : unmanaged

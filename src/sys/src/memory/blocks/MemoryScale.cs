@@ -6,6 +6,11 @@ namespace Z0
 {
     using api = MemoryScales;
 
+    public readonly record struct MemoryScale<T>
+        where T : unmanaged
+    {
+
+    }
     [DataWidth(4)]
     public readonly record struct MemoryScale : IComparable<MemoryScale>
     {

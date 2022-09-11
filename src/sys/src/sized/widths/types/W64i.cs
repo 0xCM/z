@@ -15,7 +15,7 @@ namespace Z0
     /// <summary>
     /// Defines a type-level representation of <see cref='DW.W64'/> with a <see cref='TSK'/> classifier
     /// </summary>
-    public readonly struct W64i : WNumeric<W>
+    public readonly struct W64i : WNumeric<W>, INativeSize<W>
     {
         public const DW Width = DW.W64;
 

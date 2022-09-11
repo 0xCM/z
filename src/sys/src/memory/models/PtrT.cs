@@ -65,6 +65,10 @@ namespace Z0
             => *x.P;
 
         [MethodImpl(Inline)]
+        public static T* operator ~(Ptr<T> x)
+            =>x.P;
+
+        [MethodImpl(Inline)]
         public static Ptr<T> operator ++(Ptr<T> x)
             => api.next(x);
 

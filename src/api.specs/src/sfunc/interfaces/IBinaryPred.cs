@@ -21,7 +21,7 @@ namespace Z0
     /// <typeparam name="V">The non-primal operand type</typeparam>
     [Free, SFx]
     public interface IBinaryPred<W,V> : IFunc, IFunc<V,V,bit>
-        where W : unmanaged, WType<W>
+        where W : unmanaged, INativeSize<W>
         where V : struct
     {
 
@@ -35,7 +35,7 @@ namespace Z0
     /// <typeparam name="T">The scalar type</typeparam>
     [Free, SFx]
     public interface IBinaryPred<W,V,T> : IBinaryPred<W,V>
-        where W : unmanaged, WType<W>
+        where W : unmanaged, INativeSize<W>
         where V : struct
     {
 

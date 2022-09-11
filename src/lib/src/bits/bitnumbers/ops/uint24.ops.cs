@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static uint24;
-    using static core;
+    using static sys;
 
     using U = uint24;
 

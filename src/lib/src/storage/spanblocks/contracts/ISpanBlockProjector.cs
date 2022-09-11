@@ -4,9 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Free = System.Security.SuppressUnmanagedCodeSecurityAttribute;
-
-
     [Free]
     public interface ISpanBlockProjector<W,S,T>
         where W : unmanaged, ITypeWidth

@@ -4,10 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
-    using Free = System.Security.SuppressUnmanagedCodeSecurityAttribute;
-
     [Free, SFx]
     public interface IBlockedUnaryPred8<T> : IBlockedFunc<W8,T>
         where T : unmanaged

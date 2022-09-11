@@ -4,8 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface WType<W> : ITypeWidth<W>
-        where W : struct, WType<W>
+    [Free]
+    public interface INativeSize<W> : ITypeWidth<W>
+        where W : struct, INativeSize<W>
     {
         NativeTypeWidth ITypeWidth.TypeWidth
             => Widths.type<W>();

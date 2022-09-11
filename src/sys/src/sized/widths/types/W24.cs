@@ -8,12 +8,11 @@ namespace Z0
     using TSK = TypeSignKind;
     using TW = NativeTypeWidth;
     using W = W24;
-    using N = N24;
 
     /// <summary>
     /// Defines a type-level representation of <see cref='DW.W24'/>
     /// </summary>
-    public readonly struct W24 : WType<W>
+    public readonly struct W24 : IDataWidth<W>
     {
         public const DW Width = DW.W24;
 

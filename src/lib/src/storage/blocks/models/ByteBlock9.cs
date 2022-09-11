@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    using static Spans;
+    using static sys;
 
     using B = ByteBlock9;
     using api = Storage;
@@ -13,7 +12,7 @@ namespace Z0
     /// <summary>
     /// 9 bytes of storage
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, Pack=1), DataWidth(Size*8,Size*8)]
+    [StructLayout(LayoutKind.Sequential, Pack=1)]
     public struct ByteBlock9 : IStorageBlock<B>
     {
         public const ushort Size = 9;

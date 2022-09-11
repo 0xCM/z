@@ -16,7 +16,7 @@ namespace Z0
     /// <summary>
     /// Defines a type-level representation of <see cref='DW.W256'/>
     /// </summary>
-    public readonly struct W256 : IVectorWidth<W>, WType<W>
+    public readonly struct W256 : IVectorWidth<W>, INativeSize<W>
     {
         public const DW Width = DW.W256;
 

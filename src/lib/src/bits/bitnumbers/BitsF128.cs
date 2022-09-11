@@ -24,7 +24,7 @@ namespace Z0
         [MethodImpl(Inline)]
         internal BitsF128(decimal src)
         {
-            Data = core.@as<decimal,Vector128<ulong>>(src);
+            Data = sys.@as<decimal,Vector128<ulong>>(src);
         }
     }
 }

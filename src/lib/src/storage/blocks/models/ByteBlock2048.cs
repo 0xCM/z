@@ -4,14 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    using static Spans;
+    using static sys;
 
     using B = ByteBlock2048;
     using api = Storage;
 
     [StructLayout(LayoutKind.Sequential, Size = (int)Size, Pack=1), DataTypeAttributeD("block<n:2048,t:u8>")]
-    [DataWidth(Size*8,Size*8)]
     public struct ByteBlock2048 : IStorageBlock<B>
     {
         public const ushort Size = 2048;

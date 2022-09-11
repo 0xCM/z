@@ -4,12 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     /// <summary>
     /// Defines a span of contiguous memory that can be evenly partitioned into 8, 16, 32, 64, 128, 256 and 512-bit segments
     /// </summary>
-    [SpanBlock(NativeTypeWidth.W512, SpanBlockKind.Sb512), DataTypeAttributeD("spanblock<w:512,t:{0}>")]
+    [SpanBlock(NativeTypeWidth.W512, SpanBlockKind.Sb512)]
     public readonly ref struct SpanBlock512<T>
         where T : unmanaged
     {

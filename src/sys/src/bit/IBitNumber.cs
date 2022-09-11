@@ -4,32 +4,23 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    [Free]
     public interface IBitNumber : IHashed, IBits
     {
-        Span<bit> _Bits
-            => throw new NotImplementedException();
-
-        void Bits<B>(B dst)
-            where B : unmanaged, IStorageBlock<B>
-        {
-            var src = sys.recover<bit,byte>(_Bits);
-            var buffer = dst.Bytes;
-            for(var i=0; i<Width; i++)
-                sys.seek(buffer,i) = sys.skip(src,i);
-        }
-
         bool IsZero {get;}
 
         bool IsNonZero
             => !IsZero;
     }
 
+    [Free]
     public interface IBitNumber<F> : IBitNumber, IEquatable<F>, IComparable<F>
         where F : unmanaged, IBitNumber<F>
     {
 
     }
 
+    [Free]
     public interface IBitNumber<F,T> : IBitNumber<F>, INullary<F,T>, IHashed, IBits<T>
         where F : unmanaged, IBitNumber<F,T>
         where T : unmanaged
@@ -37,6 +28,7 @@ namespace Z0
 
     }
 
+    [Free]
     public interface IBitNumber<F,W,T> : IBitNumber<F,T>
         where F : unmanaged, IBitNumber<F,W,T>
         where W : unmanaged, IDataWidth
@@ -45,6 +37,7 @@ namespace Z0
 
     }
 
+    [Free]
     public interface IBitNumber<F,W,K,T> : IBitNumber<F,W,T>
         where F : unmanaged, IBitNumber<F,W,K,T>
         where W : unmanaged, IDataWidth

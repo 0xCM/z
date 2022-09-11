@@ -13,7 +13,7 @@ namespace Z0
             => (NativeVectorWidth)BitWidth;
     }
 
-    public interface IVectorWidth<F> : IVectorWidth, ICellWidth<F>, IFixedWidth<F>
+    public interface IVectorWidth<F> : IVectorWidth, ICellWidth<F>, INativeSize<F>
         where F : unmanaged, IVectorWidth<F>
     {
 

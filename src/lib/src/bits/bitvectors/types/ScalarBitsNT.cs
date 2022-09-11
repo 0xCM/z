@@ -49,7 +49,7 @@ namespace Z0
         public static T MaxValue
         {
             [MethodImpl(Inline)]
-            get => force<ulong,T>(NatCalc.pow2m1<N>());
+            get => force<ulong,T>(Pow2.m1<N>());
         }
 
         public static T Zero => default;

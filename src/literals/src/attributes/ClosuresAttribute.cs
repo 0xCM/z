@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
     using System.Linq;
 
     public class ClosuresAttribute : Attribute
@@ -44,12 +43,12 @@ namespace Z0
             Kind = TypeClosureKind.Numeric;
         }
 
-        public ClosuresAttribute(CpuCellWidth spec)
-            : this()
-        {
-            Spec = (ulong)spec;
-            Kind = TypeClosureKind.Fixed;
-        }
+        // public ClosuresAttribute(CpuCellWidth spec)
+        //     : this()
+        // {
+        //     Spec = (ulong)spec;
+        //     Kind = TypeClosureKind.Fixed;
+        // }
 
         public ClosuresAttribute(NatClosureKind spec, params ulong[] values)
             : this()

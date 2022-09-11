@@ -14,7 +14,7 @@ namespace Z0
     /// <summary>
     /// Defines a type-level representation of <see cref='DW.W1024'/>
     /// </summary>
-    public readonly struct W1024 : IFixedWidth<W>
+    public readonly struct W1024 : IDataWidth<W>
     {
         public const DW Width = DW.W1024;
 
