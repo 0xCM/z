@@ -4,13 +4,17 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
-    [ApiHost]
-    public class ClrStructs
+    public unsafe readonly struct CorSig
     {
+        readonly byte* Data;
 
-        [MethodImpl(Inline), Op]
-        public static ClrStructAdapter adapt(Type src)
-            => new ClrStructAdapter(src);
+        readonly ushort Size;
+
+        [MethodImpl(Inline)]
+        public CorSig(byte* pSrc, ushort size)
+        {
+            Data = pSrc;
+            Size = size;
+        }
     }
 }

@@ -9,6 +9,58 @@ namespace Z0
     public sealed class ClrMethodArtifact : IClrArtifact
     {
         [Op]
+        public static ClrTypeSigInfo siginfo(ParameterInfo src)
+        {
+            var dst = new ClrTypeSigInfo();
+            var type = src.ParameterType;
+            dst.DisplayName = type.HasElementType ? type.ElementType().DisplayName() : type.EffectiveType().DisplayName();
+            dst.IsOpenGeneric = type.IsGenericType && !type.IsConstructedGenericType;
+            dst.IsClosedGeneric = type.IsConstructedGenericType;
+            dst.IsByRef = type.IsRef();
+            dst.IsIn = src.IsIn;
+            dst.IsOut = src.IsOut;
+            dst.IsPointer = type.IsPointer;
+            dst.Modifier = dst.IsIn ? "in " : dst.IsOut ? "out " : dst.IsByRef ? "ref " : EmptyString;
+            dst.IsArray = type.IsArray;
+            return dst;
+        }
+
+        [Op]
+        public static ClrTypeSigInfo siginfo(Type type)
+        {
+            var dst = new ClrTypeSigInfo();
+            dst.DisplayName = type.HasElementType ? type.ElementType().DisplayName() : type.EffectiveType().DisplayName();
+            dst.IsOpenGeneric = type.IsGenericType && !type.IsConstructedGenericType;
+            dst.IsClosedGeneric = type.IsConstructedGenericType;
+            dst.IsByRef = type.IsRef();
+            dst.IsIn = false;
+            dst.IsOut = false;
+            dst.IsPointer = type.IsPointer;
+            dst.Modifier = dst.IsIn ? "in " : dst.IsOut ? "out " : dst.IsByRef ? "ref " : EmptyString;
+            dst.IsArray = type.IsArray;
+            return dst;
+        }
+
+        /// <summary>
+        /// Derives a signature from reflected method metadata
+        /// </summary>
+        /// <param name="src">The source method</param>
+        [Op]
+        public static ClrMethodArtifact from(MethodInfo src)
+        {
+            var dst = new ClrMethodArtifact();
+            dst.Id = src.MetadataToken;
+            dst.MethodName = src.DisplayName();
+            dst.DefiningAssembly = src.Module.Assembly;
+            dst.DefiningModule = src.Module.Name;
+            dst.DeclaringType = siginfo(src.DeclaringType);
+            dst.ReturnType = siginfo(src.ReturnType);
+            dst.Args = src.GetParameters().Select(p => new ClrParamInfo(siginfo(p), p.RefKind(), p.Name, (ushort)p.Position));
+            dst.TypeParameters = src.GenericParameters(false).Mapi((i,t) => t.DisplayName());
+            return dst;
+        }
+
+        [Op]
         public static string format(in ClrTypeSigInfo src)
         {
             const string P0 = "{0}{1}[]";

@@ -46,7 +46,7 @@ namespace Z0
         static byte[] GetByteArray(DynamicMethod src)
         {
             var ilgen = src.GetILGenerator();
-            var dst = Array.Empty<byte>();
+            var dst = sys.empty<byte>();
             try
             {
                 var baked = (byte[])s_miBakeByteArray.Invoke(ilgen, null);

@@ -8,10 +8,10 @@ namespace Z0
     {
         [Op]
         public static ClrTypeSigInfo SigInfo(this ParameterInfo src)
-            => Clr.siginfo(src);
+            => ClrMethodArtifact.siginfo(src);
 
         [Op]
         public static ClrTypeSigInfo SigInfo(this Type type)
-            => Clr.siginfo(type);
+            => ClrMethodArtifact.siginfo(type);
     }
 }

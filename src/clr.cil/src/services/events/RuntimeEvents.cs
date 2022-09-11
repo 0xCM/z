@@ -6,12 +6,13 @@ namespace Z0
 {
     using System.Diagnostics.Tracing;
 
-    using static RuntimeEvents;
-
-    partial class RuntimeObservers
+    public partial class RuntimeEvents
     {
+        public static ClrEventListener observe(FilePath log)
+            => new ClrEventListener(log);
+
         [MethodImpl(Inline), Op]
-        static ref MethodLoadEvent decode(EventWrittenEventArgs src, out MethodLoadEvent dst)
+        internal static ref MethodLoadEvent decode(EventWrittenEventArgs src, out MethodLoadEvent dst)
         {
             var data = src.Payload;
             var i=0;
@@ -29,21 +30,6 @@ namespace Z0
             dst.MethodID = (ulong)data[i++];
             dst.MethodID = (ulong)data[i++];
             return ref dst;
-        }
-
-        public sealed class MethodLoad : Observer<MethodLoadEvent>
-        {
-            public static MethodLoad observe(FilePath dst)
-                => new MethodLoad(dst);
-
-            public MethodLoad(FilePath log)
-                : base(MethodLoadEvent.Keyword, MethodLoadEvent.EventName, Demand.nonempty(log))
-            {
-
-            }
-
-            protected override MethodLoadEvent Decode(EventWrittenEventArgs src)
-                => decode(src, out MethodLoadEvent e);
         }
     }
 }

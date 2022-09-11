@@ -19,10 +19,10 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public ClrTypeLookup(V[] src)
-            => Data = new KeyedValues<K, V>(kf, src);
+            => Data = new KeyedValues<K,V>(kf, src);
 
         [MethodImpl(Inline)]
-        public ClrTypeLookup(KeyedValues<K, V> src)
+        public ClrTypeLookup(KeyedValues<K,V> src)
             => Data = src;
 
         public ref V this[in K id]

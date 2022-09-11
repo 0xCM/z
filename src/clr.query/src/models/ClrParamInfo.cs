@@ -9,13 +9,13 @@ namespace Z0
     /// </summary>
     public readonly struct ClrParamInfo
     {
-        public string Name {get;}
+        public readonly string Name;
 
-        public ushort Position {get;}
+        public readonly ushort Position;
 
-        public ClrTypeSigInfo Type {get;}
+        public readonly ClrTypeSigInfo Type;
 
-        public ClrParamModifierKind RefKind {get;}
+        public readonly ClrParamModifierKind RefKind;
 
         [MethodImpl(Inline)]
         public ClrParamInfo(ClrTypeSigInfo type, ClrParamModifierKind refkind, string name, ushort pos)

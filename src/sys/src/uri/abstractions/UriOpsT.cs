@@ -4,13 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
-    [ApiHost]
-    public class ClrStructs
+    public abstract class UriOps<T,U>
+        where T : UriOps<T,U>, new()
+        where U : IUri, new()
     {
 
-        [MethodImpl(Inline), Op]
-        public static ClrStructAdapter adapt(Type src)
-            => new ClrStructAdapter(src);
     }
 }

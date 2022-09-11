@@ -6,7 +6,7 @@ namespace Z0
 {
     using Asm;
 
-    using static core;
+    using static sys;
 
     public class ApiCapture : WfSvc<ApiCapture>
     {
@@ -78,7 +78,7 @@ namespace Z0
         }
 
         ClrEventListener OpenEventLog(Timestamp ts)
-            => ClrEventListener.create(AppDb.AppData().Path($"clr.events.{ts}", FileKind.Log));
+            => RuntimeEvents.observe(AppDb.AppData().Path($"clr.events.{ts}", FileKind.Log));
 
         void EmitAsm(ICompositeDispenser symbols, PartId part, ReadOnlySeq<ApiEncoded> src, IApiPack dst)
         {

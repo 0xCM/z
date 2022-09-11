@@ -10,16 +10,6 @@ namespace Z0
 
     using Level = System.Diagnostics.Tracing.EventLevel;
 
-    public partial class RuntimeEvents
-    {
-    }
-
-    [ApiHost]
-    public partial class RuntimeObservers
-    {
-
-    }
-
     public class ClrEventListener : EventListener, IDisposable
     {
         static void render(EventWrittenEventArgs src, ITextBuffer dst)
@@ -42,9 +32,6 @@ namespace Z0
             render(src,buffer);
             await Log.WriteLineAsync(buffer.Emit());
         }
-
-        public static ClrEventListener create(FilePath log)
-            => new ClrEventListener(log);
 
         HashSet<string> EventNames;
 

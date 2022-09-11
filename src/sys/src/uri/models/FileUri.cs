@@ -9,6 +9,7 @@ namespace Z0
     // URI = scheme ":" ["//" authority] path ["?" query] ["#" fragment]
     public sealed record class FileUri : Uri<FileUri,File>
     {
+
         public FileUri()
         {
 
@@ -22,5 +23,8 @@ namespace Z0
 
         public override string ToString()
             => $"{Scheme}://{Data.PathAndQuery}";
+
+        public string LocalPath
+            => Data.LocalPath;
     }
 }

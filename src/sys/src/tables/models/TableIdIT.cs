@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     public readonly struct TableId<I,T> : ITableId
         where T : struct, IRecord<T>
         where I : unmanaged

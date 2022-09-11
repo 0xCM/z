@@ -103,18 +103,4 @@ namespace Z0
             return result;
         }
     }
-
-    public unsafe readonly struct CorSig
-    {
-        readonly byte* Data;
-
-        readonly ushort Size;
-
-        [MethodImpl(Inline)]
-        public CorSig(byte* pSrc, ushort size)
-        {
-            Data = pSrc;
-            Size = size;
-        }
-    }
 }

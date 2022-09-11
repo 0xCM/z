@@ -14,7 +14,7 @@ namespace Z0
             dst = Empty;
             if(src.Length == 1)
             {
-                 var c = (AsciCode)core.first(src);
+                 var c = (AsciCode)sys.first(src);
                  switch(c)
                  {
                      case AsciCode.i:
@@ -34,7 +34,7 @@ namespace Z0
 
         [Parser]
         public static bool parse(string src, out C dst)
-            => parse(core.span(src), out dst);
+            => parse(sys.span(src), out dst);
 
         public static C Signed => K.Signed;
 

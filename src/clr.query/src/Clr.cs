@@ -8,14 +8,22 @@ namespace Z0
 
     class Clr
     {
-        /// <summary>
-        /// Defines a <see cref='ClrModuleAdapter'/> over a <see cref='Module'/>
-        /// </summary>
-        /// <param name="src">The source module</param>
-        /// <summary>
-        /// Defines a <see cref='ClrFieldAdapter'/> over a <see cref='FieldInfo'/>
-        /// </summary>
-        /// <param name="src">The source module</param>
+        [MethodImpl(Inline), Op]
+        public static FieldInfo field(Module src, CliToken token)
+            => src.ResolveField((int)token);
+
+        [MethodImpl(Inline), Op]
+        public static FieldInfo field(Type type, string name)
+            => type.GetField(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
+
+        [MethodImpl(Inline), Op]
+        public static MethodBase method(Module src, CliToken token)
+            => src.ResolveMethod((int)token);
+
+        [MethodImpl(Inline), Op]
+        public static MethodInfo method(Type type, string name)
+            => type.GetMethod(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
+
         [MethodImpl(Inline), Op]
         public static ClrFieldAdapter adapt(FieldInfo src)
             => src;

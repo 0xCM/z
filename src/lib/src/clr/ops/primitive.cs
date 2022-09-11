@@ -4,11 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static sys;
 
-    [ApiHost]
-    public class ClrPred
+    partial struct Clr
     {
-
         /// <summary>
         /// Determines whether a specified type is a system-defined primitive
         /// </summary>

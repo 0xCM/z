@@ -12,6 +12,6 @@ namespace Z0
         /// <param name="src">The source method</param>
         [Op]
         public static ClrMethodArtifact Artifact(this MethodInfo src)
-            => Clr.artifact(src);
+            => ClrMethodArtifact.from(src);
     }
 }

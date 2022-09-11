@@ -18,6 +18,5 @@ namespace Z0
         where L : ITextLine<L,T>
     {
 
-
     }
 }
