@@ -2,7 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="$(AsmCore)" />
-    <ProjectReference Include="$(Queues)" />
+    <ProjectReference Include="$(Process)" />
   </ItemGroup>
 
 </Project>

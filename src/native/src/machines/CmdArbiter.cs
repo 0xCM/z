@@ -6,7 +6,7 @@ namespace Z0
 {
     using System.Threading;
 
-    using static core;
+    using static sys;
 
     using Windows;
 

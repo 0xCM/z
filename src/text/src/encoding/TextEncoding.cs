@@ -155,5 +155,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public static implicit operator TextEncoding(Encoding src)
             => new TextEncoding(src);
+
+        public static TextEncoding Default => Utf8;
     }
 }

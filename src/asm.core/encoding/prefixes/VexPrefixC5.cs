@@ -71,7 +71,6 @@ namespace Z0.Asm
             get => (byte)R;
         }
 
-
         // ~ VVVV
 
         const byte VVVV_Mask = 0b0111_1000;

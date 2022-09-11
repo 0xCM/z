@@ -3,7 +3,6 @@
   <ItemGroup>
     <ProjectReference Include="$(Archives)" />
     <ProjectReference Include="$(Agents)" />
-    <ProjectReference Include="$(Queues)" />
   </ItemGroup>
 
 </Project>

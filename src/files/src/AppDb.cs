@@ -31,6 +31,9 @@ namespace Z0
         public DbArchive DevOps()
             => folder(_Settings.Setting(SettingNames.DevOps));
 
+        public DbArchive ProcDumps()
+            => folder(_Settings.Setting(SettingNames.ProcDumps));
+
         public DbArchive Archives()
             => EnvRoot().Scoped("archives");
 

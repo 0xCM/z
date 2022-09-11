@@ -22,5 +22,7 @@ namespace Z0
         public const string DevOps = nameof(DevOps);
 
         public const string Control = nameof(Control);
+
+        public const string ProcDumps = nameof(ProcDumps);
     }
 }

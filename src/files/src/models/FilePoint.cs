@@ -4,15 +4,15 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct FilePoint
+    public readonly record struct FilePoint
     {
         [MethodImpl(Inline), Op]
         public static FilePoint point(FilePath path, LineOffset offset)
             => new FilePoint(path,offset);
 
         [MethodImpl(Inline), Op]
-        public static FilePoint point(FilePath path, LineNumber line, uint col)
-            => new FilePoint(path, (line,col));
+        public static FilePoint point(FilePath path, Count line, Count col)
+            => new FilePoint(path, ((uint)line,(uint)col));
 
         public FilePath Path {get;}
 

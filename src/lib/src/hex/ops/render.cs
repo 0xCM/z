@@ -179,14 +179,14 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static uint render(LowerCased @case, Hex8 src, ref uint i, Span<char> dst, HexSpecKind spec)
+        public static uint render(LowerCased @case, Hex8 src, ref uint i, Span<char> dst, NumericSpecifier spec)
         {
             var i0 = i;
-            if(spec == HexSpecKind.PreSpec)
+            if(spec == NumericSpecifier.PreSpec)
                 prespec(ref i, dst);
             seek(dst, i++) = hexchar(@case, src.Hi);
             seek(dst, i++) = hexchar(@case, src.Lo);
-            if(spec == HexSpecKind.PostSpec)
+            if(spec == NumericSpecifier.PostSpec)
                 postspec(ref i, dst);
             return i - i0;
         }

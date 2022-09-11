@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     /// <summary>
     /// Defines a bit sequence representation compatible with both llvm and SMTLib 'FixedSizeBitVectors' theory

@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Queues>$(MsBuildThisFileDirectory)z0.queues.csproj</Queues>
+  </PropertyGroup>
+</Project>

@@ -74,6 +74,18 @@ namespace Z0
             get => new TimeSpan(Ticks);
         }
 
+        public ulong Seconds
+        {
+            [MethodImpl(Inline)]
+            get => (ulong)TimeSpan.TotalSeconds;
+        }
+
+        public ulong Minutes
+        {
+            [MethodImpl(Inline)]
+            get => (ulong)TimeSpan.TotalMinutes;
+        }
+
         [MethodImpl(Inline)]
         public bool Equals(Duration rhs)
             => this.Ticks == rhs.Ticks;

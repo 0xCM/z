@@ -109,7 +109,7 @@ namespace Z0
             error.Start();
 
             ObservationEmitter.WriteLine(ExecutingPart.Process.Id.ToString(CultureInfo.CurrentCulture));
-            ObservationEmitter.WriteLine(Process.Id.ToString(CultureInfo.CurrentCulture));           
+            ObservationEmitter.WriteLine(Process.Id);  
 
         }
         void OnExit(EventArgs e)
@@ -302,7 +302,7 @@ namespace Z0
                 error.Start();
 
                 PidStream.WriteLine(Process.GetCurrentProcess().Id.ToString(CultureInfo.CurrentCulture));
-                PidStream.WriteLine(ExeProcess.Id.ToString(CultureInfo.CurrentCulture));
+                PidStream.WriteLine(ExeProcess.Id.Format());
             }
             catch (Exception e)
             {

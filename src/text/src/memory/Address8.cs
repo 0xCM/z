@@ -64,8 +64,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public string Format()
-            => HexFormatter.format(Location, W, true);
-
+            => HexFormatter.format(Location, NumericSpecifier.PreSpec, LetterCaseKind.Lower, W);
 
         public override string ToString()
             => Format();

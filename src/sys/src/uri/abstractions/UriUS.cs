@@ -8,7 +8,7 @@ namespace Z0
         where U : Uri<U,S>, new()
         where S : unmanaged, IUriScheme        
     {
-        System.Uri Data;
+        protected System.Uri Data;
 
         public readonly S Scheme = default;
 

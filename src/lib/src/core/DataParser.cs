@@ -205,6 +205,13 @@ namespace Z0
         }
 
         [Parser]
+        public static Outcome parse(string src, out FileUri dst)
+        {
+            dst = FS.path(src);
+            return true;
+        }
+
+        [Parser]
         public static Outcome parse(string src, out BinaryCode dst)
         {
             var result = Hex.hexdata(src, out var data);

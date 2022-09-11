@@ -7,7 +7,7 @@ namespace Z0
     public sealed class EnvVars<T> : ReadOnlySeq<EnvVars<T>,EnvVar<T>>
         where T : IEquatable<T>
     {
-        readonly ConstLookup<Name,T> Lookup;
+        readonly ConstLookup<@string,T> Lookup;
 
         public EnvVars()
         {
@@ -18,13 +18,13 @@ namespace Z0
         public EnvVars(EnvVar<T>[] src)
             : base(src)
         {
-            Lookup = src.Select(x => (x.Name, x.Value)).ToDictionary();
+            Lookup = src.Map(x => (x.Name, x.Value)).ToDictionary();
         }
 
-        public bool Find(Name name, out T value)
+        public bool Find(string name, out T value)
             => Lookup.Find(name, out value);
 
-        public ReadOnlySpan<Name> Names
+        public ReadOnlySpan<@string> Names
         {
             [MethodImpl(Inline)]
             get => Lookup.Keys;

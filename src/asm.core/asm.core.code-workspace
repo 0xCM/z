@@ -4,10 +4,22 @@
 			"path": "../literals"
 		},
 		{
-			"path": "../part"
+			"path": "../sys"
 		},
 		{
-			"path": "../sys"
+			"path": "../hex"
+		},
+		{
+			"path": "../bit"
+		},
+		{
+			"path": "../text"
+		},
+		{
+			"path": "../api.specs"
+		},
+		{
+			"path": "../math"
 		},
 		{
 			"path": "../imagine"
@@ -22,6 +34,12 @@
 			"path": "../native"
 		},
 		{
+			"path": "../files"
+		},
+		{
+			"path": "../process"
+		},
+		{
 			"path": "../assets"
 		},
 		{
@@ -34,16 +52,28 @@
 			"path": "../numbers"
 		},
 		{
+			"path": "../clr.cil"
+		},
+		{
+			"path": "../dynamic"
+		},
+		{
+			"path": "../api.code"
+		},
+		{
+			"path": "../diagnostics"
+		},
+		{
 			"path": "../bits"
 		},
 		{
 			"path": "../asm.models"
 		},
 		{
-			"path": "../asm.operands"
+			"path": "."
 		},
 		{
-			"path": "."
+			"path": "../machines"
 		},
 	],
 	"settings": {}

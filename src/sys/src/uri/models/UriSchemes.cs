@@ -4,14 +4,35 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {   
+    [ApiHost]
     public class UriSchemes
     {        
+        [Op]
+        public static File file()
+            => new();
+
+        [Op]
+        public static Data data()
+            => new();
+
+        [Op]
+        public static Cmd cmd()
+            => new();
+
+        [Op]
+        public static Tool tool()
+            => new();
+
+        [Op]
+        public static Machine machine()
+            => new();
+
         /// <summary>
         /// https://en.wikipedia.org/wiki/File_URI_scheme
         /// </summary>
         public readonly struct File : IUriScheme
         {
-            public string Name => nameof(File);
+            public string Name => "file";
 
             public UriPartKind Kind => UriPartKind.Scheme;
 
@@ -27,7 +48,7 @@ namespace Z0
         /// </summary>
         public readonly struct Data : IUriScheme
         {
-            public string Name => nameof(Data);
+            public string Name => "data";
 
             public UriPartKind Kind => UriPartKind.Scheme;
 
@@ -40,7 +61,7 @@ namespace Z0
 
         public readonly struct Doc : IUriScheme
         {
-            public string Name => nameof(Doc);
+            public string Name => "doc";
 
             public UriPartKind Kind => UriPartKind.Scheme;
 
@@ -53,7 +74,7 @@ namespace Z0
 
         public readonly struct Cmd : IUriScheme
         {
-            public string Name => nameof(Cmd);
+            public string Name => "cmd";
 
             public UriPartKind Kind => UriPartKind.Scheme;
 
@@ -66,7 +87,7 @@ namespace Z0
 
         public readonly struct Tool : IUriScheme
         {
-            public string Name => nameof(Tool);
+            public string Name => "tool";
 
             public UriPartKind Kind => UriPartKind.Scheme;
 
@@ -79,7 +100,7 @@ namespace Z0
 
         public readonly struct Machine : IUriScheme
         {
-            public string Name => nameof(Machine);
+            public string Name => "machine";
 
             public UriPartKind Kind => UriPartKind.Scheme;
 
@@ -90,17 +111,17 @@ namespace Z0
                 => Format();
         }
 
-        public readonly struct Local : IUriScheme
-        {
-            public string Name => nameof(Local);
+        // public readonly struct Local : IUriScheme
+        // {
+        //     public string Name => nameof(Local);
 
-            public UriPartKind Kind => UriPartKind.Scheme;
+        //     public UriPartKind Kind => UriPartKind.Scheme;
 
-            public string Format()
-                => Name;
+        //     public string Format()
+        //         => Name;
 
-            public override string ToString()
-                => Format();
-        }       
+        //     public override string ToString()
+        //         => Format();
+        // }       
     }
 }

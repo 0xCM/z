@@ -80,7 +80,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public string Format()
-            => HexFormatter.format(Location, W, true);
+             => HexFormatter.format(Location, NumericSpecifier.PreSpec, LetterCaseKind.Lower, W);
 
         public string FormatTrimmed(bool prespec = false, bool postspec = false)
             => Location.FormatTrimmedHex(prespec, postspec);

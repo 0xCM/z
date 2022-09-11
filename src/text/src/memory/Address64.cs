@@ -76,7 +76,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public string Format()
-            => HexFormatter.format(Location, W, true);
+            => HexFormatter.format(Location, NumericSpecifier.PreSpec, LetterCaseKind.Lower, W);
 
         public string FormatMinimal()
             => Location.FormatTrimmedAsmHex();
@@ -95,7 +95,7 @@ namespace Z0
             => src.Location;
 
         [MethodImpl(Inline)]
-        public static explicit operator Address64(IntPtr src)
+        public static implicit operator Address64(IntPtr src)
             => (ulong)src.ToInt64();
 
         [MethodImpl(Inline)]

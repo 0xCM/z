@@ -4,7 +4,7 @@
 
   <ItemGroup>
     <ProjectReference Include="$(ApiCode)" />
-    <ProjectReference Include="$(Queues)" />
+    <ProjectReference Include="$(Process)" />
   </ItemGroup>
 
 </Project>

@@ -13,7 +13,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static MemoryAddress @base(string procname)
         {
-            var module = ImageMemory.modules(Process.GetCurrentProcess()).Where(m => Path.GetFileNameWithoutExtension(m.ImagePath.Name) == procname).First;
+            var module = ImageMemory.modules(Process.GetCurrentProcess()).Where(m => Path.GetFileNameWithoutExtension(m.ImagePath.ToFilePath().Name) == procname).First;
             return module.BaseAddress;
         }
     }

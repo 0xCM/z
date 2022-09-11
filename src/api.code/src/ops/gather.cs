@@ -6,10 +6,8 @@ namespace Z0
 {
     using Asm;
 
-    using static Algs;
-    using static Spans;
-    using static Arrays;
-
+    using static sys;
+    
     partial class ApiCode
     {
         [Op]

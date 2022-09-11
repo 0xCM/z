@@ -28,6 +28,9 @@ namespace Z0
 
             public ToolScripts ToolScripts(IWfRuntime wf)
                 => Service<ToolScripts>(wf);
+
+            public DevOpsSvc DevOps(IWfRuntime wf)
+                => Service<DevOpsSvc>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
@@ -52,5 +55,8 @@ namespace Z0
 
         public static ToolScripts ToolScripts(this IWfRuntime wf)
             => Services.ToolScripts(wf);
+
+        public static DevOpsSvc DevOps(this IWfRuntime wf)
+                => Services.DevOps(wf);
     }
 }

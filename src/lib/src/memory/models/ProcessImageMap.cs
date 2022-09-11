@@ -6,9 +6,12 @@ namespace Z0
 {
     public record class ProcessImageMap
     {
-        public readonly ProcessMemoryState Process;
+        public readonly ProcessMemoryState MemoryState;
 
-        public readonly ReadOnlySeq<ImageLocation> Locations;
+        /// <summary>
+        /// Specfies the images mapped into the process
+        /// </summary>
+        public readonly ReadOnlySeq<ImageLocation> Images;
 
         public readonly ReadOnlySeq<MemoryAddress> Addresses;
 
@@ -17,8 +20,8 @@ namespace Z0
         [MethodImpl(Inline)]
         public ProcessImageMap(ProcessMemoryState state, ReadOnlySeq<ImageLocation> locations, ReadOnlySeq<MemoryAddress> addresses, ReadOnlySeq<ProcessModuleRow> modules)
         {
-            Process = state;
-            Locations = locations;
+            MemoryState = state;
+            Images = locations;
             Addresses = addresses;
             Modules = modules;
         }

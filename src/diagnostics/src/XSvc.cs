@@ -14,8 +14,8 @@ namespace Z0
             public DumpParser DumpParser(IWfRuntime wf)
                 => Service<DumpParser>(wf);
 
-            public RuntimeCmd RuntimeCmd(IWfRuntime wf)
-                => Service<RuntimeCmd>(wf);
+            public ProcessCmd RuntimeCmd(IWfRuntime wf)
+                => Service<ProcessCmd>(wf);
         }
 
         static Svc Services => Svc.Instance;

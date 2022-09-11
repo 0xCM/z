@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct HResult<T> : ITextual, IEquatable<HResult<T>>
+    public readonly struct HResult<T> : IEquatable<HResult<T>>
     {
         public HResult Code {get;}
 

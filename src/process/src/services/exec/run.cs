@@ -8,6 +8,59 @@ namespace Z0
 
     partial record class ProcExec
     {
+        public static CmdExecStatus run(CmdArgs spec, Action<string> status, Action<string> error, FolderPath wd)
+        {
+            var values = spec.Values();
+            Demand.gt(values.Count,0u);
+            var name = values.First;
+            var args = values.ToSpan().Slice(1).ToArray();
+            var psi = new ProcessStartInfo(values.First, text.join(Chars.Space,args))
+            {
+                UseShellExecute = false,
+                RedirectStandardError = true,
+                RedirectStandardOutput = true,
+                ErrorDialog = false,
+                CreateNoWindow = true,
+                RedirectStandardInput = false,
+                WorkingDirectory = wd.Format()
+            };
+
+            void OnStatus(object sender, DataReceivedEventArgs e)
+            {
+                if(sys.nonempty(e.Data))
+                    status(e.Data);
+            }
+    
+            void OnError(object sender, DataReceivedEventArgs e)
+            {
+                if(sys.nonempty(e.Data))
+                    error(e.Data);
+            }
+
+            var outcome = default(CmdExecStatus);
+            try
+            {                
+                using var process = sys.process(psi);
+                process.OutputDataReceived += OnStatus;
+                process.ErrorDataReceived += OnError;
+                process.Start();
+                outcome.StartTime = sys.now();
+                outcome.Id = process.Id;
+                process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
+                process.WaitForExitAsync().Wait();                
+                outcome.HasExited = true;
+                outcome.ExitTime = sys.now();
+                outcome.Duration = outcome.ExitTime - outcome.StartTime;
+                outcome.ExitCode = process.ExitCode;
+            }
+            catch(Exception e)
+            {
+                error(e.ToString());
+            }
+            return outcome;
+        }
+
         public static CmdExecStatus run(CmdScript src)
         {
             var ts = timestamp();

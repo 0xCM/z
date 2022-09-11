@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
+    using static sys;
 
     /// <summary>
     /// Defines a value-parametric environment variable
@@ -15,12 +15,12 @@ namespace Z0
     {
         const string TableId = "env.vars.{0}";
 
-        public readonly Name Name;
+        public readonly @string Name;
 
         public readonly T Value;
 
         [MethodImpl(Inline)]
-        public EnvVar(Name name, T value)
+        public EnvVar(string name, T value)
         {
             Name = name;
             Value = value;
@@ -61,6 +61,6 @@ namespace Z0
         public bool Equals(EnvVar<T> src)
             => Name.Equals(src.Name) && Value.Equals(src.Value);
 
-        public static EnvVar<T> Empty => new EnvVar<T>(Name.Empty, default);
+        public static EnvVar<T> Empty => new EnvVar<T>(EmptyString, default);
     }
 }

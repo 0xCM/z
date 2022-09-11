@@ -4,9 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct HResult : ITextual, IEquatable<HResult>
+    public readonly struct HResult : IEquatable<HResult>
     {
-        public int Code {get;}
+        public readonly int Code;
 
         [MethodImpl(Inline)]
         public HResult(int value)

@@ -14,8 +14,14 @@ namespace Z0
 
     using static sys;
 
-    public sealed class ProcessAdapter : Adapter<A,S>
+    public sealed class ProcessAdapter : Adapter<A,S>, IComparable<A>, IEquatable<A>
     {
+        public static ProcessAdapter adapt(ProcessId pid)
+            => S.GetProcessById(pid.Value);
+
+        public static ReadOnlySeq<ProcessAdapter> adapt()
+            => map(Process.GetProcesses(), process => process.Adapt());
+
         ConcurrentBag<Action<EventArgs>> ExitHandlers = new();
 
         ConcurrentBag<Action<EventArgs>> DataHandlers = new();
@@ -36,6 +42,12 @@ namespace Z0
             subject.OutputDataReceived += OnOutputData;
             subject.Disposed += OnDisposed;
         }
+
+        public int CompareTo(ProcessAdapter src)
+            => Id.CompareTo(src.Id);
+
+        public bool Equals(ProcessAdapter src)
+            => Id == src.Id;
 
         public MemoryAddress BaseAddress
         {
@@ -239,7 +251,7 @@ namespace Z0
         //   T:System.InvalidOperationException:
         //     The process's System.Diagnostics.Process.Id property has not been set. -or- There
         //     is no process associated with this System.Diagnostics.Process object.
-        public int Id
+        public ProcessId Id
         {
             [MethodImpl(Inline)]
             get => Subject.Id;
@@ -286,10 +298,10 @@ namespace Z0
             get => new ProcessModule(Subject.MainModule);
         }
 
-        public _FileUri Uri
+        public FileUri Uri
         {
             [MethodImpl(Inline)]
-            get => MainModule.Path;
+            get => new(MainModule.Path.ToUri().Format());
         }
 
         //
@@ -596,7 +608,7 @@ namespace Z0
         //
         //   T:System.NotSupportedException:
         //     The process is not on this computer.
-        public NameOld ProcessName
+        public @string ProcessName
         {
             [MethodImpl(Inline)]
             get => Subject.ProcessName;
@@ -626,13 +638,13 @@ namespace Z0
         //   T:System.InvalidOperationException:
         //     The process System.Diagnostics.Process.Id was not available. -or- The process
         //     has exited.
-        public ulong ProcessorAffinity
+        public bits<ulong> ProcessorAffinity
         {
             [MethodImpl(Inline)]
             get => (ulong)Subject.ProcessorAffinity;
 
             [MethodImpl(Inline)]
-            set => Subject.ProcessorAffinity = (IntPtr)value;
+            set => Subject.ProcessorAffinity = (IntPtr)value.Packed;
         }
 
         //
@@ -760,9 +772,14 @@ namespace Z0
 
             [MethodImpl(Inline)]
             set => Subject.StartInfo = value;
-
         }
 
+        public ProcessStartSpec StartSpec
+        {
+            get => Subject.StartInfo;
+            set => Subject.StartInfo = value;
+        }
+        
         //
         // Summary:
         //     Gets the time that the associated process was started.
@@ -1011,7 +1028,6 @@ namespace Z0
         public void WaitForExit()
             => Subject.WaitForExit();
 
-
         //
         // Summary:
         //     Instructs the System.Diagnostics.Process component to wait the specified number
@@ -1088,12 +1104,12 @@ namespace Z0
             => Subject.WaitForInputIdle(milliseconds);
 
         [MethodImpl(Inline)]
-        public static implicit operator ProcessAdapter(AdapterHost<A,S> src)
-            => new ProcessAdapter(src.Subject);
+        public static implicit operator A(AdapterHost<A,S> src)
+            => new A(src.Subject);
 
         [MethodImpl(Inline)]
-        public static implicit operator ProcessAdapter(S subject)
-            => new ProcessAdapter(subject);
+        public static implicit operator A(S subject)
+            => new A(subject);
 
         [MethodImpl(Inline)]
         public static implicit operator S(A src)

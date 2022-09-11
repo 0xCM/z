@@ -12,7 +12,7 @@ namespace Z0
     using static HexFormatSpecs;
     using static HexOptionData;
 
-    using SK = HexSpecKind;
+    using SK = NumericSpecifier;
 
     [ApiHost]
     public readonly struct HexFormatter
@@ -142,7 +142,7 @@ namespace Z0
                 => quoted_u(src, null, 0, @case, dst);
 
         [MethodImpl(Inline)]
-        static void quoted_u<T>(T src, int? digits, HexSpecKind spec, LetterCaseKind @case, ITextBuffer dst)
+        static void quoted_u<T>(T src, int? digits, NumericSpecifier spec, LetterCaseKind @case, ITextBuffer dst)
             where T : unmanaged
         {
             if(typeof(T) == typeof(byte))
@@ -158,7 +158,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        static void quoted_i<T>(T src, int? digits, HexSpecKind spec, LetterCaseKind @case, ITextBuffer dst)
+        static void quoted_i<T>(T src, int? digits, NumericSpecifier spec, LetterCaseKind @case, ITextBuffer dst)
             where T : unmanaged
         {
             if(typeof(T) == typeof(byte))
@@ -174,7 +174,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        static void quoted_x<T>(T src, int? digits, HexSpecKind spec, LetterCaseKind @case, ITextBuffer dst)
+        static void quoted_x<T>(T src, int? digits, NumericSpecifier spec, LetterCaseKind @case, ITextBuffer dst)
             where T : unmanaged
         {
             if(size<T>() == 1)
@@ -311,6 +311,55 @@ namespace Z0
             => (prespec ? PreSpec : EmptyString)
              + (@case == LetterCaseKind.Lower ? src.ToString(Hex64Spec) : src.ToString(Hex64SpecUC))
              + (postspec ? PostSpec : EmptyString);
+
+
+        [Op]
+        public static string format(W8 w, byte src, NumericSpecifier spec, LetterCaseKind @case)
+            => (spec == NumericSpecifier.PreSpec ? PreSpec : EmptyString)
+             + (@case == LetterCaseKind.Lower ? src.ToString(Hex8Spec) : src.ToString(Hex8SpecUC))
+             + (spec == NumericSpecifier.PostSpec ? PostSpec : EmptyString);
+
+        [Op]
+        public static string format(W8i w, sbyte src, NumericSpecifier spec, LetterCaseKind @case)
+            => (spec == NumericSpecifier.PreSpec ? PreSpec : EmptyString)
+             + (@case == LetterCaseKind.Lower ? src.ToString(Hex8Spec) : src.ToString(Hex8SpecUC))
+             + (spec == NumericSpecifier.PostSpec ? PostSpec : EmptyString);
+
+        [Op]
+        public static string format(W16 w, ushort src, NumericSpecifier spec, LetterCaseKind @case)
+            => (spec == NumericSpecifier.PreSpec ? PreSpec : EmptyString)
+             + (@case == LetterCaseKind.Lower ? src.ToString(Hex16Spec) : src.ToString(Hex16SpecUC))
+             + (spec == NumericSpecifier.PostSpec ? PostSpec : EmptyString);
+
+        [Op]
+        public static string format(W16i w, short src, NumericSpecifier spec, LetterCaseKind @case)
+            => (spec == NumericSpecifier.PreSpec ? PreSpec : EmptyString)
+             + (@case == LetterCaseKind.Lower ? src.ToString(Hex16Spec) : src.ToString(Hex16SpecUC))
+             + (spec == NumericSpecifier.PostSpec ? PostSpec : EmptyString);
+
+        [Op]
+        public static string format(W32 w, uint src, NumericSpecifier spec, LetterCaseKind @case)
+            => (spec == NumericSpecifier.PreSpec ? PreSpec : EmptyString)
+             + (@case == LetterCaseKind.Lower ? src.ToString(Hex32Spec) : src.ToString(Hex32SpecUC))
+             + (spec == NumericSpecifier.PostSpec ? PostSpec : EmptyString);
+
+        [Op]
+        public static string format(W32i w, int src, NumericSpecifier spec, LetterCaseKind @case)
+            => (spec == NumericSpecifier.PreSpec ? PreSpec : EmptyString)
+             + (@case == LetterCaseKind.Lower ? src.ToString(Hex32Spec) : src.ToString(Hex32SpecUC))
+             + (spec == NumericSpecifier.PostSpec ? PostSpec : EmptyString);
+
+        [Op]
+        public static string format(W64 w, ulong src, NumericSpecifier spec, LetterCaseKind @case)
+            => (spec == NumericSpecifier.PreSpec ? PreSpec : EmptyString)
+             + (@case == LetterCaseKind.Lower ? src.ToString(Hex64Spec) : src.ToString(Hex64SpecUC))
+             + (spec == NumericSpecifier.PostSpec ? PostSpec : EmptyString);
+
+        [Op]
+        public static string format(W64i w, long src, NumericSpecifier spec, LetterCaseKind @case)
+            => (spec == NumericSpecifier.PreSpec ? PreSpec : EmptyString)
+             + (@case == LetterCaseKind.Lower ? src.ToString(Hex64Spec) : src.ToString(Hex64SpecUC))
+             + (spec == NumericSpecifier.PostSpec ? PostSpec : EmptyString);
 
         [Op]
         public static string format(W8 w, byte src, HexPadStyle pad, bool prespec = false, bool postspec = false, LetterCaseKind @case = LetterCaseKind.Lower)
@@ -579,6 +628,21 @@ namespace Z0
                 return format(w32, bw32(value), postspec:postspec, @case:@case);
             else
                 return format(w64, bw64(value), postspec:postspec, @case:@case);
+        }
+
+        [MethodImpl(Inline), Op]
+        public static string format<W,T>(T value, NumericSpecifier spec, LetterCaseKind @case, W w = default)
+            where W : unmanaged, IDataWidth
+            where T : unmanaged
+        {
+            if(typeof(W) == typeof(W8))
+                return format(w8, bw8(value), spec, @case);
+            else if(typeof(W) == typeof(W16))
+                return format(w16, bw16(value), spec, @case);
+            else if(typeof(W) == typeof(W32))
+                return format(w32, bw32(value), spec, @case);
+            else
+                return format(w64, bw64(value), spec, @case);
         }
 
         [MethodImpl(Inline)]
