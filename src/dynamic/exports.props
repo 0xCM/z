@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Dynamic>$(MsBuildThisFileDirectory)z0.dynamic.csproj</Dynamic>
+  </PropertyGroup>
+</Project>

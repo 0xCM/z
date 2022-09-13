@@ -1,0 +1,6 @@
+<Project>
+  <ItemGroup>
+    <ProjectReference Include="$(Dynamic)" />
+    <ProjectReference Include="$(ZLib)" />
+  </ItemGroup>
+</Project>

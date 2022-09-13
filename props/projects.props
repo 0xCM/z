@@ -11,22 +11,14 @@
     <Imagine>$(SlnLibs)\imagine\z0.imagine.csproj</Imagine>
     <ZLib>$(SlnLibs)\lib\z0.lib.csproj</ZLib>
 
-    <ApiCode>$(SlnLibs)\api.code\z0.api.code.csproj</ApiCode>
     <Assets>$(SlnLibs)\assets\z0.assets.csproj</Assets>
-    <Agents>$(SlnLibs)\agents\z0.agents.csproj</Agents>
-    <Alloc>$(SlnLibs)\alloc\z0.alloc.csproj</Alloc>
-    <ApiMd>$(SlnLibs)\api.md\z0.api.md.csproj</ApiMd>
     <ApiChecks>$(SlnLibs)\api.checks\z0.api.checks.csproj</ApiChecks>
 
     <Asm>$(SlnLibs)\asm\z0.asm.csproj</Asm>
-    <AsmCore>$(SlnLibs)\asm.core\z0.asm.core.csproj</AsmCore>
     <AsmModels>$(SlnLibs)\asm.models\z0.asm.models.csproj</AsmModels>
     <AsmPrototypes>$(SlnLibs)\asm.prototypes\z0.asm.prototypes.csproj</AsmPrototypes>
     <AsmSvc>$(SlnLibs)\asm.svc\z0.asm.svc.csproj</AsmSvc>
 
-    <Archives>$(SlnLibs)\archives\z0.archives.csproj</Archives>
-
-    <Bits>$(SlnLibs)\bits\z0.bits.csproj</Bits>
     <Builds>$(SlnLibs)\builds\z0.builds.csproj</Builds>
 
     <Cli>$(SlnLibs)\cli\z0.cli.csproj</Cli>

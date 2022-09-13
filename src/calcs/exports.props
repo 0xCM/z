@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Calcs>$(MsBuildThisFileDirectory)z0.calcs.csproj</Calcs>
+  </PropertyGroup>
+</Project>

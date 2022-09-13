@@ -1,0 +1,6 @@
+<Project>
+  <ItemGroup>
+    <ProjectReference Include="$(ClrCil)" />
+    <ProjectReference Include="$(Native)" />
+  </ItemGroup>
+</Project>

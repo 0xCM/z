@@ -1,6 +1,5 @@
 <Project>
   <PropertyGroup>
-    <SlnRoot>$(Z0)</SlnRoot>
     <SlnLibs>$(SlnRoot)\src</SlnLibs>
     <ProjectProps>$(SlnRoot)\props</ProjectProps>
     <ImportDefs>$(ProjectProps)\deps</ImportDefs>
