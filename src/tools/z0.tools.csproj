@@ -1,17 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="$(ProjectProps)\usings.props"/>
+  <Import Project="imports.props"/>
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>$(FrameworkMoniker)</TargetFramework>
   </PropertyGroup>
-
-  <Import Project="$(ProjectProps)\usings.props"/>
-
-  <ItemGroup>
+  <!-- <ItemGroup>
      <EmbeddedResource Include="patterns/**/*.*" />
-     <ProjectReference Include="$(Builds)"/>
-     <ProjectReference Include="$(Native)"/>
-     <ProjectReference Include="$(Wf)"/>
-  </ItemGroup>
-
+  </ItemGroup> -->
 </Project>

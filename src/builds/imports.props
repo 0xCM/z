@@ -1,0 +1,6 @@
+<Project>
+  <Import Project="$(ImportDefs)\microsoft.build.props" />
+  <ItemGroup>
+    <ProjectReference Include="$(Wf)" />
+  </ItemGroup>
+</Project>

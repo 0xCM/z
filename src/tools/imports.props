@@ -1,0 +1,7 @@
+<Project>
+  <ItemGroup>
+     <ProjectReference Include="$(Builds)"/>
+     <ProjectReference Include="$(Native)"/>
+     <ProjectReference Include="$(Wf)"/>
+  </ItemGroup>
+</Project>

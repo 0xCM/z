@@ -4,12 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static sys;
+    using static Build;
+
     using E = Microsoft.Build.Evaluation;
     using B = Build;
-
-    using static core;
-
-    using static Build;
 
     [ApiHost]
     public partial class MsBuild : WfSvc<MsBuild>

@@ -4,11 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using api = Build;
+    using api = BuildVersions;
 
-    /// <summary>
-    /// Defines a symver-aligned build/publication version specifier
-    /// </summary>
     [StructLayout(StructLayout,Pack=1)]
     public readonly record struct BuildVersion
     {
@@ -32,7 +29,7 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => Algs.hash((ushort)Major, (ushort)Minor, (ushort)Patch);
+            get => sys.hash((ushort)Major, (ushort)Minor, (ushort)Patch);
         }
 
         public override int GetHashCode()
@@ -49,10 +46,10 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator Version128(BuildVersion src)
-            => Algs.@as<BuildVersion,Version128>(src);
+            => sys.@as<BuildVersion,Version128>(src);
         
         [MethodImpl(Inline)]
         public static implicit operator BuildVersion(Version128 src)
-            => Algs.@as<Version128,BuildVersion>(src);
+            => sys.@as<Version128,BuildVersion>(src);
     }
 }

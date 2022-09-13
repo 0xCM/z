@@ -1,5 +1,4 @@
 @echo off
-echo Level:%~dp0
 call %~dp0..\config.cmd
 set EnvPartition=dev
 set BuildPrefix=z0
@@ -12,6 +11,8 @@ set PlatformName="Any CPU"
 set RuntimeMoniker=%OsName%-%ArchName%
 set VersionSuffix=3
 set SlnRoot=%EnvD%\%EnvPartition%\%BuildPrefix%
+echo SlnRoot=%SlnRoot%
+
 set MimeTypes=%EnvSite%\mime.types
 set Archives=%EnvP%\archives
 set PackageOut=%EnvRoot%\packages\%SlnId%

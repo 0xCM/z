@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "../native"
+		},
+		{
+			"path": "../builds"
+		},
+		{
+			"path": "../wf"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {}
+}
