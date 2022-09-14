@@ -7,7 +7,7 @@ namespace Z0
     using System.Linq;
     using System.Diagnostics;
 
-    using static core;
+    using static sys;
 
     [ApiHost]
     public readonly struct Time

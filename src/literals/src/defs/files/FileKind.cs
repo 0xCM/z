@@ -266,6 +266,9 @@ namespace Z0
         Svg,
 
         [Symbol(cmdkvp, "A file with KVP semantics/syntax refined to specify a sequence of application commands")]
-        CmdKvp
+        CmdKvp,
+
+        [Symbol(job, "A job specification")]
+        Job,
     }
 }

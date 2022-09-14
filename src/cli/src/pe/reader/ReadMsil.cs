@@ -6,9 +6,7 @@ namespace Z0
 {
     using System.Linq;
 
-    using static Algs;
-    using static Spans;
-    using static Arrays;
+    using static sys;
 
     partial class PeReader
     {

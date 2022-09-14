@@ -10,7 +10,7 @@ namespace Z0.Parts
         [ModuleInitializer]
         internal static void Init()
         {
-            //NumRender.Service.RegisterFomatters();
+            NumRender.Service.RegisterFomatters();
         }
     }
 }
@@ -27,6 +27,7 @@ namespace Z0
             var running = wf.Running($"Creating command providers");
             var providers = new ICmdProvider[]{
                 wf.WfCmd(),
+                wf.ToolCmd()
             };
             wf.Ran(running, $"Created {providers.Length} command providers");
             app.CmdService = Cmd.service<AppShellCmd>(wf, providers);

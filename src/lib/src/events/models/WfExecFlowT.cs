@@ -26,5 +26,7 @@ namespace Z0
 
         public void Dispose()
             => Wf.Ran(Wf.Host.Type, this);
+
+        public static WfExecFlow<T> Empty => new WfExecFlow<T>(null, default, default);
     }
 }

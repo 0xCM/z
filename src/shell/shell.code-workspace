@@ -1,0 +1,32 @@
+{
+	"folders": [
+		{
+			"path": "../lib"
+		},
+		{
+			"path": "../containers"
+		},
+		{
+			"path": "../native"
+		},
+		{
+			"path": "../files"
+		},
+		{
+			"path": "../process"
+		},
+		{
+			"path": "../wf"
+		},
+		{
+			"path": "../builds"
+		},
+		{
+			"path": "../tools"
+		},
+		{
+			"path": "."
+		},
+	],
+	"settings": {}
+}

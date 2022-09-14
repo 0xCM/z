@@ -11,7 +11,7 @@ namespace Z0
         /// <summary>
         /// *.obj -> *.hex.dat
         /// </summary>
-        public class ObjToHexDat : FileFlow<ObjToHexDat,ZTool>
+        public class ObjToHexDat : FileFlow<ObjToHexDat,Zsh>
         {
             public ObjToHexDat()
                 : base(ztool, K.Obj, K.HexDat)

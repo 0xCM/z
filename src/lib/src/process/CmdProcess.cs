@@ -77,22 +77,6 @@ namespace Z0
             }
         }
 
-        // [Op]
-        // public static CmdProcess process(CmdLine cmd, CmdVars? vars)
-        // {
-        //     var options = new CmdProcessOptions();
-        //     include(vars, options);
-        //     return new CmdProcess(cmd, options);
-        // }
-
-        // [Op]
-        // public static CmdProcess process(CmdLine cmd, Receiver<string> status, Receiver<string> error)
-        // {
-        //     var options = new CmdProcessOptions();
-        //     options.WithReceivers(status, error);
-        //     return new CmdProcess(cmd, options);
-        // }
- 
         readonly CmdLine _commandLine;
 
         readonly StringBuilder _output;

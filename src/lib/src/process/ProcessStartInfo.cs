@@ -15,14 +15,29 @@ namespace Z0
     public sealed class ProcessStartSpec : Adapter<A,S>
     {
         public ProcessStartSpec()
+            : base(new())
         {
-
+            UseShellExecute = false;
         }
 
         public ProcessStartSpec(S src)
             : base(src)
         {
+            UseShellExecute = false;
             
+        }
+
+        public static ProcessStartSpec define(FilePath target, params string[] args)
+            => new(target,args);
+
+        public ProcessStartSpec(FilePath target, params string[] args)
+            : base(new())
+        {
+            TargetPath = target;
+            var data = text.emitter();
+            iter(args, arg => data.Append($" {arg}"));
+            Arguments = data.Emit();
+            UseShellExecute = false;
         }
 
         public static A adapt(S src)
@@ -65,6 +80,7 @@ namespace Z0
             get => Subject.Arguments ?? EmptyString;
             set => Subject.Arguments = value.IsEmpty ? null : value.Format();
         }
+
 
         //
         // Summary:
@@ -273,8 +289,28 @@ namespace Z0
         public ReadOnlySeq<string> Verbs
             => Subject.Verbs;
 
-        /*
 
+        //
+        // Summary:
+        //     Gets or sets a value indicating whether to use the operating system shell to
+        //     start the process.
+        //
+        // Returns:
+        //     true if the shell should be used when starting the process; false if the process
+        //     should be created directly from the executable file. The default is true on .NET
+        //     Framework apps and false on .NET Core apps.
+        //
+        // Exceptions:
+        //   T:System.PlatformNotSupportedException:
+        //     An attempt to set the value to true on Universal Windows Platform (UWP) apps
+        //     occurs.
+        public bool UseShellExecute
+        {
+            get => Subject.UseShellExecute;
+            set => Subject.UseShellExecute = value;
+        }
+
+        /*
         //
         // Summary:
         //     Gets search paths for files, directories for temporary files, application-specific
@@ -379,31 +415,6 @@ namespace Z0
                 throw null;
             }
             [param: AllowNull]
-            set
-            {
-            }
-        }
-
-        //
-        // Summary:
-        //     Gets or sets a value indicating whether to use the operating system shell to
-        //     start the process.
-        //
-        // Returns:
-        //     true if the shell should be used when starting the process; false if the process
-        //     should be created directly from the executable file. The default is true on .NET
-        //     Framework apps and false on .NET Core apps.
-        //
-        // Exceptions:
-        //   T:System.PlatformNotSupportedException:
-        //     An attempt to set the value to true on Universal Windows Platform (UWP) apps
-        //     occurs.
-        public bool UseShellExecute
-        {
-            get
-            {
-                throw null;
-            }
             set
             {
             }

@@ -6,6 +6,7 @@ namespace Z0
 {
     using static sys;
 
+
     public sealed class ToolCmd : AppCmdService<ToolCmd>
     {
         public static ICmdProvider[] providers(IWfRuntime wf)
@@ -77,11 +78,80 @@ namespace Z0
             EmittedFile(emitting, counter);
         }
 
+        Outcome RunJobs(CmdArgs args)
+        {
+            var result = Outcome.Success;
+            RunJobs(arg(args,0));
+            return result;
+        }
+
+        void RunJobs(string match)
+        {
+            var paths = AppDb.Service.Jobs().Files();
+            var counter = 0u;
+            for(var i=0; i<paths.Count; i++)
+            {
+                ref readonly var path = ref paths[i];
+                if(path.FileName.Format().StartsWith(match))
+                {
+                    var dispatching = Running(string.Format("Dispatching job {0} defined by {1}", counter, path.ToUri()));
+                    DispatchJobs(path);
+                    Ran(dispatching, string.Format("Dispatched job {0}", counter));
+                    counter++;
+                }
+            }
+
+            if(counter == 0)
+                Warn($"No jobs identified by '{match}'");
+        }
+
+        [CmdOp("jobs/run")]
+        void RunCliJobs()
+        {
+            var src = AppDb.DotNetRoot().Files(FileKind.Dll).Map(x => new FileUri(x.Format())).ToSeq();
+            var name = Cmd.identify<EcmaEmissionCmd>().Format();
+            var ts = timestamp();
+            var dst = AppDb.Jobs(Cmd.identify<EcmaEmissionCmd>().Format()).Path($"{name}.{ts}.jobs", FileKind.Json);
+            var job = new EcmaEmissionCmd();
+            job.JobId = ts;
+            job.Sources = src;
+            job.Targets = AppDb.DbTargets("tools/jobs").Folder(Cmd.identify<EcmaEmissionCmd>().Format());
+            job.Settings = EcmaEmissionSettings.Default;
+            
+            var data = JsonData.serialize(job);
+            FileEmit(data, dst);
+            //iter(src.View, file => Write(src.ToUri()));
+        }
+
         [CmdOp("tool/cmd")]
         void ExecToolCmd(CmdArgs args)
         {
             var tool = TB.Tool(arg(args,0).Value);
 
+        }
+
+        [CmdOp("cd")]
+        void Cd(CmdArgs args)
+        {
+            if(args.Length == 1)
+                Environment.CurrentDirectory = args.First.Value;
+            Write(Environment.CurrentDirectory);
+        }
+
+        [CmdOp("tool/shim")]
+        void RunTool(CmdArgs args)
+        {
+            var count = args.Length;
+            if(count < 3)
+            {
+                Error($"Not enough");
+                return;                
+            }
+
+            var values = args.Values().View;
+            var def = ToolShims.validate(ToolShims.parse(slice(values,0,3).ToArray()));            
+            var ops = slice(values,3).ToArray();
+            var task = ToolShims.start(def,Emitter,slice(values,3).ToArray());
         }
 
         [CmdOp("tool/script")]

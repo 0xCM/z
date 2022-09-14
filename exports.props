@@ -1,67 +1,74 @@
 <Project>
 
-   <Import Project="src/agents/exports.props"/>
-   <Import Project="src/alloc/exports.props"/>   
-   <Import Project="src/api.code/exports.props"/>
-   <Import Project="src/api.md/exports.props"/>
-   <Import Project="src/api.specs/exports.props"/>
-   <Import Project="src/archives/exports.props"/>
-   <Import Project="src/asm/exports.props"/>
-   <Import Project="src/asm.core/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/agents/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/alloc/exports.props"/>   
+   <Import Project="$(MsBuildThisFileDirectory)src/api.code/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/api.md/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/api.specs/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/archives/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/asm/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/asm.core/exports.props"/>
 
-   <Import Project="src/bit/exports.props"/>
-   <Import Project="src/bit.render/exports.props"/>
-   <Import Project="src/bitmasks/exports.props"/>
-   <Import Project="src/blocks/exports.props"/>
-   <Import Project="src/bits/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/bit/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/bit.render/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/bitmasks/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/blocks/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/bits/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/builds/exports.props"/>
 
-   <Import Project="src/cg/cg.common/exports.props"/>
-   <Import Project="src/cg/cg.intel/exports.props"/>
-   <Import Project="src/cg/cg.libs/exports.props"/>
-   <Import Project="src/cg/cg.llvm/exports.props"/>
-   <Import Project="src/cg/cg.shell/exports.props"/>
-   <Import Project="src/cg/cg.test/exports.props"/>
-   <Import Project="src/clr.query/exports.props"/>
-   <Import Project="src/clr.cil/exports.props"/>
-   <Import Project="src/capture/exports.props"/>
-   <Import Project="src/containers/exports.props"/>
-   <Import Project="src/cells/exports.props"/>
-   <Import Project="src/cpu/exports.props"/>
-   <Import Project="src/cmd/exports.props"/>
-   <Import Project="src/coff/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/calcs/exports.props"/>
 
-   <Import Project="src/db/exports.props"/>
-   <Import Project="src/db.sqlite/exports.props"/>
-   <Import Project="src/dispatcher/exports.props"/>
-   <Import Project="src/diagnostics/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/cg/cg.common/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/cg/cg.intel/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/cg/cg.libs/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/cg/cg.llvm/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/cg/cg.shell/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/cg/cg.test/exports.props"/>
+   
+   <Import Project="$(MsBuildThisFileDirectory)src/clr.query/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/clr.cil/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/capture/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/containers/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/cells/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/cpu/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/cmd/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/coff/exports.props"/>
 
-   <Import Project="src/files/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/db/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/db.sqlite/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/dispatcher/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/digital/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/diagnostics/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/dynamic/exports.props"/>
 
-   <Import Project="src/heaps/exports.props"/>
-   <Import Project="src/hex/exports.props"/>
-   <Import Project="src/hub/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/files/exports.props"/>
 
-   <Import Project="src/lang/exports.props"/>
-   <Import Project="src/lang.emit/exports.props"/>
-   <Import Project="src/literals/exports.props"/>
-   <Import Project="src/lib/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/heaps/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/hex/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/hub/exports.props"/>
 
-   <Import Project="src/math/exports.props"/>
-   <Import Project="src/memory/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/lang/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/lang.emit/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/literals/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/lib/exports.props"/>
 
-   <Import Project="src/numbers/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/math/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/memory/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/machines/exports.props"/>
 
-   <Import Project="src/rules/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/numbers/exports.props"/>
 
-   <Import Project="src/polyrand/exports.props"/>
-   <Import Project="src/process/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/rules/exports.props"/>
 
-   <Import Project="src/shell/exports.props"/>
-   <Import Project="src/sys/exports.props"/>
-   <Import Project="src/symbolics/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/polyrand/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/process/exports.props"/>
 
-   <Import Project="src/text/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/shell/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/sys/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/symbolics/exports.props"/>
 
-   <Import Project="src/wf/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/text/exports.props"/>
+
+   <Import Project="$(MsBuildThisFileDirectory)src/wf/exports.props"/>
 
 </Project>

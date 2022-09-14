@@ -57,6 +57,8 @@ namespace Z0
 
         public const S dotfile = "dot";
         
+        public const S job = nameof(job);
+        
         public const S kvp = nameof(kvp);
 
         public const S db = nameof(db);

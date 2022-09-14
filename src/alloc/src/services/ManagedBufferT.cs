@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
+    using static sys;
 
     public class ManagedBuffer<T> :  Allocation<T>
         where T : unmanaged

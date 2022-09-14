@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
+    using static sys;
 
     public unsafe class PageAllocator : Allocation<MemoryAddress>, IPageAllocator
     {

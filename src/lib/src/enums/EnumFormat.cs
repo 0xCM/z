@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     using M = EnumFormatMode;
 
     public readonly struct EnumFormat

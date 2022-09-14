@@ -5,7 +5,6 @@
 namespace Z0
 {
     using static IntervalKind;
-    using static core;
 
     partial struct Intervals
     {

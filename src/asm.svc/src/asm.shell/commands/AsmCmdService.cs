@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using static core;
+    using static sys;
 
     public sealed partial class AsmCmdService : AppCmdService<AsmCmdService>
     {

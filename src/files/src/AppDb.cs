@@ -64,6 +64,9 @@ namespace Z0
         public DbArchive DevOps(string scope)
             => DevOps().Scoped(scope);
 
+        public DbArchive DotNetRoot()
+            => Env.var(EnvVarKind.Process, SettingNames.DOTNET_ROOT, FS.dir).Value;
+
         public DbArchive AppData()
             => DbRoot().Scoped("apps").Scoped(ExecutingPart.Name.Format());
 

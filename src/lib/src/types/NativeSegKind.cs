@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     using SC = NativeClass;
     using SZ = NativeSizeCode;
 

@@ -4,14 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
     using static Bytes;
 
     [ApiHost]
     public class Cli : WfSvc<Cli>
     {
         const NumericKind Closure = UnsignedInts;
-
 
         ApiMd ApiMd => Wf.ApiMd();
 
@@ -20,8 +19,6 @@ namespace Z0
 
         public void EmitIl(IApiCatalog src, IApiPack dst)
             => EmitMsil(src.PartHosts(), dst);
-
-
 
         MsilPipe MsilSvc => Wf.MsilSvc();
 

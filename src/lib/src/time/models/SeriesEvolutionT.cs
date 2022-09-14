@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
     public readonly struct SeriesEvolution<T>
         where T : unmanaged
     {

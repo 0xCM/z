@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     partial class XTend
     {
         public static IRecordFormatter<T> Formatter<T>(this T src, ushort rowpad = 0)

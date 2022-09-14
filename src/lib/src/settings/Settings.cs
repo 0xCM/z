@@ -8,6 +8,7 @@ namespace Z0
     public partial class Settings
     {
         const NumericKind Closure = UnsignedInts;
+        
         [Op]
         public static bool search(SettingLookup src, string key, out Setting value)
         {

@@ -1,92 +1,83 @@
 <Project>
 
   <PropertyGroup>
-    <Containers>$(SlnLibs)\containers\z0.containers.csproj</Containers>
-    <Symbolics>$(SlnLibs)\symbolics\z0.symbolics.csproj</Symbolics>
-    <CmdSpecs>$(SlnLibs)\cmd.specs\z0.cmd.specs.csproj</CmdSpecs>
-    <Digital>$(SlnLibs)\digital\z0.digital.csproj</Digital>
-    <Wf>$(SlnLibs)\wf\z0.wf.csproj</Wf>
-    <WfShell>$(SlnLibs)\wf.shell\z0.wf.shell.csproj</WfShell>
+    <Containers>$(SlnSrc)\containers\z0.containers.csproj</Containers>
+    <Symbolics>$(SlnSrc)\symbolics\z0.symbolics.csproj</Symbolics>
+    <CmdSpecs>$(SlnSrc)\cmd.specs\z0.cmd.specs.csproj</CmdSpecs>
+    <Wf>$(SlnSrc)\wf\z0.wf.csproj</Wf>
+    <WfShell>$(SlnSrc)\wf.shell\z0.wf.shell.csproj</WfShell>
 
-    <Imagine>$(SlnLibs)\imagine\z0.imagine.csproj</Imagine>
-    <ZLib>$(SlnLibs)\lib\z0.lib.csproj</ZLib>
+    <Imagine>$(SlnSrc)\imagine\z0.imagine.csproj</Imagine>
+    <ZLib>$(SlnSrc)\lib\z0.lib.csproj</ZLib>
 
-    <Assets>$(SlnLibs)\assets\z0.assets.csproj</Assets>
-    <ApiChecks>$(SlnLibs)\api.checks\z0.api.checks.csproj</ApiChecks>
+    <Assets>$(SlnSrc)\assets\z0.assets.csproj</Assets>
+    <ApiChecks>$(SlnSrc)\api.checks\z0.api.checks.csproj</ApiChecks>
 
-    <Asm>$(SlnLibs)\asm\z0.asm.csproj</Asm>
-    <AsmModels>$(SlnLibs)\asm.models\z0.asm.models.csproj</AsmModels>
-    <AsmPrototypes>$(SlnLibs)\asm.prototypes\z0.asm.prototypes.csproj</AsmPrototypes>
-    <AsmSvc>$(SlnLibs)\asm.svc\z0.asm.svc.csproj</AsmSvc>
+    <Asm>$(SlnSrc)\asm\z0.asm.csproj</Asm>
+    <AsmModels>$(SlnSrc)\asm.models\z0.asm.models.csproj</AsmModels>
+    <AsmPrototypes>$(SlnSrc)\asm.prototypes\z0.asm.prototypes.csproj</AsmPrototypes>
+    <AsmSvc>$(SlnSrc)\asm.svc\z0.asm.svc.csproj</AsmSvc>
 
-    <Builds>$(SlnLibs)\builds\z0.builds.csproj</Builds>
+    <Cli>$(SlnSrc)\cli\z0.cli.csproj</Cli>
+    <ClrCil>$(SlnSrc)\clr.cil\z0.clr.cil.csproj</ClrCil>
 
-    <Cli>$(SlnLibs)\cli\z0.cli.csproj</Cli>
-    <ClrCil>$(SlnLibs)\clr.cil\z0.clr.cil.csproj</ClrCil>
+    <Commands>$(SlnSrc)\commands\z0.commands.csproj</Commands>
+    <Circuits>$(SlnSrc)\circuits\z0.circuits.csproj</Circuits>
 
-    <Commands>$(SlnLibs)\commands\z0.commands.csproj</Commands>
-    <Calcs>$(SlnLibs)\calcs\z0.calcs.csproj</Calcs>
-    <Circuits>$(SlnLibs)\circuits\z0.circuits.csproj</Circuits>
+    <CmdActions>$(SlnSrc)\cmd.actions\z0.cmd.actions.csproj</CmdActions>
+    <CmdExec>$(SlnSrc)\cmd.exec\z0.cmd.exec.csproj</CmdExec>
+    <CmdTools>$(SlnSrc)\cmd.tools\z0.cmd.tools.csproj</CmdTools>
+    <CmdFlows>$(SlnSrc)\cmd.flows\z0.cmd.flows.csproj</CmdFlows>
+    <CmdChecks>$(SlnSrc)\cmd.checks\z0.cmd.checks.csproj</CmdChecks>
 
-    <CmdActions>$(SlnLibs)\cmd.actions\z0.cmd.actions.csproj</CmdActions>
-    <CmdExec>$(SlnLibs)\cmd.exec\z0.cmd.exec.csproj</CmdExec>
-    <CmdTools>$(SlnLibs)\cmd.tools\z0.cmd.tools.csproj</CmdTools>
-    <CmdFlows>$(SlnLibs)\cmd.flows\z0.cmd.flows.csproj</CmdFlows>
-    <CmdChecks>$(SlnLibs)\cmd.checks\z0.cmd.checks.csproj</CmdChecks>
+    <Diagnostics>$(SlnSrc)\diagnostics\z0.diagnostics.csproj</Diagnostics>
 
-    <Coff>$(SlnLibs)\coff\z0.coff.csproj</Coff>
+    <EMath>$(SlnSrc)\emath\z0.emath.csproj</EMath>
 
-    <Db>$(SlnLibs)\db\z0.db.csproj</Db>
-    <Diagnostics>$(SlnLibs)\diagnostics\z0.diagnostics.csproj</Diagnostics>
-    <Dynamic>$(SlnLibs)\dynamic\z0.dynamic.csproj</Dynamic>
+    <Fsm>$(SlnSrc)\fsm\z0.fsm.csproj</Fsm>
+    <Files>$(SlnSrc)\files\z0.files.csproj</Files>
 
-    <EMath>$(SlnLibs)\emath\z0.emath.csproj</EMath>
+    <IntelSvc>$(SlnSrc)\intel.svc\z0.intel.svc.csproj</IntelSvc>
+    <LlvmTools>$(SlnSrc)\llvm.tools\z0.llvm.tools.csproj</LlvmTools>
+    <LlvmSvc>$(SlnSrc)\llvm.svc\z0.llvm.svc.csproj</LlvmSvc>
+    <Lang>$(SlnSrc)\lang\z0.lang.csproj</Lang>
+    <Lines>$(SlnSrc)\lines\z0.lines.csproj</Lines>
+    <Linq>$(SlnSrc)\linq\z0.linq.csproj</Linq>
 
-    <Fsm>$(SlnLibs)\fsm\z0.fsm.csproj</Fsm>
-    <Files>$(SlnLibs)\files\z0.files.csproj</Files>
+    <Math>$(SlnSrc)\math\z0.math.csproj</Math>
 
-    <IntelSvc>$(SlnLibs)\intel.svc\z0.intel.svc.csproj</IntelSvc>
-    <LlvmTools>$(SlnLibs)\llvm.tools\z0.llvm.tools.csproj</LlvmTools>
-    <LlvmSvc>$(SlnLibs)\llvm.svc\z0.llvm.svc.csproj</LlvmSvc>
-    <Lang>$(SlnLibs)\lang\z0.lang.csproj</Lang>
-    <Lines>$(SlnLibs)\lines\z0.lines.csproj</Lines>
-    <Linq>$(SlnLibs)\linq\z0.linq.csproj</Linq>
+    <Memory>$(SlnSrc)\memory\z0.memory.csproj</Memory>
+    <MemorySvc>$(SlnSrc)\memory.svc\z0.memory.svc.csproj</MemorySvc>
+    <MemoryChecks>$(SlnSrc)\memory.checks\z0.memory.checks.csproj</MemoryChecks>
 
-    <Machines>$(SlnLibs)\machines\z0.machines.csproj</Machines>
-    <Math>$(SlnLibs)\math\z0.math.csproj</Math>
+    <Native>$(SlnSrc)\native\z0.native.csproj</Native>
 
-    <Memory>$(SlnLibs)\memory\z0.memory.csproj</Memory>
-    <MemorySvc>$(SlnLibs)\memory.svc\z0.memory.svc.csproj</MemorySvc>
-    <MemoryChecks>$(SlnLibs)\memory.checks\z0.memory.checks.csproj</MemoryChecks>
+    <Queues>$(SlnSrc)\queues\z0.queues.csproj</Queues>
 
-    <Native>$(SlnLibs)\native\z0.native.csproj</Native>
+    <Rules>$(SlnSrc)\rules\z0.rules.csproj</Rules>
+    <Render>$(SlnSrc)\render\z0.render.csproj</Render>
 
-    <Queues>$(SlnLibs)\queues\z0.queues.csproj</Queues>
+    <SosCmd>$(SlnSrc)\sos.cmd\z0.sos.cmd.csproj</SosCmd>
 
-    <Rules>$(SlnLibs)\rules\z0.rules.csproj</Rules>
-    <Render>$(SlnLibs)\render\z0.render.csproj</Render>
+    <Validity>$(SlnSrc)\validity\z0.validity.csproj</Validity>
 
-    <SosCmd>$(SlnLibs)\sos.cmd\z0.sos.cmd.csproj</SosCmd>
+    <Tools>$(SlnSrc)\tools\z0.tools.csproj</Tools>
 
-    <Validity>$(SlnLibs)\validity\z0.validity.csproj</Validity>
+    <Tuples>$(SlnSrc)\tuples\z0.tuples.csproj</Tuples>
 
-    <Tools>$(SlnLibs)\tools\z0.tools.csproj</Tools>
+    <ShellCmd>$(SlnSrc)\shell.cmd\z0.shell.cmd.csproj</ShellCmd>
+    <Workers>$(SlnSrc)\workers\z0.workers.csproj</Workers>
 
-    <Tuples>$(SlnLibs)\tuples\z0.tuples.csproj</Tuples>
+    <TestChecks>$(SlnSrc)\test\test.checks\z0.test.checks.csproj</TestChecks>
+    <TestUnits>$(SlnSrc)\test\test.units\z0.test.units.csproj</TestUnits>
+    <TestShell>$(SlnSrc)\test\test.shell\z0.test.shell.csproj</TestShell>
 
-    <ShellCmd>$(SlnLibs)\shell.cmd\z0.shell.cmd.csproj</ShellCmd>
-    <Workers>$(SlnLibs)\workers\z0.workers.csproj</Workers>
-
-    <TestChecks>$(SlnLibs)\test\test.checks\z0.test.checks.csproj</TestChecks>
-    <TestUnits>$(SlnLibs)\test\test.units\z0.test.units.csproj</TestUnits>
-    <TestShell>$(SlnLibs)\test\test.shell\z0.test.shell.csproj</TestShell>
-
-    <CgCommon>$(SlnLibs)\cg\cg.common\z0.cg.common.csproj</CgCommon>
-    <CgLlvm>$(SlnLibs)\cg\cg.llvm\z0.cg.llvm.csproj</CgLlvm>
-    <CgIntel>$(SlnLibs)\cg\cg.intel\z0.cg.intel.csproj</CgIntel>
-    <CgLibs>$(SlnLibs)\cg\cg.libs\z0.cg.libs.csproj</CgLibs>
-    <CgShell>$(SlnLibs)\cg\cg.shell\z0.cg.shell.csproj</CgShell>
-    <CgTest>$(SlnLibs)\cg\cg.test\z0.cg.test.csproj</CgTest>    
+    <CgCommon>$(SlnSrc)\cg\cg.common\z0.cg.common.csproj</CgCommon>
+    <CgLlvm>$(SlnSrc)\cg\cg.llvm\z0.cg.llvm.csproj</CgLlvm>
+    <CgIntel>$(SlnSrc)\cg\cg.intel\z0.cg.intel.csproj</CgIntel>
+    <CgLibs>$(SlnSrc)\cg\cg.libs\z0.cg.libs.csproj</CgLibs>
+    <CgShell>$(SlnSrc)\cg\cg.shell\z0.cg.shell.csproj</CgShell>
+    <CgTest>$(SlnSrc)\cg\cg.test\z0.cg.test.csproj</CgTest>    
   </PropertyGroup>
 
 </Project>

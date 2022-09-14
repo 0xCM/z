@@ -11,7 +11,7 @@ namespace Z0
         /// <summary>
         /// *.obj -> *.hex.dat
         /// </summary>
-        public class OToHexDat : FileFlow<OToHexDat,ZTool>
+        public class OToHexDat : FileFlow<OToHexDat,Zsh>
         {
             public OToHexDat()
                 : base(ztool, K.O, K.HexDat)

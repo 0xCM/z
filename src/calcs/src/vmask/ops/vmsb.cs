@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static BitMasks;
-    using static core;
+    using static sys;
 
     partial struct vmask
     {

@@ -6,10 +6,10 @@ namespace Z0
 {
     partial class Settings
     {
-        public static Name name(Type src)
-            => src.Tag<SettingsAttribute>().MapValueOrElse(tag => tag.Name, () => (Name)src.DisplayName());
+        public static @string name(Type src)
+            => src.Tag<SettingsAttribute>().MapValueOrElse(tag => tag.Name, () => (@string)src.DisplayName());
 
-        public static Name name<T>()
+        public static @string name<T>()
             => name(typeof(T));
     }
 }

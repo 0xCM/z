@@ -9,7 +9,7 @@ namespace Z0
     [Free]
     public interface ISettings : IExpr
     {
-        Name Name {get;}
+        @string Name {get;}
 
         SettingLookup Lookup {get;}
 
@@ -27,7 +27,7 @@ namespace Z0
     public interface ISettings<S> : ISettings
         where S : ISettings<S>, new()
     {
-        Name ISettings.Name
+        @string ISettings.Name
             => typeof(S).Name;
 
         SettingLookup ISettings.Lookup

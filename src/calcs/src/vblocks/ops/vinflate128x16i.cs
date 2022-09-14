@@ -4,9 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     using static System.Runtime.Intrinsics.X86.Sse41;
-    using static core;
+    using static sys;
 
     partial struct vblocks
     {

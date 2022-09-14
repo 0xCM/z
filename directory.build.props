@@ -1,10 +1,23 @@
 <Project>
-  <PropertyGroup>
-    <SlnId>z0</SlnId>
-    <EnvSegment>dev</EnvSegment>
-    <Configuration>Release</Configuration>
-  </PropertyGroup>
   <Import Project="exports.props"/>
-  <Import Project="props/locations.props"/>
+  <PropertyGroup>  
+    <Configuration>Release</Configuration>
+    <SlnId>z0</SlnId>
+    <SlnRoot>$(MsBuildThisFileDirectory)</SlnRoot>
+    <SlnLibs>$(SlnRoot)\src</SlnLibs>
+    <SlnSrc>$(SlnRoot)\src</SlnSrc>
+    <ProjectProps>$(SlnRoot)\props</ProjectProps>
+    <ImportDefs>$(ProjectProps)\deps</ImportDefs>
+    <SlnBuild>$(SlnRoot)\artifacts</SlnBuild>
+    <SlnBin>$(SlnBuild)\bin</SlnBin>
+    <LogRoot>$(SlnBuild)\logs</LogRoot>
+    <CgRoot>$(SlnSrc)\cg</CgRoot>
+    <TestRoot>$(SlnSrc)\test</TestRoot>
+    <OutputPath>$(SlnBuild)\bin\$(MsBuildProjectName)\$(Configuration)</OutputPath>
+    <IntermediateRoot>$(SlnBuild)\obj\$(MsBuildProjectName)\$(Configuration)</IntermediateRoot>
+    <IntermediateBuildDir>$(IntermediateRoot)</IntermediateBuildDir>
+    <BaseIntermediateOutputPath>$(IntermediateRoot)</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(IntermediateRoot)</IntermediateOutputPath>
+  </PropertyGroup>
   <Import Project="props/common.props"/>
 </Project>

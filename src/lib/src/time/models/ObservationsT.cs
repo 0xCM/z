@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.Text;
-
     /// <summary>
     /// Defines an observation sequence
     /// </summary>

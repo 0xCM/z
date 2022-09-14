@@ -6,8 +6,7 @@ namespace Z0
 {
     using System.Linq;
 
-    using static Algs;
-    using static Spans;
+    using static sys;
 
     using I = System.Reflection.Metadata.Ecma335.TableIndex;
 

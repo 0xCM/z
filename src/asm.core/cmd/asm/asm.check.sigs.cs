@@ -6,10 +6,7 @@ namespace Z0
 {
     using Asm;
 
-    using static Spans;
-    using static Algs;
-    using static Arrays;
-
+    using static sys;
     using static AsmRegTokens;
 
     partial class AsmCoreCmd

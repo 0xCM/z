@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "z0.cmd", "..\src\cmd\z0.cmd.csproj", "{6795CB10-04AB-4E40-AEFF-43272474DF99}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "z0.cmd", "..\src\cmd\z0.cmd.csproj", "{D9138C49-2EEE-499A-A890-FE4626BC231D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "z0.hub", "..\src\hub\z0.hub.csproj", "{4912028F-3759-4FF1-8246-BDFE8B971B86}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "z0.hub", "..\src\hub\z0.hub.csproj", "{3B329D1B-E06F-4879-A47E-2C1CFCF60FCF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "z0.wf.shell", "..\src\wf.shell\z0.wf.shell.csproj", "{68C2E036-621B-4593-9FF0-83C6BB2D5B66}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "z0.wf.shell", "..\src\wf.shell\z0.wf.shell.csproj", "{19C54D26-D7DE-4719-9EC3-BB32CB99156A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "z0.dispatcher", "..\src\dispatcher\z0.dispatcher.csproj", "{E2CE86AB-925E-42E3-AF54-B174E2D3AD86}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "z0.dispatcher", "..\src\dispatcher\z0.dispatcher.csproj", "{64255D23-FC07-4557-BB8B-40ACEB1876D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "z0.deploy", "z0.deploy.csproj", "{2A150CD1-0A32-4CA4-B011-841EEFB643F6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "z0.deploy", "z0.deploy.csproj", "{7BBFB8D4-CDB3-4576-B076-1445C64AE888}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,15 +21,15 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6795CB10-04AB-4E40-AEFF-43272474DF99}.Release|Any CPU.ActiveCfg = Release|x64
-		{6795CB10-04AB-4E40-AEFF-43272474DF99}.Release|Any CPU.Build.0 = Release|x64
-		{4912028F-3759-4FF1-8246-BDFE8B971B86}.Release|Any CPU.ActiveCfg = Release|x64
-		{4912028F-3759-4FF1-8246-BDFE8B971B86}.Release|Any CPU.Build.0 = Release|x64
-		{68C2E036-621B-4593-9FF0-83C6BB2D5B66}.Release|Any CPU.ActiveCfg = Release|x64
-		{68C2E036-621B-4593-9FF0-83C6BB2D5B66}.Release|Any CPU.Build.0 = Release|x64
-		{E2CE86AB-925E-42E3-AF54-B174E2D3AD86}.Release|Any CPU.ActiveCfg = Release|x64
-		{E2CE86AB-925E-42E3-AF54-B174E2D3AD86}.Release|Any CPU.Build.0 = Release|x64
-		{2A150CD1-0A32-4CA4-B011-841EEFB643F6}.Release|Any CPU.ActiveCfg = Release|x64
-		{2A150CD1-0A32-4CA4-B011-841EEFB643F6}.Release|Any CPU.Build.0 = Release|x64
+		{D9138C49-2EEE-499A-A890-FE4626BC231D}.Release|Any CPU.ActiveCfg = Release|x64
+		{D9138C49-2EEE-499A-A890-FE4626BC231D}.Release|Any CPU.Build.0 = Release|x64
+		{3B329D1B-E06F-4879-A47E-2C1CFCF60FCF}.Release|Any CPU.ActiveCfg = Release|x64
+		{3B329D1B-E06F-4879-A47E-2C1CFCF60FCF}.Release|Any CPU.Build.0 = Release|x64
+		{19C54D26-D7DE-4719-9EC3-BB32CB99156A}.Release|Any CPU.ActiveCfg = Release|x64
+		{19C54D26-D7DE-4719-9EC3-BB32CB99156A}.Release|Any CPU.Build.0 = Release|x64
+		{64255D23-FC07-4557-BB8B-40ACEB1876D8}.Release|Any CPU.ActiveCfg = Release|x64
+		{64255D23-FC07-4557-BB8B-40ACEB1876D8}.Release|Any CPU.Build.0 = Release|x64
+		{7BBFB8D4-CDB3-4576-B076-1445C64AE888}.Release|Any CPU.ActiveCfg = Release|x64
+		{7BBFB8D4-CDB3-4576-B076-1445C64AE888}.Release|Any CPU.Build.0 = Release|x64
 	EndGlobalSection
 EndGlobal

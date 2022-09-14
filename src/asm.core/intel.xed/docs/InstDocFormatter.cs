@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XedPatterns;
     using static XedRules;
     using static XedModels;
     using static Markdown;

@@ -7,8 +7,6 @@ namespace Z0
     using System.IO;
     using System.Text;
 
-    using static FS;
-
     public readonly struct FilePath : IFsEntry<FilePath>
     {
         public static RelativeFilePath relative(FolderPath root, FilePath src)

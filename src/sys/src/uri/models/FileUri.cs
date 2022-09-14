@@ -9,7 +9,6 @@ namespace Z0
     // URI = scheme ":" ["//" authority] path ["?" query] ["#" fragment]
     public sealed record class FileUri : Uri<FileUri,File>
     {
-
         public FileUri()
         {
 
@@ -26,5 +25,8 @@ namespace Z0
 
         public string LocalPath
             => Data.LocalPath;
+
+        public bool Exists
+            => System.IO.File.Exists(LocalPath);
     }
 }

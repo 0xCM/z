@@ -5,7 +5,4 @@
     <OutputType>Library</OutputType>
     <TargetFramework>$(FrameworkMoniker)</TargetFramework>
   </PropertyGroup>
-  <!-- <ItemGroup>
-     <EmbeddedResource Include="patterns/**/*.*" />
-  </ItemGroup> -->
 </Project>

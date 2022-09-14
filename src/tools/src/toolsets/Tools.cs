@@ -37,7 +37,7 @@ namespace Z0
 
         public static ref readonly LlvmLld llvm_lld => ref LlvmLld.Instance;
 
-        public static ref readonly ZTool ztool => ref ZTool.Instance;
+        public static ref readonly Zsh ztool => ref Zsh.Instance;
 
         public static ref readonly Xed xed => ref Xed.Instance;
 
@@ -45,20 +45,6 @@ namespace Z0
 
         public static ref readonly VisualStudio msvs => ref VisualStudio.Instance;
 
-        public sealed class ZTool : Tool<ZTool>
-        {
-            public ZTool()
-                : base("ZTool")
-            {
-
-            }
-
-            public string Format()
-                => Name.Format();
-
-            public override string ToString()
-                => Format();
-        }
 
     }
 

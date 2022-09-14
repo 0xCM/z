@@ -25,7 +25,7 @@ namespace Z0
 
         public Seq<PartName> Parts;
 
-        public CliEmissionSettings CliEmissions;
+        public EcmaEmissionSettings CliEmissions;
 
         public CaptureWfSettings()
         {
@@ -36,7 +36,7 @@ namespace Z0
             EmitRegions = true;
             RunChecks = false;
             PurgeTarget = false;
-            CliEmissions = CliEmissionSettings.Default;
+            CliEmissions = EcmaEmissionSettings.Default;
             Parts = sys.empty<PartName>();
         }
 

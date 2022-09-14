@@ -31,7 +31,8 @@ namespace Z0
             for(var i=0; i<count; i++)
             {
                 ref readonly var source = ref src[i];
-                ItemLists.list(source, true, Chars.Pipe, BvParser.Service, out items).Require();
+                using var reader = source.Utf8LineReader();
+                ItemLists.list(reader, true, Chars.Pipe, BvParser.Service, out items).Require();
                 seek(bitfields, i) = bitvector(origin(source.ToUri()), source.FileName.WithoutExtension.Format(), items);
             }
 

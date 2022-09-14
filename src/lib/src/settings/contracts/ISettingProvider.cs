@@ -7,9 +7,9 @@ namespace Z0
     [Free]
     public interface ISettingProvider
     {
-        Name Name {get;}
+        @string Name {get;}
 
-        ReadOnlySpan<Name> Names {get;}
+        ReadOnlySpan<@Name> Names {get;}
 
         string ToString();
 
@@ -19,9 +19,9 @@ namespace Z0
     [Free]
     public interface ISettingProvider<V> : ISettingProvider
     {
-        V Value(Name name);
+        V Value(string name);
 
-        bool Value(Name name, out V value);
+        bool Value(string name, out V value);
 
 
         ReadOnlySpan<V> Values {get;}

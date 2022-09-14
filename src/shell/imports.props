@@ -1,5 +1,5 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(Wf)" />
+    <ProjectReference Include="$(Tools)" />
   </ItemGroup>
 </Project>

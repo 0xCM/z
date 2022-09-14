@@ -14,33 +14,6 @@ namespace Z0
 
         ProjectScripts ProjectScripts => Wf.ProjectScripts();
 
-        [CmdOp("jobs/run")]
-        Outcome RunJobs(CmdArgs args)
-        {
-            var result = Outcome.Success;
-            RunJobs(arg(args,0));
-            return result;
-        }
-
-        void RunJobs(string match)
-        {
-            var paths = AppDb.Service.Jobs().Files();
-            var counter = 0u;
-            for(var i=0; i<paths.Count; i++)
-            {
-                ref readonly var path = ref paths[i];
-                if(path.FileName.Format().StartsWith(match))
-                {
-                    var dispatching = Running(string.Format("Dispatching job {0} defined by {1}", counter, path.ToUri()));
-                    DispatchJobs(path);
-                    Ran(dispatching, string.Format("Dispatched job {0}", counter));
-                    counter++;
-                }
-            }
-
-            if(counter == 0)
-                Warn($"No jobs identified by '{match}'");
-        }
 
         [CmdOp("archives/zip")]        
         void CreateZip(CmdArgs args)

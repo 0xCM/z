@@ -54,6 +54,14 @@ namespace Z0
         public static implicit operator ProcessId(int value)
             => new (value);
 
+        [MethodImpl(Inline)]
+        public static implicit operator ulong(ProcessId src)
+            => (ulong)src.Value;
+
+        [MethodImpl(Inline)]
+        public static implicit operator long(ProcessId src)
+            => src.Value;
+
         public static ProcessId Empty => default;
     }
 }

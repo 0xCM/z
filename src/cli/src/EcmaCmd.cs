@@ -19,7 +19,7 @@ namespace Z0
         {
             var dst = ApiPacks.create();
             ApiMd.Emitter().Emit(src,dst);
-            CliEmitter.Emit(src, CliEmissionSettings.Default, dst);
+            CliEmitter.Emit(src, EcmaEmissionSettings.Default, dst);
         }
 
         public static unsafe PEReader PeReader(MemorySeg src)

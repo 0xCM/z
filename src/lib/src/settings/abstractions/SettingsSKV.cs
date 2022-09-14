@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
+    using static sys;
 
     public abstract class Settings<S,K,V> : ReadOnlySeq<S,Setting<K,V>>, ILookup<K,V>
         where K : unmanaged, IExpr, IDataType<K>

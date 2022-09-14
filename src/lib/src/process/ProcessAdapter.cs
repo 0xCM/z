@@ -96,6 +96,7 @@ namespace Z0
             Subject.Close();
         }
 
+        
         //
         // Summary:
         //     Gets the base priority of the associated process.

@@ -8,4 +8,15 @@ namespace Z0
     public static partial class XFs
     {
     }
+
+    partial class XTend
+    {
+        [Op]
+        public static LineReader Utf8LineReader(this FilePath src)
+            => new LineReader(src.Utf8Reader());
+
+        [Op]
+        public static LineReader LineReader(this FilePath src, TextEncodingKind encoding)
+            => src.Reader(encoding).ToLineReader();
+    }
 }

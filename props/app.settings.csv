@@ -2,6 +2,6 @@
 | DbRoot         | b:/db
 | EnvRoot        | b:
 | DevRoot        | d:/dev
-| DevOps         | d:/devops
+| DevOps         | d:/dev/devops
 | Control        | d:/control
 | ProcDumps      | p:/dumps

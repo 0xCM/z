@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
 
     partial record class ProcExec
-    {
+    {        
         public static Task<ExecToken> start(CmdArgs args, WfEmit channel)
         {
             void status(in string src)

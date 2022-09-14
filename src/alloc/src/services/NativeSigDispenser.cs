@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    using static Arrays;
+    using static sys;
 
     public class NativeSigDispenser : Dispenser<NativeSigDispenser>, ISigDispenser
     {

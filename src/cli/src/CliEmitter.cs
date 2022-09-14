@@ -10,7 +10,7 @@ namespace Z0
 
         Cli Cli => Wf.Cli();
 
-        public void Emit(IApiCatalog src, CliEmissionSettings options, IApiPack dst)
+        public void Emit(IApiCatalog src, EcmaEmissionSettings options, IApiPack dst)
         {
             if(options.EmitAssemblyRefs)
                 EmitAssemblyRefs(src.Components, dst);
