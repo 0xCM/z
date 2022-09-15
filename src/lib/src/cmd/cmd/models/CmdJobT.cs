@@ -7,7 +7,7 @@ namespace Z0
     public readonly struct CmdJob<T>
         where T : struct
     {
-        public readonly Name Name;
+        public readonly @string Name;
 
         public readonly T Spec;
 

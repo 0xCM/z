@@ -11,7 +11,6 @@ tools/bin/
 tools/obj/
 .vs/
 .ionide/
-dotnet/
 repo
 artifacts/
 node_modules

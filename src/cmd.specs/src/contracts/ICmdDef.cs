@@ -4,18 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-   public interface ICmdRender<C> : ICmdRender
-        where C : ICmd<C>, new()
-    {
-        CmdId ICmdRender.CmdId 
-            => CmdId.identify<C>();
-
-        string Format(C src);
-        
-        string ICmdRender.Format(ICmd src)
-            => Format((C)src);
-    }
-        
     [Free]
     public interface ICmd<T> : ICmd
         where T : ICmd<T>, new()
@@ -40,7 +28,6 @@ namespace Z0
 
 
     }
-
     [Free]
     public interface IShellCmd<D> : ICmdDef<D>
         where D : struct, IShellCmd<D>

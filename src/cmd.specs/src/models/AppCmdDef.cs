@@ -6,7 +6,7 @@ namespace Z0
 {
     public sealed class AppCmdDef : ICmdDef
     {
-        public readonly Name CmdName;
+        public readonly @string CmdName;
 
         public readonly CmdActorKind Kind;
 
@@ -23,7 +23,7 @@ namespace Z0
             Kind = kind;
             Host = Require.notnull(host);
             Method = Require.notnull(method);
-            Uri = Cmd.uri(CmdKind.App, host.GetType().Assembly.PartName().Format(), host.GetType().DisplayName(), CmdName);
+            Uri = new(CmdKind.App, host.GetType().Assembly.PartName().Format(), host.GetType().DisplayName(), CmdName);
         }
 
         CmdUri ICmdDef.Uri 

@@ -6,6 +6,7 @@ namespace Z0
 {
     using static sys;
 
+
     public class RuntimeContext
     {
         public static void emit(CmdArgs args, WfEmit channel, DbArchive dst)
@@ -15,9 +16,7 @@ namespace Z0
             {
                 iter(args, arg => {
                     if(DataParser.parse(arg.Value, out int id))
-                    {
                         ids.Add(id);
-                    }
                 });
             }
             else

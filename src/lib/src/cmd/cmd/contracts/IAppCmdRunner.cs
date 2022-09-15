@@ -15,7 +15,7 @@ namespace Z0
     {
         AppCmdDef Def {get;}
 
-        ref readonly Name CmdName
+        ref readonly @string CmdName
             => ref Def.CmdName;
     }
 }

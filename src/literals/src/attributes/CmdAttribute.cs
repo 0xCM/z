@@ -10,7 +10,7 @@ namespace Z0
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
     public class CmdAttribute : Attribute
     {
-        public CmdAttribute(string name, string desc = EmptyString)
+        public CmdAttribute(string name = EmptyString, string desc = EmptyString)
         {
             Name = name;
             Description = desc;

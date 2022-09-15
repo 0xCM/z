@@ -6,14 +6,14 @@ namespace Z0
 {
     public class CmdTypeInfo : ICmdTypeInfo, IComparable<CmdTypeInfo>
     {
-        public readonly Name CmdName;
+        public readonly @string CmdName;
 
         public readonly Type Source;
 
         public readonly Index<CmdField> Fields;
 
         [MethodImpl(Inline)]
-        public CmdTypeInfo(Name name, Type type, CmdField[] fields)
+        public CmdTypeInfo(string name, Type type, CmdField[] fields)
         {
             CmdName = name;
             Source = Require.notnull(type);
@@ -38,7 +38,7 @@ namespace Z0
         Index<CmdField> ICmdTypeInfo.Fields
             => Fields;
 
-        Name ICmdTypeInfo.CmdName
+        @string ICmdTypeInfo.CmdName
             => CmdName;
 
         public int CompareTo(CmdTypeInfo src)

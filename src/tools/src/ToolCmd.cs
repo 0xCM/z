@@ -6,7 +6,6 @@ namespace Z0
 {
     using static sys;
 
-
     public sealed class ToolCmd : AppCmdService<ToolCmd>
     {
         public static ICmdProvider[] providers(IWfRuntime wf)

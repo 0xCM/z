@@ -2,15 +2,12 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0.Cmd
 {
-    [Free]
-    public interface ICmdTypeInfo
+    public record struct MergeFile : ICmd<MergeFile>
     {
-        Name CmdName {get;}
+        public FolderPath Sources;
 
-        Type Source {get;}
-
-        Index<CmdField> Fields {get;}
+        public FolderPath Targets;
     }
 }
