@@ -6,8 +6,6 @@ namespace Z0
 {
     using System.IO;
 
-    using static FS;
-
     public readonly struct FileName : IFsEntry<FileName>
     {
         public PathPart Name {get;}
@@ -57,7 +55,7 @@ namespace Z0
             => this + ext;
 
         public PartId Owner
-            => part(this);
+            => FS.part(this);
 
         /// <summary>
         /// Determines whether the name of a file is of the form {owner}.{*}
@@ -115,7 +113,7 @@ namespace Z0
         /// </summary>
         [MethodImpl(Inline)]
         public FilePath ToPath()
-            => path(Name);
+            => FS.path(Name);
 
         [MethodImpl(Inline)]
         public string Format()

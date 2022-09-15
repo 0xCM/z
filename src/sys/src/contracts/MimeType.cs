@@ -6,9 +6,9 @@ namespace Z0
 {
     public readonly struct MimeType
     {
-        public string BaseTypeName {get;}
+        public @string BaseTypeName {get;}
 
-        public string SubtypeName {get;}
+        public @string SubtypeName {get;}
 
         [MethodImpl(Inline)]
         public MimeType(string @base, string subtype)

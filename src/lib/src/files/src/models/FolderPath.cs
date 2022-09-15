@@ -7,7 +7,7 @@ namespace Z0
     using System.IO;
     using System.Linq;
 
-    using static FS;
+    //using static FS;
 
     public readonly struct FolderPath : IFsEntry<FolderPath>
     {
@@ -69,7 +69,7 @@ namespace Z0
             => Files(this, recurse, ext);
 
         public Files TopFiles
-            => Directory.Exists(Name) ? files(Directory.EnumerateFiles(Name).Map(path)) : Z0.Files.Empty;
+            => Directory.Exists(Name) ? FS.files(Directory.EnumerateFiles(Name).Map(FS.path)) : Z0.Files.Empty;
 
         public FolderPaths Folders(string match, bool recurse)
             => Directory.Exists(Name) ? Directory.EnumerateDirectories(Name, match, options(recurse)).Array().Select(FS.dir) : FolderPaths.Empty;
@@ -104,7 +104,7 @@ namespace Z0
             => this + FS.folder(name);
 
         public Files Match(string pattern, bool recurse)
-            => Exists ? files(Directory.EnumerateFiles(Name, pattern, option(recurse)).Map(path)) : Z0.Files.Empty;
+            => Exists ? FS.files(Directory.EnumerateFiles(Name, pattern, option(recurse)).Map(FS.path)) : Z0.Files.Empty;
 
         public Files Match(string pattern, FileExt ext, bool recurse)
             => Exists ? Files(ext, recurse).Where(f => f.Name.Contains(pattern)) : Z0.Files.Empty;
@@ -125,11 +125,11 @@ namespace Z0
             => Files(true).Where(f => FileTypes.@is(f,kinds));
 
         public Files Files(bool recurse)
-            => Exists ? Directory.EnumerateFiles(Name, SearchAll, option(recurse)).Map(path) : Z0.Files.Empty;
+            => Exists ? Directory.EnumerateFiles(Name, SearchAll, option(recurse)).Map(FS.path) : Z0.Files.Empty;
 
         public Index<FolderPath> SubDirs(bool recurse = false)
             => Directory.Exists(Name)
-            ? Directory.EnumerateDirectories(Name, SearchAll, option(recurse)).Map(dir)
+            ? Directory.EnumerateDirectories(Name, SearchAll, option(recurse)).Map(FS.dir)
             : sys.empty<FolderPath>();
 
         public Deferred<FilePath> EnumerateFiles(bool recurse)
@@ -224,7 +224,7 @@ namespace Z0
         {
             if(src.Exists)
                 foreach(var file in Directory.EnumerateFiles(src.Name, pattern, option(recurse)))
-                    yield return path(file);
+                    yield return FS.path(file);
         }
 
         static IEnumerable<FilePath> EnumerateFiles(FolderPath src, bool recurse, FileExt[] ext)
@@ -236,7 +236,7 @@ namespace Z0
                     from x in ext
                     where src.Exists
                     from f in Directory.EnumerateFiles(src.Name, x.SearchPattern, option(recurse))
-                    select path(f);
+                    select FS.path(f);
             return selected;
         }
 
@@ -244,14 +244,14 @@ namespace Z0
         {
             if(src.Exists)
                 foreach(var file in Directory.GetFiles(src.Name, ext.SearchPattern, option(recurse)))
-                    yield return path(file);
+                    yield return FS.path(file);
         }
 
         static IEnumerable<FilePath> EnumerateFiles(FolderPath src, bool recurse)
         {
             if(src.Exists)
                 foreach(var file in Directory.EnumerateFiles(src.Name, SearchAll, option(recurse)))
-                    yield return path(file);
+                    yield return FS.path(file);
         }
 
         public int CompareTo(FolderPath src)

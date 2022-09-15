@@ -14,6 +14,5 @@ namespace Z0
         [MethodImpl(Inline)]
         public int Compare(Interval<T> x, Interval<T> y)
             => gmath.cmp(x.Left, y.Left);
-
     }
 }
