@@ -1,5 +1,5 @@
 | Name           | Value
-| DbRoot         | b:/db
+| DbRoot         | d:/db
 | EnvRoot        | b:
 | DevRoot        | d:/dev
 | DevOps         | d:/dev/devops

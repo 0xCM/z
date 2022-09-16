@@ -6,8 +6,13 @@ namespace Z0
 {
     using static sys;
 
-    public partial class Parsers : AppService<Parsers>, IMultiParser
+    public partial class Parsers : IMultiParser
     {
+        sealed class ParserCache : AppData<ParserCache>
+        {
+
+        }
+
         public static bool parse(string src, out PrimalKind dst)
         {
             var symbols = Symbols.index<PrimalKind>();
@@ -58,7 +63,7 @@ namespace Z0
             var segment = ClosedInterval<uint>.Zero;
             while(parser.Unfinished())
             {
-                ref readonly var cell = ref core.skip(src, parser.CellPos);
+                ref readonly var cell = ref skip(src, parser.CellPos);
                 if(parser.OnLastPos())
                 {
                     if(parser.Collecting)
@@ -87,7 +92,7 @@ namespace Z0
             return ref dst;
         }
 
-        MultiParser Mp() => data(nameof(Mp), () => new MultiParser(discover(Wf.Components)));
+        MultiParser Mp() => ParserCache.get(nameof(Mp), () => new MultiParser(discover(ModuleArchives.parts())));
 
         [MethodImpl(Inline)]
         public static SeqSplitter<T> splitter<T>(T delimiter)

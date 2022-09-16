@@ -6,6 +6,14 @@ namespace Z0
 {
     partial class text
     {
+        /// <summary>
+        /// Encloses content between left and right backticks
+        /// </summary>
+        /// <param name="content">The content to enclose</param>
+        [Op,Closures(Closure)]
+        public static string ticked<T>(T src)
+            => RP.Ticked.Format(src);    
+
         [Op]
         public static bool ticks(string src, out Pair<int> indices)
         {

@@ -21,5 +21,9 @@ namespace Z0
         [MethodImpl(Options), Op]
         public static bool empty(string src)
             => string.IsNullOrEmpty(src);
+
+        [MethodImpl(Inline), Op]
+        public static bool empty(ReadOnlySpan<char> src)
+            => empty(new string(src));
     }
 }

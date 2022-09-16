@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public delegate void WfEventLogger(IWfEvent e);
 
     public abstract class AppService<H> : AppService, IAppService<H>
         where H : AppService<H>, new()

@@ -9,6 +9,14 @@ namespace Z0
     {
         const NumericKind Closure = UInt64k;
 
+        public const char DefaultDelimiter = Chars.Comma; 
+
+        public static DelimitedSeq<T> seq<T>(ReadOnlySeq<T> src, char delimiter = DefaultDelimiter, int pad = 0, Fence<char>? fence = null)
+            => new(src,delimiter,pad,fence);
+
+        public static DelimitedSeq<T> seq<T>(ReadOnlySeq<T> src, char delimiter, Fence<char> fence)
+            => new(src,delimiter,0,fence);
+
         [Op]
         static string pad(int pad)
             => pad == 0 ? "{0}" : "{0," + pad.ToString() + "}";

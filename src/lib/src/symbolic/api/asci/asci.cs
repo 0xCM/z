@@ -5,13 +5,22 @@
 namespace Z0
 {
     using static core;
-    using static AsciSymbols;
-    using static AsciChars;
-
-    using C = AsciCode;
 
     partial struct Asci
     {
+        public static uint asci<T>(W8 w, N5 n, in SymExpr symbol, T kind, uint offset, Span<byte> dst)
+            where T : unmanaged
+        {
+            const string RenderPattern = "{0,-2} {1,-4} {2,-2} {3,-5}";
+            var index = u8(kind);
+            var bits = BitRender.format5(index);
+            var hex = index.FormatHex(specifier:false);
+            var desc = string.Format(RenderPattern,index, symbol, hex, bits);
+            var width = desc.Length;
+            encode(desc, slice(dst,offset));
+            return (uint)width;
+        }
+
         [MethodImpl(Inline), Op]
         public static asci8 asci(N8 n, char src)
             => new asci8((ulong)src);

@@ -4,13 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static SeqEnclosureKind;
     using static Chars;
 
     partial class RP
     {
         [MethodImpl(Inline), Op]
         public static char left(SeqEnclosureKind kind)
-            => kind == Embraced ? LBrace : kind == Bracketed ? LBracket : LParen;
+            => kind == SeqEnclosureKind.Embraced ? LBrace : kind == SeqEnclosureKind.Bracketed ? LBracket : LParen;
     }
 }

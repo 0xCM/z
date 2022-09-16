@@ -51,7 +51,7 @@ namespace Z0
         /// The process identifier
         /// </summary>
         [Render(12)]
-        public uint ProcessId;
+        public ProcessId ProcessId;
 
         /// <summary>
         /// The process image version

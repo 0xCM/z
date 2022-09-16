@@ -20,5 +20,9 @@ namespace Z0
         [MethodImpl(Options), Op]
         public static bool nonempty(char src)
             => src != Chars.Null;
+
+        [MethodImpl(Inline), Op]
+        public static bool nonempty(ReadOnlySpan<char> src)
+            => nonempty(new string(src));            
     }
 }

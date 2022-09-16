@@ -10,10 +10,10 @@ namespace Z0
     {
         public void EmitRowStats(IApiPack dst)
         {
-            var src = ApiMd.Assemblies;
+            var src = ApiMd.Parts;
             var buffer = bag<CliRowStats>();
             stats(src,buffer);
-            EmitRowStats(ApiMd.Assemblies, dst.Metadata().Table<CliRowStats>());
+            EmitRowStats(ApiMd.Parts, dst.Metadata().Table<CliRowStats>());
         }
 
         public void EmitRowStats(ReadOnlySpan<Assembly> src, FilePath dst)

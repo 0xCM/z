@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     using System.IO;
 
@@ -14,7 +14,7 @@ namespace Z0
         PdbIndexBuilder PdbIndexBuilder => Wf.PdbIndexBuilder();
 
         public FilePath IndexAssemblies()
-            => IndexAssemblies(DbArchives.parts());
+            => IndexAssemblies(ModuleArchives.parts());
 
         public FilePath IndexAssemblies(Assembly[] src)
             => PdbIndexBuilder.IndexComponents(src, new PdbIndex());
@@ -103,7 +103,7 @@ namespace Z0
                 HResult hr = src.GetSourceServerData(out var pData, out var size);
                 if(hr)
                 {
-                    read(pData, size, out dst);
+                    core.read(pData, size, out dst);
                     return true;
                 }
                 else
@@ -138,7 +138,7 @@ namespace Z0
                 HResult result = srcsrv.GetSourceServerData(out var size, out pData);
                 if(result)
                 {
-                    read(pData, size, out dst);
+                    memory.read(pData, size, out dst);
                     return true;
                 }
                 else

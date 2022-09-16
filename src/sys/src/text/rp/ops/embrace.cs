@@ -13,5 +13,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static string embrace<T>(T src)
             => $"{Chars.LBrace}{src}{Chars.RBrace}";
+
+        public static Fence<char> Embraced => fence(Chars.LBrace, Chars.RBrace);
     }
 }

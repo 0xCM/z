@@ -18,7 +18,7 @@ namespace Z0
             => AppDb.ApiTargets("assets");
 
         ReadOnlySeq<ApiDataType> DataTypes()
-            => data("DataTypes", () => ApiTypes.discover(Md.Assemblies));
+            => data("DataTypes", () => ApiTypes.discover(Md.Parts));
 
         ReadOnlySeq<ApiTypeInfo> DataTypeInfo()
             => data("DataTypeInfo", () => ApiTypes.describe(DataTypes()));
@@ -79,7 +79,7 @@ namespace Z0
         }
 
         public void EmitApiLiterals()
-            => EmitApiLiterals(Literals.apilits(Md.Assemblies));
+            => EmitApiLiterals(Literals.apilits(Md.Parts));
 
         public void EmitCmdDefs()
             => Emit(CalcCmdDefs());
@@ -90,7 +90,7 @@ namespace Z0
         public void EmitPartList()
         {
             var dst = text.emitter();
-            var src = Md.Assemblies.Index();
+            var src = Md.Parts.Index();
             for(var i=0; i<src.Count; i++)
                 dst.AppendLine(src[i].GetName().FullName);
             FileEmit(dst.Emit(), AppDb.ApiTargets().Path("api.parts", FileKind.List));
@@ -124,7 +124,7 @@ namespace Z0
             => iter(sys.array(ExecutingPart.Assembly), a => EmitApiDeps(a, AppDb.ApiTargets().Path($"{a.GetSimpleName()}", FileKind.DepsList)), true);
 
         public void EmitApiSymbols()
-            => TableEmit(Symbolic.symlits(Md.Assemblies), AppDb.ApiTargets().Table<SymLiteralRow>(), UTF16);
+            => TableEmit(Symbolic.symlits(Md.Parts), AppDb.ApiTargets().Table<SymLiteralRow>(), UTF16);
 
         void EmitSymHeap(SymHeap src, IApiPack dst)
             => Heaps.emit(src, dst.Metadata().Table<SymHeapRecord>(), EventLog);
@@ -142,11 +142,11 @@ namespace Z0
         }
 
         ReadOnlySeq<ApiCmdRow> CalcCmdDefs()
-            => CmdTypes.rows(CmdTypes.discover(Md.Assemblies));
+            => CmdTypes.rows(CmdTypes.discover(Md.Parts));
 
         ReadOnlySeq<ApiFlowSpec> CalcDataFlows()
         {
-            var src = ApiDataFlow.discover(Md.Assemblies);
+            var src = ApiDataFlow.discover(Md.Parts);
             var count = src.Length;
             var buffer = alloc<ApiFlowSpec>(count);
             for(var i=0; i<count; i++)
@@ -220,7 +220,7 @@ namespace Z0
             => TableEmit(src, AppDb.ApiTargets().Table<ApiFlowSpec>());
 
         Index<ComponentAssets> CalcAssets()
-            => Assets.extract(Md.Assemblies);
+            => Assets.extract(Md.Parts);
 
         static uint CountFields(Index<Type> tables)
         {

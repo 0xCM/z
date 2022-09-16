@@ -19,24 +19,24 @@ namespace Z0
         IDbTargets AssetTargets
             => AppDb.ApiTargets("assets");
 
-        public Assembly[] Assemblies
-            => DbArchives.parts();
+        public Assembly[] Parts
+            => ModuleArchives.parts();
 
         public Type[] EnumTypes
-            => data(K.EnumTypes, () => Assemblies
+            => data(K.EnumTypes, () => Parts
                 .Enums()
                 .Where(x => x.ContainsGenericParameters == false));
 
         public Index<Type> ApiTableTypes
-            => data(K.ApiTables, () => Assemblies.Types().Tagged<RecordAttribute>().Index());
+            => data(K.ApiTables, () => Parts.Types().Tagged<RecordAttribute>().Index());
 
         public ReadOnlySeq<SymLiteralRow> SymLits
-            => data(nameof(SymLiteralRow), () => Symbolic.symlits(Assemblies));
+            => data(nameof(SymLiteralRow), () => Symbolic.symlits(Parts));
 
         ReadOnlySeq<IApiHost> CalcApiHosts()
         {
             var dst = sys.bag<IApiHost>();
-            iter(Assemblies, a => iter(ApiRuntime.hosts(a), h => dst.Add(h)), PllExec);
+            iter(Parts, a => iter(ApiRuntime.hosts(a), h => dst.Add(h)), PllExec);
             return dst.Array();
         }
 
@@ -47,7 +47,7 @@ namespace Z0
             => data(K.ApiAssets, () => CalcAssets());
 
         public ApiParserLookup Parsers
-            => data(K.Parsers, () => Z0.Parsers.contracted(Assemblies));
+            => data(K.Parsers, () => Z0.Parsers.contracted(Parts));
 
         public new ApiMdEmitter Emitter()
             => ApiMdEmitter.create(Wf, this);
@@ -81,7 +81,7 @@ namespace Z0
             => TableEmit(src, ApiTargets(tokens).PrefixedTable<SymInfo>(name), TextEncodingKind.Unicode);
 
         internal Index<ComponentAssets> CalcAssets()
-            => Assets.extract(Assemblies);
+            => Assets.extract(Parts);
 
         internal void EmitAssets()
         {

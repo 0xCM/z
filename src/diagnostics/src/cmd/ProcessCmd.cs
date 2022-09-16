@@ -11,53 +11,6 @@ namespace Z0
         public static StackFrameInfo Describe(this StackFrame src)
             => StackFrameInfo.from(src);
     }
-    
-    public record struct StackFrameInfo
-    {
-        public static StackFrameInfo from(StackFrame src)
-        {
-            var dst = new StackFrameInfo();
-            dst.MethodId = src.GetMethod().MetadataToken;
-            dst.MethodSig = Clr.sig(src.GetMethod());
-            dst.Point = FilePoint.point(FS.path(src.GetFileName()), src.GetFileLineNumber(), src.GetFileColumnNumber());
-            dst.IlOffset = src.GetILOffset();
-            dst.IP = src.GetNativeIP();
-            dst.NativeBase = src.GetNativeImageBase();
-            dst.NativeOffset = src.GetNativeOffset();
-            return dst;
-        }
-
-        public CliToken MethodId;
-
-        public CliSig MethodSig;
-
-        public FilePoint Point;
-
-        public Address32 IlOffset;
-
-        public MemoryAddress IP;
-
-        public Address64 NativeBase;
-
-        public Address32 NativeOffset;
-
-        public string Format()
-        {
-            var dst = EmptyString;
-            if(Point.Path.IsNonEmpty)
-            {
-                dst = Point.Format();
-            }
-            else
-            {
-                dst = $"{NativeBase}:{NativeOffset}";
-            }
-            return dst;
-        }
-
-        public override string ToString()
-            => Format();
-    }
 
     class ProcessCmd : AppCmdService<ProcessCmd>
     {
@@ -85,24 +38,33 @@ namespace Z0
             return result;
         }
         
-        [CmdOp("process/list")]
+        [CmdOp("procs/list")]
         void ProcessList()
         {
             const string Pattern = "{0,-24} | {1,-12}";
-            var src = ProcessAdapter.adapt().Sort();
+            var src = ProcessAdapter.proceses().Sort();
             var dst = text.emitter();
             dst.AppendLineFormat(Pattern,"Name", "PID");
             iter(src, p => dst.AppendLineFormat(Pattern, p.ProcessName, p.Id));
-            Row(dst.Emit());           
+            var data = dst.Emit();
+            Row(data);
+            FileEmit(data, AppDb.AppData().Path("processes", FileKind.Csv));
+            //Row(dst.Emit());
+            //FileEmit()
         }
 
-        [CmdOp("process/context")]
+        [CmdOp("proc/context")]
         void ProcessMap(CmdArgs args)
         {
             RuntimeContext.emit(args, Emitter, AppDb.ProcDumps());
+
+            //ImageMemory.map()
         }
 
-        [CmdOp("process/stack")]
+
+
+
+        [CmdOp("proc/stack")]
         void Trace()
         {
             var trace = new StackTrace(true);

@@ -27,7 +27,7 @@ namespace Z0
             return dst;
         }
 
-        public readonly FolderPath Root {get;}
+        public readonly FolderPath Root;
 
         [MethodImpl(Inline)]
         public ModuleArchive(FolderPath root)

@@ -9,7 +9,7 @@ namespace Z0
     partial class CliEmitter
     {
         public void EmitBlobs(IApiPack dst)
-            => iter(ApiMd.Assemblies, c => EmitBlobs(c, dst.Metadata(CliSections.Blobs).PrefixedTable<CliBlob>(c.GetSimpleName())), true);
+            => iter(ApiMd.Parts, c => EmitBlobs(c, dst.Metadata(CliSections.Blobs).PrefixedTable<CliBlob>(c.GetSimpleName())), true);
 
         public void EmitBlobs(Assembly src, FilePath dst)
         {

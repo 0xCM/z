@@ -24,7 +24,7 @@ namespace Z0
 
         public ReadOnlySeq<AssemblyRefInfo> ReadAssemblyRefs()
         {
-            var components = ApiMd.Assemblies;
+            var components = ApiMd.Parts;
             var count = components.Length;
             var dst = list<AssemblyRefInfo>();
             for(var i=0; i<count; i++)

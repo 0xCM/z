@@ -11,7 +11,7 @@ namespace Z0
         public void EmitImageContent(IApiPack dst)
         {
             var flow = Running();
-            iter(ApiMd.Assemblies, c => EmitImageContent(c, dst), PllExec);
+            iter(ApiMd.Parts, c => EmitImageContent(c, dst), PllExec);
             Ran(flow);
         }
 

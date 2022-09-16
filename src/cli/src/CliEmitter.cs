@@ -46,7 +46,7 @@ namespace Z0
                 EmitBlobs(dst);
 
             if(options.EmitMethodDefs)
-                EmitMethodDefs(ApiMd.Assemblies, dst);
+                EmitMethodDefs(ApiMd.Parts, dst);
 
             if(options.EmitCliRowStats)
                 EmitRowStats(dst);

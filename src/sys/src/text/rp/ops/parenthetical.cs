@@ -13,5 +13,8 @@ namespace Z0
         [Op]
         public static string parenthetical(params object[] content)
             => enclose(string.Concat(content.Select(x => x.ToString())), Chars.LParen, Chars.RParen);
+
+        public static Fence<char> Parenthetical => fence(Chars.LBrace, Chars.RBrace);
+
     }
 }

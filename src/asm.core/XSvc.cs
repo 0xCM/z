@@ -61,9 +61,6 @@ namespace Z0
             public StanfordAsmCatalog StanfordCatalog(IWfRuntime wf)
                 => Service<StanfordAsmCatalog>(wf);
 
-            public Parsers Parsers(IWfRuntime wf)
-                => Service<Parsers>(wf);
-
             public CharMapper CharMapper(IWfRuntime wf)
                 => Service<CharMapper>(wf);
 
@@ -134,11 +131,8 @@ namespace Z0
         public static SdmCodeGen SdmCodeGen(this IWfRuntime wf)
             => Services.Service<SdmCodeGen>(wf);
 
-        public static StanfordAsmCatalog StanfordCatalog(this IWfRuntime wf)
+         public static StanfordAsmCatalog StanfordCatalog(this IWfRuntime wf)
             => Services.StanfordCatalog(wf);
-
-        public static Parsers Parsers(this IWfRuntime wf)
-            => Services.Parsers(wf);
 
         public static AsmDocs AsmDocs(this IWfRuntime wf)
             => Services.AsmDocs(wf);

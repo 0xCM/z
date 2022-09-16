@@ -5,6 +5,10 @@
 namespace Z0
 {
     [Free]
+    public delegate void WfEventLogger(IWfEvent e);
+
+    [Free]
+
     public interface IWfEvent : IAppEvent
     {
         EventId EventId {get;}

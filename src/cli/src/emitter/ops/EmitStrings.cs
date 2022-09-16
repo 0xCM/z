@@ -17,7 +17,7 @@ namespace Z0
         }
 
         public void EmitUserStrings(IApiPack dst)
-            => EmitUserStrings(ApiMd.Assemblies, dst);
+            => EmitUserStrings(ApiMd.Parts, dst);
 
         public void EmitUserStrings(ReadOnlySpan<Assembly> src, IApiPack dst)
             => iter(src, a => EmitUserStrings(a, dst), true);
@@ -34,7 +34,7 @@ namespace Z0
         }
 
         public void EmitSystemStrings(IApiPack dst)
-            => EmitSystemStrings(ApiMd.Assemblies, dst);
+            => EmitSystemStrings(ApiMd.Parts, dst);
 
         public void EmitSystemStrings(ReadOnlySpan<Assembly> src, IApiPack dst)
             => iter(src, a => EmitSystemStrings(a, dst), true);

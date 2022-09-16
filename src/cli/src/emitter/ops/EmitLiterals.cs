@@ -9,7 +9,7 @@ namespace Z0
     partial class CliEmitter
     {
         public void EmitLiterals(IApiPack dst)
-            => iter(ApiMd.Assemblies, c => EmitFieldLiterals(c, dst), true);
+            => iter(ApiMd.Parts, c => EmitFieldLiterals(c, dst), true);
 
         void EmitFieldLiterals(Assembly src, IApiPack dst)
         {

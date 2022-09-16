@@ -188,7 +188,7 @@ namespace Z0
             return true;
         }
 
-        Parsers Parsers => Service(Wf.Parsers);
+        Parsers Parsers => new();
 
         [CmdOp("check/api/parsers")]
         Outcome CheckApiParsers(CmdArgs args)

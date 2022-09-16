@@ -19,7 +19,7 @@ namespace Z0
         public static ProcessAdapter adapt(ProcessId pid)
             => S.GetProcessById(pid.Value);
 
-        public static ReadOnlySeq<ProcessAdapter> adapt()
+        public static ReadOnlySeq<ProcessAdapter> proceses()
             => map(Process.GetProcesses(), process => process.Adapt());
 
         ConcurrentBag<Action<EventArgs>> ExitHandlers = new();
@@ -50,7 +50,7 @@ namespace Z0
         public bool IsEmpty {get; private set;}
 
         public int CompareTo(ProcessAdapter src)
-            => Id.CompareTo(src.Id);
+            => ProcessName.CompareTo(src.ProcessName);
 
         public bool Equals(ProcessAdapter src)
             => Id == src.Id;

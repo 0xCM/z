@@ -9,5 +9,8 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static string squote(object src)
             => enclose(src, CharText.SQuote);
+
+        public static Fence<char> SQuoted => fence(Chars.SQuote, Chars.SQuote);
+
     }
 }

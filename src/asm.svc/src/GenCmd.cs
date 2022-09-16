@@ -352,7 +352,7 @@ namespace Z0
         {
             var generator = Wf.ApiTableGen();
             var buffer = text.emitter();
-            var src = ApiMd.Assemblies;
+            var src = ApiMd.Parts;
             var defs = ApiTableDefs.defs(src);
             iter(defs, src => generator.Emit(0u,src,buffer));
             var dst = AppDb.CgStage("api.tables").Path("replicants", FileKind.Cs);

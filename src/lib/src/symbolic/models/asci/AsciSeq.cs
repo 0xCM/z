@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Spans;
-    using static Algs;
+    using static sys;
 
     /// <summary>
     /// Covers a sequence of asci-encoded bytes

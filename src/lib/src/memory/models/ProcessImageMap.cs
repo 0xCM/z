@@ -11,19 +11,34 @@ namespace Z0
         /// <summary>
         /// Specfies the images mapped into the process
         /// </summary>
-        public readonly ReadOnlySeq<ImageLocation> Images;
+        public readonly DelimitedSeq<ImageLocation> Images;
 
-        public readonly ReadOnlySeq<MemoryAddress> Addresses;
+        public readonly DelimitedSeq<MemoryAddress> Addresses;
 
-        public readonly ReadOnlySeq<ProcessModuleRow> Modules;
+        public readonly DelimitedSeq<ProcessModuleRow> Modules;
 
         [MethodImpl(Inline)]
         public ProcessImageMap(ProcessMemoryState state, ReadOnlySeq<ImageLocation> locations, ReadOnlySeq<MemoryAddress> addresses, ReadOnlySeq<ProcessModuleRow> modules)
         {
             MemoryState = state;
-            Images = locations;
-            Addresses = addresses;
-            Modules = modules;
+            Images = Delimiting.seq(locations, Chars.NL, RP.Embraced);
+            Addresses = Delimiting.seq(addresses, Chars.Comma, RP.Embraced);
+            Modules =  Delimiting.seq(modules, Chars.NL, RP.Embraced);
         }
+
+        public string ImageName
+        {
+            [MethodImpl(Inline)]
+            get => MemoryState.ImageName;
+        }
+
+        public ProcessId ProcessId
+        {
+            [MethodImpl(Inline)]
+            get => MemoryState.ProcessId;
+        }
+
+        public string Format()
+            => this.ToString();
     }
 }

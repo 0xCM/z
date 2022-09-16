@@ -23,6 +23,6 @@ namespace Z0
         }
 
         public void EmitLocatedMetadata(IApiPack dst, uint bpl = 64)
-            => iter(ApiMd.Assemblies, c => EmitLocatedMetadata(c, bpl, dst.Metadata(CliSections.ApiHex).Path(c.GetSimpleName(), FileKind.LocatedHex)), true);
+            => iter(ApiMd.Parts, c => EmitLocatedMetadata(c, bpl, dst.Metadata(CliSections.ApiHex).Path(c.GetSimpleName(), FileKind.LocatedHex)), true);
     }
 }

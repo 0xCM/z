@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
+    using static sys;
 
     [Free]
     public interface IString8<S,B> : INativeString<S,AsciSymbol>
@@ -34,5 +34,5 @@ namespace Z0
 
         int IByteSeq.Capacity
             => (int)size<B>()/2;
-    }
+    }    
 }

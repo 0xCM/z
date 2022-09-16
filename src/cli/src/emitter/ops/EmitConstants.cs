@@ -9,7 +9,7 @@ namespace Z0
     partial class CliEmitter
     {
         public void EmitConstFields(IApiPack dst)
-            => iter(ApiMd.Assemblies, c => EmitConstFields(c, dst), true);
+            => iter(ApiMd.Parts, c => EmitConstFields(c, dst), true);
 
         public void EmitConstFields(Assembly src, IApiPack dst)
         {

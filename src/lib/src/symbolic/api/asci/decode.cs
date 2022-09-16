@@ -4,9 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    using static Spans;
-
+    using static sys;
+    
     using C = AsciCode;
     using S = AsciSymbol;
 

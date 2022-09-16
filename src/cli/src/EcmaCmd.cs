@@ -49,7 +49,7 @@ namespace Z0
 
         [CmdOp("ecma/emit/stats")]
         void EmitStats()
-            => CliEmitter.EmitRowStats(ApiMd.Assemblies, AppDb.ApiTargets().Table<CliRowStats>());
+            => CliEmitter.EmitRowStats(ApiMd.Parts, AppDb.ApiTargets().Table<CliRowStats>());
 
         [CmdOp("ecma/emit/blobs")]
         void EmitBlobs()
