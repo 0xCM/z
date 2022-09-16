@@ -14,22 +14,21 @@ namespace Z0
 
     class ProcessCmd : AppCmdService<ProcessCmd>
     {
-        [CmdOp("process/memory")]
+        [CmdOp("proc/memory")]
         Outcome ShowMemHex(CmdArgs args)
         {
             var address = MemoryAddress.Zero;
             var result = DataParser.parse(arg(args,0), out address);
+            var size = 16u;
             if(result)
             {
 
-                var size = 16u;
                 if(args.Count >= 2)
                     result = DataParser.parse(arg(args,1), out size);
 
                 if(result)
                 {
-                    ref readonly var src = ref address.Ref<byte>();
-                    var data = sys.cover(src,size);
+                    var data = sys.cover(address.Ref<byte>(), size);
                     var hex = data.FormatHex();
                     Write(string.Format("{0,-16}: {1}", address, hex));
                 }
@@ -53,16 +52,17 @@ namespace Z0
             //FileEmit()
         }
 
-        [CmdOp("proc/context")]
-        void ProcessMap(CmdArgs args)
-        {
-            RuntimeContext.emit(args, Emitter, AppDb.ProcDumps());
+        [CmdOp("procs/context")]
+        void ProcContext(CmdArgs args)
+            => RuntimeContext.emit(args, Emitter, AppDb.ProcDumps());
 
-            //ImageMemory.map()
-        }
+        [CmdOp("procs/map")]
+        void ProcMap(CmdArgs args)
+            => ImageMemory.map(args, Emitter, AppDb.AppData());
 
-
-
+        [CmdOp("procs/modules")]
+        void ProcModules(CmdArgs args)
+            => ImageMemory.modules(args, Emitter, AppDb.AppData());
 
         [CmdOp("proc/stack")]
         void Trace()

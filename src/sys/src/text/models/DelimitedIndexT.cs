@@ -80,7 +80,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public string Format()
         {
-            var content = Delimiting.delimit(Data.View, Delimiter, CellPad);
+            var content = Delimiting.format(Data.View, Delimiter, CellPad);
             if(Fence != null && sys.nonempty(content))
                 return RP.enclose(content, Fence.Value);
             else

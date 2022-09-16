@@ -14,11 +14,27 @@ namespace Z0
 
         public DelimitedSeq()
         {
-
+            Delimiter = ",";
+            CellPad = 0;
+            Fence = null;
         }
 
+        static string format(T item)
+            => $"{item}";
+
+        public override string Format()
+        {
+            var f = Delimiting.format(View, format, Delimiter, CellPad);
+            if(Fence != null)
+                f = Fence.Value.Format(f);
+            return f;
+        }
+
+        public override string ToString()
+            => Format();
+
         [MethodImpl(Inline)]
-        public DelimitedSeq(ReadOnlySeq<T> src, char delimiter = DelimitedSeq.DefaultDelimiter, int pad = 0, Fence<char>? fence = null)
+        public DelimitedSeq(ReadOnlySeq<T> src, char delimiter, int pad, Fence<char>? fence)
             : base(src.Storage)
         {
             Delimiter = delimiter.ToString();
@@ -28,10 +44,10 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator DelimitedSeq<T>(ReadOnlySeq<T> src)
-            => new DelimitedSeq<T>(src);
+            => new DelimitedSeq<T>(src, Chars.Comma, 0, null);
 
         [MethodImpl(Inline)]
         public static implicit operator DelimitedSeq<T>(T[] src)
-            => new DelimitedSeq<T>(src);
+            => new DelimitedSeq<T>(src, Chars.Comma, 0, null);
     }
 }

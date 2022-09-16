@@ -26,18 +26,6 @@ namespace Z0
             Modules =  Delimiting.seq(modules, Chars.NL, RP.Embraced);
         }
 
-        public string ImageName
-        {
-            [MethodImpl(Inline)]
-            get => MemoryState.ImageName;
-        }
-
-        public ProcessId ProcessId
-        {
-            [MethodImpl(Inline)]
-            get => MemoryState.ProcessId;
-        }
-
         public string Format()
             => this.ToString();
     }

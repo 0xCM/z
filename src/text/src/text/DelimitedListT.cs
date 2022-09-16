@@ -42,7 +42,7 @@ namespace Z0
             => Data.ViewDeposited();
         public string Format()
         {
-            var content = Delimiting.delimit(Data.ViewDeposited(), Delimiter, CellPad);
+            var content = Delimiting.format(Data.ViewDeposited(), Delimiter, CellPad);
             if(Fence != null && sys.nonempty(content))
                 return text.enclose(content, Fence.Value);
             else

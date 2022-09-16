@@ -134,8 +134,9 @@ namespace Z0
 
         public virtual string FormatItem(T src)
             => src?.ToString() ?? EmptyString;
+
         public virtual string Format()
-            => Seq.format(Data.Storage, FormatItem, Delimiter);
+            => Delimiting.format(View, FormatItem, Delimiter);
 
         public override string ToString()
             => Format();

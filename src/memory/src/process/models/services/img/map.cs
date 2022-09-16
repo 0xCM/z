@@ -11,6 +11,17 @@ namespace Z0
         public static ProcessImageMap map()
             => map(Process.GetCurrentProcess());
 
+        public static void map(CmdArgs args, WfEmit channel, DbArchive dst)
+        {
+            var buffer = bag<ProcessId>();
+            if(args.Count != 0)
+                ProcessId.parse(args, buffer);
+            else
+                buffer.Add(ExecutingPart.Process.Id);
+
+            iter(buffer, id =>  map(ProcessAdapter.adapt(id), channel, dst));
+        }
+
         public static void map(ProcessAdapter src, WfEmit channel, DbArchive dst)
             => channel.FileEmit(map(src).Format(), new FileUri($"{dst.Root.Format(PathSeparator.FS)}{src.ProcessName}.{src.Id}.{sys.timestamp()}.image.map"));
 

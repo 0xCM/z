@@ -2,6 +2,7 @@
   <ItemGroup>
      <ProjectReference Include="$(Builds)"/>
      <ProjectReference Include="$(Native)"/>
+     <ProjectReference Include="$(Process)"/>
      <ProjectReference Include="$(Wf)"/>
   </ItemGroup>
 </Project>

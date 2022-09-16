@@ -6,7 +6,6 @@ namespace Z0
 {
     using static sys;
 
-
     public class RuntimeContext
     {
         public static void emit(CmdArgs args, WfEmit channel, DbArchive dst)

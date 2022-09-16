@@ -1,5 +1,4 @@
 <Project>
-
   <ItemGroup>
     <ProjectReference Include="$(Wf)" />
     <ProjectReference Include="$(Native)" />
@@ -8,5 +7,4 @@
     <ProjectReference Include="$(Dynamic)" />
     <ProjectReference Include="$(Heaps)" />
   </ItemGroup>
-
 </Project>

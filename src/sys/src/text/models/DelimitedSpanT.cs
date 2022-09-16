@@ -14,15 +14,18 @@ namespace Z0
 
         public readonly int CellPad;
 
+        public readonly Fence<char>? Fence;
+
         readonly FormatCells<T> Render;
 
         [MethodImpl(Inline)]
-        public DelimitedSpan(ReadOnlySpan<T> src, char delimiter = Chars.Pipe, int pad = 0)
+        public DelimitedSpan(ReadOnlySpan<T> src, char delimiter = Chars.Pipe, int pad = 0, Fence<char>? fence = null)
         {
             Data = src;
             Delimiter = delimiter;
-            Render = Delimiting.delimit;
+            Render = Delimiting.format;
             CellPad = pad;
+            Fence = fence;
         }
 
         [MethodImpl(Inline)]
