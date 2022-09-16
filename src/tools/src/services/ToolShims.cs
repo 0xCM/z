@@ -6,6 +6,7 @@ namespace Z0
 {
     using static sys;
 
+
     public class ToolShims 
     {
         public static Task<int> start(ShimDef shim, WfEmit channel, params string[] args)
@@ -29,7 +30,7 @@ namespace Z0
                 try
                 {
                     var psi = ProcessStartSpec.define(spec.ShimSource, args.Storage);
-                    var process = Cmd.process(psi);
+                    var process = ProcExec.start(psi);
                     var seq = enlist(spec,process);
                     var running = channel.Running($"{process.Id}:{spec.ShimSource}");
                     process.WaitForExit();

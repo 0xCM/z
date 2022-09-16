@@ -52,6 +52,18 @@ namespace Z0
             get => ref Data.First;
         }
 
+        public Span<T> Slice(int offset)
+            => sys.slice(Data.Edit,offset);
+
+        public Span<T> Slice(int offset, int length)
+            => sys.slice(Data.Edit, offset, length);
+
+        public Span<T> Slice(uint offset)
+            => sys.slice(Data.Edit,offset);
+
+        public Span<T> Slice(uint offset, uint length)
+            => sys.slice(Data.Edit, offset, length);
+
         public Seq<T> Reverse()
             => new Seq<T>(Data.Reverse());
 

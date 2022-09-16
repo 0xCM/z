@@ -38,6 +38,7 @@
         <ProjectReference Include="$(IntelSvc)" />
         <ProjectReference Include="$(LangEmit)" />
         <ProjectReference Include="$(Linq)" />
+        <ProjectReference Include="$(LlvmSvc)" />
         <ProjectReference Include="$(Machines)" />
         <ProjectReference Include="$(Memory)" />
         <ProjectReference Include="$(MemoryModels)" />
@@ -52,8 +53,6 @@
         <ProjectReference Include="$(Tuples)" />
         <ProjectReference Include="$(Tools)" />
         <ProjectReference Include="$(Validity)" />
-        <ProjectReference Include="$(LlvmModels)" />
-        <ProjectReference Include="$(LlvmSvc)" />
   </ItemGroup>
 
 </Project>

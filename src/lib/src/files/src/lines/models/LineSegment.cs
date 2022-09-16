@@ -7,7 +7,7 @@ namespace Z0
     /// <summary>
     /// Defines a segment of a number-identified line
     /// </summary>
-    [StructLayout(LayoutKind.Sequential), DataTypeAttributeD("line.segment")]
+    [StructLayout(LayoutKind.Sequential)]
     public readonly struct LineSegment
     {
         const string RenderPattern = "{0}[{1},{2}]";

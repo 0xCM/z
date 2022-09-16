@@ -21,6 +21,7 @@ namespace Z0
             Data = src;
         }
 
+
         public override string Format()
         {
             if(Count > 0)

@@ -12,7 +12,7 @@ namespace Z0
         {
             void status(in string src)
             {
-                channel.Write(src);
+                channel.Row(src);
             }
 
             void error(in string src)

@@ -139,7 +139,7 @@ namespace Z0
         void GetHelp(CmdArgs args)
         {
             var dst = AppDb.DbTargets("tools/help").Path(FS.file($"{args[0].Value}.{timestamp()}", FileKind.Help));                    
-            Cmd.run(args, dst, Emitter);
+            ProcExec.run(args, dst, Emitter);
         }
 
         [CmdOp("exe")]
@@ -147,7 +147,7 @@ namespace Z0
         {
             var src = FS.path(args[0]);
             var dst =  AppDb.Logs("exe").Path($"{src.FileName.WithoutExtension}.{timestamp()}", FileKind.Log);
-            Cmd.run(src, dst, Emitter);
+            ProcExec.run(src, dst, Emitter);
         }
 
         [CmdOp("cmd")]

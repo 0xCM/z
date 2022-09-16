@@ -14,7 +14,7 @@ namespace Z0
 
     using static sys;
 
-    public sealed class ProcessAdapter : Adapter<A,S>, IComparable<A>, IEquatable<A>
+    public class ProcessAdapter : Adapter<A,S>, IComparable<A>, IEquatable<A>
     {
         public static ProcessAdapter adapt(ProcessId pid)
             => S.GetProcessById(pid.Value);
@@ -31,7 +31,9 @@ namespace Z0
         ConcurrentBag<Action<EventArgs>> DisposalHandlers = new();
 
         public ProcessAdapter()
-        {}
+        {
+            IsEmpty = true;
+        }
 
         [MethodImpl(Inline)]
         public ProcessAdapter(S subject)
@@ -41,7 +43,11 @@ namespace Z0
             subject.ErrorDataReceived += OnErrorData;
             subject.OutputDataReceived += OnOutputData;
             subject.Disposed += OnDisposed;
+            IsEmpty = false;
         }
+
+
+        public bool IsEmpty {get; private set;}
 
         public int CompareTo(ProcessAdapter src)
             => Id.CompareTo(src.Id);
@@ -418,6 +424,7 @@ namespace Z0
             [MethodImpl(Inline)]
             set => Subject.MinWorkingSet = value;
         }
+
 
         //
         // Summary:
@@ -925,7 +932,7 @@ namespace Z0
         //     The process has already exited. -or- There is no process associated with this
         //     System.Diagnostics.Process object.
         [MethodImpl(Inline)]
-        public void Kill()
+        public virtual void Kill()
             => Subject.Kill();
 
         //

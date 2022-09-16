@@ -30,53 +30,6 @@ namespace Z0
 
         static readonly Toolbase TB = new();
 
-        [CmdOp("tools")]
-        void ListTools()
-        {
-            var tools = TB.Tools();
-            var dst = AppDb.Dev("toolsets").Path("tools",FileKind.Cfg);
-            var emitting = Emitter.EmittingFile(dst);
-            var counter = 0u;
-            var indent = 0u;
-            using var emitter = dst.Emitter();
-            for(var i=0; i<tools.Count; i++)
-            {
-                ref readonly var tool = ref tools[i];
-                var location = tool.Location;                
-                var docs = tool.Docs().Files();
-                emitter.AppendLine(RP.PageBreak120);
-                emitter.AppendLine($"Tool={tool.Name},");             
-                emitter.AppendLine($"Home={tool.Location.Root},");
-                
-                if(docs.Count != 0)
-                {
-                    emitter.AppendLine("Docs={");
-                    
-                    indent += 4;
-
-                    core.iteri(docs.View, (i,doc) => emitter.IndentLine(indent, $"{text.quote(doc.ToUri())},"));
-                    counter += (4 + docs.Count);
-                    indent -= 4;
-                    emitter.AppendLine("},");
-                }
-
-                var cfgpath = tool.Location.Path(tool.Name, FileKind.Cfg);
-                if(cfgpath.Exists)
-                {
-                    emitter.AppendLine($"ConfigPath={text.quote(cfgpath.ToUri())},");
-                    var settings = Cmd.settings(cfgpath);
-                    emitter.WriteLine("Settings={");
-                    indent += 4;
-                    emitter.Write(settings.Format(indent));
-                    emitter.WriteLine("}");
-                    indent -= 4;
-                    counter += 2*6;
-                }
-            }
-
-            EmittedFile(emitting, counter);
-        }
-
         Outcome RunJobs(CmdArgs args)
         {
             var result = Outcome.Success;
@@ -180,6 +133,15 @@ namespace Z0
             var src = FS.dir(arg(args,0).Value);
             var dst = FS.dir(arg(args,1).Value);
             var cmd = Tools.mklink(src,dst);            
+        }
+
+        [CmdOp("child")]
+        void Child(CmdArgs args)
+        {
+            Demand.neq<uint>(args.Count,0);
+            var path = FS.path(args.First);
+            var _args = sys.slice(args.Values().View,1).ToArray();
+            ProcExec.passthrough(path,Emitter,_args);
         }
     }
 }
