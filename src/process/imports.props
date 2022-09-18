@@ -1,5 +1,5 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(Files)" />
+    <ProjectReference Include="$(Db)" />
   </ItemGroup>
 </Project>

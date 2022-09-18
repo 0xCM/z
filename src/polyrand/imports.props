@@ -1,7 +1,5 @@
 <Project>
-
   <ItemGroup>
-    <ProjectReference Include="$(Dynamic)" />
+    <ProjectReference Include="$(Native)" />
   </ItemGroup>
-
 </Project>

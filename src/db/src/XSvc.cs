@@ -9,13 +9,16 @@ namespace Z0
     {
         sealed class ServiceCache : AppServices<ServiceCache>
         {
-            public DbCmd DbCmd(IWfRuntime wf)
-                => Service<DbCmd>(wf);
+
+            public DbArchives DbArchives(IWfRuntime wf)
+                => Service<DbArchives>(wf);
+
         }
 
         static ServiceCache Services => ServiceCache.Instance;
 
-        public static ICmdProvider DbCmd(this IWfRuntime wf)
-            => Services.DbCmd(wf);
+        public static DbArchives DbArchive(this IWfRuntime wf)
+            => Services.DbArchives(wf);
+
     }
 }

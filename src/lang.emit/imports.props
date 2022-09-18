@@ -6,7 +6,7 @@
     <ProjectReference Include="$(Rules)" />
     <ProjectReference Include="$(Builds)" />
     <ProjectReference Include="$(Lang)" />
-    <ProjectReference Include="$(Wf)" />
+    <ProjectReference Include="$(Tools)" />
     
   </ItemGroup>
 </Project>

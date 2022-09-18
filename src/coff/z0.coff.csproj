@@ -5,9 +5,4 @@
     <OutputType>Library</OutputType>
     <TargetFramework>$(FrameworkMoniker)</TargetFramework>
   </PropertyGroup>
-
-
-  <ItemGroup>
-  </ItemGroup>
-
 </Project>

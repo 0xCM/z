@@ -4,7 +4,6 @@
     <Containers>$(SlnSrc)\containers\z0.containers.csproj</Containers>
     <Symbolics>$(SlnSrc)\symbolics\z0.symbolics.csproj</Symbolics>
     <CmdSpecs>$(SlnSrc)\cmd.specs\z0.cmd.specs.csproj</CmdSpecs>
-    <Wf>$(SlnSrc)\wf\z0.wf.csproj</Wf>
     <WfShell>$(SlnSrc)\wf.shell\z0.wf.shell.csproj</WfShell>
 
     <Imagine>$(SlnSrc)\imagine\z0.imagine.csproj</Imagine>
@@ -12,11 +11,6 @@
 
     <Assets>$(SlnSrc)\assets\z0.assets.csproj</Assets>
     <ApiChecks>$(SlnSrc)\api.checks\z0.api.checks.csproj</ApiChecks>
-
-    <Asm>$(SlnSrc)\asm\z0.asm.csproj</Asm>
-    <AsmModels>$(SlnSrc)\asm.models\z0.asm.models.csproj</AsmModels>
-    <AsmPrototypes>$(SlnSrc)\asm.prototypes\z0.asm.prototypes.csproj</AsmPrototypes>
-    <AsmSvc>$(SlnSrc)\asm.svc\z0.asm.svc.csproj</AsmSvc>
 
     <Cli>$(SlnSrc)\cli\z0.cli.csproj</Cli>
     <ClrCil>$(SlnSrc)\clr.cil\z0.clr.cil.csproj</ClrCil>
@@ -29,8 +23,6 @@
     <CmdTools>$(SlnSrc)\cmd.tools\z0.cmd.tools.csproj</CmdTools>
     <CmdFlows>$(SlnSrc)\cmd.flows\z0.cmd.flows.csproj</CmdFlows>
     <CmdChecks>$(SlnSrc)\cmd.checks\z0.cmd.checks.csproj</CmdChecks>
-
-    <Diagnostics>$(SlnSrc)\diagnostics\z0.diagnostics.csproj</Diagnostics>
 
     <EMath>$(SlnSrc)\emath\z0.emath.csproj</EMath>
 

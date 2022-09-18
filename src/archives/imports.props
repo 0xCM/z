@@ -3,6 +3,6 @@
     <ProjectReference Include="$(Containers)" />
     <ProjectReference Include="$(Digital)" />
     <ProjectReference Include="$(CmdSpecs)" />
-    <ProjectReference Include="$(Wf)" />
+    <ProjectReference Include="$(Tools)" />
   </ItemGroup>
 </Project>

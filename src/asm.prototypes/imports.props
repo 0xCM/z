@@ -1,0 +1,7 @@
+<Project>
+  <ItemGroup>
+    <ProjectReference Include="$(Assets)" />
+    <ProjectReference Include="$(ApiCode)" />
+    <ProjectReference Include="$(Calcs)" />
+  </ItemGroup>
+</Project>

@@ -1,6 +1,7 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(Archives)" />
-    <ProjectReference Include="$(Wf)" />
+    <ProjectReference Include="$(Containers)" />
+    <ProjectReference Include="$(Symbolics)" />
+    <ProjectReference Include="$(CmdSpecs)" />
   </ItemGroup>
 </Project>

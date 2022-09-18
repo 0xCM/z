@@ -9,13 +9,9 @@ namespace Z0
     {
         sealed class ServiceCache : AppServices<ServiceCache>
         {
-            public IAppCmdSvc FsmCmd(IWfRuntime wf)
-                => Service<FsmCmd>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
 
-        public static IAppCmdSvc FsmCmd(this IWfRuntime wf)
-            => Services.FsmCmd(wf);
     }
 }

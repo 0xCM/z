@@ -1,0 +1,9 @@
+<Project>
+  <ItemGroup>
+    <ProjectReference Include="$(Asm)" />
+    <ProjectReference Include="$(Cli)" />
+    <ProjectReference Include="$(Polyrand)" />
+    <ProjectReference Include="$(IntelSvc)" />
+    <ProjectReference Include="$(Diagnostics)" />
+  </ItemGroup>
+</Project>

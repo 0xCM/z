@@ -1,0 +1,7 @@
+<Project>
+  <Import Project="$(ImportDefs)\microsoft.build.props"/>
+  <ItemGroup>
+    <ProjectReference Include="$(Polyrand)" />
+    <ProjectReference Include="$(Db)" />
+  </ItemGroup>
+</Project>

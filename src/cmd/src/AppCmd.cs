@@ -32,7 +32,6 @@ namespace Z0
                 wf.XedChecks(),
                 wf.BuildCmd(),
                 wf.XedToolCmd(),
-                wf.FsmCmd(),
                 wf.CalcChecker(),
                 wf.TestCmd(),
                 wf.AsmGenCmd(),

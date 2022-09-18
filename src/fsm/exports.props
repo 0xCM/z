@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Fsm>$(MsBuildThisFileDirectory)z0.fsm.csproj</Fsm>
+  </PropertyGroup>
+</Project>

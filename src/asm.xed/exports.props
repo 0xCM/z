@@ -1,5 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <AsmXed>$(MsBuildThisFileDirectory)z0.asm.xed.csproj</AsmXed>
-  </PropertyGroup>
-</Project>

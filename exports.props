@@ -6,8 +6,11 @@
    <Import Project="$(MsBuildThisFileDirectory)src/api.md/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/api.specs/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/archives/exports.props"/>
+
    <Import Project="$(MsBuildThisFileDirectory)src/asm/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/asm.core/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/asm.prototypes/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/asm.svc/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/bit/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/bit.render/exports.props"/>
@@ -39,9 +42,8 @@
    <Import Project="$(MsBuildThisFileDirectory)src/dispatcher/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/digital/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/diagnostics/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/dynamic/exports.props"/>
 
-   <Import Project="$(MsBuildThisFileDirectory)src/files/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/fsm/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/heaps/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/hex/exports.props"/>
@@ -68,7 +70,5 @@
    <Import Project="$(MsBuildThisFileDirectory)src/symbolics/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/text/exports.props"/>
-
-   <Import Project="$(MsBuildThisFileDirectory)src/wf/exports.props"/>
 
 </Project>

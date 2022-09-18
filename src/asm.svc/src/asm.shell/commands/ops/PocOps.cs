@@ -441,15 +441,15 @@ namespace Z0.Asm
         }
 
 
-        public void CheckClrKeys()
-        {
-            var types = Wf.ApiCatalog.Components.Storage.Types();
-            var unique = hashset<Type>();
-            var count = unique.Include(types).Where(x => x).Count();
-            Wf.Data($"{types.Length} ?=? {count}");
-            var fields = Wf.ApiCatalog.Components.Storage.DeclaredStaticFields();
-            iter(fields, f => Wf.Data(f.Name + ": " + f.FieldType.Name));
-        }
+        // public void CheckClrKeys()
+        // {
+        //     var types = Wf.ApiCatalog.Components.Storage.Types();
+        //     var unique = hashset<Type>();
+        //     var count = unique.Include(types).Where(x => x).Count();
+        //     Wf.Data($"{types.Length} ?=? {count}");
+        //     var fields = Wf.ApiCatalog.Components.Storage.DeclaredStaticFields();
+        //     iter(fields, f => Wf.Data(f.Name + ": " + f.FieldType.Name));
+        // }
 
 
         void CheckFlags()
@@ -470,41 +470,41 @@ namespace Z0.Asm
             }
         }
 
-        static string FormatAttributes(IXmlElement src)
-            => src.Attributes.Select(x => string.Format("{0}={1}",x.Name, x.Value)).Delimit(Chars.Comma).Format();
+        // static string FormatAttributes(IXmlElement src)
+        //     => src.Attributes.Select(x => string.Format("{0}={1}",x.Name, x.Value)).Delimit(Chars.Comma).Format();
 
-        void ConvertPdbXml()
-        {
-            var dir = FolderPath.Empty;
-            var file = PartId.AsmCore.Component(FS.Pdb, FS.Xml);
-            var srcPath = dir + file;
-            var buffer = text.buffer();
+        // void ConvertPdbXml()
+        // {
+        //     var dir = FolderPath.Empty;
+        //     var file = PartId.AsmCore.Component(FS.Pdb, FS.Xml);
+        //     var srcPath = dir + file;
+        //     var buffer = text.buffer();
 
-            var dstPath = FilePath.Empty;
-            using var writer = dstPath.Writer();
+        //     var dstPath = FilePath.Empty;
+        //     using var writer = dstPath.Writer();
 
-            const string Pattern = "{0}/{1}:{2}";
+        //     const string Pattern = "{0}/{1}:{2}";
 
-            void HandleFiles(IXmlElement src)
-                => writer.WriteLine(string.Format(Pattern, src.Ancestor, src.Name, FormatAttributes(src)));
+        //     void HandleFiles(IXmlElement src)
+        //         => writer.WriteLine(string.Format(Pattern, src.Ancestor, src.Name, FormatAttributes(src)));
 
-            void HandleMethods(IXmlElement src)
-                => writer.WriteLine(string.Format(Pattern, src.Ancestor, src.Name, FormatAttributes(src)));
+        //     void HandleMethods(IXmlElement src)
+        //         => writer.WriteLine(string.Format(Pattern, src.Ancestor, src.Name, FormatAttributes(src)));
 
-            void HandleSequencePointEntry(IXmlElement src)
-                => writer.WriteLine(string.Format(Pattern, src.Ancestor, src.Name, FormatAttributes(src)));
+        //     void HandleSequencePointEntry(IXmlElement src)
+        //         => writer.WriteLine(string.Format(Pattern, src.Ancestor, src.Name, FormatAttributes(src)));
 
 
-            var handlers = new ElementHandlers();
-            handlers.AddHandler("file", HandleFiles);
-            handlers.AddHandler("method", HandleMethods);
-            handlers.AddHandler("entry", HandleMethods);
+        //     var handlers = new ElementHandlers();
+        //     handlers.AddHandler("file", HandleFiles);
+        //     handlers.AddHandler("method", HandleMethods);
+        //     handlers.AddHandler("entry", HandleMethods);
 
-            var flow = Wf.EmittingFile(dstPath);
-            using var xml = XmlSource.create(srcPath);
-            xml.Read(handlers);
-            Wf.EmittedFile(flow,1);
-        }
+        //     var flow = Wf.EmittingFile(dstPath);
+        //     using var xml = XmlSource.create(srcPath);
+        //     xml.Read(handlers);
+        //     Wf.EmittedFile(flow,1);
+        // }
 
         public void RunPipes()
         {

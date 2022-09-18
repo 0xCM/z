@@ -1,6 +1,5 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(ClrCil)" />
-    <ProjectReference Include="$(Native)" />
+    <ProjectReference Include="$(Sys)" />
   </ItemGroup>
 </Project>

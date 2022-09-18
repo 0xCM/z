@@ -1,13 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="$(ProjectProps)\usings.props"/>
+  <Import Project="imports.props"/>
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>$(FrameworkMoniker)</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="$(Polyrand)" />
-    <ProjectReference Include="$(Wf)" />
-  </ItemGroup>
-
 </Project>

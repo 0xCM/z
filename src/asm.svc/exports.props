@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <AsmSvc>$(MsBuildThisFileDirectory)z0.asm.svc.csproj</AsmSvc>
+  </PropertyGroup>
+</Project>

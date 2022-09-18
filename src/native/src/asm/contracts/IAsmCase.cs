@@ -2,10 +2,20 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-[assembly: PartId(PartId.Fsm)]
-namespace Z0.Parts
+namespace Z0
 {
-    public sealed class Fsm : Part<Fsm>
+    public interface IAsmCase : ITextual
+    {
+
+    }
+
+    public interface IAsmCase<T> : IAsmCase
+        where T : IAsmCase<T>, new()
+    {
+
+    }
+
+    public interface IAsmCaseResult : ITextual
     {
 
     }

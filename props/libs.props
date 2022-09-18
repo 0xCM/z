@@ -33,7 +33,6 @@
         <ProjectReference Include="$(Dynamic)" />
         <ProjectReference Include="$(EMath)" />
         <ProjectReference Include="$(Fsm)" />
-        <ProjectReference Include="$(Files)" />
         <ProjectReference Include="$(Heaps)" />
         <ProjectReference Include="$(IntelSvc)" />
         <ProjectReference Include="$(LangEmit)" />
