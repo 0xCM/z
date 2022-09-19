@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <SosCmd>$(MsBuildThisFileDirectory)z0.sos.cmd.csproj</SosCmd>
+  </PropertyGroup>
+</Project>

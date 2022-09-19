@@ -9,67 +9,30 @@
     <Imagine>$(SlnSrc)\imagine\z0.imagine.csproj</Imagine>
     <ZLib>$(SlnSrc)\lib\z0.lib.csproj</ZLib>
 
-    <Assets>$(SlnSrc)\assets\z0.assets.csproj</Assets>
-    <ApiChecks>$(SlnSrc)\api.checks\z0.api.checks.csproj</ApiChecks>
-
     <Cli>$(SlnSrc)\cli\z0.cli.csproj</Cli>
     <ClrCil>$(SlnSrc)\clr.cil\z0.clr.cil.csproj</ClrCil>
 
-    <Commands>$(SlnSrc)\commands\z0.commands.csproj</Commands>
     <Circuits>$(SlnSrc)\circuits\z0.circuits.csproj</Circuits>
 
     <CmdActions>$(SlnSrc)\cmd.actions\z0.cmd.actions.csproj</CmdActions>
-    <CmdExec>$(SlnSrc)\cmd.exec\z0.cmd.exec.csproj</CmdExec>
-    <CmdTools>$(SlnSrc)\cmd.tools\z0.cmd.tools.csproj</CmdTools>
-    <CmdFlows>$(SlnSrc)\cmd.flows\z0.cmd.flows.csproj</CmdFlows>
     <CmdChecks>$(SlnSrc)\cmd.checks\z0.cmd.checks.csproj</CmdChecks>
 
     <EMath>$(SlnSrc)\emath\z0.emath.csproj</EMath>
 
-    <Fsm>$(SlnSrc)\fsm\z0.fsm.csproj</Fsm>
-    <Files>$(SlnSrc)\files\z0.files.csproj</Files>
-
     <IntelSvc>$(SlnSrc)\intel.svc\z0.intel.svc.csproj</IntelSvc>
     <LlvmTools>$(SlnSrc)\llvm.tools\z0.llvm.tools.csproj</LlvmTools>
     <LlvmSvc>$(SlnSrc)\llvm.svc\z0.llvm.svc.csproj</LlvmSvc>
-    <Lang>$(SlnSrc)\lang\z0.lang.csproj</Lang>
-    <Lines>$(SlnSrc)\lines\z0.lines.csproj</Lines>
-    <Linq>$(SlnSrc)\linq\z0.linq.csproj</Linq>
-
-    <Math>$(SlnSrc)\math\z0.math.csproj</Math>
 
     <Memory>$(SlnSrc)\memory\z0.memory.csproj</Memory>
     <MemorySvc>$(SlnSrc)\memory.svc\z0.memory.svc.csproj</MemorySvc>
     <MemoryChecks>$(SlnSrc)\memory.checks\z0.memory.checks.csproj</MemoryChecks>
 
-    <Native>$(SlnSrc)\native\z0.native.csproj</Native>
-
-    <Queues>$(SlnSrc)\queues\z0.queues.csproj</Queues>
-
-    <Rules>$(SlnSrc)\rules\z0.rules.csproj</Rules>
-    <Render>$(SlnSrc)\render\z0.render.csproj</Render>
-
-    <SosCmd>$(SlnSrc)\sos.cmd\z0.sos.cmd.csproj</SosCmd>
-
-    <Validity>$(SlnSrc)\validity\z0.validity.csproj</Validity>
-
-    <Tools>$(SlnSrc)\tools\z0.tools.csproj</Tools>
-
-    <Tuples>$(SlnSrc)\tuples\z0.tuples.csproj</Tuples>
-
     <ShellCmd>$(SlnSrc)\shell.cmd\z0.shell.cmd.csproj</ShellCmd>
-    <Workers>$(SlnSrc)\workers\z0.workers.csproj</Workers>
 
     <TestChecks>$(SlnSrc)\test\test.checks\z0.test.checks.csproj</TestChecks>
     <TestUnits>$(SlnSrc)\test\test.units\z0.test.units.csproj</TestUnits>
     <TestShell>$(SlnSrc)\test\test.shell\z0.test.shell.csproj</TestShell>
 
-    <CgCommon>$(SlnSrc)\cg\cg.common\z0.cg.common.csproj</CgCommon>
-    <CgLlvm>$(SlnSrc)\cg\cg.llvm\z0.cg.llvm.csproj</CgLlvm>
-    <CgIntel>$(SlnSrc)\cg\cg.intel\z0.cg.intel.csproj</CgIntel>
-    <CgLibs>$(SlnSrc)\cg\cg.libs\z0.cg.libs.csproj</CgLibs>
-    <CgShell>$(SlnSrc)\cg\cg.shell\z0.cg.shell.csproj</CgShell>
-    <CgTest>$(SlnSrc)\cg\cg.test\z0.cg.test.csproj</CgTest>    
   </PropertyGroup>
 
 </Project>

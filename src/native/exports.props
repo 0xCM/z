@@ -1,5 +1,5 @@
 <Project>
   <PropertyGroup>
-    <Natve>$(MsBuildThisFileDirectory)z0.native.csproj</Natve>
+    <Native>$(MsBuildThisFileDirectory)z0.native.csproj</Native>
   </PropertyGroup>
 </Project>

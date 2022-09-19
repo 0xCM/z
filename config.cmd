@@ -3,6 +3,7 @@ call %~dp0..\config.cmd
 set SlnId=z0
 set SlnRoot=%SlnRoot%\%SlnId%
 echo SlnRoot=%SlnRoot%
+
 set CfgFile=%SlnRoot%\%SlnId%.cfg
 
 set BuildPrefix=z0
@@ -118,3 +119,4 @@ set CleanSlnLogs=rmdir %SlnLogs% /s/q
 set ArchiveSln=robocopy %SlnRoot% %DevArchives%\z0 /xd %SlnRoot%\.git /v /mir /fp /log:%DevArchives%\z0.archive.log
 set ArchiveRepo=git archive -v -o %RepoArchive% HEAD
 set DeployCfg=%SlnRoot%\deploy\deploy.cfg
+set PlatformDeployment=%EnvB%\tools\z0\bin

@@ -1,2 +1,2 @@
 @echo off
-call %~dp0..\deploy\.x\build.cmd
+call %~dp0..\src\deploy\.x\build.cmd

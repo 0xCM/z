@@ -6,5 +6,6 @@
     <ProjectReference Include="$(MemoryModels)" />
     <ProjectReference Include="$(Symbolics)" />
     <ProjectReference Include="$(Process)" />
+    <ProjectReference Include="$(Alloc)" />
   </ItemGroup>
 </Project>

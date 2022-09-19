@@ -1,4 +1,4 @@
 @echo off
-set ProjectId=symbolics
-call %~dp0..\..\.cmd\config.cmd
-
+set ProjectId=sos.cmd
+set Area=src
+call %~dp0..\config.cmd

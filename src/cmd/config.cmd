@@ -1,6 +1,10 @@
 @echo off
-echo Level:%~dp0
+set Area=src
 set ProjectId=cmd
 set ShellId=zcmd
-set Area=src
 call %~dp0..\config.cmd
+set SlnRoot=%SlnRoot%\cmd
+set Deployments=%EnvB%\tools\z0
+set ProjectBin=%SlnBin%\%BuildPrefix%.%ProjectId%\%ConfigName%\%FrameworkMoniker%\%RuntimeMoniker%
+
+

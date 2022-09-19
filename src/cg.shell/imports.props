@@ -1,0 +1,6 @@
+<Project>
+  <ItemGroup>
+    <ProjectReference Include="$(Tools)" />
+    <ProjectReference Include="$(LangEmit)" />
+  </ItemGroup>
+</Project>

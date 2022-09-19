@@ -1,5 +1,5 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(Db)" />
+    <ProjectReference Include="$(ZLib)" />
   </ItemGroup>
 </Project>

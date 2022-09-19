@@ -7,8 +7,6 @@ namespace Z0
     using System.IO;
     using System.Linq;
 
-    //using static FS;
-
     public readonly struct FolderPath : IFsEntry<FolderPath>
     {
         const string FolderJoinPattern = "{0}/{1}";

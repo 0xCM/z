@@ -6,6 +6,11 @@ namespace Z0
 {
     using static Tools;
 
+    public interface ITools
+    {
+
+        
+    }
     public static partial class XTend
     {
         [MethodImpl(Inline)]

@@ -1,7 +1,5 @@
 <Project>
-
   <ItemGroup>
     <ProjectReference Include="$(Sys)" />
   </ItemGroup>
-
 </Project>

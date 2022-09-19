@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <IntelSvc>$(MsBuildThisFileDirectory)z0.intel.svc.csproj</IntelSvc>
+  </PropertyGroup>
+</Project>

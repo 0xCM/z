@@ -4,9 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    using static Spans;
-    using static Arrays;
+    using static sys;
 
     public readonly struct Faceted
     {

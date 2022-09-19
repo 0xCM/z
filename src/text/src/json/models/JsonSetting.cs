@@ -5,6 +5,7 @@
 namespace Z0
 {
     using System.Text.Json;
+    
     public record class JsonSetting
     {
         public readonly string Name;

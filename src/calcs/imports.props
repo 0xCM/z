@@ -1,6 +1,5 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(Dynamic)" />
     <ProjectReference Include="$(ZLib)" />
     <ProjectReference Include="$(Native)" />
   </ItemGroup>

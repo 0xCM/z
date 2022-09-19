@@ -5,6 +5,7 @@
 namespace Z0
 {
     using System.Globalization;
+
     using static sys;
 
     using C = AsciCode;

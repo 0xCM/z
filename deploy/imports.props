@@ -1,8 +1,0 @@
-<Project>
-  <ItemGroup>
-    <ProjectReference Include="$(ZCmd)" />
-    <ProjectReference Include="$(Dispatcher)" />
-    <ProjectReference Include="$(Hub)" />
-    <ProjectReference Include="$(Shell)" />
-  </ItemGroup>
-</Project>

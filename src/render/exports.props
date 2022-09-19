@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Render>$(MsBuildThisFileDirectory)z0.render.csproj</Render>
+  </PropertyGroup>
+</Project>

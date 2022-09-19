@@ -1,5 +1,5 @@
 <Project>
   <PropertyGroup>
-    <Symbolics>$(MsBuildThisFileDirectory)z0.math.csproj</Symbolics>
+    <Math>$(MsBuildThisFileDirectory)z0.math.csproj</Math>
   </PropertyGroup>
 </Project>

@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Linq>$(MsBuildThisFileDirectory)z0.linq.csproj</Linq>
+  </PropertyGroup>
+</Project>

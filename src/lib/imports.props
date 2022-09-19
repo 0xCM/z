@@ -9,6 +9,7 @@
     <ProjectReference Include="$(Imagine)" />
     <ProjectReference Include="$(Hex)" />
     <ProjectReference Include="$(Cells)" />
+    <ProjectReference Include="$(Files)" />
     <ProjectReference Include="$(CmdSpecs)" />
   </ItemGroup>
 

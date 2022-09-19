@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Validity>$(MsBuildThisFileDirectory)z0.validity.csproj</Validity>
+  </PropertyGroup>
+</Project>

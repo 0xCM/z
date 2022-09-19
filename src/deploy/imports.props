@@ -1,0 +1,5 @@
+<Project>
+  <ItemGroup>
+    <ProjectReference Include="$(ZCmd)" />
+  </ItemGroup>
+</Project>

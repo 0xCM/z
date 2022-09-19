@@ -1,6 +1,6 @@
 <Project>
   <Import Project="$(ImportDefs)\microsoft.build.props" />
   <ItemGroup>
-    <ProjectReference Include="$(Db)" />
+    <ProjectReference Include="$(ZLib)" />
   </ItemGroup>
 </Project>

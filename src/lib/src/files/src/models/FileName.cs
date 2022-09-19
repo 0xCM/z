@@ -31,7 +31,7 @@ namespace Z0
         }
 
         public FileExt Ext
-            => HasExtension ? FS.ext(Path.GetExtension(Name)) : FileExt.Empty;
+            => HasExtension ? new FileExt(Path.GetExtension(Name)) : FileExt.Empty;
 
         public bool IsEmpty
         {
@@ -48,7 +48,7 @@ namespace Z0
         public FileName WithoutExtension
         {
             [MethodImpl(Inline)]
-            get => FS.file(Path.GetFileNameWithoutExtension(Name));
+            get => new (Path.GetFileNameWithoutExtension(Name));
         }
 
         public FileName WithExtension(FileExt ext)
