@@ -1,5 +1,5 @@
 <Project>
   <PropertyGroup>
-    <Numbers>$(MsBuildThisFileDirectory)z0.memory.csproj</Numbers>
+    <Memory>$(MsBuildThisFileDirectory)z0.memory.csproj</Memory>
   </PropertyGroup>
 </Project>

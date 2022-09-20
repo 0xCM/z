@@ -8,7 +8,7 @@ namespace Z0
 
     partial class CsLang
     {
-        public class CsEmitter : ISeqEmitter<string>
+        public class CsEmitter
         {
             static string pad(uint width)
                 => new string(Chars.Space, (int)width);

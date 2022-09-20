@@ -38,6 +38,6 @@ namespace Z0
         where N : unmanaged, ITypeNat
     {
         uint INativeChannel.CellCount
-            => core.nat32u<N>();
+            => sys.nat32u<N>();
     }
 }

@@ -92,6 +92,10 @@ namespace Z0
         public static implicit operator FileUri(_FileUri src)
             => new FileUri(src.Format());
 
+        [MethodImpl(Inline)]
+        public static implicit operator _FileUri(FileUri src)
+            => new _FileUri(FS.path(src.LocalPath));
+
         public static _FileUri Empty => new _FileUri(FilePath.Empty);
     }
 }

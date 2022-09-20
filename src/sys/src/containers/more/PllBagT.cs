@@ -40,7 +40,5 @@ namespace Z0
             Data.Clear();
             return data;
         }
-
-
     }
 }

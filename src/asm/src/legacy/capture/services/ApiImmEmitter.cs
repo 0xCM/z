@@ -51,7 +51,7 @@ namespace Z0.Asm
             }
         }
 
-        public void Emit(ReadOnlySpan<IApiHost> hosts, IApiPack dst, SpanReceiver<AsmRoutine> receiver = null)
+        public void Emit(ReadOnlySpan<IApiHost> hosts, IApiPack dst, ReadOnlySpanTarget<AsmRoutine> receiver = null)
         {
             var count = hosts.Length;
             var exchange = Exchange;

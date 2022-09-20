@@ -4,15 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Caller = System.Runtime.CompilerServices.CallerMemberNameAttribute;
-    using File = System.Runtime.CompilerServices.CallerFilePathAttribute;
-    using Line = System.Runtime.CompilerServices.CallerLineNumberAttribute;
-
     [ApiHost]
     public static partial class AppErrors
     {
         const string Delimiter = " | ";
-
+        
         public static AppException missing([CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
             => new AppException(ErrorMsg.NotImplemented(caller,file,line));
 

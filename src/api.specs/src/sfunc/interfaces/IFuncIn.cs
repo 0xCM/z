@@ -16,7 +16,8 @@ namespace Z0
     {
         R Invoke(in A a);
 
-        FuncIn<A,R>  IFuncD<FuncIn<A,R>>.Operation => Invoke;
+        FuncIn<A,R> IFuncD<FuncIn<A,R>>.Operation 
+            => Invoke;
     }
 
     [Free, SFx]
@@ -24,7 +25,8 @@ namespace Z0
     {
         R Invoke(in A a, in B b);
 
-        FuncIn<A,B,R> IFuncD<FuncIn<A,B,R>>.Operation => Invoke;
+        FuncIn<A,B,R> IFuncD<FuncIn<A,B,R>>.Operation
+            => Invoke;
     }
 
     [Free, SFx]
@@ -32,6 +34,7 @@ namespace Z0
     {
         R Invoke(in A a, in B b, in C c);
 
-        FuncIn<A,B,C,R> IFuncD<FuncIn<A,B,C,R>>.Operation => Invoke;
+        FuncIn<A,B,C,R> IFuncD<FuncIn<A,B,C,R>>.Operation 
+            => Invoke;
     }
 }

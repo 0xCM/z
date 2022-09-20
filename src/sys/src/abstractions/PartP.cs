@@ -29,8 +29,8 @@ namespace Z0
             Name = PartIdAttribute.name(Owner);
         }
 
-        public virtual IExecutor Executor
-            => new PartExecutor();
+        // public virtual IExecutor Executor
+        //     => new PartExecutor();
 
         public uint Hash
         {

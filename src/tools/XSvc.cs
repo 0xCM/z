@@ -17,6 +17,7 @@ namespace Z0
 
             public BuildCmd BuildCmd(IWfRuntime wf)
                 => Service<BuildCmd>(wf);
+
             public WfCmd WfCmd(IWfRuntime wf)
                 => Service<WfCmd>(wf);
 
@@ -43,9 +44,6 @@ namespace Z0
 
             public DbCmd DbCmd(IWfRuntime wf)
                 => Service<DbCmd>(wf);
-
-
-
         }
 
         public static ICmdProvider DbCmd(this IWfRuntime wf)
@@ -59,7 +57,6 @@ namespace Z0
 
         public static WfCmd WfCmd(this IWfRuntime wf)
             => Services.WfCmd(wf);
-
 
         public static ApiComments ApiComments(this IWfRuntime wf)
             => Services.ApiComments(wf);
@@ -87,6 +84,5 @@ namespace Z0
 
         public static IAppCmdSvc BuildCmd(this IWfRuntime wf)
             => Services.BuildCmd(wf);
-
     }
 }

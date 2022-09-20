@@ -21,6 +21,24 @@ namespace Z0
             Pointer = ptr;
         }
 
+        public ref T First
+        {
+            [MethodImpl(Inline)]
+            get => ref Pointer[0];
+        }
+
+        public ref T this[uint index]
+        {
+            [MethodImpl(Inline)]
+            get => ref Pointer[index];
+        }
+
+        public ref T this[int index]
+        {
+            [MethodImpl(Inline)]
+            get => ref Pointer[index];
+        }
+
         public void Dispose()
         {
             if(Handle.IsAllocated)

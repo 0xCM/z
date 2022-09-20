@@ -140,7 +140,7 @@ namespace Z0.Roslyn
             });
         }
 
-        public void SymbolizeMethods(ReadOnlySpan<Assembly> src, SpanReceiver<MethodSymbol> dst)
+        public void SymbolizeMethods(ReadOnlySpan<Assembly> src, ReadOnlySpanTarget<MethodSymbol> dst)
         {
             var count = src.Length;
             for(var i=0; i<count; i++)

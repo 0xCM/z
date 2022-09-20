@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Circuits>$(MsBuildThisFileDirectory)z0.circuits.csproj</Circuits>
+  </PropertyGroup>
+</Project>

@@ -27,7 +27,10 @@
    <Import Project="$(MsBuildThisFileDirectory)src/cg.llvm/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/cg.shell/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/cg.test/exports.props"/>
-   
+
+   <Import Project="$(MsBuildThisFileDirectory)src/circuits/exports.props"/>
+
+   <Import Project="$(MsBuildThisFileDirectory)src/cli/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/clr.query/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/clr.cil/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/capture/exports.props"/>
@@ -42,6 +45,8 @@
    <Import Project="$(MsBuildThisFileDirectory)src/dispatcher/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/digital/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/diagnostics/exports.props"/>
+
+   <Import Project="$(MsBuildThisFileDirectory)src/events/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/fsm/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/files/exports.props"/>
@@ -62,6 +67,7 @@
 
    <Import Project="$(MsBuildThisFileDirectory)src/math/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/memory/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/memory.svc/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/machines/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/native/exports.props"/>

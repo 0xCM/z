@@ -20,7 +20,7 @@ namespace Z0
         public uint CellCount
         {
             [MethodImpl(Inline)]
-            get => core.nat32u<N>();
+            get => sys.nat32u<N>();
         }
 
         /// <summary>
@@ -33,9 +33,9 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        internal NativeChannel(ChannelMask mask = default)
+        internal NativeChannel(ChannelMask mask)
         {
-            Capacity = core.nat32u<N>()*core.width<W>();
+            Capacity = sys.nat32u<N>()*sys.width<W>();
             Mask = mask;
         }
 

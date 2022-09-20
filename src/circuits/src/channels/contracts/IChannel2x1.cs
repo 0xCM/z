@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+
     public interface IChannel2x1<T>
         where T : unmanaged
     {

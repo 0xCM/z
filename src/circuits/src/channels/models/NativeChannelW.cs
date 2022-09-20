@@ -20,7 +20,7 @@ namespace Z0
         public uint CellWidth
         {
             [MethodImpl(Inline)]
-            get => core.width<W>();
+            get => sys.width<W>();
         }
 
         public uint Capacity {get;}

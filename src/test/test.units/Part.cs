@@ -37,6 +37,12 @@ namespace Z0.Parts
 
 namespace Z0
 {
+    [Free]
+    public interface IExecutable
+    {
+        void Execute(params string[] args);
+    }
+
     public interface IExplicitTest : IUnitTest, IExecutable
     {
 

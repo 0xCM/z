@@ -19,7 +19,7 @@ namespace Z0
             Wf.Ran(flow);
         }
 
-        public void EmitImm(ReadOnlySpan<IApiHost> hosts, IApiPack dst, SpanReceiver<AsmRoutine> receiver = null)
+        public void EmitImm(ReadOnlySpan<IApiHost> hosts, IApiPack dst, ReadOnlySpanTarget<AsmRoutine> receiver = null)
         {
             var flow = Running("EmitImm");
             ImmEmitter.Emit(hosts, dst, receiver);

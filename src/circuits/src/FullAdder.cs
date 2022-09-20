@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Gated;
-
     [ApiHost]
     public class FullAdder
     {

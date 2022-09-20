@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class AppException : Exception, ITextual
+    public class AppException : Exception
     {
         public new IAppMsg Message {get;}
 

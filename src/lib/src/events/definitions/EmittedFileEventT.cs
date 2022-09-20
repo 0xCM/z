@@ -15,7 +15,6 @@ namespace Z0
 
         public EventPayload<T> Payload {get;}
 
-
         [MethodImpl(Inline)]
         public EmittedFileEvent(Type host, FilePath dst, T msg)
         {

@@ -16,7 +16,6 @@ namespace Z0
 
     }
 
-
     [Free]
     public interface IConversionOp<S,T> : IFunc, IExpr
     {

@@ -13,8 +13,6 @@ namespace Z0
     [Free]
     public delegate T Shifter<T>(T a, byte count)
         where T : unmanaged;
-
     [Free]
     public delegate Span<T> Imm8ShiftSpanOp<T>(ReadOnlySpan<T> src, byte imm8, Span<T> dst);
-
 }
