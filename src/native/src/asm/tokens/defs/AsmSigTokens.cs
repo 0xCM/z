@@ -5,23 +5,13 @@
 namespace Z0
 {
     using TK = AsmSigTokenKind;
-    using G = AsmSigTokens;
 
-    public class AsmSigTokens : TokenGroup<G,TK>
+    public class AsmSigTokens : TokenGroup<AsmSigTokens,AsmSigTokenKind>
     {
         const string Group = "asm.sigs";
 
         public override string GroupName
             => Group;
-
-        public class TokenKindAttribute : TokenKindAttribute<TK>
-        {
-            public TokenKindAttribute(TK kind)
-                : base(kind)
-            {
-
-            }
-        }
 
         [SymSource(Group), TokenKind(TK.IntLiteral)]
         public enum IntLiteral : byte

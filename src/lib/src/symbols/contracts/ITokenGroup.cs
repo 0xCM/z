@@ -8,14 +8,13 @@ namespace Z0
         where G : ITokenGroup<G,K>, new()
         where K : unmanaged
     {
-
         Symbols<K> Kinds {get;}
 
         ConstLookup<Type,K> TypeKinds {get;}
 
         Index<K,Index<Token>> KindedTokens {get;}
 
-        Index<Token> Tokens(Type src)
+        Index<Token> TokensByType(Type src)
             => KindedTokens[Kind(src)];
 
         Type ITokenGroup.GroupType

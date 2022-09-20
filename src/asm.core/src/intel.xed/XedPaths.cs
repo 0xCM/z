@@ -36,31 +36,31 @@ namespace Z0
         public FolderPath Output()
             => State.XedTargets;
 
-        public IDbTargets Targets()
-            => new DbTargets(State.XedTargets);
+        public DbArchive Targets()
+            => new DbArchive(State.XedTargets);
 
-        public IDbTargets Targets(string scope)
-            => new DbTargets(State.XedTargets, scope);
+        public DbArchive Targets(string scope)
+            => new DbArchive(State.XedTargets, scope);
 
-        public IDbTargets DbTargets()
+        public DbArchive DbTargets()
             => Targets().Targets("db");
 
-        public IDbTargets Imports()
+        public DbArchive Imports()
             => Targets("imports");
 
-        public IDbTargets RuleTargets()
+        public DbArchive RuleTargets()
             => Targets("rules");
 
-        public IDbTargets Refs()
+        public DbArchive Refs()
             => Targets("refs");
 
-        public IDbTargets InstTargets()
+        public DbArchive InstTargets()
             => Targets("instructions");
 
-        public IDbTargets InstPages()
+        public DbArchive InstPages()
             => InstTargets().Targets("pages");
 
-        public IDbTargets RulePages()
+        public DbArchive RulePages()
             => RuleTargets().Targets("pages");
 
         public FilePath Table<T>()
@@ -112,7 +112,7 @@ namespace Z0
             };
         }
 
-        public IDbTargets DisasmTargets(ProjectId project)
+        public IDbArchive DisasmTargets(ProjectId project)
             => AppDb.EtlTargets(project).Targets("xed.disasm");
 
         public FilePath DisasmDetailPath(ProjectId project, in FileRef src)

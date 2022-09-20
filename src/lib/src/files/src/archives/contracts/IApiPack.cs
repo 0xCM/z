@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IApiPack : IRootedArchive, IExpr
+    public interface IApiPack : IDbArchive, IExpr
     {
         Timestamp Timestamp {get;}
 
@@ -17,31 +17,31 @@ namespace Z0
         IImmArchive ImmArchive()
             => new ImmArchive(Root + FS.folder("imm"));
 
-        IDbTargets Context()
+        DbArchive Context()
             => Targets("context");
 
-        IDbTargets Analysis()
+        DbArchive Analysis()
             => Targets("analysis");
 
-        IDbTargets Docs()
+        DbArchive Docs()
             => Targets("docs");
 
-        IDbTargets Docs(string scope)
+        DbArchive Docs(string scope)
             => Docs().Targets(scope);
 
-        IDbTargets Tokens()
+        DbArchive Tokens()
             => Metadata().Targets("tokens");
 
-        IDbTargets Extracts()
+        DbArchive Extracts()
             => Targets("extracts");
 
-        IDbTargets Metadata()
+        DbArchive Metadata()
             => Targets("metadata");
 
-        IDbTargets Runtime()
+        DbArchive Runtime()
             => Targets("runtime");
 
-        IDbTargets Metadata(string scope)
+        DbArchive Metadata(string scope)
             => Metadata().Targets(scope);
 
         FilePath ExtractPath(PartId part, FileKind kind)

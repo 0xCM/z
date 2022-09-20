@@ -13,11 +13,11 @@ namespace Z0
 
     using CT = ApiCommentTarget;
 
-    public sealed partial class ApiComments : WfSvc<ApiComments>
+    public sealed partial class ApiComments : AppService<ApiComments>
     {
         public CommentDataset Calc()
         {
-            var targets = AppDb.ApiTargets(comments);
+            var targets = AppDb.Service.ApiTargets(comments);
             var dllPaths = list<FilePath>();
             var xmlData = new Dictionary<FilePath, Dictionary<string,string>>();
             var archive = sys.controller().RuntimeArchive();
@@ -70,7 +70,7 @@ namespace Z0
         public static FileName XmlFile(PartId part)
             => FS.file(string.Format("api.comments.z0", part.Format()), FS.Xml);
 
-        public void Collect(IDbTargets dst)
+        public void Collect(IDbArchive dst)
         {
             var targets = dst;
             var src = Pull(dst);
@@ -186,7 +186,7 @@ namespace Z0
                 _ => ApiCommentTarget.None,
             };
 
-        ConstLookup<FilePath, Dictionary<string,string>> Pull(IDbTargets dst)
+        ConstLookup<FilePath, Dictionary<string,string>> Pull(IDbArchive dst)
         {
             var archive = sys.controller().RuntimeArchive();
             var paths = archive.XmlFiles();
@@ -202,7 +202,7 @@ namespace Z0
             return lookup;
         }
 
-        Dictionary<string,string> ParseXmlFile(FilePath src, IDbTargets dst, out FilePath target)
+        Dictionary<string,string> ParseXmlFile(FilePath src, IDbArchive dst, out FilePath target)
         {
             var data = src.ReadText();
             var parsed = ParseXmlData(data);

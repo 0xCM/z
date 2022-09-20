@@ -51,7 +51,7 @@ namespace Z0
             }
         }
 
-        public void EmitApiMetadump(IDbTargets dst)
+        public void EmitApiMetadump(IDbArchive dst)
             => EmitMetadump(ApiMd.Parts, dst.Root);
     }
 }

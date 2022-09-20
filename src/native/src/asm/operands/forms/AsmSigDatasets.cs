@@ -87,7 +87,7 @@ namespace Z0.Asm
             for(var i=0; i<types.Length; i++)
             {
                 var kind = src.Kind(skip(types,i));
-                var tokens = src.Tokens(skip(types,i));
+                var tokens = src.TokensByType(skip(types,i));
                 for(var j=0u; j<tokens.Count; j++, k++)
                 {
                     ref readonly var token = ref tokens[j];

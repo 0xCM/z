@@ -6,17 +6,15 @@ namespace Z0
 {
     using System.Xml;
 
-    using dsl.intel;
-
     using static IntrinsicsDoc;
     using static sys;
 
     public class IntelInx : WfSvc<IntelInx>
     {
-        IDbSources Sources()
+        IDbArchive Sources()
             => AppDb.DbIn("intel");
 
-        IDbTargets Targets()
+        IDbArchive Targets()
             => AppDb.AsmDb("intrinsics");
 
         FilePath XmlSource()

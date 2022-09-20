@@ -26,7 +26,7 @@ namespace Z0
             return new AsmCodeMap(entries);
         }
 
-        IDbTargets EtlTargets(ProjectId project)
+        IDbArchive EtlTargets(ProjectId project)
             => AppDb.EtlTargets(project);
 
         public void RunEtl(ProjectContext context)
@@ -186,7 +186,7 @@ namespace Z0
             return records;
         }
 
-        public IDbTargets RecodedTargets(ProjectId id)
+        public IDbArchive RecodedTargets(ProjectId id)
             => AppDb.EtlTargets("mc.recoded").Targets(id.Format());
 
         public FilePath RecodedTarget(ProjectId project, string origin)
@@ -260,7 +260,7 @@ namespace Z0
 
         public void EmitRecoded(ProjectContext context, ReadOnlySeq<AsmCodeBlocks> blocks)
         {
-            RecodedTargets(context.Project.ProjectId).Clear();
+            //RecodedTargets(context.Project.ProjectId).Clear();
             for(var i=0; i<blocks.Count; i++)
                 RecodeBlocks(context.Project.ProjectId, blocks[i]);
         }

@@ -185,7 +185,7 @@ namespace Z0
             return docs.ToArray();
         }
  
-        public ConstLookup<ToolIdOld,ToolHelpDoc> LoadHelpDocs(IDbSources src)
+        public ConstLookup<ToolIdOld,ToolHelpDoc> LoadHelpDocs(IDbArchive src)
         {
             var dst = dict<ToolIdOld,ToolHelpDoc>();
             var files = src.Files(FileKind.Help);

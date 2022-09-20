@@ -3,6 +3,5 @@
      <ProjectReference Include="$(Builds)"/>
      <ProjectReference Include="$(Native)"/>
      <ProjectReference Include="$(Process)"/>
-     <ProjectReference Include="$(Db)"/>
   </ItemGroup>
 </Project>

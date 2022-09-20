@@ -19,7 +19,7 @@ namespace Z0
             ProjectId = name;
         }
 
-        public IDbSources BuildRoot()
+        public IDbArchive BuildRoot()
             => Root.Sources(build);
 
         public Files BuildFiles()

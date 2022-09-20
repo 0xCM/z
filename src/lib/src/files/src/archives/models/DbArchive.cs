@@ -17,6 +17,12 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
+        public DbArchive(FolderPath root, string scope)
+        {
+            Root = root + FS.folder(scope);
+        }
+
+        [MethodImpl(Inline)]
         public DbArchive(IRootedArchive root)
         {
             Root = root.Root;
@@ -30,6 +36,12 @@ namespace Z0
 
         FolderPath IRootedArchive.Root 
             => Root;
+
+        public void Delete()
+            => Root.Delete();
+
+        public void Clear()
+            => Root.Clear();
 
         public Hash32 Hash
         {

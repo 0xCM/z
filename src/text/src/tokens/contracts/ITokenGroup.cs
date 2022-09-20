@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     public interface ITokenGroup
     {
         string GroupName {get;}
@@ -19,6 +17,8 @@ namespace Z0
         Type GroupType {get;}
 
         ReadOnlySpan<Type> TokenTypes {get;}
+
+        ReadOnlySeq<Token> Tokens {get;}
     }
 
     public interface ITokenGroup<K> : ITokenGroup

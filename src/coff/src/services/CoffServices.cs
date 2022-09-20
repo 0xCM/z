@@ -27,7 +27,7 @@ namespace Z0
         public CoffSymIndex CollectSymIndex(ProjectContext context)
             => new CoffSymIndex(CollectHeaders(context), CollectSymbols(context));
 
-        public IDbTargets ObjHex(ProjectId project)
+        public DbArchive ObjHex(ProjectId project)
             => AppDb.EtlTargets(project).Targets(objhex);
 
         public Outcome CollectObjHex(ProjectContext context)

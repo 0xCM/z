@@ -26,7 +26,7 @@ namespace Z0.Asm
             GenSigStrings(dst);
         }
 
-        public void GenMnemonicNames(IDbTargets dst)
+        public void GenMnemonicNames(IDbArchive dst)
         {
             var src = Sdm.CalcMnemonics().Select(x => x.Format(MnemonicCase.Lowercase));
             CsLang.LiteralProviders().Emit(TargetNamespace,
@@ -35,7 +35,7 @@ namespace Z0.Asm
                 );
         }
 
-        public void GenFormKinds(IDbTargets dst)
+        public void GenFormKinds(IDbArchive dst)
         {
             var descriptors = Sdm.CalcFormDescriptors();
             var src = descriptors.CalcSymbols();
@@ -50,7 +50,7 @@ namespace Z0.Asm
             CsLang.EmitFile(buffer.Emit(), SdmFormDescriptors.FormKindName, dst);
         }
 
-        public void GenSigStrings(IDbTargets dst)
+        public void GenSigStrings(IDbArchive dst)
         {
             var forms = Sdm.CalcFormDescriptors();
             var keys = forms.Keys;

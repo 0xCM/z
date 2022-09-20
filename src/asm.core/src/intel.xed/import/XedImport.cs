@@ -18,9 +18,9 @@ namespace Z0
 
         XedPaths XedPaths => Wf.XedPaths();
 
-        IDbTargets Targets() => XedPaths.Imports();
+        IDbArchive Targets() => XedPaths.Imports();
 
-        IDbTargets Targets(string scope) => Targets().Targets(scope);
+        IDbArchive Targets(string scope) => Targets().Targets(scope);
 
         InstBlockImporter BlockImporter => Wf.BlockImporter();
 

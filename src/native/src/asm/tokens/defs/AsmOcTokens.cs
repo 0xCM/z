@@ -16,15 +16,6 @@ namespace Z0
         public override string GroupName
             => Group;
 
-        public class TokenKindAttribute : TokenKindAttribute<TK>
-        {
-            public TokenKindAttribute(TK kind)
-                : base(kind)
-            {
-
-            }
-        }
-
         [LiteralProvider(Group)]
         public readonly struct AsmOcSymbols
         {
@@ -157,7 +148,6 @@ namespace Z0
             public const string gs = "gs";
 
             public const string fs = "fs";
-
         }
 
         [SymSource(Group), TokenKind(TK.Hex16)]

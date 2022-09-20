@@ -6,8 +6,8 @@ namespace Z0
 {
     public interface IApiPackArchive : IFileArchive
     {
-        IDbTargets Tables()
-            => new DbTargets(Root);
+        DbArchive Tables()
+            => new DbArchive(Root);
 
         FilePath ProcessAsmPath()
             => Tables().Path(FS.file("asm.statements", FileKind.Csv));
@@ -18,7 +18,7 @@ namespace Z0
         FilePath JmpTarget()
             => Tables().Path(FS.file("asm.jumps", FileKind.Csv));
 
-        IDbTargets DetailTables()
+        DbArchive DetailTables()
             => Tables().Targets("asm.details");
     }
 }

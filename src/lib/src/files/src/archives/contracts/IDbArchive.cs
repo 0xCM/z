@@ -4,8 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IDbArchive : IDbSources, IDbTargets
+    public interface IDbArchive : IRootedArchive
     {
+        void Delete()
+            => Root.Delete();
+
+        void Clear()
+            => Root.Clear();
+
         string Name => Root.Name;
     }
 }

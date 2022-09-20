@@ -18,7 +18,7 @@ namespace Z0
 
         public ConstLookup<Type,K> TypeKinds {get;}
 
-        public Symbols<K> Kinds{get;}
+        public Symbols<K> Kinds {get;}
 
         public Index<K,Index<Token>> KindedTokens {get;}
 
@@ -31,7 +31,8 @@ namespace Z0
             Kinds = Symbols.index<K>();
             KindCount = Kinds.Count;
             var types = typeof(G).GetNestedTypes().Enums().Tagged<SymSourceAttribute>();
-            TypeKinds = types.Select(t => (t, t.Tag<TokenKindAttribute<K>>().Require().Kind)).ToDictionary();
+            
+            TypeKinds = types.Select(t => (t, (K)t.Tag<TokenKindAttribute>().Require().Kind)).ToDictionary();            
             KindedTokens = alloc<Index<Token>>(Kinds.Count);
             for(var i=0u; i<Kinds.Count; i++)
                 KindedTokens[@as<K>(i)] = sys.empty<Token>();
@@ -44,7 +45,10 @@ namespace Z0
             }
 
             TokenCount = counter;
+            Tokens = KindedTokens.SelectMany(x => x).ToSeq();
         }
+
+        public readonly ReadOnlySeq<Token> Tokens;
 
         public ReadOnlySpan<Type> TokenTypes
         {
@@ -52,10 +56,13 @@ namespace Z0
             get => TypeKinds.Keys;
         }
 
+        ReadOnlySeq<Token> ITokenGroup.Tokens 
+            => Tokens;
+
         public K Kind(Type src)
             => TypeKinds[src];
 
-        public Index<Token> Tokens(Type src)
+        public Index<Token> TokensByType(Type src)
             => KindedTokens[Kind(src)];
     }
 }

@@ -22,10 +22,10 @@ namespace Z0
 
         DbArchive DbFiles => Root;
 
-        IDbTargets Logs()
+        DbArchive Logs()
             => Targets("logs");
 
-        IDbSources Sources()
+        DbArchive Sources()
             => DbFiles.Sources();
 
         DbArchive Targets()

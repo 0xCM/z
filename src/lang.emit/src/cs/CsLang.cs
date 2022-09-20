@@ -137,13 +137,13 @@ namespace Z0
         public FolderPath SourceRoot(CgTarget target)
             => ProjectRoot(target) + FS.folder("src");
 
-        public FilePath SourceFile(string name, IDbTargets dst)
+        public FilePath SourceFile(string name, IDbArchive dst)
             => dst.Path(FS.file(name, FS.Cs));
 
         public FilePath SourceFile(string name, string scope, CgTarget target)
             => SourceRoot(target) + FS.folder(scope) + FS.file(name, FS.Cs);
 
-        public FilePath SourceFile(string name, string scope, IDbTargets dst)
+        public FilePath SourceFile(string name, string scope, IDbArchive dst)
             => dst.Targets(scope).Path(FS.file(name, FS.Cs));
 
         public FilePath DataFile(FolderPath dst, string name)
@@ -155,10 +155,10 @@ namespace Z0
         public FilePath DataFile(string name, string scope, CgTarget target)
             => SourceRoot(target) + FS.folder(scope) + FS.file(name, FS.Csv);
 
-        public FilePath DataFile(string name, string scope, IDbTargets dst)
+        public FilePath DataFile(string name, string scope, IDbArchive dst)
             => dst.Targets(scope).Path(FS.file(name, FS.Csv));
 
-        public void EmitFile(string src, string name, IDbTargets dst)
+        public void EmitFile(string src, string name, IDbArchive dst)
             => FileEmit(src, SourceFile(name, dst));
 
         public void RenderHeader(Timestamp ts, ITextEmitter dst)

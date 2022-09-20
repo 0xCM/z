@@ -1,19 +1,19 @@
 {
 	"folders": [
 		{
+			"path": "../lib"
+		},
+		{
 			"path": "../native"
 		},
 		{
 			"path": "../builds"
 		},
 		{
-			"path": "../wf"
+			"path": "../process"
 		},
 		{
 			"path": "."
-		},
-		{
-			"path": "../shell"
 		}
 	],
 	"settings": {}

@@ -329,7 +329,7 @@ namespace Z0
             var types = src.TokenTypes;
             for(var i=0; i<types.Length; i++)
             {
-                var sigTokens = src.Tokens(skip(types,i));
+                var sigTokens = src.TokensByType(skip(types,i));
                 for(var j=0;j<sigTokens.Count; j++)
                 {
                     Write(sigTokens[j].Format());

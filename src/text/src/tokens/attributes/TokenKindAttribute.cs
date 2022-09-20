@@ -4,12 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class TokenKindAttribute<K> : Attribute
-        where K : unmanaged, Enum
+    public class TokenKindAttribute : Attribute
     {
-        public readonly K Kind;
-
-        public TokenKindAttribute(K kind)
+        public readonly object Kind;
+        
+        public TokenKindAttribute(object kind)
         {
             Kind = kind;
         }

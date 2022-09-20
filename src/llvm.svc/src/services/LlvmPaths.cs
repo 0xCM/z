@@ -8,25 +8,25 @@ namespace Z0.llvm
 
     public class LlvmPaths : WfSvc<LlvmPaths>
     {
-        public IDbTargets Targets()
+        public DbArchive Targets()
             => AppDb.DbTargets(llvm);
 
-        public IDbTargets Targets(string scope)
+        public DbArchive Targets(string scope)
             => Targets().Targets(scope);
 
-        public IDbSources Sources()
+        public DbArchive Sources()
             => AppDb.DbIn(llvm);
 
-        public IDbSources Sources(string scope)
+        public DbArchive Sources(string scope)
             => Sources().Sources(scope);
 
-        public IDbTargets TestResultTargets()
+        public DbArchive TestResultTargets()
             => Targets(tests);
 
-        public IDbSources TestResultSources()
+        public DbArchive TestResultSources()
             => Sources(logs);
 
-        public IDbTargets Tables()
+        public DbArchive Tables()
             => Targets(tables);
 
         public FilePath DbTable<T>()
@@ -40,10 +40,10 @@ namespace Z0.llvm
         public FilePath DbTable(string id)
             => Tables().Path(FS.file(id, FS.Csv));
 
-        public IDbTargets LineMaps()
+        public DbArchive LineMaps()
             => Targets("maps");
 
-        public IDbTargets ToolImports()
+        public DbArchive ToolImports()
             => Targets(tools);
 
         public FilePath RecordMap(string project, string kind)
@@ -58,7 +58,7 @@ namespace Z0.llvm
         public ListedFiles RecordFiles(string project)
             => ListedFiles.listing(Sources("records").Sources(project).Files());
 
-        public IDbTargets QueryOut()
+        public DbArchive QueryOut()
             => Targets(queries);
 
         public FilePath QueryOut(string name, FileKind kind)
@@ -79,19 +79,19 @@ namespace Z0.llvm
         public Files TableGenHeaders(LlvmTargetName target)
             => LlvmSources(include).Files(FileKind.H).Where(f => f.FileName.StartsWith($"{target}."));
 
-        public IDbSources LlvmRoot
+        public IDbArchive LlvmRoot
             => AppDb.LlvmRoot();
         
-        public IDbSources LlvmSources(string scope)
+        public IDbArchive LlvmSources(string scope)
             => AppDb.DbIn(llvm).Sources(scope);
 
-        public IDbSources Records(string project)
+        public IDbArchive Records(string project)
             => Sources("records").Sources(project);
 
-        public IDbSources HelpSouces()
+        public IDbArchive HelpSouces()
             => Sources("docs/help");
 
-        public IDbSources SourceSettings()
+        public IDbArchive SourceSettings()
             => Sources("settings");
 
         public FilePath RecordSet(string project, string name)
@@ -112,7 +112,7 @@ namespace Z0.llvm
         public FilePath ListTargetPath(string name)
             => DbTable(string.Format("llvm.lists.{0}", name));
 
-        public IDbTargets CodeGen()
+        public DbArchive CodeGen()
             => AppDb.CgRoot().Targets("cg.llvm/src");
     }
 }

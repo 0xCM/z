@@ -38,10 +38,10 @@ namespace Z0
         public IDbSources DotNetSymSources()
             => new DbSources(SymbolCacheRoot(), dotnet);
 
-        public IDbSources DotNetSymbolSource(string name)
+        public DbArchive DotNetSymbolSource(string name)
             => DotNetSymSources().Sources(name);
 
-        public IDbSources DotNetSymbolSource(byte major, byte minor, byte revision)
+        public DbArchive DotNetSymbolSource(byte major, byte minor, byte revision)
             => DotNetSymbolSource(FolderName.version(major, minor, revision).Format());
     }
 }

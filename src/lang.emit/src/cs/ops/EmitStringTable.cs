@@ -71,7 +71,7 @@ namespace Z0
             return def;
         }
 
-        public StringTable EmitStringTable(Identifier tableNs, Identifier tableName, Identifier indexName, ReadOnlySpan<string> strings, bool emitIndex, IDbTargets dst)
+        public StringTable EmitStringTable(Identifier tableNs, Identifier tableName, Identifier indexName, ReadOnlySpan<string> strings, bool emitIndex, IDbArchive dst)
         {
             var spec = StringTables.spec(
                 tableNs: tableNs,

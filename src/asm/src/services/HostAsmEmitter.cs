@@ -98,8 +98,6 @@ namespace Z0.Asm
 
         public void EmitHostAsm(ReadOnlySpan<HostAsmRecord> src, FolderPath root)
         {
-            ClearTarget();
-
             var thumbprints = hashset<AsmThumbprint>();
             var formatter = Tables.formatter<HostAsmRecord>(HostAsmRecord.RenderWidths);
             var statements = src;
@@ -165,20 +163,11 @@ namespace Z0.Asm
                 counter++;
             }
 
-            //AsmEtl.EmitThumbprints(thumbprints.ToArray(), ThumbprintPath(root));
             tableWriter.Dispose();
             EmittedTable(tableFlow, counter);
 
             asmWriter.Dispose();
             EmittedFile(asmFlow, counter);
-        }
-
-        void ClearTarget()
-        {
-            // var dir = Db.TableDir<HostAsmRecord>();
-            // var flow = Running(Msg.ObliteratingDirectory.Format(dir));
-            // dir.Delete();
-            // Ran(flow, Msg.ObliteratedDirectory.Format(dir));
         }
 
         void EmitHostAsmDoc(ApiHostUri host, ReadOnlySpan<HostAsmRecord> src)

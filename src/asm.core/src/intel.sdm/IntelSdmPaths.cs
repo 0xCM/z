@@ -9,23 +9,23 @@ namespace Z0.Asm
 
     public class IntelSdmPaths : WfSvc<IntelSdmPaths>
     {
-        public IDbTargets Output()
+        public IDbArchive Output()
             => AppDb.AsmDb("sdm");
 
         public FilePath SdmTable<T>()
             where T : struct
                 => Output().Table<T>();
 
-        public IDbSources Sources()
+        public IDbArchive Sources()
             => AppDb.DbIn(intel);
 
-        public IDbSources Sources(string scope)
+        public IDbArchive Sources(string scope)
             => Sources().Sources(scope);
 
-        public IDbSources Settings()
+        public IDbArchive Settings()
             => AppDb.EnvConfig();
 
-        public IDbTargets Logs()
+        public IDbArchive Logs()
             => AppDb.Logs("intel.sdm");
 
         public FilePath SigFixupConfig()
@@ -70,7 +70,7 @@ namespace Z0.Asm
         public FilePath SdmSrcPath()
             => Sources().Path(FS.file("intel-sdm", FS.Txt));
 
-        public IDbSources CsvSources()
+        public IDbArchive CsvSources()
             => Sources().Sources("sdm.instructions");
 
         public FilePath TokensDst(string sort)

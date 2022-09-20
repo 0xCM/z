@@ -25,16 +25,6 @@ namespace Z0
             Alt,
         }
 
-        public class TokenKindAttribute : TokenKindAttribute<TK>
-        {
-            public TokenKindAttribute(TK kind)
-                : base(kind)
-            {
-
-
-            }
-        }
-
         [LiteralProvider(Group)]
         public readonly struct ConditionFacets
         {

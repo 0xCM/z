@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Spans;
-    using static Algs;
+    using static sys;
 
     class EcmaCmd : AppCmdService<EcmaCmd>
     {
@@ -30,9 +29,9 @@ namespace Z0
 
         [CmdOp("api/emit")]
         void ApiEmit()
-        {
-            var src = ApiRuntime.catalog();
-            EmitCatalog(src);
+        {            
+            ApiMd.Emitter().Emit(ModuleArchives.parts(), AppDb.ApiTargets());
+         
         }
 
         [CmdOp("ecma/emit/hex")]

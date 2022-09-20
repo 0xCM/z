@@ -8,7 +8,7 @@ namespace Z0
 
     partial class CsLang
     {
-        public void EmitTableCode(StringTableSpec syntax, ItemList<string> src, IDbTargets dst)
+        public void EmitTableCode(StringTableSpec syntax, ItemList<string> src, IDbArchive dst)
         {
             var path = SourceFile(syntax.TableName, "stringtables", dst);
             var emitter = text.emitter();
@@ -25,7 +25,7 @@ namespace Z0
             FileEmit(emitter.Emit(), spec.Entries.Count, dst);
         }
 
-        public void EmitTableCode(StringTableSpec spec, ReadOnlySpan<string> src, IDbTargets dst)
+        public void EmitTableCode(StringTableSpec spec, ReadOnlySpan<string> src, IDbArchive dst)
         {
             var path = SourceFile(spec.TableName, "stringtables", dst);
             var emitter = text.emitter();

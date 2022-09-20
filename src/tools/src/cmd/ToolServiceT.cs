@@ -14,7 +14,7 @@ namespace Z0
             Id = id;
         }
 
-        protected virtual IDbSources Deployments
+        protected virtual IDbArchive Deployments
             => AppDb.Toolbase();
 
         protected FolderPath Deployment
