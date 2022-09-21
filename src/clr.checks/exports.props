@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <ClrChecks>$(MsBuildThisFileDirectory)z0.clr.checks.csproj</ClrChecks>
+  </PropertyGroup>
+</Project>

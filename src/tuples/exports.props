@@ -1,5 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <Tuples>$(MsBuildThisFileDirectory)z0.tuples.csproj</Tuples>
-  </PropertyGroup>
-</Project>

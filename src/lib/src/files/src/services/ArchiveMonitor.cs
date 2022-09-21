@@ -8,10 +8,10 @@ namespace Z0
 
     public class ArchiveMonitor : IArchiveMonitor
     {
-        public static IArchiveMonitor start(IDbSources target, FileChanged listener, bool recursive = true, string filter = null)
+        public static IArchiveMonitor start(IDbArchive target, FileChanged listener, bool recursive = true, string filter = null)
             => new ArchiveMonitor(target, listener, recursive, filter);
 
-        public readonly IDbSources Target;
+        public readonly IDbArchive Target;
 
         readonly FileSystemWatcher Watcher;
 
@@ -19,7 +19,7 @@ namespace Z0
 
         event FileChanged Listener;
 
-        public ArchiveMonitor(IDbSources target, FileChanged listener, bool recursive = true, string filter = null, ushort capacity = Pow2.T14)
+        public ArchiveMonitor(IDbArchive target, FileChanged listener, bool recursive = true, string filter = null, ushort capacity = Pow2.T14)
         {
             Target = target;
             Watcher = new FileSystemWatcher(target.Root.Format(), filter ?? "*.*");
@@ -87,7 +87,7 @@ namespace Z0
         void Error(object sender, ErrorEventArgs e)
             => term.error(e.GetException());
 
-        IDbSources IMonitor<IDbSources>.Target
+        IDbArchive IMonitor<IDbArchive>.Target
             => Target;
     }
 }

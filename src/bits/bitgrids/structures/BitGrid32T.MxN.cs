@@ -4,19 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-    using System.Runtime.InteropServices;
-
-    using static Root;
-    using static core;
+    using static sys;
 
     /// <summary>
     /// A grid of natural dimensions M and N such that M*N = W := 32
     /// </summary>
     /// <remarks>Conforming dimensions include 1x32, 32x1, 2x16, 16x2, 4x8, and 8x4</remarks>
     [StructLayout(LayoutKind.Sequential, Size=ByteCount)]
-    [IdentityProvider(typeof(BitGridIdentityProvider))]
     public struct BitGrid32<M,N,T>
         where M : unmanaged, ITypeNat
         where N : unmanaged, ITypeNat

@@ -1,0 +1,8 @@
+<Project>
+  <Import Project="$(ImportDefs)\microsoft.cmdline.props"/>
+  <Import Project="$(ProjectProps)\libs.props"/>
+  <ItemGroup>
+    <ProjectReference Include="$(CmdSpecs)" />
+    <ProjectReference Include="$(Rules)" />
+  </ItemGroup>
+</Project>

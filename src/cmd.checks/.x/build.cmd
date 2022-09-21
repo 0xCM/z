@@ -1,3 +1,3 @@
 @echo off
-call %~dp0config.cmd
-call %BuildLib%
+call %~dp0..\config.cmd
+call %BuildProject%

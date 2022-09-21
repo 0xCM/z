@@ -1,18 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>$(FrameworkMoniker)</TargetFramework>
-  </PropertyGroup>
-
   <Import Project="$(ProjectProps)\settings.props"/>
   <Import Project="$(ProjectProps)\usings.props"/>
-  <Import Project="$(ImportDefs)microsoft.cmdline.props"/>
-  <Import Project="$(ProjectProps)libs.props"/>
-
-  <ItemGroup>
-    <ProjectReference Include="$(CmdSpecs)" />
-    <ProjectReference Include="$(Rules)" />
-  </ItemGroup>
-
+  <Import Project="imports.props"/>
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+  </PropertyGroup>
 </Project>

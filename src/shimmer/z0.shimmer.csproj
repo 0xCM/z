@@ -1,16 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <AssemblyName>shimmer</AssemblyName>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-  </PropertyGroup>
-
   <Import Project="$(ProjectProps)\settings.props"/>
   <Import Project="$(ProjectProps)\usings.props"/>
-
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>$(ShimName)</AssemblyName>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="$(Tools)" />
   </ItemGroup>
-
 </Project>

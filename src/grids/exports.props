@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Grids>$(MsBuildThisFileDirectory)z0.grids.csproj</Grids>
+  </PropertyGroup>
+</Project>

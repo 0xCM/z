@@ -4,18 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-    using System.Runtime.InteropServices;
-
-    using static Root;
-    using static core;
+    using static sys;
 
     /// <summary>
     /// Defines a 64-bit grid
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Size=8)]
-    [IdentityProvider(typeof(BitGridIdentityProvider))]
     public struct BitGrid64<T>
         where T : unmanaged
     {

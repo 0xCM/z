@@ -74,7 +74,6 @@
     <ProjectReference Include="$(TestUnits)" />
     <ProjectReference Include="$(Text)" />
     <ProjectReference Include="$(Tools)" />
-    <ProjectReference Include="$(Tuples)" />
 
     <ProjectReference Include="$(Validity)" />
     <ProjectReference Include="$(Wf)" />

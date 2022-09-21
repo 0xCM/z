@@ -7,7 +7,7 @@ namespace Z0.Expr
     using static sys;
     using static expr;
 
-    [StructLayout(LayoutKind.Sequential, Pack=1), DataTypeAttributeD("g3x3<t:{0}>")]
+    [StructLayout(LayoutKind.Sequential, Pack=1)]
     public struct g3x3<T> : IGrid<g3x3<T>,N3,T>
         where T : unmanaged
     {
@@ -62,7 +62,7 @@ namespace Z0.Expr
         public GridSpec Spec
         {
             [MethodImpl(Inline)]
-            get => spec<T>(M,N);
+            get => gridspec<T>(M,N);
         }
     }
 }

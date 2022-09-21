@@ -1,5 +1,4 @@
 <Project>
-
    <Import Project="$(MsBuildThisFileDirectory)src/agents/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/alloc/exports.props"/>   
    <Import Project="$(MsBuildThisFileDirectory)src/api.code/exports.props"/>
@@ -33,11 +32,17 @@
    <Import Project="$(MsBuildThisFileDirectory)src/cli/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/clr.query/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/clr.cil/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/clr.checks/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/capture/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/containers/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/cells/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/cpu/exports.props"/>
+
    <Import Project="$(MsBuildThisFileDirectory)src/cmd/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/cmd.checks/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/cmd.specs/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/cmd.models/exports.props"/>
+
    <Import Project="$(MsBuildThisFileDirectory)src/coff/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/db/exports.props"/>
@@ -53,6 +58,7 @@
    <Import Project="$(MsBuildThisFileDirectory)src/files/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/graphs/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/grids/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/heaps/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/hex/exports.props"/>
@@ -65,6 +71,8 @@
    <Import Project="$(MsBuildThisFileDirectory)src/literals/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/lib/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/linq/exports.props"/>
+
+   <Import Project="$(MsBuildThisFileDirectory)src/llvm.svc/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/math/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/memory/exports.props"/>
@@ -86,9 +94,12 @@
    <Import Project="$(MsBuildThisFileDirectory)src/symbolics/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/text/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/tuples/exports.props"/>
+
+   <Import Project="$(MsBuildThisFileDirectory)src/test.checks/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/test.shell/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/test.units/exports.props"/>
+
    <Import Project="$(MsBuildThisFileDirectory)src/tools/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/validity/exports.props"/>
-
 </Project>

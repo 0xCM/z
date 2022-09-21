@@ -18,7 +18,7 @@ namespace Z0
     }
 
     [Free]
-    public interface IArchiveMonitor : IMonitor<IDbSources>
+    public interface IArchiveMonitor : IMonitor<IDbArchive>
     {
 
     }

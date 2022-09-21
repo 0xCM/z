@@ -49,7 +49,6 @@
         <ProjectReference Include="$(Rules)" />
         <ProjectReference Include="$(Render)" />
         <ProjectReference Include="$(SosCmd)" />
-        <ProjectReference Include="$(Tuples)" />
         <ProjectReference Include="$(Tools)" />
         <ProjectReference Include="$(Validity)" />
   </ItemGroup>

@@ -20,7 +20,7 @@ namespace Z0
         public BitWidth BitCount
         {
             [MethodImpl(Inline)]
-            get => grids.gridwidth<M,N,T>();
+            get => CellCalcs.gridwidth<M,N,T>();
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Z0
         public uint CellCount
         {
             [MethodImpl(Inline)]
-            get => grids.gridcells<M,N,T>();
+            get => CellCalcs.gridcells<M,N,T>();
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Z0
         public ByteSize GridSize
         {
             [MethodImpl(Inline)]
-            get => grids.gridsize<M,N,T>();
+            get => CellCalcs.gridsize<M,N,T>();
         }
 
         /// <summary>

@@ -1,5 +1,4 @@
 <Project>
-
   <ItemGroup>
     <ProjectReference Include="$(ZLib)" />
     <ProjectReference Include="$(Expr)" />
@@ -9,5 +8,4 @@
     <ProjectReference Include="$(Files)" />
     <ProjectReference Include="$(Polyrand)" />
   </ItemGroup>
-
 </Project>

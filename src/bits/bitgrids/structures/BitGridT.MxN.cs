@@ -4,17 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-    using System.Runtime.Intrinsics;
-
-    using static Root;
-    using static core;
+    using static sys;
 
     /// <summary>
     /// Defines a maximally packed data structure of natural dimensions over a primal type
     /// </summary>
-    [IdentityProvider(typeof(BitGridIdentityProvider))]
     public readonly ref struct BitGrid<M,N,T>
         where M : unmanaged, ITypeNat
         where N : unmanaged, ITypeNat

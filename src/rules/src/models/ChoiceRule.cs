@@ -4,15 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct Rules
+    public class ChoiceRule : ChoiceRule<RuleValue>
     {
-        public class ChoiceRule : ChoiceRule<RuleValue>
+        public ChoiceRule(Index<RuleValue> src)
+            : base(src)
         {
-            public ChoiceRule(Index<RuleValue> src)
-                : base(src)
-            {
 
-            }
         }
-    }
+    }    
 }

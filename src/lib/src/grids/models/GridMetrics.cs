@@ -74,7 +74,8 @@ namespace Z0
         public GridStats Stats
         {
             [MethodImpl(Inline)]
-            get => grids.stats(this);
+            get => throw new NotImplementedException();
+            //grids.stats(this);
         }
 
         public GridDim Dim

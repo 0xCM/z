@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Expr
 {
-    using System;
-
     /// <summary>
     /// Represents the empty vector
     /// </summary>

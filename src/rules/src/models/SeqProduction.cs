@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Rules;
-
     public class SeqProduction : Production<IRuleExpr, SeqExpr>, ISeqProduction<IRuleExpr>
     {
         public SeqProduction(IRuleExpr src, SeqExpr dst)
@@ -14,5 +12,4 @@ namespace Z0
 
         }
     }
-
 }

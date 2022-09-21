@@ -4,15 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct Rules
+    public class SplitRule<T> : Rule
     {
-        public class SplitRule<T> : Rule
-        {
-            public T Source {get;}
+        public T Source {get;}
 
-            public Index<T> Target {get;}
-            public override string Format()
-                => string.Format("{0} -> {1}", Source, Target.Delimit(Chars.Comma, fence:Fenced.Paren).Format());
-        }
+        public Index<T> Target {get;}
+        public override string Format()
+            => string.Format("{0} -> {1}", Source, Target.Delimit(Chars.Comma, fence:Fenced.Paren).Format());
     }
+    
 }

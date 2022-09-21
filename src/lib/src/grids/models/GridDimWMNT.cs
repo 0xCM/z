@@ -66,7 +66,7 @@ namespace Z0
         public int CellCount
         {
             [MethodImpl(Inline)]
-            get => (int)grids.gridcells<M,N,T>();
+            get => (int)CellCalcs.gridcells<M,N,T>();
         }
 
         /// <summary>

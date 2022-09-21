@@ -4,11 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Expr
 {
-    using System;
-    using System.Runtime.CompilerServices;
-    using System.Runtime.InteropServices;
-
-    using static Root;
     using static sys;
     using static expr;
 

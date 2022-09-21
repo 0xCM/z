@@ -3,7 +3,7 @@
   <Import Project="$(ProjectProps)\settings.props"/>
   <Import Project="imports.props"/>
   <PropertyGroup>
-    <TargetFramework>$(FrameworkMoniker)</TargetFramework>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <OutputType>Exe</OutputType>
     <AssemblyName>zcg</AssemblyName>
   </PropertyGroup>

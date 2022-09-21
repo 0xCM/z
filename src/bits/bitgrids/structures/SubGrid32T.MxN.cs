@@ -4,18 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-    using System.Runtime.InteropServices;
-
-    using static Root;
-    using static core;
+    using static sys;
 
     /// <summary>
     /// A grid of natural dimensions M and N such that M*N <= W := 32
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Size=ByteCount)]
-    [IdentityProvider(typeof(BitGridIdentityProvider))]
     public struct SubGrid32<M,N,T>
         where M : unmanaged, ITypeNat
         where N : unmanaged, ITypeNat

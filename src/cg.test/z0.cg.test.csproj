@@ -3,7 +3,6 @@
   <Import Project="$(ProjectProps)\settings.props"/>
   <Import Project="imports.props"/>
   <PropertyGroup>
-    <TargetFramework>$(FrameworkMoniker)</TargetFramework>
     <OutputType>Exe</OutputType>
     <AssemblyName>cgtest</AssemblyName>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>

@@ -26,8 +26,11 @@ namespace Z0
             => src.Join().Select(f);
 
         [Op, Closures(Closure)]
-        public static bool Contains<T>(this T[] src, T match)
+        public static bool Contains<T>(this Seq<T> src, T match)
             => src.ToHashSet().Contains(match);
 
+        [Op, Closures(Closure)]
+        public static bool Contains<T>(this ReadOnlySeq<T> src, T match)
+            => src.ToHashSet().Contains(match);
     }
 }

@@ -4,10 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Collections.Generic;
-
-    using static Root;
     using static core;
     using static grids;
 

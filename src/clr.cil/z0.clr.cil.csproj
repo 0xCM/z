@@ -3,6 +3,5 @@
   <Import Project="$(ProjectProps)\usings.props"/>
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>$(FrameworkMoniker)</TargetFramework>
   </PropertyGroup>
 </Project>

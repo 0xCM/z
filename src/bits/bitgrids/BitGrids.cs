@@ -10,7 +10,7 @@ namespace Z0
         const NumericKind Closure = UnsignedInts;
     }
 
-    [ApiHost("allocating")]
+    [ApiHost("bitgrid.allocating")]
     public partial class BitGridA
     {
         internal const MethodImplOptions Inline = MethodImplOptions.AggressiveInlining;

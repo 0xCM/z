@@ -5,7 +5,7 @@
 [assembly: PartId(PartId.Rules)]
 namespace Z0.Parts
 {
-    public partial class Rules : Part<Rules>
+    public class Rules : Part<Rules>
     {
     }
 }

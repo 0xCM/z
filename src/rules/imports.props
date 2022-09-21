@@ -2,5 +2,6 @@
   <ItemGroup>
     <ProjectReference Include="$(ZLib)" />
     <ProjectReference Include="$(Graphs)" />
+    <ProjectReference Include="$(Grids)" />
   </ItemGroup>
 </Project>

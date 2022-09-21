@@ -1,3 +1,4 @@
 @echo off
 set ProjectId=linq
-call %~dp0..\..\.cmd\config.cmd
+set Area=src
+call %~dp0..\config.cmd

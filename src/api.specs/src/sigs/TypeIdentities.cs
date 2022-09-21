@@ -28,16 +28,5 @@ namespace Z0
             => from a in t.Tag<IdentityProviderAttribute>()
                from tid in hosted(a.Host.ToOption().ValueOrDefault(t))
                select tid;
-
-        /// <summary>
-        /// Retrieves a type's specialized identity provider, if it has one; otherwise, returns a caller-supplied fallback
-        /// </summary>
-        /// <param name="src">The source type</param>
-        /// <param name="fallback">The identity provider to yield if the type does not have a specialized provider</param>
-        public static ITypeIdentityProvider include(Type src, Func<Type,ITypeIdentityProvider> fallback)
-            => _TypeIdentityProviders.GetOrAdd(src.EffectiveType(), fallback);
-
-        static ConcurrentDictionary<Type, ITypeIdentityProvider> _TypeIdentityProviders {get;}
-            = new ConcurrentDictionary<Type, ITypeIdentityProvider>();
     }
 }

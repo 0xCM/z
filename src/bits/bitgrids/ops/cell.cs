@@ -4,16 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
-    using static core;
+    using static sys;
 
     partial class BitGrid
     {
-
-
         /// <summary>
         /// Reads/manipulates a cell identified by a linear bit position
         /// </summary>

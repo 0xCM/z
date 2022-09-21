@@ -6,18 +6,18 @@ namespace Z0
 {
     class DirectoryMonitor : IMonitor
     {        
-        public static IMonitor start(IDbSources src, IDbArchive dst)
+        public static IMonitor start(IDbArchive src, IDbArchive dst)
             => new DirectoryMonitor(src, dst);
 
         readonly IWorkerLog Target;
 
-        readonly IDbSources Sources;
+        readonly IDbArchive Sources;
 
         readonly IArchiveMonitor Service;
 
         readonly RunningEvent<string> Running;
 
-        internal DirectoryMonitor(IDbSources src, IDbArchive dst)
+        internal DirectoryMonitor(IDbArchive src, IDbArchive dst)
         {
             var ts = Timestamp.now();
             var id = Archives.identifier(src.Root);

@@ -1,0 +1,7 @@
+<Project>
+  <ItemGroup>
+    <ProjectReference Include="$(TestUnits)" />
+    <ProjectReference Include="$(TestChecks)" />
+    <ProjectReference Include="$(Bits)" />
+  </ItemGroup>
+</Project>

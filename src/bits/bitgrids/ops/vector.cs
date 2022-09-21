@@ -4,12 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-    using System.Runtime.Intrinsics;
-
-    using static Root;
-
     partial class BitGrid
     {
         /// <summary>
@@ -18,7 +12,7 @@ namespace Z0
         /// <param name="src">The source grid</param>
         /// <param name="block">The block index</param>
         /// <typeparam name="T">The storage segment type</typeparam>
-        [MethodImpl(Inline)]
+        [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector256<T> vector<T>(in BitSpanBlocks256<T> src, int block, W256 w = default)
             where T : unmanaged
                 => gcpu.vload(w, src.Data.BlockLead(block));

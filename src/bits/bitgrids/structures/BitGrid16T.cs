@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     /// <summary>
     /// Defines a 16-bit grid of caller-interpreted dimension

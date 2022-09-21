@@ -1,5 +1,12 @@
 <Project>
   <ItemGroup>
     <ProjectReference Include="$(ZCmd)" />
+    <ProjectReference Include="$(CgShell)" />
+    <ProjectReference Include="$(ClrChecks)" />
+    <ProjectReference Include="$(CmdChecks)" />
+    <ProjectReference Include="$(Dispatcher)" />
+    <ProjectReference Include="$(Hub)" />
+    <ProjectReference Include="$(Shell)" />
+    <ProjectReference Include="$(TestShell)" />
   </ItemGroup>
 </Project>

@@ -6,8 +6,6 @@ namespace Z0
 {
     using static sys;
 
-    using static Rules;
-
     public class TextReplace : Rule
     {
         readonly Dictionary<string,string> Rules;

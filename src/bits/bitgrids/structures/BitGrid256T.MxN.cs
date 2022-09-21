@@ -4,19 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-    using System.Runtime.InteropServices;
-    using System.Runtime.Intrinsics;
-
-    using static Root;
     using static core;
 
     /// <summary>
     /// A grid of natural dimensions M and N such that M*N = W := 256
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Size=ByteCount)]
-    [IdentityProvider(typeof(BitGridIdentityProvider))]
     public struct BitGrid256<M,N,T>
         where M : unmanaged, ITypeNat
         where N : unmanaged, ITypeNat

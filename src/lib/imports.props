@@ -7,10 +7,12 @@
     <ProjectReference Include="$(ClrQuery)" />
     <ProjectReference Include="$(Events)" />
     <ProjectReference Include="$(ApiSpecs)" />
-    <ProjectReference Include="$(Imagine)" />
     <ProjectReference Include="$(Hex)" />
     <ProjectReference Include="$(Cells)" />
     <ProjectReference Include="$(Files)" />
     <ProjectReference Include="$(CmdSpecs)" />
+    <ProjectReference Include="../cmd.specs/z0.cmd.specs.csproj" />
+    <ProjectReference Include="../imagine/z0.imagine.csproj" />
+
   </ItemGroup>
 </Project>

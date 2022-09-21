@@ -3,7 +3,6 @@
   <Import Project="$(ProjectProps)\settings.props"/>
   <Import Project="imports.props"/>
   <PropertyGroup>
-    <TargetFramework>$(FrameworkMoniker)</TargetFramework>
     <UserSecretsId>dotnet-z0.workers-2BAED327-27AB-40E4-97E3-63FB9B91B894</UserSecretsId>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <AssemblyName>zdisp</AssemblyName>

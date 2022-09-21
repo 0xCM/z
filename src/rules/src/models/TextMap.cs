@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Rules;
-
     public sealed class TextMap : Rule
     {
         ConstLookup<string,string> Data;
