@@ -1,0 +1,6 @@
+<Project>
+  <ItemGroup>
+    <ProjectReference Include="$(AsmCore)" />
+    <ProjectReference Include="$(Cpu)" />
+  </ItemGroup>
+</Project>

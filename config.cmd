@@ -42,6 +42,9 @@ set ProjectScripts=%ProjectRoot%\scripts
 set ProjectPath=%ProjectRoot%\%BuildPrefix%.%ProjectId%.csproj
 set ProjectSln=%ProjectRoot%\%BuildPrefix%.%ProjectId%.sln
 set ProjectBin=%Artifacts%\bin\%BuildPrefix%.%ProjectId%
+set TargetBuildRoot=%ProjectBin%\%ConfigName%\%FrameworkMoniker%
+set ShellBin=%TargetBuildRoot%\%RuntimeMoniker%
+
 set ProjectObj=%Artifacts%\obj\%BuildPrefix%.%ProjectId%
 set ProjectPdb=%Artifacts%\pdb\%BuildPrefix%.%ProjectId%
 set ProjectRuntime=%ProjectBin%\%ConfigName%\%FrameworkMoniker%\%RuntimeMoniker%
@@ -78,7 +81,6 @@ set PackageProject=%PackageTool% %ProjectPath%
 set PackagePath=%Packages%\%BuildPrefix%.%ProjectId%.%SlnVersion%.nupkg
 set PackageSln=%PackageTool% %ProjectSln%
 set PublishSln=%PublishTool% %ProjecSln%
-set TargetBuildRoot=%ProjectBin%\%BuildPrefix%.%ProjectId%\%ConfigName%\%FrameworkMoniker%
 set BuildSlnRoot=%BuildTool% %SlnRoot%\z0.sln %BuildProps% %RootSlnLogSpec%; %BuildOptions%
 set ShellName=%ShellId%.exe
 set ShellExePath=%TargetBuildRoot%\%RuntimeMoniker%\%ShellName%

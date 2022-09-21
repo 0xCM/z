@@ -9,13 +9,8 @@
 
     <CmdChecks>$(SlnSrc)\cmd.checks\z0.cmd.checks.csproj</CmdChecks>
 
-    <EMath>$(SlnSrc)\emath\z0.emath.csproj</EMath>
-
     <IntelSvc>$(SlnSrc)\intel.svc\z0.intel.svc.csproj</IntelSvc>
-    <LlvmTools>$(SlnSrc)\llvm.tools\z0.llvm.tools.csproj</LlvmTools>
     <LlvmSvc>$(SlnSrc)\llvm.svc\z0.llvm.svc.csproj</LlvmSvc>
-
-    <ShellCmd>$(SlnSrc)\shell.cmd\z0.shell.cmd.csproj</ShellCmd>
 
     <TestChecks>$(SlnSrc)\test\test.checks\z0.test.checks.csproj</TestChecks>
     <TestUnits>$(SlnSrc)\test\test.units\z0.test.units.csproj</TestUnits>

@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Spans;
-    using static Pointers;
+    using static sys;
 
     public unsafe readonly struct ByteSpanReader
     {
@@ -43,7 +42,7 @@ namespace Z0
             where N : unmanaged, ITypeNat
         {
             var buffer = span<N>(src, n);
-            var pSrc = gptr(core.first(buffer));
+            var pSrc = gptr(sys.first(buffer));
             return new MemorySeg(pSrc, buffer.Length);
          }
 

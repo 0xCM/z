@@ -13,13 +13,6 @@ namespace Z0
 
         internal const MethodImplOptions Options = MethodImplOptions.AggressiveInlining;
 
-
-        public static Assembly CallingAssembly
-        {
-            [MethodImpl(Options), Op]
-            get => Assembly.GetEntryAssembly();
-        }        
-
         public static Process CurrentProcess
         {
             [MethodImpl(Options), Op]

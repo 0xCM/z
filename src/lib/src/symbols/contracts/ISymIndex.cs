@@ -29,6 +29,7 @@ namespace Z0
         }
     }
 
+
     public interface ISymIndex<K> : ISymIndex
         where K : unmanaged
     {

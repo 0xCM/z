@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+
     public readonly struct SymVal : IEquatable<SymVal>, ISymVal<ulong>
     {
         [Parser]

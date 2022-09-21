@@ -31,7 +31,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public bool Read(ref T dst)
         {
-            read(Source, State.Position, ref dst);
+            memory.read(Source, State.Position, ref dst);
             State.Advance();
             return State.HasNext;
         }
@@ -47,7 +47,7 @@ namespace Z0
         public int Read(int offset, int cells, Span<T> dst)
         {
             int count = min(cells, State.Remaining);
-            read<T>(Source, offset, ref first(dst), count);
+            memory.read<T>(Source, offset, ref first(dst), count);
             State.Advance((uint)count);
             return count;
         }
@@ -63,7 +63,7 @@ namespace Z0
         public int Read(int offset, int cells, ref T dst)
         {
             int count = min(cells, State.Remaining);
-            read<T>(Source, offset, ref dst, count);
+            memory.read<T>(Source, offset, ref dst, count);
             State.Advance((uint)count);
             return count;
         }

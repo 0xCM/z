@@ -20,7 +20,7 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => HashCodes.hash(ProcessId, Address);
+            get => sys.hash(ProcessId, Address);
         }
 
         public bool IsEmpty

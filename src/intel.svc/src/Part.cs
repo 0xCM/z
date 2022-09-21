@@ -2,10 +2,10 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+[assembly: PartId(PartId.IntelSvc)]
+namespace Z0.Parts
 {
-    public class DevOpsSvc : WfSvc<DevOpsSvc>
+    public sealed class IntelIntrinsics : Part<IntelIntrinsics>
     {
-        public DbArchive Control => AppDb.Control();
     }
 }

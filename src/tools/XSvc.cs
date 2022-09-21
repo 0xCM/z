@@ -39,18 +39,17 @@ namespace Z0
             public ToolScripts ToolScripts(IWfRuntime wf)
                 => Service<ToolScripts>(wf);
 
-            public DevOpsSvc DevOps(IWfRuntime wf)
-                => Service<DevOpsSvc>(wf);
-
             public DbCmd DbCmd(IWfRuntime wf)
                 => Service<DbCmd>(wf);
+
+            public DevCmd DevCmd(IWfRuntime wf)
+                => Service<DevCmd>(wf);
         }
+
+        static ServiceCache Services => ServiceCache.Instance;
 
         public static ICmdProvider DbCmd(this IWfRuntime wf)
             => Services.DbCmd(wf);
-
-
-        static ServiceCache Services => ServiceCache.Instance;
 
         public static IAppCmdSvc ToolCmd(this IWfRuntime wf)
             => Services.ToolCmd(wf);
@@ -76,13 +75,13 @@ namespace Z0
         public static ToolScripts ToolScripts(this IWfRuntime wf)
             => Services.ToolScripts(wf);
 
-        public static DevOpsSvc DevOps(this IWfRuntime wf)
-                => Services.DevOps(wf);            
-
         public static MsBuild BuildSvc(this IWfRuntime wf)
             => Services.BuildSvc(wf);
 
         public static IAppCmdSvc BuildCmd(this IWfRuntime wf)
             => Services.BuildCmd(wf);
+
+        public static IAppCmdSvc DevCmd(this IWfRuntime wf)
+            => Services.DevCmd(wf);
     }
 }

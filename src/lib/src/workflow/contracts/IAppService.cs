@@ -9,8 +9,6 @@ namespace Z0
     {
         IWfRuntime Wf {get;}
 
-        void InstallChannel(WfEmit channel);
-
         T Service<T>(Func<T> factory);
 
         void Init(IWfRuntime wf);

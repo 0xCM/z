@@ -13,7 +13,7 @@ namespace Z0
         /// The component that defines the literal
         /// </summary>
         [Render(24)]
-        public NameOld Component;
+        public string Component;
 
         /// <summary>
         /// A literal classifier

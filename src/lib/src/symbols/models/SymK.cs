@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     using api = Symbols;
 
     public class Sym<K> : ISym<K>

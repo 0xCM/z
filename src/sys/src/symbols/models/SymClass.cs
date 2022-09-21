@@ -24,13 +24,13 @@ namespace Z0
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => core.empty(Name);
+            get => sys.empty(Name);
         }
 
         public bool IsNonEmpty
         {
             [MethodImpl(Inline)]
-            get => core.nonempty(Name);
+            get => sys.nonempty(Name);
         }
 
         public string Format()

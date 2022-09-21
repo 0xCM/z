@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Spans;
+    using static sys;
 
     public readonly record struct HexRef
     {
@@ -38,7 +38,7 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => HashCodes.hash(View);
+            get => sys.hash(View);
         }
 
         public byte Size

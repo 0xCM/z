@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     [ApiHost]
     public unsafe struct MemoryReader
@@ -45,7 +45,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public bool Read(ref byte dst)
         {
-            read(Source, State.Position, ref dst);
+            memory.read(Source, State.Position, ref dst);
             Advance();
             return State.HasNext;
         }
@@ -54,7 +54,7 @@ namespace Z0
         public int Read(int offset, int requested, Span<byte> dst)
         {
             int count = min(requested, State.Remaining);
-            read(Source, offset, ref first(dst), count);
+            memory.read(Source, offset, ref first(dst), count);
             Advance((uint)count);
             return count;
         }
@@ -63,7 +63,7 @@ namespace Z0
         public int Read(int offset, int requested, ref byte dst)
         {
             int count = min(requested, State.Remaining);
-            read(Source, offset, ref dst, count);
+            memory.read(Source, offset, ref dst, count);
             Advance((uint)count);
             return count;
         }

@@ -6,6 +6,10 @@ namespace Z0
 {
     using static sys;
 
+    public interface IWfEmitter
+    {
+        
+    }
     public class WfEmit
     {
         public static WfEmit create(IWfRuntime wf, WfHost host)

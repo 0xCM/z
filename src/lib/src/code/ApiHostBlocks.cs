@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    using static Arrays;
+    using static sys;
 
     /// <summary>
     /// Collects code derived from members declared by a specific operation host
