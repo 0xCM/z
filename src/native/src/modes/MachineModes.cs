@@ -44,7 +44,7 @@ namespace Z0
         [Symbol("")]
         None,
 
-        [Symbol("32/64", "64b operating mode")]
+        [Symbol("32/64", "LONG_64 mode w/64b addressing")]
         LONG_64,
 
         [Symbol("32/64", "32b protected mode")]
@@ -53,16 +53,16 @@ namespace Z0
         [Symbol("32/64", "16b protected mode")]
         LONG_COMPAT_16,
 
-        [Symbol("32/64", "32b protected mode")]
+        [Symbol("32/64", "LEGACY_32 mode, 32b addressing, 32b default data size")]
         LEGACY_32,
 
-        [Symbol("32/64", "16b protected mode")]
+        [Symbol("32/64", "LEGACY_16 mode, 16b addressing, 16b default data size")]
         LEGACY_16,
 
-        [Symbol("32/64", "16b real mode")]
+        [Symbol("32/64", "REAL_16 mode, 16b addressing (20b addresses), 16b default data size")]
         REAL_16,
 
-        [Symbol("32/64", "32b real mode (CS.D bit = 1)")]
+        [Symbol("32/64", "REAL_32 mode, 16b addressing (20b addresses), 32b default data size (CS.D bit = 1)")]
         REAL_32,
     }
 

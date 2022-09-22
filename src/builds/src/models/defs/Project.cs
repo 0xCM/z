@@ -12,13 +12,16 @@ namespace Z0
         {
             internal readonly E.Project Source;
 
+            public readonly FileUri Origin;
+
             public readonly ReadOnlySeq<Property> Props;
 
             public readonly ReadOnlySeq<ProjectItem> Items;
 
             [MethodImpl(Inline)]
-            internal ProjectSpec(E.Project src)
+            internal ProjectSpec(E.Project src, FileUri origin)
             {
+                Origin = origin;
                 Source = src;
                 Props = Source.AllEvaluatedProperties.Array().Select(MsBuild.property);
                 Items = Source.AllEvaluatedItems.Array().Select(MsBuild.item);

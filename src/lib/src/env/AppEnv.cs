@@ -4,25 +4,37 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed record class AppEnv : AppSettings<AppEnv,FolderPath>
+    using static Settings;
+    using static EnvNames;
+
+    public sealed record class AppEnv : AppEnv<AppEnv,FolderPath>
     {
         public static ref readonly AppEnv Cfg => ref Instance;
         
-        readonly FolderPath _DbRoot;
-
-        readonly FolderPath _DevRoot;
+        readonly AppSettings _Settings;
 
         public AppEnv()
         {
-            _DbRoot = FS.dir(Environment.GetEnvironmentVariable(SettingNames.DbRoot));
-            _DevRoot = FS.dir(Environment.GetEnvironmentVariable(SettingNames.DevRoot));
+            _Settings = AppSettings.Default;
         }
 
-        public FolderPath DbRoot() => _DbRoot;
+        public DbArchive DbRoot() 
+            => folder(_Settings.Setting(SettingNames.DbRoot));
 
-        public FolderPath Logs() => DbRoot() + FS.folder("logs");
+        public DbArchive Logs() 
+            => DbRoot().Scoped(logs);
 
-        public FolderPath DevRoot() => _DevRoot;
+        public DbArchive EnvRoot() 
+            => folder(_Settings.Setting(SettingNames.EnvRoot));
+
+        public DbArchive Sdks()
+            => EnvRoot().Scoped(sdks);
+
+        public DbArchive Dev()
+            => folder(_Settings.Setting(SettingNames.DevRoot));
+
+        public DbArchive Projects()
+            => Dev().Scoped(projects);
 
         static AppEnv Instance = new();        
     }

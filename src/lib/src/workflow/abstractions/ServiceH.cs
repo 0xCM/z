@@ -17,25 +17,20 @@ namespace Z0
         /// Creates and initializes the service
         /// </summary>
         /// <param name="wf">The source workflow</param>
-        public static H create(IServiceContext ctx)
+        public static H create(IEventSink ctx)
         {
             var service = create();
             service.Init(ctx);
             return service;
         }
 
-        protected IServiceContext Context {get; private set;}
-
-        protected IServiceContext Wf => Context;
-
         public Type HostType => typeof(H);
 
         EventSignal Signal;
 
-        public void Init(IServiceContext ctx)
+        public void Init(IEventSink sink)
         {
-            Context = ctx;
-            Signal = Events.signal(ctx.EventSink, typeof(H));
+            Signal = Events.signal(sink, typeof(H));
             Initializer((H)this);
             Initialized();
         }

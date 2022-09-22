@@ -102,13 +102,12 @@ namespace Z0
                 var ts = now();
                 var clock = Time.counter(true);
                 term.emit(Events.running(factory, InitializingRuntime));
-                var settings = AppEnv.Cfg;
                 var control = ExecutingPart.Assembly;
                 var id = control.Id();
                 var dst = new WfInit();
                 dst.Args = args;
                 dst.ApiCatalog = src;
-                dst.LogConfig = Loggers.configure(id, settings.Logs());
+                dst.LogConfig = Loggers.configure(id, AppEnv.Cfg.Logs());
                 dst.LogConfig.ErrorPath.CreateParentIfMissing();
                 dst.LogConfig.StatusPath.CreateParentIfMissing();
                 term.emit(Events.babble(factory, ConfiguredAppLogs.Format(dst.LogConfig)));

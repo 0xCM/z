@@ -85,6 +85,8 @@ namespace Z0
 
         public const S env = nameof(env);
 
+        public const S nuspec = nameof(nuspec);
+
         public const S control = nameof(control);
 
         public const S contracts = nameof(contracts);
@@ -312,6 +314,7 @@ namespace Z0
 
         public const S ii = nameof(ii);
 
+        public const S msi = nameof(msi);
         public const S idx = nameof(idx);
 
         public const S list = nameof(list);
@@ -415,6 +418,8 @@ namespace Z0
         public const S vars = nameof(vars);
 
         public const S views = nameof(views);
+
+        public const S nupkg = nameof(nupkg);
 
         public const S records = nameof(records);
 
@@ -527,6 +532,7 @@ namespace Z0
         public const S sjson = settings + dot + json;
 
         public const S synasm = syn + dot + asm;
+
 
         public const S synasmlog = syn + dot + asm + dot + log;
 

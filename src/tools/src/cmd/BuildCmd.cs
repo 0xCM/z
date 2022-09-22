@@ -10,6 +10,8 @@ namespace Z0
     {
         MsBuild BuildSvc => Wf.BuildSvc();
 
+        Dev Dev => Wf.Dev();
+
         //ConcurrentDictionary<
 
         [CmdOp("projects/list")]
@@ -94,18 +96,24 @@ namespace Z0
             });
         }
 
-        [CmdOp("build/exports")]
-        void BuildExports(CmdArgs args)
+        [CmdOp("dev/exports")]
+        void BuildExports()
         {
-            var files = AppDb.Dev("z0").Sources("src").Files().Where(x => x.FileName == FS.file("exports", FileKind.Props));
-            iter(files, file =>{
-                Write(file.ToUri());
-                var name = $"{file.FolderName}.exports";
-                var path = AppDb.AppData("build/exports").Path(name, FileKind.Cfg);
-                var project = BuildSvc.LoadProject(file);
-                var data = project.Format();
-                FileEmit(data, path, (ByteSize)data.Length);
-            });
+            var exports = Dev.Exports(AppDb.DevProject("z0"));
+            Dev.EmitCfg(exports, "exports", AppDb.AppData("dev/exports"));
+
+        }
+
+        [CmdOp("dev/deps")]
+        void DevImports()
+        {
+            //var props = Dev.DirectoryProps(AppDb.DevProject("z0"));
+            //Write(props.Format());
+            var deps = Dev.Deps("z0");
+            foreach(var dep in deps)
+            {
+                FileEmit(dep.Format(), AppDb.AppData("dev/deps").Path(dep.Origin.ToFilePath().FileName.WithoutExtension.Format(), FileKind.Cfg));
+            }
         }
 
         [CmdOp("build/libinfo")]

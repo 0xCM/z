@@ -7,7 +7,7 @@ namespace Z0
     using System.IO;
     using System.Text;
 
-    using static Spans;
+    using static sys;
 
     partial struct Tables
     {
@@ -26,7 +26,7 @@ namespace Z0
              log.Deposit(emitted);
         }
 
-        public static ExecToken emit<T>(WfEmit channel, ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
+        public static ExecToken emit<T>(IWfChannel channel, ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
                 where T : struct
         {

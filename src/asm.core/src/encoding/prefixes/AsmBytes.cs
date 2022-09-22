@@ -6,12 +6,10 @@ namespace Z0.Asm
 {
     using static sys;
 
-
     [ApiHost]
     public class AsmBytes
     {
         const NumericKind Closure = UnsignedInts;
-
 
         [MethodImpl(Inline), Op]
         public static void pack(in EncodingOffsets src, Span<byte> dst)

@@ -11,13 +11,6 @@ namespace Z0
     {
         const NumericKind Closure = UnsignedInts;
 
-        public static void emit(SymHeap src, FilePath dst, IWfEventTarget log)
-            => Tables.emit(log, Heaps.records(src).View, dst, TextEncodingKind.Unicode);
-
-        [MethodImpl(Inline), Op]
-        public static MemoryHeap memory(MemoryAddress @base, Span<byte> data, Span<Address32> offsets)
-            => new MemoryHeap(@base, data,offsets);
-
         public static asci16 id(SymHeap src)
             => string.Format("H{0:X4}x{1:X4}x{2:X6}", src.SymbolCount, src.EntryCount, src.ExprLengths.Storage.Sum());
 

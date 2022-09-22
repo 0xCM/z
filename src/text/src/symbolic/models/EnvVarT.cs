@@ -61,6 +61,10 @@ namespace Z0
         public bool Equals(EnvVar<T> src)
             => Name.Equals(src.Name) && Value.Equals(src.Value);
 
+        [MethodImpl(Inline)]
+        public static implicit operator T (EnvVar<T> src)
+            => src.Value;
+            
         public static EnvVar<T> Empty => new EnvVar<T>(EmptyString, default);
     }
 }

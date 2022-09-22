@@ -21,12 +21,13 @@ namespace Z0
         internal static B.Property property(E.ProjectProperty src)
             => new B.Property(src);
 
-        public ProjectSpec LoadProject(FilePath src)
-            => ProjectLookup.GetOrAdd(src, Build.project);
-
         [MethodImpl(Inline), Op]
         internal static ProjectItem item(E.ProjectItem src)
             => new ProjectItem(src);
+
+        public ProjectSpec LoadProject(FilePath src)
+            => ProjectLookup.GetOrAdd(src, Build.project);
+
 
         [Op]
         public static ProjectSpec resbytes()

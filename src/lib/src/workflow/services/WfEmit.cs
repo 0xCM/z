@@ -6,15 +6,13 @@ namespace Z0
 {
     using static sys;
 
-    public interface IWfEmitter
-    {
-        
-    }
-    public class WfEmit
+
+
+    public class WfEmit : IWfChannel
     {
         public static WfEmit create(IWfRuntime wf, WfHost host)
             => new WfEmit(wf, host);
-            
+
         readonly IWfRuntime Wf;
 
         readonly WfHost Host;
@@ -38,7 +36,7 @@ namespace Z0
             => Wf.Babble(Host, content);
 
         public void Babble(string pattern, params object[] args)
-            => Wf.Babble(Host, string.Format(pattern,args));
+            => Wf.Babble(Host, string.Format(pattern, args));
 
         public void Status<T>(T content, FlairKind flair = FlairKind.Status)
             => Wf.Status(Host, content, flair);
@@ -85,11 +83,11 @@ namespace Z0
         public ExecToken Created(WfExecFlow<Type> flow)
             => Wf.Created(flow);
 
-        public ExecToken Completed<T>(WfExecFlow<T> flow, Type host, Exception e, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine]int? line = null)
-            => Wf.Completed(flow,host,e, caller, file, line);
+        public ExecToken Completed<T>(WfExecFlow<T> flow, Type host, Exception e, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
+            => Wf.Completed(flow, host, e, caller, file, line);
 
         public ExecToken Completed<T>(WfExecFlow<T> flow, Type host, Exception e, EventOrigin origin)
-            => Wf.Completed(flow,host,e, origin);
+            => Wf.Completed(flow, host, e, origin);
 
         public WfExecFlow<T> Running<T>(T msg)
             => Wf.Running(Host, msg);
@@ -103,7 +101,7 @@ namespace Z0
         public ExecToken Ran<T>(WfExecFlow<T> flow, string msg, FlairKind flair = FlairKind.Ran)
             => Wf.Ran(Host, flow.WithMsg(msg), flair);
 
-        public ExecToken Ran<T,D>(WfExecFlow<T> src, D data, FlairKind flair = FlairKind.Ran)
+        public ExecToken Ran<T, D>(WfExecFlow<T> src, D data, FlairKind flair = FlairKind.Ran)
             => Wf.Ran(src, data, flair);
 
         public FileWritten EmittingFile(FilePath dst)
@@ -133,46 +131,46 @@ namespace Z0
 
         public ExecToken EmittedTable<T>(WfTableFlow<T> flow, Count count, FilePath? dst = null)
             where T : struct
-                => Wf.EmittedTable(Host, flow,count, dst);
+                => Wf.EmittedTable(Host, flow, count, dst);
 
-        public ExecToken TableEmit<T>(ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci, 
+        public ExecToken TableEmit<T>(ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
                 where T : struct
         {
-            var emitting = EmittingTable<T>(dst);            
+            var emitting = EmittingTable<T>(dst);
             Tables.emit(rows, dst, encoding, rowpad, fk);
             return EmittedTable(emitting, rows.Length);
         }
 
-        public ExecToken TableEmit<T>(Index<T> rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci, 
+        public ExecToken TableEmit<T>(Index<T> rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
                 where T : struct
                     => TableEmit(rows.View, dst, encoding, rowpad, fk);
 
-        public ExecToken TableEmit<T>(T[] rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci, 
+        public ExecToken TableEmit<T>(T[] rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
                 where T : struct
                     => TableEmit(@readonly(rows), dst, encoding, rowpad, fk);
 
-        public ExecToken TableEmit<T>(ReadOnlySeq<T> src, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci, 
+        public ExecToken TableEmit<T>(ReadOnlySeq<T> src, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
                 where T : struct
                     => TableEmit(src.View, dst, encoding, rowpad, fk);
 
-        public ExecToken TableEmit<T>(Seq<T> src, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci, 
+        public ExecToken TableEmit<T>(Seq<T> src, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
                 where T : struct
                     => TableEmit(src.View, dst, encoding, rowpad, fk);
 
-         public ExecToken TableEmit<T>(ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding)
-            where T : struct
+        public ExecToken TableEmit<T>(ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding)
+           where T : struct
         {
             var emitting = EmittingTable<T>(dst);
             var formatter = RecordFormatters.create(typeof(T));
             using var writer = dst.Emitter(encoding);
             writer.WriteLine(formatter.FormatHeader());
-            for(var i=0; i<rows.Length; i++)
-                writer.WriteLine(formatter.Format(skip(rows,i)));
+            for (var i = 0; i < rows.Length; i++)
+                writer.WriteLine(formatter.Format(skip(rows, i)));
             return EmittedTable(emitting, rows.Length, dst);
         }
 
@@ -182,7 +180,7 @@ namespace Z0
             var flow = Wf.EmittingTable<T>(Host, dst);
             var spec = Tables.rowspec<T>(widths, z16);
             var count = Tables.emit(src, spec, encoding, dst);
-            return Wf.EmittedTable(Host, flow,count);
+            return Wf.EmittedTable(Host, flow, count);
         }
 
         public ExecToken FileEmit<T>(T src, Count count, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)

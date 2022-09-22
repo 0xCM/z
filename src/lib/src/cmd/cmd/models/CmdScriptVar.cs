@@ -35,11 +35,11 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public string Format()
-            => ExprFormatters.format(this);
+            => Env.format(this);
 
         [MethodImpl(Inline)]
         public string Format(VarContextKind vck)
-            => ExprFormatters.format(vck, this);
+            => Env.format(vck, this);
 
         public override string ToString()
             => Format();

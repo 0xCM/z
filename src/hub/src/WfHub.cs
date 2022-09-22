@@ -9,7 +9,7 @@ namespace Z0
     {
         public static void Main(params string[] args)
         {
-            using var app = AppShell.create<WfHub>(false, args);            
+            using var app = AppShells.create<WfHub>(false, args);            
             var wf = app.Wf;
             var running = wf.Running($"Creating command providers");
             var providers = new ICmdProvider[]{
@@ -17,7 +17,7 @@ namespace Z0
             };
             wf.Ran(running, $"Created {providers.Length} command providers");
             app.CmdService = Cmd.service<WfShellCmd>(wf, providers);
-            app.Run();
+            app.Run(args);
         }
     }
 }

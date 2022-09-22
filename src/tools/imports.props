@@ -4,5 +4,6 @@
      <ProjectReference Include="$(Native)"/>
      <ProjectReference Include="$(Process)"/>
      <ProjectReference Include="$(Circuits)"/>
+     <ProjectReference Include="$(Db)"/>
   </ItemGroup>
 </Project>

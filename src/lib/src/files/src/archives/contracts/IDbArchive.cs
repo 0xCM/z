@@ -14,4 +14,10 @@ namespace Z0
 
         string Name => Root.Name;
     }
+
+    public interface IDbArchive<A> : IDbArchive
+        where A : IDbArchive<A>
+    {
+
+    }
 }

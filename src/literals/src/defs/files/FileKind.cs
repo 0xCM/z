@@ -27,6 +27,10 @@ namespace Z0
         [Symbol(synasmlog)]
         SynAsmLog,
 
+        [Symbol(nupkg, "A nuget archive")]
+        Nuget,
+
+
         [Symbol(bat, "A windows batch file")]
         Bat,
 
@@ -50,6 +54,9 @@ namespace Z0
 
         [Symbol(ildat, "Msil bytes")]
         MsilDat,
+
+        [Symbol(msi, "A miserable installer file")]
+        Msi,
 
         [Symbol(cmd, "A windows batch file")]
         Cmd,
@@ -234,6 +241,9 @@ namespace Z0
 
         [Symbol(zip, "A zip archive binary")]
         Zip,
+
+        [Symbol(nuspec, "A nuget package specification")]
+        Nuspec,
 
         [Symbol(env, "An environment configuration document")]
         Env,

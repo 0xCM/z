@@ -6,7 +6,9 @@ namespace Z0
 {
     using K = FileKind;
 
-    partial class Tools
+    using static Tools;
+
+    partial class FileFlows
     {
         /// <summary>
         /// *.obj -> *.hex.dat

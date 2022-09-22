@@ -7,7 +7,6 @@ namespace Z0
     partial class XFs
     {
         public static FilePath ToFilePath(this FileUri src)
-            => src;
-
+            => new FilePath(src.LocalPath);
     }
 }

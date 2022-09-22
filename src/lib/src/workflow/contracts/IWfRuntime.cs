@@ -6,7 +6,7 @@ namespace Z0
 {
     using static Events;
 
-    public interface IWfRuntime : IDisposable, ITextual, IServiceContext
+    public interface IWfRuntime : IDisposable, ITextual
     {
         PartName AppName {get;}
 
@@ -16,6 +16,8 @@ namespace Z0
 
         IEventBroker EventBroker {get;}
 
+        IEventSink EventSink {get;}
+        
         WfHost Host {get;}
 
         LogLevel Verbosity {get;}

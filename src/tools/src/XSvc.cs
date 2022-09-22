@@ -12,6 +12,12 @@ namespace Z0
                 => Service<ToolCmd>(wf);
 
 
+            public Dev Dev(IWfRuntime wf)
+                => Service<Dev>(wf);
+
+            public DevPacks DevPacks(IWfRuntime wf)
+                => Service<DevPacks>(wf);
+
             public MsBuild BuildSvc(IWfRuntime wf)
                 => Service<MsBuild>(wf);
 
@@ -77,6 +83,12 @@ namespace Z0
 
         public static MsBuild BuildSvc(this IWfRuntime wf)
             => Services.BuildSvc(wf);
+
+       public static Dev Dev(this IWfRuntime wf)
+            => Services.Dev(wf);
+
+        public static DevPacks DevPacks(this IWfRuntime wf)
+            => Services.DevPacks(wf);
 
         public static IAppCmdSvc BuildCmd(this IWfRuntime wf)
             => Services.BuildCmd(wf);

@@ -4,16 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [ApiHost]
-    public partial class WinSdk : ToolService<WinSdk>
+    public class WinSdk : ToolService<WinSdk>
     {
         public WinSdk()
             : base("winsdk")
         {
 
         }
-
-        public WinSdkInfo Latest()
-            => latest();
     }
 }

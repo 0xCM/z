@@ -19,4 +19,20 @@ namespace Z0
         public static implicit operator Actor(Tool<T> src)
             => src.ToolId;
     }
+
+    public sealed class CmdTool : Tool<CmdTool>
+    {
+        public CmdTool()
+            : base(EmptyString)
+        {
+
+        }
+     
+        public CmdTool(@string name)
+            : base(name)
+        {
+
+        }
+
+    }
 }

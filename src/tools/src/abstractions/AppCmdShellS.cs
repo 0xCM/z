@@ -11,28 +11,28 @@ namespace Z0
 
         protected static void run(Func<IWfRuntime,IAppCmdSvc> f, params string[] args)
         {
-            using var app = AppShell.create<S>(false, args);
+            using var app = AppShells.create<S>(false, args);
             app.CmdService = f(app.Wf);
-            app.Run();
+            app.Run(args);
         }
 
         protected static void run(Func<IWfRuntime,IAppCmdSvc> factory, bool catalog, params string[] args)
         {
-            using var app = AppShell.create<S>(catalog, args);
+            using var app = AppShells.create<S>(catalog, args);
             app.CmdService = factory(app.Wf);
-            app.Run();
+            app.Run(args);
         }
 
         protected static void run<C>(Func<IWfRuntime,IAppCmdSvc> factory, C context, IRunnable<C> runnable, params string[] args)
         {
-            using var app = AppShell.create<S>(false, args);
+            using var app = AppShells.create<S>(false, args);
             app.CmdService = factory(app.Wf);
             runnable.Run(context);
         }
 
         protected static void run(Func<IWfRuntime,IAppCmdSvc> factory, IRunnable<S> runnable, params string[] args)
         {
-            using var app = AppShell.create<S>(false, args);
+            using var app = AppShells.create<S>(false, args);
             app.CmdService = factory(app.Wf);
             runnable.Run(app);
         }
@@ -42,7 +42,7 @@ namespace Z0
             CmdService?.Dispose();
         }
 
-        protected override void Run()
+        protected override void Run(string[] args)
             => CmdService.Run();
     }
 }

@@ -42,7 +42,6 @@ namespace Z0
             Target = dst;
             var symlits = Symbolic.symlits(src);
             exec(true,
-                //() => EmitTokenGroups(src),
                 () => EmitDataFlows(src),
                 () => EmitSymLits(symlits),
                 () => EmitApiLiterals(src),
@@ -113,7 +112,7 @@ namespace Z0
             => TableEmit(Symbols.syminfo(src.TokenTypes), Target.Table<SymInfo>($"{src.GroupName}"), TextEncodingKind.Unicode);
 
         public void EmitHeap(SymHeap src)
-            => Heaps.emit(src, AppDb.ApiTargets().Table<SymHeapRecord>(), EventLog);
+            => Heaps.emit(src, AppDb.ApiTargets().Table<SymHeapRecord>(), Channel);
 
         public void EmitTypeLists(Assembly[] src)
         {            
@@ -131,7 +130,7 @@ namespace Z0
             => TableEmit(Symbolic.symlits(src), AppDb.ApiTargets().Table<SymLiteralRow>(), UTF16);
 
         void EmitSymHeap(SymHeap src)
-            => Heaps.emit(src, Target.Table<SymHeapRecord>(), EventLog);
+            => Heaps.emit(src, Target.Table<SymHeapRecord>(), Channel);
 
         void EmitComments(IApiPack dst)
             => Comments.Collect(dst);

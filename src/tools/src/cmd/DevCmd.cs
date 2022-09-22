@@ -6,9 +6,10 @@ namespace Z0
 {
     using static sys;
 
+
     public sealed class DevCmd : AppCmdService<DevCmd>
     {
-        WfEmit Channel => Emitter;
+        DevPacks Devpacks => Wf.DevPacks();
 
         public static FolderPath cd()
         {
@@ -20,6 +21,21 @@ namespace Z0
             if(args.Length == 1)
                 Environment.CurrentDirectory = args.First.Value;
             return cd();
+        }
+
+        [CmdOp("files/nuget")]
+        void NugetFiles(CmdArgs args)
+        {
+            var src = FS.dir(arg(args,0));
+            var packs = FilePacks.search(src, PackageKind.Nuget);
+            iter(packs, p => Write(p));
+        }
+
+        [CmdOp("devpack/nuget")]
+        void DevPack(CmdArgs args)
+        {
+            var src = FS.dir(arg(args,0));
+            Devpacks.NugetStage(src);
         }
 
         [CmdOp("sln/root")]

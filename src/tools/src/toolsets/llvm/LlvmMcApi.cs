@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static FileFlows;
+    
     partial class Tools
     {
         public static McCmd cmd(AsmToMcAsm kind, FilePath src, FilePath dst)

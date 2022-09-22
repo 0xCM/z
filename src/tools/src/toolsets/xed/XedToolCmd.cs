@@ -24,7 +24,7 @@ namespace Z0
         public Verbosity Verbosity;
 
         [CmdArg("-{0}")]
-        public Mode Mode;
+        public string Mode;
 
         FilePath IFlowCmd<FilePath, FilePath>.Source
             => Source;

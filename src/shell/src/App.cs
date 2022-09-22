@@ -22,19 +22,18 @@ namespace Z0
     {
         public static void Main(params string[] args)
         {
-            using var app = AppShell.create<App>(false, args);            
+            using var app = AppShells.create<App>(false, args);            
             var wf = app.Wf;
             var running = wf.Running($"Creating command providers");
             var providers = new ICmdProvider[]{
                 wf.WfCmd(),
                 wf.ToolCmd(),
                 wf.DevCmd(),
-                wf.BuildCmd(),
-                
+                wf.BuildCmd(),                
             };
             wf.Ran(running, $"Created {providers.Length} command providers");
             app.CmdService = Cmd.service<AppShellCmd>(wf, providers);
-            app.Run();
+            app.Run(args);
         }
     }
 

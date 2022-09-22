@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using static core;
+    using static sys;
 
     public class CpuIdSvc : WfSvc<CpuIdSvc>
     {
@@ -120,7 +120,7 @@ namespace Z0.Asm
         {
             const sbyte ColWidth = 46;
             const byte ColCount = 6;
-            var slots = array(RpOps.pad(0,-ColWidth), RpOps.pad(1,-ColWidth), RpOps.pad(2,-ColWidth), RpOps.pad(3,-ColWidth), RpOps.pad(4,-ColWidth), RpOps.pad(5,-ColWidth));
+            var slots = array(RP.pad(0,-ColWidth), RP.pad(1,-ColWidth), RP.pad(2,-ColWidth), RP.pad(3,-ColWidth), RP.pad(4,-ColWidth), RP.pad(5,-ColWidth));
             var pattern = string.Format("{0} | {1} | {2} | {3} | {4} | {5}", slots);
             var header = string.Format(pattern, "eax(in)", "ecx(in)", "eax(out)", "ebx(out)", "ecx(out)", "edx(out)");
             dst.AppendLine(header);

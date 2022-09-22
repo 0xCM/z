@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="imports.props"/>
   <Import Project="$(ProjectProps)\usings.props"/>
+  <Import Project="imports.props"/>
   <PropertyGroup>
     <OutputType>Library</OutputType>
   </PropertyGroup>

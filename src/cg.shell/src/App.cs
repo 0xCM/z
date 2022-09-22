@@ -20,14 +20,14 @@ namespace Z0
             CmdService?.Dispose();
         }
 
-        protected override void Run()
+        protected override void Run(string[] args)
             => CmdService.Run();
 
         public static void Main(params string[] args)
         {
             using var wf = ApiRuntime.create(args);
             using var shell = create(wf);
-            shell.Run();
+            shell.Run(args);
         }
     }
 }

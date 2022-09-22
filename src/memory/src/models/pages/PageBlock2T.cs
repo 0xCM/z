@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     [StructLayout(LayoutKind.Sequential, Size = (int)Size)]
     public struct PageBlock2<T> : IPageBlock<PageBlock2<T>>

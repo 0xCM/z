@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(ProjectProps)\settings.props"/>
+  <Import Project="$(ProjectProps)\usings.props"/>
+  <Import Project="imports.props"/>
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>help</AssemblyName>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+  </PropertyGroup>
+</Project>

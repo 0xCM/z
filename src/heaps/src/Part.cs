@@ -5,7 +5,7 @@
 [assembly: PartId(PartId.Heaps)]
 namespace Z0.Parts
 {
-    public sealed partial class Heaps : Part<Heaps>
+    public sealed class Heaps : Part<Heaps>
     {
 
     }

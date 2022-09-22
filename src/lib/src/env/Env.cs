@@ -9,6 +9,31 @@ namespace Z0
     [ApiHost]
     public class Env
     {
+        public static EnvVar<T> var<T>(EnvVarKind kind, string name, Func<string,T> parser)
+            where T : IEquatable<T>
+        {
+            var dst = EnvVar<T>.Empty;
+            var value = Environment.GetEnvironmentVariable(name, (EnvironmentVariableTarget)kind);
+            if(nonempty(value))
+                dst = new(name,parser(value));
+            return dst;
+        }
+
+        public static string format(IVarValue var)
+            => format(var, Chars.Eq);
+
+        public static string format(IVarValue var, char assign)
+            => string.Format("{0}{1}{2}", var.VarName, assign, var.VarValue);
+
+        public static string format(VarContextKind vck, IVarValue var)
+            => format(vck,var, Chars.Eq);
+
+        public static string format(VarContextKind vck, IVarValue var, char assign)
+            => string.Format("{0}{1}{2}", format(vck, var.VarName), assign, var.VarValue);
+
+        static string format(VarContextKind vck, string name)
+            => string.Format(RP.pattern(vck), name);
+
         public static ExecToken emit(WfEmit emitter, EnvVarKind kind, FolderPath dst)
         {
             var vars = EnvVars.Empty;
@@ -34,7 +59,7 @@ namespace Z0
             return token;
         }
 
-        static ExecToken emit(WfEmit channel, EnvVars src, EnvVarKind kind, FolderPath dst)
+        static ExecToken emit(IWfChannel channel, EnvVars src, EnvVarKind kind, FolderPath dst)
         {
             var name =  $"{ExecutingPart.Name}.{EnumRender.format(kind)}";
             var table = dst + FS.file($"{name}.settings",FileKind.Csv);
@@ -42,30 +67,20 @@ namespace Z0
             using var writer = env.AsciWriter();
             for(var i=0; i<src.Count; i++)
                 writer.WriteLine(src[i].Format());
-            return emit(channel, records(src, name).View, table, ASCI);
+            return Tables.emit(channel, records(src, name).View, table, ASCI);
         }
 
-        static ExecToken emit<T>(WfEmit emitter, ReadOnlySpan<T> src, FilePath dst, TextEncodingKind encoding, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular, string delimiter = " | ")
-            where T : struct
-        {
-            var emitting = emitter.EmittingTable<T>(dst);
-            var formatter = RecordFormatters.create<T>(rowpad, fk, delimiter);
-            using var writer = dst.Emitter(encoding);
-            writer.WriteLine(formatter.FormatHeader());
-            for(var i=0; i<src.Length; i++)            
-                writer.WriteLine(formatter.Format(skip(src,i)));            
-            return emitter.EmittedTable(emitting, src.Length);
-        }
-
-        public static EnvVar<T> var<T>(EnvVarKind kind, string name, Func<string,T> parser)
-            where T : IEquatable<T>
-        {
-            var dst = EnvVar<T>.Empty;
-            var value = Environment.GetEnvironmentVariable(name, (EnvironmentVariableTarget)kind);
-            if(nonempty(value))
-                dst = new(name,parser(value));
-            return dst;
-        }
+        // static ExecToken emit<T>(IWfChannel channel, ReadOnlySpan<T> src, FilePath dst, TextEncodingKind encoding, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular, string delimiter = " | ")
+        //     where T : struct
+        // {
+        //     var emitting = channel.EmittingTable<T>(dst);
+        //     var formatter = RecordFormatters.create<T>(rowpad, fk, delimiter);
+        //     using var writer = dst.Emitter(encoding);
+        //     writer.WriteLine(formatter.FormatHeader());
+        //     for(var i=0; i<src.Length; i++)            
+        //         writer.WriteLine(formatter.Format(skip(src,i)));            
+        //     return channel.EmittedTable(emitting, src.Length);
+        // }
 
         public static EnvVars vars(EnvVarKind kind)
         {

@@ -11,6 +11,8 @@ namespace Z0
     {
         public IWfRuntime Wf {get; private set;}
 
+        protected IWfChannel Channel => Emitter;
+
         public abstract Type HostType {get;}
 
         public WfEmit Emitter {get; private set;}

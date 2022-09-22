@@ -31,8 +31,7 @@ namespace Z0
                 => new Property<T>(src);
         [Op]
         public static ProjectSpec project(FilePath src)
-            => new(E.Project.FromFile(src.Name, new D.ProjectOptions {
-            }));
+            => new(E.Project.FromFile(src.Name, new D.ProjectOptions {}), src);
 
         public static string format(ProjectSpec src)
         {

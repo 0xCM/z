@@ -1,5 +1,8 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(Text)" />
+    <ProjectReference Include="$(ZLib)" />
+    <ProjectReference Include="$(Alloc)" />
+    <ProjectReference Include="$(Numbers)" />
+    <ProjectReference Include="$(Process)" />
   </ItemGroup>
 </Project>
