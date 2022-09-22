@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Rules;
-
     public sealed class Production : Production<IRuleExpr, IRuleExpr>, INullity, IProduction
     {
         [MethodImpl(Inline)]

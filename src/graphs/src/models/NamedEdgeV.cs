@@ -9,14 +9,14 @@ namespace Z0
     public sealed record class NamedEdge<V> : IEdge<V>, IEquatable<NamedEdge<V>>
         where V : IEquatable<V>, IExpr, IHashed
     {
-        public readonly Name Name;
+        public readonly @string Name;
 
         public readonly V Source;
 
         public readonly V Target;
 
         [MethodImpl(Inline)]
-        public NamedEdge(Name name, V src, V dst)
+        public NamedEdge(string name, V src, V dst)
         {
             Name = name;
             Source = src;

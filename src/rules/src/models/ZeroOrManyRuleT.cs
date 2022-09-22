@@ -4,9 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct Rules
-    {
-
     public class ZeroOrManyRule<T>
         where T : IEquatable<T>
     {
@@ -35,7 +32,4 @@ namespace Z0
         public static implicit operator ZeroOrManyRule<T>(T[] src)
             => new ZeroOrManyRule<T>(src);
     }
-
-    }
-
 }

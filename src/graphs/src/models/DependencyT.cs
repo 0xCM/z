@@ -34,7 +34,7 @@ namespace Z0
             => Source.Equals(src.Source) && Target.Equals(src.Target);
 
         public override int GetHashCode()
-            => (int)alg.hash.combine(Source.GetHashCode(),Target.GetHashCode());
+            => sys.hash(Source.GetHashCode(),Target.GetHashCode());
 
         public override bool Equals(object src)
             => src is Dependency<T> a && Equals(a);

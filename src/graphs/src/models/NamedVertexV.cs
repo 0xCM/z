@@ -9,14 +9,14 @@ namespace Z0
     public sealed record class NamedVertex<V>
         where V : IDataType<V>, IExpr
     {
-        public readonly Name Name;
+        public readonly @string Name;
 
         public readonly V Value;
 
         public readonly Seq<Vertex<V>> Targets;
 
         [MethodImpl(Inline)]
-        public NamedVertex(Name name, V value, params Vertex<V>[] targets)
+        public NamedVertex(string name, V value, params Vertex<V>[] targets)
         {
             Name = name;
             Value = value;

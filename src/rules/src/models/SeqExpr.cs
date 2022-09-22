@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Rules;
-
     public class SeqExpr : RuleExpr<Index<IExpr>>, ISeqExpr<IExpr>
     {
         public SeqExpr(params IExpr[] terms)

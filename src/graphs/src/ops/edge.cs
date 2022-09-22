@@ -10,7 +10,7 @@ namespace Z0
             where V : IDataType<V>, IExpr, IVertex<V>
                 => new Edge<V>(src, dst);
 
-        public static NamedEdge<V> edge<V>(Name name, V src, V dst)
+        public static NamedEdge<V> edge<V>(string name, V src, V dst)
             where V : IDataType<V>, IExpr, IVertex<V>
                 => new NamedEdge<V>(name, src, dst);
     }

@@ -4,37 +4,34 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct Rules
+    public class ListExprRule : RuleExpr<Index<IRuleExpr>>, IListRule
     {
-        public class ListExprRule : RuleExpr<Index<IRuleExpr>>, IListRule
+        public Index<IRuleExpr> Terms
+            => Content;
+
+        public ListExprRule(IRuleExpr[] src)
+            : base(src)
         {
-            public Index<IRuleExpr> Terms
-                => Content;
 
-            public ListExprRule(IRuleExpr[] src)
-                : base(src)
-            {
-
-            }
-
-            public bool IsEmpty
-            {
-                [MethodImpl(Inline)]
-                get => Terms.IsEmpty;
-            }
-
-            public bool IsNonEmpty
-            {
-                [MethodImpl(Inline)]
-                get => Terms.IsNonEmpty;
-            }
-
-            public override string Format()
-                => Terms.Delimit(Chars.Comma, fence:Fenced.Embraced).Format();
-
-            [MethodImpl(Inline)]
-            public static implicit operator ListExprRule(IRuleExpr[] src)
-                => new ListExprRule(src);
         }
-    }
+
+        public bool IsEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Terms.IsEmpty;
+        }
+
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Terms.IsNonEmpty;
+        }
+
+        public override string Format()
+            => Terms.Delimit(Chars.Comma, fence:Fenced.Embraced).Format();
+
+        [MethodImpl(Inline)]
+        public static implicit operator ListExprRule(IRuleExpr[] src)
+            => new ListExprRule(src);
+    }   
 }

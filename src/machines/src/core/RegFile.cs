@@ -6,8 +6,6 @@ namespace Z0
 {
     using static sys;
 
-    using Asm;
-
     /// <summary>
     /// Defines a squence of register seqeunces
     /// </summary>

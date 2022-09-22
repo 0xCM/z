@@ -87,7 +87,4 @@ namespace Z0
                 channel.Status($"Verified {count} label allocations");
         }
     }
-    partial class AsmCheckCmd
-    {
-    }
 }

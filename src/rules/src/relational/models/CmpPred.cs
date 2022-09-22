@@ -25,7 +25,7 @@ namespace Z0
                 Right = b;
                 Kind = kind;
                 Size = a.Size;
-                Symbol = Relations.symbol(Kind);
+                Symbol = symbol(Kind);
             }
 
             uint IFreeExpr.Size

@@ -12,7 +12,7 @@ namespace Z0
                 => new Vertex<V>(value, targets);
 
         [MethodImpl(Inline)]
-        public static NamedVertex<V> vertex<V>(Name name, V value, params Vertex<V>[] targets)
+        public static NamedVertex<V> vertex<V>(string name, V value, params Vertex<V>[] targets)
             where V : IDataType<V>, IExpr
                 => new NamedVertex<V>(name,value, targets);
     }

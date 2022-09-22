@@ -10,7 +10,7 @@ namespace Z0
 
         Index<IProduction> _Productions;
 
-        internal TextMap(ConstLookup<string,string> src, IProduction[] productions)
+        public TextMap(ConstLookup<string,string> src, IProduction[] productions)
         {
             Data = src;
             _Productions = productions;

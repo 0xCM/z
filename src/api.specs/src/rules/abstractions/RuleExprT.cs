@@ -16,5 +16,4 @@ namespace Z0
         public override string Format()
             => Content.ToString();
     }
-
 }

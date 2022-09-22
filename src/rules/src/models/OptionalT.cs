@@ -4,25 +4,21 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct Rules
+    public class Optional<T> : RuleExpr<Optional<T>,T>, IOptionRule
+        where T : IRuleExpr
     {
-        public class Optional<T> : RuleExpr<Optional<T>,T>, IOptionRule
-            where T : IRuleExpr
+        public Optional(T opt)
+            : base(opt)
         {
-            public Optional(T opt)
-                : base(opt)
-            {
 
-            }
-
-            public IRuleExpr Potential
-                => Content;
-            public override string Format()
-                => text.bracket(Content.ToString());
-
-            public static implicit operator Optional<T>(T value)
-                => new Optional<T>(value);
         }
-    }
 
+        public IRuleExpr Potential
+            => Content;
+        public override string Format()
+            => text.bracket(Content.ToString());
+
+        public static implicit operator Optional<T>(T value)
+            => new Optional<T>(value);
+    }
 }

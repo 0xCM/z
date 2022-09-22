@@ -11,8 +11,6 @@ namespace Z0
 
     public partial class ProcessMemory : WfSvc<ProcessMemory>
     {
-        ImageRegions Regions => Wf.ImageRegions();
-
         [Op, MethodImpl(Inline)]
         public static Traverser traverser(ReadOnlySpan<ProcessMemoryRegion> src, bool live)
             => new Traverser(src, live);
