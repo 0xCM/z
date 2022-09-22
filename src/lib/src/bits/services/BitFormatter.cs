@@ -12,14 +12,14 @@ namespace Z0
             where T : unmanaged
                 => new BitFormatter<T>(config);
 
-        [MethodImpl(Inline), Op]
-        public static FixedBitFormatter @fixed()
-            => FixedBitFormatter.Service;
+        // [MethodImpl(Inline), Op]
+        // public static FixedBitFormatter @fixed()
+        //     => FixedBitFormatter.Service;
 
-        [MethodImpl(Inline), Op, Closures(UnsignedInts)]
-        public static FixedBitFormatter<T> @fixed<T>(uint width)
-            where T : struct
-                => new FixedBitFormatter<T>(width);
+        // [MethodImpl(Inline), Op, Closures(UnsignedInts)]
+        // public static FixedBitFormatter<T> @fixed<T>(uint width)
+        //     where T : struct
+        //         => new FixedBitFormatter<T>(width);
 
         [MethodImpl(Inline), Op]
         public static BitFormat configure(bool tlz)

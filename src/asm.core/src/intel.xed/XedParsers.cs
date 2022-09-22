@@ -239,7 +239,7 @@ namespace Z0
         public static bool parse(string src, out uint1 dst)
         {
             if(IsBinaryLiteral(src))
-                return DataParser.parse(src, out dst);
+                return BitNumbers.parse(src, out dst);
             else
             {
                 dst = default;
@@ -250,7 +250,7 @@ namespace Z0
         public static bool parse(string src, out uint2 dst)
         {
             if(IsBinaryLiteral(src))
-                return DataParser.parse(src, out dst);
+                return BitNumbers.parse(src, out dst);
             else
             {
                 dst = default;
@@ -261,7 +261,7 @@ namespace Z0
         public static bool parse(string src, out uint3 dst)
         {
             if(IsBinaryLiteral(src))
-                return DataParser.parse(src, out dst);
+                return BitNumbers.parse(src, out dst);
             else
             {
                 dst = default;
@@ -273,7 +273,7 @@ namespace Z0
         {
             if(IsBinaryLiteral(src))
             {
-                return DataParser.parse(src, out dst);
+                return BitNumbers.parse(src, out dst);
             }
             else
             {
@@ -285,7 +285,7 @@ namespace Z0
         public static bool parse(string src, out uint5 dst)
         {
             if(IsBinaryLiteral(src))
-                return DataParser.parse(src, out dst);
+                return BitNumbers.parse(src, out dst);
             else
             {
                 dst = default;
@@ -368,7 +368,7 @@ namespace Z0
         public static bool parse(string src, out uint8b dst)
         {
             if(IsBinaryLiteral(src))
-                return DataParser.parse(src, out dst);
+                return BitNumbers.parse(src, out dst);
             else
             {
                 dst = default;

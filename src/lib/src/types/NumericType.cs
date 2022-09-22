@@ -75,13 +75,13 @@ namespace Z0
 
             public static NumericType U64 => numeric(NextKey(DataTypeKind.Numeric),  P.U64.TypeName, 64);
 
-            public static NumericType U2 => numeric(NextKey(DataTypeKind.Numeric),  nameof(uint2), (2,8));
+            public static NumericType U2 => numeric(NextKey(DataTypeKind.Numeric),  "uint2", (2,8));
 
-            public static NumericType U3 => numeric(NextKey(DataTypeKind.Numeric),  nameof(uint3), (3,8));
+            public static NumericType U3 => numeric(NextKey(DataTypeKind.Numeric),  "uint3", (3,8));
 
-            public static NumericType U4 => numeric(NextKey(DataTypeKind.Numeric),  nameof(uint4), (4,8));
+            public static NumericType U4 => numeric(NextKey(DataTypeKind.Numeric),  "uint4", (4,8));
 
-            public static NumericType U5 => numeric(NextKey(DataTypeKind.Numeric),  nameof(uint5), (5,8));
+            public static NumericType U5 => numeric(NextKey(DataTypeKind.Numeric),  "uint5", (5,8));
 
             public static Intrinsic Types => new();
 

@@ -6,7 +6,6 @@ namespace Z0
 {
     using System.Globalization;
 
-    using static Msg;
     using static sys;
 
     partial struct Hex
@@ -56,6 +55,9 @@ namespace Z0
 
         public static bool parse64u(ReadOnlySpan<char> src, out ulong dst)
             => ulong.TryParse(HexParser.clear(src), NumberStyles.HexNumber, null,  out dst);
+
+        static MsgPattern<string> UnevenNibbles
+            => "An even number of nibbles was not provided in the source text '{0}'";
 
         public static Outcome parse(string src, out BinaryCode dst)
         {
@@ -332,13 +334,16 @@ namespace Z0
                 result = parse8u(part, out seek(target,i));
                 if(result.Fail)
                 {
-                    result = (false, Msg.HexParseFailure.Format(part));
+                    result = (false, HexParseFailure.Format(part));
                     return result;
                 }
             }
             dst = buffer;
             return result;
         }
+
+        public static MsgPattern<string> HexParseFailure
+            => "The value '{0}' could not be parsed as a hex number";
 
         [Op]
         public static Outcome<uint> hexbytes(string src, Span<byte> dst)

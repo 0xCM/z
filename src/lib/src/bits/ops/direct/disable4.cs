@@ -14,7 +14,7 @@ namespace Z0
           [MethodImpl(Inline), Disable]
           public static byte disable4(byte src, byte offset)
           {
-               var mask = ulong.MaxValue ^ ((ulong)uint4.MaxValue << offset);
+               var mask = ulong.MaxValue ^ ((ulong)LimitValues.Max4u << offset);
                return (byte)(mask & src);
           }
 
@@ -26,7 +26,7 @@ namespace Z0
           [MethodImpl(Inline), Disable]
           public static ushort disable4(ushort src, byte offset)
           {
-               var mask = ulong.MaxValue ^ ((ulong)uint4.MaxValue << offset);
+               var mask = ulong.MaxValue ^ ((ulong)LimitValues.Max4u << offset);
                return (ushort)(mask & src);
           }
 
@@ -38,7 +38,7 @@ namespace Z0
           [MethodImpl(Inline), Disable]
           public static uint disable4(uint src, byte offset)
           {
-               var mask = ulong.MaxValue ^ ((ulong)uint4.MaxValue << offset);
+               var mask = ulong.MaxValue ^ ((ulong)LimitValues.Max4u << offset);
                return (uint)(mask & src);
           }
 
@@ -50,7 +50,7 @@ namespace Z0
           [MethodImpl(Inline), Disable]
           public static ulong disable4(ulong src, byte offset)
           {
-               var mask = ulong.MaxValue ^ ((ulong)uint4.MaxValue << offset);
+               var mask = ulong.MaxValue ^ ((ulong)LimitValues.Max4u << offset);
                return (ulong)(mask & src);
           }
 
@@ -62,7 +62,7 @@ namespace Z0
           [MethodImpl(Inline), Disable]
           public static byte disable(N4 n, byte src, byte offset)
           {
-               var mask = ulong.MaxValue ^ ((ulong)uint4.MaxValue << offset);
+               var mask = ulong.MaxValue ^ ((ulong)LimitValues.Max4u << offset);
                return (byte)(mask & src);
           }
 
@@ -74,7 +74,7 @@ namespace Z0
           [MethodImpl(Inline), Disable]
           public static ushort disable(N4 n, ushort src, byte offset)
           {
-               var mask = ulong.MaxValue ^ ((ulong)uint4.MaxValue << offset);
+               var mask = ulong.MaxValue ^ ((ulong)LimitValues.Max4u << offset);
                return (ushort)(mask & src);
           }
 
@@ -86,7 +86,7 @@ namespace Z0
           [MethodImpl(Inline), Disable]
           public static uint disable(N4 n, uint src, byte offset)
           {
-               var mask = ulong.MaxValue ^ ((ulong)uint4.MaxValue << offset);
+               var mask = ulong.MaxValue ^ ((ulong)LimitValues.Max4u << offset);
                return (uint)(mask & src);
           }
 
@@ -98,7 +98,7 @@ namespace Z0
           [MethodImpl(Inline), Disable]
           public static ulong disable(N4 n,ulong src, byte offset)
           {
-               var mask = ulong.MaxValue ^ ((ulong)uint4.MaxValue << offset);
+               var mask = ulong.MaxValue ^ ((ulong)LimitValues.Max4u << offset);
                return (ulong)(mask & src);
           }
 

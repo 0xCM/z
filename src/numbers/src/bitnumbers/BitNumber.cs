@@ -44,16 +44,6 @@ namespace Z0
                 return u64(src).ToBitString((byte)n.NatValue);
         }
 
-        public static bool parse(string src, out uint5 dst)
-        {
-            if(IsBinaryLiteral(src))
-                return DataParser.parse(src, out dst);
-            else
-            {
-                dst = default;
-                return false;
-            }
-        }
 
         static int parse(string src, Span<bit> dst)
         {

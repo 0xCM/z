@@ -23,24 +23,6 @@ namespace Z0
         public static bool parse(string src, out DataSize dst)
             => Sizes.parse(src, out dst);
 
-        public static bool parse(string src, out uint1 dst)
-            => uint1.parse(src, out dst);
-
-        public static bool parse(string src, out uint2 dst)
-            => uint2.parse(src, out dst);
-
-        public static bool parse(string src, out uint3 dst)
-            => uint3.parse(src, out dst);
-
-        public static bool parse(string src, out uint4 dst)
-            => uint4.parse(src, out dst);
-
-        public static bool parse(string src, out uint5 dst)
-            => uint5.parse(src, out dst);
-
-        public static bool parse(string src, out uint8b dst)
-            => uint8b.parse(src, out dst);
-
         public static bool parse(string src, out Hex4 dst)
             => HexParser.parse(src, out dst);
 
