@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     /// <summary>
     /// Defines an S-symbol value, of bit-width N, covered by a T-storage cell

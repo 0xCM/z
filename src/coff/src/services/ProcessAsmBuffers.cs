@@ -78,7 +78,7 @@ namespace Z0.Asm
             var bitstring = skip(parts,i++);
             dst.Bitstring = ApiNative.bitstring(dst.Encoded);
 
-            outcome += DataParser.parse(skip(parts,i++), out dst.OpUri);
+            outcome += ApiIdentity.parse(skip(parts,i++), out dst.OpUri);
             if(outcome.Fail)
                 return (false, string.Format(ErrorPattern, nameof(dst.OpUri), src.LineNumber));
 

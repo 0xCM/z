@@ -51,6 +51,7 @@
    <Import Project="$(MsBuildThisFileDirectory)src/dispatcher/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/digital/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/diagnostics/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/dynamic/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/events/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/emath/exports.props"/>

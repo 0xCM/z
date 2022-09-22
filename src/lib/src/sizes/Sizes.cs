@@ -32,8 +32,8 @@ namespace Z0
             var result = parts.Length == 2;
             if(result)
             {
-                result &= DataParser.parse(skip(parts,0), out uint p);
-                result &= DataParser.parse(skip(parts,1), out uint n);
+                result &= uint.TryParse(skip(parts,0), out uint p);
+                result &= uint.TryParse(skip(parts,1), out uint n);
                 dst = new DataSize(p,n);
             }
             return result;
@@ -196,7 +196,7 @@ namespace Z0
         [Parser]
         public static Outcome parse(string src, out ByteSize dst)
         {
-            if(NumericParser.parse<ulong>(text.remove(src,Chars.Comma), out var x))
+            if(NumericParser.parse<ulong>(text.remove(src, Chars.Comma), out var x))
             {
                 dst = x;
                 return true;
@@ -209,7 +209,7 @@ namespace Z0
         }
 
         [Parser]
-        public static Outcome parse(string src, out BitWidth dst)
+        public static bool parse(string src, out BitWidth dst)
         {
             if(NumericParser.parse<ulong>(src, out var x))
             {
@@ -224,7 +224,7 @@ namespace Z0
         }
 
         [Parser(typeof(ClrTypes.Integers))]
-        public static Outcome parse<T>(string src, out Size<T> dst)
+        public static bool parse<T>(string src, out Size<T> dst)
             where T : unmanaged
         {
             if(NumericParser.parse<ulong>(src, out var x))

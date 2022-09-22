@@ -60,7 +60,7 @@ namespace Z0
         public Index<SymInfo> LoadTokens(string name)
         {
             var src = ApiTargets().PrefixedTable<SymInfo>(tokens + "." +  name.ToLower());
-            using var reader = src.TableReader<SymInfo>(SymInfo.parse);
+            using var reader = src.TableReader<SymInfo>(Symbols.parse);
             var header = reader.Header.Split(Chars.Pipe);
             if(header.Length != SymInfo.FieldCount)
             {

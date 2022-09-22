@@ -48,7 +48,7 @@ namespace Z0
             DataParser.parse(skip(fields, i++), out dst.MemberRebase);
             DataParser.parse(skip(fields, i++), out dst.PartName);
             DataParser.parse(skip(fields, i++), out dst.HostName);
-            DataParser.parse(skip(fields, i++), out dst.OpUri);
+            ApiIdentity.parse(skip(fields, i++), out dst.OpUri);
             return true;
         }
  

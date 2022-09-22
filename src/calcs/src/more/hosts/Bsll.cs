@@ -33,7 +33,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public ref readonly SpanBlock128<T> Invoke(in SpanBlock128<T> a, [Imm] byte count, in SpanBlock128<T> dst)
-                => ref zip(a, count, dst, Calcs.vbsll<T>(n128));
+                => ref SpanBlocks.zip(a, count, dst, Calcs.vbsll<T>(n128));
         }
 
         [Closures(Integers), Bsll]
@@ -42,7 +42,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public ref readonly SpanBlock256<T> Invoke(in SpanBlock256<T> a, [Imm] byte count, in SpanBlock256<T> dst)
-                => ref zip(a, count, dst, Calcs.vbsll<T>(n256));
+                => ref SpanBlocks.zip(a, count, dst, Calcs.vbsll<T>(n256));
         }
     }
 }

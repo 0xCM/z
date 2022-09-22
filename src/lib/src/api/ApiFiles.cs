@@ -6,9 +6,6 @@ namespace Z0
 {
     public class ApiFiles
     {
-        // public static ApiPartFiles part(IApiPack src, PartId part)
-        //     => ApiPartFiles.create(src,part);
-            
         public static FileName filename(ApiHostUri host, FileExt ext)
             => FS.file(host.Id.Format(), ext);
 
@@ -52,6 +49,5 @@ namespace Z0
         [Op]
         public static FileName file(PartId part, string hostname, FileExt ext)
             => FS.file(text.concat(part.Format(), Chars.Dot, hostname), ext);
-
     }
 }

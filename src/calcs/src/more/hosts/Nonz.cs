@@ -53,7 +53,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public Span<bit> Invoke(in SpanBlock128<T> src, Span<bit> dst)
-                => map(src, dst, Calcs.vnonz<T>(w128));
+                => SpanBlocks.map(src, dst, Calcs.vnonz<T>(w128));
         }
 
         [Closures(AllNumeric), Nonz]
@@ -62,7 +62,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public Span<bit> Invoke(in SpanBlock256<T> src, Span<bit> dst)
-                => map(src, dst, Calcs.vnonz<T>(w256));
+                => SpanBlocks.map(src, dst, Calcs.vnonz<T>(w256));
         }
     }
 }

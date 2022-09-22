@@ -58,7 +58,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public ref readonly SpanBlock128<T> Invoke(in SpanBlock128<T> a, in SpanBlock128<T> c)
-                => ref map(a, c, Calcs.vnegate<T>(w128));
+                => ref SpanBlocks.map(a, c, Calcs.vnegate<T>(w128));
         }
 
         [Closures(AllNumeric), Negate]
@@ -67,7 +67,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public ref readonly SpanBlock256<T> Invoke(in SpanBlock256<T> a, in SpanBlock256<T> c)
-                => ref map(a, c, Calcs.vnegate<T>(w256));
+                => ref SpanBlocks.map(a, c, Calcs.vnegate<T>(w256));
         }
     }
 }

@@ -6,6 +6,26 @@ namespace Z0
 {
     public readonly record struct FileExt
     {
+        [MethodImpl(Inline), Op]
+        public static FileExt combine(FileExt x1, FileExt x2)
+            => x1 + x2;
+
+        [MethodImpl(Inline), Op]
+        public static FileExt ext(PathPart name)
+            => new FileExt(name);
+
+        [MethodImpl(Inline), Op]
+        public static FileExt ext(PathPart a, PathPart b)
+            => new FileExt(a,b);
+
+        [MethodImpl(Inline), Op]
+        public static FileExt ext(string a, string b)
+            => new FileExt(a, b);
+
+        [MethodImpl(Inline), Op]
+        public static FileExt ext(FileExt a, FileExt b)
+            => a + b;
+
         public PathPart Name {get;}
 
         public string Text

@@ -8,6 +8,41 @@ namespace Z0
 
     public readonly struct FileName : IFsEntry<FileName>
     {
+        [Op]
+        public static bool matches(FileName name, FileExt ext)
+            => name.Format().EndsWith(ext.Name, NoCase);
+
+        [MethodImpl(Inline), Op]
+        public static FileName file(PathPart name, FileExt ext)
+            => new FileName(name, ext);
+
+        [Op]
+        public static FileName file(PartId part, FileExt ext)
+            => file(part.Format(), ext);
+
+        [Op]
+        public static FileName file(PartId part, FileKind kind)
+            => file(part.Format(), kind.Ext());
+
+        [MethodImpl(Inline), Op]
+        public static FileName file(Identifier name, string type)
+            => new FileName(name.Content, FileExt.ext(type));
+
+        public static FileName file(string name, FileKind kind)
+            => new FileName(name, kind.Ext());
+
+        [Op]
+        public static FileName file(PathPart name, FileExt x1, FileExt x2)
+            => new FileName(name, FileExt.combine(x1,x2));
+
+        [MethodImpl(Inline), Op]
+        public static FileName file(string name)
+            => new FileName(name);
+
+        [MethodImpl(Inline), Op]
+        public static FileName file(@string name, string x)
+            => new FileName(name.Format(), FileExt.ext(x));
+
         public PathPart Name {get;}
 
         [MethodImpl(Inline)]
@@ -27,7 +62,7 @@ namespace Z0
         public FileExt FileExt
         {
             [MethodImpl(Inline)]
-            get => HasExtension ? FS.ext(Path.GetExtension(Name)) : FileExt.Empty;
+            get => HasExtension ? FileExt.ext(Path.GetExtension(Name)) : FileExt.Empty;
         }
 
         public FileExt Ext
@@ -54,22 +89,18 @@ namespace Z0
         public FileName WithExtension(FileExt ext)
             => this + ext;
 
-        public PartId Owner
-            => FS.part(this);
+        // public PartId Owner
+        //     => FS.part(this);
 
-        /// <summary>
-        /// Determines whether the name of a file is of the form {owner}.{*}
-        /// </summary>
-        /// <param name="host">The owner to test</param>
-        [MethodImpl(Inline)]
-        public bool IsOwner(PartId id)
-            => id == Owner;
+        // [MethodImpl(Inline)]
+        // public bool IsOwner(PartId id)
+        //     => id == Owner;
 
         public FileName ChangeExtension(FileExt ext)
-            => FS.file(Path.GetFileNameWithoutExtension(Name), ext);
+            => file(Path.GetFileNameWithoutExtension(Name), ext);
 
         public FileName ChangeExtension(FileKind kind)
-            => FS.file(Path.GetFileNameWithoutExtension(Name), kind);
+            => file(Path.GetFileNameWithoutExtension(Name), kind);
 
         /// <summary>
         /// Determines whether the filename, begins with a specified substring
@@ -89,7 +120,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public bool Is(FileExt ext)
-            => FS.matches(this, ext);
+            => matches(this, ext);
 
         public Hash32 Hash
         {
@@ -108,12 +139,12 @@ namespace Z0
 
         const string ExtPattern = "{0}.{1}";
 
-        /// <summary>
-        /// Converts this filename to a <see cref='FilePath'/>
-        /// </summary>
-        [MethodImpl(Inline)]
-        public FilePath ToPath()
-            => FS.path(Name);
+        // /// <summary>
+        // /// Converts this filename to a <see cref='FilePath'/>
+        // /// </summary>
+        // [MethodImpl(Inline)]
+        // public FilePath ToPath()
+        //     => new FilePath(Name);
 
         [MethodImpl(Inline)]
         public string Format()

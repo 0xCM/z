@@ -10,7 +10,12 @@ namespace Z0
     {
         [MethodImpl(Options), Op, Closures(Closure)]
         public static ref T unbox<T>(object src)
-            where T : unmanaged
-                => ref Unbox<T>(src);
+             where T : struct
+               => ref Unbox<T>(src);
+
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static ref T unbox<T>(Enum src)
+            where T : struct
+                => ref Unbox<T>(src);                
     }
 }

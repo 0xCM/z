@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
-
     public readonly struct SymPair<L,R>
         where L : unmanaged
         where R : unmanaged
@@ -31,6 +29,6 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator Paired<Sym<L>,Sym<R>>(SymPair<L,R> src)
-            => paired(src.Left, src.Right);
+            => Tuples.paired(src.Left, src.Right);
     }
 }

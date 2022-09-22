@@ -146,7 +146,7 @@ namespace Z0
                     return (false, AppMsg.ParseFailure.Format(nameof(dst.Data), fields[index-1]));
 
 
-                result = DataParser.parse(fields[index++], out dst.Uri);
+                result = ApiIdentity.parse(fields[index++], out dst.Uri);
                 if(result.Fail)
                     return (false, AppMsg.ParseFailure.Format(nameof(dst.Data), fields[index-1]));
 

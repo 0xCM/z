@@ -6,6 +6,7 @@ namespace Z0
 {
     partial class Sized
     {
+        
         [MethodImpl(Inline), Op]
         public static NativeSize native(BitWidth src)
         {

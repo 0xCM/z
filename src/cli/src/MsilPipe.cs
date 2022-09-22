@@ -208,7 +208,7 @@ namespace Z0
                 var i=0;
                 DataParser.parse(skip(parts,i++), out dst.Token);
                 DataParser.parse(skip(parts,i++), out dst.BaseAddress);
-                DataParser.parse(skip(parts,i++), out dst.Uri);
+                ApiIdentity.parse(skip(parts,i++), out dst.Uri);
                 DataParser.parse(skip(parts,i++), out dst.Encoded);
                 return true;
             }

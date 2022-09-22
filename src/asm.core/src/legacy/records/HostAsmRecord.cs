@@ -4,9 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Z0.Asm;
-
-    using static core;
+    using static sys;
 
     [Record(TableId), StructLayout(LayoutKind.Sequential)]
     public struct HostAsmRecord : IComparable<HostAsmRecord>
@@ -45,7 +43,7 @@ namespace Z0
             dst.OpCode = skip(cells, i++);
             dst.Bitstring = ApiNative.bitstring(dst.Encoded);
 
-            result = DataParser.parse(skip(cells, i++), out dst.OpUri);
+            result = ApiIdentity.parse(skip(cells, i++), out dst.OpUri);
             if(result.Fail)
                 return (false, AppMsg.UriParseFailure.Format(skip(cells,i-1)));
 

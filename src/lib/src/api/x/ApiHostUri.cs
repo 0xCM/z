@@ -4,11 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     partial class XApi
     {
         const NumericKind Closure = UnsignedInts;
+
         [Op]
         public static ApiHostUri ApiHostUri(this Type host)
         {
