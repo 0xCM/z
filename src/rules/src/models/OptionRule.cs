@@ -4,15 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct Rules
+    public class OptionRule : Optional<IRuleExpr>
     {
-        public class Optional : Optional<IRuleExpr>
+        public OptionRule(IRuleExpr src)
+            : base(src)
         {
-            public Optional(IRuleExpr src)
-                : base(src)
-            {
 
-            }
         }
-    }
+    }    
 }

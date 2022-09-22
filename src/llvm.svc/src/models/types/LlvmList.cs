@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.llvm
 {
-    using static core;
+    using static sys;
 
     public readonly struct LlvmList : IIndex<LlvmListItem>
     {

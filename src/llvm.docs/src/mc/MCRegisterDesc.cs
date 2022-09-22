@@ -8,7 +8,7 @@ namespace Z0.llvm
     /// Defined by a tabegen-produced array when invoked with the --gen-register-info action. Each instance describes a specific register
     /// </summary>
     /// <summary>
-    /// From https://github.com/llvm/llvm-project/blob/53196387c201fd082d62f58459adb03267811a4c/llvm/include/llvm/MC/MCRegisterInfo.h
+    /// From https://github.com/llvm/llvm-project/llvm/include/llvm/MC/MCRegisterInfo.h
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack=1)]
     public record struct MCRegisterDesc
@@ -53,9 +53,5 @@ namespace Z0.llvm
             RegUnits = units;
             RegUnitLaneMasks = masks;
         }
-
-        [MethodImpl(Inline)]
-        public static implicit operator MCRegisterDesc((uint name, uint subs, uint supers, uint subi, uint units, ushort masks) src)
-            => new MCRegisterDesc(src.name, src.subs, src.supers, src.subi, src.units, src.masks);
     }
 }

@@ -47,9 +47,9 @@ namespace Z0.llvm
         public void EmitList(LlvmList src, FilePath dst)
             => TableEmit(src.Items, dst);
 
-        public void Emit(RegIdentifiers src)
+        public void Emit(LlvmRegIdentifiers src)
         {
-            var dst = LlvmPaths.DbTable(RegIdentifier.TableId);
+            var dst = LlvmPaths.DbTable(LlvmRegIdentifier.TableId);
             var list = new LlvmList(dst, src.Values.Select(x => new LlvmListItem(x.Id, x.Name.Format())));
             EmitList(list, dst);
         }
@@ -89,7 +89,7 @@ namespace Z0.llvm
 
         Index<RecordField> EmitFields(Index<RecordField> src, string id)
         {
-            TableEmit<RecordField>(src, RecordField.RenderWidths, LlvmPaths.DbTable(id));
+            TableEmit<RecordField>(src, LlvmPaths.DbTable(id));
             return src;
         }
     }

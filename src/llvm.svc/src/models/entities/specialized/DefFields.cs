@@ -81,7 +81,7 @@ namespace Z0.llvm
         {
             dag<IExpr> parse()
             {
-                var result = LlvmTypes.parse(this[attrib], out var _dst);
+                var result = dag.parse(this[attrib], out var _dst);
                 if(result)
                     return _dst;
                 else

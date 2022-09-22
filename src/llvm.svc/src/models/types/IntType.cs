@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.llvm
 {
-    using static core;
+    using static sys;
 
     /// <summary>
     /// The integer type is a very simple type that simply specifies an arbitrary bit width for the integer type desired.

@@ -13,6 +13,9 @@ public enum PartId : byte
     [Symbol("root")]
     Root,
 
+    [Symbol("bitvectors")]
+    BitVectors,
+    
     [Symbol("asm.operands")]
     AsmOperands,
 

@@ -303,12 +303,12 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static uint bits(uint24 src, Span<bit> dst)
         {
-            var input = @readonly(recover<bit>((((uint)src).ToBitVector32().ToBitString()[0,23]).BitSeq));
+            var input = @readonly((bytes((uint)src).ToBitString()[0,23]).BitSeq);
+            //var input = @readonly(recover<bit>((((uint)src).ToBitVector32().ToBitString()[0,23]).BitSeq));
             seek64(dst,0) = skip64(input,0);
             seek64(dst,1) = skip64(input,1);
             seek64(dst,2) = skip64(input,2);
             return 24;
         }
-
     }
 }

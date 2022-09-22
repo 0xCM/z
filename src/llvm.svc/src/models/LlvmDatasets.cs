@@ -46,6 +46,5 @@ namespace Z0.llvm
         public const string X86DefFields = "X86.records.defs.fields";
 
         public const string X86Classes = "X86.records.classes";
-
     }
 }

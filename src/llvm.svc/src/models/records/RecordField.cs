@@ -43,7 +43,5 @@ namespace Z0.llvm
         }
 
         public static RecordField Empty => new RecordField(Identifier.Empty, EmptyString, EmptyString, EmptyString);
-
-        public static ReadOnlySpan<byte> RenderWidths => new byte[]{64,32,32,1};
     }
 }

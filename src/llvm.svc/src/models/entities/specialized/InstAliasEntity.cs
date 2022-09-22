@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0.llvm
 {
-    using Asm;
-
     using static LlvmNames;
 
     /// <summary>

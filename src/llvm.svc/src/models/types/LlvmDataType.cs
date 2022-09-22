@@ -2,20 +2,18 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.llvm
+namespace Z0
 {
-    using static core;
-
     [StructLayout(LayoutKind.Sequential)]
     public readonly partial struct LlvmDataType : IComparable<LlvmDataType>, IEquatable<LlvmDataType>
     {
-        public LlvmTypeKind Kind {get;}
+        public readonly LlvmTypeKind Kind;
 
-        public Identifier Name {get;}
+        public readonly Identifier Name;
 
-        public Index<string> Parameters {get;}
+        public readonly Index<string> Parameters;
 
-        public string Spec {get;}
+        public readonly string Spec;
 
         [MethodImpl(Inline)]
         public LlvmDataType(Identifier name, LlvmTypeKind kind, string[] parameters)
@@ -24,7 +22,7 @@ namespace Z0.llvm
             Kind = kind;
             Parameters = parameters;
             Spec = EmptyString;
-            Spec = LlvmTypes.format(this);
+            Spec = format(this);
         }
 
         public byte Arity
@@ -91,5 +89,26 @@ namespace Z0.llvm
             => Format();
 
         public static LlvmDataType Empty => new LlvmDataType(EmptyString,0,sys.empty<string>());
+
+        static string format(in LlvmDataType src)
+        {
+            var arity = src.Arity;
+            if(arity == 0)
+                return src.Name;
+
+            var dst = text.buffer();
+            dst.AppendFormat("{0}<", src.Name);
+
+            for(var i=0; i<arity; i++)
+            {
+                dst.Append(src.Parameters[i]);
+                if(i!= arity - 1)
+                    dst.Append(Chars.Comma);
+            }
+
+            dst.Append(">");
+
+            return dst.Emit();
+        }
    }
 }

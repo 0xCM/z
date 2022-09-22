@@ -56,8 +56,8 @@ namespace Z0.llvm
                 dst.Mnemonic = skip(values,j++);
                 dst.VarCode = new AsmVariationCode(skip(values,j++));
                 DataParser.parse(skip(values,j++), out dst.FormatPattern);
-                LlvmTypes.parse(skip(values,j++), out dst.InOperandList);
-                LlvmTypes.parse(skip(values,j++), out dst.OutOperandList);
+                dag.parse(skip(values,j++), out dst.InOperandList);
+                dag.parse(skip(values,j++), out dst.OutOperandList);
             }
             return records;
         }

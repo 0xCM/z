@@ -6,17 +6,16 @@ namespace Z0.llvm
 {
     partial class LlvmDataCalcs
     {
-        public RegIdentifiers CalcRegIdentifiers(LlvmTargetName target)
+        public LlvmRegIdentifiers CalcRegIdentifiers(LlvmTargetName target)
         {
             const string BeginRegsMarker = "NoRegister,";
             var src = LlvmPaths.TableGenHeaders(target).Where(x => x.FileName == FS.file($"{target}.Regs", FileKind.H));
             if(src.Count != 1)
             {
                 Error("Path not found");
-                return llvm.RegIdentifiers.Empty;
+                return LlvmRegIdentifiers.Empty;
             }
-            return LlvmIdentifiers.discover<ushort>(src[0],BeginRegsMarker).Map(x => new RegIdentifier(x.Key, x.Value));
+            return LlvmIdentifiers.discover<ushort>(src[0],BeginRegsMarker).Map(x => new LlvmRegIdentifier(x.Key, x.Value));
         }
-
     }
 }

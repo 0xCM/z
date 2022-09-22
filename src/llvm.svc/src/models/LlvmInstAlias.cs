@@ -2,10 +2,8 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.llvm
+namespace Z0
 {
-    using Asm;
-
     [Record(TableId)]
     public struct LlvmInstAlias : IComparable<LlvmInstAlias>
     {

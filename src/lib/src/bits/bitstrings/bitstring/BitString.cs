@@ -16,11 +16,11 @@ namespace Z0
         internal byte[] Data;
 
         [MethodImpl(Inline)]
-        internal BitString(byte[] src)
+        public BitString(byte[] src)
             => Data = src;
 
         [MethodImpl(Inline)]
-        internal BitString(ReadOnlySpan<byte> src)
+        public BitString(ReadOnlySpan<byte> src)
         {
             Data = src.ToArray();
         }

@@ -15,5 +15,4 @@ namespace Z0
         public static implicit operator Productions<S,T>(Dictionary<S,Index<T>> src)
             => new Productions<S,T>(src);
     }
-
 }

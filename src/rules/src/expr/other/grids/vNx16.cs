@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Expr
 {
-    using static sys;
-
     /// <summary>
     /// Represents a finite sequence of 16-bit values
     /// </summary>

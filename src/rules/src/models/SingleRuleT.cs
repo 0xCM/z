@@ -18,6 +18,5 @@ namespace Z0
         [MethodImpl(Inline)]
         public static implicit operator SingleRule<T>(T src)
             => new SingleRule<T>(src);
-    }
-    
+    }   
 }

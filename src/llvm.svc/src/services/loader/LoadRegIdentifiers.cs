@@ -8,13 +8,13 @@ namespace Z0.llvm
 
     partial class LlvmTableLoader
     {
-        public RegIdentifiers LoadRegIdentifiers()
+        public LlvmRegIdentifiers LoadRegIdentifiers()
         {
             const string TableId = "llvm.asm.RegId";
             var items = LoadList(LlvmPaths.DbTable(TableId));
-            var dst = list<RegIdentifier>();
+            var dst = list<LlvmRegIdentifier>();
             foreach(var id in items)
-                dst.Add(new RegIdentifier((ushort)id.Key, id.Value.Trim()));
+                dst.Add(new LlvmRegIdentifier((ushort)id.Key, id.Value.Trim()));
             return dst.Array().Sort();
         }
     }

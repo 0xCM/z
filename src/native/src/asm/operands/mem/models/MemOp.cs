@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using static core;
-
     [StructLayout(LayoutKind.Sequential, Pack=1)]
     public readonly struct MemOp : IMemOp
     {

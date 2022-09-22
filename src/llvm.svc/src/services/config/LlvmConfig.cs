@@ -6,7 +6,6 @@ namespace Z0
 {
     using static sys;
 
-    using llvm;
     using K = LlvmConfigKind;
 
     public sealed class LlvmConfigSvc : ToolService<LlvmConfigSvc>

@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0.llvm
 {
-    using static Root;
-
     /// <summary>
     /// Represents a table-gen defined instruction
     /// </summary>

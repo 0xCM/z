@@ -14,6 +14,7 @@
    <Import Project="$(MsBuildThisFileDirectory)src/bit/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/bit.render/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/bitmasks/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/bitvectors/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/blocks/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/bits/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/builds/exports.props"/>

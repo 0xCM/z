@@ -9,8 +9,8 @@ namespace Z0
         public T Source {get;}
 
         public Index<T> Target {get;}
+        
         public override string Format()
             => string.Format("{0} -> {1}", Source, Target.Delimit(Chars.Comma, fence:Fenced.Paren).Format());
-    }
-    
+    }   
 }

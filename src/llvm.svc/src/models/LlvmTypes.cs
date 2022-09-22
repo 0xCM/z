@@ -32,27 +32,6 @@ namespace Z0.llvm
                 return parse(0,src);
         }
 
-        public static string format(in LlvmDataType src)
-        {
-            var arity = src.Arity;
-            if(arity == 0)
-                return src.Name;
-
-            var dst = text.buffer();
-            dst.AppendFormat("{0}<", src.Name);
-
-            for(var i=0; i<arity; i++)
-            {
-                dst.Append(src.Parameters[i]);
-                if(i!= arity - 1)
-                    dst.Append(Chars.Comma);
-            }
-
-            dst.Append(">");
-
-            return dst.Emit();
-        }
-
         static LlvmDataType parse(LlvmTypeKind kind, string src)
         {
             var i = text.index(src,Chars.Lt);
@@ -89,48 +68,9 @@ namespace Z0.llvm
                 return src.Right.Format();
         }
 
-        public static dag<L,R> dag<L,R>(L left, R right)
-            where L : IExpr
-            where R : IExpr
-                => new dag<L,R>(left,right);
-
         public static Outcome parse(string src, string type, out list<string> dst)
         {
             dst = new list<string>(text.trim(text.split(Fenced.unfence(src, Fenced.Bracketed), Chars.Comma)));
-            return true;
-        }
-
-        public static Outcome parse(string src, out dag<IExpr> dag)
-        {
-            dag = new dag<IExpr>(@string.Empty, @string.Empty);
-            if(src.Contains("->"))
-            {
-                var parts = src.SplitClean("->").Select(x => x.Trim());
-                var count = parts.Length;
-                for(var i=1; i<count; i++)
-                {
-                    if(i==1)
-                        dag = new dag<IExpr>((@string)skip(parts,i-1), (@string)skip(parts,i));
-                    else
-                        dag = new dag<IExpr>(dag, (@string)skip(parts,i));
-                }
-            }
-            else if(src.Contains(","))
-            {
-                var parts = src.SplitClean(",").Select(x => x.Trim());
-                var count = parts.Length;
-                for(var i=1; i<count; i++)
-                {
-                    if(i==1)
-                        dag = new dag<IExpr>((@string)skip(parts,i-1), (@string)skip(parts,i));
-                    else
-                        dag = new dag<IExpr>(dag, (@string)skip(parts,i));
-                }
-            }
-            else
-            {
-                dag = new dag<IExpr>((@string)src, @string.Empty);
-            }
             return true;
         }
     }

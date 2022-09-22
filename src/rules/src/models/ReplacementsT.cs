@@ -23,6 +23,5 @@ namespace Z0
         [MethodImpl(Inline)]
         public static implicit operator Replacements<T>(ReplaceRule<T>[] src)
             => new Replacements<T>(src);
-    }
-    
+    }   
 }
