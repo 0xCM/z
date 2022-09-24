@@ -6,12 +6,12 @@ namespace Z0
 {
     partial class EcmaReader
     {
-        [MethodImpl(Inline), Op]
-        public BinaryCode ReadSig(FieldDefinition src)
-            => ReadBlob(src.Signature);
-
-        [MethodImpl(Inline), Op]
-        public BinaryCode ReadSig(MethodDefinition src)
-            => ReadBlob(src.Signature);
+        [Op]
+        public CliGuidHeap ReadGuidHeap()
+        {
+            var offset = HeapOffset(MetadataTokens.GuidHandle(0));
+            var @base = Segment.BaseAddress + offset;
+            return new CliGuidHeap(@base, HeapSize(HeapIndex.Guid));
+        }
     }
 }

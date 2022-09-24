@@ -33,6 +33,5 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public TypeDefinition Read(TypeDefinitionHandle src)
             => MD.GetTypeDefinition(src);
-
     }
 }

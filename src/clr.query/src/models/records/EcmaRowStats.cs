@@ -7,7 +7,7 @@ namespace Z0
     [Record(TableId), StructLayout(LayoutKind.Sequential)]
     public struct EcmaRowStats : IComparable<EcmaRowStats>
     {
-        const string TableId = "cli.stats";
+        const string TableId = "ecma.rowstats";
 
         [Render(48)]
         public Label AssemblyName;

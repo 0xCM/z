@@ -5,9 +5,9 @@
 namespace Z0
 {
     [Record(TableId), StructLayout(LayoutKind.Sequential)]
-    public struct CliMemberField
+    public struct EcmaField
     {
-        const string TableId = "cli.fields";
+        const string TableId = "ecma.fields";
 
         [Render(10)]
         public CliToken Token;

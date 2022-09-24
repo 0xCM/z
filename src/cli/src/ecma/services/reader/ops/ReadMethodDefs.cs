@@ -60,7 +60,7 @@ namespace Z0
                 info.Attributes = row.Attributes;
                 info.ImplAttributes = row.ImplAttributes;
                 info.Rva = row.Rva;
-                info.CliSig = Read(row.SigKey);
+                info.CliSig = ReadBlob(row.SigKey);
                 info.Name = Read(row.NameKey);
             }
             return dst;

@@ -279,7 +279,7 @@ namespace Z0
         }
 
         [Op]
-        static ApiMember[] generic(JittedMethod src, WfEmit emitter)
+        static ApiMember[] generic(JittedMethod src, IWfChannel channel)
         {
             var diviner = MultiDiviner.Service;
             var method = src.Method;
@@ -299,12 +299,12 @@ namespace Z0
             }
             catch(ArgumentException e)
             {
-                emitter.Warn(string.Format("{0}: Closure creation failed for {1}/{2}", e.GetType().Name, method.DeclaringType.DisplayName(), method.DisplayName()));
+                channel.Warn(string.Format("{0}: Closure creation failed for {1}/{2}", e.GetType().Name, method.DeclaringType.DisplayName(), method.DisplayName()));
                 return sys.empty<ApiMember>();
             }
             catch(Exception e)
             {
-                emitter.Error(e);
+                channel.Error(e);
             }
             return buffer;
         }

@@ -21,6 +21,5 @@ namespace Z0
                 seek(dst,i) = (uint)MD.GetTableRowCount(indices[i].Key);
             return dst;
         }
-
     }
 }

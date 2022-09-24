@@ -11,32 +11,16 @@ namespace Z0
             => MD.GetHeapSize(index);
 
         [Op]
-        public CliBlobHeap BlobHeap()
-        {
-            var offset = HeapOffset(MetadataTokens.BlobHandle(0));
-            var @base = Segment.BaseAddress + offset;
-            return new CliBlobHeap(@base, HeapSize(HeapIndex.Blob));
-        }
-
-        [Op]
-        public CliGuidHeap GuidHeap()
-        {
-            var offset = HeapOffset(MetadataTokens.GuidHandle(0));
-            var @base = Segment.BaseAddress + offset;
-            return new CliGuidHeap(@base, HeapSize(HeapIndex.Guid));
-        }
-
-        [Op]
-        public CliStringHeap StringHeap(CliStringKind kind)
+        public CliStringHeap ReadStringHeap(CliStringKind kind)
             => kind switch
             {
-                CliStringKind.User => UserStringHeap(),
-                CliStringKind.System => SystemStringHeap(),
+                CliStringKind.User => ReadUserStringHeap(),
+                CliStringKind.System => ReadSystemStringHeap(),
                 _ => CliStringHeap.Empty
             };
 
         [Op]
-        public CliStringHeap UserStringHeap()
+        public CliStringHeap ReadUserStringHeap()
         {
             var offset = HeapOffset(MetadataTokens.UserStringHandle(0));
             var @base = Segment.BaseAddress + offset;
@@ -44,7 +28,7 @@ namespace Z0
         }
 
         [Op]
-        public CliStringHeap SystemStringHeap()
+        public CliStringHeap ReadSystemStringHeap()
         {
             var offset = HeapOffset(MetadataTokens.StringHandle(0));
             var @base = Segment.BaseAddress + offset;

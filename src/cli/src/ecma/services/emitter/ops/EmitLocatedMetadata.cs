@@ -8,6 +8,18 @@ namespace Z0
 
     partial class EcmaEmitter
     {
+        public void EmitLocatedMetadata(ReadOnlySeq<Assembly> src, IDbArchive dst, uint bpl = 64)
+        {
+            for(var i=0; i<src.Count; i++)
+            {
+                ref readonly var a = ref src[i];
+                EmitLocatedMetadata(a, bpl, dst.Path(a.GetSimpleName(), FileKind.LocatedHex));
+            }
+        }
+
+        public void EmitLocatedMetadata(IApiPack dst, uint bpl = 64)
+            => iter(ApiMd.Parts, c => EmitLocatedMetadata(c, bpl, dst.Metadata(EcmaSections.ApiHex).Path(c.GetSimpleName(), FileKind.LocatedHex)), true);
+
         public void EmitLocatedMetadata(Assembly src, uint bpl, FilePath dst)
         {
             try
@@ -21,8 +33,5 @@ namespace Z0
                 Error(e);
             }
         }
-
-        public void EmitLocatedMetadata(IApiPack dst, uint bpl = 64)
-            => iter(ApiMd.Parts, c => EmitLocatedMetadata(c, bpl, dst.Metadata(EcmaSections.ApiHex).Path(c.GetSimpleName(), FileKind.LocatedHex)), true);
     }
 }

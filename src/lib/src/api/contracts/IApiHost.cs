@@ -9,6 +9,9 @@ namespace Z0
     {
         Type HostType {get;}
 
+        Assembly Assembly
+            => HostType.Assembly;
+            
         PartName PartName 
             => HostType.Assembly.PartName();
 

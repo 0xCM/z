@@ -20,11 +20,15 @@ namespace Z0
         public static FolderName folder(PartId part)
             => FS.folder(part.Format());
 
-         [Op]
+        [Op]
         public static FileName hostfile(ApiHostUri uri, FileExt ext)
             => FS.file(string.Format("{0}.{1}", uri.Part.Format(), uri.HostName), ext);
 
-         /// <summary>
+        [Op]
+        public static FileName hostfile(ApiHostUri uri, FileKind ext)
+            => FS.file(string.Format("{0}.{1}", uri.Part.Format(), uri.HostName), ext);
+
+        /// <summary>
         /// Determines whether the name of a file is of the form {owner}.{host}.{*}
         /// </summary>
         /// <param name="host">The owner to test</param>

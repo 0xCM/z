@@ -8,12 +8,12 @@ namespace Z0
 
     partial class EcmaReader
     {
-        public ReadOnlySpan<CliMemberField> ReadFieldInfo()
+        public ReadOnlySpan<EcmaField> ReadFields()
         {
             var reader = MD;
             var handles = reader.FieldDefinitions.ToReadOnlySpan();
             var count = handles.Length;
-            var dst = span<CliMemberField>(count);
+            var dst = span<EcmaField>(count);
             for(var i=0u; i<count; i++)
             {
                 ref readonly var handle = ref skip(handles,i);

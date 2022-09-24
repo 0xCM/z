@@ -30,12 +30,12 @@ namespace Z0
             try
             {
                 var name = src.GetSimpleName();
-                var path = dst.Metadata(EcmaSections.MemberFields).PrefixedTable<CliMemberField>(name);
-                var flow = EmittingTable<CliMemberField>(path);
+                var path = dst.Metadata(EcmaSections.MemberFields).PrefixedTable<EcmaField>(name);
+                var flow = EmittingTable<EcmaField>(path);
                 var reader = EcmaReader.create(src);
-                var fields = reader.ReadFieldInfo();
+                var fields = reader.ReadFields();
                 var count = (uint)fields.Length;
-                var formatter = Tables.formatter<CliMemberField>();
+                var formatter = Tables.formatter<EcmaField>();
                 using var writer = path.Writer();
                 writer.WriteLine(formatter.FormatHeader());
                 foreach(var item in fields)
@@ -73,7 +73,7 @@ namespace Z0
                     info.Token = Clr.token(handle);
                     info.Component = name;
                     info.Attributes = row.Attributes;
-                    info.CliSig = reader.Read(row.Sig);
+                    info.CliSig = reader.ReadBlob(row.Sig);
                     info.Name = reader.Read(row.Name);
                     writer.WriteLine(formatter.Format(info));
                 }

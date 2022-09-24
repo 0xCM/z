@@ -65,10 +65,6 @@ namespace Z0
             => MD.GetInterfaceImplementation(src);
 
         [MethodImpl(Inline), Op]
-        public BinaryCode Read(BlobHandle src)
-            => MD.GetBlobBytes(src);
-
-        [MethodImpl(Inline), Op]
         public string Read(UserStringHandle handle)
             => MD.GetUserString(handle);
 

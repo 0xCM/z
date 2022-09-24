@@ -5,10 +5,11 @@
 namespace Z0
 {
     using static sys;
+    using System.Linq;
 
     class EcmaCmd : AppCmdService<EcmaCmd>
     {
-        Ecma Cli => Wf.Ecma();
+        Ecma Ecma => Wf.Ecma();
 
         EcmaEmitter EcmaEmitter => Wf.EcmaEmitter();
 
@@ -35,11 +36,11 @@ namespace Z0
 
         [CmdOp("ecma/emit/hex")]
         void EmitApiHex()
-            => EcmaEmitter.EmitLocatedMetadata(Dst);
+            => EcmaEmitter.EmitLocatedMetadata(ModuleArchives.parts(), AppDb.ApiTargets("ecma/hex"), 64);
 
         [CmdOp("ecma/emit/refs")]
         void EmitMemberRefs()
-            => EcmaEmitter.EmitRefs(AppDb.ApiTargets("ecma/refs"));
+            => EcmaEmitter.EmitRefs(AppDb.ApiTargets("ecma"));
 
         [CmdOp("ecma/emit/strings")]
         void EmitStrings()
@@ -47,19 +48,24 @@ namespace Z0
 
         [CmdOp("ecma/emit/stats")]
         void EmitStats()
-            => EcmaEmitter.EmitRowStats(ApiMd.Parts, AppDb.ApiTargets().Table<EcmaRowStats>());
+            => EcmaEmitter.EmitRowStats(ApiMd.Parts, AppDb.ApiTargets("ecma").Table<EcmaRowStats>());
 
         [CmdOp("ecma/emit/blobs")]
         void EmitBlobs()
-            => EcmaEmitter.EmitBlobs(Dst);
+            => EcmaEmitter.EmitBlobs(ApiMd.Parts, AppDb.ApiTargets("ecma/blobs"));
 
         [CmdOp("ecma/emit/msil")]
         void EmitMsil()
-            => Cli.EmitIl(Dst);
+        {
+            var src = ApiMd.ApiHosts.GroupBy(x => x.Assembly).Map(x => (x.Key,x.Array())).ToDictionary();
+            Ecma.EmitMsil(src, AppDb.ApiTargets("ecma/msil"));
+        }
 
-        [CmdOp("ecma/emit/ildat")]
-        void EmitIlDat()
-            => EcmaEmitter.EmitIlDat(Dst);
+        [CmdOp("ecma/emit/msildat")]
+        void EmitMsilData()
+        {
+            EcmaEmitter.EmitMsilMetadata(ApiMd.Parts, AppDb.ApiTargets("ecma/msil.dat"));
+        }
 
         // [CmdOp("ecma/emit/fields")]
         // void EmitFields()

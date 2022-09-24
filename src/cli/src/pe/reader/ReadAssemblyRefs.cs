@@ -32,7 +32,7 @@ namespace Z0
             dst.SourceVersion = dst.Source.Version;
             dst.Target = src.GetAssemblyName();
             dst.TargetVersion = dst.Target.Version;
-            dst.Token = CliReader().Read(src.PublicKeyOrToken);
+            dst.Token = CliReader().ReadBlob(src.PublicKeyOrToken);
             return ref dst;
         }
     }

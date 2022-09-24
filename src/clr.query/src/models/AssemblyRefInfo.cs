@@ -10,18 +10,18 @@ namespace Z0
     [StructLayout(StructLayout), Record(TableId)]
     public struct AssemblyRefInfo : IComparable<AssemblyRefInfo>
     {
-        const string TableId = "clr.assembly.refs";
+        const string TableId = "assembly.refs";
 
         [Render(48)]
         public ClrAssemblyName Source;
 
-        [Render(12)]
+        [Render(18)]
         public AssemblyVersion SourceVersion;
 
         [Render(48)]
         public ClrAssemblyName Target;
 
-        [Render(12)]
+        [Render(18)]
         public AssemblyVersion TargetVersion;
 
         [Render(1)]

@@ -17,10 +17,10 @@ namespace Z0
         public void EmitIl(IApiPack dst)
             => EmitMsil(ApiMd.ApiHosts, dst);
 
-        public void EmitIl(IApiCatalog src, IApiPack dst)
-            => EmitMsil(src.PartHosts(), dst);
-
         MsilSvc MsilSvc => Wf.MsilSvc();
+
+        FilePath MsilPath(ApiHostUri src, IDbArchive dst)
+            => dst.Path(ApiFiles.hostfile(src, FileKind.Il));
 
         public ReadOnlySeq<AssemblyRefInfo> ReadAssemblyRefs()
         {
@@ -54,14 +54,14 @@ namespace Z0
             }
         }
 
-        public void EmitMsil(ReadOnlySpan<IApiHost> src, IApiPack dst)
+        public void EmitMsil(ReadOnlySeq<IApiHost> src, IApiPack dst)
         {
             var buffer = text.buffer();
             var k = 0u;
             var emitted = cdict<ApiHostUri,FilePath>();
             for(var i=0; i<src.Length; i++)
             {
-                ref readonly var host = ref skip(src, i);
+                ref readonly var host = ref src[i];
                 var members = ClrJit.members(host, Emitter);
                 var count = members.Length;
                 if(members.Count == 0)
@@ -77,6 +77,33 @@ namespace Z0
                 FileEmit(buffer.Emit(), members.Count, path, TextEncodingKind.Unicode);
                 emitted[host.HostUri] = path;
             }
+        }
+
+        public void EmitMsil(IReadOnlyDictionary<Assembly,IApiHost[]> src, IDbArchive dst)
+        {
+            dst.Delete();
+            var k = 0u;
+            var emitted = cdict<ApiHostUri,FilePath>();
+            
+            iter(src, part => {
+                
+                var hosts = bag<IApiHost>();
+                iter(part.Value, host => {
+                    var members = ClrJit.members(host, Emitter);
+                    var buffer = text.buffer();
+
+                    for(var j=0; j<members.Count; j++)
+                        MsilSvc.RenderCode(members[j].Msil, buffer);
+
+                    if(members.Count != 0)
+                    {
+                        var path = MsilPath(host.HostUri, dst);
+                        FileEmit(buffer.Emit(), members.Count, path, TextEncodingKind.Unicode);
+                        emitted.TryAdd(host.HostUri, path);
+                    }
+                });
+
+            }, true);
         }
 
         public bool Reader(Assembly src, out EcmaReader dst)
@@ -291,7 +318,7 @@ namespace Z0
             {
                 ref readonly var component = ref skip(src,i);
                 var reader = EcmaReader.create(component);
-                seek(dst,i) = reader.BlobHeap();
+                seek(dst,i) = reader.ReadBlobHeap();
             }
             return buffer;
         }
@@ -305,7 +332,7 @@ namespace Z0
             {
                 ref readonly var component = ref skip(src,i);
                 var reader = EcmaReader.create(component);
-                seek(dst,i) = reader.GuidHeap();
+                seek(dst,i) = reader.ReadGuidHeap();
             }
             return buffer;
         }
@@ -320,8 +347,8 @@ namespace Z0
             {
                 ref readonly var component = ref skip(src,i);
                 var reader = EcmaReader.create(component);
-                seek(dst,j++) = reader.StringHeap(CliStringKind.System);
-                seek(dst,j++) = reader.StringHeap(CliStringKind.User);
+                seek(dst,j++) = reader.ReadStringHeap(CliStringKind.System);
+                seek(dst,j++) = reader.ReadStringHeap(CliStringKind.User);
             }
             return buffer;
         }
