@@ -85,8 +85,8 @@ namespace Z0
             }
         }
 
-        CliReader CliReader()
-            => Z0.CliReader.create(MetadataBlock);
+        EcmaReader CliReader()
+            => Z0.EcmaReader.create(MetadataBlock);
 
         public PeReader(FilePath src)
         {

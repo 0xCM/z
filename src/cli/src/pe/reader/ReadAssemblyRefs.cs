@@ -12,7 +12,7 @@ namespace Z0
         public ReadOnlySeq<AssemblyRefInfo> ReadAssemblyRefs()
         {
             var src = CliReader().AssemblyRefHandles();
-            var dst = sys.alloc<AssemblyRefInfo>(src.Length);
+            var dst = alloc<AssemblyRefInfo>(src.Length);
             ReadAssemblyRefs(src, dst);
             return dst;
         }

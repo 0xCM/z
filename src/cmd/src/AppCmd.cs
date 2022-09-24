@@ -17,7 +17,7 @@ namespace Z0
                 wf.AsmChecks(),
                 wf.CaptureCmd(),
                 wf.AsmDbCmd(),
-                wf.CliCmd(),
+                wf.EcmaCmd(),
                 wf.DbCmd(),
                 wf.LlvmCmd(),
                 wf.RoslynCmd(),

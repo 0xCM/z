@@ -29,22 +29,12 @@ namespace Z0
         {
             var files = src.Files().Where(x => x.FileName == FS.file("exports", FileKind.Props));
             return LoadProjects(files);
-            // var count = files.Count;
-            // var buffer = alloc<ProjectSpec>(count);
-            // for(var i=0; i<count; i++)
-            //     seek(buffer,i) = MsBuild.LoadProject(files[i]);
-            // return buffer;
         }
 
         public ReadOnlySeq<ProjectSpec> Imports(IDbArchive src)
         {
             var files = src.Files().Where(x => x.FileName == FS.file("imports", FileKind.Props));
             return LoadProjects(files);
-            // var count = files.Count;
-            // var buffer = alloc<ProjectSpec>(count);
-            // for(var i=0; i<count; i++)
-            //     seek(buffer,i) = MsBuild.LoadProject(files[i]);
-            // return buffer;
         }
 
         public void EmitCfg(ReadOnlySeq<ProjectSpec> src, string kind, IDbArchive dst)

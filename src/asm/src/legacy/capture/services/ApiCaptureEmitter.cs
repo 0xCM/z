@@ -10,7 +10,7 @@ namespace Z0
 
     public class ApiCaptureEmitter : AppService<ApiCaptureEmitter>
     {
-        MsilPipe IlPipe => Wf.MsilSvc();
+        MsilSvc IlPipe => Wf.MsilSvc();
 
         ApiCodeSvc ApiCode => Wf.ApiCode();
 

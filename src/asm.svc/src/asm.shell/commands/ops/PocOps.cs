@@ -366,7 +366,7 @@ namespace Z0.Asm
         void DescribeHeaps()
         {
             var src = Wf.ApiCatalog.Components.View;
-            var heaps = Cli.strings(src).View;
+            var heaps = Ecma.strings(src).View;
             var count = heaps.Length;
             for(var i=0; i<count; i++)
             {
@@ -400,11 +400,11 @@ namespace Z0.Asm
         }
 
 
-        Cli Cli => Wf.Cli();
+        Ecma Cli => Wf.Ecma();
 
         void EmitDependencyGraph()
         {
-            var svc = Wf.CliEmitter();
+            var svc = Wf.EcmaEmitter();
             var refs = Cli.ReadAssemblyRefs();
             var dst = AppDb.Logs().Path("dependencies", FileKind.Dot);
             var flow = Wf.EmittingFile(dst);

@@ -76,13 +76,13 @@ namespace Z0
 
         ApiCodeSvc ApiCodeSvc => Wf.ApiCode();
 
-        CliEmitter CliEmitter => Wf.CliEmitter();
+        EcmaEmitter CliEmitter => Wf.EcmaEmitter();
 
         ApiPacks ApiPacks => Wf.ApiPacks();
 
         ProcessMemory Regions => Wf.ProcessMemory();
 
-        Cli Cli => Wf.Cli();
+        Ecma Cli => Wf.Ecma();
 
         ExecToken EmitMemberIndex(ReadOnlySeq<ApiEncoded> src, IApiPack dst)
         {

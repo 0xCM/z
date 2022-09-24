@@ -9,7 +9,7 @@ namespace Z0
     using I = System.Reflection.Metadata.Ecma335.TableIndex;
 
     [Free, ApiHost]
-    public partial class PeTables : IDisposable
+    public class PeTables : IDisposable
     {
         [MethodImpl(Inline)]
         internal static ReadOnlySpan<R> empty<R>()

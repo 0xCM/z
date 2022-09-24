@@ -12,20 +12,11 @@ namespace Z0
     public record struct bits<T>
         where T : unmanaged
     {
-        public static bool parse<N>(string src, N n, out bits<T> dst)
-            where N : unmanaged, ITypeNat
-                => BitParser.parse(src, n, out dst);
-
-        //public const string Identifier = "bits<{0}>";
-
         const char DefaultSep = Chars.Comma;
 
         public T Packed;
 
         public uint N;
-
-        // public string TypeName
-        //     => string.Format(Identifier, N);
 
         [MethodImpl(Inline)]
         public bits(uint n, T src)

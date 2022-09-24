@@ -12,16 +12,16 @@ namespace Z0
     {
         sealed class Svc : AppServices<Svc>
         {
-            public CliEmitter CliEmitter(IWfRuntime wf)
-                => Service<CliEmitter>(wf);
+            public EcmaEmitter EcmaEmitter(IWfRuntime wf)
+                => Service<EcmaEmitter>(wf);
 
-            public Cli Cli(IWfRuntime wf)
-                => Service<Cli>(wf);
+            public Ecma Ecma(IWfRuntime wf)
+                => Service<Ecma>(wf);
 
-            public MsilPipe MsilSvc(IWfRuntime wf)
-                => Service<MsilPipe>(wf);
+            public MsilSvc MsilSvc(IWfRuntime wf)
+                => Service<MsilSvc>(wf);
 
-            public EcmaCmd CliCmd(IWfRuntime wf)
+            public EcmaCmd EcmaCmd(IWfRuntime wf)
                 => Service<EcmaCmd>(wf);
 
             public RoslnCmd RoslynCmd(IWfRuntime wf)
@@ -33,17 +33,17 @@ namespace Z0
 
         static Svc Services => Svc.Instance;
 
-        public static CliEmitter CliEmitter(this IWfRuntime wf)
-            => Services.CliEmitter(wf);
+        public static EcmaEmitter EcmaEmitter(this IWfRuntime wf)
+            => Services.EcmaEmitter(wf);
 
-        public static MsilPipe MsilSvc(this IWfRuntime wf)
+        public static MsilSvc MsilSvc(this IWfRuntime wf)
             => Services.MsilSvc(wf);
 
-        public static Cli Cli(this IWfRuntime wf)
-            => Services.Cli(wf);
+        public static Ecma Ecma(this IWfRuntime wf)
+            => Services.Ecma(wf);
 
-        public static ICmdProvider CliCmd(this IWfRuntime wf)
-            => Services.CliCmd(wf);
+        public static ICmdProvider EcmaCmd(this IWfRuntime wf)
+            => Services.EcmaCmd(wf);
 
         public static R Roslyn(this IWfRuntime wf)
             => Services.Roslyn(wf);

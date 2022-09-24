@@ -33,7 +33,6 @@ namespace Z0
         void ArchiveFiles(CmdArgs args)
         {
             var src = AppDb.Archive(arg(args,0).Value);
-
             iter(src.Files(true), file => Write(file.ToUri()));
         }
         

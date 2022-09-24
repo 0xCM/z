@@ -72,7 +72,6 @@ namespace Z0
             
             var data = JsonData.serialize(job);
             FileEmit(data, dst);
-            //iter(src.View, file => Write(src.ToUri()));
         }
 
         [CmdOp("tool/cmd")]

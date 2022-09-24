@@ -32,7 +32,7 @@ namespace Z0
 
         protected Uri(string data)
         {
-            Data = new (data);
+            Data = sys.empty(data) ? new Uri(EmptyName) : new Uri(data);
             Text = data;
             _Hash = sys.hash(Text);
         }

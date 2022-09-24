@@ -1,0 +1,26 @@
+{
+	"folders": [
+		{
+			"path": "../sys"
+		},
+		{
+			"path": "../bit"
+		},
+		{
+			"path": "../clr.query"
+		},
+		{
+			"path": "../lib"
+		},
+		{
+			"path": "../native"
+		},
+		{
+			"path": "."
+		},
+		{
+			"path": "../cmd"
+		}
+	],
+	"settings": {}
+}

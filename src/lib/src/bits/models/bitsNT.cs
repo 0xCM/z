@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     public record struct bits<M,T>
         where M : unmanaged, ITypeNat

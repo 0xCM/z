@@ -8,7 +8,7 @@ namespace Z0
     using System.Reflection.Metadata;
     using System.Reflection.PortableExecutable;
 
-    using static core;
+    using static sys;
 
     [ApiHost]
     public readonly struct ClrModules
