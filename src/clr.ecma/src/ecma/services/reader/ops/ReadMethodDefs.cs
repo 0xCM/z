@@ -65,5 +65,26 @@ namespace Z0
             }
             return dst;
         }
+
+        public uint ReadMethodDefs(List<EcmaMethodDef> dst)
+        {
+            var rows = ReadMethodDefRows();
+            var count = rows.Length;
+            var counter = 0u;
+            for(var i=0; i<count; i++, counter++)
+            {
+                ref readonly var src = ref skip(rows,i);
+                var def = new EcmaMethodDef();
+                def.Token = src.Token;
+                def.Component = MD.GetAssemblyDefinition().GetAssemblyName().SimpleName();
+                def.Attributes = src.Attributes;
+                def.ImplAttributes = src.ImplAttributes;
+                def.Rva = src.Rva;
+                def.CliSig = ReadBlob(src.SigKey);
+                def.Name = Read(src.NameKey);
+                dst.Add(def);
+            }
+            return counter;
+        }        
     }
 }

@@ -6,11 +6,17 @@ namespace Z0
 {
     public interface IDbArchive : IRootedArchive
     {
-        void Delete()
-            => Root.Delete();
+        IDbArchive Delete()
+        {
+            Root.Delete();
+            return this;
+        }
 
-        void Clear()
-            => Root.Clear();
+        IDbArchive Clear()
+        {
+            Root.Clear();
+            return this;
+        }
 
         string Name => Root.Name;
     }

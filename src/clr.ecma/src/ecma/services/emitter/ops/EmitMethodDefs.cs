@@ -8,8 +8,8 @@ namespace Z0
 
     partial class EcmaEmitter
     {
-        public void EmitMethodDefs(ReadOnlySpan<Assembly> src, IApiPack dst)
-            => iter(src, a => EmitMethodDefs(a, dst), true);
+        public void EmitMethodDefs(ReadOnlySeq<Assembly> src, IApiPack dst)
+            => iter(src, a => EmitMethodDefs(a, dst), PllExec);
 
         void EmitMethodDefs(Assembly src, IApiPack dst)
         {
@@ -26,6 +26,22 @@ namespace Z0
                 for(var j=0; j<count; j++)
                     writer.WriteLine(formatter.Format(skip(records, j)));
                 EmittedTable(flow, count);
+            }
+
+            Try(Exec);
+        }
+
+        public void EmitMethodDefs(ReadOnlySeq<Assembly> src, IDbArchive dst)
+            => iter(src, a => EmitMethodDefs(a, dst), PllExec);
+
+        void EmitMethodDefs(Assembly src, IDbArchive dst)
+        {
+            void Exec()
+            {
+                var reader = EcmaReader.create(src);
+                var buffer = list<EcmaMethodDef>();
+                reader.ReadMethodDefs(buffer);
+                TableEmit(buffer.ViewDeposited(), dst.PrefixedTable<EcmaMethodDef>(src.GetSimpleName()));
             }
 
             Try(Exec);

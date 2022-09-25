@@ -10,13 +10,13 @@ namespace Z0
         const string TableId = "ecma.rowstats";
 
         [Render(48)]
-        public Label AssemblyName;
+        public @string AssemblyName;
 
         [Render(12)]
         public byte TableIndex;
 
         [Render(32)]
-        public Label TableName;
+        public @string TableName;
 
         [Render(12)]
         public Address32 TableOffset;        

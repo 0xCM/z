@@ -22,12 +22,6 @@ namespace Z0
             Root = root + FS.folder(scope);
         }
 
-        [MethodImpl(Inline)]
-        public DbArchive(IRootedArchive root)
-        {
-            Root = root.Root;
-        }
-
         public bool Exists
         {
             [MethodImpl(Inline)]
@@ -37,11 +31,17 @@ namespace Z0
         FolderPath IRootedArchive.Root 
             => Root;
 
-        public void Delete()
-            => Root.Delete();
+        public DbArchive Delete()
+        {
+            Root.Delete();
+            return this;
+        }
 
-        public void Clear()
-            => Root.Clear();
+        public DbArchive Clear()
+        {
+            Root.Clear();
+            return this;
+        }
 
         public Hash32 Hash
         {

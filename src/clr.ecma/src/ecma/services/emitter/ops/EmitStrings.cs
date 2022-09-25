@@ -10,56 +10,18 @@ namespace Z0
     {
         public void EmitStrings(IApiPack dst)
         {
-            exec(true,
+            exec(PllExec,
             () => EmitSystemStrings(dst),
             () => EmitUserStrings(dst)
             );
         }
 
-        public void EmitUserStrings(IApiPack dst)
-            => EmitUserStrings(ApiMd.Parts, dst);
-
-        public void EmitUserStrings(ReadOnlySpan<Assembly> src, IApiPack dst)
-            => iter(src, a => EmitUserStrings(a, dst), true);
-
-        public void EmitUserStrings(Assembly src, IApiPack dst)
+        public void EmitStrings(ReadOnlySeq<Assembly> src, IDbArchive dst)
         {
-            void Exec()
-            {
-                var reader = EcmaReader.create(src);
-                TableEmit(reader.ReadUserStringDetail(), dst.Metadata(EcmaSections.UserStrings).PrefixedTable<EcmaString>(src.GetSimpleName()), UTF16);
-            }
-
-            Try(Exec);
+            exec(PllExec,
+                () => EmitSystemStrings(src,dst),
+                () => EmitUserStrings(src,dst)
+            );
         }
-
-        public void EmitSystemStrings(IApiPack dst)
-            => EmitSystemStrings(ApiMd.Parts, dst);
-
-        public void EmitSystemStrings(ReadOnlySpan<Assembly> src, IApiPack dst)
-            => iter(src, a => EmitSystemStrings(a, dst), true);
-
-        public void EmitSystemStrings(Assembly src, IApiPack dst)
-        {
-            void Exec()
-            {
-                var path = dst.Metadata(EcmaSections.SystemStrings).PrefixedTable<EcmaString>(src.GetSimpleName());
-                using var reader = PeReader.create(FS.path(src.Location));
-                TableEmit(reader.ReadSystemStringDetail(), path, UTF16);
-            }
-            Try(Exec);
-        }
-
-        public void EmitSystemStrings(Assembly src, IDbArchive dst)
-        {
-            void Exec()
-            {
-                var path = dst.PrefixedTable<EcmaString>(src.GetSimpleName());
-                using var reader = PeReader.create(FS.path(src.Location));
-                TableEmit(reader.ReadSystemStringDetail(), path, UTF16);
-            }
-            Try(Exec);
-        }
-
     }
 }

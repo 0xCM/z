@@ -34,6 +34,24 @@ namespace Z0
             ApiMd.Emitter().Emit(ModuleArchives.parts(), AppDb.ApiTargets());         
         }
 
+        [CmdOp("ecma/emit")]
+        void EcmaEmit()
+        {
+            var src = ModuleArchives.parts();
+            exec(true,
+                () => EcmaEmitter.EmitLocatedMetadata(src, AppDb.ApiTargets("ecma/hex").Delete(), 64),
+                () => EcmaEmitter.EmitAssemblyRefs(src, AppDb.ApiTargets("ecma").Delete()),
+                () => EcmaEmitter.EmitStrings(src, AppDb.ApiTargets("ecma/strings").Delete()),
+                () => EcmaEmitter.EmitRowStats(src, AppDb.ApiTargets("ecma").Table<EcmaRowStats>()),
+                () => EcmaEmitter.EmitMsilMetadata(src, AppDb.ApiTargets("ecma/msil.dat").Delete()),
+                () => EcmaEmitter.EmitBlobs(src, AppDb.ApiTargets("ecma/blobs").Delete()),
+                () => EcmaEmitter.EmitMetadumps(src, Channel, AppDb.ApiTargets("ecma/dumps").Delete()),
+                () => EcmaEmitter.EmitMemberRefs(src, AppDb.ApiTargets("ecma/members.refs").Delete()),
+                () => EcmaEmitter.EmitMethodDefs(src, AppDb.ApiTargets("ecma/methods.defs").Delete()),
+                () => {}
+            );
+        }
+
         [CmdOp("ecma/emit/hex")]
         void EmitApiHex()
             => EcmaEmitter.EmitLocatedMetadata(ModuleArchives.parts(), AppDb.ApiTargets("ecma/hex"), 64);
@@ -42,13 +60,17 @@ namespace Z0
         void EmitAssmeblyRefs()
             => EcmaEmitter.EmitAssemblyRefs(ApiMd.Parts, AppDb.ApiTargets("ecma"));
 
+        [CmdOp("ecma/emit/method-defs")]
+        void EmitMethodDefs()
+            => EcmaEmitter.EmitMethodDefs(ApiMd.Parts, AppDb.ApiTargets("ecma/methods.defs").Delete());
+
         [CmdOp("ecma/emit/member-refs")]
         void EmitMemberRefs()
-            => EcmaEmitter.EmitMemberRefs(ApiMd.Parts, AppDb.ApiTargets("ecma/member-refs"));
+            => EcmaEmitter.EmitMemberRefs(ApiMd.Parts, AppDb.ApiTargets("ecma/members.refs"));
 
         [CmdOp("ecma/emit/strings")]
         void EmitStrings()
-            => EcmaEmitter.EmitStrings(Dst);
+            => EcmaEmitter.EmitStrings(ApiMd.Parts, AppDb.ApiTargets("ecma/strings"));
 
         [CmdOp("ecma/emit/stats")]
         void EmitStats()
@@ -67,13 +89,7 @@ namespace Z0
 
         [CmdOp("ecma/emit/msildat")]
         void EmitMsilData()
-        {
-            EcmaEmitter.EmitMsilMetadata(ApiMd.Parts, AppDb.ApiTargets("ecma/msil.dat"));
-        }
-
-        // [CmdOp("ecma/emit/fields")]
-        // void EmitFields()
-        //     => EcmaEmitter.EmitFieldMetadata(Dst);
+            => EcmaEmitter.EmitMsilMetadata(ApiMd.Parts, AppDb.ApiTargets("ecma/msil.dat"));
 
         [CmdOp("ecma/emit/literals")]
         void EmitLiterals()
@@ -92,13 +108,17 @@ namespace Z0
                 if(file.Value.IsNot(FS.ext("resources.dll")))
                 {
                     EcmaEmitter.EmitMetadump(file.Value, EcmaArchive(file.Value));
-                    var path = EcmaArchive(file.Value);
-                    
-                    }            }, PllExec);
+                    var path = EcmaArchive(file.Value);                    
+                    }
+                }, PllExec);
         }
 
         static Outcome<FilePath> parse(string src)
             => FS.path(src);
+
+        [CmdOp("ecma/emit/dumps")]
+        void EmitMetaDumps()
+            => EcmaEmitter.EmitMetadumps(ApiMd.Parts, Channel, AppDb.ApiTargets("ecma/dumps"));
 
         [CmdOp("ecma/dump")]
         void EmitCliDump(CmdArgs args)

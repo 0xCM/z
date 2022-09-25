@@ -37,21 +37,20 @@ namespace Z0
         public void EmitApiMetadump(IApiPack dst)
             => EmitApiMetadump(dst.Metadata("metadump"));
 
-        public void EmitMetadump(ReadOnlySpan<Assembly> src, FolderPath dst, bool clear = true)
+        public void EmitMetadump(ReadOnlySeq<Assembly> src, IDbArchive dst, bool clear = true)
         {
             if(clear)
                 dst.Clear();
             var count = src.Length;
             for(var i=0; i<count; i++)
             {
-                var component = skip(src,i);
+                var component = src[i];
                 var source = FS.path(component.Location);
-                var target = dst + FS.file(source.FileName.Format(), FS.Txt);
-                EmitMetadump(source,target);
+                EmitMetadump(source, dst.Path(FS.file(source.FileName.Format(), FS.Txt)));
             }
         }
 
         public void EmitApiMetadump(IDbArchive dst)
-            => EmitMetadump(ApiMd.Parts, dst.Root);
+            => EmitMetadump(ApiMd.Parts, dst);
     }
 }

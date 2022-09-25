@@ -4,51 +4,51 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     partial class EcmaReader
     {
-        public ReadOnlySpan<string> ReadStrings(EcmaStringKind kind)
+        public uint ReadStrings(EcmaStringKind kind, List<string> dst)
             => kind switch {
-                EcmaStringKind.User => ReadUserStrings(),
-                EcmaStringKind.System => ReadSystemStrings(),
-                _ => default
+                EcmaStringKind.User => ReadUserStrings(dst),
+                EcmaStringKind.System => ReadSystemStrings(dst),
+                _ => 0u
             };
 
-        ReadOnlySpan<string> ReadUserStrings()
+        uint ReadUserStrings(List<string> dst)
         {
+            var counter = 0u;
             int size = HeapSize(HeapIndex.UserString);
             if (size == 0)
-                return sys.empty<string>();
+                return counter;
 
-            var values = list<string>();
             var handle = MetadataTokens.UserStringHandle(0);
             do
             {
-                values.Add(Read(handle));
+                dst.Add(Read(handle));
+                counter++;
                 handle = MD.GetNextHandle(handle);
             }
             while (!handle.IsNil);
 
-            return values.ViewDeposited();
+            return counter;
         }
 
-        ReadOnlySpan<string> ReadSystemStrings()
+        uint ReadSystemStrings(List<string> dst)
         {
+            var counter = 0u;
             int size = HeapSize(HeapIndex.String);
             if (size == 0)
-                return sys.empty<string>();
+                return counter;
 
-            var values = list<string>();
             var handle = MetadataTokens.StringHandle(0);
             do
             {
-                values.Add(Read(handle));
+                dst.Add(Read(handle));
+                counter++;
                 handle = MD.GetNextHandle(handle);
             }
             while (!handle.IsNil);
 
-            return values.ViewDeposited();
+            return counter;
         }
     }
 }

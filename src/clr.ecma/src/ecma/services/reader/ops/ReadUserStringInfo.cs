@@ -8,7 +8,7 @@ namespace Z0
 
     partial class EcmaReader
     {
-        public ReadOnlySpan<EcmaString> ReadUserStringDetail()
+        public ReadOnlySpan<EcmaStringDetail> ReadUserStringInfo()
         {
             var reader = MD;
             int size = MD.GetHeapSize(HeapIndex.UserString);
@@ -17,16 +17,17 @@ namespace Z0
 
             var handle = MetadataTokens.UserStringHandle(0);
             var counter=0u;
-            var dst = list<EcmaString>();
+            var dst = list<EcmaStringDetail>();
 
             do
             {
-                dst.Add(new EcmaString(seq: counter++, size, HeapOffset(handle), Read(handle)));
+                dst.Add(new EcmaStringDetail(seq: counter++, size, HeapOffset(handle), Read(handle)));
                 handle = MD.GetNextHandle(handle);
             }
             while (!handle.IsNil);
 
             return dst.ViewDeposited();
         }
+
     }
 }

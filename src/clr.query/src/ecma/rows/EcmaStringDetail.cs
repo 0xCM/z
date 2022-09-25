@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Record(TableId), StructLayout(LayoutKind.Sequential,Pack=1)]
-    public struct EcmaString
+    public struct EcmaStringDetail
     {
         const string TableId = "ecma.strings";
 
@@ -28,7 +28,7 @@ namespace Z0
         public string Content;
 
         [MethodImpl(Inline)]
-        public EcmaString(Count seq, ByteSize heap, Address32 offset, string data)
+        public EcmaStringDetail(Count seq, ByteSize heap, Address32 offset, string data)
         {
             Seq = seq;
             System = true;
