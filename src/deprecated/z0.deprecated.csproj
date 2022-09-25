@@ -6,6 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(Cli)" />
+    <ProjectReference Include="$(ClrEcma)" />
   </ItemGroup>
 </Project>

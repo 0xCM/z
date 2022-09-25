@@ -1,7 +1,7 @@
 <Project>
   <ItemGroup>
     <ProjectReference Include="$(Asm)" />
-    <ProjectReference Include="$(Cli)" />
+    <ProjectReference Include="$(ClrEcma)" />
     <ProjectReference Include="$(Polyrand)" />
     <ProjectReference Include="$(IntelSvc)" />
     <ProjectReference Include="$(Diagnostics)" />

@@ -25,7 +25,7 @@
     <ProjectReference Include="$(Coff)" />
     <ProjectReference Include="$(CmdSpecs)" />
     <ProjectReference Include="$(ClrQuery)" />
-    <ProjectReference Include="$(Cli)" />
+    <ProjectReference Include="$(ClrEcma)" />
     <ProjectReference Include="$(ClrCil)" />
 
     <ProjectReference Include="$(Db)" />

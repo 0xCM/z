@@ -116,6 +116,9 @@ public enum PartId : byte
     [Symbol("cli")]
     Cli,
 
+    [Symbol("clr.ecma")]
+    ClrEcma,
+
     [Symbol("builds")]
     Builds,
 

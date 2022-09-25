@@ -25,7 +25,7 @@
         <ProjectReference Include="$(Assets)" />
         <ProjectReference Include="$(Bits)" />
         <ProjectReference Include="$(Calcs)" />
-        <ProjectReference Include="$(Cli)" />
+        <ProjectReference Include="$(ClrEcma)" />
         <ProjectReference Include="$(Circuits)" />
         <ProjectReference Include="$(ClrCil)" />
         <ProjectReference Include="$(Db)" />

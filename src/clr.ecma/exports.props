@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <ClrEcma>$(MsBuildThisFileDirectory)z0.clr.ecma.csproj</ClrEcma>
+  </PropertyGroup>
+</Project>

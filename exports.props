@@ -30,10 +30,12 @@
 
    <Import Project="$(MsBuildThisFileDirectory)src/circuits/exports.props"/>
 
-   <Import Project="$(MsBuildThisFileDirectory)src/cli/exports.props"/>
+
    <Import Project="$(MsBuildThisFileDirectory)src/clr.query/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/clr.cil/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/clr.checks/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/clr.ecma/exports.props"/>
+
    <Import Project="$(MsBuildThisFileDirectory)src/capture/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/containers/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/cells/exports.props"/>

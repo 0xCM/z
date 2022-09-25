@@ -10,7 +10,7 @@ namespace Z0
         public static ICmdProvider[] providers(IWfRuntime wf)
             => new ICmdProvider[]{
                 wf.WfCmd(),
-                wf.CliCmd(),
+                wf.EcmaCmd(),
             };
 
 

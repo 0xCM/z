@@ -2,7 +2,7 @@
   <Import Project="$(ImportDefs)\microsoft.cmdline.props"/>
   <Import Project="$(ProjectProps)\libs.props"/>
   <ItemGroup>
-    <ProjectReference Include="$(Cli)" />
+    <ProjectReference Include="$(ClrEcma)" />
     <ProjectReference Include="$(ClrQuery)" />
   </ItemGroup>
 </Project>
