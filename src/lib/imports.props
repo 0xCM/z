@@ -11,6 +11,7 @@
     <ProjectReference Include="$(Cells)" />
     <ProjectReference Include="$(Files)" />
     <ProjectReference Include="$(CmdSpecs)" />
+    <ProjectReference Include="$(Types)" />
     <ProjectReference Include="../cmd.specs/z0.cmd.specs.csproj" />
     <ProjectReference Include="../imagine/z0.imagine.csproj" />
 

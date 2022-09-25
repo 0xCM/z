@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct Cil
+    partial struct MsilCodeModels
     {
         [DataWidth(3)]
         public enum StackBehaviour : byte

@@ -49,8 +49,6 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static uint parse(ReadOnlySpan<S> src, out GBlock64<D> dst, B @base = default)
-            => parse(recover<S,C>(src), out dst, @base);
-        
-    
+            => parse(recover<S,C>(src), out dst, @base);    
     }
 }

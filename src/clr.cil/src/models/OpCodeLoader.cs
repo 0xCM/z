@@ -6,17 +6,17 @@ namespace Z0
     using static sys;
 
     using C = System.Reflection.Metadata.ILOpCode;
-    using CT = Cil.OpCodeType;
-    using OT = Cil.OperandType;
-    using SB = Cil.StackBehaviour;
+    using CT = MsilCodeModels.OpCodeType;
+    using OT = MsilCodeModels.OperandType;
+    using SB = MsilCodeModels.StackBehaviour;
 
-    partial struct Cil
+    partial struct MsilCodeModels
     {
         public readonly struct OpCodeLoader
         {
             [MethodImpl(Inline), Op]
-            public static CilOpCode pack(C id, string name, OpCodeType type, OperandType optype, byte opcount, ushort value, StackBehaviour sb1, StackBehaviour sb2)
-                => new CilOpCode(id, value, name, type, optype, opcount, sb1, sb2);
+            public static MsilOpCode pack(C id, string name, OpCodeType type, OperandType optype, byte opcount, ushort value, StackBehaviour sb1, StackBehaviour sb2)
+                => new MsilOpCode(id, value, name, type, optype, opcount, sb1, sb2);
 
             /// <summary>
             /// Populates an opcode dataset
@@ -24,7 +24,7 @@ namespace Z0
             /// <param name="dst"></param>
             /// <remarks>This implementation of this method was derived from test code in the System.Reflection.Metadata .net core repo</remarks>
             [Op]
-            public static uint load(ref CilOpCode dst)
+            public static uint load(ref MsilOpCode dst)
             {
                 var i=0u;
                 seek(dst,i++) = pack(C.Add, "add", CT.Primitive, OT.InlineNone, 1, 0x58, SB.Pop1_pop1, SB.Push1);

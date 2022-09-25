@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Types>$(MsBuildThisFileDirectory)z0.types.csproj</Types>
+  </PropertyGroup>
+</Project>

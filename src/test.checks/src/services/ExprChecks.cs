@@ -77,12 +77,6 @@ namespace Z0
             return true;
         }
 
-        public Outcome CheckTypeSyntax()
-        {
-            var result = Outcome.Success;
-            Write(typeof(Span<int>).Spec());
-            return result;
-        }
     }
 
     readonly struct TmpTables

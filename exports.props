@@ -11,7 +11,12 @@
    <Import Project="$(MsBuildThisFileDirectory)src/asm.prototypes/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/asm.svc/exports.props"/>
 
+   <Import Project="$(MsBuildThisFileDirectory)src/sys/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/text/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/bit/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/types/exports.props"/>
+
+
    <Import Project="$(MsBuildThisFileDirectory)src/bit.render/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/bitmasks/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/bitvectors/exports.props"/>
@@ -93,11 +98,9 @@
    <Import Project="$(MsBuildThisFileDirectory)src/process/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/shell/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/sys/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/sos.cmd/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/symbolics/exports.props"/>
 
-   <Import Project="$(MsBuildThisFileDirectory)src/text/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/test.checks/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/test.shell/exports.props"/>

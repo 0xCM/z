@@ -19,7 +19,7 @@ namespace Z0
                     using var stream = File.OpenRead(src.Name);
                     using var pe = ImageMemory.pe(stream);
                     using var target = dst.Writer();
-                    Cil.mdv(pe.GetMetadataReader(), target).Visualize();
+                    MsilCodeModels.mdv(pe.GetMetadataReader(), target).Visualize();
                     token = Emitter.EmittedFile(flow);
                 }
             }

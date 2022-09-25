@@ -3,6 +3,7 @@
   <Import Project="$(ProjectProps)\usings.props"/>
   <Import Project="imports.props"/>
   <PropertyGroup>
+    <AssemblyName>zclr</AssemblyName>
     <OutputType>Exe</OutputType>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>

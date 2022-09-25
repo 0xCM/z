@@ -4,11 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Cil.OpCodeSpecs;
+    using static MsilCodeModels.OpCodeSpecs;
 
     using ILOpCode = System.Reflection.Metadata.ILOpCode;
 
-    partial struct Cil
+    partial struct MsilCodeModels
     {
         public readonly struct OpCode : IEquatable<OpCode>
         {

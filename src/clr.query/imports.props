@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="$(Sys)" />
     <ProjectReference Include="$(Text)" />
+    <ProjectReference Include="$(Types)" />
   </ItemGroup>
 
 </Project>

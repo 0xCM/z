@@ -4,9 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using K = Cil.OpCodeValue;
+    using K = MsilCodeModels.OpCodeValue;
 
-    partial struct Cil
+    partial struct MsilCodeModels
     {
         [ApiComplete]
         public readonly struct OpCodeSpecs

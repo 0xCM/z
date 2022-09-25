@@ -1,35 +1,32 @@
 {
 	"folders": [
 		{
+			"path": "../literals"
+		},
+		{
+			"path": "../sys"
+		},
+		{
+			"path": "../clr.query"
+		},
+		{
+			"path": "../lib"
+		},
+		{
+			"path": "../dynamic"
+		},
+		{
+			"path": "../api.md"
+		},
+		{
+			"path": "../clr.cil"
+		},
+		{
+			"path": "../clr.ecma"
+		},
+		{
 			"path": "."
 		},
-		{
-			"path": "..\\cli"
-		},
-		{
-			"path": "..\\clr.query"
-		},
-		{
-			"path": "..\\clr.cil"
-		},
-		{
-			"path": "..\\clr.models"
-		},
-		{
-			"path": "..\\api.md"
-		},
-		{
-			"path": "..\\lib"
-		},
-		{
-			"path": "..\\dynamic"
-		},
-		{
-			"path": "..\\imagine"
-		},
-		{
-			"path": "..\\literals"
-		}
 	],
 	"settings": {}
 }

@@ -25,6 +25,9 @@ public enum PartId : byte
     [Symbol("api.svc")]
     ApiSvc,
 
+    [Symbol("types")]
+    Types,
+
     [Symbol("process")]
     Process,
 

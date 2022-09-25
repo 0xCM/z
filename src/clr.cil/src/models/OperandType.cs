@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct Cil
+    partial struct MsilCodeModels
     {
         [DataWidth(5)]
         public enum OperandType : byte

@@ -11,8 +11,6 @@ namespace Z0
     {
         public T Value;
 
-        public TypeSpec ScalarType
-            => TypeSyntax.num(TypeSyntax.infer<T>());
 
         [MethodImpl(Inline)]
         public num(T value)

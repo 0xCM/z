@@ -28,7 +28,7 @@ namespace Z0
         }
 
         public string Format()
-            => text.ifempty(Content?.ToString(), $"<!!{Null.Empty}!!>");
+            => text.ifempty(Content?.ToString(), $"<!!empty!!>");
 
         public override string ToString()
             => Format();
