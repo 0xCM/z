@@ -22,17 +22,17 @@ namespace Z0
             => ref As<T,uint>(ref src);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref T uint32<T>(in uint src, out T dst)
+        public static T uint32<T>(in uint src, out T dst)
         {
             dst = @as<uint,T>(src);
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref uint uint32<T>(in T src, out uint dst)
+        public static uint uint32<T>(in T src, out uint dst)
         {
             dst = @as<T,uint>(src);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>

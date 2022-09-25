@@ -102,6 +102,8 @@
    <Import Project="$(MsBuildThisFileDirectory)src/symbolics/exports.props"/>
 
 
+   <Import Project="$(MsBuildThisFileDirectory)src/workflow/exports.props"/>
+
    <Import Project="$(MsBuildThisFileDirectory)src/test.checks/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/test.shell/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/test.units/exports.props"/>

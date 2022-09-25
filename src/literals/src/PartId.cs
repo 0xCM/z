@@ -405,6 +405,9 @@ public enum PartId : byte
     [Symbol("workers")]
     Workers,
 
+    [Symbol("workflow")]
+    Workflow,
+
     [Symbol("lang.emit")]
     LangEmit,
 

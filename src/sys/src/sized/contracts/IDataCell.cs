@@ -27,8 +27,8 @@ namespace Z0
     public interface IDataCell<T> : IDataCell
         where T : struct
     {
-        Span<byte> CellBytes
-            => bytes((T)this);
+        //Span<byte> CellBytes
+        //    => bytes((T)this);
 
         uint IDataCell.Width
             => Sized.width<T>();

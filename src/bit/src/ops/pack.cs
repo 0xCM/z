@@ -116,13 +116,13 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op, Closures(UnsignedInts)]
-        public static ref T pack<T>(ReadOnlySpan<byte> src, uint offset, out T dst)
+        public static T pack<T>(ReadOnlySpan<byte> src, uint offset, out T dst)
             where T : unmanaged
         {
             dst = default;
             var buffer = bytes(dst);
             pack(src, offset, ref first(buffer));
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op]

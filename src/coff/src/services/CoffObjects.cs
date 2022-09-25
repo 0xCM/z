@@ -42,7 +42,6 @@ namespace Z0
             return buffer;
         }
 
-
         public static Outcome parse(ProjectContext context, in FileRef src, out Index<ObjDumpRow> dst)
             => new ObjDumpParser().Parse(context, src, out dst);
 

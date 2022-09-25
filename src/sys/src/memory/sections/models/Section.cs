@@ -6,10 +6,12 @@ namespace Z0
 {
     using api = MemorySections;
 
+    using static sys;
+
     partial struct MemorySections
     {
         [StructLayout(LayoutKind.Sequential, Pack=1)]
-        public readonly struct Section : IMemorySection<Section>
+        public unsafe readonly struct Section : IMemorySection<Section>
         {
             readonly Descriptor _D;
 
@@ -87,16 +89,22 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public Span<byte> Storage()
-                => api.cells(this);
+                => cover(Base().Pointer<byte>(), TotalSize);
 
             [MethodImpl(Inline)]
             public Span<byte> Segment(uint index)
-                => api.segment(this, index);
+            {
+                var pBase = Base().Pointer<byte>();
+                var unit = SegSize;
+                var offset = index * unit;
+                pBase += offset;
+                return cover(pBase, unit);
+            }
 
             [MethodImpl(Inline)]
             public Span<S> Storage<S>()
                 where S : unmanaged
-                    => api.cells<S>(this);
+                    => cover(Base().Pointer<S>(), TotalSize / size<S>());
 
             public string Format()
                 => Descriptor().Format();

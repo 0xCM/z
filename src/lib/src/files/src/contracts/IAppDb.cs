@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IAppDb : IEtlDb
+    public interface IAppDb 
     {
         DbArchive Settings();        
 

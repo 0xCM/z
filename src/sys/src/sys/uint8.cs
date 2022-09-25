@@ -27,17 +27,17 @@ namespace Z0
             => ref As<T,byte>(ref src);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref T uint8<T>(in byte src, out T dst)
+        public static T uint8<T>(in byte src, out T dst)
         {
             dst = @as<byte,T>(src);
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref byte uint8<T>(in T src, out byte dst)
+        public static byte uint8<T>(in T src, out byte dst)
         {
             dst = @as<T,byte>(src);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>

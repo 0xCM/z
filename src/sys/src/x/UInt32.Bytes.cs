@@ -9,7 +9,7 @@ namespace Z0
     partial class XTend
     {
         [MethodImpl(Inline), Op]
-        public static unsafe Span<byte> Bytes(this uint src)
+        public static unsafe Span<byte> Bytes(this in uint src)
             => bytes(src);
     }
 }

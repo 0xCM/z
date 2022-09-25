@@ -40,42 +40,37 @@ namespace Z0
             });
         }
 
-        [CmdOp("build/projects")]
-        void ProjectCfg()
+        ReadOnlySeq<Build.Property> Exports()
         {
-            var path = AppDb.Dev("z0").Sources("props").Path("projects",FileKind.Props);
+            var path = AppDb.Dev("projects/z0").Path("exports",FileKind.Props);
             var project = BuildSvc.LoadProject(path);
             ref readonly var props = ref project.Props;
             var dst = list<Build.Property>();
-            var j = -1;
+            var adding = false;
             for(var i=0; i<props.Count; i++)
             {
                 ref readonly var prop = ref props[i];
-                var desc = prop.Format();
-                if(prop.Name == "Literals")
+                if(adding)
                 {
-                    j=i;
-                    break;
+                    dst.Add(prop);
+                    if(prop.Name == "Validity")
+                        break;                    
+                }
+                else if(prop.Name=="Agents")
+                {
+                    adding = true;
+                    dst.Add(prop);
                 }
             }
-
-            if(j > 0)
-            {
-                for(var i=j; i<props.Count; i++)
-                {
-                    if(props[i].Name != "MSBuildAllProjects")
-                        dst.Add(props[i]);
-                }
-            }
-
-            iter(dst, prop => Emitter.Write(prop.Format()));
-            var data = dst.Map(x => x.Format()).Concat("\n");
-            var cfg = AppDb.DbTargets("cfg").Path("projects", FileKind.Cfg);
-            FileEmit(data, cfg);
-            var config = Settings.cfg(cfg);
-            iter(config, entry => Emitter.Row($"dotnet sln add {FS.path(new string(entry.Value))}"));
-
-            //Emitter.FileEmit()
+            return dst.ToArray();
+        }
+        [CmdOp("z0/exports")]
+        void DirProps()
+        {
+            var src = Exports();
+            var dst = text.emitter();
+            iter(src, prop => dst.AppendLine($"dotnet sln add {prop.Value}"));
+            FileEmit(dst.Emit(), AppDb.AppData().Path("sln",FileKind.Cmd));
         }
 
         [CmdOp("build/props")]

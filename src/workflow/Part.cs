@@ -2,14 +2,11 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+[assembly: PartId(PartId.Workflow)]
+namespace Z0.Parts
 {
-    using static sys;
-
-    partial class XTend
+    public sealed class Workflow : Part<Workflow>
     {
-        [MethodImpl(Inline), Op]
-        public static unsafe Span<byte> Bytes(this in ushort src)
-            => bytes(src);
     }
 }
+

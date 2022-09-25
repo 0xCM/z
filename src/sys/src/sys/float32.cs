@@ -13,17 +13,17 @@ namespace Z0
             => As<T,float>(ref src);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref T float32<T>(in float src, out T dst)
+        public static T float32<T>(in float src, out T dst)
         {
             dst = @as<float,T>(src);
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref float float32<T>(in T src, out float dst)
+        public static float float32<T>(in T src, out float dst)
         {
             dst = @as<T,float>(src);
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op, Closures(Closure)]

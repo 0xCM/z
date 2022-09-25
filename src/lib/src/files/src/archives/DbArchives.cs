@@ -8,11 +8,7 @@ namespace Z0
 
     [ApiHost]
     public class DbArchives : AppService<DbArchives>
-    {
-     
-        // public static Assembly[] parts()
-        //     => data(ApiAtomic.modules,() => modules().ManagedDll().Where(x => x.FileName.StartsWith("z0")).Select(x => x.Load()).Unwrap().Distinct().Unwrap());
-
+    {     
         public static LineMap<string> map<T>(Index<TextLine> lines, Index<T> relations)
             where T : struct, ILineRelations<T>
         {

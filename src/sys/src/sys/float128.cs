@@ -13,17 +13,17 @@ namespace Z0
             => As<T,decimal>(ref src);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref T float128<T>(in decimal src, out T dst)
+        public static T float128<T>(in decimal src, out T dst)
         {
             dst = @as<decimal,T>(src);
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref decimal float128<T>(in T src, out decimal dst)
+        public static decimal float128<T>(in T src, out decimal dst)
         {
             dst = @as<T,decimal>(src);
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op, Closures(Closure)]

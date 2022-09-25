@@ -59,7 +59,7 @@ namespace Z0
         public ReadOnlySpan<char> View
         {
             [MethodImpl(Inline)]
-            get => view(this);
+            get => cover<char>(BaseAddress.Pointer<char>(), (uint)Length);
         }
 
         public unsafe string Text

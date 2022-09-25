@@ -9,7 +9,7 @@ namespace Z0
     /// <summary>
     /// Defines a reference to a memory segment
     /// </summary>
-    public readonly struct SegRef : ISegRef<byte>
+    public unsafe readonly struct SegRef : ISegRef<byte>
     {
         public readonly MemoryAddress Address;
 
@@ -23,13 +23,9 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        ref byte self()
-            => ref first(bytes(this));
-
-        [MethodImpl(Inline)]
         public ref SegRef<T> As<T>()
             where T : unmanaged
-                => ref @as<byte,SegRef<T>>(self());
+                => ref @as<byte,SegRef<T>>(Address.Ref<byte>());
 
         [MethodImpl(Inline)]
         public Span<T> Data<T>()

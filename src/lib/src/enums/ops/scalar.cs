@@ -109,9 +109,9 @@ namespace Z0
         /// <param name="tVal">The primal output value</param>
         /// <typeparam name="E">The enum type</typeparam>
         [MethodImpl(Inline)]
-        public static ref long scalar<E>(in E eVal, out long tVal)
+        public static long scalar<E>(in E eVal, out long tVal)
             where E : unmanaged, Enum
-                => ref deposit(eVal, out tVal);
+                => deposit(eVal, out tVal);
 
         /// <summary>
         /// Reads a u64-value from an enum of primal u64-kind
@@ -120,9 +120,9 @@ namespace Z0
         /// <param name="tVal">The primal output value</param>
         /// <typeparam name="E">The enum type</typeparam>
         [MethodImpl(Inline)]
-        public static ref ulong scalar<E>(in E eVal, out ulong tVal)
+        public static ulong scalar<E>(in E eVal, out ulong tVal)
             where E : unmanaged, Enum
-                => ref deposit(eVal, out tVal);
+                => deposit(eVal, out tVal);
 
         /// <summary>
         /// Reads a c16-value from an enum of primal u16-kind
@@ -131,11 +131,11 @@ namespace Z0
         /// <param name="cVal">The character output value</param>
         /// <typeparam name="E">The enum type</typeparam>
         [MethodImpl(Inline)]
-        public static ref char scalar<E>(in E eVal, out char cVal)
+        public static char scalar<E>(in E eVal, out char cVal)
             where E : unmanaged, Enum
         {
             cVal = (char)scalar(eVal, out ushort _);
-            return ref cVal;
+            return cVal;
         }
     }
 }

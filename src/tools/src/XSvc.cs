@@ -30,15 +30,6 @@ namespace Z0
             public ApiComments ApiComments(IWfRuntime wf)
                 => Service<ApiComments>(wf);
 
-            public OmniScript OmniScript(IWfRuntime wf)
-                => Service<OmniScript>(wf);
-
-            public WsRegistry WsRegistry(IWfRuntime wf)
-                => Service<WsRegistry>(wf);
-
-            public ProjectScripts ProjectScripts(IWfRuntime wf)
-                => Service<ProjectScripts>(wf);
-
             public Tooling Tooling(IWfRuntime wf)
                 => Service<Tooling>(wf);
 
@@ -66,14 +57,6 @@ namespace Z0
         public static ApiComments ApiComments(this IWfRuntime wf)
             => Services.ApiComments(wf);
 
-        public static OmniScript OmniScript(this IWfRuntime wf)
-            => Services.OmniScript(wf);
-
-        public static WsRegistry WsRegistry(this IWfRuntime wf)
-            => Services.WsRegistry(wf);
-
-        public static ProjectScripts ProjectScripts(this IWfRuntime wf)
-            => Services.ProjectScripts(wf);
 
         public static Tooling Tooling(this IWfRuntime wf)
             => Services.Tooling(wf);             

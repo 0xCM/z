@@ -22,17 +22,17 @@ namespace Z0
             => ref As<T,ulong>(ref src);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref T uint64<T>(in ulong src, out T dst)
+        public static T uint64<T>(in ulong src, out T dst)
         {
             dst = @as<ulong,T>(src);
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref ulong uint64<T>(in T src, out ulong dst)
+        public static ulong uint64<T>(in T src, out ulong dst)
         {
             dst = @as<T,ulong>(src);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>

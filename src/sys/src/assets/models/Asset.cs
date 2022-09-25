@@ -57,7 +57,7 @@ namespace Z0
         public ReadOnlySpan<byte> ResBytes
         {
             [MethodImpl(Inline)]
-            get => view(this);
+            get => sys.view(Address, Size);
         }
 
         [MethodImpl(Inline)]

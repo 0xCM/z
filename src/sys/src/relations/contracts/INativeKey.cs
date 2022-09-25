@@ -23,14 +23,14 @@ namespace Z0
 
     [Free]
     public interface INativeKey<K> : INativeKey, IKeyed<K>
-        where K : unmanaged, IEquatable<K>, IComparable<K>
+       where K : unmanaged, IEquatable<K>, IComparable<K>
     {
-        new K Key {get;}
+       new K Key {get;}
 
-        K IKeyed<K>.Key
-            => Key;
+       K IKeyed<K>.Key
+           => Key;
 
-        ReadOnlySpan<byte> INativeKey.Key
-            => sys.bytes(Key);
+       ReadOnlySpan<byte> INativeKey.Key
+           => sys.bytes(Key);
     }
 }

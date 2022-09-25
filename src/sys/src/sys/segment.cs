@@ -13,11 +13,11 @@ namespace Z0
         /// <param name="cVal">The character output value</param>
         /// <typeparam name="E">The enum type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref char scalar<S>(in S eVal, out char cVal)
+        public static char scalar<S>(in S eVal, out char cVal)
             where S : unmanaged
         {
             cVal = (char)deposit(eVal, out ushort _);
-            return ref cVal;
+            return cVal;
         }
 
         /// <summary>

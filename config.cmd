@@ -70,7 +70,7 @@ set BuildOptions=-graph:true -m:24
 set BuildTool=dotnet build
 set BuildProps=/p:Configuration=%ConfigName% /p:Platform=%PlatformName%
 set BuildProject=%BuildTool% %ProjectPath% %BuildProps% %BuildLogSpec%; %BuildOptions%
-set BuildSln=%BuildTool% %SlnPath% %BuildProps% %BuildLogSpec%; %BuildOptions%
+set BuildSln=%BuildTool% %RootSlnPath% %BuildProps% %BuildLogSpec%; %BuildOptions%
 set BuildShells=%BuildTool% %SlnRoot%\shells\z0.shells.sln %BuildProps% -bl:%BuildLogs%\z0.shells.binlog; %BuildOptions%
 set BuildDeployment=%BuildTool% %~dp0deploy\z0.deploy.sln %BuildProps% -bl:%BuildLogs%\z0.deploy.binlog; %BuildOptions%
 set BuildProjectSln=%BuildTool% %ProjectSln% %BuildProps% %BuildLogSpec%; %BuildOptions%

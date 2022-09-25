@@ -8,7 +8,11 @@ namespace Z0
 
     partial record class ProcExec
     {        
-        public static Task<ExecToken> start(CmdArgs args, WfEmit channel)
+        [Op]
+        public static ProcessAdapter start(ProcessStartSpec spec)
+            => Process.Start(spec);
+
+        public static Task<ExecToken> start(CmdArgs args, IWfChannel channel)
         {
             void status(in string src)
             {
@@ -24,7 +28,7 @@ namespace Z0
             {
                 var ran = ExecToken.Empty;
                 var data = text.emitter();
-                iter(args, arg => data.Append($" {arg}"));
+                iter(args.Values(), arg => data.Append($" {arg}"));
                 var command = cmd(data.Emit());
                 var running = channel.Running($"Executing '{command}'");
                 try

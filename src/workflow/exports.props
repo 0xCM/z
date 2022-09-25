@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Workflow>$(MsBuildThisFileDirectory)z0.workflow.csproj</Workflow>
+  </PropertyGroup>
+</Project>

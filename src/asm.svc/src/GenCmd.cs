@@ -18,6 +18,9 @@ namespace Z0
 
         ApiMd ApiMd => Wf.ApiMd();
 
+        public IProjectWorkspace EtlSource(ProjectId src)
+            => Projects.load(AppDb.Dev($"llvm.models/{src}").Root, src);
+
         /*
         | dec_m16        | dec m16  | FF /1            | Decrement r/m16 by 1.
         | dec_m32        | dec m32  | FF /1            | Decrement r/m32 by 1.
@@ -79,7 +82,7 @@ namespace Z0
             foreach(var mnemonic in sources.Keys)
             {
                 var file = AsmFileSpec.define(mnemonic.Format(), sources[mnemonic].ToArray());
-                var dst = file.Path(AppDb.EtlSource("mc.models.g").SrcDir("asm"));
+                var dst = file.Path(EtlSource("mc.models.g").SrcDir("asm"));
                 EmittedFile(EmittingFile(dst), file.Save(dst));
             }
 
@@ -292,7 +295,7 @@ namespace Z0
             foreach(var mnemonic in sources.Keys)
             {
                 var file = AsmFileSpec.define(mnemonic, sources[mnemonic].ToArray());
-                var dst = file.Path(AppDb.EtlSource("mc.models").SrcDir("asm"));
+                var dst = file.Path(EtlSource("mc.models").SrcDir("asm"));
                 EmittedFile(EmittingFile(dst), file.Save(dst));
             }
 

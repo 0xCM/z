@@ -11,6 +11,7 @@ namespace Z0
 
         
     }
+
     public static partial class XTend
     {
         [MethodImpl(Inline)]

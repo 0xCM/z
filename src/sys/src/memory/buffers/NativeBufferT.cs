@@ -66,13 +66,13 @@ namespace Z0
         public Span<T> Edit
         {
             [MethodImpl(Inline)]
-            get => api.span(this);
+            get => new Span<T>(Handle.ToPointer(), (int)Count);
         }
 
         public ReadOnlySpan<T> View
         {
             [MethodImpl(Inline)]
-            get => api.span(this);
+            get => new Span<T>(Handle.ToPointer(), (int)Count);
         }
 
         [MethodImpl(Inline)]

@@ -22,10 +22,10 @@ namespace Z0
                 => CopyBlock(pDst, pSrc, count* (uint)SizeOf<T>());
 
         [MethodImpl(Options), Op, Closures(Closure)]
-        public static ref readonly Span<T> copy<T>(ReadOnlySpan<T> src, in Span<T> dst)
+        public static Span<T> copy<T>(ReadOnlySpan<T> src, in Span<T> dst)
         {
             src.CopyTo(dst);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>

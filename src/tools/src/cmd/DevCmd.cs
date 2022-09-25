@@ -6,15 +6,12 @@ namespace Z0
 {
     using static sys;
 
-
     public sealed class DevCmd : AppCmdService<DevCmd>
     {
         DevPacks Devpacks => Wf.DevPacks();
 
         public static FolderPath cd()
-        {
-            return new(text.ifempty(Environment.CurrentDirectory, AppDb.Control().Root.Format()));
-        }
+            => new(text.ifempty(Environment.CurrentDirectory, AppDb.Control().Root.Format()));
 
         public static FolderPath cd(CmdArgs args)
         {
@@ -59,7 +56,6 @@ namespace Z0
             {
                 var folders = cd().Folders();
                 iter(folders, f => Channel.Row(f));
-
                 var files = cd().Files(false);
                 iter(files, f => Channel.Row(((FileUri)f)));
             }

@@ -17,6 +17,8 @@ namespace Z0
 
         protected static AppDb AppDb => AppDb.Service;
 
+        protected static EtlDb EtlDb => new EtlDb(AppDb);
+
         [MethodImpl(Inline)]
         public IProjectWorkspace Project()
             => Projects.project();
@@ -54,7 +56,7 @@ namespace Z0
 
         [CmdOp("project")]
         public Outcome LoadProject(CmdArgs args)
-            => LoadProjectSources(AppDb.EtlSource(arg(args, 0).Value));
+            => LoadProjectSources(EtlDb.EtlSource(arg(args, 0).Value));
 
         protected Outcome LoadProjectSources(IProjectWorkspace ws)
         {

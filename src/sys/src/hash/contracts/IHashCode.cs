@@ -19,6 +19,7 @@ namespace Z0
 
         bool INullity.IsEmpty
             => bw64u(Data) == 0;
+
         bool INullity.IsNonEmpty
             => bw64u(Data) != 0;
     }
@@ -34,7 +35,7 @@ namespace Z0
 
         ReadOnlySpan<byte> IHashCode.Data
             => bytes(Value);
-     }
+    }
 
     [Free]
     public interface IHashCode<H,V> : IHashCode<V>

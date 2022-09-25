@@ -152,9 +152,6 @@ namespace Z0
             where T : struct
                 => Settings().Table<T>();
 
-        public IProjectWorkspace EtlSource(ProjectId src)
-            => Projects.load(Dev($"llvm.models/{src}").Root, src);
-
         public FilePath EtlTable<T>(ProjectId project)
             where T : struct
                 => EtlTargets(project).Table<T>(project.Format());

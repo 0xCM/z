@@ -150,7 +150,7 @@ namespace Z0
 
         [CmdOp("cmd")]
         protected void RunCmd(CmdArgs args)
-            => ProcExec.start(args, Emitter);
+            => ProcExec.start(args, Channel);
 
         // tool ilc help
         [CmdOp("tool")]

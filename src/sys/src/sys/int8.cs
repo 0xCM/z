@@ -18,17 +18,17 @@ namespace Z0
                 => As<T?,sbyte?>(ref src);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref T int8<T>(in sbyte src, out T dst)
+        public static T int8<T>(in sbyte src, out T dst)
         {
             dst = @as<sbyte,T>(src);
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref sbyte int8<T>(in T src, out sbyte dst)
+        public static sbyte int8<T>(in T src, out sbyte dst)
         {
             dst = @as<T,sbyte>(src);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
