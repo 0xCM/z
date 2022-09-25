@@ -1,5 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <Cli>$(MsBuildThisFileDirectory)z0.cli.csproj</Cli>
-  </PropertyGroup>
-</Project>
