@@ -68,7 +68,7 @@ namespace Z0
         static SymIdentity identity(FieldInfo field, ushort index, SymExpr expr)
             => string.Format("{0:D3}:{1}:{2}::{3}.{4}({5})",
                     index,
-                    text.bracket((CliToken)field),
+                    text.bracket((EcmaToken)field),
                     field.DeclaringType.Assembly.GetSimpleName(),
                     field.DeclaringType.FullName,
                     field.Name,

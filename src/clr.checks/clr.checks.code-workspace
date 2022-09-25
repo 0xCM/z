@@ -7,7 +7,25 @@
 			"path": "../sys"
 		},
 		{
+			"path": "../events"
+		},
+		{
+			"path": "../files"
+		},
+		{
 			"path": "../clr.query"
+		},
+		{
+			"path": "../api.specs"
+		},
+		{
+			"path": "../process"
+		},
+		{
+			"path": "../native"
+		},
+		{
+			"path": "../diagnostics"
 		},
 		{
 			"path": "../lib"

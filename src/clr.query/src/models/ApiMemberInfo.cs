@@ -18,10 +18,10 @@ namespace Z0
         public ApiClassKind ApiKind;
 
         [Render(16)]
-        public CliToken Token;
+        public EcmaToken Token;
 
         [Render(80)]
-        public CliSig CliSig;
+        public EcmaSig CliSig;
 
         [Render(120)]
         public utf8 DisplaySig;

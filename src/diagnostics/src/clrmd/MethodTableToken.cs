@@ -15,10 +15,10 @@ namespace Z0
             public MemoryAddress Table;
 
             [Render(12)]
-            public CliToken Method;
+            public EcmaToken Method;
 
             [MethodImpl(Inline)]
-            public MethodTableToken(MemoryAddress address, CliToken token)
+            public MethodTableToken(MemoryAddress address, EcmaToken token)
             {
                 Table = address;
                 Method = token;

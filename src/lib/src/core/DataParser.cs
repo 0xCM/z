@@ -211,9 +211,6 @@ namespace Z0
 
         public static Outcome parse(string src, out OpUri dst)
             => ApiIdentity.parse(src, out dst);
-
-        public static Outcome parse(string src, out CliToken dst)
-            => Clr.token(src, out dst);
      }
 
      partial struct Msg

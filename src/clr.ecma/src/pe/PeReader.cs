@@ -12,8 +12,8 @@ namespace Z0
 
     public partial class PeReader : IDisposable
     {
-        public static CliRowIndex index(in PeStream state, Handle handle)
-            => new CliToken(state.Reader.GetToken(handle));
+        public static EcmaRowIndex index(in PeStream state, Handle handle)
+            => new EcmaToken(state.Reader.GetToken(handle));
 
         [MethodImpl(Inline), Op]
         public static PeDirInfo directory(Address32 rva, uint size)
@@ -32,16 +32,16 @@ namespace Z0
 
         readonly FileStream Stream;
 
-        public ReadOnlySpan<ConstantFieldInfo> Constants(ref uint counter)
+        public ReadOnlySpan<EcmaConstField> Constants(ref uint counter)
         {
             var reader = MD;
             var count = ConstantCount();
-            var dst = core.span<ConstantFieldInfo>(count);
+            var dst = core.span<EcmaConstField>(count);
             for(var i=1u; i<=count; i++)
             {
                 var k = MetadataTokens.ConstantHandle((int)i);
                 var entry = reader.GetConstant(k);
-                var parent = new CliRowIndex(MD.GetToken(entry.Parent));
+                var parent = new EcmaRowIndex(MD.GetToken(entry.Parent));
                 var blob = reader.GetBlobBytes(entry.Value);
                 ref var target = ref seek(dst, i - 1u);
                 target.Seq = counter++;

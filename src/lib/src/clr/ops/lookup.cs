@@ -7,7 +7,7 @@ namespace Z0
     partial struct Clr
     {
         [MethodImpl(Inline), Op]
-        public static ClrTypeLookup lookup(Type[] src)
-            => new ClrTypeLookup(src);
+        public static EcmaTypeLookup lookup(Type[] src)
+            => new EcmaTypeLookup(src);
     }
 }

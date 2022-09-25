@@ -67,7 +67,7 @@ namespace Z0
             get => ClrEnumLiteral.@base<E>();
         }
 
-        public CliToken Token
+        public EcmaToken Token
         {
             [MethodImpl(Inline)]
             get => Spec.Token;

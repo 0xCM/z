@@ -8,12 +8,12 @@ namespace Z0
     {
         public readonly ClrArtifactKind Kind;
 
-        public readonly CliToken Token;
+        public readonly EcmaToken Token;
 
         public readonly string Name;
 
         [MethodImpl(Inline)]
-        public ClrArtifactRef(CliToken id, ClrArtifactKind kind, string name)
+        public ClrArtifactRef(EcmaToken id, ClrArtifactKind kind, string name)
         {
             Token = id;
             Kind = kind;

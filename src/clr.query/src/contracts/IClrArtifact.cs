@@ -10,7 +10,7 @@ namespace Z0
         /// <summary>
         /// The artifact metadata token
         /// </summary>
-        CliToken Token {get;}
+        EcmaToken Token {get;}
 
         /// <summary>
         /// The artifact name

@@ -6,19 +6,19 @@ namespace Z0
 {
     partial class PeReader
     {
-        public ReadOnlySpan<CliBlob> ReadBlobs()
+        public ReadOnlySpan<EcmaBlobRow> ReadBlobs()
         {
             var size = (uint)MD.GetHeapSize(HeapIndex.Blob);
             if (size == 0)
-                return Span<CliBlob>.Empty;
+                return Span<EcmaBlobRow>.Empty;
 
             var handle = MetadataTokens.BlobHandle(1);
             var i=0;
-            var values = new List<CliBlob>();
+            var values = new List<EcmaBlobRow>();
             do
             {
                 var value = MD.GetBlobBytes(handle);
-                var row = new CliBlob();
+                var row = new EcmaBlobRow();
                 row.Seq = i++;
                 row.HeapSize = size;
                 row.Offset = (Address32)MD.GetHeapOffset(handle);

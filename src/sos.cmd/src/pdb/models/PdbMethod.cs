@@ -16,10 +16,10 @@ namespace Z0
         }
 
         [Op]
-        public static CliToken token(PdbMethod src)
+        public static EcmaToken token(PdbMethod src)
         {
             HResult result = src.Source.GetToken(out var token);
-            return result ? token : CliToken.Empty;
+            return result ? token : EcmaToken.Empty;
         }
 
         readonly ISymUnmanagedMethod Source;
@@ -42,7 +42,7 @@ namespace Z0
             get => Source != null;
         }
 
-        public CliToken Token
+        public EcmaToken Token
         {
             [MethodImpl(Inline)]
             get => PdbMethod.token(this);

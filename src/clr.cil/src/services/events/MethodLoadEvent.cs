@@ -28,7 +28,7 @@ namespace Z0
         /// <summary>
         /// 0 for dynamic methods and JIT helpers.
         /// </summary>
-        public CliToken MethodToken;
+        public EcmaToken MethodToken;
 
         public MethodFlag MethodFlags;
 

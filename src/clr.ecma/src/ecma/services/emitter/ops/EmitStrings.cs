@@ -27,7 +27,7 @@ namespace Z0
             void Exec()
             {
                 var reader = EcmaReader.create(src);
-                TableEmit(reader.ReadUserStringDetail(), dst.Metadata(EcmaSections.UserStrings).PrefixedTable<CliString>(src.GetSimpleName()), UTF16);
+                TableEmit(reader.ReadUserStringDetail(), dst.Metadata(EcmaSections.UserStrings).PrefixedTable<EcmaString>(src.GetSimpleName()), UTF16);
             }
 
             Try(Exec);
@@ -43,13 +43,23 @@ namespace Z0
         {
             void Exec()
             {
-                var path = dst.Metadata(EcmaSections.SystemStrings).PrefixedTable<CliString>(src.GetSimpleName());
+                var path = dst.Metadata(EcmaSections.SystemStrings).PrefixedTable<EcmaString>(src.GetSimpleName());
                 using var reader = PeReader.create(FS.path(src.Location));
                 TableEmit(reader.ReadSystemStringDetail(), path, UTF16);
             }
             Try(Exec);
         }
 
-        
+        public void EmitSystemStrings(Assembly src, IDbArchive dst)
+        {
+            void Exec()
+            {
+                var path = dst.PrefixedTable<EcmaString>(src.GetSimpleName());
+                using var reader = PeReader.create(FS.path(src.Location));
+                TableEmit(reader.ReadSystemStringDetail(), path, UTF16);
+            }
+            Try(Exec);
+        }
+
     }
 }

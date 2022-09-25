@@ -47,13 +47,13 @@ namespace Z0
             TermCode = 0;
         }
 
-        public CliToken MemberToken
+        public EcmaToken MemberToken
         {
             [MethodImpl(Inline)]
             get => Member.Token;
         }
 
-        public CliSig CliSig
+        public EcmaSig CliSig
         {
             [MethodImpl(Inline)]
             get => Member.CliSig;

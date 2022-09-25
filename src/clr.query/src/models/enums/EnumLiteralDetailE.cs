@@ -50,7 +50,7 @@ namespace Z0
         /// <summary>
         /// The metadata token that identifies the backing field
         /// </summary>
-        public CliToken Token
+        public EcmaToken Token
         {
             [MethodImpl(Inline)]
             get => DefiningField;

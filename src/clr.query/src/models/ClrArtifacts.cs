@@ -13,7 +13,7 @@ namespace Z0
         /// <param name="src">The source artifact</param>
         /// <typeparam name="A">The artifact type</typeparam>
         [MethodImpl(Inline), Op]
-        public static ClrArtifactRef reference(CliToken id, ClrArtifactKind kind, string name)
+        public static ClrArtifactRef reference(EcmaToken id, ClrArtifactKind kind, string name)
             => new ClrArtifactRef(id,kind,name);
 
         /// <summary>

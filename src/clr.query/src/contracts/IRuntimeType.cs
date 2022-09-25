@@ -18,7 +18,7 @@ namespace Z0
         IEnumerable<IRuntimeType> NestedTypes
             => sys.stream<IRuntimeType>();
 
-        CliToken IClrArtifact.Token
+        EcmaToken IClrArtifact.Token
             => Definition.MetadataToken;
     }
 

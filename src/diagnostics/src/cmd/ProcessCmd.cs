@@ -6,11 +6,6 @@ namespace Z0
 {
     using static sys;
 
-    partial class XTend 
-    {
-        public static StackFrameInfo Describe(this StackFrame src)
-            => StackFrameInfo.from(src);
-    }
 
     class ProcessCmd : AppCmdService<ProcessCmd>
     {
@@ -64,16 +59,5 @@ namespace Z0
         void ProcModules(CmdArgs args)
             => ImageMemory.modules(args, Emitter, AppDb.AppData());
 
-        [CmdOp("proc/stack")]
-        void Trace()
-        {
-            var trace = new StackTrace(true);
-            var frames = trace.GetFrames().ToReadOnlySeq();
-            for(var i=0; i<frames.Count; i++)
-            {
-                ref readonly var frame = ref frames[i];
-                Write(frame.Describe());
-            }            
-        }
     }
 }

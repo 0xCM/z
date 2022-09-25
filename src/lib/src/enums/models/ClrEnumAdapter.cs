@@ -21,7 +21,7 @@ namespace Z0
         public ClrEnumAdapter(Type src)
             => Definition = src;
 
-        public CliToken Id
+        public EcmaToken Id
         {
             [MethodImpl(Inline)]
             get => Definition.MetadataToken;

@@ -10,19 +10,19 @@ namespace Z0
 
     partial class PeReader
     {
-        public ReadOnlySeq<CliString> ReadSystemStringDetail()
+        public ReadOnlySeq<EcmaString> ReadSystemStringDetail()
         {
             var reader = MD;
             int size = reader.GetHeapSize(HeapIndex.String);
             if (size == 0)
-                return array<CliString>();
+                return array<EcmaString>();
 
-            var values = list<CliString>();
+            var values = list<EcmaString>();
             var handle = MetadataTokens.StringHandle(0);
             var i=0;
             do
             {
-                values.Add(new CliString(seq: i++, size, (Address32)reader.GetHeapOffset(handle), reader.GetString(handle)));
+                values.Add(new EcmaString(seq: i++, size, (Address32)reader.GetHeapOffset(handle), reader.GetString(handle)));
                 handle = reader.GetNextHandle(handle);
             }
             while (!handle.IsNil);

@@ -13,7 +13,7 @@ namespace Z0
 
         public Type Definition => TD;
 
-        public CliToken Token
+        public EcmaToken Token
         {
             [MethodImpl(Inline)]
             get => Definition.MetadataToken;

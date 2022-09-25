@@ -53,24 +53,24 @@ namespace Z0
             try
             {
                 var name = src.GetSimpleName();
-                var path = dst.Metadata(EcmaSections.FieldDefs).PrefixedTable<FieldDefInfo>(name);
+                var path = dst.Metadata(EcmaSections.FieldDefs).PrefixedTable<EcmaFieldDefInfo>(name);
                 if(path.Exists)
                     Errors.ThrowWithOrigin(AppMsg.FileExists.Format(path));
 
-                var flow = EmittingTable<FieldDefInfo>(path);
+                var flow = EmittingTable<EcmaFieldDefInfo>(path);
                 var reader = EcmaReader.create(src);
                 var handles = reader.FieldDefHandles();
                 var count = handles.Length;
                 using var writer = path.Writer();
-                var formatter = Tables.formatter<FieldDefInfo>();
+                var formatter = Tables.formatter<EcmaFieldDefInfo>();
                 writer.WriteLine(formatter.FormatHeader());
                 for(var j=0; j<count; j++)
                 {
-                    var row = new CliFieldDef();
-                    var info = new FieldDefInfo();
+                    var row = new EcmaFieldDef();
+                    var info = new EcmaFieldDefInfo();
                     ref readonly var handle = ref skip(handles,j);
                     reader.Row(handle, ref row);
-                    info.Token = Clr.token(handle);
+                    info.Token = Ecma.token(handle);
                     info.Component = name;
                     info.Attributes = row.Attributes;
                     info.CliSig = reader.ReadBlob(row.Sig);

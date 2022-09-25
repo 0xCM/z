@@ -16,7 +16,7 @@ namespace Z0
         public ClrMethodAdapter(MethodInfo src)
             => Definition = src;
 
-        public CliToken Token
+        public EcmaToken Token
         {
             [MethodImpl(Inline)]
             get => Definition.MetadataToken;

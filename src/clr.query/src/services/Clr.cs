@@ -9,7 +9,7 @@ namespace Z0
     class Clr
     {
         [MethodImpl(Inline), Op]
-        public static FieldInfo field(Module src, CliToken token)
+        public static FieldInfo field(Module src, EcmaToken token)
             => src.ResolveField((int)token);
 
         [MethodImpl(Inline), Op]
@@ -17,7 +17,7 @@ namespace Z0
             => type.GetField(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
 
         [MethodImpl(Inline), Op]
-        public static MethodBase method(Module src, CliToken token)
+        public static MethodBase method(Module src, EcmaToken token)
             => src.ResolveMethod((int)token);
 
         [MethodImpl(Inline), Op]

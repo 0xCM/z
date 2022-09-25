@@ -31,7 +31,7 @@ namespace Z0
             => new PdbDocument(src, src.GetName(), src.GetDocumentType());
 
         [MethodImpl(Inline), Op]
-        public static HResult<PdbMethod> method(PdbReader reader, CliToken token)
+        public static HResult<PdbMethod> method(PdbReader reader, EcmaToken token)
         {
             HResult result = reader.Provider.GetMethod((int)token, out var accessor);
             if(result)

@@ -6,7 +6,7 @@ namespace Z0
 {
     partial class ClrQuery
     {
-        public static CliSig ResolveSignature(this MethodInfo src)
+        public static EcmaSig ResolveSignature(this MethodInfo src)
         {
             try
             {
@@ -14,7 +14,7 @@ namespace Z0
             }
             catch
             {
-                return CliSig.Empty;
+                return EcmaSig.Empty;
             }
         }
     }

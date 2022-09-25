@@ -11,13 +11,13 @@ namespace Z0
     {
         readonly ulong Data;
 
-        public CliToken OwnerId
+        public EcmaToken OwnerId
         {
             [MethodImpl(Inline)]
             get => (uint)(Data >> 32);
         }
 
-        public CliToken MemberId
+        public EcmaToken MemberId
         {
             [MethodImpl(Inline)]
             get => (uint)(Data);

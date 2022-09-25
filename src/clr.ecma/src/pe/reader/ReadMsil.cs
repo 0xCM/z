@@ -32,8 +32,8 @@ namespace Z0
                         dst.Add(new MsilRow
                         {
                             MethodRva = (Address32)rva,
-                            Token = Clr.token(method),
-                            ImageName = Source.FileName,
+                            Token = Ecma.token(method),
+                            ImageName = Source.FileName.Format(),
                             BodySize = body.Size,
                             LocalInit = body.LocalVariablesInitialized,
                             MaxStack = body.MaxStack,

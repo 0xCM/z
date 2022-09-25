@@ -8,7 +8,7 @@ namespace Z0
 
     partial class EcmaReader
     {
-        public uint Rows(ReadOnlySpan<FieldDefinitionHandle> src, Span<CliFieldDef> dst)
+        public uint Rows(ReadOnlySpan<FieldDefinitionHandle> src, Span<EcmaFieldDef> dst)
         {
             var count = (uint)min(src.Length, dst.Length);
             for(var i=0; i<count; i++)
@@ -16,10 +16,10 @@ namespace Z0
             return count;
         }
 
-        public ReadOnlySpan<CliFieldDef> Rows(ReadOnlySpan<FieldDefinitionHandle> src)
+        public ReadOnlySpan<EcmaFieldDef> Rows(ReadOnlySpan<FieldDefinitionHandle> src)
         {
             var count = (uint)src.Length;
-            var dst = span<CliFieldDef>(count);
+            var dst = span<EcmaFieldDef>(count);
             Rows(src,dst);
             return dst;
         }

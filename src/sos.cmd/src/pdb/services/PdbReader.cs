@@ -57,7 +57,7 @@ namespace Z0
             Source.Dispose();
         }
 
-        public HResult<PdbMethod> Method(CliToken token)
+        public HResult<PdbMethod> Method(EcmaToken token)
             => PdbDocs.method(this, token);
 
         public ReadOnlySpan<PdbMethod> Methods

@@ -10,6 +10,250 @@ namespace Z0
     [ApiHost]
     public class Ecma : WfSvc<Ecma>
     {
+        [MethodImpl(Inline), Op]
+        public static MemberInfo member(Module src, EcmaToken token)
+            => src.ResolveMember((int)token);
+
+        [MethodImpl(Inline), Op]
+        public static FieldInfo field(Module src, EcmaToken token)
+            => src.ResolveField((int)token);
+
+        [MethodImpl(Inline), Op]
+        public static RuntimeTypeHandle typehandle(Module src, EcmaToken token)
+            => src.ModuleHandle.GetRuntimeTypeHandleFromMetadataToken((int)token);
+
+        [MethodImpl(Inline), Op]
+        public static RuntimeMethodHandle methodhandle(Module src, EcmaToken token)
+            => src.ModuleHandle.GetRuntimeMethodHandleFromMetadataToken((int)token);
+
+        [MethodImpl(Inline), Op]
+        public static RuntimeFieldHandle fieldhandle(Module src, EcmaToken token)
+            => src.ModuleHandle.GetRuntimeFieldHandleFromMetadataToken((int)token);
+
+        [MethodImpl(Inline), Op]
+        public static EcmaFieldRow row(FieldInfo src)
+        {
+            var data = Clr.adapt(src);
+            var dst = new EcmaFieldRow();
+            dst.Key = ClrArtifacts.reference(src);
+            dst.DeclaringType = data.DeclaringType.Token;
+            dst.CilType = data.FieldType.Token;
+            dst.Attributes = data.Attributes;
+            dst.Address = data.Address;
+            dst.IsStatic = data.IsStatic;
+            return dst;
+        }
+
+        public static ReadOnlySpan<EcmaSig> sigs(MethodInfo[] src)
+        {
+            var count = src.Length;
+            if(count==0)
+                return default;
+
+            var dst = alloc<EcmaSig>(count);
+            sigs(src, dst);
+            return dst;
+        }
+
+        [Op]
+        public static void sigs(MethodInfo[] src, Span<EcmaSig> dst)
+        {
+            var k = min(sys.count(src), sys.count(dst));
+            if(k != 0)
+            {
+                ref readonly var input = ref first(src);
+                ref var output = ref first(dst);
+                for(var i=0; i<k; i++)
+                    seek(output,i) = sig(skip(input,i));
+            }
+        }
+
+        [MethodImpl(Inline), Op]
+        public static EcmaSig sig(MemberInfo src)
+        {
+            sig(src, out EcmaSig dst);
+            return dst;
+        }
+
+        public static bool sig(MemberInfo src, out EcmaSig dst)
+        {
+            try
+            {
+                dst = src.Module.ResolveSignature(src.MetadataToken);
+                return true;
+            }
+            catch
+            {
+                dst = EcmaSig.Empty;
+                return false;
+            }
+        }
+
+        [MethodImpl(Inline), Op]
+        public static EcmaToken token(Handle handle)
+            => MetadataTokens.GetToken(handle);
+
+        [MethodImpl(Inline), Op]
+        public static EcmaToken token(EntityHandle handle)
+            => MetadataTokens.GetToken(handle);
+
+        [MethodImpl(Inline), Op]
+        public static EcmaToken token(TableIndex table, uint row)
+            => new EcmaToken(((uint)table << 24) | (0xFFFFFF &  row));
+
+        [MethodImpl(Inline), Op, Closures(AllNumeric)]
+        public static EcmaToken token<T>()
+            => new EcmaToken(typeof(T));
+
+        [MethodImpl(Inline), Op]
+        public static EcmaToken token(Type src)
+            => new EcmaToken(src);
+
+        [MethodImpl(Inline), Op]
+        public static EcmaToken token(FieldInfo src)
+            => new EcmaToken(src);
+
+        [MethodImpl(Inline), Op]
+        public static EcmaToken token(PropertyInfo src)
+            => new EcmaToken(src);
+
+        [MethodImpl(Inline), Op]
+        public static EcmaToken token(MethodInfo src)
+            => new EcmaToken(src);
+
+        [MethodImpl(Inline), Op]
+        public static EcmaToken token(ParameterInfo src)
+            => new EcmaToken(src);
+
+        [MethodImpl(Inline), Op]
+        public static EcmaToken token(Assembly src)
+            => new EcmaToken(src);
+
+        [Parser]
+        public static bool parse(string src, out EcmaToken dst)
+        {
+            var i = text.index(src, Chars.Colon);
+            var outcome = Outcome.Empty;
+            dst = EcmaToken.Empty;
+            if(i != NotFound)
+            {
+                outcome = Hex.parse8u(src.LeftOfIndex(i), out var table);
+                if(!outcome)
+                    return outcome;
+
+                outcome = Hex.parse32u(text.right(src,i), out var row);
+                if(!outcome)
+                    return outcome;
+
+                dst = Ecma.token((TableIndex)table, row);
+                return true;
+            }
+            else
+            {
+                outcome = Hex.parse32u(src, out var token);
+                if(!outcome)
+                    return outcome;
+                dst = token;
+                return true;
+            }
+        }
+
+        [MethodImpl(Inline), Op]
+        public static Handle ecmahandle(EcmaHandleData src)
+            => @as<EcmaHandleData,Handle>(src);
+
+        [MethodImpl(Inline), Op]
+        public Handle ecmahandle(EcmaToken src)
+            => ecmahandle(new EcmaHandleData(src.Table, src.Row));
+
+        [MethodImpl(Inline), Op]
+        public static EcmaHandleData datahandle(Handle src)
+            => @as<Handle,EcmaHandleData>(src);
+
+        [MethodImpl(Inline), Op]
+        public static EcmaHandleData datahandle(EntityHandle src)
+        {
+            var row = uint32(src) & 0xFFFFFF;
+            var kind = (EcmaTableKind)(uint32(src) >> 24);
+            return new EcmaHandleData(kind,row);
+        }
+
+        [MethodImpl(Inline), Op]
+        public static EcmaRowKey key(Handle src)
+        {
+            var data = datahandle(src);
+            return new EcmaRowKey(data.Table, data.RowId);
+        }
+
+        [MethodImpl(Inline), Op]
+        public static EcmaRowKey key(EntityHandle src)
+        {
+            var data = datahandle(src);
+            return new EcmaRowKey(data.Table, data.RowId);
+        }
+
+        [MethodImpl(Inline), Op]
+        public static EcmaHandle<RuntimeMethodHandle> MethodHandle(Module src, EcmaToken token)
+            => new EcmaHandle<RuntimeMethodHandle>(ClrArtifactKind.Method, token, src.ModuleHandle.GetRuntimeMethodHandleFromMetadataToken((int)token));
+
+        [MethodImpl(Inline), Op]
+        public static EcmaHandle<RuntimeFieldHandle> FieldHandle(Module src, EcmaToken token)
+            => new EcmaHandle<RuntimeFieldHandle>(ClrArtifactKind.Field, token, src.ModuleHandle.GetRuntimeFieldHandleFromMetadataToken((int)token));
+
+        [MethodImpl(Inline), Op]
+        public static EcmaHandle<RuntimeTypeHandle> TypeHandle(Module src, EcmaToken token)
+            => new EcmaHandle<RuntimeTypeHandle>(ClrArtifactKind.Type, token, src.ModuleHandle.GetRuntimeTypeHandleFromMetadataToken((int)token));
+
+        [Op]
+        public static TableIndex? index(EntityHandle handle)
+        {
+            if(MetadataTokens.TryGetTableIndex(handle.Kind, out var table))
+                return table;
+            else
+                return null;
+        }
+
+        [Op]
+        public static TableIndex? index(Handle handle)
+        {
+            if(MetadataTokens.TryGetTableIndex(handle.Kind, out var table))
+                return table;
+            else
+                return null;
+        }
+
+        [MethodImpl(Inline), Op]
+        public static EcmaTableKind table(Handle handle)
+            => EcmaHandleData.from(handle).Table;
+
+        [MethodImpl(Inline), Op]
+        public static uint row(EntityHandle src)
+            => uint32(src) & 0xFFFFFF;
+
+        // [Op]
+        // public static uint row(EntityHandle handle)
+        //     => uint32(handle) & 0xFFFFFF;        
+
+        [MethodImpl(Inline), Op]
+        public static Type type(Module src, EcmaToken token)
+            => src.ResolveType((int)token);
+
+        [MethodImpl(Inline), Op]
+        public static bool type(in EcmaTypeLookup src, string name, out Type dst)
+        {
+            dst = default;
+            for(var i=0u; i<src.Count; i++)
+            {
+                ref readonly var x = ref skip(src.Pairs,i);
+                if(x.Value.Name == name)
+                {
+                    dst = x.Value;
+                    return true;
+                }
+            }
+            return false;
+        }
+
         const NumericKind Closure = UnsignedInts;
 
         ApiMd ApiMd => Wf.ApiMd();
@@ -184,49 +428,33 @@ namespace Z0
         public static EcmaDataSource source(PEMemoryBlock src)
             => new EcmaDataSource(src);
 
-        [MethodImpl(Inline), Op]
-        public static CliRowKey key(Handle src)
-        {
-            var data = CliHandleData.from(src);
-            return new CliRowKey(data.Table, data.RowId);
-        }
-
-        [MethodImpl(Inline), Op]
-        public static CliRowKey key(EntityHandle src)
-        {
-            var dat = CliHandleData.from(src);
-            return new CliRowKey(dat.Table, dat.RowId);
-        }
 
         [MethodImpl(Inline)]
-        public static CliRowKey<K> key<K,T>(T handle, K k = default)
-            where K : unmanaged, ICliTableKind<K>
+        public static EcmaRowKey<K> key<K,T>(T handle, K k = default)
+            where K : unmanaged, IEcmaTableKind<K>
             where T : unmanaged
                 => uint32(handle);
 
-        [MethodImpl(Inline), Op]
-        public static CliTableKind table(Handle handle)
-            => CliHandleData.from(handle).Table;
 
         [MethodImpl(Inline), Op]
-        public static CliTableKind table(Type src)
-            => (CliTableKind)(u32(src.MetadataToken) >> 24);
+        public static EcmaTableKind table(Type src)
+            => (EcmaTableKind)(u32(src.MetadataToken) >> 24);
 
         [MethodImpl(Inline), Op]
-        public static CliTableKind table(MethodInfo src)
-            => (CliTableKind)(u32(src.MetadataToken) >> 24);
+        public static EcmaTableKind table(MethodInfo src)
+            => (EcmaTableKind)(u32(src.MetadataToken) >> 24);
 
         [MethodImpl(Inline), Op]
-        public static CliTableKind table(EventInfo src)
-            => (CliTableKind)(u32(src.MetadataToken) >> 24);
+        public static EcmaTableKind table(EventInfo src)
+            => (EcmaTableKind)(u32(src.MetadataToken) >> 24);
 
         [MethodImpl(Inline), Op]
-        public static CliTableKind table(FieldInfo src)
-            => (CliTableKind)(u32(src.MetadataToken) >> 24);
+        public static EcmaTableKind table(FieldInfo src)
+            => (EcmaTableKind)(u32(src.MetadataToken) >> 24);
 
         [MethodImpl(Inline), Op]
-        public static CliTableKind table(PropertyInfo src)
-             => (CliTableKind)(u32(src.MetadataToken) >> 24);
+        public static EcmaTableKind table(PropertyInfo src)
+             => (EcmaTableKind)(u32(src.MetadataToken) >> 24);
 
         [MethodImpl(Inline), Op]
         public static uint row(Type src)
@@ -240,28 +468,25 @@ namespace Z0
         public static uint row(EventInfo src)
             => u32(src.MetadataToken) & 0xFFFFFF;
 
-        [MethodImpl(Inline), Op]
-        public static uint row(EntityHandle src)
-            => uint32(src) & 0xFFFFFF;
 
-        public static Index<byte,CliTableKind> TableKinds()
+        public static Index<byte,EcmaTableKind> TableKinds()
         {
-            const byte MaxTableId = (byte)CliTableKind.CustomDebugInformation;
-            var values = Enums.literals<CliTableKind,byte>().Where(x => x < MaxTableId).Sort().View;
-            var src = recover<CliTableKind>(values);
-            var buffer = alloc<CliTableKind>(MaxTableId + 1);
+            const byte MaxTableId = (byte)EcmaTableKind.CustomDebugInformation;
+            var values = Enums.literals<EcmaTableKind,byte>().Where(x => x < MaxTableId).Sort().View;
+            var src = recover<EcmaTableKind>(values);
+            var buffer = alloc<EcmaTableKind>(MaxTableId + 1);
             ref var dst = ref first(buffer);
             for(byte i=0; i<values.Length; i++)
-                seek(dst,skip(values,i)) = (CliTableKind)i;
+                seek(dst,skip(values,i)) = (EcmaTableKind)i;
             return buffer;
         }
 
-        public static CliRowKeys keys<K,T>(ReadOnlySpan<T> handles, K k = default)
+        public static EcmaRowKeys keys<K,T>(ReadOnlySpan<T> handles, K k = default)
             where T : unmanaged
-            where K : unmanaged, ICliTableKind<K>
+            where K : unmanaged, IEcmaTableKind<K>
         {
             var count = handles.Length;
-            var buffer = alloc<CliRowKey>(count);
+            var buffer = alloc<EcmaRowKey>(count);
             ref var dst = ref first(buffer);
             for(var i=0; i<count; i++)
                 seek(dst,i) = key<K,T>(skip(handles,i));
@@ -306,13 +531,13 @@ namespace Z0
         }
 
         public static string heapinfo<T>(T src)
-            where T : ICliHeap
+            where T : IEcmaHeap
                 => string.Format("{0,-20} | {1} | {2}", src.HeapKind, src.BaseAddress, src.Size);
 
-        public static Index<CliBlobHeap> blobs(ReadOnlySpan<Assembly> src)
+        public static Index<EcmaBlobHeap> blobs(ReadOnlySpan<Assembly> src)
         {
             var count = src.Length;
-            var buffer = alloc<CliBlobHeap>(count);
+            var buffer = alloc<EcmaBlobHeap>(count);
             ref var dst = ref first(buffer);
             for(var i=0; i<count; i++)
             {
@@ -323,10 +548,10 @@ namespace Z0
             return buffer;
         }
 
-        public static Index<CliGuidHeap> guids(ReadOnlySpan<Assembly> src)
+        public static Index<EcmaGuidHeap> guids(ReadOnlySpan<Assembly> src)
         {
             var count = src.Length;
-            var buffer = alloc<CliGuidHeap>(count);
+            var buffer = alloc<EcmaGuidHeap>(count);
             ref var dst = ref first(buffer);
             for(var i=0; i<count; i++)
             {
@@ -337,24 +562,24 @@ namespace Z0
             return buffer;
         }
 
-        public static Index<CliStringHeap> strings(ReadOnlySpan<Assembly> src)
+        public static Index<EcmaStringHeap> strings(ReadOnlySpan<Assembly> src)
         {
             var count = src.Length;
-            var buffer = alloc<CliStringHeap>(count*2);
+            var buffer = alloc<EcmaStringHeap>(count*2);
             ref var dst = ref first(buffer);
             var j=0;
             for(var i=0; i<count; i++)
             {
                 ref readonly var component = ref skip(src,i);
                 var reader = EcmaReader.create(component);
-                seek(dst,j++) = reader.ReadStringHeap(CliStringKind.System);
-                seek(dst,j++) = reader.ReadStringHeap(CliStringKind.User);
+                seek(dst,j++) = reader.ReadStringHeap(EcmaStringKind.System);
+                seek(dst,j++) = reader.ReadStringHeap(EcmaStringKind.User);
             }
             return buffer;
         }
 
         [MethodImpl(Inline), Op]
-        public static unsafe uint count(in CliStringHeap src)
+        public static unsafe uint count(in EcmaStringHeap src)
         {
             var counter = 0u;
             var pCurrent = src.BaseAddress.Pointer<char>();
@@ -368,7 +593,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static unsafe uint terminators(in CliStringHeap src, Span<uint> dst)
+        public static unsafe uint terminators(in EcmaStringHeap src, Span<uint> dst)
         {
             var counter = 0u;
             var pCurrent = src.BaseAddress.Pointer<char>();
@@ -383,7 +608,7 @@ namespace Z0
             return counter;
         }
 
-        public static Index<uint> terminators(in CliStringHeap src)
+        public static Index<uint> terminators(in EcmaStringHeap src)
         {
             var dst = alloc<uint>(count(src));
             terminators(src,dst);

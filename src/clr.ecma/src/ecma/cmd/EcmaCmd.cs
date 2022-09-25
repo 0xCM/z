@@ -38,9 +38,13 @@ namespace Z0
         void EmitApiHex()
             => EcmaEmitter.EmitLocatedMetadata(ModuleArchives.parts(), AppDb.ApiTargets("ecma/hex"), 64);
 
-        [CmdOp("ecma/emit/refs")]
+        [CmdOp("ecma/emit/assembly-refs")]
+        void EmitAssmeblyRefs()
+            => EcmaEmitter.EmitAssemblyRefs(ApiMd.Parts, AppDb.ApiTargets("ecma"));
+
+        [CmdOp("ecma/emit/member-refs")]
         void EmitMemberRefs()
-            => EcmaEmitter.EmitRefs(AppDb.ApiTargets("ecma"));
+            => EcmaEmitter.EmitMemberRefs(ApiMd.Parts, AppDb.ApiTargets("ecma/member-refs"));
 
         [CmdOp("ecma/emit/strings")]
         void EmitStrings()

@@ -21,8 +21,8 @@ namespace Z0
             => ConstantRowCount()* ConstantRowSize();
 
         [MethodImpl(Inline), Op]
-        public static Handle handle(CliHandleData src)
-            => @as<CliHandleData,Handle>(src);
+        public static Handle handle(EcmaHandleData src)
+            => @as<EcmaHandleData,Handle>(src);
 
         [Op]
         public ReadOnlySpan<AssemblyReferenceHandle> AssemblyRefHandles()

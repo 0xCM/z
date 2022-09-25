@@ -8,16 +8,16 @@ namespace Z0
 
     partial class EcmaReader
     {
-        public ReadOnlySpan<MethodDefRelations> ReadMethodDefRows()
+        public ReadOnlySpan<EcmaMethodRelations> ReadMethodDefRows()
         {
             var src = MethodDefHandles();
             var count = src.Length;
-            var dst = alloc<MethodDefRelations>(count);
+            var dst = alloc<EcmaMethodRelations>(count);
             Read(src,dst);
             return dst;
         }
 
-        public uint Read(ReadOnlySpan<MethodDefinitionHandle> src, Span<MethodDefRelations> dst)
+        public uint Read(ReadOnlySpan<MethodDefinitionHandle> src, Span<EcmaMethodRelations> dst)
         {
             var count = (uint)min(src.Length, dst.Length);
             for(var i=0; i<count; i++)
@@ -26,10 +26,10 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public ref MethodDefRelations Read(MethodDefinitionHandle handle, ref MethodDefRelations dst)
+        public ref EcmaMethodRelations Read(MethodDefinitionHandle handle, ref EcmaMethodRelations dst)
         {
             var src = MD.GetMethodDefinition(handle);
-            dst.Token = Clr.token(handle);
+            dst.Token = Ecma.token(handle);
             dst.Attributes = src.Attributes;
             dst.ImplAttributes  = src.ImplAttributes;
             dst.Rva = src.RelativeVirtualAddress;
@@ -46,11 +46,11 @@ namespace Z0
             return ref dst;
         }
 
-        public ReadOnlySpan<MethodDefInfo> ReadMethodDefInfo()
+        public ReadOnlySpan<EcmaMethodDef> ReadMethodDefInfo()
         {
             var rows = ReadMethodDefRows();
             var count = rows.Length;
-            var dst = span<MethodDefInfo>(count);
+            var dst = span<EcmaMethodDef>(count);
             for(var i=0; i<count; i++)
             {
                 ref readonly var row = ref skip(rows,i);

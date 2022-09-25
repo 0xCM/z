@@ -35,7 +35,7 @@ namespace Z0
             get => DeclaringType.Definition.GetEnumUnderlyingType();
         }
 
-        public CliToken Token
+        public EcmaToken Token
         {
             [MethodImpl(Inline)]
             get => Definition.MetadataToken;

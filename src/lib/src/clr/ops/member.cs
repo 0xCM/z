@@ -7,10 +7,6 @@ namespace Z0
 
     partial struct Clr
     {
-        [MethodImpl(Inline), Op]
-        public static MemberInfo member(Module src, CliToken token)
-            => src.ResolveMember((int)token);
-
         /// <summary>
         /// Defines a tagged member
         /// </summary>

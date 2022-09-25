@@ -27,7 +27,7 @@ namespace Z0
         /// The metadata token of the defining type
         /// </summary>
         [Render(8)]
-        public CliToken TypeId;
+        public EcmaToken TypeId;
 
         /// <summary>
         /// The name of the literal identifier
@@ -39,7 +39,7 @@ namespace Z0
         /// The metadata token of the defining field
         /// </summary>
         [Render(8)]
-        public CliToken FieldId;
+        public EcmaToken FieldId;
 
         /// <summary>
         /// The kind of primitive specialized by the enum

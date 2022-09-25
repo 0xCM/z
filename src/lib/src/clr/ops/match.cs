@@ -7,7 +7,7 @@ namespace Z0
     partial struct Clr
     {
         [Op]
-        public static bool match(Index<Type> src, CliToken id, out Type matched)
+        public static bool match(Index<Type> src, EcmaToken id, out Type matched)
         {
             for(var i=0; i<src.Length; i++)
             {

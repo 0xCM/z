@@ -7,12 +7,12 @@ namespace Z0
     partial class EcmaReader
     {
         [Op]
-        public CliBlob ReadBlobInfo(BlobHandle handle, Count seq)
+        public EcmaBlobRow ReadBlobInfo(BlobHandle handle, Count seq)
         {
             var offset = (Address32)MD.GetHeapOffset(handle);
             var value = MD.GetBlobBytes(handle) ?? core.array<byte>();
             var size = (uint)MD.GetHeapSize(HeapIndex.Blob);
-            var row = new CliBlob();
+            var row = new EcmaBlobRow();
             row.Seq = seq;
             row.HeapSize = (uint)MD.GetHeapSize(HeapIndex.Blob);
             row.Offset = (Address32)MD.GetHeapOffset(handle);

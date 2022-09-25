@@ -14,7 +14,7 @@ namespace Z0
         public ClrParameterAdapter(R.ParameterInfo src)
             => Definition = src;
 
-        public CliToken Token
+        public EcmaToken Token
         {
             [MethodImpl(Inline)]
             get => Definition.MetadataToken;

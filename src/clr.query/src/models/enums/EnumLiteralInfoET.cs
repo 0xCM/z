@@ -8,7 +8,7 @@ namespace Z0
         where E : unmanaged, Enum
         where T : unmanaged
     {
-        public readonly CliToken Token;
+        public readonly EcmaToken Token;
 
         public readonly uint Position;
 
@@ -19,7 +19,7 @@ namespace Z0
         public readonly T Scalar;
 
         [MethodImpl(Inline)]
-        public EnumLiteralInfo(CliToken token, uint pos, string name, E literal, T scalar)
+        public EnumLiteralInfo(EcmaToken token, uint pos, string name, E literal, T scalar)
         {
             Token = token;
             Position = pos;

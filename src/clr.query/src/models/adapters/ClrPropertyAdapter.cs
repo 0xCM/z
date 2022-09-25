@@ -12,7 +12,7 @@ namespace Z0
         public ClrPropertyAdapter(PropertyInfo data)
             => Definition = data;
 
-        public CliToken Token
+        public EcmaToken Token
         {
             [MethodImpl(Inline)]
             get => Definition.MetadataToken;

@@ -30,7 +30,7 @@ namespace Z0
 
             public readonly MemoryAddress Module;
 
-            public readonly CliToken MetadataToken;
+            public readonly EcmaToken MetadataToken;
 
             public readonly MemoryAddress GCInfo;
 

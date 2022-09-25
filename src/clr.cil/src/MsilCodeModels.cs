@@ -15,7 +15,7 @@ namespace Z0
             => new MetadataVisualizer(src,dst);
 
         [Op]
-        public static string format(CliSig src)
+        public static string format(EcmaSig src)
             => DefaultMsilFormatProvider.Instance.SigByteArrayToString(src);
 
         public static ReadOnlySpan<MsilOpCode> opcodes()

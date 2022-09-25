@@ -11,7 +11,11 @@ namespace Z0
             => src.Method;
 
         [MethodImpl(Inline), Op]
-        public static MethodBase method(Module src, CliToken token)
+        public static string @string(Module module, EcmaToken token)
+            => module.ResolveString((int)token);
+
+        [MethodImpl(Inline), Op]
+        public static MethodBase method(Module src, EcmaToken token)
             => src.ResolveMethod((int)token);
 
         [MethodImpl(Inline), Op]

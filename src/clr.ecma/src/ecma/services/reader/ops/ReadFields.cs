@@ -19,7 +19,7 @@ namespace Z0
                 ref readonly var handle = ref skip(handles,i);
                 var entry = reader.GetFieldDefinition(handle);
                 ref var field = ref seek(dst,i);
-                field.Token = Clr.token(handle);
+                field.Token = Ecma.token(handle);
                 field.Offset = (uint)entry.GetOffset();
                 field.Rva = entry.GetRelativeVirtualAddress();
                 field.FieldName = MD.GetString(entry.Name);
@@ -29,12 +29,12 @@ namespace Z0
             return dst;
         }
 
-        CliFieldName ReadFieldName(StringHandle handle, Count seq)
+        EcmaName ReadFieldName(StringHandle handle, Count seq)
         {
             var value = MD.GetString(handle);
             var offset = MD.GetHeapOffset(handle);
             var size = MD.GetHeapSize(HeapIndex.String);
-            return new CliFieldName(seq, size, (Address32)offset, value);
+            return new EcmaName(seq, size, (Address32)offset, value);
         }
     }
 }

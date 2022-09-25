@@ -21,7 +21,7 @@ namespace Z0
 
         public ApiMsil Msil;
 
-        public CliSig CliSig;
+        public EcmaSig CliSig;
 
         public ByteSize RawSize
         {

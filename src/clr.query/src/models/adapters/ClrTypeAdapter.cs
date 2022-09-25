@@ -23,7 +23,7 @@ namespace Z0
             get => Definition.Assembly;
         }
 
-        public CliToken Token
+        public EcmaToken Token
         {
             [MethodImpl(Inline)]
             get => Definition.MetadataToken;

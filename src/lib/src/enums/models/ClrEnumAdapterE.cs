@@ -21,7 +21,7 @@ namespace Z0
             get => _Fields.Count;
         }
 
-        public CliToken Token
+        public EcmaToken Token
         {
             [MethodImpl(Inline)]
             get => Definition.MetadataToken;

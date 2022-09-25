@@ -6,7 +6,7 @@ namespace Z0
 {
     public readonly record struct WfStepId : IDataType<WfStepId>, IDataString
     {
-        public readonly CliToken HostKey;
+        public readonly uint HostKey;
 
         public readonly string HostName;
 
@@ -16,7 +16,7 @@ namespace Z0
         public WfStepId(string name)
         {
             HostName = name;
-            HostKey = CliToken.Empty;
+            HostKey = 0;
             HostIdentifier = HostName.Contains(Chars.Comma) && HostName.Contains(Chars.Dot) ? HostName.LeftOfFirst(Chars.Comma).RightOfLast(Chars.Dot) : HostName;
         }
 
@@ -24,7 +24,7 @@ namespace Z0
         public WfStepId(Type host)
         {
             HostName = host.AssemblyQualifiedName;
-            HostKey = host.MetadataToken;
+            HostKey = (uint)host.MetadataToken;
             HostIdentifier = HostName.Contains(Chars.Comma) && HostName.Contains(Chars.Dot) ? HostName.LeftOfFirst(Chars.Comma).RightOfLast(Chars.Dot) : HostName;
         }
 

@@ -6,7 +6,7 @@ namespace Z0
 {
     public struct PdbMethodInfo
     {
-        public CliToken Token;
+        public EcmaToken Token;
 
         public Index<PdbSeqPoint> SequencePoints;
 

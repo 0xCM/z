@@ -12,7 +12,7 @@ namespace Z0
         string IClrArtifact.Name
             => Definition.Name;
 
-        CliToken IClrArtifact.Token
+        EcmaToken IClrArtifact.Token
             => Definition.MetadataToken;
     }
 

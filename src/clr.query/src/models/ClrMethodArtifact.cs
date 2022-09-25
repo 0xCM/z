@@ -103,7 +103,7 @@ namespace Z0
 
         public ClrMethodArtifact()
         {
-            Id = CliToken.Empty;
+            Id = EcmaToken.Empty;
             MethodName = EmptyString;
             DefiningAssembly = ClrAssemblyName.Empty;
             DefiningModule = EmptyString;
@@ -113,7 +113,7 @@ namespace Z0
             TypeParameters = sys.empty<string>();
         }
 
-        public CliToken Id;
+        public EcmaToken Id;
 
         public @string MethodName;
 
@@ -132,7 +132,7 @@ namespace Z0
         public MethodDisplaySig DisplaySig
             => new MethodDisplaySig(format(this));
 
-        CliToken IClrArtifact.Token
+        EcmaToken IClrArtifact.Token
             => Id;
 
         string IClrArtifact.Name

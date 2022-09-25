@@ -15,9 +15,9 @@ namespace Z0
         {
             void Exec()
             {
-                var path = dst.Metadata(EcmaSections.Methods).PrefixedTable<MethodDefInfo>(src.GetSimpleName());
-                var formatter = Tables.formatter<MethodDefInfo>();
-                var flow = EmittingTable<MethodDefInfo>(path);
+                var path = dst.Metadata(EcmaSections.Methods).PrefixedTable<EcmaMethodDef>(src.GetSimpleName());
+                var formatter = Tables.formatter<EcmaMethodDef>();
+                var flow = EmittingTable<EcmaMethodDef>(path);
                 using var writer = path.Writer();
                 writer.WriteLine(formatter.FormatHeader());
                 var reader = EcmaReader.create(src);

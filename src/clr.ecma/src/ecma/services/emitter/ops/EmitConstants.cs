@@ -16,9 +16,9 @@ namespace Z0
             try
             {
                 var counter = 0u;
-                var target = dst.Metadata(EcmaSections.ConstFields).PrefixedTable<ConstantFieldInfo>(src.GetSimpleName());
-                var flow = EmittingTable<ConstantFieldInfo>(target);
-                var formatter = Tables.formatter<ConstantFieldInfo>();
+                var target = dst.Metadata(EcmaSections.ConstFields).PrefixedTable<EcmaConstField>(src.GetSimpleName());
+                var flow = EmittingTable<EcmaConstField>(target);
+                var formatter = Tables.formatter<EcmaConstField>();
                 using var writer = target.Writer();
                 writer.WriteLine(formatter.FormatHeader());
                 using var reader = PeReader.create(src.Path());

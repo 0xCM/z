@@ -46,13 +46,13 @@ namespace Z0
             get => OpUri.Host;
         }
 
-        public CliSig CliSig
+        public EcmaSig CliSig
         {
              [MethodImpl(Inline)]
              get => Msil.CliSig;
         }
 
-        public CliToken Token
+        public EcmaToken Token
         {
             [MethodImpl(Inline)]
             get => Msil.Token;

@@ -8,10 +8,10 @@ namespace Z0
 
     partial class EcmaReader
     {
-        public ReadOnlySpan<string> ReadStrings(CliStringKind kind)
+        public ReadOnlySpan<string> ReadStrings(EcmaStringKind kind)
             => kind switch {
-                CliStringKind.User => ReadUserStrings(),
-                CliStringKind.System => ReadSystemStrings(),
+                EcmaStringKind.User => ReadUserStrings(),
+                EcmaStringKind.System => ReadSystemStrings(),
                 _ => default
             };
 

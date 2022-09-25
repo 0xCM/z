@@ -6,7 +6,7 @@ namespace Z0
 {
     partial class EcmaReader
     {
-        public ref CliAssemblyRef Row(AssemblyReferenceHandle handle, ref CliAssemblyRef dst)
+        public ref EcmaAssemblyRef Row(AssemblyReferenceHandle handle, ref EcmaAssemblyRef dst)
         {
             var src = MD.GetAssemblyReference(handle);
             dst.Culture = src.Culture;
@@ -18,7 +18,7 @@ namespace Z0
             return ref dst;
         }
 
-        public ref TypeDefRow Row(TypeDefinitionHandle handle, ref TypeDefRow dst)
+        public ref EcmaTypeDef Row(TypeDefinitionHandle handle, ref EcmaTypeDef dst)
         {
             var src = MD.GetTypeDefinition(handle);
             dst.Name = src.Name;
@@ -29,7 +29,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public ref CliAttribute Row(CustomAttribute src, ref CliAttribute dst)
+        public ref EcmaAttribute Row(CustomAttribute src, ref EcmaAttribute dst)
         {
             dst.Parent = src.Parent;
             dst.Constructor = src.Constructor;
@@ -39,7 +39,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public ref CliFieldDef Row(FieldDefinitionHandle handle, ref CliFieldDef dst)
+        public ref EcmaFieldDef Row(FieldDefinitionHandle handle, ref EcmaFieldDef dst)
         {
             var src = MD.GetFieldDefinition(handle);
             dst.Attributes = src.Attributes;

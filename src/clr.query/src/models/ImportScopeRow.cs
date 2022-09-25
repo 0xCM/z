@@ -4,11 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [CliRecord(CliTableKind.ImportScope), StructLayout(LayoutKind.Sequential)]
+    [EcmaRecord(EcmaTableKind.ImportScope), StructLayout(LayoutKind.Sequential)]
     public struct ImportScopeRow
     {
         [Render(12)]
-        public CliBlobIndex Imports;
+        public EcmaBlobIndex Imports;
     }
     
 }

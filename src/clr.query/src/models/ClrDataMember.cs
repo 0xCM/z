@@ -81,7 +81,7 @@ namespace Z0
             get => IsField ? ClrArtifactKind.Field : ClrArtifactKind.Assembly;
         }
 
-        public CliToken Token
+        public EcmaToken Token
         {
             [MethodImpl(Inline)]
             get => Definition.MetadataToken;

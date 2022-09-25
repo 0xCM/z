@@ -34,7 +34,7 @@ namespace Z0
             get => Definition.IsStatic;
         }
 
-        public CliToken Token
+        public EcmaToken Token
         {
             [MethodImpl(Inline)]
             get => Definition.MetadataToken;

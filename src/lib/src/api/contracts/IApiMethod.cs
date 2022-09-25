@@ -22,7 +22,7 @@ namespace Z0
         /// <summary>
         /// The clr metadata token
         /// </summary>
-        CliToken Token
+        EcmaToken Token
             => Method;
 
         /// <summary>

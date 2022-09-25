@@ -16,7 +16,7 @@ namespace Z0
         public PartName Part;
 
         [Render(12)]
-        public CliToken Token;
+        public EcmaToken Token;
 
         [Render(16)]
         public MemoryAddress Address;

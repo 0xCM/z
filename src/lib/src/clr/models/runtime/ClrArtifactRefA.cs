@@ -18,7 +18,7 @@ namespace Z0
             get => Artifact.Kind;
         }
 
-        public CliToken Token
+        public EcmaToken Token
         {
             [MethodImpl(Inline)]
             get => Artifact.Token;

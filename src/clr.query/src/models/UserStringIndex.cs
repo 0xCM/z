@@ -5,9 +5,9 @@
 namespace Z0
 {
 
-    public readonly struct UserStringIndex : ICliHeapKey<UserStringIndex>
+    public readonly struct UserStringIndex : IEcmaHeapKey<UserStringIndex>
     {
-        public CliHeapKind HeapKind => CliHeapKind.UserString;
+        public EcmaHeapKind HeapKind => EcmaHeapKind.UserString;
 
         public uint Value {get;}
 
@@ -18,7 +18,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public static implicit operator CliHeapKey(UserStringIndex src)
-            => new CliHeapKey(src.HeapKind, src.Value);
+        public static implicit operator EcmaHeapKey(UserStringIndex src)
+            => new EcmaHeapKey(src.HeapKind, src.Value);
     }
 }

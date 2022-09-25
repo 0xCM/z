@@ -97,7 +97,7 @@ namespace Msil
             sw.WriteLine("  .maxstack " + reader.ILProvider.MaxStackSize);
 
             byte[] sig = reader.ILProvider.GetLocalSignature();
-            var lsp = new CliLocalSigParser(reader.Resolver, typeFactory);
+            var lsp = new EcmaLocalSigParser(reader.Resolver, typeFactory);
             var locals = default(Type[]);
             if (lsp.Parse(sig, out locals) && locals.Length > 0)
             {

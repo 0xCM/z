@@ -9,10 +9,10 @@ namespace Z0
     partial class EcmaReader
     {
         [Op]
-        public CliRowKeys Keys(ParameterHandleCollection src)
+        public EcmaRowKeys Keys(ParameterHandleCollection src)
         {
             var count = src.Count;
-            var buffer = core.alloc<CliRowKey>(count);
+            var buffer = core.alloc<EcmaRowKey>(count);
             var i=0;
             ref var dst = ref first(buffer);
             foreach(var handle in src)
@@ -21,7 +21,7 @@ namespace Z0
         }
 
         [Op]
-        public ReadOnlySpan<CliRowKey> IntefaceImplKeys(TypeDefinition src)
+        public ReadOnlySpan<EcmaRowKey> IntefaceImplKeys(TypeDefinition src)
             => src.GetInterfaceImplementations().Map(x => Ecma.key(MD.GetInterfaceImplementation(x).Interface)).ToReadOnlySpan();
     }
 }

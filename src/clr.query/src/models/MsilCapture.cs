@@ -12,7 +12,7 @@ namespace Z0
         public const byte FieldCount = 4;
 
         [Render(16)]
-        public CliToken Token;
+        public EcmaToken Token;
 
         [Render(16)]
         public MemoryAddress BaseAddress;

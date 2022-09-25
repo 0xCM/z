@@ -12,7 +12,7 @@ namespace Z0
 
         ApiMsil Msil {get;}
 
-        CliSig CliSig {get;}
+        EcmaSig CliSig {get;}
 
     }
 
