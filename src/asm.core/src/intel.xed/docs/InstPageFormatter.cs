@@ -7,7 +7,7 @@ namespace Z0
 {
     using System.Linq;
 
-    using static core;
+    using static sys;
     using static XedRules;
     using static XedModels;
     using static XedRules.InstRender;

@@ -4,11 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
-
     /// <summary>
     /// Defines a typed logic expression over one or more variables
     /// </summary>
@@ -30,6 +25,19 @@ namespace Z0
         {
             BaseExpr = baseExpr;
             Vars = variables;
+        }
+
+
+        public bool IsEmpty
+        {
+            [MethodImpl(Inline)]
+            get => BaseExpr is null;
+        }
+
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => BaseExpr is not null;
         }
 
         ILogicExpr IVariedLogicExpr.BaseExpr

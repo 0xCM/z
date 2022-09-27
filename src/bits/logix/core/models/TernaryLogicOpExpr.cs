@@ -38,6 +38,18 @@ namespace Z0
             Third = arg3;
         }
 
+        public bool IsEmpty
+        {
+            [MethodImpl(Inline)]
+            get => ApiClass == 0;
+        }
+
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => ApiClass != 0;
+        }
+
         public string Format()
             => ApiClass.Format(First,Second,Third);
 

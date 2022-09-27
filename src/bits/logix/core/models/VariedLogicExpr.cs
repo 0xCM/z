@@ -26,6 +26,18 @@ namespace Z0
             Vars = variables;
         }
 
+        public bool IsEmpty
+        {
+            [MethodImpl(Inline)]
+            get => BaseExpr is null;
+        }
+
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => BaseExpr is not null;
+        }
+
         public byte VarCount
         {
             [MethodImpl(Inline)]

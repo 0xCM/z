@@ -59,11 +59,11 @@ namespace Z0
         public void Notify(string msg, LogLevel? severity = null)
             => Deposit(AppMsg.define($"{msg}", severity ?? LogLevel.Babble));
 
-        public void Emit(FilePath dst)
+        public void Emit(FileUri dst)
         {
             try
             {
-                using var writer = dst.Writer();
+                using var writer = dst.Utf8Writer();
                 iter(Dequeue(), msg => writer.WriteLine(msg.Format()));
             }
             catch(Exception)

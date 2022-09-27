@@ -39,6 +39,18 @@ namespace Z0
             this.Third = arg3;
         }
 
+        public bool IsEmpty
+        {
+            [MethodImpl(Inline)]
+            get => ApiClass == 0;
+        }
+
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => ApiClass != 0;
+        }
+
         ILogicExpr ITernaryOpExpr<ILogicExpr>.First
             => First;
 

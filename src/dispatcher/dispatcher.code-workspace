@@ -1,35 +1,59 @@
 {
 	"folders": [
-		
 		{
-			"path": "../../libs/lib"
+			"path": "../sys"
 		},
 		{
-			"path": "../../libs/digital"
+			"path": "../cmd.specs"
+		},		
+		{
+			"path": "../files"
 		},
 		{
-			"path": "../../libs/containers"
+			"path": "../types"
 		},
 		{
-			"path": "../../libs/symbolics"
+			"path": "../events"
 		},
 		{
-			"path": "../../libs/cmd.specs"
+			"path": "../lib"
 		},
 		{
-			"path": "../../libs/files"
+			"path": "../digital"
 		},
 		{
-			"path": "../../libs/wf"
+			"path": "../containers"
 		},
 		{
-			"path": "../../libs/archives"
+			"path": "../process"
+		},
+		{
+			"path": "../rules"
+		},
+		{
+			"path": "../symbolics"
+		},
+		{
+			"path": "../numbers"
+		},
+		{
+			"path": "../alloc"
+		},
+		{
+			"path": "../db"
+		},
+		{
+			"path": "../workflow"
+		},
+		{
+			"path": "../tools"
+		},
+		{
+			"path": "../archives"
 		},
 		{
 			"path": "."
 		},
 	],
-	"settings": {
-		"powershell.cwd": "${EnvRoot}"
-	}
+
 }

@@ -18,6 +18,18 @@ namespace Z0
         public LiteralLogicExpr(bool src)
             => Value= src;
 
+        public bool IsEmpty
+        {
+            [MethodImpl(Inline)]
+            get => false;
+        }
+
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => true;
+        }
+
         public string Format()
             => Format(false);
 

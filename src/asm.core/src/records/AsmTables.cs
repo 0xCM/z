@@ -6,7 +6,7 @@ namespace Z0.Asm
 {
     using System.Linq;
 
-    using static core;
+    using static sys;
 
     public class AsmTables : WfSvc<AsmTables>
     {

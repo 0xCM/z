@@ -5,37 +5,29 @@
 namespace Z0
 {
     [Event(Kind)]
-    public readonly struct CreatedEvent : ITerminalEvent<CreatedEvent>
+    public readonly struct CreatingEvent : IInitialEvent<CreatingEvent>
     {
-        public const string EventName = GlobalEvents.Created;
+        public const string EventName = GlobalEvents.Creating;
 
-        public const EventKind Kind = EventKind.Created;
-
-        public FlairKind Flair  => FlairKind.Created;
+        public const EventKind Kind = EventKind.Creating;
 
         public EventId EventId {get;}
+
+        public FlairKind Flair => FlairKind.Creating;
 
         public Type HostType {get;}
 
         [MethodImpl(Inline)]
-        public CreatedEvent(Type host)
+        public CreatingEvent(Type host)
         {
             EventId = EventId.define(host, Kind);
             HostType = host;
         }
 
-        [MethodImpl(Inline)]
-        public CreatedEvent(CreatingEvent prior)
-        {
-            EventId = prior.EventId;
-            HostType = prior.HostType;
-        }
-
         public string Format()
-            => string.Format(RpOps.PSx2, EventId, string.Format("Created {0}", HostType.DisplayName()));
+            => string.Format(RP.PSx2, EventId, string.Format("Creating {0}", HostType.DisplayName()));
 
         public override string ToString()
             => Format();
-
     }
 }

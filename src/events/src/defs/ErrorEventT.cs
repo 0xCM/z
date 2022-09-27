@@ -44,7 +44,7 @@ namespace Z0
         public string Format()
         {
             var dst = text.emitter();
-            dst.AppendLine(string.Format(RpOps.PSx2, EventId, Origin));
+            dst.AppendLine(string.Format(RP.PSx2, EventId, Origin));
             dst.AppendLine($"{Payload}");
             return dst.Emit();
         }

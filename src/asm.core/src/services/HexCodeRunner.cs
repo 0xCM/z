@@ -8,7 +8,7 @@ namespace Z0
 
     public unsafe class HexCodeRunner : IDisposable
     {
-        public static unsafe void slots(WfEmit channel)
+        public static unsafe void slots(IWfChannel channel)
         {
             var slots = ClrDynamic.slots(typeof(SlotBox64));
             var box = new SlotBox64();
@@ -38,9 +38,9 @@ namespace Z0
 
         readonly NativeBuffer CodeBuffer;
 
-        readonly WfEmit Channel;
+        readonly IWfChannel Channel;
 
-        public HexCodeRunner(IWfRuntime wf, WfEmit channel)
+        public HexCodeRunner(IWfRuntime wf, IWfChannel channel)
         {
             CodeBuffer = memory.native(Pow2.T10);
             Channel = channel;

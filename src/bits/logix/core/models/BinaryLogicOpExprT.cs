@@ -33,6 +33,18 @@ namespace Z0
             Right = right;
         }
 
+        public bool IsEmpty
+        {
+            [MethodImpl(Inline)]
+            get => ApiClass == 0;
+        }
+
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => ApiClass != 0;
+        }
+
         ILogicExpr IBinaryOpExpr<ILogicExpr>.Left
             => Left;
 

@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     /// <summary>
     /// Characterizes a finite sequence of terms
     /// </summary>

@@ -5,10 +5,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static sys;
     using static XedRules;
     using static XedPatterns;
     using static XedModels;
-    using static core;
     using static XedImport;
 
     using I = XedRecord;

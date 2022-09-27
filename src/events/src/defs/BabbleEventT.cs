@@ -5,18 +5,22 @@
 namespace Z0
 {
     [Event(Kind)]
-    public readonly struct Disposed<T> : IWfEvent<Disposed<T>,T>
+    public readonly struct BabbleEvent<T> : ILevelEvent<BabbleEvent<T>,T>
     {
-        public const EventKind Kind = EventKind.Disposed;
+        public const string EventName = GlobalEvents.Babble;
+
+        public const EventKind Kind = EventKind.Babble;
+
+        public LogLevel EventLevel => LogLevel.Babble;
 
         public EventId EventId {get;}
 
         public EventPayload<T> Payload {get;}
 
-        public FlairKind Flair => FlairKind.Disposed;
+        public FlairKind Flair => FlairKind.Babble;
 
         [MethodImpl(Inline)]
-        public Disposed(Type host, T msg)
+        public BabbleEvent(Type host, T msg)
         {
             EventId = EventId.define(host, Kind);
             Payload = msg;
@@ -24,7 +28,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public string Format()
-            => string.Format(RpOps.PSx2, EventId, Payload);
+            => string.Format(RP.PSx2, EventId, Payload);
 
         public override string ToString()
             => Format();

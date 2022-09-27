@@ -36,6 +36,18 @@ namespace Z0
             Value = new LiteralLogicExpr<T>(init);
         }
 
+        public bool IsEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Symbol == 0;
+        }
+
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Symbol != 0;
+        }
+
         ILogicExpr ILogicVarExpr.Value
             => Value;
 

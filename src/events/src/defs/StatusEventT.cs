@@ -5,40 +5,34 @@
 namespace Z0
 {
     [Event(Kind)]
-    public readonly struct RanEvent<T> : ITerminalEvent<RanEvent<T>>
+    public readonly struct StatusEvent<T> : ILevelEvent<StatusEvent<T>,T>
     {
-        public const EventKind Kind = EventKind.Ran;
+        public const string EventName = GlobalEvents.Status;
 
-        public FlairKind Flair => FlairKind.Ran;
+        public const EventKind Kind = EventKind.Status;
+
+        public LogLevel EventLevel => LogLevel.Status;
 
         public EventId EventId {get;}
 
         public EventPayload<T> Payload {get;}
 
-        public Type Host {get;}
+        public FlairKind Flair {get;}
 
         [MethodImpl(Inline)]
-        public RanEvent(Type host, T msg)
+        public StatusEvent(Type host, T msg, FlairKind flair)
         {
             EventId = EventId.define(host, Kind);
             Payload = msg;
-            Host = host;
-        }
-
-        [MethodImpl(Inline)]
-        public RanEvent(RunningEvent<T> e, T msg = default)
-        {
-            EventId = e.EventId;
-            Host = e.Host;
-            Payload = msg;
+            Flair = flair;
         }
 
         [MethodImpl(Inline)]
         public string Format()
-            => string.Format(RpOps.PSx2, EventId, Payload);
-
+            => string.Format(RP.PSx2, EventId, Payload);
 
         public override string ToString()
             => Format();
+
     }
 }

@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     using ULK = UnaryBitLogicKind;
     using BLK = BinaryBitLogicKind;
     using TLK = TernaryBitLogicKind;

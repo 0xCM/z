@@ -4,9 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface ILogicExpr : IExprDeprecated
+    public interface ILogicExpr : IExpr
     {
-
+        bool INullity.IsEmpty
+            => false;
     }
 
     /// <summary>

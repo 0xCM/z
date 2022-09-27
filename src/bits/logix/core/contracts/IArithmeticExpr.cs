@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
-    public interface IArithmeticExpr : IExprDeprecated
+    public interface IArithmeticExpr : IExpr
     {
+        bool INullity.IsEmpty
+            => false;
 
     }
 

@@ -30,7 +30,7 @@ namespace Z0
         }
 
         void Ran()
-            => term.emit(Events.ran(Running, $"Finished monitoriing {Sources.Root}/*.*"));
+            => term.emit(Events.ran(Running, $"Finished monitoring {Sources.Root}/*.*"));
 
         public void Dispose()
         {

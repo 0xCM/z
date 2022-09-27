@@ -16,14 +16,4 @@ namespace Z0
     {
 
     }
-
-    [Free]
-    public interface IWfEventSinkDeprecated : ISink
-    {
-       void Deposit(IWfEvent e);
-
-       void Deposit<S>(in S e)
-            where S : struct, IWfEvent
-                => Deposit((IWfEvent)e);
-    }
 }

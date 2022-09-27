@@ -33,6 +33,18 @@ namespace Z0
             Right = rhs;
         }
 
+        public bool IsEmpty
+        {
+            [MethodImpl(Inline)]
+            get => ApiClass == 0;
+        }
+
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => ApiClass != 0;
+        }
+
         /// <summary>
         /// Renders the expression in canonical form
         /// </summary>

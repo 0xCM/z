@@ -5,8 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-     using static core;
-     using static XedLiterals;
+    using static XedLiterals;
 
     partial class XedRules
     {

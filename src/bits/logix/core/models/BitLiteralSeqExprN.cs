@@ -16,6 +16,19 @@ namespace Z0
         public LiteralLogixSeqExpr(bit[] terms)
             => Terms = terms;
 
+        public bool IsEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Terms.IsEmpty;
+        }
+
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Terms.IsNonEmpty;
+        }
+
+
         public bit this[int index]
         {
             [MethodImpl(Inline)]

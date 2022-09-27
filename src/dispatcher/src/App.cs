@@ -14,13 +14,9 @@ namespace Z0
         {
             var result = 0;
             if(args.Length == 0)
-            {
                 term.print($"Usage: {Assembly.GetEntryAssembly().GetSimpleName()} <path>");
-            }
             else
-            {
                 CreateHostBuilder(ApiRuntime.create(args), args).Build().Run();
-            }
             return result;
         }
 
@@ -28,7 +24,6 @@ namespace Z0
         {
             AppController AddController(IServiceProvider provider)
                 => new AppController(wf, provider.GetService<ILogger<AppController>>(), args);
-
             return services.AddHostedService(AddController);
         }
 

@@ -12,7 +12,7 @@ namespace Z0.Asm
 
         void CheckHexExec()
         {
-            HexCodeRunner.slots(Emitter);
+            HexCodeRunner.slots(Channel);
             var runner = new HexCodeRunner(Wf,Emitter);
             runner.RunAlgs();
         }

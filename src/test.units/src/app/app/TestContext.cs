@@ -92,7 +92,7 @@ namespace Z0
         public void Flush(Exception e, IMessageSink target)
             => Queue.Flush(e, target);
 
-        public void Emit(FilePath dst)
+        public void Emit(FileUri dst)
             => Queue.Emit(dst);
 
         /// <summary>

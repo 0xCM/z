@@ -26,6 +26,18 @@ namespace Z0
             Operand = arg;
         }
 
+        public bool IsEmpty
+        {
+            [MethodImpl(Inline)]
+            get => ApiClass == 0;
+        }
+
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => ApiClass != 0;
+        }
+
         public string Format()
             => ApiClass.Format(Operand);
     }

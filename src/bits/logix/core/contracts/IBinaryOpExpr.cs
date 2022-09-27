@@ -8,7 +8,7 @@ namespace Z0
     /// Characterizes a binary operator parametrized by expression type
     /// </summary>
     public interface IBinaryOpExpr<X> : IOperatorExpr
-        where X : IExprDeprecated
+        where X : IExpr
     {
         X Left {get;}
 

@@ -33,6 +33,18 @@ namespace Z0
             Offset = offset;
         }
 
+        public bool IsEmpty
+        {
+            [MethodImpl(Inline)]
+            get => ApiClass == 0;
+        }
+
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => ApiClass != 0;
+        }
+
         public string Format()
             => ApiClass.Format(Subject,Offset);
 

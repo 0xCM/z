@@ -7,7 +7,7 @@ namespace Z0
     /// <summary>
     /// Defines a sink that forwards deposits to a receiver
     /// </summary>
-    public readonly struct HubRelay : IWfEventSinkDeprecated
+    public readonly struct HubRelay : IEventSink
     {
         readonly EventReceiver Receiver;
 
@@ -19,9 +19,9 @@ namespace Z0
         public void Deposit(IWfEvent e)
             => Receiver(e);
 
-        [MethodImpl(Inline)]
-        public void Deposit<S>(in S e)
-            where S : struct, IWfEvent
-                => Receiver(e);
+        public void Dispose()
+        {
+            
+        }
     }
 }

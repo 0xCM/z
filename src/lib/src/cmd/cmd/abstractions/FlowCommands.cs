@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     public readonly struct FlowCommands : IFlowCommands
     {
         public static IFlowCommands Service => new FlowCommands();

@@ -8,7 +8,7 @@ namespace Z0
     /// Characterizes a unary operator parametrized by an expression type
     /// </summary>
     public interface IUnaryOpExpr<X> : IOperatorExpr
-        where X : IExprDeprecated
+        where X : IExpr
     {
         /// <summary>
         /// The operand

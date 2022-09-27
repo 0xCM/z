@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Asm;
-
     using W = AsmColWidths;
 
     [Record(TableId), StructLayout(LayoutKind.Sequential, Pack=1)]
