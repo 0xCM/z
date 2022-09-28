@@ -94,7 +94,7 @@ namespace Z0.Asm
             Require.equal(jcc8a.Count, ConditionCount);
 
             _Jcc8Names = alloc<text7>(ConditionCount);
-            Symbols.expr(jcc8a, _Jcc8Names.Edit);
+            FixedChars.expr(jcc8a, _Jcc8Names.Edit);
 
             _Jcc8Codes = alloc<Jcc8Code>(ConditionCount);
             Symbols.kinds(jcc8a, _Jcc8Codes.Edit);
@@ -103,7 +103,7 @@ namespace Z0.Asm
             Require.equal(jcc8b.Count, ConditionCount);
 
             _Jcc8AltNames = alloc<text7>(ConditionCount);
-            Symbols.expr(jcc8b, _Jcc8AltNames.Edit);
+            FixedChars.expr(jcc8b, _Jcc8AltNames.Edit);
 
             _Jcc8AltCodes = alloc<Jcc8AltCode>(ConditionCount);
             Symbols.kinds(jcc8b, _Jcc8AltCodes.Edit);
@@ -112,7 +112,7 @@ namespace Z0.Asm
             Require.equal(jcc32a.Count, ConditionCount);
 
             _Jcc32Names = alloc<text7>(ConditionCount);
-            Symbols.expr(jcc32a, _Jcc32Names.Edit);
+            FixedChars.expr(jcc32a, _Jcc32Names.Edit);
 
             _Jcc32Codes = alloc<Jcc32Code>(ConditionCount);
             Symbols.kinds(jcc32a, _Jcc32Codes.Edit);
@@ -121,7 +121,7 @@ namespace Z0.Asm
             Require.equal(jcc32b.Count, ConditionCount);
 
             _Jcc32AltNames = alloc<text7>(ConditionCount);
-            Symbols.expr(jcc32b, _Jcc32AltNames.Edit);
+            FixedChars.expr(jcc32b, _Jcc32AltNames.Edit);
 
             _Jcc32AltCodes = alloc<Jcc32AltCode>(ConditionCount);
             Symbols.kinds(jcc32b, _Jcc32AltCodes.Edit);

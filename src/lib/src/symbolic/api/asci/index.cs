@@ -4,10 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
-    using static AsciSymbols;
-
-    using C = AsciCode;
+    using static sys;
 
     partial struct Asci
     {

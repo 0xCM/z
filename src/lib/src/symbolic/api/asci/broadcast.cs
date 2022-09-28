@@ -4,12 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    using static Spans;
-
-    using static AsciSymbols;
-    using static AsciChars;
-
     using C = AsciCode;
 
     partial struct Asci

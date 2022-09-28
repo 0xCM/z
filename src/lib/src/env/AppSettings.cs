@@ -5,7 +5,8 @@
 namespace Z0
 {
     using static sys;
-    
+    using static Settings;
+
     public sealed class AppSettings : SettingLookup<Name,string>
     {
         static AppSettings _Service = load(path());
@@ -15,6 +16,36 @@ namespace Z0
 
         public static FilePath path()
             => FS.path(sys.controller().Location).FolderPath + FS.file("app.settings", FileKind.Csv);
+
+        public DbArchive EnvDb()
+            => folder(_Service.Setting(SettingNames.EnvDb));
+
+        public DbArchive Control()
+            => folder(_Service.Setting(SettingNames.Control));
+
+        public DbArchive DbRoot()
+            => folder(_Service.Setting(SettingNames.DbRoot));
+
+        public DbArchive Dev()
+            => folder(_Service.Setting(SettingNames.DevRoot));
+
+        public DbArchive DevOps()
+            => folder(_Service.Setting(SettingNames.DevOps));
+
+        public DbArchive ProcDumps()
+            => folder(_Service.Setting(SettingNames.ProcDumps));
+
+        public DbArchive Capture()
+            => folder(_Service.Setting(SettingNames.Capture));
+
+        public DbArchive DevPacks()
+            => folder(_Service.Setting(SettingNames.DevPacks));
+
+        public DbArchive Archives()
+            => folder(_Service.Setting(SettingNames.Archives));
+
+        public DbArchive DevTools()
+            => folder(_Service.Setting(SettingNames.DevTools));
 
         public static ref readonly AppSettings Default
         {
@@ -62,7 +93,7 @@ namespace Z0
             return dst;
         }
 
-        public string Find(Name name)
+        public string Find(string name)
             => Find(name, EmptyString);
 
         public Setting Setting(string name)

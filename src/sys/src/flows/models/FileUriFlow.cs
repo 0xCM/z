@@ -4,14 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public record class UriFlow  : IFlow<FileUri,FileUri>
+    public record class FileUriFlow  : IFlow<FileUri,FileUri>
     {
         public readonly FileUri Source;
 
         public readonly FileUri Target;
 
         [MethodImpl(Inline)]
-        public UriFlow(FileUri src, FileUri dst)
+        public FileUriFlow(FileUri src, FileUri dst)
         {
             Source = src;
             Target = dst;

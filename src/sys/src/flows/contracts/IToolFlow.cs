@@ -3,15 +3,11 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0
-{   
-    public interface IUriPart : IExpr
+{    
+    [Free]
+    public interface IToolFlow<T,A,B> : IFlow<A,B>
+        where T : ITool, new()
     {
-        UriPartKind Kind {get;}
-
-        bool INullity.IsEmpty
-            => Kind == 0;
-
-        bool INullity.IsNonEmpty
-            => Kind != 0;
-    }    
+        T Tool {get;}
+    }
 }

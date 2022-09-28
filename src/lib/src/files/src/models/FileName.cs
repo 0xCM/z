@@ -89,13 +89,6 @@ namespace Z0
         public FileName WithExtension(FileExt ext)
             => this + ext;
 
-        // public PartId Owner
-        //     => FS.part(this);
-
-        // [MethodImpl(Inline)]
-        // public bool IsOwner(PartId id)
-        //     => id == Owner;
-
         public FileName ChangeExtension(FileExt ext)
             => file(Path.GetFileNameWithoutExtension(Name), ext);
 
@@ -138,13 +131,6 @@ namespace Z0
             => src is FileName x && Equals(x);
 
         const string ExtPattern = "{0}.{1}";
-
-        // /// <summary>
-        // /// Converts this filename to a <see cref='FilePath'/>
-        // /// </summary>
-        // [MethodImpl(Inline)]
-        // public FilePath ToPath()
-        //     => new FilePath(Name);
 
         [MethodImpl(Inline)]
         public string Format()

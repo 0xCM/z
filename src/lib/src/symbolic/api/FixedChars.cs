@@ -4,13 +4,24 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     public readonly struct FixedChars
     {
         [MethodImpl(Inline), Op]
         public static uint hash(text7 src)
-            => alg.hash.calc(src.Storage);
+            => sys.hash(src.Storage);
+
+        [MethodImpl(Inline),Op, Closures(UnsignedInts)]
+        public static uint expr<T>(Symbols<T> src, Span<text7> dst)
+            where T : unmanaged
+        {
+            var count = (uint)min(src.Length, dst.Length);
+            var symbols = src.View;
+            for(var i=0; i<count; i++)
+                seek(dst, i) = txt(n7, skip(symbols,i).Expr.Data);
+            return count;
+        }
 
         [Op]
         public static string format(in text7 src)

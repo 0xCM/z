@@ -3,15 +3,11 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0
-{   
-    public interface IUriPart : IExpr
+{
+    partial class Tools
     {
-        UriPartKind Kind {get;}
-
-        bool INullity.IsEmpty
-            => Kind == 0;
-
-        bool INullity.IsNonEmpty
-            => Kind != 0;
-    }    
+        public partial class Git
+        {
+        }
+    }
 }

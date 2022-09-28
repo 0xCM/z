@@ -117,5 +117,5 @@ set ArchiveSln=robocopy %SlnRoot% %DevArchives%\z0 /xd %SlnRoot%\.git /v /mir /f
 set ArchiveRepo=git archive -v -o %RepoArchive% HEAD
 set DeployCfg=%SlnRoot%\deploy\deploy.cfg
 set PlatformDeployment=%EnvB%\tools\z0\bin
-set PackageOut=%DevPacks%\nuget\incoming
+set PackageOut=%DevPacks%\nuget\z0\incoming
 set PackageSln=dotnet pack --include-symbols --include-source %SlnMain% --output %PackageOut% %BuildProps%

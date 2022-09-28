@@ -27,10 +27,48 @@ namespace Z0
         public static Machine machine()
             => new();
 
+        [Op]
+        public static Tool git()
+            => new();
+
+        [Op]
+        public static Tool http()
+            => new();
+
+        public record struct Git : IUriScheme<Git>
+        {
+            public const string Name = "git";
+
+            public UriPartKind Kind => UriPartKind.Scheme;
+
+            string IUriScheme.Name 
+                => Name;
+        }
+
+        public record struct Http : IUriScheme<Http>
+        {
+            public const string Name = "http";
+
+            public UriPartKind Kind => UriPartKind.Scheme;
+
+            string IUriScheme.Name 
+                => Name;
+        }
+
+        public record struct Https : IUriScheme<Https>
+        {
+            public const string Name = "https";
+
+            public UriPartKind Kind => UriPartKind.Scheme;
+
+            string IUriScheme.Name 
+                => Name;
+        }
+
         /// <summary>
         /// https://en.wikipedia.org/wiki/File_URI_scheme
         /// </summary>
-        public readonly struct File : IUriScheme
+        public readonly struct File : IUriScheme<File>
         {
             public string Name => "file";
 
@@ -46,7 +84,7 @@ namespace Z0
         /// <summary>
         /// https://en.wikipedia.org/wiki/Data_URI_scheme
         /// </summary>
-        public readonly struct Data : IUriScheme
+        public readonly struct Data : IUriScheme<Data>
         {
             public string Name => "data";
 
@@ -59,7 +97,7 @@ namespace Z0
                 => Format();
         }
 
-        public readonly struct Doc : IUriScheme
+        public readonly struct Doc : IUriScheme<Doc>
         {
             public string Name => "doc";
 
@@ -72,7 +110,7 @@ namespace Z0
                 => Format();
         }
 
-        public readonly struct Cmd : IUriScheme
+        public readonly struct Cmd : IUriScheme<Cmd>
         {
             public string Name => "cmd";
 
@@ -85,7 +123,7 @@ namespace Z0
                 => Format();
         }
 
-        public readonly struct Tool : IUriScheme
+        public readonly struct Tool : IUriScheme<Tool>
         {
             public string Name => "tool";
 
@@ -98,7 +136,7 @@ namespace Z0
                 => Format();
         }
 
-        public readonly struct Machine : IUriScheme
+        public readonly struct Machine : IUriScheme<Machine>
         {
             public string Name => "machine";
 
@@ -110,18 +148,5 @@ namespace Z0
             public override string ToString()
                 => Format();
         }
-
-        // public readonly struct Local : IUriScheme
-        // {
-        //     public string Name => nameof(Local);
-
-        //     public UriPartKind Kind => UriPartKind.Scheme;
-
-        //     public string Format()
-        //         => Name;
-
-        //     public override string ToString()
-        //         => Format();
-        // }       
     }
 }

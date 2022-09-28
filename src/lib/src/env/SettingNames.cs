@@ -31,6 +31,8 @@ namespace Z0
 
         public const string Archives = nameof(Archives);
 
-        public const string Tools = nameof(Tools);
+        public const string DevTools = nameof(DevTools);
+
+        public const string EnvDb = nameof(EnvDb);
     }
 }
