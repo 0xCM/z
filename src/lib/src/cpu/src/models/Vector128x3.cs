@@ -4,13 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-    using System.Runtime.InteropServices;
-    using System.Runtime.Intrinsics;
-
-    using static Root;
-
     [StructLayout(LayoutKind.Sequential)]
     public struct Vector128x3<T>
         where T : unmanaged

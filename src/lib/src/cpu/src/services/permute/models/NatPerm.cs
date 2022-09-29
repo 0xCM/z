@@ -6,7 +6,7 @@ namespace Z0
 {
     using System.Linq;
 
-    using static core;
+    using static sys;
 
     using api = Perm;
 

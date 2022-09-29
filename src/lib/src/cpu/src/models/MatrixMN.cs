@@ -4,11 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
-    using static core;
+    using static sys;
 
     /// <summary>
     /// Defines a blocked primal matrix of natural dimensions

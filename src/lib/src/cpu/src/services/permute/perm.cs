@@ -6,7 +6,7 @@ namespace Z0
 {
     using System.Linq;
 
-    using static core;
+    using static sys;
 
     /// <summary>
     /// Defines a permutation over the integers [0, 1, ..., n - 1] where n is the permutation length

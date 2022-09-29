@@ -4,13 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-    using System.Text;
-
-    using static Root;
-    using static core;
-
     public static class MatrixFormat
     {
         public static Matrix<M,N,T> ToMatrix<M,N,T>(this Matrix256<M,N,T> src)

@@ -11,7 +11,9 @@ namespace Z0
 
         public const byte BPL = 64;
 
-        [Render(16)]
+        public const byte AddressWidth = 16;
+
+        [Render(AddressWidth)]
         public MemoryAddress Address;
 
         [Render(1)]

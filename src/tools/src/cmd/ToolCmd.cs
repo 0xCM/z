@@ -81,6 +81,17 @@ namespace Z0
 
         }
 
+        [CmdOp("hexify")]
+        void Hexify(CmdArgs args)
+        {
+            var src = arg(args,0).Value;
+            var pattern = arg(args,1).Value;
+            var files = FS.files(FS.dir(src),pattern,true);
+            var dst = AppDb.DbTargets("hexify");
+            Hex.hexify(Channel, files, dst);
+            //iter(files, file => Write(file));
+        }
+
         [CmdOp("tool/shim")]
         void RunTool(CmdArgs args)
         {

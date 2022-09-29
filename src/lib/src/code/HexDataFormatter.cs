@@ -12,7 +12,7 @@ namespace Z0
     {
         [MethodImpl(Inline), Op]
         public static HexDataFormatter create(ulong? @base = null, ushort bpl = 20, bool labels = true)
-            => new HexDataFormatter(new HexLineConfig(bpl, labels), @base);
+            => new HexDataFormatter(new HexLineConfig(bpl, 16, labels), @base);
 
         public readonly HexLineConfig LineConfig;
 
@@ -20,7 +20,7 @@ namespace Z0
 
         readonly HexFormatOptions DataConfig;
 
-        readonly ulong BaseAddress;
+        readonly MemoryAddress BaseAddress;
 
         [MethodImpl(Inline)]
         public HexDataFormatter(HexLineConfig config, ulong? @base = null)
@@ -31,15 +31,18 @@ namespace Z0
             DataConfig = HexDataOptions;
         }
 
+        string FormatAddress(MemoryAddress src)
+            => "0x" + string.Format(RP.pad(-LineConfig.AddressWidth),((ulong)src).ToString("X"));
+
         public string FormatLine(ReadOnlySpan<byte> data, ulong offset, char delimiter)
         {
             var line = TextFormat.buffer();
             var count = data.Length;
             if(LineConfig.LineLabels)
             {
-                var pos = BaseAddress + offset;
-                line.AppendFormat("{0,-12}", pos.ToString("x") + HexFormatSpecs.PostSpec);
+                line.Append(FormatAddress(BaseAddress + offset));
                 line.Append(delimiter);
+                line.Append(Chars.Space);
             }
 
             line.Append(data.FormatHex());
@@ -64,7 +67,7 @@ namespace Z0
 
                     if(LineConfig.LineLabels)
                     {
-                        line.Append(offset.Format(12));
+                        line.Append(FormatAddress(BaseAddress + offset));
                         line.Append(LineConfig.Delimiter);
                         line.Append(Chars.Space);
                     }

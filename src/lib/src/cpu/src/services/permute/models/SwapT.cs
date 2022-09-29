@@ -4,8 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
-
+    using static sys;
+    
     /// <summary>
     /// Defines a transposition, i.e. a specification for the transposition
     /// of two elements, denoted by an ordered pair of space-delimited indices (i j)

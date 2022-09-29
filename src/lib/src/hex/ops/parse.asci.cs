@@ -235,6 +235,6 @@ namespace Z0
 
         [MethodImpl(Inline)]
         static bool whitespace(AsciCode src)
-            => SQ.contains(AsciCodes.whitespace(), src);
+            => SQ.contains(Asci.whitespace(), src);
     }
 }

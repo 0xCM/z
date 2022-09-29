@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     public readonly ref struct Block256<N,T>
         where N : unmanaged, ITypeNat

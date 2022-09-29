@@ -39,7 +39,7 @@ namespace Z0
             else if(size<T>() == 32)
                 return uint32(src.Data);
             else
-                return HashCodes.hash(src.Bytes);
+                return sys.hash(src.Bytes);
         }
 
         [MethodImpl(Inline), Op, Closures(Closure)]

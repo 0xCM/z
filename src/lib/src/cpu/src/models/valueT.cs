@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Spans;
-    using static Scalars;
+    using static sys;
     using static value;
 
     public struct value<T> : IDataType<value<T>>
@@ -46,13 +45,13 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => HashCodes.hash(Data);
+            get => hash(Data);
         }
 
         public Span<byte> Bytes
         {
             [MethodImpl(Inline)]
-            get => sys.bytes(Data);
+            get => bytes(Data);
         }
 
         [MethodImpl(Inline)]

@@ -13,6 +13,11 @@ namespace Z0
         public readonly ushort BytesPerLine;
 
         /// <summary>
+        /// The width of the address field
+        /// </summary>
+        public readonly byte AddressWidth;
+
+        /// <summary>
         /// Specifies whether offset labels should be emitted
         /// </summary>
         public readonly bool LineLabels;
@@ -28,9 +33,10 @@ namespace Z0
         public readonly bool ZeroPad;
 
         [MethodImpl(Inline)]
-        public HexLineConfig(ushort bpl, bool labels, char delimiter = Chars.Space, bool zeropad = false)
+        public HexLineConfig(ushort bpl, byte awidth, bool labels, char delimiter = Chars.Space, bool zeropad = false)
         {
             BytesPerLine = bpl;
+            AddressWidth = awidth;
             LineLabels = labels;
             Delimiter = delimiter;
             ZeroPad = zeropad;
