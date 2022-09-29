@@ -1,5 +1,5 @@
-export * from "./env"
 export * from "./clang"
+export * as Env from "./env"
 export * from "./cabal"
 export * as DumpBin from "./dumpbin"
 export * as SymStore from "./symstore"
@@ -10,11 +10,10 @@ export * from "./git"
 export * as Nuget from "./nuget"
 import {Git} from "./git"
 
-import {env} from "./env"
 
 export function main() {
     
-    console.log(env().LlvmSdk.path('index.ts'))
+    //console.log(LlvmSdk().LlvmSdk.path('index.ts'))
     //console.log(JSON.stringify(Git.SubModule.syntax(), null, ' '))
 }
 

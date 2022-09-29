@@ -106,7 +106,6 @@ export function docurl() : URL {
     return new URL('https://git-scm.com/docs/git-submodule')
 }
 
-
 const _List = [
     add(),
     status(),

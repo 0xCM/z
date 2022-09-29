@@ -9,11 +9,22 @@ namespace Z0
     using System.Linq;
     
     using static Chars;
+    
+
+    partial class XTend
+    {
+        public static Utf8JsonWriter JsonWriter(this Stream src, bool indented = true)
+            => JsonData.writer(src, indented);
+    }
 
     [ApiHost]
     public readonly struct JsonData
     {
         const NumericKind Closure = UInt64k;
+
+        [Op, Closures(Closure)]
+        public static Utf8JsonWriter writer(Stream stream, bool indented = true)
+            => new Utf8JsonWriter(stream, new JsonWriterOptions{Indented = indented});
 
         [Op, Closures(Closure)]
         public static JsonText serialize<T>(T src, FileUri dst, bool indented = true)
@@ -28,6 +39,10 @@ namespace Z0
         public static string serialize<T>(T src, bool indented = true)
             => JsonSerializer.Serialize(src);
 
+        [Op, Closures(Closure)]
+        public static JsonDocument parse(ReadOnlySeq<byte> src)
+            => JsonDocument.Parse(src.Storage);
+            
         [Op, Closures(Closure)]
         public static JsonDocument document<T>(T src, bool indented = true)
             => JsonSerializer.SerializeToDocument(src, new JsonSerializerOptions{WriteIndented = indented, AllowTrailingCommas = true});
