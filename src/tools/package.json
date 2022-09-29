@@ -1,8 +1,13 @@
 {
   "name": "toolsets",
   "version": "1.0.0",
-  "main": "./.site/build/index.js",
+  "main": "./.site/index.js",
   "license": "MIT",
+  "scripts": {
+    "tsbuild":"./.x/tsbuild.cmd",    
+    "start" :"./.x/run.cmd",
+    "clean" :"./.x/clean.cmd"
+  },
   "dependencies": {
     "ts-node": "^10.9.1",
     "typescript": "^4.8.3"
