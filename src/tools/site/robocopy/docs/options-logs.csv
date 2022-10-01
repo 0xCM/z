@@ -1,0 +1,21 @@
+﻿| Option             | Description                                                                                                                    |
+| /l                 | Specifies that files are to be listed only (and not copied, deleted, or time stamped)                                          |
+| /x                 | Reports all extra files, not just those that are selected                                                                      |
+| /v                 | Produces verbose output, and shows all skipped files.                                                                          |
+| /ts                | Includes source file time stamps in the output.                                                                                |
+| /fp                | Includes the full path names of the files in the output.                                                                       |
+| /bytes             | Prints sizes as bytes.                                                                                                         |
+| /ns                | Specifies that file sizes are not to be logged.                                                                                |
+| /nc                | Specifies that file classes are not to be logged.                                                                              |
+| /nfl               | Specifies that file names are not to be logged.                                                                                |
+| /ndl               | Specifies that directory names are not to be logged.                                                                           |
+| /np                | Specifies that the progress of the copying operation (the number of files or directories copied so far) will not be displayed. |
+| /eta               | Shows the estimated time of arrival (ETA) of the copied files.                                                                 |
+| /log:<logfile>     | Writes the status output to the log file (overwrites the existing log file).                                                   |
+| /log+:<logfile>    | Writes the status output to the log file (appends the output to the existing log file).                                        |
+| /unicode           | Displays the status output as Unicode text.                                                                                    |
+| /unilog:<logfile>  | Writes the status output to the log file as Unicode text (overwrites the existing log file).                                   |
+| /unilog+:<logfile> | Writes the status output to the log file as Unicode text (appends the output to the existing log file).                        |
+| /tee               | Writes the status output to the console window and to the log file.                                                            |
+| /njh               | Specifies that there is no job header.                                                                                         |
+| /njs               | Specifies that there is no job summary.                                                                                        |

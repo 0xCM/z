@@ -1,0 +1,19 @@
+# d:\views\sdks\netsdk\dotnet.exe remove --help
+Description:
+  .NET Remove Command
+
+Usage:
+  dotnet remove [<PROJECT>] [command] [options]
+
+Arguments:
+  <PROJECT>  The project file to operate on. If a file is not specified, the command will search the current directory for one. [default: D:\Drives\Z\dev\toolbase\]
+
+Options:
+  -?, -h, --help  Show command line help.
+
+
+Commands:
+  package <PACKAGE_NAME>    Remove a NuGet package reference from the project.
+  reference <PROJECT_PATH>  Remove a project-to-project reference from the project.
+
+

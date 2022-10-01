@@ -1,0 +1,13 @@
+# B:\sdks\dotnet\root\dotnet.exe build-server --help 
+Description:
+  Interact with servers started from a build.
+
+Usage:
+  dotnet build-server [command] [options]
+
+Options:
+  -?, -h, --help  Show command line help.
+
+Commands:
+  shutdown  Shuts down build servers that are started from dotnet. By default, all servers are shut down.
+

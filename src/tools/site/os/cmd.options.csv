@@ -1,0 +1,17 @@
+﻿| Parameter           | Description                                                                                          
+| /c                  | Carries out the command specified by string and then stops.                                          
+| /k                  | Carries out the command specified by string and continues.                                           
+| /s                  | Modifies the treatment of string after /c or /k.                                                     
+| /q                  | Turns echo off.                                                                                      
+| /d                  | Disables execution of AutoRun commands.                                                              
+| /a                  | Formats internal command output to a pipe or a file as American National Standards Institute (ANSI). 
+| /u                  | Formats internal command output to a pipe or a file as Unicode.                                      
+| /t:{or(<b><f>,<f>)} | Sets the background (b) and foreground (f) colors.                                                   
+| /e:on               | Enables command extensions.                                                                          
+| /e:off              | Disables commands extensions.                                                                        
+| /f:on               | Enables file and directory name completion.                                                          
+| /f:off              | Disables file and directory name completion.                                                         
+| /v:on               | Enables delayed environment variable expansion.                                                      
+| /v:off              | Disables delayed environment variable expansion.                                                     
+| <string>            | Specifies the command you want to carry out.                                                         
+| /?                  | Displays help at the command prompt.                                                                 

@@ -1,90 +1,85 @@
-//import * as Llvm from "./llvm"
-export type Tools = 'tools'
-export function Tools() : Tools {
-    return 'tools'
-}
-export type Env = 'env'
 
-export type Sdks = 'sdks'
-export function Sdks()  : Sdks {
-    return 'sdks'
-}
-
-export type Dist = 'dist'
-export function Dist() : Dist{
-    return `dist`
-}
-
-export type Lang = 'b:/lang'
-export function Lang() : Lang {
-    return 'b:/lang'
-}
+import {Literal} from "../core"
+import {Tk} from "../core"
 
 export type DevRoot = 'd:/dev'
 export function DevRoot() : DevRoot{
     return 'd:/dev'
 }
 
-export type EnvRoot = `d:/${Env}`
-export function EnvRoot() : EnvRoot {
-    return 'd:/env'
-}
-
-export type DevTools = `b:/${Tools}`
+export type DevTools = `b:/${Tk.Tools}`
 export function DevTools() : DevTools {
     return `b:/tools`
 }
 
-export type DevTool<T extends string> = `${DevTools}/${T}`
-export function DevTool<T extends string>(tool:T) : DevTool<T> {
+export type DevTool<T extends Literal> = `${DevTools}/${T}`
+export function DevTool<T extends Literal>(tool:T) : DevTool<T> {
     return `${DevTools()}/${tool}`
 }
 
-export type SdkRoot = `${EnvRoot}/${Sdks}`
-export function SdkRoot() : SdkRoot {
-    return `${EnvRoot()}/sdks`
+export type Path<P extends Literal> = `${P}`
+export function Path<P extends Literal>(src:P) : Path<P> {
+    return `${src}`
 }
 
-export type LlvmSdk = `${SdkRoot}/llvm/sdk`
-
-export function LlvmSdk() : LlvmSdk  {
-    return `${SdkRoot()}/llvm/sdk`
+export type Paths<P0 extends Literal,P1 extends Literal> = `${P0};${P1}`
+export function Paths<P0 extends Literal,P1 extends Literal>(p0:P0, p1:P1) : Paths<P0,P1> {
+    return `${p0};${p1}`
 }
 
-export type LlvmSdkPath<L extends string> = `${LlvmSdk}/${L}`
-
-export function LlvmSdkPath<L extends string>(part:L) : LlvmSdkPath<L>{
-    return `${SdkRoot()}/llvm/sdk/${part}`
+export type Lang = `I:/${Tk.Lang}`
+export function Lang() : Lang {
+    return `I:/${Tk.Lang()}`
 }
 
-export type DotNetSdk = `${SdkRoot}/dotnet`
-export type DotNetRoot = `${DotNetSdk}/root`
-export type DotNetTools = `${DotNetSdk}/${Tools}`
-
-export function DotNetSdk() : DotNetSdk {
-    return `${SdkRoot()}/dotnet`
+export type EnvRoot = `d:/${Tk.Env}`
+export function EnvRoot() : EnvRoot {
+    return 'd:/env'
 }
 
-export function DotNetRoot() : DotNetRoot {
-    return `${DotNetSdk()}/root`
+export type PkgKind =
+    | Tk.Nuget
+    | 'native'
+    | 'wix'
+    | 'msi'
+    | 'exe'
+    | Tk.Zip
+    | Tk.Tar
+    | Tk.Gz
+    | Tk._7z
+    | Tk.Zip
+    | Tk.Data
+
+export type PkgCaches = `${EnvRoot}/${Tk.Pkg}/${Tk.Cache}`
+export function PkgCaches() : PkgCaches {
+    return `${EnvRoot()}/${Tk.Pkg()}/${Tk.Cache()}`
 }
 
-export function DotNetTools() : DotNetTools {
-    return `${DotNetSdk()}/${Tools()}`
+export type PkgCache<K extends PkgKind> = `${PkgCaches}/${K}`
+
+export function PkgCache<K extends PkgKind>(kind:K) : PkgCache<K> {
+    return `${PkgCaches()}/${kind}`
 }
 
-export type Linguist = `${Lang}/linguist`
-export type LinguistDist =`${Linguist}/${Dist}`
-export type LinguistGrammars = `${LinguistDist}/grammars`
+export type NUGET_PACKAGES = PkgCache<Tk.Nuget>
 
-export function Linguist() : Linguist {
-    return `${Lang()}/linguist`
+export function NUGET_PACKAGES() : NUGET_PACKAGES {
+    return PkgCache('nuget')
 }
 
-export function LinguistDist() : LinguistDist {
-    return `${Linguist()}/dist`
-}
 
-export function LinguistGrammars() : LinguistGrammars {
-    return `${LinguistDist()}/grammars`
-}
+// export type JAVA_HOME = `${Env.MsJdkHome}`
+// export function JAVA_HOME() : JAVA_HOME {
+//     return `${Env.MsJdkHome()}`    
+// }
+
+// export type JavaBin = `${Env.MsJdkBin}`
+// export function JavaBin() : JavaBin {
+//     return `${Env.MsJdkBin()}`
+// }
+
+// export type PATH = `${JavaBin}`
+
+// export function PATH() : PATH {
+//     return `${JavaBin()}`
+// }

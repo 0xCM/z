@@ -1,0 +1,33 @@
+Windows Package Manager v1.2.11601
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+Installs the selected package, either found by searching a configured source or directly from a manifest. By default, the query must case-insensitively match the id, name, or moniker of the package. Other fields can be used by passing their appropriate option.
+
+usage: winget install [[-q] <query>] [<options>]
+
+The following arguments are available:
+  -q,--query                   The query used to search for a package
+
+The following options are available:
+  -m,--manifest                The path to the manifest of the package
+  --id                         Filter results by id
+  --name                       Filter results by name
+  --moniker                    Filter results by moniker
+  -v,--version                 Use the specified version; default is the latest version
+  -s,--source                  Find package using the specified source
+  --scope                      Select install scope (user or machine)
+  -a,--architecture            Select the architecture to install
+  -e,--exact                   Find package using exact match
+  -i,--interactive             Request interactive installation; user input may be needed
+  -h,--silent                  Request silent installation
+  --locale                     Locale to use (BCP47 format)
+  -o,--log                     Log location (if supported)
+  --override                   Override arguments to be passed on to the installer
+  -l,--location                Location to install to (if supported)
+  --force                      Override the installer hash check
+  --dependency-source          Find package dependencies using the specified source
+  --accept-package-agreements  Accept all license agreements for packages
+  --header                     Optional Windows-Package-Manager REST source HTTP header
+  --accept-source-agreements   Accept all source agreements during source operations
+
+More help can be found at: https://aka.ms/winget-command-install

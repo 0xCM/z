@@ -1,0 +1,29 @@
+# d:\views\sdks\netsdk\dotnet.exe run --help
+Description:
+  .NET Run Command
+
+Usage:
+  dotnet run [options] [[--] <additional arguments>...]]
+
+Options:
+  -c, --configuration <CONFIGURATION>  The configuration to run for. The default for most projects is 'Debug'.
+  -f, --framework <FRAMEWORK>          The target framework to run for. The target framework must also be specified in the project file.
+  -r, --runtime <RUNTIME_IDENTIFIER>   The target runtime to run for.
+  --project <project>                  The path to the project file to run (defaults to the current directory if there is only one project).
+  -p, --property <property>            Properties to be passed to MSBuild.
+  --launch-profile <launch-profile>    The name of the launch profile (if any) to use when launching the application.
+  --no-launch-profile                  Do not attempt to use launchSettings.json to configure the application.
+  --no-build                           Do not build the project before running. Implies --no-restore.
+  --interactive                        Allows the command to stop and wait for user input or action (for example to complete authentication).
+  --no-restore                         Do not restore the project before building.
+  --sc, --self-contained               Publish the .NET runtime with your application so the runtime doesn't need to be installed on the target machine.
+                                       The default is 'true' if a runtime identifier is specified.
+  --no-self-contained                  Publish your application as a framework dependent application. A compatible .NET runtime must be installed on the target machine to run your application.
+  -v, --verbosity <LEVEL>              Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+  -a, --arch <arch>                    The target architecture.
+  --os <os>                            The target operating system.
+  -?, -h, --help                       Show command line help.
+
+Additional Arguments:
+  Arguments passed to the application that is being run.
+

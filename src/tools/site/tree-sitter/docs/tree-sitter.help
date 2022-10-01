@@ -1,0 +1,23 @@
+# d:\views\tools\tree-sitter\tree-sitter.exe --help
+tree-sitter 0.20.6 (ccd6bf554d922596ce905730d98a77af368bba5c)
+Max Brunsfeld <maxbrunsfeld@gmail.com>
+Generates and tests parsers
+
+USAGE:
+    tree-sitter.exe <SUBCOMMAND>
+
+FLAGS:
+    -h, --help       Prints help information
+    -V, --version    Prints version information
+
+SUBCOMMANDS:
+    init-config       Generate a default config file
+    generate          Generate a parser
+    parse             Parse files
+    query             Search files using a syntax tree query
+    tags              Generate a list of tags
+    test              Run a parser's tests
+    highlight         Highlight a file
+    build-wasm        Compile a parser to WASM
+    playground        Start local playground for a parser in the browser
+    dump-languages    Print info about all known language parsers

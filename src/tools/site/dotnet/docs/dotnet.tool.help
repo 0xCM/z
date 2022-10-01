@@ -1,0 +1,19 @@
+# d:\views\sdks\netsdk\dotnet.exe tool --help
+Description:
+  Install or work with tools that extend the .NET experience.
+
+Usage:
+  dotnet tool [command] [options]
+
+Options:
+  -?, -h, --help  Show command line help.
+
+Commands:
+  install <PACKAGE_ID>    Install global or local tool. Local tools are added to manifest and restored.
+  uninstall <PACKAGE_ID>  Uninstall a global tool or local tool.
+  update <PACKAGE_ID>     Update a global tool.
+  list                    List tools installed globally or locally.
+  run <COMMAND_NAME>      Run local tool.
+  search <Search Term>    Search dotnet tools in nuget.org
+  restore                 Restore tools defined in the local tool manifest.
+

@@ -1,5 +1,24 @@
-export type Tool = `robocopy`
-export const DocSource = 'https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/robocopy'
+import {FS} from "../core"
+import * as Core from "../core"
+import { PathSep } from "../core/fs"
+import {Tk} from "../core"
+
+export type Name = `robocopy`
+export type Tool = Core.Tool<Name>
+
+export function tool(name:Name = 'robocopy') : Tool {
+    return Core.tool(name)
+}
+
+export function copy<S,T,N>(name:N, src:FS.Path<S>, dst:FS.Path<T>, sep:PathSep = Tk.BackSlash()) {
+    const _Sep = FS.sep(sep)
+    const _Src = FS.format(_Sep, src)
+    const _Dst = FS.format(_Sep, dst)
+    const _Script = `robocopy ${_Src}${_Sep}${name} ${_Dst}${_Sep}${name} /e`
+    return _Script
+}
+
+const DocSource = 'https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/robocopy'
 
 type ToolCmd<T> = {
     tool:T
@@ -9,30 +28,12 @@ type ToolCmd<T> = {
     options?:string
 }
 
-namespace ToolCmd {
-
-    export function cmd0<T>(tool:T) {
-        return `${tool}`
-    }
-
-    export function cmd1<T,A>(tool:T, a:A) {
-        return `${cmd0(tool)} ${a}`
-    }
-
-    export function cmd2<T,A,B>(tool:T, a:A, b:B) {
-        return `${cmd1(tool,a)} ${b}`
-    }
-
-    export function cmd3<T,A,B,C>(tool:T, a:A, b:B, c:C) {
-        return `${cmd2(tool,a,b)} ${c}`
-    }   
-}
 
 function usage<T>(tool:T){
     return `${tool} <source> <target> [<file>[ ...]] [<options>]`
 }
 
-export function robocopy(src:string, dst:string, flags= "/e", options?:string) : ToolCmd<Tool> {
+export function robocopy(src:string, dst:string, flags= "/e", options?:string) : ToolCmd<Name> {
     return {
         tool:'robocopy',
         source:src,
@@ -42,7 +43,7 @@ export function robocopy(src:string, dst:string, flags= "/e", options?:string) :
     }
 }
 
-export function render(cmd:ToolCmd<Tool>){
+export function render(cmd:ToolCmd<Name>){
     let base = `${cmd.tool} ${cmd.source} ${cmd.target}`
     var result = base;
     if(cmd.flags != null)
@@ -53,7 +54,7 @@ export function render(cmd:ToolCmd<Tool>){
     return result;
 }
 
-export function emit(cmd:ToolCmd<Tool>){
+export function emit(cmd:ToolCmd<Name>){
     console.log(render(cmd));
 }
 
@@ -64,3 +65,6 @@ export function script(){
 }
 
 
+// export function copy(src:string,dst:string) {
+//     return `robocopy D:\\VHD\\lang\\repos\\json I:\\lang\\repos\\json /e`
+// }

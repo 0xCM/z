@@ -1,0 +1,16 @@
+# d:\views\sdks\netsdk\dotnet.exe sql-cache --help
+SQL Server Cache Command Line Tool 6.0.6+68bb6fb08f8f85bb3cf08953a0d2f4a254eaccff
+
+Usage: dotnet sql-cache [options] [command]
+
+Options:
+  -?|-h|--help  Show help information
+  --version     Show version information
+  -v|--verbose  Show verbose output
+
+Commands:
+  create  Adds table and indexes to the database.
+  script  Generates a SQL script for the table and indexes.
+
+Use "dotnet sql-cache [command] --help" for more information about a command.
+

@@ -1,0 +1,22 @@
+# d:\views\sdks\netsdk\dotnet.exe clean --help
+Description:
+  .NET Clean Command
+
+Usage:
+  dotnet clean [<PROJECT | SOLUTION>...] [options]
+
+Arguments:
+  <PROJECT | SOLUTION>  The project or solution file to operate on. If a file is not specified, the command will search the current directory for one.
+
+Options:
+  -f, --framework <FRAMEWORK>          The target framework to clean for. The target framework must also be specified in the project file.
+  -r, --runtime <RUNTIME_IDENTIFIER>   The target runtime to clean for.
+  -c, --configuration <CONFIGURATION>  The configuration to clean for. The default for most projects is 'Debug'.
+  --interactive                        Allows the command to stop and wait for user input or action (for example to complete authentication).
+  -v, --verbosity <LEVEL>              Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+  -o, --output <OUTPUT_DIR>            The directory containing the build artifacts to clean.
+  --nologo                             Do not display the startup banner or the copyright message.
+  -?, -h, --help                       Show command line help.
+
+
+

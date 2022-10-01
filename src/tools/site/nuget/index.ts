@@ -1,5 +1,4 @@
 export type Tool = 'nuget'
-
 export type Add = 'add'
 export type ClientCerts = 'client-certs'
 export type Config = 'config'
@@ -12,6 +11,7 @@ export type Locals = 'locals'
 export type Pack = 'pack'
 export type Push = 'push'
 export type Restore = 'restore'
+
 
 export type SubCmd = 
     | Add
@@ -34,3 +34,13 @@ export type SubCmd =
     | 'trusted-signers'
     | 'update'
     | 'verify'
+
+    export function expand(src:string, dst:string){
+        return `nuget init "${src}" -expand "${dst}"`
+    }
+    
+    function run(){
+        return expand('D:/cache/packages/devpacks/nuget/incoming', 'D:/cache/packages/devpacks/nuget/packages')
+    }
+    
+    console.log(run());    

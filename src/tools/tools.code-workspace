@@ -16,5 +16,7 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"powershell.cwd": "d:\\dev\\projects\\z0\\src\\tools"
+	}
 }

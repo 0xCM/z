@@ -4,7 +4,7 @@ export type Recursive = '/r'
 export type FileNames = `{FileNames}`
 export type Symbols = `{Symbols}`
 
-import {Script} from "../common"
+import {Script} from "../core"
 
 function tool() : Tool {
     return 'symcheck'

@@ -49,7 +49,7 @@ export type Option =
     | LogFile
     | Share
 
-import {Lookup, Kvp, kvp, KeyedValues} from "../common"
+import {Lookup, Kvp, kvp, KeyedValues} from "../core"
 
 export function tool() : Tool {
     return 'symstore'

@@ -1,0 +1,7 @@
+﻿| Option          | Description                                                                                                                                                                              |
+| /job:<jobname>  | Specifies that parameters are to be derived from the named job file. To run /job:jobname you must first run the /save:jobname parameter to create the job file                           |
+| /save:<jobname> | Specifies that parameters are to be saved to the named job file. This must be ran before running /job:jobname. All copy retr and logging options must be specified before this parameter |
+| /quit           | Quits after processing command line (to view parameters                                                                                                                                  |
+| /nosd           | Indicates that no source directory is specified.                                                                                                                                         |
+| /nodd           | Indicates that no destination directory is specified.                                                                                                                                    |
+| /if             | Includes the specified files.                                                                                                                                                            |

@@ -1,0 +1,13 @@
+# B:\sdks\dotnet\root\tools\dotnet-dump.exe --help 
+Usage:
+  dotnet-dump [options] [command]
+
+Options:
+  --version         Show version information
+  -?, -h, --help    Show help and usage information
+
+Commands:
+  collect                Capture dumps from a process
+  analyze <dump_path>    Starts an interactive shell with debugging commands to explore a dump
+  ps                     Lists the dotnet processes that dumps can be collected from.
+

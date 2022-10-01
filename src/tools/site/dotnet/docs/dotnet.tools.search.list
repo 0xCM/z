@@ -1,0 +1,23 @@
+# d:\views\sdks\netsdk\dotnet.exe tool search typescript
+Package ID                                       Latest Version      Authors                               Downloads      Verified
+----------------------------------------------------------------------------------------------------------------------------------
+nswag.consolecore                                13.16.1             Rico Suter                            692215                 
+typescriptdeclarations.generator                 1.5.0               ittennull                             5069                   
+eventhorizon.blazor.typescript.interop.tool      1.3.0               Cody Merritt Anhorn                   18585                  
+skbkontur.typescript.contractgenerator.cli       2.0.106             Eugene Tihonov, Pavel Vostretsov      5483                   
+dotnet-typegen                                   3.0.0               Jacek Burzynski                       77567                  
+fsdgenjs                                         2.4.0               Ed Ball                               22145                  
+clr2ts                                           0.4.0               Dennis Janiak                         6623                   
+typegen.dotnetcli                                2.4.7               Jacek Burzynski                       23375                  
+typedsignalr.client.typescript.generator         1.1.0               nenoNaninu                            349                    
+net2typescript                                   6.0.14              josundt                               2103                   
+tapper.generator                                 1.3.0               nenoNaninu                            590                    
+retypeapp                                        2.4.0               Object.NET                            11472                  
+checktestfiles                                   1.0.2               Kelvys B. Pantaleao                   792                    
+crosstech.xcs2ts                                 0.0.1               Crosstech                             31                     
+nablats                                          1.2.0               effun                                 230                    
+typescriptclassgenerator.cli                     1.0.9               TypeScriptClassGenerator.Cli          2969                   
+mdm-cli                                          0.12.15             Trifenix                              10751                  
+treetype                                         1.0.0               Yellowsink                            58                     
+luisgen                                          2.2.0               Microsoft                             43962                  
+csharptotypescript.clitool                       2.5.1               AdrianWilczynski                      9479                   

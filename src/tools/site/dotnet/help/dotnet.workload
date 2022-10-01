@@ -1,0 +1,19 @@
+# B:\sdks\dotnet\root\dotnet.exe workload --help 
+Description:
+  Install or work with workloads that extend the .NET experience.
+
+Usage:
+  dotnet workload [command] [options]
+
+Options:
+  -?, -h, --help  Show command line help.
+
+Commands:
+  install <WORKLOAD_ID>         Install one or more workloads.
+  update                        Update all installed workloads.
+  list                          List workloads available.
+  search <SEARCH_STRING>        Search for available workloads.
+  uninstall <WORKLOAD_ID>       Uninstall one or more workloads.
+  repair                        Repair workload installations.
+  restore <PROJECT | SOLUTION>  Restore workloads required for a project.
+

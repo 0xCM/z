@@ -1,0 +1,13 @@
+# B:\sdks\dotnet\root\dotnet.exe sdk --help 
+Description:
+  .NET SDK Command
+
+Usage:
+  dotnet sdk [command] [options]
+
+Options:
+  -?, -h, --help  Show command line help.
+
+Commands:
+  check  .NET SDK Check Command
+
