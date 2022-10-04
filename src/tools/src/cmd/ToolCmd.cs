@@ -60,7 +60,8 @@ namespace Z0
         [CmdOp("jobs/run")]
         void RunCliJobs()
         {
-            var src = AppDb.DotNetRoot().Files(FileKind.Dll).Map(x => new FileUri(x.Format())).ToSeq();
+            var root = Env.var(EnvVarKind.Process, SettingNames.DOTNET_ROOT, FS.dir).Value;
+            var src = root.Files(FileKind.Dll).Map(x => new FileUri(x.Format())).ToSeq();
             var name = Cmd.identify<EcmaEmissionCmd>().Format();
             var ts = timestamp();
             var dst = AppDb.Jobs(Cmd.identify<EcmaEmissionCmd>().Format()).Path($"{name}.{ts}.jobs", FileKind.Json);
@@ -74,12 +75,52 @@ namespace Z0
             FileEmit(data, dst);
         }
 
-        [CmdOp("tool/cmd")]
         void ExecToolCmd(CmdArgs args)
         {
             var tool = TB.Tool(arg(args,0).Value);
 
         }
+
+        [CmdOp("pwsh")]
+        void RunPwshCmd(CmdArgs args)
+        {
+            var cmd = Cmd.pwsh(Cmd.join(args));
+            Status($"Executing '{cmd}'");
+            ProcExec.start(cmd,Channel);
+        }
+
+        [CmdOp("cmd")]
+        void RunCmd(CmdArgs args)
+            => ProcExec.start(args, Channel);
+
+        [CmdOp("help")]
+        void GetHelp(CmdArgs args)
+        {
+            var tool = args[0].Value;
+            var dst = AppDb.DbTargets("tools/help").Path(FS.file(tool, FileKind.Help));
+            Toolsets.help(Channel, args, dst);
+        }
+
+        [CmdOp("tool")]
+        void RunTool(CmdArgs args)
+        {
+            var tool = arg(args,0).Value;
+            var script = arg(args,1).Value;
+            var count = args.Count - 2;
+            var _args = count > 0 ? sys.alloc<string>(count) : sys.empty<string>();
+            var path = AppDb.Toolbase($"{tool}/scripts").Path(FS.file(script,FileKind.Cmd));
+            var emitter = text.emitter();
+            var j=2;
+            for(var i=0; i<count; i++, j++)
+            {
+                emitter.Append(Chars.Space);
+                emitter.Append(args[i].Value);
+            }
+            
+            var cmd = Cmd.cmd(path, CmdKind.Tool, emitter.Emit());        
+            ProcExec.start(cmd, Channel);        
+        }
+
 
         [CmdOp("hexify")]
         void Hexify(CmdArgs args)
@@ -93,7 +134,7 @@ namespace Z0
         }
 
         [CmdOp("tool/shim")]
-        void RunTool(CmdArgs args)
+        void RunShim(CmdArgs args)
         {
             var count = args.Length;
             if(count < 3)

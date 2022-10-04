@@ -12,6 +12,22 @@ namespace Z0
     [StructLayout(LayoutKind.Sequential, Pack=1)]
     public class Var : IVar
     {
+
+        public static string format(IVarValue var)
+            => format(var, Chars.Eq);
+
+        public static string format(IVarValue var, char assign)
+            => string.Format("{0}{1}{2}", var.VarName, assign, var.VarValue);
+
+        public static string format(VarContextKind vck, IVarValue var)
+            => format(vck,var, Chars.Eq);
+
+        public static string format(VarContextKind vck, IVarValue var, char assign)
+            => string.Format("{0}{1}{2}", format(vck, var.VarName), assign, var.VarValue);
+
+        static string format(VarContextKind vck, string name)
+            => string.Format(RP.pattern(vck), name);
+
         public readonly @string Name;
 
         readonly Func<object> Resolver;

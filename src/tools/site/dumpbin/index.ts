@@ -1,7 +1,7 @@
 import * as Core from "../core"
 
 export type Name='dumpbin'
-export type Tool = Core.Tool<Name>
+export type Tool = Core.Actor<Name>
 
 export type Flag = ''
     | '/ALL'

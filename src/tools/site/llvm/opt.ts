@@ -1,5 +1,7 @@
-import {LlvmTool} from "./LlvmNames"
 import {HelpDoc} from "../core"
+import * as Core from "../core"
+
+import * as Tk from "./tokens"
 
 const Content = 
 `OVERVIEW: MLIR modular optimizer driver
@@ -2229,14 +2231,10 @@ test-loop-fusion options:
   --test-loop-fusion-transformation                               - Enable testing of loop fusion transformation
 `
 
-export function help() : HelpDoc<LlvmTool> {
-    return {
-        tool:'mlir-cpu-runner',
-        content:Content
-    }
+export function help() : HelpDoc<Tk.MlirCpuRunner,string> {
+  return {
+    tool:Core.actor(Tk.MlirCpuRunner()),
+    content:Content
 }
-
-export function command() {
-
 }
 

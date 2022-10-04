@@ -4,7 +4,7 @@
   "main": "./.site/index.js",
   "license": "MIT",
   "scripts": {
-    "tsbuild":"./.x/tsbuild.cmd",    
+    "build":"./.x/tsbuild.cmd && ./.x/dnbuild.cmd",
     "start" :"./.x/run.cmd",
     "clean" :"./.x/clean.cmd"
   },

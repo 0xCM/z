@@ -1,5 +1,15 @@
 import { ExecutorName,Cmd } from "./cmd"
 
+export type Actor<N> = {
+    name:N
+}
+
+export function actor<T>(name:T) : Actor<T> {
+    return {
+        name
+    }
+}
+
 export type ToolInfo = {
     name:string
     root:string
@@ -51,46 +61,34 @@ export type ToolName<N> = {
 
 export type Tools<N> = Array<ToolId<N>>
 
-export function tool1<T>(name: T) : ToolId<T> {
+
+export type HelpDoc<T,C>  = {
+    tool:Actor<T>,
+    content:C
+}
+
+
+export function help<T,C>(tool:Actor<T>,content:C) : HelpDoc<T,C> {
     return {
-        tool: name
+        tool,
+        content
     }
-}
-
-
-export type RootedArchive<R> = {
-    root:R
-}
-
-
-export type HelpDoc<T>  = {
-    tool:T,
-    content:string
-}
+  }
 
 export type ToolHelpCmd<T,A0=null, A1=null, A2=null> = {
     tool:T
     args:[a0?:A0, a1?:A1, a2?:A2]
 }
 
-export type ToolHelp<T> = {
-    tool:T
-    docs:Array<HelpDoc<T>>
-}
 
-export type Tool<T> = {
-    tool:T
+export type ToolHelp<T,C> = {
+    tool:Actor<T>
+    docs:Array<HelpDoc<T,C>>
 }
 
 
-export function tool<T>(tool:T) : Tool<T> {
-    return {
-        tool
-    }
-}
 
-
-export interface ToolCmd<T,C> extends Cmd<C>, Tool<T> {
+export interface ToolCmd<T,C> extends Cmd<C>, Actor<T> {
 
 }
 

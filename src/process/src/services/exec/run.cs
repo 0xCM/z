@@ -8,10 +8,10 @@ namespace Z0
 
     partial record class ProcExec
     {
-        public static ExecToken run(FilePath src, FilePath dst, IWfChannel channel, bool babble = true)
+        public static ExecToken run(FilePath src, FilePath dst, IWfChannel channel)
             => run(Cmd.args(src), dst, channel);
 
-        public static ExecToken run(CmdArgs spec, FilePath dst, IWfChannel channel, bool babble = true)
+        public static ExecToken run(CmdArgs spec, FilePath dst, IWfChannel channel)
         {
             var running = channel.Running($"Executing command '{spec}");
             var token = ExecToken.Empty;
@@ -23,8 +23,7 @@ namespace Z0
                 if(nonempty(src))
                 {
                     buffer.Add(src);
-                    if(babble)
-                        channel.Row(src);
+                    channel.Row(src);
                 }
             }
 
@@ -105,7 +104,7 @@ namespace Z0
             return outcome;
         }
 
-        public static CmdExecStatus run(CmdArgs spec, Action<string> status, Action<string> error, FolderPath wd)
+        public static CmdExecStatus run(CmdArgs spec, IStdIO io, FolderPath wd)
         {
             var values = spec.Values();
             Demand.gt(values.Count,0u);
@@ -125,13 +124,13 @@ namespace Z0
             void OnStatus(object sender, DataReceivedEventArgs e)
             {
                 if(sys.nonempty(e.Data))
-                    status(e.Data);
+                    io.Status(e.Data);
             }
     
             void OnError(object sender, DataReceivedEventArgs e)
             {
                 if(sys.nonempty(e.Data))
-                    error(e.Data);
+                    io.Error(e.Data);
             }
 
             var outcome = default(CmdExecStatus);
@@ -153,7 +152,7 @@ namespace Z0
             }
             catch(Exception e)
             {
-                error(e.ToString());
+                io.Error(e.ToString());
             }
             return outcome;
         }

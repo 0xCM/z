@@ -16,7 +16,7 @@ namespace Z0
         {
             var src = FS.relative(arg(args,0).Value);
             var flow = Running("db/purge");
-            Db.purge(Root.Root, src, Emitter).ContinueWith(x => Ran(flow));
+            Db.purge(Root.Root, src, Channel).ContinueWith(x => Ran(flow));
         }
 
         [CmdOp(archive)]

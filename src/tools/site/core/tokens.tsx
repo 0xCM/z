@@ -7,6 +7,10 @@ export type JAVA_HOME = 'JAVA_HOME'
 
 export type DOTNET_ROOT = 'DOTNET_ROOT'
 
+export type Verbose = 'verbose'
+export function Verbose() : Verbose {
+    return 'verbose'
+}
 
 export type Bin = 'bin'
 export function Bin() : Bin {
@@ -126,5 +130,3 @@ export const TokenDefs = [
     token("Lang", "lang"),
     token("Zip", "zip"),
 ]
-
-

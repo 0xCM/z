@@ -37,6 +37,16 @@ export function EnvRoot() : EnvRoot {
     return 'd:/env'
 }
 
+export type DocSources = `b:/docs`
+export function DocSources() : DocSources {
+    return 'b:/docs'
+}
+
+export type DocTargets = 'f:/build/docs'
+export function DocTargets() : DocTargets {
+    return 'f:/build/docs'
+}
+
 export type PkgKind =
     | Tk.Nuget
     | 'native'
@@ -67,19 +77,3 @@ export function NUGET_PACKAGES() : NUGET_PACKAGES {
     return PkgCache('nuget')
 }
 
-
-// export type JAVA_HOME = `${Env.MsJdkHome}`
-// export function JAVA_HOME() : JAVA_HOME {
-//     return `${Env.MsJdkHome()}`    
-// }
-
-// export type JavaBin = `${Env.MsJdkBin}`
-// export function JavaBin() : JavaBin {
-//     return `${Env.MsJdkBin()}`
-// }
-
-// export type PATH = `${JavaBin}`
-
-// export function PATH() : PATH {
-//     return `${JavaBin()}`
-// }

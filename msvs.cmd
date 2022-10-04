@@ -1,3 +1,6 @@
 @echo off
+call %Control%\config.cmd
 call %~dp0config.cmd
-devenv %RootSlnPath%
+devenv %~dp0z0.sln
+
+

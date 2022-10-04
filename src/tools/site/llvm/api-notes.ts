@@ -1,5 +1,9 @@
-import {LlvmTool} from "./LlvmNames"
 import {HelpDoc} from "../core"
+import * as Core from "../core"
+import {LlvmTool} from "./tokens"
+
+export type Name = 'apinotes'
+export type Tool = Core.Actor<Name>
 
 const Content=
 `USAGE: apinotes-test.exe [options] [<apinotes> ...]
@@ -40,9 +44,9 @@ Generic Options:
   --version                               - Display the version of this program
 `
 
-export function help() : HelpDoc<LlvmTool> {
+export function help() : HelpDoc<LlvmTool,string> {
   return {
-      tool:'mlir-cpu-runner',
+      tool:Core.actor('mlir-opt'),
       content:Content
   }
 }

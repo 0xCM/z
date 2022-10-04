@@ -1,5 +1,6 @@
 import {HelpDoc} from "../core"
-import { LlvmTool } from "./LlvmNames"
+import * as Core from "../core"
+import {LlvmTool } from "./tokens"
 
 const Content  = `
 OVERVIEW: MLIR CPU execution driver
@@ -1589,9 +1590,9 @@ opt-like flags:
   --O3                                                            - Run opt passes and codegen at O3
 `
 
-export function help() : HelpDoc<LlvmTool> {
+export function help() : HelpDoc<LlvmTool,string> {
     return {
-        tool:'mlir-opt',
+        tool:Core.actor('mlir-opt'),
         content:Content
     }
 }

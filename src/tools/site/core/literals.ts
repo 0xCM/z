@@ -1,4 +1,4 @@
-import {Bind as Binder,Reify as Reification, Bound} from "./bind"
+import {Bind as Binder,Reify as Reification, Bound} from "./vars"
 
 export type Number = number | bigint
 export type Bool = boolean
@@ -37,3 +37,5 @@ export function AssignLiteral<S extends Identifier,T extends Literal>() : Assign
         reify:assign
     }
 }
+
+export type SetLiteral<N extends Literal,V extends Literal> = `${N}=${V}`

@@ -107,7 +107,7 @@ namespace Z0
             return sys.start(run);
         }
 
-        public static Task<ExecToken> start(CmdLine cmd, WfEmit channel)
+        public static Task<ExecToken> start(CmdLine cmd, IWfChannel channel)
         {
             void OnError(in string src)
                 => channel.Error(src);

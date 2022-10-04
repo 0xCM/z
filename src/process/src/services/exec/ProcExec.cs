@@ -4,14 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     [ApiHost]
     public sealed partial record class ProcExec
     {
 
         static AppDb AppDb => AppDb.Service;
-
 
         [MethodImpl(Inline), Op]
         public static CmdScript script(string name, CmdScriptExpr src)

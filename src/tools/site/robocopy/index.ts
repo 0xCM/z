@@ -1,13 +1,12 @@
-import {FS} from "../core"
 import * as Core from "../core"
-import { PathSep } from "../core/fs"
-import {Tk} from "../core"
+import {PathSep} from "../core/fs"
+import {Tk,Actor,FS} from "../core"
 
 export type Name = `robocopy`
-export type Tool = Core.Tool<Name>
+export type Tool = Actor<Name>
 
 export function tool(name:Name = 'robocopy') : Tool {
-    return Core.tool(name)
+    return Core.actor(name)
 }
 
 export function copy<S,T,N>(name:N, src:FS.Path<S>, dst:FS.Path<T>, sep:PathSep = Tk.BackSlash()) {

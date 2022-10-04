@@ -8,6 +8,30 @@ namespace Z0
 
     using static sys;
 
+    class StdIO : IStdIO
+    {
+        readonly Action<string> StatusHandler;
+
+        readonly Action<string> ErrorHandler;
+
+        public StdIO(Action<string> status, Action<string> error)
+        {
+            StatusHandler = status;
+            ErrorHandler = error;
+        }
+
+        public void Status(string msg)
+        {
+            StatusHandler(msg);
+        }
+        
+        public void Error(string msg)
+        {
+            ErrorHandler(msg);
+        }
+
+    }
+
     public class WfCmd : AppCmdService<WfCmd>
     {
         WsRegistry WsRegistry => Wf.WsRegistry();
@@ -133,45 +157,14 @@ namespace Z0
             Db.robocopy(src,dst);
         }
 
-        [CmdOp("help")]
-        void GetHelp(CmdArgs args)
-        {
-            var dst = AppDb.DbTargets("tools/help").Path(FS.file($"{args[0].Value}.{timestamp()}", FileKind.Help));                    
-            ProcExec.run(args, dst, Emitter);
-        }
-
         [CmdOp("exe")]
         void RunExe(CmdArgs args)
         {
             var src = FS.path(args[0]);
             var dst =  AppDb.Logs("exe").Path($"{src.FileName.WithoutExtension}.{timestamp()}", FileKind.Log);
-            ProcExec.run(src, dst, Emitter);
+            ProcExec.run(src, dst, Channel);
         }
 
-        [CmdOp("cmd")]
-        protected void RunCmd(CmdArgs args)
-            => ProcExec.start(args, Channel);
-
-        // tool ilc help
-        [CmdOp("tool")]
-        void RunTool(CmdArgs args)
-        {
-            var tool = arg(args,0).Value;
-            var script = arg(args,1).Value;
-            var count = args.Count - 2;
-            var _args = count > 0 ? sys.alloc<string>(count) : sys.empty<string>();
-            var path = AppDb.Toolbase($"{tool}/scripts").Path(FS.file(script,FileKind.Cmd));
-            var emitter = text.emitter();
-            var j=2;
-            for(var i=0; i<count; i++, j++)
-            {
-                emitter.Append(Chars.Space);
-                emitter.Append(args[i].Value);
-            }
-            
-            var cmd = Cmd.cmd(path, CmdKind.Tool, emitter.Emit());        
-            ProcExec.start(cmd, Emitter);        
-        }
 
         [CmdOp("cmd/copy")]
         void Copy(CmdArgs args)
@@ -181,16 +174,14 @@ namespace Z0
             Db.robocopy(src,dst);
         }
 
-        [CmdOp("pwsh")]
-        protected void RunPwshCmd(CmdArgs args)
-        {
-            var cmd = Cmd.pwsh(Cmd.join(args));
-            Status($"Executing '{cmd}'");
-            ProcExec.start(cmd);
-        }
-
         static Files launchers()
-            => DbArchive.match(AppDb.Control("launch").Root, FS.Cmd);
+            => DbArchive.match(AppDb.Control("launch").Root, FileKind.Cmd, FileKind.Ps1);
+
+        [CmdOp("captured")]
+        void Captured()
+        {
+            
+        }
 
         [CmdOp("launchers")]
         protected void Launchers(CmdArgs args)
@@ -251,7 +242,6 @@ namespace Z0
             }
             return result;
         }
-
 
         [CmdOp("env/report")]
         void EmitEnv(CmdArgs args)

@@ -19,9 +19,6 @@ export interface Node<N> extends Named<N> {
     
 }
 
-export interface Actor<A> extends Node<A> {
-
-}
 
 export interface Action<K,A> extends Node<A>, Kinded<K> {
 }

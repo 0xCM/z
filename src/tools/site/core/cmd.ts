@@ -13,8 +13,6 @@ export interface CmdAlias<C,A> extends Cmd<C> {
     alias:A
 }
 
-
-
 export interface ToolExe<R,T> {
     root:R
     tool:T

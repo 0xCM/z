@@ -5,8 +5,9 @@ set PublishCmd=dotnet publish %ProjectPath% --output %Deployments% --configurati
 set CopySymbols=copy %ProjectRuntime%\*.pdb %ProjectPdb%\ /Y
 set PublishSymbols=robocopy %ProjectPdb% %Deployments%
 
-call %RetractCmd%
-if errorlevel 1 goto:eof
+echo PublishCmd=%PublishCmd%
+
+call %RetractCmd% 1>nul 2>nul
 
 call %PublishCmd%
 if errorlevel 1 goto:eof

@@ -1,6 +1,5 @@
 import { EmptyString, EmptyType } from "./common"
 import {uint32} from "./integers"
-import {Edge} from "./graphs"
 import {ForwardSlash,BackSlash} from "./tokens"
 
 export type PathSep = EmptyType<''>| BackSlash | ForwardSlash
@@ -49,7 +48,6 @@ export type Drive =
     | 'Y:'
     | 'Z:'
     
-
 export type Volume<V> = V
 
 export type Mount<P,R> = {
@@ -98,19 +96,18 @@ export function format<A,B,C,D,E,F,G,H>(sep:string, src:Path<A,B,C,D,E,F,G,H>) {
         + (src.h == undefined ? empty : sep + src.h)
 }
 
-export type File = {
-    name:string
-}
+export type File<F> = F
 
-export type Folder = {
-    name:string
+export type Edge<K,S,T> = {
+    kind:K
+    source:S
+    target:T
 }
 
 export type Link<L,F> = Edge<L,F,F>
 
-export type FileLink<K> = Link<K,File>
+export type FileLink<K,F> = Link<K,File<F>>
 
-export type FolderLink<K> = Link<K,Folder>
 
 export function link<K,F>(kind:K, source:F, target:F) : Link<K,F> {
     return {
@@ -120,16 +117,22 @@ export function link<K,F>(kind:K, source:F, target:F) : Link<K,F> {
     }
 }
 
-export function file(name:string) : File {
+
+export function edge<K,S,T>(kind:K, source:S, target:T) : Edge<K,S,T> {
     return {
-        name:name
+        kind,
+        source,
+        target
     }
 }
+export function file<F>(file:F) : File<F> {
+    return file
+}
 
-export function folder(name:string) : Folder {
-    return {
-        name:name
-    }
+export type Folder<P> = P
+
+export function folder<P>(src:P) : Folder<P> {
+    return src
 }
 
 export type Archive<K,R> = {
@@ -141,6 +144,7 @@ export type ArchiveKind =
     | 'git'
     | 'zip'
     | 'fs'
+    | 'tar'
 
 export type FileArchive<R> = Archive<0,R>
 
@@ -159,23 +163,3 @@ export function lines<S,T>(source:S, min:uint32<T>, max:uint32<T>) : LineSpan<S,
     }
 }
 
-
-
-/*
-https://github.com/MicrosoftDocs/windows-powershell-docs/blob/main/docset/winserver2019-ps/storage/Get-DiskImage.md
-ByImagePath (Default)
-Get-DiskImage [-ImagePath] <String[]> [-StorageType <StorageType>] [-CimSession <CimSession[]>]
-[-ThrottleLimit <Int32>] [-AsJob] [<CommonParameters>]
-ByVolume
-Get-DiskImage [-Volume <CimInstance>] [-StorageType <StorageType>] [-CimSession <CimSession[]>]
-[-ThrottleLimit <Int32>] [-AsJob] [<CommonParameters>]
-ByDevicePath
-Get-DiskImage -DevicePath <String[]> [-StorageType <StorageType>] [-CimSession <CimSession[]>]
-[-ThrottleLimit <Int32>] [-AsJob] [<CommonParameters>]
-
-```pwershell
-Get-Volume | Get-DiskImage | Select DevicePath,ImagePath
-```
-Get-DiskImage -ImagePath E:\vhd1.vhdx | Get-Disk | Get-Partition | Get-Volume
-Get-Volume | Get-DiskImage | Get-Disk | Get-Partition | Get-Volume
-*/

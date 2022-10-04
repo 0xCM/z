@@ -1,3 +1,3 @@
 @echo off
-call %~dp0..\config.cmd
-call %BuildProject%
+call %~dp0tsbuild.cmd
+call %~dp0dnbuild.cmd

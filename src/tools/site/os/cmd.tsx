@@ -1,14 +1,14 @@
 import * as Core from "../core"
 
 export type Name = 'cmd'
-export type Tool = Core.Tool<Name>
+export type Tool = Core.Actor<Name>
 
 export function name() : Name {
     return 'cmd'
 }
 
 export function tool(name:Name = 'cmd') : Tool {
-    return Core.tool(name)
+    return Core.actor(name)
 }
 
 export const Refs = 
