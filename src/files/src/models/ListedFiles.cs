@@ -7,10 +7,10 @@ namespace Z0
     public class ListedFiles : SortedSeq<ListedFile>
     {
         public static ListedFiles listing(FolderPath src, bool recurse)
-            => src.Files(recurse).Select(listing).Array();
+            => src.Files(recurse).Map(listing).Array();
 
         public static ListedFiles listing(FolderPath src, bool recurse, params FileKind[] kinds)
-            => src.Files(recurse,kinds).Select(listing).Array();
+            => src.Files(recurse,kinds).Map(listing).Array();
 
         public static ListedFiles listing(ReadOnlySpan<FilePath> src)
             => src.Select(listing);

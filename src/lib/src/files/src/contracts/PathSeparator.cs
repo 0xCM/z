@@ -4,8 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IFilteredArchive
+    [SymSource("files")]
+    public enum PathSeparator : ushort
     {
-        Deferred<FilePath> Files();
+        FS = '/',
+
+        BS = '\\',
     }
 }

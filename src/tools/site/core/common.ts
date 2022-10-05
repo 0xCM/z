@@ -1,24 +1,15 @@
-export type EmptyType<T=null> = T
-export type TheEmpty<T> = T
-export type EmptyString = EmptyType<''>
+export type Const<T> = T
+
+export type Null<T=null> = Const<null>
+
+export type EmptyString = Const<''>
 
 
-export interface Named<N> {
-    name:N
-}
-
-export interface Valued<V> {
-    value:V
-}
-
-export interface Kinded<K> {
-    kind:K
-}
-
-export interface Node<N> extends Named<N> {
+export interface Node<N> {
     
 }
 
-
-export interface Action<K,A> extends Node<A>, Kinded<K> {
+export interface Action<K,A> extends Node<A>{
 }
+
+export type Mapper<S,T> = (src:S) => T;

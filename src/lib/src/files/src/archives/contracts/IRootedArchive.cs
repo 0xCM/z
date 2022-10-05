@@ -97,4 +97,10 @@ namespace Z0
         Deferred<_FileUri> Enumerate()
             => from f in DbFiles.Enumerate(true) select f.ToUri();
     }
+
+    public interface IRootedArchive<R> : IRootedArchive
+        where R : IRootedArchive<R>, new()
+    {
+
+    }
 }

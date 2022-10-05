@@ -6,5 +6,6 @@
      <ProjectReference Include="$(Circuits)"/>
      <ProjectReference Include="$(Db)"/>
      <ProjectReference Include="$(Workflow)"/>
+     <ProjectReference Include="$(Files)"/>
   </ItemGroup>
 </Project>

@@ -175,7 +175,7 @@ namespace Z0
         }
 
         static Files launchers()
-            => DbArchive.match(AppDb.Control("launch").Root, FileKind.Cmd, FileKind.Ps1);
+            => FilteredArchive.match(AppDb.Control("launch").Root, FileKind.Cmd, FileKind.Ps1);
 
         [CmdOp("captured")]
         void Captured()

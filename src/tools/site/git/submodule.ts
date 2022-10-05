@@ -1,5 +1,5 @@
-export type Tool = 'git'
-export type SubCmd = 'submodule'
+import {SubModule,Tool,Recursive} from "./common"
+
 export type Quiet = '--quiet'
 export type Cached = '--cached'
 export type Add = 'add'
@@ -12,7 +12,6 @@ export type SetUrl = 'set-url'
 export type Summary = 'summary'
 export type ForEach = 'foreach'
 export type Sync = 'sync'
-export type Recursive = '--recursive'
 export type Path= '<path>'
 export type Force = '--force'
 export type AbsorbGitDirs = 'absorbgitdirs'
@@ -40,18 +39,18 @@ export type Action =
 
 export type Syntax =
     | ''
-    | `${Tool} ${SubCmd} [${Quiet}] [${Cached}]`
-    | `${Tool} ${SubCmd} [${Quiet}] ${Add} [${Options}] [${DashDash}] ${Repository} [${Path}]`
-    | `${Tool} ${SubCmd} [${Quiet}] ${Status} [${Cached}] [${Recursive}] [${DashDash}] [${Path}${TripleDot}]`
-    | `${Tool} ${SubCmd} [${Quiet}] ${Init} [${DashDash}] [${Path}${TripleDot}​​]`
-    | `${Tool} ${SubCmd} [${Quiet}] ${Deinit} [${Force}] (${All}|[${DashDash}] ${Path}${TripleDot}​)`
-    | `${Tool} ${SubCmd} [${Quiet}] ${Update} [${Options}] [${DashDash}] [${Path}${TripleDot}​]`
-    | `${Tool} ${SubCmd} [${Quiet}] ${SetBranch} [${Options}] [${DashDash}] ${Path}`
-    | `${Tool} ${SubCmd} [${Quiet}] ${SetUrl} [${DashDash}] ${Path} ${NewUrl}`
-    | `${Tool} ${SubCmd} [${Quiet}] ${Summary} [${Options}] [${DashDash}] [${Path}${TripleDot}​]`
-    | `${Tool} ${SubCmd} [${Quiet}] ${ForEach} [${Recursive}] ${Command}`
-    | `${Tool} ${SubCmd} [${Quiet}] ${Sync} [${Recursive}] [${DashDash}] [${Path}${TripleDot}​]`
-    | `${Tool} ${SubCmd} [${Quiet}] ${AbsorbGitDirs} [${DashDash}] [${Path}${TripleDot}​]`
+    | `${Tool} ${SubModule} [${Quiet}] [${Cached}]`
+    | `${Tool} ${SubModule} [${Quiet}] ${Add} [${Options}] [${DashDash}] ${Repository} [${Path}]`
+    | `${Tool} ${SubModule} [${Quiet}] ${Status} [${Cached}] [${Recursive}] [${DashDash}] [${Path}${TripleDot}]`
+    | `${Tool} ${SubModule} [${Quiet}] ${Init} [${DashDash}] [${Path}${TripleDot}​​]`
+    | `${Tool} ${SubModule} [${Quiet}] ${Deinit} [${Force}] (${All}|[${DashDash}] ${Path}${TripleDot}​)`
+    | `${Tool} ${SubModule} [${Quiet}] ${Update} [${Options}] [${DashDash}] [${Path}${TripleDot}​]`
+    | `${Tool} ${SubModule} [${Quiet}] ${SetBranch} [${Options}] [${DashDash}] ${Path}`
+    | `${Tool} ${SubModule} [${Quiet}] ${SetUrl} [${DashDash}] ${Path} ${NewUrl}`
+    | `${Tool} ${SubModule} [${Quiet}] ${Summary} [${Options}] [${DashDash}] [${Path}${TripleDot}​]`
+    | `${Tool} ${SubModule} [${Quiet}] ${ForEach} [${Recursive}] ${Command}`
+    | `${Tool} ${SubModule} [${Quiet}] ${Sync} [${Recursive}] [${DashDash}] [${Path}${TripleDot}​]`
+    | `${Tool} ${SubModule} [${Quiet}] ${AbsorbGitDirs} [${DashDash}] [${Path}${TripleDot}​]`
 
 export type SyntaxSpec = {
     action:Action

@@ -170,42 +170,6 @@ namespace Z0
             }
         }
 
-        [MethodImpl(Inline), Op]
-        public static IFilteredArchive filter(FolderPath src, string filter)
-            => new FilteredArchive(src, filter);
-
-        [MethodImpl(Inline), Op]
-        public static IFilteredArchive filter(FolderPath src, params FileExt[] ext)
-            => new FilteredArchive(src, ext);
-
-        [MethodImpl(Inline), Op]
-        public static IFilteredArchive filter(FolderPath src, params FileKind[] kinds)
-            => new FilteredArchive(src, kinds.Map(x => x.Ext()));
-
-        public static Files search(FolderPath src, FileExt[] ext, uint limit = 0)
-            => limit != 0 ? match(src, limit, ext) : match(src, ext);
-
-        public static Files match(FolderPath src, uint max, params FileExt[] ext)
-        {
-            var files = filter(src, ext).Files().Take(max).Array();
-            Array.Sort(files);
-            return files;
-        }
-
-        public static Files match(FolderPath src, params FileKind[] ext)
-        {
-            var files = filter(src, ext).Files().Array();
-            Array.Sort(files);
-            return files;
-        }
-
-        public static Files match(FolderPath src, params FileExt[] ext)
-        {
-            var files = filter(src, ext).Files().Array();
-            Array.Sort(files);
-            return files;
-        }
-
         [MethodImpl(Inline)]
         public static implicit operator DbArchive(FolderPath src)
             => new DbArchive(src);

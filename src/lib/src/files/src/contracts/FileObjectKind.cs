@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [SymSource(files)]
+    [SymSource("files")]
     public enum FileObjectKind : byte
     {
         None = 0,

@@ -11,8 +11,8 @@ export type Locals = 'locals'
 export type Pack = 'pack'
 export type Push = 'push'
 export type Restore = 'restore'
-
-
+export type Search = 'search'
+export type SetApiKey = 'setApiKey'
 export type SubCmd = 
     | Add
     | ClientCerts
@@ -26,7 +26,7 @@ export type SubCmd =
     | Pack
     | Push
     | Restore
-    | 'search'
+    | Search
     | 'setApiKey'
     | 'sign'
     | 'sources'

@@ -1,8 +1,9 @@
-import { EmptyString, EmptyType } from "./common"
+import { EmptyString, Null } from "./common"
 import {uint32} from "./integers"
 import {ForwardSlash,BackSlash} from "./tokens"
+import {Upper,Colon} from "./utf7"
 
-export type PathSep = EmptyType<''>| BackSlash | ForwardSlash
+export type PathSep = EmptyString | BackSlash | ForwardSlash
 
 export function sep(kind:PathSep) {
     var sep :PathSep = ''
@@ -18,9 +19,11 @@ export function sep(kind:PathSep) {
     return `${sep}`
 }
 
-export type Drive = 
+export type Drive<D extends Upper> = `${D}${Colon}`
+
+export type _Drive = 
     | ''
-    | 'A:' 
+    | `A:` 
     | 'B:' 
     | 'C:' 
     | 'D:' 
@@ -57,7 +60,7 @@ export type Mount<P,R> = {
     
 export type WslMount<M> = Mount<`\\\\wsl$`,M>
 
-export type NtfsMount<P extends Drive,R> = Mount<P,R>
+export type NtfsMount<P extends _Drive,R> = Mount<P,R>
 
 export type Path<A,B=null,C=null,D=null,E=null,F=null,G=null,H=null> = {
     a:A
@@ -162,4 +165,3 @@ export function lines<S,T>(source:S, min:uint32<T>, max:uint32<T>) : LineSpan<S,
         max
     }
 }
-

@@ -1,0 +1,30 @@
+NuGet Version: 6.2.1.2
+usage: NuGet list [search terms] [options]
+
+Displays a list of packages from a given source. If no sources are specified, all sources defined in %AppData%\NuGet\NuGet.config are used. If NuGet.config specifies no sources, uses the default NuGet feed.
+
+     Specify optional search terms.
+
+options:
+
+ -Source +                                                   A list of packages sources to search.
+ -Verbose                                                    Displays a detailed list of information for each package.
+ -AllVersions                                                List all versions of a package. By default, only the latest package version is displayed.
+ -Prerelease                                                 Allow prerelease packages to be shown.
+ -IncludeDelisted                                            Allow unlisted packages to be shown.
+ -Help                    (?)                                help
+ -Verbosity                                                  Display this amount of details in the output: normal, quiet, detailed.
+ -NonInteractive                                             Do not prompt for user input or confirmations.
+ -ConfigFile                                                 The NuGet configuration file. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration file
+                               s from the current directory will be used. To learn more about NuGet configuration go to https://docs.microsoft.com/en-us/nuget/consume-packages
+                               /configuring-nuget-behavior.
+ -ForceEnglishOutput                                         Forces the application to run using an invariant, English-based culture.
+
+examples:
+
+nuget list
+
+nuget list -verbose -allversions
+
+For more information, visit https://docs.nuget.org/docs/reference/command-line-reference
+

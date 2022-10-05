@@ -14,6 +14,13 @@ export * from "./literals"
 export * from "./vars"
 export * from "./context"
 export * from "./lookup"
+export * from "./names"
+export * from "./kinds"
+export * from "./values"
+export * from "./kinds"
+export * from "./locations"
+export * from "./services"
+export * as Grammar from "./grammar"
 
 export type ModuleList = Array<string>
 
@@ -26,3 +33,4 @@ export function oneof<A,B,C=null>(a:A,b:B,c?:C) {
         dst += `|${c}`
     return dst
 }
+

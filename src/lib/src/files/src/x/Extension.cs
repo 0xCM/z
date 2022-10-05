@@ -7,6 +7,6 @@ namespace Z0
     partial class XTend
     {
         public static FileExt Ext(this FileUri src)
-            => new (Path.GetExtension(src.LocalPath).TrimStart('.'));
+            => new (System.IO.Path.GetExtension(src.LocalPath).TrimStart('.'));
     }
 }

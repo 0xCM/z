@@ -1,4 +1,4 @@
-import {Drive} from "./fs"
+import {_Drive} from "./fs"
 
 export type Scheme =
     | 'http'
@@ -58,7 +58,7 @@ export type FileUri<U, H="localhost", Q=null, F=null> = {
 
 // URI = scheme ":" ["//" authority] path ["?" query] ["#" fragment]
 // https://en.wikipedia.org/wiki/Uniform_Resource_Identifier
-export type LocalResource<S extends Scheme, N extends string, D extends Drive, R extends string> = {
+export type LocalResource<S extends Scheme, N extends string, D extends _Drive, R extends string> = {
     scheme:S
     name:N
     drive:D

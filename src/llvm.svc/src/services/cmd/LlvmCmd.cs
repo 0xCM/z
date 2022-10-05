@@ -31,7 +31,7 @@ namespace Z0.llvm
         ToolIdOld SelectedTool;
 
         Files TdFiles()
-            => Z0.DbArchive.filter(Paths.LlvmRoot.Root, FS.ext(td)).Files().Array();
+            => FilteredArchive.filter(Paths.LlvmRoot.Root, FS.ext(td)).Files().Array();
 
         public LlvmCmd()
         {

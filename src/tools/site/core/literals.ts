@@ -1,9 +1,11 @@
 import {Bind as Binder,Reify as Reification, Bound} from "./vars"
+import {Null} from "./common"
 
 export type Number = number | bigint
 export type Bool = boolean
 export type String = string
-export type Literal = String | Number | Bool
+export type Literal =  String | Number | Bool | 'x'
+
 export type Identifier = String
 export type LiteralsSeq<T extends Literal> = Array<T>
 export type Strings = LiteralsSeq<String>
@@ -38,4 +40,8 @@ export function AssignLiteral<S extends Identifier,T extends Literal>() : Assign
     }
 }
 
-export type SetLiteral<N extends Literal,V extends Literal> = `${N}=${V}`
+export type Assign<N extends Literal,V extends Literal> = `${N}=${V}`
+
+
+export type Concat<A extends Literal,B extends Literal,C extends Literal = ''> = `${A}${B}${C}`
+

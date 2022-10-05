@@ -95,6 +95,16 @@ export function Zip() : Zip {
     return 'zip'
 }
 
+export type Include = 'include'
+export function Include() : Include {
+    return 'include'
+}
+
+export type Lib = 'lib'
+export function Lib() : Lib {
+    return 'lib'
+}
+
 export type BackSlash = '\\'
 export function BackSlash() : BackSlash{
     return '\\'
@@ -104,6 +114,12 @@ export type ForwardSlash = '/'
 
 export function ForwardSlash() : ForwardSlash{
     return '/'
+}
+
+export type Repeat = '...'
+
+export function Repeat() : Repeat {
+    return '...'
 }
 
 
