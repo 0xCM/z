@@ -7,7 +7,7 @@ namespace Z0
     [Free]
     sealed class App : AppCmdShell<App>
     {
-        public static void Main(int a = 4, int b = 5)
+        public static void Main(params string[] args)
         {
 
             

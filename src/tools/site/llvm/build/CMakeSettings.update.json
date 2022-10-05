@@ -1,0 +1,124 @@
+﻿{
+  "configurations": [
+    {
+      "name": "x64-Release",
+      "generator": "Ninja",
+      "configurationType": "Release",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
+      "intelliSenseMode": "windows-msvc-x64",
+      "variables": [
+        {
+          "name": "LLVM_ENABLE_CURL",
+          "value": "ON",
+          "type": "STRING"
+        },
+        {
+          "name": "VCPKG_VERBOSE",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "BENCHMARK_ENABLE_GTEST_TESTS",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "BENCHMARK_ENABLE_INSTALL",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "BENCHMARK_DOWNLOAD_DEPENDENCIES",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "BENCHMARK_ENABLE_ASSEMBLY_TESTS",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "LLVM_BUILD_EXAMPLES",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "LLVM_ENABLE_PROJECTS",
+          "value": "clang;clang-tools-extra;flang;libc;libclc;lld;lldb;mlir;polly;pstl;bolt",
+          "type": "STRING"
+        },
+        {
+          "name": "LLVM_TOOL_OPENMP_BUILD",
+          "value": "TRUE",
+          "type": "STRING"
+        },
+        {
+          "name": "LIBOMP_OMPT_SUPPORT",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "LIBOMP_OMPT_DEBUG",
+          "value": "False",
+          "type": "BOOL"
+        },
+        {
+          "name": "LLVM_TOOL_MLIR_BUILD",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "LLVM_BUILD_TESTS",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "LLVM_TOOL_CLANG_BUILD",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "CLANG_BUILD_EXAMPLES",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "LLVM_ENABLE_LLD",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "LLVM_BUILD_BENCHMARKS",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "CUDA_SDK_ROOT_DIR",
+          "value": "D:/env/sdks/cuda/root",
+          "type": "PATH"
+        },
+        {
+          "name": "CUDA_BUILD_EMULATION",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "MLIR_ENABLE_CUDA_RUNNER",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "LLVM_ENABLE_Z3_SOLVER",
+          "value": "True",
+          "type": "BOOL"
+        }
+      ],
+      "cmakeToolchain": "D:/env/sdks/vcpkg/scripts/buildsystems/vcpkg.cmake"
+    }
+  ]
+}
