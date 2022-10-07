@@ -106,7 +106,7 @@ namespace Z0
                 var dst = new WfInit();
                 dst.Args = args;
                 dst.ApiCatalog = src;
-                dst.LogConfig = Loggers.configure(id, AppEnv.Cfg.Logs());
+                dst.LogConfig = Loggers.configure(id, AppSettings.Default.Logs());
                 dst.LogConfig.ErrorPath.CreateParentIfMissing();
                 dst.LogConfig.StatusPath.CreateParentIfMissing();
                 term.emit(Events.babble(factory, ConfiguredAppLogs.Format(dst.LogConfig)));

@@ -31,5 +31,7 @@ namespace Z0
         public const string DENO_DIR = nameof(DENO_DIR);
 
         public const string DENO_CACHE = nameof(DENO_CACHE);
+
+        public const string settings = nameof(settings);
     }
 }

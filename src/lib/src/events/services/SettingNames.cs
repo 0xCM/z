@@ -33,6 +33,6 @@ namespace Z0
 
         public const string DevTools = nameof(DevTools);
 
-        public const string EnvDb = nameof(EnvDb);
+        public const string SdkRoot = nameof(SdkRoot);
     }
 }

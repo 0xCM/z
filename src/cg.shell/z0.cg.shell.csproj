@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(ProjectProps)\usings.props"/>
-  <Import Project="$(ProjectProps)\settings.props"/>
   <Import Project="imports.props"/>
   <PropertyGroup>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>

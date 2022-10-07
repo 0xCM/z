@@ -26,7 +26,7 @@ namespace Z0
             => _Settings.DbRoot();
 
         public DbArchive Dev()
-            => _Settings.Dev();
+            => _Settings.DevRoot();
 
         public DbArchive DevOps()
             => _Settings.DevOps();

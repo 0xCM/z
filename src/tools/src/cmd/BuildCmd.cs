@@ -64,6 +64,7 @@ namespace Z0
             }
             return dst.ToArray();
         }
+        
         [CmdOp("z0/exports")]
         void DirProps()
         {

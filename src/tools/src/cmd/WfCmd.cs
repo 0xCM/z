@@ -8,30 +8,6 @@ namespace Z0
 
     using static sys;
 
-    class StdIO : IStdIO
-    {
-        readonly Action<string> StatusHandler;
-
-        readonly Action<string> ErrorHandler;
-
-        public StdIO(Action<string> status, Action<string> error)
-        {
-            StatusHandler = status;
-            ErrorHandler = error;
-        }
-
-        public void Status(string msg)
-        {
-            StatusHandler(msg);
-        }
-        
-        public void Error(string msg)
-        {
-            ErrorHandler(msg);
-        }
-
-    }
-
     public class WfCmd : AppCmdService<WfCmd>
     {
         WsRegistry WsRegistry => Wf.WsRegistry();
@@ -194,6 +170,12 @@ namespace Z0
             Emitter.FileEmit(data, AppDb.AppData().Path("launchers", FileKind.List));
         }
         
+        void LaunchProject(CmdArgs args)
+        {
+            var name = arg(args,0).Value;
+            
+        }
+
         [CmdOp("launch")]
         protected void LaunchTargets(CmdArgs args)
         {
@@ -214,33 +196,16 @@ namespace Z0
             }
         }
 
-        [CmdOp("app/settings")]
+        [CmdOp("settings")]
         void ReadSettings(CmdArgs args)
         {
-            var src = AppSettings.load(Emitter);
-            iter(src, setting => Write(setting.Format()));
+            iter(AppSettings, setting => Write(setting.Format()));
         }
 
         [CmdOp("services")]
         void GetServices()
         {
             Write(ApiRuntime.services(ApiCatalog.Components));
-        }
-
-        [CmdOp("setting")]
-        Outcome Setting(CmdArgs args)
-        {
-            var name = arg(args,0).Value;
-            var result = Outcome.Success;
-            if(AppSettings.Default.Find(name, out var value))
-            {
-                Write($"{name}:{value}");
-            }
-            else
-            {
-                result = (false, $"Setting '{name}' not found");
-            }
-            return result;
         }
 
         [CmdOp("env/report")]

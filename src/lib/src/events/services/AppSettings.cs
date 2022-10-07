@@ -6,19 +6,23 @@ namespace Z0
 {
     using static sys;
     using static Settings;
+    using static EnvNames;
 
     public sealed class AppSettings : SettingLookup<Name,string>
     {
-        static AppSettings _Service = load(path());
+        static AppSettings _Service = load(SettingsRoot().Path(FS.file("z0.settings", FileKind.Csv)));
 
         public static AppSettings load(WfEmit channel)
-            => load(path(), channel);
+            => load(SettingsRoot().Path(FS.file("z0.settings", FileKind.Csv)), channel);
 
-        public static FilePath path()
-            => FS.path(sys.controller().Location).FolderPath + FS.file("app.settings", FileKind.Csv);
+        public static DbArchive EnvRoot()
+            => FS.dir(System.Environment.GetEnvironmentVariable(SettingNames.EnvRoot));
 
-        public DbArchive EnvDb()
-            => folder(_Service.Setting(SettingNames.EnvDb));
+        public DbArchive Sdks()
+            => folder(_Service.Setting(SettingNames.SdkRoot));
+
+        public static DbArchive SettingsRoot()
+            => EnvRoot().Scoped(settings);
 
         public DbArchive Control()
             => folder(_Service.Setting(SettingNames.Control));
@@ -26,7 +30,7 @@ namespace Z0
         public DbArchive DbRoot()
             => folder(_Service.Setting(SettingNames.DbRoot));
 
-        public DbArchive Dev()
+        public DbArchive DevRoot()
             => folder(_Service.Setting(SettingNames.DevRoot));
 
         public DbArchive DevOps()
@@ -46,6 +50,9 @@ namespace Z0
 
         public DbArchive DevTools()
             => folder(_Service.Setting(SettingNames.DevTools));
+
+        public DbArchive Logs() 
+            => DbRoot().Scoped(logs);
 
         public static ref readonly AppSettings Default
         {
