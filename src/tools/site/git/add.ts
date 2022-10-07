@@ -1,4 +1,4 @@
-import * as Env from "../env"
+import * as Env from "../pkg"
 import {Tk} from "../core"
 
 export type DryRun = '--dry-run'

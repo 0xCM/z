@@ -1,0 +1,18 @@
+Description:
+  Restore tools defined in the local tool manifest.
+
+Usage:
+  dotnet tool restore [options]
+
+Options:
+  --configfile <FILE>      The NuGet configuration file to use.
+  --add-source <SOURCE>    Add an additional NuGet package source to use during installation.
+  --tool-manifest <PATH>   Path to the manifest file.
+  --disable-parallel       Prevent restoring multiple projects in parallel.
+  --ignore-failed-sources  Treat package source failures as warnings.
+  --no-cache               Do not cache packages and http requests.
+  --interactive            Allows the command to stop and wait for user input or action (for example to complete authentication).
+  -v, --verbosity <LEVEL>  Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+  -?, -h, --help           Show command line help.
+
+

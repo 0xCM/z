@@ -1,6 +1,6 @@
 <Project>
   <ItemGroup>
-    <EmbeddedResource Include="$(ProjectProps)\app.settings.csv"  CopyToOutputDirectory="Always" />
+    <EmbeddedResource Include="$(EnvRoot)\settings\z0.settings.csv"  CopyToOutputDirectory="Always" />
     <EmbeddedResource Include="$(ShellRoot)\$(ShellId)\$(ShellId).settings.csv"  CopyToOutputDirectory="Always" />
   </ItemGroup>
 </Project>

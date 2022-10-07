@@ -12,9 +12,19 @@ export function Verbose() : Verbose {
     return 'verbose'
 }
 
+export type Version = 'version'
+export function Version() : Version {
+    return 'version'
+}
+
 export type Bin = 'bin'
 export function Bin() : Bin {
     return 'bin'
+}
+
+export type Csv = 'csv'
+export function Csv() : Csv {
+    return 'csv'
 }
 
 export type Cache = 'cache'
@@ -120,6 +130,11 @@ export type Repeat = '...'
 
 export function Repeat() : Repeat {
     return '...'
+}
+
+export type Mime = 'mime'
+export function Mime() : Mime {
+    return 'mime'
 }
 
 

@@ -3,6 +3,8 @@ call %~dp0..\config.cmd
 set SlnId=z0
 set SlnRoot=%SlnRoot%\%SlnId%
 echo SlnRoot=%SlnRoot%
+set WsRoot=%SlnRoot%
+set WsPath=%WsRoot%
 
 set CfgFile=%SlnRoot%\%SlnId%.cfg
 
@@ -36,7 +38,6 @@ set SlnDist=%Distributions%\%SlnId%
 set BuildLogs=%Artifacts%\logs
 set SlnScripts=%SlnRoot%\scripts
 set SlnProps=%SlnRoot%\props
-set AppSettings=%SlnProps%\app.settings.csv
 set ProjectRoot=%SlnRoot%\%Area%\%ProjectId%
 set ProjectScripts=%ProjectRoot%\scripts
 set ProjectPath=%ProjectRoot%\%BuildPrefix%.%ProjectId%.csproj

@@ -1,7 +1,5 @@
 import {Service,Provider} from "./services"
 
-
-
 export interface Locatable<L> {
     location:L
 }

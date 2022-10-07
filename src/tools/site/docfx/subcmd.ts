@@ -1,15 +1,15 @@
 
 export type SubCmdName = 
-| 'build' 
-| 'dependency' 
-| 'download' 
-| 'help' 
-| 'init' 
-| 'merge' 
-| 'metadata' 
-| 'pdf' 
-| 'serve' 
-| 'template'
+    | 'build' 
+    | 'dependency' 
+    | 'download' 
+    | 'help' 
+    | 'init' 
+    | 'merge' 
+    | 'metadata' 
+    | 'pdf' 
+    | 'serve' 
+    | 'template'
 
 export type SubCmdNames = Array<SubCmdName>
 
@@ -28,17 +28,16 @@ return {
 }
 
 export const SubCommands = {
-names: subcmdnames,
-build: subcommand('build','Generate client-only website combining API in YAML files and conceptual files'),
-dependency:subcommand('dependency','Export dependency file'),
-download:subcommand('download','Download remote xref map file and create an xref archive in local.'),
-help:subcommand('help','Get an overall guide for the command and sub-commands'),
-merge:subcommand('merge','Merge .net base API in YAML files and toc files.'),
-metadata:subcommand('metadata','Generate YAML files from source code'),
-pdf:subcommand('pdf','Generate pdf file'),
-serve:subcommand('serve','Host a local static website'),
-template:subcommand('template','List or export existing template'),
-
+    names: subcmdnames,
+    build: subcommand('build','Generate client-only website combining API in YAML files and conceptual files'),
+    dependency:subcommand('dependency','Export dependency file'),
+    download:subcommand('download','Download remote xref map file and create an xref archive in local.'),
+    help:subcommand('help','Get an overall guide for the command and sub-commands'),
+    merge:subcommand('merge','Merge .net base API in YAML files and toc files.'),
+    metadata:subcommand('metadata','Generate YAML files from source code'),
+    pdf:subcommand('pdf','Generate pdf file'),
+    serve:subcommand('serve','Host a local static website'),
+    template:subcommand('template','List or export existing template'),
 }
 
 export function subcommands() {

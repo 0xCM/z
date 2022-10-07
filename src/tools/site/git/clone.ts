@@ -1,12 +1,6 @@
 import * as C from "./common"
 
 
-// export type Binder<S,T> = {
-//     src:S
-//     dst:T
-// }
-
-
 export type Syntax 
     = `${C.Tool} ${C.Add} [--template=<template-directory>]`
     + `[-l] [-s] [--no-hardlinks] [-q] [-n] [--bare] [--mirror]`

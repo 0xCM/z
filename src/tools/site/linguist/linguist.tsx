@@ -1,4 +1,4 @@
-import {Lang} from "../env"
+import {Lang} from "../pkg"
 import {Dist} from "../core/tokens"
 
 export type Linguist = `${Lang}/linguist`

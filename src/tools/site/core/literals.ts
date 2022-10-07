@@ -1,7 +1,8 @@
 import {Bind as Binder,Reify as Reification, Bound} from "./vars"
-import {Null} from "./common"
 
 export type Number = number | bigint
+export type Numeric<T extends Number> = T
+
 export type Bool = boolean
 export type String = string
 export type Literal =  String | Number | Bool | 'x'

@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     public class ClosureProviderAttribute : Attribute
     {
         public ClosureProviderAttribute(Type provider)

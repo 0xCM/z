@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     /// <summary>
     /// Attaches a binary literal value to a target or identifies a literal field
     /// </summary>

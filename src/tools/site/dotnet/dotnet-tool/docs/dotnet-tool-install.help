@@ -1,4 +1,3 @@
-# B:\sdks\dotnet\root\dotnet.exe tool install --help 
 Description:
   Install global or local tool. Local tools are added to manifest and restored.
 

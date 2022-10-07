@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
-
     public abstract class TraceEventAdapter<A,T> : TraceEventAdapter<A>
         where A : TraceEventAdapter<A,T>, new()
         where T : unmanaged

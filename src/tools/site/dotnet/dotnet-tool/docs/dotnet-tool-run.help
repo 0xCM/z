@@ -1,0 +1,16 @@
+Description:
+  Run local tool.
+
+Usage:
+  dotnet tool run <COMMAND_NAME> [options] [[--] <additional arguments>...]]
+
+Arguments:
+  <COMMAND_NAME>  The command name of the tool to run.
+
+Options:
+  -?, -h, --help  Show command line help.
+
+
+Additional Arguments:
+  Arguments passed to the application that is being run.
+
