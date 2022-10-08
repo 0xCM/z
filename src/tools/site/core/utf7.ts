@@ -6,6 +6,10 @@ export type Space = ' '
 
 export type Colon = ':'
 
+export type FSlash = '/'
+
+export type BSlash = '\\'
+
 export type Plus = '+'
 
 export type Lower = 
@@ -87,3 +91,5 @@ export type Symbol =
     | Space
     | Colon
     | Plus
+    | FSlash
+    | BSlash

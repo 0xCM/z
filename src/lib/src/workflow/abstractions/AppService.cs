@@ -96,6 +96,6 @@ namespace Z0
             _AppData = Z0.AppData.get();
         }
 
-        protected AppSettings AppSettings => AppSettings.Default;
+        protected static AppSettings AppSettings => AppSettings.Default;
     }
 }

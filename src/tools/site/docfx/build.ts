@@ -1,11 +1,11 @@
-import {Folder} from "../core"
+import {Folder,File} from "../core"
 
 import * as IO from "./io"
 
 export type LogLevel = | 'Verbose' | 'Info' | 'Warning' | 'Error'
 
 export type BuildOptions = {
-    project:File,
+    project:File<string>,
     cleanupCacheHistory?:boolean,
     output?:string,
     debug?:boolean,
@@ -61,7 +61,7 @@ docfx build
 
 */
 
-export function options<R,P>(project:P, def:File, build:Folder<R>) : BuildOptions  {
+export function options<R,P>(project:P, def:File<string>, build:Folder<R>) : BuildOptions  {
     return {
     project:def,
     cleanupCacheHistory:true,

@@ -9,7 +9,7 @@ namespace Z0
 
     class DbCmd : AppCmdService<DbCmd>
     {
-        DbArchive Root => AppDb.DbRoot();
+        DbArchive Root => AppSettings.DbRoot();
 
         [CmdOp(purge)]
         void Purge(CmdArgs args)
@@ -27,7 +27,7 @@ namespace Z0
             var scope = "default";
             if(i > 0)
                 scope = text.left(folder,i);
-            var src = AppDb.DbRoot().Scoped(folder).Root;
+            var src = AppSettings.DbRoot().Scoped(folder).Root;
             var name = src.FolderName.Format();
             var file = FS.file($"{scope}.{name}", FileKind.Zip);
             var cmd = DbCmdSpecs.archive(src, AppDb.Archive(scope).Path(file));

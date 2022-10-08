@@ -15,7 +15,7 @@ namespace Z0
 
         static ExecToken stage(ReadOnlySeq<FilePack> src, IWfChannel channel)
         {
-            var dst = AppDb.DevPacks().Scoped("nuget/incoming");
+            var dst = AppSettings.DevPacks().Scoped("nuget/incoming");
             var running = channel.Running($"Updating {dst.Root}");
             var counter = 0u;
             for(var i=0; i<src.Count; i++)

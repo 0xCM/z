@@ -5,11 +5,10 @@ set SlnRoot=%SlnRoot%\%SlnId%
 echo SlnRoot=%SlnRoot%
 set WsRoot=%SlnRoot%
 set WsPath=%WsRoot%
-
 set CfgFile=%SlnRoot%\%SlnId%.cfg
 
 set BuildPrefix=z0
-set SlnVersion=0.0.1
+set ZVer=0.0.2
 set ArchName=x64
 set OsName=win
 set ConfigName=Release
@@ -118,5 +117,6 @@ set ArchiveSln=robocopy %SlnRoot% %DevArchives%\z0 /xd %SlnRoot%\.git /v /mir /f
 set ArchiveRepo=git archive -v -o %RepoArchive% HEAD
 set DeployCfg=%SlnRoot%\deploy\deploy.cfg
 set PlatformDeployment=%EnvB%\tools\z0\bin
-set PackageOut=%DevPacks%\nuget\z0\incoming
-set PackageSln=dotnet pack --include-symbols --include-source %SlnMain% --output %PackageOut% %BuildProps%
+set PackageOut=%DevPacks%\stage\devpacks\nuget
+set PackSln=dotnet pack --include-symbols --include-source %SlnMain% --output %PackageOut% %BuildProps%
+

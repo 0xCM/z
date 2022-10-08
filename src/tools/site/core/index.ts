@@ -21,16 +21,13 @@ export * from "./kinds"
 export * from "./locations"
 export * from "./services"
 export * as Grammar from "./grammar"
+export * as Links from "./links"
+export * from "./archives"
+export * from "./external"
+export * from "./external"
+export * from "./sets"
 
 export type ModuleList = Array<string>
 
-
 export type Script = string
-
-export function oneof<A,B,C=null>(a:A,b:B,c?:C) {    
-    var dst = `${a}|${b}`
-    if(c != null)
-        dst += `|${c}`
-    return dst
-}
 

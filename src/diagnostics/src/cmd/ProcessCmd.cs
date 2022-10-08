@@ -49,7 +49,7 @@ namespace Z0
 
         [CmdOp("procs/context")]
         void ProcContext(CmdArgs args)
-            => RuntimeContext.emit(args, Emitter, AppDb.ProcDumps());
+            => RuntimeContext.emit(args, Emitter, AppSettings.ProcDumps());
 
         [CmdOp("procs/map")]
         void ProcMap(CmdArgs args)

@@ -1,11 +1,4 @@
-
-export type NUGET_PACKAGES = 'NUGET_PACKAGES'
-
-export type VCPKG_ROOT = 'VCPKG_ROOT'
-
-export type JAVA_HOME = 'JAVA_HOME'
-
-export type DOTNET_ROOT = 'DOTNET_ROOT'
+import * as Utf7 from "./utf7"
 
 export type Verbose = 'verbose'
 export function Verbose() : Verbose {
@@ -93,12 +86,10 @@ export function Pkg() : Pkg {
     return 'pkg'
 }
 
-
 export type _7z = '7z'
 export function _7z() : _7z {
     return '7z'
 }
-
 
 export type Zip = 'zip'
 export function Zip() : Zip {
@@ -115,14 +106,14 @@ export function Lib() : Lib {
     return 'lib'
 }
 
-export type BackSlash = '\\'
-export function BackSlash() : BackSlash{
+export type BSlash = Utf7.BSlash
+export function BSlash() : BSlash{
     return '\\'
 }
 
-export type ForwardSlash = '/'
+export type FSlash = Utf7.FSlash
 
-export function ForwardSlash() : ForwardSlash{
+export function FSlash() : FSlash{
     return '/'
 }
 

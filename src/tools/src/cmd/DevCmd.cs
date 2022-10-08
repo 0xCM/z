@@ -11,7 +11,7 @@ namespace Z0
         DevPacks Devpacks => Wf.DevPacks();
 
         public static FolderPath cd()
-            => new(text.ifempty(Environment.CurrentDirectory, AppDb.Control().Root.Format()));
+            => new(text.ifempty(Environment.CurrentDirectory, AppSettings.Control().Root.Format()));
 
         public static FolderPath cd(CmdArgs args)
         {

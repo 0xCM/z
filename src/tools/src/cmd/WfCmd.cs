@@ -72,6 +72,15 @@ namespace Z0
             Emitter.EmittedFile(flow,counter);
         }
 
+        [CmdOp("symlink")]
+        void Symlink(CmdArgs args)
+        {
+            var src = FS.dir(args[0]);
+            var dst = FS.dir(args[1]);
+            var result = FS.symlink(src,dst,true);
+            Channel.Status($"symlink:{src} -> {dst}");
+        }
+
         [CmdOp("files")]
         void CatalogFiles(CmdArgs args)
         {
@@ -112,7 +121,7 @@ namespace Z0
         [CmdOp("jobs/types")]
         void ListJobTypes()
         {
-            var db = AppDb.DbRoot();
+            var db = AppSettings.DbRoot();
             Write(db.Root);
             Write(RpOps.PageBreak80);
             var jobs = db.Sources("jobs");
@@ -151,7 +160,7 @@ namespace Z0
         }
 
         static Files launchers()
-            => FilteredArchive.match(AppDb.Control("launch").Root, FileKind.Cmd, FileKind.Ps1);
+            => FilteredArchive.match(AppSettings.Control("launch").Root, FileKind.Cmd, FileKind.Ps1);
 
         [CmdOp("captured")]
         void Captured()
@@ -170,12 +179,6 @@ namespace Z0
             Emitter.FileEmit(data, AppDb.AppData().Path("launchers", FileKind.List));
         }
         
-        void LaunchProject(CmdArgs args)
-        {
-            var name = arg(args,0).Value;
-            
-        }
-
         [CmdOp("launch")]
         protected void LaunchTargets(CmdArgs args)
         {

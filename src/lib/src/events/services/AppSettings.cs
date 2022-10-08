@@ -54,6 +54,9 @@ namespace Z0
         public DbArchive Logs() 
             => DbRoot().Scoped(logs);
 
+        public DbArchive Control(string scope)
+            => Control().Scoped(scope);
+
         public static ref readonly AppSettings Default
         {
             [MethodImpl(Inline)]
