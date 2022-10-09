@@ -8,6 +8,7 @@ namespace Z0
 
     using static Hex8Kind;
     using static XedLiterals;
+
     using NBK = NumericBaseKind;
 
     [ApiHost]

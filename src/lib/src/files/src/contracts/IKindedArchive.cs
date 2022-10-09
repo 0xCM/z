@@ -4,10 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class Cmd
+    public interface IKindedArchive<K> : IFileArchive
+        where K : IFileKind<K>, new()
     {
-        [MethodImpl(Inline), Op]
-        public static CmdVarInfo varinfo(@string name, TextBlock purpose)
-            => new (name,purpose);
+        Deferred<FileUri> Files(K kind);
     }
 }

@@ -7,7 +7,7 @@ namespace Z0
     public class CmdVar<K>
         where K : unmanaged
     {
-        public readonly NameOld Name;
+        public readonly @string Name;
 
         public readonly K Kind;
 

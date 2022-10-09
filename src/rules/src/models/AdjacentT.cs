@@ -17,7 +17,7 @@ namespace Z0
         }
 
         public override string Format()
-            => string.Format(RpOps.Adjacent2,Content.Left, Content.Right);
+            => string.Format(RP.Adjacent2,Content.Left, Content.Right);
 
         [MethodImpl(Inline)]
         public static implicit operator Adjacent<T>((T left, T right) src)

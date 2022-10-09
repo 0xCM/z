@@ -8,6 +8,42 @@ namespace Z0
 
     public readonly struct ClrAssembly : IRuntimeObject<ClrAssembly,Assembly>
     {
+        /// <summary>
+        /// Returns a <see cref='SegRef'/> to the cli metadata segment of the source
+        /// </summary>
+        /// <param name="src">The source assembly</param>
+        [MethodImpl(Inline), Op]
+        public static unsafe MemorySeg metadata(Assembly src)
+        {
+            if(src.TryGetRawMetadata(out var ptr, out var len))
+                return new MemorySeg(ptr,len);
+            else
+                return MemorySeg.Empty;
+        }
+
+        /// <summary>
+        /// Returns a reference to the cli metadata for an assembly
+        /// </summary>
+        /// <param name="src">The source assembly</param>
+        [Op]
+        public static unsafe ref ReadOnlySpan<byte> metaspan(Assembly src, out ReadOnlySpan<byte> dst)
+        {
+            src.TryGetRawMetadata(out var ptr, out var size);
+            dst = cover(ptr, size);
+            return ref dst;
+        }
+
+        /// <summary>
+        /// Returns a reference to the cli metadata for an assembly
+        /// </summary>
+        /// <param name="src">The source assembly</param>
+        [Op]
+        public static unsafe ReadOnlySpan<byte> metaspan(Assembly src)
+        {
+            src.TryGetRawMetadata(out var ptr, out var size);
+            return cover(ptr, size);
+        }
+
         public readonly Assembly Definition;
 
         [MethodImpl(Inline)]
@@ -16,18 +52,6 @@ namespace Z0
 
         public ClrArtifactKind Kind
             => ClrArtifactKind.Assembly;
-
-        public PartId Part
-        {
-            [MethodImpl(Inline)]
-            get => Definition.Id();
-        }
-
-        public bool IsPart
-        {
-            [MethodImpl(Inline)]
-            get => Definition.Id() != 0;
-        }
 
         public string SimpleName
         {
@@ -38,7 +62,7 @@ namespace Z0
         public MemorySeg Metadata
         {
             [MethodImpl(Inline)]
-            get => Clr.metadata(this);
+            get => metadata(this);
         }
 
         public bool IsEmpty
@@ -71,7 +95,7 @@ namespace Z0
         public ReadOnlySpan<byte> RawMetadata
         {
             [MethodImpl(Inline)]
-            get => Clr.metaspan(Definition);
+            get => metaspan(Definition);
         }
 
         string IClrArtifact.Name

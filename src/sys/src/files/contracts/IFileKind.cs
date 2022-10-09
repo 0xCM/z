@@ -4,10 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class Cmd
+    public interface IFileKind<K>
+        where K : new()
     {
-        [MethodImpl(Inline), Op]
-        public static CmdVarInfo varinfo(@string name, TextBlock purpose)
-            => new (name,purpose);
+        K Descriptor {get;}
+    }
+
+    public interface IFileKind : IFileKind<FileKind>
+    {
+
     }
 }

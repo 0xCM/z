@@ -6,6 +6,12 @@ namespace Z0
 {
     using static sys;
 
+    partial class XTend
+    {
+        public static IDbArchive DbArchive(this FolderPath root)
+            => new DbArchive(root);
+    }
+
     public readonly record struct DbArchive : IDbArchive
     {
         public readonly FolderPath Root;

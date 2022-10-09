@@ -15,7 +15,7 @@ namespace Z0
 
         [CmdOp("project/xed/etl")]
         void XedCollect()
-            => Xed.Disasm.Collect(Context());
+            => Xed.Disasm.Collect(ProjectContext());
 
         [CmdOp("xed/start")]
         void StartRuntime()
@@ -52,7 +52,7 @@ namespace Z0
         [CmdOp("xed/disasm/flow")]
         void RunDisasmFlow()
         {
-            var context = Context();
+            var context = ProjectContext();
             var flow = XedDisasm.flow(context);
             var targets = sys.bag<ITarget>();
             var sources = XedDisasm.sources(context);

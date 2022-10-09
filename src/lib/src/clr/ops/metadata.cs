@@ -12,11 +12,6 @@ namespace Z0
         /// <param name="src">The source assembly</param>
         [MethodImpl(Inline), Op]
         public static unsafe MemorySeg metadata(Assembly src)
-        {
-            if(src.TryGetRawMetadata(out var ptr, out var len))
-                return new MemorySeg(ptr,len);
-            else
-                return MemorySeg.Empty;
-        }
+            => ClrAssembly.metadata(src);
     }
 }

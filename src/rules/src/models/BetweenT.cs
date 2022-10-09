@@ -26,5 +26,4 @@ namespace Z0
         public static implicit operator Between<T>((T min, T max) src)
             => new Between<T>(src.min, src.max);
     }
-
 }

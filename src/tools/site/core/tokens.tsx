@@ -89,7 +89,6 @@ export function _7z() : _7z {
     return '7z'
 }
 
-
 export type Zip = 'zip'
 export function Zip() : Zip {
     return 'zip'

@@ -30,6 +30,5 @@ namespace Z0.Asm
         public Disp Disp;
 
         public Imm Imm;
-
     }
 }

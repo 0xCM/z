@@ -19,6 +19,8 @@ namespace Z0
 
         public abstract T Service<T>(Func<T> factory);
 
+        protected IWfContext Context {get; private set;}
+
         public void Init(IWfRuntime wf)
         {
             Wf = wf;
@@ -27,6 +29,7 @@ namespace Z0
             OnInit();
             Initialized();
             Emitter.Created(flow);
+            Context = new WfContext(Channel,wf);
         }
 
         Files _Files;

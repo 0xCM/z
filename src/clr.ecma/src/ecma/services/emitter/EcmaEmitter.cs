@@ -9,9 +9,7 @@ namespace Z0
         ApiMd ApiMd => Wf.ApiMd();
 
         Ecma Cli => Wf.Ecma();
-
-        
-
+                
         public void Emit(IApiCatalog src, EcmaEmissionSettings options, IApiPack dst)
         {
             if(options.EmitAssemblyRefs)

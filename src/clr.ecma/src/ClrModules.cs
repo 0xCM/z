@@ -93,7 +93,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public unsafe static MetadataReaderProvider ReaderProvider(Assembly src)
         {
-            var metadata = Clr.metadata(src);
+            var metadata = ClrAssembly.metadata(src);
             return ReaderProvider(metadata.BaseAddress.Pointer<byte>(), metadata.Size);
         }
 

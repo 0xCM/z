@@ -4,10 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class Cmd
+    [Cmd(Name)]
+    public record class EmitAssemblyCatalog : ICmd<EmitAssemblyCatalog>
     {
-        [MethodImpl(Inline), Op]
-        public static CmdVarInfo varinfo(@string name, TextBlock purpose)
-            => new (name,purpose);
+        const string Name = "emit-assembly-catalog";
+
+        public FolderPath Source;
+
+        public FolderPath Target;
     }
 }

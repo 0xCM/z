@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class Cmd
+    public interface IWfContext : IWfServices
     {
-        [MethodImpl(Inline), Op]
-        public static CmdVarInfo varinfo(@string name, TextBlock purpose)
-            => new (name,purpose);
+        IWfChannel Channel {get;}
+
+        IWfRuntime Runtime {get;}
     }
 }

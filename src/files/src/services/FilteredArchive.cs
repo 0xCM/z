@@ -60,9 +60,6 @@ namespace Z0
             ExtFilter = ext;
         }
 
-        // public FilteredArchive Scoped(string name)
-        //     => new FilteredArchive(Root + FS.folder(name), );
-
         public Deferred<FilePath> Files()
             =>  ExtFilter.IsNonEmpty
             ?  Root.EnumerateFiles(ExtFilter.Storage, true)

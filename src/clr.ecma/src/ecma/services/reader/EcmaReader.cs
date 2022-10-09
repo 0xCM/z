@@ -36,7 +36,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public EcmaReader(Assembly src)
         {
-            Segment = Clr.metadata(src);
+            Segment = ClrAssembly.metadata(src);
             MD = new MetadataReader(Segment.BaseAddress.Pointer<byte>(), Segment.Size);
         }
 

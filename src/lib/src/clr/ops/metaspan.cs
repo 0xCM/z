@@ -4,10 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.Reflection.Metadata;
-
-    using static sys;
-
     partial struct Clr
     {
         /// <summary>
@@ -16,11 +12,7 @@ namespace Z0
         /// <param name="src">The source assembly</param>
         [Op]
         public static unsafe ref ReadOnlySpan<byte> metaspan(Assembly src, out ReadOnlySpan<byte> dst)
-        {
-            src.TryGetRawMetadata(out var ptr, out var size);
-            dst = cover(ptr, size);
-            return ref dst;
-        }
+            => ref ClrAssembly.metaspan(src, out dst);
 
         /// <summary>
         /// Returns a reference to the cli metadata for an assembly
@@ -28,9 +20,6 @@ namespace Z0
         /// <param name="src">The source assembly</param>
         [Op]
         public static unsafe ReadOnlySpan<byte> metaspan(Assembly src)
-        {
-            src.TryGetRawMetadata(out var ptr, out var size);
-            return cover(ptr, size);
-        }
+            => ClrAssembly.metaspan(src);
     }
 }

@@ -4,10 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class Cmd
+    public abstract record class FileKind<K> : IFileKind<K>
+        where K : FileKind<K>, new()
     {
-        [MethodImpl(Inline), Op]
-        public static CmdVarInfo varinfo(@string name, TextBlock purpose)
-            => new (name,purpose);
+        public static readonly K Descriptor = new();
+
+        K IFileKind<K>.Descriptor
+            => Descriptor;        
     }
 }

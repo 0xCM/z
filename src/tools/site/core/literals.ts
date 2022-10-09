@@ -1,5 +1,4 @@
 import {Bind as Binder,Reify as Reification, Bound} from "./vars"
-import {Null} from "./common"
 
 export type Number = number | bigint
 export type Bool = boolean
