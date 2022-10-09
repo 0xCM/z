@@ -19,4 +19,4 @@ git add [--verbose | -v] [--dry-run | -n] [--force | -f] [--interactive | -i] [-
           [--] [<pathspec>…​]
 */
 
-export const Ref = `${Env.DevTools()}/gfw/mingw64/share/doc/git-doc/git-add.html`
+//export const Ref = `${Env.DevTools()}/gfw/mingw64/share/doc/git-doc/git-add.html`

@@ -1,8 +1,7 @@
 import { EmptyString} from "./common"
 
-
 export interface Node<N> {
-    
+    name:N   
 }
 
 export interface Action<K,A> extends Node<A>{

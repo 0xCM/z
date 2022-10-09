@@ -17,7 +17,7 @@ export * as Pip from "./pip"
 export * as SymLink from "./mklink"
 export * as Python from "./python"
 export * as DocFx from "./docfx"
-
+export * as YarnV1 from "./yarn/v1"
 import {main} from "./main"
 
 main()

@@ -1,9 +1,21 @@
 import {UriScheme} from "./uri"
 import {Valued} from "./values"
+import {Literal,Strings} from "./literals"
 
-export interface CmdOption<N,V> extends Valued<V>{
-    
+export type CmdName<N extends Literal> = N
+
+export type CmdList = {
+    commands:Strings
 }
+
+export function cmdname<N extends Literal>(name:N) : CmdName<N> {
+    return name;
+}
+export interface CmdOption<N,V=null>{
+    name:N
+    value?:V
+}
+
 
 export interface Cmd<C>  {
     cmd:C
@@ -50,6 +62,11 @@ export type CmdFlagDef<F> = {
     name:F
 }
 
+export interface CmdSet<P,N> {
+    readonly name: P;
+    Commands: Array<Cmd<N>>;
+};
+
 export function cmd0<T>(tool:T) {
     return `${tool}`
 }
@@ -66,13 +83,6 @@ export function cmd3<T,A,B,C>(tool:T, a:A, b:B, c:C) {
     return `${cmd2(tool,a,b)} ${c}`
 }   
 
-
-export interface CmdSet<P,N> {
-    readonly name: P;
-    Commands: Array<Cmd<N>>;
-};
-
-
 export function cmd<N>(name: N) : Cmd<N>
 {
     return {
@@ -83,3 +93,10 @@ export function cmd<N>(name: N) : Cmd<N>
 export declare function commands<N>(names: Array<N>): Array<Cmd<N>>;
 
 export declare function provider<P,T>(name: P, names: Array<Cmd<T>>): CmdSet<P,T>;
+
+export function option<N,V>(name:N, value?:V) {
+    return {
+        name,
+        value
+    }
+}

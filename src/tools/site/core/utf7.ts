@@ -70,7 +70,6 @@ export type Upper =
     | 'Y'
     | 'Z'
 
-
 export type Letter = Upper | Lower    
 
 export function lower<C extends Lower>(c:C) : C {

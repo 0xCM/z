@@ -1,5 +1,5 @@
-import { EmptyString, Null } from "./common"
-import {FSlash,BSlash} from "./tokens"
+import { EmptyString, List } from "./common"
+import { FSlash,BSlash} from "./tokens"
 import {Link} from "./links"
 import {Literal} from "./literals"
 import { Kinded } from "./kinds"
@@ -64,7 +64,6 @@ export type WslMount<M> = Mount<`\\\\wsl$`,M>
 
 export type NtfsMount<P extends DriveLetter,R> = Mount<P,R>
 
-
 export enum ObjectKind  {
     None,
 
@@ -75,33 +74,38 @@ export enum ObjectKind  {
     Drive,
 }
 
-
 export interface File<L extends Literal> extends Kinded<ObjectKind>{
     location:L    
 }
-
-
-// export function file<F extends Literal>(file:F) : File<F> {
-//     return file
-// }
 
 export interface Folder<L extends Literal> extends Kinded<ObjectKind> {
     location:L
 }
 
-export type Object<L extends Literal> = Folder<L> | File<L> | DriveLetter
+export type FileName = File<string>
+
+export type FolderName = Folder<string>
+
+export type Path<L extends Literal> = Folder<L> | File<L> | DriveLetter
 
 
-export interface Path<L extends Literal> extends Link<ObjectKind,Object<L>> {
+export interface SymLink<L extends Literal> extends Link<ObjectKind,Path<L>> {
 
 } 
 
+export type Folders = List<FolderName>
+
+export type Files = List<FileName>
 
 
-//Link<Folder<P> | File<P>>
+export function path<L extends Literal>(kind:ObjectKind,location:L) : Path<L> {
+    return {
+        kind,
+        location
+    }
+}
 
-
-export function path<K,P extends Literal>(kind:ObjectKind, source:Object<P>, target:Object<P>) : Path<P> {
+export function symlink<K,P extends Literal>(kind:ObjectKind, source:Path<P>, target:Path<P>) : SymLink<P> {
      return {
         kind,
         source,
@@ -123,5 +127,6 @@ export function file<L extends Literal>(location:L) : File<L> {
     }
 }
 
-
-export type Symlink<F extends Literal> = Link<ObjectKind,Path<F>>
+export function drive<L extends DriveLetter>(location:L) : Drive<L> {
+    return location
+}

@@ -1,6 +1,6 @@
 import * as Core from "../core"
 import {PathSep} from "../core/fs"
-import {Tk,Actor,FS} from "../core"
+import {Tk,Actor,FS, Literal} from "../core"
 
 export type Name = `robocopy`
 export type Tool = Actor<Name>
@@ -9,13 +9,13 @@ export function tool(name:Name = 'robocopy') : Tool {
     return Core.actor(name)
 }
 
-export function copy<S,T,N>(name:N, src:FS.Path<S>, dst:FS.Path<T>, sep:PathSep = Tk.BackSlash()) {
-    const _Sep = FS.sep(sep)
-    const _Src = FS.format(_Sep, src)
-    const _Dst = FS.format(_Sep, dst)
-    const _Script = `robocopy ${_Src}${_Sep}${name} ${_Dst}${_Sep}${name} /e`
-    return _Script
-}
+// export function copy<S extends Literal,T extends Literal,N>(name:N, src:FS.Folder<S>, dst:FS.Folder<T>, sep:PathSep = Tk.BackSlash()) {
+//     const _Sep = FS.sep(sep)
+//     const _Src = FS.format(_Sep, src)
+//     const _Dst = FS.format(_Sep, dst)
+//     const _Script = `robocopy ${_Src}${_Sep}${name} ${_Dst}${_Sep}${name} /e`
+//     return _Script
+// }
 
 const DocSource = 'https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/robocopy'
 

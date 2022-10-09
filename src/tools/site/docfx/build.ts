@@ -1,4 +1,4 @@
-import {Folder,File} from "../core"
+import {Folder,File, Literal} from "../core"
 
 import * as IO from "./io"
 
@@ -61,17 +61,17 @@ docfx build
 
 */
 
-export function options<R,P>(project:P, def:File<string>, build:Folder<R>) : BuildOptions  {
+export function options<R extends Literal,P>(project:P, def:File<string>, build:Folder<R>) : BuildOptions  {
     return {
     project:def,
     cleanupCacheHistory:true,
-    output:IO.outdir(IO.output(build,project,'site')),
-    debugOutput:IO.outdir(IO.output(build,project,'debug')),
+    output:`${IO.outdir(IO.output(build,project,'site'))}`,
+    debugOutput:`${IO.outdir(IO.output(build,project,'debug'))}`,
     loglevel:'Verbose',
-    log:IO.outfile(IO.output(build,project,'log')),
-    rawModelOutputFolder:IO.outdir(IO.output(build,project,'raw')),
-    viewModelOutputFolder:IO.outdir(IO.output(build,project,'view')),
-    intermediateFolder:IO.outdir(IO.output(build,project,'obj')),
+    log:`${IO.outfile(IO.output(build,project,'log'))}`,
+    rawModelOutputFolder:`${IO.outdir(IO.output(build,project,'raw'))}}`,
+    viewModelOutputFolder:`${IO.outdir(IO.output(build,project,'view'))}`,
+    intermediateFolder:`${IO.outdir(IO.output(build,project,'obj'))}`,
     }
 }
 
