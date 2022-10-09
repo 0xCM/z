@@ -1,0 +1,18 @@
+Description:
+  Uninstall a global tool or local tool.
+
+Usage:
+  dotnet tool uninstall [<PACKAGE_ID>] [options]
+
+Arguments:
+  <PACKAGE_ID>  The NuGet Package Id of the tool to install.
+
+Options:
+  -g, --global            Uninstall the tool from the current user's tools directory.
+  --local                 Uninstall the tool and remove it from the local tool manifest.
+  --tool-path <PATH>      The directory containing the tool to uninstall.
+  --tool-manifest <PATH>  Path to the manifest file.
+  -?, -h, --help          Show command line help.
+
+
+

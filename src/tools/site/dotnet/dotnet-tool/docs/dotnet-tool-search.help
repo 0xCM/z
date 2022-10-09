@@ -1,0 +1,18 @@
+Description:
+  Search dotnet tools in nuget.org
+
+Usage:
+  dotnet tool search <Search Term> [options]
+
+Arguments:
+  <Search Term>  Search term from package id or package description. Require at least one character.
+
+Options:
+  --detail        Show detail result of the query.
+  --skip <Skip>   The number of results to skip, for pagination.
+  --take <Take>   The number of results to return, for pagination.
+  --prerelease    determining whether to include pre-release packages.
+  -?, -h, --help  Show command line help.
+
+
+

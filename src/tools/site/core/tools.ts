@@ -61,7 +61,6 @@ export type ToolName<N> = {
 
 export type Tools<N> = Array<ToolId<N>>
 
-export type SubCmdType<T,N> = N
 
 export type HelpDoc<T,C>  = {
     tool:Actor<T>,
@@ -86,6 +85,7 @@ export type ToolHelp<T,C> = {
     tool:Actor<T>
     docs:Array<HelpDoc<T,C>>
 }
+
 
 
 export interface ToolCmd<T,C> extends Cmd<C>, Actor<T> {
@@ -120,9 +120,5 @@ export const ToolCmd = {
     c1:cmd1,
     c2:cmd2,
     c3:cmd3
-}
 
-export interface ToolSyntax<T,S> {
-    tool:Actor<T>
-    syntax:S
 }

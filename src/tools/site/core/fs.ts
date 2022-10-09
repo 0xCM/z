@@ -1,9 +1,10 @@
-import { EmptyString, Null } from "./common"
-import {uint32} from "./integers"
-import {ForwardSlash,BackSlash} from "./tokens"
-import {Upper,Colon} from "./utf7"
+import { EmptyString, List } from "./common"
+import { FSlash,BSlash} from "./tokens"
+import {Link} from "./links"
+import {Literal} from "./literals"
+import { Kinded } from "./kinds"
 
-export type PathSep = EmptyString | BackSlash | ForwardSlash
+export type PathSep = EmptyString | BSlash | FSlash
 
 export function sep(kind:PathSep) {
     var sep :PathSep = ''
@@ -19,9 +20,8 @@ export function sep(kind:PathSep) {
     return `${sep}`
 }
 
-export type Drive<D extends Upper> = `${D}${Colon}`
 
-export type _Drive = 
+export type DriveLetter = 
     | ''
     | `A:` 
     | 'B:' 
@@ -50,6 +50,8 @@ export type _Drive =
     | 'X:'
     | 'Y:'
     | 'Z:'
+
+export type Drive<K extends DriveLetter> = K
     
 export type Volume<V> = V
 
@@ -60,108 +62,71 @@ export type Mount<P,R> = {
     
 export type WslMount<M> = Mount<`\\\\wsl$`,M>
 
-export type NtfsMount<P extends _Drive,R> = Mount<P,R>
+export type NtfsMount<P extends DriveLetter,R> = Mount<P,R>
 
-export type Path<A,B=null,C=null,D=null,E=null,F=null,G=null,H=null> = {
-    a:A
-    b?:B
-    c?:C
-    d?:D
-    e?:E
-    f?:F
-    g?:G
-    h?:H
+export enum ObjectKind  {
+    None,
+
+    Folder,
+
+    File,
+
+    Drive,
 }
 
-export function path<A, B=null, C=null, D=null, E=null, F=null, G=null, H=null> (
-    a:A, b?:B, c?:C, d?:D, e?:E, f?:F, g?:G, h?:H) : Path<A,B,C,D,E,F,G,H> {    
-        return {
-            a:a,
-            b:b,
-            c:c,
-            d:d,
-            e:e,
-            f:f,
-            g:g,
-            h:h
-        }
+export interface File<L extends Literal> extends Kinded<ObjectKind>{
+    location:L    
 }
 
-export function format<A,B,C,D,E,F,G,H>(sep:string, src:Path<A,B,C,D,E,F,G,H>) {
-    const empty:EmptyString = ''
-    return `${src.a}` 
-        + (src.b == undefined ? empty : sep + src.b)
-        + (src.c == undefined ? empty : sep + src.c)
-        + (src.d == undefined ? empty : sep + src.d)
-        + (src.e == undefined ? empty : sep + src.e)
-        + (src.f == undefined ? empty : sep + src.f)
-        + (src.g == undefined ? empty : sep + src.g)
-        + (src.h == undefined ? empty : sep + src.h)
+export interface Folder<L extends Literal> extends Kinded<ObjectKind> {
+    location:L
 }
 
-export type File<F> = F
+export type FileName = File<string>
 
-export type Edge<K,S,T> = {
-    kind:K
-    source:S
-    target:T
-}
+export type FolderName = Folder<string>
 
-export type Link<L,F> = Edge<L,F,F>
-
-export type FileLink<K,F> = Link<K,File<F>>
+export type Path<L extends Literal> = Folder<L> | File<L> | DriveLetter
 
 
-export function link<K,F>(kind:K, source:F, target:F) : Link<K,F> {
+export interface SymLink<L extends Literal> extends Link<ObjectKind,Path<L>> {
+
+} 
+
+export type Folders = List<FolderName>
+
+export type Files = List<FileName>
+
+
+export function path<L extends Literal>(kind:ObjectKind,location:L) : Path<L> {
     return {
         kind,
-        source,
-        target
+        location
     }
 }
 
-
-export function edge<K,S,T>(kind:K, source:S, target:T) : Edge<K,S,T> {
-    return {
+export function symlink<K,P extends Literal>(kind:ObjectKind, source:Path<P>, target:Path<P>) : SymLink<P> {
+     return {
         kind,
         source,
-        target
-    }
-}
-export function file<F>(file:F) : File<F> {
-    return file
-}
+        target,
+     }
+ }
 
-export type Folder<P> = P
-
-export function folder<P>(src:P) : Folder<P> {
-    return src
-}
-
-export type Archive<K,R> = {
-    kind:K
-    root:R
-}
-
-export type ArchiveKind = 
-    | 'git'
-    | 'zip'
-    | 'fs'
-    | 'tar'
-
-export type FileArchive<R> = Archive<0,R>
-
-
-export type LineSpan<S,T> ={
-    source:S
-    min:uint32<T>
-    max:uint32<T>
-}
-
-export function lines<S,T>(source:S, min:uint32<T>, max:uint32<T>) : LineSpan<S,T> {
+export function folder<L extends Literal>(location:L) : Folder<L> {
     return {
-        source,
-        min,
-        max
+        kind:ObjectKind.Folder,
+        location
     }
+}
+
+export function file<L extends Literal>(location:L) : File<L> {
+    return {
+        kind:ObjectKind.Folder,
+        location
+    }
+}
+
+export function drive<L extends DriveLetter>(location:L) : Drive<L> {
+    return location
 }

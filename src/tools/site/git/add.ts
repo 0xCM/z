@@ -1,4 +1,4 @@
-import * as Env from "../env"
+import * as Env from "../pkg"
 import {Tk} from "../core"
 
 export type DryRun = '--dry-run'
@@ -19,4 +19,4 @@ git add [--verbose | -v] [--dry-run | -n] [--force | -f] [--interactive | -i] [-
           [--] [<pathspec>…​]
 */
 
-export const Ref = `${Env.DevTools()}/gfw/mingw64/share/doc/git-doc/git-add.html`
+//export const Ref = `${Env.DevTools()}/gfw/mingw64/share/doc/git-doc/git-add.html`

@@ -27,7 +27,7 @@ export type SubCmd =
     | Push
     | Restore
     | Search
-    | 'setApiKey'
+    | SetApiKey
     | 'sign'
     | 'sources'
     | 'spec'
@@ -35,12 +35,7 @@ export type SubCmd =
     | 'update'
     | 'verify'
 
-    export function expand(src:string, dst:string){
+export function init<S,T>(src:S, dst:T){
         return `nuget init "${src}" -expand "${dst}"`
     }
     
-    function run(){
-        return expand('D:/cache/packages/devpacks/nuget/incoming', 'D:/cache/packages/devpacks/nuget/packages')
-    }
-    
-    console.log(run());    

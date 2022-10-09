@@ -6,6 +6,10 @@ export type Space = ' '
 
 export type Colon = ':'
 
+export type FSlash = '/'
+
+export type BSlash = '\\'
+
 export type Plus = '+'
 
 export type Lower = 
@@ -66,7 +70,6 @@ export type Upper =
     | 'Y'
     | 'Z'
 
-
 export type Letter = Upper | Lower    
 
 export function lower<C extends Lower>(c:C) : C {
@@ -87,3 +90,5 @@ export type Symbol =
     | Space
     | Colon
     | Plus
+    | FSlash
+    | BSlash

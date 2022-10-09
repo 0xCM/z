@@ -1,11 +1,11 @@
-import {Folder} from "../core"
+import {Folder,File, Literal} from "../core"
 
 import * as IO from "./io"
 
 export type LogLevel = | 'Verbose' | 'Info' | 'Warning' | 'Error'
 
 export type BuildOptions = {
-    project:File,
+    project:File<string>,
     cleanupCacheHistory?:boolean,
     output?:string,
     debug?:boolean,
@@ -61,17 +61,17 @@ docfx build
 
 */
 
-export function options<R,P>(project:P, def:File, build:Folder<R>) : BuildOptions  {
+export function options<R extends Literal,P>(project:P, def:File<string>, build:Folder<R>) : BuildOptions  {
     return {
     project:def,
     cleanupCacheHistory:true,
-    output:IO.outdir(IO.output(build,project,'site')),
-    debugOutput:IO.outdir(IO.output(build,project,'debug')),
+    output:`${IO.outdir(IO.output(build,project,'site'))}`,
+    debugOutput:`${IO.outdir(IO.output(build,project,'debug'))}`,
     loglevel:'Verbose',
-    log:IO.outfile(IO.output(build,project,'log')),
-    rawModelOutputFolder:IO.outdir(IO.output(build,project,'raw')),
-    viewModelOutputFolder:IO.outdir(IO.output(build,project,'view')),
-    intermediateFolder:IO.outdir(IO.output(build,project,'obj')),
+    log:`${IO.outfile(IO.output(build,project,'log'))}`,
+    rawModelOutputFolder:`${IO.outdir(IO.output(build,project,'raw'))}}`,
+    viewModelOutputFolder:`${IO.outdir(IO.output(build,project,'view'))}`,
+    intermediateFolder:`${IO.outdir(IO.output(build,project,'obj'))}`,
     }
 }
 
