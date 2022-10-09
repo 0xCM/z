@@ -6,12 +6,12 @@ namespace Z0
 {
     public readonly record struct CmdVarInfo
     {
-        public readonly Name VarName;
+        public readonly @string VarName;
 
         public readonly TextBlock Purpose;
 
         [MethodImpl(Inline)]
-        public CmdVarInfo(Name name, TextBlock purpose)
+        public CmdVarInfo(@string name, TextBlock purpose)
         {
             VarName = name;
             Purpose = purpose;

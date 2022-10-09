@@ -25,7 +25,7 @@ namespace Z0
             try
             {
                 var flow = EmittingFile(dst);
-                ByteSize size = MemoryEmitter.emit(Clr.metadata(src), bpl, dst);
+                ByteSize size = MemoryEmitter.emit(ClrAssembly.metadata(src), bpl, dst);
                 EmittedBytes(flow, size);
             }
             catch(Exception e)

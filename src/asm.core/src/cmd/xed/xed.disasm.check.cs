@@ -15,7 +15,7 @@ namespace Z0
         [CmdOp("xed/disasm/check")]
         Outcome DisasmCheck(CmdArgs args)
         {
-            var context = Context();
+            var context = ProjectContext();
             var files = XedDisasm.datafiles(context);
             iter(files, file => Write($"Loaded {file.Source}"));
             iter(files, file => Check(file),true);
@@ -24,7 +24,7 @@ namespace Z0
 
         void Check(in DataFile src)
         {
-            var context = Context();
+            var context = ProjectContext();
             var project = context.Project;
             var states = src.ParseStates();
             var render = FieldRender.create();

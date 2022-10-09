@@ -26,5 +26,4 @@ namespace Z0
         public static implicit operator DelimitRule<T>(T src)
             => new DelimitRule<T>(src);
     }
-
 }

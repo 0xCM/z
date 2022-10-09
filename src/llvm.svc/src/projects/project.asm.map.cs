@@ -11,7 +11,7 @@ namespace Z0
         [CmdOp("project/context")]
         void EmitProjectContext()
         {
-             var context = Context();
+             var context = ProjectContext();
              var project = context.Project;
              Write(string.Format("{0,-18}:{1}", "Project", project.ProjectId));
              iter(project.OutFiles(FileKind.Obj), file => Write(file));

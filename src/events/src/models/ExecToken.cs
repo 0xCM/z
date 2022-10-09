@@ -33,10 +33,24 @@ namespace Z0
             return this;
         }
 
-        public static ExecToken Empty
+        public ExecToken()
+        {
+            StartSeq = 0;
+            Started = Timestamp.Zero;
+            Finished = null;
+            EndSeq = 0;
+        }
+
+        public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => new ExecToken(ulong.MaxValue);
+            get => Started.IsZero;
+        }
+
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Started.IsNonZero;
         }
 
         public string Format()
@@ -60,5 +74,11 @@ namespace Z0
 
         public override string ToString()
             => Format();
+
+        public static ExecToken Empty
+        {
+            [MethodImpl(Inline)]
+            get => new ();
+        }
     }
 }

@@ -18,7 +18,7 @@ namespace Z0
         protected static AppDb AppDb => AppDb.Service;
 
         protected static EtlDb EtlDb => new EtlDb(AppDb);
-
+    
         [MethodImpl(Inline)]
         public IProjectWorkspace Project()
             => Projects.project();
@@ -35,7 +35,7 @@ namespace Z0
             }
         }
 
-        protected ProjectContext Context()
+        protected ProjectContext ProjectContext()
         {
             var project = Project();
             return _Context.GetOrAdd(project.ProjectId, _ => Projects.context(project));
@@ -43,15 +43,15 @@ namespace Z0
 
         [CmdOp("project/home")]
         protected void ProjectHome()
-            => Write(Context().Project.Home());
+            => Write(ProjectContext().Project.Home());
 
         [CmdOp("project/files")]
         protected void ListProjectFiles(CmdArgs args)
         {
             if (args.Count != 0)
-                iter(Context().Files.Docs(arg(args, 0)), file => Write(file.Format()));
+                iter(ProjectContext().Files.Docs(arg(args, 0)), file => Write(file.Format()));
             else
-                iter(Context().Files.Docs(), file => Write(file.Format()));
+                iter(ProjectContext().Files.Docs(), file => Write(file.Format()));
         }
 
         [CmdOp("project")]
