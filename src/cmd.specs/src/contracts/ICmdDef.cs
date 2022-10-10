@@ -12,7 +12,7 @@ namespace Z0
             => CmdId.identify<T>();
 
         string IExpr.Format()
-            => CmdFormat.format(this);
+            => CmdFormat.format((T)this);
     }    
 
     [Free]

@@ -5,9 +5,9 @@
 namespace Z0
 {
     [Cmd(CmdName)]
-    public struct EcmaEmissionCmd : IToolCmd<Zsh,EcmaEmissionCmd>
+    public struct EmitEcmaDatasets : IToolCmd<Zsh,EmitEcmaDatasets>
     {
-        const string CmdName = "emit.ecma.metadata";
+        const string CmdName = "ecma-emit";
 
         public Timestamp JobId;
 

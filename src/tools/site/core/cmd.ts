@@ -1,6 +1,7 @@
 import {UriScheme} from "./uri"
-import {Valued} from "./values"
 import {Literal,Strings} from "./literals"
+import {Edge} from "./links"
+import { Named } from "./common"
 
 export type CmdName<N extends Literal> = N
 
@@ -16,9 +17,8 @@ export interface CmdOption<N,V=null>{
     value?:V
 }
 
-
-export interface Cmd<C>  {
-    cmd:C
+export interface Cmd<N> extends Named<N> {
+    
 }
 
 export interface CmdAlias<C,A> extends Cmd<C> {
@@ -50,7 +50,6 @@ export type Group<G> = {
     group:G
 }
 
-
 export type ExecutorName = | 'exe' | 'python' | 'cmd' | 'pwsh'
 
 export type CmdOptionDef<N,K> = {
@@ -66,6 +65,28 @@ export interface CmdSet<P,N> {
     readonly name: P;
     Commands: Array<Cmd<N>>;
 };
+
+export interface CmdDef<K extends Literal,N extends Literal,S,T,O= null> extends Edge<K,S,T>, Named<N> {
+    options?:O
+}
+
+export declare function DefineCmd<K extends Literal,N extends Literal,S,T,O>(kind:K, name:N, source:S, target:T, options?:O) : CmdDef<K,N,S,T,O>
+
+function define<K extends Literal,N extends Literal,S,T,O>(kind:K, name:N, source:S, target:T, options?:O) : CmdDef<K,N,S,T,O> {
+    return {
+        kind,
+        name,
+        source,
+        target,
+        options
+    }
+}
+
+export const CmdFactory = {
+    define:define
+}
+
+//export interface CmdFactory<K extends Literal,S,T,O> {
 
 export function cmd0<T>(tool:T) {
     return `${tool}`
@@ -86,9 +107,10 @@ export function cmd3<T,A,B,C>(tool:T, a:A, b:B, c:C) {
 export function cmd<N>(name: N) : Cmd<N>
 {
     return {
-        cmd: name
+        name: name
     }
 }
+
 
 export declare function commands<N>(names: Array<N>): Array<Cmd<N>>;
 

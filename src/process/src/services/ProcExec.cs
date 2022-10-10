@@ -5,10 +5,31 @@
 namespace Z0
 {
     [ApiHost]
-    public sealed partial record class ProcExec
+    public sealed partial class ProcExec
     {
-
         static AppDb AppDb => AppDb.Service;
+
+        static void running(ExecutingProcess spec)
+            => ExecutingLookup.TryAdd(spec.Id,spec);
+
+        static void finished(ExecutedProcess exec)
+        {
+            if(ExecutingLookup.TryRemove(exec.Id))
+            {
+                FinishedLookup.TryAdd(exec.Id,exec);
+            }
+        }
+
+
+        static ConcurrentDictionary<ProcessId,ExecutingProcess> ExecutingLookup = new();
+
+        static ConcurrentDictionary<ProcessId,ExecutedProcess> FinishedLookup = new();
+
+        public static ReadOnlySeq<ExecutingProcess> Executing()
+            => ExecutingLookup.Values.Array();
+
+        public static ReadOnlySeq<ExecutedProcess> Finished()
+            => FinishedLookup.Values.Array();
 
         [MethodImpl(Inline), Op]
         public static CmdScript script(string name, CmdScriptExpr src)

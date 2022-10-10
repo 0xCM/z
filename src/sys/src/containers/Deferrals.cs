@@ -6,6 +6,12 @@ namespace Z0
 {
     using System.Linq;
 
+    partial class XTend
+    {
+        public static Deferred<T> Defer<T>(this IEnumerable<T> src)
+            => Deferrals.defer(src);
+    }
+
     [ApiHost]
     public class Deferrals
     {

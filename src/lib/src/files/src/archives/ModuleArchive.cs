@@ -5,15 +5,9 @@
 namespace Z0
 {
     using static FS;
-
-    public readonly struct ModuleArchive
+    
+    public readonly struct ModuleArchive : IModuleArchive
     {
-        /// <summary>
-        /// Searches the source for managed modules
-        /// </summary>
-        /// <param name="src">The directory to search to search</param>
-        /// <param name="dst">The buffer to populate</param>
-        /// <param name="recurse">Specifies whether subdirectories should be searched</param>
         [Op]
         public static Files managed(FolderPath src, bool recurse = false, bool dll = true, bool exe = true)
         {
@@ -35,26 +29,29 @@ namespace Z0
             Root = root;
         }
 
-        public ReadOnlySeq<ManagedDllFile> ManagedDll()
-            => ManagedDllFiles().Array();
+        FolderPath IFileArchive.Root
+            => Root;
 
-        public ReadOnlySeq<NativeDllFile> NativeDll()
-            => NativeDllFiles().Array();
+        public Deferred<ManagedDllFile> ManagedDll()
+            => ManagedDllFiles().Defer();
 
-        public ReadOnlySeq<ManagedExeFile> ManagedExe()
-            => ManagedExeFiles().Array();
+        public Deferred<NativeDllFile> NativeDll()
+            => NativeDllFiles().Defer();
 
-        public ReadOnlySeq<NativeExeFile> NativeExe()
-            => NativeExeFiles().Array();
+        public Deferred<ManagedExeFile> ManagedExe()
+            => ManagedExeFiles().Defer();
 
-        public ReadOnlySeq<NativeLibFile> Lib()
-            => NativeLibFiles().Array();
+        public Deferred<NativeExeFile> NativeExe()
+            => NativeExeFiles().Defer();
 
-        public ReadOnlySeq<FileModule> Members()
-            => Modules().Array();
+        public Deferred<NativeLibFile> Lib()
+            => NativeLibFiles().Defer();
 
-        public ReadOnlySeq<ObjFile> Obj()
-            => ObjFiles().Array();
+        public Deferred<FileModule> Members()
+            => Modules().Defer();
+
+        public Deferred<ObjFile> Obj()
+            => ObjFiles().Defer();
 
         public bool IsManaged(FilePath src, out AssemblyName name)
             => FS.managed(src, out name);
@@ -68,7 +65,7 @@ namespace Z0
 
         IEnumerable<ManagedDllFile> ManagedDllFiles()
         {
-            foreach(var path in Root.Files(true).Where(f => f.Is(FS.Dll)))
+            foreach(var path in Root.Files(true).Where(f => f.Is(FS.Dll) || f.Is(FileKind.WinMd.Ext())))
                 if(IsManaged(path, out var assname))
                     yield return new ManagedDllFile(path, assname);
         }
@@ -101,7 +98,7 @@ namespace Z0
                     yield return new NativeLibFile(path);
         }
 
-       IEnumerable<FileModule> Modules()
+        IEnumerable<FileModule> Modules()
         {
             foreach(var path in Root.Files(true))
             {

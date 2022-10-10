@@ -12,10 +12,10 @@ namespace Z0
 
         IRecordFormatter<Entry> EntryFormatter = Tables.formatter<Entry>();
 
-        public void Register(Name name, FolderPath location)
+        public void Register(@string name, FolderPath location)
         {
             using var writer = RegistryPath.Writer();
-            writer.AppendLine(EntryFormatter.Format(new Entry(name,new FileUri(location.ToUri().Format()))));
+            writer.AppendLine(EntryFormatter.Format(new Entry(name, location.ToUri())));
         }
 
         public ReadOnlySpan<Entry> Entries()
@@ -37,15 +37,15 @@ namespace Z0
 
         public readonly struct Entry
         {
-            public readonly Name Name;
+            public readonly @string Name;
 
             public readonly FileUri Location;
 
             [MethodImpl(Inline)]
-            public Entry(Name name, FileUri loc)
+            public Entry(@string name, FileUri uri)
             {
                 Name = name;
-                Location = loc;
+                Location = uri;
             }
         }
     }

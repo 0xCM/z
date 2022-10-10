@@ -27,6 +27,15 @@ namespace Z0
         public FileExt DefaultExt
             => FS.Exe;
 
+        public Assembly Load()
+            => Assembly.LoadFrom(Path.Name);
+
+        public string Format()
+            => Path.ToUri().Format();
+
+        public override string ToString()
+            => Format();
+
         [MethodImpl(Inline)]
         public static implicit operator FileModule(NativeExeFile src)
             => new FileModule(src.Path, src.ModuleKind);

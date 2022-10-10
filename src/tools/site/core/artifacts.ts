@@ -1,4 +1,4 @@
-import { Named } from "./names"
+import { Named } from "./common"
 import { Kinded } from "./kinds"
 import { Locatable } from "./locations"
 

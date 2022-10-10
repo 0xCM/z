@@ -19,9 +19,6 @@ namespace Z0
         public static ref readonly AppSettings AppSettings
             => ref Service._Settings;
 
-        // public DbArchive Control()
-        //     => _Settings.Control();
-
         public DbArchive DbRoot()
             => _Settings.DbRoot();
 
@@ -30,9 +27,6 @@ namespace Z0
 
         public DbArchive DevOps()
             => _Settings.DevOps();
-
-        // public DbArchive ProcDumps()
-        //     => _Settings.ProcDumps();
 
         public DbArchive Capture()
             => _Settings.Capture();
@@ -63,7 +57,6 @@ namespace Z0
 
         public DbArchive AsmDb(string scope)
             => AsmDb().Scoped(scope);
-
 
         public DbArchive EnvSpecs()
             => DbRoot().Scoped("env");
@@ -127,9 +120,6 @@ namespace Z0
 
         public DbArchive Logs(string scope)
             => Logs().Scoped(scope);
-
-        // public DbArchive Control(string scope)
-        //     => Control().Scoped(scope);
 
         public DbArchive Dev(string scope)
             => Dev().Scoped(scope);

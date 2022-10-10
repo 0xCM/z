@@ -1,4 +1,5 @@
 import { EmptyString} from "./common"
+import {Kinded} from "./kinds"
 
 export interface Node<N> {
     name:N   
@@ -7,10 +8,12 @@ export interface Node<N> {
 export interface Action<K,A> extends Node<A>{
 }
 
-export interface Edge<K,S,T> {
-    kind:K
+export interface Flow<S,T> {
     source:S
     target:T
+}
+
+export interface Edge<K,S,T> extends Kinded<K>, Flow<S,T>{
 }
 
 export type Link<K,N> = Edge<K,N,N>

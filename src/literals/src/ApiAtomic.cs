@@ -94,7 +94,10 @@ namespace Z0
         public const S imports = nameof(imports);
 
         public const S impl = nameof(impl);
+        
         public const S api = nameof(api);
+
+        //public const S ecma = nameof(ecma);
 
         public const S bin = nameof(bin);
 
@@ -378,6 +381,8 @@ namespace Z0
 
         public const S win = nameof(win);
 
+        public const S winmd = nameof(winmd);
+        
         public const S interop = nameof(interop);
 
         public const S ws = nameof(ws);

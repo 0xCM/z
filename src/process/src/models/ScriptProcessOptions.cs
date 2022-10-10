@@ -65,7 +65,7 @@ namespace Z0
         /// </summary>
         public CmdProcessOptions()
         {
-            _TimeoutMS = 600000;
+            _TimeoutMS = Int32.MaxValue;
             _NoThrow = true;
             _StatusReceiver = OnStaus;
             _ErrorReceiver = OnError;

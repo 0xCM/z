@@ -9,27 +9,46 @@ namespace Z0
     partial class Tools
     {
         [Cmd(N.mklink)]
-        public struct MkLinkCmd : IToolCmd<MkLink,MkLinkCmd>
+        public record struct SymLinkCmd : IToolCmd<SymLink,SymLinkCmd>
         {            
-            public _FileUri Source;
+            public const string ToolName = N.mklink;
 
-            public _FileUri Target;
+            public FileUri Source;
+
+            public FileUri Target;
             
             public Flag Flags;
 
             [MethodImpl(Inline)]
-            public MkLinkCmd(Flag flags, _FileUri src, _FileUri dst)
+            public SymLinkCmd(Flag flags, FileUri src, FileUri dst)
             {
                 Flags = flags;
                 Source = src;
                 Target = dst;
+            }            
+
+            public string Format()
+            {
+                var result = EmptyString;
+                if(Flags != 0)
+                {
+                    result = $"{ToolName} {EnumRender.format(Flags)} {Source} {Target}";
+                }
+                else
+                {
+                    result = $"{ToolName} {Source} {Target}";
+                }
+                return result;
             }
+
+            public override string ToString()
+                => Format();
 
             [SymSource(tools)]
             public enum Flag : byte
             {
                 [Symbol("")]
-                None,
+                File,
 
                 [Symbol("D","Creates a directory symbolic link")]
                 Directory,

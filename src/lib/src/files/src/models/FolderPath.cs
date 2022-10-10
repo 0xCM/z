@@ -195,8 +195,9 @@ namespace Z0
         public FolderPath Replace(string src, string dst)
             => new FolderPath(Name.Replace(src,dst));
 
-        public _FileUri ToUri()
-            => new _FileUri(this);
+        public FileUri ToUri()
+            => new FileUri(Format(PathSeparator.FS));
+
         public static FolderPath Empty
             => new FolderPath(PathPart.Empty);
 

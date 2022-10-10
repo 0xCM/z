@@ -4,12 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class EcmaEmitter
+    partial class XFs
     {
-        public void EmitApiMetadump(IApiPack dst)
-            => EmitApiMetadump(dst.Metadata("metadump"));
-
-        public void EmitApiMetadump(IDbArchive dst)
-            => EmitMetadump(ApiMd.Parts, dst);
+        public static FolderPath ToFolderPath(this FileUri src)
+            => FS.dir(src);
     }
 }

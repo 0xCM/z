@@ -89,7 +89,7 @@ namespace Z0
             var name = Archives.identifier(src);
             var records = AppDb.Catalogs("files").Table<ListedFile>(name);
             Emitter.TableEmit(files, records);            
-            var list = AppDb.Catalogs("files").Path(name,FileKind.List);
+            var list = AppDb.Catalogs("files").Path(name, FileKind.List);
             var flow = Emitter.EmittingFile(list);
             using var writer = list.Utf8Writer();
             var counter = 0u;

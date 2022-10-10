@@ -1,4 +1,6 @@
 export * from "./cmd"
+export * as Cmd from "./cmd"
+
 export * from "./digital"
 export * from "./expr"
 export * from "./fs"

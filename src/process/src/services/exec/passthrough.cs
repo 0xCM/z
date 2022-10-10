@@ -4,9 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
-    partial record class ProcExec
+    partial class ProcExec
     {        
         public static Task<int> passthrough(FilePath target, WfEmit channel, params string[] args)
         {

@@ -57,29 +57,6 @@ namespace Z0
                 Warn($"No jobs identified by '{match}'");
         }
 
-        [CmdOp("jobs/run")]
-        void RunCliJobs()
-        {
-            var root = Env.var(EnvVarKind.Process, SettingNames.DOTNET_ROOT, FS.dir).Value;
-            var src = root.Files(FileKind.Dll).Map(x => new FileUri(x.Format())).ToSeq();
-            var name = Cmd.identify<EcmaEmissionCmd>().Format();
-            var ts = timestamp();
-            var dst = AppDb.Jobs(Cmd.identify<EcmaEmissionCmd>().Format()).Path($"{name}.{ts}.jobs", FileKind.Json);
-            var job = new EcmaEmissionCmd();
-            job.JobId = ts;
-            job.Sources = src;
-            job.Targets = AppDb.DbTargets("tools/jobs").Folder(Cmd.identify<EcmaEmissionCmd>().Format());
-            job.Settings = EcmaEmissionSettings.Default;
-            
-            var data = JsonData.serialize(job);
-            FileEmit(data, dst);
-        }
-
-        void ExecToolCmd(CmdArgs args)
-        {
-            var tool = TB.Tool(arg(args,0).Value);
-
-        }
 
         [CmdOp("pwsh")]
         void RunPwshCmd(CmdArgs args)
@@ -89,9 +66,13 @@ namespace Z0
             ProcExec.start(cmd,Channel);
         }
 
+        [CmdOp("devenv")]
+        void DevEnv(CmdArgs args)
+            => ProcExec.start(Channel, Cmd.args("devenv.exe",args[0].Value));
+
         [CmdOp("cmd")]
         void RunCmd(CmdArgs args)
-            => ProcExec.start(args, Channel);
+            => ProcExec.start(Channel, args);
 
         [CmdOp("help")]
         void GetHelp(CmdArgs args)
@@ -120,7 +101,6 @@ namespace Z0
             var cmd = Cmd.cmd(path, CmdKind.Tool, emitter.Emit());        
             ProcExec.start(cmd, Channel);        
         }
-
 
         [CmdOp("hexify")]
         void Hexify(CmdArgs args)
@@ -170,12 +150,14 @@ namespace Z0
             Row(settings.Format());
         }
 
-        [CmdOp("tool/mklink")]
+        [CmdOp("symlink")]
         void Link(CmdArgs args)
         {
             var src = FS.dir(arg(args,0).Value);
             var dst = FS.dir(arg(args,1).Value);
-            var cmd = Tools.mklink(src,dst);            
+            var cmd = Tools.symlink(src,dst);
+            //ProcExec.run(Channel, Cmd.script(CmdFormat.format(cmd)));
+
         }
 
         [CmdOp("child")]

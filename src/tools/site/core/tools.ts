@@ -86,9 +86,7 @@ export type ToolHelp<T,C> = {
     docs:Array<HelpDoc<T,C>>
 }
 
-
-
-export interface ToolCmd<T,C> extends Cmd<C>, Actor<T> {
+export interface ToolCmd<T,C> extends Cmd<C> {
 
 }
 

@@ -1,6 +1,9 @@
 {
 	"folders": [
 		{
+			"path": "../cmd.specs"
+		},
+		{
 			"path": "../lib"
 		},
 		{
@@ -8,6 +11,12 @@
 		},
 		{
 			"path": "../native"
+		},
+		{
+			"path": "../process"
+		},
+		{
+			"path": "../workflow"
 		},
 		{
 			"path": "../files"

@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    partial record class ProcExec
+    partial class ProcExec
     {
         public static ExecToken run(FilePath src, FilePath dst, IWfChannel channel)
             => run(Cmd.args(src), dst, channel);

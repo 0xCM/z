@@ -71,7 +71,7 @@ namespace Z0
         public Identifier ScriptId(CmdName cmd, FileKind kind)
             => string.Format("{0}.{1}.{2}", Id, kind.Format(), CmdSymbols[cmd].Expr);
 
-        public CmdScript Script<T>(string name, CmdName cmd, ReadOnlySeq<T> src, IDbTargets output)
+        public CmdScript Script<T>(string name, CmdName cmd, Deferred<T> src, IDbTargets output)
             where T : IFileModule
         {
             var emitter = text.emitter();
@@ -189,7 +189,7 @@ namespace Z0
             return paths.ToArray();
         }
 
-        FilePath GenScript<T>(CmdName cmd, ReadOnlySeq<T> src, FileKind kind, IDbTargets dst)
+        FilePath GenScript<T>(CmdName cmd, Deferred<T> src, FileKind kind, IDbTargets dst)
             where T : IFileModule
         {
             var script = Script(ScriptId(cmd, kind), cmd, src, dst);
