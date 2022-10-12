@@ -1,6 +1,5 @@
 export * from "./cmd"
 export * as Cmd from "./cmd"
-
 export * from "./digital"
 export * from "./expr"
 export * from "./fs"
@@ -20,12 +19,14 @@ export * from "./kinds"
 export * from "./values"
 export * from "./kinds"
 export * from "./locations"
-export * from "./services"
+//export * from "./services"
 export * as Grammar from "./grammar"
 export * as Links from "./links"
 export * from "./archives"
 export * from "./external"
 export * from "./sets"
+export * as Text from "./text"
+export * as Env from "./env"
 
 export type Strings = Array<string>
 

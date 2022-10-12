@@ -60,7 +60,7 @@ namespace Z0
                 info.Attributes = row.Attributes;
                 info.ImplAttributes = row.ImplAttributes;
                 info.Rva = row.Rva;
-                info.CliSig = ReadBlob(row.SigKey);
+                info.CliSig = ReadBlobData(row.SigKey);
                 info.Name = Read(row.NameKey);
             }
             return dst;
@@ -80,7 +80,7 @@ namespace Z0
                 def.Attributes = src.Attributes;
                 def.ImplAttributes = src.ImplAttributes;
                 def.Rva = src.Rva;
-                def.CliSig = ReadBlob(src.SigKey);
+                def.CliSig = ReadBlobData(src.SigKey);
                 def.Name = Read(src.NameKey);
                 dst.Add(def);
             }

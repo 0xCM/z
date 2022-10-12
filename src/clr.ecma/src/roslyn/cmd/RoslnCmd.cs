@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Roslyn
 {
-    using static core;
+    using static sys;
     using static Delegates;
 
     [ApiHost]

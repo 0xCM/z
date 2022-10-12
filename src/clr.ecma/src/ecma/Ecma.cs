@@ -10,6 +10,9 @@ namespace Z0
     [ApiHost]
     public class Ecma : WfSvc<Ecma>
     {
+        public static ReadOnlySeq<AssemblyRefInfo> refs(Assembly src)
+            => EcmaReader.create(src).ReadAssemblyRefs();
+
         [MethodImpl(Inline), Op]
         public static MemberInfo member(Module src, EcmaToken token)
             => src.ResolveMember((int)token);
@@ -230,10 +233,6 @@ namespace Z0
         public static uint row(EntityHandle src)
             => uint32(src) & 0xFFFFFF;
 
-        // [Op]
-        // public static uint row(EntityHandle handle)
-        //     => uint32(handle) & 0xFFFFFF;        
-
         [MethodImpl(Inline), Op]
         public static Type type(Module src, EcmaToken token)
             => src.ResolveType((int)token);
@@ -265,26 +264,6 @@ namespace Z0
 
         FilePath MsilPath(ApiHostUri src, IDbArchive dst)
             => dst.Path(ApiFiles.hostfile(src, FileKind.Il));
-
-        public ReadOnlySeq<AssemblyRefInfo> ReadAssemblyRefs()
-        {
-            var components = ApiMd.Parts;
-            var count = components.Length;
-            var dst = list<AssemblyRefInfo>();
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var assembly = ref skip(components,i);
-                var path = FS.path(assembly.Location);
-                if(ClrModules.valid(path))
-                {
-                    using var reader = PeReader.create(path);
-                    var refs = reader.ReadAssemblyRefs();
-                    iter(refs,r => dst.Add(r));
-                }
-            }
-            dst.Sort();
-            return dst.ToArray();
-        }
 
         public void EmitMsil(CollectedHost src, IApiPack dst)
         {

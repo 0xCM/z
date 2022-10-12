@@ -82,21 +82,19 @@ export interface Folder<L extends Literal> extends Kinded<ObjectKind> {
     location:L
 }
 
-export type FileName = File<string>
+export type FileName<N extends Literal> = N
 
-export type FolderName = Folder<string>
+export type FolderName<N extends Literal> = N
 
 export type Path<L extends Literal> = Folder<L> | File<L> | DriveLetter
-
 
 export interface SymLink<L extends Literal> extends Link<ObjectKind,Path<L>> {
 
 } 
 
-export type Folders = List<FolderName>
+export type Folders = List<string>
 
-export type Files = List<FileName>
-
+export type Files = List<string>
 
 export function path<L extends Literal>(kind:ObjectKind,location:L) : Path<L> {
     return {
@@ -105,9 +103,9 @@ export function path<L extends Literal>(kind:ObjectKind,location:L) : Path<L> {
     }
 }
 
-export function symlink<K,P extends Literal>(kind:ObjectKind, source:Path<P>, target:Path<P>) : SymLink<P> {
+export function symlink<K,P extends Literal>(source:Path<P>, target:Path<P>) : SymLink<P> {
      return {
-        kind,
+        kind:ObjectKind.Folder,
         source,
         target,
      }

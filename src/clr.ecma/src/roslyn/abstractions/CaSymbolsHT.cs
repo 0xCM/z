@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Roslyn
 {
-    using static core;
+    using static sys;
 
     public abstract class CaSymbols<H,T> : ICaSymbols<H,T>
         where T : ISymbol

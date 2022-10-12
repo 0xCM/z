@@ -139,7 +139,7 @@ namespace Z0
         }
 
         public static FileModuleInfo describe(PEReader reader)
-            => new FileModuleInfo(ReadPeInfo(reader), ReadCoffInfo(reader), headers(reader, FilePath.Empty));
+            => new FileModuleInfo(ReadPeInfo(reader), ReadCoffInfo(reader), headers(reader));
 
         public PEHeaders PeHeaders
         {

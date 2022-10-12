@@ -24,9 +24,21 @@ namespace Z0
                 field.Rva = entry.GetRelativeVirtualAddress();
                 field.FieldName = MD.GetString(entry.Name);
                 field.Attribs = entry.Attributes;
-                field.Sig = ReadSig(entry);
+                field.Sig = ReadSigData(entry);
             }
             return dst;
+        }
+
+        [MethodImpl(Inline), Op]
+        public ref EcmaFieldDef Row(FieldDefinitionHandle handle, ref EcmaFieldDef dst)
+        {
+            var src = MD.GetFieldDefinition(handle);
+            dst.Attributes = src.Attributes;
+            dst.Name = src.Name;
+            dst.Sig = src.Signature;
+            dst.Offset = (uint)src.GetOffset();
+            dst.Marshal = src.GetMarshallingDescriptor();
+            return ref dst;
         }
 
         EcmaName ReadFieldName(StringHandle handle, Count seq)

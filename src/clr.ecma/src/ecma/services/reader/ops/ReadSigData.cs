@@ -7,7 +7,11 @@ namespace Z0
     partial class EcmaReader
     {
         [MethodImpl(Inline), Op]
-        public BinaryCode ReadBlob(BlobHandle src)
-            => MD.GetBlobBytes(src);
+        public BinaryCode ReadSigData(FieldDefinition src)
+            => ReadBlobData(src.Signature);
+
+        [MethodImpl(Inline), Op]
+        public BinaryCode ReadSigData(MethodDefinition src)
+            => ReadBlobData(src.Signature);
     }
 }

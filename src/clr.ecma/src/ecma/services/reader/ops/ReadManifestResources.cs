@@ -4,14 +4,16 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static sys;
+
     partial class EcmaReader
     {
         [MethodImpl(Inline), Op]
-        public BinaryCode ReadSig(FieldDefinition src)
-            => ReadBlob(src.Signature);
+        public ManifestResource ReadResource(ManifestResourceHandle src)
+            => MD.GetManifestResource(src);
 
-        [MethodImpl(Inline), Op]
-        public BinaryCode ReadSig(MethodDefinition src)
-            => ReadBlob(src.Signature);
+        [Op]
+        public ReadOnlySeq<ManifestResource> ManifestResources()
+            => MD.ManifestResources.ToReadOnlySpan().Select(x => ReadResource(x));
     }
 }

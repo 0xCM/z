@@ -1,4 +1,4 @@
-export type Var<N,V> = {
+export type Var<N> = {
     name:N
 }
 
@@ -25,19 +25,15 @@ export function bind<E,N,V>(env:E,name:N,value:V) : BoundVar<E,N,V> {
     }
 }
 
-
-export function Var<N,V=null>(name:N) : Var<N,V> {
+export function Var<N>(name:N) : Var<N> {
     return {
-        name,
-     
+        name,     
     }
 }
 
 export interface Reify<S,T,R> {
     reify(bound:Bound<S,T>):R
 }
-
-
 
 export interface Bind<S,T> {
     bind(src:S,dst:T) : Bound<S,T>

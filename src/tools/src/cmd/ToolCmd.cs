@@ -57,7 +57,6 @@ namespace Z0
                 Warn($"No jobs identified by '{match}'");
         }
 
-
         [CmdOp("pwsh")]
         void RunPwshCmd(CmdArgs args)
         {
@@ -69,6 +68,10 @@ namespace Z0
         [CmdOp("devenv")]
         void DevEnv(CmdArgs args)
             => ProcExec.start(Channel, Cmd.args("devenv.exe",args[0].Value));
+
+        [CmdOp("vscode")]
+        void VsCode(CmdArgs args)
+            => ProcExec.start(Channel, Cmd.args("code.exe",args[0].Value));
 
         [CmdOp("cmd")]
         void RunCmd(CmdArgs args)
@@ -153,11 +156,11 @@ namespace Z0
         [CmdOp("symlink")]
         void Link(CmdArgs args)
         {
-            var src = FS.dir(arg(args,0).Value);
-            var dst = FS.dir(arg(args,1).Value);
-            var cmd = Tools.symlink(src,dst);
-            //ProcExec.run(Channel, Cmd.script(CmdFormat.format(cmd)));
-
+            const string Pattern = "mklink /D {0} {1}";
+            var src = text.quote(FS.dir(arg(args,0).Value).Format(PathSeparator.BS));
+            var dst = text.quote(FS.dir(arg(args,1).Value).Format(PathSeparator.BS));
+            var cmd = Cmd.cmd(string.Format(Pattern,src,dst));
+            ProcExec.run(cmd);
         }
 
         [CmdOp("child")]

@@ -1,7 +1,16 @@
 {
 	"folders": [
 		{
+			"path": "../literals"
+		},
+		{
+			"path": "../sys"
+		},
+		{
 			"path": "../cmd.specs"
+		},
+		{
+			"path": "../text"
 		},
 		{
 			"path": "../lib"

@@ -29,9 +29,7 @@ namespace Z0
             var result = Outcome.Success;
             var src = cmd.Source.DbArchive();
             var dst = cmd.Target.DbArchive();
-
             return result;
-
         }
         
         public Task<ExecResult> Start(EmitAssemblyCatalog cmd)

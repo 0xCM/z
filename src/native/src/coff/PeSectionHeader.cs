@@ -9,9 +9,6 @@ namespace Z0
     {
         const string TableId = "section.headers";
 
-        [Render(64)]
-        public FileName File;
-
         [Render(16)]
         public string SectionName;
 
@@ -35,8 +32,5 @@ namespace Z0
 
         [Render(48)]
         public SectionCharacteristics SectionFlags;
-
-        [Render(1)]
-        public _FileUri FullPath;
     }
 }

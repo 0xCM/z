@@ -402,32 +402,6 @@ namespace Z0.Asm
 
         Ecma Cli => Wf.Ecma();
 
-        void EmitDependencyGraph()
-        {
-            var svc = Wf.EcmaEmitter();
-            var refs = Cli.ReadAssemblyRefs();
-            var dst = AppDb.Logs().Path("dependencies", FileKind.Dot);
-            var flow = Wf.EmittingFile(dst);
-            var count = refs.Length;
-            // var parts = Wf.ApiCatalog.ComponentNames.ToHashSet();
-            // using var writer = dst.Writer();
-            // writer.WriteLine("digraph dependencies{");
-            // writer.WriteLine(string.Format("label={0}", text.dquote("Assembly Dependencies")));
-            // for(var i=0; i<count; i++)
-            // {
-            //     ref readonly var x = ref refs[i];
-            //     if(parts.Contains(x.Target.Format()))
-            //     {
-            //         var source = x.Source.Format().Replace(Chars.Dot, Chars.Underscore);
-            //         var target = x.Target.Format().Replace(Chars.Dot, Chars.Underscore);
-            //         var arrow = string.Format("{0}->{1}", source, target);
-            //         writer.WriteLine(arrow);
-            //     }
-            // }
-            // writer.WriteLine("}");
-            // Wf.EmittedFile(flow, count);
-        }
-
         void GenSlnScript()
         {
             const string Pattern = "dotnet sln add {0}";

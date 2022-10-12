@@ -25,10 +25,6 @@ namespace Z0
             => @as<EcmaHandleData,Handle>(src);
 
         [Op]
-        public ReadOnlySpan<AssemblyReferenceHandle> AssemblyRefHandles()
-            => MD.AssemblyReferences.ToReadOnlySpan();
-
-        [Op]
         public ReadOnlySpan<TypeReferenceHandle> TypeRefHandles()
             => MD.TypeReferences.ToReadOnlySpan();
 

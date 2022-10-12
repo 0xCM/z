@@ -12,6 +12,17 @@ namespace Z0
         public ReadOnlySpan<TypeDefinitionHandle> TypeDefHandles()
             => MD.TypeDefinitions.ToReadOnlySpan();
 
+        public EcmaTypeDef ReadTypeDef(TypeDefinitionHandle handle)
+        {
+            var src = MD.GetTypeDefinition(handle);
+            var dst = default(EcmaTypeDef);
+            dst.Name = src.Name;
+            dst.Namespace = src.Namespace;
+            dst.Attributes = src.Attributes;
+            dst.Layout = src.GetLayout();
+            return dst;
+        }
+
         [Op]
         public ReadOnlySpan<TypeDefinition> ReadTypeDefs()
         {

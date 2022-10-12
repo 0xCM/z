@@ -112,11 +112,9 @@ function cmd3<T,A,B,C>(tool:T, a:A, b:B, c:C) {
     return `${cmd2(tool,a,b)} ${c}`
 }   
 
-
 export const ToolCmd = {
     c0:cmd0,
     c1:cmd1,
     c2:cmd2,
     c3:cmd3
-
 }

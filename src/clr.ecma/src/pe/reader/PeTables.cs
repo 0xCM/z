@@ -11,19 +11,12 @@ namespace Z0
     [Free, ApiHost]
     public class PeTables : IDisposable
     {
-        [MethodImpl(Inline)]
-        internal static ReadOnlySpan<R> empty<R>()
-            => ReadOnlySpan<R>.Empty;
-
         readonly PEReader Reader;
 
-        readonly FilePath Source;
-
         [MethodImpl(Inline)]
-        internal PeTables(PEReader src, FilePath path)
+        public PeTables(PEReader src)
         {
             Reader = src;
-            Source = path;
         }
 
         public void Dispose()
@@ -41,14 +34,11 @@ namespace Z0
         }
 
         public ReadOnlySeq<PeSectionHeader> Headers()
-            => PeReader.headers(Reader,Source);
+            => PeReader.headers(Reader);
 
         [Op]
         public static PeTables open(FilePath src)
-        {
-            var reader = new PEReader(File.OpenRead(src.Name));
-            return new PeTables(reader, src);
-        }
+            => new PeTables(new PEReader(File.OpenRead(src.Name)));
 
         [MethodImpl(Inline), Op]
         public static Address32 offset(MetadataReader reader, UserStringHandle handle)
@@ -62,14 +52,14 @@ namespace Z0
 
         [MethodImpl(Inline)]
         static string format(PeFieldOffset src)
-            => RpOps.format(OffsetPatternText, src.Name, src.Value);
+            => RP.format(OffsetPatternText, src.Name, src.Value);
 
         [Op]
         public static void save(ReadOnlySpan<PeFieldOffset> src, FilePath dst)
         {
             using var writer = dst.Writer();
             var l = labels(default(PeFieldOffset));
-            writer.WriteLine(RpOps.format(OffsetPatternText, l[0], l[1]));
+            writer.WriteLine(RP.format(OffsetPatternText, l[0], l[1]));
             for(var i=0u; i<src.Length; i++)
                 writer.WriteLine(format(skip(src,i)));
         }

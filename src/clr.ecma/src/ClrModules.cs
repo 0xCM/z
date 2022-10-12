@@ -4,27 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.IO;
-    using System.Reflection.Metadata;
-    using System.Reflection.PortableExecutable;
-
     using static sys;
 
     [ApiHost]
     public readonly struct ClrModules
     {
-        public static ReadOnlySeq<AssemblyRefInfo> refs(Assembly src)
-        {
-            var path = FS.path(src.Location);
-            if(ClrModules.valid(path))
-            {
-                using var reader = PeReader.create(path);
-                return reader.ReadAssemblyRefs();
-            }
-            else
-                return ReadOnlySeq<AssemblyRefInfo>.Empty;
-        }
-
         [Op]
         public static ClrModuleInfo describe(Assembly src)
         {

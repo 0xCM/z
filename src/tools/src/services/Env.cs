@@ -14,10 +14,10 @@ namespace Z0
             => new DbArchive(FS.dir(src));
 
         public static DbArchive NUGET_PACKAGES()
-            => var(EnvVarKind.Process, EnvNames.NUGET_PACKAGES, archive);
+            => var(EnvVarKind.Process, SettingNames.NUGET_PACKAGES, archive);
 
         public static DbArchive DOTNET_ROOT()
-            => var(EnvVarKind.Process, EnvNames.DOTNET_ROOT, archive);
+            => var(EnvVarKind.Process, SettingNames.DOTNET_ROOT, archive);
 
 
         public static EnvVar<T> var<T>(EnvVarKind kind, string name, Func<string,T> parser)

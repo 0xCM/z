@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     public class DevPacks : WfSvc<DevPacks>
     {
         public void NugetStage(DbArchive src)

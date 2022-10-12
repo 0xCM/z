@@ -8,7 +8,7 @@ namespace Z0
 
     partial class PeReader
     {
-        public static ReadOnlySeq<PeSectionHeader> headers(PEReader src, FilePath path)
+        public static ReadOnlySeq<PeSectionHeader> headers(PEReader src)
         {
             var headers = src.PEHeaders;
             var pe = headers.PEHeader;
@@ -19,7 +19,6 @@ namespace Z0
             {
                 ref readonly var section = ref skip(sections,i);
                 ref var dst = ref seek(buffer,i);
-                dst.File = path.FileName;
                 dst.EntryPoint = (Address32)pe.AddressOfEntryPoint;
                 dst.CodeBase = (Address32)pe.BaseOfCode;
                 dst.GptRva = (Address32)pe.GlobalPointerTableDirectory.RelativeVirtualAddress;
@@ -28,7 +27,6 @@ namespace Z0
                 dst.SectionName = section.Name;
                 dst.RawDataAddress = (Address32)section.PointerToRawData;
                 dst.RawDataSize = (uint)section.SizeOfRawData;
-                dst.FullPath = path;
             }
             return buffer;
         }

@@ -25,6 +25,7 @@ namespace Z0
 
         public void EmitAssemblyRefs(ReadOnlySpan<Assembly> src, IDbArchive dst)
             => EmitAssemblyRefs(src, dst.Table<AssemblyRefInfo>());
+        
 
         public void EmitAssemblyRefs(ReadOnlySpan<Assembly> src, FilePath dst)
         {
@@ -47,7 +48,8 @@ namespace Z0
                 if(ClrModules.valid(path))
                 {
                     using var reader = PeReader.create(path);
-                    var refs = reader.ReadAssemblyRefs();
+                    //var refs = reader.ReadAssemblyRefs();
+                    var refs = Ecma.refs(src);
                     var count = refs.Length;
                     if(count == 0)
                     {

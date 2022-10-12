@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class PeReader
+    partial class EcmaReader
     {
-        [Op]
-        public AssemblyName AssemblyName()
-            => MD.GetAssemblyDefinition().GetAssemblyName();
+        [MethodImpl(Inline), Op]
+        public BinaryCode ReadBlobData(BlobHandle src)
+            => MD.GetBlobBytes(src);
     }
 }

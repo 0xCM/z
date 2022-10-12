@@ -111,7 +111,6 @@ export function cmd<N>(name: N) : Cmd<N>
     }
 }
 
-
 export declare function commands<N>(names: Array<N>): Array<Cmd<N>>;
 
 export declare function provider<P,T>(name: P, names: Array<Cmd<T>>): CmdSet<P,T>;

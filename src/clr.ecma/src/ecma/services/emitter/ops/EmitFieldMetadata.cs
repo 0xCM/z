@@ -73,7 +73,7 @@ namespace Z0
                     info.Token = Ecma.token(handle);
                     info.Component = name;
                     info.Attributes = row.Attributes;
-                    info.CliSig = reader.ReadBlob(row.Sig);
+                    info.CliSig = reader.ReadBlobData(row.Sig);
                     info.Name = reader.Read(row.Name);
                     writer.WriteLine(formatter.Format(info));
                 }

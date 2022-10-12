@@ -1,20 +1,64 @@
 export type Comma = ','
 
 export type Dot = '.'
+export const Dot:Dot = '.'
 
 export type Space = ' '
+export const Space:Space = ' '
 
 export type Colon = ':'
+export const Colon:Colon =':'
 
 export type FSlash = '/'
+export const FSlash:FSlash = '/'
 
 export type BSlash = '\\'
+export const BSlash:BSlash = '\\'
+
+export type Slash = FSlash | BSlash
 
 export type Plus = '+'
 
+export type DQuote = '"'
+export const DQuote = '"'
+
+export type SQuote = "'"
+export const SQuote = "'"
+
+export type Quote = SQuote | DQuote
+
+
+export enum QuoteKind {
+    SQuote = "'",
+    DQuote = '"'
+}
+
+
+export type LBrace = '{'
+export function lbrace() : LBrace {
+    return '{'
+}
+
+export type RBrace = '}'
+
+export function rbrace() : RBrace {
+    return '}'
+}
+
+export type a = 'a'
+export const a:a = 'a'
+
+export type b = 'b'
+export const b:b = 'b'
+
+export type c = 'c'
+export const c:c = 'c'
+
+
+
 export type Lower = 
-    | 'a' 
-    | 'b' 
+    | a 
+    | b 
     | 'c' 
     | 'd' 
     | 'e' 
@@ -92,3 +136,8 @@ export type Symbol =
     | Plus
     | FSlash
     | BSlash
+    | SQuote
+    | DQuote
+
+
+

@@ -27,6 +27,20 @@ namespace Z0
 
         public const string DOTNET_ROOT = nameof(DOTNET_ROOT);
 
+        public const string VCPKG_ROOT = nameof(VCPKG_ROOT);
+
+        public const string CARGO_HOME = nameof(CARGO_HOME);
+
+        public const string GHCUP_INSTALL_BASE_PREFIX = nameof(GHCUP_INSTALL_BASE_PREFIX);
+
+        public const string DENO_INSTALL_ROOT = nameof(DENO_INSTALL_ROOT);
+
+        public const string DENO_DIR = nameof(DENO_DIR);
+
+        public const string DENO_CACHE = nameof(DENO_CACHE);
+
+        public const string NUGET_PACKAGES = nameof(NUGET_PACKAGES);
+
         public const string DevPacks = nameof(DevPacks);
 
         public const string Archives = nameof(Archives);

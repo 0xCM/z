@@ -6,7 +6,7 @@ namespace Z0
 {
     partial class EcmaReader
     {
-        public ReadOnlySpan<EcmaBlobRow> ReadBlobs()
+        public ReadOnlySpan<EcmaBlobRow> ReadBlobRows()
         {
             var size = (uint)MD.GetHeapSize(HeapIndex.Blob);
             if (size == 0)

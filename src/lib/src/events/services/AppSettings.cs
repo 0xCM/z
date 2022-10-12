@@ -6,10 +6,13 @@ namespace Z0
 {
     using static sys;
     using static Settings;
-    using static EnvNames;
 
     public sealed class AppSettings : SettingLookup<Name,string>
     {
+        const string settings = nameof(settings);
+
+        const string logs = nameof(logs);
+
         static AppSettings _Service = load(SettingsRoot().Path(FS.file("z0.settings", FileKind.Csv)));
 
         public static AppSettings load(WfEmit channel)

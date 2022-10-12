@@ -28,15 +28,8 @@ namespace Z0
         {
             var count = src.Length;
             for(var i=0u; i<count; i++)
-                ReadResInfo(ReadResource(skip(src,i), out var _), ref dst[i]);
+                ReadResInfo(ReadResource(skip(src,i)), ref dst[i]);
             return dst;
-        }
-
-        [MethodImpl(Inline), Op]
-        public ref ManifestResource ReadResource(ManifestResourceHandle src, out ManifestResource dst)
-        {
-            dst = MD.GetManifestResource(src);
-            return ref dst;
         }
 
         [MethodImpl(Inline), Op]

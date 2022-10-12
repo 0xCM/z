@@ -48,9 +48,7 @@ namespace Z0
 
         [CmdOp("api/emit")]
         void ApiEmit()
-        {            
-            ApiMd.Emitter().Emit(ModuleArchives.parts(), AppDb.ApiTargets());         
-        }
+            => ApiMd.Emitter().Emit(ModuleArchives.parts(), AppDb.ApiTargets());
 
         static void EcmaEmit(IWfChannel channel, FilePath src, IDbArchive dst)
         {
@@ -64,6 +62,7 @@ namespace Z0
                 channel.Error(e);
             }
         }
+
         void EcmaEmit(Files src)
         {
             iter(src, path => EcmaEmit(Channel, path, AppDb.DbTargets("ecma/datasets")));
@@ -75,9 +74,7 @@ namespace Z0
             var src = new ModuleArchive(FS.dir(args[0]));            
             var dlls = src.ManagedDll().Where(path => !path.Path.Contains(".resources.dll")).Select(x => x.Path);
             var exe = src.ManagedExe().Select(x => x.Path);
-            EcmaEmitter.EmitMetadumps(Channel, src,AppDb.DbTargets("ecma/datasets"));
-            
-            //EcmaEmitter.EmitMetadumps(Channel, dlls.Union(exe), AppDb.DbTargets($"ecma/datasets/{src.Root.FolderName}"));
+            EcmaEmitter.EmitMetadumps(Channel, src,AppDb.DbTargets("ecma/datasets"));                     
         }
 
         [CmdOp("ecma/emit/parts")]
@@ -185,7 +182,7 @@ namespace Z0
         {
             var src = Clr.corlib();
             var reader = EcmaReader.create(src);
-            var blobs = reader.ReadBlobs();
+            var blobs = reader.ReadBlobRows();
             for(var i=0; i<blobs.Length; i++)
             {
                 ref readonly var blob = ref skip(blobs,i);

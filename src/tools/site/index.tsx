@@ -14,10 +14,12 @@ export * as Llvm from "./llvm"
 export * as Nuget from "./nuget"
 export * as RoboCopy from "./robocopy"
 export * as Pip from "./pip"
-export * as SymLink from "./mklink"
+export * as SymLink from "./symlink"
 export * as Python from "./python"
 export * as DocFx from "./docfx"
 export * as YarnV1 from "./yarn/v1"
+export * from "./schemacrawler"
 import {main} from "./main"
+
 
 main()
