@@ -9,6 +9,33 @@ namespace Z0
     [ApiHost]
     public class Env
     {
+        public static CfgEntries cfg(FilePath src)
+        {
+            var dst = list<CfgEntry>();
+            using var reader = src.Utf8LineReader();
+            var line = TextLine.Empty;
+            while(reader.Next(out line))
+            {
+                var i = line.Index('=');
+                if(i > 0)
+                {
+                    var name = text.left(line.Content, i);
+                    var value = text.right(line.Content,i);
+                    dst.Add(new (name,value));
+                }
+            }
+            return new (dst.ToArray());
+        }
+
+        public static FolderPath cd()
+            => new(text.ifempty(Environment.CurrentDirectory, AppSettings.Default.Control().Root.Format()));
+
+        public static FolderPath cd(CmdArgs args)
+        {
+            if(args.Length == 1)
+                Environment.CurrentDirectory = args.First.Value;
+            return cd();
+        }
 
         static DbArchive archive(string src)
             => new DbArchive(FS.dir(src));
@@ -19,6 +46,26 @@ namespace Z0
         public static DbArchive DOTNET_ROOT()
             => var(EnvVarKind.Process, SettingNames.DOTNET_ROOT, archive);
 
+        public static EnvVars<string> vars(FilePath src, char sep = Chars.Eq)
+        {
+            var k = z16;
+            var dst = list<EnvVar<string>>();
+            var line = AsciLineCover.Empty;
+            var buffer = sys.alloc<char>(1024*4);
+            using var reader = src.AsciLineReader();
+            while(reader.Next(out line))
+            {
+                var content = line.Codes;
+                var i = SQ.index(content, sep);
+                if(i == NotFound)
+                    continue;
+
+                var _name = Asci.format(SQ.left(content,i), buffer);
+                var _value = Asci.format(SQ.right(content,i), buffer);
+                dst.Add(new (_name, _value));
+            }
+            return dst.ToArray().Sort();
+        }
 
         public static EnvVar<T> var<T>(EnvVarKind kind, string name, Func<string,T> parser)
             where T : IEquatable<T>

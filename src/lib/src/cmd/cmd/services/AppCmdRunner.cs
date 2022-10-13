@@ -49,7 +49,7 @@ namespace Z0
         AppCmdDef IAppCmdRunner.Def
             => Def;
 
-        public Outcome Run(CmdArgs args, WfEmit channel)
+        public Outcome Run(IWfChannel channel, CmdArgs args)
         {
             var output = default(object);
             var result = Outcome.Success;

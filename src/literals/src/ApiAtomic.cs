@@ -430,6 +430,8 @@ namespace Z0
 
         public const S files = nameof(files);
 
+        public const S fs = nameof(fs);
+
         public const S kinds = nameof(kinds);
 
         public const S numeric = nameof(numeric);

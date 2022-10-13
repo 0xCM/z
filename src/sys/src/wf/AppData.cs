@@ -25,8 +25,7 @@ namespace Z0
         }
 
         public bool Value<V>(string key, out V value)
-        {
-            
+        {            
             value = default;
             var result =_KeyedValues.TryGetValue(key, out var _value);
             if(result)
@@ -34,13 +33,22 @@ namespace Z0
             return result;
         }
 
+        public V Value<V>(string key)
+        {            
+            var value = default(V);
+            if(_KeyedValues.TryGetValue(key, out var _value))
+            {   
+                value = (V)_value;
+            }
+            else
+            {
+                sys.@throw($"Value with key {key} missing");
+            }
+            return value;
+        }
+
         public bool Value<V>(string key, V value)
             => _KeyedValues.TryAdd(key, value);
-
-        public void Store(Assembly[] src)
-        {
-            sys.iter(src, a => _Components.TryAdd(a.GetName(),a));
-        }
 
         AppData()
         {

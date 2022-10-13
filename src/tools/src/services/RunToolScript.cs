@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    sealed class RunScript : CmdReactor<RunScript,RunScriptCmd>
+    sealed class RunToolScript : CmdReactor<RunToolScript,RunScriptCmd>
     {
         protected override CmdResult Run(RunScriptCmd cmd)
         {

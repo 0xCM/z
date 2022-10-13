@@ -24,20 +24,18 @@ namespace Z0
             return count;
         }
 
-        public static void store(ReadOnlySpan<Setting> src, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)
+        public static void store(IWfChannel channel, ReadOnlySpan<Setting> src, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)
         {
             var emitter = text.emitter();
-            Tables.emit(src, emitter);
-            using var writer = dst.Writer(encoding);
-            writer.Write(emitter.Emit());
+            iter(src, x=> emitter.AppendLine(x.Format()));
+            channel.FileEmit(emitter.Emit(),dst, encoding);            
         }
 
-        public static void store<T>(ReadOnlySpan<Setting<T>> src, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)
+        public static void store<T>(IWfChannel channel, ReadOnlySpan<Setting<T>> src, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)
         {
             var emitter = text.emitter();
-            Tables.emit(src, emitter);
-            using var writer = dst.Writer(encoding);
-            writer.Write(emitter.Emit());
+            iter(src, x=> emitter.AppendLine(x.Format()));
+            channel.FileEmit(emitter.Emit(),dst, encoding);            
         }
     }
 }

@@ -14,6 +14,10 @@ namespace Z0
 
         ProjectScripts ProjectScripts => Wf.ProjectScripts();
 
+        DevPacks Devpacks => Wf.DevPacks();
+
+        Tooling Tooling => Wf.Tooling();
+
         [CmdOp("archives/zip")]        
         void CreateZip(CmdArgs args)
         {
@@ -322,5 +326,197 @@ namespace Z0
             WinMem.vquery(@base, ref basic);
             Write(basic.ToString());
         }
+
+        [CmdOp("cd")]
+        void Cd(CmdArgs args)
+            => Channel.Row(Env.cd(args));
+
+        [CmdOp("files/nuget")]
+        void NugetFiles(CmdArgs args)
+        {
+            var src = FS.dir(arg(args,0));
+            var packs = FilePacks.search(src, PackageKind.Nuget);
+            iter(packs, p => Write(p));
+        }
+
+        [CmdOp("devpack/nuget")]
+        void DevPack(CmdArgs args)
+        {
+            var src = FS.dir(arg(args,0));
+            Devpacks.NugetStage(src);
+        }
+
+        [CmdOp("sln/root")]
+        void SlnRoot(CmdArgs args)
+        {
+            if(args.Count == 1)
+                Environment.CurrentDirectory = args.First.Value;
+            Channel.Row(Env.cd());
+        }
+
+        [CmdOp("dir")]
+        void Dir(CmdArgs args)
+        {
+            var root = Env.cd();
+            if(args.Count != 0)
+            root = FS.dir(args[0]);
+            var folders = root.Folders();
+            iter(folders, f => Channel.Row(f));
+            var files = root.Files(false);
+            iter(files, f => Channel.Row(((FileUri)f)));
+        }        
+
+        static readonly Toolbase TB = new();
+
+        [CmdOp("api/emit/impls")]
+        void EmitImplMaps()
+        {
+            var src = Clr.impls(Parts.Lib.Assembly, Parts.Lib.Assembly);
+            using var writer = AppDb.ApiTargets().Path("api.impl.maps", FileKind.Map).Utf8Writer();
+            for(var i=0; i<src.Count; i++)
+                src[i].Render(s => writer.WriteLine(s));
+        }
+
+        [CmdOp("run/script")]
+        void RunAppScript(CmdArgs args)
+        {
+            RunAppScript(FS.path(arg(args,0)));
+        }
+
+        void RunAppScript(FilePath src)
+        {
+            if(src.Missing)
+            {
+                Channel.Error(AppMsg.FileMissing.Format(src));
+            }
+            else
+            {
+                var lines = src.ReadNumberedLines(true);
+                var count = lines.Count;
+                for(var i=0; i<count; i++)
+                {
+                    ref readonly var content = ref lines[i].Content;
+                    if(Cmd.parse(content, out AppCmdSpec spec))
+                        RunCmd(spec);
+                    else
+                    {
+                        Error($"ParseFailure:'{content}'");
+                        break;
+                    }
+                }
+            }
+        }
+
+        [CmdOp("pwsh")]
+        void RunPwshCmd(CmdArgs args)
+        {
+            var cmd = Cmd.pwsh(Cmd.join(args));
+            Status($"Executing '{cmd}'");
+            ProcExec.start(cmd,Channel);
+        }
+
+        [CmdOp("devenv")]
+        void DevEnv(CmdArgs args)
+            => ProcExec.start(Channel, Cmd.args("devenv.exe",args[0].Value));
+
+        [CmdOp("vscode")]
+        void VsCode(CmdArgs args)
+            => ProcExec.start(Channel, Cmd.args("code.exe",args[0].Value));
+
+        [CmdOp("cmd")]
+        void RunCmd(CmdArgs args)
+            => ProcExec.start(Channel, args);
+
+        [CmdOp("help")]
+        void GetHelp(CmdArgs args)
+        {
+            var tool = args[0].Value;
+            var dst = AppDb.DbTargets("tools/help").Path(FS.file(tool, FileKind.Help));
+            Toolsets.help(Channel, args, dst);
+        }
+
+        [CmdOp("tool")]
+        void RunTool(CmdArgs args)
+        {
+            var tool = arg(args,0).Value;
+            var script = arg(args,1).Value;
+            var count = args.Count - 2;
+            var path = AppDb.Toolbase($"{tool}/scripts").Path(FS.file(script,FileKind.Cmd));
+            var emitter = text.emitter();
+            var j=2;
+            for(var i=0; i<count; i++, j++)
+            {
+                emitter.Append(Chars.Space);
+                emitter.Append(args[i].Value);
+            }
+            
+            ProcExec.start(Cmd.cmd(path, CmdKind.Tool, emitter.Emit()), Channel);        
+        }
+
+        [CmdOp("hexify")]
+        void Hexify(CmdArgs args)
+        {
+            var src = arg(args,0).Value;
+            var pattern = arg(args,1).Value;
+            var files = FS.files(FS.dir(src), pattern, true);
+            var dst = AppDb.DbTargets("hexify");
+            Hex.hexify(Channel, files, dst);
+        }
+
+        [CmdOp("tool/shim")]
+        void RunShim(CmdArgs args)
+        {
+            var count = args.Length;
+            if(count < 3)
+            {
+                Error($"Not enough");
+                return;                
+            }
+
+            var values = args.Values().View;
+            var def = ToolShims.validate(ToolShims.parse(slice(values,0,3).ToArray()));            
+            var ops = slice(values,3).ToArray();
+            var task = ToolShims.start(def,Emitter,slice(values,3).ToArray());
+        }
+
+        [CmdOp("tool/script")]
+        Outcome ToolScript(CmdArgs args)
+            => Tooling.RunScript(arg(args,0).Value, arg(args,1).Value);
+
+        [CmdOp("tool/setup")]
+        void ConfigureTool(CmdArgs args)
+            => Tooling.Setup(Cmd.tool(args));
+
+        [CmdOp("tool/docs")]
+        void ToolDocs(CmdArgs args)
+            => iter(Tooling.LoadDocs(arg(args,0).Value), doc => Write(doc));
+
+        [CmdOp("tool/env")]
+        void ToolConfig(CmdArgs args)
+        {
+            var tool = TB.Tool(arg(args,0).Value);
+            var path = tool.CfgPath();
+            var settings = Cmd.settings(path);
+            Row(settings.Format());
+        }
+
+        [CmdOp("symlink")]
+        void Link(CmdArgs args)
+        {
+            const string Pattern = "mklink /D {0} {1}";
+            var src = text.quote(FS.dir(arg(args,0).Value).Format(PathSeparator.BS));
+            var dst = text.quote(FS.dir(arg(args,1).Value).Format(PathSeparator.BS));
+            var cmd = Cmd.cmd(string.Format(Pattern,src,dst));
+            ProcExec.run(cmd);
+        }
+
+        [CmdOp("child")]
+        void Child(CmdArgs args)
+        {
+            Demand.neq<uint>(args.Count,0);
+            var path = FS.path(args.First);
+            var _args = sys.slice(args.Values().View,1).ToArray();
+            ProcExec.passthrough(path,Emitter,_args);
+        }        
     }
 }

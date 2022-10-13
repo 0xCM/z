@@ -6,6 +6,7 @@ namespace Z0
 {
     public interface IAppCmdDispatcher
     {
+        ReadOnlySeq<ICmdProvider> Providers {get;}
         Outcome Dispatch(string action, CmdArgs args);
 
         Outcome Dispatch(string action);

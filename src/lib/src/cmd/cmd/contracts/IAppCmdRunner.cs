@@ -7,7 +7,7 @@ namespace Z0
     [Free]
     public interface IAppCmdRunner<S,T>
     {
-        T Run(S src, WfEmit emitter);
+        T Run(IWfChannel channel, S spec);
     }
 
     [Free]

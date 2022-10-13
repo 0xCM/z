@@ -30,8 +30,7 @@ namespace Z0
             var src = AppSettings.DbRoot().Scoped(folder).Root;
             var name = src.FolderName.Format();
             var file = FS.file($"{scope}.{name}", FileKind.Zip);
-            var cmd = DbCmdSpecs.archive(src, AppDb.Archive(scope).Path(file));
-            
+            var cmd = DbCmdSpecs.archive(src, AppDb.Archive(scope).Path(file));            
             Db.zip(cmd, Emitter);            
         }
 

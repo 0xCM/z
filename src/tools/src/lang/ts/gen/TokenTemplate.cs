@@ -6,7 +6,7 @@ namespace Z0.Ts
 {
     partial class Generators
     {
-        class TokenTemplate<K,V> : Template<TokenTemplate<K,V>,Token<K,V>>
+        class TokenTemplate<K,V> : Template<TokenTemplate<K,V>,TokenLift<K,V>>
             where K : new()
             where V : new()
         {
@@ -42,7 +42,7 @@ namespace Z0.Ts
                 _Value = value;
             }
 
-            public override TokenTemplate<K,V> Bind(Token<K,V> src)
+            public override TokenTemplate<K,V> Bind(TokenLift<K,V> src)
                 => new (src.Key,src.Value);
 
             public override string Format()

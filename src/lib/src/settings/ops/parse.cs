@@ -201,6 +201,7 @@ namespace Z0
             }
             return dst != null;
         }
+
         public static bool parse<T>(string src, char sep, out T dst)
         {
             dst = Setting<T>.Empty;

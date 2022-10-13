@@ -12,7 +12,7 @@ namespace Z0
     {
         public static ToolSettings settings(FilePath src)
         {
-            var data = Settings.env(src);
+            var data = Env.vars(src);
             var dst = new ToolSettings();
             var setting = EmptyString;
             if(data.Find(nameof(S.ToolId), out setting))

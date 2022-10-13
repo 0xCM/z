@@ -8,49 +8,6 @@ namespace Z0
 
     class AppCmd : AppCmdService<AppCmd>
     {
-        public static ICmdProvider[] providers(IWfRuntime wf)
-            => new ICmdProvider[]{
-                wf.ApiCmd(),
-                wf.AncestryChecks(),
-                wf.AsmCoreCmd(),
-                wf.AsmCmdSvc(),
-                wf.AsmChecks(),
-                wf.CaptureCmd(),
-                wf.AsmDbCmd(),
-                wf.EcmaCmd(),
-                wf.DbCmd(),
-                wf.LlvmCmd(),
-                wf.RoslynCmd(),
-                wf.IntelInxCmd(),
-                wf.Machines(),
-                wf.ProjectCmd(),
-                wf.RuntimeCmd(),
-                wf.ToolCmd(),
-                wf.WfCmd(),
-                wf.RoslynCmd(),
-                wf.XedCmd(),
-                wf.XedChecks(),
-                wf.BuildCmd(),
-                wf.XedToolCmd(),
-                wf.CalcChecker(),
-                wf.TestCmd(),
-                wf.AsmGenCmd(),
-                wf.SosCmd(),
-                wf.CsGenCmd(),
-                wf.MemoryChecks(),
-                wf.CgChecks(),
-                };
-
-        public static AppCmd service(IWfRuntime wf)
-        {
-            GlobalServices.Instance.Inject(wf.XedRuntime());
-            var flow = wf.Running("Creating application host");
-            var providers = AppCmd.providers(wf);
-            var cmd = Cmd.service<AppCmd>(wf, providers);
-            wf.Ran(flow, $"Created application host with {providers.Length} command providers");
-            return cmd;
-        }
-
         protected override void Initialized()
         {            
             EmitCatalog(this);
@@ -59,7 +16,7 @@ namespace Z0
         void EmitCatalog(IAppCmdSvc src)
         {
             var counter = 0u;
-            iter(src.Providers.View, provider => {
+            iter(src.Dispatcher.Providers.View, provider => {
                 var type = provider.GetType();
                 var part = type.Assembly.PartName();
                 var assembly = FS.path(type.Assembly.Location).ToUri();
@@ -77,12 +34,6 @@ namespace Z0
                 });                        
             }
                 );
-        }
-
-        void LoadCatalog()
-        {
-            Emitter.Write($"Providers:{Providers.Count}");
-            iter(Providers, p => Emitter.Row(p.GetType().DisplayName()));
         }
 
         void PrintAssemblies()

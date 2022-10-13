@@ -10,15 +10,18 @@ namespace Z0
 
         Func<string,CmdArgs,Outcome> Fallback;
 
-        readonly WfEmit Emit;
+        readonly IWfChannel Channel;
 
         [MethodImpl(Inline)]
-        public AppCmdDispatcher(IAppCommands lookup, WfEmit emit)
+        public AppCmdDispatcher(IWfChannel channel, ReadOnlySeq<ICmdProvider> providers, IAppCommands lookup)
         {
             _Commands = lookup;
             Fallback = NotFound;
-            Emit = emit;
+            Channel = channel;
+            Providers = providers;
         }
+
+        public ReadOnlySeq<ICmdProvider> Providers {get;}
 
         public IAppCommands Commands => _Commands;
 
@@ -34,7 +37,7 @@ namespace Z0
             var runner = default(IAppCmdRunner);
             if(Commands.Find(name, out runner))
             {
-                result = runner.Run(args, Emit);
+                result = runner.Run(Channel,args);
             }
             else
             {

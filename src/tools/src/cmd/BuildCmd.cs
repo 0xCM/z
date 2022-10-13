@@ -12,8 +12,6 @@ namespace Z0
 
         Dev Dev => Wf.Dev();
 
-        //ConcurrentDictionary<
-
         [CmdOp("projects/list")]
         void ListProjects(CmdArgs args)
         {
@@ -21,10 +19,7 @@ namespace Z0
             var files = AppDb.Dev(scope).Files().Where(x => FileTypes.@is(x,FileKind.CsProj));
             iter(files, file => Write(file.ToUri()));
 
-            var uri = Cmd.uri((MethodInfo)MethodInfo.GetCurrentMethod());
-            
-
-            //iter(files, file => Write(file.ToUri()));
+            var uri = Cmd.uri((MethodInfo)MethodInfo.GetCurrentMethod());            
         }
 
         [CmdOp("build/libs")]
@@ -97,7 +92,6 @@ namespace Z0
         {
             var exports = Dev.Exports(AppDb.DevProject("z0"));
             Dev.EmitCfg(exports, "exports", AppDb.AppData("dev/exports"));
-
         }
 
         [CmdOp("dev/deps")]

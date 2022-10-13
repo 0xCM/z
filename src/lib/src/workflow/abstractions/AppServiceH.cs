@@ -7,6 +7,8 @@ namespace Z0
     public abstract class AppService<H> : AppService, IAppService<H>
         where H : AppService<H>, new()
     {
+        public static string ServiceName => typeof(H).DisplayName();
+        
         static ConcurrentDictionary<Type,object> ServiceCache {get;}
             = new();
 

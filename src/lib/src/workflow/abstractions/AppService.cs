@@ -93,12 +93,25 @@ namespace Z0
         }
 
         static AppData  _AppData;
-        
+
+        static readonly Dictionary<string,string> ContextValues;
+
         static AppService()
         {
             _AppData = Z0.AppData.get();
+            ContextValues = new();
         }
 
         protected static AppSettings AppSettings => AppSettings.Default;
+
+        protected static void ContextValue(string name, string value)
+            => ContextValues[name] = value;
+
+        protected static string ContextValue(string name)
+        {
+            var result = EmptyString;
+            ContextValues.TryGetValue(name, out result);
+            return result;
+        }
     }
 }

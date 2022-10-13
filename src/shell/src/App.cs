@@ -27,9 +27,8 @@ namespace Z0
             var running = wf.Running($"Creating command providers");
             var providers = new ICmdProvider[]{
                 wf.WfCmd(),
-                wf.ToolCmd(),
-                wf.DevCmd(),
-                wf.BuildCmd(),                
+                wf.BuildCmd(),
+                wf.DbCmd() 
             };
             wf.Ran(running, $"Created {providers.Length} command providers");
             app.CmdService = Cmd.service<AppShellCmd>(wf, providers);

@@ -8,10 +8,6 @@ namespace Z0
     {
         class ServiceCache : AppServices<ServiceCache>
         {
-            public ToolCmd ToolCmd(IWfRuntime wf)
-                => Service<ToolCmd>(wf);
-
-
             public Dev Dev(IWfRuntime wf)
                 => Service<Dev>(wf);
 
@@ -38,9 +34,6 @@ namespace Z0
 
             public DbCmd DbCmd(IWfRuntime wf)
                 => Service<DbCmd>(wf);
-
-            public DevCmd DevCmd(IWfRuntime wf)
-                => Service<DevCmd>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
@@ -48,15 +41,11 @@ namespace Z0
         public static ICmdProvider DbCmd(this IWfRuntime wf)
             => Services.DbCmd(wf);
 
-        public static IAppCmdSvc ToolCmd(this IWfRuntime wf)
-            => Services.ToolCmd(wf);
-
         public static WfCmd WfCmd(this IWfRuntime wf)
             => Services.WfCmd(wf);
 
         public static ApiComments ApiComments(this IWfRuntime wf)
             => Services.ApiComments(wf);
-
 
         public static Tooling Tooling(this IWfRuntime wf)
             => Services.Tooling(wf);             
@@ -67,7 +56,7 @@ namespace Z0
         public static MsBuild BuildSvc(this IWfRuntime wf)
             => Services.BuildSvc(wf);
 
-       public static Dev Dev(this IWfRuntime wf)
+        public static Dev Dev(this IWfRuntime wf)
             => Services.Dev(wf);
 
         public static DevPacks DevPacks(this IWfRuntime wf)
@@ -75,8 +64,5 @@ namespace Z0
 
         public static IAppCmdSvc BuildCmd(this IWfRuntime wf)
             => Services.BuildCmd(wf);
-
-        public static IAppCmdSvc DevCmd(this IWfRuntime wf)
-            => Services.DevCmd(wf);
     }
 }

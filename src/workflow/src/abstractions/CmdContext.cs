@@ -2,12 +2,14 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Ts
+namespace Z0
 {
-    public partial class Ts
+    public static class CmdContextNames
     {
-        [MethodImpl(Inline)]
-        public static TokenLift<K,V> token<K,V>(K key, V value)
-            => new(key,value);
+        public const string fs = "fs/context";
+
+        public const string db = "db/context";
+
+        public const string sln = "sln/context";
     }
 }

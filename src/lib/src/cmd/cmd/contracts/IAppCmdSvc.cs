@@ -6,8 +6,6 @@ namespace Z0
 {
     public interface IAppCmdSvc : IAppService, ICmdProvider, ICmdRunner, IRunnable
     {     
-        IAppCmdDispatcher Dispatcher {get;}
-
-        ref readonly ReadOnlySeq<ICmdProvider> Providers {get;}
+        IAppCmdDispatcher Dispatcher {get;}    
     }
 }
