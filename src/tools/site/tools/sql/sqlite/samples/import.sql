@@ -1,1 +1,0 @@
-.import c:/data/zdb/tables/asm.rows/asm.rows.vxorpd.csv vxorpd

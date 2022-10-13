@@ -1,1 +1,0 @@
-./refasmerexe -v -c -n -w -g -all -o <TargetPath> <AssemblyPath>

@@ -1,8 +1,0 @@
-# d:\views\sdks\netsdk\dotnet.exe tool list --global
-Package Id                      Version           Commands                  
-----------------------------------------------------------------------------
-clangsharppinvokegenerator      11.0.0-beta3      ClangSharpPInvokeGenerator
-dotnet-depends                  0.6.1             dotnet-depends            
-dotnet-sql-cache                6.0.6             dotnet-sql-cache          
-dotnet-stryker                  2.0.0             dotnet-stryker            
-nbgv                            3.5.107           nbgv                      

@@ -1,1 +1,0 @@
-.read script.sql
