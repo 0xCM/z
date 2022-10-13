@@ -13,9 +13,38 @@ export type Numbers = Literals<Number>
 export type Bools = Literals<Bool>
 export type LiteralExpr = String
 
+
+export interface Valued<V> {
+    value:V
+}
+
+
+export type Context<C> = {
+    context:C
+}
+
+export type Scope<C,S> = {
+    context:Context<C>
+    scope:S
+}
+
 export type Names<K extends Literal> = {
     names:Array<K>
 }
+
+export interface Kinded<K> {
+    kind:K
+}
+
+export interface Class<K,C> extends Kinded<K> {
+    class:C
+}
+export type Const<T> = T
+
+export type EmptyString = Const<''>
+
+export type Null<T=null> = Const<null>
+
 
 export type LiteralBinder<S extends Identifier,T extends Literal> = Binder<S,T>
 
@@ -44,4 +73,16 @@ export function AssignLiteral<S extends Identifier,T extends Literal>() : Assign
     return {
         reify:assign
     }
+}
+
+export interface Named<N extends Literal> {
+    name:N
+}
+
+export interface Locatable<L extends Literal> {
+    location:L
+}
+
+export interface Locator<L extends Literal>  {
+    readonly locate: (locatable: L) => URL
 }

@@ -4,7 +4,7 @@ export type VendorKey =
     | 'ms'
     | 'intel'
     
-export type Vendor<K extends VendorKey,B> = Root<K,B>
+export type Vendor<K extends VendorKey,B> = Root<'vendor',B>
 
 
 export function vendor<K extends VendorKey,B>(key:K, base:B) {

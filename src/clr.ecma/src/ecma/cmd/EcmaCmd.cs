@@ -176,18 +176,5 @@ namespace Z0
                     EcmaEmitter.EmitMetadump(src, EcmaArchive(src));
             }
         }
-
-        [CmdOp("api/emit/corelib")]
-        void EmitCorLib()
-        {
-            var src = Clr.corlib();
-            var reader = EcmaReader.create(src);
-            var blobs = reader.ReadBlobRows();
-            for(var i=0; i<blobs.Length; i++)
-            {
-                ref readonly var blob = ref skip(blobs,i);
-                Write(string.Format("{0,-8} | {1,-8} | {2,-8}", blob.Seq, blob.Offset, blob.DataSize));
-            }
-        }
     }
 }

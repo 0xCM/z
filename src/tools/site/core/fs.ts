@@ -1,8 +1,7 @@
 import { EmptyString, List } from "./common"
 import { FSlash,BSlash} from "./tokens"
 import {Link} from "./links"
-import {Literal} from "./literals"
-import { Kinded } from "./kinds"
+import {Literal,Kinded} from "./literals"
 
 export type PathSep = EmptyString | BSlash | FSlash
 
@@ -75,11 +74,11 @@ export enum ObjectKind  {
 }
 
 export interface File<L extends Literal> extends Kinded<ObjectKind>{
-    location:L    
+    path:L    
 }
 
 export interface Folder<L extends Literal> extends Kinded<ObjectKind> {
-    location:L
+    path:L
 }
 
 export type FileName<N extends Literal> = N
@@ -92,14 +91,19 @@ export interface SymLink<L extends Literal> extends Link<ObjectKind,Path<L>> {
 
 } 
 
+export interface FSO<K extends ObjectKind,L extends Literal> {
+    kind:K
+    path:L
+}
+
 export type Folders = List<string>
 
 export type Files = List<string>
 
-export function path<L extends Literal>(kind:ObjectKind,location:L) : Path<L> {
+export function fso<K extends ObjectKind, L extends Literal>(kind:K, path:L) : FSO<K,L> {
     return {
         kind,
-        location
+        path
     }
 }
 
@@ -111,20 +115,20 @@ export function symlink<K,P extends Literal>(source:Path<P>, target:Path<P>) : S
      }
  }
 
-export function folder<L extends Literal>(location:L) : Folder<L> {
+export function folder<L extends Literal>(path:L) : FSO<ObjectKind.Folder, L> {
     return {
         kind:ObjectKind.Folder,
-        location
+        path
     }
 }
 
-export function file<L extends Literal>(location:L) : File<L> {
+export function file<L extends Literal>(path:L) : FSO<ObjectKind.File, L> {
     return {
-        kind:ObjectKind.Folder,
-        location
+        kind:ObjectKind.File,
+        path
     }
 }
 
-export function drive<L extends DriveLetter>(location:L) : Drive<L> {
-    return location
+export function drive<L extends DriveLetter>(name:L) : Drive<L> {
+    return name
 }

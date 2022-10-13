@@ -1,12 +1,10 @@
-import { Named } from "./common"
-import { Kinded } from "./kinds"
-import { Locatable } from "./locations"
+import { Locatable,Named,Literal,Kinded } from "./literals"
 
-export interface Artifact<K,N,L> extends Kinded<K> , Named<N>, Locatable<L> {
+export interface Artifact<K,N extends Literal,L extends Literal> extends Kinded<K> , Named<N>, Locatable<L> {
 
 }
 
-export function artifact<N,L,K>(kind:K,name:N,location:L) : Artifact<K,N,L> {
+export function artifact<N extends Literal,L extends Literal,K extends Literal>(kind:K,name:N,location:L) : Artifact<K,N,L> {
     return {
         kind,
         name,

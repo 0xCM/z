@@ -11,7 +11,7 @@ namespace Z0
         {
             var result = ExecResult.Empty;
             var outcome = Outcome.Success;
-            var running = context.Channel.Running("");
+            var running = context.Channel.Running($"{cmd.CmdId}");
             try
             {
                 outcome = actor(context,cmd);
@@ -24,7 +24,7 @@ namespace Z0
             return new(context.Channel.Ran(running, result),outcome);
         }
 
-        static Outcome exec(IWfContext channel, EmitAssemblyCatalog cmd)
+        static Outcome exec(IWfContext channel, CatalogAssemblies cmd)
         {
             var result = Outcome.Success;
             var src = cmd.Source.DbArchive();
@@ -32,7 +32,7 @@ namespace Z0
             return result;
         }
         
-        public Task<ExecResult> Start(EmitAssemblyCatalog cmd)
+        public Task<ExecResult> Start(CatalogAssemblies cmd)
             => sys.start(() => exec(Context, cmd, exec));
     }
 }

@@ -75,10 +75,14 @@ export function Tar() : Tar {
     return 'tar'
 }
 
-
 export type Sdks = 'sdks'
 export function Sdks()  : Sdks {
     return 'sdks'
+}
+
+export type Sdk = 'sdk'
+export function Sdk()  : Sdk {
+    return 'sdk'
 }
 
 export type Pkg = 'pkg'

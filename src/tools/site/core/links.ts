@@ -1,5 +1,4 @@
-import { EmptyString} from "./common"
-import {Kinded} from "./kinds"
+import { EmptyString, Kinded} from "./literals"
 
 export interface Node<N> {
     name:N   

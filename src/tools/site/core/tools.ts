@@ -1,10 +1,11 @@
 import { ExecutorName,Cmd } from "./cmd"
+import { Literal } from "./literals"
 
-export type Actor<N> = {
+export type Actor<N extends Literal> = {
     name:N
 }
 
-export function actor<T>(name:T) : Actor<T> {
+export function actor<T extends Literal>(name:T) : Actor<T> {
     return {
         name
     }
@@ -62,13 +63,13 @@ export type ToolName<N> = {
 export type Tools<N> = Array<ToolId<N>>
 
 
-export type HelpDoc<T,C>  = {
+export type HelpDoc<T extends Literal,C>  = {
     tool:Actor<T>,
     content:C
 }
 
 
-export function help<T,C>(tool:Actor<T>,content:C) : HelpDoc<T,C> {
+export function help<T extends Literal,C>(tool:Actor<T>,content:C) : HelpDoc<T,C> {
     return {
         tool,
         content
@@ -81,12 +82,12 @@ export type ToolHelpCmd<T,A0=null, A1=null, A2=null> = {
 }
 
 
-export type ToolHelp<T,C> = {
+export type ToolHelp<T extends Literal,C> = {
     tool:Actor<T>
     docs:Array<HelpDoc<T,C>>
 }
 
-export interface ToolCmd<T,C> extends Cmd<C> {
+export interface ToolCmd<T extends Literal,C extends Literal> extends Cmd<C> {
 
 }
 
@@ -117,4 +118,9 @@ export const ToolCmd = {
     c1:cmd1,
     c2:cmd2,
     c3:cmd3
+}
+
+export interface ToolExe<R,T> {
+    root:R
+    tool:T
 }

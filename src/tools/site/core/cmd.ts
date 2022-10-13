@@ -17,17 +17,12 @@ export interface CmdOption<N,V=null>{
     value?:V
 }
 
-export interface Cmd<N> extends Named<N> {
+export interface Cmd<N extends Literal> extends Named<N> {
     
 }
 
-export interface CmdAlias<C,A> extends Cmd<C> {
+export interface CmdAlias<C extends Literal,A> extends Cmd<C> {
     alias:A
-}
-
-export interface ToolExe<R,T> {
-    root:R
-    tool:T
 }
 
 export type CmdUri = {
@@ -61,7 +56,7 @@ export type CmdFlagDef<F> = {
     name:F
 }
 
-export interface CmdSet<P,N> {
+export interface CmdSet<P,N extends Literal> {
     readonly name: P;
     Commands: Array<Cmd<N>>;
 };
@@ -104,16 +99,16 @@ export function cmd3<T,A,B,C>(tool:T, a:A, b:B, c:C) {
     return `${cmd2(tool,a,b)} ${c}`
 }   
 
-export function cmd<N>(name: N) : Cmd<N>
+export function cmd<N extends Literal>(name: N) : Cmd<N>
 {
     return {
         name: name
     }
 }
 
-export declare function commands<N>(names: Array<N>): Array<Cmd<N>>;
+export declare function commands<N extends Literal>(names: Array<N>): Array<Cmd<N>>;
 
-export declare function provider<P,T>(name: P, names: Array<Cmd<T>>): CmdSet<P,T>;
+export declare function provider<P,T extends Literal>(name: P, names: Array<Cmd<T>>): CmdSet<P,T>;
 
 export function option<N,V>(name:N, value?:V) {
     return {

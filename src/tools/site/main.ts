@@ -1,11 +1,10 @@
 //import {copy } from "./robocopy"
 //import * as Yarn from "./yarn/v1/main"
 
-import {schemacrawler} from "./schemacrawler"
+import {} from "./tools"
+
 
 export function main() {    
-
-    schemacrawler('--help')
 
     //Yarn.main()
     

@@ -1,1 +1,0 @@
-export * as Cabal from "./specs"
