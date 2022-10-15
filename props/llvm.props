@@ -1,0 +1,21 @@
+<Project>
+
+  <ItemGroup>
+    <PackageReference Include="LLVMSharp" Version="$(LlvmSharpVer)"/>
+    <PackageReference Include="LLVMSharp.Interop" Version="$(LlvmSharpVer)"/>
+
+    <PackageReference Include="libLLVM" Version="$(ClangSharpVer)"/>
+    <PackageReference Include="libLLVM.runtime.win-x64" Version="$(ClangSharpVer)"/>
+
+    <PackageReference Include="libclang" Version="$(ClangSharpVer)"/>
+    <PackageReference Include="libclang.runtime.win-x64" Version="$(ClangSharpVer)"/>
+
+    <PackageReference Include="libclangsharp" Version="$(ClangSharpVer)"/>
+    <PackageReference Include="libclangsharp.runtime.win-x64" Version="$(ClangSharpVer)"/>
+
+    <PackageReference Include="ClangSharp" Version="$(ClangSharpVer)"/>
+    <PackageReference Include="ClangSharp.Interop" Version="$(ClangSharpVer)"/>
+    <PackageReference Include="ClangSharp.PInvokeGenerator" Version="$(ClangSharpVer)"/>
+  </ItemGroup>
+
+</Project>

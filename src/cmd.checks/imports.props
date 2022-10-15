@@ -1,7 +1,0 @@
-<Project>
-  <Import Project="$(ProjectProps)\libs.props"/>
-  <ItemGroup>
-    <ProjectReference Include="$(CmdSpecs)" />
-    <ProjectReference Include="$(Rules)" />
-  </ItemGroup>
-</Project>

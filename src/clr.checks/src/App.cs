@@ -22,8 +22,6 @@ namespace Z0
             var running = wf.Running($"Creating command providers");
             var providers = new ICmdProvider[]{
                 wf.WfCmd(),
-                wf.ToolCmd(),
-                wf.DevCmd(),
                 wf.BuildCmd(),
                 wf.EcmaCmd()
             };

@@ -46,7 +46,7 @@ namespace Z0
             var actor = "rmdir";
             var flags = "/s/q";
             var spec = Cmd.cmd($"{actor} {scoped.Format(PathSeparator.BS,true)} {flags}");
-            return ProcExec.start(spec,channel);           
+            return ProcExec.start(channel, spec);           
         }
     }
 }

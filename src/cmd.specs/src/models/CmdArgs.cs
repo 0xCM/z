@@ -21,7 +21,6 @@ namespace Z0
             Data = src;
         }
 
-
         public override string Format()
         {
             if(Count > 0)
@@ -40,5 +39,8 @@ namespace Z0
                 return EmptyString;
             }
         }
+
+        public string Join()
+            => Format();
     }
 }

@@ -15,15 +15,19 @@ namespace Z0
                 => Service<ProjectScripts>(wf);
 
             public WsRegistry WsRegistry(IWfRuntime wf)
-                => Service<WsRegistry>(wf);
+                => Service<WsRegistry>(wf);            
 
-
+            public Reactor Reactor(IWfRuntime wf)
+                => Service<Reactor>(wf);            
         }
 
         static ServiceCache Services => ServiceCache.Instance;
 
         public static OmniScript OmniScript(this IWfRuntime wf)
             => Services.OmniScript(wf);
+
+        public static Reactor Reactor(this IWfRuntime wf)
+            => Services.Reactor(wf);
 
         public static ProjectScripts ProjectScripts(this IWfRuntime wf)
             => Services.ProjectScripts(wf);

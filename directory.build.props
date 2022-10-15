@@ -2,6 +2,7 @@
   <Import Project="exports.props"/>
   <PropertyGroup>  
     <Configuration>Release</Configuration>
+    <LangVersion>preview</LangVersion>
     <SlnId>z0</SlnId>
     <SlnRoot>$(MsBuildThisFileDirectory)</SlnRoot>
     <SlnLibs>$(SlnRoot)\src</SlnLibs>

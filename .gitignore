@@ -16,5 +16,4 @@ artifacts/
 node_modules
 *.log
 deps/win-x64
-*.cfg
 .dotnet/

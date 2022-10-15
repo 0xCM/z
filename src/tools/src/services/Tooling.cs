@@ -141,7 +141,7 @@ namespace Z0
                 ref readonly var tool = ref profile.Id;
                 if(profile.HelpCmd.IsEmpty)
                     continue;
-                dst.Add(Cmd.cmd(tool, string.Format("{0} {1}", profile.Executable.ToFilePath().Format(PathSeparator.BS), profile.HelpCmd)));
+                dst.Add(ToolCmdLine.define(tool, string.Format("{0} {1}", profile.Executable.ToFilePath().Format(PathSeparator.BS), profile.HelpCmd)));
             }
             dst.Sort();
             return dst.ToArray();
@@ -206,7 +206,7 @@ namespace Z0
             var running = Running(string.Format("Loading tool profiles from {0}", dir));
             var sources = dir.Match("tool.profiles", FS.Csv, true);
             var dst = new Lookup<Actor,ToolProfile>();
-            iter(sources, src => TextGrids.profiles(src,dst,Emitter));
+            iter(sources, src => ToolSettings.profiles(src,dst,Emitter));
             var lookup = dst.Seal();
             Ran(running, string.Format("Collected {0} profile definitions", lookup.EntryCount));
             return lookup;

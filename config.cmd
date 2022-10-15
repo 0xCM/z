@@ -1,14 +1,13 @@
 @echo off
 call %~dp0..\config.cmd
 set SlnId=z0
-set SlnRoot=%SlnRoot%\%SlnId%
-echo SlnRoot=%SlnRoot%
+set SlnRoot=%DevRoot%\projects\%SlnId%
 set WsRoot=%SlnRoot%
 set WsPath=%WsRoot%
 set CfgFile=%SlnRoot%\%SlnId%.cfg
-
 set BuildPrefix=z0
 set ZVer=0.0.2
+set DotNetVer=6.0.303
 set ArchName=x64
 set OsName=win
 set ConfigName=Release
@@ -51,7 +50,7 @@ set ProjectRuntime=%ProjectBin%\%ConfigName%\%FrameworkMoniker%\%RuntimeMoniker%
 set ProjectShell=%ProjectRuntime%\%ShellId%.exe
 set ProjectDist=%Distributions%\%ProjectId%
 set PublishedShell=%ProjectDist%\%ShellId%.exe
-set Deployments=%EnvB%\tools\z0\bin
+set Deployments=b:\tools\z0\bin
 set DeployedShell=%Deployments%\%ShellId%.exe
 set DeploySln=%SlnScripts%\sln-deploy.cmd
 set SlnPath=%SlnArea%\z0.%Area%.sln

@@ -1,0 +1,83 @@
+<Project>
+  <ItemGroup>
+    <ProjectReference Include="$(Agents)" />
+    <ProjectReference Include="$(ApiCode)" />
+    <ProjectReference Include="$(ApiMd)" />
+    <ProjectReference Include="$(ApiSpecs)" />
+    <ProjectReference Include="$(Archives)" />
+    <ProjectReference Include="$(Alloc)" />
+    <ProjectReference Include="$(Asm)" />
+    <ProjectReference Include="$(AsmCore)" />
+    <ProjectReference Include="$(AsmPrototypes)" />
+    <ProjectReference Include="$(AsmSvc)" />
+    <ProjectReference Include="$(Assets)" />
+
+    <ProjectReference Include="$(Bit)" />
+    <ProjectReference Include="$(Bits)" />
+
+    <ProjectReference Include="$(Calcs)" />
+    <ProjectReference Include="$(Capture)" />
+    <ProjectReference Include="$(Cells)" />
+    <ProjectReference Include="$(Cpu)" />
+    <ProjectReference Include="$(CgLibs)" />
+    <ProjectReference Include="$(Circuits)" />
+    <ProjectReference Include="$(Containers)" />
+    <ProjectReference Include="$(Coff)" />
+    <ProjectReference Include="$(CmdSpecs)" />
+    <ProjectReference Include="$(ClrQuery)" />
+    <ProjectReference Include="$(ClrEcma)" />
+    <ProjectReference Include="$(ClrCil)" />
+
+    <ProjectReference Include="$(Db)" />
+    <ProjectReference Include="$(Diagnostics)" />
+    <ProjectReference Include="$(Digital)" />
+    <ProjectReference Include="$(Dynamic)" />
+
+    <ProjectReference Include="$(EMath)" />
+    <ProjectReference Include="$(Events)" />
+
+    <ProjectReference Include="$(Files)" />
+    <ProjectReference Include="$(Fsm)" />
+
+    <ProjectReference Include="$(Heaps)" />
+    <ProjectReference Include="$(Hex)" />
+
+    <ProjectReference Include="$(IntelSvc)" />
+    <ProjectReference Include="$(Imagine)" />
+
+    <ProjectReference Include="$(Lang)" />
+    <ProjectReference Include="$(LangEmit)" />
+    <ProjectReference Include="$(Linq)" />
+    <ProjectReference Include="$(Literals)" />
+    <ProjectReference Include="$(LLvmModels)" />
+    <ProjectReference Include="$(LlvmSvc)" />
+
+    <ProjectReference Include="$(Machines)" />
+    <ProjectReference Include="$(Math)" />
+    <ProjectReference Include="$(Memory)" />
+    <ProjectReference Include="$(MemorySvc)" />
+
+    <ProjectReference Include="$(Native)" />
+    <ProjectReference Include="$(Numbers)" />
+
+    <ProjectReference Include="$(Polyrand)" />
+    <ProjectReference Include="$(Process)" />
+
+    <ProjectReference Include="$(Render)" />
+    <ProjectReference Include="$(Rules)" />
+
+    <ProjectReference Include="$(SosCmd)" />
+    <ProjectReference Include="$(Symbolics)" />
+    <ProjectReference Include="$(Sys)" />
+
+    <ProjectReference Include="$(TestChecks)" />
+    <ProjectReference Include="$(TestUnits)" />
+    <ProjectReference Include="$(Text)" />
+    <ProjectReference Include="$(Tools)" />
+
+    <ProjectReference Include="$(Validity)" />
+    <ProjectReference Include="$(Wf)" />
+
+    <ProjectReference Include="$(ZLib)" />
+  </ItemGroup>
+</Project>

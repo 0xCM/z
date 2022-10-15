@@ -1,5 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <CmdSpecs>$(MsBuildThisFileDirectory)z0.cmd.checks.csproj</CmdSpecs>
-  </PropertyGroup>
-</Project>

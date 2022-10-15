@@ -104,6 +104,25 @@ namespace Z0
             return outcome;
         }
 
+        public static void run(IWfChannel channel, string tool, string cmd, CmdArgs args, FilePath dst)
+        {
+            var emitting = channel.EmittingFile(dst);
+            using var status = dst.Utf8Writer(true);
+            var counter = 0u;
+
+            void OnStatus(string msg)
+            {
+                status.WriteLine(msg);
+                counter++;
+            }
+
+            void OnError(string msg)
+                => channel.Error(msg);
+
+            ProcExec.run(Cmd.args(tool,cmd), new StdIO(OnStatus, OnError), dst.FolderPath);
+            channel.EmittedFile(emitting, counter);
+        }
+
         public static CmdExecStatus run(CmdArgs spec, IStdIO io, FolderPath wd)
         {
             var values = spec.Values();

@@ -1,5 +1,4 @@
 <Project>
-  <Import Project="$(ImportDefs)\microsoft.build.props" />
   <ItemGroup>
     <ProjectReference Include="$(ZLib)" />
     <ProjectReference Include="$(Process)" />

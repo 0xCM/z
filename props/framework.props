@@ -1,0 +1,42 @@
+<Project>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.DiaSymReader.PortablePdb" Version="$(MsDiaVer)">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>  
+
+    <PackageReference Include="Microsoft.FileFormats" Version="1.0.161401" />
+    <PackageReference Include="Microsoft.SymbolStore" Version="1.0.161401" />
+
+    <PackageReference Include="Microsoft.Diagnostics.Runtime" Version="2.2.332302" />
+    <PackageReference Include="Microsoft.Diagnostics.Runtime.Utilities" Version="2.0.230301" />
+    <PackageReference Include="Microsoft.Diagnostics.Tracing.TraceEvent" Version="2.0.44" />
+
+    <PackageReference Include="QuikGraph.Graphviz" Version="2.3.1" />
+
+    <PackageReference Include="Microsoft.Build.Runtime" Version="$(MsBuildVer)" />
+
+    <PackageReference Include="Microsoft.CodeAnalysis" Version="$(CodeAnalysisVer)" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Scripting" Version="$(CodeAnalysisVer)" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="$(CodeAnalysisVer)" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="$(CodeAnalysisVer)" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="$(CodeAnalysisVer)" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Features" Version="$(CodeAnalysisVer)" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Features" Version="$(CodeAnalysisVer)" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Compilers" Version="$(CodeAnalysisVer)" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(MsExtVer)" />
+    <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="$(MsExtVer)" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="$(MsExtVer)" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="$(MsExtVer)" />
+    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="$(MsExtVer)" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Abstractions" Version="$(MsExtVer)" />
+
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.8" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(ProjectProps)\usings.props" />
+  <Import Project="imports.props" />
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>zfx</AssemblyName>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <StartupObject>Z0.App</StartupObject>
+    <RootNamespace>z0</RootNamespace>
+  </PropertyGroup>
+</Project>

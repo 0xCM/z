@@ -2,7 +2,5 @@
   <Import Project="version.props"/>
   <Import Project="versions.props"/>
   <Import Project="build.props"/>
-  <Import Project="projects.props"/>
-  <Import Project="deps\microsoft.common.props"/>
-  <Import Project="deps\quickgraph.props"/>
+  <Import Project="framework.props"/>
 </Project>

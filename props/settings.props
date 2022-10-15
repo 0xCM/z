@@ -1,5 +1,0 @@
-<Project>
-  <ItemGroup>
-    <EmbeddedResource Include="$(MsBuildThisFileDirectory)app.settings.csv"  CopyToOutputDirectory="Always" />
-  </ItemGroup>
-</Project>

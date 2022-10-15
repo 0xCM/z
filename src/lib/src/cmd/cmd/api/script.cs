@@ -6,8 +6,5 @@ namespace Z0
 {
     partial class Cmd
     {
-        [MethodImpl(Inline), Op]
-        public static ToolScript script(FilePath script, CmdVars vars)
-            => new ToolScript(script, vars);
     }
 }

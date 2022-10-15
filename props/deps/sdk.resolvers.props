@@ -1,7 +1,0 @@
-<Project>
-  <ItemGroup>
-    <Reference Include="Microsoft.Build.NuGetSdkResolver">
-      <HintPath>$(DOTNET_ROOT)\sdk\$(DotNetSdkVer)\Microsoft.Build.NuGetSdkResolver.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-</Project>

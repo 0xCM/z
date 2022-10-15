@@ -111,7 +111,7 @@ namespace Z0
         }
 
 
-        public static Task<ExecToken> start(CmdLine cmd, IWfChannel channel)
+        public static Task<ExecToken> start(IWfChannel channel, CmdLine cmd)
         {
             void OnError(in string src)
                 => channel.Error(src);

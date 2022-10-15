@@ -66,8 +66,7 @@ namespace Z0
         }
 
         void ICmdService.Install(ReadOnlySeq<ICmdProvider> src)
-        {
-            AppData.Value(nameof(IAppCmdDispatcher), Cmd.dispatcher((S)this, Emitter, src));
-        }
+            => AppData.Value(nameof(IAppCmdDispatcher), Cmd.dispatcher((S)this, Emitter, src));
+
     }
 }

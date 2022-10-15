@@ -6,14 +6,6 @@ namespace Z0
 {
     partial class Cmd
     {
-        [MethodImpl(Inline), Op]
-        public static ToolCmdLine cmd(Tool tool, CmdModifier modifier, params string[] src)
-            => new ToolCmdLine(tool, modifier, new CmdLine(src));
-
-        [MethodImpl(Inline), Op]
-        public static ToolCmdLine cmd(Tool tool, params string[] src)
-            => new ToolCmdLine(tool, new CmdLine(src));
-
         [Op]
         public static CmdLine cmd(string spec)
             => string.Format("cmd.exe /c {0}", spec);

@@ -88,12 +88,23 @@ namespace Z0
         [CmdOp("files")]
         void CatalogFiles(CmdArgs args)
         {
-            var src = FS.dir(args[0].Value);
+            var src = FS.dir(args[0].Value);            
             var files = ListedFiles.listing(search(args));
             var name = Archives.identifier(src);
-            var records = AppDb.Catalogs("files").Table<ListedFile>(name);
-            Emitter.TableEmit(files, records);            
-            var list = AppDb.Catalogs("files").Path(name, FileKind.List);
+            var table = FilePath.Empty;
+            var list = FilePath.Empty;
+            if(args.Count >=2)    
+            {
+                table = FS.dir(args[1]) + Tables.filename<ListedFile>(name);
+                list = FS.dir(args[1]) + FS.file(name,FileKind.List);
+            }
+            else
+            {
+                table = AppDb.Catalogs("files").Table<ListedFile>(name);
+                list = AppDb.Catalogs("files").Path(name, FileKind.List);
+            }
+
+            Emitter.TableEmit(files, table);            
             var flow = Emitter.EmittingFile(list);
             using var writer = list.Utf8Writer();
             var counter = 0u;
@@ -377,6 +388,11 @@ namespace Z0
                 src[i].Render(s => writer.WriteLine(s));
         }
 
+        void RunToolScript(CmdArgs args)
+        {
+
+        }
+
         [CmdOp("run/script")]
         void RunAppScript(CmdArgs args)
         {
@@ -412,16 +428,16 @@ namespace Z0
         {
             var cmd = Cmd.pwsh(Cmd.join(args));
             Status($"Executing '{cmd}'");
-            ProcExec.start(cmd,Channel);
+            ProcExec.start(Channel, cmd);
         }
 
         [CmdOp("devenv")]
         void DevEnv(CmdArgs args)
-            => ProcExec.start(Channel, Cmd.args("devenv.exe",args[0].Value));
+            => ProcExec.start(Channel, Cmd.args("devenv.exe", args[0].Value));
 
         [CmdOp("vscode")]
         void VsCode(CmdArgs args)
-            => ProcExec.start(Channel, Cmd.args("code.exe",args[0].Value));
+            => ProcExec.start(Channel, Cmd.args("code.exe", args[0].Value));
 
         [CmdOp("cmd")]
         void RunCmd(CmdArgs args)
@@ -431,8 +447,8 @@ namespace Z0
         void GetHelp(CmdArgs args)
         {
             var tool = args[0].Value;
-            var dst = AppDb.DbTargets("tools/help").Path(FS.file(tool, FileKind.Help));
-            Toolsets.help(Channel, args, dst);
+            var dst = AppDb.DbTargets("tools/help").Path(FS.file(tool, FileKind.Help));        
+            ProcExec.run(Channel, tool, "--help", args, dst);
         }
 
         [CmdOp("tool")]
@@ -450,7 +466,7 @@ namespace Z0
                 emitter.Append(args[i].Value);
             }
             
-            ProcExec.start(Cmd.cmd(path, CmdKind.Tool, emitter.Emit()), Channel);        
+            ProcExec.start(Channel, Cmd.cmd(path, CmdKind.Tool, emitter.Emit()));        
         }
 
         [CmdOp("hexify")]
@@ -496,7 +512,7 @@ namespace Z0
         {
             var tool = TB.Tool(arg(args,0).Value);
             var path = tool.CfgPath();
-            var settings = Cmd.settings(path);
+            var settings = ToolSettings.load(path);
             Row(settings.Format());
         }
 

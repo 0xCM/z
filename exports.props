@@ -46,7 +46,6 @@
    <Import Project="$(MsBuildThisFileDirectory)src/cpu/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/cmd/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/cmd.checks/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/cmd.specs/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/cmd.models/exports.props"/>
 
@@ -110,4 +109,7 @@
    <Import Project="$(MsBuildThisFileDirectory)src/tools/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/validity/exports.props"/>
+
+   <Import Project="$(MsBuildThisFileDirectory)src/cmd.public/exports.props"/>
+
 </Project>

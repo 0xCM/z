@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../workflow"
+		},
+		{
+			"path": "../tools"
+		},
+		{
+			"path": "."
+		},
+	],
+	"settings": {}
+}

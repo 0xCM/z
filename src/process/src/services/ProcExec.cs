@@ -52,22 +52,5 @@ namespace Z0
         [Op]
         public static CmdLine cmd<T>(T src)
             => $"cmd.exe /c {src}";
-
-        [Op]
-        public static bool arg(ToolCmdArgs src, string name, out ToolCmdArg dst)
-        {
-            var count = src.Count;
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var arg = ref src[i];
-                if(string.Equals(arg.Name, name, NoCase))
-                {
-                    dst=arg;
-                    return true;
-                }
-            }
-            dst = ToolCmdArg.Empty;
-            return false;
-        }
     }
 }

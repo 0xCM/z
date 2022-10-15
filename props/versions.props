@@ -6,5 +6,7 @@
     <MsExtVer>6.0.0</MsExtVer>
     <MsDiaRuntimeVer>2.2.332302</MsDiaRuntimeVer>
     <DotNetSdkVer>6.0.303</DotNetSdkVer>
+    <ClangSharpVer>15.0.0</ClangSharpVer>
+    <LlvmSharpVer>15.0.0-beta1</LlvmSharpVer>
   </PropertyGroup>
 </Project>

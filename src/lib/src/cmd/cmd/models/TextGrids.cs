@@ -9,54 +9,6 @@ namespace Z0
     [ApiHost]
     public readonly struct TextGrids
     {
-        public static Outcome parse(in TextRow src, out ToolProfile dst)
-        {
-            var result = Outcome.Success;
-            dst = default;
-            if(src.CellCount != ToolProfile.FieldCount)
-                result = (false,Tables.FieldCountMismatch.Format(ToolProfile.FieldCount, src.CellCount));
-            else
-            {
-                var i=0;
-                dst.Id = src[i++].Text;
-                dst.Modifier = src[i++].Text;
-                dst.HelpCmd = src[i++].Text;
-                dst.Membership = src[i++].Text;
-                dst.Executable = FS.path(src[i++]);
-            }
-            return result;
-        } 
-
-        public static void profiles(FilePath src, Lookup<Actor,ToolProfile> dst, WfEmit channel)
-        {
-            var content = src.ReadUnicode();
-            var result = parse(content, out var grid);
-            if(result)
-            {
-                if(grid.ColCount != ToolProfile.FieldCount)
-                    channel.Error(Tables.FieldCountMismatch.Format(ToolProfile.FieldCount, grid.ColCount));
-                else
-                {
-                    var count = grid.RowCount;
-                    for(var i=0; i<count; i++)
-                    {
-                        result = parse(grid[i], out ToolProfile profile);
-                        if(result)
-                            dst.Include(profile.Id, profile);
-                        else
-                            break;
-                    }
-                }
-            }
-        }
-
-        [MethodImpl(Inline), Op]
-        public static TextGrid<B> grid<B>(uint width, ReadOnlySpan<B> src)
-            where B : unmanaged, IStorageBlock<B>
-                => new TextGrid<B>(width,src);
-
-        public static ReadOnlySpan<string> split(string src, in TextDocFormat spec)
-            => sys.nonempty(src) ? spec.SplitClean ? src.SplitClean(spec.Delimiter) : src.Split(spec.Delimiter) : sys.empty<string>();
 
         [Op]
         public static Outcome<Count> normalize(string data, string delimiter, ReadOnlySpan<byte> widths, FilePath dst)
@@ -148,6 +100,14 @@ namespace Z0
             },true);
             return dst.ToArray();
         }
+
+        [MethodImpl(Inline), Op]
+        public static TextGrid<B> grid<B>(uint width, ReadOnlySpan<B> src)
+            where B : unmanaged, IStorageBlock<B>
+                => new TextGrid<B>(width,src);
+
+        public static ReadOnlySpan<string> split(string src, in TextDocFormat spec)
+            => sys.nonempty(src) ? spec.SplitClean ? src.SplitClean(spec.Delimiter) : src.Split(spec.Delimiter) : sys.empty<string>();
 
         /// Parses a header row from a line of text
         /// </summary>

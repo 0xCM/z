@@ -11,7 +11,7 @@ namespace Z0
             var project = arg(args, 0).Value;
             var script = arg(args, 1).Value;
             var path = AppDb.ProjectLib(project).Scoped(scripts).Path(script, FileKind.Cmd);
-            return ProcExec.start(Cmd.cmd(path, CmdKind.Cmd, EmptyString), Emitter);
+            return ProcExec.start(Channel, Cmd.cmd(path, CmdKind.Cmd, EmptyString));
         }
 
         public static Task<ExecToken> start(string project, string script, WfEmit channel)
@@ -21,7 +21,7 @@ namespace Z0
             {
                 sys.@throw(AppMsg.FileMissing.Format(path));
             }
-            var task =  ProcExec.start(Cmd.cmd(path, CmdKind.Cmd, EmptyString), channel);
+            var task =  ProcExec.start(channel, Cmd.cmd(path, CmdKind.Cmd, EmptyString));
             return task;
         }
 
