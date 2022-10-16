@@ -13,7 +13,7 @@ namespace Z0
         /// <param name="kind"></param>
         /// <param name="name"></param>
         [MethodImpl(Inline), Op]
-        public static ClrArtifactRef artifact(EcmaToken token, ClrArtifactKind kind, string name)
-            => new ClrArtifactRef(token, kind, name);
+        public static EcmaArtifactRef artifact(EcmaToken token, ClrArtifactKind kind, string name)
+            => new EcmaArtifactRef(token, kind, name);
     }
 }

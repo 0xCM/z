@@ -11,7 +11,7 @@ namespace Z0
     {
         public const string TableId = "clr.fields";
 
-        public ClrArtifactRef Key;
+        public EcmaArtifactRef Key;
 
         public EcmaToken DeclaringType;
 

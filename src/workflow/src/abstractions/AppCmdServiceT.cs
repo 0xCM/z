@@ -21,7 +21,7 @@ namespace Z0
         AppCmdSpec Next()
         {
             var input = term.prompt(Prompt());
-            if(Cmd.parse(input, out AppCmdSpec cmd))
+            if(AppCmd.parse(input, out AppCmdSpec cmd))
             {
                 return cmd;
             }

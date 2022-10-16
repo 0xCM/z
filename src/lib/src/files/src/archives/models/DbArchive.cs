@@ -121,8 +121,21 @@ namespace Z0
         public Files Files(FileExt ext, bool recurse = true)
             => Root.Files(ext, recurse);
 
-        public Deferred<FilePath> Enumerate(bool recursive = true)
-            => Root.EnumerateFiles(recursive);
+        public Deferred<FileUri> Enumerate(string pattern, bool recursive = true)
+            => defer(DbArchive.enumerate(Root, pattern, recursive));
+
+        static EnumerationOptions options(bool recurse)
+            => new EnumerationOptions{
+                RecurseSubdirectories = recurse
+            };
+
+        public static IEnumerable<FileUri> enumerate(FolderPath src, string pattern, bool recurse)
+        {
+            if(src.Exists)
+                foreach(var file in Directory.EnumerateFiles(src.Name, pattern, options(recurse)))
+                    yield return new FileUri(file);
+        }
+
 
         public FileName File(string name, FileKind kind)
             => FS.file(name, kind.Ext());

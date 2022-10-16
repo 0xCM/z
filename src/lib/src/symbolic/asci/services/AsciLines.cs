@@ -288,10 +288,6 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static CmdFlagSpec flag(string name, string desc)
-            => new CmdFlagSpec(name, desc);
-
-        [MethodImpl(Inline), Op]
         static bool test(Base10 @base, byte c)
             => (DecimalDigitValue)c >= D.MinDigit && (DecimalDigitValue)c <= D.MaxDigit;
 

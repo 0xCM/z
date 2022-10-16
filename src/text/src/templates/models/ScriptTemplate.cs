@@ -9,6 +9,14 @@ namespace Z0
         public static ScriptTemplate create(string name, string content)
             => new ScriptTemplate(name, content);
 
+        [MethodImpl(Inline), Op]
+        public static CmdScriptExpr expr(ScriptTemplate src)
+            => new CmdScriptExpr(src);
+
+        [MethodImpl(Inline), Op]
+        public static CmdScriptExpr expr(ScriptTemplate src, CmdVars vars)
+            => new CmdScriptExpr(src, vars);
+
         public string Name {get;}
 
         [MethodImpl(Inline)]

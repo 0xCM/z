@@ -69,7 +69,7 @@ namespace Z0.Asm
             for(var i=0; i<count; i++)
             {
                 ref readonly var facet = ref src[i];
-                seek(vars,i) = Cmd.var(facet.Name, facet.Value);
+                seek(vars,i) = CmdVars.var(facet.Name, facet.Value);
             }
 
             iter(vars, v => Write(v.Name,

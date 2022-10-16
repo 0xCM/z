@@ -110,7 +110,6 @@ namespace Z0
             return sys.start(run);
         }
 
-
         public static Task<ExecToken> start(IWfChannel channel, CmdLine cmd)
         {
             void OnError(in string src)
@@ -143,6 +142,18 @@ namespace Z0
                 return ran;
             }
             return sys.start(run);
+        }
+
+        public static Task<ExecToken> start(IWfChannel channel, ISysIO io, CmdArgs spec, FolderPath? wd = null)
+        {
+            ExecToken go()
+            {
+                var running = channel.Running(spec);
+                var result = run(io,spec,wd);
+                return channel.Ran(running);
+            }
+
+            return sys.start(go);
         }
     }
 }

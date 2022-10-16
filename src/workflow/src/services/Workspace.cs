@@ -37,8 +37,5 @@ namespace Z0
             [MethodImpl(Inline)]
             get => Archive;
         }
-
-        public Deferred<_FileUri> Members()
-            => IsNonEmpty ? Location.Enumerate() : sys.defer<_FileUri>();
     }
 }

@@ -8,6 +8,21 @@ namespace Z0
 
     partial struct Clr
     {
+        public static ReadOnlySeq<IRuntimeMember> join<A,B>(ReadOnlySpan<A> head, ReadOnlySpan<B> tail)
+            where A : IRuntimeMember
+            where B : IRuntimeMember
+        {
+            var count = head.Length + tail.Length;
+            var dst = alloc<IRuntimeMember>(count);
+            var j=0;
+            for(var i=0; i<head.Length; i++)
+                seek(dst,j++) = skip(head,i);
+            for(var i=0; i<tail.Length; i++)
+                seek(dst,j++) = skip(tail,i);
+
+            return dst;
+        }
+
         /// <summary>
         /// Defines a <see cref='ClrAssembly'/> over an <see cref='Assembly'/>
         /// </summary>
@@ -30,6 +45,22 @@ namespace Z0
         /// <param name="src">The source module</param>
         [MethodImpl(Inline), Op]
         public static ClrFieldAdapter adapt(FieldInfo src)
+            => src;
+ 
+        /// <summary>
+        /// Covers a <see cref='FieldInfo'/> sequence with r a <see cref='ClrFieldAdapter'/> sequence
+        /// </summary>
+        /// <param name="src">The source module</param>
+        [MethodImpl(Inline), Op]
+        public static ReadOnlySpan<ClrFieldAdapter> adapt(FieldInfo[] src)
+            => adapt<FieldInfo,ClrFieldAdapter>(src);
+
+        /// <summary>
+        /// Covers a <see cref='PropertyInfo'/> with a <see cref='ClrPropertyAdapter'/>
+        /// </summary>
+        /// <param name="src">The source module</param>
+        [MethodImpl(Inline), Op]
+        public static ClrPropertyAdapter adapt(PropertyInfo src)
             => src;
 
         /// <summary>
@@ -63,10 +94,6 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static ReadOnlySpan<ClrMethodAdapter> adapt(MethodInfo[] src)
             => adapt<MethodInfo,ClrMethodAdapter>(src);
-
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<ClrFieldAdapter> adapt(FieldInfo[] src)
-            => adapt<FieldInfo,ClrFieldAdapter>(src);
 
         [MethodImpl(Inline), Op]
         internal static ReadOnlySpan<V> adapt<S,V>(S[] src)

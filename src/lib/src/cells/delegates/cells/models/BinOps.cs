@@ -29,6 +29,5 @@ namespace Z0
 
         [Free]
         public delegate Cell512 BinaryOp512(Cell512 a, Cell512 b);
-
     }
 }

@@ -13,8 +13,8 @@ namespace Z0
         /// <param name="src">The source artifact</param>
         /// <typeparam name="A">The artifact type</typeparam>
         [MethodImpl(Inline), Op]
-        public static ClrArtifactRef reference(EcmaToken id, ClrArtifactKind kind, string name)
-            => new ClrArtifactRef(id,kind,name);
+        public static EcmaArtifactRef reference(EcmaToken id, ClrArtifactKind kind, string name)
+            => new EcmaArtifactRef(id,kind,name);
 
         /// <summary>
         /// Defines a reference to an artifact of parametric type
@@ -22,7 +22,7 @@ namespace Z0
         /// <param name="src">The source artifact</param>
         /// <typeparam name="A">The artifact type</typeparam>
         [MethodImpl(Inline)]
-        public static ClrArtifactRef reference<M>(M src)
+        public static EcmaArtifactRef reference<M>(M src)
             where M : MemberInfo
                 => reference(src.MetadataToken, ClrArtifactKind.Field, src.Name);
     }

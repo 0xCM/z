@@ -57,5 +57,8 @@ namespace Z0
 
         [Symbol("link-static", "Component static link")]
         LinkStatic,
+
+        [Symbol("assertion-mode", "Specifies whether LLVM was built with asserts enabled")]
+        AssertionMode,
     }
 }

@@ -9,7 +9,7 @@ namespace Z0
         sealed class Svc : AppServices<Svc>
         {
             public CmdPublic CmdPublic(IWfRuntime wf)
-                => Service(wf,nameof(CmdPublic), Z0.CmdPublic.factory);
+                => Service(wf, nameof(CmdPublic), Z0.CmdPublic.factory);
         }
 
         static Svc Services => Svc.Instance;

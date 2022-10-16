@@ -10,9 +10,9 @@ namespace Z0
     public readonly struct ClrModules
     {
         [Op]
-        public static ClrModuleInfo describe(Assembly src)
+        public static EcmaModuleInfo describe(Assembly src)
         {
-            var dst = new ClrModuleInfo();
+            var dst = new EcmaModuleInfo();
             var adapted = Clr.adapt(src);
             dst.ImgPath = location(src);
             pdbpath(adapted, out dst.PdbPath);
@@ -20,6 +20,7 @@ namespace Z0
             dst.MetadatSize = (ByteSize)adapted.RawMetadata.Length;
             return dst;
         }
+
 
         /// <summary>
         /// Loads an assembly + pdb
@@ -51,12 +52,39 @@ namespace Z0
         }
 
         [Op]
-        public static uint describe(ReadOnlySpan<Assembly> src, Span<ClrModuleInfo> dst)
+        public static uint describe(ReadOnlySpan<Assembly> src, Span<EcmaModuleInfo> dst)
         {
             var count = (uint)min(src.Length, dst.Length);
             for(var i=0; i<count; i++)
                 seek(dst,i) = describe(skip(src,i));
             return count;
+        }
+
+        public static bool load(FilePath src, out EcmaFile dst)
+        {
+            var result = false;
+            dst = EcmaFile.Empty;
+            try
+            {
+                var stream = File.OpenRead(src.Name);
+                var reader = new PEReader(stream);
+                result = reader.HasMetadata;
+                if(result)
+                {
+                    dst = new EcmaFile(src, stream, reader);
+                }
+                else
+                {
+                    stream.Dispose();
+                    reader.Dispose();
+                }
+                
+            }
+            catch(Exception)
+            {
+                
+            }
+            return result;
         }
 
         [Op]

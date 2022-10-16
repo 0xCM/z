@@ -23,7 +23,7 @@ namespace Z0
             => DefaultExtensions.IsNonEmpty ?  DefaultExtensions.First : FileExt.Empty;
     }
 
-    public interface IFileType<K> : IFileType, IKinded<K>
+    public interface IFileType<K> : IKinded<K>
         where K : unmanaged
     {
 

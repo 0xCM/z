@@ -6,7 +6,6 @@ namespace Z0
 {
     using System.Reflection.Emit;
 
-
     [ApiHost]
     public readonly partial struct CellDelegates
     {

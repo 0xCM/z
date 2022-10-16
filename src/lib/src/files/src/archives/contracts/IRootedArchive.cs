@@ -8,6 +8,9 @@ namespace Z0
     {
         FolderPath Root {get;}
 
+        Deferred<FileUri> Enumerate(string pattern, bool recursive = true)
+            => sys.defer(DbArchive.enumerate(Root, pattern, recursive));
+
         bool INullity.IsEmpty
             => Root.IsEmpty;
 
@@ -93,9 +96,6 @@ namespace Z0
 
         string IExpr.Format()
             => DbFiles.Format();
-
-        Deferred<_FileUri> Enumerate()
-            => from f in DbFiles.Enumerate(true) select f.ToUri();
     }
 
     public interface IRootedArchive<R> : IRootedArchive

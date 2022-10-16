@@ -16,6 +16,10 @@ namespace Z0
     }
             
     public partial class TextTemplates
-    {}
+    {
+        [MethodImpl(Inline), Op]
+        public static ScriptTemplate script(string name, string content)
+            => new ScriptTemplate(name, content);
+    }
     
 }

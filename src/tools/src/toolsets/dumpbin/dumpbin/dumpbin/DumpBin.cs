@@ -109,7 +109,7 @@ namespace Z0
                     pattern = ScriptTemplate.create("dumpbin.loadconfig", string.Format("dumpbin /LOADCONFIG /OUT:{1} {0}", src.Format(PS), output.Format(PS)));
                     break;
             }
-            return Cmd.expr(pattern);
+            return ScriptTemplate.expr(pattern);
         }
 
         public static FileName scriptfile(FileKind kind)

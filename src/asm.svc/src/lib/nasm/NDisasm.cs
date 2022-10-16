@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     [ApiHost]
     public sealed class NDisasm : ToolService<NDisasm>
@@ -19,7 +19,7 @@ namespace Z0
         {
             const string Pattern = "{0} -b {1} -p intel {2} > {3}";
             var name = src.FileName.WithoutExtension.Format();
-            var body = Cmd.expr(string.Format(Pattern, (byte)mode, "ndisasm", src.Format(PathSeparator.BS), dst.Format(PathSeparator.BS)));
+            var body = ScriptTemplate.expr(string.Format(Pattern, (byte)mode, "ndisasm", src.Format(PathSeparator.BS), dst.Format(PathSeparator.BS)));
             return ProcExec.script(name, body);
         }
 

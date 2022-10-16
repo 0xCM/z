@@ -10,14 +10,18 @@ namespace Z0
     {
         readonly Dictionary<K,dynamic> Data;
 
-        public LlvmConfigSet()
+        readonly IWfChannel Channel;
+
+        public LlvmConfigSet(IWfChannel channel)
         {
+            Channel = channel;
             Data = new();
         }
 
         public void Set<T>(K key, T value)
         {
             Data[key] = value;
+            Channel.Write($"{key}: {text.embrace(value)}");
         }
 
         public bool Get<T>(K key, out T value)

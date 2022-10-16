@@ -77,6 +77,30 @@ namespace Z0
             EcmaEmitter.EmitMetadumps(Channel, src,AppDb.DbTargets("ecma/datasets"));                     
         }
 
+        [CmdOp("ecma/list")]
+        void EcmaList(CmdArgs args)
+        {
+            var src = FS.dir(args[0]).DbArchive();
+            Channel.Write(src.Root);
+            iter(src.Enumerate("*.dll"), file =>{
+                if(EcmaFile.load(file, out EcmaFile ecma))
+                {
+                    try
+                    {
+                        Channel.Write($"{ecma.Uri}");
+                    }
+                    catch(Exception e)
+                    {
+                        Channel.Error(e);
+                    }
+                    finally
+                    {
+                        ecma.Dispose();
+                    }
+                }
+            });
+        }
+
         [CmdOp("ecma/emit/parts")]
         void EmitPartEcma()
         {

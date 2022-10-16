@@ -33,32 +33,64 @@ namespace Z0
                     var p = part.Format();
                     var h = type.Name.ToLower();
                     var n = tag.Name;
-                    var uri = Cmd.uri(CmdKind.App, p, h,n);
+                    var uri = AppCmd.uri(CmdKind.App, p, h,n);
                     Emitter.Write(string.Format("{0:D3} {1}", counter++, uri));
                 });                        
             }
                 );
         }
-
-
-
     }
+
+
+    [Free]
     sealed class App : AppCmdShell<App>
-    {   
+    {
         public static void Main(params string[] args)
         {
-            using var app = AppShells.create<App>(false, args);
-        
-            app.PrintAssemblies();
-            // var commands = app.Wf.CmdPublic();
-            // app.CmdService = commands;
-            // app.Run(args);                        
-        }
-
-        void PrintAssemblies()
-        {
-            var src = ApiRuntime.colocated(ExecutingPart.Assembly);
-            iter(src, a => Emitter.Row(FS.uri(a.Location)));
+            using var app = AppShells.create<App>(false, args);            
+            var wf = app.Wf;
+            var running = wf.Running($"Creating command providers");
+            var providers = new ICmdProvider[]{
+                wf.WfCmd(),
+                wf.BuildCmd(),
+                wf.DbCmd() 
+            };
+            wf.Ran(running, $"Created {providers.Length} command providers");
+            app.CmdService = Cmd.service<AppShellCmd>(wf, CmdPublic.providers(wf).Init(wf).Array());
+            app.Run(args);
         }
     }
+
+    sealed class AppShellCmd : AppCmdService<AppShellCmd>
+    {
+
+    }
+
+    // sealed class ShellCommands : AppCmdService<ShellCommands>
+    // {
+
+    // }
+    // sealed class App : AppCmdShell<App>
+    // {   
+    //     public static void Main(params string[] args)
+    //     {
+    //         using var app = AppShells.create<App>(false, args);    
+    //         //var dispatcher = app.Wf.CmdPublic().Dispatcher;
+    //         app.CmdService = Cmd.service<ShellCommands>(app.Wf, CmdPublic.providers(app.Wf).Array());
+    //         //app.CmdService = app.Wf.CmdPublic();
+    //         //app.PrintAssemblies();
+    //         app.Run(args);
+            
+
+    //         // var commands = app.Wf.CmdPublic();
+    //         // app.CmdService = commands;
+    //         // app.Run(args);                        
+    //     }
+
+    //     void PrintAssemblies()
+    //     {
+    //         var src = ApiRuntime.colocated(ExecutingPart.Assembly);
+    //         iter(src, a => Emitter.Row(FS.uri(a.Location)));
+    //     }
+    // }
 }

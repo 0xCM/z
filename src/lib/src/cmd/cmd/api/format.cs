@@ -23,7 +23,7 @@ namespace Z0
 
             var fields = ClrFields.instance(typeof(T));
             if(fields.Length != 0)
-                render(__makeref(src), fields, buffer);
+                ClrFieldAdapter.render(__makeref(src), fields, buffer);
 
             buffer.Append(Chars.RParen);
             return buffer.Emit();

@@ -6,6 +6,27 @@ namespace Z0
 {
     using static sys;
 
+    public class WfSvc
+    {
+        public static ExecResult exec<C>(IWfContext context, C cmd, Func<IWfContext,C,Outcome> actor)
+            where C : ICmd<C>, new()
+        {
+            var result = ExecResult.Empty;
+            var outcome = Outcome.Success;
+            var running = context.Channel.Running($"{cmd.CmdId}");
+            try
+            {
+                outcome = actor(context,cmd);
+            }
+            catch(Exception e)
+            {
+                outcome = e;
+            }
+
+            return new(context.Channel.Ran(running, result),outcome);
+        }
+    }
+
     public abstract class WfSvc<S> : AppService<S>, IWfSvc<S>
         where S : WfSvc<S>, new()
     {

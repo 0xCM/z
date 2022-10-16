@@ -14,7 +14,15 @@ namespace Z0.llvm
            var config = Config.CollectSettings();
            var items = config.Items;
            var dst = text.emitter();
-           iter(items, item => dst.AppendLine($"{item.Key}={item.Value}"));
+           iter(items, item => {
+                var name = item.Key;
+                dst.Append($"{name} : ");
+                dst.Append("{");
+                dst.AppendLine();
+                dst.IndentLine(4,item.Value);
+                dst.AppendLine("}");
+           });
+
            FileEmit(dst.Emit(), items.Count, AppDb.DbTargets(llvm).Path(llvm, FileKind.Cfg));               
         }
     }

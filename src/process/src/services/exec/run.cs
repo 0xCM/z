@@ -119,11 +119,14 @@ namespace Z0
             void OnError(string msg)
                 => channel.Error(msg);
 
-            ProcExec.run(Cmd.args(tool,cmd), new StdIO(OnStatus, OnError), dst.FolderPath);
+            string Input()
+                => EmptyString;
+            
+            ProcExec.run(new SysIO(OnStatus, OnError, Input), Cmd.args(tool,cmd), dst.FolderPath);
             channel.EmittedFile(emitting, counter);
         }
 
-        public static CmdExecStatus run(CmdArgs spec, IStdIO io, FolderPath wd)
+        public static CmdExecStatus run(ISysIO io, CmdArgs spec, FolderPath? wd = null)
         {
             var values = spec.Values();
             Demand.gt(values.Count,0u);
@@ -137,7 +140,7 @@ namespace Z0
                 ErrorDialog = false,
                 CreateNoWindow = true,
                 RedirectStandardInput = false,
-                WorkingDirectory = wd.Format()
+                WorkingDirectory = wd != null ? wd.Value.Format() : EmptyString
             };
 
             void OnStatus(object sender, DataReceivedEventArgs e)

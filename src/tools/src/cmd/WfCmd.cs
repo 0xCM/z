@@ -388,11 +388,6 @@ namespace Z0
                 src[i].Render(s => writer.WriteLine(s));
         }
 
-        void RunToolScript(CmdArgs args)
-        {
-
-        }
-
         [CmdOp("run/script")]
         void RunAppScript(CmdArgs args)
         {
@@ -412,7 +407,7 @@ namespace Z0
                 for(var i=0; i<count; i++)
                 {
                     ref readonly var content = ref lines[i].Content;
-                    if(Cmd.parse(content, out AppCmdSpec spec))
+                    if(AppCmd.parse(content, out AppCmdSpec spec))
                         RunCmd(spec);
                     else
                     {
@@ -534,5 +529,25 @@ namespace Z0
             var _args = sys.slice(args.Values().View,1).ToArray();
             ProcExec.passthrough(path,Emitter,_args);
         }        
+
+        [CmdOp("cmd/redirect")]
+        void CmdIo(CmdArgs args)
+        {
+            //var exe = FS.path(args[0]);
+            // var a = FS.path(args[1]);
+            // var b = FS.path(args[2]);
+            
+            void OnA(string msg)
+            {
+                Channel.Row(msg, FlairKind.Data);
+            }
+
+            void OnB(string msg)
+            {
+                Channel.Row(msg, FlairKind.StatusData);
+            }
+
+            ProcExec.start(Channel,new SysIO(OnA,OnB), args);
+        }
     }
 }
