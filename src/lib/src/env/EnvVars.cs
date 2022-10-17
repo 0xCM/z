@@ -78,6 +78,18 @@ namespace Z0
         public override string ToString()
             => Format();
 
+        public SortedLookup<string,EnvVar> ToLookup()
+        {
+            var dst = dict<string,EnvVar>(Count);
+            for(var i=0; i<Count; i++)
+            {
+                ref readonly var v = ref this[i];
+                dst.TryAdd(v.VarName,v);
+            }
+
+            return dst;
+        }
+
         [MethodImpl(Inline)]
         public static implicit operator EnvVars(EnvVar[] src)
             => new EnvVars(src);

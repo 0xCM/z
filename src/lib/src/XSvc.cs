@@ -9,9 +9,6 @@ namespace Z0
     {
         class ServiceCache : AppServices<ServiceCache>
         {
-            public HexDataReader HexDataReader(IWfRuntime wf)
-                => Service<HexDataReader>(wf);
-
             public DbArchives DbArchives(IWfRuntime wf)
                 => Service<DbArchives>(wf);
         }
@@ -19,9 +16,6 @@ namespace Z0
 
         static ServiceCache Services => ServiceCache.Instance;
 
-
-        public static HexDataReader HexDataReader(this IWfRuntime wf)
-            => Services.HexDataReader(wf);
 
         public static DbArchives DbArchive(this IWfRuntime wf)
             => Services.DbArchives(wf);

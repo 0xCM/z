@@ -12,7 +12,7 @@ namespace Z0.Parts
 
 namespace Z0
 {
-    sealed class AppCmd : AppCmdService<AppCmd>
+    sealed class DeploymentServices : AppCmdService<DeploymentServices>
     {
 
     }
@@ -29,7 +29,7 @@ namespace Z0
                 wf.WfCmd(),
             };
             wf.Ran(running, $"Created {providers.Length} command providers");
-            app.CmdService = Cmd.service<AppCmd>(wf, providers);
+            app.CmdService = Cmd.service<DeploymentServices>(wf, providers);
             app.Run(args);
         }
     }

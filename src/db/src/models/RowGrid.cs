@@ -25,7 +25,7 @@ namespace Z0
             ColCount = shape.J;
             CellCount = shape.I*shape.J;
             Data = sys.alloc<T>(CellCount);
-            _Offsets = DbGrids.CalcRowOffsets(shape);
+            _Offsets = DataGrids.CalcRowOffsets(shape);
         }
 
         public Span<T> Cells

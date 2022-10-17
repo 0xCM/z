@@ -24,7 +24,7 @@ namespace Z0
             RowCount = src.RowCount;
             ColCount = src.ColCount;
             Data = sys.alloc<T>(CellCount);
-            _Offsets = DbGrids.CalcColOffsets(new Dim2<uint>(src.RowCount,src.ColCount));
+            _Offsets = DataGrids.CalcColOffsets(new Dim2<uint>(src.RowCount,src.ColCount));
             for(var j=0u; j<RowCount; j++)
                 for(var i=0u; i<ColCount; i++)
                     this[j,i] = src[i,j];
@@ -36,7 +36,7 @@ namespace Z0
             ColCount = shape.J;
             CellCount = shape.I*shape.J;
             Data = sys.alloc<T>(CellCount);
-            _Offsets = DbGrids.CalcColOffsets(shape);
+            _Offsets = DataGrids.CalcColOffsets(shape);
         }
 
         public ref readonly Index<uint> Offsets

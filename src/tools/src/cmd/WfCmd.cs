@@ -117,6 +117,20 @@ namespace Z0
 
         }
 
+        [CmdOp("process/paths")]
+        void ProcPaths()
+        {
+            var src = Env.process().ToLookup();
+            var names = src.Keys;
+            var dst = text.emitter();
+            iter(names, name => {
+                dst.AppendLine(src[name]);
+            });
+
+            Channel.Row(dst.Emit());
+            //iter(src, var => Channel.Row(var));
+        }
+
         void CalcRelativePaths()
         {
             var @base = FS.dir("dir1");
@@ -464,15 +478,6 @@ namespace Z0
             ProcExec.start(Channel, Cmd.cmd(path, CmdKind.Tool, emitter.Emit()));        
         }
 
-        [CmdOp("hexify")]
-        void Hexify(CmdArgs args)
-        {
-            var src = arg(args,0).Value;
-            var pattern = arg(args,1).Value;
-            var files = FS.files(FS.dir(src), pattern, true);
-            var dst = AppDb.DbTargets("hexify");
-            Hex.hexify(Channel, files, dst);
-        }
 
         [CmdOp("tool/shim")]
         void RunShim(CmdArgs args)

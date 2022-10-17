@@ -5,7 +5,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     public partial class XedGrids : AppService<XedGrids>
     {
     }

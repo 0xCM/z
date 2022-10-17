@@ -9,6 +9,40 @@ namespace Z0
     [ApiHost]
     public class BitfieldChecks : Checker<BitfieldChecks>
     {
+        DbArchive Targets => AppDb.DbOut().Targets(polybits);
+
+
+        public void Check()
+        {
+            Targets.Delete();
+            BitCheckers.run(Wf);
+            var n = n8;
+            var count = Numbers.count(n);
+            var convert = BitConverters.converter(n);
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var hex = ref convert.Chars(base16, (ushort)i);
+                ref readonly var bin = ref convert.Chars(base2, (ushort)i);
+            }
+
+            PbChecks.create(Wf).Run();
+        }
+
+
+        public static ByteSpanSpec GenBits(W8 w, byte start = 0, byte end = byte.MaxValue)
+        {
+            var blocks = PolyBits.BitBlocks(w,start, end);
+            var count = blocks.Count;
+            var buffer = alloc<ByteSpanSpec>(count);
+            for(var i=0; i<count; i++)
+                seek(buffer,i) = ByteSpans.specify(string.Format("Block{0:X2}", i), @bytes(blocks[i].Data).ToArray());
+            var merge = ByteSpans.merge("CharBytes", buffer);
+            var seg = merge.Segment(16,16);
+            var chars = recover<char>(seg);
+            return merge;
+        }
+
+
         enum BF_A : byte
         {
             [Symbol("seg0")]

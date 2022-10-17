@@ -6,5 +6,6 @@
     <ProjectReference Include="$(MemorySvc)" />
     <ProjectReference Include="$(Dynamic)" />
     <ProjectReference Include="$(Heaps)" />
+    <ProjectReference Include="$(Polyrand)" />
   </ItemGroup>
 </Project>

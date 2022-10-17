@@ -15,10 +15,15 @@ namespace Z0
             public AsmObjects AsmObjects(IWfRuntime wf)
                 => Service<AsmObjects>(wf);
 
-
+            public HexDataReader HexDataReader(IWfRuntime wf)
+                => Service<HexDataReader>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
+
+
+        public static HexDataReader HexDataReader(this IWfRuntime wf)
+            => Services.HexDataReader(wf);
 
         public static CoffServices CoffServices(this IWfRuntime wf)
             => Services.CoffServices(wf);

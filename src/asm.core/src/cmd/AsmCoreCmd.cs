@@ -5,7 +5,7 @@
 namespace Z0
 {
     using Asm;
-    using static core;
+    using static sys;
     using static XedRules;
 
     public partial class AsmCoreCmd : AppCmdService<AsmCoreCmd>
@@ -21,6 +21,16 @@ namespace Z0
         AsmRegSets Regs => Service(AsmRegSets.create);
 
         StanfordAsmCatalog StanfordCatalog => Wf.StanfordCatalog();
+
+        [CmdOp("hexify")]
+        void Hexify(CmdArgs args)
+        {
+            var src = arg(args,0).Value;
+            var pattern = arg(args,1).Value;
+            var files = FS.files(FS.dir(src), pattern, true);
+            var dst = AppDb.DbTargets("hexify");
+            ApiCode.hexify(Channel, files, dst);
+        }
 
         Outcome LoadStanfordForms()
         {
