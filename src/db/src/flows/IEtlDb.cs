@@ -4,10 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IWfContext
+    public interface IEtlDb
     {
-        IWfChannel Channel {get;}
+        IProjectWorkspace EtlSource(ProjectId src);
 
-        IWfRuntime Runtime {get;}
+        DbArchive EtlTargets(ProjectId src);
+
+        FilePath EtlTable<T>(ProjectId project)
+            where T : struct;
     }
 }

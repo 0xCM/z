@@ -44,5 +44,7 @@ namespace Z0
         public const string sqlite = "sqlite";
 
         public const string robocopy = "robocopy";
+
+        public const string pwsh = "pwsh";
     }
 }

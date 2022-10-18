@@ -18,15 +18,19 @@ namespace Z0
 
         Tooling Tooling => Wf.Tooling();
 
-        [CmdOp("archives/zip")]        
-        void CreateZip(CmdArgs args)
+        [CmdOp("zip")]
+        void Zip(CmdArgs args)
         {
-            var src = FS.dir(arg(args,0));
-            var dst = AppDb.Archive(arg(args,1)).Path(src.FolderName.Format(),FileKind.Zip);
-            var cmd = new ArchiveCmd();
-            cmd.Source = src;
-            cmd.Target = dst;
-            Db.zip(cmd, Emitter);
+            var folder = arg(args,0).Value;
+            var i = text.index(folder, Chars.FSlash,Chars.BSlash);
+            var scope = "default";
+            if(i > 0)
+                scope = text.left(folder,i);
+            var src = AppSettings.DbRoot().Scoped(folder).Root;
+            var name = src.FolderName.Format();
+            var file = FS.file($"{scope}.{name}", FileKind.Zip);
+            var cmd = DbCmdSpecs.archive(src, AppDb.Archive(scope).Path(file));
+            Db.zip(Channel, cmd);            
         }
 
         [CmdOp("archives")]        
@@ -170,15 +174,6 @@ namespace Z0
             var src = ExecutingPart.Assembly.Path().FolderPath;
             Db.robocopy(src,dst);
         }
-
-        [CmdOp("exe")]
-        void RunExe(CmdArgs args)
-        {
-            var src = FS.path(args[0]);
-            var dst =  AppDb.Logs("exe").Path($"{src.FileName.WithoutExtension}.{timestamp()}", FileKind.Log);
-            ProcExec.run(src, dst, Channel);
-        }
-
 
         [CmdOp("cmd/copy")]
         void Copy(CmdArgs args)
@@ -391,7 +386,6 @@ namespace Z0
             iter(files, f => Channel.Row(((FileUri)f)));
         }        
 
-        static readonly Toolbase TB = new();
 
         [CmdOp("api/emit/impls")]
         void EmitImplMaps()
@@ -432,14 +426,6 @@ namespace Z0
             }
         }
 
-        [CmdOp("pwsh")]
-        void RunPwshCmd(CmdArgs args)
-        {
-            var cmd = Cmd.pwsh(Cmd.join(args));
-            Status($"Executing '{cmd}'");
-            ProcExec.start(Channel, cmd);
-        }
-
         [CmdOp("devenv")]
         void DevEnv(CmdArgs args)
             => ProcExec.start(Channel, Cmd.args("devenv.exe", args[0].Value));
@@ -475,7 +461,7 @@ namespace Z0
                 emitter.Append(args[i].Value);
             }
             
-            ProcExec.start(Channel, Cmd.cmd(path, CmdKind.Tool, emitter.Emit()));        
+            ProcExec.start(Channel, CmdTerm.cmd(path, CmdKind.Tool, emitter.Emit()));        
         }
 
 
@@ -507,14 +493,16 @@ namespace Z0
         void ToolDocs(CmdArgs args)
             => iter(Tooling.LoadDocs(arg(args,0).Value), doc => Write(doc));
 
-        [CmdOp("tool/env")]
-        void ToolConfig(CmdArgs args)
-        {
-            var tool = TB.Tool(arg(args,0).Value);
-            var path = tool.CfgPath();
-            var settings = ToolSettings.load(path);
-            Row(settings.Format());
-        }
+        // static readonly Toolbase TB = new();
+
+        // [CmdOp("tool/env")]
+        // void ToolConfig(CmdArgs args)
+        // {
+        //     var tool = TB.Tool(arg(args,0).Value);
+        //     var path = tool.CfgPath();
+        //     var settings = ToolSettings.load(path);
+        //     Row(settings.Format());
+        // }
 
         [CmdOp("symlink")]
         void Link(CmdArgs args)
@@ -522,18 +510,32 @@ namespace Z0
             const string Pattern = "mklink /D {0} {1}";
             var src = text.quote(FS.dir(arg(args,0).Value).Format(PathSeparator.BS));
             var dst = text.quote(FS.dir(arg(args,1).Value).Format(PathSeparator.BS));
-            var cmd = Cmd.cmd(string.Format(Pattern,src,dst));
+            var cmd = CmdTerm.cmd(string.Format(Pattern,src,dst));
             ProcExec.run(cmd);
         }
 
-        [CmdOp("child")]
-        void Child(CmdArgs args)
+        [CmdOp("dev")]
+        void LaunchCmdTerm(CmdArgs args)
         {
-            Demand.neq<uint>(args.Count,0);
-            var path = FS.path(args.First);
-            var _args = sys.slice(args.Values().View,1).ToArray();
-            ProcExec.passthrough(path,Emitter,_args);
-        }        
+            var channel = Channel;
+            void OnA(string msg)
+            {
+                channel.Row(msg, FlairKind.Data);
+            }
+
+            void OnB(string msg)
+            {
+                channel.Row(msg, FlairKind.StatusData);
+            }
+            
+            if(args.Count == 0)
+            {
+                var wd = Env.cd();
+                var options = $"-NoLogo -i -wd {text.dquote(Env.cd())}";
+                ProcExec.start(channel, new SysIO(OnA,OnB), CmdArgs.create("pwsh.exe", options), wd);
+            }
+
+        }
 
         [CmdOp("cmd/redirect")]
         void CmdIo(CmdArgs args)
@@ -552,7 +554,7 @@ namespace Z0
                 Channel.Row(msg, FlairKind.StatusData);
             }
 
-            ProcExec.start(Channel,new SysIO(OnA,OnB), args);
+            ProcExec.start(Channel, new SysIO(OnA,OnB), args);
         }
     }
 }

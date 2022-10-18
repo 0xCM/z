@@ -14,7 +14,6 @@ namespace Z0
         ToolCmdArgs Args 
             => ToolCmdArgs.Empty;
 
-
         string IExpr.Format()
         {
             var count = Args.Count;

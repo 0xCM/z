@@ -6,12 +6,28 @@ namespace Z0
 {
     public sealed record class ExecutingProcess
     {
-        public ExecutingProcess(CmdArgs args, CmdLine cmd, Timestamp ts, ProcessId id)
+        public static CmdExecStatus status(ExecutingProcess src)
+        {
+            var dst = CmdExecStatus.Empty;
+            dst.Id = src.Id;
+            dst.StartTime = src.Started;
+            dst.HasExited = src.Finished;
+            if(src.Finished)
+            {
+                dst.ExitTime = src.Adapted.ExitTime;
+                dst.Duration = dst.ExitTime - dst.StartTime;
+                dst.ExitCode = src.Adapted.ExitCode;
+            }
+            return dst;
+        }
+
+        public ExecutingProcess(CmdArgs args, CmdLine cmd, ProcessAdapter? process)
         {
             Args = args;
             CmdLine = cmd;
-            Started = ts;
-            Id = id;
+            Started = process?.StartTime ?? Timestamp.Zero;
+            Id = process?.Id ?? ProcessId.Empty;
+            Adapted = process!;
         }
 
         public readonly CmdArgs Args;
@@ -21,6 +37,14 @@ namespace Z0
         public readonly Timestamp Started;
         
         public readonly ProcessId Id;
+
+        public readonly ProcessAdapter Adapted;
+
+        public bool Finished
+        {
+            [MethodImpl(Inline)]
+            get => Adapted.HasExited;
+        }
 
         public bool IsNonEmpty
         {
@@ -32,8 +56,12 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             get => Id.IsEmpty;
-        }
+        }        
 
-        public static ExecutingProcess Empty => new (CmdArgs.Empty, CmdLine.Empty, Timestamp.Zero, ProcessId.Empty);
+        public CmdExecStatus Status()
+            => status(this);
+
+        public static ExecutingProcess Empty 
+            => new (CmdArgs.Empty, CmdLine.Empty, null);
     }
 }

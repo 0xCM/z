@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Settings(Id)]
-    public struct SymbolCollectorSettings : ISettings<SymbolCollectorSettings>
+    public struct SymGatherSpec : ISettings<SymGatherSpec>
     {
         const string Id = "symbolics.collector.settings";
 

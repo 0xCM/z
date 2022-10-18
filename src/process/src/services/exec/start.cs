@@ -32,7 +32,7 @@ namespace Z0
                 try
                 {
                     var process = CmdProcess.create(command, status, error);
-                    executing = new (args, command, process.StartTime, process.ProcessId);
+                    executing = new (args, command, process.Process);
                     running(executing);
                     process.Wait();
                     var lines =  Lines.read(process.Output);

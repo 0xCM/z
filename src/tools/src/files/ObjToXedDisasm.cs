@@ -11,7 +11,7 @@ namespace Z0
         /// <summary>
         /// *.obj -> *.xed.disam.txt
         /// </summary>
-        public class ObjToXedDisasm : FileFlow<ObjToXedDisasm,Xed>
+        public class ObjToXedDisasm : FileFlow<ObjToXedDisasm,XedTool>
         {
             public ObjToXedDisasm()
                 : base(xed, FileKind.Obj, FileKind.XedRawDisasm)

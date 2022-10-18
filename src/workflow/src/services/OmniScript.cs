@@ -15,7 +15,7 @@ namespace Z0
                 );
 
         public Outcome Run(string content, out ReadOnlySpan<TextLine> response)
-            => ProcExec.run(Cmd.cmd(content), ReceiveCmdStatusQuiet, ReceiveCmdError, out response);
+            => ProcExec.run(CmdTerm.cmd(content), ReceiveCmdStatusQuiet, ReceiveCmdError, out response);
 
         public Outcome Run(FilePath src, out ReadOnlySpan<TextLine> response)
             => ProcExec.run(new CmdLine(src.Format(PathSeparator.BS)), CmdVars.Empty, ReceiveCmdStatusQuiet, ReceiveCmdError, out response);

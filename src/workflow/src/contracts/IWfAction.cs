@@ -4,8 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct FlowCommands : IFlowCommands
+    public interface IWfAction
     {
-        public static IFlowCommands Service => new FlowCommands();
+
+    }
+    
+    public interface IWfAction<A> : IWfAction
+        where A : IWfAction<A>, new()
+    {
+
     }
 }

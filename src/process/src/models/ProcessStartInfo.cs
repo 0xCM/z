@@ -81,7 +81,6 @@ namespace Z0
             set => Subject.Arguments = value.IsEmpty ? null : value.Format();
         }
 
-
         //
         // Summary:
         //     Gets or sets a value indicating whether to start the process in a new window.
@@ -118,17 +117,6 @@ namespace Z0
         public void Environment(ReadOnlySeq<EnvVar<string>> src)
             => iter(src, var => Subject.Environment[var.Name] = var.Value);
 
-        //
-        // Summary:
-        //     Gets the environment variables that apply to this process and its child processes.
-        //
-        // Returns:
-        //     A generic dictionary containing the environment variables that apply to this
-        //     process and its child processes. The default is null.
-        // public IDictionary<string, string?> Environment
-        // {
-        //     get => Subject.Environment;        
-        // }
 
         // public StringDictionary EnvironmentVariables
         // {
@@ -289,7 +277,6 @@ namespace Z0
         public ReadOnlySeq<string> Verbs
             => Subject.Verbs;
 
-
         //
         // Summary:
         //     Gets or sets a value indicating whether to use the operating system shell to
@@ -308,144 +295,6 @@ namespace Z0
         {
             get => Subject.UseShellExecute;
             set => Subject.UseShellExecute = value;
-        }
-
-        /*
-        //
-        // Summary:
-        //     Gets search paths for files, directories for temporary files, application-specific
-        //     options, and other similar information.
-        //
-        // Returns:
-        //     A string dictionary that provides environment variables that apply to this process
-        //     and child processes. The default is null.
-        [Editor("System.Diagnostics.Design.StringDictionaryEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", "System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
-
-        //
-        // Summary:
-        //     Gets or sets a value indicating whether an error dialog box is displayed to the
-        //     user if the process cannot be started.
-        //
-        // Returns:
-        //     true if an error dialog box should be displayed on the screen if the process
-        //     cannot be started; otherwise, false. The default is false.
-        public bool ErrorDialog
-        {
-            get
-            {
-                throw null;
-            }
-            set
-            {
-            }
-        }
-
-        //
-        // Summary:
-        //     Gets or sets the window handle to use when an error dialog box is shown for a
-        //     process that cannot be started.
-        //
-        // Returns:
-        //     A pointer to the handle of the error dialog box that results from a process start
-        //     failure.
-        public IntPtr ErrorDialogParentHandle
-        {
-            get
-            {
-                throw null;
-            }
-            set
-            {
-            }
-        }
-
-
-
-        //
-        // Summary:
-        //     Gets or sets a secure string that contains the user password to use when starting
-        //     the process.
-        //
-        // Returns:
-        //     The user password to use when starting the process.
-        [CLSCompliant(false)]
-        [SupportedOSPlatform("windows")]
-        public SecureString? Password
-        {
-            get
-            {
-                throw null;
-            }
-            set
-            {
-            }
-        }
-
-        //
-        // Summary:
-        //     Gets or sets the user password in clear text to use when starting the process.
-        //
-        // Returns:
-        //     The user password in clear text.
-        [SupportedOSPlatform("windows")]
-        public string? PasswordInClearText
-        {
-            get
-            {
-                throw null;
-            }
-            set
-            {
-            }
-        }
-
-        //
-        // Summary:
-        //     Gets or sets the user name to use when starting the process. If you use the UPN
-        //     format, user@DNS_domain_name, the System.Diagnostics.ProcessStartInfo.Domain
-        //     property must be null.
-        //
-        // Returns:
-        //     The user name to use when starting the process. If you use the UPN format, user@DNS_domain_name,
-        //     the System.Diagnostics.ProcessStartInfo.Domain property must be null.
-        public string UserName
-        {
-            get
-            {
-                throw null;
-            }
-            [param: AllowNull]
-            set
-            {
-            }
-        }
-
-
-        //
-        // Summary:
-        //     Gets or sets the window state to use when the process is started.
-        //
-        // Returns:
-        //     One of the enumeration values that indicates whether the process is started in
-        //     a window that is maximized, minimized, normal (neither maximized nor minimized),
-        //     or not visible. The default is Normal.
-        //
-        // Exceptions:
-        //   T:System.ComponentModel.InvalidEnumArgumentException:
-        //     The window style is not one of the System.Diagnostics.ProcessWindowStyle enumeration
-        //     members.
-        [DefaultValue(ProcessWindowStyle.Normal)]
-        public ProcessWindowStyle WindowStyle
-        {
-            get
-            {
-                throw null;
-            }
-            set
-            {
-            }
-        }
-
-        */
+        } 
     }
 }

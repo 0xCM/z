@@ -59,18 +59,6 @@ namespace Z0
             => Task.Run(() => Run(state));
     }
 
-    // [Free]
-    // public interface IExecutable<A> : IExecutable
-    // {
-    //     void Execute(params A[] args);
-    // }
-
-    // [Free]
-    // public interface IExecutable<M,A> : IExecutable<A>
-    //     where M : IExecutable<M,A>, new()
-    // {
-
-    // }
     [Free, Runnable]
     public abstract class Runnable<R,S,T> : IRunnable<S,T>
         where R : IRunnable<S,T>, new()

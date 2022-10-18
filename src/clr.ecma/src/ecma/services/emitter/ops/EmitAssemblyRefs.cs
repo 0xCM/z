@@ -43,7 +43,7 @@ namespace Z0
             try
             {
                 var path = FS.path(src.Location);
-                if(ClrModules.valid(path))
+                if(EcmaFiles.valid(path))
                 {
                     using var reader = PeReader.create(path);
                     var refs = Ecma.refs(src);

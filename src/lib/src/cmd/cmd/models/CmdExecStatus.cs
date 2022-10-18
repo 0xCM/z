@@ -9,7 +9,7 @@ namespace Z0
     {
         public const string TableId = "cmd.status";
 
-        public int Id;
+        public ProcessId Id;
 
         public Timestamp StartTime;
 

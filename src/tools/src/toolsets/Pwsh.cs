@@ -6,10 +6,10 @@ namespace Z0
 {
     using N = ToolNames;
 
-    public sealed class XedTool : Tool<XedTool>
+    public sealed class Pwsh : Tool<Pwsh>
     {
-        public XedTool()
-            : base(N.xed)
+        public Pwsh()
+            : base(N.pwsh)
         {
 
         }
@@ -19,5 +19,5 @@ namespace Z0
 
         public override string ToString()
             => Format();
-    }   
+    }
 }

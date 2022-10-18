@@ -46,7 +46,6 @@ namespace Z0
             IsEmpty = false;
         }
 
-
         public bool IsEmpty {get; private set;}
 
         public int CompareTo(ProcessAdapter src)
@@ -101,7 +100,6 @@ namespace Z0
         {
             Subject.Close();
         }
-
         
         //
         // Summary:

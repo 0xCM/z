@@ -55,7 +55,7 @@ namespace Z0
 
         public static ref readonly Zsh ztool => ref Zsh.Instance;
 
-        public static ref readonly Xed xed => ref Xed.Instance;
+        public static ref readonly XedTool xed => ref XedTool.Instance;
 
         public static ref readonly BdDisasm bddisasm => ref BdDisasm.Instance;
 

@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     using static sys;
 
     public class DbRowGrid<T>
@@ -25,7 +24,7 @@ namespace Z0
             ColCount = shape.J;
             CellCount = shape.I*shape.J;
             Data = sys.alloc<T>(CellCount);
-            _Offsets = DataGrids.CalcRowOffsets(shape);
+            _Offsets = DbGrids.CalcRowOffsets(shape);
         }
 
         public Span<T> Cells

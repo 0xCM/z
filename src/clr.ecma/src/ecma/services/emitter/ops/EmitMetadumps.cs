@@ -32,7 +32,7 @@ namespace Z0
             var token = ExecToken.Empty;
             try
             {
-                if(ClrModules.valid(src))
+                if(EcmaFiles.valid(src))
                 {
                     var flow = EmittingFile(dst);
                     using var stream = File.OpenRead(src.Name);

@@ -4,10 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
-    public class DbStores 
+    public abstract record class WfAction<A> : IWfAction<A>
+        where A : WfAction<A>, new()
     {
-        
-    }
+        protected WfAction()
+        {
 
+        }
+
+        public static A Empty => new();
+    }
 }

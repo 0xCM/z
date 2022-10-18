@@ -4,8 +4,18 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class Cmd
+    public abstract class CmdTerm
     {
+        [Op]
+        public static CmdLine pwsh(string spec)
+            => $"pwsh.exe {spec}";
+
+        public static CmdLine pwsh(FilePath src, string args)
+            => string.Format("pwsh.exe {0} {1}", src.Format(PathSeparator.BS), args);
+
+        public static CmdLine pwsh(FilePath src)
+            => string.Format("pwsh.exe {0}", src.Format(PathSeparator.BS));        
+
         [Op]
         public static CmdLine cmd(string spec)
             => string.Format("cmd.exe /c {0}", spec);
@@ -39,5 +49,11 @@ namespace Z0
                 _ => Z0.CmdLine.Empty
             };
         }
+    }
+
+    public abstract class CmdTerm<T> : CmdTerm
+        where T : CmdTerm<T>
+    {
+
     }
 }

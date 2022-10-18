@@ -24,7 +24,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public static ref readonly Xed xed(this ITools tools)
+        public static ref readonly XedTool xed(this ITools tools)
             => ref Tools.xed;
 
         [MethodImpl(Inline)]

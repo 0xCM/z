@@ -4,20 +4,18 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using N = ToolNames;
-
-    public sealed class XedTool : Tool<XedTool>
+    public sealed record class WfCmdLine : WfAction<WfCmdLine>
     {
-        public XedTool()
-            : base(N.xed)
+        public WfCmdLine()
         {
-
+            Spec = CmdLine.Empty;
         }
 
-        public string Format()
-            => Name.Format();
+        public WfCmdLine(CmdLine spec)
+        {
+            Spec = spec;
+        }
 
-        public override string ToString()
-            => Format();
-    }   
+        public CmdLine Spec {get;}
+    }
 }

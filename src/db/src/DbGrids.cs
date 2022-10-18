@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public readonly struct DataGrids
+    public class DbGrids
     {
         [MethodImpl(Inline)]
         public static void CalcRowOffsets<S,T>(Dim2<S> shape, Index<T> dst)

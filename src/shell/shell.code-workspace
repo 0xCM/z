@@ -19,6 +19,9 @@
 			"path": "../containers"
 		},
 		{
+			"path": "../db"
+		},
+		{
 			"path": "../native"
 		},
 		{
@@ -26,9 +29,6 @@
 		},
 		{
 			"path": "../workflow"
-		},
-		{
-			"path": "../files"
 		},
 		{
 			"path": "../process"

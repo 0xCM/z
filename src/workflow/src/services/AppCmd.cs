@@ -5,9 +5,9 @@
 namespace Z0
 {
     using static sys;
-    using static ApiCmdNames;
+    using static AppCmdNames;
 
-    public readonly struct ApiCmdNames
+    public readonly struct AppCmdNames
     {   
         const string Sep = "/";
 

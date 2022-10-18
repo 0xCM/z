@@ -8,22 +8,26 @@ namespace Z0
 
     using static sys;
 
-    public sealed record class Db : ApiSet<Db>
+    public class Db 
     {
         const string group = "db";
 
         static Type Host => typeof(Db);
 
-        [Api]
+        public static SymLinkCmd symlink(FolderPath src, FolderPath dst)
+            => new SymLinkCmd(SymLinkCmd.Flag.Directory, src.ToUri(), dst.ToUri());
+
+        [Op]
+        static CmdLine cmd(string spec)
+            => string.Format("cmd.exe /c {0}", spec);
+
         public static CmdProcess robocopy(FolderPath src, FolderPath dst)
         {
             var spec = $"robocopy {src} {dst} /e";
-            var cmd = Cmd.cmd(spec);
-            return CmdProcess.create(cmd);
+            return CmdProcess.create(cmd(spec));
         }
 
-        [Api]
-        public static Task<ExecToken> zip(ArchiveCmd cmd, WfEmit channel)
+        public static Task<ExecToken> zip(IWfChannel channel, ArchiveCmd cmd)
         {
             var uri = $"{app}://{group}/{cmd}";
             var running = channel.Running(uri);
@@ -35,18 +39,6 @@ namespace Z0
             }
 
             return @try(run, e => channel.Completed(running, Host, e));                                                    
-        }
-
-        [Api]
-        public static Task<ExecToken> purge(FolderPath src, RelativePath scope, IWfChannel channel)
-        {
-            var uri = $"{app}://{group}/purge?src={src}&scope={scope}";
-            var running = channel.Running(uri);
-            var scoped = src + scope;
-            var actor = "rmdir";
-            var flags = "/s/q";
-            var spec = Cmd.cmd($"{actor} {scoped.Format(PathSeparator.BS,true)} {flags}");
-            return ProcExec.start(channel, spec);           
         }
     }
 }

@@ -7,8 +7,11 @@ namespace Z0
     using static sys;
 
     [ApiHost]
-    public readonly struct ClrModules
+    public readonly struct EcmaFiles
     {
+        public static Deferred<FileUri> filter(DbArchive src, FileKind kind)
+            => from file in src.Enumerate($"*.{kind.Ext()}") where valid(file) select file;                        
+
         [Op]
         public static EcmaModuleInfo describe(Assembly src)
         {
@@ -20,7 +23,6 @@ namespace Z0
             dst.MetadatSize = (ByteSize)adapted.RawMetadata.Length;
             return dst;
         }
-
 
         /// <summary>
         /// Loads an assembly + pdb

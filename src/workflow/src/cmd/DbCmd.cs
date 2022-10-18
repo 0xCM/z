@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IWfContext
-    {
-        IWfChannel Channel {get;}
+    using static sys;
 
-        IWfRuntime Runtime {get;}
+    class DbCmd : AppCmdService<DbCmd>
+    {
+
     }
 }

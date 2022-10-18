@@ -27,7 +27,7 @@ namespace Z0
                 var path = dst.Metadata(EcmaSections.MsilData).Table<MsilRow>(src.GetSimpleName());
                 var methods = ReadOnlySpan<MsilRow>.Empty;
                 var srcPath = FS.path(src.Location);
-                if(ClrModules.valid(srcPath))
+                if(EcmaFiles.valid(srcPath))
                 {
                     using var reader = PeReader.create(srcPath);
                     methods = reader.ReadMsil();
@@ -49,7 +49,7 @@ namespace Z0
             {
                 var methods = ReadOnlySpan<MsilRow>.Empty;
                 var srcPath = FS.path(src.Location);
-                if(ClrModules.valid(srcPath))
+                if(EcmaFiles.valid(srcPath))
                 {
                     using var reader = PeReader.create(srcPath);
                     methods = reader.ReadMsil();

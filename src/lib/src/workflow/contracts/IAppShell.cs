@@ -8,6 +8,6 @@ namespace Z0
     {
         void OnExit();
 
-        void Run(string[] args);
+        void Run(string[] args);        
     }
 }
