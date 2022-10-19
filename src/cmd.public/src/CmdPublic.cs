@@ -12,7 +12,7 @@ namespace Z0
             GlobalServices.Instance.Inject(wf.XedRuntime());
             var p = providers(wf);
             wf.Ran(running,$"Created {p.Length} command providers");
-            return Cmd.service<CmdPublic>(wf, p.Unwrap());
+            return AppCmd.service<CmdPublic>(wf, p.Unwrap());
         }
         
         public static CmdProviders providers(IWfRuntime wf)

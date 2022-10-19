@@ -4,8 +4,16 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface ICmdService : IAppService, ICmdRunner, ICmdProvider
+    [Free]
+    public interface ICmdDef
     {
-        void Install(ReadOnlySeq<ICmdProvider> providers);
+        CmdUri Uri {get;}
+    }
+
+    [Free]
+    public interface ICmdDef<D> : ICmdDef
+        where D : struct, ICmdDef<D>
+    {
+
     }
 }

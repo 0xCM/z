@@ -13,9 +13,9 @@ namespace Z0
     [Free]
     public interface IAppCmdRunner : IAppCmdRunner<CmdArgs,Outcome>
     {
-        AppCmdDef Def {get;}
+        AppCmdMethod Def {get;}
 
-        ref readonly @string CmdName
+        ref readonly Name CmdName
             => ref Def.CmdName;
     }
 }

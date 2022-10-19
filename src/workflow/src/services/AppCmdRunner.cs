@@ -9,44 +9,11 @@ namespace Z0
 
     public class AppCmdRunner : IAppCmdRunner
     {
-        public static CmdActorKind classify(MethodInfo src)
-        {
-            var dst = CmdActorKind.None;
-            var arity = src.ArityValue();
-            var @void = src.HasVoidReturn();
-            switch(arity)
-            {
-                case 0:
-                    switch(@void)
-                    {
-                        case false:
-                            dst = CmdActorKind.Pure;
-                        break;
-                        case true:
-                            dst = CmdActorKind.Emitter;
-                        break;
-                    }
-                break;
-                case 1:
-                    switch(@void)
-                    {
-                        case true:
-                            dst = CmdActorKind.Receiver;
-                        break;
-                        case false:
-                            dst = CmdActorKind.Func;
-                        break;
-                    }
-                break;
-            }
-            return dst;
-        }
+        public readonly AppCmdMethod Def;
 
-        public readonly AppCmdDef Def;
-
-        public AppCmdRunner(string name, object host, MethodInfo method)
+        public AppCmdRunner(Name name, object host, MethodInfo method)
         {
-            Def = new AppCmdDef(name, classify(method), Require.notnull(method), Require.notnull(host));
+            Def = new AppCmdMethod(name, AppCmd.classify(method), Require.notnull(method), Require.notnull(host));
         }
 
         public ref readonly object Host
@@ -58,7 +25,7 @@ namespace Z0
         public ref readonly MethodInfo Method
         {
             [MethodImpl(Inline)]
-            get => ref Def.Method;
+            get => ref Def.Definition;
         }
 
         public ref readonly CmdActorKind ActionKind
@@ -79,7 +46,7 @@ namespace Z0
             get => Def.Host.GetType();
         }
 
-        AppCmdDef IAppCmdRunner.Def
+        AppCmdMethod IAppCmdRunner.Def
             => Def;
 
         public Outcome Run(IWfChannel channel, CmdArgs args)
@@ -138,6 +105,11 @@ namespace Z0
             }
 
            return result;
+        }
+
+        public Task<ExecToken> Start(IWfContext context, IWfAction action)
+        {
+            throw new NotImplementedException();
         }
     }
 }

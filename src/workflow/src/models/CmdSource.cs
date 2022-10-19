@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class CmdSource : ICmdSource
+    public class CmdSource
     {
         public readonly Name Name;
 

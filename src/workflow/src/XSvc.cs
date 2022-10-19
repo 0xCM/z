@@ -29,10 +29,12 @@ namespace Z0
              public Tooling Tooling(IWfRuntime wf)
                 => Service<Tooling>(wf);
 
-
-            public DevPacks DevPacks(IWfRuntime wf)
+             public DevPacks DevPacks(IWfRuntime wf)
                 => Service<DevPacks>(wf);
 
+
+            public DbArchives DbArchives(IWfRuntime wf)
+                => Service<DbArchives>(wf);
 
 
         }
@@ -61,6 +63,9 @@ namespace Z0
             => Services.DevPacks(wf);
        public static Tooling Tooling(this IWfRuntime wf)
             => Services.Tooling(wf);             
+
+        public static DbArchives DbArchive(this IWfRuntime wf)
+            => Services.DbArchives(wf);                
 
     }
 }

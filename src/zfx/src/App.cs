@@ -13,6 +13,17 @@ namespace Z0.Parts
 
 namespace Z0
 {
+    public static partial class XTend
+    {
+        // public static A Runner<A>(this IWfContext context)
+        //     where A : IWfAction<A>, new()
+        //         => new A();
+        
+        // public static Task<ExecToken> Start<A>(this IActionable runner, this A action)
+        //     where A : IWfAction<A>, new()
+        //         => 
+    }
+
     using static sys;
 
     sealed class AppSvc : WfSvc<AppSvc>
@@ -41,15 +52,14 @@ namespace Z0
         }
     }
 
-
     [Free]
     sealed class App : AppCmdShell<App>
     {
-        
+
         public static void Main(params string[] args)
         {
 
-            // using var app = AppShells.create<App>(false, args);            
+            using var app = AppShells.create<App>(false, args);            
             // var wf = app.Wf;            
 
             // wf.Write($"ws:{Env.cd()}");

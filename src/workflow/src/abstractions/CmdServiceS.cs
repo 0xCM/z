@@ -41,7 +41,7 @@ namespace Z0
 
         [CmdOp("commands")]
         protected void EmitCommands()
-            => AppCmd.emit(AppCmd.catalog(Dispatcher), AppDb.AppData().Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv), Emitter);
+            => AppCmd.emit(Channel, AppCmd.catalog(Dispatcher), AppDb.AppData().Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv));
 
         public void RunCmd(string name)
         {
@@ -65,8 +65,8 @@ namespace Z0
             }
         }
 
-        void ICmdService.Install(ReadOnlySeq<ICmdProvider> src)
-            => AppData.Value(nameof(IAppCmdDispatcher), AppCmd.dispatcher((S)this, Emitter, src));
+        // void ICmdService.Install(ReadOnlySeq<ICmdProvider> src)
+        //     => Z0.AppData.get().Value(nameof(IAppCmdDispatcher), AppCmd.dispatcher((S)this, Emitter, src));
 
     }
 }

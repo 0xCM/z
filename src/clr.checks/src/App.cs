@@ -26,7 +26,7 @@ namespace Z0
                 wf.EcmaCmd()
             };
             wf.Ran(running, $"Created {providers.Length} command providers");
-            app.CmdService = Cmd.service<AppShellCmd>(wf, providers);
+            app.CmdService = AppCmd.service<AppShellCmd>(wf, providers);
             app.Run(args);
         }
     }

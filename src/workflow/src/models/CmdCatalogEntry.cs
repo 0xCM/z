@@ -13,7 +13,7 @@ namespace Z0
         public uint Seq;
 
         [Render(32)]
-        public @string Name;
+        public Name Name;
 
         [Render(16)]
         public Hash32 Hash;

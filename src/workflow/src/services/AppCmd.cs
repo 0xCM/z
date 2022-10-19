@@ -5,21 +5,67 @@
 namespace Z0
 {
     using static sys;
-    using static AppCmdNames;
-
-    public readonly struct AppCmdNames
-    {   
-        const string Sep = "/";
-
-        public const string files = nameof(files);
-
-        public const string copy = nameof(copy);
-
-        public const string files_copy = files + Sep + copy;
-    }
 
     public class AppCmd
     {
+        public static T service<T>(IWfRuntime wf, ReadOnlySeq<ICmdProvider> providers)
+            where T : ICmdService, new()
+        {
+            var emitter = Require.notnull(wf.Emitter);
+            var name = $"clr:://z0/{typeof(T).Assembly.GetSimpleName()}/{typeof(T).DisplayName()}";
+            var msg = $"Creating {name}";
+            var service = new T();            
+            var running = emitter.Running(msg);
+            service.Init(wf);
+            dispatcher(service, wf.Emitter, providers);
+            wf.Ran(running, $"Created {name}");
+            return service;
+        }
+
+        static IAppCmdDispatcher dispatcher<T>(T service, IWfChannel channel, ReadOnlySeq<ICmdProvider> providers)
+        {
+            var flow = channel.Running($"Discovering {service} dispatchers");
+            var dst = dict<string,IAppCmdRunner>();
+            iter(runners(service), r => dst.TryAdd(r.Def.CmdName, r));
+            iter(providers, p => iter(runners(p), r => dst.TryAdd(r.Def.CmdName, r)));
+            var dispatcher = new AppCmdDispatcher(channel, providers, new AppCommands(dst));
+            install(dispatcher, providers);
+            return dispatcher;
+        }        
+
+        public static CmdActorKind classify(MethodInfo src)
+        {
+            var dst = CmdActorKind.None;
+            var arity = src.ArityValue();
+            var @void = src.HasVoidReturn();
+            switch(arity)
+            {
+                case 0:
+                    switch(@void)
+                    {
+                        case false:
+                            dst = CmdActorKind.Pure;
+                        break;
+                        case true:
+                            dst = CmdActorKind.Emitter;
+                        break;
+                    }
+                break;
+                case 1:
+                    switch(@void)
+                    {
+                        case true:
+                            dst = CmdActorKind.Receiver;
+                        break;
+                        case false:
+                            dst = CmdActorKind.Func;
+                        break;
+                    }
+                break;
+            }
+            return dst;
+        }
+
         [MethodImpl(Inline), Op]
         public static CmdUri uri(CmdKind kind, string? part, string? host, string? name)
             => new CmdUri(kind, part, host, name);
@@ -65,18 +111,18 @@ namespace Z0
         public static AppCmdRunner runner(string name, object host, MethodInfo method)
             => new AppCmdRunner(name, host, method);
 
-        public static ConstLookup<Name,AppCmdDef> defs(IAppCmdDispatcher src)
+        public static ConstLookup<Name,AppCmdMethod> defs(IAppCmdDispatcher src)
         {
             ref readonly var defs = ref src.Commands.Defs;
-            var dst = dict<Name,AppCmdDef>();
+            var dst = dict<Name,AppCmdMethod>();
             iter(defs.View, def => dst.Add(def.CmdName, def));
             return dst;
         }
 
-        public static AppCmdDef def(object host, MethodInfo method)
+        public static AppCmdMethod def(object host, MethodInfo method)
         {
             var attrib = method.Tag<CmdOpAttribute>().Require();
-            return new AppCmdDef(attrib.Name, AppCmdRunner.classify(method), method, host);
+            return new AppCmdMethod(attrib.Name, AppCmd.classify(method), method, host);
         }
 
         [Op]
@@ -99,18 +145,9 @@ namespace Z0
             }
         }
 
-        static MsgPattern EmptyArgList => "No arguments specified";
+        static void install(IAppCmdDispatcher dispatcher, ReadOnlySeq<ICmdProvider> src)
+            => Z0.AppData.get().Value(nameof(IAppCmdDispatcher), dispatcher);
 
-        static MsgPattern ArgSpecError => "Argument specification error";        
-
-        public static IAppCmdDispatcher dispatcher<T>(T service, WfEmit channel, ReadOnlySeq<ICmdProvider> providers)
-        {
-            var flow = channel.Running($"Discovering {service} dispatchers");
-            var dst = dict<string,IAppCmdRunner>();
-            iter(runners(service), r => dst.TryAdd(r.Def.CmdName, r));
-            iter(providers, p => iter(runners(p), r => dst.TryAdd(r.Def.CmdName, r)));            
-            return new AppCmdDispatcher(channel, providers, new AppCommands(dst));
-        }        
 
         public static AppCommands distill(IAppCommands[] src)
         {
@@ -120,27 +157,20 @@ namespace Z0
             return new AppCommands(dst);
         }
 
-        public static void emit(ICmdSource src, WfEmit channel, FilePath dst)
+        public static void emit(IWfChannel channel, CmdCatalog src, FilePath dst)
         {
-            var flow = channel.EmittingFile(dst);
-            var commands = src.Commands;
-            using var writer = dst.AsciWriter();
-            for(var i=0; i<src.Count; i++)
-            {
-                ref readonly var cmd = ref commands[i];
-                var fmt = cmd.Format();
-                channel.Row(fmt);
-                writer.WriteLine(fmt);
-            }
-
-            channel.EmittedFile(flow, src.Count);
+            var data = src.Values;
+            iter(data, x => channel.Row(x.Uri.Name));
+            Tables.emit(channel, data, dst);
         }
 
-        public static void emit(CmdCatalog src, FilePath dst, WfEmit channel)
+        public static CmdCatalog catalog(ReadOnlySeq<AppCmdMethod> src)
         {
-            var data = src.Entries;
-            iter(data, x => channel.Row(x.Uri.Name));
-            Tables.emit(channel, data.View, dst);
+            var count = src.Count;
+            var dst = alloc<CmdUri>(count);
+            for(var i=0; i<count; i++)
+                seek(dst,i) = src[i].Uri;
+            return new CmdCatalog(entries(dst));
         }
 
         public static CmdCatalog catalog(IAppCmdDispatcher src)
@@ -178,7 +208,7 @@ namespace Z0
             public static Zip zip(FolderPath src, FilePath dst)
                 => new (src,dst);
 
-            [Cmd(files_copy)]
+            [Cmd("files/copy")]
             public struct Copy : ICmd<Copy>
             {
                 public Copy(FolderPath src, FolderPath dst)
@@ -192,7 +222,7 @@ namespace Z0
                 public FolderPath Target;
             }
 
-            [Cmd(files_copy)]
+            [Cmd("files/copy")]
             public struct Zip : ICmd<Zip>
             {
                 public Zip(FolderPath src, FilePath dst)

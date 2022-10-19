@@ -16,7 +16,7 @@ namespace Z0
                 wf.WfCmd(),
             };
             wf.Ran(running, $"Created {providers.Length} command providers");
-            app.CmdService = Cmd.service<WfShellCmd>(wf, providers);
+            app.CmdService = AppCmd.service<WfShellCmd>(wf, providers);
             app.Run(args);
         }
     }

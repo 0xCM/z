@@ -20,10 +20,9 @@ namespace Z0
     [Free]
     sealed class App : AppCmdShell<App>
     {
-        public static void Main(params string[] args)
+        static AppShellCmd commands(IWfContext context)
         {
-            using var app = AppShells.create<App>(false, args);            
-            var wf = app.Wf;
+            var wf = context.Runtime;
             var running = wf.Running($"Creating command providers");
             var providers = new ICmdProvider[]{
                 wf.WfCmd(),
@@ -31,9 +30,37 @@ namespace Z0
                 wf.DbCmd() 
             };
             wf.Ran(running, $"Created {providers.Length} command providers");
-            app.CmdService = Cmd.service<AppShellCmd>(wf, providers);
-            app.Run(args);
+            return AppCmd.service<AppShellCmd>(wf, providers);
         }
+
+        static int main(string[] args)
+        {
+            var result = 0;
+            using var app = AppShells.create<App>(false,args);
+            var context = app.Context;
+            var wf = context.Runtime;
+            var channel = context.Channel;
+            app.CmdService = commands(context);
+            if(args.Length == 0)
+                app.Run(sys.empty<string>());
+            else
+            {
+                try
+                {
+                    
+                }
+                catch(Exception e)
+                {
+                    channel.Error(e);
+                    result = -1;
+                }
+            }
+            return result;
+        }
+
+        public static int Main(params string[] args)
+            => main(args);
+
     }
 
     sealed class AppShellCmd : AppCmdService<AppShellCmd>

@@ -4,13 +4,5 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public static class XSvc
-    {
-        sealed class Svc : AppServices<Svc>
-        {
-        }
 
-        static Svc Services => Svc.Instance;
-
-    }
 }

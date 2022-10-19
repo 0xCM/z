@@ -29,7 +29,7 @@ namespace Z0
                 wf.WfCmd(),
             };
             wf.Ran(running, $"Created {providers.Length} command providers");
-            app.CmdService = Cmd.service<DeploymentServices>(wf, providers);
+            app.CmdService = AppCmd.service<DeploymentServices>(wf, providers);
             app.Run(args);
         }
     }

@@ -18,7 +18,7 @@ namespace Z0
                 wf.DbCmd() 
             };
             wf.Ran(running, $"Created {providers.Length} command providers");
-            app.CmdService = Cmd.service<AppShellCmd>(wf, CmdPublic.providers(wf).Init(wf).Array());
+            app.CmdService = AppCmd.service<AppShellCmd>(wf, CmdPublic.providers(wf).Init(wf).Array());
             app.Run(args);
         }
     }

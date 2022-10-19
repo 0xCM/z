@@ -6,11 +6,39 @@ namespace Z0
 {
     public class AppCmdDispatcher : IAppCmdDispatcher
     {
+        public static void exec(IWfContext context, FilePath src)
+        {
+            if(src.Missing)
+            {
+                context.Channel.Error(AppMsg.FileMissing.Format(src));
+            }
+            else
+            {
+                var lines = src.ReadNumberedLines(true);
+                var count = lines.Count;
+                for(var i=0; i<count; i++)
+                {
+                    ref readonly var content = ref lines[i].Content;
+                    if(AppCmd.parse(content, out AppCmdSpec spec))
+                    {
+                        //Dispatch(spec.Name, spec.Args);
+                    }
+                    else
+                    {
+                        context.Channel.Error($"ParseFailure:'{content}'");
+                        break;
+                    }
+                }
+            }
+        }
+
         IAppCommands _Commands;
 
         Func<string,CmdArgs,Outcome> Fallback;
 
         readonly IWfChannel Channel;
+
+        ConstLookup<Name,AppCmdMethod> Catalog;
 
         [MethodImpl(Inline)]
         public AppCmdDispatcher(IWfChannel channel, ReadOnlySeq<ICmdProvider> providers, IAppCommands lookup)
@@ -19,6 +47,7 @@ namespace Z0
             Fallback = NotFound;
             Channel = channel;
             Providers = providers;
+            Catalog = AppCmd.defs(this);
         }
 
         public ReadOnlySeq<ICmdProvider> Providers {get;}
@@ -37,7 +66,7 @@ namespace Z0
             var runner = default(IAppCmdRunner);
             if(Commands.Find(name, out runner))
             {
-                result = runner.Run(Channel,args);
+                result = runner.Run(Channel, args);
             }
             else
             {

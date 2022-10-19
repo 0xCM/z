@@ -6,9 +6,9 @@ namespace Z0
 {
     public class AppCommands : IAppCommands
     {
-        internal readonly Dictionary<string,IAppCmdRunner> Lookup;
+        readonly Dictionary<string,IAppCmdRunner> Lookup;
 
-        readonly ReadOnlySeq<AppCmdDef> CmdDefs;
+        readonly ReadOnlySeq<AppCmdMethod> CmdDefs;
 
         internal AppCommands(Dictionary<string,IAppCmdRunner> src)
         {
@@ -28,7 +28,7 @@ namespace Z0
         public ICollection<IAppCmdRunner> Invokers
             => Lookup.Values;
 
-        public ref readonly ReadOnlySeq<AppCmdDef> Defs
+        public ref readonly ReadOnlySeq<AppCmdMethod> Defs
         {
             [MethodImpl(Inline)]
             get => ref CmdDefs;

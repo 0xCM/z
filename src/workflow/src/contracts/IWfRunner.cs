@@ -4,17 +4,17 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IActionable
+    public interface IWfRunner
     {
         Task<ExecToken> Start(IWfContext context, IWfAction action);
     }
 
-    public interface IActionable<A> : IActionable
-        where A : IActionable<A>, new()
+    public interface IWfRunner<A> : IWfRunner
+        where A : IWfRunner<A>, new()
     {
         Task<ExecToken> Start(IWfContext context, A action);
 
-        Task<ExecToken> IActionable.Start(IWfContext context, IWfAction action)
+        Task<ExecToken> IWfRunner.Start(IWfContext context, IWfAction action)
             => Start(context, (A)action);
     }
 }

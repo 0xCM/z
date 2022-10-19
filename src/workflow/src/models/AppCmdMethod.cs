@@ -4,25 +4,25 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed class AppCmdDef : ICmdDef
+    public sealed class AppCmdMethod : ICmdDef
     {
-        public readonly @string CmdName;
+        public readonly Name CmdName;
 
         public readonly CmdActorKind Kind;
 
         public readonly object Host;
 
-        public readonly MethodInfo Method;
+        public readonly MethodInfo Definition;
 
         public readonly CmdUri Uri;
 
         [MethodImpl(Inline)]
-        public AppCmdDef(string name, CmdActorKind kind, MethodInfo method, object host)
+        public AppCmdMethod(Name name, CmdActorKind kind, MethodInfo method, object host)
         {
-            CmdName = Require.notnull(name);
+            CmdName = name;
             Kind = kind;
             Host = Require.notnull(host);
-            Method = Require.notnull(method);
+            Definition = Require.notnull(method);
             Uri = new(CmdKind.App, host.GetType().Assembly.PartName().Format(), host.GetType().DisplayName(), CmdName);
         }
 

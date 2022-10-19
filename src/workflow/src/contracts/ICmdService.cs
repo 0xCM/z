@@ -4,13 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [Free]
-    public interface IAppCommands
+    public interface ICmdService : IAppService, ICmdRunner, ICmdProvider
     {
-        bool Find(string spec, out IAppCmdRunner runner);
-
-        ref readonly ReadOnlySeq<AppCmdMethod> Defs {get;}
-
-        ICollection<IAppCmdRunner> Invokers {get;}
+        //void Install(ReadOnlySeq<ICmdProvider> providers);
     }
 }
