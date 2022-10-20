@@ -68,7 +68,7 @@ namespace Z0
             => Format();
 
         public DbArchive Scoped(string scope)
-            => Datasets.archive(new DbArchive(Root + FS.folder(scope)));
+            => FS.archive(new DbArchive(Root + FS.folder(scope)));
 
         public DbArchive Logs()
             => Targets("logs");
@@ -83,7 +83,7 @@ namespace Z0
             => Root;
 
         public DbArchive Targets(string scope)
-            => Datasets.archive((new DbTargets(Root, scope)).Root);
+            => FS.archive((new DbTargets(Root, scope)).Root);
 
         public DbArchive Sources()
             => Root;

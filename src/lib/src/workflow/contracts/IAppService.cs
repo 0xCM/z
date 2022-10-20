@@ -11,9 +11,6 @@ namespace Z0
 
         IWfChannel Channel {get;}
 
-        IWfContext Context 
-            => new WfContext(Channel,Wf);
-
         T Service<T>(Func<T> factory);
 
         void Init(IWfRuntime wf);

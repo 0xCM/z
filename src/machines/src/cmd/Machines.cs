@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public class Machines : AppCmdService<Machines>
+    public class Machines : WfAppCmd<Machines>
     {
         IPolyrand Random;
 

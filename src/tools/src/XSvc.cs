@@ -8,8 +8,8 @@ namespace Z0
     {
         class ServiceCache : AppServices<ServiceCache>
         {
-            public Dev Dev(IWfRuntime wf)
-                => Service<Dev>(wf);
+            public ProjectTools Dev(IWfRuntime wf)
+                => Service<ProjectTools>(wf);
 
             public MsBuild BuildSvc(IWfRuntime wf)
                 => Service<MsBuild>(wf);
@@ -42,7 +42,7 @@ namespace Z0
         public static MsBuild BuildSvc(this IWfRuntime wf)
             => Services.BuildSvc(wf);
 
-        public static Dev Dev(this IWfRuntime wf)
+        public static ProjectTools Dev(this IWfRuntime wf)
             => Services.Dev(wf);
 
         public static IAppCmdSvc BuildCmd(this IWfRuntime wf)

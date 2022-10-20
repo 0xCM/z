@@ -12,33 +12,21 @@ namespace Z0
     {
         const string group = "db";
 
-        static Type Host => typeof(Db);
+        public static Task<ExecToken> robocopy(IWfChannel channel, FolderPath src, FolderPath dst)
+            => ProcExec.start(channel, $"robocopy {src} {dst} /e");
 
-        public static SymLinkCmd symlink(FolderPath src, FolderPath dst)
-            => new SymLinkCmd(SymLinkCmd.Flag.Directory, src.ToUri(), dst.ToUri());
-
-        [Op]
-        static CmdLine cmd(string spec)
-            => string.Format("cmd.exe /c {0}", spec);
-
-        public static CmdProcess robocopy(FolderPath src, FolderPath dst)
+        public static Task<ExecToken> zip(IWfChannel channel, FolderPath src, FilePath dst)
         {
-            var spec = $"robocopy {src} {dst} /e";
-            return CmdProcess.create(cmd(spec));
-        }
-
-        public static Task<ExecToken> zip(IWfChannel channel, ArchiveCmd cmd)
-        {
-            var uri = $"{app}://{group}/{cmd}";
+            var uri = $"{app}://{group}/zip";
             var running = channel.Running(uri);
 
             ExecToken run()
             {
-                ZipFile.CreateFromDirectory(cmd.Source.Format(), cmd.Target.Format(), CompressionLevel.Fastest, true);
+                ZipFile.CreateFromDirectory(src.Format(), dst.Format(), CompressionLevel.Fastest, true);
                 return channel.Ran(running, uri); 
             }
 
-            return @try(run, e => channel.Completed(running, Host, e));                                                    
+            return @try(run, e => channel.Completed(running, typeof(Db), e));                                                    
         }
     }
 }

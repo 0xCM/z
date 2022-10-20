@@ -2,56 +2,42 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-[assembly: PartId(PartId.Shell)]
-namespace Z0.Parts
-{
-    public sealed class Shell : Part<Shell>
-    {
-        [ModuleInitializer]
-        internal static void Init()
-        {
-            NumRender.Service.RegisterFomatters();
-        }
-    }
-}
-
 namespace Z0
 {
     [Free]
     sealed class App : AppCmdShell<App>
     {
-        static AppShellCmd commands(IWfContext context)
-        {
-            var wf = context.Runtime;
-            var running = wf.Running($"Creating command providers");
-            var providers = new ICmdProvider[]{
+        static ReadOnlySeq<ICmdProvider> providers(IWfRuntime wf)
+            => new ICmdProvider[]{
                 wf.WfCmd(),
                 wf.BuildCmd(),
-                wf.DbCmd() 
             };
-            wf.Ran(running, $"Created {providers.Length} command providers");
-            return AppCmd.service<AppShellCmd>(wf, providers);
-        }
+
+        public static void main()
+        {
+            var args = sys.empty<string>();
+            using var app = AppCmd.shell<App>(false, args);
+
+        }        
 
         static int main(string[] args)
         {
             var result = 0;
-            using var app = AppShells.create<App>(false,args);
-            var context = app.Context;
-            var wf = context.Runtime;
+            using var app = AppCmd.shell<App>(false, args);
+            var context = AppCmd.context<AppShellCmd>(app.Wf, () => providers(app.Wf));
             var channel = context.Channel;
-            app.CmdService = commands(context);
+            app.Commander = context.Commander;
             if(args.Length == 0)
                 app.Run(sys.empty<string>());
             else
             {
                 try
                 {
-                    
+
                 }
                 catch(Exception e)
                 {
-                    channel.Error(e);
+                    app.Channel.Error(e);
                     result = -1;
                 }
             }
@@ -60,11 +46,12 @@ namespace Z0
 
         public static int Main(params string[] args)
             => main(args);
-
     }
 
-    sealed class AppShellCmd : AppCmdService<AppShellCmd>
+    sealed class AppShellCmd : WfAppCmd<AppShellCmd>
     {
 
     }
+
+
 }

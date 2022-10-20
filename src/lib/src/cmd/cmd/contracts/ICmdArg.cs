@@ -22,6 +22,4 @@ namespace Z0
         where T : IEquatable<T>, IComparable<T>
     {
     }
-
-
 }

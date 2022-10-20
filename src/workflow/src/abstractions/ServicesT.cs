@@ -35,7 +35,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static S service<S>(IWfRuntime wf, Func<IWfRuntime,S> factory)
-            where S : ICmdService, new()
+            where S : IAppCmdSvc, new()
         {
             lock(ServiceLock)
                 return (S)Lookup.GetOrAdd(svcid<S>(), _ => factory(wf));

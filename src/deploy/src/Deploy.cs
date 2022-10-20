@@ -12,7 +12,7 @@ namespace Z0.Parts
 
 namespace Z0
 {
-    sealed class DeploymentServices : AppCmdService<DeploymentServices>
+    sealed class DeploymentServices : WfAppCmd<DeploymentServices>
     {
 
     }
@@ -22,15 +22,15 @@ namespace Z0
     {
         public static void Main(params string[] args)
         {
-            using var app = AppShells.create<App>(false, args);            
-            var wf = app.Wf;
-            var running = wf.Running($"Creating command providers");
-            var providers = new ICmdProvider[]{
-                wf.WfCmd(),
-            };
-            wf.Ran(running, $"Created {providers.Length} command providers");
-            app.CmdService = AppCmd.service<DeploymentServices>(wf, providers);
-            app.Run(args);
+            // using var app = AppShells.create<App>(false, args);            
+            // var wf = app.Wf;
+            // var running = wf.Running($"Creating command providers");
+            // var providers = new ICmdProvider[]{
+            //     wf.WfCmd(),
+            // };
+            // wf.Ran(running, $"Created {providers.Length} command providers");
+            // app.CmdService = AppCmd.service<DeploymentServices>(wf, providers);
+            // app.Run(args);
         }
     }
 }

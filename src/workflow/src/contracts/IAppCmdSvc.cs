@@ -6,6 +6,6 @@ namespace Z0
 {
     public interface IAppCmdSvc : IAppService, ICmdProvider, ICmdRunner, IRunnable
     {     
-        IAppCmdDispatcher Dispatcher {get;}    
+        IWfDispatcher Dispatcher {get;}    
     }
 }

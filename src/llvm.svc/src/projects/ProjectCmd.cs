@@ -6,7 +6,7 @@ namespace Z0
 {
     using Asm;
 
-    public partial class ProjectCmd : AppCmdService<ProjectCmd>
+    public partial class ProjectCmd : WfAppCmd<ProjectCmd>
     {
         CoffServices Coff => Wf.CoffServices();
 

@@ -32,16 +32,16 @@ namespace Z0
             => DbFiles.Sources();
 
         DbArchive Targets()
-            => Datasets.archive(DbFiles.Targets());
+            => FS.archive(DbFiles.Targets());
 
         DbArchive Sources(string scope)
-            => Datasets.archive(DbFiles.Sources(scope));
+            => FS.archive(DbFiles.Sources(scope));
 
         DbArchive Targets(string scope)
-            => Datasets.archive(DbFiles.Targets(scope));
+            => FS.archive(DbFiles.Targets(scope));
 
         DbArchive Scoped(string name)
-            => Datasets.archive(DbFiles.Sources(name));
+            => FS.archive(DbFiles.Sources(name));
 
         FilePath Table<T>()
             where T : struct

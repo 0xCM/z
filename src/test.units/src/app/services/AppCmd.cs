@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed class TestCmd : AppCmdService<TestCmd>
+    public sealed class TestCmd : WfAppCmd<TestCmd>
     {
         [CmdOp("units/run")]
         Outcome RunUnits(CmdArgs args)

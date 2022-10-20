@@ -71,7 +71,7 @@ namespace Z0
                 get => ref _CurrentFile;
             }
 
-            protected new ref readonly ProjectContext Context
+            protected ref readonly ProjectContext Context
             {
                 [MethodImpl(Inline)]
                 get => ref _Context;

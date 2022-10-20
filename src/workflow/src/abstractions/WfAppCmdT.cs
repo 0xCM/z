@@ -6,11 +6,36 @@ namespace Z0
 {
     using CCN = CmdContextNames;
 
-    public abstract class CmdService<S> : WfSvc<S>, ICmdProvider, ICmdService
-        where S : CmdService<S>, new()
+    [CmdProvider]
+    public abstract class WfAppCmd<T> : WfSvc<T>, IAppCmdSvc
+        where T : WfAppCmd<T>, new()
     {
-        public IAppCmdDispatcher Dispatcher 
-            => AppData.Value<IAppCmdDispatcher>(nameof(IAppCmdDispatcher));
+        public IWfDispatcher Dispatcher 
+            => AppData.Value<IWfDispatcher>(nameof(IWfDispatcher));
+
+        protected virtual string PromptTitle {get;}
+
+        protected WfAppCmd()
+        {
+            PromptTitle = "cmd";
+        }
+
+        string Prompt()
+            => string.Format("{0}> ", PromptTitle);
+
+        AppCmdSpec Next()
+        {
+            var input = term.prompt(Prompt());
+            if(AppCmd.parse(input, out AppCmdSpec cmd))
+            {
+                return cmd;
+            }
+            else
+            {
+                Error($"ParseFailure:{input}");
+                return AppCmdSpec.Empty;
+            }
+        }
 
         [CmdOp(CCN.db)]
         protected void SetDbContext(CmdArgs args)
@@ -65,8 +90,15 @@ namespace Z0
             }
         }
 
-        // void ICmdService.Install(ReadOnlySeq<ICmdProvider> src)
-        //     => Z0.AppData.get().Value(nameof(IAppCmdDispatcher), AppCmd.dispatcher((S)this, Emitter, src));
-
-    }
+        public virtual void Run()
+        {
+            var input = Next();
+            while(input.Name != ".exit")
+            {
+                if(input.IsNonEmpty)
+                    RunCmd(input);
+                input = Next();
+            }
+        }
+   }
 }

@@ -6,25 +6,22 @@ namespace Z0
 {
     public readonly struct ToolDeployment
     {
-        public readonly ToolIdOld Id;
+        public readonly Tool Tool;
 
         public readonly FilePath Path;
 
         [MethodImpl(Inline)]
-        public ToolDeployment(ToolIdOld id, FilePath path)
+        public ToolDeployment(Tool tool, FilePath path)
         {
-            Id = id;
+            Tool = tool;
             Path = path;
         }
 
         public string Format()
-            => string.Format("{0}:{1}", Id.Format(), Path.ToUri());
+            => string.Format("{0}:{1}", Tool.Format(), Path.ToUri());
 
         public override string ToString()
             => Format();
 
-        [MethodImpl(Inline)]
-        public static implicit operator ToolDeployment((ToolIdOld id, FilePath path) src)
-            => new ToolDeployment(src.id, src.path);
     }
 }

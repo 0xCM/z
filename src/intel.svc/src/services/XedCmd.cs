@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
     using static XedDisasm;
 
-    public class XedCmd : AppCmdService<XedCmd>
+    public class XedCmd : WfAppCmd<XedCmd>
     {
         XedRuntime Xed => GlobalServices.Instance.Injected<XedRuntime>();
 

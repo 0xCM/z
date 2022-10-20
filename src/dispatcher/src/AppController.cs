@@ -18,7 +18,7 @@ namespace Z0
         public AppController(IWfRuntime wf, ILogger<AppController> logger, string[] args)
         {
             Wf = wf;
-            var src = Datasets.archive(FS.dir(args[0]));
+            var src = FS.archive(FS.dir(args[0]));
             var dst = AppDb.Service.Catalogs("fs.change");
             Require.invariant(src.Exists);
             Monitor = DirectoryMonitor.start(src, dst);

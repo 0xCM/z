@@ -8,7 +8,7 @@ namespace Z0
     
     using System.Diagnostics;
 
-    public class MemoryChecks : AppCmdService<MemoryChecks>
+    public class MemoryChecks : WfAppCmd<MemoryChecks>
     {
         [CmdOp("memory/checks")]
         void CheckMemAlloc()

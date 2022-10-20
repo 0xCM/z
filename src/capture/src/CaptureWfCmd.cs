@@ -6,7 +6,7 @@ namespace Z0
 {
     using static Algs;
 
-    public class CaptureWfCmd : AppCmdService<CaptureWfCmd>
+    public class CaptureWfCmd : WfAppCmd<CaptureWfCmd>
     {
         Runtime Runtime => Wf.Runtime();
 

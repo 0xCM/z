@@ -6,11 +6,11 @@ namespace Z0
 {
     using static sys;
 
-    class BuildCmd : AppCmdService<BuildCmd>
+    class BuildCmd : WfAppCmd<BuildCmd>
     {
         MsBuild BuildSvc => Wf.BuildSvc();
 
-        Dev Dev => Wf.Dev();
+        ProjectTools Dev => Wf.Dev();
 
         [CmdOp("projects/list")]
         void ListProjects(CmdArgs args)

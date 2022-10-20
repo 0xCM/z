@@ -9,7 +9,7 @@ namespace Z0
     using System.Text;
     using dsl.intel;
 
-    public class IntelInxCmd : AppCmdService<IntelInxCmd>
+    public class IntelInxCmd : WfAppCmd<IntelInxCmd>
     {
         IntelInx Intrinsics => Wf.IntelIntrinsics();
 

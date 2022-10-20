@@ -8,21 +8,65 @@ namespace Z0
 
     public class AppCmd
     {
-        public static T service<T>(IWfRuntime wf, ReadOnlySeq<ICmdProvider> providers)
-            where T : ICmdService, new()
+        public static void exec(IWfContext context, FilePath defs)
         {
-            var emitter = Require.notnull(wf.Emitter);
-            var name = $"clr:://z0/{typeof(T).Assembly.GetSimpleName()}/{typeof(T).DisplayName()}";
-            var msg = $"Creating {name}";
-            var service = new T();            
-            var running = emitter.Running(msg);
-            service.Init(wf);
-            dispatcher(service, wf.Emitter, providers);
-            wf.Ran(running, $"Created {name}");
-            return service;
+            if(defs.Missing)
+            {
+                context.Channel.Error(AppMsg.FileMissing.Format(defs));
+            }
+            else
+            {
+                var lines = defs.ReadNumberedLines(true);
+                var count = lines.Count;
+                for(var i=0; i<count; i++)
+                {
+                    ref readonly var content = ref lines[i].Content;
+                    if(AppCmd.parse(content, out AppCmdSpec spec))
+                    {
+                        //Dispatch(spec.Name, spec.Args);
+                    }
+                    else
+                    {
+                        context.Channel.Error($"ParseFailure:'{content}'");
+                        break;
+                    }
+                }
+            }
         }
 
-        static IAppCmdDispatcher dispatcher<T>(T service, IWfChannel channel, ReadOnlySeq<ICmdProvider> providers)
+        public static A shell<A>(bool catalog, params string[] args)
+            where A : IAppShell, new()
+        {
+            var wf = ApiRuntime.create(catalog, args);
+            var app = new A();
+            app.Init(wf);
+            return app;
+        }                    
+
+        public static WfContext<C> context<C>(IWfRuntime wf, Func<ReadOnlySeq<ICmdProvider>> factory)
+            where C : IAppCmdSvc, new()
+        {
+            var running = wf.Running($"Creating command providers");
+            var providers = factory();
+            wf.Ran(running, $"Created {providers.Length} command providers");
+            return context<C>(wf, providers);
+        }
+
+        public static WfContext<C> context<C>(IWfRuntime wf, ReadOnlySeq<ICmdProvider> providers)
+            where C : IAppCmdSvc, new()
+        {
+            var emitter = Require.notnull(wf.Emitter);
+            var name = $"clr:://z0/{typeof(C).Assembly.GetSimpleName()}/{typeof(C).DisplayName()}";
+            var msg = $"Creating {name}";
+            var service = new C();            
+            var running = emitter.Running(msg);
+            service.Init(wf);
+            var context = new WfContext<C>(service, wf.Channel, wf, dispatcher(service, wf.Emitter, providers));
+            wf.Ran(running, $"Created {name}");
+            return context;
+        }
+
+        static IWfDispatcher dispatcher<T>(T service, IWfChannel channel, ReadOnlySeq<ICmdProvider> providers)
         {
             var flow = channel.Running($"Discovering {service} dispatchers");
             var dst = dict<string,IAppCmdRunner>();
@@ -96,7 +140,7 @@ namespace Z0
             return true;
         }
 
-        public static CmdUriSeq uri<S>(IAppCmdDispatcher src)
+        public static CmdUriSeq uri<S>(IWfDispatcher src)
         {
             ref readonly var defs = ref src.Commands.Defs;
             var part = src.Controller;
@@ -111,7 +155,7 @@ namespace Z0
         public static AppCmdRunner runner(string name, object host, MethodInfo method)
             => new AppCmdRunner(name, host, method);
 
-        public static ConstLookup<Name,AppCmdMethod> defs(IAppCmdDispatcher src)
+        public static ConstLookup<Name,AppCmdMethod> defs(IWfDispatcher src)
         {
             ref readonly var defs = ref src.Commands.Defs;
             var dst = dict<Name,AppCmdMethod>();
@@ -145,8 +189,8 @@ namespace Z0
             }
         }
 
-        static void install(IAppCmdDispatcher dispatcher, ReadOnlySeq<ICmdProvider> src)
-            => Z0.AppData.get().Value(nameof(IAppCmdDispatcher), dispatcher);
+        static void install(IWfDispatcher dispatcher, ReadOnlySeq<ICmdProvider> src)
+            => Z0.AppData.get().Value(nameof(IWfDispatcher), dispatcher);
 
 
         public static AppCommands distill(IAppCommands[] src)
@@ -173,7 +217,7 @@ namespace Z0
             return new CmdCatalog(entries(dst));
         }
 
-        public static CmdCatalog catalog(IAppCmdDispatcher src)
+        public static CmdCatalog catalog(IWfDispatcher src)
         {
             ref readonly var defs = ref src.Commands.Defs;
             var count = defs.Count;

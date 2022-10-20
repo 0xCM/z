@@ -69,7 +69,6 @@
 
    <Import Project="$(MsBuildThisFileDirectory)src/heaps/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/hex/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/hub/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/intel.svc/exports.props"/>
 

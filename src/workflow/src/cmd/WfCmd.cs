@@ -8,7 +8,7 @@ namespace Z0
 
     using static sys;
 
-    public class WfCmd : AppCmdService<WfCmd>
+    public class WfCmd : WfAppCmd<WfCmd>
     {
         WsRegistry WsRegistry => Wf.WsRegistry();
 
@@ -17,6 +17,8 @@ namespace Z0
         DevPacks Devpacks => Wf.DevPacks();
 
         Tooling Tooling => Wf.Tooling();
+
+        Dev Dev => Dev.create(Wf);
 
         [CmdOp("zip")]
         void Zip(CmdArgs args)
@@ -29,8 +31,7 @@ namespace Z0
             var src = AppSettings.DbRoot().Scoped(folder).Root;
             var name = src.FolderName.Format();
             var file = FS.file($"{scope}.{name}", FileKind.Zip);
-            var cmd = DbCmdSpecs.archive(src, AppDb.Archive(scope).Path(file));
-            Db.zip(Channel, cmd);            
+            Db.zip(Channel, src, AppDb.Archive(scope).Path(file));
         }
 
         [CmdOp("archives")]        
@@ -172,7 +173,7 @@ namespace Z0
         {
             var dst = AppDb.Tools("z0/cmd").Targets().Root;
             var src = ExecutingPart.Assembly.Path().FolderPath;
-            Db.robocopy(src,dst);
+            Db.robocopy(Channel, src, dst);
         }
 
         [CmdOp("cmd/copy")]
@@ -180,7 +181,7 @@ namespace Z0
         {
             var src = FS.dir(arg(args,0).Value);
             var dst = FS.dir(arg(args,1).Value);
-            Db.robocopy(src,dst);
+            Db.robocopy(Channel, src, dst);
         }
 
         static Files launchers()
@@ -246,15 +247,15 @@ namespace Z0
 
         [CmdOp("env/machine")]
         void EmitMachineEnv()
-            => Env.emit(Emitter, EnvVarKind.Machine, AppDb.EnvSpecs().Root);
+            => Dev.EmitMachineEnv();
 
         [CmdOp("env/user")]
         void EmitUserEnv()
-            => Env.emit(Emitter, EnvVarKind.User, AppDb.EnvSpecs().Root);
+            => Dev.EmitUserEnv();
 
         [CmdOp("env/process")]
         void EmitProcessEnv()
-            => Env.emit(Emitter, EnvVarKind.Process, AppDb.EnvSpecs().Root);
+            => Dev.EmitProcessEnv();
 
         [CmdOp("env/pid")]
         void ProcessId()
@@ -386,7 +387,6 @@ namespace Z0
             iter(files, f => Channel.Row(((FileUri)f)));
         }        
 
-
         [CmdOp("api/emit/impls")]
         void EmitImplMaps()
         {
@@ -426,13 +426,30 @@ namespace Z0
             }
         }
 
+        [CmdOp("develop")]
+        void Develop(CmdArgs args)
+        {
+            var cd = Env.cd();
+            var workspaces = cd.Files(FS.ext("code-workspace"));
+            var preconditions = cd.Files(FileKind.Cmd).Where(p => p.FileName == FS.file("env", FileKind.Cmd));
+            if(preconditions.IsNonEmpty)
+            {
+
+            }
+
+            if(workspaces.IsNonEmpty)
+                Dev.VsCode(cd + workspaces[0].FileName);
+            else
+                Dev.VsCode(cd);            
+        }
+
         [CmdOp("devenv")]
         void DevEnv(CmdArgs args)
-            => ProcExec.start(Channel, Cmd.args("devenv.exe", args[0].Value));
+            => Dev.DevEnv(args[0].Value);
 
         [CmdOp("vscode")]
         void VsCode(CmdArgs args)
-            => ProcExec.start(Channel, Cmd.args("code.exe", args[0].Value));
+            => Dev.VsCode(args[0].Value);
 
         [CmdOp("cmd")]
         void RunCmd(CmdArgs args)
@@ -493,17 +510,6 @@ namespace Z0
         void ToolDocs(CmdArgs args)
             => iter(Tooling.LoadDocs(arg(args,0).Value), doc => Write(doc));
 
-        // static readonly Toolbase TB = new();
-
-        // [CmdOp("tool/env")]
-        // void ToolConfig(CmdArgs args)
-        // {
-        //     var tool = TB.Tool(arg(args,0).Value);
-        //     var path = tool.CfgPath();
-        //     var settings = ToolSettings.load(path);
-        //     Row(settings.Format());
-        // }
-
         [CmdOp("symlink")]
         void Link(CmdArgs args)
         {
@@ -534,7 +540,6 @@ namespace Z0
                 var options = $"-NoLogo -i -wd {text.dquote(Env.cd())}";
                 ProcExec.start(channel, new SysIO(OnA,OnB), CmdArgs.create("pwsh.exe", options), wd);
             }
-
         }
 
         [CmdOp("cmd/redirect")]

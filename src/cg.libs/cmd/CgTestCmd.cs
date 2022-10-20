@@ -7,7 +7,7 @@ namespace Z0
     using llvm;
     using Asm;
     
-    public sealed partial class CgTestCmd : AppCmdService<CgTestCmd>
+    public sealed partial class CgTestCmd : WfAppCmd<CgTestCmd>
     {
         StringTableChecks LlvmStringTableChecks => Service(() => StringTableChecks.create(Wf));
 

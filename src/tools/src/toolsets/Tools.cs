@@ -13,6 +13,7 @@ namespace Z0
     {
         
     }
+
     [ApiHost]
     public partial class Tools : ITools
     {
@@ -60,8 +61,6 @@ namespace Z0
         public static ref readonly BdDisasm bddisasm => ref BdDisasm.Instance;
 
         public static ref readonly VisualStudio msvs => ref VisualStudio.Instance;
-
-
     }
 
     partial class XTend

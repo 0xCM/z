@@ -9,10 +9,6 @@ namespace Z0
     [ApiHost, Free]
     public class Datasets
     {
-        [MethodImpl(Inline), Op]
-        public static DbArchive archive(FolderPath home)
-            => new DbArchive(home);
-
         [MethodImpl(Inline)]
         public static RecordSet<T> records<T>(T[] src)
             where T : struct

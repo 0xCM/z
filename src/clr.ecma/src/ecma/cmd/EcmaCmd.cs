@@ -8,7 +8,7 @@ namespace Z0
 
     using static sys;
 
-    class EcmaCmd : AppCmdService<EcmaCmd>
+    class EcmaCmd : WfAppCmd<EcmaCmd>
     {
         Ecma Ecma => Wf.Ecma();
 

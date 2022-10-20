@@ -8,7 +8,7 @@ namespace Z0.Roslyn
     using static Delegates;
 
     [ApiHost]
-    public sealed class RoslnCmd : AppCmdService<RoslnCmd>
+    public sealed class RoslnCmd : WfAppCmd<RoslnCmd>
     {
         [MethodImpl(Inline),Op]
         public static uint nonempty(ReadOnlySpan<CaSymbol> src, Span<CaSymbol> dst)

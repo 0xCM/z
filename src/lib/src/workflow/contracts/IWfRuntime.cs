@@ -34,6 +34,9 @@ namespace Z0
 
         WfEmit Emitter {get;}
 
+        IWfChannel Channel 
+            => Emitter;
+
         WfEventLogger EventLogger
             => x => Raise(x);
 

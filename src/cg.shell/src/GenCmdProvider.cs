@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public partial class GenCmdProvider : AppCmdService<GenCmdProvider>
+    public partial class GenCmdProvider : WfAppCmd<GenCmdProvider>
     {
 
     }

@@ -6,7 +6,7 @@ namespace Z0.llvm
 {
     using static ApiAtomic;
 
-    public partial class LlvmCmd : AppCmdService<LlvmCmd>
+    public partial class LlvmCmd : WfAppCmd<LlvmCmd>
     {
         const string llvm = nameof(llvm);
         

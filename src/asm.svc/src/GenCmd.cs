@@ -8,7 +8,7 @@ namespace Z0
 
     using static core;
 
-    public class AsmGenCmd : AppCmdService<AsmGenCmd>
+    public class AsmGenCmd : WfAppCmd<AsmGenCmd>
     {
         IntelSdm Sdm => Wf.IntelSdm();
 

@@ -4,18 +4,17 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed class CmdPublic : AppCmdService<CmdPublic>
+    public sealed class CmdPublic : WfAppCmd<CmdPublic>
     {
-        internal static CmdPublic factory(IWfRuntime wf)
+
+        public static WfContext context<C>(IWfRuntime wf)
+            where C : IAppCmdSvc, new()
         {
-            var running = wf.Running($"Creating command providers");
             GlobalServices.Instance.Inject(wf.XedRuntime());
-            var p = providers(wf);
-            wf.Ran(running,$"Created {p.Length} command providers");
-            return AppCmd.service<CmdPublic>(wf, p.Unwrap());
+            return AppCmd.context<C>(wf, () => providers(wf));            
         }
         
-        public static CmdProviders providers(IWfRuntime wf)
+        public static ReadOnlySeq<ICmdProvider> providers(IWfRuntime wf)
         {
             var providers = new ICmdProvider[]{
                 wf.ApiCmd(),
@@ -26,7 +25,6 @@ namespace Z0
                 wf.CaptureCmd(),
                 wf.AsmDbCmd(),
                 wf.EcmaCmd(),
-                wf.DbCmd(),
                 wf.LlvmCmd(),
                 wf.RoslynCmd(),
                 wf.IntelInxCmd(),
@@ -47,7 +45,7 @@ namespace Z0
                 wf.MemoryChecks(),
                 wf.CgChecks(),
                 };
-                return new CmdProviders(_ => providers);
+                return providers;
         }        
     }    
 }

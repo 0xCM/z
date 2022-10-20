@@ -14,15 +14,14 @@ namespace Z0
 
         public static void Main(params string[] args)
         {
-            using var app = AppShells.create<App>(false, args);            
-            var wf = app.Wf;
-            var running = wf.Running($"Creating command providers");
-            app.CmdService = AppCmd.service<AppShell>(wf, providers(wf));
+            using var app = AppCmd.shell<App>(false, args);
+            var context = AppCmd.context<AppShellCmd>(app.Wf, () => providers(app.Wf));
+            app.Commander = context.Commander;
             app.Run(args);            
         } 
     }
 
-    sealed class AppShell : AppCmdService<AppShell>
+    sealed class AppShellCmd : WfAppCmd<AppShellCmd>
     {
 
     }        

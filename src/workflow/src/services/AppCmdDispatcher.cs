@@ -4,34 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class AppCmdDispatcher : IAppCmdDispatcher
+    public class AppCmdDispatcher : IWfDispatcher
     {
-        public static void exec(IWfContext context, FilePath src)
-        {
-            if(src.Missing)
-            {
-                context.Channel.Error(AppMsg.FileMissing.Format(src));
-            }
-            else
-            {
-                var lines = src.ReadNumberedLines(true);
-                var count = lines.Count;
-                for(var i=0; i<count; i++)
-                {
-                    ref readonly var content = ref lines[i].Content;
-                    if(AppCmd.parse(content, out AppCmdSpec spec))
-                    {
-                        //Dispatch(spec.Name, spec.Args);
-                    }
-                    else
-                    {
-                        context.Channel.Error($"ParseFailure:'{content}'");
-                        break;
-                    }
-                }
-            }
-        }
-
         IAppCommands _Commands;
 
         Func<string,CmdArgs,Outcome> Fallback;

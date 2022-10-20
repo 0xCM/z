@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
 
     [Checker]
-    public abstract class CheckCmd<T> : AppCmdService<T>, ICheckRunner
+    public abstract class CheckCmd<T> : WfAppCmd<T>, ICheckRunner
         where T : CheckCmd<T>, new()
     {
         ConstLookup<Type,IChecker> Services;

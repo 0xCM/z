@@ -20,6 +20,6 @@ namespace Z0
             FileMode mode = FileMode.OpenOrCreate,
             FileAccess access = FileAccess.Write, 
             FileShare share = FileShare.Read) 
-                => new FileStream(src.EnsureParentExists().Name, mode, access, share);
+                => new FileStream(src.CreateParentIfMissing().Name, mode, access, share);
     }
 }

@@ -6,7 +6,7 @@ namespace Z0
 {
     using Asm;
 
-    public class AsmDbCmd : AppCmdService<AsmDbCmd>
+    public class AsmDbCmd : WfAppCmd<AsmDbCmd>
     {
         IntelSdm Sdm => Wf.IntelSdm();
 

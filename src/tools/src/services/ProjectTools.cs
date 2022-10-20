@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
     using static Build;
 
-    public class Dev : WfSvc<Dev>
+    public class ProjectTools : WfSvc<ProjectTools>
     {
         MsBuild MsBuild => Wf.BuildSvc();
         

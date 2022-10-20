@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class SosCmd : AppCmdService<SosCmd>
+    public class SosCmd : WfAppCmd<SosCmd>
     {
         ApiMd ApiMd => Wf.ApiMd();
 

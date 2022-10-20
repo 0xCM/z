@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
-    class DbCmd : AppCmdService<DbCmd>
+    partial struct FS
     {
-
+        [MethodImpl(Inline), Op]
+        public static DbArchive archive(FolderPath home)
+            => new DbArchive(home);
     }
 }

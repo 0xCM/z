@@ -7,7 +7,7 @@ namespace Z0
     using llvm;
     using static llvm.LlvmSubtarget;
 
-    public partial class ProjectSvc : AppCmdService<ProjectSvc>
+    public partial class ProjectSvc : WfAppCmd<ProjectSvc>
     {
         ToolScripts Scripts => Wf.ToolScripts();
 

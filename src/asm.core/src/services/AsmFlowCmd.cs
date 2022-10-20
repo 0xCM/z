@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class AsmFlowCmd : AppCmdService<AsmFlowCmd>
+    public class AsmFlowCmd : WfAppCmd<AsmFlowCmd>
     {
         [CmdOp("mc/cleanse")]
         Outcome ExecMcCleanse(CmdArgs args)

@@ -9,21 +9,13 @@ namespace Z0
     {
         public static void Main(params string[] args)
         {
-            using var app = AppShells.create<App>(false, args);            
-            var wf = app.Wf;
-            var running = wf.Running($"Creating command providers");
-            var providers = new ICmdProvider[]{
-                wf.WfCmd(),
-                wf.BuildCmd(),
-                wf.DbCmd() 
-            };
-            wf.Ran(running, $"Created {providers.Length} command providers");
-            app.CmdService = AppCmd.service<AppShellCmd>(wf, CmdPublic.providers(wf).Init(wf).Array());
+            using var app = AppCmd.shell<App>(false, args);            
+            app.Commander = CmdPublic.context<AppShellCmd>(app.Wf).Commander;
             app.Run(args);
         }
     }
 
-    sealed class AppShellCmd : AppCmdService<AppShellCmd>
+    sealed class AppShellCmd : WfAppCmd<AppShellCmd>
     {
 
     }

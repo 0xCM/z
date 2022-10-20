@@ -4,10 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IWfContext
+    public sealed class WfShellCmd : WfAppCmd<WfShellCmd>
     {
-        IWfChannel Channel {get;}
 
-        IWfRuntime Runtime {get;}
     }
+
 }

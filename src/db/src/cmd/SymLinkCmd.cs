@@ -7,6 +7,9 @@ namespace Z0
     [Cmd(CmdName)]
     public record struct SymLinkCmd : ICmd<SymLinkCmd>
     {            
+        public static SymLinkCmd define(FolderPath src, FolderPath dst)
+            => new SymLinkCmd(SymLinkCmd.Flag.Directory, src.ToUri(), dst.ToUri());
+
         public const string CmdName = "symlink";
 
         public FileUri Source;

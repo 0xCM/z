@@ -8,7 +8,7 @@ namespace Z0
     using static sys;
     using static XedRules;
 
-    public partial class AsmCoreCmd : AppCmdService<AsmCoreCmd>
+    public partial class AsmCoreCmd : WfAppCmd<AsmCoreCmd>
     {
         static XedRuntime Xed;
 

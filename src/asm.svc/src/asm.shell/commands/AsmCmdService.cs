@@ -6,7 +6,7 @@ namespace Z0.Asm
 {
     using static sys;
 
-    public sealed partial class AsmCmdService : AppCmdService<AsmCmdService>
+    public sealed partial class AsmCmdService : WfAppCmd<AsmCmdService>
     {
         AsmCallPipe AsmCalls => Wf.AsmCallPipe();
 

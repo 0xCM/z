@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class CsGenCmd : AppCmdService<CsGenCmd>
+    public class CsGenCmd : WfAppCmd<CsGenCmd>
     {
         [CmdOp("gen/cs/shim")]
         void GenToolShim(CmdArgs args)

@@ -57,10 +57,10 @@ namespace Z0
             get => FS.folder(Info.Name);
         }
 
-        public FilePath[] Files(FileExt ext, bool recurse = false)
+        public Files Files(FileExt ext, bool recurse = false)
             => Files(this, ext, recurse);
 
-        public FilePath[] Files(FileKind kind, bool recurse = false)
+        public Files Files(FileKind kind, bool recurse = false)
             => Files(this, kind.Ext(), recurse);
 
         public Files Files(bool recurse, params FileExt[] ext)
@@ -90,7 +90,7 @@ namespace Z0
         public Files AllFiles
             => Files(true);
 
-        FilePath[] Match(string pattern = null)
+        Files Match(string pattern = null)
             => Directory.EnumerateFiles(Name, pattern ?? SearchAll).Array().Select(x => FS.path(x));
 
         static EnumerationOptions options(bool recurse)

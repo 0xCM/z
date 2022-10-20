@@ -23,26 +23,18 @@ namespace Z0
             public IWfServices WfServices(IWfRuntime wf)
                 => Service<WfServices>(wf);
 
-            public DbCmd DbCmd(IWfRuntime wf)
-                => Service<DbCmd>(wf);
-
              public Tooling Tooling(IWfRuntime wf)
                 => Service<Tooling>(wf);
 
              public DevPacks DevPacks(IWfRuntime wf)
                 => Service<DevPacks>(wf);
 
-
             public DbArchives DbArchives(IWfRuntime wf)
                 => Service<DbArchives>(wf);
-
-
         }
 
         static ServiceCache Services => ServiceCache.Instance;
 
-        public static ICmdProvider DbCmd(this IWfRuntime wf)
-            => Services.DbCmd(wf);
 
         public static OmniScript OmniScript(this IWfRuntime wf)
             => Services.OmniScript(wf);

@@ -15,23 +15,24 @@ namespace Z0
     [Free]
     sealed class App : AppCmdShell<App>
     {
-        public static void Main(params string[] args)
-        {
-            using var app = AppShells.create<App>(false, args);            
-            var wf = app.Wf;
-            var running = wf.Running($"Creating command providers");
-            var providers = new ICmdProvider[]{
+        public static ICmdProvider[] providers(IWfRuntime wf)
+            => new ICmdProvider[]{
                 wf.WfCmd(),
                 wf.BuildCmd(),
                 wf.EcmaCmd()
             };
-            wf.Ran(running, $"Created {providers.Length} command providers");
-            app.CmdService = AppCmd.service<AppShellCmd>(wf, providers);
-            app.Run(args);
-        }
+
+        public static void Main(params string[] args)
+        {
+            using var app = AppCmd.shell<App>(false, args);
+            var context = AppCmd.context<AppShellCmd>(app.Wf, () => providers(app.Wf));
+            app.Commander = context.Commander;
+            app.Run(args);            
+        } 
+        
     }
 
-    sealed class AppShellCmd : AppCmdService<AppShellCmd>
+    sealed class AppShellCmd : WfAppCmd<AppShellCmd>
     {
 
     }

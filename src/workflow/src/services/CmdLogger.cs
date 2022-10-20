@@ -16,7 +16,7 @@ namespace Z0
         public CmdLogger(FilePath dst)
         {
             Target = dst;
-            LogStream = new FileStream(dst.EnsureParentExists().Name, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite);;
+            LogStream = new FileStream(dst.CreateParentIfMissing().Name, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite);;
         }
 
         public void Dispose()

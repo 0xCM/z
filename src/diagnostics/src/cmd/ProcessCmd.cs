@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
 
 
-    class ProcessCmd : AppCmdService<ProcessCmd>
+    class ProcessCmd : WfAppCmd<ProcessCmd>
     {
         [CmdOp("proc/memory")]
         Outcome ShowMemHex(CmdArgs args)
