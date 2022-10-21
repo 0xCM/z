@@ -5,8 +5,10 @@
 namespace Z0
 {
     [Free]
-    public interface IString : IByteSeq, IExpr
+    public interface IString : IByteSeq, IReadOnlyString
     {
+        ReadOnlySpan<byte> IReadOnlyString.Bytes
+            =>  View;
     }
 
     [Free]
@@ -17,6 +19,7 @@ namespace Z0
             => sys.recover<T,byte>(Cells);
     }
 
+ 
     [Free]
     public interface IString<F,T> : IString<T>, IEquatable<F>, IComparable<F>
         where F : IString<F,T>, new()

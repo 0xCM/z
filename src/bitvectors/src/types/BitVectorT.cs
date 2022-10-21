@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
     using api = BitVectors;
 
     public struct BitVector<T> : IBitVector<BitVector<T>,T>

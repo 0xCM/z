@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
-
     using V = BitVector4;
     using D = Byte;
     using W = W4;

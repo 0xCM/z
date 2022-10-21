@@ -4,11 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-    using System.Collections.Generic;
-
-    using static Root;
     using static core;
 
     /// <summary>
@@ -26,7 +21,7 @@ namespace Z0
         public static GfPoly<N,T> Zero => default;
 
         public static implicit operator T(GfPoly<N,T> src)
-            => convert<T>(src.Data);
+            => Numeric.force<T>(src.Data);
 
         public GfPoly(params byte[] exponents)
         {

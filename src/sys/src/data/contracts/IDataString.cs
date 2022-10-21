@@ -16,4 +16,12 @@ namespace Z0
     {
 
     }
+
+    [Free]
+    public interface IDataString<D,S> : IDataType<D>, IReadOnlyString<S>
+        where D : IDataType<D>
+        where S : unmanaged
+    {
+
+    }
 }

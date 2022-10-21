@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
-
     using V = BitVector64;
     using D = UInt64;
     using W = W64;
