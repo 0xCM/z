@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 global using static global.literals;
 global using static global.lib;
-global using static global.api;
+//global using static global.api;
 using static Z0.ApiAtomic;
 namespace global
 {

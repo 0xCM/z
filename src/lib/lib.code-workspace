@@ -4,9 +4,6 @@
 			"path": "../literals"
 		},
 		{
-			"path": "../interop"
-		},
-		{
 			"path": "../sys"
 		},
 		{
@@ -19,6 +16,9 @@
 			"path": "../text"
 		},
 		{
+			"path": "../types"
+		},
+		{
 			"path": "../cells"
 		},
 		{
@@ -26,6 +26,9 @@
 		},
 		{
 			"path": "../cmd.specs"
+		},
+		{
+			"path": "../clr.query"
 		},
 		{
 			"path": "../imagine"

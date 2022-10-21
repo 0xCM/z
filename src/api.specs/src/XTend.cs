@@ -9,4 +9,10 @@ namespace Z0
     {
         const NumericKind Closure = UnsignedInts;
     }
+
+    public static partial class XApi
+    {
+        const NumericKind Closure = UnsignedInts;
+        
+    }
 }

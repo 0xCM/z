@@ -24,16 +24,6 @@ namespace Z0
         public bool Find(@string key, out Setting setting)
             => api.search(this, key, out setting);
 
-        // public override string Format()
-        // {
-        //     var dst = text.emitter();
-        //     api.render(this, dst);
-        //     return dst.Emit();
-        // }
-
-        // public override string ToString()
-        //     => Format();
-
         [MethodImpl(Inline)]
         public static implicit operator SettingLookup(SettingLookup<T> src)
             => new SettingLookup(src.Data);

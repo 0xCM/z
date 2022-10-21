@@ -4,17 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [Flags]
-    public enum BinaryRenderKind : byte
+    partial class sys
     {
-        None = 0,
-
-        LowerHex = 1,
-
-        UpperHex = 2,
-
-        Bits = 4,
-
-        Delimited = 8,
+        [MethodImpl(Inline)]
+        public static bool tag<A>(MemberInfo src, out A dst)
+            where A : Attribute
+        {
+            dst = src.GetCustomAttribute<A>();
+            return dst != null;
+        }
     }
 }

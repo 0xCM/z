@@ -12,12 +12,6 @@ namespace Z0
 
         void Status<T>(T content, FlairKind flair = FlairKind.Status);
 
-        // void Status(ReadOnlySpan<char> src, FlairKind flair = FlairKind.Status);
-
-        // void Status(FlairKind flair, string pattern, params object[] args);
-
-        // void Status(string pattern, params object[] args);
-
         void Warn<T>(T content, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null);
 
         void Error<T>(T content, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null);

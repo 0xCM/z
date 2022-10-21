@@ -30,22 +30,5 @@ namespace Z0
             api.render(this,dst);
             return dst.Emit();
         }
-
-
-        public FolderPaths Includes()
-        {
-            if(Find("INCLUDE", out var setting))
-                if(FS.parse(setting.Value.ToString(), out FolderPaths paths))
-                    return paths;
-            return FolderPaths.Empty;
-        }
-
-        public FolderPaths Libs()
-        {
-            if(Find("LIB", out var setting))
-                if(FS.parse(setting.Value.ToString(), out FolderPaths paths))
-                    return paths;
-            return FolderPaths.Empty;
-        }
     }
 }

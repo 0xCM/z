@@ -19,10 +19,6 @@ public class PartIdAttribute : Attribute
         }
 
         return dst;
-        // if(src != null && Attribute.IsDefined(src, typeof(PartIdAttribute)))
-        //     return ((PartIdAttribute)Attribute.GetCustomAttribute(src, typeof(PartIdAttribute))).Id;
-        // else
-        //     return PartId.None;
     }
 
     static string symbol(PartId id)

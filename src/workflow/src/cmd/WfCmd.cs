@@ -34,6 +34,14 @@ namespace Z0
             Db.zip(Channel, src, AppDb.Archive(scope).Path(file));
         }
 
+        [CmdOp("robocopy")]
+        void Copy(CmdArgs args)
+        {
+            var src = FS.dir(arg(args,0).Value);
+            var dst = FS.dir(arg(args,1).Value);
+            Db.robocopy(Channel, src, dst);
+        }
+
         [CmdOp("archives")]        
         void ListArchives(CmdArgs args)
             => Emitter.Row(AppDb.Archives().Folders().Delimit(Eol));
@@ -44,7 +52,16 @@ namespace Z0
             var src = AppDb.Archive(arg(args,0).Value);
             iter(src.Files(true), file => Write(file.ToUri()));
         }
-        
+
+        [CmdOp("symlink")]
+        void Symlink(CmdArgs args)
+        {
+            var src = FS.dir(args[0]);
+            var dst = FS.dir(args[1]);
+            var result = FS.symlink(src,dst,true);
+            Channel.Status($"symlink:{src} -> {dst}");
+        }
+
         static Files search(CmdArgs args)
         {
             var src = FS.dir(arg(args,0));
@@ -81,15 +98,6 @@ namespace Z0
             Emitter.EmittedFile(flow,counter);
         }
 
-        [CmdOp("symlink")]
-        void Symlink(CmdArgs args)
-        {
-            var src = FS.dir(args[0]);
-            var dst = FS.dir(args[1]);
-            var result = FS.symlink(src,dst,true);
-            Channel.Status($"symlink:{src} -> {dst}");
-        }
-
         [CmdOp("files")]
         void CatalogFiles(CmdArgs args)
         {
@@ -122,7 +130,7 @@ namespace Z0
 
         }
 
-        [CmdOp("process/paths")]
+        [CmdOp("env/process/paths")]
         void ProcPaths()
         {
             var src = Env.process().ToLookup();
@@ -176,14 +184,6 @@ namespace Z0
             Db.robocopy(Channel, src, dst);
         }
 
-        [CmdOp("cmd/copy")]
-        void Copy(CmdArgs args)
-        {
-            var src = FS.dir(arg(args,0).Value);
-            var dst = FS.dir(arg(args,1).Value);
-            Db.robocopy(Channel, src, dst);
-        }
-
         static Files launchers()
             => FilteredArchive.match(AppSettings.Control("launch").Root, FileKind.Cmd, FileKind.Ps1);
 
@@ -194,7 +194,7 @@ namespace Z0
         }
 
         [CmdOp("launchers")]
-        protected void Launchers(CmdArgs args)
+        void Launchers(CmdArgs args)
         {
             var src = launchers();
             var emitter = text.emitter();
@@ -205,7 +205,7 @@ namespace Z0
         }
         
         [CmdOp("launch")]
-        protected void LaunchTargets(CmdArgs args)
+        void LaunchTargets(CmdArgs args)
         {
             var src = launchers().Map(x => (x.FileName,x)).ToDictionary();
             foreach(var arg in args)
@@ -386,6 +386,9 @@ namespace Z0
             var files = root.Files(false);
             iter(files, f => Channel.Row(((FileUri)f)));
         }        
+
+        void Ls(CmdArgs args)
+            => Dir(args);
 
         [CmdOp("api/emit/impls")]
         void EmitImplMaps()

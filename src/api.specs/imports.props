@@ -2,6 +2,6 @@
   <ItemGroup>
     <ProjectReference Include="$(Sys)" />
     <ProjectReference Include="$(Text)" />
-    <ProjectReference Include="$(ClrQuery)" />
+    <ProjectReference Include="$(ZLib)" />
   </ItemGroup>
 </Project>
