@@ -66,6 +66,5 @@ namespace Z0
         [MethodImpl(Inline)]
         public int CompareTo(DbDataType src)
             => Key.CompareTo(src.Key);
-    }
-    
+    }    
 }

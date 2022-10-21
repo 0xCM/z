@@ -34,14 +34,14 @@ namespace Z0
             }
         }
 
-        public static A shell<A>(bool catalog, params string[] args)
-            where A : IAppShell, new()
-        {
-            var wf = ApiRuntime.create(catalog, args);
-            var app = new A();
-            app.Init(wf);
-            return app;
-        }                    
+        // public static A shell<A>(bool catalog, params string[] args)
+        //     where A : IAppShell, new()
+        // {
+        //     var wf = ApiRuntime.create(catalog, args);
+        //     var app = new A();
+        //     app.Init(wf);
+        //     return app;
+        // }                    
 
         public static WfContext<C> context<C>(IWfRuntime wf, Func<ReadOnlySeq<ICmdProvider>> factory)
             where C : IAppCmdSvc, new()

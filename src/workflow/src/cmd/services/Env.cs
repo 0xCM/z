@@ -27,6 +27,60 @@ namespace Z0
             return new (dst.ToArray());
         }
 
+        static AppDb AppDb => AppDb.Service;
+
+        public static EnvReport report(EnvVarKind kind)
+        {
+            var _vars = vars(kind);
+            var cfg = CfgEntries.alloc(_vars.Count);
+            for(var i=0; i<cfg.Count; i++)
+            {
+                ref readonly var src = ref _vars[i];
+                cfg[i] = new CfgEntry(src.VarName, src.VarValue);
+            }
+            return new EnvReport(EnvId.Current, kind, cfg, _vars);
+        }
+
+        public static ReadOnlySeq<EnvReport> reports()
+        {
+            var dst = sys.alloc<EnvReport>(3);
+            dst[(byte)EnvVarKind.Process] = report(EnvVarKind.Process);
+            dst[(byte)EnvVarKind.User] = report(EnvVarKind.User);
+            dst[(byte)EnvVarKind.Machine] = report(EnvVarKind.Machine);            
+            return dst;        
+        }
+
+        public static ExecToken emit(IWfChannel channel, EnvReport src, IDbArchive dst)
+            => emit(channel, src.Kind, src.Vars, src.EnvId.IsEmpty ? dst.Scoped("default") : dst.Scoped(src.EnvId));
+
+        public static ExecToken EmitReport(IWfChannel channel, EnvVarKind kind, IDbArchive dst)
+        {
+            var token = ExecToken.Empty;
+            switch(kind)
+            {
+                case EnvVarKind.Process:
+                     token = Env.emit(channel, kind, dst.Root);
+                break;
+                case EnvVarKind.User:
+                    token = Env.emit(channel, kind, dst.Root);
+                break;
+                case EnvVarKind.Machine:
+                    token = Env.emit(channel, kind, dst.Root);
+                break;
+            }
+
+            return token;
+        }
+
+        public static ExecToken EmitReports(IWfChannel channel, IDbArchive dst)
+        {
+            var running = channel.Running();
+            emit(channel, EnvVarKind.Process, dst.Root);
+            emit(channel, EnvVarKind.User, dst.Root);
+            emit(channel, EnvVarKind.Machine, dst.Root);
+            return channel.Ran(running);
+        }
+
         public static FolderPath cd()
             => new(text.ifempty(Environment.CurrentDirectory, AppSettings.Default.Control().Root.Format()));
 
@@ -108,7 +162,18 @@ namespace Z0
             return dst;
         }
 
-        public static ExecToken emit(WfEmit emitter, EnvVarKind kind, FolderPath dst)
+        public static ExecToken emit(IWfChannel channel, EnvVarKind kind, EnvVars vars, IDbArchive dst)
+        {
+            var token = ExecToken.Empty;
+            if(vars.IsNonEmpty)
+            {
+                vars.Iter(v => channel.Write(v.Format()));
+                token = emit(channel, vars, kind, dst.Root);
+            }
+            return token;
+        }
+
+        public static ExecToken emit(IWfChannel channel, EnvVarKind kind, FolderPath dst)
         {
             var vars = EnvVars.Empty;
             var token = ExecToken.Empty;
@@ -125,11 +190,7 @@ namespace Z0
                 break;
             }
 
-            if(vars.IsNonEmpty)
-            {
-                vars.Iter(v => emitter.Write(v.Format()));
-                token = emit(emitter, vars, kind, dst);
-            }
+            token = emit(channel, kind, vars, new DbArchive(dst));
             return token;
         }
 
@@ -140,7 +201,7 @@ namespace Z0
                  dst.Add(new EnvVar(kind, kv.Key?.ToString() ?? EmptyString, kv.Value?.ToString() ?? EmptyString));
             return dst.ToArray().Sort();
         }
-
+        
         public static EnvVars machine()
             => vars(EnvVarKind.Machine);
 
@@ -201,6 +262,5 @@ namespace Z0
                 writer.WriteLine(src[i].Format());
             return Tables.emit(channel, records(src, name).View, table, ASCI);
         }
-
     }
 }

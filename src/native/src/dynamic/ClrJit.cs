@@ -48,22 +48,67 @@ namespace Z0
             return dst;
         }
 
+        // [Op]
+        // public static ApiMembers _jit(IApiPartCatalog catalog, WfEmit log)
+        // {
+        //     var buffer = list<ApiMember>();
+        //     //var catalog = ApiRuntime.catalog(src.Owner);
+
+        //     var types = catalog.ApiTypes;
+        //     foreach(var t in types)
+        //         buffer.AddRange(ClrJit.jit(t));
+
+        //     var hosts = catalog.ApiHosts;
+        //     foreach(var h in hosts)
+        //         buffer.AddRange(ClrJit.members(h, log));
+
+        //     return ApiQuery.members(buffer.ToArray());
+        // }
+
         [Op]
-        public static ApiMembers jit(IPart src, WfEmit log)
+        public static ApiMembers jit(ReadOnlySpan<IApiPartCatalog> src, WfEmit log, bool pll)
         {
-            var buffer = list<ApiMember>();
-            var catalog = ApiRuntime.catalog(src.Owner);
-
-            var types = catalog.ApiTypes;
-            foreach(var t in types)
-                buffer.AddRange(ClrJit.jit(t));
-
-            var hosts = catalog.ApiHosts;
-            foreach(var h in hosts)
-                buffer.AddRange(ClrJit.members(h, log));
-
-            return ApiQuery.members(buffer.ToArray());
+            var @base = Process.GetCurrentProcess().MainModule.BaseAddress;
+            var dst = sys.bag<ApiMembers>();
+            
+            iter(src, part => dst.Add(jit(part,log)), pll);
+            return ApiQuery.members(@base, dst.SelectMany(x => x).Array());
         }
+
+        [Op]
+        public static ApiMembers jit(IApiPartCatalog src, WfEmit log)
+        {
+            var dst = list<ApiMember>();
+            iter(src.ApiTypes.Select(h => h.HostType), t => dst.AddRange(complete(t,log)));
+            iter(src.ApiHosts.Select(h => h.HostType), t => dst.AddRange(jit(t, log)));
+            return ApiQuery.members(dst.ToArray());
+        }
+
+
+        // [Op]
+        // public static ApiMembers jit(Assembly src, WfEmit log)
+        // {
+        //     jit(ApiRuntime.catalog(src), log);
+
+        // }
+
+
+        // [Op]
+        // public static ApiMembers jit(IPart src, WfEmit log)
+        // {
+        //     var buffer = list<ApiMember>();
+        //     var catalog = ApiRuntime.catalog(src.Owner);
+
+        //     var types = catalog.ApiTypes;
+        //     foreach(var t in types)
+        //         buffer.AddRange(ClrJit.jit(t));
+
+        //     var hosts = catalog.ApiHosts;
+        //     foreach(var h in hosts)
+        //         buffer.AddRange(ClrJit.members(h, log));
+
+        //     return ApiQuery.members(buffer.ToArray());
+        // }
 
         [Op, MethodImpl(Inline)]
         static MemoryAddress fptr(MethodInfo src)
@@ -132,31 +177,20 @@ namespace Z0
             where D : Delegate
                 => jit(src.Untyped);
 
-        [Op]
-        public static ApiMembers jit(ReadOnlySpan<Assembly> src, WfEmit log, bool pll)
-        {
-            var @base = Process.GetCurrentProcess().MainModule.BaseAddress;
-            var dst = sys.bag<ApiMembers>();
-            iter(src, part => dst.Add(jit(part,log)), pll);
-            return ApiQuery.members(@base, dst.SelectMany(x => x).Array());
-        }
+
+        // [Op]
+        // public static ApiMembers jit(ReadOnlySpan<Assembly> src, WfEmit log, bool pll)
+        // {
+        //     var @base = Process.GetCurrentProcess().MainModule.BaseAddress;
+        //     var dst = sys.bag<ApiMembers>();
+            
+        //     iter(src, part => dst.Add(jit(part,log)), pll);
+        //     return ApiQuery.members(@base, dst.SelectMany(x => x).Array());
+        // }
 
         [Op]
         public static Index<ApiMember> complete(Type src, WfEmit log)
             => members(complete(src, CommonExclusions).Select(m => new JittedMethod(src.ApiHostUri(), m, jit(m))));
-
-        [Op]
-        public static ApiMembers jit(IApiPartCatalog src, WfEmit log)
-        {
-            var dst = list<ApiMember>();
-            iter(src.ApiTypes.Select(h => h.HostType), t => dst.AddRange(complete(t,log)));
-            iter(src.ApiHosts.Select(h => h.HostType), t => dst.AddRange(jit(t, log)));
-            return ApiQuery.members(dst.ToArray());
-        }
-
-        [Op]
-        public static ApiMembers jit(Assembly src, WfEmit log)
-            => jit(ApiRuntime.catalog(src), log);
 
         [Op]
         public static MethodInfo[] complete(Type src, HashSet<string> exclusions)

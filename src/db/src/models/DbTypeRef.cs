@@ -5,23 +5,20 @@
 namespace Z0
 {
     [StructLayout(LayoutKind.Sequential,Pack=1)]
-    public readonly record struct DbColType : IEntity<DbColType,uint>
+    public readonly record struct DbTypeRef
     {
         public readonly uint Key;
 
         public readonly Name TypeName;
 
         [MethodImpl(Inline)]
-        public DbColType(uint key, Name name)
+        public DbTypeRef(uint key, Name name)
         {
             Key = key;
             TypeName = name;
         }
 
-        uint IKeyed<uint>.Key
-            => Key;
-
-        public int CompareTo(DbColType src)
+        public int CompareTo(DbTypeRef src)
             => TypeName.CompareTo(src.TypeName);
 
         public string Format()

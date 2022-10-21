@@ -6,7 +6,7 @@ namespace Z0
 {
     public sealed record class AppServiceSpec : ServiceSpec<IAppService>
     {
-        internal AppServiceSpec(Type host, MethodInfo[] factories)
+        public AppServiceSpec(Type host, MethodInfo[] factories)
             : base(host, factories)
         {
 

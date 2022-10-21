@@ -20,6 +20,8 @@ namespace Z0
 
         Dev Dev => Dev.create(Wf);
 
+        EnvSvc EnvSvc => Wf.EnvSvc();
+
         [CmdOp("zip")]
         void Zip(CmdArgs args)
         {
@@ -236,26 +238,34 @@ namespace Z0
             Write(ApiRuntime.services(ApiCatalog.Components));
         }
 
-        [CmdOp("env/report")]
+        void SpecifyEnvId(CmdArgs args)
+        {
+            var id = EnvId.Current;
+            
+        }
+
+        [CmdOp("env/reports")]
         void EmitEnv(CmdArgs args)
         {
-            var dst = AppDb.AppData("env").Root;
-            Env.emit(Emitter, EnvVarKind.Process, dst);
-            Env.emit(Emitter, EnvVarKind.User, dst);
-            Env.emit(Emitter, EnvVarKind.Machine, dst);
+            EnvSvc.EmitReports(AppDb.AppData("env"));
+                
+            // var dst = AppDb.AppData("env").Root;
+            // Env.emit(Emitter, EnvVarKind.Process, dst);
+            // Env.emit(Emitter, EnvVarKind.User, dst);
+            // Env.emit(Emitter, EnvVarKind.Machine, dst);
         }
 
         [CmdOp("env/machine")]
         void EmitMachineEnv()
-            => Dev.EmitMachineEnv();
+            => EnvSvc.EmitReport(EnvVarKind.Machine, AppDb.AppData("env"));
 
         [CmdOp("env/user")]
         void EmitUserEnv()
-            => Dev.EmitUserEnv();
+            => EnvSvc.EmitReport(EnvVarKind.User, AppDb.AppData("env"));
 
         [CmdOp("env/process")]
         void EmitProcessEnv()
-            => Dev.EmitProcessEnv();
+            => EnvSvc.EmitReport(EnvVarKind.Process, AppDb.AppData($"env/{Environment.ProcessId}"));
 
         [CmdOp("env/pid")]
         void ProcessId()

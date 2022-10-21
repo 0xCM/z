@@ -10,6 +10,54 @@ namespace Z0
 
     public partial class MemDb : IMemDb
     {
+        public static void check(IWfChannel channel)
+        {
+            check(channel, (32,32));
+            check(channel, (12,12));
+            check(channel, (8,8));
+            check(channel, (256,256));
+        }
+
+        public static void check(IWfChannel channel, Dim2<uint> shape)
+        {
+            var r = shape.I;
+            var c = shape.J;
+            var m = (uint)(r*c);
+            var grid = MemDb.grid<byte>(shape);
+            ref readonly var rows = ref grid.Rows;
+            for(var i=0u; i<r; i++)
+            {
+                for(var j=0u; j<c; j++)
+                    rows[i,j] = (byte)math.mod((i*c + j), r) ;
+            }
+
+            var cols = rows.Columns();
+            var rDst = text.emitter();
+            var cDst = text.emitter();
+
+            for(var i=0u; i<r; i++)
+            {
+                for(var j=0u; j<c; j++)
+                {
+                    rDst.AppendFormat("{0:X2} | ", rows[i,j]);
+                    cDst.AppendFormat("{0:X2} | ", cols[i,j]);
+                }
+
+                rDst.AppendLine();
+                cDst.AppendLine();
+            }
+
+            var linear = Points.multilinear(shape);
+            var lDst = text.emitter();
+            Points.render(linear, lDst);
+
+            var scope = "memdb";
+            var suffix = $"{r}x{c}";
+            channel.FileEmit(lDst.Emit(), linear.Count, AppDb.Service.Logs().Targets(scope).Path($"{scope}.linear.{suffix}", FileKind.Csv));
+            channel.FileEmit(rDst.Emit(), m, AppDb.Service.Logs().Targets(scope).Path($"{scope}.rows.{suffix}", FileKind.Txt), TextEncodingKind.Asci);
+            channel.FileEmit(cDst.Emit(), m, AppDb.Service.Logs().Targets(scope).Path($"{scope}.cols.{suffix}", FileKind.Txt), TextEncodingKind.Asci);
+        }
+
         [MethodImpl(Inline)]
         public static ref num4 read(ReadOnlySpan<byte> src, uint index, out num4 dst)
         {

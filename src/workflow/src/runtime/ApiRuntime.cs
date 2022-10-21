@@ -8,6 +8,15 @@ namespace Z0
 
     public class ApiRuntime : ApiRuntime<ApiRuntime>
     {        
+        public static A shell<A>(bool catalog, params string[] args)
+            where A : IAppShell, new()
+        {
+            var wf = ApiRuntime.create(catalog, args);
+            var app = new A();
+            app.Init(wf);
+            return app;
+        }                    
+
         public static ApiPartCatalog catalog(Assembly src)
             => new ApiPartCatalog(src.PartName(), src, complete(src), hosts(src), SvcHostTypes(src));
 

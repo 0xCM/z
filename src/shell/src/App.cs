@@ -16,14 +16,14 @@ namespace Z0
         public static void main()
         {
             var args = sys.empty<string>();
-            using var app = AppCmd.shell<App>(false, args);
+            using var app = ApiRuntime.shell<App>(false, args);
 
         }        
 
         static int main(string[] args)
         {
             var result = 0;
-            using var app = AppCmd.shell<App>(false, args);
+            using var app = ApiRuntime.shell<App>(false, args);
             var context = AppCmd.context<AppShellCmd>(app.Wf, () => providers(app.Wf));
             var channel = context.Channel;
             app.Commander = context.Commander;

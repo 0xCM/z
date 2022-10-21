@@ -31,6 +31,9 @@ namespace Z0
 
             public DbArchives DbArchives(IWfRuntime wf)
                 => Service<DbArchives>(wf);
+
+            public EnvSvc EnvSvc(IWfRuntime wf)
+                => Service<EnvSvc>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
@@ -53,11 +56,14 @@ namespace Z0
 
         public static DevPacks DevPacks(this IWfRuntime wf)
             => Services.DevPacks(wf);
-       public static Tooling Tooling(this IWfRuntime wf)
+        public static Tooling Tooling(this IWfRuntime wf)
             => Services.Tooling(wf);             
 
         public static DbArchives DbArchive(this IWfRuntime wf)
             => Services.DbArchives(wf);                
+
+        public static EnvSvc EnvSvc(this IWfRuntime wf)
+            => Services.EnvSvc(wf);                
 
     }
 }

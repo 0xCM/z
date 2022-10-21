@@ -9,7 +9,7 @@ namespace Z0
     {
         public static void Main(params string[] args)
         {
-            using var app = AppCmd.shell<App>(false, args);            
+            using var app = AppCmdShell.create<App>(false, args);            
             app.Commander = CmdPublic.context<AppShellCmd>(app.Wf).Commander;
             app.Run(args);
         }

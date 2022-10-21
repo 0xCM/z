@@ -13,11 +13,7 @@ namespace Z0
         [CmdOp("xed/db/check")]
         void CheckMemDb()
         {
-            CheckMemDb((32,32));
-            CheckMemDb((12,12));
-            CheckMemDb((8,8));
-            CheckMemDb((256,256));
-
+            MemDb.check(Channel);
             var size = 1073741824ul;
             var mb = size/1024;
             var db = Xed.XedDb.Store;
@@ -25,46 +21,6 @@ namespace Z0
             var src = XedDb.InstDumpFile();
             var data = src.View();
             var token = db.Store(data);
-        }
-
-        void CheckMemDb(Dim2<uint> shape)
-        {
-            var r = shape.I;
-            var c = shape.J;
-            var m = (uint)(r*c);
-            var grid = MemDb.grid<byte>(shape);
-            ref readonly var rows = ref grid.Rows;
-            for(var i=0u; i<r; i++)
-            {
-                for(var j=0u; j<c; j++)
-                    rows[i,j] = (byte)math.mod((i*c + j), r) ;
-            }
-
-            var cols = rows.Columns();
-            var rDst = text.emitter();
-            var cDst = text.emitter();
-
-            for(var i=0u; i<r; i++)
-            {
-                for(var j=0u; j<c; j++)
-                {
-                    rDst.AppendFormat("{0:X2} | ", rows[i,j]);
-                    cDst.AppendFormat("{0:X2} | ", cols[i,j]);
-                }
-
-                rDst.AppendLine();
-                cDst.AppendLine();
-            }
-
-            var linear = Points.multilinear(shape);
-            var lDst = text.emitter();
-            Points.render(linear, lDst);
-
-            var scope = "memdb";
-            var suffix = $"{r}x{c}";
-            FileEmit(lDst.Emit(), linear.Count, AppDb.Logs().Targets(scope).Path($"{scope}.linear.{suffix}", FileKind.Csv));
-            FileEmit(rDst.Emit(), m, AppDb.Logs().Targets(scope).Path($"{scope}.rows.{suffix}", FileKind.Txt), TextEncodingKind.Asci);
-            FileEmit(cDst.Emit(), m, AppDb.Logs().Targets(scope).Path($"{scope}.cols.{suffix}", FileKind.Txt), TextEncodingKind.Asci);
         }
 
         public void CheckRules()

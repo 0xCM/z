@@ -8,6 +8,9 @@ namespace Z0
     {
         [Op]
         public static ReadOnlySeq<ApiEncoded> collect(ICompositeDispenser symbols, IPart src, WfEmit log)
-            => gather(entries(ClrJit.jit(src, log)), symbols, log);
+        {
+            var catalog = ApiRuntime.catalog(src.Owner);
+            return gather(entries(ClrJit.jit(catalog, log)), symbols, log);
+        }
     }
 }

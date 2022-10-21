@@ -19,6 +19,12 @@ namespace Z0
         {
 
         }
+        
+        public static S alloc(uint count)
+        {
+            var dst = new S();
+            return dst.Alloc(count);
+        }
 
         public S Alloc(uint count)
         {

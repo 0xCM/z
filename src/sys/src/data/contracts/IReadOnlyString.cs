@@ -14,6 +14,9 @@ namespace Z0
     public interface IReadOnlyString<T> : IReadOnlyString
         where T : unmanaged
     {
-        ReadOnlySeq<T> Cells {get;}
+        ReadOnlySpan<T> Cells {get;}
+
+        ReadOnlySpan<byte> IReadOnlyString.Bytes
+            => sys.recover<T,byte>(Cells);
     }
 }
