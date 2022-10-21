@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Root;
 
     partial struct SpanBlocks
     {

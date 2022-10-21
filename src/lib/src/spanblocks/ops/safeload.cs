@@ -4,10 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     using static CellCalcs;
-    using static core;
+    using static sys;
 
     partial struct SpanBlocks
     {

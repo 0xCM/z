@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
-    
     /// <summary>
     /// Defines a shared context for a set of agents
     /// </summary>

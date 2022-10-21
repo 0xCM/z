@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Free]
-    sealed class AppCmdShell : AppShell<AppCmdShell>
+    sealed class CgShell : AppShell<CgShell>
     {
         IAppCmdSvc CmdService;
 

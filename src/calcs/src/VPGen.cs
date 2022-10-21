@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static gcpu;
-    using static core;
+    using static sys;
     using static Numeric;
     using static Limits;
 
