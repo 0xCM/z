@@ -125,8 +125,8 @@ public enum PartId : byte
     [Symbol("builds")]
     Builds,
 
-    [Symbol("clr.checks")]
-    ClrChecks,
+    [Symbol("llvm")]
+    LlvmShell,
 
     [Symbol("clr.query")]
     ClrQuery,

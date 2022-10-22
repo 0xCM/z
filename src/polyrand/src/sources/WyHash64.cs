@@ -20,9 +20,9 @@ namespace Z0
         public static ulong next(ref G g)
         {
             g.State += X1;
-            Math128.mul(g.State, X2, out var Y1);
+            UInt128.mul(g.State, X2, out var Y1);
             var m1 = Y1.Lo ^ Y1.Hi;
-            Math128.mul(m1, X3, out var Y2);
+            UInt128.mul(m1, X3, out var Y2);
             var m2 = Y2.Lo ^ Y2.Hi;
             return m2;
         }

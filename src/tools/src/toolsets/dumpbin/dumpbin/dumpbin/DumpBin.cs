@@ -77,7 +77,7 @@ namespace Z0
             var emitter = text.emitter();
             foreach(var module in src)
                 emitter.AppendLine(Expr(cmd, module.Location, output).Format());
-            return ProcExec.script(name, emitter.Emit());
+            return ProcessControl.script(name, emitter.Emit());
         }
 
         public CmdScriptExpr Expr(CmdName name, FilePath src, IDbTargets dst)
@@ -153,7 +153,7 @@ namespace Z0
                 vars.DstDir = dst.Root;
                 vars.SrcDir = path.FolderPath;
                 vars.SrcFile = path.FileName;
-                ProcExec.start(cmd, vars.ToCmdVars(), response => {}, Emitter);
+                ProcessControl.start(cmd, vars.ToCmdVars(), response => {}, Emitter);
             }
         }
 

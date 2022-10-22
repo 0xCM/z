@@ -25,13 +25,13 @@
 			"path": "../native"
 		},
 		{
+			"path": "../symbolics"
+		},
+		{
 			"path": "../process"
 		},
 		{
 			"path": "../workflow"
-		},
-		{
-			"path": "../process"
 		},
 		{
 			"path": "../builds"
@@ -41,7 +41,7 @@
 		},
 		{
 			"path": "."
-		},
+		}
 	],
 	"settings": {}
 }

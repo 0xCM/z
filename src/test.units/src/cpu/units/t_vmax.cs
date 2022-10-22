@@ -4,10 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
-    using static Root;
-
     public class t_vmax : t_inx<t_vmax>
     {
         public void vmax_check()

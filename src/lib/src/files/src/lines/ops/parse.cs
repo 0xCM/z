@@ -19,28 +19,6 @@ namespace Z0
         }
 
 
-        [Parser]
-        public static Outcome parse(string src, out FilePoint dst)
-        {
-            dst = FilePoint.Empty;
-            var indices = text.indices(src,Chars.Colon);
-            if(indices.Length < 2)
-                return false;
-
-            var j = indices.Length -1;
-            ref readonly var i0 = ref indices[j-1];
-            ref readonly var i1 = ref indices[j];
-            var l = text.inside(src,i0,i1);
-            var c = text.right(src, i1);
-            if(uint.TryParse(l, out var line) && uint.TryParse(c, out var col))
-            {
-                var loc = (line,col);
-                var path = FS.path(text.left(src,i0));
-                dst = new FilePoint(path,loc);
-            }
-            return true;
-        }
-
         static Fence<char> RangeFence
             => (Chars.LBracket, Chars.RBracket);
 

@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     public class t_bits_split : t_bits<t_bits_split>
     {
         public void split_16x8()

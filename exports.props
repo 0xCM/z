@@ -11,6 +11,8 @@
    <Import Project="$(MsBuildThisFileDirectory)src/asm.prototypes/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/asm.svc/exports.props"/>
 
+   <Import Project="$(MsBuildThisFileDirectory)src/llvm.shell/exports.props"/>
+
    <Import Project="$(MsBuildThisFileDirectory)src/sys/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/text/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/bit/exports.props"/>
@@ -37,7 +39,6 @@
 
    <Import Project="$(MsBuildThisFileDirectory)src/clr.query/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/clr.cil/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/clr.checks/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/clr.ecma/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/capture/exports.props"/>

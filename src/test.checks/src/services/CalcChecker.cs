@@ -151,8 +151,8 @@ namespace Z0
         void Run(N30 n)
         {
             var x0 = "0x3412a";
-            var x1 = uint128.Zero;
-            var result = Math128.parse(x0, out x1);
+            var x1 = UInt128.Zero;
+            var result = math.parse(x0, out x1);
             if(result)
             {
                 var x2 = x1.Format();

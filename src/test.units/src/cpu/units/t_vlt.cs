@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Root;
-
     public class t_vlt : t_inx<t_vlt>
     {
         public void vlt_check()

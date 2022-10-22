@@ -2,5 +2,6 @@
   <ItemGroup>
     <ProjectReference Include="$(ZLib)" />
     <ProjectReference Include="$(Process)" />
+    <ProjectReference Include="$(Db)" />
   </ItemGroup>
 </Project>

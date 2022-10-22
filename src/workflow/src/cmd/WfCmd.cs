@@ -44,6 +44,18 @@ namespace Z0
             Db.robocopy(Channel, src, dst);
         }
 
+        [CmdOp("env/include")]
+        void EnvInclude()
+            => Channel.Row(Env.paths(EnvTokens.Include, EnvVarKind.Process).Delimit(Chars.NL));
+
+        [CmdOp("env/path")]
+        void EnvPath()
+            => Channel.Row(Env.paths(EnvTokens.Path, EnvVarKind.Process).Delimit(Chars.NL));
+
+        [CmdOp("env/lib")]
+        void EnvLib()
+            => Channel.Row(Env.paths(EnvTokens.Lib, EnvVarKind.Process).Delimit(Chars.NL));
+
         [CmdOp("archives")]        
         void ListArchives(CmdArgs args)
             => Emitter.Row(AppDb.Archives().Folders().Delimit(Eol));
@@ -78,26 +90,6 @@ namespace Z0
             {
                 return src.Files(true);
             }            
-        }
-
-        void _CatalogFiles(CmdArgs args)
-        {
-            var src = FS.dir(arg(args,0));
-            var filter = args.Count > 1 ? args[1].Value : EmptyString;
-            var files = ListedFiles.listing(src,true);
-            var name = Archives.identifier(src);
-            var records = AppDb.Catalogs("files").Table<ListedFile>(name);
-            Emitter.TableEmit(files, records);            
-            var list = AppDb.Catalogs("files").Path(name,FileKind.List);
-            var flow = Emitter.EmittingFile(list);
-            using var writer = list.Utf8Writer();
-            var counter = 0u;
-            foreach(var file in files)
-            {
-                writer.AppendLine(file.Path);
-                counter++;
-            }
-            Emitter.EmittedFile(flow,counter);
         }
 
         [CmdOp("files")]
@@ -189,11 +181,9 @@ namespace Z0
         static Files launchers()
             => FilteredArchive.match(AppSettings.Control("launch").Root, FileKind.Cmd, FileKind.Ps1);
 
-        [CmdOp("captured")]
-        void Captured()
-        {
-            
-        }
+        [CmdOp("shell")]
+        void LaunchDevshell()
+            => ProcessControl.start(Channel, CmdArgs.create($"{AppSettings.EnvRoot()}/shell.cmd"));
 
         [CmdOp("launchers")]
         void Launchers(CmdArgs args)
@@ -216,7 +206,7 @@ namespace Z0
                 var path = FilePath.Empty;
                 if(src.TryGetValue(file, out path))
                 {
-                    ProcExec.start(ProcExec.cmdline(path));
+                    ProcessControl.start(ProcessControl.cmdline(path));
                     Status($"Script {path.ToUri()} executing", FlairKind.Ran);
                 }
                 else
@@ -238,22 +228,31 @@ namespace Z0
             Write(ApiRuntime.services(ApiCatalog.Components));
         }
 
-        void SpecifyEnvId(CmdArgs args)
+        [CmdOp("env/id")]
+        void EvId(CmdArgs args)
         {
-            var id = EnvId.Current;
-            
+            var id = Env.EnvId;
+            var msg = EmptyString;
+            if(args.IsNonEmpty)
+            {
+                Env.EnvId = args.First.Value;
+                if(id.IsNonEmpty)
+                    msg = $"{id} -> {Env.EnvId}";
+                else
+                    msg = $"{Env.EnvId}";
+            }
+            else
+            {
+                if(id.IsNonEmpty)
+                    msg = id;
+            }
+            if(nonempty(msg))
+                Channel.Write(msg);            
         }
 
         [CmdOp("env/reports")]
         void EmitEnv(CmdArgs args)
-        {
-            EnvSvc.EmitReports(AppDb.AppData("env"));
-                
-            // var dst = AppDb.AppData("env").Root;
-            // Env.emit(Emitter, EnvVarKind.Process, dst);
-            // Env.emit(Emitter, EnvVarKind.User, dst);
-            // Env.emit(Emitter, EnvVarKind.Machine, dst);
-        }
+            => EnvSvc.EmitReports(AppDb.AppData("env"));
 
         [CmdOp("env/machine")]
         void EmitMachineEnv()
@@ -313,32 +312,6 @@ namespace Z0
         void Cwd()
             => Write(FS.dir(Environment.CurrentDirectory)); 
 
-        const string RegKey = @"HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment";
-
-        static CmdScript unset(CmdArg src)
-            => ProcExec.script("unset", $"reg delete \"{RegKey}\" /F /V {src.Value}");
-
-        static Task<ExecToken> start(CmdScript src, WfEmit channel)
-        {
-            ExecToken run()
-            {
-                var flow = channel.Running($"Executing script {src.Name}");
-                ProcExec.run(src);                
-                return channel.Ran(flow, $"Completed script execution {src.Name}");
-            }
-            return sys.start(run);
-        }
-
-        void ExecUnset(CmdArgs args)
-        {
-            var scripts = map(args,unset);
-            iter(scripts, script => start(script,Emitter));
-        }
-
-        [CmdOp("env/unset")]
-        void Unset(CmdArgs args)
-            => ExecUnset(args);
-
         [CmdOp("memory/query")]
         void QueryMemory(CmdArgs args)
         {            
@@ -383,6 +356,12 @@ namespace Z0
             if(args.Count == 1)
                 Environment.CurrentDirectory = args.First.Value;
             Channel.Row(Env.cd());
+        }
+
+        void Where(CmdArgs args)
+        {
+            var search = args[0];
+
         }
 
         [CmdOp("dir")]
@@ -466,14 +445,14 @@ namespace Z0
 
         [CmdOp("cmd")]
         void RunCmd(CmdArgs args)
-            => ProcExec.start(Channel, args);
+            => ProcessControl.start(Channel, args);
 
         [CmdOp("help")]
         void GetHelp(CmdArgs args)
         {
             var tool = args[0].Value;
             var dst = AppDb.DbTargets("tools/help").Path(FS.file(tool, FileKind.Help));        
-            ProcExec.run(Channel, tool, "--help", args, dst);
+            ProcessControl.run(Channel, tool, "--help", args, dst);
         }
 
         [CmdOp("tool")]
@@ -491,24 +470,23 @@ namespace Z0
                 emitter.Append(args[i].Value);
             }
             
-            ProcExec.start(Channel, CmdTerm.cmd(path, CmdKind.Tool, emitter.Emit()));        
+            ProcessControl.start(Channel, CmdTerm.cmd(path, CmdKind.Tool, emitter.Emit()));        
         }
-
 
         [CmdOp("tool/shim")]
         void RunShim(CmdArgs args)
         {
-            var count = args.Length;
-            if(count < 3)
-            {
-                Error($"Not enough");
-                return;                
-            }
+            // var count = args.Length;
+            // if(count < 3)
+            // {
+            //     Error($"Not enough");
+            //     return;                
+            // }
 
-            var values = args.Values().View;
-            var def = ToolShims.validate(ToolShims.parse(slice(values,0,3).ToArray()));            
-            var ops = slice(values,3).ToArray();
-            var task = ToolShims.start(def,Emitter,slice(values,3).ToArray());
+            // var values = args.Values().View;
+            // var def = ToolShims.validate(ToolShims.parse(slice(values,0,3).ToArray()));            
+            // var ops = slice(values,3).ToArray();
+            // var task = ToolShims.start(def,Emitter,slice(values,3).ToArray());
         }
 
         [CmdOp("tool/script")]
@@ -530,7 +508,7 @@ namespace Z0
             var src = text.quote(FS.dir(arg(args,0).Value).Format(PathSeparator.BS));
             var dst = text.quote(FS.dir(arg(args,1).Value).Format(PathSeparator.BS));
             var cmd = CmdTerm.cmd(string.Format(Pattern,src,dst));
-            ProcExec.run(cmd);
+            ProcessControl.run(cmd);
         }
 
         [CmdOp("dev")]
@@ -551,28 +529,12 @@ namespace Z0
             {
                 var wd = Env.cd();
                 var options = $"-NoLogo -i -wd {text.dquote(Env.cd())}";
-                ProcExec.start(channel, new SysIO(OnA,OnB), CmdArgs.create("pwsh.exe", options), wd);
+                ProcessControl.start(channel, new SysIO(OnA,OnB), CmdArgs.create("pwsh.exe", options), wd);
             }
         }
 
         [CmdOp("cmd/redirect")]
-        void CmdIo(CmdArgs args)
-        {
-            //var exe = FS.path(args[0]);
-            // var a = FS.path(args[1]);
-            // var b = FS.path(args[2]);
-            
-            void OnA(string msg)
-            {
-                Channel.Row(msg, FlairKind.Data);
-            }
-
-            void OnB(string msg)
-            {
-                Channel.Row(msg, FlairKind.StatusData);
-            }
-
-            ProcExec.start(Channel, new SysIO(OnA,OnB), args);
-        }
+        void Redirect(CmdArgs args)
+            => Dev.Redirect(args);
     }
 }

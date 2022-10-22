@@ -4,12 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.Intrinsics;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
-    using static core;
+    using static sys;
     using static cpu;
 
     public class t_vgather : t_inx<t_vgather>

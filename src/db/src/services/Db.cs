@@ -13,7 +13,7 @@ namespace Z0
         const string group = "db";
 
         public static Task<ExecToken> robocopy(IWfChannel channel, FolderPath src, FolderPath dst)
-            => ProcExec.start(channel, $"robocopy {src} {dst} /e");
+            => ProcessControl.start(channel, $"robocopy {src} {dst} /e");
 
         public static Task<ExecToken> zip(IWfChannel channel, FolderPath src, FilePath dst)
         {

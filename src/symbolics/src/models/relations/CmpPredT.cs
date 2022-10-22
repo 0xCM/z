@@ -25,10 +25,10 @@ namespace Z0
                 Kind = kind;
             }
 
-            T IFreeCmpPred<CmpPred<T>, T>.Left
+            T IFreeCmpPred<CmpPred<T>,T>.Left
                 => Left;
 
-            T IFreeCmpPred<CmpPred<T>, T>.Right
+            T IFreeCmpPred<CmpPred<T>,T>.Right
                 => Right;
 
             CmpPredKind IKinded<CmpPredKind>.Kind

@@ -5,7 +5,7 @@
 namespace Z0
 {
     [StructLayout(LayoutKind.Sequential,Pack=1), Settings(Id)]
-    public record struct CaptureWfSettings : IWfSettings<CaptureWfSettings>
+    public record struct CaptureWfSettings : ISettings<CaptureWfSettings>
     {
         const string Id = "capture";
 
@@ -40,7 +40,7 @@ namespace Z0
             Parts = sys.empty<PartName>();
         }
 
-        public static IWfSettings<CaptureWfSettings> Default
+        public static ISettings<CaptureWfSettings> Default
             => new CaptureWfSettings();
     }    
 }

@@ -6,7 +6,7 @@ namespace Z0
 {
     using System.IO;
 
-    struct WfEventLog : IWfEventLog
+    public struct WfEventLog : IWfEventLog
     {
         public FilePath StatusPath {get;}
 

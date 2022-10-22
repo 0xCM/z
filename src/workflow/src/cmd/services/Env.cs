@@ -9,6 +9,12 @@ namespace Z0
     [ApiHost]
     public class Env
     {
+        public static EnvId EnvId 
+        {
+            get => var(EnvVarKind.Process, nameof(EnvId), x => new EnvId(x));
+            set => apply(new EnvVar(EnvVarKind.Process, nameof(EnvId), value.Format()));
+        }
+
         public static CfgEntries cfg(FilePath src)
         {
             var dst = list<CfgEntry>();
@@ -91,38 +97,17 @@ namespace Z0
             return cd();
         }
 
+        public static void cd(FolderPath dst)
+            => Environment.CurrentDirectory = dst.Format(PathSeparator.BS);
+
         static DbArchive archive(string src)
             => new DbArchive(FS.dir(src));
 
-        public static FolderPaths includes(SettingLookup src)
+        public static FolderPaths paths(string name, EnvVarKind kind)
         {
-            if(Settings.search(src,"INCLUDE", out var setting))
-                if(FS.parse(setting.Value.ToString(), out FolderPaths paths))
-                    return paths;
-            return FolderPaths.Empty;
-        }
-
-        public static FolderPaths includes(EnvVarKind kind)
-        {
-            var dst = FolderPaths.Empty;
-            var(kind,"PATH", s => FS.parse(s, out FolderPaths dst));
-            return dst;
-        }
-
-        public FolderPaths libs(SettingLookup src)
-        {
-            if(Settings.search(src,"LIB", out var setting))
-                if(FS.parse(setting.Value.ToString(), out FolderPaths paths))
-                    return paths;
-            return FolderPaths.Empty;
-        }
-
-        public FolderPaths paths(SettingLookup src)
-        {
-            if(Settings.search(src,"PATH", out var setting))
-                if(FS.parse(setting.Value.ToString(), out FolderPaths paths))
-                    return paths;
-            return FolderPaths.Empty;
+            var value = Environment.GetEnvironmentVariable(name, (EnvironmentVariableTarget)kind);
+            var values = text.split(value,Chars.Semicolon).Sort();
+            return map(values, FS.dir);
         }
 
         public static DbArchive NUGET_PACKAGES()
@@ -210,6 +195,9 @@ namespace Z0
 
         public static EnvVars process()
             => vars(EnvVarKind.Process);
+
+        public static void apply(EnvVar src)
+            => Environment.SetEnvironmentVariable(src.VarName, src.VarValue, (EnvironmentVariableTarget)src.Kind);
 
         public static Index<EnvVarRow> records(EnvVars src, string name)
         {

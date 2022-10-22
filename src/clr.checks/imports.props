@@ -1,7 +1,0 @@
-<Project>
-  <Import Project="$(ProjectProps)\libs.props"/>
-  <ItemGroup>
-    <ProjectReference Include="$(ClrEcma)" />
-    <ProjectReference Include="$(ClrQuery)" />
-  </ItemGroup>
-</Project>

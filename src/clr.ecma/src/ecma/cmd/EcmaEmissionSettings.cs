@@ -5,7 +5,7 @@
 namespace Z0
 {
     [StructLayout(LayoutKind.Sequential,Pack=1), Settings(Id)]
-    public record struct EcmaEmissionSettings : IWfSettings<EcmaEmissionSettings>
+    public record struct EcmaEmissionSettings : ISettings<EcmaEmissionSettings>
     {
         const string Id = "cli.options";
 

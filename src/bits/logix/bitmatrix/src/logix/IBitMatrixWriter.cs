@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     public interface IBitMatrixWriter : IArchiveWriter
     {
         void Write<T>(in BitMatrix<T> src)

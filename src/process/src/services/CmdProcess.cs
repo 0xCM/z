@@ -21,19 +21,19 @@ namespace Z0
     /// </summary>
     public sealed class CmdProcess : ICmdProcess<CmdProcess>
     {
-        public static ref CmdExecStatus status(CmdProcess src, ref CmdExecStatus dst)
-        {
-            dst.Id = src.Process.Id;
-            dst.StartTime = src.StartTime;
-            dst.HasExited = src.Finished;
-            if(src.Finished)
-            {
-                dst.ExitTime = src.ExitTime;
-                dst.Duration = dst.ExitTime - dst.StartTime;
-                dst.ExitCode = src.ExitCode;
-            }
-            return ref dst;
-        }
+        // public static ref CmdExecStatus status(CmdProcess src, ref CmdExecStatus dst)
+        // {
+        //     dst.Id = src.Process.Id;
+        //     dst.StartTime = src.StartTime;
+        //     dst.HasExited = src.Finished;
+        //     if(src.Finished)
+        //     {
+        //         dst.ExitTime = src.ExitTime;
+        //         dst.Duration = dst.ExitTime - dst.StartTime;
+        //         dst.ExitCode = src.ExitCode;
+        //     }
+        //     return ref dst;
+        // }
 
         [Op]
         public static CmdProcess create(CmdLine cmd)

@@ -2,7 +2,7 @@
   <ItemGroup>
     <ProjectReference Include="$(ZCmd)" />
     <ProjectReference Include="$(CgShell)" />
-    <ProjectReference Include="$(ClrChecks)" />
+    <ProjectReference Include="$(LLvmShell)" />
     <ProjectReference Include="$(CmdChecks)" />
     <ProjectReference Include="$(Dispatcher)" />
     <ProjectReference Include="$(Hub)" />

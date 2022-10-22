@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     public class t_bm_outer : t_bits<t_bm_outer>
     {
         public void outer_product_32()

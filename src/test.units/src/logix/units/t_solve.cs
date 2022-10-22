@@ -4,7 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Logix
 {
-    using static core;
+    using static sys;
+
     public class t_solve : UnitTest<t_solve>
     {
         public override bool Enabled => true;

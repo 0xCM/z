@@ -11,7 +11,7 @@ namespace Z0
             var project = arg(args, 0).Value;
             var script = arg(args, 1).Value;
             var path = AppDb.ProjectLib(project).Scoped(scripts).Path(script, FileKind.Cmd);
-            return ProcExec.start(Channel, CmdTerm.cmd(path, CmdKind.Cmd, EmptyString));
+            return ProcessControl.start(Channel, CmdTerm.cmd(path, CmdKind.Cmd, EmptyString));
         }
 
         public Files List(CmdArgs args)

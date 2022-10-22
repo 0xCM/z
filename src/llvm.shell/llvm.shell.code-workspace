@@ -1,0 +1,47 @@
+{
+	"folders": [
+		{
+			"path": "../literals"
+		},
+		{
+			"path": "../sys"
+		},
+		{
+			"path": "../text"
+		},
+		{
+			"path": "../events"
+		},
+		{
+			"path": "../files"
+		},
+		{
+			"path": "../clr.query"
+		},
+		{
+			"path": "../lib"
+		},
+		{
+			"path": "../api.specs"
+		},
+		{
+			"path": "../process"
+		},
+		{
+			"path": "../native"
+		},
+		{
+			"path": "../workflow"
+		},
+		{
+			"path": "../diagnostics"
+		},
+		{
+			"path": "../llvm.svc"
+		},
+		{
+			"path": "."
+		},
+	],
+	"settings": {}
+}
