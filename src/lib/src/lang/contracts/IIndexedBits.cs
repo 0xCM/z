@@ -14,6 +14,6 @@ namespace Z0
         where T : unmanaged
     {
         T IValued<T>.Value
-            => core.@as<IIndexedBits<T>,T>(this);
+            => sys.@as<IIndexedBits<T>,T>(this);
     }
 }

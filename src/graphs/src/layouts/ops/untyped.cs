@@ -33,6 +33,6 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static LayoutIdentity untyped<T>(in LayoutIdentity<T> src)
             where T : unmanaged
-                => new LayoutIdentity(src.Index, @as<T,uint>(src.Kind));
+                => new LayoutIdentity(src.Pos, @as<T,uint>(src.Kind));
     }
 }

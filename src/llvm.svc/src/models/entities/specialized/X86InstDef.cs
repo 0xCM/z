@@ -11,11 +11,11 @@ namespace Z0.llvm
     /// <summary>
     /// Represents a table-gen defined instruction
     /// </summary>
-    public class InstEntity : DefFields
+    public class X86InstDef : LlvmTableDef
     {
         public const string LlvmName = "Instruction";
 
-        public InstEntity(LineRelations def, RecordField[] fields)
+        public X86InstDef(LineRelations def, RecordField[] fields)
             : base(def,fields)
         {
 

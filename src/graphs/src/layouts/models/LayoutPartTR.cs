@@ -21,7 +21,7 @@ namespace Z0
         /// <summary>
         /// The enclosure-relative partition index
         /// </summary>
-        public uint Index => Id.Index;
+        public uint Index => Id.Pos;
 
         [MethodImpl(Inline)]
         public LayoutPart(LayoutIdentity<T> id, R start, R end)

@@ -6,16 +6,16 @@ namespace Z0
 {
     using api = DataLayouts;
 
-    public readonly struct DataLayout<T,R> : IDataLayout<DataLayout<T,R>,LayoutPart<T,R>,T>
+    [StructLayout(LayoutKind.Sequential)]
+    public readonly struct DataLayout<T> : IDataLayout<DataLayout<T>, LayoutPart<T>,T>
         where T : unmanaged
-        where R : unmanaged
     {
         public LayoutIdentity<T> Id {get;}
 
-        readonly Index<LayoutPart<T,R>> Data;
+        readonly Index<LayoutPart<T>> Data;
 
         [MethodImpl(Inline)]
-        public DataLayout(LayoutIdentity<T> id, LayoutPart<T,R>[] parts)
+        public DataLayout(LayoutIdentity<T> id, LayoutPart<T>[] parts)
         {
             Id = id;
             Data = parts;
@@ -24,7 +24,7 @@ namespace Z0
         public uint Index
         {
             [MethodImpl(Inline)]
-            get => Id.Index;
+            get => Id.Pos;
         }
 
         public uint PartitionCount
@@ -33,25 +33,25 @@ namespace Z0
             get => Data.Count;
         }
 
-        public LayoutPart<T,R>[] Storage
+        public LayoutPart<T>[] Storage
         {
             [MethodImpl(Inline)]
             get => Data.Storage;
         }
 
-        public ReadOnlySpan<LayoutPart<T,R>> Partitions
+        public ReadOnlySpan<LayoutPart<T>> Partitions
         {
             [MethodImpl(Inline)]
             get => Data.View;
         }
 
-        public ref LayoutPart<T,R> FirstPartition
+        public ref LayoutPart<T> FirstPartition
         {
             [MethodImpl(Inline)]
             get => ref Data.First;
         }
 
-        public ref LayoutPart<T,R> this[uint index]
+        public ref LayoutPart<T> this[uint index]
         {
             [MethodImpl(Inline)]
             get => ref Data[index];
@@ -71,7 +71,7 @@ namespace Z0
             => Format();
 
         [MethodImpl(Inline)]
-        public static implicit operator DataLayout(DataLayout<T,R> src)
+        public static implicit operator DataLayout(DataLayout<T> src)
             => api.untyped(src);
     }
 }

@@ -21,7 +21,7 @@ namespace Z0
         public PathPart Name
             => Source.Format();
 
-        FileUri IArtifact<K, FileUri>.Location
+        FileUri IArtifact<K,FileUri>.Location
             => Source;
 
         K IArtifact<K>.Kind

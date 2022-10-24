@@ -6,10 +6,10 @@ namespace Z0.llvm
 {
     partial class LlvmDataProvider
     {
-        public Index<LlvmInstDef> InstDefs()
+        public Index<Z0.LlvmInstDef> InstDefs()
             => InstDefs(AsmIdentifiers(), Entities());
 
-        public Index<LlvmInstDef> InstDefs(AsmIdentifiers lookup, Index<LlvmEntity> entities)
-            => (Index<LlvmInstDef>)DataSets.GetOrAdd("InstDefs", key => DataCalcs.CalcInstDefs(lookup,entities));
+        public Index<Z0.LlvmInstDef> InstDefs(AsmIdentifiers lookup, Index<LlvmEntity> entities)
+            => (Index<Z0.LlvmInstDef>)DataSets.GetOrAdd("InstDefs", key => DataCalcs.CalcInstDefs(lookup, entities));
     }
 }

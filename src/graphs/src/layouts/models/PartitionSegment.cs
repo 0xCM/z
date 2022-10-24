@@ -10,9 +10,9 @@ namespace Z0
     public readonly struct PartitionSegment<T>
         where T : unmanaged
     {
-        public T Min {get;}
+        public readonly T Min;
 
-        public T Max {get;}
+        public readonly T Max;
 
         [MethodImpl(Inline)]
         public PartitionSegment(T min, T max)
@@ -29,6 +29,7 @@ namespace Z0
 
         public string Format()
             => format(this);
+            
         static string format(PartitionSegment<T> src)
             => RenderPart().Format(src.Min, src.Max);
 

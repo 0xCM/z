@@ -10,7 +10,6 @@ namespace Z0
     
     using static Chars;
     
-
     partial class XTend
     {
         public static Utf8JsonWriter JsonWriter(this Stream src, bool indented = true)

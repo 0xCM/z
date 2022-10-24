@@ -7,7 +7,7 @@ namespace Z0.llvm
     /// <summary>
     /// Represents a table-gen defined instruction
     /// </summary>
-    public class IntrinsicEntity : DefFields
+    public class IntrinsicEntity : LlvmTableDef
     {
         public const string LlvmName = "Intrinsic";
 

@@ -473,22 +473,6 @@ namespace Z0
             ProcessControl.start(Channel, CmdTerm.cmd(path, CmdKind.Tool, emitter.Emit()));        
         }
 
-        [CmdOp("tool/shim")]
-        void RunShim(CmdArgs args)
-        {
-            // var count = args.Length;
-            // if(count < 3)
-            // {
-            //     Error($"Not enough");
-            //     return;                
-            // }
-
-            // var values = args.Values().View;
-            // var def = ToolShims.validate(ToolShims.parse(slice(values,0,3).ToArray()));            
-            // var ops = slice(values,3).ToArray();
-            // var task = ToolShims.start(def,Emitter,slice(values,3).ToArray());
-        }
-
         [CmdOp("tool/script")]
         Outcome ToolScript(CmdArgs args)
             => Tooling.RunScript(arg(args,0).Value, arg(args,1).Value);

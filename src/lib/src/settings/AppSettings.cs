@@ -13,10 +13,7 @@ namespace Z0
 
         const string logs = nameof(logs);
 
-        static AppSettings _Service = load(SettingsRoot().Path(FS.file("z0.settings", FileKind.Csv)));
-
-        public static AppSettings load(WfEmit channel)
-            => load(SettingsRoot().Path(FS.file("z0.settings", FileKind.Csv)), channel);
+        static AppSettings _Service = new AppSettings(Settings.load(SettingsRoot().Path(FS.file("z0.settings", FileKind.Csv))));
 
         public static DbArchive EnvRoot()
             => FS.dir(System.Environment.GetEnvironmentVariable(SettingNames.EnvRoot));
@@ -83,28 +80,28 @@ namespace Z0
 
         }
 
-        public static AppSettings load(FilePath src)
-        {
-            var data = src.ReadLines(true);
-            var dst = sys.alloc<Setting>(data.Length - 1);
-            for(var i=1; i<data.Length; i++)
-            {
-                ref readonly var line = ref data[i];
-                var parts = text.split(line, Chars.Pipe);
-                Require.equal(parts.Length,2);
-                seek(dst,i-1)= new Setting(text.trim(sys.skip(parts,0)), text.trim(sys.skip(parts,1)));
-            }
+        // public static AppSettings load(FilePath src)
+        // {
+        //     var data = src.ReadLines(true);
+        //     var dst = sys.alloc<Setting>(data.Length - 1);
+        //     for(var i=1; i<data.Length; i++)
+        //     {
+        //         ref readonly var line = ref data[i];
+        //         var parts = text.split(line, Chars.Pipe);
+        //         Require.equal(parts.Length,2);
+        //         seek(dst,i-1)= new Setting(text.trim(sys.skip(parts,0)), text.trim(sys.skip(parts,1)));
+        //     }
 
-            return new AppSettings(dst);
-        }
+        //     return new AppSettings(dst);
+        // }
 
-        public static AppSettings load(FilePath src, WfEmit channel)
-        {
-            var flow = channel.Running($"Loading application settings from {src.ToUri()}");
-            var dst = load(src);
-            channel.Ran(flow,$"Read {dst.Length} settings from {src.ToUri()}");
-            return dst;
-        }
+        // public static AppSettings load(IWfChannel channel, FilePath src)
+        // {
+        //     var flow = channel.Running($"Loading application settings from {src.ToUri()}");
+        //     var dst = load(src);
+        //     channel.Ran(flow,$"Read {dst.Length} settings from {src.ToUri()}");
+        //     return dst;
+        // }
 
         public string Find(string name)
             => Find(name, EmptyString);

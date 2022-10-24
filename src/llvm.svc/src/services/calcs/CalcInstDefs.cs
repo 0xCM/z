@@ -4,15 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0.llvm
 {
-    using System;
-
-    using static core;
+    using static sys;
 
     partial class LlvmDataCalcs
     {
-        public Index<LlvmInstDef> CalcInstDefs(AsmIdentifiers lookup, ReadOnlySpan<LlvmEntity> entities)
+        public Index<Z0.LlvmInstDef> CalcInstDefs(AsmIdentifiers lookup, ReadOnlySpan<LlvmEntity> entities)
         {
-            var found = list<Paired<ushort,InstEntity>>();
+            var found = list<Paired<ushort,X86InstDef>>();
             var count = entities.Length;
             for(var i=0; i<count; i++)
             {
@@ -26,7 +24,7 @@ namespace Z0.llvm
             }
 
             var src = found.ViewDeposited();
-            var buffer = alloc<LlvmInstDef>(src.Length);
+            var buffer = alloc<Z0.LlvmInstDef>(src.Length);
             for(var i=0; i<src.Length; i++)
             {
                 ref readonly var pair = ref skip(src,i);

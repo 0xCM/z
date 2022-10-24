@@ -8,10 +8,10 @@ namespace Z0.llvm
 
     partial class LlvmDataCalcs
     {
-        public LlvmAsmOpCodeMap CalcAsmOpCodeMap(Index<InstEntity> src)
+        public LlvmAsmOpCodeMap CalcAsmOpCodeMap(Index<X86InstDef> src)
         {
             var count = src.Length;
-            var dst = dict<Identifier,DataList<InstEntity>>();
+            var dst = dict<Identifier,DataList<X86InstDef>>();
             for(var i=0; i<count; i++)
             {
                 ref readonly var inst = ref src[i];
@@ -31,7 +31,7 @@ namespace Z0.llvm
                     }
                 }
             }
-            return dst.Map(x => (x.Key, new Index<InstEntity>(x.Value.Array()))).ToDictionary();
+            return dst.Map(x => (x.Key, new Index<X86InstDef>(x.Value.Array()))).ToDictionary();
         }
     }
 }

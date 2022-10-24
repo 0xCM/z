@@ -4,9 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public abstract class Render512<S,T> : BlockedRender<S,CharBlock512>
-        where T : unmanaged
+    public class LlvmWorkspace : Workspace<LlvmWorkspace>
     {
+        public LlvmWorkspace(FolderPath root)
+            : base(root)
+        {
 
+        }
     }
+
 }

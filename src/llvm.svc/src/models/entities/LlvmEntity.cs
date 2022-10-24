@@ -6,7 +6,7 @@ namespace Z0.llvm
 {
     using static LlvmNames;
 
-    public class LlvmEntity : DefFields
+    public class LlvmEntity : LlvmTableDef
     {
         public LlvmEntity(LineRelations def, RecordField[] fields)
             : base(def,fields)
@@ -23,10 +23,10 @@ namespace Z0.llvm
             => Def.AncestorNames.Contains(name);
 
         public bool IsInstruction()
-            => HasAncestor(InstEntity.LlvmName);
+            => HasAncestor(X86InstDef.LlvmName);
 
-        public InstEntity ToInstruction()
-            => new InstEntity(Def,AttribIndex);
+        public X86InstDef ToInstruction()
+            => new X86InstDef(Def,AttribIndex);
 
         public bool IsProcessor()
             => HasAncestor(ProcessorEntity.LlvmName);

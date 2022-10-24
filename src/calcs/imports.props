@@ -2,5 +2,6 @@
   <ItemGroup>
     <ProjectReference Include="$(ZLib)" />
     <ProjectReference Include="$(Native)" />
+    <ProjectReference Include="$(Assets)" />
   </ItemGroup>
 </Project>

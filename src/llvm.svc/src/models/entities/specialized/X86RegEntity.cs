@@ -7,7 +7,7 @@ namespace Z0.llvm
     /// <summary>
     /// Represents a table-gen defined instruction
     /// </summary>
-    public class X86RegEntity : DefFields
+    public class X86RegEntity : LlvmTableDef
     {
         public const string LlvmName = "X86Reg";
 

@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     public interface IDataLayout : ITextual
     {
         LayoutIdentity Id {get;}
@@ -13,10 +11,7 @@ namespace Z0
         BitWidth Width {get;}
 
         uint Index
-            => Id.Index;
-
-        ulong Kind
-            => Id.Kind;
+            => Id.Pos;
     }
 
     public interface IDataLayout<H> : IDataLayout
@@ -25,7 +20,7 @@ namespace Z0
 
     }
 
-    public interface IDataLayout<H,S> : IDataLayout<H>
+    public interface IDataLayout<H,S> : IDataLayout
         where H : struct, IDataLayout<H,S>
         where S : struct
     {

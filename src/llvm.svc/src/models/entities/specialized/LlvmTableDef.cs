@@ -4,11 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0.llvm
 {
-    public class DefFields : Entity<string,RecordField>
+    public class LlvmTableDef : Entity<string,RecordField>
     {
         public readonly LineRelations Def;
 
-        public DefFields(LineRelations def, RecordField[] fields)
+        public LlvmTableDef(LineRelations def, RecordField[] fields)
             : base(fields ?? sys.empty<RecordField>())
         {
             Def = def;

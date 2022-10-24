@@ -113,8 +113,8 @@ namespace Z0
         public static DbArchive NUGET_PACKAGES()
             => var(EnvVarKind.Process, SettingNames.NUGET_PACKAGES, archive);
 
-        public static DbArchive DOTNET_ROOT()
-            => var(EnvVarKind.Process, SettingNames.DOTNET_ROOT, archive);
+        // public static DbArchive DOTNET_ROOT()
+        //     => var(EnvVarKind.Process, SettingNames.DOTNET_ROOT, archive);
 
         public static EnvVars<string> vars(FilePath src, char sep = Chars.Eq)
         {

@@ -22,10 +22,19 @@
 			"path": "../lib"
 		},
 		{
+			"path": "../calcs"
+		},
+		{
+			"path": "../db"
+		},
+		{
 			"path": "../api.specs"
 		},
 		{
 			"path": "../process"
+		},
+		{
+			"path": "../assets"
 		},
 		{
 			"path": "../native"

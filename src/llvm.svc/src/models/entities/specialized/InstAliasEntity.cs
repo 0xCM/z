@@ -9,7 +9,7 @@ namespace Z0.llvm
     /// <summary>
     /// Represents a table-gen defined instruction
     /// </summary>
-    public class InstAliasEntity : DefFields
+    public class InstAliasEntity : LlvmTableDef
     {
         public InstAliasEntity(LineRelations def, RecordField[] fields)
             : base(def,fields)

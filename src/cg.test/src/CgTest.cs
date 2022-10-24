@@ -11,6 +11,8 @@ namespace Z0
             => CgTestCmd.create(wf);
 
         public static void Main(params string[] args)
-            => run(commands, args);
+        {
+            
+        }
     }
 }

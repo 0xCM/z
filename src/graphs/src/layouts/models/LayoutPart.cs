@@ -6,31 +6,30 @@ namespace Z0
 {
     using api = DataLayouts;
 
-    /// <summary>
-    /// Defines a <typeparamref name='T'/> kinded segment partition
-    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public readonly struct LayoutPart<T>
-        where T : unmanaged
+    public readonly struct LayoutPart : IDataLayout
     {
-        public LayoutIdentity<T> Id {get;}
+        /// <summary>
+        /// Defines enclosure-relative partition identity
+        /// </summary>
+        public readonly LayoutIdentity Id {get;}
 
         readonly PartitionSegment<ulong> Range;
 
         /// <summary>
         /// The enclosure-relative partition index
         /// </summary>
-        public uint Index => Id.Index;
+        public uint Index => Id.Pos;
 
         [MethodImpl(Inline)]
-        public LayoutPart(LayoutIdentity<T> id, ulong start, ulong end)
+        public LayoutPart(LayoutIdentity id, ulong start, ulong end)
         {
             Id = id;
             Range = new PartitionSegment<ulong>(start,end);
         }
 
         /// <summary>
-        /// The inclusive lower index
+        /// The bit position at which partition begins
         /// </summary>
         public ulong Left
         {
@@ -39,7 +38,7 @@ namespace Z0
         }
 
         /// <summary>
-        /// The inclusive upper index
+        /// The bit position at which partition ends
         /// </summary>
         public ulong Right
         {
@@ -47,9 +46,6 @@ namespace Z0
             get => Range.Max;
         }
 
-        /// <summary>
-        /// The partition width determined by <see cref='Right'/> - <see cref='Left'/>
-        /// </summary>
         public BitWidth Width
         {
             [MethodImpl(Inline)]
@@ -62,9 +58,5 @@ namespace Z0
 
         public override string ToString()
             => Format();
-
-        [MethodImpl(Inline)]
-        public static implicit operator LayoutPart(LayoutPart<T> src)
-            => api.untyped(src);
     }
 }

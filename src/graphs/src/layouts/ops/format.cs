@@ -28,11 +28,11 @@ namespace Z0
         [Op, Closures(Closure)]
         public static string format<T>(in LayoutIdentity<T> src)
             where T : unmanaged
-                => string.Format("{0}:{1}", src.Index, src.Kind);
+                => string.Format("{0}:{1}", src.Pos, src.Kind);
 
         [Op, Closures(Closure)]
         public static string format(in LayoutIdentity src)
-            => string.Format("{0}:{1}", src.Index, src.Kind);
+            => string.Format("{0}:{1}", src.Pos, src.Kind);
 
         [Op]
         public static string format(in DataLayout src)
@@ -64,7 +64,7 @@ namespace Z0
             {
                 ref readonly var section = ref src.FirstPartition;
                 dst.AppendLine(string.Format("{0} ", src.Index));
-                dst.AppendLine(RpOps.PageBreak40);
+                dst.AppendLine(RP.PageBreak40);
 
                 for(var i=0; i<count; i++)
                 {
@@ -72,7 +72,7 @@ namespace Z0
                     render(skip(section,i), dst);
                 }
 
-                dst.AppendLine(RpOps.PageBreak40);
+                dst.AppendLine(RP.PageBreak40);
             }
         }
     }

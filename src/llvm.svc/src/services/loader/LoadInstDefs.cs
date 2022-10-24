@@ -11,13 +11,13 @@ namespace Z0.llvm
 
     partial class LlvmTableLoader
     {
-        public Index<LlvmInstDef> LoadInstDefs()
+        public Index<Z0.LlvmInstDef> LoadInstDefs()
         {
-            const byte FieldCount = LlvmInstDef.FieldCount;
+            const byte FieldCount = Z0.LlvmInstDef.FieldCount;
             const char Delimiter = Chars.Pipe;
-            var src = LlvmPaths.DbTable<LlvmInstDef>();
+            var src = LlvmPaths.DbTable<Z0.LlvmInstDef>();
             var lines = src.ReadLines();
-            var records = Index<LlvmInstDef>.Empty;
+            var records = Index<Z0.LlvmInstDef>.Empty;
             if(lines.Length < 1)
             {
                 Error(string.Format("Empty file"));
@@ -33,7 +33,7 @@ namespace Z0.llvm
             }
 
             var count = lines.Length - 1;
-            records = alloc<LlvmInstDef>(count);
+            records = alloc<Z0.LlvmInstDef>(count);
             for(var i=1;i<count; i++)
             {
                 ref readonly var line = ref lines[i];

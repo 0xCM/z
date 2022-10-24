@@ -7,10 +7,6 @@ namespace Z0
     using static sys;
     using static HexCharData;
 
-    using XF = HexDigitFacets;
-
-    using H = HexCharData;
-
     partial class H0x
     {
         [MethodImpl(Inline), Op]

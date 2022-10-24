@@ -4,11 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0.llvm
 {
-    using static core;
+    using static sys;
 
     partial class LlvmDataCalcs
     {
-        public Index<LlvmAsmVariation> CalcAsmVariations(AsmIdentifiers asmid, ReadOnlySpan<InstEntity> entities)
+        public Index<LlvmAsmVariation> CalcAsmVariations(AsmIdentifiers asmid, ReadOnlySpan<X86InstDef> entities)
         {
             var count = entities.Length;
             var variations = list<LlvmAsmVariation>();

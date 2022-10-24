@@ -7,7 +7,7 @@ namespace Z0.llvm
     /// <summary>
     /// Represents a table-gen defined instruction
     /// </summary>
-    public class ProcessorEntity : DefFields
+    public class ProcessorEntity : LlvmTableDef
     {
         public const string LlvmName = "Processor";
 

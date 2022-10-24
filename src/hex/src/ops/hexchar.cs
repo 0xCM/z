@@ -9,8 +9,6 @@ namespace Z0
 
     partial class H0x
     {
-
-
         [MethodImpl(Inline)]
         public static char hexchar<T,C>(C @case, T src, byte pos)
             where T : unmanaged

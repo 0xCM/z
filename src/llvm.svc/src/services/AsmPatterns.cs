@@ -29,7 +29,7 @@ namespace Z0.llvm
             return dst;
         }
 
-        public static LlvmAsmPattern extract(InstEntity src)
+        public static LlvmAsmPattern extract(X86InstDef src)
         {
             var dst = LlvmAsmPattern.Empty;
             var name = src.InstName;

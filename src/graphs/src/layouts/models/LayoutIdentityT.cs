@@ -7,25 +7,20 @@ namespace Z0
     using api = DataLayouts;
 
     /// <summary>
-    /// Defines identity for a <see cref 'IDataLayout'/> component
+    /// Defines identity for a <see cref 'DataLayout{T}'/> component
     /// </summary>
-    public readonly struct LayoutIdentity : ITextual
+    public readonly struct LayoutIdentity<T>
+        where T : unmanaged
     {
-        /// <summary>
-        /// The 0-based index of the layout within the enclosing scope
-        /// </summary>
-        public uint Index {get;}
+        public readonly uint Pos;
 
-        /// <summary>
-        /// The unrefined layout kind
-        /// </summary>
-        public ulong Kind {get;}
+        public readonly T Kind;
 
         [MethodImpl(Inline)]
-        public LayoutIdentity(uint index, ulong src)
+        public LayoutIdentity(uint index, T kind)
         {
-            Index = index;
-            Kind = src;
+            Pos = index;
+            Kind = kind;
         }
 
         [MethodImpl(Inline)]
@@ -34,5 +29,9 @@ namespace Z0
 
         public override string ToString()
             => Format();
+
+        [MethodImpl(Inline)]
+        public static implicit operator LayoutIdentity(LayoutIdentity<T> src)
+            => api.untyped(src);
     }
 }

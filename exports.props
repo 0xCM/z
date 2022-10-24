@@ -90,7 +90,6 @@
    <Import Project="$(MsBuildThisFileDirectory)src/numbers/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/rules/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/render/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/polyrand/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/process/exports.props"/>
@@ -98,7 +97,6 @@
    <Import Project="$(MsBuildThisFileDirectory)src/shell/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/sos.cmd/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/symbolics/exports.props"/>
-
 
    <Import Project="$(MsBuildThisFileDirectory)src/workflow/exports.props"/>
 

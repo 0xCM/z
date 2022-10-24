@@ -6,7 +6,7 @@ namespace Z0.llvm
 {
     partial class LlvmDataCalcs
     {
-        public Index<InstEntity> CalcInstructions(Index<LlvmEntity> src)
-            => Data(nameof(InstEntity), () => src.Where(e => e.IsInstruction()).Select(e => e.ToInstruction()));
+        public Index<X86InstDef> CalcInstructions(Index<LlvmEntity> src)
+            => Data(nameof(X86InstDef), () => src.Where(e => e.IsInstruction()).Select(e => e.ToInstruction()));
     }
 }

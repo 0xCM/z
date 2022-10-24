@@ -4,14 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-    using static HexCharData;
-
     using XF = HexDigitFacets;
-
-    using H = HexCharData;
-
-    
 
     [ApiHost]
     public partial class H0x

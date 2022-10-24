@@ -7,7 +7,7 @@ namespace Z0.llvm
     /// <summary>
     /// Represents a table-gen defined instruction
     /// </summary>
-    public class RegOpEntity : DefFields
+    public class RegOpEntity : LlvmTableDef
     {
         public RegOpEntity(LineRelations def, RecordField[] fields)
             : base(def,fields)

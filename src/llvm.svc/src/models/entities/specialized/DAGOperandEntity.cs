@@ -7,7 +7,7 @@ namespace Z0.llvm
     /// <summary>
     /// Represents a table-gen defined instruction
     /// </summary>
-    public class DAGOperandEntity : DefFields
+    public class DAGOperandEntity : LlvmTableDef
     {
         public const string LlvmName = "DAGOperand";
 
