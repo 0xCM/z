@@ -4,22 +4,27 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed class CfgEntries : Seq<CfgEntries,CfgEntry>
+    public sealed class CfgBlock : Seq<CfgBlock,CfgEntry>
     {
-        public CfgEntries()
+        public CfgBlock()
         {
-
+            Name = EmptyString;
         }
 
-        public CfgEntries(CfgEntry[] src) 
+        public string Name {get;}
+
+        public CfgBlock(string name, CfgEntry[] src) 
             : base(src)
         {
-
+            Name = name;
         }
 
         public override string Format()
         {
             var dst = text.emitter();
+            dst.AppendLine(RP.PageBreak180);
+            dst.AppendLine($"# <{Name}>");
+            dst.AppendLine(RP.PageBreak180);
             for(var i=0; i<Count; i++)
                 dst.AppendLine(this[i]);
             return dst.Emit();

@@ -34,7 +34,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public string Format()
-            => string.Format(RpOps.PSx2, Address, Name);
+            => string.Format(RP.PSx2, Address, Name);
 
         [MethodImpl(Inline)]
         public static implicit operator IntPtr(NativeModule<T> src)

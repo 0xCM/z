@@ -6,7 +6,6 @@ set WsRoot=%SlnRoot%
 set WsPath=%WsRoot%
 set CfgFile=%SlnRoot%\%SlnId%.cfg
 set BuildPrefix=z0
-set ZVer=0.0.4
 set DotNetVer=6.0.303
 set ArchName=x64
 set OsName=win

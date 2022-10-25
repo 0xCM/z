@@ -15,7 +15,7 @@ namespace Z0
             set => apply(new EnvVar(EnvVarKind.Process, nameof(EnvId), value.Format()));
         }
 
-        public static CfgEntries cfg(FilePath src)
+        public static CfgBlock cfg(FilePath src)
         {
             var dst = list<CfgEntry>();
             using var reader = src.Utf8LineReader();
@@ -30,7 +30,7 @@ namespace Z0
                     dst.Add(new (name,value));
                 }
             }
-            return new (dst.ToArray());
+            return new (src.FileName.WithoutExtension.Format(),dst.ToArray());
         }
 
         static AppDb AppDb => AppDb.Service;
@@ -38,7 +38,7 @@ namespace Z0
         public static EnvReport report(EnvVarKind kind)
         {
             var _vars = vars(kind);
-            var cfg = CfgEntries.alloc(_vars.Count);
+            var cfg = CfgBlock.alloc(_vars.Count);
             for(var i=0; i<cfg.Count; i++)
             {
                 ref readonly var src = ref _vars[i];
@@ -100,21 +100,12 @@ namespace Z0
         public static void cd(FolderPath dst)
             => Environment.CurrentDirectory = dst.Format(PathSeparator.BS);
 
-        static DbArchive archive(string src)
-            => new DbArchive(FS.dir(src));
-
         public static FolderPaths paths(string name, EnvVarKind kind)
         {
             var value = Environment.GetEnvironmentVariable(name, (EnvironmentVariableTarget)kind);
             var values = text.split(value,Chars.Semicolon).Sort();
             return map(values, FS.dir);
         }
-
-        public static DbArchive NUGET_PACKAGES()
-            => var(EnvVarKind.Process, SettingNames.NUGET_PACKAGES, archive);
-
-        // public static DbArchive DOTNET_ROOT()
-        //     => var(EnvVarKind.Process, SettingNames.DOTNET_ROOT, archive);
 
         public static EnvVars<string> vars(FilePath src, char sep = Chars.Eq)
         {

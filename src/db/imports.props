@@ -2,6 +2,5 @@
   <ItemGroup>
     <ProjectReference Include="$(Alloc)" />
     <ProjectReference Include="$(Numbers)" />
-    <ProjectReference Include="$(Process)" />
   </ItemGroup>
 </Project>

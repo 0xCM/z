@@ -33,7 +33,7 @@ namespace Z0
             var src = AppSettings.DbRoot().Scoped(folder).Root;
             var name = src.FolderName.Format();
             var file = FS.file($"{scope}.{name}", FileKind.Zip);
-            Db.zip(Channel, src, AppDb.Archive(scope).Path(file));
+            EtlTasks.zip(Channel, src, AppDb.Archive(scope).Path(file));
         }
 
         [CmdOp("robocopy")]
@@ -41,20 +41,20 @@ namespace Z0
         {
             var src = FS.dir(arg(args,0).Value);
             var dst = FS.dir(arg(args,1).Value);
-            Db.robocopy(Channel, src, dst);
+            EtlTasks.robocopy(Channel, src, dst);
         }
 
         [CmdOp("env/include")]
         void EnvInclude()
-            => Channel.Row(Env.paths(EnvTokens.Include, EnvVarKind.Process).Delimit(Chars.NL));
+            => Channel.Row(Env.paths(EnvTokens.INCLUDE, EnvVarKind.Process).Delimit(Chars.NL));
 
         [CmdOp("env/path")]
         void EnvPath()
-            => Channel.Row(Env.paths(EnvTokens.Path, EnvVarKind.Process).Delimit(Chars.NL));
+            => Channel.Row(Env.paths(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL));
 
         [CmdOp("env/lib")]
         void EnvLib()
-            => Channel.Row(Env.paths(EnvTokens.Lib, EnvVarKind.Process).Delimit(Chars.NL));
+            => Channel.Row(Env.paths(EnvTokens.LIB, EnvVarKind.Process).Delimit(Chars.NL));
 
         [CmdOp("archives")]        
         void ListArchives(CmdArgs args)
@@ -170,12 +170,24 @@ namespace Z0
         void ShowThread()
             => Write(string.Format("ThreadId:{0}", Kernel32.GetCurrentThreadId()));
 
+        [CmdOp("env/tools")]
+        void EnvTools()
+        {
+            var dst = new ConcurrentSet<string>();
+            var paths = Env.paths(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL);
+            iter(paths, path => iter(path.Files(FileKind.Exe,false), file => dst.Add(file.ToUri().Format())), true);
+            var tools = dst.ToSeq().Sort();
+            var counter = 0u;
+            foreach(var tool in tools)
+                Write(string.Format("{0:D5} {1}", counter++, tool));
+        }
+
         [CmdOp("app/deploy")]
         void Deploy()
         {
             var dst = AppDb.Tools("z0/cmd").Targets().Root;
             var src = ExecutingPart.Assembly.Path().FolderPath;
-            Db.robocopy(Channel, src, dst);
+            EtlTasks.robocopy(Channel, src, dst);
         }
 
         static Files launchers()
@@ -219,7 +231,10 @@ namespace Z0
         [CmdOp("settings")]
         void ReadSettings(CmdArgs args)
         {
-            iter(AppSettings, setting => Write(setting.Format()));
+            if(args.IsEmpty)
+                Channel.Row(AppSettings.Format());
+            else
+                Channel.Row(AppSettings.absorb(FS.path(args.First.Value)));
         }
 
         [CmdOp("services")]
@@ -418,6 +433,13 @@ namespace Z0
             }
         }
 
+        [CmdOp("cfg")]
+        void LoadCfg(CmdArgs args)
+        {
+            var src = args.Count != 0 ? FS.dir(args.First) : Env.cd();
+            iter(src.Files(FileKind.Cfg), file => Channel.Row(Env.cfg(file).Format()));    
+        }        
+
         [CmdOp("develop")]
         void Develop(CmdArgs args)
         {
@@ -426,7 +448,26 @@ namespace Z0
             var preconditions = cd.Files(FileKind.Cmd).Where(p => p.FileName == FS.file("env", FileKind.Cmd));
             if(preconditions.IsNonEmpty)
             {
+                ref readonly var path = ref preconditions.First;
+                var running = Channel.Running($"Applying {path} to environment");
+                var settings = Env.cfg(preconditions.First);                
+                var count = settings.Count;
+                for(var i=0; i<count; i++)
+                {
+                    ref readonly var setting = ref settings[i];
+                    switch(sys.@string(setting.Name))
+                    {
+                        case EnvTokens.INCLUDE:
+                                                     
+                        break;
+                        case EnvTokens.LIB:                            
+                        break;
+                        case EnvTokens.PATH:
+                        break;
+                    }
 
+                    Write($"Integrated {setting}");
+                }
             }
 
             if(workspaces.IsNonEmpty)

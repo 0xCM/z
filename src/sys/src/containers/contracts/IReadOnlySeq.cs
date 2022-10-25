@@ -50,7 +50,6 @@ namespace Z0
         new ReadOnlySpan<T>.Enumerator GetEnumerator()
             => View.GetEnumerator();
 
-
         string IExpr.Format()
             => string.Join(Chars.Comma, View.ToArray());
     }

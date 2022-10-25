@@ -18,7 +18,7 @@ namespace Z0
 
         void RunCliJobs()
         {
-            var root = Env.var(EnvVarKind.Process, SettingNames.DOTNET_ROOT, FS.dir).Value;
+            var root = Env.var(EnvVarKind.Process, EnvTokens.DOTNET_ROOT, FS.dir).Value;
             var src = root.Files(FileKind.Dll).Map(x => new FileUri(x.Format())).ToSeq();
             var name = Cmd.identify<EmitEcmaDatasets>().Format();
             var ts = timestamp();

@@ -1,6 +1,9 @@
 <Project>
   <Import Project="exports.props"/>
-  <PropertyGroup>  
+  <PropertyGroup>
+    <ZVer>0.0.5</ZVer>
+    <FrameworkMoniker>net6.0</FrameworkMoniker>    
+    <TargetRuntime>$(FrameworkMoniker)</TargetRuntime>
     <Configuration>Release</Configuration>
     <LangVersion>preview</LangVersion>
     <SlnId>z0</SlnId>

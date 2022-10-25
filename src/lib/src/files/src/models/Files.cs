@@ -34,6 +34,12 @@ namespace Z0
             get => Data.Length;
         }
 
+        public ref FilePath First
+        {
+            [MethodImpl(Inline)]
+            get => ref Data.First;
+        }
+
         public uint Count
         {
             [MethodImpl(Inline)]

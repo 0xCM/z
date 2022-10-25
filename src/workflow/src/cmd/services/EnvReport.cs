@@ -10,11 +10,11 @@ namespace Z0
 
         public EnvVarKind Kind {get;}
 
-        public CfgEntries Cfg {get;}
+        public CfgBlock Cfg {get;}
 
         public EnvVars Vars {get;}        
 
-        public EnvReport(EnvId id, EnvVarKind kind, CfgEntries cfg, EnvVars vars)
+        public EnvReport(EnvId id, EnvVarKind kind, CfgBlock cfg, EnvVars vars)
         {
             EnvId = id;
             Kind = kind;

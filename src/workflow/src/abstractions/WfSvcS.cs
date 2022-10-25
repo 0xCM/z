@@ -17,7 +17,7 @@ namespace Z0
 
         protected static AppDb AppDb => AppDb.Service;
 
-        protected static EtlDb EtlDb => new EtlDb(AppDb);
+        protected static EtlTasks EtlDb => new EtlTasks(AppDb);
     
         [MethodImpl(Inline)]
         public IProjectWorkspace Project()

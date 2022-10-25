@@ -6,44 +6,42 @@ namespace Z0
 {
     using static sys;
 
-    public class SettingLookup<K,V> : ReadOnlySeq<Setting<K,V>>, ILookup<K,V>
+    public class SettingLookup<K,V> : ILookup<K,V>
         where K : unmanaged, IExpr, IDataType<K>
     {
-        readonly ConstLookup<K,V> Lookup;
+        readonly Dictionary<K,V> Data;
 
         public SettingLookup()
         {
-            Lookup = ConstLookup<K,V>.Empty;
+            Data = dict<K,V>();
         }
 
         public SettingLookup(Setting<K,V>[] data)
-            : base(data)
         {
             var dst = dict<K,V>();
-            core.iter(data, s => dst.TryAdd(s.Name,s.Value));
-            Lookup = dst;
-        }
-
-        public SettingLookup(Setting<K,V>[] data, Dictionary<K,V> lookup)
-            : base(data)
-        {
-            Lookup = lookup;
+            iter(data, s => dst.TryAdd(s.Name,s.Value));
+            Data = dst;
         }
 
         public V Find(K name, V @default)
         {
             var dst = @default;
-            Lookup.Find(name, out dst);
+            Data.TryGetValue(name, out dst);
             return dst;
         }
 
         public bool Find(K name, out V dst)
-            => Lookup.Find(name, out dst);
+            => Data.TryGetValue(name, out dst);
 
-        public override string Delimiter => "\n";
+        public void Set(K name, V value)
+            => Data[name] = value;
 
-        public override Fence<char>? Fence => null;
+        public uint Count => (uint)Data.Count;
 
-        public static new SettingLookup<K,V> Empty => new SettingLookup<K,V>();
+        public ICollection<K> Keys => Data.Keys;
+
+        public ICollection<V> Values => Data.Values;
+
+        public static SettingLookup<K,V> Empty => new SettingLookup<K,V>();
     }
 }

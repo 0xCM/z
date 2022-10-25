@@ -27,13 +27,19 @@ namespace Z0
             return kind;
         }
 
-        public static FileKind kind(string src)
+        public static bool parse(string src, out FileKind dst)
         {
-            var dst = FileKind.None;
             var symbols = Symbols.index<FileKind>();
-            symbols.ExprKind(src.ToLower(), out dst);
-            return dst;
+            return symbols.ExprKind(src.ToLower(), out dst);
         }
+
+        // public static FileKind kind(string src)
+        // {
+        //     var dst = FileKind.None;
+        //     var symbols = Symbols.index<FileKind>();
+        //     symbols.ExprKind(src.ToLower(), out dst);
+        //     return dst;
+        // }
 
         public static FileKind kind(FileExt src)
         {

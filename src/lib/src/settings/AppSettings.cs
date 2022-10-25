@@ -13,43 +13,60 @@ namespace Z0
 
         const string logs = nameof(logs);
 
-        static AppSettings _Service = new AppSettings(Settings.load(SettingsRoot().Path(FS.file("z0.settings", FileKind.Csv))));
+        static AppSettings load()
+            => new AppSettings(Settings.load(SettingsRoot().Path(FS.file("z0.settings", FileKind.Csv))));
+
+        public static AppSettings absorb(FilePath src)
+        {
+            Data = new AppSettings(Settings.load(src));
+            return Data;
+        }
+
+        public AppSettings Absorb(FilePath src)
+        {
+            var settings = Settings.load(src);
+            foreach(var setting in settings)
+                Data.Set(setting.Name, $"{setting.Value}");
+            return Data;
+        }
+
+        static AppSettings Data = load();
 
         public static DbArchive EnvRoot()
             => FS.dir(System.Environment.GetEnvironmentVariable(SettingNames.EnvRoot));
 
         public DbArchive Sdks()
-            => folder(_Service.Setting(SettingNames.SdkRoot));
+            => folder(Data.Setting(SettingNames.SdkRoot));
 
         public static DbArchive SettingsRoot()
             => EnvRoot().Scoped(settings);
 
         public DbArchive Control()
-            => folder(_Service.Setting(SettingNames.Control));
+            => folder(Data.Setting(SettingNames.Control));
 
         public DbArchive DbRoot()
-            => folder(_Service.Setting(SettingNames.DbRoot));
+            => folder(Data.Setting(SettingNames.DbRoot));
 
         public DbArchive DevRoot()
-            => folder(_Service.Setting(SettingNames.DevRoot));
+            => folder(Data.Setting(SettingNames.DevRoot));
 
         public DbArchive DevOps()
-            => folder(_Service.Setting(SettingNames.DevOps));
+            => folder(Data.Setting(SettingNames.DevOps));
 
         public DbArchive ProcDumps()
-            => folder(_Service.Setting(SettingNames.ProcDumps));
+            => folder(Data.Setting(SettingNames.ProcDumps));
 
         public DbArchive Capture()
-            => folder(_Service.Setting(SettingNames.Capture));
+            => folder(Data.Setting(SettingNames.Capture));
 
         public DbArchive DevPacks()
-            => folder(_Service.Setting(SettingNames.DevPacks));
+            => folder(Data.Setting(SettingNames.DevPacks));
 
         public DbArchive Archives()
-            => folder(_Service.Setting(SettingNames.Archives));
+            => folder(Data.Setting(SettingNames.Archives));
 
         public DbArchive DevTools()
-            => folder(_Service.Setting(SettingNames.DevTools));
+            => folder(Data.Setting(SettingNames.DevTools));
 
         public DbArchive Logs() 
             => DbRoot().Scoped(logs);
@@ -60,7 +77,7 @@ namespace Z0
         public static ref readonly AppSettings Default
         {
             [MethodImpl(Inline)]
-            get => ref _Service;
+            get => ref Data;
         }
 
         public AppSettings()
@@ -74,35 +91,6 @@ namespace Z0
 
         }
 
-        public AppSettings(Setting<Name,string>[] settings)
-            : base(settings)
-        {
-
-        }
-
-        // public static AppSettings load(FilePath src)
-        // {
-        //     var data = src.ReadLines(true);
-        //     var dst = sys.alloc<Setting>(data.Length - 1);
-        //     for(var i=1; i<data.Length; i++)
-        //     {
-        //         ref readonly var line = ref data[i];
-        //         var parts = text.split(line, Chars.Pipe);
-        //         Require.equal(parts.Length,2);
-        //         seek(dst,i-1)= new Setting(text.trim(sys.skip(parts,0)), text.trim(sys.skip(parts,1)));
-        //     }
-
-        //     return new AppSettings(dst);
-        // }
-
-        // public static AppSettings load(IWfChannel channel, FilePath src)
-        // {
-        //     var flow = channel.Running($"Loading application settings from {src.ToUri()}");
-        //     var dst = load(src);
-        //     channel.Ran(flow,$"Read {dst.Length} settings from {src.ToUri()}");
-        //     return dst;
-        // }
-
         public string Find(string name)
             => Find(name, EmptyString);
 
@@ -114,11 +102,14 @@ namespace Z0
             return dst;
         }
 
-        public override string Format()
+        public string Format()
         {
             var dst = text.emitter();            
-            iter(Data, s => dst.AppendLine(s));
+            iter(Keys, key => dst.AppendLine(Setting(key)));
             return dst.Emit();
         }
+
+        public override string ToString()
+            => Format();
     }
 }
