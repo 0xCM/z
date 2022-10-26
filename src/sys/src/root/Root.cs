@@ -8,6 +8,6 @@ namespace Z0
     [LiteralProvider]
     public readonly partial struct Root
     {
-        const NumericKind Closure = Root.UnsignedInts;
+        internal const NumericKind Closure = Root.UnsignedInts;
     }
 }

@@ -1,5 +1,4 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(Literals)" />
   </ItemGroup>
 </Project>

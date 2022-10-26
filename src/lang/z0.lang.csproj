@@ -4,4 +4,9 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
   </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="src/**/*.*" />
+  </ItemGroup>
+
 </Project>

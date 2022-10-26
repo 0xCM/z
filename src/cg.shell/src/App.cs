@@ -5,29 +5,30 @@
 namespace Z0
 {
     [Free]
-    sealed class CgShell : AppShell<CgShell>
+    sealed class App : AppCmdShell<App>
     {
-        IAppCmdSvc CmdService;
+        static ReadOnlySeq<ICmdProvider> providers(IWfRuntime wf)
+            => new ICmdProvider[]{
+                wf.WfCmd(),
+                wf.BuildCmd(),
+                CgCmd.create(wf)
+            };
 
-        protected override void Initialized()
+        public static void main(string[] args)
         {
-            CmdService = GenCmdProvider.create(Wf);
-        }
-
-
-        protected override void Disposing()
-        {
-            CmdService?.Dispose();
-        }
-
-        protected override void Run(string[] args)
-            => CmdService.Run();
+            using var app = ApiRuntime.shell<App>(false, args);
+            var context = AppCmd.context<CgCmd>(app.Wf, () => providers(app.Wf));
+            var channel = context.Channel;
+            app.Commander = context.Commander;
+            app.Run(args);
+        }        
 
         public static void Main(params string[] args)
-        {
-            using var wf = ApiRuntime.create(args);
-            using var shell = create(wf);
-            shell.Run(args);
-        }
+            => main(args);
     }
+
+    partial class CgCmd : WfAppCmd<CgCmd>
+    {
+
+    }    
 }

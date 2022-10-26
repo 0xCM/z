@@ -6,7 +6,6 @@ namespace Z0
 {
     using static System.Runtime.CompilerServices.Unsafe;
 
-
     partial class sys
     {
         /// <summary>

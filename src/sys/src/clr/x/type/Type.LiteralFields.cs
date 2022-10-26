@@ -29,5 +29,19 @@ namespace Z0
         [Op]
         public static FieldInfo[] LiteralFields(this Type src, Type match)
             => src.GetFields(BF_Declared).Where(f => f.IsLiteral && f.FieldType == match).ToArray();
+
+        public static bool LiteralField(this Type src, string name, out FieldInfo field)
+        {
+            var result = src.GetFields(BF_Declared).Where(x => x.IsLiteral && x.Name == name).ToArray();
+            if(result.Length != 0)
+            {
+                field = result[0];
+            }
+            else
+            {
+                field = null;
+            }
+            return field != null;
+        }
     }
 }

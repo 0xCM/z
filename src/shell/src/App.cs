@@ -17,7 +17,10 @@ namespace Z0
         {
             var args = sys.empty<string>();
             using var app = ApiRuntime.shell<App>(false, args);
-
+            var context = AppCmd.context<AppShellCmd>(app.Wf, () => providers(app.Wf));
+            var channel = context.Channel;
+            app.Commander = context.Commander;
+            app.Run(sys.empty<string>());
         }        
 
         static int main(string[] args)
