@@ -16,7 +16,7 @@ namespace Z0
         const string @base = "rowbits";
 
         public IEnumerable<Type> Identifiable
-            => Algs.defer(typeof(RowBits<>));
+            => sys.array(typeof(RowBits<>));
 
         public TypeIdentity Identify(Type src)
         {

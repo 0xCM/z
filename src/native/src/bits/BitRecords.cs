@@ -86,7 +86,7 @@ namespace Z0
             }
 
             if(rem != 0)
-                dep += store(Spans.slice(src,0,dep), slice(dst,0,dep));
+                dep += store(sys.slice(src,0,dep), slice(dst,0,dep));
 
             return dep;
         }

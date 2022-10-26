@@ -49,7 +49,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public Span<byte> Segment(Address32 offset, uint size)
-            => Algs.cover(Cell(offset),size);
+            => sys.cover(Cell(offset),size);
 
         [MethodImpl(Inline)]
         public Span<byte> Entry(uint index)

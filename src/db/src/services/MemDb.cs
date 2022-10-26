@@ -139,7 +139,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static uint NextSeq(DbObjectKind kind)
-            => Algs.inc(ref ObjSeqSource[kind]);
+            => sys.inc(ref ObjSeqSource[kind]);
 
         [MethodImpl(Inline)]
         static AllocToken token(MemoryAddress @base, uint offset, uint size)

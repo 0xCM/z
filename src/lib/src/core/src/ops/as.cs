@@ -29,7 +29,7 @@ namespace Z0
         public static ref T @as<S,T>(Span<S> src)
             where S : unmanaged
             where T : unmanaged
-                => ref Spans.first(Spans.recover<S,T>(src));
+                => ref sys.first(sys.recover<S,T>(src));
 
         /// <summary>
         /// Presents the leading S-cells as a readonly <typeparamref name='T'/>-cell reference
@@ -41,7 +41,7 @@ namespace Z0
         public static ref readonly T @as<S,T>(ReadOnlySpan<S> src)
             where S : unmanaged
             where T : unmanaged
-                => ref Spans.first(Spans.recover<S,T>(src));
+                => ref sys.first(sys.recover<S,T>(src));
 
         /// <summary>
         /// Presents the source as a <typeparamref name='T'/>-cell reference

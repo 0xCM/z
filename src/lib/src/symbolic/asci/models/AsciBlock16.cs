@@ -67,13 +67,13 @@ namespace Z0
         public ref S this[int index]
         {
             [MethodImpl(Inline)]
-            get => ref Spans.seek(Symbols,index);
+            get => ref seek(Symbols,index);
         }
 
         public ref S this[uint index]
         {
             [MethodImpl(Inline)]
-            get => ref Spans.seek(Symbols,index);
+            get => ref seek(Symbols,index);
         }
 
         public ref byte First

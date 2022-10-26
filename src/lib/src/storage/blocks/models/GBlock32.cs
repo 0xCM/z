@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    using static Spans;
+    using static sys;
 
     /// <summary>
     /// Defines storage for contiguous sequence of 32 T-cells

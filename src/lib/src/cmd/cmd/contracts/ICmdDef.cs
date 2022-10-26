@@ -14,6 +14,4 @@ namespace Z0
         string IExpr.Format()
             => CmdFormat.format((T)this);
     }    
-
-
 }

@@ -18,8 +18,8 @@ namespace Z0
                 var count = kLeft;
                 for(var i=0; i<count; i++)
                 {
-                    ref readonly var x = ref Spans.skip(a,i);
-                    ref readonly var y = ref Spans.skip(b,i);
+                    ref readonly var x = ref sys.skip(a,i);
+                    ref readonly var y = ref sys.skip(b,i);
                     result = x.CompareTo(y);
                     if(result != 0)
                         break;

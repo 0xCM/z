@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    using static Spans;
+    using static sys;
 
     [StructLayout(LayoutKind.Sequential, Size = (int)Size, Pack=1)]
     public struct PageBlock1 : IPageBlock<PageBlock1>

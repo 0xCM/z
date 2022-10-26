@@ -46,7 +46,7 @@ namespace Z0
             ref var dst = ref sys.@as<byte>(storage);
             var count = min(8,src.Length);
             for(var i=0; i<count; i++)
-                sys.seek(dst,i) = Spans.skip(src,i);
+                sys.seek(dst,i) = sys.skip(src,i);
             return storage;
         }
 
@@ -57,7 +57,7 @@ namespace Z0
             ref var dst = ref sys.@as<byte>(storage);
             var count = min(8,src.Length);
             for(var i=0; i<count; i++)
-                sys.seek(dst,i) = Spans.skip(src,i);
+                sys.seek(dst,i) = sys.skip(src,i);
             return storage;
         }
     }

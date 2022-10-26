@@ -49,7 +49,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public static explicit operator Relation32(uint id)
         {
-            Algs.split(id, out var src, out var dst);
+            Numbers.split(id, out var src, out var dst);
             return new Relation32(src,dst);
         }
 

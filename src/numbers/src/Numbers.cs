@@ -18,6 +18,13 @@ namespace Z0
 
         internal const NumericKind Closure32 = NumericKind.U32;
 
+        [MethodImpl(Inline), Op]
+        public static void split(uint src, out ushort a, out ushort b)
+        {
+            a = (ushort)(src & 0x0000_FFFF);
+            b = (ushort)((src & 0xFFFF_0000) >> 16);
+        }
+
         public static bool num8(string src, out byte dst)
         {
             var result = false;

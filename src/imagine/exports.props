@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Imagine>$(MsBuildThisFileDirectory)z0.imagine.csproj</Imagine>
+  </PropertyGroup>
+</Project>

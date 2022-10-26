@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Algs;
-    using static Spans;
+    using static sys;
 
     /// <summary>
     /// Reserves 2 pages of memory that cover 2^13 = 8,192 bytes

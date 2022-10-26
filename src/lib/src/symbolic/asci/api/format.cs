@@ -43,7 +43,7 @@ namespace Z0
 
         [Op]
         public static string format(ReadOnlySpan<C> src, Span<char> buffer)
-            => sys.@string(Spans.slice(buffer,0, decode(src, buffer)));
+            => sys.@string(sys.slice(buffer,0, decode(src, buffer)));
 
         [Op]
         public static string format(ReadOnlySpan<byte> src, Span<char> dst)

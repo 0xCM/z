@@ -46,7 +46,7 @@ namespace Z0
         /// <typeparam name="T">The element type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static IEnumerable<T> stream<T>(T head, IEnumerable<T> tail)
-            => Algs.array(head).Concat(tail);
+            => sys.array(head).Concat(tail);
 
         /// <summary>
         /// Procduces an output stream by concatenating three input streams

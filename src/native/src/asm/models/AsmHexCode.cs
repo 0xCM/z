@@ -72,7 +72,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public int CompareTo(AsmHexCode src)
-            => Algs.cmp(Bytes, src.Bytes);
+            => math.cmp(Bytes, src.Bytes);
 
         [MethodImpl(Inline)]
         public static implicit operator AsmHexCode(BinaryCode src)

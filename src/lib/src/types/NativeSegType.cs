@@ -27,7 +27,7 @@ namespace Z0
         public NativeSegKind SegKind
         {
             [MethodImpl(Inline)]
-            get => Algs.@as<NativeSegType,NativeSegKind>(this);
+            get => sys.@as<NativeSegType,NativeSegKind>(this);
         }
 
         public NativeSize Size
@@ -39,7 +39,7 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => Algs.hash(CellType.GetHashCode(), CellCount);
+            get => sys.hash(CellType.GetHashCode(), CellCount);
         }
 
         public bool IsVoid
@@ -67,7 +67,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator NativeSegType(NativeSegKind kind)
-            => Algs.@as<NativeSegKind,NativeSegType>(kind);
+            => sys.@as<NativeSegKind,NativeSegType>(kind);
 
         [MethodImpl(Inline)]
         public static implicit operator NativeSegKind(NativeSegType src)

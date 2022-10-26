@@ -35,7 +35,6 @@
 
    <Import Project="$(MsBuildThisFileDirectory)src/circuits/exports.props"/>
 
-
    <Import Project="$(MsBuildThisFileDirectory)src/clr.query/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/clr.cil/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/clr.ecma/exports.props"/>
@@ -70,6 +69,8 @@
    <Import Project="$(MsBuildThisFileDirectory)src/heaps/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/hex/exports.props"/>
 
+   <Import Project="$(MsBuildThisFileDirectory)src/imagine/exports.props"/>
+   
    <Import Project="$(MsBuildThisFileDirectory)src/intel.svc/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/lang.emit/exports.props"/>

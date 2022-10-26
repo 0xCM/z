@@ -96,5 +96,31 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static int cmp(double a, double b)
             => a.CompareTo(b);
+
+        [Op]
+        public static int cmp(ReadOnlySpan<byte> a, ReadOnlySpan<byte> b)
+        {
+            var result = 0;
+            var kLeft = a.Length;
+            var kRight = b.Length;
+
+            if(kLeft == kRight)
+            {
+                var count = kLeft;
+                for(var i=0; i<count; i++)
+                {
+                    ref readonly var x = ref sys.skip(a,i);
+                    ref readonly var y = ref sys.skip(b,i);
+                    result = x.CompareTo(y);
+                    if(result != 0)
+                        break;
+                }
+            }
+            else
+                result = kLeft.CompareTo(kRight);
+
+            return result;
+        }
+            
     }
 }

@@ -10,7 +10,7 @@
     <ProjectReference Include="$(Cells)" />
     <ProjectReference Include="$(CmdSpecs)" />
     <ProjectReference Include="$(Types)" />
-    <ProjectReference Include="../cmd.specs/z0.cmd.specs.csproj" />
-    <ProjectReference Include="../imagine/z0.imagine.csproj" />
+    <ProjectReference Include="$(CmdSpecs)" />
+    <ProjectReference Include="$(Imagine)" />
   </ItemGroup>
 </Project>

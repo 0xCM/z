@@ -4,9 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using static Algs;
-    using static Spans;
-
+    using static sys;
     public readonly struct AsmEncoding<K,T> : IAsmEncoding<K,T>
         where T : unmanaged, IStorageBlock<T>
         where K : unmanaged

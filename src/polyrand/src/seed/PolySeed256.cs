@@ -181,7 +181,7 @@ namespace Z0
             Guid.Parse("8cf3136f-6af6-4a4d-9cbf-013602b6103d"),
         };
 
-        public static ulong[] Default = Arrays.from(guids[18],guids[19]).ToU64Array();
+        public static ulong[] Default = sys.array(guids[18],guids[19]).ToU64Array();
 
         public static void generate()
         {

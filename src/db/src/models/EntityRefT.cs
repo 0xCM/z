@@ -19,7 +19,7 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => Algs.native(Key);
+            get => sys.nhash(Key);
         }
 
         public override int GetHashCode()

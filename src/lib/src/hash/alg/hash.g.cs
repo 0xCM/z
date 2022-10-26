@@ -82,8 +82,8 @@ namespace Z0.alg
             var rolling = H.FnvOffsetBias;
             for(var i=0u; i<length-1; i++)
             {
-                ref readonly var x = ref Spans.skip(src,i);
-                ref readonly var y = ref Spans.skip(src,i + 1);
+                ref readonly var x = ref sys.skip(src,i);
+                ref readonly var y = ref sys.skip(src,i + 1);
                 rolling = H.combine(rolling, combine(x,y))*H.FnvPrime;
             }
             return rolling;
@@ -91,11 +91,11 @@ namespace Z0.alg
 
         [MethodImpl(Inline)]
         public static uint calc<T>(Span<T> src)
-            => calc(Algs.@readonly(src));
+            => calc(sys.@readonly(src));
 
         [MethodImpl(Inline)]
         public static uint calc<T>(T[] src)
-            => calc(Spans.span(src));
+            => calc(sys.span(src));
 
         [MethodImpl(Inline)]
         static uint calc_u<T>(T src)

@@ -45,13 +45,13 @@ namespace Z0
         public ref byte First
         {
             [MethodImpl(Inline)]
-            get => ref  Algs.@ref<byte>(BaseAddress);
+            get => ref  sys.@ref<byte>(BaseAddress);
         }
 
         protected override Span<byte> Data
         {
             [MethodImpl(Inline)]
-            get => Algs.cover<byte>(BaseAddress, _Size);
+            get => sys.cover<byte>(BaseAddress, _Size);
         }
 
         public BitWidth Width

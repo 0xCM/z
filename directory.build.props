@@ -1,5 +1,4 @@
 <Project>
-  <Import Project="exports.props"/>
   <PropertyGroup>
     <ZVer>0.0.6</ZVer>
     <ZSysVer>0.0.5</ZSysVer>
@@ -24,5 +23,6 @@
     <BaseIntermediateOutputPath>$(IntermediateRoot)</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(IntermediateRoot)</IntermediateOutputPath>
   </PropertyGroup>
+  <Import Project="exports.props"/>
   <Import Project="props/common.props"/>
 </Project>

@@ -20,7 +20,7 @@ namespace Z0
         public ReadOnlySpan<CmdLinePart> Parts
         {
             [MethodImpl(Inline)]
-            get => Spans.recover<string,CmdLinePart>(Data.Edit);
+            get => sys.recover<string,CmdLinePart>(Data.Edit);
         }
 
         [MethodImpl(Inline)]

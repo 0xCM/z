@@ -16,7 +16,7 @@ namespace Z0
             {
                 var start = i0 + 1;
                 var length = i1 - start;
-                return Spans.slice(src, start, length);
+                return sys.slice(src, start, length);
             }
             else
                 return ReadOnlySpan<AsciCode>.Empty;

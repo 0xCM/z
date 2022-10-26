@@ -20,7 +20,7 @@ namespace Z0
             var sz = size(src);
             if(sz == 0)
                 sz = 1;
-            return Spans.slice(src.BlockData, 0, sz).FormatHex();
+            return sys.slice(src.BlockData, 0, sz).FormatHex();
         }
     }
 }

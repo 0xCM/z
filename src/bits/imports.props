@@ -6,5 +6,6 @@
     <ProjectReference Include="$(Validity)" />
     <ProjectReference Include="$(Rules)" />
     <ProjectReference Include="$(Calcs)" />
+    <ProjectReference Include="$(Imagine)" />
   </ItemGroup>
 </Project>

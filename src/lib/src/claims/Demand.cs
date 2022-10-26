@@ -50,8 +50,8 @@ namespace Z0
             var count = eq(a.Length,b.Length, caller, file, line);
             for(var i=0; i<count; i++)
             {
-                ref readonly var left = ref Spans.skip(a,i);
-                ref readonly var right = ref Spans.skip(b,i);
+                ref readonly var left = ref sys.skip(a,i);
+                ref readonly var right = ref sys.skip(b,i);
                 eq(left,right, caller,file, line);
             }
             return a;

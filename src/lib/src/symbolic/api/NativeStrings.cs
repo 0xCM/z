@@ -19,7 +19,7 @@ namespace Z0
             where K : unmanaged, IEquatable<K>, IComparable<K>
             where B : unmanaged, IStorageBlock<B>
         {
-            var data = Spans.recover<byte>(src);
+            var data = sys.recover<byte>(src);
             var dst = NativeString<K,B>.Empty;
             if(data.Length >= NativeString<K,B>.StorageSize)
                 dst = new NativeString<K,B>(@as<byte,B>(data));
@@ -55,7 +55,7 @@ namespace Z0
         public static NativeString<K,B> load<K,B>(string src)
             where K : unmanaged, IEquatable<K>, IComparable<K>
             where B : unmanaged, IStorageBlock<B>
-                => load<K,B>(Spans.span(src));
+                => load<K,B>(sys.span(src));
 
         public static uint lines<K,B>(string src, Span<NativeString<K,B>> dst, bool keepblank = false, bool trim = true)
             where B : unmanaged, IStorageBlock<B>

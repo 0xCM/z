@@ -14,7 +14,7 @@ namespace Z0.DynamicModels
     using G = System.Collections.Generic;
 
     using static FacetsDynamic;
-    using static Algs;
+    using static sys;
 
     public class SelectionModelBuilder
     {

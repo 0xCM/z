@@ -53,7 +53,7 @@ namespace Z0
             ref var dst = ref @as<uint,char>(storage);
             seek(dst, 0) = (char)(byte)(src.Storage >> 0);
             seek(dst, 1) = (char)(byte)(src.Storage >> 8);
-            return Algs.cover(dst, 2);
+            return sys.cover(dst, 2);
         }
 
         [MethodImpl(Inline), Op]
@@ -65,7 +65,7 @@ namespace Z0
             seek(dst, 1) = (char)(byte)(src.Storage >> 8);
             seek(dst, 2) = (char)(byte)(src.Storage >> 16);
             seek(dst, 3) = (char)(byte)(src.Storage >> 24);
-            return slice(Algs.cover(dst, asci4.Size),0, src.Length);
+            return slice(sys.cover(dst, asci4.Size),0, src.Length);
         }
 
         [MethodImpl(Inline), Op]

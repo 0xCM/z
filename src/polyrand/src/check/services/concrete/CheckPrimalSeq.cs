@@ -9,10 +9,6 @@ namespace Z0
     using static CheckInvariant;
     using static ClaimValidator;
 
-    using Caller = System.Runtime.CompilerServices.CallerMemberNameAttribute;
-    using File = System.Runtime.CompilerServices.CallerFilePathAttribute;
-    using Line = System.Runtime.CompilerServices.CallerLineNumberAttribute;
-
     public readonly struct CheckPrimalSeq : ICheckPrimalSeq
     {
         /// <summary>
@@ -22,7 +18,7 @@ namespace Z0
         /// <param name="b">The right operand</param>
         [MethodImpl(Inline), Op]
         public static bool TestEq(ReadOnlySpan<char> a, ReadOnlySpan<char> b)
-            => Algs.eq(a, b);
+            => sys.eq(a, b);
 
         /// <summary>
         /// Returns true if the character spans are equal as strings, false otherwise
@@ -31,7 +27,7 @@ namespace Z0
         /// <param name="b">The right operand</param>
         [MethodImpl(Inline), Op]
         public static bool TestEq(ReadOnlySpan<byte> a, ReadOnlySpan<byte> b)
-            => Algs.eq(a,b);
+            => sys.eq(a,b);
 
         /// <summary>
         /// Returns true if the spans are equal, false otherwise
@@ -40,7 +36,7 @@ namespace Z0
         /// <param name="b">The right operand</param>
         [MethodImpl(Inline), Op]
         public static bool TestEq(ReadOnlySpan<sbyte> a, ReadOnlySpan<sbyte> b)
-            => Algs.eq(a,b);
+            => sys.eq(a,b);
 
         /// <summary>
         /// Returns true if the character spans are equal as strings, false otherwise
@@ -49,7 +45,7 @@ namespace Z0
         /// <param name="b">The right operand</param>
         [MethodImpl(Inline), Op]
         public static bool TestEq(ReadOnlySpan<int> a, ReadOnlySpan<int> b)
-            => Algs.eq(a,b);
+            => sys.eq(a,b);
 
         /// <summary>
         /// Returns true if the character spans are equal as strings, false otherwise
@@ -58,7 +54,7 @@ namespace Z0
         /// <param name="b">The right operand</param>
         [MethodImpl(Inline), Op]
         public static bool TestEq(ReadOnlySpan<uint> a, ReadOnlySpan<uint> b)
-            => Algs.eq(a,b);
+            => sys.eq(a,b);
 
         /// <summary>
         /// Returns true if the character spans are equal as strings, false otherwise
@@ -67,7 +63,7 @@ namespace Z0
         /// <param name="b">The right operand</param>
         [MethodImpl(Inline), Op]
         public static bool TestEq(ReadOnlySpan<ulong> a, ReadOnlySpan<ulong> b)
-            => Algs.eq(a,b);
+            => sys.eq(a,b);
 
         /// <summary>
         /// Asserts the equality of two boolean arrays
