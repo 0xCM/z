@@ -4,7 +4,6 @@ call %~dp0config.cmd
 set DotNetVersion=6.0.303
 set DOTNET_ROOT=%SdkRoot%\dotnet\v%DotNetVersion%
 set PATH=%DOTNET_ROOT%;%PATH%
-set WsRoot=%SlnRoot%
-set WsPath=%SlnRoot%
-set Launcher=%EnvRoot%\control\launch\vscode.ps1
-call %Launcher%
+set WsRoot=%~dp0
+set WsPath=%~dp0
+call %VsCode%

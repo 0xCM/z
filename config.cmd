@@ -1,7 +1,7 @@
 @echo off
 call %~dp0..\config.cmd
 set SlnId=z0
-set SlnRoot=%DevRoot%\projects\%SlnId%
+set SlnRoot=%DevRoot%\%SlnId%
 set WsRoot=%SlnRoot%
 set WsPath=%WsRoot%
 set CfgFile=%SlnRoot%\%SlnId%.cfg

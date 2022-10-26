@@ -1,8 +1,7 @@
 <Project>
 
   <ItemGroup>
-    <ProjectReference Include="$(Sys)" />
-    <ProjectReference Include="../bit/z0.bit.csproj" />
+    <ProjectReference Include="$(Bit)" />
   </ItemGroup>
 
 </Project>

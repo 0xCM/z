@@ -4,7 +4,6 @@
     <ProjectReference Include="$(Memory)" />
     <ProjectReference Include="$(Rules)" />
     <ProjectReference Include="$(Builds)" />
-    <ProjectReference Include="$(Lang)" />
     <ProjectReference Include="$(Tools)" />    
     <ProjectReference Include="$(ApiCode)" />    
   </ItemGroup>
