@@ -195,7 +195,7 @@ namespace Z0
                 var value = arg.Value;
                 var src = FS.path(value);
                 if(src.Is(FileKind.List))
-                    EmitMetadumps(ListArchives.load(src, parse, Emitter));
+                    EmitMetadumps(ListArchives.load(Channel, src, parse));
                 else
                     EcmaEmitter.EmitMetadump(src, EcmaArchive(src));
             }

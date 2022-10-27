@@ -23,7 +23,7 @@ namespace Z0
             public Identifier OpName => "sum";
 
             public string Format()
-                => OpFormatters.format(this);
+                => format(this);
 
             public override string ToString()
                 => Format();

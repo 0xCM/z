@@ -83,35 +83,6 @@ namespace Z0
             return result;
         }
 
-        // public static CmdExecStatus run(CmdScript src)
-        // {
-        //     var ts = timestamp();
-        //     var errors = ProcessLogs.errors(ts, src.Name.Format());
-        //     using var status = ProcessLogs.status(ts, src.Name.Format()).AsciWriter();
-            
-        //     void OnStatus(in string msg)
-        //         => status.AppendLine(msg);
-
-        //     void OnError(in string msg)
-        //         => errors.Append(msg);
-
-        //     var result = CmdExecStatus.Empty;
-        //     try
-        //     {
-        //         var process = CmdProcess.create(src.ToCmdLine(), OnStatus, OnError);
-        //         CmdProcess.status(process, ref result);
-        //         result = process.Wait();
-        //     }
-        //     catch(Exception e)
-        //     {
-        //         errors.Append(e.ToString());
-        //         result.ExitCode = -1;
-        //         result.ExitTime = timestamp();
-        //         result.Duration = result.ExitTime - result.StartTime;
-        //     }       
-        //     return result;     
-        // }
-
         [Op]
         public static Outcome run(CmdLine cmd, CmdVars vars, Receiver<string> status, Receiver<string> error, out ReadOnlySpan<TextLine> response)
             => run(cmd, vars, FilePath.Empty, status,error, out response);

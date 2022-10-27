@@ -13,7 +13,18 @@ namespace Z0
         const string group = "db";
 
         public static Task<ExecToken> robocopy(IWfChannel channel, FolderPath src, FolderPath dst)
-            => ProcessControl.start(channel, $"robocopy {src} {dst} /e");
+        {
+            var cmd = new CmdLine($"robocopy {src} {dst} /e");
+            var running = channel.Running(cmd);
+            
+            ExecToken run()
+            {
+                ProcessControl.start(cmd).Wait();
+                return channel.Ran(running); 
+            }
+
+            return @try(run, e => channel.Completed(running, typeof(EtlTasks), e));
+        }
 
         public static Task<ExecToken> zip(IWfChannel channel, FolderPath src, FilePath dst)
         {
@@ -26,7 +37,7 @@ namespace Z0
                 return channel.Ran(running, uri); 
             }
 
-            return @try(run, e => channel.Completed(running, typeof(EtlTasks), e));                                                    
+            return @try(run, e => channel.Completed(running, typeof(EtlTasks), e));
         }
 
 

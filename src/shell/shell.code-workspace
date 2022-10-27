@@ -1,31 +1,49 @@
 {
 	"folders": [
 		{
-			"path": "../literals"
-		},
-		{
-			"path": "../sys"
-		},
-		{
-			"path": "../cmd.specs"
-		},
-		{
 			"path": "../text"
+		},
+		{
+			"path": "../cells"
+		},
+		{
+			"path": "../math"
 		},
 		{
 			"path": "../lib"
 		},
 		{
+			"path": "../digital"
+		},
+		{
 			"path": "../containers"
 		},
 		{
+			"path": "../alloc"
+		},
+		{
 			"path": "../db"
+		},
+		{
+			"path": "../dynamic"
+		},
+		{
+			"path": "../emath"
+		},
+		{
+			"path": "../bitvectors"
+		},
+		{
+			"path": "../circuits"
 		},
 		{
 			"path": "../native"
 		},
 		{
 			"path": "../symbolics"
+		},
+		{
+			"path": "../numbers"
 		},
 		{
 			"path": "../process"

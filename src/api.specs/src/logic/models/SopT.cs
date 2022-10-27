@@ -56,7 +56,7 @@ namespace Z0
             }
 
             public string Format()
-                => OpFormatters.format(this);
+                => format(this);
 
             public override string ToString()
                 => Format();

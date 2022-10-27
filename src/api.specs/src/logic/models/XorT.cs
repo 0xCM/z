@@ -37,7 +37,7 @@ namespace Z0
                 => "xor<{0}>";
 
             public string Format()
-                => OpFormatters.format(this);
+                => format(this);
 
             public override string ToString()
                 => Format();

@@ -26,7 +26,7 @@ namespace Z0
             public Label Name => "exclude";
 
             public string Format()
-                => OpFormatters.format(this);
+                => format(this);
 
             public override string ToString()
                 => Format();
