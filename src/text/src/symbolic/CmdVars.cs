@@ -8,7 +8,6 @@ namespace Z0
 
     public class CmdVars : IIndex<CmdVar>
     {
-
         public static CmdVar<K> var<K>(string name, K kind, string value)
             where K : unmanaged
                 => new CmdVar<K>(name,kind,value);

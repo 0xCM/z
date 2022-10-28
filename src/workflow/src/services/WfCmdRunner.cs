@@ -7,13 +7,13 @@ namespace Z0
 {
     using static CmdActorKind;
 
-    public class AppCmdRunner : IAppCmdRunner
+    public class WfCmdRunner : IWfCmdRunner
     {
-        public readonly AppCmdMethod Def;
+        public readonly WfCmdMethod Def;
 
-        public AppCmdRunner(Name name, object host, MethodInfo method)
+        public WfCmdRunner(Name name, object host, MethodInfo method)
         {
-            Def = new AppCmdMethod(name, AppCmd.classify(method), Require.notnull(method), Require.notnull(host));
+            Def = new WfCmdMethod(name, WfCmd.classify(method), Require.notnull(method), Require.notnull(host));
         }
 
         public ref readonly object Host
@@ -46,7 +46,7 @@ namespace Z0
             get => Def.Host.GetType();
         }
 
-        AppCmdMethod IAppCmdRunner.Def
+        WfCmdMethod IWfCmdRunner.Def
             => Def;
 
         public Outcome Run(IWfChannel channel, CmdArgs args)

@@ -26,7 +26,7 @@ namespace Z0
         AppCmdSpec Next()
         {
             var input = term.prompt(Prompt());
-            if(AppCmd.parse(input, out AppCmdSpec cmd))
+            if(WfCmd.parse(input, out AppCmdSpec cmd))
             {
                 return cmd;
             }
@@ -66,7 +66,7 @@ namespace Z0
 
         [CmdOp("commands")]
         protected void EmitCommands()
-            => AppCmd.emit(Channel, AppCmd.catalog(Dispatcher), AppDb.AppData().Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv));
+            => WfCmd.emit(Channel, WfCmd.catalog(Dispatcher), AppDb.AppData().Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv));
 
         public void RunCmd(string name)
         {

@@ -4,8 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IEnv<N> : IExpr, IDataType
+    public class CmdFxAttribute : OpAttribute
     {
-        N Name {get;}
+
+
     }
 }

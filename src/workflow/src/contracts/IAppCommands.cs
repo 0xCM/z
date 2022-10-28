@@ -7,10 +7,10 @@ namespace Z0
     [Free]
     public interface IAppCommands
     {
-        bool Find(string spec, out IAppCmdRunner runner);
+        bool Find(string spec, out IWfCmdRunner runner);
 
-        ref readonly ReadOnlySeq<AppCmdMethod> Defs {get;}
+        ref readonly ReadOnlySeq<WfCmdMethod> Defs {get;}
 
-        ICollection<IAppCmdRunner> Invokers {get;}
+        ICollection<IWfCmdRunner> Invokers {get;}
     }
 }

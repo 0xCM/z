@@ -8,6 +8,32 @@ namespace Z0
     
     public class FilePacks
     {
+        static AppSettings Settings => AppSettings.Default;
+
+        public static void stage(IWfChannel channel, PackageKind kind, FolderPath src)
+            => stage(channel, kind, search(src,kind));
+
+        static ExecToken stage(IWfChannel channel, PackageKind kind, ReadOnlySeq<FilePack> src)
+        {
+            var dst = stage(kind);
+            var running = channel.Running($"Updating {dst.Root}");
+            var counter = 0u;
+            for(var i=0; i<src.Count; i++)
+            {
+                ref readonly var pack = ref src[i];
+                var path = pack.Location.ToFilePath().CopyTo(dst.Root);
+                if(path.IsNonEmpty)
+                {
+                    channel.Babble($"{pack} -> {path.ToUri()}");
+                    counter++;
+                }
+                else
+                    channel.Error($"The operation to copy {pack} to {dst.Root} failed");
+            }
+
+            return channel.Ran(running,$"Copied {counter} files to {dst.Root}");
+        }
+
         public static ReadOnlySeq<FilePack> search(FolderPath src, PackageKind kind)
         {
             var files = src.EnumerateFiles(filekind(kind).Ext(), true).ToSeq();
@@ -21,6 +47,17 @@ namespace Z0
             }
             return dst;
         }
+
+        public static string scope(PackageKind kind)
+            => kind switch {
+                PackageKind.Nuget => "nuget",
+                PackageKind.Msi => "msi",
+                PackageKind.Zip => "zip",
+                _ => EmptyString
+            };
+
+        public static IDbArchive stage(PackageKind kind)
+            => Settings.PkgRoot().Scoped(scope(kind));
 
         public static FileKind filekind(PackageKind src)
             => src switch{

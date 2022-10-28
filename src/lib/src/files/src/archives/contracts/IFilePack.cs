@@ -9,7 +9,7 @@ namespace Z0
         None,
 
         Zip,
-
+        
         Nuget,
 
         Msi

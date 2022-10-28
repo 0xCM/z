@@ -5,15 +5,15 @@
 namespace Z0
 {
     [Free]
-    public interface IAppCmdRunner<S,T>
+    public interface IWfCmdRunner<S,T>
     {
         T Run(IWfChannel channel, S spec);
     }
 
     [Free]
-    public interface IAppCmdRunner : IAppCmdRunner<CmdArgs,Outcome>
+    public interface IWfCmdRunner : IWfCmdRunner<CmdArgs,Outcome>
     {
-        AppCmdMethod Def {get;}
+        WfCmdMethod Def {get;}
 
         ref readonly Name CmdName
             => ref Def.CmdName;

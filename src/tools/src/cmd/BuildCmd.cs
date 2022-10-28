@@ -18,7 +18,7 @@ namespace Z0
             var scope = arg(args,0).Value;
             var files = AppDb.Dev(scope).Files().Where(x => FileTypes.@is(x,FileKind.CsProj));
             iter(files, file => Write(file.ToUri()));
-            var uri = AppCmd.uri((MethodInfo)MethodInfo.GetCurrentMethod());            
+            var uri = WfCmd.uri((MethodInfo)MethodInfo.GetCurrentMethod());            
         }
 
         [CmdOp("build/libs")]

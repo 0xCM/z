@@ -59,8 +59,8 @@ namespace Z0
         public DbArchive Capture()
             => folder(Data.Setting(SettingNames.Capture));
 
-        public DbArchive DevPacks()
-            => folder(Data.Setting(SettingNames.DevPacks));
+        public DbArchive PkgRoot()
+            => folder(Data.Setting(SettingNames.PkgRoot));
 
         public DbArchive Archives()
             => folder(Data.Setting(SettingNames.Archives));

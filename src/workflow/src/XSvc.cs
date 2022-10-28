@@ -26,9 +26,6 @@ namespace Z0
              public Tooling Tooling(IWfRuntime wf)
                 => Service<Tooling>(wf);
 
-             public DevPacks DevPacks(IWfRuntime wf)
-                => Service<DevPacks>(wf);
-
             public DbArchives DbArchives(IWfRuntime wf)
                 => Service<DbArchives>(wf);
 
@@ -37,7 +34,6 @@ namespace Z0
         }
 
         static ServiceCache Services => ServiceCache.Instance;
-
 
         public static OmniScript OmniScript(this IWfRuntime wf)
             => Services.OmniScript(wf);
@@ -54,8 +50,6 @@ namespace Z0
         public static IWfServices WfServices(this IWfRuntime wf)
             => Services.WfServices(wf);
 
-        public static DevPacks DevPacks(this IWfRuntime wf)
-            => Services.DevPacks(wf);
         public static Tooling Tooling(this IWfRuntime wf)
             => Services.Tooling(wf);             
 
@@ -64,6 +58,5 @@ namespace Z0
 
         public static EnvSvc EnvSvc(this IWfRuntime wf)
             => Services.EnvSvc(wf);                
-
     }
 }

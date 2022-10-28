@@ -25,12 +25,12 @@ namespace Z0
 
         public const string Capture = nameof(Capture);
 
-        public const string DevPacks = nameof(DevPacks);
-
         public const string Archives = nameof(Archives);
 
         public const string DevTools = nameof(DevTools);
 
         public const string SdkRoot = nameof(SdkRoot);
+
+        public const string PkgRoot = nameof(PkgRoot);
     }
 }

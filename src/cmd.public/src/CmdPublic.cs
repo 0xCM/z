@@ -11,7 +11,7 @@ namespace Z0
             where C : IAppCmdSvc, new()
         {
             GlobalServices.Instance.Inject(wf.XedRuntime());
-            return AppCmd.context<C>(wf, () => providers(wf));            
+            return WfCmd.context<C>(wf, () => providers(wf));            
         }
         
         public static ReadOnlySeq<ICmdProvider> providers(IWfRuntime wf)

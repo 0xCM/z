@@ -17,8 +17,8 @@ namespace Z0
             public BuildCmd BuildCmd(IWfRuntime wf)
                 => Service<BuildCmd>(wf);
 
-            public WfCmd WfCmd(IWfRuntime wf)
-                => Service<WfCmd>(wf);
+            public WfAppCmd WfCmd(IWfRuntime wf)
+                => Service<WfAppCmd>(wf);
 
             public ApiComments ApiComments(IWfRuntime wf)
                 => Service<ApiComments>(wf);
@@ -30,7 +30,7 @@ namespace Z0
 
         static ServiceCache Services => ServiceCache.Instance;
 
-        public static WfCmd WfCmd(this IWfRuntime wf)
+        public static WfAppCmd WfCmd(this IWfRuntime wf)
             => Services.WfCmd(wf);
 
         public static ApiComments ApiComments(this IWfRuntime wf)

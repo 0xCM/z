@@ -136,6 +136,16 @@ namespace Z0
         public Deferred<FilePath> EnumerateFiles(FileExt[] ext, bool recurse)
             => sys.defer(EnumerateFiles(this, recurse, ext));
 
+        public IEnumerable<FilePath> EnumerateFiles(Func<FilePath,bool> predicate, bool recurse = true)
+        {
+            foreach(var file in Directory.EnumerateFiles(Name, SearchAll, option(recurse)))
+            {
+                var path = FS.path(file);
+                if(predicate(path))
+                    yield return path;
+            }
+        }
+
         public Deferred<FilePath> EnumerateFiles(FileExt ext, bool recurse)
             => sys.defer(EnumerateFiles(this, ext, recurse));
 

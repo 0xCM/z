@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed class AppCmdMethod : ICmdDef
+    public sealed class WfCmdMethod : ICmdDef
     {
         public readonly Name CmdName;
 
@@ -17,7 +17,7 @@ namespace Z0
         public readonly CmdUri Uri;
 
         [MethodImpl(Inline)]
-        public AppCmdMethod(Name name, CmdActorKind kind, MethodInfo method, object host)
+        public WfCmdMethod(Name name, CmdActorKind kind, MethodInfo method, object host)
         {
             CmdName = name;
             Kind = kind;

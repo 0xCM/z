@@ -4,562 +4,224 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Windows;
-
     using static sys;
 
-    public class WfCmd : WfAppCmd<WfCmd>
+    public class WfCmd
     {
-        WsRegistry WsRegistry => Wf.WsRegistry();
-
-        ProjectScripts ProjectScripts => Wf.ProjectScripts();
-
-        DevPacks Devpacks => Wf.DevPacks();
-
-        Tooling Tooling => Wf.Tooling();
-
-        Dev Dev => Dev.create(Wf);
-
-        EnvSvc EnvSvc => Wf.EnvSvc();
-
-        [CmdOp("zip")]
-        void Zip(CmdArgs args)
-        {
-            var folder = arg(args,0).Value;
-            var i = text.index(folder, Chars.FSlash,Chars.BSlash);
-            var scope = "default";
-            if(i > 0)
-                scope = text.left(folder,i);
-            var src = AppSettings.DbRoot().Scoped(folder).Root;
-            var name = src.FolderName.Format();
-            var file = FS.file($"{scope}.{name}", FileKind.Zip);
-            EtlTasks.zip(Channel, src, AppDb.Archive(scope).Path(file));
-        }
-
-        [CmdOp("robocopy")]
-        void Copy(CmdArgs args)
-        {
-            var src = FS.dir(arg(args,0).Value);
-            var dst = FS.dir(arg(args,1).Value);
-            EtlTasks.robocopy(Channel, src, dst);
-        }
-
-        [CmdOp("env/include")]
-        void EnvInclude()
-            => Channel.Row(Env.paths(EnvTokens.INCLUDE, EnvVarKind.Process).Delimit(Chars.NL));
-
-        [CmdOp("env/path")]
-        void EnvPath()
-            => Channel.Row(Env.paths(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL));
-
-        [CmdOp("env/lib")]
-        void EnvLib()
-            => Channel.Row(Env.paths(EnvTokens.LIB, EnvVarKind.Process).Delimit(Chars.NL));
-
-        [CmdOp("archives")]        
-        void ListArchives(CmdArgs args)
-            => Emitter.Row(AppDb.Archives().Folders().Delimit(Eol));
-
-        [CmdOp("archives/list")]        
-        void ArchiveFiles(CmdArgs args)
-        {
-            var src = AppDb.Archive(arg(args,0).Value);
-            iter(src.Files(true), file => Write(file.ToUri()));
-        }
-
-        [CmdOp("symlink")]
-        void Symlink(CmdArgs args)
-        {
-            var src = FS.dir(args[0]);
-            var dst = FS.dir(args[1]);
-            var result = FS.symlink(src,dst,true);
-            Channel.Status($"symlink:{src} -> {dst}");
-        }
-
-        static Files search(CmdArgs args)
-        {
-            var src = FS.dir(arg(args,0));
-            if(args.Count > 1)
-            {
-                var kinds = args.Values().Span().Slice(1).Select(x => FS.kind(FS.ext(x))).Where(x => x!=0);
-                iter(kinds, kind => term.babble(kind));
-                var query = FS.query(src,true,kinds); 
-                return query.Compute().Storage;
-            }
-            else
-            {
-                return src.Files(true);
-            }            
-        }
-
-        [CmdOp("files")]
-        void CatalogFiles(CmdArgs args)
-        {
-            var src = FS.dir(args[0].Value);            
-            var files = ListedFiles.listing(search(args));
-            var name = Archives.identifier(src);
-            var table = FilePath.Empty;
-            var list = FilePath.Empty;
-            if(args.Count >=2)    
-            {
-                table = FS.dir(args[1]) + Tables.filename<ListedFile>(name);
-                list = FS.dir(args[1]) + FS.file(name,FileKind.List);
-            }
-            else
-            {
-                table = AppDb.Catalogs("files").Table<ListedFile>(name);
-                list = AppDb.Catalogs("files").Path(name, FileKind.List);
-            }
-
-            Emitter.TableEmit(files, table);            
-            var flow = Emitter.EmittingFile(list);
-            using var writer = list.Utf8Writer();
-            var counter = 0u;
-            foreach(var file in files)
-            {
-                writer.AppendLine(file.Path);
-                counter++;
-            }
-            Emitter.EmittedFile(flow,counter);
-
-        }
-
-        [CmdOp("env/process/paths")]
-        void ProcPaths()
-        {
-            var src = Env.process().ToLookup();
-            var names = src.Keys;
-            var dst = text.emitter();
-            iter(names, name => {
-                dst.AppendLine(src[name]);
-            });
-
-            Channel.Row(dst.Emit());
-            //iter(src, var => Channel.Row(var));
-        }
-
-        void CalcRelativePaths()
-        {
-            var @base = FS.dir("dir1");
-            var files = FS.dir("dir2").AllFiles;
-            var links = Markdown.links(@base,files);
-            iter(links, r=> Write(r.Format()));
-        }
-
-        [CmdOp("scripts")]
-        void Scripts(CmdArgs args)
-            => iter(ProjectScripts.List(args), path => Emitter.Write(path.ToUri()));
-
-        [CmdOp("scripts/cmd")]
-        void Script(CmdArgs args)
-            => ProjectScripts.Start(args);
-
-        [CmdOp("jobs/types")]
-        void ListJobTypes()
-        {
-            var db = AppSettings.DbRoot();
-            Write(db.Root);
-            Write(RpOps.PageBreak80);
-            var jobs = db.Sources("jobs");
-            Write($"Jobs: {jobs.Root}");
-
-            jobs.Root.Folders(true).Iter(f => Write(f.Format()));
-        }
-
-        [CmdOp("env/thread")]
-        void ShowThread()
-            => Write(string.Format("ThreadId:{0}", Kernel32.GetCurrentThreadId()));
-
-        [CmdOp("env/tools")]
-        void EnvTools()
-        {
-            var dst = new ConcurrentSet<string>();
-            var paths = Env.paths(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL);
-            iter(paths, path => iter(path.Files(FileKind.Exe,false), file => dst.Add(file.ToUri().Format())), true);
-            var tools = dst.ToSeq().Sort();
-            var counter = 0u;
-            foreach(var tool in tools)
-                Write(string.Format("{0:D5} {1}", counter++, tool));
-        }
-
-        [CmdOp("app/deploy")]
-        void Deploy()
-        {
-            var dst = AppDb.Tools("z0/cmd").Targets().Root;
-            var src = ExecutingPart.Assembly.Path().FolderPath;
-            EtlTasks.robocopy(Channel, src, dst);
-        }
-
-        static Files launchers()
-            => FilteredArchive.match(AppSettings.Control("launch").Root, FileKind.Cmd, FileKind.Ps1);
-
-        [CmdOp("shell")]
-        void LaunchDevshell()
-            => ProcessControl.start(Channel, CmdArgs.create($"{AppSettings.EnvRoot()}/shell.cmd"));
-
-        [CmdOp("launchers")]
-        void Launchers(CmdArgs args)
-        {
-            var src = launchers();
-            var emitter = text.emitter();
-            iter(src, file => emitter.AppendLine(file.ToUri()));
-            var data = emitter.Emit();
-            Emitter.Row(data);
-            Emitter.FileEmit(data, AppDb.AppData().Path("launchers", FileKind.List));
-        }
+        static AppDb AppDb => AppDb.Service;
         
-        [CmdOp("launch")]
-        void LaunchTargets(CmdArgs args)
+        public static Task<ExecToken> redirect(IWfChannel channel, CmdArgs args)
         {
-            var src = launchers().Map(x => (x.FileName,x)).ToDictionary();
-            foreach(var arg in args)
+            ExecToken Run()
             {
-                var file = FS.file(arg.Value, FileKind.Cmd);
-                var path = FilePath.Empty;
-                if(src.TryGetValue(file, out path))
+                var running = channel.Running("cmd/redirect");
+                var outAPath = AppDb.AppData().Path("a", FileKind.Log);
+                var outBPath = AppDb.AppData().Path("b", FileKind.Log);
+                using var outA = outAPath.Utf8Writer();
+                using var outB = outBPath.Utf8Writer();
+
+                void OnA(string msg)
                 {
-                    ProcessControl.start(ProcessControl.cmdline(path));
-                    Status($"Script {path.ToUri()} executing", FlairKind.Ran);
+                    channel.Row(msg, FlairKind.Data);
+                    outA.WriteLine(msg);
                 }
-                else
+
+                void OnB(string msg)
                 {
-                    Warn($"Launcher for {file} not found");
+                    channel.Row(msg, FlairKind.StatusData);
+                    outB.WriteLine(msg);
                 }
+
+                ProcessControl.start(channel, new SysIO(OnA,OnB), args).Wait();
+                return channel.Ran(running, outA);
             }
+            return sys.start(Run);
         }
 
-        [CmdOp("settings")]
-        void ReadSettings(CmdArgs args)
+        public static WfContext<C> context<C>(IWfRuntime wf, Func<ReadOnlySeq<ICmdProvider>> factory)
+            where C : IAppCmdSvc, new()
         {
-            if(args.IsEmpty)
-                Channel.Row(AppSettings.Format());
-            else
-                Channel.Row(AppSettings.absorb(FS.path(args.First.Value)));
+            var running = wf.Running($"Creating command providers");
+            var providers = factory();
+            wf.Ran(running, $"Created {providers.Length} command providers");
+            return context<C>(wf, providers);
         }
 
-        [CmdOp("services")]
-        void GetServices()
+        public static WfContext<C> context<C>(IWfRuntime wf, ReadOnlySeq<ICmdProvider> providers)
+            where C : IAppCmdSvc, new()
         {
-            Write(ApiRuntime.services(ApiCatalog.Components));
+            var emitter = Require.notnull(wf.Emitter);
+            var name = $"clr:://z0/{typeof(C).Assembly.GetSimpleName()}/{typeof(C).DisplayName()}";
+            var msg = $"Creating {name}";
+            var service = new C();            
+            var running = emitter.Running(msg);
+            service.Init(wf);
+            var context = new WfContext<C>(service, wf.Channel, wf, dispatcher(service, wf.Emitter, providers));
+            wf.Ran(running, $"Created {name}");
+            return context;
         }
 
-        [CmdOp("env/id")]
-        void EvId(CmdArgs args)
+        static IWfDispatcher dispatcher<T>(T service, IWfChannel channel, ReadOnlySeq<ICmdProvider> providers)
         {
-            var id = Env.EnvId;
-            var msg = EmptyString;
-            if(args.IsNonEmpty)
-            {
-                Env.EnvId = args.First.Value;
-                if(id.IsNonEmpty)
-                    msg = $"{id} -> {Env.EnvId}";
-                else
-                    msg = $"{Env.EnvId}";
-            }
-            else
-            {
-                if(id.IsNonEmpty)
-                    msg = id;
-            }
-            if(nonempty(msg))
-                Channel.Write(msg);            
-        }
-
-        [CmdOp("env/reports")]
-        void EmitEnv(CmdArgs args)
-            => EnvSvc.EmitReports(AppDb.AppData("env"));
-
-        [CmdOp("env/machine")]
-        void EmitMachineEnv()
-            => EnvSvc.EmitReport(EnvVarKind.Machine, AppDb.AppData("env"));
-
-        [CmdOp("env/user")]
-        void EmitUserEnv()
-            => EnvSvc.EmitReport(EnvVarKind.User, AppDb.AppData("env"));
-
-        [CmdOp("env/process")]
-        void EmitProcessEnv()
-            => EnvSvc.EmitReport(EnvVarKind.Process, AppDb.AppData($"env/{Environment.ProcessId}"));
-
-        [CmdOp("env/pid")]
-        void ProcessId()
-            => Write(Environment.ProcessId);
-
-        [CmdOp("env/cpucore")]
-        void ShowCurrentCore()
-            => Emitter.Write(string.Format("Cpu:{0}", Kernel32.GetCurrentProcessorNumber()));
-
-        [CmdOp("ws/register")]
-        void RegisterWorkspace(CmdArgs args)
-        {
-            WsRegistry.Register(arg(args,0).Value, FS.dir(arg(args,1).Value));
-            var entries = WsRegistry.Entries();            
-        }
-
-        void ShowMemory()
-        {
-            var info = WinMem.basic();
-            var formatter = Tables.formatter<BasicMemoryInfo>(16,RecordFormatKind.KeyValuePairs);
-            Wf.Data(formatter.Format(info));
-        }
-
-        [CmdOp("env/stack")]
-        void Stack()
-            => Write(Environment.StackTrace);
-
-        [CmdOp("env/pagesize")]
-        void PageSize()
-            => Write(Environment.SystemPageSize);
-
-        [CmdOp("env/ticks")]
-        void Ticks()
-            => Write(Environment.TickCount64);
-
-        [CmdOp("env/mem-physical")]
-        void WorkingSet()
-            => Write(((ByteSize)Environment.WorkingSet));
-
-        [CmdOp("env/args")]
-        void CmdlLineArgs()
-            => iter(Environment.GetCommandLineArgs(), arg => Write(arg));
-
-        [CmdOp("env/cwd")]
-        void Cwd()
-            => Write(FS.dir(Environment.CurrentDirectory)); 
-
-        [CmdOp("memory/query")]
-        void QueryMemory(CmdArgs args)
-        {            
-            var @base = ExecutingPart.Process.Adapt().BaseAddress;
-            if(args.Count != 0)
-            {
-                var result = DataParser.parse(args[0].Value, out @base);
-                if(result.Fail)
-                {
-                    Error($"Could not parse ${args[0].Value} as an address");
-                    return;
-                }
-            }
-
-            var basic = default(MEMORY_BASIC_INFORMATION);
-            WinMem.vquery(@base, ref basic);
-            Write(basic.ToString());
-        }
-
-        [CmdOp("cd")]
-        void Cd(CmdArgs args)
-            => Channel.Row(Env.cd(args));
-
-        [CmdOp("files/nuget")]
-        void NugetFiles(CmdArgs args)
-        {
-            var src = FS.dir(arg(args,0));
-            var packs = FilePacks.search(src, PackageKind.Nuget);
-            iter(packs, p => Write(p));
-        }
-
-        [CmdOp("devpack/nuget")]
-        void DevPack(CmdArgs args)
-        {
-            var src = FS.dir(arg(args,0));
-            Devpacks.NugetStage(src);
-        }
-
-        [CmdOp("sln/root")]
-        void SlnRoot(CmdArgs args)
-        {
-            if(args.Count == 1)
-                Environment.CurrentDirectory = args.First.Value;
-            Channel.Row(Env.cd());
-        }
-
-        void Where(CmdArgs args)
-        {
-            var search = args[0];
-
-        }
-
-        [CmdOp("dir")]
-        void Dir(CmdArgs args)
-        {
-            var root = Env.cd();
-            if(args.Count != 0)
-            root = FS.dir(args[0]);
-            var folders = root.Folders();
-            iter(folders, f => Channel.Row(f));
-            var files = root.Files(false);
-            iter(files, f => Channel.Row(((FileUri)f)));
+            var flow = channel.Running($"Discovering {service} dispatchers");
+            var dst = dict<string,IWfCmdRunner>();
+            iter(runners(service), r => dst.TryAdd(r.Def.CmdName, r));
+            iter(providers, p => iter(runners(p), r => dst.TryAdd(r.Def.CmdName, r)));
+            var dispatcher = new WfCmdRouter(channel, providers, new AppCommands(dst));
+            install(dispatcher, providers);
+            return dispatcher;
         }        
 
-        void Ls(CmdArgs args)
-            => Dir(args);
-
-        [CmdOp("api/emit/impls")]
-        void EmitImplMaps()
+        public static CmdActorKind classify(MethodInfo src)
         {
-            var src = Clr.impls(Parts.Lib.Assembly, Parts.Lib.Assembly);
-            using var writer = AppDb.ApiTargets().Path("api.impl.maps", FileKind.Map).Utf8Writer();
+            var dst = CmdActorKind.None;
+            var arity = src.ArityValue();
+            var @void = src.HasVoidReturn();
+            switch(arity)
+            {
+                case 0:
+                    switch(@void)
+                    {
+                        case false:
+                            dst = CmdActorKind.Pure;
+                        break;
+                        case true:
+                            dst = CmdActorKind.Emitter;
+                        break;
+                    }
+                break;
+                case 1:
+                    switch(@void)
+                    {
+                        case true:
+                            dst = CmdActorKind.Receiver;
+                        break;
+                        case false:
+                            dst = CmdActorKind.Func;
+                        break;
+                    }
+                break;
+            }
+            return dst;
+        }
+
+        [MethodImpl(Inline), Op]
+        public static CmdUri uri(CmdKind kind, string? part, string? host, string? name)
+            => new CmdUri(kind, part, host, name);
+
+        [Op]
+        public static CmdUri uri(MethodInfo src)
+        {
+            var kind = CmdKind.App;
+            var host = src.DeclaringType;
+            var part = host.Assembly.PartName().Format();
+            var attrib = src.Tag<CmdOpAttribute>();
+            var name = attrib.MapValueOrElse(a => a.Name, () => src.DisplayName());
+            return uri(kind,part, host.DisplayName(), name);        
+        }
+
+        [Op]
+        public static bool parse(ReadOnlySpan<char> src, out AppCmdSpec dst)
+        {
+            var i = SQ.index(src, Chars.Space);
+            if(i < 0)
+                dst = new AppCmdSpec(@string(src), CmdArgs.Empty);
+            else
+            {
+                var name = sys.@string(SQ.left(src,i));
+                var _args = sys.@string(SQ.right(src,i)).Split(Chars.Space);
+                dst = new AppCmdSpec(name, Cmd.args(_args));
+            }
+            return true;
+        }
+
+        [Op]
+        public static WfCmdRunner runner(string name, object host, MethodInfo method)
+            => new WfCmdRunner(name, host, method);
+
+        public static ConstLookup<Name,WfCmdMethod> defs(IWfDispatcher src)
+        {
+            ref readonly var defs = ref src.Commands.Defs;
+            var dst = dict<Name,WfCmdMethod>();
+            iter(defs.View, def => dst.Add(def.CmdName, def));
+            return dst;
+        }
+
+        public static WfCmdMethod def(object host, MethodInfo method)
+        {
+            var attrib = method.Tag<CmdOpAttribute>().Require();
+            return new WfCmdMethod(attrib.Name, WfCmd.classify(method), method, host);
+        }
+
+        [Op]
+        public static ReadOnlySeq<WfCmdRunner> runners(object host)
+        {
+            var methods = host.GetType().DeclaredInstanceMethods().Tagged<CmdOpAttribute>();
+            var dst = alloc<WfCmdRunner>(methods.Length);
+            runners(host, methods, dst);
+            return dst;
+        }
+
+        static void runners(object host, ReadOnlySpan<MethodInfo> src, Span<WfCmdRunner> dst)
+        {
+            var count = src.Length;
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var method = ref skip(src,i);
+                var tag = method.Tag<CmdOpAttribute>().Require();
+                seek(dst,i) = runner(tag.Name, host, method);
+            }
+        }
+
+        static void install(IWfDispatcher dispatcher, ReadOnlySeq<ICmdProvider> src)
+            => Z0.AppData.get().Value(nameof(IWfDispatcher), dispatcher);
+
+        public static AppCommands distill(IAppCommands[] src)
+        {
+            var dst = dict<string,IWfCmdRunner>();
+            foreach(var a in src)
+                iter(a.Invokers,  a => dst.TryAdd(a.CmdName, a));
+            return new AppCommands(dst);
+        }
+
+        public static void emit(IWfChannel channel, CmdCatalog src, FilePath dst)
+        {
+            var data = src.Values;
+            iter(data, x => channel.Row(x.Uri.Name));
+            Tables.emit(channel, data, dst);
+        }
+
+        public static CmdCatalog catalog(ReadOnlySeq<WfCmdMethod> src)
+        {
+            var count = src.Count;
+            var dst = alloc<CmdUri>(count);
+            for(var i=0; i<count; i++)
+                seek(dst,i) = src[i].Uri;
+            return new CmdCatalog(entries(dst));
+        }
+
+        public static CmdCatalog catalog(IWfDispatcher src)
+        {
+            ref readonly var defs = ref src.Commands.Defs;
+            var count = defs.Count;
+            var dst = alloc<CmdUri>(count);
+            for(var i=0; i<count; i++)
+                seek(dst,i) = defs[i].Uri;
+            return new CmdCatalog(entries(dst));
+        }
+
+        static ReadOnlySeq<CmdCatalogEntry> entries(CmdUriSeq src)    
+        {
+            var entries = alloc<CmdCatalogEntry>(src.Count);
             for(var i=0; i<src.Count; i++)
-                src[i].Render(s => writer.WriteLine(s));
-        }
-
-        [CmdOp("run/script")]
-        void RunAppScript(CmdArgs args)
-        {
-            RunAppScript(FS.path(arg(args,0)));
-        }
-
-        void RunAppScript(FilePath src)
-        {
-            if(src.Missing)
             {
-                Channel.Error(AppMsg.FileMissing.Format(src));
+                ref readonly var uri = ref src[i];
+                ref var entry = ref seek(entries,i);
+                entry.Uri = uri;
+                entry.Hash = uri.Hash;
+                entry.Name = uri.Name;
             }
-            else
-            {
-                var lines = src.ReadNumberedLines(true);
-                var count = lines.Count;
-                for(var i=0; i<count; i++)
-                {
-                    ref readonly var content = ref lines[i].Content;
-                    if(AppCmd.parse(content, out AppCmdSpec spec))
-                        RunCmd(spec);
-                    else
-                    {
-                        Error($"ParseFailure:'{content}'");
-                        break;
-                    }
-                }
-            }
-        }
-
-        [CmdOp("cfg")]
-        void LoadCfg(CmdArgs args)
-        {
-            var src = args.Count != 0 ? FS.dir(args.First) : Env.cd();
-            iter(src.Files(FileKind.Cfg), file => Channel.Row(Env.cfg(file).Format()));    
+            return entries.Sort().Resequence();        
         }        
-
-        [CmdOp("develop")]
-        void Develop(CmdArgs args)
-        {
-            var cd = Env.cd();
-            var workspaces = cd.Files(FS.ext("code-workspace"));
-            var preconditions = cd.Files(FileKind.Cmd).Where(p => p.FileName == FS.file("env", FileKind.Cmd));
-            if(preconditions.IsNonEmpty)
-            {
-                ref readonly var path = ref preconditions.First;
-                var running = Channel.Running($"Applying {path} to environment");
-                var settings = Env.cfg(preconditions.First);                
-                var count = settings.Count;
-                for(var i=0; i<count; i++)
-                {
-                    ref readonly var setting = ref settings[i];
-                    switch(sys.@string(setting.Name))
-                    {
-                        case EnvTokens.INCLUDE:
-                                                     
-                        break;
-                        case EnvTokens.LIB:                            
-                        break;
-                        case EnvTokens.PATH:
-                        break;
-                    }
-
-                    Write($"Integrated {setting}");
-                }
-            }
-
-            if(workspaces.IsNonEmpty)
-                Dev.VsCode(cd + workspaces[0].FileName);
-            else
-                Dev.VsCode(cd);            
-        }
-
-        [CmdOp("devenv")]
-        void DevEnv(CmdArgs args)
-            => Dev.DevEnv(args[0].Value);
-
-        [CmdOp("vscode")]
-        void VsCode(CmdArgs args)
-            => Dev.VsCode(args[0].Value);
-
-        [CmdOp("cmd")]
-        void RunCmd(CmdArgs args)
-            => ProcessControl.start(Channel, args);
-
-        [CmdOp("help")]
-        void GetHelp(CmdArgs args)
-        {
-            var tool = args[0].Value;
-            var dst = AppDb.DbTargets("tools/help").Path(FS.file(tool, FileKind.Help));        
-            ProcessControl.run(Channel, tool, "--help", args, dst);
-        }
-
-        [CmdOp("tool")]
-        void RunTool(CmdArgs args)
-        {
-            var tool = arg(args,0).Value;
-            var script = arg(args,1).Value;
-            var count = args.Count - 2;
-            var path = AppDb.Toolbase($"{tool}/scripts").Path(FS.file(script,FileKind.Cmd));
-            var emitter = text.emitter();
-            var j=2;
-            for(var i=0; i<count; i++, j++)
-            {
-                emitter.Append(Chars.Space);
-                emitter.Append(args[i].Value);
-            }
-            
-            ProcessControl.start(Channel, CmdTerm.cmd(path, CmdKind.Tool, emitter.Emit()));        
-        }
-
-        [CmdOp("tool/script")]
-        Outcome ToolScript(CmdArgs args)
-            => Tooling.RunScript(arg(args,0).Value, arg(args,1).Value);
-
-        [CmdOp("tool/setup")]
-        void ConfigureTool(CmdArgs args)
-            => Tooling.Setup(Cmd.tool(args));
-
-        [CmdOp("tool/docs")]
-        void ToolDocs(CmdArgs args)
-            => iter(Tooling.LoadDocs(arg(args,0).Value), doc => Write(doc));
-
-        [CmdOp("symlink")]
-        void Link(CmdArgs args)
-        {
-            const string Pattern = "mklink /D {0} {1}";
-            var src = text.quote(FS.dir(arg(args,0).Value).Format(PathSeparator.BS));
-            var dst = text.quote(FS.dir(arg(args,1).Value).Format(PathSeparator.BS));
-            var cmd = CmdTerm.cmd(string.Format(Pattern,src,dst));
-            ProcessControl.run(cmd);
-        }
-
-        [CmdOp("dev")]
-        void LaunchCmdTerm(CmdArgs args)
-        {
-            var channel = Channel;
-            void OnA(string msg)
-            {
-                channel.Row(msg, FlairKind.Data);
-            }
-
-            void OnB(string msg)
-            {
-                channel.Row(msg, FlairKind.StatusData);
-            }
-            
-            if(args.Count == 0)
-            {
-                var wd = Env.cd();
-                var options = $"-NoLogo -i -wd {text.dquote(Env.cd())}";
-                ProcessControl.start(channel, new SysIO(OnA,OnB), CmdArgs.create("pwsh.exe", options), wd);
-            }
-        }
-
-        [CmdOp("cmd/redirect")]
-        void Redirect(CmdArgs args)
-            => Dev.Redirect(args);
     }
 }

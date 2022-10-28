@@ -6,17 +6,8 @@ namespace Z0
 {
     using static sys;
 
-    public class EnvSvc : WfSvc<EnvSvc>
+    public class EnvSvc : AppService<EnvSvc>
     {
-        Dev Dev => Dev.create(Wf);
-
-        void ProcPaths()
-        {
-            var src = Env.process();
-            
-            //iter(src, var => Channel.Row(var));
-        }
-
         public void EmitReports(IDbArchive dst)
         {
             var flow = Channel.Running();

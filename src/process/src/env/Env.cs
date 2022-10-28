@@ -33,8 +33,6 @@ namespace Z0
             return new (src.FileName.WithoutExtension.Format(),dst.ToArray());
         }
 
-        static AppDb AppDb => AppDb.Service;
-
         public static EnvReport report(EnvVarKind kind)
         {
             var _vars = vars(kind);

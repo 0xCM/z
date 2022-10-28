@@ -4,14 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-    using System.Runtime.Intrinsics;
-    using System.Reflection;
     using System.Reflection.Emit;
-    using System.Runtime.InteropServices;
 
-    using static Root;
     using static CellDelegates;
 
     using U = UnaryOperatorClass;
@@ -51,7 +45,6 @@ namespace Z0
 
         DynamicDelegate<BinaryOp<Vector256<T>>> IDynexus.CreateBinaryOp<T>(MethodInfo src, W256 w, byte imm)
             => Dynop.EmbedImmVBinaryOpImm(VK.vk256<T>(), Identify(src), src, imm);
-
 
         Option<DynamicDelegate> IDynexus.CreateUnaryOp(NativeTypeWidth w, MethodInfo src, byte imm8)
         {
