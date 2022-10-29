@@ -6,7 +6,6 @@ namespace Z0
 {
     using static sys;
 
-
     class ProcessCmd : WfAppCmd<ProcessCmd>
     {
         [CmdOp("proc/memory")]
@@ -58,6 +57,5 @@ namespace Z0
         [CmdOp("procs/modules")]
         void ProcModules(CmdArgs args)
             => ImageMemory.modules(args, Emitter, AppDb.AppData());
-
     }
 }

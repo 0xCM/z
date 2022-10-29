@@ -100,33 +100,6 @@ namespace Z0
 
         public void Collect(IApiPack dst)
             => Collect(dst.Targets(comments));
-        // {
-        //     var targets = dst.Comments();
-        //     var src = Pull(dst.Targets());
-        //     var lookup = new Dictionary<FilePath, Dictionary<string,ApiComment>>();
-        //     var formatter = Tables.formatter<ApiComment>();
-        //     foreach(var part in src.Keys)
-        //     {
-        //         var id = part.FileName.WithoutExtension.Name;
-        //         var file = FS.file(string.Format("{0}.{1}", "api.comments", part.FileName.WithoutExtension.Name), FS.Csv);
-        //         var path = targets.Path(file);
-        //         var flow = EmittingTable<ApiComment>(path);
-        //         var docs = new Dictionary<string, ApiComment>();
-        //         lookup[part] = docs;
-        //         using var writer = path.Writer();
-        //         writer.AppendLine(formatter.FormatHeader());
-        //         var kvp = src[part];
-        //         foreach(var key in kvp.Keys)
-        //         {
-        //             var value = kvp[key];
-        //             var comment = ParseComent(key, value).Value;
-        //             docs[comment.TargetName] = comment;
-        //             writer.WriteLine(formatter.Format(comment));
-        //         }
-        //         EmittedTable(flow, kvp.Count);
-        //     }
-        // }
-
         static bool parse(string key, string value, out ApiComment dst)
         {
             var parts = key.SplitClean(Chars.Colon);

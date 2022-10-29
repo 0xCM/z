@@ -11,36 +11,11 @@ namespace Z0
             public ProjectTools Dev(IWfRuntime wf)
                 => Service<ProjectTools>(wf);
 
-            public MsBuild BuildSvc(IWfRuntime wf)
-                => Service<MsBuild>(wf);
-
             public BuildCmd BuildCmd(IWfRuntime wf)
                 => Service<BuildCmd>(wf);
-
-            public WfAppCmd WfCmd(IWfRuntime wf)
-                => Service<WfAppCmd>(wf);
-
-            public ApiComments ApiComments(IWfRuntime wf)
-                => Service<ApiComments>(wf);
-
-            public ToolScripts ToolScripts(IWfRuntime wf)
-                => Service<ToolScripts>(wf);
-
         }
 
         static ServiceCache Services => ServiceCache.Instance;
-
-        public static WfAppCmd WfCmd(this IWfRuntime wf)
-            => Services.WfCmd(wf);
-
-        public static ApiComments ApiComments(this IWfRuntime wf)
-            => Services.ApiComments(wf);
-
-        public static ToolScripts ToolScripts(this IWfRuntime wf)
-            => Services.ToolScripts(wf);
-
-        public static MsBuild BuildSvc(this IWfRuntime wf)
-            => Services.BuildSvc(wf);
 
         public static ProjectTools Dev(this IWfRuntime wf)
             => Services.Dev(wf);

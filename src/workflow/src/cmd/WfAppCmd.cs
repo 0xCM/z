@@ -10,9 +10,11 @@ namespace Z0
 
     public class WfAppCmd : WfAppCmd<WfAppCmd>
     {
-        WsRegistry WsRegistry => Wf.WsRegistry();
+        ArchiveRegistry ArchiveRegistry => Wf.ArchiveRegistry();
 
         ProjectScripts ProjectScripts => Wf.ProjectScripts();
+
+        ProcessMemory ProcessMemory => Wf.ProcessMemory();
 
         Tooling Tooling => Wf.Tooling();
 
@@ -57,6 +59,17 @@ namespace Z0
         [CmdOp("archives")]        
         void ListArchives(CmdArgs args)
             => Emitter.Row(AppDb.Archives().Folders().Delimit(Eol));
+
+        [CmdOp("process/modules")]
+        void ListModules()
+        {
+            var src = ImageMemory.modules(ExecutingPart.Process);
+            var dst = AppDb.AppData().Targets(ApiAtomic.tables).Path($"process.modules.{timestamp()}", FileKind.Csv);
+            var formatter = Tables.formatter<ProcessModuleRow>();
+            for(var i=0; i<src.Length; i++)
+                Row(formatter.Format(src[i]));
+            TableEmit(src, dst);
+        }
 
         [CmdOp("archives/list")]        
         void ArchiveFiles(CmdArgs args)
@@ -288,11 +301,11 @@ namespace Z0
         void ShowCurrentCore()
             => Emitter.Write(string.Format("Cpu:{0}", Kernel32.GetCurrentProcessorNumber()));
 
-        [CmdOp("ws/register")]
+        [CmdOp("archives/register")]
         void RegisterWorkspace(CmdArgs args)
         {
-            WsRegistry.Register(arg(args,0).Value, FS.dir(arg(args,1).Value));
-            var entries = WsRegistry.Entries();            
+            ArchiveRegistry.Register(arg(args,0).Value, FS.dir(arg(args,1).Value));
+            var entries = ArchiveRegistry.Entries();            
         }
 
         void ShowMemory()
@@ -344,6 +357,10 @@ namespace Z0
             WinMem.vquery(@base, ref basic);
             Write(basic.ToString());
         }
+
+        [CmdOp("memory/emit")]
+        void EmitRegions()
+            => ProcessMemory.EmitRegions(Process.GetCurrentProcess(), ApiPacks.create());
 
         [CmdOp("cd")]
         void Cd(CmdArgs args)

@@ -23,7 +23,7 @@ namespace Z0
             => SymUnmanagedReaderFactory.CreateSymReaderMetadataImport(PdbSymbols.metadata(src));
 
         static ISymUnmanagedReader5 portable(in PdbSymbolSource src)
-            =>default; 
+            => throw new NotImplementedException();
             //(ISymUnmanagedReader5)new  SymBinder().GetReaderFromStream(src.PdbStream, importer(src));
 
         static ISymUnmanagedReader5 legacy(in PdbSymbolSource src)

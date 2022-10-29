@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public class WsRegistry : WfSvc<WsRegistry>
+    public class ArchiveRegistry : WfSvc<ArchiveRegistry>
     {
         FilePath RegistryPath => AppDb.Settings("workspaces", FileKind.Csv);
 

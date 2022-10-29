@@ -6,7 +6,7 @@ namespace Z0
 {
     using System.IO;
 
-    using static core;
+    using static sys;
 
     public class FileSplitter : AppService<FileSplitter>
     {
@@ -15,7 +15,7 @@ namespace Z0
             var writer = default(StreamWriter);
             try
             {
-                var flow = Wf.Running(Msg.SplittingFile.Format(spec.SourcePath.ToUri(), spec.TargetEncoding, spec.MaxLineCount));
+                var flow = Channel.Running();
                 using var reader = spec.SourcePath.Reader(spec.TargetEncoding);
                 var paths = list<FilePath>();
                 var subcount = 0u;
@@ -54,7 +54,7 @@ namespace Z0
                     }
                 }
 
-                Wf.Ran(flow, Msg.FinishedFileSplit.Format(linecount, spec.SourcePath.ToUri(), splitcount));
+                Wf.Ran(flow);
                 return new FileSplitInfo(spec, paths.ToArray(), linecount);
             }
             catch(Exception e)

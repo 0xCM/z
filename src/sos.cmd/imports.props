@@ -2,5 +2,6 @@
   <ItemGroup>
     <ProjectReference Include="$(ApiMd)" />
     <ProjectReference Include="$(Imagine)" />
+    <ProjectReference Include="$(Native)" />
   </ItemGroup>
 </Project>

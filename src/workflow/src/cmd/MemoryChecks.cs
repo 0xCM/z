@@ -17,23 +17,6 @@ namespace Z0
             CheckLabelAllocator(Emitter);
         }
 
-        [CmdOp("memory/regions")]
-        void EmitRegions()
-            => ProcessMemory.EmitRegions(Process.GetCurrentProcess(), ApiPacks.create());
-
-        ProcessMemory ProcessMemory => Wf.ProcessMemory();
-
-        [CmdOp("env/modules")]
-        void ListModules()
-        {
-            var src = ImageMemory.modules(ExecutingPart.Process);
-            var dst = AppDb.AppData().Targets(ApiAtomic.tables).Path($"process.modules.{timestamp()}", FileKind.Csv);
-            var formatter = Tables.formatter<ProcessModuleRow>();
-            for(var i=0; i<src.Length; i++)
-                Row(formatter.Format(src[i]));
-            TableEmit(src, dst);
-        }
-
         static void CheckStringAllocator(WfEmit channel)
         {
             var count = Pow2.T16;

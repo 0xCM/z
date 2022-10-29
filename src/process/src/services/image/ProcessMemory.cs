@@ -9,7 +9,7 @@ namespace Z0
     using static sys;
     using static ImageRegions;
 
-    public partial class ProcessMemory : WfSvc<ProcessMemory>
+    public partial class ProcessMemory : AppService<ProcessMemory>
     {
         [Op, MethodImpl(Inline)]
         public static Traverser traverser(ReadOnlySpan<ProcessMemoryRegion> src, bool live)
@@ -147,7 +147,7 @@ namespace Z0
                 }
             }
 
-            TableEmit(@readonly(buffer), dst.Context().Table<MethodSegment>());
+            Channel.TableEmit(@readonly(buffer), dst.Context().Table<MethodSegment>());
             Ran(flow, LocatedSegments.Format(buffer.Length, count));
             return locations.Array().Sort();
         }
@@ -201,12 +201,12 @@ namespace Z0
         }
 
         public void Emit(ReadOnlySpan<AddressBankEntry> src, FilePath dst)
-            => TableEmit(src,dst);
+            => Channel.TableEmit(src,dst);
 
         public ReadOnlySeq<ProcessPartition> EmitPartitions(Process process, IApiPack dst)
         {
             var summaries = partitions(ImageMemory.locations(process));
-            TableEmit(summaries, dst.PartitionPath());
+            Channel.TableEmit(summaries, dst.PartitionPath());
             return summaries;
         }
 
@@ -220,15 +220,14 @@ namespace Z0
             => EmitSegments(dst, ProcessMemory.regions());
 
         public void EmitSegments(IApiPack dst, ReadOnlySeq<ProcessMemoryRegion> src)
-            => TableEmit(addresses(src).Segments, dst.Context().Table<ProcessSegment>());
-
+            => Channel.TableEmit(addresses(src).Segments, dst.Context().Table<ProcessSegment>());
 
         ReadOnlySeq<AddressHash> EmitHashes(ReadOnlySpan<MemoryAddress> addresses, FilePath dst)
         {
             var count = (uint)addresses.Length;
             var buffer = alloc<AddressHash>(count);
             MemoryStores.hash(addresses, buffer);
-            TableEmit(buffer, dst);
+            Channel.TableEmit(buffer, dst);
             return buffer;
         }
 

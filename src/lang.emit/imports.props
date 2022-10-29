@@ -1,7 +1,6 @@
 <Project>
   <ItemGroup>
     <ProjectReference Include="$(Assets)" />
-    <ProjectReference Include="$(Memory)" />
     <ProjectReference Include="$(Rules)" />
     <ProjectReference Include="$(Builds)" />
     <ProjectReference Include="$(Tools)" />    

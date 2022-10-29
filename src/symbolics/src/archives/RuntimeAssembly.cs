@@ -6,23 +6,17 @@ namespace Z0
 {
     using api = RuntimeArchive;
 
-    public readonly struct RuntimeAssembly : IFsEntry<RuntimeAssembly>
+    public readonly struct RuntimeAssembly
     {
         public readonly Assembly Component;
 
-        public readonly FilePath Path;
+        public readonly FileUri Uri;
 
         [MethodImpl(Inline)]
-        public RuntimeAssembly(Assembly src, FilePath path)
+        public RuntimeAssembly(Assembly src, FileUri path)
         {
             Component = Require.notnull(src);
-            Path = path;
-        }
-
-        PathPart IFsEntry.Name
-        {
-            [MethodImpl(Inline)]
-            get => Path.Name;
+            Uri = path;
         }
 
         public string Format()

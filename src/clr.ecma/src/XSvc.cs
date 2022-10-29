@@ -24,9 +24,6 @@ namespace Z0
             public EcmaCmd EcmaCmd(IWfRuntime wf)
                 => Service<EcmaCmd>(wf);
 
-            public EcmaStore EcmaStore(IWfRuntime wf)
-                => Service<EcmaStore>(wf);
-
             public RoslnCmd RoslynCmd(IWfRuntime wf)
                 => Service<RoslnCmd>(wf);
 
@@ -47,9 +44,6 @@ namespace Z0
 
         public static ICmdProvider EcmaCmd(this IWfRuntime wf)
             => Services.EcmaCmd(wf);
-
-       public static EcmaStore EcmaStore(this IWfRuntime wf)
-            => Services.EcmaStore(wf);
 
         public static R Roslyn(this IWfRuntime wf)
             => Services.Roslyn(wf);

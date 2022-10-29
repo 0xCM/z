@@ -12,9 +12,9 @@ namespace Z0
 
         PdbSvc PdbSvc => Wf.PdbSvc();
 
-        // [CmdOp("api/emit/pdb-info")]
-        // void EmitApiPdbInfo()
-        //     => PdbSvc.EmitPdbInfo(ApiMd.Assemblies.Index().First);
+        [CmdOp("pdb/emit")]
+        void EmitApiPdbInfo()
+            => PdbSvc.EmitPdbInfo(ApiMd.Parts.Index().First);
 
         // [CmdOp("api/emit/pdb-index")]
         // void IndexApiPdbFiles()

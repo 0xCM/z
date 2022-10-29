@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     public abstract class NameResolver<T,R>
         where T : NameResolver<T,R>, new()

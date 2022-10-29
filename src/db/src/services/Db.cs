@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class Db 
+    public partial class Db 
     {
 
     }

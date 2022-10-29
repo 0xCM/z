@@ -5,7 +5,8 @@
 namespace Z0
 {
     using api = StaticBuffers;
-    using static core;
+
+    using static sys;
 
     /// <summary>
     /// Supertype for covers with locations that will be pinned for the domain lifetime

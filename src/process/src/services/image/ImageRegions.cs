@@ -9,7 +9,7 @@ namespace Z0
     using static sys;
 
     [Free]
-    public class ImageRegions : WfSvc<ImageRegions>
+    public class ImageRegions : AppService<ImageRegions>
     {
         public readonly ref struct Traverser
         {

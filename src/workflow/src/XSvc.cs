@@ -14,8 +14,8 @@ namespace Z0
             public ProjectScripts ProjectScripts(IWfRuntime wf)
                 => Service<ProjectScripts>(wf);
 
-            public WsRegistry WsRegistry(IWfRuntime wf)
-                => Service<WsRegistry>(wf);            
+            public ArchiveRegistry ArchiveRegistry(IWfRuntime wf)
+                => Service<ArchiveRegistry>(wf);            
 
             public Reactor Reactor(IWfRuntime wf)
                 => Service<Reactor>(wf);            
@@ -31,9 +31,27 @@ namespace Z0
 
             public EnvSvc EnvSvc(IWfRuntime wf)
                 => Service<EnvSvc>(wf);
+
+            public WfAppCmd WfCmd(IWfRuntime wf)
+                => Service<WfAppCmd>(wf);
+
+            public ToolScripts ToolScripts(IWfRuntime wf)                
+                => Service<ToolScripts>(wf);
+
+            public ProcessMemory ProcessMemory(IWfRuntime wf)                
+                => Service<ProcessMemory>(wf);
+
+            public MemoryChecks MemoryChecks(IWfRuntime wf)
+                => Service<MemoryChecks>(wf); 
         }
 
         static ServiceCache Services => ServiceCache.Instance;
+
+        public static MemoryChecks MemoryChecks(this IWfRuntime wf)
+            => Services.MemoryChecks(wf);         
+
+        public static ProcessMemory ProcessMemory(this IWfRuntime wf)
+            => Services.ProcessMemory(wf);
 
         public static OmniScript OmniScript(this IWfRuntime wf)
             => Services.OmniScript(wf);
@@ -44,8 +62,8 @@ namespace Z0
         public static ProjectScripts ProjectScripts(this IWfRuntime wf)
             => Services.ProjectScripts(wf);
 
-        public static WsRegistry WsRegistry(this IWfRuntime wf)
-            => Services.WsRegistry(wf);
+        public static ArchiveRegistry ArchiveRegistry(this IWfRuntime wf)
+            => Services.ArchiveRegistry(wf);
  
         public static IWfServices WfServices(this IWfRuntime wf)
             => Services.WfServices(wf);
@@ -58,5 +76,11 @@ namespace Z0
 
         public static EnvSvc EnvSvc(this IWfRuntime wf)
             => Services.EnvSvc(wf);                
+
+        public static WfAppCmd WfCmd(this IWfRuntime wf)
+            => Services.WfCmd(wf);
+
+        public static ToolScripts ToolScripts(this IWfRuntime wf)
+            => Services.ToolScripts(wf);
     }
 }

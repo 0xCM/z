@@ -1,7 +1,5 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(Memory)" />
-    <ProjectReference Include="$(Wf)" />
-    <ProjectReference Include="$(Archives)" />
+    <ProjectReference Include="$(Workflow)" />
   </ItemGroup>
 </Project>

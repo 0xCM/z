@@ -39,7 +39,6 @@
         <ProjectReference Include="$(Linq)" />
         <ProjectReference Include="$(LlvmSvc)" />
         <ProjectReference Include="$(Machines)" />
-        <ProjectReference Include="$(Memory)" />
         <ProjectReference Include="$(MemoryModels)" />
         <ProjectReference Include="$(MemorySvc)" />
         <ProjectReference Include="$(Native)" />

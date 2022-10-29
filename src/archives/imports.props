@@ -1,8 +1,5 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(Containers)" />
-    <ProjectReference Include="$(Digital)" />
-    <ProjectReference Include="$(CmdSpecs)" />
-    <ProjectReference Include="$(Tools)" />
+    <ProjectReference Include="$(ZLib)" />
   </ItemGroup>
 </Project>

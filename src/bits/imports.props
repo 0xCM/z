@@ -2,10 +2,10 @@
   <ItemGroup>
     <ProjectReference Include="$(Numbers)" />
     <ProjectReference Include="$(Assets)" />
-    <ProjectReference Include="$(Memory)" />
     <ProjectReference Include="$(Validity)" />
     <ProjectReference Include="$(Rules)" />
     <ProjectReference Include="$(Calcs)" />
     <ProjectReference Include="$(Imagine)" />
+    <ProjectReference Include="$(Workflow)" />
   </ItemGroup>
 </Project>

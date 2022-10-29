@@ -91,7 +91,6 @@ namespace Z0
             return dst;
         }
 
-
         public PdbSymbolSource SymbolSource(FilePath module)
             => PdbSymbols.source(module);
 

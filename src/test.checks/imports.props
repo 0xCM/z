@@ -1,7 +1,6 @@
 <Project>
   <ItemGroup>
     <ProjectReference Include="$(Bits)" />
-    <ProjectReference Include="$(Memory)" />
     <ProjectReference Include="$(Fsm)" />
     <ProjectReference Include="$(Symbolics)" />
     <ProjectReference Include="$(Polyrand)" />
