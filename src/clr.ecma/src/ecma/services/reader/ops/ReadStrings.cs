@@ -6,7 +6,19 @@ namespace Z0
 {
     partial class EcmaReader
     {
-        public uint ReadStrings(EcmaStringKind kind, List<string> dst)
+        [MethodImpl(Inline), Op]
+        public string String(UserStringHandle handle)
+            => MD.GetUserString(handle);
+
+        [MethodImpl(Inline), Op]
+        public string String(DocumentNameBlobHandle handle)
+            => MD.GetString(handle);
+
+        [MethodImpl(Inline), Op]
+        public string String(StringHandle src)
+            => MD.GetString(src);
+
+        public uint Strings(EcmaStringKind kind, List<string> dst)
             => kind switch {
                 EcmaStringKind.User => ReadUserStrings(dst),
                 EcmaStringKind.System => ReadSystemStrings(dst),
@@ -23,7 +35,7 @@ namespace Z0
             var handle = MetadataTokens.UserStringHandle(0);
             do
             {
-                dst.Add(Read(handle));
+                dst.Add(String(handle));
                 counter++;
                 handle = MD.GetNextHandle(handle);
             }
@@ -42,7 +54,7 @@ namespace Z0
             var handle = MetadataTokens.StringHandle(0);
             do
             {
-                dst.Add(Read(handle));
+                dst.Add(String(handle));
                 counter++;
                 handle = MD.GetNextHandle(handle);
             }

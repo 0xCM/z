@@ -74,7 +74,7 @@ namespace Z0
                     info.Component = name;
                     info.Attributes = row.Attributes;
                     info.CliSig = reader.ReadBlobData(row.Sig);
-                    info.Name = reader.Read(row.Name);
+                    info.Name = reader.String(row.Name);
                     writer.WriteLine(formatter.Format(info));
                 }
                 EmittedTable(flow, count);

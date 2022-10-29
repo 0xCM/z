@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Roslyn
 {
-    using static core;
-
     using api = CaSymbols;
 
     public readonly struct MethodSymbol : ICaSymbol<MethodSymbol,IMethodSymbol>
@@ -307,6 +305,7 @@ namespace Z0.Roslyn
 
         public IMethodSymbol ReduceExtensionMethod(ITypeSymbol receiverType)
             => Source.ReduceExtensionMethod(receiverType);
+
         public ImmutableArray<AttributeData> GetReturnTypeAttributes()
             => Source.GetReturnTypeAttributes();
 
@@ -351,20 +350,12 @@ namespace Z0.Roslyn
 
         public string Format()
         {
-            var locations = Locations;
-            var location = default(_FileUri);
-            if(locations.Length != 0)
-            {
-                var loc = first(locations);
-                var ls = loc.GetLineSpan();
-                if(ls.Path != null)
-                {
-                    location = FS.path(ls.Path).ToUri();
-                    location = location.LineRef((uint)ls.Span.Start.Line);
-                }
-            }
+            var locations = Locations.Where(x => x.Kind != 0);
+            var location = new object();
+            if(locations.Length !=0)
+                location = new FileUri(locations.First().GetLineSpan().Path);
 
-            return string.Format("{0}", Source.ToDisplayString());
+            return string.Format("{0,-80} | {1} ", location, Source.ToDisplayString());
         }
 
         public override string ToString()

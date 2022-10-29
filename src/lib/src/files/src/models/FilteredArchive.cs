@@ -60,7 +60,7 @@ namespace Z0
             ExtFilter = ext;
         }
 
-        public Deferred<FilePath> Files()
+        public IEnumerable<FilePath> Files()
             =>  ExtFilter.IsNonEmpty
             ?  Root.EnumerateFiles(ExtFilter.Storage, true)
             :  Root.EnumerateFiles(TextFilter, true);

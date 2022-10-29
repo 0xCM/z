@@ -8,10 +8,6 @@ namespace Z0
 
     partial class EcmaReader
     {
-        [Op]
-        ReadOnlySpan<AssemblyReferenceHandle> AssemblyRefHandles()
-            => MD.AssemblyReferences.ToReadOnlySpan();
-
         public EcmaAssemblyRef ReadAssemblyRef(AssemblyReferenceHandle handle)
         {
             var src = MD.GetAssemblyReference(handle);

@@ -6,11 +6,44 @@ namespace Z0
 {
     using static sys;
 
+    partial class XTend
+    {
+        public static EcmaReader Reader(this EcmaFile src)
+            => EcmaReader.create(src);
+    }
+
     [ApiHost]
     public readonly struct EcmaFiles
     {
-        public static Deferred<FileUri> filter(DbArchive src, FileKind kind)
+        public static IEnumerable<FileUri> filter(DbArchive src, FileKind kind)
             => from file in src.Enumerate($"*.{kind.Ext()}") where valid(file) select file;                        
+
+        public static bool load(FilePath src, out EcmaFile dst)
+        {
+            var result = false;
+            dst = EcmaFile.Empty;
+            try
+            {
+                var stream = File.OpenRead(src.Name);
+                var reader = new PEReader(stream);
+                result = reader.HasMetadata;
+                if(result)
+                {
+                    dst = new EcmaFile(src, stream, reader);
+                }
+                else
+                {
+                    stream.Dispose();
+                    reader.Dispose();
+                }
+                
+            }
+            catch(Exception)
+            {
+                
+            }
+            return result;
+        }
 
         [Op]
         public static EcmaModuleInfo describe(Assembly src)
@@ -62,32 +95,32 @@ namespace Z0
             return count;
         }
 
-        public static bool load(FilePath src, out EcmaFile dst)
-        {
-            var result = false;
-            dst = EcmaFile.Empty;
-            try
-            {
-                var stream = File.OpenRead(src.Name);
-                var reader = new PEReader(stream);
-                result = reader.HasMetadata;
-                if(result)
-                {
-                    dst = new EcmaFile(src, stream, reader);
-                }
-                else
-                {
-                    stream.Dispose();
-                    reader.Dispose();
-                }
+        // public static bool load(FilePath src, out EcmaFile dst)
+        // {
+        //     var result = false;
+        //     dst = EcmaFile.Empty;
+        //     try
+        //     {
+        //         var stream = File.OpenRead(src.Name);
+        //         var reader = new PEReader(stream);
+        //         result = reader.HasMetadata;
+        //         if(result)
+        //         {
+        //             dst = new EcmaFile(src, stream, reader);
+        //         }
+        //         else
+        //         {
+        //             stream.Dispose();
+        //             reader.Dispose();
+        //         }
                 
-            }
-            catch(Exception)
-            {
+        //     }
+        //     catch(Exception)
+        //     {
                 
-            }
-            return result;
-        }
+        //     }
+        //     return result;
+        // }
 
         [Op]
         public static bool valid(FilePath src)

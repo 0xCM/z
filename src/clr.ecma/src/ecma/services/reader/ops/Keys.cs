@@ -12,7 +12,7 @@ namespace Z0
         public EcmaRowKeys Keys(ParameterHandleCollection src)
         {
             var count = src.Count;
-            var buffer = core.alloc<EcmaRowKey>(count);
+            var buffer = alloc<EcmaRowKey>(count);
             var i=0;
             ref var dst = ref first(buffer);
             foreach(var handle in src)

@@ -11,6 +11,13 @@ namespace Z0
     /// </summary>
     public readonly struct ClrMemberName : IEquatable<ClrMemberName>, IComparable<ClrMemberName>
     {
+        [Parser]
+        public static Outcome parse(string src, out ClrMemberName dst)
+        {
+            dst = new (text.trim(src));
+            return true;
+        }
+
         public @string Name {get;}
 
         [MethodImpl(Inline)]

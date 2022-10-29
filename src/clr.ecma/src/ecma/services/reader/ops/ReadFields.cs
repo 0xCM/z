@@ -8,6 +8,10 @@ namespace Z0
 
     partial class EcmaReader
     {
+        [MethodImpl(Inline), Op]
+        public FieldDefinition ReadFieldDef(FieldDefinitionHandle src)
+            => MD.GetFieldDefinition(src);
+
         public ReadOnlySpan<EcmaField> ReadFields()
         {
             var reader = MD;

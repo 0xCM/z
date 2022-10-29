@@ -4,14 +4,15 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static sys;
+
     partial class EcmaReader
     {
         [MethodImpl(Inline), Op]
-        public ManifestResource ReadResource(ManifestResourceHandle src)
-            => MD.GetManifestResource(src);
+        public MethodDebugInformation ReadDebugInfo(MethodDebugInformationHandle src)
+            => MD.GetMethodDebugInformation(src);
 
-        [Op]
-        public ReadOnlySeq<ManifestResource> ManifestResources()
-            => MD.ManifestResources.ToReadOnlySpan().Select(x => ReadResource(x));
+        public ReadOnlySeq<MethodDebugInformation> ReadMethodDebugInfo()
+            => MethodDebugInfoHandles().Map(ReadDebugInfo);
     }
 }

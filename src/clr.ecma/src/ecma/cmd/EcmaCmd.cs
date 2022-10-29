@@ -82,12 +82,15 @@ namespace Z0
         {
             var src = FS.dir(args[0]).DbArchive();
             Channel.Write(src.Root);
-            iter(src.Enumerate("*.dll"), file =>{
-                if(EcmaFile.load(file, out EcmaFile ecma))
+            iter(src.Enumerate(true, FileKind.Dll, FileKind.Exe), file =>{
+                if(EcmaFiles.load(file, out EcmaFile ecma))
                 {
                     try
                     {
-                        Channel.Write($"{ecma.Uri}");
+                        var reader = ecma.Reader();
+                        Channel.Row(ecma.Uri);
+                        foreach(var f in reader.ReadDocInfo())
+                            Channel.Write($"{f.ContentHash} | {f.Name}");                            
                     }
                     catch(Exception e)
                     {
@@ -98,7 +101,7 @@ namespace Z0
                         ecma.Dispose();
                     }
                 }
-            });
+            },false);
         }
 
         [CmdOp("ecma/emit/parts")]

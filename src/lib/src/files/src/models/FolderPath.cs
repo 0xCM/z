@@ -130,11 +130,11 @@ namespace Z0
             ? Directory.EnumerateDirectories(Name, SearchAll, option(recurse)).Map(FS.dir)
             : sys.empty<FolderPath>();
 
-        public Deferred<FilePath> EnumerateFiles(bool recurse)
-            => sys.defer(EnumerateFiles(this, recurse));
+        public IEnumerable<FilePath> EnumerateFiles(bool recurse)
+            => EnumerateFiles(this, recurse);
 
-        public Deferred<FilePath> EnumerateFiles(FileExt[] ext, bool recurse)
-            => sys.defer(EnumerateFiles(this, recurse, ext));
+        public IEnumerable<FilePath> EnumerateFiles(FileExt[] ext, bool recurse)
+            => EnumerateFiles(this, recurse, ext);
 
         public IEnumerable<FilePath> EnumerateFiles(Func<FilePath,bool> predicate, bool recurse = true)
         {
@@ -146,11 +146,11 @@ namespace Z0
             }
         }
 
-        public Deferred<FilePath> EnumerateFiles(FileExt ext, bool recurse)
-            => sys.defer(EnumerateFiles(this, ext, recurse));
+        public IEnumerable<FilePath> EnumerateFiles(FileExt ext, bool recurse)
+            => EnumerateFiles(this, ext, recurse);
 
-        public Deferred<FilePath> EnumerateFiles(string pattern, bool recurse)
-            => sys.defer(EnumerateFiles(this, pattern, recurse));
+        public IEnumerable<FilePath> EnumerateFiles(string pattern, bool recurse)
+            => EnumerateFiles(this, pattern, recurse);
 
         /// <summary>
         /// Creates the represented directory in the file system if it doesn't exist

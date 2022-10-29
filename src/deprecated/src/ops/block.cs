@@ -8,14 +8,14 @@ namespace Z0
     partial class SRM
     {
         [MethodImpl(Inline), Op]
-        public static unsafe MemoryBlock block(byte* pSrc, ByteSize length)
-            => new MemoryBlock(pSrc,length);
+        public static unsafe MemoryBlock block(byte* pSrc, ByteSize size)
+            => new MemoryBlock(pSrc,size);
 
         [MethodImpl(Inline), Op]
-        public static unsafe MemoryBlock block(MemoryBlock src, uint offset, ByteSize length)
+        public static unsafe MemoryBlock block(MemoryBlock src, uint offset, ByteSize size)
         {
-            if(available(src, offset, length))
-                return new MemoryBlock(src.Pointer + offset, length);
+            if(available(src, offset, size))
+                return new MemoryBlock(src.Pointer + offset, size);
             else
                 return MemoryBlock.Empty;
         }

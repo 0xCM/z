@@ -10,6 +10,9 @@ namespace Z0
     {
         public static IDbArchive DbArchive(this FolderPath root)
             => new DbArchive(root);
+
+        public static string SearchPattern(this FileKind kind)
+            => kind.Ext().SearchPattern;
     }
 
     public readonly record struct DbArchive : IDbArchive
@@ -136,6 +139,25 @@ namespace Z0
                     yield return new FileUri(file);
         }
 
+        public static IEnumerable<FileUri> enumerate(FolderPath src, bool recurse, params FileKind[] kinds)
+        {
+            if(src.Exists)
+            {
+                foreach(var kind in kinds)
+                foreach(var file in Directory.EnumerateFiles(src.Name, kind.SearchPattern(), options(recurse)))
+                    yield return new FileUri(file);
+            }            
+        }
+
+        public static IEnumerable<FileUri> enumerate(FolderPath src, bool recurse, params FileExt[] extensions)
+        {
+            if(src.Exists)
+            {
+                foreach(var ext in extensions)
+                foreach(var file in Directory.EnumerateFiles(src.Name, ext.SearchPattern, options(recurse)))
+                    yield return new FileUri(file);
+            }            
+        }
 
         public FileName File(string name, FileKind kind)
             => FS.file(name, kind.Ext());

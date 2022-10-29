@@ -578,5 +578,37 @@ namespace Z0
         [CmdOp("cmd/redirect")]
         void Redirect(CmdArgs args)
             => WfCmd.redirect(Channel, args);
+
+
+        [CmdOp("mul/check")]
+        void CalcCheck()
+        {
+            CheckMullo(Rng.@default());
+        }
+
+        void CheckMullo(IBoundSource Source)
+        {
+            var @class = ApiClassKind.MulLo;
+            var key = ApiKeys.key(PartId.Math, 1, @class);
+            var count = 12;
+            var left = Source.Array<uint>(count,100,200);
+            var right = Source.Array<uint>(count,100,200);
+            var dst = alloc<uint>(count);
+            var results = alloc<ApiCall<uint,uint,uint>>(count);
+            var output = alloc<uint>(count);
+            for(var i=0u; i<count; i++)
+            {
+                ref readonly var a = ref skip(left,i);
+                ref readonly var b = ref skip(right,i);
+                seek(dst,i) = cpu.mullo(a,b);
+                seek(output,i) = math.mul(a,b);
+                seek(results, i) = ApiCalls.call(key,a,b,skip(dst,i));
+            }
+
+            for(var i=0; i<count; i++)
+            {
+                Channel.Row(skip(results,i).Format() + " | " + skip(output,i).ToString());
+            }
+        }            
     }
 }

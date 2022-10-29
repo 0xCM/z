@@ -8,6 +8,6 @@ namespace Z0
     {
         [MethodImpl(Inline), Op]
         public BinaryCode ReadBlobData(BlobHandle src)
-            => MD.GetBlobBytes(src);
+            => MD.GetBlobBytes(src);                    
     }
 }

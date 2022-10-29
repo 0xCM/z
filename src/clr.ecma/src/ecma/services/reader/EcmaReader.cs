@@ -4,9 +4,32 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    [StructLayout(LayoutKind.Sequential,Pack =1)]
+    public struct EcmaStreamHeader
+    {
+        public Address32 Offset;
+        
+        public uint Size;
+        
+        public string Name;
+    }
+
+    public enum MetadataStreamKind : byte
+    {
+        Illegal,
+
+        Compressed,
+
+        Uncompressed,
+    }
+
+    public sealed record class EcmaStreams(MetadataStreamKind StreamKind, ReadOnlySeq<EcmaStreamHeader> Headers, MemoryBlock MetadataRoot, MemoryBlock Tables, MemoryBlock Pdb);
+
     [ApiHost]
     public unsafe partial class EcmaReader
     {
+        public static EcmaReader create(EcmaFile src)
+            => new EcmaReader(src);
         [Op]
         public static EcmaReader create(Assembly src)
             => new EcmaReader(src);
@@ -51,7 +74,7 @@ namespace Z0
         public EcmaReader(PEMemoryBlock src)
         {
             Segment = MemorySegs.define(src.Pointer, src.Length);
-            MD = new MetadataReader(Segment.BaseAddress.Pointer<byte>(), Segment.Size);
+            MD = new MetadataReader(Segment.BaseAddress.Pointer<byte>(), Segment.Size);        
         }
 
         [MethodImpl(Inline)]
@@ -59,6 +82,13 @@ namespace Z0
         {
             Segment = MemorySegs.define(src.MetadataPointer, src.MetadataLength);
             MD = src;
+        }
+
+        [MethodImpl(Inline)]
+        public EcmaReader(EcmaFile src)
+        {
+            Segment = MemorySegs.define(src.MetadataReader.MetadataPointer, src.MetadataReader.MetadataLength);
+            MD = src.MetadataReader;
         }
 
         public ByteSize MetaSize
@@ -71,6 +101,12 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             get => MemorySegs.view<byte>(Segment);
+        }
+
+        public static EcmaStreams streams(in MemoryBlock root, ReadOnlySeq<EcmaStreamHeader> headers)
+        {
+            return default;
+
         }
     }
 }

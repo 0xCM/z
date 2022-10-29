@@ -247,7 +247,7 @@ namespace Z0
                 if(!outcome)
                     return outcome;
 
-                outcome = DataParser.parse(skip(parts,i++), out dst.MethodName);
+                outcome = ClrMemberName.parse(skip(parts,i++), out dst.MethodName);
                 if(!outcome)
                     return outcome;
 

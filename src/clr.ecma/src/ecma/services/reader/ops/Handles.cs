@@ -41,6 +41,10 @@ namespace Z0
             => MD.MemberReferences.ToReadOnlySpan();
 
         [Op]
+        public ReadOnlySpan<AssemblyReferenceHandle> AssemblyRefHandles()
+            => MD.AssemblyReferences.ToReadOnlySpan();
+
+        [Op]
         public ReadOnlySpan<AssemblyFileHandle> AssemblyFileHandles()
             => MD.AssemblyFiles.ToReadOnlySpan();
 
@@ -69,8 +73,8 @@ namespace Z0
             => MD.Documents.ToReadOnlySpan();
 
         [Op]
-        public ReadOnlySpan<CustomDebugInformationHandle> MethodDebugInfoHandles()
-            => MD.CustomDebugInformation.ToReadOnlySpan();
+        public ReadOnlySpan<MethodDebugInformationHandle> MethodDebugInfoHandles()
+            => MD.MethodDebugInformation.ToReadOnlySpan();
 
         [Op]
         public ReadOnlySpan<LocalScopeHandle> LocalScopeHandles()

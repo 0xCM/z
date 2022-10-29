@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using System.Linq;
+    
     partial struct Clr
     {
         /// <summary>
@@ -31,9 +33,9 @@ namespace Z0
         {
             var contrats = defs.Interfaces().ToHashSet();
             var maps = from host in hosts.Types().Concrete()
-                    from i in host.Interfaces()
-                    where contrats.Contains(i)
-                    select impl(host,i);
+                       from i in host.Interfaces()
+                       where contrats.Contains(i)
+                      select impl(host,i);
             return maps.ToArray();
         }
     }

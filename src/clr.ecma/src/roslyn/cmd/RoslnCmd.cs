@@ -7,6 +7,8 @@ namespace Z0.Roslyn
     using static sys;
     using static Delegates;
 
+    using Z0.Roslyn;
+
     [ApiHost]
     public sealed class RoslnCmd : WfAppCmd<RoslnCmd>
     {
@@ -149,7 +151,7 @@ namespace Z0.Roslyn
         public ReadOnlySpan<MethodSymbol> SymbolizeMethods(Assembly src)
             => Symbolize(src).Methods;
 
-        [CmdOp("api/emit/pdb/methods/symbols")]
+        [CmdOp("api/pdbs")]
         void CollectComponentSymbols()
         {
             var components = ApiMd.Parts;
@@ -166,6 +168,7 @@ namespace Z0.Roslyn
             for(var i=0; i<count; i++)
             {
                 ref readonly var item = ref skip(items,i);
+                writer.WriteLine(item.Format());
             }
             EmittedFile(emitting, count);
         }
@@ -198,21 +201,10 @@ namespace Z0.Roslyn
             return dst;
         }
 
-        public CaSymbolSet Symbolize(PartId part)
-        {
-            if(Wf.ApiCatalog.Assembly(part, out var assembly))
-                return Symbolize(assembly);
-            else
-            {
-                Error(string.Format("{0} not found", part.Format()));
-                return CaSymbolSet.Empty;
-            }
-        }
-
         [CmdOp("api/emit/sigs")]
         void EmitMemberSigs()
         {
-            iter(ApiMd.Parts, a => EmitMemberSigs(a, Emitter), true);
+            iter(ApiMd.Parts, a => EmitMemberInfo(Emitter, a ), true);
         }
 
         static void emit(TypeSymbol type, ITextEmitter dst)
@@ -227,10 +219,12 @@ namespace Z0.Roslyn
                 var docs = member.DocXml();
                 var desc = member.Format();
                 dst.AppendLine(desc);
+                if(docs.IsNonEmpty)
+                    dst.AppendLine(docs);
             }
         }
 
-        void EmitMemberSigs(Assembly src, WfEmit channel)
+        void EmitMemberInfo(IWfChannel channel, Assembly src)
         {
             var tool = Wf.Roslyn();
             var name = $"{src.GetSimpleName()}.compilation";

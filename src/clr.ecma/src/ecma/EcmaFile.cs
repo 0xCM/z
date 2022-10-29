@@ -6,34 +6,6 @@ namespace Z0
 {
     public unsafe class EcmaFile : IDisposable
     {
-
-        public static bool load(FilePath src, out EcmaFile dst)
-        {
-            var result = false;
-            dst = EcmaFile.Empty;
-            try
-            {
-                var stream = File.OpenRead(src.Name);
-                var reader = new PEReader(stream);
-                result = reader.HasMetadata;
-                if(result)
-                {
-                    dst = new EcmaFile(src, stream, reader);
-                }
-                else
-                {
-                    stream.Dispose();
-                    reader.Dispose();
-                }
-                
-            }
-            catch(Exception)
-            {
-                
-            }
-            return result;
-        }
-
         public readonly FileUri Uri;
 
         public readonly MemoryAddress ImageBase;
@@ -42,13 +14,13 @@ namespace Z0
 
         readonly FileStream Stream;
 
-        readonly PEReader PeReader;
+        internal readonly PEReader PeReader;
 
-        readonly PEMemoryBlock ImageBlock;
+        internal readonly PEMemoryBlock ImageBlock;
 
-        readonly PEMemoryBlock MetaBlock;
+        internal readonly PEMemoryBlock MetaBlock;
 
-        readonly MetadataReader MetadataReader;
+        internal readonly MetadataReader MetadataReader;
 
         internal EcmaFile(FileUri file)
         {

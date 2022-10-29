@@ -7,7 +7,7 @@ namespace Z0
     [StructLayout(LayoutKind.Sequential,Pack=1)]
     public readonly record struct ClrLiteralInfo
     {
-        public readonly PartId Part;
+        public readonly PartName Part;
 
         public readonly string Group;
 
@@ -20,7 +20,7 @@ namespace Z0
         public readonly ClrLiteralKind Kind;
 
         [MethodImpl(Inline)]
-        public ClrLiteralInfo(PartId part, string group, string type, string name, object value, ClrLiteralKind clr)
+        public ClrLiteralInfo(PartName part, string group, string type, string name, object value, ClrLiteralKind clr)
         {
             Part = part;
             Group = group;

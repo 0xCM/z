@@ -8,7 +8,7 @@ namespace Z0
 
     using api = ApiKeys;
 
-    public readonly struct ApiKeyJoin
+    public readonly record struct ApiKeyJoin
     {
         public readonly ApiKeySeg Left;
 

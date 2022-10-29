@@ -6,7 +6,7 @@ namespace Z0
 {
     using System.IO;
 
-    using static core;
+    using static sys;
 
     public sealed class MemoryEmitter : AppService<MemoryEmitter>
     {

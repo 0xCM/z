@@ -17,7 +17,7 @@ namespace Z0
             var counter=0u;
             do
             {
-                dst.Add(new EcmaStringDetail(seq: counter++, size, HeapOffset(handle), Read(handle)));
+                dst.Add(new EcmaStringDetail(seq: counter++, size, HeapOffset(handle), String(handle)));
                 handle = MD.GetNextHandle(handle);
             }
             while (!handle.IsNil);

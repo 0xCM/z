@@ -32,7 +32,7 @@ namespace Z0
                         lk = (ClrLiteralKind)Enums.@base(datatype);
                     else
                         lk = (ClrLiteralKind)PrimalBits.kind(datatype);
-                    seek(dst,k) = new (host.Assembly.Id(), provider.Group, ClrLiterals.name(host), ClrLiterals.name(field), field.GetRawConstantValue(), lk);
+                    seek(dst,k) = new (host.Assembly.PartName(), provider.Group, ClrLiterals.name(host), ClrLiterals.name(field), field.GetRawConstantValue(), lk);
                 }
             }
             return dst;

@@ -165,12 +165,6 @@ namespace Z0
             return true;
         }
 
-        [Parser]
-        public static Outcome parse(string src, out ClrMemberName dst)
-        {
-            dst = Clr.membername(src);
-            return true;
-        }
 
         [Parser]
         public static Outcome parse(string src, out FilePath dst)

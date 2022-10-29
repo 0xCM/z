@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using System.Linq;
+    
     public class EcmaServices : WfSvc<EcmaServices>
     {
         public static Outcome exec(IWfContext channel, CatalogAssemblies cmd)

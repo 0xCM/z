@@ -44,7 +44,7 @@ namespace Z0.Asm
             var result = Outcome.Success;
             var id = arg(args,0).Value;
             var script = FilePath.Empty;
-            result = BuildAsmExe(id,script);
+            result = ExecVarScript(id,script);
             if(result.Fail)
                 return result;
             //var exe = AsmWs.ExePath(id);
@@ -79,38 +79,6 @@ namespace Z0.Asm
             return result;
         }
 
-        void CheckMullo(IBoundSource Source)
-        {
-            var @class = ApiClassKind.MulLo;
-            var count = 12;
-            var left = Source.Array<uint>(count,100,200);
-            var right = Source.Array<uint>(count,100,200);
-            var buffer = alloc<uint>(count);
-            ref readonly var x = ref first(left);
-            ref readonly var y = ref first(right);
-            ref var dst = ref first(buffer);
-            var results = alloc<TextBlock>(count);
-            var output = alloc<uint>(count);
-            ref var expected = ref first(output);
-            ref var calls = ref first(results);
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var a = ref skip(x,i);
-                ref readonly var b = ref skip(y,i);
-                ref var actual = ref seek(dst,i);
-                ref var expect = ref seek(expected,i);
-                actual = cpu.mullo(a,b);
-                expect = math.mul(a,b);
-                //seek(calls, i) = ApiCalls.result(@class,a,b,actual);
-            }
-
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var call = ref skip(calls,i);
-                ref readonly var expect = ref skip(expected,i);
-                Wf.Data(call.Format() + " ?=? " + expect.ToString());
-            }
-        }
 
         Outcome EmitTokenStrings(CmdArgs args)
         {

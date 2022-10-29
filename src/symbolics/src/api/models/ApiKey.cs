@@ -14,7 +14,7 @@ namespace Z0
     /// [ 7 | 6 | 5 | 4 | 3     | 2         | 1    | 0         ]
     /// </remarks>
     [ApiComplete]
-    public readonly struct ApiKey
+    public readonly record struct ApiKey
     {
         public static W128 W => default;
 
@@ -105,6 +105,11 @@ namespace Z0
             get => Storage.V16u;
         }
 
+        public string Format()
+            => ApiKeys.format(this);
+
+        public override string ToString()
+            => Format();
         [MethodImpl(Inline)]
         public static implicit operator ApiKey(ReadOnlySpan<byte> src)
             => new ApiKey(src);

@@ -6,7 +6,7 @@ namespace Z0
 {
     using System.IO.Compression;
 
-    public sealed record class Archives : ApiSet<Archives>
+    public class Archives
     {
         public static ExecToken zip(FolderPath src, FilePath dst, WfEmit channel)
         {

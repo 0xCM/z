@@ -8,10 +8,6 @@ namespace Z0
 
     partial class EcmaReader
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         [Op]
         public Index<TableIndex,uint> GetRowCounts(ReadOnlySeq<KeyedValue<TableIndex,byte>> indices)
         {

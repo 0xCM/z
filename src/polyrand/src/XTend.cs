@@ -5,8 +5,6 @@
 
 namespace Z0
 {
-    using static core;
-
     [ApiHost]
     public static partial class XTend
     {

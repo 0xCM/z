@@ -35,7 +35,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public ref ManifestResourceInfo ReadResInfo(in ManifestResource src, ref ManifestResourceInfo dst)
         {
-            dst.Name = Read(src.Name);
+            dst.Name = String(src.Name);
             dst.Offset = (ulong)src.Offset;
             dst.Attributes = src.Attributes;
             return ref dst;

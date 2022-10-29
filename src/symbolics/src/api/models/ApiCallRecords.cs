@@ -4,13 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using api =  ApiCallData;
+    using api =  ApiCalls;
 
     /// <summary>
     /// Rpresents an action invocation
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct ApiCall : IApiCall<ApiCall>
+    public record struct ApiCall : IApiCall<ApiCall>
     {
         public ApiKey Api {get; set;}
 
@@ -23,7 +23,7 @@ namespace Z0
     /// Rpresents an emitter invocation
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct ApiCall<R> : IApiCall<ApiCall<R>,R>
+    public record struct ApiCall<R> : IApiCall<ApiCall<R>,R>
         where R : unmanaged
     {
         public ApiKey Api {get; set;}
@@ -39,7 +39,7 @@ namespace Z0
     /// Rpresents an unary function invocation
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct ApiCall<A0,R> : IApiCall<ApiCall<A0,R>,R>
+    public record struct ApiCall<A0,R> : IApiCall<ApiCall<A0,R>,R>
         where A0 : unmanaged
         where R : unmanaged
     {
@@ -58,7 +58,7 @@ namespace Z0
     /// Rpresents a binary function invocation
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct ApiCall<A0,A1,R> : IApiCall<ApiCall<A0,A1,R>,R>
+    public record struct ApiCall<A0,A1,R> : IApiCall<ApiCall<A0,A1,R>,R>
         where A0 : unmanaged
         where A1 : unmanaged
         where R : unmanaged
@@ -71,6 +71,12 @@ namespace Z0
 
         public R Result {get; set;}
 
+        public string Format()
+            => $"{Api}:{Arg0} -> {Arg1} -> {Result}";
+
+        public override string ToString()
+            => Format();
+
         [MethodImpl(Inline)]
         public static implicit operator ApiCallData(ApiCall<A0,A1,R> src)
             => api.serialize(src);
@@ -80,7 +86,7 @@ namespace Z0
     /// Rpresents a ternary function invocation
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack=0)]
-    public struct ApiCall<A0,A1,A2,R> : IApiCall<ApiCall<A0,A1,A2,R>,R>
+    public record struct ApiCall<A0,A1,A2,R> : IApiCall<ApiCall<A0,A1,A2,R>,R>
         where A0 : unmanaged
         where A1 : unmanaged
         where A2 : unmanaged
@@ -102,7 +108,7 @@ namespace Z0
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct ApiCall<A0,A1,A2,A3,R> : IApiCall<ApiCall<A0,A1,A2,A3,R>,R>
+    public record struct ApiCall<A0,A1,A2,A3,R> : IApiCall<ApiCall<A0,A1,A2,A3,R>,R>
         where A0 : unmanaged
         where A1 : unmanaged
         where A2 : unmanaged

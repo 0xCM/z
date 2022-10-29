@@ -11,8 +11,6 @@ namespace Z0
 
             public ImageRegions ImageRegions(IWfRuntime wf)
                 => Service<ImageRegions>(wf);
-
-
         }
 
         static ServiceCache Services => ServiceCache.Instance;

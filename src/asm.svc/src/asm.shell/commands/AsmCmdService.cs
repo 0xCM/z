@@ -63,8 +63,7 @@ namespace Z0.Asm
             Random = Rng.wyhash64();
         }
 
-
-        Outcome BuildAsmExe(string SrcId, FilePath script)
+        Outcome ExecVarScript(string SrcId, FilePath script)
         {
             const string ScriptId = "build-exe";
             var result = Outcome.Success;
