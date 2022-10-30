@@ -6,7 +6,7 @@ namespace Z0.llvm
 {
     using Asm;
 
-    using static core;
+    using static sys;
 
     public readonly struct AsmPatterns
     {

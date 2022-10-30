@@ -1,4 +1,13 @@
 <Project>
+  <PropertyGroup>
+    <CodeAnalysisVer>4.3.0-2.final</CodeAnalysisVer>
+    <MsDiaVer>1.6.0</MsDiaVer>
+    <MsBuildVer>17.2.0</MsBuildVer>
+    <MsExtVer>6.0.0</MsExtVer>
+    <MsDiaRuntimeVer>2.2.332302</MsDiaRuntimeVer>
+    <DotNetSdkVer>6.0.303</DotNetSdkVer>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.DiaSymReader.PortablePdb" Version="$(MsDiaVer)">
       <PrivateAssets>all</PrivateAssets>

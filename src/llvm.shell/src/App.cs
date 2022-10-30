@@ -12,7 +12,7 @@ namespace Z0
                 wf.WfCmd(),
                 wf.BuildCmd(),
                 wf.LlvmCmd(),
-                wf.EcmaCmd(),
+                //wf.EcmaCmd(),
                 wf.ProjectCmd()
             };
 

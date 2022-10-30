@@ -1,5 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <Version>$(ZVer)</Version>
-  </PropertyGroup>
-</Project>

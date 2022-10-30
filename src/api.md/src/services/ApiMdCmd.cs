@@ -46,7 +46,7 @@ namespace Z0
 
             if(result)
             {
-                var listing = ListedFiles.listing(pack.Files());
+                var listing = Archives.listing(pack.Files());
                 var dst = AppDb.AppData().PrefixedTable<ListedFile>($"api.pack.{pack.Timestamp}");
                 TableEmit(listing, dst);
             }

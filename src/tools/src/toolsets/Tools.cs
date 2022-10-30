@@ -17,12 +17,12 @@ namespace Z0
     [ApiHost]
     public partial class Tools : ITools
     {
-        public static Files files(FolderPath src, params FileKind[] kinds)
+        public static IEnumerable<FileUri> files(FolderPath src, params FileKind[] kinds)
         {
             if(kinds.Length != 0)
-                return FS.query(src,true,kinds).Compute().Storage;
+                return DbArchive.enumerate(src,true,kinds);
             else
-                return src.Files(true);
+                return DbArchive.enumerate(src,"*.*",true);
         }
 
         [MethodImpl(Inline), Op]

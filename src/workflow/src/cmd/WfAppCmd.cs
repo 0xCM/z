@@ -87,54 +87,55 @@ namespace Z0
             Channel.Status($"symlink:{src} -> {dst}");
         }
 
-        static Files search(CmdArgs args)
+        static IEnumerable<FileUri> search(CmdArgs args)
         {
             var src = FS.dir(arg(args,0));
             if(args.Count > 1)
             {
                 var kinds = args.Values().Span().Slice(1).Select(x => FS.kind(FS.ext(x))).Where(x => x!=0);
                 iter(kinds, kind => term.babble(kind));
-                var query = FS.query(src,true,kinds); 
-                return query.Compute().Storage;
+                return DbArchive.enumerate(src,true,kinds); 
             }
             else
             {
-                return src.Files(true);
+                return DbArchive.enumerate(src,"*.*", true);
             }            
         }
 
 
         [CmdOp("files")]
         void CatalogFiles(CmdArgs args)
-        {
-            var src = FS.dir(args[0].Value);            
-            var files = ListedFiles.listing(search(args));
-            var name = Archives.identifier(src);
-            var table = FilePath.Empty;
-            var list = FilePath.Empty;
-            if(args.Count >=2)    
-            {
-                table = FS.dir(args[1]) + Tables.filename<ListedFile>(name);
-                list = FS.dir(args[1]) + FS.file(name,FileKind.List);
-            }
-            else
-            {
-                table = AppDb.Catalogs("files").Table<ListedFile>(name);
-                list = AppDb.Catalogs("files").Path(name, FileKind.List);
-            }
+            => WfCmd.files(Channel,args);
+            
+        // {
+        //     var src = FS.dir(args[0].Value);            
+        //     var files = ListedFiles.listing(search(args).Map(x => x.ToFilePath()));
+        //     var name = Archives.identifier(src);
+        //     var table = FilePath.Empty;
+        //     var list = FilePath.Empty;
+        //     if(args.Count >=2)    
+        //     {
+        //         table = FS.dir(args[1]) + Tables.filename<ListedFile>(name);
+        //         list = FS.dir(args[1]) + FS.file(name,FileKind.List);
+        //     }
+        //     else
+        //     {
+        //         table = AppDb.Catalogs("files").Table<ListedFile>(name);
+        //         list = AppDb.Catalogs("files").Path(name, FileKind.List);
+        //     }
 
-            Emitter.TableEmit(files, table);            
-            var flow = Emitter.EmittingFile(list);
-            using var writer = list.Utf8Writer();
-            var counter = 0u;
-            foreach(var file in files)
-            {
-                writer.AppendLine(file.Path);
-                counter++;
-            }
-            Emitter.EmittedFile(flow,counter);
+        //     Emitter.TableEmit(files, table);            
+        //     var flow = Emitter.EmittingFile(list);
+        //     using var writer = list.Utf8Writer();
+        //     var counter = 0u;
+        //     foreach(var file in files)
+        //     {
+        //         writer.AppendLine(file.Path);
+        //         counter++;
+        //     }
+        //     Emitter.EmittedFile(flow,counter);
 
-        }
+        // }
 
         [CmdOp("env/process/paths")]
         void ProcPaths()

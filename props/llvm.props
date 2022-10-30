@@ -1,5 +1,10 @@
 <Project>
 
+  <PropertyGroup>
+    <ClangSharpVer>15.0.0</ClangSharpVer>
+    <LlvmSharpVer>15.0.0-beta1</LlvmSharpVer>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="LLVMSharp" Version="$(LlvmSharpVer)"/>
     <PackageReference Include="LLVMSharp.Interop" Version="$(LlvmSharpVer)"/>

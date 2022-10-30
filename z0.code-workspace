@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../sys"
+		},
+		{
+			"path": "../llvm"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {}
+}

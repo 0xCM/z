@@ -1,6 +1,0 @@
-<Project>
-  <Import Project="version.props"/>
-  <Import Project="versions.props"/>
-  <Import Project="build.props"/>
-  <Import Project="framework.props"/>
-</Project>

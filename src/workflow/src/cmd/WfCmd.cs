@@ -224,5 +224,93 @@ namespace Z0
             return entries.Sort().Resequence();        
         }        
 
+        static FileUri next(IWfChannel channel, IEnumerator<FileUri> src, out bool @continue)
+        {
+            var file = FileUri.Empty;            
+
+            try
+            {
+                @continue = src.MoveNext();
+                file = src.Current;
+            }
+            catch(Exception e)
+            {
+                channel.Babble($"Trapped {e}");
+                @continue = true;
+            }
+            return file;
+        }
+
+        static IEnumerable<FileUri> query(IWfChannel channel, CmdArgs args)
+        {
+            var src = FS.dir(args[0]);
+            var files = default(IEnumerable<FileUri>);
+            var it = default(IEnumerator<FileUri>);
+            if(args.Count > 1)
+            {
+                var kinds = args.Values().Span().Slice(1).Select(x => FS.kind(FS.ext(x))).Where(x => x!=0);
+                iter(kinds, kind => channel.Babble(kind));
+                files = DbArchive.enumerate(src,true,kinds); 
+            }
+            else
+            {
+                files = DbArchive.enumerate(src,"*.*", true);
+            }            
+
+            it = files.GetEnumerator();
+
+            var file = next(channel,it, out var @continue);
+            while(@continue)
+            {
+                if(file.IsNonEmpty)
+                    yield return file;
+                
+                if(!@continue)
+                    break;
+                file = next(channel,it, out @continue);
+            }
+        }
+
+        public static void files(IWfChannel channel, CmdArgs args)
+        {
+            var files = bag<FileUri>();
+            var src = query(channel,args);
+            var counter = 0u;
+            iter(src, file => {
+                files.Add(file);
+                counter++;
+                if(counter % 1024 == 0)
+                    channel.Babble($"Collected {counter} files");
+            }, true);
+
+            //var files = ListedFiles.listing(search(args));
+            // var name = Archives.identifier(src);
+            // var table = FilePath.Empty;
+            // var list = FilePath.Empty;
+            // if(args.Count >=2)    
+            // {
+            //     table = FS.dir(args[1]) + Tables.filename<ListedFile>(name);
+            //     list = FS.dir(args[1]) + FS.file(name,FileKind.List);
+            // }
+            // else
+            // {
+            //     table = AppDb.Catalogs("files").Table<ListedFile>(name);
+            //     list = AppDb.Catalogs("files").Path(name, FileKind.List);
+            // }
+
+            // channel.TableEmit(files, table);            
+            // var flow = channel.EmittingFile(list);
+            // using var writer = list.Utf8Writer();
+            // var counter = 0u;
+            // foreach(var file in files)
+            // {
+            //     writer.AppendLine(file.Path);
+            //     counter++;
+            // }
+            // channel.EmittedFile(flow,counter);
+
+        }
+
+
     }
 }

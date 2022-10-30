@@ -73,7 +73,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public unsafe ReadOnlySpan<byte> Read(PEMemoryBlock src)
-            => core.cover<byte>(src.Pointer, (uint)src.Length);
+            => sys.cover<byte>(src.Pointer, (uint)src.Length);
 
         public ReadOnlySpan<byte> Resources
         {

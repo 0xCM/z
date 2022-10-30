@@ -132,6 +132,7 @@ namespace Z0
                 RecurseSubdirectories = recurse
             };
 
+
         public static IEnumerable<FileUri> enumerate(FolderPath src, string pattern, bool recurse)
         {
             if(src.Exists)
