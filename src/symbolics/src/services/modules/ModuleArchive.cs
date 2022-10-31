@@ -6,7 +6,7 @@ namespace Z0
 {
     using static FS;
     
-    public readonly struct ModuleArchive : IModuleArchive
+    public readonly struct ApiModule : IModuleArchive
     {
         [Op]
         public static Files managed(FolderPath src, bool recurse = false, bool dll = true, bool exe = true)
@@ -24,7 +24,7 @@ namespace Z0
         public readonly FolderPath Root;
 
         [MethodImpl(Inline)]
-        public ModuleArchive(FolderPath root)
+        public ApiModule(FolderPath root)
         {
             Root = root;
         }

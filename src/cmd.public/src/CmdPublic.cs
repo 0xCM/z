@@ -16,7 +16,6 @@ namespace Z0
         public static ReadOnlySeq<ICmdProvider> providers(IWfRuntime wf)
         {
             var providers = new ICmdProvider[]{
-                wf.ApiCmd(),
                 wf.AncestryChecks(),
                 wf.AsmCoreCmd(),
                 wf.AsmCmdSvc(),

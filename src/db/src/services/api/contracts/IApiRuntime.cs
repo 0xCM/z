@@ -4,10 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class Cmd
+    public interface IApiRuntime
     {
-        [Op, MethodImpl(Inline)]
-        public static AppCmdSpec app(string name, CmdArgs args)
-            => new AppCmdSpec(name, args);
+
+    }
+
+    public interface IApiRuntime<R> : IApiRuntime
+        where R: IApiRuntime<R>
+    {
+
     }
 }

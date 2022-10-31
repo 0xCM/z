@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public sealed class PdbIndexBuilder : WfSvc<PdbIndexBuilder>
+    public sealed class PdbIndexBuilder : AppService<PdbIndexBuilder>
     {
         public PdbReaderStats IndexComponent(Assembly src, PdbIndex dst)
         {
@@ -56,7 +56,7 @@ namespace Z0
                 counter += stats.MethodCount;
             }
 
-            var path = AppDb.ApiTargets().Path(FS.file("pdbdocs", FS.Md));
+            var path = AppDb.Service.ApiTargets().Path(FS.file("pdbdocs", FS.Md));
             var emitting = EmittingFile(path);
             var docs = dst.Documents;
             using var writer = path.Writer();

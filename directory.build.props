@@ -1,5 +1,10 @@
 <Project>
   <PropertyGroup>
+    <ZVer>0.0.9</ZVer>
+    <ZSysVer>0.0.6</ZSysVer>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <LangVersion>preview</LangVersion>
     <FrameworkMoniker>net6.0</FrameworkMoniker>
     <Configuration>Release</Configuration>
@@ -29,8 +34,6 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <ZVer>0.0.8</ZVer>
-    <ZSysVer>0.0.6</ZSysVer>
     <TargetRuntime>$(FrameworkMoniker)</TargetRuntime>
     <SlnId>z0</SlnId>
     <SlnRoot>$(MsBuildThisFileDirectory)</SlnRoot>

@@ -33,14 +33,6 @@ namespace Z0
               return (S)Lookup.GetOrAdd(svcid<S>(), new S());
         }
 
-        // [MethodImpl(Inline)]
-        // public static S service<S>(IWfRuntime wf, Func<IWfRuntime,S> factory)
-        //     where S : IAppCmdSvc, new()
-        // {
-        //     lock(ServiceLock)
-        //         return (S)Lookup.GetOrAdd(svcid<S>(), _ => factory(wf));
-        // }
-
         public static S service<S>(IWfRuntime wf, string name)
             where S : IAppService, new()
         {

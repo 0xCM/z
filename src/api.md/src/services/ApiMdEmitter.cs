@@ -6,9 +6,11 @@ namespace Z0
 {
     using static sys;
 
-    public class ApiMdEmitter : WfSvc<ApiMdEmitter>
+    public class ApiMdEmitter : AppService<ApiMdEmitter>
     {
         IDbArchive Target;
+
+        AppDb AppDb => AppDb.Service;
 
         public static ApiMdEmitter init(IWfRuntime wf)
         {
@@ -64,7 +66,7 @@ namespace Z0
                     parser.ResultType.DisplayName(),
                     parser.TargetType.DisplayName()
                     ));
-            FileEmit(emitter.Emit(), parsers.Count, AppDb.ApiTargets().Path("api.parsers", FileKind.Csv));
+            Channel.FileEmit(emitter.Emit(), parsers.Count, AppDb.ApiTargets().Path("api.parsers", FileKind.Csv));
         }
 
         public void EmitApiLiterals(params Assembly[] src)
@@ -74,7 +76,7 @@ namespace Z0
             => Emit(CalcCmdDefs(src));
 
         public void EmitDataTypes(params Assembly[] src)
-            => TableEmit(DataTypeInfo(src), AppDb.ApiTargets().Table<ApiTypeInfo>());
+            => Channel.TableEmit(DataTypeInfo(src), AppDb.ApiTargets().Table<ApiTypeInfo>());
 
         public void EmitPartList(params Assembly[] src)
         {
@@ -82,7 +84,7 @@ namespace Z0
             var seq = src.ToSeq();
             for(var i=0; i<seq.Count; i++)
                 dst.AppendLine(seq[i].GetName().FullName);
-            FileEmit(dst.Emit(), AppDb.ApiTargets().Path("api.parts", FileKind.List));
+            Channel.FileEmit(dst.Emit(), AppDb.ApiTargets().Path("api.parts", FileKind.List));
         }
 
         public void EmitDataFlows(params Assembly[] src)
@@ -98,7 +100,7 @@ namespace Z0
             => iter(src.TaggedTypes<TokenGroupAttribute>().Select(x=>x.Type).Where(x => x.IsConcrete()).Map(x => (ITokenGroup)Activator.CreateInstance(x)), EmitTokenGroup);
 
         public void EmitTokenGroup(ITokenGroup src)
-            => TableEmit(Symbols.syminfo(src.TokenTypes), Target.Table<SymInfo>($"{src.GroupName}"), TextEncodingKind.Unicode);
+            => Channel.TableEmit(Symbols.syminfo(src.TokenTypes), Target.Table<SymInfo>($"{src.GroupName}"), TextEncodingKind.Unicode);
 
         public void EmitHeap(SymHeap src)
             => Heaps.emit(src, AppDb.ApiTargets().Table<SymHeapRecord>(), Channel);
@@ -119,21 +121,21 @@ namespace Z0
             iteri(deps.RuntimeLibs(), (i,lib) => buffer.Add(string.Format("{0:D4}:{1}",i,lib)));
             var emitter = text.emitter();
             iter(buffer, line => emitter.AppendLine(line));
-            FileEmit(emitter.Emit(), buffer.Count, dst);
+            Channel.FileEmit(emitter.Emit(), buffer.Count, dst);
         }
 
         public void EmitApiDeps()
             => EmitApiDeps(EntryAssembly, AppDb.ApiTargets().Path($"{EntryAssembly.GetSimpleName()}", FileKind.DepsList));
 
         public void EmitApiSymbols(params Assembly[] src)
-            => TableEmit(Symbolic.symlits(src), AppDb.ApiTargets().Table<SymLiteralRow>(), UTF16);
+            => Channel.TableEmit(Symbolic.symlits(src), AppDb.ApiTargets().Table<SymLiteralRow>(), UTF16);
 
         public void EmitTokens(Type src)
         {
             var syms = Symbols.syminfo(src);
             var name = src.Name.ToLower();
             var dst = Target.PrefixedTable<SymInfo>("tokens" + "." +  name);
-            TableEmit(syms, dst, TextEncodingKind.Unicode);
+            Channel.TableEmit(syms, dst, TextEncodingKind.Unicode);
         }
 
         public void EmitTypeList(string name, ReadOnlySpan<Type> src)
@@ -142,7 +144,7 @@ namespace Z0
             var dst = text.emitter();
             for(var i=0; i<src.Length; i++)
                 dst.AppendLine(skip(src,i).AssemblyQualifiedName);
-            FileEmit(dst.Emit(), src.Length, path);
+            Channel.FileEmit(dst.Emit(), src.Length, path);
         }
 
         IDbArchive ApiTargets(string scope)
@@ -208,7 +210,7 @@ namespace Z0
                 for(var j=0; j<count; j++)
                 {
                     ref readonly var asset = ref assets[j];
-                    FileEmit(Assets.utf8(asset), targets.Path(FS.file(asset.Name.ShortFileName)), TextEncodingKind.Utf8);
+                    Channel.FileEmit(Assets.utf8(asset), targets.Path(FS.file(asset.Name.ShortFileName)), TextEncodingKind.Utf8);
                     counter++;
                 }
             }
@@ -217,10 +219,10 @@ namespace Z0
         }
 
         void EmitAssetEntries(ReadOnlySeq<AssetCatalogEntry> src)
-            => TableEmit(src, AppDb.ApiTargets().Table<AssetCatalogEntry>());
+            => Channel.TableEmit(src, AppDb.ApiTargets().Table<AssetCatalogEntry>());
 
         void EmitSymLits(ReadOnlySpan<SymLiteralRow> src)
-            => TableEmit(src, Target.Path("api.symbols", FileKind.Csv), TextEncodingKind.Unicode);
+            => Channel.TableEmit(src, Target.Path("api.symbols", FileKind.Csv), TextEncodingKind.Unicode);
 
         ConstLookup<Name,ReadOnlySeq<SymInfo>> CalcApiTokens(Assembly[] src)
             => Symbols.lookup(EnumTypes(src).Tagged<SymSourceAttribute>());
@@ -233,19 +235,19 @@ namespace Z0
         }
 
         void Emit(ReadOnlySpan<ApiTableField> src)
-            => TableEmit(src, AppDb.ApiTargets().Table<ApiTableField>());
+            => Channel.TableEmit(src, AppDb.ApiTargets().Table<ApiTableField>());
 
         void Emit(string name, ReadOnlySeq<SymInfo> src)
-            => TableEmit(src, ApiTargets(tokens).PrefixedTable<SymInfo>(name), TextEncodingKind.Unicode);
+            => Channel.TableEmit(src, ApiTargets(tokens).PrefixedTable<SymInfo>(name), TextEncodingKind.Unicode);
 
         void Emit(ReadOnlySpan<ApiCmdRow> src)
-            => TableEmit(src, AppDb.ApiTargets().Table<ApiCmdRow>());
+            => Channel.TableEmit(src, AppDb.ApiTargets().Table<ApiCmdRow>());
 
         void EmitApiLiterals(ReadOnlySpan<ApiLiteralInfo> src)
-            => TableEmit(src, AppDb.ApiTargets().Table<ApiLiteralInfo>(), TextEncodingKind.Unicode);
+            => Channel.TableEmit(src, AppDb.ApiTargets().Table<ApiLiteralInfo>(), TextEncodingKind.Unicode);
 
         void Emit(ReadOnlySpan<ApiFlowSpec> src)
-            => TableEmit(src, AppDb.ApiTargets().Table<ApiFlowSpec>());
+            => Channel.TableEmit(src, AppDb.ApiTargets().Table<ApiFlowSpec>());
 
         static uint CountFields(Index<Type> tables)
         {

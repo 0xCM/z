@@ -1,6 +1,5 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(MemorySvc)" />
     <ProjectReference Include="$(Assets)" />
     <ProjectReference Include="$(Heaps)" />
     <ProjectReference Include="$(Builds)" />

@@ -55,25 +55,24 @@ namespace Z0
         }
 
         [CmdOp("project")]
-        public Outcome LoadProject(CmdArgs args)
+        public void LoadProject(CmdArgs args)
             => LoadProjectSources(EtlDb.EtlSource(arg(args, 0).Value));
 
-        protected Outcome LoadProjectSources(IProjectWorkspace ws)
+        protected void LoadProjectSources(IProjectWorkspace ws)
         {
             var result = Outcome.Success;
             if (ws == null)
-                result = Outcome.fail("Project unspecified");
+                Channel.Error("Project unspecified");
             else
             {
-                Status($"Loading project from {ws.Home()}");
+                Channel.Status($"Loading project from {ws.Home()}");
                 Projects.project(ws);
                 ProjectFiles = FileCatalog.load(Projects.project().ProjectFiles().Storage.ToSortedSpan());
                 var dir = ws.Home();
                 if (dir.Exists)
                     Files(ws.SourceFiles());
-                Status($"Project={Projects.project()}");
+                Channel.Status($"Project={Projects.project()}");
             }
-            return result;
         }
 
         public new void Babble(string pattern, params object[] args)

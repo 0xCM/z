@@ -4,13 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class Cmd
+    public interface IWfModule : IWfSvc
     {
-        public static CmdId identify<T>()
-            => CmdId.identify<T>();
+        
+    }
 
-        [Op]
-        public static CmdId identify(Type spec)
-            => CmdId.identify(spec);
+    public interface IWfModule<M> : IWfModule, IWfSvc<M>
+        where M : IWfModule<M>, new()
+    {
+
     }
 }

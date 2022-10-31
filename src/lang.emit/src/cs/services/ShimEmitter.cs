@@ -13,9 +13,9 @@ namespace Z0
     {
         public static ref ToolShimSpec bind(CmdArgs args, out ToolShimSpec dst)
         {
-            dst.ShimName = Cmd.arg(args,0).Value;
-            dst.ShimPath = FS.dir(Cmd.arg(args,1)) + FS.file(dst.ShimName,FileKind.Exe);
-            dst.TargetPath = FS.path(Cmd.arg(args,2));
+            dst.ShimName = CmdArgs.arg(args,0).Value;
+            dst.ShimPath = FS.dir(CmdArgs.arg(args,1)) + FS.file(dst.ShimName,FileKind.Exe);
+            dst.TargetPath = FS.path(CmdArgs.arg(args,2));
             return ref dst;
         }
 

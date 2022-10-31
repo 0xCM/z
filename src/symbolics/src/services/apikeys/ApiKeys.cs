@@ -9,6 +9,10 @@ namespace Z0
     [ApiHost]
     public readonly struct ApiKeys
     {
+        [MethodImpl(Inline)]
+        public Hex32 id(PartName part)
+            => (Hex32)sys.hash(part);
+
         [Op]
         public static string format(ApiKey src)
         {
@@ -35,10 +39,10 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static ApiKey key(PartId part, ushort host, ApiClass @class)
+        public static ApiKey key(PartName part, ushort host, ApiClass @class)
         {
             var dst = span16u(Cells.alloc(w128).Bytes);
-            seek(dst,0) = (ushort)part;
+            seek(dst,0) = (ushort)(uint)sys.hash(part);
             seek(dst,1) = host;
             seek(dst,2) = @class;
             return key(dst);

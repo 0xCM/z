@@ -20,13 +20,13 @@ namespace Z0
         {
             var root = Env.var(EnvVarKind.Process, EnvTokens.DOTNET_ROOT, FS.dir).Value;
             var src = root.Files(FileKind.Dll).Map(x => new FileUri(x.Format())).ToSeq();
-            var name = Cmd.identify<EmitEcmaDatasets>().Format();
+            var name = CmdId.identify<EmitEcmaDatasets>().Format();
             var ts = timestamp();
-            var dst = AppDb.Jobs(Cmd.identify<EmitEcmaDatasets>().Format()).Path($"{name}.{ts}.jobs", FileKind.Json);
+            var dst = AppDb.Jobs(CmdId.identify<EmitEcmaDatasets>().Format()).Path($"{name}.{ts}.jobs", FileKind.Json);
             var job = new EmitEcmaDatasets();
             job.JobId = ts;
             job.Sources = src;
-            job.Targets = AppDb.DbTargets("tools/jobs").Folder(Cmd.identify<EmitEcmaDatasets>().Format());
+            job.Targets = AppDb.DbTargets("tools/jobs").Folder(CmdId.identify<EmitEcmaDatasets>().Format());
             job.Settings = EcmaEmissionSettings.Default;
             
             var data = JsonData.serialize(job);
@@ -48,7 +48,7 @@ namespace Z0
 
         [CmdOp("api/emit")]
         void ApiEmit()
-            => ApiMd.Emitter().Emit(ModuleArchives.parts(), AppDb.ApiTargets());
+            => ApiMd.Emitter().Emit(ApiModules.parts(), AppDb.ApiTargets());
 
         static void EcmaEmit(IWfChannel channel, FilePath src, IDbArchive dst)
         {
@@ -71,7 +71,7 @@ namespace Z0
         [CmdOp("ecma/emit")]
         void EcmaEmit(CmdArgs args)
         {
-            var src = new ModuleArchive(FS.dir(args[0]));            
+            var src = ApiModules.create(FS.dir(args[0]));            
             var dlls = src.ManagedDll().Where(path => !path.Path.Contains(".resources.dll")).Select(x => x.Path);
             var exe = src.ManagedExe().Select(x => x.Path);
             EcmaEmitter.EmitMetadumps(Channel, src,AppDb.DbTargets("ecma/datasets"));                     
@@ -107,7 +107,7 @@ namespace Z0
         [CmdOp("ecma/emit/parts")]
         void EmitPartEcma()
         {
-            var src = ModuleArchives.parts();
+            var src = ApiModules.parts();
             exec(true,
                 () => EcmaEmitter.EmitLocatedMetadata(src, AppDb.ApiTargets("ecma/hex").Delete(), 64),
                 () => EcmaEmitter.EmitAssemblyRefs(src, AppDb.ApiTargets("ecma").Delete()),
@@ -124,7 +124,7 @@ namespace Z0
 
         [CmdOp("ecma/emit/hex")]
         void EmitApiHex()
-            => EcmaEmitter.EmitLocatedMetadata(ModuleArchives.parts(), AppDb.ApiTargets("ecma/hex"), 64);
+            => EcmaEmitter.EmitLocatedMetadata(ApiModules.parts(), AppDb.ApiTargets("ecma/hex"), 64);
 
         [CmdOp("ecma/emit/assembly-refs")]
         void EmitAssmeblyRefs()

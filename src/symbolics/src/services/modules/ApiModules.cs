@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed class ModuleArchives : AppData<ModuleArchives>
+    public sealed class ApiModules : AppData<ApiModules>
     {            
         public static IModuleArchive create(FolderPath root)
-            => new ModuleArchive(root);
+            => new ApiModule(root);
 
         static IModuleArchive create()
             => create(FS.path(ExecutingPart.Assembly.Location).FolderPath);

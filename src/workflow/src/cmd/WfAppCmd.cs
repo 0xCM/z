@@ -103,7 +103,7 @@ namespace Z0
 
         [CmdOp("files")]
         void CatalogFiles(CmdArgs args)
-            => WfCmd.files(Channel,args);
+            => WfArchives.catalog(Channel,args);
             
         [CmdOp("env/process/paths")]
         void ProcPaths()
@@ -343,13 +343,6 @@ namespace Z0
             iter(packs, p => Write(p));
         }
 
-
-        void GatherFiles(CmdArgs args)
-        {            
-            var cmd = WfCmdDefs.gather(FS.dir(args[0]), FS.dir(args[1]), FileKind.Nuget.Ext());
-            WfCmdExec.exec(Channel, cmd);
-        }
-
         [CmdOp("nuget/stage")]
         void DevPack(CmdArgs args)
         {
@@ -549,8 +542,8 @@ namespace Z0
             => ProcessControl.redirect(Channel, args);
 
 
-        [CmdOp("mul/check")]
-        void CalcCheck()
+        [CmdOp("api/calls/check")]
+        void CheckApiCalls()
         {
             CheckMullo(Rng.@default());
         }
@@ -558,7 +551,7 @@ namespace Z0
         void CheckMullo(IBoundSource Source)
         {
             var @class = ApiClassKind.MulLo;
-            var key = ApiKeys.key(PartId.Math, 1, @class);
+            var key = ApiKeys.key(Parts.Math.Resolved.Name, 1, @class);
             var count = 12;
             var left = Source.Array<uint>(count,100,200);
             var right = Source.Array<uint>(count,100,200);
@@ -579,5 +572,54 @@ namespace Z0
                 Channel.Row(skip(results,i).Format() + " | " + skip(output,i).ToString());
             }
         }            
+
+
+        [CmdOp("api/packs/list")]
+        void ListApiPacks()
+        {
+            var src = ApiPacks.discover();
+            for(var i=0; i<src.Count; i++)
+            {
+                Write($"{i}", src[i].Timestamp);
+            }
+        }
+
+        [CmdOp("api/pack/list")]
+        Outcome ListApiPack(CmdArgs args)
+        {
+            var result = Outcome.Failure;
+            var src = ApiPacks.discover();
+            var pack = default(IApiPack);
+            if(args.Count > 0)
+            {
+                result = DataParser.parse(arg(args,0), out int i);
+                if(result)
+                {
+                    var count = src.Length;
+                    if(i<count-1)
+                    {
+                        pack = src[i];
+                        result = true;
+                    }
+                }
+            }
+            else
+            {
+                if(src.Count >= 0)
+                {
+                    pack = src.Last;
+                    result = true;
+                }
+            }
+
+            if(result)
+            {
+                var listing = Archives.listing(pack.Files());
+                var dst = AppDb.AppData().PrefixedTable<ListedFile>($"api.pack.{pack.Timestamp}");
+                TableEmit(listing, dst);
+            }
+
+            return result;
+        }
     }
 }

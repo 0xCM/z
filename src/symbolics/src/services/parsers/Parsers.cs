@@ -92,7 +92,7 @@ namespace Z0
             return ref dst;
         }
 
-        MultiParser Mp() => ParserCache.get(nameof(Mp), () => new MultiParser(discover(ModuleArchives.parts())));
+        MultiParser Mp() => ParserCache.get(nameof(Mp), () => new MultiParser(discover(ApiModules.parts())));
 
         [MethodImpl(Inline)]
         public static SeqSplitter<T> splitter<T>(T delimiter)

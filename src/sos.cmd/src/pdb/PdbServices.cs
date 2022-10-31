@@ -9,12 +9,12 @@ namespace Z0
     using System.IO;
 
     [ApiHost]
-    public class PdbSvc : WfSvc<PdbSvc>
+    public class PdbSvc : AppService<PdbSvc>
     {
         PdbIndexBuilder PdbIndexBuilder => Wf.PdbIndexBuilder();
 
         public FilePath IndexAssemblies()
-            => IndexAssemblies(ModuleArchives.parts());
+            => IndexAssemblies(ApiModules.parts());
 
         public FilePath IndexAssemblies(Assembly[] src)
             => PdbIndexBuilder.IndexComponents(src, new PdbIndex());
@@ -68,7 +68,7 @@ namespace Z0
             var pdbPath = symbols.PdbPath;
             using var pdbReader = PdbSymbols.reader(symbols);
             var counter = 0u;
-            var dst = AppDb.ApiTargets("pdb").Path(string.Format("{0}.pdbinfo", src.GetSimpleName()), FileKind.Csv);
+            var dst = AppDb.Service.ApiTargets("pdb").Path(string.Format("{0}.pdbinfo", src.GetSimpleName()), FileKind.Csv);
             using var writer = dst.Writer();
             var emitting = Wf.EmittingFile(dst);
             Write("Collecting methods");

@@ -4,12 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    // public sealed class ApiControl : Actor<ApiControl>
-    // {
-    //     public ApiControl()
-    //         : base("api")
-    //     {
+    public class WfModules : WfSvc<WfModules>
+    {
 
-    //     }
-    // }
+        static WfModules()
+        {
+            
+        }
+    }
 }

@@ -6,17 +6,6 @@ namespace Z0
 {
     using static sys;
 
-    public interface IApiRuntime
-    {
-
-    }
-
-    public interface IApiRuntime<R> : IApiRuntime
-        where R: IApiRuntime<R>
-    {
-
-    }
-
     public abstract class ApiRuntime<R> : IApiRuntime<R>
         where R: ApiRuntime<R>
     {

@@ -9,7 +9,7 @@ namespace Z0
     public class WfCmd
     {
         static AppDb AppDb => AppDb.Service;
-        
+
         public static WfContext<C> context<C>(IWfRuntime wf, Func<ReadOnlySeq<ICmdProvider>> factory)
             where C : IAppCmdSvc, new()
                 => WfServices.context<C>(wf,factory);
@@ -24,7 +24,7 @@ namespace Z0
             {
                 var name = sys.@string(SQ.left(src,i));
                 var _args = sys.@string(SQ.right(src,i)).Split(Chars.Space);
-                dst = new AppCmdSpec(name, Cmd.args(_args));
+                dst = new AppCmdSpec(name, CmdArgs.args(_args));
             }
             return true;
         }
@@ -77,95 +77,6 @@ namespace Z0
             return entries.Sort().Resequence();        
         }        
 
-        static FileUri next(IWfChannel channel, IEnumerator<FileUri> src, out bool @continue)
-        {
-            var file = FileUri.Empty;            
-            try
-            {
-                @continue = src.MoveNext();
-                file = src.Current;
-            }
-            catch(Exception e)
-            {
-                channel.Babble($"Trapped {e}");
-                @continue = true;
-            }
-            return file;
-        }
 
-        static IEnumerable<FileUri> query(IWfChannel channel, CmdArgs args)
-        {
-            var src = FS.dir(args[0]);
-            var files = default(IEnumerable<FileUri>);
-            var it = default(IEnumerator<FileUri>);
-            if(args.Count > 1)
-            {
-                var kinds = args.Values().Span().Slice(1).Select(x => FS.kind(FS.ext(x))).Where(x => x!=0);
-                iter(kinds, kind => channel.Babble(kind));
-                files = DbArchive.enumerate(src,true,kinds); 
-            }
-            else
-            {
-                files = DbArchive.enumerate(src,"*.*", true);
-            }            
-
-            it = files.GetEnumerator();
-            var file = next(channel,it, out var @continue);
-            while(@continue)
-            {
-                if(file.IsNonEmpty)
-                    yield return file;
-                
-                if(!@continue)
-                    break;
-                file = next(channel,it, out @continue);
-            }
-        }
-
-        public static void files(IWfChannel channel, CmdArgs args)
-        {
-            var files = bag<FileUri>();
-            var table = FilePath.Empty;
-            var list = FilePath.Empty;
-            var name = Archives.identifier(FS.dir(args[0]));
-            var src = query(channel,args);
-            var counter = 0u;
-
-            string msg()
-                => $"Collected {counter} files";
-
-            iter(src, file => {
-                files.Add(file);
-                counter++;
-                if(counter % 1024 == 0)
-                    channel.Babble(msg());
-            }, true);
-            channel.Babble(msg());
-
-            var collected = files.ToSeq();
-            var listing = Archives.listing(collected.View);
-            
-            if(args.Count >=2)    
-            {
-                table = FS.dir(args[1]) + Tables.filename<ListedFile>(name);
-                list = FS.dir(args[1]) + FS.file(name,FileKind.List);
-            }
-            else
-            {
-                table = AppDb.Catalogs("files").Table<ListedFile>(name);
-                list = AppDb.Catalogs("files").Path(name, FileKind.List);
-            }
-
-            channel.TableEmit(listing, table);
-            var flow = channel.EmittingFile(list);
-            using var writer = list.Utf8Writer();
-            counter =0;
-            foreach(var file in files)
-            {
-                writer.AppendLine(file.ToFilePath().ToUri());
-                counter++;
-            }
-            channel.EmittedFile(flow, counter);
-        }
     }
 }

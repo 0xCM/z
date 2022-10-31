@@ -4,9 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class Cmd
+    public class WfModuleAttribute : Attribute
     {
-        public static Symbols<CmdKind> kinds()
-            => Symbols.index<CmdKind>();
+
     }
 }

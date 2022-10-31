@@ -212,35 +212,5 @@ namespace Z0
             dst.Result = result;
             return dst;
         }
-
-        // [MethodImpl(Inline), Op, Closures(Closure)]
-        // public static ApiCall<T,T,T> call<T>(in ApiKey api, uint offset, in T a0, in T a1, in T value)
-        //     where T : unmanaged
-        //         => define(api, skip(a0,offset), skip(a1, offset), skip(value, offset));
-
-        // [MethodImpl(Inline), Op, Closures(Closure)]
-        // public static ApiCall<T,T,T,T> call<T>(in ApiKey api, uint offset, in T a0, in T a1, in T a2, in T result)
-        //     where T : unmanaged
-        //         => define(api, skip(a0,offset), skip(a1, offset), skip(a2,offset), skip(result, offset));
-
-        // [MethodImpl(Inline), Op, Closures(Closure)]
-        // public static void store<T>(in ApiCall<T,T,T> src, Span<byte> dst)
-        //     where T : unmanaged
-        //         => serialize(src, dst);
-
-        // [MethodImpl(Inline), Op, Closures(Closure)]
-        // public static ApiCallData data<T>(in ApiCall<T,T,T> src)
-        //     where T : unmanaged
-        //         => ApiCallData.serialize(src);
-
-        // [MethodImpl(Inline), Op, Closures(Closure)]
-        // public static ApiCallData data<T>(in ApiKey api, uint offset, in T a0, in T a1, in T result)
-        //     where T : unmanaged
-        //         => call<T>(api,offset, a0, a1, result);
-
-        // [MethodImpl(Inline), Op, Closures(Closure)]
-        // public static ApiCallData data<T>(in ApiKey api, uint offset, in T a0, in T a1, in T a2, in T result)
-        //     where T : unmanaged
-        //         => call<T>(api,offset, a0, a1, a2, result);
    }
 }

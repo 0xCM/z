@@ -26,7 +26,7 @@ namespace Z0
             string Input()
                 => EmptyString;
             
-            run(new SysIO(OnStatus, OnError, Input), Cmd.args(tool,cmd), dst.FolderPath);
+            run(new SysIO(OnStatus, OnError, Input), CmdArgs.args(tool,cmd), dst.FolderPath);
             channel.EmittedFile(emitting, counter);
         }
 

@@ -59,11 +59,6 @@ namespace Z0
             Wf.Disposed();
         }
 
-        public void InstallChannel(WfEmit channel)
-        {
-            Emitter = channel;   
-        }
-
         public static ref readonly AppData AppData
         {
             [MethodImpl(Inline)]
@@ -77,11 +72,11 @@ namespace Z0
         }
 
         protected static CmdArg arg(in CmdArgs src, int index)
-            => Cmd.arg(src, index);
+            => CmdArgs.arg(src, index);
 
         protected static ref readonly T arg<T>(in CmdArgs src, int index, out T dst)
         {
-            var data = Cmd.arg(src,index).Value;
+            var data = CmdArgs.arg(src,index).Value;
             if(typeof(T) == typeof(bit))
                 dst = @as<bit,T>(bit.parse(data));
             else

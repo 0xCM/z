@@ -8,6 +8,6 @@ namespace Z0
     {
         [Op, Closures(UInt64k)]
         public static Tool tool(CmdArgs args, byte index = 0)
-            => arg(args,index).Value;
+            => CmdArgs.arg(args,index).Value;
     }
 }

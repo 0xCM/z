@@ -3,5 +3,6 @@
     <ProjectReference Include="$(ApiMd)" />
     <ProjectReference Include="$(Imagine)" />
     <ProjectReference Include="$(Native)" />
+    <ProjectReference Include="$(Workflow)" />
   </ItemGroup>
 </Project>

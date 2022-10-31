@@ -9,10 +9,10 @@ namespace Z0
     public class WfTools : WfSvc<WfTools>
     {
         public static Task<ExecToken> vscode<T>(IWfChannel channel, T target)
-            => ProcessControl.start(channel, Cmd.args("code.exe", $"{target}"));
+            => ProcessControl.start(channel, CmdArgs.args("code.exe", $"{target}"));
 
         public static Task<ExecToken> devenv<T>(IWfChannel channel, T target)
-            => ProcessControl.start(channel, Cmd.args("devenv.exe", $"{target}"));
+            => ProcessControl.start(channel, CmdArgs.args("devenv.exe", $"{target}"));
 
         [Op]
         public static async Task<int> start(ToolCmdSpec cmd, CmdContext context, Action<string> status, Action<string> error)

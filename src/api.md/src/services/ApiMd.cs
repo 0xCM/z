@@ -8,13 +8,13 @@ namespace Z0
 
     using K = ApiMdKind;
 
-    public sealed class ApiMd : WfSvc<ApiMd>
+    public sealed class ApiMd : AppService<ApiMd>
     {
         IDbArchive ApiTargets()
-            => AppDb.ApiTargets();
+            => AppDb.Service.ApiTargets();
 
         public Assembly[] Parts
-            => ModuleArchives.parts();
+            => ApiModules.parts();
 
         public Index<Type> ApiTableTypes
             => data(K.ApiTables, () => Parts.Types().Tagged<RecordAttribute>().Index());
@@ -81,6 +81,5 @@ namespace Z0
 
             return dst.ToArray();
         }
-
     }
 }
