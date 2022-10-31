@@ -4,47 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     public class WfCmdRouter : IWfDispatcher
     {
-        public static CmdUriSeq supported<S>(IWfDispatcher src)
-        {
-            ref readonly var defs = ref src.Commands.Defs;
-            var part = src.Controller;
-            var count = defs.Count;
-            var dst = alloc<CmdUri>(count);
-            for(var i=0; i<defs.Count; i++)
-                seek(dst,i) = defs[i].Uri;
-            return dst;            
-        }
-
-        public static void dispatch(IWfContext context, FilePath defs)
-        {
-            if(defs.Missing)
-            {
-                context.Channel.Error(AppMsg.FileMissing.Format(defs));
-            }
-            else
-            {
-                var lines = defs.ReadNumberedLines(true);
-                var count = lines.Count;
-                for(var i=0; i<count; i++)
-                {
-                    ref readonly var content = ref lines[i].Content;
-                    if(WfCmd.parse(content, out AppCmdSpec spec))
-                    {
-                        context.Dispatcher.Dispatch(spec.Name, spec.Args);
-                    }
-                    else
-                    {
-                        context.Channel.Error($"ParseFailure:'{content}'");
-                        break;
-                    }
-                }
-            }
-        }
-
         public @string Name => "router";
 
         public Hash32 Hash => Name.Hash;
@@ -57,7 +18,7 @@ namespace Z0
 
         readonly IWfChannel Channel;
 
-        ConstLookup<Name,WfCmdMethod> Catalog;
+        ConstLookup<Name,WfOp> Catalog;
 
         [MethodImpl(Inline)]
         public WfCmdRouter(IWfChannel channel, ReadOnlySeq<ICmdProvider> providers, IAppCommands lookup)
@@ -66,7 +27,7 @@ namespace Z0
             Fallback = NotFound;
             Channel = channel;
             Providers = providers;
-            Catalog = WfCmd.defs(this);
+            Catalog = WfServices.defs(this);
         }
 
         public ReadOnlySeq<ICmdProvider> Providers {get;}

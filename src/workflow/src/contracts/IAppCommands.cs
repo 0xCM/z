@@ -9,7 +9,7 @@ namespace Z0
     {
         bool Find(string spec, out IWfCmdRunner runner);
 
-        ref readonly ReadOnlySeq<WfCmdMethod> Defs {get;}
+        ref readonly ReadOnlySeq<WfOp> Defs {get;}
 
         ICollection<IWfCmdRunner> Invokers {get;}
     }

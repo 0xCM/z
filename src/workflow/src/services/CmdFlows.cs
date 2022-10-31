@@ -8,24 +8,6 @@ namespace Z0
 
     public class CmdFlows : WfSvc<CmdFlows>, ICmdRouter
     {
-        public static ExecResult exec<C>(IWfContext context, C cmd, Func<IWfContext,C,Outcome> actor)
-            where C : ICmd<C>, new()
-        {
-            var result = ExecResult.Empty;
-            var outcome = Outcome.Success;
-            var running = context.Channel.Running($"{cmd.CmdId}");
-            try
-            {
-                outcome = actor(context,cmd);
-            }
-            catch(Exception e)
-            {
-                outcome = e;
-            }
-
-            return new(context.Channel.Ran(running, result),outcome);
-        }
-
         public static ReadOnlySpan<CmdFlow> flows(ReadOnlySpan<TextLine> src)
         {
             var count = src.Length;
@@ -64,7 +46,6 @@ namespace Z0
         [Op]
         public static void parse(ReadOnlySpan<TextLine> src, out ReadOnlySpan<CmdFlow> dst)
             => dst = flows(src);
-
 
         [MethodImpl(Inline)]
         public static FileFlow flow(in CmdFlow src)

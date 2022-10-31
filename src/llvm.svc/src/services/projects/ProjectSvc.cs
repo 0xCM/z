@@ -9,7 +9,7 @@ namespace Z0
 
     public partial class ProjectSvc : WfAppCmd<ProjectSvc>
     {
-        ToolScripts Scripts => Wf.ToolScripts();
+        WfScripts Scripts => Wf.ToolScripts();
 
         AsmObjects AsmObjects => Wf.AsmObjects();
 
@@ -34,7 +34,7 @@ namespace Z0
                 Avx512 => "llc-build-avx512",
                 _ => EmptyString
             };
-            Scripts.RunBuildScripts(project, FileKind.Llir, project.Script(scriptid), runexe);
+            Scripts.RunScripts(project, FileKind.Llir, project.Script(scriptid), runexe);
         }
    }
 }

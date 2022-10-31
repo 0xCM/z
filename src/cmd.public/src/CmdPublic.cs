@@ -6,12 +6,11 @@ namespace Z0
 {
     public sealed class CmdPublic : WfAppCmd<CmdPublic>
     {
-
         public static WfContext context<C>(IWfRuntime wf)
             where C : IAppCmdSvc, new()
         {
             GlobalServices.Instance.Inject(wf.XedRuntime());
-            return WfCmd.context<C>(wf, () => providers(wf));            
+            return WfServices.context<C>(wf, () => providers(wf));            
         }
         
         public static ReadOnlySeq<ICmdProvider> providers(IWfRuntime wf)

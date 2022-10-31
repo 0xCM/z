@@ -13,7 +13,7 @@ namespace Z0
     [Free]
     public interface IWfCmdRunner : IWfCmdRunner<CmdArgs,Outcome>
     {
-        WfCmdMethod Def {get;}
+        WfOp Def {get;}
 
         ref readonly Name CmdName
             => ref Def.CmdName;

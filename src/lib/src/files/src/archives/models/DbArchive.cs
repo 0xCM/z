@@ -124,8 +124,8 @@ namespace Z0
         public Files Files(FileExt ext, bool recurse = true)
             => Root.Files(ext, recurse);
 
-        public Deferred<FileUri> Enumerate(string pattern, bool recursive = true)
-            => defer(DbArchive.enumerate(Root, pattern, recursive));
+        public IEnumerable<FileUri> Enumerate(string pattern, bool recursive = true)
+            => DbArchive.enumerate(Root, pattern, recursive);
 
         static EnumerationOptions options(bool recurse)
             => new EnumerationOptions{

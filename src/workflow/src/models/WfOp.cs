@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed class WfCmdMethod : ICmdDef
+    public sealed class WfOp : IWfOp
     {
         public readonly Name CmdName;
 
@@ -17,7 +17,7 @@ namespace Z0
         public readonly CmdUri Uri;
 
         [MethodImpl(Inline)]
-        public WfCmdMethod(Name name, CmdActorKind kind, MethodInfo method, object host)
+        public WfOp(Name name, CmdActorKind kind, MethodInfo method, object host)
         {
             CmdName = name;
             Kind = kind;
@@ -26,7 +26,7 @@ namespace Z0
             Uri = new(CmdKind.App, host.GetType().Assembly.PartName().Format(), host.GetType().DisplayName(), CmdName);
         }
 
-        CmdUri ICmdDef.Uri 
+        CmdUri IWfOp.Uri 
             => Uri;
 
         public string Format()

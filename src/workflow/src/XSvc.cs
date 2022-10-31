@@ -35,8 +35,8 @@ namespace Z0
             public WfAppCmd WfCmd(IWfRuntime wf)
                 => Service<WfAppCmd>(wf);
 
-            public ToolScripts ToolScripts(IWfRuntime wf)                
-                => Service<ToolScripts>(wf);
+            public WfScripts ToolScripts(IWfRuntime wf)                
+                => Service<WfScripts>(wf);
 
             public ProcessMemory ProcessMemory(IWfRuntime wf)                
                 => Service<ProcessMemory>(wf);
@@ -80,7 +80,7 @@ namespace Z0
         public static WfAppCmd WfCmd(this IWfRuntime wf)
             => Services.WfCmd(wf);
 
-        public static ToolScripts ToolScripts(this IWfRuntime wf)
+        public static WfScripts ToolScripts(this IWfRuntime wf)
             => Services.ToolScripts(wf);
     }
 }

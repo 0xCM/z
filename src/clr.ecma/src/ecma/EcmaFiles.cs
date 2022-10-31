@@ -5,6 +5,8 @@
 namespace Z0
 {
     using static sys;
+    
+    using System.Linq;
 
     partial class XTend
     {

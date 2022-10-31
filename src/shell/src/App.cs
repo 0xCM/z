@@ -17,7 +17,7 @@ namespace Z0
         {
             var args = sys.empty<string>();
             using var app = ApiRuntime.shell<App>(false, args);
-            var context = WfCmd.context<AppShellCmd>(app.Wf, () => providers(app.Wf));
+            var context = WfServices.context<AppShellCmd>(app.Wf, () => providers(app.Wf));
             var channel = context.Channel;
             app.Commander = context.Commander;
             app.Run(sys.empty<string>());
@@ -27,7 +27,7 @@ namespace Z0
         {
             var result = 0;
             using var app = ApiRuntime.shell<App>(false, args);
-            var context = WfCmd.context<AppShellCmd>(app.Wf, () => providers(app.Wf));
+            var context = WfServices.context<AppShellCmd>(app.Wf, () => providers(app.Wf));
             var channel = context.Channel;
             app.Commander = context.Commander;
             if(args.Length == 0)

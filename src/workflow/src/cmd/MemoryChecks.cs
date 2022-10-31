@@ -6,8 +6,6 @@ namespace Z0
 {
     using static sys;
     
-    using System.Diagnostics;
-
     public class MemoryChecks : WfAppCmd<MemoryChecks>
     {
         [CmdOp("memory/checks")]

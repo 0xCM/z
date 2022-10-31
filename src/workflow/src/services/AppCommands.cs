@@ -8,7 +8,7 @@ namespace Z0
     {
         readonly Dictionary<string,IWfCmdRunner> Lookup;
 
-        readonly ReadOnlySeq<WfCmdMethod> CmdDefs;
+        readonly ReadOnlySeq<WfOp> CmdDefs;
 
         internal AppCommands(Dictionary<string,IWfCmdRunner> src)
         {
@@ -28,7 +28,7 @@ namespace Z0
         public ICollection<IWfCmdRunner> Invokers
             => Lookup.Values;
 
-        public ref readonly ReadOnlySeq<WfCmdMethod> Defs
+        public ref readonly ReadOnlySeq<WfOp> Defs
         {
             [MethodImpl(Inline)]
             get => ref CmdDefs;

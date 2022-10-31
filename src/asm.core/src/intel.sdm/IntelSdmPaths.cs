@@ -23,7 +23,7 @@ namespace Z0.Asm
             => Sources().Sources(scope);
 
         public IDbArchive Settings()
-            => AppDb.EnvConfig();
+            => AppDb.Env();
 
         public IDbArchive Logs()
             => AppDb.Logs("intel.sdm");

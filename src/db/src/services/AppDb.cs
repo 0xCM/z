@@ -94,7 +94,7 @@ namespace Z0
         public DbArchive Jobs(string scope)
             => Jobs().Scoped(scope);
 
-        public DbArchive EnvConfig()
+        public DbArchive Env()
             => DbRoot().Scoped("env");
 
         public FilePath Settings(string name, FileKind kind)

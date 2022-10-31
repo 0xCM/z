@@ -6,26 +6,26 @@ namespace Z0
 {
     using static sys;
 
-    public class ToolScripts : WfSvc<ToolScripts>
+    public class WfScripts : WfSvc<WfScripts>
     {
         public FolderPath CleanOutDir(IProjectWorkspace project)
             => project.BuildOut().Clear(true);
 
         public void BuildAsm(IProjectWorkspace src)
-            => RunBuildScripts(src, FileKind.Asm, src.Script("build-asm"), false);
+            => RunScripts(src, FileKind.Asm, src.Script("build-asm"), false);
 
         public void BuildC(IProjectWorkspace src, bool runexe = false)
-            => RunBuildScripts(src, FileKind.C, src.Script("build-c"), runexe);
+            => RunScripts(src, FileKind.C, src.Script("build-c"), runexe);
 
         public void BuildCpp(IProjectWorkspace src, bool runexe = false)
-            => RunBuildScripts(src, FileKind.Cpp, src.Script("build-cpp"), runexe);
+            => RunScripts(src, FileKind.Cpp, src.Script("build-cpp"), runexe);
 
-        public void RunBuildScripts(IProjectWorkspace project, FileKind kind, FilePath script, bool runexe)
+        public void RunScripts(IProjectWorkspace project, FileKind kind, FilePath script, bool runexe)
         {
             if(!script.Exists)
                 sys.@throw(AppMsg.NotFound.Format(script));
                 
-            RunBuildScript(project, kind, script, flow => OnExec(flow, runexe));
+            RunScript(project, kind, script, flow => OnExec(flow, runexe));
         }
 
         void RunExe(CmdFlow flow)
@@ -109,7 +109,7 @@ namespace Z0
             return result;
         }
 
-        void RunBuildScript(IProjectWorkspace project, FileKind kind, FilePath script, Action<CmdFlow> receiver)
+        void RunScript(IProjectWorkspace project, FileKind kind, FilePath script, Action<CmdFlow> receiver)
         {
             var flows = list<CmdFlow>();
             var files = project.SourceFiles(kind, false);

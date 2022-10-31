@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     [ApiHost]
     public sealed partial class ProcessControl : Control<ProcessControl>
     {
@@ -25,6 +23,34 @@ namespace Z0
         static ConcurrentDictionary<ProcessId,ExecutingProcess> ExecutingLookup = new();
 
         static ConcurrentDictionary<ProcessId,ExecutedProcess> FinishedLookup = new();
+
+        public static Task<ExecToken> redirect(IWfChannel channel, CmdArgs args)
+        {
+            ExecToken Run()
+            {
+                var running = channel.Running("cmd/redirect");
+                var outAPath = AppDb.AppData().Path("a", FileKind.Log);
+                var outBPath = AppDb.AppData().Path("b", FileKind.Log);
+                using var outA = outAPath.Utf8Writer();
+                using var outB = outBPath.Utf8Writer();
+
+                void OnA(string msg)
+                {
+                    channel.Row(msg, FlairKind.Data);
+                    outA.WriteLine(msg);
+                }
+
+                void OnB(string msg)
+                {
+                    channel.Row(msg, FlairKind.StatusData);
+                    outB.WriteLine(msg);
+                }
+
+                ProcessControl.start(channel, new SysIO(OnA,OnB), args).Wait();
+                return channel.Ran(running, outA);
+            }
+            return sys.start(Run);
+        }
 
         public static ReadOnlySeq<ExecutingProcess> Executing()
             => ExecutingLookup.Values.Array();

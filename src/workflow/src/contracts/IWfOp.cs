@@ -5,14 +5,14 @@
 namespace Z0
 {
     [Free]
-    public interface ICmdDef
+    public interface IWfOp
     {
         CmdUri Uri {get;}
     }
 
     [Free]
-    public interface ICmdDef<D> : ICmdDef
-        where D : struct, ICmdDef<D>
+    public interface IWfOp<D> : IWfOp
+        where D : struct, IWfOp<D>
     {
 
     }

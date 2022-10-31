@@ -6,8 +6,14 @@ namespace Z0
 {
     using static sys;
  
-    public class Toolsets : WfSvc<Toolsets>
+    public class WfTools : WfSvc<WfTools>
     {
+        public static Task<ExecToken> vscode<T>(IWfChannel channel, T target)
+            => ProcessControl.start(channel, Cmd.args("code.exe", $"{target}"));
+
+        public static Task<ExecToken> devenv<T>(IWfChannel channel, T target)
+            => ProcessControl.start(channel, Cmd.args("devenv.exe", $"{target}"));
+
         [Op]
         public static async Task<int> start(ToolCmdSpec cmd, CmdContext context, Action<string> status, Action<string> error)
         {

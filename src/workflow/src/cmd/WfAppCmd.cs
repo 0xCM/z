@@ -18,8 +18,6 @@ namespace Z0
 
         Tooling Tooling => Wf.Tooling();
 
-        Dev Dev => Dev.create(Wf);
-
         EnvSvc EnvSvc => Wf.EnvSvc();
 
         [CmdOp("zip")]
@@ -107,36 +105,6 @@ namespace Z0
         void CatalogFiles(CmdArgs args)
             => WfCmd.files(Channel,args);
             
-        // {
-        //     var src = FS.dir(args[0].Value);            
-        //     var files = ListedFiles.listing(search(args).Map(x => x.ToFilePath()));
-        //     var name = Archives.identifier(src);
-        //     var table = FilePath.Empty;
-        //     var list = FilePath.Empty;
-        //     if(args.Count >=2)    
-        //     {
-        //         table = FS.dir(args[1]) + Tables.filename<ListedFile>(name);
-        //         list = FS.dir(args[1]) + FS.file(name,FileKind.List);
-        //     }
-        //     else
-        //     {
-        //         table = AppDb.Catalogs("files").Table<ListedFile>(name);
-        //         list = AppDb.Catalogs("files").Path(name, FileKind.List);
-        //     }
-
-        //     Emitter.TableEmit(files, table);            
-        //     var flow = Emitter.EmittingFile(list);
-        //     using var writer = list.Utf8Writer();
-        //     var counter = 0u;
-        //     foreach(var file in files)
-        //     {
-        //         writer.AppendLine(file.Path);
-        //         counter++;
-        //     }
-        //     Emitter.EmittedFile(flow,counter);
-
-        // }
-
         [CmdOp("env/process/paths")]
         void ProcPaths()
         {
@@ -489,18 +457,18 @@ namespace Z0
             }
 
             if(workspaces.IsNonEmpty)
-                Dev.VsCode(cd + workspaces[0].FileName);
+                WfTools.vscode(Channel, cd + workspaces[0].FileName);
             else
-                Dev.VsCode(cd);            
+                WfTools.vscode(Channel, cd); 
         }
 
         [CmdOp("devenv")]
         void DevEnv(CmdArgs args)
-            => Dev.DevEnv(args[0].Value);
+            => WfTools.devenv(Channel, args[0].Value);
 
         [CmdOp("vscode")]
         void VsCode(CmdArgs args)
-            => Dev.VsCode(args[0].Value);
+            => WfTools.vscode(Channel, args[0].Value);
 
         [CmdOp("cmd")]
         void RunCmd(CmdArgs args)
@@ -578,7 +546,7 @@ namespace Z0
 
         [CmdOp("cmd/redirect")]
         void Redirect(CmdArgs args)
-            => WfCmd.redirect(Channel, args);
+            => ProcessControl.redirect(Channel, args);
 
 
         [CmdOp("mul/check")]

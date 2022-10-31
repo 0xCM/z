@@ -19,7 +19,7 @@ namespace Z0
         public static void Main(params string[] args)
         {
             using var app = AppCmdShell.create<LlvmApp>(false, args);
-            var context = WfCmd.context<LlvmShellCmd>(app.Wf, () => providers(app.Wf));
+            var context = WfServices.context<LlvmShellCmd>(app.Wf, () => providers(app.Wf));
             app.Commander = context.Commander;
             Env.cd(AppSettings.EnvRoot().Scoped("sdks/llvm").Root);
             app.Run(args);            

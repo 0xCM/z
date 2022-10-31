@@ -15,10 +15,11 @@ namespace Z0
         [CmdOp("projects/list")]
         void ListProjects(CmdArgs args)
         {
-            var scope = arg(args,0).Value;
-            var files = AppDb.Dev(scope).Files().Where(x => FileTypes.@is(x,FileKind.CsProj));
-            iter(files, file => Write(file.ToUri()));
-            var uri = WfCmd.uri((MethodInfo)MethodInfo.GetCurrentMethod());            
+            var uri = WfServices.uri((MethodInfo)MethodInfo.GetCurrentMethod()); 
+            var flow = Channel.Running(uri);
+            var files = Archives.archive(Env.cd()).Files().Where(x => FileTypes.@is(x,FileKind.CsProj));
+            iter(files, file => Channel.Row(file.ToUri()));
+            Channel.Ran(flow, uri);            
         }
 
         [CmdOp("build/libs")]
@@ -71,26 +72,27 @@ namespace Z0
         [CmdOp("build/props")]
         void BuildProps(CmdArgs args)
         {
-            var sources = AppDb.Dev("z0").Sources("props");
-            var files = Z0.Files.Empty;
-            if(args.Count == 0)
-                files = sources.Files(FileKind.Props, true);
-            else
-                files = array(sources.Path(FS.file(arg(args,0), FileKind.Props)));
-
+            var sources = Archives.archive(Env.cd());
+            var files = sources.Files(FileKind.Props,true);
             iter(files, file =>{
                 var project = BuildSvc.LoadProject(file);
                 var data = project.Format();    
                 Write(data);
-                FileEmit(data, AppDb.AppData("build/env").Path(file.FileName.WithoutExtension.Format(), FileKind.Cfg), (ByteSize)data.Length);
+                FileEmit(data, AppDb.Env().Path(file.FileName.WithoutExtension.Format(), FileKind.Cfg), (ByteSize)data.Length);
             });
         }
 
-        [CmdOp("dev/exports")]
+        [CmdOp("build/exports")]
         void BuildExports()
         {
-            var exports = Dev.Exports(AppDb.DevProject("z0"));
-            Dev.EmitCfg(exports, "exports", AppDb.AppData("dev/exports"));
+            var sources = Archives.archive(Env.cd());
+            var files = sources.Files(FileKind.Props,true).Where(f => f.FileName.WithoutExtension.Name == "exports");
+            iter(files, file =>{
+                var project = BuildSvc.LoadProject(file);
+                var data = project.Format();    
+                Write(data);
+                FileEmit(data, AppDb.Env().Path(file.FileName.WithoutExtension.Format(), FileKind.Cfg), (ByteSize)data.Length);
+            });
         }
 
         [CmdOp("dev/deps")]

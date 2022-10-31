@@ -9,11 +9,11 @@ namespace Z0
 
     public class WfCmdRunner : IWfCmdRunner
     {
-        public readonly WfCmdMethod Def;
+        public readonly WfOp Def;
 
         public WfCmdRunner(Name name, object host, MethodInfo method)
         {
-            Def = new WfCmdMethod(name, WfCmd.classify(method), Require.notnull(method), Require.notnull(host));
+            Def = new WfOp(name, WfServices.classify(method), Require.notnull(method), Require.notnull(host));
         }
 
         public ref readonly object Host
@@ -46,7 +46,7 @@ namespace Z0
             get => Def.Host.GetType();
         }
 
-        WfCmdMethod IWfCmdRunner.Def
+        WfOp IWfCmdRunner.Def
             => Def;
 
         public Outcome Run(IWfChannel channel, CmdArgs args)
