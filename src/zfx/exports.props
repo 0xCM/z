@@ -1,5 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <ZFx>$(MsBuildThisFileDirectory)z0.zfx.csproj</ZFx>
-  </PropertyGroup>
-</Project>

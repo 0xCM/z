@@ -1,5 +1,0 @@
-<Project>
-  <ItemGroup>
-    <ProjectReference Include="$(CmdPublic)" />
-  </ItemGroup>
-</Project>

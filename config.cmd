@@ -1,9 +1,7 @@
 @echo off
-call %~dp0..\config.cmd
+call %EnvRoot%\settings\config.cmd
 set SlnId=z0
 set SlnRoot=%DevRoot%\%SlnId%
-set WsRoot=%SlnRoot%
-set WsPath=%WsRoot%
 set CfgFile=%SlnRoot%\%SlnId%.cfg
 set BuildPrefix=z0
 set DotNetVer=6.0.303
@@ -117,4 +115,3 @@ set DeployCfg=%SlnRoot%\deploy\deploy.cfg
 set PlatformDeployment=%EnvB%\tools\z0\bin
 set PackageOut=%DevPacks%\stage\devpacks\nuget
 set PackSln=dotnet pack --include-symbols --include-source %SlnMain% --output %PackageOut% %BuildProps%
-

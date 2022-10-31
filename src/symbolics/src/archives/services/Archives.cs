@@ -45,6 +45,9 @@ namespace Z0
         public static ListedFiles listing(FolderPath src, bool recurse, params FileKind[] kinds)
             => src.Files(recurse,kinds).Map(listing).Array();
 
+        public static ListedFiles listing(ReadOnlySpan<FileUri> src)
+            => src.Select(listing);
+
         public static ListedFiles listing(ReadOnlySpan<FilePath> src)
             => src.Select(listing);
 
@@ -52,6 +55,18 @@ namespace Z0
         {
             var dst = new ListedFile();
             var info = new FileInfo(src.Name);
+            dst.Size = ((ByteSize)info.Length).Kb;
+            dst.CreateTS = info.CreationTime;
+            dst.UpdateTS = info.LastWriteTime;
+            dst.Path = src;
+            dst.Attributes = info.Attributes;
+            return dst;
+        }
+
+        public static ListedFile listing(FileUri src)
+        {
+            var dst = new ListedFile();
+            var info = new FileInfo(src.ToFilePath().Format(PathSeparator.BS));
             dst.Size = ((ByteSize)info.Length).Kb;
             dst.CreateTS = info.CreationTime;
             dst.UpdateTS = info.LastWriteTime;

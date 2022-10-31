@@ -1,9 +1,8 @@
 @echo off
 call %EnvRoot%\settings\config.cmd
-call %~dp0config.cmd
-set DotNetVersion=6.0.303
-set DOTNET_ROOT=%SdkRoot%\dotnet\v%DotNetVersion%
-set PATH=%DOTNET_ROOT%;%PATH%
+call %~dp0env.cmd
+set WsRoot=%SlnRoot%
+set WsPath=%WsRoot%
 set WsRoot=%~dp0
 set WsPath=%~dp0
 call %VsCode%

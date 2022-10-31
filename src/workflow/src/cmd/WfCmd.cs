@@ -258,7 +258,6 @@ namespace Z0
             }            
 
             it = files.GetEnumerator();
-
             var file = next(channel,it, out var @continue);
             while(@continue)
             {
@@ -274,43 +273,47 @@ namespace Z0
         public static void files(IWfChannel channel, CmdArgs args)
         {
             var files = bag<FileUri>();
+            var table = FilePath.Empty;
+            var list = FilePath.Empty;
+            var name = Archives.identifier(FS.dir(args[0]));
             var src = query(channel,args);
             var counter = 0u;
+
+            string msg()
+                => $"Collected {counter} files";
+
             iter(src, file => {
                 files.Add(file);
                 counter++;
                 if(counter % 1024 == 0)
-                    channel.Babble($"Collected {counter} files");
+                    channel.Babble(msg());
             }, true);
+            channel.Babble(msg());
 
-            //var files = ListedFiles.listing(search(args));
-            // var name = Archives.identifier(src);
-            // var table = FilePath.Empty;
-            // var list = FilePath.Empty;
-            // if(args.Count >=2)    
-            // {
-            //     table = FS.dir(args[1]) + Tables.filename<ListedFile>(name);
-            //     list = FS.dir(args[1]) + FS.file(name,FileKind.List);
-            // }
-            // else
-            // {
-            //     table = AppDb.Catalogs("files").Table<ListedFile>(name);
-            //     list = AppDb.Catalogs("files").Path(name, FileKind.List);
-            // }
+            var collected = files.ToSeq();
+            var listing = Archives.listing(collected.View);
+            
+            if(args.Count >=2)    
+            {
+                table = FS.dir(args[1]) + Tables.filename<ListedFile>(name);
+                list = FS.dir(args[1]) + FS.file(name,FileKind.List);
+            }
+            else
+            {
+                table = AppDb.Catalogs("files").Table<ListedFile>(name);
+                list = AppDb.Catalogs("files").Path(name, FileKind.List);
+            }
 
-            // channel.TableEmit(files, table);            
-            // var flow = channel.EmittingFile(list);
-            // using var writer = list.Utf8Writer();
-            // var counter = 0u;
-            // foreach(var file in files)
-            // {
-            //     writer.AppendLine(file.Path);
-            //     counter++;
-            // }
-            // channel.EmittedFile(flow,counter);
-
+            channel.TableEmit(listing, table);
+            var flow = channel.EmittingFile(list);
+            using var writer = list.Utf8Writer();
+            counter =0;
+            foreach(var file in files)
+            {
+                writer.AppendLine(file.ToFilePath().ToUri());
+                counter++;
+            }
+            channel.EmittedFile(flow, counter);
         }
-
-
     }
 }
