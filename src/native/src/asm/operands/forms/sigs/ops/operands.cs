@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using static core;
+    using static sys;
 
     partial class AsmSigs
     {
@@ -34,7 +34,7 @@ namespace Z0.Asm
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static AsmSigOp operand<T>(AsmSigTokenKind kind, T value)
             where T : unmanaged
-                => new AsmSigOp(kind, core.bw8(value));
+                => new AsmSigOp(kind, bw8(value));
 
         [MethodImpl(Inline), Op]
         public static ref readonly AsmSigOpExpr operand(in AsmSigExpr src, byte i)

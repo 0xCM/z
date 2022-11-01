@@ -8,7 +8,7 @@ namespace Z0
     {
         [MethodImpl(Inline), Op]
         public static unsafe ReadOnlySpan<char> chars(string src)
-            => Algs.cover(memory.pchar(src), (uint)src.Length);
+            => cover(memory.pchar(src), (uint)src.Length);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static ReadOnlySpan<char> chars<E>(ReadOnlySpan<E> src)

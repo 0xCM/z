@@ -23,7 +23,7 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => Algs.hash(Name);
+            get => sys.hash(Name);
         }
 
         public FilePath Path

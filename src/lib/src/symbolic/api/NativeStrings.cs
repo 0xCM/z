@@ -4,11 +4,17 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     [ApiHost, Free]
     public class NativeStrings
     {
+        [MethodImpl(Inline)]
+        static ref readonly T @as<S,T>(ReadOnlySpan<S> src)
+            where S : unmanaged
+            where T : unmanaged
+                => ref first(sys.recover<S,T>(src));
+
         [MethodImpl(Inline)]
         public static @string<C> @string<C>(in C src)
             where C : unmanaged, ICharBlock<C>
@@ -44,12 +50,12 @@ namespace Z0
         [MethodImpl(Inline)]
         public static AsciString<B> load<B>(ReadOnlySpan<AsciSymbol> src)
             where B : unmanaged, IStorageBlock<B>
-                => asci<B>(core.recover<AsciSymbol,byte>(src));
+                => asci<B>(sys.recover<AsciSymbol,byte>(src));
 
         [MethodImpl(Inline)]
         public static AsciString<B> load<B>(ReadOnlySpan<AsciCode> src)
             where B : unmanaged, IStorageBlock<B>
-                => asci<B>(core.recover<AsciCode,byte>(src));
+                => asci<B>(recover<AsciCode,byte>(src));
 
         [MethodImpl(Inline)]
         public static NativeString<K,B> load<K,B>(string src)
@@ -100,7 +106,6 @@ namespace Z0
             }
             return k;
         }
-
 
         [MethodImpl(Inline), Op]
         public static @string<CharBlock1> c16(N1 n, string src = EmptyString)

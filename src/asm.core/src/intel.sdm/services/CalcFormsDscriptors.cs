@@ -28,7 +28,7 @@ namespace Z0.Asm
                 for(var i=0; i<count; i++)
                 {
                     ref readonly var detail = ref src[i];
-                    result = AsmSigs.parse(detail.AsmSig, out var sig);
+                    result = AsmSigs.parse(detail.AsmSig.View, out var sig);
                     if(result.Fail)
                         break;
 

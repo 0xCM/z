@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     public readonly struct EqualityClaimEvaluator<C> : IClaimEvaluator<C>
         where C : IEqualityClaim, IEquatable<C>
     {

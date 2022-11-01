@@ -54,7 +54,7 @@ namespace Z0
             if(args.Count >=2)    
             {
                 table = FS.dir(args[1]) + Tables.filename<ListedFile>(name);
-                list = FS.dir(args[1]) + FS.file(name,FileKind.List);
+                list = FS.dir(args[1]) + FS.file(name, FileKind.List);
             }
             else
             {

@@ -4,13 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
     using System.Linq;
-    using System.Runtime.CompilerServices;
-    using System.Collections.Generic;
 
-    using static Root;
-    using static core;
+    using static sys;
 
     using K = OperatorClasses;
 

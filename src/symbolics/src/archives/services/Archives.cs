@@ -9,7 +9,22 @@ namespace Z0
     using static sys;
 
     public class Archives
-    {
+    {        
+        public static Task<ExecToken> zip(IWfChannel channel, FolderPath src, FilePath dst)
+        {
+            var uri = $"{app}://db/zip";
+            var running = channel.Running(uri);
+
+            ExecToken run()
+            {
+                ZipFile.CreateFromDirectory(src.Format(), dst.Format(), CompressionLevel.Fastest, true);
+                return channel.Ran(running, uri); 
+            }
+
+            return @try(run, e => channel.Completed(running, typeof(Archives), e));
+        }
+
+
         public static LineMap<string> map<T>(Index<TextLine> lines, Index<T> relations)
             where T : struct, ILineRelations<T>
         {

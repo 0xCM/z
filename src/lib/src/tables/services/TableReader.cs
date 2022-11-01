@@ -6,7 +6,6 @@ namespace Z0
 {
     using System.IO;
 
-
     public class TableReader<T> : IDisposable
         where T : struct
     {

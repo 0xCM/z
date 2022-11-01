@@ -9,7 +9,7 @@ namespace Z0
         [CmdOp("units/run")]
         Outcome RunUnits(CmdArgs args)
         {
-            TestRunner.Run(Algs.array(PartId.Lib, PartId.TestUnits));
+            TestRunner.Run(sys.array(PartId.Lib, PartId.TestUnits));
             return true;
         }
 

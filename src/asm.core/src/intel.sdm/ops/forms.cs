@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using static core;
+    using static sys;
 
     partial struct SdmOps
     {
@@ -19,7 +19,7 @@ namespace Z0.Asm
 
         public static SdmForm form(in SdmOpCodeDetail src)
         {
-            var result = AsmSigs.parse(src.AsmSig, out AsmSig sig);
+            var result = AsmSigs.parse(src.AsmSig.View, out AsmSig sig);
             if(result.Fail)
                 Errors.Throw(result.Message);
 

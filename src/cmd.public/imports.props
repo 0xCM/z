@@ -23,7 +23,6 @@
     <ProjectReference Include="$(Circuits)" />
     <ProjectReference Include="$(Containers)" />
     <ProjectReference Include="$(Coff)" />
-    <ProjectReference Include="$(CmdSpecs)" />
     <ProjectReference Include="$(ClrQuery)" />
     <ProjectReference Include="$(ClrEcma)" />
     <ProjectReference Include="$(ClrCil)" />
@@ -36,7 +35,6 @@
     <ProjectReference Include="$(EMath)" />
     <ProjectReference Include="$(Events)" />
 
-    <ProjectReference Include="$(Files)" />
     <ProjectReference Include="$(Fsm)" />
 
     <ProjectReference Include="$(Heaps)" />

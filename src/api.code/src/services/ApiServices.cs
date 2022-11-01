@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public class ApiServices : WfSvc<ApiServices>
+    public class ApiServices : AppService<ApiServices>
     {        
         public void Emit(ApiMembers src, IApiPack dst)
         {
@@ -16,7 +16,7 @@ namespace Z0
         public Index<ApiCatalogEntry> Emit(ApiMembers src, FilePath dst)
         {
             var records = rebase(src.BaseAddress, src.View);
-            TableEmit(records, dst);
+            Channel.TableEmit(records, dst);
             return records;
         }
 

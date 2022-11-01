@@ -169,6 +169,9 @@ namespace Z0
         public FilePath Path(string name, FileKind kind)
             => Root + FS.file(name, kind.Ext());
 
+        public FilePath Path(string name, FileExt ext)
+            => Root + FS.file(name, ext);
+
         public FilePath Path(string @class, string name, FileKind kind)
             => new DbSources(Root, @class).Root + File(@class, name,kind);
 

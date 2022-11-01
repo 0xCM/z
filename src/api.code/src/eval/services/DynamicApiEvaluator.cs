@@ -7,7 +7,7 @@ namespace Z0
     using System.Linq;
 
     using static BufferSeqId;
-    using static core;
+    using static sys;
 
     public class DynamicApiEvaluator : IDisposable
     {

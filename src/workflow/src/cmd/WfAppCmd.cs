@@ -20,6 +20,10 @@ namespace Z0
 
         EnvSvc EnvSvc => Wf.EnvSvc();
 
+        WfEnv WfEnv => Wf.WfEnv();
+
+        WfArchives WfArchives => Wf.WfArchives();
+
         [CmdOp("zip")]
         void Zip(CmdArgs args)
         {
@@ -31,7 +35,7 @@ namespace Z0
             var src = AppSettings.DbRoot().Scoped(folder).Root;
             var name = src.FolderName.Format();
             var file = FS.file($"{scope}.{name}", FileKind.Zip);
-            EtlTasks.zip(Channel, src, AppDb.Archive(scope).Path(file));
+            Archives.zip(Channel, src, AppDb.Archive(scope).Path(file));
         }
 
         [CmdOp("copy")]
@@ -85,25 +89,9 @@ namespace Z0
             Channel.Status($"symlink:{src} -> {dst}");
         }
 
-        static IEnumerable<FileUri> search(CmdArgs args)
-        {
-            var src = FS.dir(arg(args,0));
-            if(args.Count > 1)
-            {
-                var kinds = args.Values().Span().Slice(1).Select(x => FS.kind(FS.ext(x))).Where(x => x!=0);
-                iter(kinds, kind => term.babble(kind));
-                return DbArchive.enumerate(src,true,kinds); 
-            }
-            else
-            {
-                return DbArchive.enumerate(src,"*.*", true);
-            }            
-        }
-
-
         [CmdOp("files")]
         void CatalogFiles(CmdArgs args)
-            => WfArchives.catalog(Channel,args);
+            => WfArchives.catalog(Channel, args);
             
         [CmdOp("env/process/paths")]
         void ProcPaths()
@@ -152,16 +140,8 @@ namespace Z0
             => Write(string.Format("ThreadId:{0}", Kernel32.GetCurrentThreadId()));
 
         [CmdOp("env/tools")]
-        void EnvTools()
-        {
-            var dst = new ConcurrentSet<string>();
-            var paths = Env.paths(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL);
-            iter(paths, path => iter(path.Files(FileKind.Exe,false), file => dst.Add(file.ToUri().Format())), true);
-            var tools = dst.ToSeq().Sort();
-            var counter = 0u;
-            foreach(var tool in tools)
-                Write(string.Format("{0:D5} {1}", counter++, tool));
-        }
+        void EnvTools(CmdArgs args)
+            => WfEnv.Tools(args);
 
         [CmdOp("app/deploy")]
         void Deploy()

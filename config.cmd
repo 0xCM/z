@@ -8,6 +8,7 @@ set DotNetVer=6.0.303
 set ArchName=x64
 set OsName=win
 set ConfigName=Release
+set Configuration=%ConfigName%
 set FrameworkMoniker=net6.0
 set PlatformName="Any CPU"
 set RuntimeMoniker=%OsName%-%ArchName%

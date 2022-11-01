@@ -4,7 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public partial class Db 
+     using System.IO.Compression;
+
+     using static sys;
+
+   public partial class Db 
     {
 
     }

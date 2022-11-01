@@ -8,9 +8,7 @@
     <ProjectReference Include="$(Events)" />
     <ProjectReference Include="$(Hex)" />
     <ProjectReference Include="$(Cells)" />
-    <ProjectReference Include="$(CmdSpecs)" />
     <ProjectReference Include="$(Types)" />
-    <ProjectReference Include="$(CmdSpecs)" />
     <ProjectReference Include="$(Imagine)" />
   </ItemGroup>
 </Project>

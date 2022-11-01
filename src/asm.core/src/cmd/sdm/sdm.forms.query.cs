@@ -5,8 +5,7 @@
 namespace Z0
 {
     using Asm;
-    using static core;
-
+    
     partial class AsmCoreCmd
     {
         [CmdOp("sdm/check/opcodes")]
@@ -45,7 +44,7 @@ namespace Z0
             for(var i=0; i<count; i++)
             {
                 ref readonly var detail = ref details[i];
-                AsmSigs.parse(detail.AsmSig, out var sig);
+                AsmSigs.parse(detail.AsmSig.View, out var sig);
                 buffer.Append(sig.Mnemonic.Format());
                 if(sig.OpCount != 0)
                 {

@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
 
     [ApiHost]
-    public class ApiResolver : WfSvc<ApiResolver>
+    public class ApiResolver : AppService<ApiResolver>
     {
         readonly HashSet<string> Exclusions;
 
@@ -128,7 +128,7 @@ namespace Z0
             var offset = 0u;
             for(var i=0; i<count; i++)
                 offset += Describe(skip(src,i), slice(dst,offset));
-            TableEmit(@readonly(dst), FilePath.Empty);
+            Channel.TableEmit(@readonly(dst), FilePath.Empty);
         }
 
         public uint Describe(in ResolvedPart src, Span<ApiMemberInfo> dst)

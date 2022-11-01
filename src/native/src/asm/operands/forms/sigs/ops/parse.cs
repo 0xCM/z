@@ -4,11 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using static core;
+    using static sys;
 
     partial class AsmSigs
     {
-        static AsmMnemonic partition(string src, out Index<AsmSigOpExpr> dst)
+        static AsmMnemonic partition(ReadOnlySpan<char> src, out Index<AsmSigOpExpr> dst)
         {
             var input = text.trim(text.despace(src));
             var i= text.index(input, Chars.Space);
@@ -22,10 +22,6 @@ namespace Z0.Asm
 
         [Parser]
         public static Outcome parse(ReadOnlySpan<char> src, out AsmSig dst)
-            => parse(text.format(src), out dst);
-
-        [Parser]
-        public static Outcome parse(string src, out AsmSig dst)
         {
             var result = Outcome.Success;
             dst = AsmSig.Empty;

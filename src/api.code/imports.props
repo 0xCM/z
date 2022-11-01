@@ -1,10 +1,9 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(Wf)" />
     <ProjectReference Include="$(Native)" />
-    <ProjectReference Include="$(MemorySvc)" />
     <ProjectReference Include="$(Dynamic)" />
     <ProjectReference Include="$(Heaps)" />
     <ProjectReference Include="$(Polyrand)" />
+    <ProjectReference Include="$(Workflow)" />
   </ItemGroup>
 </Project>

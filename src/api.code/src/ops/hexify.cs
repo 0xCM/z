@@ -8,7 +8,7 @@ namespace Z0
 
     partial class ApiCode
     {
-        public static void hexify(IWfChannel channel,FilePath src, FilePath dst, byte bpl = HexCsvRow.BPL)
+        public static void hexify(IWfChannel channel, FilePath src, FilePath dst, byte bpl = HexCsvRow.BPL)
         {
             var emitting = channel.EmittingFile(dst);
             using var stream = src.Stream();
