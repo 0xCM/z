@@ -1,5 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <MemorySvc>$(MsBuildThisFileDirectory)z0.memory.svc.csproj</MemorySvc>
-  </PropertyGroup>
-</Project>

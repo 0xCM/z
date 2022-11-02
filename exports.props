@@ -79,7 +79,6 @@
    <Import Project="$(MsBuildThisFileDirectory)src/llvm.svc/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/math/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/memory.svc/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/machines/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/native/exports.props"/>

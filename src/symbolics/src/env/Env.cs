@@ -9,6 +9,13 @@ namespace Z0
     [ApiHost]
     public class Env
     {
+        // public static ReadOnlySeq<FilePath> includes(EnvVarKind kind)
+        // {
+        //     var src = vars(kind)[EnvTokens.INCLUDE];
+
+        // }
+
+
         public static ReadOnlySeq<EnvReport> reports(IWfChannel channel, IDbArchive dst)
         {
             var flow = channel.Running();
@@ -115,10 +122,10 @@ namespace Z0
             return map(values, FS.dir);
         }
 
-        public static EnvVars<string> vars(FilePath src, char sep = Chars.Eq)
+        public static EnvVars<@string> vars(FilePath src, char sep = Chars.Eq)
         {
             var k = z16;
-            var dst = list<EnvVar<string>>();
+            var dst = list<EnvVar<@string>>();
             var line = AsciLineCover.Empty;
             var buffer = sys.alloc<char>(1024*4);
             using var reader = src.AsciLineReader();

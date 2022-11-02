@@ -11,7 +11,7 @@ namespace Z0
     {
         const string Id = "settings.env";
 
-        public static Outcome parse(in TextRow src, out ToolProfile dst)
+        public static Outcome parse(TextRow src, out ToolProfile dst)
         {
             var result = Outcome.Success;
             dst = default;
@@ -56,7 +56,7 @@ namespace Z0
         {
             var data = Env.vars(src);
             var dst = new ToolSettings();
-            var setting = EmptyString;
+            var setting = @string.Empty;
             if(data.Find(nameof(S.ToolId), out setting))
                 dst.ToolId = setting;
             if(data.Find(nameof(S.Group), out setting))

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public record struct MergeFile : ICmd<MergeFile>
+    public record struct MergeFile
     {
         public FolderPath Sources;
 

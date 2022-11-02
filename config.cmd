@@ -1,7 +1,7 @@
 @echo off
 call %EnvRoot%\settings\config.cmd
+set SlnRoot=%DevRoot%\z0
 set SlnId=z0
-set SlnRoot=%DevRoot%\%SlnId%
 set CfgFile=%SlnRoot%\%SlnId%.cfg
 set BuildPrefix=z0
 set DotNetVer=6.0.303

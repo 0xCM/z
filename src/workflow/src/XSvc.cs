@@ -44,9 +44,6 @@ namespace Z0
             public WfArchives WfArchives(IWfRuntime wf)
                 => Service<WfArchives>(wf); 
 
-            public WfEnv WfEnv(IWfRuntime wf)
-                => Service<WfEnv>(wf); 
-
         }
 
         static ServiceCache Services => ServiceCache.Instance;
@@ -87,7 +84,5 @@ namespace Z0
         public static WfArchives WfArchives(this IWfRuntime wf) 
             => Services.WfArchives(wf); 
 
-        public static WfEnv WfEnv(this IWfRuntime wf)
-            => Services.WfEnv(wf); 
     }
 }

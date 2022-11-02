@@ -51,7 +51,6 @@
 
     <ProjectReference Include="$(Machines)" />
     <ProjectReference Include="$(Math)" />
-    <ProjectReference Include="$(MemorySvc)" />
 
     <ProjectReference Include="$(Native)" />
     <ProjectReference Include="$(Numbers)" />

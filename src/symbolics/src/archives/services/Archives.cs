@@ -19,12 +19,6 @@ namespace Z0
         public static FolderPaths folders(ReadOnlySpan<string> src)
             => src.Map(FS.dir);
 
-        public static IncludePath include(string src)
-            => new IncludePath(folder(src));
-
-        public static IncludePath include(FolderPath src)
-            => new IncludePath(src);
-
         public static Task<ExecToken> zip(IWfChannel channel, FolderPath src, FilePath dst)
         {
             var uri = $"{app}://db/zip";

@@ -5,26 +5,17 @@
 namespace Z0
 {
     using static sys;
-    using static WfEnv.CommandNames;
+    using static AppEnv.CommandNames;
 
-    using M = WfEnv;
+    using M = AppEnv;
 
-    public class FileNameComparer : IComparer<FileName>, IComparer<FilePath>
-    {
-        public int Compare(FileName x, FileName y)
-            => x.CompareTo(y);
-
-        public int Compare(FilePath x, FilePath y)
-            => Compare(x.FileName, y.FileName);
-
-    }
-
-    public class WfEnv : WfSvc<M>, IWfModule<M>
+    public class AppEnv : AppService<M>, IWfModule<M>
     {
         public class CommandNames 
         {
             public const string EnvTools = "files/gather";
         }
+
     
         [CmdOp("env/tools")]
         public void Tools(CmdArgs args)
@@ -38,18 +29,18 @@ namespace Z0
             var emitter = text.emitter();
             foreach(var tool in tools)
             {               
-                var info = string.Format("{0:D5} {1:24} {2}", counter++, tool.FileName.WithoutExtension, tool); 
+                var info = string.Format("{0:D5} {1,-36} {2}", counter++, tool.FileName.WithoutExtension, tool); 
                 emitter.AppendLine(info);
                 Channel.Row(info);
             }
 
             var dir = Env.cd();
-            var file = FS.file($"{dir.FolderName}.tools", FileKind.Lib);
+            var file = FS.file($"{dir.FolderName}.tools", FileKind.List);
             var dst = dir + file;
             Channel.FileEmit(emitter.Emit(), dst);
         }
 
         [Cmd(EnvTools)]
-        public record struct ListTools(EnvVarKind kind, FileUri Target);           
+        public record struct ListTools(EnvVarKind kind, FileUri Target);       
     }
 }

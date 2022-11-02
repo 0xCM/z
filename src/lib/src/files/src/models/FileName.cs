@@ -6,6 +6,15 @@ namespace Z0
 {
     using System.IO;
 
+    public class FileNameComparer : IComparer<FileName>, IComparer<FilePath>
+    {
+        public int Compare(FileName x, FileName y)
+            => x.CompareTo(y);
+
+        public int Compare(FilePath x, FilePath y)
+            => Compare(x.FileName, y.FileName);
+    }
+
     public readonly struct FileName : IFsEntry<FileName>
     {
         [Op]

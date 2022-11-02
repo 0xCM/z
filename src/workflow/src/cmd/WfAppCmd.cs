@@ -18,9 +18,7 @@ namespace Z0
 
         Tooling Tooling => Wf.Tooling();
 
-        WfEnv WfEnv => Wf.WfEnv();
-
-        WfArchives WfArchives => Wf.WfArchives();
+        AppEnv AppEnv => Wf.AppEnv();
 
         [CmdOp("zip")]
         void Zip(CmdArgs args)
@@ -139,7 +137,7 @@ namespace Z0
 
         [CmdOp("env/tools")]
         void EnvTools(CmdArgs args)
-            => WfEnv.Tools(args);
+            => AppEnv.Tools(args);
 
         [CmdOp("app/deploy")]
         void Deploy()
@@ -402,30 +400,27 @@ namespace Z0
         {
             var cd = Env.cd();
             var workspaces = cd.Files(FS.ext("code-workspace"));
-            var preconditions = cd.Files(FileKind.Cmd).Where(p => p.FileName == FS.file("env", FileKind.Cmd));
-            if(preconditions.IsNonEmpty)
-            {
-                ref readonly var path = ref preconditions.First;
-                var running = Channel.Running($"Applying {path} to environment");
-                var settings = Env.cfg(preconditions.First);                
-                var count = settings.Count;
-                for(var i=0; i<count; i++)
-                {
-                    ref readonly var setting = ref settings[i];
-                    switch(sys.@string(setting.Name))
-                    {
-                        case EnvTokens.INCLUDE:
-                                                     
-                        break;
-                        case EnvTokens.LIB:                            
-                        break;
-                        case EnvTokens.PATH:
-                        break;
-                    }
+            // var preconditions = cd.Files(FileKind.Cmd).Where(p => p.FileName == FS.file("env", FileKind.Cmd));            
+            // if(preconditions.IsNonEmpty)
+            // {
+            //     ref readonly var path = ref preconditions.First;
+            //     var running = Channel.Running($"Applying {path} to environment");
+            //     var settings = Env.cfg(preconditions.First);                
+            //     var count = settings.Count;
+            //     for(var i=0; i<count; i++)
+            //     {
+            //         ref readonly var setting = ref settings[i];
+            //         switch(sys.@string(setting.Name))
+            //         {
+            //             case EnvTokens.INCLUDE:                                          
+            //             case EnvTokens.LIB:                            
+            //             case EnvTokens.PATH:                            
+            //             break;
+            //         }
 
-                    Write($"Integrated {setting}");
-                }
-            }
+            //         Write($"Integrated {setting}");
+            //     }
+            // }
 
             if(workspaces.IsNonEmpty)
                 WfTools.vscode(Channel, cd + workspaces[0].FileName);

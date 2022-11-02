@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     using api = ClaimValidator;
 
     public interface IClaimValidator

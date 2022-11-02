@@ -18,4 +18,21 @@ namespace Z0
     {
 
     }
+
+    public static class XSvc
+    {
+        class ServiceCache : AppServices<ServiceCache>
+        {
+            public AppEnv AppEnv(IWfRuntime wf)
+                => Service<AppEnv>(wf); 
+        }
+
+        static ServiceCache Services = ServiceCache.Instance;
+
+        public static AppEnv AppEnv(this IWfRuntime wf)
+            => Services.AppEnv(wf); 
+    }
+
+
+
 }

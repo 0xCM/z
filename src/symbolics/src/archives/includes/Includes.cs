@@ -9,6 +9,13 @@ namespace Z0
     [ApiHost]
     public readonly struct Includes
     {
+        public static IncludePath include(string src)
+            => new IncludePath(FS.dir(src));
+
+        public static IncludePath include(FolderPath src)
+            => new IncludePath(src);
+
+
         public static IncludePath concat(IncludePath a, IncludePath b)
         {
             var dst = alloc<FolderPath>(a.EntryCount + b.EntryCount);

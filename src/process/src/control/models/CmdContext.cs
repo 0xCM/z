@@ -14,10 +14,10 @@ namespace Z0
         /// <summary>
         /// Environment variables to use, if any
         /// </summary>
-        public readonly EnvVars<string> EnvVars;
+        public readonly EnvVars<@string> EnvVars;
 
         [MethodImpl(Inline)]
-        public CmdContext(FolderPath wd, params EnvVar<string>[] src)
+        public CmdContext(FolderPath wd, params EnvVar<@string>[] src)
         {
             WorkingDir = wd;
             EnvVars = src;
