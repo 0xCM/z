@@ -29,11 +29,11 @@ namespace Z0
             if(!outcome)
                 return outcome;
 
-            outcome = DataParser.parse(skip(input, i++), out dst.GlobalOffset);
+            outcome = AddressParser.parse(skip(input, i++), out dst.GlobalOffset);
             if(!outcome)
                 return outcome;
 
-            outcome = DataParser.parse(skip(input, i++), out dst.LocalOffset);
+            outcome = AddressParser.parse(skip(input, i++), out dst.LocalOffset);
             if(!outcome)
                 return outcome;
 

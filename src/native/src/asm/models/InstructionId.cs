@@ -16,12 +16,12 @@ namespace Z0
             if(input.Length != 24)
                 return false;
             var x0 = slice(input,0,8);
-            var result = DataParser.parse(x0, out Hex32 docid);
+            var result = HexParser.parse(x0, out Hex32 docid);
             if(!result)
                 return result;
 
             var x1 = slice(input,8,16);
-            result = DataParser.parse(x1, out Hex64 encid);
+            result = HexParser.parse(x1, out Hex64 encid);
             if(!result)
                 return result;
 

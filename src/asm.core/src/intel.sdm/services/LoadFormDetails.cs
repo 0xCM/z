@@ -24,8 +24,8 @@ namespace Z0.Asm
                 var src = line.Cells(Chars.Pipe, SdmFormDetail.FieldCount).Reader();
                 var dst = new SdmFormDetail();
                 Throw.OnError(DataParser.parse(src.Next(), out dst.Seq));
-                Throw.OnError(DataParser.parse(src.Next(), out dst.Id));
-                Throw.OnError(DataParser.asci(src.Next(), n64, out dst.Name));
+                Throw.OnError(HexParser.parse(src.Next(), out dst.Id));
+                Throw.OnError(AsciG.parse(src.Next(), n64, out dst.Name));
                 Throw.OnError(AsmSigs.parse(src.Next(), out dst.Sig));
                 Throw.OnError(SdmOpCodes.parse(src.Next(), out dst.OpCode));
                 Throw.OnError(DataParser.parse(src.Next(), out dst.Mode64));

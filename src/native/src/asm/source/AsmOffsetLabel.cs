@@ -13,7 +13,7 @@ namespace Z0
         public static Outcome label(string src, out AsmOffsetLabel dst)
         {
             dst = default;
-            var result = DataParser.parse(src, out Hex64 value);
+            var result = HexParser.parse(src, out Hex64 value);
             if(result)
                 dst = new AsmOffsetLabel(bits.effwidth(value), value);
             return result;

@@ -26,7 +26,7 @@ namespace Z0
                 var j=0;
                 result = DataParser.parse(data[j++], out dst.Seq);
                 result = DataParser.parse(data[j++], out dst.DocSeq);
-                result = DataParser.parse(data[j++], out dst.OriginId);
+                result = HexParser.parse(data[j++], out dst.OriginId);
                 result = EncodingId.parse(data[j++].Text, out dst.EncodingId);
                 result = InstructionId.parse(data[j++].Text, out dst.InstructionId);
                 result = DataParser.parse(data[j++], out dst.Section);

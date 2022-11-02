@@ -27,9 +27,9 @@ namespace Z0
             DataParser.parse(skip(cells,j++), out dst.Index);
             DataParser.parse(skip(cells,j++), out dst.Name);
             DataParser.parse(skip(cells,j++), out dst.Symbol);
-            DataParser.eparse(skip(cells,j++), out dst.DataType);
+            Enums.parse(skip(cells,j++), out dst.DataType);
             DataParser.parse(skip(cells,j++), out dst.Value);
-            DataParser.eparse(skip(cells,j++), out dst.Base);
+            Enums.parse(skip(cells,j++), out dst.Base);
             DataParser.parse(skip(cells,j++), out dst.Hidden);
             DataParser.parse(skip(cells,j++), out dst.Description);
             DataParser.parse(skip(cells,j++), out dst.Identity);

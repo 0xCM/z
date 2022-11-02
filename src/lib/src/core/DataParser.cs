@@ -7,13 +7,6 @@ namespace Z0
     [ApiHost]
     public readonly struct DataParser
     {
-        public static MsgPattern<NameOld,string> ParseFailure => "Parse failure {0}:{1}";
-
-        public static Outcome asci<S,N>(string src, N n, out S dst)
-            where S : struct, IAsciSeq<S,N>
-            where N : unmanaged, ITypeNat
-                => AsciG.parse(src, n, out dst);
-
         public static bool parse(string src, out PartName dst)
         {
             dst = text.trim(src);
@@ -22,27 +15,6 @@ namespace Z0
 
         public static bool parse(string src, out DataSize dst)
             => Sizes.parse(src, out dst);
-
-        public static bool parse(string src, out Hex4 dst)
-            => HexParser.parse(src, out dst);
-
-        public static bool parse(string src, out Hex8 dst)
-            => HexParser.parse(src, out dst);
-
-        public static bool parse(string src, out Hex16 dst)
-            => HexParser.parse(src, out dst);
-
-        public static bool parse(string src, out Hex32 dst)
-            => HexParser.parse(src, out dst);
-
-        public static bool parse(string src, out Hex64 dst)
-            => HexParser.parse(src, out dst);
-
-        public static bool parse(ReadOnlySpan<char> src, out Hex32 dst)
-            => HexParser.parse(src, out dst);
-
-        public static bool parse(ReadOnlySpan<char> src, out Hex64 dst)
-            => HexParser.parse(src, out dst);
 
         public static Outcome parse(string src, out SymVal dst)
             => SymVal.parse(src, out dst);

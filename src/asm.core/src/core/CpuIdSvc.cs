@@ -59,7 +59,7 @@ namespace Z0.Asm
                             break;
                         }
 
-                        outcome = DataParser.parse(skip(iargs,0), out row.Leaf);
+                        outcome = HexParser.parse(skip(iargs,0), out row.Leaf);
                         if(outcome.Fail)
                         {
                             outcome = (false, "Failed to parse eax");
@@ -69,7 +69,7 @@ namespace Z0.Asm
                         if(skip(iargs,1).Contains(Chars.Star))
                             row.Subleaf = uint.MaxValue;
                         else
-                            outcome = DataParser.parse(skip(iargs,1), out row.Subleaf);
+                            outcome = HexParser.parse(skip(iargs,1), out row.Subleaf);
 
                         if(outcome.Fail)
                         {
@@ -91,19 +91,19 @@ namespace Z0.Asm
                             break;
                         }
                         row.Chip = chip;
-                        outcome = DataParser.parse(skip(outvals,1), out row.Eax);
+                        outcome = HexParser.parse(skip(outvals,1), out row.Eax);
                         if(outcome.Fail)
                             break;
 
-                        outcome = DataParser.parse(skip(outvals,2), out row.Ebx);
+                        outcome = HexParser.parse(skip(outvals,2), out row.Ebx);
                         if(outcome.Fail)
                             break;
 
-                        outcome = DataParser.parse(skip(outvals,3), out row.Ecx);
+                        outcome = HexParser.parse(skip(outvals,3), out row.Ecx);
                         if(outcome.Fail)
                             break;
 
-                        outcome = DataParser.parse(skip(outvals,4), out row.Edx);
+                        outcome = HexParser.parse(skip(outvals,4), out row.Edx);
                         if(outcome.Fail)
                             break;
 
@@ -152,13 +152,13 @@ namespace Z0.Asm
             var input = src.Cells;
             var i = 0;
             var outcome = Outcome.Success;
-            outcome += DataParser.asci(skip(input,i++), n16, out dst.Chip);
-            outcome += DataParser.parse(skip(input,i++), out dst.Leaf);
-            outcome += DataParser.parse(skip(input,i++), out dst.Subleaf);
-            outcome += DataParser.parse(skip(input,i++), out dst.Eax);
-            outcome += DataParser.parse(skip(input,i++), out dst.Ebx);
-            outcome += DataParser.parse(skip(input,i++), out dst.Ecx);
-            outcome += DataParser.parse(skip(input,i++), out dst.Edx);
+            outcome += AsciG.parse(skip(input,i++), n16, out dst.Chip);
+            outcome += HexParser.parse(skip(input,i++), out dst.Leaf);
+            outcome += HexParser.parse(skip(input,i++), out dst.Subleaf);
+            outcome += HexParser.parse(skip(input,i++), out dst.Eax);
+            outcome += HexParser.parse(skip(input,i++), out dst.Ebx);
+            outcome += HexParser.parse(skip(input,i++), out dst.Ecx);
+            outcome += HexParser.parse(skip(input,i++), out dst.Edx);
             return outcome;
         }
 

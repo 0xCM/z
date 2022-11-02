@@ -176,10 +176,10 @@ namespace Z0
                 ref var row = ref dst[i];
                 DataParser.parse(reader.Next(), out row.Seq).Require();
                 DataParser.parse(reader.Next(), out row.Section).Require();
-                DataParser.parse(reader.Next(), out row.OriginId).Require();
-                DataParser.parse(reader.Next(), out row.Address).Require();
+                HexParser.parse(reader.Next(), out row.OriginId).Require();
+                AddressParser.parse(reader.Next(), out row.Address).Require();
                 DataParser.parse(reader.Next(), out row.SymSize).Require();
-                DataParser.parse(reader.Next(), out row.Value).Require();
+                HexParser.parse(reader.Next(), out row.Value).Require();
                 DataParser.eparse(reader.Next(), out row.SymClass).Require();
                 DataParser.parse(reader.Next(), out row.AuxCount).Require();
                 DataParser.parse(reader.Next(), out row.Name).Require();
@@ -205,7 +205,7 @@ namespace Z0
                 var reader = cells.Reader();
                 ref var row = ref seek(buffer,i++);
                 DataParser.parse(reader.Next(), out row.Seq).Require();
-                DataParser.parse(reader.Next(), out row.OriginId).Require();
+                HexParser.parse(reader.Next(), out row.OriginId).Require();
                 DataParser.parse(reader.Next(), out row.SectionNumber).Require();
                 DataParser.parse(reader.Next(), out row.SectionName).Require();
                 SectionKinds.ExprKind(reader.Next(), out row.SectionKind);

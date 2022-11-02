@@ -92,8 +92,8 @@ namespace Z0
                 ref var row = ref seek(dst,i);
                 DataParser.parse(reader.Next(), out row.Seq).Require();
                 DataParser.parse(reader.Next(), out row.DocSeq).Require();
-                DataParser.parse(reader.Next(), out row.OriginId).Require();
-                DataParser.parse(reader.Next(), out row.Offset).Require();
+                HexParser.parse(reader.Next(), out row.OriginId).Require();
+                HexParser.parse(reader.Next(), out row.Offset).Require();
                 SymCodes.ExprKind(reader.Next(), out row.Code);
                 SymKinds.ExprKind(reader.Next(), out row.Kind);
                 DataParser.parse(reader.Next(), out row.Name).Require();
@@ -136,7 +136,7 @@ namespace Z0
                 var j = 0;
                 result = DataParser.parse(skip(cells, j++), out dst.Seq);
                 result = DataParser.parse(skip(cells, j++), out dst.DocSeq);
-                result = DataParser.parse(skip(cells, j++), out dst.OriginId);
+                result = HexParser.parse(skip(cells, j++), out dst.OriginId);
                 result = DataParser.parse(skip(cells, j++), out dst.OriginName);
                 result = DataParser.parse(skip(cells, j++), out dst.AsmName);
                 result = AsmExpr.parse(skip(cells, j++), out dst.Asm);
@@ -494,7 +494,7 @@ namespace Z0
 
                 result = DataParser.parse(skip(cells,j++), out dst.Seq);
                 result = DataParser.parse(skip(cells,j++), out dst.DocSeq);
-                result = DataParser.parse(skip(cells,j++), out dst.OriginId);
+                result = HexParser.parse(skip(cells,j++), out dst.OriginId);
                 result = DataParser.parse(skip(cells,j++), out dst.OriginName);
 
                 if(result.Fail)

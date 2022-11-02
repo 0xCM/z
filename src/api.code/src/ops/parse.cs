@@ -99,7 +99,7 @@ namespace Z0
 
             var result = Outcome.Success;
             var i=0;
-            result = DataParser.parse(skip(cells,i++), out dst.Id);
+            result = HexParser.parse(skip(cells,i++), out dst.Id);
             result = DataParser.parse(skip(cells,i++), out dst.EntryAddress);
             result = DataParser.parse(skip(cells,i++), out dst.EntryRebase);
             result = DataParser.parse(skip(cells,i++), out dst.TargetAddress);

@@ -4,9 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
-    using static Root;
-
     [ApiHost]
     public static partial class XSb
     {

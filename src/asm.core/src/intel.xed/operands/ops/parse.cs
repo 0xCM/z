@@ -202,7 +202,7 @@ namespace Z0
 
                 case K.ESRC:
                 {
-                    if(DataParser.parse(value, out Hex4 x))
+                    if(HexParser.parse(value, out Hex4 x))
                     {
                         dst = new (field,(byte)x);
                         result = true;
@@ -213,7 +213,7 @@ namespace Z0
 
                 case K.NOMINAL_OPCODE:
                 {
-                    if(DataParser.parse(value, out Hex8 x))
+                    if(HexParser.parse(value, out Hex8 x))
                     {
                         dst = new (field, x);
                         result = true;

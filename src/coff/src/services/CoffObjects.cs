@@ -25,13 +25,13 @@ namespace Z0
                 var j=0;
                 result = DataParser.parse(data[j++], out dst.Seq);
                 result = DataParser.parse(data[j++], out dst.DocSeq);
-                result = DataParser.parse(data[j++], out dst.OriginId);
+                result = HexParser.parse(data[j++], out dst.OriginId);
                 result = EncodingId.parse(data[j++].Text, out dst.EncodingId);
                 result = InstructionId.parse(data[j++].Text, out dst.InstructionId);
                 result = DataParser.parse(data[j++], out dst.Section);
                 result = DataParser.parse(data[j++], out dst.BlockAddress);
                 result = DataParser.parse(data[j++], out dst.BlockName);
-                result = DataParser.parse(data[j++], out dst.IP);
+                result = AddressParser.parse(data[j++], out dst.IP);
                 result = DataParser.parse(data[j++], out dst.Size);
                 result = ApiNative.parse(data[j++].View, out dst.Encoded);
                 dst.Asm = text.trim(data[j++].Text);
@@ -60,7 +60,7 @@ namespace Z0
                     var digits = text.slice(text.right(content,k),1,8).Trim();
                     var hex = Hex32.Max;
                     if(nonempty(digits))
-                        DataParser.parse(digits, out hex);
+                        HexParser.parse(digits, out hex);
                     dst.DocSeq = seq++;
                     dst.Offset = hex;
                     var pos = k + 1 + 8 + 2;

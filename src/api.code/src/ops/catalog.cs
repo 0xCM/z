@@ -45,7 +45,7 @@ namespace Z0
             DataParser.parse(skip(fields, i++), out dst.ProcessBase);
             DataParser.parse(skip(fields, i++), out dst.MemberBase);
             Disp32.parse(skip(fields, i++), out dst.MemberOffset);
-            DataParser.parse(skip(fields, i++), out dst.MemberRebase);
+            AddressParser.parse(skip(fields, i++), out dst.MemberRebase);
             DataParser.parse(skip(fields, i++), out dst.PartName);
             DataParser.parse(skip(fields, i++), out dst.HostName);
             ApiIdentity.parse(skip(fields, i++), out dst.OpUri);

@@ -47,7 +47,7 @@ namespace Z0.Asm
             if(outcome.Fail)
                 return (false, string.Format(ErrorPattern, nameof(dst.Sequence), src.LineNumber));
 
-            outcome += DataParser.parse(skip(parts,i++), out dst.GlobalOffset);
+            outcome += AddressParser.parse(skip(parts,i++), out dst.GlobalOffset);
             if(outcome.Fail)
                 return (false, string.Format(ErrorPattern, nameof(dst.GlobalOffset), src.LineNumber));
 
@@ -59,7 +59,7 @@ namespace Z0.Asm
             if(outcome.Fail)
                 return (false, string.Format(ErrorPattern, nameof(dst.IP), src.LineNumber));
 
-            outcome += DataParser.parse(skip(parts,i++), out dst.BlockOffset);
+            outcome += AddressParser.parse(skip(parts,i++), out dst.BlockOffset);
             if(outcome.Fail)
                 return (false, string.Format(ErrorPattern, nameof(dst.BlockOffset), src.LineNumber));
 

@@ -108,7 +108,7 @@ namespace Z0
                 var src = cells.Reader();
                 DataParser.parse(src.Next(), out dst.Seq).Require();
                 DataParser.parse(src.Next(), out dst.BlockNumber).Require();
-                DataParser.parse(src.Next(), out dst.OriginId).Require();
+                HexParser.parse(src.Next(), out dst.OriginId).Require();
                 DataParser.parse(src.Next(), out dst.BlockName).Require();
                 DataParser.parse(src.Next(), out dst.BlockAddress).Require();
                 DataParser.parse(src.Next(), out dst.BlockSize).Require();

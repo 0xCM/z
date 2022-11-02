@@ -231,7 +231,7 @@ namespace Z0
                 if(!outcome)
                     return outcome;
 
-                outcome = DataParser.parse(skip(parts,i++), out dst.MethodRva);
+                outcome = AddressParser.parse(skip(parts,i++), out dst.MethodRva);
                 if(!outcome)
                     return outcome;
 

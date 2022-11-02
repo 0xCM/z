@@ -30,7 +30,7 @@ namespace Z0
             if(result.Fail)
                 return result;
 
-            result = DataParser.parse(skip(cells, i++), out dst.BlockOffset);
+            result = AddressParser.parse(skip(cells, i++), out dst.BlockOffset);
             if(result.Fail)
                 return result;
 

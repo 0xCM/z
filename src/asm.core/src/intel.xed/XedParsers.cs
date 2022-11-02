@@ -379,7 +379,7 @@ namespace Z0
         public static bool parse(string src, out Hex8 dst)
         {
             if(IsHexLiteral(src))
-                return DataParser.parse(src, out dst);
+                return HexParser.parse(src, out dst);
             dst = default;
             return false;
         }
@@ -396,7 +396,7 @@ namespace Z0
         public static bool parse(string src, out Hex16 dst)
         {
             if(IsHexLiteral(src))
-                return DataParser.parse(src, out dst);
+                return HexParser.parse(src, out dst);
             dst = default;
             return false;
         }

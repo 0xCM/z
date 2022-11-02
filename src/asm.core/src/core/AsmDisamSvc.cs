@@ -64,7 +64,7 @@ namespace Z0
                         if(i<0)
                             return (false, "Unexpected content");
 
-                        result = DataParser.parse(text.left(content,i), out offset);
+                        result = HexParser.parse(text.left(content,i), out offset);
                         if(result.Fail)
                             return (false, "Unable to parse offset");
 
