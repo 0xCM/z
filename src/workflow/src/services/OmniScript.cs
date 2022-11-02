@@ -15,7 +15,7 @@ namespace Z0
                 );
 
         public Outcome Run(string content, out ReadOnlySpan<TextLine> response)
-            => ProcessControl.run(CmdTerm.cmd(content), ReceiveCmdStatusQuiet, ReceiveCmdError, out response);
+            => ProcessControl.run(Cmd.cmd(content), ReceiveCmdStatusQuiet, ReceiveCmdError, out response);
 
         public Outcome Run(FilePath src, out ReadOnlySpan<TextLine> response)
             => ProcessControl.run(new CmdLine(src.Format(PathSeparator.BS)), CmdVars.Empty, ReceiveCmdStatusQuiet, ReceiveCmdError, out response);

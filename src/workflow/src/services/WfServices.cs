@@ -8,10 +8,9 @@ namespace Z0
 
     public class WfServices : WfSvc<WfServices>, IWfServices
     {
-        public static ExecResult exec<C>(IWfContext context, C cmd, Func<IWfContext,C,Outcome> actor)
+        public static ExecToken exec<C>(IWfContext context, C cmd, Func<IWfContext,C,Outcome> actor)
             where C : ICmd<C>, new()
         {
-            var result = ExecResult.Empty;
             var outcome = Outcome.Success;
             var running = context.Channel.Running($"{cmd.CmdId}");
             try
@@ -23,7 +22,7 @@ namespace Z0
                 outcome = e;
             }
 
-            return new(context.Channel.Ran(running, result),outcome);
+            return context.Channel.Ran(running);
         }
 
         public static void dispatch(IWfContext context, FilePath defs)

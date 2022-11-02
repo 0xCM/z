@@ -38,7 +38,7 @@ namespace Z0
             EmittedTable(flow, counter);
         }
 
-        void EmitAssemblyRefs(Assembly src, IRecordFormatter formatter, StreamWriter dst)
+        void EmitAssemblyRefs(Assembly src, ICsvFormatter formatter, StreamWriter dst)
         {
             try
             {

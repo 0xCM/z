@@ -4,13 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Reflection;
-    using System.Runtime.CompilerServices;
-
-    using static core;
-    using static Root;
-
     partial struct Tables
     {
         [MethodImpl(Inline), Op]

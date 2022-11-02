@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IRecordFormatter
+    public interface ICsvFormatter
     {
         TableId TableId {get;}
 
@@ -20,15 +20,15 @@ namespace Z0
                 => dst.AppendLine(Format(src));
     }
 
-    public interface IRecordFormatter<T> : IRecordFormatter
+    public interface ICsvFormatter<T> : ICsvFormatter
         where T : struct
     {
         string Format(in T src);
 
-        string IRecordFormatter.Format<X>(in X src)
+        string ICsvFormatter.Format<X>(in X src)
             => Format(sys.@as<X,T>(src));
 
-        TableId IRecordFormatter.TableId
+        TableId ICsvFormatter.TableId
             => TableId.identify(typeof(T));
     }
 }

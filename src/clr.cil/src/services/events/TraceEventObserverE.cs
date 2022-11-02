@@ -36,7 +36,7 @@ namespace Z0
 
         FilePath LogPath;
 
-        readonly IRecordFormatter<E> Formatter;
+        readonly ICsvFormatter<E> Formatter;
 
         readonly uint EventKeyword;
 

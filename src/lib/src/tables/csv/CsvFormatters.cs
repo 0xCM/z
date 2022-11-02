@@ -4,15 +4,48 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
     using static Tables;
-    using static RecordFormatter;
+    using static CsvFormatter;
 
-    using api = RecordFormatters;
+    using api = CsvFormatters;
 
-    public class RecordFormatters
+    [ApiHost]
+    public class CsvFormatters
     {
-        public static IRecordFormatter<T> create<T>(ushort rowpad, RecordFormatKind fk, string delimiter = DefaultDelimiter)
+        const NumericKind Closure = UInt64k;
+
+        [Op, Closures(Closure)]
+        public static uint cells<T>(in RowFormatSpec rowspec, in DynamicRow<T> row, Span<string> dst)
+            where T : struct
+        {
+            var count = (uint)min(rowspec.CellCount, row.CellCount);
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var value = ref row[i];
+                ref readonly var spec = ref rowspec[i];
+                var cellpad = spec.Width.Pattern();
+                seek(dst, i) = string.Format(cellpad, spec.Pattern.Format(value));
+            }
+
+            return count;
+        }
+
+        public static Outcome cells(TextLine src, char delimiter, byte fields, out ReadOnlySpan<string> dst)
+        {
+            var cells = src.Split(Chars.Pipe, true);
+            dst = default;
+            if(cells.Length != fields)
+            {
+                return (false, Tables.FieldCountMismatch.Format(fields, cells.Length));
+            }
+            else
+            {
+                dst = cells;
+                return true;
+            }
+        }        
+        public static ICsvFormatter<T> create<T>(ushort rowpad, RecordFormatKind fk, string delimiter = DefaultDelimiter)
             where T : struct
         {
             var record = typeof(T);
@@ -26,7 +59,7 @@ namespace Z0
             return new Formatter2<T>(spec, api.adapter(record));
         }
 
-        public static RecordFormatter create(Type record, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular, string delimiter = DefaultDelimiter)
+        public static CsvFormatter create(Type record, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular, string delimiter = DefaultDelimiter)
         {
             var fields = Tables.fields(record).Index();
             var count = fields.Length;
@@ -35,7 +68,7 @@ namespace Z0
                 seek(buffer, i) = new HeaderCell(fields[i].FieldIndex, fields[i].FieldName, fields[i].FieldWidth);
             var header = new RowHeader(buffer, delimiter);
             var spec = rowspec(header, header.Cells.Select(x => x.CellFormat), rowpad, fk);
-            return new RecordFormatter(record, spec, api.adapter(record));
+            return new CsvFormatter(record, spec, api.adapter(record));
         }
 
         internal static RowAdapter adapter(Type src)

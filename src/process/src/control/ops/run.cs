@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
 
     partial class ProcessControl
-    {
+    {        
         public static void run(IWfChannel channel, string tool, string cmd, CmdArgs args, FilePath dst)
         {
             var emitting = channel.EmittingFile(dst);

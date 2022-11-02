@@ -4,24 +4,23 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.IO.Compression;
-
-    using static sys;
-
     public class EtlTasks : IEtlDb
     {
         public static Task<ExecToken> robocopy(IWfChannel channel, FolderPath src, FolderPath dst)
         {
             var cmd = new CmdLine($"robocopy {src} {dst} /e");
-            var running = channel.Running(cmd);
+            //var running = channel.Running(cmd);
+            var args = Cmd.args(src, dst, "/e");            
+            return ProcessControl.start(channel, FS.path("robocopy.exe"), args);
             
-            ExecToken run()
-            {
-                ProcessControl.start(cmd).Wait();
-                return channel.Ran(running); 
-            }
+            // ExecToken run()
+            // {
+                
+            //     ProcessControl.start(cmd).Wait();
+            //     return channel.Ran(running); 
+            // }
 
-            return @try(run, e => channel.Completed(running, typeof(EtlTasks), e));
+            // return @try(run, e => channel.Completed(running, typeof(EtlTasks), e));
         }
 
         readonly AppDb AppDb;

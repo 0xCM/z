@@ -1,6 +1,6 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(ZLib)" />
+    <ProjectReference Include="$(Commands)" />
     <ProjectReference Include="$(Db)" />
   </ItemGroup>
 </Project>

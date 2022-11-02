@@ -7,7 +7,55 @@ namespace Z0
     using static sys;
 
     partial class ProcessControl
-    {        
+    {       
+        [Op]
+        public static Task<ExecToken> start(IWfChannel channel, FilePath path, CmdArgs args, CmdContext? context = null)
+        {
+            var info = new ProcessStartInfo
+            {
+                FileName = path.Format(),
+                Arguments = Cmd.join(args),
+                RedirectStandardError = true,
+                RedirectStandardOutput = true,
+                RedirectStandardInput = true
+            };
+
+            void OnStatus(DataReceivedEventArgs e)
+            {
+                if(e != null && nonempty(e.Data))
+                    channel.Row(e.Data);
+
+            }
+
+            void OnError(DataReceivedEventArgs e)
+            {
+                if(e != null && nonempty(e.Data))
+                    channel.Error(e.Data);                
+            }
+
+            ExecToken Run()
+            {
+                var token = ExecToken.Empty;
+                var running = channel.Running($"{info.FileName} ${info.Arguments}");
+                var process = new Process {StartInfo = info};
+                var ctx = context ?? CmdContext.Default;
+                if (!ctx .WorkingDir.IsNonEmpty)
+                    process.StartInfo.WorkingDirectory = context.WorkingDir.Name;
+                iter(ctx.EnvVars, v => process.StartInfo.Environment.Add(v.Name, v.Value));
+                process.OutputDataReceived += (s,d) => OnStatus(d);
+                process.ErrorDataReceived += (s,d) => OnError(d);
+                process.Start();
+                process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
+                process.WaitForExit();
+                token = channel.Ran(running);
+                term.cmd();
+                return token;
+
+            }   
+            return sys.start(Run);
+        }
+
         [Op]
         public static ProcessAdapter start(ProcessStartSpec spec)
             => Process.Start(spec);
@@ -47,7 +95,7 @@ namespace Z0
                 }
                 
                 remove(new (executing,ts,token));
-                term.write("cmd> ", (FlairKind)ConsoleColor.Cyan);
+                term.cmd();
                 return token;
             }
             return sys.start(run);

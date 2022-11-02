@@ -4,7 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct Tables
+    partial struct term
     {
+        public static void cmd()
+            => write("cmd> ", (FlairKind)ConsoleColor.Cyan);
     }
 }

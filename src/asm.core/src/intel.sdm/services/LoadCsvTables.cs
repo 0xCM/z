@@ -43,7 +43,7 @@ namespace Z0.Asm
             var foundtable = false;
             var parsingrows = false;
             var rowcount = 0;
-            var cols = Index<TableColumn>.Empty;
+            var cols = Seq<TableColumn>.Empty;
             var rows = list<TableRow>();
             var rowidx = z16;
             var table = TableBuilder.create();
@@ -114,7 +114,7 @@ namespace Z0.Asm
             return tables.ViewDeposited();
         }
 
-        static Index<TableColumn> columns(ReadOnlySpan<string> src)
+        static Seq<TableColumn> columns(ReadOnlySpan<string> src)
             => Tables.columns<SdmColumnKind>(src);
     }
 }

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     partial struct Tables
     {
@@ -22,7 +22,7 @@ namespace Z0
             return Tables.column(name.Trim(), type, (ushort)length);
         }
 
-        public static Index<TableColumn> columns<K>(ReadOnlySpan<string> src)
+        public static Seq<TableColumn> columns<K>(ReadOnlySpan<string> src)
             where K : unmanaged, Enum
         {
             var count = src.Length;

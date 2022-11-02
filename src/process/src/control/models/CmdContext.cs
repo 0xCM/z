@@ -22,5 +22,7 @@ namespace Z0
             WorkingDir = wd;
             EnvVars = src;
         }
+
+        public static CmdContext Default => new CmdContext(Env.cd());
     }
 }

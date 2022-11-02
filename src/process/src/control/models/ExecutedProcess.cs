@@ -18,6 +18,7 @@ namespace Z0
             Finished = finished;
             Token = token;
         }
+
         public ref readonly ProcessId Id => ref ExecSpec.Id;
     }
 }

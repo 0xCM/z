@@ -6,7 +6,7 @@ namespace Z0
 {
     using api = Tables;
 
-    public struct RecordFormatter<T> : IRecordFormatter<T>
+    public struct CsvFormatter<T> : ICsvFormatter<T>
         where T : struct
     {
         public readonly RowFormatSpec FormatSpec;
@@ -16,14 +16,14 @@ namespace Z0
         ITextBuffer Buffer;
 
         [MethodImpl(Inline)]
-        internal RecordFormatter(RowFormatSpec spec, RowAdapter<T> adapter)
+        internal CsvFormatter(RowFormatSpec spec, RowAdapter<T> adapter)
         {
             FormatSpec = spec;
             Adapter = adapter;
             Buffer = text.buffer();
         }
 
-        RowFormatSpec IRecordFormatter.FormatSpec
+        RowFormatSpec ICsvFormatter.FormatSpec
             => FormatSpec;
 
         public string Format(in T src)

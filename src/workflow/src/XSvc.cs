@@ -29,9 +29,6 @@ namespace Z0
             public DbArchives DbArchives(IWfRuntime wf)
                 => Service<DbArchives>(wf);
 
-            public EnvSvc EnvSvc(IWfRuntime wf)
-                => Service<EnvSvc>(wf);
-
             public WfAppCmd WfCmd(IWfRuntime wf)
                 => Service<WfAppCmd>(wf);
 
@@ -81,9 +78,6 @@ namespace Z0
         public static DbArchives DbArchive(this IWfRuntime wf)
             => Services.DbArchives(wf);                
 
-        public static EnvSvc EnvSvc(this IWfRuntime wf)
-            => Services.EnvSvc(wf);                
-
         public static WfAppCmd WfCmd(this IWfRuntime wf)
             => Services.WfCmd(wf);
 
@@ -95,6 +89,5 @@ namespace Z0
 
         public static WfEnv WfEnv(this IWfRuntime wf)
             => Services.WfEnv(wf); 
- 
     }
 }

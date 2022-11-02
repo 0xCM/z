@@ -13,10 +13,6 @@ namespace Z0
 
         static MsgPattern ArgSpecError => "Argument specification error";
 
-        [MethodImpl(Inline), Op, Closures(NumericKind.U64)]
-        public static CmdArg<T> arg<T>(T value)
-            where T : ICmdArg<T>, IEquatable<T>, IComparable<T>
-                => value;
         [Op]
         public static CmdArg arg(CmdArgs src, int index)
         {
@@ -29,26 +25,6 @@ namespace Z0
             return src[(ushort)index];
         }
 
-        public static string join(CmdArgs args)
-        {
-            var dst = text.emitter();
-            for(var i=0; i<args.Count; i++)
-            {
-                if(i != 0)
-                    dst.Append(Chars.Space);
-                dst.Append(args[i].Value);
-            }
-
-            return dst.Emit();
-        }
-
-        public static CmdArgs args(ReadOnlySpan<string> src)
-        {
-            var dst = alloc<CmdArg>(src.Length);
-            for(ushort i=0; i<src.Length; i++)
-                seek(dst,i) = new CmdArg(skip(src,i));
-            return new (dst);
-        }
 
         public static CmdArgs args<T>(params T[] src)
             where T : IEquatable<T>, IComparable<T>

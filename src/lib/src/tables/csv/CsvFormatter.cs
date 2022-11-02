@@ -4,11 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using api = RecordFormatters;
+    using api = CsvFormatters;
 
-    public class RecordFormatter : IRecordFormatter
+    public class CsvFormatter : ICsvFormatter
     {
-        internal class Formatter2<T> : IRecordFormatter<T>
+        internal class Formatter2<T> : ICsvFormatter<T>
             where T : struct
         {
             readonly RenderBuffers Buffers;
@@ -48,7 +48,7 @@ namespace Z0
         readonly RenderBuffers Buffers;
 
         [MethodImpl(Inline)]
-        internal RecordFormatter(Type record, RowFormatSpec spec, RowAdapter adapter)
+        internal CsvFormatter(Type record, RowFormatSpec spec, RowAdapter adapter)
         {
             TableId = Tables.identify(record);
             FormatSpec = spec;
@@ -71,10 +71,10 @@ namespace Z0
                 return string.Format(Tables.KvpPattern(FormatSpec), "Name", "Value");
         }
 
-        RowFormatSpec IRecordFormatter.FormatSpec
+        RowFormatSpec ICsvFormatter.FormatSpec
             => FormatSpec;
 
-        TableId IRecordFormatter.TableId
+        TableId ICsvFormatter.TableId
             => TableId;
 
         /// <summary>

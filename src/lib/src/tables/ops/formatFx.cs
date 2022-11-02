@@ -9,7 +9,7 @@ namespace Z0
         public class FormatFx<T>
             where T : struct         
         {
-            static IRecordFormatter<T> Formatter = formatter<T>();
+            static ICsvFormatter<T> Formatter = formatter<T>();
 
             public static Func<T,string> Fx => (T src) => formatter<T>().Format(src);
         }

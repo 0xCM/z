@@ -4,9 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Reflection;
-
     public interface IOpFactoryProvider
     {
        IEmitterOpFactory<T> Factory<T>(EmitterClass<T> k)

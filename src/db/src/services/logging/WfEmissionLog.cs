@@ -12,7 +12,7 @@ namespace Z0
 
         readonly FilePath Target;
 
-        readonly IRecordFormatter<EmissionLogEntry> Formatter;
+        readonly ICsvFormatter<EmissionLogEntry> Formatter;
 
         bool Closed;
 

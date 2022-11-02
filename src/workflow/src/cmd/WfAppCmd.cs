@@ -18,8 +18,6 @@ namespace Z0
 
         Tooling Tooling => Wf.Tooling();
 
-        EnvSvc EnvSvc => Wf.EnvSvc();
-
         WfEnv WfEnv => Wf.WfEnv();
 
         WfArchives WfArchives => Wf.WfArchives();
@@ -228,19 +226,19 @@ namespace Z0
 
         [CmdOp("env/reports")]
         void EmitEnv(CmdArgs args)
-            => EnvSvc.EmitReports(AppDb.AppData("env"));
+            => Env.reports(Channel, AppDb.AppData("env"));
 
         [CmdOp("env/machine")]
         void EmitMachineEnv()
-            => EnvSvc.EmitReport(EnvVarKind.Machine, AppDb.AppData("env"));
+            => Env.report(Channel, EnvVarKind.Machine, AppDb.AppData("env"));
 
         [CmdOp("env/user")]
         void EmitUserEnv()
-            => EnvSvc.EmitReport(EnvVarKind.User, AppDb.AppData("env"));
+            => Env.report(Channel, EnvVarKind.User, AppDb.AppData("env"));
 
         [CmdOp("env/process")]
         void EmitProcessEnv()
-            => EnvSvc.EmitReport(EnvVarKind.Process, AppDb.AppData($"env/{Environment.ProcessId}"));
+            => Env.report(Channel, EnvVarKind.Process, AppDb.AppData($"env/{Environment.ProcessId}"));
 
         [CmdOp("env/pid")]
         void ProcessId()
@@ -470,7 +468,7 @@ namespace Z0
                 emitter.Append(args[i].Value);
             }
             
-            ProcessControl.start(Channel, CmdTerm.cmd(path, CmdKind.Tool, emitter.Emit()));        
+            ProcessControl.start(Channel, Cmd.cmd(path, CmdKind.Tool, emitter.Emit()));        
         }
 
         [CmdOp("tool/script")]
@@ -491,7 +489,7 @@ namespace Z0
             const string Pattern = "mklink /D {0} {1}";
             var src = text.quote(FS.dir(arg(args,0).Value).Format(PathSeparator.BS));
             var dst = text.quote(FS.dir(arg(args,1).Value).Format(PathSeparator.BS));
-            var cmd = CmdTerm.cmd(string.Format(Pattern,src,dst));
+            var cmd = Cmd.cmd(string.Format(Pattern,src,dst));
             ProcessControl.run(cmd);
         }
 

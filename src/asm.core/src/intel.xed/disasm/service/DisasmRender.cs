@@ -26,7 +26,7 @@ namespace Z0
                     render(formatter, src[i].DetailRow, dst);
             }
 
-            public static string FormatDetailHeader(IRecordFormatter<DetailBlockRow> formatter)
+            public static string FormatDetailHeader(ICsvFormatter<DetailBlockRow> formatter)
             {
                 var headerBase = formatter.FormatHeader();
                 var j = text.lastindex(headerBase, Chars.Pipe);
@@ -56,7 +56,7 @@ namespace Z0
                 return dst.Emit();
             }
 
-            public static void render(IRecordFormatter<DetailBlockRow> formatter, in DetailBlockRow src, ITextEmitter dst)
+            public static void render(ICsvFormatter<DetailBlockRow> formatter, in DetailBlockRow src, ITextEmitter dst)
                 => dst.AppendLine(formatter.Format(src));
 
             public static string OpDetailHeader(int index)

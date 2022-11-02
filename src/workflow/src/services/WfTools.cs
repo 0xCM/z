@@ -14,40 +14,6 @@ namespace Z0
         public static Task<ExecToken> devenv<T>(IWfChannel channel, T target)
             => ProcessControl.start(channel, CmdArgs.args("devenv.exe", $"{target}"));
 
-        [Op]
-        public static async Task<int> start(ToolCmdSpec cmd, CmdContext context, Action<string> status, Action<string> error)
-        {
-            var info = new ProcessStartInfo
-            {
-                FileName = cmd.Tool.Format(),
-                Arguments = cmd.Format(),
-                RedirectStandardError = true,
-                RedirectStandardOutput = true,
-                RedirectStandardInput = true
-            };
-
-            var process = new Process {StartInfo = info};
-
-            if (!context.WorkingDir.IsNonEmpty)
-                process.StartInfo.WorkingDirectory = context.WorkingDir.Name;
-
-            iter(context.EnvVars, v => process.StartInfo.Environment.Add(v.Name, v.Value));
-            process.OutputDataReceived += (s,d) => status(d.Data ?? EmptyString);
-            process.ErrorDataReceived += (s,d) => error(d.Data ?? EmptyString);
-            process.Start();
-            process.BeginOutputReadLine();
-            process.BeginErrorReadLine();
-            return await wait(process);
-
-            static async Task<int> wait(Process process)
-            {
-                return await Task.Run(() => {
-                    process.WaitForExit();
-                    return Task.FromResult(process.ExitCode);
-                });
-            }
-        }
-
         [Op, Closures(UInt64k)]
         public static ToolCmdSpec spec<T>(Tool tool, in T src)
             where T : struct

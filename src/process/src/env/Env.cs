@@ -9,6 +9,35 @@ namespace Z0
     [ApiHost]
     public class Env
     {
+        public static ReadOnlySeq<EnvReport> reports(IWfChannel channel, IDbArchive dst)
+        {
+            var flow = channel.Running();
+            var src = Env.reports();
+            var id = EnvId.Current;
+            iter(src, report => Env.emit(channel,report, dst));
+            channel.Ran(flow);
+            return src;
+        }
+
+        public static ExecToken report(IWfChannel channel, EnvVarKind kind, IDbArchive dst)
+        {
+            var token = ExecToken.Empty;
+            switch(kind)
+            {
+                case EnvVarKind.Process:
+                     token = Env.emit(channel, kind, dst.Root);
+                break;
+                case EnvVarKind.User:
+                    token = Env.emit(channel, kind, dst.Root);
+                break;
+                case EnvVarKind.Machine:
+                    token = Env.emit(channel, kind, dst.Root);
+                break;
+            }
+
+            return token;
+        }
+
         public static EnvId EnvId 
         {
             get => var(EnvVarKind.Process, nameof(EnvId), x => new EnvId(x));
@@ -56,25 +85,6 @@ namespace Z0
 
         public static ExecToken emit(IWfChannel channel, EnvReport src, IDbArchive dst)
             => emit(channel, src.Kind, src.Vars, src.EnvId.IsEmpty ? dst.Scoped("default") : dst.Scoped(src.EnvId));
-
-        public static ExecToken EmitReport(IWfChannel channel, EnvVarKind kind, IDbArchive dst)
-        {
-            var token = ExecToken.Empty;
-            switch(kind)
-            {
-                case EnvVarKind.Process:
-                     token = Env.emit(channel, kind, dst.Root);
-                break;
-                case EnvVarKind.User:
-                    token = Env.emit(channel, kind, dst.Root);
-                break;
-                case EnvVarKind.Machine:
-                    token = Env.emit(channel, kind, dst.Root);
-                break;
-            }
-
-            return token;
-        }
 
         public static ExecToken EmitReports(IWfChannel channel, IDbArchive dst)
         {

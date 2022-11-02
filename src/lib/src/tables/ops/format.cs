@@ -8,19 +8,6 @@ namespace Z0
 
     partial struct Tables
     {
-        // [Op, Closures(Closure)]
-        // public static string format<T>(in RowFormatSpec rowspec, in DynamicRow<T> src)
-        //     where T : struct
-        // {
-        //     var content = string.Format(rowspec.Pattern, src.Cells);
-        //     var pad = rowspec.RowPad;
-        //     if(pad == 0)
-        //         return content;
-        //     else
-        //         return content.PadRight(pad);
-        // }
-
-
         /// <summary>
         /// Formats a <see cref='RowHeader'/>
         /// </summary>

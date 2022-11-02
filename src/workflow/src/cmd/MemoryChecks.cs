@@ -15,7 +15,7 @@ namespace Z0
             CheckLabelAllocator(Emitter);
         }
 
-        static void CheckStringAllocator(WfEmit channel)
+        static void CheckStringAllocator(IWfChannel channel)
         {
             var count = Pow2.T16;
             var inputlen = Pow2.T04;
