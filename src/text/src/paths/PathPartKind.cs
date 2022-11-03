@@ -38,6 +38,5 @@ namespace Z0
         /// A drive letter
         /// </summary>
         Drive,
-    }
-    
+    }   
 }

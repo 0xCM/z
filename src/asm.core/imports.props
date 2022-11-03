@@ -9,6 +9,7 @@
     <ProjectReference Include="$(LangEmit)" />
     <ProjectReference Include="$(Coff)" />
     <ProjectReference Include="$(Db)" />
+    <ProjectReference Include="$(Stitch)" />
     <PackageReference Include="Iced" Version="1.4.0" />
   </ItemGroup>
 </Project>

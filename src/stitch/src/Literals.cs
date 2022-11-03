@@ -38,28 +38,6 @@ namespace Z0
             return dst;
         }
 
-        public static ReadOnlySeq<ApiLiteralInfo> apilits(Assembly[] src)
-        {
-            var providers = src.Types().Tagged<LiteralProviderAttribute>()
-                  .Select(x => (Type:x, Attrib:x.Tag<LiteralProviderAttribute>().Require()))
-                  .Select(x => new LiteralProvider(x.Type.Assembly.Id(), x.Type, x.Attrib.Group, x.Type.Name)).Index();
-            var literals = runtimelits(providers);
-            var count = literals.Count;
-            var dst = sys.alloc<ApiLiteralInfo>(count);
-            for(var i=0u; i<count; i++)
-            {
-                ref var target = ref seek(dst,i);
-                ref readonly var literal = ref literals[i];
-                target.Part = literal.Part;
-                target.Type = literal.Type;
-                target.Group = literal.Group;
-                target.Name = literal.Name;
-                target.Kind = literal.Kind.ToString();
-                target.Value = literal.Value;
-            }
-            return dst.Sort();
-        }
-
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Literal<T> literal<T>(string name, T value)

@@ -34,7 +34,7 @@ namespace Z0
             => Format();
 
         [MethodImpl(Inline)]
-        public static implicit operator FileArtifact<K>((K kind, _FileUri locator) src)
+        public static implicit operator FileArtifact<K>((K kind, FileUri locator) src)
             => new FileArtifact<K>(src.kind, src.locator);
     }
 }

@@ -70,7 +70,7 @@ namespace Z0
         }
 
         public void EmitApiLiterals(params Assembly[] src)
-            => EmitApiLiterals(Literals.apilits(src));
+            => EmitApiLiterals(Symbolic.apilits(src));
 
         public void EmitCmdDefs(params Assembly[] src)
             => Emit(CalcCmdDefs(src));

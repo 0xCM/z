@@ -17,7 +17,7 @@ namespace Z0
                 Arguments = Cmd.join(args),
                 RedirectStandardError = true,
                 RedirectStandardOutput = true,
-                RedirectStandardInput = true
+                RedirectStandardInput = false
             };
 
             void OnStatus(DataReceivedEventArgs e)
