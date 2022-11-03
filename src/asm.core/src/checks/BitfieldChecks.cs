@@ -4,13 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     [ApiHost]
     public class BitfieldChecks : Checker<BitfieldChecks>
     {
         DbArchive Targets => AppDb.DbOut().Targets(polybits);
-
 
         public void Check()
         {

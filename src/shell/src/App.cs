@@ -18,22 +18,17 @@ namespace Z0
             var result = 0;
             using var app = ApiRuntime.shell<App>(false, args);
             var context = WfServices.context<AppShellCmd>(app.Wf, () => providers(app.Wf));
-            var channel = context.Channel;
             app.Commander = context.Commander;
-            if(args.Length == 0)
-                app.Run(sys.empty<string>());
-            else
+            try
             {
-                try
-                {
-
-                }
-                catch(Exception e)
-                {
-                    app.Channel.Error(e);
-                    result = -1;
-                }
+                app.Run(args);
             }
+            catch(Exception e)
+            {
+                app.Channel.Error(e);
+                result = -1;
+            }
+            ProcessControl.Control().Dispose();
             return result;
         }
 

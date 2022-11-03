@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
-    using static XedDisasm;
+    using static sys;
     using static XedRules;
     using static XedFields;
     using static XedDisasmModels;

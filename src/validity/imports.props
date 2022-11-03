@@ -1,6 +1,5 @@
 <Project>
   <ItemGroup>
     <ProjectReference Include="$(Polyrand)" />
-    <ProjectReference Include="$(Archives)" />
   </ItemGroup>
 </Project>

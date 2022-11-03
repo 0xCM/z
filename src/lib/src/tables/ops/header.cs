@@ -8,43 +8,6 @@ namespace Z0
 
     partial struct Tables
     {
-        [Op]
-        public static Outcome header(TextLine src, char delimiter, byte fields, out RowHeader dst)
-        {
-            dst = RowHeader.Empty;
-            if(src.IsEmpty)
-            {
-                return (false,"The source text is empty");
-            }
-            else
-            {
-                try
-                {
-                    var parts = src.Split(delimiter, false);
-                    var count = parts.Length;
-                    if(count != fields)
-                        return (false, Tables.FieldCountMismatch.Format(fields, dst.Length));
-
-                    var cells = alloc<HeaderCell>(count);
-                    ref var cell = ref first(cells);
-                    for(var i=0u; i<count; i++)
-                    {
-                        ref readonly var content = ref skip(parts,i);
-                        var length = (ushort)content.Length;
-                        var name = text.trim(content);
-                        seek(cell,i) = new HeaderCell(i, name, length);
-                    }
-                    dst = new RowHeader(cells, delimiter);
-                    return true;
-                }
-                catch(Exception e)
-                {
-                    dst = RowHeader.Empty;
-                    return e;
-                }
-            }
-        }
-
         /// <summary>
         /// Creates a row header for parametrically-identified record type
         /// </summary>

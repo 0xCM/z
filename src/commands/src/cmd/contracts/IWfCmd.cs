@@ -4,17 +4,21 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct EmptyRecord : IRecord<EmptyRecord>
+    public interface IWfCmd : ICmd
     {
 
     }
 
-    public readonly struct EmptyRecord<T> : IRecord<EmptyRecord<T>>
+    public interface IWfCmd<C> : IWfCmd, ICmd<C>
+        where C : ICmd<C>, new()
     {
-        public static implicit operator EmptyRecord(EmptyRecord<T> src)
-            => default;
 
-        public static implicit operator EmptyRecord<T>(T src)
+    }
+
+    public interface IWfFlow<C,A,B> : IFlowCmd<A,B>, IWfCmd<C>
+        where C : ICmd<C>, new()
+    {
+        IActor IFlowCmd.Actor 
             => default;
     }
 }

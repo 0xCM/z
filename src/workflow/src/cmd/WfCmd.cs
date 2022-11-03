@@ -41,7 +41,7 @@ namespace Z0
         {
             var data = src.Values;
             iter(data, x => channel.Row(x.Uri.Name));
-            Tables.emit(channel, data, dst);
+            CsvEmitters.emit(channel, data, dst);
         }
 
         public static CmdCatalog catalog(ReadOnlySeq<WfOp> src)
@@ -76,7 +76,5 @@ namespace Z0
             }
             return entries.Sort().Resequence();        
         }        
-
-
     }
 }

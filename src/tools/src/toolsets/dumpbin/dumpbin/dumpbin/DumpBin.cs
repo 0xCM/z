@@ -153,7 +153,7 @@ namespace Z0
                 vars.DstDir = dst.Root;
                 vars.SrcDir = path.FolderPath;
                 vars.SrcFile = path.FileName;
-                ProcessControl.start(cmd, vars.ToCmdVars(), response => {}, Emitter);
+                ProcessControl.start(Channel, cmd, vars.ToCmdVars(), response => {});
             }
         }
 

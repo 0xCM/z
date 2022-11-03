@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
     using static PbChecks.Field32;
 
     using FK = PbChecks.Field32.FieldName;

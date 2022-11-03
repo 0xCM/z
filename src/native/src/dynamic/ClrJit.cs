@@ -48,23 +48,6 @@ namespace Z0
             return dst;
         }
 
-        // [Op]
-        // public static ApiMembers _jit(IApiPartCatalog catalog, WfEmit log)
-        // {
-        //     var buffer = list<ApiMember>();
-        //     //var catalog = ApiRuntime.catalog(src.Owner);
-
-        //     var types = catalog.ApiTypes;
-        //     foreach(var t in types)
-        //         buffer.AddRange(ClrJit.jit(t));
-
-        //     var hosts = catalog.ApiHosts;
-        //     foreach(var h in hosts)
-        //         buffer.AddRange(ClrJit.members(h, log));
-
-        //     return ApiQuery.members(buffer.ToArray());
-        // }
-
         [Op]
         public static ApiMembers jit(ReadOnlySpan<IApiPartCatalog> src, WfEmit log, bool pll)
         {

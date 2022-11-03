@@ -6,12 +6,10 @@ namespace Z0
 {
     using System.Text;
 
-    using static core;
+    using static sys;
 
     using SQ = SymbolicQuery;
     using C = AsciCode;
-
-    using Asm;
 
     public class AsmDisamSvc : WfSvc<AsmDisamSvc>
     {

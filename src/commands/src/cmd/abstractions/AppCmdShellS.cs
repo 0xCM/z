@@ -13,7 +13,7 @@ namespace Z0
             var app = new A();
             app.Init(wf);
             return app;
-        }                    
+        }
     }
 
     public abstract class AppCmdShell<S> : AppShell<S>

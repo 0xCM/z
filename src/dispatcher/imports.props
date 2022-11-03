@@ -1,7 +1,6 @@
 <Project>
   <ItemGroup>
     <ProjectReference Include="$(ZLib)" />
-    <ProjectReference Include="$(Archives)" />
     <ProjectReference Include="$(Tools)" />
     <ProjectReference Include="$(Agents)" />
   </ItemGroup>

@@ -8,7 +8,7 @@ namespace Z0
     {
         protected override CmdResult Run(RunScriptCmd cmd)
         {
-            ProcessControl.start(ProcessControl.cmd(cmd.ScriptPath)).Wait();
+            ProcessControl.start(Channel, ProcessControl.cmd(cmd.ScriptPath)).Wait();
             return CmdResults.ok(cmd);
         }
     }

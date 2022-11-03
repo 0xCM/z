@@ -4,10 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Root;
-    using static core;
-
-    partial struct Tables
+    public interface IWfCmdRouter : IActor
     {
+
     }
 }

@@ -18,12 +18,12 @@ namespace Z0
                 orderby count
                 select (row, col)).ToArray();
 
-            for(var i = 0; i<points.Length; i++)
-            {
-                var stats = BitGrid.metrics((ushort)points[i].row, (ushort)points[i].col, (ushort)segwidth).Stats;
-                if(stats.Vec256Remainder == 0 || stats.Vec128Remainder == 0)
-                    dst.AppendLine(grids.format(stats));
-            }
+            // for(var i = 0; i<points.Length; i++)
+            // {
+            //     var stats = BitGrid.metrics((ushort)points[i].row, (ushort)points[i].col, (ushort)segwidth).Stats;
+            //     if(stats.Vec256Remainder == 0 || stats.Vec128Remainder == 0)
+            //         dst.AppendLine(grids.format(stats));
+            // }
         }
     }
 }

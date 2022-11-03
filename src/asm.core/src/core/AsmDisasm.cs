@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Asm;
-
     [Record(TableId)]
     public struct AsmDisasm
     {

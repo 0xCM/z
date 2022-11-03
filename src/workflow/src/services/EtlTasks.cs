@@ -9,18 +9,8 @@ namespace Z0
         public static Task<ExecToken> robocopy(IWfChannel channel, FolderPath src, FolderPath dst)
         {
             var cmd = new CmdLine($"robocopy {src} {dst} /e");
-            //var running = channel.Running(cmd);
             var args = Cmd.args(src, dst, "/e");            
             return ProcessControl.start(channel, FS.path("robocopy.exe"), args);
-            
-            // ExecToken run()
-            // {
-                
-            //     ProcessControl.start(cmd).Wait();
-            //     return channel.Ran(running); 
-            // }
-
-            // return @try(run, e => channel.Completed(running, typeof(EtlTasks), e));
         }
 
         readonly AppDb AppDb;

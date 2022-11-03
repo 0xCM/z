@@ -4,9 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
-    partial class AsmCheckCmd
+    partial class AsmCoreCmd
     {
         [CmdOp("parsers/check")]
         void CheckParsers()

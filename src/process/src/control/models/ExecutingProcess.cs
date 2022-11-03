@@ -21,9 +21,8 @@ namespace Z0
             return dst;
         }
 
-        internal ExecutingProcess(CmdArgs args, CmdLine cmd, ProcessAdapter? process)
+        internal ExecutingProcess(CmdLine cmd, ProcessAdapter? process)
         {
-            Args = args;
             CmdLine = cmd;
             Started = process?.StartTime ?? Timestamp.Zero;
             Id = process?.Id ?? ProcessId.Empty;
@@ -31,8 +30,6 @@ namespace Z0
         }
 
         public readonly ProcessId Id;
-
-        public readonly CmdArgs Args;
 
         public readonly CmdLine CmdLine;   
 
@@ -65,6 +62,6 @@ namespace Z0
             => status(this);
 
         public static ExecutingProcess Empty 
-            => new (CmdArgs.Empty, CmdLine.Empty, null);
+            => new (CmdLine.Empty, null);
     }
 }

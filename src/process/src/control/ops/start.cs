@@ -24,7 +24,6 @@ namespace Z0
             {
                 if(e != null && nonempty(e.Data))
                     channel.Row(e.Data);
-
             }
 
             void OnError(DataReceivedEventArgs e)
@@ -36,8 +35,11 @@ namespace Z0
             ExecToken Run()
             {
                 var token = ExecToken.Empty;
-                var running = channel.Running($"{info.FileName} ${info.Arguments}");
+                var executing = ExecutingProcess.Empty;
+                var cmdline = new CmdLine($"{info.FileName} ${info.Arguments}");
+                var running = channel.Running(cmdline);
                 var process = new Process {StartInfo = info};
+                var ts = Timestamp.Zero;
                 var ctx = context ?? CmdContext.Default;
                 if (!ctx .WorkingDir.IsNonEmpty)
                     process.StartInfo.WorkingDirectory = context.WorkingDir.Name;
@@ -45,20 +47,20 @@ namespace Z0
                 process.OutputDataReceived += (s,d) => OnStatus(d);
                 process.ErrorDataReceived += (s,d) => OnError(d);
                 process.Start();
+                executing = new (cmdline, process);
+                enlist(executing);
                 process.BeginOutputReadLine();
                 process.BeginErrorReadLine();
                 process.WaitForExit();
+                ts = now();
                 token = channel.Ran(running);
                 term.cmd();
+                remove(new (executing,ts,token));
                 return token;
 
             }   
             return sys.start(Run);
         }
-
-        [Op]
-        public static ProcessAdapter start(ProcessStartSpec spec)
-            => Process.Start(spec);
 
         public static Task<ExecToken> start(IWfChannel channel, CmdArgs args)
         {
@@ -80,7 +82,7 @@ namespace Z0
                 try
                 {
                     var process = CmdProcess.create(command, status, error);
-                    executing = new (args, command, process.Process);
+                    executing = new (command, process.Process);
                     enlist(executing);
                     process.Wait();
                     var lines =  Lines.read(process.Output);
@@ -101,7 +103,7 @@ namespace Z0
             return sys.start(run);
         }
 
-        public static Task<ExecToken> start(CmdLine cmd, CmdVars vars, Action<TextLine> receiver, WfEmit channel)
+        public static Task<ExecToken> start(IWfChannel channel, CmdLine cmd, CmdVars vars, Action<TextLine> receiver)
         {
             ExecToken run()
             {
@@ -119,41 +121,9 @@ namespace Z0
                     ran = channel.Ran(running,$"error:cmd='{cmd}, description='{e}'");
                 }
 
-                term.write("cmd> ", (FlairKind)ConsoleColor.Cyan);
+                term.cmd();
                 return ran;
 
-            }
-            return sys.start(run);
-        }
-
-        public static Task<FilePath> start(CmdLine cmd)
-        {
-            static void OnError(in string src)
-                => term.emit(Events.error(typeof(ProcessControl), src, Events.originate(typeof(CmdScript))));
-
-            static void OnStatus(in string src)
-                => term.emit(Events.data(src,FlairKind.Babble));
-
-            FilePath run()
-            {
-                var log = AppDb.Logs("procs").Path(sys.timestamp().Format(),FileKind.Log);
-                using var writer = log.AsciWriter();
-                try
-                {
-                    term.print();
-                    term.emit(Events.running(typeof(ProcessControl), $"'{cmd}"));
-                    var process = CmdProcess.create(cmd, OnStatus, OnError);
-                    var outcome = process.Wait();
-                    var lines =  Lines.read(process.Output);
-                    iter(lines, line => writer.WriteLine(line));
-                    term.emit(Events.ran(typeof(ProcessControl), $"Executed '{cmd}'"));
-                }
-                catch(Exception e)
-                {
-                    writer.WriteLine(e.ToString());
-                }
-                term.write("cmd> ", (FlairKind)ConsoleColor.Cyan);
-                return log;
             }
             return sys.start(run);
         }
@@ -186,7 +156,7 @@ namespace Z0
                     ran = channel.Ran(running,$"error:cmd='{cmd}, description='{e}'");
                 }
 
-                term.write("cmd> ", (FlairKind)ConsoleColor.Cyan);
+                term.cmd();
                 return ran;
             }
             return sys.start(run);

@@ -41,7 +41,7 @@ namespace Z0.Asm
 
             var dst = AppDb.DbOut().Table<StokeAsmExportRow>("asmcat");
             var flow = EmittingTable<StokeAsmExportRow>(dst);
-            var _count = Tables.emit(@readonly(buffer), dst);
+            var _count = CsvEmitters.emit(@readonly(buffer), dst);
             EmittedTable(flow, _count);
             return buffer;
         }

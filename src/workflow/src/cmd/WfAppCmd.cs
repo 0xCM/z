@@ -20,6 +20,41 @@ namespace Z0
 
         AppEnv AppEnv => Wf.AppEnv();
 
+        [CmdOp("cmd/redirect")]
+        void Redirect(CmdArgs args)
+            => ProcessControl.redirect(Channel, args);
+
+        [CmdOp("cmd")]
+        void RunCmd(CmdArgs args)
+            => ProcessControl.start(Channel, args);
+
+        [CmdOp("help")]
+        void GetHelp(CmdArgs args)
+        {
+            var tool = args[0].Value;
+            var dst = AppDb.DbTargets("tools/help").Path(FS.file(tool, FileKind.Help));        
+            ProcessControl.run(Channel, tool, "--help", args, dst);
+        }
+
+        [CmdOp("develop")]
+        void Develop(CmdArgs args)
+        {
+            var cd = Env.cd();
+            var workspaces = cd.Files(FS.ext("code-workspace"));
+            if(workspaces.IsNonEmpty)
+                WfTools.vscode(Channel, cd + workspaces[0].FileName);
+            else
+                WfTools.vscode(Channel, cd); 
+        }
+
+        [CmdOp("devenv")]
+        void DevEnv(CmdArgs args)
+            => WfTools.devenv(Channel, args[0].Value);
+
+        [CmdOp("vscode")]
+        void VsCode(CmdArgs args)
+            => WfTools.vscode(Channel, args[0].Value);
+
         [CmdOp("zip")]
         void Zip(CmdArgs args)
         {
@@ -150,10 +185,6 @@ namespace Z0
         static Files launchers()
             => FilteredArchive.match(AppSettings.Control("launch").Root, FileKind.Cmd, FileKind.Ps1);
 
-        [CmdOp("shell")]
-        void LaunchDevshell()
-            => ProcessControl.start(Channel, CmdArgs.create($"{AppSettings.EnvRoot()}/shell.cmd"));
-
         [CmdOp("launchers")]
         void Launchers(CmdArgs args)
         {
@@ -165,25 +196,6 @@ namespace Z0
             Emitter.FileEmit(data, AppDb.AppData().Path("launchers", FileKind.List));
         }
         
-        [CmdOp("launch")]
-        void LaunchTargets(CmdArgs args)
-        {
-            var src = launchers().Map(x => (x.FileName,x)).ToDictionary();
-            foreach(var arg in args)
-            {
-                var file = FS.file(arg.Value, FileKind.Cmd);
-                var path = FilePath.Empty;
-                if(src.TryGetValue(file, out path))
-                {
-                    ProcessControl.start(ProcessControl.cmdline(path));
-                    Status($"Script {path.ToUri()} executing", FlairKind.Ran);
-                }
-                else
-                {
-                    Warn($"Launcher for {file} not found");
-                }
-            }
-        }
 
         [CmdOp("settings")]
         void ReadSettings(CmdArgs args)
@@ -395,59 +407,6 @@ namespace Z0
             iter(src.Files(FileKind.Cfg), file => Channel.Row(Env.cfg(file).Format()));    
         }        
 
-        [CmdOp("develop")]
-        void Develop(CmdArgs args)
-        {
-            var cd = Env.cd();
-            var workspaces = cd.Files(FS.ext("code-workspace"));
-            // var preconditions = cd.Files(FileKind.Cmd).Where(p => p.FileName == FS.file("env", FileKind.Cmd));            
-            // if(preconditions.IsNonEmpty)
-            // {
-            //     ref readonly var path = ref preconditions.First;
-            //     var running = Channel.Running($"Applying {path} to environment");
-            //     var settings = Env.cfg(preconditions.First);                
-            //     var count = settings.Count;
-            //     for(var i=0; i<count; i++)
-            //     {
-            //         ref readonly var setting = ref settings[i];
-            //         switch(sys.@string(setting.Name))
-            //         {
-            //             case EnvTokens.INCLUDE:                                          
-            //             case EnvTokens.LIB:                            
-            //             case EnvTokens.PATH:                            
-            //             break;
-            //         }
-
-            //         Write($"Integrated {setting}");
-            //     }
-            // }
-
-            if(workspaces.IsNonEmpty)
-                WfTools.vscode(Channel, cd + workspaces[0].FileName);
-            else
-                WfTools.vscode(Channel, cd); 
-        }
-
-        [CmdOp("devenv")]
-        void DevEnv(CmdArgs args)
-            => WfTools.devenv(Channel, args[0].Value);
-
-        [CmdOp("vscode")]
-        void VsCode(CmdArgs args)
-            => WfTools.vscode(Channel, args[0].Value);
-
-        [CmdOp("cmd")]
-        void RunCmd(CmdArgs args)
-            => ProcessControl.start(Channel, args);
-
-        [CmdOp("help")]
-        void GetHelp(CmdArgs args)
-        {
-            var tool = args[0].Value;
-            var dst = AppDb.DbTargets("tools/help").Path(FS.file(tool, FileKind.Help));        
-            ProcessControl.run(Channel, tool, "--help", args, dst);
-        }
-
         [CmdOp("tool")]
         void RunTool(CmdArgs args)
         {
@@ -481,11 +440,11 @@ namespace Z0
         [CmdOp("symlink")]
         void Link(CmdArgs args)
         {
-            const string Pattern = "mklink /D {0} {1}";
+            //const string Pattern = "mklink /D {0} {1}";
             var src = text.quote(FS.dir(arg(args,0).Value).Format(PathSeparator.BS));
             var dst = text.quote(FS.dir(arg(args,1).Value).Format(PathSeparator.BS));
-            var cmd = Cmd.cmd(string.Format(Pattern,src,dst));
-            ProcessControl.run(cmd);
+            //var cmd = Cmd.cmd(string.Format(Pattern,src,dst));
+            ProcessControl.start(Channel, FS.path("mlkink.exe"), Cmd.args("/D", src, dst));
         }
 
         [CmdOp("dev")]
@@ -509,11 +468,6 @@ namespace Z0
                 ProcessControl.start(channel, new SysIO(OnA,OnB), CmdArgs.create("pwsh.exe", options), wd);
             }
         }
-
-        [CmdOp("cmd/redirect")]
-        void Redirect(CmdArgs args)
-            => ProcessControl.redirect(Channel, args);
-
 
         [CmdOp("api/calls/check")]
         void CheckApiCalls()
@@ -545,7 +499,6 @@ namespace Z0
                 Channel.Row(skip(results,i).Format() + " | " + skip(output,i).ToString());
             }
         }            
-
 
         [CmdOp("api/packs/list")]
         void ListApiPacks()

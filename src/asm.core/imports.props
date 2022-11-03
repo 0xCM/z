@@ -6,7 +6,6 @@
     <ProjectReference Include="$(AsmModels)" />
     <ProjectReference Include="$(Diagnostics)" />
     <ProjectReference Include="$(Rules)" />
-    <ProjectReference Include="$(Archives)" />
     <ProjectReference Include="$(LangEmit)" />
     <ProjectReference Include="$(Coff)" />
     <ProjectReference Include="$(Db)" />

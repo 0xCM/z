@@ -5,6 +5,7 @@
 namespace Z0.Asm
 {
     using static sys;
+    
     public readonly struct AsmEncoding<K,T> : IAsmEncoding<K,T>
         where T : unmanaged, IStorageBlock<T>
         where K : unmanaged

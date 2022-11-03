@@ -1,11 +1,13 @@
 <Project>
   <PropertyGroup>
-    <ZVer>0.0.10</ZVer>
+    <ZVer>0.0.11</ZVer>
     <ZSysVer>0.0.6</ZSysVer>
   </PropertyGroup>
 
   <PropertyGroup>
+    <Version>$(ZVer)</Version>
     <LangVersion>preview</LangVersion>
+    <EnablePreviewFeatures>True</EnablePreviewFeatures>
     <FrameworkMoniker>net6.0</FrameworkMoniker>
     <Configuration>Release</Configuration>
     <OptimizeImplicitlyTriggeredBuild>True</OptimizeImplicitlyTriggeredBuild>

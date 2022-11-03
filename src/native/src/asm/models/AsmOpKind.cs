@@ -5,7 +5,6 @@
 namespace Z0
 {
     using C = AsmOpClass;
-
     using SZ = NativeSizeCode;
 
     [Flags,SymSource(asm)]

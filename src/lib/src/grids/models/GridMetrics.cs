@@ -71,13 +71,6 @@ namespace Z0
         public string Format()
             => EmptyString;
 
-        public GridStats Stats
-        {
-            [MethodImpl(Inline)]
-            get => throw new NotImplementedException();
-            //grids.stats(this);
-        }
-
         public GridDim Dim
         {
             [MethodImpl(Inline)]
