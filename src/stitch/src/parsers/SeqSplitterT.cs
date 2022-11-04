@@ -12,19 +12,19 @@ namespace Z0
     {
         public readonly T Delimiter;
 
-        internal bool Collecting;
+        public bool Collecting;
 
-        internal uint CellPos;
+        public uint CellPos;
 
-        internal uint SegPos;
+        public uint SegPos;
 
-        internal uint I0;
+        public uint I0;
 
-        internal uint I1;
+        public uint I1;
 
-        internal uint LastPos;
+        public uint LastPos;
 
-        internal uint InputCount;
+        public uint InputCount;
 
         [MethodImpl(Inline)]
         public SeqSplitter(T delimiter)
