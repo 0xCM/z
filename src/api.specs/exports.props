@@ -1,5 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <ApiSpecs>$(MsBuildThisFileDirectory)z0.api.specs.csproj</ApiSpecs>
-  </PropertyGroup>
-</Project>

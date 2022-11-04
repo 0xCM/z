@@ -10,6 +10,10 @@ namespace Z0
     {
         public abstract ResultCode Compute(in S src, out T dst);
 
+        [Op]
+        public static ResultCode error(Exception e)
+            => new ResultCode(uint.MaxValue);
+
         public virtual ResultCode Compute(ReadOnlySpan<S> src, Span<T> dst)
         {
             var count = src.Length;
@@ -30,7 +34,7 @@ namespace Z0
             }
             catch(Exception e)
             {
-                return Z0.Compute.result(e);
+                return error(e);
             }
 
             return result;

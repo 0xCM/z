@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     [ApiHost]
-    public class Agents : WfSvc<Agents>
+    public class Agents : AppService<Agents>
     {
         public static IAgentControl control(IAgentContext context)
             => AgentControl.create(context);

@@ -9,17 +9,6 @@ namespace Z0
     [ApiHost]
     public readonly partial struct BitNumbers
     {
-        // public static bool parse(string src, out uint5 dst)
-        // {
-        //     if(BitNumber.IsBinaryLiteral(src))
-        //         return DataParser.parse(src, out dst);
-        //     else
-        //     {
-        //         dst = default;
-        //         return false;
-        //     }
-        // }
-
         public static bool parse(string src, out uint1 dst)
             => Z0.uint1.parse(src, out dst);
 

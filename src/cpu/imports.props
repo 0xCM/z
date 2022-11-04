@@ -6,5 +6,6 @@
     <ProjectReference Include="$(Numbers)" />
     <ProjectReference Include="$(Native)" />
     <ProjectReference Include="$(Polyrand)" />
+    <ProjectReference Include="$(Grids)" />
   </ItemGroup>
 </Project>

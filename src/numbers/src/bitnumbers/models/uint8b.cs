@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static BitNumbers;
-    using static core;
+    using static sys;
     using U = uint8b;
     using W = W8;
     using K = BitSeq8;

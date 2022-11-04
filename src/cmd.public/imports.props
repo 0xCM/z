@@ -3,7 +3,6 @@
     <ProjectReference Include="$(Agents)" />
     <ProjectReference Include="$(ApiCode)" />
     <ProjectReference Include="$(ApiMd)" />
-    <ProjectReference Include="$(ApiSpecs)" />
     <ProjectReference Include="$(Alloc)" />
     <ProjectReference Include="$(Asm)" />
     <ProjectReference Include="$(AsmCore)" />

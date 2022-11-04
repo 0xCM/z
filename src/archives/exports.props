@@ -1,5 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <Archives>$(MsBuildThisFileDirectory)z0.archives.csproj</Archives>
-  </PropertyGroup>
-</Project>

@@ -25,7 +25,7 @@ namespace Z0
 
 
         public void Emit(Index<BitMaskInfo> src)
-            => TableEmit(src, AppDb.ApiTargets().Table<BitMaskInfo>());
+            => Channel.TableEmit(src, AppDb.ApiTargets().Table<BitMaskInfo>());
 
         public Index<BfModel> BvEmit(DbSources sources, string filter, FolderPath dst)
             => BvEmit(PolyBits.bitvectors(sources, filter), dst);
@@ -40,7 +40,7 @@ namespace Z0
                 ref readonly var name = ref bv.Name;
                 var target = dst + FS.file(name.Format(), FS.ext("bv"));
                 var msg = string.Format("{0} -> {1}", bv.Origin, target.ToUri());
-                FileEmit(bv, msg, target);
+                Channel.FileEmit(bv, msg, target);
             }
             return src;
         }
@@ -65,7 +65,7 @@ namespace Z0
             var dst = text.emitter();
             for(var i=0u; i<src.Length; i++)
                 PbRender.render(skip(src,i), i, dst);
-            FileEmit(dst.Emit(), 12, Targets.Path(name, FileKind.Txt));
+            Channel.FileEmit(dst.Emit(), 12, Targets.Path(name, FileKind.Txt));
         }
 
         public void EmitRecords(string name, ReadOnlySpan<BpInfo> src)
@@ -75,8 +75,8 @@ namespace Z0
             var segs = BitPatterns.segs(src);
             for(var i=0; i<src.Length; i++)
                 seek(specs,i) = skip(src,i).Spec;
-            TableEmit(segs, Targets.PrefixedTable<BpSeg>(name));
-            TableEmit(specs, Targets.PrefixedTable<BpSpec>(name));
+            Channel.TableEmit(segs, Targets.PrefixedTable<BpSeg>(name));
+            Channel.TableEmit(specs, Targets.PrefixedTable<BpSpec>(name));
         }
 
         public static Index<CharBlock8> BitBlocks(W8 w, byte start = 0, byte end = byte.MaxValue)

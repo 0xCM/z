@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public abstract class AgentControl<A,C> : WfSvc<A>, IAgentControl<A,C>
+    public abstract class AgentControl<A,C> : AppService<A>, IAgentControl<A,C>
         where A : AgentControl<A,C>, new()
         where C : IAgentContext
     {

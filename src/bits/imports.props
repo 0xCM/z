@@ -5,7 +5,8 @@
     <ProjectReference Include="$(Validity)" />
     <ProjectReference Include="$(Rules)" />
     <ProjectReference Include="$(Calcs)" />
-    <ProjectReference Include="$(Imagine)" />
+    <ProjectReference Include="$(Graphs)" />
+    <ProjectReference Include="$(Grids)" />
     <ProjectReference Include="$(Workflow)" />
   </ItemGroup>
 </Project>

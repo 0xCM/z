@@ -1,8 +1,0 @@
-<Project>
-  <ItemGroup>
-    <ProjectReference Include="$(ZLib)" />
-    <ProjectReference Include="$(Graphs)" />
-    <ProjectReference Include="$(Grids)" />
-    <ProjectReference Include="$(ApiSpecs)" />
-  </ItemGroup>
-</Project>

@@ -27,7 +27,7 @@ namespace Z0
         public void Emit(Assembly[] src, IDbArchive dst)
         {
             Target = dst;
-            var symlits = Symbolic.symlits(src);
+            var symlits = Heaps.symlits(src);
             exec(true,
                 () => EmitDataFlows(src),
                 () => EmitSymLits(symlits),
@@ -128,7 +128,7 @@ namespace Z0
             => EmitApiDeps(EntryAssembly, AppDb.ApiTargets().Path($"{EntryAssembly.GetSimpleName()}", FileKind.DepsList));
 
         public void EmitApiSymbols(params Assembly[] src)
-            => Channel.TableEmit(Symbolic.symlits(src), AppDb.ApiTargets().Table<SymLiteralRow>(), UTF16);
+            => Channel.TableEmit(Heaps.symlits(src), AppDb.ApiTargets().Table<SymLiteralRow>(), UTF16);
 
         public void EmitTokens(Type src)
         {

@@ -3,7 +3,6 @@
    <Import Project="$(MsBuildThisFileDirectory)src/alloc/exports.props"/>   
    <Import Project="$(MsBuildThisFileDirectory)src/api.code/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/api.md/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/api.specs/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/assets/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/asm/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/asm.core/exports.props"/>
@@ -19,7 +18,6 @@
    <Import Project="$(MsBuildThisFileDirectory)src/bit.render/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/bitmasks/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/bitvectors/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/blocks/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/bits/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/builds/exports.props"/>
 
@@ -82,8 +80,6 @@
 
    <Import Project="$(MsBuildThisFileDirectory)src/native/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/numbers/exports.props"/>
-
-   <Import Project="$(MsBuildThisFileDirectory)src/rules/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/polyrand/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/process/exports.props"/>

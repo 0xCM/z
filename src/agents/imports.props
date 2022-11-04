@@ -1,5 +1,5 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(Workflow)" />
+    <ProjectReference Include="$(ZLib)" />
   </ItemGroup>
 </Project>
