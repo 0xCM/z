@@ -9,6 +9,26 @@ namespace Z0
     [Free]
     public class PointMappers
     {
+        [Op]
+        public static void check(IWfChannel channel)
+        {
+            var result = Outcome.Success;
+            var symbols = Symbols.index<DecimalDigitValue>();
+            var symview = symbols.View;
+            var map = PointMappers.mapper<DecimalDigitValue,Pow2x16>(symbols, (i,k) => (Pow2x16)Pow2.pow((byte)i));
+            var data = PointMappers.serialize(map).View;
+            var count = map.PointCount;
+            var indices = slice(data,0, count);
+            var bits = recover<ushort>(slice(data,count,count*size<Pow2x16>()));
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var symbol = ref skip(symview,i);
+                ref readonly var entry = ref map[symbol.Kind];
+                ref readonly var index = ref skip(data,i);
+                channel.Write(string.Format("{0} => {1}", entry, BitRender.format16(skip(bits,i))));
+            }
+        }
+
         const NumericKind Closure = UnsignedInts;
 
         [MethodImpl(Inline)]

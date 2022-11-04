@@ -6,9 +6,9 @@ namespace Z0
 {
     public readonly struct TypeRef
     {
-        public TypeSpec Type {get;}
+        public readonly TypeSpec Type;
 
-        public TypeRefKind Kind {get;}
+        public readonly TypeRefKind Kind;
 
         [MethodImpl(Inline)]
         public TypeRef(TypeSpec src, TypeRefKind kind)
@@ -16,8 +16,5 @@ namespace Z0
             Type = src;
             Kind = kind;
         }
-
-        public string Format(params object[] args)
-            => TypeFormatter.format(this,args);
     }
 }

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct RecordType : IRecordType
+    public readonly struct RecordType
     {
         public Identifier Name {get;}
 

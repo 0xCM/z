@@ -34,13 +34,5 @@ namespace Z0
         [MethodImpl(Inline)]
         public static implicit operator asci64(AsciNull src)
             => default;
-
-        [MethodImpl(Inline)]
-        public static implicit operator Null(AsciNull src)
-            => default;
-
-        [MethodImpl(Inline)]
-        public static implicit operator AsciNull(Null src)
-            => default;
     }
 }

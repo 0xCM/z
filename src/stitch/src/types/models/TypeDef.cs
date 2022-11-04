@@ -4,6 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    public interface ITypeDef
+    {
+        
+    }
     public class TypeDef : IType, IEquatable<TypeDef>
     {
         public Identifier Name {get;}

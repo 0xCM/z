@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     public readonly struct Null<T> : IType<ulong>
         where T : IType
     {

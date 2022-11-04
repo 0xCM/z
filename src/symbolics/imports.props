@@ -3,6 +3,5 @@
     <ProjectReference Include="$(ZLib)" />
     <ProjectReference Include="$(Commands)" />
     <ProjectReference Include="$(Stitch)" />
-
   </ItemGroup>
 </Project>
