@@ -6,13 +6,6 @@ namespace Z0
 {
     public class EtlTasks : IEtlDb
     {
-        public static Task<ExecToken> robocopy(IWfChannel channel, FolderPath src, FolderPath dst)
-        {
-            var cmd = new CmdLine($"robocopy {src} {dst} /e");
-            var args = Cmd.args(src, dst, "/e");            
-            return ProcessControl.start(channel, FS.path("robocopy.exe"), args);
-        }
-
         readonly AppDb AppDb;
 
         public EtlTasks(AppDb db)

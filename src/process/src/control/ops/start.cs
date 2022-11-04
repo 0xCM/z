@@ -11,15 +11,6 @@ namespace Z0
         [Op]
         public static Task<ExecToken> start(IWfChannel channel, FilePath path, CmdArgs args, CmdContext? context = null)
         {
-            var info = new ProcessStartInfo
-            {
-                FileName = path.Format(),
-                Arguments = Cmd.join(args),
-                RedirectStandardError = true,
-                RedirectStandardOutput = true,
-                RedirectStandardInput = false
-            };
-
             void OnStatus(DataReceivedEventArgs e)
             {
                 if(e != null && nonempty(e.Data))
@@ -32,30 +23,49 @@ namespace Z0
                     channel.Error(e.Data);                
             }
 
+            var info = new ProcessStartInfo
+            {
+                FileName = path.Format(),
+                Arguments = Cmd.join(args),
+                CreateNoWindow = true,
+                WorkingDirectory = context?.WorkingDir.Format() ?? Environment.CurrentDirectory,
+                RedirectStandardError = true,
+                RedirectStandardOutput = true,
+                RedirectStandardInput = false
+            };
+
+            var ctx = context ?? CmdContext.Default;
+            iter(ctx.EnvVars, v => info.Environment.Add(v.Name, v.Value));
+
+            var cmdline = new CmdLine($"{info.FileName} {info.Arguments}");
+            var ts = Timestamp.Zero;
+            var token = ExecToken.Empty;
+            var executing = ExecutingProcess.Empty;
+
             ExecToken Run()
             {
-                var token = ExecToken.Empty;
-                var executing = ExecutingProcess.Empty;
-                var cmdline = new CmdLine($"{info.FileName} ${info.Arguments}");
-                var running = channel.Running(cmdline);
-                var process = new Process {StartInfo = info};
-                var ts = Timestamp.Zero;
-                var ctx = context ?? CmdContext.Default;
-                if (!ctx .WorkingDir.IsNonEmpty)
-                    process.StartInfo.WorkingDirectory = context.WorkingDir.Name;
-                iter(ctx.EnvVars, v => process.StartInfo.Environment.Add(v.Name, v.Value));
-                process.OutputDataReceived += (s,d) => OnStatus(d);
-                process.ErrorDataReceived += (s,d) => OnError(d);
-                process.Start();
-                executing = new (cmdline, process);
-                enlist(executing);
-                process.BeginOutputReadLine();
-                process.BeginErrorReadLine();
-                process.WaitForExit();
-                ts = now();
-                token = channel.Ran(running);
-                term.cmd();
-                remove(new (executing,ts,token));
+                try
+                {
+                    using var process = new Process {StartInfo = info};
+                    process.OutputDataReceived += (s,d) => OnStatus(d);
+                    process.ErrorDataReceived += (s,d) => OnError(d);
+                    var flow = channel.Running(cmdline);
+                    process.Start();
+                    executing = new (cmdline, process);
+                    enlist(executing);
+                    process.BeginOutputReadLine();
+                    process.BeginErrorReadLine();
+                    channel.Babble($"Waiting for process {process.Id} to exit");
+                    process.WaitForExit();
+                    ts = now();
+                    token = channel.Ran(flow);
+                    term.cmd();
+                    remove(new (executing,ts,token));
+                }
+                catch(Exception e)
+                {
+                    channel.Error(e);
+                }
                 return token;
 
             }   

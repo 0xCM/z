@@ -71,11 +71,7 @@ namespace Z0
 
         [CmdOp("copy")]
         void Copy(CmdArgs args)
-        {
-            var src = FS.dir(arg(args,0).Value);
-            var dst = FS.dir(arg(args,1).Value);
-            EtlTasks.robocopy(Channel, src, dst);
-        }
+            => Pipelines.copy(Channel, FS.dir(arg(args,0).Value), FS.dir(arg(args,1).Value));
 
         [CmdOp("env/include")]
         void EnvInclude()
@@ -111,15 +107,6 @@ namespace Z0
             iter(src.Files(true), file => Write(file.ToUri()));
         }
 
-        [CmdOp("symlink")]
-        void Symlink(CmdArgs args)
-        {
-            var src = FS.dir(args[0]);
-            var dst = FS.dir(args[1]);
-            var result = FS.symlink(src,dst,true);
-            Channel.Status($"symlink:{src} -> {dst}");
-        }
-
         [CmdOp("files")]
         void CatalogFiles(CmdArgs args)
             => WfArchives.catalog(Channel, args);
@@ -135,7 +122,6 @@ namespace Z0
             });
 
             Channel.Row(dst.Emit());
-            //iter(src, var => Channel.Row(var));
         }
 
         void CalcRelativePaths()
@@ -179,7 +165,7 @@ namespace Z0
         {
             var dst = AppDb.Tools("z0/cmd").Targets().Root;
             var src = ExecutingPart.Assembly.Path().FolderPath;
-            EtlTasks.robocopy(Channel, src, dst);
+            Pipelines.copy(Channel, src, dst);
         }
 
         static Files launchers()
@@ -196,7 +182,6 @@ namespace Z0
             Emitter.FileEmit(data, AppDb.AppData().Path("launchers", FileKind.List));
         }
         
-
         [CmdOp("settings")]
         void ReadSettings(CmdArgs args)
         {
@@ -370,7 +355,7 @@ namespace Z0
                 src[i].Render(s => writer.WriteLine(s));
         }
 
-        [CmdOp("run/script")]
+        [CmdOp("cmd/script")]
         void RunAppScript(CmdArgs args)
         {
             RunAppScript(FS.path(arg(args,0)));
@@ -440,11 +425,14 @@ namespace Z0
         [CmdOp("symlink")]
         void Link(CmdArgs args)
         {
-            //const string Pattern = "mklink /D {0} {1}";
-            var src = text.quote(FS.dir(arg(args,0).Value).Format(PathSeparator.BS));
-            var dst = text.quote(FS.dir(arg(args,1).Value).Format(PathSeparator.BS));
-            //var cmd = Cmd.cmd(string.Format(Pattern,src,dst));
-            ProcessControl.start(Channel, FS.path("mlkink.exe"), Cmd.args("/D", src, dst));
+            var src = FS.dir(arg(args,0).Value);
+            var dst = FS.dir(arg(args,1).Value);
+            var result = FS.symlink(src,dst,true);
+            if(result)
+                Channel.Status($"symlink:{src} -> {dst}");
+            else
+                Channel.Error(result.Message);
+            //ProcessControl.start(Channel, FS.path("mlkink.exe"), Cmd.args("/D", src, dst));
         }
 
         [CmdOp("dev")]

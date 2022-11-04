@@ -4,23 +4,24 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct BufferedProjector<S,T>
+    public class BufferedProjector<T>
     {
-        readonly Queue<S> Buffer;
+        readonly Queue<T> Buffer;
 
-        readonly ISFxProjector<S,T> Projector;
+        readonly ISFxProjector<T> Projector;
 
         [MethodImpl(Inline)]
-        public BufferedProjector(IPipeline pipes, Queue<S> buffer, ISFxProjector<S,T> projector)
+        public BufferedProjector(IPipeline pipes, Queue<T> buffer, ISFxProjector<T> projector)
         {
             Buffer = buffer;
             Projector = projector;
         }
 
         [MethodImpl(Inline)]
-        public void Deposit(S src)
+        public void Deposit(T src)
             => Buffer.Enqueue(src);
 
+        [MethodImpl(Inline)]
         public bool Emit(out T dst)
         {
             if(Buffer.TryDequeue(out var src))

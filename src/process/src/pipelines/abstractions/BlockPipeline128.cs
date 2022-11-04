@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public struct BlockPipeline128<S,T>
+    public class BlockPipeline128<S,T>
         where S : unmanaged
         where T : unmanaged
     {
@@ -34,7 +34,7 @@ namespace Z0
         }
     }
 
-    public struct BlockPipeline128<A,S,P,B,T>
+    public class BlockPipeline128<A,S,P,B,T>
         where S : unmanaged
         where A : IBlockSource128<S>
         where P : IBlockProjector128<S,T>

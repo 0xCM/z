@@ -11,17 +11,17 @@ namespace Z0
     {
         const NumericKind Closure = UnsignedInts;
 
-        /// <summary>
-        /// Infers a delegate type compatible with the signature of a specified method
-        /// </summary>
-        /// <param name="src">The source method</param>
-        public static Type type(MethodInfo src)
-        {
-            var args = src.ParameterTypes();
-            return src.IsAction()
-                ? Expression.GetActionType(args)
-                : Expression.GetFuncType(sys.concat(args, sys.array(src.ReturnType)));
-        }
+        // /// <summary>
+        // /// Infers a delegate type compatible with the signature of a specified method
+        // /// </summary>
+        // /// <param name="src">The source method</param>
+        // public static Type type(MethodInfo src)
+        // {
+        //     var args = src.ParameterTypes();
+        //     return src.IsAction()
+        //         ? Expression.GetActionType(args)
+        //         : Expression.GetFuncType(sys.concat(args, sys.array(src.ReturnType)));
+        // }
 
         [Free]
         public delegate bool TernaryPredicate<W,T>(T a, T b, T c)

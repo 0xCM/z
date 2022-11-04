@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct BlockRelay256<S,T> : IBlockRelay256<S,T>
+    public class BlockRelay256<S,T> : IBlockRelay256<S,T>
         where S : unmanaged
         where T : unmanaged
     {

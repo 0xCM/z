@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public struct BlockPipeline256<S,T>
+    public class BlockPipeline256<S,T>
         where S : unmanaged
         where T : unmanaged
     {

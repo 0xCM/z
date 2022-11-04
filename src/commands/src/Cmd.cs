@@ -95,6 +95,5 @@ namespace Z0
                 seek(dst,i) = new CmdArg($"{skip(src,i)}");
             return new (dst);
         }
-
    }
 }

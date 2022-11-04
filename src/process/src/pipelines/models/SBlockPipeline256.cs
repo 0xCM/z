@@ -4,30 +4,30 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public struct SBlockPipeline128<B,M,R,S,T>
-        where R : IBlockSink128<R,T>
-        where M : IVMap128<M,S,T>
-        where B : IBlockSource128<S>
+    public class SBlockPipeline256<B,M,R,S,T>
+        where R : IBlockSink256<R,T>
+        where M : IVMap256<M,S,T>
+        where B : IBlockSource256<S>
         where S : unmanaged
         where T : unmanaged
     {
-        readonly B Blocks;
+        B Blocks;
 
-        readonly M Mapper;
+        M Mapper;
 
-        readonly R Receiver;
+        R Receiver;
 
-        readonly SBlockProjector128<M,S,T> Projector;
+        SBlockProjector256<M,S,T> Projector;
 
-        static W128 W => default;
+        static W256 W => default;
 
         [MethodImpl(Inline)]
-        public SBlockPipeline128(B blocks, M mapper, R receiver)
+        public SBlockPipeline256(B blocks, M mapper, R receiver)
         {
             Blocks = blocks;
             Mapper = mapper;
             Receiver = receiver;
-            Projector = new SBlockProjector128<M,S,T>(mapper);
+            Projector = new SBlockProjector256<M,S,T>(mapper);
         }
 
         [MethodImpl(Inline)]

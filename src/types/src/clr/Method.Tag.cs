@@ -34,19 +34,19 @@ namespace Z0
             return a != null;
         }
 
-        public static bool Tagged<A>(this MethodInfo src, out TaggedMethod<A> dst)
-            where A : Attribute
-        {
-            if(src.Tag<A>(out var tag))
-            {
-                dst = (src,tag);
-                return true;
-            }
-            else
-            {
-                dst = TaggedMethod<A>.Empty;
-                return false;
-            }
-        }
+        // public static bool Tagged<A>(this MethodInfo src, out TaggedMethod<A> dst)
+        //     where A : Attribute
+        // {
+        //     if(src.Tag<A>(out var tag))
+        //     {
+        //         dst = (src,tag);
+        //         return true;
+        //     }
+        //     else
+        //     {
+        //         dst = TaggedMethod<A>.Empty;
+        //         return false;
+        //     }
+        // }
     }
 }
