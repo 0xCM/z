@@ -36,32 +36,32 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public ref readonly ApiMembers TransmitResolved(in ApiMembers src)
+        public ref readonly ApiMembers Resolved(in ApiMembers src)
         {
             return ref src;
         }
 
         [MethodImpl(Inline)]
-        public ref readonly ReadOnlySeq<ApiCatalogEntry> TransmitRebased(in ReadOnlySeq<ApiCatalogEntry> src)
+        public ref readonly ReadOnlySeq<ApiCatalogEntry> Rebased(in ReadOnlySeq<ApiCatalogEntry> src)
         {
             return ref src;
         }
 
         [MethodImpl(Inline)]
-        public ref readonly ReadOnlySeq<ApiCatalogEntry> TransmitReloaded(in ReadOnlySeq<ApiCatalogEntry> src)
+        public ref readonly ReadOnlySeq<ApiCatalogEntry> Reloaded(in ReadOnlySeq<ApiCatalogEntry> src)
         {
             return ref src;
         }
 
         [MethodImpl(Inline)]
-        public ref readonly ApiMemberCode TransmitReloaded(in ApiMemberCode src)
+        public ref readonly ApiMemberCode Reloaded(in ApiMemberCode src)
         {
             Disposables.Add(src);
             return ref src;
         }
 
         [MethodImpl(Inline)]
-        public ref readonly ReadOnlySeq<ApiEncoded> Transmit(in ReadOnlySeq<ApiEncoded> src)
+        public ref readonly ReadOnlySeq<ApiEncoded> Encoded(in ReadOnlySeq<ApiEncoded> src)
         {
             _Encoded = src;
             return ref src;
@@ -80,11 +80,6 @@ namespace Z0
 
         }
 
-        public ref readonly ReadOnlySeq<ApiEncoded> Encoded
-        {
-            [MethodImpl(Inline)]
-            get => ref _Encoded;
-        }
 
         void IDisposable.Dispose()
         {

@@ -11,11 +11,11 @@ namespace Z0
     partial class ApiCode
     {
         [Op]
-        public static void gather(IApiPartCatalog src, ICompositeDispenser dispenser, ConcurrentBag<CollectedHost> dst, WfEmit log, bool pll)
+        public static void gather(IApiPartCatalog src, ICompositeDispenser dispenser, ConcurrentBag<CollectedHost> dst, IWfChannel log, bool pll)
             => iter(jit(src, log), member => dst.Add(gather(member, dispenser, log)), pll);
 
         [Op]
-        static ConcurrentBag<ApiHostMembers> jit(IApiPartCatalog src, WfEmit log)
+        static ConcurrentBag<ApiHostMembers> jit(IApiPartCatalog src, IWfChannel log)
         {
             var members = bag<ApiHostMembers>();
             iter(src.ApiHosts, host => ClrJit.jit(host, members, log));
@@ -24,7 +24,7 @@ namespace Z0
         }
 
         [Op]
-        public static ReadOnlySeq<ApiEncoded> gather(ReadOnlySpan<MethodEntryPoint> src, ICompositeDispenser dispenser, WfEmit log)
+        public static ReadOnlySeq<ApiEncoded> gather(ReadOnlySpan<MethodEntryPoint> src, ICompositeDispenser dispenser, IWfChannel log)
             => parse(raw(dispenser, src, log), log).Values.Array().Sort();
 
         [Op]
@@ -47,11 +47,11 @@ namespace Z0
         }
 
         [Op]
-        static CollectedHost gather(ApiHostMembers src, ICompositeDispenser dst, WfEmit log)
+        static CollectedHost gather(ApiHostMembers src, ICompositeDispenser dst, IWfChannel log)
             => new (src, gather(entries(src.Members), dst, log));
 
         [Op]
-        static Index<RawMemberCode> raw(ICompositeDispenser dispenser, ReadOnlySpan<MethodEntryPoint> src, WfEmit log)
+        static Index<RawMemberCode> raw(ICompositeDispenser dispenser, ReadOnlySpan<MethodEntryPoint> src, IWfChannel log)
         {
             var code = sys.alloc<RawMemberCode>(src.Length);
             for(var i=0; i<src.Length; i++)
@@ -65,7 +65,7 @@ namespace Z0
         }
 
         [Op]
-        static RawMemberCode raw(MethodEntryPoint src, ICompositeDispenser dispenser, WfEmit log)
+        static RawMemberCode raw(MethodEntryPoint src, ICompositeDispenser dispenser, IWfChannel log)
         {
             var dst = new RawMemberCode();
             dst.Entry = src.Location;

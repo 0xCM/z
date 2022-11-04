@@ -1,4 +1,4 @@
 @echo off
 call %~dp0..\config.cmd
-: %ProjectShell% %*
-
+set ToolPath=%ProjectBin%\%ConfigName%\%FrameworkMoniker%\%RuntimeMoniker%\%ToolName%.exe
+call %ToolPath%

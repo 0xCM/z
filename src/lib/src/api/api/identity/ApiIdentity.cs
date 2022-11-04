@@ -139,18 +139,6 @@ namespace Z0
         public static string Imm8Suffix(byte imm8)
             => $"{IDI.SuffixSep}{IDI.Imm}{imm8}";
 
-        // [Op]
-        // public static string PathText(string scheme, PartId catalog, string host)
-        //     => $"{scheme}{IDI.EndOfScheme}{catalog.Format()}{IDI.UriPathSep}{host}";
-
-        // [Op]
-        // public static string GroupUriText(ApiUriScheme scheme, ApiHostUri host, string group)
-        //     => QueryText(scheme, host.Part, host.HostName, group);
-
-        // [Op]
-        // public static string HostUri(Type host)
-        //     => $"{PartNames.name(host)}{IDI.UriPathSep}{host.Name}";
-
         /// <summary>
         /// Builds the *canonical* operation uri
         /// </summary>

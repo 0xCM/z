@@ -46,5 +46,7 @@ namespace Z0
             [MethodImpl(Inline)]
             get => ref Members[i];
         }        
+
+        public static ApiHostMembers Empty => new ApiHostMembers(ApiHostUri.Empty, ApiMembers.Empty);
     }
 }

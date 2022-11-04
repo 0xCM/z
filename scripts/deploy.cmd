@@ -9,8 +9,8 @@ set OutputOption=--output %StagePath%
 set ConfigOption=--configuration %ConfigName%
 set FrameworkOption=--framework %FrameworkMoniker%
 set BuildProps=-p:PublishReadyToRun=true
-set StageCmd=dotnet publish %ProjectPath% %OutputOption% %ConfigOption% %VerbosityOption% %FrameworkOption% %BuildProps% %LogOptions% %BuidPrps%
-echo StageCmd=%StageCmd%
-call %StageCmd%
+set StageBuild=dotnet publish %ProjectPath% %OutputOption% %ConfigOption% %VerbosityOption% %FrameworkOption% %BuildProps% %LogOptions% %BuildProps%
+echo StageBuild=%StageBuild%
+call %StageBuild%
 set DeployCmd=robocopy %StagePath% %DeployPath% /e
 call %DeployCmd%

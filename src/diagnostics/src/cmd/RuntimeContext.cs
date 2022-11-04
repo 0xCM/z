@@ -8,7 +8,7 @@ namespace Z0
 
     public class RuntimeContext
     {
-        public static void emit(CmdArgs args, WfEmit channel, DbArchive dst)
+        public static void emit(CmdArgs args, IWfChannel channel, DbArchive dst)
         {
             var ids = sys.list<ProcessId>();
             if(args.Count != 0)
@@ -29,7 +29,7 @@ namespace Z0
             });
         }
 
-        public static ExecToken emit(ProcessAdapter src, WfEmit channel, DbArchive dst)
+        public static ExecToken emit(ProcessAdapter src, IWfChannel channel, DbArchive dst)
         {
             var id = src.Id;
             var name = src.ProcessName;
@@ -40,10 +40,10 @@ namespace Z0
             return dump(src,channel, targets.Path("process",FileKind.Dmp));
         }
 
-        static ExecToken modules(ProcessAdapter src, WfEmit channel, DbArchive dst)
+        static ExecToken modules(ProcessAdapter src, IWfChannel channel, DbArchive dst)
             => channel.TableEmit(ImageMemory.modules(src), dst.Table<ProcessModuleRow>());
 
-        public static ExecToken dump(ProcessAdapter src, WfEmit channel, DbArchive dst)
+        public static ExecToken dump(ProcessAdapter src, IWfChannel channel, DbArchive dst)
         {
             var name = $"{src.ProcessName}.{src.Id}.{core.timestamp()}";
             var path = dst.Path(name, FileKind.Dmp);
@@ -52,21 +52,21 @@ namespace Z0
             return channel.EmittedBytes(running, path.Size);
         }
 
-        public static ExecToken dump(ProcessAdapter src, WfEmit channel, FilePath dst)
+        public static ExecToken dump(ProcessAdapter src, IWfChannel channel, FilePath dst)
         {
             var running = channel.EmittingFile(dst);
             DumpEmitter.emit(src, dst);
             return channel.EmittedBytes(running, dst.Size);
         }
 
-        public static void env(WfEmit channel, IApiPack dst)
+        public static void env(IWfChannel channel, IApiPack dst)
         {
             Env.emit(channel,EnvVarKind.Process, dst.Context().Root);
             Env.emit(channel,EnvVarKind.User, dst.Context().Root);
             Env.emit(channel,EnvVarKind.Machine, dst.Context().Root);
         }
 
-        public static ExecToken emit(WfEmit channel, IApiPack dst)
+        public static ExecToken emit(IWfChannel channel, IApiPack dst)
         {
             env(channel,dst);
             var map = ImageMemory.map();
@@ -74,7 +74,7 @@ namespace Z0
             return emit(Process.GetCurrentProcess(), dst, channel);
         }
 
-        static ExecToken emit(ProcessAdapter src, IApiPack dst, WfEmit channel)
+        static ExecToken emit(ProcessAdapter src, IApiPack dst, IWfChannel channel)
         {
             var running = channel.Running($"Emiting context for process {src.Id} based at {src.BaseAddress} from {src.Uri}");
             modules(src, dst, channel);
@@ -82,10 +82,10 @@ namespace Z0
             return channel.Ran(running);           
         }
 
-        static ExecToken modules(Process src, IApiPack dst, WfEmit channel)
+        static ExecToken modules(Process src, IApiPack dst, IWfChannel channel)
             => channel.TableEmit(ImageMemory.modules(src), dst.ProcessModules());
 
-        static ExecToken dump(Process src, IApiPack dst, WfEmit channel)
+        static ExecToken dump(Process src, IApiPack dst, IWfChannel channel)
         {
             var path = dst.DumpPath(src);
             var running = channel.EmittingFile(path);

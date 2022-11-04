@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Free]
-    public interface IApiMethod : ITextual
+    public interface IApiMethod : IExpr
     {
         OpIdentity Id {get;}
 
@@ -18,6 +18,12 @@ namespace Z0
         /// The hosted method
         /// </summary>
         MethodInfo Method {get;}
+
+        bool INullity.IsEmpty
+            => Host.IsEmpty || Method == null;
+
+        bool INullity.IsNonEmpty
+            => Host.IsNonEmpty || Method != null;
 
         /// <summary>
         /// The clr metadata token
@@ -39,7 +45,7 @@ namespace Z0
         ClrMethodArtifact Metadata
             => Method.Artifact();
 
-        string ITextual.Format()
+        string IExpr.Format()
             => OpUri.Format();
     }
 }

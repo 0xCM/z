@@ -12,7 +12,7 @@ namespace Z0
     {
         const byte ZeroLimit = 10;
 
-        static ConcurrentDictionary<ApiToken,ApiEncoded> parse(ReadOnlySpan<RawMemberCode> src, WfEmit log)
+        static ConcurrentDictionary<ApiToken,ApiEncoded> parse(ReadOnlySpan<RawMemberCode> src, IWfChannel log)
         {
             var count = src.Length;
             var buffer = span<byte>(Pow2.T16);
@@ -46,7 +46,7 @@ namespace Z0
             return parse(dst, log);
         }
 
-        static ConcurrentDictionary<ApiToken,ApiEncoded> parse(Dictionary<ApiHostUri,CollectedCodeExtracts> src, WfEmit log)
+        static ConcurrentDictionary<ApiToken,ApiEncoded> parse(Dictionary<ApiHostUri,CollectedCodeExtracts> src, IWfChannel log)
         {
             var flow = log.Running(Msg.ParsingHosts.Format(src.Count));
             var buffer = sys.alloc<byte>(Pow2.T14);

@@ -6,38 +6,20 @@ namespace Z0
 {
     public class AsmCheckExec
     {
-        public static void run(WfEmit channel)
+        public static void run(IWfChannel channel)
         {
             var exec = new AsmCheckExec();
             exec.Run(channel);
         }
         
-        public void Run(WfEmit channel)   
+        public void Run(IWfChannel channel)   
         {
             using var buffer = CodeBuffer.allocate();
             CheckFxPointers(channel);
-            CheckBinaryOpExec(buffer, channel);
-            CheckUnaryOpExec(buffer, channel);
-            CheckUnaryFuncExec(buffer, channel);
+            CheckBinaryOpExec(channel, buffer);
+            CheckUnaryOpExec(channel, buffer);
+            CheckUnaryFuncExec(channel, buffer);
         }
-
-        public static ReadOnlySpan<byte> min64u_64u_64u
-            => new byte[18]{0x0f,0x1f,0x44,0x00,0x00,0x48,0x3b,0xca,0x72,0x04,0x48,0x8b,0xc2,0xc3,0x48,0x8b,0xc1,0xc3};
-
-        public static ReadOnlySpan<byte> nonz_64u
-            => new byte[18]{0x0f,0x1f,0x44,0x00,0x00,0x48,0x85,0xc9,0x0f,0x95,0xc0,0x0f,0xb6,0xc0,0x0f,0xb6,0xc0,0xc3};
-
-        public static ReadOnlySpan<byte> dec_64u
-             => new byte[10]{0x0f,0x1f,0x44,0x00,0x00,0x48,0x8d,0x41,0xff,0xc3};
-
-        public static ReadOnlySpan<byte> mul_32u_32u_32u
-            => new byte[11]{0x0f,0x1f,0x44,0x00,0x00,0x8b,0xc1,0x0f,0xaf,0xc2,0xc3};
-
-        public static ReadOnlySpan<byte> inc_8u_8u
-            => new byte[14]{0x0f,0x1f,0x44,0x00,0x00,0x0f,0xb6,0xc1,0xff,0xc0,0x0f,0xb6,0xc0,0xc3};
-
-        public static ReadOnlySpan<byte> vadd_128x8u
-            => new byte[22]{0xc5,0xf8,0x77,0x66,0x90,0xc5,0xf9,0x10,0x02,0xc4,0xc1,0x79,0xfc,0x00,0xc5,0xf9,0x11,0x01,0x48,0x8b,0xc1,0xc3};
 
         static unsafe string fx1()
         {
@@ -67,14 +49,14 @@ namespace Z0
             return string.Format("<{0}> + <{1}> = <{2}>", a.FormatHex(), b.FormatHex(), c.FormatHex());
         }
 
-        unsafe void CheckFxPointers(WfEmit channel)
+        unsafe void CheckFxPointers(IWfChannel channel)
         {
             channel.Write(fx1());
             channel.Write(fx2());
             channel.Write(fx3());
         }
 
-        void CheckBinaryOpExec(CodeBuffer buffer, WfEmit channel)
+        void CheckBinaryOpExec(IWfChannel channel, CodeBuffer buffer)
         {
             var name = nameof(min64u_64u_64u);
             var code = min64u_64u_64u;
@@ -85,7 +67,7 @@ namespace Z0
             channel.Write(f.Format(a,b,c));
         }
 
-        void CheckUnaryOpExec(CodeBuffer buffer, WfEmit channel)
+        void CheckUnaryOpExec(IWfChannel channel, CodeBuffer buffer)
         {
             var name = nameof(dec_64u);
             var code = dec_64u;
@@ -95,7 +77,7 @@ namespace Z0
             channel.Write(f.Format(a,b));
         }
 
-        void CheckUnaryFuncExec(CodeBuffer buffer, WfEmit channel)
+        void CheckUnaryFuncExec(IWfChannel channel, CodeBuffer buffer)
         {
             var name = nameof(nonz_64u);
             var code = nonz_64u;
@@ -104,5 +86,23 @@ namespace Z0
             var b = f.Invoke(a);
             channel.Write(f.Format(a,b));
         }
+
+        static ReadOnlySpan<byte> min64u_64u_64u
+            => new byte[18]{0x0f,0x1f,0x44,0x00,0x00,0x48,0x3b,0xca,0x72,0x04,0x48,0x8b,0xc2,0xc3,0x48,0x8b,0xc1,0xc3};
+
+        static ReadOnlySpan<byte> nonz_64u
+            => new byte[18]{0x0f,0x1f,0x44,0x00,0x00,0x48,0x85,0xc9,0x0f,0x95,0xc0,0x0f,0xb6,0xc0,0x0f,0xb6,0xc0,0xc3};
+
+        static ReadOnlySpan<byte> dec_64u
+             => new byte[10]{0x0f,0x1f,0x44,0x00,0x00,0x48,0x8d,0x41,0xff,0xc3};
+
+        public static ReadOnlySpan<byte> mul_32u_32u_32u
+            => new byte[11]{0x0f,0x1f,0x44,0x00,0x00,0x8b,0xc1,0x0f,0xaf,0xc2,0xc3};
+
+        static ReadOnlySpan<byte> inc_8u_8u
+            => new byte[14]{0x0f,0x1f,0x44,0x00,0x00,0x0f,0xb6,0xc1,0xff,0xc0,0x0f,0xb6,0xc0,0xc3};
+
+        static ReadOnlySpan<byte> vadd_128x8u
+            => new byte[22]{0xc5,0xf8,0x77,0x66,0x90,0xc5,0xf9,0x10,0x02,0xc4,0xc1,0x79,0xfc,0x00,0xc5,0xf9,0x11,0x01,0x48,0x8b,0xc1,0xc3};
     }
 }

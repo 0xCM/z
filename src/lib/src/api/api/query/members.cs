@@ -8,8 +8,11 @@ namespace Z0
     {
         public static ApiMembers members(Index<ApiMember> src)
         {
-            if(src.Count != 0)
-                return new ApiMembers(src.First.BaseAddress, src.Sort());
+            if(src.IsNonEmpty)
+            {
+                src.Sort();
+                return new ApiMembers(src.First.BaseAddress, src);
+            }
             else
                 return ApiMembers.Empty;
         }

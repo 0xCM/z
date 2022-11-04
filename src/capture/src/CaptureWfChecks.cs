@@ -75,7 +75,7 @@ namespace Z0
 
         void CheckReloaded(CaptureTransport transport, IApiPack src)
         {
-            var members = transport.TransmitReloaded(ApiCode.load(src, PartId.AsmCore, Emitter));
+            var members = transport.Reloaded(ApiCode.load(src, PartId.AsmCore, Emitter));
             for(var i=0; i<members.MemberCount; i++)
             {
                 ref readonly var member = ref members.Member(i);

@@ -52,6 +52,18 @@ namespace Z0
              get => Msil.CliSig;
         }
 
+        public bool IsEmpty
+        {
+             [MethodImpl(Inline)]
+            get => Method == null || Method == EmptyVessels.EmptyMethod;
+        }
+
+        public bool IsNonEmpty
+        {
+             [MethodImpl(Inline)]
+            get => Method != null && Method != EmptyVessels.EmptyMethod;
+        }
+
         public EcmaToken Token
         {
             [MethodImpl(Inline)]

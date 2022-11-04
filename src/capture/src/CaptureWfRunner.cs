@@ -6,7 +6,7 @@ namespace Z0
 {
     using Asm;
 
-    using static core;
+    using static sys;
 
     public sealed class CaptureWfRunner
     {
@@ -16,7 +16,7 @@ namespace Z0
 
         public readonly CaptureWfSettings Settings;
 
-        readonly WfEmit Emitter;
+        readonly IWfChannel Channel;
 
         readonly CaptureTransport Transport;
 
@@ -25,7 +25,7 @@ namespace Z0
             Wf = wf;
             Target = dst;
             Settings = settings;
-            Emitter = wf.Emitter;
+            Channel = wf.Channel;
             Transport = transport;
             Wf.RedirectEmissions(Loggers.emission(Target.Path("capture.emissions", FileKind.Csv)));
         }
@@ -38,11 +38,11 @@ namespace Z0
 
             if(Settings.EmitCatalog)
             {
-                var members = Transport.TransmitResolved(ApiQuery.members(collected.SelectMany(x => x.Resolved.Members)));
-                var rebased = Transport.TransmitRebased(ApiCode.catalog(members));
+                var members = Transport.Resolved(ApiQuery.members(collected.SelectMany(x => x.Resolved.Members)));
+                var rebased = Transport.Rebased(ApiCode.catalog(members));
                 var path = Target.Table<ApiCatalogEntry>();
-                Emitter.TableEmit(rebased, path, UTF8);
-                Transport.TransmitReloaded(ApiCode.catalog(path, Emitter));
+                Channel.TableEmit(rebased, path, UTF8);
+                Transport.Reloaded(ApiCode.catalog(path, Channel));
             }
 
             if(Settings.EmitMetadata)
@@ -55,7 +55,7 @@ namespace Z0
                 Regions.EmitRegions(Process.GetCurrentProcess(), Target);
 
             if(Settings.EmitContext)
-                RuntimeContext.emit(Emitter,Target);
+                RuntimeContext.emit(Channel,Target);
 
             if(Settings.RunChecks)
             {
@@ -97,21 +97,39 @@ namespace Z0
                 seek(buffer,i).TargetRebase = skip(buffer,i).TargetAddress - rebase;
             }
 
-            return Emitter.TableEmit(Transport.Transmit(buffer).View, dst.Table<EncodedMember>());
+            return Channel.TableEmit(Transport.Transmit(buffer).View, dst.Table<EncodedMember>());
+        }
+
+        static ApiMembers members(IWfChannel channel, ReadOnlySeq<CollectedHost> src)
+        {
+            var dst = ApiMembers.Empty;
+            var buffer = bag<ApiMember>();
+            iter(src.View, host => {
+                iter(host.Resolved.Members, member => {
+                    if(member.IsNonEmpty)
+                        buffer.Add(member);
+                    else
+                        channel.Warn($"Empty member");
+                });
+            });
+            var members = buffer.ToSeq().Sort();
+            if(members.Length != 0)
+                dst = new ApiMembers(members.First.BaseAddress, members);
+            return dst;
         }
 
         Seq<CollectedHost> Capture(IApiCatalog src)
         {            
             var dst = sys.bag<CollectedHost>();
             var parts = src.PartCatalogs.Select(x => x as IApiPartCatalog);
-            var running = Emitter.Running($"Running capture workflow: {parts.Select(x => x.Component.PartName()).Delimit()}");
-            iter(parts, p => Capture(p, Dispenser, dst, Emitter), Settings.PllExec);            
+            var running = Channel.Running($"Running capture workflow: {parts.Select(x => x.Component.PartName()).Delimit()}");
+            iter(parts, p => Capture(p, Dispenser, dst, Channel), Settings.PllExec);            
             var collected = Transport.Transmit(dst.ToSeq());        
-            Emitter.Ran(running, $"Captured {collected.Count} hosts");
+            Channel.Ran(running, $"Captured {collected.Count} hosts");
             return collected;
         }
 
-        void Capture(IApiPartCatalog src, ICompositeDispenser dispenser, ConcurrentBag<CollectedHost> dst, WfEmit log)
+        void Capture(IApiPartCatalog src, ICompositeDispenser dispenser, ConcurrentBag<CollectedHost> dst, IWfChannel log)
         {
             var tmp = sys.bag<CollectedHost>();
             ApiCode.gather(src, dispenser, tmp, log, Settings.PllExec);
@@ -134,7 +152,7 @@ namespace Z0
             {
                 ref readonly var host = ref src[i];
                 var path = Target.AsmExtractPath(host.Host);
-                var flow = Emitter.EmittingFile(path);
+                var flow = Channel.EmittingFile(path);
                 var size = ByteSize.Zero;
                 using var writer = path.AsciWriter();
                 for(var j=0; j<host.Blocks.Count; j++)
@@ -145,7 +163,7 @@ namespace Z0
                     size += (ulong)asm.Length;
                     writer.AppendLine(asm);
                 }
-                Emitter.EmittedFile(flow, AppMsg.EmittedBytes.Capture(size,path));
+                Channel.EmittedFile(flow, AppMsg.EmittedBytes.Capture(size,path));
             }
         }
    }
