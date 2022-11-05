@@ -4,14 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public record class AppCmdSpec
+    public record class WfCmdSpec
     {
         public readonly @string Name;
 
         public readonly CmdArgs Args;
 
         [MethodImpl(Inline)]
-        public AppCmdSpec(string name, CmdArgs args)
+        public WfCmdSpec(string name, CmdArgs args)
         {
             Name = name;
             Args = args;
@@ -36,13 +36,13 @@ namespace Z0
             => Format();
 
         [MethodImpl(Inline)]
-        public static implicit operator AppCmdSpec((string name, CmdArgs args) src)
-            => new AppCmdSpec(src.name, src.args);
+        public static implicit operator WfCmdSpec((string name, CmdArgs args) src)
+            => new WfCmdSpec(src.name, src.args);
 
-        public static AppCmdSpec Empty
+        public static WfCmdSpec Empty
         {
             [MethodImpl(Inline)]
-            get => new AppCmdSpec(default, CmdArgs.Empty);
+            get => new WfCmdSpec(default, CmdArgs.Empty);
         }
     }
 }

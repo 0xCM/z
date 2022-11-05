@@ -6,7 +6,7 @@ namespace Z0
 {
     public class WfCmdRouter : IWfDispatcher
     {
-        IWfCmdSpecs _Commands;
+        IWfOps _Commands;
 
         Func<string,CmdArgs,Outcome> Fallback;
 
@@ -15,7 +15,7 @@ namespace Z0
         ConstLookup<Name,WfOp> Catalog;
 
         [MethodImpl(Inline)]
-        public WfCmdRouter(IWfChannel channel, ReadOnlySeq<ICmdProvider> providers, IWfCmdSpecs lookup)
+        public WfCmdRouter(IWfChannel channel, ReadOnlySeq<ICmdProvider> providers, IWfOps lookup)
         {
             _Commands = lookup;
             Fallback = NotFound;
@@ -32,7 +32,7 @@ namespace Z0
         
         public bool IsEmpty => false;
         
-        public IWfCmdSpecs Commands => _Commands;
+        public IWfOps Commands => _Commands;
 
         static Outcome NotFound(string cmd, CmdArgs args)
             => (false, string.Format("Handler for '{0}' not found", cmd));

@@ -9,17 +9,13 @@
    <Import Project="$(MsBuildThisFileDirectory)src/asm.prototypes/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/asm.svc/exports.props"/>
 
-   <Import Project="$(MsBuildThisFileDirectory)src/llvm.shell/exports.props"/>
-
-   <Import Project="$(MsBuildThisFileDirectory)src/text/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/bit/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/types/exports.props"/>
 
-   <Import Project="$(MsBuildThisFileDirectory)src/bitmasks/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/bitvectors/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/bits/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/builds/exports.props"/>
 
+   <Import Project="$(MsBuildThisFileDirectory)src/cmd.public/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/calcs/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/cg.common/exports.props"/>
@@ -72,6 +68,7 @@
    <Import Project="$(MsBuildThisFileDirectory)src/lib/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/linq/exports.props"/>
 
+   <Import Project="$(MsBuildThisFileDirectory)src/llvm.shell/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/llvm.svc/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/math/exports.props"/>
@@ -88,16 +85,16 @@
    <Import Project="$(MsBuildThisFileDirectory)src/stitch/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/symbolics/exports.props"/>
 
-   <Import Project="$(MsBuildThisFileDirectory)src/workflow/exports.props"/>
-
    <Import Project="$(MsBuildThisFileDirectory)src/test.checks/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/test.shell/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/test.units/exports.props"/>
-
+   <Import Project="$(MsBuildThisFileDirectory)src/text/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/types/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/tools/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/validity/exports.props"/>
 
-   <Import Project="$(MsBuildThisFileDirectory)src/cmd.public/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/workflow/exports.props"/>
+
 
 </Project>

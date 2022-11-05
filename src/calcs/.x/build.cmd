@@ -1,3 +1,3 @@
 @echo off
-call %~dp0..\config.cmd
-call %BuildProject%
+cd %~dp0..
+dotnet build

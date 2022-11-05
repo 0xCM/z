@@ -12,7 +12,7 @@ namespace Z0
 
         Outcome Dispatch(string action);
 
-        IWfCmdSpecs Commands {get;}
+        IWfOps Commands {get;}
 
         PartName Controller 
             => ExecutingPart.Name;

@@ -4,13 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class WfCmdSpecs : IWfCmdSpecs
+    public class WfOps : IWfOps
     {
         readonly Dictionary<string,IWfCmdRunner> Lookup;
 
         readonly ReadOnlySeq<WfOp> CmdDefs;
 
-        internal WfCmdSpecs(Dictionary<string,IWfCmdRunner> src)
+        internal WfOps(Dictionary<string,IWfCmdRunner> src)
         {
             Lookup = src;
             CmdDefs = src.Values.Map(x => x.Def).ToSeq();

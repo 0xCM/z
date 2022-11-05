@@ -15,15 +15,55 @@ namespace Z0
 
         static MsgPattern ArgSpecError => "Argument specification error";
 
-        public static WfCmdSpecs distill(IWfCmdSpecs[] src)
+        public static WfOps distill(IWfOps[] src)
         {
             var dst = dict<string,IWfCmdRunner>();
             foreach(var a in src)
                 iter(a.Invokers,  a => dst.TryAdd(a.CmdName, a));
-            return new WfCmdSpecs(dst);
+            return new WfOps(dst);
         }
 
-        public static CmdUriSeq commands<S>(IWfDispatcher src)
+        public static WfCmdCatalog catalog(ReadOnlySeq<WfOp> src)
+        {
+            var count = src.Count;
+            var dst = alloc<CmdUri>(count);
+            for(var i=0; i<count; i++)
+                seek(dst,i) = src[i].Uri;
+            return new WfCmdCatalog(entries(dst));
+        }
+
+        public static WfCmdCatalog catalog(IWfDispatcher src)
+        {
+            ref readonly var defs = ref src.Commands.Defs;
+            var count = defs.Count;
+            var dst = alloc<CmdUri>(count);
+            for(var i=0; i<count; i++)
+                seek(dst,i) = defs[i].Uri;
+            return new WfCmdCatalog(entries(dst));
+        }
+
+        static ReadOnlySeq<WfCmdInfo> entries(CmdUriSeq src)    
+        {
+            var entries = alloc<WfCmdInfo>(src.Count);
+            for(var i=0; i<src.Count; i++)
+            {
+                ref readonly var uri = ref src[i];
+                ref var entry = ref seek(entries,i);
+                entry.Uri = uri;
+                entry.Hash = uri.Hash;
+                entry.Name = uri.Name;
+            }
+            return entries.Sort().Resequence();        
+        }        
+
+        public static void emit(IWfChannel channel, WfCmdCatalog src, FilePath dst)
+        {
+            var data = src.Values;
+            iter(data, x => channel.Row(x.Uri.Name));
+            CsvEmitters.emit(channel, data, dst);
+        }
+
+        public static CmdUriSeq uris<S>(IWfDispatcher src)
         {
             ref readonly var defs = ref src.Commands.Defs;
             var part = src.Controller;
@@ -148,16 +188,16 @@ namespace Z0
         }
 
         [Op]
-        public static bool parse(ReadOnlySpan<char> src, out AppCmdSpec dst)
+        public static bool parse(ReadOnlySpan<char> src, out WfCmdSpec dst)
         {
             var i = SQ.index(src, Chars.Space);
             if(i < 0)
-                dst = new AppCmdSpec(@string(src), CmdArgs.Empty);
+                dst = new WfCmdSpec(@string(src), CmdArgs.Empty);
             else
             {
                 var name = sys.@string(SQ.left(src,i));
                 var _args = sys.@string(SQ.right(src,i)).Split(Chars.Space);
-                dst = new AppCmdSpec(name, CmdArgs.args(_args));
+                dst = new WfCmdSpec(name, CmdArgs.args(_args));
             }
             return true;
         }
@@ -191,7 +231,7 @@ namespace Z0
             var dst = dict<string,IWfCmdRunner>();
             iter(runners(service), r => dst.TryAdd(r.Def.CmdName, r));
             iter(providers, p => iter(runners(p), r => dst.TryAdd(r.Def.CmdName, r)));
-            var dispatcher = new WfCmdRouter(channel, providers, new WfCmdSpecs(dst));
+            var dispatcher = new WfCmdRouter(channel, providers, new WfOps(dst));
             install(dispatcher, providers);
             return dispatcher;
         }        
@@ -278,7 +318,7 @@ namespace Z0
                 for(var i=0; i<count; i++)
                 {
                     ref readonly var content = ref lines[i].Content;
-                    if(parse(content, out AppCmdSpec spec))
+                    if(parse(content, out WfCmdSpec spec))
                     {
                         context.Dispatcher.Dispatch(spec.Name, spec.Args);
                     }

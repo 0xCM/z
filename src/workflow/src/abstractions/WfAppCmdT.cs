@@ -23,17 +23,17 @@ namespace Z0
         string Prompt()
             => string.Format("{0}> ", PromptTitle);
 
-        AppCmdSpec Next()
+        WfCmdSpec Next()
         {
             var input = term.prompt(Prompt());
-            if(WfCmd.parse(input, out AppCmdSpec cmd))
+            if(Cmd.parse(input, out WfCmdSpec cmd))
             {
                 return cmd;
             }
             else
             {
                 Error($"ParseFailure:{input}");
-                return AppCmdSpec.Empty;
+                return WfCmdSpec.Empty;
             }
         }
 
@@ -66,7 +66,7 @@ namespace Z0
 
         [CmdOp("commands")]
         protected void EmitCommands()
-            => WfCmd.emit(Channel, WfCmd.catalog(Dispatcher), AppDb.AppData().Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv));
+            => Cmd.emit(Channel, Cmd.catalog(Dispatcher), AppDb.AppData().Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv));
 
         public void RunCmd(string name)
         {
@@ -78,7 +78,7 @@ namespace Z0
         public void RunCmd(string name, CmdArgs args)
             => Dispatcher.Dispatch(name, args);
 
-        protected void RunCmd(AppCmdSpec cmd)
+        protected void RunCmd(WfCmdSpec cmd)
         {
             try
             {

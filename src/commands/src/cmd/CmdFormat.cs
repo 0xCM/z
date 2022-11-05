@@ -34,7 +34,7 @@ namespace Z0
             }
         }
 
-        public static string format(AppCmdSpec src)
+        public static string format(WfCmdSpec src)
         {
             if(src.IsEmpty)
                 return EmptyString;

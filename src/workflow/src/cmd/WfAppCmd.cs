@@ -374,7 +374,7 @@ namespace Z0
                 for(var i=0; i<count; i++)
                 {
                     ref readonly var content = ref lines[i].Content;
-                    if(WfCmd.parse(content, out AppCmdSpec spec))
+                    if(Cmd.parse(content, out WfCmdSpec spec))
                         RunCmd(spec);
                     else
                     {

@@ -1,5 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <BitMasks>$(MsBuildThisFileDirectory)z0.bitmasks.csproj</BitMasks>
-  </PropertyGroup>
-</Project>
