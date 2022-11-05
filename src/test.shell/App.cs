@@ -15,7 +15,7 @@ namespace Z0
         public static void Main(params string[] args)
         {
             using var app = AppCmdShell.create<App>(false, args);
-            var context = WfServices.context<AppShellCmd>(app.Wf, () => providers(app.Wf));
+            var context = Cmd.context<AppShellCmd>(app.Wf, () => providers(app.Wf));
             app.Commander = context.Commander;
             app.Run(args);            
         } 

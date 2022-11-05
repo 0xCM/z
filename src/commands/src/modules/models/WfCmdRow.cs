@@ -5,29 +5,29 @@
 namespace Z0
 {
     [Record(TableId)]
-    public struct ApiCmdRow
+    public struct WfCmdRow
     {
-        const string TableId = "api.commands.typed";
+        const string TableId = "wf.commands";
 
         [Render(22)]
         public @string CmdName;
 
         [Render(22)]
-        public string CmdType;
+        public @string CmdType;
 
         [Render(12)]
         public byte FieldIndex;
 
         [Render(36)]
-        public string FieldName;
+        public @string FieldName;
 
         [Render(48)]
-        public string DataType;
+        public @string DataType;
 
         [Render(32)]
-        public string Expression;
+        public @string Expression;
 
         [Render(1)]
-        public string DefaultValue;
+        public @string DefaultValue;
     }
 }

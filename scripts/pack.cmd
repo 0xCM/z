@@ -1,5 +1,4 @@
 @echo off
-
 set PackageTool=dotnet pack --include-symbols --include-source
 set PackageProject=%PackageTool% %ProjectPath%
 set PackageLib=dotnet pack %ProjectPath% --output %PackageDist% --configuration %ConfigName% %PackageFlags%

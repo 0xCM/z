@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public struct ExecToken
+    public record struct ExecToken : IDataType<ExecToken>, IDataString<ExecToken>
     {
         public ulong StartSeq;
 
@@ -41,6 +41,12 @@ namespace Z0
             EndSeq = 0;
         }
 
+        public Hash32 Hash
+        {
+            [MethodImpl(Inline)]
+            get => sys.nhash(StartSeq) | Started.Hash | (Finished ?? Timestamp.Zero).Hash | nhash(EndSeq);
+        }
+
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
@@ -52,6 +58,13 @@ namespace Z0
             [MethodImpl(Inline)]
             get => Started.IsNonZero;
         }
+
+        [MethodImpl(Inline)]
+        public bool Equals(ExecToken src)
+            => StartSeq == src.StartSeq && Started == src.Started && EndSeq == src.EndSeq && Finished == src.Finished;
+
+        public int CompareTo(ExecToken src)
+            => StartSeq.CompareTo(src.StartSeq);
 
         public string Format()
         {
@@ -74,6 +87,9 @@ namespace Z0
 
         public override string ToString()
             => Format();
+
+        public override int GetHashCode()
+            => Hash;
 
         public static ExecToken Empty
         {

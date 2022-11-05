@@ -40,10 +40,6 @@ namespace Z0
 
             public MemoryChecks MemoryChecks(IWfRuntime wf)
                 => Service<MemoryChecks>(wf); 
-
-            public WfArchives WfArchives(IWfRuntime wf)
-                => Service<WfArchives>(wf); 
-
         }
 
         static ServiceCache Services => ServiceCache.Instance;
@@ -80,9 +76,5 @@ namespace Z0
 
         public static WfScripts ToolScripts(this IWfRuntime wf)
             => Services.ToolScripts(wf);
-
-        public static WfArchives WfArchives(this IWfRuntime wf) 
-            => Services.WfArchives(wf); 
-
     }
 }

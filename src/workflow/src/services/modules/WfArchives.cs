@@ -9,7 +9,7 @@ namespace Z0
     using static WfArchives.CommandNames;
 
     [WfModule]
-    public class WfArchives : WfSvc<WfArchives>, IWfModule<WfArchives>
+    public class WfArchives : WfModule<WfArchives>
     {
         public class CommandNames 
         {
@@ -18,8 +18,6 @@ namespace Z0
             public const string FilesCopy = "files/copy";
 
             public const string FilesPack = "files/pack";
-
-            public const string FilesCatalog = "files";
         }
 
         public static Task<ListedFiles> catalog(IWfChannel channel, FolderPath src, FolderPath dst)
@@ -58,8 +56,8 @@ namespace Z0
             }
             else
             {
-                table = AppDb.Catalogs("files").Table<ListedFile>(name);
-                list = AppDb.Catalogs("files").Path(name, FileKind.List);
+                table = AppDb.Service.Catalogs("files").Table<ListedFile>(name);
+                list = AppDb.Service.Catalogs("files").Path(name, FileKind.List);
             }
 
             channel.TableEmit(listing, table);
@@ -145,26 +143,31 @@ namespace Z0
             => new (src,dst,ext);
 
         [CmdOp(FilesGather)]
-        public Task<ExecToken> Gather(CmdArgs args)
+        public Task<ExecToken> Gather(IWfChannel channel, CmdArgs args)
         {            
             var cmd = gather(FS.dir(args[0]), FS.dir(args[1]), FileKind.Nuget.Ext());
-            return Exec(cmd);
+            return Exec(channel, cmd);
         }
 
-        Task<ExecToken> Exec(GatherFiles cmd)
+        Task<ExecToken> Exec(IWfChannel channel, GatherFiles cmd)
         {
             ExecToken exec()
             {
-                var flow = Channel.Running(cmd);
+                var flow = channel.Running(cmd);
                 var paths = cmd.Source.Files(cmd.Ext,true);
                 iter(paths, src => {
                     var dst = src.CopyTo(cmd.Target);
-                    Channel.Babble($"Copied {src} -> {dst}");
+                    channel.Babble($"Copied {src} -> {dst}");
                 });
-                return Channel.Ran(flow);
+                return channel.Ran(flow);
             }
 
             return start(exec);            
+        }
+
+        protected override Task<ExecToken> Start<C>(C cmd) 
+        {
+            throw new NotImplementedException();
         }
     }
 }

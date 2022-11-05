@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Record(TableId)]
-    public record struct CmdCatalogEntry : IComparable<CmdCatalogEntry>, IHashed, ISequential<CmdCatalogEntry>
+    public record struct WfCmdInfo : IComparable<WfCmdInfo>, IHashed, ISequential<WfCmdInfo>
     {
         const string TableId = "cmd.catalog";
 
@@ -30,7 +30,7 @@ namespace Z0
             set => Seq = value;
         }
 
-        public int CompareTo(CmdCatalogEntry src)
+        public int CompareTo(WfCmdInfo src)
             => Name.CompareTo(src.Name);
 
         public override string ToString()

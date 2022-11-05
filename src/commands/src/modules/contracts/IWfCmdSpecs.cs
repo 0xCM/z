@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Free]
-    public interface IAppCommands
+    public interface IWfCmdSpecs
     {
         bool Find(string spec, out IWfCmdRunner runner);
 

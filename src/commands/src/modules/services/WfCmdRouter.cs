@@ -6,13 +6,7 @@ namespace Z0
 {
     public class WfCmdRouter : IWfDispatcher
     {
-        public @string Name => "router";
-
-        public Hash32 Hash => Name.Hash;
-        
-        public bool IsEmpty => false;
-        
-        IAppCommands _Commands;
+        IWfCmdSpecs _Commands;
 
         Func<string,CmdArgs,Outcome> Fallback;
 
@@ -21,18 +15,24 @@ namespace Z0
         ConstLookup<Name,WfOp> Catalog;
 
         [MethodImpl(Inline)]
-        public WfCmdRouter(IWfChannel channel, ReadOnlySeq<ICmdProvider> providers, IAppCommands lookup)
+        public WfCmdRouter(IWfChannel channel, ReadOnlySeq<ICmdProvider> providers, IWfCmdSpecs lookup)
         {
             _Commands = lookup;
             Fallback = NotFound;
             Channel = channel;
             Providers = providers;
-            Catalog = WfServices.defs(this);
+            Catalog = Cmd.defs(this);
         }
 
         public ReadOnlySeq<ICmdProvider> Providers {get;}
 
-        public IAppCommands Commands => _Commands;
+        public @string Name => "router";
+
+        public Hash32 Hash => Name.Hash;
+        
+        public bool IsEmpty => false;
+        
+        public IWfCmdSpecs Commands => _Commands;
 
         static Outcome NotFound(string cmd, CmdArgs args)
             => (false, string.Format("Handler for '{0}' not found", cmd));

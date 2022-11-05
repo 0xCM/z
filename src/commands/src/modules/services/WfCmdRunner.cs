@@ -13,7 +13,7 @@ namespace Z0
 
         public WfCmdRunner(Name name, object host, MethodInfo method)
         {
-            Def = new WfOp(name, WfServices.classify(method), Require.notnull(method), Require.notnull(host));
+            Def = new WfOp(name, Cmd.classify(method), Require.notnull(method), Require.notnull(host));
         }
 
         public ref readonly object Host

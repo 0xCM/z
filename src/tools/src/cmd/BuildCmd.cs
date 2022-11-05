@@ -15,7 +15,7 @@ namespace Z0
         [CmdOp("projects/list")]
         void ListProjects(CmdArgs args)
         {
-            var uri = WfServices.uri((MethodInfo)MethodInfo.GetCurrentMethod()); 
+            var uri = Cmd.uri((MethodInfo)MethodInfo.GetCurrentMethod()); 
             var flow = Channel.Running(uri);
             var files = Archives.archive(Env.cd()).Files().Where(x => FileTypes.@is(x,FileKind.CsProj));
             iter(files, file => Channel.Row(file.ToUri()));

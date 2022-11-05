@@ -70,10 +70,10 @@ namespace Z0
         public static Index<CmdTypeInfo> discover(Assembly[] src)
             => tagged(src).Select(describe).Sort();
 
-        public static ReadOnlySeq<ApiCmdRow> rows(ReadOnlySpan<CmdTypeInfo> src)
+        public static ReadOnlySeq<WfCmdRow> rows(ReadOnlySpan<CmdTypeInfo> src)
         {
             var count = src.Select(x => x.FieldCount).Sum();
-            var dst = alloc<ApiCmdRow>(count);
+            var dst = alloc<WfCmdRow>(count);
             var k=0u;
             for(var i=0; i<src.Length; i++)
             {

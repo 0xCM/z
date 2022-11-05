@@ -4,13 +4,15 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IWfSvc : IAppService
+    public interface IWfResult
     {
-        WfEmit Emitter {get;}
+        CmdUri TaskName {get;}
+
+        ExecToken Token {get;}
     }
 
-    public interface IWfSvc<S> : IWfSvc, IAppService<S>
-        where S : IWfSvc<S>, new()
+    public interface IWfResult<R> : IWfResult
+        where R : new()
     {
 
     }

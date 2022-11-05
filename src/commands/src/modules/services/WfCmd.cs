@@ -8,12 +8,6 @@ namespace Z0
 
     public class WfCmd
     {
-        static AppDb AppDb => AppDb.Service;
-
-        public static WfContext<C> context<C>(IWfRuntime wf, Func<ReadOnlySeq<ICmdProvider>> factory)
-            where C : IAppCmdSvc, new()
-                => WfServices.context<C>(wf,factory);
-
         [Op]
         public static bool parse(ReadOnlySpan<char> src, out AppCmdSpec dst)
         {
@@ -29,43 +23,35 @@ namespace Z0
             return true;
         }
 
-        public static AppCommands distill(IAppCommands[] src)
-        {
-            var dst = dict<string,IWfCmdRunner>();
-            foreach(var a in src)
-                iter(a.Invokers,  a => dst.TryAdd(a.CmdName, a));
-            return new AppCommands(dst);
-        }
-
-        public static void emit(IWfChannel channel, CmdCatalog src, FilePath dst)
+        public static void emit(IWfChannel channel, WfCmdCatalog src, FilePath dst)
         {
             var data = src.Values;
             iter(data, x => channel.Row(x.Uri.Name));
             CsvEmitters.emit(channel, data, dst);
         }
 
-        public static CmdCatalog catalog(ReadOnlySeq<WfOp> src)
+        public static WfCmdCatalog catalog(ReadOnlySeq<WfOp> src)
         {
             var count = src.Count;
             var dst = alloc<CmdUri>(count);
             for(var i=0; i<count; i++)
                 seek(dst,i) = src[i].Uri;
-            return new CmdCatalog(entries(dst));
+            return new WfCmdCatalog(entries(dst));
         }
 
-        public static CmdCatalog catalog(IWfDispatcher src)
+        public static WfCmdCatalog catalog(IWfDispatcher src)
         {
             ref readonly var defs = ref src.Commands.Defs;
             var count = defs.Count;
             var dst = alloc<CmdUri>(count);
             for(var i=0; i<count; i++)
                 seek(dst,i) = defs[i].Uri;
-            return new CmdCatalog(entries(dst));
+            return new WfCmdCatalog(entries(dst));
         }
 
-        static ReadOnlySeq<CmdCatalogEntry> entries(CmdUriSeq src)    
+        static ReadOnlySeq<WfCmdInfo> entries(CmdUriSeq src)    
         {
-            var entries = alloc<CmdCatalogEntry>(src.Count);
+            var entries = alloc<WfCmdInfo>(src.Count);
             for(var i=0; i<src.Count; i++)
             {
                 ref readonly var uri = ref src[i];

@@ -4,11 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed class CmdCatalog : ConstLookup<Name,CmdCatalogEntry>
+    public sealed class WfCmdCatalog : ConstLookup<Name,WfCmdInfo>
     {                
-        readonly ReadOnlySeq<CmdCatalogEntry> Data;
+        readonly ReadOnlySeq<WfCmdInfo> Data;
 
-        public CmdCatalog(ReadOnlySeq<CmdCatalogEntry> src)
+        public WfCmdCatalog(ReadOnlySeq<WfCmdInfo> src)
             : base(src.Select(x => (x.Name,x)).ToDictionary())
         {
             Data = src;
@@ -16,6 +16,5 @@ namespace Z0
 
         public static Symbols<CmdKind> kinds()
             => Symbols.index<CmdKind>();
-
     }
 }

@@ -18,7 +18,7 @@ namespace Z0
 
         Tooling Tooling => Wf.Tooling();
 
-        AppEnv AppEnv => Wf.AppEnv();
+        EnvModule AppEnv => Channel.Env();
 
         [CmdOp("cmd/redirect")]
         void Redirect(CmdArgs args)
@@ -158,7 +158,7 @@ namespace Z0
 
         [CmdOp("env/tools")]
         void EnvTools(CmdArgs args)
-            => AppEnv.Tools(args);
+            => Env.tools(Channel, args);
 
         [CmdOp("app/deploy")]
         void Deploy()

@@ -4,12 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class WfModules : WfSvc<WfModules>
+    [LiteralProvider(env)]
+    public class EnvNames
     {
-
-        static WfModules()
-        {
-            
-        }
+        public const string EnvTools = "env/tools";
     }
 }

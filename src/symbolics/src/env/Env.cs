@@ -9,12 +9,27 @@ namespace Z0
     [ApiHost]
     public class Env
     {
-        // public static ReadOnlySeq<FilePath> includes(EnvVarKind kind)
-        // {
-        //     var src = vars(kind)[EnvTokens.INCLUDE];
+        [CmdOp("env/tools")]
+        public static void tools(IWfChannel channel, CmdArgs args)
+        {
+            var buffer = bag<FilePath>();
+            var paths = Env.paths(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL);
+            iter(paths, path => iter(path.Files(FileKind.Exe,false), file => buffer.Add(file)), true);
+            var tools = buffer.Array().Sort(new FileNameComparer());
+            var counter = 0u;
+            var emitter = text.emitter();
+            foreach(var tool in tools)
+            {               
+                var info = string.Format("{0:D5} {1,-36} {2}", counter++, tool.FileName.WithoutExtension, tool); 
+                emitter.AppendLine(info);
+                channel.Row(info);
+            }
 
-        // }
-
+            var dir = Env.cd();
+            var file = FS.file($"{dir.FolderName}.tools", FileKind.List);
+            var dst = dir + file;
+            channel.FileEmit(emitter.Emit(), dst);
+        }
 
         public static ReadOnlySeq<EnvReport> reports(IWfChannel channel, IDbArchive dst)
         {

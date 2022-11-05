@@ -23,16 +23,11 @@ namespace Z0
     {
         class ServiceCache : AppServices<ServiceCache>
         {
-            public AppEnv AppEnv(IWfRuntime wf)
-                => Service<AppEnv>(wf); 
         }
 
         static ServiceCache Services = ServiceCache.Instance;
 
-        public static AppEnv AppEnv(this IWfRuntime wf)
-            => Services.AppEnv(wf); 
+        public static EnvModule Env(this IWfChannel channel)
+            => EnvModule.create(channel);
     }
-
-
-
 }

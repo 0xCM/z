@@ -14,11 +14,4 @@ namespace Z0
     {
 
     }
-
-    public interface IWfFlow<C,A,B> : IFlowCmd<A,B>, IWfCmd<C>
-        where C : ICmd<C>, new()
-    {
-        IActor IFlowCmd.Actor 
-            => default;
-    }
 }
