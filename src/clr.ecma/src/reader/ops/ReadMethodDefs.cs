@@ -29,7 +29,7 @@ namespace Z0
         public ref EcmaMethodRelations Read(MethodDefinitionHandle handle, ref EcmaMethodRelations dst)
         {
             var src = MD.GetMethodDefinition(handle);
-            dst.Token = Ecma.token(handle);
+            dst.Token = EcmaTokens.token(handle);
             dst.Attributes = src.Attributes;
             dst.ImplAttributes  = src.ImplAttributes;
             dst.Rva = src.RelativeVirtualAddress;

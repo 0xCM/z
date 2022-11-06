@@ -70,7 +70,7 @@ namespace Z0
                     var info = new EcmaFieldDefInfo();
                     ref readonly var handle = ref skip(handles,j);
                     reader.Row(handle, ref row);
-                    info.Token = Ecma.token(handle);
+                    info.Token = EcmaTokens.token(handle);
                     info.Component = name;
                     info.Attributes = row.Attributes;
                     info.CliSig = reader.ReadBlobData(row.Sig);

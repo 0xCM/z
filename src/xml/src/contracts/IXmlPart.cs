@@ -4,9 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Xml;
-
     public interface IXmlPart
     {
         XmlNodeType Kind {get;}

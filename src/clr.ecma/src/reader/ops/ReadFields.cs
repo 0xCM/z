@@ -23,7 +23,7 @@ namespace Z0
                 ref readonly var handle = ref skip(handles,i);
                 var entry = reader.GetFieldDefinition(handle);
                 ref var field = ref seek(dst,i);
-                field.Token = Ecma.token(handle);
+                field.Token = EcmaTokens.token(handle);
                 field.Offset = (uint)entry.GetOffset();
                 field.Rva = entry.GetRelativeVirtualAddress();
                 field.FieldName = MD.GetString(entry.Name);

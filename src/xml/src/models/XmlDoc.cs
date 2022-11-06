@@ -4,26 +4,25 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
     using System.Xml;
-
-    using static Root;
 
     partial struct XmlParts
     {
-        public readonly struct Comment : IXmlPart<NameOld>
+        public readonly struct XmlDoc : IXmlPart<string>
         {
-            public NameOld Value{get;}
+            public string Value {get;}
 
             [MethodImpl(Inline)]
-            public Comment(string value)
+            public XmlDoc(string value)
             {
                 Value = value;
             }
 
             public XmlNodeType Kind
-                => XmlNodeType.Comment;
+                => XmlNodeType.Document;
+
+            public override string ToString()
+                => "Document";
         }
     }
 }

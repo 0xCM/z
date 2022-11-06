@@ -8,7 +8,19 @@ namespace Z0
 
     [ApiHost]
     public readonly struct EcmaHandles
-    {        
+    {       
+        [MethodImpl(Inline), Op]
+        public static RuntimeTypeHandle typehandle(Module src, EcmaToken token)
+            => src.ModuleHandle.GetRuntimeTypeHandleFromMetadataToken((int)token);
+
+        [MethodImpl(Inline), Op]
+        public static RuntimeMethodHandle methodhandle(Module src, EcmaToken token)
+            => src.ModuleHandle.GetRuntimeMethodHandleFromMetadataToken((int)token);
+
+        [MethodImpl(Inline), Op]
+        public static RuntimeFieldHandle fieldhandle(Module src, EcmaToken token)
+            => src.ModuleHandle.GetRuntimeFieldHandleFromMetadataToken((int)token);
+
         [Op]
         public static void load(ReadOnlySpan<EcmaHandle> src, Span<EcmaHandleRow> dst)
         {
@@ -58,16 +70,15 @@ namespace Z0
         {
             var count = src.Length;
             for(var i=0u; i<count; i++)
-                seek(dst,i) = field(module, Ecma.token(skip(src,i)));
+                seek(dst,i) = field(module, EcmaTokens.token(skip(src,i)));
         }
-
 
         [Op]
         public static void types(ReadOnlySpan<Type> src, Module module, Span<EcmaHandle<RuntimeTypeHandle>> dst)
         {
             var count = src.Length;
             for(var i=0u; i<count; i++)
-                seek(dst,i) = type(module, Ecma.token(skip(src,i)));
+                seek(dst,i) = type(module, EcmaTokens.token(skip(src,i)));
         }
 
         [Op]
@@ -75,20 +86,20 @@ namespace Z0
         {
             var count = src.Length;
             for(var i=0u; i<count; i++)
-                seek(dst,i) = method(module, Ecma.token(skip(src,i)));
+                seek(dst,i) = method(module, EcmaTokens.token(skip(src,i)));
         }
 
         [MethodImpl(Inline), Op]
         public static EcmaHandle<RuntimeMethodHandle> method(Module src, EcmaToken token)
-            => new EcmaHandle<RuntimeMethodHandle>(ClrArtifactKind.Method, token, Ecma.methodhandle(src,token));
+            => new EcmaHandle<RuntimeMethodHandle>(ClrArtifactKind.Method, token, methodhandle(src,token));
 
         [MethodImpl(Inline), Op]
         public static EcmaHandle<RuntimeTypeHandle> type(Module src, EcmaToken token)
-            => new EcmaHandle<RuntimeTypeHandle>(ClrArtifactKind.Type, token, Ecma.typehandle(src,token));
+            => new EcmaHandle<RuntimeTypeHandle>(ClrArtifactKind.Type, token, typehandle(src,token));
 
         [MethodImpl(Inline), Op]
         public static EcmaHandle<RuntimeFieldHandle> field(Module src, EcmaToken token)
-            => new EcmaHandle<RuntimeFieldHandle>(ClrArtifactKind.Field, token, Ecma.fieldhandle(src,token));
+            => new EcmaHandle<RuntimeFieldHandle>(ClrArtifactKind.Field, token, fieldhandle(src,token));
 
         [MethodImpl(Inline), Op]
         public static EcmaHandle untype(in EcmaHandle<RuntimeMethodHandle> src)

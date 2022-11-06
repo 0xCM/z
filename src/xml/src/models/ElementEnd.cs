@@ -4,31 +4,24 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.Runtime.CompilerServices;
     using System.Xml;
-
-    using static Root;
 
     partial struct XmlParts
     {
-        public readonly struct XmlDocType : IXmlPart<string>
+        public readonly struct ElementEnd : IXmlPart<NameOld>
         {
-            public NameOld Name {get;}
+            public NameOld Value {get;}
 
-            public string Value {get;}
+            public XmlNodeType Kind => XmlNodeType.EndElement;
 
             [MethodImpl(Inline)]
-            public XmlDocType(string name, string value)
+            public ElementEnd(string value)
             {
-                Name = name;
                 Value = value;
             }
 
-            public XmlNodeType Kind
-                => XmlNodeType.DocumentType;
-
             public string Format()
-                => string.Format("<!DOCTYPE {0} [{1}]", Name, Value);
+                => string.Format("</{0}>", Value);
         }
     }
 }

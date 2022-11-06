@@ -55,7 +55,7 @@ namespace Z0
         {
             var src = Enums.details<E,T>();
             var count = src.Length;
-            var token = Ecma.token<E>();
+            var token = EcmaTokens.token<E>();
             var datatype = Enums.@base<E>();
             var description = string.Empty;
             var indices = alloc<uint>(count);

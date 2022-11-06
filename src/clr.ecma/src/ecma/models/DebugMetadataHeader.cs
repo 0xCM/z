@@ -5,8 +5,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     public readonly struct DebugMetadataHeader
     {
         public byte[] Id {get;}

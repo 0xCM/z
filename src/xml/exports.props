@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <ZXml>$(MsBuildThisFileDirectory)z0.xml.csproj</ZXml>
+  </PropertyGroup>
+</Project>

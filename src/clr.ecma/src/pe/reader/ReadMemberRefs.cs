@@ -11,9 +11,9 @@ namespace Z0
         public ref EcmaMemberRef ReadMemberRef(MemberReferenceHandle handle, ref EcmaMemberRef dst)
         {
             var src = MD.GetMemberReference(handle);
-            dst.Token = Ecma.token(handle);
+            dst.Token = EcmaTokens.token(handle);
             dst.Name = MD.GetString(src.Name);
-            dst.Parent = Ecma.token(src.Parent);
+            dst.Parent = EcmaTokens.token(src.Parent);
             dst.RefKind = (MemberRefKind)src.GetKind();
             dst.Sig = MD.GetBlobBytes(src.Signature);
             return ref dst;

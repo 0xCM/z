@@ -95,6 +95,7 @@
    <Import Project="$(MsBuildThisFileDirectory)src/validity/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/workflow/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/xml/exports.props"/>
 
 
 </Project>

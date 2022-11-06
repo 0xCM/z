@@ -32,7 +32,7 @@ namespace Z0
                         dst.Add(new MsilRow
                         {
                             MethodRva = (Address32)rva,
-                            Token = Ecma.token(method),
+                            Token = EcmaTokens.token(method),
                             ImageName = Source.FileName.Format(),
                             BodySize = body.Size,
                             LocalInit = body.LocalVariablesInitialized,
