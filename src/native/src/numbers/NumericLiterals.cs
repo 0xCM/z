@@ -22,7 +22,7 @@ namespace Z0
                 ref readonly var field = ref skip(fields,i);
                 var tc = Type.GetTypeCode(field.FieldType);
                 var vRaw = field.GetRawConstantValue();
-                dst.Add(numeric(b,field.Name, vRaw, BitRender.format(vRaw, tc)));
+                dst.Add(numeric(b,field.Name, vRaw, BoxedNumber.format(vRaw, tc)));
             }
             return dst.ToArray();
         }

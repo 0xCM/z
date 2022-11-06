@@ -66,7 +66,7 @@ namespace Z0
         public string Format()
         {
             if(Base == NumericBaseKind.Base2)
-                return BitRender.format(Data, Type.GetTypeCode(Data.GetType()));
+                return BoxedNumber.format(Data, Type.GetTypeCode(Data.GetType()));
             else
                 return Data.ToString();
         }
