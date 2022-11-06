@@ -18,10 +18,8 @@ namespace Z0
         }
 
         public NugetArchive()
-            : base(NUGET_PACKAGES())
+            : base(NUGET_PACKAGES().Root)
         {
         }
-    }   
-
-    
+    }       
 }

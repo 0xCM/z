@@ -4,13 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class DumpArchive : IDumpArchive
-    {
-        public DumpArchive(FolderPath root)
-        {
-            Root = root;
-        }
+    using static FS;
 
-        public FolderPath Root {get;}
+    partial class XTend
+    {
+        public static IRuntimeArchive RuntimeArchive(this Assembly src)
+            => Z0.RuntimeArchive.load(src);
     }
+
 }

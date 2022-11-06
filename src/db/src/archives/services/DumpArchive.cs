@@ -4,12 +4,17 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-     using System.IO.Compression;
-
-     using static sys;
-
-   public partial class Db 
+    public class DumpArchive : DbArchive<DumpArchive>, IDumpArchive
     {
+        public DumpArchive(FolderPath root)
+            : base(root)
+        {
+        }
 
+        public DumpArchive()
+            : base(FolderPath.Empty)
+        {
+
+        }
     }
 }

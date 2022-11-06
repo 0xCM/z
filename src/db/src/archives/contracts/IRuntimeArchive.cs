@@ -8,9 +8,6 @@ namespace Z0
 
     public interface IRuntimeArchive : IRootedArchive
     {
-        /// <summary>
-        /// All runtime-related files in the archive
-        /// </summary>
         Files RuntimeFiles()
              => Root.Files(false, Exe, Dll, Pdb, Json, Xml);
 

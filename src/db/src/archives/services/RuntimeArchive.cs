@@ -6,14 +6,7 @@ namespace Z0
 {
     using static FS;
 
-    partial class XTend
-    {
-        public static IRuntimeArchive RuntimeArchive(this Assembly src)
-            => Z0.RuntimeArchive.load(src);
-    }
-
-    [ApiHost]
-    public readonly struct RuntimeArchive : IRuntimeArchive
+    public class RuntimeArchive : DbArchive<RuntimeArchive>, IRuntimeArchive
     {
         public static IRuntimeArchive load()
             => new RuntimeArchive(FS.dir(RuntimeEnvironment.GetRuntimeDirectory()));
@@ -23,8 +16,6 @@ namespace Z0
 
         public static IRuntimeArchive load(Assembly src)
             => new RuntimeArchive(FS.path(src.Location).FolderPath);
-
-        public FolderPath Root {get;}
 
         public Files Files {get;}
 
@@ -40,10 +31,15 @@ namespace Z0
         public static RuntimeAssembly assembly(Assembly component, FilePath path)
             => new RuntimeAssembly(component, path);
 
+        public RuntimeArchive()
+        {
+            Files = Files.Empty;
+        }
+
         [MethodImpl(Inline)]
         public RuntimeArchive(FolderPath root)
+            : base(root)
         {
-            Root = root;
             Files = root.Files(false, Exe, Dll, Pdb, Json, Xml).Where(x => !x.Name.Contains("System.Private.CoreLib"));
         }
     }

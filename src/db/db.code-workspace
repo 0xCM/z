@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "../stitch"
+		},
+		{
+			"path": "../symbolics"
+		},
+		{
+			"path": "../numbers"
+		},
+		{
+			"path": "../alloc"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {}
+}

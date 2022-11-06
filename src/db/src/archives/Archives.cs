@@ -13,6 +13,12 @@ namespace Z0
         public static DbArchive archive(string src)
             => new DbArchive(FS.dir(src));
 
+        public static DbArchive archive(FolderPath root)
+            => new DbArchive(root);
+
+        public static DbArchive archive(Timestamp ts, DbArchive dst)
+            => dst.Scoped(ts.Format());
+
         public static FolderPath folder(string src)
             => FS.dir(src);
 
@@ -126,12 +132,6 @@ namespace Z0
 
         public static string identifier(FolderPath src)
             => src.Format(PathSeparator.FS).Replace(Chars.FSlash, Chars.Dot).Replace(Chars.Colon, Chars.Dot).Replace("..", ".");
-
-        public static DbArchive archive(FolderPath root)
-            => new DbArchive(root);
-
-        public static DbArchive archive(Timestamp ts, DbArchive dst)
-            => dst.Scoped(ts.Format());
 
         public static FileName timestamped(string name, FileExt ext)
             => FS.file(string.Format("{0}.{1}", name, (sys.timestamp()).Format()),ext);
