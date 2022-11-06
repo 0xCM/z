@@ -8,6 +8,20 @@ namespace Z0
 
     partial class EcmaEmitter
     {
+        public void EmitApiMetadump(IApiPack dst)
+            => EmitApiMetadump(dst.Metadata("metadump"));
+
+        public void EmitApiMetadump(IDbArchive dst)
+            => EmitMetadump(ApiMd.Parts, dst);
+
+        public void EmitMetadumps(CmdArgs args)
+        {
+            var src = ApiModules.create(FS.dir(args[0]));            
+            var dlls = src.ManagedDll().Where(path => !path.Path.Contains(".resources.dll")).Select(x => x.Path);
+            var exe = src.ManagedExe().Select(x => x.Path);
+            EmitMetadumps(Channel, src,AppDb.DbTargets("ecma/datasets"));                     
+        }
+
         public void EmitMetadumps(IWfChannel channel, FolderPath root, Deferred<FilePath> src, IDbArchive dst)
         {
             var @base = Archives.identifier(root);
@@ -32,7 +46,7 @@ namespace Z0
             var token = ExecToken.Empty;
             try
             {
-                if(EcmaFiles.valid(src))
+                if(EcmaReader.valid(src))
                 {
                     var flow = EmittingFile(dst);
                     using var stream = File.OpenRead(src.Name);

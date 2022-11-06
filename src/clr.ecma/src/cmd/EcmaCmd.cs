@@ -16,6 +16,17 @@ namespace Z0
 
         ApiMd ApiMd => Wf.ApiMd();
 
+
+        public static Outcome exec(IWfContext channel, CatalogAssemblies cmd)
+        {
+            var result = Outcome.Success;
+            var src = from file in cmd.Source.DbArchive().Enumerate("*.dll")
+                        where EcmaReader.valid(file)
+                        select file;            
+            var dst = cmd.Target.DbArchive();                        
+            return result;
+        }        
+        
         void RunCliJobs()
         {
             var root = Env.var(EnvVarKind.Process, EnvTokens.DOTNET_ROOT, FS.dir).Value;
@@ -40,9 +51,6 @@ namespace Z0
             EcmaEmitter.Emit(src, EcmaEmissionSettings.Default, dst);
         }
 
-        public static unsafe PEReader PeReader(MemorySeg src)
-            => new PEReader(src.BaseAddress.Pointer<byte>(), src.Size);
-
         static IApiPack Dst
             => ApiPacks.create();
 
@@ -63,65 +71,26 @@ namespace Z0
             }
         }
 
-        void EcmaEmit(Files src)
-        {
-            iter(src, path => EcmaEmit(Channel, path, AppDb.DbTargets("ecma/datasets")));
-        }
-
         [CmdOp("ecma/emit")]
-        void EcmaEmit(CmdArgs args)
-        {
-            var src = ApiModules.create(FS.dir(args[0]));            
-            var dlls = src.ManagedDll().Where(path => !path.Path.Contains(".resources.dll")).Select(x => x.Path);
-            var exe = src.ManagedExe().Select(x => x.Path);
-            EcmaEmitter.EmitMetadumps(Channel, src,AppDb.DbTargets("ecma/datasets"));                     
-        }
+        void EcmaEmitMetaDumps(CmdArgs args)
+            => EcmaEmitter.EmitMetadumps(args);
 
         [CmdOp("ecma/list")]
         void EcmaList(CmdArgs args)
-        {
-            var src = FS.dir(args[0]).DbArchive();
-            Channel.Write(src.Root);
-            iter(src.Enumerate(true, FileKind.Dll, FileKind.Exe), file =>{
-                if(EcmaFiles.load(file, out EcmaFile ecma))
-                {
-                    try
-                    {
-                        var reader = ecma.Reader();
-                        Channel.Row(ecma.Uri);
-                        foreach(var f in reader.ReadDocInfo())
-                            Channel.Write($"{f.ContentHash} | {f.Name}");                            
-                    }
-                    catch(Exception e)
-                    {
-                        Channel.Error(e);
-                    }
-                    finally
-                    {
-                        ecma.Dispose();
-                    }
-                }
-            },false);
-        }
+            => EcmaEmitter.EmitList(args);
 
         [CmdOp("ecma/emit/parts")]
         void EmitPartEcma()
         {
             var src = ApiModules.parts();
-            exec(true,
-                () => EcmaEmitter.EmitLocatedMetadata(src, AppDb.ApiTargets("ecma/hex").Delete(), 64),
-                () => EcmaEmitter.EmitAssemblyRefs(src, AppDb.ApiTargets("ecma").Delete()),
-                () => EcmaEmitter.EmitStrings(src, AppDb.ApiTargets("ecma/strings").Delete()),
-                () => EcmaEmitter.EmitRowStats(src, AppDb.ApiTargets("ecma").Table<EcmaRowStats>()),
-                () => EcmaEmitter.EmitMsilMetadata(src, AppDb.ApiTargets("ecma/msil.dat").Delete()),
-                () => EcmaEmitter.EmitBlobs(src, AppDb.ApiTargets("ecma/blobs").Delete()),
-                () => EcmaEmitter.EmitMetadumps(Channel, src, AppDb.ApiTargets("ecma/dumps").Delete()),
-                () => EcmaEmitter.EmitMemberRefs(src, AppDb.ApiTargets("ecma/members.refs").Delete()),
-                () => EcmaEmitter.EmitMethodDefs(src, AppDb.ApiTargets("ecma/methods.defs").Delete()),
-                () => {}
-            );
+            EcmaEmitter.EmitCatalogs(src);
         }
 
+        void EcmaEmit(CmdArgs args)
+        {
+            var src = FS.dir(args[0]);
+            var dst = FS.dir(args[1]);
+        }
         [CmdOp("ecma/emit/hex")]
         void EmitApiHex()
             => EcmaEmitter.EmitLocatedMetadata(ApiModules.parts(), AppDb.ApiTargets("ecma/hex"), 64);

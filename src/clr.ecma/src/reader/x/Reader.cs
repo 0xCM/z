@@ -4,12 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class EcmaEmitter
-    {
-        public void EmitApiMetadump(IApiPack dst)
-            => EmitApiMetadump(dst.Metadata("metadump"));
+    using static sys;
 
-        public void EmitApiMetadump(IDbArchive dst)
-            => EmitMetadump(ApiMd.Parts, dst);
+    partial class XTend
+    {
+        public static EcmaReader Reader(this EcmaFile src)
+            => EcmaReader.create(src);
     }
+
 }
