@@ -6,6 +6,7 @@
     <MsExtVer>6.0.0</MsExtVer>
     <MsDiaRuntimeVer>2.2.332302</MsDiaRuntimeVer>
     <DotNetSdkVer>6.0.303</DotNetSdkVer>
+    <NugetVer>6.3.1</NugetVer>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +15,15 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>  
 
+    <PackageReference Include="NuGet.Common" Version="$(NugetVer)" />    
+    <PackageReference Include="NuGet.Commands" Version="$(NugetVer)" />
+    <PackageReference Include="NuGet.Frameworks" Version="$(NugetVer)" />
+    <PackageReference Include="NuGet.Packaging" Version="$(NugetVer)" />
+    <PackageReference Include="NuGet.Configuration" Version="$(NugetVer)" />
+    <PackageReference Include="NuGet.ProjectModel" Version="$(NugetVer)" />
+    <PackageReference Include="NuGet.LibraryModel" Version="$(NugetVer)" />
+    <PackageReference Include="NuGet.Protocol" Version="$(NugetVer)" />
+    
     <PackageReference Include="Microsoft.FileFormats" Version="1.0.352801" />
     <PackageReference Include="Microsoft.SymbolStore" Version="1.0.352801" />
 
