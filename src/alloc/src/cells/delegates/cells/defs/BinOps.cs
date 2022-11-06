@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct CellDelegates
+    partial class CellDelegates
     {
         [Free]
         public delegate bit BinaryOp1(bit a, bit b);

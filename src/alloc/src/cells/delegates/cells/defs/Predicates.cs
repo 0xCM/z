@@ -4,21 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.Reflection.Emit;
-
-    [ApiHost]
-    public readonly partial struct CellDelegates
+    partial class CellDelegates
     {
-        const NumericKind Closure = Integers;
-
-        [MethodImpl(Inline)]
-        public static CellDelegate define(OpIdentity id, MemoryAddress src, DynamicMethod enclosure, Delegate dynop)
-            => CellDelegate.define(id, src, enclosure, dynop);
-
-        [MethodImpl(Inline)]
-        public static CellDelegate define(Identifier id, MemoryAddress src, DynamicMethod enclosure, Delegate dynop)
-            => CellDelegate.define(id, src, enclosure, dynop);
-
         [Free]
         public delegate bit BinaryPredicate1(bit a, bit b);
 
@@ -69,5 +56,6 @@ namespace Z0
 
         [Free]
         public delegate Bit32 BinaryPredicate512(Cell512 a, Cell512 b);
+
     }
 }

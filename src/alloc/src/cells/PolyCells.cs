@@ -4,6 +4,16 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+
+    public readonly struct CellIO
+    {
+        [MethodImpl(Inline), Op]
+        public static CellIO<T> io<T>(in Cells<T> src, in Cells<T> dst)
+            where T : unmanaged
+                => new CellIO<T>(src,dst);
+    }
+
+
     [ApiHost]
     public static class PolyCells
     {

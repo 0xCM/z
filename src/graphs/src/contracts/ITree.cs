@@ -4,6 +4,21 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    [Free]
+    public interface IBranch : ITree
+    {
+
+    }
+
+    [Free]
+    public interface IBranch<B,L> : IBranch, ITree<B,L>
+        where B : IBranch
+        where L : ILeaf
+    {
+
+    }
+        
+    [Free]
     public interface ITree
     {
         Index<IBranch> Branches {get;}
@@ -11,6 +26,7 @@ namespace Z0
         Index<ILeaf> Leaves {get;}
     }
 
+    [Free]
     public interface ITree<T> : ITree
         where T : ILeaf
     {

@@ -6,7 +6,6 @@ namespace Z0
 {
     using static sys;
 
-    [StructLayout(LayoutKind.Sequential, Size = (int)Size, Pack=1)]
     public struct Cell512<T> : IDataCell<Cell512<T>,W512,ByteBlock64>
         where T : unmanaged
     {

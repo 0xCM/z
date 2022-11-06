@@ -4,10 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
     using static Cells;
 
-    partial struct CellDelegates
+    partial class CellDelegates
     {
         /// <summary>
         /// Creates a fixed 16-bit binary operator from caller-supplied delegate

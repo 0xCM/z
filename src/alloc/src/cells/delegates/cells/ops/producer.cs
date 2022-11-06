@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct CellDelegates
+    partial class CellDelegates
     {
         [MethodImpl(NotInline), Op]
         public static Producer1 producer(Producer<bit> f)

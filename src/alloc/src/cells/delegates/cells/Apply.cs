@@ -11,22 +11,22 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector256<T> Apply<T>(this UnaryOp256 f, Vector256<T> x)
             where T : unmanaged
-                => CellOps.apply(f,x);
+                => apply(f,x);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector128<T> Apply<T>(this UnaryOp128 f, Vector128<T> x)
             where T : unmanaged
-                => CellOps.apply(f,x);
+                => apply(f,x);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector128<T> Apply<T>(this BinaryOp128 f, Vector128<T> x, Vector128<T> y)
             where T : unmanaged
-                => CellOps.apply(f,x,y);
+                => apply(f,x,y);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector256<T> Apply<T>(this BinaryOp256 f, Vector256<T> x, Vector256<T> y)
             where T : unmanaged
-                => CellOps.apply(f,x,y);
+                => apply(f,x,y);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector512<T> Apply<T>(this UnaryOp512 f, Vector512<T> x)

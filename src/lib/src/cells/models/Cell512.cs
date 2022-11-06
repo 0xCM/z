@@ -8,8 +8,6 @@ namespace Z0
 
     using F = Cell512;
 
-    using api = Cells;
-
     public struct Cell512 : IDataCell<Cell512,W512,Vector512<ulong>>
     {
         public const uint Width = 512;

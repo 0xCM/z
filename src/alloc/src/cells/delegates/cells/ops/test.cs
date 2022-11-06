@@ -4,9 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static CellDelegates;
-
-    partial class Cells
+    partial class CellDelegates
     {
         [MethodImpl(Inline), Op]
         public static bit test(UnaryPredicate8 f, Cell8 a)

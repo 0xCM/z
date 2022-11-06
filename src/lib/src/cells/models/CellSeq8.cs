@@ -8,19 +8,6 @@ namespace Z0
     using S = CellSeq8;
     using I = System.UInt32;
 
-    public readonly struct CellIO
-    {
-        [MethodImpl(Inline), Op]
-        public static CellIO<T> io<T>(in Cells<T> src, in Cells<T> dst)
-            where T : unmanaged
-                => new CellIO<T>(src,dst);
-    }
-
-    public readonly struct CellSeq
-    {
-
-    }
-
     /// <summary>
     /// Defines an indexed sequence of <see cref='C'/> cells
     /// </summary>

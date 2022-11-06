@@ -6,13 +6,8 @@ namespace Z0
 {
     using static sys;
 
-    using static CellDelegates;
-
-    [ApiHost]
-    public readonly struct CellOps
+    partial class CellDelegates
     {
-        const NumericKind Closure = Integers;
-
         [MethodImpl(Inline), Op]
         public static Cell8 apply(UnaryOp8 f, Cell8 a)
             => f(a);
@@ -165,7 +160,6 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector512<T> apply<T>(BinaryOp512 f, Vector512<T> x, Vector512<T> y)
             where T : unmanaged
-                => f(x.ToCell(), y.ToCell()).ToVector<T>();
-
-   }
+                => f(x.ToCell(), y.ToCell()).ToVector<T>();    
+    }
 }

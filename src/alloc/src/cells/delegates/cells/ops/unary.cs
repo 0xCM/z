@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct CellDelegates
+    partial class CellDelegates
     {
         /// <summary>
         /// Creates a binary cell operator determined by a source delegate and specified cell width
