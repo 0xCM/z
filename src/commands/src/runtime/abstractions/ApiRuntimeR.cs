@@ -34,6 +34,6 @@ namespace Z0
 
         protected static RenderPattern<LogSettings> ConfiguredAppLogs => "Configured app logs:{0}";
 
-        protected static RenderPattern<IWfEmissionLog> ConfiguredEmissionLogs => "Configured emisson logs:{0}";
+        protected static RenderPattern<IWfEmissions> ConfiguredEmissionLogs => "Configured emisson logs:{0}";
     }
 }

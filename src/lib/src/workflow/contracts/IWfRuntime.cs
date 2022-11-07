@@ -28,9 +28,9 @@ namespace Z0
 
         ExecToken Completed<T>(WfExecFlow<T> src);
 
-        IWfEmissionLog Emissions {get;}
+        IWfEmissions Emissions {get;}
 
-        void RedirectEmissions(IWfEmissionLog dst);
+        void RedirectEmissions(IWfEmissions dst);
 
         WfEmit Emitter {get;}
 

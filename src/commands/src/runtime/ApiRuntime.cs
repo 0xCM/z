@@ -145,8 +145,7 @@ namespace Z0
             {
                 ref readonly var type = ref types[i];
                 var factories = type.PublicInstanceMethods().Concrete().Where(m => m.ReturnType.Reifies<IAppService>());
-                if(factories.Length != 0)
-                    dst.Add(new AppServiceSpec(type,factories));
+                dst.Add(new AppServiceSpec(type,factories));
             }
 
             return dst.Array();

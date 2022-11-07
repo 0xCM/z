@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class KindedFiles : WfIterator<FileUri>
+    public class KindedFiles : ChannelIterator<FileUri>
     {
         readonly Func<IEnumerable<FileUri>> Selector;
 

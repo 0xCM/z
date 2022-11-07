@@ -18,6 +18,6 @@ namespace Z0
 
         public WfHost Host;
 
-        public IWfEmissionLog EmissionLog;
+        public IWfEmissions EmissionLog;
     }
 }

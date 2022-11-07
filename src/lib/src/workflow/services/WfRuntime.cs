@@ -17,7 +17,7 @@ namespace Z0
 
         public LogLevel Verbosity {get; private set;}
 
-        public IWfEmissionLog Emissions {get; private set;}
+        public IWfEmissions Emissions {get; private set;}
 
         public WfEmit Emitter {get;}
 
@@ -45,7 +45,7 @@ namespace Z0
             get => EventBroker.Sink;
         }
 
-        public void RedirectEmissions(IWfEmissionLog dst)
+        public void RedirectEmissions(IWfEmissions dst)
         {
             Emissions.Close();
             Emissions = dst;

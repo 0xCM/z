@@ -1,10 +1,9 @@
 <Project>
   <ItemGroup>
-     <ProjectReference Include="$(ZLib)"/>
-     <ProjectReference Include="$(Process)"/>
      <ProjectReference Include="$(Db)"/>
      <ProjectReference Include="$(Assets)"/>
      <ProjectReference Include="$(Polyrand)"/>
      <ProjectReference Include="$(Commands)"/>
+     <ProjectReference Include="$(Pipes)"/>
   </ItemGroup>
 </Project>

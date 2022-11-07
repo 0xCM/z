@@ -4,9 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static FileFlows;
-    
-    partial class Tools
+    using K = FileKind;
+
+    using static Tools;
+
+    partial class FileFlows
     {
         public static McCmd cmd(AsmToMcAsm kind, FilePath src, FilePath dst)
         {
@@ -33,6 +35,18 @@ namespace Z0
             cmd.OutputAsmVariant = 1;
             cmd.PrintImmHex = 1;
             return cmd;
+        }
+
+        /// <summary>
+        /// *.ll -> *ll.asm
+        /// </summary>
+        public class LlToAsm : FileFlow<LlToAsm,Llc>
+        {
+            public LlToAsm()
+                : base(llc, K.Llir, K.LlAsm)
+            {
+
+            }
         }
     }
 }

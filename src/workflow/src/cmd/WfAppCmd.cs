@@ -8,6 +8,7 @@ namespace Z0
 
     using static sys;
 
+
     public class WfAppCmd : WfAppCmd<WfAppCmd>
     {
         ArchiveRegistry ArchiveRegistry => Wf.ArchiveRegistry();
@@ -161,7 +162,7 @@ namespace Z0
         void ShowThread()
             => Write(string.Format("ThreadId:{0}", Kernel32.GetCurrentThreadId()));
 
-        [CmdOp("env/tools")]
+        [CmdOp(EnvModule.Names.EnvTools)]
         void EnvTools(CmdArgs args)
             => Env.tools(Channel, args);
 
@@ -199,7 +200,8 @@ namespace Z0
         [CmdOp("services")]
         void GetServices()
         {
-            Write(ApiRuntime.services(ApiCatalog.Components));
+            var src = ApiModules.parts();
+            Write(ApiRuntime.services(src));
         }
 
         [CmdOp("env/id")]

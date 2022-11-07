@@ -19,11 +19,14 @@ namespace Z0
             _Factories = factories;
         }
 
-        public ref readonly Assembly Owner => ref _Owner;
+        public ref readonly Assembly Owner 
+            => ref _Owner;
 
-        public ref readonly Type Host => ref _Host;
+        public ref readonly Type Host 
+            => ref _Host;
 
-        public ref readonly ReadOnlySeq<MethodInfo> Factories => ref _Factories;
+        public ref readonly ReadOnlySeq<MethodInfo> Factories 
+            => ref _Factories;
 
         public virtual string Format()
         {

@@ -30,14 +30,14 @@ namespace Z0
             return ref dst;
         }
 
-        public static IWfEmissionLog emission(Assembly src, Timestamp ts)
-            => new WfEmissionLog(emissions(src,ts));
+        public static IWfEmissions emission(Assembly src, Timestamp ts)
+            => new EmissionLog(emissions(src,ts));
 
         static FilePath emissions(Assembly src, Timestamp ts)
             => AppSettings.Default.DbRoot().Scoped($"logs/{src.PartName()}").Path(FS.file($"{src.PartName()}.emissions.{ts}.csv"));
 
-        public static IWfEmissionLog emission(FilePath dst)
-            => new WfEmissionLog(dst);
+        public static IWfEmissions emission(FilePath dst)
+            => new EmissionLog(dst);
 
         [MethodImpl(Inline), Op]
         public static IWorkerLog worker(LogSettings config)

@@ -6,7 +6,7 @@ namespace Z0
 {
     using System.IO;
 
-    class WfEmissionLog : IWfEmissionLog
+    class EmissionLog : IWfEmissions
     {
         readonly FileStream Stream;
 
@@ -16,7 +16,7 @@ namespace Z0
 
         bool Closed;
 
-        public WfEmissionLog(FilePath dst)
+        public EmissionLog(FilePath dst)
         {
             Closed = false;
             Target = dst;

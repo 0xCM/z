@@ -2,11 +2,12 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+[assembly: PartId("pipes")]
+
+namespace Z0.Parts
 {
-    [LiteralProvider(env)]
-    public class EnvNames
+    public sealed class Pipes : Part<Pipes>
     {
-        public const string EnvTools = "env/tools";
+
     }
 }

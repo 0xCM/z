@@ -4,6 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static EnvModule.Commands;
+    using static EnvModule.Records;
+
     public class EnvModule : WfModule<EnvModule>
     {
         protected override Task<ExecToken> Start<C>(C cmd)
@@ -11,7 +14,13 @@ namespace Z0
             var flow = Channel.Running();
             try
             {
-                
+                switch(cmd)
+                {
+                    case ListTools spec:
+                        
+                    break;
+
+                }
             }
             catch(Exception e)
             {
@@ -21,9 +30,15 @@ namespace Z0
             return sys.start(() => Channel.Ran(flow));            
         }
 
+        [LiteralProvider(env)]
+        public class Names
+        {
+            public const string EnvTools = "env/tools";
+        }
+
         public class Commands
         {
-            [Cmd(EnvNames.EnvTools)]
+            [Cmd(Names.EnvTools)]
             public record struct ListTools(EnvVarKind kind, FileUri Target);
         }
 

@@ -6,9 +6,9 @@ namespace Z0
 {
     using static sys;
 
-    public abstract class WfIterator<T>
+    public abstract class ChannelIterator<T>
     {
-        protected WfIterator(IWfChannel channel)
+        protected ChannelIterator(IWfChannel channel)
         {
             Channel = channel;
         }

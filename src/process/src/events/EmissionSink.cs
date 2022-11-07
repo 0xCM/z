@@ -12,13 +12,13 @@ namespace Z0
 
         object Locker;
 
-        internal EmissionSink(ConcurrentDictionary<EventId,IWfEvent> storage)
+        public EmissionSink(ConcurrentDictionary<EventId,IWfEvent> storage)
         {
             Storage = storage;
             Locker = new();
         }
 
-        internal EmissionSink()
+        public EmissionSink()
             : this(new())
         {
         }
