@@ -20,6 +20,11 @@ namespace Z0
 
         EnvModule AppEnv => Channel.Env();
 
+
+        [CmdOp("version")]
+        void Version()
+            => Channel.Row($"[z0.{ExecutingPart.Name}-v{ExecutingPart.Assembly.AssemblyVersion()}]({ExecutingPart.Assembly.Path().ToUri()})");
+
         [CmdOp("cmd/redirect")]
         void Redirect(CmdArgs args)
             => ProcessControl.redirect(Channel, args);

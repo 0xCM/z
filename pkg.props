@@ -24,8 +24,8 @@
     <PackageReference Include="NuGet.LibraryModel" Version="$(NugetVer)" />
     <PackageReference Include="NuGet.Protocol" Version="$(NugetVer)" />
     
-    <PackageReference Include="Microsoft.FileFormats" Version="1.0.352801" />
-    <PackageReference Include="Microsoft.SymbolStore" Version="1.0.352801" />
+    <PackageReference Include="Microsoft.FileFormats" Version="1.0.353101" />
+    <PackageReference Include="Microsoft.SymbolStore" Version="1.0.353101" />
 
     <PackageReference Include="Microsoft.Diagnostics.Runtime" Version="2.2.332302" />
     <PackageReference Include="Microsoft.Diagnostics.Tracing.TraceEvent" Version="2.0.44" />
