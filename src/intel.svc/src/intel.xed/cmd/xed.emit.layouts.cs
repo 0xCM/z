@@ -7,7 +7,7 @@ namespace Z0
     using static core;
     using static XedRules;
 
-    partial class AsmCoreCmd
+    partial class XedCmd
     {
         [CmdOp("xed/emit/layouts")]
         Outcome EmitLayouts(CmdArgs args)

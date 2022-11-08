@@ -11,10 +11,6 @@ namespace Z0
     {
         WfScripts Scripts => Wf.ToolScripts();
 
-        AsmObjects AsmObjects => Wf.AsmObjects();
-
-        XedDisasmSvc XedDisasm => Wf.XedDisasmSvc();
-
         CoffServices Coff => Wf.CoffServices();
 
         public FilePath AsmSyntaxTable(ProjectId project)

@@ -6,18 +6,9 @@ namespace Z0
 {
     using Asm;
     using static sys;
-    using static XedRules;
 
     public partial class AsmCoreCmd : WfAppCmd<AsmCoreCmd>
     {
-        static XedRuntime Xed;
-
-        XedPaths XedPaths => Xed.Paths;
-
-        XedDb XedDb => Xed.XedDb;
-
-        IntelSdm Sdm => Wf.IntelSdm();
-
         AsmRegSets Regs => Service(AsmRegSets.create);
 
         StanfordAsmCatalog StanfordCatalog => Wf.StanfordCatalog();
@@ -53,8 +44,5 @@ namespace Z0
 
             return true;
         }
-
-        ref readonly Index<InstPattern> Patterns
-            => ref Xed.Views.Patterns;
     }
 }

@@ -7,7 +7,7 @@ namespace Z0
     using static Asm.SdmModels;
     using static sys;
 
-    partial class AsmCoreCmd
+    partial class IntelSdmCmd
     {
         [CmdOp("sdm/markers")]
         Outcome SdmMarkers(CmdArgs args)

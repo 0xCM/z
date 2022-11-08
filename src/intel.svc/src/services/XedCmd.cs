@@ -4,14 +4,33 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using Asm;
+
     using static sys;
     using static XedDisasm;
+    using static XedRules;
 
-    public class XedCmd : WfAppCmd<XedCmd>
+    public partial class XedCmd : WfAppCmd<XedCmd>
     {
+        //static XedRuntime Xed;
+
+        AsmObjects AsmObjects => Wf.AsmObjects();
+
+        //XedDisasmSvc XedDisasm => Wf.XedDisasmSvc();
+
+        XedPaths XedPaths => Xed.Paths;
+
+        XedDb XedDb => Xed.XedDb;
+
+        IntelSdm Sdm => Wf.IntelSdm();
+
+
+        ref readonly Index<InstPattern> Patterns
+            => ref Xed.Views.Patterns;
+
         XedRuntime Xed => GlobalServices.Instance.Injected<XedRuntime>();
 
-        XedPaths XedPaths => Wf.XedPaths();
+        //XedPaths XedPaths => Wf.XedPaths();
 
         [CmdOp("project/xed/etl")]
         void XedCollect()

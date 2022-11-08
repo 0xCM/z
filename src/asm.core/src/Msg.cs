@@ -4,12 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XedModels;
 
     [ApiComplete]
     struct Msg
     {
-        public static MsgPattern<ChipCode> DuplicateChipCode => "Duplicate chip code {0}";
 
         public static MsgPattern<string> ChipCodeNotFound => "Code for chip {0} not found";
 

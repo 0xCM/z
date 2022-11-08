@@ -4,7 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class ProjectCmd
+    using Asm;
+
+    public partial class IntelSdmCmd : WfAppCmd<IntelSdmCmd>
     {
+        IntelSdm Sdm => Wf.IntelSdm();
     }
 }

@@ -9,8 +9,19 @@ namespace Z0
     using static XedFields;
     using static XedDisasmModels;
 
-    partial class AsmCoreCmd
+    partial class XedCmd
     {
+        [CmdOp("project/etl")]
+        void Etl()
+            => Etl(Project());
+
+        public void Etl(IProjectWorkspace project)
+        {
+            var context = Projects.context(project);
+            AsmObjects.RunEtl(context);
+            Xed.Disasm.Collect(context);
+        }
+                
         [CmdOp("xed/disasm/check")]
         Outcome DisasmCheck(CmdArgs args)
         {

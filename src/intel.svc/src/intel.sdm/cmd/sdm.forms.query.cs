@@ -6,7 +6,7 @@ namespace Z0
 {
     using Asm;
     
-    partial class AsmCoreCmd
+    partial class IntelSdmCmd
     {
         [CmdOp("sdm/check/opcodes")]
         Outcome CheckAsmOpCodes(CmdArgs args)
