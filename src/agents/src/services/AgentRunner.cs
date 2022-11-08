@@ -6,7 +6,7 @@ namespace Z0
 {
     public class AgentRunner : IDisposable
     {
-        public static void run(EventSignal dst)
+        public static void run(WfEventSignal dst)
         {
             var runner = new AgentRunner(dst, new AgentContext(SystemEventWriter.Log));
             runner.Run();
@@ -14,13 +14,13 @@ namespace Z0
 
         AgentContext Context;
 
-        EventSignal Signal;
+        WfEventSignal Signal;
 
         AgentComplex Complex;
 
         IAgentControl Control;
 
-        internal AgentRunner(EventSignal signal, AgentContext context)
+        internal AgentRunner(WfEventSignal signal, AgentContext context)
         {
             Signal = signal;
             Context = context;

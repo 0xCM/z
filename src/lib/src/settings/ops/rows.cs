@@ -10,7 +10,7 @@ namespace Z0
     {
         public static SettingLookup rows(FilePath src)
         {
-            var formatter = Tables.formatter<Setting>();
+            var formatter = CsvChannels.formatter<Setting>();
             var data = src.ReadLines(true);
             var dst = sys.alloc<Setting>(data.Length - 1);
             for(var i=1; i<data.Length; i++)

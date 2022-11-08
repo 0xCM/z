@@ -8,7 +8,7 @@ namespace Z0
     {
         public static IEventSink BlackHole => default(DevNull);
 
-        public void Deposit(IWfEvent src){ }
+        public void Deposit(IEvent src){ }
 
         public void Dispose(){ }
     }

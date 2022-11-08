@@ -6,37 +6,37 @@ namespace Z0
 {
     using static sys;
 
-    public sealed class EventQueue : IEventSink, IEventEmitter
+    public sealed class WfEventQueue : IEventSink, IEventEmitter
     {
-        public static EventQueue allocate(Type host)
-            => new EventQueue(host);
+        public static WfEventQueue allocate(Type host)
+            => new WfEventQueue(host);
 
-        public static EventQueue allocate(Type host, Action<IWfEvent> receiver)
-            => new EventQueue(host, receiver);
+        public static WfEventQueue allocate(Type host, Action<IEvent> receiver)
+            => new WfEventQueue(host, receiver);
 
-        readonly ConcurrentQueue<IWfEvent> Storage = new();
+        readonly ConcurrentQueue<IEvent> Storage = new();
 
-        readonly Action<IWfEvent> Receiver;
+        readonly Action<IEvent> Receiver;
 
-        readonly EventSignal Signal;
+        readonly WfEventSignal Signal;
 
         readonly Type Host;
 
-        internal EventQueue(Type host)
+        internal WfEventQueue(Type host)
         {
             Host = host;
             Receiver = e => {};
             Signal = Events.signal(this, Host);
         }
 
-        internal EventQueue(Type host, Action<IWfEvent> receiver)
+        internal WfEventQueue(Type host, Action<IEvent> receiver)
         {
             Host = host ?? GetType();
             Receiver = receiver;
             Signal = Events.signal(this, Host);
         }
 
-        public void Deposit(IWfEvent e)
+        public void Deposit(IEvent e)
         {
             if(e != null)
             {
@@ -55,7 +55,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public bool Next(out IWfEvent e)
+        public bool Next(out IEvent e)
             => Storage.TryDequeue(out e);
     }
 }

@@ -60,7 +60,7 @@ namespace Z0
         {
             var data = src.Values;
             iter(data, x => channel.Row(x.Uri.Name));
-            CsvEmitters.emit(channel, data, dst);
+            CsvChannels.emit(channel, data, dst);
         }
 
         public static CmdUriSeq uris<S>(IWfDispatcher src)

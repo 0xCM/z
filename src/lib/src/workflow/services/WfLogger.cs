@@ -6,7 +6,7 @@ namespace Z0
 {
     using System.IO;
 
-    public struct WfEventLog : IWfEventLog
+    struct WfLogger : IEventSink, ISink<IEvent>, ISink<IAppMsg>, IDisposable
     {
         public FilePath StatusPath {get;}
 
@@ -14,7 +14,7 @@ namespace Z0
 
         readonly FileStream Status;
 
-        public WfEventLog(LogSettings config)
+        public WfLogger(LogSettings config)
         {
             StatusPath = config.StatusPath;
             ErrorPath = config.ErrorPath;
@@ -34,7 +34,7 @@ namespace Z0
             => term.print(src);
 
         [MethodImpl(Inline)]
-        void Display(IAppEvent src)
+        void Display(IEvent src)
             => term.print(src);
 
         [MethodImpl(Inline)]
@@ -62,7 +62,7 @@ namespace Z0
             }
         }
 
-        void Emit(IAppEvent e)
+        void Emit(IEvent e)
         {
             Display(e);
 
@@ -78,20 +78,20 @@ namespace Z0
             }
         }
 
-        [MethodImpl(Inline)]
-        public void Deposit(IAppEvent e)
-            => Emit(e);
+        // [MethodImpl(Inline)]
+        // public void Deposit(IEvent e)
+        //     => Emit(e);
 
-        public void Deposit(object src)
-        {
-            if(src is IWfEvent e)
-                Deposit(e);
-            else if(src is IAppMsg m)
-                Deposit(m);
-        }
+        // public void Deposit(object src)
+        // {
+        //     if(src is IWfEvent e)
+        //         Deposit(e);
+        //     else if(src is IAppMsg m)
+        //         Deposit(m);
+        // }
 
         [MethodImpl(Inline)]
-        public void Deposit(IWfEvent e)
+        public void Deposit(IEvent e)
         {
             Display(e);
 

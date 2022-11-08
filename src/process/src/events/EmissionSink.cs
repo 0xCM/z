@@ -6,13 +6,13 @@ namespace Z0
 {
     using System.Linq;
 
-    public class EmissionSink : IEmissionSink<EmissionSink>
+    public class EmissionSink : IEventSink
     {
-        readonly ConcurrentDictionary<EventId,IWfEvent> Storage;
+        readonly ConcurrentDictionary<EventId,IEvent> Storage;
 
         object Locker;
 
-        public EmissionSink(ConcurrentDictionary<EventId,IWfEvent> storage)
+        public EmissionSink(ConcurrentDictionary<EventId,IEvent> storage)
         {
             Storage = storage;
             Locker = new();
@@ -23,10 +23,10 @@ namespace Z0
         {
         }
 
-        public void Deposit(IWfEvent src)
+        public void Deposit(IEvent src)
             => Storage.TryAdd(src.EventId, src);
 
-        public ReadOnlySpan<IWfEvent> Clear()
+        public ReadOnlySpan<IEvent> Clear()
         {
             lock(Locker)
             {

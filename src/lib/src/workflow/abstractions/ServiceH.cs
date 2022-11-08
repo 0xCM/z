@@ -26,7 +26,7 @@ namespace Z0
 
         public Type HostType => typeof(H);
 
-        EventSignal Signal;
+        WfEventSignal Signal;
 
         public void Init(IEventSink sink)
         {

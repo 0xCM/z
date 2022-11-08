@@ -4,9 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [Free]
-    public interface IWfEventLog : IEventSink, ISink<IAppEvent>, ISink<IAppMsg>, ISink<IWfEvent>, IDisposable
+    public class TableReaders
     {
-
+        public static TableReader<T> reader<T>(FilePath src, RowParser<T> parser, bool header = true)
+            where T : struct
+                => new TableReader<T>(src, parser, header);
     }
 }

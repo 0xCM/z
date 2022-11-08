@@ -4,8 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IEvent : IChronic, IExpr
+    public interface IEvent : IChronic, IExpr, INullary
     {
+        EventId EventId {get;}
+
         FlairKind Flair
             => FlairKind.Status;
 
@@ -13,7 +15,7 @@ namespace Z0
             => Flair == FlairKind.Error;
     }
 
-    public interface IEvent<E> : IEvent
+    public interface IEvent<E> : IEvent, INullary<E>
         where E : IEvent<E>, new()
     {
 
@@ -37,17 +39,5 @@ namespace Z0
     public interface IAppEvent : IEvent
     {
 
-    }
-
-    /// <summary>
-    /// Characterizes a reified application event
-    /// </summary>
-    /// <typeparam name="F">The reification type</typeparam>
-    [Free]
-    public interface IAppEvent<F> : IAppEvent, INullary<F>, IChronic
-        where F : IAppEvent<F>, new()
-    {
-        F INullary<F>.Zero
-            => new F();
     }
 }

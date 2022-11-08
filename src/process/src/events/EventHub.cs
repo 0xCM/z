@@ -16,7 +16,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public void Subscribe<E>(E e, EventReceiver receiver)
-            where E : struct, IWfEvent
+            where E : struct, IEvent
                 => api.subscribe(this, receiver, e);
 
         [MethodImpl(Inline)]
@@ -25,7 +25,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public ref readonly E Broadcast<E>(in E e)
-            where E : struct, IWfEvent
+            where E : struct, IEvent
                 => ref api.broadcast(this, e);        
     }
 }

@@ -8,7 +8,7 @@ namespace Z0
     /// Defines a sink that forwards deposits to a receiver
     /// </summary>
     public readonly struct EventRelay<E> : ISink<E>
-        where E : IAppEvent
+        where E : IEvent
     {
         readonly Action<E> Receiver;
 

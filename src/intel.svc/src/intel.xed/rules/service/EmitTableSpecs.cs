@@ -12,7 +12,7 @@ namespace Z0
 
         public void EmitTableSpecs(RuleTables src)
         {
-            var formatter = Tables.formatter<TableDefRow>();
+            var formatter = CsvChannels.formatter<TableDefRow>();
             ref readonly var specs = ref src.Specs();
             ref readonly var criteria = ref src.Criteria();
             using var emitter = XedPaths.RuleSpecs().AsciEmitter();

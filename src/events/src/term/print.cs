@@ -45,15 +45,7 @@ namespace Z0
         /// Writes formattables to the console in a contiguous block
         /// </summary>
         /// <param name="content">The content to print</param>
-        public static void print<F>(F src)
-            where F : ITextual
-                => T.WriteLine(src, FlairKind.Status);
-
-        /// <summary>
-        /// Writes formattables to the console in a contiguous block
-        /// </summary>
-        /// <param name="content">The content to print</param>
-        public static void print(IAppEvent e)
+        public static void print(IEvent e)
             => T.WriteLine(e.Format(), e.Flair);
 
         /// <summary>

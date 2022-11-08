@@ -16,7 +16,7 @@ namespace Z0
 
         protected IPolySource Random;
 
-        readonly EventQueue Queue;
+        readonly WfEventQueue Queue;
 
         readonly string SvcName;
 
@@ -27,7 +27,7 @@ namespace Z0
             Checkers.methods(HostType,methods);
             Methods = methods;
             CheckSpecs = Methods.Keys.ToArray();
-            Queue = EventQueue.allocate(GetType(), EventRaised);
+            Queue = WfEventQueue.allocate(GetType(), EventRaised);
         }
 
         FileName FileName(string suffix, FileKind kind)
@@ -53,10 +53,10 @@ namespace Z0
         ref readonly Index<string> IChecker.Specs
             => ref CheckSpecs;
 
-        protected void Raise(IWfEvent e)
+        protected void Raise(IEvent e)
             => Queue.Deposit(e);
 
-        void EventRaised(IWfEvent e)
+        void EventRaised(IEvent e)
         {
 
         }

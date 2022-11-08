@@ -11,7 +11,7 @@ namespace Z0
 
         public RecordParser(IMultiParser parser)
         {
-            Parser = new RecordParser(Tables.reflected(typeof(T)), parser);
+            Parser = new RecordParser(TableConvention.reflected(typeof(T)), parser);
         }
 
         public Outcome Parse(string src, out T dst)

@@ -100,7 +100,7 @@ namespace Z0
         {
             var src = ImageMemory.modules(ExecutingPart.Process);
             var dst = AppDb.AppData().Targets(ApiAtomic.tables).Path($"process.modules.{timestamp()}", FileKind.Csv);
-            var formatter = Tables.formatter<ProcessModuleRow>();
+            var formatter = CsvChannels.formatter<ProcessModuleRow>();
             for(var i=0; i<src.Length; i++)
                 Row(formatter.Format(src[i]));
             TableEmit(src, dst);
@@ -260,7 +260,7 @@ namespace Z0
         void ShowMemory()
         {
             var info = WinMem.basic();
-            var formatter = Tables.formatter<BasicMemoryInfo>(16,RecordFormatKind.KeyValuePairs);
+            var formatter = CsvChannels.formatter<BasicMemoryInfo>(16,RecordFormatKind.KeyValuePairs);
             Wf.Data(formatter.Format(info));
         }
 

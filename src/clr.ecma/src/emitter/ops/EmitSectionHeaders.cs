@@ -17,7 +17,7 @@ namespace Z0
             try
             {
                 var total = Count.Zero;
-                var formatter = Tables.formatter<PeSectionHeader>();
+                var formatter = CsvChannels.formatter<PeSectionHeader>();
                 var flow = EmittingTable<PeSectionHeader>(dst);
                 using var writer = dst.AsciWriter();
                 writer.WriteLine(formatter.FormatHeader());

@@ -115,6 +115,6 @@ namespace Z0.Asm
         }
 
         static Seq<TableColumn> columns(ReadOnlySpan<string> src)
-            => Tables.columns<SdmColumnKind>(src);
+            => TableConvention.columns<SdmColumnKind>(src);
     }
 }

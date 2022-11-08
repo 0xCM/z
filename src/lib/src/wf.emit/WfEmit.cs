@@ -6,6 +6,11 @@ namespace Z0
 {
     using static sys;
 
+    public abstract class WfChannel<C>
+    {
+
+    }
+
     public class WfEmit : IWfChannel
     {
         public static WfEmit create(IWfRuntime wf, WfHost host)
@@ -27,7 +32,7 @@ namespace Z0
         }
 
         public EventId Raise<E>(E e)
-            where E : IWfEvent
+            where E : IEvent
                 => Wf.Raise(e);
 
         public void Babble<T>(T content)
@@ -136,7 +141,7 @@ namespace Z0
                 where T : struct
         {
             var emitting = EmittingTable<T>(dst);
-            CsvEmitters.emit(rows, dst, encoding, rowpad, fk);
+            CsvChannels.emit(rows, dst, encoding, rowpad, fk);
             return EmittedTable(emitting, rows.Length);
         }
 
@@ -164,7 +169,7 @@ namespace Z0
            where T : struct
         {
             var emitting = EmittingTable<T>(dst);
-            var formatter = CsvFormatters.create(typeof(T));
+            var formatter = CsvChannels.create(typeof(T));
             using var writer = dst.Emitter(encoding);
             writer.WriteLine(formatter.FormatHeader());
             for (var i = 0; i < rows.Length; i++)
@@ -177,7 +182,7 @@ namespace Z0
         {
             var flow = Wf.EmittingTable<T>(Host, dst);
             var spec = Tables.rowspec<T>(widths, z16);
-            var count = CsvEmitters.emit(src, spec, encoding, dst);
+            var count = CsvChannels.emit(src, spec, encoding, dst);
             return Wf.EmittedTable(Host, flow, count);
         }
 

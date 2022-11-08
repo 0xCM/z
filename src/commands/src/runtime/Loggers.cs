@@ -43,9 +43,9 @@ namespace Z0
         public static IWorkerLog worker(LogSettings config)
             => new WorkerLog(config);
 
-        [MethodImpl(Inline), Op]
-        public static IWfEventLog events(LogSettings config)
-            => new WfEventLog(config);
+        // [MethodImpl(Inline), Op]
+        // public static IWfEventLog events(LogSettings config)
+        //     => new WfEventLog(config);
 
         [MethodImpl(Inline), Op]
         public static LogSettings configure(string name, FolderPath dst)

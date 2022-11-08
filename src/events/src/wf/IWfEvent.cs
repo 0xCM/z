@@ -5,16 +5,13 @@
 namespace Z0
 {
     [Free]
-    public delegate void WfEventLogger(IWfEvent e);
+    public delegate void WfEventLogger(IEvent e);
 
     [Free]
 
-    public interface IWfEvent : IAppEvent
+    public interface IWfEvent : IEvent
     {
-        EventId EventId {get;}
 
-        WfStepId StepId
-            => WfStepId.Empty;
     }
 
     /// <summary>
@@ -22,7 +19,7 @@ namespace Z0
     /// </summary>
     /// <typeparam name="H">The reifying type</typeparam>
     [Free]
-    public interface IWfEvent<H> : IWfEvent, IAppEvent<H>
+    public interface IWfEvent<H> : IEvent, IEvent<H>
         where H : IWfEvent<H>, new()
     {
 

@@ -22,7 +22,7 @@ namespace Z0
 
         protected IPipeline Pipeline {get; private set;}
 
-        protected EventSignal Signal {get; private set;}
+        protected WfEventSignal Signal {get; private set;}
 
         public void Init(IPipeline pipes)
         {

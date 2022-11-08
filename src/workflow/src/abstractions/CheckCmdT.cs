@@ -12,14 +12,17 @@ namespace Z0
     {
         ConstLookup<Type,IChecker> Services;
 
+        ConstLookup<Type,Func<IChecker>> Factories;
+
         protected CheckCmd()
         {
             Pll = true;
         }
 
-        protected override void Initialized()
+        protected override void Initialized()        
         {
-            Services = Checkers.discover(Wf, typeof(T));
+            Factories = Checkers.discover(Wf, ApiRuntime.colocated(ExecutingPart.Assembly));
+            //Services = Checkers.discover(Wf, GetType());
         }
 
         protected virtual bool Pll {get;}

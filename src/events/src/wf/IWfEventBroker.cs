@@ -4,14 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IEventBroker : ISink<IWfEvent> , ISink<IAppEvent>, ISink<IAppMsg>,  IDisposable
+    public interface IWfEventBroker : ISink<IEvent>, ISink<IAppMsg>,  IDisposable
     {
         Outcome Subscribe<E>(Action<E> receiver, E model = default)
-            where E : IAppEvent;
-
-        void Raise(IWfEvent e);
-
-        void Raise(IAppEvent e);
+            where E : IEvent;
 
         IEventSink Sink {get;}
     }

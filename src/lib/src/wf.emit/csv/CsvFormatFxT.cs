@@ -4,10 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct Tables
+    public class CsvFormatFx<T>
+        where T : struct         
     {
-       [MethodImpl(Inline), Op]
-        public static TableCell cell(object content)
-            => new TableCell(content);
+        static ICsvFormatter<T> Formatter = CsvChannels.formatter<T>();
+
+        public static Func<T,string> Fx => (T src) => CsvChannels.formatter<T>().Format(src);
     }
 }

@@ -5,13 +5,13 @@
 namespace Z0
 {
     [Free]
-    public interface ILevelEvent : IWfEvent
+    public interface ILevelEvent : IEvent
     {
         LogLevel EventLevel {get;}
     }
 
     [Free]
-    public interface ILevelEvent<H> : IWfEvent, IWfEvent<H>
+    public interface ILevelEvent<H> : IEvent, IWfEvent<H>
         where H : ILevelEvent<H>, new()
     {
 

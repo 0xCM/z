@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IWfEventTarget : ISink<IWfEvent>
+    public interface IWfEventTarget : ISink<IEvent>
     {
         Type Host {get;}
     }

@@ -6,11 +6,11 @@ namespace Z0
 {
     using static sys;
 
-    public class EventBroker : IEventBroker
+    public class WfEventBroker : IWfEventBroker
     {
         readonly Dictionary<Type,ISink> Subscriptions;
 
-        readonly Dictionary<ulong, Receiver<IAppEvent>> Receivers;
+        readonly Dictionary<ulong, Receiver<IEvent>> Receivers;
 
         public IEventSink Sink {get;}
 
@@ -19,12 +19,12 @@ namespace Z0
         readonly bool Owner;
 
         [MethodImpl(Inline)]
-        internal EventBroker(IEventSink sink, bool owner)
+        internal WfEventBroker(IEventSink sink, bool owner)
         {
             Owner = owner;
             Sink = sink;
             Subscriptions = new Dictionary<Type,ISink>();
-            Receivers = new Dictionary<ulong, Receiver<IAppEvent>>();
+            Receivers = new Dictionary<ulong, Receiver<IEvent>>();
             locker = new object();
         }
 
@@ -35,7 +35,7 @@ namespace Z0
         }
 
         public Outcome Subscribe<S,E>(S sink, E model)
-            where E : IAppEvent
+            where E : IEvent
             where S : ISink
         {
             if(Subscriptions.TryAdd(typeof(E), sink))
@@ -46,12 +46,12 @@ namespace Z0
 
         [MethodImpl(Inline)]
         static EventRelay<E> relay<E>(Action<E> receiver)
-            where E : IAppEvent
+            where E : IEvent
                 => new EventRelay<E>(receiver);
 
         [MethodImpl(Inline)]
         public Outcome Subscribe<E>(Action<E> receiver, E model = default)
-            where E : IAppEvent
+            where E : IEvent
                 => Subscribe(relay(receiver), model);
 
         public void Cancel(ulong session)
@@ -60,23 +60,14 @@ namespace Z0
                 Receivers.Remove(session);
         }
 
-        void Emit(IWfEvent e)
+        void Emit(IEvent e)
             => iter(Receivers.Values, r => r(e));
 
-        void Emit(IAppEvent e)
-            => iter(Receivers.Values, r => r(e));
-
-        public void Raise(IWfEvent e)
+        public void Deposit(IEvent e)
             => Emit(e);
 
-        public void Raise(IAppEvent e)
-            => Emit(e);
-
-        public void Deposit(IWfEvent e)
-            => Sink.Deposit(e);
-
-        public void Deposit(IAppEvent e)
-            => term.print(e);
+        // public void Deposit(IAppEvent e)
+        //     => term.print(e);
 
         public void Deposit(IAppMsg e)
             => term.print(e);

@@ -11,7 +11,7 @@ namespace Z0
     {
         static void EmitRulePage(in TableCriteria src)
         {
-            var formatter = Tables.formatter<TableDefRow>();
+            var formatter = CsvChannels.formatter<TableDefRow>();
             using var emitter = XedPaths.Service.RulePage(src.Sig).Path.AsciEmitter();
             emitter.AppendLine(formatter.FormatHeader());
             var k=0u;

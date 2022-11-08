@@ -233,7 +233,7 @@ namespace Z0
             var project = context.Project;
             var src = project.OutFiles(FileKind.ObjAsm).Storage.Sort().Index();
             var result = Outcome.Success;
-            var formatter = Tables.formatter<ObjDumpRow>();
+            var formatter = CsvChannels.formatter<ObjDumpRow>();
             var buffer = sys.bag<ObjDumpRow>();
 
             iter(src, path => {

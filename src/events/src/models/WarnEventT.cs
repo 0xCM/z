@@ -15,8 +15,6 @@ namespace Z0
 
         public EventId EventId {get;}
 
-        public WfStepId StepId {get;}
-
         public EventPayload<T> Payload {get;}
 
         public FlairKind Flair => FlairKind.Warning;
@@ -26,7 +24,6 @@ namespace Z0
         {
             EventId = EventId.define(host, Kind);
             Payload = msg;
-            StepId = host;
         }
         public string Format()
             => string.Format(RP.PSx2, EventId, Payload);

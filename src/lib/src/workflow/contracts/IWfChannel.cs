@@ -30,7 +30,8 @@ namespace Z0
 
         void Write<T>(string name, T value);
 
-        EventId Raise<E>(E e) where E : IWfEvent;
+        EventId Raise<E>(E e) 
+            where E : IEvent;
 
         WfExecFlow<Type> Creating(Type service);
 

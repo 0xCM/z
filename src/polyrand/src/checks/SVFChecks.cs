@@ -45,7 +45,7 @@ namespace Z0
         [MethodImpl(Inline)]
         internal SVFChecks(IWfRuntime wf, IPolyrand rng)
         {
-            Formatter = Tables.FormatFx<TestCaseRecord>.Fx;
+            Formatter = CsvFormatFx<TestCaseRecord>.Fx;
             Wf = wf;
             Random = rng;
             RepCount = Pow2.T10;

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct EventId : IWfEventId<EventId>    
+    public readonly struct EventId : IEventId<EventId>    
     {
         [MethodImpl(Inline)]
         public static EventId define(string name, WfStepId step)

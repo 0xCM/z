@@ -30,7 +30,7 @@ namespace Z0
         void EmitTestCaseLog(FilePath dst, TestCaseRecord[] records)
         {
             if(records.Length != 0)
-                CsvEmitters.emit(@readonly(records), dst);
+                CsvChannels.emit(@readonly(records), dst);
         }
     }
 }

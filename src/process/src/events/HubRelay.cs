@@ -16,7 +16,7 @@ namespace Z0
             => Receiver = receiver;
 
         [MethodImpl(Inline)]
-        public void Deposit(IWfEvent e)
+        public void Deposit(IEvent e)
             => Receiver(e);
 
         public void Dispose()

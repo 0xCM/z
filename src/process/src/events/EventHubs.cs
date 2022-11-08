@@ -23,12 +23,12 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static HubRelay<E> relay<E>(EventReceiver<E> receiver)
-            where E : struct, IWfEvent
+            where E : struct, IEvent
                 => new HubRelay<E>(receiver);
 
         [MethodImpl(Inline)]
         public static ref readonly E broadcast<E>(EventHub hub, in E e)
-            where E : struct, IWfEvent
+            where E : struct, IEvent
         {
             if(hub.Index.TryGetValue(e.GetType(), out var sink))
                 sink.Deposit(e);
@@ -37,7 +37,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static bool subscribe<E>(EventHub hub, EventReceiver receiver, E model = default)
-            where E : struct, IWfEvent
+            where E : struct, IEvent
                 => subscribe(hub, new HubRelay(receiver), model);
 
         [MethodImpl(Inline), Op]
@@ -46,7 +46,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static bool subscribe<S,E>(EventHub hub, S sink, E model)
-            where E : struct, IWfEvent
+            where E : struct, IEvent
             where S : IEventSink
                 => hub.Index.TryAdd(typeof(E), sink);
 

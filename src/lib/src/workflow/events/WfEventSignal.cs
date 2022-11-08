@@ -6,21 +6,21 @@ namespace Z0
 {
     using static Events;
 
-    public class EventSignal
+    public class WfEventSignal
     {
         readonly WfHost Source;
 
         readonly IEventSink Sink;
 
         [MethodImpl(Inline)]
-        internal EventSignal(IEventSink sink, WfHost src)
+        internal WfEventSignal(IEventSink sink, WfHost src)
         {
             Source = src;
             Sink = sink;
         }
 
         public EventId Raise<E>(in E e)
-            where E : IWfEvent
+            where E : IEvent
         {
             Sink.Deposit(e);
             return e.EventId;

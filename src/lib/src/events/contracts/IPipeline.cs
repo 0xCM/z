@@ -9,6 +9,6 @@ namespace Z0
     {
         void Run();
 
-        EventSignal Signal {get;}
+        WfEventSignal Signal {get;}
     }
 }

@@ -27,7 +27,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public void Deposit(IWfEvent src)
+        public void Deposit(IEvent src)
             => Logger(src);
     }
 }

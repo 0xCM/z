@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Free]
-    public interface IEmissionSink : IEventSink, IDisposable
+    public interface IEmissionSink : IDisposable
     {
 
     }

@@ -18,7 +18,7 @@ namespace Z0
     [ApiHost]
     public unsafe partial class X86Machine : IDisposable, IX86Machine
     {
-        public static X86Machine create(EventSignal signal)
+        public static X86Machine create(WfEventSignal signal)
             => new X86Machine(signal);
 
         RegBank Regs;
@@ -43,7 +43,7 @@ namespace Z0
 
         MemoryAddress CodeBase;
 
-        EventSignal Signal;
+        WfEventSignal Signal;
 
         Task Dispatcher;
 
@@ -51,7 +51,7 @@ namespace Z0
 
         bool Verbose;
 
-        internal X86Machine(EventSignal signal)
+        internal X86Machine(WfEventSignal signal)
         {
             Queue = new();
             Signal = signal;

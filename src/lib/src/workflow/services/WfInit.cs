@@ -14,7 +14,7 @@ namespace Z0
 
         public TokenDispenser Tokens;
 
-        public IEventBroker EventBroker;
+        public IWfEventBroker EventBroker;
 
         public WfHost Host;
 

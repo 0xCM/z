@@ -4,6 +4,9 @@
 			"path": "../lib"
 		},
 		{
+			"path": "../commands"
+		},
+		{
 			"path": "../numbers"
 		},
 		{

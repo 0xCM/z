@@ -19,11 +19,11 @@ namespace Z0
         static IAppMsg message(object title, object msg, Type host, string caller, FlairKind flair)
             => AppMsg.colorize(string.Concat(prefix(title, host, caller), Chars.Pipe, Chars.Space, msg), flair);
 
-        public static EventBroker broker(LogSettings config)
-            => new EventBroker(new WfEventLog(config), true);
+        public static WfEventBroker broker(LogSettings config)
+            => new WfEventBroker(new WfLogger(config), true);
 
-        public static EventBroker broker(IEventSink target)
-            => new EventBroker(target,false);
+        public static WfEventBroker broker(IEventSink target)
+            => new WfEventBroker(target,false);
 
         [MethodImpl(Inline), Op]
         public static CallingMember caller([CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
@@ -37,20 +37,20 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static EventSignal signal(IWfRuntime wf)
+        public static WfEventSignal signal(IWfRuntime wf)
             => Events.signal(wf.EventSink, wf.Host);
 
         [MethodImpl(Inline), Op]
-        public static EventSignal signal(IWfRuntime wf, WfHost host)
+        public static WfEventSignal signal(IWfRuntime wf, WfHost host)
             => Events.signal(wf.EventSink, host);
 
         [MethodImpl(Inline), Op]
-        public static EventSignal signal(IEventSink sink, WfHost host)
-            => new EventSignal(sink, host);
+        public static WfEventSignal signal(IEventSink sink, WfHost host)
+            => new WfEventSignal(sink, host);
 
         [MethodImpl(Inline), Op]
-        public static EventSignal signal(IEventSink sink, Type host)
-            => new EventSignal(sink, host);
+        public static WfEventSignal signal(IEventSink sink, Type host)
+            => new WfEventSignal(sink, host);
 
         [Op, Closures(Closure)]
         public static BabbleEvent<T> babble<T>(Type host, T msg)

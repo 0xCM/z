@@ -10,14 +10,14 @@ namespace Z0
     {
         public static string KvpPattern(in RowFormatSpec spec)
         {
-            var slot0 = RpOps.slot(0, math.negate((short)spec.MaxCellWidth));
-            var slot1 = RpOps.slot(1);
+            var slot0 = RP.slot(0, math.negate((short)spec.MaxCellWidth));
+            var slot1 = RP.slot(1);
             return slot0 + Chars.Space + spec.Delimiter + Chars.Space + slot1;
         }
 
         [Op]
         static string slot(byte index, RenderWidth width, string delimiter = DefaultDelimiter)
-            => delimiter + RpOps.slot(index, (short)(-(short)width));
+            => delimiter + RP.slot(index, (short)(-(short)width));
 
         [Op]
         public static string pattern(Index<CellFormatSpec> cells, string delimiter = DefaultDelimiter)

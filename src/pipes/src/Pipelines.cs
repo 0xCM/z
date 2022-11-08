@@ -20,7 +20,7 @@ namespace Z0
         /// <summary>
         /// Creates a <see cref='EmissionSink'/>
         /// </summary>
-        public static IEmissionSink sink()
+        public static IEventSink sink()
             => new EmissionSink();
 
         /// <summary>

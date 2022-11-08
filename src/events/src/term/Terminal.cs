@@ -202,7 +202,7 @@ namespace Z0
         public void Write(params (object content, FlairKind flair)[] messages)
         {
             lock(TermLock)
-                core.iter(messages, msg => WriteNoLock(msg.content,msg.flair));
+                sys.iter(messages, msg => WriteNoLock(msg.content,msg.flair));
         }
 
         public void WriteError(IAppMsg src)

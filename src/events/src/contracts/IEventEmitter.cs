@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Free]
-    public interface IEventEmitter : IProducer<IWfEvent>
+    public interface IEventEmitter : IProducer<IEvent>
     {
 
     }

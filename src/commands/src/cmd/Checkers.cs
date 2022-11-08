@@ -14,40 +14,57 @@ namespace Z0
         public static string name(MethodInfo src)
             => string.Format("{0}.{1}", name(src.DeclaringType), src.Name);
 
-        public static Type[] hosts(params Assembly[] src)
-            => src.Types().Tagged<CheckerAttribute>().Concrete();
-
-        public static ConstLookup<Type,IChecker> discover(IWfRuntime wf, params Assembly[] src)
-        {
-            var dst = cdict<Type,IChecker>();
-            foreach(var type in hosts(src))
-                discover(wf, type, dst);
-            return dst;
-        }
-
-        public static ConstLookup<Type,IChecker> discover(IWfRuntime wf, Type src)
-        {
-            var dst = cdict<Type,IChecker>();
-            discover(wf, src, dst);
-            return dst;
-        }
-
-        public static void discover(IWfRuntime wf, Type src, ConcurrentDictionary<Type,IChecker> dst)
-        {
-            var factories = src.StaticMethods().Where(x => x.Name == "create");
-            if(factories.Length == 1)
-            {
-                ref readonly var factory = ref first(factories);
-                var service = (IChecker)factory.Invoke(null, new object[]{wf});
-                dst.TryAdd(service.GetType(), service);
-            }
-        }
-
         public static void methods(Type src, ConcurrentDictionary<string,MethodInfo> dst)
             => iter(src.DeclaredMethods().WithArity(0), m => dst.TryAdd(name(m), m));
 
         public static void methods(Type src, ConcurrentBag<MethodInfo> dst)
             => iter(src.DeclaredMethods().WithArity(0), m => dst.Add(m));
+
+        // public static Type[] hosts(params Assembly[] src)
+        //     => src.Types().Tagged<CheckerAttribute>().Concrete();
+
+        // public static ConstLookup<Type,IChecker> discover(IWfRuntime wf, params Assembly[] src)
+        // {
+        //     var dst = cdict<Type,IChecker>();
+        //     foreach(var type in hosts(src))
+        //         discover(wf, type, dst);
+        //     return dst;
+        // }
+
+        // public static ConstLookup<Type,IChecker> discover(IWfRuntime wf, Type src)
+        // {
+        //     var dst = cdict<Type,IChecker>();
+        //     discover(wf, src, dst);
+        //     return dst;
+        // }
+
+        public static ConstLookup<Type,Func<IChecker>> discover(IWfRuntime wf, params Assembly[] src)
+        {
+            IChecker create(MethodInfo m)
+                => (IChecker)m.Invoke(null, new object[]{wf});
+
+            var services = 
+                from m in src.Types().Concrete().Tagged<CheckerAttribute>().StaticMethods()
+                where m.Name == "create" && m.Parameters().Length == 1
+                where first(m.ParameterTypes()) == typeof(IWfRuntime)
+                select (service:m.DeclaringType, factory:m);            
+            var dst = dict<Type,Func<IChecker>>();
+            iter(services, f => dst.TryAdd(f.service, (() => create(f.factory))));
+            return dst;
+        }
+
+
+        // public static void discover(IWfRuntime wf, Type src, ConcurrentDictionary<Type,IChecker> dst)
+        // {
+        //     var factories = src.StaticMethods().Where(x => x.Name == "create");
+        //     if(factories.Length == 1)
+        //     {
+        //         ref readonly var factory = ref first(factories);
+        //         var service = (IChecker)factory.Invoke(null, new object[]{wf});
+        //         dst.TryAdd(service.GetType(), service);
+        //     }
+        // }
+
 
         public static void run(ReadOnlySpan<IChecker> checks, IWfEventTarget log, bool pll = true)
         {
@@ -113,7 +130,7 @@ namespace Z0
             }
         }
 
-        static IWfEvent @event(Type host, string data, Exception e = null)
+        static IEvent @event(Type host, string data, Exception e = null)
         {
             if(e != null)
                 return Events.error(host, e);

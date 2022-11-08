@@ -4,10 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [Free]
-    public interface IWfEventId<T> : IComparable<T>, IEquatable<T>, IChronic<T>, ITextual
-        where T : struct, IWfEventId<T>
+    partial struct term
     {
-
+        public static void emit(IEvent e)
+            => T.WriteLine(e.Format(), e.Flair);
     }
 }

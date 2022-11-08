@@ -10,11 +10,11 @@ namespace Z0
     {
         IPolyrand Random;
 
-        EventQueue Queue;
+        WfEventQueue Queue;
 
         X86Machine Machine;
 
-        EventSignal Signal;
+        WfEventSignal Signal;
 
         bool Verbose;
 
@@ -23,7 +23,7 @@ namespace Z0
             Verbose = true;
         }
 
-        void EventRaised(IWfEvent e)
+        void EventRaised(IEvent e)
         {
             Write(e.Format());
         }
@@ -31,7 +31,7 @@ namespace Z0
         protected override void Initialized()
         {
             Random = Rng.@default();
-            Queue = EventQueue.allocate(typeof(Machines), EventRaised);
+            Queue = WfEventQueue.allocate(typeof(Machines), EventRaised);
             Signal = Events.signal(Queue, GetType());
             Machine = X86Machine.create(Signal);
         }

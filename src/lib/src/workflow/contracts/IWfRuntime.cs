@@ -14,7 +14,7 @@ namespace Z0
 
         IApiCatalog ApiCatalog {get;}
 
-        IEventBroker EventBroker {get;}
+        IWfEventBroker EventBroker {get;}
 
         IEventSink EventSink {get;}
         
@@ -105,7 +105,7 @@ namespace Z0
             => new FileWritten(this, dst, NextExecToken());
 
         EventId Raise<E>(in E e)
-            where E : IWfEvent
+            where E : IEvent
         {
             EventSink.Deposit(e);
             return e.EventId;

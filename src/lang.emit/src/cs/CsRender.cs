@@ -10,7 +10,7 @@ namespace Z0
 
     public readonly struct CsRender
     {
-        public static void EnumReplicants(EnumReplicantSpec spec, ReadOnlySpan<Type> types, ITextEmitter code, ITextEmitter data, Action<IWfEvent> log)
+        public static void EnumReplicants(EnumReplicantSpec spec, ReadOnlySpan<Type> types, ITextEmitter code, ITextEmitter data, Action<IEvent> log)
         {
             var offset = 0u;
             code.IndentLineFormat(offset, "namespace {0}", spec.Namespace);
@@ -56,7 +56,7 @@ namespace Z0
         public static void Data(SymSet src, ITextEmitter dst, bool header)
         {
             var records = src.Records();
-            var formatter = Tables.formatter<SymInfo>();
+            var formatter = CsvChannels.formatter<SymInfo>();
             if(header)
                 dst.AppendLine(formatter.FormatHeader());
 

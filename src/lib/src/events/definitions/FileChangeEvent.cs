@@ -41,12 +41,12 @@ namespace Z0
             File = path;
         }
 
-        EventId IWfEvent.EventId 
+        EventId IEvent.EventId 
             => EventId;
 
         [MethodImpl(Inline)]
         public string Format()
-            => string.Format(RpOps.PSx3, EventId, symbolize(ChangeKind), $"{File}");
+            => string.Format(RP.PSx3, EventId, symbolize(ChangeKind), $"{File}");
 
         public override string ToString()
             => Format();
