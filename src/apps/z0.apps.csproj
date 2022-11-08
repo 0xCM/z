@@ -1,4 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <EnablePreviewFeatures>True</EnablePreviewFeatures>
+    <GenerateRequiresPreviewFeaturesAttribute>False</GenerateRequiresPreviewFeaturesAttribute>
+  </PropertyGroup>
   <Import Project="$(ProjectProps)\usings.props" />
   <Import Project="imports.props" />
   <PropertyGroup>

@@ -4,7 +4,4 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
   </PropertyGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="assets/**/*.*" />
-  </ItemGroup>
 </Project>

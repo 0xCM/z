@@ -11,10 +11,6 @@ namespace Z0
     {
         sealed class Svc : AppServices<Svc>
         {
-            public AsmCheckCmd AsmCheckCmd(IWfRuntime wf)
-                => Service<AsmCheckCmd>(wf);
-
-
             public AsmTables AsmTables(IWfRuntime wf)
                 => Service<AsmTables>(wf);
 
@@ -46,9 +42,6 @@ namespace Z0
 
         public static AsmCoreCmd AsmCoreCmd(this IWfRuntime wf)
             => Services.AsmCoreCmd(wf);
-
-        public static AsmCheckCmd AsmChecks(this IWfRuntime wf)
-            => Services.AsmCheckCmd(wf);
 
         public static AsmTables AsmTables(this IWfRuntime wf)
             => Services.AsmTables(wf);

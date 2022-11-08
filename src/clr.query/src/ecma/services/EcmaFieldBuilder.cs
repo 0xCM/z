@@ -74,7 +74,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public EcmaFieldBuilder WithField(ClrFieldAdapter src)
-            =>  WithField(new MemberFieldSpec(src.Name, src.FieldType.Name, Index));
+            => WithField(new MemberFieldSpec(src.Name, src.FieldType.Name, Index));
 
         [MethodImpl(Inline), Op]
         public EcmaFieldBuilder WithFields(params PropertyInfo[] src)

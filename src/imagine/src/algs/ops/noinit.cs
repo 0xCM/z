@@ -9,10 +9,10 @@ namespace Z0
     partial class Algs
     {
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref T noinit<T>(out T dst)
+        public static T noinit<T>(out T dst)
         {
             SkipInit(out dst);
-            return ref dst;
+            return dst;
         }
     }
 }

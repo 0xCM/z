@@ -1,0 +1,35 @@
+{
+	"folders": [
+		{
+			"path": "../lib"
+		},
+		{
+			"path": "../numbers"
+		},
+		{
+			"path": "../alloc"
+		},
+		{
+			"path": "../native"
+		},
+		{
+			"path": "../asm.prototypes"
+		},
+		{
+			"path": "../api.code"
+		},
+		{
+			"path": "../native"
+		},
+		{
+			"path": "../asm.core"
+		},
+		{
+			"path": "../intel.svc"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {}
+}

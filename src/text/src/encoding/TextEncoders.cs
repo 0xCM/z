@@ -62,17 +62,17 @@ namespace Z0
             => utf8().GetBytes(src);
 
         [MethodImpl(Inline), Op]
-        public static ref string DecodeUtf8(ReadOnlySpan<byte> src, out string dst)
+        public static string DecodeUtf8(ReadOnlySpan<byte> src, out string dst)
         {
             dst = utf8().GetString(src);
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op]
-        public static ref string DecodeUtf16(ReadOnlySpan<byte> src, out string dst)
+        public static string DecodeUtf16(ReadOnlySpan<byte> src, out string dst)
         {
             dst = utf16().GetString(src);
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op]
@@ -108,24 +108,24 @@ namespace Z0
             => e.GetString(src, index, count);
 
         [MethodImpl(Inline), Op]
-        public static ref string Decode(Encoding e, ReadOnlySpan<byte> src, out string dst)
+        public static string Decode(Encoding e, ReadOnlySpan<byte> src, out string dst)
         {
             dst = e.GetString(src);
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op]
-        public static ref byte[] Encode(Encoding e, string src, out byte[] dst)
+        public static byte[] Encode(Encoding e, string src, out byte[] dst)
         {
             dst = e.GetBytes(src);
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op]
-        public static ref byte[] Encode(Encoding e, char[] src, out byte[] dst)
+        public static byte[] Encode(Encoding e, char[] src, out byte[] dst)
         {
             dst = e.GetBytes(src);
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op]

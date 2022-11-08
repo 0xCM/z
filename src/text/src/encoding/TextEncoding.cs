@@ -77,8 +77,8 @@ namespace Z0
             => Encoding.GetChars(src,dst);
 
         [MethodImpl(Inline)]
-        public ref string Decode(ReadOnlySpan<byte> src, out string dst)
-            => ref api.Decode(Encoding, src, out dst);
+        public string Decode(ReadOnlySpan<byte> src, out string dst)
+            => api.Decode(Encoding, src, out dst);
 
         [MethodImpl(Inline)]
         public int GetCharCount(ReadOnlySpan<byte> bytes)

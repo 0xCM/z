@@ -50,10 +50,10 @@ namespace Z0
             => encoding().GetCharCount(src);
 
         [MethodImpl(Inline), Op]
-        public static ref string decode(ReadOnlySpan<byte> src, out string dst)
+        public static string decode(ReadOnlySpan<byte> src, out string dst)
         {
             dst = encoding().GetString(src);
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op]

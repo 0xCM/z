@@ -131,7 +131,7 @@ namespace Z0
 
         void GenRuleNames(FilePath path)
         {
-            var assets = AsmCaseAssets.create();
+            var assets = IntrinsicAssets.create();
             var header = assets.XedFileHeader().Utf8();
 
             var rules = Xed.Views.RuleTables;

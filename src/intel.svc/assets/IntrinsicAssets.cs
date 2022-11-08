@@ -11,5 +11,7 @@ namespace Z0
         public Asset Csv() => Asset("intrinsics.csv");
 
         public Asset Algorithms() => Asset("intrinsics.algorithms.txt");
+
+        public Asset XedFileHeader() => Asset("xedheader.cs");        
     }
 }
