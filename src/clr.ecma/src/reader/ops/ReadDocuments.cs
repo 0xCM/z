@@ -4,28 +4,18 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
-
-    public struct MetadataDocInfo
-    {   
-        public string Name;
-
-        public BinaryCode ContentHash;
-    }
-
     partial class EcmaReader
     {
-        public MetadataDocInfo ReadDocInfo(DocumentHandle handle)
+        public EcmaDocInfo ReadDocInfo(DocumentHandle handle)
         {
             var src = MD.GetDocument(handle);
-            var dst = new MetadataDocInfo();
+            var dst = new EcmaDocInfo();
             dst.Name = String(src.Name);
             dst.ContentHash = ReadBlobData(src.Hash);
             return dst;
         }
 
-        public ReadOnlySeq<MetadataDocInfo> ReadDocInfo()
+        public ReadOnlySeq<EcmaDocInfo> ReadDocInfo()
             => DocHandles().Map(ReadDocInfo);
     }
 }

@@ -4,18 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
-    public struct AssemblyFileInfo
-    {
-        public FileUri Name;
-
-        public BinaryCode Hash;
-
-        public bool ContainsMetadata;
-
-    }
-
     partial class EcmaReader
     {
         [MethodImpl(Inline), Op]

@@ -65,9 +65,6 @@ namespace Z0
         public static ImmSpecializer ImmSpecializer(this IWfRuntime wf)
             => Services.ImmSpecializer(wf);
 
-        public static ApiImmEmitter ImmEmitter(this IWfRuntime wf)
-            => Services.ImmEmitter(wf);
-
         public static ICaptureCore CaptureCore(this IWfRuntime wf)
             => Asm.CaptureCore.create(wf);
     }

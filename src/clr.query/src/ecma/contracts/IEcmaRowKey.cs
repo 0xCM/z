@@ -9,6 +9,5 @@ namespace Z0
         EcmaTableKind TableKind {get;}
 
         Type RowType {get;}
-
     }
 }

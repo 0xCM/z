@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using static core;
+    using static sys;
 
     public sealed class ApiResCapture : AppService<ApiResCapture>
     {

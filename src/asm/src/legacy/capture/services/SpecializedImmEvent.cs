@@ -4,11 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
-
     public readonly struct SpecializedImmEvent : IWfEvent<SpecializedImmEvent>
     {
         public const string EventName = "SpecializedImm";

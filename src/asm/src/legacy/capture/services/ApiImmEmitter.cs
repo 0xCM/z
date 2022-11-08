@@ -6,8 +6,7 @@ namespace Z0.Asm
 {
     using System.Linq;
 
-    using static core;
-    using static Delegates;
+    using static sys;
 
     using E = SpecializedImmEvent;
 

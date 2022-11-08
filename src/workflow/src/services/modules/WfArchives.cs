@@ -20,12 +20,6 @@ namespace Z0
             public const string FilesPack = "files/pack";
         }
 
-        public static Task<ListedFiles> catalog(IWfChannel channel, FolderPath src, FolderPath dst)
-        {
-            throw new NotImplementedException();
-
-        }
-
         public static ListedFiles catalog(IWfChannel channel, CmdArgs args)
         {
             var files = bag<FileUri>();

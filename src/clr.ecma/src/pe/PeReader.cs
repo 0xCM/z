@@ -182,5 +182,30 @@ namespace Z0
 
         public PEMemoryBlock ReadSectionData(DirectoryEntry src)
             => PE.GetSectionData(src.RelativeVirtualAddress);
+
+        /// <summary>
+        /// Determines whether the source image is r2r
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
+        /// <remarks>Taken from https://github.com/dotnet/runtime/blob/55e2378d86841ec766ee21d5e504d7724c39b53b/src/tasks/Crossgen2Tasks/PrepareForReadyToRunCompilation.cs</remarks>
+        public bool IsReady2Run()
+        {
+            if (PeHeaders == null)
+                return false;
+
+            if (CorHeader == null)
+                return false;
+
+            if ((CorHeader.Flags & CorFlags.ILLibrary) == 0)
+            {
+                // This is likely a composite image, but those can't be re-r2r'd
+                return false;
+            }
+            else
+            {
+                return CorHeader.ManagedNativeHeaderDirectory.Size != 0;
+            }
+        }
     }
 }

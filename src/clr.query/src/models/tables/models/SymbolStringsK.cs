@@ -25,7 +25,6 @@ namespace Z0
         public ItemList<K,string> Entries;
 
         public Index<StringTableRow> Rows;
-
     }
 
     public sealed class SymTable8Spec : SymbolStrings<byte>

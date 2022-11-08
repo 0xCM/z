@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public abstract partial class ChildProcess : ProcessAdapter, IDisposable
+    public abstract class ChildProcess : ProcessAdapter, IDisposable
     {
         static ConcurrentDictionary<ProcessId, ChildProcess> Children = new();
 
@@ -33,39 +33,6 @@ namespace Z0
         {
             Disposing();
             Kill();
-        }
-    }
-    
-    public abstract class ChildProcess<P> : ChildProcess
-        where P : ChildProcess<P>, new()
-    {
-        protected ChildProcess()
-        {
-            
-        }
-
-        protected ChildProcess(Process process)
-            : base(process)
-        {
-            
-        }
-    }
-
-
-    partial class ChildProcess
-    {
-        public class PassThrough : ChildProcess<PassThrough>
-        {
-            public PassThrough()
-            {
-
-            }
-
-            public PassThrough(Process process)
-                : base(process)
-            {
-
-            }
         }
     }
 }

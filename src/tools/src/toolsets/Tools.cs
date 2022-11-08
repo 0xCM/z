@@ -17,13 +17,13 @@ namespace Z0
     [ApiHost]
     public partial class Tools : ITools
     {
-        public static IEnumerable<FileUri> files(FolderPath src, params FileKind[] kinds)
-        {
-            if(kinds.Length != 0)
-                return DbArchive.enumerate(src,true,kinds);
-            else
-                return DbArchive.enumerate(src,"*.*",true);
-        }
+        // public static IEnumerable<FileUri> files(FolderPath src, params FileKind[] kinds)
+        // {
+        //     if(kinds.Length != 0)
+        //         return DbArchive.enumerate(src,true,kinds);
+        //     else
+        //         return DbArchive.enumerate(src,"*.*",true);
+        // }
 
         [MethodImpl(Inline), Op]
         public static CmdTool tool(string name)

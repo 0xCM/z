@@ -2,10 +2,14 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-[assembly: PartId(PartId.ApiMd)]
-namespace Z0.Parts
+namespace Z0
 {
-    public sealed class ApiMd : Part<ApiMd>
+    public struct AssemblyFileInfo
     {
+        public FileUri Name;
+
+        public BinaryCode Hash;
+
+        public bool ContainsMetadata;
     }
 }

@@ -6,7 +6,7 @@ namespace Z0.llvm
 {
     using System;
 
-    using static core;
+    using static sys;
 
     public class LlvmCodeGen : WfSvc<LlvmCodeGen>
     {

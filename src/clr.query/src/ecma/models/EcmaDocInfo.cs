@@ -4,9 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class XTend
-    {
-        public static ReadOnlySpan<TextLine> Lines(this string src, bool keepblank = false, bool trim = true)
-            => Z0.Lines.read(src, keepblank, trim);
+    public struct EcmaDocInfo
+    {   
+        public string Name;
+
+        public BinaryCode ContentHash;
     }
 }

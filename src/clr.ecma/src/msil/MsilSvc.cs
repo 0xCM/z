@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public sealed class MsilSvc : WfSvc<MsilSvc>
+    public sealed class MsilSvc : AppService<MsilSvc>
     {
         const string CommentToken = "// ";
 

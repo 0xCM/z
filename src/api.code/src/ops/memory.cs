@@ -7,8 +7,7 @@ namespace Z0
     using static sys;
 
     partial class ApiCode
-    {
-                    
+    {                    
         public static MemoryBlocks memory(ReadOnlySpan<ApiCodeRow> src)
         {
             var count = src.Length;

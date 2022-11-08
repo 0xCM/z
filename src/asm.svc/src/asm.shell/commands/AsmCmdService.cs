@@ -20,6 +20,14 @@ namespace Z0.Asm
 
         AsmDecoder AsmDecoder => Wf.AsmDecoder();
 
+        ApiMd ApiMd => Wf.ApiMd();
+
+        PdbSvc PdbSvc => Wf.PdbSvc();
+
+        [CmdOp("pdb/emit")]
+        void EmitApiPdbInfo()
+            => PdbSvc.EmitPdbInfo(ApiMd.Parts.Index().First);
+
         ReadOnlySeq<HostAsmRecord> HostAsm()
         {
             var pack = ApiPacks.Current();

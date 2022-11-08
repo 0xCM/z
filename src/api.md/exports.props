@@ -1,5 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <ApiMd>$(MsBuildThisFileDirectory)z0.api.md.csproj</ApiMd>
-  </PropertyGroup>
-</Project>

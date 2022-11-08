@@ -29,6 +29,10 @@ namespace Z0
 
             public R Roslyn(IWfRuntime wf)
                 => Service<R>(wf);
+
+            public ApiMd ApiMetadata(IWfRuntime wf)
+                => Service<ApiMd>(wf);
+
         }
 
         static Svc Services => Svc.Instance;
@@ -50,5 +54,8 @@ namespace Z0
 
         public static RoslnCmd RoslynCmd(this IWfRuntime wf)
             => Services.RoslynCmd(wf);            
+
+        public static ApiMd ApiMd(this IWfRuntime wf)
+            => Services.ApiMetadata(wf);            
     }
 }

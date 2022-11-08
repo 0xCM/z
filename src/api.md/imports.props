@@ -1,7 +1,0 @@
-<Project>
-  <ItemGroup>
-    <ProjectReference Include="$(Assets)" />
-    <ProjectReference Include="$(Heaps)" />
-    <ProjectReference Include="$(Builds)" />
-  </ItemGroup>
-</Project>

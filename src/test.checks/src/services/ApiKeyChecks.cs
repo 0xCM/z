@@ -12,7 +12,6 @@ namespace Z0
 
         const GenericStateKind g = GenericStateKind.OpenGeneric;
 
-        ApiMd ApiMd => Wf.ApiMd();
         [CmdOp("apikeys/check")]
         public void RunAll()
         {

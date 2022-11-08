@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     public readonly struct UserStringIndex : IEcmaHeapKey<UserStringIndex>
     {
         public EcmaHeapKind HeapKind => EcmaHeapKind.UserString;

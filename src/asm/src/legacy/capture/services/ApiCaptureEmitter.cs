@@ -6,7 +6,7 @@ namespace Z0
 {
     using Z0.Asm;
 
-    using static core;
+    using static sys;
 
     public class ApiCaptureEmitter : AppService<ApiCaptureEmitter>
     {

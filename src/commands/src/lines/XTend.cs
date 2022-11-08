@@ -4,8 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IPartCapture
+    public static partial class XTend
     {
-
+        public static ReadOnlySpan<TextLine> Lines(this string src, bool keepblank = false, bool trim = true)
+            => Z0.Lines.read(src, keepblank, trim);
     }
 }

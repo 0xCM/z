@@ -15,7 +15,15 @@ namespace Z0
         {
             var buffer = bag<FilePath>();
             var paths = Env.paths(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL);
-            iter(paths, path => iter(path.Files(FileKind.Exe,false), file => buffer.Add(file)), true);
+
+            iter(paths, dir => {
+                iter(DbArchive.enumerate(dir, false, FileKind.Exe, FileKind.Cmd, FileKind.Bat), path => {
+                    buffer.Add(path);
+                });
+            }, true);
+
+            //iter(paths, path => iter(path.Files(FileKind.Exe, true), file => buffer.Add(file)), true);
+
             var tools = buffer.Array().Sort(new FileNameComparer());
             var counter = 0u;
             var emitter = text.emitter();

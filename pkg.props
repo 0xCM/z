@@ -10,6 +10,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+
+    <PackageReference Include="System.Reflection.MetadataLoadContext" Version="6.0.0" />
+    
     <PackageReference Include="Microsoft.DiaSymReader.PortablePdb" Version="$(MsDiaVer)">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -33,19 +36,6 @@
     <PackageReference Include="QuikGraph.Graphviz" Version="2.3.1" />
 
     <PackageReference Include="Microsoft.Build.Runtime" Version="$(MsBuildVer)" />
-
-    <PackageReference Include="Microsoft.CodeAnalysis" Version="$(CodeAnalysisVer)" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Scripting" Version="$(CodeAnalysisVer)" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="$(CodeAnalysisVer)" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="$(CodeAnalysisVer)" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="$(CodeAnalysisVer)" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Features" Version="$(CodeAnalysisVer)" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Features" Version="$(CodeAnalysisVer)" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Compilers" Version="$(CodeAnalysisVer)" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
 
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(MsExtVer)" />
     <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="$(MsExtVer)" />

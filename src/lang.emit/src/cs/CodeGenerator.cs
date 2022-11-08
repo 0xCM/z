@@ -7,7 +7,7 @@ namespace Z0
     using System.Text;
     using System.IO;
 
-    using static core;
+    using static sys;
 
     public class CodeGenerator
     {

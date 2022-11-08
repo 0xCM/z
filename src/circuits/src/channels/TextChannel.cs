@@ -7,8 +7,6 @@ namespace Z0
     using System;
     using System.Threading.Tasks;
     using static sys;
-
-    using P = System.IO.Pipelines;
     
     public class SeqChannels
     {

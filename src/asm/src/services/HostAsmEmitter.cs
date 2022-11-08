@@ -6,7 +6,7 @@ namespace Z0.Asm
 {
     using System.IO;
 
-    using static core;
+    using static sys;
 
     public sealed class HostAsmEmitter : AppService<HostAsmEmitter>
     {
@@ -68,19 +68,6 @@ namespace Z0.Asm
             Ran(flow, string.Format("Emitted {0} total statements", counter));
             return records.ViewDeposited();
         }
-
-        // public ReadOnlySpan<HostAsmRecord> EmitHostAsm(ReadOnlySpan<ApiCodeBlock> src, FolderPath dst)
-        // {
-        //     var count = src.Length;
-        //     var buffer = list<HostAsmRecord>();
-        //     for(var i=0; i<count; i++)
-        //         ApiInstructions.hostasm(Decode(skip(src,i)), buffer);
-        //     buffer.Sort();
-
-        //     var statements = buffer.ViewDeposited();
-        //     EmitHostAsm(statements, dst);
-        //     return statements;
-        // }
 
         public Index<HostAsmRecord> EmitHostAsm(ReadOnlySpan<AsmRoutine> src, IApiPackArchive dst)
         {

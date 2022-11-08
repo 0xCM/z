@@ -1,4 +1,5 @@
 <Project>
+  <Import Project="../../props/msca.props" />
   <ItemGroup>
     <ProjectReference Include="$(ApiMd)" />
     <ProjectReference Include="$(Imagine)" />

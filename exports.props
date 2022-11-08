@@ -2,7 +2,6 @@
    <Import Project="$(MsBuildThisFileDirectory)src/agents/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/alloc/exports.props"/>   
    <Import Project="$(MsBuildThisFileDirectory)src/api.code/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/api.md/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/assets/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/asm/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/asm.core/exports.props"/>
