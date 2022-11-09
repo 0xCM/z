@@ -4,25 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class XTend
+    public readonly struct WfEventTarget : IEventTarget
     {
-        public static IWfEventTarget ToTarget(this WfEventLogger src, Type host)
-            => new WfEventTarget(host, src );
-    }
-
-    public readonly struct WfEventTarget : IWfEventTarget
-    {
-        readonly WfEventLogger Logger;
-
-        public readonly Type Host;
-
-        Type IWfEventTarget.Host
-            => Host;
+        readonly Action<IEvent> Logger;
 
         [MethodImpl(Inline)]
-        public WfEventTarget(Type host, WfEventLogger logger)
+        public WfEventTarget(Action<IEvent> logger)
         {
-            Host = host;
             Logger = logger;
         }
 

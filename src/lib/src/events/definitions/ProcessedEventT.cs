@@ -25,7 +25,7 @@ namespace Z0
 
 
         [MethodImpl (Inline)]
-        public ProcessedEvent(WfStepId step, T payload)
+        public ProcessedEvent(StepId step, T payload)
         {
             EventId = EventId.define(EventName, step);
             Payload = payload;

@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public class WfEventBroker : IWfEventBroker
+    public class EventBroker : IEventBroker
     {
         readonly Dictionary<Type,ISink> Subscriptions;
 
@@ -19,7 +19,7 @@ namespace Z0
         readonly bool Owner;
 
         [MethodImpl(Inline)]
-        internal WfEventBroker(IEventSink sink, bool owner)
+        internal EventBroker(IEventSink sink, bool owner)
         {
             Owner = owner;
             Sink = sink;
@@ -65,9 +65,6 @@ namespace Z0
 
         public void Deposit(IEvent e)
             => Emit(e);
-
-        // public void Deposit(IAppEvent e)
-        //     => term.print(e);
 
         public void Deposit(IAppMsg e)
             => term.print(e);

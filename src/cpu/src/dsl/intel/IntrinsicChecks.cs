@@ -242,7 +242,7 @@ namespace Z0
                 Channel.Write(string.Format("{0}:{1} -> {2}", op, skip(src,i), skip(dst,i)));
         }
 
-        public void Execute(IWfEventTarget log)
+        public void Execute(IEventTarget log)
         {
             Compute(IntrinsicName.mm256_min_epu8);
             Compute(IntrinsicName.mm_packus_epi16);

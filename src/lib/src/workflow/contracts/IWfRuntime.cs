@@ -14,11 +14,11 @@ namespace Z0
 
         IApiCatalog ApiCatalog {get;}
 
-        IWfEventBroker EventBroker {get;}
+        IEventBroker EventBroker {get;}
 
         IEventSink EventSink {get;}
         
-        WfHost Host {get;}
+        KillMe Host {get;}
 
         LogLevel Verbosity {get;}
 
@@ -33,15 +33,9 @@ namespace Z0
         void RedirectEmissions(IWfEmissions dst);
 
         WfEmit Emitter {get;}
-
+        
         IWfChannel Channel 
             => Emitter;
-
-        WfEventLogger EventLogger
-            => x => Raise(x);
-
-        IWfEventTarget EventLog
-            => new WfEventTarget(Host.Type, EventLogger);
 
         void Disposed()
         {
@@ -55,13 +49,13 @@ namespace Z0
             return Flow(data);
         }
 
-        WfExecFlow<T> Running<T>(WfHost host, T msg)
+        WfExecFlow<T> Running<T>(KillMe host, T msg)
         {
             signal(this, host).Running(msg);
             return Flow(msg);
         }
 
-        WfExecFlow<string> Running(WfHost host, [CallerName] string caller = null)
+        WfExecFlow<string> Running(KillMe host, [CallerName] string caller = null)
         {
             signal(this, host).Running(caller);
             return Flow(caller);
@@ -74,7 +68,7 @@ namespace Z0
             return token;
         }
 
-        ExecToken Ran<T>(WfHost host, WfExecFlow<T> src, FlairKind flair = FlairKind.Ran)
+        ExecToken Ran<T>(KillMe host, WfExecFlow<T> src, FlairKind flair = FlairKind.Ran)
         {
             var token = Completed(src);
             signal(this, host).Ran(src.Data);
@@ -114,13 +108,13 @@ namespace Z0
         void Babble<T>(T data)
             => signal(this).Babble(data);
 
-        void Babble<T>(WfHost host, T data)
+        void Babble<T>(KillMe host, T data)
             => signal(this, host).Babble(data);
 
         void Status<T>(T data, FlairKind flair = FlairKind.Status)
             => signal(this).Status(data, flair);
 
-        void Status<T>(WfHost host,T data, FlairKind flair = FlairKind.Status)
+        void Status<T>(KillMe host,T data, FlairKind flair = FlairKind.Status)
             => signal(this, host).Status(data, flair);
 
         void Warn<T>(T msg, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
@@ -132,7 +126,7 @@ namespace Z0
         void Error<T>(T msg, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine]int? line = null)
             => signal(this).Error(msg, Events.originate("WorkflowError", caller, file, line));
 
-        void Error<T>(WfHost host, T data, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine]int? line = null)
+        void Error<T>(KillMe host, T data, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine]int? line = null)
             => signal(this, host).Error(data, Events.originate("WorkflowError", caller, file, line));
 
         WfExecFlow<Type> Creating(Type host)
@@ -166,7 +160,7 @@ namespace Z0
             return Emissions.LogEmission(TableFlow<T>(dst));
         }
 
-        WfTableFlow<T> EmittingTable<T>(WfHost host, FilePath dst)
+        WfTableFlow<T> EmittingTable<T>(KillMe host, FilePath dst)
             where T : struct
         {
             signal(this, host).EmittingTable<T>(dst);
@@ -183,7 +177,7 @@ namespace Z0
             return completed;
         }
 
-        ExecToken EmittedTable<T>(WfHost host, WfTableFlow<T> flow, Count count, FilePath? dst = null)
+        ExecToken EmittedTable<T>(KillMe host, WfTableFlow<T> flow, Count count, FilePath? dst = null)
             where T : struct
         {
             var completed = Completed(flow);
@@ -199,7 +193,7 @@ namespace Z0
             return Emissions.LogEmission(Flow(dst));
         }
 
-        FileWritten EmittingFile(WfHost host, FilePath dst)
+        FileWritten EmittingFile(KillMe host, FilePath dst)
         {
             signal(this, host).EmittingFile(dst);
             return Emissions.LogEmission(Flow(dst));
@@ -236,7 +230,7 @@ namespace Z0
             return completed;
         }
 
-        ExecToken EmittedFile(WfHost host, FileWritten flow, Count count)
+        ExecToken EmittedFile(KillMe host, FileWritten flow, Count count)
         {
             var completed = Completed(flow);
             var counted = flow.WithCount(count).WithToken(completed);
@@ -251,10 +245,10 @@ namespace Z0
         void Data<T>(T data, FlairKind flair)
             => signal(this).Data(data, flair);
 
-        void Data<T>(WfHost host, T data)
+        void Data<T>(KillMe host, T data)
             => signal(this).Data(data);
 
-        void Data<T>(WfHost host, T data, FlairKind flair)
+        void Data<T>(KillMe host, T data, FlairKind flair)
             => signal(this).Data(data, flair);
 
         void Row<T>(T data)

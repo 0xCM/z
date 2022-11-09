@@ -69,7 +69,7 @@ namespace Z0
             return result;
         }
 
-        protected override void Execute(IWfEventTarget log)
+        protected override void Execute(IEventTarget log)
         {
             var flow = Running();
             try

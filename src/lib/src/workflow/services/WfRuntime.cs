@@ -7,13 +7,13 @@ namespace Z0
     [ApiHost]
     public partial class WfRuntime : IWfRuntime
     {
-        public IWfEventBroker EventBroker {get;}
+        public IEventBroker EventBroker {get;}
 
         public IApiCatalog ApiCatalog {get;}
         
         public PartName AppName {get;}
 
-        public WfHost Host {get; private set;}
+        public KillMe Host {get; private set;}
 
         public LogLevel Verbosity {get; private set;}
 

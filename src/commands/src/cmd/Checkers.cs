@@ -66,7 +66,7 @@ namespace Z0
         // }
 
 
-        public static void run(ReadOnlySpan<IChecker> checks, IWfEventTarget log, bool pll = true)
+        public static void run(ReadOnlySpan<IChecker> checks, IEventTarget log, bool pll = true)
         {
             iter(checks, checker => {
                 var host = checker.GetType();
@@ -88,7 +88,7 @@ namespace Z0
             run(name, f, log, show);
         }
 
-        public static void run(Type host, string name, Action<IWfEventTarget> f, IWfEventTarget log)
+        public static void run(Type host, string name, Action<IEventTarget> f, IEventTarget log)
         {
             try
             {
@@ -105,7 +105,7 @@ namespace Z0
             iter(checks, x => run(x.name, x.f), pll);
         }
 
-        public static void run(bool pll, Type host, IWfEventTarget log, params (string name, Action<IWfEventTarget> f)[] checks)
+        public static void run(bool pll, Type host, IEventTarget log, params (string name, Action<IEventTarget> f)[] checks)
         {
             iter(checks, x => run(host, x.name, x.f, log), pll);
         }

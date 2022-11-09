@@ -13,14 +13,14 @@ namespace Z0
 
     public class WfEmit : IWfChannel
     {
-        public static WfEmit create(IWfRuntime wf, WfHost host)
+        public static WfEmit create(IWfRuntime wf, KillMe host)
             => new WfEmit(wf, host);
 
         readonly IWfRuntime Wf;
 
-        readonly WfHost Host;
+        readonly KillMe Host;
 
-        WfEmit(IWfRuntime wf, WfHost host)
+        WfEmit(IWfRuntime wf, KillMe host)
         {
             Wf = wf;
             Host = host;

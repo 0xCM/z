@@ -122,7 +122,7 @@ namespace Z0
                 dst.Tokens = TokenDispenser.Service;
                 dst.EventBroker = Events.broker(dst.LogConfig);
                 term.emit(Events.babble(factory, "Created event broker"));
-                dst.Host = new WfHost(typeof(WfRuntime));
+                dst.Host = new KillMe(typeof(WfRuntime));
                 term.emit(Events.babble(factory, "Created host"));
                 dst.EmissionLog = Loggers.emission(control, timestamp());
                 term.emit(Events.babble(factory, ConfiguredEmissionLogs.Format(dst.EmissionLog)));

@@ -19,11 +19,11 @@ namespace Z0
         static IAppMsg message(object title, object msg, Type host, string caller, FlairKind flair)
             => AppMsg.colorize(string.Concat(prefix(title, host, caller), Chars.Pipe, Chars.Space, msg), flair);
 
-        public static WfEventBroker broker(LogSettings config)
-            => new WfEventBroker(new WfLogger(config), true);
+        public static EventBroker broker(LogSettings config)
+            => new EventBroker(new EventLogger(config), true);
 
-        public static WfEventBroker broker(IEventSink target)
-            => new WfEventBroker(target,false);
+        public static EventBroker broker(IEventSink target)
+            => new EventBroker(target,false);
 
         [MethodImpl(Inline), Op]
         public static CallingMember caller([CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
@@ -41,11 +41,11 @@ namespace Z0
             => Events.signal(wf.EventSink, wf.Host);
 
         [MethodImpl(Inline), Op]
-        public static WfEventSignal signal(IWfRuntime wf, WfHost host)
+        public static WfEventSignal signal(IWfRuntime wf, KillMe host)
             => Events.signal(wf.EventSink, host);
 
         [MethodImpl(Inline), Op]
-        public static WfEventSignal signal(IEventSink sink, WfHost host)
+        public static WfEventSignal signal(IEventSink sink, KillMe host)
             => new WfEventSignal(sink, host);
 
         [MethodImpl(Inline), Op]

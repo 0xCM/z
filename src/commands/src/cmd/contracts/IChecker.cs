@@ -6,7 +6,7 @@ namespace Z0
 {
     public interface IChecker : ICmdProvider
     {
-        void Run(IWfEventTarget dst, bool pll);
+        void Run(IEventTarget dst, bool pll);
 
         ref readonly Index<string> Specs {get;}
     }

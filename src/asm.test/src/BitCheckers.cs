@@ -12,7 +12,7 @@ namespace Z0
         public static void run(IWfRuntime wf, bool pll = true)
         {
             var checkers = new BitCheckers(wf);
-            checkers.Run(wf.EventLog, pll);
+            checkers.Run(wf.EventBroker, pll);
         }
 
         IWfRuntime Wf;
@@ -43,7 +43,7 @@ namespace Z0
             Wf = wf;
         }
 
-        public void Run(IWfEventTarget log, bool pll)
+        public void Run(IEventTarget log, bool pll)
         {
             Checkers.run(pll,GetType(), log,
                 (nameof(CheckBitNumbers), CheckBitNumbers),
@@ -61,13 +61,13 @@ namespace Z0
             where T : unmanaged
                 => default;
 
-        void CheckBitfields(IWfEventTarget log)
+        void CheckBitfields(IEventTarget log)
         {
             var checks = BitfieldChecks.create(Wf);
             checks.Run(log);
         }
 
-        void CheckBv256(IWfEventTarget log)
+        void CheckBv256(IEventTarget log)
         {
             var width = 256;
             var storage = ByteBlock32.Empty;
@@ -89,7 +89,7 @@ namespace Z0
             }
         }
 
-        void CheckBitReplication(IWfEventTarget log)
+        void CheckBitReplication(IEventTarget log)
         {
             const byte PW = 4;
 
@@ -126,7 +126,7 @@ namespace Z0
             log.Deposit(Events.row(R3.FormatBits()));
         }
 
-        void CheckBitNumbers(IWfEventTarget log)
+        void CheckBitNumbers(IEventTarget log)
         {
             var dst = text.emitter();
             BitNumber.validate(n3, (byte)0b0000_0111, dst);
@@ -140,7 +140,7 @@ namespace Z0
             log.Deposit(Events.row(dst.Emit()));
         }
 
-        void CheckSegVars(IWfEventTarget log)
+        void CheckSegVars(IEventTarget log)
         {
             var a = Code.A;
             var b = Code.B;
@@ -160,7 +160,7 @@ namespace Z0
             log.Deposit(Events.row(result));
         }
 
-        void CheckUnpack4x1(IWfEventTarget log)
+        void CheckUnpack4x1(IEventTarget log)
         {
             const byte a0 = 0b1111;
             const byte a1 = 0b1110;
@@ -289,7 +289,7 @@ namespace Z0
                 Require.equal(packed[i], skip(unpacked,i));
         }
 
-        void CheckPack64x1(IWfEventTarget dst)
+        void CheckPack64x1(IEventTarget dst)
         {
             var a = 0xAAAAAAAAAAAAAAAAul;
             var emitter = text.emitter();

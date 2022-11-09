@@ -8,6 +8,6 @@ namespace Z0
     {
         IWfRuntime Wf {get;}
 
-        WfHost Host {get;}
+        KillMe Host {get;}
     }
 }

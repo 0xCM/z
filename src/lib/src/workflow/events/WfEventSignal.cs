@@ -8,12 +8,12 @@ namespace Z0
 
     public class WfEventSignal
     {
-        readonly WfHost Source;
+        readonly KillMe Source;
 
         readonly IEventSink Sink;
 
         [MethodImpl(Inline)]
-        internal WfEventSignal(IEventSink sink, WfHost src)
+        internal WfEventSignal(IEventSink sink, KillMe src)
         {
             Source = src;
             Sink = sink;

@@ -57,7 +57,7 @@ namespace Z0
             Seg3 = 3
         }
 
-        public void Run(IWfEventTarget log)
+        public void Run(IEventTarget log)
         {
             var segs = array(
                 PolyBits.seg(BF_A.Seg0, 0, 1, Bitfields.mask(Bitfields.segwidth(0,1), 0)),
@@ -88,7 +88,7 @@ namespace Z0
             log.Deposit(Events.row(emitter.Emit()));
         }
 
-        protected override void Execute(IWfEventTarget log)
+        protected override void Execute(IEventTarget log)
         {
             Run(log);
         }

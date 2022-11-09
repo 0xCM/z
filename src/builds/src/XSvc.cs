@@ -4,6 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using Z0.Roslyn;
+
+    using R = Z0.Roslyn.Roslyn;
+
     public static partial class XTend
     {
 
@@ -18,6 +22,12 @@ namespace Z0
 
             public ApiComments ApiComments(IWfRuntime wf)
                 => Service<ApiComments>(wf);
+
+            public RoslnCmd RoslynCmd(IWfRuntime wf)
+                => Service<RoslnCmd>(wf);
+
+            public R Roslyn(IWfRuntime wf)
+                => Service<R>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
@@ -27,5 +37,13 @@ namespace Z0
 
         public static MsBuild BuildSvc(this IWfRuntime wf)
             => Services.BuildSvc(wf);
+
+       public static R Roslyn(this IWfRuntime wf)
+            => Services.Roslyn(wf);
+
+        public static RoslnCmd RoslynCmd(this IWfRuntime wf)
+            => Services.RoslynCmd(wf);            
+
+             
     }
 }

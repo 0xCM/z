@@ -5,7 +5,7 @@
 namespace Z0
 {
     [WfHost]
-    public sealed class CheckResources : WfHost<CheckResources>
+    public sealed class CheckResources : KillMe<CheckResources>
     {
         public const string StepName = nameof(CheckResourcesStep);
 
@@ -21,12 +21,12 @@ namespace Z0
     {
         readonly IWfRuntime Wf;
 
-        readonly WfHost Host;
+        readonly KillMe Host;
 
         readonly FilePath Source;
 
         [MethodImpl(Inline)]
-        public CheckResourcesStep(IWfRuntime wf, WfHost host, FilePath src)
+        public CheckResourcesStep(IWfRuntime wf, KillMe host, FilePath src)
         {
             Wf = wf;
             Host = host;

@@ -206,17 +206,6 @@ namespace Z0
             return buffer;
         }
 
-        // static ApiMember[] generic(Type src, IWfEventTarget log)
-        // {
-        //     var uri = src.ApiHostUri();
-        //     var generic = ApiQuery.generic(src).Select(m => new JittedMethod(uri, m)).ToReadOnlySpan();
-        //     var gCount = generic.Length;
-        //     var buffer = list<ApiMember>();
-        //     for(var i=0; i<gCount; i++)
-        //         buffer.AddRange(ClrJit.generic(skip(generic, i), log));
-        //     return buffer.ToArray();
-        // }
-
         static ApiMember[] generic(Type src, IWfChannel emitter)
         {
             var uri = src.ApiHostUri();
@@ -228,43 +217,9 @@ namespace Z0
             return buffer.ToArray();
         }
 
-        // static ApiMember[] generic(IApiHost src, IWfEventTarget log)
-        //     => generic(src.HostType, log);
-
         static ApiMember[] generic(IApiHost src, IWfChannel emitter)
             => generic(src.HostType, emitter);
 
-        // [Op]
-        // static ApiMember[] generic(JittedMethod src, IWfEventTarget log)
-        // {
-        //     var diviner = MultiDiviner.Service;
-        //     var method = src.Method;
-        //     var types = @readonly(ApiIdentityKinds.NumericClosureTypes(method));
-        //     var count = types.Length;
-        //     var buffer = alloc<ApiMember>(count);
-        //     var dst = span(buffer);
-        //     try
-        //     {
-        //         for(var i=0u; i<count; i++)
-        //         {
-        //             ref readonly var t = ref skip(types, i);
-        //             var constructed = src.Method.MakeGenericMethod(t);
-        //             var uri = ApiIdentity.define(ApiUriScheme.Located, src.Host, method.Name, diviner.Identify(constructed));
-        //             seek(dst,i) = member(constructed, uri);
-        //         }
-        //     }
-        //     catch(ArgumentException e)
-        //     {
-        //         var msg = string.Format("{0}: Closure creation failed for {1}/{2}", e.GetType().Name, method.DeclaringType.DisplayName(), method.DisplayName());
-        //         log.Deposit(warn(msg));
-        //         return sys.empty<ApiMember>();
-        //     }
-        //     catch(Exception e)
-        //     {
-        //         log.Deposit(warn(e.ToString()));
-        //     }
-        //     return buffer;
-        // }
 
         [Op]
         static ApiMember[] generic(JittedMethod src, IWfChannel channel)
@@ -297,15 +252,6 @@ namespace Z0
             return buffer;
         }
 
-        // static IDictionary<MethodInfo,Type> ClosureProviders(IEnumerable<Type> src)
-        // {
-        //     var query = from t in src
-        //                 from m in t.DeclaredStaticMethods()
-        //                 let tag = m.Tag<ClosureProviderAttribute>()
-        //                 where tag.IsSome()
-        //                 select (m, tag.Value.ProviderType);
-        //     return query.ToDictionary();
-        // }
 
         static HashSet<string> CommonExclusions
             = sys.hashset(sys.array("ToString","GetHashCode", "Equals", "ToString"));

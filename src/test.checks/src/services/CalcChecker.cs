@@ -163,7 +163,7 @@ namespace Z0
                 Error(result.Message);
         }
 
-        void RunValidators(IWfEventTarget log)
+        void RunValidators(IEventTarget log)
         {
             Md5Validator.create(Wf).Run();
             Run("1");
@@ -216,7 +216,7 @@ namespace Z0
             }
         }
 
-        protected override void Execute(IWfEventTarget log)
+        protected override void Execute(IEventTarget log)
         {
             RunValidators(log);
         }

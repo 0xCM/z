@@ -26,7 +26,7 @@ namespace Z0
             return true;
         }
 
-        static DataFlowCatalog flows(IProjectWorkspace src)
+        static CmdFlowCatalog flows(IProjectWorkspace src)
         {
             var path = build(src);
             var lines = path.ReadLines(TextEncodingKind.Asci,true);

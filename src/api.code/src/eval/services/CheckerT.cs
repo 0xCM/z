@@ -96,7 +96,7 @@ namespace Z0
                 Throw.message(claim.Format());
         }
 
-        void Run(MethodInfo method, IWfEventTarget log)
+        void Run(MethodInfo method, IEventTarget log)
         {
             var args = sys.empty<object>();
             var result = Outcome.Success;
@@ -158,10 +158,10 @@ namespace Z0
         }
 
 
-        protected virtual void Execute(IWfEventTarget log)
+        protected virtual void Execute(IEventTarget log)
             => Execute(log, true);
 
-        void Execute(IWfEventTarget log, bool pll)
+        void Execute(IEventTarget log, bool pll)
         {
             try
             {
@@ -188,7 +188,7 @@ namespace Z0
                 FileEmit(emitter.Emit(), counter, EventLogPath);
         }
 
-        public void Run(IWfEventTarget log, bool pll)
+        public void Run(IEventTarget log, bool pll)
         {
             var flow = Running($"Running {SvcName} checks");
             EventLogPath.Delete();

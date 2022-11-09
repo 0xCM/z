@@ -24,12 +24,6 @@ namespace Z0
             public EcmaCmd EcmaCmd(IWfRuntime wf)
                 => Service<EcmaCmd>(wf);
 
-            public RoslnCmd RoslynCmd(IWfRuntime wf)
-                => Service<RoslnCmd>(wf);
-
-            public R Roslyn(IWfRuntime wf)
-                => Service<R>(wf);
-
             public ApiMd ApiMetadata(IWfRuntime wf)
                 => Service<ApiMd>(wf);
 
@@ -48,12 +42,6 @@ namespace Z0
 
         public static ICmdProvider EcmaCmd(this IWfRuntime wf)
             => Services.EcmaCmd(wf);
-
-        public static R Roslyn(this IWfRuntime wf)
-            => Services.Roslyn(wf);
-
-        public static RoslnCmd RoslynCmd(this IWfRuntime wf)
-            => Services.RoslynCmd(wf);            
 
         public static ApiMd ApiMd(this IWfRuntime wf)
             => Services.ApiMetadata(wf);            

@@ -69,7 +69,7 @@ namespace Z0
             lock(DataLock)
                 _Data.Clear();
         }
-        protected WfHost Host 
+        protected KillMe Host 
             => HostType;
 
         public override Type HostType
@@ -110,10 +110,10 @@ namespace Z0
             where T : struct
                 => Emitter.EmittedTable(flow,count, dst);
 
-        WfEventLogger EventLogger
+        Action<IEvent> EventLogger
             => e => Emitter.Raise(e);
 
-        protected IWfEventTarget EventLog
-            => EventLogger.ToTarget(GetType());
+        protected IEventTarget EventLog
+            => new WfEventTarget(EventLogger);
     }
 }

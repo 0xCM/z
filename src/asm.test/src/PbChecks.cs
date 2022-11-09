@@ -78,7 +78,7 @@ namespace Z0
         static ReadOnlySpan<byte> Widths0 => new byte[3]{4,3,5};
 
 
-        void EmitHeader(IWfEventTarget dst)
+        void EmitHeader(IEventTarget dst)
             => dst.Deposit(Events.row(string.Format(DsPattern, DsHeaders)));
 
         void Render(IBfDataset src)
@@ -109,7 +109,7 @@ namespace Z0
 
         }
 
-        protected override void Execute(IWfEventTarget log)
+        protected override void Execute(IEventTarget log)
         {
             EmitHeader(log);
             Check(n0);

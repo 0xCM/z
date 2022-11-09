@@ -4,8 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public abstract class WfHost<H> : IWfHost<H>
-        where H : WfHost<H>, new()
+    public abstract class KillMe<H> : IWfHost
+        where H : KillMe<H>, new()
     {
         [MethodImpl(Inline)]
         public static H create() => new H();
@@ -13,7 +13,7 @@ namespace Z0
         public Type Type {get;}
 
         [MethodImpl(Inline)]
-        protected WfHost()
+        protected KillMe()
         {
             Type = typeof(H);
         }
@@ -38,11 +38,11 @@ namespace Z0
             => Type.Name;
 
         [MethodImpl(Inline)]
-        public static implicit operator WfStepId(WfHost<H> src)
+        public static implicit operator StepId(KillMe<H> src)
             => src.Type;
 
         [MethodImpl(Inline)]
-        public static implicit operator WfHost(WfHost<H> src)
-            => new WfHost(src.Type);
+        public static implicit operator KillMe(KillMe<H> src)
+            => new KillMe(src.Type);
     }
 }

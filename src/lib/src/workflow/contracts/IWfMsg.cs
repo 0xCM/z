@@ -9,7 +9,7 @@ namespace Z0
         IWfRuntime Wf {get;}
 
         EventId Raise<E>(in E e)
-            where E : IWfEvent
+            where E : IEvent
                 => Wf.Raise(e);
 
         void Babble(string pattern, params object[] args)
