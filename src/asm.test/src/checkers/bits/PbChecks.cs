@@ -26,7 +26,6 @@ namespace Z0
             Demand.eq(bit.Off, (bit)b3);
         }
 
-
         public PbChecks()
         {
             Emitter = text.emitter();
@@ -98,31 +97,23 @@ namespace Z0
             var segs = PolyBits.segs(bf);
             TableEmit(segs, AppDb.DbTargets("pb").PrefixedTable<BfSegModel>($"{bf.Name}"));
             var intervals = bf.Intervals;
-
-
-            // Write(formatter.FormatHeader());
-            // iter(segs, seg => Write(formatter.Format(seg)));
-            // for(var i=0; i<intervals.Count; i++)
-            // {
-            //     Write(intervals[i]);
-            // }
+            Write(formatter.FormatHeader());
+            iter(segs, seg => Write(formatter.Format(seg)));
+            for(var i=0; i<intervals.Count; i++)
+            {
+                Write(intervals[i]);
+            }
 
         }
 
-        protected override void Execute(IEventTarget log)
+        protected override void Execute(IEventTarget dst)
         {
-            EmitHeader(log);
+            EmitHeader(dst);
             Check(n0);
             Check(n1);
-            log.Deposit(Events.row(Emitter.Emit()));
+            dst.Deposit(Events.row(Emitter.Emit()));
 
         }
-        // protected override void Execute(WfEventLogger log, bool pll)
-        // {
-        //     RenderHeader(Emitter);
-        //     Check(n0);
-        //     Check(n1);
-        //     Write(Emitter.Emit());
-        // }
+ 
     }
 }

@@ -6,6 +6,16 @@ namespace Z0
 {
     using static sys;
 
+    public class CheckRunner : WfSvc<CheckRunner>
+    {
+        IEventTarget Target => Checkers.target(Wf.Channel);
+
+        public void Run(bool pll, params IChecker[] src)
+        {
+            iter(src, checker => checker.Run(pll, Target), pll);
+        }
+    }
+
     [ApiHost]
     public class BitfieldChecks : Checker<BitfieldChecks>
     {
@@ -23,10 +33,7 @@ namespace Z0
                 ref readonly var hex = ref convert.Chars(base16, (ushort)i);
                 ref readonly var bin = ref convert.Chars(base2, (ushort)i);
             }
-
-            PbChecks.create(Wf).Run();
         }
-
 
         public static ByteSpanSpec GenBits(W8 w, byte start = 0, byte end = byte.MaxValue)
         {

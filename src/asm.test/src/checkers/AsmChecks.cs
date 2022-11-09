@@ -11,31 +11,17 @@ namespace Z0
 
     using gp32 = AsmRegTokens.Gp32Reg;
 
-    public class IntelHexIO : WfSvc<IntelHexIO>
-    {
-        public static bool parse(ReadOnlySpan<char> src, out Seq<HexDigitValue> dst)
-        {
-            dst = sys.alloc<HexDigitValue>(src.Length);
-            return Hex.digits(src, dst.Edit);
-        }
-
-        public static bool parse(ReadOnlySpan<AsciCode> src, out Seq<HexDigitValue> dst)
-        {
-            dst = sys.alloc<HexDigitValue>(src.Length);
-            return Hex.digits(src, dst.Edit);
-        }
-
-        public static bool parse(ReadOnlySpan<AsciSymbol> src, out Seq<HexDigitValue> dst)
-        {
-            dst = sys.alloc<HexDigitValue>(src.Length);
-            return Hex.digits(src, dst.Edit);
-        }
-
-    }
-
     [ApiHost]
     public partial class AsmCheckCmd : CheckCmd<AsmCheckCmd>
-    {
+    {    
+        [CmdOp("checkers/run")]
+        void CheckBits()
+        {
+            CheckRunner.create(Wf).Run(PllExec, 
+                BitfieldChecks.create(Wf),
+                PbChecks.create(Wf)
+            );
+        }    
 
         [CmdOp("asm/check/flags")]
         Outcome CheckAsmFlags(CmdArgs args)

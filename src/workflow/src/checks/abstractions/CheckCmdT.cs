@@ -21,8 +21,7 @@ namespace Z0
 
         protected override void Initialized()        
         {
-            Factories = Checkers.discover(Wf, ApiRuntime.colocated(ExecutingPart.Assembly));
-            //Services = Checkers.discover(Wf, GetType());
+            Factories = Checkers.factories(Wf, ApiRuntime.colocated(ExecutingPart.Assembly));
         }
 
         protected virtual bool Pll {get;}
@@ -53,8 +52,7 @@ namespace Z0
             return dst.ToArray();
         }
 
-        [CmdOp("checks/run")]
-        protected void ChecksRun(CmdArgs args)
+        public void Run(CmdArgs args)
         {
             if(args.Count == 0)
                 Run();

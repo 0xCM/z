@@ -9,7 +9,7 @@ namespace Z0
     {
         string Name {get;}
 
-        NativeModule Source {get;}
+        INativeModule Source {get;}
 
         MemoryAddress Address {get;}
     }

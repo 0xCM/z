@@ -15,7 +15,7 @@ namespace Z0
                 wf.CsGenCmd(),
                 wf.IntelInxCmd(),
                 wf.RuntimeCmd(),
-                AsmCheckCmd.create(wf)
+                wf.AsmCheckCmd(),
             };
 
         static int main(string[] args)

@@ -23,7 +23,7 @@ namespace Z0
         string INativeFunction.Name
             => Name;
 
-        NativeModule INativeFunction.Source
+        INativeModule INativeFunction.Source
             => Source;
 
         MemoryAddress INativeFunction.Address
@@ -31,5 +31,8 @@ namespace Z0
 
         public string Format()
             => Address.Format();
+
+       public override string ToString()
+            => Format();
     }
 }

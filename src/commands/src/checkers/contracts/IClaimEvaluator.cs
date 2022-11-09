@@ -4,16 +4,18 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IIndexedBits : ISizedValue
+    [Free]
+    public interface IClaimEvaluator<C> : IEvaluator<C,bool>
+        where C : IClaim
     {
-        bit this[uint i] {get;set;}
+
     }
 
     [Free]
-    public interface IIndexedBits<T> : IIndexedBits, ISizedValue<T>
-        where T : unmanaged
+    public interface IClaimEvaluator<S,T> : IEvaluator<S,T>
+        where S : IClaim
+        where T : IClaim
     {
-        T IValued<T>.Value
-            => sys.@as<IIndexedBits<T>,T>(this);
+
     }
 }

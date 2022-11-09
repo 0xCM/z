@@ -214,6 +214,5 @@ namespace Z0
                 dst = (Hex14)storage;
             return result;
         }
-
     }
 }

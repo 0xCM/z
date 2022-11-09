@@ -88,9 +88,6 @@ namespace Z0
         public string Format()
             => Text;
 
-        // public string Format(bool zpad = true, bool prespec = false, bool uppercase = false)
-        //     => Value.FormatHex(zpad:zpad, prespec:prespec, uppercase:uppercase);
-
         public override string ToString()
             => Text;
 

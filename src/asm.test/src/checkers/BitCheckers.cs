@@ -8,11 +8,25 @@ namespace Z0
     using static Char5;
 
     public class BitCheckers
-    {
+    {        
         public static void run(IWfRuntime wf, bool pll = true)
         {
             var checkers = new BitCheckers(wf);
-            checkers.Run(wf.EventBroker, pll);
+            checkers.Run(Checkers.target(wf.Channel), pll);
+        }
+
+        public void Run(IEventTarget log, bool pll)
+        {
+            Checkers.run(pll,GetType(), log,
+                (nameof(CheckBitNumbers), CheckBitNumbers),
+                (nameof(CheckBitReplication), CheckBitReplication),
+                (nameof(CheckSegVars), CheckSegVars),
+                (nameof(CheckBitfields), CheckBitfields),
+                (nameof(CheckBv256), CheckBv256),
+                (nameof(CheckPack64x1), CheckPack64x1),
+                (nameof(CheckUnpack4x1), CheckUnpack4x1)
+            );
+
         }
 
         IWfRuntime Wf;
@@ -43,19 +57,6 @@ namespace Z0
             Wf = wf;
         }
 
-        public void Run(IEventTarget log, bool pll)
-        {
-            Checkers.run(pll,GetType(), log,
-                (nameof(CheckBitNumbers), CheckBitNumbers),
-                (nameof(CheckBitReplication), CheckBitReplication),
-                (nameof(CheckSegVars), CheckSegVars),
-                (nameof(CheckBitfields), CheckBitfields),
-                (nameof(CheckBv256), CheckBv256),
-                (nameof(CheckPack64x1), CheckPack64x1),
-                (nameof(CheckUnpack4x1), CheckUnpack4x1)
-            );
-
-        }
 
         static BitVector256<T> bv256<T>()
             where T : unmanaged

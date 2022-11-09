@@ -4,7 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IWfChannel
+    public interface IEventChannel
+    {
+        EventId Raise<E>(E e) 
+            where E : IEvent;
+    }
+
+    public interface IMsgChannel
     {
         void Babble<T>(T content);
 
@@ -29,10 +35,23 @@ namespace Z0
         void Write<T>(string name, T value, FlairKind flair);
 
         void Write<T>(string name, T value);
+    }
 
-        EventId Raise<E>(E e) 
-            where E : IEvent;
+    public interface ITableChannel
+    {
+        ExecToken TableEmit<T>(ReadOnlySpan<T> rows, TextEncodingKind encoding = TextEncodingKind.Asci, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular) where T : struct;
 
+        ExecToken TableEmit<T>(Index<T> rows, TextEncodingKind encoding = TextEncodingKind.Asci, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular) where T : struct;
+
+        ExecToken TableEmit<T>(T[] rows, TextEncodingKind encoding = TextEncodingKind.Asci, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular) where T : struct;
+
+        ExecToken TableEmit<T>(ReadOnlySeq<T> src, TextEncodingKind encoding = TextEncodingKind.Asci, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular) where T : struct;
+
+        ExecToken TableEmit<T>(Seq<T> src, TextEncodingKind encoding = TextEncodingKind.Asci, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular) where T : struct;                
+    }
+
+    public interface IWfChannel : IEventChannel, IMsgChannel
+    {
         WfExecFlow<Type> Creating(Type service);
 
         ExecToken Completed<T>(WfExecFlow<T> flow, Type host, Exception e, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null);

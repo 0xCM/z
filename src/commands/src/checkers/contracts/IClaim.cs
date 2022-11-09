@@ -4,11 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
-    partial struct Hex
+    [Free]
+    public interface IClaim : IExprDeprecated
     {
-
-         
     }
 }

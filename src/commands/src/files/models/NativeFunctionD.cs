@@ -25,6 +25,12 @@ namespace Z0
         }
 
         public string Format()
-            => string.Format(RpOps.PSx3, Address, Source, Name);
+            => string.Format(RP.PSx3, Address, Source, Name);
+
+        public override string ToString()
+            => Format();
+
+        INativeModule INativeFunction.Source
+            => Source;
     }
 }

@@ -8,6 +8,9 @@ namespace Z0
     {
         void Run(IEventTarget dst, bool pll);
 
+        void Run(bool pll, IEventTarget dst)
+            => Run(dst,pll);
+
         ref readonly Index<string> Specs {get;}
     }
 }

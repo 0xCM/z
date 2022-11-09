@@ -157,7 +157,6 @@ namespace Z0
 
         }
 
-
         protected virtual void Execute(IEventTarget log)
             => Execute(log, true);
 
