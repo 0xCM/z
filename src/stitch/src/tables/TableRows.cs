@@ -6,9 +6,9 @@ namespace Z0
 {
     using static sys;
 
-    public class TableBuilder
+    public class TableRows
     {
-        List<TableRow> Rows;
+        List<TableRow> Data;
 
         TableColumn[] Cols;
 
@@ -16,62 +16,62 @@ namespace Z0
 
         string Source;
 
-        public static TableBuilder create()
-            => new TableBuilder(0);
+        public static TableRows create()
+            => new TableRows(0);
 
-        public TableBuilder(uint kind)
+        public TableRows(uint kind)
         {
             Kind = kind;
             Source = EmptyString;
-            Rows = new();
+            Data = new();
             Cols = array<TableColumn>();
         }
 
-        public TableBuilder WithKind(uint kind)
+        public TableRows WithKind(uint kind)
         {
             Kind = kind;
             return this;
         }
 
-        public TableBuilder WithSource(string src)
+        public TableRows WithSource(string src)
         {
             Source = src;
             return this;
         }
 
-        public TableBuilder WithRow(in TableRow row)
+        public TableRows WithRow(in TableRow row)
         {
-            Rows.Add(row);
+            Data.Add(row);
             return this;
         }
 
-        public TableBuilder WithColumns(TableColumn[] cols)
+        public TableRows WithColumns(TableColumn[] cols)
         {
             Cols = cols;
             return this;
         }
 
-        public TableBuilder WithRow(TableCell[] cells)
+        public TableRows WithRow(TableCell[] cells)
         {
-            Rows.Add(new TableRow(0, cells));
+            Data.Add(new TableRow(0, cells));
             return this;
         }
 
-        public TableBuilder WithRow(string[] cells)
+        public TableRows WithRow(string[] cells)
         {
-            Rows.Add(new TableRow(0, cells.Select(x => new TableCell(x))));
+            Data.Add(new TableRow(0, cells.Select(x => new TableCell(x))));
             return this;
         }
 
-        public TableBuilder WithRows(ReadOnlySpan<TableRow> src)
+        public TableRows WithRows(ReadOnlySpan<TableRow> src)
         {
             var count = src.Length;
             for(var i=0; i<count; i++)
-                Rows.Add(skip(src,i));
+                Data.Add(skip(src,i));
             return this;
         }
 
-        public TableBuilder IfNonEmpty(Action f)
+        public TableRows IfNonEmpty(Action f)
         {
             if(IsNonEmpty)
                 f();
@@ -80,7 +80,7 @@ namespace Z0
 
         public Table Emit()
         {
-            var rows = Rows.ToArray();
+            var rows = Data.ToArray();
             var count = rows.Length;
             ref var row = ref first(rows);
             for(var i=0u; i<count; i++)
@@ -90,9 +90,9 @@ namespace Z0
             return dst;
         }
 
-        public TableBuilder Clear()
+        public TableRows Clear()
         {
-            Rows.Clear();
+            Data.Clear();
             Cols.Clear();
             Kind = 0;
             return this;
@@ -100,7 +100,7 @@ namespace Z0
 
         public bool IsNonEmpty
         {
-            get => Rows.Count != 0;
+            get => Data.Count != 0;
         }
     }
 }

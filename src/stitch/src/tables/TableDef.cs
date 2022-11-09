@@ -4,16 +4,16 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct ApiTableDef
+    public readonly struct TableDef
     {
         public readonly TableId TableId;
 
         public readonly Identifier TypeName;
 
-        public readonly Index<TableFieldDef> Fields;
+        public readonly Index<TableField> Fields;
 
         [MethodImpl(Inline)]
-        public ApiTableDef(TableId id, Identifier name, TableFieldDef[] fields)
+        public TableDef(TableId id, Identifier name, TableField[] fields)
         {
             TableId = id;
             TypeName = name;
@@ -26,7 +26,7 @@ namespace Z0
             get => Fields.Count;
         }
 
-        public static ApiTableDef Empty
-            => new ApiTableDef(TableId.Empty, Identifier.Empty, sys.empty<TableFieldDef>());
+        public static TableDef Empty
+            => new TableDef(TableId.Empty, Identifier.Empty, sys.empty<TableField>());
     }
 }

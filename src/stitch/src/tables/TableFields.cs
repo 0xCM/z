@@ -8,18 +8,18 @@ namespace Z0
     using static sys;
 
     [ApiHost]
-    public ref struct EcmaFieldBuilder
+    public ref struct TableFields
     {
-        readonly Span<MemberFieldSpec> Fields;
+        readonly Span<ColumnSpec> Fields;
 
         ushort Index;
 
         [Op]
-        public static EcmaFieldBuilder create(ushort? capacity = null)
-            => new EcmaFieldBuilder(capacity ?? 20);
+        public static TableFields create(ushort? capacity = null)
+            => new TableFields(capacity ?? 20);
 
         [Op]
-        public static FieldBuilder field(TypeBuilder tb, string name, string type, Address16? offset = null)
+        public static System.Reflection.Emit.FieldBuilder field(TypeBuilder tb, string name, string type, Address16? offset = null)
         {
             var fb = tb.DefineField(name, Type.GetType(type), FieldAttributes.Public);
             if(offset != null)
@@ -51,33 +51,33 @@ namespace Z0
             = Default | SequentialLayout;
 
         [MethodImpl(Inline),Op]
-        public EcmaFieldBuilder(uint capacity)
+        public TableFields(uint capacity)
         {
             Index = 0;
-            Fields = span<MemberFieldSpec>(capacity);
+            Fields = span<ColumnSpec>(capacity);
         }
 
         [MethodImpl(Inline),Op]
-        public EcmaFieldBuilder WithField(in MemberFieldSpec src)
+        public TableFields WithField(in ColumnSpec src)
         {
             seek(Fields, Index++) = src;
             return this;
         }
 
         [MethodImpl(Inline),Op]
-        public EcmaFieldBuilder WithField(PropertyInfo src)
-            => WithField(new MemberFieldSpec(src.Name, src.PropertyType.Name, Index));
+        public TableFields WithField(PropertyInfo src)
+            => WithField(new ColumnSpec(src.Name, src.PropertyType.Name, Index));
 
         [MethodImpl(Inline),Op]
-        public EcmaFieldBuilder WithField(string name, Type type)
-            => WithField(new MemberFieldSpec(name, type.Name, Index));
+        public TableFields WithField(string name, Type type)
+            => WithField(new ColumnSpec(name, type.Name, Index));
 
         [MethodImpl(Inline), Op]
-        public EcmaFieldBuilder WithField(ClrFieldAdapter src)
-            => WithField(new MemberFieldSpec(src.Name, src.FieldType.Name, Index));
+        public TableFields WithField(ClrFieldAdapter src)
+            => WithField(new ColumnSpec(src.Name, src.FieldType.Name, Index));
 
         [MethodImpl(Inline), Op]
-        public EcmaFieldBuilder WithFields(params PropertyInfo[] src)
+        public TableFields WithFields(params PropertyInfo[] src)
         {
             foreach(var item in src)
                 WithField(item);
@@ -85,7 +85,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public EcmaFieldBuilder WithFields(params FieldInfo[] src)
+        public TableFields WithFields(params FieldInfo[] src)
         {
             foreach(var item in src)
                 WithField(item);

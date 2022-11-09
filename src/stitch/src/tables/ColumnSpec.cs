@@ -7,39 +7,39 @@ namespace Z0
     /// <summary>
     /// Defines a field
     /// </summary>
-    public readonly struct MemberFieldSpec
+    public readonly struct ColumnSpec
     {
         /// <summary>
         /// The field's name
         /// </summary>
-        public Identifier FieldName {get;}
+        public readonly Identifier Name;
 
         /// <summary>
         /// The name of the field data type
         /// </summary>
-        public Identifier DataType {get;}
+        public readonly Identifier DataType;
 
         /// <summary>
         /// The field's relative position
         /// </summary>
-        public uint Position {get;}
+        public readonly uint Position;
 
         /// <summary>
         /// The 0-based offset address of the field in the context of a type with explicit layout; otherwise ignored
         /// </summary>
-        public uint Offset {get;}
+        public readonly uint Offset;
 
         [MethodImpl(Inline)]
-        public MemberFieldSpec(Identifier field, Identifier type, uint pos, uint offset = default)
+        public ColumnSpec(Identifier field, Identifier type, uint pos, uint offset = default)
         {
-            FieldName = field;
+            Name = field;
             DataType = type;
             Position = pos;
             Offset = offset;
         }
 
         public string Format()
-            =>  string.Format(RP.PSx4, FieldName, Position, Offset, DataType);
+            =>  string.Format(RP.PSx4, Name, Position, Offset, DataType);
 
 
         public override string ToString()

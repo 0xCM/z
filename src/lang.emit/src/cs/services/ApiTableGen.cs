@@ -6,7 +6,7 @@ namespace Z0
 {
     public class ApiTableGen : WfSvc<ApiTableGen>
     {
-        public void Emit(uint margin, ApiTableDef spec, ITextEmitter dst)
+        public void Emit(uint margin, TableDef spec, ITextEmitter dst)
         {
             dst.IndentLine(margin, "[Record(TableId), StructLayout(LayoutKind.Sequential,Pack=1)]");
             dst.IndentLineFormat(margin, "public struct {0}", spec.TypeName);

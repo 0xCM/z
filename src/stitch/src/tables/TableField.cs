@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct TableFieldDef
+    public readonly struct TableField
     {
         public readonly ushort FieldIndex;
 
@@ -13,7 +13,7 @@ namespace Z0
         public readonly Identifier DataType;
 
         [MethodImpl(Inline)]
-        public TableFieldDef(ushort index, string name, Identifier type)
+        public TableField(ushort index, string name, Identifier type)
         {
             FieldIndex = index;
             FieldName = name;

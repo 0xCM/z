@@ -37,29 +37,20 @@ namespace Z0
         [Op]
         public static ushort[] offsets(Type host, Index<FieldInfo> fields)
             => fields.Select(f => offset(host,f));
+
         public const TypeAttributes ExplicitAnsi
             = Default | ExplicitLayout;
 
         public const TypeAttributes SequentialAnsi
             = Default | SequentialLayout;
 
-        [Op]
-        public static string format(in RecordSpec src)
-        {
-            var dst = text.build();
-            dst.AppendLine(src.TypeName);
-            for(var i=0; i<src.Fields.Length; i++)
-                dst.AppendLine(src.Fields[i].ToString());
-            return dst.ToString();
-        }
-
         [MethodImpl(Inline), Op]
-        public static RecordSpec table(Identifier type, params MemberFieldSpec[] Fields)
+        public static RecordSpec table(Identifier type, params ColumnSpec[] Fields)
             => new RecordSpec(type, Fields);
 
         [MethodImpl(Inline), Op]
-        public static MemberFieldSpec field(Identifier name, Identifier type, ushort position, ushort offset = default)
-            => new MemberFieldSpec(name, type, position, offset);
+        public static ColumnSpec field(Identifier name, Identifier type, ushort position, ushort offset = default)
+            => new ColumnSpec(name, type, position, offset);
 
         [Op]
         public static TypeBuilder type(ModuleBuilder mb, Identifier fullName, TypeAttributes attributes, Type parent)
@@ -70,7 +61,7 @@ namespace Z0
             => mb.DefineType(fullName, attributes, typeof(ValueType));
 
         [Op]
-        public static FieldBuilder field(TypeBuilder tb, Identifier name, Identifier type, uint? offset = null)
+        public static System.Reflection.Emit.FieldBuilder field(TypeBuilder tb, Identifier name, Identifier type, uint? offset = null)
         {
             var fb = tb.DefineField(name.Format(), Type.GetType(type.Format()), FieldAttributes.Public);
             if(offset != null)
@@ -91,7 +82,7 @@ namespace Z0
             Identifier name = src.Name;
             var declared = src.DeclaredInstanceFields();
             var count = declared.Length;
-            var buffer = alloc<MemberFieldSpec>(count);
+            var buffer = alloc<ColumnSpec>(count);
             var fields = @readonly(declared);
             var fieldOffsets = span(offsets(src, declared));
             var dst = span(buffer);
@@ -136,7 +127,7 @@ namespace Z0
             var tb = valueType(mb, spec.TypeName, ExplicitAnsi);
             var fields = spec.Fields;
             foreach(var f in fields)
-                field(tb, f.FieldName, f.DataType, f.Offset);
+                field(tb, f.Name, f.DataType, f.Offset);
             var type = tb.CreateType();
             return type;
         }

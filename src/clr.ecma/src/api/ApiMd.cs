@@ -34,7 +34,7 @@ namespace Z0
 
         public Index<SymLiteralRow> LoadSymLits(FilePath src)
         {
-            using var reader = TableReaders.reader<SymLiteralRow>(src, Symbolic.parse);
+            using var reader = TableConvention.reader<SymLiteralRow>(src, Symbolic.parse);
             var header = reader.Header.Split(Chars.Tab);
             if(header.Length != SymLiteralRow.FieldCount)
             {
@@ -60,7 +60,7 @@ namespace Z0
         public Index<SymInfo> LoadTokens(string name)
         {
             var src = ApiTargets().PrefixedTable<SymInfo>(tokens + "." +  name.ToLower());
-            using var reader = TableReaders.reader<SymInfo>(src, Symbols.parse);
+            using var reader = TableConvention.reader<SymInfo>(src, Symbols.parse);
             var header = reader.Header.Split(Chars.Pipe);
             if(header.Length != SymInfo.FieldCount)
             {

@@ -15,6 +15,10 @@ namespace Z0
 
         internal const byte DefaultFieldWidth = 24;
 
+        public static TableReader<T> reader<T>(FilePath src, RowParser<T> parser, bool header = true)
+            where T : struct
+                => new TableReader<T>(src, parser, header);
+
         /// <summary>
         /// Formats a <see cref='RowHeader'/>
         /// </summary>
