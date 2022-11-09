@@ -11,7 +11,7 @@ namespace Z0
         /// <summary>
         /// isl/test_inputs/codegen/gemm.c
         /// </summary>
-        public static void gemm(in Limits3 n, ref Receiver2 S_2, ref Receiver3 S_4)
+        public static void gemm(in AsmLoopLimits n, ref Receiver2 S_2, ref Receiver3 S_4)
         {
             for(int c0 = 0; c0 < n.I; c0 += 1)
             for(int c1 = 0; c1 < n.J; c1 += 1)
@@ -22,14 +22,14 @@ namespace Z0
             }
         }
 
-        public static void gemm(in Limits3 n, int* pDst00, int* pDst01,  int* pDst10, int* pDst11, int* pDst13)
+        public static void gemm(in AsmLoopLimits n, int* pDst00, int* pDst01,  int* pDst10, int* pDst11, int* pDst13)
         {
             var S_2 = LoopReceivers.r2(pDst00, pDst01);
             var S_4 = LoopReceivers.r3(pDst10, pDst11, pDst13);
             gemm(n, ref S_2, ref S_4);
         }
 
-        public static void gemm(in Limits3 n, Span<int> dst00, Span<int> dst01, Span<int> dst10, Span<int> dst11, Span<int> dst12)
+        public static void gemm(in AsmLoopLimits n, Span<int> dst00, Span<int> dst01, Span<int> dst10, Span<int> dst11, Span<int> dst12)
         {
             var S_2 = LoopReceivers.r2(pfirst(dst00), pfirst(dst01));
             var S_4 = LoopReceivers.r3(pfirst(dst10), pfirst(dst11), pfirst(dst12));

@@ -8,19 +8,6 @@ namespace Z0
 
     public class CaptureWf : WfSvc<CaptureWf>
     {
-        public class SettingsStore : Repository<FilePath, CaptureWfSettings, FilePath>
-        {
-            public override CaptureWfSettings Load(FilePath key)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override void Store(CaptureWfSettings src, FilePath dst)
-            {
-                
-            }
-        }
-
         public void RunChecks(IApiPack src)
         {
             CaptureWfChecks.run(src, Emitter);            
@@ -32,7 +19,7 @@ namespace Z0
         public static ReadOnlySeq<ApiEncoded> run(IWfRuntime wf, CmdArgs args)
         {
             var collected = ReadOnlySeq<ApiEncoded>.Empty;
-            var channel = wf.Emitter;
+            var channel = wf.Channel;
             var catalog = default(IApiCatalog);
             var settings = new CaptureWfSettings();
             var assemblies = list<Assembly>();
@@ -72,21 +59,5 @@ namespace Z0
             collected = exec.Run(catalog);
             return collected;
         }
-
-        public void Run(CmdArgs args)
-        {
-            run(Wf, args);
-        }
-
-        static SettingsStore Store = new();
-
-        public static CaptureWfSettings settings()   
-            => new();
-
-        public static CaptureWfSettings settings(FilePath src)   
-            => Store.Load(src);
-
-        public static void store(CaptureWfSettings src, FilePath dst)
-            => Store.Store(src,dst);
     }
 }

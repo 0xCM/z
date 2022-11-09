@@ -22,8 +22,6 @@ namespace Z0
                 });
             }, true);
 
-            //iter(paths, path => iter(path.Files(FileKind.Exe, true), file => buffer.Add(file)), true);
-
             var tools = buffer.Array().Sort(new FileNameComparer());
             var counter = 0u;
             var emitter = text.emitter();

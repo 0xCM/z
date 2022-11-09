@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class OmniScript : WfSvc<OmniScript>
+    public class OmniScript : AppService<OmniScript>
     {
         public Outcome Run(FilePath src, CmdVars vars, bool quiet, out ReadOnlySpan<TextLine> response)
             => ProcessControl.run(
@@ -30,12 +30,12 @@ namespace Z0
 
         void ReceiveCmdStatus(in string src)
         {
-            Write(src);
+            Channel.Write(src);
         }
 
         void ReceiveCmdError(in string src)
         {
-            Write(src, FlairKind.Error);
+            Channel.Write(src, FlairKind.Error);
         }
     }
 }

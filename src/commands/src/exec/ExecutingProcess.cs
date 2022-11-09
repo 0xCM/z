@@ -21,7 +21,7 @@ namespace Z0
             return dst;
         }
 
-        internal ExecutingProcess(CmdLine cmd, ProcessAdapter? process)
+        public ExecutingProcess(CmdLine cmd, ProcessAdapter? process)
         {
             CmdLine = cmd;
             Started = process?.StartTime ?? Timestamp.Zero;

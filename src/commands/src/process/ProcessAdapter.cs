@@ -780,11 +780,11 @@ namespace Z0
             set => Subject.StartInfo = value;
         }
 
-        public ProcessStartSpec StartSpec
-        {
-            get => Subject.StartInfo;
-            set => Subject.StartInfo = value;
-        }
+        // public ProcessStartSpec StartSpec
+        // {
+        //     get => Subject.StartInfo;
+        //     set => Subject.StartInfo = value;
+        // }
         
         //
         // Summary:

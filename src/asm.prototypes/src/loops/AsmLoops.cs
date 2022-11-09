@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [ApiHost("asm.proto.loops")]
+    [ApiHost]
     public unsafe readonly partial struct AsmLoops
     {
         [Op]

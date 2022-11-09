@@ -8,7 +8,6 @@ namespace Z0
 
     using static sys;
 
-
     public class WfAppCmd : WfAppCmd<WfAppCmd>
     {
         ArchiveRegistry ArchiveRegistry => Wf.ArchiveRegistry();

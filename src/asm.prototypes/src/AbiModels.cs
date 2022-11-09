@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [ApiHost("canonical.abi")]
+    [ApiHost]
     public struct AbiModels
     {
         uint State;

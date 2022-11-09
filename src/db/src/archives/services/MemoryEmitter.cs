@@ -8,6 +8,7 @@ namespace Z0
 
     using static sys;
 
+    [ApiHost]
     public sealed class MemoryEmitter : AppService<MemoryEmitter>
     {
         const byte Bpl = 40;

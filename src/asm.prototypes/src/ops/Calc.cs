@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using Free = System.Security.SuppressUnmanagedCodeSecurityAttribute;
 
     partial struct AsmPrototypes
     {

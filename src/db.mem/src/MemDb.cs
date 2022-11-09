@@ -8,6 +8,7 @@ namespace Z0
     using static Numbers;
     using static math;
 
+    [ApiHost]
     public partial class MemDb : IMemDb
     {
         public static void check(IWfChannel channel)
