@@ -42,6 +42,7 @@
    <Import Project="$(MsBuildThisFileDirectory)src/coff/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/db/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/db.mem/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/db.sqlite/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/dispatcher/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/digital/exports.props"/>
