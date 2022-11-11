@@ -6,6 +6,7 @@
 namespace Z0
 {
     using Asm;
+    using global;
 
     using static XedModels;
     using static XedRules;
@@ -373,7 +374,7 @@ namespace Z0
             dst.AppendLineFormat(RenderPattern, nameof(src.Props.InstForm), src.Props.InstForm);
             dst.AppendLineFormat(RenderPattern, nameof(src.Asm.Category), src.Asm.Category);
             dst.AppendLineFormat(RenderPattern, nameof(src.Asm.Extension), src.Asm.Extension);
-            dst.AppendLineFormat(RenderPattern, nameof(src.Encoding.Offsets), AsmRender.format(src.Encoding.Offsets));
+            dst.AppendLineFormat(RenderPattern, nameof(src.Encoding.Offsets), native.format(src.Encoding.Offsets));
             dst.AppendLineFormat(RenderPattern, nameof(src.Encoding.OpCode), XedRender.format(src.Encoding.OpCode));
             if(src.Encoding.ModRm.IsNonZero)
                 dst.AppendLineFormat(RenderPattern, nameof(src.Encoding.ModRm), src.Encoding.ModRm);

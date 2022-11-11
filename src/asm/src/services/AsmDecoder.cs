@@ -83,7 +83,7 @@ namespace Z0.Asm
                     continue;
                 }
 
-                var decoding = Wf.Running(Msg.DecodingPartRoutines.Format(kHosts, part.PartId));
+                var decoding = Wf.Running(Msg.DecodingPartRoutines.Format(kHosts, part.Part));
                 for(var j = 0; j<kHosts; j++)
                 {
                     ref readonly var host = ref skip(hostBlocks,j);
@@ -98,9 +98,9 @@ namespace Z0.Asm
                     stats.InstCount += routines.InstructionCount;
                 }
 
-                seek(dst,i) = new ApiPartRoutines(part.PartId, hostFx.ToArray());
+                seek(dst,i) = new ApiPartRoutines(part.Part, hostFx.ToArray());
 
-                Wf.Ran(decoding,  Msg.DecodedPartRoutines.Format(hostFx.Count, part.PartId, stats));
+                Wf.Ran(decoding,  Msg.DecodedPartRoutines.Format(hostFx.Count, part.Part, stats));
             }
 
             Wf.Ran(flow, Msg.DecodedMachine.Format(src.Length, parts.Length));

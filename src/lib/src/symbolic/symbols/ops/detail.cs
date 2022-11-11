@@ -7,7 +7,7 @@ namespace Z0
     partial struct Symbols
     {
         [Op, Closures(Closure)]
-        public static ref SymDetailRow detail<T>(in Sym<T> src, ushort count, out SymDetailRow dst)
+        public static SymDetailRow detail<T>(in Sym<T> src, ushort count, out SymDetailRow dst)
             where T : unmanaged
         {
             dst.TypeName = src.Type.Content;
@@ -20,7 +20,7 @@ namespace Z0
             dst.ExprData = text.utf16(src.Expr.Format()).ToArray();
             dst.ExprSize = (ushort)dst.ExprData.Count;
             dst.Hidden = src.Hidden;
-            return ref dst;
+            return dst;
         }
     }
 }

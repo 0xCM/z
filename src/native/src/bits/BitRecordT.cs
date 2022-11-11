@@ -19,11 +19,5 @@ namespace Z0
         {
             Data = data;
         }
-
-        public Span<byte> Storage
-        {
-            [MethodImpl(Inline)]
-            get => bytes(Data);
-        }
     }
 }

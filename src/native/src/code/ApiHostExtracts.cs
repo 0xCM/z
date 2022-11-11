@@ -6,7 +6,7 @@ namespace Z0
 {
     public readonly struct ApiHostExtracts : IIndex<ApiMemberExtract>
     {
-        public ApiHostUri Host {get;}
+        public readonly ApiHostUri Host;
 
         readonly Index<ApiMemberExtract> Blocks;
 

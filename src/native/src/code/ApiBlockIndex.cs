@@ -121,10 +121,6 @@ namespace Z0
                 return ApiHostBlocks.Empty;
         }
 
-        // [MethodImpl(Inline)]
-        // public ApiPartCode PartCodeBlocks(PartId id)
-        //     => ApiPartCode.create(id, Hosts.Map(HostCodeBlocks));
-
         public ApiCodeBlock this[MemoryAddress location]
         {
             [MethodImpl(Inline)]
@@ -136,12 +132,6 @@ namespace Z0
             [MethodImpl(Inline)]
             get => HostCodeBlocks(id);
         }
-
-        // public ApiPartCode this[PartId id]
-        // {
-        //     [MethodImpl(Inline)]
-        //     get => PartCodeBlocks(id);
-        // }
 
         public static ApiBlockIndex Empty
         {

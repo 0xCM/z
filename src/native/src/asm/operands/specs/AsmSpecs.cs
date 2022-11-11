@@ -7,7 +7,7 @@ namespace Z0
     using Asm;
     using Asm.Operands;
 
-    using static core;
+    using static sys;
 
     [ApiHost]
     public class AsmSpecs
@@ -44,50 +44,50 @@ namespace Z0
             => new AsmInstruction(mnemonic, opcode, ops);
 
         [MethodImpl(Inline), Op]
-        public static ref AsmInstruction inst(in AsmMnemonic mnemonic, in SdmOpCode opcode, out AsmInstruction dst)
+        public static AsmInstruction inst(in AsmMnemonic mnemonic, in SdmOpCode opcode, out AsmInstruction dst)
         {
             dst = inst(mnemonic, opcode, AsmOperands.Empty);
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op]
-        public static ref AsmInstruction inst(in AsmMnemonic mnemonic, in SdmOpCode opcode, in AsmOperand op0, out AsmInstruction dst)
+        public static AsmInstruction inst(in AsmMnemonic mnemonic, in SdmOpCode opcode, in AsmOperand op0, out AsmInstruction dst)
         {
             dst.Mnemonic = mnemonic;
             dst.OpCode = opcode;
             dst.Operands = AsmOperands.Empty;
             ops(op0, ref dst.Operands);
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op]
-        public static ref AsmInstruction inst(in AsmMnemonic mnemonic, in SdmOpCode opcode, in AsmOperand op0, in AsmOperand op1, out AsmInstruction dst)
+        public static AsmInstruction inst(in AsmMnemonic mnemonic, in SdmOpCode opcode, in AsmOperand op0, in AsmOperand op1, out AsmInstruction dst)
         {
             dst.Mnemonic = mnemonic;
             dst.OpCode = opcode;
             dst.Operands = AsmOperands.Empty;
             ops(op0, op1, ref dst.Operands);
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op]
-        public static ref AsmInstruction inst(in AsmMnemonic mnemonic, in SdmOpCode opcode, in AsmOperand op0, in AsmOperand op1, in AsmOperand op2, out AsmInstruction dst)
+        public static AsmInstruction inst(in AsmMnemonic mnemonic, in SdmOpCode opcode, in AsmOperand op0, in AsmOperand op1, in AsmOperand op2, out AsmInstruction dst)
         {
             dst.Mnemonic = mnemonic;
             dst.OpCode = opcode;
             dst.Operands = AsmOperands.Empty;
             ops(op0, op1, op2, ref dst.Operands);
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op]
-        public static ref AsmInstruction inst(in AsmMnemonic mnemonic, in SdmOpCode opcode, in AsmOperand op0, in AsmOperand op1, in AsmOperand op2, in AsmOperand op3, out AsmInstruction dst)
+        public static AsmInstruction inst(in AsmMnemonic mnemonic, in SdmOpCode opcode, in AsmOperand op0, in AsmOperand op1, in AsmOperand op2, in AsmOperand op3, out AsmInstruction dst)
         {
             dst.Mnemonic = mnemonic;
             dst.OpCode = opcode;
             dst.Operands = AsmOperands.Empty;
             ops(op0, op1, op2, op3, ref dst.Operands);
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline)]

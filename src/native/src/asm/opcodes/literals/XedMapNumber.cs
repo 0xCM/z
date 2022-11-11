@@ -4,11 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class XedLiterals
-    {
-
-    }
-
     [SymSource("xed"), DataWidth(4)]
     public enum XedMapNumber : byte
     {

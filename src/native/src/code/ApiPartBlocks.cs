@@ -6,14 +6,14 @@ namespace Z0
 {
     public readonly struct ApiPartBlocks : IIndex<ApiHostBlocks>
     {
-        public readonly PartId PartId;
+        public readonly PartName Part;
 
         public readonly Index<ApiHostBlocks> Blocks;
 
         [MethodImpl(Inline)]
-        public ApiPartBlocks(PartId part, Index<ApiHostBlocks> blocks)
+        public ApiPartBlocks(PartName part, Index<ApiHostBlocks> blocks)
         {
-            PartId = part;
+            Part = part;
             Blocks = blocks;
         }
 

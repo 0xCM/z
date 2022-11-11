@@ -64,10 +64,10 @@ namespace Z0
         public OpUri OpUri;
 
         [MethodImpl(Inline)]
-        public ref readonly AsmHexCode AsmHex(out AsmHexCode hex)
+        public AsmHexCode AsmHex(out AsmHexCode hex)
         {
             hex = Encoded;
-            return ref hex;
+            return hex;
         }
 
         [MethodImpl(Inline)]

@@ -20,7 +20,7 @@ namespace Z0
         /// <param name="api">The api member</param>
         /// <param name="src">The source pairs over which to evaluate the operator</param>
         /// <typeparam name="T">The operand type</typeparam>
-        public ref readonly Triples<T> Eval<T>(in MemberCodeBlock api, BinaryOperatorClass op, in Pairs<T> src, in Triples<T> dst)
+        public Triples<T> Eval<T>(in MemberCodeBlock api, BinaryOperatorClass op, in Pairs<T> src, in Triples<T> dst)
             where T : unmanaged
         {
             var count = src.PointCount;
@@ -30,7 +30,7 @@ namespace Z0
                 ref readonly var pair = ref src[i];
                 dst[i] = Tuples.triple(pair.Left, pair.Right, f(pair.Left,pair.Right));
             }
-            return ref dst;
+            return dst;
         }
 
         /// <summary>

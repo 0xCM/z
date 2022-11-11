@@ -8,6 +8,7 @@ namespace Z0
 
     partial class Symbolic
     {
+
         [Op, Closures(UInt64k)]
         public static SymStore<T> store<T>(ushort capacity)
             => new SymStore<T>((uint)inc(ref SegCount), sys.alloc<T>(capacity));

@@ -80,7 +80,6 @@ namespace Z0
             }
         }
 
-
         [Parser]
         public static bool parse(string src, out EcmaToken dst)
         {

@@ -17,28 +17,10 @@ namespace Z0
             Data = data;
         }
 
-        public Span<BitChar> Edit
-        {
-            [MethodImpl(Inline)]
-            get => recover<BitChar>(bytes(Data));
-        }
-
-        public ReadOnlySpan<BitChar> View
-        {
-            [MethodImpl(Inline)]
-            get => recover<BitChar>(bytes(Data));
-        }
-
         public uint Count
         {
             [MethodImpl(Inline)]
             get => size<T>();
-        }
-
-        public ref BitChar this[uint index]
-        {
-            [MethodImpl(Inline)]
-            get => ref seek(Edit,index);
         }
     }
 }

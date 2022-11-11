@@ -100,12 +100,12 @@ namespace Z0
         /// <param name="count">The number of characters to encode</param>
         /// <param name="dst">The receiver</param>
         [MethodImpl(Inline), Op]
-        public static ref readonly asci2 encode(in char src, byte count, out asci2 dst)
+        public static asci2 encode(in char src, byte count, out asci2 dst)
         {
             dst = asci2.Null;
             ref var codes = ref Unsafe.As<asci2,AsciCode>(ref dst);
             AsciSymbols.codes(src, (byte)count, ref codes);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -114,11 +114,11 @@ namespace Z0
         /// <param name="src">The data source</param>
         /// <param name="dst">The target block</param>
         [MethodImpl(Inline), Op]
-        public static ref readonly asci2 encode(ReadOnlySpan<char> src, out asci2 dst)
+        public static asci2 encode(ReadOnlySpan<char> src, out asci2 dst)
         {
             dst = default;
             AsciSymbols.codes(src, span<asci2,AsciCode>(ref dst));
-            return ref dst;
+            return dst;
         }
 
         /// <summary>

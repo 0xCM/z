@@ -14,6 +14,16 @@ namespace Z0
     {
         const NumericKind Closure = UnsignedInts;
 
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static Span<BitChar> edit<T>(ref BitChars<T> src)
+            where T : unmanaged
+                => recover<BitChar>(bytes(src));
+
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static ReadOnlySpan<BitChar> view<T>(in BitChars<T> src)
+            where T : unmanaged
+                => recover<BitChar>(bytes(src));
+
         public static BitChar SectionSep
         {
             [MethodImpl(Inline), Op]
@@ -56,11 +66,11 @@ namespace Z0
             => ref skip(CharData.Kinds, (byte)index);
 
         [MethodImpl(Inline), Op]
-        public static uint render<T>(BitChars<T> src, Span<char> dst)
+        public static uint render<T>(in BitChars<T> src, Span<char> dst)
             where T : unmanaged
         {
             var count = src.Count;
-            var bits = src.View;
+            var bits = view(src);
             for(var i=0; i<count; i++)
                 seek(dst,i) = skip(bits,i);
             return count;

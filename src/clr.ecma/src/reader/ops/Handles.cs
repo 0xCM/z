@@ -18,7 +18,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public uint ConstantTableSize()
-            => ConstantRowCount()* ConstantRowSize();
+            => ConstantRowCount()*ConstantRowSize();
 
         [MethodImpl(Inline), Op]
         public static Handle handle(EcmaHandleData src)

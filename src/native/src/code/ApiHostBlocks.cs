@@ -25,7 +25,7 @@ namespace Z0
         public ApiHostBlocks(ApiHostUri host, ApiCodeBlock[] code)
         {
             Host = host;
-            Data = core.require(code).OrderBy(x => x.BaseAddress);
+            Data = sys.require(code).OrderBy(x => x.BaseAddress);
         }
 
         public PartId Part
@@ -94,7 +94,7 @@ namespace Z0
         public static ApiHostBlocks Empty
         {
             [MethodImpl(Inline)]
-            get => new ApiHostBlocks(ApiHostUri.Empty, core.array<ApiCodeBlock>());
+            get => new ApiHostBlocks(ApiHostUri.Empty, sys.empty<ApiCodeBlock>());
         }
     }
 }

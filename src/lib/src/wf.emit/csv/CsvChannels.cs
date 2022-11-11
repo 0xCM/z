@@ -15,7 +15,6 @@ namespace Z0
     {
         const NumericKind Closure = UInt64k;
 
-
         public static ExecToken emit<T>(IWfChannel channel, ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
                 where T : struct

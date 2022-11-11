@@ -6,7 +6,7 @@ namespace Z0
 {
     using System.Reflection.PortableExecutable;
 
-    using static core;
+    using static sys;
 
     public struct CoffHeaderView
     {
@@ -16,19 +16,13 @@ namespace Z0
 
         readonly CoffHeader Source;
 
-        ReadOnlySpan<byte> Data
-        {
-            [MethodImpl(Inline)]
-            get => core.bytes(Source);
-        }
-
         /// <summary>
         /// Specifies the target machine's CPU architecture.
         /// </summary>
-        public ref readonly Machine Machine
+        public Machine Machine
         {
             [MethodImpl(Inline)]
-            get => ref first(recover<Machine>(Data));
+            get => first(recover<Machine>(core.bytes(Source)));
         }
 
         /// <summary>

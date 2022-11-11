@@ -28,12 +28,12 @@ namespace Z0
         /// <typeparam name="E">The enum type</typeparam>
         /// <typeparam name="T">The primal type</typeparam>
         [MethodImpl(Inline)]
-        public static ref T scalar<E,T>(in E eVal, out T tVal)
+        public static T scalar<E,T>(in E eVal, out T tVal)
             where E : unmanaged, Enum
             where T : unmanaged
         {
             tVal = @as<E,T>(eVal);
-            return ref tVal;
+            return tVal;
         }
 
         /// <summary>
@@ -43,9 +43,9 @@ namespace Z0
         /// <param name="tVal">The primal output value</param>
         /// <typeparam name="E">The enum type</typeparam>
         [MethodImpl(Inline)]
-        public static ref byte scalar<E>(in E eVal, out byte tVal)
+        public static byte scalar<E>(in E eVal, out byte tVal)
             where E : unmanaged, Enum
-                => ref store(eVal, out tVal);
+                => store(eVal, out tVal);
 
         /// <summary>
         /// Reads an i16-value from an enum of primal i16-kind
@@ -54,9 +54,9 @@ namespace Z0
         /// <param name="tVal">The primal output value</param>
         /// <typeparam name="E">The enum type</typeparam>
         [MethodImpl(Inline)]
-        public static ref short scalar<E>(in E eVal, out short tVal)
+        public static short scalar<E>(in E eVal, out short tVal)
             where E : unmanaged, Enum
-                => ref store(eVal, out tVal);
+                => store(eVal, out tVal);
 
         /// <summary>
         /// Reads a u16-value from an enum of primal u16-kind
@@ -65,9 +65,9 @@ namespace Z0
         /// <param name="tVal">The primal output value</param>
         /// <typeparam name="E">The enum type</typeparam>
         [MethodImpl(Inline)]
-        public static ref ushort scalar<E>(in E eVal, out ushort tVal)
+        public static ushort scalar<E>(in E eVal, out ushort tVal)
             where E : unmanaged, Enum
-                => ref store(eVal, out tVal);
+                => store(eVal, out tVal);
 
         /// <summary>
         /// Reads an i32-value from an enum of primal i32-kind
@@ -76,9 +76,9 @@ namespace Z0
         /// <param name="tVal">The primal output value</param>
         /// <typeparam name="E">The enum type</typeparam>
         [MethodImpl(Inline)]
-        public static ref int scalar<E>(in E eVal, out int tVal)
+        public static int scalar<E>(in E eVal, out int tVal)
             where E : unmanaged, Enum
-                => ref store(eVal, out tVal);
+                => store(eVal, out tVal);
 
         /// <summary>
         /// Reads a u32-value from an enum of primal u32-kind
@@ -87,9 +87,9 @@ namespace Z0
         /// <param name="tVal">The primal output value</param>
         /// <typeparam name="E">The enum type</typeparam>
         [MethodImpl(Inline)]
-        public static ref uint scalar<E>(in E eVal, out uint tVal)
+        public static uint scalar<E>(in E eVal, out uint tVal)
             where E : unmanaged, Enum
-                => ref store(eVal, out tVal);
+                => store(eVal, out tVal);
 
         /// <summary>
         /// Reads an i8-value from an enum of primal u8-kind
@@ -98,9 +98,9 @@ namespace Z0
         /// <param name="tVal">The primal output value</param>
         /// <typeparam name="E">The enum type</typeparam>
         [MethodImpl(Inline)]
-        public static ref sbyte scalar<E>(in E eVal, out sbyte tVal)
+        public static sbyte scalar<E>(in E eVal, out sbyte tVal)
             where E : unmanaged, Enum
-                => ref store(eVal, out tVal);
+                => store(eVal, out tVal);
 
         /// <summary>
         /// Reads an i64-value from an enum of primal i64-kind

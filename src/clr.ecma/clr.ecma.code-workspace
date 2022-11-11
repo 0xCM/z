@@ -1,9 +1,6 @@
 {
 	"folders": [
 		{
-			"path": "../sys"
-		},
-		{
 			"path": "../bit"
 		},
 		{
@@ -13,14 +10,26 @@
 			"path": "../lib"
 		},
 		{
+			"path": "../symbolics"
+		},
+		{
 			"path": "../native"
+		},
+		{
+			"path": "../api.code"
+		},
+		{
+			"path": "../bits"
+		},
+		{
+			"path": "../clr.cil"
+		},
+		{
+			"path": "../cmd"
 		},
 		{
 			"path": "."
 		},
-		{
-			"path": "../cmd"
-		}
 	],
 	"settings": {}
 }

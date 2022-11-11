@@ -57,29 +57,5 @@ namespace Z0
             return dst.ToArray();
         }
 
-        public Index<SymInfo> LoadTokens(string name)
-        {
-            var src = ApiTargets().PrefixedTable<SymInfo>(tokens + "." +  name.ToLower());
-            using var reader = TableConvention.reader<SymInfo>(src, Symbols.parse);
-            var header = reader.Header.Split(Chars.Pipe);
-            if(header.Length != SymInfo.FieldCount)
-            {
-                Error(AppMsg.FieldCountMismatch.Format(SymInfo.FieldCount, header.Length));
-                return Index<SymInfo>.Empty;
-            }
-            var dst = list<SymInfo>();
-            while(!reader.Complete)
-            {
-                var outcome = reader.ReadRow(out var row);
-                if(!outcome)
-                {
-                    Error(outcome.Message);
-                    break;
-                }
-                dst.Add(row);
-            }
-
-            return dst.ToArray();
-        }
     }
 }

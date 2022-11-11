@@ -38,12 +38,12 @@ namespace Z0
         /// <param name="count">The number of characters to encode</param>
         /// <param name="dst">The receiver</param>
         [MethodImpl(Inline), Op]
-        public static ref readonly asci16 encode(in char src, byte count, out asci16 dst)
+        public static asci16 encode(in char src, byte count, out asci16 dst)
         {
             dst = asci16.Null;
             ref var storage = ref @as<asci16,AsciCode>(dst);
             codes(src, (byte)count, ref storage);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -52,11 +52,11 @@ namespace Z0
         /// <param name="src">The data source</param>
         /// <param name="dst">The target block</param>
         [MethodImpl(Inline), Op]
-        public static ref readonly asci16 encode(ReadOnlySpan<char> src, out asci16 dst)
+        public static asci16 encode(ReadOnlySpan<char> src, out asci16 dst)
         {
             dst = asci16.Spaced;
             codes(src, span<asci16,AsciCode>(ref dst));
-            return ref dst;
+            return dst;
         }
 
         /// <summary>

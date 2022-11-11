@@ -11,6 +11,41 @@ namespace Z0
     [ApiHost]
     public unsafe partial class EcmaReader
     {
+        public static ReadOnlySeq<EcmaRowStats> stats(EcmaReader reader)
+        {
+            var dst = bag<EcmaRowStats>();
+            stats(reader,dst);
+            return dst.Array().Sort();
+        }
+
+        [Op]
+        public static void stats(EcmaReader reader, ConcurrentBag<EcmaRowStats> dst)
+        {
+            var indicies = Symbols.values<TableIndex,byte>();
+            var counts = reader.GetRowCounts(indicies);
+            var offsets = reader.GetTableOffsets(indicies);
+            var sizes = reader.GetRowSizes(indicies);            
+            var name = reader.AssemblyName;
+            for(byte j=0; j<counts.Count; j++)
+            {
+                var table = (TableIndex)j;
+                var rowcount = counts[table];
+                var rowsize = sizes[table];
+                if(rowcount != 0)
+                {
+                    var entry = new EcmaRowStats();
+                    entry.AssemblyName = name;
+                    entry.TableName = table.ToString();
+                    entry.TableOffset = offsets[table];
+                    entry.TableIndex = j;
+                    entry.RowCount = rowcount;
+                    entry.RowSize = rowsize;
+                    entry.TableSize = rowcount*rowsize;
+                    dst.Add(entry);
+                }
+            }
+        }
+
         [MethodImpl(Inline), Op]
         public unsafe static MetadataReaderProvider provider(Assembly src)
         {
@@ -66,19 +101,19 @@ namespace Z0
             => FS.path(src.Definition.Location);
 
         [Op]
-        public static ref readonly FilePath xmlpath(ClrAssembly src, out FilePath dst)
+        public static FilePath xmlpath(ClrAssembly src, out FilePath dst)
         {
             var candidate = FS.path(Path.ChangeExtension(src.Definition.Location, FS.Xml.Name));
             dst = candidate.Exists ? candidate : FilePath.Empty;
-            return ref dst;
+            return dst;
         }
 
         [Op]
-        public static ref readonly FilePath pdbpath(ClrAssembly src, out FilePath dst)
+        public static FilePath pdbpath(ClrAssembly src, out FilePath dst)
         {
             var candidate = FS.path(Path.ChangeExtension(src.Definition.Location, FS.Pdb.Name));
             dst = candidate.Exists ? candidate : FilePath.Empty;
-            return ref dst;
+            return dst;
         }
 
         [Op]
@@ -134,6 +169,7 @@ namespace Z0
 
         public static EcmaReader create(EcmaFile src)
             => new EcmaReader(src);
+
         [Op]
         public static EcmaReader create(Assembly src)
             => new EcmaReader(src);
@@ -171,7 +207,7 @@ namespace Z0
         public EcmaReader(MemorySeg src)
         {
             Segment = src;
-            MD = new MetadataReader(Segment.BaseAddress.Pointer<byte>(), Segment.Size);
+            MD = new MetadataReader(Segment.BaseAddress.Pointer<byte>(), Segment.Size);            
         }
 
         [MethodImpl(Inline)]
@@ -206,5 +242,11 @@ namespace Z0
             [MethodImpl(Inline)]
             get => MemorySegs.view<byte>(Segment);
         }
+
+        AssemblyDefinition ReadAssemblyDef()
+            => MD.GetAssemblyDefinition();
+        
+        public string AssemblyName
+            => String(ReadAssemblyDef().Name);        
     }
 }

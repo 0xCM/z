@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     [ApiHost]
     public unsafe readonly struct DFx
@@ -198,20 +198,20 @@ namespace Z0
         public static ActionSpec action(Identifier name, SegRef dst)
             => new ActionSpec(name, dst, (Action)emit(name, functype:typeof(Action), result:typeof(void), args: sys.empty<Type>(), dst.Address));
 
-        public static ref FuncSpec<A,B> func<A,B>(Identifier name, SegRef dst, out FuncSpec<A,B> spec)
+        public static FuncSpec<A,B> func<A,B>(Identifier name, SegRef dst, out FuncSpec<A,B> spec)
         {
             spec.Name = name;
             spec.Code = dst;
             spec.Operation = (Func<A,B>)emit(name, functype:typeof(Func<A,B>), result:typeof(B), args: array(typeof(A)), dst.Address);
-            return ref spec;
+            return spec;
         }
 
-        public static ref FuncSpec<A,B,C> func<A,B,C>(Identifier name, SegRef dst, out FuncSpec<A,B,C> spec)
+        public static FuncSpec<A,B,C> func<A,B,C>(Identifier name, SegRef dst, out FuncSpec<A,B,C> spec)
         {
             spec.Name = name;
             spec.Code = dst;
             spec.Operation = (Func<A,B,C>)emit(name, functype:typeof(Func<A,B,C>), result:typeof(C), args: array(typeof(A), typeof(B)), dst.Address);
-            return ref spec;
+            return spec;
         }
 
         [Op, Closures(Closure)]

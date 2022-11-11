@@ -5,8 +5,6 @@
 namespace Z0.Asm
 {
 
-    using Operands;
-
     partial struct asm
     {
         [MethodImpl(Inline), Op]

@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     using static XedOpCodeKind;
     using static VexMapKind;
@@ -25,16 +25,16 @@ namespace Z0
     {
         public const string group = "asm.opcodes";
 
-        public static ref ulong convert(XedOpCode src, out ulong dst)
+        public static ulong convert(XedOpCode src, out ulong dst)
         {
             dst = @as<XedOpCode,ulong>(src);
-            return ref dst;
+            return dst;
         }
 
-        public static ref XedOpCode convert(ulong src, out XedOpCode dst)
+        public static XedOpCode convert(ulong src, out XedOpCode dst)
         {
             dst = @as<ulong,XedOpCode>(src);
-            return ref dst;
+            return dst;
         }
 
         public static int cmp(XedOpCodeKind a, XedOpCodeKind b)

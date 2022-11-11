@@ -110,7 +110,6 @@ namespace Z0
             return dst;
         }
 
-
         [MethodImpl(Inline), Op]
         public static uint size(in CoffStringTable src)
             => first(recover<uint>(slice(src.Data,0,4)));

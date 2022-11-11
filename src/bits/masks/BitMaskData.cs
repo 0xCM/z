@@ -87,31 +87,31 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public ref byte Value(out byte value)
+        public byte Value(out byte value)
         {
             value = (byte)Data;
-            return ref value;
+            return value;
         }
 
         [MethodImpl(Inline)]
-        public ref ushort Value(out ushort value)
+        public ushort Value(out ushort value)
         {
             value = (ushort)Data;
-            return ref value;
+            return value;
         }
 
         [MethodImpl(Inline)]
-        public ref uint Value(out uint value)
+        public uint Value(out uint value)
         {
             value = (uint)Data;
-            return ref value;
+            return value;
         }
 
         [MethodImpl(Inline)]
-        public ref ulong Value(out ulong value)
+        public ulong Value(out ulong value)
         {
             value = Data;
-            return ref value;
+            return value;
         }
 
         public bool IsEmpty

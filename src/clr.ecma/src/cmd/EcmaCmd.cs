@@ -16,11 +16,9 @@ namespace Z0
 
         ApiMd ApiMd => Wf.ApiMd();
 
-
         void DescribeHeaps()
         {
-            var src = Wf.ApiCatalog.Assemblies.View;
-            var heaps = Ecma.strings(src);
+            var heaps = Ecma.strings(ApiMd.Parts);
             var count = heaps.Length;
             for(var i=0; i<count; i++)
             {
@@ -35,14 +33,28 @@ namespace Z0
             }
         }
 
-        public static Outcome exec(IWfContext channel, CatalogAssemblies cmd)
+        public static void exec(IWfChannel channel, CatalogAssemblies cmd)
         {
-            var result = Outcome.Success;
             var src = from file in cmd.Source.DbArchive().Enumerate("*.dll")
                         where EcmaReader.valid(file)
                         select file;            
-            var dst = cmd.Target.DbArchive();                        
-            return result;
+            var dst = cmd.Target.DbArchive();
+            var formatter = Tables.formatter<EcmaRowStats>();
+            iter(src, path => {
+                if(EcmaReader.file(path, out var file))
+                {
+                    try
+                    {
+                        var reader = EcmaReader.create(file);
+                        var stats = EcmaReader.stats(reader);
+                        iter(stats, row => channel.Row(formatter.Format(row)));
+                    }
+                    finally
+                    {
+                        file.Dispose();
+                    }
+                }
+            });      
         }        
         
         void RunCliJobs()
@@ -89,6 +101,14 @@ namespace Z0
             }
         }
 
+        [CmdOp("ecma/catalog")]
+        void EmitEcmaCatalog(CmdArgs args)
+        {
+            var cmd = new CatalogAssemblies();
+            cmd.Source = FS.dir(args[0]);
+            exec(Channel, cmd);        
+        }
+
         [CmdOp("ecma/emit")]
         void EcmaEmitMetaDumps(CmdArgs args)
             => EcmaEmitter.EmitMetadumps(args);
@@ -104,11 +124,6 @@ namespace Z0
             EcmaEmitter.EmitCatalogs(src);
         }
 
-        void EcmaEmit(CmdArgs args)
-        {
-            var src = FS.dir(args[0]);
-            var dst = FS.dir(args[1]);
-        }
         [CmdOp("ecma/emit/hex")]
         void EmitApiHex()
             => EcmaEmitter.EmitLocatedMetadata(ApiModules.parts(), AppDb.ApiTargets("ecma/hex"), 64);

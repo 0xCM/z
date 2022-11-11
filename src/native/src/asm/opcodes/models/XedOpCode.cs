@@ -6,7 +6,7 @@
 namespace Z0
 {
     using static AsmOpCodeMaps;
-    using static core;
+    using static sys;
 
     [StructLayout(LayoutKind.Sequential,Pack=1), DataWidth(64)]
     public readonly struct XedOpCode : IEquatable<XedOpCode>, IComparable<XedOpCode>

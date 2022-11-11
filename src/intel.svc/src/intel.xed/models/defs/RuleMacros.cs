@@ -23,7 +23,7 @@ namespace Z0
     using M = XedRules.RuleMacroKind;
     using P = XedModels.RepPrefix;
     using D = XedModels.SegDefaultKind;
-    using V = XedLiterals.XedVexKind;
+    using V = XedVexKind;
     using X = XopMapKind;
 
     using static core;

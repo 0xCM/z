@@ -131,11 +131,11 @@ namespace Z0
         /// <param name="src">The data source</param>
         /// <param name="dst">The target block</param>
         [MethodImpl(Inline), Op]
-        public static ref readonly asci4 encode(ReadOnlySpan<char> src, out asci4 dst)
+        public static asci4 encode(ReadOnlySpan<char> src, out asci4 dst)
         {
             dst = default;
             codes(src, span<asci4,AsciCode>(ref dst));
-            return ref dst;
+            return dst;
         }
 
 
@@ -165,12 +165,12 @@ namespace Z0
         /// <param name="count">The number of characters to encode</param>
         /// <param name="dst">The receiver</param>
         [MethodImpl(Inline), Op]
-        public static ref readonly asci8 encode(in char src, byte count, out asci8 dst)
+        public static asci8 encode(in char src, byte count, out asci8 dst)
         {
             dst = asci8.Null;
             ref var storage = ref @as<asci8,AsciCode>(dst);
             AsciSymbols.codes(src, (byte)count, ref storage);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -187,11 +187,11 @@ namespace Z0
         /// <param name="src">The data source</param>
         /// <param name="dst">The target block</param>
         [MethodImpl(Inline), Op]
-        public static ref readonly asci8 encode(ReadOnlySpan<char> src, out asci8 dst)
+        public static asci8 encode(ReadOnlySpan<char> src, out asci8 dst)
         {
             dst = default;
             AsciSymbols.codes(src, span<asci8,AsciCode>(ref dst));
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -201,12 +201,12 @@ namespace Z0
         /// <param name="count">The number of characters to encode</param>
         /// <param name="dst">The receiver</param>
         [MethodImpl(Inline), Op]
-        public static ref readonly asci32 encode(in char src, byte count, out asci32 dst)
+        public static asci32 encode(in char src, byte count, out asci32 dst)
         {
             dst = asci32.Null;
             ref var storage = ref @as<asci32,AsciCode>(dst);
             AsciSymbols.codes(src, (byte)count, ref storage);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -215,11 +215,11 @@ namespace Z0
         /// <param name="src">The data source</param>
         /// <param name="dst">The target block</param>
         [MethodImpl(Inline), Op]
-        public static ref readonly asci32 encode(ReadOnlySpan<char> src, out asci32 dst)
+        public static asci32 encode(ReadOnlySpan<char> src, out asci32 dst)
         {
             dst = asci32.Spaced;
             AsciSymbols.codes(src, span<asci32,AsciCode>(ref dst));
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -229,12 +229,12 @@ namespace Z0
         /// <param name="count">The number of characters to encode</param>
         /// <param name="dst">The receiver</param>
         [MethodImpl(Inline), Op]
-        public static ref readonly asci64 encode(in char src, byte count, out asci64 dst)
+        public static asci64 encode(in char src, byte count, out asci64 dst)
         {
             dst = asci64.Null;
             ref var storage = ref @as<asci64,AsciCode>(dst);
             AsciSymbols.codes(src, (byte)count, ref storage);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -243,11 +243,11 @@ namespace Z0
         /// <param name="src">The data source</param>
         /// <param name="dst">The target block</param>
         [MethodImpl(Inline), Op]
-        public static ref readonly asci64 encode(ReadOnlySpan<char> src, out asci64 dst)
+        public static asci64 encode(ReadOnlySpan<char> src, out asci64 dst)
         {
             dst = asci64.Spaced;
             AsciSymbols.codes(src, span<asci64,AsciCode>(ref dst));
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -259,91 +259,90 @@ namespace Z0
             => encode(src, out asci64 dst);
 
         [MethodImpl(Inline), Op]
-        public static ref AsciBlock4 encode(string src, out AsciBlock4 dst)
-            => ref encode(span(src), out dst);
+        public static AsciBlock4 encode(string src, out AsciBlock4 dst)
+            => encode(span(src), out dst);
 
         [MethodImpl(Inline), Op]
-        public static ref AsciBlock8 encode(string src, out AsciBlock8 dst)
-            => ref encode(span(src), out dst);
+        public static AsciBlock8 encode(string src, out AsciBlock8 dst)
+            => encode(span(src), out dst);
 
         [MethodImpl(Inline), Op]
-        public static ref AsciBlock16 encode(string src, out AsciBlock16 dst)
-            => ref encode(span(src), out dst);
+        public static AsciBlock16 encode(string src, out AsciBlock16 dst)
+            => encode(span(src), out dst);
 
         [MethodImpl(Inline), Op]
-        public static ref AsciBlock32 encode(string src, out AsciBlock32 dst)
-            => ref encode(span(src), out dst);
+        public static AsciBlock32 encode(string src, out AsciBlock32 dst)
+            => encode(span(src), out dst);
 
         [MethodImpl(Inline), Op]
-        public static ref AsciBlock64 encode(string src, out AsciBlock64 dst)
-            => ref encode(span(src), out dst);
+        public static AsciBlock64 encode(string src, out AsciBlock64 dst)
+            => encode(span(src), out dst);
 
         [MethodImpl(Inline), Op]
-        public static ref AsciBlock128 encode(string src, out AsciBlock128 dst)
-            => ref encode(span(src), out dst);
+        public static AsciBlock128 encode(string src, out AsciBlock128 dst)
+            => encode(span(src), out dst);
 
         [MethodImpl(Inline), Op]
-        public static ref AsciBlock4 encode(ReadOnlySpan<char> src, out AsciBlock4 dst)
+        public static AsciBlock4 encode(ReadOnlySpan<char> src, out AsciBlock4 dst)
         {
             dst = default;
             var count = min(ByteBlock4.N, src.Length);
             encode(src, slice(dst.Bytes,0,count));
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op]
-        public static ref AsciBlock8 encode(ReadOnlySpan<char> src, out AsciBlock8 dst)
+        public static AsciBlock8 encode(ReadOnlySpan<char> src, out AsciBlock8 dst)
         {
             dst = default;
             var count = min(ByteBlock8.N, src.Length);
             encode(src, slice(dst.Bytes,0,count));
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op]
-        public static ref AsciBlock16 encode(ReadOnlySpan<char> src, out AsciBlock16 dst)
+        public static AsciBlock16 encode(ReadOnlySpan<char> src, out AsciBlock16 dst)
         {
             dst = default;
             var count = min(ByteBlock16.N, src.Length);
             encode(src, slice(dst.Bytes,0,count));
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op]
-        public static ref AsciBlock24 encode(ReadOnlySpan<char> src, out AsciBlock24 dst)
+        public static AsciBlock24 encode(ReadOnlySpan<char> src, out AsciBlock24 dst)
         {
             dst = default;
             var count = min(ByteBlock24.N, src.Length);
             encode(src, slice(dst.Bytes,0,count));
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op]
-        public static ref AsciBlock32 encode(ReadOnlySpan<char> src, out AsciBlock32 dst)
+        public static AsciBlock32 encode(ReadOnlySpan<char> src, out AsciBlock32 dst)
         {
             dst = AsciBlock32.Empty;
             var count = min(ByteBlock32.N, src.Length);
             encode(src, slice(dst.Bytes,0,count));
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op]
-        public static ref AsciBlock64 encode(ReadOnlySpan<char> src, out AsciBlock64 dst)
+        public static AsciBlock64 encode(ReadOnlySpan<char> src, out AsciBlock64 dst)
         {
             dst = AsciBlock64.Empty;
             var count = min(ByteBlock64.N, src.Length);
             encode(src, slice(dst.Bytes,0,count));
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op]
-        public static ref AsciBlock128 encode(ReadOnlySpan<char> src, out AsciBlock128 dst)
+        public static AsciBlock128 encode(ReadOnlySpan<char> src, out AsciBlock128 dst)
         {
             dst = AsciBlock128.Empty;
             var count = min(ByteBlock128.N, src.Length);
             encode(src, slice(dst.Bytes,0,count));
-            return ref dst;
-        }
-
+            return dst;
+       }
     }
 }

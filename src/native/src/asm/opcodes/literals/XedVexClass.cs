@@ -9,11 +9,6 @@ namespace Z0
 
     partial class XedLiterals
     {
-
-    }
-
-    partial class XedLiterals
-    {
         [SymSource(AsmOpCodeMaps.group), DataWidth(3)]
         public enum XedVexClass : byte
         {

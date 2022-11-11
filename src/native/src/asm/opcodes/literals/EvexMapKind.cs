@@ -7,11 +7,6 @@ namespace Z0
 {
     using N = AsmOpCodeMaps.Literals;
 
-    partial class XedLiterals
-    {
-
-    }
-
     [SymSource("asm.opcodes"), DataWidth(2)]
     public enum EvexMapKind : byte
     {

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using static core;
+    using static sys;
 
     [ApiComplete]
     public struct AsmOpCodeBits
@@ -42,19 +42,10 @@ namespace Z0.Asm
         {
             IncTokenCount(out var pos);
             Enable(src.Kind);
-            Value(pos) = src.Value;
+            var data = slice(bytes(this),3);
+            seek(data, pos) = src.Value;
             return this;
         }
-
-        Span<byte> Values
-        {
-            [MethodImpl(Inline)]
-            get => slice(bytes(this),3);
-        }
-
-        [MethodImpl(Inline)]
-        ref byte Value(byte pos)
-            => ref seek(Values, pos);
 
         [MethodImpl(Inline)]
         byte IncTokenCount(out byte pos)

@@ -9,12 +9,12 @@ namespace Z0
     partial struct Enums
     {
         [MethodImpl(Inline)]
-        public static ref T store<E,T>(in E e, out T dst)
+        public static T store<E,T>(in E e, out T dst)
             where E : unmanaged
             where T : unmanaged
         {
             dst = @as<E,T>(e);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace Z0
         /// <param name="dst">The storage target</param>
         /// <typeparam name="E">The enum type</typeparam>
         [MethodImpl(Inline)]
-        public static ref ulong store<E>(in E src, out ulong dst)
+        public static ulong store<E>(in E src, out ulong dst)
             where E : unmanaged
         {
             dst = 0ul;
@@ -36,43 +36,43 @@ namespace Z0
                 store(w32, src, ref dst);
             else
                 store(w64, src, ref dst);
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline)]
-        public static ref byte store<E>(W8 w, in E src, ref ulong dst)
+        public static byte store<E>(W8 w, in E src, ref ulong dst)
             where E : unmanaged
         {
             ref var u8 = ref @as<E,byte>(src);
             dst = u8;
-            return ref u8;
+            return u8;
         }
 
         [MethodImpl(Inline)]
-        public static ref ushort store<E>(W16 w, in E src, ref ulong dst)
+        public static ushort store<E>(W16 w, in E src, ref ulong dst)
             where E : unmanaged
         {
             ref var tVal = ref @as<E,ushort>(src);
             dst = tVal;
-            return ref tVal;
+            return tVal;
         }
 
         [MethodImpl(Inline)]
-        public static ref uint store<E>(W32 w, in E src, ref ulong dst)
+        public static uint store<E>(W32 w, in E src, ref ulong dst)
             where E : unmanaged
         {
             ref var tVal = ref @as<E,uint>(src);
             dst = tVal;
-            return ref tVal;
+            return tVal;
         }
 
         [MethodImpl(Inline)]
-        public static ref ulong store<E>(W64 w, in E src, ref ulong dst)
+        public static ulong store<E>(W64 w, in E src, ref ulong dst)
             where E : unmanaged
         {
             ref var tVal = ref @as<E,ulong>(src);
             dst = tVal;
-            return ref tVal;
+            return tVal;
         }
     }
 }
