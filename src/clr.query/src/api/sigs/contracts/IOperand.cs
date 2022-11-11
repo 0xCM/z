@@ -4,22 +4,20 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    [Free]
     public interface IOperand
     {
         byte Kind {get;}
-
-        ReadOnlySpan<byte> Value {get;}
     }
 
+    [Free]
     public interface IOperand<T> : IOperand
         where T : unmanaged
     {
-        new T Value {get;}
-
-        ReadOnlySpan<byte> IOperand.Value
-            => sys.bytes(Value);
+        T Value {get;}
     }
 
+    [Free]
     public interface IOperand<K,T> : IOperand<T>
         where T : unmanaged
         where K : unmanaged

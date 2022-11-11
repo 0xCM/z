@@ -28,7 +28,7 @@ namespace Z0
         /// <param name="src">The source value</param>
         /// <typeparam name="T">The source type</typeparam>
         [Op, Closures(Closure)]
-        public static ReadOnlySpan<char> chars<T>(in T src)
+        public static ReadOnlySpan<char> chars<T>(T src)
             where T : unmanaged
         {
             var dst = core.alloc<char>(width<T>());

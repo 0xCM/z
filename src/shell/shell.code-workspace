@@ -19,6 +19,9 @@
 			"path": "../lib"
 		},
 		{
+			"path": "../commands"
+		},
+		{
 			"path": "../digital"
 		},
 		{

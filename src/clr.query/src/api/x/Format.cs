@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class XTend
+    partial class XApi
     {
         //const NumericKind Closure = UnsignedInts;
 

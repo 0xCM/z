@@ -26,11 +26,11 @@ namespace Z0
         /// </summary>
         /// <param name="src">The source assembly</param>
         [Op]
-        public static unsafe ref ReadOnlySpan<byte> metaspan(Assembly src, out ReadOnlySpan<byte> dst)
+        public static unsafe ReadOnlySpan<byte> metaspan(Assembly src, out ReadOnlySpan<byte> dst)
         {
             src.TryGetRawMetadata(out var ptr, out var size);
             dst = cover(ptr, size);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>

@@ -1,8 +1,0 @@
-{
-    "msbuild": {
-        "enabled": true,
-        "Configuration": "Release"
-    },
-    "omnisharp.enableDecompilationSupport": true,
-    "omnisharp.defaultLaunchSolution": "z0.lib.sln"
-}

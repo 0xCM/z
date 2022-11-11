@@ -13,7 +13,7 @@ namespace Z0
 
         IPart[] Parts {get;}
 
-        Index<Assembly> Components {get;}
+        Index<Assembly> Assemblies {get;}
 
         bool Assembly(PartName id, out Assembly dst);
     }

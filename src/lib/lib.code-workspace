@@ -1,12 +1,6 @@
 {
 	"folders": [
 		{
-			"path": "../literals"
-		},
-		{
-			"path": "../sys"
-		},
-		{
 			"path": "../hex"
 		},
 		{
@@ -20,12 +14,6 @@
 		},
 		{
 			"path": "../cells"
-		},
-		{
-			"path": "../api.specs"
-		},
-		{
-			"path": "../cmd.specs"
 		},
 		{
 			"path": "../clr.query"

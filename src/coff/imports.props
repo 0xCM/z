@@ -1,7 +1,6 @@
 <Project>
   <ItemGroup>
     <ProjectReference Include="$(Native)" />
-    <ProjectReference Include="$(Digital)" />
-    <ProjectReference Include="$(Tools)" />
+    <ProjectReference Include="$(Workflow)" />
   </ItemGroup>
 </Project>

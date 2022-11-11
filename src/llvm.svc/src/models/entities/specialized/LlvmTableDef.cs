@@ -17,7 +17,7 @@ namespace Z0.llvm
         protected override Func<RecordField,string> KeyFunction
             => a => text.ifempty(a.Name,EmptyString);
 
-        protected ref bit Parse(string attrib, out bit dst)
+        protected bit Parse(string attrib, out bit dst)
         {
             bit parse()
             {
@@ -29,10 +29,10 @@ namespace Z0.llvm
 
             dst = Value(attrib, parse);
 
-            return ref dst;
+            return dst;
         }
 
-        protected ref int Parse(string attrib, out int dst)
+        protected int Parse(string attrib, out int dst)
         {
             int parse()
             {
@@ -43,10 +43,10 @@ namespace Z0.llvm
             }
 
             dst = Value(attrib, parse);
-            return ref dst;
+            return dst;
         }
 
-        protected ref bits<N,T> Parse<N,T>(string attrib, out bits<N,T> dst)
+        protected bits<N,T> Parse<N,T>(string attrib, out bits<N,T> dst)
             where T : unmanaged
             where N : unmanaged, ITypeNat
         {
@@ -59,10 +59,10 @@ namespace Z0.llvm
             }
 
             dst = Value(attrib, parse);
-            return ref dst;
+            return dst;
         }
 
-        protected ref list<string> Parse(string attrib, string type, out list<string> dst)
+        protected list<string> Parse(string attrib, string type, out list<string> dst)
         {
             list<string> parse()
             {
@@ -74,10 +74,10 @@ namespace Z0.llvm
             }
 
             dst = Value(attrib, parse);
-            return ref dst;
+            return dst;
         }
 
-        protected ref dag<IExpr> Parse(string attrib, out dag<IExpr> dst)
+        protected dag<IExpr> Parse(string attrib, out dag<IExpr> dst)
         {
             dag<IExpr> parse()
             {
@@ -90,7 +90,7 @@ namespace Z0.llvm
 
 
             dst = Value(attrib, parse);
-            return ref dst;
+            return dst;
         }
 
         public Identifier EntityName

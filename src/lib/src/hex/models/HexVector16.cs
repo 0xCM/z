@@ -53,12 +53,6 @@ namespace Z0
             get => ref Data.First;
         }
 
-        public Span<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => bytes(Data);
-        }
-
         [MethodImpl(Inline)]
         public static implicit operator HexVector16(Hex16[] src)
             => new HexVector16(src);

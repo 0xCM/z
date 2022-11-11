@@ -13,7 +13,7 @@ namespace Z0
         public static Outcome<uint> parse(string src, out HexArray16 dst)
         {
             dst = HexArray16.Empty;
-            return hexbytes(src, dst.Bytes);
+            return hexbytes(src, bytes(dst));
         }
 
         [MethodImpl(Inline), Op]

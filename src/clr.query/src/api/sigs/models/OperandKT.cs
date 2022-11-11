@@ -25,5 +25,4 @@ namespace Z0
         T IOperand<T>.Value
             => Value;
     }
-
 }

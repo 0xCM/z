@@ -8,7 +8,6 @@ namespace Z0
 
     partial struct NumericBox
     {
-
         /// <summary>
         /// Converts a numeric source value to a boxed numeric value of specified kind
         /// </summary>

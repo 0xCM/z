@@ -57,7 +57,6 @@
    <Import Project="$(MsBuildThisFileDirectory)src/graphs/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/grids/exports.props"/>
 
-   <Import Project="$(MsBuildThisFileDirectory)src/heaps/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/hex/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/imagine/exports.props"/>

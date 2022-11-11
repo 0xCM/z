@@ -27,7 +27,7 @@ namespace Z0
 
         static ServiceCache Services = ServiceCache.Instance;
 
-        public static EnvModule Env(this IWfChannel channel)
-            => EnvModule.create(channel);
+        public static EnvMod Env(this IWfChannel channel)
+            => EnvMod.create(channel);
     }
 }

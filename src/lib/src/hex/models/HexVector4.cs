@@ -33,10 +33,5 @@ namespace Z0
             get => Data.Length;
         }
 
-        public Span<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => bytes(Data);
-        }
     }
 }

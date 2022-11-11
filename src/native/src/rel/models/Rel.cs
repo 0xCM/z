@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     using I = Rel;
 
@@ -14,15 +14,6 @@ namespace Z0
     [StructLayout(LayoutKind.Sequential,Pack=1)]
     public readonly record struct Rel : IRelOp<uint>
     {
-        [MethodImpl(Inline), Op]
-        public static RelativeAddress address(MemoryAddress @base, MemoryAddress offset)
-            => new RelativeAddress(@base, offset);
-
-        [MethodImpl(Inline)]
-        public static RelativeAddress<T> address<T>(MemoryAddress @base, T offset)
-            where T : unmanaged, IAddress
-                    => new RelativeAddress<T>(@base, offset);
-
         public readonly uint Value;
 
         public readonly NativeSize Size;

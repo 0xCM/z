@@ -12,7 +12,7 @@ namespace Z0
             => new ClrEventListener(log);
 
         [MethodImpl(Inline), Op]
-        internal static ref MethodLoadEvent decode(EventWrittenEventArgs src, out MethodLoadEvent dst)
+        internal static MethodLoadEvent decode(EventWrittenEventArgs src, out MethodLoadEvent dst)
         {
             var data = src.Payload;
             var i=0;
@@ -29,7 +29,7 @@ namespace Z0
             dst.MethodID = (ulong)data[i++];
             dst.MethodID = (ulong)data[i++];
             dst.MethodID = (ulong)data[i++];
-            return ref dst;
+            return dst;
         }
     }
 }

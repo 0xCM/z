@@ -8,18 +8,18 @@ namespace Z0
     public readonly struct Loggers
     {
         [MethodImpl(Inline), Op]
-        public static ref EmissionLogEntry entry(in FileWritten src, out EmissionLogEntry dst)
+        public static EmissionLogEntry entry(in FileWritten src, out EmissionLogEntry dst)
         {
             dst.ExecToken = src.Token;
             dst.Target = src.Target;
             dst.FileType = src.Target.Ext;
             dst.Quantity = src.EmissionCount;
             dst.EventType = src.EmissionCount == 0 ? EmissionEventKind.Emitting : EmissionEventKind.Emitted;
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op, Closures(UnsignedInts)]
-        public static ref EmissionLogEntry entry<T>(in WfTableFlow<T> src, out EmissionLogEntry dst)
+        public static EmissionLogEntry entry<T>(in WfTableFlow<T> src, out EmissionLogEntry dst)
             where T : struct
         {
             dst.ExecToken = src.Token;
@@ -27,7 +27,7 @@ namespace Z0
             dst.FileType = src.Target.Ext;
             dst.Quantity = src.EmissionCount;
             dst.EventType = src.EmissionCount == 0 ? EmissionEventKind.Emitting : EmissionEventKind.Emitted;
-            return ref dst;
+            return dst;
         }
 
         public static IWfEmissions emission(Assembly src, Timestamp ts)

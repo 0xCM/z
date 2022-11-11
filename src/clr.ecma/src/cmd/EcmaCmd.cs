@@ -17,6 +17,24 @@ namespace Z0
         ApiMd ApiMd => Wf.ApiMd();
 
 
+        void DescribeHeaps()
+        {
+            var src = Wf.ApiCatalog.Assemblies.View;
+            var heaps = Ecma.strings(src);
+            var count = heaps.Length;
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var heap = ref heaps[i];
+                var data = heap.Data;
+                var size = heap.Size;
+                var dst = text.emitter();
+                dst.Append(heap.BaseAddress.Format());
+                for(var j=0; j<size; j++)
+                    dst.AppendFormat(" {0:X2}", skip(data,j));
+                Write(dst.Emit());
+            }
+        }
+
         public static Outcome exec(IWfContext channel, CatalogAssemblies cmd)
         {
             var result = Outcome.Success;

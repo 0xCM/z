@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class XTend
+    partial class XApi
     {
         [MethodImpl(Inline), Op]
         public static bool IsOpaque(this ApiClassKind src)

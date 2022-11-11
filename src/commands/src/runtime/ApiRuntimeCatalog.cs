@@ -51,7 +51,7 @@ namespace Z0
             get => _ComponentNames;
         }
 
-        public Index<Assembly> Components
+        public Index<Assembly> Assemblies
         {
             [MethodImpl(Inline)]
             get => _PartComponents;

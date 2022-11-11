@@ -46,7 +46,7 @@ namespace Z0
 
         public static uint bitstring<N>(HexVector8<N> src, uint i, Span<char> dst, N count = default)
             where N : unmanaged, ITypeNat
-                => render8x8(src.Bytes, i, dst, count);
+                => render8x8(bytes(src.View), i, dst, count);
 
         public static uint render8x8<N>(ReadOnlySpan<byte> src, uint offset, Span<char> dst, N k = default)
             where N : unmanaged, ITypeNat

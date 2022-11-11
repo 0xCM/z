@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     using api = HexArray;
 
     public struct HexArray16
@@ -18,29 +16,6 @@ namespace Z0
 
         public int Length => 16;
 
-        public ref byte First
-        {
-            [MethodImpl(Inline)]
-            get => ref sys.first(Bytes);
-        }
-
-        public ref byte this[int index]
-        {
-            [MethodImpl(Inline)]
-            get => ref seek(First,index);
-        }
-
-        public ref byte this[uint index]
-        {
-            [MethodImpl(Inline)]
-            get => ref seek(First,index);
-        }
-
-        public Span<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => bytes(this);
-        }
 
         [MethodImpl(Inline)]
         public static implicit operator HexArray16(ReadOnlySpan<byte> src)

@@ -5,8 +5,10 @@
 namespace Z0
 {
 
-    partial class XApi
+    public static partial class XApi
     {
+        const NumericKind Closure = UnsignedInts;
+        
         /// <summary>
         /// Determines whether a type is a 128-bit intrinsic vector closed over a specified type
         /// </summary>

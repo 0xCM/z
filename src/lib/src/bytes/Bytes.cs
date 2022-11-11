@@ -41,7 +41,7 @@ namespace Z0
         /// <param name="src">The data source</param>
         /// <param name="w">The target width</param>
         [MethodImpl(Inline), Op]
-        public static ref ushort convert(ReadOnlySpan<byte> src, out ushort dst)
+        public static ushort convert(ReadOnlySpan<byte> src, out ushort dst)
         {
             var n = src.Length;
             if(n >= 2)
@@ -54,7 +54,7 @@ namespace Z0
                     seek(b,i) = skip(src,i);
             }
 
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Z0
         /// <param name="src">The data source</param>
         /// <param name="w">The target width</param>
         [MethodImpl(Inline), Op]
-        public static ref uint convert(ReadOnlySpan<byte> src, out uint dst)
+        public static uint convert(ReadOnlySpan<byte> src, out uint dst)
         {
             var n = src.Length;
             if(n >= 4)
@@ -76,7 +76,7 @@ namespace Z0
                     seek(b,i) = skip(src,i);
             }
 
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Z0
         /// <param name="src">The data source</param>
         /// <param name="w">The target width</param>
         [MethodImpl(Inline), Op]
-        public static ref ulong convert(ReadOnlySpan<byte> src, out ulong dst)
+        public static ulong convert(ReadOnlySpan<byte> src, out ulong dst)
         {
             var n = src.Length;
             if(n >= 8)
@@ -98,7 +98,7 @@ namespace Z0
                     seek(b,i) = skip(src,i);
             }
 
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op]

@@ -5,5 +5,6 @@
     <ProjectReference Include="$(Numbers)" />
     <ProjectReference Include="$(EMath)" />
     <ProjectReference Include="$(Dynamic)" />
+    <ProjectReference Include="$(Db)" />
   </ItemGroup>
 </Project>

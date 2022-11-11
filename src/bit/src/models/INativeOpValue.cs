@@ -8,8 +8,7 @@ namespace Z0
     public interface INativeOpValue : IValued
     {
         NativeSize Size {get;}
-
-        ReadOnlySpan<byte> Data {get;}
+        
     }
 
     [Free]
@@ -19,7 +18,5 @@ namespace Z0
         NativeSize INativeOpValue.Size
             => Sized.native(sys.width<T>());
 
-        ReadOnlySpan<byte> INativeOpValue.Data
-            => sys.bytes(Value);
     }
 }

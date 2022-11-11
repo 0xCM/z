@@ -22,6 +22,19 @@ namespace Z0
             Data = data;
         }
 
+
+        public Span<Hex8> Edit
+        {
+            [MethodImpl(Inline)]
+            get => Data.Edit;
+        }
+
+        public ReadOnlySpan<Hex8> View
+        {
+            [MethodImpl(Inline)]
+            get => Data.View;
+        }
+
         public static ByteSize CellSize => 1;
 
         public static BitWidth CellWidth => 8;
@@ -56,18 +69,12 @@ namespace Z0
             get => ref Data[index];
         }
 
-        public Span<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => bytes(Data);
-        }
-
         [MethodImpl(Inline), Op]
         public uint Bitstring(uint offset, Span<char> dst)
             => BitRender.bitstring(this, offset, dst, count);
 
         public string Format()
-            => string.Format("<{0}>", Bytes.FormatHex());
+            => string.Format("<{0}>", sys.bytes(View).FormatHex());
 
         public override string ToString()
             => Format();

@@ -74,14 +74,14 @@ namespace Z0
         protected static CmdArg arg(in CmdArgs src, int index)
             => CmdArgs.arg(src, index);
 
-        protected static ref readonly T arg<T>(in CmdArgs src, int index, out T dst)
+        protected static T arg<T>(in CmdArgs src, int index, out T dst)
         {
             var data = CmdArgs.arg(src,index).Value;
             if(typeof(T) == typeof(bit))
                 dst = @as<bit,T>(bit.parse(data));
             else
                 dst = @throw<T>();
-            return ref dst;
+            return dst;
         }
 
         static AppData  _AppData;

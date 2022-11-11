@@ -331,29 +331,6 @@ namespace Z0.Asm
             return result;
         }
 
-        void DescribeHeaps()
-        {
-            var src = Wf.ApiCatalog.Components.View;
-            var heaps = Ecma.strings(src).View;
-            var count = heaps.Length;
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var heap = ref skip(heaps,i);
-                var data = heap.Data;
-
-                var size = heap.Size;
-                var dst = text.emitter();
-                dst.Append(heap.BaseAddress.Format());
-                for(var j=0; j<size; j++)
-                {
-                    ref readonly var b = ref skip(data,j);
-                    dst.AppendFormat(" {0:X2}", b);
-                }
-
-                Write(dst.Emit());
-
-            }
-        }
 
         void ResolveApi(params PartId[] parts)
         {

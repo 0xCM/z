@@ -21,7 +21,7 @@ namespace Z0
         public void Emit(IApiCatalog catalog, IDbArchive dst)
         {
             Target = dst;
-            Emit(catalog.Components, Target);
+            Emit(catalog.Assemblies, Target);
         }
 
         public void Emit(Assembly[] src, IDbArchive dst)

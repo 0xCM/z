@@ -3,5 +3,6 @@
   <ItemGroup>
     <ProjectReference Include="$(ApiCode)" />
     <ProjectReference Include="$(Process)" />
+    <ProjectReference Include="$(Workflow)" />
   </ItemGroup>
 </Project>

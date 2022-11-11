@@ -13,10 +13,10 @@ namespace Z0
         public void Emit(IApiCatalog src, EcmaEmissionSettings options, IApiPack dst)
         {
             if(options.EmitAssemblyRefs)
-                EmitAssemblyRefs(src.Components, dst);
+                EmitAssemblyRefs(src.Assemblies, dst);
 
             if(options.EmitFieldMetadata)
-                EmitFieldMetadata(src.Components, dst);
+                EmitFieldMetadata(src.Assemblies, dst);
 
             if(options.EmitApiMetadump)
                 EmitApiMetadump(dst);

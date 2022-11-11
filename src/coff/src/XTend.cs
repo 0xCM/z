@@ -10,10 +10,6 @@ namespace Z0
     {
         const NumericKind Closure = Root.UnsignedInts;
 
-        public static void Require(this bool src)
-        {
-            if(!src)
-                sys.@throw("Fail");
-        }
+
     }
 }

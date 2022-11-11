@@ -47,7 +47,7 @@ namespace Z0
         public Span<byte> Bytes
         {
             [MethodImpl(Inline)]
-            get => core.bytes(this);
+            get => sys.bytes(this);
         }
 
 

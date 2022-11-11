@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public partial class ApiCodeSvc : WfSvc<ApiCodeSvc>
+    public partial class ApiCodeSvc : AppService<ApiCodeSvc>
     {
         public ReadOnlySeq<ApiHexIndexRow> EmitHexIndex(SortedIndex<ApiCodeBlock> src, IApiPack dst)
             => EmitIndex(SortedSpans.define(src.Storage), dst.Targets().Path("api.index", FileKind.Csv));
@@ -50,7 +50,7 @@ namespace Z0
                 for(var i=0u; i<count; i++)
                     seek(buffer, i) = ApiCode.apicode(skip(src, i), i);
 
-                TableEmit(buffer, dst);
+                Channel.TableEmit(buffer, dst);
                 return buffer;
             }
             else
@@ -101,7 +101,7 @@ namespace Z0
                 seek(encoded,i).TargetRebase = skip(encoded,i).TargetAddress - rebase;
             }
 
-            TableEmit(encoded, csv);
+            Channel.TableEmit(encoded, csv);
             return encoded;
         }
 

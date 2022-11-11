@@ -35,10 +35,10 @@ namespace Z0
         /// <summary>
         /// The defining part
         /// </summary>
-        public PartId Part
+        public PartName Part
         {
             [MethodImpl(Inline)]
-            get => Host.PartId;
+            get => Host.PartName;
         }
 
         public Count MemberCount

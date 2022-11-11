@@ -48,12 +48,7 @@ namespace Z0
             get => ref Data.First;
         }
 
-        public Span<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => bytes(Data);
-        }
-
+ 
         public ref Hex8 this[uint index]
         {
             [MethodImpl(Inline)]

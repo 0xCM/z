@@ -83,7 +83,7 @@ namespace Z0
         }
 
         Assembly[] Components
-            => ApiCatalog.Components;
+            => ApiCatalog.Assemblies;
 
         string ITextual.Format()
             => AppName.Format();

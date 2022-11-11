@@ -6,6 +6,12 @@ namespace Z0
 {
     partial class XTend
     {
+        public static void Require(this bool src)
+        {
+            if(!src)
+                sys.@throw("Fail");
+        }
+                
         /// <summary>
         /// Presents a 128-bit vector as a 128-bit fixed block
         /// </summary>

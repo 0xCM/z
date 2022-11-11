@@ -1,6 +1,6 @@
 namespace Z0
 {
-    partial class XTend
+    partial class XApi
     {
         /// <summary>
         /// Determines whether a type encodes a natural number

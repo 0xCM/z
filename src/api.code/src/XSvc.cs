@@ -17,8 +17,6 @@ namespace Z0
             public ApiResProvider ApiResProvider(IWfRuntime wf)
                 => Service<ApiResProvider>(wf);
 
-            public ApiPacks ApiPacks(IWfRuntime wf)
-                => Service<ApiPacks>(wf);
 
         }
 
@@ -34,7 +32,5 @@ namespace Z0
         public static ApiResProvider ApiResProvider(this IWfRuntime wf)
             => Services.ApiResProvider(wf);
 
-        public static ApiPacks ApiPacks(this IWfRuntime wf)
-            => Services.ApiPacks(wf);
    }
 }

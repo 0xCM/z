@@ -9,7 +9,7 @@ namespace Z0
     partial class gbits
     {
         [MethodImpl(Inline), Parse, Closures(Closure)]
-        public static ref T parse<T>(ReadOnlySpan<char> src, byte offset, out T dst)
+        public static T parse<T>(ReadOnlySpan<char> src, byte offset, out T dst)
             where T : unmanaged
         {
             var last = math.min(width<T>(), src.Length) - 1;
@@ -18,7 +18,7 @@ namespace Z0
             for(byte i=offset, pos = 0; i<= last; i++, pos++)
                 if(skip(input,i) == bit.One)
                     dst = gbits.enable(dst, pos);
-            return ref dst;
+            return dst;
         }
     }
 }

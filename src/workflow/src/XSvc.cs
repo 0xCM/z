@@ -40,6 +40,10 @@ namespace Z0
 
             public MemoryChecks MemoryChecks(IWfRuntime wf)
                 => Service<MemoryChecks>(wf); 
+
+            public ApiPacks ApiPacks(IWfRuntime wf)
+                => Service<ApiPacks>(wf);
+
         }
 
         static ServiceCache Services => ServiceCache.Instance;
@@ -76,5 +80,8 @@ namespace Z0
 
         public static WfScripts ToolScripts(this IWfRuntime wf)
             => Services.ToolScripts(wf);
+
+        public static ApiPacks ApiPacks(this IWfRuntime wf)
+            => Services.ApiPacks(wf);
     }
 }

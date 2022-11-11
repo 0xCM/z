@@ -86,8 +86,6 @@ namespace Z0
         public override string ToString()
             => Text;
 
-        ReadOnlySpan<byte> IByteSeq.View
-            => sys.bytes(this);
 
         bool INullity.IsEmpty
             => IsEmpty;
