@@ -19,19 +19,9 @@ namespace Z0
 
         public DataWidth Width => DataWidth.W16;
 
-        public ReadOnlySpan<byte> Data
-        {
-            [MethodImpl(Inline)]
-            get => bytes(Storage);
-        }
-
         [MethodImpl(Inline)]
         public static implicit operator ApiKeySeg(ReadOnlySpan<byte> src)
             => new ApiKeySeg(first(src));
-
-        [MethodImpl(Inline)]
-        public static implicit operator ReadOnlySpan<byte>(ApiKeySeg src)
-            => src.Data;
 
         [MethodImpl(Inline)]
         public static implicit operator ApiKeySeg(ushort src)

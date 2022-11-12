@@ -20,7 +20,7 @@ namespace Z0
             return buffer.Resequence();
         }
 
-        static ref ProcessMemoryRegion fill(in MemoryRangeInfo src, uint index, out ProcessMemoryRegion dst)
+        static ProcessMemoryRegion fill(in MemoryRangeInfo src, uint index, out ProcessMemoryRegion dst)
         {
             var owner = src.Owner;
             dst.Seq = index;
@@ -44,7 +44,7 @@ namespace Z0
             dst.Protection = src.Protection;
             dst.Type = src.Type;
             dst.State = src.State;
-            return ref dst;
+            return dst;
         }
     }
 }

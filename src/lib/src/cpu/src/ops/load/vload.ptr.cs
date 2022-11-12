@@ -52,7 +52,7 @@ namespace Z0
         /// <param name="dst">The target vector</param>
         /// <typeparam name="T">The vector cell type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static unsafe ref Vector128<T> vload<T>(T* pSrc, out Vector128<T> dst)
+        public static unsafe Vector128<T> vload<T>(T* pSrc, out Vector128<T> dst)
             where T : unmanaged
         {
             if(typeof(T) == typeof(byte)
@@ -67,7 +67,7 @@ namespace Z0
                 vloadu_i(pSrc, out dst);
             else
                 vloadu_f(pSrc, out dst);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Z0
         /// <param name="dst">The target vector</param>
         /// <typeparam name="T">The vector cell type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static unsafe ref Vector256<T> vload<T>(T* pSrc, out Vector256<T> dst)
+        public static unsafe Vector256<T> vload<T>(T* pSrc, out Vector256<T> dst)
             where T : unmanaged
         {
             if(typeof(T) == typeof(byte)
@@ -93,17 +93,17 @@ namespace Z0
             else
                 vloadu_f(pSrc, out dst);
 
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static unsafe ref Vector512<T> vload<T>(T* pSrc, out Vector512<T> dst)
+        public static unsafe Vector512<T> vload<T>(T* pSrc, out Vector512<T> dst)
             where T : unmanaged
         {
             vload(pSrc, out Vector256<T> a);
             vload((T*)Unsafe.Add<T>(pSrc, Vector256<T>.Count), out Vector256<T> b);
             dst = new Vector512<T>(a,b);
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline)]

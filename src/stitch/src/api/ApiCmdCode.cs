@@ -32,9 +32,6 @@ namespace Z0
             get => @as<ulong,ApiCmdId>(Data);
         }
 
-        public ReadOnlySpan<byte> Serialize()
-            => sys.bytes(this);
-
         public string Format()
             => format(this);
 

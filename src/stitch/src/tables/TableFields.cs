@@ -64,34 +64,6 @@ namespace Z0
             return this;
         }
 
-        [MethodImpl(Inline),Op]
-        public TableFields WithField(PropertyInfo src)
-            => WithField(new ColumnSpec(src.Name, src.PropertyType.Name, Index));
-
-        [MethodImpl(Inline),Op]
-        public TableFields WithField(string name, Type type)
-            => WithField(new ColumnSpec(name, type.Name, Index));
-
-        [MethodImpl(Inline), Op]
-        public TableFields WithField(ClrFieldAdapter src)
-            => WithField(new ColumnSpec(src.Name, src.FieldType.Name, Index));
-
-        [MethodImpl(Inline), Op]
-        public TableFields WithFields(params PropertyInfo[] src)
-        {
-            foreach(var item in src)
-                WithField(item);
-            return this;
-        }
-
-        [MethodImpl(Inline), Op]
-        public TableFields WithFields(params FieldInfo[] src)
-        {
-            foreach(var item in src)
-                WithField(item);
-            return this;
-        }
-
         [MethodImpl(NotInline), Op]
         public RecordSpec Complete(Identifier name)
         {

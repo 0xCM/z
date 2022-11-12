@@ -48,14 +48,14 @@ namespace Z0
 
         [CmdOp("procs/context")]
         void ProcContext(CmdArgs args)
-            => RuntimeContext.emit(args, Emitter, AppSettings.ProcDumps());
+            => RuntimeContext.emit(args, Channel, AppSettings.ProcDumps());
 
         [CmdOp("procs/map")]
         void ProcMap(CmdArgs args)
-            => ImageMemory.map(args, Emitter, AppDb.AppData());
+            => ImageMemory.map(args, Channel, AppDb.AppData());
 
         [CmdOp("procs/modules")]
         void ProcModules(CmdArgs args)
-            => ImageMemory.modules(args, Emitter, AppDb.AppData());
+            => ImageMemory.modules(args, Channel, AppDb.AppData());
     }
 }

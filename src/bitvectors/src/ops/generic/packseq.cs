@@ -4,12 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     partial class BitVectors
     {
         [MethodImpl(Inline), Op, Closures(Integers)]
-        public static ref T packseq<T>(ReadOnlySpan<byte> src, out T dst)
+        public static T packseq<T>(ReadOnlySpan<byte> src, out T dst)
             where T : unmanaged
         {
             if(typeof(T) == typeof(byte) || typeof(T) == typeof(sbyte))
@@ -23,11 +23,11 @@ namespace Z0
             else
                 throw no<T>();
 
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op, Closures(Integers)]
-        public static ref T packseq2<T>(ReadOnlySpan<byte> src, out T dst)
+        public static T packseq2<T>(ReadOnlySpan<byte> src, out T dst)
             where T : unmanaged
         {
             if(size<T>() == 1)
@@ -41,7 +41,7 @@ namespace Z0
             else
                 throw no<T>();
 
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -49,14 +49,14 @@ namespace Z0
         /// </summary>
         /// <param name="src">The source sequence</param>
         [MethodImpl(Inline), Op]
-        static ref byte packseq(ReadOnlySpan<byte> src, out byte dst)
+        static byte packseq(ReadOnlySpan<byte> src, out byte dst)
         {
             dst = z8;
             var count = math.min(8, src.Length);
             for(byte i=0; i<count; i++)
                 if(skip(src, i) == 1)
                     dst |= (byte)(1 << i);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -64,14 +64,14 @@ namespace Z0
         /// </summary>
         /// <param name="src">The source sequence</param>
         [MethodImpl(Inline), Op]
-        static ref ushort packseq(ReadOnlySpan<byte> src, out ushort dst)
+        static ushort packseq(ReadOnlySpan<byte> src, out ushort dst)
         {
             dst = z16;
             var count = math.min(16, src.Length);
             for(byte i=0; i<count; i++)
                 if(skip(src, i) == 1)
                     dst |= (ushort)(1 << i);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -79,14 +79,14 @@ namespace Z0
         /// </summary>
         /// <param name="src">The source sequence</param>
         [MethodImpl(Inline), Op]
-        static ref uint packseq(ReadOnlySpan<byte> src, out uint dst)
+        static uint packseq(ReadOnlySpan<byte> src, out uint dst)
         {
             dst = z32;
             var count = math.min(32, src.Length);
             for(byte i=0; i<count; i++)
                 if(skip(src, i) == 1)
                     dst |= (1u << i);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -94,14 +94,14 @@ namespace Z0
         /// </summary>
         /// <param name="src">The source sequence</param>
         [MethodImpl(Inline), Op]
-        static ref ulong packseq(ReadOnlySpan<byte> src, out ulong dst)
+        static ulong packseq(ReadOnlySpan<byte> src, out ulong dst)
         {
             dst = z64;
             var count = math.min(64, src.Length);
             for(byte i=0; i<count; i++)
                 if(skip(src, i) == 1)
                     dst |= (1ul << i);
-            return ref dst;
+            return dst;
         }
     }
 }

@@ -4,13 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-   using static core;
-
-    public readonly struct SeqEval
-    {
-        public static SeqEval<T> alloc<T>(uint count, bit result)
-            => new SeqEval<T>(new BinaryEval<T>[count], result);
-    }
+   using static sys;
 
     public struct SeqEval<T> : ISeqEval<SeqEval<T>,BinaryEval<T>>
     {

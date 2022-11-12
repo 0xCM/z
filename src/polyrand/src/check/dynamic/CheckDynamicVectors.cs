@@ -4,10 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.Intrinsics;
-
-    using static Root;
     using static CellDelegates;
 
     public readonly struct CheckDynamicVectors

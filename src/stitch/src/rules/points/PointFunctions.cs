@@ -49,11 +49,11 @@ namespace Z0
         }
 
         [Op, Closures(Closure)]
-        public static ref Fx8<byte,T> fx<T>(N8 n, ReadOnlySpan<byte> src, ReadOnlySpan<T> dst, out Fx8<byte,T> f)
+        public static Fx8<byte,T> fx<T>(N8 n, ReadOnlySpan<byte> src, ReadOnlySpan<T> dst, out Fx8<byte,T> f)
             where T : unmanaged
         {
             f = fx<T>(n, address(first(src)), address(first(dst)));
-            return ref fx(n, ref f, src, dst);
+            return fx(n, ref f, src, dst);
         }
 
         /// <summary>
@@ -85,11 +85,11 @@ namespace Z0
                 => new Fx16<ushort,T>(src, dst);
 
         [Op, Closures(Closure)]
-        public static ref Fx16<ushort,T> fx<T>(N16 n, ReadOnlySpan<ushort> src, ReadOnlySpan<T> dst, out Fx16<ushort,T> f)
+        public static Fx16<ushort,T> fx<T>(N16 n, ReadOnlySpan<ushort> src, ReadOnlySpan<T> dst, out Fx16<ushort,T> f)
             where T : unmanaged
         {
             f = fx<T>(n, address(first(src)), address(first(dst)));
-            return ref fx(n,ref f, src, dst);
+            return fx(n,ref f, src, dst);
         }
     }
 }

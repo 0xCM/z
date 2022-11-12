@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     public static class PolyMarkov
     {
@@ -58,12 +58,12 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public static ref Block256<N,T> MarkovBlock<N,T>(this IPolyrand random, ref Block256<N,T> dst)
+        public static Block256<N,T> MarkovBlock<N,T>(this IPolyrand random, ref Block256<N,T> dst)
             where N : unmanaged, ITypeNat
             where T : unmanaged
         {
             random.MarkovSpan(dst.Unsized);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Z0
             return Z0.Matrix.blockload<N,T>(data);
         }
 
-        public static ref Matrix256<N,T> MarkovSquare<N,T>(this IPolyrand random, ref Matrix256<N,T> dst)
+        public static Matrix256<N,T> MarkovSquare<N,T>(this IPolyrand random, ref Matrix256<N,T> dst)
             where T : unmanaged
             where N : unmanaged, ITypeNat
         {
@@ -94,7 +94,7 @@ namespace Z0
             var n = Typed.nat64u<N>();
             for(var row=0u; row < n; row++)
                 random.MarkovSpan<T>(data.Slice((int)(row*n), (int)n));
-            return ref dst;
+            return dst;
         }
 
         /// Evaluates whether a square matrix is right-stochasitc, i.e. the sum of the entries

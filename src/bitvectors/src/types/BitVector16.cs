@@ -95,15 +95,6 @@ namespace Z0
             get => (byte)(Data >> 8);
         }
 
-        /// <summary>
-        /// Presents bitvector content as a bytespan
-        /// </summary>
-        public Span<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => core.bytes(Data);
-        }
-
         public Hash32 Hash
         {
             [MethodImpl(Inline)]

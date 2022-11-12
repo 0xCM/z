@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static cpu;
-    using static core;
+    using static sys;
 
     partial class BitVectors
     {

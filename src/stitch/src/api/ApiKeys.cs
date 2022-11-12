@@ -98,14 +98,6 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<byte> data(ApiKeyJoin src)
-            => bytes(src);
-
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<byte> data(ApiKeySeg src)
-            => bytes(src);
-
-        [MethodImpl(Inline), Op]
         public static ReadOnlySpan<char> render(ApiKeySeg src)
         {
             ushort data = src;

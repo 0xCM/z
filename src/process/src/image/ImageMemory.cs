@@ -7,7 +7,7 @@ namespace Z0
     [ApiHost,Free]
     public partial class ImageMemory
     {
-        public static FileUri uri(ProcessAdapter src, DbArchive dst)
+        public static FileUri uri(ProcessAdapter src, IDbArchive dst)
             => new FileUri($"{dst.Root.Format(PathSeparator.FS)}/{src.ProcessName}.{src.Id}.{sys.timestamp()}.modules.{FileKind.Csv.Format()}");
 
         public static PEReader pe(Stream src)

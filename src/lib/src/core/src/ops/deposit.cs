@@ -14,24 +14,24 @@ namespace Z0
         /// <typeparam name="S">The source type</typeparam>
         /// <typeparam name="T">The target type</typeparam>
         [MethodImpl(Inline)]
-        public static ref T deposit<S,T>(in S src, out T dst)
+        public static T deposit<S,T>(in S src, out T dst)
         {
             dst = @as<S,T>(src);
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op, Closures(Int8k)]
-        public static ref byte deposit<T>(in T src, out byte dst)
+        public static byte deposit<T>(in T src, out byte dst)
             where T : unmanaged
         {
             dst = 0;
             if(typeof(T) == typeof(byte) || typeof(T) == typeof(sbyte))
                 deposit(w8, src, ref dst);
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op, Closures(Int8x16k)]
-        public static ref ushort deposit<T>(in T src, out ushort dst)
+        public static ushort deposit<T>(in T src, out ushort dst)
             where T : unmanaged
         {
             dst = 0;
@@ -39,7 +39,7 @@ namespace Z0
                 deposit(w8, src, ref dst);
             else if(typeof(T) == typeof(ushort) || typeof(T) == typeof(short) || typeof(T) == typeof(char))
                 deposit(w16, src, ref dst);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -49,16 +49,16 @@ namespace Z0
         /// <param name="cVal">The character output value</param>
         /// <typeparam name="E">The enum type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref char scalar<S>(in S eVal, out char cVal)
+        public static char scalar<S>(in S eVal, out char cVal)
             where S : unmanaged
         {
             cVal = (char)deposit(eVal, out ushort _);
-            return ref cVal;
+            return cVal;
         }
 
 
         [MethodImpl(Inline), Op, Closures(Integers)]
-        public static ref ulong deposit<T>(in T src, out ulong dst)
+        public static ulong deposit<T>(in T src, out ulong dst)
             where T : unmanaged
         {
             dst = 0ul;
@@ -70,7 +70,7 @@ namespace Z0
                 deposit(w32, src, ref dst);
             else if(typeof(T) == typeof(ulong) || typeof(T) == typeof(ulong))
                 deposit(w64, src, ref dst);
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op, Closures(Int8k)]

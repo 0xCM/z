@@ -12,7 +12,6 @@ namespace Z0
         public EnvVars()
         {
 
-
         }
 
         public EnvVars(EnvVar<T>[] src)

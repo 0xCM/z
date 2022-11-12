@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static BufferSeqId;
-    using static core;
+    using static sys;
 
     public interface ICheckFixedDynamic : ITestRandom, ICheckNull, ICheckDynamic, IBufferedChecker
     {

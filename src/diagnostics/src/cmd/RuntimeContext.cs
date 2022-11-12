@@ -8,7 +8,7 @@ namespace Z0
 
     public class RuntimeContext
     {
-        public static void emit(CmdArgs args, IWfChannel channel, DbArchive dst)
+        public static void emit(CmdArgs args, IWfChannel channel, IDbArchive dst)
         {
             var ids = sys.list<ProcessId>();
             if(args.Count != 0)
@@ -29,7 +29,7 @@ namespace Z0
             });
         }
 
-        public static ExecToken emit(ProcessAdapter src, IWfChannel channel, DbArchive dst)
+        public static ExecToken emit(ProcessAdapter src, IWfChannel channel, IDbArchive dst)
         {
             var id = src.Id;
             var name = src.ProcessName;
@@ -40,10 +40,10 @@ namespace Z0
             return dump(src,channel, targets.Path("process",FileKind.Dmp));
         }
 
-        static ExecToken modules(ProcessAdapter src, IWfChannel channel, DbArchive dst)
+        static ExecToken modules(ProcessAdapter src, IWfChannel channel, IDbArchive dst)
             => channel.TableEmit(ImageMemory.modules(src), dst.Table<ProcessModuleRow>());
 
-        public static ExecToken dump(ProcessAdapter src, IWfChannel channel, DbArchive dst)
+        public static ExecToken dump(ProcessAdapter src, IWfChannel channel, IDbArchive dst)
         {
             var name = $"{src.ProcessName}.{src.Id}.{core.timestamp()}";
             var path = dst.Path(name, FileKind.Dmp);

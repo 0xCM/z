@@ -49,15 +49,6 @@ namespace Z0
             get => 8;
         }
 
-        /// <summary>
-        /// Presents bitvector content as a bytespan
-        /// </summary>
-        public Span<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => core.bytes(Data);
-        }
-
         public bit IsZero
         {
             [MethodImpl(Inline)]

@@ -8,7 +8,7 @@ namespace Z0
 
     partial class ImageMemory
     {
-        public static void modules(CmdArgs args, WfEmit channel, DbArchive dst)
+        public static void modules(CmdArgs args, IWfChannel channel, DbArchive dst)
         {
             var buffer = bag<ProcessId>();
             if(args.Count != 0)
@@ -19,7 +19,7 @@ namespace Z0
             iter(buffer, id => modules(ProcessAdapter.adapt(id), channel, dst));
         }
 
-        public static void modules(ProcessAdapter src, WfEmit channel, DbArchive dst)
+        public static void modules(ProcessAdapter src, IWfChannel channel, DbArchive dst)
             => channel.TableEmit(modules(src), uri(src, dst));
 
         [Op]

@@ -84,9 +84,9 @@ namespace Z0
         /// <param name="dst">The target vector</param>
         /// <typeparam name="T">The component type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static unsafe ref Vector128<T> vload<T>(in T src, out Vector128<T> dst)
+        public static unsafe Vector128<T> vload<T>(in T src, out Vector128<T> dst)
             where T : unmanaged
-                => ref vload(gptr(src), out dst);
+                => vload(gptr(src), out dst);
 
         /// <summary>
         /// Loads a 256-bit vector from a readonly memory reference
@@ -95,9 +95,9 @@ namespace Z0
         /// <param name="dst">The target vector</param>
         /// <typeparam name="T">The component type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static unsafe ref Vector256<T> vload<T>(in T src, out Vector256<T> dst)
+        public static unsafe Vector256<T> vload<T>(in T src, out Vector256<T> dst)
             where T : unmanaged
-                => ref vload(gptr(src), out dst);
+                => vload(gptr(src), out dst);
 
         /// <summary>
         /// Loads a 512-bit vector from a readonly memory reference
@@ -106,8 +106,8 @@ namespace Z0
         /// <param name="dst">The target vector</param>
         /// <typeparam name="T">The component type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static unsafe ref Vector512<T> vload<T>(in T src, out Vector512<T> dst)
+        public static unsafe Vector512<T> vload<T>(in T src, out Vector512<T> dst)
             where T : unmanaged
-                => ref vload(gptr(src), out dst);
+                => vload(gptr(src), out dst);
     }
 }

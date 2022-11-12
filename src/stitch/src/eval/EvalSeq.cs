@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     [ApiHost]
     public readonly struct EvalSeq
@@ -42,13 +42,12 @@ namespace Z0
             return eq(a,b, ref dst);
         }
 
-
         [Op, Closures(Closure)]
-        public static ref BinaryEval<T> eq<T>(T a, T b, out BinaryEval<T> dst)
+        public static BinaryEval<T> eq<T>(T a, T b, out BinaryEval<T> dst)
             where T : IEquatable<T>
         {
             dst = new BinaryEval<T>(a, b, a.Equals(b));
-            return ref dst;
+            return dst;
         }
     }
 }

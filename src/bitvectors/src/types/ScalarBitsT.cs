@@ -62,15 +62,6 @@ namespace Z0
         }
 
         /// <summary>
-        /// Converts the encapsulated data to a bytespan
-        /// </summary>
-        public readonly Span<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => bytes(Data);
-        }
-
-        /// <summary>
         /// Specifies whether all bits are disabled
         /// </summary>
         public bit IsZero

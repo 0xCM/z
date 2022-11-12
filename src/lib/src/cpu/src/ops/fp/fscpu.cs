@@ -17,8 +17,7 @@ namespace Z0
     using static System.Runtime.Intrinsics.X86.Fma;
     using static System.Runtime.Intrinsics.X86.Sse.X64;
 
-    using static Root;
-    using static core;
+    using static sys;
 
     /// <summary>
     /// Floating-point scalar intrinsics
@@ -74,10 +73,10 @@ namespace Z0
         /// <param name="x"></param>
         /// <param name="dst"></param>
         [MethodImpl(Inline), Op]
-        public static ref Vector128<double> convert(int x, out Vector128<double> dst)
+        public static Vector128<double> convert(int x, out Vector128<double> dst)
         {
             dst = ConvertScalarToVector128Double(default, x);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -86,10 +85,10 @@ namespace Z0
         /// <param name="src"></param>
         /// <param name="src"></param>
         [MethodImpl(Inline), Op]
-        public static ref Vector128<float> convert(int src, out Vector128<float> dst)
+        public static Vector128<float> convert(int src, out Vector128<float> dst)
         {
             dst = ConvertScalarToVector128Single(default, src);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -98,10 +97,10 @@ namespace Z0
         /// <param name="src"></param>
         /// <param name="dst"></param>
         [MethodImpl(Inline), Op]
-        public static ref Vector128<float> convert(long src, out Vector128<float> dst)
+        public static Vector128<float> convert(long src, out Vector128<float> dst)
         {
             dst = ConvertScalarToVector128Single(default, src);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>

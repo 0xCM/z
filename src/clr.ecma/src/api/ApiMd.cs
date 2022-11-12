@@ -31,31 +31,5 @@ namespace Z0
 
         public new ApiMdEmitter Emitter()
             => ApiMdEmitter.init(Wf);
-
-        public Index<SymLiteralRow> LoadSymLits(FilePath src)
-        {
-            using var reader = TableConvention.reader<SymLiteralRow>(src, Symbolic.parse);
-            var header = reader.Header.Split(Chars.Tab);
-            if(header.Length != SymLiteralRow.FieldCount)
-            {
-                Error(AppMsg.FieldCountMismatch.Format(SymLiteralRow.FieldCount, header.Length));
-                return Index<SymLiteralRow>.Empty;
-            }
-
-            var dst = list<SymLiteralRow>();
-            while(!reader.Complete)
-            {
-                var outcome = reader.ReadRow(out var row);
-                if(!outcome)
-                {
-                    Error(outcome.Message);
-                    break;
-                }
-                dst.Add(row);
-            }
-
-            return dst.ToArray();
-        }
-
     }
 }

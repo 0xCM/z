@@ -36,8 +36,7 @@ namespace Z0
         unsafe Outcome FT(CmdArgs args)
         {
             var src = recover<C,byte>(Source);
-            ref var f = ref PointFunctions.fx<AsciCode>(n8, src, Target, out _);
-
+            PointFunctions.fx<AsciCode>(n8, src, Target, out var f);
             byte x = 0;
             x = skip(src,0);
             Write(f.Map(x));
@@ -56,7 +55,6 @@ namespace Z0
 
             return true;
         }
-
     }
 
     readonly struct TmpTables

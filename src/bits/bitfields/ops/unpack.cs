@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static BitMaskLiterals;
-    using static core;
+    using static sys;
     using static cpu;
     using static BitMasks;
 
@@ -286,8 +286,8 @@ namespace Z0
         /// </summary>
         /// <param name="src"></param>
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<ushort> unpack8x16(ulong src)
-            => recover<ushort>(bytes(vlo(vpack.vinflate256x16u(vbytes(w128, src)))));
+        public static Vector128<ushort> unpack8x16(ulong src)
+            => vlo(vpack.vinflate256x16u(vbytes(w128, src)));
 
         /// <summary>
         /// Unpacks 8 source bits over 8 32-bit target segments

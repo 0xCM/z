@@ -24,12 +24,6 @@ namespace Z0
             get => @as<T,uint>(State);
         }
 
-        public Span<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => bytes(State);
-        }
-
         [MethodImpl(Inline)]
         public bool Equals(BitVector32<T> other)
             => Untyped == other.Untyped;

@@ -41,15 +41,9 @@ namespace Z0
         public int CompareTo(BitVector<T> src)
             => bw64(this).CompareTo(bw64(src));
 
-        Span<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => bytes(_State);
-        }
-
         [MethodImpl(Inline)]
         Span<byte> Segment(uint offset)
-            => slice(Bytes, offset);
+            => slice(bytes(_State), offset);
 
         [MethodImpl(Inline)]
         public ref ScalarBits<byte> Scalar(W8 w, uint offset)

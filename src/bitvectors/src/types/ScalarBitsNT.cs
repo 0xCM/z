@@ -98,12 +98,6 @@ namespace Z0
             get => gmath.nonz(Data);
         }
 
-        public Span<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => bytes(Data);
-        }
-
         /// <summary>
         /// Reads/Manipulates a single bit
         /// </summary>

@@ -161,10 +161,10 @@ namespace Z0
         /// <param name="src">The bit source</param>
         /// <param name="dst">The target</param>
         [MethodImpl(Inline), Op]
-        public static unsafe ref uint copy(W32 w, in ushort src, out uint dst)
+        public static unsafe uint copy(W32 w, in ushort src, out uint dst)
         {
             dst = *(uint*)gptr(in src);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -173,10 +173,10 @@ namespace Z0
         /// <param name="src">The source</param>
         /// <param name="dst">The target</param>
         [MethodImpl(Inline), Op]
-        public static unsafe ref ulong copy(W64 w, in byte src, out ulong dst)
+        public static unsafe ulong copy(W64 w, in byte src, out ulong dst)
         {
             dst = *(ulong*)gptr(in src);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -185,10 +185,10 @@ namespace Z0
         /// <param name="src">The data source</param>
         /// <param name="dst">The target</param>
         [MethodImpl(Inline), Op]
-        public static unsafe ref ulong copy(W64 w, in ushort src, out ulong dst)
+        public static unsafe ulong copy(W64 w, in ushort src, out ulong dst)
         {
             dst = *(ulong*)gptr(in src);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -197,10 +197,10 @@ namespace Z0
         /// <param name="src">The data source</param>
         /// <param name="dst">The target</param>
         [MethodImpl(Inline), Op]
-        public static unsafe ref ushort copy(W16 w,in byte src, out ushort dst)
+        public static unsafe ushort copy(W16 w,in byte src, out ushort dst)
         {
             dst = *(ushort*)gptr(in src);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -209,10 +209,10 @@ namespace Z0
         /// <param name="src">The data source</param>
         /// <param name="dst">The target</param>
         [MethodImpl(Inline), Op]
-        public static unsafe ref uint copy(W32 w,in byte src, out uint dst)
+        public static unsafe uint copy(W32 w,in byte src, out uint dst)
         {
             dst = *(uint*)gptr(in src);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -221,10 +221,10 @@ namespace Z0
         /// <param name="src">The data source</param>
          /// <param name="dst">The target</param>
         [MethodImpl(Inline), Op]
-        public static unsafe ref ulong copy(W64 w, in uint src, out ulong dst)
+        public static unsafe ulong copy(W64 w, in uint src, out ulong dst)
         {
             dst = *(ulong*)gptr(in src);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -245,10 +245,10 @@ namespace Z0
         /// <param name="src">The data source</param>
         /// <param name="dst">The target</param>
         [MethodImpl(Inline), Op]
-        public static unsafe ref ushort copy(W32 w, in uint src, ref ushort dst)
+        public static unsafe ushort copy(W32 w, in uint src, ref ushort dst)
         {
             *(gptr<uint>(dst)) = src;
-            return ref dst;
+            return dst;
         }
 
         /// <summary>

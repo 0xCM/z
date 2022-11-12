@@ -11,7 +11,7 @@ namespace Z0
         public static ProcessImageMap map()
             => map(Process.GetCurrentProcess());
 
-        public static void map(CmdArgs args, WfEmit channel, DbArchive dst)
+        public static void map(CmdArgs args, IWfChannel channel, IDbArchive dst)
         {
             var buffer = bag<ProcessId>();
             if(args.Count != 0)
@@ -22,7 +22,7 @@ namespace Z0
             iter(buffer, id =>  map(ProcessAdapter.adapt(id), channel, dst));
         }
 
-        public static void map(ProcessAdapter src, WfEmit channel, DbArchive dst)
+        public static void map(ProcessAdapter src, IWfChannel channel, IDbArchive dst)
             => channel.FileEmit(map(src).Format(), new FileUri($"{dst.Root.Format(PathSeparator.FS)}{src.ProcessName}.{src.Id}.{sys.timestamp()}.image.map"));
 
         public static ProcessImageMap map(ProcessAdapter process)

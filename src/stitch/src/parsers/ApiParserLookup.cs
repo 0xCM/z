@@ -18,7 +18,7 @@ namespace Z0
             where T : unmanaged
                 => new SeqSplitter<T>(delimiter);
 
-        public static ref BufferSegments<T> split<T>(SeqSplitter<T> parser, Span<T> src, out BufferSegments<T> dst)
+        public static BufferSegments<T> split<T>(SeqSplitter<T> parser, Span<T> src, out BufferSegments<T> dst)
             where T : unmanaged
         {
             dst = new BufferSegments<T>(src, byte.MaxValue);
@@ -53,7 +53,7 @@ namespace Z0
             }
 
             dst.Dispensed = parser.SegPos + 1;
-            return ref dst;
+            return dst;
         }
 
 
@@ -180,6 +180,5 @@ namespace Z0
 
             return parsers.ToConcurrentDictionary();
         }
-
     }
 }

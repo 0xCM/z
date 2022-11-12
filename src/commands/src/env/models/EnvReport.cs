@@ -6,13 +6,13 @@ namespace Z0
 {
     public sealed record class EnvReport
     {
-        public EnvId EnvId {get;}
+        public readonly EnvId EnvId;
 
-        public EnvVarKind Kind {get;}
+        public readonly EnvVarKind Kind;
 
-        public CfgBlock Cfg {get;}
+        public readonly CfgBlock Cfg;
 
-        public EnvVars Vars {get;}        
+        public readonly EnvVars Vars;
 
         public EnvReport(EnvId id, EnvVarKind kind, CfgBlock cfg, EnvVars vars)
         {
