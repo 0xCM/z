@@ -10,11 +10,11 @@ namespace Z0
     public class CharBlocks
     {
         [MethodImpl(Inline)]
-        public static ref T init<T>(ReadOnlySpan<char> src, out T dst)
+        public static T init<T>(ReadOnlySpan<char> src, out T dst)
             where T : unmanaged, ICharBlock<T>
         {
             dst = default;
-            return ref Z0.text.copy(src, ref dst);
+            return Z0.text.copy(src, ref dst);
         }
 
         [MethodImpl(Inline)]

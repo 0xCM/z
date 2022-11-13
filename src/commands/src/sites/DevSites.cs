@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     public record class DevSite
     {
         public FolderPath SiteRoot;
@@ -19,7 +17,6 @@ namespace Z0
 
     public class DevSites : AppService<DevSites>
     {
-
         [Cmd(Name)]
         public record class CreateSite : ICmd<CreateSite>
         {

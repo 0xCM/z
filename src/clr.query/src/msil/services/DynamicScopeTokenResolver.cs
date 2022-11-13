@@ -28,19 +28,19 @@ namespace Msil
             Type dynamicScope = Type.GetType("System.Reflection.Emit.DynamicScope", throwOnError: true);
             Type dynamicILGenerator = Type.GetType("System.Reflection.Emit.DynamicILGenerator", throwOnError: true);
 
-            s_indexer = dynamicScope.GetPropertyAssert("Item");
-            s_scopeFi = dynamicILGenerator.GetFieldAssert("m_scope");
+            s_indexer = dynamicScope.RequireProperty("Item");
+            s_scopeFi = dynamicILGenerator.RequireField("m_scope");
             s_varArgMethodType = Type.GetType("System.Reflection.Emit.VarArgMethod", throwOnError: true);
-            s_varargFi1 = s_varArgMethodType.GetFieldAssert("m_method");
-            s_varargFi2 = s_varArgMethodType.GetFieldAssert("m_signature");
+            s_varargFi1 = s_varArgMethodType.RequireField("m_method");
+            s_varargFi2 = s_varArgMethodType.RequireField("m_signature");
             s_genMethodInfoType = Type.GetType("System.Reflection.Emit.GenericMethodInfo", throwOnError: true);
-            s_genmethFi1 = s_genMethodInfoType.GetFieldAssert("m_methodHandle");
-            s_genmethFi2 = s_genMethodInfoType.GetFieldAssert("m_context");
+            s_genmethFi1 = s_genMethodInfoType.RequireField("m_methodHandle");
+            s_genmethFi2 = s_genMethodInfoType.RequireField("m_context");
             s_genFieldInfoType = Type.GetType("System.Reflection.Emit.GenericFieldInfo", throwOnError: false);
             if (s_genFieldInfoType != null)
             {
-                s_genfieldFi1 = s_genFieldInfoType.GetFieldAssert("m_fieldHandle");
-                s_genfieldFi2 = s_genFieldInfoType.GetFieldAssert("m_context");
+                s_genfieldFi1 = s_genFieldInfoType.RequireField("m_fieldHandle");
+                s_genfieldFi2 = s_genFieldInfoType.RequireField("m_context");
             }
             else
             {

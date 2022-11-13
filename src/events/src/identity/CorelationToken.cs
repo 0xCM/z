@@ -11,7 +11,7 @@ namespace Z0
     /// </summary>
     [StructLayout(LayoutKind.Sequential,Size=16), ApiComplete]
     public record struct CorrelationToken : IHashed<Hash64>
-    {    
+    {     
         ref ulong Lo
         {
             [MethodImpl(Inline)]
@@ -43,12 +43,6 @@ namespace Z0
         {
             Lo = lo;
             Hi = hi;
-        }
-
-        public Span<byte> Data
-        {
-            [MethodImpl(Inline)]
-            get => bytes(this);
         }
         
         public Hash64 Hash

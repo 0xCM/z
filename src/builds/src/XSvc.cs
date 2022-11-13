@@ -20,9 +20,6 @@ namespace Z0
             public MsBuild BuildSvc(IWfRuntime wf)
                 => Service<MsBuild>(wf);
 
-            public ApiComments ApiComments(IWfRuntime wf)
-                => Service<ApiComments>(wf);
-
             public RoslnCmd RoslynCmd(IWfRuntime wf)
                 => Service<RoslnCmd>(wf);
 
@@ -32,8 +29,6 @@ namespace Z0
 
         static ServiceCache Services => ServiceCache.Instance;
 
-        public static ApiComments ApiComments(this IWfRuntime wf)
-            => Services.ApiComments(wf);
 
         public static MsBuild BuildSvc(this IWfRuntime wf)
             => Services.BuildSvc(wf);
@@ -43,7 +38,5 @@ namespace Z0
 
         public static RoslnCmd RoslynCmd(this IWfRuntime wf)
             => Services.RoslynCmd(wf);            
-
-             
     }
 }

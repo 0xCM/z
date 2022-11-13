@@ -40,6 +40,6 @@ namespace Msil
 
         static readonly Type s_rtDynamicMethodType = Type.GetType("System.Reflection.Emit.DynamicMethod+RTDynamicMethod", throwOnError: true);
 
-        static readonly FieldInfo s_fiOwner = s_rtDynamicMethodType.GetFieldAssert("m_owner");
+        static readonly FieldInfo s_fiOwner = s_rtDynamicMethodType.RequireField("m_owner");
     }
 }

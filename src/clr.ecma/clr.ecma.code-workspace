@@ -19,6 +19,9 @@
 			"path": "../api.code"
 		},
 		{
+			"path": "../workflow"
+		},
+		{
 			"path": "../bits"
 		},
 		{

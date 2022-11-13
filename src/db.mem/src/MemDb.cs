@@ -60,12 +60,12 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public static ref num4 read(ReadOnlySpan<byte> src, uint index, out num4 dst)
+        public static num4 read(ReadOnlySpan<byte> src, uint index, out num4 dst)
         {
             var cell = MemoryScales.index(4, -2, index);
             ref readonly var b = ref skip(src, cell.Offset);
             dst = cell.Aligned ? num(n4,b) : num(n4, srl(b , (byte)cell.CellWidth));
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline)]

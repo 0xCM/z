@@ -381,20 +381,8 @@ namespace Z0
             => src.Chars(kind);
 
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> render(Hex1Kind src)
-            => render(hexstring<Hex1Kind>(), src);
-
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> render(Hex2Kind src)
-            => render(hexstring<Hex2Kind>(), src);
-
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> render(Hex3Kind src)
-            => render(hexstring<Hex3Kind>(), src);
-
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> render(Hex4Kind src)
-            => render(hexstring<Hex4Kind>(), src);
+        public static string render(Hex1Kind src)
+            => sys.@string(render(hexstring<Hex1Kind>(), src));
 
         [MethodImpl(Inline), Op]
         public static uint render(UpperCased @case, byte src, uint offset, Span<char> dst)

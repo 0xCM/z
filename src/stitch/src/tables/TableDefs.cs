@@ -19,7 +19,7 @@ namespace Z0
             for(var i=z16; i<count; i++)
             {
                 var field = skip(fields,i);
-                seek(specs,i) = new TableField(i, ClrTableField.name(field), field.FieldType.CodeName());
+                seek(specs,i) = new TableField(i, ReflectedField.name(field), field.FieldType.CodeName());
             }
 
             return new TableDef(TableId.identify(src), src.Name, specs);

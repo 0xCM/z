@@ -21,7 +21,7 @@ namespace Z0
 
         public void check_enum_values()
         {
-            var values = Enums.details<Choices32i,int>();
+            var values = ClrEnums.details<Choices32i,int>();
             Claim.eq(Enum.GetValues(typeof(Choices32i)).Length, values.Length);
 
             for(var i = 0; i<values.Length; i++)

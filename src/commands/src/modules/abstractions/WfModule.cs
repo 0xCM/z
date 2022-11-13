@@ -11,9 +11,12 @@ namespace Z0
 
         protected static AppDb AppDb => AppDb.Service;
 
-        protected abstract Task<ExecToken> Start<C>(C cmd)
-            where C : IWfCmd<C>, new();
-
+        protected virtual Task<ExecToken> Start<C>(C cmd)
+            where C : IWfCmd<C>, new()
+        {
+            return sys.start(() => ExecToken.Empty);
+        }
+        
         Task<ExecToken> IWfModule.Start<C>(C cmd)
         {
             return Start(cmd);

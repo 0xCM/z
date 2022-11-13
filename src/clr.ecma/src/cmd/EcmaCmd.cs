@@ -16,23 +16,6 @@ namespace Z0
 
         ApiMd ApiMd => Wf.ApiMd();
 
-        void DescribeHeaps()
-        {
-            var heaps = Ecma.strings(ApiMd.Parts);
-            var count = heaps.Length;
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var heap = ref heaps[i];
-                var data = heap.Data;
-                var size = heap.Size;
-                var dst = text.emitter();
-                dst.Append(heap.BaseAddress.Format());
-                for(var j=0; j<size; j++)
-                    dst.AppendFormat(" {0:X2}", skip(data,j));
-                Write(dst.Emit());
-            }
-        }
-
         public static void exec(IWfChannel channel, CatalogAssemblies cmd)
         {
             var src = from file in cmd.Source.DbArchive().Enumerate("*.dll")
@@ -56,24 +39,7 @@ namespace Z0
                 }
             });      
         }        
-        
-        void RunCliJobs()
-        {
-            var root = Env.var(EnvVarKind.Process, EnvTokens.DOTNET_ROOT, FS.dir).Value;
-            var src = root.Files(FileKind.Dll).Map(x => new FileUri(x.Format())).ToSeq();
-            var name = CmdId.identify<EmitEcmaDatasets>().Format();
-            var ts = timestamp();
-            var dst = AppDb.Jobs(CmdId.identify<EmitEcmaDatasets>().Format()).Path($"{name}.{ts}.jobs", FileKind.Json);
-            var job = new EmitEcmaDatasets();
-            job.JobId = ts;
-            job.Sources = src;
-            job.Targets = AppDb.DbTargets("tools/jobs").Folder(CmdId.identify<EmitEcmaDatasets>().Format());
-            job.Settings = EcmaEmissionSettings.Default;
-            
-            var data = JsonData.serialize(job);
-            FileEmit(data, dst);
-        }
-
+                
         public void EmitCatalog(IApiCatalog src)
         {
             var dst = ApiPacks.create();
@@ -83,23 +49,6 @@ namespace Z0
 
         static IApiPack Dst
             => ApiPacks.create();
-
-        [CmdOp("api/emit")]
-        void ApiEmit()
-            => ApiMd.Emitter().Emit(ApiModules.parts(), AppDb.ApiTargets());
-
-        static void EcmaEmit(IWfChannel channel, FilePath src, IDbArchive dst)
-        {
-            try
-            {
-                var name = src.FileName.WithoutExtension.Name.Format();
-                channel.Write($"{src} -> ${dst.Root}/{name}");
-            }
-            catch(Exception e)
-            {
-                channel.Error(e);
-            }
-        }
 
         [CmdOp("ecma/catalog")]
         void EmitEcmaCatalog(CmdArgs args)
@@ -120,13 +69,13 @@ namespace Z0
         [CmdOp("ecma/emit/parts")]
         void EmitPartEcma()
         {
-            var src = ApiModules.parts();
+            var src = ModuleArchives.parts();
             EcmaEmitter.EmitCatalogs(src);
         }
 
         [CmdOp("ecma/emit/hex")]
         void EmitApiHex()
-            => EcmaEmitter.EmitLocatedMetadata(ApiModules.parts(), AppDb.ApiTargets("ecma/hex"), 64);
+            => EcmaEmitter.EmitLocatedMetadata(ModuleArchives.parts(), AppDb.ApiTargets("ecma/hex"), 64);
 
         [CmdOp("ecma/emit/assembly-refs")]
         void EmitAssmeblyRefs()

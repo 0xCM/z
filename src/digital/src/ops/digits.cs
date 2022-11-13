@@ -408,14 +408,14 @@ namespace Z0
         /// </summary>
         /// <param name="src">The perm spec</param>
         [MethodImpl(Inline), Op]
-        public static ref readonly NatSpan<N4,byte> digits(Perm4L src, in NatSpan<N4,byte> dst)
+        public static NatSpan<N4,byte> digits(Perm4L src, in NatSpan<N4,byte> dst)
         {
             var scalar = (byte)src;
             dst[0] = bits.extract(scalar, 0, 1);
             dst[1] = bits.extract(scalar, 2, 3);
             dst[2] = bits.extract(scalar, 4, 5);
             dst[3] = bits.extract(scalar, 6, 7);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>

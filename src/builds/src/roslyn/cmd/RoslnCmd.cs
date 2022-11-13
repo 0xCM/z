@@ -126,7 +126,7 @@ namespace Z0.Roslyn
         [CmdOp("api/emit/pdbinfo")]
         void EmitPdbInfo()
         {
-            EmitMethodSymbols(ApiModules.parts());
+            EmitMethodSymbols(ModuleArchives.parts());
             //EmitTypeSymbols(ApiMd.Components);
         }
 
@@ -156,7 +156,7 @@ namespace Z0.Roslyn
         [CmdOp("api/pdbs")]
         void CollectComponentSymbols()
         {
-            var components = ApiModules.parts();
+            var components = ModuleArchives.parts();
             var flow = Running(string.Format("Collecting method symbols for {0} assemblies", components.Length));
             var symbolic = Wf.RoslynCmd();
             var collector = new MethodSymbolCollector();

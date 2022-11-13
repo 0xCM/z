@@ -10,24 +10,6 @@ namespace Z0
     public readonly struct EcmaHandleData : IComparable<EcmaHandleData>, IEquatable<EcmaHandleData>
     {
         [MethodImpl(Inline), Op]
-        public static EcmaRowKey key(Handle src)
-        {
-            var data = EcmaHandleData.from(src);
-            return new EcmaRowKey(data.Table, data.RowId);
-        }
-
-        [MethodImpl(Inline), Op]
-        public static EcmaRowKey key(EntityHandle src)
-        {
-            var dat = EcmaHandleData.from(src);
-            return new EcmaRowKey(dat.Table, dat.RowId);
-        }
-
-        [MethodImpl(Inline), Op]
-        public static EntityHandle handle(uint src)
-            => @as<uint,EntityHandle>(src);
-
-        [MethodImpl(Inline), Op]
         public static EcmaHandleData from(Handle src)
             => @as<Handle,EcmaHandleData>(src);
 

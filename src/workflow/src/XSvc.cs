@@ -17,9 +17,6 @@ namespace Z0
             public ArchiveRegistry ArchiveRegistry(IWfRuntime wf)
                 => Service<ArchiveRegistry>(wf);            
 
-            public Reactor Reactor(IWfRuntime wf)
-                => Service<Reactor>(wf);            
-
             public IWfServices WfServices(IWfRuntime wf)
                 => Service<WfServices>(wf);
 
@@ -57,8 +54,6 @@ namespace Z0
         public static OmniScript OmniScript(this IWfRuntime wf)
             => Services.OmniScript(wf);
 
-        public static Reactor Reactor(this IWfRuntime wf)
-            => Services.Reactor(wf);
 
         public static ProjectScripts ProjectScripts(this IWfRuntime wf)
             => Services.ProjectScripts(wf);

@@ -92,7 +92,7 @@ namespace Z0
             public readonly Type RowType;
 
             [MethodImpl(Inline)]
-            internal RowAdapter(Type type, ClrTableFields fields)
+            internal RowAdapter(Type type, ReflectedFields fields)
             {
                 RowType = type;
                 Source = type;

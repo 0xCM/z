@@ -24,7 +24,7 @@ namespace Z0
             where E : unmanaged, Enum
             where T : unmanaged
         {
-            var index = Enums.dictionary<E,T>();
+            var index = ClrEnums.dictionary<E,T>();
             var bitcount = maxbits ?? core.width<T>();
             var count = CellCalcs.mincells((ulong)segwidth, (ulong)bitcount);
             Span<char> symbols = new char[count];

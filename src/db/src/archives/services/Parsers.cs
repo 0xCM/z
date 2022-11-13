@@ -13,7 +13,7 @@ namespace Z0
 
         }
 
-        MultiParser Mp() => _ParserCache.get(nameof(Mp), () => new MultiParser(Parsers.discover(ApiModules.parts())));
+        MultiParser Mp() => _ParserCache.get(nameof(Mp), () => new MultiParser(Parsers.discover(ModuleArchives.parts())));
 
         public IParser RecordParser(Type t)
             => Mp().RecordParser(t);

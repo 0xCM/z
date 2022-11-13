@@ -16,7 +16,7 @@ namespace Z0
 
         public void EmitMetadumps(CmdArgs args)
         {
-            var src = ApiModules.create(FS.dir(args[0]));            
+            var src = ModuleArchives.create(FS.dir(args[0]));            
             var dlls = src.ManagedDll().Where(path => !path.Path.Contains(".resources.dll")).Select(x => x.Path);
             var exe = src.ManagedExe().Select(x => x.Path);
             EmitMetadumps(Channel, src,AppDb.DbTargets("ecma/datasets"));                     

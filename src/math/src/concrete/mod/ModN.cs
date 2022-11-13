@@ -58,10 +58,10 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public ref readonly ConstPair<uint> divrem(in ModN n, uint a, out ConstPair<uint> dst)
+        public ConstPair<uint> divrem(in ModN n, uint a, out ConstPair<uint> dst)
         {
             dst = new ConstPair<uint>(div(a), mod(a));
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline)]

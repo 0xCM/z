@@ -19,10 +19,10 @@ namespace Z0
             Size = size;
         }
 
-        public Name Name
+        public @string Name
         {
             [MethodImpl(Inline)]
-            get => Definition?.DisplayName() ?? asci64.Null;
+            get => Definition?.DisplayName() ?? EmptyString;
         }
 
         public bool IsEmpty
@@ -30,16 +30,17 @@ namespace Z0
             [MethodImpl(Inline)]
             get => Definition is null;
         }
+
         public Assembly Assembly
         {
             [MethodImpl(Inline)]
             get => Definition.Assembly;
         }
 
-        public PartId Part
+        public PartName Part
         {
             [MethodImpl(Inline)]
-            get => Assembly.Id();
+            get => Assembly.PartName();
         }
 
         public Hash32 Hash

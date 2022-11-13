@@ -12,7 +12,5 @@ namespace Z0
         public static GridSpec spec<T>(uint rows, uint cols)
             where T : unmanaged
                 => gridspec((ushort)rows, (ushort)cols, (ushort)width<T>());
-
-
     }
 }

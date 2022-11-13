@@ -16,12 +16,12 @@ namespace Z0
             var i=0;
             ref var dst = ref first(buffer);
             foreach(var handle in src)
-                seek(dst,i++) = Ecma.key(handle);
+                seek(dst,i++) = EcmaHandles.key(handle);
             return buffer;
         }
 
         [Op]
         public ReadOnlySpan<EcmaRowKey> IntefaceImplKeys(TypeDefinition src)
-            => src.GetInterfaceImplementations().Map(x => Ecma.key(MD.GetInterfaceImplementation(x).Interface)).ToReadOnlySpan();
+            => src.GetInterfaceImplementations().Map(x => EcmaHandles.key(MD.GetInterfaceImplementation(x).Interface)).ToReadOnlySpan();
     }
 }

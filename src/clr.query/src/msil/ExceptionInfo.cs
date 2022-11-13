@@ -78,7 +78,7 @@ namespace Msil
         }
 
         static MethodInfo GetMethodInfo(string name) 
-            => s_tyExceptionInfo.GetMethodAssert(name);
+            => s_tyExceptionInfo.RequireMethod(name);
         
         T Invoke<T>(MethodInfo method, params object[] args) 
             => (T)method.Invoke(_exceptionInfo, args);

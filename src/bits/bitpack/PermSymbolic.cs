@@ -118,7 +118,7 @@ namespace Z0
             where E : unmanaged, Enum
             where T : unmanaged
         {
-            var values = Enums.dictionary<E,T>();
+            var values = ClrEnums.dictionary<E,T>();
             var index = new Dictionary<T,char>();
             foreach(var kvp in values)
                 index[kvp.Key] = kvp.Value.ToString().Last();

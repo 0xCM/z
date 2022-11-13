@@ -41,7 +41,7 @@ namespace Z0
         public ReadOnlySpan<byte> Bytes
         {
             [MethodImpl(Inline)]
-            get => core.bytes(this);
+            get => sys.bytes(this);
         }
 
         public bool IsEmpty

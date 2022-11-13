@@ -15,6 +15,6 @@ namespace Z0
 
         Index<Assembly> Assemblies {get;}
 
-        bool Assembly(PartName id, out Assembly dst);
+        bool Assembly(PartName part, out Assembly dst);
     }
 }

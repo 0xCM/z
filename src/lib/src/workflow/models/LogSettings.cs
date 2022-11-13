@@ -16,12 +16,6 @@ namespace Z0
         /// </summary>
         public readonly FilePath ErrorPath;
 
-        public LogSettings(FilePath status, FilePath errors)
-        {
-            StatusPath = status;
-            ErrorPath = errors;
-        }
-
         public LogSettings(FolderPath root)
         {
             var ts = sys.timestamp();
@@ -31,7 +25,7 @@ namespace Z0
             ErrorPath = root + FS.folder(control.Format()) + FS.file($"{id}.errors.{ts}", FS.Log);
         }
 
-        public LogSettings(PartId control, FolderPath root, string name)
+        public LogSettings(PartName control, FolderPath root, string name)
         {
             var id = text.empty(name) ? control.Format() : $"{control.Format()}.{name}";
             var ts = sys.timestamp();

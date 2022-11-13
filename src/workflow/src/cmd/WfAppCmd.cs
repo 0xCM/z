@@ -18,7 +18,26 @@ namespace Z0
 
         Tooling Tooling => Wf.Tooling();
 
-        EnvMod AppEnv => Channel.Env();
+        ApiMd ApiMd => Wf.ApiMd();
+
+        void EmitEcmaJobs()
+        {
+            var root = Env.var(EnvVarKind.Process, EnvTokens.DOTNET_ROOT, FS.dir).Value;
+            var src = root.Files(FileKind.Dll).Map(x => new FileUri(x.Format())).ToSeq();
+            var name = CmdId.identify<EmitEcmaDatasets>().Format();
+            var ts = timestamp();
+            var dst = AppDb.Jobs(CmdId.identify<EmitEcmaDatasets>().Format()).Path($"{name}.{ts}.jobs", FileKind.Json);
+            var job = new EmitEcmaDatasets();
+            job.JobId = ts;
+            job.Sources = src;
+            job.Targets = AppDb.DbTargets("tools/jobs").Folder(CmdId.identify<EmitEcmaDatasets>().Format());            
+            var data = JsonData.serialize(job);
+            FileEmit(data, dst);
+        }
+
+        [CmdOp("api/emit")]
+        void ApiEmit()
+            => ApiMd.Emitter().Emit(ModuleArchives.parts(), AppDb.ApiTargets());
 
         [CmdOp("version")]
         void Version()
@@ -113,7 +132,7 @@ namespace Z0
 
         [CmdOp("files")]
         void CatalogFiles(CmdArgs args)
-            => WfArchives.catalog(Channel, args);
+            => Archives.catalog(Channel, args);
             
         [CmdOp("env/process/paths")]
         void ProcPaths()
@@ -198,7 +217,7 @@ namespace Z0
         [CmdOp("services")]
         void GetServices()
         {
-            var src = ApiModules.parts();
+            var src = ModuleArchives.parts();
             Write(ApiRuntime.services(src));
         }
 

@@ -8,7 +8,7 @@ namespace Msil
 
         protected DefaultTypeFactory() { }
 
-        static readonly MethodInfo s_GetTypeFromHandleUnsafe = typeof(Type).GetMethodAssert("GetTypeFromHandleUnsafe");
+        static readonly MethodInfo s_GetTypeFromHandleUnsafe = typeof(Type).RequireMethod("GetTypeFromHandleUnsafe");
 
         public virtual Type FromHandle(IntPtr handle)
             => (Type)s_GetTypeFromHandleUnsafe.Invoke(null, new object[] {handle});

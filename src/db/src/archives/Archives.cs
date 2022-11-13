@@ -2,14 +2,123 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
+
 namespace Z0
 {
     using System.IO.Compression;
 
+    using Microsoft.Extensions.FileSystemGlobbing;
+
     using static sys;
 
-    public class Archives
+    public class Archives : WfModule<Archives>
     {        
+        public static IEnumerable<FileUri> query(FileQuery spec)
+        {
+            var filter = spec.Filter;
+            var matcher = new Matcher();  
+            iter(filter.FileTypes, t => matcher.AddInclude($"${t.SearchPattern}${SearchPattern.Recurse}" ));
+            iter(filter.FileKinds, t => matcher.AddInclude($"${t.Ext().SearchPattern}${SearchPattern.Recurse}" ));
+            iter(filter.Inclusions, i => matcher.AddInclude(i.Format()));
+            iter(filter.Exclusions, x => matcher.AddExclude(x.Format()));        
+            var result  = matcher.GetResultsInFullPath(spec.Source.Format());
+            foreach(var item in result)
+                yield return new FileUri(item);
+        }
+
+        public static ListedFiles catalog(IWfChannel channel, CmdArgs args)
+        {
+            var files = bag<FileUri>();
+            var table = FilePath.Empty;
+            var list = FilePath.Empty;
+            var name = Archives.identifier(FS.dir(args[0]));
+            var src = query(channel,args);
+            var counter = 0u;
+
+            string msg()
+                => $"Collected {counter} files";
+
+            iter(src, file => {
+                files.Add(file);
+                counter++;
+                if(counter % 1024 == 0)
+                    channel.Babble(msg());
+            }, true);
+            channel.Babble(msg());
+
+            var collected = files.ToSeq();
+            var listing = Archives.listing(collected.View);
+            
+            if(args.Count >=2)    
+            {
+                table = FS.dir(args[1]) + Tables.filename<ListedFile>(name);
+                list = FS.dir(args[1]) + FS.file(name, FileKind.List);
+            }
+            else
+            {
+                table = AppDb.Service.Catalogs("files").Table<ListedFile>(name);
+                list = AppDb.Service.Catalogs("files").Path(name, FileKind.List);
+            }
+
+            channel.TableEmit(listing, table);
+            var flow = channel.EmittingFile(list);
+            using var writer = list.Utf8Writer();
+            counter =0;
+            foreach(var file in files)
+            {
+                writer.AppendLine(file.ToFilePath().ToUri());
+                counter++;
+            }
+            channel.EmittedFile(flow, counter);
+            return listing;
+        }
+
+        static IEnumerable<FileUri> query(IWfChannel channel, CmdArgs args)
+        {
+            var src = FS.dir(args[0]);
+            var files = default(IEnumerable<FileUri>);
+            var it = default(IEnumerator<FileUri>);
+            if(args.Count > 1)
+            {
+                var kinds = args.Values().Span().Slice(1).Select(x => FS.kind(FS.ext(x))).Where(x => x!=0);
+                iter(kinds, kind => channel.Babble(kind));
+                files = DbArchive.enumerate(src,true,kinds); 
+            }
+            else
+            {
+                files = DbArchive.enumerate(src,"*.*", true);
+            }            
+
+            it = files.GetEnumerator();
+            var file = next(channel,it, out var @continue);
+            while(@continue)
+            {
+                if(file.IsNonEmpty)
+                    yield return file;
+                
+                if(!@continue)
+                    break;
+                file = next(channel,it, out @continue);
+            }
+        }
+
+        static FileUri next(IWfChannel channel, IEnumerator<FileUri> src, out bool @continue)
+        {
+            var file = FileUri.Empty;            
+            try
+            {
+                @continue = src.MoveNext();
+                file = src.Current;
+            }
+            catch(Exception e)
+            {
+                channel.Babble($"Trapped {e}");
+                @continue = true;
+            }
+            return file;
+        }
+
+
         public static DbArchive archive(string src)
             => new DbArchive(FS.dir(src));
 

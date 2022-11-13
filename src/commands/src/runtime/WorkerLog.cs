@@ -45,7 +45,7 @@ namespace Z0
             {
                 ErrorPath.AppendLines(content);
                 FS.write("[error] ", Status);
-                FS.write(RpOps.PageBreak40 + Eol, Status);
+                FS.write(RP.PageBreak40 + Eol, Status);
                 FS.write(content + Eol, Status);
             }
             catch(Exception error)

@@ -5,7 +5,7 @@
     <ZVer>0.0.12</ZVer>
     <ZSysVer>0.0.13</ZSysVer>
     <Version>$(ZVer)</Version>
-    <LangVersion>preview</LangVersion>
+    <LangVersion>10</LangVersion>
     <EnablePreviewFeatures>True</EnablePreviewFeatures>
     <FrameworkMoniker>net6.0</FrameworkMoniker>
     <Configuration>Release</Configuration>

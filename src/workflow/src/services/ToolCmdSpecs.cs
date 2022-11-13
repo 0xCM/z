@@ -56,7 +56,7 @@ namespace Z0
 
             dst = CmdOption.Empty;
             if(empty(src))
-                return (false,RpOps.Empty);
+                return (false, RP.Empty);
             var i = text.index(src, Delimiter);
             if(i>0)
                 dst = new CmdOption(text.left(src,i).Trim(), text.right(src,i).Trim());

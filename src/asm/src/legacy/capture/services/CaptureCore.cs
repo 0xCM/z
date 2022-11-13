@@ -25,7 +25,7 @@ namespace Z0.Asm
             dst.OpUri = ApiIdentity.hex(method.DeclaringType.ApiHostUri(), method.Name, id);
             dst.TermCode = term;
             dst.Msil = ClrDynamic.msil(parsed.Address, dst.OpUri, method);
-            dst.CliSig = Ecma.sig(method);
+            dst.CliSig = EcmaSigs.sig(method);
             return dst;
         }
 

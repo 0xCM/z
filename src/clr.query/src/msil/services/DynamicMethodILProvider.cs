@@ -6,19 +6,19 @@ namespace Msil
 
     public sealed class DynamicMethodILProvider : IILProvider
     {
-        static readonly FieldInfo s_fiLen = typeof(ILGenerator).GetFieldAssert("m_length");
+        static readonly FieldInfo s_fiLen = typeof(ILGenerator).RequireField("m_length");
 
-        static readonly FieldInfo s_fiStream = typeof(ILGenerator).GetFieldAssert("m_ILStream");
+        static readonly FieldInfo s_fiStream = typeof(ILGenerator).RequireField("m_ILStream");
 
-        static readonly FieldInfo s_fiExceptions = typeof(ILGenerator).GetFieldAssert("m_exceptions");
+        static readonly FieldInfo s_fiExceptions = typeof(ILGenerator).RequireField("m_exceptions");
 
-        static readonly FieldInfo s_fiExceptionCount = typeof(ILGenerator).GetFieldAssert("m_exceptionCount");
+        static readonly FieldInfo s_fiExceptionCount = typeof(ILGenerator).RequireField("m_exceptionCount");
 
-        static readonly FieldInfo s_fiLocalSignature = typeof(ILGenerator).GetFieldAssert("m_localSignature");
+        static readonly FieldInfo s_fiLocalSignature = typeof(ILGenerator).RequireField("m_localSignature");
 
-        static readonly MethodInfo s_miBakeByteArray = typeof(ILGenerator).GetMethodAssert("BakeByteArray");
+        static readonly MethodInfo s_miBakeByteArray = typeof(ILGenerator).RequireMethod("BakeByteArray");
 
-        static readonly MethodInfo s_miMaxStackSize = typeof(ILGenerator).GetMethodAssert("GetMaxStackSize");
+        static readonly MethodInfo s_miMaxStackSize = typeof(ILGenerator).RequireMethod("GetMaxStackSize");
 
         readonly DynamicMethod _method;
 

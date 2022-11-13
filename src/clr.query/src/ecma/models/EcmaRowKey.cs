@@ -93,11 +93,11 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator EcmaRowKey(Handle src)
-            => EcmaHandleData.key(src);
+            => EcmaHandles.key(src);
 
         [MethodImpl(Inline)]
         public static implicit operator EcmaRowKey(EntityHandle src)
-            => EcmaHandleData.key(src);
+            => EcmaHandles.key(src);
 
         public static EcmaRowKey Empty
         {

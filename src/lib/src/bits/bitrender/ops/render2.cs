@@ -19,7 +19,6 @@ namespace Z0
             return i - i0;
         }
 
-
         [MethodImpl(Inline), Op]
         public static asci2 render2(byte src, out asci2 dst)
         {

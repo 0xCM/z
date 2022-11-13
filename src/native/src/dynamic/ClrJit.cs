@@ -48,16 +48,6 @@ namespace Z0
             return dst;
         }
 
-        // [Op]
-        // public static ApiMembers jit(ReadOnlySpan<IApiPartCatalog> src, IWfChannel log, bool pll)
-        // {
-        //     var @base = Process.GetCurrentProcess().MainModule.BaseAddress;
-        //     var dst = sys.bag<ApiMembers>();
-            
-        //     iter(src, part => dst.Add(jit(part,log)), pll);
-        //     return ApiQuery.members(@base, dst.SelectMany(x => x).Array());
-        // }
-
         [Op]
         public static ApiMembers jit(IApiPartCatalog src, IWfChannel channel)
         {
@@ -71,51 +61,12 @@ namespace Z0
         static MemoryAddress fptr(MethodInfo src)
             => src.MethodHandle.GetFunctionPointer();
 
-        // [Op]
-        // public static ApiMembers jit(Index<ApiCompleteType> src, IWfChannel log)
-        // {
-        //     var dst = list<ApiMember>();
-        //     var count = src.Count;
-        //     ref var lead = ref src.First;
-        //     for(var i=0u; i<count; i++)
-        //         dst.AddRange(jit(skip(lead,i)));
-        //     return ApiQuery.members(dst.ToArray());
-        // }
-
-        // [Op]
-        // static WarnEvent<T> warn<T>(T msg)
-        //     => Events.warn(typeof(ClrJit), msg);
-
         [Op]
         public static MemoryAddress jit(MethodInfo src)
         {
             RuntimeHelpers.PrepareMethod(src.MethodHandle);
             return fptr(src);
         }
-
-        // [Op]
-        // public static void jit(ReadOnlySpan<MethodInfo> src, Span<MemoryAddress> dst)
-        // {
-        //     var count = src.Length;
-        //     for(var i=0; i<count; i++)
-        //         seek(dst,i) = jit(skip(src,i));
-        // }
-
-        // [Op]
-        // public static Index<MemberAddress> jit(Index<MethodInfo> src)
-        // {
-        //     var methods = src.View;
-        //     var count = methods.Length;
-        //     var buffer = alloc<MemberAddress>(count);
-        //     ref var dst = ref first(buffer);
-        //     for(var i=0; i<count; i++)
-        //     {
-        //         var method = skip(methods, i);
-        //         seek(dst,i) = Clr.address(method, jit(method));
-        //     }
-        //     return buffer;
-        // }
-
         [Op]
         public static MemoryAddress jit(Delegate src)
         {

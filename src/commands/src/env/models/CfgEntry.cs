@@ -7,19 +7,19 @@ namespace Z0
     [StructLayout(LayoutKind.Sequential)]
     public record struct CfgEntry
     {
-        public readonly ReadOnlySeq<char> Name;
+        public readonly string Name;
 
-        public readonly ReadOnlySeq<char> Value;
+        public readonly string Value;
 
         [MethodImpl(Inline)]
         public CfgEntry(string name, string value)
         {
-            Name = name.ToCharArray();
-            Value = value.ToCharArray();
+            Name = name;
+            Value = value;
         }
 
         public string Format()
-            => $"{new string(Name.Storage)}={new string(Value.Storage)}";
+            => $"{Name}={Value}";
 
         public override string ToString()
             => Format();

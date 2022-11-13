@@ -24,9 +24,6 @@ namespace Z0
             public EcmaCmd EcmaCmd(IWfRuntime wf)
                 => Service<EcmaCmd>(wf);
 
-            public ApiMd ApiMetadata(IWfRuntime wf)
-                => Service<ApiMd>(wf);
-
         }
 
         static Svc Services => Svc.Instance;
@@ -42,8 +39,5 @@ namespace Z0
 
         public static ICmdProvider EcmaCmd(this IWfRuntime wf)
             => Services.EcmaCmd(wf);
-
-        public static ApiMd ApiMd(this IWfRuntime wf)
-            => Services.ApiMetadata(wf);            
     }
 }

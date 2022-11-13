@@ -13,7 +13,7 @@ namespace Z0
     public struct RowAdapter<T>
         where T : struct
     {
-        public readonly ClrTableFields Fields
+        public readonly ReflectedFields Fields
         {
             [MethodImpl(Inline)]
             get => Row.Fields;
@@ -26,7 +26,7 @@ namespace Z0
         internal DynamicRow<T> Row;
 
         [MethodImpl(Inline)]
-        internal RowAdapter(ClrTableFields fields)
+        internal RowAdapter(ReflectedFields fields)
         {
             Source = default;
             Index = 0;

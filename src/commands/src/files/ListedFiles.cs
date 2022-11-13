@@ -6,7 +6,6 @@ namespace Z0
 {
     public class ListedFiles : SortedSeq<ListedFile>
     {
-
         [Op]
         public static string format(ListedFiles src)
         {
