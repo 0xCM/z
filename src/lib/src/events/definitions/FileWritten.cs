@@ -32,7 +32,7 @@ namespace Z0
             => new FileWritten(Wf, Target, token, EmissionCount);
 
         [MethodImpl(Inline)]
-        public static implicit operator WfExecFlow(FileWritten src)
-            => new WfExecFlow(src.Wf, src.Token);
+        public static implicit operator ExecFlow(FileWritten src)
+            => new ExecFlow(src.Wf, src.Token);
     }
 }

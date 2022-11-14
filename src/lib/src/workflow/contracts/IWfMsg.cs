@@ -27,16 +27,16 @@ namespace Z0
         void Write<T>(T content)
             => Wf.Data(HostType, content);
 
-        WfExecFlow<Type> Creating(Type host)
+        ExecFlow<Type> Creating(Type host)
             => Wf.Creating(host);
 
-        ExecToken Created(WfExecFlow<Type> flow)
+        ExecToken Created(ExecFlow<Type> flow)
             => Wf.Created(flow);
 
-        WfExecFlow<string> Running([CallerName] string msg = null)
+        ExecFlow<string> Running([CallerName] string msg = null)
             => Wf.Running(HostType, msg);
 
-        ExecToken Ran<T>(WfExecFlow<T> flow, [CallerName] string msg = null)
+        ExecToken Ran<T>(ExecFlow<T> flow, [CallerName] string msg = null)
             => Wf.Ran(HostType, flow.WithMsg(msg));
 
         FileWritten EmittingFile(FilePath dst)
@@ -45,11 +45,11 @@ namespace Z0
         ExecToken EmittedFile(FileWritten flow, Count count)
             => Wf.EmittedFile(HostType, flow, count);
 
-        WfTableFlow<T> EmittingTable<T>(FilePath dst)
+        TableFlow<T> EmittingTable<T>(FilePath dst)
             where T : struct
                 => Wf.EmittingTable<T>(HostType, dst);
 
-        ExecToken EmittedTable<T>(WfTableFlow<T> flow, Count count, FilePath? dst = null)
+        ExecToken EmittedTable<T>(TableFlow<T> flow, Count count, FilePath? dst = null)
             where T : struct
                 => Wf.EmittedTable(HostType, flow,count, dst);
     }

@@ -19,7 +19,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op, Closures(UnsignedInts)]
-        public static EmissionLogEntry entry<T>(in WfTableFlow<T> src, out EmissionLogEntry dst)
+        public static EmissionLogEntry entry<T>(in TableFlow<T> src, out EmissionLogEntry dst)
             where T : struct
         {
             dst.ExecToken = src.Token;

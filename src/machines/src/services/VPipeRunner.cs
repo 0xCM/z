@@ -37,7 +37,7 @@ namespace Z0
 
     public struct BlockSink01 : IBlockSink128<BlockSink01,byte>
     {
-        readonly WfEventSignal Signal;
+        readonly EventSignal Signal;
 
         uint Counter;
 
@@ -54,7 +54,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public BlockSink01(WfEventSignal wf)
+        public BlockSink01(EventSignal wf)
         {
             Signal = wf;
             Counter = 0;

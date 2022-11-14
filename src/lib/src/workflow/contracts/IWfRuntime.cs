@@ -24,9 +24,9 @@ namespace Z0
 
         ExecToken NextExecToken();
 
-        ExecToken Completed(WfExecFlow src);
+        ExecToken Completed(ExecFlow src);
 
-        ExecToken Completed<T>(WfExecFlow<T> src);
+        ExecToken Completed<T>(ExecFlow<T> src);
 
         IWfEmissions Emissions {get;}
 
@@ -43,39 +43,39 @@ namespace Z0
                 Raise(Events.disposed(Host.Type));
         }
 
-        WfExecFlow<T> Running<T>(T data)
+        ExecFlow<T> Running<T>(T data)
         {
             signal(this).Running(data);
             return Flow(data);
         }
 
-        WfExecFlow<T> Running<T>(KillMe host, T msg)
+        ExecFlow<T> Running<T>(KillMe host, T msg)
         {
             signal(this, host).Running(msg);
             return Flow(msg);
         }
 
-        WfExecFlow<string> Running(KillMe host, [CallerName] string caller = null)
+        ExecFlow<string> Running(KillMe host, [CallerName] string caller = null)
         {
             signal(this, host).Running(caller);
             return Flow(caller);
         }
 
-        ExecToken Ran<T>(WfExecFlow<T> src)
+        ExecToken Ran<T>(ExecFlow<T> src)
         {
             var token = Completed(src);
             signal(this).Ran(src.Data);
             return token;
         }
 
-        ExecToken Ran<T>(KillMe host, WfExecFlow<T> src, FlairKind flair = FlairKind.Ran)
+        ExecToken Ran<T>(KillMe host, ExecFlow<T> src, FlairKind flair = FlairKind.Ran)
         {
             var token = Completed(src);
             signal(this, host).Ran(src.Data);
             return token;
         }
 
-        ExecToken Ran<T,D>(WfExecFlow<T> src, D data, FlairKind flair = FlairKind.Ran)
+        ExecToken Ran<T,D>(ExecFlow<T> src, D data, FlairKind flair = FlairKind.Ran)
         {
             var token = Completed(src);
             signal(this).Ran(data);
@@ -88,12 +88,12 @@ namespace Z0
         string ITextual.Format()
             => AppName.Format();
 
-        WfExecFlow<T> Flow<T>(T data)
-            => new WfExecFlow<T>(this, data, NextExecToken());
+        ExecFlow<T> Flow<T>(T data)
+            => new ExecFlow<T>(this, data, NextExecToken());
 
-        WfTableFlow<T> TableFlow<T>(FilePath dst)
+        TableFlow<T> TableFlow<T>(FilePath dst)
             where T : struct
-                => new WfTableFlow<T>(this, dst, NextExecToken());
+                => new TableFlow<T>(this, dst, NextExecToken());
 
         FileWritten Flow(FilePath dst)
             => new FileWritten(this, dst, NextExecToken());
@@ -129,45 +129,45 @@ namespace Z0
         void Error<T>(KillMe host, T data, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine]int? line = null)
             => signal(this, host).Error(data, Events.originate("WorkflowError", caller, file, line));
 
-        WfExecFlow<Type> Creating(Type host)
+        ExecFlow<Type> Creating(Type host)
         {
             signal(this, host).Creating(host);
             return Flow(host);
         }
 
-        ExecToken Created(WfExecFlow<Type> flow)
+        ExecToken Created(ExecFlow<Type> flow)
         {
             signal(this, flow.Data).Created(flow.Data);
             return Completed(flow);
         }
 
-        ExecToken Completed<T>(WfExecFlow<T> flow, Type host, Exception e, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine]int? line = null)
+        ExecToken Completed<T>(ExecFlow<T> flow, Type host, Exception e, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine]int? line = null)
         {
             signal(this).Raise(Events.error(host, e, caller,file,line));
             return Completed(flow);
         }
 
-        ExecToken Completed<T>(WfExecFlow<T> flow, Type host, Exception e, EventOrigin origin)
+        ExecToken Completed<T>(ExecFlow<T> flow, Type host, Exception e, EventOrigin origin)
         {
             signal(this).Raise(Events.error(host, e, origin));
             return Completed(flow);
         }
 
-        WfTableFlow<T> EmittingTable<T>(FilePath dst)
+        TableFlow<T> EmittingTable<T>(FilePath dst)
             where T : struct
         {
             signal(this).EmittingTable<T>(dst);
             return Emissions.LogEmission(TableFlow<T>(dst));
         }
 
-        WfTableFlow<T> EmittingTable<T>(KillMe host, FilePath dst)
+        TableFlow<T> EmittingTable<T>(KillMe host, FilePath dst)
             where T : struct
         {
             signal(this, host).EmittingTable<T>(dst);
             return Emissions.LogEmission(TableFlow<T>(dst));
         }
 
-        ExecToken EmittedTable<T>(WfTableFlow<T> flow, Count count, FilePath? dst = null)
+        ExecToken EmittedTable<T>(TableFlow<T> flow, Count count, FilePath? dst = null)
             where T : struct
         {
             var completed = Completed(flow);
@@ -177,7 +177,7 @@ namespace Z0
             return completed;
         }
 
-        ExecToken EmittedTable<T>(KillMe host, WfTableFlow<T> flow, Count count, FilePath? dst = null)
+        ExecToken EmittedTable<T>(KillMe host, TableFlow<T> flow, Count count, FilePath? dst = null)
             where T : struct
         {
             var completed = Completed(flow);

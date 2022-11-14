@@ -87,10 +87,10 @@ namespace Z0
         protected virtual void Error<T>(T content, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
             => Emitter.Error(content, caller, file, line);
 
-        protected WfExecFlow<string> Running([CallerName] string msg = null)
+        protected ExecFlow<string> Running([CallerName] string msg = null)
             => Emitter.Running(msg);
 
-        protected ExecToken Ran<T>(WfExecFlow<T> flow, [CallerName] string msg = null)
+        protected ExecToken Ran<T>(ExecFlow<T> flow, [CallerName] string msg = null)
             => Emitter.Ran(flow, msg);
 
         protected void Write<T>(T content)
@@ -102,11 +102,11 @@ namespace Z0
         public ExecToken EmittedFile(FileWritten flow, Count count)
             => Emitter.EmittedFile(flow,count);
 
-        protected WfTableFlow<T> EmittingTable<T>(FilePath dst)
+        protected TableFlow<T> EmittingTable<T>(FilePath dst)
             where T : struct
                 => Emitter.EmittingTable<T>(dst);
 
-        protected ExecToken EmittedTable<T>(WfTableFlow<T> flow, Count count, FilePath? dst = null)
+        protected ExecToken EmittedTable<T>(TableFlow<T> flow, Count count, FilePath? dst = null)
             where T : struct
                 => Emitter.EmittedTable(flow,count, dst);
 
@@ -114,6 +114,6 @@ namespace Z0
             => e => Emitter.Raise(e);
 
         protected IEventTarget EventLog
-            => new WfEventTarget(EventLogger);
+            => new EventTarget(EventLogger);
     }
 }

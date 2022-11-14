@@ -3,14 +3,11 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0
-{
-    public interface IWfEmissions : IExpr, IDisposable
+{   
+    public abstract class ProjectGenerator<G>
+        where G : ProjectGenerator<G>, new()
     {
-        void Close();
 
-        ref readonly TableFlow<T> LogEmission<T>(in TableFlow<T> flow)
-            where T : struct;
-
-        ref readonly FileWritten LogEmission(in FileWritten flow);
     }
+
 }

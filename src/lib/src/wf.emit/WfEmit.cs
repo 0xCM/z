@@ -80,31 +80,31 @@ namespace Z0
         public void Write<T>(string name, T value)
             => Wf.Data(Host, RpOps.attrib(name, value));
 
-        public WfExecFlow<Type> Creating(Type service)
+        public ExecFlow<Type> Creating(Type service)
             => Wf.Creating(service);
 
-        public ExecToken Created(WfExecFlow<Type> flow)
+        public ExecToken Created(ExecFlow<Type> flow)
             => Wf.Created(flow);
 
-        public ExecToken Completed<T>(WfExecFlow<T> flow, Type host, Exception e, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
+        public ExecToken Completed<T>(ExecFlow<T> flow, Type host, Exception e, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
             => Wf.Completed(flow, host, e, caller, file, line);
 
-        public ExecToken Completed<T>(WfExecFlow<T> flow, Type host, Exception e, EventOrigin origin)
+        public ExecToken Completed<T>(ExecFlow<T> flow, Type host, Exception e, EventOrigin origin)
             => Wf.Completed(flow, host, e, origin);
 
-        public WfExecFlow<T> Running<T>(T msg)
+        public ExecFlow<T> Running<T>(T msg)
             => Wf.Running(Host, msg);
 
-        public WfExecFlow<string> Running([CallerName] string msg = null)
+        public ExecFlow<string> Running([CallerName] string msg = null)
             => Wf.Running(Host, msg);
 
-        public ExecToken Ran<T>(WfExecFlow<T> flow, [CallerName] string msg = null)
+        public ExecToken Ran<T>(ExecFlow<T> flow, [CallerName] string msg = null)
             => Wf.Ran(Host, flow.WithMsg(msg));
 
-        public ExecToken Ran<T>(WfExecFlow<T> flow, string msg, FlairKind flair = FlairKind.Ran)
+        public ExecToken Ran<T>(ExecFlow<T> flow, string msg, FlairKind flair = FlairKind.Ran)
             => Wf.Ran(Host, flow.WithMsg(msg), flair);
 
-        public ExecToken Ran<T, D>(WfExecFlow<T> src, D data, FlairKind flair = FlairKind.Ran)
+        public ExecToken Ran<T, D>(ExecFlow<T> src, D data, FlairKind flair = FlairKind.Ran)
             => Wf.Ran(src, data, flair);
 
         public FileWritten EmittingFile(FilePath dst)
@@ -128,11 +128,11 @@ namespace Z0
         public ExecToken EmittedBytes(FileWritten flow, ByteSize size)
             => EmittedFile(flow, AppMsg.EmittedBytes.Capture(size, flow.Target));
 
-        public WfTableFlow<T> EmittingTable<T>(FilePath dst)
+        public TableFlow<T> EmittingTable<T>(FilePath dst)
             where T : struct
                 => Wf.EmittingTable<T>(Host, dst);
 
-        public ExecToken EmittedTable<T>(WfTableFlow<T> flow, Count count, FilePath? dst = null)
+        public ExecToken EmittedTable<T>(TableFlow<T> flow, Count count, FilePath? dst = null)
             where T : struct
                 => Wf.EmittedTable(Host, flow, count, dst);
 

@@ -52,13 +52,13 @@ namespace Z0
 
     public interface IWfChannel : IEventChannel, IMsgChannel
     {
-        WfExecFlow<Type> Creating(Type service);
+        ExecFlow<Type> Creating(Type service);
 
-        ExecToken Completed<T>(WfExecFlow<T> flow, Type host, Exception e, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null);
+        ExecToken Completed<T>(ExecFlow<T> flow, Type host, Exception e, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null);
 
-        ExecToken Completed<T>(WfExecFlow<T> flow, Type host, Exception e, EventOrigin origin);
+        ExecToken Completed<T>(ExecFlow<T> flow, Type host, Exception e, EventOrigin origin);
 
-        ExecToken Created(WfExecFlow<Type> flow);
+        ExecToken Created(ExecFlow<Type> flow);
 
         ExecToken EmittedBytes(FileWritten flow, ByteSize size);
 
@@ -72,11 +72,11 @@ namespace Z0
 
         ExecToken EmittedFile(FileWritten flow);
 
-        ExecToken EmittedTable<T>(WfTableFlow<T> flow, Count count, FilePath? dst = null) where T : struct;
+        ExecToken EmittedTable<T>(TableFlow<T> flow, Count count, FilePath? dst = null) where T : struct;
 
         FileWritten EmittingFile(FilePath dst);
 
-        WfTableFlow<T> EmittingTable<T>(FilePath dst) where T : struct;
+        TableFlow<T> EmittingTable<T>(FilePath dst) where T : struct;
 
         ExecToken FileEmit<T>(T src, Count count, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci);
 
@@ -90,15 +90,15 @@ namespace Z0
 
         ExecToken FileEmit(string src, Count count, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Utf8);
 
-        WfExecFlow<T> Running<T>(T msg);
+        ExecFlow<T> Running<T>(T msg);
 
-        WfExecFlow<string> Running([CallerName] string msg = null);
+        ExecFlow<string> Running([CallerName] string msg = null);
 
-        ExecToken Ran<T>(WfExecFlow<T> flow, [CallerName] string msg = null);
+        ExecToken Ran<T>(ExecFlow<T> flow, [CallerName] string msg = null);
 
-        ExecToken Ran<T>(WfExecFlow<T> flow, string msg, FlairKind flair = FlairKind.Ran);
+        ExecToken Ran<T>(ExecFlow<T> flow, string msg, FlairKind flair = FlairKind.Ran);
 
-        ExecToken Ran<T, D>(WfExecFlow<T> src, D data, FlairKind flair = FlairKind.Ran);
+        ExecToken Ran<T, D>(ExecFlow<T> src, D data, FlairKind flair = FlairKind.Ran);
 
         ExecToken TableEmit<T>(ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular) where T : struct;
 

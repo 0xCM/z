@@ -71,7 +71,7 @@ namespace Z0
             return ref flow;
         }
 
-        public ref readonly WfTableFlow<T> LogEmission<T>(in WfTableFlow<T> flow)
+        public ref readonly TableFlow<T> LogEmission<T>(in TableFlow<T> flow)
             where T : struct
         {
             try

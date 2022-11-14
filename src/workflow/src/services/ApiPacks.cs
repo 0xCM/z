@@ -67,7 +67,7 @@ namespace Z0
             var src = capture.Root + FS.folder("current");
             var dst = discover().Last.Root;
             FS.symlink(src,dst,true).Require();
-            Status($"symlink:{src} -> {dst}");
+            Channel.Status($"symlink:{src} -> {dst}");
             return (src,dst);
         }
 

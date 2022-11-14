@@ -182,11 +182,11 @@ namespace Z0
         ReadOnlySeq<WfCmdRow> CalcCmdDefs(Assembly[] src)
             => CmdTypes.rows(CmdTypes.discover(src));
 
-        ReadOnlySeq<ApiFlowSpec> CalcDataFlows(Assembly[] src)
+        ReadOnlySeq<DataFlowSpec> CalcDataFlows(Assembly[] src)
         {
-            var flows = ApiDataFlow.discover(src);
+            var flows = DataFlow.discover(src);
             var count = flows.Length;
-            var buffer = alloc<ApiFlowSpec>(count);
+            var buffer = alloc<DataFlowSpec>(count);
             for(var i=0; i<count; i++)
             {
                 ref var dst = ref seek(buffer,i);
@@ -246,8 +246,8 @@ namespace Z0
         void EmitApiLiterals(ReadOnlySpan<ApiLiteralInfo> src)
             => Channel.TableEmit(src, AppDb.ApiTargets().Table<ApiLiteralInfo>(), TextEncodingKind.Unicode);
 
-        void Emit(ReadOnlySpan<ApiFlowSpec> src)
-            => Channel.TableEmit(src, AppDb.ApiTargets().Table<ApiFlowSpec>());
+        void Emit(ReadOnlySpan<DataFlowSpec> src)
+            => Channel.TableEmit(src, AppDb.ApiTargets().Table<DataFlowSpec>());
 
         static uint CountFields(Index<Type> tables)
         {

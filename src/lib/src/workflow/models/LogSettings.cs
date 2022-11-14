@@ -16,6 +16,12 @@ namespace Z0
         /// </summary>
         public readonly FilePath ErrorPath;
 
+        public LogSettings(FilePath status, FilePath error)
+        {
+            StatusPath = status;
+            ErrorPath = error;
+            
+        }
         public LogSettings(FolderPath root)
         {
             var ts = sys.timestamp();

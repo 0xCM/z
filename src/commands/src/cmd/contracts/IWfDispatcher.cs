@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IWfDispatcher : IWfCmdRouter
+    public interface IWfDispatcher : IActor
     {
         ReadOnlySeq<ICmdProvider> Providers {get;}
 

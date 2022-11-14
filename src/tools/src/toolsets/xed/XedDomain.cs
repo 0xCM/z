@@ -8,7 +8,5 @@ namespace Z0
     public partial class XedDomain
     {
         const string group = "xedtool";
-
-        const string tool = "xed";
     }
 }

@@ -55,10 +55,10 @@ namespace Z0
         public ExecToken NextExecToken()
             => Tokens.Open();
 
-        public ExecToken Completed(WfExecFlow src)
+        public ExecToken Completed(ExecFlow src)
             => Tokens.Close(src.Token);
 
-        public ExecToken Completed<T>(WfExecFlow<T> src)
+        public ExecToken Completed<T>(ExecFlow<T> src)
             => Tokens.Close(src.Token);
 
         public void Dispose()

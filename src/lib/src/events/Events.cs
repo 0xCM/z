@@ -37,20 +37,20 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static WfEventSignal signal(IWfRuntime wf)
+        public static EventSignal signal(IWfRuntime wf)
             => Events.signal(wf.EventSink, wf.Host);
 
         [MethodImpl(Inline), Op]
-        public static WfEventSignal signal(IWfRuntime wf, KillMe host)
+        public static EventSignal signal(IWfRuntime wf, KillMe host)
             => Events.signal(wf.EventSink, host);
 
         [MethodImpl(Inline), Op]
-        public static WfEventSignal signal(IEventSink sink, KillMe host)
-            => new WfEventSignal(sink, host);
+        public static EventSignal signal(IEventSink sink, KillMe host)
+            => new EventSignal(sink, host);
 
         [MethodImpl(Inline), Op]
-        public static WfEventSignal signal(IEventSink sink, Type host)
-            => new WfEventSignal(sink, host);
+        public static EventSignal signal(IEventSink sink, Type host)
+            => new EventSignal(sink, host);
 
         [Op, Closures(Closure)]
         public static BabbleEvent<T> babble<T>(Type host, T msg)

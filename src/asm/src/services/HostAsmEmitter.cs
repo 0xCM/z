@@ -93,7 +93,7 @@ namespace Z0.Asm
             var counter = 0u;
             var tableWriter = default(StreamWriter);
             var tablePath = FilePath.Empty;
-            var tableFlow = default(WfTableFlow<HostAsmRecord>);
+            var tableFlow = default(TableFlow<HostAsmRecord>);
             var asmWriter = default(StreamWriter);
             var asmPath = FilePath.Empty;
             var asmFlow = default(FileWritten);

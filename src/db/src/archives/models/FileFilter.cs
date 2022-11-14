@@ -4,13 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IWfEmissions : IExpr, IDisposable
+    public record struct FileFilter
     {
-        void Close();
+        public Seq<FileExt> FileTypes;
 
-        ref readonly TableFlow<T> LogEmission<T>(in TableFlow<T> flow)
-            where T : struct;
+        public Seq<FileKind> FileKinds;
 
-        ref readonly FileWritten LogEmission(in FileWritten flow);
+        public Seq<SearchPattern> Inclusions;
+
+        public Seq<SearchPattern> Exclusions;
     }
 }

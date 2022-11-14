@@ -21,14 +21,4 @@ namespace Z0
 
         CmdResult<C> Invoke(C src);
     }
-
-    [Free]
-    public interface ICmdReactor<C,T> : ICmdReactor
-        where C : struct, ICmd
-    {
-        CmdId ICmdReactor.CmdId
-            => default(C).CmdId;
-
-        CmdResult<C,T> Invoke(C Cmd);
-    }
 }

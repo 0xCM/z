@@ -1,13 +1,13 @@
 <Project>
   <PropertyGroup>
-    <EnablePreviewFeatures>True</EnablePreviewFeatures>
-    <GenerateRequiresPreviewFeaturesAttribute>False</GenerateRequiresPreviewFeaturesAttribute>
     <ZVer>0.0.12</ZVer>
     <ZSysVer>0.0.13</ZSysVer>
     <Version>$(ZVer)</Version>
     <LangVersion>10</LangVersion>
-    <EnablePreviewFeatures>True</EnablePreviewFeatures>
     <FrameworkMoniker>net6.0</FrameworkMoniker>
+    <EnablePreviewFeatures>True</EnablePreviewFeatures>
+    <GenerateRequiresPreviewFeaturesAttribute>False</GenerateRequiresPreviewFeaturesAttribute>
+    <EnablePreviewFeatures>True</EnablePreviewFeatures>
     <Configuration>Release</Configuration>
     <OptimizeImplicitlyTriggeredBuild>True</OptimizeImplicitlyTriggeredBuild>
     <PublishRelease>true</PublishRelease>

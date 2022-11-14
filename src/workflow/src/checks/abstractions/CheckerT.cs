@@ -16,7 +16,7 @@ namespace Z0
 
         protected IPolySource Random;
 
-        readonly WfEventQueue Queue;
+        readonly EventQueue Queue;
 
         readonly string SvcName;
 
@@ -27,7 +27,7 @@ namespace Z0
             Checkers.methods(HostType,methods);
             Methods = methods;
             CheckSpecs = Methods.Keys.ToArray();
-            Queue = WfEventQueue.allocate(GetType(), EventRaised);
+            Queue = EventQueue.allocate(GetType(), EventRaised);
         }
 
         FileName FileName(string suffix, FileKind kind)

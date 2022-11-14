@@ -108,16 +108,16 @@ namespace Z0
         public void Write<T>(string name, T value)
             => Emitter.Write(name, value);
 
-        public WfExecFlow<T> Running<T>(T msg)
+        public ExecFlow<T> Running<T>(T msg)
             => Emitter.Running(msg);
 
-        public new WfExecFlow<string> Running([CallerName] string msg = null)
+        public new ExecFlow<string> Running([CallerName] string msg = null)
             => Emitter.Running(msg);
 
-        public new ExecToken Ran<T>(WfExecFlow<T> flow, [CallerName] string msg = null)
+        public new ExecToken Ran<T>(ExecFlow<T> flow, [CallerName] string msg = null)
             => Emitter.Ran(flow, msg);
 
-        public ExecToken Ran<T, D>(WfExecFlow<T> src, D data)
+        public ExecToken Ran<T, D>(ExecFlow<T> src, D data)
             => Emitter.Ran(src, data);
 
         public new FileWritten EmittingFile(FilePath dst)
@@ -132,11 +132,11 @@ namespace Z0
         public ExecToken EmittedBytes(FileWritten flow, ByteSize size)
             => Emitter.EmittedBytes(flow, size);
 
-        public new WfTableFlow<T> EmittingTable<T>(FilePath dst)
+        public new TableFlow<T> EmittingTable<T>(FilePath dst)
             where T : struct
                 => Emitter.EmittingTable<T>(dst);
 
-        public new ExecToken EmittedTable<T>(WfTableFlow<T> flow, Count count, FilePath? dst = null)
+        public new ExecToken EmittedTable<T>(TableFlow<T> flow, Count count, FilePath? dst = null)
             where T : struct
                 => Emitter.EmittedTable(flow, count, dst);
 

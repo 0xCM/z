@@ -35,7 +35,7 @@ namespace Z0.Asm
 
         public ReadOnlySpan<DocSplitSpec> LoadSplitSpecs(FilePath src)
         {
-            var outcome = DocSplits.load(src, out var specs);
+            var outcome = DocServices.load(src, out var specs);
             if(outcome.Fail)
                 Wf.Error(outcome.Message);
             return specs;
@@ -99,7 +99,7 @@ namespace Z0.Asm
                 return;
             }
 
-            var range = DocSplits.split(src, TextEncodingKind.Unicode, spec, dst);
+            var range = DocServices.split(src, TextEncodingKind.Unicode, spec, dst);
             Emit(range, SdmPaths.Output().Path(FS.file(string.Format("{0}-{1}", spec.DocId, spec.Unit), FS.Txt)));
             dst.Deposit(range);
         }
