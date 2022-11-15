@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using System.Linq;
 
     using K = ApiMdKind;
 
@@ -13,11 +14,17 @@ namespace Z0
         IDbArchive ApiTargets()
             => AppDb.Service.ApiTargets();
 
+        static IModuleArchive archive(FolderPath root)
+            => new ModuleArchive(root);
+
+        static IModuleArchive archive()
+            => archive(FS.path(ExecutingPart.Assembly.Location).FolderPath);
+
         public static Assembly[] parts()
-            => ModuleArchives.parts();
+            => data("parts",() => archive().ManagedDll().Where(x => x.FileName.StartsWith("z0")).Map(x => x.Load()).Distinct().Array());
 
         public Assembly[] Parts
-            => ModuleArchives.parts();
+            => parts();
 
         public Index<Type> ApiTableTypes
             => data(K.ApiTables, () => Parts.Types().Tagged<RecordAttribute>().Index());

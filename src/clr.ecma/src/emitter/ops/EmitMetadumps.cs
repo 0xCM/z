@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using System.Linq;
 
     partial class EcmaEmitter
     {
@@ -16,13 +17,13 @@ namespace Z0
 
         public void EmitMetadumps(CmdArgs args)
         {
-            var src = ModuleArchives.create(FS.dir(args[0]));            
+            var src = Archives.modules(FS.dir(args[0]));            
             var dlls = src.ManagedDll().Where(path => !path.Path.Contains(".resources.dll")).Select(x => x.Path);
-            var exe = src.ManagedExe().Select(x => x.Path);
+            var exe = src.ManagedExe().Map(x => x.Path);
             EmitMetadumps(Channel, src,AppDb.DbTargets("ecma/datasets"));                     
         }
 
-        public void EmitMetadumps(IWfChannel channel, FolderPath root, Deferred<FilePath> src, IDbArchive dst)
+        public void EmitMetadumps(IWfChannel channel, FolderPath root, IEnumerable<FilePath> src, IDbArchive dst)
         {
             var @base = Archives.identifier(root);
             iter(src, input => {
@@ -33,8 +34,8 @@ namespace Z0
 
         public void EmitMetadumps(IWfChannel channel, IModuleArchive src, IDbArchive dst)
         {
-            var dlls = src.ManagedDll().Where(path => !path.Path.Contains(".resources.dll")).Select(x => x.Path);
-            var exe = src.ManagedExe().Select(x => x.Path);
+            var dlls = src.ManagedDll().Where(path => !path.Path.Contains(".resources.dll")).Map(x => x.Path);
+            var exe = src.ManagedExe().Map(x => x.Path);
             EmitMetadumps(channel, src.Root, dlls.Concat(exe), dst);
         }
 

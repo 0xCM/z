@@ -14,7 +14,7 @@ namespace Z0
         PdbIndexBuilder PdbIndexBuilder => Wf.PdbIndexBuilder();
 
         public FilePath IndexAssemblies()
-            => IndexAssemblies(ModuleArchives.parts());
+            => IndexAssemblies(ApiMd.parts());
 
         public FilePath IndexAssemblies(Assembly[] src)
             => PdbIndexBuilder.IndexComponents(src, new PdbIndex());

@@ -136,6 +136,9 @@ namespace Z0
         public IEnumerable<FilePath> EnumerateFiles(FileExt[] ext, bool recurse)
             => EnumerateFiles(this, recurse, ext);
 
+        public IEnumerable<FilePath> EnumerateFiles(bool recurse, params FileExt[] ext)
+            => EnumerateFiles(this, recurse, ext);
+
         public IEnumerable<FilePath> EnumerateFiles(Func<FilePath,bool> predicate, bool recurse = true)
         {
             foreach(var file in Directory.EnumerateFiles(Name, SearchAll, option(recurse)))

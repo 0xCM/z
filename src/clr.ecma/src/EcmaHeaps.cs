@@ -10,7 +10,7 @@ namespace Z0
     {
         static void describe(IWfChannel channel)
         {
-            var heaps = EcmaHeaps.strings(ModuleArchives.parts());
+            var heaps = EcmaHeaps.strings(ApiMd.parts());
             var count = heaps.Length;
             for(var i=0; i<count; i++)
             {

@@ -68,14 +68,11 @@ namespace Z0
 
         [CmdOp("ecma/emit/parts")]
         void EmitPartEcma()
-        {
-            var src = ModuleArchives.parts();
-            EcmaEmitter.EmitCatalogs(src);
-        }
+            => EcmaEmitter.EmitCatalogs(ApiMd.Parts);
 
         [CmdOp("ecma/emit/hex")]
         void EmitApiHex()
-            => EcmaEmitter.EmitLocatedMetadata(ModuleArchives.parts(), AppDb.ApiTargets("ecma/hex"), 64);
+            => EcmaEmitter.EmitLocatedMetadata(ApiMd.Parts, AppDb.ApiTargets("ecma/hex"), 64);
 
         [CmdOp("ecma/emit/assembly-refs")]
         void EmitAssmeblyRefs()

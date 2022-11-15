@@ -37,7 +37,7 @@ namespace Z0
 
         [CmdOp("api/emit")]
         void ApiEmit()
-            => ApiMd.Emitter().Emit(ModuleArchives.parts(), AppDb.ApiTargets());
+            => ApiMd.Emitter().Emit(ApiMd.parts(), AppDb.ApiTargets());
 
         [CmdOp("version")]
         void Version()
@@ -217,7 +217,7 @@ namespace Z0
         [CmdOp("services")]
         void GetServices()
         {
-            var src = ModuleArchives.parts();
+            var src = ApiMd.parts();
             Write(ApiRuntime.services(src));
         }
 

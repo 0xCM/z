@@ -23,6 +23,9 @@ namespace Z0
             public const string FilesPack = "files/pack";
         }
 
+        public static IModuleArchive modules(FolderPath src)
+            => new ModuleArchive(src);
+
         [Cmd(FilesCopy)]
         public record struct CopyFiles(FolderPath Source, FolderPath Target) 
             : IWfFlow<CopyFiles,FolderPath,FolderPath> {}
