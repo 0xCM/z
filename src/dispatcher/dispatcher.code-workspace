@@ -1,59 +1,14 @@
 {
 	"folders": [
 		{
-			"path": "../sys"
-		},
-		{
-			"path": "../cmd.specs"
-		},		
-		{
-			"path": "../files"
-		},
-		{
-			"path": "../types"
-		},
-		{
-			"path": "../events"
-		},
-		{
-			"path": "../lib"
-		},
-		{
-			"path": "../digital"
-		},
-		{
-			"path": "../containers"
-		},
-		{
-			"path": "../process"
-		},
-		{
-			"path": "../rules"
-		},
-		{
-			"path": "../symbolics"
-		},
-		{
-			"path": "../numbers"
-		},
-		{
-			"path": "../alloc"
-		},
-		{
-			"path": "../db"
+			"path": "../commands"
 		},
 		{
 			"path": "../workflow"
 		},
 		{
-			"path": "../tools"
-		},
-		{
-			"path": "../archives"
-		},
-		{
 			"path": "."
-		},
+		}
 	],
-
+	"settings": {}
 }

@@ -23,12 +23,6 @@ namespace Z0
             Y = y;
         }
 
-        public ReadOnlySpan<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => bytes(this);
-        }
-
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
@@ -150,9 +144,5 @@ namespace Z0
         [MethodImpl(Inline)]
         public static implicit operator Point<A,B>(ReadOnlySpan<byte> src)
             => first(recover<Point<A,B>>(src));
-
-        [MethodImpl(Inline)]
-        public static implicit operator ReadOnlySpan<byte>(Point<A,B> src)
-            => src.Bytes;
     }
 }

@@ -130,7 +130,7 @@ namespace Z0
                     if(kind == CoffNameKind.String)
                     {
                         var len = length(src,sym.Name);
-                        dst = recover<AsciCode>(slice(sym.Name.Bytes,0,len)).Format();
+                        dst = recover<AsciCode>(slice(sym.Name.Bytes, 0,len)).Format();
                     }
                 }
             }

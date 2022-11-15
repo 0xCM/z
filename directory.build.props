@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <ZVer>0.0.12</ZVer>
+    <ZVer>0.0.13</ZVer>
     <ZSysVer>0.0.13</ZSysVer>
     <Version>$(ZVer)</Version>
     <LangVersion>10</LangVersion>

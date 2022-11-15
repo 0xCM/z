@@ -29,7 +29,6 @@ namespace Z0
             public XedCmd XedCmd(IWfRuntime wf)
                 => Service<XedCmd>(wf);
 
-
             public IntelSdm IntelSdm(IWfRuntime wf)
                 => Service<IntelSdm>(wf);
 
