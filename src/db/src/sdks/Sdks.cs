@@ -8,21 +8,23 @@ namespace Z0
 
     public class Sdks
     {
-        public static CorClrSdk coreclr(FolderPath src) => new(src);
+        public static Sdk sdk(FolderPath src) => new(src);
 
-        public sealed class CorClrSdk : Sdk<CorClrSdk,SdkKind>
+        public sealed class Sdk : Sdk<Sdk,SdkKind>
         {
-            public CorClrSdk()
+            public Sdk()
             {
 
             }
 
-            public CorClrSdk(FolderPath src)
+            public Sdk(FolderPath src)
                 : base(src)
             {
 
             }
 
+            public IModuleArchive Modules => Archives.modules(Location);
+            
         }
     }
 }

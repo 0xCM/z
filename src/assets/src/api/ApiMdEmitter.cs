@@ -150,7 +150,7 @@ namespace Z0
         IDbArchive ApiTargets(string scope)
             => AppDb.ApiTargets(scope);
 
-        ApiComments Comments 
+        XmlComments Comments 
             => Wf.ApiComments();
 
         IDbArchive AssetTargets

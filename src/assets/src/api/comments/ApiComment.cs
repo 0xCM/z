@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static ApiComments;
+    using static XmlComments;
 
     /// <summary>
     ///

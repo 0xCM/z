@@ -13,7 +13,7 @@ namespace Z0
 
     using CT = ApiCommentTarget;
 
-    public sealed partial class ApiComments : AppService<ApiComments>
+    public sealed partial class XmlComments : AppService<XmlComments>
     {
         public CommentDataset Calc()
         {

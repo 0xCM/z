@@ -22,6 +22,9 @@
 			"path": "../commands"
 		},
 		{
+			"path": "../stitch"
+		},
+		{
 			"path": "../digital"
 		},
 		{

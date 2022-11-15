@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static FS;
-    
     public readonly struct ModuleArchive : IModuleArchive
     {
         public readonly FolderPath Root;
@@ -18,6 +16,7 @@ namespace Z0
 
         FolderPath IFileArchive.Root
             => Root;
+
 
         public IEnumerable<ManagedDllFile> ManagedDll()
             => ManagedDllFiles();
@@ -37,17 +36,34 @@ namespace Z0
         public IEnumerable<FileModule> Members()
             => Modules();
 
+        public IEnumerable<PdbFile> Pdb()
+            => PdbFiles();
+
         public IEnumerable<ObjFile> Obj()
             => ObjFiles();
+
+        public IEnumerable<DllFile> Dll()
+            => DllFiles();
 
         public bool IsManaged(FilePath src, out AssemblyName name)
             => FS.managed(src, out name);
 
+        IEnumerable<DllFile> DllFiles()
+        {
+            foreach(var path in Root.EnumerateFiles(true, FS.Dll))
+                yield return new DllFile(path);
+        }
+
+        IEnumerable<PdbFile> PdbFiles()
+        {
+            foreach(var path in Root.EnumerateFiles(true, FS.Pdb))
+                yield return new PdbFile(path);
+        }
+
         IEnumerable<ObjFile> ObjFiles()
         {
             foreach(var path in Root.EnumerateFiles(true, FS.Obj))
-                if(path.Is(FS.Obj))
-                    yield return new ObjFile(path);
+                yield return new ObjFile(path);
         }
 
         IEnumerable<ManagedDllFile> ManagedDllFiles()

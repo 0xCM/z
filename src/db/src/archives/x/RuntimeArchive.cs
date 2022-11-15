@@ -11,5 +11,4 @@ namespace Z0
         public static IRuntimeArchive RuntimeArchive(this Assembly src)
             => Z0.RuntimeArchive.load(src);
     }
-
 }

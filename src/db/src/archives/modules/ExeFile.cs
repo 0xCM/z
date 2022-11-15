@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct ExeFile : IFsEntry<ExeFile>
+    public readonly struct ExeFile : IFileModule<ExeFile>
     {
         public FilePath Path {get;}
 
@@ -13,6 +13,13 @@ namespace Z0
             [MethodImpl(Inline)]
             get => Path.Name;
         }
+
+        public FileModuleKind ModuleKind
+            => FileModuleKind.Exe;
+
+        public FileExt DefaultExt
+            => FS.Exe;
+
 
         public bool IsEmpty
         {
@@ -25,6 +32,12 @@ namespace Z0
             [MethodImpl(Inline)]
             get => Name.IsNonEmpty;
         }
+
+        public string Format()
+            => Path.Format();
+
+        public override string ToString()
+            => Format();
 
         [MethodImpl(Inline)]
         public int CompareTo(ExeFile src)

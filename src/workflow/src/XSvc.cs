@@ -23,9 +23,6 @@ namespace Z0
              public Tooling Tooling(IWfRuntime wf)
                 => Service<Tooling>(wf);
 
-            public DbArchives DbArchives(IWfRuntime wf)
-                => Service<DbArchives>(wf);
-
             public WfAppCmd WfCmd(IWfRuntime wf)
                 => Service<WfAppCmd>(wf);
 
@@ -66,9 +63,6 @@ namespace Z0
 
         public static Tooling Tooling(this IWfRuntime wf)
             => Services.Tooling(wf);             
-
-        public static DbArchives DbArchive(this IWfRuntime wf)
-            => Services.DbArchives(wf);                
 
         public static WfAppCmd WfCmd(this IWfRuntime wf)
             => Services.WfCmd(wf);

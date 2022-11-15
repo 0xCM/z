@@ -7,22 +7,28 @@ namespace Z0
     /// <summary>
     /// Identifies and represents a native static library
     /// </summary>
-    public readonly struct ObjFile : IFileModule<ObjFile>
+    public readonly struct DllFile : IFileModule<DllFile>
     {
         public FilePath Path {get;}
 
         [MethodImpl(Inline)]
-        public ObjFile(FilePath path)
+        public DllFile(FilePath path)
             => Path = path;
 
+        public string Format()
+            => Path.Format();
+
+        public override string ToString()
+            => Format();
+
         public FileModuleKind ModuleKind
-            => FileModuleKind.Obj;
+            => FileModuleKind.Dll;
 
         public FileExt DefaultExt
-            =>  FS.Obj;
+            => FS.Dll;
 
         [MethodImpl(Inline)]
-        public static implicit operator FileModule(ObjFile src)
+        public static implicit operator FileModule(DllFile src)
             => new FileModule(src.Path, src.ModuleKind);
     }
 }

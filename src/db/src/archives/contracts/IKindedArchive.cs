@@ -4,17 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
-    public abstract record class CmdJson
+    public interface IKindedArchive<K> : IFileArchive
+        where K : IFileKind<K>, new()
     {
-        public JsonText Data {get;}
-
-        
-
+        IEnumerable<FileUri> Files(K kind);
     }
-    public record class CmdJson<T> 
-    {
-
-    }
-
 }

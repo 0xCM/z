@@ -20,6 +20,15 @@ namespace Z0
 
         ApiMd ApiMd => Wf.ApiMd();
 
+        [CmdOp("sdk/catalog")]
+        void Sdk(CmdArgs args)
+        {
+            var src = FS.dir(args[0]);
+            var sdk = Sdks.sdk(src);
+            var modules = sdk.Modules;
+            iter(modules.Dll(), file => Write(file));
+        }
+
         void EmitEcmaJobs()
         {
             var root = Env.var(EnvVarKind.Process, EnvTokens.DOTNET_ROOT, FS.dir).Value;

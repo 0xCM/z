@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    partial class ApiComments
+    partial class XmlComments
     {
         static Fence<string> SummaryFence = Fenced.define("<summary>", "</summary>");
 

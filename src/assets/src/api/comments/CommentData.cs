@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class ApiComments
+    partial class XmlComments
     {
         public partial class CommentDataset
         {

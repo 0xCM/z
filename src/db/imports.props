@@ -2,7 +2,6 @@
   <ItemGroup>
     <ProjectReference Include="$(Alloc)" />
     <ProjectReference Include="$(Commands)" />
-    <ProjectReference Include="$(Stitch)" />
     <ProjectReference Include="$(Symbolics)" />
   </ItemGroup>
 </Project>

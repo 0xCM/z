@@ -7,7 +7,6 @@ namespace Z0
     using static sys;
     using static FS;
 
-    using K = ApiMdKind;
 
     public sealed class ModuleArchives : AppData<ModuleArchives>
     {            

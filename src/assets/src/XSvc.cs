@@ -12,13 +12,13 @@ namespace Z0
             public ApiMd ApiMetadata(IWfRuntime wf)
                 => Service<ApiMd>(wf);
 
-            public ApiComments ApiComments(IWfRuntime wf)
-                => Service<ApiComments>(wf);
+            public XmlComments ApiComments(IWfRuntime wf)
+                => Service<XmlComments>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
 
-        public static ApiComments ApiComments(this IWfRuntime wf)
+        public static XmlComments ApiComments(this IWfRuntime wf)
             => Services.ApiComments(wf);
 
         public static ApiMd ApiMd(this IWfRuntime wf)
