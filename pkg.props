@@ -27,12 +27,8 @@
 
   <ItemGroup>
 
-    <PackageReference Include="System.Reflection.MetadataLoadContext" Version="$(FxVer)" />
-    
-    <PackageReference Include="Microsoft.DiaSymReader.PortablePdb" Version="$(MsDiaVer)">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>  
+    <Reference Include="$(SlnRoot)libs/Microsoft.DiaSymReader.PortablePdb.dll"/>    
+    <PackageReference Include="System.Reflection.MetadataLoadContext" Version="$(FxVer)" />    
     <PackageReference Include="Microsoft.FileFormats" Version="1.0.353101" />
     <PackageReference Include="Microsoft.SymbolStore" Version="1.0.353101" />
     <PackageReference Include="Microsoft.Diagnostics.Runtime" Version="2.2.332302" />

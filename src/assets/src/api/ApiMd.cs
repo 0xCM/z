@@ -5,15 +5,13 @@
 namespace Z0
 {
     using static sys;
+
     using System.Linq;
 
     using K = ApiMdKind;
 
     public sealed class ApiMd : AppService<ApiMd>
     {
-        IDbArchive ApiTargets()
-            => AppDb.Service.ApiTargets();
-
         static IModuleArchive archive(FolderPath root)
             => new ModuleArchive(root);
 

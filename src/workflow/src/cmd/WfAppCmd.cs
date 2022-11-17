@@ -48,6 +48,14 @@ namespace Z0
         void ApiEmit()
             => ApiMd.Emitter().Emit(ApiMd.parts(), AppDb.ApiTargets());
 
+        [CmdOp("api/types")]
+        void EmitApiTypes()
+            => ApiMd.Emitter().EmitApiTypes(ApiMd.parts(), AppDb.ApiTargets());
+
+        [CmdOp("api/tables")]
+        void EmitApiTables()
+            => ApiMd.Emitter().EmitApiTables(ApiMd.parts(), AppDb.ApiTargets());
+
         [CmdOp("version")]
         void Version()
             => Channel.Row($"[z0.{ExecutingPart.Name}-v{ExecutingPart.Assembly.AssemblyVersion()}]({ExecutingPart.Assembly.Path().ToUri()})");

@@ -34,10 +34,10 @@ namespace Z0
                 () => EmitApiLiterals(src),
                 () => EmitParsers(src),
                 () => EmitApiDeps(),
-                () => EmitApiTables(src),
+                () => EmitApiTables(src,AppDb.ApiTargets()),
                 () => EmitApiTokens(src),
-                () => EmitCmdDefs(src),
-                () => EmitDataTypes(src),
+                () => EmitApiCommands(src),
+                () => EmitApiTypes(src, AppDb.ApiTargets()),
                 () => EmitTypeLists(src),
                 () => EmitApiSymbols(src),
                 () => EmitPartList(src),
@@ -47,7 +47,7 @@ namespace Z0
 
         public void EmitAssets(params Assembly[] src)
         {
-            AssetTargets.Delete();            
+            AppDb.ApiTargets("assets").Delete();            
             var entries = EmitAssets(Assets.extract(src));
             EmitAssetEntries(entries);
         }
@@ -72,11 +72,11 @@ namespace Z0
         public void EmitApiLiterals(params Assembly[] src)
             => EmitApiLiterals(Symbolic.apilits(src));
 
-        public void EmitCmdDefs(params Assembly[] src)
-            => Emit(CalcCmdDefs(src));
+        public void EmitApiCommands(params Assembly[] src)
+            => Emit(CalcApiCommands(src));
 
-        public void EmitDataTypes(params Assembly[] src)
-            => Channel.TableEmit(DataTypeInfo(src), AppDb.ApiTargets().Table<ApiTypeInfo>());
+        public void EmitApiTypes(Assembly[] src, IDbArchive dst)
+            => Channel.TableEmit(DataTypeInfo(src), dst.Table<ApiTypeInfo>());
 
         public void EmitPartList(params Assembly[] src)
         {
@@ -90,8 +90,8 @@ namespace Z0
         public void EmitDataFlows(params Assembly[] src)
             => Emit(CalcDataFlows(src));
 
-        public void EmitApiTables(params Assembly[] src)
-            => Emit(CalcTableFields(src));
+        public void EmitApiTables(ReadOnlySeq<Assembly> src, IDbArchive dst)
+            => Channel.TableEmit(CalcTableFields(src), dst.Table<ApiTableField>());
 
         public void EmitApiTokens(params Assembly[] src)
             => EmitApiTokens(CalcApiTokens(src));
@@ -153,14 +153,8 @@ namespace Z0
         XmlComments Comments 
             => Wf.ApiComments();
 
-        IDbArchive AssetTargets
-            => AppDb.ApiTargets("assets");
-
-        ReadOnlySeq<DataType> DataTypes(Assembly[] src)
-            => ApiTypes.discover(src);
-
         ReadOnlySeq<ApiTypeInfo> DataTypeInfo(Assembly[] src)
-            => ApiTypes.describe(DataTypes(src));
+            => ApiTypes.describe(ApiTypes.discover(src));
 
         Type[] EnumTypes(Assembly[] src)
             => src.Enums().Where(x => x.ContainsGenericParameters == false);
@@ -169,7 +163,7 @@ namespace Z0
             => Heaps.emit(src, Target.Table<SymHeapRecord>(), Channel);
 
         void EmitComments(IApiPack dst)
-            => Comments.Collect(dst);
+            => Wf.ApiComments().Collect(dst);
 
         void EmitApiDeps(IApiPack dst)
         {
@@ -179,7 +173,7 @@ namespace Z0
                 EmitApiDeps(src, path);
         }
 
-        ReadOnlySeq<ApiCmdRow> CalcCmdDefs(Assembly[] src)
+        ReadOnlySeq<ApiCmdRow> CalcApiCommands(Assembly[] src)
             => CmdTypes.rows(CmdTypes.discover(src));
 
         ReadOnlySeq<DataFlowSpec> CalcDataFlows(Assembly[] src)
@@ -206,7 +200,7 @@ namespace Z0
             {
                 ref readonly var assets = ref src[i];
                 var count = assets.Count;
-                var targets = AssetTargets.Targets(assets.Source.GetSimpleName());
+                var targets = AppDb.ApiTargets("assets").Targets(assets.Source.GetSimpleName());
                 for(var j=0; j<count; j++)
                 {
                     ref readonly var asset = ref assets[j];
@@ -257,9 +251,9 @@ namespace Z0
             return counter;
         }
 
-        ReadOnlySeq<ApiTableField> CalcTableFields(Assembly[] src)
+        ReadOnlySeq<ApiTableField> CalcTableFields(ReadOnlySeq<Assembly> src)
         {
-            var tables = src.Types().Tagged<RecordAttribute>().Index();
+            var tables = src.Storage.Types().Tagged<RecordAttribute>().Index();
             var count = CountFields(tables);
             var buffer = alloc<ApiTableField>(count);
             var k=0u;

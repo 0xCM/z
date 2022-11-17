@@ -19,13 +19,13 @@ namespace Z0
             => sys.slice(src.Expr.Edit, src.ExprOffsets[index], src.ExprLengths[index]);
 
         [MethodImpl(Inline)]
-        public static ref HeapEntry<K,O,L> convert<K,O,L>(ReadOnlySpan<byte> src, out HeapEntry<K,O,L> dst)
+        public static HeapEntry<K,O,L> convert<K,O,L>(ReadOnlySpan<byte> src, out HeapEntry<K,O,L> dst)
             where K : unmanaged
             where O : unmanaged
             where L : unmanaged
         {
             dst = @as<HeapEntry<K,O,L>>(src);
-            return ref dst;
+            return dst;
         }
    }
 }

@@ -6,14 +6,14 @@ namespace Z0
 {
     using static sys;
 
-    public readonly record struct DataType : IDataType<DataType>
+    public readonly record struct ApiDataType : IDataType<ApiDataType>
     {
         public readonly Type Definition;
 
         public readonly DataSize Size;
 
         [MethodImpl(Inline)]
-        public DataType(Type def, DataSize size)
+        public ApiDataType(Type def, DataSize size)
         {
             Definition = def;
             Size = size;
@@ -49,7 +49,7 @@ namespace Z0
             get => hash(Definition.AssemblyQualifiedName);
         }
 
-        public int CompareTo(DataType src)
+        public int CompareTo(ApiDataType src)
         {
             var result = Name.CompareTo(src.Name);
             if(result == 0)
@@ -61,7 +61,7 @@ namespace Z0
             => Hash;
 
         [MethodImpl(Inline)]
-        public bool Equals(DataType src)
+        public bool Equals(ApiDataType src)
             => Definition.Equals(src.Definition);
     }
 }

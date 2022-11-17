@@ -3,8 +3,7 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0
-{
-    
+{    
     public readonly struct PdbMethods
     {
         public static PdbMethods load(ISymUnmanagedReader5 reader, ISymUnmanagedDocument doc)

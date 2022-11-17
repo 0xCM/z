@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     public sealed class PdbMethodLookup : Dictionary<ISymUnmanagedDocument,Index<ISymUnmanagedMethod>>
     {

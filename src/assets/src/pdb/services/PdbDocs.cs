@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     public class PdbDocs
     {
         [MethodImpl(Inline), Op]        
@@ -38,6 +37,5 @@ namespace Z0
             else
                 return result;
         }
-
     }
 }

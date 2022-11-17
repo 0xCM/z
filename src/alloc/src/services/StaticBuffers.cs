@@ -25,19 +25,19 @@ namespace Z0
             => first(cover<Index<T>>(src.Address, 1)).Storage;
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref T cell<T>(in StaticBuffer<T> src, uint index, out T value)
+        public static T cell<T>(in StaticBuffer<T> src, uint index, out T value)
         {
             value = seek(src.Content, index);
-            return ref value;
+            return value;
         }
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Span<T> slice<T>(in StaticBuffer<T> src, uint offset)
-            => core.slice(covered(src), offset);
+            => sys.slice(covered(src), offset);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Span<T> slice<T>(in StaticBuffer<T> src, uint offset, uint length)
-            => core.slice(covered(src), offset, length);
+            => sys.slice(covered(src), offset, length);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static void enumerate<T>(in StaticBuffer<T> src, Action<T> receiver)

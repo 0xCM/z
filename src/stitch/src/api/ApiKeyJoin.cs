@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     using api = ApiKeys;
 
     public readonly record struct ApiKeyJoin
@@ -22,16 +20,6 @@ namespace Z0
         }
 
         public DataWidth Width => DataWidth.W32;
-
-        public ReadOnlySpan<byte> Data
-        {
-            [MethodImpl(Inline)]
-            get => bytes(this);
-        }
-
-        [MethodImpl(Inline)]
-        public static implicit operator ReadOnlySpan<byte>(ApiKeyJoin src)
-            => src.Data;
 
         [MethodImpl(Inline)]
         public static implicit operator ApiKeyJoin(ReadOnlySpan<byte> src)

@@ -54,7 +54,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        static ref SymLiteral<E> symlit<E>(in Sym<E> src, out SymLiteral<E> dst)
+        static SymLiteral<E> symlit<E>(in Sym<E> src, out SymLiteral<E> dst)
             where E : unmanaged
         {
             var type = typeof(E);
@@ -70,7 +70,7 @@ namespace Z0
             dst.Symbol = (src.Kind, src.Expr.Format());
             dst.Type = src.Type;
             dst.Hidden = src.Hidden;
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op, Closures(Closure)]

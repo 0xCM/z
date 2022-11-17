@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Microsoft.DiaSymReader;
-
     public readonly record struct PdbMethod : IAppSymAdapter<PdbMethod, ISymUnmanagedMethod>
     {
         [Op]

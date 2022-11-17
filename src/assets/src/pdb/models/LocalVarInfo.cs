@@ -3,8 +3,6 @@
 // See the LICENSE file in the project root for more information.
 namespace SOS
 {
-    using System.Runtime.InteropServices;
-
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct LocalVarInfo
     {
