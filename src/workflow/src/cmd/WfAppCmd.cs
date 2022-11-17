@@ -129,7 +129,7 @@ namespace Z0
             var formatter = CsvChannels.formatter<ProcessModuleRow>();
             for(var i=0; i<src.Length; i++)
                 Row(formatter.Format(src[i]));
-            TableEmit(src, dst);
+            Channel.TableEmit(src, dst);
         }
 
         [CmdOp("archives/list")]        
@@ -390,33 +390,7 @@ namespace Z0
 
         [CmdOp("cmd/script")]
         void RunAppScript(CmdArgs args)
-        {
-            RunAppScript(FS.path(arg(args,0)));
-        }
-
-        void RunAppScript(FilePath src)
-        {
-            if(src.Missing)
-            {
-                Channel.Error(AppMsg.FileMissing.Format(src));
-            }
-            else
-            {
-                var lines = src.ReadNumberedLines(true);
-                var count = lines.Count;
-                for(var i=0; i<count; i++)
-                {
-                    ref readonly var content = ref lines[i].Content;
-                    if(Cmd.parse(content, out WfCmdSpec spec))
-                        RunCmd(spec);
-                    else
-                    {
-                        Error($"ParseFailure:'{content}'");
-                        break;
-                    }
-                }
-            }
-        }
+            => ApiCmd.RunCmdScript(FS.path(arg(args,0)));
 
         [CmdOp("cfg")]
         void LoadCfg(CmdArgs args)
@@ -510,13 +484,11 @@ namespace Z0
                 Channel.Row(string.Format("{0:D6} | {1,-24} | {2,-16} {3}", counter++, part.Owner.GetSimpleName(), part.Owner.AssemblyVersion(), part.Owner.Path()));
             });
 
-
             counter=0u;
             iter(hosts, host => {
                 Channel.Row(string.Format("{0:D6} | {1,-16} | {2}", counter++, host.Assembly.GetSimpleName(), host.HostUri));
             });            
         }
-
 
         void CheckMullo(IBoundSource Source)
         {
@@ -549,7 +521,7 @@ namespace Z0
             var src = ApiPacks.discover();
             for(var i=0; i<src.Count; i++)
             {
-                Write($"{i}", src[i].Timestamp);
+                Channel.Write($"{i}", src[i].Timestamp);
             }
         }
 
@@ -585,7 +557,7 @@ namespace Z0
             {
                 var listing = Archives.listing(pack.Files());
                 var dst = AppDb.AppData().PrefixedTable<ListedFile>($"api.pack.{pack.Timestamp}");
-                TableEmit(listing, dst);
+                Channel.TableEmit(listing, dst);
             }
 
             return result;

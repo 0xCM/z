@@ -20,7 +20,7 @@ namespace Z0
         public static ProjectTools Dev(this IWfRuntime wf)
             => Services.Dev(wf);
 
-        public static IAppCmdSvc BuildCmd(this IWfRuntime wf)
+        public static IApiCmdSvc BuildCmd(this IWfRuntime wf)
             => Services.BuildCmd(wf);
     }
 }

@@ -30,16 +30,16 @@ namespace Z0
 
         void RunExe(CmdFlow flow)
         {
-            var running = Running(string.Format("Executing {0}", flow.TargetPath.ToUri()));
+            var running = Channel.Running(string.Format("Executing {0}", flow.TargetPath.ToUri()));
             var result = OmniScript.Run(flow.TargetPath, CmdVars.Empty, quiet: true, out var response);
             if (result.Fail)
-                Error(result.Message);
+                Channel.Error(result.Message);
             else
             {
                 for (var i=0; i<response.Length; i++)
-                    Write(string.Format("exec >> {0}",skip(response, i).Content), FlairKind.StatusData);
+                    Channel.Write(string.Format("exec >> {0}",skip(response, i).Content), FlairKind.StatusData);
 
-                Ran(running, string.Format("Executed {0}", flow.TargetPath.ToUri()));
+                Channel.Ran(running, string.Format("Executed {0}", flow.TargetPath.ToUri()));
             }
         }
 
@@ -83,7 +83,7 @@ namespace Z0
 
         void ReceiveCmdError(in string src)
         {
-            Write(src, FlairKind.Error);
+            Channel.Write(src, FlairKind.Error);
         }
 
         Outcome RunProjectScript(IProjectWorkspace project, string srcid, FilePath script, bool quiet, out ReadOnlySpan<CmdFlow> flows)
@@ -131,7 +131,7 @@ namespace Z0
             }
 
             if(flows.Count != 0)
-                TableEmit(flows.ViewDeposited(), Projects.build(project));
+                Channel.TableEmit(flows.ViewDeposited(), Projects.build(project));
         }
     }
 }

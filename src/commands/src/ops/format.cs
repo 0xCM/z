@@ -29,7 +29,7 @@ namespace Z0
             return buffer.Emit();
         }
 
-        public static string format(WfCmdSpec src)
+        public static string format(ApiCmdSpec src)
         {
             if(src.IsEmpty)
                 return EmptyString;

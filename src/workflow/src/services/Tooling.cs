@@ -36,7 +36,7 @@ namespace Z0
             var result = OmniScript.Run(cmd, vars.ToCmdVars(), out var response);
             if(result)
             {
-               var items = CmdResponse.parse(response);
+               var items = Cmd.response(response);
                iter(items, item => Write(item));
             }
             return result;
@@ -55,7 +55,7 @@ namespace Z0
             var config = src + FS.file("toolset", FS.Settings);
             if(!config.Exists)
             {
-                Error(FS.missing(config));
+                Channel.Error(FS.missing(config));
                 return dict<Actor,ToolProfile>();
             }
 
@@ -141,7 +141,7 @@ namespace Z0
                 ref readonly var tool = ref profile.Id;
                 if(profile.HelpCmd.IsEmpty)
                     continue;
-                dst.Add(ToolCmdLine.define(tool, string.Format("{0} {1}", profile.Executable.ToFilePath().Format(PathSeparator.BS), profile.HelpCmd)));
+                dst.Add(Cmd.cmdline(tool, string.Format("{0} {1}", profile.Executable.ToFilePath().Format(PathSeparator.BS), profile.HelpCmd)));
             }
             dst.Sort();
             return dst.ToArray();
@@ -161,7 +161,7 @@ namespace Z0
                 result = OmniScript.Run(cmd.Command, CmdVars.Empty, out var response);
                 if(result.Fail)
                 {
-                    Error(result.Message);
+                    Channel.Error(result.Message);
                     continue;
                 }
 
@@ -170,11 +170,11 @@ namespace Z0
                 if(paths.Find(tool, out var path))
                 {
                     var length = response.Length;
-                    var emitting = EmittingFile(path);
+                    var emitting = Channel.EmittingFile(path);
                     using var writer = path.UnicodeWriter();
                     for(var j=0; j<length; j++)
                         writer.WriteLine(skip(response, j).Content);
-                    EmittedFile(emitting,length);
+                    Channel.EmittedFile(emitting,length);
 
                     docs.Add(new ToolHelpDoc(tool,path));
                 }
@@ -203,12 +203,12 @@ namespace Z0
 
         public ConstLookup<Actor,ToolProfile> LoadProfileLookup(FolderPath dir)
         {
-            var running = Running(string.Format("Loading tool profiles from {0}", dir));
+            var running = Channel.Running(string.Format("Loading tool profiles from {0}", dir));
             var sources = dir.Match("tool.profiles", FS.Csv, true);
             var dst = new Lookup<Actor,ToolProfile>();
             iter(sources, src => ToolSettings.profiles(src,dst,Emitter));
             var lookup = dst.Seal();
-            Ran(running, string.Format("Collected {0} profile definitions", lookup.EntryCount));
+            Channel.Ran(running, string.Format("Collected {0} profile definitions", lookup.EntryCount));
             return lookup;
         }
     }

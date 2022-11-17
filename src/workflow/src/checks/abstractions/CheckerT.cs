@@ -168,10 +168,9 @@ namespace Z0
             }
             catch(Exception e)
             {
-                Error(e);
+                Channel.Error(e);
             }
         }
-
 
         void EmitLog()
         {
@@ -184,21 +183,21 @@ namespace Z0
             }
 
             if(counter != 0)
-                FileEmit(emitter.Emit(), counter, EventLogPath);
+                Channel.FileEmit(emitter.Emit(), counter, EventLogPath);
         }
 
         public void Run(IEventTarget log, bool pll)
         {
-            var flow = Running($"Running {SvcName} checks");
+            var flow = Channel.Running($"Running {SvcName} checks");
             EventLogPath.Delete();
             Prepare();
             Execute(log, pll);
             EmitLog();
             Finish();
-            Ran(flow);
+            Channel.Ran(flow);
         }
 
-        public new void Run()
+        public void Run()
             => Run(EventLog, true);
     }
 }

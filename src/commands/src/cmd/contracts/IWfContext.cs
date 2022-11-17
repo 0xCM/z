@@ -10,17 +10,17 @@ namespace Z0
 
         IWfRuntime Runtime {get;}
 
-        IWfDispatcher Dispatcher {get;}
+        IApiDispatcher Dispatcher {get;}
 
-        IAppCmdSvc Commander {get;}
+        IApiCmdSvc Commander {get;}
     }
 
     public interface IWfContext<C> : IWfContext
-        where C : IAppCmdSvc
+        where C : IApiCmdSvc
     {
         new C Commander {get;}
 
-        IAppCmdSvc IWfContext.Commander
+        IApiCmdSvc IWfContext.Commander
             => Commander;
     }
 }

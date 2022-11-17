@@ -6,10 +6,6 @@ namespace Z0
 {
     public readonly struct ToolScript
     {
-        [MethodImpl(Inline), Op]
-        public static ToolScript define(FilePath script, CmdVars vars)
-            => new ToolScript(script, vars);
-
         public readonly FilePath Script;
 
         public readonly CmdVars Vars;

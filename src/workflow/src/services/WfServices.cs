@@ -8,10 +8,10 @@ namespace Z0
 
     public class WfServices : WfSvc<WfServices>, IWfServices
     {
-        public static ConstLookup<Name,WfOp> defs(IWfDispatcher src)
+        public static ConstLookup<Name,ApiOp> defs(IApiDispatcher src)
         {
             ref readonly var defs = ref src.Commands.Defs;
-            var dst = dict<Name,WfOp>();
+            var dst = dict<Name,ApiOp>();
             iter(defs.View, def => dst.Add(def.CmdName, def));
             return dst;
         }

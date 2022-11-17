@@ -7,35 +7,37 @@ namespace Z0
     using CCN = CmdContextNames;
 
     [CmdProvider]
-    public abstract class WfAppCmd<T> : WfSvc<T>, IAppCmdSvc
+    public abstract class WfAppCmd<T> : WfSvc<T>, IApiCmdSvc
         where T : WfAppCmd<T>, new()
     {
-        public IWfDispatcher Dispatcher 
-            => AppData.Value<IWfDispatcher>(nameof(IWfDispatcher));
+        public IApiDispatcher Dispatcher 
+            => ApiCmd.Dispatcher;
 
-        protected virtual string PromptTitle {get;}
+        protected ApiCmd ApiCmd => Wf.ApiCmd();
+
+        //protected virtual string PromptTitle {get;}
 
         protected WfAppCmd()
         {
-            PromptTitle = "cmd";
+            //PromptTitle = "cmd";
         }
 
-        string Prompt()
-            => string.Format("{0}> ", PromptTitle);
+        // string Prompt()
+        //     => string.Format("{0}> ", PromptTitle);
 
-        WfCmdSpec Next()
-        {
-            var input = term.prompt(Prompt());
-            if(Cmd.parse(input, out WfCmdSpec cmd))
-            {
-                return cmd;
-            }
-            else
-            {
-                Error($"ParseFailure:{input}");
-                return WfCmdSpec.Empty;
-            }
-        }
+        // ApiCmdSpec Next()
+        // {
+        //     var input = term.prompt(Prompt());
+        //     if(ApiCmd.parse(input, out ApiCmdSpec cmd))
+        //     {
+        //         return cmd;
+        //     }
+        //     else
+        //     {
+        //         Channel.Error($"ParseFailure:{input}");
+        //         return ApiCmdSpec.Empty;
+        //     }
+        // }
 
         [CmdOp(CCN.db)]
         protected void SetDbContext(CmdArgs args)
@@ -66,39 +68,18 @@ namespace Z0
 
         [CmdOp("commands")]
         protected void EmitCommands()
-            => Cmd.emit(Channel, Cmd.catalog(Dispatcher), AppDb.AppData().Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv));
+            => ApiCmd.emit(Channel, ApiCmd.catalog(ApiCmd.Dispatcher), AppDb.AppData().Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv));
 
         public void RunCmd(string name)
-        {
-            var result = Dispatcher.Dispatch(name);
-            if(result.Fail)
-                Error(result.Message);
-        }
+            => ApiCmd.RunCmd(name);
 
         public void RunCmd(string name, CmdArgs args)
-            => Dispatcher.Dispatch(name, args);
+            => ApiCmd.RunCmd(name,args);
 
-        protected void RunCmd(WfCmdSpec cmd)
-        {
-            try
-            {
-                Dispatcher.Dispatch(cmd.Name, cmd.Args);
-            }
-            catch(Exception e)
-            {
-                Channel.Error(e);
-            }
-        }
+        protected void RunCmd(ApiCmdSpec cmd)
+            => ApiCmd.RunCmd(cmd);
 
-        public virtual void Run()
-        {
-            var input = Next();
-            while(input.Name != ".exit")
-            {
-                if(input.IsNonEmpty)
-                    RunCmd(input);
-                input = Next();
-            }
-        }
+        public virtual void Loop()
+            => ApiCmd.Loop();
    }
 }

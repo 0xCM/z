@@ -4,19 +4,19 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class WfOps : IWfOps
+    public class WfOps : IApiOps
     {
-        readonly Dictionary<string,IWfCmdRunner> Lookup;
+        readonly Dictionary<string,IApiCmdMethod> Lookup;
 
-        readonly ReadOnlySeq<WfOp> CmdDefs;
+        readonly ReadOnlySeq<ApiOp> CmdDefs;
 
-        internal WfOps(Dictionary<string,IWfCmdRunner> src)
+        internal WfOps(Dictionary<string,IApiCmdMethod> src)
         {
             Lookup = src;
             CmdDefs = src.Values.Map(x => x.Def).ToSeq();
         }
 
-        public bool Find(string spec, out IWfCmdRunner runner)
+        public bool Find(string spec, out IApiCmdMethod runner)
             => Lookup.TryGetValue(spec, out runner);
 
         public IEnumerable<string> Specs
@@ -25,10 +25,10 @@ namespace Z0
             get => Lookup.Keys;
         }
 
-        public ICollection<IWfCmdRunner> Invokers
+        public ICollection<IApiCmdMethod> Invokers
             => Lookup.Values;
 
-        public ref readonly ReadOnlySeq<WfOp> Defs
+        public ref readonly ReadOnlySeq<ApiOp> Defs
         {
             [MethodImpl(Inline)]
             get => ref CmdDefs;

@@ -19,7 +19,7 @@ namespace Z0
     public abstract class AppCmdShell<S> : AppShell<S>
         where S : AppCmdShell<S>, new()
     {
-        protected IAppCmdSvc Commander;
+        protected IApiCmdSvc Commander;
 
         protected override void Disposing()
         {
@@ -27,6 +27,6 @@ namespace Z0
         }
 
         protected override void Run(string[] args)
-            => Commander.Run();
+            => Commander.Loop();
     }
 }

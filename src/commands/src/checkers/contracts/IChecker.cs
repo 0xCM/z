@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IChecker : ICmdProvider
+    public interface IChecker : IApiCmdProvider
     {
         void Run(IEventTarget dst, bool pll);
 

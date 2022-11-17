@@ -1,6 +1,5 @@
 @echo off
-set SlnId=deploy
-set ProjectName=deploy
-set Area=src
-set ShellName=zpub
+set BuildPrefix=z0
+set ProjectName=apps
+set ToolName=apps
 : call %~dp0..\config.cmd

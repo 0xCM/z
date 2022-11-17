@@ -179,7 +179,7 @@ namespace Z0
                 EmitApiDeps(src, path);
         }
 
-        ReadOnlySeq<WfCmdRow> CalcCmdDefs(Assembly[] src)
+        ReadOnlySeq<ApiCmdRow> CalcCmdDefs(Assembly[] src)
             => CmdTypes.rows(CmdTypes.discover(src));
 
         ReadOnlySeq<DataFlowSpec> CalcDataFlows(Assembly[] src)
@@ -240,8 +240,8 @@ namespace Z0
         void Emit(string name, ReadOnlySeq<SymInfo> src)
             => Channel.TableEmit(src, ApiTargets(tokens).PrefixedTable<SymInfo>(name), TextEncodingKind.Unicode);
 
-        void Emit(ReadOnlySpan<WfCmdRow> src)
-            => Channel.TableEmit(src, AppDb.ApiTargets().Table<WfCmdRow>());
+        void Emit(ReadOnlySpan<ApiCmdRow> src)
+            => Channel.TableEmit(src, AppDb.ApiTargets().Table<ApiCmdRow>());
 
         void EmitApiLiterals(ReadOnlySpan<ApiLiteralInfo> src)
             => Channel.TableEmit(src, AppDb.ApiTargets().Table<ApiLiteralInfo>(), TextEncodingKind.Unicode);

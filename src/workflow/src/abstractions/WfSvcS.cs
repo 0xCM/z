@@ -31,7 +31,7 @@ namespace Z0
             }
             catch (Exception e)
             {
-                Error(e, caller, file, line);
+                Channel.Error(e, caller, file, line);
             }
         }
 
@@ -117,7 +117,7 @@ namespace Z0
         public new ExecToken Ran<T>(ExecFlow<T> flow, [CallerName] string msg = null)
             => Emitter.Ran(flow, msg);
 
-        public ExecToken Ran<T, D>(ExecFlow<T> src, D data)
+        public ExecToken Ran<T,D>(ExecFlow<T> src, D data)
             => Emitter.Ran(src, data);
 
         public new FileWritten EmittingFile(FilePath dst)

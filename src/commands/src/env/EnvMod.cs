@@ -6,7 +6,7 @@ namespace Z0
 {
     using static EnvMod.Commands;
 
-    public class EnvMod : WfModule<EnvMod>
+    public class EnvMod : ApiModule<EnvMod>
     {
         protected override Task<ExecToken> Start<C>(C cmd)
         {

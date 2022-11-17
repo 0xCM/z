@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
 
     [Checker]
-    public abstract class CheckCmd<T> : WfAppCmd<T>, ICheckRunner
+    public abstract class CheckCmd<T> : WfAppCmd<T>
         where T : CheckCmd<T>, new()
     {
         ConstLookup<Type,IChecker> Services;
@@ -26,7 +26,7 @@ namespace Z0
 
         protected virtual bool Pll {get;}
 
-        public override sealed void Run()
+        public override sealed void Loop()
         {
             Status($"Running {Services.EntryCount} checkers");
             iter(Services.Values, svc => svc.Run(EventLog, Pll), Pll);
@@ -55,7 +55,7 @@ namespace Z0
         public void Run(CmdArgs args)
         {
             if(args.Count == 0)
-                Run();
+                ApiCmd.Loop();
             else
             {
                 var count = args.Count;

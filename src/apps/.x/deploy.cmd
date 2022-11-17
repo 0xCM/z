@@ -1,21 +1,22 @@
 @echo off
 call %~dp0..\config.cmd
-set SlnRoot=%~dp0..
-set ProjectRoot=%SlnRoot%
-set Deployments=%DevTools%\%BuildPrefix%\bin
-set ProjectPath=%ProjectRoot%\%BuildPrefix%.%ProjectName%.csproj
-set DeployedShell=%Deployments%\%ShellName%.exe
-set LogOptions=-bl:%BuildLogs%\%BuildPrefix%.%ProjectName%.binlog
-set VerbosityOption=--verbosity normal
-set OutputOption=--output %Deployments%
-set ConfigOption=--configuration %ConfigName%
-set FrameworkOption=--framework %FrameworkMoniker%
-set BuildProps=-p:PublishReadyToRun=true
-set BuildProps=
-set RetractCmd=rmdir %Deployments% /s/q
-set ProjectPdb=%Artifacts%\pdb\%BuildPrefix%.%ProjectId%
-set PublishTool=dotnet publish %ProjectPath% %OutputOption% %ConfigOption% %VerbosityOption% %FrameworkOption% %BuildProps% %LogOptions%
-set CopySymbols=copy %ProjectRuntime%\*.pdb %ProjectPdb%\ /Y
-: set PublishSymbols=robocopy %ProjectPdb% %Deployments%
-echo PublishTool=%PublishTool%
-call %PublishTool%
+call %SlnRoot%\scripts\deploy.cmd
+@REM set SlnRoot=%~dp0..
+@REM set ProjectRoot=%SlnRoot%
+@REM set Deployments=%DevTools%\%BuildPrefix%\bin
+@REM set ProjectPath=%ProjectRoot%\%BuildPrefix%.%ProjectName%.csproj
+@REM set DeployedShell=%Deployments%\%ShellName%.exe
+@REM set LogOptions=-bl:%BuildLogs%\%BuildPrefix%.%ProjectName%.binlog
+@REM set VerbosityOption=--verbosity normal
+@REM set OutputOption=--output %Deployments%
+@REM set ConfigOption=--configuration %ConfigName%
+@REM set FrameworkOption=--framework %FrameworkMoniker%
+@REM set BuildProps=-p:PublishReadyToRun=true
+@REM set BuildProps=
+@REM set RetractCmd=rmdir %Deployments% /s/q
+@REM set ProjectPdb=%Artifacts%\pdb\%BuildPrefix%.%ProjectId%
+@REM set PublishTool=dotnet publish %ProjectPath% %OutputOption% %ConfigOption% %VerbosityOption% %FrameworkOption% %BuildProps% %LogOptions%
+@REM set CopySymbols=copy %ProjectRuntime%\*.pdb %ProjectPdb%\ /Y
+@REM : set PublishSymbols=robocopy %ProjectPdb% %Deployments%
+@REM echo PublishTool=%PublishTool%
+@REM call %PublishTool%

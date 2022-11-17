@@ -12,7 +12,7 @@ namespace Z0
     using static sys;
     using static Archives.CommandNames;
 
-    public class Archives : WfModule<Archives>
+    public class Archives : ApiModule<Archives>
     {        
         public class CommandNames 
         {
@@ -28,15 +28,15 @@ namespace Z0
 
         [Cmd(FilesCopy)]
         public record struct CopyFiles(FolderPath Source, FolderPath Target) 
-            : IWfFlow<CopyFiles,FolderPath,FolderPath> {}
+            : IApiCmdFlow<CopyFiles,FolderPath,FolderPath> {}
 
         [Cmd(FilesPack)]
         public record struct PackFolder(FolderPath Source, FileUri Target) 
-            : IWfFlow<PackFolder,FolderPath,FileUri> {}
+            : IApiCmdFlow<PackFolder,FolderPath,FileUri> {}
 
         [Cmd(FilesGather)]
         public record struct GatherFiles(FolderPath Source, FolderPath Target, FileExt Ext) 
-            : IWfFlow<GatherFiles,FolderPath,FolderPath> {}
+            : IApiCmdFlow<GatherFiles,FolderPath,FolderPath> {}
 
         [MethodImpl(Inline), CmdFx(FilesCopy)]
         public static CopyFiles copy(FolderPath src, FolderPath dst)
