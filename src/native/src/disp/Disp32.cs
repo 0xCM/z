@@ -30,7 +30,7 @@ namespace Z0
             }
             else
             {
-                result = DataParser.parse(src, out disp);
+                result = NumericParser.parse(src, out disp);
                 if(result)
                     dst = disp;
             }

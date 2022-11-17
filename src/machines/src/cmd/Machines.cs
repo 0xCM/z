@@ -49,13 +49,6 @@ namespace Z0
                 Wf.Raise(e);
         }
 
-        // public IX86Machine RunMachine()
-        //     => Machine.Run(Verbose);
-
-        // [CmdOp("machine/run")]
-        // void RunMachine()
-        //     => Machine.Run(Verbose);
-
         void DumpRegs()
         {
             var buffer = text.buffer();
@@ -167,7 +160,7 @@ namespace Z0
             const uint CycleCount = 256;
 
             Task<uint> RunMachine(uint cycles)
-                => Task.Factory.StartNew(() => new Vmx128x2(CellCount, Rng.@default()).Run(cycles));
+                => Task.Factory.StartNew(() => new VmProcess(CellCount, Rng.@default()).Run(cycles));
 
             var flow = Wf.Running("Test11");
             var clock = Time.counter(true);
@@ -187,7 +180,7 @@ namespace Z0
         void Run(N21 n)
             => BlitMachine.create(Wf).Run();
 
-        static void run(N26 n, WfEmit channel)
+        static void run(N26 n, IWfChannel channel)
         {
             void receive(uint i, uint j)
             {
@@ -201,7 +194,7 @@ namespace Z0
             channel.Write(string.Format("Term Count:{0}", count));
         }
 
-        static void spin(WfEmit channel)
+        static void spin(IWfChannel channel)
         {
             var counter = 0u;
             var ticks = 0L;
@@ -219,7 +212,10 @@ namespace Z0
 
         void Run(N33 n)
         {
-            spin(Emitter);
+            bool Predicate(SpinStats stats)
+                => stats.Count > 20;
+            
+            SpinMachines.spin(Emitter, Predicate);
         }
 
         void Run(N29 n)

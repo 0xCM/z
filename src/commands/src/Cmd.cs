@@ -8,7 +8,242 @@ namespace Z0
 
     [ApiHost]
     public partial class Cmd
-    {
+    {        
+        public static Task<ExecToken> start(IWfChannel channel, CmdArgs args, CmdContext? context = null)
+            => start(channel, FS.path(args[0]), args.Skip(1), context);
+
+        [Op]
+        public static Task<ExecToken> start(IWfChannel channel, FilePath path, CmdArgs args, CmdContext? context = null)
+        {
+            void OnStatus(DataReceivedEventArgs e)
+            {
+                if(e != null && nonempty(e.Data))
+                    channel.Row(e.Data);
+            }
+
+            void OnError(DataReceivedEventArgs e)
+            {
+                if(e != null && nonempty(e.Data))
+                    channel.Error(e.Data);                
+            }
+
+            var info = new ProcessStartInfo
+            {
+                FileName = path.Format(),
+                Arguments = Cmd.join(args),
+                CreateNoWindow = true,
+                WorkingDirectory = context?.WorkingDir.Format() ?? Environment.CurrentDirectory,
+                RedirectStandardError = true,
+                RedirectStandardOutput = true,
+                RedirectStandardInput = false
+            };
+
+            var ctx = context ?? CmdContext.Default;
+            iter(ctx.EnvVars, v => info.Environment.Add(v.Name, v.Value));
+
+            var cmdline = new CmdLine($"{info.FileName} {info.Arguments}");
+            var ts = Timestamp.Zero;
+            var token = ExecToken.Empty;
+            var executing = ExecutingProcess.Empty;
+
+            ExecToken Run()
+            {
+                try
+                {
+                    using var process = new Process {StartInfo = info};
+                    process.OutputDataReceived += (s,d) => OnStatus(d);
+                    process.ErrorDataReceived += (s,d) => OnError(d);
+                    var flow = channel.Running(cmdline);
+                    process.Start();
+                    executing = new (cmdline, process);
+                    ProcessState.enlist(executing);
+                    process.BeginOutputReadLine();
+                    process.BeginErrorReadLine();
+                    channel.Babble($"Waiting for process {process.Id} to exit");
+                    process.WaitForExit();
+                    ts = now();
+                    token = channel.Ran(flow);
+                    term.cmd();
+                    ProcessState.remove(new (executing,ts,token));
+                }
+                catch(Exception e)
+                {
+                    channel.Error(e);
+                }
+                return token;
+
+            }   
+            return sys.start(Run);
+        }
+
+        public static CmdScript script(string name, CmdScriptExpr src)
+            => new CmdScript(name, src);
+
+        public static CmdLine cmdline(FilePath src)
+        {
+            if(src.Is(FileKind.Cmd))
+                return cmd(src);
+            else if(src.Is(FileKind.Ps1))
+                return pwsh(src);
+            else
+                return sys.@throw<CmdLine>();
+        }
+
+        [Op]
+        public static CmdLine cmd<T>(T src)
+            => $"cmd.exe /c {src}";
+
+        public static CmdExecStatus status(ExecutingProcess src)
+        {
+            var dst = CmdExecStatus.Empty;
+            dst.Id = src.Id;
+            dst.StartTime = src.Started;
+            dst.HasExited = src.Finished;
+            if(src.Finished)
+            {
+                dst.ExitTime = src.Adapted.ExitTime;
+                dst.Duration = dst.ExitTime - dst.StartTime;
+                dst.ExitCode = src.Adapted.ExitCode;
+            }
+            return dst;
+        }
+
+        public static Task<ExecToken> redirect(IWfChannel channel, CmdArgs args)
+        {
+            ExecToken Run()
+            {
+                var running = channel.Running("cmd/redirect");
+                var outAPath = AppDb.Service.AppData().Path("a", FileKind.Log);
+                var outBPath = AppDb.Service.AppData().Path("b", FileKind.Log);
+                using var outA = outAPath.Utf8Writer();
+                using var outB = outBPath.Utf8Writer();
+
+                void OnA(string msg)
+                {
+                    channel.Row(msg, FlairKind.Data);
+                    outA.WriteLine(msg);
+                }
+
+                void OnB(string msg)
+                {
+                    channel.Row(msg, FlairKind.StatusData);
+                    outB.WriteLine(msg);
+                }
+
+                Cmd.start(channel, new SysIO(OnA,OnB), args).Wait();
+                return channel.Ran(running, outA);
+            }
+            return sys.start(Run);
+        }
+
+        public static Task<ExecToken> start(IWfChannel channel, ISysIO io, CmdArgs spec, FolderPath? wd = null)
+        {
+            ExecToken go()
+            {
+                var running = channel.Running(spec);
+                var result = Cmd.run(io,spec,wd);
+                return channel.Ran(running);
+            }
+
+            return sys.start(go);
+        }
+
+        public static void run(IWfChannel channel, string tool, string args, FilePath dst)
+        {
+            var emitting = channel.EmittingFile(dst);
+            using var status = dst.Utf8Writer(true);
+            var counter = 0u;
+
+            void OnStatus(string msg)
+            {
+                status.WriteLine(msg);
+                counter++;
+            }
+
+            void OnError(string msg)
+                => channel.Error(msg);
+
+            string Input()
+                => EmptyString;
+            
+            Cmd.run(new SysIO(OnStatus, OnError, Input), Cmd.args(tool,args), dst.FolderPath);
+            channel.EmittedFile(emitting, counter);
+        }
+
+        public static CmdExecStatus run(ISysIO io, CmdArgs spec, FolderPath? wd = null)
+        {
+            var values = spec.Values();
+            Demand.gt(values.Count,0u);
+            var name = values.First;
+            var args = values.ToSpan().Slice(1).ToArray();
+            var psi = new ProcessStartInfo(values.First, text.join(Chars.Space,args))
+            {
+                UseShellExecute = false,
+                RedirectStandardError = true,
+                RedirectStandardOutput = true,
+                ErrorDialog = false,
+                CreateNoWindow = true,
+                RedirectStandardInput = false,
+                WorkingDirectory = wd != null ? wd.Value.Format() : EmptyString
+            };
+
+            void OnStatus(object sender, DataReceivedEventArgs e)
+            {
+                if(sys.nonempty(e.Data))
+                    io.Status(e.Data);
+            }
+    
+            void OnError(object sender, DataReceivedEventArgs e)
+            {
+                if(sys.nonempty(e.Data))
+                    io.Error(e.Data);
+            }
+
+            var result = default(CmdExecStatus);
+            try
+            {                
+                using var process = sys.process(psi);
+                process.OutputDataReceived += OnStatus;
+                process.ErrorDataReceived += OnError;
+                process.Start();
+                result.StartTime = sys.now();
+                result.Id = process.Id;
+                process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
+                process.WaitForExitAsync().Wait();                
+                result.HasExited = true;
+                result.ExitTime = sys.now();
+                result.Duration = result.ExitTime - result.StartTime;
+                result.ExitCode = process.ExitCode;
+            }
+            catch(Exception e)
+            {
+                io.Error(e.ToString());
+            }
+            return result;
+        }
+
+        [Op]
+        public static CmdArg arg(CmdArgs src, int index)
+        {
+            if(src.IsEmpty)
+                @throw(EmptyArgList.Format());
+
+            var count = src.Count;
+            if(count < index - 1)
+                @throw(ArgSpecError.Format());
+            return src[(ushort)index];
+        }
+
+        public static CmdArgs args<T>(params T[] src)
+            where T : IEquatable<T>, IComparable<T>
+        {
+            var dst = alloc<CmdArg>(src.Length);
+            for(ushort i=0; i<src.Length; i++)
+                seek(dst,i) = new CmdArg<T>(skip(src,i));
+            return new (dst);
+        }
+
         public static ReadOnlySpan<CmdResponse> response(ReadOnlySpan<TextLine> src)
         {
             var count = src.Length;
@@ -154,18 +389,6 @@ namespace Z0
         public static CmdArg<T> arg<T>(T value)
             where T : ICmdArg<T>, IEquatable<T>, IComparable<T>
                 => value;
-        [Op]
-        public static CmdArg arg(CmdArgs src, int index)
-        {
-            if(src.IsEmpty)
-                @throw(EmptyArgList.Format());
-
-            var count = src.Count;
-            if(count < index - 1)
-                @throw(ArgSpecError.Format());
-            return src[(ushort)index];
-        }
-
         public static string join(CmdArgs args)
         {
             var dst = text.emitter();

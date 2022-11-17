@@ -183,7 +183,7 @@ namespace Z0
             {
                 var name = sys.@string(SQ.left(src,i));
                 var _args = sys.@string(SQ.right(src,i)).Split(Chars.Space);
-                dst = new ApiCmdSpec(name, CmdArgs.args(_args));
+                dst = new ApiCmdSpec(name, Cmd.args(_args));
             }
             return true;
         }

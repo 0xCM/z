@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Microsoft.DiaSymReader;
 
     public class PdbDocs
     {

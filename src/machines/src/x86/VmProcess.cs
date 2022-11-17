@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
 
     [ApiHost]
-    public class Vmx128x2
+    public class VmProcess
     {
         ISource Source;
 
@@ -23,7 +23,7 @@ namespace Z0
 
         uint Cycle;
 
-        public Vmx128x2(uint cells, IBoundSource source)
+        public VmProcess(uint cells, IBoundSource source)
         {
             Source = source;
             CellCount = cells;

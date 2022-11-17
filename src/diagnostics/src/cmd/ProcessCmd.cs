@@ -24,7 +24,7 @@ namespace Z0
                 {
                     var data = sys.cover(address.Ref<byte>(), size);
                     var hex = data.FormatHex();
-                    Write(string.Format("{0,-16}: {1}", address, hex));
+                    Channel.Write(string.Format("{0,-16}: {1}", address, hex));
                 }
 
             }
@@ -41,9 +41,7 @@ namespace Z0
             iter(src, p => dst.AppendLineFormat(Pattern, p.ProcessName, p.Id));
             var data = dst.Emit();
             Row(data);
-            FileEmit(data, AppDb.AppData().Path("processes", FileKind.Csv));
-            //Row(dst.Emit());
-            //FileEmit()
+            Channel.FileEmit(data, AppDb.AppData().Path("processes", FileKind.Csv));
         }
 
         [CmdOp("procs/context")]

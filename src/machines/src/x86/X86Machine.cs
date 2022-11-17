@@ -4,15 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.Threading.Tasks;
-
     using static sys;
 
     using Asm;
 
     public interface IX86Machine
     {
-        void Dispatch(in AsmCode asm);
+        void Dispatch(AsmCode asm);
     }
 
     [ApiHost]
@@ -70,12 +68,12 @@ namespace Z0
             rip() = CodeBase;
         }
 
-        public void Dispatch(in AsmCode cmd)
+        public void Dispatch(AsmCode cmd)
         {
             Queue.Enqueue(cmd);
         }
 
-        void Execute(in AsmCode cmd)
+        void Execute(AsmCode cmd)
         {
 
         }

@@ -7,8 +7,8 @@ namespace Z0
     [Free]
     sealed class App : AppCmdShell<App>
     {
-        static ReadOnlySeq<ICmdProvider> providers(IWfRuntime wf)
-            => new ICmdProvider[]{
+        static ReadOnlySeq<IApiCmdProvider> providers(IWfRuntime wf)
+            => new IApiCmdProvider[]{
                 wf.WfCmd(),
                 wf.BuildCmd(),
                 CgCmd.create(wf)
@@ -17,7 +17,7 @@ namespace Z0
         public static void main(string[] args)
         {
             using var app = ApiRuntime.shell<App>(false, args);
-            var context = Cmd.context<CgCmd>(app.Wf, () => providers(app.Wf));
+            var context = ApiCmd.context<CgCmd>(app.Wf, () => providers(app.Wf));
             var channel = context.Channel;
             app.Commander = context.Commander;
             app.Run(args);

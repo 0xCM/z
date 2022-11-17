@@ -6,7 +6,7 @@ namespace Z0
 {
     public abstract class Control : IControl
     {
-        protected abstract void Disposing();
+        protected virtual void Disposing() {}
 
         void IDisposable.Dispose()
             => Disposing();

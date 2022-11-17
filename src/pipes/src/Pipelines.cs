@@ -11,9 +11,6 @@ namespace Z0
     {
         const NumericKind Closure = UnsignedInts;
 
-        public static Task<ExecToken> copy(IWfChannel channel, FolderPath src, FolderPath dst)
-            => ProcessControl.start(channel, FS.path("robocopy.exe"), Cmd.args(src, dst, "/e"));
-
         static T identity<T>(T src)
             => src;
 

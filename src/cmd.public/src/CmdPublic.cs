@@ -6,16 +6,16 @@ namespace Z0
 {
     public sealed class CmdPublic : WfAppCmd<CmdPublic>
     {
-        public static WfContext context<C>(IWfRuntime wf)
-            where C : IAppCmdSvc, new()
+        public static ApiContext context<C>(IWfRuntime wf)
+            where C : IApiCmdSvc, new()
         {
             GlobalServices.Instance.Inject(wf.XedRuntime());
-            return Cmd.context<C>(wf, () => providers(wf));            
+            return ApiCmd.context<C>(wf, () => providers(wf));            
         }
         
-        public static ReadOnlySeq<ICmdProvider> providers(IWfRuntime wf)
+        public static ReadOnlySeq<IApiCmdProvider> providers(IWfRuntime wf)
         {
-            var providers = new ICmdProvider[]{
+            var providers = new IApiCmdProvider[]{
                 wf.AncestryChecks(),
                 wf.AsmCoreCmd(),
                 wf.AsmCmdSvc(),
@@ -37,7 +37,7 @@ namespace Z0
                 wf.CalcChecker(),
                 wf.TestCmd(),
                 wf.AsmGenCmd(),
-                wf.SosCmd(),
+                //wf.SosCmd(),
                 wf.CsGenCmd(),
                 wf.MemoryChecks(),
                 wf.CgChecks(),

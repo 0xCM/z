@@ -37,7 +37,7 @@ namespace Z0
         public static Ecma Ecma(this IWfRuntime wf)
             => Services.Ecma(wf);
 
-        public static ICmdProvider EcmaCmd(this IWfRuntime wf)
+        public static IApiCmdSvc EcmaCmd(this IWfRuntime wf)
             => Services.EcmaCmd(wf);
     }
 }

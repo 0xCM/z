@@ -9,14 +9,13 @@ namespace Z0
     {
         class ServiceCache : AppServices<ServiceCache>
         {
-
-            public IAppCmdSvc CgTestCmd(IWfRuntime wf)
+            public IApiCmdSvc CgTestCmd(IWfRuntime wf)
                 => Service<CgTestCmd>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
 
-        public static IAppCmdSvc CgChecks(this IWfRuntime wf)
+        public static IApiCmdSvc CgChecks(this IWfRuntime wf)
             => Services.CgTestCmd(wf);
     }
 }

@@ -8,7 +8,7 @@ namespace Z0
 
     public class ApiTypes
     {
-        public static Index<ApiTypeInfo> describe(ReadOnlySeq<ApiDataType> types)
+        public static Index<ApiTypeInfo> describe(ReadOnlySeq<DataType> types)
         {
             var count = types.Count;
             var dst = sys.alloc<ApiTypeInfo>(count);
@@ -27,13 +27,13 @@ namespace Z0
             return dst;
         }
 
-        public static ReadOnlySeq<ApiDataType> discover(Assembly[] src)
+        public static ReadOnlySeq<DataType> discover(Assembly[] src)
         {
             var types = src.Types().Where(t => (t.IsStruct() || t.IsClass)  && t.Reifies<IDataType>()).Ignore().Index();
             var count = types.Count;
-            var dst = sys.alloc<ApiDataType>(count);
+            var dst = sys.alloc<DataType>(count);
             for(var i=0; i<count; i++)
-                seek(dst,i) = new ApiDataType(types[i], Sizes.measure(types[i]));
+                seek(dst,i) = new DataType(types[i], Sizes.measure(types[i]));
             return dst.Sort();
         }
     }

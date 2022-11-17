@@ -25,7 +25,7 @@ namespace Z0
         void Run(N22 n)
         {
             M = Machines.create(Wf);
-            M.Run();
+            M.Loop();
         }
 
         void Run(string spec)

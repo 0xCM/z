@@ -14,6 +14,25 @@ namespace Z0
 
     public class Archives : ApiModule<Archives>
     {        
+        public static void zip(IWfChannel channel, CmdArgs args)
+        {
+            var folder = Cmd.arg(args,0).Value;
+            var i = text.index(folder, Chars.FSlash, Chars.BSlash);
+            var scope = "default";
+            if(i > 0)
+                scope = text.left(folder,i);
+            var src = AppSettings.DbRoot().Scoped(folder).Root;
+            var name = src.FolderName.Format();
+            var file = FS.file($"{scope}.{name}", FileKind.Zip);
+            Archives.zip(channel, src, AppDb.Archive(scope).Path(file));
+        }
+
+        public static void copy(IWfChannel channel, CmdArgs args)
+            => copy(channel, FS.dir(args[0]), FS.dir(args[1]));
+        
+        public static Task<ExecToken> copy(IWfChannel channel, FolderPath src, FolderPath dst)
+            => Cmd.start(channel, FS.path("robocopy.exe"), Cmd.args(src, dst, "/e"));
+
         public class CommandNames 
         {
             public const string FilesGather = "files/gather";
@@ -51,13 +70,10 @@ namespace Z0
             => new (src,dst,ext);
 
         [CmdOp(FilesGather)]
-        public Task<ExecToken> Gather(IWfChannel channel, CmdArgs args)
-        {            
-            var cmd = gather(FS.dir(args[0]), FS.dir(args[1]), FileKind.Nuget.Ext());
-            return Exec(channel, cmd);
-        }
+        public static Task<ExecToken> gather(IWfChannel channel, CmdArgs args)
+            => exec(channel, gather(FS.dir(args[0]), FS.dir(args[1]), FileKind.Nuget.Ext()));
 
-        Task<ExecToken> Exec(IWfChannel channel, GatherFiles cmd)
+        static Task<ExecToken> exec(IWfChannel channel, GatherFiles cmd)
         {
             ExecToken exec()
             {
@@ -91,7 +107,7 @@ namespace Z0
             var files = bag<FileUri>();
             var table = FilePath.Empty;
             var list = FilePath.Empty;
-            var name = Archives.identifier(FS.dir(args[0]));
+            var name = identifier(FS.dir(args[0]));
             var src = query(channel,args);
             var counter = 0u;
 

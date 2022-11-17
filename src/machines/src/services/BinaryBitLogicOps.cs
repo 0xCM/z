@@ -125,23 +125,14 @@ namespace Z0
 
             Symbols<K> OpSymbols;
 
-            CharBlock16 Buffer;
-
             public OpFormatter()
             {
                 OpSymbols = Symbols.index<K>();
-                Buffer = CharBlock16.Null;
-            }
-
-            void ClearBuffer()
-            {
-                Buffer = CharBlock16.Null;
             }
 
             public string Format(OpEval src, FormatOption option = default)
             {
-                ClearBuffer();
-                var dst = Buffer.Data;
+                Span<char> dst = stackalloc char[16];
                 var i=0u;
                 var length = Render(src, ref i, dst, option);
                 return text.format(slice(dst,0,length));
@@ -149,18 +140,17 @@ namespace Z0
 
             public string Format(OpInput src, FormatOption option = default)
             {
-                ClearBuffer();
-                var dst = Buffer.Data;
+                Span<char> dst = stackalloc char[16];
                 var i=0u;
                 var length = Render(src, ref i, dst, option);
                 return text.format(slice(dst,0,length));
             }
 
-            public static CharBlock4 bitstring(K src)
+            public static string bitstring(K src)
             {
-                var dst = CharBlock4.Null;
-                BitRender.render4((byte)src, dst.Data);
-                return dst;
+                Span<char> dst = stackalloc char[4];
+                BitRender.render4((byte)src, dst);
+                return new string(dst);
             }
 
             uint Functional(OpEval src, ref uint i, Span<char> dst)

@@ -3,5 +3,7 @@
     <ProjectReference Include="$(ZLib)" />
     <ProjectReference Include="$(Symbolics)" />
     <ProjectReference Include="$(Db)" />
+    <ProjectReference Include="$(Native)" />
   </ItemGroup>
+  <Import Project="../../props/msca.props" />
 </Project>

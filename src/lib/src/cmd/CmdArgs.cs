@@ -25,7 +25,6 @@ namespace Z0
             return src[(ushort)index];
         }
 
-
         public static CmdArgs args<T>(params T[] src)
             where T : IEquatable<T>, IComparable<T>
         {
@@ -34,6 +33,9 @@ namespace Z0
                 seek(dst,i) = new CmdArg<T>(skip(src,i));
             return new (dst);
         }
+
+        public CmdArgs Skip(uint count)
+            => new CmdArgs(Data.Slice(count).ToArray());
 
         public CmdArgs()
         {

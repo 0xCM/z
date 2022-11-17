@@ -156,7 +156,7 @@ namespace Z0
         IDbArchive AssetTargets
             => AppDb.ApiTargets("assets");
 
-        ReadOnlySeq<ApiDataType> DataTypes(Assembly[] src)
+        ReadOnlySeq<DataType> DataTypes(Assembly[] src)
             => ApiTypes.discover(src);
 
         ReadOnlySeq<ApiTypeInfo> DataTypeInfo(Assembly[] src)

@@ -26,7 +26,7 @@ namespace Z0
         public static DumpParser DumpParser(this IWfRuntime wf)
             => Services.DumpParser(wf);
 
-        public static ICmdProvider RuntimeCmd(this IWfRuntime wf)
+        public static IApiCmdSvc RuntimeCmd(this IWfRuntime wf)
             => Services.RuntimeCmd(wf);
     }
 }

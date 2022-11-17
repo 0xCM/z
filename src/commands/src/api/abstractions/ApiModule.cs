@@ -9,6 +9,8 @@ namespace Z0
     {
         protected IWfChannel Channel;
 
+        protected static AppSettings AppSettings => AppSettings.Default;
+        
         protected static AppDb AppDb => AppDb.Service;
 
         protected virtual Task<ExecToken> Start<C>(C cmd)

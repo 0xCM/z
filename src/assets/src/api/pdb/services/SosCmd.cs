@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class SosCmd : WfAppCmd<SosCmd>
+    public class SosCmd : AppService<SosCmd>
     {
         PdbIndexBuilder PdbIndexBuilder => Wf.PdbIndexBuilder();
 

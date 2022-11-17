@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using Microsoft.DiaSymReader;
 
     using System.IO;
 

@@ -75,7 +75,7 @@ namespace Z0
                     break;
 
                     case K.BRDISP_WIDTH:
-                        result = DataParser.parse(value, out DispWidth);
+                        result = NumericParser.parse(value, out DispWidth);
                         if(result)
                             _ParsedFields.Add(kind);
                     break;

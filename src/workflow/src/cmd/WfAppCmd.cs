@@ -54,7 +54,7 @@ namespace Z0
 
         [CmdOp("cmd/redirect")]
         void Redirect(CmdArgs args)
-            => ProcessControl.redirect(Channel, args);
+            => Cmd.redirect(Channel, args);
 
         [CmdOp("cmd")]
         void RunCmd(CmdArgs args)
@@ -64,19 +64,25 @@ namespace Z0
         void GetHelp(CmdArgs args)
         {
             var tool = args[0].Value;
-            var dst = AppDb.DbTargets("tools/help").Path(FS.file(tool, FileKind.Help));        
-            ProcessControl.run(Channel, tool, "--help", args, dst);
+            var dst = AppDb.DbTargets("tools/help").Path(FS.file(tool, FileKind.Help));
+            Cmd.run(Channel, tool, args.Length > 1 ? args[1].Value : "--help", dst);
         }
 
         [CmdOp("develop")]
         void Develop(CmdArgs args)
         {
             var cd = Env.cd();
-            var workspaces = cd.Files(FS.ext("code-workspace"));
-            if(workspaces.IsNonEmpty)
-                WfTools.vscode(Channel, cd + workspaces[0].FileName);
+            var launcher = cd + FS.file("develop", FileKind.Cmd);
+            if(launcher.Exists)
+                Cmd.start(Channel, Cmd.args(launcher)); 
             else
-                WfTools.vscode(Channel, cd); 
+            {
+                var workspaces = cd.Files(FS.ext("code-workspace"));
+                if(workspaces.IsNonEmpty)
+                    WfTools.vscode(Channel, cd + workspaces[0].FileName);
+                else
+                    WfTools.vscode(Channel, cd); 
+            }
         }
 
         [CmdOp("devenv")]
@@ -89,21 +95,11 @@ namespace Z0
 
         [CmdOp("zip")]
         void Zip(CmdArgs args)
-        {
-            var folder = arg(args,0).Value;
-            var i = text.index(folder, Chars.FSlash,Chars.BSlash);
-            var scope = "default";
-            if(i > 0)
-                scope = text.left(folder,i);
-            var src = AppSettings.DbRoot().Scoped(folder).Root;
-            var name = src.FolderName.Format();
-            var file = FS.file($"{scope}.{name}", FileKind.Zip);
-            Archives.zip(Channel, src, AppDb.Archive(scope).Path(file));
-        }
+            => Archives.zip(Channel,args);
 
         [CmdOp("copy")]
         void Copy(CmdArgs args)
-            => Pipelines.copy(Channel, FS.dir(arg(args,0).Value), FS.dir(arg(args,1).Value));
+            => Archives.copy(Channel,args);
 
         [CmdOp("env/include")]
         void EnvInclude()
@@ -143,7 +139,7 @@ namespace Z0
         void CatalogFiles(CmdArgs args)
             => Archives.catalog(Channel, args);
             
-        [CmdOp("env/process/paths")]
+        [CmdOp("env/paths")]
         void ProcPaths()
         {
             var src = Env.process().ToLookup();
@@ -197,7 +193,7 @@ namespace Z0
         {
             var dst = AppDb.Tools("z0/cmd").Targets().Root;
             var src = ExecutingPart.Assembly.Path().FolderPath;
-            Pipelines.copy(Channel, src, dst);
+            Archives.copy(Channel, src, dst);
         }
 
         static Files launchers()
@@ -460,7 +456,7 @@ namespace Z0
             {
                 var wd = Env.cd();
                 var options = $"-NoLogo -i -wd {text.dquote(Env.cd())}";
-                ProcessControl.start(channel, new SysIO(OnA,OnB), CmdArgs.create("pwsh.exe", options), wd);
+                Cmd.start(channel, new SysIO(OnA,OnB), CmdArgs.create("pwsh.exe", options), wd);
             }
         }
 

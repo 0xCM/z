@@ -79,7 +79,6 @@
    <Import Project="$(MsBuildThisFileDirectory)src/process/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/shell/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/sos.cmd/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/stitch/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/symbolics/exports.props"/>
 

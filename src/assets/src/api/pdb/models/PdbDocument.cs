@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using Microsoft.DiaSymReader;
+
     public readonly struct PdbDocument : IEquatable<PdbDocument>
     {
         public readonly string Name;
