@@ -1,14 +1,4 @@
 <Project>
-  <PropertyGroup>
-    <CodeAnalysisVer>4.4.0-4.final</CodeAnalysisVer>
-    <MsDiaVer>1.6.0</MsDiaVer>
-    <MsBuildVer>17.2.0</MsBuildVer>
-    <FxVer>7.0.0</FxVer>
-    <MsExtVer>7.0.0</MsExtVer>
-    <MsDiaRuntimeVer>2.2.332302</MsDiaRuntimeVer>
-    <DotNetSdkVer>6.0.303</DotNetSdkVer>
-    <NugetVer>6.4.0</NugetVer>
-  </PropertyGroup>
 
   <ItemGroup>
       <PackageReference Include="Microsoft.CodeAnalysis" Version="$(CodeAnalysisVer)" />

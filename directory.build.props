@@ -1,7 +1,7 @@
 <Project>
+  <Import Project="versions.props"/>
+  <Import Project="pkg.props"/>
   <PropertyGroup>
-    <ZVer>0.0.13</ZVer>
-    <ZSysVer>0.0.13</ZSysVer>
     <Version>$(ZVer)</Version>
     <LangVersion>10</LangVersion>
     <FrameworkMoniker>net6.0</FrameworkMoniker>
@@ -50,6 +50,5 @@
     <IntermediateOutputPath>$(IntermediateRoot)</IntermediateOutputPath>
   </PropertyGroup>
 
-  <Import Project="pkg.props"/>
   <Import Project="exports.props"/>
 </Project>

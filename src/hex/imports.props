@@ -1,6 +1,5 @@
 <Project>
   <ItemGroup>
-    <PackageReference Include="z0.sys.api" Version="$(ZSysVer)" />
-    <PackageReference Include="z0.sys.core" Version="$(ZSysVer)" />
+    <ProjectReference Include="$(Bit)" />
   </ItemGroup>
 </Project>

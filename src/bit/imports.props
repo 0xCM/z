@@ -1,2 +1,7 @@
 <Project>
+  <ItemGroup>
+    <PackageReference Include="z0.sys.core" Version="$(ZSysVer)" />
+    <PackageReference Include="z0.sys.api" Version="$(ZSysVer)" />
+    <PackageReference Include="z0.algebra" Version="$(ZSysVer)" />
+  </ItemGroup>
 </Project>

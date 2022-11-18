@@ -14,27 +14,27 @@ namespace Z0
             => new Files(src);
 
         [MethodImpl(Inline), Op]
-        public static Deferred<FilePath> files(FolderPath root, FileKind kind, bool recurse)
+        public static IEnumerable<FilePath> files(FolderPath root, FileKind kind, bool recurse)
             => files(root, recurse, kind.Ext());
 
         [MethodImpl(Inline), Op]
-        public static Deferred<FilePath> files(FolderPath src, bool recurse)
+        public static IEnumerable<FilePath> files(FolderPath src, bool recurse)
             => files(src, "*.*", recurse);
 
         [MethodImpl(Inline), Op]
-        public static Deferred<FilePath> files(FolderPath src, bool recurse, FileExt ext)
+        public static IEnumerable<FilePath> files(FolderPath src, bool recurse, FileExt ext)
             => files(src, ext.SearchPattern, recurse);
 
         [MethodImpl(Inline), Op]
-        public static Deferred<FilePath> files(FolderPath src, bool recurse, params FileExt[] ext)
+        public static IEnumerable<FilePath> files(FolderPath src, bool recurse, params FileExt[] ext)
             => files(src, pattern(ext), recurse);
 
         [MethodImpl(Inline), Op]
-        public static Deferred<FilePath> files(FolderPath src, string pattern, bool recurse)
+        public static IEnumerable<FilePath> files(FolderPath src, string pattern, bool recurse)
             => EnumerateFiles(src, pattern, recurse);
 
-        static Deferred<FilePath> EnumerateFiles(FolderPath src, string pattern, bool recurse, bool casematch = false)
-            => !exists(src) ? sys.defer<FilePath>() : sys.defer(from f in Directory.EnumerateFiles(src.Name, pattern, SearchOptions(recurse, casematch)) select path(f));
+        static IEnumerable<FilePath> EnumerateFiles(FolderPath src, string pattern, bool recurse, bool casematch = false)
+            => !exists(src) ? sys.empty<FilePath>() : from f in Directory.EnumerateFiles(src.Name, pattern, SearchOptions(recurse, casematch)) select path(f);
 
         [MethodImpl(Inline)]
         static EnumerationOptions SearchOptions(bool recurse, bool casematch = false, FileAttributes? skip = null)
