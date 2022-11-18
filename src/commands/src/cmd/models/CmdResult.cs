@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct CmdResult : ITextual
+    public readonly record struct CmdResult : ITextual
     {
         public CmdId CmdId {get;}
 

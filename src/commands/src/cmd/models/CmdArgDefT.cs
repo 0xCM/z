@@ -7,7 +7,7 @@ namespace Z0
     /// <summary>
     /// Defines a tool flag argument
     /// </summary>
-    public readonly struct CmdArgDef<T>
+    public readonly record struct CmdArgDef<T>
     {
         /// <summary>
         /// The argument's relative position

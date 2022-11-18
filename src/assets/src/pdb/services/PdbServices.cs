@@ -5,7 +5,6 @@
 namespace Z0
 {
     using static sys;
-    using Microsoft.DiaSymReader;
 
     using System.IO;
 
@@ -34,8 +33,8 @@ namespace Z0
         public uint IndexMethods(in ResolvedPart src, StreamWriter dst)
         {
             var hosts = src.Hosts.View;
-            using var symbols = SymbolSource(src.Location);
-            var reader = PdbSymbols.reader(symbols);
+            using var symbols = PdbDocs.source(src.Location);
+            var reader = PdbDocs.reader(symbols);
             var flow = Running(string.Format("Indexing symbols for {0} from {1}", symbols.PePath, symbols.PdbPath));
             var counter = 0u;
             var buffer = list<PdbMethod>();
@@ -64,10 +63,10 @@ namespace Z0
         {
             var _name = src.GetSimpleName();
             var module = src.ManifestModule;
-            using var symbols = SymbolSource(FS.path(src.Location));
+            using var symbols = PdbDocs.source(FS.path(src.Location));
             var pePath = symbols.PePath;
             var pdbPath = symbols.PdbPath;
-            using var pdbReader = PdbSymbols.reader(symbols);
+            using var pdbReader = PdbDocs.reader(symbols);
             var counter = 0u;
             var dst = AppDb.Service.ApiTargets("pdb").Path(string.Format("{0}.pdbinfo", src.GetSimpleName()), FileKind.Csv);
             using var writer = dst.Writer();
@@ -79,80 +78,17 @@ namespace Z0
             {
                 ref readonly var pdbMethod = ref skip(pdbMethods,i);
                 var info = pdbMethod.Describe();
-                var docview = info.Documents.View;
-                var doc = docview.Length >=1 ? first(docview).Path : FilePath.Empty;
+                var docview = info.Documents.Documents;
+                var doc = docview.Count >=1 ? docview.FirstOrDefault(PdbDocument.Empty).Path : FileUri.Empty;
                 var token = info.Token;
                 var mb = Clr.method(module,token);
                 var sig = mb is MethodInfo method ? method.DisplaySig().Format() : EmptyString;
-                writer.WriteLine(string.Format("{0,-12} | {1,-24} | {2,-68} | {3}", token, mb.Name, doc.ToUri(), sig));
+                writer.WriteLine(string.Format("{0,-12} | {1,-24} | {2,-68} | {3}", token, mb.Name, doc, sig));
                 counter++;
             }
 
             EmittedFile(emitting, counter);
             return dst;
-        }
-
-        public PdbSymbolSource SymbolSource(FilePath module)
-            => PdbSymbols.source(module);
-
-        public static unsafe Outcome srclink(ISymUnmanagedReader5 src, out Span<byte> dst)
-        {
-            dst = default;
-            try
-            {
-                HResult hr = src.GetSourceServerData(out var pData, out var size);
-                if(hr)
-                {
-                    core.read(pData, size, out dst);
-                    return true;
-                }
-                else
-                {
-                    size = 0;
-                    return (false, hr.Format());
-                }
-            }
-            catch(Exception e)
-            {
-                return e;
-            }
-        }
-
-        /// <summary>
-        /// Retrieves symbol server information
-        /// </summary>
-        /// <param name="reader"></param>
-        /// <param name="dst"></param>
-        /// <remarks>
-        /// Adapted from https://github.com/dotnet/symreader-converter/src/Microsoft.DiaSymReader.Converter/Utilities/SymReaderHelpers.cs
-        /// </remarks>
-        public unsafe static Outcome symserver(ISymUnmanagedReader reader, out Span<byte> dst)
-        {
-            dst = default;
-            if (!(reader is ISymUnmanagedSourceServerModule srcsrv))
-                return (false, string.Format("{0} does not support the required iterface", reader.GetType()));
-
-            var pData = default(byte*);
-            try
-            {
-                HResult result = srcsrv.GetSourceServerData(out var size, out pData);
-                if(result)
-                {
-                    memory.read(pData, size, out dst);
-                    return true;
-                }
-                else
-                    return (false,result.Format());
-            }
-            catch(Exception e)
-            {
-                return e;
-            }
-            finally
-            {
-                if (pData != null)
-                    Marshal.FreeCoTaskMem((IntPtr)pData);
-            }
         }
     }
 }

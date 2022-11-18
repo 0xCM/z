@@ -4,14 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {    
-    public readonly struct PdbMethods
+    public class PdbMethods
     {
-        public static PdbMethods load(ISymUnmanagedReader5 reader, ISymUnmanagedDocument doc)
-            => new PdbMethods(doc,reader.GetMethodsInDocument(doc));
+        public readonly Index<ISymUnmanagedMethod> Methods;
 
-        public readonly Index<ISymUnmanagedMethod> Methods {get;}
-
-        public readonly ISymUnmanagedDocument Document {get;}
+        public readonly ISymUnmanagedDocument Document;
 
         public PdbMethods(ISymUnmanagedDocument doc, ISymUnmanagedMethod[] methods)
         {

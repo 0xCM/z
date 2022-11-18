@@ -41,12 +41,6 @@ namespace Z0
         public override string ToString()
             => Format();
 
-        // string IToolCmdArg<string>.Value 
-        //     => Value;
-
-        // string IToolCmdArg.Name  
-        //     => Name;
-
         [MethodImpl(Inline)]
         public static implicit operator ToolCmdArg(Pair<string> src)
             => new ToolCmdArg(src.Left, src.Right);

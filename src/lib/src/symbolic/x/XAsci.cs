@@ -6,10 +6,6 @@ namespace Z0
 {
     partial class XTend
     {
-        [Op]
-        public static AsciLineReader AsciLineReader(this FilePath src)
-            => new AsciLineReader(src.AsciReader());
-
         [MethodImpl(Inline)]
         public static int FirstIndexOf<T>(this T src, AsciCharSym match)
             where T : IAsciSeq

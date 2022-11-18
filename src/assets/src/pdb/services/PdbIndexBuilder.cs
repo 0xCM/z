@@ -19,7 +19,7 @@ namespace Z0
             {
                 stats.Pdb = pdbpath;
                 stats.Assembly = asmpath;
-                var reader = PdbSymbols.reader(asmpath, pdbpath);
+                var reader = PdbDocs.reader(asmpath, pdbpath);
                 var methods = src.Methods().Index();
                 var count = methods.Length;
                 stats.DocCount += dst.Include(reader.Documents);
@@ -61,7 +61,7 @@ namespace Z0
             var docs = dst.Documents;
             using var writer = path.Writer();
             foreach(var doc in docs)
-                writer.WriteLine(string.Format("<{0}>", doc.Path.ToUri()));
+                writer.WriteLine(string.Format("<{0}>", doc.Path));
             EmittedFile(emitting, docs.Count);
             Ran(flow, Msg.IndexedPdbMethods.Format(counter));
             return path;

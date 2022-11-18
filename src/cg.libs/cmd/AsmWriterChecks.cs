@@ -94,8 +94,8 @@ namespace Z0
 
             log.AppendLine();
             log.AppendLine(RP.PageBreak80);
-            var a0 = x86x.and_r16_imm8(AsmRegOps.ax, 0x73);
-            log.AppendLineFormat("{0,-18} | {1,-8} | {2}", a0.Id, a0.EncodingSize, a0.Format());
+            // var a0 = x86x.and_r16_imm8(AsmRegOps.ax, 0x73);
+            // log.AppendLineFormat("{0,-18} | {1,-8} | {2}", a0.Id, a0.EncodingSize, a0.Format());
         }
 
         /*

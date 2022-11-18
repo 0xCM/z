@@ -17,9 +17,6 @@ namespace Z0
             public ArchiveRegistry ArchiveRegistry(IWfRuntime wf)
                 => Service<ArchiveRegistry>(wf);            
 
-            public IWfServices WfServices(IWfRuntime wf)
-                => Service<WfServices>(wf);
-
              public Tooling Tooling(IWfRuntime wf)
                 => Service<Tooling>(wf);
 
@@ -57,9 +54,6 @@ namespace Z0
         public static ArchiveRegistry ArchiveRegistry(this IWfRuntime wf)
             => Services.ArchiveRegistry(wf);
  
-        public static IWfServices WfServices(this IWfRuntime wf)
-            => Services.WfServices(wf);
-
         public static Tooling Tooling(this IWfRuntime wf)
             => Services.Tooling(wf);             
 

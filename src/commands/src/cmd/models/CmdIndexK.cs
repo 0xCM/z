@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct CmdIndex<K>
+    public readonly record struct CmdIndex<K>
         where K : unmanaged
     {
         readonly Index<K,CmdInfo<K>> Data;

@@ -1,5 +1,0 @@
-Table                    | Index        | Content
-X86SrcIdxOperandST       | 0            | srcidx16
-X86SrcIdxOperandST       | 1            | srcidx32
-X86SrcIdxOperandST       | 2            | srcidx64
-X86SrcIdxOperandST       | 3            | srcidx8

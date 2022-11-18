@@ -5,29 +5,9 @@
 namespace Z0
 {
     using Microsoft.DiaSymReader;
-    using Microsoft.DiaSymReader.PortablePdb;
 
     public ref struct PdbReader
     {
-        public static PdbReader create(PdbSymbolSource src)
-        {
-            var reader = default(PdbReader);
-            if(src.IsPortable)
-                reader = new PdbReader(src, portable(src));
-            else
-                reader = new PdbReader(src, legacy(src));
-            return reader;
-        }
-
-        static object importer(in PdbSymbolSource src)
-            => SymUnmanagedReaderFactory.CreateSymReaderMetadataImport(PdbSymbols.metadata(src));
-
-        static ISymUnmanagedReader5 portable(in PdbSymbolSource src)
-            => (ISymUnmanagedReader5)new  SymBinder().GetReaderFromStream(src.PdbStream, importer(src));
-
-        static ISymUnmanagedReader5 legacy(in PdbSymbolSource src)
-            => SymUnmanagedReaderFactory.CreateReader<ISymUnmanagedReader5>(src.PdbStream, PdbSymbols.metadata(src));
-
         Index<PdbDocument> _Documents;
 
         Index<ISymUnmanagedDocument> UnmanagedDocs;
@@ -47,7 +27,7 @@ namespace Z0
             Provider = provider;
             UnmanagedDocs = provider.GetDocuments();
             _Documents = provider.GetDocuments().Select(PdbDocs.doc);
-            _DocumentMethods = UnmanagedDocs.Storage.Map(doc => PdbMethods.load(provider,doc));
+            _DocumentMethods = UnmanagedDocs.Storage.Map(doc => PdbDocs.methods(provider,doc));
             _Methods = Index<PdbMethod>.Empty;
         }
 

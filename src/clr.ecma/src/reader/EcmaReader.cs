@@ -101,7 +101,7 @@ namespace Z0
             => FS.path(src.Definition.Location);
 
         [Op]
-        public static FilePath xmlpath(ClrAssembly src, out FilePath dst)
+        public static FileUri xmlpath(ClrAssembly src, out FileUri dst)
         {
             var candidate = FS.path(Path.ChangeExtension(src.Definition.Location, FS.Xml.Name));
             dst = candidate.Exists ? candidate : FilePath.Empty;
@@ -109,7 +109,7 @@ namespace Z0
         }
 
         [Op]
-        public static FilePath pdbpath(ClrAssembly src, out FilePath dst)
+        public static FileUri pdbpath(ClrAssembly src, out FileUri dst)
         {
             var candidate = FS.path(Path.ChangeExtension(src.Definition.Location, FS.Pdb.Name));
             dst = candidate.Exists ? candidate : FilePath.Empty;

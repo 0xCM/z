@@ -9,7 +9,7 @@ namespace Z0
     /// <summary>
     /// Defines a command option
     /// </summary>
-    public readonly struct OptionSpec : IOptionSpec
+    public readonly record struct OptionSpec : IOptionSpec
     {
         /// <summary>
         /// The option name

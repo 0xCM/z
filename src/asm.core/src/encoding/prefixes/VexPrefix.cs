@@ -43,7 +43,7 @@ namespace Z0.Asm
         [MethodImpl(Inline)]
         public static VexPrefixC4 c4(VexPrefix src)
         {
-            var data = slice(src.Encoded,1,2);
+            var data = slice(bytes(src), 1, 2);
             return VexPrefixC4.define(skip(data,0), skip(data,1));
         }
 
@@ -141,12 +141,6 @@ namespace Z0.Asm
         [MethodImpl(Inline)]
         public void Kind(K k)
             => _Data = Bytes.inject((byte)k,0, ref _Data);
-
-        public ReadOnlySpan<byte> Encoded
-        {
-            [MethodImpl(Inline)]
-            get => bytes(_Data);
-        }
 
         public string Format()
         {

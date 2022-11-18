@@ -5,7 +5,7 @@
 namespace Z0
 {
     public class AppCmdShell
-    {
+    {        
         public static A create<A>(bool catalog, params string[] args)
             where A : IAppShell, new()
         {

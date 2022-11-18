@@ -51,7 +51,7 @@ namespace Z0
             BitFormat = BitRender.formatter<byte>(4);
         }
 
-        public ref AssembledAsm Assembled(in NasmEncoding src, out AssembledAsm dst)
+        public AssembledAsm Assembled(in NasmEncoding src, out AssembledAsm dst)
         {
             dst.Bitstring = FormatBitstring(src.Encoded);
             dst.Id = EncodingId.from(src.Offset, src.Encoded);
@@ -59,7 +59,7 @@ namespace Z0
             dst.Encoded = src.Encoded;
             AsmExpr.parse(src.SourceText, out dst.Asm);
             dst.SourceLine = src.LineNumber;
-            return ref dst;
+            return dst;
         }
 
         public Index<AssembledAsm> Assembled(ReadOnlySpan<NasmCodeBlock> blocks)

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct OptionSpecs : IIndex<OptionSpecs,ushort,OptionSpec>
+    public readonly record struct OptionSpecs : IIndex<OptionSpecs,ushort,OptionSpec>
     {
         readonly Index<OptionSpec> Data;
 

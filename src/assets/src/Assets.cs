@@ -6,6 +6,17 @@ namespace Z0
 {
     using static sys;
 
+    partial class XTend
+    {
+        [MethodImpl(Inline), Op]
+        public static string Utf8(this Asset src)
+            => Assets.utf8(src);
+
+        [MethodImpl(Inline), Op]
+        public static ReadOnlySpan<byte> Bytes(this Asset src)
+            => sys.view(src.Address, src.Size);
+    }
+
     [ApiHost]
     public sealed class Assets
     {
@@ -165,7 +176,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static BinaryAsset binary(Assembly owner, string id, ReadOnlySpan<byte> src)
-            => new BinaryAsset(owner, id, src.Length, core.address(src));
+            => new BinaryAsset(owner, id, src.Length, sys.address(src));
 
         [MethodImpl(Inline), Op]
         public static BinaryAsset binary(Assembly owner, string id, ByteSize size, MemoryAddress address)

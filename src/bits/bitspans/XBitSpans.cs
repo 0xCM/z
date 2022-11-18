@@ -4,10 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
     using static BitSpans32;
 
     public static partial class XBitSpans
@@ -33,10 +29,10 @@ namespace Z0
         /// </summary>
         /// <param name="src">The source bits</param>
         [MethodImpl(Inline), Op]
-        public static ref readonly BitSpan32 Clear(this in BitSpan32 src)
+        public static BitSpan32 Clear(this in BitSpan32 src)
         {
             clear(src);
-            return ref src;
+            return src;
         }
 
         /// <summary>
@@ -46,10 +42,10 @@ namespace Z0
         /// <param name="i0">The index of the first bit to clear</param>
         /// <param name="i1">The index of the last bit to clear</param>
         [MethodImpl(Inline), Op]
-        public static ref readonly BitSpan32 Clear(this in BitSpan32 src, int i0, int i1)
+        public static BitSpan32 Clear(this in BitSpan32 src, int i0, int i1)
         {
             clear(src, i0, i1);
-            return ref src;
+            return src;
         }
 
         /// <summary>

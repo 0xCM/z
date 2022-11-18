@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct CmdScript
+    public readonly record struct CmdScript
     {
         public readonly @string Name;
 

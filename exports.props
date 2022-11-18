@@ -20,7 +20,6 @@
    <Import Project="$(MsBuildThisFileDirectory)src/cg.common/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/cg.intel/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/cg.libs/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/cg.llvm/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/cg.shell/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/cg.test/exports.props"/>
 

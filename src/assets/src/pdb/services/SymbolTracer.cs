@@ -8,10 +8,10 @@ namespace Z0
 
     readonly struct SymbolTracer : ITracer
     {
-        readonly WfEmit Channel;
+        readonly IWfChannel Channel;
 
         [MethodImpl(Inline)]
-        public SymbolTracer(WfEmit wf)
+        public SymbolTracer(IWfChannel wf)
             => Channel = wf;
 
         [MethodImpl(Inline), Op]

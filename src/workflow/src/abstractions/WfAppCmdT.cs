@@ -15,29 +15,9 @@ namespace Z0
 
         protected ApiCmd ApiCmd => Wf.ApiCmd();
 
-        //protected virtual string PromptTitle {get;}
-
         protected WfAppCmd()
         {
-            //PromptTitle = "cmd";
         }
-
-        // string Prompt()
-        //     => string.Format("{0}> ", PromptTitle);
-
-        // ApiCmdSpec Next()
-        // {
-        //     var input = term.prompt(Prompt());
-        //     if(ApiCmd.parse(input, out ApiCmdSpec cmd))
-        //     {
-        //         return cmd;
-        //     }
-        //     else
-        //     {
-        //         Channel.Error($"ParseFailure:{input}");
-        //         return ApiCmdSpec.Empty;
-        //     }
-        // }
 
         [CmdOp(CCN.db)]
         protected void SetDbContext(CmdArgs args)

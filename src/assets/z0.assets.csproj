@@ -3,7 +3,8 @@
   <Import Project="$(ProjectProps)\usings.props"/>
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <DebugSymbols>true</DebugSymbols>
-    <TargetFramework>$(FrameworkMoniker)</TargetFramework>
   </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="assets/**/*.*" />
+  </ItemGroup>
 </Project>

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct CmdOption : ICmdOption
+    public readonly record struct CmdOption : ICmdOption
     {
         public readonly @string Name {get;}
 

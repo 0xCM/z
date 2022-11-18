@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public struct CmdResult<C> : ICmdResult<C>
+    public record struct CmdResult<C> : ICmdResult<C>
         where C : ICmd, new()
     {
         public C Cmd {get;}

@@ -11,33 +11,9 @@ namespace Z0
     {
         const NumericKind Closure = UnsignedInts;
 
-        [MethodImpl(Inline)]
-        public static H fetch<H,T>()
-            where H : StaticBuffer<H,T>, new()
-                => StaticBuffer<H,T>.fetch();
-
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static StaticBuffer256<T> fetch<T>(W256 w)
-            => StaticBuffer256<T>.fetch();
-
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Span<T> covered<T>(in StaticBuffer<T> src)
             => first(cover<Index<T>>(src.Address, 1)).Storage;
-
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static T cell<T>(in StaticBuffer<T> src, uint index, out T value)
-        {
-            value = seek(src.Content, index);
-            return value;
-        }
-
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static Span<T> slice<T>(in StaticBuffer<T> src, uint offset)
-            => sys.slice(covered(src), offset);
-
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static Span<T> slice<T>(in StaticBuffer<T> src, uint offset, uint length)
-            => sys.slice(covered(src), offset, length);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static void enumerate<T>(in StaticBuffer<T> src, Action<T> receiver)

@@ -9,7 +9,7 @@ namespace Z0
     /// <summary>
     /// Specifies a kinded option
     /// </summary>
-    public readonly struct OptionSpec<K> : IOptionSpec<K>
+    public readonly record struct OptionSpec<K> : IOptionSpec<K>
         where K : unmanaged
     {
         /// <summary>

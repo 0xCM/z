@@ -4,11 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
     using System.Linq;
 
-    using static Root;
     using static BitSpanSource;
 
     public readonly struct BitSpanSource
@@ -25,7 +22,7 @@ namespace Z0
             Source = src;
         }
 
-        public ref readonly BitSpan Fill(in BitSpan dst)
+        public BitSpan Fill(in BitSpan dst)
         {
             var count = dst.Length;
             var stream = Source.BitStream().Take(count);
@@ -33,7 +30,7 @@ namespace Z0
             var i = 0;
             while(e.MoveNext())
                 dst[i] = e.Current;
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -70,7 +67,7 @@ namespace Z0
         /// </summary>
         /// <param name="source">The random source</param>
         [Op]
-        public static ref readonly BitSpan BitSpan(this ISource source, in BitSpan dst)
-            => ref create(source).Fill(dst);
+        public static BitSpan BitSpan(this ISource source, in BitSpan dst)
+            => create(source).Fill(dst);
     }
 }

@@ -7,14 +7,14 @@ namespace Z0
     partial class BitSpans
     {
         [MethodImpl(Inline), Op]
-        public static ref readonly BitSpan select(in BitSpan a, in BitSpan b, in BitSpan c, in BitSpan z)
+        public static BitSpan select(in BitSpan a, in BitSpan b, in BitSpan c, in BitSpan z)
         {
             var tmp = alloc(z.BitCount);
             not(a, tmp);
             and(a, b, z);
             and(tmp, c, tmp);
             or(z, tmp, z);
-            return ref z;
+            return z;
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ namespace Z0
     
     public sealed partial class CgTestCmd : WfAppCmd<CgTestCmd>
     {
-        StringTableChecks LlvmStringTableChecks => Service(() => StringTableChecks.create(Wf));
 
         AsmWriterChecks AsmWriterChecks => Service(() => AsmWriterChecks.create(Wf));
 
@@ -82,19 +81,6 @@ namespace Z0
             AsmWriterChecks.CheckAsmBytes(log);
             var data = log.Emit();
             FileEmit(data, AppDb.Logs("codegen.test").Path("asm.checks", FileKind.Csv));
-        }
-
-        [CmdOp("asm/check/strings")]
-        void CheckStringTables()
-        {
-            LlvmStringTableChecks.Run();
-            var strings = AsmSigST.Strings;
-            var count = AsmSigST.EntryCount;
-            for(var i=0; i<count; i++)
-            {
-                var kind = (AsmFormKind)i;
-                Write(string.Format("{0,-32} | {1}", kind, text.format(strings.Cells(kind))));
-            }
         }
     }
 }

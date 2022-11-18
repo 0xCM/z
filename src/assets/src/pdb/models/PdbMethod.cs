@@ -6,21 +6,7 @@ namespace Z0
 {
     public readonly record struct PdbMethod : IAppSymAdapter<PdbMethod, ISymUnmanagedMethod>
     {
-        [Op]
-        public static uint SeqPointCount(PdbMethod src)
-        {
-            HResult result = src.Source.GetSequencePointCount(out var count);
-            return result ? (uint)count : 0;
-        }
-
-        [Op]
-        public static EcmaToken token(PdbMethod src)
-        {
-            HResult result = src.Source.GetToken(out var token);
-            return result ? token : EcmaToken.Empty;
-        }
-
-        readonly ISymUnmanagedMethod Source;
+        internal readonly ISymUnmanagedMethod Source;
 
         [MethodImpl(Inline)]
         internal PdbMethod(ISymUnmanagedMethod src)
@@ -43,7 +29,7 @@ namespace Z0
         public EcmaToken Token
         {
             [MethodImpl(Inline)]
-            get => PdbMethod.token(this);
+            get => PdbDocs.token(this);
         }
 
         public ReadOnlySpan<PdbSeqPoint> SequencePoints

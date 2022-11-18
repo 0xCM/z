@@ -7,6 +7,8 @@ namespace Z0
     public abstract class Assets<T>
         where T : Assets<T>, new()
     {
+        public static ref readonly T Instance => ref _Data;
+
         public static T create()
             => new T();
 
@@ -25,14 +27,20 @@ namespace Z0
             var matches = Components.Filter(name);
             if(matches.Count == 0)
                 sys.@throw(string.Format("The assembly {0}, loaded from {1}, does not contain a resource with identifier {2}", DataSource.GetSimpleName(), DataSource.Location, name));
-
             return ref matches[0];
         }
 
-        public ReadOnlySpan<Asset> Data
+        public ReadOnlySpan<Asset> Entries
         {
             [MethodImpl(Inline)]
             get => Components.View;
+        }
+
+        static T _Data;
+
+        static Assets()
+        {
+            _Data = new();
         }
     }
 }

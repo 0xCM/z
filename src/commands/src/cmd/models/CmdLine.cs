@@ -7,7 +7,7 @@ namespace Z0
     /// <summary>
     /// Captures the content of a command-line
     /// </summary>
-    public readonly struct CmdLine
+    public readonly record struct CmdLine
     {
         readonly Index<string> Data;
 

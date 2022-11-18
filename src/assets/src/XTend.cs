@@ -9,13 +9,5 @@ namespace Z0
     public static partial class XTend
     {
         const NumericKind Closure = Root.UnsignedInts;
-
-        [MethodImpl(Inline), Op]
-        public static string Utf8(this Asset src)
-            => Assets.utf8(src);
-
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<byte> Bytes(this Asset src)
-            => sys.view(src.Address, src.Size);
     }
 }

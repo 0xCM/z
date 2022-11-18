@@ -35,7 +35,7 @@ namespace Z0
         [CmdOp("intel/int/algs")]
         void EmitAlgs()
         {
-            var asset = IntrinsicAssets.AssetData.Algorithms();
+            var asset = IntrinsicAssets.Instance.Algorithms();
             Utf8.decode(asset.ResBytes, out var doc);
             FileEmit(doc, AppDb.DbTargets("intrinsics").Path("algs",FileKind.Txt), TextEncodingKind.Utf8);
         }

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct CmdModifier
+    public readonly record struct CmdModifier
     {
         public readonly @string Value;
 

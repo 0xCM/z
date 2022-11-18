@@ -1,6 +1,0 @@
-Table                    | Index        | Content
-AssemblerPredicateST     | 0            | In16BitMode
-AssemblerPredicateST     | 1            | In32BitMode
-AssemblerPredicateST     | 2            | In64BitMode
-AssemblerPredicateST     | 3            | Not16BitMode
-AssemblerPredicateST     | 4            | Not64BitMode

@@ -1,5 +1,0 @@
-Table                    | Index        | Content
-X86DstIdxOperandST       | 0            | dstidx16
-X86DstIdxOperandST       | 1            | dstidx32
-X86DstIdxOperandST       | 2            | dstidx64
-X86DstIdxOperandST       | 3            | dstidx8

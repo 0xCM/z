@@ -19,9 +19,6 @@ namespace Z0
         static ReadOnlySpan<C> Whitespace
             => new C[]{C.CR, C.FF, C.NL, C.Space, C.Tab, C.VTab};
 
-        public static AsciProcessor<T> processor<T>(IWfChannel channel, uint buffer, Func<MemoryAddress,uint,T> f)
-            => new AsciProcessor<T>(channel, buffer,f);
-
         [MethodImpl(Inline), Op]
         static uint available(ReadOnlySpan<byte> src)
         {

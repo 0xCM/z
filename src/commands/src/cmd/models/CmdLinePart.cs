@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public readonly struct CmdLinePart : IExpr
+    public readonly record struct CmdLinePart : IExpr
     {
         public readonly string Content;
 
