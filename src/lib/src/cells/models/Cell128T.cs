@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public struct Cell128<T> : IDataCell<Cell128<T>,W128,ByteBlock16>
+    public record struct Cell128<T> : IDataCell<Cell128<T>,W128,ByteBlock16>
         where T : unmanaged
     {
         public const uint Width = 128;
@@ -151,9 +151,6 @@ namespace Z0
 
         public override int GetHashCode()
             => Data.GetHashCode();
-
-        public override bool Equals(object src)
-            => src is Cell128<T> x && Equals(x);
 
         [MethodImpl(Inline)]
         public static implicit operator Cell128<T>(Vector128<T> x)

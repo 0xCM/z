@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using static core;
 
     partial class IntelSdm
     {
@@ -15,7 +14,7 @@ namespace Z0.Asm
             if(src.IsEmpty)
                 return (false, "Found no toc's to combine");
 
-            var encoding = pair(TextEncodingKind.Unicode, TextEncodingKind.Unicode);
+            var encoding = Tuples.pair(TextEncodingKind.Unicode, TextEncodingKind.Unicode);
             var dst = SdmPaths.TocImportDoc();
             var count = src.Length;
             for(var i=0; i<count; i++)

@@ -194,7 +194,7 @@ namespace Z0
         {
             var w = w128;
             var count = relay.BlockCount;
-            var buffer = SpanBlocks.single<T>(w);
+            var buffer = SpanBlocks.alloc<T>(w,1);
             for(var i=0u; i<count; i++)
             {
                 buffer.BlockLead(0) = default;
@@ -214,7 +214,7 @@ namespace Z0
         {
             var w = w128;
             var count = relay.BlockCount;
-            var buffer = SpanBlocks.single<T>(w);
+            var buffer = SpanBlocks.alloc<T>(w,1);
             for(var i=0u; i<count; i++)
             {
                 buffer.BlockLead(0) = default;

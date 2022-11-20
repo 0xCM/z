@@ -54,9 +54,9 @@ namespace Z0.Asm
             var address = Trampolines[slot];
             ref var payload = ref Payloads[slot];
             var storage = Cell128.Empty;
-            var buffer = storage.Bytes;
+            var buffer = bytes(storage);
             var size = mov(AsmRegOps.rcx, target, buffer);
-            var dst = payload.Bytes;
+            var dst = bytes(payload);
             var j=0;
             for(var i=0; i<size; i++)
                 seek(dst,j++) = skip(buffer,i);

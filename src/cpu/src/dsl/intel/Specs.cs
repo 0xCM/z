@@ -17,20 +17,6 @@ namespace Z0.dsl.intel
             => (byte)src;
 
         [MethodImpl(Inline), Op]
-        public static uint mm256_cvtepi16_epi8_loop(Span<v3<int>> dst)
-        {
-            var counter = 0u;
-            for(var j=0; j<=15; j++)
-            {
-                var i=16*j;
-                var l=8*j;
-                core.seek(dst,j) = expr.v(j, i, l);
-                counter++;
-            }
-            return counter;
-        }
-
-        [MethodImpl(Inline), Op]
         public static uint _mm256_cvtepi16_epi8_seq(ReadOnlySpan<__m256i<ushort>> src, Span<__m128i<byte>> dst)
         {
             var count = (uint)src.Length;

@@ -56,7 +56,7 @@ namespace Z0
         /// <param name="index">The cell-relative bit index from [0,7] </param>
         [MethodImpl(Inline), Op]
         public static ushort pack16x1(Cell128 src, byte index)
-            => pack16x1(vload(w128,src.Bytes), index);
+            => pack16x1(vload(w128,bytes(src)), index);
 
         /// <summary>
         /// Packs 32 1-bit values taken from an index-identified bit of each source byte

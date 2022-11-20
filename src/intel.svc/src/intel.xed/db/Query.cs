@@ -5,8 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
-    using static MemDb;
+    using static sys;
 
     partial class XedDb
     {
@@ -90,24 +89,13 @@ namespace Z0
                     public Row Read(byte i)
                     {
                         var dst = default(Row);
-                        var src = @as<ushort>(seek(Data,MinOffsetSize(i)));
+                        var src = @as<ushort>(seek(bytes(this),MinOffsetSize(i)));
                         src |= (ushort)RowMask;
                         dst.REXB = bit.test(src,0);
                         dst.RM = bits.slice(src,1,3);
                         dst.OUTREG = (XedRegId)bits.slice(src, 4, 9);
                         return dst;
                     }
-
-                    Span<byte> Data
-                    {
-                        [MethodImpl(Inline)]
-                        get => bytes(this);
-                    }
-
-                    // public ref bit REXB(byte i)
-                    // {
-
-                    // }
                 }
             }
         }

@@ -33,12 +33,12 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public static ref EnumReplicantSpec replicant(FolderPath target, out EnumReplicantSpec dst, string ns = null, string type = null)
+        public static EnumReplicantSpec replicant(FolderPath target, out EnumReplicantSpec dst, string ns = null, string type = null)
         {
             dst.Namespace = ns ?? EmptyString;
             dst.DeclaringType = type ?? EmptyString;
             dst.Target = target;
-            return ref dst;
+            return dst;
         }
 
         public void EmitReplicants(EnumReplicantSpec spec, Type[] enums, FolderPath dst)

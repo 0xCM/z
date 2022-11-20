@@ -21,7 +21,7 @@ namespace Z0
         public Span<byte> Bytes
         {
             [MethodImpl(Inline)]
-            get => Data.Bytes;
+            get => bytes(Data);
         }
 
         public ref byte Size

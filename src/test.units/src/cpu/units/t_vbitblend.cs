@@ -65,7 +65,7 @@ namespace Z0
         void vcheckmask<T>(Vector256<T> left, Vector256<T> right, Vector256<T> mask, Vector256<T> result)
             where T : unmanaged
         {
-            var ld = SpanBlocks.single<byte>(n256);
+            var ld = SpanBlocks.alloc<byte>(n256,1);
 
             var lbs = left.ToBitString();
             var rbs = right.ToBitString();

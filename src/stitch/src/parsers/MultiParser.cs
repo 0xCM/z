@@ -26,7 +26,7 @@ namespace Z0
             => new SeqParser<T>(ValueParser<T>(), delimiter);
 
         public IParser RecordParser(Type src)
-            => RecordParsers.GetOrAdd(src, _ => new RecordParser(TableConvention.reflected(src), this));
+            => RecordParsers.GetOrAdd(src, _ => new RecordParser(TableDefs.reflected(src), this));
 
         public IParser<T> RecordParser<T>()
             where T : struct

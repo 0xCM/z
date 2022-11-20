@@ -19,13 +19,14 @@ namespace Z0.Asm
 
         public static string format(in SdmOpCode src)
         {
-            if(src.IsEmpty)
-                return EmptyString;
-            var dst = text.buffer();
-            var count = src.TokenCount;
-            for(var i=0; i<count; i++)
-                dst.Append(expression(src[i]));
-            return dst.Emit();
+            return EmptyString;
+            // if(src.IsEmpty)
+            //     return EmptyString;
+            // var dst = text.buffer();
+            // var count = src.TokenCount;
+            // for(var i=0; i<count; i++)
+            //     dst.Append(expression(src[i]));
+            // return dst.Emit();
         }
     }
 }

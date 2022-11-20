@@ -11,12 +11,12 @@ namespace Z0
 
     public class ShimEmitter
     {
-        public static ref ToolShimSpec bind(CmdArgs args, out ToolShimSpec dst)
+        public static ToolShimSpec bind(CmdArgs args, out ToolShimSpec dst)
         {
             dst.ShimName = CmdArgs.arg(args,0).Value;
             dst.ShimPath = FS.dir(CmdArgs.arg(args,1)) + FS.file(dst.ShimName,FileKind.Exe);
             dst.TargetPath = FS.path(CmdArgs.arg(args,2));
-            return ref dst;
+            return dst;
         }
 
         public static EmitResult gen(ToolShimSpec spec)

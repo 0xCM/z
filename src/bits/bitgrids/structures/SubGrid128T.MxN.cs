@@ -109,9 +109,9 @@ namespace Z0
         public static implicit operator Vector128<T>(in SubGrid128<M,N,T> src)
             => src.Data;
 
-        [MethodImpl(Inline)]
-        public static implicit operator SpanBlock128<T>(in SubGrid128<M,N,T> src)
-            => src.Data.ToBlock();
+        // [MethodImpl(Inline)]
+        // public static implicit operator SpanBlock128<T>(in SubGrid128<M,N,T> src)
+        //     => src.Data.ToBlock();
 
         [MethodImpl(Inline)]
         public static implicit operator SubGrid128<M,N,T>(in SpanBlock128<T> src)

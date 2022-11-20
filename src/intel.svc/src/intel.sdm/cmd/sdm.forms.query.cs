@@ -26,7 +26,7 @@ namespace Z0
                     break;
                 }
 
-                Write(string.Format("{0,-6} | {1,-16} | {2,-28} | {3}", detail.OpCodeKey, opcode.OcValue(), opcode, detail.AsmSig));
+                //Write(string.Format("{0,-6} | {1,-16} | {2,-28} | {3}", detail.OpCodeKey, opcode.OcValue(), opcode, detail.AsmSig));
             }
 
             return result;
@@ -74,8 +74,8 @@ namespace Z0
             {
                 ref readonly var form = ref forms[i];
                 ref readonly var opcode = ref form.OpCode;
-                if(SdmOpCodes.imm(opcode, out var token))
-                    Write(string.Format("{0} | {1}", token, form));
+            //     if(SdmOpCodes.imm(opcode, out var token))
+            //         Write(string.Format("{0} | {1}", token, form));
             }
 
             return true;

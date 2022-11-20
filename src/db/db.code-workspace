@@ -1,6 +1,12 @@
 {
 	"folders": [
 		{
+			"path": "../lib"
+		},
+		{
+			"path": "../commands"
+		},
+		{
 			"path": "../stitch"
 		},
 		{

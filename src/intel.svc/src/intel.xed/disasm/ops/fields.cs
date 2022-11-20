@@ -20,7 +20,7 @@ namespace Z0
         public static DisasmFieldBuffer fields()
             => DisasmFieldBuffer.allocate();
 
-        public static ref DisasmFieldBuffer fields(in DetailBlock src, ref DisasmFieldBuffer dst)
+        public static DisasmFieldBuffer fields(in DetailBlock src, ref DisasmFieldBuffer dst)
         {
             dst.Clear();
             ref readonly var lines = ref src.SummaryLines;
@@ -33,7 +33,7 @@ namespace Z0
             dst.Selected = dst.Fields.MemberKinds();
             XedOps.update(dst.Fields, dst.Selected, ref dst.State);
             dst.Encoding = XedCode.encoding(dst.State, lines.Row.Encoded);
-            return ref dst;
+            return dst;
         }
     }
 }

@@ -92,9 +92,9 @@ namespace Z0
         public static implicit operator Vector128<T>(in BitGrid128<M,N,T> src)
             => src.Data;
 
-        [MethodImpl(Inline)]
-        public static implicit operator SpanBlock128<T>(in BitGrid128<M,N,T> src)
-            => src.Data.ToBlock();
+        // [MethodImpl(Inline)]
+        // public static implicit operator SpanBlock128<T>(in BitGrid128<M,N,T> src)
+        //     => src.Data.ToBlock();
 
         /// <summary>
         /// Creates a grid from the leading source block

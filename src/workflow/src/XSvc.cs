@@ -34,9 +34,15 @@ namespace Z0
 
             public ApiPacks ApiPacks(IWfRuntime wf)
                 => Service<ApiPacks>(wf);
+
+            public ApiTableGen ApiTableGen(IWfRuntime wf)
+                => Service<ApiTableGen>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
+
+        public static ApiTableGen ApiTableGen(this IWfRuntime wf)
+            => Services.ApiTableGen(wf);
 
         public static MemoryChecks MemoryChecks(this IWfRuntime wf)
             => Services.MemoryChecks(wf);         

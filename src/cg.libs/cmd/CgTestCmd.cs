@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using llvm;
     using Asm;
     
     public sealed partial class CgTestCmd : WfAppCmd<CgTestCmd>

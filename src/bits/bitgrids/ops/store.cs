@@ -47,7 +47,7 @@ namespace Z0
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
         {
-            var dst = SpanBlocks.single<T>(n128);
+            var dst = SpanBlocks.alloc<T>(n128,1);
             gcpu.vstore(src.Data, dst);
             return dst;
         }
@@ -81,7 +81,7 @@ namespace Z0
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
         {
-            var dst = SpanBlocks.single<T>(n256);
+            var dst = SpanBlocks.alloc<T>(n256,1);
             gcpu.vstore(src.Data, dst);
             return dst;
         }

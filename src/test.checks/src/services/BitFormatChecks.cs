@@ -156,7 +156,7 @@ namespace Z0
             var m0 =  Cells.cell64(BitMaskLiterals.Even64);
             var m1 = Cells.cell64(BitMaskLiterals.Lsb63x3x1);
             var storage = Cells.join(m0,m1);
-            var bytes = storage.Bytes;
+            var bytes = sys.bytes(storage);
             var bits = BitRender.render8x8(bytes);
             Log(TextFormat.format(bits));
 
@@ -177,7 +177,7 @@ namespace Z0
             var c3 = Cells.cell64(BitMaskLiterals.Odd64);
             var c256 = Cells.join(c0,c1,c2,c3);
             Log(c256);
-            var bytes = c256.Bytes;
+            var bytes = sys.bytes(c256);
             var nibbles = Nibbles.from(bytes);
             Log(nibbles.Format());
         }

@@ -5,9 +5,8 @@
 namespace Z0
 {
     using static System.Runtime.Intrinsics.X86.Avx2;
-    using static sys;
 
-    public struct Cell256 : IDataCell<Cell256,W256,Vector256<ulong>>
+    public readonly record struct Cell256 : IDataCell<Cell256,W256,Vector256<ulong>>
     {
         public const uint Width = 256;
 
@@ -28,11 +27,11 @@ namespace Z0
         public CellKind Kind
             => CellKind.Cell256;
 
-        public Span<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => bytes(this);
-        }
+        // public Span<byte> Bytes
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => bytes(this);
+        // }
 
         public Cell128 Lo
         {
@@ -128,21 +127,21 @@ namespace Z0
             get => Data.AsDouble();
         }
 
-        [MethodImpl(Inline)]
-        public ref Cell8 Cell8(byte i)
-            => ref @as<Cell8>(Bytes);
+        // [MethodImpl(Inline)]
+        // public ref Cell8 Cell8(byte i)
+        //     => ref @as<Cell8>(Bytes);
 
-        [MethodImpl(Inline)]
-        public ref Cell16 Cell16(byte i)
-            => ref @as<Cell16>(Bytes);
+        // [MethodImpl(Inline)]
+        // public ref Cell16 Cell16(byte i)
+        //     => ref @as<Cell16>(Bytes);
 
-        [MethodImpl(Inline)]
-        public ref Cell32 Cell32(byte i)
-            => ref @as<Cell32>(Bytes);
+        // [MethodImpl(Inline)]
+        // public ref Cell32 Cell32(byte i)
+        //     => ref @as<Cell32>(Bytes);
 
-        [MethodImpl(Inline)]
-        public ref Cell64 Cell64(byte i)
-            => ref @as<Cell64>(Bytes);
+        // [MethodImpl(Inline)]
+        // public ref Cell64 Cell64(byte i)
+        //     => ref @as<Cell64>(Bytes);
 
         [MethodImpl(Inline)]
         public byte Cell(W8 w, byte index)
@@ -204,9 +203,6 @@ namespace Z0
 
         public override int GetHashCode()
             => Data.GetHashCode();
-
-        public override bool Equals(object src)
-            => src is Cell256 x && Equals(x);
 
         [MethodImpl(Inline), Op]
         static Vector256<ulong> vinsert(Vector128<ulong> src, Vector256<ulong> dst, [Imm] byte index)

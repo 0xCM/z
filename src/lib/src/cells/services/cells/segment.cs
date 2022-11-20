@@ -9,11 +9,11 @@ namespace Z0
     partial class Cells
     {
         [MethodImpl(Inline)]
-        public static ref T segment<C,T,W>(in C src, W w, out T dst)
+        public static T segment<C,T,W>(in C src, W w, out T dst)
             where T : unmanaged
             where C : IDataCell
             where W : unmanaged, INumericWidth
-                => ref seg1(src, w, out dst);
+                => seg1(src, w, out dst);
 
         /// <summary>
         /// Queries/manipulates a cell within a fixed storage block
@@ -94,7 +94,7 @@ namespace Z0
                 => ref Unsafe.Add(ref @as<Cell256,T>(src), index);
 
         [MethodImpl(Inline)]
-        static ref T seg1<C,T,W>(in C src, W w, out T dst)
+        static T seg1<C,T,W>(in C src, W w, out T dst)
             where T : unmanaged
             where C : IDataCell
             where W : unmanaged, INumericWidth
@@ -114,7 +114,7 @@ namespace Z0
             else
                 throw no<W>();
 
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op]

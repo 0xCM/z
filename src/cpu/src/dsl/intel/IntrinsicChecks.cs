@@ -218,15 +218,6 @@ namespace Z0
             }
         }
 
-        void Loops()
-        {
-            var src = Cells<int>(n2);
-            var loops = recover<int,v3<int>>(src);
-            var count = Specs.mm256_cvtepi16_epi8_loop(loops);
-            for(var i=0; i<count; i++)
-                Channel.Write(skip(loops,i).Format());
-        }
-
         void Compute()
         {
             var block0 = Cells<ushort>(n0);

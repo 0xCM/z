@@ -52,19 +52,20 @@ namespace Z0.Asm
             }
 
             var count = (byte)min(parts.Length, SdmOpCode.TokenCapacity);
-            dst.TokenCount = count;
-            var t = AsmOcToken.Empty;
-            for(var i=0; i<count; i++)
-            {
-                var expr = skip(parts,i);
-                if(AsmTokens.parse(expr, out t))
-                    dst[i] = t;
-                else
-                {
-                    result = (false, string.Format("A token matching the expression '{0}' was not found", expr));
-                    break;
-                }
-            }
+            
+            // dst.TokenCount = count;
+            // var t = AsmOcToken.Empty;
+            // for(var i=0; i<count; i++)
+            // {
+            //     var expr = skip(parts,i);
+            //     if(AsmTokens.parse(expr, out t))
+            //         dst[i] = t;
+            //     else
+            //     {
+            //         result = (false, string.Format("A token matching the expression '{0}' was not found", expr));
+            //         break;
+            //     }
+            // }
             return result;
         }
     }

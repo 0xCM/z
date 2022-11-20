@@ -350,17 +350,6 @@ namespace Z0
             return true;
         }
 
-        [CmdOp("gen/api/tables")]
-        void GenRecords()
-        {
-            var generator = Wf.ApiTableGen();
-            var buffer = text.emitter();
-            var src = ApiMd.Parts;
-            var defs = TableDefs.defs(src);
-            iter(defs, src => generator.Emit(0u,src,buffer));
-            var dst = AppDb.CgStage("api.tables").Path("replicants", FileKind.Cs);
-            FileEmit(buffer.Emit(),dst);         
-        }
 
         [CmdOp("gen/symspan")]
         void GenSymSpan()

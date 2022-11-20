@@ -41,7 +41,7 @@ namespace Z0
         uint IDataStore.Size
             => size<T>();
 
-        Span<byte> IDataStore.Data
-            => bytes((T)this);
+        // Span<byte> IDataStore.Data
+        //     => bytes((T)this);
     }
 }

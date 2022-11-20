@@ -10,7 +10,7 @@ namespace Z0
     {
         public Index<SymLiteralRow> literals(IWfChannel channel, FilePath src)
         {
-            using var reader = TableConvention.reader<SymLiteralRow>(src, Symbolic.parse);
+            using var reader = CsvTables.reader<SymLiteralRow>(src, Symbolic.parse);
             var header = reader.Header.Split(Chars.Tab);
             if(header.Length != SymLiteralRow.FieldCount)
             {
@@ -33,10 +33,9 @@ namespace Z0
             return dst.ToArray();
         }
 
-
         public static Index<SymInfo> load(IWfChannel channel, FilePath src)
         {
-            using var reader = TableConvention.reader<SymInfo>(src, parse);
+            using var reader = CsvTables.reader<SymInfo>(src, parse);
             var header = reader.Header.Split(Chars.Pipe);
             if(header.Length != SymInfo.FieldCount)
             {

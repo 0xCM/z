@@ -12,7 +12,7 @@ namespace Z0
 
         readonly Index<RegAlloc> Allocated;
 
-        internal RegBank(RegFile file, NativeBuffer buffer, RegAlloc[] allocs)
+        public RegBank(RegFile file, NativeBuffer buffer, RegAlloc[] allocs)
         {
             File = file;
             Buffer = buffer;

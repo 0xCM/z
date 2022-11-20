@@ -43,11 +43,11 @@ namespace Z0
         public DataWidth Width
             => DataWidth.W128;
 
-        public ReadOnlySpan<byte> Data
-        {
-            [MethodImpl(Inline)]
-            get => Storage.Bytes;
-        }
+        // public ReadOnlySpan<byte> Data
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => sys.bytes(Storage);
+        // }
 
         [MethodImpl(Inline)]
         public ApiKeySeg Seg(byte index)
@@ -56,9 +56,9 @@ namespace Z0
         [MethodImpl(Inline)]
         public ApiKey WithSeg(byte index, ApiKeySeg src)
         {
-            var dst = recover<ushort>(Storage.Bytes);
+            ref var dst = ref @as<ApiKey,ushort>(this);
             seek(dst, index) = src;
-            return new ApiKey(Cells.load(w128, Storage.Bytes));
+            return this;
         }
 
         [MethodImpl(Inline)]
@@ -114,9 +114,9 @@ namespace Z0
         public static implicit operator ApiKey(ReadOnlySpan<byte> src)
             => new ApiKey(src);
 
-        [MethodImpl(Inline)]
-        public static implicit operator ReadOnlySpan<byte>(ApiKey src)
-            => src.Data;
+        // [MethodImpl(Inline)]
+        // public static implicit operator ReadOnlySpan<byte>(ApiKey src)
+        //     => src.Data;
 
         [MethodImpl(Inline)]
         public static implicit operator ApiKey(ReadOnlySpan<ApiKeySeg> src)

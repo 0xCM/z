@@ -6,11 +6,6 @@ namespace Z0
 {
     using static sys;
 
-    public abstract class WfChannel<C>
-    {
-
-    }
-
     public class WfEmit : IWfChannel
     {
         public static WfEmit create(IWfRuntime wf, KillMe host)

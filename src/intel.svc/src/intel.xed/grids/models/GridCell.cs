@@ -79,10 +79,10 @@ namespace Z0
                 get => Key.Logic;
             }
 
-            public ref readonly GridCol Def
+            public GridCol Def
             {
                 [MethodImpl(Inline)]
-                get => ref core.@as<GridCol>(core.bytes(this));
+                get => sys.@as<GridCol>(sys.bytes(this));
             }
 
             public bool IsEmpty

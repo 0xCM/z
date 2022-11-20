@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public struct Cell256<T> : IDataCell<Cell256<T>,W256,ByteBlock32>
+    public record struct Cell256<T> : IDataCell<Cell256<T>,W256,ByteBlock32>
         where T : unmanaged
     {
         public const uint Width = 256;
@@ -144,9 +144,6 @@ namespace Z0
 
         public override int GetHashCode()
             => Data.GetHashCode();
-
-        public override bool Equals(object src)
-            => src is Cell256<T> x && Equals(x);
 
         [MethodImpl(Inline)]
         public static implicit operator Cell256<T>(Vector256<T> x)

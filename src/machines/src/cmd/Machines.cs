@@ -297,7 +297,7 @@ namespace Z0
 
             for(var i=0; i<count; i++)
             {
-                ref readonly var j = ref first(recover<uint>(skip(src,i).Bytes));
+                ref readonly var j = ref first(recover<uint>(bytes(skip(src,i))));
                 Write(string.Format("{0:D4}:{1}",i, j.FormatHex()));
             }
 
@@ -328,7 +328,7 @@ namespace Z0
 
             for(var i=0; i<count; i++)
             {
-                ref readonly var j = ref first(recover<uint>(skip(src,i).Bytes));
+                ref readonly var j = ref first(recover<uint>(bytes(skip(src,i))));
                 Write(string.Format("{0:D4}:{1}",i, j.FormatHex()));
             }
 

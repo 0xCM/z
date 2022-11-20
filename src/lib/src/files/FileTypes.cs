@@ -33,14 +33,6 @@ namespace Z0
             return symbols.ExprKind(src.ToLower(), out dst);
         }
 
-        // public static FileKind kind(string src)
-        // {
-        //     var dst = FileKind.None;
-        //     var symbols = Symbols.index<FileKind>();
-        //     symbols.ExprKind(src.ToLower(), out dst);
-        //     return dst;
-        // }
-
         public static FileKind kind(FileExt src)
         {
             var dst = FileKind.None;

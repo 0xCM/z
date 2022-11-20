@@ -11,6 +11,44 @@ namespace Z0
 
     using static sys;
 
+    public struct VcInfo
+    {
+        public FolderPath VsRoot;
+
+        public FolderPath ToolRoot;
+
+        public Version128 Version;
+
+        public FolderPath ToolVersionRoot;
+
+        public static VcInfo Empty
+            => default;
+
+        public bool IsEmpty
+            => ToolRoot.IsEmpty;
+    }
+    
+    public struct WinSdkInfo
+    {
+        public string Version;
+
+        public IncludePath IncPaths;
+
+        public IncludePath LibPaths;
+
+        public string Format()
+        {
+            var dst = text.buffer();
+            dst.AppendLineFormat("SdkVer:{0}", Version);
+            dst.AppendLineFormat("/I{0}", IncPaths.Format());
+            dst.AppendLineFormat("/LIBPATH {0}", LibPaths.Format());
+            return dst.Emit();
+        }
+
+        public override string ToString()
+            => Format();
+    }
+    
     partial struct Vc
     {
         [Op]

@@ -47,6 +47,15 @@ namespace Z0
             => default(Cell128);
 
         /// <summary>
+        /// Creates a 128-bit value
+        /// </summary>
+        /// <param name="w">The bit-width selector</typeparam>
+        [MethodImpl(Inline), Op]
+        public static Cell128<T> alloc<T>(W128 w)
+            where T : unmanaged
+                => default(Cell128<T>);
+
+        /// <summary>
         /// Creates a 256-bit value
         /// </summary>
         /// <param name="w">The bit-width selector</typeparam>
@@ -55,11 +64,31 @@ namespace Z0
             => default(Cell256);
 
         /// <summary>
+        /// Creates a 256-bit value
+        /// </summary>
+        /// <param name="w">The bit-width selector</typeparam>
+        [MethodImpl(Inline), Op]
+        public static Cell256<T> alloc<T>(W256 w)
+            where T : unmanaged
+                => default(Cell256<T>);
+
+        /// <summary>
         /// Creates a 512-bit value
         /// </summary>
         /// <param name="w">The bit-width selector</typeparam>
         [MethodImpl(Inline), Op]
         public static Cell512 alloc(W512 w)
             => default(Cell512);
+
+
+        /// <summary>
+        /// Creates a 512-bit value
+        /// </summary>
+        /// <param name="w">The bit-width selector</typeparam>
+        [MethodImpl(Inline), Op]
+        public static Cell512<T> alloc<T>(W512 w)
+            where T : unmanaged
+                => default(Cell512<T>);
+
     }
 }

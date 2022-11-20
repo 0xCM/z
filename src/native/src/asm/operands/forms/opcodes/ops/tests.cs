@@ -11,85 +11,85 @@ namespace Z0.Asm
 
     partial class SdmOpCodes
     {
-        [MethodImpl(Inline), Op]
-        public static bool rex(in SdmOpCode src)
-        {
-            var result = false;
-            var count = min(src.TokenCount,(byte)4);
+        // [MethodImpl(Inline), Op]
+        // public static bool rex(in SdmOpCode src)
+        // {
+        //     var result = false;
+        //     var count = min(src.TokenCount,(byte)4);
 
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var token = ref src[i];
-                var kind = token.Kind;
-                if(kind == K.Rex || kind == K.RexB)
-                {
-                    result = true;
-                    break;
-                }
-            }
-            return result;
-        }
+        //     for(var i=0; i<count; i++)
+        //     {
+        //         ref readonly var token = ref src[i];
+        //         var kind = token.Kind;
+        //         if(kind == K.Rex || kind == K.RexB)
+        //         {
+        //             result = true;
+        //             break;
+        //         }
+        //     }
+        //     return result;
+        // }
 
-        [MethodImpl(Inline), Op]
-        public static bool evex(in SdmOpCode src)
-        {
-            var result = false;
-            if(src.IsNonEmpty)
-                result = src[0].Kind == K.Evex;
-            return result;
-        }
+        // [MethodImpl(Inline), Op]
+        // public static bool evex(in SdmOpCode src)
+        // {
+        //     var result = false;
+        //     if(src.IsNonEmpty)
+        //         result = src[0].Kind == K.Evex;
+        //     return result;
+        // }
 
-        [MethodImpl(Inline), Op]
-        public static bool vex(in SdmOpCode src)
-        {
-            var result = false;
-            if(src.IsNonEmpty)
-                result = src[0].Kind == K.Vex;
-            return result;
-        }
+        // [MethodImpl(Inline), Op]
+        // public static bool vex(in SdmOpCode src)
+        // {
+        //     var result = false;
+        //     if(src.IsNonEmpty)
+        //         result = src[0].Kind == K.Vex;
+        //     return result;
+        // }
 
-        [MethodImpl(Inline), Op]
-        public static bool hex8(in SdmOpCode src, out AsmOcToken dst)
-            => query(src, t => t.Kind == K.Hex8, out dst);
+        // [MethodImpl(Inline), Op]
+        // public static bool hex8(in SdmOpCode src, out AsmOcToken dst)
+        //     => query(src, t => t.Kind == K.Hex8, out dst);
 
-        [MethodImpl(Inline), Op]
-        public static bool rex(in SdmOpCode src, out AsmOcToken dst)
-            => query(src, t => t.Kind == K.Rex || t.Kind == K.RexB, out dst);
+        // [MethodImpl(Inline), Op]
+        // public static bool rex(in SdmOpCode src, out AsmOcToken dst)
+        //     => query(src, t => t.Kind == K.Rex || t.Kind == K.RexB, out dst);
 
-        [MethodImpl(Inline), Op]
-        public static bool imm(in SdmOpCode src, out AsmOcToken dst)
-            => query(src, t => t.Kind == K.ImmSize, out dst);
+        // [MethodImpl(Inline), Op]
+        // public static bool imm(in SdmOpCode src, out AsmOcToken dst)
+        //     => query(src, t => t.Kind == K.ImmSize, out dst);
 
-        [MethodImpl(Inline), Op]
-        public static bool vex(in SdmOpCode src, out AsmOcToken dst)
-            => query(src, t => t.Kind == K.Vex, out dst);
+        // [MethodImpl(Inline), Op]
+        // public static bool vex(in SdmOpCode src, out AsmOcToken dst)
+        //     => query(src, t => t.Kind == K.Vex, out dst);
 
-        [MethodImpl(Inline), Op]
-        public static bool evex(in SdmOpCode src, out AsmOcToken dst)
-            => query(src, t => t.Kind == K.Evex, out dst);
+        // [MethodImpl(Inline), Op]
+        // public static bool evex(in SdmOpCode src, out AsmOcToken dst)
+        //     => query(src, t => t.Kind == K.Evex, out dst);
 
-        [MethodImpl(Inline), Op]
-        public static bool regdigit(in SdmOpCode src, out AsmOcToken dst)
-            => query(src, t => t.Kind == K.RegDigit, out dst);
+        // [MethodImpl(Inline), Op]
+        // public static bool regdigit(in SdmOpCode src, out AsmOcToken dst)
+        //     => query(src, t => t.Kind == K.RegDigit, out dst);
 
-        [MethodImpl(Inline), Op]
-        public static bool query(in SdmOpCode src, Func<AsmOcToken,bool> predicate, out AsmOcToken dst)
-        {
-            var count = src.TokenCount;
-            var result = false;
-            dst = default;
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var token = ref src[i];
-                if(predicate(token))
-                {
-                    result = true;
-                    dst = token;
-                    break;
-                }
-            }
-            return result;
-        }
+        // [MethodImpl(Inline), Op]
+        // public static bool query(in SdmOpCode src, Func<AsmOcToken,bool> predicate, out AsmOcToken dst)
+        // {
+        //     var count = src.TokenCount;
+        //     var result = false;
+        //     dst = default;
+        //     for(var i=0; i<count; i++)
+        //     {
+        //         ref readonly var token = ref src[i];
+        //         if(predicate(token))
+        //         {
+        //             result = true;
+        //             dst = token;
+        //             break;
+        //         }
+        //     }
+        //     return result;
+        // }
 
         public static bool rex(string src)
             => text.index(src, AsmOcSymbols.Rex) >=0;

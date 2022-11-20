@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-
     partial class IntelSdm
     {
         string CalcOperands(ReadOnlySpan<char> sig)

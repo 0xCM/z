@@ -42,38 +42,38 @@ namespace Z0
                 => new Field((ushort)value, kind, FieldDataKind.InstClass);
 
             [MethodImpl(Inline), Op]
-            public static ref AmsInstClass value(Field src, out AmsInstClass dst)
+            public static AmsInstClass value(Field src, out AmsInstClass dst)
             {
                 dst = src;
-                return ref dst;
+                return dst;
             }
 
             [MethodImpl(Inline), Op]
-            public static ref Register value(Field src, out Register dst)
+            public static Register value(Field src, out Register dst)
             {
                 dst = src;
-                return ref dst;
+                return dst;
             }
 
             [MethodImpl(Inline), Op]
-            public static ref bit value(Field src, out bit dst)
+            public static bit value(Field src, out bit dst)
             {
                 dst = src;
-                return ref dst;
+                return dst;
             }
 
             [MethodImpl(Inline), Op]
-            public static ref byte value(Field src, out byte dst)
+            public static byte value(Field src, out byte dst)
             {
                 dst = src;
-                return ref dst;
+                return dst;
             }
 
             [MethodImpl(Inline), Op]
-            public static ref ushort value(Field src, out ushort dst)
+            public static ushort value(Field src, out ushort dst)
             {
                 dst = src;
-                return ref dst;
+                return dst;
             }
 
             readonly ushort Data;

@@ -119,7 +119,7 @@ namespace Z0.Asm
                         else
                         {
                             SdmOpCodes.parse(octext, out oc).Require();
-                            target.OpCodeValue = oc.OcValue();
+                            //target.OpCodeValue = oc.OcValue();
                         }
                         break;
 

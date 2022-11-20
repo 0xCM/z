@@ -82,7 +82,7 @@ namespace Z0
 
         public SpanBlock128<byte> Emit(uint index)
         {
-            var buffer = SpanBlocks.single<byte>(w128);
+            var buffer = SpanBlocks.alloc<byte>(w128, 1);
             PolySource.Fill(buffer);
             return buffer;
         }

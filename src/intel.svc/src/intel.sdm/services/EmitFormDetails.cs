@@ -35,9 +35,9 @@ namespace Z0.Asm
                 dst.OpCode = form.OpCode;
                 dst.Mode64 = ((form.Mode & AsmBitModeKind.Mode64) != 0);
                 dst.Mode32 = ((form.Mode & AsmBitModeKind.Mode32) != 0);
-                dst.IsRex = SdmOpCodes.rex(form.OpCode);
-                dst.IsVex = SdmOpCodes.vex(form.OpCode);
-                dst.IsEvex = SdmOpCodes.evex(form.OpCode);
+                //dst.IsRex = SdmOpCodes.rex(form.OpCode);
+                //dst.IsVex = SdmOpCodes.vex(form.OpCode);
+                //dst.IsEvex = SdmOpCodes.evex(form.OpCode);
                 dst.Description = form.Description;
             }
             buffer.Sort();

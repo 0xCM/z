@@ -50,10 +50,10 @@ namespace Z0
         public void bm_create_fromfixed_16x16x16()
         {
             var src = Cells.load<ushort>(w256,Random.Span<ushort>(16));
-            var dst = Cells.alloc(w256);
-            Cells.store(src, dst.Bytes);
-            var A = BitMatrix.primal(n16, dst.Bytes);
-            var B = BitMatrix.primal(n16, src.Bytes);
+            var dst = sys.bytes(Cells.alloc(w256));
+            Cells.store(src, dst);
+            var A = BitMatrix.primal(n16, dst);
+            var B = BitMatrix.primal(n16, bytes(src));
             Claim.require(BitMatrix.same(A,B));
         }
 

@@ -17,7 +17,7 @@ namespace Z0
         public static string format(ApiKey src)
         {
             var dst = text.buffer();
-            var data = span16u(src.Data);
+            var data = span16u(src);
             var j = 0;
             var k = 0;
 
@@ -41,7 +41,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static ApiKey key(PartName part, ushort host, ApiClass @class)
         {
-            var dst = span16u(Cells.alloc(w128).Bytes);
+            var dst = span16u(Cells.alloc(w128));
             seek(dst,0) = (ushort)(uint)sys.hash(part);
             seek(dst,1) = host;
             seek(dst,2) = @class;
@@ -51,7 +51,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static ApiKey key(PartId part, ushort host, ApiClass @class, params ushort[] data)
         {
-            var dst = span16u(Cells.alloc(w128).Bytes);
+            var dst = span16u(Cells.alloc(w128));
             seek(dst,0) = (ushort)part;
             seek(dst,1) = host;
             seek(dst,2) = @class;
@@ -124,7 +124,7 @@ namespace Z0
         public static byte render<N>(ApiKey src, N n, byte offset, Span<char> dst)
             where N : unmanaged, ITypeNat
         {
-            var data = span16u(src.Data);
+            var data = span16u(src);
             var chars = Hex.render(LowerCase,skip(data, n.NatValue));
             seek(dst,offset + 0) = skip(chars,3);
             seek(dst,offset + 1) = skip(chars,2);
@@ -145,7 +145,7 @@ namespace Z0
         [Op]
         public static string bitfield(ApiKey src)
         {
-            var data = span16u(src.Data);
+            var data = span16u(src);
             var buffer = Storage.chars(n64).Data;
             ref var dst = ref first(buffer);
 

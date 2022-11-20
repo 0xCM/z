@@ -84,7 +84,7 @@ namespace Z0
             var v1 = Calcs.vbitlogic<T>(w).and(x,y);
             var storage = Cells.alloc(w128);
 
-            ref var dst = ref first<T>(storage.Bytes);
+            ref var dst = ref first<T>(bytes(storage));
             var count = cpu.vcount<T>(w);
 
             for(byte i=0; i< count; i++)

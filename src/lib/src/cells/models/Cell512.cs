@@ -8,7 +8,7 @@ namespace Z0
 
     using F = Cell512;
 
-    public struct Cell512 : IDataCell<Cell512,W512,Vector512<ulong>>
+    public record struct Cell512 : IDataCell<Cell512,W512,Vector512<ulong>>
     {
         public const uint Width = 512;
 
@@ -18,18 +18,6 @@ namespace Z0
 
         public CellKind Kind
             => CellKind.Cell512;
-
-        public Vector512<ulong> v512
-        {
-            [MethodImpl(Inline)]
-            get => gcpu.vload(w512, @as<ulong>(Bytes));
-        }
-
-        public Span<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => bytes(this);
-        }
 
         public Cell256 Lo
         {
@@ -76,21 +64,21 @@ namespace Z0
             where T : unmanaged
                 => new Cell512(src.As<ulong>());
 
-        [MethodImpl(Inline)]
-        public ref Cell8 Cell8(byte i)
-            => ref @as<Cell8>(Bytes);
+        // [MethodImpl(Inline)]
+        // public ref Cell8 Cell8(byte i)
+        //     => ref @as<Cell8>(Bytes);
 
-        [MethodImpl(Inline)]
-        public ref Cell16 Cell16(byte i)
-            => ref @as<Cell16>(Bytes);
+        // [MethodImpl(Inline)]
+        // public ref Cell16 Cell16(byte i)
+        //     => ref @as<Cell16>(Bytes);
 
-        [MethodImpl(Inline)]
-        public ref Cell32 Cell32(byte i)
-            => ref @as<Cell32>(Bytes);
+        // [MethodImpl(Inline)]
+        // public ref Cell32 Cell32(byte i)
+        //     => ref @as<Cell32>(Bytes);
 
-        [MethodImpl(Inline)]
-        public ref Cell64 Cell64(byte i)
-            => ref @as<Cell64>(Bytes);
+        // [MethodImpl(Inline)]
+        // public ref Cell64 Cell64(byte i)
+        //     => ref @as<Cell64>(Bytes);
 
         [MethodImpl(Inline)]
         public Vector512<T> ToVector<T>()
@@ -115,13 +103,10 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public bool Equals(Vector512<ulong> src)
-            => v512.Equals(src);
+            => Lo == src.Lo && Hi == src.Hi;
 
         public override int GetHashCode()
             => HashCode.Combine(X0,X1);
-
-        public override bool Equals(object src)
-            => src is Cell512 x && Equals(x);
 
         public override string ToString()
             => Format();

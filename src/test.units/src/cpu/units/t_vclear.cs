@@ -54,26 +54,6 @@ namespace Z0
                 var x2 = gcpu.vsrl(x1,start);
                 Claim.nea(gcpu.vnonz(x2));
             }
-        }
-
-        public void clearalt_256x8()
-        {
-            var tr = gcpu.vclearalt<byte>(n256);
-            for(var i=0; i<RepCount; i++)
-            {
-                var x = Random.CpuVector<byte>(n256);
-                var y = cpu.vshuf16x8(x, tr);
-                var xs = x.ToBlock();
-                for(var j =0; j< xs.CellCount; j++)
-                {
-                    if(j % 2 != 0)
-                        xs[j] = 0;
-                }
-
-                var xt = xs.LoadVector();
-
-                Claim.veq(xt,y);
-            }
-        }
+        }        
     }
 }

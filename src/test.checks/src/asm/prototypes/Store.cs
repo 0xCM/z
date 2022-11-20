@@ -79,11 +79,11 @@ namespace Z0.Asm
         [Op]
         public unsafe void deposit_intrinsic(Span<Cell256> dst, Cell256 a0, Cell256 a1, Cell256 a2, Cell256 a3, Cell256 a4)
         {
-            cpu.vstore(cpu.vload(w256, first(a0.Bytes)), ref first(seek(dst,0).Bytes));
-            cpu.vstore(cpu.vload(w256, first(a1.Bytes)), ref first(seek(dst,1).Bytes));
-            cpu.vstore(cpu.vload(w256, first(a2.Bytes)), ref first(seek(dst,2).Bytes));
-            cpu.vstore(cpu.vload(w256, first(a3.Bytes)), ref first(seek(dst,3).Bytes));
-            cpu.vstore(cpu.vload(w256, first(a4.Bytes)), ref first(seek(dst,4).Bytes));
+            cpu.vstore(cpu.vload(w256, first(bytes(a0))), ref first(bytes(seek(dst,0))));
+            cpu.vstore(cpu.vload(w256, first(bytes(a1))), ref first(bytes(seek(dst,1))));
+            cpu.vstore(cpu.vload(w256, first(bytes(a2))), ref first(bytes(seek(dst,2))));
+            cpu.vstore(cpu.vload(w256, first(bytes(a3))), ref first(bytes(seek(dst,3))));
+            cpu.vstore(cpu.vload(w256, first(bytes(a4))), ref first(bytes(seek(dst,4))));
         }
 
         [Op]

@@ -88,9 +88,9 @@ namespace Z0
         public static implicit operator Vector256<T>(in BitGrid256<M,N,T> src)
             => src.Data;
 
-        [MethodImpl(Inline)]
-        public static implicit operator SpanBlock256<T>(in BitGrid256<M,N,T> src)
-            => src.Data.ToBlock();
+        // [MethodImpl(Inline)]
+        // public static implicit operator SpanBlock256<T>(in BitGrid256<M,N,T> src)
+        //     => src.Data.ToBlock();
 
         [MethodImpl(Inline)]
         public static implicit operator BitGrid256<M,N,T>(in SpanBlock256<T> src)

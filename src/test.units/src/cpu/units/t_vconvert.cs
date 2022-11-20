@@ -78,17 +78,6 @@ namespace Z0
             VClaims.veq(y6, z6);
         }
 
-        public void block_32x8u_to_128x32u()
-        {
-            var blockA = SpanBlocks.parts<byte>(n32,1,2,3,4);
-            var x = cpu.vparts(n128,1,2,3,4);
-            var blockB = x.ToBlock();
-            var y = vblocks.vinflate128x32u(blockA,0);
-            var blockC = y.ToBlock();
-            Claim.eq(x,y);
-            Claim.eq(blockB,blockC);
-        }
-
         public void block_64x8u_to_2x128x32u()
         {
             var block = SpanBlocks.parts<byte>(n64,1,2,3,4,5,6,7,8);
@@ -164,7 +153,7 @@ namespace Z0
 
             var tbc = 1;
 
-            var sb = SpanBlocks.single<byte>(sw);
+            var sb = SpanBlocks.alloc<byte>(sw,1);
             var tb = SpanBlocks.alloc<ushort>(tw,tbc);
 
             for(var sample = 0; sample < RepCount; sample++)
@@ -196,7 +185,7 @@ namespace Z0
 
             var tbc = 2;
 
-            var sb = SpanBlocks.single<byte>(sw);
+            var sb = SpanBlocks.alloc<byte>(sw,1);
             var tb = SpanBlocks.alloc<ushort>(tw,tbc);
 
             for(var sample = 0; sample < RepCount; sample++)

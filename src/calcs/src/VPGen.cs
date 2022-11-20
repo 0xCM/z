@@ -25,12 +25,12 @@ namespace Z0
         public static Vector128<T> vpalt<T>(N128 n, T a, T b)
             where T : unmanaged
         {
-            var data = SpanBlocks.single<T>(n);
+            var data = Cells.alloc<T>(n);
             var len = CellCalcs.blocklength<T>(n);
             ref var mem = ref data.First;
             for(var i=0; i<len; i++)
                 seek(mem, i) = gmath.even(i) ? a : b;
-            return vload(n, in data.First);
+            return vload(n, in mem);
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Z0
             where T : unmanaged
         {
             var current = first;
-            var data = SpanBlocks.single<T>(n);
+            var data = Cells.alloc<T>(n);
             var len = CellCalcs.blocklength<T>(n);
             ref var mem = ref data.First;
             for(var i=0; i < len; i++)
@@ -67,7 +67,7 @@ namespace Z0
             where T : unmanaged
         {
             var current = first;
-            var data = SpanBlocks.single<T>(n);
+            var data = Cells.alloc<T>(n);
             var len = CellCalcs.blocklength<T>(n);
             ref var mem = ref data.First;
             for(var i=0; i<len; i++)
@@ -90,7 +90,7 @@ namespace Z0
             where T : unmanaged
         {
             var current = first;
-            var data = SpanBlocks.single<T>(n);
+            var data = Cells.alloc<T>(n);
             var len = CellCalcs.blocklength<T>(n);
             ref var mem = ref data.First;
             for(var i=0; i < len; i++)
@@ -112,7 +112,7 @@ namespace Z0
             where T : unmanaged
         {
             var current = first;
-            var data = SpanBlocks.single<T>(n);
+            var data = Cells.alloc<T>(n);
             var len = CellCalcs.blocklength<T>(n);
             ref var mem = ref data.First;
             for(var i=0; i < len; i++)
@@ -123,39 +123,39 @@ namespace Z0
             return vload(n, in mem);
         }
 
-        [Op, Closures(UnsignedInts)]
-        public static Vector256<T> vdecrements<T>(N256 n, T first, params Swap[] swaps)
-            where T : unmanaged
-        {
-            var current = first;
-            var data = SpanBlocks.single<T>(n);
-            var len = CellCalcs.blocklength<T>(n);
-            ref var mem = ref data.First;
-            for(var i=0; i < len; i++)
-            {
-                seek(mem, i) = current;
-                current = gmath.dec(current);
-            }
+        // [Op, Closures(UnsignedInts)]
+        // public static Vector256<T> vdecrements<T>(N256 n, T first, params Swap[] swaps)
+        //     where T : unmanaged
+        // {
+        //     var current = first;
+        //     var data = Cells.alloc<T>(n);
+        //     var len = CellCalcs.blocklength<T>(n);
+        //     ref var mem = ref data.First;
+        //     for(var i=0; i < len; i++)
+        //     {
+        //         seek(mem, i) = current;
+        //         current = gmath.dec(current);
+        //     }
 
-            return vload(n, in data.Swap(swaps).First);
-        }
+        //     return vload(n, in data.Swap(swaps).First);
+        // }
 
-        [Op, Closures(UnsignedInts)]
-        public static Vector128<T> vdecrements<T>(N128 n, T first, params Swap[] swaps)
-            where T : unmanaged
-        {
-            var current = first;
-            var data = SpanBlocks.single<T>(n);
-            var len = CellCalcs.blocklength<T>(n);
-            ref var mem = ref data.First;
-            for(var i=0; i < len; i++)
-            {
-                seek(mem, i) = current;
-                current = gmath.dec(current);
-            }
+        // [Op, Closures(UnsignedInts)]
+        // public static Vector128<T> vdecrements<T>(N128 n, T first, params Swap[] swaps)
+        //     where T : unmanaged
+        // {
+        //     var current = first;
+        //     var data = Cells.alloc<T>(n);
+        //     var len = CellCalcs.blocklength<T>(n);
+        //     ref var mem = ref data.First;
+        //     for(var i=0; i < len; i++)
+        //     {
+        //         seek(mem, i) = current;
+        //         current = gmath.dec(current);
+        //     }
 
-            return vload(n, in data.Swap(swaps).First);
-        }
+        //     return vload(n, in data.Swap(swaps).First);
+        // }
 
         /// <summary>
         /// Creates a 128-bit vector with components that increase by a specified step from an initial value
@@ -168,7 +168,7 @@ namespace Z0
             where T : unmanaged
         {
             var current = first;
-            var data = SpanBlocks.single<T>(n);
+            var data = Cells.alloc<T>(n);
             var len = CellCalcs.blocklength<T>(n);
             ref var mem = ref data.First;
             for(var i=0; i<len; i++)
@@ -190,7 +190,7 @@ namespace Z0
             where T : unmanaged
         {
             var current = first;
-            var data = SpanBlocks.single<T>(n);
+            var data = Cells.alloc<T>(n);
             var len = CellCalcs.blocklength<T>(n);
             ref var mem = ref data.First;
             for(var i=0; i<len; i++)
@@ -202,39 +202,39 @@ namespace Z0
             return vload(n, in mem);
         }
 
-        [Op, Closures(UnsignedInts)]
-        public static Vector128<T> vincrements<T>(N128 n, T first, params Swap[] swaps)
-            where T : unmanaged
-        {
-            var current = first;
-            var data = SpanBlocks.single<T>(n);
-            var len = CellCalcs.blocklength<T>(n);
-            ref var mem = ref data.First;
-            for(var i=0; i<len; i++)
-            {
-                seek(mem, i) = current;
-                current = gmath.inc(current);
-            }
+        // [Op, Closures(UnsignedInts)]
+        // public static Vector128<T> vincrements<T>(N128 n, T first, params Swap[] swaps)
+        //     where T : unmanaged
+        // {
+        //     var current = first;
+        //     var data = Cells.alloc<T>(n);
+        //     var len = CellCalcs.blocklength<T>(n);
+        //     ref var mem = ref data.First;
+        //     for(var i=0; i<len; i++)
+        //     {
+        //         seek(mem, i) = current;
+        //         current = gmath.inc(current);
+        //     }
 
-            return vload(n, in data.Swap(swaps).First);
-        }
+        //     return vload(n, in data.Swap(swaps).First);
+        // }
 
-        [Op, Closures(UnsignedInts)]
-        public static Vector256<T> vincrements<T>(N256 n, T first, params Swap[] swaps)
-            where T : unmanaged
-        {
-            var current = first;
-            var data = SpanBlocks.single<T>(n);
-            var len = CellCalcs.blocklength<T>(n);
-            ref var mem = ref data.First;
-            for(var i=0; i<len; i++)
-            {
-                seek(mem, i) = current;
-                current = gmath.inc(current);
-            }
+        // [Op, Closures(UnsignedInts)]
+        // public static Vector256<T> vincrements<T>(N256 n, T first, params Swap[] swaps)
+        //     where T : unmanaged
+        // {
+        //     var current = first;
+        //     var data = Cells.alloc<T>(n);
+        //     var len = CellCalcs.blocklength<T>(n);
+        //     ref var mem = ref data.First;
+        //     for(var i=0; i<len; i++)
+        //     {
+        //         seek(mem, i) = current;
+        //         current = gmath.inc(current);
+        //     }
 
-            return vload(n, in data.Swap(swaps).First);
-        }
+        //     return vload(n, in data.Swap(swaps).First);
+        // }
 
         [MethodImpl(Inline), Op]
         public static Vector256<byte> LaneMerge8u()

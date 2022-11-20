@@ -31,7 +31,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public BitBlock(T src, uint bitcount)
         {
-            data = SpanBlocks.single<T>(w256);
+            data = SpanBlocks.alloc<T>(w256,1);
             data.First = src;
             BitCount = bitcount;
         }

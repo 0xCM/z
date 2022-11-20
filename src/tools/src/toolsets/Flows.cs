@@ -1,39 +1,39 @@
-//-----------------------------------------------------------------------------
-// Copyright   :  (c) Chris Moore, 2020
-// License     :  MIT
-//-----------------------------------------------------------------------------
-namespace Z0
-{
-    partial class Tools
-    {
-        sealed class EmptyFlow : IFileFlowType
-        {
-            public static EmptyFlow Instance = new();
+// //-----------------------------------------------------------------------------
+// // Copyright   :  (c) Chris Moore, 2020
+// // License     :  MIT
+// //-----------------------------------------------------------------------------
+// namespace Z0
+// {
+//     partial class Tools
+//     {
+//         sealed class EmptyFlow : IFileFlowType
+//         {
+//             public static EmptyFlow Instance = new();
 
-            public FileKind SourceKind => FileKind.None;
+//             public FileKind SourceKind => FileKind.None;
 
-            public FileKind TargetKind => FileKind.None;
+//             public FileKind TargetKind => FileKind.None;
 
-            public IActor Actor => EmptyActor.Instance;
+//             public IActor Actor => EmptyActor.Instance;
 
-            public dynamic Source => SourceKind;
+//             public dynamic Source => SourceKind;
 
-            public dynamic Target => TargetKind;
+//             public dynamic Target => TargetKind;
 
-            public string Format() => EmptyString;
-        }
+//             public string Format() => EmptyString;
+//         }
 
-        sealed class EmptyActor : IActor
-        {
-            public static EmptyActor Instance = new();
+//         sealed class EmptyActor : IActor
+//         {
+//             public static EmptyActor Instance = new();
 
-            public @string Name => @string.Empty;
+//             public @string Name => @string.Empty;
 
-            public Hash32 Hash => 0;
+//             public Hash32 Hash => 0;
 
-            public bool IsEmpty => true;
+//             public bool IsEmpty => true;
 
-            public bool IsNonEmpty => false;
-        }
-    }
-}
+//             public bool IsNonEmpty => false;
+//         }
+//     }
+// }

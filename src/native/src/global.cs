@@ -100,7 +100,7 @@ namespace global
         {
             var cell = Cells.alloc(w128);
             var count = (byte)min(src.Length, 15);
-            var dst = cell.Bytes;
+            var dst = bytes(cell);
             for(var i=0; i<count; i++)
                 seek(dst,i) = skip(src,i);
             BitNumbers.cell8(cell, 15) = count;

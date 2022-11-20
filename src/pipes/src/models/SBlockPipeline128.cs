@@ -37,7 +37,7 @@ namespace Z0
             var counter = 0u;
             for(var j=0u; j<count; j++)
             {
-                var dst = SpanBlocks.single<T>(W);
+                var dst = SpanBlocks.alloc<T>(W,1);
                 var src = Blocks.Emit(j);
                 counter += Projector.Map(src, dst);
                 Receiver.Deposit(dst);

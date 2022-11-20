@@ -19,9 +19,6 @@ namespace Z0
             public GAsciLookup GenAsciLookups(IWfRuntime wf)
                 => Service<GAsciLookup>(wf);
 
-            public ApiTableGen ApiTableGen(IWfRuntime wf)
-                => Service<ApiTableGen>(wf);
-
             public GLiteralProvider GenLitProviders(IWfRuntime wf)
                 => Service<GLiteralProvider>(wf);
 
@@ -44,9 +41,6 @@ namespace Z0
         public static GAsciLookup GenAsciLookups(this IWfRuntime wf)
             => Services.GenAsciLookups(wf);
 
-        public static ApiTableGen ApiTableGen(this IWfRuntime wf)
-            => Services.ApiTableGen(wf);
-
         public static GLiteralProvider GenLitProviders(this IWfRuntime wf)
             => Services.GenLitProviders(wf);
 
@@ -55,6 +49,5 @@ namespace Z0
 
        public static CsGenCmd CsGenCmd(this IWfRuntime wf)
             => Services.CsGenCmd(wf);
-
     }
 }

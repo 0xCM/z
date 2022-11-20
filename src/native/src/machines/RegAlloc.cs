@@ -28,7 +28,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        internal RegAlloc(RegSeqSpec spec, BufferToken[] tokens)
+        public RegAlloc(RegSeqSpec spec, BufferToken[] tokens)
         {
             Id = spec.Id;
             Tokens = tokens;

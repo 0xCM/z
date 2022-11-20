@@ -8,7 +8,7 @@ namespace Z0
 
     using F = Cell128;
 
-    public struct Cell128 : IDataCell<F,W128,Vector128<ulong>>
+    public readonly record struct Cell128 : IDataCell<F,W128,Vector128<ulong>>
     {
         public const uint Width = 128;
 
@@ -61,11 +61,6 @@ namespace Z0
             get => Empty;
         }
 
-        public Span<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => bytes(this);
-        }
 
         public Vector128<byte> V8u
         {
@@ -127,21 +122,21 @@ namespace Z0
             get => Content.AsDouble();
         }
 
-        [MethodImpl(Inline)]
-        public ref Cell8 Cell8(byte i)
-            => ref @as<Cell8>(Bytes);
+        // [MethodImpl(Inline)]
+        // public Cell8 Cell8(byte i)
+        //     => @as<Cell8>(V8u);
 
-        [MethodImpl(Inline)]
-        public ref Cell16 Cell16(byte i)
-            => ref @as<Cell16>(Bytes);
+        // [MethodImpl(Inline)]
+        // public ref Cell16 Cell16(byte i)
+        //     => ref @as<Cell16>(Bytes);
 
-        [MethodImpl(Inline)]
-        public ref Cell32 Cell32(byte i)
-            => ref @as<Cell32>(Bytes);
+        // [MethodImpl(Inline)]
+        // public ref Cell32 Cell32(byte i)
+        //     => ref @as<Cell32>(Bytes);
 
-        [MethodImpl(Inline)]
-        public ref Cell64 Cell64(byte i)
-            => ref @as<Cell64>(Bytes);
+        // [MethodImpl(Inline)]
+        // public ref Cell64 Cell64(byte i)
+        //     => ref @as<Cell64>(Bytes);
 
         [MethodImpl(Inline)]
         public byte Cell(W8 w, byte index)
@@ -203,9 +198,6 @@ namespace Z0
 
         public override int GetHashCode()
             => Hash;
-
-        public override bool Equals(object src)
-            => src is Cell128 x && Equals(x);
 
         public static Cell128 Empty
             => default;
