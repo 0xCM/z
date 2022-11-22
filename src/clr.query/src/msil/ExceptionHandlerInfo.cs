@@ -2,10 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 namespace Msil
 {
-    using System;
-
     public sealed class ExceptionHandlerInfo
-    {
+    {        
         public ExceptionHandlerInfo(int startAddress, int endAddress, Type type, int kind)
         {
             StartAddress = startAddress;

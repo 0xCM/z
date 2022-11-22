@@ -11,30 +11,12 @@ namespace Z0
     {
         static int SegCount;
 
+        [MethodImpl(Inline)]
+        public static ClrEnumAdapter<E> @enum<E>()
+            where E : unmanaged, Enum
+                => default;
+
         const NumericKind Closure = UnsignedInts;
-
-        public static ReadOnlySeq<ApiLiteralInfo> apilits(Assembly[] src)
-        {
-            var providers = src.Types().Tagged<LiteralProviderAttribute>()
-                  .Select(x => (Type:x, Attrib:x.Tag<LiteralProviderAttribute>().Require()))
-                  .Select(x => new LiteralProvider(x.Type.Assembly.Id(), x.Type, x.Attrib.Group, x.Type.Name)).Index();
-            var literals = Literals.runtimelits(providers);
-            var count = literals.Count;
-            var dst = sys.alloc<ApiLiteralInfo>(count);
-            for(var i=0u; i<count; i++)
-            {
-                ref var target = ref seek(dst,i);
-                ref readonly var literal = ref literals[i];
-                target.Part = literal.Part;
-                target.Type = literal.Type;
-                target.Group = literal.Group;
-                target.Name = literal.Name;
-                target.Kind = literal.Kind.ToString();
-                target.Value = literal.Value;
-            }
-            return dst.Sort();
-        }
-
 
         [Op]
         public static uint example(SymStore<string> store, Span<SymRef> refs, Span<string> found)

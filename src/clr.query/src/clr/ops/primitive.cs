@@ -6,8 +6,12 @@ namespace Z0
 {
     partial struct Clr
     {
+        /// <summary>
+        /// Determines whether a specified type is a system-defined primitive
+        /// </summary>
+        /// <param name="src">The type to test</param>
         [MethodImpl(Inline), Op]
-        public static unsafe TypeCode typecode(in SystemTypeCodes src, byte index)
-            => (TypeCode)(*(core.address(src) + index).Pointer<byte>());
+        public static bool primitive(Type src)
+            => PrimalBits.kind(src) != 0;
     }
 }

@@ -5,7 +5,7 @@
 namespace Z0
 {
     [ApiHost]
-    public readonly partial struct EvalResults
+    public readonly struct EvalResults
     {
         const NumericKind Closure = UnsignedInts;
 

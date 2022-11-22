@@ -12,6 +12,56 @@ namespace Z0
 
     public sealed class ApiMd : AppService<ApiMd>
     {
+        public Index<SymLiteralRow> literals(IWfChannel channel, FilePath src)
+        {
+            using var reader = CsvTables.reader<SymLiteralRow>(src, Symbolic.parse);
+            var header = reader.Header.Split(Chars.Tab);
+            if(header.Length != SymLiteralRow.FieldCount)
+            {
+                channel.Error(AppMsg.FieldCountMismatch.Format(SymLiteralRow.FieldCount, header.Length));
+                return sys.empty<SymLiteralRow>();
+            }
+
+            var dst = list<SymLiteralRow>();
+            while(!reader.Complete)
+            {
+                var outcome = reader.ReadRow(out var row);
+                if(!outcome)
+                {
+                    channel.Error(outcome.Message);
+                    break;
+                }
+                dst.Add(row);
+            }
+
+            return dst.ToArray();
+        }
+
+        public static Index<SymInfo> symbols(IWfChannel channel, FilePath src)
+        {
+            using var reader = CsvTables.reader<SymInfo>(src, Symbolic.parse);
+            var header = reader.Header.Split(Chars.Pipe);
+            if(header.Length != SymInfo.FieldCount)
+            {
+                channel.Error(AppMsg.FieldCountMismatch.Format(SymInfo.FieldCount, header.Length));
+                return sys.empty<SymInfo>();
+            }
+            var dst = list<SymInfo>();
+            while(!reader.Complete)
+            {
+                var outcome = reader.ReadRow(out var row);
+                if(!outcome)
+                {
+                    channel.Error(outcome.Message);
+                    break;
+                }
+                dst.Add(row);
+            }
+
+            return dst.ToArray();
+        }
+
+
         static IModuleArchive archive(FolderPath root)
             => new ModuleArchive(root);
 

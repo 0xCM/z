@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     using System.Text.Json;
 
     public sealed record class JsonSetting<T>

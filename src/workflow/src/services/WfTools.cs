@@ -31,7 +31,7 @@ namespace Z0
                 ref readonly var fv = ref skip(values,i);
                 seek(target,i) = new ToolCmdArg(fv.Field.Name, fv.Value?.ToString() ?? EmptyString);
             }
-            return new ToolCmdSpec(tool, CmdTypes.identify(t), buffer);
+            return new ToolCmdSpec(tool, ApiCmdTypes.identify(t), buffer);
         }
     }
 }

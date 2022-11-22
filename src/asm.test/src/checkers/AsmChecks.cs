@@ -291,24 +291,24 @@ namespace Z0
             AsmSigs.parse("adc r16, r16", out var sig);
             SdmOpCodes.parse("11 /r", out var oc1);
             SdmOpCodes.parse("13 /r", out var oc2);
-            var count = min(oc1.TokenCount, oc2.TokenCount);
-            var token = AsmOcToken.Empty;
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var ta = ref oc1[i];
-                ref readonly var tb = ref oc2[i];
-                if(ta.Kind == AsmOcTokenKind.Sep && tb.Kind == AsmOcTokenKind.Sep)
-                    continue;
+            // var count = min(oc1.TokenCount, oc2.TokenCount);
+            // var token = AsmOcToken.Empty;
+            // for(var i=0; i<count; i++)
+            // {
+            //     ref readonly var ta = ref oc1[i];
+            //     ref readonly var tb = ref oc2[i];
+            //     if(ta.Kind == AsmOcTokenKind.Sep && tb.Kind == AsmOcTokenKind.Sep)
+            //         continue;
 
-                if(ta != tb)
-                {
-                    token = tb;
-                    break;
-                }
-            }
+            //     if(ta != tb)
+            //     {
+            //         token = tb;
+            //         break;
+            //     }
+            // }
 
-            if(SdmOpCodes.diff(oc1, oc2, out token))
-                Write(token.Format());
+            // if(SdmOpCodes.diff(oc1, oc2, out token))
+            //     Write(token.Format());
 
             var sigs = AsmSigTokens.create();
             var src = sigs;

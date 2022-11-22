@@ -99,6 +99,6 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator ClrEnumFieldAdapter(ClrEnumFieldAdapter<T> src)
-            => new ClrEnumFieldAdapter(src.Index, src.Definition, core.bw64(src.Value));
+            => new ClrEnumFieldAdapter(src.Index, src.Definition, sys.bw64(src.Value));
     }
 }

@@ -204,7 +204,7 @@ namespace Z0
         void ShowThread()
             => Write(string.Format("ThreadId:{0}", Kernel32.GetCurrentThreadId()));
 
-        [CmdOp(EnvMod.Names.EnvTools)]
+        [CmdOp("env/tools")]
         void EnvTools(CmdArgs args)
             => Env.tools(Channel, args);
 

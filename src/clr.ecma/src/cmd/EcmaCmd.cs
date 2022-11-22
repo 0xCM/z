@@ -16,30 +16,6 @@ namespace Z0
 
         ApiMd ApiMd => Wf.ApiMd();
 
-        public static void exec(IWfChannel channel, CatalogAssemblies cmd)
-        {
-            var src = from file in cmd.Source.DbArchive().Enumerate("*.dll")
-                        where EcmaReader.valid(file)
-                        select file;            
-            var dst = cmd.Target.DbArchive();
-            var formatter = Tables.formatter<EcmaRowStats>();
-            iter(src, path => {
-                if(EcmaReader.file(path, out var file))
-                {
-                    try
-                    {
-                        var reader = EcmaReader.create(file);
-                        var stats = EcmaReader.stats(reader);
-                        iter(stats, row => channel.Row(formatter.Format(row)));
-                    }
-                    finally
-                    {
-                        file.Dispose();
-                    }
-                }
-            });      
-        }        
-                
         public void EmitCatalog(IApiCatalog src)
         {
             var dst = ApiPacks.create();
@@ -49,14 +25,6 @@ namespace Z0
 
         static IApiPack Dst
             => ApiPacks.create();
-
-        [CmdOp("ecma/catalog")]
-        void EmitEcmaCatalog(CmdArgs args)
-        {
-            var cmd = new CatalogAssemblies();
-            cmd.Source = FS.dir(args[0]);
-            exec(Channel, cmd);        
-        }
 
         [CmdOp("ecma/emit")]
         void EcmaEmitMetaDumps(CmdArgs args)

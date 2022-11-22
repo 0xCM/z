@@ -5,12 +5,13 @@
 
 namespace Z0
 {
-    using System.IO.Compression;
-
-    using Microsoft.Extensions.FileSystemGlobbing;
-
     using static sys;
-    using static Archives.CommandNames;
+
+    using static ArchiveDomain.CommandNames;
+    using static ArchiveDomain;
+
+    using System.IO.Compression;
+    using Microsoft.Extensions.FileSystemGlobbing;
 
     public class Archives : ApiModule<Archives>
     {        
@@ -33,15 +34,6 @@ namespace Z0
         public static Task<ExecToken> copy(IWfChannel channel, FolderPath src, FolderPath dst)
             => Cmd.start(channel, FS.path("robocopy.exe"), Cmd.args(src, dst, "/e"));
 
-        public class CommandNames 
-        {
-            public const string FilesGather = "files/gather";
-
-            public const string FilesCopy = "files/copy";
-
-            public const string FilesPack = "files/pack";
-        }
-
         public static IModuleArchive modules(FolderPath src)
             => new ModuleArchive(src);
 
@@ -53,10 +45,6 @@ namespace Z0
         public record struct PackFolder(FolderPath Source, FileUri Target) 
             : IApiCmdFlow<PackFolder,FolderPath,FileUri> {}
 
-        [Cmd(FilesGather)]
-        public record struct GatherFiles(FolderPath Source, FolderPath Target, FileExt Ext) 
-            : IApiCmdFlow<GatherFiles,FolderPath,FolderPath> {}
-
         [MethodImpl(Inline), CmdFx(FilesCopy)]
         public static CopyFiles copy(FolderPath src, FolderPath dst)
             => new (src,dst);        
@@ -65,29 +53,6 @@ namespace Z0
         public static PackFolder pack(FolderPath src, FileUri dst)
             => new (src,dst);        
 
-        [MethodImpl(Inline), CmdFx]
-        public static GatherFiles gather(FolderPath src, FolderPath dst, FileExt ext)
-            => new (src,dst,ext);
-
-        [CmdOp(FilesGather)]
-        public static Task<ExecToken> gather(IWfChannel channel, CmdArgs args)
-            => exec(channel, gather(FS.dir(args[0]), FS.dir(args[1]), FileKind.Nuget.Ext()));
-
-        static Task<ExecToken> exec(IWfChannel channel, GatherFiles cmd)
-        {
-            ExecToken exec()
-            {
-                var flow = channel.Running(cmd);
-                var paths = cmd.Source.Files(cmd.Ext,true);
-                iter(paths, src => {
-                    var dst = src.CopyTo(cmd.Target);
-                    channel.Babble($"Copied {src} -> {dst}");
-                });
-                return channel.Ran(flow);
-            }
-
-            return start(exec);            
-        }
 
         public static IEnumerable<FileUri> query(FileQuery spec)
         {
@@ -102,18 +67,17 @@ namespace Z0
                 yield return new FileUri(item);
         }
 
-        public static ListedFiles catalog(IWfChannel channel, CmdArgs args)
+        public static void exec(IWfChannel channel, CatalogFiles cmd)
         {
-            var files = bag<FileUri>();
-            var table = FilePath.Empty;
-            var list = FilePath.Empty;
-            var name = identifier(FS.dir(args[0]));
-            var src = query(channel,args);
+            var name = identifier(cmd.Source);
+            var list = AppDb.Service.Catalogs("files").Path(name, FileKind.List);
+            var src = cmd.Match.IsEmpty ? DbArchive.enumerate(cmd.Source,"*.*", true) : DbArchive.enumerate(cmd.Source,true,cmd.Match);
+            var table = AppDb.Service.Catalogs("files").Table<ListedFile>(name);
             var counter = 0u;
-
             string msg()
                 => $"Collected {counter} files";
 
+            var files = bag<FileUri>();
             iter(src, file => {
                 files.Add(file);
                 counter++;
@@ -123,19 +87,7 @@ namespace Z0
             channel.Babble(msg());
 
             var collected = files.ToSeq();
-            var listing = Archives.listing(collected.View);
-            
-            if(args.Count >=2)    
-            {
-                table = FS.dir(args[1]) + Tables.filename<ListedFile>(name);
-                list = FS.dir(args[1]) + FS.file(name, FileKind.List);
-            }
-            else
-            {
-                table = AppDb.Service.Catalogs("files").Table<ListedFile>(name);
-                list = AppDb.Service.Catalogs("files").Path(name, FileKind.List);
-            }
-
+            var listing = Archives.listing(collected.View);            
             channel.TableEmit(listing, table);
             var flow = channel.EmittingFile(list);
             using var writer = list.Utf8Writer();
@@ -146,7 +98,55 @@ namespace Z0
                 counter++;
             }
             channel.EmittedFile(flow, counter);
-            return listing;
+        }
+
+        public static void catalog(IWfChannel channel, CmdArgs args)
+        {
+            ArchiveDomain.cmd(args, out CatalogFiles cmd);
+            exec(channel,cmd);
+            // var files = bag<FileUri>();
+            // var table = FilePath.Empty;
+            // var list = FilePath.Empty;
+            // var name = identifier(FS.dir(args[0]));
+            // var src = query(channel,args);
+            // var counter = 0u;
+
+            // string msg()
+            //     => $"Collected {counter} files";
+
+            // iter(src, file => {
+            //     files.Add(file);
+            //     counter++;
+            //     if(counter % 1024 == 0)
+            //         channel.Babble(msg());
+            // }, true);
+            // channel.Babble(msg());
+
+            // var collected = files.ToSeq();
+            // var listing = Archives.listing(collected.View);
+            
+            // if(args.Count >=2)    
+            // {
+            //     table = FS.dir(args[1]) + Tables.filename<ListedFile>(name);
+            //     list = FS.dir(args[1]) + FS.file(name, FileKind.List);
+            // }
+            // else
+            // {
+            //     table = AppDb.Service.Catalogs("files").Table<ListedFile>(name);
+            //     list = AppDb.Service.Catalogs("files").Path(name, FileKind.List);
+            // }
+
+            // channel.TableEmit(listing, table);
+            // var flow = channel.EmittingFile(list);
+            // using var writer = list.Utf8Writer();
+            // counter =0;
+            // foreach(var file in files)
+            // {
+            //     writer.AppendLine(file.ToFilePath().ToUri());
+            //     counter++;
+            // }
+            // channel.EmittedFile(flow, counter);
+            // return listing;
         }
 
         static IEnumerable<FileUri> query(IWfChannel channel, CmdArgs args)
@@ -193,7 +193,6 @@ namespace Z0
             }
             return file;
         }
-
 
         public static DbArchive archive(string src)
             => new DbArchive(FS.dir(src));

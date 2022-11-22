@@ -9,6 +9,7 @@ namespace Z0
 
     public class ApiCmd : AppService<ApiCmd>, IApiCmdSvc
     {
+
         public static CmdUriSeq uris(IApiDispatcher src)
         {
             ref readonly var defs = ref src.Commands.Defs;

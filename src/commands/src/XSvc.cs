@@ -15,7 +15,6 @@ namespace Z0
                 => Service<ApiCmd>(wf);
         }
 
-
         static ServiceCache Services => ServiceCache.Instance;
 
         public static ApiCmd ApiCmd(this IWfRuntime wf)

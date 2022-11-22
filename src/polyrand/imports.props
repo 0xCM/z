@@ -1,5 +1,6 @@
 <Project>
   <ItemGroup>
     <ProjectReference Include="$(Native)" />
+    <ProjectReference Include="$(Stitch)" />
   </ItemGroup>
 </Project>

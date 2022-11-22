@@ -6,6 +6,8 @@ namespace Z0
 {
     using static sys;
 
+    using static ApiDb;
+
     public class ApiMdEmitter : AppService<ApiMdEmitter>
     {
         IDbArchive Target;
@@ -52,6 +54,28 @@ namespace Z0
             EmitAssetEntries(entries);
         }
 
+        public static ReadOnlySeq<ApiLiteralInfo> apilits(Assembly[] src)
+        {
+            var providers = src.Types().Tagged<LiteralProviderAttribute>()
+                  .Select(x => (Type:x, Attrib:x.Tag<LiteralProviderAttribute>().Require()))
+                  .Select(x => new LiteralProvider(x.Type.Assembly.Id(), x.Type, x.Attrib.Group, x.Type.Name)).Index();
+            var literals = Literals.runtimelits(providers);
+            var count = literals.Count;
+            var dst = sys.alloc<ApiLiteralInfo>(count);
+            for(var i=0u; i<count; i++)
+            {
+                ref var target = ref seek(dst,i);
+                ref readonly var literal = ref literals[i];
+                target.Part = literal.Part;
+                target.Type = literal.Type;
+                target.Group = literal.Group;
+                target.Name = literal.Name;
+                target.Kind = literal.Kind.ToString();
+                target.Value = literal.Value;
+            }
+            return dst.Sort();
+        }
+
         public void EmitParsers(params Assembly[] src)
         {
             const string RenderPattern = "{0,-8} | {1,-8} | {2}";
@@ -70,10 +94,10 @@ namespace Z0
         }
 
         public void EmitApiLiterals(params Assembly[] src)
-            => EmitApiLiterals(Symbolic.apilits(src));
+            => EmitApiLiterals(apilits(src));
 
         public void EmitApiCommands(params Assembly[] src)
-            => Emit(CalcApiCommands(src));
+            => Emit(ApiCmdTypes.records(src));
 
         public void EmitApiTypes(Assembly[] src, IDbArchive dst)
             => Channel.TableEmit(DataTypeInfo(src), dst.Table<ApiTypeInfo>());
@@ -172,9 +196,6 @@ namespace Z0
             if(path.Exists)
                 EmitApiDeps(src, path);
         }
-
-        ReadOnlySeq<ApiCmdRow> CalcApiCommands(Assembly[] src)
-            => CmdTypes.rows(CmdTypes.discover(src));
 
         ReadOnlySeq<DataFlowSpec> CalcDataFlows(Assembly[] src)
         {

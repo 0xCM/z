@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <ZVer>0.0.15</ZVer>
+    <ZVer>0.0.16</ZVer>
     <ZSysVer>0.0.20</ZSysVer>
     <CodeAnalysisVer>4.4.0-4.final</CodeAnalysisVer>
     <MsDiaVer>1.6.0</MsDiaVer>

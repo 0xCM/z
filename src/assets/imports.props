@@ -4,6 +4,7 @@
     <ProjectReference Include="$(Symbolics)" />
     <ProjectReference Include="$(Db)" />
     <ProjectReference Include="$(Native)" />
+    <ProjectReference Include="$(Stitch)" />
   </ItemGroup>
   <Import Project="../../props/msca.props" />
 </Project>

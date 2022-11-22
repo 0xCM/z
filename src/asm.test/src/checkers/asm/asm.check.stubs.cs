@@ -23,7 +23,7 @@ namespace Z0
             const byte Target = 0x48;
             var input = cpu.vload(w256,x7ffaa76f0ae0);
             var mask = cpu.vindices(input, Target);
-            var bits = recover<bit>(Cells.alloc(w256).Bytes);
+            var bits = recover<bit>(bytes(Cells.alloc<byte>(w256)));
             BitPack.unpack1x32x8(mask, bits);
             var buffer = ByteBlock32.Empty;
             var j=z8;

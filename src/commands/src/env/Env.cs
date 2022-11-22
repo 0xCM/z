@@ -5,12 +5,12 @@
 namespace Z0
 {
     using static sys;
-    using static EnvMod;
 
     [ApiHost]
-    public class Env
+    public class Env : ApiModule<Env>
     {
-        [CmdOp(Names.EnvTools)]
+        public record struct ListTools(EnvVarKind kind, FileUri Target);        
+
         public static void tools(IWfChannel channel, CmdArgs args)
         {
             var buffer = bag<FilePath>();

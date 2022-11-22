@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm.Operands
 {
-    [DataTypeAttributeD(TypeSyntax.Mem64), StructLayout(LayoutKind.Sequential, Pack=1)]
+    [StructLayout(LayoutKind.Sequential, Pack=1)]
     public readonly struct m64 : IMemOp64<m64>
     {
         public readonly NativeSize TargetSize;

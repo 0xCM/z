@@ -9,6 +9,5 @@ namespace Z0
         [Op]
         public static Assembly[] refs(Assembly src)
             => refnames(src).Select(Assembly.Load);
-
     }
 }

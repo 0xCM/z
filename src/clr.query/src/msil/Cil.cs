@@ -8,7 +8,7 @@ namespace Z0
 
     using K = System.Reflection.Metadata.ILOpCode;
 
-    partial struct Clr
+    public partial class Cil
     {
         [Op]
         public static string keyword(ILOpCode src)

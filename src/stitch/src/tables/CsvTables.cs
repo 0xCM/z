@@ -8,7 +8,7 @@ namespace Z0
 
     [ApiHost]
     public class CsvTables
-    {
+    {        
         const NumericKind Closure = UInt64k;
 
         internal const string DefaultDelimiter = " | ";

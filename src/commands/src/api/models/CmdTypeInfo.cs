@@ -45,7 +45,7 @@ namespace Z0
             => CmdName.CompareTo(src.CmdName);
 
         public string Format()
-            => CmdTypes.format(this);
+            => ApiCmdTypes.format(this);
 
         public override string ToString()
             => Format();
