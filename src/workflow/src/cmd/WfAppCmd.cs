@@ -155,6 +155,29 @@ namespace Z0
             iter(src.Files(true), file => Write(file.ToUri()));
         }
 
+        [CmdOp("tokens/types")]
+        void TokenTypes()
+        {
+            var types = Tokens.types(ApiMd.Parts);
+            var dst = Env.cd() + FS.folder(".data") + FS.file("tokens.types", FileKind.List);
+            ApiMd.Emitter().EmitTypeList(types,dst);
+        }
+
+        [CmdOp("tokens/list")]
+        void Tokenize(CmdArgs args)
+        {
+            var tokens = Tokens.tokenize<Asm.AsmPrefixKind>();
+            var count = tokens.Count;
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var token = ref tokens[i];
+                var data = text.parenthetical(text.join(Chars.Comma, 
+                    token.Index, token.Kind, @string(token.Name), @string(token.Expr)));
+                Channel.Row(data);
+                //Channel.Row($"{token.Index},{token.Kind},{sys.@string(token.Name)}, {sys.@string(token.Expr)});
+            }
+        }
+
         [CmdOp("files")]
         void CatalogFiles(CmdArgs args)
             => Archives.catalog(Channel, args);

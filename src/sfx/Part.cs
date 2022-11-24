@@ -2,19 +2,12 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+[assembly: PartId("sfx")]
+
+namespace Z0.Parts
 {
-    public class TypeList : Seq<TypeList,TypeListEntry>
+    public sealed class Sfx : Part<Sfx>
     {
-        public TypeList()
-        {
 
-        }
-
-        public TypeList(TypeListEntry[] src)
-            : base(src)
-        {
-
-        }
     }
 }

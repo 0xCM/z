@@ -80,6 +80,7 @@
    <Import Project="$(MsBuildThisFileDirectory)src/shell/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/stitch/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/symbolics/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/sfx/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/test.checks/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/test.shell/exports.props"/>

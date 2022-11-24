@@ -9,7 +9,11 @@ namespace Z0
     partial class text
     {
         [Op, Closures(Closure)]
-        public static string join<T>(string sep, IEnumerable<T> src)
+        public static string join(string sep, params object[] src)
+            => string.Join(sep, src);
+
+        [Op, Closures(Closure)]
+        public static string join(char sep, params object[] src)
             => string.Join(sep, src);
 
         [Op, Closures(Closure)]

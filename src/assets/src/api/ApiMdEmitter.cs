@@ -54,6 +54,10 @@ namespace Z0
             EmitAssetEntries(entries);
         }
 
+
+        public void EmitTypeList(ReadOnlySpan<Type> src, FileUri dst)
+            => emit(Channel, src, dst);
+
         public static ReadOnlySeq<ApiLiteralInfo> apilits(Assembly[] src)
         {
             var providers = src.Types().Tagged<LiteralProviderAttribute>()
@@ -120,19 +124,13 @@ namespace Z0
         public void EmitApiTokens(params Assembly[] src)
             => EmitApiTokens(CalcApiTokens(src));
 
-        public void EmitTokenGroups(params Assembly[] src)
-            => iter(src.TaggedTypes<TokenGroupAttribute>().Select(x=>x.Type).Where(x => x.IsConcrete()).Map(x => (ITokenGroup)Activator.CreateInstance(x)), EmitTokenGroup);
-
-        public void EmitTokenGroup(ITokenGroup src)
-            => Channel.TableEmit(Symbols.syminfo(src.TokenTypes), Target.Table<SymInfo>($"{src.GroupName}"), TextEncodingKind.Unicode);
-
         public void EmitHeap(SymHeap src)
             => Heaps.emit(src, AppDb.ApiTargets().Table<SymHeapRecord>(), Channel);
 
         public void EmitTypeLists(params Assembly[] src)
         {            
-            TypeList.serialize(EnumTypes(src), AppDb.ApiTargets().Path("api.types.enums", FileKind.List));
-            TypeList.serialize(src.TaggedTypes<RecordAttribute>().Select(x => x.Type), AppDb.ApiTargets().Path("api.types.records", FileKind.List));
+            emit(Channel, EnumTypes(src), AppDb.ApiTargets().Path("api.types.enums", FileKind.List));
+            emit(Channel, src.TaggedTypes<RecordAttribute>().Select(x => x.Type), AppDb.ApiTargets().Path("api.types.records", FileKind.List));
         }
 
         public void EmitApiComments()
@@ -304,6 +302,15 @@ namespace Z0
                 }
             }
             return buffer;
+        }
+
+
+        static void emit(IWfChannel channel, ReadOnlySpan<Type> src, FileUri dst)
+        {
+            var emitter = text.emitter();
+            for(var i=0; i<src.Length; i++)
+                emitter.AppendLine(skip(src,i).AssemblyQualifiedName);
+            channel.FileEmit(emitter.Emit(),dst, TextEncodingKind.Utf8);
         }
     }
 }

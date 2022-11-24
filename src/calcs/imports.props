@@ -3,5 +3,6 @@
     <ProjectReference Include="$(ZLib)" />
     <ProjectReference Include="$(BitVectors)" />
     <ProjectReference Include="$(Assets)" />
+    <ProjectReference Include="$(Sfx)" />
   </ItemGroup>
 </Project>

@@ -7,7 +7,7 @@ namespace Z0
     using Asm;
 
     [StructLayout(LayoutKind.Sequential, Size=2, Pack=1)]
-    public readonly record struct AsmOcToken : IToken<AsmOcToken,AsmOcTokenKind,byte>
+    public readonly record struct AsmOcToken : IDataType<AsmOcToken>
     {
         public readonly AsmOcTokenKind Kind;
 
@@ -50,7 +50,7 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => core.bw16(this);
+            get => sys.bw16(this);
         }
 
         public override int GetHashCode()
@@ -65,12 +65,6 @@ namespace Z0
 
         public override string ToString()
             => Format();
-
-        AsmOcTokenKind IToken<AsmOcTokenKind,byte>.Kind
-            => Kind;
-
-        byte IToken<byte>.Value
-            => Value;
 
         [MethodImpl(Inline)]
         public static explicit operator byte(AsmOcToken src)

@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Sfx>$(MsBuildThisFileDirectory)z0.sfx.csproj</Sfx>
+  </PropertyGroup>
+</Project>

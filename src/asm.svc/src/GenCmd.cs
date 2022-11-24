@@ -344,12 +344,11 @@ namespace Z0
         {
             const string Name = "api.types.enums";
             var src = AppDb.ApiTargets().Path(Name, FileKind.List);
-            var types = TypeList.materialize(src);
+            var types = ApiMd.types(src);
             var name = "EnumDefs";
             CsLang.EmitReplicants(CsLang.replicant(AppDb.CgStage(name).Root, out var spec), types.Select(x => x.Type), AppDb.CgStage(name).Root);
             return true;
         }
-
 
         [CmdOp("gen/symspan")]
         void GenSymSpan()

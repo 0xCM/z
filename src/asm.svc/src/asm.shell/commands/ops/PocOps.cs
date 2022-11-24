@@ -102,8 +102,8 @@ namespace Z0.Asm
             seek(spec,j++) = Chars.Dash;
             seek(spec,j++) = Chars.Null;
 
-            var ts = TokenStrings.define(spec);
-            Write(ts.TokenCount);
+            var ts = Tokens.count(spec);
+            Write(ts);
 
             return result;
         }

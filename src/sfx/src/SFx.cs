@@ -4,17 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class TypeList : Seq<TypeList,TypeListEntry>
+    [ApiHost]
+    public partial class SFx
     {
-        public TypeList()
-        {
-
-        }
-
-        public TypeList(TypeListEntry[] src)
-            : base(src)
-        {
-
-        }
+        const NumericKind Closure = NumericKind.I8 | NumericKind.U64;
     }
 }

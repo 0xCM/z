@@ -12,6 +12,20 @@ namespace Z0
 
     public sealed class ApiMd : AppService<ApiMd>
     {
+        public static TypeList types(FileUri src)
+        {
+            var lines = src.ReadLines(skipBlank:true);
+            var count = lines.Count;
+            var dst = sys.alloc<TypeListEntry>(count);
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var line = ref lines[i];
+                var type = Type.GetType(line) ?? typeof(void);
+                seek(dst,i) = type;
+            }
+            return new (dst);
+        }
+
         public Index<SymLiteralRow> literals(IWfChannel channel, FilePath src)
         {
             using var reader = CsvTables.reader<SymLiteralRow>(src, Symbolic.parse);
