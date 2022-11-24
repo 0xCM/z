@@ -1,7 +1,0 @@
-<Project>
-  <ItemGroup>
-    <ProjectReference Include="$(Db)" />
-    <ProjectReference Include="$(Calcs)" />
-    <ProjectReference Include="$(Process)" />
-  </ItemGroup>
-</Project>
