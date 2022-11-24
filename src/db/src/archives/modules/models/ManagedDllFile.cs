@@ -20,10 +20,10 @@ namespace Z0
         public AssemblyName Name {get;}
 
         [MethodImpl(Inline)]
-        public ManagedDllFile(FilePath path, AssemblyName name)
+        public ManagedDllFile(AssemblyFile src)
         {
-            Path = path;
-            Name = name;
+            Path = src.AssemblyPath;
+            Name = src.AssemblyName;
         }
 
         public FileName FileName

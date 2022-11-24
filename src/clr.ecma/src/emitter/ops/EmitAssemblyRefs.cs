@@ -42,25 +42,16 @@ namespace Z0
         {
             try
             {
-                var path = FS.path(src.Location);
-                if(EcmaReader.valid(path))
+                var refs = Ecma.refs(src);
+                var count = refs.Length;
+                if(count == 0)
                 {
-                    using var reader = PeReader.create(path);
-                    var refs = Ecma.refs(src);
-                    var count = refs.Length;
-                    if(count == 0)
-                    {
-                        Babble($"{src.FullName} has no references");
-                    }
-                    else
-                    {
-                        for(var i=0; i<count; i++)
-                            dst.WriteLine(formatter.Format(refs[i]));
-                    }
+                    Babble($"{src.FullName} has no references");
                 }
                 else
                 {
-                    Warn($"Invalid {src.FullName} path");
+                    for(var i=0; i<count; i++)
+                        dst.WriteLine(formatter.Format(refs[i]));
                 }
             }
             catch(Exception e)

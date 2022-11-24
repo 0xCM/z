@@ -3,7 +3,7 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0
-{
+{    
     [Record(TableId), StructLayout(LayoutKind.Sequential)]
     public struct EcmaBlobRow
     {

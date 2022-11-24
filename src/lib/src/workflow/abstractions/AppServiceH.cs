@@ -12,33 +12,7 @@ namespace Z0
         static ConcurrentDictionary<Type,object> ServiceCache {get;}
             = new();
 
-        static ConcurrentDictionary<object,object> _Data {get;}
-            = new();
-
         static object ServiceLock = new();
-
-        static object DataLock = new();
-
-        [MethodImpl(Inline)]
-        protected D Data<D>(object key, Func<D> factory)
-        {
-            lock(DataLock)
-                return (D)_Data.GetOrAdd(key, k => factory());
-        }
-
-        [MethodImpl(Inline)]
-        protected static D data<D>(object key, Func<D> factory)
-        {
-            lock(DataLock)
-                return (D)_Data.GetOrAdd(key, k => factory());
-        }
-
-        [MethodImpl(Inline)]
-        protected static D update<D>(object key, Func<D> factory)
-        {
-            lock(DataLock)
-                return (D)_Data.AddOrUpdate(key, o => factory(), (a,b) => factory());
-        }
 
         /// <summary>
         /// Instantites the serice without initialization
@@ -63,12 +37,6 @@ namespace Z0
                 return (T)ServiceCache.GetOrAdd(typeof(T), key => factory());
         }
 
-        [MethodImpl(Inline)]
-        protected void ClearCache()
-        {
-            lock(DataLock)
-                _Data.Clear();
-        }
         protected KillMe Host 
             => HostType;
 

@@ -8,10 +8,10 @@ namespace Z0
 
     partial class EcmaReader
     {
-        public EcmaAssemblyRef ReadAssemblyRef(AssemblyReferenceHandle handle)
+        public AssemblyRefRow ReadAssemblyRef(AssemblyReferenceHandle handle)
         {
             var src = MD.GetAssemblyReference(handle);
-            var dst = default(EcmaAssemblyRef);
+            var dst = default(AssemblyRefRow);
             dst.Culture = src.Culture;
             dst.Flags = src.Flags;
             dst.Hash = src.HashValue;

@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using System.Linq;
     public readonly struct ModuleArchive : IModuleArchive
     {
         public readonly FolderPath Root;
@@ -16,7 +17,6 @@ namespace Z0
 
         FolderPath IFileArchive.Root
             => Root;
-
 
         public IEnumerable<ManagedDllFile> ManagedDll()
             => ManagedDllFiles();
@@ -45,9 +45,6 @@ namespace Z0
         public IEnumerable<DllFile> Dll()
             => DllFiles();
 
-        public bool IsManaged(FilePath src, out AssemblyName name)
-            => FS.managed(src, out name);
-
         IEnumerable<DllFile> DllFiles()
         {
             foreach(var path in Root.EnumerateFiles(true, FS.Dll))
@@ -67,11 +64,7 @@ namespace Z0
         }
 
         IEnumerable<ManagedDllFile> ManagedDllFiles()
-        {
-            foreach(var path in Root.EnumerateFiles(true, FS.Dll, FS.ext("winmd")))
-                if(IsManaged(path, out var assname))
-                    yield return new ManagedDllFile(path, assname);
-        }
+            => from file in AssemblyFiles.managed(Root) select new ManagedDllFile(file);
 
         IEnumerable<NativeDllFile> NativeDllFiles()
         {
@@ -83,7 +76,7 @@ namespace Z0
         IEnumerable<ManagedExeFile> ManagedExeFiles()
         {
             foreach(var path in Root.Files(true,FS.Exe))
-                if(IsManaged(path, out var assname))
+                if(FS.managed(path, out var assname))
                     yield return new ManagedExeFile(path, assname);
         }
 
@@ -106,14 +99,14 @@ namespace Z0
             {
                 if(path.Is(FS.Dll))
                 {
-                    if(IsManaged(path, out var assname))
-                        yield return new ManagedDllFile(path, assname);
+                    if(FS.managed(path, out var assname))
+                        yield return new ManagedDllFile(new AssemblyFile(path, assname));
                     else
                         yield return new NativeDllFile(path);
                 }
                 else if(path.Is(FS.Exe))
                 {
-                    if(IsManaged(path, out var assname))
+                    if(FS.managed(path, out var assname))
                         yield return new ManagedExeFile(path, assname);
                     else
                         yield return new NativeExeFile(path);

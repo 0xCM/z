@@ -4,8 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    partial class EcmaRecordDefs
+    {
+
+        
+    }
+
     [Record(TableId), StructLayout(LayoutKind.Sequential,Pack=1)]
-    public struct EcmaAttribute
+    public struct AttributeRow
     {
         const string TableId = "ecma.attributes";
 

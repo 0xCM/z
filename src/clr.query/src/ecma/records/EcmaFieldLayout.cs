@@ -4,13 +4,16 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [Record(TableId), StructLayout(LayoutKind.Sequential, Pack =1)]
-    public struct EcmaFieldLayout
+    partial class EcmaRecordDefs
     {
-        const string TableId = "ecma.field.layouts";
+        [Record(TableId), StructLayout(LayoutKind.Sequential, Pack =1)]
+        public struct FieldLayout
+        {
+            const string TableId = "ecma.field.layouts";
 
-        public uint Offset;
+            public uint Offset;
 
-        public EcmaRowKey Field;
+            public EcmaRowKey Field;
+        }
     }
 }

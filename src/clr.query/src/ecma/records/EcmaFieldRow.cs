@@ -4,23 +4,24 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.Reflection;
-
     [Record(TableId), StructLayout(LayoutKind.Sequential, Pack =1)]
     public struct EcmaFieldRow
     {
-        public const string TableId = "clr.fields";
+        const string TableId = "ecma.field.row";
 
-        public EcmaArtifactRef Key;
+        [Render(12)]
+        public EcmaStringIndex Name;
 
-        public EcmaToken DeclaringType;
+        [Render(12)]
+        public EcmaBlobIndex Sig;
 
-        public EcmaToken CilType;
+        [Render(12)]
+        public Address32 Offset;
 
+        [Render(12)]
+        public EcmaBlobIndex Marshal;
+
+        [Render(1)]
         public FieldAttributes Attributes;
-
-        public MemoryAddress Address;
-
-        public bool IsStatic;
     }
 }

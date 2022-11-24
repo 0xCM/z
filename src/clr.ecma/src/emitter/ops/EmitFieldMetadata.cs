@@ -66,7 +66,7 @@ namespace Z0
                 writer.WriteLine(formatter.FormatHeader());
                 for(var j=0; j<count; j++)
                 {
-                    var row = new EcmaFieldDef();
+                    var row = new EcmaFieldRow();
                     var info = new EcmaFieldDefInfo();
                     ref readonly var handle = ref skip(handles,j);
                     reader.Row(handle, ref row);

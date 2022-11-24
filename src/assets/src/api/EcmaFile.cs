@@ -6,6 +6,23 @@ namespace Z0
 {
     public unsafe class EcmaFile : IDisposable
     {
+        public static EcmaFile open(FilePath src)
+        {
+            var stream = File.OpenRead(src.Name);
+            var reader = new PEReader(stream);
+            var result = reader.HasMetadata;
+            if(result)
+            {
+                return new EcmaFile(src, stream, reader);
+            }
+            else
+            {
+                stream.Dispose();
+                reader.Dispose();
+                throw Errors.Originate($"Unable to load metadata from {src}");
+            }                
+        }
+
         public readonly FileUri Uri;
 
         public readonly MemoryAddress ImageBase;

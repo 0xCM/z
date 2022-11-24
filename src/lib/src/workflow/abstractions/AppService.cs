@@ -88,6 +88,9 @@ namespace Z0
 
         static readonly Dictionary<string,string> ContextValues;
 
+        // public static Assembly[] parts()
+        //     => data("parts",() => archive().ManagedDll().Where(x => x.FileName.StartsWith("z0")).Map(x => x.Load()).Distinct().Array());
+
         static AppService()
         {
             _AppData = Z0.AppData.get();
@@ -105,5 +108,39 @@ namespace Z0
             ContextValues.TryGetValue(name, out result);
             return result;
         }
+
+        static ConcurrentDictionary<object,object> _Data {get;}
+            = new();
+
+        static object DataLock = new();
+
+        [MethodImpl(Inline)]
+        protected D Data<D>(object key, Func<D> factory)
+        {
+            lock(DataLock)
+                return (D)_Data.GetOrAdd(key, k => factory());
+        }
+
+        [MethodImpl(Inline)]
+        protected static D data<D>(object key, Func<D> factory)
+        {
+            lock(DataLock)
+                return (D)_Data.GetOrAdd(key, k => factory());
+        }
+
+        [MethodImpl(Inline)]
+        protected static D update<D>(object key, Func<D> factory)
+        {
+            lock(DataLock)
+                return (D)_Data.AddOrUpdate(key, o => factory(), (a,b) => factory());
+        }
+
+        [MethodImpl(Inline)]
+        protected void ClearCache()
+        {
+            lock(DataLock)
+                _Data.Clear();
+        }
+ 
     }
 }

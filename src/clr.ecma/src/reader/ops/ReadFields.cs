@@ -34,7 +34,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public ref EcmaFieldDef Row(FieldDefinitionHandle handle, ref EcmaFieldDef dst)
+        public ref EcmaFieldRow Row(FieldDefinitionHandle handle, ref EcmaFieldRow dst)
         {
             var src = MD.GetFieldDefinition(handle);
             dst.Attributes = src.Attributes;
@@ -52,5 +52,22 @@ namespace Z0
             var size = MD.GetHeapSize(HeapIndex.String);
             return new EcmaName(seq, size, (Address32)offset, value);
         }
+
+        public uint Rows(ReadOnlySpan<FieldDefinitionHandle> src, Span<EcmaFieldRow> dst)
+        {
+            var count = (uint)min(src.Length, dst.Length);
+            for(var i=0; i<count; i++)
+                 Row(skip(src,i), ref seek(dst,i));
+            return count;
+        }
+
+        public ReadOnlySpan<EcmaFieldRow> Rows(ReadOnlySpan<FieldDefinitionHandle> src)
+        {
+            var count = (uint)src.Length;
+            var dst = span<EcmaFieldRow>(count);
+            Rows(src,dst);
+            return dst;
+        }
+
     }
 }

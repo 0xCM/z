@@ -79,7 +79,7 @@ namespace Z0
 
         [CmdOp("ecma/emit/literals")]
         void EmitLiterals()
-            => EcmaEmitter.EmitLiterals(Dst);
+            => ApiMd.Emitter().EmitLiterals(ApiMd.Parts, Dst);
 
         [CmdOp("ecma/emit/headers")]
         void EmitHeaders()

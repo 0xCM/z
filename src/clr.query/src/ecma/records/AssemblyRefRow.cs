@@ -4,8 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    partial class EcmaRecordDefs
+    {
+
+        
+    }
     [Record(TableId), StructLayout(LayoutKind.Sequential,Pack=1)]
-    public struct EcmaAssemblyRef
+    public struct AssemblyRefRow
     {
         const string TableId = "ecma.assemblies.refs";
 

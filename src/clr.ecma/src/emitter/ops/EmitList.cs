@@ -13,10 +13,10 @@ namespace Z0
             var src = FS.dir(args[0]).DbArchive();
             Channel.Write(src.Root);
             iter(src.Enumerate(true, FileKind.Dll, FileKind.Exe), file => {
-                if(EcmaReader.file(file, out EcmaFile ecma))
                 {
                     try
                     {
+                        using var ecma = EcmaFile.open(file);
                         var reader = ecma.Reader();
                         Channel.Row(ecma.Uri);
                         foreach(var f in reader.ReadDocInfo())
@@ -25,10 +25,6 @@ namespace Z0
                     catch(Exception e)
                     {
                         Channel.Error(e);
-                    }
-                    finally
-                    {
-                        ecma.Dispose();
                     }
                 }
             },false);

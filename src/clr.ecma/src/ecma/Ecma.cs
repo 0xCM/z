@@ -13,6 +13,14 @@ namespace Z0
         public static ReadOnlySeq<AssemblyRefInfo> refs(Assembly src)
             => EcmaReader.create(src).ReadAssemblyRefs();
 
+        // public static ReadOnlySeq<AssemblyRefInfo> refs(FileUri src)
+        // {
+
+            
+
+            
+        // }
+            
         public static bool parse(string src, out EcmaToken dst)
         {
             var i = text.index(src, Chars.Colon);

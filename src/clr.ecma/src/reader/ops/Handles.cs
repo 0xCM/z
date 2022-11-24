@@ -9,18 +9,6 @@ namespace Z0
     partial class EcmaReader
     {
         [MethodImpl(Inline), Op]
-        public uint ConstantRowCount()
-            => (uint)MD.GetTableRowCount(TableIndex.Constant);
-
-        [MethodImpl(Inline), Op]
-        public uint ConstantRowSize()
-            => (uint)MD.GetTableRowSize(TableIndex.Constant);
-
-        [MethodImpl(Inline), Op]
-        public uint ConstantTableSize()
-            => ConstantRowCount()*ConstantRowSize();
-
-        [MethodImpl(Inline), Op]
         public static Handle handle(EcmaHandleData src)
             => @as<EcmaHandleData,Handle>(src);
 

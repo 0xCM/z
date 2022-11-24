@@ -35,7 +35,7 @@ namespace Z0
             dst.Rva = src.RelativeVirtualAddress;
             dst.NameKey = src.Name;
             dst.SigKey = src.Signature;
-            var keys = Keys(src.GetParameters());
+            var keys = ReadParameterRowKeys(src.GetParameters());
             var count = keys.Count;
             if(count != 0)
             {

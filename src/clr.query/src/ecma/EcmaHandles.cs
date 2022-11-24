@@ -9,19 +9,19 @@ namespace Z0
     [ApiHost]
     public readonly struct EcmaHandles
     {       
-        [MethodImpl(Inline), Op]
-        public static EcmaFieldRow row(FieldInfo src)
-        {
-            var data = new ClrFieldAdapter(src);
-            var dst = new EcmaFieldRow();
-            dst.Key = ClrArtifacts.reference(src);
-            dst.DeclaringType = data.DeclaringType.Token;
-            dst.CilType = data.FieldType.Token;
-            dst.Attributes = data.Attributes;
-            dst.Address = data.Address;
-            dst.IsStatic = data.IsStatic;
-            return dst;
-        }
+        // [MethodImpl(Inline), Op]
+        // public static EcmaFieldRow row(FieldInfo src)
+        // {
+        //     var data = new ClrFieldAdapter(src);
+        //     var dst = new EcmaFieldRow();
+        //     dst.Key = ClrArtifacts.reference(src);
+        //     dst.DeclaringType = data.DeclaringType.Token;
+        //     dst.CilType = data.FieldType.Token;
+        //     dst.Attributes = data.Attributes;
+        //     dst.Address = data.Address;
+        //     dst.IsStatic = data.IsStatic;
+        //     return dst;
+        // }
 
         [Parser]
 

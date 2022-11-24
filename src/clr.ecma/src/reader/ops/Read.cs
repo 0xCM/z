@@ -13,10 +13,6 @@ namespace Z0
             => MD.GetCustomAttribute(src);
 
         [MethodImpl(Inline), Op]
-        public ExportedType Read(ExportedTypeHandle src)
-            => MD.GetExportedType(src);
-
-        [MethodImpl(Inline), Op]
         public MethodImplementation Read(MethodImplementationHandle src)
             => MD.GetMethodImplementation(src);
 
@@ -25,16 +21,8 @@ namespace Z0
             => MD.GetMemberReference(src);
 
         [MethodImpl(Inline), Op]
-        public NamespaceDefinition Read(NamespaceDefinitionHandle src)
-            => MD.GetNamespaceDefinition(src);
-
-        [MethodImpl(Inline), Op]
         public Parameter ReadParameter(ParameterHandle src)
             => MD.GetParameter(src);
-
-        [MethodImpl(Inline), Op]
-        public PropertyDefinition ReadPropDef(PropertyDefinitionHandle src)
-            => MD.GetPropertyDefinition(src);
 
         [MethodImpl(Inline), Op]
         public TypeReference ReadTypeRef(TypeReferenceHandle src)

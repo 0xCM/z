@@ -8,6 +8,35 @@ namespace Z0
 
     using static ApiDb;
 
+    public class MdEmit
+    {
+        public static void types(IWfChannel channel, ReadOnlySpan<Type> src, FileUri dst)
+        {
+            var emitter = text.emitter();
+            for(var i=0; i<src.Length; i++)
+                emitter.AppendLine(skip(src,i).AssemblyQualifiedName);
+            channel.FileEmit(emitter.Emit(),dst, TextEncodingKind.Utf8);
+        }
+
+        public static void types(IWfChannel channel, IEnumerable<AssemblyFile> src, FolderPath dst)
+        {
+            iter(src, file => {
+                try
+                {
+                var types = file.Load().Types();
+                var @base = Archives.identifier(file.AssemblyPath.FolderPath);
+                var filename = FS.file($"{@base}.{file.AssemblyPath.FileName.WithoutExtension}", FileKind.List);
+                var path = dst + filename;
+                MdEmit.types(channel, types, path);
+                }
+                catch(Exception)
+                {
+                    channel.Warn($"Unable to load {file}");
+                }
+            }, true);            
+        }
+    }
+
     public class ApiMdEmitter : AppService<ApiMdEmitter>
     {
         IDbArchive Target;
@@ -24,6 +53,70 @@ namespace Z0
         {
             Target = dst;
             Emit(catalog.Assemblies, Target);
+        }
+
+        public void EmitLiterals(Assembly[] src, IApiPack dst)
+            => iter(src, c => EmitFieldLiterals(c, dst), true);
+
+        void EmitFieldLiterals(Assembly src, IApiPack dst)
+        {
+            var fields = ClrFields.literals(src.Types());
+            if(fields.Length != 0)
+                Emit(fields, dst.Metadata("literals").Path(FS.file(src.GetSimpleName(), FileKind.Csv)));
+        }
+
+        void Emit(ReadOnlySpan<FieldRef> src, FilePath dst)
+        {
+            const string Sep = "| ";
+
+            static string formatLine(in FieldRef src)
+            {
+                const string Sep = "| ";
+
+                var content = ClrLiterals.format(src).PadRight(48);
+                var address = src.Address.Format().PadRight(16);
+                var width = src.Width.Content.ToString().PadRight(16);
+                var type = src.Field.DeclaringType.Name.PadRight(36);
+                var field = src.Field.Name.PadRight(36);
+                var line = string.Concat(address, Sep, width, Sep,type, Sep, field, Sep, content, Sep);
+                return line;
+            }
+
+            static string FormatHeader()
+                => string.Concat(
+                    "FieldAddress".PadRight(16), Sep,
+                    "FieldWidth".PadRight(16), Sep,
+                    "DeclaringType".PadRight(36), Sep,
+                    "FieldName".PadRight(36), Sep,
+                    "Value".PadRight(48), Sep
+                    );
+
+            var flow = EmittingFile(dst);
+            var input = src;
+            var count = input.Length;
+            var buffer = sys.alloc<Paired<FieldRef,string>>(count);
+            ref var emissions = ref first(buffer);
+
+            using var writer = dst.Writer();
+            writer.WriteLine(FormatHeader());
+
+            for(var i=0u; i<count; i++)
+            {
+                try
+                {
+                    ref readonly var field = ref skip(input,i);
+                    var formatted = formatLine(field);
+                    seek(emissions, i) = (field,formatted);
+
+                    writer.WriteLine(formatted);
+                }
+                catch(Exception e)
+                {
+                    Warn(e.Message);
+                }
+            }
+
+            EmittedFile(flow, count);
         }
 
         public void Emit(Assembly[] src, IDbArchive dst)
@@ -54,9 +147,8 @@ namespace Z0
             EmitAssetEntries(entries);
         }
 
-
         public void EmitTypeList(ReadOnlySpan<Type> src, FileUri dst)
-            => emit(Channel, src, dst);
+            => MdEmit.types(Channel, src, dst);
 
         public static ReadOnlySeq<ApiLiteralInfo> apilits(Assembly[] src)
         {
@@ -129,8 +221,8 @@ namespace Z0
 
         public void EmitTypeLists(params Assembly[] src)
         {            
-            emit(Channel, EnumTypes(src), AppDb.ApiTargets().Path("api.types.enums", FileKind.List));
-            emit(Channel, src.TaggedTypes<RecordAttribute>().Select(x => x.Type), AppDb.ApiTargets().Path("api.types.records", FileKind.List));
+            MdEmit.types(Channel, EnumTypes(src), AppDb.ApiTargets().Path("api.types.enums", FileKind.List));
+            MdEmit.types(Channel, src.TaggedTypes<RecordAttribute>().Select(x => x.Type), AppDb.ApiTargets().Path("api.types.records", FileKind.List));
         }
 
         public void EmitApiComments()
@@ -302,15 +394,6 @@ namespace Z0
                 }
             }
             return buffer;
-        }
-
-
-        static void emit(IWfChannel channel, ReadOnlySpan<Type> src, FileUri dst)
-        {
-            var emitter = text.emitter();
-            for(var i=0; i<src.Length; i++)
-                emitter.AppendLine(skip(src,i).AssemblyQualifiedName);
-            channel.FileEmit(emitter.Emit(),dst, TextEncodingKind.Utf8);
         }
     }
 }

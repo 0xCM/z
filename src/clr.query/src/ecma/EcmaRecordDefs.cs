@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class EcmaReader
+    public partial class EcmaRecordDefs
     {
-        [MethodImpl(Inline), Op]
-        public NamespaceDefinition NsRoot()
-            => MD.GetNamespaceDefinitionRoot();
+
+        
     }
+
 }

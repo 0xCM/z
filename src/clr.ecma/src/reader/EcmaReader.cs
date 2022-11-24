@@ -11,6 +11,9 @@ namespace Z0
     [ApiHost]
     public unsafe partial class EcmaReader
     {
+        public ByteSize CalcTableSize(TableIndex table)
+            => MD.GetTableRowCount(table)*MD.GetTableRowSize(table);
+
         public static ReadOnlySeq<EcmaRowStats> stats(EcmaReader reader)
         {
             var dst = bag<EcmaRowStats>();
@@ -136,33 +139,6 @@ namespace Z0
                 seek(dst,i) = describe(skip(src,i));
             return count;
         }
-
-        public static bool file(FilePath src, out EcmaFile dst)
-        {
-            var result = false;
-            dst = EcmaFile.Empty;
-            try
-            {
-                var stream = File.OpenRead(src.Name);
-                var reader = new PEReader(stream);
-                result = reader.HasMetadata;
-                if(result)
-                {
-                    dst = new EcmaFile(src, stream, reader);
-                }
-                else
-                {
-                    stream.Dispose();
-                    reader.Dispose();
-                }
-                
-            }
-            catch(Exception)
-            {
-                
-            }
-            return result;
-        }        
 
         public static unsafe PEReader pe(MemorySeg src)
             => new PEReader(src.BaseAddress.Pointer<byte>(), src.Size);

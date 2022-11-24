@@ -11,7 +11,6 @@ namespace Z0
     {
         const NumericKind Closure = UnsignedInts;
 
-
         /// <summary>
         /// Computes y := x |> f = f(x) for a unary operator f
         /// </summary>

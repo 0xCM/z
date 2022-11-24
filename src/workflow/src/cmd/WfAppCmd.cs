@@ -155,12 +155,19 @@ namespace Z0
             iter(src.Files(true), file => Write(file.ToUri()));
         }
 
+        [CmdOp("types/list")]
+        void ListTypes(CmdArgs args)
+        {
+            var dst = Env.cd() + FS.folder(".data");
+            MdEmit.types(Channel,AssemblyFiles.managed(FS.dir(args[0])), dst);
+
+        }
         [CmdOp("tokens/types")]
         void TokenTypes()
         {
             var types = Tokens.types(ApiMd.Parts);
             var dst = Env.cd() + FS.folder(".data") + FS.file("tokens.types", FileKind.List);
-            ApiMd.Emitter().EmitTypeList(types,dst);
+            ApiMd.Emitter().EmitTypeList(types, dst);
         }
 
         [CmdOp("tokens/list")]

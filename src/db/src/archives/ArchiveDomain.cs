@@ -9,8 +9,6 @@ namespace Z0
     {
         public class CommandNames 
         {
-            public const string FilesGather = "files/gather";
-
             public const string FilesCopy = "files/copy";
 
             public const string FilesPack = "files/pack";
