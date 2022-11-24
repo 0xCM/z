@@ -3,5 +3,6 @@
     <ProjectReference Include="$(AsmCore)" />
     <ProjectReference Include="$(Process)" />
     <ProjectReference Include="$(Native)" />
+    <ProjectReference Include="$(SFx)" />
   </ItemGroup>
 </Project>

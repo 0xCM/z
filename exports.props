@@ -73,7 +73,6 @@
    <Import Project="$(MsBuildThisFileDirectory)src/native/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/numbers/exports.props"/>
 
-   <Import Project="$(MsBuildThisFileDirectory)src/pipes/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/polyrand/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/process/exports.props"/>
 

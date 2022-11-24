@@ -4,6 +4,7 @@
      <ProjectReference Include="$(Assets)"/>
      <ProjectReference Include="$(Polyrand)"/>
      <ProjectReference Include="$(Commands)"/>
-     <ProjectReference Include="$(Pipes)"/>
+     <ProjectReference Include="$(SFx)"/>
+     <ProjectReference Include="$(Process)"/>
   </ItemGroup>
 </Project>

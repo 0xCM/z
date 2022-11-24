@@ -6,7 +6,8 @@ namespace Z0
 {
     using Builder = ApiIdentityBuilder;
 
-    public readonly struct SFxIdentity
+    [ApiHost,Free]
+    public class SFxIdentity
     {
         [Op]
         public static string name(IFunc f)
