@@ -53,7 +53,6 @@ namespace Z0
         public static OmniScript OmniScript(this IWfRuntime wf)
             => Services.OmniScript(wf);
 
-
         public static ProjectScripts ProjectScripts(this IWfRuntime wf)
             => Services.ProjectScripts(wf);
 

@@ -10,9 +10,6 @@ namespace Z0
     public abstract class WfAppCmd<T> : WfSvc<T>, IApiCmdSvc
         where T : WfAppCmd<T>, new()
     {
-        public IApiDispatcher Dispatcher 
-            => ApiCmd.Dispatcher;
-
         protected ApiCmd ApiCmd => Wf.ApiCmd();
 
         protected WfAppCmd()
@@ -46,9 +43,9 @@ namespace Z0
             Channel.Write($"{Name}={ContextValue(Name)}");
         }
 
-        [CmdOp("commands")]
-        protected void EmitCommands()
-            => ApiCmd.emit(Channel, ApiCmd.catalog(), AppDb.AppData().Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv));
+        // [CmdOp("commands")]
+        // protected void EmitCommands()
+        //     => ApiCmd.emit(Channel, ApiCmd.catalog(), AppDb.AppData().Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv));
 
         public void RunCmd(string name)
             => ApiCmd.RunCmd(name);
@@ -60,8 +57,6 @@ namespace Z0
             => ApiCmd.RunCmd(cmd);
 
         public virtual void Loop()
-        {
-            ApiLoop.start(Channel).Wait();
-        }
+            => ApiLoop.start(Channel).Wait();
    }
 }

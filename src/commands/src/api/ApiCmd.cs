@@ -70,8 +70,6 @@ namespace Z0
             return new WfOps(dst);
         }
 
-        IApiDispatcher IApiCmdSvc.Dispatcher 
-            => Dispatcher;
 
         public void RunCmd(string name, CmdArgs args)
             => ApiCmd.Dispatcher.Dispatch(name, args);

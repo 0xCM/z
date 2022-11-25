@@ -4,8 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IApiCmdSvc : IAppService, IApiCmdProvider, IRunLoop
-    {     
-
+    public interface IRunLoop
+    {
+        void Loop();
     }
 }

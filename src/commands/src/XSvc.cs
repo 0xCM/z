@@ -13,11 +13,17 @@ namespace Z0
 
              public ApiCmd ApiCmd(IWfRuntime wf)
                 => Service<ApiCmd>(wf);
+
+             public ApiCmdServer ApiCmdServer(IWfRuntime wf)
+                => Service<ApiCmdServer>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
 
         public static ApiCmd ApiCmd(this IWfRuntime wf)
-            => Services.ApiCmd(wf);         
+            => Services.ApiCmd(wf);
+
+        public static ApiCmdServer ApiCmdServer(this IWfRuntime wf)
+            => Services.ApiCmdServer(wf);
     }
 }

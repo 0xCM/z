@@ -420,9 +420,6 @@ namespace Z0
             iter(files, f => Channel.Row(((FileUri)f)));
         }        
 
-        void Ls(CmdArgs args)
-            => Dir(args);
-
         [CmdOp("api/emit/impls")]
         void EmitImplMaps()
         {

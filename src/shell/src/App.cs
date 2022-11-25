@@ -11,6 +11,7 @@ namespace Z0
             => new IApiCmdProvider[]{
                 wf.WfCmd(),
                 wf.BuildCmd(),
+                wf.ApiCmdServer()
             };
 
         static int main(string[] args)

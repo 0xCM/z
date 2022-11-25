@@ -17,6 +17,7 @@ namespace Z0
         {
             var providers = new IApiCmdProvider[]{
                 wf.AncestryChecks(),
+                wf.ApiCmdServer(),
                 wf.AsmCoreCmd(),
                 wf.AsmCmdSvc(),
                 //wf.AsmChecks(),
