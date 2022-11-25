@@ -25,15 +25,17 @@ namespace Z0
 
         Timestamp Time;
 
-        public Spinner(TimeSpan frequency, Action<long> receiver)
+        public Spinner(TimeSpan frequency, Action<long> receiver = null)
         {
             Continue = true;
             Cycles = 0;
             Cycles= new();
-            Receive = receiver;
+            Receive = receiver ?? Looped;
             Frequency = frequency;
             Time = Timestamp.Zero;
         }
+
+        void Looped(long cycles) {}
 
         public void Stop()
         {
@@ -58,6 +60,29 @@ namespace Z0
                 Wait.SpinOnce();
                 Cycles++;
             }
+        }
+
+        public void Spin(Func<SpinStats,bool> f)
+        {
+            var stats = new SpinStats();
+            Time = timestamp();
+            while(f(stats))
+            {
+                var now = timestamp();
+                var prior = Time;
+                Duration delta = now - prior;
+                if(delta > Frequency)
+                {
+                    var cycles = Cycles;
+                    start(() => Receive(cycles));
+                    Time = timestamp();
+                }
+
+                Wait.SpinOnce();
+                Cycles++;
+                stats.Count++;
+                stats.Ticks += (delta.TickCount);
+            }            
         }
     }
 }

@@ -10,19 +10,17 @@ namespace Z0
     {
         public static void spin(IWfChannel channel, Func<SpinStats,bool> f)
         {
-            var stats = new SpinStats();            
             var counter = 0u;
             var ticks = 0L;
-
             void Receiver(long t)
             {
-                stats.Count++;
-                stats.Ticks += (ulong)t;
-                channel.Write(string.Format("{0:D4}:{1:D12}", stats.Count, stats.Ticks));
+                counter++;
+                ticks += t;
+                channel.Write(string.Format("{0:D4}:{1:D12}", counter, ticks));
             }
 
-            var spinner = new Spinner(TimeSpan.FromSeconds(1), Receiver);
-            spinner.Spin();
+            var spinner = new Spinner(TimeSpan.FromSeconds(1));
+            spinner.Spin(f);
         }
     }
 }

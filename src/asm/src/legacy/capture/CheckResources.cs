@@ -4,32 +4,16 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [WfHost]
-    public sealed class CheckResources : KillMe<CheckResources>
-    {
-        public const string StepName = nameof(CheckResourcesStep);
-
-        protected override void Execute(IWfRuntime wf)
-        {
-            var src = FS.path("J:/dev/projects/z0-logs/builds/respack/lib/netcoreapp3.1/z0.respack.dll");
-            using var step = new CheckResourcesStep(wf,this,src);
-            step.Run();
-        }
-    }
-
     public ref struct CheckResourcesStep
     {
         readonly IWfRuntime Wf;
 
-        readonly KillMe Host;
-
         readonly FilePath Source;
 
         [MethodImpl(Inline)]
-        public CheckResourcesStep(IWfRuntime wf, KillMe host, FilePath src)
+        public CheckResourcesStep(IWfRuntime wf, FilePath src)
         {
             Wf = wf;
-            Host = host;
             Source = src;
         }
 
