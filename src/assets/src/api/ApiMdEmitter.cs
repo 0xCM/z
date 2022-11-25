@@ -6,9 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    using static ApiDb;
-
-    public class ApiMdEmitter //: AppService<ApiMdEmitter>
+    public class ApiMdEmitter
     {
         IDbArchive Target;
 

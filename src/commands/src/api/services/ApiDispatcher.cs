@@ -4,9 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class ApiDispatcher : IApiDispatcher
+    class ApiDispatcher : IApiDispatcher
     {
-        IApiOps _Commands;
+        IApiOps Ops;
 
         Func<string,CmdArgs,Outcome> Fallback;
 
@@ -15,16 +15,13 @@ namespace Z0
         ConstLookup<Name,ApiOp> Catalog;
 
         [MethodImpl(Inline)]
-        public ApiDispatcher(IWfChannel channel, ReadOnlySeq<IApiCmdProvider> providers, IApiOps lookup)
+        public ApiDispatcher(IWfChannel channel, ReadOnlySeq<IApiCmdProvider> providers, IApiOps ops)
         {
-            _Commands = lookup;
+            Ops = ops;
             Fallback = NotFound;
             Channel = channel;
-            Providers = providers;
             Catalog = Cmd.defs(this);
         }
-
-        public ReadOnlySeq<IApiCmdProvider> Providers {get;}
 
         public @string Name => "router";
 
@@ -32,7 +29,7 @@ namespace Z0
         
         public bool IsEmpty => false;
         
-        public IApiOps Commands => _Commands;
+        public IApiOps Commands => Ops;
 
         static Outcome NotFound(string cmd, CmdArgs args)
             => (false, string.Format("Handler for '{0}' not found", cmd));
@@ -43,10 +40,10 @@ namespace Z0
         public Outcome Dispatch(string name, CmdArgs args)
         {
             var result = Outcome.Success;
-            var runner = default(IApiCmdMethod);
-            if(Commands.Find(name, out runner))
+            var method = default(ApiOp);
+            if(Ops.Find(name, out method))
             {
-                result = runner.Run(Channel, args);
+                result = ApiCmd.run(Channel,method, args);
             }
             else
             {

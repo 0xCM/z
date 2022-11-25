@@ -9,7 +9,6 @@ namespace Z0
 
     partial class ApiCmd
     {
-
         public ConstLookup<Name,ApiOp> CmdDefs()
             => defs(Dispatcher);
 

@@ -10,6 +10,6 @@ namespace Z0
             where R : IWfRunner<R>, new()
                 => new R();
 
-        public abstract Task<ExecToken> Start(IWfContext context, IWfAction action);
+        public abstract Task<ExecToken> Start(IApiContext context, IWfAction action);
     }
 }

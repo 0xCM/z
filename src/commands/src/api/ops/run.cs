@@ -5,71 +5,35 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static sys;
     using static CmdActorKind;
 
-    public class ApiCmdMethod
+    partial class ApiCmd
     {
-        public readonly ApiOp Op;
-
-        public ApiCmdMethod(Name name, object host, MethodInfo method)
-        {
-            Op = new ApiOp(name, Cmd.classify(method), Require.notnull(method), Require.notnull(host));
-        }
-
-        public ref readonly object Host
-        {
-            [MethodImpl(Inline)]
-            get => ref Op.Host;
-        }
-
-        public ref readonly MethodInfo Definiton
-        {
-            [MethodImpl(Inline)]
-            get => ref Op.Definition;
-        }
-
-        public ref readonly CmdActorKind ActionKind
-        {
-            [MethodImpl(Inline)]
-            get => ref Op.Kind;
-        }
-
-        public ref readonly CmdUri Uri
-        {
-            [MethodImpl(Inline)]
-            get => ref Op.Uri;
-        }
-
-        public Type HostType
-        {
-            [MethodImpl(Inline)]
-            get => Op.Host.GetType();
-        }
-
-        public Outcome Run(IWfChannel channel, CmdArgs args)
+        public static Outcome run(IWfChannel channel, ApiOp op, CmdArgs args)
         {
             var output = default(object);
             var result = Outcome.Success;
             try
             {
-                switch(ActionKind)
+                switch(op.Kind)
                 {
                     case Pure:
-                        Definiton.Invoke(Host, new object[]{});
+                        op.Definition.Invoke(op.Host, new object[]{});
                         result = Outcome.Success;
                     break;
                     case Receiver:
-                        Definiton.Invoke(Host, new object[1]{args});
+                        op.Definition.Invoke(op.Host, new object[1]{args});
                         result = Outcome.Success;
                     break;
-                    case Emitter:
-                        output = Definiton.Invoke(Host, new object[]{});
+                    case CmdActorKind.Emitter:
+                        output = op.Definition.Invoke(op.Host, new object[]{});
                     break;
                     case Func:
-                        output = Definiton.Invoke(Host, new object[1]{args});
+                        output = op.Definition.Invoke(op.Host, new object[1]{args});
                     break;
                     default:
-                        result = new Outcome(false, $"Unsupported {Definiton}");
+                        result = new Outcome(false, $"Unsupported {op.Definition}");
                     break;
                 }
 
@@ -94,9 +58,9 @@ namespace Z0
             }
             catch(Exception e)
             {
-                var msg = AppMsg.format($"{Uri} invocation error", e);
-                var origin = AppMsg.orginate(HostType.DisplayName(), Definiton.DisplayName(), 12);
-                var error = Events.error(msg, origin, HostType);
+                var msg = AppMsg.format($"{op.Uri} invocation error", e);
+                var origin = AppMsg.orginate(op.HostType.DisplayName(), op.Definition.DisplayName(), 12);
+                var error = Events.error(msg, origin, op.HostType);
                 channel.Error(error);
                 result = (e,msg);
             }

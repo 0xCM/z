@@ -468,7 +468,7 @@ namespace Z0
             return new (dst);
         }
 
-        public static ExecToken exec<C>(IWfContext context, C cmd, Func<IWfContext,C,Outcome> actor)
+        public static ExecToken exec<C>(IApiContext context, C cmd, Func<IApiContext,C,Outcome> actor)
             where C : ICmd<C>, new()
         {
             var outcome = Outcome.Success;

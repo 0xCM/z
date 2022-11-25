@@ -9,7 +9,7 @@ namespace Z0
 
     partial class ApiCmd
     {
-        public static void dispatch(IWfContext context, FilePath defs)
+        public static void dispatch(IApiContext context, FilePath defs)
         {
             if(defs.Missing)
             {

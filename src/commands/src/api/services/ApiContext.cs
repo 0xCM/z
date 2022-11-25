@@ -3,35 +3,29 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0
-{
-    public class ApiContext : IWfContext
+{    
+    public class ApiContext : IApiContext
     {
         public readonly IWfChannel Channel;
-
-        public readonly IWfRuntime Runtime;
 
         public readonly IApiDispatcher Dispatcher;
 
         public readonly IApiCmdSvc Commander;
 
-        public ApiContext(IApiCmdSvc commander, IWfChannel channel, IWfRuntime wf, IApiDispatcher dispatcher)
+        public ApiContext(IApiCmdSvc commander, IWfChannel channel, IApiDispatcher dispatcher)
         {
             Commander = commander;
             Channel = channel;
-            Runtime = wf;
             Dispatcher = dispatcher;
         }
 
-        IWfChannel IWfContext.Channel
+        IWfChannel IApiContext.Channel
             => Channel;
 
-        IWfRuntime IWfContext.Runtime
-            => Runtime;
-
-        IApiDispatcher IWfContext.Dispatcher 
+        IApiDispatcher IApiContext.Dispatcher 
             => Dispatcher;
 
-        IApiCmdSvc IWfContext.Commander 
+        IApiCmdSvc IApiContext.Commander 
             => Commander;
     }
 }

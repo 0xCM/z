@@ -4,29 +4,37 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class WfOps : IApiOps
+    public class ApiOps : IApiOps
     {
-        readonly Dictionary<string,IApiCmdMethod> Lookup;
+        readonly Dictionary<string,ApiOp> Lookup;
 
         readonly ReadOnlySeq<ApiOp> CmdDefs;
 
-        internal WfOps(Dictionary<string,IApiCmdMethod> src)
+        // internal ApiOps(ReadOnlySeq<ApiOp> src)
+        // {
+        //     Lookup = new();
+        //     sys.iter(src, op => Lookup.TryAdd(op.CmdName, op.Definition));
+
+        //     CmdDefs = src;
+        // }
+
+        internal ApiOps(Dictionary<string,ApiOp> src)
         {
             Lookup = src;
-            CmdDefs = src.Values.Map(x => x.Def).ToSeq();
+            CmdDefs = src.Values.ToSeq();
         }
 
-        public bool Find(string spec, out IApiCmdMethod runner)
+        public bool Find(string spec, out ApiOp runner)
             => Lookup.TryGetValue(spec, out runner);
 
-        public IEnumerable<string> Specs
+        public ICollection<string> Names
         {
             [MethodImpl(Inline)]
             get => Lookup.Keys;
         }
 
-        public ICollection<IApiCmdMethod> Invokers
-            => Lookup.Values;
+        // public ICollection<IApiCmdMethod> Invokers
+        //     => Lookup.Values;
 
         public ref readonly ReadOnlySeq<ApiOp> Defs
         {

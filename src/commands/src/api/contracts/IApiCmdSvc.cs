@@ -8,4 +8,10 @@ namespace Z0
     {     
 
     }
+
+    public interface IApiCmdSvc<C> : IApiCmdSvc
+        where C : IApiCmdSvc<C>,new()
+    {
+        
+    }    
 }

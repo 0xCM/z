@@ -4,23 +4,21 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IWfContext
+    public interface IApiContext
     {
         IWfChannel Channel {get;}
-
-        IWfRuntime Runtime {get;}
 
         IApiDispatcher Dispatcher {get;}
 
         IApiCmdSvc Commander {get;}
     }
 
-    public interface IWfContext<C> : IWfContext
-        where C : IApiCmdSvc
+    public interface IApiContext<C> : IApiContext
+        where C : IApiCmdSvc<C>,new()
     {
         new C Commander {get;}
 
-        IApiCmdSvc IWfContext.Commander
+        IApiCmdSvc IApiContext.Commander
             => Commander;
     }
 }

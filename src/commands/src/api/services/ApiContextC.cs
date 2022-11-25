@@ -4,15 +4,18 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class ApiContext<C> : ApiContext 
-        where C : IApiCmdSvc
+    class ApiContext<C> : ApiContext, IApiContext<C>
+        where C : IApiCmdSvc<C>,new()
     {
-        public ApiContext(C commander, IWfChannel channel, IWfRuntime wf, IApiDispatcher dispatcher)
-            : base(commander, channel, wf, dispatcher)
+        public ApiContext(C commander, IWfChannel channel, IApiDispatcher dispatcher)
+            : base(commander, channel, dispatcher)
         {
             Commander = commander;
         }
 
         public new readonly C Commander;
+
+        C IApiContext<C>.Commander
+            => Commander;
     }
 }

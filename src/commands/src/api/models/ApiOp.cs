@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed class ApiOp : IApiOp
+    public sealed class ApiOp
     {
         public readonly Name CmdName;
 
@@ -23,11 +23,14 @@ namespace Z0
             Kind = kind;
             Host = Require.notnull(host);
             Definition = Require.notnull(method);
-            Uri = new(CmdKind.App, host.GetType().Assembly.PartName().Format(), host.GetType().DisplayName(), CmdName);
+            Uri = ApiCmd.uri(name,host);
         }
 
-        CmdUri IApiOp.Uri 
-            => Uri;
+        public Type HostType
+        {
+            [MethodImpl(Inline)]
+            get => Host.GetType();
+        }
 
         public string Format()
             => Uri.Format();

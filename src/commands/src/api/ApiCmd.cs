@@ -62,14 +62,13 @@ namespace Z0
         public static ICmd[] reify(Assembly src)
             => tagged(src).Select(reify);
 
-        public static WfOps distill(IApiOps[] src)
-        {
-            var dst = dict<string,IApiCmdMethod>();
-            foreach(var a in src)
-                iter(a.Invokers,  a => dst.TryAdd(a.CmdName, a));
-            return new WfOps(dst);
-        }
-
+        // public static ApiOps distill(IApiOps[] src)
+        // {
+        //     var dst = dict<string,IApiCmdMethod>();
+        //     foreach(var a in src)
+        //         iter(a.Invokers,  a => dst.TryAdd(a.CmdName, a));
+        //     return new ApiOps(dst);
+        // }
 
         public void RunCmd(string name, CmdArgs args)
             => ApiCmd.Dispatcher.Dispatch(name, args);

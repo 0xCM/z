@@ -6,8 +6,8 @@ namespace Z0
 {
     public sealed class CmdPublic : WfAppCmd<CmdPublic>
     {
-        public static ApiContext context<C>(IWfRuntime wf)
-            where C : IApiCmdSvc, new()
+        public static IApiContext<C> context<C>(IWfRuntime wf)
+            where C : IApiCmdSvc<C>, new()
         {
             GlobalServices.Instance.Inject(wf.XedRuntime());
             return ApiCmd.context<C>(wf, () => providers(wf));            

@@ -19,7 +19,6 @@ namespace Z0
             CsvChannels.emit(channel, data, dst);
         }
 
-
         public static ApiCmdCatalog catalog(ReadOnlySeq<ApiOp> src)
         {
             var count = src.Count;
@@ -65,9 +64,6 @@ namespace Z0
             return dst;
         }
 
-        // public static ReadOnlySeq<ApiCmdRow> records(Assembly[] src)
-        //     => rows(discover(src));
-
         static ReadOnlySeq<CmdTypeInfo> discover(Assembly[] src)
             => tagged(src).Select(describe).Sort();
 
@@ -87,7 +83,6 @@ namespace Z0
             => src.DeclaredInstanceFields().Mapi((i,x) => new CmdField((byte)i, x, expr(x)));
 
         public static ApiCmdCatalog catalog()
-
             => catalog(Dispatcher);
 
         static ReadOnlySeq<ApiCmdInfo> entries(CmdUriSeq src)    
@@ -103,8 +98,5 @@ namespace Z0
             }
             return entries.Sort().Resequence();        
         }        
-
-
-
     }
 }

@@ -18,7 +18,7 @@ namespace Z0
         public void RunCmd(string name, CmdArgs args)
             => ApiCmd.RunCmd(name,args);
 
-        protected void RunCmd(ApiCmdSpec cmd)
+        public void RunCmd(ApiCmdSpec cmd)
             => ApiCmd.RunCmd(cmd);
 
         public Task Start()
