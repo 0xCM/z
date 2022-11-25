@@ -2,7 +2,11 @@
 set PackageTool=dotnet pack --include-symbols --include-source
 set PackageProject=%PackageTool% %ProjectPath%
 set PackageLib=dotnet pack %ProjectPath% --output %PackageDist% --configuration %ConfigName% %PackageFlags%
-set PackageOut=%DevPacks%\stage\devpacks\nuget
-set PackSln=dotnet pack --include-symbols --include-source %SlnMain% --output %PackageOut% %BuildProps%
+set Packed=%DevPacks%\zpack\packed
+set Unpacked=%DevPacks%\zpack\unpack
+set PackSln=dotnet pack %SlnMain% --output %Packed% %BuildProps% --include-symbols --include-source -p:SymbolPackageFormat=snupkg -p:DebugType=pdbonly
+set UnpackCmd=nuget init %Packed% %Unpacked%
 call %PackSln%
-call %DevPacks%\unpack.cmd
+if errorlevel 1 goto:eof
+call %UnpackCmd%
+if errorlevel 1 goto:eof

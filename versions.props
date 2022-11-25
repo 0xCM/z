@@ -1,14 +1,6 @@
 <Project>
   <PropertyGroup>
-    <ZVer>0.0.17</ZVer>
+    <ZVer>0.0.18</ZVer>
     <ZSysVer>0.0.21</ZSysVer>
-    <CodeAnalysisVer>4.4.0-4.final</CodeAnalysisVer>
-    <MsDiaVer>1.6.0</MsDiaVer>
-    <MsBuildVer>17.2.0</MsBuildVer>
-    <FxVer>7.0.0</FxVer>
-    <MsExtVer>7.0.0</MsExtVer>
-    <MsDiaRuntimeVer>2.2.332302</MsDiaRuntimeVer>
-    <DotNetSdkVer>6.0.303</DotNetSdkVer>
-    <NugetVer>6.4.0</NugetVer>
   </PropertyGroup>
 </Project>
