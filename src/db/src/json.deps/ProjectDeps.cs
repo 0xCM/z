@@ -5,14 +5,14 @@
 namespace Z0
 {
     using M = Microsoft.Extensions.DependencyModel;
-    using D = JsonDepsModel;
+    using D = JsonDeps;
 
-    using static core;
-    using static JsonDepsModel;
+    using static sys;
+    using static JsonDeps;
 
     using api = JsonDeps;
 
-    public class JsonDepsSources
+    public class ProjectDeps
     {
         readonly M.DependencyContext Source;
 
@@ -24,7 +24,7 @@ namespace Z0
 
         readonly Index<M.RuntimeFallbacks> RuntimeGraph;
 
-        internal JsonDepsSources(M.DependencyContext src)
+        internal ProjectDeps(M.DependencyContext src)
         {
             if(src != null)
             {

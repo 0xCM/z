@@ -8,15 +8,15 @@ namespace Z0
 
     partial class EcmaEmitter
     {
-        public void EmitFieldMetadata(ReadOnlySpan<Assembly> src, IApiPack dst)
+        public void EmitFieldMetadata(ReadOnlySpan<Assembly> src, IDbArchive dst)
         {
             var count = 0u;
             var flow = Running(src.Length);
-            iter(src, part => EmitFieldMetadata(part,dst), true);
+            iter(src, part => EmitFieldMetadata(part, dst), true);
             Ran(flow, count);
         }
 
-        void EmitFieldMetadata(Assembly src, IApiPack dst)
+        void EmitFieldMetadata(Assembly src, IDbArchive dst)
         {
             exec(true,
             () => EmitConstFields(src, dst),
@@ -25,7 +25,7 @@ namespace Z0
             );
         }
 
-        void EmitMemberFields(Assembly src, IApiPack dst)
+        void EmitMemberFields(Assembly src, IDbArchive dst)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace Z0
             }
         }
 
-        void EmitFieldDefs(Assembly src, IApiPack dst)
+        void EmitFieldDefs(Assembly src, IDbArchive dst)
         {
             try
             {

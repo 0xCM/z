@@ -7,36 +7,20 @@ namespace Z0
     using System.Text;
     using System.IO;
 
-    using static JsonDepsModel;
-
     using M = Microsoft.Extensions.DependencyModel;
 
     public partial class JsonDeps
     {
         [Op]
-        public static JsonDepsSources parse(JsonText src)
-            => new JsonDepsSources(context(src));
+        public static ProjectDeps load(Assembly src)
+            => new ProjectDeps(M.DependencyContext.Load(src));
 
-        public static JsonDepsSources load()
-            => parse(ExecutingPart.Assembly.Path().ChangeExtension(FileKind.JsonDeps));
-
-        [Op]
-        public static JsonDepsSources load(Assembly src)
-            => new JsonDepsSources(M.DependencyContext.Load(src));
-
-        [Op]
-        public static JsonText json(Assembly src)
-        {
-            var path = FS.path(src.Location).ChangeExtension(FileKind.JsonDeps);
-            return path.ReadText();
-        }
-
-        public static JsonDepsSources parse(Assembly src)
+        public static ProjectDeps parse(Assembly src)
             => parse(src.Path().ChangeExtension(FileKind.JsonDeps));
 
         [Op]
-        public static JsonDepsSources parse(FilePath src)
-            => new JsonDepsSources(context(src.ReadText()));
+        public static ProjectDeps parse(FilePath src)
+            => new ProjectDeps(context(src.ReadText()));
 
         internal static M.DependencyContext context(JsonText src)
         {
@@ -80,7 +64,7 @@ namespace Z0
             for(var i=0; i<dst.NativeLibraries.Count; i++)
                 extract(src.NativeLibraryGroups[i], ref dst.NativeLibraries[i]);
 
-            dst.ResourceAssemblies = sys.alloc<JsonDepsModel.ResourceAssembly>(src.ResourceAssemblies.Count);
+            dst.ResourceAssemblies = sys.alloc<ResourceAssembly>(src.ResourceAssemblies.Count);
             for(var i=0; i<dst.ResourceAssemblies.Count; i++)
             {
                 ref var target = ref dst.ResourceAssemblies[i];
@@ -115,7 +99,7 @@ namespace Z0
             => src.Dependencies.Map(d => lib(d.Name, d.Version));
 
         [Op]
-        internal static ref JsonDepsModel.TargetInfo extract(M.DependencyContext context, ref JsonDepsModel.TargetInfo dst)
+        internal static ref TargetInfo extract(M.DependencyContext context, ref TargetInfo dst)
         {
             var src = context.Target;
             dst.Framework = src.Framework;
@@ -158,51 +142,6 @@ namespace Z0
             dst.PublicSign = src.PublicSign;
             dst.WarningsAsErrors = src.WarningsAsErrors;
             return ref dst;
-        }
-
-        public abstract class Projector<S,T>
-        {
-            public abstract T Map(S src);
-        }
-
-        public sealed class LibInfoProjector : Projector<M.CompilationLibrary,Library>
-        {
-            public override Library Map(M.CompilationLibrary src)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public sealed class OptionsProjector : Projector<M.CompilationOptions,Options>
-        {
-            public override Options Map(M.CompilationOptions src)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public sealed class CompilationLibraryProjector : Projector<M.CompilationLibrary,TargetInfo>
-        {
-            public override TargetInfo Map(M.CompilationLibrary src)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public sealed class TargetInfoProjector : Projector<M.TargetInfo, TargetInfo>
-        {
-            public override TargetInfo Map(M.TargetInfo src)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public sealed class ContextProjector : Projector<M.DependencyContext, object>
-        {
-            public override object Map(M.DependencyContext src)
-            {
-                throw new NotImplementedException();
-            }
         }
     }
 }

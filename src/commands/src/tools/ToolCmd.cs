@@ -5,14 +5,26 @@
 namespace Z0
 {
     using static sys;
- 
-    public class WfTools : WfSvc<WfTools>
+    
+    [ApiHost]
+    public class ToolCmd
     {
-        public static Task<ExecToken> vscode<T>(IWfChannel channel, T target)
-            => Cmd.start(channel, FS.path("code.exe"), Cmd.args(target));
+        public static string format(IToolCmd src)
+        {
+            var count = src.Args.Count;
+            var buffer = text.buffer();
+            buffer.AppendFormat("{0}{1}", src.Tool, Chars.LParen);
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var arg = ref src.Args[i];
+                buffer.AppendFormat(RpOps.Assign, arg.Name, arg.Value);
+                if(i != count - 1)
+                    buffer.Append(", ");
+            }
 
-        public static Task<ExecToken> devenv<T>(IWfChannel channel, T target)
-            => Cmd.start(channel, FS.path("devenv.exe"), Cmd.args(target));
+            buffer.Append(Chars.RParen);
+            return buffer.Emit();
+        }
 
         [Op, Closures(UInt64k)]
         public static ToolCmdSpec spec<T>(Tool tool, in T src)

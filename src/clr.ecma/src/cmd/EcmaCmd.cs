@@ -16,13 +16,6 @@ namespace Z0
 
         ApiMd ApiMd => Wf.ApiMd();
 
-        public void EmitCatalog(IApiCatalog src)
-        {
-            var dst = ApiPacks.create();
-            ApiMd.Emitter().Emit(src,dst);
-            EcmaEmitter.Emit(src, EcmaEmissionSettings.Default, dst);
-        }
-
         static IApiPack Dst
             => ApiPacks.create();
 
@@ -79,7 +72,7 @@ namespace Z0
 
         [CmdOp("ecma/emit/literals")]
         void EmitLiterals()
-            => ApiMd.Emitter().EmitLiterals(ApiMd.Parts, Dst);
+            => ApiMd.Emitter(AppDb.ApiTargets()).EmitLiterals(ApiMd.Parts);
 
         [CmdOp("ecma/emit/headers")]
         void EmitHeaders()

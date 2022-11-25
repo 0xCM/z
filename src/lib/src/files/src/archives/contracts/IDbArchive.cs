@@ -6,6 +6,12 @@ namespace Z0
 {
     public interface IDbArchive : IRootedArchive
     {
+        DbArchive Metadata()
+            => Targets("metadata");
+
+        DbArchive Metadata(string scope)
+            => Metadata().Targets(scope);
+
         IDbArchive Delete()
         {
             Root.Delete();

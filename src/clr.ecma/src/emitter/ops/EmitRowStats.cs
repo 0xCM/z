@@ -8,7 +8,7 @@ namespace Z0
 
     partial class EcmaEmitter
     {
-        public void EmitRowStats(IApiPack dst)
+        public void EmitRowStats(IDbArchive dst)
         {
             var src = ApiMd.Parts;
             var buffer = bag<EcmaRowStats>();

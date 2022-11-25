@@ -1,27 +1,27 @@
-//-----------------------------------------------------------------------------
-// Copyright   :  (c) Chris Moore, 2020
-// License     :  MIT
-//-----------------------------------------------------------------------------
-namespace Z0
-{
-    using System.Text.Json;
+// //-----------------------------------------------------------------------------
+// // Copyright   :  (c) Chris Moore, 2020
+// // License     :  MIT
+// //-----------------------------------------------------------------------------
+// namespace Z0
+// {
+//     using System.Text.Json;
 
-    public sealed record class JsonSetting<T>
-    {
-        public readonly string Name;
+//     public sealed record class JsonSetting<T>
+//     {
+//         public readonly string Name;
 
-        public readonly T Value;
+//         public readonly T Value;
 
-        [MethodImpl(Inline)]
-        public JsonSetting(string name, T value)
-        {
-            Name = name;
-            Value = value;
-        }
-        public string Format()
-            => JsonSerializer.Serialize(this);
+//         [MethodImpl(Inline)]
+//         public JsonSetting(string name, T value)
+//         {
+//             Name = name;
+//             Value = value;
+//         }
+//         public string Format()
+//             => JsonSerializer.Serialize(this);
 
-        public override string ToString()
-            => Format();
-    }
-}
+//         public override string ToString()
+//             => Format();
+//     }
+// }

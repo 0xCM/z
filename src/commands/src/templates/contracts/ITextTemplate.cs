@@ -7,7 +7,7 @@ namespace Z0
     /// <summary>
     /// Characterizes a pararametric text block bound to an arbitrary number of variables
     /// </summary>
-    public interface ITextTemplate : IExpr
+    public interface IPText : IExpr
     {
         TextBlock Pattern {get;}
 

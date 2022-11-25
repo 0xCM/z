@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.Linq;
-    using System.Text.Json;
-
-    using static sys;
-
-
+    public interface ICmdFlow<C,A,B> : IFlowCmd<A,B>, ICmd<C>
+        where C : ICmd<C>, new()
+    {
+        IActor IFlowCmd.Actor 
+            => new Actor("wf/module");
+    }   
 }

@@ -11,6 +11,9 @@ namespace Z0
         public void EmitMethodDefs(ReadOnlySeq<Assembly> src, IApiPack dst)
             => iter(src, a => EmitMethodDefs(a, dst), PllExec);
 
+        public void EmitMethodDefs(ReadOnlySeq<Assembly> src, IDbArchive dst)
+            => iter(src, a => EmitMethodDefs(a, dst), PllExec);
+
         void EmitMethodDefs(Assembly src, IApiPack dst)
         {
             void Exec()
@@ -30,9 +33,6 @@ namespace Z0
 
             Try(Exec);
         }
-
-        public void EmitMethodDefs(ReadOnlySeq<Assembly> src, IDbArchive dst)
-            => iter(src, a => EmitMethodDefs(a, dst), PllExec);
 
         void EmitMethodDefs(Assembly src, IDbArchive dst)
         {

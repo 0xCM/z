@@ -8,10 +8,10 @@ namespace Z0
 
     partial class EcmaEmitter
     {
-        public void EmitConstFields(IApiPack dst)
+        public void EmitConstFields(IDbArchive dst)
             => iter(ApiMd.Parts, c => EmitConstFields(c, dst), true);
 
-        public void EmitConstFields(Assembly src, IApiPack dst)
+        public void EmitConstFields(Assembly src, IDbArchive dst)
         {
             try
             {

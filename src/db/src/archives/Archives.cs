@@ -39,11 +39,11 @@ namespace Z0
 
         [Cmd(FilesCopy)]
         public record struct CopyFiles(FolderPath Source, FolderPath Target) 
-            : IApiCmdFlow<CopyFiles,FolderPath,FolderPath> {}
+            : ICmdFlow<CopyFiles,FolderPath,FolderPath> {}
 
         [Cmd(FilesPack)]
         public record struct PackFolder(FolderPath Source, FileUri Target) 
-            : IApiCmdFlow<PackFolder,FolderPath,FileUri> {}
+            : ICmdFlow<PackFolder,FolderPath,FileUri> {}
 
         [MethodImpl(Inline), CmdFx(FilesCopy)]
         public static CopyFiles copy(FolderPath src, FolderPath dst)

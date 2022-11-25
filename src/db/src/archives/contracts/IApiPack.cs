@@ -23,26 +23,26 @@ namespace Z0
         DbArchive Analysis()
             => Targets("analysis");
 
-        DbArchive Docs()
-            => Targets("docs");
+        // DbArchive Docs()
+        //     => Targets("docs");
 
-        DbArchive Docs(string scope)
-            => Docs().Targets(scope);
+        // DbArchive Docs(string scope)
+        //     => Docs().Targets(scope);
 
-        DbArchive Tokens()
-            => Metadata().Targets("tokens");
+        // DbArchive Tokens()
+        //     => Metadata().Targets("tokens");
 
         DbArchive Extracts()
             => Targets("extracts");
 
-        DbArchive Metadata()
-            => Targets("metadata");
+        // DbArchive Metadata()
+        //     => Targets("metadata");
 
-        DbArchive Runtime()
-            => Targets("runtime");
+        // DbArchive Runtime()
+        //     => Targets("runtime");
 
-        DbArchive Metadata(string scope)
-            => Metadata().Targets(scope);
+        // DbArchive Metadata(string scope)
+        //     => Metadata().Targets(scope);
 
         FilePath ExtractPath(PartId part, FileKind kind)
             => Extracts().Path(FS.file(part.Format(), kind));

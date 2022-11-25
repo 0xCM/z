@@ -9,6 +9,10 @@ namespace Z0
     [ApiHost]
     public partial class Cmd
     {        
+        [Op, Closures(UInt64k)]
+        public static Tool tool(CmdArgs args, byte index = 0)
+            => CmdArgs.arg(args,index).Value;
+
         /// <summary>
         /// Creates a meaningful option
         /// </summary>

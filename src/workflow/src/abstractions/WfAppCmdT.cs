@@ -48,7 +48,7 @@ namespace Z0
 
         [CmdOp("commands")]
         protected void EmitCommands()
-            => ApiCmd.emit(Channel, ApiCmd.catalog(ApiCmd.Dispatcher), AppDb.AppData().Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv));
+            => ApiCmd.emit(Channel, ApiCmd.catalog(), AppDb.AppData().Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv));
 
         public void RunCmd(string name)
             => ApiCmd.RunCmd(name);
@@ -60,6 +60,8 @@ namespace Z0
             => ApiCmd.RunCmd(cmd);
 
         public virtual void Loop()
-            => ApiCmd.Loop();
+        {
+            ApiLoop.start(Channel).Wait();
+        }
    }
 }

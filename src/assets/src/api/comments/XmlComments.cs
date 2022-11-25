@@ -98,9 +98,6 @@ namespace Z0
             }
         }
 
-        public void Collect(IApiPack dst)
-            => Collect(dst.Targets(comments));
-
         static bool parse(string key, string value, out ApiComment dst)
         {
             var parts = key.SplitClean(Chars.Colon);

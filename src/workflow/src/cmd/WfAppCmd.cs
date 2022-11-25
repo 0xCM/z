@@ -58,15 +58,15 @@ namespace Z0
 
         [CmdOp("api/emit")]
         void ApiEmit()
-            => ApiMd.Emitter().Emit(ApiMd.parts(), AppDb.ApiTargets());
+            => ApiMd.Emitter(AppDb.ApiTargets()).Emit(ApiMd.parts());
 
         [CmdOp("api/types")]
         void EmitApiTypes()
-            => ApiMd.Emitter().EmitApiTypes(ApiMd.parts(), AppDb.ApiTargets());
+            => ApiMd.Emitter(AppDb.ApiTargets()).EmitApiTypes(ApiMd.parts());
 
         [CmdOp("api/tables")]
         void EmitApiTables()
-            => ApiMd.Emitter().EmitApiTables(ApiMd.parts(), AppDb.ApiTargets());
+            => ApiMd.Emitter(AppDb.ApiTargets()).EmitApiTables(ApiMd.parts());
 
         [CmdOp("version")]
         void Version()
@@ -158,16 +158,14 @@ namespace Z0
         [CmdOp("types/list")]
         void ListTypes(CmdArgs args)
         {
-            var dst = Env.cd() + FS.folder(".data");
-            MdEmit.types(Channel,AssemblyFiles.managed(FS.dir(args[0])), dst);
-
+            ApiMd.Emitter(Archives.archive(Env.cd() + FS.folder(".data"))).EmitTypeLists(AssemblyFiles.managed(FS.dir(args[0])));
         }
+
         [CmdOp("tokens/types")]
         void TokenTypes()
         {
             var types = Tokens.types(ApiMd.Parts);
-            var dst = Env.cd() + FS.folder(".data") + FS.file("tokens.types", FileKind.List);
-            ApiMd.Emitter().EmitTypeList(types, dst);
+            ApiMd.Emitter(Archives.archive(Env.cd() + FS.folder(".data"))).EmitTypeList(types, FS.file("tokens.types", FileKind.List));
         }
 
         [CmdOp("tokens/list")]
@@ -436,7 +434,7 @@ namespace Z0
 
         [CmdOp("cmd/script")]
         void RunAppScript(CmdArgs args)
-            => ApiCmd.RunCmdScript(FS.path(arg(args,0)));
+            => ApiCmd.RunApiScript(FS.path(arg(args,0)));
 
         [CmdOp("cfg")]
         void LoadCfg(CmdArgs args)

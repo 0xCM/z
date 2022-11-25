@@ -12,6 +12,6 @@ namespace Z0
             => CmdId.identify<T>();
 
         string IExpr.Format()
-            => CmdFormat.format((T)this);
+            => Cmd.format((T)this);
     }    
 }

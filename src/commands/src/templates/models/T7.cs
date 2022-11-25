@@ -4,21 +4,21 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class TextTemplates
+    partial class TextParametrics
     {
-        public class TextTemplate<T0,T1,T2,T3,T4,T5,T6,T7> : TextTemplate<T0,T1,T2,T3,T4,T5,T6>
+        public class PT<T0,T1,T2,T3,T4,T5,T6,T7> : PT<T0,T1,T2,T3,T4,T5,T6>
         {
             const byte Arity = 8;
 
             const byte Index = Arity - 1;
 
-            public TextTemplate(TextBlock src)
+            public PT(TextBlock src)
                 : base(src, Arity)
             {
 
             }
 
-            public TextTemplate(TextBlock src, byte arity)
+            public PT(TextBlock src, byte arity)
                 : base(src, Arity)
             {
 

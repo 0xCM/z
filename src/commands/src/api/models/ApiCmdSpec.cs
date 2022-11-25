@@ -30,7 +30,7 @@ namespace Z0
         }
 
         public string Format()
-            => CmdFormat.format(this);
+            => Cmd.format(this);
 
         public override string ToString()
             => Format();

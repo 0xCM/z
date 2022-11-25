@@ -9,23 +9,6 @@ namespace Z0
     /// </summary>
     public class ToolCmdSpec : IToolCmd
     {
-        public static string format(IToolCmd src)
-        {
-            var count = src.Args.Count;
-            var buffer = text.buffer();
-            buffer.AppendFormat("{0}{1}", src.Tool, Chars.LParen);
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var arg = ref src.Args[i];
-                buffer.AppendFormat(RpOps.Assign, arg.Name, arg.Value);
-                if(i != count - 1)
-                    buffer.Append(", ");
-            }
-
-            buffer.Append(Chars.RParen);
-            return buffer.Emit();
-        }
-
         public readonly Tool Tool;
 
         public readonly string Type;
@@ -53,7 +36,7 @@ namespace Z0
             => Hash;
 
         public string Format()
-            => format(this);
+            => ToolCmd.format(this);
 
         public override string ToString()
             => Format();

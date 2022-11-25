@@ -7,7 +7,7 @@ namespace Z0
     public interface IApiModule : IActor
     {
         Task<ExecToken> Start<C>(C cmd)
-            where C : IApiCmd<C>, new();
+            where C : ICmd<C>, new();
         
         @string INamed.Name
             => GetType().AssemblyQualifiedName;

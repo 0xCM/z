@@ -4,26 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using api = Settings;
-
     using static sys;
-
-    [Free]
-    public interface ISettings : IExpr
-    {
-        @string Name {get;}
-
-        SettingLookup Lookup {get;}
-
-        bool INullity.IsEmpty
-            => Lookup.IsEmpty;
-
-        bool INullity.IsNonEmpty
-            => Lookup.IsNonEmpty;
-
-        string IExpr.Format()
-            => api.format(this);
-    }
 
 
     public abstract class Settings<S,K,V> : ReadOnlySeq<S,Setting<K,V>>, ILookup<K,V>

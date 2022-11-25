@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class ScriptTemplate : TextTemplate
+    public class ScriptTemplate : PText
     {
         public static ScriptTemplate create(string name, string content)
             => new ScriptTemplate(name, content);

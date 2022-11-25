@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct JsonDepsModel
+    partial class JsonDeps
     {
         public record struct Options
         {

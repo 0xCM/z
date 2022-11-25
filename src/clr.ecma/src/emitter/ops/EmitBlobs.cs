@@ -8,7 +8,7 @@ namespace Z0
 
     partial class EcmaEmitter
     {
-        public void EmitBlobs(IApiPack dst)
+        public void EmitBlobs(IDbArchive dst)
             => iter(ApiMd.Parts, c => EmitBlobs(c, dst.Metadata(EcmaSections.Blobs).PrefixedTable<EcmaBlobRow>(c.GetSimpleName())), true);
 
         public void EmitBlobs(ReadOnlySeq<Assembly> src, IDbArchive dst)

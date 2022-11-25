@@ -9,11 +9,11 @@ namespace Z0
 
     partial class EcmaEmitter
     {
-        public void EmitApiMetadump(IApiPack dst)
-            => EmitApiMetadump(dst.Metadata("metadump"));
-
         public void EmitApiMetadump(IDbArchive dst)
-            => EmitMetadump(ApiMd.Parts, dst);
+            => EmitMetadump(ApiMd.Parts, dst.Metadata("metadump"));
+
+        // public void EmitApiMetadump(IDbArchive dst)
+        //     => EmitMetadump(ApiMd.Parts, dst);
 
         public void EmitMetadumps(CmdArgs args)
         {
@@ -67,7 +67,6 @@ namespace Z0
             }
             return token;
         }
-
 
         public void EmitMetadump(ReadOnlySeq<Assembly> src, IDbArchive dst, bool clear = true)
         {

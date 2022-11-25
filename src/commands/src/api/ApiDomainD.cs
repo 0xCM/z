@@ -15,7 +15,7 @@ namespace Z0
     {
         [Cmd]
 
-        public abstract record class DomainCmd<C> : IApiCmd<C>
+        public abstract record class DomainCmd<C> : ICmd<C>
             where C : DomainCmd<C>, new()
         {
 

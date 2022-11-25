@@ -8,27 +8,32 @@ namespace Z0
 
     partial class Cmd
     {
-        public static CmdScriptExpr format(ScriptTemplate pattern, params CmdVar[] args)
-            => string.Format(pattern.Pattern, args.Select(a => a.Format()));
-
-        public static CmdScriptExpr format<K>(ScriptTemplate pattern, params CmdVar<K>[] args)
-            where K : unmanaged
-                => string.Format(pattern.Pattern, args.Select(a => a.Format()));
-                        
-        public static string format<T>(ICmd<T> src)
-            where T : ICmd<T>, new()
+        public static string format<T>(T src)
+            where T : ICmd, new()
         {
             var buffer = text.emitter();
             buffer.AppendFormat("{0}{1}", src.CmdId, Chars.LParen);
 
             var fields = ClrFields.instance(typeof(T));
             if(fields.Length != 0)
-                ClrFieldAdapter.render(__makeref(src), fields, buffer);
+                render(__makeref(src), fields, buffer);
 
             buffer.Append(Chars.RParen);
             return buffer.Emit();
         }
 
+        public static void render(TypedReference src, ReadOnlySpan<ClrFieldAdapter> fields, ITextEmitter dst)
+        {
+            var count = fields.Length;
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var field = ref skip(fields,i);
+                dst.AppendFormat(RP.Assign, field.Name, field.GetValueDirect(src));
+                if(i != count - 1)
+                    dst.Append(", ");
+            }
+        }
+                        
         public static string format(ApiCmdSpec src)
         {
             if(src.IsEmpty)

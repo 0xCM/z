@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class TextTemplate : ITextTemplate
+    public class PText : IPText
     {
         public readonly TextBlock Pattern;
 
@@ -12,21 +12,21 @@ namespace Z0
 
         public readonly uint VarCount;
 
-        public TextTemplate(string src)
+        public PText(string src)
         {
             Pattern = src ?? EmptyString;
             Vars = sys.empty<object>();
             VarCount = 0;
         }
 
-        public TextTemplate(string src, object[] vars)
+        public PText(string src, object[] vars)
         {
             Pattern = src ?? EmptyString;
             Vars = vars;
             VarCount = (uint)vars.Length;
         }
 
-        public TextTemplate(string src, uint varcount)
+        public PText(string src, uint varcount)
         {
             Pattern = src ?? EmptyString;
             Vars = sys.alloc<object>(varcount);
@@ -67,10 +67,10 @@ namespace Z0
             get => Pattern.IsNonEmpty;
         }
 
-        Seq<object> ITextTemplate.Vars
+        Seq<object> IPText.Vars
             => Vars;
 
-        TextBlock ITextTemplate.Pattern
+        TextBlock IPText.Pattern
             => Pattern;
 
         public string Format()
