@@ -101,14 +101,14 @@ namespace Z0
         public static ReadOnlySpan<char> render(ApiKeySeg src)
         {
             ushort data = src;
-            return Hex.render(LowerCase, data);
+            return HexRender.render(LowerCase, data);
         }
 
         [MethodImpl(Inline), Op]
         public static void render(ApiKeySeg src, Span<char> dst)
         {
             ushort data = src;
-            Hex.render(LowerCase, data, 0, dst);
+            HexRender.render(LowerCase, data, 0, dst);
         }
 
         [MethodImpl(Inline), Op]
@@ -125,7 +125,7 @@ namespace Z0
             where N : unmanaged, ITypeNat
         {
             var data = span16u(src);
-            var chars = Hex.render(LowerCase,skip(data, n.NatValue));
+            var chars = HexRender.render(LowerCase,skip(data, n.NatValue));
             seek(dst,offset + 0) = skip(chars,3);
             seek(dst,offset + 1) = skip(chars,2);
             seek(dst,offset + 2) = skip(chars,1);

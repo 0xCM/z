@@ -18,7 +18,7 @@ namespace Z0
             {
                 Layouts = src;
                 Blocks = blocks;
-                Records = core.alloc<InstLayoutRecord>(src.Length);;
+                Records = sys.alloc<InstLayoutRecord>(src.Length);;
             }
 
 

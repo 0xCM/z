@@ -5,8 +5,11 @@
 namespace Z0
 {
     using static sys;
-
-    partial struct Digital
+    public class HexConvert
     {
+        const NumericKind Closure = UnsignedInts;
+
+
+
     }
 }

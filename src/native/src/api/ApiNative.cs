@@ -28,7 +28,7 @@ namespace Z0
 
         [Op]
         public static byte render(AsmHexCode src, Span<char> dst)
-            => (byte)Hex.render(LowerCase, src.Bytes, dst);
+            => (byte)HexRender.render(LowerCase, src.Bytes, dst);
 
         [Op]
         public static string format(in AsmHexCode src)
@@ -81,6 +81,10 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
+        public static ReadOnlySpan<byte> data(in AsmHexCode src)
+            => sys.bytes(src);
+
+        [MethodImpl(Inline), Op]
         public static AsmHexCode asmhex(ulong src)
         {
             var size = bits.effsize(src);
@@ -91,9 +95,9 @@ namespace Z0
             return new AsmHexCode(Cells.cell128(u64(first(buffer)), (ulong)size << 56));
         }
 
-        [MethodImpl(Inline), Op]
-        public static Span<byte> encoded(AsmHexCode src)
-            => slice(src.Bytes, 0, src.Size);
+        // [MethodImpl(Inline), Op]
+        // public static Span<byte> encoded(in AsmHexCode src)
+        //     => slice(src.Bytes, 0, src.Size);
 
         [Op]
         public static uint render(AsmHexCode src, ref uint i, Span<char> dst)
@@ -103,7 +107,7 @@ namespace Z0
             var bytes = src.Bytes;
             for(var j=0; j<count; j++)
             {
-                Hex.render(LowerCase, (Hex8)skip(bytes, j), ref i, dst);
+                HexRender.render(LowerCase, (Hex8)skip(bytes, j), ref i, dst);
                 if(j != count - 1)
                     seek(dst, i++) = Chars.Space;
             }

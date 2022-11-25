@@ -11,6 +11,7 @@ namespace Z0
 
     partial class H0x
     {
+
         /// <summary>
         /// Returns the upper-case hex code for a specified digit
         /// </summary>
@@ -30,22 +31,6 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static HexDigitCode code(LowerCased @case, HexDigitValue digit)
             => (HexDigitCode)skip(H.LowerCodes, (byte)digit);
-
-        // /// <summary>
-        // /// Returns the hex character code for a specified value of at most 4 bits
-        // /// </summary>
-        // /// <param name="src">The value to be hex-encoded</param>
-        // [MethodImpl(Inline), Op]
-        // public static HexUpperCode code(UpperCased upper, Hex4 src)
-        //     => (HexUpperCode)sys.skip(first(UpperHexDigits), src);
-
-        // /// <summary>
-        // /// Returns the hex character code for a <see cref='uint4'/> value
-        // /// </summary>
-        // /// <param name="src">The value to be hex-encoded</param>
-        // [MethodImpl(Inline), Op]
-        // public static HexLowerCode code(LowerCased lower, Hex4 src)
-        //     => (HexLowerCode)sys.skip(first(LowerHexDigits), src);
 
         /// <summary>
         /// Returns the hex character code for a specified value of at most 4 bits

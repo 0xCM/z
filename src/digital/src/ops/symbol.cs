@@ -45,14 +45,14 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static HexDigitSym symbol(LetterCaseKind @case, HexDigitValue src)
-            => Hex.symbol(@case, src);
+            => H0x.symbol(@case, src);
 
         [MethodImpl(Inline), Op]
         public static HexDigitSym symbol(UpperCased @case, HexDigitValue src)
-            => Hex.symbol(@case, src);
+            => H0x.symbol(@case, src);
 
         [MethodImpl(Inline), Op]
         public static HexDigitSym symbol(LowerCased @case, HexDigitValue src)
-            => Hex.symbol(@case, src);
+            => H0x.symbol(@case, src);
     }
 }

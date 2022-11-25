@@ -3,5 +3,6 @@
     <ProjectReference Include="$(Sys)" />
     <ProjectReference Include="$(Text)" />
     <ProjectReference Include="$(Types)" />
+    <ProjectReference Include="$(Hex)" />
   </ItemGroup>
 </Project>

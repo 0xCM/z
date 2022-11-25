@@ -12,7 +12,7 @@ namespace Z0
         {
             var input = text.trim(src);
             dst = EncodingId.Empty;
-            var result = Hex64.parse(input, out Hex64 encid);
+            var result = HexParser.parse(input, out Hex64 encid);
             if(result)
                 dst = encid;
             return result;

@@ -22,8 +22,8 @@ namespace Z0
         public static uint render(in AsmDisasm src, Span<char> dst)
         {
             var i=0u;
-            Hex.render(LowerCase,(Hex64)src.Offset, ref i, dst);
-            core.seek(dst,i++) = Chars.Space;
+            HexRender.render(LowerCase,(Hex64)src.Offset, ref i, dst);
+            sys.seek(dst,i++) = Chars.Space;
             text.copy(src.Statement.Data, ref i, dst);
             return i;
         }
@@ -31,7 +31,7 @@ namespace Z0
         public static string format(in AsmDisasm src, Span<char> buffer)
         {
             var count = render(src,buffer);
-            return text.format(core.slice(buffer,0,count));
+            return text.format(sys.slice(buffer,0,count));
         }
 
         const string TableId = "asm.disassembly";

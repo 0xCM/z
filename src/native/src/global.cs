@@ -55,7 +55,7 @@ namespace global
 
         [Op]
         public static byte render(AsmHexCode src, Span<char> dst)
-            => (byte)Hex.render(LowerCase, src.Bytes, dst);
+            => (byte)HexRender.render(LowerCase, src.Bytes, dst);
 
         [Op]
         public static string format(in AsmHexCode src)
@@ -130,7 +130,7 @@ namespace global
             var bytes = src.Bytes;
             for(var j=0; j<count; j++)
             {
-                Hex.render(LowerCase, (Hex8)skip(bytes, j), ref i, dst);
+                HexRender.render(LowerCase, (Hex8)skip(bytes, j), ref i, dst);
                 if(j != count - 1)
                     seek(dst, i++) = Chars.Space;
             }

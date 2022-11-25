@@ -38,7 +38,7 @@ namespace Z0
         public static string format<C>(C @case, ReadOnlySpan<HexDigitValue> src, Span<char> buffer)
             where C : unmanaged, ILetterCase
         {
-            var count = Hex.render(@case, src, buffer);
+            var count = HexRender.render(@case, src, buffer);
             return new string(slice(buffer,0,count));
         }
 

@@ -46,12 +46,12 @@ namespace Z0
                 {
                     seek(buffer,i++) = Chars.D0;
                     seek(buffer,i++) = Chars.x;
-                    Hex.render(LowerCase, (Hex64)current, ref i, buffer);
+                    HexRender.render(LowerCase, (Hex64)current, ref i, buffer);
                     seek(buffer,i++) = Chars.Space;
                     restart = false;
                 }
 
-                i += Hex.hexchars(*pSrc, LowerCase, ref i, buffer);
+                i += HexRender.hexchars(*pSrc, LowerCase, ref i, buffer);
                 seek(buffer, i++) = Chars.Space;
 
                 if(offset % bpl == 0)

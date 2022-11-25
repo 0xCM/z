@@ -122,22 +122,6 @@ namespace Z0
             get => Content.AsDouble();
         }
 
-        // [MethodImpl(Inline)]
-        // public Cell8 Cell8(byte i)
-        //     => @as<Cell8>(V8u);
-
-        // [MethodImpl(Inline)]
-        // public ref Cell16 Cell16(byte i)
-        //     => ref @as<Cell16>(Bytes);
-
-        // [MethodImpl(Inline)]
-        // public ref Cell32 Cell32(byte i)
-        //     => ref @as<Cell32>(Bytes);
-
-        // [MethodImpl(Inline)]
-        // public ref Cell64 Cell64(byte i)
-        //     => ref @as<Cell64>(Bytes);
-
         [MethodImpl(Inline)]
         public byte Cell(W8 w, byte index)
             => V8u.GetElement(index);

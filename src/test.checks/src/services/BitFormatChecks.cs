@@ -196,22 +196,26 @@ namespace Z0
             CheckBv128();
         }
 
-        public void Show(HexVector8<N4> src)
-        {
-            Log(src.Format());
+        // [MethodImpl(Inline), Op]
+        // public static uint Bitstring(HexVector8<N4> src, uint offset, Span<char> dst)
+        //     => BitRender.bitstring(src, offset, dst, 4);
 
-            var offset = 0u;
-            var buffer = RentBuffer();
-            offset += src.Bitstring(offset, buffer);
+        // public void Show(HexVector8<N4> src)
+        // {
+        //     Log(src.Format());
 
-            seek(buffer, offset++) = Chars.Space;
-            seek(buffer, offset++) = Chars.Eq;
-            seek(buffer, offset++) = Chars.Space;
+        //     var offset = 0u;
+        //     var buffer = RentBuffer();
+        //     offset += src.Bitstring(offset, buffer);
 
-            offset += BitRender.bitstring(src, offset, buffer);
+        //     seek(buffer, offset++) = Chars.Space;
+        //     seek(buffer, offset++) = Chars.Eq;
+        //     seek(buffer, offset++) = Chars.Space;
 
-            Log(FormatBuffer(0, offset));
-        }
+        //     offset += bitstring(src, offset, buffer);
+
+        //     Log(FormatBuffer(0, offset));
+        // }
 
         public Index<BitFormatCheck<W3,uint3>> Check(W3 w)
         {

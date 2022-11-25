@@ -37,7 +37,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public static void render<C>(C @case, ReadOnlySpan<HexDigitValue> src, Span<char> dst)
             where C : unmanaged, ILetterCase
-                => Hex.render(@case, src,dst);
+                => HexRender.render(@case, src,dst);
 
         [MethodImpl(Inline), Op]
         public static void render(Base2 @base, ReadOnlySpan<byte> src, Span<char> dst)
