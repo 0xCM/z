@@ -12,6 +12,7 @@ namespace Z0
 
     public class HexParser
     {
+        
         [Parser]
         public static bool parse(string src, out HexArray dst)
         {

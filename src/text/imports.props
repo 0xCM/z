@@ -1,7 +1,10 @@
 <Project>
 
   <ItemGroup>
-    <ProjectReference Include="$(Bit)" />
+    <PackageReference Include="z0.sys.core" Version="$(ZSysVer)" />
+    <PackageReference Include="z0.sys.api" Version="$(ZSysVer)" />
+    <PackageReference Include="z0.algebra" Version="$(ZSysVer)" />
+    <PackageReference Include="z0.bit" Version="$(ZSysVer)" />
   </ItemGroup>
 
 </Project>

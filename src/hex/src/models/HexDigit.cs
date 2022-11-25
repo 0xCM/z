@@ -37,7 +37,7 @@ namespace Z0
         public S Symbol
         {
             [MethodImpl(Inline)]
-            get => Digital.symbol(Case,Value);
+            get => Hex.symbol(Case,Value);
         }
 
         public C Code

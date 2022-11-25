@@ -24,7 +24,7 @@ namespace Z0
         public static uint render(Paired<Hex16,char> src, ref uint i, Span<char> dst)
         {
             var i0 = i;
-            Hex.render(LowerCase, src.Left, ref i, dst);
+            HexRender.render(LowerCase, src.Left, ref i, dst);
             seek(dst,i++) = Chars.Colon;
             seek(dst,i++) = src.Right;
             return i-i0;
@@ -34,7 +34,7 @@ namespace Z0
         public static uint render(CharMapEntry<char> src, ref uint i, Span<char> dst)
         {
             var i0 = i;
-            Hex.render(LowerCase, src.Source, ref i, dst);
+            HexRender.render(LowerCase, src.Source, ref i, dst);
             seek(dst,i++) = Chars.Colon;
             seek(dst,i++) = src.Target;
             return i-i0;

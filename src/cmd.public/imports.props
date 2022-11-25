@@ -10,7 +10,6 @@
     <ProjectReference Include="$(AsmSvc)" />
     <ProjectReference Include="$(Assets)" />
 
-    <ProjectReference Include="$(Bit)" />
     <ProjectReference Include="$(Bits)" />
 
     <ProjectReference Include="$(Calcs)" />

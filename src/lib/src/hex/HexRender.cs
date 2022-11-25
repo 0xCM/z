@@ -301,8 +301,8 @@ namespace Z0
             for(var i=0; i<size; i++)
             {
                 ref readonly var b = ref skip(src,i);
-                seek(dst,j++) = H0x.hexchar(@case, b, 0);
-                seek(dst,j++) = H0x.hexchar(@case, b, 1);
+                seek(dst,j++) = Hex.hexchar(@case, b, 0);
+                seek(dst,j++) = Hex.hexchar(@case, b, 1);
                 seek(dst,j++) = Chars.Space;
             }
             return j;
@@ -318,7 +318,7 @@ namespace Z0
         {
             var count = (uint)src.Length;
             for(var i=0u; i<count; i++)
-                seek(dst,i) = (char)H0x.symbol(@case, skip(src,i));
+                seek(dst,i) = (char)Hex.symbol(@case, skip(src,i));
             return count;
         }
 
@@ -544,8 +544,8 @@ namespace Z0
             for(var i=0; i<count && j<max; i++)
             {
                 ref readonly var b = ref skip(src,i);
-                seek(dst,j++) = H0x.hexchar(@case, b, 1);
-                seek(dst,j++) = H0x.hexchar(@case, b, 0);
+                seek(dst,j++) = Hex.hexchar(@case, b, 1);
+                seek(dst,j++) = Hex.hexchar(@case, b, 0);
                 if(i != count-1)
                     seek(dst,j++) = Chars.Space;
             }

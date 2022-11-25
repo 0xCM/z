@@ -13,7 +13,7 @@ namespace Z0
     {
         [MethodImpl(Inline), Op]
         public static char hexchar(UpperCased @case, Hex2 src)
-            => (char)H0x.symbol(@case, (Hex2Kind)src.Value);
+            => (char)Hex.symbol(@case, (Hex2Kind)src.Value);
 
         public readonly K Value;
 

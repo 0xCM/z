@@ -40,8 +40,8 @@ namespace Z0
                 ref readonly var b = ref skip(src,i);
                 seek(dst,j++) = Chars.D0;
                 seek(dst,j++) = Chars.x;
-                seek(dst,j++) = H0x.hexchar(LowerCase, b, 1);
-                seek(dst,j++) = H0x.hexchar(LowerCase, b, 0);
+                seek(dst,j++) = hexchar(LowerCase, b, 1);
+                seek(dst,j++) = hexchar(LowerCase, b, 0);
                 if(i != count-1)
                     seek(dst,j++) = Chars.Comma;
             }

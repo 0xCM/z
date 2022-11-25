@@ -13,7 +13,7 @@ namespace Z0
     {
         [MethodImpl(Inline), Op]
         public static char hexchar(UpperCased @case, Hex1 src)
-            => (char)H0x.symbol(@case, (Hex3Kind)src.Value);
+            => (char)Hex.symbol(@case, (Hex3Kind)src.Value);
 
         public const string On = "1";
 

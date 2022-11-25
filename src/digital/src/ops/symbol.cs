@@ -42,17 +42,5 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static DecimalDigitSym symbol(DecimalDigitValue src)
             => (DecimalDigitSym)((byte)src + DecimalSymFacet.First);
-
-        [MethodImpl(Inline), Op]
-        public static HexDigitSym symbol(LetterCaseKind @case, HexDigitValue src)
-            => H0x.symbol(@case, src);
-
-        [MethodImpl(Inline), Op]
-        public static HexDigitSym symbol(UpperCased @case, HexDigitValue src)
-            => H0x.symbol(@case, src);
-
-        [MethodImpl(Inline), Op]
-        public static HexDigitSym symbol(LowerCased @case, HexDigitValue src)
-            => H0x.symbol(@case, src);
     }
 }

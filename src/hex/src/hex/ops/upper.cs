@@ -31,6 +31,6 @@ namespace Z0
         /// <param name="value">The digit value</param>
         [MethodImpl(Inline), Op]
         public static char upper(HexDigitValue value)
-            => (char)H0x.symbol(UpperCase, value);
+            => (char)symbol(UpperCase, value);
     }
 }

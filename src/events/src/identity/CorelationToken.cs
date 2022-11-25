@@ -12,17 +12,9 @@ namespace Z0
     [StructLayout(LayoutKind.Sequential,Size=16), ApiComplete]
     public record struct CorrelationToken : IHashed<Hash64>
     {     
-        ref ulong Lo
-        {
-            [MethodImpl(Inline)]
-            get => ref first(recover<ulong>(bytes(this)));
-        }
+        ulong Lo;
 
-        ref ulong Hi
-        {
-            [MethodImpl(Inline)]
-            get => ref first(recover<ulong>(slice(bytes(this),8)));
-        }
+        ulong Hi;
 
         [MethodImpl(Inline)]
         public CorrelationToken()

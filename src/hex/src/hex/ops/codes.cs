@@ -6,9 +6,8 @@ namespace Z0
 {
     using static sys;
 
-    partial class H0x
+    partial struct Hex
     {
-
         /// <summary>
         /// Projects a bytespan into a codespan
         /// </summary>

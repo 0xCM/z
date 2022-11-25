@@ -8,7 +8,7 @@ namespace Z0
     using static HexFormatSpecs;
     using static HexOptionData;
 
-    partial class H0x
+    partial struct Hex
     {
         /// <summary>
         /// Presents the source value as a sequence of hex symbols

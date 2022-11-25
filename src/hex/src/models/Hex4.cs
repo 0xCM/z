@@ -12,11 +12,11 @@ namespace Z0
     {
         [MethodImpl(Inline), Op]
         public static char hexchar(UpperCased @case, Hex4 src)
-            => (char)H0x.symbol(@case, src.Value);
+            => (char)Hex.symbol(@case, src.Value);
 
         [MethodImpl(Inline), Op]
         public static char hexchar(LowerCased @case, Hex4 src)
-            => (char)H0x.symbol(@case, src.Value);
+            => (char)Hex.symbol(@case, src.Value);
 
         public const byte Width = 4;
 

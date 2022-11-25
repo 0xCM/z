@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
     using static HexCharData;
 
-    partial class H0x
+    partial struct Hex
     {
         [MethodImpl(Inline), Op]
         public static HexDigitSym symbol(LowerCased casing, byte index)

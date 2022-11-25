@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
-    <ZVer>0.0.16</ZVer>
-    <ZSysVer>0.0.20</ZSysVer>
+    <ZVer>0.0.17</ZVer>
+    <ZSysVer>0.0.21</ZSysVer>
     <CodeAnalysisVer>4.4.0-4.final</CodeAnalysisVer>
     <MsDiaVer>1.6.0</MsDiaVer>
     <MsBuildVer>17.2.0</MsBuildVer>

@@ -17,13 +17,5 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static DecimalDigitCode code(DecimalDigitValue src)
             => (DecimalDigitCode)@char(src);
-
-        [MethodImpl(Inline), Op]
-        public static HexDigitCode code(UpperCased @case, HexDigitValue src)
-            => (HexDigitCode)@char(@case, src);
-
-        [MethodImpl(Inline), Op]
-        public static HexDigitCode code(LowerCased @case, HexDigitValue src)
-            => (HexDigitCode)@char(@case, src);
     }
 }

@@ -44,8 +44,8 @@ namespace Z0
             for(var i=0u; i<count; i++)
             {
                 ref readonly var d = ref skip(bytes,i);
-                seek(dst, j--) = H0x.code(n4, LowerCase, d);
-                seek(dst, j--) = H0x.code(n4, LowerCase, srl(d, 4));
+                seek(dst, j--) = code(n4, LowerCase, d);
+                seek(dst, j--) = code(n4, LowerCase, srl(d, 4));
             }
         }
 

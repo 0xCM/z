@@ -31,6 +31,6 @@ namespace Z0
         /// <param name="value">The digit value</param>
         [MethodImpl(Inline), Op]
         public static char lower(HexDigitValue value)
-            => (char)H0x.symbol(LowerCase, value);
+            => (char)symbol(LowerCase, value);
     }
 }

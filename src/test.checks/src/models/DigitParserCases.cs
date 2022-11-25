@@ -63,10 +63,10 @@ namespace Z0
                 seek(dst, j++) = new DigitParserCase(base10, Digital.@char((DecimalDigitValue)i), i);
 
             for(byte i=0; i<b16d; i++)
-                seek(dst, j++) = new DigitParserCase(base16, Digital.@char(LowerCase, (HexDigitValue)i), i);
+                seek(dst, j++) = new DigitParserCase(base16, Hex.hexchar(LowerCase, (HexDigitValue)i), i);
 
             for(byte i=0; i<b16d; i++)
-                seek(dst, j++) = new DigitParserCase(base16, Digital.@char(UpperCase, (HexDigitValue)i), i);
+                seek(dst, j++) = new DigitParserCase(base16, Hex.hexchar(UpperCase, (HexDigitValue)i), i);
 
             return buffer;
         }
