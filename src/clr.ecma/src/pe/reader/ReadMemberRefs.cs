@@ -5,10 +5,11 @@
 namespace Z0
 {
     using static sys;
+    using static EcmaTables;
 
     partial class PeReader
     {
-        public ref EcmaMemberRef ReadMemberRef(MemberReferenceHandle handle, ref EcmaMemberRef dst)
+        public ref MemberRef ReadMemberRef(MemberReferenceHandle handle, ref MemberRef dst)
         {
             var src = MD.GetMemberReference(handle);
             dst.Token = EcmaTokens.token(handle);
@@ -20,17 +21,17 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public void ReadMemberRefs(ReadOnlySpan<MemberReferenceHandle> src, Span<EcmaMemberRef> dst)
+        public void ReadMemberRefs(ReadOnlySpan<MemberReferenceHandle> src, Span<MemberRef> dst)
         {
             var count = src.Length;
             for(var i=0u; i<count; i++)
                 ReadMemberRef(skip(src,i), ref seek(dst,i));
         }
 
-        public ReadOnlySeq<EcmaMemberRef> ReadMemberRefs()
+        public ReadOnlySeq<MemberRef> ReadMemberRefs()
         {
             var handles = MemberRefHandles;
-            var dst = sys.alloc<EcmaMemberRef>(handles.Length);
+            var dst = sys.alloc<MemberRef>(handles.Length);
             ReadMemberRefs(handles,dst);
             return dst;
         }

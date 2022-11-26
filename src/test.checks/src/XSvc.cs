@@ -28,7 +28,7 @@ namespace Z0
         public static BitLogicChecker BitLogicChecker(this IWfRuntime wf)
             => Services.BitLogicChecker(wf);
 
-        public static IApiCmdSvc CalcChecker(this IWfRuntime wf)
+        public static IApiService CalcChecker(this IWfRuntime wf)
             => Services.CalcChecker(wf);
     }
 }

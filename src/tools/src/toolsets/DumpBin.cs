@@ -281,7 +281,7 @@ namespace Z0
         {
             var script = Script(ScriptId(cmd, kind), cmd, src, dst);
             var path = dst.Path(FS.file(script.Name.Format(), FS.Cmd));
-            FileEmit(script.Format(), path);
+            Channel.FileEmit(script.Format(), path);
             return path;
         }
 

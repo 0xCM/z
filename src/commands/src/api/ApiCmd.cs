@@ -7,8 +7,17 @@ namespace Z0
 {
     using static sys;
 
-    public partial class ApiCmd : AppService<ApiCmd>, IApiCmdSvc
+    public partial class ApiCmd : AppService<ApiCmd>, IApiService
     {
+        public static A shell<A>(bool catalog, params string[] args)
+            where A : IAppShell, new()
+        {
+            var wf = ApiRuntime.create(catalog, args);
+            var app = new A();
+            app.Init(wf);
+            return app;
+        }
+
         public static IApiDispatcher Dispatcher 
             => AppData.Value<IApiDispatcher>(nameof(IApiDispatcher));
 
@@ -62,14 +71,6 @@ namespace Z0
         public static ICmd[] reify(Assembly src)
             => tagged(src).Select(reify);
 
-        // public static ApiOps distill(IApiOps[] src)
-        // {
-        //     var dst = dict<string,IApiCmdMethod>();
-        //     foreach(var a in src)
-        //         iter(a.Invokers,  a => dst.TryAdd(a.CmdName, a));
-        //     return new ApiOps(dst);
-        // }
-
         public void RunCmd(string name, CmdArgs args)
             => ApiCmd.Dispatcher.Dispatch(name, args);
 
@@ -90,17 +91,30 @@ namespace Z0
             }
         }
 
-        public void Loop()
+        public void RunApiScript(FilePath src)
         {
-            var input = Next();
-            while(input.Name != ".exit")
+            if(src.Missing)
             {
-                if(input.IsNonEmpty)
-                    RunCmd(input);
-                input = Next();
+                Channel.Error(AppMsg.FileMissing.Format(src));
+            }
+            else
+            {
+                var lines = src.ReadNumberedLines(true);
+                var count = lines.Count;
+                for(var i=0; i<count; i++)
+                {
+                    ref readonly var content = ref lines[i].Content;
+                    if(ApiCmd.parse(content, out ApiCmdSpec spec))
+                        RunCmd(spec);
+                    else
+                    {
+                        Channel.Error($"ParseFailure:'{content}'");
+                        break;
+                    }
+                }
             }
         }
-            
+
         public void RunCmd(string name)
         {
             var result = Dispatcher.Dispatch(name);

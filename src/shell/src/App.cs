@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Free]
-    sealed class App : AppCmdShell<App>
+    sealed class App : ApiShell<App>
     {
         static ReadOnlySeq<IApiCmdProvider> providers(IWfRuntime wf)
             => new IApiCmdProvider[]{

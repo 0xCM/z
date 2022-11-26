@@ -4,15 +4,17 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static EcmaTables;
+
     partial class EcmaReader
     {
         [Op]
-        public EcmaBlobRow ReadBlobInfo(BlobHandle handle, Count seq)
+        public EcmaBlobInfo ReadBlobInfo(BlobHandle handle, Count seq)
         {
             var offset = (Address32)MD.GetHeapOffset(handle);
             var value = MD.GetBlobBytes(handle) ?? core.array<byte>();
             var size = (uint)MD.GetHeapSize(HeapIndex.Blob);
-            var row = new EcmaBlobRow();
+            var row = new EcmaBlobInfo();
             row.Seq = seq;
             row.HeapSize = (uint)MD.GetHeapSize(HeapIndex.Blob);
             row.Offset = (Address32)MD.GetHeapOffset(handle);

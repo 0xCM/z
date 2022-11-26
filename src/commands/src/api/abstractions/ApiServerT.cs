@@ -5,7 +5,7 @@
 namespace Z0
 {
     [CmdProvider]
-    public abstract class ApiServer<T> : AppService<T>, IApiCmdSvc
+    public abstract class ApiServer<T> : AppService<T>, IApiServer
         where T : ApiServer<T>, new()
     {
         protected AppDb AppDb => AppDb.Service;

@@ -121,18 +121,6 @@ namespace Z0
         void Copy(CmdArgs args)
             => Archives.copy(Channel,args);
 
-        [CmdOp("env/include")]
-        void EnvInclude()
-            => Channel.Row(Env.paths(EnvTokens.INCLUDE, EnvVarKind.Process).Delimit(Chars.NL));
-
-        [CmdOp("env/path")]
-        void EnvPath()
-            => Channel.Row(Env.paths(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL));
-
-        [CmdOp("env/lib")]
-        void EnvLib()
-            => Channel.Row(Env.paths(EnvTokens.LIB, EnvVarKind.Process).Delimit(Chars.NL));
-
         [CmdOp("archives")]        
         void ListArchives(CmdArgs args)
             => Emitter.Row(AppDb.Archives().Folders().Delimit(Eol));
@@ -296,22 +284,6 @@ namespace Z0
                 Channel.Write(msg);            
         }
 
-        [CmdOp("env/reports")]
-        void EmitEnv(CmdArgs args)
-            => Env.reports(Channel, AppDb.AppData("env"));
-
-        [CmdOp("env/machine")]
-        void EmitMachineEnv()
-            => Env.report(Channel, EnvVarKind.Machine, AppDb.AppData("env"));
-
-        [CmdOp("env/user")]
-        void EmitUserEnv()
-            => Env.report(Channel, EnvVarKind.User, AppDb.AppData("env"));
-
-        [CmdOp("env/process")]
-        void EmitProcessEnv()
-            => Env.report(Channel, EnvVarKind.Process, AppDb.AppData($"env/{Environment.ProcessId}"));
-
         [CmdOp("env/pid")]
         void ProcessId()
             => Write(Environment.ProcessId);
@@ -334,18 +306,6 @@ namespace Z0
             Wf.Data(formatter.Format(info));
         }
 
-        [CmdOp("env/stack")]
-        void Stack()
-            => Write(Environment.StackTrace);
-
-        [CmdOp("env/pagesize")]
-        void PageSize()
-            => Write(Environment.SystemPageSize);
-
-        [CmdOp("env/ticks")]
-        void Ticks()
-            => Write(Environment.TickCount64);
-
         [CmdOp("env/mem-physical")]
         void WorkingSet()
             => Write(((ByteSize)Environment.WorkingSet));
@@ -353,10 +313,6 @@ namespace Z0
         [CmdOp("env/args")]
         void CmdlLineArgs()
             => iter(Environment.GetCommandLineArgs(), arg => Write(arg));
-
-        [CmdOp("env/cwd")]
-        void Cwd()
-            => Write(FS.dir(Environment.CurrentDirectory)); 
 
         [CmdOp("memory/query")]
         void QueryMemory(CmdArgs args)
@@ -374,16 +330,12 @@ namespace Z0
 
             var basic = default(MEMORY_BASIC_INFORMATION);
             WinMem.vquery(@base, ref basic);
-            Write(basic.ToString());
+            Channel.Write(basic.ToString());
         }
 
         [CmdOp("memory/emit")]
         void EmitRegions()
             => ProcessMemory.EmitRegions(Process.GetCurrentProcess(), ApiPacks.create());
-
-        [CmdOp("cd")]
-        void Cd(CmdArgs args)
-            => Channel.Row(Env.cd(args));
 
         [CmdOp("files/nuget")]
         void NugetFiles(CmdArgs args)
@@ -407,18 +359,6 @@ namespace Z0
                 Environment.CurrentDirectory = args.First.Value;
             Channel.Row(Env.cd());
         }
-
-        [CmdOp("dir")]
-        void Dir(CmdArgs args)
-        {
-            var root = Env.cd();
-            if(args.Count != 0)
-            root = FS.dir(args[0]);
-            var folders = root.Folders();
-            iter(folders, f => Channel.Row(f));
-            var files = root.Files(false);
-            iter(files, f => Channel.Row(((FileUri)f)));
-        }        
 
         [CmdOp("api/emit/impls")]
         void EmitImplMaps()

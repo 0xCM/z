@@ -4,14 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IApiCmdSvc : IAppService, IApiCmdProvider, IRunLoop
-    {     
-
-    }
-
-    public interface IApiCmdSvc<C> : IApiCmdSvc
-        where C : IApiCmdSvc<C>,new()
+    public abstract class ApiService<T> : AppService<T>, IApiService<T>
+        where T : ApiService<T>, new()
     {
-        
-    }    
+
+        protected AppDb AppDb => AppDb.Service;
+    }
 }

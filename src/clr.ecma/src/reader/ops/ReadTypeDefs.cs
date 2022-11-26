@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using static EcmaTables;
 
     partial class EcmaReader
     {
@@ -12,10 +13,10 @@ namespace Z0
         public ReadOnlySpan<TypeDefinitionHandle> TypeDefHandles()
             => MD.TypeDefinitions.ToReadOnlySpan();
 
-        public EcmaTypeDef ReadTypeDef(TypeDefinitionHandle handle)
+        public EcmaTables.TypeDef ReadTypeDef(TypeDefinitionHandle handle)
         {
             var src = MD.GetTypeDefinition(handle);
-            var dst = default(EcmaTypeDef);
+            var dst = default(EcmaTables.TypeDef);
             dst.Name = src.Name;
             dst.Namespace = src.Namespace;
             dst.Attributes = src.Attributes;

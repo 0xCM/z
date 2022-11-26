@@ -10,9 +10,9 @@ namespace Z0
 
         public readonly IApiDispatcher Dispatcher;
 
-        public readonly IApiCmdSvc Commander;
+        public readonly IApiService Commander;
 
-        public ApiContext(IApiCmdSvc commander, IWfChannel channel, IApiDispatcher dispatcher)
+        public ApiContext(IApiService commander, IWfChannel channel, IApiDispatcher dispatcher)
         {
             Commander = commander;
             Channel = channel;
@@ -25,7 +25,7 @@ namespace Z0
         IApiDispatcher IApiContext.Dispatcher 
             => Dispatcher;
 
-        IApiCmdSvc IApiContext.Commander 
+        IApiService IApiContext.Commander 
             => Commander;
     }
 }

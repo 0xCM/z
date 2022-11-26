@@ -4,10 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public partial class EcmaRecordDefs
-    {
+    public interface IApiService : IAppService, IApiCmdProvider
+    {     
 
-        
     }
 
+    public interface IApiService<C> : IApiService
+        where C : IApiService<C>,new()
+    {
+        
+    }    
 }

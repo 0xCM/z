@@ -4,27 +4,22 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
+    using static EcmaTables;
 
     partial class EcmaEmitter
     {
-        public void EmitCatalogs(FolderPath src, FolderPath dst)
-        {
-
-        }
-
-        public void EmitCatalogs(ReadOnlySeq<Assembly> src)
+        public void EmitCatalogs(ReadOnlySeq<Assembly> src, IDbArchive dst)
         {
             sys.exec(true,
-                () => EmitLocatedMetadata(src, AppDb.ApiTargets("ecma/hex").Delete(), 64),
-                () => EmitAssemblyRefs(src, AppDb.ApiTargets("ecma").Delete()),
-                () => EmitStrings(src, AppDb.ApiTargets("ecma/strings").Delete()),
-                () => EmitRowStats(src, AppDb.ApiTargets("ecma").Table<EcmaRowStats>()),
-                () => EmitMsilMetadata(src, AppDb.ApiTargets("ecma/msil.dat").Delete()),
-                () => EmitBlobs(src, AppDb.ApiTargets("ecma/blobs").Delete()),
-                () => EmitMetadumps(Channel, src, AppDb.ApiTargets("ecma/dumps").Delete()),
-                () => EmitMemberRefs(src, AppDb.ApiTargets("ecma/members.refs").Delete()),
-                () => EmitMethodDefs(src, AppDb.ApiTargets("ecma/methods.defs").Delete()),
+                () => EmitLocatedMetadata(src, dst.Scoped("ecma/hex").Delete(), 64),
+                () => EmitAssemblyRefs(src, dst.Scoped("ecma").Delete()),
+                () => EmitStrings(src, dst.Scoped("ecma/strings").Delete()),
+                () => EmitRowStats(src, dst.Scoped("ecma").Table<EcmaRowStats>()),
+                () => EmitMsilMetadata(src, dst.Scoped("ecma/msil.dat").Delete()),
+                () => EmitBlobs(src, dst.Scoped("ecma/blobs").Delete()),
+                () => EmitMetadumps(Channel, src, dst.Scoped("ecma/dumps").Delete()),
+                () => EmitMemberRefs(src, dst.Scoped("ecma/members.refs").Delete()),
+                () => EmitMethodDefs(src, dst.Scoped("ecma/methods.defs").Delete()),
                 () => {}
             );
         }

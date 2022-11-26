@@ -7,20 +7,6 @@ namespace Z0
 {
     using static sys;
 
-    [Record(TableId)]
-    public struct XedScriptSpec
-    {
-        public const string TableId = "xed.scripts";
-
-        public string Name;
-
-        public FilePath InputPath;
-
-        public FilePath SummaryPath;
-
-        public FilePath DetailPath;
-    }
-
     public sealed partial class XedToolCmd : ToolService<XedToolCmd>
     {
         const string group = "xedtool";

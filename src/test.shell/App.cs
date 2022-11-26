@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Free]
-    sealed class App : AppCmdShell<App>
+    sealed class App : ApiShell<App>
     {
         public static IApiCmdProvider[] providers(IWfRuntime wf)
             => new IApiCmdProvider[]{
@@ -14,7 +14,7 @@ namespace Z0
 
         public static void Main(params string[] args)
         {
-            using var app = AppCmdShell.create<App>(false, args);
+            using var app = ApiCmd.shell<App>(false, args);
             var context = ApiCmd.context<AppShellCmd>(app.Wf, () => providers(app.Wf));
             app.Commander = context.Commander;
             app.Run(args);            

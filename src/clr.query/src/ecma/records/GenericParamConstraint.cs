@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class EcmaRecordDefs
+    partial class EcmaTables
     {
         [Record(TableId), StructLayout(LayoutKind.Sequential,Pack =1)]
-        public struct GenericParamConstraintRow
+        public struct GenericParamConstraint
         {
             public const string TableId = "ecma.generic-param-constraint";
 
@@ -24,5 +24,4 @@ namespace Z0
             public EcmaRowKey Constraint;
         }
     }
-
 }

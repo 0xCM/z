@@ -34,13 +34,13 @@ namespace Z0
         class ServiceCache : AppServices<ServiceCache>
         {
 
-            public IApiCmdSvc TestCmd(IWfRuntime wf)
+            public IApiService TestCmd(IWfRuntime wf)
                 => Service<TestCmd>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
 
-        public static IApiCmdSvc TestCmd(this IWfRuntime wf)
+        public static IApiService TestCmd(this IWfRuntime wf)
             => Services.TestCmd(wf);
     }
 }

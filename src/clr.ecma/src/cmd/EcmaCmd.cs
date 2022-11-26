@@ -21,7 +21,7 @@ namespace Z0
 
         [CmdOp("ecma/emit")]
         void EcmaEmitMetaDumps(CmdArgs args)
-            => EcmaEmitter.EmitMetadumps(args);
+            => EcmaEmitter.EmitMetadumps(FS.dir(args[0]));
 
         [CmdOp("ecma/list")]
         void EcmaList(CmdArgs args)
@@ -29,7 +29,7 @@ namespace Z0
 
         [CmdOp("ecma/emit/parts")]
         void EmitPartEcma()
-            => EcmaEmitter.EmitCatalogs(ApiMd.Parts);
+            => EcmaEmitter.EmitCatalogs(ApiMd.Parts, AppDb.ApiTargets());
 
         [CmdOp("ecma/emit/hex")]
         void EmitApiHex()

@@ -5,19 +5,20 @@
 namespace Z0
 {
     using static sys;
+    using static EcmaTables;
 
     partial class EcmaReader
     {
-        public ReadOnlySpan<EcmaMethodRelations> ReadMethodDefRows()
+        public ReadOnlySpan<MethodRelations> ReadMethodDefRows()
         {
             var src = MethodDefHandles();
             var count = src.Length;
-            var dst = alloc<EcmaMethodRelations>(count);
+            var dst = alloc<MethodRelations>(count);
             Read(src,dst);
             return dst;
         }
 
-        public uint Read(ReadOnlySpan<MethodDefinitionHandle> src, Span<EcmaMethodRelations> dst)
+        public uint Read(ReadOnlySpan<MethodDefinitionHandle> src, Span<MethodRelations> dst)
         {
             var count = (uint)min(src.Length, dst.Length);
             for(var i=0; i<count; i++)
@@ -26,7 +27,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public ref EcmaMethodRelations Read(MethodDefinitionHandle handle, ref EcmaMethodRelations dst)
+        public ref MethodRelations Read(MethodDefinitionHandle handle, ref MethodRelations dst)
         {
             var src = MD.GetMethodDefinition(handle);
             dst.Token = EcmaTokens.token(handle);
@@ -46,11 +47,11 @@ namespace Z0
             return ref dst;
         }
 
-        public ReadOnlySpan<EcmaMethodDef> ReadMethodDefInfo()
+        public ReadOnlySpan<MethodDef> ReadMethodDefInfo()
         {
             var rows = ReadMethodDefRows();
             var count = rows.Length;
-            var dst = span<EcmaMethodDef>(count);
+            var dst = span<MethodDef>(count);
             for(var i=0; i<count; i++)
             {
                 ref readonly var row = ref skip(rows,i);
@@ -66,7 +67,7 @@ namespace Z0
             return dst;
         }
 
-        public uint ReadMethodDefs(List<EcmaMethodDef> dst)
+        public uint ReadMethodDefs(List<MethodDef> dst)
         {
             var rows = ReadMethodDefRows();
             var count = rows.Length;
@@ -74,7 +75,7 @@ namespace Z0
             for(var i=0; i<count; i++, counter++)
             {
                 ref readonly var src = ref skip(rows,i);
-                var def = new EcmaMethodDef();
+                var def = new MethodDef();
                 def.Token = src.Token;
                 def.Component = MD.GetAssemblyDefinition().GetAssemblyName().SimpleName();
                 def.Attributes = src.Attributes;

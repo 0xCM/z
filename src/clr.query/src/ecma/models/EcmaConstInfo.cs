@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Record(TableId), StructLayout(LayoutKind.Sequential)]
-    public struct EcmaConstField
+    public struct EcmaConstInfo
     {
         const string TableId = "ecma.fields.const";
 

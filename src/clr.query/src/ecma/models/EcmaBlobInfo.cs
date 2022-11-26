@@ -5,7 +5,7 @@
 namespace Z0
 {    
     [Record(TableId), StructLayout(LayoutKind.Sequential)]
-    public struct EcmaBlobRow
+    public struct EcmaBlobInfo
     {
         public const string TableId = "ecma.blob";
 

@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using static EcmaTables;
 
     partial class EcmaEmitter
     {
@@ -18,9 +19,9 @@ namespace Z0
         {
             void Exec()
             {
-                var path = dst.Metadata(EcmaSections.Methods).PrefixedTable<EcmaMethodDef>(src.GetSimpleName());
-                var formatter = CsvChannels.formatter<EcmaMethodDef>();
-                var flow = EmittingTable<EcmaMethodDef>(path);
+                var path = dst.Metadata(EcmaSections.Methods).PrefixedTable<MethodDef>(src.GetSimpleName());
+                var formatter = CsvChannels.formatter<MethodDef>();
+                var flow = EmittingTable<MethodDef>(path);
                 using var writer = path.Writer();
                 writer.WriteLine(formatter.FormatHeader());
                 var reader = EcmaReader.create(src);
@@ -39,9 +40,9 @@ namespace Z0
             void Exec()
             {
                 var reader = EcmaReader.create(src);
-                var buffer = list<EcmaMethodDef>();
+                var buffer = list<MethodDef>();
                 reader.ReadMethodDefs(buffer);
-                TableEmit(buffer.ViewDeposited(), dst.PrefixedTable<EcmaMethodDef>(src.GetSimpleName()));
+                TableEmit(buffer.ViewDeposited(), dst.PrefixedTable<MethodDef>(src.GetSimpleName()));
             }
 
             Try(Exec);

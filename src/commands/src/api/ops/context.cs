@@ -10,7 +10,7 @@ namespace Z0
     partial class ApiCmd
     {
         public static IApiContext<C> context<C>(IWfRuntime wf, Func<ReadOnlySeq<IApiCmdProvider>> factory)
-            where C : IApiCmdSvc<C>, new()
+            where C : IApiService<C>, new()
         {
             var running = wf.Running($"Creating command providers");
             var providers = factory();
@@ -19,7 +19,7 @@ namespace Z0
         }
 
         static IApiContext<C> context<C>(IWfRuntime wf, IWfChannel channel, ReadOnlySeq<IApiCmdProvider> providers)
-            where C : IApiCmdSvc<C>, new()
+            where C : IApiService<C>, new()
         {
             var name = $"clr:://z0/{typeof(C).Assembly.GetSimpleName()}/{typeof(C).DisplayName()}";
             var msg = $"Creating {name}";

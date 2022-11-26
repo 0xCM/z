@@ -65,7 +65,6 @@ set BuildSln=%BuildTool% %RootSlnPath% %BuildProps% %BuildLogSpec%; %BuildOption
 set BuildShells=%BuildTool% %SlnRoot%\shells\z0.shells.sln %BuildProps% -bl:%BuildLogs%\z0.shells.binlog; %BuildOptions%
 set BuildDeployment=%BuildTool% %~dp0deploy\z0.deploy.sln %BuildProps% -bl:%BuildLogs%\z0.deploy.binlog; %BuildOptions%
 set BuildProjectSln=%BuildTool% %ProjectSln% %BuildProps% %BuildLogSpec%; %BuildOptions%
-
 set PublishSln=%PublishTool% %ProjecSln%
 set BuildSlnRoot=%BuildTool% %SlnRoot%\z0.sln %BuildProps% %RootSlnLogSpec%; %BuildOptions%
 set ShellName=%ShellId%.exe

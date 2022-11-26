@@ -12,12 +12,9 @@ namespace Z0
         public void EmitApiMetadump(IDbArchive dst)
             => EmitMetadump(ApiMd.Parts, dst.Metadata("metadump"));
 
-        // public void EmitApiMetadump(IDbArchive dst)
-        //     => EmitMetadump(ApiMd.Parts, dst);
-
-        public void EmitMetadumps(CmdArgs args)
+        public void EmitMetadumps(FolderPath f)
         {
-            var src = Archives.modules(FS.dir(args[0]));            
+            var src = Archives.modules(f);            
             var dlls = src.ManagedDll().Where(path => !path.Path.Contains(".resources.dll")).Select(x => x.Path);
             var exe = src.ManagedExe().Map(x => x.Path);
             EmitMetadumps(Channel, src,AppDb.DbTargets("ecma/datasets"));                     

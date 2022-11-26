@@ -5,7 +5,7 @@
 namespace Z0
 {
     class ApiContext<C> : ApiContext, IApiContext<C>
-        where C : IApiCmdSvc<C>,new()
+        where C : IApiService<C>,new()
     {
         public ApiContext(C commander, IWfChannel channel, IApiDispatcher dispatcher)
             : base(commander, channel, dispatcher)

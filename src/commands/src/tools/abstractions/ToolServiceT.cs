@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public abstract class ToolService<T> : WfAppCmd<T>
+    public abstract class ToolService<T> : ApiService<T>
         where T : ToolService<T>, new()
     {
         public virtual Actor Id {get;}

@@ -5,13 +5,14 @@
 namespace Z0
 {
     using static sys;
+    using static EcmaTables;
 
     partial class EcmaReader
     {
-        public AssemblyRefRow ReadAssemblyRef(AssemblyReferenceHandle handle)
+        public EcmaTables.AssemblyRef ReadAssemblyRef(AssemblyReferenceHandle handle)
         {
             var src = MD.GetAssemblyReference(handle);
-            var dst = default(AssemblyRefRow);
+            var dst = default(EcmaTables.AssemblyRef);
             dst.Culture = src.Culture;
             dst.Flags = src.Flags;
             dst.Hash = src.HashValue;

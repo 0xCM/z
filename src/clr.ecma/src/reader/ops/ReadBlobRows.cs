@@ -4,21 +4,23 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static EcmaTables;
+
     partial class EcmaReader
     {
-        public ReadOnlySpan<EcmaBlobRow> ReadBlobRows()
+        public ReadOnlySpan<EcmaBlobInfo> ReadBlobRows()
         {
             var size = (uint)MD.GetHeapSize(HeapIndex.Blob);
             if (size == 0)
-                return Span<EcmaBlobRow>.Empty;
+                return Span<EcmaBlobInfo>.Empty;
 
             var handle = MetadataTokens.BlobHandle(1);
             var i=0;
-            var values = sys.list<EcmaBlobRow>();
+            var values = sys.list<EcmaBlobInfo>();
             do
             {
                 var value = MD.GetBlobBytes(handle);
-                var row = new EcmaBlobRow();
+                var row = new EcmaBlobInfo();
                 row.Seq = i++;
                 row.HeapSize = size;
                 row.Offset = (Address32)MD.GetHeapOffset(handle);

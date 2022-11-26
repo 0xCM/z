@@ -14,7 +14,7 @@ namespace Z0
 
         static Svc Services => Svc.Instance;
 
-        public static IApiCmdSvc Machines(this IWfRuntime wf)
+        public static IApiService Machines(this IWfRuntime wf)
             => Services.Machines(wf);
     }
 }

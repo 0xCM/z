@@ -10,7 +10,7 @@ namespace Z0
 
     partial class ApiCmd
     {
-        public static Outcome run(IWfChannel channel, ApiOp op, CmdArgs args)
+        public static Outcome exec(IWfChannel channel, ApiOp op, CmdArgs args)
         {
             var output = default(object);
             var result = Outcome.Success;

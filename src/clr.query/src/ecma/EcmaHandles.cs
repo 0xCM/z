@@ -9,20 +9,6 @@ namespace Z0
     [ApiHost]
     public readonly struct EcmaHandles
     {       
-        // [MethodImpl(Inline), Op]
-        // public static EcmaFieldRow row(FieldInfo src)
-        // {
-        //     var data = new ClrFieldAdapter(src);
-        //     var dst = new EcmaFieldRow();
-        //     dst.Key = ClrArtifacts.reference(src);
-        //     dst.DeclaringType = data.DeclaringType.Token;
-        //     dst.CilType = data.FieldType.Token;
-        //     dst.Attributes = data.Attributes;
-        //     dst.Address = data.Address;
-        //     dst.IsStatic = data.IsStatic;
-        //     return dst;
-        // }
-
         [Parser]
 
         [MethodImpl(Inline), Op]
@@ -94,7 +80,6 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static uint row(EntityHandle src)
             => uint32(src) & 0xFFFFFF;
-
 
         [MethodImpl(Inline), Op]
         public static EcmaTableKind table(Type src)
@@ -195,6 +180,5 @@ namespace Z0
             for(var i=0u; i<count; i++)
                 seek(dst,i) = method(module, EcmaTokens.token(skip(src,i)));
         }
-
     }
 }

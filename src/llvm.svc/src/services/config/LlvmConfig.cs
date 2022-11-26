@@ -16,6 +16,8 @@ namespace Z0
 
         }
 
+        OmniScript OmniScript => Wf.OmniScript();
+        
         public LlvmConfigSet CollectSettings()
         {
             const string Pattern = "llvm-config --{0}";

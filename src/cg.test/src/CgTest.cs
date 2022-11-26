@@ -5,9 +5,9 @@
 namespace Z0
 {
     [Free]
-    sealed class App : AppCmdShell<App>
+    sealed class App : ApiShell<App>
     {
-        static IApiCmdSvc commands(IWfRuntime wf)
+        static IApiService commands(IWfRuntime wf)
             => CgTestCmd.create(wf);
 
         public static void Main(params string[] args)

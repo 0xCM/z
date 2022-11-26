@@ -9,10 +9,10 @@ namespace Z0
     partial class EcmaEmitter
     {
         public void EmitBlobs(IDbArchive dst)
-            => iter(ApiMd.Parts, c => EmitBlobs(c, dst.Metadata(EcmaSections.Blobs).PrefixedTable<EcmaBlobRow>(c.GetSimpleName())), true);
+            => iter(ApiMd.Parts, c => EmitBlobs(c, dst.Metadata(EcmaSections.Blobs).PrefixedTable<EcmaBlobInfo>(c.GetSimpleName())), true);
 
         public void EmitBlobs(ReadOnlySeq<Assembly> src, IDbArchive dst)
-            => iter(ApiMd.Parts, c => EmitBlobs(c, dst.PrefixedTable<EcmaBlobRow>(c.GetSimpleName())), PllExec);
+            => iter(ApiMd.Parts, c => EmitBlobs(c, dst.PrefixedTable<EcmaBlobInfo>(c.GetSimpleName())), PllExec);
 
         public void EmitBlobs(Assembly src, FilePath dst)
             => TableEmit(EcmaReader.create(src).ReadBlobRows(), dst);

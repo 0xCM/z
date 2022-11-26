@@ -4,7 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class EcmaReader
+    using static EcmaTables;
+    
+    partial class EcmaReader    
     {
         [MethodImpl(Inline), Op]
         public ManifestResource ReadResource(ManifestResourceHandle src)

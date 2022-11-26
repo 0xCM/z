@@ -10,15 +10,15 @@ namespace Z0
 
         IApiDispatcher Dispatcher {get;}
 
-        IApiCmdSvc Commander {get;}
+        IApiService Commander {get;}
     }
 
     public interface IApiContext<C> : IApiContext
-        where C : IApiCmdSvc<C>,new()
+        where C : IApiService<C>,new()
     {
         new C Commander {get;}
 
-        IApiCmdSvc IApiContext.Commander
+        IApiService IApiContext.Commander
             => Commander;
     }
 }

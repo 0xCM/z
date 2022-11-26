@@ -6,6 +6,7 @@
 namespace Z0
 {
     using System.Text;
+    //using static EcmaTables;
 
     partial class EcmaReader
     {

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class EcmaRecordDefs
+    partial class EcmaTables
     {
         [Record(TableId), StructLayout(LayoutKind.Sequential, Pack =1)]
         public struct FieldLayout

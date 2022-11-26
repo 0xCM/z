@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class EcmaRecordDefs
+    partial class EcmaTables
     {
         [Record(TableId), StructLayout(LayoutKind.Sequential, Pack=1)]
-        public struct MethodSemanticsRow
+        public struct MethodSemantics
         {
             const string TableId = "ecma.methods.semantics";
 
@@ -17,6 +17,5 @@ namespace Z0
 
             public EcmaRowKey Association;
         }    
-
     }
 }

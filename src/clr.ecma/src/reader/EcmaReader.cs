@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using static EcmaTables;
 
     using System.Linq;
 

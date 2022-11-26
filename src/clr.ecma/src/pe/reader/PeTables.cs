@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using static EcmaTables;
 
     using I = System.Reflection.Metadata.Ecma335.TableIndex;
 

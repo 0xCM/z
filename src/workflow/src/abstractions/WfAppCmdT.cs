@@ -7,7 +7,7 @@ namespace Z0
     using CCN = CmdContextNames;
 
     [CmdProvider]
-    public abstract class WfAppCmd<T> : WfSvc<T>, IApiCmdSvc<T>
+    public abstract class WfAppCmd<T> : WfSvc<T>, IApiService<T>
         where T : WfAppCmd<T>, new()
     {
         protected ApiCmd ApiCmd => Wf.ApiCmd();

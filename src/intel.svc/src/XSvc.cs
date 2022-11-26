@@ -75,7 +75,7 @@ namespace Z0
         public static IntelInx IntelIntrinsics(this IWfRuntime wf)
             => Services.IntelInx(wf);
 
-        public static IApiCmdSvc IntelInxCmd(this IWfRuntime wf)
+        public static IApiService IntelInxCmd(this IWfRuntime wf)
             => Services.IntelInxCmd(wf);
 
         public static SdeSvc SdeSvc(this IWfRuntime wf)

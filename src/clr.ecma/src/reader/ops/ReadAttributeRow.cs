@@ -4,12 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static EcmaTables;
+
     partial class EcmaReader
     {
         [MethodImpl(Inline), Op]
-        public AttributeRow ReadAttributeRow(CustomAttribute src)
+        public CustomAttribute ReadAttributeRow(System.Reflection.Metadata.CustomAttribute src)
         {
-            var dst = default(AttributeRow);
+            var dst = default(CustomAttribute);
             dst.Parent = src.Parent;
             dst.Constructor = src.Constructor;
             dst.Value = src.Value;

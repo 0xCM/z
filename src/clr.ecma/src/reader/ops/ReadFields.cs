@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using static EcmaTables;
 
     partial class EcmaReader
     {
@@ -12,12 +13,12 @@ namespace Z0
         public FieldDefinition ReadFieldDef(FieldDefinitionHandle src)
             => MD.GetFieldDefinition(src);
 
-        public ReadOnlySpan<EcmaField> ReadFields()
+        public ReadOnlySpan<Field> ReadFields()
         {
             var reader = MD;
             var handles = reader.FieldDefinitions.ToReadOnlySpan();
             var count = handles.Length;
-            var dst = span<EcmaField>(count);
+            var dst = span<Field>(count);
             for(var i=0u; i<count; i++)
             {
                 ref readonly var handle = ref skip(handles,i);
@@ -34,7 +35,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public ref EcmaFieldRow Row(FieldDefinitionHandle handle, ref EcmaFieldRow dst)
+        public ref EcmaFieldInfo Row(FieldDefinitionHandle handle, ref EcmaFieldInfo dst)
         {
             var src = MD.GetFieldDefinition(handle);
             dst.Attributes = src.Attributes;
@@ -53,7 +54,7 @@ namespace Z0
             return new EcmaName(seq, size, (Address32)offset, value);
         }
 
-        public uint Rows(ReadOnlySpan<FieldDefinitionHandle> src, Span<EcmaFieldRow> dst)
+        public uint Rows(ReadOnlySpan<FieldDefinitionHandle> src, Span<EcmaFieldInfo> dst)
         {
             var count = (uint)min(src.Length, dst.Length);
             for(var i=0; i<count; i++)
@@ -61,10 +62,10 @@ namespace Z0
             return count;
         }
 
-        public ReadOnlySpan<EcmaFieldRow> Rows(ReadOnlySpan<FieldDefinitionHandle> src)
+        public ReadOnlySpan<EcmaFieldInfo> Rows(ReadOnlySpan<FieldDefinitionHandle> src)
         {
             var count = (uint)src.Length;
-            var dst = span<EcmaFieldRow>(count);
+            var dst = span<EcmaFieldInfo>(count);
             Rows(src,dst);
             return dst;
         }

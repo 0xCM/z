@@ -11,8 +11,6 @@ namespace Z0
 
         ref readonly ReadOnlySeq<ApiOp> Defs {get;}
 
-        //ICollection<IApiCmdMethod> Invokers {get;}
-
         ICollection<string> Names {get;}
     }
 }

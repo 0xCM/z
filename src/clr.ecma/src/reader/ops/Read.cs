@@ -5,11 +5,12 @@
 namespace Z0
 {
     using static sys;
+    using static EcmaTables;
 
     partial class EcmaReader
     {
         [MethodImpl(Inline), Op]
-        public CustomAttribute Read(CustomAttributeHandle src)
+        public System.Reflection.Metadata.CustomAttribute Read(CustomAttributeHandle src)
             => MD.GetCustomAttribute(src);
 
         [MethodImpl(Inline), Op]
@@ -33,7 +34,7 @@ namespace Z0
             => MD.GetInterfaceImplementation(src);
 
         [MethodImpl(Inline), Op]
-        public void Read(ReadOnlySpan<CustomAttributeHandle> src, Span<CustomAttribute> dst)
+        public void Read(ReadOnlySpan<CustomAttributeHandle> src, Span<System.Reflection.Metadata.CustomAttribute> dst)
         {
             var count = min(src.Length, dst.Length);
             for(var i=0; i<count; i++)

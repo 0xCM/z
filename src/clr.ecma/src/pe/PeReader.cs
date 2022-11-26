@@ -5,7 +5,7 @@
 namespace Z0
 {
     using System.Linq;
-
+    using static EcmaTables;
     using static sys;
 
     using I = System.Reflection.Metadata.Ecma335.TableIndex;
@@ -32,11 +32,11 @@ namespace Z0
 
         readonly FileStream Stream;
 
-        public ReadOnlySpan<EcmaConstField> Constants(ref uint counter)
+        public ReadOnlySpan<EcmaConstInfo> Constants(ref uint counter)
         {
             var reader = MD;
             var count = ConstantCount();
-            var dst = core.span<EcmaConstField>(count);
+            var dst = core.span<EcmaConstInfo>(count);
             for(var i=1u; i<=count; i++)
             {
                 var k = MetadataTokens.ConstantHandle((int)i);

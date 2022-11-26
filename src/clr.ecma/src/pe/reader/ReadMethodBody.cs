@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static EcmaTables;
+
     partial class PeReader
     {
         [MethodImpl(Inline), Op]
