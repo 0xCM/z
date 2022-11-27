@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class ApiTableGen : WfSvc<ApiTableGen>
+    public class CsvTableGen : WfSvc<CsvTableGen>
     {
         public void Emit(uint margin, TableDef spec, ITextEmitter dst)
         {

@@ -28,29 +28,6 @@ namespace Z0
 
         public ReadOnlySeq<GroupedToken> Tokens {get; internal set;}
 
-        // protected TokenGroup()
-        // {
-        //     Kinds = Symbols.index<K>();
-        //     KindCount = Kinds.Count;
-        //     var types = typeof(G).GetNestedTypes().Enums().Tagged<SymSourceAttribute>();
-            
-        //     TypeKinds = types.Select(t => (t, (K)t.Tag<TokenKindAttribute>().Require().Kind)).ToDictionary();            
-        //     KindedTokens = alloc<Index<GroupedToken>>(Kinds.Count);
-        //     for(var i=0u; i<Kinds.Count; i++)
-        //         KindedTokens[@as<K>(i)] = sys.empty<GroupedToken>();
-        //     var counter = 0u;
-        //     for(var i=0; i<types.Length; i++)
-        //     {
-        //         var kind = TypeKinds[skip(types,i)];
-        //         KindedTokens[kind] = api.groups(skip(types,i));
-        //         counter += KindedTokens[kind].Count;
-        //     }
-
-        //     TokenCount = counter;
-        //     Tokens = KindedTokens.SelectMany(x => x).ToSeq();
-        // }
-
-
         public ReadOnlySpan<Type> TokenTypes
         {
             [MethodImpl(Inline)]

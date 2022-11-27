@@ -23,7 +23,7 @@ namespace Z0
         [CmdOp("gen/api/tables")]
         void GenRecords()
         {
-            var generator = Wf.ApiTableGen();
+            var generator = Wf.CsvTableGen();
             var buffer = text.emitter();
             var src = ApiMd.Parts;
             var defs = TableDefs.defs(src);
@@ -94,24 +94,24 @@ namespace Z0
             var cd = Env.cd();
             var launcher = cd + FS.file("develop", FileKind.Cmd);
             if(launcher.Exists)
-                Cmd.start(Channel, Cmd.args(launcher)); 
+                CmdRunner.start(Channel, Cmd.args(launcher)); 
             else
             {
                 var workspaces = cd.Files(FS.ext("code-workspace"));
                 if(workspaces.IsNonEmpty)
-                    WfTools.vscode(Channel, cd + workspaces[0].FileName);
+                    DevTools.vscode(Channel, cd + workspaces[0].FileName);
                 else
-                    WfTools.vscode(Channel, cd); 
+                    DevTools.vscode(Channel, cd); 
             }
         }
 
         [CmdOp("devenv")]
         void DevEnv(CmdArgs args)
-            => WfTools.devenv(Channel, args[0].Value);
+            => DevTools.devenv(Channel, args[0].Value);
 
         [CmdOp("vscode")]
         void VsCode(CmdArgs args)
-            => WfTools.vscode(Channel, args[0].Value);
+            => DevTools.vscode(Channel, args[0].Value);
 
         [CmdOp("zip")]
         void Zip(CmdArgs args)
@@ -154,6 +154,19 @@ namespace Z0
         {
             var types = Tokens.types(ApiMd.Parts);
             ApiMd.Emitter(Archives.archive(Env.cd() + FS.folder(".data"))).EmitTypeList(types, FS.file("tokens.types", FileKind.List));
+        }
+
+        [CmdOp("tokens/opcodes")]
+        void AsmOpCodes()
+        {
+            var src = AsmOcTokens.create();
+            var tokens = src.Tokens;
+            var count = src.TokenCount;
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var token = ref tokens[i];
+                Write(token.Format());
+            }
         }
 
         [CmdOp("tokens/list")]
@@ -216,14 +229,6 @@ namespace Z0
             jobs.Root.Folders(true).Iter(f => Write(f.Format()));
         }
 
-        [CmdOp("env/thread")]
-        void ShowThread()
-            => Write(string.Format("ThreadId:{0}", Kernel32.GetCurrentThreadId()));
-
-        [CmdOp("env/tools")]
-        void EnvTools(CmdArgs args)
-            => Env.tools(Channel, args);
-
         [CmdOp("app/deploy")]
         void Deploy()
         {
@@ -262,36 +267,6 @@ namespace Z0
             Write(ApiRuntime.services(src));
         }
 
-        [CmdOp("env/id")]
-        void EvId(CmdArgs args)
-        {
-            var id = Env.EnvId;
-            var msg = EmptyString;
-            if(args.IsNonEmpty)
-            {
-                Env.EnvId = args.First.Value;
-                if(id.IsNonEmpty)
-                    msg = $"{id} -> {Env.EnvId}";
-                else
-                    msg = $"{Env.EnvId}";
-            }
-            else
-            {
-                if(id.IsNonEmpty)
-                    msg = id;
-            }
-            if(nonempty(msg))
-                Channel.Write(msg);            
-        }
-
-        [CmdOp("env/pid")]
-        void ProcessId()
-            => Write(Environment.ProcessId);
-
-        [CmdOp("env/cpucore")]
-        void ShowCurrentCore()
-            => Emitter.Write(string.Format("Cpu:{0}", Kernel32.GetCurrentProcessorNumber()));
-
         [CmdOp("archives/register")]
         void RegisterWorkspace(CmdArgs args)
         {
@@ -299,20 +274,9 @@ namespace Z0
             var entries = ArchiveRegistry.Entries();            
         }
 
-        void ShowMemory()
-        {
-            var info = WinMem.basic();
-            var formatter = CsvChannels.formatter<BasicMemoryInfo>(16,RecordFormatKind.KeyValuePairs);
-            Wf.Data(formatter.Format(info));
-        }
-
         [CmdOp("env/mem-physical")]
         void WorkingSet()
             => Write(((ByteSize)Environment.WorkingSet));
-
-        [CmdOp("env/args")]
-        void CmdlLineArgs()
-            => iter(Environment.GetCommandLineArgs(), arg => Write(arg));
 
         [CmdOp("memory/query")]
         void QueryMemory(CmdArgs args)
@@ -331,6 +295,14 @@ namespace Z0
             var basic = default(MEMORY_BASIC_INFORMATION);
             WinMem.vquery(@base, ref basic);
             Channel.Write(basic.ToString());
+        }
+
+        [CmdOp("memory/info")]
+        void ShowMemory()
+        {
+            var info = WinMem.basic();
+            var formatter = CsvChannels.formatter<BasicMemoryInfo>(16,RecordFormatKind.KeyValuePairs);
+            Channel.Row(formatter.Format(info));
         }
 
         [CmdOp("memory/emit")]
@@ -409,19 +381,6 @@ namespace Z0
         [CmdOp("tool/docs")]
         void ToolDocs(CmdArgs args)
             => iter(Tooling.LoadDocs(arg(args,0).Value), doc => Write(doc));
-
-        [CmdOp("symlink")]
-        void Link(CmdArgs args)
-        {
-            var src = FS.dir(arg(args,0).Value);
-            var dst = FS.dir(arg(args,1).Value);
-            var result = FS.symlink(src,dst,true);
-            if(result)
-                Channel.Status($"symlink:{src} -> {dst}");
-            else
-                Channel.Error(result.Message);
-            //ProcessControl.start(Channel, FS.path("mlkink.exe"), Cmd.args("/D", src, dst));
-        }
 
         [CmdOp("dev")]
         void LaunchCmdTerm(CmdArgs args)

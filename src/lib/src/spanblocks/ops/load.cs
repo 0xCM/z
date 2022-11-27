@@ -10,48 +10,6 @@ namespace Z0
     partial struct SpanBlocks
     {
         /// <summary>
-        /// Creates a 8-bit blocked container from 1 8-bit cell
-        /// </summary>
-        [MethodImpl(Inline), Op]
-        public static SpanBlock8<byte> load(W8 w, byte src)
-            => new SpanBlock8<byte>(cover(src,1));
-
-        /// <summary>
-        /// Creates a 16-bit blocked container from 1 16-bit cell
-        /// </summary>
-        [MethodImpl(Inline), Op]
-        public static SpanBlock16<ushort> load(W16 w, ushort src)
-            => new SpanBlock16<ushort>(cover(src,1));
-
-        /// <summary>
-        /// Creates a 16-bit blocked container from 1 64-bit cell
-        /// </summary>
-        [MethodImpl(Inline), Op]
-        public static SpanBlock16<ulong> load(W16 n, ulong src)
-            => new SpanBlock16<ulong>(cover(src,1));
-
-        /// <summary>
-        /// Creates a 32-bit blocked container from 1 64-bit cell
-        /// </summary>
-        [MethodImpl(Inline), Op]
-        public static SpanBlock32<ulong> load(W32 n, ulong src)
-            => new SpanBlock32<ulong>(cover(src,1));
-
-        /// <summary>
-        /// Creates a 32-bit blocked container from 4 8-bit cells
-        /// </summary>
-        [MethodImpl(Inline), Op]
-        public static SpanBlock32<byte> load(W32 n, byte x0, byte x1, byte x2, byte x3)
-        {
-            var dst = 0u;
-            seek8(dst,0) = x0;
-            seek8(dst,1) = x1;
-            seek8(dst,2) = x2;
-            seek8(dst,3) = x3;
-            return new SpanBlock32<byte>(cover(@as<byte>(dst),4));
-        }
-
-        /// <summary>
         /// Creates a 32-bit blocked container from 2 16-bit cells
         /// </summary>
         [MethodImpl(Inline), Op]

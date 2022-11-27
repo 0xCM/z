@@ -11,7 +11,7 @@ namespace Z0
     {
         public record struct ListTools(EnvVarKind kind, FileUri Target);        
 
-        public static void tools(IWfChannel channel, CmdArgs args)
+        public static void tools(IWfChannel channel, IDbArchive dst)
         {
             var buffer = bag<FilePath>();
             var paths = Env.paths(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL);
@@ -32,10 +32,7 @@ namespace Z0
                 channel.Row(info);
             }
 
-            var dir = Env.cd();
-            var file = FS.file($"{dir.FolderName}.tools", FileKind.List);
-            var dst = dir + file;
-            channel.FileEmit(emitter.Emit(), dst);
+            channel.FileEmit(emitter.Emit(), dst.Path(FS.file("tools", FileKind.List)));
         }
 
         public static ReadOnlySeq<EnvReport> reports(IWfChannel channel, IDbArchive dst)
@@ -142,6 +139,20 @@ namespace Z0
             var value = Environment.GetEnvironmentVariable(name, (EnvironmentVariableTarget)kind);
             var values = text.split(value,Chars.Semicolon).Sort();
             return map(values, FS.dir);
+        }
+
+        public static ExecToken paths(IWfChannel channel, EnvPathKind kind, IDbArchive dst, EnvVarKind envkind = EnvVarKind.Process)
+        {            
+            var name = kind switch {
+              EnvPathKind.FileSystem => EnvTokens.PATH,
+              EnvPathKind.Include => EnvTokens.INCLUDE,
+              EnvPathKind.Lib => EnvTokens.LIB,
+                _ => EmptyString
+            };
+            var folders = paths(name, envkind);
+            var data = folders.Delimit(Chars.NL);
+            channel.Row(data);
+            return channel.FileEmit(data, dst.Path(FS.file($"paths.{kind}", FileKind.List)));
         }
 
         public static EnvVars<@string> vars(FilePath src, char sep = Chars.Eq)

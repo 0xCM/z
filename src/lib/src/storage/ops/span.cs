@@ -4,13 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     partial struct Storage
     {
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref T cell<T>(ref T src, int index)
+        public static Span<T> span<T>(ref T src)
             where T : unmanaged, IStorageBlock<T>
-                => ref seek(recover<T>(src.Bytes),index);
+                => recover<T>(src.Bytes);
     }
 }

@@ -65,9 +65,6 @@ namespace Z0
         public DbArchive Archives()
             => folder(Data.Setting(SettingNames.Archives));
 
-        public DbArchive DevTools()
-            => folder(Data.Setting(SettingNames.DevTools));
-
         public DbArchive Logs() 
             => DbRoot().Scoped(logs);
 

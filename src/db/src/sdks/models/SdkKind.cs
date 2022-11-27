@@ -26,8 +26,5 @@ namespace Z0
         [MethodImpl(Inline)]
         public static implicit operator SdkKind(string name)
             => new SdkKind(name);
-
     }
 }
-
-//K:\dist\dotnet\coreclr\windows.x64.Release

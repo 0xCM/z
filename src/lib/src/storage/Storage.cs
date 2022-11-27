@@ -193,6 +193,22 @@ namespace Z0
             return ref dst;
         }
 
+        [MethodImpl(Inline), Op]
+        public static ReadOnlySpan<char> inflate16u(in ByteBlock8 src)
+            => recover<char>(bytes(cpu.vlo(vpack.vinflate256x16u(cpu.vbytes(w128, u64(src))))));
+
+        [MethodImpl(Inline), Op]
+        public static ReadOnlySpan<char> inflate16u(in ByteBlock16 src)
+            => recover<char>(bytes(cpu.vlo(vpack.vinflate256x16u(cpu.vbytes(w128, u64(src))))));
+
+        [MethodImpl(Inline), Op]
+        public static ReadOnlySpan<char> inflate16u(in ByteBlock32 src)
+        {
+            var v = cpu.vload(w256, src.Bytes);
+            var lo = vpack.vinflatelo256x16u(v);
+            var hi = vpack.vinflatehi256x16u(v);
+            return recover<char>(sys.bytes(new V256x2(lo,hi)));
+        }
 
         [MethodImpl(Inline), Op]
         public static ref T copy<T>(ReadOnlySpan<byte> src, ref T dst)

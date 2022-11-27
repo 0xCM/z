@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     partial struct Storage
     {
@@ -14,8 +14,8 @@ namespace Z0
             where S : unmanaged
         {
             dst = default;
-            var szs = core.size<S>();
-            var szt = core.size<T>();
+            var szs = sys.size<S>();
+            var szt = sys.size<T>();
             var div = szt/szs;
             var mod =  szt % szs;
             for(var i=0; i<div; i++)

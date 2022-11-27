@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     public readonly record struct CmdArg<T> : ICmdArg<CmdArg<T>,T>
         where T : IEquatable<T>, IComparable<T>
     {

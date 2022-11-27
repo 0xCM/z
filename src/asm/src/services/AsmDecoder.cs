@@ -36,12 +36,12 @@ namespace Z0.Asm
         public ApiHostRoutines Decode(ApiHostBlocks src)
         {
             var host = src.Host;
-            var flow = Running(Msg.DecodingHostRoutines.Format(host));
+            var flow = Channel.Running(Msg.DecodingHostRoutines.Format(host));
             var view = src.Blocks.View;
             var count = view.Length;
-            var instructions = core.list<ApiHostRoutine>();
+            var instructions = sys.list<ApiHostRoutine>();
             var ip = MemoryAddress.Zero;
-            var target = core.list<IceInstruction>();
+            var target = sys.list<IceInstruction>();
             for(var i=0; i<count; i++)
             {
                 target.Clear();
@@ -55,11 +55,11 @@ namespace Z0.Asm
                      instructions.Add(AsmRoutines.hosted(ip, block, target.ToArray()));
                 }
                 else
-                    Warn(outcome.Message);
+                    Channel.Warn(outcome.Message);
             }
 
             var routines = new ApiHostRoutines(host, instructions.ToArray());
-            Ran(flow, Msg.DecodedHostRoutines.Format(routines.Length, host));
+            Channel.Ran(flow, Msg.DecodedHostRoutines.Format(routines.Length, host));
             return routines;
         }
 

@@ -44,7 +44,7 @@ namespace Z0
             var count = src.Args.Count;
             for(ushort i=0; i<count; i++)
             {
-                ref readonly var arg = ref src.Args[i];
+                var arg = src.Args[i];
                 if(nonempty(arg.Name))
                 {
                     dst.Append(Chars.Space);

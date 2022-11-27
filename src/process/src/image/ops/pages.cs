@@ -13,7 +13,7 @@ namespace Z0
         public static ReadOnlySeq<ProcessMemoryRegion> pages(ReadOnlySpan<MemoryRangeInfo> src)
         {
             var count = src.Length;
-            var buffer = sys.alloc<ProcessMemoryRegion>(count);
+            var buffer = alloc<ProcessMemoryRegion>(count);
             ref var dst = ref first(buffer);
             for(var i=0u; i<count; i++)
                 fill(skip(src,i), i, out seek(dst,i));

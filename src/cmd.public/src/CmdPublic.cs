@@ -20,7 +20,7 @@ namespace Z0
                 wf.ApiCmdServer(),
                 wf.AsmCoreCmd(),
                 wf.AsmCmdSvc(),
-                //wf.AsmChecks(),
+                wf.AsmCheckCmd(),
                 wf.CaptureCmd(),
                 wf.AsmDbCmd(),
                 wf.EcmaCmd(),

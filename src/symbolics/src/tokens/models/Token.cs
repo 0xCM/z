@@ -7,7 +7,7 @@ namespace Z0
     [StructLayout(LayoutKind.Sequential, Pack=1)]
     public readonly record struct Token : IToken
     {
-        public readonly uint Key;
+        public readonly uint Index;
 
         readonly string _Name;
 
@@ -16,7 +16,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public Token(uint key, string name, string expr)
         {
-            Key = key;
+            Index = key;
             _Name = name;
             _Expr = expr;
         }
@@ -34,6 +34,6 @@ namespace Z0
         }
 
         uint IToken.Index 
-            =>  Key;
+            =>  Index;
     }
 }

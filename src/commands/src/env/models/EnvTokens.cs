@@ -15,4 +15,15 @@ namespace Z0
 
         public const string DOTNET_ROOT = nameof(DOTNET_ROOT);
     }
+
+    public enum EnvPathKind : byte
+    {
+        None,
+
+        FileSystem,
+
+        Include,
+
+        Lib,
+    }
 }

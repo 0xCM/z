@@ -8,13 +8,15 @@ namespace Z0
     {
         public TypeList()
         {
-
+            Name = EmptyString;
         }
 
-        public TypeList(TypeListEntry[] src)
+        public TypeList(string name, TypeListEntry[] src)
             : base(src)
         {
-
+            Name = name;
         }
+
+        public readonly string Name;
     }
 }

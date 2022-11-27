@@ -1,5 +1,5 @@
 <Project>
   <PropertyGroup>
-    <Shell>$(MsBuildThisFileDirectory)z0.shell.csproj</Shell>
+    <AsmTest>$(MsBuildThisFileDirectory)z0.asm.test.csproj</AsmTest>
   </PropertyGroup>
 </Project>

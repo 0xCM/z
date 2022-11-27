@@ -95,7 +95,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public bool Equals(B src)
-            => cpu.vsame(Vector<ulong>(), src.Vector<ulong>());
+            => cpu.vsame(Vector<ulong>(),src.Vector<ulong>());
 
         public override bool Equals(object src)
             => src is B b && Equals(b);

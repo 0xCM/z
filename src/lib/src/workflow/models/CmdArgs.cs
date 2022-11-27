@@ -9,21 +9,17 @@ namespace Z0
     [ApiHost]
     public sealed class CmdArgs : Seq<CmdArgs,CmdArg>
     {
-        static MsgPattern EmptyArgList => "No arguments specified";
+        static CmdArg EmptyArg = CmdArg.Empty;
 
-        static MsgPattern ArgSpecError => "Argument specification error";
+        public new CmdArg this[int i]
+        {
+            [MethodImpl(Inline)]
+            get => i < Count ?  base[i] : EmptyArg;
+        }
 
         [Op]
-        public static CmdArg arg(CmdArgs src, int index)
-        {
-            if(src.IsEmpty)
-                @throw(EmptyArgList.Format());
-
-            var count = src.Count;
-            if(count < index - 1)
-                @throw(ArgSpecError.Format());
-            return src[(ushort)index];
-        }
+        public static CmdArg arg(CmdArgs src, int i)
+            => src[i];
 
         public static CmdArgs args<T>(params T[] src)
             where T : IEquatable<T>, IComparable<T>

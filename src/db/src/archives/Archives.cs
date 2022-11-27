@@ -32,7 +32,7 @@ namespace Z0
             => copy(channel, FS.dir(args[0]), FS.dir(args[1]));
         
         public static Task<ExecToken> copy(IWfChannel channel, FolderPath src, FolderPath dst)
-            => Cmd.start(channel, FS.path("robocopy.exe"), Cmd.args(src, dst, "/e"));
+            => CmdRunner.start(channel, FS.path("robocopy.exe"), Cmd.args(src, dst, "/e"));
 
         public static IModuleArchive modules(FolderPath src)
             => new ModuleArchive(src);

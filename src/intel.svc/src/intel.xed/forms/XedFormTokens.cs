@@ -7,14 +7,9 @@ namespace Z0
 {
     using static sys;
     using static XedForms;
-    using static XedModels;
-
-    using TK = XedForms.FormTokenKind;
     
     public class XedFormTokens
     {
-
-
         public readonly Index<FormToken> TokenIndex;
 
         readonly Index<FormTokenKind,uint> Offsets;

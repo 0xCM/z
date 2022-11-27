@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     public abstract class Sdk<S, K> : ISdk<K>
         where S : Sdk<S, K>, new()
         where K : unmanaged, ISdkKind<K>

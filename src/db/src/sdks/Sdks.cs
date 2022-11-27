@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     public class Sdks
     {
         public static Sdk sdk(FolderPath src) => new(src);
@@ -23,8 +21,8 @@ namespace Z0
 
             }
 
-            public IModuleArchive Modules => Archives.modules(Location);
-            
+            public IModuleArchive Modules 
+                => Archives.modules(Location);            
         }
     }
 }

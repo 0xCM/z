@@ -9,6 +9,7 @@
     <ProjectReference Include="$(AsmPrototypes)" />
     <ProjectReference Include="$(AsmSvc)" />
     <ProjectReference Include="$(Assets)" />
+    <ProjectReference Include="$(AsmTest)" />
 
     <ProjectReference Include="$(Bits)" />
 

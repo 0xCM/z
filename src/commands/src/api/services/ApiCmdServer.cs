@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using Windows;
+
     using static sys;
     public sealed class ApiCmdServer : ApiServer<ApiCmdServer>
     {
@@ -41,17 +43,59 @@ namespace Z0
         void EmitProcessEnv()
             => Env.report(Channel, EnvVarKind.Process, ShellData);
 
+        [CmdOp("env/pid")]
+        void ProcessId()
+            => Write(Environment.ProcessId);
+
+        [CmdOp("env/cpucore")]
+        void ShowCurrentCore()
+            => Emitter.Write(string.Format("Cpu:{0}", Kernel32.GetCurrentProcessorNumber()));
+
         [CmdOp("env/include")]
         void EnvInclude()
-            => Channel.Row(Env.paths(EnvTokens.INCLUDE, EnvVarKind.Process).Delimit(Chars.NL));
+            => Env.paths(Channel, EnvPathKind.Include, ShellData);
 
         [CmdOp("env/path")]
         void EnvPath()
-            => Channel.Row(Env.paths(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL));
+            => Env.paths(Channel, EnvPathKind.FileSystem, ShellData);
 
         [CmdOp("env/lib")]
         void EnvLib()
-            => Channel.Row(Env.paths(EnvTokens.LIB, EnvVarKind.Process).Delimit(Chars.NL));
+            => Env.paths(Channel, EnvPathKind.Lib, ShellData);
+
+        [CmdOp("env/tools")]
+        void EnvTools(CmdArgs args)
+            => Env.tools(Channel, ShellData);
+
+        [CmdOp("env/thread")]
+        void ShowThread()
+            => Channel.Row(string.Format("ThreadId:{0}", Kernel32.GetCurrentThreadId()));
+
+        [CmdOp("env/id")]
+        void EvId(CmdArgs args)
+        {
+            var id = Env.EnvId;
+            var msg = EmptyString;
+            if(args.IsNonEmpty)
+            {
+                Env.EnvId = args.First.Value;
+                if(id.IsNonEmpty)
+                    msg = $"{id} -> {Env.EnvId}";
+                else
+                    msg = $"{Env.EnvId}";
+            }
+            else
+            {
+                if(id.IsNonEmpty)
+                    msg = id;
+            }
+            if(nonempty(msg))
+                Channel.Write(msg);            
+        }
+
+        [CmdOp("env/args")]
+        void CmdlLineArgs()
+            => iter(Environment.GetCommandLineArgs(), arg => Write(arg));
 
         [CmdOp("cd")]
         void Cd(CmdArgs args)
@@ -68,5 +112,17 @@ namespace Z0
             var files = root.Files(false);
             iter(files, f => Channel.Row(((FileUri)f)));
         }        
+
+        [CmdOp("symlink")]
+        void Link(CmdArgs args)
+        {
+            var src = FS.dir(arg(args,0).Value);
+            var dst = FS.dir(arg(args,1).Value);
+            var result = FS.symlink(src,dst,true);
+            if(result)
+                Channel.Status($"symlink:{src} -> {dst}");
+            else
+                Channel.Error(result.Message);
+        }
     }
 }
