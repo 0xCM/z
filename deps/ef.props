@@ -1,0 +1,7 @@
+<Project>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="$(FxVer)" />    
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(FxVer)" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="$(FxVer)" /> 
+  </ItemGroup>
+</Project>

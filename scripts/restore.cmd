@@ -1,4 +1,3 @@
 @echo off
 call %~dp0..\config.cmd
-echo SlnRestore:%SlnRestore%
-call %SlnRestore%
+dotnet restore %SlnFilePath% --packages %SlnPkg% %BuildProps% --verbosity normal

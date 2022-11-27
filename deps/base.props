@@ -1,0 +1,4 @@
+<Project>
+  <Import Project="system.props"/>
+  <Import Project="msext.props"/>
+</Project>

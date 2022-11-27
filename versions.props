@@ -1,6 +1,9 @@
 <Project>
   <PropertyGroup>
-    <ZVer>0.0.19</ZVer>
+    <ZVer>0.0.20</ZVer>
     <ZSysVer>0.0.21</ZSysVer>
+    <FrameworkMoniker>net6.0</FrameworkMoniker>
+    <Version>$(ZVer)</Version>
+    <LangVersion>10</LangVersion>
   </PropertyGroup>
 </Project>

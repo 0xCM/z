@@ -1,4 +1,5 @@
 <Project>
+  <Import Project="$(SlnDeps)\symbolic.props"/>
   <ItemGroup>
     <ProjectReference Include="$(Sys)" />
     <ProjectReference Include="$(Text)" />

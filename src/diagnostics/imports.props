@@ -1,5 +1,5 @@
 <Project>
-
+  <Import Project="$(SlnDeps)\diagnostics.props" />
   <ItemGroup>
     <ProjectReference Include="$(ApiCode)" />
     <ProjectReference Include="$(Process)" />
