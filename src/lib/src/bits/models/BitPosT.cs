@@ -6,7 +6,7 @@ namespace Z0
 {
     using static Sized;
 
-    using api = gbits;
+    using api = BitPos;
 
 	/// <summary>
 	/// Identifies a bit position within a contiguous sequence of T-element values together with their cell index/bit offsets
@@ -44,7 +44,7 @@ namespace Z0
 		public uint LinearIndex
 		{
 			[MethodImpl(Inline)]
-			get => api.linearize(this);
+			get => BitPos.linearize(this);
 		}
 
 		[MethodImpl(Inline)]

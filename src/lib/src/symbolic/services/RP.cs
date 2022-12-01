@@ -9,6 +9,7 @@ namespace Z0
     {
         const NumericKind Closure = UnsignedInts;
 
+
         /// <summary>
         /// The end-of-line escape sequence
         /// </summary>

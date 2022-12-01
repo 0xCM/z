@@ -14,6 +14,20 @@ namespace Z0
         public static string ticked<T>(T src)
             => RP.Ticked.Format(src);    
 
+        /// <summary>
+        /// Defines the '``' literal
+        /// </summary>
+        [RenderLiteral(Ticks)]
+        public const string Ticks = "``";
+                
+        /// <summary>
+        /// Encloses content between left and right backticks
+        /// </summary>
+        /// <param name="content">The content to enclose</param>
+        [Op,Closures(Closure)]
+        public static string ticks<T>(T src)
+            => Ticks + text.denullify(src) + Ticks;
+            
         [Op]
         public static bool ticks(string src, out Pair<int> indices)
         {

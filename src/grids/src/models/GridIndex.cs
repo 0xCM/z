@@ -7,7 +7,7 @@ namespace Z0
     /// <summary>
     /// Correlates a linear bit index, a cell index and bit offset, and a row/column coordinate in a grid/matrix
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, Pack=1), DataTypeAttributeD("grid.index")]
+    [StructLayout(LayoutKind.Sequential, Pack=1)]
     public struct GridIndex
     {
         /// <summary>

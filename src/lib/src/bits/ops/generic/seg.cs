@@ -28,7 +28,7 @@ namespace Z0
         [MethodImpl(Inline), BitSeg, Closures(Closure)]
         public static T seg<T>(in Span<T> src, uint i0, uint i1)
             where T : unmanaged
-                => extract(src, bitpos<T>((uint)i0), bitpos<T>((uint)i1));
+                => extract(src, BitPos.bitpos<T>((uint)i0), BitPos.bitpos<T>((uint)i1));
 
         /// <summary>
         /// Extracts a contiguous range of bits from a primal source inclusively between two index positions

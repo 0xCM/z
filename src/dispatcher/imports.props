@@ -1,6 +1,6 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(ZLib)" />
     <ProjectReference Include="$(Workflow)" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="$(MsExtVer)" />
   </ItemGroup>
 </Project>

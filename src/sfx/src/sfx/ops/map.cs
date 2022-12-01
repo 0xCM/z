@@ -27,7 +27,6 @@ namespace Z0
             where T : unmanaged
                 => map(src,new Locate<T>(), dst);
 
-
         readonly unsafe struct Locate<T> : IPointedMap<Locate<T>,T,MemoryAddress>
             where T : unmanaged
         {

@@ -559,7 +559,7 @@ namespace Z0
             var s2 = random.Stream(Intervals.closed(mincells, maxcells)).GetEnumerator();
             var s3 = random.Stream<byte>(Intervals.closed((byte)0, (byte)width<T>())).GetEnumerator();
             while(true && s2.MoveNext() && s3.MoveNext())
-                yield return gbits.bitpos<T>(s2.Current, s3.Current);
+                yield return BitPos.bitpos<T>(s2.Current, s3.Current);
         }
 
         /// <summary>
@@ -574,7 +574,7 @@ namespace Z0
             var s2 = random.Stream(Intervals.closed(mincells,maxcells)).GetEnumerator();
             var s3 = random.Stream<byte>(Intervals.closed((byte)0, capacity)).GetEnumerator();
             while(true && s2.MoveNext() && s3.MoveNext())
-                yield return gbits.bitpos(capacity, s2.Current, s3.Current);
+                yield return BitPos.bitpos(capacity, s2.Current, s3.Current);
         }
 
         /// <summary>

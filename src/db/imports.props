@@ -3,5 +3,7 @@
     <ProjectReference Include="$(Alloc)" />
     <ProjectReference Include="$(Commands)" />
     <ProjectReference Include="$(Symbolics)" />
+    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="$(MsExtVer)" />
+    <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="$(MsExtVer)" />
   </ItemGroup>
 </Project>

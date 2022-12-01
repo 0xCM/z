@@ -14,5 +14,9 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static string denullify(string src)
             => src ?? EmptyString;
+
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static string denullify<T>(T src)
+            => src is null ? RP.Null : src.ToString();
     }
 }

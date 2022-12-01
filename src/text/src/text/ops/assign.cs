@@ -3,8 +3,11 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0
-{
-    partial struct Tables
+{    
+    partial class text
     {
-   }
+        [Op]
+        public static string assign(object lhs, object rhs, bool spaced = true)
+            => string.Format(spaced ? RP.SpacedAssign : RP.Assign, lhs, rhs);
+    }
 }

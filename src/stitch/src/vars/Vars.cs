@@ -5,11 +5,22 @@
 namespace Z0
 {
     using XF = ExprPatterns;
+    using VCK = VarContextKind;
 
     [ApiHost]
     public class Vars
     {
         const NumericKind Closure = UnsignedInts;
+
+         public static string pattern(VarContextKind vck)
+            => vck switch
+            {
+                VCK.CmdScript => "%{0}%",
+                VCK.PsScript => "${0}",
+                VCK.BashScript => "${0}",
+                VCK.MsBuild => "$({0})",
+                _ => "{0}"
+            };
 
         public static Var<T> var<T>(T src)
             where T : IEquatable<T>, IComparable<T>

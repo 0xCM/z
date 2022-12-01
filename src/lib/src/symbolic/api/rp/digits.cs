@@ -13,12 +13,5 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static string embrace<T>(T src)
             => $"{Chars.LBrace}{src}{Chars.RBrace}";
-
-        [Op]
-        public static string digits(byte n)
-            => embrace($"0:D{n}");
-
-        public static string digits(byte index, byte n)
-            => Chars.LBrace + $"{index}:D{n}" + Chars.RBrace;
     }
 }

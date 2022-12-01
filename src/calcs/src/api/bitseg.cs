@@ -37,6 +37,6 @@ namespace Z0
         [MethodImpl(Inline), BitSeg, Closures(Closure)]
         public static T bitseg<T>(in SpanBlock256<T> src, int i0, int i1)
             where T : unmanaged
-                => gbits.extract(src.Storage, gbits.bitpos<T>((uint)i0), gbits.bitpos<T>((uint)i1));
+                => gbits.extract(src.Storage, BitPos.bitpos<T>((uint)i0), BitPos.bitpos<T>((uint)i1));
     }
 }

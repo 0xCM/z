@@ -16,7 +16,7 @@ namespace Z0
         public static void setbit<T>(in SpanBlock256<T> src, int index, bit value)
             where T : unmanaged
         {
-            var loc = gbits.bitpos<T>((uint)index);
+            var loc = BitPos.bitpos<T>((uint)index);
             src[loc.CellIndex] = gbits.setbit(src[loc.CellIndex], (byte)loc.BitOffset, value);
         }
     }

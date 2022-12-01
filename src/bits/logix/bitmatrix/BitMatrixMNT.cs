@@ -117,14 +117,14 @@ namespace Z0
             [MethodImpl(Inline)]
             get
             {
-                var index = CellCalcs.index(row, col, RowDim, ColDim, default(T));
+                var index = grids.index(row, col, RowDim, ColDim, default(T));
                 return gbits.test(Data[index.CellIndex], index.BitOffset);
             }
 
             [MethodImpl(Inline)]
             set
             {
-                var index = CellCalcs.index(row, col, RowDim, ColDim, default(T));
+                var index = grids.index(row, col, RowDim, ColDim, default(T));
                 Data[index.CellIndex] = gbits.setbit(Data[index.CellIndex], index.BitOffset, value);
            }
         }

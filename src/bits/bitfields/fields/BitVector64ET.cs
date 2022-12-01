@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     public record struct BitVector64<E>
         where E : unmanaged, Enum
@@ -34,7 +34,7 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => alg.hash.combine((uint)Data, (uint)(Data >> 32));
+            get => sys.hash((uint)Data, (uint)(Data >> 32));
         }
 
         public override int GetHashCode()

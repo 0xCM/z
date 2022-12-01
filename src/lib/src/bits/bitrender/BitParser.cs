@@ -101,8 +101,8 @@ namespace Z0
         public static bool parse(string src, byte n, out ushort dst)
         {
             var input = cleanse(src);
-            var storage = ByteBlock16.Empty;
-            var buffer = recover<bit>(slice(storage.Bytes, 0, n));
+            Span<byte> storage = stackalloc byte[16];
+            var buffer = recover<bit>(slice(storage, 0, n));
             var count = parse(input, buffer);
             var result = count >= 0;
             dst = bit.scalar<byte>(buffer);
@@ -113,8 +113,8 @@ namespace Z0
         public static bool parse(string src, byte n, out uint dst)
         {
             var input = cleanse(src);
-            var storage = ByteBlock32.Empty;
-            var buffer = recover<bit>(slice(storage.Bytes, 0, n));
+            Span<byte> storage = stackalloc byte[32];
+            var buffer = recover<bit>(slice(storage, 0, n));
             var count = parse(input, buffer);
             var result = count >= 0;
             dst = bit.scalar<byte>(buffer);
@@ -125,8 +125,8 @@ namespace Z0
         public static bool parse(string src, byte n, out ulong dst)
         {
             var input = cleanse(src);
-            var storage = ByteBlock64.Empty;
-            var buffer = recover<bit>(slice(storage.Bytes, 0, n));
+            Span<byte> storage = stackalloc byte[64];
+            var buffer = recover<bit>(slice(storage, 0, n));
             var count = parse(input, buffer);
             var result = count >= 0;
             dst = bit.scalar<byte>(buffer);
@@ -136,7 +136,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public static int parse(string src, Span<bit> dst)
         {
-            var input = core.span(cleanse(src)).Reverse();
+            var input = sys.span(cleanse(src)).Reverse();
             if(input.Length > dst.Length)
                 return -1;
 

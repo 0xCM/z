@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using static core;
+    using static sys;
 
     public readonly struct AsmFormatter
     {
@@ -32,8 +32,8 @@ namespace Z0.Asm
             dst.AppendLine(PageBreak);
             dst.AppendLine(new AsmInlineComment(CommentMarker, $"{src.Sig}::{src.Uri}"));
             dst.AppendLine(AsmInlineComment.array(src.Data).Format());
-            dst.AppendLine(new AsmInlineComment(CommentMarker, RpOps.attrib(Pad, nameof(src.Token.EntryAddress), "0x" + src.Token.EntryAddress.Location.ToString("x"))));
-            dst.AppendLine(new AsmInlineComment(CommentMarker, RpOps.attrib(Pad, nameof(src.Token.TargetAddress), "0x" + src.Token.TargetAddress.Location.ToString("x"))));
+            dst.AppendLine(new AsmInlineComment(CommentMarker, text.attrib(Pad, nameof(src.Token.EntryAddress), "0x" + src.Token.EntryAddress.Location.ToString("x"))));
+            dst.AppendLine(new AsmInlineComment(CommentMarker, text.attrib(Pad, nameof(src.Token.TargetAddress), "0x" + src.Token.TargetAddress.Location.ToString("x"))));
             dst.Append(PageBreak);
             return dst.Emit();
         }
@@ -47,8 +47,8 @@ namespace Z0.Asm
             dst.AppendLine(PageBreak);
             dst.AppendLine(new AsmInlineComment(CommentMarker, $"{src.Sig}::{src.Uri}"));
             dst.AppendLine(AsmInlineComment.array(src.Code).Format());
-            dst.AppendLine(new AsmInlineComment(CommentMarker, RpOps.attrib(Pad, nameof(src.Token.EntryAddress), "0x" + src.Token.EntryAddress.Location.ToString("x"))));
-            dst.AppendLine(new AsmInlineComment(CommentMarker, RpOps.attrib(Pad, nameof(src.Token.TargetAddress), "0x" + src.Token.TargetAddress.Location.ToString("x"))));
+            dst.AppendLine(new AsmInlineComment(CommentMarker, text.attrib(Pad, nameof(src.Token.EntryAddress), "0x" + src.Token.EntryAddress.Location.ToString("x"))));
+            dst.AppendLine(new AsmInlineComment(CommentMarker, text.attrib(Pad, nameof(src.Token.TargetAddress), "0x" + src.Token.TargetAddress.Location.ToString("x"))));
             dst.Append(PageBreak);
             return dst.Emit();
         }
@@ -105,15 +105,15 @@ namespace Z0.Asm
 
         static byte render(in ApiCodeBlockHeader src, Span<string> dst)
         {
-            const string PageBreak = "#" + CharText.Space + RpOps.PageBreak160;
+            const string PageBreak = "#" + CharText.Space + RP.PageBreak160;
             const AsmCommentMarker CommentMarker = AsmCommentMarker.Hash;
             var i = z8;
             seek(dst, i++) = PageBreak;
             seek(dst, i++) = comment(CommentMarker, $"{src.DisplaySig}::{src.Uri}");
             seek(dst, i++) = bytespan(src.Uri, src.CodeBlock);
             seek(dst, i++) = hexarray(src.CodeBlock);
-            seek(dst, i++) = comment(CommentMarker, string.Concat(nameof(CodeBlock.Address), RpOps.spaced(Chars.Eq), src.CodeBlock.Address));
-            seek(dst, i++) = comment(CommentMarker, string.Concat(nameof(src.TermCode), RpOps.spaced(Chars.Eq), src.TermCode.ToString()));
+            seek(dst, i++) = comment(CommentMarker, string.Concat(nameof(CodeBlock.Address), RP.spaced(Chars.Eq), src.CodeBlock.Address));
+            seek(dst, i++) = comment(CommentMarker, string.Concat(nameof(src.TermCode), RP.spaced(Chars.Eq), src.TermCode.ToString()));
             seek(dst, i++) = PageBreak;
             return i;
         }

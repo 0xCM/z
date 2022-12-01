@@ -47,7 +47,7 @@ namespace Z0
         [MethodImpl(Inline), BitSeg, Closures(Closure)]
         public static T extract<T>(Span<T> src, uint i0, uint i1)
             where T : unmanaged
-                => extract(src, bitpos<T>(i0), bitpos<T>(i1));
+                => extract(src, BitPos.bitpos<T>(i0), BitPos.bitpos<T>(i1));
 
         /// <summary>
         /// Extracts a T-valued segment, cross-cell or same-cell, from the source as determined by an inclusive position range

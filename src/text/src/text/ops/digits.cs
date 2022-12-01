@@ -4,10 +4,15 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct RpOps
+    using System.Text;
+
+    partial class text
     {
         [Op]
-        public static string assign(object lhs, object rhs, bool spaced = true)
-            => string.Format(spaced ? RpOps.SpacedAssign : RpOps.Assign, lhs, rhs);
+        public static string digits(byte n)
+            => embrace($"0:D{n}");
+
+        public static string digits(byte index, byte n)
+            => Chars.LBrace + $"{index}:D{n}" + Chars.RBrace;
     }
 }

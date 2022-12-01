@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     partial class gmath
     {
         [MethodImpl(Inline), Op, Closures(AllNumeric)]

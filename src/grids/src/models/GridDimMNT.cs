@@ -20,7 +20,7 @@ namespace Z0
         public BitWidth BitCount
         {
             [MethodImpl(Inline)]
-            get => CellCalcs.gridwidth<M,N,T>();
+            get => grids.gridwidth<M,N,T>();
         }
 
         /// <summary>

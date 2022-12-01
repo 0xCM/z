@@ -4,9 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Root;
-    using static sys;
-
     partial class text
     {
         [Op]

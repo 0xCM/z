@@ -16,7 +16,7 @@ namespace Z0
         public static bit testbit<T>(in SpanBlock256<T> src, int index)
             where T : unmanaged
         {
-            var pos = gbits.bitpos<T>((uint)index);
+            var pos = BitPos.bitpos<T>((uint)index);
             return gbits.test(src[pos.CellIndex], (byte)pos.BitOffset);
         }
     }

@@ -9,21 +9,42 @@ namespace Z0
     partial class ApiCode
     {
         [Op]
-        public static ApiMemberCode load(IApiPack src, PartId part, WfEmit channel)
+        public static ApiMemberCode load(IWfChannel channel, IApiPack src, PartName part)
         {
-            load(src, part, channel, out var seq, out var code);
+            load(channel, src, part, out var seq, out var code);
             return members(Dispense.composite(), seq, code);
         }
 
         [Op]
-        static void load(IApiPack src, PartId part, WfEmit channel, out Seq<EncodedMember> index, out BinaryCode data)
+        static void load(IWfChannel channel, IApiPack src, PartName part, out Seq<EncodedMember> index, out BinaryCode data)
         {
-            index = member(src, part, channel);
-            data = code(src, part, channel);
+            index = member(channel, src, part);
+            data = bincode(channel, src, part);
         }
 
         [Op]
-        static Seq<EncodedMember> member(IApiPack src, PartId part, WfEmit channel)
+        public static ApiMemberCode load(IWfChannel channel, IApiPack src, ICompositeDispenser symbols, ApiHostUri host)
+        {
+            load(channel, src, host, out var seq, out var code);
+            return members(symbols, seq, code);
+        }
+
+        [Op]
+        public static ApiMemberCode load(IWfChannel channel, IApiPack src, ICompositeDispenser symbols, PartId part)
+        {
+            load(channel, src, part, out var seq, out var code);
+            return members(symbols, seq, code);
+        }
+
+        [Op]
+        public static void load(IWfChannel channel,  IApiPack src, ApiHostUri host, out Seq<EncodedMember> index, out BinaryCode data)
+        {
+            hexdat(src.HexExtractPath(host), out data).Require();
+            parse(src.CsvExtractPath(host), out index).Require();
+        }
+        
+        [Op]
+        static Seq<EncodedMember> member(IWfChannel channel, IApiPack src, PartName part)
         {
             var dst = Seq<EncodedMember>.Empty;
             var result = parse(src.CsvExtractPath(part), out dst);
@@ -36,7 +57,7 @@ namespace Z0
         }
 
         [Op]
-        static BinaryCode code(IApiPack src, PartId part, WfEmit channel)
+        static BinaryCode bincode(IWfChannel channel, IApiPack src, PartName part)
         {
             var dst = BinaryCode.Empty;
             var result = hexdat(src.HexExtractPath(part), out dst);
@@ -77,27 +98,6 @@ namespace Z0
             dst.Offsets = offsets;
             dst.Tokens = tokens;
             return ApiMemberCode.own(dst);
-        }
-
-        [Op]
-        public static ApiMemberCode load(IApiPack src, ICompositeDispenser symbols, ApiHostUri host, WfEmit channel)
-        {
-            load(src, host, channel, out var seq, out var code);
-            return members(symbols, seq, code);
-        }
-
-        [Op]
-        public static ApiMemberCode load(IApiPack src, ICompositeDispenser symbols, PartId part, WfEmit channel)
-        {
-            load(src, part, channel, out var seq, out var code);
-            return members(symbols, seq, code);
-        }
-
-        [Op]
-        public static void load(IApiPack src, ApiHostUri host, WfEmit channel, out Seq<EncodedMember> index, out BinaryCode data)
-        {
-            hexdat(src.HexExtractPath(host), out data).Require();
-            parse(src.CsvExtractPath(host), out index).Require();
         }
     }
 }

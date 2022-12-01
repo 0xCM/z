@@ -11,6 +11,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public static OpenHandle opened(IntPtr src)
             => new OpenHandle(src);
+
         public IntPtr Handle {get;}
 
         [MethodImpl(Inline)]

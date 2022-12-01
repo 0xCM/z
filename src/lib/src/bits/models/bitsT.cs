@@ -28,7 +28,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public bits(T src)
         {
-            N = core.width<T>();
+            N = sys.width<T>();
             Packed = src;
         }
 

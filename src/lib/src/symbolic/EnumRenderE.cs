@@ -182,7 +182,7 @@ namespace Z0
         static EnumRender()
         {
             Syms = Symbols.index<E>();
-            BF = new BitFormat(tlz:true,specifier:true);
+            BF = new BitFormat(tlz:true, specifier:true);
         }
     }
 }

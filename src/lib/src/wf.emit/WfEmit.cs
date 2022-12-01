@@ -70,10 +70,10 @@ namespace Z0
             => Wf.Data(Host, content, flair);
 
         public void Write<T>(string name, T value, FlairKind flair)
-            => Wf.Data(Host, RpOps.attrib(name, value), flair);
+            => Wf.Data(Host, text.attrib(name, value), flair);
 
         public void Write<T>(string name, T value)
-            => Wf.Data(Host, RpOps.attrib(name, value));
+            => Wf.Data(Host, text.attrib(name, value));
 
         public ExecFlow<Type> Creating(Type service)
             => Wf.Creating(service);
