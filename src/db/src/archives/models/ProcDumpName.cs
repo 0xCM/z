@@ -8,6 +8,12 @@ namespace Z0
 
     public readonly struct ProcDumpName : IIdentified
     {
+        public static FileName filename(Process process, Timestamp ts)
+            => FS.file(create(process, ts).Format(false), FileKind.Dmp);
+
+        public static FilePath path(Process process, Timestamp ts, IDbArchive dst)
+            => dst.Path(filename(process, ts)).CreateParentIfMissing();        
+
         public static ProcDumpName from(FilePath src)
         {
             if(src.IsEmpty)
@@ -17,7 +23,7 @@ namespace Z0
             var name = identifier.LeftOfFirst(Chars.Dot);
             var result = Time.parse(identifier.RightOfFirst(Chars.Dot), out var ts);
             if(result)
-                return create(name,ts);
+                return new(name,ts);
             else
                 return Empty;
         }
@@ -26,16 +32,12 @@ namespace Z0
         public static ProcDumpName create(Process process, Timestamp ts)
             => new ProcDumpName(process.ProcessName, ts);
 
-        [MethodImpl(Inline)]
-        public static ProcDumpName create(string name, Timestamp ts)
-            => new ProcDumpName(name, ts);
-
         public string ProcessName {get;}
 
         public Timestamp CaptureTime {get;}
 
         [MethodImpl(Inline)]
-        public ProcDumpName(string name, Timestamp ts)
+        ProcDumpName(string name, Timestamp ts)
         {
             ProcessName = name;
             CaptureTime = ts;
@@ -61,13 +63,13 @@ namespace Z0
         public override string ToString()
             => Format();
 
-        [MethodImpl(Inline)]
-        public static implicit operator ProcDumpName((string name, Timestamp ts) src)
-            => new ProcDumpName(src.name, src.ts);
+        // [MethodImpl(Inline)]
+        // public static implicit operator ProcDumpName((string name, Timestamp ts) src)
+        //     => new ProcDumpName(src.name, src.ts);
 
-        [MethodImpl(Inline)]
-        public static implicit operator ProcDumpName((Process proc, Timestamp ts) src)
-            => create(src.proc, src.ts);
+        // [MethodImpl(Inline)]
+        // public static implicit operator ProcDumpName((Process proc, Timestamp ts) src)
+        //     => create(src.proc, src.ts);
 
         public static ProcDumpName Empty
         {

@@ -11,7 +11,7 @@ namespace Z0
         public static ProcessImageMap map()
             => map(Process.GetCurrentProcess());
 
-        public static void map(CmdArgs args, IWfChannel channel, IDbArchive dst)
+        public static void map(IWfChannel channel, CmdArgs args, IDbArchive dst)
         {
             var buffer = bag<ProcessId>();
             if(args.Count != 0)

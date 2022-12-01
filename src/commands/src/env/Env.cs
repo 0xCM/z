@@ -8,8 +8,6 @@ namespace Z0
     
     using static sys;
 
-
-
     [ApiHost]
     public class Env : ApiModule<Env>
     {
@@ -67,13 +65,13 @@ namespace Z0
             switch(kind)
             {
                 case EnvVarKind.Process:
-                     token = Env.emit(channel, kind, dst.Root);
+                     token = Env.emit(channel, kind, dst);
                 break;
                 case EnvVarKind.User:
-                    token = Env.emit(channel, kind, dst.Root);
+                    token = Env.emit(channel, kind, dst);
                 break;
                 case EnvVarKind.Machine:
-                    token = Env.emit(channel, kind, dst.Root);
+                    token = Env.emit(channel, kind, dst);
                 break;
             }
 
@@ -131,9 +129,9 @@ namespace Z0
         public static ExecToken EmitReports(IWfChannel channel, IDbArchive dst)
         {
             var running = channel.Running();
-            emit(channel, EnvVarKind.Process, dst.Root);
-            emit(channel, EnvVarKind.User, dst.Root);
-            emit(channel, EnvVarKind.Machine, dst.Root);
+            emit(channel, EnvVarKind.Process, dst);
+            emit(channel, EnvVarKind.User, dst);
+            emit(channel, EnvVarKind.Machine, dst);
             return channel.Ran(running);
         }
 
@@ -213,7 +211,7 @@ namespace Z0
             return token;
         }
 
-        public static ExecToken emit(IWfChannel channel, EnvVarKind kind, FolderPath dst)
+        public static ExecToken emit(IWfChannel channel, EnvVarKind kind, IDbArchive dst)
         {
             var vars = EnvVars.Empty;
             var token = ExecToken.Empty;
@@ -230,7 +228,7 @@ namespace Z0
                 break;
             }
 
-            token = emit(channel, kind, vars, new DbArchive(dst));
+            token = emit(channel, kind, vars, dst);
             return token;
         }
 

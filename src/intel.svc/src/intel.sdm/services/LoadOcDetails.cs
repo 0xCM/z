@@ -24,16 +24,9 @@ namespace Z0.Asm
                 return (false, AppMsg.ParseFailure.Format(nameof(dst.OpCodeKey), skip(cells,i-1)));
 
             dst.Mnemonic = skip(cells, i++).ToUpperInvariant();
-
-            dst.OpCodeExpr = skip(cells,i++).Trim();
-            AsmOcValue.parse(skip(cells,i++), out dst.OpCodeValue);
-
-            ref readonly var sigsrc = ref skip(cells,i++);
-            if(sigsrc.Length == 0)
-                dst.AsmSig = EmptyString;
-            else
-                dst.AsmSig = sigsrc;
-
+            dst.OpCodeExpr = skip(cells, i++).Trim();
+            AsmOcValue.parse(skip(cells, i++), out dst.OpCodeValue);
+            dst.AsmSig = skip(cells, i++);            
             dst.EncXRef = skip(cells, i++);
             dst.Mode64 = skip(cells, i++);
             dst.Mode32 = skip(cells, i++);
@@ -65,8 +58,8 @@ namespace Z0.Asm
             Index<SdmOpCodeDetail> Load()
             {
                 var dst = sys.empty<SdmOpCodeDetail>();
-                var src = SdmPaths.SdmTable<SdmOpCodeDetail>();
-                var lines = SdmPaths.SdmTable<SdmOpCodeDetail>().ReadNumberedLines();
+                var src = SdmPaths.TargetTable<SdmOpCodeDetail>();
+                var lines = SdmPaths.TargetTable<SdmOpCodeDetail>().ReadNumberedLines();
                 var count = lines.Count -1;
                 dst = alloc<SdmOpCodeDetail>(count);
                 rows(slice(lines.View,1), dst);

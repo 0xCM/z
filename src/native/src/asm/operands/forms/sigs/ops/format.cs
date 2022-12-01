@@ -8,6 +8,7 @@ namespace Z0.Asm
 
     using K = AsmSigTokenKind;
     using T = AsmSigTokens;
+
     partial class AsmSigs
     {
         public static string format(in AsmSigOp src)

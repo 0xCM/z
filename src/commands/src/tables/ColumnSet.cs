@@ -36,13 +36,5 @@ namespace Z0
             seek(Columns, Index++) = src;
             return this;
         }
-
-        [MethodImpl(NotInline), Op]
-        public TableDef Complete(TableId name)
-        {
-            var cells = Columns.Slice(0,(int)Index).ToArray();
-            Columns.Clear();
-            return new TableDef(name, cells);
-        }
     }
 }

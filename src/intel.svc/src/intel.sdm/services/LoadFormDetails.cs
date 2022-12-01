@@ -28,11 +28,11 @@ namespace Z0.Asm
                 Throw.OnError(AsciG.parse(src.Next(), n64, out dst.Name));
                 Throw.OnError(AsmSigs.parse(src.Next(), out dst.Sig));
                 Throw.OnError(SdmOpCodes.parse(src.Next(), out dst.OpCode));
-                Throw.OnError(DataParser.parse(src.Next(), out dst.Mode64));
-                Throw.OnError(DataParser.parse(src.Next(), out dst.Mode32));
-                Throw.OnError(DataParser.parse(src.Next(), out dst.IsRex));
-                Throw.OnError(DataParser.parse(src.Next(), out dst.IsEvex));
-                Throw.OnError(DataParser.parse(src.Next(), out dst.Description));
+                Throw.OnError(BitParser.parse(src.Next(), out dst.Mode64));
+                Throw.OnError(BitParser.parse(src.Next(), out dst.Mode32));
+                Throw.OnError(BitParser.parse(src.Next(), out dst.IsRex));
+                Throw.OnError(BitParser.parse(src.Next(), out dst.IsEvex));
+                dst.Description = src.Next();
                 buffer.Add(dst);
             }
 

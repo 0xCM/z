@@ -8,7 +8,7 @@ namespace Z0.Asm
 
     public class SdmCodeGen : WfSvc<SdmCodeGen>
     {
-        IntelSdm Sdm => Service(Wf.IntelSdm);
+        IntelSdm Sdm => Wf.IntelSdm();
 
         const string TargetNamespace = "Z0.Asm";
 
@@ -18,9 +18,8 @@ namespace Z0.Asm
 
         CsLang CsLang => Service(Wf.CsLang);
 
-        public void Emit()
+        public void Emit(IDbArchive dst)
         {
-            var dst = AppDb.CgStage(CgTarget.Intel.ToString());
             GenMnemonicNames(dst);
             GenFormKinds(dst);
             GenSigStrings(dst);

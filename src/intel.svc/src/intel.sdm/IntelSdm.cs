@@ -22,7 +22,7 @@ namespace Z0.Asm
 
         void Clear()
         {
-            SdmPaths.Output().Clear();
+            SdmPaths.Targets().Clear();
             ClearCache();
         }
 
@@ -32,25 +32,12 @@ namespace Z0.Asm
             try
             {
                 Clear();
-                EmitTokens();
-                Emit(CalcOcDetails());
-
-                EmitCharMaps();
-
-                ImportVolume(1);
-
-                ImportVolume(2);
-
-                ImportVolume(3);
-
-                ImportVolume(4);
-
-                EmitSdmSplits();
-
-                EmitCombinedToc();
-
-                EmitTocRecords();
-
+                ExportTokens();
+                ExportOpCodes();
+                ExportCharMaps();
+                ImportVolumes();
+                ExportSplitDefs();
+                ExportToc();
             }
             catch(Exception e)
             {

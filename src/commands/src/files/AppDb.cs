@@ -46,6 +46,9 @@ namespace Z0
         public DbArchive DbOut()
             => DbRoot().Scoped("targets");
 
+        public DbArchive DbOut(string scope)
+            => DbOut().Scoped(scope);
+
         public DbArchive Logs()
             => DbRoot().Scoped("logs");
 

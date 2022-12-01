@@ -68,6 +68,8 @@ namespace Z0
             public XedToolCmd XedToolCmd(IWfRuntime wf)
                 => Service<XedToolCmd>(wf);
 
+            public IApiService SdmCmd(IWfRuntime wf)
+                => Service<IntelSdmCmd>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
@@ -126,12 +128,14 @@ namespace Z0
         public static SdmCodeGen SdmCodeGen(this IWfRuntime wf)
             => Services.Service<SdmCodeGen>(wf);
 
+        public static IApiService SdmCmd(this IWfRuntime wf)
+            => Services.SdmCmd(wf);
+
         public static XedToolCmd XedToolCmd(this IWfRuntime wf)
             => Services.XedToolCmd(wf);
 
         public static XedDisasmSvc XedDisasmSvc(this IWfRuntime wf)
             => GlobalServices.Instance.Service<XedRuntime>(wf).Disasm;
-
     }
 
 

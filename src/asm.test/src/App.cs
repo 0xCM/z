@@ -14,7 +14,7 @@ namespace Z0
                 wf.XedCmd(),
                 wf.CsGenCmd(),
                 wf.IntelInxCmd(),
-                wf.RuntimeCmd(),
+                wf.ContextCmd(),
                 wf.AsmCheckCmd(),
             };
 

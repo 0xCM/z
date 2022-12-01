@@ -9,15 +9,6 @@ namespace Z0
 
     public partial class ApiCmd : AppService<ApiCmd>, IApiService
     {
-        // public static A shell<A>(bool catalog, params string[] args)
-        //     where A : IAppShell, new()
-        // {
-        //     var wf = ApiRuntime.create(catalog, args);
-        //     var app = new A();
-        //     app.Init(wf);
-        //     return app;
-        // }
-
         public static IApiDispatcher Dispatcher 
             => AppData.Value<IApiDispatcher>(nameof(IApiDispatcher));
 
@@ -73,23 +64,6 @@ namespace Z0
 
         public void RunCmd(string name, CmdArgs args)
             => ApiCmd.Dispatcher.Dispatch(name, args);
-
-        string Prompt()
-            => string.Format("{0}> ", "cmd");
-
-        ApiCmdSpec Next()
-        {
-            var input = term.prompt(Prompt());
-            if(ApiCmd.parse(input, out ApiCmdSpec cmd))
-            {
-                return cmd;
-            }
-            else
-            {
-                Channel.Error($"ParseFailure:{input}");
-                return ApiCmdSpec.Empty;
-            }
-        }
 
         public void RunApiScript(FilePath src)
         {

@@ -6,6 +6,14 @@ namespace Z0.Asm
 {
     partial class IntelSdm
     {
+        public void ImportVolumes()
+        {
+            ImportVolume(1);
+            ImportVolume(2);
+            ImportVolume(3);
+            ImportVolume(4);
+        }
+
         void ImportVolume(byte vol)
         {
             var src = SdmPaths.SdmSrcVol(vol);

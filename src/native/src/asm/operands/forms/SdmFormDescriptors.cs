@@ -10,12 +10,12 @@ namespace Z0
     {
         public const string FormKindName = "AsmFormKind";
 
-        public SymSet CalcSymbols()
+        public SymbolSet CalcSymbols()
         {
             var forms = this;
             var identifiers = forms.Keys;
             var count = (uint)identifiers.Length + 1;
-            var dst = new SymSet(count, FormKindName, ClrEnumKind.U16, new DataSize(16,16), NumericBaseKind.Base10, false, "asm");
+            var dst = new SymbolSet(count, FormKindName, ClrEnumKind.U16, new DataSize(16,16), NumericBaseKind.Base10, false, "asm");
             ref readonly var names = ref dst.Names;
             ref readonly var values = ref dst.Values;
             ref readonly var symbols = ref dst.Symbols;

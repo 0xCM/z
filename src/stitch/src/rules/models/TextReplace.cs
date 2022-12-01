@@ -17,10 +17,10 @@ namespace Z0
 
         public string Apply(string src)
         {
-            var dst = src;
+            var dst = text.trim(src);
             foreach(var rule in Rules)
                 dst = text.replace(dst, rule.Key, rule.Value);
-            return dst;
+            return text.despace(dst);
         }
 
         public override string Format()

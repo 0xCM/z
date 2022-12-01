@@ -8,7 +8,6 @@ namespace Z0
 
     public readonly struct DocModels
     {
-
         public abstract class Doc
         {
             public uint LineCount {get; protected set;}

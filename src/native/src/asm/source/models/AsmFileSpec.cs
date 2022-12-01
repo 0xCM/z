@@ -50,12 +50,6 @@ namespace Z0
         public FilePath Path(FolderPath dst)
             => dst + FS.file(Name.Format(), FS.Asm);
 
-        public FilePath Save(FolderPath dst)
-        {
-            var path = Path(dst);
-            Save(path);
-            return path;
-        }
 
         public uint Save(FilePath dst)
         {

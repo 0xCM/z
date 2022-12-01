@@ -8,25 +8,19 @@ namespace Z0
     {
         sealed class Svc : AppServices<Svc>
         {
-            public Runtime Runtime(IWfRuntime wf)
-                => Service<Runtime>(wf);
-
             public DumpParser DumpParser(IWfRuntime wf)
                 => Service<DumpParser>(wf);
 
-            public ProcessCmd RuntimeCmd(IWfRuntime wf)
-                => Service<ProcessCmd>(wf);
+            public ContextCmd ContextCmd(IWfRuntime wf)
+                => Service<ContextCmd>(wf);
         }
 
         static Svc Services => Svc.Instance;
 
-        public static Runtime Runtime(this IWfRuntime wf)
-            => Services.Runtime(wf);
-
         public static DumpParser DumpParser(this IWfRuntime wf)
             => Services.DumpParser(wf);
 
-        public static IApiService RuntimeCmd(this IWfRuntime wf)
-            => Services.RuntimeCmd(wf);
+        public static IApiService ContextCmd(this IWfRuntime wf)
+            => Services.ContextCmd(wf);
     }
 }

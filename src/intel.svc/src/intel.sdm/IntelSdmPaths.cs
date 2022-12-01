@@ -9,60 +9,61 @@ namespace Z0.Asm
 
     public class IntelSdmPaths : WfSvc<IntelSdmPaths>
     {
-        public IDbArchive Output()
-            => AppDb.AsmDb("sdm");
-
-        public FilePath SdmTable<T>()
-            where T : struct
-                => Output().Table<T>();
-
         public IDbArchive Sources()
-            => AppDb.DbIn(intel);
+            => AppDb.DbIn("intel");
+
+        public IDbArchive Targets()
+            => AppDb.DbOut("asm.db.check");
+
+        public FilePath SourceTable<T>()
+            where T : struct
+                => Sources().Table<T>();
 
         public IDbArchive Sources(string scope)
             => Sources().Sources(scope);
 
-        public IDbArchive Settings()
-            => AppDb.Env();
+        public FilePath TargetTable<T>()
+            where T : struct
+                => Targets().Table<T>();
 
         public IDbArchive Logs()
             => AppDb.Logs("intel.sdm");
 
         public FilePath SigFixupConfig()
-            => Settings().Path("asm.sigs.fixups", FileKind.Map);
+            => AppDb.Env().Path("asm.sigs.fixups", FileKind.Map);
 
         public FilePath SigNormalConfig()
-            => Settings().Path("asm.sigs.normalize", FileKind.Map);
+            => AppDb.Env().Path("asm.sigs.normalize", FileKind.Map);
 
         public FilePath OcFixupConfig()
-            => Settings().Path("asm.opcodes.fixups", FileKind.Map);
+            => AppDb.Env().Path("asm.opcodes.fixups", FileKind.Map);
 
         public FilePath SplitConfig()
-            => Settings().Path(FS.file("sdm.splits", FS.Csv));
+            => AppDb.Env().Path(FS.file("sdm.splits", FS.Csv));
 
         public FilePath SdmSrcVol(byte vol)
             => Sources().Path(FS.file(string.Format("intel-sdm-vol{0}", vol), FS.Txt));
 
         public FilePath SdmDstVol(byte vol)
-            => Output().Path(FS.file(string.Format("intel-sdm-vol{0}-{1}", vol, "lined"), FS.Txt));
+            => Targets().Path(FS.file(string.Format("intel-sdm-vol{0}-{1}", vol, "lined"), FS.Txt));
 
         public FilePath TocImportDoc()
-            => Output().Path(FS.file("sdm.toc", FS.Txt));
+            => Targets().Path(FS.file("sdm.toc", FS.Txt));
 
         public FilePath ProcessLog(string name)
             => Logs().Path(name,FileKind.Log);
 
         public ReadOnlySeq<FilePath> TocPaths()
-            => Output().Files().Where(f => IsTocPart(f)).Array().Sort();
+            => Targets().Files().Where(f => IsTocPart(f)).Array().Sort();
 
         public FilePath TocDst()
-            => Output().Table<TocEntry>(sdm);
+            => Targets().Table<TocEntry>(sdm);
 
         public FilePath FormDetailDst()
-            => Output().Table<SdmFormDetail>(sdm);
+            => Targets().Table<SdmFormDetail>(sdm);
 
         public FilePath CharMapDst()
-            => Output().Path(FS.file("sdm.charmap", FS.Config));
+            => Targets().Path(FS.file("sdm.charmap", FS.Config));
 
         public FilePath UnmappedCharLog()
             => Logs().Path("sdm.unmapped", FileKind.Log);
@@ -74,7 +75,7 @@ namespace Z0.Asm
             => Sources().Sources("sdm.instructions");
 
         public FilePath TokensDst(string sort)
-            => Output().Path(sort,FileKind.Csv);
+            => Targets().Path(sort,FileKind.Csv);
 
         static bool IsTocPart(FilePath src)
         {

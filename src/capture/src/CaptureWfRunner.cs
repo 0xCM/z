@@ -55,7 +55,7 @@ namespace Z0
                 Regions.EmitRegions(Process.GetCurrentProcess(), Target);
 
             if(Settings.EmitContext)
-                RuntimeContext.emit(Channel,Target);
+                RuntimeContext.emit(Channel, Target.Timestamp, Target);
 
             if(Settings.RunChecks)
             {

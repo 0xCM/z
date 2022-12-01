@@ -93,8 +93,8 @@ namespace Z0
             = Default | SequentialLayout;
 
         [MethodImpl(Inline), Op]
-        public static TableDef table(TableId name, params Column[] cols)
-            => new TableDef(name, cols);
+        public static TableDef table(TableId name, Identifier type, params Column[] cols)
+            => new TableDef(name, type, cols);
 
         [MethodImpl(Inline), Op]
         public static Column column(ushort index, Identifier name, Identifier type)
@@ -144,18 +144,18 @@ namespace Z0
         [Op]
         public static TableDef def(Type src)
         {
-            var fields = src.DeclaredInstanceFields();
+            var fields = src.PublicInstanceFields();
             var count = fields.Length;
             if(count == 0)
-                return new TableDef(TableId.identify(src), sys.empty<Column>());
-            var specs = sys.alloc<Column>(count);
+                return new TableDef(TableId.identify(src), src.Name, sys.empty<Column>());
+            var specs = alloc<Column>(count);
             for(var i=z16; i<count; i++)
             {
                 var field = skip(fields,i);
                 seek(specs,i) = new Column(i, ReflectedField.name(field), field.FieldType.CodeName());
             }
 
-            return new TableDef(TableId.identify(src), specs);
+            return new TableDef(TableId.identify(src), src.Name, specs);
         }
 
         /// <summary>
@@ -201,31 +201,30 @@ namespace Z0
             var type = tb.CreateType();
             return type;
         }
-        [Op]
-        public static ushort offset(Type host, FieldInfo field)
-            => (ushort)Marshal.OffsetOf(host, field.Name);
 
         [Op]
-        public static ushort[] offsets(Type host, Index<FieldInfo> fields)
+        public static uint offset(Type host, FieldInfo field)
+            => (uint)Marshal.OffsetOf(host, field.Name);
+
+        [Op]
+        public static uint[] offsets(Type host, Index<FieldInfo> fields)
             => fields.Select(f => offset(host,f));
 
         [Op]
-        public static TableDef clone(Type src)
+        public static TableDef infer(Type src)
         {
-            var declared = src.DeclaredInstanceFields();
-            var count = declared.Length;
-            var buffer = alloc<Column>(count);
-            var fields = @readonly(declared);
-            var fieldOffsets = span(offsets(src, declared));
-            var dst = span(buffer);
+            var members = src.PublicInstanceFields();
+            var count = members.Length;
+            var cols = alloc<Column>(count);
+            var fieldOffsets = offsets(src, members);
             for(ushort i=0; i<count; i++)
             {
-                ref readonly var f = ref skip(fields, i);
+                ref readonly var member = ref skip(members, i);
                 var offset = skip(fieldOffsets,i);
-                seek(dst,i) = column(i, f.Name, f.FieldType.Name);
+                seek(cols,i) = column(i, member.Name, Clr.type(member).Name);
             }
 
-            return new TableDef(Tables.identify(src), buffer);
+            return new TableDef(Tables.identify(src), src.Name, cols);
         }
 
         public static TableDef def<T>()
@@ -243,6 +242,6 @@ namespace Z0
 
         [Op]
         public static Index<TableDef> defs(params Assembly[] src)
-            => defs(src.Types().Tagged<RecordAttribute>());
+            => defs(src.Types().Concrete().Tagged<RecordAttribute>());
     }
 }

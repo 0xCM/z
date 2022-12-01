@@ -16,6 +16,9 @@ namespace Z0
 
     public class ProcessAdapter : Adapter<A,S>, IComparable<A>, IEquatable<A>
     {
+        public static implicit operator ProcessAdapter(ProcessId src)
+            => adapt(src);
+            
         public static ProcessAdapter adapt(ProcessId pid)
             => S.GetProcessById(pid.Value);
 
@@ -59,6 +62,7 @@ namespace Z0
             [MethodImpl(Inline)]
             get => MainModule.BaseAddress;
         }
+
 
         void OnExit(object sender, EventArgs args)
             => sys.iter(ExitHandlers, h => start(() => h));

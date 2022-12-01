@@ -29,7 +29,7 @@ namespace Z0
                 wf.IntelInxCmd(),
                 wf.Machines(),
                 wf.ProjectCmd(),
-                wf.RuntimeCmd(),
+                wf.ContextCmd(),
                 wf.WfCmd(),
                 wf.XedCmd(),
                 //wf.XedChecks(),
@@ -41,6 +41,7 @@ namespace Z0
                 wf.CsGenCmd(),
                 wf.MemoryChecks(),
                 wf.CgChecks(),
+                wf.SdmCmd()
                 };
                 return providers;
         }        

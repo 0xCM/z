@@ -26,7 +26,7 @@ namespace Z0
 
             for(var i=0; i<types.Length; i++)
             {
-                var symbols = Symbols.set(types[i]);
+                var symbols = Symbolic.set(types[i]);
                 if(symbols.SymbolCount != 0)
                 {
                     Code(offset, symbols, code);
@@ -47,13 +47,13 @@ namespace Z0
             code.Indent(offset, Chars.RBrace);
         }
 
-        public static void Code(uint offset, SymSet src, ITextEmitter dst)
+        public static void Code(uint offset, SymbolSet src, ITextEmitter dst)
         {
             dst.AppendLine();
             CsRender.@enum(offset, src, dst);
         }
 
-        public static void Data(SymSet src, ITextEmitter dst, bool header)
+        public static void Data(SymbolSet src, ITextEmitter dst, bool header)
         {
             var records = src.Records();
             var formatter = CsvChannels.formatter<SymInfo>();
@@ -67,7 +67,7 @@ namespace Z0
         public static void EnumReplicant(uint offset, Type type, ITextEmitter dst)
         {
             dst.AppendLine();
-            CsRender.@enum(offset, Symbols.set(type), dst);
+            CsRender.@enum(offset, Symbolic.set(type), dst);
         }
 
         public static void @enum<T>(uint offset, Identifier name, ReadOnlySpan<Literal<T>> literals, ITextEmitter dst)
@@ -100,7 +100,7 @@ namespace Z0
             dst.IndentLine(indent,"}");
         }
 
-        public static void @enum(uint offset, SymSet src, ITextEmitter dst)
+        public static void @enum(uint offset, SymbolSet src, ITextEmitter dst)
         {
             var counter = 0ul;
             var names = src.Names.View;

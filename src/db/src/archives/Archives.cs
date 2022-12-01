@@ -121,7 +121,7 @@ namespace Z0
 
             ExecToken run()
             {
-                ZipFile.CreateFromDirectory(src.Format(), dst.Format(), CompressionLevel.Fastest, true);
+                zip(src, dst);
                 return channel.Ran(running, uri); 
             }
 
@@ -174,10 +174,10 @@ namespace Z0
             var dst = new ListedFile();
             var info = new FileInfo(src.Name);
             dst.Size = ((ByteSize)info.Length).Kb;
-            //dst.CreateTS = info.CreationTime;
-            //dst.UpdateTS = info.LastWriteTime;
+            dst.CreateTS = info.CreationTime;
+            dst.UpdateTS = info.LastWriteTime;
             dst.Path = src;
-            //dst.Attributes = info.Attributes;
+            dst.Attributes = info.Attributes;
             return dst;
         }
 
@@ -186,18 +186,24 @@ namespace Z0
             var dst = new ListedFile();
             var info = new FileInfo(src.ToFilePath().Format(PathSeparator.BS));
             dst.Size = ((ByteSize)info.Length).Kb;
-            //dst.CreateTS = info.CreationTime;
-            //dst.UpdateTS = info.LastWriteTime;
+            dst.CreateTS = info.CreationTime;
+            dst.UpdateTS = info.LastWriteTime;
             dst.Path = src;
-            //dst.Attributes = info.Attributes;
+            dst.Attributes = info.Attributes;
             return dst;
+        }
+
+        public static ZipFile zip(FolderPath src, FileUri dst)
+        {
+            System.IO.Compression.ZipFile.CreateFromDirectory(src.Name, dst.Format(), CompressionLevel.Fastest, true);
+            return new ZipFile(dst);
         }
 
         public static ExecToken zip(FolderPath src, FilePath dst, WfEmit channel)
         {
             var uri = $"app://archives/zip?src={src}?dst={dst.ToUri()}";
             var flow = channel.EmittingFile(dst);
-            ZipFile.CreateFromDirectory(src.Name, dst.Name, CompressionLevel.SmallestSize, true);
+            zip(src, dst);
             return channel.EmittedBytes(flow, dst.Size);
         }
 

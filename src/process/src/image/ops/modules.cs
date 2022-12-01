@@ -8,18 +8,25 @@ namespace Z0
 
     partial class ImageMemory
     {
-        public static void modules(CmdArgs args, IWfChannel channel, DbArchive dst)
+        public static Task<ExecToken> modules(IWfChannel channel, CmdArgs args, IDbArchive dst)
         {
-            var buffer = bag<ProcessId>();
-            if(args.Count != 0)
-                ProcessId.parse(args, buffer);
-            else
-                buffer.Add(ExecutingPart.Process.Id);
+            ExecToken run()
+            {
+                var flow = channel.Running();
+                var buffer = bag<ProcessId>();
+                if(args.Count != 0)
+                    iter(args, arg =>  ProcessId.parse(args, buffer));                    
+                else
+                    buffer.Add(ExecutingPart.Process.Id);
 
-            iter(buffer, id => modules(ProcessAdapter.adapt(id), channel, dst));
+                iter(buffer, id => modules(id, channel, dst), true);
+                return channel.Ran(flow);
+            }
+
+            return sys.start(run);
         }
 
-        public static void modules(ProcessAdapter src, IWfChannel channel, DbArchive dst)
+        public static void modules(ProcessAdapter src, IWfChannel channel, IDbArchive dst)
             => channel.TableEmit(modules(src), uri(src, dst));
 
         [Op]

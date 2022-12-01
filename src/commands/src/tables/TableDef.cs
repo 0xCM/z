@@ -13,14 +13,15 @@ namespace Z0
         public readonly ReadOnlySeq<Column> Columns;
 
         [MethodImpl(Inline)]
-        public TableDef(TableId name, Column[] fields)
+        public TableDef(TableId name, Identifier type, Column[] fields)
         {
             TableName = name;
+            TypeName = type;
             Columns = fields;
         }
 
         public static TableDef Empty
-            => new TableDef(TableId.Empty, sys.empty<Column>());
+            => new TableDef(TableId.Empty, Identifier.Empty, sys.empty<Column>());
 
         public record class Column
         {

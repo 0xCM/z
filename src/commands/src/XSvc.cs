@@ -16,6 +16,10 @@ namespace Z0
 
              public ApiCmdServer ApiCmdServer(IWfRuntime wf)
                 => Service<ApiCmdServer>(wf);
+
+            public CsvTableGen CsvTableGen(IWfRuntime wf)
+                => Service<CsvTableGen>(wf);
+
         }
 
         static ServiceCache Services => ServiceCache.Instance;
@@ -25,5 +29,8 @@ namespace Z0
 
         public static ApiCmdServer ApiCmdServer(this IWfRuntime wf)
             => Services.ApiCmdServer(wf);
+
+        public static CsvTableGen CsvTableGen(this IWfRuntime wf)
+            => Services.CsvTableGen(wf);
     }
 }

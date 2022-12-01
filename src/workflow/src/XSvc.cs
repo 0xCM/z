@@ -35,14 +35,9 @@ namespace Z0
             public ApiPacks ApiPacks(IWfRuntime wf)
                 => Service<ApiPacks>(wf);
 
-            public CsvTableGen CsvTableGen(IWfRuntime wf)
-                => Service<CsvTableGen>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
-
-        public static CsvTableGen CsvTableGen(this IWfRuntime wf)
-            => Services.CsvTableGen(wf);
 
         public static MemoryChecks MemoryChecks(this IWfRuntime wf)
             => Services.MemoryChecks(wf);         

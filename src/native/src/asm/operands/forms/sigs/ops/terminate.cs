@@ -15,7 +15,6 @@ namespace Z0.Asm
             var sigs = list<AsmSig>();
             terminate(src.Sig, sigs);
             iter(sigs, s => Require.invariant(terminal(s)));
-
             var count = sigs.Count;
             var dst = alloc<SdmForm>(count);
             for(var i=0; i<count; i++)

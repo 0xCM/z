@@ -8,10 +8,6 @@ namespace Z0
 
     public class CaptureWfCmd : WfAppCmd<CaptureWfCmd>
     {
-        Runtime Runtime => Wf.Runtime();
-
-        IApiPack Dst => ApiPacks.create();
-
         ApiPacks ApiPacks => Wf.ApiPacks();
 
         CaptureWf CaptureWf => Wf.CaptureWf();
@@ -45,8 +41,6 @@ namespace Z0
             }
         }
 
-        [CmdOp("capture/context")]
-        void CaptureContext()
-            => Runtime.EmitContext(Dst);
+
     }
 }

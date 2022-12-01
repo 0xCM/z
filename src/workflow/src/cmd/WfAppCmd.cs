@@ -5,6 +5,7 @@
 namespace Z0
 {
     using Windows;
+    using Commands;
 
     using static sys;
 
@@ -20,18 +21,6 @@ namespace Z0
 
         ApiMd ApiMd => Wf.ApiMd();
 
-        [CmdOp("gen/api/tables")]
-        void GenRecords()
-        {
-            var generator = Wf.CsvTableGen();
-            var buffer = text.emitter();
-            var src = ApiMd.Parts;
-            var defs = TableDefs.defs(src);
-            iter(defs, src => generator.Emit(0u,src,buffer));
-            var dst = AppDb.CgStage("api.tables").Path("replicants", FileKind.Cs);
-            FileEmit(buffer.Emit(),dst);         
-        }
-
         [CmdOp("sdk/catalog")]
         void Sdk(CmdArgs args)
         {
@@ -41,19 +30,16 @@ namespace Z0
             iter(modules.Dll(), file => Write(file));
         }
 
-        void EmitEcmaJobs()
+        [CmdOp("api/tablegen")]
+        void GenRecords()
         {
-            var root = Env.var(EnvVarKind.Process, EnvTokens.DOTNET_ROOT, FS.dir).Value;
-            var src = root.Files(FileKind.Dll).Map(x => new FileUri(x.Format())).ToSeq();
-            var name = CmdId.identify<EmitEcmaDatasets>().Format();
-            var ts = timestamp();
-            var dst = AppDb.Jobs(CmdId.identify<EmitEcmaDatasets>().Format()).Path($"{name}.{ts}.jobs", FileKind.Json);
-            var job = new EmitEcmaDatasets();
-            job.JobId = ts;
-            job.Sources = src;
-            job.Targets = AppDb.DbTargets("tools/jobs").Folder(CmdId.identify<EmitEcmaDatasets>().Format());            
-            var data = JsonData.serialize(job);
-            FileEmit(data, dst);
+            var generator = Wf.CsvTableGen();
+            var buffer = text.emitter();
+            var src = ApiMd.Parts;
+            var defs = TableDefs.defs(src);
+            iter(defs, src => generator.Emit(0u,src,buffer));
+            var dst = AppDb.CgStage("api.tables").Path("replicants", FileKind.Cs);
+            FileEmit(buffer.Emit(),dst);         
         }
 
         [CmdOp("api/emit")]
@@ -80,31 +66,6 @@ namespace Z0
             Cmd.run(Channel, tool, args.Length > 1 ? args[1].Value : "--help", dst);
         }
 
-        [CmdOp("develop")]
-        void Develop(CmdArgs args)
-        {
-            var cd = Env.cd();
-            var launcher = cd + FS.file("develop", FileKind.Cmd);
-            if(launcher.Exists)
-                CmdRunner.start(Channel, Cmd.args(launcher)); 
-            else
-            {
-                var workspaces = cd.Files(FS.ext("code-workspace"));
-                if(workspaces.IsNonEmpty)
-                    DevTools.vscode(Channel, cd + workspaces[0].FileName);
-                else
-                    DevTools.vscode(Channel, cd); 
-            }
-        }
-
-        [CmdOp("devenv")]
-        void DevEnv(CmdArgs args)
-            => DevTools.devenv(Channel, args[0].Value);
-
-        [CmdOp("vscode")]
-        void VsCode(CmdArgs args)
-            => DevTools.vscode(Channel, args[0].Value);
-
         [CmdOp("zip")]
         void Zip(CmdArgs args)
             => Archives.zip(Channel,args);
@@ -117,7 +78,6 @@ namespace Z0
         void ListArchives(CmdArgs args)
             => Emitter.Row(AppDb.Archives().Folders().Delimit(Eol));
 
-        [CmdOp("process/modules")]
         void ListModules()
         {
             var src = ImageMemory.modules(ExecutingPart.Process);
@@ -301,28 +261,13 @@ namespace Z0
         void EmitRegions()
             => ProcessMemory.EmitRegions(Process.GetCurrentProcess(), ApiPacks.create());
 
-        [CmdOp("files/nuget")]
+        [CmdOp("nuget/search")]
         void NugetFiles(CmdArgs args)
-        {
-            var src = FS.dir(arg(args,0));
-            var packs = FilePacks.search(src, PackageKind.Nuget);
-            iter(packs, p => Write(p));
-        }
+            => DevPacks.search(Channel, args);
 
         [CmdOp("nuget/stage")]
         void DevPack(CmdArgs args)
-        {
-            var src = FS.dir(arg(args,0));
-            FilePacks.stage(Channel,PackageKind.Nuget, src);
-        }
-
-        [CmdOp("sln/root")]
-        void SlnRoot(CmdArgs args)
-        {
-            if(args.Count == 1)
-                Environment.CurrentDirectory = args.First.Value;
-            Channel.Row(Env.cd());
-        }
+            => DevPacks.stage(Channel, PackageKind.Nuget, FS.dir(arg(args,0)));
 
         [CmdOp("api/emit/impls")]
         void EmitImplMaps()
@@ -332,17 +277,6 @@ namespace Z0
             for(var i=0; i<src.Count; i++)
                 src[i].Render(s => writer.WriteLine(s));
         }
-
-        [CmdOp("cmd/script")]
-        void RunAppScript(CmdArgs args)
-            => ApiCmd.RunApiScript(FS.path(arg(args,0)));
-
-        [CmdOp("cfg")]
-        void LoadCfg(CmdArgs args)
-        {
-            var src = args.Count != 0 ? FS.dir(args.First) : Env.cd();
-            iter(src.Files(FileKind.Cfg), file => Channel.Row(Env.cfg(file).Format()));    
-        }        
 
         [CmdOp("tool")]
         void RunTool(CmdArgs args)

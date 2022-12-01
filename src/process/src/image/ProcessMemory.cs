@@ -44,7 +44,7 @@ namespace Z0
         public ReadOnlySeq<ProcessMemoryRegion> EmitRegions(Process process, IApiPack dst)
         {
             var regions = ProcessMemory.regions(process);
-            EmitRegions(regions, dst.RegionPath());
+            EmitRegions(regions, dst.Scoped("context").Path("memory.regions", FileKind.Csv));
             return regions;
         }
 
@@ -96,7 +96,7 @@ namespace Z0
         public static ReadOnlySeq<ProcessMemoryRegion> regions(Process src)
             => ImageMemory.pages(MemoryNode.snapshot(src.Id).Describe());
 
-        public ReadOnlySpan<ProcessSegment> EmitMethodSegments(ProcAddresses src, ReadOnlySpan<ApiMemberInfo> methods, IApiPack dst)
+        public ReadOnlySpan<ProcessSegment> EmitMethodSegments(ProcAddresses src, ReadOnlySpan<ApiMemberInfo> methods, IDbArchive dst)
         {
             var count = methods.Length;
             var flow = Running(LocatingSegments.Format(count));
@@ -142,13 +142,13 @@ namespace Z0
                 }
                 if(!matched)
                 {
-                    Error(string.Format("Could not locate the segment containing the entry point {0} for {1}", method.EntryPoint, method.Uri));
+                    Channel.Error(string.Format("Could not locate the segment containing the entry point {0} for {1}", method.EntryPoint, method.Uri));
                     break;
                 }
             }
 
-            Channel.TableEmit(@readonly(buffer), dst.Context().Table<MethodSegment>());
-            Ran(flow, LocatedSegments.Format(buffer.Length, count));
+            Channel.TableEmit(@readonly(buffer), dst.Scoped("context").Table<MethodSegment>());
+            Channel.Ran(flow, LocatedSegments.Format(buffer.Length, count));
             return locations.Array().Sort();
         }
 
@@ -217,10 +217,10 @@ namespace Z0
             => EmitHashes(MemoryStores.load(src).Addresses, dst.RegionHashPath());
 
         public void EmitSegments(IApiPack dst)
-            => EmitSegments(dst, ProcessMemory.regions());
+            => EmitSegments(ProcessMemory.regions(), dst);
 
-        public void EmitSegments(IApiPack dst, ReadOnlySeq<ProcessMemoryRegion> src)
-            => Channel.TableEmit(addresses(src).Segments, dst.Context().Table<ProcessSegment>());
+        public void EmitSegments(ReadOnlySeq<ProcessMemoryRegion> src, IDbArchive dst)
+            => Channel.TableEmit(addresses(src).Segments, dst.Scoped("context").Table<ProcessSegment>());
 
         ReadOnlySeq<AddressHash> EmitHashes(ReadOnlySpan<MemoryAddress> addresses, FilePath dst)
         {
