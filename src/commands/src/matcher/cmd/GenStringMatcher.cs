@@ -2,11 +2,12 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0.Commands
 {
-    public abstract class ApiService<T> : AppService<T>, IApiService<T>
-        where T : ApiService<T>, new()
+
+    public record class GenStringMatcher : Command<GenStringMatcher>
     {
-        protected AppDb AppDb => AppDb.Service;
+
     }
+
 }

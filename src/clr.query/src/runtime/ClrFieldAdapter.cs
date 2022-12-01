@@ -8,18 +8,6 @@ namespace Z0
 
     public readonly struct ClrFieldAdapter : IRuntimeMember<ClrFieldAdapter,FieldInfo>
     {
-        public static void render(TypedReference src, ReadOnlySpan<ClrFieldAdapter> fields, ITextEmitter dst)
-        {
-            var count = fields.Length;
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var field = ref sys.skip(fields,i);
-                dst.AppendFormat(RP.Assign, field.Name, field.GetValueDirect(src));
-                if(i != count - 1)
-                    dst.Append(", ");
-            }
-        }
-
         [MethodImpl(Inline), Op]
         public static ReadOnlySpan<ClrFieldAdapter> adapt(FieldInfo[] src)
             => adapt<FieldInfo,ClrFieldAdapter>(src);
@@ -99,6 +87,10 @@ namespace Z0
             [MethodImpl(Inline)]
             get => !IsEmpty;
         }
+
+        [MethodImpl(Inline)]
+        public object GetValue(object src)
+            => Definition.GetValue(src);
 
         [MethodImpl(Inline)]
         public object GetValueDirect(TypedReference src)

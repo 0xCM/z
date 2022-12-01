@@ -58,7 +58,6 @@ namespace Z0
         public static CmdFlagSpec flag(string name, string desc)
             => new CmdFlagSpec(name, desc);
 
-
         public static CmdScript script(string name, CmdScriptExpr src)
             => new CmdScript(name, src);
 

@@ -16,19 +16,19 @@ namespace Z0
 
             var fields = ClrFields.instance(typeof(T));
             if(fields.Length != 0)
-                render(__makeref(src), fields, buffer);
+                render(src, fields, buffer);
 
             buffer.Append(Chars.RParen);
             return buffer.Emit();
         }
 
-        public static void render(TypedReference src, ReadOnlySpan<ClrFieldAdapter> fields, ITextEmitter dst)
+        public static void render(object src, ReadOnlySpan<ClrFieldAdapter> fields, ITextEmitter dst)
         {
             var count = fields.Length;
             for(var i=0; i<count; i++)
             {
                 ref readonly var field = ref skip(fields,i);
-                dst.AppendFormat(RP.Assign, field.Name, field.GetValueDirect(src));
+                dst.AppendFormat(RP.Assign, field.Name, field.GetValue(src));
                 if(i != count - 1)
                     dst.Append(", ");
             }

@@ -4,21 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     partial class StringMatcher
     {
         public readonly struct CharIndices : IIndex<CharIndex>
         {
-            public static CharIndices calc(ReadOnlySpan<char> src)
-            {
-                var count = src.Length;
-                var dst = alloc<CharIndex>(count);
-                for(var i=z16; i<count; i++)
-                    seek(dst,i) = (skip(src,i), i);
-                return dst;
-            }
-
             readonly Index<CharIndex> Data;
 
             [MethodImpl(Inline)]

@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.Globalization;
-    
     using static sys;
 
     public readonly struct JsonText : IExpr, IContented<string>
