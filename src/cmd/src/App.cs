@@ -9,7 +9,7 @@ namespace Z0
     {
         public static void Main(params string[] args)
         {
-            using var app = ApiCmd.shell<App>(false, args);            
+            using var app = ApiServer.shell<App>(false, args);            
             app.Commander = CmdPublic.context<AppShellCmd>(app.Wf).Commander;
             app.Run(args);
         }

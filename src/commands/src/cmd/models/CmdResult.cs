@@ -4,58 +4,38 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly record struct CmdResult : ITextual
+
+    public readonly record struct CmdResult : ICmdResult
     {
-        public CmdId CmdId {get;}
+        record struct EmptyCommand : ICmd<EmptyCommand>
+        {
+
+        }
+        public ICmd Cmd {get;}
+
+        public ExecToken Token {get;}
 
         public bool Succeeded {get;}
 
-        public dynamic Payload {get;}
-
-        public string Message {get;}
+        public TextBlock Message {get;}
 
         [MethodImpl(Inline)]
-        public CmdResult(CmdId id, bool success)
+        public CmdResult()
         {
-            CmdId = id;
-            Succeeded = success;
-            Message = DefaultMsg(id, success);
-            Payload = Succeeded;
-        }
-
-        [MethodImpl(Inline)]
-        public CmdResult(CmdId id, bool success, dynamic payload)
-        {
-            CmdId = id;
-            Succeeded = success;
-            Message = DefaultMsg(id, success);
-            Payload = payload;
-        }
-
-        [MethodImpl(Inline)]
-        public CmdResult(CmdId id, bool success, string message)
-        {
-            CmdId = id;
-            Succeeded = success;
-            Message = core.ifempty(message, DefaultMsg(id,success));
-            Payload = Succeeded;
-        }
-
-        [MethodImpl(Inline)]
-        public CmdResult(CmdId id, Exception e)
-        {
-            CmdId = id;
+            Cmd = new EmptyCommand();
+            Token = ExecToken.Empty;
             Succeeded = false;
-            Message = e.ToString();
-            Payload = Succeeded;
+            Message = EmptyString;
         }
 
         [MethodImpl(Inline)]
-        public static CmdResult FromOutcome<T>(CmdId id, Outcome<T> result)
-            => new CmdResult(id, result.Ok, result.Message);
-
-        public static string DefaultMsg(CmdId id, bool success)
-            => string.Format("{0} execution {1}", id, success ? "succeeded" : "failed");
+        public CmdResult(ICmd cmd, ExecToken token, bool success, string message = EmptyString)
+        {
+            Cmd = cmd;
+            Token = token;
+            Succeeded = success;
+            Message = message ?? EmptyString;
+        }
 
         [MethodImpl(Inline)]
         public string Format()
@@ -65,6 +45,9 @@ namespace Z0
             => Format();
 
         public static CmdResult Empty
-            => default;
+            => new ();
+
+        public CmdId CmdId 
+            => Cmd.CmdId;
     }
 }

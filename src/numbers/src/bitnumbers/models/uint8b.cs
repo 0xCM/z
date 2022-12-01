@@ -337,12 +337,6 @@ namespace Z0
             get => new U(MaxValue);
         }
 
-        public Span<bit> _Bits
-        {
-            [MethodImpl(Inline)]
-            get => bits(this);
-        }
-
         [MethodImpl(Inline)]
         static U wrap(int x)
             => new U((byte)x);

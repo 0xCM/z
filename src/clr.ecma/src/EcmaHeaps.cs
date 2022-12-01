@@ -8,7 +8,7 @@ namespace Z0
 
     public class EcmaHeaps
     {
-        static void describe(IWfChannel channel)
+        public static void describe(IWfChannel channel)
         {
             var heaps = EcmaHeaps.strings(ApiMd.parts());
             var count = heaps.Length;

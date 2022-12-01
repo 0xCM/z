@@ -183,12 +183,6 @@ namespace Z0
             get => Value == MaxValue;
         }
 
-        public Span<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => bytes(this);
-        }
-
         [MethodImpl(Inline)]
         public S Force<S>()
             where S : unmanaged

@@ -11,9 +11,9 @@ namespace Z0
         {
             public const string TableId = "ecma.typedefs";
 
-            public TypeAttributes Attributes;
+            public TypeAttributes Flags;
 
-            public EcmaStringIndex Name;
+            public EcmaStringIndex TypeName;
 
             public EcmaStringIndex Namespace;
 

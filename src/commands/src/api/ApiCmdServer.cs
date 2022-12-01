@@ -7,13 +7,17 @@ namespace Z0
     using Windows;
 
     using static sys;
-    public sealed class ApiCmdServer : ApiServer<ApiCmdServer>
-    {
-        IDbArchive ShellData => Env.cd().DbArchive().Scoped(".data");
+    using static Env;
 
-        [CmdOp("commands")]
+    public sealed class ApiCmdServer : ApiServer<ApiCmdServer>
+    {    
+        [CmdOp("api/commands")]
         void EmitCommands()
             => ApiCmd.emit(Channel, ApiCmd.catalog(), ShellData.Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv));
+
+        [CmdOp("api/tools")]
+        void EnvTools()
+            => ApiTools.emit(Channel, ApiTools.Service.Known, ShellData);
 
         [CmdOp("env/stack")]
         void Stack()
@@ -29,27 +33,27 @@ namespace Z0
 
         [CmdOp("env/reports")]
         void EmitEnv(CmdArgs args)
-            => Env.reports(Channel, ShellData);
+            => reports(Channel, ShellData);
 
         [CmdOp("env/machine")]
         void EmitMachineEnv()
-            => Env.report(Channel, EnvVarKind.Machine, ShellData);
+            => report(Channel, EnvVarKind.Machine, ShellData);
 
         [CmdOp("env/user")]
         void EmitUserEnv()
-            => Env.report(Channel, EnvVarKind.User, ShellData);
+            => report(Channel, EnvVarKind.User, ShellData);
 
         [CmdOp("env/process")]
         void EmitProcessEnv()
-            => Env.report(Channel, EnvVarKind.Process, ShellData);
+            => report(Channel, EnvVarKind.Process, ShellData);
 
         [CmdOp("env/pid")]
         void ProcessId()
-            => Write(Environment.ProcessId);
+            => Channel.Write(Env.pid());
 
         [CmdOp("env/cpucore")]
         void ShowCurrentCore()
-            => Emitter.Write(string.Format("Cpu:{0}", Kernel32.GetCurrentProcessorNumber()));
+            => Emitter.Write(Env.cpucore());
 
         [CmdOp("env/include")]
         void EnvInclude()
@@ -63,13 +67,9 @@ namespace Z0
         void EnvLib()
             => Env.paths(Channel, EnvPathKind.Lib, ShellData);
 
-        [CmdOp("env/tools")]
-        void EnvTools(CmdArgs args)
-            => Env.tools(Channel, ShellData);
-
-        [CmdOp("env/thread")]
+        [CmdOp("env/tid")]
         void ShowThread()
-            => Channel.Row(string.Format("ThreadId:{0}", Kernel32.GetCurrentThreadId()));
+            => Channel.Row(Env.tid());
 
         [CmdOp("env/id")]
         void EvId(CmdArgs args)
@@ -95,7 +95,11 @@ namespace Z0
 
         [CmdOp("env/args")]
         void CmdlLineArgs()
-            => iter(Environment.GetCommandLineArgs(), arg => Write(arg));
+            => iter(Environment.GetCommandLineArgs(), arg => Channel.Write(arg));
+
+        [CmdOp("cmd")]
+        void Redirect(CmdArgs args)
+            => Cmd.redirect(Channel, args);
 
         [CmdOp("cd")]
         void Cd(CmdArgs args)
@@ -123,6 +127,19 @@ namespace Z0
                 Channel.Status($"symlink:{src} -> {dst}");
             else
                 Channel.Error(result.Message);
+        }
+
+        [CmdOp("symlink/file")]
+        void LinkFile(CmdArgs args)
+        {
+            var src = FS.path(arg(args,0).Value);
+            var dst = FS.path(arg(args,1).Value);
+            var result = FS.symlink(src,dst,true);
+            if(result)
+                Channel.Status($"symlink:{src} -> {dst}");
+            else
+                Channel.Error(result.Message);
+
         }
     }
 }

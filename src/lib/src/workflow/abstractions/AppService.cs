@@ -17,7 +17,12 @@ namespace Z0
 
         public WfEmit Emitter {get; private set;}
 
-        public abstract T Service<T>(Func<T> factory);
+        public virtual T Service<T>(Func<T> factory)
+        {
+            lock(ServiceLock)
+                return (T)ServiceCache.GetOrAdd(typeof(T), key => factory());
+        }
+
 
         public void Init(IWfRuntime wf)
         {
@@ -88,9 +93,6 @@ namespace Z0
 
         static readonly Dictionary<string,string> ContextValues;
 
-        // public static Assembly[] parts()
-        //     => data("parts",() => archive().ManagedDll().Where(x => x.FileName.StartsWith("z0")).Map(x => x.Load()).Distinct().Array());
-
         static AppService()
         {
             _AppData = Z0.AppData.get();
@@ -141,6 +143,10 @@ namespace Z0
             lock(DataLock)
                 _Data.Clear();
         }
- 
+
+        static ConcurrentDictionary<Type,object> ServiceCache {get;}
+            = new();
+
+        static object ServiceLock = new();
     }
 }

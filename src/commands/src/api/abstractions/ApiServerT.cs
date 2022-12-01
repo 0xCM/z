@@ -4,13 +4,19 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static sys;
+
+
     [CmdProvider]
-    public abstract class ApiServer<T> : AppService<T>, IApiServer
+    public abstract class ApiServer<T> : ApiServer, IApiServer
         where T : ApiServer<T>, new()
     {
         protected AppDb AppDb => AppDb.Service;
 
         protected ApiCmd ApiCmd => Wf.ApiCmd();
+
+        public override Type HostType
+            => typeof(T);
 
         public void RunCmd(string name)
             => ApiCmd.RunCmd(name);

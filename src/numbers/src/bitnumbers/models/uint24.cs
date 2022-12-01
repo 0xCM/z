@@ -44,29 +44,6 @@ namespace Z0
             b2 = B2;
         }
 
-        public Span<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => sys.bytes(this);
-        }
-
-
-        [MethodImpl(Inline)]
-        public ref byte Seg(byte i)
-            =>  ref seek(Bytes,i);
-
-        [MethodImpl(Inline)]
-        public ref byte Seg(N0 n)
-            =>  ref seek(Bytes,0);
-
-        [MethodImpl(Inline)]
-        public ref byte Seg(N1 n)
-            =>  ref seek(Bytes,1);
-
-        [MethodImpl(Inline)]
-        public ref byte Seg(N2 n)
-            =>  ref seek(Bytes,2);
-
         internal uint Value
         {
             [MethodImpl(Inline)]

@@ -4,11 +4,18 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public record class ApiCmdSpec
+    public record class ApiCmdSpec : ICmd<ApiCmdSpec>
     {
         public readonly @string Name;
 
         public readonly CmdArgs Args;
+
+        [MethodImpl(Inline)]
+        public ApiCmdSpec()
+        {
+            Name = EmptyString;
+            Args = CmdArgs.Empty;
+        }
 
         [MethodImpl(Inline)]
         public ApiCmdSpec(string name, CmdArgs args)
@@ -42,7 +49,7 @@ namespace Z0
         public static ApiCmdSpec Empty
         {
             [MethodImpl(Inline)]
-            get => new ApiCmdSpec(default, CmdArgs.Empty);
+            get => new ApiCmdSpec();
         }
     }
 }

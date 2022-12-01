@@ -15,6 +15,5 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public NamespaceDefinition ReadNamespaceRoot()
             => MD.GetNamespaceDefinitionRoot();
-
     }
 }

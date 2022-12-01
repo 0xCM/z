@@ -57,7 +57,7 @@ namespace Z0
             for(var i=0; i<src.Length; i++)
             {
                 ref readonly var entry = ref skip(src,i);
-                var buffer = Cells.alloc(w64).Bytes;
+                var buffer = sys.bytes(Cells.alloc(w64));
                 ByteReader.read5(entry.Location.Ref<byte>(), buffer);
                 seek(code, i) = raw(entry, dispenser, log);
             }

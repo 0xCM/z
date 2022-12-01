@@ -8,13 +8,15 @@ namespace Z0
 
     public readonly record struct ProcessId : IDataType<ProcessId>, IDataString
     {
+        public static ProcessId current()
+            => Environment.ProcessId;
+
         public static void parse(CmdArgs src, ConcurrentBag<ProcessId> dst)
         {
             iter(src, arg => {
                 if(parse(arg.Value, out ProcessId id))
                     dst.Add(id);
             });
-
         }
 
         public static bool parse(string src, out ProcessId dst)

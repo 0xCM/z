@@ -17,6 +17,7 @@ namespace Z0
         public static Outcome cmd(CmdArgs src, out CatalogFiles dst)
         {
             dst = new();
+            dst.Target = Env.ShellData.Root;
             var count = src.Count;
             try
             {
@@ -46,13 +47,6 @@ namespace Z0
                 Source = FolderPath.Empty;
                 Target = FolderPath.Empty;
                 Match = sys.empty<FileExt>();
-            }
-
-            public CatalogFiles(FolderPath src, FolderPath dst, params FileExt[] match)
-            {
-                Source = src;
-                Target = dst;
-                Match = match;
             }
 
             public FolderPath Source;

@@ -9,63 +9,40 @@ namespace Z0
     {
         public C Cmd {get;}
 
-        public bool Succeeded {get;}
+        public ExecToken Token {get;}
 
-        public dynamic Payload {get;}
+        public bool Succeeded {get;}
 
         public TextBlock Message {get;}
 
         [MethodImpl(Inline)]
-        public CmdResult(C cmd, bool success, string msg)
+        public CmdResult()
         {
-            Cmd = cmd;
-            Succeeded = success;
-            Message = core.ifempty(msg, CmdResult.DefaultMsg(Cmd.CmdId, success));
-            Payload = Succeeded;
-        }
-
-        [MethodImpl(Inline)]
-        public CmdResult(C cmd, bool success)
-        {
-            Cmd = cmd;
-            Succeeded = success;
-            Message = CmdResult.DefaultMsg(Cmd.CmdId, success);
-            Payload = Succeeded;
-        }
-
-        [MethodImpl(Inline)]
-        public CmdResult(C cmd, bool success, dynamic payload)
-        {
-            Cmd = cmd;
-            Succeeded = success;
-            Message = CmdResult.DefaultMsg(Cmd.CmdId, success);
-            Payload = payload;
-        }
-
-        [MethodImpl(Inline)]
-        public CmdResult(C cmd, Exception e)
-        {
-            Cmd = cmd;
+            Cmd = new();
+            Token = ExecToken.Empty;
             Succeeded = false;
-            Message = e.ToString();
-            Payload = Succeeded;
+            Message = EmptyString;
         }
 
-        public CmdId Id  => Cmd.CmdId;
+        [MethodImpl(Inline)]
+        public CmdResult(C cmd, ExecToken token, bool success, string msg = EmptyString)
+        {
+            Cmd = cmd;
+            Token = token;
+            Succeeded = success;
+            Message = msg ?? EmptyString;
+        }
+
+        public CmdId CmdId  => Cmd.CmdId;
 
         [MethodImpl(Inline)]
         public string Format()
             => Message;
 
-
         public override string ToString()
             => Format();
 
-        [MethodImpl(Inline)]
-        public static implicit operator CmdResult(CmdResult<C> src)
-            => new CmdResult(src.Id, src.Succeeded, src.Message);
-
         public static CmdResult<C> Empty
-            => default;
+            => new();
     }
 }

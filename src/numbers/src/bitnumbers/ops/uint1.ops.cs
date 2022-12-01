@@ -289,15 +289,5 @@ namespace Z0
         [MethodImpl(Inline), Select]
         public static U select(U a, U b, U c)
             => or(and(a,b), nonimpl(a,c));
-
-        [MethodImpl(Inline), Op]
-        public static Span<bit> bits(U src)
-        {
-            var storage = z8;
-            var dst = @recover<byte,bit>(@bytes(storage));
-            if(bit.test(src,0))
-                seek(dst,0) = bit.On;
-            return dst;
-        }
     }
 }

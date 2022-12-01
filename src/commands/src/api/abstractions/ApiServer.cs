@@ -1,4 +1,3 @@
-
 //-----------------------------------------------------------------------------
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
@@ -7,8 +6,17 @@ namespace Z0
 {
     using static sys;
 
-    partial class ApiCmd
+    public abstract class ApiServer : AppService
     {
+        public static A shell<A>(bool catalog, params string[] args)
+            where A : IAppShell, new()
+        {
+            var wf = ApiRuntime.create(catalog, args);
+            var app = new A();
+            app.Init(wf);
+            return app;
+        }
+
         public static IApiContext<C> context<C>(IWfRuntime wf, Func<ReadOnlySeq<IApiCmdProvider>> factory)
             where C : IApiService<C>, new()
         {
@@ -38,7 +46,8 @@ namespace Z0
             iter(methods(service), r => dst.TryAdd(r.CmdName, r));
             iter(providers, p => iter(methods(p), r => dst.TryAdd(r.CmdName, r)));
             var dispatcher = new ApiDispatcher(channel, providers, new ApiOps(dst));
-            install(dispatcher, providers);
+            AppData.Value(nameof(IApiDispatcher), dispatcher);
+            //install(dispatcher, providers);
             return dispatcher;
         }    
 
@@ -57,7 +66,7 @@ namespace Z0
             return dst;
         }
 
-        static void install(IApiDispatcher dispatcher, ReadOnlySeq<IApiCmdProvider> src)
-            => AppData.Value(nameof(IApiDispatcher), dispatcher);
+        // static void install(IApiDispatcher dispatcher, ReadOnlySeq<IApiCmdProvider> src)
+        //     => AppData.Value(nameof(IApiDispatcher), dispatcher);
     }
 }

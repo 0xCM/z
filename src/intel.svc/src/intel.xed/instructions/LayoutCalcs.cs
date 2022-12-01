@@ -42,14 +42,15 @@ namespace Z0
                     if(layout.Count == 0)
                         continue;
 
-                    var buffer = comps.Cells(k, layout.Count);
+                    //var buffer = comps.Cells(k, layout.Count);
+                    ref var _buffer = ref comps.Content(k);
                     for(var j=0; j<layout.Count; j++, k++)
                     {
                         ref readonly var cell = ref layout[j];
                         var address = comps[k].Location;
-                        seek(buffer,j) = new LayoutComponent(cell.Field, cell.Kind, (ulong)cell);
+                        seek(_buffer,j) = new LayoutComponent(cell.Field, cell.Kind, (ulong)cell);
                     }
-                    seek(vectors,k) = new LayoutVector(memory.segref(first(buffer), layout.Count));
+                    seek(vectors,k) = new LayoutVector(memory.segref(_buffer, layout.Count));
                 }
 
                 return new LayoutVectors(comps,vectors);

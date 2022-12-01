@@ -7,14 +7,16 @@ namespace Z0
     [Free]
     public interface ICmdResult : ITextual
     {
-        CmdId Id {get;}
+        ICmd Cmd {get;}
+
+        ExecToken Token {get;}
 
         bool Succeeded {get;}
 
-        dynamic Payload {get;}
-
         TextBlock Message {get;}
 
+        CmdId CmdId 
+            => Cmd.CmdId;
         string ITextual.Format()
             => Message;
     }
@@ -23,16 +25,15 @@ namespace Z0
     public interface ICmdResult<C> : ICmdResult
         where C : ICmd, new()
     {
-        C Cmd {get;}
+        new C Cmd {get;}
+        ICmd ICmdResult.Cmd
+            => Cmd;
     }
 
     [Free]
     public interface ICmdResult<C,P> : ICmdResult<C>
         where C : ICmd, new()
     {
-        new P Payload {get;}
 
-        dynamic ICmdResult.Payload
-            => Payload;
     }
 }

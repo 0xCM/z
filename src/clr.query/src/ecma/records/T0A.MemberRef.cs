@@ -6,7 +6,7 @@ namespace Z0
 {
     partial class EcmaTables
     {
-        [Table(0x0A), Record(TableId), StructLayout(LayoutKind.Sequential, Pack =1)]
+        [Table(0x0A), StructLayout(LayoutKind.Sequential, Pack =1)]
         public struct MemberRef
         {
             const string TableId = "refs";

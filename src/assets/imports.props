@@ -1,5 +1,4 @@
 <Project>
-  <Import Project="$(SlnDeps)\symbolic.props" />
   <ItemGroup>
     <ProjectReference Include="$(ZLib)" />
     <ProjectReference Include="$(Symbolics)" />

@@ -72,14 +72,6 @@ namespace Z0
         void Version()
             => Channel.Row($"[z0.{ExecutingPart.Name}-v{ExecutingPart.Assembly.AssemblyVersion()}]({ExecutingPart.Assembly.Path().ToUri()})");
 
-        [CmdOp("cmd/redirect")]
-        void Redirect(CmdArgs args)
-            => Cmd.redirect(Channel, args);
-
-        [CmdOp("cmd")]
-        void RunCmd(CmdArgs args)
-            => ProcessControl.start(Channel, args);
-
         [CmdOp("help")]
         void GetHelp(CmdArgs args)
         {

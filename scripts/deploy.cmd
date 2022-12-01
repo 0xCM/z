@@ -1,7 +1,7 @@
 @echo off
 set BuildPrefix=z0
-set ProjectRoot=%SlnRoot%\%ProjectName%
-set StagePath=%DevTools%\%BuildPrefix%\stage\%ToolName%
+set ProjectRoot=%SlnRoot%\src\%ProjectName%
+: echo ProjectRoot=%ProjectRoot%
 set DeployPath=%DevTools%\%BuildPrefix%\bin
 set ProjectPath=%ProjectRoot%\%BuildPrefix%.%ProjectName%.csproj
 set LogOptions=-bl:%BuildLogs%\%BuildPrefix%.%ProjectName%.binlog
@@ -11,7 +11,7 @@ set ConfigOption=--configuration %ConfigName%
 set DeployLogPath=%SlnLogs%\%ProjectName%.deploy.binlog
 set DeployLogOption=-bl:%DeployLogPath%
 set FrameworkOption=--framework %FrameworkMoniker%
-set BuildProps=-p:PublishReadyToRun=true -p:PreserveCompilationContext=true -p:PublishDocumentationFiles=true -p:CopyLocalLockFileAssemblies=true -p:CopyDebugSymbolsFromPackages=true -p:CopyDocumentationFilesFromPackages=true -p:DebugType=pdbonly %DeployLogOption%
+set BuildProps=-p:PublishReadyToRun=true -p:PublishDocumentationFiles=true -p:CopyLocalLockFileAssemblies=true -p:CopyDebugSymbolsFromPackages=true -p:CopyDocumentationFilesFromPackages=true %DeployLogOption% -p:PublishSingleFile=true -p:PreserveCompilationContext=true -p:DebugType=embedded
 set PublishApp=dotnet publish %ProjectPath% %OutputOption% %ConfigOption% %VerbosityOption% %FrameworkOption% %BuildProps% %LogOptions% %BuildProps%
-echo PublishApp=%PublishApp%
+: echo PublishApp=%PublishApp%
 call %PublishApp%

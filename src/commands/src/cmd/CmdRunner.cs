@@ -8,7 +8,6 @@ namespace Z0
 
     public class CmdRunner
     {
-
         public static Task<ExecToken> start(IWfChannel channel, CmdArgs args, CmdContext? context = null)
             => start(channel, FS.path(args[0]), args.Skip(1), context);
 
@@ -59,12 +58,12 @@ namespace Z0
                     ProcessState.enlist(executing);
                     process.BeginOutputReadLine();
                     process.BeginErrorReadLine();
-                    channel.Babble($"Waiting for process {process.Id} to exit");
+                    channel.Babble($"Enlisted process {process.Id}");
                     process.WaitForExit();
                     ts = now();
-                    token = channel.Ran(flow);
+                    token = channel.Ran(flow, $"Process {process.Id} finished");
                     term.cmd();
-                    ProcessState.remove(new (executing,ts,token));
+                    ProcessState.remove(new (executing, ts, token));
                 }
                 catch(Exception e)
                 {

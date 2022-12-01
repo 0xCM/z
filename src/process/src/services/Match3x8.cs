@@ -36,14 +36,8 @@ namespace Z0
 
             public Hex32 Instruction;
 
-            public ReadOnlySpan<byte> Terms
-            {
-                [MethodImpl(Inline)]
-                get => slice(bytes(TermEncoding),0, TermCount);
-            }
-
             public string Format()
-                => FormatPattern.Format(TermCount, HexArray.from(Terms), Instruction, HexArray.from(Instruction));
+                => FormatPattern.Format(TermCount, HexArray.from(slice(bytes(TermEncoding),0, TermCount)), Instruction, HexArray.from(Instruction));
 
             public override string ToString()
                 => Format();
@@ -60,8 +54,8 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        ref readonly byte Term(byte index)
-            => ref skip(Spec.Terms,index);
+        byte Term(byte index)
+            => skip(slice(bytes(Spec.TermEncoding),0, TermCount), index);
 
         [MethodImpl(Inline)]
         Match3x8(MachineSpec spec)

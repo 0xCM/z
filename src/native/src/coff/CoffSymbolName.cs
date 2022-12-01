@@ -38,12 +38,6 @@ namespace Z0
             get => (uint)(Data >> 32);
         }
 
-        public ReadOnlySpan<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => sys.bytes(this);
-        }
-
         public bool IsEmpty
         {
             [MethodImpl(Inline)]

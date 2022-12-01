@@ -7,10 +7,10 @@ namespace Z0
     public abstract class AppService<H> : AppService, IAppService<H>
         where H : AppService<H>, new()
     {
-        public static string ServiceName => typeof(H).DisplayName();
+        //public static string ServiceName => typeof(H).DisplayName();
         
-        static ConcurrentDictionary<Type,object> ServiceCache {get;}
-            = new();
+        // static ConcurrentDictionary<Type,object> ServiceCache {get;}
+        //     = new();
 
         static object ServiceLock = new();
 
@@ -31,11 +31,11 @@ namespace Z0
             return service;
         }
 
-        public override T Service<T>(Func<T> factory)
-        {
-            lock(ServiceLock)
-                return (T)ServiceCache.GetOrAdd(typeof(T), key => factory());
-        }
+        // public override T Service<T>(Func<T> factory)
+        // {
+        //     lock(ServiceLock)
+        //         return (T)ServiceCache.GetOrAdd(typeof(T), key => factory());
+        // }
 
         protected KillMe Host 
             => HostType;

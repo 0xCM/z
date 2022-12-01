@@ -10,7 +10,7 @@ namespace Z0
             where C : IApiService<C>, new()
         {
             GlobalServices.Instance.Inject(wf.XedRuntime());
-            return ApiCmd.context<C>(wf, () => providers(wf));            
+            return ApiServer.context<C>(wf, () => providers(wf));            
         }
         
         public static ReadOnlySeq<IApiCmdProvider> providers(IWfRuntime wf)
@@ -38,7 +38,6 @@ namespace Z0
                 wf.CalcChecker(),
                 wf.TestCmd(),
                 wf.AsmGenCmd(),
-                //wf.SosCmd(),
                 wf.CsGenCmd(),
                 wf.MemoryChecks(),
                 wf.CgChecks(),

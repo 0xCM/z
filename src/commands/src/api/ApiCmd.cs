@@ -9,14 +9,14 @@ namespace Z0
 
     public partial class ApiCmd : AppService<ApiCmd>, IApiService
     {
-        public static A shell<A>(bool catalog, params string[] args)
-            where A : IAppShell, new()
-        {
-            var wf = ApiRuntime.create(catalog, args);
-            var app = new A();
-            app.Init(wf);
-            return app;
-        }
+        // public static A shell<A>(bool catalog, params string[] args)
+        //     where A : IAppShell, new()
+        // {
+        //     var wf = ApiRuntime.create(catalog, args);
+        //     var app = new A();
+        //     app.Init(wf);
+        //     return app;
+        // }
 
         public static IApiDispatcher Dispatcher 
             => AppData.Value<IApiDispatcher>(nameof(IApiDispatcher));

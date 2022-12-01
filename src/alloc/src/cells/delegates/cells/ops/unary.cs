@@ -44,7 +44,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static UnaryOp64 unary<T>(W64 w, Func<T,T> f)
             where T : unmanaged
-                => (Cell64 a) => Cells.cell64(f(a.As<T>()));
+                => (Cell64 a) => Cells.cell64(f(sys.@as<T>(a)));
 
         [MethodImpl(NotInline), Op]
         public static UnaryOp1 unary(UnaryOp<bit> f)

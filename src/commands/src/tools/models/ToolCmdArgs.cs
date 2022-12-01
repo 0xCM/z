@@ -7,24 +7,6 @@ namespace Z0
     public class ToolCmdArgs : Seq<ToolCmdArgs,ToolCmdArg>
     {
         [Op]
-        public static bool arg(ToolCmdArgs src, string name, out ToolCmdArg dst)
-        {
-            var count = src.Count;
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var arg = ref src[i];
-                if(string.Equals(arg.Name, name, NoCase))
-                {
-                    dst=arg;
-                    return true;
-                }
-            }
-            dst = ToolCmdArg.Empty;
-            return false;
-        }
-
-
-        [Op]
         public static void render(ToolCmdArgs src, ITextEmitter dst)
         {
             var count = src.Count;
@@ -35,6 +17,7 @@ namespace Z0
                     dst.Append(Space);
             }
         }        
+
         public static ToolCmdArgs load<T>(T src)
             where T : struct, IToolCmd
         {

@@ -12,7 +12,7 @@ namespace Z0
         public EcmaBlobInfo ReadBlobInfo(BlobHandle handle, Count seq)
         {
             var offset = (Address32)MD.GetHeapOffset(handle);
-            var value = MD.GetBlobBytes(handle) ?? core.array<byte>();
+            var value = MD.GetBlobBytes(handle) ?? sys.array<byte>();
             var size = (uint)MD.GetHeapSize(HeapIndex.Blob);
             var row = new EcmaBlobInfo();
             row.Seq = seq;

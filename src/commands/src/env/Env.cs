@@ -4,12 +4,28 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using Windows;
+    
     using static sys;
+
+
 
     [ApiHost]
     public class Env : ApiModule<Env>
     {
-        public record struct ListTools(EnvVarKind kind, FileUri Target);        
+        public static IDbArchive ShellData => Env.cd().DbArchive().Scoped(".data");
+
+        public static ProcessId pid() 
+            => ProcessId.current();
+
+        public static uint cpucore()
+            => Kernel32.GetCurrentProcessorNumber();
+
+        public static uint tid()
+            => Kernel32.GetCurrentThreadId();
+
+        public static FilePath path(string name, FileKind kind)
+            => ShellData.Path(name, kind);
 
         public static void tools(IWfChannel channel, IDbArchive dst)
         {
@@ -137,7 +153,7 @@ namespace Z0
         public static FolderPaths paths(string name, EnvVarKind kind)
         {
             var value = Environment.GetEnvironmentVariable(name, (EnvironmentVariableTarget)kind);
-            var values = text.split(value,Chars.Semicolon).Sort();
+            var values = text.split(value,Chars.Semicolon);
             return map(values, FS.dir);
         }
 

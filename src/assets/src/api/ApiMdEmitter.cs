@@ -203,7 +203,7 @@ namespace Z0
             => Emit(ApiMd.CalcDataFlows(src));
 
         public void EmitApiTables(ReadOnlySeq<Assembly> src)
-            => Channel.TableEmit(ApiMd.CalcTableFields(src), Target.Table<ApiTableField>());
+            => Channel.TableEmit(ApiMd.CalcTableFields(Channel, src), Target.Table<ApiTableField>());
 
         public void EmitApiTokens(params Assembly[] src)
             => EmitApiTokens(CalcApiTokens(src));

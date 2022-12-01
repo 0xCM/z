@@ -59,8 +59,9 @@ namespace Z0
             if(src.IsEmpty)
                 return default;
 
-            Storage.chars(n256, out var block);
-            var dst = block.Data;
+            Span<char> dst = stackalloc char[256];
+            //Storage.chars(n256, out var block);
+            //var dst = block.Data;
             var count = bitstring(src, dst);
             if(count == 0)
                 return EmptyString;

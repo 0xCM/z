@@ -13,15 +13,6 @@ namespace Z0
         public static Tool tool(CmdArgs args, byte index = 0)
             => CmdArgs.arg(args,index).Value;
 
-        /// <summary>
-        /// Creates a meaningful option
-        /// </summary>
-        /// <param name="name">The option name</param>
-        /// <param name="value">What does it do?</param>
-        [MethodImpl(Inline), Op]
-        public static CmdOption option(string name, string value)
-            => new CmdOption(name, value);
-
         [MethodImpl(Inline), Op]
         public static CmdArgDef<T> arg<T>(string name, T value, ArgPrefix prefix)
             => new CmdArgDef<T>(name, value, prefix);
@@ -104,27 +95,40 @@ namespace Z0
         {
             ExecToken Run()
             {
-                var running = channel.Running("cmd/redirect");
-                var outAPath = AppDb.Service.AppData().Path("a", FileKind.Log);
-                var outBPath = AppDb.Service.AppData().Path("b", FileKind.Log);
-                using var outA = outAPath.Utf8Writer();
-                using var outB = outBPath.Utf8Writer();
+                var c0Name=$"{Environment.ProcessId}.channels.0";
+                var c0Path = AppDb.Service.AppData().Path(c0Name, FileKind.Log);
+                var h0 = $"# {args} -> ${c0Path}";
 
-                void OnA(string msg)
+                var c1Name = $"{Environment.ProcessId}.channels.1";
+                var c1Path = AppDb.Service.AppData().Path(c1Name, FileKind.Log);
+                var h1 = $"# {args} -> ${c1Path}";
+                
+                using var c0 = c0Path.Utf8Writer(true);
+                c0.WriteLine($"# {c0Name}");
+                c0.WriteLine(h0);
+
+                using var c1 = c1Path.Utf8Writer(true);
+                c1.WriteLine($"# {c1Name}");
+                c1.WriteLine(h1);
+
+                void Channel0(string msg)
                 {
                     channel.Row(msg, FlairKind.Data);
-                    outA.WriteLine(msg);
+                    c0.WriteLine(msg);
                 }
 
-                void OnB(string msg)
+                void Channel1(string msg)
                 {
                     channel.Row(msg, FlairKind.StatusData);
-                    outB.WriteLine(msg);
+                    c1.WriteLine(msg);
                 }
 
-                Cmd.start(channel, new SysIO(OnA,OnB), args).Wait();
-                return channel.Ran(running, outA);
+                var io = new SysIO(Channel0, Channel1);
+                var running = channel.Running($"{args} -> ({c0Path}, ${c1Path})");
+                Cmd.run(io, args);
+                return channel.Ran(running, c0);
             }
+
             return sys.start(Run);
         }
 
@@ -133,7 +137,7 @@ namespace Z0
             ExecToken go()
             {
                 var running = channel.Running(spec);
-                var result = Cmd.run(io,spec,wd);
+                var result = Cmd.run(io, spec, wd);
                 return channel.Ran(running);
             }
 
@@ -165,7 +169,7 @@ namespace Z0
         public static CmdExecStatus run(ISysIO io, CmdArgs spec, FolderPath? wd = null)
         {
             var values = spec.Values();
-            Demand.gt(values.Count,0u);
+            Demand.gt(values.Count, 0u);
             var name = values.First;
             var args = values.ToSpan().Slice(1).ToArray();
             var psi = new ProcessStartInfo(values.First, text.join(Chars.Space,args))

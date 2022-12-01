@@ -1,9 +1,0 @@
-<Project>
-  <Import Project="../../props/msca.props" />
-  <ItemGroup>
-    <ProjectReference Include="$(ApiMd)" />
-    <ProjectReference Include="$(Imagine)" />
-    <ProjectReference Include="$(Native)" />
-    <ProjectReference Include="$(Workflow)" />
-  </ItemGroup>
-</Project>

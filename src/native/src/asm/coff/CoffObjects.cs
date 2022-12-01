@@ -130,7 +130,7 @@ namespace Z0
                     if(kind == CoffNameKind.String)
                     {
                         var len = length(src,sym.Name);
-                        dst = recover<AsciCode>(slice(sym.Name.Bytes, 0,len)).Format();
+                        dst = recover<AsciCode>(slice(bytes(name), 0,len)).Format();
                     }
                 }
             }
@@ -155,7 +155,7 @@ namespace Z0
             var kind = name.NameKind;
             var len  = 0u;
             if(kind == CoffNameKind.String)
-                len = AQ.length(recover<AsciCode>(name.Bytes));
+                len = AQ.length(recover<AsciCode>(bytes(name)));
             else if(kind == CoffNameKind.Address)
                 len = length(strings, name.Address);
             return len;
@@ -166,7 +166,7 @@ namespace Z0
             var len = length(strings, name);
             var dst = EmptyString;
             if(len <= 8)
-                dst = recover<AsciCode>(slice(name.Bytes,0,len)).Format();
+                dst = recover<AsciCode>(slice(bytes(name),0,len)).Format();
             else if(name.Address.IsNonZero)
                 dst = entry(strings, name.Address).Format();
             return dst;

@@ -8,38 +8,6 @@ namespace Z0
 
     public class Tooling : WfSvc<Tooling>
     {
-        [Parser]
-        public static Outcome parse(string src, out CmdOption dst)
-        {
-            const char Delimiter = Chars.Colon;
-
-            dst = CmdOption.Empty;
-            if(empty(src))
-                return (false, RP.Empty);
-            var i = text.index(src, Delimiter);
-            if(i>0)
-                dst = new CmdOption(text.left(src,i).Trim(), text.right(src,i).Trim());
-            else
-                dst = new CmdOption(src.Trim());
-            return true;
-        }
-
-        public static ReadOnlySpan<CmdOption> options(FilePath src)
-        {
-            var dst = list<CmdOption>();
-            using var reader = src.Utf8LineReader();
-            while(reader.Next(out var line))
-            {
-                if(line.IsNonEmpty)
-                {
-                    ref readonly var content = ref line.Content;
-                    if(parse(content, out var option))
-                        dst.Add(option);
-                }
-            }
-            return dst.ViewDeposited();
-        }
-
         public FilePath ConfigScript(Tool tool)
             => Home(tool).ConfigScript(ApiAtomic.config, FileKind.Cmd);
 
@@ -57,22 +25,6 @@ namespace Z0
 
         public FilePath ScriptPath(Tool tool, string name, FileKind kind)
             => Home(tool).Script(name, kind);
-
-        public Outcome Run(IToolWs tool, string name, FilePath src, FolderPath dst)
-        {
-            var cmd = new CmdLine(tool.Script(name, FileKind.Cmd).Format(PathSeparator.BS));
-            var vars = WsCmdVars.create();
-            vars.DstDir = dst;
-            vars.SrcDir = src.FolderPath;
-            vars.SrcFile = src.FileName;
-            var result = OmniScript.Run(cmd, vars.ToCmdVars(), out var response);
-            if(result)
-            {
-               var items = Cmd.response(response);
-               iter(items, item => Write(item));
-            }
-            return result;
-        }
 
         public SettingLookup LoadCfg(Tool tool)
         {

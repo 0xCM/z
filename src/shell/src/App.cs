@@ -18,7 +18,7 @@ namespace Z0
         {
             var result = 0;
             using var app = ApiRuntime.shell<App>(false, args);
-            var context = ApiCmd.context<AppShellCmd>(app.Wf, () => providers(app.Wf));
+            var context = ApiServer.context<AppShellCmd>(app.Wf, () => providers(app.Wf));
             app.Commander = context.Commander;
             try
             {

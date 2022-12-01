@@ -382,11 +382,5 @@ namespace Z0
             [MethodImpl(Inline)]
             get => new T(1,true);
         }
-
-        public Span<bit> _Bits
-        {
-            [MethodImpl(Inline)]
-            get => bits(this);
-        }
     }
 }

@@ -207,12 +207,6 @@ namespace Z0
             get => Value == MaxValue;
         }
 
-        public Span<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => bytes(this);
-        }
-
         [MethodImpl(Inline)]
         public string Format()
             => Value.ToString();

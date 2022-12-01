@@ -236,20 +236,6 @@ namespace Z0
             => new U(src, false);
 
         [MethodImpl(Inline), Op]
-        public static Span<bit> bits(U src)
-        {
-            var storage = 0ul;
-            var dst = slice(@recover<byte,bit>(@bytes(storage)),0, U.Width);
-            if(bit.test(src,0))
-                seek(dst,0) = bit.On;
-            if(bit.test(src,1))
-                seek(dst,1) = bit.On;
-            if(bit.test(src,2))
-                seek(dst,2) = bit.On;
-            return dst;
-        }
-
-        [MethodImpl(Inline), Op]
         internal static byte reduce3(byte x)
             => (byte)(x % U.Mod);
 

@@ -78,6 +78,18 @@ namespace Z0
         void EmitHeaders()
             => EcmaEmitter.EmitSectionHeaders(Dst);
 
+        [CmdOp("ecma/emit/typedefs")]
+        void EmitTypeDefs(CmdArgs args)
+        {
+            var modules = Archives.modules(FS.dir(args[0])).ManagedDll();
+            iter(modules, module => {
+                using var file = EcmaFile.open(module.Path);
+                var reader = EcmaReader.create(file);
+                var types = reader.ReadTypeDefs();
+                iter(types, t => Channel.Write(t.Name));
+            });
+        }
+
         static FilePath EcmaArchive(FilePath src)
             => AppDb.Archive("ecma").Path(src.FileName.WithExtension(FS.ext($"{src.Hash}.txt")));
 

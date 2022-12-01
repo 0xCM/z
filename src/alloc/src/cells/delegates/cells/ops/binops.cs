@@ -42,7 +42,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static BinaryOp64 binop<T>(Func<T,T,T> f, W64 dst)
             where T : unmanaged
-                => (Cell64 a, Cell64 b) => cell64(f(a.As<T>(),b.As<T>()));
+                => (Cell64 a, Cell64 b) => cell64(f(sys.@as<T>(a), sys.@as<T>(b)));
 
         [MethodImpl(NotInline), Op]
         public static BinaryOp1 binop(BinaryOp<bit> f)

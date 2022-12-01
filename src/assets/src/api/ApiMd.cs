@@ -37,7 +37,7 @@ namespace Z0
             return buffer.Sort();
         }
 
-        public static ReadOnlySeq<ApiTableField> CalcTableFields(ReadOnlySeq<Assembly> src)
+        public static ReadOnlySeq<ApiTableField> CalcTableFields(IWfChannel channel, ReadOnlySeq<Assembly> src)
         {
             var tables = src.Storage.Types().Tagged<RecordAttribute>().Index();
             var count = CountFields(tables);
@@ -46,26 +46,33 @@ namespace Z0
             for(var i=0; i<tables.Count; i++)
             {
                 ref readonly var type = ref tables[i];
-                var fields = Tables.fields(type);
-                var total = 0u;
-                var id = TableId.identify(type).Format();
-                var typename = type.DisplayName();
-                for(var j=z16; j<fields.Length; j++, k++)
+                try
                 {
-                    ref readonly var tf = ref skip(fields,j);
-                    ref readonly var fd = ref tf.Definition;
-                    ref var dst = ref seek(buffer,k);
-                    var size = (ushort)(Sizes.bits(fd.FieldType)/8);
-                    total += size;
-                    dst.Seq = j;
-                    dst.TableId = id;
-                    dst.TableType = typename;
-                    dst.Col = j;
-                    dst.FieldSize = size;
-                    dst.TableSize = total;
-                    dst.RenderWidth = tf.FieldWidth;
-                    dst.FieldName = fd.Name;
-                    dst.FieldType = fd.FieldType.DisplayName();
+                    var fields = Tables.fields(type);
+                    var total = 0u;
+                    var id = TableId.identify(type).Format();
+                    var typename = type.DisplayName();
+                    for(var j=z16; j<fields.Length; j++, k++)
+                    {
+                        ref readonly var tf = ref skip(fields,j);
+                        ref readonly var fd = ref tf.Definition;
+                        ref var dst = ref seek(buffer,k);
+                        var size = (ushort)(Sizes.bits(fd.FieldType)/8);
+                        total += size;
+                        dst.Seq = j;
+                        dst.TableId = id;
+                        dst.TableType = typename;
+                        dst.Col = j;
+                        dst.FieldSize = size;
+                        dst.TableSize = total;
+                        dst.RenderWidth = tf.FieldWidth;
+                        dst.FieldName = fd.Name;
+                        dst.FieldType = fd.FieldType.DisplayName();
+                    }
+                }
+                catch(Exception e)
+                {
+                    channel.Warn($"{type}:${e.Message}");
                 }
             }
             return buffer;

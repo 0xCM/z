@@ -10,14 +10,6 @@ namespace Z0
 
         readonly ReadOnlySeq<ApiOp> CmdDefs;
 
-        // internal ApiOps(ReadOnlySeq<ApiOp> src)
-        // {
-        //     Lookup = new();
-        //     sys.iter(src, op => Lookup.TryAdd(op.CmdName, op.Definition));
-
-        //     CmdDefs = src;
-        // }
-
         internal ApiOps(Dictionary<string,ApiOp> src)
         {
             Lookup = src;
@@ -26,15 +18,6 @@ namespace Z0
 
         public bool Find(string spec, out ApiOp runner)
             => Lookup.TryGetValue(spec, out runner);
-
-        public ICollection<string> Names
-        {
-            [MethodImpl(Inline)]
-            get => Lookup.Keys;
-        }
-
-        // public ICollection<IApiCmdMethod> Invokers
-        //     => Lookup.Values;
 
         public ref readonly ReadOnlySeq<ApiOp> Defs
         {

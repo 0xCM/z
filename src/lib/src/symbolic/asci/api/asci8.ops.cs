@@ -11,6 +11,36 @@ namespace Z0
     partial struct Asci
     {
         [MethodImpl(Inline), Op]
+        public static asci2 render2(byte src, out asci2 dst)
+        {
+            dst = new asci2(
+                BitRender.bitchar(src, 1),
+                BitRender.bitchar(src, 0)
+            );
+            return dst;
+        }
+
+        [MethodImpl(Inline), Op]
+        public static asci4 render2(byte src, out asci4 dst)
+        {
+            dst = new asci4(
+                BitRender.bitchar(src, 1),
+                BitRender.bitchar(src, 0)
+            );
+            return dst;
+        }
+
+        [MethodImpl(Inline), Op]
+        public static asci8 render2(byte src, out asci8 dst)
+        {
+            dst = new asci8(
+                BitRender.bitchar(src, 1),
+                BitRender.bitchar(src, 0)
+            );
+            return dst;
+        }
+
+        [MethodImpl(Inline), Op]
         public static C code(in asci8 src, Hex3Kind index)
             => (C)(src.Storage >> (byte)index);
 

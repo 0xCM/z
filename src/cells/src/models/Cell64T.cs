@@ -30,12 +30,6 @@ namespace Z0
         public CellKind Kind
             => CellKind.Cell64;
 
-        public Span<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => bytes(this);
-        }
-
         public Cell32 Lo
         {
             [MethodImpl(Inline)]

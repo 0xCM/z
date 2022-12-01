@@ -15,7 +15,7 @@ namespace Z0
             }
 
             public TableAttribute(byte id)
-                : base("")
+                : base($"Ecma.{id.FormatHex()}")
             {
 
             }                

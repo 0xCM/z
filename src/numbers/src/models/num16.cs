@@ -184,12 +184,6 @@ namespace Z0
         public bool Equals(T src)
             => eq(this, src);
 
-        public Span<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => bytes(this);
-        }
-
         public bit IsZero
         {
              [MethodImpl(Inline)]

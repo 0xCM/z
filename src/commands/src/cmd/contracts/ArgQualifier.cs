@@ -6,14 +6,6 @@ namespace Z0
 {
     public readonly struct ArgQualifier
     {
-        [MethodImpl(Inline), Factory]
-        public static ArgQualifier qualifier(AsciCode src)
-            => new ArgQualifier(src);
-
-        [MethodImpl(Inline), Factory]
-        public static ArgQualifier qualifier(char src)
-            => new ArgQualifier((AsciCode)src);
-
         readonly AsciCode Code;
 
         [MethodImpl(Inline)]

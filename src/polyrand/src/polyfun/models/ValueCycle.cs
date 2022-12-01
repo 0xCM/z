@@ -28,13 +28,6 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public ref T Next(out T dst)
-        {
-            dst = Next();
-            return ref dst;
-        }
-
-        [MethodImpl(Inline)]
         public T Next()
             => NextRef();
     }

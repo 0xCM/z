@@ -217,33 +217,6 @@ namespace Z0
                     _ => FileName.Empty
             };
 
-        public void DumpModules(IDbSources src, string tag, FileKind kind)
-        {
-            var script = scriptfile(kind);
-            var fk = kind switch{
-                FileKind.Obj => FileKind.Obj,
-                FileKind.Exe => FileKind.Exe,
-                FileKind.Lib => FileKind.Lib,
-                FileKind.Dll => FileKind.Dll,
-                _ => FileKind.None
-            };
-
-            var dst = AppDb.DbOut().Targets(tag);
-            var ws = Tooling.Home(dumpbin);
-            var cmd = new CmdLine(ws.Script(script).Format(PathSeparator.BS));
-            var files = src.Sources().Files(fk);
-
-            for(var i=0; i<files.Count; i++)
-            {
-                ref readonly var path = ref files[i];
-                var vars = WsCmdVars.create();
-                vars.DstDir = dst.Root;
-                vars.SrcDir = path.FolderPath;
-                vars.SrcFile = path.FileName;
-                ProcessControl.start(Channel, cmd, vars.ToCmdVars(), response => {});
-            }
-        }
-
         public ReadOnlySeq<FilePath> GenScripts(IModuleArchive src, IDbTargets dst)
         {
             var paths = list<FilePath>();

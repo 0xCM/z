@@ -16,7 +16,7 @@ namespace Z0
             const byte StubSize = JmpRel32.InstSize;
             stub = AsmHexCode.Empty;
             var target = src;
-            var buffer = Cells.alloc(w64).Bytes;
+            var buffer = sys.bytes(Cells.alloc(w64));
             ref var data = ref src.Ref<byte>();
             ByteReader.read6(data, buffer);
             if(JmpRel32.test(buffer))

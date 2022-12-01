@@ -270,28 +270,6 @@ namespace Z0
             => new U(src.Value);
 
         [MethodImpl(Inline), Op]
-        public static Span<bit> bits(uint7 src)
-        {
-            var storage = 0ul;
-            var dst = slice(@recover<byte,bit>(@bytes(storage)),0, U.Width);
-            if(bit.test(src,0))
-                seek(dst,0) = bit.On;
-            if(bit.test(src,1))
-                seek(dst,1) = bit.On;
-            if(bit.test(src,2))
-                seek(dst,2) = bit.On;
-            if(bit.test(src,3))
-                seek(dst,3) = bit.On;
-            if(bit.test(src,4))
-                seek(dst,4) = bit.On;
-            if(bit.test(src,5))
-                seek(dst,5) = bit.On;
-            if(bit.test(src,6))
-                seek(dst,6) = bit.On;
-            return dst;
-        }
-
-        [MethodImpl(Inline), Op]
         public static Span<bit> bits(uint24 src)
         {
             var storage = ByteBlock24.Empty;

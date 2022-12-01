@@ -10,7 +10,5 @@ namespace Z0
         bool Find(string spec, out ApiOp runner);
 
         ref readonly ReadOnlySeq<ApiOp> Defs {get;}
-
-        ICollection<string> Names {get;}
     }
 }

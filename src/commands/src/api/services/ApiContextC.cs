@@ -13,7 +13,7 @@ namespace Z0
             Commander = commander;
         }
 
-        public new readonly C Commander;
+        public readonly C Commander;
 
         C IApiContext<C>.Commander
             => Commander;

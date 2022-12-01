@@ -1,24 +1,10 @@
 <Project>
-  <ItemGroup>
+  <!-- <ItemGroup>
     <PackageReference Include="Microsoft.FileFormats" Version="1.0.353101" />
     <PackageReference Include="Microsoft.SymbolStore" Version="1.0.353101" />
     <Reference Include="$(SlnRoot)\libs\Microsoft.DiaSymReader.PortablePdb.dll"/>    
     <PackageReference Include="Microsoft.FileFormats" Version="1.0.353101" />
-  </ItemGroup>
+  </ItemGroup> -->
 
-  <ItemGroup>
-      <PackageReference Include="Microsoft.CodeAnalysis" Version="$(CodeAnalysisVer)" />
-      <PackageReference Include="Microsoft.CodeAnalysis.Scripting" Version="$(CodeAnalysisVer)" />
-      <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="$(CodeAnalysisVer)" />
-      <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="$(CodeAnalysisVer)" />
-      <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="$(CodeAnalysisVer)" />
-      <PackageReference Include="Microsoft.CodeAnalysis.Features" Version="$(CodeAnalysisVer)" />
-      <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Features" Version="$(CodeAnalysisVer)" />
-      <PackageReference Include="Microsoft.CodeAnalysis.Compilers" Version="$(CodeAnalysisVer)" />
-      <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-      </PackageReference>
-  </ItemGroup>
 
 </Project>

@@ -5,11 +5,10 @@
 
 namespace Z0
 {
-    using static sys;
-
     using static ArchiveDomain.CommandNames;
     using static ArchiveDomain;
 
+    using static sys;
     using System.IO.Compression;
     using Microsoft.Extensions.FileSystemGlobbing;
 
@@ -66,12 +65,13 @@ namespace Z0
                 yield return new FileUri(item);
         }
 
-        public static void exec(IWfChannel channel, CatalogFiles cmd)
+
+        public static void catalog(IWfChannel channel, CmdArgs args)
         {
+            ArchiveDomain.cmd(args, out CatalogFiles cmd);
             var name = identifier(cmd.Source);
-            var list = AppDb.Service.Catalogs("files").Path(name, FileKind.List);
-            var src = cmd.Match.IsEmpty ? DbArchive.enumerate(cmd.Source,"*.*", true) : DbArchive.enumerate(cmd.Source,true,cmd.Match);
-            var table = AppDb.Service.Catalogs("files").Table<ListedFile>(name);
+            var list = cmd.Target + FS.file(name, FileKind.List);
+            var src = cmd.Match.IsEmpty ? DbArchive.enumerate(cmd.Source,"*.*", true) : DbArchive.enumerate(cmd.Source, true, cmd.Match);
             var counter = 0u;
             string msg()
                 => $"Collected {counter} files";
@@ -87,7 +87,7 @@ namespace Z0
 
             var collected = files.ToSeq();
             var listing = Archives.listing(collected.View);            
-            channel.TableEmit(listing, table);
+            channel.TableEmit(listing, cmd.Target + FS.file(name,FileKind.Csv));
             var flow = channel.EmittingFile(list);
             using var writer = list.Utf8Writer();
             counter =0;
@@ -97,12 +97,6 @@ namespace Z0
                 counter++;
             }
             channel.EmittedFile(flow, counter);
-        }
-
-        public static void catalog(IWfChannel channel, CmdArgs args)
-        {
-            ArchiveDomain.cmd(args, out CatalogFiles cmd);
-            exec(channel,cmd);
         }
 
         public static DbArchive archive(string src)
@@ -180,10 +174,10 @@ namespace Z0
             var dst = new ListedFile();
             var info = new FileInfo(src.Name);
             dst.Size = ((ByteSize)info.Length).Kb;
-            dst.CreateTS = info.CreationTime;
-            dst.UpdateTS = info.LastWriteTime;
+            //dst.CreateTS = info.CreationTime;
+            //dst.UpdateTS = info.LastWriteTime;
             dst.Path = src;
-            dst.Attributes = info.Attributes;
+            //dst.Attributes = info.Attributes;
             return dst;
         }
 
@@ -192,10 +186,10 @@ namespace Z0
             var dst = new ListedFile();
             var info = new FileInfo(src.ToFilePath().Format(PathSeparator.BS));
             dst.Size = ((ByteSize)info.Length).Kb;
-            dst.CreateTS = info.CreationTime;
-            dst.UpdateTS = info.LastWriteTime;
+            //dst.CreateTS = info.CreationTime;
+            //dst.UpdateTS = info.LastWriteTime;
             dst.Path = src;
-            dst.Attributes = info.Attributes;
+            //dst.Attributes = info.Attributes;
             return dst;
         }
 

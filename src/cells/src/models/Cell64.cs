@@ -23,34 +23,11 @@ namespace Z0
         public CellKind Kind
             => CellKind.Cell64;
 
-        public Span<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => bytes(this);
-        }
-
-        public ref Cell32 Lo
-        {
-            [MethodImpl(Inline)]
-            get => ref @as<Cell32>(Bytes);
-        }
-
-        public ref Cell32 Hi
-        {
-            [MethodImpl(Inline)]
-            get => ref seek(@as<Cell32>(Bytes),1);
-        }
-
         public Cell64 Zero
         {
             [MethodImpl(Inline)]
             get => Empty;
         }
-
-        [MethodImpl(Inline)]
-        public ref T As<T>()
-            where T : unmanaged
-              => ref @as<T>(Bytes);
 
         [MethodImpl(Inline)]
         public bool Equals(ulong src)

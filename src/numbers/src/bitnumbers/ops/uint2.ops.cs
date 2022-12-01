@@ -377,18 +377,6 @@ namespace Z0
         public static U select(U a, U b, U c)
             => or(and(a,b), nonimpl(a,c));
 
-        [MethodImpl(Inline), Op]
-        public static Span<bit> bits(U src)
-        {
-            var storage = 0ul;
-            var dst = slice(@recover<byte,bit>(@bytes(storage)),0, U.Width);
-            if(bit.test(src,0))
-                seek(dst,0) = bit.On;
-            if(bit.test(src,1))
-                seek(dst,1) = bit.On;
-            return dst;
-        }
-
         [MethodImpl(Inline)]
         public static byte crop2(byte x)
             => (byte)(U.MaxValue & x);
