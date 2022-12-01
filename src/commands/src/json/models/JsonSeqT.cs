@@ -6,17 +6,17 @@ namespace Z0
 {
     using api = JsonData;
 
-    public sealed record class Json<T> : IJsonSource<Json<T>>
+    public sealed record class JsonSeq<T> : IJsonSource<JsonSeq<T>>
     {
         public readonly Seq<T> Content;
 
-        public Json()
+        public JsonSeq()
         {
             Content = sys.empty<T>();
         }
 
         [MethodImpl(Inline)]
-        public Json(T[] src)
+        public JsonSeq(T[] src)
         {
             Content = src;
         }
@@ -38,7 +38,7 @@ namespace Z0
             => api.jtext(this);
 
         [MethodImpl(Inline)]
-        public static implicit operator Json<T>(T[] src)
-            => new Json<T>(src);
+        public static implicit operator JsonSeq<T>(T[] src)
+            => new JsonSeq<T>(src);
     }
 }

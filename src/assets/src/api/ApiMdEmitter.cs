@@ -296,10 +296,10 @@ namespace Z0
         void EmitSymLits(ReadOnlySpan<SymLiteralRow> src)
             => Channel.TableEmit(src, Target.Path("api.symbols", FileKind.Csv), TextEncodingKind.Unicode);
 
-        ConstLookup<Name,ReadOnlySeq<SymInfo>> CalcApiTokens(Assembly[] src)
+        ConstLookup<@string,ReadOnlySeq<SymInfo>> CalcApiTokens(Assembly[] src)
             => Symbols.lookup(EnumTypes(src).Tagged<SymSourceAttribute>());
 
-        void EmitApiTokens(ConstLookup<Name,ReadOnlySeq<SymInfo>> src)
+        void EmitApiTokens(ConstLookup<@string,ReadOnlySeq<SymInfo>> src)
         {
             var names = src.Keys;
             for(var i=0; i<names.Length; i++)

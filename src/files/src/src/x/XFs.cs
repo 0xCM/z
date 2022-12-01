@@ -9,7 +9,7 @@ namespace Z0
     {
     }
 
-    partial class XTend
+    public static partial class XTend
     {
         [Op]
         public static LineReader Utf8LineReader(this FilePath src)

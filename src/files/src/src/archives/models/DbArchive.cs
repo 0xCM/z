@@ -71,7 +71,7 @@ namespace Z0
             => Format();
 
         public DbArchive Scoped(string scope)
-            => FS.archive(new DbArchive(Root + FS.folder(scope)));
+            => new DbArchive(Root + FS.folder(scope));
 
         public DbArchive Logs()
             => Targets("logs");
@@ -86,7 +86,7 @@ namespace Z0
             => Root;
 
         public DbArchive Targets(string scope)
-            => FS.archive((new DbTargets(Root, scope)).Root);
+            => (new DbTargets(Root, scope)).Root;
 
         public DbArchive Sources()
             => Root;
@@ -131,7 +131,6 @@ namespace Z0
             => new EnumerationOptions{
                 RecurseSubdirectories = recurse
             };
-
 
         public static IEnumerable<FileUri> enumerate(FolderPath src, string pattern, bool recurse)
         {
@@ -178,17 +177,34 @@ namespace Z0
         public FilePath Path(FileName file)
             => Root + file;
 
+        public static FileName filename(TableId id)
+            => FS.file(id.Format(), FS.Csv);
+
+        public static FileName filename(TableId id, FileExt ext)
+            => FS.file(id.Format(), ext);
+
+        public static FileName filename<T>()
+            where T : struct
+                => filename<T>(FS.Csv);
+
+        public static FileName filename<T>(FileExt ext)
+            where T : struct
+                => filename(TableId.identify<T>());
+
+        public static FileName filename<T>(string prefix)
+            where T : struct
+                => FS.file(string.Format("{0}.{1}", prefix, TableId.identify<T>()), FS.Csv);
         public FilePath Table<T>()
             where T : struct
-                => Root + Tables.filename<T>();
+                => Root + filename<T>();
 
         public FilePath Table<T>(ProjectId id)
             where T : struct
-                => Root + Tables.filename<T>(id.Format());
+                => Root + filename<T>(id.Format());
 
         public FilePath PrefixedTable<T>(string prefix)
             where T : struct
-                => Root + Tables.filename<T>(prefix);
+                => Root + filename<T>(prefix);
 
         public static FileName file(string @class, string name, FileKind kind)
             => FS.file(string.Format("{0}.{1}", @class, name), kind.Ext());

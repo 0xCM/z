@@ -1,0 +1,7 @@
+<Project>
+  <ItemGroup>
+    <ProjectReference Include="$(Text)" />
+    <ProjectReference Include="$(ClrQuery)" />
+  </ItemGroup>
+  <Import Project="../../usings.props"/>
+</Project>

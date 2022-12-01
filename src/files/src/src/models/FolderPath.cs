@@ -90,9 +90,6 @@ namespace Z0
         public Files AllFiles
             => Files(true);
 
-        Files Match(string pattern = null)
-            => Directory.EnumerateFiles(Name, pattern ?? SearchAll).Array().Select(x => FS.path(x));
-
         static EnumerationOptions options(bool recurse)
             => new EnumerationOptions{
                 RecurseSubdirectories = recurse

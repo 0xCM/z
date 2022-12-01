@@ -4,8 +4,16 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IEtlService : IAppService
+    public interface IJsonValue : IJsonNode
     {
-        void RunEtl();
+        T GetValue<T>();
+
+        bool TryGetValue<T>(out T value);
     }
+
+    public interface IJsonValue<V> : IJsonValue
+        where V : new()
+    {
+        V Value {get;}
+    }    
 }

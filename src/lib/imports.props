@@ -8,5 +8,6 @@
     <ProjectReference Include="$(Cells)" />
     <ProjectReference Include="$(Types)" />
     <ProjectReference Include="$(Imagine)" />
+    <ProjectReference Include="$(Files)" />
   </ItemGroup>
 </Project>

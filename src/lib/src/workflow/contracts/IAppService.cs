@@ -4,6 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    public interface IEtlService : IAppService
+    {
+        void RunEtl();
+    }
+        
     [Free]
     public interface IAppService : IService, IDisposable
     {

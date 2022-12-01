@@ -49,6 +49,7 @@
    <Import Project="$(MsBuildThisFileDirectory)src/emath/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/fsm/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/files/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/graphs/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/grids/exports.props"/>

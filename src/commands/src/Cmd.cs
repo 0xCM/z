@@ -6,6 +6,10 @@ namespace Z0
 {
     using static sys;
 
+    // msvsmon.exe, 0, 67532, 7, 0:00:00:00:046, 10:48:46 PM 11/30/2022, 148.39 MB, 142.04 MB, "D:\tools\msvs\msvs.2022\Common7\IDE\Remote Debugger\x64\msvsmon.exe" /__dbgautolaunch 0x0000000000001578 0x8c3c /hostname [anon-pipe:0000000000001570:000000000000156C] /port 1 /__pseudoremote /__workerProcess
+    // msvsmon.exe, 0, 57404, 10, 0:00:00:00:453, 10:48:44 PM 11/30/2022, 143.1 MB, 83.48 MB, "D:\tools\msvs\msvs.2022\Common7\IDE\Remote Debugger\x64\msvsmon.exe" /__dbgautolaunch 0x00000000000019EC 0x8c3c /hostname [anon-pipe:0000000000001380:0000000000001A30] /port 1 /__pseudoremote /VsReliabilityPath "D:\tools\msvs\msvs.2022\common7\ide\VSReliability.dll"
+
+
     [ApiHost]
     public partial class Cmd
     {        

@@ -38,16 +38,16 @@ namespace Z0
             => DbFiles.Sources();
 
         DbArchive Targets()
-            => FS.archive(DbFiles.Targets());
+            => DbFiles.Targets();
 
         DbArchive Sources(string scope)
-            => FS.archive(DbFiles.Sources(scope));
+            => DbFiles.Sources(scope);
 
         DbArchive Targets(string scope)
-            => FS.archive(DbFiles.Targets(scope));
+            => DbFiles.Targets(scope);
 
         DbArchive Scoped(string name)
-            => FS.archive(DbFiles.Sources(name));
+            => DbFiles.Sources(name);
 
         FilePath Table<T>()
             where T : struct

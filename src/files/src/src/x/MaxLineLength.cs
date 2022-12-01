@@ -4,10 +4,5 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct FS
-    {
-        [MethodImpl(Inline), Op]
-        public static DbArchive archive(FolderPath home)
-            => new DbArchive(home);
-    }
+
 }

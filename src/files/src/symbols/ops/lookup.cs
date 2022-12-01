@@ -8,10 +8,10 @@ namespace Z0
 
     partial struct Symbols
     {
-        public static ConstLookup<Name,ReadOnlySeq<SymInfo>> lookup(params Type[] src)
+        public static ConstLookup<@string,ReadOnlySeq<SymInfo>> lookup(params Type[] src)
         {
             var types = src.Tagged<SymSourceAttribute>();
-            var groups = dict<Name,List<Type>>();
+            var groups = dict<@string,List<Type>>();
             var individuals = list<Type>();
             foreach(var type in types)
             {
@@ -32,7 +32,7 @@ namespace Z0
                     individuals.Add(type);
             }
 
-            var dst = dict<Name,ReadOnlySeq<SymInfo>>();
+            var dst = dict<@string,ReadOnlySeq<SymInfo>>();
             foreach(var g in groups.Keys)
                 dst[g] = Symbols.syminfo(groups[g].ViewDeposited());
 

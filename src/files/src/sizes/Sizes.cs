@@ -121,28 +121,21 @@ namespace Z0
         {
             var dst = DataSize.Empty;
             var width = bits(src);
-            try
+            var tag = src.Tag<DataWidthAttribute>();
+            if(src.IsEnum)
             {
-                var tag = src.Tag<DataWidthAttribute>();
-                if(src.IsEnum)
-                {
-                    width = bits(PrimalBits.width(Enums.@base(src)));
-                    if(tag)
-                        dst = new (tag.Value.PackedWidth, width);
-                    else
-                        dst = (width, width);
-                }
+                width = bits(PrimalBits.width(Enums.@base(src)));
+                if(tag)
+                    dst = new (tag.Value.PackedWidth, width);
                 else
-                {
-                    if(tag)
-                        dst = new (tag.Value.PackedWidth, width);
-                    else
-                        dst = (width,width);
-                }
+                    dst = (width, width);
             }
-            catch(AmbiguousMatchException)
+            else
             {
-                term.error($"Ambiguous {nameof(DataWidthAttribute)} match on {src.DisplayName()}");
+                if(tag)
+                    dst = new (tag.Value.PackedWidth, width);
+                else
+                    dst = (width,width);
             }
             return dst;
         }
@@ -223,7 +216,6 @@ namespace Z0
             }
         }
 
-        [Parser(typeof(ClrTypes.Integers))]
         public static bool parse<T>(string src, out Size<T> dst)
             where T : unmanaged
         {
