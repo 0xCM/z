@@ -1,9 +1,8 @@
 <Project>
+  <Import Project="props\versions.props"/>
   <PropertyGroup>
-    <ZVer>0.0.25</ZVer>
-    <ZSysVer>0.0.25</ZSysVer>
     <FrameworkMoniker>net6.0</FrameworkMoniker>
     <Version>$(ZVer)</Version>
-    <LangVersion>10</LangVersion>
+    <LangVersion>11</LangVersion>
   </PropertyGroup>
 </Project>

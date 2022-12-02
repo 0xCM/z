@@ -75,6 +75,55 @@ namespace Z0
             }
         }
 
+        Outcome AsmExe(CmdArgs args)
+        {
+            var result = Outcome.Success;
+            var id = arg(args,0).Value;
+            var script = FilePath.Empty;
+            result = ExecVarScript(id,script);
+            if(result.Fail)
+                return result;
+            //var exe = AsmWs.ExePath(id);
+            var exe = FilePath.Empty;
+            var clock = Time.counter(true);
+            var process = Process.Start(exe.Format());
+            process.WaitForExit();
+            var duration = clock.Elapsed();
+            Write(string.Format("runtime:{0}", duration));
+            return result;
+        }
+
+        Outcome ExecVarScript(string SrcId, FilePath script)
+        {
+            const string ScriptId = "build-exe";
+            var result = Outcome.Success;
+            var vars = CmdVars.load(("SrcId", SrcId));
+            var cmd = new CmdLine(script.Format(PathSeparator.BS));
+            return OmniScript.Run(cmd, vars, out var response);
+        }
+
+        Outcome AsmConfig(CmdArgs args)
+        {
+            var result = OmniScript.Run(FolderPath.Empty + FS.file("log-config",FileKind.Cmd), out var response);
+            if(result.Fail)
+                return result;
+
+            var src = Settings.parse(response, Chars.Colon);
+            var count = src.Length;
+            var vars = new CmdVar[count];
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var facet = ref src[i];
+                seek(vars,i) = CmdVars.var(facet.Name, facet.Value);
+            }
+
+            iter(vars, v => Write(v.Name,
+                v.Evaluated ? string.Format("{0} (Evaluated)", v.Value) : string.Format("{0} (Symbolic)", v.Value))
+                );
+
+            return result;
+        }
+
         public new void Babble(string pattern, params object[] args)
             => Emitter.Babble(pattern, args);
 

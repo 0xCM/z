@@ -4,9 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
-
     [CmdProvider]
     public abstract class ApiServer<T> : ApiServer, IApiServer
         where T : ApiServer<T>, new()

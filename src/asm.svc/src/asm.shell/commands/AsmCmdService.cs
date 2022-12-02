@@ -65,13 +65,6 @@ namespace Z0.Asm
             Random = Rng.wyhash64();
         }
 
-        Outcome ExecVarScript(string SrcId, FilePath script)
-        {
-            const string ScriptId = "build-exe";
-            var result = Outcome.Success;
-            var vars = CmdVars.load(("SrcId", SrcId));
-            var cmd = new CmdLine(script.Format(PathSeparator.BS));
-            return OmniScript.Run(cmd, vars, out var response);
-        }
+
     }
 }

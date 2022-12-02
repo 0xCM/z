@@ -1,6 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(SlnDeps)/nuget.props" />
-  <Import Project="$(SlnDeps)/msbuild.props" />
   <Import Project="../../usings.props" />
   <Import Project="imports.props" />
   <PropertyGroup>

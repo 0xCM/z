@@ -1,5 +1,5 @@
 <Project>
-  <Import Project="../../props/msca.props" />
+  <Import Project="$(DevRoot)\props\microsoft.codeanalysis.props" />
   <ItemGroup>
     <ProjectReference Include="$(Assets)" />
     <ProjectReference Include="$(Rules)" />

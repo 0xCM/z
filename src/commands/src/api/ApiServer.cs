@@ -66,7 +66,5 @@ namespace Z0
             return dst;
         }
 
-        // static void install(IApiDispatcher dispatcher, ReadOnlySeq<IApiCmdProvider> src)
-        //     => AppData.Value(nameof(IApiDispatcher), dispatcher);
     }
 }

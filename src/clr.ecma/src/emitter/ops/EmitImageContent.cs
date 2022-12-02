@@ -26,7 +26,7 @@ namespace Z0
             using var stream = FS.path(src.Location).Utf8Reader();
             using var reader = stream.BinaryReader();
             using var writer = path.Writer();
-            writer.WriteLine(string.Concat($"Address".PadRight(16), RpOps.SpacedPipe, "Data"));
+            writer.WriteLine(string.Concat($"Address".PadRight(16), RP.SpacedPipe, "Data"));
             var buffer = sys.alloc<byte>(bpl);
             var k = Read(reader, buffer);
             var offset = MemoryAddress.Zero;

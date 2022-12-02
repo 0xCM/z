@@ -27,6 +27,14 @@ namespace Z0
         public readonly string VarValue;
 
         [MethodImpl(Inline)]
+        public EnvVar(string name, string value)
+        {
+            Kind = EnvVarKind.Process;
+            VarName = name;
+            VarValue = value;
+        }
+
+        [MethodImpl(Inline)]
         public EnvVar(EnvVarKind kind, string name, string value)
         {
             Kind = kind;

@@ -36,7 +36,7 @@ namespace Z0
         public static implicit operator LineMap<T>(LineInterval<T>[] src)
             => new LineMap<T>(src);
 
-        public static LineMap<T> operator +(LineMap<T> a, LineMap<T> b)
-            => Seq.concat<LineMap<T>,LineInterval<T>>(a,b);
+        // public static LineMap<T> operator +(LineMap<T> a, LineMap<T> b)
+        //     => Seq.concat(a,b);
     }
 }

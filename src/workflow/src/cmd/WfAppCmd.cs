@@ -63,7 +63,7 @@ namespace Z0
         {
             var tool = args[0].Value;
             var dst = AppDb.DbTargets("tools/help").Path(FS.file(tool, FileKind.Help));
-            Cmd.run(Channel, tool, args.Length > 1 ? args[1].Value : "--help", dst);
+            CmdRunner.run(Channel, tool, args.Length > 1 ? args[1].Value : "--help", dst);
         }
 
         [CmdOp("zip")]
@@ -326,7 +326,7 @@ namespace Z0
             {
                 var wd = Env.cd();
                 var options = $"-NoLogo -i -wd {text.dquote(Env.cd())}";
-                Cmd.start(channel, new SysIO(OnA,OnB), CmdArgs.create("pwsh.exe", options), wd);
+                CmdRunner.start(channel, new SysIO(OnA,OnB), CmdArgs.create("pwsh.exe", options), wd);
             }
         }
 

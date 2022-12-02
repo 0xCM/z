@@ -9,6 +9,7 @@ namespace Z0
     using static sys;
     using static Env;
 
+
     public sealed class ApiCmdServer : ApiServer<ApiCmdServer>
     {    
         [CmdOp("api/commands")]
@@ -118,7 +119,7 @@ namespace Z0
 
         [CmdOp("cmd")]
         void Redirect(CmdArgs args)
-            => Cmd.redirect(Channel, args);
+            => CmdRunner.redirect(Channel, args);
 
         [CmdOp("cd")]
         void Cd(CmdArgs args)
@@ -140,46 +141,23 @@ namespace Z0
         {
             var a0 = args[0].Value;
             var a1 = args[1].Value;
-            var d0  = FS.dir(Path.GetDirectoryName(a0));
-            var p0 = FS.path(a0);
-            var d1 = FS.dir(Path.GetDirectoryName(a1));
-            var p1 = FS.path(a1);
+
             var result = Outcome.Failure;
-            var src = EmptyString;
-            var dst = EmptyString;
-            if(p0.Name == d0.Name && p1.Name == d1.Name)
-            {
-                result = FS.symlink(d0,d1,true);
-                src = d0.Format();
-                dst = d1.Format();
-            }
+            var isfile = (new FileInfo(a0)).Exists;
+            if(isfile)
+                result = FS.symlink(FS.path(a0), FS.path(a1),true);
             else
-            {
-                result = FS.symlink(p0,p1,true);
-                src = p0.Format();
-                dst = p1.Format();
-            }
+                result = FS.symlink(FS.dir(a0), FS.dir(a1), true);
+
             if(result)
-                Channel.Status($"symlink:{src} -> {dst}");
+                Channel.Status($"symlink:{a0} -> {a1}");
             else
-                Channel.Error(result.Message);
-        
+                Channel.Error(result.Message);        
         }
 
         [CmdOp("symlink")]
         void Link(CmdArgs args)
             => Symlink(args);
-
-        // void LinkFile(CmdArgs args)
-        // {
-        //     var src = FS.path(arg(args,0).Value);
-        //     var dst = FS.path(arg(args,1).Value);
-        //     var result = FS.symlink(src,dst,true);
-        //     if(result)
-        //         Channel.Status($"symlink:{src} -> {dst}");
-        //     else
-        //         Channel.Error(result.Message);
-        // }
 
         [CmdOp("develop")]
         void Develop(CmdArgs args)

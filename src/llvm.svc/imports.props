@@ -1,5 +1,4 @@
 <Project>
-  <Import Project="$(ProjectProps)\llvm.props"/>
   <ItemGroup>
     <ProjectReference Include="$(AsmCore)" />
   </ItemGroup>

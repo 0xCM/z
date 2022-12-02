@@ -44,7 +44,7 @@ namespace Z0
         }        
 
         public CmdExecStatus Status()
-            => Cmd.status(this);
+            => CmdRunner.status(this);
 
         public static ExecutingProcess Empty 
             => new (CmdLine.Empty, null);

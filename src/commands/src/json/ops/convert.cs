@@ -133,7 +133,7 @@ namespace Z0
         /// <remarks>
         /// Adapted from https://github.com/dotnet/runtime/blob/6de7147b9266d7730b0d73ba67632b0c198cb11e/src/libraries/System.Text.Json/src/System/Text/Json/Nodes/JsonValueOfT.cs
         /// </remarks>
-        public static bool convert<T>(object src, [NotNullWhen(true)] out T dst)
+        public static bool convert<T>(object src, out T dst)
         {
             bool success;
             if(src is JsonElement e)

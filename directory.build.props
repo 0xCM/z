@@ -1,7 +1,6 @@
 <Project>
-  <Import Project="$(DevRoot)\props\versions.props"/>
-  <Import Project="$(DevRoot)\props\system.props"/>
   <Import Project="versions.props"/>
+  <Import Project="props\system.props"/>
   <PropertyGroup>
     <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
     <EnablePreviewFeatures>True</EnablePreviewFeatures>

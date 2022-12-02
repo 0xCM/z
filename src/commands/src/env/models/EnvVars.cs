@@ -6,66 +6,20 @@ namespace Z0
 {
     using static sys;
 
-    public readonly struct EnvVars : IIndex<EnvVar>
+    public sealed class EnvVars : Seq<EnvVars,EnvVar>
     {
-        public static EnvVars Empty => new EnvVars(sys.empty<EnvVar>());
+        public EnvVars()
+        {
 
-        readonly Index<EnvVar> Data;
-
+        }
+        
         [MethodImpl(Inline)]
         public EnvVars(EnvVar[] src)
+            : base(src)
         {
-            Data = src;
         }
 
-        public uint Count
-        {
-            [MethodImpl(Inline)]
-            get => Data.Count;
-        }
-
-        public bool IsNonEmpty
-        {
-            [MethodImpl(Inline)]
-            get => Data.IsNonEmpty;
-        }
-
-        public bool IsEmpty
-        {
-            [MethodImpl(Inline)]
-            get => Data.IsEmpty;
-        }
-        public EnvVar[] Storage
-        {
-            [MethodImpl(Inline)]
-            get => Data.Storage;
-        }
-
-        public Span<EnvVar> Edit
-        {
-            [MethodImpl(Inline)]
-            get => Data.Edit;
-        }
-
-        public ReadOnlySpan<EnvVar> View
-        {
-            [MethodImpl(Inline)]
-            get => Data.View;
-        }
-
-        public ref EnvVar this[uint i]
-        {
-            [MethodImpl(Inline)]
-            get => ref Data[i];
-        }
-
-        public ref EnvVar this[int i]
-        {
-            [MethodImpl(Inline)]
-            get => ref Data[i];
-        }
-
-        public string Format()
+        public override string Format()
         {
             var dst = text.emitter();
             var src = View;

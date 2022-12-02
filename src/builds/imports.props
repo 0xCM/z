@@ -7,6 +7,9 @@
     <ProjectReference Include="$(Assets)" />
   </ItemGroup>
 
+  <Import Project="$(SlnProps)\msbuild.props" />
+  <Import Project="$(SlnProps)\nuget.props" />
+
   <ItemGroup>
       <PackageReference Include="Microsoft.CodeAnalysis" Version="$(CodeAnalysisVer)" />
       <PackageReference Include="Microsoft.CodeAnalysis.Scripting" Version="$(CodeAnalysisVer)" />
