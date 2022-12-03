@@ -24,9 +24,11 @@ namespace Z0
 
         ExecToken NextExecToken();
 
-        ExecToken Completed(ExecFlow src);
+        ExecToken Completed(ExecFlow src, bool success = true);
 
-        ExecToken Completed<T>(ExecFlow<T> src);
+        ExecToken Completed(FileEmission src);
+
+        ExecToken Completed<T>(ExecFlow<T> src, bool success = true);
 
         IWfEmissions Emissions {get;}
 
@@ -82,8 +84,8 @@ namespace Z0
             return token;
         }
 
-        Assembly[] Components
-            => ApiCatalog.Assemblies;
+        // Assembly[] Components
+        //     => ApiCatalog.Assemblies;
 
         string ITextual.Format()
             => AppName.Format();
@@ -95,8 +97,8 @@ namespace Z0
             where T : struct
                 => new TableFlow<T>(this, dst, NextExecToken());
 
-        FileWritten Flow(FilePath dst)
-            => new FileWritten(this, dst, NextExecToken());
+        FileEmission Flow(FilePath dst)
+            => new FileEmission(NextExecToken(), dst, 0);
 
         EventId Raise<E>(in E e)
             where E : IEvent
@@ -187,19 +189,19 @@ namespace Z0
             return completed;
         }
 
-        FileWritten EmittingFile(FilePath dst)
+        FileEmission EmittingFile(FilePath dst)
         {
             signal(this).EmittingFile(dst);
             return Emissions.LogEmission(Flow(dst));
         }
 
-        FileWritten EmittingFile(KillMe host, FilePath dst)
+        FileEmission EmittingFile(KillMe host, FilePath dst)
         {
             signal(this, host).EmittingFile(dst);
             return Emissions.LogEmission(Flow(dst));
         }
 
-        ExecToken EmittedFile(FileWritten flow, Count count)
+        ExecToken EmittedFile(FileEmission flow, Count count)
         {
             var completed = Completed(flow);
             var counted = flow.WithCount(count).WithToken(completed);
@@ -208,20 +210,20 @@ namespace Z0
             return completed;
         }
 
-        ExecToken EmittedFile(FileWritten flow)
+        ExecToken EmittedFile(FileEmission flow)
         {
             var completed = Completed(flow);
             signal(this).EmittedFile(flow.WithToken(completed));
             return completed;
         }
         
-        ExecToken EmittedFile(FileWritten flow, int count)
+        ExecToken EmittedFile(FileEmission flow, int count)
             => EmittedFile(flow, (Count)count);
 
-        ExecToken EmittedFile(FileWritten flow, uint count)
+        ExecToken EmittedFile(FileEmission flow, uint count)
             => EmittedFile(flow, (Count)count);
 
-        ExecToken EmittedFile<T>(FileWritten flow, T msg)
+        ExecToken EmittedFile<T>(FileEmission flow, T msg)
         {
             var completed = Completed(flow);
             var counted = flow.WithToken(completed);
@@ -230,7 +232,7 @@ namespace Z0
             return completed;
         }
 
-        ExecToken EmittedFile(KillMe host, FileWritten flow, Count count)
+        ExecToken EmittedFile(KillMe host, FileEmission flow, Count count)
         {
             var completed = Completed(flow);
             var counted = flow.WithCount(count).WithToken(completed);

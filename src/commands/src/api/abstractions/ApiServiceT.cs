@@ -8,5 +8,7 @@ namespace Z0
         where T : ApiService<T>, new()
     {
         protected AppDb AppDb => AppDb.Service;
+
+        protected ApiCmd ApiCmd => Wf.ApiCmd();
     }
 }

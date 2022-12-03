@@ -28,7 +28,7 @@ namespace Z0
                 var records = reader.ReadMethodDefInfo();
                 var count = records.Length;
                 for(var j=0; j<count; j++)
-                    writer.WriteLine(formatter.Format(skip(records, j)));
+                    writer.WriteLine(formatter.Format(records[j]));
                 EmittedTable(flow, count);
             }
 

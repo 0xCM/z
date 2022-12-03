@@ -5,7 +5,7 @@
 namespace Z0
 {
     [StructLayout(LayoutKind.Sequential, Pack=1)]
-    public struct ImageReloc
+    public record struct ImageReloc
     {
         /// <summary>
         /// The virtual address (or count)

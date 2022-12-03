@@ -24,9 +24,19 @@ namespace Z0
             return dst;
         }
 
+        public ReadOnlySeq<PeSectionHeader> Headers()
+            => PeReader.headers(PE);
+
         [Op]
         public static PeReader create(FilePath src)
             => new PeReader(src);
+
+        public PeReader(FilePath src)
+        {
+            Source = src;
+            Stream = File.OpenRead(src.Name);
+            PE = new PEReader(Stream);            
+        }
 
         readonly FilePath Source;
 
@@ -88,12 +98,6 @@ namespace Z0
         EcmaReader CliReader()
             => Z0.EcmaReader.create(MetadataBlock);
 
-        public PeReader(FilePath src)
-        {
-            Source = src;
-            Stream = File.OpenRead(src.Name);
-            PE = new PEReader(Stream);
-        }
 
         public void Dispose()
         {
@@ -138,8 +142,8 @@ namespace Z0
             return dst;
         }
 
-        public static FileModuleInfo describe(PEReader reader)
-            => new FileModuleInfo(ReadPeInfo(reader), ReadCoffInfo(reader), headers(reader));
+        public FileModuleInfo Describe()
+            => new FileModuleInfo(ReadPeInfo(PE), ReadCoffInfo(PE), CorHeader, headers(PE));
 
         public PEHeaders PeHeaders
         {
@@ -152,9 +156,6 @@ namespace Z0
             [MethodImpl(Inline)]
             get => PeHeaders.CorHeader;
         }
-
-        ReadOnlySpan<SectionHeader> SectionHeaders
-            => PeHeaders.SectionHeaders.ToReadOnlySpan();
 
         public ReadOnlySpan<MemberReferenceHandle> MemberRefHandles
             => MD.MemberReferences.ToArray();

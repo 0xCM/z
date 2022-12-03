@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.llvm
 {
-    using static core;
+    using static sys;
 
     partial class LlvmCmd
     {
@@ -19,8 +19,9 @@ namespace Z0.llvm
                 ref readonly var srcpath = ref sources[i];
                 var relative = srcpath.Relative(Paths.LlvmRoot.Root);
                 var linkpath = links.Root + relative;
-                var link = FS.symlink(linkpath, srcpath, true);
-                link.OnFailure(e => Error(e)).OnSuccess(Write);
+                var result = FS.symlink(linkpath, srcpath, true);
+                if(result.Fail)
+                    Channel.Error(result.Message);
             }
 
             var dst = Paths.File("links", "tabledefs", FileKind.Md);

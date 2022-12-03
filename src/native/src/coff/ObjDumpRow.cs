@@ -7,7 +7,7 @@ namespace Z0
     using W = AsmColWidths;
 
     [StructLayout(LayoutKind.Sequential), Record(TableId)]
-    public struct ObjDumpRow : IComparable<ObjDumpRow>, ISequential<ObjDumpRow>
+    public record struct ObjDumpRow : IComparable<ObjDumpRow>, ISequential<ObjDumpRow>
     {
         const string TableId = "llvm.objdump";
 

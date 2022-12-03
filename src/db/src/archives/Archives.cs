@@ -5,6 +5,9 @@
 
 namespace Z0
 {
+    using Commands;
+    using static ArchiveExecutors;
+
     using static ArchiveDomain.CommandNames;
     using static ArchiveDomain;
 
@@ -14,6 +17,51 @@ namespace Z0
 
     public class Archives : ApiModule<Archives>
     {        
+        [Op]
+        public static Task<FileEmission> emissions(IWfChannel channel, Files src, bool uri, FilePath dst)
+        {
+            var counter  = 0;
+            FileEmission run()
+            {
+                var emission = FileEmission.Empty;
+                try
+                {
+                    var flow = channel.EmittingFile(dst);
+                    using var writer = dst.Writer();
+                    for(var i=0; i<src.Count; i++)
+                    {
+                        ref readonly var file = ref src[i];
+                        writer.WriteLine(uri ? file.ToUri().Format() : file.Format());
+                        counter++;
+                    }
+
+                    emission = new FileEmission(channel.EmittedFile(flow), dst, (int)counter);
+                }
+                catch(Exception e)
+                {
+                    channel.Error(e);
+                }
+                return emission;
+            }
+            return sys.start(run);
+        }
+
+
+        public static Task<ExecToken> symlink(IWfChannel channel, CmdArgs args)
+        {
+            var a0 = args[0].Value;
+            var a1 = args[1].Value;
+            var result = Outcome.Failure;
+            var isfile = (new FileInfo(a0)).Exists;
+            var cmd = CreateSymLink.Empty;
+            if(isfile)
+                cmd = new (FS.path(a0), FS.path(a1), true);
+            else
+                cmd = new (FS.dir(a0), FS.dir(a1), true);
+
+            return Symlink.create().Execute(channel, CmdRunner.context(), cmd);
+        }
+
         public static void zip(IWfChannel channel, CmdArgs args)
         {
             var folder = Cmd.arg(args,0).Value;
@@ -65,7 +113,6 @@ namespace Z0
                 yield return new FileUri(item);
         }
 
-
         public static void catalog(IWfChannel channel, CmdArgs args)
         {
             ArchiveDomain.cmd(args, out CatalogFiles cmd);
@@ -99,13 +146,13 @@ namespace Z0
             channel.EmittedFile(flow, counter);
         }
 
-        public static DbArchive archive(string src)
+        public static IDbArchive archive(string src)
             => new DbArchive(FS.dir(src));
 
-        public static DbArchive archive(FolderPath root)
+        public static IDbArchive archive(FolderPath root)
             => new DbArchive(root);
 
-        public static DbArchive archive(Timestamp ts, DbArchive dst)
+        public static IDbArchive archive(Timestamp ts, DbArchive dst)
             => dst.Scoped(ts.Format());
 
         public static FolderPath folder(string src)

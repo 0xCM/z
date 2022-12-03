@@ -96,7 +96,7 @@ namespace Z0.Asm
             var tableFlow = default(TableFlow<HostAsmRecord>);
             var asmWriter = default(StreamWriter);
             var asmPath = FilePath.Empty;
-            var asmFlow = default(FileWritten);
+            var asmFlow = FileEmission.Empty;
             var buffer = text.buffer();
 
             for(var i=0; i<count; i++)

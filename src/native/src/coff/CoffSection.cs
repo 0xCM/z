@@ -9,7 +9,7 @@ namespace Z0
     using W = AsmColWidths;
 
     [Record(TableId), StructLayout(LayoutKind.Sequential)]
-    public struct CoffSection : IComparable<CoffSection>
+    public record struct CoffSection : IComparable<CoffSection>
     {
         public const string TableId = "coff.sections";
 

@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Record(TableId)]
-    public struct ObjSymRow
+    public record struct ObjSymRow
     {
         const string TableId = "objsyms";
 

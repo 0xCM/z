@@ -169,16 +169,16 @@ namespace Z0
         public ExecToken Ran<T,D>(ExecFlow<T> src, D data)
             => Emitter.Ran(src, data);
 
-        public new FileWritten EmittingFile(FilePath dst)
+        public new FileEmission EmittingFile(FilePath dst)
             => Emitter.EmittingFile(dst);
 
-        public ExecToken EmittedFile(FileWritten flow, int count)
+        public ExecToken EmittedFile(FileEmission flow, int count)
             => Emitter.EmittedFile(flow, count);
 
-        public ExecToken EmittedFile(FileWritten flow, uint count)
+        public ExecToken EmittedFile(FileEmission flow, uint count)
             => Emitter.EmittedFile(flow, count);
 
-        public ExecToken EmittedBytes(FileWritten flow, ByteSize size)
+        public ExecToken EmittedBytes(FileEmission flow, ByteSize size)
             => Emitter.EmittedBytes(flow, size);
 
         public new TableFlow<T> EmittingTable<T>(FilePath dst)

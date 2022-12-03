@@ -22,9 +22,9 @@ namespace Z0
                         foreach(var f in reader.ReadDocInfo())
                             Channel.Write($"{f.ContentHash} | {f.Name}");                            
                     }
-                    catch(Exception e)
+                    catch(Exception)
                     {
-                        Channel.Error(e);
+                    
                     }
                 }
             },false);

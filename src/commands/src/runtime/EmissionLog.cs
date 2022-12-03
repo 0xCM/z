@@ -57,7 +57,7 @@ namespace Z0
             Close();
         }
 
-        public ref readonly FileWritten LogEmission(in FileWritten flow)
+        public ref readonly FileEmission LogEmission(in FileEmission flow)
         {
             try
             {

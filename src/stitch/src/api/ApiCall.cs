@@ -14,9 +14,6 @@ namespace Z0
     {
         public ApiKey Api {get; set;}
 
-        [MethodImpl(Inline)]
-        public static implicit operator ApiCallData(ApiCall src)
-            => api.serialize(src);
     }
 
     /// <summary>
@@ -30,9 +27,6 @@ namespace Z0
 
         public R Result {get; set;}
 
-        [MethodImpl(Inline)]
-        public static implicit operator ApiCallData(ApiCall<R> src)
-            => api.serialize(src);
     }
 
     /// <summary>
@@ -49,9 +43,6 @@ namespace Z0
 
         public R Result {get; set;}
 
-        [MethodImpl(Inline)]
-        public static implicit operator ApiCallData(ApiCall<A0,R> src)
-            => api.serialize(src);
     }
 
     /// <summary>
@@ -76,10 +67,6 @@ namespace Z0
 
         public override string ToString()
             => Format();
-
-        [MethodImpl(Inline)]
-        public static implicit operator ApiCallData(ApiCall<A0,A1,R> src)
-            => api.serialize(src);
     }
 
     /// <summary>
@@ -102,9 +89,6 @@ namespace Z0
 
         public R Result {get; set;}
 
-        [MethodImpl(Inline)]
-        public static implicit operator ApiCallData(ApiCall<A0,A1,A2,R> src)
-            => api.serialize(src);
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -126,9 +110,5 @@ namespace Z0
         public A3 Arg3;
 
         public R Result {get; set;}
-
-        [MethodImpl(Inline)]
-        public static implicit operator ApiCallData(ApiCall<A0,A1,A2,A3,R> src)
-            => api.serialize(src);
     }
 }

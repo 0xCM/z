@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public struct CoffSymbolName
+    public record struct CoffSymbolName
     {
         readonly ulong Data;
 

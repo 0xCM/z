@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Record(TableId), StructLayout(LayoutKind.Sequential)]
-    public struct PeFieldOffset
+    public record struct PeFieldOffset
     {
         public const string TableId = "image.offsets";
 

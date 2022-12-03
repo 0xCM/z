@@ -7,23 +7,9 @@ namespace Z0
     using H = Hex10;
     using K = UInt16;
 
-    using static sys;
-
     [DataWidth(Width)]
     public readonly struct Hex10 : IEquatable<Hex10>, IComparable<Hex10>
     {
-        // [Parser]
-        // public static bool parse(ReadOnlySpan<char> src, out Hex10 dst)
-        // {
-        //     dst = Zero;
-        //     var storage = z32;
-        //     var buffer = bytes(storage);
-        //     var result = Hex.parse(src, buffer);
-        //     if(result && storage <= MaxValue)
-        //         dst = (Hex10)storage;
-        //     return result;
-        // }
-
         public const byte Width = 10;
 
         const byte StorageWidth = 16;

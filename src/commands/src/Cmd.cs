@@ -9,35 +9,11 @@ namespace Z0
     // msvsmon.exe, 0, 67532, 7, 0:00:00:00:046, 10:48:46 PM 11/30/2022, 148.39 MB, 142.04 MB, "D:\tools\msvs\msvs.2022\Common7\IDE\Remote Debugger\x64\msvsmon.exe" /__dbgautolaunch 0x0000000000001578 0x8c3c /hostname [anon-pipe:0000000000001570:000000000000156C] /port 1 /__pseudoremote /__workerProcess
     // msvsmon.exe, 0, 57404, 10, 0:00:00:00:453, 10:48:44 PM 11/30/2022, 143.1 MB, 83.48 MB, "D:\tools\msvs\msvs.2022\Common7\IDE\Remote Debugger\x64\msvsmon.exe" /__dbgautolaunch 0x00000000000019EC 0x8c3c /hostname [anon-pipe:0000000000001380:0000000000001A30] /port 1 /__pseudoremote /VsReliabilityPath "D:\tools\msvs\msvs.2022\common7\ide\VSReliability.dll"
 
-
     [ApiHost]
     public class Cmd
     {        
-        public static string format(ApiCmdSpec src)
-        {
-            if(src.IsEmpty)
-                return EmptyString;
-
-            var dst = text.buffer();
-            dst.Append(src.Name);
-            var count = src.Args.Count;
-            for(ushort i=0; i<count; i++)
-            {
-                var arg = src.Args[i];
-                if(nonempty(arg.Name))
-                {
-                    dst.Append(Chars.Space);
-                    dst.Append(arg.Name);
-                }
-
-                if(nonempty(arg.Value))
-                {
-                    dst.Append(Chars.Space);
-                    dst.Append(arg.Value);
-                }
-            }
-            return dst.Emit();
-        }
+        public static ReadOnlySeq<ICmdExecutor> executors(params Assembly[] src)
+            => src.Types().Tagged<CmdExecutorAttribute>().Concrete().Map(x => (ICmdExecutor)Activator.CreateInstance(x));
 
         [Op, Closures(UInt64k)]
         public static Tool tool(CmdArgs args, byte index = 0)
@@ -212,22 +188,6 @@ namespace Z0
             return new (dst);
         }
 
-        public static ExecToken exec<C>(IApiContext context, C cmd, Func<IApiContext,C,Outcome> actor)
-            where C : ICmd<C>, new()
-        {
-            var outcome = Outcome.Success;
-            var running = context.Channel.Running($"{cmd.CmdId}");
-            try
-            {
-                outcome = actor(context,cmd);
-            }
-            catch(Exception e)
-            {
-                outcome = e;
-            }
-
-            return context.Channel.Ran(running);
-        }
 
         public static ConstLookup<Name,ApiOp> defs(IApiDispatcher src)
         {

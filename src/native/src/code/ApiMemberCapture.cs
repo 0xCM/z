@@ -7,7 +7,7 @@ namespace Z0
     /// <summary>
     /// Specifies a <see cref='ApiMember'/> along with its binary represetnation
     /// </summary>
-    public readonly struct ApiMemberCapture : IComparable<ApiMemberCapture>
+    public readonly record struct ApiMemberCapture : IComparable<ApiMemberCapture>
     {
         public readonly ApiMember Member;
 

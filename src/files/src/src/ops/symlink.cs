@@ -29,7 +29,7 @@ namespace Z0
         }
 
         [Op]
-        public static Outcome<Arrow<FilePath>> symlink(FilePath link, FilePath dst, bool deleteExising = false)
+        public static Outcome symlink(FilePath link, FilePath dst, bool deleteExising = false)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace Z0
 
                 var outcome = Kernel32.CreateSymLink(link.Name, dst.Name, SymLinkKind.File);
                 if(outcome)
-                    return (true,(link,dst));
+                    return true;
                 else
                     return (false, FileLinkCreationFailed.Format(link, dst, EmptyString));
 

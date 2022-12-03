@@ -6,7 +6,7 @@ namespace Z0
 {
     public sealed class CmdPublic : WfAppCmd<CmdPublic>
     {
-        public static IApiContext<C> context<C>(IWfRuntime wf)
+        public static IApiServerContext<C> context<C>(IWfRuntime wf)
             where C : IApiService<C>, new()
         {
             GlobalServices.Instance.Inject(wf.XedRuntime());
@@ -17,7 +17,7 @@ namespace Z0
         {
             var providers = new IApiCmdProvider[]{
                 wf.AncestryChecks(),
-                wf.ApiCmdServer(),
+                wf.EnvCmd(),
                 wf.AsmCoreCmd(),
                 wf.AsmCmdSvc(),
                 wf.AsmCheckCmd(),
@@ -25,6 +25,7 @@ namespace Z0
                 wf.AsmDbCmd(),
                 wf.EcmaCmd(),
                 wf.LlvmCmd(),
+                wf.ArchiveCmd(),
                 //wf.RoslynCmd(),
                 wf.IntelInxCmd(),
                 wf.Machines(),

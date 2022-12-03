@@ -11,13 +11,16 @@ namespace Z0
 
         public readonly CoffHeader Coff;
 
+        public readonly CorHeader Core;
+
         public readonly ReadOnlySeq<PeSectionHeader> Sections;
 
         [MethodImpl(Inline)]
-        public FileModuleInfo(PeFileInfo info, CoffHeader coff, ReadOnlySeq<PeSectionHeader> sections)
+        public FileModuleInfo(PeFileInfo info, CoffHeader coff, CorHeader cor, ReadOnlySeq<PeSectionHeader> sections)
         {
-            Info = info;
+            Info = info;            
             Coff = coff;
+            Core = cor;
             Sections = sections;
         }
     }

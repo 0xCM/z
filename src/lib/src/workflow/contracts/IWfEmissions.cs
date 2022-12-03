@@ -11,6 +11,6 @@ namespace Z0
         ref readonly TableFlow<T> LogEmission<T>(in TableFlow<T> flow)
             where T : struct;
 
-        ref readonly FileWritten LogEmission(in FileWritten flow);
+        ref readonly FileEmission LogEmission(in FileEmission flow);
     }
 }

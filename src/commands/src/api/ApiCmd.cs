@@ -9,6 +9,32 @@ namespace Z0
 
     public partial class ApiCmd : AppService<ApiCmd>, IApiService
     {
+        public static string format(ApiCmdSpec src)
+        {
+            if(src.IsEmpty)
+                return EmptyString;
+
+            var dst = text.buffer();
+            dst.Append(src.Name);
+            var count = src.Args.Count;
+            for(ushort i=0; i<count; i++)
+            {
+                var arg = src.Args[i];
+                if(nonempty(arg.Name))
+                {
+                    dst.Append(Chars.Space);
+                    dst.Append(arg.Name);
+                }
+
+                if(nonempty(arg.Value))
+                {
+                    dst.Append(Chars.Space);
+                    dst.Append(arg.Value);
+                }
+            }
+            return dst.Emit();
+        }
+
         public static IApiDispatcher Dispatcher 
             => AppData.Value<IApiDispatcher>(nameof(IApiDispatcher));
 

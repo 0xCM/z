@@ -4,22 +4,18 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     public static class XSvc
     {
         class ServiceCache : AppServices<ServiceCache>
         {
-
              public ApiCmd ApiCmd(IWfRuntime wf)
                 => Service<ApiCmd>(wf);
 
-             public ApiCmdServer ApiCmdServer(IWfRuntime wf)
-                => Service<ApiCmdServer>(wf);
+             public IApiService EnvCmd(IWfRuntime wf)
+                => Service<EnvCmdService>(wf);
 
             public CsvTableGen CsvTableGen(IWfRuntime wf)
                 => Service<CsvTableGen>(wf);
-
         }
 
         static ServiceCache Services => ServiceCache.Instance;
@@ -27,8 +23,8 @@ namespace Z0
         public static ApiCmd ApiCmd(this IWfRuntime wf)
             => Services.ApiCmd(wf);
 
-        public static ApiCmdServer ApiCmdServer(this IWfRuntime wf)
-            => Services.ApiCmdServer(wf);
+        public static IApiService EnvCmd(this IWfRuntime wf)
+            => Services.EnvCmd(wf);
 
         public static CsvTableGen CsvTableGen(this IWfRuntime wf)
             => Services.CsvTableGen(wf);

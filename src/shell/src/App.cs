@@ -11,17 +11,17 @@ namespace Z0
             => new IApiCmdProvider[]{
                 wf.WfCmd(),
                 wf.BuildCmd(),
-                wf.ApiCmdServer(),
+                wf.EnvCmd(),
                 wf.ContextCmd(),
-
+                wf.ArchiveCmd(),
             };
 
         static int main(string[] args)
         {
             var result = 0;
-            using var app = ApiServer.shell<App>(false, args);
-            var context = ApiServer.context<AppShellCmd>(app.Wf, () => providers(app.Wf));
-            app.Commander = context.Commander;
+            using var app = ApiServer.shell<App,AppShellCmd>(false, args, providers);
+            // var context = ApiServer.context<AppShellCmd>(app.Wf, () => providers(app.Wf));
+            // app.Commander = context.Commander;
             try
             {
                 app.Run(args);

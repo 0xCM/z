@@ -22,7 +22,7 @@ namespace Z0
         public Machine Machine
         {
             [MethodImpl(Inline)]
-            get => first(recover<Machine>(core.bytes(Source)));
+            get => first(recover<Machine>(bytes(Source)));
         }
 
         /// <summary>

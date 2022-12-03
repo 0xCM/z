@@ -112,7 +112,7 @@ namespace Z0
             return ev;
         }
 
-        public EmittedFileEvent EmittedFile(FileWritten ran)
+        public EmittedFileEvent EmittedFile(FileEmission ran)
         {
             var ev = emittedFile(Source.Type, ran.Target);
             Raise(ev);

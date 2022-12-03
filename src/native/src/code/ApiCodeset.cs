@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct ApiCodeset
+    public readonly record struct ApiCodeset
     {
         [MethodImpl(Inline)]
         public static ApiCodeset create(FilePath location, Index<ApiCodeBlock> blocks)

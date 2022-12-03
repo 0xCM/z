@@ -9,7 +9,7 @@ namespace Z0
     /// <summary>
     /// Collects code derived from members declared by a specific operation host
     /// </summary>
-    public readonly struct ApiHostBlocks : ISortedIndex<ApiCodeBlock>
+    public readonly record struct ApiHostBlocks : ISortedIndex<ApiCodeBlock>
     {
         /// <summary>
         /// The defining host
@@ -25,7 +25,7 @@ namespace Z0
         public ApiHostBlocks(ApiHostUri host, ApiCodeBlock[] code)
         {
             Host = host;
-            Data = sys.require(code).OrderBy(x => x.BaseAddress);
+            Data = require(code).OrderBy(x => x.BaseAddress);
         }
 
         public PartId Part

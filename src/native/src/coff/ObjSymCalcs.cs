@@ -8,7 +8,7 @@ namespace Z0
     using static ObjSymKind;
 
     [ApiHost]
-    public readonly struct ObjSymCalcs
+    public readonly record struct ObjSymCalcs
     {
         [Op]
         public static ObjSymKind kind(ObjSymCode code)

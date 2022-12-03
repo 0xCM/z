@@ -5,7 +5,7 @@
 namespace Z0
 {
     [StructLayout(LayoutKind.Sequential), Record(TableId)]
-    public struct ApiHexPack
+    public record struct ApiHexPack
     {
         public const string TableId = "hexpack";
 
@@ -21,5 +21,8 @@ namespace Z0
 
         public string Format()
             => string.Format(FormatPattern, (ulong)Address, Index, Size, Data);
+
+        public override string ToString()
+            => Format();
     }
 }

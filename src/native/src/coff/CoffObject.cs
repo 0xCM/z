@@ -5,7 +5,7 @@
 namespace Z0
 {
     [StructLayout(LayoutKind.Sequential, Pack=1)]
-    public readonly struct CoffObject
+    public readonly record struct CoffObject
     {
         public readonly FilePath Path;
 
@@ -59,6 +59,9 @@ namespace Z0
             return dst.Emit();
         }
 
+        public override string ToString()
+            => Format();
+            
         public static CoffObject Empty
             => new CoffObject(FilePath.Empty, BinaryCode.Empty);
     }

@@ -55,11 +55,14 @@ namespace Z0
         public ExecToken NextExecToken()
             => Tokens.Open();
 
-        public ExecToken Completed(ExecFlow src)
-            => Tokens.Close(src.Token);
+        public ExecToken Completed(ExecFlow src, bool success = true)
+            => Tokens.Close(src.Token, success);
 
-        public ExecToken Completed<T>(ExecFlow<T> src)
-            => Tokens.Close(src.Token);
+        public ExecToken Completed(FileEmission src)
+            => Tokens.Close(src.Token, src.Succeeded);
+
+        public ExecToken Completed<T>(ExecFlow<T> src, bool success = true)
+            => Tokens.Close(src.Token, success);
 
         public void Dispose()
         {

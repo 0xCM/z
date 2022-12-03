@@ -5,7 +5,7 @@
 namespace Windows
 {
     [StructLayout(LayoutKind.Sequential, Pack=1)]
-    public struct IMAGE_NT_HEADERS64
+    public record struct IMAGE_NT_HEADERS64
     {
         public uint Signature;
 

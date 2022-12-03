@@ -20,9 +20,16 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
+        public FilePath AsFilePath()
+            => new FilePath(Name);
+
+        [MethodImpl(Inline)]
+        public FolderPath AsFolderPath()
+            => new FolderPath(Name);
+
+        [MethodImpl(Inline)]
         public string Format()
             => string.Format(FormatPattern, Kind, Name);
-
 
         PathPart IFsEntry.Name
             => Name;
@@ -59,8 +66,22 @@ namespace Z0
         public override string ToString()
             => Format();
 
+        [MethodImpl(Inline)]
+        public static implicit operator FsEntry(FilePath src)
+            => new FsEntry(src.Name, FileObjectKind.FilePath);
+
+        [MethodImpl(Inline)]
+        public static implicit operator FsEntry(FolderPath src)
+            => new FsEntry(src.Name, FileObjectKind.Directory);
+
+        [MethodImpl(Inline)]
+        public static explicit operator FolderPath(FsEntry src)
+            => new FolderPath(src.Name);
+
+        [MethodImpl(Inline)]
+        public static explicit operator FilePath(FsEntry src)
+            => new FilePath(src.Name);
 
         public static FsEntry Empty => new FsEntry(PathPart.Empty, 0);
     }
-
 }

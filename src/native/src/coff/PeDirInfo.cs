@@ -5,7 +5,7 @@
 namespace Z0
 {
     [StructLayout(LayoutKind.Sequential), Record(TableId)]
-    public struct PeDirInfo
+    public record struct PeDirInfo
     {
         public const string TableId = "pe.dirinfo";
 

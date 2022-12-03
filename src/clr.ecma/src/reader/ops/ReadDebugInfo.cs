@@ -5,14 +5,11 @@
 namespace Z0
 {
     using static EcmaTables;
-
+    using static sys;
     partial class EcmaReader
     {
         [MethodImpl(Inline), Op]
         public MethodDebugInformation ReadDebugInfo(MethodDebugInformationHandle src)
             => MD.GetMethodDebugInformation(src);
-
-        public ReadOnlySeq<MethodDebugInformation> ReadMethodDebugInfo()
-            => MethodDebugInfoHandles().Map(ReadDebugInfo);
     }
 }

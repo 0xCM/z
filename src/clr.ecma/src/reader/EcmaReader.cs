@@ -29,7 +29,7 @@ namespace Z0
             var counts = reader.GetRowCounts(indicies);
             var offsets = reader.GetTableOffsets(indicies);
             var sizes = reader.GetRowSizes(indicies);            
-            var name = reader.AssemblyName;
+            var name = reader._AssemblyName;
             for(byte j=0; j<counts.Count; j++)
             {
                 var table = (TableIndex)j;
@@ -220,10 +220,7 @@ namespace Z0
             get => MemorySegs.view<byte>(Segment);
         }
 
-        AssemblyDefinition ReadAssemblyDef()
-            => MD.GetAssemblyDefinition();
-        
-        public string AssemblyName
+        public string _AssemblyName
             => String(ReadAssemblyDef().Name);        
     }
 }

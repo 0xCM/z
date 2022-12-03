@@ -68,7 +68,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public PEMemoryBlock SectonData(DirectoryEntry src)
+        public PEMemoryBlock SectionData(DirectoryEntry src)
             => PE.GetSectionData(src.RelativeVirtualAddress);
 
         [MethodImpl(Inline)]
@@ -78,7 +78,7 @@ namespace Z0
         public ReadOnlySpan<byte> Resources
         {
             [MethodImpl(Inline)]
-            get => Read(SectonData(ResourceDirectory));
+            get => Read(SectionData(ResourceDirectory));
         }
 
         public static ClrMdMemory Empty

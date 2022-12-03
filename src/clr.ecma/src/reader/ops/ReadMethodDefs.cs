@@ -47,17 +47,18 @@ namespace Z0
             return ref dst;
         }
 
-        public ReadOnlySpan<MethodDef> ReadMethodDefInfo()
+        public ReadOnlySeq<MethodDef> ReadMethodDefInfo()
         {
             var rows = ReadMethodDefRows();
             var count = rows.Length;
-            var dst = span<MethodDef>(count);
+            var dst = alloc<MethodDef>(count);
+            var assembly = AssemblyName().SimpleName();
             for(var i=0; i<count; i++)
             {
                 ref readonly var row = ref skip(rows,i);
                 ref var info = ref seek(dst,i);
                 info.Token = row.Token;
-                info.Component = MD.GetAssemblyDefinition().GetAssemblyName().SimpleName();
+                info.Component = assembly;
                 info.Attributes = row.Attributes;
                 info.ImplAttributes = row.ImplAttributes;
                 info.Rva = row.Rva;
@@ -66,6 +67,9 @@ namespace Z0
             }
             return dst;
         }
+
+        public AssemblyName AssemblyName()
+            => MD.GetAssemblyDefinition().GetAssemblyName();
 
         public uint ReadMethodDefs(List<MethodDef> dst)
         {

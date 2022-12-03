@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Record(TableId)]
-    public struct ApiIndexStatus : IRecord<ApiIndexStatus>, ITextual
+    public record struct ApiIndexStatus : IRecord<ApiIndexStatus>, ITextual
     {
         public const string TableId = "api-index.status";
 
@@ -21,7 +21,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public string Format()
-            => string.Format(RpOps.PSx5, Parts.Length, Hosts.Length, MemberCount, Addresses.Length, Encoded.Count);
+            => string.Format(RP.PSx5, Parts.Length, Hosts.Length, MemberCount, Addresses.Length, Encoded.Count);
 
         public override string ToString()
             => Format();

@@ -8,13 +8,13 @@ namespace Z0
     public readonly struct Loggers
     {
         [MethodImpl(Inline), Op]
-        public static EmissionLogEntry entry(in FileWritten src, out EmissionLogEntry dst)
+        public static EmissionLogEntry entry(in FileEmission src, out EmissionLogEntry dst)
         {
             dst.ExecToken = src.Token;
             dst.Target = src.Target;
             dst.FileType = src.Target.Ext;
-            dst.Quantity = src.EmissionCount;
-            dst.EventType = src.EmissionCount == 0 ? EmissionEventKind.Emitting : EmissionEventKind.Emitted;
+            dst.Quantity = src.Count;
+            dst.EventType = src.Count == 0 ? EmissionEventKind.Emitting : EmissionEventKind.Emitted;
             return dst;
         }
 

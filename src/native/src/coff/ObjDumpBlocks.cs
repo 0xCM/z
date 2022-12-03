@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct ObjDumpBlocks
+    public readonly record struct ObjDumpBlocks
     {
         public readonly Index<ObjBlock> Blocks;
 

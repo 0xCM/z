@@ -151,10 +151,6 @@ namespace Z0
         public static H operator-(H x, H y)
             => new H((K)(x.Value - y.Value));
 
-        // [MethodImpl(Inline)]
-        // public static H operator-(H x)
-        //     => new H(math.negate(x.Value));
-
         [MethodImpl(Inline)]
         public static bool operator <(H a, H b)
             => a.Value < b.Value;

@@ -39,10 +39,10 @@ namespace Z0
         ExecToken Ran<T>(ExecFlow<T> flow, [CallerName] string msg = null)
             => Wf.Ran(HostType, flow.WithMsg(msg));
 
-        FileWritten EmittingFile(FilePath dst)
+        FileEmission EmittingFile(FilePath dst)
             => Wf.EmittingFile(HostType, dst);
 
-        ExecToken EmittedFile(FileWritten flow, Count count)
+        ExecToken EmittedFile(FileEmission flow, Count count)
             => Wf.EmittedFile(HostType, flow, count);
 
         TableFlow<T> EmittingTable<T>(FilePath dst)

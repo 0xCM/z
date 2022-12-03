@@ -12,7 +12,7 @@ namespace Z0
             const string TableId = "ecma.method.defs";
 
             [Render(32)]
-            public string Name;
+            public @string Name;
 
             [Render(12)]
             public EcmaToken Token;
@@ -24,13 +24,15 @@ namespace Z0
             public EcmaSig CliSig;
 
             [Render(32)]
-            public string Component;
+            public @string Component;
 
             [Render(32)]
             public MethodImplAttributes ImplAttributes;
 
             [Render(1)]
             public MethodAttributes Attributes;
+
+            public static MethodDef Empty => new ();
         }
     }
 }

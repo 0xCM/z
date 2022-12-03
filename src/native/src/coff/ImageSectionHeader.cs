@@ -3,7 +3,7 @@ namespace Z0
     using Windows;
 
     [StructLayout(LayoutKind.Sequential, Pack=1)]
-    public struct ImageSectionHeader
+    public record struct ImageSectionHeader
     {
         public CoffSymbolName Name;
 

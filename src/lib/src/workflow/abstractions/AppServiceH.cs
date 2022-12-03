@@ -64,10 +64,10 @@ namespace Z0
         protected void Write<T>(T content)
             => Emitter.Write(content);
 
-        protected FileWritten EmittingFile(FilePath dst)
+        protected FileEmission EmittingFile(FilePath dst)
             => Emitter.EmittingFile(dst);
 
-        public ExecToken EmittedFile(FileWritten flow, Count count)
+        public ExecToken EmittedFile(FileEmission flow, Count count)
             => Emitter.EmittedFile(flow,count);
 
         protected TableFlow<T> EmittingTable<T>(FilePath dst)

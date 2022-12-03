@@ -6,7 +6,7 @@ namespace Z0
 {
     using api = Includes;
 
-    public readonly struct IncludePath : ITextual, IIndex<FolderPath>
+    public readonly struct IncludePath : IIndex<FolderPath>
     {
         internal readonly Index<FolderPath> Data;
 

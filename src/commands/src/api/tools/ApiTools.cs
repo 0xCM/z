@@ -14,8 +14,6 @@ namespace Z0
 
         public ReadOnlySpan<Key> Known => Lookup.Keys;
 
-        //public ReadOnlySpan<ApiTool> Known => Lookup.Values;
-
         static bool tool(Key key, out ApiTool tool)
             => Lookup.Find(key, out tool);
 

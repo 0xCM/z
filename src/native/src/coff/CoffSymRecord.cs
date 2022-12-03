@@ -7,7 +7,7 @@ namespace Z0
     using W = AsmColWidths;
 
     [Record(TableId), StructLayout(LayoutKind.Sequential,Pack=1)]
-    public struct CoffSymRecord : IComparable<CoffSymRecord>
+    public record struct CoffSymRecord : IComparable<CoffSymRecord>
     {
         const string TableId = "coff.symbols";
 

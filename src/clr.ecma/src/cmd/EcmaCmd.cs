@@ -7,6 +7,7 @@ namespace Z0
     using System.Linq;
 
     using static sys;
+    using static Env;
 
     class EcmaCmd : WfAppCmd<EcmaCmd>
     {
@@ -123,6 +124,27 @@ namespace Z0
                 else
                     EcmaEmitter.EmitMetadump(src, EcmaArchive(src));
             }
+        }
+
+        [CmdOp("pe/info")]
+        void ExportPeInfo(CmdArgs args)
+        {
+            var src = Archives.archive(args[0]);
+
+            var dst = ShellData.Path(FS.file($"{Archives.identifier(src.Root)}.peinfo", FS.ext("records")));
+            var flow = Channel.EmittingFile(dst);
+            var counter = 0u;
+            var type = typeof(FileModuleInfo).GetType().AssemblyQualifiedName;
+            using var writer = dst.Writer();
+            iter(src.Enumerate(true, FileKind.Exe, FileKind.Dll), path => {                
+                using var reader = PeReader.create(path);
+                var info = reader.Describe();
+                writer.AppendLineFormat("{0,-120} | {1:D5} | {2}", path, counter++, type);
+                writer.AppendLine(RP.PageBreak180);
+                writer.AppendLine(info);     
+                writer.AppendLine();           
+            });
+            Channel.EmittedFile(flow);
         }
     }
 }

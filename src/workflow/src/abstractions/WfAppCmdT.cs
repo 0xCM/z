@@ -47,6 +47,6 @@ namespace Z0
             => ApiCmd.RunCmd(name);
 
         public virtual void Loop()
-            => ApiLoop.start(Channel).Wait();
+            => CmdLoop.start(Channel).Wait();
    }
 }

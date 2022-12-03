@@ -102,25 +102,25 @@ namespace Z0
         public ExecToken Ran<T, D>(ExecFlow<T> src, D data, FlairKind flair = FlairKind.Ran)
             => Wf.Ran(src, data, flair);
 
-        public FileWritten EmittingFile(FilePath dst)
+        public FileEmission EmittingFile(FilePath dst)
             => Wf.EmittingFile(Host, dst);
 
-        public ExecToken EmittedFile(FileWritten flow, Count count)
+        public ExecToken EmittedFile(FileEmission flow, Count count)
             => Wf.EmittedFile(Host, flow, count);
 
-        public ExecToken EmittedFile(FileWritten flow, int count)
+        public ExecToken EmittedFile(FileEmission flow, int count)
             => Wf.EmittedFile(Host, flow, count);
 
-        public ExecToken EmittedFile(FileWritten flow, uint count)
+        public ExecToken EmittedFile(FileEmission flow, uint count)
             => Wf.EmittedFile(Host, flow, count);
 
-        public ExecToken EmittedFile<T>(FileWritten flow, T msg)
+        public ExecToken EmittedFile<T>(FileEmission flow, T msg)
             => Wf.EmittedFile(flow, msg);
 
-        public ExecToken EmittedFile(FileWritten flow)
+        public ExecToken EmittedFile(FileEmission flow)
             => Wf.EmittedFile(flow);
 
-        public ExecToken EmittedBytes(FileWritten flow, ByteSize size)
+        public ExecToken EmittedBytes(FileEmission flow, ByteSize size)
             => EmittedFile(flow, AppMsg.EmittedBytes.Capture(size, flow.Target));
 
         public TableFlow<T> EmittingTable<T>(FilePath dst)
