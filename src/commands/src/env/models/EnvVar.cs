@@ -18,13 +18,13 @@ namespace Z0
         public readonly EnvVarKind Kind;
 
         [Render(64)]
-        public readonly string VarName;
+        public readonly @string VarName;
 
         /// <summary>
         /// The environment variable value
         /// </summary>
         [Render(1)]
-        public readonly string VarValue;
+        public readonly @string VarValue;
 
         [MethodImpl(Inline)]
         public EnvVar(string name, string value)

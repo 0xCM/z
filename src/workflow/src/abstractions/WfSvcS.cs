@@ -9,6 +9,8 @@ namespace Z0
     public abstract class WfSvc<S> : AppService<S>
         where S : WfSvc<S>, new()
     {
+        protected static AppSettings AppSettings => AppSettings.Default;
+        
         ConcurrentDictionary<ProjectId, ProjectContext> _Context = new();
 
         public FileCatalog ProjectFiles { get; protected set; }

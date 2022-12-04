@@ -45,7 +45,6 @@ namespace Z0
                     Channel.Warn($"Unable to load {file}");
                 }
             }, true);            
-
         }
 
         public void EmitLiterals(Assembly[] src)

@@ -11,6 +11,6 @@ namespace Z0
 
         Type Source {get;}
 
-        Index<CmdField> Fields {get;}
+        ReadOnlySeq<CmdField> Fields {get;}
     }
 }

@@ -5,15 +5,12 @@
 
 namespace Z0
 {
-    using Commands;
-    using static ArchiveExecutors;
-
-    using static ArchiveDomain.CommandNames;
-    using static ArchiveDomain;
-
-    using static sys;
     using System.IO.Compression;
     using Microsoft.Extensions.FileSystemGlobbing;
+    using Commands;
+
+    using static ArchiveExecutors;
+    using static sys;
 
     public class Archives : ApiModule<Archives>
     {        
@@ -72,7 +69,7 @@ namespace Z0
             var src = AppSettings.DbRoot().Scoped(folder).Root;
             var name = src.FolderName.Format();
             var file = FS.file($"{scope}.{name}", FileKind.Zip);
-            Archives.zip(channel, src, AppDb.Archive(scope).Path(file));
+            zip(channel, src, AppDb.Archive(scope).Path(file));
         }
 
         public static void copy(IWfChannel channel, CmdArgs args)
@@ -84,19 +81,15 @@ namespace Z0
         public static IModuleArchive modules(FolderPath src)
             => new ModuleArchive(src);
 
-        [Cmd(FilesCopy)]
         public record struct CopyFiles(FolderPath Source, FolderPath Target) 
             : ICmdFlow<CopyFiles,FolderPath,FolderPath> {}
 
-        [Cmd(FilesPack)]
         public record struct PackFolder(FolderPath Source, FileUri Target) 
             : ICmdFlow<PackFolder,FolderPath,FileUri> {}
 
-        [MethodImpl(Inline), CmdFx(FilesCopy)]
         public static CopyFiles copy(FolderPath src, FolderPath dst)
             => new (src,dst);        
 
-        [MethodImpl(Inline), CmdFx(FilesPack)]
         public static PackFolder pack(FolderPath src, FileUri dst)
             => new (src,dst);        
 
@@ -115,7 +108,7 @@ namespace Z0
 
         public static void catalog(IWfChannel channel, CmdArgs args)
         {
-            ArchiveDomain.cmd(args, out CatalogFiles cmd);
+            CatalogFiles.bind(args, out CatalogFiles cmd);
             var name = identifier(cmd.Source);
             var list = cmd.Target + FS.file(name, FileKind.List);
             var src = cmd.Match.IsEmpty ? DbArchive.enumerate(cmd.Source,"*.*", true) : DbArchive.enumerate(cmd.Source, true, cmd.Match);

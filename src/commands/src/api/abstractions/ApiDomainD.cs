@@ -5,12 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public abstract class ApiDomain
-    {
-
-    }
-
-    public abstract class ApiDomain<D> : ApiDomain
+    public abstract class ApiDomain<D>
         where D : ApiDomain<D>,new()
     {
         [Cmd]

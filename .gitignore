@@ -19,3 +19,4 @@ deps/win-x64
 .dotnet/
 **/.antlr/**
 **/.data/**
+build

@@ -5,11 +5,10 @@
 namespace Z0
 {
     using Windows;
-    
     using static sys;
 
     [ApiHost]
-    public class Env : ApiModule<Env>
+    public class Env
     {
         public static IDbArchive ShellData => Env.cd().DbArchive().Scoped(".data");
 

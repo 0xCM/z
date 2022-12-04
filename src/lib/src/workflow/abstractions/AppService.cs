@@ -36,7 +36,6 @@ namespace Z0
 
         Files _Files;
 
-        protected IApiCatalog ApiCatalog => Wf.ApiCatalog;
 
         protected Files Files()
             => _Files;
@@ -98,8 +97,6 @@ namespace Z0
             _AppData = Z0.AppData.get();
             ContextValues = new();
         }
-
-        protected static AppSettings AppSettings => AppSettings.Default;
 
         protected static void ContextValue(string name, string value)
             => ContextValues[name] = value;

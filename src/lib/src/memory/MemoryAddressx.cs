@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using A = MemoryAddress;
-
     partial class XTend
     {
         public static Address32 Lo(this MemoryAddress src)
@@ -30,6 +28,4 @@ namespace Z0
         public static Address16 Quadrant(this MemoryAddress src, N3 n)
             => src.Hi().Hi;
     }
-
-
 }

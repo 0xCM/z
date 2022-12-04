@@ -58,6 +58,15 @@ namespace Z0
         void Version()
             => Channel.Row($"[z0.{ExecutingPart.Name}-v{ExecutingPart.Assembly.AssemblyVersion()}]({ExecutingPart.Assembly.Path().ToUri()})");
 
+        [CmdOp("types/systems")]
+        void TypeSys()
+        {
+            var src = TypeSystems.api.typedefs(ApiMd.Parts);
+            iter(src, s => {
+                Channel.Row(s);
+            });
+        }
+
         [CmdOp("help")]
         void GetHelp(CmdArgs args)
         {

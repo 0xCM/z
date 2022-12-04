@@ -37,7 +37,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static Span<byte> edit(in MemoryFile src)
+        public static Span<byte> edit(MemoryFile src)
             => cover<byte>(src.BaseAddress, src.FileSize);
 
         [MethodImpl(Inline), Op]
@@ -58,7 +58,7 @@ namespace Z0
         /// </summary>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static Span<T> edit<T>(in MemoryFile src)
+        public static Span<T> edit<T>(MemoryFile src)
             => cover<T>(src.BaseAddress, src.FileSize/size<T>());
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Z0
         /// <param name="index">The number of cells to advance from the base address</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static Span<T> slice<T>(in MemoryFile src, uint index)
+        public static Span<T> slice<T>(MemoryFile src, uint index)
             => sys.cover<T>(src.BaseAddress, src.FileSize/size<T>());
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Z0
         /// <param name="count">The number of cells in the returnd squence</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static Span<T> slice<T>(in MemoryFile src, uint index, uint count)
+        public static Span<T> slice<T>(MemoryFile src, uint index, uint count)
             => sys.slice(edit<T>(src), index, count);
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Z0
         /// <param name="index">The number of cells to advance from the base address</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref T seek<T>(in MemoryFile src, uint index)
+        public static ref T seek<T>(MemoryFile src, uint index)
             => ref sys.first(slice<T>(src, index));
 
         [MethodImpl(Inline), Op]
@@ -96,7 +96,7 @@ namespace Z0
             => sys.cover<byte>(@base + offset, size);
 
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<byte> view(in MemoryFile src)
+        public static ReadOnlySpan<byte> view(MemoryFile src)
             => cover<byte>(src.BaseAddress, src.FileSize);
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Z0
         /// </summary>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ReadOnlySpan<T> view<T>(in MemoryFile src)
+        public static ReadOnlySpan<T> view<T>(MemoryFile src)
             => cover<T>(src.BaseAddress, src.FileSize/size<T>());
 
         /// <summary>
@@ -113,11 +113,11 @@ namespace Z0
         /// <param name="index">The number of cells to advance from the base address</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ReadOnlySpan<T> view<T>(in MemoryFile src, uint index)
+        public static ReadOnlySpan<T> view<T>(MemoryFile src, uint index)
             => sys.slice(view<T>(src), index);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ReadOnlySpan<T> view<T>(in MemoryFile src, uint index, uint count)
+        public static ReadOnlySpan<T> view<T>(MemoryFile src, uint index, uint count)
             => sys.slice(view<T>(src), index, count);
 
         [Op]

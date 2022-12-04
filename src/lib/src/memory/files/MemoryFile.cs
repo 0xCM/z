@@ -10,6 +10,47 @@ namespace Z0
 
     using api = MemoryFiles;
 
+    partial class XTend
+    {
+        /// <summary>
+        /// Presents file content as a sequence of <see cref='byte'/> cells
+        /// </summary>
+        [MethodImpl(Inline)]
+        public static Span<byte> Edit(this MemoryFile src)
+            => api.edit(src);
+
+        /// <summary>
+        /// Presents a single cell from the underlying source located at a <typeparamref name='T'/> measured offset
+        /// </summary>
+        /// <param name="index">The number of cells to advance from the base address</param>
+        /// <typeparam name="T">The cell type</typeparam>
+        [MethodImpl(Inline)]
+        public unsafe static ref T Seek<T>(this MemoryFile src, uint index)
+            where T : unmanaged
+                => ref sys.seek<T>((T*)src.Base, index);
+
+        /// <summary>
+        /// Presents file content segment as a readonly sequence of <typeparamref name='T'/> cells beginning
+        /// at a <typeparamref name='T'/> measured offset and continuing to the end of the file
+        /// </summary>
+        /// <param name="index">The number of cells to advance from the base address</param>
+        /// <typeparam name="T">The cell type</typeparam>
+        [MethodImpl(Inline)]
+        public static Span<T> Slice<T>(this MemoryFile src, uint index)
+            => api.slice<T>(src, index);
+
+        /// <summary>
+        /// Presents file content as a <typeparamref name='T'/> sequence of length <paramref name='count'/> beginning at a <typeparamref name='T'/> measured offset
+        /// </summary>
+        /// <param name="src">The data source</param>
+        /// <param name="index">The file-relative T-measured index</param>
+        /// <param name="count">The number of cells in the returned squence</param>
+        /// <typeparam name="T">The cell type</typeparam>
+        [MethodImpl(Inline)]
+        public static Span<T> Slice<T>(this MemoryFile src, uint index, uint count)
+            => api.slice<T>(src, index, count);
+    }
+
     public unsafe class MemoryFile : IMemoryFile<MemoryFile>
     {
         readonly MemoryFileSpec Spec;
@@ -18,7 +59,7 @@ namespace Z0
 
         readonly MemoryMappedFile File;
 
-        byte* Base;
+        internal byte* Base;
 
         public readonly ByteSize FileSize;
 
@@ -113,62 +154,17 @@ namespace Z0
         public Span<byte> Edit(ulong offset, ByteSize size)
             => edit(BaseAddress, offset, size);
 
-        /// <summary>
-        /// Presents file content as a sequence of <see cref='byte'/> cells
-        /// </summary>
-        [MethodImpl(Inline)]
-        public Span<byte> Edit()
-            => api.edit(this);
-
-        /// <summary>
-        /// Presents file content as a sequence of <typeparamref name='T'/> cells
-        /// </summary>
-        /// <typeparam name="T">The cell type</typeparam>
-        [MethodImpl(Inline)]
-        public Span<T> Edit<T>()
-            => api.edit<T>(this);
-
-        /// <summary>
-        /// Presents a single cell from the underlying source located at a <typeparamref name='T'/> measured offset
-        /// </summary>
-        /// <param name="index">The number of cells to advance from the base address</param>
-        /// <typeparam name="T">The cell type</typeparam>
-        [MethodImpl(Inline)]
-        public ref T Seek<T>(uint index)
-            where T : unmanaged
-                => ref core.seek<T>((T*)Base, index);
-
-        /// <summary>
-        /// Presents file content segment as a readonly sequence of <typeparamref name='T'/> cells beginning
-        /// at a <typeparamref name='T'/> measured offset and continuing to the end of the file
-        /// </summary>
-        /// <param name="index">The number of cells to advance from the base address</param>
-        /// <typeparam name="T">The cell type</typeparam>
-        [MethodImpl(Inline)]
-        public Span<T> Slice<T>(uint index)
-            => api.slice<T>(this, index);
-
-        /// <summary>
-        /// Presents file content as a <typeparamref name='T'/> sequence of length <paramref name='count'/> beginning at a <typeparamref name='T'/> measured offset
-        /// </summary>
-        /// <param name="src">The data source</param>
-        /// <param name="index">The file-relative T-measured index</param>
-        /// <param name="count">The number of cells in the returned squence</param>
-        /// <typeparam name="T">The cell type</typeparam>
-        [MethodImpl(Inline)]
-        public Span<T> Slice<T>(uint index, uint count)
-            => api.slice<T>(this, index, count);
 
         public ref byte this[uint offset]
         {
             [MethodImpl(Inline)]
-            get => ref Seek<byte>(offset);
+            get => ref this.Seek<byte>(offset);
         }
 
         public ref byte this[int offset]
         {
             [MethodImpl(Inline)]
-            get => ref Seek<byte>((uint)offset);
+            get => ref this.Seek<byte>((uint)offset);
         }
 
         [MethodImpl(Inline)]

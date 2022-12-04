@@ -29,12 +29,9 @@ namespace Z0
         [Op]
         public static CmdUri uri(MethodInfo src)
         {
-            var kind = CmdKind.App;
             var host = src.DeclaringType;
-            var part = host.Assembly.PartName().Format();
-            var attrib = src.Tag<CmdOpAttribute>();
-            var name = attrib.MapValueOrElse(a => a.Name, () => src.DisplayName());
-            return Cmd.uri(kind,part, host.DisplayName(), name);        
+            var name = src.Tag<CmdOpAttribute>().MapValueOrElse(a => a.Name, () => src.DisplayName());
+            return Cmd.uri(CmdKind.App, host.Assembly.PartName().Format(), host.DisplayName(), name);        
         }
     }
 }

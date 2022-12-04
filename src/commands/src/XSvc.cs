@@ -12,7 +12,7 @@ namespace Z0
                 => Service<ApiCmd>(wf);
 
              public IApiService EnvCmd(IWfRuntime wf)
-                => Service<EnvCmdService>(wf);
+                => Service<EnvCmd>(wf);
 
             public CsvTableGen CsvTableGen(IWfRuntime wf)
                 => Service<CsvTableGen>(wf);

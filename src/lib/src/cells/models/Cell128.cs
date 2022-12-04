@@ -61,7 +61,6 @@ namespace Z0
             get => Empty;
         }
 
-
         public Vector128<byte> V8u
         {
             [MethodImpl(Inline)]

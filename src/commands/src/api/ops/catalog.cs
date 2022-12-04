@@ -47,7 +47,7 @@ namespace Z0
             {
                 var type = Require.notnull(skip(src,i));
                 var instance = Require.notnull(Activator.CreateInstance(type.Source));
-                var values = ClrFields.values(instance, type.Fields.Select(x => x.Source));
+                var values = ClrFields.values(instance, type.Fields.Select(x => x.Source).Storage);
                 for(var j=0; j<type.FieldCount; j++,k++)
                 {
                     ref var row = ref seek(dst,k);

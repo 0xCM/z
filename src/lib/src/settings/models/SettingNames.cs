@@ -32,5 +32,7 @@ namespace Z0
         public const string SdkRoot = nameof(SdkRoot);
 
         public const string PkgRoot = nameof(PkgRoot);
+
+        public const string Dashboard = nameof(Dashboard);
     }
 }

@@ -15,15 +15,15 @@ namespace Z0
 
         readonly MemoryFile Source;
 
-        public readonly PEReader PE;
+        readonly PEReader PE;
 
-        public readonly MetadataReader MD;
+        readonly MetadataReader MD;
 
-        public readonly ulong ImageSize;
+        readonly ulong ImageSize;
 
-        public readonly Ptr<byte> BasePointer;
+        readonly Ptr<byte> BasePointer;
 
-        public readonly PEMemoryBlock MtadataBlock;
+        readonly PEMemoryBlock MtadataBlock;
 
         public ClrMdMemory(FilePath src)
         {

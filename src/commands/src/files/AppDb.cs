@@ -8,6 +8,7 @@ namespace Z0
 
     using Names = SettingNames;
 
+
     public class AppDb : IAppDb
     {
         public static readonly Timestamp Ts = sys.timestamp();

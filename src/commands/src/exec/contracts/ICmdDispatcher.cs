@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IApiDispatcher : IActor
+    public interface IApiDispatcher
     {
         Outcome Dispatch(string action, CmdArgs args);
 

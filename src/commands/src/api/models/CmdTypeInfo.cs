@@ -10,7 +10,7 @@ namespace Z0
 
         public readonly Type Source;
 
-        public readonly Index<CmdField> Fields;
+        public readonly ReadOnlySeq<CmdField> Fields;
 
         [MethodImpl(Inline)]
         public CmdTypeInfo(string name, Type type, CmdField[] fields)
@@ -35,7 +35,7 @@ namespace Z0
         Type ICmdTypeInfo.Source
             => Source;
 
-        Index<CmdField> ICmdTypeInfo.Fields
+        ReadOnlySeq<CmdField> ICmdTypeInfo.Fields
             => Fields;
 
         @string ICmdTypeInfo.CmdName

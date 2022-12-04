@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
     using static Env;
 
-    sealed class EnvCmdService : ApiService<EnvCmdService>
+    sealed class EnvCmd : ApiService<EnvCmd>
     {    
         [CmdOp("api/commands")]
         void EmitCommands()
@@ -23,7 +23,7 @@ namespace Z0
 
         [CmdOp("env/tools")]
         void EnvTools()
-            => ApiTools.emit(Channel, ApiTools.Service.Known, ShellData);
+            => Z0.EnvTools.emit(Channel, Z0.EnvTools.Service.Known, ShellData);
 
         [CmdOp("env/stack")]
         void Stack()

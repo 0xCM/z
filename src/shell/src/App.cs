@@ -19,9 +19,7 @@ namespace Z0
         static int main(string[] args)
         {
             var result = 0;
-            using var app = ApiServer.shell<App,AppShellCmd>(false, args, providers);
-            // var context = ApiServer.context<AppShellCmd>(app.Wf, () => providers(app.Wf));
-            // app.Commander = context.Commander;
+            using var app = ApiServer.shell<App,AppCmd>(false, args, providers);
             try
             {
                 app.Run(args);
@@ -39,7 +37,7 @@ namespace Z0
             => main(args);
     }
 
-    sealed class AppShellCmd : WfAppCmd<AppShellCmd>
+    sealed class AppCmd : WfAppCmd<AppCmd>
     {
 
     }

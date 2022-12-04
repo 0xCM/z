@@ -19,11 +19,12 @@ namespace Z0.Commands
         where C : Command<C>, new()
     {
         
-        public static C Empty => new();
         public override CmdId CmdId 
             => CmdId.identify<C>();
         
         public override string Format()
             => Commands.format((C)this);
+
+        public static C Empty => new();
     }
 }

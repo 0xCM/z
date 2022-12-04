@@ -8,6 +8,7 @@ namespace Z0
 
     class ContextCmd : WfAppCmd<ContextCmd>
     {
+        
         [CmdOp("process/memory")]
         Outcome ShowMemHex(CmdArgs args)
         {
