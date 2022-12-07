@@ -174,29 +174,29 @@ namespace Z0
             var output = subdir + src.FileName.ChangeExtension(outkind(name));
             var source = src.Format(PS);
             var target = output.Format(PS);
-            var pattern = ScriptTemplate.Empty;
+            var pattern = PScript.Empty;
             switch(name)
             {
                 case CmdName.EmitAsm:
-                    pattern = ScriptTemplate.create("dumpbin.disasm", string.Format("dumpbin /DISASM:{2} /OUT:{1} {0}", source, target, "NOBYTES"));
+                    pattern = PScript.create("dumpbin.disasm", string.Format("dumpbin /DISASM:{2} /OUT:{1} {0}", source, target, "NOBYTES"));
                     break;
                 case CmdName.EmitRawData:
-                    pattern = ScriptTemplate.create("dumpbin.rawdata", string.Format("dumpbin /RAWDATA:1,32 /OUT:{1} {0}", source, target));
+                    pattern = PScript.create("dumpbin.rawdata", string.Format("dumpbin /RAWDATA:1,32 /OUT:{1} {0}", source, target));
                     break;
                 case CmdName.EmitHeaders:
-                    pattern = ScriptTemplate.create("dumpbin.headers", string.Format("dumpbin /HEADERS /OUT:{1} {0}", source, target));
+                    pattern = PScript.create("dumpbin.headers", string.Format("dumpbin /HEADERS /OUT:{1} {0}", source, target));
                     break;
                 case CmdName.EmitRelocations:
-                    pattern = ScriptTemplate.create("dumpbin.relocations", string.Format("dumpbin /RELOCATIONS /OUT:{1} {0}", src.Format(PS), output.Format(PS)));
+                    pattern = PScript.create("dumpbin.relocations", string.Format("dumpbin /RELOCATIONS /OUT:{1} {0}", src.Format(PS), output.Format(PS)));
                     break;
                 case CmdName.EmitExports:
-                    pattern = ScriptTemplate.create("dumpbin.exports", string.Format("dumpbin /EXPORTS /OUT:{1} {0}", source, target));
+                    pattern = PScript.create("dumpbin.exports", string.Format("dumpbin /EXPORTS /OUT:{1} {0}", source, target));
                     break;
                 case CmdName.EmitLoadConfig:
-                    pattern = ScriptTemplate.create("dumpbin.loadconfig", string.Format("dumpbin /LOADCONFIG /OUT:{1} {0}", src.Format(PS), output.Format(PS)));
+                    pattern = PScript.create("dumpbin.loadconfig", string.Format("dumpbin /LOADCONFIG /OUT:{1} {0}", src.Format(PS), output.Format(PS)));
                     break;
             }
-            return ScriptTemplate.expr(pattern);
+            return PScript.expr(pattern);
         }
 
         public static FileName scriptfile(FileKind kind)

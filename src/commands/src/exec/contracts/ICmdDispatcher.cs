@@ -11,7 +11,7 @@ namespace Z0
 
         Outcome Dispatch(string action);
 
-        IApiOps Commands {get;}
+        IApiEfectors Commands {get;}
 
         PartName Controller 
             => ExecutingPart.Name;

@@ -57,11 +57,13 @@ namespace Z0
             Channel.TableEmit(refs, DataTarget.Path(name, FileKind.Csv));            
         }   
 
-
         [CmdOp("clr/types")]
         void ListTypes(CmdArgs args)
-            => ApiMd.Emitter(Archives.archive(DataTarget.Root)).EmitTypeLists(AssemblyFiles.managed(FS.dir(args[0])));
-
+        {
+            var dir = FS.dir(args[0]);
+            var src = Archives.modules(dir).Assemblies();
+            ApiMd.Emitter(Archives.archive(DataTarget.Root)).EmitTypeLists(src);
+        }
 
         [CmdOp("clr/dump")]
         void EcmaEmitMetaDumps(CmdArgs args)

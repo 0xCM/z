@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class TextParametrics
+    partial class PText
     {
         public class PT<T0> : PText
         {

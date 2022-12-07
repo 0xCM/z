@@ -17,7 +17,7 @@ namespace Z0
         [Op]
         public static void render(ListedFiles src, ITextEmitter dst)
         {
-            var formatter = CsvChannels.formatter<ListedFile>();
+            var formatter = Tables.formatter<ListedFile>();
             dst.AppendLine(formatter.FormatHeader());
             for(var i=0u; i<src.Count; i++)
                 dst.AppendLine(formatter.Format(src[i]));

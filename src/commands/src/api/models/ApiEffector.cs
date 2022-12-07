@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed class Effector
+    public sealed class ApiEffector
     {
         public readonly @string CmdName;
 
@@ -17,7 +17,7 @@ namespace Z0
         public readonly CmdUri Uri;
 
         [MethodImpl(Inline)]
-        public Effector(string name, CmdActorKind kind, MethodInfo method, object host)
+        public ApiEffector(string name, CmdActorKind kind, MethodInfo method, object host)
         {
             CmdName = name;
             Kind = kind;

@@ -219,15 +219,15 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public CmdExecStatus Status()
+        public ExecStatus Status()
         {
-            var dst = new CmdExecStatus();
+            var dst = new ExecStatus();
             Status(ref dst);
             return dst;
         }
 
         [MethodImpl(Inline)]
-        ref CmdExecStatus Status(ref CmdExecStatus dst)
+        ref ExecStatus Status(ref ExecStatus dst)
         {
             dst.Id = Process.Id;
             dst.StartTime = Process.StartTime;
@@ -323,7 +323,7 @@ namespace Z0
         /// Wait for a started process to complete (HasExited will be <see langword="true"/> on return)
         /// </summary>
         /// <returns>Wait returns that 'this' pointer.</returns>
-        public CmdExecStatus Wait()
+        public ExecStatus Wait()
         {
             bool waitReturned = false;
             bool killed = false;

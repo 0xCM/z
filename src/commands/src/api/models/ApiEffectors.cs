@@ -4,22 +4,22 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class ApiOps : IApiOps
+    public class ApiEffectors : IApiEfectors
     {
-        readonly Dictionary<string,Effector> Lookup;
+        readonly Dictionary<string,ApiEffector> Lookup;
 
-        readonly ReadOnlySeq<Effector> CmdDefs;
+        readonly ReadOnlySeq<ApiEffector> CmdDefs;
 
-        internal ApiOps(Dictionary<string,Effector> src)
+        internal ApiEffectors(Dictionary<string,ApiEffector> src)
         {
             Lookup = src;
             CmdDefs = src.Values.ToSeq();
         }
 
-        public bool Find(string spec, out Effector runner)
+        public bool Find(string spec, out ApiEffector runner)
             => Lookup.TryGetValue(spec, out runner);
 
-        public ref readonly ReadOnlySeq<Effector> Defs
+        public ref readonly ReadOnlySeq<ApiEffector> Defs
         {
             [MethodImpl(Inline)]
             get => ref CmdDefs;

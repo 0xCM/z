@@ -76,6 +76,6 @@ namespace Z0
         /// Wait for a started process to complete (HasExited will be <see langword="true"/> on return)
         /// </summary>
         /// <returns>Wait returns that 'this' pointer.</returns>
-        CmdExecStatus Wait();
+        ExecStatus Wait();
     }
 }

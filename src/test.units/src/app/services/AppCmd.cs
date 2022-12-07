@@ -17,7 +17,7 @@ namespace Z0
         void Hello()
         {
             var src = BitMask.masks(typeof(BitMaskLiterals));
-            var formatter = CsvChannels.formatter<BitMaskLiterals>();
+            var formatter = Tables.formatter<BitMaskLiterals>();
             for(var i=0; i<src.Count; i++)
             {
                 ref readonly var mask = ref src[i];

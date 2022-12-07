@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using api = CsvChannels;
+    using api = Tables;
 
     public class CsvFormatter : ICsvFormatter
     {

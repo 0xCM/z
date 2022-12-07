@@ -20,7 +20,7 @@ namespace Z0
             void Exec()
             {
                 var path = dst.Metadata(EcmaSections.Methods).PrefixedTable<MethodDef>(src.GetSimpleName());
-                var formatter = CsvChannels.formatter<MethodDef>();
+                var formatter = Tables.formatter<MethodDef>();
                 var flow = EmittingTable<MethodDef>(path);
                 using var writer = path.Writer();
                 writer.WriteLine(formatter.FormatHeader());

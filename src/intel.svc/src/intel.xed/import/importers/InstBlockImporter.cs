@@ -63,7 +63,7 @@ namespace Z0
             {
                 const string Pattern = "{0,-6} | {1,-12} | {2,-12} | {3,-12} | {4,-12} | {5,-6} | {6,-64} | {7}";
                 var dst = XedPaths.Imports().Table<InstBlockLineSpec>();
-                var formatter = CsvChannels.formatter<InstBlockLineSpec>();
+                var formatter = Tables.formatter<InstBlockLineSpec>();
                 var emitting = EmittingTable<InstBlockLineSpec>(dst);
                 using var writer = dst.AsciWriter();
                 writer.WriteLine(formatter.FormatHeader());

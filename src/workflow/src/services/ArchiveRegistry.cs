@@ -10,7 +10,7 @@ namespace Z0
     {
         FilePath RegistryPath => AppDb.Settings("workspaces", FileKind.Csv);
 
-        ICsvFormatter<Entry> EntryFormatter = CsvChannels.formatter<Entry>();
+        ICsvFormatter<Entry> EntryFormatter = Tables.formatter<Entry>();
 
         public void Register(@string name, FolderPath location)
         {

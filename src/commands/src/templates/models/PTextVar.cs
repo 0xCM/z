@@ -4,11 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class TextTemplateVar : ITextVar
+    public class PTextVar : ITextVar
     {
         public static VarKind Kind = new VarKind();
 
-        public sealed class VarKind : TextVarExpr<VarKind>
+        public sealed class VarKind : PTextVar<VarKind>
         {
             public override Fence<char> Fence
                 => ((char)SymNotKind.Lt, (char)SymNotKind.Gt);
@@ -19,14 +19,14 @@ namespace Z0
         public string Value;
 
         [MethodImpl(Inline)]
-        public TextTemplateVar(string name)
+        public PTextVar(string name)
         {
             Name = name;
             Value = EmptyString;
         }
 
         [MethodImpl(Inline)]
-        public TextTemplateVar(string name, string val)
+        public PTextVar(string name, string val)
         {
             Name = name;
             Value = val;

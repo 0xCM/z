@@ -5,10 +5,10 @@
 namespace Z0
 {
     [Free]
-    public interface IApiOps
+    public interface IApiEfectors
     {
-        bool Find(string spec, out Effector op);
+        bool Find(string spec, out ApiEffector op);
 
-        ref readonly ReadOnlySeq<Effector> Defs {get;}
+        ref readonly ReadOnlySeq<ApiEffector> Defs {get;}
     }
 }

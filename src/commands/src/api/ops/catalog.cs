@@ -16,10 +16,10 @@ namespace Z0
         {
             var data = src.Values;
             iter(data, x => channel.Row(x.Uri.Name));
-            CsvChannels.emit(channel, data, dst);
+            Tables.emit(channel, data, dst);
         }
 
-        public static ApiCmdCatalog catalog(ReadOnlySeq<Effector> src)
+        public static ApiCmdCatalog catalog(ReadOnlySeq<ApiEffector> src)
         {
             var count = src.Count;
             var dst = alloc<CmdUri>(count);

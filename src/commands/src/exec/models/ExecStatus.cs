@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Record(TableId), StructLayout(StructLayout)]
-    public record struct CmdExecStatus
+    public record struct ExecStatus
     {
         public const string TableId = "cmd.status";
 
@@ -21,6 +21,6 @@ namespace Z0
 
         public int ExitCode;
 
-        public static CmdExecStatus Empty => default;
+        public static ExecStatus Empty => default;
     }
 }

@@ -51,7 +51,7 @@ namespace Z0
         public Count EmitRegions(ReadOnlySeq<ProcessMemoryRegion> src, FilePath dst)
         {
             var flow = EmittingTable<ProcessMemoryRegion>(dst);
-            var count = CsvChannels.emit(src.View,dst);
+            var count = Tables.emit(src.View,dst);
             EmittedTable(flow,count);
             return count;
         }

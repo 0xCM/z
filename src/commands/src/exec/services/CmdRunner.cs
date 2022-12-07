@@ -8,22 +8,22 @@ namespace Z0
 
     public class CmdRunner
     {
-        public static ExecToken run<C>(IWfChannel channel, CmdContext context, C cmd, Func<IWfChannel,CmdContext,C,Outcome> actor)
-            where C : ICmd<C>, new()
-        {
-            var outcome = Outcome.Success;
-            var running = channel.Running($"{cmd.CmdId}");
-            try
-            {
-                outcome = actor(channel, context, cmd);
-            }
-            catch(Exception e)
-            {
-                outcome = e;
-            }
+        // public static ExecToken run<C>(IWfChannel channel, CmdContext context, C cmd, Func<IWfChannel,CmdContext,C,Outcome> actor)
+        //     where C : ICmd<C>, new()
+        // {
+        //     var outcome = Outcome.Success;
+        //     var running = channel.Running($"{cmd.CmdId}");
+        //     try
+        //     {
+        //         outcome = actor(channel, context, cmd);
+        //     }
+        //     catch(Exception e)
+        //     {
+        //         outcome = e;
+        //     }
 
-            return channel.Ran(running);
-        }
+        //     return channel.Ran(running);
+        // }
 
         [Op]
         public static void parse(ReadOnlySpan<TextLine> src, out ReadOnlySpan<CmdFlow> dst)
@@ -166,7 +166,7 @@ namespace Z0
             channel.EmittedFile(emitting, counter);
         }
 
-        public static CmdExecStatus run(ISysIO io, CmdArgs spec, FolderPath? wd = null)
+        public static ExecStatus run(ISysIO io, CmdArgs spec, FolderPath? wd = null)
         {
             var values = spec.Values();
             Demand.gt(values.Count, 0u);
@@ -195,7 +195,7 @@ namespace Z0
                     io.Error(e.Data);
             }
 
-            var result = default(CmdExecStatus);
+            var result = default(ExecStatus);
             try
             {                
                 using var process = sys.process(psi);
@@ -219,9 +219,9 @@ namespace Z0
             return result;
         }
 
-        public static CmdExecStatus status(ExecutingProcess src)
+        public static ExecStatus status(ExecutingProcess src)
         {
-            var dst = CmdExecStatus.Empty;
+            var dst = ExecStatus.Empty;
             dst.Id = src.Id;
             dst.StartTime = src.Started;
             dst.HasExited = src.Finished;

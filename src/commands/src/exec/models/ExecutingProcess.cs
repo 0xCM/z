@@ -43,7 +43,7 @@ namespace Z0
             get => Id.IsEmpty;
         }        
 
-        public CmdExecStatus Status()
+        public ExecStatus Status()
             => CmdRunner.status(this);
 
         public static ExecutingProcess Empty 

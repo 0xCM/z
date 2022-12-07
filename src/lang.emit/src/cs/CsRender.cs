@@ -56,7 +56,7 @@ namespace Z0
         public static void Data(SymbolSet src, ITextEmitter dst, bool header)
         {
             var records = src.Records();
-            var formatter = CsvChannels.formatter<SymInfo>();
+            var formatter = Tables.formatter<SymInfo>();
             if(header)
                 dst.AppendLine(formatter.FormatHeader());
 

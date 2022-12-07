@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public abstract class ApiRuntime<R> : IApiRuntime<R>
+    public abstract class ApiRuntime<R>
         where R: ApiRuntime<R>
     {
         protected static Type[] SvcHostTypes(Assembly src)

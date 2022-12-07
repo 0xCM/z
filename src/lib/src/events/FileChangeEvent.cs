@@ -10,7 +10,7 @@ namespace Z0
     public readonly record struct FileChangeEvent : IWfEvent<FileChangeEvent>
     {
         [Op]
-        public static asci4 symbolize(FileChangeKind kind)
+        public static string symbolize(FileChangeKind kind)
         {   
             var dst = asci4.Null;
             if(kind.Test(Created))
@@ -26,7 +26,7 @@ namespace Z0
             return dst;
         }
         
-        public readonly _FileUri File;
+        public readonly FileUri File;
 
         public readonly FileChangeKind ChangeKind;
 

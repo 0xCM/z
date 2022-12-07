@@ -8,8 +8,8 @@ namespace Z0
     /// Defines the root <see cref='ITextVarExpr'/> abstraction
     /// </summary>
     /// <typeparam name="T">The concrete expression type</typeparam>
-    public abstract class TextVarExpr<T> : ITextVarExpr
-        where T : TextVarExpr<T>
+    public abstract class PTextVar<T> : ITextVarExpr
+        where T : PTextVar<T>
     {
         /// <summary>
         /// Specifies the variable fence, if any

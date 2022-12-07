@@ -22,7 +22,7 @@ namespace Z0
             Target = dst;
             Target.EnsureParentExists().Delete();
             Stream = Target.Stream();
-            Formatter = CsvChannels.formatter<EmissionLogEntry>();
+            Formatter = Tables.formatter<EmissionLogEntry>();
             FS.write(Formatter.FormatHeader() + Eol, Stream);
         }
 

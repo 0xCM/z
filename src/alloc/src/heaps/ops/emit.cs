@@ -7,6 +7,6 @@ namespace Z0
     partial class Heaps
     {
         public static void emit(SymHeap src, FilePath dst, IWfChannel channel)
-            => CsvChannels.emit(channel, records(src).View, dst, TextEncodingKind.Unicode);
+            => Tables.emit(channel, records(src).View, dst, TextEncodingKind.Unicode);
     }
 }

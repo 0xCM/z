@@ -263,7 +263,7 @@ namespace Z0
                 where T : struct
         {
             var emitting = EmittingTable<T>(dst);
-            CsvChannels.emit(rows, dst, encoding, rowpad, fk);
+            Tables.emit(rows, dst, encoding, rowpad, fk);
             return EmittedTable(emitting, rows.Length);
         }
 
@@ -291,7 +291,7 @@ namespace Z0
            where T : struct
         {
             var emitting = EmittingTable<T>(dst);
-            var formatter = CsvChannels.create(typeof(T));
+            var formatter = Tables.create(typeof(T));
             using var writer = dst.Emitter(encoding);
             writer.WriteLine(formatter.FormatHeader());
             for (var i = 0; i < rows.Length; i++)
@@ -304,7 +304,7 @@ namespace Z0
         {
             var flow = EmittingTable<T>(Host, dst);
             var spec = Tables.rowspec<T>(widths, z16);
-            var count = CsvChannels.emit(src, spec, encoding, dst);
+            var count = Tables.emit(src, spec, encoding, dst);
             return EmittedTable(Host, flow, count);
         }
 

@@ -5,6 +5,7 @@
 namespace Z0
 {
     using Windows;
+
     using static sys;
 
     [ApiHost]
@@ -300,7 +301,7 @@ namespace Z0
             using var writer = env.AsciWriter();
             for(var i=0; i<src.Count; i++)
                 writer.WriteLine(src[i].Format());
-            return CsvChannels.emit(channel, records(src, name).View, table, ASCI);
+            return Tables.emit(channel, records(src, name).View, table, ASCI);
         }
     }
 }

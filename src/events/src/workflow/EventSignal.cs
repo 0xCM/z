@@ -13,7 +13,7 @@ namespace Z0
         readonly IEventSink Sink;
 
         [MethodImpl(Inline)]
-        internal EventSignal(IEventSink sink, AppEventSource src)
+        public EventSignal(IEventSink sink, AppEventSource src)
         {
             Source = src;
             Sink = sink;

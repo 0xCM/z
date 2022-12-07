@@ -7,8 +7,7 @@ namespace Z0
     using static sys;
 
     class ContextCmd : WfAppCmd<ContextCmd>
-    {
-        
+    {        
         [CmdOp("process/memory")]
         Outcome ShowMemHex(CmdArgs args)
         {
@@ -44,10 +43,6 @@ namespace Z0
             Row(data);
             Channel.FileEmit(data, Env.ShellData.Path("processes", FileKind.Csv));
         }
-
-        // [CmdOp("capture/context")]
-        // void CaptureContext()
-        //     => Runtime.EmitContext(Dst);
 
         [CmdOp("process/context")]
         void ProcContext(CmdArgs args)

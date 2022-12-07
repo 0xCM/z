@@ -19,7 +19,7 @@ namespace Z0
         readonly bool Owner;
 
         [MethodImpl(Inline)]
-        internal EventBroker(IEventSink sink, bool owner)
+        public EventBroker(IEventSink sink, bool owner)
         {
             Owner = owner;
             Sink = sink;
