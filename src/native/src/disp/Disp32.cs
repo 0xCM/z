@@ -9,35 +9,7 @@ namespace Z0
     /// </summary>
     public readonly struct Disp32 : IDisplacement<Disp32,int>
     {
-        [Parser]
-        public static Outcome parse(string src, out Disp32 dst)
-        {
-            var result = Outcome.Success;
-            var input = text.trim(src);
-            if(text.empty(input))
-            {
-                dst = 0;
-                return true;
-            }
-
-            dst = default;
-            var disp = 0;
-            if(HexFormatter.HasSpec(input))
-            {
-                result = Hex.parse32i(src, out disp);
-                if(result)
-                    dst = disp;
-            }
-            else
-            {
-                result = NumericParser.parse(src, out disp);
-                if(result)
-                    dst = disp;
-            }
-            return result;
-        }
-
-        public readonly int Value {get;}
+        public readonly int Value;
 
         [MethodImpl(Inline)]
         public Disp32(int value)
@@ -144,5 +116,8 @@ namespace Z0
             [MethodImpl(Inline)]
             get => new Disp32(0);
         }
+
+        int IDisplacement<int>.Value 
+            => Value;
     }
 }

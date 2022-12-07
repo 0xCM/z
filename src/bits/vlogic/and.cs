@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
     using static SFx;
 
     using BL = ByteLogic;
@@ -63,7 +63,6 @@ namespace Z0
             for(int i=0, offset = 0; i < vcount; i++, offset += blocklen)
                 and(n, skip(in a, offset), in skip(in b, offset), ref seek(dst, offset));
         }
-
 
         public readonly struct MultiAnd
         {

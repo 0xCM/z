@@ -9,34 +9,6 @@ namespace Z0
     /// </summary>
     public readonly struct Disp64 : IDisplacement<Disp64,long>
     {
-        [Parser]
-        public static Outcome parse(string src, out Disp64 dst)
-        {
-            var result = Outcome.Success;
-            if(text.empty(text.trim(src)))
-            {
-                dst = 0L;
-                return true;
-            }
-
-            dst = default;
-            var i = text.index(src,HexFormatSpecs.PreSpec);
-            var disp = 0L;
-            if(i>=0)
-            {
-                result = Hex.parse64i(src, out disp);
-                if(result)
-                    dst = disp;
-            }
-            else
-            {
-                result = NumericParser.parse(src, out disp);
-                if(result)
-                    dst = disp;
-            }
-            return result;
-        }
-
         public readonly long Value;
 
         [MethodImpl(Inline)]

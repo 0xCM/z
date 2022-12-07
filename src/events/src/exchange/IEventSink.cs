@@ -13,6 +13,6 @@ namespace Z0
     [Free]
     public interface IEventSink : IEventSink<IEvent>, IDisposable
     {
-
+        Type Host => GetType();
     }
 }

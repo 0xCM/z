@@ -9,38 +9,10 @@ namespace Z0
     /// </summary>
     public readonly struct Disp8 : IDisplacement<Disp8,sbyte>
     {
-        [Parser]
-        public static Outcome parse(string src, out Disp8 dst)
-        {
-            var result = Outcome.Success;
-            var input = text.trim(src);
-            if(text.empty(input))
-            {
-                dst = z8i;
-                return true;
-            }
-
-            dst = default;
-            var disp = z8i;
-            if(HexFormatter.HasSpec(input))
-            {
-                result = Hex.parse8i(src, out disp);
-                if(result)
-                    dst = disp;
-            }
-            else
-            {
-                result = NumericParser.parse(src, out disp);
-                if(result)
-                    dst = disp;
-            }
-            return result;
-        }
-
         /// <summary>
         /// The base displacement magnitude
         /// </summary>
-        public readonly sbyte Value {get;}
+        public readonly sbyte Value;
 
         [MethodImpl(Inline)]
         public Disp8(sbyte @base)
@@ -70,6 +42,9 @@ namespace Z0
         }
 
         long IDisplacement.Value
+            => Value;
+
+        sbyte IDisplacement<sbyte>.Value 
             => Value;
 
         [MethodImpl(Inline)]

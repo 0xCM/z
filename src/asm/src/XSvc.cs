@@ -37,6 +37,12 @@ namespace Z0
 
             public ApiImmEmitter ImmEmitter(IWfRuntime wf)
                 => Service<ApiImmEmitter>(wf);
+
+            public ApiCapture ApiCapture(IWfRuntime wf)
+                => Service<ApiCapture>(wf);
+
+            public AsmCmdService AsmCmdSvc(IWfRuntime wf)
+                => Service<AsmCmdService>(wf);
         }
 
         static Svc Services => Svc.Instance;
@@ -67,5 +73,12 @@ namespace Z0
 
         public static ICaptureCore CaptureCore(this IWfRuntime wf)
             => Asm.CaptureCore.create(wf);
+
+        public static ApiCapture ApiCapture(this IWfRuntime wf)
+            => Services.ApiCapture(wf);
+
+        public static AsmCmdService AsmCmdSvc(this IWfRuntime wf)
+            => Services.AsmCmdSvc(wf);
+
     }
 }

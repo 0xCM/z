@@ -10,10 +10,10 @@ namespace Z0
 
         public readonly Identifier TypeName;
 
-        public readonly ReadOnlySeq<Column> Columns;
+        public readonly ReadOnlySeq<ColumDef> Columns;
 
         [MethodImpl(Inline)]
-        public TableDef(TableId name, Identifier type, Column[] fields)
+        public TableDef(TableId name, Identifier type, ColumDef[] fields)
         {
             TableName = name;
             TypeName = type;
@@ -21,29 +21,7 @@ namespace Z0
         }
 
         public static TableDef Empty
-            => new TableDef(TableId.Empty, Identifier.Empty, sys.empty<Column>());
+            => new TableDef(TableId.Empty, Identifier.Empty, sys.empty<ColumDef>());
 
-        public record class Column
-        {
-            public readonly ushort Index;
-
-            public readonly Identifier Name;
-
-            public readonly Identifier DataType;
-
-            [MethodImpl(Inline)]
-            public Column(ushort index, string name, Identifier type)
-            {
-                Index = index;
-                Name = name;
-                DataType = type;
-            }
-
-            public string Format()
-                => string.Format("[{0:D2} {1}:{2}]", Index, Name, DataType);
-
-            public override string ToString()
-                => Format();
-        }
-    }
+   }
 }

@@ -12,7 +12,7 @@ namespace Z0
         public CmdUriSeq CmdUris()
             => uris(Dispatcher);
 
-        public static CmdUri uri(Name name, object host)
+        public static CmdUri uri(string name, object host)
             => new(CmdKind.App, host.GetType().Assembly.PartName().Format(), host.GetType().DisplayName(), name);
 
         public static CmdUriSeq uris(IApiDispatcher src)

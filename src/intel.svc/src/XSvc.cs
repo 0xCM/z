@@ -70,6 +70,16 @@ namespace Z0
 
             public IApiService SdmCmd(IWfRuntime wf)
                 => Service<IntelSdmCmd>(wf);
+
+            public AsmDbCmd AsmDbCmd(IWfRuntime wf)
+                => Service<AsmDbCmd>(wf);
+
+            public NasmCatalog NasmCatalog(IWfRuntime wf)
+                => Service<NasmCatalog>(wf);
+
+            public AsmGenCmd AsmGenCmd(IWfRuntime wf)
+                => Service<AsmGenCmd>(wf);
+
         }
 
         static ServiceCache Services => ServiceCache.Instance;
@@ -136,6 +146,15 @@ namespace Z0
 
         public static XedDisasmSvc XedDisasmSvc(this IWfRuntime wf)
             => GlobalServices.Instance.Service<XedRuntime>(wf).Disasm;
+ 
+         public static AsmDbCmd AsmDbCmd(this IWfRuntime wf)
+            => Services.AsmDbCmd(wf);
+
+        public static NasmCatalog NasmCatalog(this IWfRuntime wf)
+            => Services.NasmCatalog(wf);
+
+        public static AsmGenCmd AsmGenCmd(this IWfRuntime wf)
+            => Services.AsmGenCmd(wf);
     }
 
 

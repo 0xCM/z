@@ -15,53 +15,53 @@ namespace Z0
         /// <summary>
         /// The record fields
         /// </summary>
-        public readonly ReflectedFields Fields;
+        public readonly ClrTableCells Cells;
 
-        readonly Index<object> Cells;
+        readonly Index<object> Values;
 
         [MethodImpl(Inline)]
-        public DynamicRow(ReflectedFields fields, object[] cells)
+        public DynamicRow(ClrTableCells cells, object[] values)
         {
-            Fields = fields;
             Cells = cells;
+            Values = values;
         }
 
         public string Format(string pattern, RenderBuffers buffers)
         {
             for(var i=0; i<CellCount; i++)
-                buffers[i] = Fields.FormatFieldValue(i, this[i]);
+                buffers[i] = Cells.FormatFieldValue(i, this[i]);
             return string.Format(pattern, buffers.CellStorage);
         }
 
         public string Format(string pattern, object[] buffer)
         {
             for(var i=0; i<CellCount; i++)
-                seek(buffer,i) = Fields.FormatFieldValue(i, this[i]);
+                seek(buffer,i) = Cells.FormatFieldValue(i, this[i]);
             return string.Format(pattern, buffer);
         }
 
         public uint FieldCount
         {
             [MethodImpl(Inline)]
-            get => Fields.Count;
+            get => Cells.Count;
         }
 
         public uint CellCount
         {
             [MethodImpl(Inline)]
-            get => (uint)Cells.Length;
+            get => (uint)Values.Length;
         }
 
         public ref object this[uint index]
         {
             [MethodImpl(Inline)]
-            get => ref Cells[index];
+            get => ref Values[index];
         }
 
         public ref object this[int index]
         {
             [MethodImpl(Inline)]
-            get => ref Cells[index];
+            get => ref Values[index];
         }
     }
 }

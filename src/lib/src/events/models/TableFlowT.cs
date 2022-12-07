@@ -7,7 +7,7 @@ namespace Z0
     public readonly struct TableFlow<T>
         where T : struct
     {
-        readonly IWfRuntime Wf;
+        readonly IWfChannel Wf;
 
         public readonly ExecToken Token;
 
@@ -16,7 +16,7 @@ namespace Z0
         public readonly Count EmissionCount;
 
         [MethodImpl(Inline)]
-        internal TableFlow(IWfRuntime wf, FilePath dst, in ExecToken token, uint count = 0)
+        internal TableFlow(IWfChannel wf, FilePath dst, in ExecToken token, uint count = 0)
         {
             Wf = wf;
             Token = token;

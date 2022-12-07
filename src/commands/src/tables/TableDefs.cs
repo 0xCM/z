@@ -34,7 +34,7 @@ namespace Z0
             => new TableCell(content);
 
         [Op]
-        public static ReflectedTable reflected(Type src)
+        public static ClrTable reflected(Type src)
         {
             var layout = src.Tag<StructLayoutAttribute>();
             var id = TableId.identify(src);
@@ -50,31 +50,31 @@ namespace Z0
                 pack = (byte)value.Pack;
                 size = (uint)value.Size;
             }
-            return new ReflectedTable(src, id, Tables.fields(src), kind, charset, pack, size);
+            return new ClrTable(src, id, Tables.fields(src), kind, charset, pack, size);
         }
 
         [Op]
-        public static Index<ReflectedTable> reflected(ReadOnlySpan<Assembly> src)
+        public static Index<ClrTable> reflected(ReadOnlySpan<Assembly> src)
         {
             var count = src.Length;
-            var dst = list<ReflectedTable>();
+            var dst = list<ClrTable>();
             for(var i=0; i<count; i++)
                 discover(skip(src,i), dst);
             return dst.ToArray();
         }
 
         [Op]
-        public static Index<ReflectedTable> reflected(Assembly src)
+        public static Index<ClrTable> reflected(Assembly src)
         {
             var types = @readonly(src.Types().Tagged<RecordAttribute>());
             var count = types.Length;
-            var dst = list<ReflectedTable>();
+            var dst = list<ClrTable>();
             discover(src, dst);
             return dst.ToArray();
         }
 
         [Op]
-        static uint discover(Assembly src, List<ReflectedTable> dst)
+        static uint discover(Assembly src, List<ClrTable> dst)
         {
             var types = src.Types().Tagged<RecordAttribute>().Index();
             for(var i=0; i<types.Count; i++)
@@ -93,12 +93,12 @@ namespace Z0
             = Default | SequentialLayout;
 
         [MethodImpl(Inline), Op]
-        public static TableDef table(TableId name, Identifier type, params Column[] cols)
+        public static TableDef table(TableId name, Identifier type, params ColumDef[] cols)
             => new TableDef(name, type, cols);
 
         [MethodImpl(Inline), Op]
-        public static Column column(ushort index, Identifier name, Identifier type)
-            => new Column(index, name, type);
+        public static ColumDef column(ushort index, Identifier name, Identifier type)
+            => new ColumDef(index, name, type);
 
         [Op]
         public static TypeBuilder type(ModuleBuilder mb, Identifier fullName, TypeAttributes attributes, Type parent)
@@ -147,12 +147,12 @@ namespace Z0
             var fields = src.PublicInstanceFields();
             var count = fields.Length;
             if(count == 0)
-                return new TableDef(TableId.identify(src), src.Name, sys.empty<Column>());
-            var specs = alloc<Column>(count);
+                return new TableDef(TableId.identify(src), src.Name, sys.empty<ColumDef>());
+            var specs = alloc<ColumDef>(count);
             for(var i=z16; i<count; i++)
             {
                 var field = skip(fields,i);
-                seek(specs,i) = new Column(i, ReflectedField.name(field), field.FieldType.CodeName());
+                seek(specs,i) = new ColumDef(i, ClrTableCell.name(field), field.FieldType.CodeName());
             }
 
             return new TableDef(TableId.identify(src), src.Name, specs);
@@ -215,7 +215,7 @@ namespace Z0
         {
             var members = src.PublicInstanceFields();
             var count = members.Length;
-            var cols = alloc<Column>(count);
+            var cols = alloc<ColumDef>(count);
             var fieldOffsets = offsets(src, members);
             for(ushort i=0; i<count; i++)
             {

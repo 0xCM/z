@@ -21,7 +21,7 @@ namespace Z0
             return service;
         }
 
-        protected KillMe Host 
+        protected AppEventSource Host 
             => HostType;
 
         public override Type HostType

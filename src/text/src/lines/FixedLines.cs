@@ -10,8 +10,8 @@ namespace Z0
     public readonly struct FixedLines
     {
         [MethodImpl(Inline), Op]
-        public static FixedLineSegment segment(ushort index, ushort min, ushort max)
-            => new FixedLineSegment(index,min,max);
+        public static FixedLineSegment segment(uint index, ushort min, ushort max)
+            => new FixedLineSegment(index, min, max);
 
         [MethodImpl(Inline), Op]
         public static ushort length(FixedLineFormat src)

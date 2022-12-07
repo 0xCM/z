@@ -6,11 +6,11 @@ namespace Z0
 {
     public readonly struct ConstructedMethod
     {
-        public GenericMethod Source {get;}
+        public readonly GenericMethod Source;
 
-        public Index<Type> Parameters {get;}
+        public readonly Index<Type> Parameters;
 
-        public MethodInfo Closure {get;}
+        public readonly MethodInfo Closure;
 
         [MethodImpl(Inline)]
         public ConstructedMethod(GenericMethod src, Index<Type> args, MethodInfo closure)

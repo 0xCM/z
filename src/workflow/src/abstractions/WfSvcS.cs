@@ -153,9 +153,6 @@ namespace Z0
         public void Write(string content, FlairKind flair)
             => Emitter.Write(content, flair);
 
-        public void Write<T>(string name, T value, FlairKind flair)
-            => Emitter.Write(name, value, flair);
-
         public void Write<T>(string name, T value)
             => Emitter.Write(name, value);
 

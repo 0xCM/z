@@ -8,9 +8,6 @@ namespace Z0
 
     public sealed class EventQueue : IEventSink, IEventEmitter
     {
-        public static EventQueue allocate(Type host)
-            => new EventQueue(host);
-
         public static EventQueue allocate(Type host, Action<IEvent> receiver)
             => new EventQueue(host, receiver);
 
@@ -18,18 +15,9 @@ namespace Z0
 
         readonly Action<IEvent> Receiver;
 
-        readonly EventSignal Signal;
-
-        internal EventQueue(Type host)
-        {
-            Receiver = e => {};
-            Signal = Events.signal(this, host);
-        }
-
         internal EventQueue(Type host, Action<IEvent> receiver)
         {
             Receiver = receiver;
-            Signal = Events.signal(this, host ?? GetType());
         }
 
         public void Deposit(IEvent e)

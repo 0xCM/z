@@ -7,7 +7,7 @@ namespace Z0
     /// <summary>
     /// Defines an 8, 16, or 32-bit signed displacement
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    [ApiHost,StructLayout(LayoutKind.Sequential, Pack = 1)]
     public readonly struct Disp : IDisplacement, IEquatable<Disp>
     {
         public static string format<T>(T src, bool @signop = false)
@@ -75,42 +75,151 @@ namespace Z0
         }
 
         [Parser]
-        public static Outcome parse(string src, NativeSize size, out Disp dst)
+        public static Outcome parse(string src, out Disp8 dst)
         {
             var result = Outcome.Success;
+            var input = text.trim(src);
+            if(text.empty(input))
+            {
+                dst = z8i;
+                return true;
+            }
+
+            dst = default;
+            var disp = z8i;
+            if(HexFormatter.HasSpec(input))
+            {
+                result = Hex.parse8i(src, out disp);
+                if(result)
+                    dst = disp;
+            }
+            else
+            {
+                result = NumericParser.parse(src, out disp);
+                if(result)
+                    dst = disp;
+            }
+            return result;
+        }
+
+        [Parser]
+        public static bool parse(string src, out Disp16 dst)
+        {
+            var result = Outcome.Success;
+            var input = text.trim(src);
+            if(text.empty(input))
+            {
+                dst = z16i;
+                return true;
+            }
+
+            dst = default;
+            var disp = z16i;
+            if(HexFormatter.HasSpec(input))
+            {
+                result = Hex.parse16i(src, out disp);
+                if(result)
+                    dst = disp;
+            }
+            else
+            {
+                result = NumericParser.parse(src, out disp);
+                if(result)
+                    dst = disp;
+            }
+            return result;
+        }
+
+        [Parser]
+        public static bool parse(string src, out Disp32 dst)
+        {
+            var result = Outcome.Success;
+            var input = text.trim(src);
+            if(text.empty(input))
+            {
+                dst = 0;
+                return true;
+            }
+
+            dst = default;
+            var disp = 0;
+            if(HexFormatter.HasSpec(input))
+            {
+                result = Hex.parse32i(src, out disp);
+                if(result)
+                    dst = disp;
+            }
+            else
+            {
+                result = NumericParser.parse(src, out disp);
+                if(result)
+                    dst = disp;
+            }
+            return result;
+        }
+
+        [Parser]
+        public static bool parse(string src, out Disp64 dst)
+        {
+            var result = Outcome.Success;
+            if(text.empty(text.trim(src)))
+            {
+                dst = 0L;
+                return true;
+            }
+
+            dst = default;
+            var i = text.index(src,HexFormatSpecs.PreSpec);
+            var disp = 0L;
+            if(i>=0)
+            {
+                result = Hex.parse64i(src, out disp);
+                if(result)
+                    dst = disp;
+            }
+            else
+            {
+                result = NumericParser.parse(src, out disp);
+                if(result)
+                    dst = disp;
+            }
+            return result;
+        }
+
+        [Parser]
+        public static bool parse(string src, NativeSize size, out Disp dst)
+        {
+            var result = false;
             dst = Empty;
             switch(size.Code)
             {
                 case NativeSizeCode.W64:
                 {
-                    result = Disp64.parse(src, out var _dst);
+                    result = parse(src, out Disp64 _dst);
                     if(result)
                         dst = new Disp(_dst, size);
                 }
                 break;
                 case NativeSizeCode.W32:
                 {
-                    result = Disp32.parse(src, out var _dst);
+                    result = parse(src, out Disp32 _dst);
                     if(result)
                         dst = new Disp(_dst, size);
                 }
                 break;
                 case NativeSizeCode.W16:
                 {
-                    result = Disp16.parse(src, out var _dst);
+                    result = parse(src, out Disp16 _dst);
                     if(result)
                         dst = new Disp(_dst, size);
                 }
                 break;
                 case NativeSizeCode.W8:
                 {
-                    result = Disp8.parse(src, out var _dst);
+                    result = parse(src, out Disp8 _dst);
                     if(result)
                         dst = new Disp(_dst, size);
                 }
-                break;
-                default:
-                    result = false;
                 break;
             }
 
@@ -151,7 +260,7 @@ namespace Z0
             => Value == src.Value;
 
         public string Format()
-            => Disp.format(this);
+            => format(this);
 
         public override string ToString()
             => Format();
@@ -164,7 +273,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator Disp((long value, NativeSize width) src)
-            => new Disp(src.value,src.width);
+            => new Disp(src.value, src.width);
 
         [MethodImpl(Inline)]
         public static explicit operator sbyte(Disp src)
@@ -225,6 +334,5 @@ namespace Z0
         public static Disp Empty => default;
 
         public static Disp Zero => default;
-
     }
 }

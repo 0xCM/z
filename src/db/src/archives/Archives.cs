@@ -165,7 +165,7 @@ namespace Z0
                 return channel.Ran(running, uri); 
             }
 
-            return @try(run, e => channel.Completed(running, typeof(Archives), e));
+            return @try(run, e => channel.Ran(running, e));
         }
 
         public static LineMap<string> map<T>(Index<TextLine> lines, Index<T> relations)

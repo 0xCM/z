@@ -7,16 +7,16 @@ namespace Z0
     [StructLayout(LayoutKind.Sequential, Pack=4)]
     public readonly struct FixedLineSegment
     {
-        public readonly ushort Index;
+        public readonly LineNumber Line;
 
         public readonly ushort Min;
 
         public readonly ushort Max;
 
         [MethodImpl(Inline)]
-        public FixedLineSegment(ushort index, ushort min, ushort max)
+        public FixedLineSegment(uint index, ushort min, ushort max)
         {
-            Index = index;
+            Line = index;
             Min = min;
             Max = max;
         }
@@ -28,10 +28,9 @@ namespace Z0
         }
 
         public string Format()
-            => string.Format("[{0}:({1},{2})]", Index, Min, Max);
+            => string.Format("[{0}:({1},{2})]", Line, Min, Max);
 
         public override string ToString()
             => Format();
     }
-
 }

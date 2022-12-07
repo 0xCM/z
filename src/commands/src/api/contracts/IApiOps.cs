@@ -7,7 +7,7 @@ namespace Z0
     [Free]
     public interface IApiOps
     {
-        bool Find(string spec, out ApiOp runner);
+        bool Find(string spec, out ApiOp op);
 
         ref readonly ReadOnlySeq<ApiOp> Defs {get;}
     }

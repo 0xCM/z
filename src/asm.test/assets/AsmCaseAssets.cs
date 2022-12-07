@@ -10,5 +10,6 @@ namespace Z0
 
         public Asset Branches() => Asset("prototypes.branches.asm");
 
+        public Asset Mov() => Asset("prototypes.mov.asm");
     }
 }

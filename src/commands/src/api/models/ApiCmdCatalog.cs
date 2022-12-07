@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed class ApiCmdCatalog : ConstLookup<Name,ApiCmdInfo>
+    public sealed class ApiCmdCatalog : ConstLookup<@string,ApiCmdInfo>
     {                
         readonly ReadOnlySeq<ApiCmdInfo> Data;
 

@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static sys;
     partial class CsLang
     {
         public class SwitchMapEmitter : AppService<SwitchMapEmitter>

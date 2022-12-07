@@ -6,14 +6,14 @@ namespace Z0
 {
     public readonly struct ExecFlow<T>: IDisposable
     {
-        readonly IWfRuntime Wf;
+        readonly IWfChannel Wf;
 
         public T Data {get;}
 
         public ExecToken Token {get;}
 
         [MethodImpl(Inline)]
-        internal ExecFlow(IWfRuntime wf, T data, in ExecToken token)
+        internal ExecFlow(IWfChannel wf, T data, in ExecToken token)
         {
             Wf = wf;
             Data = data;
@@ -25,7 +25,11 @@ namespace Z0
             => new ExecFlow<string>(Wf, msg, Token);
 
         public void Dispose()
-            => Wf.Ran(Wf.Host.Type, this);
+            => Wf.Ran(this);
+
+        [MethodImpl(Inline)]
+        public static implicit operator ExecFlow(ExecFlow<T> src)
+            => new ExecFlow(src.Wf, src.Token);
 
         public static ExecFlow<T> Empty => new ExecFlow<T>(null, default, default);
     }

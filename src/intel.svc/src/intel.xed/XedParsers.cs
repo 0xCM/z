@@ -199,7 +199,6 @@ namespace Z0
         public static bool IsInt(string src)
             => ushort.TryParse(src, out _);
 
-
         public static bool parse(string src, out bit dst)
             => BitParser.parse(src, out dst);
 
@@ -213,7 +212,7 @@ namespace Z0
             => ElementSizes.Parse(src, out dst);
 
         public static bool parse(string src, out Disp64 dst)
-            => Disp64.parse(src, out dst);
+            => Disp.parse(src, out dst);
 
         public static bool parse(string src, out ErrorKind dst)
             => ErrorKinds.Parse(text.remove(text.trim(src), "XED_ERROR_"), out dst);

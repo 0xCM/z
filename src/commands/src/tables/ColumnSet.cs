@@ -6,12 +6,11 @@ namespace Z0
 {
     using static System.Reflection.TypeAttributes;
     using static sys;
-    using static TableDef;
 
     [ApiHost]
     public ref struct ColumnSet
     {
-        readonly Span<Column> Columns;
+        readonly Span<ColumDef> Columns;
 
         ushort Index;
 
@@ -27,11 +26,11 @@ namespace Z0
         public ColumnSet(uint capacity)
         {
             Index = 0;
-            Columns = span<Column>(capacity);
+            Columns = span<ColumDef>(capacity);
         }
 
         [MethodImpl(Inline),Op]
-        public ColumnSet WithColumn(in Column src)
+        public ColumnSet WithColumn(in ColumDef src)
         {
             seek(Columns, Index++) = src;
             return this;

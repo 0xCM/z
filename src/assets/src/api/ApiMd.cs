@@ -65,7 +65,7 @@ namespace Z0
                         dst.Col = j;
                         dst.FieldSize = size;
                         dst.TableSize = total;
-                        dst.RenderWidth = tf.FieldWidth;
+                        dst.RenderWidth = tf.CellWidth;
                         dst.FieldName = fd.Name;
                         dst.FieldType = fd.FieldType.DisplayName();
                     }
@@ -155,7 +155,6 @@ namespace Z0
 
         public Assembly[] Parts
             => parts();
-
 
         ReadOnlySeq<IApiHost> CalcApiHosts()
         {

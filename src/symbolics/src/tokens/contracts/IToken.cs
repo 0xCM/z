@@ -24,7 +24,7 @@ namespace Z0
     [Free]
     public interface IToken<K,E> : IToken<K>
         where K : unmanaged
-        where E : unmanaged, ICharBlock
+        where E : ICharBlock
     {
         new E Name {get;}
 

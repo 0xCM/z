@@ -26,5 +26,3 @@ namespace Z0
         }
     }
 }
-
-//K:\dist\dotnet\coreclr\windows.x64.Release

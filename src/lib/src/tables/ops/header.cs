@@ -38,7 +38,7 @@ namespace Z0
             var buffer = alloc<HeaderCell>(count);
             var cells = span(buffer);
             for(var i=0u; i<count; i++)
-                seek(cells, i) = new HeaderCell(i, skip(_fields,i).FieldName, fieldwidth);
+                seek(cells, i) = new HeaderCell(i, skip(_fields,i).CellName, fieldwidth);
             return new RowHeader(buffer, delimiter);
         }
 
@@ -57,7 +57,7 @@ namespace Z0
             for(var i=0u; i<count; i++)
             {
                 ref readonly var field = ref skip(_fields,i);
-                seek(cells,i) = new HeaderCell(i, field.FieldName, skip(widths,i));
+                seek(cells,i) = new HeaderCell(i, field.CellName, skip(widths,i));
             }
             return new RowHeader(buffer, delimiter);
         }

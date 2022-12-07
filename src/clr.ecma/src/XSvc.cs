@@ -4,10 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Z0.Roslyn;
-
-    using R = Z0.Roslyn.Roslyn;
-
     public static class XSvc
     {
         sealed class Svc : AppServices<Svc>
@@ -23,7 +19,6 @@ namespace Z0
 
             public EcmaCmd EcmaCmd(IWfRuntime wf)
                 => Service<EcmaCmd>(wf);
-
         }
 
         static Svc Services => Svc.Instance;

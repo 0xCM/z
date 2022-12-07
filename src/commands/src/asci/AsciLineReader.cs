@@ -6,7 +6,8 @@ namespace Z0
 {
     using static sys;
 
-    public ref struct AsciLineReader
+
+    public struct AsciLineReader : IDisposable
     {
         readonly StreamReader Source;
 
@@ -14,21 +15,21 @@ namespace Z0
 
         uint Offset;
 
-        Span<byte> _Buffer;
+        Seq<byte> _Buffer;
 
         public AsciLineReader(StreamReader src)
         {
             Source = src;
             LineCount = 0;
             Offset = 0;
-            _Buffer = sys.alloc<byte>(1024);
+            _Buffer = sys.alloc<byte>(1024*4);
         }
 
         [MethodImpl(Inline)]
         Span<byte> Buffer()
         {
-            _Buffer.Clear();
-            return _Buffer;
+            _Buffer.Storage.Clear();
+            return _Buffer.Edit;
         }
 
 

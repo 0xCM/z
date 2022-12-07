@@ -12,7 +12,7 @@ namespace Z0
         /// <summary>
         /// The represented member
         /// </summary>
-        public MemberInfo Definition {get;}
+        public readonly MemberInfo Definition {get;}
 
         [MethodImpl(Inline)]
         public ClrDataMember(PropertyInfo src)
@@ -22,16 +22,22 @@ namespace Z0
         public ClrDataMember(FieldInfo src)
             => Definition = src;
 
-        public bool IsField
+        bool IsField
         {
             [MethodImpl(Inline)]
             get => Definition is FieldInfo;
         }
 
-        public bool IsProperty
+        bool IsProperty
         {
             [MethodImpl(Inline)]
             get => Definition is PropertyInfo;
+        }
+
+        public Type MemberType
+        {
+            [MethodImpl(Inline)]
+            get => Definition is FieldInfo f ? f.FieldType : (Definition as PropertyInfo).PropertyType;
         }
 
         public ClrArtifactKind Kind
@@ -41,21 +47,15 @@ namespace Z0
         }
 
         public object GetValue(object o)
-        {
-            var objType = o.GetType();
-            var declarer = Definition.DeclaringType;
-            return IsField ? (Definition as FieldInfo).GetValue(o)
-                : (Definition as PropertyInfo).GetValue(o);
-        }
+            => Definition is FieldInfo f ? f.GetValue(o) :  (Definition as PropertyInfo).GetValue(o);
 
         public T GetValue<T>(object o)
-            => (T)(IsField ? (Definition as FieldInfo).GetValue(o)
-                : (Definition as PropertyInfo).GetValue(o));
+            => (T)GetValue(o);
 
         public void SetValue(object o, object value)
         {
-            if (IsField)
-                (Definition as FieldInfo).SetValue(o, value);
+            if (Definition is FieldInfo f)
+                f.SetValue(o, value);
             else
                 (Definition as PropertyInfo).SetValue(o, value);
         }
@@ -65,15 +65,6 @@ namespace Z0
         /// </summary>
         public string Name
             => Definition.Name;
-
-        /// <summary>
-        /// The type of data represented by the member
-        /// </summary>
-        public Type DataType
-        {
-             [MethodImpl(Inline)]
-             get => IsField ? (Definition as FieldInfo).FieldType : (Definition as PropertyInfo).PropertyType;
-        }
 
         public ClrArtifactKind ClrKind
         {

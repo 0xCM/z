@@ -62,7 +62,6 @@ namespace Z0.Asm
             if(statemements.Count != 0)
                 Target.Add(new DecodedAsmBlock(label, statemements.ToArray()));
 
-
             return result;
         }
     }

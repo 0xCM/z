@@ -37,16 +37,12 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static EventSignal signal(IWfRuntime wf)
-            => Events.signal(wf.EventSink, wf.Host);
+        public static EventSignal signal(IEventSink sink, AppEventSource src)
+            => new EventSignal(sink, src);
 
         [MethodImpl(Inline), Op]
-        public static EventSignal signal(IWfRuntime wf, KillMe host)
-            => Events.signal(wf.EventSink, host);
-
-        [MethodImpl(Inline), Op]
-        public static EventSignal signal(IEventSink sink, KillMe host)
-            => new EventSignal(sink, host);
+        public static EventSignal signal(IEventSink dst)
+            => new EventSignal(dst, dst.Host);
 
         [MethodImpl(Inline), Op]
         public static EventSignal signal(IEventSink sink, Type host)

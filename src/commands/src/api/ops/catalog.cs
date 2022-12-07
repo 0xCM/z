@@ -68,10 +68,10 @@ namespace Z0
             => tagged(src).Select(describe).Sort();
 
         static Type[] tagged(Assembly src)
-            =>  src.Structs().Tagged<CmdAttribute>();
+            =>  src.Types().Tagged<CmdAttribute>();
 
         static Type[] tagged(Assembly[] src)
-            =>  src.Structs().Tagged<CmdAttribute>();
+            =>  src.Types().Tagged<CmdAttribute>();
 
         static CmdTypeInfo describe(Type src)
             => new CmdTypeInfo(identify(src), src, fields(src));
@@ -80,7 +80,7 @@ namespace Z0
             => src.Tag<CmdArgAttribute>().MapValueOrDefault(x => text.ifempty(x.Expression,src.Name), src.Name);
 
         static Index<CmdField> fields(Type src)
-            => src.DeclaredInstanceFields().Mapi((i,x) => new CmdField((byte)i, x, expr(x)));
+            => src.PublicInstanceFields().Mapi((i,x) => new CmdField((byte)i, x, expr(x)));
 
         public static ApiCmdCatalog catalog()
             => catalog(Dispatcher);

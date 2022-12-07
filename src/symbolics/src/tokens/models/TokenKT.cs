@@ -6,7 +6,7 @@ namespace Z0
 {
     public readonly record struct Token<K,T> : IToken<K,T>
         where K : unmanaged
-        where T : unmanaged, ICharBlock
+        where T : ICharBlock
     {
         public readonly uint Index;
 

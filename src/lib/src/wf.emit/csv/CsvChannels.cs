@@ -227,7 +227,7 @@ namespace Z0
             var count = fields.Length;
             var buffer = alloc<HeaderCell>(count);
             for(var i=0u; i<count; i++)
-                seek(buffer, i) = new HeaderCell(fields[i].FieldIndex, fields[i].FieldName, fields[i].FieldWidth);
+                seek(buffer, i) = new HeaderCell(i, fields[i].CellName, fields[i].CellWidth);
             var header = new RowHeader(buffer, DefaultDelimiter);
             var spec = rowspec(header, header.Cells.Select(x => x.CellFormat), rowpad, fk);
             return new Formatter2<T>(spec, api.adapter(record));
@@ -239,7 +239,7 @@ namespace Z0
             var count = fields.Length;
             var buffer = alloc<HeaderCell>(count);
             for(var i=0u; i<count; i++)
-                seek(buffer, i) = new HeaderCell(fields[i].FieldIndex, fields[i].FieldName, fields[i].FieldWidth);
+                seek(buffer, i) = new HeaderCell(i, fields[i].CellName, fields[i].CellWidth);
             var header = new RowHeader(buffer, delimiter);
             var spec = rowspec(header, header.Cells.Select(x => x.CellFormat), rowpad, fk);
             return new CsvFormatter(record, spec, api.adapter(record));
@@ -263,7 +263,7 @@ namespace Z0
         {
             var tr = __makeref(edit(src));
             for(var i=0u; i<dst.FieldCount; i++)
-                dst[i] = dst.Fields[i].Definition.GetValueDirect(tr);
+                dst[i] = dst.Cells[i].Definition.GetValueDirect(tr);
         }
 
         internal static string format(in RowFormatSpec spec, RenderBuffers buffers, in DynamicRow src)

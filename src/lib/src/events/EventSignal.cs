@@ -8,12 +8,12 @@ namespace Z0
 
     public class EventSignal
     {
-        readonly KillMe Source;
+        readonly AppEventSource Source;
 
         readonly IEventSink Sink;
 
         [MethodImpl(Inline)]
-        internal EventSignal(IEventSink sink, KillMe src)
+        internal EventSignal(IEventSink sink, AppEventSource src)
         {
             Source = src;
             Sink = sink;

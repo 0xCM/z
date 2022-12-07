@@ -13,8 +13,6 @@ namespace Z0
         
         public PartName AppName {get;}
 
-        public KillMe Host {get; private set;}
-
         public LogLevel Verbosity {get; private set;}
 
         public IWfEmissions Emissions {get; private set;}
@@ -31,7 +29,6 @@ namespace Z0
             Args = init.Args;
             Tokens = init.Tokens;
             EventBroker = init.EventBroker;
-            Host = init.Host;
             Verbosity = LogLevel.Status;
             ApiCatalog = init.ApiCatalog;
             AppName = ExecutingPart.Assembly.PartName();

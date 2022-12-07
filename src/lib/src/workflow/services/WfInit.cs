@@ -16,7 +16,7 @@ namespace Z0
 
         public IEventBroker EventBroker;
 
-        public KillMe Host;
+        public AppEventSource Host;
 
         public IWfEmissions EmissionLog;
     }

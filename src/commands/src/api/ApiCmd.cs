@@ -9,6 +9,21 @@ namespace Z0
 
     public partial class ApiCmd : AppService<ApiCmd>, IApiService
     {
+        [Op]
+        public static bool parse(ReadOnlySpan<char> src, out ApiCmdSpec dst)
+        {
+            var i = SQ.index(src, Chars.Space);
+            if(i < 0)
+                dst = new ApiCmdSpec(@string(src), CmdArgs.Empty);
+            else
+            {
+                var name = @string(SQ.left(src,i));
+                var _args = @string(SQ.right(src,i)).Split(Chars.Space);
+                dst = new ApiCmdSpec(name, Cmd.args(_args));
+            }
+            return true;
+        }        
+
         public static string format(ApiCmdSpec src)
         {
             if(src.IsEmpty)
@@ -65,11 +80,11 @@ namespace Z0
         public static ICmd reify(Type src)
             => (ICmd)Activator.CreateInstance(src);
 
-        public static Name identify<T>()
+        public static @string identify<T>()
             => identify(typeof(T));
 
         [Op]
-        public static Name identify(Type spec)
+        public static @string identify(Type spec)
         {
             var tag = spec.Tag<CmdAttribute>();
             if(tag)

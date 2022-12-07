@@ -9,35 +9,7 @@ namespace Z0
     /// </summary>
     public readonly struct Disp16 : IDisplacement<Disp16,short>
     {
-        [Parser]
-        public static Outcome parse(string src, out Disp16 dst)
-        {
-            var result = Outcome.Success;
-            var input = text.trim(src);
-            if(text.empty(input))
-            {
-                dst = z16i;
-                return true;
-            }
-
-            dst = default;
-            var disp = z16i;
-            if(HexFormatter.HasSpec(input))
-            {
-                result = Hex.parse16i(src, out disp);
-                if(result)
-                    dst = disp;
-            }
-            else
-            {
-                result = NumericParser.parse(src, out disp);
-                if(result)
-                    dst = disp;
-            }
-            return result;
-        }
-
-        public readonly short Value {get;}
+        public readonly short Value;
 
         public NativeSize Size
             => NativeSizeCode.W16;
@@ -67,6 +39,9 @@ namespace Z0
         }
 
         long IDisplacement.Value
+            => Value;
+
+        short IDisplacement<short>.Value 
             => Value;
 
         [MethodImpl(Inline)]

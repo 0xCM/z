@@ -5,7 +5,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
     using static CmdActorKind;
 
     partial class ApiCmd

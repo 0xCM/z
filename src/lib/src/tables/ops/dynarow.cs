@@ -7,12 +7,12 @@ namespace Z0
     partial struct Tables
     {
         [Op, Closures(Closure)]
-        public static DynamicRow<T> dynarow<T>(ReflectedFields fields)
+        public static DynamicRow<T> dynarow<T>(ClrTableCells fields)
             where T : struct
                 => new DynamicRow<T>(fields, new object[fields.Length]);
 
         [Op, Closures(Closure)]
-        public static DynamicRow dynarow(ReflectedFields fields)
+        public static DynamicRow dynarow(ClrTableCells fields)
             => new DynamicRow(fields, new object[fields.Length]);
     }
 }

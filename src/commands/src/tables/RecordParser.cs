@@ -8,11 +8,11 @@ namespace Z0
 
     public readonly struct RecordParser : IParser<object>
     {
-        readonly ReflectedTable Table;
+        readonly ClrTable Table;
 
         readonly IMultiParser Parser;
 
-        public RecordParser(ReflectedTable table, IMultiParser parser)
+        public RecordParser(ClrTable table, IMultiParser parser)
         {
             Table = table;
             Parser = parser;
@@ -21,13 +21,13 @@ namespace Z0
         public Outcome Parse(string src, out object dst)
         {
             var result = Outcome.Success;
-            var fields = Table.Fields;
-            var count = fields.Length;
+            var slots = Table.Cells;
+            var count = slots.Length;
             var values = text.split(src,Chars.Pipe);
             if(values.Length != count)
             {
                 dst = null;
-                return (false, Tables.FieldCountMismatch.Format(fields.Length, values.Length));
+                return (false, Tables.FieldCountMismatch.Format(slots.Length, values.Length));
             }
 
             try
@@ -35,7 +35,7 @@ namespace Z0
                 dst = Activator.CreateInstance(Table.Type);
                 for(var i=0; i<count; i++)
                 {
-                    ref readonly var field = ref fields[i];
+                    ref readonly var field = ref slots[i];
                     ref readonly var value = ref skip(values,i);
                     result = Parser.Parse(field.DataType, value, out var v);
                     if(result.Fail)

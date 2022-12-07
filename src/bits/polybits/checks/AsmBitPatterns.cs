@@ -67,21 +67,5 @@ namespace Z0.Asm
         public static readonly BpInfo VexC5 = describe<P>(nameof(VexC5),
             cccccccc + sep + R + sep + vvvv + sep + L + sep + pp
             );
-
-        const string Prefix1 = "qqqqqqqq";
-
-        const string OcByte1 = "11111111";
-
-        const string OcByte2 = "22222222";
-
-        const string OcByte3 = "33333333";
-
-        const string Disp2 = Disp1 + join +  Disp1;
-
-        const string Disp4 = Disp2 + join + Disp2;
-
-        const string Imm2 = Imm1 + join + Imm1;
-
-        const string Imm4 = Imm2 + join + Imm2;
     }
 }

@@ -5,17 +5,18 @@
 namespace Z0
 {
     using static sys;
+    using static Events;
 
     public class WfEmit : IWfChannel
     {
-        public static WfEmit create(IWfRuntime wf, KillMe host)
+        public static WfEmit create(IWfRuntime wf, AppEventSource host)
             => new WfEmit(wf, host);
 
         readonly IWfRuntime Wf;
 
-        readonly KillMe Host;
+        readonly AppEventSource Host;
 
-        WfEmit(IWfRuntime wf, KillMe host)
+        WfEmit(IWfRuntime wf, AppEventSource host)
         {
             Wf = wf;
             Host = host;
@@ -24,6 +25,16 @@ namespace Z0
         public void Dispose()
         {
 
+        }
+
+        public ExecToken Completed(ExecFlow src, bool success = true)
+            => Wf.Completed(src, success);
+
+        public ExecToken Ran<D>(ExecFlow src, D data, FlairKind flair = FlairKind.Ran)
+        {
+            var token = Completed(src);
+            signal(Wf.EventSink).Ran(data);
+            return token;
         }
 
         public EventId Raise<E>(E e)
@@ -119,6 +130,9 @@ namespace Z0
 
         public ExecToken EmittedFile(FileEmission flow)
             => Wf.EmittedFile(flow);
+
+        public ExecToken Ran(ExecFlow flow)
+            => Wf.Ran(flow);
 
         public ExecToken EmittedBytes(FileEmission flow, ByteSize size)
             => EmittedFile(flow, AppMsg.EmittedBytes.Capture(size, flow.Target));

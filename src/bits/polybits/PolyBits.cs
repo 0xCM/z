@@ -23,7 +23,6 @@ namespace Z0
         public Index<BitMaskInfo> ApiBitMasks
             => Data("BitMasks", () => BitMask.masks(typeof(BitMaskLiterals)));
 
-
         public void Emit(Index<BitMaskInfo> src)
             => Channel.TableEmit(src, AppDb.ApiTargets().Table<BitMaskInfo>());
 

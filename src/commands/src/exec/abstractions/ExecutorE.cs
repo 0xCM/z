@@ -2,7 +2,7 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Commands
+namespace Z0
 {
     [CmdExecutor]
     public abstract class Executor : ICmdExecutor

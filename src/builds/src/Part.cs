@@ -10,9 +10,9 @@ global using NuGet.Versioning;
 global using System.Text.Json;
 global using System.Text.Json.Nodes;
 global using System.Text.Json.Serialization;
-global using Microsoft.CodeAnalysis;
-global using Microsoft.CodeAnalysis.CSharp;
-global using Microsoft.CodeAnalysis.Emit;
+// global using Microsoft.CodeAnalysis;
+// global using Microsoft.CodeAnalysis.CSharp;
+// global using Microsoft.CodeAnalysis.Emit;
 
 global using BuildTask = Microsoft.Build.Utilities.Task;
 
