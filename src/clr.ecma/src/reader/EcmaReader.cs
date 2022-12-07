@@ -12,6 +12,18 @@ namespace Z0
     [ApiHost]
     public unsafe partial class EcmaReader
     {
+        public static IEnumerable<AssemblyRefInfo> refs(IEnumerable<AssemblyFile> src)
+        {
+            foreach(var file in src.AsParallel())
+            {
+                using var ecma = EcmaFile.open(file.Path);
+                var reader = EcmaReader.create(ecma);
+                var refs = reader.ReadAssemblyRefs().Storage;
+                foreach(var r in refs)
+                    yield return r;                
+            }
+        }
+
         public ByteSize CalcTableSize(TableIndex table)
             => MD.GetTableRowCount(table)*MD.GetTableRowSize(table);
 

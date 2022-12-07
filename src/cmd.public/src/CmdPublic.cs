@@ -26,6 +26,8 @@ namespace Z0
                 wf.EcmaCmd(),
                 wf.LlvmCmd(),
                 wf.ArchiveCmd(),
+                wf.ClrCmd(),
+
                 //wf.RoslynCmd(),
                 wf.IntelInxCmd(),
                 wf.Machines(),

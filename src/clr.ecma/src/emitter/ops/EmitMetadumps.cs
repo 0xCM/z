@@ -12,13 +12,8 @@ namespace Z0
         public void EmitApiMetadump(IDbArchive dst)
             => EmitMetadump(ApiMd.Parts, dst.Metadata("metadump"));
 
-        public void EmitMetadumps(FolderPath f)
-        {
-            var src = Archives.modules(f);            
-            var dlls = src.ManagedDll().Where(path => !path.Path.Contains(".resources.dll")).Select(x => x.Path);
-            var exe = src.ManagedExe().Map(x => x.Path);
-            EmitMetadumps(Channel, src,AppDb.DbTargets("ecma/datasets"));                     
-        }
+        public void EmitMetadumps(FolderPath f, bool recurse, IDbArchive dst)
+            => EmitMetadumps(Channel, Archives.modules(f, recurse), dst); 
 
         public void EmitMetadumps(IWfChannel channel, FolderPath root, IEnumerable<FilePath> src, IDbArchive dst)
         {
@@ -31,8 +26,8 @@ namespace Z0
 
         public void EmitMetadumps(IWfChannel channel, IModuleArchive src, IDbArchive dst)
         {
-            var dlls = src.ManagedDll().Where(path => !path.Path.Contains(".resources.dll")).Map(x => x.Path);
-            var exe = src.ManagedExe().Map(x => x.Path);
+            var dlls = src.Assemblies().Where(path => !path.Path.ToFilePath().Contains(".resources.dll")).Map(x => x.Path.ToFilePath());
+            var exe = src.Exe().Map(x => x.Path.ToFilePath());
             EmitMetadumps(channel, src.Root, dlls.Concat(exe), dst);
         }
 

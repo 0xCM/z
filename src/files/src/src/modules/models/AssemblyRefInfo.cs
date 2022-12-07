@@ -15,14 +15,8 @@ namespace Z0
         [Render(48)]
         public ClrAssemblyName Source;
 
-        [Render(18)]
-        public AssemblyVersion SourceVersion;
-
         [Render(48)]
         public ClrAssemblyName Target;
-
-        [Render(18)]
-        public AssemblyVersion TargetVersion;
 
         [Render(1)]
         public BinaryCode Token;
@@ -33,5 +27,11 @@ namespace Z0
             var right = string.Format("{0}.{1}", src.Source, src.Target);
             return left.CompareTo(right);
         }
+
+        public string Format()
+            => $"{Token}:{Source} -> {Target}";
+        
+        public override string ToString()
+            => Format();
     }
 }

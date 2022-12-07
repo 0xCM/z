@@ -5,115 +5,81 @@
 namespace Z0
 {
     using System.Linq;
+
     public readonly struct ModuleArchive : IModuleArchive
     {
         public readonly FolderPath Root;
 
+        readonly bool Recurse;
+
         [MethodImpl(Inline)]
-        public ModuleArchive(FolderPath root)
+        public ModuleArchive(FolderPath root, bool recurse = true)
         {
             Root = root;
+            Recurse = recurse;
         }
 
         FolderPath IFileArchive.Root
             => Root;
 
-        public IEnumerable<ManagedDllFile> ManagedDll()
-            => ManagedDllFiles();
-
-        public IEnumerable<NativeDllFile> NativeDll()
-            => NativeDllFiles();
-
-        public IEnumerable<ManagedExeFile> ManagedExe()
-            => ManagedExeFiles();
-
-        public IEnumerable<NativeExeFile> NativeExe()
-            => NativeExeFiles();
-
-        public IEnumerable<NativeLibFile> Lib()
-            => NativeLibFiles();
-
-        public IEnumerable<FileModule> Members()
-            => Modules();
-
-        public IEnumerable<PdbFile> Pdb()
-            => PdbFiles();
-
-        public IEnumerable<ObjFile> Obj()
-            => ObjFiles();
-
-        public IEnumerable<DllFile> Dll()
-            => DllFiles();
-
-        IEnumerable<DllFile> DllFiles()
+        public IEnumerable<AssemblyFile> Assemblies()
         {
-            foreach(var path in Root.EnumerateFiles(true, FS.Dll))
-                yield return new DllFile(path);
-        }
-
-        IEnumerable<PdbFile> PdbFiles()
-        {
-            foreach(var path in Root.EnumerateFiles(true, FS.Pdb))
-                yield return new PdbFile(path);
-        }
-
-        IEnumerable<ObjFile> ObjFiles()
-        {
-            foreach(var path in Root.EnumerateFiles(true, FS.Obj))
-                yield return new ObjFile(path);
-        }
-
-        IEnumerable<ManagedDllFile> ManagedDllFiles()
-            => from file in AssemblyFiles.managed(Root) select new ManagedDllFile(file);
-
-        IEnumerable<NativeDllFile> NativeDllFiles()
-        {
-            foreach(var path in Root.EnumerateFiles(true,FS.Dll))
-                if(FS.native(path))
-                    yield return new NativeDllFile(path);
-        }
-
-        IEnumerable<ManagedExeFile> ManagedExeFiles()
-        {
-            foreach(var path in Root.Files(true,FS.Exe))
+            foreach(var path in Root.EnumerateFiles(Recurse, FS.Dll, FS.ext("winmd")))
                 if(FS.managed(path, out var assname))
-                    yield return new ManagedExeFile(path, assname);
+                    yield return new AssemblyFile(new FileUri(path.ToUri().Format()), assname);
         }
 
-        IEnumerable<NativeExeFile> NativeExeFiles()
+        public IEnumerable<DllModule> NativeDll()
         {
-            foreach(var path in Root.Files(true,FS.Exe))
+            foreach(var path in Root.EnumerateFiles(Recurse, FS.Dll))
                 if(FS.native(path))
-                    yield return new NativeExeFile(path);
+                    yield return new DllModule(path);
         }
 
-        IEnumerable<NativeLibFile> NativeLibFiles()
+        public IEnumerable<DllModule> Dll()
         {
-            foreach(var path in Root.Files(true,FS.Lib))
-                yield return new NativeLibFile(path);
+            foreach(var path in Root.EnumerateFiles(Recurse, FS.Dll))
+                yield return new DllModule(path);            
         }
 
-        IEnumerable<FileModule> Modules()
+        public IEnumerable<ExeModule> Exe()
         {
-            foreach(var path in Root.EnumerateFiles(true,FS.Dll,FS.Exe,FS.Lib))
-            {
-                if(path.Is(FS.Dll))
-                {
-                    if(FS.managed(path, out var assname))
-                        yield return new ManagedDllFile(new AssemblyFile(path, assname));
-                    else
-                        yield return new NativeDllFile(path);
-                }
-                else if(path.Is(FS.Exe))
-                {
-                    if(FS.managed(path, out var assname))
-                        yield return new ManagedExeFile(path, assname);
-                    else
-                        yield return new NativeExeFile(path);
-                }
-                else if(path.Is(FS.Lib))
-                    yield return new NativeLibFile(path);
-            }
+            foreach(var path in Root.Files(Recurse, FS.Exe))
+                if(FS.native(path))
+                    yield return new ExeModule(path);
         }
+
+        public IEnumerable<LibModule> Lib()
+        {
+            foreach(var path in Root.Files(Recurse, FS.Lib))
+                yield return new LibModule(path);
+        }
+
+        public IEnumerable<BinaryModule> Members()
+        {
+            var managed = from module in Assemblies() select generalize(module);
+            var native = from module in NativeDll() select generalize(module);
+            var obj = from module in Obj() select generalize(module);
+            var exe = from module in Exe() select generalize(module);
+            var pdb = from module in Pdb() select generalize(module);
+            return managed.Union(native).Union(obj).Union(exe).Union(pdb);
+        }
+
+        public IEnumerable<PdbModule> Pdb()
+        {
+            foreach(var path in Root.EnumerateFiles(Recurse, FS.Pdb))
+                yield return new PdbModule(path);
+        }
+
+        public IEnumerable<ObjModule> Obj()
+        {
+            foreach(var path in Root.EnumerateFiles(Recurse, FS.Obj))
+                yield return new ObjModule(path);
+        }
+
+        [MethodImpl(Inline)]
+        static BinaryModule generalize<T>(T src)
+            where T : IBinaryModule
+                => new BinaryModule(src.Location, src.ModuleKind);
     }
 }

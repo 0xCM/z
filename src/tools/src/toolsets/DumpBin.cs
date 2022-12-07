@@ -159,7 +159,7 @@ namespace Z0
             => string.Format("{0}.{1}.{2}", Id, kind.Format(), CmdSymbols[cmd].Expr);
 
         public CmdScript Script<T>(string name, CmdName cmd, IEnumerable<T> src, IDbTargets output)
-            where T : IFileModule
+            where T : IBinaryModule
         {
             var emitter = text.emitter();
             foreach(var module in src)
@@ -220,10 +220,7 @@ namespace Z0
         public ReadOnlySeq<FilePath> GenScripts(IModuleArchive src, IDbTargets dst)
         {
             var paths = list<FilePath>();
-            var exe = src.NativeExe();
-            var lib = src.Lib();
             var dll = src.NativeDll();
-            var obj = src.Obj();
             var sid = Identifier.Empty;
             var cmd = DumpBin.CmdName.None;
             var ext = FileExt.Empty;
@@ -250,7 +247,7 @@ namespace Z0
         }
 
         FilePath GenScript<T>(CmdName cmd, IEnumerable<T> src, FileKind kind, IDbTargets dst)
-            where T : IFileModule
+            where T : IBinaryModule
         {
             var script = Script(ScriptId(cmd, kind), cmd, src, dst);
             var path = dst.Path(FS.file(script.Name.Format(), FS.Cmd));

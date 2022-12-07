@@ -6,22 +6,18 @@ namespace Z0
 {
     public interface IModuleArchive : IFileArchive
     {
-        IEnumerable<DllFile> Dll();
+        IEnumerable<DllModule> NativeDll();
 
-        IEnumerable<ObjFile> Obj();
+        IEnumerable<ObjModule> Obj();
 
-        IEnumerable<PdbFile> Pdb();
+        IEnumerable<PdbModule> Pdb();
 
-        IEnumerable<ManagedDllFile> ManagedDll();
+        IEnumerable<ExeModule> Exe();
 
-        IEnumerable<NativeDllFile> NativeDll();
+        IEnumerable<AssemblyFile> Assemblies();
 
-        IEnumerable<ManagedExeFile> ManagedExe();
+        IEnumerable<LibModule> Lib();
 
-        IEnumerable<NativeExeFile> NativeExe();
-
-        IEnumerable<NativeLibFile> Lib();
-
-        IEnumerable<FileModule> Members();
+        IEnumerable<BinaryModule> Members();
     }
 }

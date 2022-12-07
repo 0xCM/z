@@ -27,7 +27,7 @@ namespace Z0
             var src = FS.dir(args[0]);
             var sdk = Sdks.sdk(src);
             var modules = sdk.Modules;
-            iter(modules.Dll(), file => Write(file));
+            iter(modules.NativeDll(), file => Write(file));
         }
 
         [CmdOp("api/tablegen")]
@@ -102,12 +102,6 @@ namespace Z0
         {
             var src = AppDb.Archive(arg(args,0).Value);
             iter(src.Files(true), file => Write(file.ToUri()));
-        }
-
-        [CmdOp("types/list")]
-        void ListTypes(CmdArgs args)
-        {
-            ApiMd.Emitter(Archives.archive(Env.cd() + FS.folder(".data"))).EmitTypeLists(AssemblyFiles.managed(FS.dir(args[0])));
         }
 
         [CmdOp("tokens/types")]

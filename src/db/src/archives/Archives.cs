@@ -78,8 +78,8 @@ namespace Z0
         public static Task<ExecToken> copy(IWfChannel channel, FolderPath src, FolderPath dst)
             => CmdRunner.start(channel, FS.path("robocopy.exe"), Cmd.args(src, dst, "/e"));
 
-        public static IModuleArchive modules(FolderPath src)
-            => new ModuleArchive(src);
+        public static IModuleArchive modules(FolderPath src, bool recurse = true)
+            => new ModuleArchive(src, recurse);
 
         public record struct CopyFiles(FolderPath Source, FolderPath Target) 
             : ICmdFlow<CopyFiles,FolderPath,FolderPath> {}

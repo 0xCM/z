@@ -19,7 +19,7 @@ namespace Z0
             CsvChannels.emit(channel, data, dst);
         }
 
-        public static ApiCmdCatalog catalog(ReadOnlySeq<ApiOp> src)
+        public static ApiCmdCatalog catalog(ReadOnlySeq<Effector> src)
         {
             var count = src.Count;
             var dst = alloc<CmdUri>(count);

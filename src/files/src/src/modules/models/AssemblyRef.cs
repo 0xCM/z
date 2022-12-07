@@ -4,15 +4,18 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct AssemblyRef : IAssemblyRef<ClrAssemblyName>, IDataType<AssemblyRef>
+    public readonly struct AssemblyRef : IAssemblyRef<AssemblyFile>, IDataType<AssemblyRef>
     {
-        public readonly ClrAssemblyName Source;
+        public readonly BinaryCode Token;
 
-        public readonly ClrAssemblyName Target;
+        public readonly AssemblyFile Source;
+
+        public readonly AssemblyFile Target;
 
         [MethodImpl(Inline)]
-        public AssemblyRef(ClrAssemblyName src, ClrAssemblyName dst)
+        public AssemblyRef(BinaryCode token, AssemblyFile src, AssemblyFile dst)
         {
+            Token = token;
             Source = src;
             Target = dst;
         }
@@ -43,7 +46,7 @@ namespace Z0
             => Source == src.Source && Target == src.Target;
 
         public string Format()
-            => $"{Source.SimpleName} -> {Target.SimpleName}";
+            => $"{Source.Name} -> {Target.Name}";
 
         public override string ToString()
             => Format();
@@ -56,12 +59,12 @@ namespace Z0
             return result;
         }
 
-        ClrAssemblyName IArrow<ClrAssemblyName, ClrAssemblyName>.Source
+        AssemblyFile IArrow<AssemblyFile, AssemblyFile>.Source
             => Source;
 
-        ClrAssemblyName IArrow<ClrAssemblyName, ClrAssemblyName>.Target
+        AssemblyFile IArrow<AssemblyFile, AssemblyFile>.Target
             => Target;
 
-        public static AssemblyRef Empty => new AssemblyRef(ClrAssemblyName.Empty,ClrAssemblyName.Empty);
+        public static AssemblyRef Empty => new AssemblyRef(BinaryCode.Empty, AssemblyFile.Empty,AssemblyFile.Empty);
     }
 }

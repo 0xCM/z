@@ -9,30 +9,30 @@ namespace Z0
 
     partial class ApiCmd
     {
-        public static Outcome exec(IWfChannel channel, ApiOp op, CmdArgs args)
+        public static Outcome exec(IWfChannel channel, Effector effector, CmdArgs args)
         {
             var output = default(object);
             var result = Outcome.Success;
             try
             {
-                switch(op.Kind)
+                switch(effector.Kind)
                 {
                     case Pure:
-                        op.Definition.Invoke(op.Host, new object[]{});
+                        effector.Definition.Invoke(effector.Host, new object[]{});
                         result = Outcome.Success;
                     break;
                     case Receiver:
-                        op.Definition.Invoke(op.Host, new object[1]{args});
+                        effector.Definition.Invoke(effector.Host, new object[1]{args});
                         result = Outcome.Success;
                     break;
                     case CmdActorKind.Emitter:
-                        output = op.Definition.Invoke(op.Host, new object[]{});
+                        output = effector.Definition.Invoke(effector.Host, new object[]{});
                     break;
                     case Func:
-                        output = op.Definition.Invoke(op.Host, new object[1]{args});
+                        output = effector.Definition.Invoke(effector.Host, new object[1]{args});
                     break;
                     default:
-                        result = new Outcome(false, $"Unsupported {op.Definition}");
+                        result = new Outcome(false, $"Unsupported {effector.Definition}");
                     break;
                 }
 
@@ -57,9 +57,9 @@ namespace Z0
             }
             catch(Exception e)
             {
-                var msg = AppMsg.format($"{op.Uri} invocation error", e);
-                var origin = AppMsg.orginate(op.HostType.DisplayName(), op.Definition.DisplayName(), 12);
-                var error = Events.error(msg, origin, op.HostType);
+                var msg = AppMsg.format($"{effector.Uri} invocation error", e);
+                var origin = AppMsg.orginate(effector.HostType.DisplayName(), effector.Definition.DisplayName(), 12);
+                var error = Events.error(msg, origin, effector.HostType);
                 channel.Error(error);
                 result = (e,msg);
             }

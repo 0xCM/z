@@ -5,18 +5,18 @@
 namespace Z0
 {
     [Free]
-    public interface IFileModule : IFile
+    public interface IBinaryModule : IFile
     {
         FileModuleKind ModuleKind {get;}
     }
 
     [Free]
-    public interface IFileModule<T> : IFileModule, IFile<FilePath>
-        where T : struct, IFileModule<T>
+    public interface IBinaryModule<T> : IBinaryModule, IFile<FileUri>
+        where T : struct, IBinaryModule<T>
     {
-        FilePath Path {get;}
+        FileUri Path {get;}
 
-        FilePath ILocatable<FilePath>.Location
+        FileUri ILocatable<FileUri>.Location
             => Path;
     }
 }

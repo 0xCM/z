@@ -5,11 +5,13 @@
 namespace Z0
 {
     using static sys;
+    using System.Linq;
+
     using static EcmaTables;
 
     partial class EcmaReader
     {
-        public EcmaTables.AssemblyRef ReadAssemblyRef(AssemblyReferenceHandle handle)
+        public EcmaTables.AssemblyRef ReadAssemblyRefRow(AssemblyReferenceHandle handle)
         {
             var src = MD.GetAssemblyReference(handle);
             var dst = default(EcmaTables.AssemblyRef);
@@ -43,9 +45,7 @@ namespace Z0
         public ref AssemblyRefInfo ReadAssemblyRef(AssemblyReference src, ref AssemblyRefInfo dst)
         {
             dst.Source = MD.GetAssemblyDefinition().GetAssemblyName();
-            dst.SourceVersion = dst.Source.Version;
             dst.Target = src.GetAssemblyName();
-            dst.TargetVersion = dst.Target.Version;
             dst.Token = ReadBlobData(src.PublicKeyOrToken);
             return ref dst;
         }

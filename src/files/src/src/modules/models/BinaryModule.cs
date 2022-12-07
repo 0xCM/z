@@ -7,14 +7,14 @@ namespace Z0
     /// <summary>
     /// Represents a managed or native image
     /// </summary>
-    public readonly record struct FileModule : IFileModule<FileModule>
+    public readonly record struct BinaryModule : IBinaryModule<BinaryModule>
     {
-        public FilePath Path {get;}
+        public FileUri Path {get;}
 
         public FileModuleKind ModuleKind {get;}
 
         [MethodImpl(Inline)]
-        public FileModule(FilePath src, FileModuleKind kind)
+        public BinaryModule(FilePath src, FileModuleKind kind)
         {
             Path = src;
             ModuleKind = kind;
@@ -57,7 +57,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public static implicit operator ImagePath(FileModule src)
-            => src.Path;
+        public static implicit operator ImagePath(BinaryModule src)
+            => src.Path.ToFilePath();
     }
 }

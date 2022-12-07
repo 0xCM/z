@@ -19,7 +19,7 @@ namespace Z0
 
         [CmdOp("api/script")]
         void RunAppScript(CmdArgs args)
-            => ApiCmd.RunApiScript(FS.path(arg(args,0)));
+            => ApiScripts.start(Channel, args);
 
         [CmdOp("env/tools")]
         void EnvTools()

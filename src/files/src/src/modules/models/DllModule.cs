@@ -4,41 +4,35 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using api = NativeModules;
-
     /// <summary>
     /// Represents a native dll
     /// </summary>
-    public readonly struct NativeDllFile : IFileModule<NativeDllFile>
+    public readonly struct DllModule : IBinaryModule<DllModule>
     {
-        public FilePath Path {get;}
+        public FileUri Path {get;}
 
         public FileModuleKind ModuleKind
             => FileModuleKind.NativeDll;
 
         [MethodImpl(Inline)]
-        public NativeDllFile(FilePath path)
+        public DllModule(FilePath path)
             => Path = path;
 
         public FileName FileName
         {
             [MethodImpl(Inline)]
-            get => Path.FileName;
+            get => Path.FileName();
         }
 
         public FileExt DefaultExt
             => FS.Dll;
 
         [MethodImpl(Inline)]
-        public NativeModule Load()
-            => api.load(Path);
+        public static implicit operator BinaryModule(DllModule src)
+            => new BinaryModule(src.Path, src.ModuleKind);
 
         [MethodImpl(Inline)]
-        public static implicit operator FileModule(NativeDllFile src)
-            => new FileModule(src.Path, src.ModuleKind);
-
-        [MethodImpl(Inline)]
-        public static implicit operator ImagePath(NativeDllFile src)
-            => src.Path;
+        public static implicit operator ImagePath(DllModule src)
+            => src.Path.ToFilePath();
     }
 }

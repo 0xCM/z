@@ -143,15 +143,11 @@ namespace Z0
             return dst.ToArray();
         }
 
-
-        static IModuleArchive archive(FolderPath root)
-            => new ModuleArchive(root);
-
         static IModuleArchive archive()
-            => archive(FS.path(ExecutingPart.Assembly.Location).FolderPath);
+            => Archives.modules(FS.path(ExecutingPart.Assembly.Location).FolderPath);
 
         public static Assembly[] parts()
-            => data("parts",() => archive().ManagedDll().Where(x => x.FileName.StartsWith("z0")).Map(x => x.Load()).Distinct().Array());
+            => data("parts",() => archive().Assemblies().Where(x => x.Path.FileName().StartsWith("z0")).Map(x => x.Load()).Distinct().Array());
 
         public Assembly[] Parts
             => parts();

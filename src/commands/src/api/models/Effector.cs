@@ -4,9 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed class ApiOp
+    public sealed class Effector
     {
-        public readonly Name CmdName;
+        public readonly @string CmdName;
 
         public readonly CmdActorKind Kind;
 
@@ -17,7 +17,7 @@ namespace Z0
         public readonly CmdUri Uri;
 
         [MethodImpl(Inline)]
-        public ApiOp(Name name, CmdActorKind kind, MethodInfo method, object host)
+        public Effector(string name, CmdActorKind kind, MethodInfo method, object host)
         {
             CmdName = name;
             Kind = kind;

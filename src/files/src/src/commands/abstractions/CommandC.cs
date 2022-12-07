@@ -17,8 +17,7 @@ namespace Z0.Commands
 
     public abstract record class Command<C> : Command, ICmd<C>
         where C : Command<C>, new()
-    {
-        
+    {        
         public override CmdId CmdId 
             => CmdId.identify<C>();
         

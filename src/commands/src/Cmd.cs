@@ -189,10 +189,10 @@ namespace Z0
         }
 
 
-        public static ConstLookup<Name,ApiOp> defs(IApiDispatcher src)
+        public static ConstLookup<Name,Effector> defs(IApiDispatcher src)
         {
             ref readonly var defs = ref src.Commands.Defs;
-            var dst = dict<Name,ApiOp>();
+            var dst = dict<Name,Effector>();
             iter(defs.View, def => dst.Add(def.CmdName, def));
             return dst;
         }

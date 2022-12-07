@@ -20,10 +20,6 @@ namespace Z0
         static IApiPack Dst
             => ApiPacks.create();
 
-        [CmdOp("ecma/emit")]
-        void EcmaEmitMetaDumps(CmdArgs args)
-            => EcmaEmitter.EmitMetadumps(FS.dir(args[0]));
-
         [CmdOp("ecma/list")]
         void EcmaList(CmdArgs args)
             => EcmaEmitter.EmitList(args);
@@ -82,7 +78,7 @@ namespace Z0
         [CmdOp("ecma/emit/typedefs")]
         void EmitTypeDefs(CmdArgs args)
         {
-            var modules = Archives.modules(FS.dir(args[0])).ManagedDll();
+            var modules = Archives.modules(FS.dir(args[0])).Assemblies();
             iter(modules, module => {
                 using var file = EcmaFile.open(module.Path);
                 var reader = EcmaReader.create(file);

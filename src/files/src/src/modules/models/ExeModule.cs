@@ -7,18 +7,18 @@ namespace Z0
     /// <summary>
     /// Represents a native executable
     /// </summary>
-    public readonly struct NativeExeFile : IFileModule<NativeExeFile>
+    public readonly struct ExeModule : IBinaryModule<ExeModule>
     {
-        public FilePath Path {get;}
+        public FileUri Path {get;}
 
         [MethodImpl(Inline)]
-        public NativeExeFile(FilePath path)
+        public ExeModule(FilePath path)
             => Path = path;
 
         public FileName FileName
         {
             [MethodImpl(Inline)]
-            get => Path.FileName;
+            get => Path.FileName();
         }
 
         public FileModuleKind ModuleKind
@@ -28,20 +28,20 @@ namespace Z0
             => FS.Exe;
 
         public Assembly Load()
-            => Assembly.LoadFrom(Path.Name);
+            => Assembly.LoadFrom(Path.ToFilePath().Format());
 
         public string Format()
-            => Path.ToUri().Format();
+            => Path.Format();
 
         public override string ToString()
             => Format();
 
         [MethodImpl(Inline)]
-        public static implicit operator FileModule(NativeExeFile src)
-            => new FileModule(src.Path, src.ModuleKind);
+        public static implicit operator BinaryModule(ExeModule src)
+            => new BinaryModule(src.Path, src.ModuleKind);
 
         [MethodImpl(Inline)]
-        public static implicit operator ImagePath(NativeExeFile src)
-            => src.Path;
+        public static implicit operator ImagePath(ExeModule src)
+            => src.Path.ToFilePath();
     }
 }

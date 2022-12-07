@@ -19,6 +19,12 @@ namespace Z0
 
             public EcmaCmd EcmaCmd(IWfRuntime wf)
                 => Service<EcmaCmd>(wf);
+
+            public ClrCmd ClrCmd(IWfRuntime wf)
+                => Service<ClrCmd>(wf);
+
+            public ClrSvc ClrServices(IWfRuntime wf)
+                => Service<ClrSvc>(wf);
         }
 
         static Svc Services => Svc.Instance;
@@ -34,5 +40,13 @@ namespace Z0
 
         public static IApiService EcmaCmd(this IWfRuntime wf)
             => Services.EcmaCmd(wf);
+
+        public static IApiService ClrCmd(this IWfRuntime wf)
+            => Services.ClrCmd(wf);
+
+        public static ClrSvc ClrSvc(this IWfRuntime wf)
+            => Services.ClrServices(wf);
+
+
     }
 }

@@ -7,18 +7,18 @@ namespace Z0
     /// <summary>
     /// Identifies and represents a native static library
     /// </summary>
-    public readonly struct NativeLibFile : IFileModule<NativeLibFile>
+    public readonly struct LibModule : IBinaryModule<LibModule>
     {
-        public FilePath Path {get;}
+        public FileUri Path {get;}
 
         [MethodImpl(Inline)]
-        public NativeLibFile(FilePath path)
+        public LibModule(FilePath path)
             => Path = path;
 
         public FileName FileName
         {
             [MethodImpl(Inline)]
-            get => Path.FileName;
+            get => Path.FileName();
         }
 
         public FileModuleKind ModuleKind
@@ -28,11 +28,11 @@ namespace Z0
             =>  FS.Lib;
 
         [MethodImpl(Inline)]
-        public static implicit operator FileModule(NativeLibFile src)
-            => new FileModule(src.Path, src.ModuleKind);
+        public static implicit operator BinaryModule(LibModule src)
+            => new BinaryModule(src.Path, src.ModuleKind);
 
         [MethodImpl(Inline)]
-        public static implicit operator ImagePath(NativeLibFile src)
-            => src.Path;
+        public static implicit operator ImagePath(LibModule src)
+            => src.Path.ToFilePath();
     }
 }

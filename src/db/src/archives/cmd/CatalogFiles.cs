@@ -20,7 +20,6 @@ namespace Z0.Commands
 
         public Seq<FileExt> Match;
 
-
         public static Outcome bind(CmdArgs src, out CatalogFiles dst)
         {
             dst = new();

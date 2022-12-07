@@ -6,20 +6,20 @@ namespace Z0
 {
     public class ApiOps : IApiOps
     {
-        readonly Dictionary<string,ApiOp> Lookup;
+        readonly Dictionary<string,Effector> Lookup;
 
-        readonly ReadOnlySeq<ApiOp> CmdDefs;
+        readonly ReadOnlySeq<Effector> CmdDefs;
 
-        internal ApiOps(Dictionary<string,ApiOp> src)
+        internal ApiOps(Dictionary<string,Effector> src)
         {
             Lookup = src;
             CmdDefs = src.Values.ToSeq();
         }
 
-        public bool Find(string spec, out ApiOp runner)
+        public bool Find(string spec, out Effector runner)
             => Lookup.TryGetValue(spec, out runner);
 
-        public ref readonly ReadOnlySeq<ApiOp> Defs
+        public ref readonly ReadOnlySeq<Effector> Defs
         {
             [MethodImpl(Inline)]
             get => ref CmdDefs;
