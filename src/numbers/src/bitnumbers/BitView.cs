@@ -13,11 +13,11 @@ namespace Z0
     public unsafe ref struct BitView
     {
         [MethodImpl(Inline)]
-        public static BitView create(ulong src)
+        public static BitView create(in ulong src)
             => new BitView(bytes(src));
 
         [MethodImpl(Inline), Closures(UnsignedInts)]
-        public static BitView create<T>(T src)
+        public static BitView create<T>(in T src)
             where T : unmanaged
                 => new BitView(bytes(src));
 

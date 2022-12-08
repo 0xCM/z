@@ -60,7 +60,7 @@ namespace Z0.Asm
         }
 
         [Op]
-        static ref AsmJmpRow jmprow(in ApiInstruction src, AsmJmpKind jk, out AsmJmpRow dst)
+        static AsmJmpRow jmprow(in ApiInstruction src, AsmJmpKind jk, out AsmJmpRow dst)
         {
             dst.SourcePart = src.Part;
             dst.Block = src.BaseAddress;
@@ -71,11 +71,11 @@ namespace Z0.Asm
             dst.Target = IceConverters.branch(dst.Source, src.Instruction, 0).Target.Address;
             dst.Instruction = src.Statment;
             dst.Encoded = src.Encoded;
-            return ref dst;
+            return dst;
         }
 
         [Op]
-        static ref AsmJmpKind classify(IceMnemonic src, out AsmJmpKind kind)
+        static AsmJmpKind classify(IceMnemonic src, out AsmJmpKind kind)
         {
             kind = K.None;
             switch(src)
@@ -147,7 +147,7 @@ namespace Z0.Asm
                 default:
                 break;
             }
-            return ref kind;
+            return kind;
         }
     }
 }

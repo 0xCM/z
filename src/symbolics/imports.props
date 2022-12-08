@@ -1,4 +1,5 @@
 <Project>
+  <Import Project="$(DevRoot)\props\microsoft.codeanalysis.props" />
   <ItemGroup>
     <ProjectReference Include="$(ZLib)" />
   </ItemGroup>

@@ -28,6 +28,7 @@ namespace Z0
             }
             return new ToolCmdSpec(tool, ApiCmd.identify(t), buffer);
         }        
+
         public static string format(IToolCmd src)
         {
             var count = src.Args.Count;

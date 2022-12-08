@@ -180,7 +180,7 @@ namespace Z0
 
             var emitter = text.emitter();
             Span<char> dst = stackalloc char[RenderWidth];
-            var buffer = default(Span<bit>);
+            Span<bit> buffer = stackalloc bit[4];
 
             i=0;
             src = a0;
@@ -191,7 +191,7 @@ namespace Z0
 
             i=0;
             storage = 0;
-            buffer = recover<bit>(@bytes(storage));
+            buffer.Clear();
             Bitfields.unpack4x1(src,buffer);
             output = BitPack.scalar<uint>(buffer);
             Require.equal(input,output);
@@ -208,7 +208,7 @@ namespace Z0
 
             i=0;
             storage = 0;
-            buffer = recover<bit>(@bytes(storage));
+            buffer.Clear();
             Bitfields.unpack4x1(src, buffer);
             output = BitPack.scalar<uint>(buffer);
             Require.equal(input,output);
@@ -225,7 +225,7 @@ namespace Z0
 
             i=0;
             storage = 0;
-            buffer = recover<bit>(@bytes(storage));
+            buffer.Clear();
             Bitfields.unpack4x1(src,buffer);
             output = BitPack.scalar<uint>(buffer);
             Require.equal(input,output);
@@ -242,7 +242,7 @@ namespace Z0
 
             i=0;
             storage = 0;
-            buffer = recover<bit>(@bytes(storage));
+            buffer.Clear();
             Bitfields.unpack4x1(src,buffer);
             output = BitPack.scalar<uint>(buffer);
             Require.equal(input,output);
@@ -259,7 +259,7 @@ namespace Z0
 
             i=0;
             storage = 0;
-            buffer = recover<bit>(@bytes(storage));
+            buffer.Clear();
             Bitfields.unpack4x1(src,buffer);
             output = BitPack.scalar<uint>(buffer);
             Require.equal(input,output);

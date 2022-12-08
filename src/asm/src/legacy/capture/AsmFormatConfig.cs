@@ -24,7 +24,7 @@ namespace Z0.Asm
         public static AsmFormatConfig DefaultStreamFormat
             => @default(out var _);
 
-        public static ref AsmFormatConfig @default(out AsmFormatConfig dst)
+        public static AsmFormatConfig @default(out AsmFormatConfig dst)
         {
             dst.EmitCaptureTermCode = true;
             dst.EmitFileHeader = true;
@@ -32,7 +32,7 @@ namespace Z0.Asm
             dst.AbsoluteLabels = false;
             dst.EmitLineAddresses = true;
             dst.HeaderEncodingFormat = HexFormatOptions.define();
-            return ref dst;
+            return dst;
         }
     }
 }

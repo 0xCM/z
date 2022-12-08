@@ -100,7 +100,7 @@ namespace Z0.Asm
             {
                 ref readonly var seg = ref skip(src,i);
                 buffer.Clear();
-                writer.WriteLine(CsLang.hexarray(seg, i, buffer));
+                writer.WriteLine(GHexStrings.hexarray(seg, i, buffer));
             }
             EmittedFile(flow, count);
         }

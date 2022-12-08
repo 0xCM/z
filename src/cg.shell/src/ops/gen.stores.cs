@@ -10,8 +10,6 @@ namespace Z0
 
     partial class CgCmd
     {
-        CsLang CsLang => Wf.CsLang();
-
         [CmdOp("gen/stores")]
         Outcome GenStores(CmdArgs args)
         {

@@ -34,12 +34,5 @@ namespace Z0
             EventId = id;
             Payload = data;
         }
-
-        /// <summary>
-        /// Renders the event as a sequence of bytes
-        /// </summary>
-        [MethodImpl(Inline)]
-        public Span<byte> Serialize()
-            => core.bytes(this);
     }
 }
