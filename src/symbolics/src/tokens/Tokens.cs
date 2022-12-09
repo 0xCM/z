@@ -97,14 +97,14 @@ namespace Z0
             return counter;
         }
 
-        [MethodImpl(Inline), Op]
-        public static TokenExpr<T> expr<T>(uint id, T src)
-            where T : unmanaged, ICharBlock
-                => new TokenExpr<T>(id,src);
+        // [MethodImpl(Inline), Op]
+        // public static TokenExpr<T> expr<T>(uint id, T src)
+        //     where T : unmanaged, ICharBlock
+        //         => new TokenExpr<T>(id,src);
 
-        [MethodImpl(Inline), Op]
-        public static TokenExpr expr(uint id, ReadOnlySpan<char> src, uint offset, uint length)
-            => new TokenExpr(id, address(skip(src,offset)),length);
+        // [MethodImpl(Inline), Op]
+        // public static TokenExpr expr(uint id, ReadOnlySpan<char> src, uint offset, uint length)
+        //     => new TokenExpr(id, address(skip(src,offset)),length);
 
         [MethodImpl(Inline), Op]
         public static uint count(ReadOnlySpan<char> src)
@@ -148,12 +148,13 @@ namespace Z0
             for(var i=0u; i<count; i++)
             {
                 ref readonly var symbol = ref symbols[i];
-                seek(dst,i) = new Token<K>(
-                    symbol.Key,
-                    symbol.Kind,
-                    symbol.Name,
-                    text.ifempty(symbol.Expr.Text,symbol.Name)
-                    );
+                seek(dst,i) = new Token<K>{
+                    Index = symbol.Key,
+                    Kind = symbol.Kind,
+                    Name = symbol.Name,
+                    Expr = text.ifempty(symbol.Expr.Text, symbol.Name),
+                    Description = symbol.Description
+                };
             }
             return dst;
         }

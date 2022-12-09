@@ -74,8 +74,50 @@ namespace Z0
             {
                 ref readonly var mi = ref skip(src,i);
                 var tag = mi.Tag<CmdOpAttribute>().Require();
-                seek(dst,i) = new ApiEffector(tag.Name, Cmd.classify(mi),  mi, host);
+                seek(dst,i) = new ApiEffector(tag.Name, classify(mi),  mi, host);
             }
+            return dst;
+        }
+
+        static CmdActorKind classify(MethodInfo src)
+        {
+            var dst = CmdActorKind.None;
+            var arity = src.ArityValue();
+            var @void = src.HasVoidReturn();
+            switch(arity)
+            {
+                case 0:
+                    switch(@void)
+                    {
+                        case false:
+                            dst = CmdActorKind.Pure;
+                        break;
+                        case true:
+                            dst = CmdActorKind.Emitter;
+                        break;
+                    }
+                break;
+                case 1:
+                    switch(@void)
+                    {
+                        case true:
+                            dst = CmdActorKind.Receiver;
+                        break;
+                        case false:
+                            dst = CmdActorKind.Func;
+                        break;
+                    }
+                break;
+            }
+            return dst;
+        }
+
+
+        public static ConstLookup<Name,ApiEffector> effectors(IApiDispatcher src)
+        {
+            ref readonly var defs = ref src.Commands.Defs;
+            var dst = dict<Name,ApiEffector>();
+            iter(defs.View, def => dst.Add(def.CmdName, def));
             return dst;
         }
     }

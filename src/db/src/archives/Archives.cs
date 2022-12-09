@@ -60,7 +60,7 @@ namespace Z0
 
         public static void zip(IWfChannel channel, CmdArgs args)
         {
-            var folder = Cmd.arg(args,0).Value;
+            var folder = args[0].Value;
             var i = text.index(folder, Chars.FSlash, Chars.BSlash);
             var scope = "default";
             if(i > 0)

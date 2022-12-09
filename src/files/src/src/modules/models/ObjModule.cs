@@ -21,6 +21,12 @@ namespace Z0
         public FileExt DefaultExt
             => FS.Obj;
 
+        public string Format()
+            => Path.Format();
+
+        public override string ToString()
+            => Format();
+
         [MethodImpl(Inline)]
         public static implicit operator BinaryModule(ObjModule src)
             => new BinaryModule(src.Path, src.ModuleKind);

@@ -6,9 +6,6 @@ namespace Z0
 {
     using static sys;
 
-    // msvsmon.exe, 0, 67532, 7, 0:00:00:00:046, 10:48:46 PM 11/30/2022, 148.39 MB, 142.04 MB, "D:\tools\msvs\msvs.2022\Common7\IDE\Remote Debugger\x64\msvsmon.exe" /__dbgautolaunch 0x0000000000001578 0x8c3c /hostname [anon-pipe:0000000000001570:000000000000156C] /port 1 /__pseudoremote /__workerProcess
-    // msvsmon.exe, 0, 57404, 10, 0:00:00:00:453, 10:48:44 PM 11/30/2022, 143.1 MB, 83.48 MB, "D:\tools\msvs\msvs.2022\Common7\IDE\Remote Debugger\x64\msvsmon.exe" /__dbgautolaunch 0x00000000000019EC 0x8c3c /hostname [anon-pipe:0000000000001380:0000000000001A30] /port 1 /__pseudoremote /VsReliabilityPath "D:\tools\msvs\msvs.2022\common7\ide\VSReliability.dll"
-
     [ApiHost]
     public class Cmd
     {        
@@ -18,18 +15,6 @@ namespace Z0
         [Op, Closures(UInt64k)]
         public static Tool tool(CmdArgs args, byte index = 0)
             => CmdArgs.arg(args,index).Value;
-
-        [MethodImpl(Inline), Op]
-        public static CmdArgDef<T> arg<T>(string name, T value, ArgPrefix prefix)
-            => new CmdArgDef<T>(name, value, prefix);
-
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static CmdArgDef<T> arg<T>(ushort pos, T value, ArgPrefix prefix)
-            => new CmdArgDef<T>(pos, value.ToString(), value, prefix);
-
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static CmdArgDef<T> arg<T>(ushort pos, string name, T value, ArgPrefix prefix)
-            => new CmdArgDef<T>(pos, name, value, prefix);
 
         public static ReadOnlySeq<CmdFlagSpec> flags(FilePath src)
         {
@@ -68,18 +53,6 @@ namespace Z0
         public static CmdLine cmd<T>(T src)
             => $"cmd.exe /c {src}";
 
-        [Op]
-        public static CmdArg arg(CmdArgs src, int index)
-        {
-            if(src.IsEmpty)
-                @throw(EmptyArgList.Format());
-
-            var count = src.Count;
-            if(count < index - 1)
-                @throw(ArgSpecError.Format());
-            return src[(ushort)index];
-        }
-
         public static CmdArgs args<T>(params T[] src)
             where T : IEquatable<T>, IComparable<T>
         {
@@ -108,12 +81,6 @@ namespace Z0
         [MethodImpl(Inline)]
         public static DataFlow<Actor,S,T> flow<S,T>(Tool tool, S src, T dst)
             => new DataFlow<Actor,S,T>(FlowId.identify(tool,src,dst), tool,src,dst);        
-
-        const NumericKind Closure = UnsignedInts;    
-
-        static MsgPattern EmptyArgList => "No arguments specified";
-
-        static MsgPattern ArgSpecError => "Argument specification error";
 
         [MethodImpl(Inline), Op]
         public static CmdUri uri(CmdKind kind, string? part, string? host, string? name)
@@ -163,10 +130,6 @@ namespace Z0
             };
         }
 
-        [MethodImpl(Inline), Op, Closures(NumericKind.U64)]
-        public static CmdArg<T> arg<T>(T value)
-            where T : ICmdArg<T>, IEquatable<T>, IComparable<T>
-                => value;
         public static string join(CmdArgs args)
         {
             var dst = text.emitter();
@@ -186,48 +149,6 @@ namespace Z0
             for(ushort i=0; i<src.Length; i++)
                 seek(dst,i) = new CmdArg($"{skip(src,i)}");
             return new (dst);
-        }
-
-
-        public static ConstLookup<Name,ApiEffector> defs(IApiDispatcher src)
-        {
-            ref readonly var defs = ref src.Commands.Defs;
-            var dst = dict<Name,ApiEffector>();
-            iter(defs.View, def => dst.Add(def.CmdName, def));
-            return dst;
-        }
-
-        public static CmdActorKind classify(MethodInfo src)
-        {
-            var dst = CmdActorKind.None;
-            var arity = src.ArityValue();
-            var @void = src.HasVoidReturn();
-            switch(arity)
-            {
-                case 0:
-                    switch(@void)
-                    {
-                        case false:
-                            dst = CmdActorKind.Pure;
-                        break;
-                        case true:
-                            dst = CmdActorKind.Emitter;
-                        break;
-                    }
-                break;
-                case 1:
-                    switch(@void)
-                    {
-                        case true:
-                            dst = CmdActorKind.Receiver;
-                        break;
-                        case false:
-                            dst = CmdActorKind.Func;
-                        break;
-                    }
-                break;
-            }
-            return dst;
         }
    }
 }

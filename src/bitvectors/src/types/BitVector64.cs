@@ -57,14 +57,6 @@ namespace Z0
         }
 
         /// <summary>
-        /// Presents bitvector content as a bytespan
-        /// </summary>
-        public Span<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => core.bytes(Data);
-        }
-
         public bit IsZero
         {
             [MethodImpl(Inline)]
@@ -155,14 +147,6 @@ namespace Z0
             [MethodImpl(Inline)]
             get => BitVectors.extract(this,i0, i1);
         }
-
-        /// <summary>
-        /// Selects an index-identified byte where i = [0,..,7]
-        /// </summary>
-        /// <param name="i">The 0-based byte-relative position</param>
-        [MethodImpl(Inline)]
-        public ref byte Byte(int i)
-            => ref Bytes[i];
 
         [MethodImpl(Inline)]
         public readonly bool Equals(V y)

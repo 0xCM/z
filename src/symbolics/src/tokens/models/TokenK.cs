@@ -5,42 +5,29 @@
 namespace Z0
 {
     [StructLayout(LayoutKind.Sequential, Pack=1)]
-    public readonly struct Token<K> : IToken<K>
-        where K : unmanaged
+    public sealed record class Token<K> : IToken<K>
+        where K : unmanaged, Enum
     {
-        public readonly uint Index;
+        public uint Index;
 
-        public readonly K Kind;
+        public K Kind;
 
-        readonly string _Name;
+        public string Name;
 
-        readonly string _Expr;
+        public string Expr;
 
-        [MethodImpl(Inline)]
-        public Token(uint index,  K kind, string name, string expr)
-        {
-            Kind = kind;
-            Index = index;
-            _Name = name;
-            _Expr = expr;
-        }
-
-        public ReadOnlySpan<char> Name
-        {
-            [MethodImpl(Inline)]
-            get => _Name;
-        }
-
-        public ReadOnlySpan<char> Expr
-        {
-            [MethodImpl(Inline)]
-            get => _Expr;
-        }
+        public string Description;
 
         uint IToken.Index 
             => Index;
 
         K IToken<K>.Kind 
             => Kind;
+
+        ReadOnlySpan<char> IToken.Name
+            => Name;
+
+        ReadOnlySpan<char> IToken.Expr
+            => Name;     
     }
 }

@@ -125,7 +125,7 @@ namespace Z0.Asm
             dst.Encoded = new BinaryCode(encoded.TrimEnd().ToArray());
             dst.Statement = src.FormattedInstruction;
             dst.Instruction = src.Specifier.Sig.Format();
-            dst.CpuId = RpOps.embrace(src.CpuidFeatures.Select(x => x.ToString()).Join(","));
+            dst.CpuId = RP.embrace(src.CpuidFeatures.Select(x => x.ToString()).Join(","));
             dst.OpCodeId = src.Code.ToString();
             if(Index.TryGetValue(src.AsmMnemonic, out var builder))
                 builder.Include(dst);

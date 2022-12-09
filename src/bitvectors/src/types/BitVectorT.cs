@@ -41,24 +41,24 @@ namespace Z0
         public int CompareTo(BitVector<T> src)
             => bw64(this).CompareTo(bw64(src));
 
-        [MethodImpl(Inline)]
-        Span<byte> Segment(uint offset)
-            => slice(bytes(_State), offset);
+        // [MethodImpl(Inline)]
+        // Span<byte> Segment(uint offset)
+        //     => slice(bytes(_State), offset);
 
-        [MethodImpl(Inline)]
-        public ref ScalarBits<byte> Scalar(W8 w, uint offset)
-            => ref first(recover<ScalarBits<byte>>(Segment(offset)));
+        // [MethodImpl(Inline)]
+        // public ref ScalarBits<byte> Scalar(W8 w, uint offset)
+        //     => ref first(recover<ScalarBits<byte>>(Segment(offset)));
 
-        [MethodImpl(Inline)]
-        public ref ScalarBits<ushort> Scalar(W16 w, uint offset)
-            => ref first(recover<ScalarBits<ushort>>(Segment(offset)));
+        // [MethodImpl(Inline)]
+        // public ref ScalarBits<ushort> Scalar(W16 w, uint offset)
+        //     => ref first(recover<ScalarBits<ushort>>(Segment(offset)));
 
-        [MethodImpl(Inline)]
-        public ref ScalarBits<uint> Scalar(W32 w, uint offset)
-            => ref first(recover<ScalarBits<uint>>(Segment(offset)));
+        // [MethodImpl(Inline)]
+        // public ref ScalarBits<uint> Scalar(W32 w, uint offset)
+        //     => ref first(recover<ScalarBits<uint>>(Segment(offset)));
 
-        [MethodImpl(Inline)]
-        public ref ScalarBits<ulong> Scalar(W64 w, uint offset)
-            => ref first(recover<ScalarBits<ulong>>(Segment(offset)));
+        // [MethodImpl(Inline)]
+        // public ref ScalarBits<ulong> Scalar(W64 w, uint offset)
+        //     => ref first(recover<ScalarBits<ulong>>(Segment(offset)));
     }
 }

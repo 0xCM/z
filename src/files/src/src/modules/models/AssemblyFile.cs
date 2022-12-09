@@ -22,7 +22,7 @@ namespace Z0
             Version = default;
         }
 
-        public AssemblyFile(FileUri path, AssemblyName name)
+        public AssemblyFile(FilePath path, AssemblyName name)
         {
             Path = path;
             Name = name;

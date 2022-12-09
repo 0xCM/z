@@ -9,27 +9,21 @@ namespace Z0
 
     partial class EcmaEmitter
     {
-        public void EmitRowStats(IDbArchive dst)
+        public void EmitRowStats(ReadOnlySpan<Assembly> src, IDbArchive dst)
         {
-            var src = ApiMd.Parts;
             var buffer = bag<EcmaRowStats>();
-            stats(src,buffer);
-            EmitRowStats(ApiMd.Parts, dst.Metadata().Table<EcmaRowStats>());
+            EcmaReader.stats(src,buffer);
+            var rows = buffer.ToSeq().Sort();
+            Channel.TableEmit(rows, dst.Metadata().Table<EcmaRowStats>());
         }
 
         public void EmitRowStats(ReadOnlySpan<Assembly> src, FilePath dst)
         {
             var buffer = bag<EcmaRowStats>();
-            stats(src,buffer);
+            EcmaReader.stats(src,buffer);
             var rows = buffer.ToSeq().Sort();
-            TableEmit(rows, dst);
+            Channel.TableEmit(rows, dst);
         }
-
-        public static void stats(ReadOnlySpan<Assembly> src, ConcurrentBag<EcmaRowStats> dst)
-            => iter(src, a => stats(a,dst), PllExec);
-
-        public static void stats(Assembly src, ConcurrentBag<EcmaRowStats> dst)
-            => EcmaReader.stats(EcmaReader.create(src), dst);
 
     }
 }

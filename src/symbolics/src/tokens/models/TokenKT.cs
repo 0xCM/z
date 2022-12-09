@@ -4,37 +4,40 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly record struct Token<K,T> : IToken<K,T>
-        where K : unmanaged
-        where T : ICharBlock
+    public abstract record class Token<T,K> : IToken<K>
+        where T : Token<T,K>, new()
+        where K : unmanaged, Enum
     {
         public readonly uint Index;
 
         public readonly K Kind;
 
-        public readonly T _Name;
+        public readonly string Name;
 
-        public readonly T _Expr;
+        public readonly string Expr;
 
-        public Token(uint index, K kind, T name, T expr)
+        protected Token()
         {
+            Index = 0;
+            Kind = default;
+            Expr = typeof(T).Name;
+            Name = EmptyString;
+        }
+
+        protected Token(K kind)
+        {
+            Index = sys.u32(kind);
             Kind = kind;
-            Index = index;
-            _Name = name;
-            _Expr = expr;
+            Expr = Render.Format(kind);
+            Name = kind.ToString();
         }
 
-        public ReadOnlySpan<char> Name
-        {
-            [MethodImpl(Inline)]
-            get => Name;
-        }
-
-        public ReadOnlySpan<char> Expr
-        {
-            [MethodImpl(Inline)]
-            get => Expr;
-        }
+        public Token<K> Record() => new Token<K>{
+            Index = Index,
+            Kind = Kind,
+            Name = Name,
+            Expr = Expr
+        };
 
         uint IToken.Index 
             => Index;
@@ -42,10 +45,14 @@ namespace Z0
         K IToken<K>.Kind 
             => Kind;
 
-        T IToken<K, T>.Name 
-            => _Name;
+        ReadOnlySpan<char> IToken.Name
+            => Name;
 
-        T IToken<K, T>.Expr 
-            => _Expr;
+        ReadOnlySpan<char> IToken.Expr
+            => Name;
+
+        public static T Rep = new();
+
+        static EnumRender<K> Render = new();
     }
 }

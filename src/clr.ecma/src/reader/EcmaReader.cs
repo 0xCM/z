@@ -12,6 +12,12 @@ namespace Z0
     [ApiHost]
     public unsafe partial class EcmaReader
     {
+        public static void stats(ReadOnlySpan<Assembly> src, ConcurrentBag<EcmaRowStats> dst)
+            => iter(src, a => stats(a,dst), true);
+
+        public static void stats(Assembly src, ConcurrentBag<EcmaRowStats> dst)
+            => stats(EcmaReader.create(src), dst);
+
         public static IEnumerable<AssemblyRefInfo> refs(IEnumerable<AssemblyFile> src)
         {
             foreach(var file in src.AsParallel())

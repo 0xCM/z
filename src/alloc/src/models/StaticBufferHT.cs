@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     public abstract class StaticBuffer<H,T> : StaticBuffer<T>
         where H : StaticBuffer<H,T>, new()

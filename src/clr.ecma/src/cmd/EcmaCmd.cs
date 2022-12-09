@@ -24,6 +24,22 @@ namespace Z0
         void EcmaList(CmdArgs args)
             => EcmaEmitter.EmitList(args);
 
+        public static ReadOnlySeq<Assembly> Parts(FolderPath src)
+        {
+            var modules = Archives.modules(src,false).Members().Where(x => FS.managed(x.Path) && !x.Path.FileName().Contains("System.Private.CoreLib"));
+            return modules.Where(m => m.Path.FileName().StartsWith("z0.")).Map(x => Assembly.LoadFile(x.Path.ToFilePath().Format()));
+        }
+
+        [CmdOp("api/parts")]
+        void ApiAssemblies()
+        {
+
+            var root = FS.path(controller().Location).FolderPath;
+            var src  = Parts(root);
+            // var src = Archives.modules(root).Members();
+            iter(src, a => Write(a.Path()));
+
+        }
         [CmdOp("ecma/emit/parts")]
         void EmitPartEcma()
             => EcmaEmitter.EmitCatalogs(ApiMd.Parts, AppDb.ApiTargets());
@@ -73,7 +89,7 @@ namespace Z0
 
         [CmdOp("ecma/emit/headers")]
         void EmitHeaders()
-            => EcmaEmitter.EmitSectionHeaders(Dst);
+            => EcmaEmitter.EmitSectionHeaders(sys.controller().RuntimeArchive(), Dst);
 
         [CmdOp("ecma/emit/typedefs")]
         void EmitTypeDefs(CmdArgs args)

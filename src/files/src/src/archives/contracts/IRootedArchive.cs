@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static FileKind;
+
     public interface IRootedArchive : IExistential, ILocatable<FolderPath>
     {
         FolderPath Root {get;}
@@ -102,6 +104,15 @@ namespace Z0
 
         string IExpr.Format()
             => DbFiles.Format();
+
+        Files ExeFiles()
+            => Files().Where(x => x.Is(Exe));
+
+        Files XmlFiles()
+            => Files().Where(x => x.Is(Xml));
+
+        Files DllFiles()
+            => Files().Where(x => x.Is(Dll));
     }
 
     public interface IRootedArchive<R> : IRootedArchive

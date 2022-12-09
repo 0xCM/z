@@ -65,7 +65,7 @@ namespace Z0
         }
 
         static ReadOnlySeq<CmdTypeInfo> discover(Assembly[] src)
-            => tagged(src).Select(describe).Sort();
+            => tagged(src).Concrete().Select(describe).Sort();
 
         static Type[] tagged(Assembly src)
             =>  src.Types().Tagged<CmdAttribute>();

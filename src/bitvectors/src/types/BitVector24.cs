@@ -125,15 +125,6 @@ namespace Z0
             get => Data;
         }
 
-        /// <summary>
-        /// Presents bitvector content as a bytespan
-        /// </summary>
-        public Span<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => slice(bytes(Data),0,3);
-        }
-
         public bit IsZero
         {
             [MethodImpl(Inline)]

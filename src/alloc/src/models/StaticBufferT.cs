@@ -27,7 +27,7 @@ namespace Z0
         public Span<T> Content
         {
             [MethodImpl(Inline)]
-            get => api.covered(this);
+            get => first(cover<Index<T>>(Address, 1)).Storage;
         }
 
         public ref T this[uint index]

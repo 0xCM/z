@@ -16,6 +16,8 @@ namespace Z0
 
         IEnumerable<AssemblyFile> Assemblies();
 
+        IEnumerable<DllModule> Dll();
+
         IEnumerable<LibModule> Lib();
 
         IEnumerable<BinaryModule> Members();

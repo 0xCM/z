@@ -11,6 +11,8 @@ namespace Z0
 
         Outcome Dispatch(string action);
 
+        Task<ExecToken> Dispatch(ICmd cmd);
+
         IApiEfectors Commands {get;}
 
         PartName Controller 

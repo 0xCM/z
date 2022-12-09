@@ -27,6 +27,12 @@ namespace Z0
         public FileExt DefaultExt
             =>  FS.Lib;
 
+        public string Format()
+            => Path.Format();
+
+        public override string ToString()
+            => Format();
+
         [MethodImpl(Inline)]
         public static implicit operator BinaryModule(LibModule src)
             => new BinaryModule(src.Path, src.ModuleKind);

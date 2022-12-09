@@ -8,8 +8,7 @@ namespace Z0
 
     partial class XTend
     {
-
-        public static IRuntimeArchive RuntimeArchive(this Assembly src)
+        public static IDbArchive RuntimeArchive(this Assembly src)
             => Z0.RuntimeArchive.load(src);
     }
 }

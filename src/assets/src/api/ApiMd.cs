@@ -143,11 +143,20 @@ namespace Z0
             return dst.ToArray();
         }
 
-        static IModuleArchive archive()
-            => Archives.modules(FS.path(ExecutingPart.Assembly.Location).FolderPath);
+        // static IModuleArchive archive()
+        //     => Archives.modules(FS.path(ExecutingPart.Assembly.Location).FolderPath);
 
-        public static Assembly[] parts()
-            => data("parts",() => archive().Assemblies().Where(x => x.Path.FileName().StartsWith("z0")).Map(x => x.Load()).Distinct().Array());
+        public static Assembly[] parts()        
+        {
+            Assembly[] get()
+            {
+                var root = FS.path(controller().Location).FolderPath;                    
+                var modules = Archives.modules(root,false).Members().Where(x => FS.managed(x.Path) && !x.Path.FileName().Contains("System.Private.CoreLib"));
+                return modules.Where(m => m.Path.FileName().StartsWith("z0.")).Map(x => Assembly.LoadFile(x.Path.ToFilePath().Format()));
+            }
+            return data("parts",get);
+        }
+            //=> data("parts",() => archive().Assemblies().Where(x => x.Path.FileName().StartsWith("z0")).Map(x => x.Load()).Distinct().Array());
 
         public Assembly[] Parts
             => parts();

@@ -12,44 +12,45 @@ namespace Z0
                 
         public void Emit(IApiCatalog src, EcmaEmissionSettings options, IApiPack dst)
         {
+            var parts = ApiMd.parts();
             if(options.EmitAssemblyRefs)
-                EmitAssemblyRefs(src.Assemblies, dst);
+                EmitAssemblyRefs(parts, dst);
 
             if(options.EmitFieldMetadata)
-                EmitFieldMetadata(src.Assemblies, dst);
+                EmitFieldMetadata(parts, dst);
 
             if(options.EmitApiMetadump)
-                EmitApiMetadump(dst);
+                EmitMetadumps(Channel, parts,dst);
 
             if(options.EmitSectionHeaders)
-                EmitSectionHeaders(dst);
+                EmitSectionHeaders(sys.controller().RuntimeArchive(), dst);
 
             if(options.EmitMsilMetadata)
-                EmitIlDat(dst);
+                EmitMsilMetadata(parts, dst);
 
             if(options.EmitMsilCode)
                 Cli.EmitIl(dst);
 
             if(options.EmitCliStrings)
             {
-                EmitUserStrings(dst);
-                EmitSystemStrings(dst);
+                EmitUserStrings(parts, dst);
+                EmitSystemStrings(parts, dst);
             }
 
             if(options.EmitMetadataHex)
-                EmitLocatedMetadata(dst);
+                EmitLocatedMetadata(parts, dst);
 
             if(options.EmitCliConstants)
-                EmitConstFields(dst);
+                EmitConstFields(parts, dst);
 
             if(options.EmitCliBlobs)
-                EmitBlobs(dst);
+                EmitBlobs(parts, dst);
 
             if(options.EmitMethodDefs)
-                EmitMethodDefs(ApiMd.Parts, dst);
+                EmitMethodDefs(parts, dst);
 
             if(options.EmitCliRowStats)
-                EmitRowStats(dst);
+                EmitRowStats(parts, dst);
         }
     }
 }

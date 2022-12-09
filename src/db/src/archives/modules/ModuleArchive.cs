@@ -26,7 +26,7 @@ namespace Z0
         {
             foreach(var path in Root.EnumerateFiles(Recurse, FS.Dll, FS.ext("winmd")))
                 if(FS.managed(path, out var assname))
-                    yield return new AssemblyFile(new FileUri(path.ToUri().Format()), assname);
+                    yield return new AssemblyFile(path, assname);
         }
 
         public IEnumerable<DllModule> NativeDll()
