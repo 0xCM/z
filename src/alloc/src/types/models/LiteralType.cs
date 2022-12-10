@@ -59,7 +59,7 @@ namespace Z0
         {
             /// <summary>
             /// Specifies runtime literal types that are considered intrinsic and which correspond to the
-            /// sorts defined byte <see cref='_PrimalKind'/>
+            /// sorts defined byte <see cref='NativeKind'/>
             /// </summary>
             public static Type[] ClrIntrinsic => new Type[]{
                 typeof(Null),
@@ -87,7 +87,7 @@ namespace Z0
 
             public static Intrinsic Types => new();
 
-            public static implicit operator Index<_PrimalKind,LiteralType>(Intrinsic src)
+            public static implicit operator Index<NativeKind,LiteralType>(Intrinsic src)
                 => _Types;
 
             static LiteralType[] _Types = new LiteralType[]

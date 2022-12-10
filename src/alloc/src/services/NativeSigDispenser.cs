@@ -14,7 +14,7 @@ namespace Z0
 
         readonly LabelDispenser Labels;
 
-        readonly ConcurrentDictionary<Hex64,NativeSig> Dispensed;
+        readonly ConcurrentDictionary<Hex64,NativeSigRef> Dispensed;
 
         internal NativeSigDispenser(MemoryDispenser mem, StringDispenser strings, LabelDispenser labels)
             : base(false)
@@ -45,13 +45,13 @@ namespace Z0
         NativeOp Operand(string name, NativeType type, NativeOpMod mod = default)
             => new NativeOp(Labels.Label(name), type, mod);
 
-        public NativeSig Sig(string scope, string opname, NativeType ret, params NativeOpDef[] opspecs)
+        public NativeSigRef Sig(string scope, string opname, NativeType ret, params NativeOpDef[] opspecs)
         {
             var id = next();
             var count = (byte)opspecs.Length;
             var size = size<byte>() + size<StringRef>() + (count + 1)*NativeOp.StorageSize;
             var data = Memory.Memory(size);
-            var dst = new NativeSig(id, data);
+            var dst = new NativeSigRef(id, data);
             dst.Scope = Strings.String(scope);
             dst.Name = Strings.String(opname);
             dst.OperandCount = count;
@@ -66,7 +66,7 @@ namespace Z0
             return dst;
         }
 
-        public NativeSig Sig(NativeSigSpec src)
+        public NativeSigRef Sig(NativeSigSpec src)
             => Sig(src.Scope, src.Name, src.ReturnType, src.Operands);
     }
 }

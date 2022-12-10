@@ -52,11 +52,11 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public NativeSig Sig(string scope, string name, NativeType ret, params NativeOpDef[] ops)
+        public NativeSigRef Sig(string scope, string name, NativeType ret, params NativeOpDef[] ops)
             => Sigs.Sig(scope, name, ret, ops);
 
         [MethodImpl(Inline)]
-        public NativeSig Sig(NativeSigSpec spec)
+        public NativeSigRef Sig(NativeSigSpec spec)
             => Sigs.Sig(spec);
 
         [MethodImpl(Inline)]

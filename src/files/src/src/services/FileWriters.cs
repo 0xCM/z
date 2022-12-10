@@ -9,9 +9,6 @@ namespace Z0
 
     public readonly struct FileWriters
     {
-        public static StreamWriter writer(FilePath dst, FileWriteMode mode, Encoding encoding)
-            => new StreamWriter(dst.CreateParentIfMissing().Name.Format(), mode == FileWriteMode.Append, encoding);
-
         public static StreamWriter asci(FilePath dst, FileWriteMode mode = FileWriteMode.Overwrite)
             => new StreamWriter(dst.CreateParentIfMissing().Name.Format(), mode == FileWriteMode.Append, Encoding.ASCII);
 

@@ -78,10 +78,10 @@ namespace Z0
         public Label Label(string content)
             => Labels().Label(content);
 
-        public NativeSig Sig(string scope, string name, NativeType ret, params NativeOpDef[] ops)
+        public NativeSigRef Sig(string scope, string name, NativeType ret, params NativeOpDef[] ops)
             => Sigs().Sig(scope, name,ret,ops);
 
-        public NativeSig Sig(NativeSigSpec spec)
+        public NativeSigRef Sig(NativeSigSpec spec)
             => Sigs().Sig(spec);
 
         public StringRef String(string content)

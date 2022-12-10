@@ -9,14 +9,14 @@ namespace Z0
     [StructLayout(StructLayout,Pack=1)]
     public readonly record struct PrimalType : IDataType<PrimalType>
     {
-        public readonly _PrimalKind PrimalKind;
+        public readonly NativeKind PrimalKind;
 
         public readonly asci64 TypeName;
 
         public readonly DataSize Size;
 
         [MethodImpl(Inline)]
-        public PrimalType(_PrimalKind kind, asci64 name, AlignedWidth width)
+        public PrimalType(NativeKind kind, asci64 name, AlignedWidth width)
         {
             PrimalKind = kind;
             TypeName = name;
@@ -57,12 +57,12 @@ namespace Z0
             => TypeName.CompareTo(src.TypeName);
 
         [MethodImpl(Inline)]
-        public static ref readonly PrimalType type(_PrimalKind kind)
+        public static ref readonly PrimalType type(NativeKind kind)
             => ref Intrinsic.type(kind);
 
         public static PrimalType Empty => Intrinsic.Empty;
 
-        public const _PrimalKind LastKind = _PrimalKind.Void;
+        public const NativeKind LastKind = NativeKind.Void;
 
         public readonly struct Intrinsic
         {
@@ -78,24 +78,24 @@ namespace Z0
 
             const byte W64 = 64;
 
-            public static PrimalType Empty => primitive(_PrimalKind.None, EmptyString, W0);
+            public static PrimalType Empty => primitive(NativeKind.None, EmptyString, W0);
 
-            public static PrimalType U1 => primitive(_PrimalKind.U1, "bit", W1);
+            public static PrimalType U1 => primitive(NativeKind.U1, "bit", W1);
 
-            public static PrimalType U8 => primitive(_PrimalKind.U8, "byte", W8);
+            public static PrimalType U8 => primitive(NativeKind.U8, "byte", W8);
 
-            public static PrimalType U16 => primitive(_PrimalKind.U16, "ushort", W16);
+            public static PrimalType U16 => primitive(NativeKind.U16, "ushort", W16);
 
-            public static PrimalType U32 => primitive(_PrimalKind.U32, "uint", W32);
+            public static PrimalType U32 => primitive(NativeKind.U32, "uint", W32);
 
-            public static PrimalType U64 => primitive(_PrimalKind.U64, "ulong", W64);
+            public static PrimalType U64 => primitive(NativeKind.U64, "ulong", W64);
 
-            public static PrimalType Void => primitive(_PrimalKind.Void, "void", W0);
+            public static PrimalType Void => primitive(NativeKind.Void, "void", W0);
 
             public static Intrinsic Types => new();
 
             [MethodImpl(Inline)]
-            public static ref readonly PrimalType type(_PrimalKind kind)
+            public static ref readonly PrimalType type(NativeKind kind)
             {
                 if(kind <= LastKind)
                     return ref core.skip(_Types,(byte)kind);
@@ -103,7 +103,7 @@ namespace Z0
                     return ref core.first(_Types);
             }
 
-            public static implicit operator Index<_PrimalKind,PrimalType>(Intrinsic src)
+            public static implicit operator Index<NativeKind,PrimalType>(Intrinsic src)
                 => _Types;
 
             static PrimalType[] _Types = new PrimalType[]{

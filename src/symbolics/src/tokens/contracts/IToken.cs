@@ -20,20 +20,4 @@ namespace Z0
     {   
         K Kind {get;}
     }
-
-    [Free]
-    public interface IToken<K,E> : IToken<K>
-        where K : unmanaged
-        where E : ICharBlock
-    {
-        new E Name {get;}
-
-        new E Expr {get;}
-
-        ReadOnlySpan<char> IToken.Expr
-            => Expr.Cells;
-
-        ReadOnlySpan<char> IToken.Name
-            => Name.Cells;
-    }
 }

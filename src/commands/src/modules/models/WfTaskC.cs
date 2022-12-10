@@ -5,7 +5,7 @@
 namespace Z0
 {
     public readonly struct WfTask<C>
-        where C : ICmd<C>, new()        
+        where C : IApiCmd<C>, new()        
     {
         public readonly C Command;
 

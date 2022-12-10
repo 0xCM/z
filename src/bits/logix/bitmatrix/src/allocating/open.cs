@@ -150,11 +150,11 @@ namespace Z0
         /// <param name="B">The target matrix</param>
         /// <typeparam name="T">The primal type over which the matrix is constructed</typeparam>
         [MethodImpl(Inline), Nor, Closures(UnsignedInts)]
-        public static ref readonly BitMatrix<T> nor<T>(in BitMatrix<T> A, in BitMatrix<T> B, in BitMatrix<T> Z)
+        public static BitMatrix<T> nor<T>(in BitMatrix<T> A, in BitMatrix<T> B, in BitMatrix<T> Z)
             where T : unmanaged
         {
             vlogic.nor(in A.Head, in B.Head, ref Z.Head);
-            return ref Z;
+            return Z;
         }
     }
 }

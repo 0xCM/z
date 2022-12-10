@@ -3,7 +3,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     /// <summary>
     /// Defines a square bitmatrix with order determined by the primal type over which it is defined

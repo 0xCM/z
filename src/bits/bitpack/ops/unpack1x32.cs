@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
     using static BitMasks;
 
     partial struct BitPack
@@ -115,10 +115,10 @@ namespace Z0
         /// <param name="block">The block index</param>
         /// <typeparam name="T">The source type</typeparam>
         [MethodImpl(Inline), Op]
-        public static ref readonly SpanBlock256<byte> unpack1x32x8(uint src, in SpanBlock256<byte> dst, int block)
+        public static SpanBlock256<byte> unpack1x32x8(uint src, in SpanBlock256<byte> dst, int block)
         {
             unpack1x32x8(src, dst.CellBlock(block));
-            return ref dst;
+            return dst;
         }
     }
 }

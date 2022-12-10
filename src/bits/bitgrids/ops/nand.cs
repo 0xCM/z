@@ -47,13 +47,13 @@ namespace Z0
         /// <param name="gz">The target grid</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Nand, Closures(UnsignedInts)]
-        public static ref readonly BitSpanBlocks256<T> nand<T>(in BitSpanBlocks256<T> x, in BitSpanBlocks256<T> y, in BitSpanBlocks256<T> gz)
+        public static BitSpanBlocks256<T> nand<T>(in BitSpanBlocks256<T> x, in BitSpanBlocks256<T> y, in BitSpanBlocks256<T> gz)
             where T : unmanaged
         {
             var blocks = gz.BlockCount;
             for(var i=0; i<blocks; i++)
                 gz[i] = gcpu.vnand(x[i],y[i]);
-            return ref gz;
+            return gz;
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Z0
         /// <param name="gz">The target grid</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline)]
-        public static ref readonly BitGrid<M,N,T> nand<M,N,T>(in BitGrid<M,N,T> x, in BitGrid<M,N,T> y, in BitGrid<M,N,T> gz)
+        public static BitGrid<M,N,T> nand<M,N,T>(in BitGrid<M,N,T> x, in BitGrid<M,N,T> y, in BitGrid<M,N,T> gz)
             where T : unmanaged
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
@@ -137,7 +137,7 @@ namespace Z0
             var blocks = (int)CellCalcs.blockcount<M,N,T>(W256.W);
             for(var i=0; i<blocks; i++)
                 gz[i] = gcpu.vnand(x[i],y[i]);
-            return ref gz;
+            return gz;
         }
 
         /// <summary>

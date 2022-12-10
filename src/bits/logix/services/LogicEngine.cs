@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
-    using static core;
+    using static sys;
 
     [ApiHost]
     public static class LogixEngine

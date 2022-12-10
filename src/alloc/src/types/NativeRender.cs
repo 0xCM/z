@@ -35,7 +35,7 @@ namespace Z0
             }
         }
 
-        public static string format(in NativeSig src, SigFormatStyle style = default)
+        public static string format(in NativeSigRef src, SigFormatStyle style = default)
         {
             switch(style)
             {
@@ -144,7 +144,7 @@ namespace Z0
             return dst.Emit();
         }
 
-        static string functional(in NativeSig src)
+        static string functional(in NativeSigRef src)
         {
             var dst = TextFormat.emitter();
             dst.AppendFormat("{0}::{1}:", src.Scope, src.Name);
@@ -163,7 +163,7 @@ namespace Z0
             return dst.Emit();
         }
 
-        static string cstyle(in NativeSig src)
+        static string cstyle(in NativeSigRef src)
         {
             var dst = TextFormat.emitter();
             dst.AppendFormat("{0} {1}(", src.Return.Type, src.Name);

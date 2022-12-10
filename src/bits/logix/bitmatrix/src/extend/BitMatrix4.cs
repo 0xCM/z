@@ -4,11 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
-
     public static class BitMatrix4x
     {
         [MethodImpl(Inline)]
@@ -24,7 +19,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static string Format(this BitMatrix4 src)
-            => src.Bytes.FormatGridBits(src.Order);
+            => sys.bytes(src).FormatGridBits(src.Order);
 
         /// <summary>
         /// Transposes a copy of the source matrix

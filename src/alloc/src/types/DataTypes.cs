@@ -10,7 +10,7 @@ namespace Z0
     public class DataTypes
     {
         [MethodImpl(Inline), Op]
-        public static PrimalType primitive(_PrimalKind kind, asci64 name, AlignedWidth width)
+        public static PrimalType primitive(NativeKind kind, asci64 name, AlignedWidth width)
             => new PrimalType(kind, name,width);
 
         [MethodImpl(Inline), Op]
@@ -74,7 +74,7 @@ namespace Z0
             return literal(key, name, @base, new DataSize(packed, @base.Size.NativeWidth));
         }
 
-        public static PrimalType type(_PrimalKind kind)
+        public static PrimalType type(NativeKind kind)
             => PrimalType.type(kind);
 
         public static LiteralType[] literals(params Type[] src)
@@ -103,42 +103,42 @@ namespace Z0
             return PrimalType.Intrinsic.Empty;
         }
 
-        public static _PrimalKind primitive(ClrEnumKind scalar)
+        public static NativeKind primitive(ClrEnumKind scalar)
         {
-            var @base = _PrimalKind.None;
+            var @base = NativeKind.None;
             switch(scalar)
             {
                 case ClrEnumKind.I8:
                 case ClrEnumKind.U8:
-                    @base = _PrimalKind.U8;
+                    @base = NativeKind.U8;
                 break;
                 case ClrEnumKind.I16:
                 case ClrEnumKind.U16:
-                    @base = _PrimalKind.U16;
+                    @base = NativeKind.U16;
                 break;
                 case ClrEnumKind.I32:
                 case ClrEnumKind.U32:
-                    @base = _PrimalKind.U32;
+                    @base = NativeKind.U32;
                 break;
                 case ClrEnumKind.I64:
                 case ClrEnumKind.U64:
-                    @base = _PrimalKind.U64;
+                    @base = NativeKind.U64;
                 break;
             }
             return @base;
         }
 
-        public static _PrimalKind primitive(NumericKind src)
+        public static NativeKind primitive(NumericKind src)
             => src switch{
-                NumericKind.U8 => _PrimalKind.U8,
-                NumericKind.U16 => _PrimalKind.U16,
-                NumericKind.U32 => _PrimalKind.U32,
-                NumericKind.U64 => _PrimalKind.U64,
-                NumericKind.I8 => _PrimalKind.U8,
-                NumericKind.I16 => _PrimalKind.U16,
-                NumericKind.I32 => _PrimalKind.U32,
-                NumericKind.I64 => _PrimalKind.U64,
-                _ => _PrimalKind.None
+                NumericKind.U8 => NativeKind.U8,
+                NumericKind.U16 => NativeKind.U16,
+                NumericKind.U32 => NativeKind.U32,
+                NumericKind.U64 => NativeKind.U64,
+                NumericKind.I8 => NativeKind.U8,
+                NumericKind.I16 => NativeKind.U16,
+                NumericKind.I32 => NativeKind.U32,
+                NumericKind.I64 => NativeKind.U64,
+                _ => NativeKind.None
             };
 
         static object KeyLocker = new();

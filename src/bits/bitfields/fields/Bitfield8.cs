@@ -25,12 +25,6 @@ namespace Z0
             get => _State;
         }
 
-        public ReadOnlySpan<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => bytes(_State);
-        }
-
         public bit this[byte pos]
         {
             [MethodImpl(Inline)]

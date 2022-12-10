@@ -10,7 +10,7 @@ namespace Z0
     }
 
     public interface ICmdExecutor<E,C> : ICmdExecutor
-        where C : ICmd<C>, new()
+        where C : IApiCmd<C>, new()
         where E : ICmdExecutor, new()
     {
         Task<ExecToken> Execute(IWfChannel channel, CmdContext context, C command);

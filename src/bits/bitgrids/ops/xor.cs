@@ -4,11 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
-
     partial class BitGrid
     {
         /// <summary>
@@ -52,13 +47,13 @@ namespace Z0
         /// <param name="gz">The target grid</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Xor, Closures(UnsignedInts)]
-        public static ref readonly BitSpanBlocks256<T> xor<T>(in BitSpanBlocks256<T> gx, in BitSpanBlocks256<T> gy, in BitSpanBlocks256<T> gz)
+        public static BitSpanBlocks256<T> xor<T>(in BitSpanBlocks256<T> gx, in BitSpanBlocks256<T> gy, in BitSpanBlocks256<T> gz)
             where T : unmanaged
         {
             var blocks = gz.BlockCount;
             for(var i=0; i<blocks; i++)
                 gz[i] = gcpu.vxor(gx[i],gy[i]);
-            return ref gz;
+            return gz;
         }
 
         /// <summary>
@@ -162,7 +157,7 @@ namespace Z0
         /// <typeparam name="N">The col count type</typeparam>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline)]
-        public static ref readonly BitGrid<M,N,T> xor<M,N,T>(in BitGrid<M,N,T> gx, in BitGrid<M,N,T> gy, in BitGrid<M,N,T> gz)
+        public static BitGrid<M,N,T> xor<M,N,T>(in BitGrid<M,N,T> gx, in BitGrid<M,N,T> gy, in BitGrid<M,N,T> gz)
             where T : unmanaged
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
@@ -170,7 +165,7 @@ namespace Z0
             var blocks = gz.BlockCount;
             for(var i=0; i<blocks; i++)
                 gz[i] = gcpu.vxor(gx[i],gy[i]);
-            return ref gz;
+            return gz;
         }
 
         /// <summary>

@@ -52,7 +52,7 @@ namespace Z0
             }                
         }
 
-        public struct AddSubmodule : ICmd<AddSubmodule>
+        public struct AddSubmodule : IApiCmd<AddSubmodule>
         {
             public Submodule Submodule;
 

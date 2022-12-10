@@ -7,11 +7,11 @@ namespace Z0
     partial class PolyBits
     {
         [Op]
-        internal static ref asci64 segname(string src, out asci64 dst)
+        internal static asci64 segname(string src, out asci64 dst)
         {
             Demand.lteq(src.Length, asci64.Size);
             dst = src;
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op]

@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.IO;
-
     partial class XTend
     {
         public static IDbArchive ToArchive(this FolderPath src)

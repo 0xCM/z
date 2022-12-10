@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
-
     [IdentityProvider(typeof(BitMatrixIdentityProvider))]
     public struct BitMatrix4
     {
@@ -36,12 +34,6 @@ namespace Z0
         }
 
         public int Order => (int)N;
-
-        public Span<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get =>  bytes(Data);
-        }
 
         /// <summary>
         /// Gets an index-identified row vector

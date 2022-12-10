@@ -3,5 +3,6 @@
     <ProjectReference Include="$(Text)" />
     <ProjectReference Include="$(ClrQuery)" />
   </ItemGroup>
-  <Import Project="../../usings.props"/>
+  <Import Project="$(SlnProps)\usings.props"/>
+  <Import Project="$(SlnProps)\microsoft.extensions.fileproviders.props"/>
 </Project>

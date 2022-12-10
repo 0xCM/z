@@ -4,9 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
-    using static Root;
     using static LogicSig;
 
     using UAR = ApiUnaryArithmeticClass;

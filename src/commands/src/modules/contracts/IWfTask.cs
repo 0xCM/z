@@ -10,7 +10,7 @@ namespace Z0
     }
 
     public interface IWfTask<C> : IWfTask
-        where C : ICmd<C>, new()
+        where C : IApiCmd<C>, new()
     {
         C Command {get;}
     }

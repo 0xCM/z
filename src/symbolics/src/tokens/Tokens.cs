@@ -97,15 +97,6 @@ namespace Z0
             return counter;
         }
 
-        // [MethodImpl(Inline), Op]
-        // public static TokenExpr<T> expr<T>(uint id, T src)
-        //     where T : unmanaged, ICharBlock
-        //         => new TokenExpr<T>(id,src);
-
-        // [MethodImpl(Inline), Op]
-        // public static TokenExpr expr(uint id, ReadOnlySpan<char> src, uint offset, uint length)
-        //     => new TokenExpr(id, address(skip(src,offset)),length);
-
         [MethodImpl(Inline), Op]
         public static uint count(ReadOnlySpan<char> src)
         {

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     partial struct Bitfields
     {
@@ -23,16 +23,16 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(UInt8x16x32k)]
         public static Bitfield8<T> hi<T>(Bitfield16<T> src)
             where T : unmanaged
-                => create(w8, to<T>((byte)(math.srl(src.State16u, Bitfield8.Width))));
+                => create(w8, generic<T>((byte)(math.srl(src.State16u, Bitfield8.Width))));
 
         [MethodImpl(Inline), Op, Closures(UInt8x16x32k)]
         public static Bitfield16<T> hi<T>(Bitfield32<T> src)
             where T : unmanaged
-                => create(w16, to<T>((ushort)(math.srl(src.State32u, Bitfield16.Width))));
+                => create(w16, generic<T>((ushort)(math.srl(src.State32u, Bitfield16.Width))));
 
         [MethodImpl(Inline), Op, Closures(UInt8x16x32k)]
         public static Bitfield32<T> hi<T>(Bitfield64<T> src)
             where T : unmanaged
-                => create(w32, to<T>((uint)(math.srl(src.State, Bitfield32.Width))));
+                => create(w32, generic<T>((uint)(math.srl(src.State, Bitfield32.Width))));
     }
 }

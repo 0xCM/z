@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     using api = Bitfields;
     using S = System.UInt32;
@@ -80,12 +80,6 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             get => Hi.Hi;
-        }
-
-        public readonly ReadOnlySpan<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => bytes(_State);
         }
 
         [MethodImpl(Inline)]

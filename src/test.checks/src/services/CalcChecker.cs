@@ -121,7 +121,7 @@ namespace Z0
             var m1 = BitMaskLiterals.Even32;
             var m = (ulong)m0 | ((ulong)m1 << 32);
             var bf = Bitfields.create(m);
-            var bytes = bf.Bytes;
+            var bytes = sys.bytes(bf);
             var buffer = CharBlock128.Null;
             var count = BitRender.render4x4(bytes, buffer.Data);
             var chars = slice(buffer.Data,0,count);

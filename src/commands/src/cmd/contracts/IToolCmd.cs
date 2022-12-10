@@ -33,9 +33,9 @@ namespace Z0
     }
 
     [Free]
-    public interface IToolCmd<T,C> : IToolCmd, ICmd<C>
+    public interface IToolCmd<T,C> : IToolCmd, IApiCmd<C>
         where T : ITool, new()
-        where C : ICmd<C>, new()
+        where C : IApiCmd<C>, new()
     {
         new T Tool 
             => new T();

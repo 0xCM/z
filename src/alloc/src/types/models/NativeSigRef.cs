@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
 
     [StructLayout(LayoutKind.Sequential,Pack=1)]
-    public struct NativeSig
+    public struct NativeSigRef
     {
         const uint StringSize = 16;
 
@@ -38,7 +38,7 @@ namespace Z0
         readonly MemorySeg DataRef;
 
         [MethodImpl(Inline)]
-        public NativeSig(Hex64 id, MemorySeg data)
+        public NativeSigRef(Hex64 id, MemorySeg data)
         {
             Id = id;
             DataRef = data;

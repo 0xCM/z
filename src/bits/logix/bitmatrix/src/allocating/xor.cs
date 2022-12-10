@@ -4,11 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
-
     partial class BitMatrixA
     {
         /// <summary>
@@ -46,11 +41,11 @@ namespace Z0
         /// <param name="Z">The target matrix</param>
         /// <typeparam name="T">The primal type over which the matrices are constructed</typeparam>
         [MethodImpl(Inline), Xor, Closures(UnsignedInts)]
-        public static ref BitMatrix<T> xor<T>(in BitMatrix<T> A, in BitMatrix<T> B, ref BitMatrix<T> Z)
+        public static BitMatrix<T> xor<T>(in BitMatrix<T> A, in BitMatrix<T> B, ref BitMatrix<T> Z)
             where T : unmanaged
         {
             vlogic.xor(in A.Head,in B.Head, ref Z.Head);
-            return ref Z;
+            return Z;
         }
 
         /// <summary>
@@ -105,7 +100,5 @@ namespace Z0
             vlogic.xor(in A.Head,in B.Head, ref Z.Head);
             return Z;
         }
-
-
     }
 }

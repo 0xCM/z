@@ -11,19 +11,19 @@ namespace Z0
     {
         [Op]
         public static StreamWriter Writer(this FilePath dst, bool append)
-            => FileWriters.writer(dst, append ? FileWriteMode.Append : FileWriteMode.Overwrite, Encoding.UTF8);
+            => FS.writer(dst, append ? FileWriteMode.Append : FileWriteMode.Overwrite, Encoding.UTF8);
 
         [Op]
         public static StreamWriter Writer(this FilePath dst)
-            => FileWriters.writer(dst, FileWriteMode.Overwrite, Encoding.UTF8);
+            => FS.writer(dst, FileWriteMode.Overwrite, Encoding.UTF8);
 
         [Op]
         public static StreamWriter Writer(this FilePath dst, Encoding encoding)
-            => FileWriters.writer(dst, FileWriteMode.Overwrite, encoding);
+            => FS.writer(dst, FileWriteMode.Overwrite, encoding);
 
         [Op]
         public static StreamWriter Writer(this FilePath dst, Encoding encoding, bool append)
-            => FileWriters.writer(dst, append ? FileWriteMode.Append : FileWriteMode.Overwrite, encoding);
+            => FS.writer(dst, append ? FileWriteMode.Append : FileWriteMode.Overwrite, encoding);
 
         [Op]
         public static StreamWriter Writer(this FilePath dst, TextEncodingKind encoding, bool append = false)

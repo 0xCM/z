@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static BitMaskLiterals;
-    using static core;
+    using static sys;
     using static cpu;
 
     partial struct Bitfields

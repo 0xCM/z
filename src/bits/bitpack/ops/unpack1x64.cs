@@ -126,10 +126,10 @@ namespace Z0
         /// <param name="block">The block index</param>
         /// <typeparam name="T">The source type</typeparam>
         [MethodImpl(Inline), Op]
-        public static ref readonly SpanBlock512<byte> unpack1x64(ulong src, in SpanBlock512<byte> dst, int block)
+        public static SpanBlock512<byte> unpack1x64(ulong src, in SpanBlock512<byte> dst, int block)
         {
             unpack1x64x8(src, dst.CellBlock(block));
-            return ref dst;
+            return dst;
         }
     }
 }

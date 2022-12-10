@@ -111,14 +111,14 @@ namespace Z0
         /// <typeparam name="S">The source type</typeparam>
         /// <typeparam name="T">The target cell type</typeparam>
         [MethodImpl(Inline)]
-        public static ref readonly SpanBlock128<T> broadcast<S,T>(S src, T enabled, in SpanBlock128<T> dst)
+        public static SpanBlock128<T> broadcast<S,T>(S src, T enabled, in SpanBlock128<T> dst)
             where S : unmanaged
             where T : unmanaged
         {
             var length = core.min(dst.CellCount, width<S>());
             for(var i=0; i<length; i++)
                 dst[i] = gbits.test(src, (byte)i) ? enabled : default;
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -130,14 +130,14 @@ namespace Z0
         /// <typeparam name="S">The source type</typeparam>
         /// <typeparam name="T">The target cell type</typeparam>
         [MethodImpl(Inline)]
-        public static ref readonly SpanBlock256<T> broadcast<S,T>(S src, T enabled, in SpanBlock256<T> dst)
+        public static SpanBlock256<T> broadcast<S,T>(S src, T enabled, in SpanBlock256<T> dst)
             where S : unmanaged
             where T : unmanaged
         {
             var length = core.min(dst.CellCount, width<S>());
             for(var i=0; i<length; i++)
                 dst[i] = gbits.test(src,(byte)i) ? enabled : default;
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Factory, Closures(Closure)]

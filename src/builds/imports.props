@@ -8,6 +8,5 @@
   </ItemGroup>
 
   <Import Project="$(SlnProps)\msbuild.props" />
-  <Import Project="$(SlnProps)\nuget.props" />
 
 </Project>

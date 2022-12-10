@@ -12,7 +12,7 @@ namespace Z0
     }
 
     [Free]
-    public interface IToolFlowCmd<C> : IToolFlowCmd, ICmd<C>, IFlowCmd<C>
+    public interface IToolFlowCmd<C> : IToolFlowCmd, IApiCmd<C>, IFlowCmd<C>
         where C : struct, IToolFlowCmd<C>
 
     {

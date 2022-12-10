@@ -7,7 +7,7 @@ namespace Z0
 
     public readonly record struct CmdResult : ICmdResult
     {
-        record struct EmptyCommand : ICmd<EmptyCommand>
+        record struct EmptyCommand : IApiCmd<EmptyCommand>
         {
 
         }

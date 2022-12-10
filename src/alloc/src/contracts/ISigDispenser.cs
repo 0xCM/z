@@ -5,10 +5,10 @@
 namespace Z0
 {
     [Free]
-    public interface ISigDispenser : IAllocDispenser<NativeSig>
+    public interface ISigDispenser : IAllocDispenser<NativeSigRef>
     {
-        NativeSig Sig(string scope, string name, NativeType ret, params NativeOpDef[] ops);
+        NativeSigRef Sig(string scope, string name, NativeType ret, params NativeOpDef[] ops);
 
-        NativeSig Sig(NativeSigSpec spec);
+        NativeSigRef Sig(NativeSigSpec spec);
     }
 }

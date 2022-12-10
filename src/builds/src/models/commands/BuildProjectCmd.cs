@@ -7,7 +7,7 @@ namespace Z0
     using static Build;
     
     [Cmd(CmdName)]
-    public struct BuildProjectCmd : ICmd<BuildProjectCmd>
+    public struct BuildProjectCmd : IApiCmd<BuildProjectCmd>
     {
         public const string CmdName = "build";
 

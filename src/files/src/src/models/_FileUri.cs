@@ -4,9 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using System;
+    using System.IO;
     using static FS;
 
-    public readonly record struct _FileUri : IFsEntry<_FileUri>
+    public readonly record struct _FileUri : IFsEntry<_FileUri>, IFileInfo
     {
         readonly FilePath Source;
 
@@ -46,6 +48,27 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             get => Source.IsNonEmpty;
+        }
+
+        public FileInfo Info
+        {
+            [MethodImpl(Inline)]
+            get => new FileInfo(Name);
+        }
+
+        public Timestamp Timestamp
+        {
+            [MethodImpl(Inline)]
+            get => Info.LastWriteTime;
+        }
+
+        /// <summary>
+        /// The size of the file in bytes
+        /// </summary>
+        public ByteSize Size
+        {
+            [MethodImpl(Inline)]
+            get => Info.Length;
         }
 
         public Hash32 Hash
@@ -98,5 +121,30 @@ namespace Z0
             => new _FileUri(FS.path(src.LocalPath));
 
         public static _FileUri Empty => new _FileUri(FilePath.Empty);
+
+        public bool Exists
+            => File.Exists(Name);
+
+        long IFileInfo.Length 
+            => Size;
+
+        string? IFileInfo.PhysicalPath 
+            => Name;
+
+        string IFileInfo.Name 
+            => Name;
+
+        DateTimeOffset IFileInfo.LastModified 
+            => Info.LastWriteTime;
+
+        bool IFileInfo.IsDirectory 
+            => false;
+
+        Stream IFileInfo.CreateReadStream()
+        {
+            throw new NotImplementedException();
+        }
+
+
     }
 }

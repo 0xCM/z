@@ -5,7 +5,7 @@
 namespace Z0
 {
     public interface ICmdRender<C> : ICmdRender
-        where C : ICmd<C>, new()
+        where C : IApiCmd<C>, new()
     {
         CmdId ICmdRender.CmdId 
             => CmdId.identify<C>();

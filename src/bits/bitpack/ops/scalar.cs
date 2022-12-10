@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     partial struct BitPack
     {
@@ -67,13 +67,12 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        static ref T pack<T>(ReadOnlySpan<byte> src, uint offset, out T dst)
+        static void pack<T>(ReadOnlySpan<byte> src, uint offset, out T dst)
             where T : unmanaged
         {
             dst = default;
             var buffer = bytes(dst);
             pack(src, offset, ref first(buffer));
-            return ref dst;
         }
 
         [MethodImpl(Inline), Op]

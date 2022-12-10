@@ -32,13 +32,7 @@ namespace Z0
             get => @as<uint,T>(_State);
         }
 
-        public readonly ReadOnlySpan<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => bytes(_State);
-        }
-
-        internal S State8u
+       internal S State8u
         {
             [MethodImpl(Inline)]
             get => _State;

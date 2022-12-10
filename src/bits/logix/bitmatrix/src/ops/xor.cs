@@ -16,20 +16,20 @@ namespace Z0
         /// <param name="Z">The target matrix</param>
         /// <typeparam name="T">The primal type over which the matrices are constructed</typeparam>
         [MethodImpl(Inline), Xor, Closures(Closure)]
-        public static ref readonly BitMatrix<T> xor<T>(in BitMatrix<T> A, in BitMatrix<T> B, in BitMatrix<T> Z)
+        public static BitMatrix<T> xor<T>(in BitMatrix<T> A, in BitMatrix<T> B, in BitMatrix<T> Z)
             where T : unmanaged
         {
             vlogic.xor(in A.Head,in B.Head, ref Z.Head);
-            return ref Z;
+            return Z;
         }
 
         [MethodImpl(Inline)]
-        public static ref readonly BitMatrix<N,T> xor<N,T>(in BitMatrix<N,T> A, in BitMatrix<N,T> B, in BitMatrix<N,T> C)
+        public static BitMatrix<N,T> xor<N,T>(in BitMatrix<N,T> A, in BitMatrix<N,T> B, in BitMatrix<N,T> C)
             where N : unmanaged, ITypeNat
             where T : unmanaged
         {
             Calcs.xor(A.Content, B.Content, C.Content);
-            return ref C;
+            return C;
         }
 
         /// <summary>
@@ -74,10 +74,10 @@ namespace Z0
         /// <param name="b">The right matrix</param>
         /// <param name="dst">The target matrix</param>
         [MethodImpl(Inline), Xor]
-        public static ref readonly BitMatrix32 xor(in BitMatrix32 a, in BitMatrix32 b, in BitMatrix32 dst)
+        public static BitMatrix32 xor(in BitMatrix32 a, in BitMatrix32 b, in BitMatrix32 dst)
         {
             vlogic.xor(a.Head, b.Head, ref dst.Head);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -87,10 +87,10 @@ namespace Z0
         /// <param name="b">The right matrix</param>
         /// <param name="dst">The target matrix</param>
         [MethodImpl(Inline), Xor]
-        public static ref readonly BitMatrix64 xor(in BitMatrix64 a, in BitMatrix64 b, in BitMatrix64 dst)
+        public static BitMatrix64 xor(in BitMatrix64 a, in BitMatrix64 b, in BitMatrix64 dst)
         {
             vlogic.xor(a.Head, b.Head, ref dst.Head);
-            return ref dst;
+            return dst;
         }
     }
 }

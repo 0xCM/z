@@ -75,13 +75,13 @@ namespace Z0
         /// <typeparam name="N">The col count type</typeparam>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline)]
-        public static ref readonly BitGrid<M,N,T> broadcast<M,N,T>(T cell, in BitGrid<M,N,T> dst)
+        public static BitGrid<M,N,T> broadcast<M,N,T>(T cell, in BitGrid<M,N,T> dst)
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
             where T : unmanaged
         {
             dst.Content.Fill(cell);
-            return ref dst;
+            return dst;
         }
     }
 }

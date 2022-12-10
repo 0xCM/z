@@ -15,8 +15,6 @@ namespace Z0
 
         TextBlock Message {get;}
 
-        CmdId CmdId 
-            => Cmd.CmdId;
         string ITextual.Format()
             => Message;
     }
@@ -26,14 +24,8 @@ namespace Z0
         where C : ICmd, new()
     {
         new C Cmd {get;}
+
         ICmd ICmdResult.Cmd
             => Cmd;
-    }
-
-    [Free]
-    public interface ICmdResult<C,P> : ICmdResult<C>
-        where C : ICmd, new()
-    {
-
     }
 }

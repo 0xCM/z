@@ -6,7 +6,7 @@ namespace Z0
 {
     public abstract class Executor<E, C> : Executor<E>, ICmdExecutor<E, C>
         where E : ICmdExecutor, new()
-        where C : ICmd<C>, new()
+        where C : IApiCmd<C>, new()
     {
         public Task<ExecToken> Execute(IWfChannel channel, CmdContext context, C command)
         {

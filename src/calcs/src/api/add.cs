@@ -56,12 +56,12 @@ namespace Z0
                 => ref add<T>(w128).Invoke(a, b, dst);
 
         [MethodImpl(Inline)]
-        public static ref Block256<N,T> add<N,T>(ref Block256<N,T> a, in Block256<N,T> b)
+        public static Block256<N,T> add<N,T>(ref Block256<N,T> a, in Block256<N,T> b)
             where N : unmanaged, ITypeNat
             where T : unmanaged
         {
             add<T>(a,b,a);
-            return ref a;
+            return a;
         }
     }
 }
