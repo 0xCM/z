@@ -128,7 +128,7 @@ namespace Z0
             }
 
 
-            FileEmit(output.Emit(),0,XedPaths.Target("xed.inst.layouts.test", FS.Csv));
+            Channel.FileEmit(output.Emit(),0,XedPaths.Target("xed.inst.layouts.test", FS.Csv));
 
             return true;
         }

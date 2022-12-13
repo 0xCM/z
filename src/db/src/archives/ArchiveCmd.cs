@@ -9,6 +9,6 @@ namespace Z0
     {
         [CmdOp("symlink")]
         void Link(CmdArgs args)
-            => Archives.symlink(Channel, args);
+            => Archives.symlink(Wf, args);
     }
 }

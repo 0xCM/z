@@ -6,6 +6,55 @@ namespace Z0
 {
     using static sys;
 
+    public abstract class WfAction<A>
+        where A : WfAction<A>
+    {
+        protected IWfRuntime Wf;
+
+        protected IWfChannel Channel;
+
+        public readonly string ActionName;
+
+        protected WfAction(IWfRuntime wf, string action)
+        {
+            Wf = wf;
+            Channel = wf.Channel;
+            ActionName = action;
+        }
+    }
+
+    public class MsBuildLoader : WfAction<MsBuildLoader>
+    {
+        MsBuild MsBuild => Wf.BuildSvc();
+
+        public MsBuildLoader(IWfRuntime wf)
+            : base(wf, "projects/load")
+        {
+            Wf = wf;
+        }
+
+        public Task<ExecToken> Start(IDbArchive src, Action<Build.ProjectSpec> dst)
+        {
+            ExecToken Worker()
+            {
+                using var running = Channel.Running(ActionName);
+                iter(src.Enumerate(true, FileKind.CsProj), uri => {
+                    try
+                    {
+                        var project = MsBuild.LoadProject(uri);
+                        dst(project);
+                    }
+                    catch(Exception e)
+                    {
+                        Channel.Error(e);
+                    }
+                });
+                return Channel.Ran(running);
+            }
+            return sys.start(Worker);
+        }
+    }
+    
     class BuildCmd : WfAppCmd<BuildCmd>
     {
         MsBuild BuildSvc => Wf.BuildSvc();
@@ -15,24 +64,39 @@ namespace Z0
         [CmdOp("projects/list")]
         void ListProjects(CmdArgs args)
         {
-            var uri = ApiCmd.uri((MethodInfo)MethodInfo.GetCurrentMethod()); 
-            var flow = Channel.Running(uri);
-            var files = Archives.archive(Env.cd()).Files().Where(x => FileTypes.@is(x,FileKind.CsProj));
-            iter(files, file => Channel.Row(file.ToUri()));
-            Channel.Ran(flow, uri);            
+            var root = Archives.archive(FS.dir(args[0]));
+            var dst = sys.list<FileUri>();
+            iter(root.Enumerate(true, FileKind.CsProj), uri => {
+                Channel.Row(uri);
+                dst.Add(uri);
+            });
         }
 
-        [CmdOp("build/libs")]
-        void LoadProjects()
+        [CmdOp("projects/report")]
+        void EmitProjectProps(CmdArgs args)
+        {   
+            void Receiver(Build.ProjectSpec project)
+            {
+                var data = project.Format();
+                Channel.Write(data);
+                var dst = Env.ShellData.Path(project.Origin.FileName().WithoutExtension.Format(), FileKind.Cfg);
+                Channel.FileEmit(data,dst);
+            }
+
+            var root = Archives.archive(FS.dir(args[0]));
+            var loader = new MsBuildLoader(Wf);
+            loader.Start(root,Receiver).Wait();        
+        }
+
+
+        [CmdOp("projects/sln")]
+        void BuildSln(CmdArgs args)
         {
-            var sources = AppDb.Dev("z0/libs");
-            var files = sources.Files(FileKind.CsProj);
-            iter(files, file =>{
-                var project = BuildSvc.LoadProject(file);
-                var data = project.Format();    
-                Write(data);
-                FileEmit(data, AppDb.AppData("build/libs").Path(file.FileName.WithoutExtension.Format(), FileKind.Cfg), (ByteSize)data.Length);
-            });
+            var src =  FS.path(args[0]);
+            var sln = Build.sln(src);
+            var data = sln.ToString();
+            Channel.Write(data);
+            Channel.FileEmit(data, AppDb.AppData().Path(src.FileName.WithoutExtension.Format(), FileKind.Cfg), (ByteSize)data.Length);
         }
 
         ReadOnlySeq<Build.Property> Exports()
@@ -66,7 +130,7 @@ namespace Z0
             var src = Exports();
             var dst = text.emitter();
             iter(src, prop => dst.AppendLine($"dotnet sln add {prop.Value}"));
-            FileEmit(dst.Emit(), AppDb.AppData().Path("sln",FileKind.Cmd));
+            Channel.FileEmit(dst.Emit(), AppDb.AppData().Path("sln", FileKind.Cmd));
         }
 
         [CmdOp("build/props")]
@@ -77,7 +141,7 @@ namespace Z0
             iter(files, file =>{
                 var project = BuildSvc.LoadProject(file);
                 var data = project.Format();    
-                Write(data);
+                Channel.Write(data);
                 FileEmit(data, AppDb.Env().Path(file.FileName.WithoutExtension.Format(), FileKind.Cfg), (ByteSize)data.Length);
             });
         }
@@ -116,19 +180,9 @@ namespace Z0
             var src =  ws.Sources($"libs/{id}").Path(FS.file(name, FileKind.CsProj));
             var project = BuildSvc.LoadProject(src);
             var data = project.Format();
-            Write(data);
-            FileEmit(data, AppDb.AppData().Path(src.FileName.WithoutExtension.Format(), FileKind.Cfg), (ByteSize)data.Length);
+            Channel.Write(data);
+            Channel.FileEmit(data, AppDb.AppData().Path(src.FileName.WithoutExtension.Format(), FileKind.Cfg), (ByteSize)data.Length);
         }
 
-        [CmdOp("build/slninfo")]
-        void BuildSln(CmdArgs args)
-        {
-            var ws = AppDb.Dev("z0");
-            var src =  ws.Path(FS.file(arg(args,0), FileKind.Sln));
-            var sln = Build.sln(src);
-            var data = sln.ToString();
-            Write(data);
-            FileEmit(data, AppDb.AppData().Path(src.FileName.WithoutExtension.Format(), FileKind.Cfg), (ByteSize)data.Length);
-        }
     }
 }

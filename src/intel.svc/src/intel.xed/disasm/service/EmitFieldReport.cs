@@ -17,7 +17,7 @@ namespace Z0
             var emitter = new FieldEmitter();
             var dst = text.emitter();
             var count = emitter.EmitFields(src, dst);
-            FileEmit(dst.Emit(), count, XedPaths.DisasmFieldsPath(context.Project.ProjectId, src.Source));
+            Channel.FileEmit(dst.Emit(), count, XedPaths.DisasmFieldsPath(context.Project.ProjectId, src.Source));
         }
     }
 }

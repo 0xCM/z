@@ -4,14 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using api = Commands.Commands;
+    using api = CmdApi;
 
     [Free]
     public interface IApiCmd : ICmd
     {
-        string CmdName {get;}            
+        CmdUri Uri {get;}
     }
-
 
     [Free]
     public interface IApiCmd<T> : IApiCmd
@@ -23,7 +22,7 @@ namespace Z0
         string IExpr.Format()
             => api.format((T)this);
 
-        string IApiCmd.CmdName
-            => CmdId.identify<T>().Format();
+        CmdUri IApiCmd.Uri
+            => new(CmdKind.App, GetType().Assembly.PartName().Format(), GetType().DisplayName(), CmdId.Format());
     }    
 }

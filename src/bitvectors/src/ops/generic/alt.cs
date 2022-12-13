@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
     using static BitMaskLiterals;
 
     partial class BitVectors
@@ -17,7 +17,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static ScalarBits<T> alt<T>(bit parity)
             where T : unmanaged
-                => parity ? convert<T>(Even64) : convert<T>(Odd64);
+                => parity ? generic<T>(Even64) : generic<T>(Odd64);
 
         /// <summary>
         /// Creates a bitvector with uniformly alternating states where the state of
@@ -29,6 +29,6 @@ namespace Z0
         public static ScalarBits<N,T> alt<N,T>(bit parity, N n = default)
             where T : unmanaged
             where N : unmanaged, ITypeNat
-                => natural<N,T>(parity ? convert<T>(Even64) : convert<T>(Odd64));
+                => natural<N,T>(parity ? generic<T>(Even64) : generic<T>(Odd64));
     }
 }

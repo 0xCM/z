@@ -101,7 +101,7 @@ namespace Z0
                 dst.AppendLine(XedPaths.MarkdownLink(call.Target));
             }
 
-            FileEmit(dst.Emit(), calls.Count, XedPaths.DbTarget("rules.tables.deps", FileKind.Md));
+            Channel.FileEmit(dst.Emit(), calls.Count, XedPaths.DbTarget("rules.tables.deps", FileKind.Md));
         }
 
         void CheckRuleNames()

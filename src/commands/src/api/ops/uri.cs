@@ -15,7 +15,7 @@ namespace Z0
         public static CmdUri uri(string name, object host)
             => new(CmdKind.App, host.GetType().Assembly.PartName().Format(), host.GetType().DisplayName(), name);
 
-        public static CmdUriSeq uris(IApiDispatcher src)
+        public static CmdUriSeq uris(ICmdDispatcher src)
         {
             ref readonly var defs = ref src.Commands.Defs;
             var part = src.Controller;

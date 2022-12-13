@@ -40,7 +40,7 @@ namespace Z0
             dst.AppendLineFormat(Pattern,"Name", "PID");
             iter(src, p => dst.AppendLineFormat(Pattern, p.ProcessName, p.Id));
             var data = dst.Emit();
-            Row(data);
+            Channel.Row(data);
             Channel.FileEmit(data, Env.ShellData.Path("processes", FileKind.Csv));
         }
 

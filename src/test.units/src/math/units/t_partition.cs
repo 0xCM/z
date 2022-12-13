@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static Intervals;
-    using static core;
+    using static sys;
 
     public class t_partition : t_gmath<t_partition>
     {
@@ -22,7 +22,6 @@ namespace Z0
         public void part_points_32u()
         {
             points_check(0u, 99u, 1u);
-
         }
 
         public void part_points_64i()

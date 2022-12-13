@@ -47,7 +47,7 @@ namespace Z0
         }
 
         public string Format()
-            => ApiCmd.format(this);
+            => Cmd.format(this);
 
         public override string ToString()
             => Format();

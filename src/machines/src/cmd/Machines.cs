@@ -114,7 +114,7 @@ namespace Z0
             var w = w128;
             var flow = Wf.Running(w.ToString());
             var size = RunCalc(w);
-            Ran(flow, size);
+            Channel.Ran(flow, size);
         }
 
         bool TestMatchMachine()
@@ -301,13 +301,13 @@ namespace Z0
                 Write(string.Format("{0:D4}:{1}",i, j.FormatHex()));
             }
 
-            Row(block.Describe());
+            Channel.Row(block.Describe());
         }
 
         void LogHeader<N>(MethodBase src, N n)
             where N : unmanaged, ITypeNat
         {
-            Row(string.Format("{0} {1} ", src.Name, n).PadRight(80,Chars.Dash));
+            Channel.Row(string.Format("{0} {1} ", src.Name, n).PadRight(80,Chars.Dash));
         }
 
         void Run(N8 n)

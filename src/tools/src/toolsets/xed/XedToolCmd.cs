@@ -7,7 +7,7 @@ namespace Z0
     using static XedDomain;
 
     [StructLayout(LayoutKind.Sequential, Pack=1), Cmd(CmdName)]
-    public struct XedToolCmdSpec : IToolFlowCmd<XedToolCmdSpec>
+    public struct XedToolCmdSpec
     {
         const string CmdName = "xedtool.cmd";
 
@@ -25,11 +25,5 @@ namespace Z0
 
         [CmdArg("-{0}")]
         public string Mode;
-
-        FilePath IFlowCmd<FilePath, FilePath>.Source
-            => Source;
-
-        FilePath IFlowCmd<FilePath, FilePath>.Target
-            => Target;
     }
 }

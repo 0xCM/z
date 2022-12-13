@@ -8,11 +8,11 @@ namespace Z0
     {
         void RunCmd(string name);
         
-        public void RunCmd(string name, CmdArgs args);
+        void RunCmd(string name, CmdArgs args);
 
-        public void RunCmd(ApiCmdSpec cmd);
+        void RunCmd(ApiCmdSpec cmd);
 
-        public Task Start();        
+        Task Start();        
     }
 
     public interface IApiServer<T> : IApiServer, IApiService<T>

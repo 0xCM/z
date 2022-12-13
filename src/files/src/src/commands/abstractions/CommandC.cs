@@ -2,7 +2,7 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Commands
+namespace Z0
 {
     [Cmd]
     public abstract record class Command : ICmd
@@ -22,7 +22,7 @@ namespace Z0.Commands
             => CmdId.identify<C>();
         
         public override string Format()
-            => Commands.format((C)this);
+            => CmdApi.format((C)this);
 
         public static C Empty => new();
     }

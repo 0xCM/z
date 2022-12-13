@@ -22,6 +22,5 @@ namespace Z0
 
         public static TableDef Empty
             => new TableDef(TableId.Empty, Identifier.Empty, sys.empty<ColumDef>());
-
    }
 }

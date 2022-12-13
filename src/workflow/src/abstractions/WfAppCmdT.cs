@@ -10,7 +10,7 @@ namespace Z0
     public abstract class WfAppCmd<T> : WfSvc<T>, IApiService<T>
         where T : WfAppCmd<T>, new()
     {
-        protected ApiCmd ApiCmd => Wf.ApiCmd();
+        protected Cmd Cmd => Wf.Cmd();
 
         protected WfAppCmd()
         {
@@ -44,7 +44,7 @@ namespace Z0
         }
 
         public void RunCmd(string name)
-            => ApiCmd.RunCmd(name);
+            => Cmd.RunCmd(name);
 
         public virtual void Loop()
             => CmdLoop.start(Channel).Wait();

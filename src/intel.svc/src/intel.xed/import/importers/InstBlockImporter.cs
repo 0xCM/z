@@ -34,9 +34,9 @@ namespace Z0
 
             void EmitRecords(InstImportBlocks src)
             {
-                TableEmit(src.Imports, XedPaths.Imports().Table<InstBlockImport>());
+                Channel.TableEmit(src.Imports, XedPaths.Imports().Table<InstBlockImport>());
                 var file = FS.file($"{Tables.filename<InstBlockImport>().WithoutExtension.Format()}.duplicates", FS.Csv);
-                TableEmit(src.Duplicates, XedPaths.Imports().Path(file));
+                Channel.TableEmit(src.Duplicates, XedPaths.Imports().Path(file));
             }
 
             void EmitBlockDetail(InstImportBlocks src)
@@ -56,7 +56,7 @@ namespace Z0
                     emitter.AppendLine(src.Description(form));
                     emitter.WriteLine();
                 }
-                FileEmit(emitter.Emit(), count, path);
+                Channel.FileEmit(emitter.Emit(), count, path);
             }
 
             void EmitLineMap(LineMap<InstBlockLineSpec> data)
@@ -64,12 +64,12 @@ namespace Z0
                 const string Pattern = "{0,-6} | {1,-12} | {2,-12} | {3,-12} | {4,-12} | {5,-6} | {6,-64} | {7}";
                 var dst = XedPaths.Imports().Table<InstBlockLineSpec>();
                 var formatter = Tables.formatter<InstBlockLineSpec>();
-                var emitting = EmittingTable<InstBlockLineSpec>(dst);
+                var emitting = Channel.EmittingTable<InstBlockLineSpec>(dst);
                 using var writer = dst.AsciWriter();
                 writer.WriteLine(formatter.FormatHeader());
                 for(var i=0u; i<data.IntervalCount; i++)
                     writer.WriteLine(formatter.Format(data[i].Id));
-                EmittedTable(emitting, data.IntervalCount);
+                Channel.EmittedTable(emitting, data.IntervalCount);
             }
         }
     }

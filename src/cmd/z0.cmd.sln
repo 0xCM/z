@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "z0.cmd", "z0.cmd.csproj", "{6920E5F0-9660-41E9-BEB0-B224C1FC8D79}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "z0.builds", "..\builds\z0.builds.csproj", "{4FF40F03-AB56-4E32-84EB-5262AB8C607F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -15,6 +17,10 @@ Global
 		{6920E5F0-9660-41E9-BEB0-B224C1FC8D79}.Debug|x64.Build.0 = Debug|x64
 		{6920E5F0-9660-41E9-BEB0-B224C1FC8D79}.Release|x64.ActiveCfg = Release|x64
 		{6920E5F0-9660-41E9-BEB0-B224C1FC8D79}.Release|x64.Build.0 = Release|x64
+		{4FF40F03-AB56-4E32-84EB-5262AB8C607F}.Debug|x64.ActiveCfg = Debug|x64
+		{4FF40F03-AB56-4E32-84EB-5262AB8C607F}.Debug|x64.Build.0 = Debug|x64
+		{4FF40F03-AB56-4E32-84EB-5262AB8C607F}.Release|x64.ActiveCfg = Release|x64
+		{4FF40F03-AB56-4E32-84EB-5262AB8C607F}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

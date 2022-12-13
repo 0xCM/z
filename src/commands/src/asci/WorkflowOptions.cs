@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public struct WorkflowOptions : ISettings<WorkflowOptions>
+    public record struct ApiWorkflowSettings : ISettings<ApiWorkflowSettings>
     {
         public bool CollectApiDocs;
 
@@ -55,9 +55,9 @@ namespace Z0
         public bool ProcessCultFiles;
         
 
-        public static WorkflowOptions @default()
+        public static ApiWorkflowSettings @default()
         {
-            var dst = new WorkflowOptions();
+            var dst = new ApiWorkflowSettings();
             dst.CollectApiDocs = true;
             dst.EmitImageContent = true;
             dst.EmitSectionHeaders = true;

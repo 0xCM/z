@@ -200,7 +200,7 @@ namespace Z0
         {
             var dst = Paths.InstPagePath(src.Isa);
             Require.invariant(!dst.Exists);
-            FileEmit(src.Content, src.LineCount, dst, TextEncodingKind.Asci);
+            Channel.FileEmit(src.Content, src.LineCount, dst, TextEncodingKind.Asci);
         }
 
         void Emit(ReadOnlySpan<FieldDef> src)
@@ -208,8 +208,8 @@ namespace Z0
 
         void EmitRegmaps()
         {
-            TableEmit(XedRegMap.Service.REntries, Paths.Table<RegMapEntry>("rmap"));
-            TableEmit(XedRegMap.Service.XEntries, Paths.Table<RegMapEntry>("xmap"));
+            Channel.TableEmit(XedRegMap.Service.REntries, Paths.Table<RegMapEntry>("rmap"));
+            Channel.TableEmit(XedRegMap.Service.XEntries, Paths.Table<RegMapEntry>("xmap"));
         }
     }
 }

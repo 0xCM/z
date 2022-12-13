@@ -18,10 +18,10 @@ namespace Z0
             var target = XedPaths.DisasmDetailPath(context.Project.ProjectId, doc.DataSource);
             var dst = text.emitter();
             DisasmRender.render(doc.DetailBlocks, dst);
-            var emitting = EmittingFile(target);
+            var emitting = Channel.EmittingFile(target);
             using var emitter = target.AsciEmitter();
             emitter.Write(dst.Emit());
-            EmittedFile(emitting, doc.DetailBlocks.Count);
+            Channel.EmittedFile(emitting, doc.DetailBlocks.Count);
         }
     }
 }

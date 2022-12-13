@@ -24,7 +24,7 @@ namespace Z0
             var content = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             var dst = text.buffer();
             var bytes = CsLang.AsciLookups().Emit(8u, name,content, dst);
-            Write(dst.Emit());
+            Channel.Write(dst.Emit());
             return true;
         }
 
@@ -43,7 +43,7 @@ namespace Z0
                 var dst = text.buffer();
                 dst.Append("public static string[] ");
                 CsLang.EmitArrayInitializer(list,dst);
-                Write(dst.Emit());
+                Channel.Write(dst.Emit());
             }
         }
 
@@ -61,7 +61,7 @@ namespace Z0
             var dst = array<uint>(3000, 201, 197, 313145, 264801, 911122, 4, 7, 11, 54, 99);
             var spec = CgSpecs.@switch("test", src, dst);
             var result = CsLang.SwitchMap().Generate(spec);
-            Write(result);
+            Channel.Write(result);
         }
 
         void GenEnumToIntSwitch()
@@ -70,7 +70,7 @@ namespace Z0
             var dst = array<byte>(2,3,4);
             var spec = CgSpecs.@switch("enum_test", src, dst);
             var result = CsLang.SwitchMap().Generate(spec);
-            Write(result);
+            Channel.Write(result);
         }
 
         [CmdOp("gen/hex/strings")]
@@ -92,7 +92,7 @@ namespace Z0
             offset -= 4;
             dst.CloseNamespace(offset);
 
-            FileEmit(dst.Emit(), AppDb.CgStage().Path(name,FileKind.Cs));
+            Channel.FileEmit(dst.Emit(), AppDb.CgStage().Path(name,FileKind.Cs));
 
             return true;
         }
@@ -103,7 +103,7 @@ namespace Z0
             var dst = text.emitter();
             var offset = 8u;
             RenderByteSpans(offset,dst);
-            FileEmit(dst.Emit(), 4, AppDb.CgStage().Path("UnpackedBytes", FileKind.Cs));
+            Channel.FileEmit(dst.Emit(), 4, AppDb.CgStage().Path("UnpackedBytes", FileKind.Cs));
             return true;
         }
 
@@ -178,7 +178,7 @@ namespace Z0
             offset-=4;
             emitter.CloseNamespace(offset);
 
-            FileEmit(emitter.Emit(), AppDb.CgStage().Path("limit", FileKind.Cs));
+            Channel.FileEmit(emitter.Emit(), AppDb.CgStage().Path("limit", FileKind.Cs));
 
             return true;
         }
@@ -204,14 +204,14 @@ namespace Z0
             var src = AppDb.CgStage().Path("ms","ms.cs.keywords", FileKind.List);
             if(!src.Exists)
             {
-                Error(FS.missing(src));
+                Channel.Error(FS.missing(src));
             }
             else
             {
                 var items = new ItemList<Constant<string>>("CsKeywordList", mapi(src.ReadLines(), (i,line) => new ListItem<Constant<string>>((uint)i,text.trim(line))));
                 var dst = text.buffer();
                 CsLang.EmitArrayInitializer(items,dst);
-                Write(dst.Emit());
+                Channel.Write(dst.Emit());
 
             }
             return true;

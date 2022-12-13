@@ -8,23 +8,6 @@ namespace Z0
 
     public class CmdRunner
     {
-        // public static ExecToken run<C>(IWfChannel channel, CmdContext context, C cmd, Func<IWfChannel,CmdContext,C,Outcome> actor)
-        //     where C : ICmd<C>, new()
-        // {
-        //     var outcome = Outcome.Success;
-        //     var running = channel.Running($"{cmd.CmdId}");
-        //     try
-        //     {
-        //         outcome = actor(channel, context, cmd);
-        //     }
-        //     catch(Exception e)
-        //     {
-        //         outcome = e;
-        //     }
-
-        //     return channel.Ran(running);
-        // }
-
         [Op]
         public static void parse(ReadOnlySpan<TextLine> src, out ReadOnlySpan<CmdFlow> dst)
             => dst = flows(src);

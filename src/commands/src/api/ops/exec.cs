@@ -9,7 +9,7 @@ namespace Z0
 
     partial class ApiCmd
     {
-        public static Outcome exec(IWfChannel channel, ApiEffector effector, CmdArgs args)
+        public static Outcome exec(IWfChannel channel, CmdActor effector, CmdArgs args)
         {
             var output = default(object);
             var result = Outcome.Success;

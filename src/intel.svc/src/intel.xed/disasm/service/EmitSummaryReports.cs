@@ -14,7 +14,7 @@ namespace Z0
             var outdir = FolderPath.Empty;
             ref readonly var summary = ref doc.Summary;
             ref readonly var origin = ref summary.Origin;
-            TableEmit(summary.Rows, outdir + origin.Path.FileName.WithoutExtension + FS.ext("xed.disasm.summary.csv"));
+            Channel.TableEmit(summary.Rows, outdir + origin.Path.FileName.WithoutExtension + FS.ext("xed.disasm.summary.csv"));
         }
     }
 }

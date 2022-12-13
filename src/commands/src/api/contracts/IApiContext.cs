@@ -8,7 +8,7 @@ namespace Z0
     {
         IWfChannel Channel {get;}
 
-        IApiDispatcher Dispatcher {get;}
+        ICmdDispatcher Dispatcher {get;}
 
         IApiService Commander {get;}
     }

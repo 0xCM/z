@@ -6,7 +6,6 @@ namespace Z0
 {
     using static sys;
 
-
     public struct AsciLineReader : IDisposable
     {
         readonly StreamReader Source;

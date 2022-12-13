@@ -1,6 +1,0 @@
-<Project>
-  <Import Project="$(SlnDeps)\graphs.props"/>
-  <ItemGroup>
-    <ProjectReference Include="$(Text)" />
-  </ItemGroup>
-</Project>

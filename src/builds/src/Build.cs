@@ -7,6 +7,7 @@ namespace Z0
     using E = Microsoft.Build.Evaluation;
     using D = Microsoft.Build.Definition;
     using C = Microsoft.Build.Construction;
+
     using static sys;
 
     [ApiHost]
@@ -30,7 +31,10 @@ namespace Z0
                 => new Property<T>(src);
         [Op]
         public static ProjectSpec project(FilePath src)
-            => new(E.Project.FromFile(src.Name, new D.ProjectOptions {}), src);
+            => new(E.Project.FromFile(src.Name, new D.ProjectOptions {
+                GlobalProperties = sys.dict<string,string>(),
+                LoadSettings = E.ProjectLoadSettings.Default
+            }), src);
 
         public static string format(ProjectSpec src)
         {

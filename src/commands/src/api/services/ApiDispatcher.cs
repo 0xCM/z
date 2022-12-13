@@ -4,20 +4,20 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    class ApiDispatcher : IApiDispatcher
+    class ApiDispatcher : ICmdDispatcher
     {
-        readonly IApiEfectors Ops;
+        readonly ICmdActors Ops;
 
         readonly IWfChannel Channel;
 
         [MethodImpl(Inline)]
-        public ApiDispatcher(IWfChannel channel, IApiEfectors ops)
+        public ApiDispatcher(IWfChannel channel, ICmdActors ops)
         {
             Ops = ops;
             Channel = channel;
         }
 
-        public IApiEfectors Commands => Ops;
+        public ICmdActors Commands => Ops;
 
         public Outcome Dispatch(string action)
             => Dispatch(action, CmdArgs.Empty);

@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../asm.core"
+		},
+		{
+			"path": "../native"
+		},
+		{
+			"path": "../machines"
+		}
+	],
+	"settings": {}
+}

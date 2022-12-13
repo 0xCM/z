@@ -22,7 +22,7 @@ namespace Z0
             foreach(var name in names)
             {
                 if(!known.Contains(name))
-                    Write($"Not known: {name}");
+                    Channel.Write($"Not known: {name}");
             }
         }
 
@@ -37,7 +37,7 @@ namespace Z0
                 dst.AppendLine();
             }
 
-            FileEmit(dst.Emit(), count, XedPaths.RuleTarget($"blocks.{kind.ToString().ToLower()}", FS.Csv));
+            Channel.FileEmit(dst.Emit(), count, XedPaths.RuleTarget($"blocks.{kind.ToString().ToLower()}", FS.Csv));
             return blocks;
         }
     }

@@ -46,7 +46,7 @@ namespace Z0
                 () => Emit(mapi(RuleMacros.matches().Values.ToArray().Sort(), (i,m) => m.WithSeq((uint)i))),
                 () => Emit(CalcMacroDefs().View),
                 () => Emit(XedFields.Defs.Positioned),
-                () => TableEmit(Xed.Views.InstOpSpecs, XedPaths.InstTable<InstOpSpec>()),
+                () => Channel.TableEmit(Xed.Views.InstOpSpecs, XedPaths.InstTable<InstOpSpec>()),
                 EmitRuleDeps
             );
 
@@ -68,10 +68,10 @@ namespace Z0
             => Emit(Xed.Views.OpCodes);
 
         public void EmitInstFields(Index<InstPattern> src)
-            => TableEmit(Xed.Views.InstFields, XedPaths.InstTable<InstFieldRow>());
+            => Channel.TableEmit(Xed.Views.InstFields, XedPaths.InstTable<InstFieldRow>());
 
         public void EmitPatternRecords(Index<InstPattern> src)
-            => TableEmit(CalcPatternRecords(src), XedPaths.InstTable<InstPatternRecord>());
+            => Channel.TableEmit(CalcPatternRecords(src), XedPaths.InstTable<InstPatternRecord>());
 
         public void EmitOpDetails()
             => Emit(Xed.Views.InstOpDetails);
@@ -131,14 +131,14 @@ namespace Z0
                 dst.AppendLine(defs[i].Format());
             }
 
-            FileEmit(dst.Emit(), controls.Count + defs.Count, XedPaths.RuleTarget("seq.reflected", FS.Txt));
+            Channel.FileEmit(dst.Emit(), controls.Count + defs.Count, XedPaths.RuleTarget("seq.reflected", FS.Txt));
         }
 
         void EmitSeq(Index<RuleSeq> src)
         {
             var dst = text.buffer();
             iter(src, x => dst.AppendLine(x.Format()));
-            FileEmit(dst.Emit(), src.Count, XedPaths.RuleTarget("seq", FS.Txt));
+            Channel.FileEmit(dst.Emit(), src.Count, XedPaths.RuleTarget("seq", FS.Txt));
         }
 
         public void Emit(Index<InstOpDetail> src)
@@ -162,31 +162,31 @@ namespace Z0
             var dst = text.emitter();
             var count = CellRender.Tables.render(Xed.Views.CellTables.Cells(), dst);
             var data = Require.equal(dst.Emit(), src.RawFormat);
-            FileEmit(data, src.TableCount, XedPaths.RuleTarget("cells.raw", FS.Csv));
+            Channel.FileEmit(data, src.TableCount, XedPaths.RuleTarget("cells.raw", FS.Csv));
         }
 
         public void Emit(ReadOnlySpan<MacroMatch> src)
-            => TableEmit(src, MacroMatch.RenderWidths, XedPaths.RuleTable<MacroMatch>());
+            => Channel.TableEmit(src, XedPaths.RuleTable<MacroMatch>());
 
         public void Emit(ReadOnlySpan<FieldDef> src)
-            => TableEmit(src, XedPaths.Table<FieldDef>());
+            => Channel.TableEmit(src, XedPaths.Table<FieldDef>());
 
         public void Emit(ReadOnlySpan<RuleCellRecord> src)
-            => TableEmit(src, XedPaths.RuleTable<RuleCellRecord>());
+            => Channel.TableEmit(src, XedPaths.RuleTable<RuleCellRecord>());
 
         public void Emit(ReadOnlySpan<MacroDef> src)
-            => TableEmit(src, MacroDef.RenderWidths, XedPaths.RuleTable<MacroDef>());
+            => Channel.TableEmit(src, XedPaths.RuleTable<MacroDef>());
 
         public void Emit(ReadOnlySpan<XedInstOpCode> src)
-            => TableEmit(src, XedPaths.InstTable<XedInstOpCode>());
+            => Channel.TableEmit(src, XedPaths.InstTable<XedInstOpCode>());
 
         public void Emit(ReadOnlySpan<InstOpRow> src)
-            => TableEmit(src, XedPaths.InstTable<InstOpRow>());
+            => Channel.TableEmit(src, XedPaths.InstTable<InstOpRow>());
 
         public void Emit(ReadOnlySpan<InstOpClass> src)
-            => TableEmit(src, XedPaths.Table<InstOpClass>());
+            => Channel.TableEmit(src, XedPaths.Table<InstOpClass>());
 
         public void Emit(ReadOnlySpan<RuleExpr> src)
-            => TableEmit(src, XedPaths.RuleTable<RuleExpr>());
+            => Channel.TableEmit(src, XedPaths.RuleTable<RuleExpr>());
     }
 }

@@ -53,28 +53,28 @@ namespace Z0
             return context;
         }
 
-        static IApiDispatcher dispatcher<T>(T service, IWfChannel channel, ReadOnlySeq<IApiCmdProvider> providers)
+        static ICmdDispatcher dispatcher<T>(T service, IWfChannel channel, ReadOnlySeq<IApiCmdProvider> providers)
         {
             var flow = channel.Running($"Discovering {service} dispatchers");
-            var dst = dict<string,ApiEffector>();
+            var dst = dict<string,CmdActor>();
             iter(effectors(service), r => dst.TryAdd(r.CmdName, r));
             iter(providers, p => iter(effectors(p), r => dst.TryAdd(r.CmdName, r)));
-            var dispatcher = new ApiDispatcher(channel, new ApiEffectors(dst));
-            AppData.Value(nameof(IApiDispatcher), dispatcher);
+            var dispatcher = new ApiDispatcher(channel, new CmdActors(dst));
+            AppData.Value(nameof(ICmdDispatcher), dispatcher);
             return dispatcher;
         }    
 
         [Op]
-        static ReadOnlySeq<ApiEffector> effectors(object host)
+        static ReadOnlySeq<CmdActor> effectors(object host)
         {
             var src = host.GetType().DeclaredInstanceMethods().Tagged<CmdOpAttribute>();
-            var dst = alloc<ApiEffector>(src.Length);
+            var dst = alloc<CmdActor>(src.Length);
             var count = src.Length;
             for(var i=0; i<count; i++)
             {
                 ref readonly var mi = ref skip(src,i);
                 var tag = mi.Tag<CmdOpAttribute>().Require();
-                seek(dst,i) = new ApiEffector(tag.Name, classify(mi),  mi, host);
+                seek(dst,i) = new CmdActor(tag.Name, classify(mi),  mi, host);
             }
             return dst;
         }
@@ -113,10 +113,10 @@ namespace Z0
         }
 
 
-        public static ConstLookup<Name,ApiEffector> effectors(IApiDispatcher src)
+        public static ConstLookup<Name,CmdActor> effectors(ICmdDispatcher src)
         {
             ref readonly var defs = ref src.Commands.Defs;
-            var dst = dict<Name,ApiEffector>();
+            var dst = dict<Name,CmdActor>();
             iter(defs.View, def => dst.Add(def.CmdName, def));
             return dst;
         }

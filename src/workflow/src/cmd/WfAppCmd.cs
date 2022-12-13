@@ -232,7 +232,7 @@ namespace Z0
                 var result = DataParser.parse(args[0].Value, out @base);
                 if(result.Fail)
                 {
-                    Error($"Could not parse ${args[0].Value} as an address");
+                    Channel.Error($"Could not parse ${args[0].Value} as an address");
                     return;
                 }
             }
@@ -365,7 +365,7 @@ namespace Z0
                 ref readonly var b = ref skip(right,i);
                 seek(dst,i) = cpu.mullo(a,b);
                 seek(output,i) = math.mul(a,b);
-                seek(results, i) = ApiCalls.call(key,a,b,skip(dst,i));
+                seek(results, i) = ApiCalls.call(key, a, b, skip(dst,i));
             }
 
             for(var i=0; i<count; i++)

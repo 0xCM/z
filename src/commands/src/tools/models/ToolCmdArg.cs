@@ -12,14 +12,11 @@ namespace Z0
 
         public readonly string Value;
 
-        public readonly bool IsFlag;
-
         [MethodImpl(Inline)]
-        public ToolCmdArg(string name, string value, bool flag = false)
+        public ToolCmdArg(string name, string value)
         {
             Name = name;
             Value = value;
-            IsFlag = flag;
         }
 
         public bool IsEmpty

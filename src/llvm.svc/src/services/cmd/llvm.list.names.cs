@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.llvm
 {
-    using static Algs;
+    using static sys;
 
     partial class LlvmCmd
     {

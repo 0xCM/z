@@ -2,6 +2,7 @@
   <Import Project="$(SlnProps)\usings.props" />
   <Import Project="imports.props" />
   <PropertyGroup>
+    <SatteliteResourceLanguages>en-us</SatteliteResourceLanguages>
     <OutputType>Exe</OutputType>
     <AssemblyName>zcmd</AssemblyName>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>

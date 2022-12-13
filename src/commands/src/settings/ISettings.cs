@@ -17,6 +17,6 @@ namespace Z0
             => api.format((S)this, Chars.Eq);
 
         SettingLookup ISettings.Lookup 
-            => AsciLines.lookup((S)this);
+            => AppSettings.lookup((S)this);
     }
 }

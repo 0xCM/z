@@ -12,7 +12,6 @@
    <Import Project="$(MsBuildThisFileDirectory)src/bits/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/builds/exports.props"/>
 
-   <Import Project="$(MsBuildThisFileDirectory)src/cmd.public/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/calcs/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/cg.common/exports.props"/>
@@ -49,7 +48,6 @@
    <Import Project="$(MsBuildThisFileDirectory)src/fsm/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/files/exports.props"/>
 
-   <Import Project="$(MsBuildThisFileDirectory)src/graphs/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/grids/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/hex/exports.props"/>
@@ -74,7 +72,6 @@
    <Import Project="$(MsBuildThisFileDirectory)src/polyrand/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/process/exports.props"/>
 
-   <Import Project="$(MsBuildThisFileDirectory)src/shell/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/stitch/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/symbolics/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/sfx/exports.props"/>
@@ -90,4 +87,8 @@
 
    <Import Project="$(MsBuildThisFileDirectory)src/workflow/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/xml/exports.props"/>
+
+
+   <Import Project="$(MsBuildThisFileDirectory)src/components/exports.props"/>
+
 </Project>

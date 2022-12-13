@@ -11,11 +11,17 @@ namespace Z0
 
             public ImageRegions ImageRegions(IWfRuntime wf)
                 => Service<ImageRegions>(wf);
+
+            public OmniScript OmniScript(IWfRuntime wf)
+                => Service<OmniScript>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
 
         public static ImageRegions ImageRegions(this IWfRuntime wf)
             => Services.ImageRegions(wf);
+
+        public static OmniScript OmniScript(this IWfRuntime wf)
+            => Services.OmniScript(wf);
     }
 }

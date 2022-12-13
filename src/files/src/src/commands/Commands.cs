@@ -2,12 +2,12 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Commands
+namespace Z0
 {
     using static sys;
 
     [ApiHost]
-    public partial class Commands
+    public class CmdApi
     {
         public static string format<T>(T src)
             where T : ICmd, new()

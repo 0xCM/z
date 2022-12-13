@@ -64,7 +64,7 @@ namespace Z0.Asm
                 else
                 {
                     seek(buffer, k++) = AsmFormInfo.Empty;
-                    Wf.Warn($"The opcode row {row.OpCode} could not be parsed");
+                    Channel.Warn($"The opcode row {row.OpCode} could not be parsed");
                 }
             }
 
@@ -124,7 +124,7 @@ namespace Z0.Asm
         public ReadOnlySpan<StanfordInstruction> RunEtl()
         {
             var imports = LoadSource();
-            TableEmit(imports, AppDb.AsmDb().Targets("asm.refs").Table<StanfordInstruction>());
+            Channel.TableEmit(imports, AppDb.AsmDb().Targets("asm.refs").Table<StanfordInstruction>());
             return imports;
         }
 
@@ -141,7 +141,7 @@ namespace Z0.Asm
                 target.Sig = source.Sig;
                 target.FormExpr = new AsmFormInfo(source.OpCode,source.Sig);
             }
-            TableEmit(buffer, AppDb.DbOut().Targets("asm.refs").Table<StanfordFormInfo>());
+            Channel.TableEmit(buffer, AppDb.DbOut().Targets("asm.refs").Table<StanfordFormInfo>());
         }
 
         Outcome parse(ushort seq, in TextLine src, ref StanfordInstruction dst)
@@ -155,13 +155,13 @@ namespace Z0.Asm
                 }
                 else
                 {
-                    Wf.Error($"Row content parse failure: {nameof(row.CellCount)} = {row.CellCount} != 15; Line: {src}");
+                    Channel.Error($"Row content parse failure: {nameof(row.CellCount)} = {row.CellCount} != 15; Line: {src}");
                     return false;
                 }
             }
             else
             {
-                Wf.Error($"Row parse failure: {src.Content}");
+                Channel.Error($"Row parse failure: {src.Content}");
                 return false;
             }
         }

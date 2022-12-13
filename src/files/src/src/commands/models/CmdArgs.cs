@@ -69,5 +69,8 @@ namespace Z0
 
         public string Join()
             => Format();
+
+        public static implicit operator CmdArgs(CmdArg[] src)
+            => new CmdArgs(src);
     }
 }

@@ -36,13 +36,13 @@ namespace Z0
         FilePath EventLogPath
             => AppDb.Logs("checks").Path(FileName("logs", FileKind.Log));
 
-        FilePath TablePath<R>()
-            where R : struct
-                => AppDb.Logs("checks").PrefixedTable<R>(SvcName);
+        // FilePath TablePath<R>()
+        //     where R : struct
+        //         => AppDb.Logs("checks").PrefixedTable<R>(SvcName);
 
-        FilePath TablePath<R>(string label)
-            where R : struct
-                => AppDb.Logs("checks").PrefixedTable<R>(SvcName + $".{label}");
+        // FilePath TablePath<R>(string label)
+        //     where R : struct
+        //         => AppDb.Logs("checks").PrefixedTable<R>(SvcName + $".{label}");
 
         protected new void Write<X>(X src, FlairKind flair = FlairKind.Data)
             => Raise(Events.data(src, flair));
@@ -60,14 +60,6 @@ namespace Z0
         {
 
         }
-
-        protected void TableEmit<R>(string label, ReadOnlySpan<R> src)
-            where R : struct
-                => TableEmit(src, TablePath<R>(label));
-
-        protected void TableEmit<R>(ReadOnlySpan<R> src)
-            where R : struct
-                => TableEmit(src, TablePath<R>());
 
         protected override sealed void Disposing()
         {

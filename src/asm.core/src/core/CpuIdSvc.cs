@@ -15,7 +15,7 @@ namespace Z0.Asm
         {
             var buffer = text.emitter();
             regvals(src, buffer);
-            FileEmit(buffer.Emit(), src.Length, dst);
+            Channel.FileEmit(buffer.Emit(), src.Length, dst);
         }
 
         public static Index<CpuIdRow> import(FolderPath srcdir)

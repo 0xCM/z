@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     [ApiHost]
     public sealed partial class ProcessControl : Control<ProcessControl>
     {

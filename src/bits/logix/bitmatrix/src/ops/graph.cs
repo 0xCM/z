@@ -14,7 +14,7 @@ namespace Z0
         /// <param name="A">The source matrix</param>
         /// <typeparam name="T">The type over which the matrix is constructed</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static Graph<T> graph<T>(in BitMatrix<T> A)
+        public static ValueGraph<T> graph<T>(in BitMatrix<T> A)
             where T : unmanaged
         {
             if(typeof(T) == typeof(byte))
@@ -34,7 +34,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">The source matrix</param>
         [MethodImpl(Inline), Op]
-        public static Graph<byte> graph(BitMatrix8 A)
+        public static ValueGraph<byte> graph(BitMatrix8 A)
             => graph(BitMatrix.natural(A));
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">The source matrix</param>
         [MethodImpl(Inline), Op]
-        public static Graph<byte> graph(BitMatrix16 A)
+        public static ValueGraph<byte> graph(BitMatrix16 A)
             => graph(BitMatrix.natural(A));
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">The source matrix</param>
         [MethodImpl(Inline), Op]
-        public static Graph<byte> graph(BitMatrix32 A)
+        public static ValueGraph<byte> graph(BitMatrix32 A)
             => graph(BitMatrix.natural(A));
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">The source matrix</param>
         [MethodImpl(Inline), Op]
-        public static Graph<byte> graph(BitMatrix64 A)
+        public static ValueGraph<byte> graph(BitMatrix64 A)
             => graph(BitMatrix.natural(A));
 
         /// <summary>
@@ -70,18 +70,18 @@ namespace Z0
         /// <typeparam name="V">The vertex index type</typeparam>
         /// <typeparam name="N">The dimension type</typeparam>
         /// <typeparam name="T">The source matrix element type</typeparam>
-        static Graph<T> graph<N,T>(BitMatrix<N,T> src)
+        static ValueGraph<T> graph<N,T>(BitMatrix<N,T> src)
             where N : unmanaged, ITypeNat
             where T : unmanaged
         {
             var n = nat32u<N>();
-            var nodes = Graphs.nodes<T>(n);
-            var edges = new List<Arrow<Node<T>>>();
+            var nodes = ValueGraphs.nodes<T>(n);
+            var edges = new List<Arrow<ValueNode<T>>>();
             for(var row=0; row<n; row++)
             for(var col=0; col<n; col++)
                 if(src[row,col])
-                    edges.Add(Graphs.connect(nodes[row], nodes[col]));
-            return Graphs.graph(nodes, edges.ToArray());
+                    edges.Add(ValueGraphs.connect(nodes[row], nodes[col]));
+            return ValueGraphs.graph(nodes, edges.ToArray());
         }
     }
 }

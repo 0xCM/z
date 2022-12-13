@@ -9,9 +9,16 @@ namespace Z0
 
     sealed class EnvCmd : ApiService<EnvCmd>
     {    
+        static void emit(IWfChannel channel, ApiCmdCatalog src, FilePath dst)
+        {
+            var data = src.Values;
+            iter(data, x => channel.Row(x.Uri.Name));
+            Tables.emit(channel, data, dst);
+        }
+
         [CmdOp("api/commands")]
         void EmitCommands()
-            => ApiCmd.emit(Channel, ApiCmd.catalog(), ShellData.Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv));
+            => emit(Channel, Cmd.catalog(), ShellData.Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv));
 
         [CmdOp("api/version")]
         void ApiVersion()
@@ -19,7 +26,7 @@ namespace Z0
 
         [CmdOp("api/script")]
         void RunAppScript(CmdArgs args)
-            => ApiScripts.start(Channel, args);
+            => Cmd.start(Channel, args);
 
         [CmdOp("env/tools")]
         void EnvTools()

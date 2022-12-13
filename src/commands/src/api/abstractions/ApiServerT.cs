@@ -10,19 +10,19 @@ namespace Z0
     {
         protected AppDb AppDb => AppDb.Service;
 
-        protected ApiCmd ApiCmd => Wf.ApiCmd();
+        protected Cmd Cmd => Wf.Cmd();
 
         public override Type HostType
             => typeof(T);
 
         public void RunCmd(string name)
-            => ApiCmd.RunCmd(name);
+            => Cmd.RunCmd(name);
 
         public void RunCmd(string name, CmdArgs args)
-            => ApiCmd.RunCmd(name,args);
+            => Cmd.RunCmd(name,args);
 
         public void RunCmd(ApiCmdSpec cmd)
-            => ApiCmd.RunCmd(cmd);
+            => Cmd.RunCmd(cmd);
 
         public Task Start()
             => CmdLoop.start(Channel);

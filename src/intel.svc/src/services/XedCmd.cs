@@ -183,7 +183,7 @@ namespace Z0
         Outcome CheckXedDb(CmdArgs args)
         {
             var rows = Xed.Views.TypeTables.SelectMany(x => x.Rows).Sort().Resequence();
-            TableEmit(rows, XedPaths.DbTable<TypeTableRow>());
+            Channel.TableEmit(rows, XedPaths.DbTable<TypeTableRow>());
             return true;
         }
 

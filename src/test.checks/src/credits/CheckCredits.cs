@@ -82,14 +82,14 @@ namespace Z0
             }
             catch(Exception e)
             {
-                Error(e);
+                Channel.Error(e);
             }
 
-            Ran(flow);
+            Channel.Ran(flow);
         }
 
         void Exec<R>(Func<R> f)
-            => Status($"{f()}");
+            => Channel.Status($"{f()}");
 
         [Op]
         ulong CheckCreditFields()

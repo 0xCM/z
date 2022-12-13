@@ -9,7 +9,7 @@ namespace Z0
     partial struct FS
     {
         [Op]
-        public static Outcome symlink(FolderPath src, FolderPath dst, bool deleteExising = false)
+        public static Outcome<Symlink> symlink(FolderPath src, FolderPath dst, bool deleteExising = false)
         {
             try
             {
@@ -18,7 +18,7 @@ namespace Z0
 
                 var outcome = Kernel32.CreateSymLink(src.Name, dst.Name, SymLinkKind.Directory);
                 if(outcome)
-                    return true;
+                    return new Symlink(SymLinkKind.Directory, src, dst);
                 else
                     return (false, DirectoryLinkCreationFailed.Format(src, dst, EmptyString));
             }
@@ -29,29 +29,29 @@ namespace Z0
         }
 
         [Op]
-        public static Outcome symlink(FilePath link, FilePath dst, bool deleteExising = false)
+        public static Outcome<Symlink> symlink(FilePath src, FilePath dst, bool deleteExising = false)
         {
             try
             {
                 if(deleteExising)
-                    link.Delete();
+                    src.Delete();
 
-                link.FolderPath.Create();
+                src.FolderPath.Create();
 
-                var outcome = Kernel32.CreateSymLink(link.Name, dst.Name, SymLinkKind.File);
+                var outcome = Kernel32.CreateSymLink(src.Name, dst.Name, SymLinkKind.File);
                 if(outcome)
-                    return true;
+                    return new Symlink(SymLinkKind.File, src, dst);
                 else
-                    return (false, FileLinkCreationFailed.Format(link, dst, EmptyString));
+                    return (false, FileLinkCreationFailed.Format(src, dst, EmptyString));
 
             }
             catch(Exception e)
             {
-                return (false, FileLinkCreationFailed.Format(link, dst, e.ToString()));
+                return (false, FileLinkCreationFailed.Format(src, dst, e.ToString()));
             }
         }
 
-        static MsgPattern<_FileUri, _FileUri, string> FileLinkCreationFailed => "Failed to create link {0} -> {1}:{2}";
+        static MsgPattern<FileUri, FileUri, string> FileLinkCreationFailed => "Failed to create link {0} -> {1}:{2}";
 
         static MsgPattern<FolderPath, FolderPath, string> DirectoryLinkCreationFailed => "Failed to create link {0} -> {1}:{2}";
     }

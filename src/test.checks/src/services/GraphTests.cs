@@ -18,19 +18,19 @@ namespace Z0
             return true;
         }
 
-        public static Digraph cycle(uint src, uint dst)
+        public static Forest cycle(uint src, uint dst)
         {
-            var g = Graphs.digraph();
+            var g = ValueGraphs.forest();
             for(var i=src; i<dst; i+=2)
                 g.Connect(i, i+1);
             g.Connect(dst,src);
             return g;
         }
 
-        public static Digraph cycle(uint period)
+        public static Forest cycle(uint period)
             => cycle(0u,period);
 
-        public static void render(Digraph src, ITextBuffer dst)
+        public static void render(Forest src, ITextBuffer dst)
         {
             var counter = 0u;
             var connector = " -> ";
@@ -39,7 +39,7 @@ namespace Z0
             dst.AppendLine("}");
         }
 
-        public static void render(Digraph src, string connector, ReadOnlySpan<Label> labels, ITextBuffer dst)
+        public static void render(Forest src, string connector, ReadOnlySpan<Label> labels, ITextBuffer dst)
         {
             var count = src.EdgeCount;
             var edges = src.Edges;

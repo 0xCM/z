@@ -184,7 +184,9 @@ namespace Z0
             => EmitApiLiterals(apilits(src));
 
         public void EmitApiCommands(params Assembly[] src)
-            => ApiCmd.EmitCatalog(Channel, src, Target);
+        {
+            Channel.TableEmit(Cmd.fields(Cmd.discover(src)),Target.Table<CmdFieldRow>());
+        }
 
         public void EmitApiTypes(Assembly[] src)
             => Channel.TableEmit(DataTypeInfo(src), Target.Table<ApiTypeInfo>());
@@ -308,8 +310,8 @@ namespace Z0
         void Emit(string name, ReadOnlySeq<SymInfo> src)
             => Channel.TableEmit(src, Target.Scoped(tokens).PrefixedTable<SymInfo>(name), TextEncodingKind.Unicode);
 
-        void Emit(ReadOnlySpan<ApiCmdRow> src)
-            => Channel.TableEmit(src, Target.Table<ApiCmdRow>());
+        void Emit(ReadOnlySpan<CmdFieldRow> src)
+            => Channel.TableEmit(src, Target.Table<CmdFieldRow>());
 
         void EmitApiLiterals(ReadOnlySpan<ApiLiteralInfo> src)
             => Channel.TableEmit(src, Target.Table<ApiLiteralInfo>(), TextEncodingKind.Unicode);

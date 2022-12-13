@@ -43,7 +43,7 @@ namespace Z0
             return sys.start(run);
         }
 
-        public static Task<ExecToken> symlink(IWfChannel channel, CmdArgs args)
+        public static Task<CmdResult<CreateSymLink,Symlink>> symlink(IWfRuntime wf, CmdArgs args)
         {
             var a0 = args[0].Value;
             var a1 = args[1].Value;
@@ -55,7 +55,7 @@ namespace Z0
             else
                 cmd = new (FS.dir(a0), FS.dir(a1), true);
 
-            return Symlink.create().Execute(channel, CmdRunner.context(), cmd);
+            return SymlinkExecutor.create(wf).Execute(CmdRunner.context(), cmd);
         }
 
         public static void zip(IWfChannel channel, CmdArgs args)
@@ -107,7 +107,7 @@ namespace Z0
 
         public static void catalog(IWfChannel channel, CmdArgs args)
         {
-            CatalogFiles.bind(args, out CatalogFiles cmd);
+            CreateFileCatalog.bind(args, out CreateFileCatalog cmd);
             var name = identifier(cmd.Source);
             var list = cmd.Target + FS.file(name, FileKind.List);
             var src = cmd.Match.IsEmpty ? DbArchive.enumerate(cmd.Source,"*.*", true) : DbArchive.enumerate(cmd.Source, true, cmd.Match);

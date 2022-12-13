@@ -9,6 +9,6 @@ namespace Z0
     {
         protected AppDb AppDb => AppDb.Service;
 
-        protected ApiCmd ApiCmd => Wf.ApiCmd();
+        protected Cmd Cmd => Wf.Cmd();
     }
 }

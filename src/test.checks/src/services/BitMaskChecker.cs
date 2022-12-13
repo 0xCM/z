@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
     using static BitMasks;
 
     [ApiHost]
@@ -277,7 +277,7 @@ namespace Z0
                 log.Check3 = log.Count == log.PackedWidth;
             }
 
-            TableEmit($"{w.BitWidth}u",dst.View);
+            TableEmit(dst.View, AppDb.ApiTargets().Table<HiMaskLog<T>>());
         }
     }
 }
