@@ -12,7 +12,6 @@ namespace Z0
                 wf.WfCmd(),
                 wf.BuildCmd(),
                 wf.XedCmd(),
-                wf.CsGenCmd(),
                 wf.IntelInxCmd(),
                 wf.ContextCmd(),
                 wf.AsmCheckCmd(),

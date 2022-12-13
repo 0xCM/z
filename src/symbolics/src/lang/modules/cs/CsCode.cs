@@ -25,7 +25,6 @@ namespace Z0
                 dst.Target = target;
                 return dst;
             }
-
         }
 
 
@@ -481,8 +480,6 @@ namespace Z0
 
     public class CsCode : AppService<CsCode>
     {
- 
-
 
     }
 }

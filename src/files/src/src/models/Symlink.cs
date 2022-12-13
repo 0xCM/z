@@ -6,7 +6,7 @@ namespace Z0
 {
     using Windows;
 
-    public record class Symlink : IExpr
+    public record struct Symlink : IExpr, IFsEntry<Symlink>
     {
         public readonly SymLinkKind Kind;
 
@@ -47,5 +47,7 @@ namespace Z0
             => Format();
 
         public static Symlink Empty => new ();
+
+        public PathPart Name => $"{Source} -> ${Target}";
     }
 }

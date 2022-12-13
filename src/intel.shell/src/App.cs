@@ -19,7 +19,6 @@ namespace Z0
                 wf.AsmDbCmd(),
                 wf.AsmGenCmd(),
                 wf.AsmFlowCmd(),
-                wf.CsGenCmd(),
                 wf.PbCmd(),
                 wf.SdmCmd(),
                 wf.XedToolCmd()

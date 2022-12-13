@@ -17,7 +17,7 @@ namespace Z0
             var files = Project().Files().Where(f => f.Is(FS.Obj) || f.Is(FS.Dll) || f.Is(FS.Lib) || f.Is(FS.Exe)).View;
             var count = files.Length;
             var outdir = Project().BuildOut();
-            var tool = Tooling.Home(ToolNames.llvm_nm);
+            var tool = Tooling.Home("llvm-nm");
             var script = tool.Script("run", FileKind.Cmd);
             for(var i=0; i<count; i++)
             {

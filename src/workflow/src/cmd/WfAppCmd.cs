@@ -21,14 +21,14 @@ namespace Z0
 
         ApiMd ApiMd => Wf.ApiMd();
 
-        [CmdOp("sdk/catalog")]
-        void Sdk(CmdArgs args)
-        {
-            var src = FS.dir(args[0]);
-            var sdk = Sdks.sdk(src);
-            var modules = sdk.Modules;
-            iter(modules.NativeDll(), file => Write(file));
-        }
+        // [CmdOp("sdk/catalog")]
+        // void Sdk(CmdArgs args)
+        // {
+        //     var src = FS.dir(args[0]);
+        //     var sdk = Sdks.sdk(src);
+        //     var modules = sdk.Modules;
+        //     iter(modules.NativeDll(), file => Write(file));
+        // }
 
         [CmdOp("api/tablegen")]
         void GenRecords()
@@ -74,14 +74,6 @@ namespace Z0
             var dst = AppDb.DbTargets("tools/help").Path(FS.file(tool, FileKind.Help));
             CmdRunner.run(Channel, tool, args.Length > 1 ? args[1].Value : "--help", dst);
         }
-
-        [CmdOp("zip")]
-        void Zip(CmdArgs args)
-            => Archives.zip(Channel,args);
-
-        [CmdOp("copy")]
-        void Copy(CmdArgs args)
-            => Archives.copy(Channel,args);
 
         [CmdOp("archives")]        
         void ListArchives(CmdArgs args)
@@ -129,9 +121,6 @@ namespace Z0
             }
         }
 
-        [CmdOp("files")]
-        void CatalogFiles(CmdArgs args)
-            => Archives.catalog(Channel, args);
             
         [CmdOp("env/paths")]
         void ProcPaths()
@@ -182,20 +171,6 @@ namespace Z0
             Archives.copy(Channel, src, dst);
         }
 
-        static Files launchers()
-            => FilteredArchive.match(AppSettings.Control("launch").Root, FileKind.Cmd, FileKind.Ps1);
-
-        [CmdOp("launchers")]
-        void Launchers(CmdArgs args)
-        {
-            var src = launchers();
-            var emitter = text.emitter();
-            iter(src, file => emitter.AppendLine(file.ToUri()));
-            var data = emitter.Emit();
-            Emitter.Row(data);
-            Emitter.FileEmit(data, AppDb.AppData().Path("launchers", FileKind.List));
-        }
-        
         [CmdOp("settings")]
         void ReadSettings(CmdArgs args)
         {

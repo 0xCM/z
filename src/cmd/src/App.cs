@@ -47,9 +47,7 @@ namespace Z0
                 wf.CalcChecker(),
                 wf.TestCmd(),
                 wf.AsmGenCmd(),
-                wf.CsGenCmd(),
                 wf.MemoryChecks(),
-                wf.CgChecks(),
                 wf.SdmCmd()
                 };
                 return providers;

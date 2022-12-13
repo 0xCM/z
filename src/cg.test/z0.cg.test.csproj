@@ -1,9 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(ProjectProps)\usings.props"/>
-  <Import Project="imports.props"/>
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <AssemblyName>cgtest</AssemblyName>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-  </PropertyGroup>
-</Project>

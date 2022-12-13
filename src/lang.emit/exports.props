@@ -1,5 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <LangEmit>$(MsBuildThisFileDirectory)z0.lang.emit.csproj</LangEmit>
-  </PropertyGroup>
-</Project>

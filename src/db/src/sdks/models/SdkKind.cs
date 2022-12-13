@@ -4,27 +4,27 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly record struct SdkKind : ISdkKind<SdkKind>
-    {
-        public readonly asci16 Name;
+    // public readonly record struct SdkKind : ISdkKind<SdkKind>
+    // {
+    //     public readonly asci16 Name;
 
-        [MethodImpl(Inline)]
-        public SdkKind(string name)
-        {
-            Name = name;
-        }
+    //     [MethodImpl(Inline)]
+    //     public SdkKind(string name)
+    //     {
+    //         Name = name;
+    //     }
 
-        asci16 ISdkKind.Name 
-            => Name;
+    //     asci16 ISdkKind.Name 
+    //         => Name;
 
-        public string Format()
-            => Name;
+    //     public string Format()
+    //         => Name;
 
-        public override string ToString()
-            => Name;
+    //     public override string ToString()
+    //         => Name;
 
-        [MethodImpl(Inline)]
-        public static implicit operator SdkKind(string name)
-            => new SdkKind(name);
-    }
+    //     [MethodImpl(Inline)]
+    //     public static implicit operator SdkKind(string name)
+    //         => new SdkKind(name);
+    // }
 }

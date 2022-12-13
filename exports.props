@@ -14,12 +14,6 @@
 
    <Import Project="$(MsBuildThisFileDirectory)src/calcs/exports.props"/>
 
-   <Import Project="$(MsBuildThisFileDirectory)src/cg.common/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/cg.intel/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/cg.libs/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/cg.shell/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/cg.test/exports.props"/>
-
    <Import Project="$(MsBuildThisFileDirectory)src/circuits/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/clr.query/exports.props"/>
@@ -56,7 +50,6 @@
    
    <Import Project="$(MsBuildThisFileDirectory)src/intel.svc/exports.props"/>
 
-   <Import Project="$(MsBuildThisFileDirectory)src/lang.emit/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/lib/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/linq/exports.props"/>
 

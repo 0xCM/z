@@ -31,6 +31,12 @@ namespace Z0
         FileExt,
 
         [Symbol("uri")]
-        Uri
+        Uri,
+
+        [Symbol("symlink/file")]
+        FileRef,
+
+        [Symbol("symlink/folder")]
+        FolderRef,
     }
 }

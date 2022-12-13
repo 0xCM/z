@@ -1,8 +1,0 @@
-<Project>
-  <ItemGroup>
-    <ProjectReference Include="$(CgCommon)" />
-    <ProjectReference Include="$(CgIntel)" />
-    <ProjectReference Include="$(AsmCore)" />
-    <ProjectReference Include="$(Heaps)" />
-  </ItemGroup>
-</Project>

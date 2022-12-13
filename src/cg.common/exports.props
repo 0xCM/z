@@ -1,5 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <CgCommon>$(MsBuildThisFileDirectory)z0.cg.common.csproj</CgCommon>
-  </PropertyGroup>
-</Project>

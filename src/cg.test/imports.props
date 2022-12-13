@@ -1,8 +1,0 @@
-<Project>
-  <ItemGroup>
-    <ProjectReference Include="$(CgLibs)" />
-    <ProjectReference Include="$(AsmCore)" />
-    <ProjectReference Include="$(Numbers)" />
-    <ProjectReference Include="$(LangEmit)" />
-  </ItemGroup>
-</Project>

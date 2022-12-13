@@ -1,9 +1,0 @@
-<Project>
-  <ItemGroup>
-    <ProjectReference Include="$(Assets)" />
-    <ProjectReference Include="$(Rules)" />
-    <ProjectReference Include="$(Builds)" />
-    <ProjectReference Include="$(Tools)" />    
-    <ProjectReference Include="$(ApiCode)" />    
-  </ItemGroup>
-</Project>

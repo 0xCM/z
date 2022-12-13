@@ -4,25 +4,25 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class Sdks
-    {
-        public static Sdk sdk(FolderPath src) => new(src);
+    // public class Sdks
+    // {
+    //     public static Sdk sdk(FolderPath src) => new(src);
 
-        public sealed class Sdk : Sdk<Sdk,SdkKind>
-        {
-            public Sdk()
-            {
+    //     public sealed class Sdk : Sdk<Sdk,SdkKind>
+    //     {
+    //         public Sdk()
+    //         {
 
-            }
+    //         }
 
-            public Sdk(FolderPath src)
-                : base(src)
-            {
+    //         public Sdk(FolderPath src)
+    //             : base(src)
+    //         {
 
-            }
+    //         }
 
-            public IModuleArchive Modules 
-                => Archives.modules(Location);            
-        }
-    }
+    //         public IModuleArchive Modules 
+    //             => Archives.modules(Location);            
+    //     }
+    // }
 }

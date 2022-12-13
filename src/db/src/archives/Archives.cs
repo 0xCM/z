@@ -14,6 +14,36 @@ namespace Z0
 
     public class Archives : ApiModule<Archives>
     {        
+        [Parser]
+        public static bool parse(string src, out FilePoint dst)
+        {
+            dst = FilePoint.Empty;
+            var indices = text.indices(src,Chars.Colon);
+            if(indices.Length < 2)
+                return false;
+
+            var j = indices.Length -1;
+            ref readonly var i0 = ref indices[j-1];
+            ref readonly var i1 = ref indices[j];
+            var l = text.inside(src,i0,i1);
+            var c = text.right(src, i1);
+            if(uint.TryParse(l, out var line) && uint.TryParse(c, out var col))
+            {
+                var loc = (line,col);
+                var path = FS.path(text.left(src,i0));
+                dst = new FilePoint(path,loc);
+            }
+            return true;
+        }
+
+        [MethodImpl(Inline), Op]
+        public static FilePoint point(FilePath src, LineOffset offset)
+            => new FilePoint(src,offset);
+
+        [MethodImpl(Inline), Op]
+        public static FilePoint point(FilePath src, Count line, Count col)
+            => new FilePoint(src, ((uint)line,(uint)col));
+
         [Op]
         public static Task<FileEmission> emissions(IWfChannel channel, Files src, bool uri, FilePath dst)
         {
@@ -105,37 +135,57 @@ namespace Z0
                 yield return new FileUri(item);
         }
 
-        public static void catalog(IWfChannel channel, CmdArgs args)
+        // public static ConcurrentBag<FilePath> search(IWfChannel channel, in CreateFileCatalog cmd)
+        // {
+        //     var dst = bag<FilePath>();
+        //     search(channel, cmd, path => dst.Add(path));                
+        //     return dst;
+        // }
+
+        public static void search(IWfChannel channel, in CreateFileCatalog cmd, Action<FilePath> dst, bool pll = true)
         {
-            CreateFileCatalog.bind(args, out CreateFileCatalog cmd);
-            var name = identifier(cmd.Source);
-            var list = cmd.Target + FS.file(name, FileKind.List);
             var src = cmd.Match.IsEmpty ? DbArchive.enumerate(cmd.Source,"*.*", true) : DbArchive.enumerate(cmd.Source, true, cmd.Match);
             var counter = 0u;
+            var flow = channel.Running($"Searching {cmd.Source}");
             string msg()
                 => $"Collected {counter} files";
 
-            var files = bag<FileUri>();
             iter(src, file => {
-                files.Add(file);
+                dst(file);
                 counter++;
                 if(counter % 1024 == 0)
                     channel.Babble(msg());
-            }, true);
-            channel.Babble(msg());
+            }, pll);
+            channel.Ran(flow, $"Found {counter} files from {cmd.Source}");
+        }
 
-            var collected = files.ToSeq();
-            var listing = Archives.listing(collected.View);            
-            channel.TableEmit(listing, cmd.Target + FS.file(name,FileKind.Csv));
-            var flow = channel.EmittingFile(list);
-            using var writer = list.Utf8Writer();
-            counter =0;
-            foreach(var file in files)
+        public static void catalog(IWfChannel channel, CmdArgs args)
+        {
+            CreateFileCatalog.bind(args, out CreateFileCatalog cmd);
+            var name = Archives.identifier(cmd.Source);
+            var dst = cmd.Target + FS.file(name, FileKind.Csv);
+            var running =  channel.Running($"Adding files from {cmd.Source} to catalog");
+            var counter = 0u;
+            var paths = bag<FilePath>();
+            var rows = bag<ListedFile>();
+            void Accept(FilePath file)
             {
-                writer.AppendLine(file.ToFilePath().ToUri());
-                counter++;
+                paths.Add(file);
+                rows.Add(new ListedFile{
+                    Seq = counter++,
+                    Size = file.Size.Kb,
+                    Path = file,
+                    CreateTS = file.Info.CreationTime,
+                    UpdateTS = file.Info.LastWriteTime,
+                    Attributes = file.Info.Attributes
+                });                
             }
-            channel.EmittedFile(flow, counter);
+
+            Archives.search(channel, cmd, Accept);
+
+            channel.TableEmit(rows.ToSeq().Sort().Resequence(), dst);
+            channel.Ran(running, counter);
+
         }
 
         public static IDbArchive archive(string src)

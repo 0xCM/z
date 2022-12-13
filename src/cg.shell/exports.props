@@ -1,5 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <CgShell>$(MsBuildThisFileDirectory)z0.cg.shell.csproj</CgShell>
-  </PropertyGroup>
-</Project>
