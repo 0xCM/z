@@ -4,19 +4,18 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [FileFlowType]
-    public abstract class FileFlowType<F,A,K> : DataFlow<F,A,K,K>, IFlowType
+    public abstract class FileFlow<F,A> : FlowType<F,A,FileKind>, IFileFlowType<F>
+        where F : FileFlow<F,A>,new()
         where A : IActor
-        where K : unmanaged
-        where F : FileFlowType<F,A,K>, new()
     {
-        protected FileFlowType(A actor, K src, K dst)
+        protected FileFlow(A actor, FileKind src, FileKind dst)
             : base(actor,src,dst)
         {
 
         }
 
-        IActor IFlowType.Actor
-            => Actor;
+        public FileKind SourceKind => Source;
+
+        public FileKind TargetKind => Target;
     }
 }

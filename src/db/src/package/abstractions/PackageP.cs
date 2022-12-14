@@ -4,17 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.IO.Compression;
-
-    public sealed class ZipFile : FilePack<ZipFile>
+    public abstract record class Package<P> : Package
+        where P : Package<P>
     {
-        public ZipFile(FileUri src)
-            : base(src, PackageKind.Zip)
+        protected Package(FileUri location, PackageKind kind)
+            : base(location,kind)
         {
-
         }
-
-        public override FileKind FileKind => FileKind.Zip;
-
     }
 }

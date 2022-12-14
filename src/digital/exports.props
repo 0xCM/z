@@ -1,5 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <Digital>$(MsBuildThisFileDirectory)z0.digital.csproj</Digital>
-  </PropertyGroup>
-</Project>

@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.Linq;
-
     public interface IDataChannel
     {   
         Task<ExecToken> Emit(ISeqEmitter src, ISeqReceiver dst);

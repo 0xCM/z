@@ -14,7 +14,10 @@ namespace Z0
 
         [Op, Closures(Closure)]
         public static string serialize<T>(T src, bool indented = true)
-            => JsonSerializer.Serialize(src);
+            => JsonSerializer.Serialize(src, new JsonSerializerOptions{
+                IncludeFields= true,
+                WriteIndented = indented
+            });
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static JsonText jtext<T>(JsonSeq<T> src)

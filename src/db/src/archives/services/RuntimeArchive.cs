@@ -19,18 +19,6 @@ namespace Z0
 
         public Files Files {get;}
 
-        [Op]
-        public static string format(RuntimeAssembly src)
-            => string.Format("{0}:{1}", src.Component.GetSimpleName(), src.Uri);
-
-        [MethodImpl(Inline)]
-        public static RuntimeAssembly assembly(Assembly component)
-            => new RuntimeAssembly(component, new FileUri(component.Location));
-
-        [MethodImpl(Inline)]
-        public static RuntimeAssembly assembly(Assembly component, FilePath path)
-            => new RuntimeAssembly(component, path);
-
         public RuntimeArchive()
         {
             Files = Files.Empty;

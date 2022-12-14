@@ -7,7 +7,7 @@ namespace Z0
     using System.Reflection.PortableExecutable;
 
     [StructLayout(LayoutKind.Sequential), Record(TableId)]
-    public record struct PeFileInfo
+    public record struct PeFileInfo : IRecord<PeFileInfo>
     {
         public const string TableId = "pe.info";
 
@@ -49,37 +49,37 @@ namespace Z0
         /// <summary>
         /// The location/size of the export directory
         /// </summary>
-        public PeDirInfo ExportDir;
+        public PeDirectory ExportDir;
 
         /// <summary>
         /// The location/size of the import directory
         /// </summary>
-        public PeDirInfo ImportDir;
+        public PeDirectory ImportDir;
 
         /// <summary>
         /// The location/size of the import address directory
         /// </summary>
-        public PeDirInfo ImportAddressDir;
+        public PeDirectory ImportAddressDir;
 
         /// <summary>
         /// The location/size of the resource directory
         /// </summary>
-        public PeDirInfo ResourceDir;
+        public PeDirectory ResourceDir;
 
         /// <summary>
         /// The location/size of the relocation directory
         /// </summary>
-        public PeDirInfo RelocationDir;
+        public PeDirectory RelocationDir;
 
         /// <summary>
         /// The location/size of the load config directory
         /// </summary>
-        public PeDirInfo LoadConfigDir;
+        public PeDirectory LoadConfigDir;
 
         /// <summary>
         /// The location/size of the load debug directory
         /// </summary>
-        public PeDirInfo DebugDir;
+        public PeDirectory DebugDir;
 
         /// <summary>
         /// https://docs.microsoft.com/en-us/dotnet/api/system.reflection.portableexecutable.characteristics?view=net-5.0

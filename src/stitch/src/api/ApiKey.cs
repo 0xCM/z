@@ -43,12 +43,6 @@ namespace Z0
         public DataWidth Width
             => DataWidth.W128;
 
-        // public ReadOnlySpan<byte> Data
-        // {
-        //     [MethodImpl(Inline)]
-        //     get => sys.bytes(Storage);
-        // }
-
         [MethodImpl(Inline)]
         public ApiKeySeg Seg(byte index)
             => Storage.Cell(w16, index);

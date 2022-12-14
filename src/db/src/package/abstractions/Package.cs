@@ -4,24 +4,22 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public abstract class FilePack : IFilePack
+    public record class Package : IPackage
     {
         public readonly FileUri Location;
 
         public readonly PackageKind PackageKind;
 
-        protected FilePack(FileUri location, PackageKind kind)
+        protected Package(FileUri location, PackageKind kind)
         {
             Location = location;
             PackageKind = kind;
         }
 
-        public abstract FileKind FileKind {get;}
-
-        FileUri IFilePack.Location 
+        FileUri IPackage.Location 
             => Location;
 
-        PackageKind IFilePack.PackageKind 
+        PackageKind IPackage.PackageKind 
             => PackageKind;
     
         public string Format()

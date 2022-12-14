@@ -26,7 +26,6 @@ namespace Z0
         public ApiKey Api {get; set;}
 
         public R Result {get; set;}
-
     }
 
     /// <summary>
@@ -42,7 +41,6 @@ namespace Z0
         public A0 Arg0;
 
         public R Result {get; set;}
-
     }
 
     /// <summary>

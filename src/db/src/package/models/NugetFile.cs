@@ -4,14 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed class NugetFile : FilePack<NugetFile>
+    public sealed record class NugetPackge : Package<NugetPackge>
     {
-        public NugetFile(FileUri src)
+        public NugetPackge(FileUri src)
             : base(src, PackageKind.Nuget)
         {
 
         }
-
-        public override FileKind FileKind => FileKind.Nuget;
     }
 }

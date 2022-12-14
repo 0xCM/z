@@ -23,7 +23,7 @@ namespace Z0
             ref readonly var src = ref row.Head;
             ref var dst = ref matrix.Head;
             for(var i=0u; i<srcBitCount; i++)
-                core.copy(src, ref seek(dst, i*srcCellCount), (int)srcCellCount);
+                memory.copy(src, ref seek(dst, i*srcCellCount), (int)srcCellCount);
             return matrix;
         }
 
@@ -43,7 +43,7 @@ namespace Z0
             ref readonly var src = ref row.Head;
             ref var dst = ref matrix.Head;
             for(var i=0u; i< srcBitCount; i++)
-                core.copy(src, ref seek(dst, i*srcCellCount), (int)srcCellCount);
+                memory.copy(src, ref seek(dst, i*srcCellCount), (int)srcCellCount);
             return matrix;
         }
 

@@ -14,6 +14,57 @@ namespace Z0
 
     public class Archives : ApiModule<Archives>
     {        
+        public static void nupkg(IWfChannel channel, CmdArgs args)
+        {
+            var src = FS.dir(args[0]);
+            var packs = Archives.packages(src, PackageKind.Nuget);
+            iter(packs, p => channel.Write(p));
+        }
+
+        public static FileKind filekind(PackageKind src)
+            => src switch{
+                PackageKind.Zip => FileKind.Zip,
+                PackageKind.Nuget => FileKind.Nuget,
+                PackageKind.Msi => FileKind.Msi,
+                _ => FileKind.None
+            };
+
+        public static ReadOnlySeq<Package> packages(FolderPath src, PackageKind kind)
+        {
+            var files = src.EnumerateFiles(filekind(kind).Ext(), true).ToSeq();
+            var count = files.Count;
+            var dst = alloc<Package>(count);
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var file = ref files[i];
+                var uri = $"file://{file.Name.Text}";
+                seek(dst,i) = package(new FileUri(uri));
+            }
+            return dst;
+        }
+
+        public static Package package(FileUri src)
+        {
+            var kind = src.Ext().FileKind();
+            var dst = default(Package);
+            switch(kind)
+            {
+                case FileKind.Zip:
+                    dst = new ZipFile(src);
+                break;
+                case FileKind.Msi:
+                    dst = new MsiFile(src);
+                break;
+                case FileKind.Nuget:
+                    dst = new NugetPackge(src);
+                break;
+                default:
+                    sys.@throw($"File type for '{src}' unknown");
+                break;
+            }
+            return dst;
+        }
+         
         [Parser]
         public static bool parse(string src, out FilePoint dst)
         {
@@ -135,13 +186,6 @@ namespace Z0
                 yield return new FileUri(item);
         }
 
-        // public static ConcurrentBag<FilePath> search(IWfChannel channel, in CreateFileCatalog cmd)
-        // {
-        //     var dst = bag<FilePath>();
-        //     search(channel, cmd, path => dst.Add(path));                
-        //     return dst;
-        // }
-
         public static void search(IWfChannel channel, in CreateFileCatalog cmd, Action<FilePath> dst, bool pll = true)
         {
             var src = cmd.Match.IsEmpty ? DbArchive.enumerate(cmd.Source,"*.*", true) : DbArchive.enumerate(cmd.Source, true, cmd.Match);
@@ -185,7 +229,6 @@ namespace Z0
 
             channel.TableEmit(rows.ToSeq().Sort().Resequence(), dst);
             channel.Ran(running, counter);
-
         }
 
         public static IDbArchive archive(string src)

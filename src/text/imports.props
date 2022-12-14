@@ -1,5 +1,7 @@
 <Project>
 
+  <Import Project="$(SlnProps)\system.props"/>
+
   <ItemGroup>
     <PackageReference Include="z0.sys.core" Version="$(ZSysVer)" />
     <PackageReference Include="z0.sys.api" Version="$(ZSysVer)" />

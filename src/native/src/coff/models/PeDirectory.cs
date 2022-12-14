@@ -5,7 +5,7 @@
 namespace Z0
 {
     [StructLayout(LayoutKind.Sequential), Record(TableId)]
-    public record struct PeDirInfo
+    public record struct PeDirectory
     {
         public const string TableId = "pe.dirinfo";
 
@@ -14,13 +14,13 @@ namespace Z0
         public uint Size;
 
         [MethodImpl(Inline)]
-        internal PeDirInfo(DirectoryEntry src)
+        public PeDirectory(DirectoryEntry src)
         {
             Rva = src.RelativeVirtualAddress;
             Size = (uint)src.Size;
         }
 
-        public static implicit operator PeDirInfo(DirectoryEntry src)
-            => new PeDirInfo(src);
+        public static implicit operator PeDirectory(DirectoryEntry src)
+            => new PeDirectory(src);
     }
 }

@@ -229,9 +229,9 @@ namespace Z0
         void EmitRegions()
             => ProcessMemory.EmitRegions(Process.GetCurrentProcess(), ApiPacks.create());
 
-        [CmdOp("nuget/search")]
+        [CmdOp("nuget/pkg")]
         void NugetFiles(CmdArgs args)
-            => DevPacks.search(Channel, args);
+            => Archives.nupkg(Channel, args);
 
         [CmdOp("nuget/stage")]
         void DevPack(CmdArgs args)

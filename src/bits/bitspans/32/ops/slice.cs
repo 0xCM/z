@@ -69,7 +69,7 @@ namespace Z0
             var block = ByteBlocks.alloc(n8);
             var unpacked = block.Storage<Bit32>();
             ref var dst = ref ByteBlocks.first<Bit32>(ref block);
-            core.copy(in skip(src.Edit, offset), ref dst, count);
+            memory.copy(in skip(src.Edit, offset), ref dst, count);
             return BitPack32.pack<byte>(unpacked);
         }
 
@@ -86,7 +86,7 @@ namespace Z0
             var block = ByteBlocks.alloc(n16);
             var unpacked = block.Storage<Bit32>();
             ref var dst = ref ByteBlocks.first<Bit32>(ref block);
-            core.copy(in skip(src.Edit, offset), ref dst, count);
+            memory.copy(in skip(src.Edit, offset), ref dst, count);
             return BitPack32.pack<ushort>(unpacked);
         }
 
@@ -120,7 +120,7 @@ namespace Z0
             var buffer = ByteBlocks.alloc(n64);
             var unpacked = buffer.Storage<Bit32>();
             ref var dst = ref ByteBlocks.first<Bit32>(ref buffer);
-            core.copy(skip(src.Edit, offset), ref dst, count);
+            memory.copy(skip(src.Edit, offset), ref dst, count);
             return BitPack32.pack<ulong>(unpacked);
         }
 
@@ -130,7 +130,7 @@ namespace Z0
             var buffer = ByteBlocks.alloc(n8);
             var unpacked = buffer.Storage<Bit32>();
             ref var dst = ref ByteBlocks.first<Bit32>(ref buffer);
-            core.copy(skip(src.Edit, offset), ref dst, count);
+            memory.copy(skip(src.Edit, offset), ref dst, count);
             return BitPack32.pack<sbyte>(unpacked);
         }
 
@@ -140,7 +140,7 @@ namespace Z0
             var buffer = ByteBlocks.alloc(n16);
             var unpacked = buffer.Storage<Bit32>();
             ref var dst = ref ByteBlocks.first<Bit32>(ref buffer);
-            core.copy(skip(src.Edit, offset), ref dst, count);
+            memory.copy(skip(src.Edit, offset), ref dst, count);
             return BitPack32.pack(unpacked, z16i);
         }
 
@@ -150,7 +150,7 @@ namespace Z0
             var buffer = ByteBlocks.alloc(n32);
             var unpacked = buffer.Storage<Bit32>();
             ref var dst = ref ByteBlocks.first<Bit32>(ref buffer);
-            core.copy(skip(src.Edit, offset), ref dst, count);
+            memory.copy(skip(src.Edit, offset), ref dst, count);
             return BitPack32.pack(unpacked,z32i);
         }
 
@@ -160,7 +160,7 @@ namespace Z0
             var buffer = ByteBlocks.alloc(n64);
             var unpacked = buffer.Storage<Bit32>();
             ref var dst = ref ByteBlocks.first<Bit32>(ref buffer);
-            core.copy(skip(src.Edit, offset), ref dst, count);
+            memory.copy(skip(src.Edit, offset), ref dst, count);
             return BitPack32.pack(unpacked, z64i);
         }
     }

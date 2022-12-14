@@ -4,11 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
-    using static core;
+    using static sys;
 
     partial class BitSpans32
     {
@@ -23,7 +19,7 @@ namespace Z0
         {
             var dst = span<Bit32>(width<T>());
             var len = math.min(dst.Length, src.Length - offset);
-            core.copy(src.Edit, offset, len, dst);
+            memory.copy(src.Edit, offset, len, dst);
             return BitPack32.pack<T>(dst);
         }
 
@@ -38,7 +34,7 @@ namespace Z0
         {
             var dst = span<Bit32>(width<T>());
             var len = math.min(dst.Length, src.Length);
-            core.copy(src.Edit, 0, len, dst);
+            memory.copy(src.Edit, 0, len, dst);
             return BitPack32.pack<T>(dst);
         }
 
@@ -55,7 +51,7 @@ namespace Z0
         {
             var dst = span<Bit32>(width<T>());
             var len = math.min(count, src.Length - offset);
-            core.copy(src.Edit, offset, len, dst);
+            memory.copy(src.Edit, offset, len, dst);
             return BitPack32.pack<T>(dst);
         }
    }

@@ -7,7 +7,7 @@ namespace Z0
     partial struct MinidumpRecords
     {
         [Record(TableId), StructLayout(LayoutKind.Sequential)]
-        public unsafe struct DumpFileHeader : IRecord<DumpFileHeader>
+        public unsafe struct DumpFileHeader
         {
             public const string TableId = "image.minidump-header";
 

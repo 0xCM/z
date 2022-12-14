@@ -2,10 +2,23 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-[assembly: PartId(PartId.DbSqlite)]
-namespace Z0.Parts
+namespace Z0
 {
-    public sealed class DbSqlite : Part<DbSqlite>
+    public enum PackageKind : byte
     {
+        None,
+
+        Zip,
+        
+        Nuget,
+
+        Msi
+    }
+
+    public interface IPackage
+    {
+        FileUri Location {get;}
+
+        PackageKind PackageKind {get;}
     }
 }

@@ -4,9 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public static partial class XTend
+    public sealed record class ZipFile : Package<ZipFile>
     {
-        const NumericKind Closure = NumericKind.UnsignedInts;
+        public ZipFile(FileUri src)
+            : base(src, PackageKind.Zip)
+        {
+
+        }
     }
 }
-

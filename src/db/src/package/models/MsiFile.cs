@@ -4,14 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed class MsiFile : FilePack<MsiFile>
+    public sealed record class MsiFile : Package<MsiFile>
     {
         public MsiFile(FileUri src)
             : base(src, PackageKind.Msi)
         {
 
-        }
-
-        public override FileKind FileKind => FileKind.Msi;
+        }        
     }
 }

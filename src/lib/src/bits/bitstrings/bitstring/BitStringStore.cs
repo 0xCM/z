@@ -106,28 +106,28 @@ namespace Z0
         [MethodImpl(Inline), Op]
         static unsafe void bitchars(byte src, Span<char> dst, int offset)
         {
-            core.copy(bitcharP((byte)(src >> seglen*0)), dst, offset + seglen*0,  seglen);
+            memory.copy(bitcharP((byte)(src >> seglen*0)), dst, offset + seglen*0,  seglen);
         }
 
         [MethodImpl(Inline), Op]
         static unsafe void bitchars(ushort src, Span<char> dst, int offset)
         {
-            core.copy(bitcharP((byte)(src >> seglen*0)), dst, offset + seglen*0,  seglen);
-            core.copy(bitcharP((byte)(src >> seglen*1)), dst, offset + seglen*1,  seglen);
+            memory.copy(bitcharP((byte)(src >> seglen*0)), dst, offset + seglen*0,  seglen);
+            memory.copy(bitcharP((byte)(src >> seglen*1)), dst, offset + seglen*1,  seglen);
         }
 
         [MethodImpl(Inline), Op]
         static unsafe void bitchars(uint src, Span<char> dst, int offset)
         {
             for(var i=0; i<4; i++)
-                core.copy(bitcharP((byte)(src >> seglen*i)), dst, offset + seglen*i,  seglen);
+                memory.copy(bitcharP((byte)(src >> seglen*i)), dst, offset + seglen*i,  seglen);
         }
 
         [MethodImpl(Inline), Op]
         static unsafe void bitchars(ulong src, Span<char> dst, int offset)
         {
             for(var i=0; i<8; i++)
-                core.copy(bitcharP((byte)(src >> seglen*i)), dst, offset + seglen*i,  seglen);
+                memory.copy(bitcharP((byte)(src >> seglen*i)), dst, offset + seglen*i,  seglen);
         }
 
         [MethodImpl(Inline), Op]
@@ -157,29 +157,29 @@ namespace Z0
         [MethodImpl(Inline), Op]
         static unsafe void bitseq(byte src, Span<byte> dst, int offset)
         {
-            core.copy(bitseqP((byte)(src >> seglen*0)), dst, offset + seglen*0, seglen);
+            memory.copy(bitseqP((byte)(src >> seglen*0)), dst, offset + seglen*0, seglen);
         }
 
         [MethodImpl(Inline), Op]
         static unsafe void bitseq(ushort src, Span<byte> dst, int offset)
         {
             ref var target = ref first(dst);
-            core.copy(bitseqP((byte)(src >> seglen*0)), dst, offset + seglen*0, seglen);
-            core.copy(bitseqP((byte)(src >> seglen*1)), dst, offset + seglen*1, seglen);
+            memory.copy(bitseqP((byte)(src >> seglen*0)), dst, offset + seglen*0, seglen);
+            memory.copy(bitseqP((byte)(src >> seglen*1)), dst, offset + seglen*1, seglen);
         }
 
         [MethodImpl(Inline), Op]
         static unsafe void bitseq(uint src, Span<byte> dst, int offset)
         {
             for(var i=0; i<4; i++)
-                core.copy(bitseqP((byte)(src >> seglen*i)), dst, offset + seglen*i, seglen);
+                memory.copy(bitseqP((byte)(src >> seglen*i)), dst, offset + seglen*i, seglen);
         }
 
         [MethodImpl(Inline), Op]
         static unsafe void bitseq(ulong src, Span<byte> dst, int offset)
         {
             for(var i=0; i<8; i++)
-                core.copy(bitseqP((byte)(src >> seglen*i)), dst, offset + seglen*i, seglen);
+                memory.copy(bitseqP((byte)(src >> seglen*i)), dst, offset + seglen*i, seglen);
         }
 
         [MethodImpl(Inline), Op]

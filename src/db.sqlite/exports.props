@@ -1,5 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <DbSqlite>$(MsBuildThisFileDirectory)z0.db.sqlite.csproj</DbSqlite>
-  </PropertyGroup>
-</Project>

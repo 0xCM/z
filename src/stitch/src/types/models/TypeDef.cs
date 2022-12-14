@@ -8,6 +8,7 @@ namespace Z0
     {
         
     }
+
     public class TypeDef : IType, IEquatable<TypeDef>
     {
         public Identifier Name {get;}

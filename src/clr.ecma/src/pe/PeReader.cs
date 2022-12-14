@@ -12,13 +12,21 @@ namespace Z0
 
     public partial class PeReader : IDisposable
     {
+        public static void modules(IDbArchive src, Action<CoffModule> dst)
+        {
+            iter(src.Enumerate(true, FileKind.Exe, FileKind.Dll, FileKind.Obj, FileKind.Lib), path => {                
+                using var reader = PeReader.create(path);
+                dst(reader.ModuleInfo());
+            }, true);
+        }
+
         public static EcmaRowIndex index(in PeStream state, Handle handle)
             => new EcmaToken(state.Reader.GetToken(handle));
 
         [MethodImpl(Inline), Op]
-        public static PeDirInfo directory(Address32 rva, uint size)
+        public static PeDirectory directory(Address32 rva, uint size)
         {
-            var dst = new PeDirInfo();
+            var dst = new PeDirectory();
             dst.Rva = rva;
             dst.Size = size;
             return dst;
@@ -142,8 +150,30 @@ namespace Z0
             return dst;
         }
 
-        public FileModuleInfo Describe()
-            => new FileModuleInfo(ReadPeInfo(PE), ReadCoffInfo(PE), CorHeader, headers(PE));
+        public static CorHeaderInfo? cor(PEHeaders src)
+        {
+            var cor = src.CorHeader;
+            var dst = default(CorHeaderInfo);
+            if(cor != null)
+            {
+                dst = new();
+                dst.MajorRuntimeVersion = cor.MajorRuntimeVersion;
+                dst.MinorRuntimeVersion = cor.MinorRuntimeVersion;
+                dst.MetadataDirectory = cor.MetadataDirectory;
+                dst.Flags = cor.Flags;
+                dst.EntryPointTokenOrRelativeVirtualAddress = cor.EntryPointTokenOrRelativeVirtualAddress;
+                dst.ResourcesDirectory = cor.ResourcesDirectory;
+                dst.StrongNameSignatureDirectory = cor.StrongNameSignatureDirectory;
+                dst.CodeManagerTableDirectory = cor.CodeManagerTableDirectory;
+                dst.VtableFixupsDirectory = cor.VtableFixupsDirectory;
+                dst.ExportAddressTableJumpsDirectory = cor.ExportAddressTableJumpsDirectory;
+                dst.ManagedNativeHeaderDirectory = cor.ManagedNativeHeaderDirectory;
+            }
+            return dst;
+        }
+
+        public CoffModule ModuleInfo()
+            => new CoffModule(Source, ReadPeInfo(PE), ReadCoffInfo(PE), cor(PE.PEHeaders), headers(PE));
 
         public PEHeaders PeHeaders
         {
@@ -151,7 +181,7 @@ namespace Z0
             get => PE.PEHeaders;
         }
 
-        public CorHeader CorHeader
+        public CorHeader? CorHeader
         {
             [MethodImpl(Inline)]
             get => PeHeaders.CorHeader;
@@ -160,29 +190,11 @@ namespace Z0
         public ReadOnlySpan<MemberReferenceHandle> MemberRefHandles
             => MD.MemberReferences.ToArray();
 
-        public DirectoryEntry ResourcesDirectory
-            => CorHeader.ResourcesDirectory;
+        public PeDirectory ResourcesDirectory
+            => PeHeaders.CorHeader.ResourcesDirectory;
 
-        public DirectoryEntry CodeManagerTableDirectory
-            => CorHeader.CodeManagerTableDirectory;
-
-        public DirectoryEntry ExportAddressTableJumpsDirectory
-            => CorHeader.ExportAddressTableJumpsDirectory;
-
-        public CorFlags Flags
-            => CorHeader.Flags;
-
-        public DirectoryEntry ManagedNativeHeaderDirectory
-            => CorHeader.ManagedNativeHeaderDirectory;
-
-        public DirectoryEntry MetadataDirectory
-            => CorHeader.MetadataDirectory;
-
-        public DirectoryEntry VtableFixupsDirectory
-            => CorHeader.VtableFixupsDirectory;
-
-        public PEMemoryBlock ReadSectionData(DirectoryEntry src)
-            => PE.GetSectionData(src.RelativeVirtualAddress);
+        public PEMemoryBlock ReadSectionData(PeDirectory src)
+            => PE.GetSectionData((int)src.Rva);
 
         /// <summary>
         /// Determines whether the source image is r2r
@@ -195,17 +207,17 @@ namespace Z0
             if (PeHeaders == null)
                 return false;
 
-            if (CorHeader == null)
+            if (PeHeaders.CorHeader == null)
                 return false;
 
-            if ((CorHeader.Flags & CorFlags.ILLibrary) == 0)
+            if ((PeHeaders.CorHeader.Flags & CorFlags.ILLibrary) == 0)
             {
                 // This is likely a composite image, but those can't be re-r2r'd
                 return false;
             }
             else
             {
-                return CorHeader.ManagedNativeHeaderDirectory.Size != 0;
+                return PeHeaders.CorHeader.ManagedNativeHeaderDirectory.Size != 0;
             }
         }
     }

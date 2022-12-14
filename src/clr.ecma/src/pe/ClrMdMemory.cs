@@ -61,12 +61,6 @@ namespace Z0
             get => PE.PEHeaders;
         }
 
-        public CorHeader CorHeader
-        {
-            [MethodImpl(Inline)]
-            get => PeHeaders.CorHeader;
-        }
-
         [MethodImpl(Inline)]
         public PEMemoryBlock SectionData(DirectoryEntry src)
             => PE.GetSectionData(src.RelativeVirtualAddress);
