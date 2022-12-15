@@ -6,17 +6,17 @@ namespace Z0
 {
     using static sys;
 
-    public class SettingLookup<K,V> : ILookup<K,V>
+    public class SettingStore<K,V> : ILookup<K,V>
         where K : unmanaged, IExpr, IDataType<K>
     {
         readonly Dictionary<K,V> Data;
 
-        public SettingLookup()
+        public SettingStore()
         {
             Data = dict<K,V>();
         }
 
-        public SettingLookup(Setting<K,V>[] data)
+        public SettingStore(Setting<K,V>[] data)
         {
             var dst = dict<K,V>();
             iter(data, s => dst.TryAdd(s.Name,s.Value));
@@ -42,6 +42,6 @@ namespace Z0
 
         public ICollection<V> Values => Data.Values;
 
-        public static SettingLookup<K,V> Empty => new SettingLookup<K,V>();
+        public static SettingStore<K,V> Empty => new SettingStore<K,V>();
     }
 }

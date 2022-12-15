@@ -8,7 +8,7 @@ namespace Z0
 
     public struct Cell32 : IDataCell<Cell32,W32,uint>
     {
-        public const uint Width = 32;
+        public const uint Size = 4;
 
         readonly uint Data;
 
@@ -23,34 +23,21 @@ namespace Z0
         public CellKind Kind
             => CellKind.Cell32;
 
-        public Span<byte> Bytes
+        public uint Deposit(Span<byte> dst)
         {
-            [MethodImpl(Inline)]
-            get => bytes(this);
+            u32(dst) = Data;
+            return Size;
         }
 
-        public ref Cell16 Lo
-        {
-            [MethodImpl(Inline)]
-            get => ref @as<Cell16>(Bytes);
-        }
-
-        public ref Cell16 Hi
-        {
-            [MethodImpl(Inline)]
-            get => ref seek(@as<Cell16>(Bytes),1);
-        }
+        public T Convert<T>()
+            where T : unmanaged
+                => @as<uint,T>(Data);
 
         public Cell32 Zero
         {
             [MethodImpl(Inline)]
             get => Empty;
         }
-
-        [MethodImpl(Inline)]
-        public ref T As<T>()
-            where T : unmanaged
-              => ref @as<T>(Bytes);
 
         [MethodImpl(Inline)]
         public bool Equals(Cell32 src)

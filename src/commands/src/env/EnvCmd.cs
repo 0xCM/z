@@ -30,7 +30,7 @@ namespace Z0
 
         [CmdOp("env/tools")]
         void EnvTools()
-            => Z0.EnvTools.emit(Channel, Z0.EnvTools.Service.Known, ShellData);
+            => Z0.Tools.emit(Channel, Tools.Service.Known, ShellData);
 
         [CmdOp("env/stack")]
         void Stack()
@@ -156,18 +156,18 @@ namespace Z0
             {
                 var workspaces = cd.Files(FS.ext("code-workspace"));
                 if(workspaces.IsNonEmpty)
-                    DevTools.vscode(Channel, cd + workspaces[0].FileName);
+                    Tools.vscode(Channel, cd + workspaces[0].FileName);
                 else
-                    DevTools.vscode(Channel, cd); 
+                    Tools.vscode(Channel, cd); 
             }
         }
 
         [CmdOp("devenv")]
         void DevEnv(CmdArgs args)
-            => DevTools.devenv(Channel, args[0].Value);
+            => Tools.devenv(Channel, args[0].Value);
 
         [CmdOp("vscode")]
         void VsCode(CmdArgs args)
-            => DevTools.vscode(Channel, args[0].Value);
+            => Tools.vscode(Channel, args[0].Value);
     }
 }

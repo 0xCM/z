@@ -5,7 +5,7 @@
 namespace Z0
 {
     using Windows;
-    using Commands;
+    using Types;
 
     using static sys;
 
@@ -35,7 +35,7 @@ namespace Z0
         {
             var generator = Wf.CsvTableGen();
             var buffer = text.emitter();
-            var src = ApiMd.Parts;
+            var src = ApiAssemblies.Parts;
             var defs = TableDefs.defs(src);
             iter(defs, src => generator.Emit(0u,src,buffer));
             var dst = AppDb.CgStage("api.tables").Path("replicants", FileKind.Cs);
@@ -44,15 +44,15 @@ namespace Z0
 
         [CmdOp("api/emit")]
         void ApiEmit()
-            => ApiMd.Emitter(AppDb.ApiTargets()).Emit(ApiMd.parts());
+            => ApiMd.Emitter(AppDb.ApiTargets()).Emit(ApiAssemblies.Parts);
 
         [CmdOp("api/types")]
         void EmitApiTypes()
-            => ApiMd.Emitter(AppDb.ApiTargets()).EmitApiTypes(ApiMd.parts());
+            => ApiMd.Emitter(AppDb.ApiTargets()).EmitApiTypes(ApiAssemblies.Parts);
 
         [CmdOp("api/tables")]
         void EmitApiTables()
-            => ApiMd.Emitter(AppDb.ApiTargets()).EmitApiTables(ApiMd.parts());
+            => ApiMd.Emitter(AppDb.ApiTargets()).EmitApiTables(ApiAssemblies.Parts);
 
         [CmdOp("version")]
         void Version()
@@ -61,7 +61,7 @@ namespace Z0
         [CmdOp("types/systems")]
         void TypeSys()
         {
-            var src = TypeSystems.api.typedefs(ApiMd.Parts);
+            var src = TypeSystems.typedefs(ApiAssemblies.Parts);
             iter(src, s => {
                 Channel.Row(s);
             });
@@ -89,7 +89,7 @@ namespace Z0
         [CmdOp("tokens/types")]
         void TokenTypes()
         {
-            var types = Tokens.types(ApiMd.Parts);
+            var types = Tokens.types(ApiAssemblies.Parts);
             ApiMd.Emitter(Archives.archive(Env.cd() + FS.folder(".data"))).EmitTypeList(types, FS.file("tokens.types", FileKind.List));
         }
 
@@ -183,8 +183,7 @@ namespace Z0
         [CmdOp("services")]
         void GetServices()
         {
-            var src = ApiMd.parts();
-            Write(ApiRuntime.services(src));
+            Write(ApiRuntime.services(ApiAssemblies.Parts));
         }
 
         [CmdOp("archives/register")]

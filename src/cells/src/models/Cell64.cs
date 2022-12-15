@@ -8,7 +8,7 @@ namespace Z0
 
     public struct Cell64 : IDataCell<Cell64,W64,ulong>
     {
-        public const uint Width = 64;
+        public const uint Size = 8;
 
         readonly ulong Data;
 
@@ -22,6 +22,16 @@ namespace Z0
 
         public CellKind Kind
             => CellKind.Cell64;
+
+        public uint Deposit(Span<byte> dst)
+        {
+            u64(dst) = Data;
+            return Size;
+        }
+
+        public T Convert<T>()
+            where T : unmanaged
+                => @as<ulong,T>(Data);
 
         public Cell64 Zero
         {

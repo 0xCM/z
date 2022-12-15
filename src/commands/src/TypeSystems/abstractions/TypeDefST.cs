@@ -2,7 +2,7 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace TypeSystems
+namespace Z0.Types
 {
     public abstract class TypeDef<R,T> : TypeDef<T>, IType<R,T>
         where R : TypeDef<R,T>, new()

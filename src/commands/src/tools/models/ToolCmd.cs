@@ -7,7 +7,7 @@ namespace Z0
     /// <summary>
     /// Defines a tool execution specification
     /// </summary>
-    public class ToolCmdSpec : IToolCmd
+    public record class ToolCmd : IToolCmd
     {
         public readonly Tool Tool;
 
@@ -18,7 +18,7 @@ namespace Z0
         public readonly CmdId CmdId;
 
         [MethodImpl(Inline)]
-        public ToolCmdSpec(Tool tool, string type, params ToolCmdArg[] args)
+        public ToolCmd(Tool tool, string type, params ToolCmdArg[] args)
         {            
             Tool = tool;
             Type = type;
@@ -41,10 +41,10 @@ namespace Z0
         public override string ToString()
             => Format();
 
-        public static ToolCmdSpec Empty
+        public static ToolCmd Empty
         {
             [MethodImpl(Inline)]
-            get => new ToolCmdSpec(Actor.Empty, EmptyString);
+            get => new ToolCmd(Actor.Empty, EmptyString);
         }
 
         ToolCmdArgs IToolCmd.Args

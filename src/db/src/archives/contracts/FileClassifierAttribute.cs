@@ -4,15 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static ApiAtomic;
-
-    sealed class Toolbase : Toolset<Toolbase>
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
+    public class FileClassifierAttribute : Attribute
     {
-        public Toolbase()   
-            : base(toolbase)
-        {
 
-
-        }
     }
 }

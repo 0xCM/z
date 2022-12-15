@@ -11,10 +11,10 @@ namespace Z0
     partial class EcmaEmitter
     {
         public void EmitMemberRefs(IApiPack dst)
-            => iter(ApiMd.Parts, c => EmitMemberRefs(c,dst), PllExec);
+            => iter(ApiAssemblies.Parts, c => EmitMemberRefs(c,dst), PllExec);
 
         public void EmitMemberRefs(IDbArchive dst)
-            => iter(ApiMd.Parts, c => EmitMemberRefs(c,dst), PllExec);
+            => iter(ApiAssemblies.Parts, c => EmitMemberRefs(c,dst), PllExec);
 
         public void EmitMemberRefs(ReadOnlySeq<Assembly> src, IDbArchive dst)
             => iter(src, a => EmitMemberRefs(a,dst), PllExec);

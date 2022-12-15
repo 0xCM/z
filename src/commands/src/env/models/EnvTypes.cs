@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using TypeSystems;
+    using Types;
 
     [TypeSystem(SystemName)]
-    public class EnvTypes : TypeSystems.TypeSystem<EnvTypes>
+    public class EnvTypes : TypeSystem<EnvTypes>
     {
         public const string SystemName = "env";
 
@@ -17,14 +17,6 @@ namespace Z0
 
         }
 
-        [TypeDef(SystemName,TypeName)]
-        public sealed class Uri : TypeDef<Uri,FileUri,@string>
-        {
-            public const string TypeName = "uri";
-
-            public override FileUri Value(@string args)
-                => new (args);            
-        }
 
         [TypeDef(SystemName,TypeName)]
         public sealed class File : TypeDef<File,FilePath,@string>

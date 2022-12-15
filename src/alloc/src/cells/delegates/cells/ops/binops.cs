@@ -15,7 +15,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static BinaryOp8 binop<T>(Func<T,T,T> f, W8 dst)
             where T : unmanaged
-                => (Cell8 a, Cell8 b) => cell8(f(a.As<T>(),b.As<T>()));
+                => (Cell8 a, Cell8 b) => cell8(f(a.Convert<T>(), b.Convert<T>()));
 
         /// <summary>
         /// Creates a fixed 16-bit binary operator from caller-supplied delegate
@@ -24,7 +24,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static BinaryOp16 binop<T>(Func<T,T,T> f, W16 dst)
             where T : unmanaged
-                => (Cell16 a, Cell16 b) => cell16(f(a.As<T>(),b.As<T>()));
+                => (Cell16 a, Cell16 b) => cell16(f(a.Convert<T>(), b.Convert<T>()));
 
         /// <summary>
         /// Creates a fixed 32-bit binary operator from caller-supplied delegate
@@ -33,7 +33,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static BinaryOp32 binop<T>(Func<T,T,T> f, W32 dst)
             where T : unmanaged
-                => (Cell32 a, Cell32 b) => cell32(f(a.As<T>(),b.As<T>()));
+                => (Cell32 a, Cell32 b) => cell32(f(a.Convert<T>(), b.Convert<T>()));
 
         /// <summary>
         /// Creates a fixed 64-bit binary operator from caller-supplied delegate
@@ -42,7 +42,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static BinaryOp64 binop<T>(Func<T,T,T> f, W64 dst)
             where T : unmanaged
-                => (Cell64 a, Cell64 b) => cell64(f(sys.@as<T>(a), sys.@as<T>(b)));
+                => (Cell64 a, Cell64 b) => cell64(f(a.Convert<T>(), b.Convert<T>()));
 
         [MethodImpl(NotInline), Op]
         public static BinaryOp1 binop(BinaryOp<bit> f)

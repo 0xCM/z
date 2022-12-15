@@ -7,9 +7,9 @@ namespace Z0
     partial struct FS
     {
         public static FileKind kind(FileExt src)
-            => FileTypes.kind(src);
+            => FileKinds.kind(src);
 
         public static FileKind kind(FilePath src)
-            => FileTypes.kind(src);
+            => FileKinds.kind(src);
     }
 }

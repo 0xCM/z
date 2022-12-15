@@ -12,10 +12,10 @@ namespace Z0
         public static Outcome parse(string src, out AsmOcValue dst)
         {
             var storage = Cells.alloc(w32);
-            var result = Hex.parse(src, storage.Bytes);
+            var result = Hex.parse(src, bytes(storage));
             dst = AsmOcValue.Empty;
             if(result)
-                dst = new AsmOcValue(slice(storage.Bytes,0, result.Data));
+                dst = new AsmOcValue(slice(bytes(storage),0, result.Data));
             return result;
         }
 

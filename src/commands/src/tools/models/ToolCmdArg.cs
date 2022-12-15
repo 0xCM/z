@@ -8,27 +8,27 @@ namespace Z0
 
     public readonly record struct ToolCmdArg
     {
-        public readonly string Name;
+        public readonly @string Name;
 
-        public readonly string Value;
+        public readonly EnvExpr Value;
 
         [MethodImpl(Inline)]
-        public ToolCmdArg(string name, string value)
+        public ToolCmdArg(string name, EnvExpr expr)
         {
             Name = name;
-            Value = value;
+            Value = expr;
         }
 
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => empty(Value);
+            get => Value.IsEmpty;
         }
 
         public bool IsNonEmpty
         {
             [MethodImpl(Inline)]
-            get => nonempty(Value);
+            get => Value.IsNonEmpty;
         }
 
         [MethodImpl(Inline)]
@@ -49,7 +49,7 @@ namespace Z0
         public static ToolCmdArg Empty
         {
             [MethodImpl(Inline)]
-            get => new ToolCmdArg(EmptyString, EmptyString);
+            get => new ToolCmdArg(EmptyString, EnvExpr.Empty);
         }
     }
 }

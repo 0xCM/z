@@ -10,7 +10,7 @@ namespace Z0
     partial class EcmaEmitter
     {
         public void EmitApiMetadump(IDbArchive dst)
-            => EmitMetadump(ApiMd.Parts, dst.Metadata("metadump"));
+            => EmitMetadump(ApiAssemblies.Parts, dst.Metadata("metadump"));
 
         public void EmitMetadumps(FolderPath f, bool recurse, IDbArchive dst)
             => EmitMetadumps(Channel, Archives.modules(f, recurse), dst); 

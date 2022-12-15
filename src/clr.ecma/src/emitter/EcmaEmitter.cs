@@ -12,7 +12,7 @@ namespace Z0
                 
         public void Emit(IApiCatalog src, EcmaEmissionSettings options, IApiPack dst)
         {
-            var parts = ApiMd.parts();
+            var parts = ApiAssemblies.Parts;
             if(options.EmitAssemblyRefs)
                 EmitAssemblyRefs(parts, dst);
 

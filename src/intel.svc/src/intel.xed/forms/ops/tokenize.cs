@@ -6,7 +6,6 @@
 namespace Z0
 {
     using static sys;
-    using static XedModels;
 
     using TK = XedForms.FormTokenKind;
 
@@ -14,11 +13,10 @@ namespace Z0
     {
         public static FormSyntax tokenize(InstForm src)
         {
-            var dst = FormSyntax.Empty;
             var parts = src.Format().Split(Chars.Underscore);
             var count = parts.Length;
             if(count == 0)
-                return dst;
+                return FormSyntax.Empty;
 
             var k=0u;
             var j=0u;
@@ -47,12 +45,8 @@ namespace Z0
                     seek(tokens, k++) = @class;
             }
 
-            for(var i=k; i<count; i++, j++)
-            {
-                ref readonly var part = ref skip(parts,j);
-            }
 
-            return dst;
+            return new FormSyntax(tokens);
         }
     }
 }

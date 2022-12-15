@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public enum XedRecord : byte
+    public enum XedRecordType : byte
     {
         InstPattern,
 

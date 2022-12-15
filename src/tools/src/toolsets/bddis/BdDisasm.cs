@@ -8,7 +8,8 @@ namespace Z0
 
     using N = ToolNames;
 
-    partial class Tools
+    [ApiHost]
+    public sealed class BdDisasm : Tool<BdDisasm>
     {
         [Op]
         public static uint render(Bitness src, ref uint i, Span<char> dst)
@@ -76,19 +77,17 @@ namespace Z0
             return i - i0;
         }
 
-        public sealed class BdDisasm : Tool<BdDisasm>
+        public BdDisasm()
+            : base(N.bddisasm)
         {
-            public BdDisasm()
-                : base(N.bddisasm)
-            {
 
-            }
-
-            public string Format()
-                => Name.Format();
-
-            public override string ToString()
-                => Format();
         }
+
+        public string Format()
+            => Name.Format();
+
+        public override string ToString()
+            => Format();
     }
+
 }

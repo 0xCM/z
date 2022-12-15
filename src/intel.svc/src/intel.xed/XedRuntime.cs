@@ -11,7 +11,7 @@ namespace Z0
     using static XedModels;
     using static XedImport;
 
-    using I = XedRecord;
+    using I = XedRecordType;
 
     public partial class XedRuntime : WfSvc<XedRuntime>
     {

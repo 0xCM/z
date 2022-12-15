@@ -2,11 +2,9 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace TypeSystems
+namespace Z0.Types
 {
-    using static sys;
-
-    public partial class api
+    public partial class TypeSystems
     {        
         public static ReadOnlySeq<TypeDef> typedefs(params Assembly[] src)
             => from type in src.Types().Tagged<TypeDefAttribute>().Concrete()

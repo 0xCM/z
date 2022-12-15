@@ -26,11 +26,6 @@ namespace Z0
                 => new Cell<T>(key,value);
 
         [MethodImpl(Inline)]
-        public static Value<T> value<T>(T data)
-            where T : unmanaged
-                => new Value<T>(data);
-
-        [MethodImpl(Inline)]
         public static GridCell cell(in RuleCell src)
             => new GridCell(src.Key, ColType.field(src.Field), src.Size, src.Value);
 

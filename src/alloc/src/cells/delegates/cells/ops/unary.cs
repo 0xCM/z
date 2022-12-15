@@ -14,7 +14,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static UnaryOp8 unary<T>(W8 w, Func<T,T> f)
             where T : unmanaged
-                => (Cell8 a) => Cells.cell8(f(a.As<T>()));
+                => (Cell8 a) => Cells.cell8(f(a.Convert<T>()));
 
         /// <summary>
         /// Creates a binary cell operator determined by a source delegate and specified cell width
@@ -24,7 +24,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static UnaryOp16 unary<T>(W16 w, Func<T,T> f)
             where T : unmanaged
-                => (Cell16 a) => Cells.cell16(f(a.As<T>()));
+                => (Cell16 a) => Cells.cell16(f(a.Convert<T>()));
 
         /// <summary>
         /// Creates a binary cell operator determined by a source delegate and specified cell width
@@ -34,7 +34,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static UnaryOp32 unary<T>(W32 w, Func<T,T> f)
             where T : unmanaged
-                => (Cell32 a) => Cells.cell32(f(a.As<T>()));
+                => (Cell32 a) => Cells.cell32(f(a.Convert<T>()));
 
         /// <summary>
         /// Creates a binary cell operator determined by a source delegate and specified cell width
@@ -44,7 +44,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static UnaryOp64 unary<T>(W64 w, Func<T,T> f)
             where T : unmanaged
-                => (Cell64 a) => Cells.cell64(f(sys.@as<T>(a)));
+                => (Cell64 a) => Cells.cell64(f(a.Convert<T>()));
 
         [MethodImpl(NotInline), Op]
         public static UnaryOp1 unary(UnaryOp<bit> f)

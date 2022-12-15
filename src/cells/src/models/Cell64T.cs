@@ -9,9 +9,20 @@ namespace Z0
     public struct Cell64<T> : IDataCell<Cell64<T>,W64,T>
         where T : unmanaged
     {
-        public const uint Width = 64;
+        public const uint Size = 8;
 
         T Data;
+
+        public uint Deposit(Span<byte> dst)
+        {
+            u64(dst) = u64(Data);
+            return Size;
+        }
+
+        [MethodImpl(Inline)]
+        public X Convert<X>()
+            where X : unmanaged
+                => @as<T,X>(Data);
 
         public ulong Content
         {
@@ -48,10 +59,6 @@ namespace Z0
             get => Empty;
         }
 
-        [MethodImpl(Inline)]
-        public X As<X>()
-            where X : struct
-                => Numeric.force<X>(Content);
 
         [MethodImpl(Inline)]
         public bool Equals(ulong src)

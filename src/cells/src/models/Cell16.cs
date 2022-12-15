@@ -8,7 +8,7 @@ namespace Z0
 
     public struct Cell16 : IDataCell<Cell16,W16,ushort>
     {
-        public const uint Width = 16;
+        public const uint Size = 2;
 
         readonly ushort Data;
 
@@ -23,28 +23,20 @@ namespace Z0
         public CellKind Kind
             => CellKind.Cell16;
 
+        public uint Deposit(Span<byte> dst)
+        {
+            u16(dst) = Data;
+            return Size;
+        }
+
+        public T Convert<T>()
+            where T : unmanaged
+                => @as<ushort,T>(Data);
+
         public ushort Content
         {
             [MethodImpl(Inline)]
             get => Data;
-        }
-
-        public Span<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => bytes(this);
-        }
-
-        public ref Cell8 Lo
-        {
-            [MethodImpl(Inline)]
-            get => ref @as<Cell8>(Bytes);
-        }
-
-        public ref Cell8 Hi
-        {
-            [MethodImpl(Inline)]
-            get => ref seek(@as<Cell8>(Bytes),1);
         }
 
         public Cell16 Zero
@@ -52,11 +44,6 @@ namespace Z0
             [MethodImpl(Inline)]
             get => Empty;
         }
-
-        [MethodImpl(Inline)]
-        public ref T As<T>()
-            where T : unmanaged
-              => ref @as<T>(Bytes);
 
         [MethodImpl(Inline)]
         public bool Equals(Cell16 src)

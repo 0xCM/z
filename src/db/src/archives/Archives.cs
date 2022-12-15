@@ -14,6 +14,9 @@ namespace Z0
 
     public class Archives : ApiModule<Archives>
     {        
+        public static BuildArchive build(FolderPath root)
+            => new BuildArchive(archive(root));
+            
         public static void nupkg(IWfChannel channel, CmdArgs args)
         {
             var src = FS.dir(args[0]);

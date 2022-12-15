@@ -114,10 +114,10 @@ namespace Z0
             => (this + FS.folder(scope)).Files(recurse).Where(f => f.Is(kind));
 
         public Files Files(string scope, bool recurse, params FileKind[] kinds)
-            => (this + FS.folder(scope)).Files(recurse).Where(f => FileTypes.@is(f,kinds));
+            => (this + FS.folder(scope)).Files(recurse).Where(f => FileKinds.@is(f,kinds));
 
         public Files Files(bool recurse, params FileKind[] kinds)
-            => Files(true).Where(f => FileTypes.@is(f,kinds));
+            => Files(true).Where(f => FileKinds.@is(f,kinds));
 
         public Files Files(bool recurse)
             => Exists ? Directory.EnumerateFiles(Name, SearchAll, option(recurse)).Map(FS.path) : Z0.Files.Empty;

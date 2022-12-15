@@ -7,7 +7,7 @@ namespace Z0
 {    
     using static sys;
 
-    public class FileTypes
+    public class FileKinds
     {
         public static bool @is(FilePath src, params FileKind[] kinds)
             => kinds.Where(x => src.Is(x)).Length != 0;
@@ -47,7 +47,7 @@ namespace Z0
         public static string format(FileKind src)
             => Symbols.index<FileKind>()[src].Expr.Format();
 
-        static FileTypes()
+        static FileKinds()
         {
             Data = Symbols.index<FileKind>().View.Map(s => ("." + s.Expr.Format().ToLower(), s.Kind)).ToSortedDictionary(TextLengthComparer.create(true));
         }
@@ -58,19 +58,19 @@ namespace Z0
     public static class XFiles
     {
         public static FileExt Ext(this FileKind src)
-            => FileTypes.ext(src);
+            => FileKinds.ext(src);
 
         public static string Format(this FileKind src)
-            => FileTypes.format(src);
+            => FileKinds.format(src);
 
         public static FileKind FileKind(this FileExt src)
-            => FileTypes.kind(src);
+            => FileKinds.kind(src);
 
         public static FileKind FileKind(this FileName src)
-            => FileTypes.kind(src.Ext);
+            => FileKinds.kind(src.Ext);
 
         public static FileKind FileKind(this FilePath src)
-            => FileTypes.kind(src. FileName.Ext);
+            => FileKinds.kind(src. FileName.Ext);
 
         public static string SrcId(this FilePath src, params FileKind[] kinds)
             => src.FileName.SrcId(kinds);

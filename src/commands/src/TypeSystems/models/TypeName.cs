@@ -2,7 +2,7 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace TypeSystems
+namespace Z0.Types
 {
     public readonly record struct TypeName : IDataType<TypeName>, IDataString<TypeName>
     {

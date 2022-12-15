@@ -17,7 +17,7 @@ namespace Z0
             for(var i=0u; i<src.Count; i++)
             {
                 ref readonly var path = ref src[i];
-                var file = new FileRef(i, docid(path), FileTypes.kind(path), path);
+                var file = new FileRef(i, docid(path), FileKinds.kind(path), path);
                 dst.IdMap.Include(dst.PathMap.Include(file, _ => file.DocId), file);
                 dst.PathRefs.Include(path, file);
             }

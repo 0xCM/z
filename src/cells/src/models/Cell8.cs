@@ -8,7 +8,7 @@ namespace Z0
 
     public struct Cell8 : IDataCell<Cell8,W8,byte>
     {
-        public const uint Width = 8;
+        public const uint Size = 1;
 
         readonly byte Data;
 
@@ -23,11 +23,15 @@ namespace Z0
         public CellKind Kind
             => CellKind.Cell8;
 
-        public Span<byte> Bytes
+        public uint Deposit(Span<byte> dst)
         {
-            [MethodImpl(Inline)]
-            get => bytes(this);
+            first(dst) = Data;
+            return Size;
         }
+
+        public T Convert<T>()
+            where T : unmanaged
+                => @as<byte,T>(Data);
 
         public byte Content
         {
@@ -41,10 +45,6 @@ namespace Z0
             get => Empty;
         }
 
-        [MethodImpl(Inline)]
-        public ref T As<T>()
-            where T : unmanaged
-              => ref @as<T>(Bytes);
 
         [MethodImpl(Inline)]
         public bool Equals(Cell8 src)

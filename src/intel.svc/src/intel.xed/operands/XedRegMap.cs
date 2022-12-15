@@ -88,12 +88,12 @@ namespace Z0
 
         Index<RegMapEntry> XLUData;
 
-        internal XedRegMap(ConstLookup<XedRegId,RegOp> rlu, ConstLookup<RegKind,XedRegId> xlu)
+        XedRegMap(ConstLookup<XedRegId,RegOp> rlu, ConstLookup<RegKind,XedRegId> xlu)
         {
             RLU = rlu;
             XLU = xlu;
-            RLUData = core.map(rlu.Entries, x => entry(x.Key, x.Value));
-            XLUData = core.map(xlu.Entries, x => entry(x.Value, x.Key));
+            RLUData = sys.map(rlu.Entries, x => entry(x.Key, x.Value));
+            XLUData = sys.map(xlu.Entries, x => entry(x.Value, x.Key));
         }
 
         public RegOp Map(XedRegId src)

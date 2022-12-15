@@ -15,7 +15,7 @@ namespace Z0
         }
 
         public void EmitAssemblyRefs(IApiPack dst)
-            => EmitAssemblyRefs(ApiMd.Parts, dst);
+            => EmitAssemblyRefs(ApiAssemblies.Parts, dst);
 
         // public void EmitAssemblyRefs(IDbArchive dst)
         //     => EmitAssemblyRefs(ApiMd.Parts, dst);

@@ -6,7 +6,7 @@ namespace Z0
 {
     using static XedRules;
     using static XedModels;
-    using static core;
+    using static sys;
 
     public partial class XedImport : WfSvc<XedImport>
     {

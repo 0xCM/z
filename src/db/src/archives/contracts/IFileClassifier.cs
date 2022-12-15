@@ -4,9 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IKindedArchive<K> : IFileArchive
-        where K : IFileKind<K>, new()
+    public interface IFileClassifier
     {
-        IEnumerable<FileUri> Files(K kind);
+        ReadOnlySeq<IFileType> SupportedTypes {get;}
+
+        bool Clasify(FileUri src, out IFileType dst);
+
+        void Classify(IEnumerable<FileUri> src, Action<FileUri, bool, IFileType> dst);
     }
 }

@@ -4,10 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IFileType : IKinded
+    public interface IFileType : IExpr
     {
-        Identifier Name {get;}
+        asci16 Name {get;}
 
+        FileExt DefaultExt {get;}
         bool INullity.IsEmpty
             => Name.IsEmpty;
 
@@ -16,17 +17,12 @@ namespace Z0
 
         string IExpr.Format()
             => Name;
-
-        Index<FileExt> DefaultExtensions {get;}
-
-        FileExt PrimaryExtension
-            => DefaultExtensions.IsNonEmpty ?  DefaultExtensions.First : FileExt.Empty;
     }
 
-    public interface IFileType<K> : IKinded<K>
-        where K : unmanaged
+    public interface IFileType<T> : IFileType
+        where T : IFileType<T>, new()
+
     {
-
-
+        
     }
 }

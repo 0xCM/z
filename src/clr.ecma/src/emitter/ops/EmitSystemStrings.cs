@@ -9,7 +9,7 @@ namespace Z0
     partial class EcmaEmitter
     {
         public void EmitSystemStrings(IApiPack dst)
-            => EmitSystemStrings(ApiMd.Parts, dst);
+            => EmitSystemStrings(ApiAssemblies.Parts, dst);
 
         public void EmitSystemStrings(ReadOnlySeq<Assembly> src, IApiPack dst)
             => iter(src, a => EmitSystemStrings(a, dst), true);

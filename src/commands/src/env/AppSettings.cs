@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
     using static Settings;
 
-    public sealed class AppSettings : SettingLookup<Name,string>
+    public sealed class AppSettings : SettingStore<Name,string>
     {
         const string settings = nameof(settings);
 

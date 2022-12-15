@@ -8,6 +8,6 @@ namespace Z0
     partial class XedRules
     {
         public static Pairings<InstPattern,InstSig> CalcInstSigs(Index<InstPattern> src)
-            => data(XedRecord.InstSigs, () => XedSigs.sigs(src));
+            => data(XedRecordType.InstSigs, () => XedSigs.sigs(src));
     }
 }

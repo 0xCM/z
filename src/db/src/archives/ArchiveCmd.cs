@@ -5,10 +5,6 @@
 
 namespace Z0
 {
-    using Commands;
-
-    using static sys;
-
     class ArchiveCmd : ApiService<ArchiveCmd>
     {
         [CmdOp("symlink")]
