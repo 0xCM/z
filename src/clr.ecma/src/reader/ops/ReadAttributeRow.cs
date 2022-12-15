@@ -18,6 +18,5 @@ namespace Z0
             dst.ValueOffset = HeapOffset(src.Value);
             return dst;
         }
-
     }
 }

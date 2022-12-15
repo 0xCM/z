@@ -50,9 +50,9 @@ namespace Z0
 
         public Count EmitRegions(ReadOnlySeq<ProcessMemoryRegion> src, FilePath dst)
         {
-            var flow = EmittingTable<ProcessMemoryRegion>(dst);
+            var flow = Channel.EmittingTable<ProcessMemoryRegion>(dst);
             var count = Tables.emit(src.View,dst);
-            EmittedTable(flow,count);
+            Channel.EmittedTable(flow,count);
             return count;
         }
 
@@ -99,7 +99,7 @@ namespace Z0
         public ReadOnlySpan<ProcessSegment> EmitMethodSegments(ProcAddresses src, ReadOnlySpan<ApiMemberInfo> methods, IDbArchive dst)
         {
             var count = methods.Length;
-            var flow = Running(LocatingSegments.Format(count));
+            var flow = Channel.Running(LocatingSegments.Format(count));
             var buffer = alloc<MethodSegment>(count);
             var locations = hashset<ProcessSegment>();
             var segments  = src.Segments;
@@ -111,7 +111,7 @@ namespace Z0
                 var index = src.SelectorIndex(selector);
                 if(index == NotFound)
                 {
-                    Error(SegSelectorNotFound.Format(selector));
+                    Channel.Error(SegSelectorNotFound.Format(selector));
                     break;
                 }
 
@@ -240,7 +240,7 @@ namespace Z0
         public Outcome<Index<ProcessMemoryRegion>> LoadRegions(FilePath src)
         {
             var tid = Tables.identify<ProcessMemoryRegion>();
-            var flow = Running(string.Format("Reading {0} records from {1}", tid, src.ToUri()));
+            var flow = Channel.Running(string.Format("Reading {0} records from {1}", tid, src.ToUri()));
             if(!src.Exists)
                 return (false, FS.Msg.DoesNotExist.Format(src));
             var lines = src.ReadNumberedLines();
@@ -271,7 +271,7 @@ namespace Z0
 
                 counter++;
             }
-            Ran(flow, string.Format("Read {0} {1} records from {2}", counter, tid, src.ToUri()));
+            Channel.Ran(flow, string.Format("Read {0} {1} records from {2}", counter, tid, src.ToUri()));
             return (true,buffer);
         }
     }

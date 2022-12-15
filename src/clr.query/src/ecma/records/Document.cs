@@ -7,7 +7,7 @@ namespace Z0
     partial class EcmaTables
     {
         [Record(TableId), StructLayout(LayoutKind.Sequential,Pack=1)]
-        public struct Document
+        public struct Document : IEcmaRecord<Document>
         {
             const string TableId = "documents";
 

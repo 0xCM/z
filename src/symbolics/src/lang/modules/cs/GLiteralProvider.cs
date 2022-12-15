@@ -37,11 +37,11 @@ namespace Z0
             margin -=4;
             buffer.IndentLine(margin, Close());
 
-            var emitting = EmittingFile(dst);
+            var emitting = Channel.EmittingFile(dst);
             using var writer = dst.Writer();
             writer.Write(buffer.Emit());
 
-            EmittedFile(emitting, count);
+            Channel.EmittedFile(emitting, count);
         }
     }
 }

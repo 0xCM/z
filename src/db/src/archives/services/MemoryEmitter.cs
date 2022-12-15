@@ -110,9 +110,9 @@ namespace Z0
         {
             using var file = MemoryFiles.map(src);
             var target = dst + FS.file(file.Path.FileName.Name, FS.Hex);
-            var flow = Wf.EmittingFile(target);
+            var flow = Channel.EmittingFile(target);
             emit(file.BaseAddress, file.FileSize, target);
-            EmittedFile(flow, (uint)file.FileSize);
+            Channel.EmittedFile(flow, (uint)file.FileSize);
         }
 
         public static unsafe void EmitPaged(MemoryRange src, StreamWriter dst, byte bpl = Bpl)

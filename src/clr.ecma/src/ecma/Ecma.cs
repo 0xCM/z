@@ -5,6 +5,7 @@
 namespace Z0
 {
     using Commands;
+
     using static sys;
     using static Bytes;
 
@@ -87,11 +88,9 @@ namespace Z0
                 return null;
         }
 
-        const NumericKind Closure = UnsignedInts;
-
         ApiMd ApiMd => Wf.ApiMd();
 
-        public void EmitIl(IApiPack dst)
+        public void EmitMsil(IDbArchive dst)
             => EmitMsil(ApiMd.ApiHosts, dst);
 
         MsilSvc MsilSvc => Wf.MsilSvc();
@@ -99,7 +98,7 @@ namespace Z0
         FilePath MsilPath(ApiHostUri src, IDbArchive dst)
             => dst.Path(ApiFiles.hostfile(src, FileKind.Il));
 
-        public void EmitMsil(CollectedHost src, IApiPack dst)
+        public void EmitMsil(CollectedHost src, IDbArchive dst)
         {
             ref readonly var resolved = ref src.Resolved;
             if(resolved.IsNonEmpty)
@@ -107,11 +106,11 @@ namespace Z0
                 var buffer = text.buffer();
                 for(var j=0; j<resolved.Count; j++)   
                     MsilSvc.RenderCode(resolved[j].Msil, buffer);
-                Channel.FileEmit(buffer.Emit(), resolved.Count, dst.MsilPath(src.Host), TextEncodingKind.Unicode);
+                Channel.FileEmit(buffer.Emit(), resolved.Count, MsilPath(src.Host, dst), TextEncodingKind.Unicode);
             }
         }
 
-        public void EmitMsil(ReadOnlySeq<IApiHost> src, IApiPack dst)
+        public void EmitMsil(ReadOnlySeq<IApiHost> src, IDbArchive dst)
         {
             var buffer = text.buffer();
             var k = 0u;
@@ -130,7 +129,7 @@ namespace Z0
                     k++;
                 }
 
-                var path = dst.MsilPath(host.HostUri);
+                var path = MsilPath(host.HostUri, dst);
                 Channel.FileEmit(buffer.Emit(), members.Count, path, TextEncodingKind.Unicode);
                 emitted[host.HostUri] = path;
             }

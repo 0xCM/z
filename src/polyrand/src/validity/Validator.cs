@@ -4,10 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
-    using static core;
-
     public abstract class Validator<T> : AppService<T>
         where T : Validator<T>, new()
     {

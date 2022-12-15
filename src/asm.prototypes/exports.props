@@ -1,5 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <AsmPrototypes>$(MsBuildThisFileDirectory)z0.asm.prototypes.csproj</AsmPrototypes>
-  </PropertyGroup>
-</Project>

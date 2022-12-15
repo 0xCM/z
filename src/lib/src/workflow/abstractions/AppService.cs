@@ -36,7 +36,6 @@ namespace Z0
 
         Files _Files;
 
-
         protected Files Files()
             => _Files;
 

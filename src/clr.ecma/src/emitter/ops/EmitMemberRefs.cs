@@ -22,13 +22,13 @@ namespace Z0
         public void EmitMemberRefs(Assembly src, IApiPack dst)
         {
             using var reader = PeReader.create(FS.path(src.Location));
-            TableEmit(reader.ReadMemberRefs(), dst.Metadata(MemberRefs).Table<MemberRef>(src.GetSimpleName()));
+            Channel.TableEmit(reader.ReadMemberRefs(), dst.Metadata(MemberRefs).Table<MemberRef>(src.GetSimpleName()));
         }
 
         public void EmitMemberRefs(Assembly src, IDbArchive dst)
         {
             using var reader = PeReader.create(FS.path(src.Location));
-            TableEmit(reader.ReadMemberRefs(), dst.Table<MemberRef>(src.GetSimpleName()));
+            Channel.TableEmit(reader.ReadMemberRefs(), dst.Table<MemberRef>(src.GetSimpleName()));
         }
     }
 }

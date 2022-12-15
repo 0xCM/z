@@ -242,7 +242,7 @@ namespace Z0
                 result = CoffObjects.parse(context, context.Doc(path), out var records);
                 if(result.Fail)
                 {
-                    Error(result.Message);
+                    Channel.Error(result.Message);
                     return;
                 }
 
@@ -271,7 +271,7 @@ namespace Z0
         {
             const string intel_syntax = ".intel_syntax noprefix";
             var asmpath = RecodedTarget(project, src.OriginName.Format());
-            var emitting = EmittingFile(asmpath);
+            var emitting = Channel.EmittingFile(asmpath);
             var counter = 0u;
             using var writer = asmpath.AsciWriter();
             writer.WriteLine(intel_syntax);
@@ -290,7 +290,7 @@ namespace Z0
                 }
             }
 
-            EmittedFile(emitting,counter);
+            Channel.EmittedFile(emitting,counter);
         }
 
         public Index<AsmCodeBlocks> EmitAsmRows(ProjectContext context, Alloc alloc)
@@ -339,7 +339,7 @@ namespace Z0
                     record.Encoded = code.Encoded;
                     record.Asm = code.Asm;
                     if(!distinct.Add(record.EncodingId))
-                        Warn(string.Format("Duplicate identifier:{0}", record.EncodingId));
+                        Channel.Warn(string.Format("Duplicate identifier:{0}", record.EncodingId));
                 }
             }
 
@@ -537,7 +537,7 @@ namespace Z0
             }
             else
             {
-                Error(result.Message);
+                Channel.Error(result.Message);
                 return sys.empty<AsmSyntaxRow>();
             }
         }

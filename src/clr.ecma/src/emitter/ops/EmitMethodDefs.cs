@@ -19,9 +19,9 @@ namespace Z0
         {
             void Exec()
             {
-                var path = dst.Metadata(EcmaSections.Methods).PrefixedTable<MethodDef>(src.GetSimpleName());
-                var formatter = Tables.formatter<MethodDef>();
-                var flow = EmittingTable<MethodDef>(path);
+                var path = dst.Metadata(EcmaSections.Methods).PrefixedTable<EcmaMethodInfo>(src.GetSimpleName());
+                var formatter = Tables.formatter<EcmaMethodInfo>();
+                var flow = EmittingTable<EcmaMethodInfo>(path);
                 using var writer = path.Writer();
                 writer.WriteLine(formatter.FormatHeader());
                 var reader = EcmaReader.create(src);
@@ -40,9 +40,9 @@ namespace Z0
             void Exec()
             {
                 var reader = EcmaReader.create(src);
-                var buffer = list<MethodDef>();
+                var buffer = list<EcmaMethodInfo>();
                 reader.ReadMethodDefs(buffer);
-                TableEmit(buffer.ViewDeposited(), dst.PrefixedTable<MethodDef>(src.GetSimpleName()));
+                Channel.TableEmit(buffer.ViewDeposited(), dst.PrefixedTable<EcmaMethodInfo>(src.GetSimpleName()));
             }
 
             Try(Exec);

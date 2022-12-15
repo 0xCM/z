@@ -16,7 +16,7 @@ namespace Z0
             public const byte FieldCount = 9;
 
             [Render(64)]
-            public asci64 Name;
+            public @string Name;
 
             [Render(16)]
             public MemoryAddress Address;

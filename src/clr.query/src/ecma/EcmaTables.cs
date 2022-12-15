@@ -8,17 +8,13 @@ namespace Z0
     {
         public class TableAttribute : RecordAttribute
         {
-            public TableAttribute()
-                : base("")
+            public TableAttribute(EcmaTableKind kind)
+                : base($"Ecma.{kind}")
             {
-
-            }
-
-            public TableAttribute(byte id)
-                : base($"Ecma.{id.FormatHex()}")
-            {
-
+                Kind = kind;
             }                
+
+            public readonly EcmaTableKind Kind;
         }        
     }
 }

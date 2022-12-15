@@ -17,6 +17,6 @@ namespace Z0
         [MethodImpl(Inline), Odd, Closures(Integers)]
         public static Span<bit> odd<T>(ReadOnlySpan<T> src, Span<bit> dst)
             where T : unmanaged
-                => gcalc.apply(Calcs.odd<T>(), src,dst);
+                => gcalc.apply(odd<T>(), src,dst);
     }
 }

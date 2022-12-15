@@ -22,7 +22,7 @@ namespace Z0
         }
 
         public string Format()
-            => eval.format(this);
+            => ApiEval.format(this);
 
         public override string ToString()
             => Format();

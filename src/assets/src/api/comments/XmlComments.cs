@@ -81,7 +81,7 @@ namespace Z0
                 var id = part.FileName.WithoutExtension.Name;
                 var file = FS.file($"{part.FileName.WithoutExtension}.{comments}", FileKind.Csv);
                 var path = targets.Path(file);
-                var flow = EmittingTable<ApiComment>(path);
+                var flow = Channel.EmittingTable<ApiComment>(path);
                 var docs = new Dictionary<string, ApiComment>();
                 lookup[part] = docs;
                 using var writer = path.Writer();
@@ -94,7 +94,7 @@ namespace Z0
                     docs[comment.TargetName] = comment;
                     writer.WriteLine(formatter.Format(comment));
                 }
-                EmittedTable(flow, kvp.Count);
+                Channel.EmittedTable(flow, kvp.Count);
             }
         }
 

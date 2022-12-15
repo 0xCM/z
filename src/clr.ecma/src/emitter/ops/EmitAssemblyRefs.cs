@@ -17,9 +17,6 @@ namespace Z0
         public void EmitAssemblyRefs(IApiPack dst)
             => EmitAssemblyRefs(ApiAssemblies.Parts, dst);
 
-        // public void EmitAssemblyRefs(IDbArchive dst)
-        //     => EmitAssemblyRefs(ApiMd.Parts, dst);
-
         public void EmitAssemblyRefs(ReadOnlySpan<Assembly> src, IApiPack dst)
             => EmitAssemblyRefs(src, dst.Metadata().Table<AssemblyRefInfo>());
 

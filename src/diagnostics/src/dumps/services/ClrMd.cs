@@ -7,89 +7,8 @@ namespace Z0
     using System.Linq;
     using Microsoft.Diagnostics.Runtime;
 
-    public readonly struct IlEncodingMap
+    public sealed class ClrMdSvc : IDisposable
     {
-        public readonly Address32 IlOffset;
-
-        public readonly MemoryAddress BaseAddress;
-
-        public readonly MemoryAddress LastAddress;
-
-        [MethodImpl(Inline)]
-        public IlEncodingMap(Address32 il, MemoryAddress min, MemoryAddress max)
-        {
-            IlOffset = il;
-            BaseAddress = min;
-            LastAddress = max;
-        }
-    }
-
-    public sealed class ClrMdSvc : AppService<ClrMdSvc>
-    {
-        DataTarget Target;
-
-        ClrRuntime Runtime;
-
-        int ProcId;
-
-        Process Proc;
-
-        bool Attached => Target != null && Runtime != null;
-
-        public ClrMdSvc()
-        {
-            ProcId = Process.GetCurrentProcess().Id;
-            Proc = Process.GetProcessById(ProcId);
-            ChildProcessTracker.AddProcess(Proc);
-        }
-
-        public void Attach()
-        {
-            if(Attached)
-                return;
-
-            Wf.Babble(string.Format("Attaching to {0}", ProcId));
-            Target = DataTarget.CreateSnapshotAndAttach(ProcId);
-            Runtime = Target.ClrVersions.Single().CreateRuntime();
-            Wf.Babble("Attached");
-        }
-
-        public void Detach()
-        {
-            if(Attached)
-            {
-                Wf.Babble(string.Format("Detaching from {0}", ProcId));
-                Runtime.Dispose();
-                Runtime = null;
-                Target.Dispose();
-                Target = null;
-                Wf.Babble("Detached");
-            }
-        }
-
-        protected override void OnInit()
-        {
-            Attach();
-        }
-
-        public void Collect()
-        {
-            foreach (ClrThread thread in Runtime.Threads)
-            {
-                Console.WriteLine($"{thread.OSThreadId:x}:");
-                foreach (ClrStackFrame frame in thread.EnumerateStackTrace())
-                    Console.WriteLine($"    {frame}");
-            }
-        }
-
-        public void ParseDump(FilePath src)
-            => Wf.DumpParser().ParseDump(src);
-
-        protected override void Disposing()
-        {
-            Detach();
-        }
-
         [MethodImpl(Inline)]
         public static bool hot(ClrMethod src)
         {
@@ -125,6 +44,71 @@ namespace Z0
                     .Array();
 
             return dst;
+        }
+
+        DataTarget Target;
+
+        ClrRuntime Runtime;
+
+        int ProcId;
+
+        Process Proc;
+
+        bool Attached => Target != null && Runtime != null;
+
+        IWfChannel Channel;
+
+        IWfRuntime Wf;
+        public ClrMdSvc(IWfRuntime wf)
+        {
+            Wf = wf;
+            Channel = wf.Channel;
+            ProcId = Process.GetCurrentProcess().Id;
+            Proc = Process.GetProcessById(ProcId);
+            ChildProcessTracker.AddProcess(Proc);
+            Attach();            
+        }
+
+        public void Attach()
+        {
+            if(Attached)
+                return;
+
+            Channel.Babble(string.Format("Attaching to {0}", ProcId));
+            Target = DataTarget.CreateSnapshotAndAttach(ProcId);
+            Runtime = Target.ClrVersions.Single().CreateRuntime();
+            Channel.Babble("Attached");
+        }
+
+        public void Detach()
+        {
+            if(Attached)
+            {
+                Channel.Babble(string.Format("Detaching from {0}", ProcId));
+                Runtime.Dispose();
+                Runtime = null;
+                Target.Dispose();
+                Target = null;
+                Channel.Babble("Detached");
+            }
+        }
+
+        public void Collect()
+        {
+            foreach (var thread in Runtime.Threads)
+            {
+                Channel.Row($"{thread.OSThreadId:x}:");
+                foreach (var frame in thread.EnumerateStackTrace())
+                    Channel.Row($"    {frame}");
+            }
+        }
+
+        public void ParseDump(FilePath src)
+            => Wf.DumpParser().ParseDump(src);
+
+        public void Dispose()
+        {
+            Detach();
         }
     }
 }

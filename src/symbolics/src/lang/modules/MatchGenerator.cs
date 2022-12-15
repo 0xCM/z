@@ -40,14 +40,14 @@ namespace Z0
             void EmitTargets()
             {
                 var dst = targets.Path(input.FileName.ChangeExtension(FS.ext("hist")));
-                var emitting = EmittingFile(dst);
+                var emitting = Channel.EmittingFile(dst);
                 using var writer = dst.Utf8Writer();
                 for(var i=0; i<counts.Length; i++)
                 {
                     ref readonly var bucket = ref skip(counts,i);
                     writer.WriteLine(string.Format("{0} | {1}", bucket.Key, bucket.Value));
                 }
-                EmittedFile(emitting, counts.Length);
+                Channel.EmittedFile(emitting, counts.Length);
             }
 
             void EmitTerms()
@@ -55,19 +55,19 @@ namespace Z0
                 var sorted = Terms.Map(x => (x.Key, x.Value)).OrderBy(x => x.Value);
                 var max = gmath.max(sorted.Select(x => x.Value).ToReadOnlySpan());
                 var dst = targets.Path(input.FileName.ChangeExtension(FS.ext("terms")));
-                var emitting = EmittingFile(dst);
+                var emitting = Channel.EmittingFile(dst);
                 using var writer = dst.Utf8Writer();
                 var s0 = text.slot(0, math.negate((short)(max)));
                 var s1 = text.slot(1);
                 var pattern = string.Concat(s0," | ", s1);
                 iter(sorted, s => writer.WriteLine(string.Format(pattern, s.Key, s.Value)));
-                EmittedFile(emitting, sorted.Length);
+                Channel.EmittedFile(emitting, sorted.Length);
             }
 
             void EmitBuckets()
             {
                 var buckets = Buckets.bucketize(lines.Select(x => x.Content.Trim()));
-                Write(buckets.Format());
+                Channel.Write(buckets.Format());
             }
         }
     }

@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static CalcHosts;
-    using static core;
+    using static sys;
 
     partial struct Calcs
     {

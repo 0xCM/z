@@ -12,14 +12,14 @@ namespace Z0
     {
         public void Emit(string name, ReadOnlySpan<char> src, FilePath dst)
         {
-            var emitting = EmittingFile(dst);
+            var emitting = Channel.EmittingFile(dst);
             using var writer = dst.AsciWriter();
             writer.Write(fielddecl(name));
             begin(writer);
             write(writer,src);
             end(writer);
 
-            EmittedFile(emitting, 1);
+            Channel.EmittedFile(emitting, 1);
         }
 
         public void Emit(string name, ReadOnlySpan<char> src, StreamWriter dst)
@@ -63,7 +63,7 @@ namespace Z0
 
         public void Emit(string name, ReadOnlySpan<string> src, FilePath dst)
         {
-            var emitting = EmittingFile(dst);
+            var emitting = Channel.EmittingFile(dst);
             using var writer = dst.AsciWriter();
 
             writer.WriteLine(structdecl(name));
@@ -82,7 +82,7 @@ namespace Z0
 
             writer.WriteLine("}");
 
-            EmittedFile(emitting, count);
+            Channel.EmittedFile(emitting, count);
         }
     }
 }

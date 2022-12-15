@@ -7,16 +7,35 @@ namespace Z0
     using static sys;
     using static EcmaTables;
 
+    public record struct TypeDefInfo
+    {
+        public @string Name;
+
+        public TypeAttributes Attributes;
+
+    }
     partial class EcmaReader
     {
         [Op]
-        public ReadOnlySpan<TypeDefinition> ReadTypeDefs()
+        public void ReadTypeDefs(Action<TypeDefInfo> dst)
         {
-            var src = MD.TypeDefinitions.ToReadOnlySpan();
-            var count = src.Length;
-            var dst = alloc<TypeDefinition>(count);
-            Read(src,dst);
-            return dst;
+            var info = new TypeDefInfo();
+            iter(MD.TypeDefinitions, handle => {
+                var src = MD.GetTypeDefinition(handle);
+                info.Name = String(src.Name);
+                info.Attributes = src.Attributes;
+                var @base = src.BaseType;
+                if(!@base.IsNil)
+                {
+                    
+                }
+                dst(info);
+            });
+            // var src = MD.TypeDefinitions.ToReadOnlySpan();
+            // var count = src.Length;
+            // var dst = alloc<TypeDefinition>(count);
+            // Read(src, dst);
+            // return dst;
         }
 
         [MethodImpl(Inline), Op]

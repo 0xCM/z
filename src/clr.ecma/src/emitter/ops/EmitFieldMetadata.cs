@@ -31,12 +31,12 @@ namespace Z0
             try
             {
                 var name = src.GetSimpleName();
-                var path = dst.Metadata(EcmaSections.MemberFields).PrefixedTable<Field>(name);
-                var flow = EmittingTable<Field>(path);
+                var path = dst.Metadata(EcmaSections.MemberFields).PrefixedTable<EcmaFieldInfo>(name);
+                var flow = EmittingTable<EcmaFieldInfo>(path);
                 var reader = EcmaReader.create(src);
-                var fields = reader.ReadFields();
+                var fields = reader.ReadFieldInfo();
                 var count = (uint)fields.Length;
-                var formatter = Tables.formatter<Field>();
+                var formatter = Tables.formatter<EcmaFieldInfo>();
                 using var writer = path.Writer();
                 writer.WriteLine(formatter.FormatHeader());
                 foreach(var item in fields)
@@ -67,7 +67,7 @@ namespace Z0
                 writer.WriteLine(formatter.FormatHeader());
                 for(var j=0; j<count; j++)
                 {
-                    var row = new EcmaFieldInfo();
+                    var row = new Field();
                     var info = new EcmaFieldDefInfo();
                     ref readonly var handle = ref skip(handles,j);
                     reader.Row(handle, ref row);

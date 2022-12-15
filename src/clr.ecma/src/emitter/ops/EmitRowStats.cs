@@ -24,6 +24,5 @@ namespace Z0
             var rows = buffer.ToSeq().Sort();
             Channel.TableEmit(rows, dst);
         }
-
     }
 }

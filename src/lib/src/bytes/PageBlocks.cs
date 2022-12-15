@@ -18,11 +18,6 @@ namespace Z0
         public static PageBlockInfo describe(MemoryPage src)
             => new PageBlockInfo(src.Range);
 
-        // [MethodImpl(Inline)]
-        // public static MemoryCells<T> cells<T>(MemoryPage src)
-        //     where T : unmanaged
-        //         => new MemoryCells<T>(src.Range);
-
         [MethodImpl(Inline)]
         public static void alloc(out PageBlock16x4 dst)
         {

@@ -14,13 +14,13 @@ namespace Z0
         ReadOnlySeq<CharMapEntry<char>> Unmapped(FilePath src, AsciPoints target)
         {
             var map = CharMaps.create(TextEncodings.Unicode, target);
-            var flow = Running(string.Format("Searching {0} for unmapped characters", src.ToUri()));
+            var flow = Channel.Running(string.Format("Searching {0} for unmapped characters", src.ToUri()));
             var unmapped = hashset<char>();
             using var reader = src.LineReader(TextEncodingKind.Utf8);
             while(reader.Next(out var line))
                 CharMaps.unmapped(map, line.Data, unmapped);
             var pairs = unmapped.Map(x => CharMaps.entry((Hex16)x,x)).OrderBy(x => x.Source).ToSeq();
-            Ran(flow, string.Format("Found {0} unmapped characters", pairs.Count));
+            Channel.Ran(flow, string.Format("Found {0} unmapped characters", pairs.Count));
             return pairs;
         }
 
@@ -36,10 +36,10 @@ namespace Z0
 
         public void Emit(in CharMap<char> src, FilePath dst)
         {
-            var emitting = EmittingFile(dst);
+            var emitting = Channel.EmittingFile(dst);
             using var writer = dst.Writer();
             var mapcount = CharMaps.emit(src, writer);
-            EmittedFile(emitting,mapcount);
+            Channel.EmittedFile(emitting,mapcount);
         }
     }
 }

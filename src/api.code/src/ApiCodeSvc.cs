@@ -16,7 +16,7 @@ namespace Z0
 
         public ConstLookup<FilePath,MemoryBlocks> LoadMemoryBlocks(Files src)
         {
-            var flow = Running(string.Format("Loading {0} packs", src.Length));
+            var flow = Channel.Running(string.Format("Loading {0} packs", src.Length));
             var lookup = new Lookup<FilePath,MemoryBlocks>();
             var errors = new Lookup<FilePath,Outcome>();
             iter(src, path => lookup.Include(path, ApiCode.memory(path)), true);
@@ -31,11 +31,11 @@ namespace Z0
                 var blocks = entry.Value.View;
                 var blockCount = (uint)blocks.Length;
                 var host = path.FileName.Format().Remove(".extracts.parsed.xpack").Replace(".","/");
-                Write(string.Format("Loaded {0} blocks from {1}", blockCount, path.ToUri()));
+                Channel.Write(string.Format("Loaded {0} blocks from {1}", blockCount, path.ToUri()));
                 counter += blockCount;
             }
 
-            Ran(flow, string.Format("Loaded {0} total blocks", counter));
+            Channel.Ran(flow, string.Format("Loaded {0} total blocks", counter));
 
             return result;
         }
@@ -78,9 +78,9 @@ namespace Z0
         ByteSize EmitHex(ReadOnlySeq<ApiEncoded> src, FilePath dst)
         {
             var count = src.Count;
-            var emitting = EmittingFile(dst);
+            var emitting = Channel.EmittingFile(dst);
             var size = ApiCode.hexdat(src, dst);
-            EmittedFile(emitting,count);
+            Channel.EmittedFile(emitting,count);
             return size;
         }
 
@@ -88,9 +88,9 @@ namespace Z0
         {
             var collected = src;
             var count = collected.Count;
-            var emitting = EmittingFile(hex);
+            var emitting = Channel.EmittingFile(hex);
             var size = ApiCode.hexdat(collected, hex);
-            EmittedFile(emitting,count);
+            Channel.EmittedFile(emitting,count);
             var encoded = alloc<EncodedMember>(count);
             for(var i=0; i<count; i++)
                 seek(encoded,i) = ApiCode.member(collected[i]);
@@ -108,7 +108,7 @@ namespace Z0
         [Op]
         ReadOnlySeq<ApiHexIndexRow> EmitIndex(SortedReadOnlySpan<ApiCodeBlock> src, FilePath dst)
         {
-            var flow = EmittingTable<ApiHexIndexRow>(dst);
+            var flow = Channel.EmittingTable<ApiHexIndexRow>(dst);
             var blocks = src.View;
             var count = blocks.Length;
             var buffer = alloc<ApiHexIndexRow>(count);
@@ -131,7 +131,7 @@ namespace Z0
                 writer.WriteLine(formatter.Format(record));
             }
 
-            EmittedTable(flow, count);
+            Channel.EmittedTable(flow, count);
             return buffer;
         }
     }

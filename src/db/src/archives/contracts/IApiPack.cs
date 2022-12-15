@@ -62,9 +62,6 @@ namespace Z0
         FilePath AsmExtractPath(PartId part)
             => ExtractPath(part, FileKind.Asm);
 
-        FilePath MsilPath(ApiHostUri host)
-            => Extracts().Path(ApiFiles.hostfile(host,FileKind.Il.Ext()));
-
         FilePath HexExtractPath(ApiHostUri src)
             => ExtractPath(src, FileKind.HexDat);
 

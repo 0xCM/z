@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Alg
 {
-    using static core;
+    using static sys;
 
     /// <summary>
     /// Defines MD5-related operations

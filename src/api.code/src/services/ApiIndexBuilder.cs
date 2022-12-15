@@ -49,20 +49,20 @@ namespace Z0
         {
             var src = Z0.Files.Empty;
             var count = src.Length;
-            var flow = Running(Msg.IndexingPartFiles.Format(count));
+            var flow = Channel.Running(Msg.IndexingPartFiles.Format(count));
 
             for(var i=0; i<count; i++)
             {
                 ref readonly var path = ref src[i];
-                var inner = Running(Msg.IndexingCodeBlocks.Format(path));
+                var inner = Channel.Running(Msg.IndexingCodeBlocks.Format(path));
                 var blocks = ReadRows(path);
                 if(blocks.Length != 0)
                 {
                     Include(blocks);
-                    Ran(inner, Msg.AbsorbedCodeBlocks.Format(blocks.Length, path));
+                    Channel.Ran(inner, Msg.AbsorbedCodeBlocks.Format(blocks.Length, path));
                 }
                 else
-                    Error(Msg.Unparsed(path));
+                    Channel.Error(Msg.Unparsed(path));
             }
 
             IndexStatus = Status();

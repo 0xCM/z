@@ -4,24 +4,22 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [Record(TableId), StructLayout(LayoutKind.Sequential, Pack =1)]
+    [Record(TableName), StructLayout(LayoutKind.Sequential,Pack=1)]
     public struct EcmaFieldInfo
     {
-        const string TableId = "ecma.field.row";
+        const string TableName = "ecma.fieldinfo";
 
-        [Render(12)]
-        public EcmaStringIndex Name;
+        public EcmaToken Token;
 
-        [Render(12)]
-        public EcmaBlobIndex Sig;
-
-        [Render(12)]
         public Address32 Offset;
 
-        [Render(12)]
-        public EcmaBlobIndex Marshal;
+        public Address32 Rva;
 
-        [Render(1)]
-        public FieldAttributes Attributes;
+        public @string FieldName;
+
+        public FieldAttributes Attribs;
+
+        public BinaryCode Sig;
     }
+
 }

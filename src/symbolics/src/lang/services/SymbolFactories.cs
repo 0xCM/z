@@ -11,7 +11,7 @@ namespace Z0
     {
         public void Emit(string ns, string name, ReadOnlySpan<Type> enums, FilePath dst)
         {
-            var flow = EmittingFile(dst);
+            var flow = Channel.EmittingFile(dst);
             var buffer = text.buffer();
             var margin = 0u;
             buffer.IndentLine(margin, CsPatterns.NamespaceDecl(ns));
@@ -20,7 +20,7 @@ namespace Z0
             buffer.IndentLine(margin, Close());
             using var writer = dst.Writer();
             writer.WriteLine(buffer.Emit());
-            EmittedFile(flow,count);
+            Channel.EmittedFile(flow,count);
         }
 
         public uint Emit(uint margin, string name, ReadOnlySpan<Type> enums, ITextBuffer dst)

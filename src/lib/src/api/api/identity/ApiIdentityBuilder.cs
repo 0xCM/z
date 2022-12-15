@@ -6,7 +6,6 @@ namespace Z0
 {
     using static sys;
 
-
     public readonly struct ApiIdentityBuilder
     {
         /// <summary>

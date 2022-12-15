@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
     using static SFx;
 
     partial struct CalcHosts

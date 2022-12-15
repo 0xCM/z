@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     [Free, SFx]
     public interface IBlockedUnaryImm8Op8<T> : IBlockedFunc<W8,T>
         where T : unmanaged
@@ -53,5 +52,4 @@ namespace Z0
     {
         ref readonly SpanBlock512<T> Invoke(in SpanBlock512<T> src, byte imm8, in SpanBlock512<T> dst);
     }
-
 }

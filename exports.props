@@ -5,7 +5,6 @@
    <Import Project="$(MsBuildThisFileDirectory)src/assets/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/asm/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/asm.core/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/asm.prototypes/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/asm.test/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/bitvectors/exports.props"/>

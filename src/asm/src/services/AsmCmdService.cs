@@ -187,7 +187,7 @@ namespace Z0.Asm
             return true;
         }
 
-        MsgPattern<Count,_FileUri> EmittedInstructions
+        MsgPattern<Count,FileUri> EmittedInstructions
             => "Emitted {0} instructions to {1}";
 
         Outcome GenAsm2(CmdArgs args)
@@ -287,13 +287,6 @@ namespace Z0.Asm
             var resolver = Wf.ApiResolver();
             resolver.ResolveParts(parts);
         }
-
-        public void ParseDump()
-        {
-            using var clrmd = ClrMdSvc.create(Wf);
-            clrmd.ParseDump(AppDb.Logs().Path("dump", FileKind.Log));
-        }
-
 
         void GenSlnScript()
         {

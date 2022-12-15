@@ -20,6 +20,10 @@ namespace Z0
         static IApiPack Dst
             => ApiPacks.create();
 
+        [CmdOp("ecma/emit")]
+        void EcmaEmit()
+            => EcmaEmitter.Emit(ApiAssemblies.Parts, EcmaEmissionSettings.Default, AppDb.ApiTargets("ecma"));
+
         [CmdOp("ecma/list")]
         void EcmaList(CmdArgs args)
             => EcmaEmitter.EmitList(args);
@@ -33,13 +37,11 @@ namespace Z0
         [CmdOp("api/parts")]
         void ApiPartList()
         {
-
             var root = FS.path(controller().Location).FolderPath;
             var src  = Parts(root);
-            // var src = Archives.modules(root).Members();
             iter(src, a => Write(a.Path()));
-
         }
+
         [CmdOp("ecma/emit/parts")]
         void EmitPartEcma()
             => EcmaEmitter.EmitCatalogs(ApiAssemblies.Parts, AppDb.ApiTargets());
@@ -98,8 +100,9 @@ namespace Z0
             iter(modules, module => {
                 using var file = EcmaFile.open(module.Path);
                 var reader = EcmaReader.create(file);
-                var types = reader.ReadTypeDefs();
-                iter(types, t => Channel.Write(t.Name));
+                reader.ReadTypeDefs(td => {
+                    Channel.Row(td);
+                });               
             });
         }
 

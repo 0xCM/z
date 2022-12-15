@@ -45,6 +45,5 @@ namespace Z0.DynamicModels
 
         public override string ToString()
             => $"{Operator}({Member.Name})";
-
     }
 }

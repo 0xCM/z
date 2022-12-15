@@ -7,7 +7,7 @@ namespace Z0
     using System.Linq.Expressions;
 
     using static LinqXFunc;
-    using static core;
+    using static sys;
 
     [ApiHost]
     public readonly partial struct ModelsDynamic

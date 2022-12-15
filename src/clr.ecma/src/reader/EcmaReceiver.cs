@@ -21,7 +21,7 @@ namespace Z0
 
         public void ReadMethodDefs()
         {
-            var def = MethodDef.Empty;
+            var def = EcmaMethodInfo.Empty;
             var assname = Reader.AssemblyName().SimpleName();
             iter(Reader.MethodDefHandles(), handle => {
                 var src = MD.GetMethodDefinition(handle);
@@ -37,7 +37,7 @@ namespace Z0
 
         }
 
-        public virtual void Receive(MethodDef src) {}
+        public virtual void Receive(EcmaMethodInfo src) {}
 
     }
 }

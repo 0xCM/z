@@ -35,7 +35,4 @@ namespace Z0.DynamicModels
                 NewPrecedence ?? this.Precedence
             );
     }
-
-
-
 }

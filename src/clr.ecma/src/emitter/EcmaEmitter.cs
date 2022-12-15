@@ -6,51 +6,48 @@ namespace Z0
 {
     public sealed partial class EcmaEmitter : WfSvc<EcmaEmitter>
     {
-        ApiMd ApiMd => Wf.ApiMd();
-
         Ecma Cli => Wf.Ecma();
                 
-        public void Emit(IApiCatalog src, EcmaEmissionSettings options, IApiPack dst)
+        public void Emit(Assembly[] src, EcmaEmissionSettings options, IDbArchive dst)
         {
-            var parts = ApiAssemblies.Parts;
             if(options.EmitAssemblyRefs)
-                EmitAssemblyRefs(parts, dst);
+                EmitAssemblyRefs(src, dst);
 
             if(options.EmitFieldMetadata)
-                EmitFieldMetadata(parts, dst);
+                EmitFieldMetadata(src, dst);
 
             if(options.EmitApiMetadump)
-                EmitMetadumps(Channel, parts,dst);
+                EmitMetadumps(Channel, src,dst);
 
             if(options.EmitSectionHeaders)
                 EmitSectionHeaders(sys.controller().RuntimeArchive(), dst);
 
             if(options.EmitMsilMetadata)
-                EmitMsilMetadata(parts, dst);
+                EmitMsilMetadata(src, dst);
 
             if(options.EmitMsilCode)
-                Cli.EmitIl(dst);
+                Cli.EmitMsil(dst);
 
             if(options.EmitCliStrings)
             {
-                EmitUserStrings(parts, dst);
-                EmitSystemStrings(parts, dst);
+                EmitUserStrings(src, dst);
+                EmitSystemStrings(src, dst);
             }
 
             if(options.EmitMetadataHex)
-                EmitLocatedMetadata(parts, dst);
+                EmitLocatedMetadata(src, dst);
 
             if(options.EmitCliConstants)
-                EmitConstFields(parts, dst);
+                EmitConstFields(src, dst);
 
             if(options.EmitCliBlobs)
-                EmitBlobs(parts, dst);
+                EmitBlobs(src, dst);
 
             if(options.EmitMethodDefs)
-                EmitMethodDefs(parts, dst);
+                EmitMethodDefs(src, dst);
 
             if(options.EmitCliRowStats)
-                EmitRowStats(parts, dst);
+                EmitRowStats(src, dst);
         }
     }
 }

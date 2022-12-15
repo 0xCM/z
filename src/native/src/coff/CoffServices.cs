@@ -44,11 +44,11 @@ namespace Z0
                 ref readonly var path = ref files[i].Path;
                 var srcid = text.ifempty(path.SrcId(FileKind.Obj, FileKind.O), path.FileName.WithoutExtension.Format());
                 var dst = targets.Path(FS.file(srcid, FileKind.HexDat.Ext()));
-                var running = Running(string.Format("Emitting {0}", dst));
+                var running = Channel.Running(string.Format("Emitting {0}", dst));
                 using var writer = dst.AsciWriter();
                 var obj = CoffObjects.load(path);
                 writer.WriteLine(obj.Format());
-                Ran(running, string.Format("objhex:{0} -> {1}", path.ToUri(), dst.ToUri()));
+                Channel.Ran(running, string.Format("objhex:{0} -> {1}", path.ToUri(), dst.ToUri()));
             }
 
             return result;

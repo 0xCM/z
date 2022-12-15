@@ -10,7 +10,6 @@ namespace Z0.DynamicModels
 
     public class MemberOrdering
     {
-
         public MemberOrdering(IEnumerable<MemberItemOrder> orders)
         {
             Orders = orders.OrderBy(e => e.Precedence).ToList();

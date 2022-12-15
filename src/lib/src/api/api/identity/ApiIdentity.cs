@@ -15,6 +15,18 @@ namespace Z0
     [ApiHost]
     public readonly partial struct ApiIdentity
     {
+        public static PartName part(string src)
+        {
+            part(src, out var dst);
+            return dst;
+        }
+
+        public static bool part(string src, out PartName dst)
+        {
+            dst = new (src);
+            return true;
+        }
+
         /// <summary>
         /// Extracts an 8-bit immediate value from an identity if it contains an immediate suffix; otherwise, returns none
         /// </summary>
@@ -62,7 +74,7 @@ namespace Z0
             if(count != 2)
                 return failure.WithReason(string.Concat("Component count ", count," != ", 2));
 
-            if(!ApiParsers.part(skip(parts,0), out PartName owner))
+            if(!part(skip(parts,0), out PartName owner))
                 return failure.WithReason("Invalid part");
 
             var host = skip(parts,1);

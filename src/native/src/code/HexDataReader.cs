@@ -109,7 +109,7 @@ namespace Z0
 
             if(result.Fail)
             {
-                Error(result.Message);
+                Channel.Error(result.Message);
                 return sys.empty<HexDataRow>();
             }
 

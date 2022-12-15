@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Alg
 {
-    using static core;
+    using static sys;
 
     public sealed class Md5Validator : Validator<Md5Validator>
     {
@@ -17,7 +17,7 @@ namespace Z0.Alg
         void Handle(Outcome result)
         {
             if(result.Fail)
-                Error(result.Message);
+                Channel.Error(result.Message);
         }
 
         Outcome CheckCalc()

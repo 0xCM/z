@@ -32,7 +32,7 @@ namespace Z0
         }
 
         public void EmitMetadumps(IWfChannel channel, IEnumerable<Assembly> src, IDbArchive dst)
-            => iter(src, x => EmitMetadump(channel, x, dst.Path(x.GetSimpleName(), FileKind.Txt)), PllExec);
+            => iter(src, x => EmitMetadump(Channel, x, dst.Path(x.GetSimpleName(), FileKind.Txt)), PllExec);
 
         public ExecToken EmitMetadump(FilePath src, FilePath dst)
         {

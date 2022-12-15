@@ -9,8 +9,7 @@ namespace Z0
 
     [ApiHost]
     public unsafe class EcmaSigs
-    {
-        
+    {        
         public static EcmaSigParser parser()
             => new EcmaSigParser();
 

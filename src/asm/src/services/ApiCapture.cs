@@ -32,7 +32,7 @@ namespace Z0
                     continue;
 
                 var part = skip(elements,0);
-                var id = ApiParsers.part(part);
+                var id = ApiIdentity.part(part);
                 if(id.IsEmpty)
                     continue;
 

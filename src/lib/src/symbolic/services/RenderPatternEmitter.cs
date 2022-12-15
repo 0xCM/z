@@ -11,7 +11,7 @@ namespace Z0
     {
         public void Emit(Type src, FilePath dst)
         {
-            var flow = EmittingFile(dst);
+            var flow = Channel.EmittingFile(dst);
             using var writer = dst.Writer();
             var patterns = Sources(src);
             var view = patterns.View;
@@ -20,7 +20,7 @@ namespace Z0
             for(var i=0; i<count; i++)
                 writer.WriteLine(skip(view,i).Format());
 
-            EmittedFile(flow, count);
+            Channel.EmittedFile(flow, count);
         }
 
         [Op]

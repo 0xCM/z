@@ -35,21 +35,21 @@ namespace Z0.Asm
             var dst = list<StanfordFormInfo>();
             if(src.Exists)
             {
-                var flow = Running($"Loading form records from {src.ToUri()}");
+                var flow = Channel.Running($"Loading form records from {src.ToUri()}");
                 var doc = TextGrids.parse(src);
                 if(doc.Failed)
                 {
-                    Error(doc.Reason);
+                    Channel.Error(doc.Reason);
                     return array<StanfordFormInfo>();
                 }
 
                 var forms = LoadFormInfo(doc.Value);
-                Ran(flow, LoadedForms.Format(forms.Length, src));
+                Channel.Ran(flow, LoadedForms.Format(forms.Length, src));
                 return forms;
             }
             else
             {
-                Error($"The file <{src.ToUri()}> does not exist");
+                Channel.Error($"The file <{src.ToUri()}> does not exist");
                 return array<StanfordFormInfo>();
             }
         }
