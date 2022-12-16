@@ -5,27 +5,30 @@
 namespace Z0
 {
     /// <summary>
-    /// Represents a native dll
+    /// Represents a native executable
     /// </summary>
-    public readonly struct DllModule : IBinaryModule<DllModule>
+    public readonly struct ExeModule : IBinaryModule<ExeModule>
     {
-        public FileUri Path {get;}
-
-        public FileModuleKind ModuleKind
-            => FileModuleKind.NativeDll;
+        public FilePath Path {get;}
 
         [MethodImpl(Inline)]
-        public DllModule(FilePath path)
+        public ExeModule(FilePath path)
             => Path = path;
 
         public FileName FileName
         {
             [MethodImpl(Inline)]
-            get => Path.FileName();
+            get => Path.FileName;
         }
 
+        public FileModuleKind ModuleKind
+            => FileModuleKind.NativeExe;
+
         public FileExt DefaultExt
-            => FS.Dll;
+            => FS.Exe;
+
+        public Assembly Load()
+            => Assembly.LoadFrom(Path.Format());
 
         public string Format()
             => Path.Format();
@@ -34,11 +37,11 @@ namespace Z0
             => Format();
 
         [MethodImpl(Inline)]
-        public static implicit operator BinaryModule(DllModule src)
+        public static implicit operator BinaryModule(ExeModule src)
             => new BinaryModule(src.Path, src.ModuleKind);
 
         [MethodImpl(Inline)]
-        public static implicit operator ImagePath(DllModule src)
-            => src.Path.ToFilePath();
+        public static implicit operator ImagePath(ExeModule src)
+            => src.Path;
     }
 }

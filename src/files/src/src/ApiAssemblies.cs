@@ -8,7 +8,7 @@ namespace Z0
 
     using static sys;
 
-    public class ApiAssemblies : ClrAssemblyArchive
+    public class ApiAssemblies : ClrAssemblySet
     {
         public static Assembly[] Parts => _Parts;
 
@@ -28,8 +28,8 @@ namespace Z0
         static Assembly[] parts()        
         {
             var root = FS.path(controller().Location).FolderPath;                    
-            var modules = Archives.modules(root,false).Members().Where(x => FS.managed(x.Path) && !x.Path.FileName().Contains("System.Private.CoreLib"));
-            return modules.Where(m => m.Path.FileName().StartsWith("z0.")).Map(x => Assembly.LoadFile(x.Path.ToFilePath().Format()));         
+            var modules = ModuleArchive.modules(root,false).Members().Where(x => FS.managed(x.Path) && !x.Path.FileName.Contains("System.Private.CoreLib"));
+            return modules.Where(m => m.FileName. StartsWith("z0.")).Map(x => Assembly.LoadFile(x.Path.Format()));         
         }
     }
 }

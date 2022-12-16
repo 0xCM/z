@@ -4,14 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class ClrAssemblyArchive
+    public class ClrAssemblySet
     {
-        public ClrAssemblyArchive()
+        public ClrAssemblySet()
         {
             Members = sys.empty<Assembly>();
         }
 
-        public ClrAssemblyArchive(Assembly[] members)
+        public ClrAssemblySet(Assembly[] members)
         {
             Members = members;
         }

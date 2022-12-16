@@ -15,7 +15,7 @@ namespace Z0
         CsLang CsLang => Wf.CsLang();
 
         public IProjectWorkspace EtlSource(ProjectId src)
-            => Projects.load(AppDb.Dev($"llvm.models/{src}").Root, src);
+            => Projects.load(AppDb.Dev($"llvm.models/{src}"), src);
 
         [CmdOp("gen/asci/bytes")]
         Outcome EmitAsciBytes(CmdArgs args)

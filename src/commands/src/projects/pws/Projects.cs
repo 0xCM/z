@@ -14,10 +14,7 @@ namespace Z0
         static FilePath target(IProjectWorkspace project, string name, FileKind kind = FileKind.Log)
             => project.BuildOut()+ FS.file(name, kind.Ext());
 
-        public static IProjectWorkspace load(FolderPath root, ProjectId id)
-            => new ProjectWorkspace(root, id);
-
-        public static IProjectWorkspace load(IRootedArchive root, ProjectId id)
+        public static IProjectWorkspace load(IDbArchive root, ProjectId id)
             => new ProjectWorkspace(root, id);
 
         static Outcome parse(string src, out Tool dst)

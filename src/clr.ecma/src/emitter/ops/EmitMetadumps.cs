@@ -26,8 +26,8 @@ namespace Z0
 
         public void EmitMetadumps(IWfChannel channel, IModuleArchive src, IDbArchive dst)
         {
-            var dlls = src.Assemblies().Where(path => !path.Path.ToFilePath().Contains(".resources.dll")).Map(x => x.Path.ToFilePath());
-            var exe = src.Exe().Map(x => x.Path.ToFilePath());
+            var dlls = src.Assemblies().Where(path => !path.Path.Contains(".resources.dll")).Map(x => x.Path);
+            var exe = src.Exe().Map(x => x.Path);
             EmitMetadumps(channel, src.Root, dlls.Concat(exe), dst);
         }
 

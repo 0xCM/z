@@ -6,35 +6,29 @@ namespace Z0
 {
     using static ApiAtomic;
 
-    public interface IToolWs : INamed
+    public interface IToolWs : INullity, IExpr, IHashed
     {
         Tool Tool {get;}
         
-        DbArchive Location  {get;}
+        IDbArchive Root  {get;}
 
         bool INullity.IsEmpty
             => Tool.IsEmpty;
 
-        string IExpr.Format()
-            => Tool.Format();
-
         Hash32 IHashed.Hash
             => Tool.Hash;
-            
-        @string INamed.Name 
-            => Location.Root.FolderName.Format();
-            
+                        
         FilePath CfgPath()
-            => Location.Path(Tool.Name, FileKind.Cfg);
+            => Root.Path(Tool.Name, FileKind.Cfg);
 
         DbArchive Docs()
-            => Location.Sources(docs);
+            => Root.Sources(docs);
 
         DbArchive Scripts()
-            => Location.Sources(scripts);
+            => Root.Sources(scripts);
 
         FilePath ConfigScript(string name, FileKind kind)
-            => Location.Path(FS.file(name,kind));
+            => Root.Path(FS.file(name,kind));
 
         FilePath Script(string name, FileKind kind)
             => Scripts().Path(name,kind);

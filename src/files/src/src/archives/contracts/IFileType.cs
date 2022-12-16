@@ -6,7 +6,7 @@ namespace Z0
 {
     public interface IFileType : IExpr
     {
-        asci16 Name {get;}
+        @string Name {get;}
 
         FileExt DefaultExt {get;}
         bool INullity.IsEmpty

@@ -9,8 +9,8 @@ namespace Z0
     /// </summary>
     public readonly record struct PdbModule : IBinaryModule<PdbModule>
     {
-        public FileUri Path {get;}
-
+        public FilePath Path {get;}
+        
         [MethodImpl(Inline)]
         public PdbModule(FilePath path)
             => Path = path;

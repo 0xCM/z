@@ -216,5 +216,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public static implicit operator FolderPath(DbArchive src)
             => src.Root;
+
+        public static DbArchive Empty => new (FolderPath.Empty);
     }
 }

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public record class Package : IPackage
+    public record class Package : IFilePackage
     {
         public readonly FileUri Location;
 
@@ -16,10 +16,10 @@ namespace Z0
             PackageKind = kind;
         }
 
-        FileUri IPackage.Location 
+        FileUri IFilePackage.Location 
             => Location;
 
-        PackageKind IPackage.PackageKind 
+        PackageKind IFilePackage.PackageKind 
             => PackageKind;
     
         public string Format()

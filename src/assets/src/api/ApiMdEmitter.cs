@@ -35,8 +35,8 @@ namespace Z0
                 try
                 {
                 var types = file.Load().Types();
-                var @base = Archives.identifier(file.Path.FolderPath());
-                var filename = FS.file($"{@base}.{file.Path.FileName().WithoutExtension}", FileKind.List);
+                var @base = Archives.identifier(file.Path.FolderPath);
+                var filename = FS.file($"{@base}.{file.Path.FileName.WithoutExtension}", FileKind.List);
                 var path = Target.Path(filename);
                 emit(Channel, types, path);
                 }

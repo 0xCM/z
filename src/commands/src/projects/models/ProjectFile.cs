@@ -4,8 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IWorkspace : IProject
+    public class ProjectFile : ProjectMember
     {
-        ReadOnlySeq<ISolution> Solutions {get;}
-    }
+        public FilePath Location {get;}
+
+        public ProjectFile(IProject project, FilePath location)
+            : base(project, location.Format() )
+        {
+
+        }
+    }    
 }

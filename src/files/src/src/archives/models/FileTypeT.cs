@@ -7,11 +7,11 @@ namespace Z0
     public abstract record class FileType<T> : IFileType<T>, IDataString<T>
         where T : FileType<T>, new()
     {
-        public readonly asci16 Name;
+        public @string Name {get;}
 
         public abstract FileExt DefaultExt {get;}
 
-        protected FileType(asci16 name)
+        protected FileType(string name)
         {
             Name = name;
         }
@@ -43,9 +43,6 @@ namespace Z0
 
         Hash32 IHashed.Hash
             => Hash;
-
-        asci16 IFileType.Name 
-            => Name;
 
         [MethodImpl(Inline)]
         public int CompareTo(FileType<T> src)

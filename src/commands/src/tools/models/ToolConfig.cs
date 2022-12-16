@@ -8,7 +8,7 @@ namespace Z0
     /// Defines a configuration for an identified tool
     /// </summary>
     [StructLayout(LayoutKind.Sequential), Record(TableId)]
-    public struct ToolConfig
+    public record struct ToolConfig
     {
         const string TableId = "tool.config";
 
@@ -88,5 +88,7 @@ namespace Z0
         /// The path to the defalt tool output directory
         /// </summary>
         public FilePath ToolOut;
+
+        public static ToolConfig Empty => default;
     }
 }

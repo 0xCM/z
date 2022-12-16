@@ -11,12 +11,12 @@ namespace Z0
     }
 
     [Free]
-    public interface IBinaryModule<T> : IBinaryModule, IFile<FileUri>
+    public interface IBinaryModule<T> : IBinaryModule, IFile<FilePath>
         where T : struct, IBinaryModule<T>
     {
-        FileUri Path {get;}
+        FilePath Path {get;}
 
-        FileUri ILocatable<FileUri>.Location
+        FilePath ILocatable<FilePath>.Location
             => Path;
     }
 }

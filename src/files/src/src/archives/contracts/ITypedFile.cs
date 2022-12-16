@@ -6,9 +6,7 @@ namespace Z0
 {
     public interface ITypedFile : IFile<FileUri>
     {        
-        IFileType FileType {get;}
-
-        
+        IFileType FileType {get;}        
     }
 
     public interface ITypedFile<T> : ITypedFile

@@ -8,20 +8,22 @@ namespace Z0
     {
         public ProjectId ProjectId {get;}
 
-        public FolderPath Root {get;}
+        public IDbArchive Root {get;}
+
+        public ReadOnlySeq<ISolution> Solutions 
+            => sys.empty<ISolution>();
+
+        public @string Name 
+            => ProjectId.Format();
+
+        FolderPath IRootedArchive.Root 
+            => Root.Root;
 
         [MethodImpl(Inline)]
-        public ProjectWorkspace(FolderPath src, ProjectId id)
+        public ProjectWorkspace(IDbArchive src, ProjectId id)
         {
             Root = src;
             ProjectId = id;
-        }
-
-        [MethodImpl(Inline)]
-        public ProjectWorkspace(IRootedArchive src, ProjectId id)
-        {
-            Root = src.Root;
-            ProjectId = id;
-        }
+        }        
     }
 }

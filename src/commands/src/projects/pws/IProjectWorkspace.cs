@@ -4,11 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IProjectWorkspace : IWorkspace
+    public interface IProjectWorkspace : IDbArchive
     {
         ProjectId ProjectId  => Name;
 
-        IDbArchive Home() => new DbArchive(Root);
+        IDbArchive Home() 
+            => this;
 
         Files SourceFiles(bool recurse = true)
             => Home().Sources("src").Files(recurse);
@@ -32,7 +33,7 @@ namespace Z0
             => Home().Root.AllFiles;
         
         FolderPath BuildOut()
-            => Root + FS.folder(".out");
+            => Scoped(".out").Root;
 
         Files OutFiles(FileKind kind)
             => Home().Sources(".out").Files(kind);

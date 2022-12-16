@@ -7,46 +7,80 @@ namespace Z0
     using static ApiAtomic;
     using static sys;
 
-    public sealed class ToolWs : Workspace<ToolWs>, IToolWs
+    /// <summary>
+    /// Defines a container for tool representation and control
+    /// </summary>
+    public sealed class ToolProject : Project
     {
-        public FolderPath ToolHome(Tool tool)
-            => Root + FS.folder(tool.Format());
+        public readonly ToolConfig Config;
 
-        public FilePath ConfigScript(Tool tool)
-            => ToolHome(tool) + FS.file(ApiAtomic.config, FS.Cmd);
+        public ToolProject()
+        {
+
+        }
+
+        public ToolProject(ToolConfig config)
+            : base(config.Tool.Name, new DbArchive(config.ToolHome))
+        {
+            Config = config;
+        }
+
+    }
+
+    /// <summary>
+    /// Defines a collection of tool controllers
+    /// </summary>
+    public sealed class ToolWs : Project, IToolWs
+    {
+        public static ToolProject project(ToolConfig config)
+            => new ToolProject(config);
+
+        public static ReadOnlySeq<ToolProject> projects(ReadOnlySpan<ToolConfig> src)
+            => src.Map(project);
+
+        // public FolderPath ToolHome(Tool tool)
+        //     => Root + FS.folder(tool.Format());
+
+        // public FilePath ConfigScript(Tool tool)
+        //     => ToolHome(tool) + FS.file(ApiAtomic.config, FS.Cmd);
 
         Dictionary<Actor,ToolConfig> ConfigLookup;
 
         Index<ToolConfig> Configs;
 
+        public ToolWs()
+        {
+
+        }
+
         public ToolWs(Tool tool, FolderPath home)
-            : base(home)
+            : base(tool.Name, new DbArchive(home))
         {
             Tool = tool;
             ConfigLookup = dict<Actor,ToolConfig>();
             Configs = array<ToolConfig>();
         }
 
-        public DbArchive Location
-            => new DbArchive(Root);
+        public string Format()
+            => Name.Format();
 
-        public FolderPath ToolDocs(Tool tool)
-            => ToolHome(tool) + FS.folder(docs);
+        // public FolderPath ToolDocs(Tool tool)
+        //     => ToolHome(tool) + FS.folder(docs);
 
-        public FolderPath Logs(Tool tool)
-            => ToolHome(tool) + FS.folder(logs);
+        // public FolderPath Logs(Tool tool)
+        //     => ToolHome(tool) + FS.folder(logs);
 
-        public FilePath ConfigPath(Tool tool)
-            => ToolHome(tool) + FS.file(tool.Format(), FileKind.Config);
+        // public FilePath ConfigPath(Tool tool)
+        //     => ToolHome(tool) + FS.file(tool.Format(), FileKind.Config);
 
-        public FolderPath Scripts(Tool tool)
-            => ToolHome(tool) + FS.folder(scripts);
+        public IDbArchive Scripts(Tool tool)
+            => Root.Scoped(tool.Name).Scoped(scripts);
 
-        public FilePath Script(Tool tool, string name)
-            => Scripts(tool) + FS.file(name, FS.Cmd);
+        // public FilePath Script(Tool tool, string name)
+        //     => Scripts(tool) + FS.file(name, FS.Cmd);
 
-        public FilePath Inventory()
-            => Root + FS.folder(admin) + FS.file(inventory, FS.Txt);
+        // public FilePath Inventory()
+        //     => Root + FS.folder(admin) + FS.file(inventory, FS.Txt);
 
         public ReadOnlySpan<ToolConfig> Configured
         {

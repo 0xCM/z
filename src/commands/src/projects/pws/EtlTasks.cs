@@ -14,7 +14,7 @@ namespace Z0
         }
 
         public IProjectWorkspace EtlSource(ProjectId src)
-            => Projects.load(AppDb.Dev($"llvm.models/{src}").Root, src);
+            => Projects.load(AppDb.Dev($"llvm.models/{src}"), src);
 
         public FilePath EtlTable<T>(ProjectId project) where T : struct
             => EtlTargets(project).Table<T>(project.Format());

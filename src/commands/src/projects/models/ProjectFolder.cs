@@ -4,21 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public enum PackageKind : byte
+    public class ProjectFolder : ProjectMember
     {
-        None,
+        public FolderPath Location {get;}
 
-        Zip,
-        
-        Nuget,
+        public ProjectFolder(IProject project, FolderPath location)
+            : base(project, location.Format())
+        {
 
-        Msi
-    }
-
-    public interface IPackage
-    {
-        FileUri Location {get;}
-
-        PackageKind PackageKind {get;}
+        }
     }
 }

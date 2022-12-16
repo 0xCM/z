@@ -4,8 +4,21 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IWorkspace : IProject
+    public enum PackageKind : byte
     {
-        ReadOnlySeq<ISolution> Solutions {get;}
+        None,
+
+        Zip,
+        
+        Nuget,
+
+        Msi
+    }
+
+    public interface IFilePackage
+    {
+        FileUri Location {get;}
+
+        PackageKind PackageKind {get;}
     }
 }

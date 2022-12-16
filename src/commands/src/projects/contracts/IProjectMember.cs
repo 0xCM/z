@@ -3,11 +3,11 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0
-{   
-    public abstract class ProjectGenerator<G>
-        where G : ProjectGenerator<G>, new()
+{
+    public interface IProjectMember
     {
+        @string Name {get;}
 
+        IProject Project {get;}
     }
-
 }

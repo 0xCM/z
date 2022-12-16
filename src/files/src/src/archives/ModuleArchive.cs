@@ -8,6 +8,9 @@ namespace Z0
 
     public readonly struct ModuleArchive : IModuleArchive
     {
+        public static IModuleArchive modules(FolderPath src, bool recurse = true)
+            => new ModuleArchive(src, recurse);
+
         public readonly FolderPath Root;
 
         readonly bool Recurse;
@@ -24,7 +27,7 @@ namespace Z0
 
         public IEnumerable<AssemblyFile> Assemblies()
         {
-            foreach(var path in Root.EnumerateFiles(Recurse, FS.Dll, FS.ext("winmd")))
+            foreach(var path in Root.EnumerateFiles(Recurse, FS.Dll))
                 if(FS.managed(path, out var assname))
                     yield return new AssemblyFile(path, assname);
         }

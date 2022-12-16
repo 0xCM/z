@@ -4,8 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IWorkspace : IProject
+
+    public partial class ProjectSystem
     {
-        ReadOnlySeq<ISolution> Solutions {get;}
+
     }
 }

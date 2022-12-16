@@ -4,8 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IWorkspace : IProject
+    public interface ISolution : IProject
     {
-        ReadOnlySeq<ISolution> Solutions {get;}
+        ReadOnlySeq<IProject> Projects {get;}
+    }
+
+    public interface ISolution<S> : ISolution
+        where S : ISolution<S>, new()
+    {
+
     }
 }

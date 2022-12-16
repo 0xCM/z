@@ -30,8 +30,8 @@ namespace Z0
 
         public static ReadOnlySeq<Assembly> Parts(FolderPath src)
         {
-            var modules = Archives.modules(src,false).Members().Where(x => FS.managed(x.Path) && !x.Path.FileName().Contains("System.Private.CoreLib"));
-            return modules.Where(m => m.Path.FileName().StartsWith("z0.")).Map(x => Assembly.LoadFile(x.Path.ToFilePath().Format()));
+            var modules = Archives.modules(src,false).Members().Where(x => FS.managed(x.Path) && !x.Path.FileName.Contains("System.Private.CoreLib"));
+            return modules.Where(m => m.Path.FileName.StartsWith("z0.")).Map(x => Assembly.LoadFile(x.Path.Format()));
         }
 
         [CmdOp("api/parts")]
@@ -104,6 +104,22 @@ namespace Z0
                     Channel.Row(td);
                 });               
             });
+        }
+
+        [CmdOp("ecma/md")]
+        void EcmaMeta(CmdArgs args)
+        {
+            var modules = Archives.modules(FS.dir(args[0])).Dll();
+            iter(modules, module => {
+                if(module.IsManaged)
+                {
+                    var assembly = Assembly.LoadFile(module.Path.Format());
+                    var md = Clr.metadata(assembly);
+                    Channel.Row(string.Format("{0,-32} | {1,-16} | {2}", assembly.GetSimpleName(), md.BaseAddress, md.Size));
+                }
+            });
+
+
         }
 
         static FilePath EcmaArchive(FilePath src)

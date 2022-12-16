@@ -4,13 +4,16 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class LlvmWorkspace : Workspace<LlvmWorkspace>
+    public abstract class Solution<S> : Solution, ISolution<S>
+        where S : Solution<S>, new()
     {
-        public LlvmWorkspace(FolderPath root)
-            : base(root)
+        protected Solution()
         {
 
         }
+        protected Solution(string name, IDbArchive root, ReadOnlySeq<IProject> src)
+            : base(name, root, src)
+        {
+        }
     }
-
 }

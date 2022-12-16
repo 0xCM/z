@@ -9,7 +9,7 @@ namespace Z0
     /// </summary>
     public readonly record struct BinaryModule : IBinaryModule<BinaryModule>
     {
-        public FileUri Path {get;}
+        public FilePath Path {get;}
 
         public FileModuleKind ModuleKind {get;}
 
@@ -20,6 +20,10 @@ namespace Z0
             ModuleKind = kind;
         }
 
+        public FileName FileName
+        {
+            get => Path.FileName;
+        }
         public bool IsManaged
         {
             [MethodImpl(Inline)]
@@ -58,6 +62,6 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator ImagePath(BinaryModule src)
-            => src.Path.ToFilePath();
+            => src.Path;
     }
 }

@@ -116,7 +116,7 @@ namespace Z0
 
         public Index<ToolCmdLine> BuildHelpCommands(IToolWs ws)
         {
-            var profiles = LoadProfileLookup(ws.Location.Root).Values;
+            var profiles = LoadProfileLookup(ws.Root.Root).Values;
             var count = profiles.Length;
             var dst = list<ToolCmdLine>();
             for(var i=0; i<count; i++)
@@ -134,7 +134,7 @@ namespace Z0
         public Index<ToolHelpDoc> EmitHelp(IToolWs ws)
         {
             var result = Outcome.Success;
-            var paths = CalcHelpPaths(ws.Location.Root);
+            var paths = CalcHelpPaths(ws.Root.Root);
             var commands = BuildHelpCommands(ws);
             var count = commands.Length;
             var docs = list<ToolHelpDoc>();

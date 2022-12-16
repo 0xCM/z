@@ -150,7 +150,7 @@ namespace Z0
         internal XedMachine(XedRuntime xed)
         {
             Xed = xed;
-            Ws = Projects.load(AppDb.DbOut().Root, Identifier);
+            Ws = Projects.load(AppDb.DbOut(), Identifier);
             RuntimeState = new(NextId());
             _Emitter = Channel.create(this, StatusWriter);
             LoadLookups();

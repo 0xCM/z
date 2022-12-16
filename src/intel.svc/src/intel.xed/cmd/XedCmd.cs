@@ -12,16 +12,12 @@ namespace Z0
 
     public partial class XedCmd : WfAppCmd<XedCmd>
     {
-        //static XedRuntime Xed;
-
         CsLang CsLang => Wf.CsLang();
 
 
         AsmObjects AsmObjects => Wf.AsmObjects();
 
         SdmCodeGen SdmCodeGen => Wf.SdmCodeGen();
-
-        //XedDisasmSvc XedDisasm => Wf.XedDisasmSvc();
 
         XedPaths XedPaths => Xed.Paths;
 
@@ -30,7 +26,7 @@ namespace Z0
         IntelSdm Sdm => Wf.IntelSdm();
 
         public IProjectWorkspace LlvmModels(string scope)
-            => Projects.load(AppDb.Dev($"llvm.models/{scope}").Root, scope);
+            => Projects.load(AppDb.Dev($"llvm.models/{scope}"), scope);
 
         [CmdOp("asm/gen/specs")]
         Outcome GenInstData(CmdArgs args)

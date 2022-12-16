@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {    
-    public abstract class Toolset<T> : IToolset<T>
+    public abstract class Toolset<T>
         where T : Toolset<T>, new()
     {
         static AppDb AppDb => AppDb.Service;
@@ -35,14 +35,14 @@ namespace Z0
             Location = AppDb.DevOps("toolsets");
         }
 
-        public IToolWs Tool(Tool tool)
+        public ToolWs Tool(Tool tool)
             => new ToolWs(tool, Location.Sources(tool.Name).Root);
 
-        public ReadOnlySeq<IToolWs> Tools()
+        public ReadOnlySeq<ToolWs> Tools()
         {
             var src = Location.Folders(false).Where(f => !f.Name.StartsWith("."));
             var count = src.Count;
-            Seq<IToolWs> dst = sys.alloc<IToolWs>(count);
+            var dst = sys.alloc<ToolWs>(count);
             for(var i=0; i<count; i++)
                 dst[i] = new ToolWs(src[i].FolderName.Name.Format(), src[i]);
             return dst;

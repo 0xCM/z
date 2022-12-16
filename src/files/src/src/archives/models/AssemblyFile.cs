@@ -6,7 +6,7 @@ namespace Z0
 {
     public readonly record struct AssemblyFile : IBinaryModule<AssemblyFile>, IComparable<AssemblyFile>
     {
-        public FileUri Path {get;}
+        public FilePath Path {get;}
 
         public FileModuleKind ModuleKind {get;}
 
