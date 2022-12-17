@@ -10,51 +10,8 @@ namespace Z0
 
     using api = MemoryFiles;
 
-    partial class XTend
-    {
-        /// <summary>
-        /// Presents file content as a sequence of <see cref='byte'/> cells
-        /// </summary>
-        [MethodImpl(Inline)]
-        public static Span<byte> Edit(this MemoryFile src)
-            => api.edit(src);
-
-        /// <summary>
-        /// Presents a single cell from the underlying source located at a <typeparamref name='T'/> measured offset
-        /// </summary>
-        /// <param name="index">The number of cells to advance from the base address</param>
-        /// <typeparam name="T">The cell type</typeparam>
-        [MethodImpl(Inline)]
-        public unsafe static ref T Seek<T>(this MemoryFile src, uint index)
-            where T : unmanaged
-                => ref sys.seek<T>((T*)src.Base, index);
-
-        /// <summary>
-        /// Presents file content segment as a readonly sequence of <typeparamref name='T'/> cells beginning
-        /// at a <typeparamref name='T'/> measured offset and continuing to the end of the file
-        /// </summary>
-        /// <param name="index">The number of cells to advance from the base address</param>
-        /// <typeparam name="T">The cell type</typeparam>
-        [MethodImpl(Inline)]
-        public static Span<T> Slice<T>(this MemoryFile src, uint index)
-            => api.slice<T>(src, index);
-
-        /// <summary>
-        /// Presents file content as a <typeparamref name='T'/> sequence of length <paramref name='count'/> beginning at a <typeparamref name='T'/> measured offset
-        /// </summary>
-        /// <param name="src">The data source</param>
-        /// <param name="index">The file-relative T-measured index</param>
-        /// <param name="count">The number of cells in the returned squence</param>
-        /// <typeparam name="T">The cell type</typeparam>
-        [MethodImpl(Inline)]
-        public static Span<T> Slice<T>(this MemoryFile src, uint index, uint count)
-            => api.slice<T>(src, index, count);
-    }
-
     public unsafe class MemoryFile : IMemoryFile<MemoryFile>
     {
-        readonly MemoryFileSpec Spec;
-
         public readonly FilePath Path;
 
         readonly MemoryMappedFile File;
@@ -73,14 +30,13 @@ namespace Z0
 
         public MemoryFile(MemoryFileSpec spec)
         {
-            Spec = spec;
             Path = spec.Path;
             FileSize = (ulong)Path.Info.Length;
             File = MemoryMappedFile.CreateFromFile(spec.Path.Name, spec.Mode, spec.MapName, spec.Capacity, spec.Access);
-            Description = api.describe(this);
-            ViewAccessor = File.CreateViewAccessor(0, (long)FileSize);
+            ViewAccessor = File.CreateViewAccessor(0, FileSize);
             ViewAccessor.SafeMemoryMappedViewHandle.AcquirePointer(ref Base);
             BaseAddress = Base;
+            Description = api.describe(this);
             if(spec.Stream)
                 ViewStream = File.CreateViewStream();
             else
@@ -92,11 +48,10 @@ namespace Z0
             Path = path;
             FileSize = (ulong)Path.Info.Length;
             File = MemoryMappedFile.CreateFromFile(path.Name);
-            Base = File.SafeMemoryMappedFileHandle.ToPointer<byte>();
-            Description = api.describe(this);
-            ViewAccessor = File.CreateViewAccessor(0, Path.Info.Length);
+            ViewAccessor = File.CreateViewAccessor(0, FileSize);
             ViewAccessor.SafeMemoryMappedViewHandle.AcquirePointer(ref Base);
             BaseAddress = Base;
+            Description = api.describe(this);
             if(stream)
                 ViewStream = File.CreateViewStream();
             else
@@ -106,8 +61,10 @@ namespace Z0
         public void Dispose()
         {
             ViewAccessor?.Dispose();
-            Stream?.Dispose();
             File?.Dispose();
+            
+            if(ViewStream != null)
+                ViewStream.Dispose();
         }
 
         public ref readonly MemoryAddress EndAddress
@@ -153,7 +110,6 @@ namespace Z0
         [MethodImpl(Inline)]
         public Span<byte> Edit(ulong offset, ByteSize size)
             => edit(BaseAddress, offset, size);
-
 
         public ref byte this[uint offset]
         {

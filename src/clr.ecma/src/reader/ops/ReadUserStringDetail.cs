@@ -9,7 +9,7 @@ namespace Z0
 
     partial class EcmaReader
     {
-        public ReadOnlySpan<EcmaStringDetail> ReadUserStringInfo()
+        public ReadOnlySpan<EcmaStringDetail> ReadUserStringDetail()
         {
             var reader = MD;
             int size = MD.GetHeapSize(HeapIndex.UserString);

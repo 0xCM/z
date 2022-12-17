@@ -60,8 +60,6 @@ namespace Z0
                 return default;
 
             Span<char> dst = stackalloc char[256];
-            //Storage.chars(n256, out var block);
-            //var dst = block.Data;
             var count = bitstring(src, dst);
             if(count == 0)
                 return EmptyString;
@@ -95,10 +93,6 @@ namespace Z0
             reverse(data, buffer);
             return new AsmHexCode(Cells.cell128(u64(first(buffer)), (ulong)size << 56));
         }
-
-        // [MethodImpl(Inline), Op]
-        // public static Span<byte> encoded(in AsmHexCode src)
-        //     => slice(src.Bytes, 0, src.Size);
 
         [Op]
         public static uint render(AsmHexCode src, ref uint i, Span<char> dst)

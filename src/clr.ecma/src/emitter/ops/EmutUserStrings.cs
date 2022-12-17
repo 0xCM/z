@@ -19,7 +19,7 @@ namespace Z0
             void Exec()
             {
                 var reader = EcmaReader.create(src);
-                TableEmit(reader.ReadUserStringInfo(), dst.Metadata(EcmaSections.UserStrings).PrefixedTable<EcmaStringDetail>(src.GetSimpleName()), UTF16);
+                Channel.TableEmit(reader.ReadUserStringDetail(), dst.Metadata(EcmaSections.UserStrings).PrefixedTable<EcmaStringDetail>(src.GetSimpleName()), UTF16);
             }
 
             Try(Exec);
@@ -33,7 +33,7 @@ namespace Z0
             void Exec()
             {
                 var reader = EcmaReader.create(src);
-                TableEmit(reader.ReadUserStringInfo(), dst.Path($"{src.GetSimpleName()}.ecma.strings.user", FileKind.Csv), UTF16);
+                Channel.TableEmit(reader.ReadUserStringDetail(), dst.Path($"{src.GetSimpleName()}.ecma.strings.user", FileKind.Csv), UTF16);
             }
             Try(Exec);
         }

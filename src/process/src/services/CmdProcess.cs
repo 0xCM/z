@@ -21,6 +21,73 @@ namespace Z0
     /// </summary>
     public sealed class CmdProcess : ICmdProcess<CmdProcess>
     {
+        public static Task<ExecToken> start(IWfChannel channel, CmdLine cmd)
+        {
+            void OnError(in string src)
+                => channel.Error(src);
+
+            void OnStatus(in string src)
+                => channel.Babble(src);
+
+            ExecToken run()
+            {
+                var running = channel.Running($"Executing '{cmd}'");
+                var log = ProcessLogs.status(sys.timestamp(), cmd.Format());
+                var ran = ExecToken.Empty;
+                using var logger = log.AsciWriter();
+                try
+                {
+                    var process = CmdProcess.create(cmd, OnStatus, OnError);
+                    var outcome = process.Wait();
+                    var lines =  Lines.read(process.Output);
+                    sys.iter(lines, line => logger.WriteLine(line));
+                    ran = channel.Ran(running, $"Executed {text.quote(cmd)}");
+                }
+                catch(Exception e)
+                {
+                    logger.WriteLine(e.ToString());
+                    ran = channel.Ran(running,$"error:cmd='{cmd}, description='{e}'");
+                }
+
+                term.cmd();
+                return ran;
+            }
+            return sys.start(run);
+        }
+
+        [Op]
+        public static Outcome run(CmdLine cmd, CmdVars vars, Receiver<string> status, Receiver<string> error, out ReadOnlySpan<TextLine> response)
+            => run(cmd, vars, FilePath.Empty, status,error, out response);
+
+        [Op]
+        public static Outcome run(CmdLine cmd, Receiver<string> status, Receiver<string> error, out ReadOnlySpan<TextLine> response)
+            => run(cmd, CmdVars.Empty, FilePath.Empty, status,error, out response);
+
+        [Op]
+        public static Outcome run(CmdLine cmd, CmdVars vars, FilePath log, Receiver<string> status, Receiver<string> error, out ReadOnlySpan<TextLine> response)
+        {
+            response = sys.empty<TextLine>();
+            var result = Outcome.Success;
+            try
+            {
+                var proc = CmdProcess.create(cmd, vars, status, error);
+                var outcome = proc.Wait();
+                var lines =  Lines.read(proc.Output);
+                if(log.IsNonEmpty)
+                {
+                    using var writer = log.AsciWriter(true);
+                    sys.iter(lines, line => writer.WriteLine(line));
+                }
+                response = lines;
+                return true;
+            }
+            catch(Exception e)
+            {
+                result = e;
+            }
+            return result;
+        }
+
         [Op]
         public static CmdProcess create(CmdLine cmd)
             => new CmdProcess(cmd);

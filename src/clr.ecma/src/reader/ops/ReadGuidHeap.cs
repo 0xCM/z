@@ -9,11 +9,11 @@ namespace Z0
     partial class EcmaReader
     {
         [Op]
-        public EcmaGuidHeap ReadGuidHeap()
+        public EcmaHeap ReadGuidHeap()
         {
             var offset = HeapOffset(MetadataTokens.GuidHandle(0));
             var @base = Segment.BaseAddress + offset;
-            return new EcmaGuidHeap(@base, HeapSize(HeapIndex.Guid));
+            return new EcmaHeap(EcmaHeapKind.Guid, @base, HeapSize(HeapIndex.Guid));
         }
     }
 }

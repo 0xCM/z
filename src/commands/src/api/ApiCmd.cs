@@ -5,8 +5,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     public partial class ApiCmd : AppService<ApiCmd>, IApiService
     {
         public static ICmdDispatcher Dispatcher 
@@ -14,7 +12,6 @@ namespace Z0
 
         public void RunCmd(string name, CmdArgs args)
             => Dispatcher.Dispatch(name, args);
-
 
         public void RunCmd(string name)
         {

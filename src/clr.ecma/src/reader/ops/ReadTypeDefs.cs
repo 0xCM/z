@@ -12,8 +12,8 @@ namespace Z0
         public @string Name;
 
         public TypeAttributes Attributes;
-
     }
+
     partial class EcmaReader
     {
         [Op]
@@ -31,19 +31,6 @@ namespace Z0
                 }
                 dst(info);
             });
-            // var src = MD.TypeDefinitions.ToReadOnlySpan();
-            // var count = src.Length;
-            // var dst = alloc<TypeDefinition>(count);
-            // Read(src, dst);
-            // return dst;
-        }
-
-        [MethodImpl(Inline), Op]
-        public void Read(ReadOnlySpan<TypeDefinitionHandle> src, Span<TypeDefinition> dst)
-        {
-            var count = src.Length;
-            for(var i=0u; i<count; i++)
-                seek(dst,i) = Read(skip(src,i));
         }
 
         [MethodImpl(Inline), Op]

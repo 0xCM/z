@@ -16,6 +16,9 @@ namespace Z0
 
             public Cmd Cmd(IWfRuntime wf)
                 => Service<Cmd>(wf);
+
+            public ProjectScripts ProjectScripts(IWfRuntime wf)
+                => Service<ProjectScripts>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
@@ -28,5 +31,8 @@ namespace Z0
 
         public static CsvTableGen CsvTableGen(this IWfRuntime wf)
             => Services.CsvTableGen(wf);
+
+        public static ProjectScripts ProjectScripts(this IWfRuntime wf)
+            => Services.ProjectScripts(wf);            
     }
 }

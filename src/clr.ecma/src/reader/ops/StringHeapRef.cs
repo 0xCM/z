@@ -13,28 +13,28 @@ namespace Z0
             => MD.GetHeapSize(index);
 
         [Op]
-        public EcmaStringHeap ReadStringHeap(EcmaStringKind kind)
+        public EcmaHeap StringHeapRef(EcmaStringKind kind)
             => kind switch
             {
-                EcmaStringKind.User => ReadUserStringHeap(),
-                EcmaStringKind.System => ReadSystemStringHeap(),
-                _ => EcmaStringHeap.Empty
+                EcmaStringKind.User => UserStringHeapRef(),
+                EcmaStringKind.System => SystemStringHeapRef(),
+                _ => EcmaHeap.Empty
             };
 
         [Op]
-        public EcmaStringHeap ReadUserStringHeap()
+        public EcmaHeap UserStringHeapRef()
         {
             var offset = HeapOffset(MetadataTokens.UserStringHandle(0));
             var @base = Segment.BaseAddress + offset;
-            return new EcmaStringHeap(@base, HeapSize(HeapIndex.UserString), EcmaHeapKind.UserString);
+            return new EcmaHeap(EcmaHeapKind.UserString, @base, HeapSize(HeapIndex.UserString));
         }
 
         [Op]
-        public EcmaStringHeap ReadSystemStringHeap()
+        public EcmaHeap SystemStringHeapRef()
         {
             var offset = HeapOffset(MetadataTokens.StringHandle(0));
             var @base = Segment.BaseAddress + offset;
-            return new EcmaStringHeap(@base, HeapSize(HeapIndex.String), EcmaHeapKind.String);
+            return new EcmaHeap(EcmaHeapKind.String, @base, HeapSize(HeapIndex.String));
         }
     }
 }

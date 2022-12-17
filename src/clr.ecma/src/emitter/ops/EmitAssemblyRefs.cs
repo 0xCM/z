@@ -23,6 +23,26 @@ namespace Z0
         public void EmitAssemblyRefs(ReadOnlySpan<Assembly> src, IDbArchive dst)
             => EmitAssemblyRefs(src, dst.Table<AssemblyRefInfo>());
         
+        public void EmitAssemblyRefs(IEnumerable<MappedAssembly> src, FilePath dst)
+        {
+            var flow = EmittingTable<AssemblyRefInfo>(dst);
+            var counter = 0;
+            using var writer = dst.Writer();
+            var formatter = Tables.formatter<AssemblyRefInfo>();
+
+            foreach(var a in src)
+            {
+                var reader = a.MetadataReader();
+                var refs = reader.ReadAssemblyRefs();
+                foreach(var @ref in refs)
+                {
+                    writer.WriteLine(formatter.Format(@ref));
+                    counter++;
+                }
+            }
+            EmittedTable(flow, counter);
+
+        }
         public void EmitAssemblyRefs(ReadOnlySpan<Assembly> src, FilePath dst)
         {
             var count = src.Length;

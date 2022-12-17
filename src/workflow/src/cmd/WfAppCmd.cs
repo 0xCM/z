@@ -260,7 +260,7 @@ namespace Z0
                 emitter.Append(args[i].Value);
             }
             
-            ProcessControl.start(Channel, Cmd.cmd(path, CmdKind.Tool, emitter.Emit()));        
+            CmdProcess.start(Channel, Cmd.cmd(path, CmdKind.Tool, emitter.Emit()));        
         }
 
         [CmdOp("tool/script")]

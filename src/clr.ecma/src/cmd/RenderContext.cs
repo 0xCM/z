@@ -4,11 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.Linq;
-
-    using static sys;
-    using static Env;
-
     public class RenderContext
     {
         public static RenderContext create(ITextEmitter dst, uint indent = 0)

@@ -47,14 +47,14 @@ namespace Z0
 
         public IEnumerable<ExeModule> Exe()
         {
-            foreach(var path in Root.Files(Recurse, FS.Exe))
+            foreach(var path in Root.EnumerateFiles(Recurse, FS.Exe))
                 if(FS.native(path))
                     yield return new ExeModule(path);
         }
 
         public IEnumerable<LibModule> Lib()
         {
-            foreach(var path in Root.Files(Recurse, FS.Lib))
+            foreach(var path in Root.EnumerateFiles(Recurse, FS.Lib))
                 yield return new LibModule(path);
         }
 
@@ -62,10 +62,11 @@ namespace Z0
         {
             var managed = from module in Assemblies() select generalize(module);
             var native = from module in NativeDll() select generalize(module);
+            var lib = from module in Lib() select generalize(module);
             var obj = from module in Obj() select generalize(module);
             var exe = from module in Exe() select generalize(module);
             var pdb = from module in Pdb() select generalize(module);
-            return managed.Union(native).Union(obj).Union(exe).Union(pdb);
+            return managed.Union(native).Union(obj).Union(exe).Union(pdb).Union(lib);
         }
 
         public IEnumerable<PdbModule> Pdb()

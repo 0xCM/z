@@ -159,8 +159,8 @@ namespace Z0
             return count;
         }
 
-        public static unsafe PEReader pe(MemorySeg src)
-            => new PEReader(src.BaseAddress.Pointer<byte>(), src.Size);
+        public static unsafe EcmaReader create(MemoryAddress @base, ByteSize size)
+            => new (new PEReader(@base.Pointer<byte>(), size).GetMetadata());
 
         public static EcmaReader create(EcmaFile src)
             => new EcmaReader(src);
@@ -185,11 +185,14 @@ namespace Z0
 
         public ref readonly MetadataReader MetadataReader
         {
+            
             [MethodImpl(Inline)]
             get => ref MD;
         }
 
         readonly MemorySeg Segment;
+
+        GenericSignatureTypeProvider GSTP = new GenericSignatureTypeProvider();
 
         [MethodImpl(Inline)]
         public EcmaReader(Assembly src)

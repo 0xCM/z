@@ -30,14 +30,7 @@ namespace Z0
             for(var i=0u; i<count; i++)
             {
                 ref readonly var handle = ref skip(handles,i);
-                //var entry = MD.GetFieldDefinition(handle);
                 ReadFieldInfo(handle, f => seek(dst,i) = f);
-                // field.Token = EcmaTokens.token(handle);
-                // field.Offset = (uint)entry.GetOffset();
-                // field.Rva = entry.GetRelativeVirtualAddress();
-                // field.FieldName = MD.GetString(entry.Name);
-                // field.Attribs = entry.Attributes;
-                // field.Sig = ReadSigData(entry);
             }
             return dst;
         }
@@ -61,21 +54,5 @@ namespace Z0
             var size = MD.GetHeapSize(HeapIndex.String);
             return new EcmaName(seq, size, (Address32)offset, value);
         }
-
-        // public uint Rows(ReadOnlySpan<FieldDefinitionHandle> src, Span<EcmaFieldInfo> dst)
-        // {
-        //     var count = (uint)min(src.Length, dst.Length);
-        //     for(var i=0; i<count; i++)
-        //          Row(skip(src,i), ref seek(dst,i));
-        //     return count;
-        // }
-
-        // public ReadOnlySpan<EcmaFieldInfo> Rows(ReadOnlySpan<FieldDefinitionHandle> src)
-        // {
-        //     var count = (uint)src.Length;
-        //     var dst = span<EcmaFieldInfo>(count);
-        //     Rows(src,dst);
-        //     return dst;
-        // }
     }
 }

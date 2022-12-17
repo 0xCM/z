@@ -8,9 +8,6 @@ namespace Z0
     {
         class ServiceCache : AppServices<ServiceCache>
         {
-            public ProjectScripts ProjectScripts(IWfRuntime wf)
-                => Service<ProjectScripts>(wf);
-
             public ArchiveRegistry ArchiveRegistry(IWfRuntime wf)
                 => Service<ArchiveRegistry>(wf);            
 
@@ -40,9 +37,6 @@ namespace Z0
 
         public static ProcessMemory ProcessMemory(this IWfRuntime wf)
             => Services.ProcessMemory(wf);
-
-        public static ProjectScripts ProjectScripts(this IWfRuntime wf)
-            => Services.ProjectScripts(wf);
 
         public static ArchiveRegistry ArchiveRegistry(this IWfRuntime wf)
             => Services.ArchiveRegistry(wf);

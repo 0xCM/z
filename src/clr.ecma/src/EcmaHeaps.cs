@@ -29,10 +29,10 @@ namespace Z0
             where T : IEcmaHeap
                 => string.Format("{0,-20} | {1} | {2}", src.HeapKind, src.BaseAddress, src.Size);
 
-        public static Index<EcmaBlobHeap> blobs(ReadOnlySpan<Assembly> src)
+        public static Index<EcmaHeap> blobs(ReadOnlySpan<Assembly> src)
         {
             var count = src.Length;
-            var buffer = alloc<EcmaBlobHeap>(count);
+            var buffer = alloc<EcmaHeap>(count);
             ref var dst = ref first(buffer);
             for(var i=0; i<count; i++)
             {
@@ -43,10 +43,10 @@ namespace Z0
             return buffer;
         }
 
-        public static Index<EcmaGuidHeap> guids(ReadOnlySpan<Assembly> src)
+        public static Index<EcmaHeap> guids(ReadOnlySpan<Assembly> src)
         {
             var count = src.Length;
-            var buffer = alloc<EcmaGuidHeap>(count);
+            var buffer = alloc<EcmaHeap>(count);
             ref var dst = ref first(buffer);
             for(var i=0; i<count; i++)
             {
@@ -57,24 +57,24 @@ namespace Z0
             return buffer;
         }
 
-        public static Index<EcmaStringHeap> strings(ReadOnlySpan<Assembly> src)
+        public static Index<EcmaHeap> strings(ReadOnlySpan<Assembly> src)
         {
             var count = src.Length;
-            var buffer = alloc<EcmaStringHeap>(count*2);
+            var buffer = alloc<EcmaHeap>(count*2);
             ref var dst = ref first(buffer);
             var j=0;
             for(var i=0; i<count; i++)
             {
                 ref readonly var component = ref skip(src,i);
                 var reader = EcmaReader.create(component);
-                seek(dst,j++) = reader.ReadStringHeap(EcmaStringKind.System);
-                seek(dst,j++) = reader.ReadStringHeap(EcmaStringKind.User);
+                seek(dst,j++) = reader.StringHeapRef(EcmaStringKind.System);
+                seek(dst,j++) = reader.StringHeapRef(EcmaStringKind.User);
             }
             return buffer;
         }
 
         [MethodImpl(Inline), Op]
-        public static unsafe uint count(in EcmaStringHeap src)
+        public static unsafe uint count(in EcmaHeap src)
         {
             var counter = 0u;
             var pCurrent = src.BaseAddress.Pointer<char>();
@@ -88,7 +88,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static unsafe uint terminators(in EcmaStringHeap src, Span<uint> dst)
+        public static unsafe uint terminators(in EcmaHeap src, Span<uint> dst)
         {
             var counter = 0u;
             var pCurrent = src.BaseAddress.Pointer<char>();
@@ -103,7 +103,7 @@ namespace Z0
             return counter;
         }
 
-        public static Index<uint> terminators(in EcmaStringHeap src)
+        public static Index<uint> terminators(in EcmaHeap src)
         {
             var dst = alloc<uint>(count(src));
             terminators(src,dst);

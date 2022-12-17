@@ -9,11 +9,11 @@ namespace Z0
     partial class EcmaReader
     {
         [Op]
-        public EcmaBlobHeap ReadBlobHeap()
+        public EcmaHeap ReadBlobHeap()
         {
             var offset = HeapOffset(MetadataTokens.BlobHandle(0));
             var @base = Segment.BaseAddress + offset;
-            return new EcmaBlobHeap(@base, HeapSize(HeapIndex.Blob));
+            return new EcmaHeap(EcmaHeapKind.Blob, @base, HeapSize(HeapIndex.Blob));
         }
     }
 }

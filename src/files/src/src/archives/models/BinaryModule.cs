@@ -24,6 +24,7 @@ namespace Z0
         {
             get => Path.FileName;
         }
+
         public bool IsManaged
         {
             [MethodImpl(Inline)]

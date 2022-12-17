@@ -5,7 +5,7 @@
 namespace Z0
 {
     [ApiHost]
-    public sealed partial class ProcessControl : Control<ProcessControl>
+    public sealed class ProcessControl : Control<ProcessControl>
     {
         public static IControl Control()
             => Instance;    

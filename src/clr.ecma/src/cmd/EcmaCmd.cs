@@ -9,7 +9,7 @@ namespace Z0
     using static sys;
     using static Env;
 
-    class EcmaCmd : WfAppCmd<EcmaCmd>
+    partial class EcmaCmd : WfAppCmd<EcmaCmd>
     {
         Ecma Ecma => Wf.Ecma();
 
@@ -51,27 +51,27 @@ namespace Z0
             => EcmaEmitter.EmitLocatedMetadata(ApiAssemblies.Parts, AppDb.ApiTargets("ecma/hex"), 64);
 
         [CmdOp("ecma/emit/assembly-refs")]
-        void EmitAssmeblyRefs()
+        void EmitAssmeblyRefs(CmdArgs args)
             => EcmaEmitter.EmitAssemblyRefs(ApiAssemblies.Parts, AppDb.ApiTargets("ecma"));
 
         [CmdOp("ecma/emit/method-defs")]
-        void EmitMethodDefs()
+        void EmitMethodDefs(CmdArgs args)
             => EcmaEmitter.EmitMethodDefs(ApiAssemblies.Parts, AppDb.ApiTargets("ecma/methods.defs").Delete());
 
         [CmdOp("ecma/emit/member-refs")]
-        void EmitMemberRefs()
+        void EmitMemberRefs(CmdArgs args)
             => EcmaEmitter.EmitMemberRefs(ApiAssemblies.Parts, AppDb.ApiTargets("ecma/members.refs"));
 
         [CmdOp("ecma/emit/strings")]
-        void EmitStrings()
+        void EmitStrings(CmdArgs args)
             => EcmaEmitter.EmitStrings(ApiAssemblies.Parts, AppDb.ApiTargets("ecma/strings"));
 
         [CmdOp("ecma/emit/stats")]
-        void EmitStats()
+        void EmitStats(CmdArgs args)
             => EcmaEmitter.EmitRowStats(ApiAssemblies.Parts, AppDb.ApiTargets("ecma").Table<EcmaRowStats>());
 
         [CmdOp("ecma/emit/blobs")]
-        void EmitBlobs()
+        void EmitBlobs(CmdArgs args)
             => EcmaEmitter.EmitBlobs(ApiAssemblies.Parts, AppDb.ApiTargets("ecma/blobs"));
 
         [CmdOp("ecma/emit/msil")]
@@ -106,20 +106,17 @@ namespace Z0
             });
         }
 
+        void Mapped(MappedAssembly src)
+        {
+            var reader = src.MetadataReader();
+            Channel.Row(string.Format("{0,-8} | {1,-16} | {2,-12} | {3,-46} | {4}", src.Index, src.BaseAddress, src.FileSize, src.ContentHash, reader.AssemblyName().SimpleName(), FlairKind.StatusData));
+        }
+
         [CmdOp("ecma/md")]
         void EcmaMeta(CmdArgs args)
         {
-            var modules = Archives.modules(FS.dir(args[0])).Dll();
-            iter(modules, module => {
-                if(module.IsManaged)
-                {
-                    var assembly = Assembly.LoadFile(module.Path.Format());
-                    var md = Clr.metadata(assembly);
-                    Channel.Row(string.Format("{0,-32} | {1,-16} | {2}", assembly.GetSimpleName(), md.BaseAddress, md.Size));
-                }
-            });
-
-
+            using var map = new ModuleMap(Channel, Mapped);
+            map.Include(EcmaWokflows.sources());
         }
 
         static FilePath EcmaArchive(FilePath src)

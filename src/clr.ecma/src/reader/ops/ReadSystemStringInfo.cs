@@ -6,7 +6,7 @@ namespace Z0
 {
     partial class EcmaReader
     {
-        public uint ReadSystemStringInfo(List<EcmaStringDetail> dst)
+        public uint ReadSystemStringDetail(List<EcmaStringDetail> dst)
         {
             var reader = MD;
             int size = MD.GetHeapSize(HeapIndex.String);
