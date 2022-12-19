@@ -11,7 +11,7 @@ namespace Z0
         public static A shell<A>(bool catalog, params string[] args)
             where A : IAppShell, new()
         {
-            var wf = ApiRuntime.create(catalog, args);
+            var wf = ApiRuntime.create(args);
             var app = new A();
             app.Init(wf);
             return app;
@@ -21,7 +21,7 @@ namespace Z0
             where A : IAppShell, new()
             where C : IApiService<C>, new()
         {
-            var wf = ApiRuntime.create(catalog, args);
+            var wf = ApiRuntime.create(args);
             var channel = wf.Channel;
             var flow = channel.Running($"Creating api server");
             var app = new A();

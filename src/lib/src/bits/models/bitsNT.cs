@@ -13,7 +13,7 @@ namespace Z0
         const char DefaultSep = Chars.Comma;
 
         public static bool parse(string src, out bits<M,T> dst)
-            => BitParser.parse(src, out dst);
+            => BitsParser.parse(src, out dst);
 
         public T Packed;
 

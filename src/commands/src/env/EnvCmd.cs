@@ -147,20 +147,7 @@ namespace Z0
 
         [CmdOp("develop")]
         void Develop(CmdArgs args)
-        {
-            var cd = Env.cd();
-            var launcher = cd + FS.file("develop", FileKind.Cmd);
-            if(launcher.Exists)
-                CmdRunner.start(Channel, Cmd.args(launcher)); 
-            else
-            {
-                var workspaces = cd.Files(FS.ext("code-workspace"));
-                if(workspaces.IsNonEmpty)
-                    Tools.vscode(Channel, cd + workspaces[0].FileName);
-                else
-                    Tools.vscode(Channel, cd); 
-            }
-        }
+            => Tools.develop(Channel,args);
 
         [CmdOp("devenv")]
         void DevEnv(CmdArgs args)

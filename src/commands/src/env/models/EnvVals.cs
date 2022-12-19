@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Z0.Types;
     public class EnvVals
     {
         public sealed record class File : EnvVal<File>

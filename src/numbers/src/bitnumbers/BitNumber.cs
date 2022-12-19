@@ -98,7 +98,7 @@ namespace Z0
         public static bits<byte> parse<N>(string data, W8 w, N n = default)
             where N : unmanaged, ITypeNat
         {
-            BitParser.parse(data, n, out bits<byte> dst);
+            BitsParser.parse(data, n, out bits<byte> dst);
             return dst;
         }
 

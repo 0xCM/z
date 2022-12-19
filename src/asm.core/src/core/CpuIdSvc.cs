@@ -201,7 +201,7 @@ namespace Z0.Asm
         }
 
         public void ImportSources()
-            => Emit(CpuIdSvc.import(AppDb.DbIn("intel").Root));
+            => Emit(CpuIdSvc.import(AppDb.DbSources("intel").Root));
 
         void EmitBits(ReadOnlySpan<CpuIdRow> src)
         {

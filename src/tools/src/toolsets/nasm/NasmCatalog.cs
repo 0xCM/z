@@ -80,49 +80,15 @@ namespace Z0
 
         public ReadOnlySpan<NasmInstruction> RunEtl()
             => ImportInstructions(
-                AppDb.DbIn().Path(FS.file("nasm.instructions", FS.Txt)),
+                AppDb.DbSources().Path(FS.file("nasm.instructions", FS.Txt)),
                 AppDb.AsmDb().Targets("asm.refs").Table<NasmInstruction>()
                 );
 
         ReadOnlySpan<NasmInstruction> ImportInstructions(FilePath src, FilePath dst)
         {
             var instructions = ParseInstructions(src);
-            TableEmit(instructions, dst, ASCI);
+            Channel.TableEmit(instructions, dst, ASCI);
             return instructions;
         }
-
-        // public ReadOnlySpan<NasmInstruction> LoadInstructionImports()
-        //     => LoadInstructionImports(AppDb.DbOut().Targets("asm.refs").Table<NasmInstruction>());
-
-        // public ReadOnlySpan<NasmInstruction> LoadInstructionImports(FilePath src)
-        // {
-        //     using var reader = src.AsciLineReader();
-        //     var counter = 0u;
-        //     var dst = list<NasmInstruction>();
-        //     var line = AsciLineCover.Empty;
-        //     while(reader.Next(out line))
-        //     {
-        //         var splits = Asci.split(line,Chars.Pipe);// Content.Split(Chars.Pipe);
-        //         var count = splits.Length;
-        //         if(count != NasmInstruction.FieldCount)
-        //             Error(Tables.FieldCountMismatch.Format(NasmInstruction.FieldCount, count));
-
-        //         if(counter != 0)
-        //         {
-        //             var j=0u;
-        //             var record = new NasmInstruction();
-        //             DataParser.parse(skip(splits,j++), out record.Sequence);
-        //             record.Mnemonic = skip(splits,j++);
-        //             record.Operands = skip(splits,j++);
-        //             record.Encoding = skip(splits,j++);
-        //             record.Flags = skip(splits,j++);
-        //             dst.Add(record);
-        //         }
-
-        //         counter++;
-
-        //     }
-        //     return dst.ViewDeposited();
-        // }
     }
 }

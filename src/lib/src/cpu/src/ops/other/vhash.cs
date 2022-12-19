@@ -4,12 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-    using System.Runtime.Intrinsics;
-
-    using static Root;
-
     partial struct gcpu
     {
         [MethodImpl(Inline), Op, Closures(Closure)]
@@ -17,7 +11,7 @@ namespace Z0
             where T : unmanaged
         {
             var v = v64u(src);
-            return alg.hash.combine(cpu.vcell(v,0), cpu.vcell(v,1));
+            return sys.hash(cpu.vcell(v,0), cpu.vcell(v,1));
         }
 
         /// <summary>

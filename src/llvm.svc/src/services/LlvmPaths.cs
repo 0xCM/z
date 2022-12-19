@@ -15,7 +15,7 @@ namespace Z0.llvm
             => Targets().Targets(scope);
 
         public DbArchive Sources()
-            => AppDb.DbIn(llvm);
+            => AppDb.DbSources(llvm);
 
         public DbArchive Sources(string scope)
             => Sources().Sources(scope);
@@ -83,7 +83,7 @@ namespace Z0.llvm
             => AppDb.LlvmRoot();
         
         public IDbArchive LlvmSources(string scope)
-            => AppDb.DbIn(llvm).Sources(scope);
+            => AppDb.DbSources(llvm).Sources(scope);
 
         public IDbArchive Records(string project)
             => Sources("records").Sources(project);

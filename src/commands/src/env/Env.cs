@@ -8,22 +8,18 @@ namespace Z0
 
     using static sys;
 
-
     public interface IEnvironment
     {
         FolderPath CurrentDirectory {get;}
 
         ProcessId Pid {get;}
 
-        EnvVars Vars {get;}
-
-        
+        EnvVars Vars {get;}        
     }
 
     [ApiHost]
     public class Env
     {
-        
         public static IDbArchive ShellData => Env.cd().DbArchive().Scoped(".data");
 
         public static ProcessId pid() 

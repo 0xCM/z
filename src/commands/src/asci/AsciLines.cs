@@ -31,7 +31,7 @@ namespace Z0
             dst = Activator.CreateInstance(type);
             var counter = 0u;
             var line = AsciLineCover.Empty;
-            var members = Settings.members(type);
+            var members = SettingsApi.members(type);
             while(src.Next(out line))
             {
                 var content = line.Codes;
@@ -67,7 +67,7 @@ namespace Z0
             dst = new();
             var counter = 0u;
             var line = AsciLineCover.Empty;
-            var members = Settings.members<T>();
+            var members = SettingsApi.members<T>();
             while(src.Next(out line))
             {
                 var content = line.Codes;

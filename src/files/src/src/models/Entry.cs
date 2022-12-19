@@ -4,10 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static FS.Json;
+
     public readonly record struct FsEntry : IFsEntry<FsEntry>
     {
         const string FormatPattern = "{0}: {1}";
 
+        [JsonConverter(typeof(PathPartConverter))]
         public readonly PathPart Name;
 
         public readonly FileObjectKind Kind;

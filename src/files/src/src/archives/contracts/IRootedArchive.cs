@@ -4,20 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static FileKind;
-
     public interface IRootedArchive : IExistential, ILocatable<FolderPath>
     {
         FolderPath Root {get;}
-
-        IEnumerable<FileUri> Enumerate(string pattern, bool recursive = true)
-            => DbArchive.enumerate(Root, pattern, recursive);
-
-        IEnumerable<FileUri> Enumerate(bool recurse, params FileKind[] kinds)
-            => DbArchive.enumerate(Root, recurse, kinds);
-
-        IEnumerable<FileUri> Enumerate(bool recurse, params FileExt[] extensions)
-            => DbArchive.enumerate(Root, recurse, extensions);
 
         bool INullity.IsEmpty
             => Root.IsEmpty;
@@ -99,20 +88,23 @@ namespace Z0
         FilePath Path(FileName file)
             => DbFiles.Path(file);
 
+        FilePath Path(string name, FileExt ext)
+            => DbFiles.Path(name, ext);
+
         FilePath Path(string @class, string name, FileKind kind)
             => DbFiles.Path(@class, name, kind);
 
         string IExpr.Format()
             => DbFiles.Format();
 
-        Files ExeFiles()
-            => Files().Where(x => x.Is(Exe));
+        // Files ExeFiles()
+        //     => Files().Where(x => x.Is(Exe));
 
-        Files XmlFiles()
-            => Files().Where(x => x.Is(Xml));
+        // Files XmlFiles()
+        //     => Files().Where(x => x.Is(Xml));
 
-        Files DllFiles()
-            => Files().Where(x => x.Is(Dll));
+        // Files DllFiles()
+        //     => Files().Where(x => x.Is(Dll));
     }
 
     public interface IRootedArchive<R> : IRootedArchive

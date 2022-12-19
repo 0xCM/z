@@ -8,14 +8,21 @@ namespace Z0
 
     public class ApiRuntime : ApiRuntime<ApiRuntime>
     {        
-        public static A shell<A>(bool catalog, params string[] args)
-            where A : IAppShell, new()
+        public static IApiCatalog catalog(Assembly[] src)
         {
-            var wf = ApiRuntime.create(catalog, args);
-            var app = new A();
-            app.Init(wf);
-            return app;
-        }                    
+            var count = src.Length;
+            var parts = list<IPart>();
+            for(var i=0; i<count; i++)
+            {
+                if(part(skip(src,i), out var p))
+                    parts.Add(p);
+            }
+
+            return catalog(parts.Array());
+        }
+
+        public static IApiCatalog catalog()
+            => catalog(colocated(ExecutingPart.Assembly));
 
         public static ApiPartCatalog catalog(Assembly src)
             => new ApiPartCatalog(src.PartName(), src, complete(src), hosts(src), SvcHostTypes(src));
@@ -26,6 +33,100 @@ namespace Z0
             var id = src.PartName();
             return ApiHostTypes(src).Select(h => host(id, h));
         }
+
+        public static IWfRuntime create(string[] args, bool verbose = true)
+        {
+            var factory = typeof(ApiRuntime);
+            try
+            {
+                var ts = now();
+                var clock = Time.counter(true);
+                if(verbose)
+                    term.emit(Events.running(factory, InitializingRuntime));
+                var control = ExecutingPart.Assembly;
+                var id = control.Id();
+                var dst = new WfInit();
+                dst.Args = args;
+                dst.LogConfig = Loggers.configure(id, AppSettings.Default.Logs());
+                dst.LogConfig.ErrorPath.CreateParentIfMissing();
+                dst.LogConfig.StatusPath.CreateParentIfMissing();
+
+                if(verbose)
+                    term.emit(Events.babble(factory, ConfiguredAppLogs.Format(dst.LogConfig)));
+
+                dst.Tokens = TokenDispenser.Service;
+                dst.EventBroker = Events.broker(dst.LogConfig);
+                
+                if(verbose)
+                    term.emit(Events.babble(factory, "Created event broker"));
+
+                dst.Host = new AppEventSource(typeof(WfRuntime));
+                
+                if(verbose)
+                    term.emit(Events.babble(factory, "Created host"));
+
+                dst.EmissionLog = Loggers.emission(control, timestamp());
+
+                if(verbose)
+                    term.emit(Events.babble(factory, ConfiguredEmissionLogs.Format(dst.EmissionLog)));
+
+                var wf = new WfRuntime(dst);
+                if(verbose)
+                    term.emit(Events.ran(factory, AppMsg.status(InitializedRuntime.Format(clock.Elapsed()))));
+                return wf;
+            }
+            catch(Exception e)
+            {
+                term.emit(Events.error(factory, e));
+                throw;
+            }
+        }
+        
+        public static ReadOnlySeq<ServiceSpec> services(Assembly[] src)
+        {
+            var dst = list<ServiceSpec>();
+            var types = src.Types().Tagged<ServiceCacheAttribute>().Concrete().ToSeq();
+            for(var i=0; i<types.Count; i++)
+            {
+                ref readonly var type = ref types[i];
+                var factories = type.PublicInstanceMethods().Concrete().Where(m => m.ReturnType.Reifies<IAppService>());
+                dst.Add(new AppServiceSpec(type,factories));
+            }
+
+            return dst.Array();
+        }
+
+        public static Assembly[] colocated(Assembly src)
+            => assemblies(FS.path(src.Location).FolderPath);
+
+        public static Assembly[] assemblies(FolderPath src)
+        {
+            var dst = list<Assembly>();
+            var candidates = libs(src);
+            foreach(var path in candidates)
+            {
+                var assembly = Assembly.LoadFrom(path.Name);
+                if(assembly.PartName().IsNonEmpty)
+                    dst.Add(assembly);
+            }
+
+            return dst.ToArray();
+        }
+
+        public static bool part(Assembly src, out IPart dst)
+        {
+            var attempt = src.GetTypes().Where(t => t.Reifies<IPart>() && !t.IsAbstract).Map(t => (IPart)Activator.CreateInstance(t));
+            if(attempt.Length != 0)
+            {
+                dst = sys.first(attempt);
+                return true;
+            }
+            else
+            {
+                 dst = default;
+                 return false;
+            }
+        }    
 
         [Op]
         static IApiHost host(PartName part, Type type)
@@ -69,8 +170,18 @@ namespace Z0
             return buffer;
         }
 
-        public static IApiCatalog catalog()
-            => catalog(colocated(ExecutingPart.Assembly));
+        static IApiCatalog catalog(IPart[] src)
+        {
+            var catalogs = src.Select(x => catalog(x.Owner)).Where(c => c.IsIdentified);
+            var dst = new ApiRuntimeCatalog(
+                src,
+                src.Select(p => p.Owner),
+                new ApiPartCatalogs(catalogs),
+                catalogs.SelectMany(c => c.ApiHosts.Storage).Where(h => nonempty(h.HostUri.HostName)),
+                catalogs.SelectMany(x => x.Methods)
+                );
+            return dst;
+        }
 
         static IApiCatalog match(Assembly control, string[] args)
         {
@@ -90,123 +201,5 @@ namespace Z0
                 return catalog(matched.ToArray());
             }
         }
-
-        public static IWfRuntime create(string[] args)
-            => create(match(ExecutingPart.Assembly, args), args);
-
-        public static IWfRuntime create(bool catalog, params string[] args)
-        {            
-            if(catalog)
-                return create(args);
-            else
-                return create(ApiRuntimeCatalog.Empty, args);
-        }
-
-        public static IWfRuntime create(IApiCatalog src, string[] args)
-        {
-            var factory = typeof(ApiRuntime);
-            try
-            {
-                var ts = now();
-                var clock = Time.counter(true);
-                term.emit(Events.running(factory, InitializingRuntime));
-                var control = ExecutingPart.Assembly;
-                var id = control.Id();
-                var dst = new WfInit();
-                dst.Args = args;
-                dst.ApiCatalog = src;
-                dst.LogConfig = Loggers.configure(id, AppSettings.Default.Logs());
-                dst.LogConfig.ErrorPath.CreateParentIfMissing();
-                dst.LogConfig.StatusPath.CreateParentIfMissing();
-                term.emit(Events.babble(factory, ConfiguredAppLogs.Format(dst.LogConfig)));
-                dst.Tokens = TokenDispenser.Service;
-                dst.EventBroker = Events.broker(dst.LogConfig);
-                term.emit(Events.babble(factory, "Created event broker"));
-                dst.Host = new AppEventSource(typeof(WfRuntime));
-                term.emit(Events.babble(factory, "Created host"));
-                dst.EmissionLog = Loggers.emission(control, timestamp());
-                term.emit(Events.babble(factory, ConfiguredEmissionLogs.Format(dst.EmissionLog)));
-                var wf = new WfRuntime(dst);
-                term.emit(Events.ran(factory, AppMsg.status(InitializedRuntime.Format(clock.Elapsed()))));
-                return wf;
-            }
-            catch(Exception e)
-            {
-                term.emit(Events.error(factory, e));
-                throw;
-            }
-        }
-        
-        public static ReadOnlySeq<ServiceSpec> services(Assembly[] src)
-        {
-            var dst = list<ServiceSpec>();
-            var types = src.Types().Tagged<ServiceCacheAttribute>().Concrete().ToSeq();
-            for(var i=0; i<types.Count; i++)
-            {
-                ref readonly var type = ref types[i];
-                var factories = type.PublicInstanceMethods().Concrete().Where(m => m.ReturnType.Reifies<IAppService>());
-                dst.Add(new AppServiceSpec(type,factories));
-            }
-
-            return dst.Array();
-        }
-
-        public static Assembly[] colocated(Assembly src)
-            => assemblies(FS.path(src.Location).FolderPath);
-
-        public static Assembly[] assemblies(FolderPath src)
-        {
-            var dst = list<Assembly>();
-            var candidates = libs(src);
-            foreach(var path in candidates)
-            {
-                var assembly = Assembly.LoadFrom(path.Name);
-                if(assembly.PartName().IsNonEmpty)
-                    dst.Add(assembly);
-            }
-
-            return dst.ToArray();
-        }
-
-        static IApiCatalog catalog(IPart[] src)
-        {
-            var catalogs = src.Select(x => catalog(x.Owner)).Where(c => c.IsIdentified);
-            var dst = new ApiRuntimeCatalog(
-                src,
-                src.Select(p => p.Owner),
-                new ApiPartCatalogs(catalogs),
-                catalogs.SelectMany(c => c.ApiHosts.Storage).Where(h => nonempty(h.HostUri.HostName)),
-                catalogs.SelectMany(x => x.Methods)
-                );
-            return dst;
-        }
-
-        public static IApiCatalog catalog(Assembly[] src)
-        {
-            var count = src.Length;
-            var parts = list<IPart>();
-            for(var i=0; i<count; i++)
-            {
-                if(part(skip(src,i), out var p))
-                    parts.Add(p);
-            }
-
-            return catalog(parts.Array());
-        }
-
-        public static bool part(Assembly src, out IPart dst)
-        {
-            var attempt = src.GetTypes().Where(t => t.Reifies<IPart>() && !t.IsAbstract).Map(t => (IPart)Activator.CreateInstance(t));
-            if(attempt.Length != 0)
-            {
-                dst = sys.first(attempt);
-                return true;
-            }
-            else
-            {
-                 dst = default;
-                 return false;
-            }
-        }    
     }
 }

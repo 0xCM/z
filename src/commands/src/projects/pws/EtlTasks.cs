@@ -20,6 +20,6 @@ namespace Z0
             => EtlTargets(project).Table<T>(project.Format());
 
         public DbArchive EtlTargets(ProjectId src)
-            => AppDb.DbOut().Scoped("projects").Scoped(src.Format());
+            => AppDb.DbTargets().Scoped("projects").Scoped(src.Format());
     }
 }

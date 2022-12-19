@@ -6,7 +6,7 @@ namespace Z0
 {
     public interface INativeLiteral
     {
-        Name Name {get;}
+        @String Name {get;}
 
         ReadOnlySpan<byte> Data {get;}
     }

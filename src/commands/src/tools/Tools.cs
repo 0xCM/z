@@ -31,7 +31,24 @@ namespace Z0
             return new ToolCmd(tool, Cmd.identify(t), buffer);
         }        
 
+
         public static ref readonly Tools Service => ref Instance;
+
+        public static void develop(IWfChannel channel, CmdArgs args)
+        {
+            var cd = Env.cd();
+            var launcher = cd + FS.file("develop", FileKind.Cmd);
+            if(launcher.Exists)
+                CmdRunner.start(channel, Cmd.args(launcher)); 
+            else
+            {
+                var workspaces = cd.Files(FS.ext("code-workspace"));
+                if(workspaces.IsNonEmpty)
+                    vscode(channel, cd + workspaces[0].FileName);
+                else
+                    vscode(channel, cd); 
+            }
+        }
 
         public static Task<ExecToken> vscode<T>(IWfChannel channel, T target)
             => CmdRunner.start(channel, FS.path("code.exe"), Cmd.args(target));

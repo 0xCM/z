@@ -41,6 +41,18 @@ namespace Z0
         public DbArchive Tools()
             => folder(_Settings.Setting(SettingNames.DevTools));
 
+        public DbArchive DbSources()
+            => DbRoot().Scoped("sources");
+
+        public DbArchive DbSources(string scope)
+            => DbSources().Scoped(scope);
+
+        public DbArchive DbTargets()
+            => DbRoot().Scoped("targets");
+
+        public DbArchive DbTargets(string scope)
+            => DbTargets().Scoped(scope);
+
         public DbArchive DbIn()
             => DbRoot().Scoped("sources");
 
@@ -48,13 +60,13 @@ namespace Z0
             => DbRoot().Scoped("targets");
 
         public DbArchive DbOut(string scope)
-            => DbOut().Scoped(scope);
+            => DbTargets().Scoped(scope);
 
         public DbArchive Logs()
             => DbRoot().Scoped("logs");
 
         public DbArchive AsmDb()
-            => DbOut().Scoped("asm.db");
+            => DbTargets().Scoped("asm.db");
 
         public DbArchive AsmDb(string scope)
             => AsmDb().Scoped(scope);
@@ -77,17 +89,14 @@ namespace Z0
         public DbArchive Catalogs()
             => DbRoot().Scoped("catalogs");
 
-        public DbArchive DbTargets(string scope)
-            => DbOut().Scoped(scope);
-
         public DbArchive ApiTargets()
-            => DbOut().Scoped("api");
+            => DbTargets().Scoped("api");
 
         public DbArchive ApiTargets(string scope)
             => DbTargets($"api/{scope}");
 
         public DbArchive EtlTargets(ProjectId project)
-            => DbOut().Scoped("projects").Scoped(project.Format());
+            => DbTargets().Scoped("projects").Scoped(project.Format());
 
         public DbArchive SlnRoot()
             => Dev().Scoped("z0");
@@ -117,7 +126,7 @@ namespace Z0
             => Catalogs().Scoped(scope);
 
         public DbArchive DbIn(string scope)
-            => DbIn().Scoped(scope);
+            => DbSources().Scoped(scope);
 
         public DbArchive Logs(string scope)
             => Logs().Scoped(scope);

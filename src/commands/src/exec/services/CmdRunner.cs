@@ -8,6 +8,69 @@ namespace Z0
 
     public class CmdRunner
     {
+        public static Task<ExecToken> redirect(IWfChannel channel, FilePath tool, string args, FilePath dst)
+        {
+            ExecToken Run()
+            {
+                var counter = 0u;
+                var emitting = channel.EmittingFile(dst);
+                using var status = dst.Utf8Writer(true);
+                run(new SysIO(msg => { 
+                    status.WriteLine(msg);
+                    counter++;
+                }, 
+                msg => {
+                    channel.Error(msg);
+                }, 
+                () => EmptyString), 
+                Cmd.args(tool,args), 
+                dst.FolderPath);
+                return channel.EmittedFile(emitting, counter);
+            }
+            return sys.start(Run);
+        }
+
+        public static Task<ExecToken> redirect(IWfChannel channel, CmdArgs args)
+        {
+            ExecToken Run()
+            {
+                var c0Name=$"{Environment.ProcessId}.channels.0";
+                var c0Path = AppDb.Service.AppData().Path(c0Name, FileKind.Log);
+                var h0 = $"# {args} -> ${c0Path}";
+
+                var c1Name = $"{Environment.ProcessId}.channels.1";
+                var c1Path = AppDb.Service.AppData().Path(c1Name, FileKind.Log);
+                var h1 = $"# {args} -> ${c1Path}";
+                
+                using var c0 = c0Path.Utf8Writer(true);
+                c0.WriteLine($"# {c0Name}");
+                c0.WriteLine(h0);
+
+                using var c1 = c1Path.Utf8Writer(true);
+                c1.WriteLine($"# {c1Name}");
+                c1.WriteLine(h1);
+
+                void Channel0(string msg)
+                {
+                    channel.Row(msg, FlairKind.Data);
+                    c0.WriteLine(msg);
+                }
+
+                void Channel1(string msg)
+                {
+                    channel.Row(msg, FlairKind.StatusData);
+                    c1.WriteLine(msg);
+                }
+
+                var io = new SysIO(Channel0, Channel1);
+                var running = channel.Running($"{args} -> ({c0Path}, ${c1Path})");
+                run(io, args);
+                return channel.Ran(running, c0);
+            }
+
+            return sys.start(Run);
+        }
+
         [Op]
         public static void parse(ReadOnlySpan<TextLine> src, out ReadOnlySpan<CmdFlow> dst)
             => dst = flows(src);
@@ -74,46 +137,6 @@ namespace Z0
                 return false;
         }
 
-        public static Task<ExecToken> redirect(IWfChannel channel, CmdArgs args)
-        {
-            ExecToken Run()
-            {
-                var c0Name=$"{Environment.ProcessId}.channels.0";
-                var c0Path = AppDb.Service.AppData().Path(c0Name, FileKind.Log);
-                var h0 = $"# {args} -> ${c0Path}";
-
-                var c1Name = $"{Environment.ProcessId}.channels.1";
-                var c1Path = AppDb.Service.AppData().Path(c1Name, FileKind.Log);
-                var h1 = $"# {args} -> ${c1Path}";
-                
-                using var c0 = c0Path.Utf8Writer(true);
-                c0.WriteLine($"# {c0Name}");
-                c0.WriteLine(h0);
-
-                using var c1 = c1Path.Utf8Writer(true);
-                c1.WriteLine($"# {c1Name}");
-                c1.WriteLine(h1);
-
-                void Channel0(string msg)
-                {
-                    channel.Row(msg, FlairKind.Data);
-                    c0.WriteLine(msg);
-                }
-
-                void Channel1(string msg)
-                {
-                    channel.Row(msg, FlairKind.StatusData);
-                    c1.WriteLine(msg);
-                }
-
-                var io = new SysIO(Channel0, Channel1);
-                var running = channel.Running($"{args} -> ({c0Path}, ${c1Path})");
-                run(io, args);
-                return channel.Ran(running, c0);
-            }
-
-            return sys.start(Run);
-        }
 
         public static Task<ExecToken> start(IWfChannel channel, ISysIO io, CmdArgs spec, FolderPath? wd = null)
         {
@@ -125,81 +148,6 @@ namespace Z0
             }
 
             return sys.start(go);
-        }
-
-        public static void run(IWfChannel channel, string tool, string args, FilePath dst)
-        {
-            var emitting = channel.EmittingFile(dst);
-            using var status = dst.Utf8Writer(true);
-            var counter = 0u;
-
-            void OnStatus(string msg)
-            {
-                status.WriteLine(msg);
-                counter++;
-            }
-
-            void OnError(string msg)
-                => channel.Error(msg);
-
-            string Input()
-                => EmptyString;
-            
-            run(new SysIO(OnStatus, OnError, Input), Cmd.args(tool,args), dst.FolderPath);
-            channel.EmittedFile(emitting, counter);
-        }
-
-        public static ExecStatus run(ISysIO io, CmdArgs spec, FolderPath? wd = null)
-        {
-            var values = spec.Values();
-            Demand.gt(values.Count, 0u);
-            var name = values.First;
-            var args = values.ToSpan().Slice(1).ToArray();
-            var psi = new ProcessStartInfo(values.First, text.join(Chars.Space,args))
-            {
-                UseShellExecute = false,
-                RedirectStandardError = true,
-                RedirectStandardOutput = true,
-                ErrorDialog = false,
-                CreateNoWindow = true,
-                RedirectStandardInput = false,
-                WorkingDirectory = wd != null ? wd.Value.Format() : EmptyString
-            };
-
-            void OnStatus(object sender, DataReceivedEventArgs e)
-            {
-                if(sys.nonempty(e.Data))
-                    io.Status(e.Data);
-            }
-    
-            void OnError(object sender, DataReceivedEventArgs e)
-            {
-                if(sys.nonempty(e.Data))
-                    io.Error(e.Data);
-            }
-
-            var result = default(ExecStatus);
-            try
-            {                
-                using var process = sys.process(psi);
-                process.OutputDataReceived += OnStatus;
-                process.ErrorDataReceived += OnError;
-                process.Start();
-                result.StartTime = sys.now();
-                result.Id = process.Id;
-                process.BeginOutputReadLine();
-                process.BeginErrorReadLine();
-                process.WaitForExitAsync().Wait();                
-                result.HasExited = true;
-                result.ExitTime = sys.now();
-                result.Duration = result.ExitTime - result.StartTime;
-                result.ExitCode = process.ExitCode;
-            }
-            catch(Exception e)
-            {
-                io.Error(e.ToString());
-            }
-            return result;
         }
 
         public static ExecStatus status(ExecutingProcess src)
@@ -309,5 +257,58 @@ namespace Z0
             }   
             return sys.start(Run);
         }    
+
+        static ExecStatus run(ISysIO io, CmdArgs spec, FolderPath? wd = null)
+        {
+            var values = spec.Values();
+            Demand.gt(values.Count, 0u);
+            var name = values.First;
+            var args = values.ToSpan().Slice(1).ToArray();
+            var psi = new ProcessStartInfo(values.First, text.join(Chars.Space,args))
+            {
+                UseShellExecute = false,
+                RedirectStandardError = true,
+                RedirectStandardOutput = true,
+                ErrorDialog = false,
+                CreateNoWindow = true,
+                RedirectStandardInput = false,
+                WorkingDirectory = wd != null ? wd.Value.Format() : EmptyString
+            };
+
+            void OnStatus(object sender, DataReceivedEventArgs e)
+            {
+                if(sys.nonempty(e.Data))
+                    io.Status(e.Data);
+            }
+    
+            void OnError(object sender, DataReceivedEventArgs e)
+            {
+                if(sys.nonempty(e.Data))
+                    io.Error(e.Data);
+            }
+
+            var result = default(ExecStatus);
+            try
+            {                
+                using var process = sys.process(psi);
+                process.OutputDataReceived += OnStatus;
+                process.ErrorDataReceived += OnError;
+                process.Start();
+                result.StartTime = sys.now();
+                result.Id = process.Id;
+                process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
+                process.WaitForExitAsync().Wait();                
+                result.HasExited = true;
+                result.ExitTime = sys.now();
+                result.Duration = result.ExitTime - result.StartTime;
+                result.ExitCode = process.ExitCode;
+            }
+            catch(Exception e)
+            {
+                io.Error(e.ToString());
+            }
+            return result;
+        }
     }
 }

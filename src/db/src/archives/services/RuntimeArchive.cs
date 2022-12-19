@@ -28,7 +28,7 @@ namespace Z0
         public RuntimeArchive(FolderPath root)
             : base(root)
         {
-            Files = root.Files(false, Exe, Dll, Pdb, Json, Xml).Where(x => !x.Name.Contains("System.Private.CoreLib"));
+            Files = root.Files(false, Exe, Dll, Pdb, FS.ext("json"), Xml).Where(x => !x.Name.Contains("System.Private.CoreLib"));
         }
     }
 }

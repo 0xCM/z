@@ -73,11 +73,6 @@ namespace Z0
         public static FileExt IlData => ext(il, csv);
 
         /// <summary>
-        /// Defines the <see cref='json'/> <see cref='FileExt'/>
-        /// </summary>
-        public static FileExt Json => ext(json);
-
-        /// <summary>
         /// Defines the composite <see cref='djson'/> <see cref='FileExt'/>
         /// </summary>
         public static FileExt JsonDeps => ext(djson);

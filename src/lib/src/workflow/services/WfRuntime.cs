@@ -9,8 +9,6 @@ namespace Z0
     {
         public IEventBroker EventBroker {get;}
 
-        public IApiCatalog ApiCatalog {get;}
-        
         public PartName AppName {get;}
 
         public LogLevel Verbosity {get; private set;}
@@ -30,7 +28,6 @@ namespace Z0
             Tokens = init.Tokens;
             EventBroker = init.EventBroker;
             Verbosity = LogLevel.Status;
-            ApiCatalog = init.ApiCatalog;
             AppName = ExecutingPart.Assembly.PartName();
             Emissions = init.EmissionLog;           
             Emitter = WfEmit.create(this, init.Host);

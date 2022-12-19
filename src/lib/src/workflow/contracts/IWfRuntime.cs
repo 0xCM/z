@@ -12,8 +12,6 @@ namespace Z0
 
         ReadOnlySeq<string> Args {get;}
 
-        IApiCatalog ApiCatalog {get;}
-
         IEventBroker EventBroker {get;}
 
         IEventSink EventSink {get;}

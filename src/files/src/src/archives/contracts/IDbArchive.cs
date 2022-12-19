@@ -6,6 +6,15 @@ namespace Z0
 {
     public interface IDbArchive : IRootedArchive
     {
+        IEnumerable<FileUri> Enumerate(string pattern, bool recursive = true)
+            => DbArchive.enumerate(Root, pattern, recursive);
+
+        IEnumerable<FileUri> Enumerate(bool recurse, params FileKind[] kinds)
+            => DbArchive.enumerate(Root, recurse, kinds);
+
+        IEnumerable<FileUri> Enumerate(bool recurse, params FileExt[] extensions)
+            => DbArchive.enumerate(Root, recurse, extensions);
+
         DbArchive Metadata()
             => Targets("metadata");
 

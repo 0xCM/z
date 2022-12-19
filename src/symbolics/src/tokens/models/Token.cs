@@ -13,6 +13,13 @@ namespace Z0
 
         readonly string _Expr;
 
+        public Token()
+        {
+            Index = 0;
+            _Name = EmptyString;
+            _Expr = EmptyString;
+        }
+
         [MethodImpl(Inline)]
         public Token(uint key, string name, string expr)
         {
@@ -35,5 +42,7 @@ namespace Z0
 
         uint IToken.Index 
             =>  Index;
+
+        public static Token Empty => new Token();
     }
 }

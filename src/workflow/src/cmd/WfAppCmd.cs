@@ -21,14 +21,6 @@ namespace Z0
 
         ApiMd ApiMd => Wf.ApiMd();
 
-        // [CmdOp("sdk/catalog")]
-        // void Sdk(CmdArgs args)
-        // {
-        //     var src = FS.dir(args[0]);
-        //     var sdk = Sdks.sdk(src);
-        //     var modules = sdk.Modules;
-        //     iter(modules.NativeDll(), file => Write(file));
-        // }
 
         [CmdOp("api/tablegen")]
         void GenRecords()
@@ -72,7 +64,7 @@ namespace Z0
         {
             var tool = args[0].Value;
             var dst = AppDb.DbTargets("tools/help").Path(FS.file(tool, FileKind.Help));
-            CmdRunner.run(Channel, tool, args.Length > 1 ? args[1].Value : "--help", dst);
+            //CmdRunner.run(Channel, tool, args.Length > 1 ? args[1].Value : "--help", dst);
         }
 
         [CmdOp("archives")]        

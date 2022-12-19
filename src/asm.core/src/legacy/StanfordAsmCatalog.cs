@@ -26,7 +26,7 @@ namespace Z0.Asm
 
         public ReadOnlySpan<StokeAsmExportRow> ImportExported()
         {
-            var src = AppDb.DbIn().Table<StanfordInstruction>("asmcat");
+            var src = AppDb.DbSources().Table<StanfordInstruction>("asmcat");
             var doc = TextGrids.parse(src).Require();
             var data = doc.Rows;
             var count = data.Length;
@@ -39,7 +39,7 @@ namespace Z0.Asm
                 map(import, ref seek(buffer, i));
             }
 
-            var dst = AppDb.DbOut().Table<StokeAsmExportRow>("asmcat");
+            var dst = AppDb.DbTargets().Table<StokeAsmExportRow>("asmcat");
             var flow = EmittingTable<StokeAsmExportRow>(dst);
             var _count = Tables.emit(@readonly(buffer), dst);
             EmittedTable(flow, _count);
@@ -119,7 +119,7 @@ namespace Z0.Asm
         }
 
         public ReadOnlySpan<StanfordInstruction> LoadSource()
-            => LoadSource(AppDb.DbIn().Sources("asm.stanford").Path("stanford-asm-catalog",FileKind.Csv));
+            => LoadSource(AppDb.DbSources().Sources("asm.stanford").Path("stanford-asm-catalog",FileKind.Csv));
 
         public ReadOnlySpan<StanfordInstruction> RunEtl()
         {
@@ -141,7 +141,7 @@ namespace Z0.Asm
                 target.Sig = source.Sig;
                 target.FormExpr = new AsmFormInfo(source.OpCode,source.Sig);
             }
-            Channel.TableEmit(buffer, AppDb.DbOut().Targets("asm.refs").Table<StanfordFormInfo>());
+            Channel.TableEmit(buffer, AppDb.DbTargets().Targets("asm.refs").Table<StanfordFormInfo>());
         }
 
         Outcome parse(ushort seq, in TextLine src, ref StanfordInstruction dst)

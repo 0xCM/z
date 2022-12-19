@@ -8,13 +8,13 @@ namespace Z0
     {
         DbArchive Settings();        
 
-        DbArchive DbIn();
+        DbArchive DbSources();
+
+        DbArchive DbSources(string scope);
 
         DbArchive DbRoot();
 
-        DbArchive DbIn(string scope);
-
-        DbArchive DbOut();
+        DbArchive DbTargets();
 
         DbArchive DbTargets(string scope);
 

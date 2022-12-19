@@ -25,7 +25,7 @@ namespace Z0.llvm
                 {
                     ref readonly var inst = ref mapped[j];
                     var data = text.remove(Fenced.unfence(inst.OpCodeData, Fenced.Embraced),Chars.Comma, Chars.Space);
-                    BitParser.parse(data, n8, out bits<byte> bits);
+                    BitsParser.parse(data, n8, out bits<byte> bits);
                     dst.AppendLineFormat(RenderPattern, seq, map, inst.InstName, bits, data);
                 }
             }

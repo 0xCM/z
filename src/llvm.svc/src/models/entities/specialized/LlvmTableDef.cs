@@ -52,7 +52,7 @@ namespace Z0.llvm
         {
             bits<N,T> parse()
             {
-                if(BitParser.parse(this[attrib], out bits<N,T> b))
+                if(BitsParser.parse(this[attrib], out bits<N,T> b))
                     return b;
                 else
                     return bits<N,T>.Zero;

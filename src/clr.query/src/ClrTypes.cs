@@ -6,6 +6,21 @@ namespace Z0
 {
     public readonly struct ClrTypes
     {
+        /// <summary>
+        /// Returns a canonical non-null empty value
+        /// </summary>
+        /// <typeparam name="T">The value type</typeparam>
+        [MethodImpl(Inline)]
+        public static T empty<T>()
+        {
+            if(typeof(T) == typeof(string))
+                return sys.generic<T>(EmptyString);
+            else if(typeof(T) == typeof(Type))
+                return sys.generic<T>(typeof(void));
+            else
+                return default;
+        }
+
         public readonly struct Integers : IRuntimeTypeProvider
         {
             public Type[] Types => IntegerTypes;

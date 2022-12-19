@@ -11,7 +11,7 @@ set DeployMode=unpacked
 set DeployPath=%DevTools%\%BuildPrefix%\bin
 set LogOptions=-bl:%BuildLogs%\%BuildPrefix%.%ProjectName%.%DeployMode%.binlog
 set OutputOption=--output %DeployPath%
-set BuildProps=-p:PublishReadyToRun=true -p:DebugType=embedded -p:PublishDocumentationFiles=true -p:CopyLocalLockFileAssemblies=true -p:CopyDebugSymbolsFromPackages=true -p:CopyDocumentationFilesFromPackages=true
+set BuildProps=-p:PublishReadyToRun=true -p:DebugType=pdbonly -p:PublishDocumentationFiles=true -p:CopyLocalLockFileAssemblies=true -p:CopyDebugSymbolsFromPackages=true -p:CopyDocumentationFilesFromPackages=true
 set PublishApp=dotnet publish %ProjectPath% %OutputOption% %ConfigOption% %VerbosityOption% %FrameworkOption% %BuildProps% %LogOptions%
 call %PublishApp%
 

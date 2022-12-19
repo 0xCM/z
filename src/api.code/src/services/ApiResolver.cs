@@ -82,10 +82,10 @@ namespace Z0
             return buffer;
         }
 
-        public Index<ApiMemberInfo> ResolveParts(Index<PartId> src, Index<ResolvedPart> dst)
+        public Index<ApiMemberInfo> ResolveParts(IApiCatalog catalog, Index<PartId> src, Index<ResolvedPart> dst)
         {
             for(var i=0; i<src.Length; i++)
-                dst[i] = ResolvePart(src[i]);
+                dst[i] = ResolvePart(catalog,src[i]);
             var methods = alloc<ApiMemberInfo>(MethodCount(dst));
             Members(dst.View, methods);
             return methods;
@@ -108,12 +108,12 @@ namespace Z0
             }
         }
 
-        public ReadOnlySpan<ApiMemberInfo> ResolveParts(params PartName[] parts)
+        public ReadOnlySpan<ApiMemberInfo> ResolveParts(IApiCatalog src, params PartName[] parts)
         {
             var count = parts.Length;
             var buffer = list<ResolvedPart>();
             for(var i=0; i<count; i++)
-                buffer.Add(ResolvePart(skip(parts,i)));
+                buffer.Add(ResolvePart(src, skip(parts,i)));
 
             var kMethods = 0u;
             iter(buffer, p => kMethods += (uint)p.MethodCount);
@@ -155,9 +155,9 @@ namespace Z0
             return counter;
         }
 
-        public ResolvedPart ResolvePart(PartName name)
+        public ResolvedPart ResolvePart(IApiCatalog src, PartName name)
         {
-            if(Wf.ApiCatalog.Assembly(name, out var a))
+            if(src.Assembly(name, out var a))
                 return ResolvePart(a, out _);
             else
                 return ResolvedPart.Empty;
@@ -196,15 +196,15 @@ namespace Z0
             return dst.ViewDeposited();
         }
 
-        public ReadOnlySpan<ResolvedPart> ResolveParts(ReadOnlySpan<PartId> src)
+        public ReadOnlySpan<ResolvedPart> ResolveParts(IApiCatalog catalog, ReadOnlySpan<PartId> src)
         {
-            var flow = Wf.Running(string.Format("Resolving parts [{0}]", src.Delimit(Chars.Comma).Format()));
+            var flow = Channel.Running(string.Format("Resolving parts [{0}]", src.Delimit(Chars.Comma).Format()));
             var count = src.Length;
             var buffer = alloc<ResolvedPart>(count);
             ref var dst = ref first(buffer);
             for(var i=0; i<count; i++)
-                seek(dst, i) = ResolvePart(skip(src, i));
-            Wf.Ran(flow);
+                seek(dst, i) = ResolvePart(catalog, skip(src, i));
+            Channel.Ran(flow);
             return buffer;
         }
 
@@ -214,7 +214,7 @@ namespace Z0
             var location = FS.path(src.Location);
             var name = src.PartName();
             var catalog = ApiRuntime.catalog(src);
-            var flow = Wf.Running(string.Format("Resolving part {0}", name));
+            var flow = Channel.Running(string.Format("Resolving part {0}", name));
             var hosts = list<ResolvedHost>();
             foreach(var host in catalog.ApiTypes)
             {
@@ -243,7 +243,7 @@ namespace Z0
             }
 
             var result = new ResolvedPart(name, location, hosts.ToArray());
-            Wf.Ran(flow, string.Format("Resolved {0} members from {1}", counter, name));
+            Channel.Ran(flow, string.Format("Resolved {0} members from {1}", counter, name));
             return result;
         }
 
@@ -253,7 +253,7 @@ namespace Z0
 
             var location = FS.path(src.Owner.Location);
             var catalog = ApiRuntime.catalog(src.Owner);
-            var flow = Wf.Running(string.Format("Resolving part {0}", src.Id));
+            var flow = Channel.Running(string.Format("Resolving part {0}", src.Id));
             var hosts = list<ResolvedHost>();
 
             foreach(var host in catalog.ApiTypes)
@@ -283,7 +283,7 @@ namespace Z0
             }
 
             var result = new ResolvedPart(src.Id, location, hosts.ToArray());
-            Wf.Ran(flow, string.Format("Resolved {0} members from {1}", counter, src.Id));
+            Channel.Ran(flow, string.Format("Resolved {0} members from {1}", counter, src.Id));
             return result;
         }
 
@@ -291,7 +291,7 @@ namespace Z0
         {
             var counter = 0u;
 
-            var flow = Wf.Running(string.Format("Resolving {0} members", src.HostUri));
+            var flow = Channel.Running(string.Format("Resolving {0} members", src.HostUri));
             foreach(var method in ApiQuery.nongeneric(src))
             {
                 dst.Add(new ResolvedMethod(method, MemberUri(src.HostUri, method), ClrJit.jit(method)));
@@ -310,18 +310,18 @@ namespace Z0
                     }
                     catch(Exception e)
                     {
-                        Wf.Warn(e.Message);
+                        Channel.Warn(e.Message);
                     }
                 }
             }
 
-            Wf.Ran(flow, string.Format("Resolved {0} {1} members", counter, src.HostUri));
+            Channel.Ran(flow, string.Format("Resolved {0} {1} members", counter, src.HostUri));
             return counter;
         }
 
         public uint ResolveComplete(ApiCompleteType src, List<ResolvedMethod> dst)
         {
-            var flow = Wf.Running(string.Format("Resolving type {0}", src.HostUri));
+            var flow = Channel.Running(string.Format("Resolving type {0}", src.HostUri));
             var counter = 0u;
             foreach(var method in ApiQuery.methods(src, Exclusions))
             {
@@ -329,7 +329,7 @@ namespace Z0
                 counter++;
             }
 
-            Wf.Ran(flow, string.Format("Resolved {0} members from {1}", counter, src.HostUri));
+            Channel.Ran(flow, string.Format("Resolved {0} members from {1}", counter, src.HostUri));
             return counter;
         }
 

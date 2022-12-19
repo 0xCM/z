@@ -14,7 +14,7 @@ namespace Z0
     {
         const NumericKind Closure = UInt64k;
 
-        DbArchive Targets => AppDb.DbOut().Targets(polybits);
+        DbArchive Targets => AppDb.DbTargets().Targets(polybits);
 
         [CmdOp("api/emit/bitmasks")]
         void EmitApiBitMasks()

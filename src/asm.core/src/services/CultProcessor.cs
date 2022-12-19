@@ -24,7 +24,7 @@ namespace Z0
 
         public void RunEtl()
         {
-            var src = AppDb.DbIn().Path(cult, FileKind.Asm);
+            var src = AppDb.DbSources().Path(cult, FileKind.Asm);
             if(!src.Exists)
                 Emitter.Error($"{src.ToUri()} has gone missing");
             else

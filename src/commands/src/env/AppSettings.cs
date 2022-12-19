@@ -14,13 +14,13 @@ namespace Z0
         const string logs = nameof(logs);
 
         static AppSettings load()
-            => new AppSettings(Settings.load(SettingsRoot().Path(FS.file("z0.settings", FileKind.Csv))));
+            => new AppSettings(SettingsApi.load(SettingsRoot().Path(FS.file("z0.settings", FileKind.Csv))));
 
         public static T lookup<T>(SettingLookup src)
             where T : new()
         {
             var dst = new T();
-            var members = Settings.members<T>();
+            var members = SettingsApi.members<T>();
             for(var i=0; i<members.Count; i++)
             {
                 ref readonly var member = ref members[i];
@@ -71,13 +71,13 @@ namespace Z0
 
         public static AppSettings absorb(FilePath src)
         {
-            Data = new AppSettings(Settings.load(src));
+            Data = new AppSettings(SettingsApi.load(src));
             return Data;
         }
 
         public AppSettings Absorb(FilePath src)
         {
-            var settings = Settings.load(src);
+            var settings = SettingsApi.load(src);
             foreach(var setting in settings)
                 Data.Set(setting.Name, $"{setting.Value}");
             return Data;

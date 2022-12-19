@@ -10,8 +10,6 @@ namespace Z0
         
         public LogSettings LogConfig;
 
-        public IApiCatalog ApiCatalog;
-
         public TokenDispenser Tokens;
 
         public IEventBroker EventBroker;
