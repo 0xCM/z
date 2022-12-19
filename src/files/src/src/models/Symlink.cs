@@ -28,6 +28,11 @@ namespace Z0
             Kind = kind;
         }
 
+        public Hash32 Hash
+        {
+            [MethodImpl(Inline)]
+            get => Source.Hash | Target.Hash;
+        }
         public bool IsEmpty 
         {
             [MethodImpl(Inline)]
@@ -40,6 +45,11 @@ namespace Z0
             get => Source.IsEmpty && Target.IsEmpty;
         }
 
+        public bool Equals(Symlink src)
+            => Source == src.Source && Target == src.Target && Kind == src.Kind;
+
+        public override int GetHashCode()
+            => Hash;
         public string Format()
             => $"{Source} -> {Target}";
 

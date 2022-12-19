@@ -23,8 +23,8 @@ namespace Z0.Commands
         {
             Source = FsEntry.Empty;
             Target = FsEntry.Empty;
-            Overwrite = default;
-            Kind = 0;
+            Overwrite = true;
+            Kind = SymLinkKind.Directory;
         }
 
         [MethodImpl(Inline)]

@@ -18,7 +18,7 @@ namespace Z0
 
         [CmdOp("api/commands")]
         void EmitCommands()
-            => emit(Channel, Cmd.catalog(), ShellData.Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv));
+            => emit(Channel, ApiCmd.catalog(), ShellData.Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv));
 
         [CmdOp("api/version")]
         void ApiVersion()
@@ -26,7 +26,7 @@ namespace Z0
 
         [CmdOp("api/script")]
         void RunAppScript(CmdArgs args)
-            => Cmd.start(Channel, args);
+            => ApiCmd.start(Channel, args);
 
         [CmdOp("env/tools")]
         void EnvTools()

@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Free]
-    public interface ICmdTypeInfo
+    public interface IApiCmdDef
     {
         @string CmdName {get;}
 

@@ -25,7 +25,6 @@ namespace Z0
 
             var _result = x.Eval();
             Require.equal("abc, def, hij", _result);
-
         }
 
         public static PScript create(string name, string content)

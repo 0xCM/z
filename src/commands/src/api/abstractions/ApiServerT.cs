@@ -10,7 +10,7 @@ namespace Z0
     {
         protected AppDb AppDb => AppDb.Service;
 
-        protected Cmd Cmd => Wf.Cmd();
+        protected ApiCmd Cmd => Wf.ApiCmd();
 
         public override Type HostType
             => typeof(T);

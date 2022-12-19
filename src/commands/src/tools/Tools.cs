@@ -11,6 +11,35 @@ namespace Z0
     {
         static Tools Instance;
 
+        [MethodImpl(Inline), Op]
+        public static ToolCmdLine cmdline(Tool tool, CmdModifier modifier, params string[] src)
+            => new ToolCmdLine(tool, modifier, new CmdLine(src));
+
+        [MethodImpl(Inline), Op]
+        public static ToolCmdLine cmdline(Tool tool, params string[] src)
+            => new ToolCmdLine(tool, new CmdLine(src));
+
+        [MethodImpl(Inline), Op]
+        public static ToolScript script(FilePath src, CmdVars vars)
+            => new ToolScript(src, vars);
+
+        public static string format(IToolCmd src)
+        {
+            var count = src.Args.Count;
+            var buffer = text.buffer();
+            buffer.AppendFormat("{0}{1}", src.Tool, Chars.LParen);
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var arg = ref src.Args[i];
+                buffer.AppendFormat(RP.Assign, arg.Name, arg.Value);
+                if(i != count - 1)
+                    buffer.Append(", ");
+            }
+
+            buffer.Append(Chars.RParen);
+            return buffer.Emit();
+        }
+
         [Op, Closures(UInt64k)]
         public static ToolCmd cmd<T>(Tool tool, in T src)
             where T : struct
@@ -28,9 +57,8 @@ namespace Z0
                 ref readonly var fv = ref skip(values,i);
                 seek(target,i) = new ToolCmdArg(fv.Field.Name, fv.Value?.ToString() ?? EmptyString);
             }
-            return new ToolCmd(tool, Cmd.identify(t), buffer);
+            return new ToolCmd(tool, ApiCmd.identify(t), buffer);
         }        
-
 
         public static ref readonly Tools Service => ref Instance;
 

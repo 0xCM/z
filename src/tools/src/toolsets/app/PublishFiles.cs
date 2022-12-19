@@ -2,26 +2,23 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0.Commands
 {
-    partial class ApiCmdDefs
+    public struct PublishFiles : IFlowCmd<FolderPath,FolderPath>
     {
-        public struct PublishFiles : IFlowCmd<FolderPath,FolderPath>
-        {
-            public Actor Actor;
+        public Actor Actor;
 
-            public FolderPath Source;
+        public FolderPath Source;
 
-            public FolderPath Target;
+        public FolderPath Target;
 
-            IActor IFlowCmd.Actor
-                => Actor;
+        IActor IFlowCmd.Actor
+            => Actor;
 
-            FolderPath IFlowCmd<FolderPath, FolderPath>.Source
-                => Source;
+        FolderPath IFlowCmd<FolderPath, FolderPath>.Source
+            => Source;
 
-            FolderPath IFlowCmd<FolderPath, FolderPath>.Target
-                => Target;
-        }
+        FolderPath IFlowCmd<FolderPath, FolderPath>.Target
+            => Target;
     }
 }

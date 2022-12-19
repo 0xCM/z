@@ -23,7 +23,6 @@ namespace Z0
 
         bool Value(string name, out V value);
 
-
         ReadOnlySpan<V> Values {get;}
     }
 }

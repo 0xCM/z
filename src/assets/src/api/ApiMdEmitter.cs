@@ -14,9 +14,11 @@ namespace Z0
 
         IWfChannel Channel;
 
+        IWfRuntime Wf;
         public static ApiMdEmitter init(IWfRuntime wf, IDbArchive dst)
         {
             var svc = new ApiMdEmitter();
+            svc.Wf = wf;
             svc.Channel = wf.Channel;
             svc.Target = dst;
             svc.Comments = wf.ApiComments();
@@ -122,7 +124,7 @@ namespace Z0
                 () => EmitApiDeps(),
                 () => EmitApiTables(src),
                 () => EmitApiTokens(src),
-                () => EmitApiCommands(src),
+                () => EmitCmdDefs(src),
                 () => EmitApiTypes(src),
                 () => EmitTypeLists(src),
                 () => EmitApiSymbols(src),
@@ -183,10 +185,10 @@ namespace Z0
         public void EmitApiLiterals(params Assembly[] src)
             => EmitApiLiterals(apilits(src));
 
-        public void EmitApiCommands(params Assembly[] src)
-        {
-            Channel.TableEmit(Cmd.fields(Cmd.discover(src)),Target.Table<CmdFieldRow>());
-        }
+        ApiCmd ApiCmd => Wf.ApiCmd();
+
+        public void EmitCmdDefs(params Assembly[] src)
+            => ApiCmd.EmitCmdDefs(src, Target);
 
         public void EmitApiTypes(Assembly[] src)
             => Channel.TableEmit(DataTypeInfo(src), Target.Table<ApiTypeInfo>());

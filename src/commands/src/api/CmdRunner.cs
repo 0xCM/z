@@ -75,6 +75,19 @@ namespace Z0
         public static void parse(ReadOnlySpan<TextLine> src, out ReadOnlySpan<CmdFlow> dst)
             => dst = flows(src);
 
+        static string join(CmdArgs args)
+        {
+            var dst = text.emitter();
+            for(var i=0; i<args.Count; i++)
+            {
+                if(i != 0)
+                    dst.Append(Chars.Space);
+                dst.Append(args[i].Value);
+            }
+
+            return dst.Emit();
+        }
+
         static ReadOnlySpan<CmdFlow> flows(ReadOnlySpan<TextLine> src)
         {
             var count = src.Length;
@@ -213,7 +226,7 @@ namespace Z0
             var info = new ProcessStartInfo
             {
                 FileName = path.Format(),
-                Arguments = Cmd.join(args),
+                Arguments = join(args),
                 CreateNoWindow = true,
                 WorkingDirectory = context?.WorkingDir.Format() ?? Environment.CurrentDirectory,
                 RedirectStandardError = true,

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class CmdTypeInfo : ICmdTypeInfo, IComparable<CmdTypeInfo>
+    public class ApiCmdDef : IApiCmdDef, IComparable<ApiCmdDef>
     {
         public readonly @string CmdName;
 
@@ -13,7 +13,7 @@ namespace Z0
         public readonly ReadOnlySeq<CmdField> Fields;
 
         [MethodImpl(Inline)]
-        public CmdTypeInfo(string name, Type type, CmdField[] fields)
+        public ApiCmdDef(string name, Type type, CmdField[] fields)
         {
             CmdName = name;
             Source = Require.notnull(type);
@@ -32,20 +32,20 @@ namespace Z0
             get => Fields.Count;
         }
 
-        Type ICmdTypeInfo.Source
+        Type IApiCmdDef.Source
             => Source;
 
-        ReadOnlySeq<CmdField> ICmdTypeInfo.Fields
+        ReadOnlySeq<CmdField> IApiCmdDef.Fields
             => Fields;
 
-        @string ICmdTypeInfo.CmdName
+        @string IApiCmdDef.CmdName
             => CmdName;
 
-        public int CompareTo(CmdTypeInfo src)
+        public int CompareTo(ApiCmdDef src)
             => CmdName.CompareTo(src.CmdName);
 
         public string Format()
-            => Cmd.format(this);
+            => ApiCmd.format(this);
 
         public override string ToString()
             => Format();
