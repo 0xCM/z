@@ -180,6 +180,9 @@ namespace Z0
         public int CompareTo(MemoryFile src)
             => BaseAddress.CompareTo(src.BaseAddress);
 
+        public Hash128 ContentHash()
+            => api.hash(this);
+
         MemoryAddress IMemoryFile.BaseAddress
             => BaseAddress;
 

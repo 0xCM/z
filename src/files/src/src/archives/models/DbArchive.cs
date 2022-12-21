@@ -6,15 +6,6 @@ namespace Z0
 {
     using static sys;
 
-    partial class XTend
-    {
-        public static IDbArchive DbArchive(this FolderPath root)
-            => new DbArchive(root);
-
-        public static string SearchPattern(this FileKind kind)
-            => kind.Ext().SearchPattern;
-    }
-
     public readonly record struct DbArchive : IDbArchive
     {
         public readonly FolderPath Root;
@@ -84,6 +75,9 @@ namespace Z0
 
         public DbArchive Targets()
             => Root;
+
+        public IEnumerable<RelativeFilePath> Relative(IEnumerable<FilePath> src)
+            => FS.relative(Root,src);
 
         public DbArchive Targets(string scope)
             => (new DbTargets(Root, scope)).Root;

@@ -8,7 +8,6 @@ namespace Z0
     {
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static ref RowAdapter<T> adapt<T>(in T src, ref RowAdapter<T> adapter)
-            where T : struct
         {
             adapter.Source = src;
             adapter.Index++;

@@ -7,6 +7,10 @@ namespace Z0
 {
     class ArchiveCmd : ApiService<ArchiveCmd>
     {
+        FileArchives FileArchives => Wf.FileArchives();
+
+        ArchiveRegistry Registry => Wf.ArchiveRegistry();
+
         [CmdOp("symlink")]
         void Link(CmdArgs args)
             => Archives.symlink(Wf, args);
@@ -22,5 +26,17 @@ namespace Z0
         [CmdOp("files")]
         void CatalogFiles(CmdArgs args)
             => Archives.catalog(Channel, args);
+
+        [CmdOp("nuget/pkg")]
+        void NugetFiles(CmdArgs args)
+            => Archives.nupkg(Channel, args);
+
+        [CmdOp("archives/injest")]
+        void InjestFiles(CmdArgs args)
+            => FileArchives.Injest(Archives.archive(FS.dir(args[0])), AppDb.Catalogs().Scoped("files"));
+
+        [CmdOp("nuget/stage")]
+        void DevPack(CmdArgs args)
+            => DevPacks.stage(Channel, PackageKind.Nuget, FS.dir(arg(args,0)));
     }
 }

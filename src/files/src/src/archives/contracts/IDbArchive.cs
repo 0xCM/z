@@ -6,6 +6,9 @@ namespace Z0
 {
     public interface IDbArchive : IRootedArchive
     {
+        IEnumerable<RelativeFilePath> Relative(IEnumerable<FilePath> src)
+            => FS.relative(Root, src);
+
         IEnumerable<FileUri> Enumerate(string pattern, bool recursive = true)
             => DbArchive.enumerate(Root, pattern, recursive);
 

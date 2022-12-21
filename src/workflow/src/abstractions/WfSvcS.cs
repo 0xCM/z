@@ -82,7 +82,7 @@ namespace Z0
             var result = Outcome.Success;
             var id = arg(args,0).Value;
             var script = FilePath.Empty;
-            result = ExecVarScript(id,script);
+            result = ExecVarScript(id, script);
             if(result.Fail)
                 return result;
             //var exe = AsmWs.ExePath(id);
@@ -97,7 +97,6 @@ namespace Z0
 
         Outcome ExecVarScript(string SrcId, FilePath script)
         {
-            const string ScriptId = "build-exe";
             var result = Outcome.Success;
             var vars = CmdVars.load(("SrcId", SrcId));
             var cmd = new CmdLine(script.Format(PathSeparator.BS));

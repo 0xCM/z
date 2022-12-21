@@ -75,12 +75,12 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static ToolCmdLine cmdline(Tool tool, CmdModifier modifier, params string[] src)
-            => new ToolCmdLine(tool, modifier, new CmdLine(src));
+        public static ToolCmdLine cmdline(FilePath tool, CmdModifier modifier, params string[] src)
+            => new ToolCmdLine(tool.Format(), modifier, new CmdLine(src));
 
         [MethodImpl(Inline), Op]
-        public static ToolCmdLine cmdline(Tool tool, params string[] src)
-            => new ToolCmdLine(tool, new CmdLine(src));
+        public static ToolCmdLine cmdline(FilePath tool, params string[] src)
+            => new ToolCmdLine(tool.Format(), new CmdLine(src));
 
         [MethodImpl(Inline), Op]
         public static ToolScript script(FilePath src, CmdVars vars)

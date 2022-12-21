@@ -4,12 +4,19 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using System.Linq;
+
     using static sys;
+    using System.Security.Cryptography;
 
     [ApiHost]
     public readonly struct MemoryFiles
     {
         const NumericKind Closure = UnsignedInts;
+
+        [MethodImpl(Inline), Op]
+        public static Hash128 hash(MemoryFile src)
+            => sys.@as<Hash128>(sys.span(MD5.HashData(src.View())));
 
         [MethodImpl(Inline), Op]
         public static MemoryFile map(FilePath path)
@@ -35,6 +42,9 @@ namespace Z0
             else
                 return MappedFiles.Empty;
         }
+
+        public static MappedFiles map(IEnumerable<FilePath> src)
+            => new MappedFiles(src.Select(map).Array());
 
         [MethodImpl(Inline), Op]
         public static Span<byte> edit(MemoryFile src)

@@ -27,10 +27,7 @@ namespace Z0
             => Home(tool).Script(name, kind);
 
         public SettingLookup LoadCfg(Tool tool)
-        {
-            var path = Home(tool).Script("tools", FileKind.Cfg);
-            return Settings.parse(path.ReadNumberedLines(), Chars.Eq);
-        }
+            => Settings.parse(Home(tool).Script("tools", FileKind.Cfg).ReadNumberedLines(), Chars.Eq);
 
         public ConstLookup<Actor,ToolProfile> InferProfiles(FolderPath src)
         {
@@ -125,7 +122,7 @@ namespace Z0
                 ref readonly var tool = ref profile.Id;
                 if(profile.HelpCmd.IsEmpty)
                     continue;
-                dst.Add(Cmd.cmdline(tool, string.Format("{0} {1}", profile.Executable.ToFilePath().Format(PathSeparator.BS), profile.HelpCmd)));
+                dst.Add(Cmd.cmdline(FS.path(tool.Format()), string.Format("{0} {1}", profile.Executable.ToFilePath().Format(PathSeparator.BS), profile.HelpCmd)));
             }
             dst.Sort();
             return dst.ToArray();

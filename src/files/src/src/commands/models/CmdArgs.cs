@@ -9,12 +9,26 @@ namespace Z0
     [ApiHost]
     public sealed class CmdArgs : Seq<CmdArgs,CmdArg>
     {
+        public CmdArgs()
+        {
+
+        }
+
+        [MethodImpl(Inline)]
+        public CmdArgs(CmdArg[] src)
+            : base(src)
+        {
+            Data = src;
+        }
+
         static CmdArg EmptyArg = CmdArg.Empty;
 
         public new CmdArg this[int i]
         {
             [MethodImpl(Inline)]
             get => i < Count ?  base[i] : EmptyArg;
+            [MethodImpl(Inline)]
+            set => base[i] = value;
         }
 
         [Op]
@@ -33,19 +47,19 @@ namespace Z0
         public CmdArgs Skip(uint count)
             => new CmdArgs(Data.Slice(count).ToArray());
 
-        public CmdArgs()
-        {
-
-        }
-
         public ReadOnlySeq<string> Values()
             => Data.Map(x => x.Value);
 
-        [MethodImpl(Inline)]
-        public CmdArgs(CmdArg[] src)
-            : base(src)
+        public CmdArgs Concat(CmdArgs src)
         {
-            Data = src;
+            var count = Count + src.Count;
+            var dst = new CmdArgs(alloc<CmdArg>(count));
+            var i=0u;
+            for(var j=0u; j<Count; j++)
+                dst[i++] = this[i];
+            for(var j=0; j< src.Count; j++)
+                dst[i++] = src[i];
+            return dst;
         }
 
         public override string Format()
@@ -67,10 +81,10 @@ namespace Z0
             }
         }
 
-        public string Join()
-            => Format();
-
         public static implicit operator CmdArgs(CmdArg[] src)
             => new CmdArgs(src);
+
+        public static CmdArgs operator +(CmdArgs a, CmdArgs b)
+            => a.Concat(b);
     }
 }

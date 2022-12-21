@@ -14,8 +14,7 @@ namespace Z0
         /// <typeparam name="T">The record type</typeparam>
         [Op, Closures(Closure)]
         public static ClrTableCell[] fields<T>()
-            where T : struct
-                => fields(typeof(T));
+            => fields(typeof(T));
 
         /// <summary>
         /// Discerns a <see cref='ClrTableCells'/> for a specified record type

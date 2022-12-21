@@ -10,7 +10,6 @@ namespace Z0
     {
         [Op, Closures(Closure)]
         public static string pairs<T>(in RowFormatSpec spec, in RowAdapter<T> src)
-            where T : struct
         {
             var dst = text.buffer();
             pairs(spec, src, dst);
@@ -19,7 +18,6 @@ namespace Z0
 
         [Op, Closures(Closure)]
         public static void pairs<T>(in RowFormatSpec spec, in RowAdapter<T> src, ITextBuffer dst)
-            where T : struct
         {
             var pattern = KvpPattern(spec);
             var fields = src.Fields.View;

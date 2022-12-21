@@ -99,6 +99,17 @@ namespace Z0
             iter(src.Files(FileKind.Cfg), file => Channel.Row(Env.cfg(file).Format()));    
         }        
 
+        [CmdOp("jobs/types")]
+        void ListJobTypes()
+        {
+            var db = AppSettings.Default.DbRoot();
+            Write(db.Root);
+            Write(RP.PageBreak80);
+            var jobs = db.Sources("jobs");
+            Write($"Jobs: {jobs.Root}");
+            jobs.Root.Folders(true).Iter(f => Write(f.Format()));
+        }
+
         [CmdOp("env/id")]
         void EvId(CmdArgs args)
         {
@@ -120,6 +131,10 @@ namespace Z0
             if(nonempty(msg))
                 Channel.Write(msg);            
         }
+
+        [CmdOp("version")]
+        void Version()
+            => Channel.Row($"[z0.{ExecutingPart.Name}-v{ExecutingPart.Assembly.AssemblyVersion()}]({ExecutingPart.Assembly.Path().ToUri()})");
 
         [CmdOp("env/args")]
         void CmdlLineArgs()
@@ -144,6 +159,19 @@ namespace Z0
             var files = root.Files(false);
             iter(files, f => Channel.Row(((FileUri)f)));
         }        
+
+        [CmdOp("settings")]
+        void ReadSettings(CmdArgs args)
+        {
+            if(args.IsEmpty)
+                Channel.Row(AppSettings.Default.Format());
+            else
+                Channel.Row(AppSettings.absorb(FS.path(args.First.Value)));
+        }
+
+        [CmdOp("services")]
+        void GetServices()
+            => Channel.Write(ApiRuntime.services(ApiAssemblies.Parts));
 
         [CmdOp("develop")]
         void Develop(CmdArgs args)

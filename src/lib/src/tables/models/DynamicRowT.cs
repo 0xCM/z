@@ -11,7 +11,6 @@ namespace Z0
     /// </summary>
     /// <typeparam name="T">The record type</typeparam>
     public struct DynamicRow<T>
-        where T : struct
     {
         /// <summary>
         /// The record fields

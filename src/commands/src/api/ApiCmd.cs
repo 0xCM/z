@@ -228,7 +228,6 @@ namespace Z0
             return dst;
         }
 
-
         static ReadOnlySeq<ApiCmdInfo> entries(CmdUriSeq src)    
         {
             var entries = alloc<ApiCmdInfo>(src.Count);

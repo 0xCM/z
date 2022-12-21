@@ -11,7 +11,6 @@ namespace Z0
     /// </summary>
     /// <typeparam name="T">The record type</typeparam>
     public struct RowAdapter<T>
-        where T : struct
     {
         public readonly ClrTableCells Fields
         {

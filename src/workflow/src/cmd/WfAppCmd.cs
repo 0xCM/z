@@ -21,7 +21,6 @@ namespace Z0
 
         ApiMd ApiMd => Wf.ApiMd();
 
-
         [CmdOp("api/tablegen")]
         void GenRecords()
         {
@@ -45,10 +44,6 @@ namespace Z0
         [CmdOp("api/tables")]
         void EmitApiTables()
             => ApiMd.Emitter(AppDb.ApiTargets()).EmitApiTables(ApiAssemblies.Parts);
-
-        [CmdOp("version")]
-        void Version()
-            => Channel.Row($"[z0.{ExecutingPart.Name}-v{ExecutingPart.Assembly.AssemblyVersion()}]({ExecutingPart.Assembly.Path().ToUri()})");
 
         [CmdOp("types/systems")]
         void TypeSys()
@@ -112,29 +107,7 @@ namespace Z0
                 //Channel.Row($"{token.Index},{token.Kind},{sys.@string(token.Name)}, {sys.@string(token.Expr)});
             }
         }
-
             
-        [CmdOp("env/paths")]
-        void ProcPaths()
-        {
-            var src = Env.process().ToLookup();
-            var names = src.Keys;
-            var dst = text.emitter();
-            iter(names, name => {
-                dst.AppendLine(src[name]);
-            });
-
-            Channel.Row(dst.Emit());
-        }
-
-        void CalcRelativePaths()
-        {
-            var @base = FS.dir("dir1");
-            var files = FS.dir("dir2").AllFiles;
-            var links = Markdown.links(@base,files);
-            iter(links, r=> Write(r.Format()));
-        }
-
         [CmdOp("scripts")]
         void Scripts(CmdArgs args)
             => iter(ProjectScripts.List(args), path => Emitter.Write(path.ToUri()));
@@ -142,18 +115,6 @@ namespace Z0
         [CmdOp("scripts/cmd")]
         void Script(CmdArgs args)
             => ProjectScripts.Start(args);
-
-        [CmdOp("jobs/types")]
-        void ListJobTypes()
-        {
-            var db = AppSettings.DbRoot();
-            Write(db.Root);
-            Write(RpOps.PageBreak80);
-            var jobs = db.Sources("jobs");
-            Write($"Jobs: {jobs.Root}");
-
-            jobs.Root.Folders(true).Iter(f => Write(f.Format()));
-        }
 
         [CmdOp("app/deploy")]
         void Deploy()
@@ -163,31 +124,16 @@ namespace Z0
             Archives.copy(Channel, src, dst);
         }
 
-        [CmdOp("settings")]
-        void ReadSettings(CmdArgs args)
-        {
-            if(args.IsEmpty)
-                Channel.Row(AppSettings.Format());
-            else
-                Channel.Row(AppSettings.absorb(FS.path(args.First.Value)));
-        }
-
-        [CmdOp("services")]
-        void GetServices()
-        {
-            Write(ApiRuntime.services(ApiAssemblies.Parts));
-        }
-
         [CmdOp("archives/register")]
         void RegisterWorkspace(CmdArgs args)
         {
             ArchiveRegistry.Register(arg(args,0).Value, FS.dir(arg(args,1).Value));
-            var entries = ArchiveRegistry.Entries();            
+            iter(ArchiveRegistry.Entries(), entry => Channel.Row(entry));            
         }
 
-        [CmdOp("env/mem-physical")]
+        [CmdOp("memory/working")]
         void WorkingSet()
-            => Write(((ByteSize)Environment.WorkingSet));
+            => Channel.Write(((ByteSize)Environment.WorkingSet));
 
         [CmdOp("memory/query")]
         void QueryMemory(CmdArgs args)
@@ -219,14 +165,6 @@ namespace Z0
         [CmdOp("memory/emit")]
         void EmitRegions()
             => ProcessMemory.EmitRegions(Process.GetCurrentProcess(), ApiPacks.create());
-
-        [CmdOp("nuget/pkg")]
-        void NugetFiles(CmdArgs args)
-            => Archives.nupkg(Channel, args);
-
-        [CmdOp("nuget/stage")]
-        void DevPack(CmdArgs args)
-            => DevPacks.stage(Channel, PackageKind.Nuget, FS.dir(arg(args,0)));
 
         [CmdOp("api/emit/impls")]
         void EmitImplMaps()

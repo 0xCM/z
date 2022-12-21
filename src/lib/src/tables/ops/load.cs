@@ -10,7 +10,6 @@ namespace Z0
     {
         [Op, Closures(Closure)]
         public static void load<T>(in T src, ref DynamicRow<T> dst)
-            where T : struct
         {
             var tr = __makeref(edit(src));
             for(var i=0u; i<dst.FieldCount; i++)

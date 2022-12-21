@@ -14,8 +14,7 @@ namespace Z0
         /// <param name="widths">The cell render widths</param>
         /// <typeparam name="T">The record type</typeparam>
         public static RowHeader header<T>(ReadOnlySpan<byte> widths, string delimiter = DefaultDelimiter)
-            where T : struct
-                => header(typeof(T), widths);
+            => header(typeof(T), widths);
 
         /// <summary>
         /// Creates a row header for parametrically-identified record type and uniform field width
@@ -23,8 +22,7 @@ namespace Z0
         /// <param name="fieldwidht">The uniform field width</param>
         /// <typeparam name="T">The record type</typeparam>
         public static RowHeader header<T>(byte fieldwidth, string delimiter = DefaultDelimiter)
-            where T : struct
-                => header(typeof(T), fieldwidth, delimiter);
+            => header(typeof(T), fieldwidth, delimiter);
 
         /// <summary>
         /// Creates a row header for a specified record type record type and uniform field width

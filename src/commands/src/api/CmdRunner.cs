@@ -8,6 +8,9 @@ namespace Z0
 
     public class CmdRunner
     {
+        public static CmdContext context(FolderPath? work = null, params EnvVar[] vars)
+            => new (work ?? Env.cd(), vars);
+
         public static Task<ExecToken> redirect(IWfChannel channel, FilePath tool, string args, FilePath dst)
         {
             ExecToken Run()
@@ -24,11 +27,15 @@ namespace Z0
                 }, 
                 () => EmptyString), 
                 Cmd.args(tool,args), 
-                dst.FolderPath);
+                context(dst.FolderPath));
                 return channel.EmittedFile(emitting, counter);
             }
             return sys.start(Run);
         }
+
+        [Op]
+        public static Task<ExecToken> redirect(IWfChannel channel, FilePath path, CmdArgs args, CmdVars vars, FolderPath work, Receiver<string> status, Receiver<string> error)
+            => start(channel, path, args, context(work, vars.Map(v => new EnvVar(v.Name, v.Value))));
 
         public static Task<ExecToken> redirect(IWfChannel channel, CmdArgs args)
         {
@@ -64,7 +71,7 @@ namespace Z0
 
                 var io = new SysIO(Channel0, Channel1);
                 var running = channel.Running($"{args} -> ({c0Path}, ${c1Path})");
-                run(io, args);
+                run(io, args, context());
                 return channel.Ran(running, c0);
             }
 
@@ -150,13 +157,12 @@ namespace Z0
                 return false;
         }
 
-
         public static Task<ExecToken> start(IWfChannel channel, ISysIO io, CmdArgs spec, FolderPath? wd = null)
         {
             ExecToken go()
             {
                 var running = channel.Running(spec);
-                var result = run(io, spec, wd);
+                var result = run(io, spec, context(wd));
                 return channel.Ran(running);
             }
 
@@ -196,14 +202,6 @@ namespace Z0
 
         public static CmdContext context()
             => new(Env.cd());
-
-        [Op]
-        public static Outcome run(CmdLine cmd, CmdVars vars, FolderPath work, Receiver<string> status, Receiver<string> error, out ReadOnlySpan<TextLine> response)
-        {
-            response = sys.empty<TextLine>();
-            var ctx = context(work,vars.Map(v => new EnvVar(v.Name, v.Value)));
-            return true;
-        }
 
         public static Task<ExecToken> start(IWfChannel channel, CmdArgs args, CmdContext? context = null)
             => start(channel, FS.path(args[0]), args.Skip(1), context);
@@ -271,7 +269,7 @@ namespace Z0
             return sys.start(Run);
         }    
 
-        static ExecStatus run(ISysIO io, CmdArgs spec, FolderPath? wd = null)
+        static ExecStatus run(ISysIO io, CmdArgs spec, CmdContext context)
         {
             var values = spec.Values();
             Demand.gt(values.Count, 0u);
@@ -285,8 +283,10 @@ namespace Z0
                 ErrorDialog = false,
                 CreateNoWindow = true,
                 RedirectStandardInput = false,
-                WorkingDirectory = wd != null ? wd.Value.Format() : EmptyString
+                WorkingDirectory = context.WorkingDir.Format(PathSeparator.FS)
             };
+
+            iter(context.EnvVars, v => psi.Environment.Add(v.VarName, v.VarValue));
 
             void OnStatus(object sender, DataReceivedEventArgs e)
             {
@@ -323,5 +323,58 @@ namespace Z0
             }
             return result;
         }
+
+        // static ExecStatus run(ISysIO io, CmdArgs spec, FolderPath? wd = null)
+        // {
+        //     var values = spec.Values();
+        //     Demand.gt(values.Count, 0u);
+        //     var name = values.First;
+        //     var args = values.ToSpan().Slice(1).ToArray();
+        //     var psi = new ProcessStartInfo(values.First, text.join(Chars.Space,args))
+        //     {
+        //         UseShellExecute = false,
+        //         RedirectStandardError = true,
+        //         RedirectStandardOutput = true,
+        //         ErrorDialog = false,
+        //         CreateNoWindow = true,
+        //         RedirectStandardInput = false,
+        //         WorkingDirectory = wd != null ? wd.Value.Format() : EmptyString
+        //     };
+
+        //     void OnStatus(object sender, DataReceivedEventArgs e)
+        //     {
+        //         if(sys.nonempty(e.Data))
+        //             io.Status(e.Data);
+        //     }
+    
+        //     void OnError(object sender, DataReceivedEventArgs e)
+        //     {
+        //         if(sys.nonempty(e.Data))
+        //             io.Error(e.Data);
+        //     }
+
+        //     var result = default(ExecStatus);
+        //     try
+        //     {                
+        //         using var process = sys.process(psi);
+        //         process.OutputDataReceived += OnStatus;
+        //         process.ErrorDataReceived += OnError;
+        //         process.Start();
+        //         result.StartTime = sys.now();
+        //         result.Id = process.Id;
+        //         process.BeginOutputReadLine();
+        //         process.BeginErrorReadLine();
+        //         process.WaitForExitAsync().Wait();                
+        //         result.HasExited = true;
+        //         result.ExitTime = sys.now();
+        //         result.Duration = result.ExitTime - result.StartTime;
+        //         result.ExitCode = process.ExitCode;
+        //     }
+        //     catch(Exception e)
+        //     {
+        //         io.Error(e.ToString());
+        //     }
+        //     return result;
+        // }
     }
 }
