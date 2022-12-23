@@ -8,10 +8,10 @@ namespace Z0
 
     public interface IDumpArchive : IRootedArchive
     {
-        IDbTargets DumpTargets(string scope)
-            => new DbTargets(Root, scope);
+        IDbArchive DumpTargets(string scope)
+            => new DbArchive(Root, scope);
 
-        IDbTargets DotNetTargets()
+        IDbArchive DotNetTargets()
             => DumpTargets(dotnet);
 
         FolderPath DotNetTargets(byte major, byte minor, byte revision)

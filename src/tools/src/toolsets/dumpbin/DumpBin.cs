@@ -79,16 +79,16 @@ namespace Z0
         }
         internal class Scripts
         {
-            public static ToolScript DumpObj(FilePath input, IDbTargets dst)
+            public static ToolScript DumpObj(FilePath input, IDbArchive dst)
                 => Cmd.script(dst.Path("dump-obj",FileKind.Cmd), vars(input.FolderPath, input.FileName, dst.Root));
 
-            public static ToolScript DumpDll(FilePath input, IDbTargets dst)
+            public static ToolScript DumpDll(FilePath input, IDbArchive dst)
                 => Cmd.script(dst.Path("dump-dll",FileKind.Cmd), vars(input.FolderPath, input.FileName, dst.Root));
 
-            public static ToolScript DumpExe(FilePath input, IDbTargets dst)
+            public static ToolScript DumpExe(FilePath input, IDbArchive dst)
                 => Cmd.script(dst.Path("dump-exe",FileKind.Cmd), vars(input.FolderPath, input.FileName, dst.Root));
 
-            public static ToolScript DumpLib(FilePath input, IDbTargets dst)
+            public static ToolScript DumpLib(FilePath input, IDbArchive dst)
                 => Cmd.script(dst.Path("dump-lib",FileKind.Cmd), vars(input.FolderPath, input.FileName, dst.Root));
 
             static CmdVars vars(FolderPath SrcDir, FileName SrcFile, FolderPath DstDir)
@@ -127,7 +127,7 @@ namespace Z0
             return dst;
         }
 
-        public static ReadOnlySeq<ToolScript> scripts(IDbSources src, FileKind kind, IDbTargets dst)
+        public static ReadOnlySeq<ToolScript> scripts(IDbArchive src, FileKind kind, IDbArchive dst)
         {
             var files = src.Files(kind);
             var count = files.Count;
@@ -158,7 +158,7 @@ namespace Z0
         public Identifier ScriptId(CmdName cmd, FileKind kind)
             => string.Format("{0}.{1}.{2}", Id, kind.Format(), CmdSymbols[cmd].Expr);
 
-        public CmdScript Script<T>(string name, CmdName cmd, IEnumerable<T> src, IDbTargets output)
+        public CmdScript Script<T>(string name, CmdName cmd, IEnumerable<T> src, IDbArchive output)
             where T : IBinaryModule
         {
             var emitter = text.emitter();
@@ -167,7 +167,7 @@ namespace Z0
             return ProcessControl.script(name, emitter.Emit());
         }
 
-        public CmdScriptExpr Expr(CmdName name, FilePath src, IDbTargets dst)
+        public CmdScriptExpr Expr(CmdName name, FilePath src, IDbArchive dst)
         {
             var subdir = dst.Root + FS.folder(src.FileName.WithoutExtension.Name);
             subdir.Create();
@@ -217,7 +217,7 @@ namespace Z0
                     _ => FileName.Empty
             };
 
-        public ReadOnlySeq<FilePath> GenScripts(IModuleArchive src, IDbTargets dst)
+        public ReadOnlySeq<FilePath> GenScripts(IModuleArchive src, IDbArchive dst)
         {
             var paths = list<FilePath>();
             var dll = src.NativeDll();
@@ -246,7 +246,7 @@ namespace Z0
             return paths.ToArray();
         }
 
-        FilePath GenScript<T>(CmdName cmd, IEnumerable<T> src, FileKind kind, IDbTargets dst)
+        FilePath GenScript<T>(CmdName cmd, IEnumerable<T> src, FileKind kind, IDbArchive dst)
             where T : IBinaryModule
         {
             var script = Script(ScriptId(cmd, kind), cmd, src, dst);

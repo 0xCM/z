@@ -61,9 +61,6 @@ namespace Z0
         Files Files(FileExt ext)
             => DbFiles.Files(ext);
 
-        FolderPaths Folders(bool recurse = false)
-            => Root.Folders(recurse);
-
         FolderPath Folder(string match)
             => Root.Folder(match);
 

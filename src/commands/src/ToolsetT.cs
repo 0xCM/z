@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {    
+    using System.Linq;
+    
     public abstract class Toolset<T>
         where T : Toolset<T>, new()
     {
@@ -40,7 +42,7 @@ namespace Z0
 
         public ReadOnlySeq<ToolWs> Tools()
         {
-            var src = Location.Folders(false).Where(f => !f.Name.StartsWith("."));
+            var src = Location.Folders(false).Where(f => !f.Name.StartsWith(".")).ToSeq();
             var count = src.Count;
             var dst = sys.alloc<ToolWs>(count);
             for(var i=0; i<count; i++)

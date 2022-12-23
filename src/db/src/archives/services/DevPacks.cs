@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     public class DevPacks
     {
         static AppSettings Settings => AppSettings.Default;
@@ -50,6 +48,5 @@ namespace Z0
 
         public static IDbArchive stage(PackageKind kind)
             => Settings.PkgRoot().Scoped(scope(kind));
-
     }
 }

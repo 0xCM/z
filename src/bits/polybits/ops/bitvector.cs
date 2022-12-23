@@ -8,7 +8,7 @@ namespace Z0
 
     partial class PolyBits
     {
-        public static Index<BfModel> bitvectors(IDbSources sources, string filter)
+        public static Index<BfModel> bitvectors(IDbArchive sources, string filter)
             => bitvectors(sources.Files(FileKind.Csv).Where(f => f.FileName.StartsWith(filter)));
 
         struct BvParser : IParser<object>

@@ -6,6 +6,12 @@ namespace Z0
 {
     public interface IDbArchive : IRootedArchive
     {
+        IEnumerable<FolderPath> Folders(bool recurse = false)
+            => Root.Folders(recurse);
+
+        IEnumerable<FolderPath> Folders(string match, bool recurse = false)
+            => Root.Folders(match, recurse);
+
         IEnumerable<RelativeFilePath> Relative(IEnumerable<FilePath> src)
             => FS.relative(Root, src);
 

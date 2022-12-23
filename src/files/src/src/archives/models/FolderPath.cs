@@ -69,19 +69,16 @@ namespace Z0
         public Files TopFiles
             => Directory.Exists(Name) ? FS.files(Directory.EnumerateFiles(Name).Map(FS.path)) : Z0.Files.Empty;
 
-        public FolderPaths Folders(string match, bool recurse)
-            => Directory.Exists(Name) ? Directory.EnumerateDirectories(Name, match, options(recurse)).Array().Select(FS.dir) : FolderPaths.Empty;
+        public IEnumerable<FolderPath> Folders(string match, bool recurse)
+            => Directory.Exists(Name) ? Directory.EnumerateDirectories(Name, match, options(recurse)).Select(FS.dir) : FolderPaths.Empty;
 
-        public FolderPaths Folders(bool recurse = false)
-            => Directory.Exists(Name) ? Directory.EnumerateDirectories(Name).Array().Select(FS.dir) : FolderPaths.Empty;
+        public IEnumerable<FolderPath> Folders(bool recurse = false)
+            => Directory.Exists(Name) ? Directory.EnumerateDirectories(Name, "*.*", options(recurse)).Select(FS.dir) : FolderPaths.Empty;
 
         public FolderPath Folder(string match)
-        {
-            var src = Folders(match,false);
-            return src.Count == 0 ? Empty : src.First;
-        }
+            => Folders(match, false).FirstOrDefault(FolderPath.Empty);
 
-        public FolderPaths TopFolders
+        public IEnumerable<FolderPath> TopFolders
             => Folders("*.*", false);
 
         /// <summary>

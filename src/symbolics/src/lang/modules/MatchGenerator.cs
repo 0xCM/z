@@ -8,7 +8,7 @@ namespace Z0
     
     public class MatchGenerator : AppService<MatchGenerator>
     {
-        public void GenMatcher(IDbTargets root, string scope)
+        public void GenMatcher(IDbArchive root, string scope)
         {
             var input = root.Targets(scope).Path(FS.file("matcher-a", FS.Txt));
             var lines = input.ReadNumberedLines();

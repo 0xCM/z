@@ -8,15 +8,26 @@ namespace Z0
     {
         public record class SlnProject
         {
-            public _FileUri Path;
+            public FilePath Path;
 
-            public string ProjectName;
+            public @string ProjectName;
 
             public Guid ProjectGuid;
 
             public Seq<Guid> Dependencies;
 
             public Seq<SlnProjectConfig> Configurations;
+
+            public SlnProject()
+            {
+                Path = FilePath.Empty;
+                ProjectName = @string.Empty;
+                Dependencies = Seq<Guid>.Empty;
+                Configurations = Seq<SlnProjectConfig>.Empty;
+                ProjectGuid = Guid.Empty;
+            }
+
+            public static SlnProject Empty => new();
         }
     }
 }

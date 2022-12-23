@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     public readonly ref struct SymSpanSpec
     {
         public readonly Identifier Name;

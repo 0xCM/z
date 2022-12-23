@@ -80,7 +80,7 @@ namespace Z0
             => FS.relative(Root,src);
 
         public DbArchive Targets(string scope)
-            => (new DbTargets(Root, scope)).Root;
+            => (new DbArchive(Root, scope)).Root;
 
         public DbArchive Sources()
             => Root;
@@ -88,7 +88,7 @@ namespace Z0
         public DbArchive Sources(string scope)
             => Root + FS.folder(scope);
 
-        public FolderPaths Folders(bool recurse = false)
+        public IEnumerable<FolderPath> Folders(bool recurse = false)
             => Root.Folders(recurse);
 
         public FolderPath Folder(string match)
@@ -166,7 +166,7 @@ namespace Z0
             => Root + FS.file(name, ext);
 
         public FilePath Path(string @class, string name, FileKind kind)
-            => new DbSources(Root, @class).Root + File(@class, name,kind);
+            => new DbArchive(Root, @class).Root + File(@class, name,kind);
 
         public FilePath Path(FileName file)
             => Root + file;

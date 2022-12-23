@@ -35,8 +35,8 @@ namespace Z0
         public FolderPath DefaultSymbolCache()
             => SymbolCacheRoot() + FS.folder(@default);
 
-        public IDbSources DotNetSymSources()
-            => new DbSources(SymbolCacheRoot(), dotnet);
+        public IDbArchive DotNetSymSources()
+            => new DbArchive(SymbolCacheRoot(), dotnet);
 
         public DbArchive DotNetSymbolSource(string name)
             => DotNetSymSources().Sources(name);

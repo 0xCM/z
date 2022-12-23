@@ -6,10 +6,10 @@ namespace Z0
 {
     partial class Build
     {
-        [Record(TableId)]
+        [Record(TableName)]
         public record struct SlnProjectConfig
         {
-            public const string TableId = "sln.project-config";
+            const string TableName = "sln.project-config";
 
             public string SimpleName;
 

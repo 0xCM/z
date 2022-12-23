@@ -61,36 +61,31 @@ namespace Z0
             {
                 ref readonly var input = ref projects[i];
                 ref var project = ref seek(dst,i);
+
+                project = SlnProject.Empty;
                 project.Path = FS.path(input?.AbsolutePath ?? EmptyString);
                 project.ProjectName = input?.ProjectName ?? EmptyString;
                 project.ProjectGuid = Guid.Parse(input.ProjectGuid);
                 if(input.Dependencies != null)
-                    project.Dependencies = input.Dependencies.Map(x => Guid.Parse(x));
-                else
-                    project.Dependencies = sys.empty<Guid>();
+                     project.Dependencies = input.Dependencies.Map(x => Guid.Parse(x));
+
                 if(input.ProjectConfigurations != null)
                 {
-                    var configs = input.ProjectConfigurations.Values.Index();
-                    project.Configurations = sys.alloc<SlnProjectConfig>(configs.Count);
-
-                    for(var j=0; j<configs.Count; j++)
-                        define(configs[i], ref project.Configurations[j]);
+                    var configs = list<SlnProjectConfig>();
+                    iter(input.ProjectConfigurations.Values, project => {
+                        configs.Add(new SlnProjectConfig{
+                            Build = project.IncludeInBuild,
+                            FullName = project.FullName,
+                            SimpleName = project.ConfigurationName,
+                            Platform = project.PlatformName
+                        });
+                    });
+                    project.Configurations = configs.ToSeq();
                 }
-                else
-                    project.Configurations = sys.empty<SlnProjectConfig>();
             }
+            sln.Projects = dst;
 
             return sln;
         }
-
-        static ref SlnProjectConfig define(in C.ProjectConfigurationInSolution src, ref SlnProjectConfig dst)
-        {
-            dst.Build = src.IncludeInBuild;
-            dst.FullName = src.FullName;
-            dst.SimpleName = src.ConfigurationName;
-            dst.Platform = src.PlatformName;
-            return ref dst;
-        }
-
     }
 }

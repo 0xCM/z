@@ -26,7 +26,7 @@ namespace Z0
         public void Emit(Index<BitMaskInfo> src)
             => Channel.TableEmit(src, AppDb.ApiTargets().Table<BitMaskInfo>());
 
-        public Index<BfModel> BvEmit(DbSources sources, string filter, FolderPath dst)
+        public Index<BfModel> BvEmit(IDbArchive sources, string filter, FolderPath dst)
             => BvEmit(PolyBits.bitvectors(sources, filter), dst);
 
         public Index<BfModel> BvEmit(Index<BfModel> src, FolderPath dst)

@@ -5,55 +5,6 @@
 namespace Z0
 {
     using static sys;
-
-    public abstract class WfAction<A>
-        where A : WfAction<A>
-    {
-        protected IWfRuntime Wf;
-
-        protected IWfChannel Channel;
-
-        public readonly string ActionName;
-
-        protected WfAction(IWfRuntime wf, string action)
-        {
-            Wf = wf;
-            Channel = wf.Channel;
-            ActionName = action;
-        }
-    }
-
-    public class MsBuildLoader : WfAction<MsBuildLoader>
-    {
-        MsBuild MsBuild => Wf.BuildSvc();
-
-        public MsBuildLoader(IWfRuntime wf)
-            : base(wf, "projects/load")
-        {
-            Wf = wf;
-        }
-
-        public Task<ExecToken> Start(IDbArchive src, Action<Build.ProjectSpec> dst)
-        {
-            ExecToken Worker()
-            {
-                using var running = Channel.Running(ActionName);
-                iter(src.Enumerate(true, FileKind.CsProj), uri => {
-                    try
-                    {
-                        var project = MsBuild.LoadProject(uri);
-                        dst(project);
-                    }
-                    catch(Exception e)
-                    {
-                        Channel.Error(e);
-                    }
-                });
-                return Channel.Ran(running);
-            }
-            return sys.start(Worker);
-        }
-    }
     
     class BuildCmd : WfAppCmd<BuildCmd>
     {
@@ -88,8 +39,7 @@ namespace Z0
             loader.Start(root,Receiver).Wait();        
         }
 
-
-        [CmdOp("projects/sln")]
+        [CmdOp("build/sln")]
         void BuildSln(CmdArgs args)
         {
             var src =  FS.path(args[0]);
@@ -136,13 +86,34 @@ namespace Z0
         [CmdOp("build/props")]
         void BuildProps(CmdArgs args)
         {
-            var sources = Archives.archive(Env.cd());
+            var sources = Archives.archive(FS.dir(args[0]));
             var files = sources.Files(FileKind.Props,true);
             iter(files, file =>{
+                try
+                {
+                    var project = BuildSvc.LoadProject(file);
+                    var data = project.Format();    
+                    Channel.Write(data);
+                    Channel.FileEmit(data, Env.ShellData.Path(file.FileName.WithoutExtension.Format(), FileKind.Cfg), (ByteSize)data.Length);
+                }
+                catch(Exception)
+                {
+                    Channel.Warn($"Unable to load {file}");
+                }
+            });
+        }
+
+        [CmdOp("build/csprojects")]
+        void CsProjects(CmdArgs args)
+        {
+            var sources = Archives.archive(FS.dir(args[0]));
+            var dst = Env.ShellData;
+            var files = sources.Enumerate(true, FileKind.CsProj);
+            iter(files, file => {
                 var project = BuildSvc.LoadProject(file);
                 var data = project.Format();    
                 Channel.Write(data);
-                FileEmit(data, AppDb.Env().Path(file.FileName.WithoutExtension.Format(), FileKind.Cfg), (ByteSize)data.Length);
+                FileEmit(data, dst.Path(file.FileName().WithoutExtension.Format(), FileKind.Cfg), (ByteSize)data.Length);
             });
         }
 
@@ -151,19 +122,25 @@ namespace Z0
         {
             var sources = Archives.archive(Env.cd());
             var files = sources.Files(FileKind.Props,true).Where(f => f.FileName.WithoutExtension.Name == "exports");
+            var dst = Env.ShellData;
             iter(files, file =>{
-                var project = BuildSvc.LoadProject(file);
-                var data = project.Format();    
-                Write(data);
-                FileEmit(data, AppDb.Env().Path(file.FileName.WithoutExtension.Format(), FileKind.Cfg), (ByteSize)data.Length);
+                try
+                {
+                    var project = BuildSvc.LoadProject(file);
+                    var data = project.Format();    
+                    Channel.Write(data);
+                    Channel.FileEmit(data, dst.Path(file.FileName.WithoutExtension.Format(), FileKind.Cfg), (ByteSize)data.Length);
+                }
+                catch(Exception)
+                {
+                    Channel.Warn($"Unable to load {file}");
+                }
             });
         }
 
         [CmdOp("dev/deps")]
         void DevImports()
         {
-            //var props = Dev.DirectoryProps(AppDb.DevProject("z0"));
-            //Write(props.Format());
             var deps = Dev.Deps("z0");
             foreach(var dep in deps)
             {
@@ -183,6 +160,5 @@ namespace Z0
             Channel.Write(data);
             Channel.FileEmit(data, AppDb.AppData().Path(src.FileName.WithoutExtension.Format(), FileKind.Cfg), (ByteSize)data.Length);
         }
-
     }
 }

@@ -61,7 +61,7 @@ namespace Z0
                 dst[i++] = src[i];
             return dst;
         }
-
+        
         public override string Format()
         {
             if(Count > 0)

@@ -10,7 +10,7 @@ namespace Z0
         {
             public SlnFile Path;
 
-            public IndexedSeq<SlnProject> Projects;
+            public Seq<SlnProject> Projects;
         }
     }
 }
