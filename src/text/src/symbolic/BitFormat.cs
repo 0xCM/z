@@ -11,6 +11,7 @@ namespace Z0
     public struct BitFormat
     {
         const string TableId = "bit.format";
+        
         /// <summary>
         /// Indicates whether leading zeros should be trimmed
         /// </summary>

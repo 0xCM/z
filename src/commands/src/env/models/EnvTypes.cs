@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Types;
+    using static TypeSystems;
 
     [TypeSystem(SystemName)]
     public class EnvTypes : TypeSystem<EnvTypes>
@@ -16,7 +16,6 @@ namespace Z0
         {
 
         }
-
 
         [TypeDef(SystemName,TypeName)]
         public sealed class File : TypeDef<File,FilePath,@string>

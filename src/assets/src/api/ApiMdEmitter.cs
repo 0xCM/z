@@ -36,11 +36,11 @@ namespace Z0
             iter(src, file => {
                 try
                 {
-                var types = file.Load().Types();
-                var @base = Archives.identifier(file.Path.FolderPath);
-                var filename = FS.file($"{@base}.{file.Path.FileName.WithoutExtension}", FileKind.List);
-                var path = Target.Path(filename);
-                emit(Channel, types, path);
+                    var types = file.Load().Types();
+                    var @base = Archives.identifier(file.Path.FolderPath);
+                    var filename = FS.file($"{@base}.{file.Path.FileName.WithoutExtension}", FileKind.List);
+                    var path = Target.Path(filename);
+                    emit(Channel, types, path);
                 }
                 catch(Exception)
                 {
@@ -169,7 +169,7 @@ namespace Z0
         {
             const string RenderPattern = "{0,-8} | {1,-8} | {2}";
             var cols = new string[]{"Seq", "Returns", "Target"};
-            var parsers = Parsers.contracted(src);
+            var parsers = ApiParsers.contracted(src);
             var emitter = text.emitter();
             emitter.AppendLineFormat(RenderPattern, cols);
             var i=0u;
@@ -191,7 +191,7 @@ namespace Z0
             => ApiCmd.EmitCmdDefs(src, Target);
 
         public void EmitApiTypes(Assembly[] src)
-            => Channel.TableEmit(ApiTypes.describe(ApiTypes.discover(src)), Target.Table<ApiTypeInfo>());
+            => Channel.TableEmit(ApiTypes.describe(ApiTypes.data(src)), Target.Table<ApiTypeInfo>());
 
         public void EmitPartList(params Assembly[] src)
         {
@@ -203,10 +203,10 @@ namespace Z0
         }
 
         public void EmitDataFlows(params Assembly[] src)
-            => Emit(ApiMd.CalcDataFlows(src));
+            => Emit(ApiTypes.flows(src));
 
         public void EmitApiTables(ReadOnlySeq<Assembly> src)
-            => Channel.TableEmit(ApiMd.CalcTableFields(Channel, src), Target.Table<ApiTableField>());
+            => Channel.TableEmit(ApiTypes.tablefields(src), Target.Table<ApiTableField>());
 
         public void EmitApiTokens(params Assembly[] src)
             => EmitApiTokens(CalcApiTokens(src));

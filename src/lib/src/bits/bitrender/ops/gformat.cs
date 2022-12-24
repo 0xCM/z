@@ -18,7 +18,7 @@ namespace Z0
         [Op, Closures(Closure)]
         public static string gformat<T>(T src, in BitFormat config)
             where T : struct
-                => format(sys.bytes(src), config);
+                => text.bits(sys.bytes(src), config);
 
         [Op, Closures(Closure)]
         public static string gformat<T>(ReadOnlySpan<T> src, BitFormat? config = null)

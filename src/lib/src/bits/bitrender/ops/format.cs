@@ -239,31 +239,6 @@ namespace Z0
             return text.format(slice(buffer, 0, count));
         }
 
-        public static string format(ReadOnlySpan<byte> src, in BitFormat config)
-        {
-            var count = src.Length*8;
-            var dst = span<char>(count);
-            dst.Fill(Chars.D0);
-            Require.invariant(config.MaxBitCount > 0);
-
-            render8x8(src, config.MaxBitCount, dst);
-
-            dst.Reverse();
-
-            var bs = new string(dst);
-
-            if(config.TrimLeadingZeros)
-                bs = bs.TrimStart(Chars.D0);
-
-            if(config.ZPad != 0)
-                bs = bs.PadLeft(config.ZPad, Chars.D0);
-
-            if(config.BlockWidth != 0)
-                bs = string.Join(config.BlockSep, bs.Partition(config.BlockWidth));
-
-            return config.SpecifierPrefix ? "0b" + bs : bs;
-        }
-
         [MethodImpl(Inline), Op]
         public static uint length(ReadOnlySpan<bit> src, BitFormat options)
         {

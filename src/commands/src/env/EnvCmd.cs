@@ -16,21 +16,33 @@ namespace Z0
             TableFlows.emit(channel, data, dst);
         }
 
+        [CmdOp("env/include")]
+        void EnvInclude()
+            => Env.path(Channel, EnvPathKind.Include, ShellData);
+
+        [CmdOp("env/path")]
+        void EnvPath()
+            => Env.path(Channel, EnvPathKind.FileSystem, ShellData);
+
+        [CmdOp("env/lib")]
+        void EnvLib()
+            => Env.path(Channel, EnvPathKind.Lib, ShellData);
+
         [CmdOp("api/commands")]
         void EmitCommands()
             => emit(Channel, ApiCmd.catalog(), ShellData.Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv));
 
         [CmdOp("api/version")]
         void ApiVersion()
-            => Channel.Write(typeof(Parts.Commands).Assembly.AssemblyVersion());
+            => Channel.Write(ExecutingPart.Assembly.AssemblyVersion());
+
+        [CmdOp("env/tools")]
+        void EnvTools()
+            => Tools.emit(Channel, Tools.Service.Known, ShellData);
 
         [CmdOp("api/script")]
         void RunAppScript(CmdArgs args)
             => ApiCmd.start(Channel, args);
-
-        [CmdOp("env/tools")]
-        void EnvTools()
-            => Z0.Tools.emit(Channel, Tools.Service.Known, ShellData);
 
         [CmdOp("env/stack")]
         void Stack()
@@ -68,17 +80,6 @@ namespace Z0
         void ShowCurrentCore()
             => Emitter.Write(Env.cpucore());
 
-        [CmdOp("env/include")]
-        void EnvInclude()
-            => Env.path(Channel, EnvPathKind.Include, ShellData);
-
-        [CmdOp("env/path")]
-        void EnvPath()
-            => Env.path(Channel, EnvPathKind.FileSystem, ShellData);
-
-        [CmdOp("env/lib")]
-        void EnvLib()
-            => Env.path(Channel, EnvPathKind.Lib, ShellData);
 
         [CmdOp("env/tid")]
         void ShowThread()

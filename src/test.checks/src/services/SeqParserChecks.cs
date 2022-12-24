@@ -25,9 +25,9 @@ namespace Z0
             const string Input = "323,3333,33,1";
             const char Delimiter = ',';
             const byte SegCount = 4;
-            var parser = Parsers.splitter(Delimiter);
+            var parser = ApiParsers.splitter(Delimiter);
             var input = edit(span(Input));
-            Parsers.split(parser, input, out var segments);
+            ApiParsers.split(parser, input, out var segments);
             return segments;
         }
 
@@ -38,9 +38,9 @@ namespace Z0
             const char Delimiter = '.';
             const byte SegCount = 6;
 
-            var parser = Parsers.splitter<ushort>(Delimiter);
+            var parser = ApiParsers.splitter<ushort>(Delimiter);
             var input = uint16(edit(span(Input)));
-            Parsers.split(parser, input, out var segments);
+            ApiParsers.split(parser, input, out var segments);
             return segments;
         }
 
@@ -49,9 +49,9 @@ namespace Z0
         {
             const char Delimiter = '.';
             const byte SegCount = 6;
-            var parser = Parsers.splitter(AsciCode.Dot);
+            var parser = ApiParsers.splitter(AsciCode.Dot);
             var input = edit(Case2Input);
-            Parsers.split(parser, input, out var segments);
+            ApiParsers.split(parser, input, out var segments);
             return segments;
         }
 

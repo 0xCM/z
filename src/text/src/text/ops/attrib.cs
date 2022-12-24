@@ -4,8 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {    
+    using static sys;
     partial class text
     {
+
         [RenderPattern(2, Attrib)]
         const string Attrib = "{0}:{1}";
 

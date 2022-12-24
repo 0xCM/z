@@ -20,7 +20,7 @@ namespace Z0
         public Outcome Parse(string src, out E dst)
         {
             var input = text.ifempty(src,EmptyString);
-            Outcome result = (false, AppMsg.ParseFailure.Format(typeof(E).Name, input));
+            Outcome result = (false, AppMsgs.ParseFailure.Format(typeof(E).Name, input));
             dst = default;
             if(Syms.Lookup(input, out var sym))
             {

@@ -17,7 +17,7 @@ namespace Z0
             => Config = config;
 
         public string Format(ReadOnlySpan<byte> src)
-            => BitRender.format(src, Config);
+            => text.bits(src, Config);
 
         [MethodImpl(Inline)]
         public string Format(T src)

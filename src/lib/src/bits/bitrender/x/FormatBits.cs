@@ -21,6 +21,7 @@ namespace Z0
 
         public static string FormatBits(this ushort src, BitFormat? config = null)
             => api.gformat(src, config ?? BitFormatter.configure());
+
         public static string FormatBits(this uint src, BitFormat? config = null)
             => api.gformat(src, config ?? BitFormatter.configure());
 

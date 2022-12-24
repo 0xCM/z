@@ -17,14 +17,10 @@ namespace Z0
 
         public WfEmit Emitter {get;}
 
-        TokenDispenser Tokens;
-    
-        public ReadOnlySeq<string> Args {get;}
-
+        TokenDispenser Tokens;    
         [MethodImpl(Inline)]
         public WfRuntime(WfInit init)
         {
-            Args = init.Args;
             Tokens = init.Tokens;
             EventBroker = init.EventBroker;
             Verbosity = LogLevel.Status;
@@ -47,16 +43,16 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public ExecToken NextExecToken()
-            => Tokens.Open();
+            => TokenDispenser.open();
 
         public ExecToken Completed(ExecFlow src, bool success = true)
-            => Tokens.Close(src.Token, success);
+            => TokenDispenser.close(src, success);
 
         public ExecToken Completed(FileEmission src)
-            => Tokens.Close(src.Token, src.Succeeded);
+            => TokenDispenser.close(src);
 
         public ExecToken Completed<T>(ExecFlow<T> src, bool success = true)
-            => Tokens.Close(src.Token, success);
+            => TokenDispenser.close(src, success);
 
         public void Dispose()
         {

@@ -10,8 +10,6 @@ namespace Z0
     {
         PartName AppName {get;}
 
-        ReadOnlySeq<string> Args {get;}
-
         IEventBroker EventBroker {get;}
 
         IEventSink EventSink {get;}

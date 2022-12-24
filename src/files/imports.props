@@ -1,7 +1,6 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(Text)" />
-    <ProjectReference Include="$(ClrQuery)" />
+    <ProjectReference Include="$(Symbols)" />
   </ItemGroup>
   <Import Project="$(SlnProps)\usings.props"/>
   <Import Project="$(SlnProps)\microsoft.extensions.fileproviders.props"/>

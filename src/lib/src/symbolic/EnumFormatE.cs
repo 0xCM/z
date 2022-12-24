@@ -37,7 +37,7 @@ namespace Z0
                 return F(Value);
 
             if(Mode.Test(EnumFormatMode.EmptyZero))
-                if(core.bw64(Value) == 0)
+                if(bw64(Value) == 0)
                     return EmptyString;
 
             return EnumRender<E>.Service.Format(Value,Mode);

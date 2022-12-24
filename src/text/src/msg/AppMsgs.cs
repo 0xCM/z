@@ -6,6 +6,9 @@ namespace Z0
 {
     public class AppMsgs
     {
+        public static MsgPattern<string,string> ParseFailure
+            => "Could not parse {0} from {1}";
+
         public static MsgPattern<FileUri> FileExists
             => "The path {0} exists and yet it shold not";
 

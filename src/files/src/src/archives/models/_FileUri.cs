@@ -6,6 +6,7 @@ namespace Z0
 {
     using System;
     using System.IO;
+
     using static FS;
 
     public readonly record struct _FileUri : IFsEntry<_FileUri>, IFileInfo

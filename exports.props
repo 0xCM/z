@@ -64,6 +64,7 @@
    <Import Project="$(MsBuildThisFileDirectory)src/process/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/stitch/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/symbols/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/symbolics/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/sfx/exports.props"/>
 

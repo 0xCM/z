@@ -122,7 +122,7 @@ namespace Z0
         {
             if(Syms.MapKind(src, out var a))
                 return a.Expr.Text;
-            else if(Syms.MapValue(core.bw64(src), out var b))
+            else if(Syms.MapValue(sys.bw64(src), out var b))
                 return b.Expr.Text;
             else
                 return RP.Error;
@@ -134,7 +134,7 @@ namespace Z0
             {
                 if(Syms.MapKind(src, out var a))
                     return a.Name;
-                else if(Syms.MapValue(core.bw64(src), out var b))
+                else if(Syms.MapValue(bw64(src), out var b))
                     return b.Name;
                 else
                     return RP.Error;
@@ -145,7 +145,7 @@ namespace Z0
 
         public string Format(E src, EnumFormatMode mode)
         {
-            if(mode.Test(M.EmptyZero)  && core.bw64(src) == 0)
+            if(mode.Test(M.EmptyZero)  && bw64(src) == 0)
                 return EmptyString;
 
             var dst = RP.Error;
@@ -163,7 +163,7 @@ namespace Z0
                     dst = ((ulong)e.Value).ToString();
                 break;
                 case M.Base2:
-                    dst = ((ulong)e.Value).FormatBits(BF);
+                    dst = text.bits(sys.bytes((ulong)e.Value), BF);
                 break;
                 case M.Base16:
                     dst = ((ulong)e.Value).FormatHex(zpad:false);

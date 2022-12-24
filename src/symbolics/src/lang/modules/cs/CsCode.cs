@@ -127,7 +127,7 @@ namespace Z0
             return def;
         }
  
-         public void EmitTableCode(StringTableSpec syntax, ItemList<string> src, IDbArchive dst)
+         public void EmitTableCode(StringTableDef syntax, ItemList<string> src, IDbArchive dst)
         {
             var path = SourceFile(syntax.TableName, "stringtables", dst);
             var emitter = text.emitter();
@@ -144,7 +144,7 @@ namespace Z0
             Channel.FileEmit(emitter.Emit(), spec.Entries.Count, dst);
         }
 
-        public void EmitTableCode(StringTableSpec spec, ReadOnlySpan<string> src, IDbArchive dst)
+        public void EmitTableCode(StringTableDef spec, ReadOnlySpan<string> src, IDbArchive dst)
         {
             var path = SourceFile(spec.TableName, "stringtables", dst);
             var emitter = text.emitter();
@@ -152,7 +152,7 @@ namespace Z0
             Channel.FileEmit(emitter.Emit(), src.Length, path);
         }
 
-        _FileUri EmitTableCode(StringTableSpec syntax, ItemList<string> src, CgTarget cgdst)
+        _FileUri EmitTableCode(StringTableDef syntax, ItemList<string> src, CgTarget cgdst)
         {
             var dst = SourceFile(syntax.TableName, "stringtables", cgdst);
             var emitter = text.emitter();
@@ -161,7 +161,7 @@ namespace Z0
             return dst;
         }
 
-        void EmitTableCode(StringTableSpec spec, ReadOnlySpan<string> src, CgTarget cgdst)
+        void EmitTableCode(StringTableDef spec, ReadOnlySpan<string> src, CgTarget cgdst)
         {
             var dst = SourceFile(spec.TableName, "stringtables", cgdst);
             var emitter = text.emitter();
@@ -169,7 +169,7 @@ namespace Z0
             Channel.FileEmit(emitter.Emit(), src.Length, dst);
         }
 
-        static uint render(in StringTableSpec spec, ItemList<string> src, ITextEmitter dst)
+        static uint render(in StringTableDef spec, ItemList<string> src, ITextEmitter dst)
         {
             dst.WriteLine(string.Format("namespace {0}", spec.TableNs));
             dst.WriteLine(Open());
@@ -182,7 +182,7 @@ namespace Z0
             return (uint)src.Length;
         }
 
-        static uint render<K>(in StringTableSpec spec, ItemList<K,string> src, ITextEmitter dst)
+        static uint render<K>(in StringTableDef spec, ItemList<K,string> src, ITextEmitter dst)
             where K : unmanaged
         {
             dst.WriteLine(string.Format("namespace {0}", spec.TableNs));
@@ -196,7 +196,7 @@ namespace Z0
             return (uint)src.Length;
         }
 
-        static uint render(in StringTableSpec spec, ReadOnlySpan<string> src, ITextEmitter dst)
+        static uint render(in StringTableDef spec, ReadOnlySpan<string> src, ITextEmitter dst)
         {
             dst.WriteLine(string.Format("namespace {0}", spec.TableNs));
             dst.WriteLine(Open());

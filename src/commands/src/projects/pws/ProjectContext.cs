@@ -10,9 +10,9 @@ namespace Z0
 
         public readonly FileCatalog Files;
 
-        public readonly CmdFlowCatalog Flows;
+        public readonly CmdFlows Flows;
 
-        public ProjectContext(IProjectWorkspace project, CmdFlowCatalog flows)
+        public ProjectContext(IProjectWorkspace project, CmdFlows flows)
         {
             Project = project;
             Files = flows.Files;
