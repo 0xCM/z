@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     partial class XedRules
     {
@@ -14,7 +14,7 @@ namespace Z0
 
             Index<RuleExpr> Calc()
             {
-                var dst = core.alloc<RuleExpr>(src.RowCount);
+                var dst = sys.alloc<RuleExpr>(src.RowCount);
                 var k=z16;
                 for(var i=0; i<src.TableCount; i++)
                 {

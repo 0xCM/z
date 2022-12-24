@@ -64,22 +64,6 @@ namespace Z0
             where T : unmanaged
                 => new Cell512(src.As<ulong>());
 
-        // [MethodImpl(Inline)]
-        // public ref Cell8 Cell8(byte i)
-        //     => ref @as<Cell8>(Bytes);
-
-        // [MethodImpl(Inline)]
-        // public ref Cell16 Cell16(byte i)
-        //     => ref @as<Cell16>(Bytes);
-
-        // [MethodImpl(Inline)]
-        // public ref Cell32 Cell32(byte i)
-        //     => ref @as<Cell32>(Bytes);
-
-        // [MethodImpl(Inline)]
-        // public ref Cell64 Cell64(byte i)
-        //     => ref @as<Cell64>(Bytes);
-
         [MethodImpl(Inline)]
         public Vector512<T> ToVector<T>()
             where T : unmanaged

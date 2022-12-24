@@ -27,10 +27,10 @@ namespace Z0
         {
             var data = Cells.alloc<T>(n);
             var len = CellCalcs.blocklength<T>(n);
-            ref var mem = ref data.First;
+            var buffer = sys.recover<T>(sys.bytes(data));
             for(var i=0; i<len; i++)
-                seek(mem, i) = gmath.even(i) ? a : b;
-            return vload(n, in mem);
+                seek(buffer, i) = gmath.even(i) ? a : b;
+            return vload(n, buffer);
         }
 
         /// <summary>
@@ -46,14 +46,14 @@ namespace Z0
             var current = first;
             var data = Cells.alloc<T>(n);
             var len = CellCalcs.blocklength<T>(n);
-            ref var mem = ref data.First;
+            var buffer = recover<T>(bytes(data));
             for(var i=0; i < len; i++)
             {
-                seek(mem, i) = current;
+                seek(buffer, i) = current;
                 current = gmath.dec(current);
             }
 
-            return vload(n, in mem);
+            return vload(n, buffer);
         }
 
         /// <summary>
@@ -69,14 +69,14 @@ namespace Z0
             var current = first;
             var data = Cells.alloc<T>(n);
             var len = CellCalcs.blocklength<T>(n);
-            ref var mem = ref data.First;
+            var buffer = recover<T>(bytes(data));
             for(var i=0; i<len; i++)
             {
-                seek(mem, i) = current;
+                seek(buffer, i) = current;
                 current = gmath.dec(current);
             }
 
-            return vload(n, in mem);
+            return vload(n, buffer);
         }
 
         /// <summary>
@@ -92,13 +92,13 @@ namespace Z0
             var current = first;
             var data = Cells.alloc<T>(n);
             var len = CellCalcs.blocklength<T>(n);
-            ref var mem = ref data.First;
+            var buffer = sys.recover<T>(sys.bytes(data));
             for(var i=0; i < len; i++)
             {
-                seek(mem, i) = current;
+                seek(buffer, i) = current;
                 current = gmath.sub(current, step);
             }
-            return vload(n, in mem);
+            return vload(n, buffer);
         }
 
         /// <summary>
@@ -114,48 +114,14 @@ namespace Z0
             var current = first;
             var data = Cells.alloc<T>(n);
             var len = CellCalcs.blocklength<T>(n);
-            ref var mem = ref data.First;
+            var buffer = recover<T>(bytes(data));
             for(var i=0; i < len; i++)
             {
-                seek(mem, i) = current;
+                seek(buffer, i) = current;
                 current = gmath.sub(current, step);
             }
-            return vload(n, in mem);
+            return vload(n, buffer);
         }
-
-        // [Op, Closures(UnsignedInts)]
-        // public static Vector256<T> vdecrements<T>(N256 n, T first, params Swap[] swaps)
-        //     where T : unmanaged
-        // {
-        //     var current = first;
-        //     var data = Cells.alloc<T>(n);
-        //     var len = CellCalcs.blocklength<T>(n);
-        //     ref var mem = ref data.First;
-        //     for(var i=0; i < len; i++)
-        //     {
-        //         seek(mem, i) = current;
-        //         current = gmath.dec(current);
-        //     }
-
-        //     return vload(n, in data.Swap(swaps).First);
-        // }
-
-        // [Op, Closures(UnsignedInts)]
-        // public static Vector128<T> vdecrements<T>(N128 n, T first, params Swap[] swaps)
-        //     where T : unmanaged
-        // {
-        //     var current = first;
-        //     var data = Cells.alloc<T>(n);
-        //     var len = CellCalcs.blocklength<T>(n);
-        //     ref var mem = ref data.First;
-        //     for(var i=0; i < len; i++)
-        //     {
-        //         seek(mem, i) = current;
-        //         current = gmath.dec(current);
-        //     }
-
-        //     return vload(n, in data.Swap(swaps).First);
-        // }
 
         /// <summary>
         /// Creates a 128-bit vector with components that increase by a specified step from an initial value
@@ -170,13 +136,13 @@ namespace Z0
             var current = first;
             var data = Cells.alloc<T>(n);
             var len = CellCalcs.blocklength<T>(n);
-            ref var mem = ref data.First;
+            var buffer = sys.recover<T>(sys.bytes(data));
             for(var i=0; i<len; i++)
             {
-                seek(mem, i) = current;
+                seek(buffer, i) = current;
                 current = gmath.add(current, step);
             }
-            return vload(n, in mem);
+            return vload(n, buffer);
         }
 
         /// <summary>
@@ -192,49 +158,15 @@ namespace Z0
             var current = first;
             var data = Cells.alloc<T>(n);
             var len = CellCalcs.blocklength<T>(n);
-            ref var mem = ref data.First;
+            var buffer = recover<T>(bytes(data));
             for(var i=0; i<len; i++)
             {
-                seek(mem, i) = current;
+                seek(buffer, i) = current;
                 current = gmath.add(current, step);
             }
 
-            return vload(n, in mem);
+            return vload(n, buffer);
         }
-
-        // [Op, Closures(UnsignedInts)]
-        // public static Vector128<T> vincrements<T>(N128 n, T first, params Swap[] swaps)
-        //     where T : unmanaged
-        // {
-        //     var current = first;
-        //     var data = Cells.alloc<T>(n);
-        //     var len = CellCalcs.blocklength<T>(n);
-        //     ref var mem = ref data.First;
-        //     for(var i=0; i<len; i++)
-        //     {
-        //         seek(mem, i) = current;
-        //         current = gmath.inc(current);
-        //     }
-
-        //     return vload(n, in data.Swap(swaps).First);
-        // }
-
-        // [Op, Closures(UnsignedInts)]
-        // public static Vector256<T> vincrements<T>(N256 n, T first, params Swap[] swaps)
-        //     where T : unmanaged
-        // {
-        //     var current = first;
-        //     var data = Cells.alloc<T>(n);
-        //     var len = CellCalcs.blocklength<T>(n);
-        //     ref var mem = ref data.First;
-        //     for(var i=0; i<len; i++)
-        //     {
-        //         seek(mem, i) = current;
-        //         current = gmath.inc(current);
-        //     }
-
-        //     return vload(n, in data.Swap(swaps).First);
-        // }
 
         [MethodImpl(Inline), Op]
         public static Vector256<byte> LaneMerge8u()
@@ -278,13 +210,6 @@ namespace Z0
             seek(dst,k++) = j += 2;
 
             return storage.Bytes;
-
-            // Span<ushort> dst = new ushort[16]
-            // {
-            //     i, i+=2, i+=2, i+=2, i+=2, i+=2, i+=2, i+=2,
-            //     j, j+=2, j+=2, j+=2, j+=2, j+=2, j+=2, j+=2
-            // };
-            // return dst.Bytes();
         }
 
         /// <summary>

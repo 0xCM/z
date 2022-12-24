@@ -169,24 +169,24 @@ namespace Z0
             return Emissions.LogEmission(TableFlow<T>(dst));
         }
 
-        ExecToken EmittedTable<T>(TableFlow<T> flow, Count count, FilePath? dst = null)
+        ExecToken<TableFlow<T>> EmittedTable<T>(TableFlow<T> flow, Count count, FilePath? dst = null)
             where T : struct
         {
             var completed = Completed(flow);
             var counted = flow.WithCount(count).WithToken(completed);
             signal(EventSink).EmittedTable<T>(count, counted.Target);
             Emissions.LogEmission(counted);
-            return completed;
+            return (completed,counted);
         }
 
-        ExecToken EmittedTable<T>(AppEventSource host, TableFlow<T> flow, Count count, FilePath? dst = null)
+        ExecToken<TableFlow<T>> EmittedTable<T>(AppEventSource host, TableFlow<T> flow, Count count, FilePath? dst = null)
             where T : struct
         {
             var completed = Completed(flow);
             var counted = flow.WithCount(count).WithToken(completed);
             signal(EventSink, host).EmittedTable<T>(count, counted.Target);
             Emissions.LogEmission(counted);
-            return completed;
+            return (completed, counted);
         }
 
         FileEmission EmittingFile(FilePath dst)
@@ -201,20 +201,21 @@ namespace Z0
             return Emissions.LogEmission(Flow(dst));
         }
 
-        ExecToken EmittedFile(FileEmission flow, Count count)
+        ExecToken<FileEmission> EmittedFile(FileEmission flow, Count count)
         {
             var completed = Completed(flow);
-            var counted = flow.WithCount(count).WithToken(completed);
-            signal(EventSink).EmittedFile(count, counted.Target);
-            Emissions.LogEmission(counted);
-            return completed;
+            var token = flow.WithCount(count).WithToken(completed);
+            signal(EventSink).EmittedFile(count, token.Target);
+            Emissions.LogEmission(token);
+            return new (completed, token);
         }
 
-        ExecToken EmittedFile(FileEmission flow)
+        ExecToken<FileEmission> EmittedFile(FileEmission flow)
         {
             var completed = Completed(flow);
-            signal(EventSink).EmittedFile(flow.WithToken(completed));
-            return completed;
+            var token = flow.WithToken(completed);
+            signal(EventSink).EmittedFile(token);
+            return (completed, token);
         }
         
         ExecToken EmittedFile(FileEmission flow, int count)
@@ -223,22 +224,22 @@ namespace Z0
         ExecToken EmittedFile(FileEmission flow, uint count)
             => EmittedFile(flow, (Count)count);
 
-        ExecToken EmittedFile<T>(FileEmission flow, T msg)
+        ExecToken<FileEmission> EmittedFile<T>(FileEmission flow, T msg)
         {
             var completed = Completed(flow);
             var counted = flow.WithToken(completed);
             signal(EventSink).EmittedFile(counted.Target, msg);
             Emissions.LogEmission(counted);
-            return completed;
+            return (completed,counted);
         }
 
-        ExecToken EmittedFile(AppEventSource host, FileEmission flow, Count count)
+        ExecToken<FileEmission> EmittedFile(AppEventSource host, FileEmission flow, Count count)
         {
             var completed = Completed(flow);
             var counted = flow.WithCount(count).WithToken(completed);
             signal(EventSink, host).EmittedFile(count, counted.Target);
             Emissions.LogEmission(counted);
-            return completed;
+            return (completed,counted);
         }
 
         void Data<T>(T data)

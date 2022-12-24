@@ -19,6 +19,33 @@ namespace Z0
         {
         }
 
+        public EnvVars Replace(EnvVar src)
+        {
+            for(var i=0; i<Count; i++)
+            {
+                if(this[i].Name == src.Name)
+                {
+                    this[i] = src;
+                    break;
+                }
+            }
+            return this;
+        }
+
+        public bool Find(@string name, out @string value)
+        {
+            for(var i=0; i<Count; i++)
+            {
+                if(this[i].Name == name)
+                {
+                    value = this[i].Value;
+                    return true;
+                }
+            }
+            value = @string.Empty;
+            return false;
+        }
+
         public override string Format()
         {
             var dst = text.emitter();
@@ -32,17 +59,17 @@ namespace Z0
         public override string ToString()
             => Format();
 
-        public SortedLookup<string,EnvVar> ToLookup()
-        {
-            var dst = dict<string,EnvVar>(Count);
-            for(var i=0; i<Count; i++)
-            {
-                ref readonly var v = ref this[i];
-                dst.TryAdd(v.VarName,v);
-            }
+        // public SortedLookup<string,EnvVar> ToLookup()
+        // {
+        //     var dst = dict<string,EnvVar>(Count);
+        //     for(var i=0; i<Count; i++)
+        //     {
+        //         ref readonly var v = ref this[i];
+        //         dst.TryAdd(v.Name,v);
+        //     }
 
-            return dst;
-        }
+        //     return dst;
+        // }
 
         [MethodImpl(Inline)]
         public static implicit operator EnvVars(EnvVar[] src)

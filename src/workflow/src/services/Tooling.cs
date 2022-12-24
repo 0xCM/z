@@ -101,11 +101,10 @@ namespace Z0
             for(var i=0; i<count; i++)
             {
                 ref readonly var profile = ref skip(profiles,i);
-                ref readonly var tool = ref profile.Id;
                 if(profile.HelpCmd.IsEmpty)
                     continue;
 
-                dst.Include(tool, src + FS.folder("help") + FS.file(tool.Format(), FS.Help));
+                dst.Include(profile.ToolName, src + FS.folder("help") + FS.file(profile.ToolName, FS.Help));
             }
 
             return dst.Seal();
@@ -119,10 +118,9 @@ namespace Z0
             for(var i=0; i<count; i++)
             {
                 ref readonly var profile = ref skip(profiles,i);
-                ref readonly var tool = ref profile.Id;
                 if(profile.HelpCmd.IsEmpty)
                     continue;
-                dst.Add(Cmd.cmdline(FS.path(tool.Format()), string.Format("{0} {1}", profile.Executable.ToFilePath().Format(PathSeparator.BS), profile.HelpCmd)));
+                dst.Add(Cmd.cmdline(FS.path(profile.ToolName), string.Format("{0} {1}", profile.Executable.Format(PathSeparator.BS), profile.HelpCmd)));
             }
             dst.Sort();
             return dst.ToArray();

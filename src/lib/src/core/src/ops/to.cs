@@ -24,20 +24,6 @@ namespace Z0
             => ref As<S,T>(ref edit(src));
 
         /// <summary>
-        /// Presents an S-cell as a T-cell
-        /// </summary>
-        /// <param name="src">The source cell</param>
-        /// <param name="src">The target cell</param>
-        /// <typeparam name="S">The source type</typeparam>
-        /// <typeparam name="T">The target type</typeparam>
-        [MethodImpl(Inline)]
-        public static ref T to<S,T>(in S src, out T dst)
-        {
-            dst = to<S,T>(src);
-            return ref dst;
-        }
-
-        /// <summary>
         /// Presents a <see cref='sbyte'/> as a <typeparamref name='T'/> cell
         /// </summary>
         /// <param name="src">The source value</param>

@@ -5,9 +5,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
-
+    using static sys;
     using static XedDisasmModels;
+
     partial class XedDisasm
     {
         public static Index<Document> docs(ProjectContext context, bool pll = true)

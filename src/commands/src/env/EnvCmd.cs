@@ -70,15 +70,15 @@ namespace Z0
 
         [CmdOp("env/include")]
         void EnvInclude()
-            => Env.paths(Channel, EnvPathKind.Include, ShellData);
+            => Env.path(Channel, EnvPathKind.Include, ShellData);
 
         [CmdOp("env/path")]
         void EnvPath()
-            => Env.paths(Channel, EnvPathKind.FileSystem, ShellData);
+            => Env.path(Channel, EnvPathKind.FileSystem, ShellData);
 
         [CmdOp("env/lib")]
         void EnvLib()
-            => Env.paths(Channel, EnvPathKind.Lib, ShellData);
+            => Env.path(Channel, EnvPathKind.Lib, ShellData);
 
         [CmdOp("env/tid")]
         void ShowThread()

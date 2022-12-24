@@ -68,7 +68,6 @@ namespace Z0
             return new SettingLookup(dst.ToArray());
         } 
 
-
         public static AppSettings absorb(FilePath src)
         {
             Data = new AppSettings(SettingsApi.load(src));

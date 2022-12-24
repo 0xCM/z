@@ -84,7 +84,6 @@ namespace Z0
             return message;
         }
         
-
         [MethodImpl(Inline), Op]
         public static AppMsgSource orginate([CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
             => new AppMsgSource(caller, file, line);

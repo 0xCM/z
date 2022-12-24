@@ -6,7 +6,7 @@
 namespace Z0
 {
     using static XedModels;
-    using static core;
+    using static sys;
 
     [ApiHost]
     public partial class XedRules : WfSvc<XedRules>

@@ -8,15 +8,6 @@ namespace Z0
 
     using static sys;
 
-    public interface IEnvironment
-    {
-        FolderPath CurrentDirectory {get;}
-
-        ProcessId Pid {get;}
-
-        EnvVars Vars {get;}        
-    }
-
     [ApiHost]
     public class Env
     {
@@ -31,13 +22,10 @@ namespace Z0
         public static uint tid()
             => Kernel32.GetCurrentThreadId();
 
-        public static FilePath path(string name, FileKind kind)
-            => ShellData.Path(name, kind);
-
         public static void tools(IWfChannel channel, IDbArchive dst)
         {
             var buffer = bag<FilePath>();
-            var paths = Env.paths(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL);
+            var paths = Env.path(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL);
 
             iter(paths, dir => {
                 iter(DbArchive.enumerate(dir, false, FileKind.Exe, FileKind.Cmd, FileKind.Bat), path => {
@@ -90,7 +78,7 @@ namespace Z0
         public static EnvId EnvId 
         {
             get => var(EnvVarKind.Process, nameof(EnvId), x => new EnvId(x));
-            set => apply(new EnvVar(EnvVarKind.Process, nameof(EnvId), value.Format()));
+            set => apply(new EnvVar(nameof(EnvId), value.Format()), EnvVarKind.Process);
         }
 
         public static CfgBlock cfg(FilePath src)
@@ -118,7 +106,7 @@ namespace Z0
             for(var i=0; i<cfg.Count; i++)
             {
                 ref readonly var src = ref _vars[i];
-                cfg[i] = new CfgEntry(src.VarName, src.VarValue);
+                cfg[i] = new CfgEntry(src.Name, src.Value);
             }
             return new EnvReport(EnvId.Current, kind, cfg, _vars);
         }
@@ -157,14 +145,23 @@ namespace Z0
         public static void cd(FolderPath dst)
             => Environment.CurrentDirectory = dst.Format(PathSeparator.BS);
 
-        public static FolderPaths paths(string name, EnvVarKind kind)
+        public static EnvPath path(string name, EnvVarKind kind = EnvVarKind.Process)
         {
             var value = Environment.GetEnvironmentVariable(name, (EnvironmentVariableTarget)kind);
             var values = text.split(value,Chars.Semicolon);
             return map(values, FS.dir);
         }
 
-        public static ExecToken paths(IWfChannel channel, EnvPathKind kind, IDbArchive dst, EnvVarKind envkind = EnvVarKind.Process)
+        public static EnvVar<EnvPath> INCLUDE()
+            => new (EnvTokens.INCLUDE, path(EnvTokens.INCLUDE));
+
+        public static EnvVar<EnvPath> LIB()
+            => new (EnvTokens.LIB, path(EnvTokens.LIB));
+
+        public static EnvVar<EnvPath> PATH()
+            => new (EnvTokens.PATH,path(EnvTokens.PATH));
+
+        public static ExecToken<EnvPath> path(IWfChannel channel, EnvPathKind kind, IDbArchive dst, EnvVarKind envkind = EnvVarKind.Process)
         {            
             var name = kind switch {
               EnvPathKind.FileSystem => EnvTokens.PATH,
@@ -172,16 +169,17 @@ namespace Z0
               EnvPathKind.Lib => EnvTokens.LIB,
                 _ => EmptyString
             };
-            var folders = paths(name, envkind);
+            var folders = path(name, envkind);
             var data = folders.Delimit(Chars.NL);
             channel.Row(data);
-            return channel.FileEmit(data, dst.Path(FS.file($"paths.{kind}", FileKind.List)));
+            var emitted = channel.FileEmit(data, dst.Path(FS.file($"paths.{kind}", FileKind.List)));
+            return (emitted, folders);
         }
 
-        public static EnvVars<@string> vars(FilePath src, char sep = Chars.Eq)
+        public static EnvVars vars(FilePath src, char sep = Chars.Eq)
         {
             var k = z16;
-            var dst = list<EnvVar<@string>>();
+            var dst = list<EnvVar>();
             var line = AsciLineCover.Empty;
             var buffer = sys.alloc<char>(1024*4);
             using var reader = src.AsciLineReader();
@@ -198,6 +196,10 @@ namespace Z0
             }
             return dst.ToArray().Sort();
         }
+
+        public static EnvVar<T> var<T>(string name, Func<string,T> parser)
+            where T : IEquatable<T>
+                => var(EnvVarKind.Process, name, parser);
 
         public static EnvVar<T> var<T>(EnvVarKind kind, string name, Func<string,T> parser)
             where T : IEquatable<T>
@@ -245,10 +247,13 @@ namespace Z0
         {
             var dst = list<EnvVar>();
             foreach(DictionaryEntry kv in Environment.GetEnvironmentVariables((EnvironmentVariableTarget)kind))
-                 dst.Add(new EnvVar(kind, kv.Key?.ToString() ?? EmptyString, kv.Value?.ToString() ?? EmptyString));
+                 dst.Add(new EnvVar(kv.Key?.ToString() ?? EmptyString, kv.Value?.ToString() ?? EmptyString));
             return dst.ToArray().Sort();
         }
         
+        public static EnvVars vars(params Pair<string>[] src)
+            => src.Map(x => new EnvVar(x.Left,x.Right));
+
         public static EnvVars machine()
             => vars(EnvVarKind.Machine);
 
@@ -258,10 +263,10 @@ namespace Z0
         public static EnvVars process()
             => vars(EnvVarKind.Process);
 
-        public static void apply(EnvVar src)
-            => Environment.SetEnvironmentVariable(src.VarName, src.VarValue, (EnvironmentVariableTarget)src.Kind);
+        public static void apply(EnvVar src, EnvVarKind kind)
+            => Environment.SetEnvironmentVariable(src.Name, src.Value, (EnvironmentVariableTarget)kind);
 
-        public static Index<EnvVarRow> records(EnvVars src, string name)
+        public static ReadOnlySeq<EnvVarRow> rows(EnvVars src, string name)
         {
             const char Sep = ';';
             var buffer = list<EnvVarRow>();
@@ -269,8 +274,8 @@ namespace Z0
             for(var i=0; i<src.Count; i++)
             {
                 ref readonly var v = ref src[i];
-                var vName = v.VarName;
-                var vValue = v.VarValue;
+                var vName = v.Name;
+                var vValue = v.Value;
 
                 if(v.Contains(Sep))
                 {
@@ -310,7 +315,7 @@ namespace Z0
             using var writer = env.AsciWriter();
             for(var i=0; i<src.Count; i++)
                 writer.WriteLine(src[i].Format());
-            return Tables.emit(channel, records(src, name).View, table, ASCI);
+            return Tables.emit(channel, rows(src, name).View, table, ASCI);
         }
     }
 }

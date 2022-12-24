@@ -38,7 +38,7 @@ namespace Z0
         }
 
         public string Format()
-            => RP.format(EventId, AppMsg.EmittedTable.Capture(TableId, RowCount, Target));
+            => RP.format(EventId, AppMsgs.EmittedTable.Capture(TableId, RowCount, Target));
 
         public override string ToString()
             => Format();

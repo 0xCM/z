@@ -12,7 +12,7 @@ namespace Z0
         public const byte FieldCount = 5;
 
         [Render(32)]
-        public Actor Id;
+        public @string ToolName;
 
         [Render(16)]
         public string Modifier;
@@ -21,9 +21,9 @@ namespace Z0
         public CmdArg HelpCmd;
 
         [Render(32)]
-        public Actor Membership;
+        public @string Membership;
 
         [Render(1)]
-        public FileUri Executable;
+        public FilePath Executable;
     }
 }

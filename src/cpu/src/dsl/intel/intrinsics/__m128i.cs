@@ -50,10 +50,6 @@ namespace Z0.dsl.intel
             set => Cells.bits(ref Data, max, min) = value;
         }
 
-        [MethodImpl(Inline)]
-        public ref T Cell(int i)
-            => ref Data[i];
-
         public string Format()
             => string.Format("<{0}>", Data.ToVector().FormatHex());
 

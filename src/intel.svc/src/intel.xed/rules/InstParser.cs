@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
     using static XedParsers;
 
     partial class XedRules
@@ -23,7 +23,7 @@ namespace Z0
                 {
                     if(i != 0)
                         buffer.Append(Chars.Space);
-                    buffer.Append(core.skip(parts,i));
+                    buffer.Append(skip(parts,i));
                 }
                 return buffer.Emit();
             }

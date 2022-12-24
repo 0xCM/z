@@ -24,11 +24,10 @@ namespace Z0
         [CmdOp("api/tablegen")]
         void GenRecords()
         {
-            var generator = Wf.CsvTableGen();
             var buffer = text.emitter();
             var src = ApiAssemblies.Parts;
             var defs = TableDefs.defs(src);
-            iter(defs, src => generator.Emit(0u,src,buffer));
+            iter(defs, src => CsvTableTypes.emit(0u,src,buffer));
             var dst = AppDb.CgStage("api.tables").Path("replicants", FileKind.Cs);
             FileEmit(buffer.Emit(),dst);         
         }

@@ -41,6 +41,7 @@ namespace Z0
         public static ushort negate(ushort src)
             => (ushort)(~src + 1);
 
+
         /// <summary>
         /// Negates the source value
         /// </summary>

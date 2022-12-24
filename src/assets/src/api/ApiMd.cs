@@ -48,7 +48,7 @@ namespace Z0
                 ref readonly var type = ref tables[i];
                 try
                 {
-                    var fields = Tables.fields(type);
+                    var fields = TableDefs.cells(type);
                     var total = 0u;
                     var id = TableId.identify(type).Format();
                     var typename = type.DisplayName();

@@ -8,29 +8,28 @@ namespace Z0
 
     using Names = SettingNames;
 
-
     public class AppDb : IAppDb
     {
         public static readonly Timestamp Ts = sys.timestamp();
 
         public static AppDb Service => Instance;
 
-        readonly AppSettings _Settings;
+        readonly AppSettings Data;
 
         public DbArchive DbRoot()
-            => _Settings.DbRoot();
+            => Data.DbRoot();
 
         public DbArchive Dev()
-            => _Settings.DevRoot();
+            => Data.DevRoot();
 
         public DbArchive DevOps()
-            => _Settings.DevOps();
+            => Data.DevOps();
 
         public DbArchive Capture()
-            => _Settings.Capture();
+            => Data.Capture();
 
         public DbArchive Archives()
-            => _Settings.Archives();
+            => Data.Archives();
 
         public DbArchive DevProjects()
             => Dev().Scoped("projects");
@@ -39,7 +38,7 @@ namespace Z0
             => DevProjects().Scoped(name);
 
         public DbArchive Tools()
-            => folder(_Settings.Setting(SettingNames.DevTools));
+            => folder(Data.Setting(SettingNames.DevTools));
 
         public DbArchive DbSources()
             => DbRoot().Scoped("sources");
@@ -158,17 +157,17 @@ namespace Z0
             => EtlTargets(project).Path($"{project}.{name}", FileKind.Csv);
 
         public DbArchive Toolbase()
-            => folder(_Settings.Setting(Names.Toolbase));  
+            => folder(Data.Setting(Names.Toolbase));  
 
         public DbArchive Toolbase(string scope)
             => Toolbase().Sources(scope);
 
         public DbArchive LlvmRoot()
-            => folder(_Settings.Setting(Names.LlvmRoot));
+            => folder(Data.Setting(Names.LlvmRoot));
 
         AppDb()
         {
-            _Settings = AppSettings.Default;
+            Data = AppSettings.Default;
         }
 
         static AppDb Instance;

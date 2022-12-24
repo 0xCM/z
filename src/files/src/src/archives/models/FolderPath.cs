@@ -70,10 +70,10 @@ namespace Z0
             => Directory.Exists(Name) ? FS.files(Directory.EnumerateFiles(Name).Map(FS.path)) : Z0.Files.Empty;
 
         public IEnumerable<FolderPath> Folders(string match, bool recurse)
-            => Directory.Exists(Name) ? Directory.EnumerateDirectories(Name, match, options(recurse)).Select(FS.dir) : FolderPaths.Empty;
+            => Directory.Exists(Name) ? Directory.EnumerateDirectories(Name, match, options(recurse)).Select(FS.dir) : EnvPath.Empty;
 
         public IEnumerable<FolderPath> Folders(bool recurse = false)
-            => Directory.Exists(Name) ? Directory.EnumerateDirectories(Name, "*.*", options(recurse)).Select(FS.dir) : FolderPaths.Empty;
+            => Directory.Exists(Name) ? Directory.EnumerateDirectories(Name, "*.*", options(recurse)).Select(FS.dir) : EnvPath.Empty;
 
         public FolderPath Folder(string match)
             => Folders(match, false).FirstOrDefault(FolderPath.Empty);

@@ -78,11 +78,11 @@ namespace Z0
             }
         }
 
-        public static Task<ExecToken> vscode<T>(IWfChannel channel, T target)
-            => CmdRunner.start(channel, FS.path("code.exe"), Cmd.args(target));
+        public static Task<ExecToken> vscode<T>(IWfChannel channel, T target, CmdContext? context = null)
+            => CmdRunner.start(channel, FS.path("code.exe"), Cmd.args(target), context);
 
-        public static Task<ExecToken> devenv<T>(IWfChannel channel, T target)
-            => CmdRunner.start(channel, FS.path("devenv.exe"), Cmd.args(target));
+        public static Task<ExecToken> devenv<T>(IWfChannel channel, T target, CmdContext? context = null)
+            => CmdRunner.start(channel, FS.path("devenv.exe"), Cmd.args(target), context);
 
         public ReadOnlySpan<ToolKey> Known => Lookup.Keys;
 
@@ -96,7 +96,7 @@ namespace Z0
                 
         static SortedLookup<ToolKey,LocatedTool> discover()
         {
-            var paths = Env.paths(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL);
+            var paths = Env.path(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL);
             var dst = dict<ToolKey,LocatedTool>();
             var seq = 0u;
             for(var i=0u; i<paths.Count; i++)

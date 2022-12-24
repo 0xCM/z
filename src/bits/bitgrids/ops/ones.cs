@@ -40,11 +40,11 @@ namespace Z0
                 => init64<T>(ulong.MaxValue);
 
         [MethodImpl(Inline), Ones, Closures(Closure)]
-        public static ref readonly BitSpanBlocks256<T> ones<T>(in BitSpanBlocks256<T> dst)
+        public static BitSpanBlocks256<T> ones<T>(in BitSpanBlocks256<T> dst)
             where T : unmanaged
         {
             broadcast(Limits.maxval<T>(), dst);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -133,13 +133,13 @@ namespace Z0
                 => gcpu.vones<T>(width);
 
         [MethodImpl(Inline)]
-        public static ref readonly BitGrid<M,N,T> ones<M,N,T>(in BitGrid<M,N,T> dst)
+        public static BitGrid<M,N,T> ones<M,N,T>(in BitGrid<M,N,T> dst)
             where T : unmanaged
             where N : unmanaged, ITypeNat
             where M : unmanaged, ITypeNat
         {
             broadcast(Limits.maxval<T>(), dst);
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline)]

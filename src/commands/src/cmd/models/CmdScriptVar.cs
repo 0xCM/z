@@ -13,13 +13,13 @@ namespace Z0
             => format(var, Chars.Eq);
 
         public static string format(IVarValue var, char assign)
-            => string.Format("{0}{1}{2}", var.VarName, assign, var.VarValue);
+            => string.Format("{0}{1}{2}", var.Name, assign, var.Value);
 
         public static string format(VarContextKind vck, IVarValue var)
             => format(vck,var, Chars.Eq);
 
         public static string format(VarContextKind vck, IVarValue var, char assign)
-            => string.Format("{0}{1}{2}", format(vck, var.VarName), assign, var.VarValue);
+            => string.Format("{0}{1}{2}", format(vck, var.Name), assign, var.Value);
 
         static string format(VarContextKind vck, string name)
             => string.Format(RP.pattern(vck), name);
@@ -27,25 +27,25 @@ namespace Z0
         /// <summary>
         /// The variable symbol
         /// </summary>
-        public string VarName {get;}
+        public string Name {get;}
 
         /// <summary>
         /// The variable value, possibly empty
         /// </summary>
-        public string VarValue {get;set;}
+        public string Value {get;set;}
 
         [MethodImpl(Inline)]
         public CmdScriptVar(string name, string value)
         {
-            VarName = name;
-            VarValue = value;
+            Name = name;
+            Value = value;
         }
 
         [MethodImpl(Inline)]
         public CmdScriptVar(string name)
         {
-            VarName = name;
-            VarValue = EmptyString;
+            Name = name;
+            Value = EmptyString;
         }
 
         [MethodImpl(Inline)]
@@ -60,7 +60,7 @@ namespace Z0
             => Format();
 
         public string Resolve(VarContextKind vck)
-            => string.Format(RP.pattern(vck), VarValue);
+            => string.Format(RP.pattern(vck), Value);
 
         [MethodImpl(Inline)]
         public static implicit operator CmdScriptVar((string symbol, string value) src)

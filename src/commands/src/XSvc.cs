@@ -11,9 +11,6 @@ namespace Z0
              public IApiService EnvCmd(IWfRuntime wf)
                 => Service<EnvCmd>(wf);
 
-            public CsvTableGen CsvTableGen(IWfRuntime wf)
-                => Service<CsvTableGen>(wf);
-
             public Cmd Cmd(IWfRuntime wf)
                 => Service<Cmd>(wf);
 
@@ -34,9 +31,6 @@ namespace Z0
 
         public static IApiService EnvCmd(this IWfRuntime wf)
             => Services.EnvCmd(wf);
-
-        public static CsvTableGen CsvTableGen(this IWfRuntime wf)
-            => Services.CsvTableGen(wf);
 
         public static ProjectScripts ProjectScripts(this IWfRuntime wf)
             => Services.ProjectScripts(wf);            

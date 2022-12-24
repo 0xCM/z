@@ -10,7 +10,6 @@ namespace Z0.Asm.Operands
     using G = r64;
     using K = AsmRegTokens.Gp64Reg;
     using O = AsmOperand;
-    using C = RegClassCode;
     using api = AsmRegs;
 
     public readonly struct r64 : IRegOp64<G>

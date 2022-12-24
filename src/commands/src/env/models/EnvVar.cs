@@ -10,68 +10,59 @@ namespace Z0
     /// Defines a nonparametric environment variable
     /// </summary>
     [Record(TableId)]
-    public readonly record struct EnvVar : IEnvVar, IDataType<EnvVar>, IExpr
+    public readonly record struct EnvVar : IVarValue, IDataType<EnvVar>
     {
         const string TableId = "env";
 
-        [Render(12)]
-        public readonly EnvVarKind Kind;
-
         [Render(64)]
-        public readonly @string VarName;
+        public readonly @string Name;
 
         /// <summary>
         /// The environment variable value
         /// </summary>
         [Render(1)]
-        public readonly @string VarValue;
+        public readonly @string Value;
 
         [MethodImpl(Inline)]
         public EnvVar(string name, string value)
         {
-            Kind = EnvVarKind.Process;
-            VarName = name;
-            VarValue = value;
-        }
-
-        [MethodImpl(Inline)]
-        public EnvVar(EnvVarKind kind, string name, string value)
-        {
-            Kind = kind;
-            VarName = name;
-            VarValue = value;
+            Name = name;
+            Value = value;
         }
 
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => sys.hash(VarName) | hash(VarValue);
+            get => sys.hash(Name) | hash(Value);
         }
 
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => sys.empty(VarName);
+            get => sys.empty(Name);
         }
 
         public bool IsNonEmpty
         {
             [MethodImpl(Inline)]
-            get => sys.nonempty(VarName);
+            get => sys.nonempty(Name);
         }
 
         public bool Contains(string match)
-            => text.contains(VarValue,match);
+            => text.contains(Value,match);
 
         public bool Contains(ReadOnlySpan<char> match)
-            => text.contains(VarValue,match);
+            => text.contains(Value, match);
 
         public bool Contains(char match)
-            => text.contains(VarValue,match);
+            => text.contains(Value,match);
+
+        public EnvVar Revalue(@string value)
+            => new EnvVar(Name, value);
 
         [MethodImpl(Inline)]
         public string Format()
-            => sys.nonempty(VarValue) ? string.Format("{0}={1}", VarName, VarValue) : $"{VarName}=";
+            => sys.nonempty(Value) ? string.Format("{0}={1}", Name, Value) : $"{Name}=";
 
 
         public override string ToString()
@@ -82,25 +73,25 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public bool Equals(EnvVar src)
-            => VarName.Equals(src.VarName) && string.Equals(VarValue, src.VarValue, NoCase);
+            => Name.Equals(src.Name) && string.Equals(Value, src.Value, NoCase);
 
         public int CompareTo(EnvVar src)
-            => VarName.CompareTo(src.VarName);
+            => Name.CompareTo(src.Name);
 
         [MethodImpl(Inline)]
         public static implicit operator string(EnvVar src)
-            => src.VarValue;
+            => src.Value;
 
-        string IVarValue.VarName
-            => VarName;
+        string IVarValue.Name
+            => Name;
 
-        object IVarValue.VarValue
-            => VarValue;
+        object IVarValue.Value
+            => Value;
 
         public static EnvVar Empty
         {
             [MethodImpl(Inline)]
-            get => new EnvVar(0,EmptyString, EmptyString);
+            get => new EnvVar(EmptyString, EmptyString);
         }
     }
 }

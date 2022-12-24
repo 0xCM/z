@@ -174,13 +174,13 @@ namespace Z0
             return dst;
         }
 
-        public ref NatSpan<M,T> Col(int col, ref NatSpan<M,T> dst)
+        public NatSpan<M,T> Col(int col, ref NatSpan<M,T> dst)
         {
             Require.invariant(col >= 0 && col < ColCount, () => $"The column index {col} is out of range");
 
             for(var row = 0; row < ColLength; row++)
                 dst[row] = data[row*RowLength + col];
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline)]

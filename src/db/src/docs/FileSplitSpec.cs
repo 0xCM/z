@@ -8,14 +8,14 @@ namespace Z0
     {
         public readonly FilePath SourcePath;
 
-        public readonly Count MaxLineCount;
+        public readonly uint MaxLineCount;
 
         public readonly FolderPath TargetDir;
 
         public readonly TextEncodingKind TargetEncoding;
 
         [MethodImpl(Inline)]
-        public FileSplitSpec(FilePath src, Count maxlines, FolderPath dst, TextEncodingKind encoding)
+        public FileSplitSpec(FilePath src, uint maxlines, FolderPath dst, TextEncodingKind encoding)
         {
             SourcePath = src;
             MaxLineCount = maxlines;

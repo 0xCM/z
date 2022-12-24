@@ -5,8 +5,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
-
     partial class XedRules
     {
         public Index<InstGroup> CalcInstGroups(Index<InstPattern> src)

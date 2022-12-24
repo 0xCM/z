@@ -4,9 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Asm;
-
-    using static core;
+    using static sys;
     using static XedDisasmModels;
 
     partial class XedDisasm
@@ -42,7 +40,7 @@ namespace Z0
                 if(result.Fail)
                     break;
 
-                record.InstructionId = InstructionId.define(record.OriginId, record.IP, record.Encoded.Bytes);
+                record.InstructionId = InstructionId.define(record.OriginId, record.IP, sys.bytes(record.Encoded));
                 record.EncodingId = record.InstructionId.EncodingId;
                 record.Asm = expr[i];
                 record.Source = src.Path;

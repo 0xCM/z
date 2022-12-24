@@ -6,7 +6,7 @@ namespace Z0
 {
     partial struct FS
     {
-        public static string format(FolderPaths src, char sep = Chars.Semicolon)
+        public static string format(EnvPath src, char sep = Chars.Semicolon)
         {
             var dst = text.emitter();
             var count = src.Count;

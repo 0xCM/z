@@ -155,7 +155,6 @@ namespace Z0.Asm.Operands
         [MethodImpl(Inline)]
         public static implicit operator O(es src)
             => (G)src;
-
     }
 
     public readonly struct fs : IRegOp64<fs>
@@ -173,7 +172,6 @@ namespace Z0.Asm.Operands
         [MethodImpl(Inline)]
         public static implicit operator O(fs src)
             => (G)src;
-
     }
 
     public readonly struct gs : IRegOp64<gs>

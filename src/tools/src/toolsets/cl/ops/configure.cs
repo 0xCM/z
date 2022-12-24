@@ -32,9 +32,9 @@ namespace Z0
     {
         public string Version;
 
-        public IncludePath IncPaths;
+        public EnvPath IncPaths;
 
-        public IncludePath LibPaths;
+        public EnvPath LibPaths;
 
         public string Format()
         {
@@ -97,7 +97,6 @@ namespace Z0
 
             throw new Exception("No Win10 SDK version found.");
         }
-
 
         public static CmdLine cl(ClCmdInfo cmdinfo, FolderPath vsdir)
         {

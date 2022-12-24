@@ -42,10 +42,10 @@ namespace Z0.Asm.Operands
             get => W;
         }
 
-        public C RegClassCode
+        public RegClassCode RegClassCode
         {
             [MethodImpl(Inline)]
-            get => C.GP;
+            get => RegClassCode.GP;
         }
 
         public RegClass RegClass

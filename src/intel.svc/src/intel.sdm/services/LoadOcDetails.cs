@@ -15,7 +15,7 @@ namespace Z0.Asm
             var count = cells.Length;
             dst = default;
             if(count != SdmOpCodeDetail.FieldCount)
-                return (false, Tables.FieldCountMismatch.Format(SdmOpCodeDetail.FieldCount, count));
+                return (false, AppMsgs.FieldCountMismatch.Format(SdmOpCodeDetail.FieldCount, count));
 
             var i=0;
 

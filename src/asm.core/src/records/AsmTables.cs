@@ -24,7 +24,7 @@ namespace Z0.Asm
 
             var counter = 0u;
             if(doc.Header.Labels.Length != FieldCount)
-                return (false, AppMsg.FieldCountMismatch.Format(FieldCount, doc.Header.Labels.Length));
+                return (false, AppMsgs.FieldCountMismatch.Format(FieldCount, doc.Header.Labels.Length));
 
             var count = (uint)min(doc.RowCount, dst.Length);
             var rows = doc.RowData.View;

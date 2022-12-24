@@ -226,6 +226,5 @@ namespace Z0
         static Fence<char> SegFence = ('[',']');
 
         static Fence<char> DataFence = ('<', '>');
-
     }
 }

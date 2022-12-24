@@ -7,29 +7,29 @@ namespace Z0
     [Free]
     public interface IVarValue : IExpr
     {
-        string VarName {get;}
+        string Name {get;}
 
-        object VarValue {get;}
+        object Value {get;}
 
         bool INullity.IsEmpty
-            => sys.empty(VarName) || VarValue == null;
+            => sys.empty(Name) || Value == null;
 
         bool INullity.IsNonEmpty
-            => sys.nonempty(VarName) && VarValue != null;
+            => sys.nonempty(Name) && Value != null;
 
         string Format(VarContextKind vck)
-            => VarName ?? EmptyString;
+            => Name ?? EmptyString;
 
         string IExpr.Format()
-            => VarValue != null ? VarValue.ToString() : EmptyString;
+            => Value != null ? Value.ToString() : EmptyString;
     }
 
     [Free]
     public interface IVarValue<T> : IVarValue
     {
-        new T VarValue {get;}
+        new T Value {get;}
 
-        object IVarValue.VarValue
-            => VarValue;
+        object IVarValue.Value
+            => Value;
     }
 }

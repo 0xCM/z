@@ -20,7 +20,7 @@ namespace Z0
             else
             {
                 var i=0;
-                dst.Id = src[i++].Text;
+                dst.ToolName = src[i++].Text;
                 dst.Modifier = src[i++].Text;
                 dst.HelpCmd = src[i++].Text;
                 dst.Membership = src[i++].Text;
@@ -44,7 +44,7 @@ namespace Z0
                     {
                         result = parse(grid[i], out ToolProfile profile);
                         if(result)
-                            dst.Include(profile.Id, profile);
+                            dst.Include(profile.ToolName, profile);
                         else
                             break;
                     }
@@ -57,12 +57,12 @@ namespace Z0
             var data = Env.vars(src);
             var dst = new ToolSettings();
             var setting = @string.Empty;
-            if(data.Find(nameof(S.ToolId), out setting))
-                dst.ToolId = setting;
+            if(data.Find(nameof(S.Tool), out setting))
+                dst.Tool = new Tool(setting);
             if(data.Find(nameof(S.Group), out setting))
                 dst.Group = setting;
             if(data.Find(nameof(S.ToolEnv), out setting))
-                dst.ToolEnv = FS.uri(setting);
+                dst.ToolEnv = FS.path(setting);
             if(data.Find(nameof(S.InstallBase), out setting))
                 dst.InstallBase = FS.dir(setting);
             if(data.Find(nameof(S.ToolHome), out setting))
@@ -76,11 +76,11 @@ namespace Z0
             return dst;
         }
 
-        public Name ToolId;
+        public Tool Tool;
 
-        public Name Group;
+        public @string Group;
 
-        public _FileUri ToolEnv;
+        public FilePath ToolEnv;
 
         public FolderPath InstallBase;
 
@@ -95,7 +95,7 @@ namespace Z0
         public string Format(uint indent = 0)
         {
             var dst = text.emitter();
-            dst.IndentLine(indent, $"{nameof(ToolId)}={ToolId},");
+            dst.IndentLine(indent, $"{nameof(Tool)}={Tool},");
             dst.IndentLine(indent, $"{nameof(Group)}={Group},");
             dst.IndentLine(indent, $"{nameof(ToolEnv)}={ToolEnv},");
             dst.IndentLine(indent, $"{nameof(InstallBase)}={InstallBase},");

@@ -26,19 +26,19 @@ namespace Z0
         public static ref ushort uint16<T>(ref T src)
             => ref As<T,ushort>(ref src);
 
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref T uint16<T>(in ushort src, out T dst)
-        {
-            dst = @as<ushort,T>(src);
-            return ref dst;
-        }
+        // [MethodImpl(Inline), Op, Closures(Closure)]
+        // public static ref T uint16<T>(in ushort src, out T dst)
+        // {
+        //     dst = @as<ushort,T>(src);
+        //     return ref dst;
+        // }
 
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref ushort uint16<T>(in T src, out ushort dst)
-        {
-            dst = @as<T,ushort>(src);
-            return ref dst;
-        }
+        // [MethodImpl(Inline), Op, Closures(Closure)]
+        // public static ref ushort uint16<T>(in T src, out ushort dst)
+        // {
+        //     dst = @as<T,ushort>(src);
+        //     return ref dst;
+        // }
 
         /// <summary>
         /// Converts a nullable parametric source to a nullable <see cref='ushort'/>

@@ -32,7 +32,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public string Format()
-            => RP.format(EventId, AppMsg.EmittingTable.Capture(Table, Target));
+            => RP.format(EventId, AppMsgs.EmittingTable.Capture(Table, Target));
 
         public override string ToString()
             => Format();

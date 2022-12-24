@@ -30,19 +30,19 @@ namespace Z0
         public static ref uint uint32<T>(ref T src)
             => ref As<T,uint>(ref src);
 
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref T uint32<T>(in uint src, out T dst)
-        {
-            dst = @as<uint,T>(src);
-            return ref dst;
-        }
+        // [MethodImpl(Inline), Op, Closures(Closure)]
+        // public static ref T uint32<T>(in uint src, out T dst)
+        // {
+        //     dst = @as<uint,T>(src);
+        //     return ref dst;
+        // }
 
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref uint uint32<T>(in T src, out uint dst)
-        {
-            dst = @as<T,uint>(src);
-            return ref dst;
-        }
+        // [MethodImpl(Inline), Op, Closures(Closure)]
+        // public static ref uint uint32<T>(in T src, out uint dst)
+        // {
+        //     dst = @as<T,uint>(src);
+        //     return ref dst;
+        // }
 
         /// <summary>
         /// Presents a nullable parametric source to a nullable <see cref='uint'/>

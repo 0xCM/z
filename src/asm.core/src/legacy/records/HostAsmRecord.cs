@@ -19,7 +19,7 @@ namespace Z0
             var cells = src.Cells;
             dst = default;
             if(src.CellCount != FieldCount)
-                return (false, AppMsg.FieldCountMismatch.Format(FieldCount, src.CellCount));
+                return (false, AppMsgs.FieldCountMismatch.Format(FieldCount, src.CellCount));
 
             var i=0;
             result = DataParser.parse(skip(cells, i++), out dst.BlockAddress);

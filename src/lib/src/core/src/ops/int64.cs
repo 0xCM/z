@@ -21,19 +21,19 @@ namespace Z0
         public static ref long int64<T>(ref T src)
             => ref As<T,long>(ref src);
 
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref T int64<T>(in long src, out T dst)
-        {
-            dst = @as<long,T>(src);
-            return ref dst;
-        }
+        // [MethodImpl(Inline), Op, Closures(Closure)]
+        // public static ref T int64<T>(in long src, out T dst)
+        // {
+        //     dst = @as<long,T>(src);
+        //     return ref dst;
+        // }
 
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref long int64<T>(in T src, out long dst)
-        {
-            dst = @as<T,long>(src);
-            return ref dst;
-        }
+        // [MethodImpl(Inline), Op, Closures(Closure)]
+        // public static ref long int64<T>(in T src, out long dst)
+        // {
+        //     dst = @as<T,long>(src);
+        //     return ref dst;
+        // }
 
         /// <summary>
         /// Projects a sequence of <typeparamref name='T'/> cells onto a sequence of <see cref='long'/> cells

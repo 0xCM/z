@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Z0.Types;
-
    public abstract record class EnvVal<V> : IExpr
         where V : EnvVal<V>, new()
     {        

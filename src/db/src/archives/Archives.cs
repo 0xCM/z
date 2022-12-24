@@ -246,7 +246,7 @@ namespace Z0
         public static FolderPath folder(string src)
             => FS.dir(src);
 
-        public static FolderPaths folders(ReadOnlySpan<string> src)
+        public static EnvPath folders(ReadOnlySpan<string> src)
             => src.Map(FS.dir);
 
         public static Task<ExecToken> zip(IWfChannel channel, FolderPath src, FilePath dst)

@@ -183,23 +183,23 @@ namespace Z0
             return dst;
         }
 
-        static IApiCatalog match(Assembly control, string[] args)
-        {
-            var candidates = colocated(control);
-            if(args.Length == 0)
-                return catalog(candidates);
-            else
-            {
-                var match = args.ToHashSet();
-                var matched = list<Assembly>();
-                foreach(var a in candidates)
-                {
-                    var name = a.PartName();
-                    if(match.Contains(name.Format()))
-                        matched.Add(a);
-                }
-                return catalog(matched.ToArray());
-            }
-        }
+        // static IApiCatalog match(Assembly control, string[] args)
+        // {
+        //     var candidates = colocated(control);
+        //     if(args.Length == 0)
+        //         return catalog(candidates);
+        //     else
+        //     {
+        //         var match = args.ToHashSet();
+        //         var matched = list<Assembly>();
+        //         foreach(var a in candidates)
+        //         {
+        //             var name = a.PartName();
+        //             if(match.Contains(name.Format()))
+        //                 matched.Add(a);
+        //         }
+        //         return catalog(matched.ToArray());
+        //     }
+        // }
     }
 }

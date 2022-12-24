@@ -6,57 +6,57 @@ namespace Z0
 {
     using static sys;
 
-    public record struct Cell128<T> : IDataCell<Cell128<T>,W128,ByteBlock16>
+    public record struct Cell128<T> : IDataCell<Cell128<T>,W128,Cell128>
         where T : unmanaged
     {
         public const uint Width = 128;
 
         [MethodImpl(Inline)]
         public static Cell128<T> init(Vector128<T> src)
-            => new Cell128<T>(src.AsByte());
+            => @as<Vector128<T>,Cell128<T>>(src);
 
-        [MethodImpl(Inline)]
-        public static Cell128<T> init(ByteBlock16 src)
-            => new Cell128<T>(src);
+        // [MethodImpl(Inline)]
+        // public static Cell128<T> init(ByteBlock16 src)
+        //     => new Cell128<T>(src);
 
-        ByteBlock16 Data;
+        Cell128 Data;
 
-        [MethodImpl(Inline)]
-        public Cell128(ByteBlock16 data)
-            => Data = data;
+        // [MethodImpl(Inline)]
+        // public Cell128(ByteBlock16 data)
+        //     => Data = data;
 
         public CellKind Kind
             => CellKind.Cell128;
 
-        public Span<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => Data.Bytes;
-        }
+        // public Span<byte> Bytes
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => Data.Bytes;
+        // }
 
-        public ref T First
-        {
-            [MethodImpl(Inline)]
-            get => ref @as<T>(Data.First);
-        }
+        // public ref T First
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => ref @as<T>(Data.First);
+        // }
 
-        public Span<T> Cells
-        {
-            [MethodImpl(Inline)]
-            get => recover<T>(Data.Bytes);
-        }
+        // public Span<T> Cells
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => recover<T>(Data.Bytes);
+        // }
 
-        public ref T this[int i]
-        {
-            [MethodImpl(Inline)]
-            get => ref seek(First,i);
-        }
+        // public ref T this[int i]
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => ref seek(First,i);
+        // }
 
-        public ref T this[uint i]
-        {
-            [MethodImpl(Inline)]
-            get => ref seek(First,i);
-        }
+        // public ref T this[uint i]
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => ref seek(First,i);
+        // }
 
         public Cell128<T> Zero
         {
@@ -124,20 +124,23 @@ namespace Z0
             get => ToVector().AsDouble();
         }
 
+        public T Cell(byte i)
+            => first(recover<T>(bytes(Data)));
+
         [MethodImpl(Inline)]
         public bit TestBit(byte index)
-            => bit.test(Data[(byte)(index/8)], (byte)(index%8));
+            => bit.test(Cell((byte)(index/8)), (byte)(index%8));
 
         [MethodImpl(Inline)]
         public void SetBit(byte index, bit state)
         {
-            ref var b = ref Data[index];
+            ref var b = ref seek(bytes(Data),index);
             b = bit.set(b, (byte)(index%8), state);
         }
 
         [MethodImpl(Inline)]
         public Vector128<T> ToVector()
-            => Data.Vector<T>();
+            => gcpu.vload<T>(w128, sys.bytes(Data));
 
         [MethodImpl(Inline)]
         public bool Equals(Cell128<T> src)
