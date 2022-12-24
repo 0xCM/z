@@ -17,19 +17,6 @@ namespace Z0
 
         internal const byte DefaultFieldWidth = 24;
 
-        public static ExecToken emit<T>(IWfChannel channel, ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
-            ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
-                where T : struct
-        {
-            var emitting = channel.EmittingTable<T>(dst);
-            var formatter = create(typeof(T), rowpad, fk);
-            using var writer = dst.Writer(encoding);
-            writer.WriteLine(formatter.FormatHeader());
-            for(var i=0; i<rows.Length; i++)
-                writer.WriteLine(formatter.Format(skip(rows,i)));
-             return channel.EmittedTable(emitting, rows.Length, dst);
-        }
-
         public static void emit<T>(ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
                 where T : struct

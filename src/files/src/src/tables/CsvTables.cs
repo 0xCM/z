@@ -31,40 +31,6 @@ namespace Z0
             where T : struct
                 => formatter<T>(rowspec<T>(widths, rowpad, fk));
 
-        // /// <summary>
-        // /// Creates a <see cref='ICsvFormatter{T}'> instance for a specified record type
-        // /// </summary>
-        // /// <typeparam name="T">The record type</typeparam>
-        // public static ICsvFormatter<T> formatter<T>(ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular, string delimiter = DefaultDelimiter)
-        //     where T : struct
-        // {
-        //     var record = typeof(T);
-        //     var fields = TableDefs.cells(record).Index();
-        //     var count = fields.Length;
-        //     var buffer = sys.alloc<HeaderCell>(count);
-        //     for(var i=0u; i<count; i++)
-        //         sys.seek(buffer, i) = new HeaderCell(i, fields[i].CellName, fields[i].CellWidth);
-        //     var header = new RowHeader(buffer, DefaultDelimiter);
-        //     var spec = CsvTables.rowspec(header, header.Cells.Select(x => x.CellFormat), rowpad, fk);
-        //     return new CsvFormatter.Formatter2<T>(spec, Tables.adapt(record));
-        // }
-
-        // /// <summary>
-        // /// Creates a <see cref='ICsvFormatter'> instance for a specified record type
-        // /// </summary>
-        // /// <param name="record">The record type</param>
-        // /// <param name="delimiter">The field delimiter</param>
-        // public static ICsvFormatter formatter(Type record, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular, string delimiter = DefaultDelimiter)
-        // {
-        //     var fields = TableDefs.cells(record).Index();
-        //     var count = fields.Length;
-        //     var buffer = sys.alloc<HeaderCell>(count);
-        //     for(var i=0u; i<count; i++)
-        //         sys.seek(buffer, i) = new HeaderCell(i, fields[i].CellName, fields[i].CellWidth);
-        //     var header = new RowHeader(buffer, delimiter);
-        //     var spec = CsvTables.rowspec(header, header.Cells.Select(x => x.CellFormat), rowpad, fk);
-        //     return new CsvFormatter(record, spec, Tables.adapt(record));
-        // }
 
         public static ICsvFormatter<T> formatter<T>(RowFormatSpec spec, RecordFormatKind fk = RecordFormatKind.Tablular)
             where T : struct

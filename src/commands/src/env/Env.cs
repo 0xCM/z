@@ -315,7 +315,7 @@ namespace Z0
             using var writer = env.AsciWriter();
             for(var i=0; i<src.Count; i++)
                 writer.WriteLine(src[i].Format());
-            return Tables.emit(channel, rows(src, name).View, table, ASCI);
+            return TableFlows.emit(channel, rows(src, name).View, table, ASCI);
         }
     }
 }

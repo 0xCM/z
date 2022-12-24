@@ -8,9 +8,17 @@ namespace Z0
 
     partial struct Tables
     {
+        /// <summary>
+        /// Negates the source value
+        /// </summary>
+        /// <param name="src">The source value</param>
+        [MethodImpl(Inline), Negate]
+        static short negate(short src)
+            => (short)(-src);
+
         public static string KvpPattern(in RowFormatSpec spec)
         {
-            var slot0 = RP.slot(0, math.negate((short)spec.MaxCellWidth));
+            var slot0 = RP.slot(0, negate((short)spec.MaxCellWidth));
             var slot1 = RP.slot(1);
             return slot0 + Chars.Space + spec.Delimiter + Chars.Space + slot1;
         }

@@ -13,7 +13,7 @@ namespace Z0
         {
             var data = src.Values;
             iter(data, x => channel.Row(x.Uri.Name));
-            Tables.emit(channel, data, dst);
+            TableFlows.emit(channel, data, dst);
         }
 
         [CmdOp("api/commands")]
