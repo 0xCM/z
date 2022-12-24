@@ -7,14 +7,14 @@ namespace Z0
     using api = CmdApi;
 
     [Free]
-    public interface IApiCmd : ICmd
+    public interface IWfCmd : ICmd
     {
         CmdUri Uri {get;}
     }
 
     [Free]
-    public interface IApiCmd<T> : IApiCmd
-        where T : IApiCmd<T>, new()
+    public interface IWfCmd<T> : IWfCmd
+        where T : IWfCmd<T>, new()
     {
         CmdId ICmd.CmdId
             => CmdId.identify<T>();
@@ -22,7 +22,7 @@ namespace Z0
         string IExpr.Format()
             => api.format((T)this);
 
-        CmdUri IApiCmd.Uri
+        CmdUri IWfCmd.Uri
             => new(CmdKind.App, GetType().Assembly.PartName().Format(), GetType().DisplayName(), CmdId.Format());
     }    
 }

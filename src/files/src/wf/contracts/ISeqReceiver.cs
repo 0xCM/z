@@ -18,6 +18,4 @@ namespace Z0
         void ISeqReceiver.Accept(IEnumerable<dynamic> src)
             =>Accept(from item in src select (T)item);
     }
-
-
 }

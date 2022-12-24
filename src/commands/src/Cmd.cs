@@ -13,10 +13,6 @@ namespace Z0
             where T : ICmd
                 => typeof(T).DeclaredInstanceFields().Select(f => new CmdArg(f.Name, f.GetValue(src)?.ToString() ?? EmptyString));
 
-        // [Op]
-        // public static ICmd[] reify(Assembly src)
-        //     => tagged(src).Select(reify);
-
         public static ICmd reify(Type src)
             => (ICmd)Activator.CreateInstance(src);
 
@@ -88,7 +84,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static FileFlow flow(in CmdFlow src)
-            => new FileFlow(flow(src.Tool, src.SourcePath.ToUri(), src.TargetPath.ToUri()));
+            => new FileFlow(flow(src.Tool, src.SourcePath, src.TargetPath));
 
         [MethodImpl(Inline)]
         public static DataFlow<Actor,S,T> flow<S,T>(Tool tool, S src, T dst)

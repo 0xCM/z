@@ -97,16 +97,6 @@ namespace Z0
             return ref adapter;
         }
 
-
-        // [Op, Closures(Closure)]
-        // public static void load<T>(T src, ref DynamicRow<T> dst)
-        // {
-        //     var tr = __makeref(edit(src));
-        //     for(var i=0u; i<dst.FieldCount; i++)
-        //         dst[i] = dst.Fields[i].Definition.GetValueDirect(tr);
-        // }
-
-
         [Op, Closures(Closure)]
         public static void load<T>(in T src, ref DynamicRow<T> dst)
         {

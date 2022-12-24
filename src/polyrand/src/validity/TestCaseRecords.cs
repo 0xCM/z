@@ -22,23 +22,8 @@ namespace Z0
 
         public const byte MessagePad = (byte)TestCaseField.Message;
 
-        // public static void render(in TestCaseRecord src, ITextBuffer dst)
-        // {
-        //     dst.AppendPadded(src.CaseName, CasePad, Delimiter);
-        //     dst.AppendPadded(src.Passed, PassedPad, Delimiter);
-        //     dst.AppendPadded(src.Duration, DurationPad, Delimiter);
-        //     dst.AppendPadded(src.Started, StartedPad, Delimiter);
-        //     dst.AppendPadded(src.Finished, FinishedPad, Delimiter);
-        //     dst.AppendPadded(src.Message, MessagePad, Delimiter);
-        // }
-
         public static string format(in TestCaseRecord src)
             => Tables.formatFx<TestCaseRecord>()(src);
 
-        // {
-        //     var dst = text.buffer();
-        //     render(src, dst);
-        //     return dst.Emit();
-        // }
     }
 }

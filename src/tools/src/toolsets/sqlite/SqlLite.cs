@@ -24,7 +24,7 @@ namespace Z0
         }
 
         [Cmd(CmdName)]
-        public record struct ImportCmd : IApiCmd<ImportCmd>
+        public record struct ImportCmd : IWfCmd<ImportCmd>
         {
             const string CmdName=".import";
 

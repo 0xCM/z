@@ -17,11 +17,31 @@ namespace Z0
 
         internal const byte DefaultFieldWidth = 24;
 
+        public static void generate(uint margin, CsvTableDef spec, ITextEmitter dst)
+        {
+            dst.IndentLine(margin, "[Record(TableId), StructLayout(LayoutKind.Sequential,Pack=1)]");
+            dst.IndentLineFormat(margin, "public struct {0}", spec.TypeName);
+            dst.IndentLine(margin, Chars.LBrace);
+            dst.IndentLineFormat(margin,"public const string TableId = \"{0}\";", spec.TableName);
+            margin += 4;
+
+            ref readonly var fields = ref spec.Columns;
+            for(var i=0; i<fields.Count; i++)
+            {
+                dst.AppendLine();
+                ref readonly var field = ref fields[i];
+                dst.IndentLineFormat(margin,"public {0} {1};", field.DataType, field.Name);
+            }
+
+            margin -= 4;
+            dst.IndentLine(margin, Chars.RBrace);
+        }
+        
         public static void emit<T>(ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
                 where T : struct
         {
-            var formatter = create(typeof(T), rowpad, fk);
+            var formatter = CsvTables.formatter(typeof(T), rowpad, fk);
             using var writer = dst.Writer(encoding);
             writer.WriteLine(formatter.FormatHeader());
             for(var i=0; i<rows.Length; i++)
@@ -31,7 +51,7 @@ namespace Z0
         [Op, Closures(Closure)]
         public static Count emit<T>(ReadOnlySpan<T> src, StreamWriter dst)
             where T : struct
-                => emit(src,Tables.rowspec<T>(24), dst);
+                => emit(src, Tables.rowspec<T>(24), dst);
 
         [Op, Closures(Closure)]
         public static Count emit<T>(ReadOnlySpan<T> src, RowFormatSpec spec, StreamWriter dst)
@@ -165,34 +185,34 @@ namespace Z0
             }
         }        
 
-        public static ICsvFormatter<T> create<T>(ushort rowpad, RecordFormatKind fk, string delimiter = DefaultDelimiter)
-            where T : struct
-        {
-            var record = typeof(T);
-            var fields = Tables.fields(record).Index();
-            var count = fields.Length;
-            var buffer = alloc<HeaderCell>(count);
-            for(var i=0u; i<count; i++)
-                seek(buffer, i) = new HeaderCell(i, fields[i].CellName, fields[i].CellWidth);
-            var header = new RowHeader(buffer, DefaultDelimiter);
-            var spec = rowspec(header, header.Cells.Select(x => x.CellFormat), rowpad, fk);
-            return new Formatter2<T>(spec, api.adapter(record));
-        }
+        // public static ICsvFormatter<T> create<T>(ushort rowpad, RecordFormatKind fk, string delimiter = DefaultDelimiter)
+        //     where T : struct
+        // {
+        //     var record = typeof(T);
+        //     var fields = Tables.cells(record).Index();
+        //     var count = fields.Length;
+        //     var buffer = alloc<HeaderCell>(count);
+        //     for(var i=0u; i<count; i++)
+        //         seek(buffer, i) = new HeaderCell(i, fields[i].CellName, fields[i].CellWidth);
+        //     var header = new RowHeader(buffer, DefaultDelimiter);
+        //     var spec = rowspec(header, header.Cells.Select(x => x.CellFormat), rowpad, fk);
+        //     return new Formatter2<T>(spec, api.adapter(record));
+        // }
 
-        public static CsvFormatter create(Type record, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular, string delimiter = DefaultDelimiter)
-        {
-            var fields = Tables.fields(record).Index();
-            var count = fields.Length;
-            var buffer = alloc<HeaderCell>(count);
-            for(var i=0u; i<count; i++)
-                seek(buffer, i) = new HeaderCell(i, fields[i].CellName, fields[i].CellWidth);
-            var header = new RowHeader(buffer, delimiter);
-            var spec = rowspec(header, header.Cells.Select(x => x.CellFormat), rowpad, fk);
-            return new CsvFormatter(record, spec, api.adapter(record));
-        }
+        // public static CsvFormatter create(Type record, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular, string delimiter = DefaultDelimiter)
+        // {
+        //     var fields = Tables.cells(record).Index();
+        //     var count = fields.Length;
+        //     var buffer = alloc<HeaderCell>(count);
+        //     for(var i=0u; i<count; i++)
+        //         seek(buffer, i) = new HeaderCell(i, fields[i].CellName, fields[i].CellWidth);
+        //     var header = new RowHeader(buffer, delimiter);
+        //     var spec = rowspec(header, header.Cells.Select(x => x.CellFormat), rowpad, fk);
+        //     return new CsvFormatter(record, spec, api.adapter(record));
+        // }
 
         internal static RowAdapter adapter(Type src)
-            => new RowAdapter(src, Tables.fields(src));
+            => new RowAdapter(src, Tables.cells(src));
 
         [MethodImpl(Inline)]
         internal static ref RowAdapter adapt<T>(in T src, ref RowAdapter adapter)

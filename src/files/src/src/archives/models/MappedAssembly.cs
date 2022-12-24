@@ -15,7 +15,5 @@ namespace Z0
 
         }
 
-        public EcmaReader MetadataReader()
-            => EcmaReader.create(BaseAddress, FileSize);
     }
 }

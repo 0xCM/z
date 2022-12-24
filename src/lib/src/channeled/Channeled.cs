@@ -291,7 +291,7 @@ namespace Z0
            where T : struct
         {
             var emitting = EmittingTable<T>(dst);
-            var formatter = Tables.create(typeof(T));
+            var formatter = CsvTables.formatter(typeof(T));
             using var writer = dst.Emitter(encoding);
             writer.WriteLine(formatter.FormatHeader());
             for (var i = 0; i < rows.Length; i++)

@@ -143,20 +143,6 @@ namespace Z0
             return dst.ToArray();
         }
 
-        // public static Assembly[] parts()        
-        // {
-        //     Assembly[] get()
-        //     {
-        //         var root = FS.path(controller().Location).FolderPath;                    
-        //         var modules = Archives.modules(root,false).Members().Where(x => FS.managed(x.Path) && !x.Path.FileName().Contains("System.Private.CoreLib"));
-        //         return modules.Where(m => m.Path.FileName().StartsWith("z0.")).Map(x => Assembly.LoadFile(x.Path.ToFilePath().Format()));
-        //     }
-        //     return data("parts",get);
-        // }
-
-        // public Assembly[] Parts
-        //     => ApiAssemblies.Parts;
-
         ReadOnlySeq<IApiHost> CalcApiHosts()
         {
             var dst = sys.bag<IApiHost>();

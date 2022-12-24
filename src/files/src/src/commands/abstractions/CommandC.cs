@@ -15,7 +15,7 @@ namespace Z0
             => Format();
     }
 
-    public abstract record class Command<C> : Command, IApiCmd<C>
+    public abstract record class Command<C> : Command, IWfCmd<C>
         where C : Command<C>, new()
     {        
         public override CmdId CmdId 

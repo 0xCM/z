@@ -13,14 +13,31 @@ namespace Z0
 
         internal const string DefaultDelimiter = " | ";
 
-        /// <summary>
-        /// Defines a <typeparamref name='T'/> record formatter
-        /// </summary>
-        /// <param name="widths">The column widths</param>
-        /// <typeparam name="T">The record type</typeparam>
-        public static ICsvFormatter<T> formatter<T>(byte fieldwidth, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
+        public static ICsvFormatter<T> formatter<T>(ushort rowpad, RecordFormatKind fk, string delimiter = DefaultDelimiter)
             where T : struct
-                => CsvTables.formatter<T>(rowspec<T>(fieldwidth, rowpad, fk));
+        {
+            var record = typeof(T);
+            var fields = Tables.cells(record).Index();
+            var count = fields.Length;
+            var buffer = alloc<HeaderCell>(count);
+            for(var i=0u; i<count; i++)
+                seek(buffer, i) = new HeaderCell(i, fields[i].CellName, fields[i].CellWidth);
+            var header = new RowHeader(buffer, DefaultDelimiter);
+            var spec = rowspec(header, header.Cells.Select(x => x.CellFormat), rowpad, fk);
+            return new CsvFormatter.Formatter2<T>(spec, Tables.adapter(record));
+        }
+
+        public static CsvFormatter formatter(Type record, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular, string delimiter = DefaultDelimiter)
+        {
+            var fields = Tables.cells(record).Index();
+            var count = fields.Length;
+            var buffer = alloc<HeaderCell>(count);
+            for(var i=0u; i<count; i++)
+                seek(buffer, i) = new HeaderCell(i, fields[i].CellName, fields[i].CellWidth);
+            var header = new RowHeader(buffer, delimiter);
+            var spec = rowspec(header, header.Cells.Select(x => x.CellFormat), rowpad, fk);
+            return new CsvFormatter(record, spec, Tables.adapter(record));
+        }
 
         /// <summary>
         /// Defines a <typeparamref name='T'/> record formatter
@@ -30,7 +47,6 @@ namespace Z0
         public static ICsvFormatter<T> formatter<T>(ReadOnlySpan<byte> widths, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
             where T : struct
                 => formatter<T>(rowspec<T>(widths, rowpad, fk));
-
 
         public static ICsvFormatter<T> formatter<T>(RowFormatSpec spec, RecordFormatKind fk = RecordFormatKind.Tablular)
             where T : struct

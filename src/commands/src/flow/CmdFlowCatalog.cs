@@ -14,7 +14,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         static FileFlow flow(in CmdFlow src)
-            => new FileFlow(flow(src.Tool, src.SourcePath.ToUri(), src.TargetPath.ToUri()));
+            => new FileFlow(flow(src.Tool, src.SourcePath, src.TargetPath));
 
         ConstLookup<_FileUri,List<_FileUri>> Children;
 

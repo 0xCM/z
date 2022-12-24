@@ -20,7 +20,6 @@ namespace Z0
 
         [Op, Closures(Closure)]
         public static RowFormatSpec rowspec<T>(byte width, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
-            where T : struct
         {
             var header = Tables.header<T>(width);
             return rowspec(header, header.Cells.Select(x => x.CellFormat), rowpad, fk);

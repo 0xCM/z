@@ -191,7 +191,7 @@ namespace Z0
             => ApiCmd.EmitCmdDefs(src, Target);
 
         public void EmitApiTypes(Assembly[] src)
-            => Channel.TableEmit(DataTypeInfo(src), Target.Table<ApiTypeInfo>());
+            => Channel.TableEmit(ApiTypes.describe(ApiTypes.discover(src)), Target.Table<ApiTypeInfo>());
 
         public void EmitPartList(params Assembly[] src)
         {
@@ -261,9 +261,6 @@ namespace Z0
             Channel.FileEmit(dst.Emit(), src.Length, path);
         }
 
-        ReadOnlySeq<ApiTypeInfo> DataTypeInfo(Assembly[] src)
-            => ApiTypes.describe(ApiTypes.discover(src));
-
         Type[] EnumTypes(Assembly[] src)
             => src.Enums().Where(x => x.ContainsGenericParameters == false);
 
@@ -272,7 +269,6 @@ namespace Z0
 
         void EmitComments()
             => Comments.Collect(Target);
-
 
         ReadOnlySeq<AssetCatalogEntry> EmitAssets(ReadOnlySeq<ComponentAssets> src)
         {

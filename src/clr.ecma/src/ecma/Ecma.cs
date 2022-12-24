@@ -9,6 +9,12 @@ namespace Z0
     using static sys;
     using static Bytes;
 
+    partial class XTend
+    {
+        public static EcmaReader MetadataReader(this MappedAssembly src)
+            => EcmaReader.create(src.BaseAddress, src.FileSize);
+    }
+    
     [ApiHost]
     public class Ecma : WfSvc<Ecma>
     {

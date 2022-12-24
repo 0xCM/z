@@ -8,6 +8,24 @@ namespace Z0
 
     public class TableFiles
     {
+        public static FileName filename(TableId id)
+            => filename(id, FS.Csv);
+
+        public static FileName filename(TableId id, FileExt ext)
+            => FS.file(id.Format(), ext);
+
+        public static FileName filename<T>()
+            where T : struct
+                => filename<T>(FS.Csv);
+
+        public static FileName filename<T>(FileExt ext)
+            where T : struct
+                => filename(Tables.identify<T>());
+
+        public static FileName filename<T>(string prefix)
+            where T : struct
+                => FS.file(string.Format("{0}.{1}", prefix, Tables.identify<T>()), FS.Csv);        
+
         public static FilePath path(FolderPath dir, Type t)
             => t.Tag<RecordAttribute>().MapValueOrElse(a => dir + FS.file(a.TableId, FS.Csv), () => dir + FS.file(t.Name, FS.Csv));
 

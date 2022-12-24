@@ -12,7 +12,7 @@ namespace Z0
         /// <typeparam name="T">The record type</typeparam>
         public static ICsvFormatter<T> formatter<T>(ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular, string delimiter = DefaultDelimiter)
             where T : struct
-                => create<T>(rowpad, fk, delimiter);
+                => CsvTables.formatter<T>(rowpad, fk, delimiter);
 
         /// <summary>
         /// Creates a <see cref='ICsvFormatter'> instance for a specified record type
@@ -20,7 +20,7 @@ namespace Z0
         /// <param name="record">The record type</param>
         /// <param name="delimiter">The field delimiter</param>
         public static ICsvFormatter formatter(Type record, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular, string delimiter = DefaultDelimiter)
-            => create(record, rowpad, fk, delimiter);
+            => CsvTables.formatter(record, rowpad, fk, delimiter);
 
         /// <summary>
         /// Defines a <typeparamref name='T'/> record formatter

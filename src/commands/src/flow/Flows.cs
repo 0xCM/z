@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class Flows : AppService<Flows>
+    public class Flows
     {
 
         

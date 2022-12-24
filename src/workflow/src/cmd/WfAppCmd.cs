@@ -27,9 +27,9 @@ namespace Z0
             var buffer = text.emitter();
             var src = ApiAssemblies.Parts;
             var defs = TableDefs.defs(src);
-            iter(defs, src => CsvTableTypes.emit(0u,src,buffer));
+            iter(defs, src => Tables.generate(0u,src,buffer));
             var dst = AppDb.CgStage("api.tables").Path("replicants", FileKind.Cs);
-            FileEmit(buffer.Emit(),dst);         
+            Channel.FileEmit(buffer.Emit(),dst);         
         }
 
         [CmdOp("api/emit")]

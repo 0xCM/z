@@ -13,15 +13,15 @@ namespace Z0
         /// </summary>
         /// <typeparam name="T">The record type</typeparam>
         [Op, Closures(Closure)]
-        public static ClrTableCell[] fields<T>()
-            => fields(typeof(T));
+        public static ClrTableCell[] cells<T>()
+            => cells(typeof(T));
 
         /// <summary>
         /// Discerns a <see cref='ClrTableCells'/> for a specified record type
         /// </summary>
         /// <param name="src">The record type</typeparam>
         [Op]
-        public static ClrTableCell[] fields(Type src)
+        public static ClrTableCell[] cells(Type src)
         {
             var fields = src.DeclaredPublicInstanceFields().Ignore().Index();
             var count = fields.Count;

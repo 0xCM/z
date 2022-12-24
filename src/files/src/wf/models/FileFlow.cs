@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed class FileFlow : DataFlow<Actor,_FileUri,_FileUri>
+    public sealed class FileFlow : DataFlow<Actor,FilePath,FilePath>
     {
         [MethodImpl(Inline)]
-        public FileFlow(DataFlow<Actor,_FileUri,_FileUri> spec)
+        public FileFlow(DataFlow<Actor,FilePath,FilePath> spec)
             : base(spec.Id, spec.Actor, spec.Source, spec.Target)
         {
 

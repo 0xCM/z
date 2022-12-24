@@ -6,7 +6,7 @@ namespace Z0
 {
     public abstract class Executor<E, C, P> : Executor<E>, ICmdExecutor<C, P>
         where E : Executor<E, C, P>, new()
-        where C : IApiCmd<C>, new()
+        where C : IWfCmd<C>, new()
         where P : INullity, new()
     {
         protected abstract P Run(CmdContext context, C command);

@@ -15,7 +15,7 @@ namespace Z0
                 where T : struct
         {
             var emitting = channel.EmittingTable<T>(dst);
-            var formatter = Tables.create(typeof(T), rowpad, fk);
+            var formatter = CsvTables.formatter(typeof(T), rowpad, fk);
             using var writer = dst.Writer(encoding);
             writer.WriteLine(formatter.FormatHeader());
             for(var i=0; i<rows.Length; i++)
@@ -27,7 +27,7 @@ namespace Z0
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
                 where T : struct
         {
-            var formatter = Tables.create(typeof(T), rowpad, fk);
+            var formatter = CsvTables.formatter(typeof(T), rowpad, fk);
             using var writer = dst.Writer(encoding);
             writer.WriteLine(formatter.FormatHeader());
             for(var i=0; i<rows.Length; i++)

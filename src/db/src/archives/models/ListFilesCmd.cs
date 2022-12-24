@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Cmd(CmdName)]
-    public struct ListFilesCmd : IApiCmd<ListFilesCmd>
+    public struct ListFilesCmd : IWfCmd<ListFilesCmd>
     {
         public const string CmdName = "list-files";
 
