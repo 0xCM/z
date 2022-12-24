@@ -27,7 +27,7 @@ namespace Z0
         public bool IsMapped(char c)
             => u16(this[c]) != 0;
 
-        internal ReadOnlySpan<T> View
+        public ReadOnlySpan<T> Terms
         {
             [MethodImpl(Inline)]
             get => Data;

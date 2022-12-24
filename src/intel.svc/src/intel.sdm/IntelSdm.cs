@@ -7,8 +7,6 @@ namespace Z0.Asm
     [ApiHost]
     public partial class IntelSdm : WfSvc<IntelSdm>
     {
-        CharMapper CharMapper => Service(Wf.CharMapper);
-
         IntelSdmPaths SdmPaths => Wf.SdmPaths();
         
         TextMap SigNormalRules

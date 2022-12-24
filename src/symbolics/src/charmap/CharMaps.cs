@@ -8,8 +8,8 @@ namespace Z0
 
     using static sys;
 
-    [ApiHost]
-    public readonly struct CharMaps
+    [ApiHost, Free]
+    public class CharMaps
     {
         [MethodImpl(Inline), Op, Closures(UInt8x16k)]
         public static CharMapEntry<T> entry<T>(Hex16 src, T dst)
@@ -39,15 +39,6 @@ namespace Z0
             seek(dst,i++) = src.Target;
             return i-i0;
         }
-
-        // [Op]
-        // public static string format(Paired<Hex16,char> src)
-        // {
-        //     Span<char> dst = stackalloc char[16];
-        //     var i=0u;
-        //     var count = render(src,ref i, dst);
-        //     return text.format(slice(dst,0,count));
-        // }
 
         [Op]
         public static string format(CharMapEntry<char> src)
@@ -155,7 +146,7 @@ namespace Z0
         public static ushort emit<T>(in CharMap<T> map, StreamWriter dst)
             where T : unmanaged
         {
-            var src = map.View;
+            var src = map.Terms;
             var count = src.Length;
             var counter = z16;
             for(var i=0; i<count; i++)

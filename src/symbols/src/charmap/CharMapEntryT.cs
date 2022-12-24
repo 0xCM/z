@@ -27,7 +27,7 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => sys.nhash(Source, HashCodes.hash(Target));
+            get => sys.nhash(Source, Target);
         }
 
         [MethodImpl(Inline)]

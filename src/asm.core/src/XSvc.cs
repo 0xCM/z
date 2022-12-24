@@ -24,9 +24,6 @@ namespace Z0
             public StanfordAsmCatalog StanfordCatalog(IWfRuntime wf)
                 => Service<StanfordAsmCatalog>(wf);
 
-            public CharMapper CharMapper(IWfRuntime wf)
-                => Service<CharMapper>(wf);
-
             public AsmDocs AsmDocs(IWfRuntime wf)
                 => Service<AsmDocs>(wf);
 
@@ -56,9 +53,6 @@ namespace Z0
 
         public static AsmDocs AsmDocs(this IWfRuntime wf)
             => Services.AsmDocs(wf);
-
-        public static CharMapper CharMapper(this IWfRuntime wf)
-            => Services.CharMapper(wf);
 
          public static AsmFlowCmd AsmFlowCmd(this IWfRuntime wf)
            => Services.AsmFlowCmd(wf);

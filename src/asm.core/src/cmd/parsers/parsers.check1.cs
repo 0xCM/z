@@ -17,9 +17,9 @@ namespace Z0
         void CheckDigitParsers()
         {
             var input = "01001101";
-            var count = Digital.parse(input, out GBlock64<BinaryDigit> dst);
-            var digits = dst.Segment(0,count);
-            var parsed = Digital.format(digits);
+            // var count = Digital.parse(input, out GBlock64<BinaryDigit> dst);
+            // var digits = dst.Segment(0,count);
+            // var parsed = Digital.format(digits);
             //Write(Demand.eq(input,parsed));
             CheckDigitParser(base2);
             CheckDigitParser(base10);
