@@ -4,9 +4,15 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public partial class GBlocks
+    partial class GBlocks
     {
+        [Free]
+        public interface IBlockReader<G,T>
+            where T : unmanaged
+            where G : unmanaged, IGBlock
+        {
+            G Read(ReadOnlySpan<T> src);
+        }
 
-
-    }
+    }   
 }

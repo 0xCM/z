@@ -5,11 +5,9 @@
 namespace Z0
 {
     [Free]
-    public interface IAppService : IService, IDisposable
+    public interface IAppService : IChanneled, IDisposable
     {
         IWfRuntime Wf {get;}
-
-        IWfChannel Channel {get;}
 
         T Service<T>(Func<T> factory);
 
@@ -24,7 +22,7 @@ namespace Z0
     /// </summary>
     /// <typeparam name="H">The reifying type</typeparam>
     [Free]
-    public interface IAppService<H> : IAppService, IService<H>
+    public interface IAppService<H> : IAppService, IService<H>, IChanneled<H>
         where H : IAppService<H>, new()
     {
 

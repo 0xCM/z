@@ -7,13 +7,27 @@ namespace Z0
     using static sys;
 
     [ApiHost]
-    public sealed class RenderPatternEmitter : AppService<RenderPatternEmitter>
-    {
+    public sealed class RenderPatternEmitter : Channeled<RenderPatternEmitter>
+    {        
+        public RenderPatternEmitter()
+        {
+            
+        }
+
+        RenderPatternEmitter(IWfChannel channel)
+            : base(channel)
+        {
+
+        }
+
+        protected override Func<IWfChannel,RenderPatternEmitter> Factory 
+            => channel => new (channel);
+
         public void Emit(Type src, FilePath dst)
         {
             var flow = Channel.EmittingFile(dst);
             using var writer = dst.Writer();
-            var patterns = Sources(src);
+            var patterns = RenderPatternSources.from(src);
             var view = patterns.View;
 
             var count = view.Length;
@@ -21,18 +35,6 @@ namespace Z0
                 writer.WriteLine(skip(view,i).Format());
 
             Channel.EmittedFile(flow, count);
-        }
-
-        [Op]
-        public RenderPatternSources Sources(Type src)
-        {
-            var values = src.LiteralFieldValues<string>(out var fields);
-            var count = values.Length;
-            var buffer = alloc<RenderPatternSource>(count);
-            var dst = span(buffer);
-            for(var i=0u; i<count; i++)
-                seek(dst,i) = new RenderPatternSource(skip(fields,i), skip(values,i));
-            return buffer;
         }
     }
 }

@@ -17,7 +17,8 @@ namespace Z0
 
         public WfEmit Emitter {get;}
 
-        TokenDispenser Tokens;    
+        TokenDispenser Tokens;
+
         [MethodImpl(Inline)]
         public WfRuntime(WfInit init)
         {

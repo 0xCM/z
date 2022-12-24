@@ -7,7 +7,26 @@ namespace Z0
     using static sys;
     using static Events;
 
-    public class Channeled : IWfChannel
+    public abstract class Channeled<C> : Channeled, IChanneled<C>
+        where C : Channeled<C>, new()
+    {
+        public static C create(IWfChannel channel)
+            => new C().Factory(channel);
+
+        protected abstract Func<IWfChannel,C> Factory {get;}
+
+        protected Channeled(IWfChannel channel)
+            : base(channel)
+        {
+        }
+
+        protected Channeled()
+        {
+
+        }
+    }    
+
+    class Channeling : IWfChannel
     {
         TokenDispenser Tokens;
 

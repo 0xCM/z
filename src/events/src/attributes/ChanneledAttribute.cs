@@ -4,9 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public partial class GBlocks
+    public class ChanneledAttribute : Attribute
     {
-
 
     }
 }

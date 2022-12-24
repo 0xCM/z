@@ -4,9 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public partial class GBlocks
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
+    public class RunnableAttribute : Attribute
     {
-
 
     }
 }

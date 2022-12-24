@@ -4,9 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public partial class GBlocks
+    public interface IChanneled : IService
     {
+        IWfChannel Channel {get;}
+    }
 
+    public interface IChanneled<C> : IChanneled, IService<C>
+        where C : IChanneled<C>, new()
+    {
 
     }
 }

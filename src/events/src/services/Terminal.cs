@@ -14,7 +14,7 @@ namespace Z0
     /// <summary>
     /// Implements a thread-safe/thread-aware terminal abstraction
     /// </summary>
-    public class Terminal //: ITerminal
+    public class Terminal
     {
         [MethodImpl(Inline)]
         public static Terminal Get()
