@@ -9,9 +9,17 @@ namespace Z0
     {
         protected IWfChannel Channel;
 
+        protected void Connect(IWfChannel channel)
+        {
+            Channel = channel;
+        }
+
         IWfChannel IChanneled.Channel 
             => Channel;
 
+        void IChanneled.Connect(IWfChannel channel)
+            => Channel = channel;
+            
         protected Channeled(IWfChannel channel)
         {
             Channel = channel;

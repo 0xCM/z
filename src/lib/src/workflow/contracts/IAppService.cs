@@ -22,7 +22,7 @@ namespace Z0
     /// </summary>
     /// <typeparam name="H">The reifying type</typeparam>
     [Free]
-    public interface IAppService<H> : IAppService, IService<H>, IChanneled<H>
+    public interface IAppService<H> : IAppService, IService<H>
         where H : IAppService<H>, new()
     {
 

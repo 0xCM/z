@@ -9,20 +9,6 @@ namespace Z0
     [ApiHost]
     public sealed class RenderPatternEmitter : Channeled<RenderPatternEmitter>
     {        
-        public RenderPatternEmitter()
-        {
-            
-        }
-
-        RenderPatternEmitter(IWfChannel channel)
-            : base(channel)
-        {
-
-        }
-
-        protected override Func<IWfChannel,RenderPatternEmitter> Factory 
-            => channel => new (channel);
-
         public void Emit(Type src, FilePath dst)
         {
             var flow = Channel.EmittingFile(dst);

@@ -17,6 +17,11 @@ namespace Z0
 
         public WfEmit Emitter {get; private set;}
 
+        void IChanneled.Connect(Z0.IWfChannel channel)
+        {
+            
+        }
+
         public virtual T Service<T>(Func<T> factory)
         {
             lock(ServiceLock)

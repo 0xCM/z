@@ -13,7 +13,14 @@ namespace Z0
         public static C create(IWfChannel channel)
             => new C().Factory(channel);
 
-        protected abstract Func<IWfChannel,C> Factory {get;}
+        static C connect(IWfChannel channel)
+        {
+            var service = new C();
+            service.Connect(channel);
+            return service;
+        }
+
+        public virtual Func<IWfChannel,C> Factory => connect;
 
         protected Channeled(IWfChannel channel)
             : base(channel)

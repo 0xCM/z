@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [ServiceCache]
     public abstract class Services<T>
         where T : Services<T>, new()
     {
@@ -33,43 +32,35 @@ namespace Z0
               return (S)Lookup.GetOrAdd(svcid<S>(), new S());
         }
 
-        public static S service<S>(IWfRuntime wf, string name)
-            where S : IAppService, new()
+        public static S service<S>(IWfChannel channel, string name)
+            where S : IChanneled<S>, new()
         {
             lock(ServiceLock)
-                return (S)Lookup.GetOrAdd(svcid<S>(name), _ => {
-                    var service = new S();
-                    service.Init(wf);
+                return (S)Lookup.GetOrAdd(svcid<S>(name), _ => new S().Factory(channel));
+        }
+
+        public static IChanneled service(IWfChannel channel, Type host, string name)
+        {
+            lock(ServiceLock)
+                return (IChanneled)Lookup.GetOrAdd(svcid(host, name), _ => {
+                    var service = (IChanneled)Activator.CreateInstance(host);
+                    service.Connect(channel);
                     return service;
                 });
         }
 
-        public static IAppService service(IWfRuntime wf, Type host, string name)
+        public static S service<S>(IWfChannel channel, string name, Func<IWfChannel,S> factory)
+            where S : IChanneled<S>, new()
         {
             lock(ServiceLock)
-                return (IAppService)Lookup.GetOrAdd(svcid(host, name), _ => {
-                    var service = (IAppService)Activator.CreateInstance(host);
-                    service.Init(wf);
-                    return service;
-                });
+                return (S)Lookup.GetOrAdd(svcid<S>(name), _ => factory(channel));
         }
 
-        public static S service<S>(IWfRuntime wf, string name, Func<IWfRuntime,S> factory)
-            where S : IAppService, new()
+        public static S service<S>(IWfChannel channel)
+            where S : IChanneled<S>, new()
         {
             lock(ServiceLock)
-                return (S)Lookup.GetOrAdd(svcid<S>(name), _ => factory(wf));
-        }
-
-        public static S service<S>(IWfRuntime wf)
-            where S : IAppService, new()
-        {
-            lock(ServiceLock)
-                return (S)Lookup.GetOrAdd(svcid<S>(), _ => {
-                    var service = new S();
-                    service.Init(wf);
-                    return service;
-                });
+                return (S)Lookup.GetOrAdd(svcid<S>(), _ => new S().Factory(channel));
         }
 
         protected static string svcid(Type host)
