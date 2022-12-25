@@ -43,7 +43,7 @@ namespace Z0
         }
 
         public ApiMemberIndex CreateMemberIndex(ApiHostCatalog src)
-            => ApiIndex.create(src);
+            => ApiCatalog.index(src);
 
         public ApiBlockIndex IndexApiBlocks()
         {

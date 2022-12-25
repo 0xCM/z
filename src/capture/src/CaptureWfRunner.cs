@@ -39,10 +39,10 @@ namespace Z0
             if(Settings.EmitCatalog)
             {
                 var members = Transport.Resolved(ApiQuery.members(collected.SelectMany(x => x.Resolved.Members)));
-                var rebased = Transport.Rebased(ApiCode.catalog(members));
+                var rebased = Transport.Rebased(ApiCatalog.catalog(members));
                 var path = Target.Table<ApiCatalogEntry>();
                 Channel.TableEmit(rebased, path, UTF8);
-                Transport.Reloaded(ApiCode.catalog(path, Channel));
+                Transport.Reloaded(ApiCatalog.catalog(path, Channel));
             }
 
             if(Settings.EmitMetadata)
@@ -144,7 +144,6 @@ namespace Z0
             );
             Transport.Transmit(src.Component);
         }
-
 
         void EmitAsm(ICompositeDispenser symbols, ReadOnlySeq<CollectedHost> src)
         {

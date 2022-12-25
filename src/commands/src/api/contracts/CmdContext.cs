@@ -16,6 +16,7 @@ namespace Z0
         /// </summary>
         public readonly EnvVars Vars;
 
+        
         [MethodImpl(Inline)]
         public CmdContext(FolderPath wd, params EnvVar[] src)
         {

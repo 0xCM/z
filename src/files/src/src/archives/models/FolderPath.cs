@@ -13,7 +13,7 @@ namespace Z0
 
         const string FileJoinPattern = "{0}/{1}";
 
-        const string SearchAll = "*.*";
+        const string All = "*";
 
         public PathPart Name {get;}
 
@@ -73,13 +73,13 @@ namespace Z0
             => Directory.Exists(Name) ? Directory.EnumerateDirectories(Name, match, options(recurse)).Select(FS.dir) : EnvPath.Empty;
 
         public IEnumerable<FolderPath> Folders(bool recurse = false)
-            => Directory.Exists(Name) ? Directory.EnumerateDirectories(Name, "*.*", options(recurse)).Select(FS.dir) : EnvPath.Empty;
+            => Directory.Exists(Name) ? Directory.EnumerateDirectories(Name, "*", options(recurse)).Select(FS.dir) : EnvPath.Empty;
 
         public FolderPath Folder(string match)
             => Folders(match, false).FirstOrDefault(FolderPath.Empty);
 
         public IEnumerable<FolderPath> TopFolders
-            => Folders("*.*", false);
+            => Folders(All, false);
 
         /// <summary>
         /// Recursively enumerates all files in the folder
@@ -89,7 +89,9 @@ namespace Z0
 
         static EnumerationOptions options(bool recurse)
             => new EnumerationOptions{
-                RecurseSubdirectories = recurse
+                RecurseSubdirectories = recurse,
+                IgnoreInaccessible = false,
+                
             };
 
         public FolderPath Subdir(string name)
@@ -117,11 +119,11 @@ namespace Z0
             => Files(true).Where(f => FileKinds.@is(f,kinds));
 
         public Files Files(bool recurse)
-            => Exists ? Directory.EnumerateFiles(Name, SearchAll, option(recurse)).Map(FS.path) : Z0.Files.Empty;
+            => Exists ? Directory.EnumerateFiles(Name, All, option(recurse)).Map(FS.path) : Z0.Files.Empty;
 
         public Index<FolderPath> SubDirs(bool recurse = false)
             => Directory.Exists(Name)
-            ? Directory.EnumerateDirectories(Name, SearchAll, option(recurse)).Map(FS.dir)
+            ? Directory.EnumerateDirectories(Name, All, option(recurse)).Map(FS.dir)
             : sys.empty<FolderPath>();
 
         public IEnumerable<FilePath> EnumerateFiles(bool recurse)
@@ -135,7 +137,7 @@ namespace Z0
 
         public IEnumerable<FilePath> EnumerateFiles(Func<FilePath,bool> predicate, bool recurse = true)
         {
-            foreach(var file in Directory.EnumerateFiles(Name, SearchAll, option(recurse)))
+            foreach(var file in Directory.EnumerateFiles(Name, All, option(recurse)))
             {
                 var path = FS.path(file);
                 if(predicate(path))
@@ -256,7 +258,7 @@ namespace Z0
         static IEnumerable<FilePath> EnumerateFiles(FolderPath src, bool recurse)
         {
             if(src.Exists)
-                foreach(var file in Directory.EnumerateFiles(src.Name, SearchAll, option(recurse)))
+                foreach(var file in Directory.EnumerateFiles(src.Name, All, option(recurse)))
                     yield return FS.path(file);
         }
 

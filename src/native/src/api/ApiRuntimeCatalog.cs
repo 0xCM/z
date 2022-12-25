@@ -30,7 +30,7 @@ namespace Z0
 
         Index<string> _ComponentNames;
 
-        internal ApiRuntimeCatalog(Index<IPart> parts, Index<Assembly> components, ApiPartCatalogs catalogs, Index<IApiHost> hosts, Index<MethodInfo> ops)
+        public ApiRuntimeCatalog(Index<IPart> parts, Index<Assembly> components, ApiPartCatalogs catalogs, Index<IApiHost> hosts, Index<MethodInfo> ops)
         {
             _Parts = parts;
             _PartComponents = components;

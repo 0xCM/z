@@ -6,7 +6,7 @@ namespace Z0
 {
     partial class ApiCode
     {
-        [Op]
+         [Op]
          public static ApiToken token(ISymbolDispenser symbols, in MethodEntryPoint entry, MemoryAddress target)
             => new ApiToken(
                 symbols.Symbol(entry.Location, entry.Uri?.Format() ?? EmptyString),

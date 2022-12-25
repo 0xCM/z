@@ -68,6 +68,20 @@ namespace Z0
             return ev;
         }
 
+        public CreatedEvent<T> Created<T>(T data, Type host)
+        {
+            var ev = created(data, host);
+            Raise(ev);
+            return ev;
+        }
+
+        public CreatedEvent<T> Created<T>(T data, CreatingEvent prior)
+        {
+            var ev = created(data, prior);
+            Raise(ev);
+            return ev;
+        }
+
         public EmittingTableEvent EmittingTable(Type table, FilePath dst)
         {
             var ev = emittingTable(Source.Type, table, dst);

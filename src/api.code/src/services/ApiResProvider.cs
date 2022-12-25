@@ -57,9 +57,6 @@ namespace Z0
         public FilePath ResPackPath()
             => FilePath.Empty;
 
-        // public MemoryFile MapResPack()
-        //     => MemoryFiles.map(ResPackPath());
-
         public ReadOnlySpan<SpanResAccessor> SpanAccessors(FilePath src)
         {
             var flow = Channel.Running(LoadingSpanAccessors.Format(src));
@@ -73,10 +70,6 @@ namespace Z0
 
         public ReadOnlySpan<SpanResAccessor> ResPackAccessors()
             => SpanAccessors(ResPackPath());
-
-        // public ReadOnlySpan<SpanResAccessor> ResPackAccessors(FilePath src)
-        //     => SpanAccessors(src);
-
         [Op]
         static SpanResKind ResKind(Type match)
         {

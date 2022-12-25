@@ -63,23 +63,24 @@ namespace Z0
         }
         
         public override string Format()
-        {
-            if(Count > 0)
-            {
-                var dst = text.emitter();
-                for(var i=0; i<Count; i++)
-                {
-                    dst.Append(this[i].Value);
-                    if(i != Count - 1)
-                        dst.Append(Chars.Space);
-                }
-                return dst.Emit();
-            }
-            else
-            {
-                return EmptyString;
-            }
-        }
+            => text.join(Chars.Space,this);
+        // {
+        //     if(Count > 0)
+        //     {
+        //         var dst = text.emitter();
+        //         for(var i=0; i<Count; i++)
+        //         {
+        //             dst.Append(this[i].Value);
+        //             if(i != Count - 1)
+        //                 dst.Append(Chars.Space);
+        //         }
+        //         return dst.Emit();
+        //     }
+        //     else
+        //     {
+        //         return EmptyString;
+        //     }
+        // }
 
         public static implicit operator CmdArgs(CmdArg[] src)
             => new CmdArgs(src);

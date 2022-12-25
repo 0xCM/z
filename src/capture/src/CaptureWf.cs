@@ -35,21 +35,21 @@ namespace Z0
                 });
 
                 settings.Parts = parts.ToSeq();
-                catalog = ApiRuntime.catalog(ApiRuntime.colocated(ExecutingPart.Assembly));
+                catalog = ApiCatalog.catalog(ApiCatalog.colocated(ExecutingPart.Assembly));
             }
             else
             {
-                var search = ApiRuntime.colocated(ExecutingPart.Assembly);
+                var search = ApiCatalog.colocated(ExecutingPart.Assembly);
                 foreach(var a in search)
                 {
-                    if(ApiRuntime.part(a, out IPart part))
+                    if(ApiCatalog.part(a, out IPart part))
                     {
                         parts.Add(part.Name);
                         assemblies.Add(a);
                     }
                 }
                 settings.Parts = parts.ToSeq();
-                catalog = ApiRuntime.catalog(assemblies.ToArray());
+                catalog = ApiCatalog.catalog(assemblies.ToArray());
             }
 
             using var transport = new CaptureTransport(Dispense.composite(), wf.Emitter);

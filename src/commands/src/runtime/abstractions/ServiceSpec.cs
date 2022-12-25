@@ -34,7 +34,9 @@ namespace Z0
             for(var i=0; i<_Factories.Count; i++)
             {
                 ref readonly var factory = ref _Factories[i];
-                dst.AppendLine(factory.ReturnType.DisplayName());
+                var @return = factory.ReturnType.Unwrap();
+                if(@return.IsNonEmpty())
+                    dst.AppendLine(@return.DisplayName());
             }
 
             return dst.Emit();

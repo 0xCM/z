@@ -31,6 +31,5 @@ namespace Z0
 
         public static ApiResProvider ApiResProvider(this IWfRuntime wf)
             => Services.ApiResProvider(wf);
-
    }
 }

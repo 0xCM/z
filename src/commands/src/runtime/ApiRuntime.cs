@@ -8,32 +8,6 @@ namespace Z0
 
     public class ApiRuntime : ApiRuntime<ApiRuntime>
     {        
-        public static IApiCatalog catalog(Assembly[] src)
-        {
-            var count = src.Length;
-            var parts = list<IPart>();
-            for(var i=0; i<count; i++)
-            {
-                if(part(skip(src,i), out var p))
-                    parts.Add(p);
-            }
-
-            return catalog(parts.Array());
-        }
-
-        public static IApiCatalog catalog()
-            => catalog(colocated(ExecutingPart.Assembly));
-
-        public static ApiPartCatalog catalog(Assembly src)
-            => new ApiPartCatalog(src.PartName(), src, complete(src), hosts(src), SvcHostTypes(src));
-
-        [Op]
-        public static Index<IApiHost> hosts(Assembly src)
-        {
-            var id = src.PartName();
-            return ApiHostTypes(src).Select(h => host(id, h));
-        }
-
         public static IWfRuntime create(string[] args, bool verbose = true)
         {
             var factory = typeof(ApiRuntime);
@@ -90,116 +64,11 @@ namespace Z0
             {
                 ref readonly var type = ref types[i];
                 var factories = type.PublicInstanceMethods().Concrete().Where(m => m.ReturnType.Reifies<IAppService>());
-                dst.Add(new AppServiceSpec(type,factories));
+                if(factories.Length != 0)
+                    dst.Add(new AppServiceSpec(type,factories));
             }
 
             return dst.Array();
         }
-
-        public static Assembly[] colocated(Assembly src)
-            => assemblies(FS.path(src.Location).FolderPath);
-
-        public static Assembly[] assemblies(FolderPath src)
-        {
-            var dst = list<Assembly>();
-            var candidates = libs(src);
-            foreach(var path in candidates)
-            {
-                var assembly = Assembly.LoadFrom(path.Name);
-                if(assembly.PartName().IsNonEmpty)
-                    dst.Add(assembly);
-            }
-
-            return dst.ToArray();
-        }
-
-        public static bool part(Assembly src, out IPart dst)
-        {
-            var attempt = src.GetTypes().Where(t => t.Reifies<IPart>() && !t.IsAbstract).Map(t => (IPart)Activator.CreateInstance(t));
-            if(attempt.Length != 0)
-            {
-                dst = sys.first(attempt);
-                return true;
-            }
-            else
-            {
-                 dst = default;
-                 return false;
-            }
-        }    
-
-        [Op]
-        static IApiHost host(PartName part, Type type)
-        {
-            var uri = ApiIdentity.host(type);
-            var declared = type.DeclaredMethods();
-            return new ApiHost(type, uri.HostName, part, uri, declared, index(declared));
-        }
-
-        static FolderFiles libs(FolderPath src)
-        {            
-            var candidates = src.Files(FileKind.Dll);
-            var dst = list<FilePath>();
-            foreach(var file in candidates)
-            {
-                if(file.FileName.Contains("System.Private.CoreLib"))
-                    continue;
-
-                if(FS.managed(file))
-                    dst.Add(file);
-            }
-
-            return new FolderFiles(src, dst.Array());
-        }
-
-        [Op]
-        static Index<ApiCompleteType> complete(Assembly src)
-        {
-            var part = src.PartName();
-            var types = span(src.GetTypes().Where(t => t.Tagged<ApiCompleteAttribute>()));
-            var count = types.Length;
-            var buffer = sys.alloc<ApiCompleteType>(count);
-            for(var i=0u; i<count; i++)
-            {
-                ref readonly var type = ref skip(types,i);
-                var attrib = type.Tag<ApiCompleteAttribute>();
-                var name = text.ifempty(attrib.MapValueOrDefault(a => a.Name, type.Name), type.Name).ToLower();
-                var declared = type.DeclaredMethods();
-                seek(buffer, i) = new ApiCompleteType(type, part, new ApiHostUri(part, name), declared, index(declared));
-            }
-            return buffer;
-        }
-
-        static IApiCatalog catalog(IPart[] src)
-        {
-            var catalogs = src.Select(x => catalog(x.Owner)).Where(c => c.IsIdentified);
-            var dst = new ApiRuntimeCatalog(
-                src,
-                src.Select(p => p.Owner),
-                new ApiPartCatalogs(catalogs),
-                catalogs.SelectMany(c => c.ApiHosts.Storage).Where(h => nonempty(h.HostUri.HostName)),
-                catalogs.SelectMany(x => x.Methods)
-                );
-            return dst;
-        }
-
-        // static IApiCatalog match(Assembly control, string[] args)
-        // {
-        //     var candidates = colocated(control);
-        //     if(args.Length == 0)
-        //         return catalog(candidates);
-        //     else
-        //     {
-        //         var match = args.ToHashSet();
-        //         var matched = list<Assembly>();
-        //         foreach(var a in candidates)
-        //         {
-        //             var name = a.PartName();
-        //             if(match.Contains(name.Format()))
-        //                 matched.Add(a);
-        //         }
-        //         return catalog(matched.ToArray());
-        //     }
-        // }
     }
 }

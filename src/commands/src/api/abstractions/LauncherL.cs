@@ -4,10 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class ApiCode
+    public abstract class Launcher<L> : Channeled<L>
+        where L : Launcher<L>, new()
     {
-        [Op]
-        public static ReadOnlySeq<ApiEncoded> collect(ICompositeDispenser symbols, IPart src, IWfChannel log)
-            => gather(entries(ClrJit.jit(ApiCatalog.catalog(src.Owner), log)), symbols, log);
+        public abstract void Launch(CmdArgs args, Action<Process> launched);
     }
 }

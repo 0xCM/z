@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
 
     public class CmdRunner
-    {
+    {        
         public static CmdContext context(FolderPath? work = null, params EnvVar[] vars)
             => new (work ?? Env.cd(), vars);
 
@@ -237,7 +237,7 @@ namespace Z0
             var cmdline = new CmdLine($"{info.FileName} {info.Arguments}");
             var ts = Timestamp.Zero;
             var token = ExecToken.Empty;
-            var executing = ExecutingProcess.Empty;
+            var status = ExecutingProcess.Empty;
 
             ExecToken Run()
             {
@@ -246,18 +246,18 @@ namespace Z0
                     using var process = new Process {StartInfo = info};
                     process.OutputDataReceived += (s,d) => OnStatus(d);
                     process.ErrorDataReceived += (s,d) => OnError(d);
-                    var flow = channel.Running(cmdline);
+                    var executing = channel.Running($"Executing {cmdline}");
                     process.Start();
-                    executing = new (cmdline, process);
-                    ProcessState.enlist(executing);
+                    status = new (cmdline, process);
+                    ProcessState.enlist(status);
                     process.BeginOutputReadLine();
                     process.BeginErrorReadLine();
-                    channel.Babble($"Enlisted process {process.Id}");
+                    //channel.Babble($"Enlisted process {process.Id}");
                     process.WaitForExit();
                     ts = now();
-                    token = channel.Ran(flow, $"Process {process.Id} finished");
+                    token = channel.Ran(executing, $"Executed {cmdline} with {process.Id}");
                     term.cmd();
-                    ProcessState.remove(new (executing, ts, token));
+                    ProcessState.remove(new (status, ts, token));
                 }
                 catch(Exception e)
                 {
@@ -323,58 +323,5 @@ namespace Z0
             }
             return result;
         }
-
-        // static ExecStatus run(ISysIO io, CmdArgs spec, FolderPath? wd = null)
-        // {
-        //     var values = spec.Values();
-        //     Demand.gt(values.Count, 0u);
-        //     var name = values.First;
-        //     var args = values.ToSpan().Slice(1).ToArray();
-        //     var psi = new ProcessStartInfo(values.First, text.join(Chars.Space,args))
-        //     {
-        //         UseShellExecute = false,
-        //         RedirectStandardError = true,
-        //         RedirectStandardOutput = true,
-        //         ErrorDialog = false,
-        //         CreateNoWindow = true,
-        //         RedirectStandardInput = false,
-        //         WorkingDirectory = wd != null ? wd.Value.Format() : EmptyString
-        //     };
-
-        //     void OnStatus(object sender, DataReceivedEventArgs e)
-        //     {
-        //         if(sys.nonempty(e.Data))
-        //             io.Status(e.Data);
-        //     }
-    
-        //     void OnError(object sender, DataReceivedEventArgs e)
-        //     {
-        //         if(sys.nonempty(e.Data))
-        //             io.Error(e.Data);
-        //     }
-
-        //     var result = default(ExecStatus);
-        //     try
-        //     {                
-        //         using var process = sys.process(psi);
-        //         process.OutputDataReceived += OnStatus;
-        //         process.ErrorDataReceived += OnError;
-        //         process.Start();
-        //         result.StartTime = sys.now();
-        //         result.Id = process.Id;
-        //         process.BeginOutputReadLine();
-        //         process.BeginErrorReadLine();
-        //         process.WaitForExitAsync().Wait();                
-        //         result.HasExited = true;
-        //         result.ExitTime = sys.now();
-        //         result.Duration = result.ExitTime - result.StartTime;
-        //         result.ExitCode = process.ExitCode;
-        //     }
-        //     catch(Exception e)
-        //     {
-        //         io.Error(e.ToString());
-        //     }
-        //     return result;
-        // }
     }
 }

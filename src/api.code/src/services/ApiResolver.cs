@@ -213,7 +213,7 @@ namespace Z0
             counter = 0u;
             var location = FS.path(src.Location);
             var name = src.PartName();
-            var catalog = ApiRuntime.catalog(src);
+            var catalog = ApiCatalog.catalog(src);
             var flow = Channel.Running(string.Format("Resolving part {0}", name));
             var hosts = list<ResolvedHost>();
             foreach(var host in catalog.ApiTypes)
@@ -252,7 +252,7 @@ namespace Z0
             counter = 0u;
 
             var location = FS.path(src.Owner.Location);
-            var catalog = ApiRuntime.catalog(src.Owner);
+            var catalog = ApiCatalog.catalog(src.Owner);
             var flow = Channel.Running(string.Format("Resolving part {0}", src.Id));
             var hosts = list<ResolvedHost>();
 

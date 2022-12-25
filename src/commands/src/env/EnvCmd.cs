@@ -80,7 +80,6 @@ namespace Z0
         void ShowCurrentCore()
             => Emitter.Write(Env.cpucore());
 
-
         [CmdOp("env/tid")]
         void ShowThread()
             => Channel.Row(Env.tid());
@@ -152,13 +151,10 @@ namespace Z0
         [CmdOp("dir")]
         void Dir(CmdArgs args)
         {
-            var root = Env.cd();
-            if(args.Count != 0)
-            root = FS.dir(args[0]);
-            var folders = root.Folders();
-            iter(folders, f => Channel.Row(f));
-            var files = root.Files(false);
-            iter(files, f => Channel.Row(((FileUri)f)));
+            var src = args.Count == 0 ? Env.cd().ToArchive() : FS.dir(args[0]).ToArchive();
+            Channel.Row($"dir {src.Root} >");
+            iter(src.Folders(false), folder => Channel.Row(folder));
+            iter(src.Files(false), file => Channel.Row(file));            
         }        
 
         [CmdOp("settings")]
@@ -172,11 +168,18 @@ namespace Z0
 
         [CmdOp("services")]
         void GetServices()
-            => Channel.Write(ApiRuntime.services(ApiAssemblies.Parts));
+        {
+           var services = ApiRuntime.services(ApiAssemblies.Parts);
+           iter(services, svc => {
+            var fmt = svc.Format();
+            if(text.nonempty(fmt))
+                Channel.Row(fmt);
+           });
+        }
 
         [CmdOp("develop")]
         void Develop(CmdArgs args)
-            => Tools.develop(Channel,args);
+            => CodeLauncher.create(Channel).Launch(args, launched => {});
 
         [CmdOp("devenv")]
         void DevEnv(CmdArgs args)

@@ -6,8 +6,6 @@ namespace Z0
 {
     using static sys;
 
-    using System.Linq;
-
     using K = ApiMdKind;
 
     public sealed class ApiMd : AppService<ApiMd>
@@ -80,7 +78,7 @@ namespace Z0
         ReadOnlySeq<IApiHost> CalcApiHosts()
         {
             var dst = sys.bag<IApiHost>();
-            iter(ApiAssemblies.Parts, a => iter(ApiRuntime.hosts(a), h => dst.Add(h)), PllExec);
+            iter(ApiAssemblies.Parts, a => iter(ApiCatalog.hosts(a), h => dst.Add(h)), PllExec);
             return dst.Array();
         }
 

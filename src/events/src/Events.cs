@@ -159,6 +159,14 @@ namespace Z0
             => new CreatedEvent(host);
 
         [Op, Closures(Closure)]
+        public static CreatedEvent<T> created<T>(T data, Type host)
+            => new CreatedEvent<T>(data,host);
+
+        [Op, Closures(Closure)]
+        public static CreatedEvent<T> created<T>(T data, CreatingEvent prior)
+            => new CreatedEvent<T>(data, prior);
+
+        [Op, Closures(Closure)]
         public static CreatedEvent created(CreatingEvent prior)
             => new CreatedEvent(prior);
 
