@@ -8,7 +8,7 @@ namespace Z0
     {
         public interface INamed : IElement
         {
-            Name Name {get;}
+            @string Name {get;}
         }
     }
 }

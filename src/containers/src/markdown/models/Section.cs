@@ -22,12 +22,16 @@ namespace Z0
                 Content = content;
             }
 
+            public @string Name
+            {
+                [MethodImpl(Inline)]
+                get => Header.Name;
+            }        
             public string Format()
                 => text.concat(Header, Chars.Eol, Chars.Eol, Content);
 
             string IContented<string>.Content
                 => Content;
-
 
             SectionHeader ISection<Section, SectionHeader, string>.Header
                 => Header;

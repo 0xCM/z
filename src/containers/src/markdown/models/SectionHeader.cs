@@ -10,10 +10,10 @@ namespace Z0
         {
             public readonly Level Level;
 
-            public readonly Name Name;
+            public readonly @string Name;
 
             [MethodImpl(Inline)]
-            public SectionHeader(byte depth, Name name)
+            public SectionHeader(byte depth, @string name)
             {
                 Level = new Level(depth, DepthIndicator.Hash);
                 Name = name;
@@ -25,7 +25,7 @@ namespace Z0
             public override string ToString()
                 => Format();
 
-            Name INamed.Name
+            @string INamed.Name
                 => Name;
 
             Level ILeveled.Level

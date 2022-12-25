@@ -12,7 +12,7 @@ namespace Z0
 
             ISectionHeader Header {get;}
 
-            Name INamed.Name
+            @string INamed.Name
                 => Header.Name;
         }
 

@@ -42,7 +42,7 @@ namespace Z0
             => dst;
 
         [MethodImpl(Inline), Op]
-        public static PageTitle title(Name name, string content)
+        public static PageTitle title(string name, string content)
             => new PageTitle(name,content);
 
         [MethodImpl(Inline), Op]
@@ -54,7 +54,7 @@ namespace Z0
             => content;
 
         [MethodImpl(Inline), Op]
-        public static SectionHeader header(byte depth, Name name)
+        public static SectionHeader header(byte depth, string name)
             => new (depth,name);
 
         [MethodImpl(Inline), Op]

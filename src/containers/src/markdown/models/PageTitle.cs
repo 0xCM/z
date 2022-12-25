@@ -15,7 +15,7 @@ namespace Z0
             public readonly string Content;
 
             [MethodImpl(Inline)]
-            public PageTitle(Name src, string content)
+            public PageTitle(@string src, string content)
             {
                 Index = 0;
                 Header = new (1,src);
