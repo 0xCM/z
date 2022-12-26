@@ -4,10 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
-    partial struct Enums
+    public class CmdRouteAttribute : Attribute
     {
+        public CmdRouteAttribute(string name)
+        {
+            Route = name;
+        }
 
+        public readonly CmdRoute Route;
     }
 }

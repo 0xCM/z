@@ -24,7 +24,7 @@ namespace Z0
         {
             Tokens = init.Tokens;
             EventBroker = init.EventBroker;
-            Verbosity = LogLevel.Status;
+            Verbosity = init.Verbosity;
             AppName = ExecutingPart.Assembly.PartName();
             Emissions = init.EmissionLog;           
             Emitter = WfEmit.create(this, init.Host);

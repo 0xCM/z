@@ -8,7 +8,7 @@ namespace Z0
 
     public readonly record struct CmdLinePart : IExpr
     {
-        public readonly string Content;
+        public readonly @string Content;
 
         [MethodImpl(Inline)]
         public CmdLinePart(string content)
@@ -23,18 +23,30 @@ namespace Z0
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => empty(Content);
+            get => Content.IsEmpty;
         }
 
         public bool IsNonEmpty
         {
             [MethodImpl(Inline)]
-            get => nonempty(Content);
+            get => Content.IsNonEmpty;
         }
+
+        public Hash32 Hash
+        {
+            [MethodImpl(Inline)]
+            get => Content.Hash;
+        }
+
+        public override int GetHashCode()
+            => Hash;
+
+        public bool Equals(CmdLinePart src)
+            => Content == src.Content;
 
         [MethodImpl(Inline)]
         public string Format()
-            => Content ?? EmptyString;
+            => Content.Format();
 
         public override string ToString()
             => Format();
@@ -46,5 +58,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public static implicit operator string(CmdLinePart src)
             => src.Content;
+
+        public static CmdLinePart Empty => new CmdLinePart(EmptyString);
     }
 }

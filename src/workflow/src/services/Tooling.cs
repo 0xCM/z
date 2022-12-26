@@ -120,7 +120,7 @@ namespace Z0
                 ref readonly var profile = ref skip(profiles,i);
                 if(profile.HelpCmd.IsEmpty)
                     continue;
-                dst.Add(Cmd.cmdline(FS.path(profile.ToolName), string.Format("{0} {1}", profile.Executable.Format(PathSeparator.BS), profile.HelpCmd)));
+                dst.Add(Tools.cmdline(FS.path(profile.ToolName), string.Format("{0} {1}", profile.Executable.Format(PathSeparator.BS), profile.HelpCmd)));
             }
             dst.Sort();
             return dst.ToArray();
@@ -137,7 +137,7 @@ namespace Z0
             {
                 ref readonly var cmd = ref commands[i];
                 var tool = cmd.Tool;
-                result = OmniScript.Run(cmd.Command, CmdVars.Empty, out var response);
+                result = OmniScript.Run(cmd, CmdVars.Empty, out var response);
                 if(result.Fail)
                 {
                     Channel.Error(result.Message);
@@ -146,19 +146,19 @@ namespace Z0
 
                 Babble(string.Format("Executed '{0}'", cmd.Format()));
 
-                if(paths.Find(tool, out var path))
-                {
-                    var length = response.Length;
-                    var emitting = Channel.EmittingFile(path);
-                    using var writer = path.UnicodeWriter();
-                    for(var j=0; j<length; j++)
-                        writer.WriteLine(skip(response, j).Content);
-                    Channel.EmittedFile(emitting,length);
+                // if(paths.Find(tool, out var path))
+                // {
+                //     var length = response.Length;
+                //     var emitting = Channel.EmittingFile(path);
+                //     using var writer = path.UnicodeWriter();
+                //     for(var j=0; j<length; j++)
+                //         writer.WriteLine(skip(response, j).Content);
+                //     Channel.EmittedFile(emitting,length);
 
-                    docs.Add(new ToolHelpDoc(tool,path));
-                }
-                else
-                    Warn(string.Format("{0} has no help path", tool));
+                //     docs.Add(new ToolHelpDoc(tool,path));
+                // }
+                // else
+                //     Warn(string.Format("{0} has no help path", tool));
             }
 
             return docs.ToArray();

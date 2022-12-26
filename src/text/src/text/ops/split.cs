@@ -8,10 +8,10 @@ namespace Z0
     {
         [Op]
         public static string[] split(string src, char sep, bool clean = true)
-            => src.Split(sep,  clean ? StringSplitOptions.RemoveEmptyEntries : StringSplitOptions.None);
+            => empty(src) ? sys.empty<string>() : src.Split(sep,  clean ? StringSplitOptions.RemoveEmptyEntries : StringSplitOptions.None);
 
         [Op]
         public static string[] split(string src, string sep, bool clean = true)
-            => src.Split(sep, clean ? StringSplitOptions.RemoveEmptyEntries : StringSplitOptions.None);
+            =>  empty(src) ? sys.empty<string>() : src.Split(sep, clean ? StringSplitOptions.RemoveEmptyEntries : StringSplitOptions.None);
     }
 }

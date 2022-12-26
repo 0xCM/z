@@ -36,7 +36,7 @@ namespace Z0
             => Hash;
 
         public string Format()
-            => Tools.format(this);
+            => CmdApi.format(this);
 
         public override string ToString()
             => Format();

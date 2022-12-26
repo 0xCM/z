@@ -12,7 +12,7 @@ namespace Z0
 
         public readonly bool IsEmpty;
 
-        public readonly Actor Tool;
+        public readonly Tool Tool;
 
         public ToolHelpDoc()
         {
@@ -21,7 +21,7 @@ namespace Z0
             Source = FilePath.Empty;
         }
 
-        public ToolHelpDoc(Actor tool, FilePath path)
+        public ToolHelpDoc(Tool tool, FilePath path)
         {
             Source = path;
             Tool = tool;
@@ -29,7 +29,7 @@ namespace Z0
             Data = EmptyString;
         }
 
-        public ToolHelpDoc(Actor tool, FilePath src, string data)
+        public ToolHelpDoc(Tool tool, FilePath src, string data)
         {
             Tool = tool;
             Source = src;

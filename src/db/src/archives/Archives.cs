@@ -12,7 +12,7 @@ namespace Z0
     using static ArchiveExecutors;
     using static sys;
 
-    public class Archives : ApiModule<Archives>
+    public class Archives
     {        
         public static BuildArchive build(FolderPath root)
             => new BuildArchive(archive(root));
@@ -142,18 +142,8 @@ namespace Z0
             return SymlinkExecutor.create(wf).Execute(CmdRunner.context(), cmd);
         }
 
-        public static void zip(IWfChannel channel, CmdArgs args)
-        {
-            var folder = args[0].Value;
-            var i = text.index(folder, Chars.FSlash, Chars.BSlash);
-            var scope = "default";
-            if(i > 0)
-                scope = text.left(folder,i);
-            var src = AppSettings.DbRoot().Scoped(folder).Root;
-            var name = src.FolderName.Format();
-            var file = FS.file($"{scope}.{name}", FileKind.Zip);
-            zip(channel, src, AppDb.Archive(scope).Path(file));
-        }
+        public static Task<ExecToken> zip(IWfChannel channel, CmdArgs args)
+            => zip(channel, FS.dir(args[0]), FS.path(args[1]));
 
         public static void copy(IWfChannel channel, CmdArgs args)
             => copy(channel, FS.dir(args[0]), FS.dir(args[1]));
@@ -251,16 +241,14 @@ namespace Z0
 
         public static Task<ExecToken> zip(IWfChannel channel, FolderPath src, FilePath dst)
         {
-            var uri = $"{app}://db/zip";
-            var running = channel.Running(uri);
-
             ExecToken run()
             {
+                var msg = $"{src} -> {dst}";
+                var running = channel.Running(msg);
                 zip(src, dst);
-                return channel.Ran(running, uri); 
+                return channel.Ran(running, msg); 
             }
-
-            return @try(run, e => channel.Ran(running, e));
+            return start(run);
         }
 
         public static LineMap<string> map<T>(Index<TextLine> lines, Index<T> relations)
@@ -328,18 +316,10 @@ namespace Z0
             return dst;
         }
 
-        public static ZipFile zip(FolderPath src, FileUri dst)
+        public static ZipFile zip(FolderPath src, FilePath dst)
         {
-            System.IO.Compression.ZipFile.CreateFromDirectory(src.Name, dst.Format(), CompressionLevel.Fastest, true);
+            System.IO.Compression.ZipFile.CreateFromDirectory(src.Format(), dst.Format(), CompressionLevel.Fastest, true);
             return new ZipFile(dst);
-        }
-
-        public static ExecToken zip(FolderPath src, FilePath dst, WfEmit channel)
-        {
-            var uri = $"app://archives/zip?src={src}?dst={dst.ToUri()}";
-            var flow = channel.EmittingFile(dst);
-            zip(src, dst);
-            return channel.EmittedBytes(flow, dst.Size);
         }
 
         public static string identifier(FolderPath src)

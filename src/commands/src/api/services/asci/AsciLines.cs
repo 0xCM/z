@@ -22,7 +22,6 @@ namespace Z0
         static BinaryCode tobytes(string src)
             => Encoding.ASCII.GetBytes(src);
 
-
         public static AsciProcessor<T> processor<T>(IWfChannel channel, uint buffer, Func<MemoryAddress,uint,T> f)
             => new AsciProcessor<T>(channel, buffer,f);
 
@@ -48,9 +47,9 @@ namespace Z0
                         var data = SQ.right(content,i);
                         if(members.Member(name, out var field))
                         {
-                            if(Settings.parse(Asci.format(data), field.FieldType, out var value))
+                            if(ValueDynamic.parse(Asci.format(data), field.FieldType, out var value))
                             {
-                                field.SetValue(dst,value);
+                                field.SetValue(dst, value);
                                 counter++;
                             }
                         }
@@ -84,7 +83,7 @@ namespace Z0
                         var data = SQ.right(content,i);
                         if(members.Member(name, out var field))
                         {
-                            if(Settings.parse(Asci.format(data), field.FieldType, out var value))
+                            if(ValueDynamic.parse(Asci.format(data), field.FieldType, out var value))
                             {
                                 field.SetValue(dst,value);
                                 counter++;

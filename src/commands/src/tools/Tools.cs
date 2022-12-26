@@ -11,34 +11,17 @@ namespace Z0
     {
         static Tools Instance;
 
-        [MethodImpl(Inline), Op]
-        public static ToolCmdLine cmdline(Tool tool, CmdModifier modifier, params string[] src)
-            => new ToolCmdLine(tool, modifier, new CmdLine(src));
-
-        [MethodImpl(Inline), Op]
-        public static ToolCmdLine cmdline(Tool tool, params string[] src)
-            => new ToolCmdLine(tool, new CmdLine(src));
+        [Op, Closures(UInt64k)]
+        public static Tool tool(CmdArgs args, byte index = 0)
+            => CmdArgs.arg(args,index).Value;
 
         [MethodImpl(Inline), Op]
         public static ToolScript script(FilePath src, CmdVars vars)
             => new ToolScript(src, vars);
 
-        public static string format(IToolCmd src)
-        {
-            var count = src.Args.Count;
-            var buffer = text.buffer();
-            buffer.AppendFormat("{0}{1}", src.Tool, Chars.LParen);
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var arg = ref src.Args[i];
-                buffer.AppendFormat(RP.Assign, arg.Name, arg.Value);
-                if(i != count - 1)
-                    buffer.Append(", ");
-            }
-
-            buffer.Append(Chars.RParen);
-            return buffer.Emit();
-        }
+        [MethodImpl(Inline), Op]
+        public static ToolCmdLine cmdline(FilePath tool, params string[] src)
+            => new ToolCmdLine(tool, src);
 
         [Op, Closures(UInt64k)]
         public static ToolCmd cmd<T>(Tool tool, in T src)
@@ -57,49 +40,10 @@ namespace Z0
                 ref readonly var fv = ref skip(values,i);
                 seek(target,i) = new ToolCmdArg(fv.Field.Name, fv.Value?.ToString() ?? EmptyString);
             }
-            return new ToolCmd(tool, ApiCmd.identify(t), buffer);
+            return new ToolCmd(tool, Cmd.identify(t), buffer);
         }        
 
         public static ref readonly Tools Service => ref Instance;
-
-
-        // public static void develop(IWfChannel channel, CmdArgs args)
-        // {
-        //     var cd = Env.cd();
-        //     var context = CmdRunner.context(cd);
-        //     var launcher = cd + FS.file("develop", FileKind.Cmd);
-        //     if(launcher.Exists)
-        //         CmdRunner.start(channel, Cmd.args(launcher), context).Wait(); 
-        //     else
-        //     {
-        //         var bin = cd + FS.folder("node_modules/.bin");             
-        //         if(bin.Exists)
-        //         {
-        //             var path =  Env.PATH().Value;
-        //             var j=0;
-        //             EnvPath result = sys.alloc<FolderPath>(path.Count + 1);
-        //             result[j++] = bin;
-        //             for(var i=0; i<path.Count; i++)
-        //             {
-        //                 result[j++] = path[i];
-        //             }
-
-        //             channel.Babble(result.Format());
-        //             context = CmdRunner.context(cd, new EnvVar(EnvTokens.PATH, result.Format()));
-        //         }
-                
-        //         var workspaces = cd.Files(FS.ext("code-workspace"));
-        //         if(workspaces.IsNonEmpty)
-        //         {
-        //             vscode(channel, cd + workspaces[0].FileName, context).Wait();
-        //         }                 
-        //         else
-        //         {
-        //             vscode(channel, cd, context).Wait();
-        //         }
-        //     }
-
-        // }
 
         public static Task<ExecToken> vscode<T>(IWfChannel channel, T target, CmdContext? context = null)
             => CmdRunner.start(channel, FS.path("code.exe"), Cmd.args(target), context);

@@ -15,7 +15,6 @@ namespace Z0
         /// Environment variables to use, if any
         /// </summary>
         public readonly EnvVars Vars;
-
         
         [MethodImpl(Inline)]
         public CmdContext(FolderPath wd, params EnvVar[] src)

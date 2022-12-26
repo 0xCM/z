@@ -4,9 +4,36 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static sys;
+    
     [ApiHost]
     public class SettingLookup : Seq<SettingLookup,Setting>, ILookup<@string,Setting>
     {
+        public static SettingLookup load(FilePath src)
+        {
+            var formatter = Tables.formatter<Setting>();
+            var data = src.ReadLines(true);
+            var dst = sys.alloc<Setting>(data.Length - 1);
+            for(var i=1; i<data.Length; i++)
+            {
+                ref readonly var line = ref data[i];
+                var parts = text.split(line, Chars.Pipe);
+                Require.equal(parts.Length,2);
+                seek(dst,i-1)= new Setting(text.trim(skip(parts,0)), text.trim(skip(parts,1)));
+            }
+            return new SettingLookup(dst);
+        }
+
+        [Op]
+        public static SettingLookup parse(ReadOnlySpan<string> src, char sep)
+        {
+            var count = src.Length;
+            var dst = sys.alloc<Setting>(count);
+            for(var i=0; i<count; i++)
+                sys.seek(dst, i) = Setting.parse(sys.skip(src,i), sep);
+            return new (dst);
+        }
+
         [Op]
         public static bool search(SettingLookup src, string key, out Setting value)
         {

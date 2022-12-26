@@ -112,13 +112,12 @@ namespace Z0
             return dst;
         }
 
-
-        public static ConstLookup<Name,CmdActor> effectors(ICmdDispatcher src)
-        {
-            ref readonly var defs = ref src.Commands.Defs;
-            var dst = dict<Name,CmdActor>();
-            iter(defs.View, def => dst.Add(def.CmdName, def));
-            return dst;
-        }
+        // public static ConstLookup<Name,CmdActor> effectors(ICmdDispatcher src)
+        // {
+        //     ref readonly var defs = ref src.Commands.Defs;
+        //     var dst = dict<Name,CmdActor>();
+        //     iter(defs.View, def => dst.Add(def.CmdName, def));
+        //     return dst;
+        // }
     }
 }

@@ -6,7 +6,6 @@ namespace Z0
 {
     using static sys;
     using static CsvFormatter;
-    using api = Tables;
 
     [ApiHost]
     public readonly partial struct Tables

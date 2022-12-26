@@ -20,6 +20,32 @@ namespace Z0
 
         ApiMd ApiMd => Wf.ApiMd();
 
+        [CmdOp("msi/extract")]
+        void Run(CmdArgs args)
+        {
+            var msi = FS.path(args[0]);            
+            var tool = FS.path(@"B:\tools\lesmsi\tool\lessmsi.exe");
+            var cmd = Cmd.cmdline(Cmd.args(tool, "x", msi.Format(PathSeparator.BS, false)));
+
+            Channel.Row(args[0].Value);
+            var dst = FS.dir(args[1]);
+
+            //var cmd = Cmd.cmdline(args.Prepend(Cmd.args(tool.Format(), "x")));
+            // var src = FS.path(args[0]);
+            // var tool = FS.path(@"B:\tools\lesmsi\tool\lessmsi.exe");
+            // var cmd =  Tools.cmdline(tool, src.Format());
+            // Channel.Row(args.Count);
+            // Channel.Row(args.Format());
+            //Channel.Row(cmd.Format());
+
+            //var token = CmdRunner.start(Channel, cmd).Result;            
+            // if(token.Success)
+            // {
+            //     var extract = FS.dir(src.WithoutExtension.Format());
+            //     token = Archives.copy(Channel, extract, dst).Result;
+            // }            
+        }
+
         [CmdOp("api/tablegen")]
         void GenRecords()
         {
@@ -52,13 +78,6 @@ namespace Z0
             });
         }
 
-        [CmdOp("help")]
-        void GetHelp(CmdArgs args)
-        {
-            var tool = args[0].Value;
-            var dst = AppDb.DbTargets("tools/help").Path(FS.file(tool, FileKind.Help));
-            //CmdRunner.run(Channel, tool, args.Length > 1 ? args[1].Value : "--help", dst);
-        }
 
         [CmdOp("archives")]        
         void ListArchives(CmdArgs args)
@@ -197,7 +216,7 @@ namespace Z0
 
         [CmdOp("tool/setup")]
         void ConfigureTool(CmdArgs args)
-            => Tooling.Setup(Cmd.tool(args));
+            => Tooling.Setup(Tools.tool(args));
 
         [CmdOp("tool/docs")]
         void ToolDocs(CmdArgs args)

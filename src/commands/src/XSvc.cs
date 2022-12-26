@@ -11,8 +11,6 @@ namespace Z0
              public IApiService EnvCmd(IWfRuntime wf)
                 => Service<EnvCmd>(wf);
 
-            public Cmd Cmd(IWfRuntime wf)
-                => Service<Cmd>(wf);
 
             public ApiCmd ApiCmd(IWfRuntime wf)
                 => Service<ApiCmd>(wf);
@@ -22,10 +20,7 @@ namespace Z0
         }
 
         static ServiceCache Services => ServiceCache.Instance;
-
-        public static Cmd Cmd(this IWfRuntime wf)
-            => Services.Cmd(wf);
-
+        
         public static ApiCmd ApiCmd(this IWfRuntime wf)
             => Services.ApiCmd(wf);
 

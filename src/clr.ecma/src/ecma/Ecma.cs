@@ -124,7 +124,7 @@ namespace Z0
             for(var i=0; i<src.Length; i++)
             {
                 ref readonly var host = ref src[i];
-                var members = ClrJit.members(host, Emitter);
+                var members = ClrJit.members(host, Channel);
                 var count = members.Length;
                 if(members.Count == 0)
                     continue;
@@ -151,7 +151,7 @@ namespace Z0
                 
                 var hosts = bag<IApiHost>();
                 iter(part.Value, host => {
-                    var members = ClrJit.members(host, Emitter);
+                    var members = ClrJit.members(host, Channel);
                     var buffer = text.buffer();
 
                     for(var j=0; j<members.Count; j++)

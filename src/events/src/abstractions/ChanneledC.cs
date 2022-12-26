@@ -20,6 +20,13 @@ namespace Z0
             return service;
         }
 
+        public static C create(IWfChannel channel, Action<C> initializer)
+        {
+            var dst = create(channel);
+            initializer(dst);
+            return dst;
+        }
+
         public virtual Func<IWfChannel,C> Factory => connect;
 
         protected Channeled(IWfChannel channel)

@@ -57,5 +57,17 @@ namespace Z0
         [Op, Closures(Closure)]
         public static string join<T>(char sep, params T[] src)
             => string.Join(sep, src);
+
+        [Op, Closures(Closure)]
+        public static string join<T>(char sep, Index<T> src)
+            => string.Join(sep, src.Storage);
+
+        [Op, Closures(Closure)]
+        public static string join<T>(char sep, ReadOnlySeq<T> src)
+            => string.Join(sep, src.Storage);
+
+        [Op, Closures(Closure)]
+        public static string join<T>(char sep, Seq<T> src)
+            => string.Join(sep, src.Storage);
     }
 }

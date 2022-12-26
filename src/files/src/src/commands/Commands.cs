@@ -9,6 +9,23 @@ namespace Z0
     [ApiHost]
     public class CmdApi
     {
+        public static string format(IToolCmd src)
+        {
+            var count = src.Args.Count;
+            var buffer = text.buffer();
+            buffer.AppendFormat("{0}{1}", src.Tool, Chars.LParen);
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var arg = ref src.Args[i];
+                buffer.AppendFormat(RP.Assign, arg.Name, arg.Value);
+                if(i != count - 1)
+                    buffer.Append(", ");
+            }
+
+            buffer.Append(Chars.RParen);
+            return buffer.Emit();
+        }
+
         public static string format<T>(T src)
             where T : ICmd, new()
         {

@@ -25,7 +25,7 @@ namespace Z0
         ApiCmdSpec Next()
         {
             var input = term.prompt(string.Format("{0}> ", "cmd"));
-            if(ApiCmd.parse(input, out ApiCmdSpec cmd))
+            if(Cmd.parse(input, out ApiCmdSpec cmd))
             {
                 return cmd;
             }

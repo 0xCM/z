@@ -28,13 +28,6 @@ namespace Z0
             => T.WriteMessage(msg);
 
         /// <summary>
-        /// Writes a single messages to the terminal
-        /// </summary>
-        /// <param name="msg">The message to print</param>
-        public static void print(AppMsg msg)
-            => T.WriteMessage(msg);
-
-        /// <summary>
         /// Writes a single line to the terminal
         /// </summary>
         /// <param name="content">The message to print</param>

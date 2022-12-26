@@ -14,7 +14,7 @@ namespace Z0
             dst.Target = src.Target;
             dst.FileType = src.Target.Ext;
             dst.Quantity = src.Count;
-            dst.EventType = src.Count == 0 ? EmissionEventKind.Emitting : EmissionEventKind.Emitted;
+            dst.Stage = src.Count == 0 ? EmissionStage.Emitting : EmissionStage.Emitted;
             return dst;
         }
 
@@ -26,7 +26,7 @@ namespace Z0
             dst.Target = src.Target;
             dst.FileType = src.Target.Ext;
             dst.Quantity = src.EmissionCount;
-            dst.EventType = src.EmissionCount == 0 ? EmissionEventKind.Emitting : EmissionEventKind.Emitted;
+            dst.Stage = src.EmissionCount == 0 ? EmissionStage.Emitting : EmissionStage.Emitted;
             return dst;
         }
 

@@ -26,11 +26,9 @@ namespace Z0
         }
 
         public void EmitCmdDefs(Assembly[] src, IDbArchive dst)
-        {
-            Channel.TableEmit(fields(defs(src)), dst.Table<CmdFieldRow>());
-        }
+            => Channel.TableEmit(fields(defs(src)), dst.Table<CmdFieldRow>());
 
-        public void RunCmd(ApiCmdSpec cmd)
+        public void RunCmd(IWfChannel channel, ApiCmdSpec cmd)
         {
             try
             {
@@ -38,7 +36,7 @@ namespace Z0
             }
             catch(Exception e)
             {
-                Channel.Error(e);
+                channel.Error(e);
             }
         }
 
@@ -52,30 +50,11 @@ namespace Z0
             return new ApiCmdCatalog(entries(dst));
         }
 
-        [Op]
-        internal static @string identify(Type spec)
-        {
-            var tag = spec.Tag<CmdAttribute>();
-            if(tag)
-            {
-                var name = tag.Value.Name;
-                if(empty(name))
-                    return spec.Name;
-                else
-                    return name;
-            }
-            else
-                return spec.Name;
-        }
-
-        static Type[] tagged(Assembly src)
-            => src.Types().Tagged<CmdAttribute>();
-
         static Type[] tagged(Assembly[] src)
             =>  src.Types().Tagged<CmdAttribute>();
 
         static ApiCmdDef describe(Type src)
-            => new ApiCmdDef(identify(src), src, fields(src));
+            => new ApiCmdDef(Cmd.identify(src), src, fields(src));
 
         static string expr(FieldInfo src)
             => src.Tag<CmdArgAttribute>().MapValueOrDefault(x => text.ifempty(x.Expression,src.Name), src.Name);
@@ -86,11 +65,11 @@ namespace Z0
         public static ApiCmdCatalog catalog()
             => catalog(Dispatcher);
 
-        public void RunApiScript(FilePath src)
+        public void RunApiScript(IWfChannel channel, FilePath src)
         {
             if(src.Missing)
             {
-                Channel.Error(AppMsg.FileMissing.Format(src));
+                channel.Error(AppMsg.FileMissing.Format(src));
             }
             else
             {
@@ -99,11 +78,11 @@ namespace Z0
                 for(var i=0; i<count; i++)
                 {
                     ref readonly var content = ref lines[i].Content;
-                    if(parse(content, out ApiCmdSpec spec))
-                        RunCmd(spec);
+                    if(Cmd.parse(content, out ApiCmdSpec spec))
+                        RunCmd(channel,spec);
                     else
                     {
-                        Channel.Error($"ParseFailure:'{content}'");
+                        channel.Error($"ParseFailure:'{content}'");
                         break;
                     }
                 }
@@ -121,7 +100,7 @@ namespace Z0
                 for(var i=0; i<count; i++)
                 {
                     ref readonly var content = ref lines[i].Content;
-                    if(parse(content, out ApiCmdSpec spec))
+                    if(Cmd.parse(content, out ApiCmdSpec spec))
                     {
                         Dispatcher.Dispatch(spec.Name, spec.Args);
                     }
@@ -139,68 +118,20 @@ namespace Z0
         public static ReadOnlySeq<ICmdExecutor> executors(params Assembly[] src)
             => src.Types().Tagged<CmdExecutorAttribute>().Concrete().Map(x => (ICmdExecutor)Activator.CreateInstance(x));
 
-        [Op]
-        static void render(ApiCmdDef src, ITextBuffer dst)
-        {
-            dst.Append(src.Source.Name);
-            var fields = src.Fields.View;;
-            var count = fields.Length;
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var field = ref skip(fields,count);
-                dst.Append(string.Format(" | {0}:{1}", field.FieldName, field.Expr));
-            }
-        }
-
-        public static string format(ApiCmdSpec src)
-        {
-            if(src.IsEmpty)
-                return EmptyString;
-
-            var dst = text.buffer();
-            dst.Append(src.Name);
-            var count = src.Args.Count;
-            for(ushort i=0; i<count; i++)
-            {
-                var arg = src.Args[i];
-                if(nonempty(arg.Name))
-                {
-                    dst.Append(Chars.Space);
-                    dst.Append(arg.Name);
-                }
-
-                if(nonempty(arg.Value))
-                {
-                    dst.Append(Chars.Space);
-                    dst.Append(arg.Value);
-                }
-            }
-            return dst.Emit();
-        }
-
-
-        [Op]
-        public static string format(ApiCmdDef src)
-        {
-            var buffer = text.buffer();
-            render(src, buffer);
-            return buffer.Emit();
-        }
-
-        [Op]
-        public static bool parse(ReadOnlySpan<char> src, out ApiCmdSpec dst)
-        {
-            var i = SQ.index(src, Chars.Space);
-            if(i < 0)
-                dst = new ApiCmdSpec(@string(src), CmdArgs.Empty);
-            else
-            {
-                var name = @string(SQ.left(src,i));
-                var _args = @string(SQ.right(src,i)).Split(Chars.Space);
-                dst = new ApiCmdSpec(name, Cmd.args(_args));
-            }
-            return true;
-        }        
+        // [Op]
+        // public static bool parse(ReadOnlySpan<char> src, out ApiCmdSpec dst)
+        // {
+        //     var i = SQ.index(src, Chars.Space);
+        //     if(i < 0)
+        //         dst = new ApiCmdSpec(@string(src), CmdArgs.Empty);
+        //     else
+        //     {
+        //         var name = @string(SQ.left(src,i));
+        //         var _args = @string(SQ.right(src,i)).Split(Chars.Space);
+        //         dst = new ApiCmdSpec(name, Cmd.args(_args));
+        //     }
+        //     return true;
+        // }        
 
         public static ReadOnlySeq<CmdFieldRow> fields(ReadOnlySpan<ApiCmdDef> src)
         {

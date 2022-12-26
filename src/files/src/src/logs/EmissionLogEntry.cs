@@ -13,7 +13,7 @@ namespace Z0
         public ExecToken ExecToken;
 
         [Render(12)]
-        public EmissionEventKind EventType;
+        public EmissionStage Stage;
 
         [Render(16)]
         public Count Quantity;
@@ -25,7 +25,7 @@ namespace Z0
         public FileUri Target;
     }
 
-    public enum EmissionEventKind : byte
+    public enum EmissionStage : byte
     {
         Emitting,
 

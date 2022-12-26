@@ -14,10 +14,7 @@ namespace Z0
         protected override Task<ExecToken> Execute(CmdContext context, ICmd command)
         {
             async Task<ExecToken> Exec()
-            {
-                var result = await Execute(context,command);
-                return result;
-            }
+                => await Execute(context,command);
 
             return Exec();
         }

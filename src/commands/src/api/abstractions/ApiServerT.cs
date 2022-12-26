@@ -22,7 +22,7 @@ namespace Z0
             => Cmd.RunCmd(name,args);
 
         public void RunCmd(ApiCmdSpec cmd)
-            => Cmd.RunCmd(cmd);
+            => Cmd.RunCmd(Channel,cmd);
 
         public Task Start()
             => CmdLoop.start(Channel);

@@ -17,5 +17,7 @@ namespace Z0
         public AppEventSource Host;
 
         public IWfEmissions EmissionLog;
+
+        public LogLevel Verbosity;
     }
 }

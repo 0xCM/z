@@ -20,6 +20,7 @@ namespace Z0
                 var control = ExecutingPart.Assembly;
                 var id = control.Id();
                 var dst = new WfInit();
+                dst.Verbosity = verbose ? LogLevel.Babble : LogLevel.Status;
                 dst.Args = args;
                 dst.LogConfig = Loggers.configure(id, AppSettings.Default.Logs());
                 dst.LogConfig.ErrorPath.CreateParentIfMissing();

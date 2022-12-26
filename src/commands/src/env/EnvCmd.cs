@@ -163,7 +163,7 @@ namespace Z0
             if(args.IsEmpty)
                 Channel.Row(AppSettings.Default.Format());
             else
-                Channel.Row(AppSettings.absorb(FS.path(args.First.Value)));
+                Channel.Row(AppSettings.Default.Absorb(FS.path(args.First.Value)));
         }
 
         [CmdOp("services")]
@@ -177,6 +177,7 @@ namespace Z0
            });
         }
 
+
         [CmdOp("develop")]
         void Develop(CmdArgs args)
             => CodeLauncher.create(Channel).Launch(args, launched => {});
@@ -188,5 +189,19 @@ namespace Z0
         [CmdOp("vscode")]
         void VsCode(CmdArgs args)
             => Tools.vscode(Channel, args[0].Value);
+
+        [CmdOp("help")]
+        void ToolHelp(CmdArgs args)
+        {
+            var tool = FS.path(args[0]);            
+            var dst = args.Count > 1 ? FS.path(args[1]) : AppDb.DbTargets("tools/help").Path(tool.FileName.ChangeExtension(FileKind.Help));
+            var task = CmdRunner.redirect(Channel, tool, "--help", dst);
+            var token = task.Result;
+            if(!token.Success)
+            {
+
+            }
+            
+        }
     }
 }

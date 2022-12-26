@@ -206,22 +206,61 @@ namespace Z0
         public static Task<ExecToken> start(IWfChannel channel, CmdArgs args, CmdContext? context = null)
             => start(channel, FS.path(args[0]), args.Skip(1), context);
 
+        public static Task<ExecToken> start(IWfChannel channel, CmdLine cmd, CmdContext? context = null)
+        {
+            var psi = new ProcessStartInfo
+            {
+                FileName = cmd.ExePath.Format(),
+                Arguments = cmd.Args.Format(),
+                CreateNoWindow = true,
+                WorkingDirectory = context?.WorkingDir.Format() ?? Environment.CurrentDirectory,
+                RedirectStandardError = true,
+                RedirectStandardOutput = true,
+                RedirectStandardInput = false
+            };
+            
+            var ctx = context ?? CmdContext.Default;
+            if(context != null)
+                iter(context.Vars, v => psi.Environment.Add(v.Name, v.Value));
+
+            var token = ExecToken.Empty;
+
+            ExecToken Run()
+            {
+                try
+                {
+                    using var process = sys.process(psi);
+                    var channeled = channel.ChannelProcess(process);
+                    token = channeled.Run();                    
+                    term.cmd();
+                }
+                catch(Exception e)
+                {
+                    channel.Error(e);
+                }
+                return token;
+
+            }   
+            return sys.start(Run);
+
+        }
+
         [Op]
         public static Task<ExecToken> start(IWfChannel channel, FilePath path, CmdArgs args, CmdContext? context = null)
         {
-            void OnStatus(DataReceivedEventArgs e)
-            {
-                if(e != null && nonempty(e.Data))
-                    channel.Row(e.Data);
-            }
+            // void OnStatus(DataReceivedEventArgs e)
+            // {
+            //     if(e != null && nonempty(e.Data))
+            //         channel.Row(e.Data);
+            // }
 
-            void OnError(DataReceivedEventArgs e)
-            {
-                if(e != null && nonempty(e.Data))
-                    channel.Error(e.Data);                
-            }
+            // void OnError(DataReceivedEventArgs e)
+            // {
+            //     if(e != null && nonempty(e.Data))
+            //         channel.Error(e.Data);                
+            // }
 
-            var info = new ProcessStartInfo
+            var psi = new ProcessStartInfo
             {
                 FileName = path.Format(),
                 Arguments = join(args),
@@ -233,8 +272,8 @@ namespace Z0
             };
 
             var ctx = context ?? CmdContext.Default;
-            iter(ctx.Vars, v => info.Environment.Add(v.Name, v.Value));
-            var cmdline = new CmdLine($"{info.FileName} {info.Arguments}");
+            iter(ctx.Vars, v => psi.Environment.Add(v.Name, v.Value));
+            var cmdline = new CmdLine($"{psi.FileName} {psi.Arguments}");
             var ts = Timestamp.Zero;
             var token = ExecToken.Empty;
             var status = ExecutingProcess.Empty;
@@ -243,21 +282,24 @@ namespace Z0
             {
                 try
                 {
-                    using var process = new Process {StartInfo = info};
-                    process.OutputDataReceived += (s,d) => OnStatus(d);
-                    process.ErrorDataReceived += (s,d) => OnError(d);
-                    var executing = channel.Running($"Executing {cmdline}");
-                    process.Start();
-                    status = new (cmdline, process);
-                    ProcessState.enlist(status);
-                    process.BeginOutputReadLine();
-                    process.BeginErrorReadLine();
-                    //channel.Babble($"Enlisted process {process.Id}");
-                    process.WaitForExit();
-                    ts = now();
-                    token = channel.Ran(executing, $"Executed {cmdline} with {process.Id}");
+                    using var process = sys.process(psi);
+                    var channeled = channel.ChannelProcess(process);
+                    token = channeled.Run();                    
                     term.cmd();
-                    ProcessState.remove(new (status, ts, token));
+
+                    // process.OutputDataReceived += (s,d) => OnStatus(d);
+                    // process.ErrorDataReceived += (s,d) => OnError(d);
+                    // var executing = channel.Running($"Executing {cmdline}");
+                    // process.Start();
+                    // status = new (cmdline, process);
+                    // ProcessState.enlist(status);
+                    // process.BeginOutputReadLine();
+                    // process.BeginErrorReadLine();
+                    // process.WaitForExit();
+                    // ts = now();
+                    // token = channel.Ran(executing, $"Executed {cmdline} with {process.Id}");
+                    // term.cmd();
+                    // ProcessState.remove(new (status, ts, token));
                 }
                 catch(Exception e)
                 {

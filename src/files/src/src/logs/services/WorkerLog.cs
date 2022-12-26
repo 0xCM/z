@@ -35,7 +35,7 @@ namespace Z0
             }
             catch(Exception error)
             {
-                term.errlabel(error, "EventLogError");
+                Console.WriteLine(error);
             }
         }
 
@@ -50,7 +50,7 @@ namespace Z0
             }
             catch(Exception error)
             {
-                term.errlabel(error, "EventLogError");
+                Console.WriteLine(error);
             }
         }
     }

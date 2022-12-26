@@ -35,15 +35,6 @@ namespace Z0
         public static CmdArg arg(CmdArgs src, int i)
             => src[i];
 
-        public static CmdArgs args<T>(params T[] src)
-            where T : IEquatable<T>, IComparable<T>
-        {
-            var dst = alloc<CmdArg>(src.Length);
-            for(ushort i=0; i<src.Length; i++)
-                seek(dst,i) = new CmdArg<T>(skip(src,i));
-            return new (dst);
-        }
-
         public CmdArgs Skip(uint count)
             => new CmdArgs(Data.Slice(count).ToArray());
 
@@ -54,33 +45,22 @@ namespace Z0
         {
             var count = Count + src.Count;
             var dst = new CmdArgs(alloc<CmdArg>(count));
-            var i=0u;
-            for(var j=0u; j<Count; j++)
-                dst[i++] = this[i];
-            for(var j=0; j< src.Count; j++)
-                dst[i++] = src[i];
+            var j=0u;
+            for(var i=0u; i<Count; i++)
+                dst[j++] = this[i];
+            for(var i=0; i<src.Count; i++)
+                dst[j++] = src[i];
             return dst;
         }
-        
+
+        public CmdArgs Prepend(params CmdArg[] src)
+            => new CmdArgs(src).Concat(this);
+
+        public CmdArgs Prepend(CmdArgs src)
+            => src.Concat(this);
+            
         public override string Format()
-            => text.join(Chars.Space,this);
-        // {
-        //     if(Count > 0)
-        //     {
-        //         var dst = text.emitter();
-        //         for(var i=0; i<Count; i++)
-        //         {
-        //             dst.Append(this[i].Value);
-        //             if(i != Count - 1)
-        //                 dst.Append(Chars.Space);
-        //         }
-        //         return dst.Emit();
-        //     }
-        //     else
-        //     {
-        //         return EmptyString;
-        //     }
-        // }
+            => text.join(Chars.Space, Values());
 
         public static implicit operator CmdArgs(CmdArg[] src)
             => new CmdArgs(src);

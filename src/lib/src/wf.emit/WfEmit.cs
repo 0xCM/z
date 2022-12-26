@@ -28,7 +28,7 @@ namespace Z0
         }
 
         public ExecToken Completed(ExecFlow src, bool success = true)
-            => Wf.Completed(src, success);
+            => TokenDispenser.close(src, success);
 
         public ExecToken Ran<D>(ExecFlow src, D data, FlairKind flair = FlairKind.Ran)
         {
