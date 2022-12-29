@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct TokenExpr<T>
+    public readonly record struct TokenExpr<T>
         where T : unmanaged, ICharBlock
     {
         public readonly uint Id;

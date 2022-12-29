@@ -20,8 +20,8 @@ namespace Z0
         static int main(string[] args)
         {
             var result = 0;
-            using var app = ApiServer.shell<App>(false, args);
-            var context = ApiServer.context<AppShellCmd>(app.Wf, () => providers(app.Wf));
+            using var app = ApiServers.shell<App>(false, args);
+            var context = ApiServers.context<AppShellCmd>(app.Wf, () => providers(app.Wf));
             app.Commander = context.Commander;
             try
             {

@@ -4,10 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
-    public abstract class ApiServer : AppService
+    partial class JsonRecords
     {
+        public record class Field<T>
+            where T : IDataType, new()
+        {
+            public JsonText Name;
 
+            public T Type;
+        }
     }
 }

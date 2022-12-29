@@ -17,36 +17,36 @@ namespace Z0
         public static PScript script(string name, string content)
             => new PScript(name, content);
 
-        public static PText define(string pattern, params object[] vars)
+        public static PText pattern(string pattern, params object[] vars)
             => new PText(pattern, vars);
 
-        public static PT<T0> define<T0>(string pattern, T0 p0)
+        public static PT<T0> pattern<T0>(string spec, T0 p0)
         {
-            var t = new PT<T0>(pattern);
+            var t = new PT<T0>(spec);
             t.Param0 = p0;
             return t;
         }
 
-        public static PT<T0,T1> define<T0,T1>(string pattern, T0 p0, T1 p1)
+        public static PT<T0,T1> pattern<T0,T1>(string spec, T0 p0, T1 p1)
         {
-            var t = new PT<T0,T1>(pattern);
+            var t = new PT<T0,T1>(spec);
             t.Param0 = p0;
             t.Param1 = p1;
             return t;
         }
 
-        public static PT<T0,T1,T2> define<T0,T1,T2>(string pattern, T0 p0, T1 p1, T2 p2)
+        public static PT<T0,T1,T2> pattern<T0,T1,T2>(string spec, T0 p0, T1 p1, T2 p2)
         {
-            var t = new PT<T0,T1,T2>(pattern);
+            var t = new PT<T0,T1,T2>(spec);
             t.Param0 = p0;
             t.Param1 = p1;
             t.Param2 = p2;
             return t;
         }
 
-        public static PT<T0,T1,T2,T3> define<T0,T1,T2,T3>(string pattern, T0 p0, T1 p1, T2 p2, T3 p3)
+        public static PT<T0,T1,T2,T3> pattern<T0,T1,T2,T3>(string spec, T0 p0, T1 p1, T2 p2, T3 p3)
         {
-            var t = new PT<T0,T1,T2,T3>(pattern);
+            var t = new PT<T0,T1,T2,T3>(spec);
             t.Param0 = p0;
             t.Param1 = p1;
             t.Param2 = p2;
@@ -54,9 +54,9 @@ namespace Z0
             return t;
         }
 
-        public static PT<T0,T1,T2,T3,T4> define<T0,T1,T2,T3,T4>(string pattern, T0 p0, T1 p1, T2 p2, T3 p3, T4 p4)
+        public static PT<T0,T1,T2,T3,T4> pattern<T0,T1,T2,T3,T4>(string spec, T0 p0, T1 p1, T2 p2, T3 p3, T4 p4)
         {
-            var t = new PT<T0,T1,T2,T3,T4>(pattern);
+            var t = new PT<T0,T1,T2,T3,T4>(spec);
             t.Param0 = p0;
             t.Param1 = p1;
             t.Param2 = p2;
@@ -65,9 +65,9 @@ namespace Z0
             return t;
         }
 
-        public static PT<T0,T1,T2,T3,T4,T5> define<T0,T1,T2,T3,T4,T5>(string pattern, T0 p0, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5)
+        public static PT<T0,T1,T2,T3,T4,T5> pattern<T0,T1,T2,T3,T4,T5>(string spec, T0 p0, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5)
         {
-            var t = new PT<T0,T1,T2,T3,T4,T5>(pattern);
+            var t = new PT<T0,T1,T2,T3,T4,T5>(spec);
             t.Param0 = p0;
             t.Param1 = p1;
             t.Param2 = p2;
@@ -77,9 +77,9 @@ namespace Z0
             return t;
         }
 
-        public static PT<T0,T1,T2,T3,T4,T5,T6> define<T0,T1,T2,T3,T4,T5,T6>(string pattern, T0 p0, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6)
+        public static PT<T0,T1,T2,T3,T4,T5,T6> pattern<T0,T1,T2,T3,T4,T5,T6>(string spec, T0 p0, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6)
         {
-            var t = new PT<T0,T1,T2,T3,T4,T5,T6>(pattern);
+            var t = new PT<T0,T1,T2,T3,T4,T5,T6>(spec);
             t.Param0 = p0;
             t.Param1 = p1;
             t.Param2 = p2;
@@ -90,7 +90,7 @@ namespace Z0
             return t;
         }
 
-        public static PT<T0,T1,T2,T3,T4,T5,T6,T7> define<T0,T1,T2,T3,T4,T5,T6,T7>(string pattern, T0 p0, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7)
+        public static PT<T0,T1,T2,T3,T4,T5,T6,T7> pattern<T0,T1,T2,T3,T4,T5,T6,T7>(string pattern, T0 p0, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7)
         {
             var t = new PT<T0,T1,T2,T3,T4,T5,T6,T7>(pattern);
             t.Param0 = p0;
@@ -104,9 +104,9 @@ namespace Z0
             return t;
         }
 
-        public static PT<T0,T1,T2,T3,T4,T5,T6,T7,T8> define<T0,T1,T2,T3,T4,T5,T6,T7,T8>(string pattern, T0 p0, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8)
+        public static PT<T0,T1,T2,T3,T4,T5,T6,T7,T8> pattern<T0,T1,T2,T3,T4,T5,T6,T7,T8>(string spec, T0 p0, T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8)
         {
-            var t = new PT<T0,T1,T2,T3,T4,T5,T6,T7,T8>(pattern);
+            var t = new PT<T0,T1,T2,T3,T4,T5,T6,T7,T8>(spec);
             t.Param0 = p0;
             t.Param1 = p1;
             t.Param2 = p2;

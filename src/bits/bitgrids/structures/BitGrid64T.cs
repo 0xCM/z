@@ -74,7 +74,7 @@ namespace Z0
             => src is BitGrid64<T> x && Equals(x);
 
         public override int GetHashCode()
-            => (int)alg.hash.calc(Data);
+            => (int)sys.hash(Data);
 
         [MethodImpl(Inline)]
         public static implicit operator ulong(BitGrid64<T> src)

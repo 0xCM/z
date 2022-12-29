@@ -20,6 +20,21 @@ namespace Z0
 
         ApiMd ApiMd => Wf.ApiMd();
 
+        [CmdOp("tools/batch")]
+        void ToolBatch(CmdArgs args)
+        {
+            var tool = FS.path(args[0]);
+            var src = Archives.archive(FS.dir(args[1]));
+            var dst = Archives.archive(FS.dir(args[2]));
+        }
+
+
+        [CmdOp("vars/check")]
+        void CheckVars()
+        {
+
+        }
+
         [CmdOp("msi/extract")]
         void Run(CmdArgs args)
         {

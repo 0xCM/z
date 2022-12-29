@@ -58,7 +58,7 @@ namespace Z0
 
         [CmdOp("project")]
         public void LoadProject(CmdArgs args)
-            => LoadProjectSources(EtlDb.EtlSource(arg(args, 0).Value));
+            => LoadProjectSources(EtlDb.EtlSource(args[0].Format()));
 
         protected void LoadProjectSources(IProjectWorkspace ws)
         {

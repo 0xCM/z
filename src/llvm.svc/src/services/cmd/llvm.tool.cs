@@ -19,7 +19,7 @@ namespace Z0.llvm
             }
             else
             {
-                SelectedTool = arg(args,0).Value;
+                SelectedTool = args[0].Format();
                 Write(SelectedTool.Format());
             }
         }

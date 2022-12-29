@@ -35,7 +35,6 @@ namespace Z0
                 [MethodImpl(Inline)]
                 get => ref Param3;
             }
-
         }
     }
 }

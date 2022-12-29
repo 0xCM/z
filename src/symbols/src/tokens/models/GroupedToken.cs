@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct GroupedToken
+    public readonly record struct GroupedToken
     {
         public readonly SymKey Key;
 

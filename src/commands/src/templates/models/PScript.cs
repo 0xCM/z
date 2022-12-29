@@ -10,7 +10,7 @@ namespace Z0
         {
             const string Pattern = "{0} {1} {2} {3}({4},{5});";
             var result = Outcome.Success;
-            PText.define(Pattern, "public", "static", "uint", "f", "x", "y");
+            PText.pattern(Pattern, "public", "static", "uint", "f", "x", "y");
 
             var dst = new PTextVar("dst");
             var src1 = new PTextVar("src1");

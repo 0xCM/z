@@ -4,10 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
-    public abstract class ApiServer : AppService
+    [ApiHost]
+    public partial class JsonRecords
     {
-
+        
     }
 }

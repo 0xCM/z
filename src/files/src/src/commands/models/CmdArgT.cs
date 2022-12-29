@@ -4,11 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly record struct CmdArg<T> : ICmdArg<CmdArg<T>,T>
-        where T : IEquatable<T>, IComparable<T>
+    public readonly record struct CmdArg<T>
+        where T : new()
     {
-        public readonly uint Index;
-
         public readonly @string Name;
 
         public readonly T Value;
@@ -16,7 +14,6 @@ namespace Z0
         [MethodImpl(Inline)]
         public CmdArg(T value)
         {
-            Index = 0;
             Value = value;
             Name = value.ToString();
         }
@@ -24,7 +21,6 @@ namespace Z0
         [MethodImpl(Inline)]
         public CmdArg(uint index, T value)
         {
-            Index = 0;
             Value = value;
             Name = value.ToString();
         }
@@ -32,14 +28,9 @@ namespace Z0
         [MethodImpl(Inline)]
         public CmdArg(uint index, string name, T value)
         {
-            Index = index;
             Name = name;
             Value = value;
         }
-
-        [MethodImpl(Inline)]
-        public int CompareTo(CmdArg<T> src)
-            => Index.CompareTo(src.Index);
 
         public bool IsEmpty
         {
@@ -62,7 +53,7 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => sys.hash(Value);
+            get => Name.Hash | sys.hash(Value);
         }
 
         public override int GetHashCode()
@@ -72,25 +63,15 @@ namespace Z0
         public bool Equals(CmdArg<T> src)
             => Value.Equals(src.Value);
 
-        T ICmdArg<T>.Value 
-            => Value;
-
-        uint ICmdArg.Index 
-            => Index;
-
-        @string ICmdArg.Name 
-            => Name;
-
         [MethodImpl(Inline)]
         public static implicit operator CmdArg<T>(T src)
             => new CmdArg<T>(src);
 
         [MethodImpl(Inline)]
         public static implicit operator CmdArg(CmdArg<T> src)
-            => new CmdArg(src.Index, src.Name, src.Value.ToString());
-
+            => new CmdArg(src.Name, src.Value.ToString());
 
         public static CmdArg<T> Empty
-            => new CmdArg<T>(0, default(T));
+            => new CmdArg<T>(0, new T());
     }
 }

@@ -14,8 +14,8 @@ namespace Z0
     [ApiHost]
     public class Tokens
     {
-        public static void emit(IWfChannel channel, ITokenGroup src, IDbArchive dst)
-            => channel.TableEmit(Symbols.syminfo(src.TokenTypes), dst.Table<SymInfo>($"{src.GroupName}"), TextEncodingKind.Unicode);
+        // public static void emit(IWfChannel channel, ITokenGroup src, IDbArchive dst)
+        //     => channel.TableEmit(Symbols.syminfo(src.TokenTypes), dst.Table<SymInfo>($"{src.GroupName}"), TextEncodingKind.Unicode);
 
         public static ReadOnlySeq<Type> types(params Assembly[] src)
             => src.Enums().NonGeneric();

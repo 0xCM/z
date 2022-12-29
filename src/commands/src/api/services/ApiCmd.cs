@@ -65,6 +65,22 @@ namespace Z0
         public static ApiCmdCatalog catalog()
             => catalog(Dispatcher);
 
+        public void EmitApiCatalog()
+            => EmitApiCatalog(Env.ShellData);
+        
+        public void EmitApiCatalog(ApiCmdCatalog src, IDbArchive dst)
+            => emit(Channel, src, dst.Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv));
+
+        public void EmitApiCatalog(IDbArchive dst)
+            => EmitApiCatalog(catalog(), dst);
+
+        static void emit(IWfChannel channel, ApiCmdCatalog src, FilePath dst)
+        {
+            var data = src.Values;
+            iter(data, x => channel.Row(x.Uri.Name));
+            TableFlows.emit(channel, data, dst);
+        }
+
         public void RunApiScript(IWfChannel channel, FilePath src)
         {
             if(src.Missing)
@@ -117,21 +133,6 @@ namespace Z0
 
         public static ReadOnlySeq<ICmdExecutor> executors(params Assembly[] src)
             => src.Types().Tagged<CmdExecutorAttribute>().Concrete().Map(x => (ICmdExecutor)Activator.CreateInstance(x));
-
-        // [Op]
-        // public static bool parse(ReadOnlySpan<char> src, out ApiCmdSpec dst)
-        // {
-        //     var i = SQ.index(src, Chars.Space);
-        //     if(i < 0)
-        //         dst = new ApiCmdSpec(@string(src), CmdArgs.Empty);
-        //     else
-        //     {
-        //         var name = @string(SQ.left(src,i));
-        //         var _args = @string(SQ.right(src,i)).Split(Chars.Space);
-        //         dst = new ApiCmdSpec(name, Cmd.args(_args));
-        //     }
-        //     return true;
-        // }        
 
         public static ReadOnlySeq<CmdFieldRow> fields(ReadOnlySpan<ApiCmdDef> src)
         {

@@ -4,12 +4,16 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface ICmdPipe<C,S0,P0,S1,P1>
-        where S0 : IWfCmd, new()
-        where S1 : IWfCmd, new()
-        where P0 : INullity, new()
-        where P1 : INullity, new()
+    partial class JsonRecords
     {
-        ICmdExecutor<S1,P1> Next(CmdResult<S0,P0> src);
+        public interface IDataType
+        {
+            @string Name {get;}
+        }
+
+        public interface IDataType<T> : IDataType
+            where T : IDataType<T>, new()
+        {
+        }
     }
 }

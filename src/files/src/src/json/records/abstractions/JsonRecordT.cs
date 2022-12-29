@@ -4,10 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
-    public abstract class ApiServer : AppService
+    partial class JsonRecords
     {
-
+        public abstract record class JsonRecord<R> : JsonRecord, IJsonRecord<R>
+            where R : JsonRecord<R>, new()
+        {
+            
+        }        
     }
 }

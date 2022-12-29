@@ -10,12 +10,12 @@ namespace Z0
         public ApiContext(C commander, IWfChannel channel, ICmdDispatcher dispatcher)
             : base(commander, channel, dispatcher)
         {
-            Commander = commander;
+            //Commander = commander;
         }
 
-        public new readonly C Commander;
+        //public new readonly C Commander;
 
-        C IApiContext<C>.Commander
-            => Commander;
+        // C IApiContext<C>.Commander
+        //     => Commander;
     }
 }

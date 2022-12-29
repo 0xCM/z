@@ -114,7 +114,7 @@ namespace Z0
             => $"cmd.exe /c {src}";
 
         public static CmdArgs args<T>(params T[] src)
-            where T : IEquatable<T>, IComparable<T>
+            where T : new()
         {
             var dst = alloc<CmdArg>(src.Length);
             for(ushort i=0; i<src.Length; i++)
@@ -142,7 +142,6 @@ namespace Z0
                 dst.Append(string.Format(" | {0}:{1}", field.FieldName, field.Expr));
             }
         }
-
 
         [MethodImpl(Inline)]
         public static FileFlow flow(in CmdFlow src)

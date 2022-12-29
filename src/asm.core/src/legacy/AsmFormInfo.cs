@@ -17,6 +17,12 @@ namespace Z0.Asm
             Sig = sig;
         }
 
+        public Hash32 Hash
+        {
+            [MethodImpl(Inline)]
+            get => OpCode.Hash | Sig.Hash;
+        }
+
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
@@ -43,7 +49,7 @@ namespace Z0.Asm
             => src is AsmFormInfo x && Equals(x);
 
         public override int GetHashCode()
-            => (int)alg.hash.combine(OpCode.GetHashCode(), Sig.GetHashCode());
+            => Hash;
 
         public string Format()
             => Content;

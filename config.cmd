@@ -1,5 +1,7 @@
 @echo off
 call %EnvRoot%\settings\config.cmd
+set DOTNET_ROOT=K:\dist\dotnet\unpacked\dotnet-sdk-v6.0.303
+set PATH=%DOTNET_ROOT%;%PATH%
 set SlnRoot=%DevRoot%\z0
 set ConfigName=Release
 set SlnName=z0

@@ -9,17 +9,17 @@ namespace Z0
     {
         public static void Main(params string[] args)
         {
-            using var app = ApiServer.shell<App>(false, args);            
+            using var app = ApiServers.shell<App>(false, args);            
             app.Commander = context<AppShellCmd>(app.Wf).Commander;
             app.Run(args);
         }
 
 
-        public static IApiContext<C> context<C>(IWfRuntime wf)
+        public static IApiContext context<C>(IWfRuntime wf)
             where C : IApiService<C>, new()
         {
             GlobalServices.Instance.Inject(wf.XedRuntime());
-            return ApiServer.context<C>(wf, () => providers(wf));            
+            return ApiServers.context<C>(wf, () => providers(wf));            
         }
         
         public static ReadOnlySeq<IApiCmdProvider> providers(IWfRuntime wf)

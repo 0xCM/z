@@ -38,7 +38,7 @@ namespace Z0
         public CmdArgs Skip(uint count)
             => new CmdArgs(Data.Slice(count).ToArray());
 
-        public ReadOnlySeq<string> Values()
+        public ReadOnlySeq<@string> Values()
             => Data.Map(x => x.Value);
 
         public CmdArgs Concat(CmdArgs src)

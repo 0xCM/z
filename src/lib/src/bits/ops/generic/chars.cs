@@ -31,7 +31,7 @@ namespace Z0
         public static ReadOnlySpan<char> chars<T>(T src)
             where T : unmanaged
         {
-            var dst = core.alloc<char>(width<T>());
+            var dst = sys.alloc<char>(width<T>());
             chars(src, dst);
             return dst;
         }
@@ -47,7 +47,7 @@ namespace Z0
         {
             var seglen = (int)width<T>();
             var srclen = src.Length;
-            Span<char> dst = core.alloc<char>(srclen * seglen);
+            Span<char> dst = sys.alloc<char>(srclen * seglen);
             ref readonly var input = ref first(src);
             for(var i=0; i<srclen; i++)
                 chars(skip(input,i)).CopyTo(dst, i*seglen);

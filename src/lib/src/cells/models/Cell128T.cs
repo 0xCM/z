@@ -15,48 +15,11 @@ namespace Z0
         public static Cell128<T> init(Vector128<T> src)
             => @as<Vector128<T>,Cell128<T>>(src);
 
-        // [MethodImpl(Inline)]
-        // public static Cell128<T> init(ByteBlock16 src)
-        //     => new Cell128<T>(src);
-
         Cell128 Data;
 
-        // [MethodImpl(Inline)]
-        // public Cell128(ByteBlock16 data)
-        //     => Data = data;
 
         public CellKind Kind
             => CellKind.Cell128;
-
-        // public Span<byte> Bytes
-        // {
-        //     [MethodImpl(Inline)]
-        //     get => Data.Bytes;
-        // }
-
-        // public ref T First
-        // {
-        //     [MethodImpl(Inline)]
-        //     get => ref @as<T>(Data.First);
-        // }
-
-        // public Span<T> Cells
-        // {
-        //     [MethodImpl(Inline)]
-        //     get => recover<T>(Data.Bytes);
-        // }
-
-        // public ref T this[int i]
-        // {
-        //     [MethodImpl(Inline)]
-        //     get => ref seek(First,i);
-        // }
-
-        // public ref T this[uint i]
-        // {
-        //     [MethodImpl(Inline)]
-        //     get => ref seek(First,i);
-        // }
 
         public Cell128<T> Zero
         {

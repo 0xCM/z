@@ -27,7 +27,7 @@ namespace Z0
         static int main(string[] args)
         {
             var result = 0;
-            using var app = ApiServer.shell<App,AppCmd>(false, args, providers);
+            using var app = ApiServers.shell<App,AppCmd>(false, args, providers);
             try
             {
                 app.Run(args);

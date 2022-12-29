@@ -13,7 +13,7 @@ namespace Z0
 
         [Op, Closures(UInt64k)]
         public static Tool tool(CmdArgs args, byte index = 0)
-            => CmdArgs.arg(args,index).Value;
+            => new (CmdArgs.arg(args,index).Value);
 
         [MethodImpl(Inline), Op]
         public static ToolScript script(FilePath src, CmdVars vars)
