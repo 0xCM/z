@@ -13,12 +13,6 @@ namespace Z0
     {
         const NumericKind Closure = UnsignedInts;
 
-        public static string format(Var src, bool bind = true)
-            => bind ? src.Resolve().Format() : string.Format(XF.UntypedVar, src);
-
-        public static string format<T>(Var<T> src, bool bind = true)
-            where T : IEquatable<T>, IComparable<T>, new()
-                => bind ? src.Value.ToString() : string.Format(XF.TypedVar, src);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Atom<K> atom<K>(K value)
