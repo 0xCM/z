@@ -4,18 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface ITextVarExpr
+    public interface ITextVarExpr : IScriptVar<char>
     {
-        bool IsFenced {get;}
 
-        Fence<char> Fence {get;}
-
-        char Prefix {get;}
-
-        bool IsPrefixed {get;}
-
-        bool IsPrefixedFence
-            => IsFenced && IsPrefixed;
-        TextVarClass Class {get;}
     }    
 }

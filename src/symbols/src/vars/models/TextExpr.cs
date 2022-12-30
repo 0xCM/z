@@ -9,13 +9,19 @@ namespace Z0
     /// <summary>
     /// Defines the root <see cref='ITextExpr'/> abstraction
     /// </summary>
-    public abstract class TextExpr : ITextExpr
+    public class TextExpr
     {
         protected Dictionary<string,ITextVar> VarLookup;
 
         public string Body {get;}
 
         public ITextVarExpr VarExpr {get;}
+
+        public TextExpr(string body, ITextVarExpr exr)
+        {
+            Body = body;
+            VarExpr = exr;
+        }
 
         public ITextVar this[string var]
         {
@@ -36,30 +42,24 @@ namespace Z0
         {
             switch(VarExpr.Class)
             {
-                case TextVarClass.PrefixedFence:
+                case ScriptVarClass.PrefixedFence:
                     return EvalPrefixFencedVarExpr(Body, Vars, VarExpr);
-                case TextVarClass.Fenced:
+                case ScriptVarClass.Fenced:
                     return EvalFencedVarExpr(Body, Vars, VarExpr);
-                case TextVarClass.Prefixed:
+                case ScriptVarClass.Prefixed:
                     return EvalPrefixedVarExpr(Body, Vars, VarExpr);
             }
             return EmptyString;
         }
 
-        protected TextExpr(string body, ITextVarExpr kind)
-        {
-            Body = body;
-            VarExpr = kind;
-        }
-
-        public static TextVarClass @class(ITextVarExpr kind)
+        public static ScriptVarClass @class(ITextVarExpr kind)
         {
             if(kind.IsPrefixedFence)
-                return TextVarClass.PrefixedFence;
+                return ScriptVarClass.PrefixedFence;
             else if(kind.IsFenced)
-                return TextVarClass.Fenced;
+                return ScriptVarClass.Fenced;
             else if(kind.IsPrefixed)
-                return TextVarClass.Prefixed;
+                return ScriptVarClass.Prefixed;
             else
                 return 0;
         }
@@ -77,11 +77,11 @@ namespace Z0
 
             switch(@class)
             {
-                case TextVarClass.PrefixedFence:
+                case ScriptVarClass.PrefixedFence:
                     return string.Format("{0}{1}{2}{3}", kind.Prefix, kind.Fence.Left, src.Name, kind.Fence.Right);
-                case TextVarClass.Fenced:
+                case ScriptVarClass.Fenced:
                     return string.Format("{0}{1}{2}", kind.Fence.Left, src.Name, kind.Fence.Right);
-                case TextVarClass.Prefixed:
+                case ScriptVarClass.Prefixed:
                     return string.Format("{0}{1}", kind.Prefix, src.Name);
             }
             return EmptyString;

@@ -14,9 +14,9 @@ namespace Z0
         const NumericKind Closure = UnsignedInts;
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static VarExpr<T> expr<T>(string name, T value)
+        public static ScriptVar<T> expr<T>(string name, T value)
             where T : IEquatable<T>, IComparable<T>, new()
-                => new VarExpr<T>(name,(Chars.LBrace, Chars.RBrace), value);
+                => new ScriptVar<T>(name,(Chars.LBrace, Chars.RBrace), value);
 
          public static string pattern(VarContextKind vck)
             => vck switch
@@ -39,7 +39,7 @@ namespace Z0
             where T : IEquatable<T>, IComparable<T>
                 => new Var<T>(name, () => src);
 
-        public static string format<T>(VarExpr<T> src, bool name = false)
+        public static string format<T>(ScriptVar<T> src, bool name = false)
             where T : IEquatable<T>, IComparable<T>, new()
         {
             var dst = RP.Null;
@@ -79,13 +79,5 @@ namespace Z0
         public static string format<T>(Var<T> src, bool bind = true)
             where T : IEquatable<T>, IComparable<T>, new()
                 => bind ? src.Value.ToString() : string.Format(XF.TypedVar, src);
-
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ResolvedVar<T> resolve<T>(IVar var, T value)
-            => value;
-
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ResolvedVar<T> resolve<T>(string var, T value)
-            => value;
     }
 }

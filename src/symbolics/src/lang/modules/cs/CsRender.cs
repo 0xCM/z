@@ -25,7 +25,7 @@ namespace Z0
 
             for(var i=0; i<types.Length; i++)
             {
-                var symbols = Symbolic.set(types[i]);
+                var symbols = Symbols.set(types[i]);
                 if(symbols.SymbolCount != 0)
                 {
                     Code(offset, symbols, code);
@@ -66,7 +66,7 @@ namespace Z0
         public static void EnumReplicant(uint offset, Type type, ITextEmitter dst)
         {
             dst.AppendLine();
-            CsRender.@enum(offset, Symbolic.set(type), dst);
+            CsRender.@enum(offset, Symbols.set(type), dst);
         }
 
         public static void @enum<T>(uint offset, Identifier name, ReadOnlySpan<Literal<T>> literals, ITextEmitter dst)

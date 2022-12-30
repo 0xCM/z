@@ -9,7 +9,7 @@ namespace Z0
     using PK = PrimalKind;
 
     [ApiHost]
-    struct SymIndexBuilder
+    struct SymIndexer
     {
         const NumericKind Closure = UnsignedInts;
 

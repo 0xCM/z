@@ -29,9 +29,4 @@ namespace Z0
         bool IsFenced
             => Fence.Left != 0 && Fence.Right != 0;
     }
-
-    public interface IVarExpr<T> : IVarExpr
-    {
-
-    }
 }

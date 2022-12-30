@@ -31,12 +31,12 @@ namespace Z0
             => new ScriptPattern(name, content);
 
         [MethodImpl(Inline), Op]
-        public static CmdVarExpr expr(ScriptPattern src)
-            => new CmdVarExpr(src);
+        public static CmdPattern expr(ScriptPattern src)
+            => new CmdPattern(src);
 
         [MethodImpl(Inline), Op]
-        public static CmdVarExpr expr(ScriptPattern src, CmdVars vars)
-            => new CmdVarExpr(src, vars);
+        public static CmdPattern expr(ScriptPattern src, CmdVars vars)
+            => new CmdPattern(src, vars);
 
         public string Name {get;}
 

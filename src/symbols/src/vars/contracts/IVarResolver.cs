@@ -4,14 +4,16 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [Free]
-    public interface IEnvVar : IVarValue
+    public interface IVarResolver
     {
+        public dynamic Resolve(string name);
     }
 
-    [Free]
-    public interface IEnvVar<T> : IEnvVar, IVarValue<T>
+    public interface IVarResover<T> : IVarResolver
     {
+        new public T Resolve(string name);
 
+        dynamic IVarResolver.Resolve(string name)
+            => Resolve(name);
     }
 }

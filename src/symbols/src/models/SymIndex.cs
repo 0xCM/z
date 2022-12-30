@@ -9,7 +9,7 @@ namespace Z0
     public class SymIndex : ISymIndex
     {
         public static SymIndex create(Type src)
-            => SymIndexBuilder.create(src);
+            => SymIndexer.create(src);
 
         readonly Index<Sym> Data;
 

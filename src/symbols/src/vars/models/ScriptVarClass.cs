@@ -4,12 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class TextBlockExpr : TextExpr
+    public enum ScriptVarClass : byte
     {
-        public TextBlockExpr(string body, ITextVarExpr varkind)
-            : base(body,varkind)
-        {
-            VarLookup = new();
-        }
+        None = 0,
+
+        Fenced = 1,
+
+        Prefixed = 2,
+
+        PrefixedFence = Fenced | Prefixed
     }
 }

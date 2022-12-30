@@ -12,7 +12,7 @@ namespace Z0
             => new SymCache<K>();
 
         static SymCache()
-            => Storage = SymIndexBuilder.create<K>();
+            => Storage = SymIndexer.create<K>();
 
         public ref readonly Sym<K> this[K index]
         {

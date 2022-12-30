@@ -10,7 +10,7 @@ namespace Z0
     /// Defines a nonparametric environment variable
     /// </summary>
     [Record(TableId)]
-    public readonly record struct EnvVar : IVarValue, IDataType<EnvVar>
+    public readonly record struct EnvVar : IDataType<EnvVar>
     {
         const string TableId = "env";
 
@@ -82,11 +82,6 @@ namespace Z0
         public static implicit operator string(EnvVar src)
             => src.Value;
 
-        string IVarValue.Name
-            => Name;
-
-        object IVarValue.Value
-            => Value;
 
         public static EnvVar Empty
         {

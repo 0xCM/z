@@ -126,7 +126,7 @@ namespace Z0
         /// </summary>
         [MethodImpl(Inline)]
         public SymIndex Untyped()
-            => SymIndexBuilder.untype(Data.Storage);
+            => SymIndexer.untype(Data.Storage);
 
         public ReadOnlySpan<K> Kinds
         {

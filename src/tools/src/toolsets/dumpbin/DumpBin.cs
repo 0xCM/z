@@ -167,7 +167,7 @@ namespace Z0
             return new CmdScript(name, emitter.Emit());
         }
 
-        public CmdVarExpr Expr(CmdName name, FilePath src, IDbArchive dst)
+        public CmdPattern Expr(CmdName name, FilePath src, IDbArchive dst)
         {
             var subdir = dst.Root + FS.folder(src.FileName.WithoutExtension.Name);
             subdir.Create();

@@ -4,43 +4,43 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct CmdVarExpr
+    public readonly struct CmdPattern
     {
-        public readonly ScriptPattern Pattern;
+        public readonly ScriptPattern Body;
 
         public readonly CmdVars Variables;
 
         [MethodImpl(Inline)]
-        public CmdVarExpr(string pattern)
+        public CmdPattern(string pattern)
         {
-            Pattern = pattern;
+            Body = pattern;
             Variables = CmdVars.create();
         }
 
         [MethodImpl(Inline)]
-        public CmdVarExpr(ScriptPattern pattern)
+        public CmdPattern(ScriptPattern pattern)
         {
-            Pattern = pattern;
+            Body = pattern;
             Variables = CmdVars.create();
         }
 
         [MethodImpl(Inline)]
-        public CmdVarExpr(ScriptPattern pattern, CmdVars vars)
+        public CmdPattern(ScriptPattern pattern, CmdVars vars)
         {
-            Pattern = pattern;
+            Body = pattern;
             Variables = vars;
         }
 
         public Hash32 Hash
-            => sys.nhash(Pattern.Format().GetHashCode(),  Variables.Format().GetHashCode());
+            => sys.nhash(Body.Format().GetHashCode(),  Variables.Format().GetHashCode());
 
         public string Format()
-            => Pattern.Format();
+            => Body.Format();
 
         public string Id
         {
             [MethodImpl(Inline)]
-            get => Pattern.Name;
+            get => Body.Name;
         }
 
         public ref CmdVar this[byte index]
@@ -52,26 +52,26 @@ namespace Z0
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => Pattern.IsEmpty;
+            get => Body.IsEmpty;
         }
 
         public bool IsNonEmpty
         {
             [MethodImpl(Inline)]
-            get => Pattern.IsNonEmpty;
+            get => Body.IsNonEmpty;
         }
 
         public override int GetHashCode()
             => Hash;
 
         [MethodImpl(Inline)]
-        public static implicit operator CmdVarExpr(string src)
-            => new CmdVarExpr(src);
+        public static implicit operator CmdPattern(string src)
+            => new CmdPattern(src);
 
         [MethodImpl(Inline)]
-        public static implicit operator CmdVarExpr(ScriptPattern src)
-            => new CmdVarExpr(src);
+        public static implicit operator CmdPattern(ScriptPattern src)
+            => new CmdPattern(src);
 
-        public static CmdVarExpr Empty => new CmdVarExpr(EmptyString);
+        public static CmdPattern Empty => new CmdPattern(EmptyString);
     }
 }

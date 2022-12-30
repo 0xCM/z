@@ -11,13 +11,4 @@ namespace Z0
         bool INullity.IsEmpty
             => sys.empty(Value);
     }
-
-    public interface ITextVar<K> : ITextVar
-        where K : ITextVarExpr
-    {
-        new K Expr {get;}
-
-        ITextVarExpr ITextVar.Expr
-            => Expr;
-    }
 }

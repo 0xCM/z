@@ -6,13 +6,6 @@ namespace Z0
 {
     public partial class VarPatterns : IPatternText
     {
-        public static CmdVarExpr format(ScriptPattern pattern, params CmdVar[] args)
-            => string.Format(pattern.Pattern, args.Select(a => a.Format()));
-
-        public static CmdVarExpr format<K>(ScriptPattern pattern, params CmdVar<K>[] args)
-            where K : unmanaged
-                => string.Format(pattern.Pattern, args.Select(a => a.Format()));
-
         [MethodImpl(Inline), Op]
         public static ScriptPattern script(string name, string content)
             => new ScriptPattern(name, content);

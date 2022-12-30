@@ -10,7 +10,7 @@ namespace Z0
     /// Defines a value-parametric environment variable
     /// </summary>
     [Record(TableId)]
-    public readonly record struct EnvVar<T> : IDataType<EnvVar<T>>, IVarValue<T>
+    public readonly record struct EnvVar<T> : IDataType<EnvVar<T>>
         where T : IEquatable<T>
     {
         const string TableId = "env.vars.{0}";
@@ -64,11 +64,6 @@ namespace Z0
         public bool Equals(EnvVar<T> src)
             => Name.Equals(src.Name) && Value.Equals(src.Value);
 
-        string IVarValue.Name
-            => Name;
-
-        T IVarValue<T>.Value
-            => Value;
 
         [MethodImpl(Inline)]
         public static implicit operator T (EnvVar<T> src)

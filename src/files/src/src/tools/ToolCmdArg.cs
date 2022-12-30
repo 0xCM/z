@@ -8,10 +8,10 @@ namespace Z0
     {
         public readonly @string Name;
 
-        public readonly EnvExpr Value;
+        public readonly @string Value;
 
         [MethodImpl(Inline)]
-        public ToolCmdArg(string name, EnvExpr expr)
+        public ToolCmdArg(string name, string expr)
         {
             Name = name;
             Value = expr;
@@ -47,7 +47,7 @@ namespace Z0
         public static ToolCmdArg Empty
         {
             [MethodImpl(Inline)]
-            get => new ToolCmdArg(EmptyString, EnvExpr.Empty);
+            get => new ToolCmdArg(EmptyString, @string.Empty);
         }
     }
 }

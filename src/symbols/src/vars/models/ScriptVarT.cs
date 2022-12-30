@@ -6,7 +6,7 @@ namespace Z0
 {
     using api = Vars;
 
-    public record class VarExpr<T> : IVarExpr<T>
+    public record class ScriptVar<T> : IVarExpr
         where T : IEquatable<T>, IComparable<T>, new()
     {
         public readonly @string VarName;
@@ -18,7 +18,7 @@ namespace Z0
         T _Value;
 
         [MethodImpl(Inline)]
-        public VarExpr(AsciSymbol prefix, T? value = default)
+        public ScriptVar(AsciSymbol prefix, T? value = default)
         {
             _Value = value ?? new();
             VarName = default;
@@ -27,7 +27,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public VarExpr(AsciFence fence, T? value = default)
+        public ScriptVar(AsciFence fence, T? value = default)
         {
             _Value = value ?? new();
             VarName = default;
@@ -36,7 +36,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public VarExpr(AsciSymbol prefix, AsciFence fence, T? value = default)
+        public ScriptVar(AsciSymbol prefix, AsciFence fence, T? value = default)
         {
             _Value = value ?? new();
             VarName = default;
@@ -45,7 +45,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public VarExpr(string name, AsciSymbol prefix, T? value = default)
+        public ScriptVar(string name, AsciSymbol prefix, T? value = default)
         {
             _Value = value ?? new();
             VarName = name;
@@ -54,7 +54,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public VarExpr(string name, AsciFence fence, T? value = default)
+        public ScriptVar(string name, AsciFence fence, T? value = default)
         {
             _Value = value ?? new();
             VarName = name;
@@ -63,7 +63,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public VarExpr(string name, AsciSymbol prefix, AsciFence fence, T? value = default)
+        public ScriptVar(string name, AsciSymbol prefix, AsciFence fence, T? value = default)
         {
             _Value = value ?? new();
             VarName = name;
@@ -118,11 +118,11 @@ namespace Z0
             => Fence.Left != 0 && Fence.Right != 0;
 
         [MethodImpl(Inline)]
-        public static implicit operator VarExpr<T>(string name)
-            => new VarExpr<T>(name);
+        public static implicit operator ScriptVar<T>(string name)
+            => new ScriptVar<T>(name);
 
         [MethodImpl(Inline)]
-        public static implicit operator VarExpr(VarExpr<T> src)
-            => new VarExpr(src.VarName, src.Prefix,src.Fence,$"{src.VarValue}");
+        public static implicit operator ScriptVar(ScriptVar<T> src)
+            => new ScriptVar(src.VarName, src.Prefix,src.Fence,$"{src.VarValue}");
     }
 }

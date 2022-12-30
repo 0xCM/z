@@ -8,17 +8,17 @@ namespace Z0
     {
         public readonly @string Name;
 
-        readonly CmdVarExpr Data;
+        readonly CmdPattern Data;
 
         [MethodImpl(Inline)]
-        public CmdScript(CmdVarExpr src)
+        public CmdScript(CmdPattern src)
         {
             Name = EmptyString;
             Data = src;
         }
 
         [MethodImpl(Inline)]
-        public CmdScript(string name, CmdVarExpr src)
+        public CmdScript(string name, CmdPattern src)
         {
             Name = name;
             Data = src;
@@ -34,7 +34,7 @@ namespace Z0
         public static CmdScript Empty
         {
             [MethodImpl(Inline)]
-            get => new CmdScript(CmdVarExpr.Empty);
+            get => new CmdScript(CmdPattern.Empty);
         }
     }
 }

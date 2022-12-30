@@ -6,13 +6,10 @@ namespace Z0
 {
     using static sys;
 
-    using XF = ExprPatterns;
-
     [ApiHost]
     public class Atomics
     {
         const NumericKind Closure = UnsignedInts;
-
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Atom<K> atom<K>(K value)
