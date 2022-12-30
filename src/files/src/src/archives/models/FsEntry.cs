@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static FS.Json;
-
     /// <summary>
     /// Defines a file system entry
     /// </summary>

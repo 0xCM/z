@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Json>$(MsBuildThisFileDirectory)z0.json.csproj</Json>
+  </PropertyGroup>
+</Project>

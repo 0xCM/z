@@ -7,7 +7,7 @@ namespace Z0
     partial class JsonRecords
     {
         public record class FieldValue<T,V>
-            where T : IDataType,new()
+            where T : IJsonDataType,new()
         {
             public readonly V Value;
 

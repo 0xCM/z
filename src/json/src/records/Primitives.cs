@@ -127,11 +127,11 @@ namespace Z0
             }
         }
 
-        static readonly ConstLookup<@string,JsonRecords.IDataType> Types;
+        static readonly ConstLookup<@string,IJsonDataType> Types;
 
         static JsonPrimitives()
         {
-            Types = new JsonRecords.IDataType[]{
+            Types = new IJsonDataType[]{
                 i8(),
                 u8(),
                 i16(),

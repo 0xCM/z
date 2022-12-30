@@ -6,7 +6,7 @@ namespace Z0
 {
     partial class JsonRecords
     {
-        public abstract record class DataType<T> : DataType, IDataType<T>
+        public abstract record class DataType<T> : DataType, IJsonDataType<T>
             where T : DataType<T>, new()
         {
             protected DataType(string name)

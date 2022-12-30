@@ -6,14 +6,12 @@ namespace Z0
 {
     partial class JsonRecords
     {
-        public interface IDataType
+        public record class Field<T>
+            where T : IJsonDataType, new()
         {
-            @string Name {get;}
-        }
+            public JsonText Name;
 
-        public interface IDataType<T> : IDataType
-            where T : IDataType<T>, new()
-        {
+            public T Type;
         }
     }
 }
