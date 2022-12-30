@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using api = JsonData;
-
     public sealed record class JsonSeq<T> : IJsonSource<JsonSeq<T>>
     {
         public readonly Seq<T> Content;
@@ -35,7 +33,7 @@ namespace Z0
             => Format();
 
         public JsonText ToJson()
-            => api.jtext(this);
+            => Json.jtext(this);
 
         [MethodImpl(Inline)]
         public static implicit operator JsonSeq<T>(T[] src)

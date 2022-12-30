@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct JsonData
+    partial class Json
     {
         /// <summary>
         /// 

@@ -25,7 +25,7 @@ namespace Z0
  
         public string Unescape()
         {
-            if(JsonData.unescape(Content, out var escaped))
+            if(Json.unescape(Content, out var escaped))
                 return escaped;
             else
                 return EmptyString;

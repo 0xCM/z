@@ -7,7 +7,7 @@ namespace Z0
     /// <summary>
     /// Defines a directed association between two data members
     /// </summary>
-    public readonly struct MemberRelation : IRelation<ClrMember>
+    public readonly struct MemberRelation
     {
         /// <summary>
         /// The supplier member

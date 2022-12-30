@@ -32,7 +32,7 @@ namespace Z0
             job.JobId = ts;
             job.Sources = src;
             job.Targets = AppDb.DbTargets("tools/jobs").Folder(CmdId.identify<EmitEcmaDatasets>().Format());            
-            var data = JsonData.serialize(job);
+            var data = Json.serialize(job);
             FileEmit(data, dst);
         }
 

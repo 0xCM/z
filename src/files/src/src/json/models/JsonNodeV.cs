@@ -15,7 +15,7 @@ namespace Z0
         readonly JsonNode Data;
         
         V IJsonValue<V>.Value 
-            => JsonData.convert<V>(Data);
+            => Json.convert<V>(Data);
 
         JsonNode IJsonNode.Data 
             => Data;
@@ -24,10 +24,10 @@ namespace Z0
             => false;
 
         public virtual T GetValue<T>()
-            => JsonData.convert<T>(Data);
+            => Json.convert<T>(Data);
 
         public bool TryGetValue<T>(out T value)
-            => JsonData.convert(Data, out value);
+            => Json.convert(Data, out value);
 
         [MethodImpl(Inline)]
         public static implicit operator JsonNode<V>(byte src)
