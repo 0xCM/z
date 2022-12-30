@@ -1,14 +1,14 @@
 //-----------------------------------------------------------------------------
-// Copyright   :  (c) Chris Moore, 2020
+// Copyright   :  (c) Chris Moore, 4020
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class PText
+    partial class VarPatterns
     {
-        public class PT<T0,T1,T2,T3> : PT<T0,T1,T2>
+        public class PT<T0,T1,T2,T3,T4> : PT<T0,T1,T2,T3>
         {
-            const byte Arity = 4;
+            const byte Arity = 5;
 
             const byte Index = Arity - 1;
 
@@ -24,16 +24,16 @@ namespace Z0
 
             }
 
-            public ref T3 Param3
+            public ref T4 Param4
             {
                 [MethodImpl(Inline)]
-                get => ref Var<T3>(Index);
+                get => ref Var<T4>(Index);
             }
 
-            public ref T3 this[N3 n]
+            public ref T4 this[N4 n]
             {
                 [MethodImpl(Inline)]
-                get => ref Param3;
+                get => ref Param4;
             }
         }
     }

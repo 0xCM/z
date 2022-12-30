@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class PText
+    partial class VarPatterns
     {
         public class PT<T0,T1,T2> : PT<T0,T1>
         {

@@ -4,32 +4,35 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct CmdScriptExpr
+    public readonly struct CmdVarExpr
     {
-        public readonly PScript Pattern;
+        public readonly ScriptPattern Pattern;
 
         public readonly CmdVars Variables;
 
         [MethodImpl(Inline)]
-        public CmdScriptExpr(string pattern)
+        public CmdVarExpr(string pattern)
         {
             Pattern = pattern;
             Variables = CmdVars.create();
         }
 
         [MethodImpl(Inline)]
-        public CmdScriptExpr(PScript pattern)
+        public CmdVarExpr(ScriptPattern pattern)
         {
             Pattern = pattern;
             Variables = CmdVars.create();
         }
 
         [MethodImpl(Inline)]
-        public CmdScriptExpr(PScript pattern, CmdVars vars)
+        public CmdVarExpr(ScriptPattern pattern, CmdVars vars)
         {
             Pattern = pattern;
             Variables = vars;
         }
+
+        public Hash32 Hash
+            => sys.nhash(Pattern.Format().GetHashCode(),  Variables.Format().GetHashCode());
 
         public string Format()
             => Pattern.Format();
@@ -58,14 +61,17 @@ namespace Z0
             get => Pattern.IsNonEmpty;
         }
 
-        [MethodImpl(Inline)]
-        public static implicit operator CmdScriptExpr(string src)
-            => new CmdScriptExpr(src);
+        public override int GetHashCode()
+            => Hash;
 
         [MethodImpl(Inline)]
-        public static implicit operator CmdScriptExpr(PScript src)
-            => new CmdScriptExpr(src);
+        public static implicit operator CmdVarExpr(string src)
+            => new CmdVarExpr(src);
 
-        public static CmdScriptExpr Empty => new CmdScriptExpr(EmptyString);
+        [MethodImpl(Inline)]
+        public static implicit operator CmdVarExpr(ScriptPattern src)
+            => new CmdVarExpr(src);
+
+        public static CmdVarExpr Empty => new CmdVarExpr(EmptyString);
     }
 }

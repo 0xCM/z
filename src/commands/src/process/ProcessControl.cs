@@ -10,8 +10,6 @@ namespace Z0
         public static IControl Control()
             => Instance;    
 
-        public static CmdScript script(string name, CmdScriptExpr src)
-            => new CmdScript(name, src);
 
         static ProcessControl Instance = new();
     }

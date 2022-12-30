@@ -4,11 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class PText
+    partial class VarPatterns
     {
-        public class PT<T0,T1,T2,T3,T4,T5,T6,T7,T8> : PT<T0,T1,T2,T3,T4,T5,T6,T7>
+        public class PT<T0,T1,T2,T3,T4,T5> : PT<T0,T1,T2,T3,T4>
         {
-            const byte Arity = 9;
+            const byte Arity = 6;
 
             const byte Index = Arity - 1;
 
@@ -24,16 +24,16 @@ namespace Z0
 
             }
 
-            public ref T8 Param8
+            public ref T5 Param5
             {
                 [MethodImpl(Inline)]
-                get => ref Var<T8>(Index);
+                get => ref Var<T5>(Index);
             }
 
-            public ref T8 this[N8 n]
+            public ref T5 this[N5 n]
             {
                 [MethodImpl(Inline)]
-                get => ref Param8;
+                get => ref Param5;
             }
         }
     }

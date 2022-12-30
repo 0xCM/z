@@ -8,17 +8,17 @@ namespace Z0
     {
         public readonly @string Name;
 
-        readonly CmdScriptExpr Data;
+        readonly CmdVarExpr Data;
 
         [MethodImpl(Inline)]
-        public CmdScript(CmdScriptExpr src)
+        public CmdScript(CmdVarExpr src)
         {
             Name = EmptyString;
             Data = src;
         }
 
         [MethodImpl(Inline)]
-        public CmdScript(string name, CmdScriptExpr src)
+        public CmdScript(string name, CmdVarExpr src)
         {
             Name = name;
             Data = src;
@@ -30,13 +30,11 @@ namespace Z0
         public override string ToString()
             => Format();
 
-        public CmdLine ToCmdLine()
-            => new CmdLine(Format());
 
         public static CmdScript Empty
         {
             [MethodImpl(Inline)]
-            get => new CmdScript(CmdScriptExpr.Empty);
+            get => new CmdScript(CmdVarExpr.Empty);
         }
     }
 }

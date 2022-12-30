@@ -11,13 +11,15 @@ namespace Z0
 
         public readonly K Kind;
 
-        public string Value;
+        @string _Value;
+        
+        public @string Value => _Value;
 
         [MethodImpl(Inline)]
         public CmdVar(K id)
         {
             Kind = id;
-            Value = EmptyString;
+            _Value = EmptyString;
             Name = EmptyString;
         }
 
@@ -25,20 +27,20 @@ namespace Z0
         public CmdVar(K kind, string value)
         {
             Kind = kind;
-            Value = value;
+            _Value = value;
         }
 
         [MethodImpl(Inline)]
         public CmdVar(string name, K kind, string value)
         {
             Kind = kind;
-            Value = value;
+            _Value = value;
         }
 
         [MethodImpl(Inline)]
-        public CmdVar<K> Set(string value)
+        public CmdVar<K> Assign(string value)
         {
-            Value = value;
+            _Value = value;
             return this;
         }
 
@@ -48,7 +50,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public string Format()
-            => Value ?? EmptyString;
+            => Value;
 
         public override string ToString()
             => Format();

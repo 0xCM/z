@@ -184,9 +184,6 @@ namespace Z0
             return dst;
         }
 
-        public static CmdScript script(string name, CmdScriptExpr src)
-            => new CmdScript(name, src);
-
         public static CmdLine cmdline(FilePath src)
         {
             if(src.Is(FileKind.Cmd))

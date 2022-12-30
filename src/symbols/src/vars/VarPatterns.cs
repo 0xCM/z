@@ -4,21 +4,21 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public partial class PText : IPText
+    public partial class VarPatterns : IPatternText
     {
-        public static CmdScriptExpr format(PScript pattern, params CmdVar[] args)
+        public static CmdVarExpr format(ScriptPattern pattern, params CmdVar[] args)
             => string.Format(pattern.Pattern, args.Select(a => a.Format()));
 
-        public static CmdScriptExpr format<K>(PScript pattern, params CmdVar<K>[] args)
+        public static CmdVarExpr format<K>(ScriptPattern pattern, params CmdVar<K>[] args)
             where K : unmanaged
                 => string.Format(pattern.Pattern, args.Select(a => a.Format()));
 
         [MethodImpl(Inline), Op]
-        public static PScript script(string name, string content)
-            => new PScript(name, content);
+        public static ScriptPattern script(string name, string content)
+            => new ScriptPattern(name, content);
 
-        public static PText pattern(string pattern, params object[] vars)
-            => new PText(pattern, vars);
+        public static VarPatterns pattern(string pattern, params object[] vars)
+            => new VarPatterns(pattern, vars);
 
         public static PT<T0> pattern<T0>(string spec, T0 p0)
         {
@@ -125,21 +125,21 @@ namespace Z0
 
         public readonly uint VarCount;
 
-        public PText(string src)
+        public VarPatterns(string src)
         {
             Pattern = src ?? EmptyString;
             Vars = sys.empty<object>();
             VarCount = 0;
         }
 
-        public PText(string src, object[] vars)
+        public VarPatterns(string src, object[] vars)
         {
             Pattern = src ?? EmptyString;
             Vars = vars;
             VarCount = (uint)vars.Length;
         }
 
-        public PText(string src, uint varcount)
+        public VarPatterns(string src, uint varcount)
         {
             Pattern = src ?? EmptyString;
             Vars = sys.alloc<object>(varcount);
@@ -180,10 +180,10 @@ namespace Z0
             get => Pattern.IsNonEmpty;
         }
 
-        Seq<object> IPText.Vars
+        Seq<object> IPatternText.Vars
             => Vars;
 
-        TextBlock IPText.Pattern
+        TextBlock IPatternText.Pattern
             => Pattern;
 
         public string Format()
