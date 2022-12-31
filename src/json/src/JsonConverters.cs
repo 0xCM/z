@@ -15,5 +15,4 @@ namespace Z0
                 => writer.WriteStringValue(value.Format(PathSeparator.FS));
         }
     }
-
 }

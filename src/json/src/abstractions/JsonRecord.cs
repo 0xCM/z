@@ -4,14 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class JsonRecords
+    public abstract record class JsonRecord
     {
-        public record class Field<T>
-            where T : IJsonDataType, new()
-        {
-            public JsonText Name;
 
-            public T Type;
-        }
     }
+    
 }

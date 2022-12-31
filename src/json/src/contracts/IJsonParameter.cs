@@ -4,12 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class JsonRecords
+    public interface IJsonParameter : INamed<@string>
     {
-        public abstract record class JsonRecord<R> : JsonRecord, IJsonRecord<R>
-            where R : JsonRecord<R>, new()
-        {
-            
-        }        
+
+    }
+
+    public interface IJsonParameter<T> : IJsonParameter, IDataType<T>
+        where T : IJsonParameter<T>,new()
+    {
+
     }
 }

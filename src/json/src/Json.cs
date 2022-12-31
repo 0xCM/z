@@ -9,7 +9,9 @@ namespace Z0
     [ApiHost]
     public partial class Json
     {
-        const NumericKind Closure = UInt64k;        
+        const NumericKind Closure = UInt64k;
+
+        
 
         [Op, Closures(Closure)]
         public static string serialize<T>(T src, bool indented = true)

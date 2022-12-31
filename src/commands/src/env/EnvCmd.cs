@@ -197,5 +197,11 @@ namespace Z0
             }
             
         }
+
+        [CmdOp("json/types")]
+        void JsonTypes()
+        {
+            iter(Z0.JsonTypes.Types, t => Channel.Row(t));
+        }
     }
 }
