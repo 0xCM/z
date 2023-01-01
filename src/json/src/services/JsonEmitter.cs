@@ -13,13 +13,13 @@ namespace Z0
         readonly ITextEmitter Buffer;
 
         public static void render<T>(JsonArray<T> src, IJsonEmitter dst)
-            where T : IJsonRender
+            where T : IJsonValue, new()
         {
             dst.OpenArray();
             var count = src.Length;
             for(var i=0; i<count; i++)
             {
-                src[i].Render(dst);
+                //src[i].Render(dst);
                 if(i != count - 1)
                     dst.Delimit();
             }
@@ -61,19 +61,21 @@ namespace Z0
         }
         
         public void Serialize<T>(T src)
-            where T : IJsonRender
+            where T : IJsonValue
         {
             Buffer.Append(JsonSerializer.Serialize(src, Options.Serializer));        
         }
 
         public void Serialize<T>(IEnumerable<T> src)
-            where T : IJsonRender
+            where T : IJsonValue
         {
             Buffer.Append(JsonSerializer.Serialize(src.Array(), Options.Serializer));
         }
 
         public void Serialize<T>(T[] src) 
-            where T : IJsonRender
-                => render(Json.array(src), this);
+            where T : IJsonValue
+        {
+
+        }
     }
 }

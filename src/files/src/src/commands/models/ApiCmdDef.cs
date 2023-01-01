@@ -4,9 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class ApiCmdDef : IApiCmdDef, IComparable<ApiCmdDef>
+    public class ApiCmdDef : IComparable<ApiCmdDef>
     {
-        public readonly @string CmdName;
+        public readonly @string Path;
 
         public readonly Type Source;
 
@@ -15,7 +15,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public ApiCmdDef(string name, Type type, CmdField[] fields)
         {
-            CmdName = name;
+            Path = name;
             Source = Require.notnull(type);
             Fields = fields;
         }
@@ -32,17 +32,9 @@ namespace Z0
             get => Fields.Count;
         }
 
-        Type IApiCmdDef.Source
-            => Source;
-
-        ReadOnlySeq<CmdField> IApiCmdDef.Fields
-            => Fields;
-
-        @string IApiCmdDef.CmdName
-            => CmdName;
 
         public int CompareTo(ApiCmdDef src)
-            => CmdName.CompareTo(src.CmdName);
+            => Path.CompareTo(src.Path);
 
         public string Format()
             => Cmd.format(this);

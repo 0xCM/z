@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using api = CmdApi;
-
     [Free]
     public interface IWfCmd : ICmd
     {
@@ -20,7 +18,7 @@ namespace Z0
             => CmdId.identify<T>();
 
         string IExpr.Format()
-            => api.format((T)this);
+            => Cmd.format((T)this);
 
         CmdUri IWfCmd.Uri
             => new(CmdKind.App, GetType().Assembly.PartName().Format(), GetType().DisplayName(), CmdId.Format());

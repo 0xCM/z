@@ -17,7 +17,7 @@ namespace Z0
         string Emit();
 
         void Array<T>(JsonArray<T> src)
-            where T : IJsonRender
+            where T : IJsonValue, new()
                 => JsonEmitter.render(src,this);
 
         void Prop<T>(string name, T value);

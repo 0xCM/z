@@ -5,7 +5,7 @@
 namespace Z0
 {
     public class JsonArray<T> : ReadOnlySeq<T>
-        where T : IJsonRender
+        where T : IJsonValue, new()
     {   
         public JsonArray()
         {

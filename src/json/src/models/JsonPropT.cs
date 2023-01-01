@@ -4,7 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public record struct JsonProp<T> : IJsonRender
+    public record struct JsonProp<T>
+        where T : IJsonValue, new()
     {
         public readonly @string Name;
 

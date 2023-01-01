@@ -9,6 +9,54 @@ namespace Z0
     [ApiHost]
     public class Cmd 
     {   
+        public static string format(IToolCmd src)
+        {
+            var count = src.Args.Count;
+            var buffer = text.buffer();
+            buffer.AppendFormat("{0}{1}", src.Tool, Chars.LParen);
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var arg = ref src.Args[i];
+                buffer.AppendFormat(RP.Assign, arg.Name, arg.Value);
+                if(i != count - 1)
+                    buffer.Append(", ");
+            }
+
+            buffer.Append(Chars.RParen);
+            return buffer.Emit();
+        }
+
+        public static string format<T>(T src)
+            where T : ICmd, new()
+        {
+            var buffer = text.emitter();
+            buffer.AppendFormat("{0}{1}", src.CmdId, Chars.LParen);
+
+            var fields = ClrFields.instance(typeof(T));
+            if(fields.Length != 0)
+                render(src, fields, buffer);
+
+            buffer.Append(Chars.RParen);
+            return buffer.Emit();
+        }
+
+        public static void render(object src, ReadOnlySpan<ClrFieldAdapter> fields, ITextEmitter dst)
+        {
+            var count = fields.Length;
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var field = ref skip(fields,i);
+                dst.AppendFormat(RP.Assign, field.Name, field.GetValue(src));
+                if(i != count - 1)
+                    dst.Append(", ");
+            }
+        }                            
+        public static Index<CmdField> fields(Type src)
+            => src.PublicInstanceFields().Mapi((i,x) => new CmdField((byte)i, x, description(x)));
+
+        static string description(FieldInfo src)
+            => src.Tag<CmdArgAttribute>().MapValueOrDefault(x => text.ifempty(x.Description,src.Name), src.Name);
+
         [Op]
         public static bool parse(ReadOnlySpan<char> src, out ApiCmdSpec dst)
         {
@@ -93,7 +141,6 @@ namespace Z0
                 return spec.Name;
         }
 
-
         public static CmdArgs args<T>(T src)
             where T : ICmd
                 => typeof(T).DeclaredInstanceFields().Select(f => new CmdArg(f.Name, f.GetValue(src)?.ToString() ?? EmptyString));
@@ -107,7 +154,7 @@ namespace Z0
                 => new CmdResult<C, P>(spec,token,suceeded,payload);
 
         public static string format(CmdField src)
-            => string.Format($"{src.FieldName}:{src.Expr}");
+            => string.Format($"{src.FieldName}:{src.Description}");
 
         [Op]
         public static CmdLine cmd<T>(T src)
@@ -139,7 +186,7 @@ namespace Z0
             for(var i=0; i<count; i++)
             {
                 ref readonly var field = ref skip(fields,count);
-                dst.Append(string.Format(" | {0}:{1}", field.FieldName, field.Expr));
+                dst.Append(string.Format(" | {0}:{1}", field.FieldName, field.Description));
             }
         }
 

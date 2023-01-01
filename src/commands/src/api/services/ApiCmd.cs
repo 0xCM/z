@@ -54,13 +54,8 @@ namespace Z0
             =>  src.Types().Tagged<CmdAttribute>();
 
         static ApiCmdDef describe(Type src)
-            => new ApiCmdDef(Cmd.identify(src), src, fields(src));
+            => new ApiCmdDef(Cmd.identify(src), src, Cmd.fields(src));
 
-        static string expr(FieldInfo src)
-            => src.Tag<CmdArgAttribute>().MapValueOrDefault(x => text.ifempty(x.Expression,src.Name), src.Name);
-
-        static Index<CmdField> fields(Type src)
-            => src.PublicInstanceFields().Mapi((i,x) => new CmdField((byte)i, x, expr(x)));
 
         public static ApiCmdCatalog catalog()
             => catalog(Dispatcher);
@@ -148,11 +143,11 @@ namespace Z0
                 {
                     ref var row = ref seek(dst,k);
                     ref readonly var field = ref type.Fields[j];
-                    row.CmdName = type.CmdName;
+                    row.CmdName = type.Path;
                     row.Index = field.Index;
                     row.CmdType = type.Source.DisplayName();
                     row.Name = field.Source.Name;
-                    row.Expression = field.Expr;
+                    row.Expression = field.Description;
                     row.DataType = field.Source.FieldType.DisplayName();
                     row.DefaultValue = values[field.Source.Name].Value?.ToString() ?? EmptyString;
                 }

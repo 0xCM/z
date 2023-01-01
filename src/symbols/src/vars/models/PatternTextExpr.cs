@@ -11,9 +11,9 @@ namespace Z0
             => new PatternTextExpr(body);
 
         public PatternTextExpr(string body)
-            : base(body, PatternTextVar.Kind)
+            : base(body, TextVar.Kind)
         {
-            VarLookup = ParseFencedVars(body, PatternTextVar.Kind, name => new PatternTextVar(name));
+            VarLookup = ParseFencedVars(body, TextVar.Kind, name => new TextVar(name));
         }
     }
 }

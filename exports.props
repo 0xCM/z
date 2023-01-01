@@ -50,6 +50,8 @@
 
    <Import Project="$(MsBuildThisFileDirectory)src/json/exports.props"/>
 
+   <Import Project="$(MsBuildThisFileDirectory)src/lang/exports.props"/>
+
    <Import Project="$(MsBuildThisFileDirectory)src/lib/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/linq/exports.props"/>
 

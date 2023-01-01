@@ -1,0 +1,6 @@
+<Project>
+  <Import Project="$(SlnProps)\usings.props"/>
+  <ItemGroup>
+    <ProjectReference Include="$(Json)" />
+  </ItemGroup>
+</Project>

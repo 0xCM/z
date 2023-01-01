@@ -4,24 +4,27 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class ScriptPattern : VarPatterns
+    public class ScriptPattern : TextPattern
     {
+        [MethodImpl(Inline), Op]
+        public static ScriptPattern define(string name, string content)
+            => new ScriptPattern(name, content);
+
         public static void validate()
         {
             const string Pattern = "{0} {1} {2} {3}({4},{5});";
             var result = Outcome.Success;
-            VarPatterns.pattern(Pattern, "public", "static", "uint", "f", "x", "y");
-
-            var dst = new PatternTextVar("dst");
-            var src1 = new PatternTextVar("src1");
-            var src2 = new PatternTextVar("src2");
+            var pattern = text.pattern(Pattern, "public", "static", "uint", "f", "x", "y");
+            var dst = new TextVar("dst");
+            var src1 = new TextVar("src1");
+            var src2 = new TextVar("src2");
             var body = string.Format("{0}, {1}, {2}", dst, src1, src2);
             var x = PatternTextExpr.init(body);
             var vars = x.Vars;
             Require.equal(vars.Length,3);
-            x["dst"] = new PatternTextVar("dst", (Identifier)"abc");
-            x["src1"] = new PatternTextVar("src1", (Identifier)"def");
-            x["src2"] = new PatternTextVar("src2", (Identifier)"hij");
+            x["dst"] = new TextVar("dst", (Identifier)"abc");
+            x["src1"] = new TextVar("src1", (Identifier)"def");
+            x["src2"] = new TextVar("src2", (Identifier)"hij");
 
             var _result = x.Eval();
             Require.equal("abc, def, hij", _result);

@@ -11,7 +11,7 @@ global using System.Text.Json;
 global using System.Text.Json.Nodes;
 global using System.Text.Json.Serialization;
 global using static Z0.Root;
-[assembly: PartId(PartId.Hex)]
+[assembly: PartId("json")]
 namespace Z0.Parts
 {
     public sealed class Json : Part<Json>

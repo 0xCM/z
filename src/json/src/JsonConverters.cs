@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public partial class Json
+    partial class Json
     {
         public class PathPartConverter : JsonConverter<PathPart>
         {

@@ -10,7 +10,7 @@ namespace Z0
     }
 
     public interface ICmdExecutor<C,P> : ICmdExecutor
-        where C : IWfCmd, new()
+        where C : ICmd, new()
         where P : INullity, new()
     {
         Task<CmdResult<C,P>> Execute(CmdContext context, C command);

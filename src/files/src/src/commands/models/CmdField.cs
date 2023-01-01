@@ -21,20 +21,23 @@ namespace Z0
         /// </summary>
         public readonly FieldInfo Source;
 
-        public readonly string Expr;
+        /// <summary>
+        /// A human-readable description of the field
+        /// </summary>
+        public readonly @string Description;
 
         [MethodImpl(Inline)]
-        public CmdField(byte index, FieldInfo src, string expr)
+        public CmdField(byte index, FieldInfo src, string desc)
         {
             Index = index;
             Source = src;
-            Expr = expr;
+            Description = desc;
         }
 
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => hash(hash(FieldName), hash(Expr)) | (Hash32)Index;
+            get => hash(hash(FieldName), hash(Description)) | (Hash32)Index;
         }
 
         public override int GetHashCode()
@@ -53,7 +56,7 @@ namespace Z0
             => Format();
 
         public bool Equals(CmdField src)
-            => FieldName == src.FieldName && Expr == src.Expr && Index == src.Index;
+            => FieldName == src.FieldName && Description == src.Description && Index == src.Index;
 
         public int CompareTo(CmdField src)
            => Index.CompareTo(src.Index);

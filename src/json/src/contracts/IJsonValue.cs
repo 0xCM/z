@@ -4,16 +4,19 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IJsonValue : IJsonNode
+    public interface IJsonValue : IExpr
     {
-        T GetValue<T>();
+        dynamic Content {get;}
 
-        bool TryGetValue<T>(out T value);
+        IJsonType Type {get;}
     }
 
     public interface IJsonValue<V> : IJsonValue
         where V : new()
     {
-        V Value {get;}
+        new V Content {get;}        
+
+        dynamic IJsonValue.Content
+            => Content;
     }    
 }

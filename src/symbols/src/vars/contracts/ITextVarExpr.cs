@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface ITextVarExpr : IScriptVar<char>
+    public interface ITextVarExpr : ITextVar<char>
     {
 
     }    

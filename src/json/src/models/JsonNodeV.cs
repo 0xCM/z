@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public record class JsonNode<V> : IJsonValue<V>
+    public record class JsonNode<V> : IJsonNode<V>
         where V : new()
     {     
         protected JsonNode(JsonNode src)
@@ -14,9 +14,6 @@ namespace Z0
 
         readonly JsonNode Data;
         
-        V IJsonValue<V>.Value 
-            => Json.convert<V>(Data);
-
         JsonNode IJsonNode.Data 
             => Data;
 
