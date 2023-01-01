@@ -13,10 +13,7 @@ namespace Z0
 
         Task<ExecToken> Dispatch(ICmd cmd);
 
-        ICmdActors Commands {get;}
-
-        PartName Controller 
-            => ExecutingPart.Name;
+        ICmdMethods Commands {get;}
     }
         
     public interface ICmdDispatcher<C> : ICmdDispatcher

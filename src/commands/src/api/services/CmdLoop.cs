@@ -10,10 +10,7 @@ namespace Z0
         static ICmdDispatcher Dispatcher => ApiCmd.Dispatcher;
 
         public static Task start(IWfChannel channel)
-        {
-            var loop = new CmdLoop(channel);
-            return(sys.start(loop.Run));
-        }
+            => sys.start(new CmdLoop(channel).Run);
             
         readonly IWfChannel Channel;
 

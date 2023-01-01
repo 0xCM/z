@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
 
     /// <summary>
-    /// Represents an attribute within a <see cref='ApiCmdDef'/>
+    /// Represents an attribute within a <see cref='CmdDef'/>
     /// </summary>
     public readonly record struct CmdField : IComparable<CmdField>
     {

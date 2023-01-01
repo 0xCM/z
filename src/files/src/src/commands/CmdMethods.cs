@@ -4,22 +4,22 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class CmdActors : ICmdActors
+    public class CmdMethods : ICmdMethods
     {
-        readonly Dictionary<string,CmdActor> Lookup;
+        readonly Dictionary<string,CmdMethod> Lookup;
 
-        readonly ReadOnlySeq<CmdActor> CmdDefs;
+        readonly ReadOnlySeq<CmdMethod> CmdDefs;
 
-        internal CmdActors(Dictionary<string,CmdActor> src)
+        public CmdMethods(Dictionary<string,CmdMethod> src)
         {
             Lookup = src;
             CmdDefs = src.Values.ToSeq();
         }
 
-        public bool Find(string spec, out CmdActor runner)
+        public bool Find(string spec, out CmdMethod runner)
             => Lookup.TryGetValue(spec, out runner);
 
-        public ref readonly ReadOnlySeq<CmdActor> Defs
+        public ref readonly ReadOnlySeq<CmdMethod> Defs
         {
             [MethodImpl(Inline)]
             get => ref CmdDefs;

@@ -64,25 +64,25 @@ namespace Z0
             if(verbose)
                 channel.Babble($"Discovering {service} dispatchers");
 
-            var dst = dict<string,CmdActor>();
+            var dst = dict<string,CmdMethod>();
             iter(effectors(service), r => dst.TryAdd(r.CmdName, r));
             iter(providers, p => iter(effectors(p), r => dst.TryAdd(r.CmdName, r)));
-            var dispatcher = new ApiDispatcher(channel, new CmdActors(dst));
+            var dispatcher = new ApiDispatcher(channel, new CmdMethods(dst));
             AppData.Value(nameof(ICmdDispatcher), dispatcher);
             return dispatcher;
         }    
 
         [Op]
-        static ReadOnlySeq<CmdActor> effectors(object host)
+        static ReadOnlySeq<CmdMethod> effectors(object host)
         {
             var src = host.GetType().DeclaredInstanceMethods().Tagged<CmdOpAttribute>();
-            var dst = alloc<CmdActor>(src.Length);
+            var dst = alloc<CmdMethod>(src.Length);
             var count = src.Length;
             for(var i=0; i<count; i++)
             {
                 ref readonly var mi = ref skip(src,i);
                 var tag = mi.Tag<CmdOpAttribute>().Require();
-                seek(dst,i) = new CmdActor(tag.Name, classify(mi),  mi, host);
+                seek(dst,i) = new CmdMethod(tag.Name, classify(mi),  mi, host);
             }
             return dst;
         }

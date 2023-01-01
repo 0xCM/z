@@ -104,7 +104,6 @@ namespace Z0
             => inject(svc);
 
         public S Injected<S>()
-            => injected<S>();
-                
+            => injected<S>();               
    }
 }

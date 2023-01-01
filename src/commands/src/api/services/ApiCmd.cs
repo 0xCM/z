@@ -9,9 +9,6 @@ namespace Z0
 
     public partial class ApiCmd : AppService<ApiCmd>, IApiService
     {
-        public static ReadOnlySeq<ApiCmdDef> defs(Assembly[] src)
-            => tagged(src).Concrete().Select(describe).Sort();
-
         public static ICmdDispatcher Dispatcher 
             => AppData.Value<ICmdDispatcher>(nameof(ICmdDispatcher));
 
@@ -26,7 +23,7 @@ namespace Z0
         }
 
         public void EmitCmdDefs(Assembly[] src, IDbArchive dst)
-            => Channel.TableEmit(fields(defs(src)), dst.Table<CmdFieldRow>());
+            => Channel.TableEmit(fields(Cmd.defs(src)), dst.Table<CmdFieldRow>());
 
         public void RunCmd(IWfChannel channel, ApiCmdSpec cmd)
         {
@@ -40,36 +37,29 @@ namespace Z0
             }
         }
 
-        public static ApiCmdCatalog catalog(ICmdDispatcher src)
+        public static CmdCatalog catalog(ICmdDispatcher src)
         {
             ref readonly var defs = ref src.Commands.Defs;
             var count = defs.Count;
             var dst = alloc<CmdUri>(count);
             for(var i=0; i<count; i++)
                 seek(dst,i) = defs[i].Uri;
-            return new ApiCmdCatalog(entries(dst));
+            return new CmdCatalog(entries(dst));
         }
 
-        static Type[] tagged(Assembly[] src)
-            =>  src.Types().Tagged<CmdAttribute>();
-
-        static ApiCmdDef describe(Type src)
-            => new ApiCmdDef(Cmd.identify(src), src, Cmd.fields(src));
-
-
-        public static ApiCmdCatalog catalog()
+        public static CmdCatalog catalog()
             => catalog(Dispatcher);
 
         public void EmitApiCatalog()
             => EmitApiCatalog(Env.ShellData);
         
-        public void EmitApiCatalog(ApiCmdCatalog src, IDbArchive dst)
+        public void EmitApiCatalog(CmdCatalog src, IDbArchive dst)
             => emit(Channel, src, dst.Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv));
 
         public void EmitApiCatalog(IDbArchive dst)
             => EmitApiCatalog(catalog(), dst);
 
-        static void emit(IWfChannel channel, ApiCmdCatalog src, FilePath dst)
+        static void emit(IWfChannel channel, CmdCatalog src, FilePath dst)
         {
             var data = src.Values;
             iter(data, x => channel.Row(x.Uri.Name));
@@ -129,7 +119,7 @@ namespace Z0
         public static ReadOnlySeq<ICmdExecutor> executors(params Assembly[] src)
             => src.Types().Tagged<CmdExecutorAttribute>().Concrete().Map(x => (ICmdExecutor)Activator.CreateInstance(x));
 
-        public static ReadOnlySeq<CmdFieldRow> fields(ReadOnlySpan<ApiCmdDef> src)
+        public static ReadOnlySeq<CmdFieldRow> fields(ReadOnlySpan<CmdDef> src)
         {
             var count = src.Select(x => x.FieldCount).Sum();
             var dst = alloc<CmdFieldRow>(count);
@@ -143,7 +133,7 @@ namespace Z0
                 {
                     ref var row = ref seek(dst,k);
                     ref readonly var field = ref type.Fields[j];
-                    row.CmdName = type.Path;
+                    row.Route = type.Route;
                     row.Index = field.Index;
                     row.CmdType = type.Source.DisplayName();
                     row.Name = field.Source.Name;

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed class CmdActor
+    public sealed class CmdMethod
     {
         public readonly @string CmdName;
 
@@ -17,13 +17,13 @@ namespace Z0
         public readonly CmdUri Uri;
 
         [MethodImpl(Inline)]
-        public CmdActor(string name, CmdActorKind kind, MethodInfo method, object host)
+        public CmdMethod(string name, CmdActorKind kind, MethodInfo method, object host)
         {
             CmdName = name;
             Kind = kind;
             Host = Require.notnull(host);
             Definition = Require.notnull(method);
-            Uri = ApiCmd.uri(name,host);
+            Uri = Cmd.uri(name,host);
         }
 
         public Type HostType

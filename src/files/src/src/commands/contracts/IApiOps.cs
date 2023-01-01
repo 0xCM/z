@@ -5,10 +5,10 @@
 namespace Z0
 {
     [Free]
-    public interface ICmdActors
+    public interface ICmdMethods
     {
-        bool Find(string spec, out CmdActor op);
+        bool Find(string spec, out CmdMethod op);
 
-        ref readonly ReadOnlySeq<CmdActor> Defs {get;}
+        ref readonly ReadOnlySeq<CmdMethod> Defs {get;}
     }
 }

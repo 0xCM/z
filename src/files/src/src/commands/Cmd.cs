@@ -9,6 +9,32 @@ namespace Z0
     [ApiHost]
     public class Cmd 
     {   
+        public static CmdUri uri(string name, object host)
+            => new(CmdKind.App, host.GetType().Assembly.PartName().Format(), host.GetType().DisplayName(), name);
+
+        [Op]
+        public static CmdUri uri(MethodInfo src)
+        {
+            var host = src.DeclaringType;
+            var name = src.Tag<CmdOpAttribute>().MapValueOrElse(a => a.Name, () => src.DisplayName());
+            return Cmd.uri(CmdKind.App, host.Assembly.PartName().Format(), host.DisplayName(), name);        
+        }
+        
+        public static ReadOnlySeq<CmdDef> defs(Assembly[] src)
+            => tagged(src).Concrete().Select(def).Sort();
+
+        public static CmdDef def(Type src)
+            => new CmdDef(route(src), src, fields(src));
+
+        public static Index<CmdField> fields(Type src)
+            => src.PublicInstanceFields().Mapi((i,x) => new CmdField((byte)i, x, description(x)));
+
+        static string description(FieldInfo src)
+            => src.Tag<CmdArgAttribute>().MapValueOrDefault(x => text.ifempty(x.Description,src.Name), src.Name);
+
+        static Type[] tagged(Assembly[] src)
+            =>  src.Types().Tagged<CmdAttribute>();
+
         public static string format(IToolCmd src)
         {
             var count = src.Args.Count;
@@ -51,11 +77,6 @@ namespace Z0
                     dst.Append(", ");
             }
         }                            
-        public static Index<CmdField> fields(Type src)
-            => src.PublicInstanceFields().Mapi((i,x) => new CmdField((byte)i, x, description(x)));
-
-        static string description(FieldInfo src)
-            => src.Tag<CmdArgAttribute>().MapValueOrDefault(x => text.ifempty(x.Description,src.Name), src.Name);
 
         [Op]
         public static bool parse(ReadOnlySpan<char> src, out ApiCmdSpec dst)
@@ -170,7 +191,7 @@ namespace Z0
         }
 
         [Op]
-        public static string format(ApiCmdDef src)
+        public static string format(CmdDef src)
         {
             var buffer = text.buffer();
             render(src, buffer);
@@ -178,7 +199,7 @@ namespace Z0
         }
 
         [Op]
-        static void render(ApiCmdDef src, ITextBuffer dst)
+        static void render(CmdDef src, ITextBuffer dst)
         {
             dst.Append(src.Source.Name);
             var fields = src.Fields.View;;

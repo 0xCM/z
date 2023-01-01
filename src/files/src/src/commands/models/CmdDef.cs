@@ -4,18 +4,18 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class ApiCmdDef : IComparable<ApiCmdDef>
+    public class CmdDef : IComparable<CmdDef>
     {
-        public readonly @string Path;
+        public readonly CmdRoute Route;
 
         public readonly Type Source;
 
         public readonly ReadOnlySeq<CmdField> Fields;
 
         [MethodImpl(Inline)]
-        public ApiCmdDef(string name, Type type, CmdField[] fields)
+        public CmdDef(CmdRoute name, Type type, CmdField[] fields)
         {
-            Path = name;
+            Route = name;
             Source = Require.notnull(type);
             Fields = fields;
         }
@@ -32,9 +32,8 @@ namespace Z0
             get => Fields.Count;
         }
 
-
-        public int CompareTo(ApiCmdDef src)
-            => Path.CompareTo(src.Path);
+        public int CompareTo(CmdDef src)
+            => Route.CompareTo(src.Route);
 
         public string Format()
             => Cmd.format(this);

@@ -5,7 +5,7 @@
 namespace Z0
 {
     [StructLayout(LayoutKind.Sequential,Pack=64), Record(TableId)]
-    public readonly struct FlowCmd : IWfCmd<FlowCmd>
+    public readonly struct FlowCmd : ICmd<FlowCmd>
     {
         const string TableId = "ws.cmdflows";
 

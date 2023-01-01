@@ -12,13 +12,4 @@ namespace Z0
 
         IApiService Commander {get;}
     }
-
-    public interface IApiContext<C> : IApiContext
-        where C : IApiService<C>,new()
-    {
-        // new C Commander {get;}
-
-        // IApiService IApiContext.Commander
-        //     => Commander;
-    }
 }
