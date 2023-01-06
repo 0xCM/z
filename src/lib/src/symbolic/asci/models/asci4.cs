@@ -86,28 +86,28 @@ namespace Z0
             get => (int)Size;
         }
 
-        public Span<byte> Edit
-        {
-            [MethodImpl(Inline)]
-            get => sys.bytes(Storage);
-        }
+        // public Span<byte> Edit
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => sys.bytes(Storage);
+        // }
 
-        public ReadOnlySpan<byte> View
-        {
-            [MethodImpl(Inline)]
-            get => Asci.bytes(this);
-        }
+        // public ReadOnlySpan<byte> View
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => Asci.bytes(this);
+        // }
 
-        public ReadOnlySpan<char> Decoded
-        {
-            [MethodImpl(Inline)]
-            get => Asci.decode(this);
-        }
+        // public ReadOnlySpan<char> Decoded
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => Asci.decode(this);
+        // }
 
         public TextBlock Text
         {
             [MethodImpl(Inline)]
-            get => text.format(Decoded);
+            get => text.format(Asci.decode(this));
         }
 
         [MethodImpl(Inline)]
@@ -161,13 +161,13 @@ namespace Z0
         public static implicit operator string(A src)
             => src.Text;
 
-        [MethodImpl(Inline)]
-        public static implicit operator ReadOnlySpan<byte>(A src)
-            => src.View;
+        // [MethodImpl(Inline)]
+        // public static implicit operator ReadOnlySpan<byte>(A src)
+        //     => src.View;
 
-        [MethodImpl(Inline)]
-        public static implicit operator ReadOnlySpan<char>(A src)
-            => src.Decoded;
+        // [MethodImpl(Inline)]
+        // public static implicit operator ReadOnlySpan<char>(A src)
+        //     => src.Decoded;
 
         [MethodImpl(Inline)]
         public static implicit operator A(ushort src)
@@ -203,12 +203,12 @@ namespace Z0
 
         static N n => default;
 
-        [MethodImpl(Inline)]
-        public static implicit operator AsciSeq<N,A>(A src)
-            => new AsciSeq<N,A>(src);
+        // [MethodImpl(Inline)]
+        // public static implicit operator AsciSeq<N,A>(A src)
+        //     => new AsciSeq<N,A>(src);
 
-        [MethodImpl(Inline)]
-        public static implicit operator AsciSeq<A>(A src)
-            => new AsciSeq<A>(src);
+        // [MethodImpl(Inline)]
+        // public static implicit operator AsciSeq<A>(A src)
+        //     => new AsciSeq<A>(src);
     }
 }

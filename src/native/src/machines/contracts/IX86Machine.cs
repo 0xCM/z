@@ -4,10 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct StackMachines
+    public interface IX86Machine
     {
-        [MethodImpl(Inline)]
-        public static StackMachine create(uint capacity)
-            => new StackMachine(capacity);
+        void Dispatch(AsmCode asm);
     }
 }

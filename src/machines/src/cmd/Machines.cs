@@ -194,28 +194,28 @@ namespace Z0
             channel.Write(string.Format("Term Count:{0}", count));
         }
 
-        static void spin(IWfChannel channel)
-        {
-            var counter = 0u;
-            var ticks = 0L;
+        // static void spin(IWfChannel channel)
+        // {
+        //     var counter = 0u;
+        //     var ticks = 0L;
 
-            void Receiver(long t)
-            {
-                counter++;
-                ticks += t;
-                channel.Write(string.Format("{0:D4}:{1:D12}", counter, ticks));
-            }
+        //     void Receiver(long t)
+        //     {
+        //         counter++;
+        //         ticks += t;
+        //         channel.Write(string.Format("{0:D4}:{1:D12}", counter, ticks));
+        //     }
 
-            var spinner = new Spinner(TimeSpan.FromSeconds(1), Receiver);
-            spinner.Spin();
-        }
+        //     var spinner = new Spinner(TimeSpan.FromSeconds(1), Receiver);
+        //     spinner.Spin();
+        // }
 
         void Run(N33 n)
         {
             bool Predicate(SpinStats stats)
                 => stats.Count > 20;
             
-            SpinMachines.spin(Emitter, Predicate);
+            Spinners.spin(TimeSpan.FromSeconds(1), Predicate);
         }
 
         void Run(N29 n)
@@ -306,9 +306,7 @@ namespace Z0
 
         void LogHeader<N>(MethodBase src, N n)
             where N : unmanaged, ITypeNat
-        {
-            Channel.Row(string.Format("{0} {1} ", src.Name, n).PadRight(80,Chars.Dash));
-        }
+                => Channel.Row(string.Format("{0} {1} ", src.Name, n).PadRight(80,Chars.Dash));
 
         void Run(N8 n)
         {
@@ -329,10 +327,10 @@ namespace Z0
             for(var i=0; i<count; i++)
             {
                 ref readonly var j = ref first(recover<uint>(bytes(skip(src,i))));
-                Write(string.Format("{0:D4}:{1}",i, j.FormatHex()));
+                Channel.Row(string.Format("{0:D4}:{1}",i, j.FormatHex()));
             }
 
-            Write(block.Describe());
+            Channel.Row(block.Describe());
         }
 
         void Run(N3 n)
@@ -373,13 +371,7 @@ namespace Z0
             ref var target = ref dst.Segment<Cell128>(2);
             var f = Calcs.vor<uint>(w);
             for(var i=0u; i<cells; i++)
-            {
-                ref var a = ref seek(left,i);
-                //a = cpu.vbroadcast(w, i);
-                ref var b = ref seek(right,i);
-                //b = cpu.vbroadcast(w, i + Pow2.T12);
-                seek(target,i) = f.Invoke(a,b);
-            }
+                seek(target,i) = f.Invoke(seek(left,i),seek(right,i));
         }
 
         void Run(N5 n)
@@ -405,7 +397,7 @@ namespace Z0
                 ref readonly var a = ref skip(lCell,i);
                 ref readonly var b = ref skip(rCell,i);
                 ref readonly var result = ref skip(target,i);
-                Wf.Data(string.Format("{0:D6} {1}([{2}],[{3}]) = {4}", i, "or", a.V32u.FormatHex(), b.V32u.FormatHex(), result.V32u.FormatHex()));
+                Channel.Row(string.Format("{0:D6} {1}([{2}],[{3}]) = {4}", i, "or", a.V32u.FormatHex(), b.V32u.FormatHex(), result.V32u.FormatHex()));
             }
         }
 

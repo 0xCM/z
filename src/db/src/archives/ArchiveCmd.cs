@@ -9,11 +9,9 @@ namespace Z0
     {
         FileArchives FileArchives => Wf.FileArchives();
 
-        ArchiveRegistry Registry => Wf.ArchiveRegistry();
-
         [CmdOp("symlink")]
         void Link(CmdArgs args)
-            => Archives.symlink(Wf, args);
+            => Archives.symlink(Channel, args);
 
         [CmdOp("zip")]
         void Zip(CmdArgs args)

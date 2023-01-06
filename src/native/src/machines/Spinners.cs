@@ -4,17 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class Build
-    {
-        public readonly record struct Sdk
-        {
-            public readonly string Name;
+    public record struct SpinStats(ulong Count, ulong Ticks);
 
-            [MethodImpl(Inline)]
-            public Sdk(string name)
-            {
-                Name = name;
-            }
+    public class Spinners
+    {
+        public static void spin(TimeSpan freq, Func<SpinStats,bool> f)
+        {
+            var spinner = new Spinner(freq);
+            spinner.Spin(f);
         }
     }
 }

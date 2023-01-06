@@ -236,37 +236,37 @@ namespace Z0
                 return ReadOnlySpan<char>.Empty;
         }
 
-        [MethodImpl(Inline)]
-        public static ReadOnlySpan<AsciCode> codes<A>(in A src)
-            where A : unmanaged, IByteSeq
-                => codes(n2, src);
+        // [MethodImpl(Inline)]
+        // public static ReadOnlySpan<AsciCode> codes<A>(in A src)
+        //     where A : unmanaged, IByteSeq
+        //         => codes(n2, src);
 
-        [MethodImpl(Inline)]
-        static ReadOnlySpan<AsciCode> codes<A>(N2 n, in A src)
-            where A : unmanaged, IByteSeq
-        {
-            if(typeof(A) == typeof(asci2))
-                return recover<AsciCode>(cast(n2, src).View);
-            else if(typeof(A) == typeof(asci4))
-                return recover<AsciCode>(cast(n4, src).View);
-            else if(typeof(A) == typeof(asci8))
-                return recover<AsciCode>(cast(n8, src).View);
-            else if(typeof(A) == typeof(asci16))
-                return recover<AsciCode>(cast(n16, src).View);
-            else
-                return codes(n32, src);
-        }
+        // [MethodImpl(Inline)]
+        // static ReadOnlySpan<AsciCode> codes<A>(N2 n, in A src)
+        //     where A : unmanaged, IByteSeq
+        // {
+        //     if(typeof(A) == typeof(asci2))
+        //         return recover<AsciCode>(cast(n2, src).View);
+        //     else if(typeof(A) == typeof(asci4))
+        //         return recover<AsciCode>(cast(n4, src).View);
+        //     else if(typeof(A) == typeof(asci8))
+        //         return recover<AsciCode>(cast(n8, src).View);
+        //     else if(typeof(A) == typeof(asci16))
+        //         return recover<AsciCode>(cast(n16, src).View);
+        //     else
+        //         return codes(n32, src);
+        // }
 
-        [MethodImpl(Inline)]
-        static ReadOnlySpan<AsciCode> codes<A>(N32 n, in A src)
-            where A : unmanaged, IByteSeq
-        {
-            if(typeof(A) == typeof(asci32))
-                return recover<AsciCode>(cast(n32, src).View);
-            else if(typeof(A) == typeof(asci64))
-                return recover<AsciCode>(cast(n64, src).View);
-            else
-                return ReadOnlySpan<AsciCode>.Empty;
-        }
+        // [MethodImpl(Inline)]
+        // static ReadOnlySpan<AsciCode> codes<A>(N32 n, in A src)
+        //     where A : unmanaged, IByteSeq
+        // {
+        //     if(typeof(A) == typeof(asci32))
+        //         return recover<AsciCode>(cast(n32, src).View);
+        //     else if(typeof(A) == typeof(asci64))
+        //         return recover<AsciCode>(cast(n64, src).View);
+        //     else
+        //         return ReadOnlySpan<AsciCode>.Empty;
+        // }
     }
 }

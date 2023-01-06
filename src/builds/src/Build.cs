@@ -4,11 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using System.Xml;
+
     using E = Microsoft.Build.Evaluation;
     using D = Microsoft.Build.Definition;
     using C = Microsoft.Build.Construction;
 
     using static sys;
+
 
     [ApiHost]
     public partial class Build
@@ -27,8 +30,20 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static Property<T> property<T>(T src)
-            where T : struct, IProjectProperty<T>
+            where T : struct, IProjectProperty<T>            
                 => new Property<T>(src);
+
+        public static ProjectSpec project2(FilePath src)
+        {
+            using var stream = src.Stream(FileMode.Open, FileAccess.Read, FileShare.Read);
+            using var reader = new StreamReader(stream);
+            using var xml = XmlReader.Create(reader, new XmlReaderSettings{DtdProcessing = DtdProcessing.Prohibit, XmlResolver = null});
+            var root = C.ProjectRootElement.Create(xml);
+            root.FullPath = src.Format();
+            var project = new E.Project(root);
+            return new ProjectSpec(project, src);
+            
+        }
         [Op]
         public static ProjectSpec project(FilePath src)
             => new(E.Project.FromFile(src.Name, new D.ProjectOptions {

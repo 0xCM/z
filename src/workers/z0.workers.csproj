@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+  <Import Project="$(ProjectProps)\usings.props" />
+  <Import Project="imports.props" />
+  <PropertyGroup>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <AssemblyName>workers</AssemblyName>
+  </PropertyGroup>
+</Project>

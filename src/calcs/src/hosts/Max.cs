@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static SFx;
-
     partial struct CalcHosts
     {
         [Closures(AllNumeric), Max]

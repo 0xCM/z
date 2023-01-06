@@ -9,6 +9,7 @@ namespace Z0
 
     using K = BinaryBitLogicKind;
 
+    [ApiHost]
     public readonly struct BinaryBitLogicOps
     {
         public static ReadOnlySpan<OpEval> canonical(W1 w)

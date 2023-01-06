@@ -9,8 +9,31 @@ namespace Z0
     [ApiHost]
     public class Cmd 
     {   
+        public static string join(CmdArgs args)
+        {
+            var dst = text.emitter();
+            for(var i=0; i<args.Count; i++)
+            {
+                if(i != 0)
+                    dst.Append(Chars.Space);
+                dst.Append(args[i].Value);
+            }
+
+            return dst.Emit();
+        }
+
         public static CmdUri uri(string name, object host)
             => new(CmdKind.App, host.GetType().Assembly.PartName().Format(), host.GetType().DisplayName(), name);
+
+        public static CmdLine cmdline(FilePath src)
+        {
+            if(src.Is(FileKind.Cmd))
+                return cmd(src);
+            else if(src.Is(FileKind.Ps1))
+                return pwsh(src);
+            else
+                return sys.@throw<CmdLine>();
+        }
 
         [Op]
         public static CmdUri uri(MethodInfo src)

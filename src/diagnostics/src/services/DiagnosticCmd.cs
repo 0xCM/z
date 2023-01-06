@@ -52,6 +52,51 @@ namespace Z0
             Channel.FileEmit(data, Env.ShellData.Path("processes", FileKind.Csv));
         }
 
+        static string render(object src)
+        {
+            var dst = EmptyString;
+            var code = Type.GetTypeCode(src.GetType());
+            switch(code)
+            {
+                case TypeCode.Byte:
+                case TypeCode.SByte:
+                    dst = string.Format("{0:x2}", src);
+                break;
+                case TypeCode.UInt16:
+                case TypeCode.Int16:
+                    dst = string.Format("{0:x4}", src);
+                break;
+                case TypeCode.UInt32:
+                case TypeCode.Int32:
+                    dst = string.Format("{0:x8}", src);
+                break;
+                case TypeCode.UInt64:
+                case TypeCode.Int64:
+                    dst = string.Format("{0:x16}", src);
+                break;
+                default:
+                    dst = src.ToString();
+                    break;
+            }
+            return dst;
+
+        }
+
+        [CmdOp("process/thread")]
+        void ProcessThread()
+        {
+            if(ProcessControl.context(out var context))
+            {
+                var fields = context.GetType().Fields();
+                iter(fields, f => {
+                    Channel.Row(string.Format("{0:16} {1}", f.Name, render(f.GetValue(context))));
+                });
+            }
+            else
+            {
+                Channel.Error("No joy");
+            }
+        }
         [CmdOp("process/context")]
         void ProcContext(CmdArgs args)
             => RuntimeContext.dump(Channel, args, AppSettings.ProcDumps());

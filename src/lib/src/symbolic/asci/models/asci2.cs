@@ -75,11 +75,11 @@ namespace Z0
             get => Size;
         }
 
-        public Span<byte> Edit
-        {
-            [MethodImpl(Inline)]
-            get => core.bytes(Storage);
-        }
+        // public Span<byte> Edit
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => core.bytes(Storage);
+        // }
 
         public ReadOnlySpan<byte> View
         {
@@ -96,7 +96,7 @@ namespace Z0
         public string Text
         {
             [MethodImpl(Inline)]
-            get => text.format(Decoded);
+            get => text.format(Asci.decode(this));
         }
 
         [MethodImpl(Inline)]

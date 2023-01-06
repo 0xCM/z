@@ -127,19 +127,24 @@ namespace Z0
             return sys.start(run);
         }
 
-        public static Task<CmdResult<CreateSymLink,Symlink>> symlink(IWfRuntime wf, CmdArgs args)
+        public static ExecToken symlink(IWfChannel channel, CmdArgs args)
         {
             var a0 = args[0].Value;
             var a1 = args[1].Value;
             var result = Outcome.Failure;
             var isfile = (new FileInfo(a0)).Exists;
-            var cmd = CreateSymLink.Empty;
+            var cmd = CreateSymLink.Empty;        
             if(isfile)
                 cmd = new (FS.path(a0), FS.path(a1), true);
             else
                 cmd = new (FS.dir(a0), FS.dir(a1), true);
 
-            return SymlinkExecutor.create(wf).Execute(CmdRunner.context(), cmd);
+            var running = channel.Running();
+            if(cmd.Kind == Windows.SymLinkKind.File)
+                result = FS.symlink((FilePath)cmd.Source, (FilePath)cmd.Target, cmd.Overwrite);
+            else
+                result = FS.symlink((FolderPath)cmd.Source, (FolderPath)cmd.Target, cmd.Overwrite);
+            return channel.Ran(running);
         }
 
         public static Task<ExecToken> zip(IWfChannel channel, CmdArgs args)

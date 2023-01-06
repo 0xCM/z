@@ -20,21 +20,6 @@ namespace Z0
 
         ApiMd ApiMd => Wf.ApiMd();
 
-        [CmdOp("tools/batch")]
-        void ToolBatch(CmdArgs args)
-        {
-            var tool = FS.path(args[0]);
-            var src = Archives.archive(FS.dir(args[1]));
-            var dst = Archives.archive(FS.dir(args[2]));
-        }
-
-
-        [CmdOp("vars/check")]
-        void CheckVars()
-        {
-
-        }
-
         [CmdOp("msi/extract")]
         void Run(CmdArgs args)
         {
@@ -92,7 +77,6 @@ namespace Z0
                 Channel.Row(s);
             });
         }
-
 
         [CmdOp("archives")]        
         void ListArchives(CmdArgs args)
@@ -265,6 +249,17 @@ namespace Z0
             CheckMullo(Rng.@default());
         }
 
+        [CmdOp("spin")]
+        void Spin()
+        {
+            bool OnTick(SpinStats stats)
+            {
+                Channel.Row($"{stats.Count} {stats.Ticks}");
+                return stats.Count <= 10;
+            }
+
+            Spinners.spin(TimeSpan.FromSeconds(1), OnTick);
+        }
 
         void CheckMullo(IBoundSource Source)
         {

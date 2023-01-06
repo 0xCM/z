@@ -26,7 +26,7 @@ namespace Z0
             => new ProjectItem(src);
 
         public ProjectSpec LoadProject(FilePath src)
-            => ProjectLookup.GetOrAdd(src, Build.project);
+            => ProjectLookup.GetOrAdd(src, Build.project2);
 
         [Op]
         public static ProjectSpec resbytes()

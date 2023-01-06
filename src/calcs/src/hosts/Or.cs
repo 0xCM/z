@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static SFx;
-
     using K = ApiClasses.Or;
 
     partial struct CalcHosts

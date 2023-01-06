@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Workers>$(MsBuildThisFileDirectory)z0.workers.csproj</Workers>
+  </PropertyGroup>
+</Project>
