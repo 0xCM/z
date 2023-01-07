@@ -14,7 +14,7 @@ namespace Z0
         {
             var result = true;
             var counter = 0;
-            var data = src.View;
+            var data = sys.bytes(src);
             var n = data.Length;
             for(var i=0; i<n; i++)
             {

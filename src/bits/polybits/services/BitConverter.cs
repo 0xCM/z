@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     /// <summary>
     /// Converts <typeparamref name='N'/>-bit number representations
@@ -55,7 +55,7 @@ namespace Z0
         public ref readonly asci4 Chars(Base16 @base, ushort value)
         {
             ref readonly var entry = ref Data[value];
-            ref readonly var seg = ref @as<asci4>(slice(entry.View, HexValOffset, HexValLength));
+            ref readonly var seg = ref @as<asci4>(slice(sys.bytes(entry), HexValOffset, HexValLength));
             return ref seg;
         }
 
@@ -63,7 +63,7 @@ namespace Z0
         public ref readonly asci16 Chars(Base2 @base, ushort value)
         {
             ref readonly var entry = ref Entry(value);
-            ref readonly var seg = ref @as<asci16>(slice(entry.View, BinValOffset, BinValLength));
+            ref readonly var seg = ref @as<asci16>(slice(sys.bytes(entry), BinValOffset, BinValLength));
             return ref seg;
         }
     }

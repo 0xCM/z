@@ -61,8 +61,8 @@ namespace Z0
             => foundnot(index(src, z8), src.Capacity);
 
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> decode(in asci8 src)
-            => slice(recover<char>(core.bytes(cpu.vlo(vpack.vinflate256x16u(cpu.vbytes(w128, src.Storage))))), 0, src.Length);
+        public static string decode(in asci8 src)
+            => sys.@string(slice(recover<char>(core.bytes(cpu.vlo(vpack.vinflate256x16u(cpu.vbytes(w128, src.Storage))))), 0, src.Length));
 
         [MethodImpl(Inline), Op]
         public static void decode(N8 n, ReadOnlySpan<byte> src, Span<char> dst)

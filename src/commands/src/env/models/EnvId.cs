@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly record struct EnvId : IDataString<EnvId,AsciSymbol>
+    public readonly record struct EnvId : IDataType<EnvId>, IDataString
     {
         public static EnvId Current => Env.var(EnvVarKind.Process, nameof(EnvId), x => new EnvId(x));
 
@@ -34,8 +34,8 @@ namespace Z0
             get => Data.Hash;
         }
 
-        public ReadOnlySpan<AsciSymbol> Cells 
-            => sys.recover<byte,AsciSymbol>(Data.View);
+        // public ReadOnlySpan<AsciSymbol> Cells 
+        //     => sys.recover<byte,AsciSymbol>(sys.bytes(Data));
  
         public override int GetHashCode()
             => Hash;

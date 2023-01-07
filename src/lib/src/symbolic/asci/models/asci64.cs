@@ -91,11 +91,11 @@ namespace Z0
             get => Size;
         }
 
-        public ReadOnlySpan<byte> View
-        {
-            [MethodImpl(Inline)]
-            get => api.bytes(this);
-        }
+        // public ReadOnlySpan<byte> View
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => api.bytes(this);
+        // }
 
         public A Zero
         {
@@ -218,10 +218,6 @@ namespace Z0
         [MethodImpl(Inline)]
         public static implicit operator string(A src)
             => src.Text;
-
-        [MethodImpl(Inline)]
-        public static implicit operator ReadOnlySpan<byte>(A src)
-            => src.View;
 
         [MethodImpl(Inline)]
         public static implicit operator ReadOnlySpan<char>(A src)

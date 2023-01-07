@@ -81,17 +81,17 @@ namespace Z0
             get => Size;
         }
 
-        public Span<byte> Edit
-        {
-            [MethodImpl(Inline)]
-            get => core.bytes(Storage);
-        }
+        // public Span<byte> Edit
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => core.bytes(Storage);
+        // }
 
-        public ReadOnlySpan<byte> View
-        {
-            [MethodImpl(Inline)]
-            get => api.bytes(this);
-        }
+        // public ReadOnlySpan<byte> View
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => api.bytes(this);
+        // }
 
         public AsciCode this[int index]
         {
@@ -199,10 +199,6 @@ namespace Z0
         [MethodImpl(Inline)]
         public static explicit operator S(A src)
             => src.Storage;
-
-        [MethodImpl(Inline)]
-        public static implicit operator ReadOnlySpan<byte>(A src)
-            => src.View;
 
         [MethodImpl(Inline)]
         public static implicit operator ReadOnlySpan<char>(A src)

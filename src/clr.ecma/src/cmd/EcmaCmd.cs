@@ -129,7 +129,7 @@ namespace Z0
         void Mapped(MappedAssembly src)
         {
             var reader = src.MetadataReader();
-            Channel.Row(string.Format("{0,-8} | {1,-16} | {2,-12} | {3,-46} | {4}", src.Index, src.BaseAddress, src.FileSize, src.ContentHash, reader.AssemblyName().SimpleName(), FlairKind.StatusData));
+            Channel.Row(string.Format("{0,-8} | {1,-16} | {2,-12} | {3,-56} | {4}", src.Index, src.BaseAddress, src.FileSize, src.FileHash, reader.AssemblyName().SimpleName(), FlairKind.StatusData));
         }
 
         [CmdOp("ecma/md")]

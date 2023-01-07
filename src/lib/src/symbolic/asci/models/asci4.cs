@@ -86,28 +86,10 @@ namespace Z0
             get => (int)Size;
         }
 
-        // public Span<byte> Edit
-        // {
-        //     [MethodImpl(Inline)]
-        //     get => sys.bytes(Storage);
-        // }
-
-        // public ReadOnlySpan<byte> View
-        // {
-        //     [MethodImpl(Inline)]
-        //     get => Asci.bytes(this);
-        // }
-
-        // public ReadOnlySpan<char> Decoded
-        // {
-        //     [MethodImpl(Inline)]
-        //     get => Asci.decode(this);
-        // }
-
-        public TextBlock Text
+        public string Text
         {
             [MethodImpl(Inline)]
-            get => text.format(Asci.decode(this));
+            get => Asci.decode(this);
         }
 
         [MethodImpl(Inline)]

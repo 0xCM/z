@@ -10,30 +10,20 @@ namespace Z0
     {
         [MethodImpl(Inline), Op]
         public static ArgPrefix prefix(string src)
-            => prefix(chars(src));
-
-        [MethodImpl(Inline), Op]
-        public static ArgPrefix prefix(ReadOnlySpan<char> src)
             => new ArgPrefix(src);
 
-        readonly asci8 Spec;
+        readonly @string Spec;
 
         [MethodImpl(Inline)]
-        internal ArgPrefix(ReadOnlySpan<char> src)
+        public ArgPrefix(string src)
         {
             Spec = src;
         }
 
         [MethodImpl(Inline)]
-        internal ArgPrefix(AsciCode c0)
+        public ArgPrefix(params AsciCode[] src)
         {
-            Spec = new(c0);
-        }
-
-        [MethodImpl(Inline)]
-        internal ArgPrefix(AsciCode c0, AsciCode c1)
-        {
-            Spec=new(c0, c1);
+            Spec = sys.@string(src.Map(x => (char)x));
         }
 
         public bool IsEmpty

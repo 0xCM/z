@@ -13,8 +13,8 @@ namespace Z0
             [Render(8)]
             public uint Seq;
 
-            [Render(48)]
-            public Hash128 ContentHash;
+            [Render(56)]
+            public FileHash FileHash;
 
             [Render(1)]
             public FilePath Location;
@@ -33,10 +33,20 @@ namespace Z0
                 => Location.CompareTo(src.Location);
 
             public bool Equals(Entry src)
-                => Location.Equals(src.Location) && ContentHash == src.ContentHash;
+                => Location.Equals(src.Location) && FileHash == src.FileHash;
 
             uint ISequential.Seq 
                 { get => Seq; set => Seq = value; }
+        }
+
+        public static Entry entry(FilePath src)
+        {
+            var hash = FS.hash(src);
+            return new Entry{
+                Location = src,
+                FileHash = hash.FileHash,
+            };
+
         }
 
         public void Injest(IDbArchive src, IDbArchive dst)
@@ -44,11 +54,7 @@ namespace Z0
             var flow = Channel.Running($"Injesting files from {src.Root}");
             var index = dst.Path(FS.file($"index.{Env.pid()}.{timestamp()}", FileKind.Csv));
             var buffer = bag<Entry>();
-            iter(src.Enumerate("*.*"), path => buffer.Add(new Entry{
-                Location = path,
-                ContentHash = FS.hash(path)
-            }), true);            
-
+            iter(src.Enumerate("*"), path => buffer.Add(entry(path)), true);
             var entries = buffer.Array().Resequence();
             Channel.TableEmit(entries, index);
             Channel.Ran(flow,$"Injested {entries.Length} files");

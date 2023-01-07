@@ -6,12 +6,6 @@ namespace Z0
 {
     using static sys;
 
-    partial class XTend
-    {
-        public static ChanneledProcess ChannelProcess(this IWfChannel src, Process process)
-            => Z0.ChanneledProcess.create(src, x => x.Init(process));
-    }
-
     public class ChanneledProcess : Channeled<ChanneledProcess>
     {
         Process Process;
@@ -35,17 +29,24 @@ namespace Z0
                 Channel.Error(e.Data);                
         }
 
-        public ExecToken Run()
+        public ExecToken Run<T>(ExecFlow<T> flow)
         {
-            var token = ExecToken.Empty;
-            var status = ExecutingProcess.Empty;            
             Process.Start();
-            var executing = Channel.Running($"Executing {Process.ProcessName}:{Process.Id}");
+            var id = Process.Id;
+            var name = Process.ProcessName;
             Process.BeginOutputReadLine();
             Process.BeginErrorReadLine();
             Process.WaitForExit();
-            token = Channel.Ran(executing, $"Executed {Process.ProcessName}:{Process.Id}");
-            return token;            
+            return Channel.Ran(flow, $"Executed {name}:{id}");
         }
+
+        public ExecToken Run()
+            => Run(Channel.Running($"Executing {Process.ProcessName}:{Process.Id}"));            
+    }
+
+    partial class XTend
+    {
+        public static ChanneledProcess ChannelProcess(this IWfChannel src, Process process)
+            => Z0.ChanneledProcess.create(src, x => x.Init(process));
     }
 }

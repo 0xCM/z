@@ -11,7 +11,7 @@ namespace Z0
         [Op]
         public static asci8 trim(in asci8 src)
         {
-            var data = src.View;
+            var data = sys.bytes(src);
             var l0 = (int)src.Length;
             var i0 = 0;
             var i1 = l0 - 1;

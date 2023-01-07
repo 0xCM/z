@@ -9,7 +9,7 @@ namespace Z0
         public static MappedAssembly map(FilePath src)
             => new MappedAssembly(0, MemoryFiles.map(src), default);
         
-        public MappedAssembly(uint index, MemoryFile file, Hash128 hash)
+        public MappedAssembly(uint index, MemoryFile file, FileHash hash)
             : base(index, file, hash)
         {
 

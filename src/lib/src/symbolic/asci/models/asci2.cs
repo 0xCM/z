@@ -81,22 +81,22 @@ namespace Z0
         //     get => core.bytes(Storage);
         // }
 
-        public ReadOnlySpan<byte> View
-        {
-            [MethodImpl(Inline)]
-            get => Asci.bytes(this);
-        }
+        // public ReadOnlySpan<byte> View
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => Asci.bytes(this);
+        // }
 
-        public ReadOnlySpan<char> Decoded
-        {
-            [MethodImpl(Inline)]
-            get => Asci.decode(this);
-        }
+        // public ReadOnlySpan<char> Decoded
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => Asci.decode(this);
+        // }
 
         public string Text
         {
             [MethodImpl(Inline)]
-            get => text.format(Asci.decode(this));
+            get => Asci.decode(this);
         }
 
         [MethodImpl(Inline)]
@@ -140,14 +140,6 @@ namespace Z0
         static N n => default;
 
         static W w => default;
-
-        [MethodImpl(Inline)]
-        public static implicit operator ReadOnlySpan<byte>(A src)
-            => src.View;
-
-        [MethodImpl(Inline)]
-        public static implicit operator ReadOnlySpan<char>(A src)
-            => src.Decoded;
 
         [MethodImpl(Inline)]
         public static implicit operator string(A src)

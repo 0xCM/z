@@ -25,12 +25,12 @@ namespace Z0
         }
 
         [Op, Closures(UInt8k)]
-        public static ReadOnlySpan<byte> row<T>(in AsciGrid<T> src, uint index)
+        public static ReadOnlySpan<byte> row<T>(AsciGrid<T> src, uint index)
             where T : unmanaged
                 => slice(src.Rows, index*src.RowWidth, src.RowWidth);
 
         [Op, Closures(UInt8k)]
-        public static ReadOnlySpan<byte> row(in AsciGrid src, uint index)
+        public static ReadOnlySpan<byte> row(AsciGrid src, uint index)
             => slice(src.Rows, index*src.RowWidth, src.RowWidth);
 
         public static Outcome parse<S,N>(string src, N n, out S dst)
@@ -102,11 +102,11 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static bool contains<T>(in T src, AsciCharSym match)
-            where T : IAsciSeq
+            where T : unmanaged,IAsciSeq
         {
             var code = (byte)match;
             var count = src.Length;
-            var data = src.View;
+            var data = sys.bytes(src);
             for(var i=0; i<count; i++)
                 if(skip(data,i) == code)
                     return true;
@@ -115,11 +115,11 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static int index<T>(in T src, AsciCharSym match)
-            where T : IAsciSeq
+            where T : unmanaged, IAsciSeq
         {
             var code = (byte)match;
             var count = src.Length;
-            var data = src.View;
+            var data = sys.bytes(src);
             for(var i=0; i<count; i++)
                 if(skip(data,i) == code)
                     return i;
@@ -235,38 +235,5 @@ namespace Z0
             else
                 return ReadOnlySpan<char>.Empty;
         }
-
-        // [MethodImpl(Inline)]
-        // public static ReadOnlySpan<AsciCode> codes<A>(in A src)
-        //     where A : unmanaged, IByteSeq
-        //         => codes(n2, src);
-
-        // [MethodImpl(Inline)]
-        // static ReadOnlySpan<AsciCode> codes<A>(N2 n, in A src)
-        //     where A : unmanaged, IByteSeq
-        // {
-        //     if(typeof(A) == typeof(asci2))
-        //         return recover<AsciCode>(cast(n2, src).View);
-        //     else if(typeof(A) == typeof(asci4))
-        //         return recover<AsciCode>(cast(n4, src).View);
-        //     else if(typeof(A) == typeof(asci8))
-        //         return recover<AsciCode>(cast(n8, src).View);
-        //     else if(typeof(A) == typeof(asci16))
-        //         return recover<AsciCode>(cast(n16, src).View);
-        //     else
-        //         return codes(n32, src);
-        // }
-
-        // [MethodImpl(Inline)]
-        // static ReadOnlySpan<AsciCode> codes<A>(N32 n, in A src)
-        //     where A : unmanaged, IByteSeq
-        // {
-        //     if(typeof(A) == typeof(asci32))
-        //         return recover<AsciCode>(cast(n32, src).View);
-        //     else if(typeof(A) == typeof(asci64))
-        //         return recover<AsciCode>(cast(n64, src).View);
-        //     else
-        //         return ReadOnlySpan<AsciCode>.Empty;
-        // }
     }
 }

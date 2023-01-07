@@ -69,11 +69,11 @@ namespace Z0
             get => recover<byte,AsciSymbol>(Data.Edit);
         }
 
-        public ReadOnlySpan<byte> Cells
-        {
-            [MethodImpl(Inline)]
-            get => View;
-        }
+        // public ReadOnlySpan<byte> Cells
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => View;
+        // }
 
         public Span<byte> Edit
         {

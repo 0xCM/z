@@ -12,7 +12,7 @@ namespace Z0
 
         readonly SegRef Memory;
 
-        public readonly Hash128 ContentHash;
+        public readonly FileHash FileHash;
 
         readonly MemoryFile File;
 
@@ -21,15 +21,15 @@ namespace Z0
             Index = 0;
             Path = FilePath.Empty;
             Memory = SegRef.Empty;
-            ContentHash = default;
+            FileHash = default;
         }
 
-        public MappedModule(uint index, MemoryFile file, Hash128 hash)
+        public MappedModule(uint index, MemoryFile file, FileHash hash)
         {
             Index = index;
             Path = file.Path;
             Memory = new (file.BaseAddress, file.FileSize);
-            ContentHash = hash;                
+            FileHash = hash;                
             File = file;
         }
 

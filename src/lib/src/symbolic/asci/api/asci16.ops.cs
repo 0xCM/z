@@ -144,7 +144,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static byte count(in asci16 src, AsciSymbol match)
         {
-            var data = src.View;
+            var data = sys.bytes(src);
             var counter = z8;
             for(var i=0; i< asci16.Size; i++)
             {

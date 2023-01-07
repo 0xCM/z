@@ -23,7 +23,7 @@ namespace Z0
         public ReadOnlySpan<byte> Rows
         {
             [MethodImpl(Inline)]
-            get => Data.View;
+            get => Data.Data;
         }
 
         [MethodImpl(Inline)]

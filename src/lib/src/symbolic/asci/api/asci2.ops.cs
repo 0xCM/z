@@ -40,8 +40,8 @@ namespace Z0
         /// </summary>
         /// <param name="src">The asci source</param>
         [MethodImpl(Inline), Op]
-        public static int length(in asci2 src)
-            => foundnot(search(src, z8), src.Capacity);
+        public static int length(asci2 src)
+            => foundnot(search(sys.bytes(src), z8), src.Capacity);
 
         [MethodImpl(Inline), Op]
         public static unsafe void copy(in asci2 src, ref byte dst)

@@ -14,7 +14,7 @@ namespace Z0
 
         readonly ConcurrentDictionary<uint,MappedModule> Data = new();
 
-        readonly ConcurrentBag<Hash128> HashCodes = new();
+        readonly ConcurrentBag<FileHash> HashCodes = new();
 
         readonly IWfChannel Channel;
         
@@ -56,14 +56,14 @@ namespace Z0
         {
             var hash = FS.hash(src.Path);
             var result = false;
-            if(HashCodes.Contains(hash))
+            if(HashCodes.Contains(hash.FileHash))
             {
                 Channel.Babble($"Duplicate skipped {src.Path}");
             }
             else
             {
-                HashCodes.Add(hash);
-                var mapped = new MappedAssembly(sys.inc(ref Index), MemoryFiles.map(src.Path), hash);
+                HashCodes.Add(hash.FileHash);
+                var mapped = new MappedAssembly(sys.inc(ref Index), MemoryFiles.map(src.Path), hash.FileHash);
                 Data.TryAdd(mapped.Index, mapped);
                 AssemblyMapped(mapped);
             }

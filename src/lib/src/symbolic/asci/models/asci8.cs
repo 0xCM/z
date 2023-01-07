@@ -145,28 +145,28 @@ namespace Z0
             get => Size;
         }
 
-        public Span<byte> Edit
-        {
-            [MethodImpl(Inline)]
-            get => sys.bytes(Storage);
-        }
+        // public Span<byte> Edit
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => sys.bytes(Storage);
+        // }
 
-        public ReadOnlySpan<byte> View
-        {
-            [MethodImpl(Inline)]
-            get => api.bytes(this);
-        }
+        // public ReadOnlySpan<byte> View
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => api.bytes(this);
+        // }
 
-        public ReadOnlySpan<char> Decoded
+        // public ReadOnlySpan<char> Decoded
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => api.decode(this);
+        // }
+
+        public string Text
         {
             [MethodImpl(Inline)]
             get => api.decode(this);
-        }
-
-        public TextBlock Text
-        {
-            [MethodImpl(Inline)]
-            get => text.format(Decoded);
         }
 
         [MethodImpl(Inline)]
@@ -240,14 +240,6 @@ namespace Z0
         [MethodImpl(Inline)]
         public static implicit operator string(A src)
             => src.Text;
-
-        [MethodImpl(Inline)]
-        public static implicit operator ReadOnlySpan<byte>(A src)
-            => src.View;
-
-        [MethodImpl(Inline)]
-        public static implicit operator ReadOnlySpan<char>(A src)
-            => src.Decoded;
 
         [MethodImpl(Inline)]
         public static implicit operator A(uint src)

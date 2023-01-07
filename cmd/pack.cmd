@@ -1,12 +1,9 @@
 @echo off
 call %~dp0..\config.cmd
-set PackageTool=dotnet pack --include-symbols --include-source
-set PackageProject=%PackageTool% %ProjectPath%
-set PackageLib=dotnet pack %ProjectPath% --output %PackageDist% --configuration %ConfigName% %PackageFlags%
 set Packed=%DevPacks%\zpack\packed
 set Unpacked=%DevPacks%\zpack\unpacked
 set Stage=%DevPacks%\zpack\stage
-set PackSln=dotnet pack %SlnFilePath% --output %Stage% %BuildProps% --include-symbols --include-source -p:SymbolPackageFormat=snupkg -p:DebugType=pdbonly
+set PackSln=dotnet pack %SlnFilePath% --output %Stage% %BuildProps% --include-source -p:DebugType=embedded
 set UnpackCmd=nuget init %Stage% %Unpacked%
 mkdir %Stage% 1>nul 2>nul
 call %PackSln%

@@ -47,17 +47,17 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> decode(in asci2 src)
+        public static string decode(asci2 src)
         {
             var storage = 0u;
             ref var dst = ref @as<uint,char>(storage);
             seek(dst, 0) = (char)(byte)(src.Storage >> 0);
             seek(dst, 1) = (char)(byte)(src.Storage >> 8);
-            return sys.cover(dst, 2);
+            return sys.@string(sys.cover(dst, 2));
         }
 
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> decode(in asci4 src)
+        public static string decode(asci4 src)
         {
             var storage = 0ul;
             ref var dst = ref @as<ulong,char>(storage);
@@ -65,11 +65,11 @@ namespace Z0
             seek(dst, 1) = (char)(byte)(src.Storage >> 8);
             seek(dst, 2) = (char)(byte)(src.Storage >> 16);
             seek(dst, 3) = (char)(byte)(src.Storage >> 24);
-            return slice(sys.cover(dst, asci4.Size),0, src.Length);
+            return sys.@string(slice(sys.cover(dst, asci4.Size),0, src.Length));
         }
 
         [MethodImpl(Inline), Op]
-        public static void decode(in asci16 src, ref char dst)
+        public static void decode(asci16 src, ref char dst)
         {
            var decoded = vpack.vinflate256x16u(src.Storage);
            cpu.vstore(decoded, ref @as<char,ushort>(dst));
@@ -80,8 +80,8 @@ namespace Z0
             => cpu.vstore(vpack.vinflate256x16u(cpu.vload(w128,src)), ref @as<ushort>(core.first(dst)));
 
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> decode(in asci16 src)
-            => slice(recover<char>(core.bytes(vpack.vinflate256x16u(src.Storage))),0, src.Length);
+        public static string decode(asci16 src)
+            => sys.@string(slice(recover<char>(core.bytes(vpack.vinflate256x16u(src.Storage))),0, src.Length));
 
         [MethodImpl(Inline), Op]
         public static void decode(N48 n, ReadOnlySpan<byte> src, Span<char> dst)
@@ -109,12 +109,12 @@ namespace Z0
             => cpu.vparts(w512, vpack.vinflatelo256x16u(src), vpack.vinflatehi256x16u(src));
 
         [MethodImpl(Inline), Op]
-        public static ref string decode(ReadOnlySpan<byte> src, out string dst)
+        public static string decode(ReadOnlySpan<byte> src, out string dst)
         {
             Span<char> buffer = stackalloc char[src.Length];
             decode(src, buffer);
             dst = sys.@string(buffer);
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op]
@@ -127,33 +127,33 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> decode(in asci32 src)
+        public static string decode(asci32 src)
         {
             var lo = vpack.vinflatelo256x16u(src.Storage);
             var hi = vpack.vinflatehi256x16u(src.Storage);
-            return slice(recover<char>(core.bytes(new V256x2(lo,hi))), 0, src.Length);
+            return new(slice(recover<char>(core.bytes(new V256x2(lo,hi))), 0, src.Length));
         }
 
         [MethodImpl(Inline), Op]
-        public static void decode(in asci32 src, ref char dst)
+        public static void decode(asci32 src, ref char dst)
         {
             decode(src.Lo, ref dst);
             decode(src.Hi, ref seek(dst, 16));
         }
 
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> decode(in asci64 src)
+        public static string decode(asci64 src)
         {
             var x = src.Storage;
             var x0 = vpack.vinflatelo256x16u(x.Lo);
             var x1 = vpack.vinflatehi256x16u(x.Lo);
             var x2 = vpack.vinflatelo256x16u(x.Hi);
             var x3 = vpack.vinflatehi256x16u(x.Hi);
-            return slice(recover<char>(core.bytes(new V256x4(x0, x1, x2, x3))),0, src.Length);
+            return new(slice(recover<char>(core.bytes(new V256x4(x0, x1, x2, x3))),0, src.Length));
         }
 
         [MethodImpl(Inline), Op]
-        public static void decode(in asci64 src, ref char dst)
+        public static void decode(asci64 src, ref char dst)
         {
             decode(src.Lo, ref dst);
             decode(src.Hi, ref seek(dst, 32));
@@ -190,7 +190,7 @@ namespace Z0
             => decode(recover<byte,C>(src), dst, stopOnNull);
 
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> decode(in AsciBlock4 src)
+        public static string decode(AsciBlock4 src)
         {
             var storage = 0ul;
             ref var dst = ref sys.@as<ulong,char>(storage);
@@ -199,32 +199,32 @@ namespace Z0
             sys.seek(dst, 1) = (char)(byte)(input >> 8);
             sys.seek(dst, 2) = (char)(byte)(input >> 16);
             sys.seek(dst, 3) = (char)(byte)(input >> 24);
-            return sys.cover(dst, ByteBlock4.Size);
+            return new (sys.cover(dst, ByteBlock4.Size));
         }
 
         [MethodImpl(Inline), Op]
-        public static void decode(in AsciBlock8 src, ref char dst)
+        public static void decode(AsciBlock8 src, ref char dst)
         {
             var decoded = vpack.vinflate256x16u(cpu.vbytes(w128, src));
             cpu.vstore(decoded.GetLower(), ref @as<char,ushort>(dst));
         }
 
         [MethodImpl(Inline), Op]
-        public static void decode(in AsciBlock16 src, ref char dst)
+        public static void decode(AsciBlock16 src, ref char dst)
         {
            var decoded = vpack.vinflate256x16u(src.First);
            cpu.vstore(decoded, ref @as<char,ushort>(dst));
         }
 
         [MethodImpl(Inline), Op]
-        public static void decode(in AsciBlock32 src, ref char dst)
+        public static void decode(AsciBlock32 src, ref char dst)
         {
             decode(src.Lo, ref dst);
             decode(src.Hi, ref sys.seek(dst, 16));
         }
 
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> decode(in AsciBlock16 src)
+        public static ReadOnlySpan<char> decode(AsciBlock16 src)
         {
             var dst = CharBlock16.Null;
             decode(src, ref dst.First);
@@ -236,7 +236,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> decode(in AsciBlock32 src)
+        public static ReadOnlySpan<char> decode(AsciBlock32 src)
         {
             var dst = CharBlock32.Null;
             decode(src, ref dst.First);
@@ -248,7 +248,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> decode(in AsciBlock64 src)
+        public static string decode(AsciBlock64 src)
         {
             ref var storage = ref src.First;
             var v1 = cpu.vload(w256, storage);
@@ -260,9 +260,9 @@ namespace Z0
             var chars = recover<char>(sys.bytes(new V256x4(x0, x1, x2, x3)));
             var length = text.index(chars, '\0');
             if(length == NotFound)
-                return chars;
+                return new(chars);
             else
-                return slice(chars, 0, length);
+                return new (slice(chars, 0, length));
         }
     }
 }
