@@ -4,9 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
-
-    using System.Linq;
+    using static sys;
 
     partial class TestApp<A>
     {
@@ -48,7 +46,7 @@ namespace Z0
         public static void Run(Index<PartId> parts, params string[] units)
         {
             var app = new A();
-            var shell = ApiRuntime.create(sys.empty<string>());
+            var shell = ApiServers.runtime(sys.empty<string>());
             app.InjectShell(shell);
             app.SetMode(InDiagnosticMode);
             app.RunUnits(units);

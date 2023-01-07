@@ -163,7 +163,7 @@ namespace Z0
         [CmdOp("services")]
         void GetServices()
         {
-           var services = ApiRuntime.services(ApiAssemblies.Parts);
+           var services = ApiServers.services(ApiAssemblies.Parts);
            iter(services, svc => {
             var fmt = svc.Format();
             if(text.nonempty(fmt))

@@ -12,6 +12,112 @@ namespace Z0
         public override Type HostType 
             => typeof(ApiServers);
 
+        const string InitializingRuntime = "Initializing runtime";
+        
+        static RenderPattern<Duration> InitializedRuntime => "Initialized runtime:{0}";
+
+        static RenderPattern<LogSettings> ConfiguredAppLogs => "Configured app logs:{0}";
+
+        static RenderPattern<IWfEmissions> ConfiguredEmissionLogs => "Configured emisson logs:{0}";
+
+        public static ICmdServer cmd(IExecutionContext ec, IApiContext apictx, params Assembly[] components)
+        {
+            var state = new CmdServerState{
+                Handlers = handlers(ec, components),
+                ExecContext = ec,
+                ApiContext = apictx,
+                Runner = runner(ec.Wf, components)
+            };
+            return CmdServer.create(ec, components, state);
+        }
+
+        internal static ICmdHandler handler(IExecutionContext context, Type tHandler)
+        {
+            var handler = (ICmdHandler)Activator.CreateInstance(tHandler, new object[]{});
+            handler.Initialize(context);
+            return handler;
+        }
+
+        public static IApiCmdRunner runner(IWfRuntime wf, params Assembly[] components)        
+        {
+            var context = new ExecutionContext(wf, wf.Channel);
+            return new ApiCmdRunner(context, handlers(context, components));
+        }
+
+        static Type[] HandlerTypes(params Assembly[] src)
+            => src.Types().Concrete().Tagged<CmdHandlerAttribute>();
+
+        public static CmdHandlers handlers(IExecutionContext context, params Assembly[] components)
+        {
+            var data = HandlerTypes(components).Select(x => handler(context,x)).Map(x => (x.Route,x)).ToDictionary();
+            data.TryAdd(Handlers.DevNul.Route, handler(context, typeof(Handlers.DevNul)));
+            return new (data);
+        }
+        
+        public static ReadOnlySeq<ServiceSpec> services(Assembly[] src)
+        {
+            var dst = list<ServiceSpec>();
+            var types = src.Types().Tagged<ServiceCacheAttribute>().Concrete().ToSeq();
+            for(var i=0; i<types.Count; i++)
+            {
+                ref readonly var type = ref types[i];
+                var factories = type.PublicInstanceMethods().Concrete().Where(m => m.ReturnType.Reifies<IAppService>());
+                if(factories.Length != 0)
+                    dst.Add(new AppServiceSpec(type,factories));
+            }
+
+            return dst.Array();
+        }
+
+        public static IWfRuntime runtime(string[] args, bool verbose = true)
+        {
+            var factory = typeof(ApiServers);
+            try
+            {
+                var ts = now();
+                var clock = Time.counter(true);
+                if(verbose)
+                    term.emit(Events.running(factory, InitializingRuntime));
+                var control = ExecutingPart.Assembly;
+                var id = control.Id();
+                var dst = new WfInit();
+                dst.Verbosity = verbose ? LogLevel.Babble : LogLevel.Status;
+                dst.Args = args;
+                dst.LogConfig = Loggers.configure(id, AppSettings.Default.Logs());
+                dst.LogConfig.ErrorPath.CreateParentIfMissing();
+                dst.LogConfig.StatusPath.CreateParentIfMissing();
+
+                if(verbose)
+                    term.emit(Events.babble(factory, ConfiguredAppLogs.Format(dst.LogConfig)));
+
+                dst.Tokens = TokenDispenser.Service;
+                dst.EventBroker = Events.broker(dst.LogConfig);
+                
+                if(verbose)
+                    term.emit(Events.babble(factory, "Created event broker"));
+
+                dst.Host = new AppEventSource(typeof(WfRuntime));
+                
+                if(verbose)
+                    term.emit(Events.babble(factory, "Created host"));
+
+                dst.EmissionLog = Loggers.emission(control, timestamp());
+
+                if(verbose)
+                    term.emit(Events.babble(factory, ConfiguredEmissionLogs.Format(dst.EmissionLog)));
+
+                var wf = new WfRuntime(dst);
+                if(verbose)
+                    term.emit(Events.ran(factory, AppMsg.status(InitializedRuntime.Format(clock.Elapsed()))));
+                return wf;
+            }
+            catch(Exception e)
+            {
+                term.emit(Events.error(factory, e));
+                throw;
+            }
+        }
+        
         public static A shell<A>(string[] args, IWfRuntime wf, IApiContext context, bool verbose = false)
             where A : IAppShell, new()
         {            
@@ -23,7 +129,7 @@ namespace Z0
         public static A shell<A>(bool catalog, params string[] args)
             where A : IAppShell, new()
         {
-            var wf = ApiRuntime.create(args);
+            var wf = runtime(args);
             var app = new A();
             app.Init(wf);
             return app;
@@ -33,7 +139,7 @@ namespace Z0
             where A : IAppShell, new()
             where C : IApiService, new()
         {
-            var wf = ApiRuntime.create(args);
+            var wf = runtime(args);
             var channel = wf.Channel;
             if(verbose)
                 channel.Babble("Creating api server");

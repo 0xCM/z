@@ -4,15 +4,26 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    class CmdServerState
+    {
+        public IApiContext ApiContext;
+
+        public CmdHandlers Handlers;
+
+        public IExecutionContext ExecContext;
+
+        public IApiCmdRunner Runner;
+    }
+
     public sealed class CmdServer : AppService<CmdServer>, ICmdServer
     {
-        public static CmdServer create(IExecutionContext context, params Assembly[] components)
+        internal static ICmdServer create(IExecutionContext context, Assembly[] components, CmdServerState state)
         {
             var dst = create(context.Wf);
-            dst.Handlers = ApiCmd.handlers(context, components);
-            dst.ExecContext = context;
-            sys.require(AppData.Value(nameof(ApiContext), out dst.ApiContext));
-            dst.Runner = ApiCmd.runner(context.Wf, components);
+            dst.Handlers = state.Handlers;
+            dst.ExecContext = state.ExecContext;
+            dst.ApiContext = state.ApiContext;
+            dst.Runner = state.Runner;
             return dst;
         }
         

@@ -9,41 +9,9 @@ namespace Z0
     using static CmdActorKind;
 
     public class ApiCmd : AppService<ApiCmd>, IApiService
-    {        
-        internal static ICmdHandler handler(IExecutionContext context, Type tHandler)
-        {
-            var handler = (ICmdHandler)Activator.CreateInstance(tHandler, new object[]{});
-            handler.Initialize(context);
-            return handler;
-        }
-
+    {                
         public static EnvVars vars(params Pair<string>[] src)
             => src.Map(x => new EnvVar(x.Left,x.Right));
-
-        // public static IApiCmdRunner runner(IWfRuntime wf)
-        //     => new ApiCmdRunner(wf);
-
-        public static IApiCmdRunner runner(IWfRuntime wf, params Assembly[] components)        
-        {
-            var context = new ExecutionContext(wf, wf.Channel);
-            return new ApiCmdRunner(context, handlers(context, components));
-        }
-
-        static Type[] HandlerTypes(params Assembly[] src)
-            => src.Types().Concrete().Tagged<CmdHandlerAttribute>();
-
-        public static CmdHandlers handlers(IExecutionContext context, params Assembly[] components)
-        {
-            var data = HandlerTypes(components).Select(x => handler(context,x)).Map(x => (x.Route,x)).ToDictionary();
-            data.TryAdd(Handlers.DevNul.Route, handler(context, typeof(Handlers.DevNul)));
-            return new (data);
-        }
-        
-        // public static CmdHandlers handlers(IExecutionContext context)
-        // {
-        //     var types = Assembly.GetExecutingAssembly().Types().Concrete().Tagged<CmdHandlerAttribute>();
-        //     return new (types.Select(x => handler(context,x)).Map(x => (x.Route,x)).ToDictionary());
-        // }
 
         public static Outcome exec(IWfChannel channel, CmdMethod effector, CmdArgs args)
         {
