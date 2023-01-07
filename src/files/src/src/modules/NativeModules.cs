@@ -6,10 +6,10 @@ namespace Z0
 {
     using static Windows.Kernel32;
 
-    [ApiHost]
-    public readonly partial struct NativeModules
+    [ApiHost,Free]
+    public class NativeModules
     {
-        const string Kernel32 = Windows.Kernel32.LibName;
+        const string Kernel32 = Windows.ImageNames.Kernel32Dll;
 
         [MethodImpl(Inline), Op]
         public static NativeModule kernel32()

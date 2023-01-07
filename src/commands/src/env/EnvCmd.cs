@@ -32,7 +32,7 @@ namespace Z0
 
         [CmdOp("env/tools")]
         void EnvTools()
-            => Tools.emit(Channel, Tools.Service.Known, ShellData);
+            => Tools.emit(Channel, Tools.ambient(), ShellData);
 
         [CmdOp("api/script")]
         void RunAppScript(CmdArgs args)

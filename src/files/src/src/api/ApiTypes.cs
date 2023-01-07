@@ -67,10 +67,25 @@ namespace Z0
             return buffer;
         }
 
-        [Op]
-        public static ReadOnlySeq<DataFlowSpec> flows(ReadOnlySeq<Assembly> src)
+        static Index<DataFlow> discover(Assembly[] src)
         {
-            var flows = DataFlow.discover(src.Storage);
+            var types = src.Types().Concrete().Tagged<DataFlowAttribute>();
+            var count = types.Length;
+            var buffer = alloc<DataFlow>(count);
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var type = ref skip(types,i);
+                var f = type.Field("Instance");
+                seek(buffer,i) = new DataFlow((IDataFlow)f.GetValue(null));
+            }
+            return buffer;
+        }
+
+
+        [Op]
+        public static ReadOnlySeq<DataFlowSpec> flows(Assembly[] src)
+        {
+            var flows = discover(src);
             var count = flows.Length;
             var buffer = alloc<DataFlowSpec>(count);
             for(var i=0; i<count; i++)

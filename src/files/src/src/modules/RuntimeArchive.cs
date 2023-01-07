@@ -6,15 +6,15 @@ namespace Z0
 {
     using static FS;
 
-    public class RuntimeArchive : DbArchive<RuntimeArchive>, IRuntimeArchive
+    public class RuntimeArchive : DbArchive<RuntimeArchive>, IDbArchive
     {
-        public static IRuntimeArchive load()
+        public static IDbArchive load()
             => new RuntimeArchive(FS.dir(RuntimeEnvironment.GetRuntimeDirectory()));
 
-        public static IRuntimeArchive load(FolderPath src)
+        public static IDbArchive load(FolderPath src)
             => new RuntimeArchive(src);
 
-        public static IRuntimeArchive load(Assembly src)
+        public static IDbArchive load(Assembly src)
             => new RuntimeArchive(FS.path(src.Location).FolderPath);
 
         public Files Files {get;}

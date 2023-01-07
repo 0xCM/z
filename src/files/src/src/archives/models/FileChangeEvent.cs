@@ -6,13 +6,13 @@ namespace Z0
 {
     using static FileChangeKind;
 
-    [Event(EventKind.FileChange)]
-    public readonly record struct FileChangeEvent : IWfEvent<FileChangeEvent>
+    //[Event(EventKind.FileChange)]
+    public readonly record struct FileChangeEvent
     {
         [Op]
         public static string symbolize(FileChangeKind kind)
         {   
-            var dst = asci4.Null;
+            var dst = EmptyString;
             if(kind.Test(Created))
                 dst += "+";
             if(kind.Test(Deleted))
@@ -21,7 +21,7 @@ namespace Z0
                 dst += "M";
             if(kind.Test(Renamed))
                 dst += "R";
-            if(dst.IsNull)
+            if(text.empty(dst))
                 dst = "?";
             return dst;
         }
@@ -40,9 +40,6 @@ namespace Z0
             EventId = $"File{kind}";
             File = path;
         }
-
-        EventId IEvent.EventId 
-            => EventId;
 
         [MethodImpl(Inline)]
         public string Format()

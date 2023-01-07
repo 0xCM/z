@@ -29,7 +29,6 @@ namespace Z0
                 app.Channel.Error(e);
                 result = -1;
             }
-            //ProcessControl.Control().Dispose();
             return result;
         }
 

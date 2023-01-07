@@ -34,9 +34,6 @@ namespace Z0
             get => Data.Hash;
         }
 
-        // public ReadOnlySpan<AsciSymbol> Cells 
-        //     => sys.recover<byte,AsciSymbol>(sys.bytes(Data));
- 
         public override int GetHashCode()
             => Hash;
 

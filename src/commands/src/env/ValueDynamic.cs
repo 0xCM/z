@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+
     using DP = DataParser;
     using NP = NumericParser;
 
@@ -141,7 +142,7 @@ namespace Z0
                         return true;
                     }
                 }
-                else if(DP.numeric(input, out T g))
+                else if(NP.parse(input, out T g))
                 {
                     dst = g;
                     return true;
@@ -162,34 +163,5 @@ namespace Z0
             }
             return false;
         }        
-    }
-
-    public class TypedSettings
-    {
-        public static uint parse<T>(ReadOnlySpan<string> src, char sep, out T dst)
-            where T : new()
-        {
-            dst = new();
-            var counter = 0u;
-            var settings = SettingLookup.parse(src, sep);
-            var fields = typeof(T).PublicInstanceFields().Select(x => (x.Name,x)).ToDictionary();
-            var count = src.Length;
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var setting = ref settings[i];
-                if(setting.IsEmpty)
-                    continue;
-
-                if(fields.TryGetValue(setting.Name, out var field))
-                {
-                    if(ValueDynamic.parse(setting.ValueText, field.FieldType, out var x))
-                    {
-                        field.SetValue(dst, x);
-                        counter++;
-                    }
-                }
-            }
-            return counter;
-        }
     }
 }

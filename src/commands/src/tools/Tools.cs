@@ -9,7 +9,45 @@ namespace Z0
     [ApiHost]
     public class Tools
     {
-        static Tools Instance;
+        public static ToolCatalog ambient()
+        {
+            var paths = Env.path(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL);
+            var dst = dict<ToolKey,LocatedTool>();
+            var seq = 0u;
+            for(var i=0u; i<paths.Count; i++)
+            {
+                ref readonly var dir = ref paths[i];
+                iter(DbArchive.enumerate(dir, false, FileKind.Exe, FileKind.Cmd, FileKind.Bat), path => {
+                    var k = key(seq++,path.FileName());
+                    dst.TryAdd(k, new (seq++, k, path));
+                });
+            }
+            return new (dst);
+        }
+
+        public static void tools(IWfChannel channel, IDbArchive dst)
+        {
+            var buffer = bag<FilePath>();
+            var paths = Env.path(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL);
+            iter(paths, dir => {
+                iter(DbArchive.enumerate(dir, false, FileKind.Exe, FileKind.Cmd, FileKind.Bat), path => {
+                    buffer.Add(path);
+                });
+            }, true);
+
+            var tools = buffer.Array().Sort(new FileNameComparer());
+            var counter = 0u;
+            var emitter = text.emitter();
+            foreach(var tool in tools)
+            {               
+                var info = string.Format("{0:D5} {1,-36} {2}", counter++, tool.FileName.WithoutExtension, tool); 
+                emitter.AppendLine(info);
+                channel.Row(info);
+            }
+
+            channel.FileEmit(emitter.Emit(), dst.Path(FS.file("tools", FileKind.List)));
+        }
+
 
         [Op, Closures(UInt64k)]
         public static Tool tool(CmdArgs args, byte index = 0)
@@ -43,46 +81,21 @@ namespace Z0
             return new ToolCmd(tool, Cmd.identify(t), buffer);
         }        
 
-        public static ref readonly Tools Service => ref Instance;
-
         public static Task<ExecToken> vscode<T>(IWfChannel channel, T target, CmdContext? context = null)
             => CmdRunner.start(channel, FS.path("code.exe"), Cmd.args(target), context);
 
         public static Task<ExecToken> devenv<T>(IWfChannel channel, T target, CmdContext? context = null)
             => CmdRunner.start(channel, FS.path("devenv.exe"), Cmd.args(target), context);
 
-        public ReadOnlySpan<ToolKey> Known => Lookup.Keys;
-
-        static bool tool(ToolKey key, out LocatedTool tool)
-            => Lookup.Find(key, out tool);
-
-        static SortedLookup<ToolKey,LocatedTool> Lookup;
-
         public static ToolKey key(uint seq, FileName name)
             => new (seq,name);
                 
-        static SortedLookup<ToolKey,LocatedTool> discover()
-        {
-            var paths = Env.path(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL);
-            var dst = dict<ToolKey,LocatedTool>();
-            var seq = 0u;
-            for(var i=0u; i<paths.Count; i++)
-            {
-                ref readonly var dir = ref paths[i];
-                iter(DbArchive.enumerate(dir, false, FileKind.Exe, FileKind.Cmd, FileKind.Bat), path => {
-                    var k = key(seq++,path.FileName());
-                    dst.TryAdd(k, new (seq++, k, path));
-                });
-            }
-            return dst;
-        }
-
-        public static void emit(IWfChannel channel, ReadOnlySpan<ToolKey> src, IDbArchive dst)
+        public static void emit(IWfChannel channel, ToolCatalog src, IDbArchive dst)
         {
             var emitter = text.emitter();
-            foreach(var key in src)
+            foreach(var key in src.Keys)
             {               
-                if(tool(key, out var t))
+                if(src.Find(key, out var t))
                 {
                     var info = string.Format("{0:D5} | {1,-48} | {2}", t.Seq, t.Name, t.Path); 
                     emitter.AppendLine(info);
@@ -91,12 +104,6 @@ namespace Z0
             }
 
             channel.FileEmit(emitter.Emit(), dst.Path(FS.file("tools", FileKind.Csv)));
-        }
-
-        static Tools()
-        {
-            Lookup = discover();
-            Instance = new();
         }
     }
 }

@@ -8,18 +8,29 @@ namespace Z0
 
     internal class ApiCmdRunner : IApiCmdRunner
     {
-        public ApiCmdRunner(IWfRuntime wf)
+        // public ApiCmdRunner(IWfRuntime wf)
+        // {
+        //     Channel = wf.Channel;
+        //     var context = new ExecutionContext(wf, Channel);
+        //     Context = context;
+        //     Handlers = ApiCmd.handlers(context);
+        // }
+
+        public ApiCmdRunner(IExecutionContext context, CmdHandlers handlers)
         {
-            Channel = wf.Channel;
-            Context = new ExecutionContext(wf, Channel);
-            Handlers = ApiCmd.handlers(Context);
+            Context = context;
+            Channel = context.Channel;
+            Handlers = handlers;
         }
 
-        readonly ExecutionContext Context;
+        readonly IExecutionContext Context;
 
         readonly IWfChannel Channel;
 
         public CmdHandlers Handlers {get;}
+
+        IExecutionContext IContextual<IExecutionContext>.Context 
+            => Context;
 
         Task<ExecToken> IApiCmdRunner.Start(string[] args)
             => sys.start(() => Run(args));

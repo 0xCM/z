@@ -22,30 +22,6 @@ namespace Z0
         public static uint tid()
             => Kernel32.GetCurrentThreadId();
 
-        public static void tools(IWfChannel channel, IDbArchive dst)
-        {
-            var buffer = bag<FilePath>();
-            var paths = Env.path(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL);
-
-            iter(paths, dir => {
-                iter(DbArchive.enumerate(dir, false, FileKind.Exe, FileKind.Cmd, FileKind.Bat), path => {
-                    buffer.Add(path);
-                });
-            }, true);
-
-            var tools = buffer.Array().Sort(new FileNameComparer());
-            var counter = 0u;
-            var emitter = text.emitter();
-            foreach(var tool in tools)
-            {               
-                var info = string.Format("{0:D5} {1,-36} {2}", counter++, tool.FileName.WithoutExtension, tool); 
-                emitter.AppendLine(info);
-                channel.Row(info);
-            }
-
-            channel.FileEmit(emitter.Emit(), dst.Path(FS.file("tools", FileKind.List)));
-        }
-
         public static ReadOnlySeq<EnvReport> reports(IWfChannel channel, IDbArchive dst)
         {
             var flow = channel.Running();

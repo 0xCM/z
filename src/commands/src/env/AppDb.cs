@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Settings;
-
     using Names = SettingNames;
 
     public class AppDb : IAppDb
@@ -164,6 +162,10 @@ namespace Z0
 
         public DbArchive LlvmRoot()
             => folder(Data.Setting(Names.LlvmRoot));
+
+        [MethodImpl(Inline)]
+        static FolderPath folder(in Setting src)
+            => FS.dir(src.ValueText);
 
         AppDb()
         {

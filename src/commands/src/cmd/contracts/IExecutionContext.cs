@@ -9,6 +9,5 @@ namespace Z0
         IWfRuntime Wf {get;}
 
         IWfChannel Channel {get;}
-
     }
 }
