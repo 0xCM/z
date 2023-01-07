@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface ICmdRunner 
+    public interface IApiCmdRunner 
     {
         Task<ExecToken> Start(string[] args);   
 

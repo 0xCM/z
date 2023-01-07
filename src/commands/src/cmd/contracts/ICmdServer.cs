@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface ICmdServer : ICmdRunner
+    public interface ICmdServer : IApiCmdRunner
     {
         CmdCatalog Commmands {get;}
 

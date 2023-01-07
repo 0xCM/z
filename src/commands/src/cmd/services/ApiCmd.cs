@@ -6,9 +6,93 @@
 namespace Z0
 {
     using static sys;
+    using static CmdActorKind;
 
-    public partial class ApiCmd : AppService<ApiCmd>, IApiService
-    {
+    public class ApiCmd : AppService<ApiCmd>, IApiService
+    {        
+        internal static ICmdHandler handler(ExecutionContext context, Type tHandler)
+        {
+            var handler = (ICmdHandler)Activator.CreateInstance(tHandler, new object[]{});
+            handler.Initialize(context);
+            return handler;
+        }
+
+        public static EnvVars vars(params Pair<string>[] src)
+            => src.Map(x => new EnvVar(x.Left,x.Right));
+
+        public static IApiCmdRunner runner(IWfRuntime wf)
+            => new ApiCmdRunner(wf);
+        
+        static Type[] HandlerTypes(params Assembly[] src)
+            => src.Types().Concrete().Tagged<CmdHandlerAttribute>();
+
+        public static CmdHandlers handlers(ExecutionContext context, params Assembly[] components)
+            => new (HandlerTypes(components).Select(x => handler(context,x)).Map(x => (x.Route,x)).ToDictionary());
+        
+        public static CmdHandlers handlers(ExecutionContext context)
+        {
+            var types = Assembly.GetExecutingAssembly().Types().Concrete().Tagged<CmdHandlerAttribute>();
+            return new (types.Select(x => handler(context,x)).Map(x => (x.Route,x)).ToDictionary());
+        }
+
+        public static Outcome exec(IWfChannel channel, CmdMethod effector, CmdArgs args)
+        {
+            var output = default(object);
+            var result = Outcome.Success;
+            try
+            {
+                switch(effector.Kind)
+                {
+                    case Pure:
+                        effector.Definition.Invoke(effector.Host, new object[]{});
+                        result = Outcome.Success;
+                    break;
+                    case Receiver:
+                        effector.Definition.Invoke(effector.Host, new object[1]{args});
+                        result = Outcome.Success;
+                    break;
+                    case CmdActorKind.Emitter:
+                        output = effector.Definition.Invoke(effector.Host, new object[]{});
+                    break;
+                    case Func:
+                        output = effector.Definition.Invoke(effector.Host, new object[1]{args});
+                    break;
+                    default:
+                        result = new Outcome(false, $"Unsupported {effector.Definition}");
+                    break;
+                }
+
+                if(output != null)
+                {
+                    if(output is bool x)
+                        result = Outcome.define(x, output, x ? "Win" : "Fail");
+                    else if(output is Outcome y)
+                    {
+                        result = Outcome.success(y.Data, y.Message);
+                        if(sys.nonempty(y.Message))
+                        {
+                            if(y.Fail)
+                                channel.Error(y.Message);
+                            else
+                                channel.Babble(y.Message);
+                        }
+                    }
+                    else
+                        result = Outcome.success(output);
+                }
+            }
+            catch(Exception e)
+            {
+                var msg = AppMsg.format($"{effector.Uri} invocation error", e);
+                var origin = AppMsg.orginate(effector.HostType.DisplayName(), effector.Definition.DisplayName(), 12);
+                var error = Events.error(msg, origin, effector.HostType);
+                channel.Error(error);
+                result = (e,msg);
+            }
+
+           return result;
+        }
+         
         public static ICmdDispatcher Dispatcher 
             => AppData.Value<ICmdDispatcher>(nameof(ICmdDispatcher));
 
