@@ -16,13 +16,13 @@ namespace Z0
             => FS.relative(Root, src);
 
         IEnumerable<FileUri> Enumerate(string pattern, bool recursive = true)
-            => DbArchive.enumerate(Root, pattern, recursive);
+            => FS.enumerate(Root, pattern, recursive);
 
         IEnumerable<FileUri> Enumerate(bool recurse, params FileKind[] kinds)
-            => DbArchive.enumerate(Root, recurse, kinds);
+            => FS.enumerate(Root, recurse, kinds);
 
         IEnumerable<FileUri> Enumerate(bool recurse, params FileExt[] extensions)
-            => DbArchive.enumerate(Root, recurse, extensions);
+            => FS.enumerate(Root, recurse, extensions);
 
         DbArchive Metadata()
             => Targets("metadata");

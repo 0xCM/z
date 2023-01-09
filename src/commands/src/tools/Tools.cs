@@ -17,7 +17,7 @@ namespace Z0
             for(var i=0u; i<paths.Count; i++)
             {
                 ref readonly var dir = ref paths[i];
-                iter(DbArchive.enumerate(dir, false, FileKind.Exe, FileKind.Cmd, FileKind.Bat), path => {
+                iter(FS.enumerate(dir, false, FileKind.Exe, FileKind.Cmd, FileKind.Bat), path => {
                     var k = key(seq++,path.FileName());
                     dst.TryAdd(k, new (seq++, k, path));
                 });
@@ -30,7 +30,7 @@ namespace Z0
             var buffer = bag<FilePath>();
             var paths = Env.path(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL);
             iter(paths, dir => {
-                iter(DbArchive.enumerate(dir, false, FileKind.Exe, FileKind.Cmd, FileKind.Bat), path => {
+                iter(FS.enumerate(dir, false, FileKind.Exe, FileKind.Cmd, FileKind.Bat), path => {
                     buffer.Add(path);
                 });
             }, true);

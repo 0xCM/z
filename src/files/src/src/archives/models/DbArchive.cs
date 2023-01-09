@@ -119,39 +119,8 @@ namespace Z0
             => Root.Files(ext, recurse);
 
         public IEnumerable<FileUri> Enumerate(string pattern, bool recursive = true)
-            => DbArchive.enumerate(Root, pattern, recursive);
+            => FS.enumerate(Root, pattern, recursive);
 
-        static EnumerationOptions options(bool recurse)
-            => new EnumerationOptions{
-                RecurseSubdirectories = recurse
-            };
-
-        public static IEnumerable<FileUri> enumerate(FolderPath src, string pattern, bool recurse)
-        {
-            if(src.Exists)
-                foreach(var file in Directory.EnumerateFiles(src.Name, pattern, options(recurse)))
-                    yield return new FileUri(file);
-        }
-
-        public static IEnumerable<FileUri> enumerate(FolderPath src, bool recurse, params FileKind[] kinds)
-        {
-            if(src.Exists)
-            {
-                foreach(var kind in kinds)
-                foreach(var file in Directory.EnumerateFiles(src.Name, kind.SearchPattern(), options(recurse)))
-                    yield return new FileUri(file);
-            }            
-        }
-
-        public static IEnumerable<FileUri> enumerate(FolderPath src, bool recurse, params FileExt[] extensions)
-        {
-            if(src.Exists)
-            {
-                foreach(var ext in extensions)
-                foreach(var file in Directory.EnumerateFiles(src.Name, ext.SearchPattern, options(recurse)))
-                    yield return new FileUri(file);
-            }            
-        }
 
         public FileName File(string name, FileKind kind)
             => FS.file(name, kind.Ext());

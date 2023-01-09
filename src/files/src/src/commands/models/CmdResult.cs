@@ -6,7 +6,7 @@ namespace Z0
 {
     public record class CmdResult
     {
-        record struct EmptyCommand : IWfCmd<EmptyCommand>
+        record struct EmptyCommand : IApiCmd<EmptyCommand>
         {
 
         }

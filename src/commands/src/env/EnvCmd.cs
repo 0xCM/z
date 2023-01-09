@@ -24,7 +24,6 @@ namespace Z0
         [CmdOp("api/commands")]
         void EmitCommands()
             => Wf.ApiCmd().EmitApiCatalog();
-            //=> ApiCmd.emit(Channel, ApiCmd.catalog(), ShellData.Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv));
 
         [CmdOp("api/version")]
         void ApiVersion()

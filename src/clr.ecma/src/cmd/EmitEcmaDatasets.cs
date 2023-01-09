@@ -5,7 +5,7 @@
 namespace Z0.Commands
 {
     [Cmd(CmdName)]
-    public struct EmitEcmaDatasets : IWfCmd<EmitEcmaDatasets>
+    public struct EmitEcmaDatasets : IApiCmd<EmitEcmaDatasets>
     {
         const string CmdName = "ecma-emit";
 

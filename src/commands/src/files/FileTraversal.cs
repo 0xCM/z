@@ -8,13 +8,13 @@ namespace Z0
     
     public class FileTraversal : Channeled<FileTraversal>, ITraversal<IFsEntry,FileTraversal.Options>
     {    
-        public enum TraversalKind
+        public enum TraversalKind : byte
         {
             None,
 
-            Files,
+            Files = 1,
 
-            Folders
+            Folders = 2
         }
 
         public record struct Options
@@ -44,6 +44,10 @@ namespace Z0
                     break;
 
                     case TraversalKind.Files:
+                    {
+
+                    }
+                    break;
                     default:
 
                     break;

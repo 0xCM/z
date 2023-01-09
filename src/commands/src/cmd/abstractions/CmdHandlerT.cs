@@ -5,7 +5,7 @@
 namespace Z0
 {
     public abstract class CmdHandler<T> : CmdHandler, ICmdBinder<T>
-        where T : ICmd<T>, new()
+        where T : IApiCmd<T>, new()
     {            
         protected static void unbound(CmdArgs args, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
             => CmdBindingException.raise(typeof(T), args, caller, file, line);

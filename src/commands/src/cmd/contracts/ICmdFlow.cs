@@ -4,8 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface ICmdFlow<C,A,B> : IFlowCmd<A,B>, IWfCmd<C>
-        where C : IWfCmd<C>, new()
+    public interface ICmdFlow<C,A,B> : IFlowCmd<A,B>, IApiCmd<C>
+        where C : IApiCmd<C>, new()
     {
         IActor IFlowCmd.Actor 
             => new Actor("wf/module");

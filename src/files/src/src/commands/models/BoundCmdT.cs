@@ -5,7 +5,7 @@
 namespace Z0
 {
     public sealed class BoundCmd<T> : BoundCmd, IBoundCmd<T>
-        where T : ICmd<T>, new()
+        where T : IApiCmd<T>, new()
     {
         public T Command {get;}
 

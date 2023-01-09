@@ -4,15 +4,19 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.Text.Json;
-
-    public interface ICmdSerializer : ISerializer<ICmd,JsonDocument>
+    public interface IBoundCmd
     {
+        ICmd Command {get;}
 
+        CmdArgs Args {get;}
     }
 
-    public interface ICmdSerializer<C> : ISerializer<C,JsonDocument>
+    public interface IBoundCmd<T> : IBoundCmd
+        where T : IApiCmd<T>, new()
     {
+        new T Command {get;}
 
+        ICmd IBoundCmd.Command
+            => Command;
     }
 }

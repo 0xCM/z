@@ -5,9 +5,9 @@
 namespace Z0
 {
     using System.Linq;
+    using System.Security.Cryptography;
 
     using static sys;
-    using System.Security.Cryptography;
 
     [ApiHost]
     public readonly struct MemoryFiles

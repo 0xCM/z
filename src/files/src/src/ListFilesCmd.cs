@@ -2,12 +2,12 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0.Commands
 {
     [Cmd(CmdName)]
-    public struct ListFilesCmd : IWfCmd<ListFilesCmd>
+    public struct ListFilesCmd : IApiCmd<ListFilesCmd>
     {
-        public const string CmdName = "list-files";
+        const string CmdName = "list-files";
 
         [Render(16)]
         public string ListName;
@@ -16,7 +16,7 @@ namespace Z0
         public FolderPath SourceDir;
 
         [Render(16)]
-        public Index<FileExt> Extensions;
+        public ReadOnlySeq<FileExt> Extensions;
 
         [Render(16)]
         public bool FileUriMode;

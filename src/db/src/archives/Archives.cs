@@ -6,7 +6,6 @@
 namespace Z0
 {
     using System.IO.Compression;
-    using Microsoft.Extensions.FileSystemGlobbing;
     using Commands;
 
     using static sys;
@@ -89,14 +88,6 @@ namespace Z0
             return true;
         }
 
-        [MethodImpl(Inline), Op]
-        public static FilePoint point(FilePath src, LineOffset offset)
-            => new FilePoint(src,offset);
-
-        [MethodImpl(Inline), Op]
-        public static FilePoint point(FilePath src, Count line, Count col)
-            => new FilePoint(src, ((uint)line,(uint)col));
-
         [Op]
         public static Task<FileEmission> emissions(IWfChannel channel, Files src, bool uri, FilePath dst)
         {
@@ -170,22 +161,9 @@ namespace Z0
         public static PackFolder pack(FolderPath src, FileUri dst)
             => new (src,dst);        
 
-        public static IEnumerable<FileUri> query(FileQuery spec)
-        {
-            var filter = spec.Filter;
-            var matcher = new Matcher();  
-            iter(filter.FileTypes, t => matcher.AddInclude($"${t.SearchPattern}${SearchPattern.Recurse}" ));
-            iter(filter.FileKinds, t => matcher.AddInclude($"${t.Ext().SearchPattern}${SearchPattern.Recurse}" ));
-            iter(filter.Inclusions, i => matcher.AddInclude(i.Format()));
-            iter(filter.Exclusions, x => matcher.AddExclude(x.Format()));        
-            var result  = matcher.GetResultsInFullPath(spec.Source.Format());
-            foreach(var item in result)
-                yield return new FileUri(item);
-        }
-
         public static void search(IWfChannel channel, in CreateFileCatalog cmd, Action<FilePath> dst, bool pll = true)
         {
-            var src = cmd.Match.IsEmpty ? DbArchive.enumerate(cmd.Source,"*.*", true) : DbArchive.enumerate(cmd.Source, true, cmd.Match);
+            var src = cmd.Match.IsEmpty ? FS.enumerate(cmd.Source,"*.*", true) : FS.enumerate(cmd.Source, true, cmd.Match);
             var counter = 0u;
             var flow = channel.Running($"Searching {cmd.Source}");
             string msg()

@@ -5,14 +5,13 @@
 namespace Z0
 {
     [StructLayout(LayoutKind.Sequential)]
-    public readonly record struct CfgEntry
+    public readonly record struct CfgEntry<T> 
     {
         public readonly @string Name;
 
-        public readonly @string Value;
+        public readonly T Value;
 
-        [MethodImpl(Inline)]
-        public CfgEntry(string name, string value)
+        public CfgEntry(string name, T value)
         {
             Name = name;
             Value = value;

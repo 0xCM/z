@@ -19,7 +19,7 @@ namespace Z0
             var dst = new StackFrames();
             dst.MethodId = src.GetMethod().MetadataToken;
             dst.MethodSig = EcmaSigs.sig(src.GetMethod());
-            dst.Point = Archives.point(FS.path(src.GetFileName()), src.GetFileLineNumber(), src.GetFileColumnNumber());
+            dst.Point = FS.point(FS.path(src.GetFileName()), src.GetFileLineNumber(), src.GetFileColumnNumber());
             dst.IlOffset = src.GetILOffset();
             dst.IP = src.GetNativeIP();
             dst.NativeBase = src.GetNativeImageBase();

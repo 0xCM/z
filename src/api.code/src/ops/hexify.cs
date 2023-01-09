@@ -38,7 +38,7 @@ namespace Z0
         static uint Read(BinaryReader src, Span<byte> dst)
             => (uint)src.Read(dst);
 
-        public static void hexify(IWfChannel channel, IEnumerable<FilePath> src, FolderPath dst, byte bpl = HexCsvRow.BPL, bool pll = true)
-            => iter(src, file => hexify(channel, file, dst + file.FileName.ChangeExtension(FileKind.Hex), bpl));
+        public static void hexify(IWfChannel channel, IEnumerable<FileUri> src, FolderPath dst, byte bpl = HexCsvRow.BPL, bool pll = true)
+            => iter(src, file => hexify(channel, file, dst + file.ToFilePath().FileName.ChangeExtension(FileKind.Hex), bpl));
     }
 }

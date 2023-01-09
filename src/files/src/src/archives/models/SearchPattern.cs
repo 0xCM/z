@@ -26,7 +26,6 @@ namespace Z0
         public override string ToString()
             => Format();
 
-
         [MethodImpl(Inline)]
         public static SearchPattern operator+(SearchPattern a, SearchPattern b)
             => new SearchPattern(a.Content + b.Content);

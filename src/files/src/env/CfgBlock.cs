@@ -22,9 +22,6 @@ namespace Z0
         public override string Format()
         {
             var dst = text.emitter();
-            dst.AppendLine(RP.PageBreak180);
-            dst.AppendLine($"# <{Name}>");
-            dst.AppendLine(RP.PageBreak180);
             for(var i=0; i<Count; i++)
                 dst.AppendLine(this[i]);
             return dst.Emit();

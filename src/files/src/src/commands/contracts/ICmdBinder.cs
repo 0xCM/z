@@ -10,7 +10,7 @@ namespace Z0
     }
 
     public interface ICmdBinder<T> : ICmdBinder
-        where T : ICmd<T>, new()
+        where T : IApiCmd<T>, new()
     {
         new BoundCmd<T> Bind(CmdArgs cmd);
 

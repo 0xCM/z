@@ -5,7 +5,7 @@
 namespace Z0
 {
     public abstract class CmdBinder<T> : ICmdBinder<T>
-        where T : ICmd<T>, new()
+        where T : IApiCmd<T>, new()
     {
         public abstract BoundCmd<T> Bind(CmdArgs src);
     }

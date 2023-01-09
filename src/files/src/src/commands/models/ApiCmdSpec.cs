@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public record class ApiCmdSpec : IWfCmd<ApiCmdSpec>
+    public record class ApiCmdSpec : IApiCmd<ApiCmdSpec>
     {
         public readonly @string Name;
 
