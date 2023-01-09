@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public class CmdRunner
+    public class ProcessControl
     {        
         public static CmdContext context(FolderPath? work = null, params EnvVar[] vars)
             => new (work ?? Env.cd(), vars);

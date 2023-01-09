@@ -60,7 +60,7 @@ namespace Z0
             if(result.Fail)
                 return result;
 
-            CmdRunner.parse(response, out flows);
+            ProcessControl.parse(response, out flows);
 
             return result;
         }

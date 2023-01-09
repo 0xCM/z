@@ -54,7 +54,6 @@ namespace Z0
 
         public bool ProcessCultFiles;
         
-
         public static ApiWorkflowSettings @default()
         {
             var dst = new ApiWorkflowSettings();

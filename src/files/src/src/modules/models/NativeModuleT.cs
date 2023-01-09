@@ -13,11 +13,14 @@ namespace Z0
 
         public readonly IntPtr Handle {get;}
 
+        public readonly bool Owner {get;}
+
         [MethodImpl(Inline)]
-        public NativeModule(string name, IntPtr handle)
+        public NativeModule(string name, IntPtr handle, bool owner = true)
         {
             Name = name;
             Handle = handle;
+            Owner = owner;
         }
 
         public MemoryAddress Address
@@ -28,7 +31,7 @@ namespace Z0
 
         public void Dispose()
         {
-            if (Handle != IntPtr.Zero)
+            if (Handle != IntPtr.Zero && Owner)
                 Kernel32.FreeLibrary(Handle);
         }
 

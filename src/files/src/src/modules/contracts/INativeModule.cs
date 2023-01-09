@@ -10,6 +10,8 @@ namespace Z0
         string Name {get;}
 
         IntPtr Handle {get;}
+
+        bool Owner {get;}
     }
 
     [Free]

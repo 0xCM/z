@@ -46,6 +46,12 @@ namespace Z0
             // }            
         }
 
+        [CmdOp("modules/loaded")]
+        void LoadedModule(CmdArgs args)
+        {
+            iter(args, arg => Channel.Row(NativeModules.loaded(arg)));
+        }
+
         [CmdOp("api/tablegen")]
         void GenRecords()
         {
@@ -239,7 +245,7 @@ namespace Z0
             {
                 var wd = Env.cd();
                 var options = $"-NoLogo -i -wd {text.dquote(Env.cd())}";
-                CmdRunner.start(channel, new SysIO(OnA,OnB), CmdArgs.create("pwsh.exe", options), wd);
+                ProcessControl.start(channel, new SysIO(OnA,OnB), CmdArgs.create("pwsh.exe", options), wd);
             }
         }
 

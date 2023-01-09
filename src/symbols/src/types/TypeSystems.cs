@@ -4,15 +4,22 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public partial class TypeSystems
+    public class TypeSystems
     {       
+        public static ReadOnlySeq<TypeDef> typedefs(params Assembly[] src)
+            => from type in src.Types().Tagged<TypeDefAttribute>().Concrete()
+            let tag = type.Tag<TypeDefAttribute>().Require()
+            select new TypeDef {
+                    Scope = tag.Scope,
+                    Name = text.ifempty(tag.TypeName, type.Name)
+                    };
+
         public record class TypeSystem
         {
             public @string Name;
 
             public ReadOnlySeq<TypeDef> TypeDefs;
         }
-
 
         public record class TypeDef
         {
@@ -44,6 +51,7 @@ namespace Z0
             ref readonly T ITypeSystem<T>.Instance
                 => ref Instance;    
         }
+
         public abstract class TypeDef<R,S,T,A> : TypeDef<R,S,T>, IType<R,T,A>
             where S : ITypeSystem, new()
             where R : TypeDef<R,S,T,A>, new()
@@ -65,6 +73,7 @@ namespace Z0
 
             public static ref readonly R Representative => ref _Instance;        
         }
+
         public abstract class TypeDef<R,S,T> : TypeDef<R,T> 
             where S : ITypeSystem, new()
             where R : TypeDef<R,S,T>, new()
@@ -72,17 +81,6 @@ namespace Z0
             public override @string Scope 
                 => new S().Name;
         }         
-            public static ReadOnlySeq<TypeDef> typedefs(params Assembly[] src)
-                => from type in src.Types().Tagged<TypeDefAttribute>().Concrete()
-                let tag = type.Tag<TypeDefAttribute>().Require()
-                select new TypeDef {
-                        Scope = tag.Scope,
-                        Name = text.ifempty(tag.TypeName, type.Name)
-                        };
-
-
-
-
         public abstract class TypeDef<T> : IType<T>
         {
             public abstract @string Scope { get; }
@@ -144,7 +142,6 @@ namespace Z0
             T Value(A args)
                 => Factory()(args);
         }
-
 
         public readonly record struct TypeName : IDataType<TypeName>, IDataString<TypeName>
         {

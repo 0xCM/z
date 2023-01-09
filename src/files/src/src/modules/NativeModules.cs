@@ -9,7 +9,11 @@ namespace Z0
     [ApiHost,Free]
     public class NativeModules
     {
-        const string Kernel32 = Windows.ImageNames.Kernel32Dll;
+        const string Kernel32 = Windows.ImageNames.Kernel32;
+
+        [MethodImpl(Inline), Op]
+        public static LoadedModule loaded(string name)
+            => new (name,GetModuleHandle(name));
 
         [MethodImpl(Inline), Op]
         public static NativeModule kernel32()

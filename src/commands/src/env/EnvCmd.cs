@@ -90,7 +90,7 @@ namespace Z0
         void LoadCfg(CmdArgs args)
         {
             var src = args.Count != 0 ? FS.dir(args.First) : Env.cd();
-            iter(src.Files(FileKind.Cfg), file => Channel.Row(Env.cfg(file).Format()));    
+            iter(src.Files(FileKind.Cfg), file => Channel.Row(CfgBlocks.load(file).Format()));    
         }        
 
         [CmdOp("jobs/types")]
@@ -136,7 +136,7 @@ namespace Z0
 
         [CmdOp("cmd")]
         void Redirect(CmdArgs args)
-            => CmdRunner.redirect(Channel, args);
+            => ProcessControl.redirect(Channel, args);
 
         [CmdOp("cd")]
         void Cd(CmdArgs args)
@@ -171,7 +171,6 @@ namespace Z0
            });
         }
 
-
         [CmdOp("develop")]
         void Develop(CmdArgs args)
             => CodeLauncher.create(Channel).Launch(args, launched => {});
@@ -189,7 +188,7 @@ namespace Z0
         {
             var tool = FS.path(args[0]);            
             var dst = args.Count > 1 ? FS.path(args[1]) : AppDb.DbTargets("tools/help").Path(tool.FileName.ChangeExtension(FileKind.Help));
-            var task = CmdRunner.redirect(Channel, tool, "--help", dst);
+            var task = ProcessControl.redirect(Channel, tool, "--help", dst);
             var token = task.Result;
             if(!token.Success)
             {

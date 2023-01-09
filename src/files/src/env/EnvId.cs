@@ -6,12 +6,10 @@ namespace Z0
 {
     public readonly record struct EnvId : IDataType<EnvId>, IDataString
     {
-        public static EnvId Current => Env.var(EnvVarKind.Process, nameof(EnvId), x => new EnvId(x));
-
-        public readonly asci32 Data;
+        public readonly @string Data;
 
         [MethodImpl(Inline)]
-        public EnvId(asci32 data)
+        public EnvId(string data)
         {
             Data = data;
         }
@@ -19,13 +17,13 @@ namespace Z0
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => Data.IsNull;
+            get => Data.IsEmpty;
         }
 
         public bool IsNonEmpty
         {
             [MethodImpl(Inline)]
-            get => !Data.IsNull;
+            get => !Data.IsNonEmpty;
         }
 
         public Hash32 Hash
@@ -64,17 +62,9 @@ namespace Z0
             => new EnvId(src.Content);
 
         [MethodImpl(Inline)]
-        public static implicit operator EnvId(asci32 src)
-            => new EnvId(src);
-
-        [MethodImpl(Inline)]
         public static implicit operator string(EnvId src)
             => src.Data;
 
-        [MethodImpl(Inline)]
-        public static implicit operator EnvId(AsciNull src)
-            => new EnvId(asci32.Null);
-
-        public static EnvId Empty => default;
+        public static EnvId Empty => new(EmptyString);
     }
 }

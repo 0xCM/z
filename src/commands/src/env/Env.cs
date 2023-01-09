@@ -26,7 +26,6 @@ namespace Z0
         {
             var flow = channel.Running();
             var src = Env.reports();
-            var id = EnvId.Current;
             iter(src, report => Env.emit(channel,report, dst));
             channel.Ran(flow);
             return src;
@@ -57,24 +56,6 @@ namespace Z0
             set => apply(new EnvVar(nameof(EnvId), value.Format()), EnvVarKind.Process);
         }
 
-        public static CfgBlock cfg(FilePath src)
-        {
-            var dst = list<CfgEntry>();
-            using var reader = src.Utf8LineReader();
-            var line = TextLine.Empty;
-            while(reader.Next(out line))
-            {
-                var i = line.Index('=');
-                if(i > 0)
-                {
-                    var name = text.left(line.Content, i);
-                    var value = text.right(line.Content,i);
-                    dst.Add(new (name,value));
-                }
-            }
-            return new (src.FileName.WithoutExtension.Format(),dst.ToArray());
-        }
-
         public static EnvReport report(EnvVarKind kind)
         {
             var _vars = vars(kind);
@@ -84,7 +65,7 @@ namespace Z0
                 ref readonly var src = ref _vars[i];
                 cfg[i] = new CfgEntry(src.Name, src.Value);
             }
-            return new EnvReport(EnvId.Current, kind, cfg, _vars);
+            return new EnvReport(EnvId, kind, cfg, _vars);
         }
 
         public static ReadOnlySeq<EnvReport> reports()
