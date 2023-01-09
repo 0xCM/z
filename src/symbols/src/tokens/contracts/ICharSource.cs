@@ -4,18 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [Free]
-    public interface IToken
+
+    public interface ICharSource
     {
-        ReadOnlySpan<char> Name {get;}
 
-        ReadOnlySpan<char> Expr {get;}
+
     }
 
-    [Free]
-    public interface IToken<K> : IToken
-        where K : unmanaged
-    {   
-        K Kind {get;}
-    }
 }

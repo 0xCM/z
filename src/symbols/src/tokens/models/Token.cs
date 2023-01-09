@@ -40,9 +40,6 @@ namespace Z0
             get => _Expr;
         }
 
-        uint IToken.Index 
-            =>  Index;
-
         public static Token Empty => new Token();
     }
 }

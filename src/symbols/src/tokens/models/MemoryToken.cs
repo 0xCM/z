@@ -35,9 +35,6 @@ namespace Z0
             get => Location.Format();
         }
 
-        uint IToken.Index 
-            => Index;
-
         public string Format()
             => sys.@string(Expr);
 

@@ -19,7 +19,6 @@ namespace Z0
     [Free]
     public delegate Span<T> SpanSource<T>();
 
-
     [Free]
     public interface ISpanSource<T> : IFunc
     {
