@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static ApiAtomic;
+
     [LiteralProvider(events)]
     public readonly struct GlobalEvents
     {

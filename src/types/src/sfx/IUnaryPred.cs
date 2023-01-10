@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     /// <summary>
     /// Defines trait for a vectorized unary predicate that supports componentwise decomposition/evaluation
     /// </summary>

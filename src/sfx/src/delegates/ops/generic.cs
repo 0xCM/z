@@ -21,12 +21,12 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(AllNumeric)]
         public static ref Func<T,T,T> generic<T>(in Func<ushort,ushort,ushort> src)
             where T : unmanaged
-                => ref edit<Func<ushort,ushort,ushort>,Func<T,T,T>>(src);
+                => ref edit<Func<ushort,ushort,ushort>, Func<T,T,T>>(src);
 
         [MethodImpl(Inline), Op, Closures(AllNumeric)]
         public static ref Func<T,T,T> generic<T>(in Func<short,short,short> src)
             where T : unmanaged
-                => ref edit<Func<short,short,short>,Func<T,T,T>>(src);
+                => ref edit<Func<short,short,short>, Func<T,T,T>>(src);
 
         [MethodImpl(Inline), Op, Closures(AllNumeric)]
         public static ref Func<T,T,T> generic<T>(in Func<int,int,int> src)

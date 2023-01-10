@@ -16,7 +16,6 @@ namespace Z0
         Span<T> Invoke();
     }
 
-
     partial class Surrogates
     {
         /// <summary>

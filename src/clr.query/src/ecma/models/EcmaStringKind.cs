@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static ApiAtomic;
+
     [SymSource(ecma)]
     public enum EcmaStringKind : byte
     {

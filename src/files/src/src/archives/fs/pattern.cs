@@ -6,8 +6,5 @@ namespace Z0
 {
     partial struct FS
     {
-        [MethodImpl(Inline), Op]
-        public static SearchPattern pattern(params FileExt[] src)
-            => string.Join(Chars.Pipe, src.Select(x => x.SearchPattern));
     }
 }

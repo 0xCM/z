@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using api = Vars;
+
     /// <summary>
     /// Defines the root <see cref='ITextVarExpr'/> abstraction
     /// </summary>
@@ -34,6 +36,6 @@ namespace Z0
             => Fence.Left != '\0' && Fence.Right != '\0';
 
         public ScriptVarClass Class  
-            => TextExpr.@class(this);
+            => api.@class(this);
     }
 }

@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static ApiAtomic;
+    
     [LiteralProvider(tools)]
     public readonly struct ToolNames
     {

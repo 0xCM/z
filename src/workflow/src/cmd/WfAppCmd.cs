@@ -245,7 +245,7 @@ namespace Z0
             {
                 var wd = Env.cd();
                 var options = $"-NoLogo -i -wd {text.dquote(Env.cd())}";
-                ProcessControl.start(channel, new SysIO(OnA,OnB), CmdArgs.create("pwsh.exe", options), wd);
+                ProcessLauncher.launch(channel, new SysIO(OnA,OnB), CmdArgs.create("pwsh.exe", options), wd);
             }
         }
 

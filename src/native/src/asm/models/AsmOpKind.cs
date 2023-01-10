@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static ApiAtomic;
+
     using C = AsmOpClass;
     using SZ = NativeSizeCode;
 

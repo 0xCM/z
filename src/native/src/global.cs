@@ -8,6 +8,7 @@ global using static global.native;
 namespace global
 {
     using static Z0.sys;
+    using static ApiAtomic;
 
     [ApiComplete(ApiName)]
     public partial class native

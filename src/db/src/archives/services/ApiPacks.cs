@@ -66,7 +66,7 @@ namespace Z0
             var capture = AppDb.Service.Capture();
             var src = capture.Root + FS.folder("current");
             var dst = discover().Last.Root;
-            FS.symlink(src, dst,true).Require();
+            FS.symlink(src, dst, true).Require();
             Channel.Status($"symlink:{src} -> {dst}");
             return (src,dst);
         }

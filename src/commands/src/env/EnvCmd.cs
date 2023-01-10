@@ -135,7 +135,7 @@ namespace Z0
 
         [CmdOp("cmd")]
         void Redirect(CmdArgs args)
-            => ProcessControl.redirect(Channel, args);
+            => ProcessLauncher.redirect(Channel, args);
 
         [CmdOp("cd")]
         void Cd(CmdArgs args)
@@ -187,7 +187,7 @@ namespace Z0
         {
             var tool = FS.path(args[0]);            
             var dst = args.Count > 1 ? FS.path(args[1]) : AppDb.DbTargets("tools/help").Path(tool.FileName.ChangeExtension(FileKind.Help));
-            var task = ProcessControl.redirect(Channel, tool, "--help", dst);
+            var task = ProcessLauncher.redirect(Channel, tool, "--help", dst);
             var token = task.Result;
             if(!token.Success)
             {

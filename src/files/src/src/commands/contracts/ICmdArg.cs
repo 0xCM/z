@@ -4,22 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface ICmdArg : IDataType, IDataString
+    public interface ICmdArg  
     {
-        uint Index {get;}
-
-        @string Name {get;}
+        @string Name {get;}        
     }
 
     public interface ICmdArg<T> : ICmdArg
         where T : IEquatable<T>, IComparable<T>
     {
-        T Value {get;}
-    }
-
-    public interface ICmdArg<A,T> : IDataType<A>, ICmdArg<T>
-        where A : ICmdArg<A,T>
-        where T : IEquatable<T>, IComparable<T>
-    {
+        T Value {get;}        
     }
 }

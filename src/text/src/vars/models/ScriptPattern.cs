@@ -21,7 +21,7 @@ namespace Z0
             var body = string.Format("{0}, {1}, {2}", dst, src1, src2);
             var x = PatternTextExpr.init(body);
             var vars = x.Vars;
-            Require.equal(vars.Length,3);
+            Require.equal(vars.Count,3);
             x["dst"] = new TextVar("dst", (Identifier)"abc");
             x["src1"] = new TextVar("src1", (Identifier)"def");
             x["src2"] = new TextVar("src2", (Identifier)"hij");

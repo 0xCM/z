@@ -9,7 +9,6 @@ namespace Z0
     [ApiHost]
     public class Cmd 
     {   
-
         [Op]
         internal static EventOrigin origin(string name, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
             => new EventOrigin(name, new CallingMember(caller, file, line ?? 0));

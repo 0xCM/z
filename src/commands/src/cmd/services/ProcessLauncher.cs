@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public class ProcessControl
+    public class ProcessLauncher
     {        
         public static CmdContext context(FolderPath? work = null, params EnvVar[] vars)
             => new (work ?? Env.cd(), vars);
@@ -14,10 +14,13 @@ namespace Z0
         public static CmdContext context(FolderPath work, params EnvVar[] vars)
             => new(work, vars);
 
-        public static CmdContext context()
-            => new(Env.cd());
+        public static CmdContext context(FolderPath work, EnvVars vars, Action<Process> created)
+            => new(work, vars, created);
 
-        public static Task<ExecToken> start(IWfChannel channel, ISysIO io, CmdArgs spec, FolderPath? wd = null)
+        public static CmdContext context()
+            => new(Env.cd(), EnvVars.Empty);
+
+        public static Task<ExecToken> launch(IWfChannel channel, ISysIO io, CmdArgs spec, FolderPath? wd = null)
         {
             ExecToken go()
             {
@@ -30,22 +33,22 @@ namespace Z0
         }
 
         [Op]
-        public static Task<ExecToken> start(IWfChannel channel, FilePath path, CmdArgs args, CmdContext? context = null)
+        public static Task<ExecToken> launch(IWfChannel channel, FilePath path, CmdArgs args, CmdContext? context = null)
         {
+            var ctx = context ?? CmdContext.Default;
             var psi = new ProcessStartInfo
             {
                 FileName = path.Format(),
                 Arguments = Cmd.join(args),
                 CreateNoWindow = true,
-                WorkingDirectory = context?.WorkingDir.Format() ?? Environment.CurrentDirectory,
+                WorkingDirectory = ctx.WorkingDir.Format(),
                 RedirectStandardError = true,
                 RedirectStandardOutput = true,
                 RedirectStandardInput = false
             };
 
-            var ctx = context ?? CmdContext.Default;
             iter(ctx.Vars, v => psi.Environment.Add(v.Name, v.Value));
-            var cmdline = new CmdLine($"{psi.FileName} {psi.Arguments}");
+            
             var ts = Timestamp.Zero;
             var token = ExecToken.Empty;
             var status = ExecutingProcess.Empty;
@@ -55,8 +58,9 @@ namespace Z0
                 try
                 {
                     using var process = sys.process(psi);
-                    var channeled = channel.ChannelProcess(process);
-                    token = channeled.Run(channel.Running($"Executing '{cmdline}'"));
+                    ctx.ProcessCreated(process);
+                    var channeled = channel.ChannelProcess(process,ctx);
+                    token = channeled.Run(channel.Running($"Executing '{path}' with arguments '{args}"));
                     term.cmd();
                 }
                 catch(Exception e)
@@ -69,10 +73,10 @@ namespace Z0
             return sys.start(Run);
         }    
 
-        public static Task<ExecToken> start(IWfChannel channel, CmdArgs args, CmdContext? context = null)
-            => start(channel, FS.path(args[0]), args.Skip(1), context);
+        public static Task<ExecToken> launch(IWfChannel channel, CmdArgs args, CmdContext? context = null)
+            => launch(channel, FS.path(args[0]), args.Skip(1), context);
 
-        public static Task<ExecToken> start(IWfChannel channel, CmdLine cmd, CmdContext? context = null)
+        public static Task<ExecToken> launch(IWfChannel channel, CmdLine cmd, CmdContext? context = null)
         {
             var psi = new ProcessStartInfo
             {
@@ -96,7 +100,8 @@ namespace Z0
                 try
                 {
                     using var process = sys.process(psi);
-                    var channeled = channel.ChannelProcess(process);
+                    ctx.ProcessCreated(process);
+                    var channeled = channel.ChannelProcess(process, ctx);
                     token = channeled.Run();                    
                     term.cmd();
                 }
@@ -134,7 +139,7 @@ namespace Z0
 
         [Op]
         public static Task<ExecToken> redirect(IWfChannel channel, FilePath path, CmdArgs args, CmdVars vars, FolderPath work, Receiver<string> status, Receiver<string> error)
-            => start(channel, path, args, context(work, vars.Map(v => new EnvVar(v.Name, v.Value))));
+            => launch(channel, path, args, context(work, vars.Map(v => new EnvVar(v.Name, v.Value))));
 
         public static Task<ExecToken> redirect(IWfChannel channel, CmdArgs args)
         {

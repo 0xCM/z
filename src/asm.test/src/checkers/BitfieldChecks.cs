@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using static ApiAtomic;
 
     public class CheckRunner : WfSvc<CheckRunner>
     {

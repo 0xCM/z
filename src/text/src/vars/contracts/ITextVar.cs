@@ -21,7 +21,6 @@ namespace Z0
         ScriptVarClass Class {get;}
     }
 
-
     public interface ITextVar : INullity, IVar<@string>
     {
         ITextVarExpr Expr {get;}

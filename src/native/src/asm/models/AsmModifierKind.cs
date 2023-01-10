@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static ApiAtomic;
+
     [SymSource(asm)]
     public enum AsmModifierKind : byte
     {

@@ -11,6 +11,8 @@ namespace Z0
         EnvVars Vars {get;}
 
         ICmdContext WithVar(EnvVar var);
+
+        Action<Process> ProcessCreated {get;}
     }
 
     public interface ICmdContext<C> : ICmdContext

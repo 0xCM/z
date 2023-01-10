@@ -13,8 +13,8 @@ namespace Z0
         {
             try
             {
-                // if(deleteExising)
-                //     src.Delete();
+                if(deleteExising)
+                    src.Delete();
 
                 var outcome = Kernel32.CreateSymLink(src.Name, dst.Name, SymLinkKind.Directory);
                 if(outcome)
@@ -33,8 +33,8 @@ namespace Z0
         {
             try
             {
-                // if(deleteExising)
-                //     src.Delete();
+                if(deleteExising)
+                    src.Delete();
 
                 src.FolderPath.Create();
 

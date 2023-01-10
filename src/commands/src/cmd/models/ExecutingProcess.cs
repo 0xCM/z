@@ -44,7 +44,7 @@ namespace Z0
         }        
 
         public ExecStatus Status()
-            => ProcessControl.status(this);
+            => ProcessLauncher.status(this);
 
         public static ExecutingProcess Empty 
             => new (CmdLine.Empty, null);

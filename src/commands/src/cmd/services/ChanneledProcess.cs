@@ -9,10 +9,13 @@ namespace Z0
     public class ChanneledProcess : Channeled<ChanneledProcess>
     {
         Process Process;
-
-        internal void Init(Process process)
+        
+        CmdContext Context;
+        
+        internal void Init(Process process, CmdContext context)
         {
             Process = process;
+            Context = context;
             process.OutputDataReceived += (s,d) => OnStatus(d);
             process.ErrorDataReceived += (s,d) => OnError(d);
         }
@@ -32,6 +35,7 @@ namespace Z0
         public ExecToken Run<T>(ExecFlow<T> flow)
         {
             Process.Start();
+            Context.ProcessCreated(Process);
             var id = Process.Id;
             var name = Process.ProcessName;
             Process.BeginOutputReadLine();
@@ -46,7 +50,7 @@ namespace Z0
 
     partial class XTend
     {
-        public static ChanneledProcess ChannelProcess(this IWfChannel src, Process process)
-            => Z0.ChanneledProcess.create(src, x => x.Init(process));
+        public static ChanneledProcess ChannelProcess(this IWfChannel src, Process process, CmdContext context)
+            => Z0.ChanneledProcess.create(src, x => x.Init(process,context));
     }
 }

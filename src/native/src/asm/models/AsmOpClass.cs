@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static Pow2x8;
+    using static ApiAtomic;
 
     [Flags,SymSource(asm)]
     public enum AsmOpClass : byte

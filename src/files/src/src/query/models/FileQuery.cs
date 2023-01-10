@@ -6,13 +6,13 @@ namespace Z0
 {
     public record class FileQuery
     {
-        public FolderPath Source;
+        public FolderPath Root;
 
         public FileFilter Filter;
 
         public FileQuery()
         {
-            Source = FolderPath.Empty;
+            Root = FolderPath.Empty;
             Filter = FileFilter.Empty;
         }
 
