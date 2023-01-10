@@ -7,7 +7,7 @@ namespace Z0
     [Event(Kind)]
     public readonly struct RanEvent<T> : ITerminalEvent<RanEvent<T>>
     {
-        public const EventKind Kind = EventKind.Ran;
+        const EventKind Kind = EventKind.Ran;
 
         public FlairKind Flair => FlairKind.Ran;
 

@@ -4,9 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class EcmaReader
+    public interface IWfTask
     {
-        public AssemblyDefinition ReadAssemblyDef()
-            => MD.GetAssemblyDefinition();    
+        Task<ExecToken> Start(IWfChannel channel);
+
+        ExecToken Run(IWfChannel channel);
     }
 }

@@ -4,9 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class EcmaReader
-    {
-        public AssemblyDefinition ReadAssemblyDef()
-            => MD.GetAssemblyDefinition();    
+    partial struct FS
+    { 
+        public static FileIndex index(IEnumerable<FileUri> src)
+        {
+            var files = new HashedFiles();
+            files.Include(src);
+            return files.Index();
+        }
     }
 }

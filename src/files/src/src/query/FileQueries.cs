@@ -19,7 +19,10 @@ namespace Z0
         {
             var dst = new FileQuery();
             var filter = FileFilter.Empty;
-            filter.FileTypes = ext;
+            if(ext.Length != 0)
+                filter.Extensions = ext;
+            else
+                filter.Inclusions = array(SearchPattern.All);
             dst.Root = src;
             dst.Filter = filter;
             return dst;
@@ -29,16 +32,22 @@ namespace Z0
         {
             var dst = new FileQuery();
             var filter = FileFilter.Empty;
-            filter.FileTypes = ext;
+            filter.Extensions = ext;
             filter.Inclusions = array(pattern(match));
             dst.Root = src;
             dst.Filter = filter;
             return dst;
         }
 
-        public abstract class Receiver
+        public abstract class Receiver : IWfTask
         {
             public virtual bool Pll => true;
+
+            public Task<ExecToken> Start(IWfChannel channel)
+                => start(channel, Query, this);
+
+            public ExecToken Run(IWfChannel channel)
+                => run(channel, Query, this);
 
             public abstract void Matched(FileUri src);
 
@@ -48,10 +57,11 @@ namespace Z0
         public abstract class Receiver<R> : Receiver
             where R : Receiver<R>, new()
         {
-            public static R create(FileQuery query)
+            public static R create(FileQuery query, Action<R> initializer = null)
             {
                 var dst = new R();
                 dst._Query = query;
+                initializer?.Invoke(dst);
                 return dst;
             }
 
@@ -60,18 +70,20 @@ namespace Z0
             public override ref readonly FileQuery Query => ref _Query;
         }
 
-        public static Task start(FileQuery query, Receiver dst)
-            => sys.start(() => run(query,dst));
+        public static Task<ExecToken> start(IWfChannel channel, FileQuery query, Receiver dst)
+            => sys.start(() => run(channel, query,dst));
 
-        public static void run(FileQuery query, Receiver dst)
+        public static ExecToken run(IWfChannel channel, FileQuery query, Receiver dst)
         {
+            var running = channel.Running($"Executing query over {query.Root}");
             var filter = query.Filter;
             var matcher = new Matcher();  
-            iter(filter.FileTypes, t => matcher.AddInclude($"${t.SearchPattern}${Z0.SearchPattern.Recurse}" ));
-            iter(filter.FileKinds, t => matcher.AddInclude($"${t.Ext().SearchPattern}${Z0.SearchPattern.Recurse}" ));
+            iter(filter.Extensions, t => matcher.AddInclude($"${t.SearchPattern}${Z0.SearchPattern.All}" ));
+            iter(filter.FileKinds, t => matcher.AddInclude($"${t.Ext().SearchPattern}${Z0.SearchPattern.All}" ));
             iter(filter.Inclusions, i => matcher.AddInclude(i.Format()));
             iter(filter.Exclusions, x => matcher.AddExclude(x.Format()));
             iter(matcher.GetResultsInFullPath(query.Root.Format()), f => dst.Matched(new FileUri(f)), dst.Pll);
+            return channel.Ran(running);
         }
     }
 }

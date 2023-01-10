@@ -4,9 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class EcmaReader
+    using static sys;
+
+    partial class EcmaEmitter
     {
-        public AssemblyDefinition ReadAssemblyDef()
-            => MD.GetAssemblyDefinition();    
+        public void EmitAssemblyList(IDbArchive src, FilePath dst)    
+            => Channel.TableEmit(EcmaReader.assemblies(Channel, src).Records(), dst);
     }
 }

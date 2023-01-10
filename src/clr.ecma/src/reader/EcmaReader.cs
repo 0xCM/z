@@ -5,13 +5,37 @@
 namespace Z0
 {
     using static sys;
-    using static EcmaTables;
 
     using System.Linq;
 
     [ApiHost]
     public unsafe partial class EcmaReader
     {
+        public static AssemblyFiles assemblies(IWfChannel channel, IDbArchive src)
+        {
+            var dst = bag<AssemblyFile>();
+            var counter = 0u;
+            var running = channel.Running($"Searching {src.Root} for assemlies");
+            iter(src.Enumerate(true, FileKind.Dll, FileKind.Exe), path => {
+                try
+                {
+                    using var ecma = EcmaFile.open(path);
+                    var reader = ecma.Reader(); 
+                    var def = reader.ReadAssemblyDef();                    
+                    dst.Add(new AssemblyFile(path, def.GetAssemblyName()));
+                    if(math.mod(inc(ref counter),1000) == 0)
+                        channel.Babble($"Found {counter} assemblies");
+                }
+                catch(Exception)
+                {
+                    //channel.Warn($"{path}: {e.Message}")
+                }
+            }
+            );
+            channel.Ran(running, $"Found {counter} assemblies");
+            return dst.Array();
+        }
+
         public static void stats(ReadOnlySpan<Assembly> src, ConcurrentBag<EcmaRowStats> dst)
             => iter(src, a => stats(a,dst), true);
 

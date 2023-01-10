@@ -7,9 +7,9 @@ namespace Z0
     [Event(Kind)]
     public readonly struct DataEvent<T> : IWfEvent<DataEvent<T>,T>
     {
-        public const string EventName = GlobalEvents.Data;
+        const string EventName = GlobalEvents.Data;
 
-        public const EventKind Kind = EventKind.Data;
+        const EventKind Kind = EventKind.Data;
 
         public EventId EventId {get;}
 
@@ -39,6 +39,5 @@ namespace Z0
 
         public override string ToString()
             => Format();
-
     }
 }

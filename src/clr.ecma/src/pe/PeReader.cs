@@ -5,13 +5,116 @@
 namespace Z0
 {
     using System.Linq;
-    using static EcmaTables;
+
     using static sys;
 
     using I = System.Reflection.Metadata.Ecma335.TableIndex;
 
     public partial class PeReader : IDisposable
     {
+        [Op]
+        public static PeReader create(FilePath src)
+            => new PeReader(src);
+
+        public static bool create(FilePath src, out PeReader dst)
+        {
+            var stream = File.OpenRead(src.Name);
+            try
+            {                
+                var reader = new PEReader(stream,  PEStreamOptions.PrefetchMetadata);
+                dst = new PeReader(src, stream, reader);
+                return true;
+            }
+            catch(Exception)
+            {
+                stream.Dispose();
+                dst = default;
+                return false;
+            }
+        }
+
+        public static PeFileInfo ReadPeInfo(PEReader src)
+        {
+            var pe = src.PEHeaders.PEHeader;
+            var coff = src.PEHeaders.CoffHeader;
+            var dst = new PeFileInfo();
+            dst.Machine = coff.Machine;
+            dst.ImageBase = pe.ImageBase;
+            dst.EntryPointOffset = pe.AddressOfEntryPoint;
+            dst.CodeOffset = pe.BaseOfCode;
+            dst.CodeSize = (uint)pe.SizeOfCode;
+            dst.DataOffset = pe.BaseOfData;
+            dst.ImageSize = (uint)pe.SizeOfImage;
+            dst.ExportDir = pe.ExportTableDirectory;
+            dst.ImportDir = pe.ImportTableDirectory;
+            dst.ResourceDir = pe.ResourceTableDirectory;
+            dst.RelocationDir = pe.BaseRelocationTableDirectory;
+            dst.ImportAddressDir = pe.ImportAddressTableDirectory;
+            dst.LoadConfigDir = pe.LoadConfigTableDirectory;
+            dst.DebugDir = pe.DebugTableDirectory;
+            dst.Characteristics = coff.Characteristics;
+            return dst;
+        }
+
+        public static CoffHeader ReadCoffInfo(PEReader pe)
+        {
+            var src = pe.PEHeaders.CoffHeader;
+            var dst = new CoffHeader();
+            dst.Characteristics = src.Characteristics;
+            dst.Machine = src.Machine;
+            dst.NumberOfSections = (ushort)src.NumberOfSections;
+            dst.NumberOfSymbols = (uint)src.NumberOfSymbols;
+            dst.PointerToSymbolTable = src.PointerToSymbolTable;
+            dst.SizeOfOptionalHeader = (ushort)src.SizeOfOptionalHeader;
+            dst.TimeDateStamp = (uint)src.TimeDateStamp;
+            return dst;
+        }
+
+        public static CorHeaderInfo? cor(PEHeaders src)
+        {
+            var cor = src.CorHeader;
+            var dst = default(CorHeaderInfo);
+            if(cor != null)
+            {
+                dst = new();
+                dst.MajorRuntimeVersion = cor.MajorRuntimeVersion;
+                dst.MinorRuntimeVersion = cor.MinorRuntimeVersion;
+                dst.MetadataDirectory = cor.MetadataDirectory;
+                dst.Flags = cor.Flags;
+                dst.EntryPointTokenOrRelativeVirtualAddress = cor.EntryPointTokenOrRelativeVirtualAddress;
+                dst.ResourcesDirectory = cor.ResourcesDirectory;
+                dst.StrongNameSignatureDirectory = cor.StrongNameSignatureDirectory;
+                dst.CodeManagerTableDirectory = cor.CodeManagerTableDirectory;
+                dst.VtableFixupsDirectory = cor.VtableFixupsDirectory;
+                dst.ExportAddressTableJumpsDirectory = cor.ExportAddressTableJumpsDirectory;
+                dst.ManagedNativeHeaderDirectory = cor.ManagedNativeHeaderDirectory;
+            }
+            return dst;
+        }
+
+        public static ReadOnlySeq<PeSectionHeader> headers(PEReader src)
+        {
+            var headers = src.PEHeaders;
+            var pe = headers.PEHeader;
+            var sections = src.PEHeaders.SectionHeaders.AsSpan();
+            var count = sections.Length;
+            var buffer = sys.alloc<PeSectionHeader>(count);
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var section = ref skip(sections,i);
+                ref var dst = ref seek(buffer,i);
+                dst.EntryPoint = (Address32)pe.AddressOfEntryPoint;
+                dst.CodeBase = (Address32)pe.BaseOfCode;
+                dst.GptRva = (Address32)pe.GlobalPointerTableDirectory.RelativeVirtualAddress;
+                dst.GptSize = (ByteSize)pe.GlobalPointerTableDirectory.Size;
+                dst.SectionFlags = section.SectionCharacteristics;
+                dst.SectionName = section.Name;
+                dst.RawDataAddress = (Address32)section.PointerToRawData;
+                dst.RawDataSize = (uint)section.SizeOfRawData;
+            }
+            return buffer;
+        }
+
         public static void modules(IDbArchive src, Action<CoffModule> dst)
         {
             iter(src.Enumerate(true, FileKind.Exe, FileKind.Dll, FileKind.Obj, FileKind.Lib), path => {                
@@ -35,11 +138,15 @@ namespace Z0
         public ReadOnlySeq<PeSectionHeader> Headers()
             => PeReader.headers(PE);
 
-        [Op]
-        public static PeReader create(FilePath src)
-            => new PeReader(src);
 
-        public PeReader(FilePath src)
+        PeReader(FilePath src, FileStream stream, PEReader reader)
+        {
+            Source = src;
+            Stream = stream;
+            PE = reader;
+        }
+
+        PeReader(FilePath src)
         {
             Source = src;
             Stream = File.OpenRead(src.Name);
@@ -111,65 +218,6 @@ namespace Z0
         {
             PE?.Dispose();
             Stream?.Dispose();
-        }
-
-        public static PeFileInfo ReadPeInfo(PEReader src)
-        {
-            var pe = src.PEHeaders.PEHeader;
-            var coff = src.PEHeaders.CoffHeader;
-            var dst = new PeFileInfo();
-            dst.Machine = coff.Machine;
-            dst.ImageBase = pe.ImageBase;
-            dst.EntryPointOffset = pe.AddressOfEntryPoint;
-            dst.CodeOffset = pe.BaseOfCode;
-            dst.CodeSize = (uint)pe.SizeOfCode;
-            dst.DataOffset = pe.BaseOfData;
-            dst.ImageSize = (uint)pe.SizeOfImage;
-            dst.ExportDir = pe.ExportTableDirectory;
-            dst.ImportDir = pe.ImportTableDirectory;
-            dst.ResourceDir = pe.ResourceTableDirectory;
-            dst.RelocationDir = pe.BaseRelocationTableDirectory;
-            dst.ImportAddressDir = pe.ImportAddressTableDirectory;
-            dst.LoadConfigDir = pe.LoadConfigTableDirectory;
-            dst.DebugDir = pe.DebugTableDirectory;
-            dst.Characteristics = coff.Characteristics;
-            return dst;
-        }
-
-        public static CoffHeader ReadCoffInfo(PEReader pe)
-        {
-            var src = pe.PEHeaders.CoffHeader;
-            var dst = new CoffHeader();
-            dst.Characteristics = src.Characteristics;
-            dst.Machine = src.Machine;
-            dst.NumberOfSections = (ushort)src.NumberOfSections;
-            dst.NumberOfSymbols = (uint)src.NumberOfSymbols;
-            dst.PointerToSymbolTable = src.PointerToSymbolTable;
-            dst.SizeOfOptionalHeader = (ushort)src.SizeOfOptionalHeader;
-            dst.TimeDateStamp = (uint)src.TimeDateStamp;
-            return dst;
-        }
-
-        public static CorHeaderInfo? cor(PEHeaders src)
-        {
-            var cor = src.CorHeader;
-            var dst = default(CorHeaderInfo);
-            if(cor != null)
-            {
-                dst = new();
-                dst.MajorRuntimeVersion = cor.MajorRuntimeVersion;
-                dst.MinorRuntimeVersion = cor.MinorRuntimeVersion;
-                dst.MetadataDirectory = cor.MetadataDirectory;
-                dst.Flags = cor.Flags;
-                dst.EntryPointTokenOrRelativeVirtualAddress = cor.EntryPointTokenOrRelativeVirtualAddress;
-                dst.ResourcesDirectory = cor.ResourcesDirectory;
-                dst.StrongNameSignatureDirectory = cor.StrongNameSignatureDirectory;
-                dst.CodeManagerTableDirectory = cor.CodeManagerTableDirectory;
-                dst.VtableFixupsDirectory = cor.VtableFixupsDirectory;
-                dst.ExportAddressTableJumpsDirectory = cor.ExportAddressTableJumpsDirectory;
-                dst.ManagedNativeHeaderDirectory = cor.ManagedNativeHeaderDirectory;
-            }
-            return dst;
         }
 
         public CoffModule ModuleInfo()

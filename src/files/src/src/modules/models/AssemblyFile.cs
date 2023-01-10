@@ -4,56 +4,56 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly record struct AssemblyFile : IBinaryModule<AssemblyFile>, IComparable<AssemblyFile>
+    public record class AssemblyFile : IBinaryModule<AssemblyFile>, IComparable<AssemblyFile>
     {
         public FilePath Path {get;}
 
         public FileModuleKind ModuleKind {get;}
 
-        public readonly ClrAssemblyName Name;
+        public readonly ClrAssemblyName AssemblyName;
         
         public readonly AssemblyVersion Version;
 
         public AssemblyFile()
         {
             Path = FileUri.Empty;
-            Name = ClrAssemblyName.Empty;
+            AssemblyName = ClrAssemblyName.Empty;
             ModuleKind = 0;
             Version = default;
         }
 
-        public AssemblyFile(FilePath path, AssemblyName name)
+        public AssemblyFile(FilePath path, AssemblyName name, FileModuleKind? kind = null)
         {
             Path = path;
-            Name = name;
-            ModuleKind = FileModuleKind.ManagedDll;
+            AssemblyName = name;
+            ModuleKind = kind ?? (path.FileKind() == FileKind.Exe ? FileModuleKind.Exe : FileModuleKind.Dll);
             Version = name.Version;
         }
 
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => Path.IsEmpty && Name.IsEmpty;
+            get => Path.IsEmpty && AssemblyName.IsEmpty;
         }
         
         public bool IsNonEmpty
         {
             [MethodImpl(Inline)]
-            get => Path.IsNonEmpty || Name.IsNonEmpty;
+            get => Path.IsNonEmpty || AssemblyName.IsNonEmpty;
         }
 
         public Assembly Load()
             => Assembly.LoadFrom(Path.Format());
 
         public string Format()
-            => Path.IsNonEmpty ? Path.Format() : $"{Name}.{Version}";
+            => Path.IsNonEmpty ? Path.Format() : $"{AssemblyName}.{Version}";
 
         public override string ToString()
             => Format();
             
         public int CompareTo(AssemblyFile src)
         {
-            var result = Name.CompareTo(src.Name);
+            var result = AssemblyName.CompareTo(src.AssemblyName);
             if(result == 0)
                 result = Path.CompareTo(src.Path);
             return result;

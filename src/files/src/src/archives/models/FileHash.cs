@@ -7,15 +7,15 @@ namespace Z0
     [StructLayout(LayoutKind.Sequential,Pack=1)]
     public record struct FileHash : IDataType<FileHash>, IDataString
     {
-        public Hash32 LocationHash;     
-
         public Hash128 ContentHash;
 
+        public Hash32 LocationHash;     
+
         [MethodImpl(Inline)]
-        public FileHash(Hash32 location, Hash128 content)   
+        public FileHash(Hash128 content, Hash32 location)   
         {
+            ContentHash = content;
             LocationHash = location;
-            ContentHash = content;        
         }
 
         public bool IsEmpty
@@ -52,7 +52,7 @@ namespace Z0
         }
 
         public string Format()
-            => string.Format("{0}:{1}", LocationHash, ContentHash);
+            => string.Format("{0}:{1}", ContentHash, LocationHash);
 
         public override string ToString()
             => Format();

@@ -6,15 +6,28 @@ namespace Z0
 {
     public unsafe class EcmaFile : IDisposable
     {
-        public static EcmaFile open(FilePath src)
+        public static void use(FilePath src, Action<EcmaFile> user, Action<Exception> error)
         {
+            try
+            {
+                var stream = File.OpenRead(src.Name);
+                var reader = new PEReader(stream, PEStreamOptions.PrefetchMetadata);
+                using var file = new EcmaFile(src, stream, reader);
+                user(file);
+            }
+            catch(Exception e)
+            {
+                error(e);
+            }
+        }
+
+        public static EcmaFile open(FilePath src)
+        {            
             var stream = File.OpenRead(src.Name);
             var reader = new PEReader(stream);
             var result = reader.HasMetadata;
             if(result)
-            {
                 return new EcmaFile(src, stream, reader);
-            }
             else
             {
                 stream.Dispose();
@@ -39,11 +52,6 @@ namespace Z0
 
         public readonly MetadataReader MetadataReader;
 
-        public EcmaFile(FileUri file)
-        {
-            Uri = file;
-        }
-
         public EcmaFile(FileUri file, FileStream stream, PEReader pe)
         {
             Uri = file;
@@ -64,17 +72,5 @@ namespace Z0
             PeReader?.Dispose();
             Stream?.Dispose();            
         }
-
-        public bool IsEmpty
-        {
-            get => Stream == null || PeReader == null;
-        }
-
-        public bool IsNonEmpty
-        {
-            get => Stream != null && PeReader != null;
-        }
-
-        public static EcmaFile Empty => new EcmaFile(FileUri.Empty);       
     }
 }

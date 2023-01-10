@@ -10,7 +10,7 @@ namespace Z0
     {
         [Op]
         public static HashedFile hash(FilePath src)
-            => new (src, new FileHash(src.Hash, sys.@as<Hash128>(sys.span(MD5.HashData(src.ReadBytes())))));
+            => new (src, new FileHash(sys.@as<Hash128>(sys.span(MD5.HashData(src.ReadBytes()))),src.Hash));
      
         [MethodImpl(Inline), Op]
         public static bool has(FilePath src, FileExt ext)

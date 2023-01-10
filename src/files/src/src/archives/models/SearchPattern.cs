@@ -6,7 +6,7 @@ namespace Z0
 {
     public record struct SearchPattern
     {
-        public static SearchPattern Recurse = "/**/*";
+        public static SearchPattern All = "/**/*";
         
         public readonly @string Content;
 

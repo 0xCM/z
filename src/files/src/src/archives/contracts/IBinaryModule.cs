@@ -12,7 +12,7 @@ namespace Z0
 
     [Free]
     public interface IBinaryModule<T> : IBinaryModule, IFile<FilePath>
-        where T : struct, IBinaryModule<T>
+        where T : IBinaryModule<T>, new()
     {
         FilePath Path {get;}
 

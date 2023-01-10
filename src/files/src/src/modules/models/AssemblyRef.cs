@@ -46,7 +46,7 @@ namespace Z0
             => Source == src.Source && Target == src.Target;
 
         public string Format()
-            => $"{Source.Name} -> {Target.Name}";
+            => $"{Source.AssemblyName} -> {Target.AssemblyName}";
 
         public override string ToString()
             => Format();

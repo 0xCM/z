@@ -5,7 +5,6 @@
 namespace Z0
 {
     using static sys;
-    using static EcmaTables;
 
     [Free, ApiHost]
     public class PeTables : IDisposable
@@ -35,7 +34,6 @@ namespace Z0
             else
                 return null;
         }
-
 
         [Op]
         public static PeTables open(FilePath src)

@@ -5,20 +5,16 @@
 namespace Z0
 {
     using static sys;
-    using static EcmaTables;
 
     partial class EcmaEmitter
     {
         public void EmitRefs(IApiPack dst)
         {
-            EmitAssemblyRefs(dst);
+            EmitAssemblyRefs(ApiAssemblies.Parts, dst);
         }
 
         public void EmitAssemblyRefs(IApiPack dst)
             => EmitAssemblyRefs(ApiAssemblies.Parts, dst);
-
-        public void EmitAssemblyRefs(ReadOnlySpan<Assembly> src, IApiPack dst)
-            => EmitAssemblyRefs(src, dst.Metadata().Table<AssemblyRefInfo>());
 
         public void EmitAssemblyRefs(ReadOnlySpan<Assembly> src, IDbArchive dst)
             => EmitAssemblyRefs(src, dst.Table<AssemblyRefInfo>());
@@ -41,8 +37,8 @@ namespace Z0
                 }
             }
             EmittedTable(flow, counter);
-
         }
+
         public void EmitAssemblyRefs(ReadOnlySpan<Assembly> src, FilePath dst)
         {
             var count = src.Length;
