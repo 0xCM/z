@@ -63,7 +63,6 @@ namespace Z0
             return dst.Emit();
         }
 
-
         public override string ToString()
             => Format();
 

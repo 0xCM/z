@@ -8,6 +8,10 @@ namespace Z0
 
     partial struct Hex
     {
+        public static uint bitstring<N>(HexVector8<N> src, uint i, Span<char> dst, N count = default)
+            where N : unmanaged, ITypeNat
+                => BitRender.render8x8(bytes(src.View), i, dst, count);
+
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static ReadOnlySpan<char> render<T>(UpperCased @case, T value)
             where T : unmanaged

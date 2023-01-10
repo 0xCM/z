@@ -12,16 +12,15 @@ namespace Z0
         public static string format2(byte src)
         {
             var i=0u;
-            var buffer = CharBlock2.Null;
-            var dst = buffer.Data;
-            render2(src, ref i, dst);
-            return text.format(dst);
+            Span<char> buffer = stackalloc char[2];
+            render2(src, ref i, buffer);            
+            return text.format(buffer);
         }
 
         [Op]
         public static string format3(byte src)
         {
-            var buffer = CharBlock3.Null.Data;
+            Span<char> buffer = stackalloc char[8];
             var i=0u;
             var count = render3(src, ref i, buffer);
             return text.format(slice(buffer,0,count));
@@ -30,7 +29,7 @@ namespace Z0
         [Op]
         public static string format4(byte src)
         {
-            var buffer = CharBlock4.Null.Data;
+            Span<char> buffer = stackalloc char[8];
             var i=0u;
             var count = render4(src, ref i, buffer);
             return text.format(slice(buffer,0,count));
@@ -39,7 +38,7 @@ namespace Z0
         [Op]
         public static string format5(byte src)
         {
-            var buffer = CharBlock5.Null.Data;
+            Span<char> buffer = stackalloc char[8];
             var i=0u;
             var count = render5(src, ref i, buffer);
             return text.format(slice(buffer,0,count));
@@ -48,8 +47,7 @@ namespace Z0
         [Op]
         public static string format6(byte src)
         {
-            var storage = CharBlock6.Null;
-            var buffer = storage.Data;
+            Span<char> buffer = stackalloc char[8];
             var i=0u;
             var count = render6(src, ref i, buffer);
             return text.format(slice(buffer,0,count));
@@ -58,7 +56,7 @@ namespace Z0
         [Op]
         public static string format7(byte src)
         {
-            var buffer = CharBlock7.Null.Data;
+            Span<char> buffer = stackalloc char[8];
             var i=0u;
             var count = render7(src, ref i, buffer);
             return text.format(slice(buffer,0,count));
@@ -67,8 +65,7 @@ namespace Z0
         [Op]
         public static string format8(byte src)
         {
-            var storage = CharBlock8.Null;
-            var buffer = storage.Data;
+            Span<char> buffer = stackalloc char[8];
             var i=0u;
             var count = render8(src, ref i, buffer);
             return text.format(slice(buffer,0,count));
@@ -77,8 +74,7 @@ namespace Z0
         [Op]
         public static string format16(ushort src)
         {
-            var storage = CharBlock16.Null;
-            var buffer = storage.Data;
+            Span<char> buffer = stackalloc char[16];
             var i=0u;
             var count = render16(src, ref i, buffer);
             return text.format(slice(buffer,0,count));
@@ -87,7 +83,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static string format32(uint src)
         {
-            var buffer = CharBlock32.Null.Data;
+            Span<char> buffer = stackalloc char[32];
             var i=0u;
             render32(src, ref i, buffer);
             return text.format(buffer);
@@ -96,7 +92,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static string format64(ulong src)
         {
-            var buffer = CharBlock64.Null.Data;
+            Span<char> buffer = stackalloc char[64];
             var i=0u;
             render64(src, ref i, buffer);
             return text.format(buffer);
@@ -145,8 +141,7 @@ namespace Z0
         [Op]
         public static string format8x4(byte src)
         {
-            var storage = CharBlock16.Null;
-            var buffer = storage.Data;
+            Span<char> buffer = stackalloc char[16];
             var i=0u;
             var count = render8x4(src, ref i, buffer);
             return text.format(slice(buffer, 0, count));
@@ -155,8 +150,7 @@ namespace Z0
         [Op]
         public static string format16x4(ushort src, char sep = Chars.Space)
         {
-            var storage = CharBlock24.Null;
-            var buffer = storage.Data;
+            Span<char> buffer = stackalloc char[24];
             var i=0u;
             var count = render16x4(sep, src, ref i, buffer);
             return text.format(slice(buffer, 0, count));
@@ -165,8 +159,7 @@ namespace Z0
         [Op]
         public static string format16x8(ushort src)
         {
-            var storage = CharBlock24.Null;
-            var buffer = storage.Data;
+            Span<char> buffer = stackalloc char[24];
             var i=0u;
             var count = render16x8(src, ref i, buffer);
             return text.format(slice(buffer,0,count));
@@ -175,8 +168,7 @@ namespace Z0
         [Op]
         public static string format20x4(uint src, char sep = Chars.Space)
         {
-            var storage = CharBlock32.Null;
-            var buffer = storage.Data;
+            Span<char> buffer = stackalloc char[32];
             var i=0u;
             var count = render20x4(sep, src, ref i, buffer);
             return text.format(slice(buffer, 0, count));
@@ -185,8 +177,7 @@ namespace Z0
         [Op]
         public static string format24x4(uint src, char sep = Chars.Space)
         {
-            var storage = CharBlock32.Null;
-            var buffer = storage.Data;
+            Span<char> buffer = stackalloc char[32];
             var i=0u;
             var count = render24x4(sep, src, ref i, buffer);
             return text.format(slice(buffer, 0, count));
@@ -195,8 +186,7 @@ namespace Z0
         [Op]
         public static string format28x4(uint src, char sep = Chars.Space)
         {
-            var storage = CharBlock48.Null;
-            var buffer = storage.Data;
+            Span<char> buffer = stackalloc char[48];
             var i=0u;
             var count = render28x4(sep, src, ref i, buffer);
             return text.format(slice(buffer, 0, count));
@@ -205,8 +195,7 @@ namespace Z0
         [Op]
         public static string format32x4(uint src, char sep = Chars.Space)
         {
-            var storage = CharBlock48.Null;
-            var buffer = storage.Data;
+            Span<char> buffer = stackalloc char[128];
             var i=0u;
             var count = render32x4(sep, src, ref i, buffer);
             return text.format(slice(buffer, 0, count));
@@ -215,7 +204,7 @@ namespace Z0
         [Op]
         public static string format64x4(ulong src, char sep = Chars.Space)
         {
-            Span<char> buffer = stackalloc char[92];
+            Span<char> buffer = stackalloc char[128];
             var i=0u;
             var count = render64x4(sep, src, ref i, buffer);
             return text.format(slice(buffer, 0, count));
@@ -224,7 +213,7 @@ namespace Z0
         [Op]
         public static string format32x8(uint src)
         {
-            var buffer = CharBlock64.Null.Data;
+            Span<char> buffer = stackalloc char[128];
             var i=0u;
             var count = render32x8(src, ref i, buffer);
             return text.format(slice(buffer,0,count));
@@ -233,7 +222,7 @@ namespace Z0
         [Op]
         public static string format64x8(ulong src)
         {
-            var buffer = CharBlock128.Null.Data;
+            Span<char> buffer = stackalloc char[128];
             var i=0u;
             var count = render64x8(Chars.Space, src, ref i, buffer);
             return text.format(slice(buffer, 0, count));

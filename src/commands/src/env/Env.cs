@@ -137,19 +137,16 @@ namespace Z0
         {
             var k = z16;
             var dst = list<EnvVar>();
-            var line = AsciLineCover.Empty;
+            var line = TextLine.Empty;
             var buffer = sys.alloc<char>(1024*4);
-            using var reader = src.AsciLineReader();
+            using var reader = src.Utf8LineReader();
             while(reader.Next(out line))
             {
-                var content = line.Codes;
+                var content = line.Content;
                 var i = SQ.index(content, sep);
                 if(i == NotFound)
                     continue;
-
-                var _name = Asci.format(SQ.left(content,i), buffer);
-                var _value = Asci.format(SQ.right(content,i), buffer);
-                dst.Add(new (_name, _value));
+                dst.Add(new (text.left(content,i), text.right(content,i)));
             }
             return dst.ToArray().Sort();
         }

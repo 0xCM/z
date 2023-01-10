@@ -47,7 +47,7 @@ namespace Z0
             else
             {
                 dst = default;
-                Errors.Throw(no<T>());
+                sys.@throw(no<T>());
             }
 
             return result;

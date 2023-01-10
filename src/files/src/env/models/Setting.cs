@@ -6,20 +6,11 @@ namespace Z0
 {
     using static sys;
 
-    using api = SettingsApi;
+    using api = Settings;
 
     [Record(TableId)]
     public readonly record struct Setting : ISetting, IDataType<Setting>
     {
-        public static Setting parse(string src, char sep)
-        {
-            var i = text.index(src, sep);
-            var setting = Setting.Empty;
-            if(i > 0)
-                setting = new Setting(text.trim(text.left(src, i)), text.trim(text.right(src, i)));
-            return setting;
-        }
-
         const string TableId = "settings";
 
         public readonly SettingType Type;

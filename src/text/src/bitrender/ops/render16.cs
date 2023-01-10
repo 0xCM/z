@@ -34,12 +34,12 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> render16(ushort src)
+        public static string render16(ushort src)
         {
-            var buffer = CharBlock16.Null.Data;
+            Span<char> buffer = stackalloc char[16];
             var i=0u;
             render16(src, ref i, buffer);
-            return buffer;
+            return sys.@string(buffer);
         }
 
         [MethodImpl(Inline), Op]

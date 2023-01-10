@@ -32,7 +32,7 @@ namespace Z0
         {
             Name = name;
             Value = value;
-            Type = SettingsApi.type(value);
+            Type = Settings.type(value);
         }
 
         [MethodImpl(Inline)]
@@ -40,7 +40,7 @@ namespace Z0
         {
             Name = name;
             Value = value;
-            Type = SettingsApi.type(value);
+            Type = Settings.type(value);
         }
 
         public Setting NonGeneric

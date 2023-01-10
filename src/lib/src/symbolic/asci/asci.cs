@@ -11,7 +11,7 @@ namespace Z0
 
     [ApiHost]
     public readonly partial struct Asci
-    {
+    {        
         [MethodImpl(Inline), Op]
         public static ReadOnlySpan<C> whitespace()
             => Whitespace;

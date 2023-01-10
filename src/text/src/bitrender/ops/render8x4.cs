@@ -24,10 +24,9 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> render8x4(char sep, byte src)
+        public static string render8x4(char sep, byte src)
         {
-            var storage = CharBlock16.Null;
-            var dst = storage.Data;
+            Span<char> dst = stackalloc char[16];
             var i = 0u;
             seek(dst, i++) = bitchar(src, 7);
             seek(dst, i++) = bitchar(src, 6);
@@ -38,7 +37,7 @@ namespace Z0
             seek(dst, i++) = bitchar(src, 2);
             seek(dst, i++) = bitchar(src, 1);
             seek(dst, i++) = bitchar(src, 0);
-            return slice(dst, 0, i);
+            return new(slice(dst, 0, i));
         }
 
         [MethodImpl(Inline), Op]

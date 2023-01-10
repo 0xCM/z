@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
 
     public sealed class AppSettings 
-    {
+    {        
         [MethodImpl(Inline), Op]
         static FolderPath folder(in Setting src)
             => FS.dir(src.ValueText);
@@ -26,7 +26,7 @@ namespace Z0
             where T : new()
         {
             var dst = new T();
-            var members = SettingsApi.members<T>();
+            var members = Settings.members<T>();
             for(var i=0; i<members.Count; i++)
             {
                 ref readonly var member = ref members[i];
@@ -51,7 +51,7 @@ namespace Z0
 
         public AppSettings Absorb(FilePath src)
         {
-            Absorb(SettingsApi.load(src));
+            Absorb(Settings.load(src));
             return Instance;
         }
 
@@ -142,7 +142,7 @@ namespace Z0
             => Format();
 
         static AppSettings load()
-            => new AppSettings(SettingsApi.load(SettingsRoot().Path(FS.file("z0.settings", FileKind.Csv))));
+            => new AppSettings(Settings.load(SettingsRoot().Path(FS.file("z0.settings", FileKind.Csv))));
 
         static AppSettings Instance = load();
     }

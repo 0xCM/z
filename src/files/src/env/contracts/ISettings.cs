@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using api = SettingsApi;
+    using api = Settings;
 
     [Free]
     public interface ISettings : IExpr

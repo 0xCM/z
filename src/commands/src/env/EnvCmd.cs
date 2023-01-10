@@ -89,7 +89,7 @@ namespace Z0
         void LoadCfg(CmdArgs args)
         {
             var src = args.Count != 0 ? FS.dir(args.First) : Env.cd();
-            iter(src.Files(FileKind.Cfg), file => Channel.Row(CfgBlocks.load(file).Format()));    
+            iter(src.Files(FileKind.Cfg), file => Channel.Row(Settings.cfg(file).Format()));    
         }        
 
         [CmdOp("jobs/types")]

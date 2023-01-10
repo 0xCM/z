@@ -11,6 +11,15 @@ namespace Z0
 	{
         const NumericKind Closure = UnsignedInts;
 
+        /// <summary>
+        /// Computes the offset of a linear bit index over storage cells of specified width
+        /// </summary>
+        /// <param name="w">The cell width</param>
+        /// <param name="index">The linear bit index</param>
+		[MethodImpl(Inline), Op]
+        public static byte offmod(uint w, uint index)
+			=> (byte)(index % w);
+
 		/// <summary>
 		/// Computes the order-invariant absolute distance between two positions
 		/// </summary>
@@ -25,7 +34,7 @@ namespace Z0
         {
             var i = pos.LinearIndex + offset;
             pos.CellIndex = BitPos.linearize(pos.CellWidth,i);
-            pos.BitOffset = bits.offmod(pos.CellWidth, i);
+            pos.BitOffset = offmod(pos.CellWidth, i);
             return ref pos;
         }
 
@@ -35,14 +44,22 @@ namespace Z0
         {
             var i = pos.LinearIndex + offset;
             pos.CellIndex = BitPos.linearize(pos.CellWidth, i);
-            pos.BitOffset = bits.offmod(pos.CellWidth, i);
+            pos.BitOffset = offmod(pos.CellWidth, i);
             return ref pos;
         }
+
+        /// <summary>
+        /// Computes the absolute value of the source without branching
+        /// </summary>
+        /// <param name="a">The source value</param>
+        [MethodImpl(Inline), Abs]
+        static long abs(long a)
+            => (a + (a >> 63)^(a >> 63));
 
 		[MethodImpl(Inline), Op, Closures(Closure)]
 		public static uint count<T>(in BitPos<T> i0, in BitPos<T> i1)
             where T : unmanaged
-			    => (uint)math.abs((long)i0.LinearIndex - (long)i1.LinearIndex) + 1;
+			    => (uint)abs((long)i0.LinearIndex - (long)i1.LinearIndex) + 1;
 
 		[MethodImpl(Inline), Op]
         public static ref BitPos inc(ref BitPos pos)
@@ -115,7 +132,7 @@ namespace Z0
             if(newIndex > 0)
 			{
 				pos.CellIndex = linearize(pos.CellWidth, bitindex);
-				pos.BitOffset = bits.offmod(pos.CellWidth, bitindex);
+				pos.BitOffset = offmod(pos.CellWidth, bitindex);
 			}
             else
             {
@@ -134,7 +151,7 @@ namespace Z0
             if(newIndex > 0)
 			{
 				pos.CellIndex = linearize(pos.CellWidth, bitindex);
-				pos.BitOffset = bits.offmod(pos.CellWidth, bitindex);
+				pos.BitOffset = offmod(pos.CellWidth, bitindex);
 			}
             else
             {
@@ -185,7 +202,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static BitPos<T> bitpos<T>(uint index)
             where T : unmanaged
-				=> new BitPos<T>(linearize(sys.width<T>(), index), bits.offmod(sys.width<T>(), index));
+				=> new BitPos<T>(linearize(sys.width<T>(), index), offmod(sys.width<T>(), index));
 
 		/// <summary>
 		/// Computes a linear bit index from a cell index and cell-relative offset

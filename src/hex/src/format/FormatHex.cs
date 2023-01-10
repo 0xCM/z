@@ -5,7 +5,7 @@
 namespace Z0
 {
     [ApiHost]
-    public static class XHex
+    public static partial class XHex
     {
         [Op]
         public static string FormatHex(this byte[] src)

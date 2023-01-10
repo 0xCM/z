@@ -20,27 +20,6 @@ namespace Z0
             return i - i0;
         }
 
-        [MethodImpl(Inline), Op]
-        public static asci4 render3(byte src, out asci4 dst)
-        {
-            dst = new asci4(
-                bitchar(src, 2),
-                bitchar(src, 1),
-                bitchar(src, 0)
-            );
-            return dst;
-        }
-
-        [MethodImpl(Inline), Op]
-        public static asci8 render3(byte src, out asci8 dst)
-        {
-            dst = new asci8(
-                bitchar(src, 2),
-                bitchar(src, 1),
-                bitchar(src, 0)
-            );
-            return dst;
-        }
 
         [MethodImpl(Inline), Op]
         public static uint render3(byte src, ref uint i, Span<C> dst, N3 n = default)

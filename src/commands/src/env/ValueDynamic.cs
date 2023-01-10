@@ -11,6 +11,32 @@ namespace Z0
 
     public class ValueDynamic
     {
+        public static uint parse<T>(ReadOnlySpan<string> src, char sep, out T dst)
+            where T : new()
+        {
+            dst = new();
+            var counter = 0u;
+            var settings = Settings.parse(src, sep);
+            var fields = typeof(T).PublicInstanceFields().Select(x => (x.Name,x)).ToDictionary();
+            var count = src.Length;
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var setting = ref settings[i];
+                if(setting.IsEmpty)
+                    continue;
+
+                if(fields.TryGetValue(setting.Name, out var field))
+                {
+                    if(parse(setting.ValueText, field.FieldType, out var x))
+                    {
+                        field.SetValue(dst, x);
+                        counter++;
+                    }
+                }
+            }
+            return counter;
+        }
+
         public static bool parse(string src, Type type, out dynamic? dst)
         {
             dst = null;

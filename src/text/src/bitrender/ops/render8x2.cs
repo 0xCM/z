@@ -9,41 +9,38 @@ namespace Z0
     partial struct BitRender
     {
         [MethodImpl(Inline), Op]
-        public static uint render8x3x3x2(byte src, ref uint i, Span<char> dst)
+        public static uint render8x2(char sep, byte src, ref uint i, Span<char> dst)
         {
             var i0 = i;
             seek(dst, i++) = bitchar(src, 7);
             seek(dst, i++) = bitchar(src, 6);
+            i += separate(i, sep, dst);
             seek(dst, i++) = bitchar(src, 5);
-            separate(i++, dst);
             seek(dst, i++) = bitchar(src, 4);
+            i += separate(i, sep, dst);
             seek(dst, i++) = bitchar(src, 3);
             seek(dst, i++) = bitchar(src, 2);
-            separate(i++, dst);
+            i += separate(i, sep, dst);
             seek(dst, i++) = bitchar(src, 1);
             seek(dst, i++) = bitchar(src, 0);
-            separate(i++, dst);
-            return i-i0;
-        }
-
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> render8x3x3x2(byte src)
-        {
-            var dst = CharBlock16.Null.Data;
-            var i=0u;
-            var count = render8x3x3x2(src,ref i, dst);
-            return slice(dst,0,count);
-        }
-
-        [MethodImpl(Inline), Op]
-        public static uint render8x3x3x2(ReadOnlySpan<byte> src, ref uint i, Span<char> dst)
-        {
-            var i0 = i;
-            var size = (int)src.Length;
-            var length = min(size, dst.Length);
-            for(var j=0; j<length; j++)
-                render8x3x3x2(skip(src, j), ref i, dst);
             return i - i0;
         }
+
+        [MethodImpl(Inline), Op]
+        public static uint render8x2(byte src, ref uint i, Span<char> dst)
+            => render8x2(Chars.Space, src, ref i, dst);
+
+        [MethodImpl(Inline), Op]
+        public static string render8x2(char sep, byte src)
+        {
+            Span<char> dst = stackalloc char[16];
+            var i = 0u;
+            var count = render8x2(src, ref i, dst);
+            return new(slice(dst,0,count));
+        }
+
+        [MethodImpl(Inline), Op]
+        public static ReadOnlySpan<char> render8x2(byte src)
+            => render8x2(Chars.Space, src);
     }
 }

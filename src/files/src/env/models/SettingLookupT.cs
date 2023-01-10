@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using api = Settings;
+
     public class SettingLookup<T> : Seq<SettingLookup<T>,Setting>, ILookup<@string,Setting>
         where T : new()
     {
@@ -20,7 +22,7 @@ namespace Z0
         }
 
         public bool Find(@string key, out Setting setting)
-            => SettingLookup.search(this, key, out setting);
+            => api.search(this, key, out setting);
 
         [MethodImpl(Inline)]
         public static implicit operator SettingLookup(SettingLookup<T> src)

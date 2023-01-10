@@ -68,11 +68,11 @@ namespace Z0
             => render16x8(Chars.Space, src, ref i, dst);
 
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> render16x8(char sep, ushort src)
+        public static string render16x8(char sep, ushort src)
         {
-            var buffer = CharBlock32.Null.Data;
+            Span<char> buffer = stackalloc char[32];
             var count = render16x8(sep, src, 0, buffer);
-            return slice(buffer,0,count);
+            return new(slice(buffer,0,count));
         }
     }
 }

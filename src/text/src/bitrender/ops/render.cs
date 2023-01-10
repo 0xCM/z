@@ -131,7 +131,7 @@ namespace Z0
         public static uint render(ReadOnlySpan<byte> src, ReadOnlySpan<byte> widths, Span<char> dst)
         {
             var i=0u;
-            var count = core.min(src.Length,widths.Length);
+            var count = sys.min(src.Length,widths.Length);
             for(var j=0; j<count; j++)
                 i+= render(skip(src,j), ref i, skip(widths,j), dst);
             return i;

@@ -18,6 +18,33 @@ namespace Z0
     [Free,ApiHost]
     public class AsciLines
     {
+        public static SettingLookup lookup(FilePath src, char sep)
+        {
+            var dst = list<Setting>();
+            var line = AsciLineCover.Empty;
+            var quoted = new Fence<AsciCode>(AsciCode.SQuote, AsciCode.SQuote);
+            using var reader = src.AsciLineReader();
+            while(reader.Next(out line))
+            {
+                var content = line.Codes;
+                var length = content.Length;
+                if(length != 0)
+                {
+                    if(SQ.hash(first(content)))
+                        continue;
+
+                    var i = SQ.index(content, sep);
+                    if(i > 0)
+                    {
+                        var name = Asci.format(SQ.left(content,i));
+                        var value = Asci.format(SQ.right(content,i));
+                        dst.Add(new Setting(name, value));
+                    }
+                }
+            }
+            return new SettingLookup(dst.ToArray());
+        } 
+
         [MethodImpl(Inline), Op]
         static BinaryCode tobytes(string src)
             => Encoding.ASCII.GetBytes(src);
@@ -30,7 +57,7 @@ namespace Z0
             dst = Activator.CreateInstance(type);
             var counter = 0u;
             var line = AsciLineCover.Empty;
-            var members = SettingsApi.members(type);
+            var members = Settings.members(type);
             while(src.Next(out line))
             {
                 var content = line.Codes;
@@ -66,7 +93,7 @@ namespace Z0
             dst = new();
             var counter = 0u;
             var line = AsciLineCover.Empty;
-            var members = SettingsApi.members<T>();
+            var members = Settings.members<T>();
             while(src.Next(out line))
             {
                 var content = line.Codes;
