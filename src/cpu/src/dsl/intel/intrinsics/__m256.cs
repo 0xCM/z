@@ -37,18 +37,18 @@ namespace Z0.dsl.intel
         public num<float> this[int i]
         {
             [MethodImpl(Inline)]
-            get => Cells.cell(ref Data, i/8);
+            get => gcells.cell(ref Data, i/8);
 
             [MethodImpl(Inline)]
-            set => Cells.cell(ref Data, i/8) = value;
+            set => gcells.cell(ref Data, i/8) = value;
         }
 
         public float this[int max, int min]
         {
             [MethodImpl(Inline)]
-            get => Cells.bits(ref Data, max, min);
+            get => gcells.bits(ref Data, max, min);
             [MethodImpl(Inline)]
-            set => Cells.bits(ref Data, max, min) = value;
+            set => gcells.bits(ref Data, max, min) = value;
         }
 
         public string Format()

@@ -37,14 +37,14 @@ namespace Z0
         [CmdOp("asm/check/bitstrings")]
         Outcome CheckBitstrings(CmdArgs args)
         {
-            Storage.chars(n128, out var block1);
+            var block1 = CharBlock128.Null;
             var count = bitstring(Input, block1.Data);
             var chars = slice(block1.Data,0,count);
             var bits = text.format(chars);
             Write(InputBitsA);
             Write(bits);
 
-            Storage.chars(n128, out var block2);
+            var block2 = CharBlock128.Null;
             count = bitstring(bytes(InputBitsB), block2.Data);
             bits = text.format(chars);
             Write(bits);

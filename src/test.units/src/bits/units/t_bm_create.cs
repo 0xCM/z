@@ -51,7 +51,7 @@ namespace Z0
         {
             var src = Cells.load<ushort>(w256,Random.Span<ushort>(16));
             var dst = sys.bytes(Cells.alloc(w256));
-            Cells.store(src, dst);
+            gcells.store(src, dst);
             var A = BitMatrix.primal(n16, dst);
             var B = BitMatrix.primal(n16, bytes(src));
             Claim.require(BitMatrix.same(A,B));

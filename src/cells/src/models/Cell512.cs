@@ -51,13 +51,13 @@ namespace Z0
             X1 = src.Hi;
         }
 
-        [MethodImpl(Inline)]
-        public Cell512(ByteBlock64 src)
-        {
-            var v = src.Vector<ulong>();
-            X0 = v.Lo;
-            X1 = v.Hi;
-        }
+        // [MethodImpl(Inline)]
+        // public Cell512(ByteBlock64 src)
+        // {
+        //     var v = src.Vector<ulong>();
+        //     X0 = v.Lo;
+        //     X1 = v.Hi;
+        // }
 
         [MethodImpl(Inline)]
         public static Cell512 init<T>(in Vector512<T> src)
@@ -67,7 +67,8 @@ namespace Z0
         [MethodImpl(Inline)]
         public Vector512<T> ToVector<T>()
             where T : unmanaged
-                => gcpu.vload(w512, @as<F,T>(this));
+                => @as<Cell512,Vector512<T>>(this);
+                //gcpu.vload(w512, @as<F,T>(this));
 
         [MethodImpl(Inline)]
         public Vector256<T> LoVector<T>()
@@ -99,7 +100,6 @@ namespace Z0
         public T As<T>()
             where T : struct
                 => @as<F,T>(this);
-
 
         [MethodImpl(Inline)]
         public static implicit operator Cell512((Cell256 x0, Cell256 x1) x)

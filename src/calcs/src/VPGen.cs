@@ -25,7 +25,7 @@ namespace Z0
         public static Vector128<T> vpalt<T>(N128 n, T a, T b)
             where T : unmanaged
         {
-            var data = Cells.alloc<T>(n);
+            var data = new Cell128<T>();
             var len = CellCalcs.blocklength<T>(n);
             var buffer = sys.recover<T>(sys.bytes(data));
             for(var i=0; i<len; i++)
@@ -44,7 +44,7 @@ namespace Z0
             where T : unmanaged
         {
             var current = first;
-            var data = Cells.alloc<T>(n);
+            var data = new Cell128<T>();
             var len = CellCalcs.blocklength<T>(n);
             var buffer = recover<T>(bytes(data));
             for(var i=0; i < len; i++)
@@ -67,7 +67,7 @@ namespace Z0
             where T : unmanaged
         {
             var current = first;
-            var data = Cells.alloc<T>(n);
+            var data = new Cell256<T>();
             var len = CellCalcs.blocklength<T>(n);
             var buffer = recover<T>(bytes(data));
             for(var i=0; i<len; i++)
@@ -90,7 +90,7 @@ namespace Z0
             where T : unmanaged
         {
             var current = first;
-            var data = Cells.alloc<T>(n);
+            var data = new Cell128<T>();
             var len = CellCalcs.blocklength<T>(n);
             var buffer = sys.recover<T>(sys.bytes(data));
             for(var i=0; i < len; i++)
@@ -112,7 +112,7 @@ namespace Z0
             where T : unmanaged
         {
             var current = first;
-            var data = Cells.alloc<T>(n);
+            var data = new Cell256<T>();
             var len = CellCalcs.blocklength<T>(n);
             var buffer = recover<T>(bytes(data));
             for(var i=0; i < len; i++)
@@ -134,7 +134,7 @@ namespace Z0
             where T : unmanaged
         {
             var current = first;
-            var data = Cells.alloc<T>(n);
+            var data = new Cell128<T>();
             var len = CellCalcs.blocklength<T>(n);
             var buffer = sys.recover<T>(sys.bytes(data));
             for(var i=0; i<len; i++)
@@ -156,7 +156,7 @@ namespace Z0
             where T : unmanaged
         {
             var current = first;
-            var data = Cells.alloc<T>(n);
+            var data = new Cell256<T>();
             var len = CellCalcs.blocklength<T>(n);
             var buffer = recover<T>(bytes(data));
             for(var i=0; i<len; i++)

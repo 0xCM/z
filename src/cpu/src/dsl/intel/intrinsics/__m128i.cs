@@ -45,9 +45,9 @@ namespace Z0.dsl.intel
         public T this[int max, int min]
         {
             [MethodImpl(Inline)]
-            get => Cells.bits(ref Data, max, min);
+            get => gcells.bits(ref Data, max, min);
             [MethodImpl(Inline)]
-            set => Cells.bits(ref Data, max, min) = value;
+            set => gcells.bits(ref Data, max, min) = value;
         }
 
         public string Format()
