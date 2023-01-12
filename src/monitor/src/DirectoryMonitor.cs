@@ -20,7 +20,7 @@ namespace Z0
         internal DirectoryMonitor(IDbArchive src, IDbArchive dst)
         {
             var ts = Timestamp.now();
-            var id = Archives.identifier(src.Root);
+            var id = FS.identifier(src.Root);
             var settings = new LogSettings(dst.Path($"{id}.{ts}",FileKind.Log), dst.Path($"{ts}.errors", FileKind.Log));
             Target = Loggers.worker(settings);
             Sources = src;

@@ -43,7 +43,7 @@ namespace Z0
             }
             catch(Exception e)
             {
-                term.error(e);
+                Console.Error.WriteLine(e);
             }
         }
 
@@ -85,7 +85,7 @@ namespace Z0
             => Watcher.EnableRaisingEvents = false;
 
         void Error(object sender, ErrorEventArgs e)
-            => term.error(e.GetException());
+            => Console.Error.WriteLine(e.GetException());
 
         IDbArchive IMonitor<IDbArchive>.Target
             => Target;

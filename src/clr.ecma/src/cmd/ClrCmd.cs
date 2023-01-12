@@ -4,10 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.Linq;
-
     using static sys;
-    using static Env;
 
     public class ClrSvc : WfSvc<ClrSvc>
     {
@@ -26,7 +23,6 @@ namespace Z0
 
             return start(impl);
         }
-
     }
 
     class ClrCmd : WfAppCmd<ClrCmd>
@@ -52,9 +48,15 @@ namespace Z0
         {
             var dir = FS.dir(args[0]);
             var src = Archives.modules(dir).Assemblies();
-            var refs = EcmaReader.refs(src).ToSeq().Sort();
-            var name = $"{Archives.identifier(dir)}.assembly-refs";
-            Channel.TableEmit(refs, DataTarget.Path(name, FileKind.Csv));            
+            var dst = bag<AssemblyRef>();
+            iter(src, client => iter(Ecma.refs(client), c => dst.Add(c)), true);
+            var sorted = dst.Array().Sort();
+            var emitter = text.emitter();
+            iter(sorted, f => emitter.AppendLineFormat("{0}"));
+
+            // var refs = EcmaReader.refs(src).ToSeq().Sort();
+            // var name = $"{Archives.identifier(dir)}.assembly-refs";
+            // Channel.TableEmit(refs, DataTarget.Path(name, FileKind.Csv));            
         }   
 
         [CmdOp("clr/types")]

@@ -9,15 +9,15 @@ namespace Z0
     using static sys;
     using static Bytes;
 
-    partial class XTend
-    {
-        public static EcmaReader MetadataReader(this MappedAssembly src)
-            => EcmaReader.create(src.BaseAddress, src.FileSize);
-    }
-    
     [ApiHost]
     public class Ecma : WfSvc<Ecma>
     {
+        public static IEnumerable<AssemblyRef> refs(AssemblyFile src)
+        {
+            using var ecma = EcmaFile.open(src.Path);
+            return ecma.Reader().ReadAssemblyRefs2();            
+        }
+
         public static ReadOnlySeq<AssemblyRefInfo> refs(Assembly src)
             => EcmaReader.create(src).ReadAssemblyRefs();
 
@@ -314,4 +314,10 @@ namespace Z0
             return length;
         }
    }
+
+    partial class XTend
+    {
+        public static EcmaReader MetadataReader(this MappedAssembly src)
+            => EcmaReader.create(src.BaseAddress, src.FileSize);
+    }
 }

@@ -6,11 +6,6 @@ namespace Z0
 {
     using System.Text;
 
-    public readonly partial struct term
-    {
-        static readonly Terminal T = Terminal.Get();
-    }
-
     /// <summary>
     /// Implements a thread-safe/thread-aware terminal abstraction
     /// </summary>

@@ -146,7 +146,8 @@ namespace Z0
         public static string bitfield(ApiKey src)
         {
             var data = span16u(src);
-            var buffer = Storage.chars(n64).Data;
+            var block = CharBlock64.Null;
+            var buffer = block.Data;
             ref var dst = ref first(buffer);
 
             var j=z8;

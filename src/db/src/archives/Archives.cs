@@ -12,14 +12,10 @@ namespace Z0
 
     public class Archives
     {        
-        public static BuildArchive build(FolderPath root)
-            => new BuildArchive(archive(root));
-            
         public static void nupkg(IWfChannel channel, CmdArgs args)
         {
             var src = FS.dir(args[0]);
-            var packs = Archives.packages(src, PackageKind.Nuget);
-            iter(packs, p => channel.Write(p));
+            iter(packages(src, PackageKind.Nuget), p => channel.Write(p));
         }
 
         public static FileKind filekind(PackageKind src)
@@ -181,7 +177,7 @@ namespace Z0
         public static void catalog(IWfChannel channel, CmdArgs args)
         {
             CreateFileCatalog.bind(args, out CreateFileCatalog cmd);
-            var name = Archives.identifier(cmd.Source);
+            var name = FS.identifier(cmd.Source);
             var dst = cmd.Target + FS.file(name, FileKind.Csv);
             var running =  channel.Running($"Adding files from {cmd.Source} to catalog");
             var counter = 0u;
@@ -305,7 +301,7 @@ namespace Z0
         }
 
         public static string identifier(FolderPath src)
-            => src.Format(PathSeparator.FS).Replace(Chars.FSlash, Chars.Dot).Replace(Chars.Colon, Chars.Dot).Replace("..", ".");
+            => FS.identifier(src);
 
         public static FileName timestamped(string name, FileExt ext)
             => FS.file(string.Format("{0}.{1}", name, (sys.timestamp()).Format()),ext);

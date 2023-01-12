@@ -86,7 +86,7 @@ namespace Z0
             var k = 0;
             for(uint i=start; i<=end; i++, k++)
             {
-                var block = Storage.chars(n8);
+                var block = CharBlock8.Null;
                 var data = block.Data;
                 for(var j=0; j<8; j++)
                     seek(data,j) = bit.test(i,(byte)j).ToChar();
@@ -105,7 +105,7 @@ namespace Z0
             var k = 0;
             for(uint i=start; i<=end; i++, k++)
             {
-                var block = Storage.chars(n16);
+                var block = CharBlock16.Null;
                 var data = block.Data;
                 for(var j=0; j<16; j++)
                     seek(data,j) = bit.test(i,(byte)j).ToChar();

@@ -7,15 +7,7 @@ namespace Z0
     using static sys;
 
     partial class EcmaEmitter
-    {
-        public void EmitRefs(IApiPack dst)
-        {
-            EmitAssemblyRefs(ApiAssemblies.Parts, dst);
-        }
-
-        public void EmitAssemblyRefs(IApiPack dst)
-            => EmitAssemblyRefs(ApiAssemblies.Parts, dst);
-
+    {        
         public void EmitAssemblyRefs(ReadOnlySpan<Assembly> src, IDbArchive dst)
             => EmitAssemblyRefs(src, dst.Table<AssemblyRefInfo>());
         

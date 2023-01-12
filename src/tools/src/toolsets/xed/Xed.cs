@@ -4,12 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using N = ToolNames;
-
     public sealed class XedTool : Tool<XedTool>
     {
         public XedTool()
-            : base(N.xed)
+            : base("xed")
         {
 
         }

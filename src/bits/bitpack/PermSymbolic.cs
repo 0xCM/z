@@ -18,7 +18,8 @@ namespace Z0
             var bits8u = cover(@as<byte>(storage),8);
             BitPack.unpack1x8((byte)src, bits8u);
             var bits = recover<bit>(bits8u);
-            var chars = Storage.chars(n16).Data;
+            var block = CharBlock16.Null;
+            var chars = block.Data;
             var i=0;
             var j=0;
 
@@ -63,9 +64,10 @@ namespace Z0
             BitPack.unpack1x8((byte)src, bitbuffer);
             var bits = recover<bit>(bitbuffer);
             var block = bitblock(src, true);
-            var codomain = Storage.chars(n).Data;
-            letters(n, @readonly(bits), codomain);
-            return string.Format(Pattern, text.format(block), Domain, text.format(codomain));
+
+            var codomain = CharBlock4.Null;
+            letters(n, @readonly(bits), codomain.Data);
+            return string.Format(Pattern, text.format(block), Domain, text.format(codomain.Data));
         }
 
         [MethodImpl(Inline), Op]

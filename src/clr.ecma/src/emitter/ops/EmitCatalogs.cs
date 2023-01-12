@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static EcmaTables;
-
     partial class EcmaEmitter
     {
         public void EmitCatalogs(ReadOnlySeq<Assembly> src, IDbArchive dst)

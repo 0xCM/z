@@ -11,123 +11,123 @@ namespace Z0
     {
         const NumericKind Closure = UnsignedInts;
 
-        [MethodImpl(Inline), Op]
-        public static CharBlock1 chars(N1 n)
-            => default;
+        // [MethodImpl(Inline), Op]
+        // public static CharBlock1 chars(N1 n)
+        //     => default;
 
-        [MethodImpl(Inline), Op]
-        public static CharBlock2 chars(N2 n)
-            => default;
+        // [MethodImpl(Inline), Op]
+        // public static CharBlock2 chars(N2 n)
+        //     => default;
 
-        [MethodImpl(Inline), Op]
-        public static CharBlock3 chars(N3 n)
-            => default;
+        // [MethodImpl(Inline), Op]
+        // public static CharBlock3 chars(N3 n)
+        //     => default;
 
-        [MethodImpl(Inline), Op]
-        public static CharBlock4 chars(N4 n)
-            => default;
+        // [MethodImpl(Inline), Op]
+        // public static CharBlock4 chars(N4 n)
+        //     => default;
 
-        [MethodImpl(Inline), Op]
-        public static CharBlock5 chars(N5 n)
-            => default;
+        // [MethodImpl(Inline), Op]
+        // public static CharBlock5 chars(N5 n)
+        //     => default;
 
-        [MethodImpl(Inline), Op]
-        public static CharBlock6 chars(N6 n)
-            => default;
+        // [MethodImpl(Inline), Op]
+        // public static CharBlock6 chars(N6 n)
+        //     => default;
 
-        [MethodImpl(Inline), Op]
-        public static CharBlock7 chars(N7 n)
-            => default;
+        // [MethodImpl(Inline), Op]
+        // public static CharBlock7 chars(N7 n)
+        //     => default;
 
-        [MethodImpl(Inline), Op]
-        public static CharBlock8 chars(N8 n)
-            => default;
+        // [MethodImpl(Inline), Op]
+        // public static CharBlock8 chars(N8 n)
+        //     => default;
 
-        [MethodImpl(Inline), Op]
-        public static CharBlock9 chars(N9 n)
-            => default;
+        // [MethodImpl(Inline), Op]
+        // public static CharBlock9 chars(N9 n)
+        //     => default;
 
-        [MethodImpl(Inline), Op]
-        public static CharBlock10 chars(N10 n)
-            => default;
+        // [MethodImpl(Inline), Op]
+        // public static CharBlock10 chars(N10 n)
+        //     => default;
 
-        [MethodImpl(Inline), Op]
-        public static CharBlock11 chars(N11 n)
-            => default;
+        // [MethodImpl(Inline), Op]
+        // public static CharBlock11 chars(N11 n)
+        //     => default;
 
-        [MethodImpl(Inline), Op]
-        public static CharBlock12 chars(N12 n)
-            => default;
+        // [MethodImpl(Inline), Op]
+        // public static CharBlock12 chars(N12 n)
+        //     => default;
 
-        [MethodImpl(Inline), Op]
-        public static CharBlock13 chars(N13 n)
-            => default;
+        // [MethodImpl(Inline), Op]
+        // public static CharBlock13 chars(N13 n)
+        //     => default;
 
-        [MethodImpl(Inline), Op]
-        public static CharBlock14 chars(N14 n)
-            => default;
+        // [MethodImpl(Inline), Op]
+        // public static CharBlock14 chars(N14 n)
+        //     => default;
 
-        [MethodImpl(Inline), Op]
-        public static CharBlock15 chars(N15 n)
-            => default;
+        // [MethodImpl(Inline), Op]
+        // public static CharBlock15 chars(N15 n)
+        //     => default;
 
-        [MethodImpl(Inline), Op]
-        public static CharBlock16 chars(N16 n)
-            => default;
+        // [MethodImpl(Inline), Op]
+        // public static CharBlock16 chars(N16 n)
+        //     => default;
 
-        [MethodImpl(Inline), Op]
-        public static CharBlock32 chars(N32 n)
-            => default;
+        // [MethodImpl(Inline), Op]
+        // public static CharBlock32 chars(N32 n)
+        //     => default;
 
-        [MethodImpl(Inline), Op]
-        public static CharBlock64 chars(N64 n)
-            => default;
+        // [MethodImpl(Inline), Op]
+        // public static CharBlock64 chars(N64 n)
+        //     => default;
 
-        [MethodImpl(Inline), Op]
-        public static CharBlock128 chars(N128 n)
-            => default;
+        // [MethodImpl(Inline), Op]
+        // public static CharBlock128 chars(N128 n)
+        //     => default;
 
-        [MethodImpl(Inline), Op]
-        public static CharBlock256 chars(N256 n)
-            => default;
+        // [MethodImpl(Inline), Op]
+        // public static CharBlock256 chars(N256 n)
+        //     => default;
 
-        [MethodImpl(Inline), Op]
-        public static ref char chars(N128 n, out CharBlock128 dst)
-        {
-            dst = default;
-            return ref c16(dst);
-        }
+        // [MethodImpl(Inline), Op]
+        // public static ref char chars(N128 n, out CharBlock128 dst)
+        // {
+        //     dst = default;
+        //     return ref c16(dst);
+        // }
 
-        [MethodImpl(Inline), Op]
-        public static ref char chars(N256 n, out CharBlock256 dst)
-        {
-            dst = default;
-            return ref c16(dst);
-        }
+        // [MethodImpl(Inline), Op]
+        // public static ref char chars(N256 n, out CharBlock256 dst)
+        // {
+        //     dst = default;
+        //     return ref c16(dst);
+        // }
 
-        [MethodImpl(Inline), Op]
-        public static void chars(out CharBlock64 a, out CharBlock64 b)
-        {
-            a = default;
-            b = default;
-        }
+        // [MethodImpl(Inline), Op]
+        // public static void chars(out CharBlock64 a, out CharBlock64 b)
+        // {
+        //     a = default;
+        //     b = default;
+        // }
 
-        [MethodImpl(Inline), Op]
-        public static void chars(out CharBlock64 a, out CharBlock64 b, out CharBlock64 c)
-        {
-            a = default;
-            b = default;
-            c = default;
-        }
+        // [MethodImpl(Inline), Op]
+        // public static void chars(out CharBlock64 a, out CharBlock64 b, out CharBlock64 c)
+        // {
+        //     a = default;
+        //     b = default;
+        //     c = default;
+        // }
 
-        [MethodImpl(Inline), Op]
-        public static void chars(out CharBlock64 a, out CharBlock64 b, out CharBlock64 c, out CharBlock64 d)
-        {
-            a = default;
-            b = default;
-            c = default;
-            d = default;
-        }
+        // [MethodImpl(Inline), Op]
+        // public static void chars(out CharBlock64 a, out CharBlock64 b, out CharBlock64 c, out CharBlock64 d)
+        // {
+        //     a = default;
+        //     b = default;
+        //     c = default;
+        //     d = default;
+        // }
 
         [MethodImpl(Inline), Op]
         public static ref ByteBlock16 copy(ReadOnlySpan<byte> src, ref ByteBlock16 dst)

@@ -11,13 +11,11 @@ namespace Z0
 
     class AppController : BackgroundService
     {
-        readonly IWfRuntime Wf;
 
         readonly IMonitor Monitor;
         
-        public AppController(IWfRuntime wf, ILogger<AppController> logger, string[] args)
+        public AppController(ILogger<AppController> logger, string[] args)
         {
-            Wf = wf;
             var src = FS.dir(args[0]);
             var dst = AppDb.Service.Catalogs("fs.change");
             Require.invariant(src.Exists);
@@ -27,7 +25,6 @@ namespace Z0
         public override void Dispose()
         {
             Monitor.Stop();
-            Wf.Dispose();
         }
 
         protected override async Task ExecuteAsync(CancellationToken cancel)

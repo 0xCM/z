@@ -2,10 +2,10 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-[assembly: PartId(PartId.Workers)]
+[assembly: PartId("monitor")]
 namespace Z0.Parts
 {
-    public sealed partial class Workers : Part<Workers>
+    public sealed partial class Monitor : Part<Monitor>
     {
 
     }

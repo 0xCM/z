@@ -30,7 +30,7 @@ namespace Z0
         {
             var parser = DigitParsers.chars(@base);
             var input = span("346610");
-            var buffer = Storage.chars(n32);
+            var buffer = CharBlock32.Null;
             var count = parser.Parse(input, buffer.Data);
             var parsed = slice(buffer.Data,0,count);
             Write(text.format(Demand.eq(input,parsed)));
@@ -40,7 +40,7 @@ namespace Z0
         {
             var parser = DigitParsers.chars(@base);
             var input = span("FA34CA");
-            var buffer = Storage.chars(n32);
+            var buffer = CharBlock32.Null;
             var count = parser.Parse(input, buffer.Data);
             var parsed = slice(buffer.Data,0,count);
             Write(text.format(Demand.eq(input,parsed)));
@@ -50,7 +50,7 @@ namespace Z0
         {
             var parser = DigitParsers.chars(@base);
             var input = span("11001101");
-            var buffer = Storage.chars(n32);
+            var buffer = CharBlock32.Null;
             var count = parser.Parse(input, buffer.Data);
             var parsed = slice(buffer.Data,0,count);
             Write(text.format(Demand.eq(input,parsed)));

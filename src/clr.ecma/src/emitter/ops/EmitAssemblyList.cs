@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     partial class EcmaEmitter
     {
         public void EmitAssemblyList(IDbArchive src, FilePath dst)    

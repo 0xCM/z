@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Monitor>$(MsBuildThisFileDirectory)z0.monitors.csproj</Monitor>
+  </PropertyGroup>
+</Project>

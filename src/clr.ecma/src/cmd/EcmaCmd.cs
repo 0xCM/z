@@ -9,17 +9,6 @@ namespace Z0
     using static sys;
     using static Env;
 
-    [Cmd(CmdName)]
-    public record class EmitAssemblyList : Command<EmitAssemblyList>
-    {
-        const string CmdName = "ecma/list";
-
-        public FolderPath Source;
-
-
-        public FilePath Target;
-    }
-
     partial class EcmaCmd : WfAppCmd<EcmaCmd>
     {
         Ecma Ecma => Wf.Ecma();
@@ -34,18 +23,6 @@ namespace Z0
         [CmdOp("ecma/emit")]
         void EcmaEmit()
             => EcmaEmitter.Emit(ApiAssemblies.Parts, EcmaEmissionSettings.Default, AppDb.ApiTargets("ecma"));
-
-        [CmdOp("ecma/list")]
-        void EcmaList(CmdArgs args)
-        {
-            var cmd = EmitAssemblyList.Empty;
-            cmd.Source = FS.dir(args[0]);
-            if(args.Count > 1)
-                cmd.Target = FS.path(args[1]);
-            else
-                cmd.Target = Env.ShellData.Path("assemblies", FileKind.Csv);
-            EcmaEmitter.EmitAssemblyList(cmd.Source.DbArchive(), cmd.Target);
-        }
 
         public static ReadOnlySeq<Assembly> Parts(FolderPath src)
         {

@@ -4,18 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed class Zsh : Tool<Zsh>
+    partial struct FS
     {
-        public Zsh()
-            : base("zsh")
-        {
-
-        }
-
-        public string Format()
-            => Name.Format();
-
-        public override string ToString()
-            => Format();
+        [Op]
+        public static string identifier(FolderPath src)
+            => src.Format(PathSeparator.FS).Replace(Chars.FSlash, Chars.Dot).Replace(Chars.Colon, Chars.Dot).Replace("..", ".");
     }
 }

@@ -6,29 +6,52 @@ namespace Z0
 {
     using static sys;
 
-    using api = CharBlocks;
-    using B = CharBlock2;
+    using api = CharBlock;
 
-
-    /// <summary>
-    /// Defines a character block b with capacity(b) = 2x16u
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential, Pack=2)]
-    public struct CharBlock2 : ICharBlock<B>
+    public ref struct CharBlock<N>
+        where N : unmanaged, ITypeNat
     {
-        public static N2 N => default;
+        readonly Span<char> Buffer;
 
-        CharBlock1 Lo;
+        [MethodImpl(Inline)]
+        public CharBlock()
+        {
+            Buffer = new char[nat32i<N>()];            
+        }
 
-        CharBlock1 Hi;
+        [MethodImpl(Inline)]
+        internal CharBlock(Span<char> buffer)
+        {
+            Buffer = buffer;
+        }
 
-        /// <summary>
-        /// The block content presented as an editable buffer
-        /// </summary>
+        [MethodImpl(Inline)]
+        public CharBlock(ReadOnlySpan<char> src)
+        {
+            Buffer = new char[nat32i<N>()];
+            var n =  nat32u<N>();
+            var k = src.Length;
+            for(var i=0; i<n && i<k; i++, k++)
+                seek(Buffer,i) = skip(src,i);            
+            sys.copy(src, Buffer);
+        }
+
+        public uint Capacity
+        {
+            [MethodImpl(Inline)]
+            get => nat32u<N>();
+        }
+
+        public int Length
+        {
+            [MethodImpl(Inline)]
+            get => api.length(this);
+        }
+
         public Span<char> Data
         {
             [MethodImpl(Inline)]
-           get => cover<B,char>(this, CharCount);
+            get => Buffer;
         }
 
         /// <summary>
@@ -50,7 +73,6 @@ namespace Z0
             get => ref first(Data);
         }
 
-
         public ref char this[int index]
         {
             [MethodImpl(Inline)]
@@ -63,15 +85,6 @@ namespace Z0
             get => ref seek(First,index);
         }
 
-        public uint Capacity
-            => CharCount;
-
-        public int Length
-        {
-            [MethodImpl(Inline)]
-            get => api.length(this);
-        }
-
         public string Format()
             => api.format(this);
 
@@ -79,25 +92,11 @@ namespace Z0
             => Format();
 
         [MethodImpl(Inline)]
-        public static implicit operator B(string src)
-            => api.init(src, out B dst);
-
+        public static implicit operator CharBlock<N>(string src)
+            => api.init(src, out CharBlock<N> dst);
+ 
         [MethodImpl(Inline)]
-        public static implicit operator B(ReadOnlySpan<char> src)
-            => api.init(src, out B dst);
-
-        public static B Null => default;
-
-        public static B Empty => RpOps.Spaced2;
-
-        /// <summary>
-        /// The block capacity
-        /// </summary>
-        public const ushort CharCount = 2;
-
-        /// <summary>
-        /// The size of the block, in bytes
-        /// </summary>
-        public const uint Size = CharCount * 2;
+        public static implicit operator CharBlock<N>(ReadOnlySpan<char> src)
+            => api.init(src, out CharBlock<N> dst);
     }
 }

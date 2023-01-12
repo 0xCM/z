@@ -4,9 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class XTend
+    public readonly partial struct term
     {
-        public static EcmaReader Reader(this EcmaFile src)
-            => EcmaReader.create(src);
+        static readonly Terminal T = Terminal.Get();
     }
+
 }

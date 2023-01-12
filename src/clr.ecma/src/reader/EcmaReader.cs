@@ -28,7 +28,7 @@ namespace Z0
                 }
                 catch(Exception)
                 {
-                    //channel.Warn($"{path}: {e.Message}")
+                    
                 }
             }
             );

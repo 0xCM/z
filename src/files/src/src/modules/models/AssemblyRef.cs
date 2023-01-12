@@ -4,18 +4,15 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct AssemblyRef : IAssemblyRef<AssemblyFile>, IDataType<AssemblyRef>
+    public readonly struct AssemblyRef : IDataType<AssemblyRef>, IArrow<ClrAssemblyName,ClrAssemblyName>
     {
-        public readonly BinaryCode Token;
+        public readonly ClrAssemblyName Source;
 
-        public readonly AssemblyFile Source;
-
-        public readonly AssemblyFile Target;
+        public readonly ClrAssemblyName Target;
 
         [MethodImpl(Inline)]
-        public AssemblyRef(BinaryCode token, AssemblyFile src, AssemblyFile dst)
+        public AssemblyRef(ClrAssemblyName src, ClrAssemblyName dst)
         {
-            Token = token;
             Source = src;
             Target = dst;
         }
@@ -23,13 +20,13 @@ namespace Z0
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => Source.IsEmpty || Target.IsEmpty;
+            get => Source.IsEmpty | Target.IsEmpty;
         }
 
         public bool IsNonEmpty
         {
             [MethodImpl(Inline)]
-            get => Source.IsNonEmpty && Target.IsNonEmpty;
+            get => Source.IsNonEmpty | Source.IsEmpty;
         }
 
         public Hash32 Hash
@@ -46,7 +43,7 @@ namespace Z0
             => Source == src.Source && Target == src.Target;
 
         public string Format()
-            => $"{Source.AssemblyName} -> {Target.AssemblyName}";
+            => $"{Source} -> {Target}";
 
         public override string ToString()
             => Format();
@@ -59,12 +56,12 @@ namespace Z0
             return result;
         }
 
-        AssemblyFile IArrow<AssemblyFile, AssemblyFile>.Source
+        public static AssemblyRef Empty => new AssemblyRef(ClrAssemblyName.Empty, ClrAssemblyName.Empty);
+
+        ClrAssemblyName IArrow<ClrAssemblyName, ClrAssemblyName>.Source 
             => Source;
 
-        AssemblyFile IArrow<AssemblyFile, AssemblyFile>.Target
+        ClrAssemblyName IArrow<ClrAssemblyName, ClrAssemblyName>.Target     
             => Target;
-
-        public static AssemblyRef Empty => new AssemblyRef(BinaryCode.Empty, AssemblyFile.Empty,AssemblyFile.Empty);
     }
 }

@@ -1,6 +1,7 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(Workflow)" />
+    <ProjectReference Include="$(Files)" />
+    <ProjectReference Include="$(Events)" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="$(MsExtVer)" />
   </ItemGroup>
 </Project>

@@ -87,7 +87,8 @@ namespace global
             if(src.IsEmpty)
                 return default;
 
-            Storage.chars(n256, out var block);
+            var block = CharBlock256.Null;
+            //Storage.chars(n256, out var block);
             var dst = block.Data;
             var count = bitstring(src, dst);
             if(count == 0)

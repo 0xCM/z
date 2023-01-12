@@ -5,9 +5,6 @@
 namespace Z0
 {
     using static sys;
-    using System.Linq;
-
-    using static EcmaTables;
 
     partial class EcmaReader
     {
@@ -22,6 +19,12 @@ namespace Z0
             dst.Version = src.Version;
             dst.Name = src.Name;
             return dst;
+        }
+        [Op]
+        public IEnumerable<AssemblyRef> ReadAssemblyRefs2()
+        {
+            var src = MD.GetAssemblyDefinition().GetAssemblyName();
+            return AssemblyRefHandles().Select(h => new AssemblyRef(src, MD.GetAssemblyReference(h).GetAssemblyName()));
         }
 
         [Op]

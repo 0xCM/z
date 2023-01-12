@@ -30,7 +30,6 @@
 
    <Import Project="$(MsBuildThisFileDirectory)src/db/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/db.mem/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/dispatcher/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/diagnostics/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/dynamic/exports.props"/>
 
@@ -60,6 +59,7 @@
 
    <Import Project="$(MsBuildThisFileDirectory)src/math/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/machines/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/monitor/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/native/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/numbers/exports.props"/>
