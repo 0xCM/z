@@ -46,8 +46,8 @@ namespace Z0
             for(var i=0; i<RepCount; i++)
             {
                 var a = Random.Next<T>();
-                gbits.chars(a,s0);
-                s1 = gbits.chars(a);
+                BitStrings.chars(a,s0);
+                s1 = BitStrings.chars(a);
                 ClaimPrimalSeq.eq(s0, s1);
 
                 s0.Reverse();

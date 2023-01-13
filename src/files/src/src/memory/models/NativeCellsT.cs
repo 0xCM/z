@@ -51,15 +51,6 @@ namespace Z0
             get => ref Cell(i);
         }
 
-        // [MethodImpl(Inline)]
-        // internal MemoryAddress Rebase(uint offset)
-        //     => BaseAddress + CellSize*offset;
-
-        // [MethodImpl(Inline)]
-        // public Span<T> Cells(uint offset, uint count)
-        //     => sys.cover(sys.@as<T>(Rebase(offset)), count);
-
-
         [MethodImpl(Inline)]
         public ref NativeCell<T> Cell(uint index)
             => ref sys.@as<NativeCell<T>>((BaseAddress + CellSize*index).Pointer());

@@ -12,6 +12,90 @@ namespace Z0
 
     public static class XBitString
     {
+        public static string FormatBlockedBits(this byte src, in BitFormat config)
+            => api.blocked(src, config);
+
+        public static string FormatBlockedBits(this ushort src, in BitFormat config)
+            => api.blocked(src, config);
+
+        public static string FormatBlockedBits(this uint src, in BitFormat config)
+            => api.blocked(src, config);
+
+        public static string FormatBlockedBits(this ulong src, in BitFormat config)
+            => api.blocked(src, config);
+
+        public static string FormatBlockedBits(this byte src, int width)
+            => api.blocked(src, BitFormatter.blocked(width));
+
+        public static string FormatBlockedBits(this ushort src, int width)
+            => api.blocked(src, BitFormatter.blocked(width));
+
+        public static string FormatBlockedBits(this uint src, int width)
+            => api.blocked(src, BitFormatter.blocked(width));
+
+        public static string FormatBlockedBits(this ulong src, int width)
+            => api.blocked(src, BitFormatter.blocked(width));        
+        /// <summary>
+        /// Extracts a 128-bit cpu vector from a bitsring of sufficient length
+        /// </summary>
+        /// <param name="src">The source bits</param>
+        /// <param name="w">The bit width selector</param>
+        /// <param name="t">The component type representative</param>
+        /// <typeparam name="T">The target vector component type</typeparam>
+        [MethodImpl(Inline)]
+        public static Vector128<T> ToCpuVector<T>(this BitString src, N128 w, T t = default)
+            where T : unmanaged
+                => src.Pack().Recover<byte,T>().Blocked(w).LoadVector();
+
+        /// <summary>
+        /// Extracts a 256-bit cpu vector from a bitsring of sufficient length
+        /// </summary>
+        /// <param name="src">The source bits</param>
+        /// <param name="w">The bit width selector</param>
+        /// <param name="t">The component type representative</param>
+        /// <typeparam name="T">The target vector component type</typeparam>
+        [MethodImpl(Inline)]
+        public static Vector256<T> ToCpuVector<T>(this BitString src, N256 w, T t = default)
+            where T : unmanaged
+                => src.Pack().Recover<byte,T>().Blocked(w).LoadVector();
+
+        /// <summary>
+        /// Block-formats the vector, e.g. [01010101 01010101 ... 01010101] where by default the size of each block is the bit-width of a component
+        /// </summary>
+        /// <param name="src">The source vector</param>
+        /// <typeparam name="T">The component type</typeparam>
+        public static string FormatBlockedBits<T>(this Vector128<T> src, int width, uint? maxbits = null)
+            where T : unmanaged
+                => text.bracket(src.ToBitString((int?)maxbits).Format(BitFormatter.blocked(width, Chars.Space, maxbits)));
+
+        /// <summary>
+        /// Block-formats the vector, e.g. [01010101 01010101 ... 01010101] where default the size of each block is the bit-width of a component
+        /// </summary>
+        /// <param name="src">The source vector</param>
+        /// <typeparam name="T">The component type</typeparam>
+        public static string FormatBlockedBits<T>(this Vector256<T> src, int width, uint? maxbits = null)
+            where T : unmanaged
+                => text.bracket(src.ToBitString((int?)maxbits).Format(BitFormatter.blocked(width, Chars.Space, maxbits)));
+
+        /// <summary>
+        /// Formats vector bits
+        /// </summary>
+        /// <param name="src">The source vector</param>
+        /// <typeparam name="T">The underlying primal type</typeparam>
+        public static string FormatBits<T>(this Vector128<T> src, int? maxbits = null,  bool tlz = false, bool specifier = false, int? blockWidth = null,
+            char? blocksep = null, int? rowWidth = null)
+                where T : unmanaged
+                    => src.ToBitString(maxbits).Format(BitFormatter.define(tlz, specifier, blockWidth, blocksep, rowWidth,null));
+
+        /// <summary>
+        /// Formats vector bits
+        /// </summary>
+        /// <param name="src">The source vector</param>
+        /// <typeparam name="T">The underlying primal type</typeparam>
+        public static string FormatBits<T>(this Vector256<T> src, int? maxbits = null, bool tlz = false, bool specifier = false, int? blockWidth = null,
+            char? blocksep = null, int? rowWidth = null)
+                where T : unmanaged
+                    => src.ToBitString(maxbits).Format(BitFormatter.define(tlz, specifier, blockWidth, blocksep, rowWidth,null));
         /// <summary>
         /// Shuffles bitstring content as determined by a permutation
         /// </summary>

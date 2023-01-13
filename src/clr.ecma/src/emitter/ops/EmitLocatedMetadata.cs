@@ -4,9 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-    using static EcmaTables;
-
     partial class EcmaEmitter
     {
         public void EmitLocatedMetadata(ReadOnlySeq<Assembly> src, IDbArchive dst, uint bpl = 64)
@@ -23,7 +20,7 @@ namespace Z0
             try
             {
                 var flow = EmittingFile(dst);
-                ByteSize size = MemoryEmitter.emit(ClrAssembly.metadata(src), bpl, dst);
+                ByteSize size = HexEmitter.emit(ClrAssembly.metadata(src), bpl, dst);
                 EmittedBytes(flow, size);
             }
             catch(Exception e)

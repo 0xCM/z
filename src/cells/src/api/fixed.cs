@@ -5,12 +5,8 @@
 namespace Z0
 {
     using static sys;
-
-    [Free, ApiHost]
-    public partial class Cells
+    
+    partial class Cells
     {
-        const NumericKind Closure = UnsignedInts;
     }
-
-
 }

@@ -4,12 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
     using static Chars;
-    using static core;
+    using static sys;
 
     partial struct AsmPrototypes
     {

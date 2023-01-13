@@ -6,24 +6,19 @@ namespace Z0
 {
     using static sys;
     
-    public unsafe class SeqEmitter<S>
+    public unsafe class CellWriter<S> : IDisposable
         where S : unmanaged
     {
-        readonly TextWriter Writer;
+        readonly BinaryWriter Writer;
         
         readonly bool OwnsResources;
 
-        public SeqEmitter()
-        {
-            Writer = Console.Out;
-            OwnsResources = false;
-        }
-
-        public SeqEmitter(TextWriter writer, bool owns)
+        public CellWriter(BinaryWriter writer, bool owns)
         {
             Writer = writer;
             OwnsResources = owns;
         }
+
 
         void Write(PinnedPtr<S> src, uint count)
         {
@@ -34,7 +29,7 @@ namespace Z0
         public Task BeginWrite(ReadOnlySpan<S> src)
         {
             ref readonly var _ref = ref src.GetPinnableReference();
-            var pin = memory.pin<S>(_ref);
+            var pin = Pins.pointer<S>(_ref);
             var count = (uint)src.Length;
             return start(() => Write(pin,count));                
         }
@@ -44,7 +39,8 @@ namespace Z0
 
         public void Dispose()
         {
-            
+            if(OwnsResources)
+                Writer.Dispose();
         }
     }
 }

@@ -4,20 +4,18 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
-    public static class CellSeq
+    partial class Cells
     {
         [MethodImpl(Inline)]
-        public static T[] Select<S,T>(this S src, Func<S,T> f)
+        public static Cells<T> map<S,T>(S src, Func<S,T> f)
             where S : ICellSeq<S>
         {
             var count = (uint)src.Length;
-            var dst = alloc<T>(count);
+            var dst = sys.alloc<T>(count);
             ref readonly var current = ref src.First;
-            ref var target = ref first(dst);
+            ref var target = ref sys.first(dst);
             for(var i= 0u; i<count; i++)
-                seek(target,i) = f(skip(src,i));
+                sys.seek(target,i) = f(sys.skip(src,i));
             return dst;
         }
     }

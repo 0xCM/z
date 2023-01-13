@@ -4,9 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public static partial class FormatBits
+    using static sys;
+
+    public static class CellSeq
     {
-        static string format(BitString src, BitFormat config)
-            => src.Format(config.TrimLeadingZeros, config.SpecifierPrefix, config.BlockWidth, config.BlockSep, config.RowWidth);
-    }
+   }
 }

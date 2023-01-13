@@ -9,7 +9,7 @@ namespace Z0
     using static sys;
 
     [ApiHost]
-    public sealed class MemoryEmitter : AppService<MemoryEmitter>
+    public sealed class HexEmitter : AppService<HexEmitter>
     {
         const byte Bpl = 40;
 
@@ -103,16 +103,16 @@ namespace Z0
             return (uint)offset;
         }
 
-        public void DumpImages(FolderPath src, FolderPath dst, bool pll = true)
-            => iter(src.Files(FS.Dll), file => DumpImage(file,dst), pll);
+        public static void DumpImages(IWfChannel channel, FolderPath src, FolderPath dst, bool pll = true)
+            => iter(src.Files(FS.Dll), file => DumpImage(channel, file, dst), pll);
 
-        public void DumpImage(FilePath src, FolderPath dst)
+        public static void DumpImage(IWfChannel channel, FilePath src, FolderPath dst)
         {
             using var file = MemoryFiles.map(src);
             var target = dst + FS.file(file.Path.FileName.Name, FS.Hex);
-            var flow = Channel.EmittingFile(target);
+            var flow = channel.EmittingFile(target);
             emit(file.BaseAddress, file.FileSize, target);
-            Channel.EmittedFile(flow, (uint)file.FileSize);
+            channel.EmittedFile(flow, (uint)file.FileSize);
         }
 
         public static unsafe void EmitPaged(MemoryRange src, StreamWriter dst, byte bpl = Bpl)

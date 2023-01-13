@@ -4,10 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using System;
-
-    using static Root;
-
     partial struct AsmPrototypes
     {
         [ApiHost(prototypes + loops)]

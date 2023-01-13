@@ -13,6 +13,8 @@ namespace Z0
             => new DumpArchive(src);
 
         public void DumpImageHex(FolderPath src, FolderPath dst, byte major = 6, byte minor = 0, byte revision = 203)
-            => MemoryEmitter.create(Wf).DumpImages(Symbols(src).DotNetSymbolSource(major, minor, revision).Root, Dumps(dst).DotNetTargets(major,minor,revision));
+            => HexEmitter.DumpImages(Channel, 
+                Symbols(src).DotNetSymbolSource(major, minor, revision).Root, 
+                Dumps(dst).DotNetTargets(major,minor,revision));
     }
 }

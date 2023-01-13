@@ -5,5 +5,7 @@
     <ProjectReference Include="$(Db)" />
     <ProjectReference Include="$(Native)" />
     <ProjectReference Include="$(Stitch)" />
+    <ProjectReference Include="$(DbMem)" />
+
   </ItemGroup>
 </Project>

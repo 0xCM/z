@@ -484,7 +484,7 @@ namespace Z0
         {
             var src = View;
             var packed = api.pack(src, offset, (int)width<T>());
-            return packed.Length != 0 ? core.seek<byte,T>(packed) : default;
+            return packed.Length != 0 ? sys.seek<byte,T>(packed) : default;
         }
 
         ReadOnlySpan<byte> View

@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
 
     partial class Cells
-    {
+    {        
         [MethodImpl(Inline), Op]
         public static Cell8 cell8(byte src)
             => src;
