@@ -124,13 +124,13 @@ namespace Z0
                 get => ref @as<ushort>(Spec.Seq);
             }
 
-            public ref readonly AmsInstClass InstClass
+            public ref readonly AsmInstClass InstClass
             {
                 [MethodImpl(Inline)]
                 get => ref Spec.InstClass;
             }
 
-            public AmsInstClass Classifier
+            public AsmInstClass Classifier
             {
                 [MethodImpl(Inline)]
                 get => InstClass;

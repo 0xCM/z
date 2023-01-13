@@ -16,14 +16,14 @@ namespace Z0
 
             public readonly asci64 Asm;
 
-            public readonly AmsInstClass Class;
+            public readonly AsmInstClass Class;
 
             public readonly InstForm Form;
 
             public readonly InstFieldValues Props;
 
             [MethodImpl(Inline)]
-            public Instruction(InstructionId id, asci64 asm, AmsInstClass @class, InstForm form, InstFieldValues props)
+            public Instruction(InstructionId id, asci64 asm, AsmInstClass @class, InstForm form, InstFieldValues props)
             {
                 Id = id;
                 Asm = asm;
@@ -32,7 +32,7 @@ namespace Z0
                 Props = props;
             }
 
-            public static Instruction Empty => new Instruction(InstructionId.Empty, asci64.Null, AmsInstClass.Empty, InstForm.Empty, InstFieldValues.Empty);
+            public static Instruction Empty => new Instruction(InstructionId.Empty, asci64.Null, AsmInstClass.Empty, InstForm.Empty, InstFieldValues.Empty);
         }
     }
 }

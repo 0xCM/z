@@ -23,7 +23,7 @@ namespace Z0
                 var reader = src.ReadNumberedLines().Select(cleanse).Where(line => line.IsNonEmpty).Reader();
                 var seq = 0u;
                 var forms = dict<uint,InstForm>();
-                var @class = AmsInstClass.Empty;
+                var @class = AsmInstClass.Empty;
                 var category = InstCategory.Empty;
                 var isa = InstIsa.Empty;
                 var ext = Extension.Empty;
@@ -71,7 +71,7 @@ namespace Z0
                                         break;
                                         case P.Class:
                                         {
-                                            if(XedParsers.parse(text.despace(value), out AmsInstClass _class))
+                                            if(XedParsers.parse(text.despace(value), out AsmInstClass _class))
                                             {
                                                 if(_class != @class)
                                                 {

@@ -12,7 +12,7 @@ namespace Z0
     {
         public class InstFieldValues : Dictionary<string,string>
         {
-            public static InstFieldValues define(AmsInstClass @class, InstForm form, Index<Facet<string>> src)
+            public static InstFieldValues define(AsmInstClass @class, InstForm form, Index<Facet<string>> src)
             {
                 var dst = dict<string,string>();
                 for(var i=0; i<src.Count; i++)
@@ -20,11 +20,11 @@ namespace Z0
                 return new InstFieldValues(@class, form, dst);
             }
 
-            public readonly AmsInstClass InstClass;
+            public readonly AsmInstClass InstClass;
 
             public readonly InstForm InstForm;
 
-            public InstFieldValues(AmsInstClass @class, InstForm form, Dictionary<string,string> src)
+            public InstFieldValues(AsmInstClass @class, InstForm form, Dictionary<string,string> src)
                 : base(src)
             {
                 InstClass = @class;
@@ -35,7 +35,7 @@ namespace Z0
                 => FieldParser.parse(this, out state);
 
             public static InstFieldValues Empty
-                => new InstFieldValues(AmsInstClass.Empty, InstForm.Empty, dict<string,string>());
+                => new InstFieldValues(AsmInstClass.Empty, InstForm.Empty, dict<string,string>());
         }
     }
 }

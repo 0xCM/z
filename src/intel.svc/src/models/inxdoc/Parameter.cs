@@ -10,15 +10,15 @@ namespace Z0
         {
             public const string ElementName = "parameter";
 
-            public string varname;
+            public @string varname;
 
             public @string type;
 
-            public string etype;
+            public @string etype;
 
-            public string memwidth;
+            public @string memwidth;
 
-            public string immwidth;
+            public @string immwidth;
 
             public string Format()
                 => string.Format("{0} {1}", type, varname);

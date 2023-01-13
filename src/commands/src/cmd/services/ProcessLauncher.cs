@@ -176,7 +176,7 @@ namespace Z0
                 var io = new SysIO(Channel0, Channel1);
                 var running = channel.Running($"{args} -> ({c0Path}, ${c1Path})");
                 run(io, args, context());
-                return channel.Ran(running, c0);
+                return channel.Ran(running);
             }
 
             return sys.start(Run);

@@ -9,12 +9,12 @@ namespace Z0
     {
         public class InstGroup : IComparable<InstGroup>
         {
-            public readonly AmsInstClass Class;
+            public readonly AsmInstClass Class;
 
             public readonly Index<InstGroupMember> Members;
 
             [MethodImpl(Inline)]
-            public InstGroup(AmsInstClass @class, Index<InstGroupMember> src)
+            public InstGroup(AsmInstClass @class, Index<InstGroupMember> src)
             {
                 Class = @class;
                 Members = src;

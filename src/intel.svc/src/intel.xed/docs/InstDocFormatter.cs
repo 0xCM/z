@@ -17,7 +17,7 @@ namespace Z0
         {
             readonly InstDoc Doc;
 
-            AmsInstClass Classifier;
+            AsmInstClass Classifier;
 
             XedOpCode OpCode;
 
@@ -25,7 +25,7 @@ namespace Z0
 
             public InstDocFormatter(InstDoc doc)
             {
-                Classifier = AmsInstClass.Empty;
+                Classifier = AsmInstClass.Empty;
                 OpCode = XedOpCode.Empty;
                 Doc = doc;
                 XedPaths = XedPaths.Service;

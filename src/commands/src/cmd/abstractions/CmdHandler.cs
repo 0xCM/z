@@ -32,13 +32,13 @@ namespace Z0
 
         public virtual Task<ExecToken> Handle(CmdArgs args)
         {
-            ExecToken Exec()
+            ExecToken<CmdRoute> Exec()
             {
                 var flow = Channel.Running(Route);
                 Run(args);
                 return Channel.Ran(flow, Route);
             }
-            return sys.start(Exec);
+            return sys.start(() => Exec().Token);
         }
 
         void ICmdHandler.Initialize(IExecutionContext context)

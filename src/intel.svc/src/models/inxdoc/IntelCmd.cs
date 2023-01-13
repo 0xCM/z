@@ -9,9 +9,9 @@ namespace Z0
     using System.Text;
     using dsl.intel;
 
-    public class IntelInxCmd : WfAppCmd<IntelInxCmd>
+    public class IntelCmd : WfAppCmd<IntelCmd>
     {
-        IntelInx Intrinsics => Wf.IntelIntrinsics();
+        IntelIntrinsics Intrinsics => Wf.IntelIntrinsics();
 
         IntelSdm Sdm => Wf.IntelSdm();
 
@@ -19,10 +19,21 @@ namespace Z0
 
         SdeSvc Sde => Wf.SdeSvc();
 
+        [CmdOp("intel/inx")]
+        void RunInxEtl()
+        {
+            var paths = Intrinsics.Paths();
+            var xml = Intrinsics.LoadSourceDoc(paths);
+            var defs = Intrinsics.ParseSouceDoc(xml);
+            Intrinsics.EmitAlgorithms(paths, defs);
+            var records = Intrinsics.EmitRecords(paths, defs);
+        }
+
+
         [CmdOp("intel/etl")]
         void ImportIntrinsics()
         {
-            Intrinsics.RunEtl();
+            Intrinsics.RunEtl(Intrinsics.Paths());
             Sdm.RunEtl();
             Sde.RunEtl();
             Xed.Start();
@@ -32,12 +43,5 @@ namespace Z0
         public static TextEncoding encoding()
             => new TextEncoding(Encoding.UTF8);
 
-        [CmdOp("intel/int/algs")]
-        void EmitAlgs()
-        {
-            var asset = IntrinsicAssets.Instance.Algorithms();
-            Utf8.decode(asset.ResBytes, out var doc);
-            FileEmit(doc, AppDb.DbTargets("intrinsics").Path("algs",FileKind.Txt), TextEncodingKind.Utf8);
-        }
     }
 }

@@ -15,10 +15,10 @@ namespace Z0
         public uint Key;
 
         [Render(42)]
-        public string Name;
+        public @string Name;
 
         [Render(32)]
-        public DelimitedIndex<CpuId> CpuId;
+        public CpuIdMembership CpuId;
 
         [Render(8)]
         public ushort FormId;
@@ -27,16 +27,16 @@ namespace Z0
         public InstForm InstForm;
 
         [Render(18)]
-        public AmsInstClass InstClass;
+        public AsmInstClass InstClass;
 
         [Render(56)]
         public Instruction InstSig;
 
         [Render(32)]
-        public DelimitedIndex<InstructionType> Types;
+        public InstructionTypes Types;
 
         [Render(32)]
-        public string Category;
+        public Category Category;
 
         [Render(1)]
         public DocSig Signature;
@@ -60,12 +60,12 @@ namespace Z0
             var dst = default(IntelIntrinsicRecord);
             dst.Key = 0;
             dst.Name = EmptyString;
-            dst.CpuId = new (sys.empty<CpuId>());
+            dst.CpuId = CpuIdMembership.Empty;
             dst.FormId = 0;
             dst.InstForm = InstForm.Empty;
-            dst.InstClass = AmsInstClass.Empty;
+            dst.InstClass = AsmInstClass.Empty;
             dst.InstSig = Instruction.Empty;
-            dst.Types = new (sys.empty<InstructionType>());
+            dst.Types = InstructionTypes.Empty;
             dst.Category = EmptyString;
             dst.Signature = DocSig.Empty;
             return dst;

@@ -42,7 +42,7 @@ namespace Z0
         IApiCmdRunner Runner;
 
         public CmdCatalog Commmands 
-            => data("commands", () => ApiCmd.catalog(ApiContext.Dispatcher));
+            => data("commands", () => ApiServers.catalog(ApiContext.Dispatcher));
 
         public ICollection<CmdRoute> Routes 
             => Handlers.Routes;

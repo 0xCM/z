@@ -23,8 +23,6 @@ namespace Z0
         
         ExecToken Ran<T>(ExecFlow<T> flow, string msg, FlairKind flair = FlairKind.Ran);
 
-        ExecToken Ran<T, D>(ExecFlow<T> src, D data, FlairKind flair = FlairKind.Ran);
-
-        ExecToken Ran<D>(ExecFlow src, D data, FlairKind flair = FlairKind.Ran);
+        ExecToken<D> Ran<D>(ExecFlow src, D data, FlairKind flair = FlairKind.Ran);
     }
 }

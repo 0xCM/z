@@ -10,7 +10,7 @@ namespace Z0
         {
             public const string ElementType = "type";
 
-            public readonly string Content;
+            public readonly @string Content;
 
             [MethodImpl(Inline)]
             public InstructionType(string src)

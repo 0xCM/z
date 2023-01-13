@@ -11,6 +11,43 @@ namespace Z0
     [ApiHost, Free]
     public class CharMaps
     {
+        [Op]
+        static ReadOnlySeq<CharMapEntry<char>> unmapped(IWfChannel channel, FilePath src, in CharMap<char> map)
+            => umapped(channel, src, TextEncodings.Asci);
+
+        [Op]
+        static ReadOnlySeq<CharMapEntry<char>> umapped(IWfChannel channel, FilePath src, AsciPoints target)
+        {
+            var map = create(TextEncodings.Unicode, target);
+            var flow = channel.Running(string.Format("Searching {0} for unmapped characters", src.ToUri()));
+            var unmapped = hashset<char>();
+            using var reader = src.LineReader(TextEncodingKind.Utf8);
+            while(reader.Next(out var line))
+                CharMaps.unmapped(map, line.Data, unmapped);
+            var pairs = unmapped.Map(x => CharMaps.entry((Hex16)x,x)).OrderBy(x => x.Source).ToSeq();
+            channel.Ran(flow, string.Format("Found {0} unmapped characters", pairs.Count));
+            return pairs;
+        }
+
+        [Op]
+        public static void unmapped(IWfChannel channel, in CharMap<char> map, FilePath src, FilePath dst)
+        {
+            var unmapped = CharMaps.unmapped(channel, src, map);
+            var pairs = unmapped.View.Map(CharMaps.format);
+            var count = pairs.Length;
+            using var writer = dst.Writer();
+            for(var i=0; i<count; i++)
+                writer.WriteLine(skip(pairs,i));
+        }
+
+        [Op]
+        public static void emit(IWfChannel channel, in CharMap<char> src, FilePath dst)
+        {
+            var emitting = channel.EmittingFile(dst);
+            using var writer = dst.Writer();
+            channel.EmittedFile(emitting, CharMaps.emit(src, writer));
+        }
+
         [MethodImpl(Inline), Op, Closures(UInt8x16k)]
         public static CharMapEntry<T> entry<T>(Hex16 src, T dst)
             where T : unmanaged, IComparable<T>, IEquatable<T>
@@ -155,7 +192,7 @@ namespace Z0
                 if(c != 0)
                 {
                     // Symbolize whitespace characters via their identifiers
-                    if(SymbolicQuery.whitespace(c))
+                    if(SQ.whitespace(c))
                         dst.WriteLine(string.Format("{0}:({1})", (Hex16)i, ((AsciCode)c)));
                     else
                         dst.WriteLine(format(entry((Hex16)i,c)));

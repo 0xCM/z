@@ -50,6 +50,48 @@ namespace Z0
             return token;
         }
 
+        static ToolKey key(uint seq, FileName name)
+            => new (seq,name);
+
+        public static ToolCatalog tools()
+        {
+            var paths = Env.path(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL);
+            var dst = dict<ToolKey,LocatedTool>();
+            var seq = 0u;
+            for(var i=0u; i<paths.Count; i++)
+            {
+                ref readonly var dir = ref paths[i];
+                iter(FS.enumerate(dir, false, FileKind.Exe, FileKind.Cmd, FileKind.Bat), path => {
+                    var k = key(seq++,path.FileName());
+                    dst.TryAdd(k, new (seq++, k, path));
+                });
+            }
+            return new (dst);
+        }
+
+        public static void tools(IWfChannel channel, IDbArchive dst)
+        {
+            var buffer = bag<FilePath>();
+            var paths = Env.path(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL);
+            iter(paths, dir => {
+                iter(FS.enumerate(dir, false, FileKind.Exe, FileKind.Cmd, FileKind.Bat), path => {
+                    buffer.Add(path);
+                });
+            }, true);
+
+            var tools = buffer.Array().Sort(new FileNameComparer());
+            var counter = 0u;
+            var emitter = text.emitter();
+            foreach(var tool in tools)
+            {               
+                var info = string.Format("{0:D5} {1,-36} {2}", counter++, tool.FileName.WithoutExtension, tool); 
+                emitter.AppendLine(info);
+                channel.Row(info);
+            }
+
+            channel.FileEmit(emitter.Emit(), dst.Path(FS.file("tools", FileKind.List)));
+        }
+
         public static EnvId EnvId 
         {
             get => var(EnvVarKind.Process, nameof(EnvId), x => new EnvId(x));
@@ -269,7 +311,7 @@ namespace Z0
             using var writer = env.AsciWriter();
             for(var i=0; i<src.Count; i++)
                 writer.WriteLine(src[i].Format());
-            return TableFlows.emit(channel, rows(src, name).View, table, ASCI);
+            return CsvTables.emit(channel, rows(src, name).View, table, ASCI);
         }
     }
 }

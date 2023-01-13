@@ -221,7 +221,7 @@ namespace Z0
 
         [CmdOp("tool/setup")]
         void ConfigureTool(CmdArgs args)
-            => Tooling.Setup(Tools.tool(args));
+            => Tooling.Setup(Cmd.tool(args));
 
         [CmdOp("tool/docs")]
         void ToolDocs(CmdArgs args)

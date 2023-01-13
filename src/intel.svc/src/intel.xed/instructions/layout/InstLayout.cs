@@ -11,7 +11,7 @@ namespace Z0
         {
             public readonly ushort PatternId;
 
-            public readonly AmsInstClass Instruction;
+            public readonly AsmInstClass Instruction;
 
             public readonly XedOpCode OpCode;
 
@@ -19,7 +19,7 @@ namespace Z0
 
             public readonly SegRef<LayoutCell> Block;
 
-            public InstLayout(ushort pid, AmsInstClass inst, XedOpCode oc, byte count, SegRef<LayoutCell> block)
+            public InstLayout(ushort pid, AsmInstClass inst, XedOpCode oc, byte count, SegRef<LayoutCell> block)
             {
                 PatternId = pid;
                 Instruction = inst;

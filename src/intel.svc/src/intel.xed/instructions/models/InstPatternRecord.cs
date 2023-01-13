@@ -21,7 +21,7 @@ namespace Z0
             public ushort PatternId;
 
             [Render(18)]
-            public AmsInstClass InstClass;
+            public AsmInstClass InstClass;
 
             [Render(26)]
             public XedOpCode OpCode;

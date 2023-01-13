@@ -6,71 +6,9 @@
 namespace Z0
 {
     using static sys;
-    using static CmdActorKind;
 
     public class ApiCmd : AppService<ApiCmd>, IApiService
-    {                
-        public static EnvVars vars(params Pair<string>[] src)
-            => src.Map(x => new EnvVar(x.Left,x.Right));
-
-        public static Outcome exec(IWfChannel channel, CmdMethod effector, CmdArgs args)
-        {
-            var output = default(object);
-            var result = Outcome.Success;
-            try
-            {
-                switch(effector.Kind)
-                {
-                    case Pure:
-                        effector.Definition.Invoke(effector.Host, new object[]{});
-                        result = Outcome.Success;
-                    break;
-                    case Receiver:
-                        effector.Definition.Invoke(effector.Host, new object[1]{args});
-                        result = Outcome.Success;
-                    break;
-                    case CmdActorKind.Emitter:
-                        output = effector.Definition.Invoke(effector.Host, new object[]{});
-                    break;
-                    case Func:
-                        output = effector.Definition.Invoke(effector.Host, new object[1]{args});
-                    break;
-                    default:
-                        result = new Outcome(false, $"Unsupported {effector.Definition}");
-                    break;
-                }
-
-                if(output != null)
-                {
-                    if(output is bool x)
-                        result = Outcome.define(x, output, x ? "Win" : "Fail");
-                    else if(output is Outcome y)
-                    {
-                        result = Outcome.success(y.Data, y.Message);
-                        if(sys.nonempty(y.Message))
-                        {
-                            if(y.Fail)
-                                channel.Error(y.Message);
-                            else
-                                channel.Babble(y.Message);
-                        }
-                    }
-                    else
-                        result = Outcome.success(output);
-                }
-            }
-            catch(Exception e)
-            {
-                var msg = AppMsg.format($"{effector.Uri} invocation error", e);
-                var origin = AppMsg.orginate(effector.HostType.DisplayName(), effector.Definition.DisplayName(), 12);
-                var error = Events.error(msg, origin, effector.HostType);
-                channel.Error(error);
-                result = (e,msg);
-            }
-
-           return result;
-        }
-         
+    {                         
         public static ICmdDispatcher Dispatcher 
             => AppData.Value<ICmdDispatcher>(nameof(ICmdDispatcher));
 
@@ -99,19 +37,6 @@ namespace Z0
             }
         }
 
-        public static CmdCatalog catalog(ICmdDispatcher src)
-        {
-            ref readonly var defs = ref src.Commands.Defs;
-            var count = defs.Count;
-            var dst = alloc<CmdUri>(count);
-            for(var i=0; i<count; i++)
-                seek(dst,i) = defs[i].Uri;
-            return new CmdCatalog(entries(dst));
-        }
-
-        public static CmdCatalog catalog()
-            => catalog(Dispatcher);
-
         public void EmitApiCatalog()
             => EmitApiCatalog(Env.ShellData);
         
@@ -119,67 +44,14 @@ namespace Z0
             => emit(Channel, src, dst.Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv));
 
         public void EmitApiCatalog(IDbArchive dst)
-            => EmitApiCatalog(catalog(), dst);
+            => EmitApiCatalog(ApiServers.catalog(), dst);
 
         static void emit(IWfChannel channel, CmdCatalog src, FilePath dst)
         {
             var data = src.Values;
             iter(data, x => channel.Row(x.Uri.Name));
-            TableFlows.emit(channel, data, dst);
+            CsvTables.emit(channel, data, dst);
         }
-
-        public void RunApiScript(IWfChannel channel, FilePath src)
-        {
-            if(src.Missing)
-            {
-                channel.Error(AppMsg.FileMissing.Format(src));
-            }
-            else
-            {
-                var lines = src.ReadNumberedLines(true);
-                var count = lines.Count;
-                for(var i=0; i<count; i++)
-                {
-                    ref readonly var content = ref lines[i].Content;
-                    if(Cmd.parse(content, out ApiCmdSpec spec))
-                        RunCmd(channel,spec);
-                    else
-                    {
-                        channel.Error($"ParseFailure:'{content}'");
-                        break;
-                    }
-                }
-            }
-        }
-
-        public static Task<ExecToken> start(IWfChannel channel, CmdArgs args)
-        {
-            ExecToken exec()
-            {
-                var src = FS.path(args[0]);
-                var flow = channel.Running($"Executing api scripts from {src}");
-                var lines = src.ReadNumberedLines(true);
-                var count = lines.Count;
-                for(var i=0; i<count; i++)
-                {
-                    ref readonly var content = ref lines[i].Content;
-                    if(Cmd.parse(content, out ApiCmdSpec spec))
-                    {
-                        Dispatcher.Dispatch(spec.Name, spec.Args);
-                    }
-                    else
-                    {
-                        channel.Error($"ParseFailure:'{content}'");
-                        break;
-                    }
-                }
-                return channel.Ran(flow);
-            }
-            return sys.start(exec);
-        }   
-
-        public static ReadOnlySeq<ICmdExecutor> executors(params Assembly[] src)
-            => src.Types().Tagged<CmdExecutorAttribute>().Concrete().Map(x => (ICmdExecutor)Activator.CreateInstance(x));
 
         public static ReadOnlySeq<CmdFieldRow> fields(ReadOnlySpan<CmdDef> src)
         {
@@ -206,19 +78,5 @@ namespace Z0
             }
             return dst;
         }
-
-        static ReadOnlySeq<ApiCmdInfo> entries(CmdUriSeq src)    
-        {
-            var entries = alloc<ApiCmdInfo>(src.Count);
-            for(var i=0; i<src.Count; i++)
-            {
-                ref readonly var uri = ref src[i];
-                ref var entry = ref seek(entries,i);
-                entry.Uri = uri;
-                entry.Hash = uri.Hash;
-                entry.Name = uri.Name;
-            }
-            return entries.Sort().Resequence();        
-        }        
     }
 }

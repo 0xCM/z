@@ -26,7 +26,7 @@ namespace Z0
 
             public ChipCode Chip;
 
-            public AmsInstClass Class;
+            public AsmInstClass Class;
 
             public FieldDataKind DataKind()
             {

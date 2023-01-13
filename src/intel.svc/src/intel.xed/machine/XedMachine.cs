@@ -76,11 +76,11 @@ namespace Z0
 
         ConstLookup<ushort,InstGroupMember> _GroupMemberLookup;
 
-        SortedLookup<AmsInstClass,Index<InstGroupMember>> _ClassGroupLookup;
+        SortedLookup<AsmInstClass,Index<InstGroupMember>> _ClassGroupLookup;
 
-        SortedLookup<AmsInstClass,Index<InstPattern>> _ClassPatternLookup;
+        SortedLookup<AsmInstClass,Index<InstPattern>> _ClassPatternLookup;
 
-        SortedLookup<AmsInstClass,Index<InstForm>> _ClassFormLookup;
+        SortedLookup<AsmInstClass,Index<InstForm>> _ClassFormLookup;
 
         [MethodImpl(Inline)]
         ref MachineState State()
@@ -103,13 +103,13 @@ namespace Z0
         public InstGroupMember PatternGroup(ushort id)
             => _GroupMemberLookup.Find(id, out var dst) ? dst : InstGroupMember.Empty;
 
-        public Index<InstForm> ClassForms(AmsInstClass @class)
+        public Index<InstForm> ClassForms(AsmInstClass @class)
             => _ClassFormLookup.Find(@class, out var dst) ? dst : sys.empty<InstForm>();
 
-        public Index<InstGroupMember> ClassGroups(AmsInstClass @class)
+        public Index<InstGroupMember> ClassGroups(AsmInstClass @class)
             => _ClassGroupLookup.Find(@class, out var dst) ? dst : sys.empty<InstGroupMember>();
 
-        public Index<InstPattern> ClassPatterns(AmsInstClass @class)
+        public Index<InstPattern> ClassPatterns(AsmInstClass @class)
             => _ClassPatternLookup.Find(@class, out var x) ? x : sys.empty<InstPattern>();
 
         XedRuntime Xed;

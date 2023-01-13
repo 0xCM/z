@@ -8,15 +8,15 @@ namespace Z0
 
     partial class IntrinsicsDoc
     {
-        public struct IntrinsicDef : IComparable<IntrinsicDef>
+        public record struct IntrinsicDef : IComparable<IntrinsicDef>
         {
             public const string ElementName = "intrinsic";
 
-            public string tech;
+            public @string tech;
 
-            public string name;
+            public @string name;
 
-            public string content;
+            public @string content;
 
             public InstructionTypes types;
 

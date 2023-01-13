@@ -30,13 +30,6 @@ namespace Z0
         public ExecToken Completed(ExecFlow src, bool success = true)
             => TokenDispenser.close(src, success);
 
-        public ExecToken Ran<D>(ExecFlow src, D data, FlairKind flair = FlairKind.Ran)
-        {
-            var token = Completed(src);
-            signal(Wf.EventSink).Ran(data);
-            return token;
-        }
-
         public EventId Raise<E>(E e)
             where E : IEvent
                 => Wf.Raise(e);
@@ -110,8 +103,12 @@ namespace Z0
         public ExecToken Ran<T>(ExecFlow<T> flow, string msg, FlairKind flair = FlairKind.Ran)
             => Wf.Ran(Host, flow.WithMsg(msg), flair);
 
-        public ExecToken Ran<T, D>(ExecFlow<T> src, D data, FlairKind flair = FlairKind.Ran)
-            => Wf.Ran(src, data, flair);
+        public ExecToken<D> Ran<D>(ExecFlow src, D data, FlairKind flair = FlairKind.Ran)
+        {
+            var token = Completed(src);
+            signal(Wf.EventSink).Ran(data);
+            return (token,data);
+        }
 
         public FileEmission EmittingFile(FilePath dst)
             => Wf.EmittingFile(Host, dst);

@@ -8,15 +8,17 @@ namespace Z0
     {
         public class CpuIdMembership : List<CpuId>
         {
+            public bool IsEmpty => Count == 0;
+
+            public bool IsNonEmpty => Count != 0;
+
             public string Format()
                 => this.Delimit().Format();
 
             public override string ToString()
                 => Format();
 
-            public bool IsEmpty => Count == 0;
-
-            public bool IsNonEmpty => Count != 0;
+            public static CpuIdMembership Empty => new();
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Z0
         {
             public const string ElementName = "description";
 
-            public readonly string Content;
+            public readonly @string Content;
 
             [MethodImpl(Inline)]
             public Description(string src)

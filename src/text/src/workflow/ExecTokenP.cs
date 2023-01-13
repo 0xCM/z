@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     public readonly struct ExecToken<P> : IDataType<ExecToken<P>>, IDataString<ExecToken<P>>
     {
         public readonly ExecToken Token;

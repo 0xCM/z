@@ -18,7 +18,7 @@ namespace Z0
 
         AsmDocs AsmDocs => Wf.AsmDocs();
 
-        IntelInx Intrinsics => Wf.IntelIntrinsics();
+        IntelIntrinsics Intrinsics => Wf.IntelIntrinsics();
             
         SdeSvc Sde => Wf.SdeSvc();
 
@@ -48,7 +48,7 @@ namespace Z0
             Cult.RunEtl();
             Sdm.RunEtl();
             Sde.RunEtl();
-            Intrinsics.RunEtl();
+            Intrinsics.RunEtl(Intrinsics.Paths());
             Nasm.RunEtl();
             StanfordCatalog.RunEtl();
             EmitAsmSymbols();

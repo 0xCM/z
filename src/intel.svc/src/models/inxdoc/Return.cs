@@ -11,16 +11,16 @@ namespace Z0
             public const string ElementName = "return";
 
             [Render(12)]
-            public string varname;
+            public @string varname;
 
             [Render(12)]
             public DataType type;
 
             [Render(12)]
-            public string etype;
+            public @string etype;
 
             [Render(12)]
-            public string memwidth;
+            public @string memwidth;
 
             public string Format()
                 => type.Format();

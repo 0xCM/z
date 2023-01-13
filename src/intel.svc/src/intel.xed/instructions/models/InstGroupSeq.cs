@@ -23,7 +23,7 @@ namespace Z0
             public ushort PatternId;
 
             [Render(18)]
-            public AmsInstClass Instruction;
+            public AsmInstClass Instruction;
 
             [Render(6)]
             public ModIndicator Mod;

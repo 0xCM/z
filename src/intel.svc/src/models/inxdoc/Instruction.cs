@@ -35,9 +35,6 @@ namespace Z0
                 get => !IsEmpty;
             }
 
-            public AmsInstClass InstClass
-                => AmsInstClass.parse(name, out _);
-
             public string Format()
                 => IsEmpty ? EmptyString : string.Format("{0} {1}", name, form);
 

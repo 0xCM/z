@@ -100,7 +100,7 @@ namespace Z0
                         break;
 
                         case K.ICLASS:
-                            r.Functions[kind] = (x => XedRender.format((AmsInstClass)x));
+                            r.Functions[kind] = (x => XedRender.format((AsmInstClass)x));
                         break;
 
                         case K.MASK:

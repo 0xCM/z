@@ -34,7 +34,7 @@ namespace Z0
 
             public ReadOnlySpan<FieldKind> Selected;
 
-            public AmsInstClass Instruction
+            public AsmInstClass Instruction
             {
                 [MethodImpl(Inline)]
                 get => Props.InstClass;

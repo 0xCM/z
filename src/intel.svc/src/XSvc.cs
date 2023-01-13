@@ -14,11 +14,11 @@ namespace Z0
     {
         sealed class ServiceCache : AppServices<ServiceCache>
         {
-            public IntelInx IntelInx(IWfRuntime wf)
-                => Service<IntelInx>(wf);
+            public IntelIntrinsics IntelInx(IWfRuntime wf)
+                => Service<IntelIntrinsics>(wf);
 
-            public IntelInxCmd IntelInxCmd(IWfRuntime wf)
-                => Service<IntelInxCmd>(wf);
+            public IntelCmd IntelInxCmd(IWfRuntime wf)
+                => Service<IntelCmd>(wf);
 
             public SdeSvc SdeSvc(IWfRuntime wf)
                 => Service<SdeSvc>(wf);
@@ -84,7 +84,7 @@ namespace Z0
 
         static ServiceCache Services => ServiceCache.Instance;
 
-        public static IntelInx IntelIntrinsics(this IWfRuntime wf)
+        public static IntelIntrinsics IntelIntrinsics(this IWfRuntime wf)
             => Services.IntelInx(wf);
 
         public static IApiService IntelInxCmd(this IWfRuntime wf)

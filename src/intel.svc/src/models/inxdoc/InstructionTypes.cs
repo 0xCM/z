@@ -8,7 +8,13 @@ namespace Z0
     {
         public class InstructionTypes : List<InstructionType>
         {
+            public string Format()
+                => this.Delimit().Format();
 
+            public override string ToString()
+                => Format();
+
+            public static InstructionTypes Empty => new();
         }
     }
 }

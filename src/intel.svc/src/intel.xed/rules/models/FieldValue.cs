@@ -212,7 +212,7 @@ namespace Z0
                 => new FieldSeg(Field, (SegVar)Data);
 
             [MethodImpl(Inline)]
-            public AmsInstClass ToInstClass()
+            public AsmInstClass ToInstClass()
                 => (AsmInstKind)Data;
 
             [MethodImpl(Inline)]

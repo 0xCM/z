@@ -19,7 +19,7 @@ namespace Z0
             public uint Seq;
 
             [Render(18)]
-            public AmsInstClass Class;
+            public AsmInstClass Class;
 
             [Render(8)]
             public MachineMode Mode;

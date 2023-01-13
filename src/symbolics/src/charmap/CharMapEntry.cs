@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct CharMapEntry
+    public readonly record struct CharMapEntry
     {
         public readonly Hex16 Source;
 

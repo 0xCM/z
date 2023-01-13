@@ -8,7 +8,7 @@ namespace Z0
     {
         public readonly record struct DataType
         {
-            public readonly string Name;
+            public readonly @string Name;
 
             [MethodImpl(Inline)]
             public DataType(string src)

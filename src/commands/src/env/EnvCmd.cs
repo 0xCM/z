@@ -31,11 +31,11 @@ namespace Z0
 
         [CmdOp("env/tools")]
         void EnvTools()
-            => Tools.emit(Channel, Tools.ambient(), ShellData);
+            => Cmd.emit(Channel, Env.tools(), ShellData);
 
         [CmdOp("api/script")]
         void RunAppScript(CmdArgs args)
-            => ApiCmd.start(Channel, args);
+            => ApiScripts.start(Channel, args);
 
         [CmdOp("env/stack")]
         void Stack()

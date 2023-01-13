@@ -5,19 +5,33 @@
 namespace Z0
 {
     [DataWidth(Width)]
-    public readonly struct AmsInstClass : IDataType<AmsInstClass>
+    public readonly struct AsmInstClass : IDataType<AsmInstClass>
     {
-        public static AmsInstClass parse(string src, out bool result)
+        public static Outcome parse(string src, out AsmInstClass dst)
         {
-            result = EnumParser<AsmInstKind>.Service.Parse(src, out AsmInstKind dst);
-            return new (dst);
+            var result = Outcome.Success;
+            dst = AsmInstClass.Empty;
+            try
+            {
+                
+                result = EnumParser<AsmInstKind>.Service.Parse(src, out AsmInstKind kind);
+                if(result)
+                {
+                    dst = kind;
+                }
+            }
+            catch(Exception e)
+            {
+                result = e;
+            }
+            return result;
         }
 
         const byte Width = 11;
 
         public readonly AsmInstKind Kind;
 
-        public AmsInstClass(AsmInstKind kind)
+        public AsmInstClass(AsmInstKind kind)
         {
             Require.nonzero(kind);
             Kind = kind;
@@ -29,7 +43,7 @@ namespace Z0
             get => (uint)Kind;
         }
 
-        public readonly AmsInstClass Classifier
+        public readonly AsmInstClass Classifier
             => this;
 
         public Identifier Name
@@ -53,47 +67,47 @@ namespace Z0
         public override string ToString()
             => Format();
 
-        public int CompareTo(AmsInstClass src)
+        public int CompareTo(AsmInstClass src)
             => Classifier.Format().CompareTo(src.Classifier.Format());
 
         [MethodImpl(Inline)]
-        public bool Equals(AmsInstClass src)
+        public bool Equals(AsmInstClass src)
             => Kind == src.Kind;
 
         public override int GetHashCode()
             => Hash;
 
         public override bool Equals(object o)
-            => o is AmsInstClass c && Equals(c);
+            => o is AsmInstClass c && Equals(c);
 
         [MethodImpl(Inline)]
-        public static implicit operator AmsInstClass(AsmInstKind src)
-            => new AmsInstClass(src);
+        public static implicit operator AsmInstClass(AsmInstKind src)
+            => new AsmInstClass(src);
 
         [MethodImpl(Inline)]
-        public static implicit operator AsmInstKind(AmsInstClass src)
+        public static implicit operator AsmInstKind(AsmInstClass src)
             => src.Kind;
 
         [MethodImpl(Inline)]
-        public static bool operator ==(AmsInstClass a, AmsInstClass b)
+        public static bool operator ==(AsmInstClass a, AsmInstClass b)
             => a.Equals(b);
 
         [MethodImpl(Inline)]
-        public static bool operator !=(AmsInstClass a, AmsInstClass b)
+        public static bool operator !=(AsmInstClass a, AsmInstClass b)
             => !a.Equals(b);
 
         [MethodImpl(Inline)]
-        public static explicit operator ushort(AmsInstClass src)
+        public static explicit operator ushort(AsmInstClass src)
             => (ushort)src.Kind;
 
         [MethodImpl(Inline)]
-        public static explicit operator Hex12(AmsInstClass src)
+        public static explicit operator Hex12(AsmInstClass src)
             => (ushort)src.Kind;
 
         [MethodImpl(Inline)]
-        public static explicit operator AmsInstClass(ushort src)
-            => new AmsInstClass((AsmInstKind)src);
+        public static explicit operator AsmInstClass(ushort src)
+            => new AsmInstClass((AsmInstKind)src);
 
-        public static AmsInstClass Empty => default;
+        public static AsmInstClass Empty => default;
     }
 }

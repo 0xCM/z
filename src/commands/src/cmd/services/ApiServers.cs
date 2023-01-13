@@ -20,6 +20,33 @@ namespace Z0
 
         static RenderPattern<IWfEmissions> ConfiguredEmissionLogs => "Configured emisson logs:{0}";
 
+        public static CmdCatalog catalog()
+            => catalog(ApiCmd.Dispatcher);
+
+        public static CmdCatalog catalog(ICmdDispatcher src)
+        {
+            ref readonly var defs = ref src.Commands.Defs;
+            var count = defs.Count;
+            var dst = alloc<CmdUri>(count);
+            for(var i=0; i<count; i++)
+                seek(dst,i) = defs[i].Uri;
+            return new CmdCatalog(entries(dst));
+        }
+
+        static ReadOnlySeq<ApiCmdInfo> entries(CmdUriSeq src)    
+        {
+            var entries = alloc<ApiCmdInfo>(src.Count);
+            for(var i=0; i<src.Count; i++)
+            {
+                ref readonly var uri = ref src[i];
+                ref var entry = ref seek(entries,i);
+                entry.Uri = uri;
+                entry.Hash = uri.Hash;
+                entry.Name = uri.Name;
+            }
+            return entries.Sort().Resequence();        
+        }        
+
         public static ICmdServer cmd(IExecutionContext ec, IApiContext apictx, params Assembly[] components)
         {
             var state = new CmdServerState{

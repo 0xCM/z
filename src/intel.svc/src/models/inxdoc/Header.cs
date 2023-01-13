@@ -10,7 +10,7 @@ namespace Z0
         {
             public const string ElementName = "header";
 
-            public readonly string Content;
+            public readonly @string Content;
 
             [MethodImpl(Inline)]
             public Header(string src)

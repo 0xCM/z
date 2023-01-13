@@ -10,19 +10,19 @@ namespace Z0
 
     partial class XTend
     {
-        public static SortedLookup<AmsInstClass,Index<InstForm>> ClassForms(this Index<InstPattern> src)
+        public static SortedLookup<AsmInstClass,Index<InstForm>> ClassForms(this Index<InstPattern> src)
             => src.Storage.Where(x => x.InstForm.IsNonEmpty)
                     .GroupBy(x => x.InstClass.Classifier)
                     .Select(x => (x.Key.Classifier, x.Select(y => y.InstForm).ToIndex()))
                     .ToSortedLookup();
 
-        public static SortedLookup<AmsInstClass,Index<InstPattern>> ClassPatterns(this Index<InstPattern> src)
+        public static SortedLookup<AsmInstClass,Index<InstPattern>> ClassPatterns(this Index<InstPattern> src)
             => src.Storage
                     .GroupBy(x => x.InstClass)
                     .Select(x => (x.Key, x.ToIndex()))
                     .ToSortedLookup();
 
-        public static SortedLookup<AmsInstClass,Index<InstGroupMember>> ClassGroups(this Index<InstGroup> src)
+        public static SortedLookup<AsmInstClass,Index<InstGroupMember>> ClassGroups(this Index<InstGroup> src)
             => src.SelectMany(x => x.Members).GroupBy(x => x.Class.Classifier).Select(x => (x.Key.Classifier,x.Index())).ToDictionary();
     }
 }

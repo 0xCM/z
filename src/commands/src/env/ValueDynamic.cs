@@ -6,7 +6,6 @@ namespace Z0
 {
     using static sys;
 
-    using DP = DataParser;
     using NP = NumericParser;
 
     public class ValueDynamic
@@ -154,7 +153,7 @@ namespace Z0
                 }
                 else if (typeof(T) == typeof(bool))
                 {
-                    if(DP.parse(input, out bool value))
+                    if(DataParser.parse(input, out bool value))
                     {
                         dst = generic<T>(value);
                         return true;
@@ -162,7 +161,7 @@ namespace Z0
                 }
                 else if(typeof(T) == typeof(bit))
                 {
-                    if(DP.parse(input, out bit u1))
+                    if(DataParser.parse(input, out bit u1))
                     {
                         dst = generic<T>((bool)u1);
                         return true;

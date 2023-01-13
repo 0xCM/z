@@ -6,7 +6,6 @@ namespace Z0
 {
     partial struct Msg
     {
-
         public static MsgPattern<Count> LoadingHexFileBlocks => "Loading hex blocks from {0} files";
 
         public static MsgPattern<Count> LoadedHexBlocks => "Loaded {0} hex blocks";

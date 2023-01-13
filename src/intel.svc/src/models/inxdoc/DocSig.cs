@@ -10,7 +10,7 @@ namespace Z0
         {
             public readonly Return Return;
 
-            public readonly string Name;
+            public readonly @string Name;
 
             public readonly Parameters Params;
 

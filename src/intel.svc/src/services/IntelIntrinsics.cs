@@ -9,92 +9,45 @@ namespace Z0
     using static IntrinsicsDoc;
     using static sys;
 
-    public class IntelInx : WfSvc<IntelInx>
+    public class IntelIntrinsics : WfSvc<IntelIntrinsics>
     {
-        IDbArchive Sources()
-            => AppDb.DbIn("intel");
+        public IntelIntrinsicPaths Paths()
+            => new IntelIntrinsicPaths(AppDb.DbIn("intel"), AppDb.AsmDb("intrinsics"));
 
-        IDbArchive Targets()
-            => AppDb.AsmDb("intrinsics");
-
-        FilePath XmlSource()
-            => Sources().Path(XmlFile);
-
-        FilePath DeclPath()
-            => Targets().Path(DeclFile);
-
-        FilePath AlgPath()
-            => Targets().Path(AlgFile);
-
-        XmlDoc LoadDocXml()
-            => XmlSource().ReadUtf8();
-
-        Index<IntrinsicDef> ParseDoc()
+        public ExecToken<ReadOnlySeq<IntrinsicDef>> RunEtl(IntelIntrinsicPaths paths)
         {
-            var flow = Emitter.Running($"Reading intrinsics definitions from {XmlSource().ToUri()}");
-            var defs =  read(LoadDocXml());
-            Emitter.Ran(flow, $"Read {defs.Count} definitions");
+            var running = Channel.Running();
+            paths.Targets().Clear();
+            var xml = LoadSourceDoc(paths);
+            var parsed = ParseSouceDoc(xml);
+            EmitAlgorithms(paths,parsed);
+            var records = EmitRecords(paths, parsed);
+            EmitDeclarations(paths,parsed);
+            return Channel.Ran(running, parsed);
+        }
+
+        public XmlDoc LoadSourceDoc(IntelIntrinsicPaths paths)
+            => paths.XmlSource().ReadUtf8();
+
+        public ReadOnlySeq<IntrinsicDef> ParseSouceDoc(XmlDoc src)
+        {
+            var flow = Channel.Running($"Parsing definitions from source document");
+            var defs =  parse(src);
+            Channel.Ran(flow, $"Parsed {defs.Count} definitions");
             return defs;
         }
 
-        public static void render(ReadOnlySpan<IntrinsicDef> src, ITextEmitter dst)
-        {
-            for(var i=0; i<src.Length; i++)
-            {
-                if(i!=0)
-                    dst.AppendLine();
 
-                ref readonly var def = ref skip(src,i);
-                overview(def,dst);
-                dst.AppendLine(def.Sig());
-                body(def,dst);
-            }
-        }
-
-        static void body(IntrinsicDef src, ITextEmitter dst)
-        {
-            dst.AppendLine("{");
-            emit(src.operation, dst);
-            dst.AppendLine("}");
-        }
-
-        static void emit(Operation src, ITextEmitter dst)
-        {
-            if(src.IsNonEmpty)
-                iter(src.Content, x => dst.AppendLine("  " + x.Content));
-        }
-
-        static void overview(IntrinsicDef src, ITextEmitter dst)
-        {
-            dst.AppendLine(string.Format("# Intrinsic: {0}", src.Sig()));
-
-            if(nonempty(src.tech))
-                dst.AppendLineFormat("# Tech: {0}", src.tech);
-
-            if(src.CPUID.IsNonEmpty)
-                dst.AppendLineFormat("# CpuId: {0}", src.CPUID);
-
-            if(src.category.IsNonEmpty)
-                dst.AppendLineFormat("# Category: {0}", src.category);
-
-            iter(src.instructions, x => {
-                dst.AppendLineFormat("# Instruction: {0}", x);
-                dst.AppendLineFormat("# IForm: {0}", x.xed);
-            });
-
-            dst.AppendLineFormat("# Description: {0}", src.description);
-        }
-
-        public void EmitAlgorithms(ReadOnlySpan<IntrinsicDef> src)
+        public void EmitAlgorithms(IntelIntrinsicPaths paths, ReadOnlySpan<IntrinsicDef> src)
         {
             var dst = text.emitter();
-            render(src,dst);
-            FileEmit(dst.Emit(), AlgPath(), TextEncodingKind.Utf8);
+            render(src, dst);
+            Channel.FileEmit(dst.Emit(), paths.AlgTarget(), TextEncodingKind.Utf8);
         }
 
-        public void EmitDeclarations(ReadOnlySpan<IntrinsicDef> src)
+        public void EmitDeclarations(IntelIntrinsicPaths paths, ReadOnlySpan<IntrinsicDef> src)
         {
-            var dst = DeclPath();
+            var dst = paths.DeclTarget();
             var flow = EmittingFile(dst);
             var count = src.Length;
             using var writer = dst.Writer();
@@ -103,76 +56,20 @@ namespace Z0
             EmittedFile(flow, count);
         }
 
-        public Index<IntelIntrinsicRecord> EmitRecords(Index<IntrinsicDef> src)
+        public ReadOnlySeq<IntelIntrinsicRecord> EmitRecords(IntelIntrinsicPaths paths, ReadOnlySeq<IntrinsicDef> src)
         {
             var dst = alloc<IntelIntrinsicRecord>(src.Count);
-            records(src, Emitter, Targets().Table<IntelIntrinsicRecord>(), dst);
-            return dst;
-        }
-
-        public static void records(ReadOnlySpan<IntrinsicDef> src, WfEmit channel, FilePath path, Span<IntelIntrinsicRecord> dst)
-        {            
             for(var i=0; i<src.Length; i++)
-                record(skip(src,i), channel, out seek(dst,i));
-            
+                record(src[i], Channel, out seek(dst,i));            
             dst.Sort();
             dst.Resequence();
-            channel.TableEmit(@readonly(dst), path);            
-        }
-
-        static void record(in IntrinsicDef src, WfEmit channel, out IntelIntrinsicRecord dst)
-        {
-            dst = IntelIntrinsicRecord.Empty;
-            try
-            {
-                dst.Key = 0;
-                dst.Name = src.name;
-                dst.CpuId = src.CPUID;
-                dst.Types = src.types;
-                dst.Category = src.category;
-                dst.Signature = src.Sig();
-                if(instruction(src, out Instruction inst))
-                {
-                    dst.InstSig = inst;
-                    dst.InstForm = inst.xed;
-                    dst.FormId = (ushort)inst.xed;
-                    dst.InstClass = inst.InstClass;
-                }
-            }
-            catch (Exception e)
-            {
-                channel.Error(e);
-            }
-        }
-
-        static bool instruction(in IntrinsicDef src, out Instruction dst)
-        {
-            var instructions = src.instructions;
-            if(instructions.Count != 0)
-            {
-                dst = instructions[0];
-                return true;
-            }
-            else
-            {
-                dst = Instruction.Empty;
-                return false;
-            }
-        }
-
-        public Index<IntrinsicDef> RunEtl()
-        {
-            Targets().Clear();
-            var parsed = ParseDoc();
-            EmitAlgorithms(parsed);
-            var records = EmitRecords(parsed);
-            EmitDeclarations(parsed);
-            return parsed;
+            Channel.TableEmit(dst, paths.ExportTable<IntelIntrinsicRecord>());            
+            return dst;
         }
 
         const int MaxDefCount = Pow2.T13;
 
-        public static Index<IntrinsicDef> read(XmlDoc src)
+        static ReadOnlySeq<IntrinsicDef> parse(XmlDoc src)
         {
             var entries = new IntrinsicDef[MaxDefCount];
             var i = -1;
@@ -281,26 +178,96 @@ namespace Z0
                 xed: Enums.parse(reader[nameof(Instruction.xed)], default(InstFormType)))
                 );
 
-        const string intrinsics = "intel.intrinsics";
 
-        const string sep = ".";
+        static void render(ReadOnlySpan<IntrinsicDef> src, ITextEmitter dst)
+        {
+            for(var i=0; i<src.Length; i++)
+            {
+                if(i!=0)
+                    dst.AppendLine();
 
-        const string refs = intrinsics + sep + nameof(refs);
+                ref readonly var def = ref skip(src,i);
+                overview(def,dst);
+                dst.AppendLine(def.Sig());
+                body(def,dst);
+            }
+        }
 
-        const string checks = intrinsics + sep + nameof(checks);
+        static void body(IntrinsicDef src, ITextEmitter dst)
+        {
+            dst.AppendLine("{");
+            emit(src.operation, dst);
+            dst.AppendLine("}");
+        }
 
-        const string specs = intrinsics + sep + nameof(specs);
+        static void emit(Operation src, ITextEmitter dst)
+        {
+            if(src.IsNonEmpty)
+                iter(src.Content, x => dst.AppendLine("  " + x.Content));
+        }
 
-        const string algs = intrinsics + sep + nameof(algs);
+        static void overview(IntrinsicDef src, ITextEmitter dst)
+        {
+            dst.AppendLine(string.Format("# Intrinsic: {0}", src.Sig()));
 
-        const string sigs = intrinsics + sep + nameof(sigs);
+            if(nonempty(src.tech))
+                dst.AppendLineFormat("# Tech: {0}", src.tech);
 
-        public static FileName AlgFile => FS.file(algs, FS.Txt);
+            if(src.CPUID.IsNonEmpty)
+                dst.AppendLineFormat("# CpuId: {0}", src.CPUID);
 
-        public static FileName DataFile => FS.file(intrinsics, FS.Csv);
+            if(src.category.IsNonEmpty)
+                dst.AppendLineFormat("# Category: {0}", src.category);
 
-        public static FileName XmlFile => FS.file(intrinsics, FS.Xml);
+            iter(src.instructions, x => {
+                dst.AppendLineFormat("# Instruction: {0}", x);
+                dst.AppendLineFormat("# IForm: {0}", x.xed);
+            });
 
-        public static FileName DeclFile = FS.file(intrinsics, FS.H);
+            dst.AppendLineFormat("# Description: {0}", src.description);
+        }
+
+        static void record(in IntrinsicDef src, IWfChannel channel, out IntelIntrinsicRecord dst)
+        {
+            dst = IntelIntrinsicRecord.Empty;
+            try
+            {
+                dst.Key = 0;
+                dst.Name = src.name;
+                dst.CpuId = src.CPUID;
+                dst.Types = src.types;
+                dst.Category = src.category;
+                dst.Signature = src.Sig();    
+                if(instruction(src, out Instruction inst))
+                {
+                    dst.InstSig = inst;
+                    dst.InstForm = inst.xed;
+                    dst.FormId = (ushort)inst.xed;
+                    // Not every intrinsic is associated with an instruction class
+                    AsmInstClass.parse(src.name, out dst.InstClass);
+                }
+            }
+            catch (Exception e)
+            {
+                
+                channel.Error(e);
+                channel.Row(src.ToString());
+            }
+        }
+
+        static bool instruction(in IntrinsicDef src, out Instruction dst)
+        {
+            var instructions = src.instructions;
+            if(instructions.Count != 0)
+            {
+                dst = instructions[0];
+                return true;
+            }
+            else
+            {
+                dst = Instruction.Empty;
+                return false;
+            }
+        }
     }
 }

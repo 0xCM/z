@@ -120,7 +120,7 @@ namespace Z0
                 ref readonly var profile = ref skip(profiles,i);
                 if(profile.HelpCmd.IsEmpty)
                     continue;
-                dst.Add(Tools.cmdline(FS.path(profile.ToolName), string.Format("{0} {1}", profile.Executable.Format(PathSeparator.BS), profile.HelpCmd)));
+                dst.Add(Cmd.cmdline(FS.path(profile.ToolName), string.Format("{0} {1}", profile.Executable.Format(PathSeparator.BS), profile.HelpCmd)));
             }
             dst.Sort();
             return dst.ToArray();

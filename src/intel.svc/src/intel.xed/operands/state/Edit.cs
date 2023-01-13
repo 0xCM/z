@@ -19,8 +19,8 @@ namespace Z0
         public readonly struct Edit
         {
             [MethodImpl(Inline), Op]
-            public static ref AmsInstClass iclass(ref OperandState src)
-                => ref @as<AsmInstKind,AmsInstClass>(src.ICLASS);
+            public static ref AsmInstClass iclass(ref OperandState src)
+                => ref @as<AsmInstKind,AsmInstClass>(src.ICLASS);
 
             [MethodImpl(Inline), Op]
             public static ref AsmVL vl(ref OperandState src)
