@@ -3,6 +3,5 @@
     <ProjectReference Include="$(Native)" />
     <ProjectReference Include="$(Polyrand)" />
     <ProjectReference Include="$(Db)" />
-    <ProjectReference Include="$(DbMem)" />
   </ItemGroup>
 </Project>

@@ -2,6 +2,7 @@
   <ItemGroup>
     <ProjectReference Include="$(Alloc)" />
     <ProjectReference Include="$(Commands)" />
+    <ProjectReference Include="$(Numbers)" />
     <ProjectReference Include="$(Symbolics)" />
     <ProjectReference Include="$(Json)" />
     <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="$(MsExtVer)" />

@@ -3,7 +3,6 @@
     <ProjectReference Include="$(AsmCore)" />
     <ProjectReference Include="$(Cpu)" />
     <ProjectReference Include="$(ZXml)" />
-    <ProjectReference Include="$(DbMem)" />
     <ProjectReference Include="$(Symbolics)" />
     <ProjectReference Include="$(Tools)" />
   </ItemGroup>
