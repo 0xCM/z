@@ -84,6 +84,6 @@ namespace Z0
         [MethodImpl(Inline)]
         static BinaryModule generalize<T>(T src)
             where T : IBinaryModule
-                => new BinaryModule(src.Location, src.ModuleKind);
+                => new BinaryModule(src.Path, src.ModuleKind);
     }
 }

@@ -5,15 +5,17 @@
 namespace Z0
 {
     [Free]
-    public interface IFile : IExpr, ILocatable
+    public interface IFile : IExpr
     {
+        FilePath Path {get;}
+
         string IExpr.Format()
-            => $"{Location}";
-    }
+            => $"{Path}";
 
-    [Free]
-    public interface IFile<T> : IFile, ILocatable<T>
-    {
+        bool INullity.IsEmpty
+            => Path.IsEmpty;
 
+        bool INullity.IsNonEmpty
+            => Path.IsNonEmpty;
     }
 }

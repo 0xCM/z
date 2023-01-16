@@ -4,5 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    public abstract class Db<T> : Channeled<T>
+        where T : Db<T>, new()
+    {
 
+
+    }
 }

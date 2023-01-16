@@ -116,7 +116,7 @@ namespace Z0
 
         public void Emit(Assembly[] src)
         {
-            var symlits = Heaps.symlits(src);
+            var symlits = Symbols.symlits(src);
             exec(true,
                 () => EmitDataFlows(src),
                 () => EmitSymLits(symlits),
@@ -130,7 +130,7 @@ namespace Z0
                 () => EmitTypeLists(src),
                 () => EmitApiSymbols(src),
                 () => EmitPartList(src),
-                () => EmitSymHeap(Heaps.load(symlits))
+                () => EmitSymHeap(Symbols.heap(symlits))
             );
         }
 
@@ -243,7 +243,7 @@ namespace Z0
         }
 
         public void EmitApiSymbols(params Assembly[] src)
-            => Channel.TableEmit(Heaps.symlits(src), Target.Table<SymLiteralRow>(), UTF16);
+            => Channel.TableEmit(Symbols.symlits(src), Target.Table<SymLiteralRow>(), UTF16);
 
         public void EmitTokens(Type src)
         {

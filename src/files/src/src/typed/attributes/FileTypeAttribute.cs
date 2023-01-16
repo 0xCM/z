@@ -5,7 +5,7 @@
 namespace Z0
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
-    public class FileClassifierAttribute : Attribute
+    public class FileTypeAttribute : Attribute
     {
 
     }

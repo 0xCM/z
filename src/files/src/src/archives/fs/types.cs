@@ -4,13 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class MemDb
+    using static sys;
+
+    partial struct FS
     {
-        [MethodImpl(Inline), Op]
-        public static void split(uint src, out ushort a, out ushort b)
-        {
-            a = (ushort)(src & 0x0000_FFFF);
-            b = (ushort)((src & 0xFFFF_0000) >> 16);
-        }
+        public static FileTypes types(params Assembly[] src)
+            => new (src.Types().Tagged<FileTypeAttribute>().Concrete().Map(x => (IFileType)Activator.CreateInstance(x)).ToHashSet());     
     }
 }

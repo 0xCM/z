@@ -4,12 +4,18 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public record class TypedFile<T> : TypedFile, ITypedFile<T>
+    public abstract record class TypedFile<T> : TypedFile, ITypedFile<T>
         where T : IFileType, new()
     {
         public static T FileType => new();
 
-        public TypedFile(FileUri location)
+        protected TypedFile()
+            : base(FileType)
+        {
+
+        }
+
+        protected TypedFile(FilePath location)
             : base(FileType,location)
         {
 

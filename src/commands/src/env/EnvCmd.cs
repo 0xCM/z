@@ -182,19 +182,17 @@ namespace Z0
         void VsCode(CmdArgs args)
             => Tools.vscode(Channel, args[0].Value);
 
-        [CmdOp("help")]
+        [CmdOp("tool")]
         void ToolHelp(CmdArgs args)
-        {
-            var tool = FS.path(args[0]);            
-            var dst = args.Count > 1 ? FS.path(args[1]) : AppDb.DbTargets("tools/help").Path(tool.FileName.ChangeExtension(FileKind.Help));
-            var task = ProcessLauncher.redirect(Channel, tool, "--help", dst);
-            var token = task.Result;
-            if(!token.Success)
-            {
+            => Tools.start(Channel,args).Wait();
 
-            }
-            
-        }
+        // {            
+        //     var tool = FS.path(args[0]);
+        //     var toolname = tool.FileName.WithoutExtension.Format();
+        //     var running = Channel.Running($"Executing '{args}'");
+        //     var dst = AppDb.DbTargets($"tools/{toolname}").Path(tool.FileName.ChangeExtension(FileKind.Help));
+        //     ProcessLauncher.redirect(Channel, args, dst).Wait();
+        // }
 
         [CmdOp("json/types")]
         void JsonTypes()

@@ -4,9 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class MemDb
+    public abstract class ToolProcess : IToolProcess
     {
-        public static Index<TypeTableRow> rows(Index<DbTypeTable> src)
-            => src.SelectMany(x => x.Rows).Sort().Resequence();
-    }
+        public ITool Tool {get;}
+
+        protected ToolProcess(ITool tool)
+        {
+            Tool = tool;
+        }
+    }    
 }

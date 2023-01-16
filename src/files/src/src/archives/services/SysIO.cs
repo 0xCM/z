@@ -22,14 +22,10 @@ namespace Z0
         }
 
         public void Status(string msg)
-        {
-            StatusHandler(msg);
-        }
+            => StatusHandler(msg);
         
         public void Error(string msg)
-        {
-            ErrorHandler(msg);
-        }
+            => ErrorHandler(msg);
 
         public string Input()
         {

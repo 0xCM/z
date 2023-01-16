@@ -9,8 +9,55 @@ namespace Z0
     using static math;
 
     [ApiHost]
-    public partial class MemDb : IMemDb
+    public class MemDb : IMemDb
     {
+        public static DbGrid<T> grid<T>(Dim2<uint> shape)
+            => new DbGrid<T>(new DbRowGrid<T>(shape), new DbColGrid<T>(shape));
+
+        public static Index<TypeTableRow> rows(Index<DbTypeTable> src)
+            => src.SelectMany(x => x.Rows).Sort().Resequence();
+
+        [MethodImpl(Inline), Op]
+        public static DbCol col(ushort pos, Name name, ReadOnlySpan<byte> widths)
+            => new DbCol(pos, name, skip(widths, pos));
+
+        [MethodImpl(Inline), Op]
+        public static Index<DbCol> cols(params DbCol[] cols)
+            => cols;
+
+        public static IMemDb open(FilePath store)
+            => open(store,0);
+
+        public static IMemDb open(FilePath store, ByteSize capacity)
+            => Opened.GetOrAdd(store, s =>  new MemDb(s, capacity));
+
+        public static IMemDb open(FilePath store, Gb capacity)
+            => Opened.GetOrAdd(store, s =>  new MemDb(s, capacity.Size));
+
+        public static IMemDb open(FilePath store, Mb capacity)
+            => Opened.GetOrAdd(store, s =>  new MemDb(s, capacity.Size));
+
+        public static Index<DbCol> resequence(Index<DbCol> left, Index<DbCol> right)
+        {
+            var count = left.Count + right.Count;
+            var dst = sys.alloc<DbCol>(count);
+            var k=z8;
+            for(var i=0; i<left.Count; i++, k++)
+                seek(dst,k) = (left[i].Reposition(k));
+
+            for(var i=0; i<right.Count; i++, k++)
+                seek(dst,k) = (right[i].Reposition(k));
+
+            return dst;
+        }
+
+        [MethodImpl(Inline), Op]
+        public static void split(uint src, out ushort a, out ushort b)
+        {
+            a = (ushort)(src & 0x0000_FFFF);
+            b = (ushort)((src & 0xFFFF_0000) >> 16);
+        }
+
         public static void check(IWfChannel channel)
         {
             check(channel, (32,32));
@@ -142,6 +189,46 @@ namespace Z0
         public static uint NextSeq(DbObjectKind kind)
             => sys.inc(ref ObjSeqSource[kind]);
 
+        [MethodImpl(Inline), Op]
+        public static DbDataType type(uint seq, Name name, Name primitive, DataSize size, Name refinement = default)
+            => new DbDataType(seq, name, primitive, size, refinement.IsNonEmpty, refinement);
+
+        public static Index<DbTypeTable> typetables(Assembly src, string group, ICompositeDispenser dst)
+        {
+            var types = MeasuredType.symbolic(src, group);
+            Index<DbTypeTable> tables = sys.alloc<DbTypeTable>(types.Count);
+            for(var i=0; i<types.Count; i++)
+                tables[i] = MemDb.typetable(types[i], dst);
+            return tables.Sort();
+        }
+
+        public static DbTypeTable typetable(MeasuredType type, ICompositeDispenser dst)
+        {
+            var symbols = Symbols.syminfo(type.Definition);
+            Index<TypeTableRow> rows = sys.alloc<TypeTableRow>(symbols.Count);
+            for(var j=0; j<symbols.Count; j++)
+            {
+                ref readonly var sym = ref symbols[j];
+                ref var row = ref rows[j];
+                row.Seq = NextSeq(DbObjectKind.TypeTableRow);
+                row.TypeName = dst.Label(type.Definition.Name);
+                row.LiteralName = dst.Label(sym.Name.Text);
+                row.Position = (ushort)sym.Index;
+                row.PackedWidth = (byte)type.Size.PackedWidth;
+                row.NativeWidth = (byte)type.Size.NativeWidth;
+                row.LiteralValue = sym.Value;
+                row.Symbol = dst.Label(sym.Expr.Text);
+                row.Description = dst.String(sym.Description.Text);
+            }
+
+            return new DbTypeTable(
+                NextSeq(DbObjectKind.TypeTable),
+                dst.Label(type.Definition.Name),
+                type.Size,
+                rows
+                );
+        }
+ 
         [MethodImpl(Inline)]
         static AllocToken token(MemoryAddress @base, uint offset, uint size)
             => new AllocToken(@base,offset, size);

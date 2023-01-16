@@ -8,7 +8,8 @@ namespace Z0
     {
         @string Name {get;}
 
-        FileExt DefaultExt {get;}
+        FileExt Ext {get;}
+
         bool INullity.IsEmpty
             => Name.IsEmpty;
 
@@ -19,7 +20,7 @@ namespace Z0
             => Name;
     }
 
-    public interface IFileType<T> : IFileType
+    public interface IFileType<T> : IFileType, IDataString<T>, IDataType<T>
         where T : IFileType<T>, new()
 
     {

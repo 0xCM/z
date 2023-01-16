@@ -4,14 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct NasmListFile : IFile<FilePath>
+    public readonly struct NasmListFile : IFile
     {
-        public FilePath Location {get;}
+        public FilePath Path {get;}
 
         [MethodImpl(Inline)]
         public NasmListFile(FilePath target)
         {
-            Location = target;
+            Path = target;
         }
 
         [MethodImpl(Inline)]

@@ -163,7 +163,7 @@ namespace Z0
         {
             var emitter = text.emitter();
             foreach(var module in src)
-                emitter.AppendLine(Expr(cmd, module.Location, output).Format());
+                emitter.AppendLine(Expr(cmd, module.Path, output).Format());
             return new CmdScript(name, emitter.Emit());
         }
 

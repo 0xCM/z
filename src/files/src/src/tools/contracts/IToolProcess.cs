@@ -4,9 +4,17 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class MemDb
+    public interface IToolProcess
     {
-        public static DbGrid<T> grid<T>(Dim2<uint> shape)
-            => new DbGrid<T>(new DbRowGrid<T>(shape), new DbColGrid<T>(shape));
+        ITool Tool {get;}
+    }
+
+    public interface IToolProcess<T> : IToolProcess
+        where T : ITool<T>, new()
+    {
+        new T Tool => new();
+
+        ITool IToolProcess.Tool
+            => Tool;
     }
 }

@@ -115,23 +115,23 @@ namespace Z0
             return sys.start(Run);
         }
 
-        public static Task<ExecToken> redirect(IWfChannel channel, FilePath tool, string args, FilePath dst)
+        public static Task<ExecToken> redirect(IWfChannel channel, CmdArgs args, FilePath dst)
         {
             ExecToken Run()
             {
                 var counter = 0u;
                 var emitting = channel.EmittingFile(dst);
-                using var status = dst.Utf8Writer(true);
+                using var writer = dst.Utf8Writer(true);
                 run(new SysIO(msg => { 
-                    status.WriteLine(msg);
+                    writer.WriteLine(msg);
                     counter++;
                 }, 
-                msg => {
-                    channel.Error(msg);
-                }, 
-                () => EmptyString), 
-                Cmd.args(tool,args), 
-                context(dst.FolderPath));
+                    msg => channel.Error(msg), 
+                    () => EmptyString), 
+                    args, 
+                    context(dst.FolderPath)
+                );
+
                 return channel.EmittedFile(emitting, counter);
             }
             return sys.start(Run);
@@ -141,6 +141,7 @@ namespace Z0
         public static Task<ExecToken> redirect(IWfChannel channel, FilePath path, CmdArgs args, CmdVars vars, FolderPath work, Receiver<string> status, Receiver<string> error)
             => launch(channel, path, args, context(work, vars.Map(v => new EnvVar(v.Name, v.Value))));
 
+        //public static ExecToken run()
         public static Task<ExecToken> redirect(IWfChannel channel, CmdArgs args)
         {
             ExecToken Run()
@@ -174,9 +175,9 @@ namespace Z0
                 }
 
                 var io = new SysIO(Channel0, Channel1);
-                var running = channel.Running($"{args} -> ({c0Path}, ${c1Path})");
-                run(io, args, context());
-                return channel.Ran(running);
+                var running = channel.Running($"{args} -> ({c0Path}, {c1Path})");
+                var status = run(io, args, context());
+                return channel.Ran(running, status);
             }
 
             return sys.start(Run);
@@ -268,8 +269,9 @@ namespace Z0
             var values = spec.Values();
             Demand.gt(values.Count, 0u);
             var name = values.First;
-            var args = values.ToSpan().Slice(1).ToArray();
-            var psi = new ProcessStartInfo(values.First, text.join(Chars.Space,args))
+            //var args = text.join(Chars.Space,values.ToSpan().Slice(1).ToArray());
+            var path = FS.path(values.First);            
+            var psi = new ProcessStartInfo(path.Format(), spec.Skip(1).Format())
             {
                 UseShellExecute = false,
                 RedirectStandardError = true,
@@ -277,7 +279,7 @@ namespace Z0
                 ErrorDialog = false,
                 CreateNoWindow = true,
                 RedirectStandardInput = false,
-                WorkingDirectory = context.WorkingDir.Format(PathSeparator.FS)
+                WorkingDirectory = context.WorkingDir.Format(PathSeparator.BS)
             };
 
             iter(context.Vars, v => psi.Environment.Add(v.Name, v.Value));
@@ -305,7 +307,7 @@ namespace Z0
                 result.Id = process.Id;
                 process.BeginOutputReadLine();
                 process.BeginErrorReadLine();
-                process.WaitForExitAsync().Wait();                
+                process.WaitForExit();
                 result.HasExited = true;
                 result.ExitTime = sys.now();
                 result.Duration = result.ExitTime - result.StartTime;

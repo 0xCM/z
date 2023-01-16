@@ -79,9 +79,10 @@ namespace Z0
         FileKind IFileRef.Kind
             => Kind;
 
-        FilePath IFileRef.Path
-            => Path;
 
         public static FileRef Empty => default;
+
+        FilePath IFile.Path 
+            => Path;
     }
 }

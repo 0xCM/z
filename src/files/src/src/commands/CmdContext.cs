@@ -16,18 +16,30 @@ namespace Z0
         /// </summary>
         public readonly EnvVars Vars;
         
+        /// <summary>
+        /// Invoked upon process creation
+        /// </summary>
         public readonly Action<Process> ProcessCreated;
 
+        /// <summary>
+        /// Standard i/o redirection
+        /// </summary>
+        public readonly ISysIO IO;
+        
         [MethodImpl(Inline)]
-        public CmdContext(FolderPath wd, EnvVars src, Action<Process> create = null)
+        public CmdContext(FolderPath wd, EnvVars src, Action<Process> create = null, ISysIO io = null)
         {
             WorkingDir = wd;
             Vars = src;
             ProcessCreated = create ?? (p => {});
+            IO = io;
         }
 
+        public CmdContext Redirect(ISysIO io)
+            => new CmdContext(WorkingDir, Vars, ProcessCreated, io);
+
         public CmdContext WithVar(EnvVar var)
-            => new CmdContext(WorkingDir, Vars.Replace(var));
+            => new CmdContext(WorkingDir, Vars.Replace(var), ProcessCreated, IO);
 
         FolderPath ICmdContext.WorkingDir 
             => WorkingDir;
@@ -40,5 +52,8 @@ namespace Z0
 
         Action<Process> ICmdContext.ProcessCreated 
             => ProcessCreated;
+
+        ISysIO ICmdContext.IO 
+            => IO;
     }
 }

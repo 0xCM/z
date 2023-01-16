@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly record struct ImagePath : IFile<FilePath>
+    public readonly record struct ImagePath : IFile
     {
         public FilePath Path {get;}
 
@@ -32,11 +32,6 @@ namespace Z0
             get => Path.Hash;
         }
 
-        public FilePath Location
-        {
-            [MethodImpl(Inline)]
-            get => Path;
-        }
 
         public override int GetHashCode()
             => Hash;
