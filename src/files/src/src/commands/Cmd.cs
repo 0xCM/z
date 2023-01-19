@@ -9,8 +9,8 @@ namespace Z0
     [ApiHost]
     public class Cmd 
     {   
-        public static ReadOnlySeq<ICmdExecutor> executors(params Assembly[] src)
-            => src.Types().Tagged<CmdExecutorAttribute>().Concrete().Map(x => (ICmdExecutor)Activator.CreateInstance(x));
+        public static ReadOnlySeq<IToolExecutor> executors(params Assembly[] src)
+            => src.Types().Tagged<CmdExecutorAttribute>().Concrete().Map(x => (IToolExecutor)Activator.CreateInstance(x));
 
         public static void emit(IWfChannel channel, ToolCatalog src, IDbArchive dst)
         {

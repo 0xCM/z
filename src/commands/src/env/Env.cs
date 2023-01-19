@@ -25,8 +25,8 @@ namespace Z0
         public static ReadOnlySeq<EnvReport> reports(IWfChannel channel, IDbArchive dst)
         {
             var flow = channel.Running();
-            var src = Env.reports();
-            iter(src, report => Env.emit(channel,report, dst));
+            var src = reports();
+            iter(src, report => emit(channel,report, dst));
             channel.Ran(flow);
             return src;
         }
@@ -37,54 +37,70 @@ namespace Z0
             switch(kind)
             {
                 case EnvVarKind.Process:
-                     token = Env.emit(channel, kind, dst);
+                     token = emit(channel, kind, dst);
                 break;
                 case EnvVarKind.User:
-                    token = Env.emit(channel, kind, dst);
+                    token = emit(channel, kind, dst);
                 break;
                 case EnvVarKind.Machine:
-                    token = Env.emit(channel, kind, dst);
+                    token = emit(channel, kind, dst);
                 break;
             }
 
             return token;
         }
 
-        static ToolKey key(uint seq, FileName name)
-            => new (seq,name);
+        static uint KeySeq = 0;
+        
+        static ToolKey key(FileName name)
+            => new (inc(ref KeySeq), name);
 
         public static ToolCatalog tools()
         {
             var paths = Env.path(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL);
-            var dst = dict<ToolKey,LocatedTool>();
-            var seq = 0u;
-            for(var i=0u; i<paths.Count; i++)
-            {
-                ref readonly var dir = ref paths[i];
-                iter(FS.enumerate(dir, false, FileKind.Exe, FileKind.Cmd, FileKind.Bat), path => {
-                    var k = key(seq++,path.FileName());
-                    dst.TryAdd(k, new (seq++, k, path));
+            var buffer = dict<ToolKey,LocatedTool>();
+            iter(paths, dir => {
+                iter(FS.enumerate(dir, false, FileKind.Exe, FileKind.Cmd, FileKind.Bat), path => {                
+                    var fsp = path.ToFilePath();                    
+                    var include = fsp.FolderPath != FS.dir("C:/WINDOWS/System32/");
+                    include &= (fsp.FolderPath != FS.dir("C:/WINDOWS"));
+                    if(include)
+                    {
+                        var k = key(path.FileName());
+                        buffer.TryAdd(k, new LocatedTool(k.Seq, k, path));
+                    }
                 });
-            }
-            return new (dst);
+            });
+
+            // for(var i=0u; i<paths.Count; i++)
+            // {
+            //     ref readonly var dir = ref paths[i];
+            //     iter(FS.enumerate(dir, false, FileKind.Exe, FileKind.Cmd, FileKind.Bat), path => {
+            //         var k = key(seq++,path.FileName());
+            //         dst.TryAdd(k, new (seq++, k, path));
+            //     });
+            // }
+            return new (buffer);
         }
 
         public static void tools(IWfChannel channel, IDbArchive dst)
         {
-            var buffer = bag<FilePath>();
-            var paths = Env.path(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL);
-            iter(paths, dir => {
-                iter(FS.enumerate(dir, false, FileKind.Exe, FileKind.Cmd, FileKind.Bat), path => {
-                    buffer.Add(path);
-                });
-            }, true);
+            var catalog = Env.tools();
 
-            var tools = buffer.Array().Sort(new FileNameComparer());
+            // var buffer = bag<FilePath>();
+            // var paths = Env.path(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL);
+            // iter(paths, dir => {
+            //     iter(FS.enumerate(dir, false, FileKind.Exe, FileKind.Cmd, FileKind.Bat), path => {
+            //         buffer.Add(path);
+            //     });
+            // }, true);
+
+            //var tools = catalog.Array().Sort(new FileNameComparer());
             var counter = 0u;
             var emitter = text.emitter();
-            foreach(var tool in tools)
+            foreach(var tool in catalog.Tools)
             {               
-                var info = string.Format("{0:D5} {1,-36} {2}", counter++, tool.FileName.WithoutExtension, tool); 
+                var info = string.Format("{0,-36} {1}", tool.Name, tool.Path); 
                 emitter.AppendLine(info);
                 channel.Row(info);
             }

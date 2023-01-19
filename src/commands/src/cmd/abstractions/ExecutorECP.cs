@@ -4,14 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public abstract class Executor<E, C, P> : Executor<E>, ICmdExecutor<C, P>
+    public abstract class Executor<E, C, P> : Executor<E>, IToolExecutor<C, P>
         where E : Executor<E, C, P>, new()
         where C : IApiCmd<C>, new()
         where P : INullity, new()
     {
-        protected abstract P Run(CmdContext context, C command);
+        protected abstract P Run(ToolContext context, C command);
 
-        protected override Task<ExecToken> Execute(CmdContext context, ICmd command)
+        protected override Task<ExecToken> Execute(ToolContext context, ICmd command)
         {
             async Task<ExecToken> Exec()
                 => await Execute(context,command);
@@ -19,7 +19,7 @@ namespace Z0
             return Exec();
         }
 
-        public Task<CmdResult<C,P>> Execute(CmdContext context, C command)
+        public Task<CmdResult<C,P>> Execute(ToolContext context, C command)
         {
             CmdResult<C,P> Exec()
             {

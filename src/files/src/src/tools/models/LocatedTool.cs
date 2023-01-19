@@ -19,10 +19,10 @@ namespace Z0
             Path = path;
         }
 
-        public FileName Name
+        public string Name
         {
             [MethodImpl(Inline)]
-            get => Path.FileName();
+            get => Path.FileName().WithoutExtension.Format();
         }
 
         public Hash32 Hash

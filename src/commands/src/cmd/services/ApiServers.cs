@@ -47,39 +47,39 @@ namespace Z0
             return entries.Sort().Resequence();        
         }        
 
-        public static ICmdServer cmd(IExecutionContext ec, IApiContext apictx, params Assembly[] components)
-        {
-            var state = new CmdServerState{
-                Handlers = handlers(ec, components),
-                ExecContext = ec,
-                ApiContext = apictx,
-                Runner = runner(ec.Wf, components)
-            };
-            return CmdServer.create(ec, components, state);
-        }
+        // public static ICmdServer cmd(IExecutionContext ec, IApiContext apictx, params Assembly[] components)
+        // {
+        //     var state = new CmdServerState{
+        //         Handlers = handlers(ec, components),
+        //         ExecContext = ec,
+        //         ApiContext = apictx,
+        //         Runner = runner(ec.Wf, components)
+        //     };
+        //     return CmdServer.create(ec, components, state);
+        // }
 
-        internal static ICmdHandler handler(IExecutionContext context, Type tHandler)
-        {
-            var handler = (ICmdHandler)Activator.CreateInstance(tHandler, new object[]{});
-            handler.Initialize(context);
-            return handler;
-        }
+        // internal static ICmdHandler handler(IExecutionContext context, Type tHandler)
+        // {
+        //     var handler = (ICmdHandler)Activator.CreateInstance(tHandler, new object[]{});
+        //     handler.Initialize(context);
+        //     return handler;
+        // }
 
-        public static IApiCmdRunner runner(IWfRuntime wf, params Assembly[] components)        
-        {
-            var context = new ExecutionContext(wf, wf.Channel);
-            return new ApiCmdRunner(context, handlers(context, components));
-        }
+        // public static IApiCmdRunner runner(IWfRuntime wf, params Assembly[] components)        
+        // {
+        //     var context = new ExecutionContext(wf, wf.Channel);
+        //     return new ApiCmdRunner(context, handlers(context, components));
+        // }
 
-        static Type[] HandlerTypes(params Assembly[] src)
-            => src.Types().Concrete().Tagged<CmdHandlerAttribute>();
+        // static Type[] HandlerTypes(params Assembly[] src)
+        //     => src.Types().Concrete().Tagged<CmdHandlerAttribute>();
 
-        public static CmdHandlers handlers(IExecutionContext context, params Assembly[] components)
-        {
-            var data = HandlerTypes(components).Select(x => handler(context,x)).Map(x => (x.Route,x)).ToDictionary();
-            data.TryAdd(Handlers.DevNul.Route, handler(context, typeof(Handlers.DevNul)));
-            return new (data);
-        }
+        // public static CmdHandlers handlers(IExecutionContext context, params Assembly[] components)
+        // {
+        //     var data = HandlerTypes(components).Select(x => handler(context,x)).Map(x => (x.Route,x)).ToDictionary();
+        //     data.TryAdd(Handlers.DevNul.Route, handler(context, typeof(Handlers.DevNul)));
+        //     return new (data);
+        // }
         
         public static ReadOnlySeq<ServiceSpec> services(Assembly[] src)
         {

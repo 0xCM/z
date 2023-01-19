@@ -5,18 +5,18 @@
 namespace Z0
 {
     [CmdExecutor]
-    public abstract class Executor : ICmdExecutor
+    public abstract class Executor : IToolExecutor
     {
-        public static ReadOnlySeq<ICmdExecutor> discover(params Assembly[] src)
-            => src.Types().Tagged<CmdExecutorAttribute>().Concrete().Map(x => (ICmdExecutor)Activator.CreateInstance(x));
+        public static ReadOnlySeq<IToolExecutor> discover(params Assembly[] src)
+            => src.Types().Tagged<CmdExecutorAttribute>().Concrete().Map(x => (IToolExecutor)Activator.CreateInstance(x));
 
         protected IWfRuntime Wf;
 
         protected IWfChannel Channel;
 
-        protected abstract Task<ExecToken> Execute(CmdContext context, ICmd command);
+        protected abstract Task<ExecToken> Execute(ToolContext context, ICmd command);
 
-        Task<ExecToken> ICmdExecutor.Execute(CmdContext context, ICmd command)
+        Task<ExecToken> IToolExecutor.Execute(ToolContext context, ICmd command)
             => Execute(context,command);
     }
 }

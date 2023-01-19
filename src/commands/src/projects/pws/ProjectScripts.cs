@@ -13,7 +13,7 @@ namespace Z0
             var project = arg(args, 0).Value;
             var script = arg(args, 1).Value;
             var path = AppDb.Service.ProjectLib(project).Scoped(scripts).Path(script, FileKind.Cmd);
-            return ProcessLauncher.launch(Channel, path, CmdArgs.Empty, CmdContext.Default);
+            return ProcessLauncher.launch(Channel, path, CmdArgs.Empty, ToolContext.Default);
         }
 
         public Files List(CmdArgs args)

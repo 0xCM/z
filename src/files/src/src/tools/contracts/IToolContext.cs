@@ -4,32 +4,32 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface ICmdContext
+    public interface IToolContext
     {
         FolderPath WorkingDir {get;}
 
         EnvVars Vars {get;}
 
-        ICmdContext WithVar(EnvVar var);
+        IToolContext WithVar(EnvVar var);
 
-        ICmdContext Redirect(ISysIO io);
+        IToolContext Redirect(ISysIO io);
 
         Action<Process> ProcessCreated {get;}
 
         ISysIO IO {get;}
     }
 
-    public interface ICmdContext<C> : ICmdContext
-        where C : ICmdContext<C>
+    public interface IToolContext<C> : IToolContext
+        where C : IToolContext<C>
     {
         new C WithVar(EnvVar var);
 
         new C Redirect(ISysIO io);
     
-        ICmdContext ICmdContext.WithVar(EnvVar var)
+        IToolContext IToolContext.WithVar(EnvVar var)
             => WithVar(var);
         
-        ICmdContext ICmdContext.Redirect(ISysIO io)
+        IToolContext IToolContext.Redirect(ISysIO io)
             => Redirect(io);
     }
 }

@@ -6,16 +6,6 @@ namespace Z0
 {
     public readonly record struct ToolKey(uint Seq, FileName Name) : IDataType<ToolKey>
     {
-        public int CompareTo(ToolKey src)
-        {
-            if(Name == src.Name)
-            {
-                return Seq.CompareTo(src.Seq);
-            }
-            else
-                return Name.CompareTo(src.Name);
-        }
-
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
@@ -38,6 +28,20 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             get => Name.IsNonEmpty;
+        }
+
+        public string Format()
+            => Name.Format();
+
+        public override string ToString()
+            => Format();
+ 
+        public int CompareTo(ToolKey src)
+        {
+            var result = Name.CompareTo(src.Name);
+            if(result == 0)
+                result = Seq.CompareTo(src.Seq);
+            return result;
         }
 
         public static ToolKey Empty => new(0,FileName.Empty);

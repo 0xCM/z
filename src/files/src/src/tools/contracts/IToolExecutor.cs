@@ -4,18 +4,18 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface ICmdExecutor
+    public interface IToolExecutor
     {
-        Task<ExecToken> Execute(CmdContext context, ICmd command);
+        Task<ExecToken> Execute(ToolContext context, ICmd command);
     }
 
-    public interface ICmdExecutor<C,P> : ICmdExecutor
+    public interface IToolExecutor<C,P> : IToolExecutor
         where C : ICmd, new()
         where P : INullity, new()
     {
-        Task<CmdResult<C,P>> Execute(CmdContext context, C command);
+        Task<CmdResult<C,P>> Execute(ToolContext context, C command);
         
-        Task<ExecToken> ICmdExecutor.Execute(CmdContext context, ICmd command)
+        Task<ExecToken> IToolExecutor.Execute(ToolContext context, ICmd command)
         {
             ExecToken Exec()
                 => Execute(context, (C)command).Result.Token;

@@ -66,6 +66,7 @@ namespace Z0
                 iter(d.Value, file => Channel.Row($"    {file.Path}"));
             });
         }
+
         [CmdOp("files")]
         void CatalogFiles(CmdArgs args)
             => Archives.catalog(Channel, args);

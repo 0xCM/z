@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class CmdContext : ICmdContext<CmdContext>
+    public class ToolContext : IToolContext<ToolContext>
     {
         /// <summary>
         /// The working folder, if any
@@ -27,7 +27,7 @@ namespace Z0
         public readonly ISysIO IO;
         
         [MethodImpl(Inline)]
-        public CmdContext(FolderPath wd, EnvVars src, Action<Process> create = null, ISysIO io = null)
+        public ToolContext(FolderPath wd, EnvVars src, Action<Process> create = null, ISysIO io = null)
         {
             WorkingDir = wd;
             Vars = src;
@@ -35,25 +35,25 @@ namespace Z0
             IO = io;
         }
 
-        public CmdContext Redirect(ISysIO io)
-            => new CmdContext(WorkingDir, Vars, ProcessCreated, io);
+        public ToolContext Redirect(ISysIO io)
+            => new ToolContext(WorkingDir, Vars, ProcessCreated, io);
 
-        public CmdContext WithVar(EnvVar var)
-            => new CmdContext(WorkingDir, Vars.Replace(var), ProcessCreated, IO);
+        public ToolContext WithVar(EnvVar var)
+            => new ToolContext(WorkingDir, Vars.Replace(var), ProcessCreated, IO);
 
-        FolderPath ICmdContext.WorkingDir 
+        FolderPath IToolContext.WorkingDir 
             => WorkingDir;
 
-        EnvVars ICmdContext.Vars 
+        EnvVars IToolContext.Vars 
             => Vars;
 
-        public static CmdContext Default 
-            => new CmdContext(FS.dir(Environment.CurrentDirectory), EnvVars.Empty);
+        public static ToolContext Default 
+            => new ToolContext(FS.dir(Environment.CurrentDirectory), EnvVars.Empty);
 
-        Action<Process> ICmdContext.ProcessCreated 
+        Action<Process> IToolContext.ProcessCreated 
             => ProcessCreated;
 
-        ISysIO ICmdContext.IO 
+        ISysIO IToolContext.IO 
             => IO;
     }
 }

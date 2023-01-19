@@ -6,7 +6,7 @@ namespace Z0
 {
     public sealed class CodeLauncher : Launcher<CodeLauncher>
     {
-        Task<ExecToken> VsCode<T>(T target, CmdContext context)
+        Task<ExecToken> VsCode<T>(T target, ToolContext context)
             => ProcessLauncher.launch(Channel, FS.path("code.exe"), Cmd.args(target), context);
 
         public override void Launch(CmdArgs args, Action<Process> launched)

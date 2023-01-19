@@ -157,49 +157,36 @@ namespace Z0
         public static PackFolder pack(FolderPath src, FileUri dst)
             => new (src,dst);        
 
-        public static void search(IWfChannel channel, in CreateFileCatalog cmd, Action<FilePath> dst, bool pll = true)
+        public static Outcome bind(CmdArgs src, out CreateFileCatalog dst)
         {
-            var src = cmd.Match.IsEmpty ? FS.enumerate(cmd.Source,"*.*", true) : FS.enumerate(cmd.Source, true, cmd.Match);
-            var counter = 0u;
-            var flow = channel.Running($"Searching {cmd.Source}");
-            string msg()
-                => $"Collected {counter} files";
-
-            iter(src, file => {
-                dst(file);
-                counter++;
-                if(counter % 1024 == 0)
-                    channel.Babble(msg());
-            }, pll);
-            channel.Ran(flow, $"Found {counter} files from {cmd.Source}");
-        }
+            dst = new();
+            dst.Target = Env.ShellData.Root;
+            var count = src.Count;
+            try
+            {
+                if(count >= 1)
+                    dst.Source = FS.dir(src[0]);
+                
+                if(count >= 2)
+                    switch(src[1].Value)
+                    {
+                        case "--ext":
+                        dst.Match = sys.map(text.split(src[2].Value, Chars.Semicolon), x => FS.ext(x));
+                        break;
+                    }
+            }
+            catch(Exception e)
+            {
+                return e;
+            }
+        
+            return true;
+        }   
 
         public static void catalog(IWfChannel channel, CmdArgs args)
         {
-            CreateFileCatalog.bind(args, out CreateFileCatalog cmd);
-            var name = FS.identifier(cmd.Source);
-            var dst = cmd.Target + FS.file(name, FileKind.Csv);
-            var running =  channel.Running($"Adding files from {cmd.Source} to catalog");
-            var counter = 0u;
-            var paths = bag<FilePath>();
-            var rows = bag<ListedFile>();
-            void Accept(FilePath file)
-            {
-                paths.Add(file);
-                rows.Add(new ListedFile{
-                    Seq = counter++,
-                    Size = file.Size.Kb,
-                    Path = file,
-                    CreateTS = file.Info.CreationTime,
-                    UpdateTS = file.Info.LastWriteTime,
-                    Attributes = file.Info.Attributes
-                });                
-            }
-
-            Archives.search(channel, cmd, Accept);
-
-            channel.TableEmit(rows.ToSeq().Sort().Resequence(), dst);
-            channel.Ran(running, counter);
+            bind(args, out CreateFileCatalog cmd);
+            FileCatalogs.run(channel,cmd);
         }
 
         public static IDbArchive archive(string src)

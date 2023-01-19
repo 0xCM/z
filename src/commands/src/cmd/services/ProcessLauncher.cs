@@ -8,16 +8,16 @@ namespace Z0
 
     public class ProcessLauncher
     {        
-        public static CmdContext context(FolderPath? work = null, params EnvVar[] vars)
+        public static ToolContext context(FolderPath? work = null, params EnvVar[] vars)
             => new (work ?? Env.cd(), vars);
 
-        public static CmdContext context(FolderPath work, params EnvVar[] vars)
+        public static ToolContext context(FolderPath work, params EnvVar[] vars)
             => new(work, vars);
 
-        public static CmdContext context(FolderPath work, EnvVars vars, Action<Process> created)
+        public static ToolContext context(FolderPath work, EnvVars vars, Action<Process> created)
             => new(work, vars, created);
 
-        public static CmdContext context()
+        public static ToolContext context()
             => new(Env.cd(), EnvVars.Empty);
 
         public static Task<ExecToken> launch(IWfChannel channel, ISysIO io, CmdArgs spec, FolderPath? wd = null)
@@ -33,9 +33,9 @@ namespace Z0
         }
 
         [Op]
-        public static Task<ExecToken> launch(IWfChannel channel, FilePath path, CmdArgs args, CmdContext? context = null)
+        public static Task<ExecToken> launch(IWfChannel channel, FilePath path, CmdArgs args, ToolContext? context = null)
         {
-            var ctx = context ?? CmdContext.Default;
+            var ctx = context ?? ToolContext.Default;
             var psi = new ProcessStartInfo
             {
                 FileName = path.Format(),
@@ -73,10 +73,10 @@ namespace Z0
             return sys.start(Run);
         }    
 
-        public static Task<ExecToken> launch(IWfChannel channel, CmdArgs args, CmdContext? context = null)
+        public static Task<ExecToken> launch(IWfChannel channel, CmdArgs args, ToolContext? context = null)
             => launch(channel, FS.path(args[0]), args.Skip(1), context);
 
-        public static Task<ExecToken> launch(IWfChannel channel, CmdLine cmd, CmdContext? context = null)
+        public static Task<ExecToken> launch(IWfChannel channel, CmdLine cmd, ToolContext? context = null)
         {
             var psi = new ProcessStartInfo
             {
@@ -89,7 +89,7 @@ namespace Z0
                 RedirectStandardInput = false
             };
             
-            var ctx = context ?? CmdContext.Default;
+            var ctx = context ?? ToolContext.Default;
             if(context != null)
                 iter(context.Vars, v => psi.Environment.Add(v.Name, v.Value));
 
@@ -141,7 +141,6 @@ namespace Z0
         public static Task<ExecToken> redirect(IWfChannel channel, FilePath path, CmdArgs args, CmdVars vars, FolderPath work, Receiver<string> status, Receiver<string> error)
             => launch(channel, path, args, context(work, vars.Map(v => new EnvVar(v.Name, v.Value))));
 
-        //public static ExecToken run()
         public static Task<ExecToken> redirect(IWfChannel channel, CmdArgs args)
         {
             ExecToken Run()
@@ -264,12 +263,11 @@ namespace Z0
             return dst;
         }
 
-        static ExecStatus run(ISysIO io, CmdArgs spec, CmdContext context)
+        static ExecStatus run(ISysIO io, CmdArgs spec, ToolContext context)
         {
             var values = spec.Values();
             Demand.gt(values.Count, 0u);
             var name = values.First;
-            //var args = text.join(Chars.Space,values.ToSpan().Slice(1).ToArray());
             var path = FS.path(values.First);            
             var psi = new ProcessStartInfo(path.Format(), spec.Skip(1).Format())
             {

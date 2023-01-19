@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static sys;
+
     partial struct FS
     {
         public static IEnumerable<FilePath> enumerate(FolderPath src, Func<FilePath,bool> predicate, bool recurse = true)

@@ -19,7 +19,6 @@ namespace Z0
         public ReadOnlySpan<ToolKey> Keys 
             => Lookup.Keys;
 
-
         public bool Find(ToolKey key, out LocatedTool tool)
             => Lookup.Find(key, out tool);
     }

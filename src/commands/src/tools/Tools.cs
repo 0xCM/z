@@ -16,10 +16,10 @@ namespace Z0
             return ProcessLauncher.redirect(channel, args, dst);
         }
         
-        public static Task<ExecToken> vscode<T>(IWfChannel channel, T target, CmdContext? context = null)
+        public static Task<ExecToken> vscode<T>(IWfChannel channel, T target, ToolContext? context = null)
             => ProcessLauncher.launch(channel, FS.path("code.exe"), Cmd.args(target), context);
 
-        public static Task<ExecToken> devenv<T>(IWfChannel channel, T target, CmdContext? context = null)
+        public static Task<ExecToken> devenv<T>(IWfChannel channel, T target, ToolContext? context = null)
             => ProcessLauncher.launch(channel, FS.path("devenv.exe"), Cmd.args(target), context);
 
         public static ToolKey key(uint seq, FileName name)
