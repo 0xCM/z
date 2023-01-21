@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     [StructLayout(LayoutKind.Sequential,Pack =1)]
     public record class ToolHelp
     {

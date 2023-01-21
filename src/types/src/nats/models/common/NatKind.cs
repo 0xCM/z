@@ -32,7 +32,7 @@ namespace Z0
 
         static NumericKind ParseNumericKind(string kind)
         {
-            var numeric = Numeric.parser<ulong>();
+            var numeric = NumericParser.create<ulong>();
             var indicator = (NumericIndicator)kind.Last();
             var input = kind.TrimEnd(kind.Last());
             if(numeric.Parse(input, out var w))
@@ -45,7 +45,7 @@ namespace Z0
 
         public static NatKind Parse(string src)
         {
-            var numeric = Numeric.parser<ulong>();
+            var numeric = NumericParser.create<ulong>();
             var parts = text.split(src, IDI.SegSep);
             if(parts.Length == 3)
             {

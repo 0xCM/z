@@ -24,7 +24,6 @@ namespace Z0
         {
             Config = config;
         }
-
     }
 
     /// <summary>
@@ -37,12 +36,6 @@ namespace Z0
 
         public static ReadOnlySeq<ToolProject> projects(ReadOnlySpan<ToolConfig> src)
             => src.Map(project);
-
-        // public FolderPath ToolHome(Tool tool)
-        //     => Root + FS.folder(tool.Format());
-
-        // public FilePath ConfigScript(Tool tool)
-        //     => ToolHome(tool) + FS.file(ApiAtomic.config, FS.Cmd);
 
         Dictionary<Actor,ToolConfig> ConfigLookup;
 
@@ -64,23 +57,8 @@ namespace Z0
         public string Format()
             => Name.Format();
 
-        // public FolderPath ToolDocs(Tool tool)
-        //     => ToolHome(tool) + FS.folder(docs);
-
-        // public FolderPath Logs(Tool tool)
-        //     => ToolHome(tool) + FS.folder(logs);
-
-        // public FilePath ConfigPath(Tool tool)
-        //     => ToolHome(tool) + FS.file(tool.Format(), FileKind.Config);
-
         public IDbArchive Scripts(Tool tool)
             => Root.Scoped(tool.Name).Scoped(scripts);
-
-        // public FilePath Script(Tool tool, string name)
-        //     => Scripts(tool) + FS.file(name, FS.Cmd);
-
-        // public FilePath Inventory()
-        //     => Root + FS.folder(admin) + FS.file(inventory, FS.Txt);
 
         public ReadOnlySpan<ToolConfig> Configured
         {

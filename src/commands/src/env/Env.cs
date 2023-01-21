@@ -52,8 +52,8 @@ namespace Z0
 
         static uint KeySeq = 0;
         
-        static ToolKey key(FileName name)
-            => new (inc(ref KeySeq), name);
+        static ToolKey key(FilePath path)
+            => new (inc(ref KeySeq), path);
 
         public static ToolCatalog tools()
         {
@@ -61,44 +61,25 @@ namespace Z0
             var buffer = dict<ToolKey,LocatedTool>();
             iter(paths, dir => {
                 iter(FS.enumerate(dir, false, FileKind.Exe, FileKind.Cmd, FileKind.Bat), path => {                
-                    var fsp = path.ToFilePath();                    
-                    var include = fsp.FolderPath != FS.dir("C:/WINDOWS/System32/");
-                    include &= (fsp.FolderPath != FS.dir("C:/WINDOWS"));
+                    var include = path.FolderPath != FS.dir("C:/WINDOWS/System32/");
+                    include &= (path.FolderPath != FS.dir("C:/WINDOWS"));
                     if(include)
                     {
-                        var k = key(path.FileName());
-                        buffer.TryAdd(k, new LocatedTool(k.Seq, k, path));
+                        var k = key(path);
+                        buffer.TryAdd(k, new LocatedTool(k));
                     }
                 });
             });
 
-            // for(var i=0u; i<paths.Count; i++)
-            // {
-            //     ref readonly var dir = ref paths[i];
-            //     iter(FS.enumerate(dir, false, FileKind.Exe, FileKind.Cmd, FileKind.Bat), path => {
-            //         var k = key(seq++,path.FileName());
-            //         dst.TryAdd(k, new (seq++, k, path));
-            //     });
-            // }
-            return new (buffer);
+            return new (buffer.Values.Array().Sort());
         }
 
         public static void tools(IWfChannel channel, IDbArchive dst)
         {
             var catalog = Env.tools();
-
-            // var buffer = bag<FilePath>();
-            // var paths = Env.path(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL);
-            // iter(paths, dir => {
-            //     iter(FS.enumerate(dir, false, FileKind.Exe, FileKind.Cmd, FileKind.Bat), path => {
-            //         buffer.Add(path);
-            //     });
-            // }, true);
-
-            //var tools = catalog.Array().Sort(new FileNameComparer());
             var counter = 0u;
             var emitter = text.emitter();
-            foreach(var tool in catalog.Tools)
+            foreach(var tool in catalog)
             {               
                 var info = string.Format("{0,-36} {1}", tool.Name, tool.Path); 
                 emitter.AppendLine(info);
@@ -115,16 +96,7 @@ namespace Z0
         }
 
         public static EnvReport report(EnvVarKind kind)
-        {
-            var _vars = vars(kind);
-            var cfg = CfgBlock.alloc(_vars.Count);
-            for(var i=0; i<cfg.Count; i++)
-            {
-                ref readonly var src = ref _vars[i];
-                cfg[i] = new CfgEntry(src.Name, src.Value);
-            }
-            return new EnvReport(EnvId, kind, cfg, _vars);
-        }
+            => new EnvReport(EnvId, kind, vars(kind));
 
         public static ReadOnlySeq<EnvReport> reports()
         {
@@ -191,7 +163,7 @@ namespace Z0
             return (emitted, folders);
         }
 
-        public static EnvVars vars(FilePath src, char sep = Chars.Eq)
+        public static EnvVars vars(FilePath src)
         {
             var k = z16;
             var dst = list<EnvVar>();
@@ -201,7 +173,7 @@ namespace Z0
             while(reader.Next(out line))
             {
                 var content = line.Content;
-                var i = SQ.index(content, sep);
+                var i = SQ.index(content, Chars.Eq);
                 if(i == NotFound)
                     continue;
                 dst.Add(new (text.left(content,i), text.right(content,i)));

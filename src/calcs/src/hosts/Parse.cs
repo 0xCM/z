@@ -13,7 +13,7 @@ namespace Z0
             [MethodImpl(Inline)]
             public readonly T Invoke(string a)
             {
-                if(Numeric.parser<T>().Parse(a, out var dst))
+                if(NumericParser.create<T>().Parse(a, out var dst))
                     return dst;
                 else
                     return default;

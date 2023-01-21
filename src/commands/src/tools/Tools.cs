@@ -21,8 +21,5 @@ namespace Z0
 
         public static Task<ExecToken> devenv<T>(IWfChannel channel, T target, ToolContext? context = null)
             => ProcessLauncher.launch(channel, FS.path("devenv.exe"), Cmd.args(target), context);
-
-        public static ToolKey key(uint seq, FileName name)
-            => new (seq,name);               
     }
 }

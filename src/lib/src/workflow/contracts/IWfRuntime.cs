@@ -92,8 +92,7 @@ namespace Z0
             => new ExecFlow<T>(Channel, data, NextExecToken());
 
         TableFlow<T> TableFlow<T>(FilePath dst)
-            where T : struct
-                => new TableFlow<T>(Channel, dst, NextExecToken());
+            => new TableFlow<T>(Channel, dst, NextExecToken());
 
         FileEmission Flow(FilePath dst)
             => new FileEmission(NextExecToken(), dst, 0);
@@ -154,21 +153,18 @@ namespace Z0
         }
 
         TableFlow<T> EmittingTable<T>(FilePath dst)
-            where T : struct
         {
             signal(EventSink).EmittingTable<T>(dst);
             return Emissions.LogEmission(TableFlow<T>(dst));
         }
 
         TableFlow<T> EmittingTable<T>(AppEventSource host, FilePath dst)
-            where T : struct
         {
             signal(EventSink, host).EmittingTable<T>(dst);
             return Emissions.LogEmission(TableFlow<T>(dst));
         }
 
         ExecToken<TableFlow<T>> EmittedTable<T>(TableFlow<T> flow, Count count, FilePath? dst = null)
-            where T : struct
         {
             var completed = Completed(flow);
             var counted = flow.WithCount(count).WithToken(completed);
@@ -178,7 +174,6 @@ namespace Z0
         }
 
         ExecToken<TableFlow<T>> EmittedTable<T>(AppEventSource host, TableFlow<T> flow, Count count, FilePath? dst = null)
-            where T : struct
         {
             var completed = Completed(flow);
             var counted = flow.WithCount(count).WithToken(completed);

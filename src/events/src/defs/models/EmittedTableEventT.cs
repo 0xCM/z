@@ -6,7 +6,6 @@ namespace Z0
 {
     [Event(Kind)]
     public class EmittedTableEvent<T> : ITerminalEvent<EmittedTableEvent<T>>
-        where  T : struct
     {
         public const EventKind Kind = EventKind.EmittedTable;
 
@@ -21,7 +20,7 @@ namespace Z0
         public FlairKind Flair => FlairKind.Ran;
 
         public TableId Table
-            => TableId.identify<T>();
+            => TableId.identify(typeof(T));
 
         public EmittedTableEvent()
         {

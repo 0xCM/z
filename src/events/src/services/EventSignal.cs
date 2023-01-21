@@ -90,7 +90,6 @@ namespace Z0
         }
 
         public EmittingTableEvent<T> EmittingTable<T>(FilePath dst)
-            where T : struct
         {
             var ev = emittingTable<T>(Source.Type, dst);
             Raise(ev);
@@ -98,7 +97,6 @@ namespace Z0
         }
 
         public EmittedTableEvent<T> EmittedTable<T>(Count count, FilePath dst)
-            where T : struct
         {
             var e = emittedTable<T>(Source.Type, count, dst);
             Raise(e);

@@ -10,15 +10,12 @@ namespace Z0
 
         public readonly EnvVarKind Kind;
 
-        public readonly CfgBlock Cfg;
-
         public readonly EnvVars Vars;
 
-        public EnvReport(EnvId id, EnvVarKind kind, CfgBlock cfg, EnvVars vars)
+        public EnvReport(EnvId id, EnvVarKind kind, EnvVars vars)
         {
             EnvId = id;
             Kind = kind;
-            Cfg = cfg;
             Vars = vars;
         }
     }

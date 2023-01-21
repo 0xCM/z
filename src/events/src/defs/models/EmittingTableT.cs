@@ -6,7 +6,6 @@ namespace Z0
 {
     [Event(Kind)]
     public readonly struct EmittingTableEvent<T> : IInitialEvent<EmittingTableEvent<T>>
-        where  T : struct
     {
         public const string EventName = GlobalEvents.EmittingTable;
 
@@ -20,7 +19,7 @@ namespace Z0
 
         public FlairKind Flair => FlairKind.Running;
 
-        public TableId Table => TableId.identify<T>();
+        public TableId Table => Tables.identify<T>();
 
         [MethodImpl(Inline)]
         public EmittingTableEvent(Type host, FilePath dst)

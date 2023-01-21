@@ -63,6 +63,13 @@ namespace Z0
             static bool update(string src, FieldKind kind, ref DisasmState dstate)
                 => FieldParser.parse(src, kind, ref dstate.RuleState).IsNonEmpty;
 
+
+            static Outcome parse(string src, out text31 dst)
+            {
+                dst = src ?? EmptyString;
+                return true;
+            }
+
             void Parse(FieldKind kind, string value, ref DisasmState dst)
             {
                 var result = Outcome.Success;
@@ -81,19 +88,19 @@ namespace Z0
                     break;
 
                     case K.AGEN:
-                        result = DataParser.parse(value, out dst.AGENVal);
+                        result = parse(value, out dst.AGENVal);
                         if(result)
                             _ParsedFields.Add(kind);
                     break;
 
                     case K.MEM0:
-                        result = DataParser.parse(value, out dst.MEM0Val);
+                        result = parse(value, out dst.MEM0Val);
                         if(result)
                             _ParsedFields.Add(kind);
                     break;
 
                     case K.MEM1:
-                        result = DataParser.parse(value, out dst.MEM1Val);
+                        result = parse(value, out dst.MEM1Val);
                         if(result)
                             _ParsedFields.Add(kind);
                     break;

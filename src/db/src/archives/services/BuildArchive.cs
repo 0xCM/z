@@ -13,7 +13,7 @@ namespace Z0
             Source = src;
         }
 
-        public IEnumerable<FileUri> Files(params FileExt[] ext)
+        public IEnumerable<FilePath> Files(params FileExt[] ext)
             => Source.Enumerate(true,ext);
 
         public FolderPath Root => Source.Root;                

@@ -1,0 +1,15 @@
+//-----------------------------------------------------------------------------
+// Copyright   :  (c) Chris Moore, 2020
+// License     :  MIT
+//-----------------------------------------------------------------------------
+namespace Z0
+{
+    [CmdBinder]
+    public abstract class CmdBinder<T> : ICmdBinder<T>
+        where T : IApiCmd<T>, new()
+    {
+        public abstract BoundCmd<T> Bind(CmdArgs src);
+
+        protected static T command() => new();
+    }
+}

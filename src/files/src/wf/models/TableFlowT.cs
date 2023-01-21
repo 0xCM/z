@@ -5,7 +5,6 @@
 namespace Z0
 {
     public readonly struct TableFlow<T>
-        where T : struct
     {
         readonly IEventChannel Wf;
 

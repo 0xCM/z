@@ -119,7 +119,7 @@ namespace Z0
             }
             else
             {
-                token = Run(args[0],sys.mapi(sys.slice(args.View,1), (i,value) => new CmdArg($"{i}", value)));
+                token = Run(args[0],sys.mapi(sys.slice(args.View,1), (i,value) => Cmd.arg(value)));
             }
             return token;
         }

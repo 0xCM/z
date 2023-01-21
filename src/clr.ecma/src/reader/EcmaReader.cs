@@ -115,7 +115,7 @@ namespace Z0
         public static MetadataReaderProvider pdbProvider(Stream src, MetadataStreamOptions options = MetadataStreamOptions.Default)
             => MetadataReaderProvider.FromPortablePdbStream(src, options);
 
-        public static IEnumerable<FileUri> valid(DbArchive src, FileKind kind)
+        public static IEnumerable<FilePath> valid(DbArchive src, FileKind kind)
             => from file in src.Enumerate($"*.{kind.Ext()}") where EcmaReader.valid(file) select file;                        
 
         [Op]

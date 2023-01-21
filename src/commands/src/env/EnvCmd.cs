@@ -7,6 +7,7 @@ namespace Z0
     using static sys;
     using static Env;
 
+
     sealed class EnvCmd : ApiService<EnvCmd>
     {    
         [CmdOp("env/include")]
@@ -85,7 +86,7 @@ namespace Z0
             Channel.Row(Env.cd());
         }
 
-        [CmdOp("env/cfg")]
+        //[CmdOp("env/cfg")]
         void LoadCfg(CmdArgs args)
         {
             var src = args.Count != 0 ? FS.dir(args.First) : Env.cd();
@@ -101,6 +102,14 @@ namespace Z0
             var jobs = db.Sources("jobs");
             Write($"Jobs: {jobs.Root}");
             jobs.Root.Folders(true).Iter(f => Write(f.Format()));
+        }
+
+        [CmdOp("env/cfg")]
+        void EnvCfg(CmdArgs args)
+        {
+            var src = Env.report(EnvVarKind.Process);
+            var cfg = src.Vars;
+            
         }
 
         [CmdOp("env/id")]
@@ -185,14 +194,6 @@ namespace Z0
         [CmdOp("tool")]
         void ToolHelp(CmdArgs args)
             => Tools.start(Channel,args).Wait();
-
-        // {            
-        //     var tool = FS.path(args[0]);
-        //     var toolname = tool.FileName.WithoutExtension.Format();
-        //     var running = Channel.Running($"Executing '{args}'");
-        //     var dst = AppDb.DbTargets($"tools/{toolname}").Path(tool.FileName.ChangeExtension(FileKind.Help));
-        //     ProcessLauncher.redirect(Channel, args, dst).Wait();
-        // }
 
         [CmdOp("json/types")]
         void JsonTypes()

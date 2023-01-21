@@ -113,7 +113,7 @@ namespace Z0
                 var project = BuildSvc.LoadProject(file);
                 var data = project.Format();    
                 Channel.Write(data);
-                FileEmit(data, dst.Path(file.FileName().WithoutExtension.Format(), FileKind.Cfg), (ByteSize)data.Length);
+                FileEmit(data, dst.Path(file.FileName.WithoutExtension.Format(), FileKind.Cfg), (ByteSize)data.Length);
             });
         }
 

@@ -122,13 +122,11 @@ namespace Z0
 
         [Op, Closures(Closure)]
         public static EmittingTableEvent<T> emittingTable<T>(Type host, FilePath dst)
-            where  T : struct
-                => new EmittingTableEvent<T>(host, dst);
+            => new EmittingTableEvent<T>(host, dst);
 
         [Op, Closures(Closure)]
         public static EmittedTableEvent<T> emittedTable<T>(Type host, Count count, FilePath dst)
-            where  T : struct
-                => new EmittedTableEvent<T>(host, count, dst);
+            => new EmittedTableEvent<T>(host, count, dst);
 
         [Op]
         public static EmittedTableEvent emittedTable(Type host, TableId table, Count count, FilePath dst)
