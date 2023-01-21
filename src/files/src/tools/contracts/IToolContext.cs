@@ -10,10 +10,6 @@ namespace Z0
 
         EnvVars Vars {get;}
 
-        IToolContext WithVar(EnvVar var);
-
-        IToolContext Redirect(ISysIO io);
-
         Action<Process> ProcessCreated {get;}
 
         ISysIO IO {get;}
@@ -22,14 +18,6 @@ namespace Z0
     public interface IToolContext<C> : IToolContext
         where C : IToolContext<C>
     {
-        new C WithVar(EnvVar var);
 
-        new C Redirect(ISysIO io);
-    
-        IToolContext IToolContext.WithVar(EnvVar var)
-            => WithVar(var);
-        
-        IToolContext IToolContext.Redirect(ISysIO io)
-            => Redirect(io);
     }
 }

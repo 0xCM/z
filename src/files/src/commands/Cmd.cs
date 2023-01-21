@@ -34,13 +34,13 @@ namespace Z0
             var count = fields.Length;
             var reflected = sys.alloc<ClrFieldValue>(count);
             ClrFields.values(src, fields, reflected);
-            var buffer = sys.alloc<ToolCmdArg>(count);
+            var buffer = sys.alloc<CmdArg>(count);
             var target = span(buffer);
             var values = @readonly(reflected);
             for(var i=0u; i<count; i++)
             {
                 ref readonly var fv = ref skip(values,i);
-                seek(target,i) = new ToolCmdArg(fv.Field.Name, fv.Value?.ToString() ?? EmptyString);
+                seek(target,i) = new CmdArg(fv.Field.Name, fv.Value?.ToString() ?? EmptyString);
             }
             return new ToolCmd(tool, Cmd.identify(t), buffer);
         }        
@@ -130,7 +130,7 @@ namespace Z0
             buffer.AppendFormat("{0}{1}", src.Tool, Chars.LParen);
             for(var i=0; i<count; i++)
             {
-                ref readonly var arg = ref src.Args[i];
+                var arg = src.Args[i];
                 buffer.AppendFormat(RP.Assign, arg.Name, arg.Value);
                 if(i != count - 1)
                     buffer.Append(", ");

@@ -11,8 +11,8 @@ namespace Z0
         
         string Type {get;}
 
-        ToolCmdArgs Args 
-            => ToolCmdArgs.Empty;
+        CmdArgs Args 
+            => CmdArgs.Empty;
 
         string IExpr.Format()
         {
@@ -21,7 +21,7 @@ namespace Z0
             buffer.AppendFormat("{0}{1}", Tool, Chars.LParen);
             for(var i=0; i<count; i++)
             {
-                ref readonly var arg = ref Args[i];
+                var arg = Args[i];
                 buffer.AppendFormat(RP.Assign, arg.Name, arg.Value);
                 if(i != count - 1)
                     buffer.Append(", ");

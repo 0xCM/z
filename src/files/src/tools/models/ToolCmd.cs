@@ -13,12 +13,12 @@ namespace Z0
 
         public readonly string Type;
         
-        public readonly ToolCmdArgs Args;
+        public readonly CmdArgs Args;
 
         public readonly CmdId CmdId;
 
         [MethodImpl(Inline)]
-        public ToolCmd(Tool tool, string type, params ToolCmdArg[] args)
+        public ToolCmd(Tool tool, string type, params CmdArg[] args)
         {            
             Tool = tool;
             Type = type;
@@ -47,7 +47,7 @@ namespace Z0
             get => new ToolCmd(Actor.Empty, EmptyString);
         }
 
-        ToolCmdArgs IToolCmd.Args
+        CmdArgs IToolCmd.Args
             => Args;
 
         Tool IToolCmd.Tool

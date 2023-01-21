@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public abstract class Executor<E, C, P> : Executor<E>, IToolExecutor<C, P>
+    public abstract class Executor<E, C, P> : Executor<E>//, IToolExecutor<C, P>
         where E : Executor<E, C, P>, new()
         where C : IApiCmd<C>, new()
         where P : INullity, new()
