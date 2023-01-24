@@ -29,7 +29,6 @@
    <Import Project="$(MsBuildThisFileDirectory)src/cmd/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/db/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/db.mem/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/diagnostics/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/dynamic/exports.props"/>
 

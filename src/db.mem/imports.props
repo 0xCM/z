@@ -1,7 +1,0 @@
-<Project>
-  <ItemGroup>
-    <ProjectReference Include="$(Alloc)" />
-    <ProjectReference Include="$(Numbers)" />
-    <ProjectReference Include="$(Commands)" />
-  </ItemGroup>
-</Project>

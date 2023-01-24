@@ -1,5 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <DbMem>$(MsBuildThisFileDirectory)z0.db.mem.csproj</DbMem>
-  </PropertyGroup>
-</Project>
