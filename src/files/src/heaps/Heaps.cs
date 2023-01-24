@@ -11,10 +11,6 @@ namespace Z0
     {
         const NumericKind Closure = UnsignedInts;
 
-        // public static string id(SymHeap src)
-        //     => string.Format("H{0:X4}x{1:X4}x{2:X6}", src.SymbolCount, src.EntryCount, src.ExprLengths.Storage.Sum());
-
-
         [MethodImpl(Inline)]
         public static HeapEntry<K,O,L> convert<K,O,L>(ReadOnlySpan<byte> src, out HeapEntry<K,O,L> dst)
             where K : unmanaged
