@@ -45,7 +45,7 @@ namespace Z0.llvm
         static string normalize(string src)
             => text.trim(text.remove(text.replace(src, Chars.Tab, Chars.Space), Chars.Quote));
 
-        static Replacements<string> PatternReplacements = Rules.replacements<string>(new Pair<string>[]{
+        static Replacements<string> PatternReplacements = SyntaxRules.replacements<string>(new Pair<string>[]{
             ("${mask}","$mask"),
             ("${src2}","$src2"),
             });

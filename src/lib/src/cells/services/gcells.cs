@@ -91,7 +91,6 @@ namespace Z0
         public static void store(in Cell128 src, Span<byte> dst)
             => gcpu.vstore(src, dst);
 
-
         /// <summary>
         /// Deposits cell content to specified target
         /// </summary>

@@ -10,13 +10,13 @@ namespace Z0.Asm
         IntelSdmPaths SdmPaths => Wf.SdmPaths();
         
         TextMap SigNormalRules
-            => data(nameof(SigNormalRules), () => Rules.textmap(SdmPaths.SigNormalConfig()));
+            => data(nameof(SigNormalRules), () => SyntaxRules.textmap(SdmPaths.SigNormalConfig()));
 
         TextReplace OcFixupRules
-            => data(nameof(OcFixupRules), () => Rules.replace(SdmPaths.OcFixupConfig()));
+            => data(nameof(OcFixupRules), () => SyntaxRules.replace(SdmPaths.OcFixupConfig()));
 
         TextReplace SigFixupRules
-            => data(nameof(SigFixupRules), () => Rules.replace(SdmPaths.SigFixupConfig()));
+            => data(nameof(SigFixupRules), () => SyntaxRules.replace(SdmPaths.SigFixupConfig()));
 
         void Clear()
         {

@@ -4,12 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class OptionRule : Optional<IRuleExpr>
-    {
-        public OptionRule(IRuleExpr src)
-            : base(src)
-        {
+    using static sys;
 
-        }
-    }    
+
+    public class Cfg 
+    {
+        
+    }
+
 }

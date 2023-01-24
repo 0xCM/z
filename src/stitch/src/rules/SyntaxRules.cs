@@ -7,9 +7,19 @@ namespace Z0
     using static sys;
 
     [ApiHost]
-    public readonly partial struct Rules
+    public partial class SyntaxRules
     {
         const NumericKind Closure = UnsignedInts;
+
+        [Op, Closures(Closure)]
+        public static Adjacent<T> adjacent<T>(T a, T b)
+            => (a,b);
+
+        public static bool IsChoice(string src)
+            => Fenced.test(src,ChoiceFence);
+
+        public static bool IsOption(string src)
+            => Fenced.test(src, OptionFence);
 
         public static RuleValue value(string src, bool terminal = false)
             => new RuleValue(src, terminal);
@@ -112,12 +122,6 @@ namespace Z0
                 return new Production(value(text.trim(src)), value(text.trim(dst)));
         }
 
-        public static bool IsChoice(string src)
-            => Fenced.test(src,ChoiceFence);
-
-        public static bool IsOption(string src)
-            => Fenced.test(src, OptionFence);
-
         public static Outcome parse(string src, out IRuleExpr dst)
         {
             var result = Outcome.Success;
@@ -159,7 +163,7 @@ namespace Z0
                 }
 
                 if(result)
-                    dst = new ChoiceRule<IRuleExpr>(terms);
+                    dst = new Choice<IRuleExpr>(terms);
             }
             else
             {

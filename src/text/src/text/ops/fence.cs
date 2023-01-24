@@ -4,12 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class ChoiceRule : ChoiceRule<RuleValue>
+    partial class text
     {
-        public ChoiceRule(Index<RuleValue> src)
-            : base(src)
-        {
-
-        }
-    }    
+       public static string fence(string src, Fence<char> fence)
+            => $"{fence.Left}{src}${fence.Right}";
+    }
 }
