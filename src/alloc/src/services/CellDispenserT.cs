@@ -13,7 +13,7 @@ namespace Z0
 
         readonly MemoryDispenser Dispenser;
 
-        internal CellDispenser(uint partition)
+        public CellDispenser(uint partition)
             : base(true)
         {
             CellSize = sys.size<T>();

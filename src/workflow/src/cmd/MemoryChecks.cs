@@ -38,7 +38,7 @@ namespace Z0
             channel.Status($"Verified string allocator for {count} inputs over a buffer of size {size}");
         }
 
-        static void CheckLabelAllocator(WfEmit channel)
+        static void CheckLabelAllocator(IWfChannel channel)
         {
             var count = 256;
             var result = Outcome.Success;

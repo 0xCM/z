@@ -12,7 +12,7 @@ namespace Z0
     /// Supertype for covers with locations that will be pinned for the domain lifetime
     /// </summary>
     /// <typeparam name="T">The covered content type</typeparam>
-    public abstract class StaticBuffer<T> : IStaticBuffer<T>
+    public abstract class StaticBuffer<T>
     {
         /// <summary>
         /// The number of covered cells

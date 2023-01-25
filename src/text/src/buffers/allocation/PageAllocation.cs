@@ -8,7 +8,7 @@ namespace Z0
 
     public class PageAllocation : Allocation<MemorySeg>
     {
-        public const uint PageSize = MemoryPage.PageSize;
+        public const uint PageSize = Pow2.T12;
 
         public static PageAllocation alloc(uint pages)
             => new PageAllocation(pages);
@@ -67,7 +67,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         static MemoryAddress address(NativeBuffer src,  uint index)
-            => core.address(first(page(src,index)));
+            => sys.address(first(page(src,index)));
 
         static Index<MemorySeg> segments(NativeBuffer src, uint count)
         {

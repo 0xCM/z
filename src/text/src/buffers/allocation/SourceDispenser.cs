@@ -8,11 +8,11 @@ namespace Z0
 
     public class SourceDispenser : Dispenser<SourceDispenser>, ISourceDispenser
     {
-        const uint Capacity = MemoryPage.PageSize*8;
+        const uint Capacity = Pow2.T12*8;
 
         readonly Dictionary<long,SourceAllocator> Allocators;
 
-        internal SourceDispenser(uint capacity = Capacity)
+        public SourceDispenser(uint capacity = Capacity)
             : base(true)
         {
             Allocators = new();

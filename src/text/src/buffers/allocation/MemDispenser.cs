@@ -6,11 +6,11 @@ namespace Z0
 {
     public class MemoryDispenser : Dispenser<MemoryDispenser>, IMemoryDispenser
     {
-        const uint Capacity = MemoryPage.PageSize*16;
+        const uint Capacity = Pow2.T12*16;
 
         readonly Dictionary<long,MemAllocator> Allocators;
 
-        internal MemoryDispenser(uint capacity = Capacity)
+        public MemoryDispenser(uint capacity = Capacity)
             : base(true)
         {
             Allocators = new();

@@ -8,11 +8,11 @@ namespace Z0
 
     public class StringDispenser : Dispenser<StringDispenser>, IStringDispenser
     {
-        const uint Capacity = MemoryPage.PageSize;
+        const uint Capacity = Pow2.T12;
 
         readonly Dictionary<long,StringAllocator> Allocators;
 
-        internal StringDispenser(uint capacity = Capacity)
+        public StringDispenser(uint capacity = Capacity)
             : base(true)
         {
             Allocators = new();

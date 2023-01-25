@@ -22,7 +22,7 @@ namespace Z0
 
         public ByteSize Size {get;}
 
-        internal LabelAllocator(StringBuffer buffer)
+        public LabelAllocator(StringBuffer buffer)
         {
             Buffer = buffer;
             BaseAddress = buffer.BaseAddress;
@@ -32,7 +32,7 @@ namespace Z0
         }
 
         public bool Alloc(string src, out Label dst)
-            => Alloc(core.span(src), out dst);
+            => Alloc(sys.span(src), out dst);
 
         public bool Alloc(ReadOnlySpan<char> src, out Label dst)
         {

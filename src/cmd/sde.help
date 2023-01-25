@@ -1,0 +1,1089 @@
+
+Pin tools switches
+
+-check_app_mt  [default 0]
+	If the tool identifies more than a single thread, it terminates with exit code 120
+-check_app_mt_out  [default sde-check-app-mt.txt]
+	The output file for the mt-check
+-emit_illegal_insts  [default 1]
+	Emit information about illegal instructions. Default is enabled.
+-emit_ud_insts  [default 1]
+	Raise illegal exception for UD instruction
+-emulate_lahf_sahf  [default 0]
+	Enable/disable emulation of LAHF/SAHF. Defaults to on if not supported in 64b mode.
+-fma_style  [default native]
+	precise: precise emulation, native: native FMA (only on HSW and beyond)
+-follow_subprocess  [default 0]
+	1=Follow subprocess creation. 0=do not follow
+-fp16_fast  [default 1]
+	use fast FP16 emulation
+-knob_check  [default 1]
+	Enable/disable the command line knob validity checking.
+-log  [default 0]
+	Activate the pinplay logger
+-logfile  [default pintool.log]
+	The log file path and file name
+-num_grouping  [default 0]
+	Add comma as 1000's separator to group numbers
+-pause_delay  [default 0]
+	Insert delay (milliseconds) when executing the pause instruction.
+-raise_int3  [default 0]
+	Raise breakpoint signal/exception on int3
+-replay  [default 0]
+	Activate the pinplay replayer
+-sde_skip_int3  [default 0]
+	Skip INT3 instructions.
+-symbol_path  [default ]
+	List of paths separated with semicolons that is searched for symbol and line information
+-tool_help  [default 0]
+	Print the help message.
+-unique_logfile  [default 0]
+	The log file names will contain the pid
+
+Data alignment checker knobs
+
+-align_checker_action  [default assert]
+	Check for unaligned memory accesses mixing. Valid choices are: assert (default), warn, report or ignore. 
+-align_checker_all  [default 0]
+	Check for unaligned memory for all instrucions. Instructions that do not require memory alignment will also be
+	checked. Disabled by default. 
+-align_checker_emu_only  [default 1]
+	Check for unaligned memory only for emulated instrucions. If disabled, native instructions will also be
+	checked 
+-align_checker_file  [default sde-align-checker-out.txt]
+	File name for messages about unaligned memory accesses.
+-align_checker_image  [default ]
+	Only check instructions in the named image
+-align_checker_prefetch  [default 1]
+	1=check prefetches, 0=ignore prefetches.
+-align_checker_stderr  [default 0]
+	Attempt to write messages about unaligned data types to stderr.  If disabled, then the output file is used.
+
+AMX knobs
+
+
+Intel AVX-to-SSE transition checker
+
+-ast  [default 0]
+	Identify slow Intel AVX-to-SSE and SSE-to-Intel AVX transitions.
+-ast_trace  [default 0]
+	Trace Intel AVX-to-SSE and SSE-to-Intel AVX transitions.  May result in a large output file.
+-oast  [default sde-avx-sse-transition-out.txt]
+	specify Intel-AVX/SSE transition file name
+
+Call Stack knobs
+
+-callstack:source_locaion  [default 1]
+	Emit source location (file,line,column) 
+
+CET knobs
+
+-cet  [default 0]
+	Enable=1 or Disable=0  Intel(R) Control-flow enforcement emulation
+-cet_abort  [default 0]
+	Abort the run on the first control-flow ennforcement error
+-cet_breakpoint  [default 0]
+	Raise a break point when running under the debugger
+-cet_call_next  [default 1]
+	Ignore call to next instruction followed with pop instruction
+-cet_call_stack  [default 0]
+	Present call stack with control flow enforcement errors
+-cet_call_stack_depth  [default 10]
+	Specify control flow enforcement errors call-stack max depth
+-cet_endbr_exclude_image 
+	Repeatable knob to specify images to exclude from ENDBRANCH checking
+-cet_endbr_exe  [default 0]
+	Add the main executable to the ENDBRANCH checking
+-cet_endbr_include_image 
+	Repeatable knob to specify images to enable ENDBRANCH checking
+-cet_exclude_image 
+	Repeatable knob to specify images to exclude shadow stack checks
+-cet_output_file  [default sde-cet-checker-out.txt]
+	File name for control flow enforcement errors
+-cet_raise  [default 0]
+	Raise an exception when CET error detected
+-cet_shadow_stack_size  [default 4096]
+	Specify the size of the initial shadow stack
+-cet_stderr  [default 0]
+	Report control flow exception to standard error
+
+Chip-check controls
+
+-chip_check  [default ]
+	Restrict to a specific XED chip.
+-chip_check_call_stack  [default 0]
+	Emit the call stack on error
+-chip_check_call_stack_depth  [default 10]
+	Specify chip-check call-stack max depth
+-chip_check_cpuid  [default 0]
+	Check against features in the active CPUID definition
+-chip_check_die  [default 1]
+	Die on errors. 0=warn, 1=die
+-chip_check_disable  [default 0]
+	Disable the chip checking mechanism.
+-chip_check_emit_file  [default 0]
+	Emit messages to a file. 0=no file, 1=file
+-chip_check_exe_only  [default 0]
+	Check only the main executable
+-chip_check_file  [default sde-chip-check.txt]
+	Output file chip-check errors.
+-chip_check_image 
+	Repeatable knob to specify specific images to check.
+-chip_check_jit  [default 0]
+	Check during JIT'ing only. Checked code might not be executed due to speculative JIT'ing, but this mode is a
+	little faster.
+-chip_check_list  [default 0]
+	List valid chip names and exit.
+-chip_check_list_iforms  [default 0]
+	List valid iforms for a specific chip
+-chip_check_stderr  [default 1]
+	Try to emit messages to stderr. 0=no stderr, 1=stderr
+-chip_check_win_sys_ignore  [default 1]
+	Disable the chip checking checking in windows ntdll library.
+-chip_check_zcnt  [default 0]
+	The tzcnt/lzcnt has backward compatibility, check it explicitly anyway
+
+Analyze code patterns
+
+-code_pattern  [default none]
+	Analyze code pattern type
+-code_pattern_abort  [default 0]
+	Abort the run at the first bad code pattern
+-code_pattern_exe  [default 1]
+	Analyzed bad code pattern only in the executable
+-code_pattern_file  [default sde-code-pattern-out.txt]
+	Output file for analyzing code patterns
+-code_pattern_first  [default 1]
+	Report only the first occurence of bad code pattern
+-code_pattern_line_info  [default 1]
+	Report the source file and line if available
+-code_pattern_stderr  [default 0]
+	Dump bad code patterns to standard error
+-code_pattern_symbols  [default 1]
+	Report the image and function name if available
+
+Controller knobs
+
+-control 
+	Define control events and conditions:
+	<alarm-chain>[,repeat[:<int>]][,name:<name>][,waitfor:<name>]
+	alarm-chain::=<alarm>[,<alarm-chain>]
+	alarm::=<event>:<type>:<value>[:count<int>][:tid<int>][:bcast][:global]
+	event::=start|stop|threadid|precond
+	type::=icount|address|ssc|itext|isa-extension|isa-category|int3|magic|pcontrol|enter_func|exit_func|instcount
+-controller_default_start  [default 1]
+	add default START event
+-controller_input_file  [default ]
+	file name to write controller alarms
+-controller_log  [default 0]
+	Emit the controller's events log
+-controller_olog  [default controller-log.txt]
+	file name to emit controller's event log
+-controller_rep_nonstop  [default 0]
+	Do not stop on repeat string instructions
+-interactive_event 
+	name of event used for interactive communication
+-length  [default ]
+	Number of instructions to execute before stopping
+-regions:epilog  [default 0]
+	# of instructions in the epilog region
+-regions:in  [default ]
+	Regions file
+-regions:out  [default ]
+	Output file containing regions skipped due to overlap
+-regions:overlap_ok  [default 0]
+	Allow overlap in regions.
+-regions:prolog  [default 0]
+	# of instructions in the prolog region
+-regions:verbose  [default 0]
+	Print information about regions/events 
+-regions:warmup  [default 0]
+	# of instructions in the warm-up region
+-skip  [default ]
+	number of instructions to skip
+-start_address 
+	Address and count to trigger a start
+-start_category 
+	Trigger a start on seeing an instruction from this XED ISA category
+-start_extension 
+	Trigger a start on seeing an instruction from this XED ISA extension
+-start_int3 
+	Trigger a start on seeing an 'int 3' instruction,Requires a count argument.
+-start_itext 
+	Trigger a start on seeing specified instruction bytes (max 15Bytes=30nibbles)
+-start_ssc_mark 
+	Trigger a start on seeing specified SSC marker -- big-endian hex  without an 0x prefix
+-stop_address 
+	Address and count to trigger a start
+-stop_category 
+	Trigger a stop on seeing an instruction from this XED ISA category
+-stop_extension 
+	Trigger a stop on seeing an instruction from this XED ISA extension
+-stop_int3 
+	Trigger a stop on seeing an 'int 3' instruction,Requires a count argument.
+-stop_itext 
+	Trigger a stop on seeing specified instruction bytes (max 15Bytes=30nibbles)
+-stop_ssc_mark 
+	Trigger a stop on seeing specified SSC marker -- big-endian hex  without an 0x prefix
+
+PinPlayLib Code-exclusion Controller Knobs
+
+-log:exclude:control 
+	Define control events and conditions
+-log:exclude:controller_default_start  [default 1]
+	add default START event
+-log:exclude:controller_input_file  [default ]
+	file name to write controller alarms
+-log:exclude:controller_log  [default 0]
+	Emit the controller's events log
+-log:exclude:controller_olog  [default controller-log.txt]
+	file name to emit controller's event log
+-log:exclude:controller_rep_nonstop  [default 0]
+	Do not stop on repeat string instructions
+-log:exclude:interactive_event 
+	name of event used for interactive communication
+-log:exclude:length  [default ]
+	Number of instructions to execute before stopping
+-log:exclude:regions:epilog  [default 0]
+	# of instructions in the epilog region
+-log:exclude:regions:in  [default ]
+	Regions file
+-log:exclude:regions:out  [default ]
+	Output file containing regions skipped due to overlap
+-log:exclude:regions:overlap_ok  [default 0]
+	Allow overlap in regions.
+-log:exclude:regions:prolog  [default 0]
+	# of instructions in the prolog region
+-log:exclude:regions:verbose  [default 0]
+	Print information about regions/events 
+-log:exclude:regions:warmup  [default 0]
+	# of instructions in the warm-up region
+-log:exclude:skip  [default ]
+	number of instructions to skip
+-log:exclude:start_address 
+	Address and count to trigger a start
+-log:exclude:start_category 
+	Trigger a start on seeing an instruction from this XED ISA category
+-log:exclude:start_extension 
+	Trigger a start on seeing an instruction from this XED ISA extension
+-log:exclude:start_int3 
+	Trigger a start on seeing an 'int 3' instruction,Requires a count argument.
+-log:exclude:start_itext 
+	Trigger a start on seeing specified instruction bytes (max 15Bytes=30nibbles)
+-log:exclude:start_ssc_mark 
+	Trigger a start on seeing specified SSC marker -- big-endian hex  without an 0x prefix
+-log:exclude:stop_address 
+	Address and count to trigger a start
+-log:exclude:stop_category 
+	Trigger a stop on seeing an instruction from this XED ISA category
+-log:exclude:stop_extension 
+	Trigger a stop on seeing an instruction from this XED ISA extension
+-log:exclude:stop_int3 
+	Trigger a stop on seeing an 'int 3' instruction,Requires a count argument.
+-log:exclude:stop_itext 
+	Trigger a stop on seeing specified instruction bytes (max 15Bytes=30nibbles)
+-log:exclude:stop_ssc_mark 
+	Trigger a stop on seeing specified SSC marker -- big-endian hex  without an 0x prefix
+
+CPUID controls
+
+-cpuid_in  [default ]
+	CPUID definition file for SDE. This definition in the file suppress the CPUID definition through knobs and the
+	two methods can't be mixed. This file is also used by PinLIT.
+-disable_feature 
+	Disable features in cpuid. Can be used multiple times.Use option 'list' for list of valid options for this
+	knob.
+-enable_feature 
+	Enable features in cpuid. Can be used multiple times.Use option 'list' for list of valid options for this
+	knob.
+-use_host_cpuid  [default 0]
+	Use host CPUID instead of SDE.
+
+Data Watchpoint Controls
+
+-data_watchpoint  [default 0]
+	Watch an address for changes
+-data_watchpoint_32b  [default 0]
+	use 32b watchpoints instead of 64b.
+-data_watchpoint_all_instructions  [default 0]
+	Check the memory on all instructions.
+-data_watchpoint_file  [default sde-data-watchpoint.txt]
+	Output file for data watchpoint changes.
+-data_watchpoint_memop_addr  [default 0]
+	Establish the watch point by looking at the memory reference address of the specified instruction address, in
+	hex with a leading 0x
+-data_watchpoint_memop_content  [default 0]
+	Establish the watch point by looking at the value read from or written to memory of the specified instruction
+	address, in hex with a leading 0x
+-data_watchpoint_regwrite  [default 0]
+	Establish the watch point by looking at the destination register of the specified instruction address, in hex
+	with a leading 0x
+-data_watchpoint_stderr  [default 1]
+	Attempt to write output to stderr
+
+DCFG Options
+
+-dcfg  [default 0]
+	Enable DCFG
+-dcfg:analysis  [default 1]
+	Find routines, immediate dominators and loops; store results in DCFG file.
+-dcfg:bb_file_suffix  [default .bb.txt.bz2]
+	Basic-block disasm file suffix.
+-dcfg:cfg  [default 1]
+	Save basic-block and edge data in DCFG file.
+-dcfg:dcfg_file_suffix  [default .dcfg.json.bz2]
+	DCFG file suffix.
+-dcfg:debug_file_suffix  [default .dcfg-debug.txt]
+	DCFG debug file suffix.
+-dcfg:in_base_name  [default dcfg-in]
+	Common base-name of DCFG input file(s). If PinPlay replay is active, replayer's basename is used, and this is
+	ignored.
+-dcfg:out_base_name  [default dcfg-out]
+	Common base-name of DCFG output file(s). If PinPlay logging is active, logger's basename is used, and this is
+	ignored. If only replayer is active, the string '.replay.' is added to replayer basename.
+-dcfg:read_dcfg  [default 0]
+	Read an existing main DCFG file to be used as the basis for a new DCFG. Reading an existing file will ensure
+	that ID numbers and basic-block boundaries are consistent. A DCFG should only be read if the  same images will
+	be loaded in the same order. If any loaded image does not match, the data from the read DCFG will be
+	discarded. If the DCFG file cannot be read, the pin tool exits.
+-dcfg:read_dcfg_if_avail  [default 1]
+	Like -dcfg:read_dcfg, but does not exit if the DCFG file cannot be read.
+-dcfg:source  [default 1]
+	Save source filename and line-number data in DCFG file.
+-dcfg:symbols  [default 1]
+	Save symbols in DCFG file.
+-dcfg:trace_file_suffix  [default .trace.json.bz2]
+	Edge-trace file suffix.
+-dcfg:trace_focus_thread  [default 0]
+	Trace only the thread specified; use -1 to trace all threads.
+-dcfg:write_bb  [default 0]
+	Output the disasm of all basic-blocks.
+-dcfg:write_dcfg  [default 1]
+	Output a DCFG file.
+-dcfg:write_debug  [default 0]
+	Output internal debugging data. Creates a large file and greatly slows down execution.
+-dcfg:write_trace  [default 0]
+	Output the sequence of edges.
+
+Debugtrace knobs
+
+-debugtrace  [default 0]
+	Activate the debugtrace feature
+-dt_amx  [default ]
+	Dump tile data, use '-dt_amx LIST' for dump options
+-dt_call  [default 0]
+	Trace calls
+-dt_circular_buffer  [default 0]
+	Use a circular buffer, specifying the number of lines in the buffer
+-dt_cmp_replay  [default 0]
+	Special output format, for comparing log with replay. Removes the following from output: flags register,
+	prefetch instructions, translation memory strings and system calls information 
+-dt_color  [default 0]
+	Add ANSI color codes to output for highlighting
+-dt_filter_end  [default 0]
+	End address of a code region to trace.
+-dt_filter_no_shared_libs  [default ]
+	Do not instrument shared libraries
+-dt_filter_rtn 
+	Routines to instrument
+-dt_filter_start  [default 0]
+	Start address of a code region to trace
+-dt_flush  [default 0]
+	Flush output after every instruction
+-dt_fp16  [default 0]
+	Print vector values as an array of fp16 values.
+-dt_instruction  [default 1]
+	Trace instructions
+-dt_lines  [default 0]
+	Include line number information
+-dt_memory  [default 1]
+	Trace memory
+-dt_mxcsr  [default 0]
+	Emit MXCSR for each instruction.
+-dt_out  [default sde-debugtrace-out.txt]
+	trace file
+-dt_print_funcsim  [default 0]
+	Print debugtrace in format to be used by funcsim.
+-dt_print_tid  [default 0]
+	Print TID for each line.
+-dt_rawinst  [default 0]
+	Add raw instruction bytes to the disassembly
+-dt_region_icount  [default 0]
+	Print instruction count according to region.
+-dt_short_fn  [default 1]
+	Limit the image file name to just the trailing path component.
+-dt_silent  [default 0]
+	Do everything but write file (for debugging).
+-dt_symbols  [default 0]
+	Include symbol information
+-dt_syscall  [default 1]
+	Trace system calls
+-dt_watch_thread  [default -1]
+	thread to watch, -1 for all
+
+DP analysis knobs
+
+-dp_analysis_check  [default 0]
+	Analyze double precision instructions
+
+Profiling mask values dynamically
+
+-dyn_mask_detect_g2s  [default 0]
+	Enable g2s detection
+-dyn_mask_page_bytes  [default 4096]
+	define the page size for sparse stats
+-dyn_mask_profile  [default 0]
+	Enable dynamic mask profiling
+-odyn_mask_detect_g2s  [default sde-detect-g2s.txt]
+	Specify the g2s detection file output name
+-odyn_mask_profile  [default sde-dyn-mask-profile.txt]
+	Specify profile file output name
+
+Emulator controls
+
+-aes  [default 0]
+	Emulate the AES instructions.
+-avx  [default 0]
+	Emulate the Intel AVX instructions. Default depends upon host CPUID.
+-avx2  [default 0]
+	Emulate the Intel AVX2 instructions.
+-avx512  [default 1]
+	Enable/disable AVX512 emulation
+-bdwni  [default 0]
+	Enable/disable ADOX/ADCX/RDSEED emulation
+-bmi1  [default 0]
+	Emulate the Intel BMI1 instructions.
+-bmi2  [default 0]
+	Emulate the Intel BMI2 instructions.
+-clmul  [default 0]
+	Emulate the PCLMULQDQ instruction.
+-concurrent_callbacks  [default 0]
+	Enable concurrent execution of pin callbacks
+-disasm_att  [default 0]
+	Set the disassembly syntax to AT&T format
+-emu_fast  [default 1]
+	Emulate AVX-512 instructions with AVX
+-emu_fast_amx  [default 1]
+	Emulate AMX instructions with AVX-512
+-emu_trap  [default 0]
+	Emulates the effects of the TF flag (only when set by popf)
+-emu_xinuse  [default 1]
+	Emulate XINUSE for more accurate XSAVE emulation
+-emu_xinuse_fast  [default 1]
+	Faster emulation of XINUSE assume XMM always dirty
+-f16c  [default 0]
+	Emulate the Intel AVX F16C instructions.
+-fma  [default 0]
+	Emulate the Intel FMA instructions.
+-force_emulate 
+	Force emulation of specified chip insturctions. Can be used multiple times.
+	Use option 'list' for list of valid chips for this knob.
+-fsgs_abort  [default 1]
+	Abort on executions of {RD,WR}{FS,GS}BASE
+-hsw_emulate  [default 0]
+	Force emulation of all HSW instructions.
+-lzcnt  [default 0]
+	Emulate the LZCNT instruction.
+-movbe  [default 0]
+	Emulate MOVBE
+-popcnt  [default 0]
+	Emulate the SSE4.2 popcnt instruction.
+-pt_out  [default ]
+	output file name for PT trace
+-rdrand  [default 0]
+	Emulate the Intel RDRAND instruction.
+-spr_native_amx  [default 0]
+	Use native amx on SPR. NOTICE: This is not fully supported yet.
+-sse3  [default 0]
+	Emulate the SSE3 instructions.
+-sse41  [default 0]
+	Emulate the SSE4.1 instructions.
+-sse42a  [default 0]
+	Emulate the CRC32 and PCMPGTQ SSE4.2 instructions.
+-sse42x  [default 0]
+	Emulate the SSE4.2 XML instructions.
+-ssse3  [default 0]
+	Emulate the SSSE3 instructions.
+-sync_avx512_state  [default 1]
+	Sync the AVX512 state on AVX1/2 instructions;  This is extra overhead for runs that do not use AVX512
+-xsave  [default 1]
+	Emulate the XSAVE instructions.
+-xsave_by_host  [default 0]
+	Enable XSAVE if supported by the host, used only when emulated guest does not support XSVE
+-xsave_default  [default dynamic]
+	Default value for the XCR0 register. Dynamic indicates that the emulator determines it based on configured
+	features.
+
+File name additions
+
+-child_pid  [default 1]
+	Add process id to child process output file name
+-file_suffix  [default ]
+	Common suffix to add to output files (before .txt)
+-i  [default 0]
+	Add process id to output file name
+-odir  [default ]
+	Add directory to output file name
+-work_dir  [default ]
+	SDE working directory for files
+
+Footprint Knobs
+
+-footprint  [default 0]
+	Compute a memory footprint for loads, stores and code references
+-footprint_page_size  [default 0]
+	specify page size (0 means don't collect pages)
+-fp_icount  [default 0]
+	instructions between working set epochs. 0 means one epoch for whole program
+-fp_time  [default 0]
+	milliseconds between working set epochs. 0 means one epoch for whole program.
+-ofootprint  [default sde-footprint.txt]
+	specify output file name
+
+FP/INT data flow checker knobs
+
+-fpint_checker  [default ignore]
+	Check for FP/INT type mixing. Valid choices are: assert, warn, or ignore
+-fpint_checker_file  [default sde-fpint-insts.txt]
+	File name for mixed FP/INT flow records.
+-fpint_checker_stderr  [default 1]
+	Attempt to write messages about mixing FP/INT data types to stderr.  If disabled, then the output file is
+	used.
+
+Icount controls
+
+-icount  [default 0]
+	Count instructions (faster than mix)
+-icount_file  [default sde-icount.txt]
+	Output file for instructions.
+-icount_norep  [default 0]
+	Count instructions without rep iterations
+-icount_stderr  [default 1]
+	Attempt to write output to stderr
+
+Basic block profile knobs
+
+-bbprofile  [default 0]
+	Activate bbprofile / isimpoint.
+-delay_vector_emission  [default 1]
+	Wait to emit frequency vectors till the basic block following the end of slice.
+-emit_first  [default 1]
+	Emit the first interval (higher overhead to find out first IP)
+-emit_last  [default 0]
+	Emit the last interval even if it is less than slice_size
+-emit_previous_block_counts  [default 0]
+	Emit exec counts of preceding blocks in ( blk:count ... ) format
+-emit_vectors  [default 1]
+	Emit frequency (bb/reuse-dist) vectors at the end of each slice.
+-ldv_type  [default none]
+	Enable collection of LRU stack distance vectors (none(default), "approx", "exact" )
+-lengthfile 
+	Length(instruction count)  of execution regions: must specify ':tidN' suffix.
+-nosymbolic  [default 0]
+	Do not emit symbolic information for markers
+-o  [default out]
+	specify bb file name
+-pid  [default 0]
+	Use PID for naming files.
+-slice_size  [default 100000000]
+	slice size in instructions
+
+Key Locker knobs
+
+-keylocker  [default 0]
+	Enable emulation of keylocker feature
+-keylocker_cache_size  [default 4]
+	Size of per thread keys cache
+
+Profiling mask values
+
+-mask_profile  [default 0]
+	Enable mask profiling
+-omask_profile  [default sde-mask-profile.txt]
+	Specify profile file output name
+
+Memory Checker Controls
+
+-null_check  [default 0]
+	Check memops for null references.
+-null_check_out  [default sde-null-check.out.txt]
+	Output file name for -null-check.
+-ptr_breakpoint  [default 0]
+	Make the ptr checker raise application break point on errors. 
+-ptr_check  [default 0]
+	Wild pointer checker. Checks memops for accessibility.
+-ptr_check_out  [default sde-ptr-check.out.txt]
+	Output file name for -ptr-check.
+-ptr_check_warn  [default 0]
+	Make the ptr checker warn on errors. Default is to die on errors.
+-ptr_raise  [default 0]
+	Make the ptr checker raise exception on errors. Default is to do PIN_SafeCopy on so that errors are ignored in
+	analysis routines.
+
+Memory area crossing detector
+
+-bytes_per_ref 
+	Repeatable knob to enable selective memory access sizes
+-clc  [default 0]
+	Identify cache line crossings
+-clc_avx  [default 0]
+	Like clc check only access of size 16/32/64 bytes
+-clc_out  [default sde-memory-area-crossing.txt]
+	Output file name for memory area crossing detector
+-clci  [default 64]
+	Cache line size to check crossing
+-pgc  [default 0]
+	Identify page crossings
+-pgci  [default 4096]
+	Page size to check crossing
+
+Memory statistics
+
+-memory_stats  [default 0]
+	Provide histogram of memory length
+-memory_stats_file  [default sde-mem-stats.txt]
+	Output file for memory statistics.
+
+Mix knobs
+
+-d  [default 1]
+	Only collect dynamic profile
+-demangle  [default 1]
+	Control for attempting symbol demangling
+-disas  [default 0]
+	Show disassembly for top blocks
+-disas_at_jit  [default 0]
+	This knob does nothing anymore. DEPRECATED!
+-dynamic_stats_per_block  [default 0]
+	Print dynamic stats per block
+-dynamic_stats_per_loop  [default 0]
+	Print dynamic stats per loop
+-function_call_counts  [default 1]
+	Collect number of times each function is called.
+-global_functions  [default 1]
+	Print global functions report
+-global_hot_blocks  [default 1]
+	Print global hot blocks
+-hottest_threads_order  [default 0]
+	thread stats prints are ordered by Icount
+-iform  [default 0]
+	Compute ISA iform mix
+-line_info  [default 1]
+	Add line info to the top hot blocks
+-map_all_blocks  [default 0]
+	Map all the blocks instead of only top blocks
+-mapaddr  [default 0]
+	Emit mappings: Address -> Source file and Line
+-mapaddr_top_blocks  [default 0]
+	Emit mappings for top blocks: Address -> Source file and Line
+-mix  [default 0]
+	Compute mix histograms.
+-mix_concat_bbls  [default 1]
+	Concatenate consecutive blocks statistics
+-mix_count_rep_iterations  [default 1]
+	Count each iteration of repeat string instructions, as a separate instruction
+-mix_filter_no_shared_libs  [default ]
+	Do not instrument shared libraries
+-mix_filter_rtn 
+	Routines to instrument
+-mix_loops  [default 0]
+	Supply loops statistics
+-mix_loops_threads  [default 1]
+	supply loops statistics per thread
+-mix_max_cumulative  [default 97]
+	specify maximum cumulative. stops printing functionswhen it reached max cumulative.
+-mix_omit_per_function_stats  [default 0]
+	Omit the per-function histograms. Reduces the output file size.
+-mix_omit_per_thread_stats  [default 0]
+	Omit per-thread stats for smaller output files
+-mix_top_functions  [default 10]
+	specify maximum number of top function to be printed (0 unlimited)
+-mix_top_loops  [default 10]
+	specify maximum number of top loops for which statistics are printed, sorted by iteration count
+-mix_verbose  [default 0]
+	Add info messages to mix file
+-mix_vpconflict  [default 0]
+	Add vconflic stats to mix file
+-no_shared_libs  [default 0]
+	do not instrument shared libraries
+-omix  [default sde-mix-out.txt]
+	specify profile file name
+-s  [default 0]
+	terminate after collection of static profile for main image
+-top_blocks  [default 20]
+	specify maximum number of top blocks for which icounts are printed
+
+Mix Instruction Length knobs
+
+-avx_only  [default 0]
+	Measure the AVX instruction length only
+
+PinPlayLib Knobs
+
+-log:allow_cntg_hdr_only  [default 1]
+	Logger: allow use of contiguous injection when whole value is in the header
+-log:allow_deltas  [default 1]
+	Logger: allow deltas
+-log:allow_reg_deltas  [default 1]
+	Logger: allow reg deltas
+-log:allow_reg_repeats  [default 1]
+	Logger: allow reg repeats
+-log:allow_repeats  [default 1]
+	Logger: allow repeats
+-log:allow_size_reuse  [default 1]
+	Logger: allow size reuse
+-log:basename  [default log]
+	Logger: Specify base name for log files.
+-log:check_locks  [default 0]
+	Logger: Check locks released after each instruction
+-log:compressed  [default none]
+	Logger: "none", "gzip" or "bzip2"
+-log:contiguous_injections  [default 1]
+	Logger: Support Contiguous memory injections
+-log:copy_cpuid_file  [default 0]
+	Logger: Copy the chip cpuid file to the pinball even when attaching to the process
+-log:disable_x87_lit_injections  [default 1]
+	Logger: disable injections for X87 registers in LIT
+-log:disable_xinit_lit_injections  [default 1]
+	Logger: disable injections for XINIT_BV register in LIT
+-log:dynamic_focus  [default 0]
+	Logger: Log dynamic focus thread according to start event
+-log:early_detach  [default 0]
+	Logger: Detach after generating the log-files for the first region.
+-log:early_out  [default 0]
+	Logger: Exit after generating the log-files for the first region.
+-log:exclude_code  [default ]
+	Enable code exclusion. [Range to exclude to be specified by '-log:exclude:...' knobs.]
+-log:exclude_image 
+	Images to exclude from log
+-log:exclude_thread 
+	Threads to exclude from relog
+-log:exclude_vdso  [default 1]
+	Logger: Exclude execution in the VDSO area.
+-log:fat  [default 0]
+	Logger: shortcut for '-log:whole_image'             '-log:pages_early 1' even if not touched)
+-log:focus_thread  [default -1]
+	Logger: Specifies which thread id to log (defaults to all)
+-log:hash_size  [default 262144]
+	Logger: Number of buckets in the shadow memory hash table
+-log:ignore_thread_injection_event 
+	Logger: Ignore injections stop events from the given tid.
+-log:inject_ud2  [default 0]
+	Logger: log trace for InjectUD2
+-log:inject_ud2_ip_list_size  [default 100000]
+	Logger: InjectUD2 last ip list size
+-log:injections  [default 1]
+	Logger: set to 0 in order to generate injection-less region.
+-log:log_reg_names  [default 0]
+	Logger: do not include register names in the *.reg file
+-log:log_syscalls_to_sel  [default 0]
+	log syscalls to sel file always
+-log:mem_injections_threshold  [default 100000]
+	Memory injections optimization threshold
+-log:mp_atomic  [default 0]
+	Logger: use atomic instrumentation to support cross-process memory accesses
+-log:mp_mode  [default 2]
+	Logger: use atomic instrumentation to support cross-process memory accesses (Equivalent to log:mp_atomic.0 -
+	Disabled, 1 - Enabled, 2 - Pinplay will determine according to other knobs.
+-log:mt  [default 1]
+	Logger: Trace multi-threaded program
+-log:optimize_injections  [default 0]
+	Logger: Optimize injections for single threaded relog
+-log:optimize_syscall_mem_injections  [default 1]
+	Logger: Support parsing system call to optimize and generate Contiguous memory injections
+-log:pad_addresses  [default 0]
+	Logger: pad address ranges with additional page which might not be a part of the application memory.
+-log:page_size  [default 4096]
+	Logger: Size of shadow memory page in bytes
+-log:pages_early  [default 1]
+	Logger: Log pages for dynamically loaded  libraries and for first data accesses to the initial memory
+	image.specify 0 or 1.
+-log:pid  [default 0]
+	Logger: Use PID for naming files.
+-log:precede_tracking  [default 0]
+	Logger: Track last access to shadow memory chunk.
+-log:race_data_size  [default 128]
+	Logger: Size of data per race entry in bytes
+-log:read_vsyscall  [default 0]
+	Logger: Support reading from VSYSCALL area during relog.
+-log:region_id  [default 0]
+	Logger: Use region number for naming files.
+-log:smc_detection_granularity  [default 128]
+	Logger: Size of version entry in bytes
+-log:stop_at_special_inst  [default 0]
+	Logger: Stop log when hit a special inst, which requires an injection
+-log:stop_at_syscall  [default 0]
+	Logger: Stop log when hit a systemcall.
+-log:stop_at_vsyscall  [default 0]
+	Logger: Stop log when hit code at the vsyscall area.
+-log:strace  [default 0]
+	Logger: Generate a system call trace
+-log:strict_smc  [default 0]
+	Logger: Strict SMC support
+-log:syminfo  [default 1]
+	Logger: Generate procinfo XML file
+-log:whole_image  [default 0]
+	Logger: Log all image pages loaded ( even if not touched)
+-log:whole_stack  [default 0]
+	Logger: Log entire stack by monitoring stack-pointer register.
+-pinplay:analysis_assertions  [default 0]
+	insert instrumentation code for asserts
+-pinplay:disasm  [default 0]
+	Use disassembly in iptrace messages
+-pinplay:max_threads  [default 32]
+	Maximum number of threads allowed
+-pinplay:msgfile  [default ]
+	Base name of the message file. Any directory name embedded must exist. The base name of the pinball is used as
+	the default.
+-pinplay:msgon 
+	PinPlay: Possible message types:
+	info: Informational messages (enabled by default)
+	all: Enable all messages
+	log_syscall: Print syscall information during logging
+	log_control: Print control (thread creation/termination) information during logging
+	log_iptrace: Print IPs executed during logging
+	log_instrument: Print info about instrumentation inserted by the logger
+	log_mp: Print info about multi-process instrumentation and events
+	log_signal: Print info about signal handling and logging
+	log_shadow: Print info about operations and handling of the shadow-memory data structure
+	log_mem: Print debug info on memory operations instrumentation/analysis
+	log_data: Print debug info on memory values logging
+	log_emu: Print debug info on emulated instructions
+	log_warmup_emu: Print debug info on warmup generation for emulated instructions
+	log_warmup: Print debug info on warmup generation
+	log_debug: Print general debugging message during logging
+	log_text: Print info abou text logging
+	log_filehld: Print info about Handling of log files during logging
+	log_lock: Print lock info during logging
+	log_mplock: Print mp lock info during logging
+	replay_signal: Print info about signal handling and replaying
+	replay_syscall: Print syscall information during replay
+	addrtx_info: Print info about address translation.
+	addrtx_debug: Print detailed info about address translation.
+	smc: Print info about self-modifying code checks.
+	replay_instrument: Print instrumentation information
+	replay_control: Print control (thread creation/termination) information during replay
+	replay_iptrace: Print IPs executed during replay
+	replay_image: Print image replay debug information
+	replay_mem: Print memory restored during replay
+	replay_sync: Print memory synchronization during replay
+	pinplay_debug: Generic pinplay library debugging messages
+	replay_text: Print text restoration debugging messages
+	replay_emu: Print debug info on emulated instructions
+	code_exclusion: Print info for code exclusion actions
+	instrument: Print instrumentation debug info
+	shim: Print info for shim layer actions
+	inst_order: Print info for instrumentation order
+-pinplay:work_dir  [default ]
+	Pinplay working directory for files
+-replay:addr_trans  [default 0]
+	Replayer: Relocate address ranges and translate addresses
+-replay:addr_trans_hash_size  [default 262144]
+	Replayer: Set number of buckets in address translation hash table.
+-replay:allow_native_expt  [default 0]
+	Replayer: Does not allow native signals during replay.
+-replay:app_debug  [default 0]
+	Replayer: Enable application debug.
+-replay:basename  [default log]
+	Replayer: name of the log files
+-replay:exit_on_syscall  [default 0]
+	Replayer: exit thread on seeing a system call ( Works only with '-replay:injection 0' )
+-replay:forced_exit  [default 1]
+	Replayer: exit thread on reaching logged instruction count
+-replay:image_ops  [default 1]
+	Replayer: Replay image load and unload callbacks
+-replay:injection  [default 1]
+	Replayer: Instrument for register/memory injection and thread synchronization.
+-replay:pause  [default 0]
+	Replayer: Pause the replay before first instruction until gdb is attached
+-replay:pid  [default 0]
+	Replayer: Use PID for naming the message file
+-replay:playout  [default 0]
+	Replayer: Replay writes to stdout and stderr
+-replay:result  [default 0]
+	Flag if to create replay result file.
+-replay:resultfile  [default ]
+	Base name of the replay result file. Any directory name embedded must exist. The base name of the pinball is
+	used as the default.
+-replay:strace  [default 0]
+	Replayer: Generate a system call trace
+
+IVB RDRAND and BDW RDSEED knobs
+
+-limit_entropy  [default 0]
+	If nonzero, limit the entropy of RDRAND and RDSEED to this many consecutive requests per thread before running
+	out of entropy
+-rdrand_seed  [default 0]
+	If zero, use the RDSTC output as a seed. Otherwise use the supplied value. Also used by RDSEED.
+
+Region state knobs
+
+-early_detach  [default 0]
+	Detach from application after early out instead of exit.
+-early_out  [default 0]
+	Exit after the first stop event
+-global_region  [default 0]
+	Handle one global region, affecting all threads
+-pinplay_control  [default 1]
+	Use the pinplay logger controller when it is active
+
+Sparse Instructions Analysis Controls
+
+-sparse_analysis  [default 0]
+	Activate analysis of memory access distances in sparse instructions
+-sparse_analysis_out  [default sde-sparse-analysis-out.txt]
+	Output file name for the sparse analysis tool.
+-sparse_dump  [default 0]
+	Activate full dump of memory access distances in sparse instructions
+-sparse_dump_out  [default sde-sparse-dump-out.txt]
+	Output file name for the sparse dump tool.
+-sparse_vector  [default 0]
+	Activate statistics on distances vectors in sparse instructions
+-sparse_vector_constant  [default 0]
+	Display only constant distances vectors (ignore random vectors).
+-sparse_vector_debug_hash  [default 0]
+	Testing the efficiency of the hash function
+-sparse_vector_full  [default 1]
+	Display full details on each distances vector.
+-sparse_vector_out  [default sde-sparse-vector-out.txt]
+	Output file name for the sparse vector tool.
+-sparse_vector_random  [default 0]
+	Display only random distances vectors (ignore constant vectors).
+-sparse_vector_top  [default 0]
+	Specifying the number of most used vectors to be displayed.
+
+SSE operation counter/checker knobs
+
+-osse_check  [default sse-check.txt]
+	Filename for output
+-sse_check  [default 0]
+	SSE operation checking: 0=no checking, 1=check
+
+Symbols controls
+
+-ignore_debug_info  [default 0]
+	Ignore debug info for the image. Symbols are taken from the symbol tables.
+-reduce_rtn_size_mode  [default auto]
+	Mode for RTN size reduction: delete trailing instructions after RET if there is no jump to the rtn part after
+	the RET. Possible modes are: auto/never/always
+-short_name  [default 0]
+	Use the shortest name for the RTN. Names with version substrings are preferred over the same name without the
+	substring.
+-support_jit_api  [default 0]
+	Enables the Jitted Functions Support
+-unrestricted_rtn_size  [default 0]
+	Use the unrestricted RTN size. When set the RTN size defined by the distance between RTN start to the
+	beginning of next RTN.
+
+Tracing controls
+
+-itrace_compact  [default 0]
+	Generate compacted trace
+-itrace_count  [default 0]
+	Generate histogram with instruction count per ip
+-itrace_disasm  [default 1]
+	Add disassembly to the instruction trace.
+-itrace_execute  [default 0]
+	Debug/Trace execution.
+-itrace_execute_emulate  [default 0]
+	Debug/Trace execution of emulation.
+-itrace_file  [default sde-itrace-out.txt]
+	Output file for execution/instrumentation tracing.
+-itrace_flush  [default 0]
+	Flush the output buffer after writing.
+-itrace_instrument  [default 0]
+	Debug/Trace instrumentation.
+-itrace_instrument_emulate  [default 0]
+	Debug/Trace instrumentation of emulated instructions only.
+-itrace_lines  [default 0]
+	Number of lines for circular buffer. 0=no circular buffer.
+-itrace_only_isa  [default 0]
+	Print only isa set types in the trace.
+-itrace_rawinst  [default 0]
+	Add instruction's raw bytes to the trace.
+-itrace_thread_count  [default 10]
+	Maximal number of counters per thread to allocate for each instruction
+-log_exception  [default 0]
+	Log exception information.
+-sde_log_file  [default sde-log.txt]
+	Name of the sde log file.
+
+Intel(R) TSX (RTM and HLE) Options
+
+-hle_elision_entries  [default 2]
+	Maximum number of elided locks
+-rtm_abort_reason  [default 0]
+	Select RTM abort reason code. relevant only for abort mode
+-rtm_extended_abort_code  [default 0]
+	report extended abort cause codes
+-rtm_mode  [default disabled]
+	Select RTM mode from [disabled|abort|full|nop]
+-tsx  [default 0]
+	Enable TSX (RTM and HLE) functionality
+-tsx_bloom_filter_type  [default BDW]
+	bloom filter CPU type : HSW, BDW, SNC
+-tsx_cache_set_size  [default 8]
+	Number of cache lines in associative cache set(not necessarily power of 2)
+-tsx_cache_sets_num  [default 64]
+	Number of cache sets in cache
+-tsx_debug_log  [default 0]
+	define debug log details level, printed to the the log file
+-tsx_file_name  [default sde-tsx-out.txt]
+	TSX log file name
+-tsx_log_file  [default 0]
+	create a log file (does not necessarily fill it)
+-tsx_log_flush  [default 0]
+	flush data to the log file after each write
+-tsx_log_inst  [default 0]
+	print the instructions to the log file
+-tsx_ot_accuracy  [default moderate]
+	ownership table accuracy level : simple, moderate
+-tsx_ownership_size  [default 16]
+	log2(ownership table entries) default 16
+-tsx_speculation_depth  [default 7]
+	Maximum speculation depth allowed
+-tsx_stats  [default 0]
+	Collect TSX statistics
+-tsx_stats_call_stack  [default 0]
+	Add call stack information to TSX statistics
+-tsx_stats_call_stack_size  [default 10]
+	Call stack size in TSX statistics
+-tsx_stats_file  [default sde-tsx-stats.txt]
+	TSX statistics file name
+-tsx_stats_max_abort  [default 1000000]
+	Maximum number of TSX statistics abort list
+-tsx_stats_regs  [default 0]
+	Create register information to TSX statistics
+-tsx_stats_regs_file  [default sde-tsx-stats-regs.txt]
+	TSX registers statistics file name
+-tsx_stats_top_most  [default 10]
+	Number of most common aborts TSX statistics to display
+
+Tools from the UAIM team
+
+-uaim_branch_out_file  [default sde-uaim-branch-out.txt]
+	Specify the branch pattern output file name
+-uaim_branch_pattern  [default 0]
+	Activate the UAIM branch pattern analysis
+-uaim_branch_profile_bits  [default 10]
+	Specify the number of bits to keep Instruction Pointer (IP)
+-uaim_out_file  [default sde-uaim-out.txt]
+	Specify the output file name
+-uaim_reuse_dist  [default 0]
+	Activate the UAIM reuse distance analysis
+
+Statistic switches
+
+-profile  [default 0]
+	print amount of memory dynamically allocated but not yet freed by the tool
+-statistic  [default 0]
+	print general statistics
+
+General switches (available in pin and tool)
+
+-h  [default 0]
+	Print help message (same as -help)
+-help  [default 0]
+	Print help message
+-ifeellucky  [default 0]
+	skip warning message for unsupported platforms and convert some e

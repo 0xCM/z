@@ -16,7 +16,7 @@ namespace Z0
         public static PageAllocation<N> alloc()
             => new PageAllocation<N>();
 
-        public const uint PageSize = MemoryPage.PageSize;
+        public const uint PageSize = Pow2.T12;
 
         readonly NativeBuffer Buffer;
 

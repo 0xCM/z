@@ -12,9 +12,9 @@ namespace Z0
 
         const uint Capacity = 64;
 
-        static ByteSize PageSize => PageBlocks.PageSize;
+        static ByteSize PageSize => Pow2.T12;
 
-        internal PageDispenser(uint capacity = Capacity)
+        public PageDispenser(uint capacity = Capacity)
             : base(true)
         {
             Allocators = new();
@@ -39,6 +39,6 @@ namespace Z0
         }
 
         protected override void Dispose()
-            => core.iter(Allocators.Values, a => a.Dispose());
+            => sys.iter(Allocators.Values, a => a.Dispose());
     }
 }

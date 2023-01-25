@@ -15,11 +15,11 @@ namespace Z0
 
         public static ManagedBuffer<T> pin<T>(T[] src)
             where T : unmanaged
-                => new ManagedBuffer<T>(GCHandle.Alloc(src, GCHandleType.Pinned), (uint)src.Length*core.size<T>());
+                => new ManagedBuffer<T>(GCHandle.Alloc(src, GCHandleType.Pinned), (uint)src.Length*sys.size<T>());
 
         public static ManagedBuffer<T> alloc<T>(ulong count)
             where T : unmanaged
-                => new ManagedBuffer<T>(GCHandle.Alloc(new T[count], GCHandleType.Pinned), (uint)count*core.size<T>());
+                => new ManagedBuffer<T>(GCHandle.Alloc(new T[count], GCHandleType.Pinned), (uint)count*sys.size<T>());
 
         public static ManagedBuffer<T> alloc<T>(long count)
             where T : unmanaged

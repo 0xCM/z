@@ -8,11 +8,11 @@ namespace Z0
 
     public class LabelDispenser : Dispenser<LabelDispenser>, ILabelDispenser
     {
-        const uint Capacity = MemoryPage.PageSize;
+        const uint Capacity = Pow2.T12*4;
 
         readonly Dictionary<long,LabelAllocator> Allocators;
 
-        internal LabelDispenser(uint capacity = Capacity)
+        public LabelDispenser(uint capacity = Capacity)
             : base(true)
         {
             Allocators = new();
