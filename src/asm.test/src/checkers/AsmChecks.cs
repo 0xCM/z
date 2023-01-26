@@ -98,8 +98,8 @@ namespace Z0
             var @case = AsmCaseAssets.create().Branches();
             Utf8.decode(@case.ResBytes, out var doc);
 
-            using var dispenser = Alloc.asm();
-            var parser = DecodedAsmParser.create(dispenser);
+            using var buffers = CompositeBuffers.create();
+            var parser = DecodedAsmParser.create(buffers.Composite());
             var result = parser.ParseBlocks(doc);
             return result;
         }

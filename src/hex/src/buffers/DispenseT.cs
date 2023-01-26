@@ -6,27 +6,17 @@ namespace Z0
 {
     using static sys;
 
-    public class Dispense
+    public sealed class Dispense : Dispense<Dispense>
     {
-        public static D dispenser<D>(Func<D> f)
-            where D : IAllocDispenser
-        {
-            var dispensed = f();
-            Dispensed.TryAdd(inc(ref Seq), dispensed);
-            return dispensed;
-        }
 
-        public static CompositeDispenser composite()
-            => dispenser(() => new CompositeDispenser());
+    }
 
-        public static CompositeDispenser composite(MemoryDispenser memory, StringDispenser strings, LabelDispenser labels, SymbolDispenser symbols, SourceDispenser source)
-            => dispenser(() => new CompositeDispenser(memory, strings, labels, symbols, source));
+    public abstract class Dispense<T>
+        where T : Dispense<T>, new()
+    {
+        static ConcurrentDictionary<uint,IAllocDispenser> Dispensed = new();
 
-        public static NativeSigDispenser sigs()
-            => dispenser(() => new NativeSigDispenser());
-
-        public static NativeSigDispenser sigs(MemoryDispenser mem, StringDispenser strings, LabelDispenser labels)
-            => dispenser(() => new NativeSigDispenser(mem, strings, labels));
+        static uint Seq;
 
         public static LabelDispenser labels(ByteSize capacity)
             => dispenser(() => new LabelDispenser(capacity));
@@ -52,9 +42,9 @@ namespace Z0
         public static SymbolDispenser symbols()
             => dispenser(() => new SymbolDispenser());
 
-        public static CellDispenser<T> cels<T>(uint partition)
-            where T : unmanaged
-                => dispenser(() => new CellDispenser<T>(partition));
+        public static CellDispenser<C> cells<C>(uint partition)
+            where C : unmanaged
+                => dispenser(() => new CellDispenser<C>(partition));
 
         public static StringDispenser strings()
             => dispenser(() => new StringDispenser());
@@ -68,8 +58,13 @@ namespace Z0
         public static PageDispenser pages(uint count)
             => dispenser(() => new PageDispenser(count));
 
-        static ConcurrentDictionary<uint,IAllocDispenser> Dispensed = new();
 
-        static uint Seq;
+        public static D dispenser<D>(Func<D> f)
+            where D : IAllocDispenser
+        {
+            var dispensed = f();
+            Dispensed.TryAdd(inc(ref Seq), dispensed);
+            return dispensed;
+        }
     }
 }

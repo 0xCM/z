@@ -8,7 +8,7 @@ namespace Z0
 
     partial class AsmObjects
     {
-        static Index<AsmCodeMapEntry> map(IProjectWorkspace project, Index<ObjDumpRow> src, Alloc dispenser)
+        static Index<AsmCodeMapEntry> map(IProjectWorkspace project, Index<ObjDumpRow> src, CompositeBuffers dispenser)
         {
             var distilled = blocks(project, src, dispenser);
             var entries = list<AsmCodeMapEntry>();

@@ -6,8 +6,6 @@ namespace Z0
 {
     using static sys;
 
-    using api = Heaps;
-
     public ref struct MemoryHeap
     {
         public readonly MemoryAddress Base;
@@ -50,20 +48,5 @@ namespace Z0
         [MethodImpl(Inline)]
         public Span<byte> Segment(Address32 offset, uint size)
             => sys.cover(Cell(offset),size);
-
-        [MethodImpl(Inline)]
-        public Span<byte> Entry(uint index)
-            => api.entry<byte>(this,index);
-
-        [MethodImpl(Inline)]
-        public Span<T> Entry<T>(uint index)
-            where T : unmanaged
-                => api.entry<T>(this, index);
-
-        [MethodImpl(Inline)]
-        public Span<T> Entry<T>(int index)
-            where T : unmanaged
-                => api.entry<T>(this, (uint)index);
     }
-
 }

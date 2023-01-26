@@ -20,7 +20,7 @@ namespace Z0
         [CmdOp("project/asm/map")]
         void CreateCodeMap()
         {
-            using var dst = Alloc.create();
+            using var dst = CompositeBuffers.create();
             var src = Project();
             AsmObjects.MapAsm(src, dst);
         }

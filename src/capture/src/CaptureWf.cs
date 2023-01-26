@@ -52,7 +52,7 @@ namespace Z0
                 catalog = ApiCatalog.catalog(assemblies.ToArray());
             }
 
-            using var transport = new CaptureTransport(Dispense.composite(), wf.Emitter);
+            using var transport = new CaptureTransport(CompositeBuffers.composite(), wf.Emitter);
             channel.Row((settings as ISettings).Format());
             var ts = sys.timestamp();
             var exec = runner(wf, settings, ApiPacks.create(ts), transport);

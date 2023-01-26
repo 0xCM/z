@@ -8,7 +8,7 @@ namespace Z0
 
     public class SymbolDispenser : Dispenser<SymbolDispenser>, ISymbolDispenser
     {
-        const uint Capacity = MemoryPage.PageSize;
+        const uint Capacity = Pow2.T12;
 
         readonly Dictionary<long,LabelAllocator> Allocators;
 

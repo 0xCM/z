@@ -14,7 +14,7 @@ namespace Z0
         [CmdOp("asm/check/sigs")]
         Outcome CheckSigs(CmdArgs args)
         {
-            using var dispenser = Alloc.create();
+            using var dispenser = CompositeBuffers.create();
             var specs = new NativeOpDef[3];
             seek(specs,0) = NativeTypes.ptr("op0", NativeTypes.u8());
             seek(specs,1) = NativeTypes.@const("op1", NativeTypes.i16());

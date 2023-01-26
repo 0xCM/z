@@ -8,7 +8,9 @@ namespace Z0
 
     public class Alloc : IDisposable
     {
-        enum AllocationKind : byte
+        public Alloc create() => new Alloc();
+        
+        protected enum AllocationKind : byte
         {
             Label,
 
@@ -29,13 +31,7 @@ namespace Z0
             Cell,
         }
 
-        public static Alloc create()
-            => new Alloc();
-
-        public static CompositeDispenser asm()
-            => new CompositeDispenser();
-
-        ConcurrentDictionary<AllocationKind,IAllocDispenser> Data;
+        protected ConcurrentDictionary<AllocationKind,IAllocDispenser> Data = new();
 
         public LabelDispenser Labels()
             => (LabelDispenser)Data.GetOrAdd(AllocationKind.Label, k => Dispense.labels());
@@ -57,34 +53,17 @@ namespace Z0
 
         public CellDispenser<T> Cells<T>(uint partition)
             where T : unmanaged
-                => (CellDispenser<T>)Data.GetOrAdd(AllocationKind.Cell, k => Dispense.cels<T>(partition));
+                => (CellDispenser<T>)Data.GetOrAdd(AllocationKind.Cell, k => Dispense.cells<T>(partition));
 
-        public CompositeDispenser Composite()
-            => (CompositeDispenser)Data.GetOrAdd(AllocationKind.Composite, k => Dispense.composite(Memory(), Strings(), Labels(), Symbols(), Source()));
+        public Label Label(string content)
+            => Labels().Label(content);
 
-        public NativeSigDispenser Sigs()
-            => (NativeSigDispenser)Data.GetOrAdd(AllocationKind.NativeSig, k => Dispense.sigs(Memory(), Strings(), Labels()));
-
-        public Alloc()
-        {
-            Data = new();
-        }
+        public StringRef String(string content)
+            => Strings().String(content);
 
         public void Dispose()
         {
             iter(Data.Keys, k => Data[k].Dispose());
         }
-
-        public Label Label(string content)
-            => Labels().Label(content);
-
-        public NativeSigRef Sig(string scope, string name, NativeType ret, params NativeOpDef[] ops)
-            => Sigs().Sig(scope, name,ret,ops);
-
-        public NativeSigRef Sig(NativeSigSpec spec)
-            => Sigs().Sig(spec);
-
-        public StringRef String(string content)
-            => Strings().String(content);
     }
 }

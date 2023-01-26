@@ -14,14 +14,14 @@ namespace Z0
 
         CoffServices Coff => Wf.CoffServices();
 
-        public AsmCodeMap MapAsm(IProjectWorkspace ws, Alloc dst)
+        public AsmCodeMap MapAsm(IProjectWorkspace ws, CompositeBuffers dst)
         {
             var entries = map(ws, LoadRows(ws.ProjectId), dst);
             Channel.TableEmit(entries, AppDb.EtlTable<AsmCodeMapEntry>(ws.ProjectId));
             return new AsmCodeMap(entries);
         }
 
-        public AsmCodeMap MapAsm(IProjectWorkspace ws, Index<ObjDumpRow> src, Alloc dst)
+        public AsmCodeMap MapAsm(IProjectWorkspace ws, Index<ObjDumpRow> src, CompositeBuffers dst)
         {
             var entries = map(ws, src, dst);
             Channel.TableEmit(entries, AppDb.EtlTable<AsmCodeMapEntry>(ws.ProjectId));
@@ -40,7 +40,7 @@ namespace Z0
             Channel.TableEmit(objects, AppDb.EtlTable<ObjDumpRow>(project));
             var blocks = AsmObjects.blocks(objects);
             Channel.TableEmit(blocks, AppDb.EtlTable<ObjBlock>(project));
-            using var alloc = Alloc.create();
+            using var alloc = CompositeBuffers.create();
             MapAsm(context.Project, objects, alloc);
             var asmrows = EmitAsmRows(context, alloc);
             EmitRecoded(context, asmrows);
@@ -293,7 +293,7 @@ namespace Z0
             Channel.EmittedFile(emitting,counter);
         }
 
-        public Index<AsmCodeBlocks> EmitAsmRows(ProjectContext context, Alloc alloc)
+        public Index<AsmCodeBlocks> EmitAsmRows(ProjectContext context, CompositeBuffers alloc)
         {
             var files = context.Files.Docs(FileKind.ObjAsm);
             var count = files.Count;

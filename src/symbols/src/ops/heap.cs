@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
     
     partial struct Symbols
-    {
+    {        
         public static SymHeap heap<E>()
             where E : unmanaged, Enum
                 => heap(Symbols.symlits<E>());

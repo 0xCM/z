@@ -212,8 +212,11 @@ namespace Z0
         public void EmitApiTokens(params Assembly[] src)
             => EmitApiTokens(CalcApiTokens(src));
 
-        public void EmitHeap(SymHeap src)
-            => Heaps.emit(src, Target.Table<SymHeapRecord>(), Channel);
+        public void EmitHeap(SymHeap src, IDbArchive dst)
+            => HeapEmissions.emit(Channel, src, dst.Table<SymHeapRecord>());
+
+        // public void EmitHeap(SymHeap src)
+        //     => HeapEmissions.emit(Channel, src, Target.Table<SymHeapRecord>());
 
         public void EmitTypeLists(params Assembly[] src)
         {            
@@ -266,7 +269,7 @@ namespace Z0
             => src.Enums().Where(x => x.ContainsGenericParameters == false);
 
         void EmitSymHeap(SymHeap src)
-            => Heaps.emit(src, Target.Table<SymHeapRecord>(), Channel);
+            => HeapEmissions.emit(Channel, src, Target.Table<SymHeapRecord>());
 
         void EmitComments()
             => Comments.Collect(Target);

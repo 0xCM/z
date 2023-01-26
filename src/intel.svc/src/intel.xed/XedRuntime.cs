@@ -19,7 +19,7 @@ namespace Z0
 
         object StartLocker = new();
 
-        public ref readonly Alloc Alloc => ref _Alloc;
+        public ref readonly CompositeBuffers Alloc => ref _Alloc;
 
         public XedPaths Paths => XedPaths.Service;
 
@@ -35,7 +35,7 @@ namespace Z0
 
         public XedImport Import => Wf.XedImport(this);
 
-        Alloc _Alloc;
+        CompositeBuffers _Alloc;
 
         XedViews _Views;
 
@@ -52,7 +52,7 @@ namespace Z0
 
         public XedRuntime()
         {
-            _Alloc = Z0.Alloc.create();
+            _Alloc = Z0.CompositeBuffers.create();
         }
 
         void CalcCpuIdImports()

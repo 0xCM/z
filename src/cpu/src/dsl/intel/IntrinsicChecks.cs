@@ -171,7 +171,7 @@ namespace Z0
         public void CheckSigs()
         {
             var specs = new NativeOpDef[3];
-            using var dispenser = Alloc.create();
+            using var dispenser = CompositeBuffers.create();
 
             var intrinsics = new Sigs();
             var f0 = intrinsics._mm_add_epi8();

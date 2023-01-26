@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using api = Heaps;
-
     using static sys;
 
     public readonly ref struct BinaryHeap
@@ -36,15 +34,5 @@ namespace Z0
         [MethodImpl(Inline)]
         public ref uint Offset(int index)
             => ref seek(Offsets, index);
-
-        [MethodImpl(Inline)]
-        public Span<T> Segment<T>(uint index)
-            where T : unmanaged
-                => api.segment<T>(this, index);
-
-        [MethodImpl(Inline)]
-        public Span<T> Segment<T>(int index)
-            where T : unmanaged
-                => api.segment<T>(this, (uint)index);
     }
 }

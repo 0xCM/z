@@ -11,7 +11,7 @@ namespace Z0
 
     partial class AsmObjects
     {
-        public static AsmCodeBlocks blocks(ProjectContext context, in FileRef file, ref uint seq, Index<ObjDumpRow> src, Alloc dispenser)
+        public static AsmCodeBlocks blocks(ProjectContext context, in FileRef file, ref uint seq, Index<ObjDumpRow> src, CompositeBuffers dispenser)
         {
             var blocks = src.GroupBy(x => x.BlockAddress).Array();
             var blockbuffer = alloc<AsmCodeBlock>(blocks.Length);
@@ -44,7 +44,7 @@ namespace Z0
             return new AsmCodeBlocks(composite.Label(origin.DocName), origin.DocId, blockbuffer);
         }
 
-        static Index<AsmCodeBlocks> blocks(IProjectWorkspace project, Index<ObjDumpRow> src, Alloc dispenser)
+        static Index<AsmCodeBlocks> blocks(IProjectWorkspace project, Index<ObjDumpRow> src, CompositeBuffers dispenser)
         {
             var collected = dict<uint, AsmCodeBlocks>();
             var groups = src.GroupBy(x => x.OriginId).Array();
