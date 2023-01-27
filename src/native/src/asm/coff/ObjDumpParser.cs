@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using Asm;
 
     class ObjDumpParser
     {
@@ -112,7 +113,7 @@ namespace Z0
                             }
 
                             Row.Size = Row.Encoded.Size;
-                            Row.InstructionId = InstructionId.define(origin.DocId, Row.IP, Row.Encoded.Bytes);
+                            Row.InstructionId = Asm.asm.instid(origin.DocId, Row.IP, Row.Encoded.Bytes);
                             Row.EncodingId = Row.InstructionId.EncodingId;
                             Row.OriginId = origin.DocId;
                             var statement = text.trim(text.right(asm, y)).Replace(Chars.Tab, Chars.Space);

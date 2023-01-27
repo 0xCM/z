@@ -330,7 +330,7 @@ namespace Z0
                     record.DocSeq = code.DocSeq;
                     record.EncodingId = code.EncodingId;
                     record.OriginId = code.OriginId;
-                    record.InstructionId = InstructionId.define(code.OriginId, code.IP, code.Encoding);
+                    record.InstructionId = asm.instid(code.OriginId, code.IP, code.Encoding);
                     record.OriginName = src.OriginName;
                     record.BlockBase = block.Label.Location;
                     record.BlockName = block.Label.Name;

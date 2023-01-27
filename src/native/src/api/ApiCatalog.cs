@@ -4,8 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
     using System.Linq;
+
+    using static sys;
 
     public class ApiCatalog : AppService<ApiCatalog>
     {
@@ -60,6 +61,7 @@ namespace Z0
             }
             return dst;
         }        
+
         public static Index<ApiCatalogEntry> catalog(FilePath src, IWfChannel channel)
         {
             var rows = list<ApiCatalogEntry>();
@@ -80,7 +82,6 @@ namespace Z0
             }
             return rows.ToArray();
         }
-
 
         static Outcome parse(string src, out ApiCatalogEntry dst)
         {

@@ -5,10 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Asm;
-
-    using static core;
-    using static XedDisasmModels;
+    using static sys;
 
     partial class XedDisasmSvc
     {
@@ -37,7 +34,7 @@ namespace Z0
                 result = HexParser.parse(skip(cells, j++), out dst.OriginId);
                 result = DataParser.parse(skip(cells, j++), out dst.OriginName);
                 result = EncodingId.parse(skip(cells, j++), out dst.EncodingId);
-                result = InstructionId.parse(skip(cells, j++), out dst.InstructionId);
+                result = AsmParsers.parse(skip(cells, j++), out dst.InstructionId);
                 result = DataParser.parse(skip(cells, j++), out dst.IP);
                 result = ApiNative.parse(skip(cells, j++), out dst.Encoded);
                 result = DataParser.parse(skip(cells, j++), out dst.Size);

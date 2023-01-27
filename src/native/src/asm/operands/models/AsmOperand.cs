@@ -6,33 +6,13 @@ namespace Z0.Asm
 {
     using Operands;
 
-    using static core;
+    using static sys;
 
     using B = ByteBlock16;
 
     [StructLayout(LayoutKind.Sequential,Pack=1), ApiComplete]
     public struct AsmOperand : IAsmOp
     {
-        [Op]
-        public static string format(in AsmOperand src)
-        {
-            switch(src.OpClass)
-            {
-                case AsmOpClass.Mem:
-                    return src.Mem.Format();
-                case AsmOpClass.Reg:
-                    return src.Reg.Format();
-                case AsmOpClass.Imm:
-                    return src.Imm.Format();
-                case AsmOpClass.Disp:
-                    return src.Disp.Format();
-                case AsmOpClass.RegMask:
-                    return src.RegMask.Format();
-                default:
-                    return EmptyString;
-            }
-        }
-
         public readonly AsmOpClass OpClass;
 
         public readonly AsmOpKind OpKind;
@@ -316,7 +296,7 @@ namespace Z0.Asm
         }
 
        public string Format()
-            => format(this);
+            => AsmRender.format(this);
 
         public override string ToString()
             => Format();

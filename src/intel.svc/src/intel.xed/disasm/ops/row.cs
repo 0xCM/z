@@ -52,7 +52,7 @@ namespace Z0
             dst.OriginId = summary.OriginId;
             dst.OriginName = summary.OriginName;
             dst.EncodingId = summary.EncodingId;
-            dst.InstructionId = InstructionId.define(summary.OriginId, summary.IP, code.Bytes);
+            dst.InstructionId = asm.instid(summary.OriginId, summary.IP, code.Bytes);
             dst.IP = summary.IP;
             dst.Encoded = summary.Encoded;
             dst.Asm = summary.Asm;

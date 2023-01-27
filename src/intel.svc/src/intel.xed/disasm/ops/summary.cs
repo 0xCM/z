@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using Asm;
+
     using static sys;
     using static XedDisasmModels;
 
@@ -40,7 +42,7 @@ namespace Z0
                 if(result.Fail)
                     break;
 
-                record.InstructionId = InstructionId.define(record.OriginId, record.IP, sys.bytes(record.Encoded));
+                record.InstructionId = asm.instid(record.OriginId, record.IP, sys.bytes(record.Encoded));
                 record.EncodingId = record.InstructionId.EncodingId;
                 record.Asm = expr[i];
                 record.Source = src.Path;

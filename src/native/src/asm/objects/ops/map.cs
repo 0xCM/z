@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static sys;
-
+    using Asm;
     partial class AsmObjects
     {
         static Index<AsmCodeMapEntry> map(IProjectWorkspace project, Index<ObjDumpRow> src, CompositeBuffers dispenser)
@@ -39,7 +39,7 @@ namespace Z0
                         entry.DocSeq = c.DocSeq;
                         entry.EncodingId = c.EncodingId;
                         entry.OriginId = blocks.OriginId;
-                        entry.InstructionId = InstructionId.define(blocks.OriginId, c.IP, c.Encoding);
+                        entry.InstructionId = asm.instid(blocks.OriginId, c.IP, c.Encoding);
                         entry.OriginName = blocks.OriginName;
                         entry.BlockNumber = blocknumber;
                         entry.BlockName = name;

@@ -2,8 +2,10 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Asm
+namespace Z0
 {
+    using Asm;
+    
     [StructLayout(LayoutKind.Sequential,Pack=1), Record(TableId)]
     public record struct RawMemberCode
     {

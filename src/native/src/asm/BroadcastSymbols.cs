@@ -2,7 +2,7 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Asm
+namespace Z0
 {
     [LiteralProvider]
     public readonly struct BroadcastSymbols
@@ -30,6 +30,5 @@ namespace Z0.Asm
         public const string N4to16 = "{4to16}";
 
         public const string N8to16 = "{8to16}";
-
     }
 }

@@ -28,7 +28,7 @@ namespace Z0
                 result = DataParser.parse(data[j++], out dst.DocSeq);
                 result = HexParser.parse(data[j++], out dst.OriginId);
                 result = EncodingId.parse(data[j++].Text, out dst.EncodingId);
-                result = InstructionId.parse(data[j++].Text, out dst.InstructionId);
+                result = AsmParsers.parse(data[j++].Text, out dst.InstructionId);
                 result = DataParser.parse(data[j++], out dst.Section);
                 result = DataParser.parse(data[j++], out dst.BlockAddress);
                 result = DataParser.parse(data[j++], out dst.BlockName);

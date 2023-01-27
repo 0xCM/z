@@ -104,13 +104,12 @@ namespace Z0
         [CmdOp("asm/check/hexlines")]
         void CheckHexLines()
         {
-            var dst = span<string>(32);
-            var count = Lines.lines(DataSource, dst);
-            var data = slice(dst,0,count);
+            var lines = Lines.lines(DataSource);
+            var count = lines.Length;
             for(var i=0; i<count; i++)
             {
-                ref readonly var input = ref skip(data,i);
-                ApiNative.parse(input, out var code);
+                ref readonly var line = ref skip(lines,i);
+                ApiNative.parse(line, out var code);
                 Write(code.Format());
             }
         }
