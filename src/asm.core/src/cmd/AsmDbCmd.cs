@@ -5,11 +5,9 @@
 namespace Z0
 {
     using Asm;
-
+    
     public class AsmDbCmd : WfAppCmd<AsmDbCmd>
     {
-        IntelSdm Sdm => Wf.IntelSdm();
-
         CultProcessor Cult => Wf.CultProcessor();
 
         NasmCatalog Nasm => Wf.NasmCatalog();
@@ -18,21 +16,9 @@ namespace Z0
 
         AsmDocs AsmDocs => Wf.AsmDocs();
 
-        IntelIntrinsics Intrinsics => Wf.IntelIntrinsics();
-            
-        SdeSvc Sde => Wf.SdeSvc();
-
         [CmdOp("stanford/etl")]
         void StanfordEtl()
             => StanfordCatalog.RunEtl();
-
-        [CmdOp("sdm/etl")]
-        void SdmImport()
-            => Sdm.RunEtl();
-
-        [CmdOp("sde/etl")]
-        void LoadCpuidRows()
-            => Sde.RunEtl();
 
         [CmdOp("nasm/etl")]
         void ImportNasmCatalog()
@@ -46,9 +32,6 @@ namespace Z0
         void AsmEtl()
         {
             Cult.RunEtl();
-            Sdm.RunEtl();
-            Sde.RunEtl();
-            Intrinsics.RunEtl(Intrinsics.Paths());
             Nasm.RunEtl();
             StanfordCatalog.RunEtl();
             EmitAsmSymbols();

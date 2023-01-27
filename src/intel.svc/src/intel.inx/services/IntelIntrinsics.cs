@@ -14,8 +14,9 @@ namespace Z0
         public IntelIntrinsicPaths Paths()
             => new IntelIntrinsicPaths(AppDb.DbIn("intel"), AppDb.AsmDb("intrinsics"));
 
-        public ExecToken RunEtl(IntelIntrinsicPaths paths)
+        public ExecToken RunEtl()
         {
+            var paths = Paths();
             var running = Channel.Running();
             paths.Targets().Clear();
             var xml = LoadSourceDoc(paths);
@@ -36,7 +37,6 @@ namespace Z0
             Channel.Ran(flow, $"Parsed {defs.Count} definitions");
             return defs;
         }
-
 
         public void EmitAlgorithms(IntelIntrinsicPaths paths, ReadOnlySpan<IntrinsicDef> src)
         {

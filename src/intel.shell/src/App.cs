@@ -21,7 +21,9 @@ namespace Z0
                 wf.AsmFlowCmd(),
                 wf.PbCmd(),
                 wf.SdmCmd(),
-                wf.XedToolCmd()
+                wf.XedToolCmd(),
+                wf.IntelInxCmd(),
+                wf.IntelCmd()
             };
 
         static int main(string[] args)
@@ -30,6 +32,7 @@ namespace Z0
             using var app = ApiServers.shell<App,AppCmd>(false, args, providers);
             try
             {
+                GlobalServices.Instance.Inject(app.Wf.XedRuntime());
                 app.Run(args);
             }
             catch(Exception e)

@@ -7,7 +7,6 @@ namespace Z0
     using Asm;
 
     using System.Text;
-    using dsl.intel;
 
     public class IntelCmd : WfAppCmd<IntelCmd>
     {
@@ -19,21 +18,11 @@ namespace Z0
 
         SdeSvc Sde => Wf.SdeSvc();
 
-        [CmdOp("intel/inx")]
-        void RunInxEtl()
-        {
-            var paths = Intrinsics.Paths();
-            var xml = Intrinsics.LoadSourceDoc(paths);
-            var defs = Intrinsics.ParseSouceDoc(xml);
-            Intrinsics.EmitAlgorithms(paths, defs);
-            var records = Intrinsics.EmitRecords(paths, defs);
-        }
-
 
         [CmdOp("intel/etl")]
         void ImportIntrinsics()
         {
-            Intrinsics.RunEtl(Intrinsics.Paths());
+            Intrinsics.RunEtl();
             Sdm.RunEtl();
             Sde.RunEtl();
             Xed.Start();

@@ -4,14 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Asm;
-
     using static sys;
 
     public class AsmGenCmd : WfAppCmd<AsmGenCmd>
     {
-        IntelSdm Sdm => Wf.IntelSdm();
-
         CsLang CsLang => Wf.CsLang();
 
         public IProjectWorkspace EtlSource(ProjectId src)

@@ -1,4 +1,4 @@
 @echo off
 set ProjectName=intel.shell
 set ToolName=intel
-set ProjectRoot=%SlnRoot%\src\%ProjectName%
+call %~dp0..\config.cmd
