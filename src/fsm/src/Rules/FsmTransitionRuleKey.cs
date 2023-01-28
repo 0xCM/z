@@ -19,7 +19,7 @@ namespace Z0
         /// </summary>
         public E Trigger {get;}
 
-        public int Hash {get;}
+        public Hash32 Hash {get;}
 
         [MethodImpl(Inline)]
         public FsmTransitionRuleKey(E input, S source)

@@ -23,7 +23,7 @@ namespace Z0
             Selectors = new();
             Bases = new();
             Segments = new();
-            HostProcessName = core.process().ProcessName;
+            HostProcessName = Process.GetCurrentProcess().ProcessName;
         }
 
         public ref readonly ProcAddresses Complete()
@@ -54,7 +54,7 @@ namespace Z0
             if(src.Type != 0 && src.Protection != 0)
             {
                 var sidx = (ushort)Index(src.BaseAddress.Quadrant(n2));
-                Bases[sidx].Add(core.paired(src.BaseAddress.Lo(), (uint)src.Size));
+                Bases[sidx].Add(Tuples.paired(src.BaseAddress.Lo(), (uint)src.Size));
                 ImageMemory.segment(src, ref Segments[index]);
             }
         }

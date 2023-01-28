@@ -46,7 +46,5 @@ namespace Z0
 
         public static ClrSvc ClrSvc(this IWfRuntime wf)
             => Services.ClrServices(wf);
-
-
     }
 }

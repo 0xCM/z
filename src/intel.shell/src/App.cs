@@ -12,7 +12,7 @@ namespace Z0
                 wf.WfCmd(),
                 wf.BuildCmd(),
                 wf.EnvCmd(),
-                wf.ContextCmd(),
+                wf.ImageCmd(),
                 wf.ArchiveCmd(),
                 wf.XedCmd(),
                 wf.AsmCoreCmd(),

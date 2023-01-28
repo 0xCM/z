@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
 
     [ApiHost]
-    public sealed partial class Nasm : ToolService<Nasm>
+    public sealed partial class Nasm : WfToolCmd<Nasm>
     {
         readonly BitFormatter<byte> BitFormat;
 

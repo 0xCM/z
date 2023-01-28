@@ -8,6 +8,8 @@ namespace Z0
 
     public class Tooling : WfSvc<Tooling>
     {
+        OmniScript OmniScript => Wf.OmniScript();
+
         public FilePath ConfigScript(Tool tool)
             => Home(tool).ConfigScript(ApiAtomic.config, FileKind.Cmd);
 

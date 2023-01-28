@@ -12,12 +12,11 @@ namespace Z0
         public static IAgentControl control(IAgentContext context)
             => AgentControl.create(context);
 
-        public AgentRunner Runner()
+        public static AgentRunner runner(IEventSink dst)
         {
             var log = new SystemEventWriter();
-            var signal = Events.signal(Wf.EventSink, GetType());
-            var runner = new AgentRunner(signal, new AgentContext(log));
-            return runner;
+            var signal = Events.signal(dst);
+            return new AgentRunner(signal, new AgentContext(log));
         }
 
         /// <summary>

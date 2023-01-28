@@ -16,8 +16,6 @@ namespace Z0
         /// </summary>
         public string Id {get;}
 
-        readonly IWfRuntime Wf;
-
         /// <summary>
         /// Specifies the maximum number of events that will be accepted prior to forceful termination
         /// </summary>
@@ -90,10 +88,9 @@ namespace Z0
         /// <param name="end"></param>
         /// <param name="transition"></param>
         /// <param name="limit"></param>
-        public Fsm(string id, IWfRuntime wf, S ground, S end, IFsmFunc<E,S> transition, ulong? limit = null)
+        public Fsm(string id, S ground, S end, IFsmFunc<E,S> transition, ulong? limit = null)
         {
             Id = id;
-            Wf = wf;
             CurrentState = ground;
             Random = Rng.pcg64();
             EndState = end;

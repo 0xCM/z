@@ -7,7 +7,7 @@ namespace Z0
 {
     using static sys;
 
-    public sealed partial class XedToolCmd : ToolService<XedToolCmd>
+    public sealed partial class XedToolCmd : WfToolCmd<XedToolCmd>
     {
         const string group = "xedtool";
 

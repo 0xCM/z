@@ -23,7 +23,7 @@ namespace Z0
         }
     }
 
-    class ArchiveCmd : ApiService<ArchiveCmd>
+    class ArchiveCmd : WfAppCmd<ArchiveCmd>
     {
         FileArchives FileArchives => Wf.FileArchives();
 

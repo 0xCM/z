@@ -133,7 +133,7 @@ namespace Z0
         {
             LogHeader(MethodInfo.GetCurrentMethod(), n);
             Fsm.example1();
-            Fsm.example2();
+            PrimalStates.example2();
         }
 
         void Run(N28 n)

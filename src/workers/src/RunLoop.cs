@@ -8,26 +8,26 @@ namespace Z0
     {
         readonly ITaskQueue Queue;
         
-        readonly ILogger<RunLoop> Log;
+        readonly IWfChannel Channel;
         
         readonly CancellationToken Ct;
 
-        public RunLoop(ITaskQueue queue,ILogger<RunLoop> log, IHostApplicationLifetime lifetime)
+        public RunLoop(ITaskQueue queue, IWfChannel channel, IHostApplicationLifetime lifetime)
         {
             Queue = queue;
-            Log = log;
+            Channel = channel;
             Ct = lifetime.ApplicationStopping;
         }
 
         public void StartMonitorLoop()
         {
-            Log.LogInformation($"{nameof(MonitorAsync)} loop is starting.");
+            Channel.Status($"{nameof(MonitorAsync)} loop is starting.");
 
             // Run a console user input loop in a background thread
             Task.Run(async () => await MonitorAsync());
         }
 
-        private async ValueTask MonitorAsync()
+        async ValueTask MonitorAsync()
         {
             while (!Ct.IsCancellationRequested)
             {
@@ -40,15 +40,12 @@ namespace Z0
             }
         }
 
-        private async ValueTask BuildWorkItemAsync(CancellationToken token)
+        async ValueTask BuildWorkItemAsync(CancellationToken token)
         {
-            // Simulate three 5-second tasks to complete
-            // for each enqueued work item
-
             int delayLoop = 0;
             var guid = Guid.NewGuid();
 
-            Log.LogInformation("Queued work item {Guid} is starting.", guid);
+            Channel.Status(string.Format("Queued work item {Guid} is starting.", guid));
 
             while (!token.IsCancellationRequested && delayLoop < 3)
             {
@@ -63,7 +60,7 @@ namespace Z0
 
                 ++ delayLoop;
 
-                Log.LogInformation("Queued work item {Guid} is running. {DelayLoop}/3", guid, delayLoop);
+                Channel.Status(string.Format("Queued work item {Guid} is running. {DelayLoop}/3", guid, delayLoop));
             }
 
             string format = delayLoop switch
@@ -72,7 +69,7 @@ namespace Z0
                 _ => "Queued Background Task {Guid} was cancelled."
             };
 
-            Log.LogInformation(format, guid);
+            Channel.Status(string.Format(format, guid));
         }
     }
 }

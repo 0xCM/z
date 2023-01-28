@@ -12,9 +12,9 @@ namespace Z0
    /// <typeparam name="A">The action type</typeparam>
     public class Fsm<E,S,A> : Fsm<E,S>
     {
-        internal Fsm(string Id, IWfRuntime wf, S s0, S end,
+        public Fsm(string Id, S s0, S end,
                 FsmTransitionFunc<E,S> Transition, FsmEntryFunc<S,A> entry, FsmExitFunc<S,A> exit, ulong? limit = null)
-            : base(Id, wf, s0, end, Transition, limit)
+            : base(Id, s0, end, Transition, limit)
         {
             EntryFunc = entry;
             ExitFunc = exit;

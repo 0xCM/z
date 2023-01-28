@@ -8,6 +8,8 @@ namespace Z0
 
     public class WfScripts : WfSvc<WfScripts>
     {
+        OmniScript OmniScript => Wf.OmniScript();
+
         public FolderPath CleanOutDir(IProjectWorkspace project)
             => project.BuildOut().Clear(true);
 

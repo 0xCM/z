@@ -17,7 +17,7 @@ namespace Z0
         /// <summary>
         /// The invariant hash
         /// </summary>
-        public int Hash {get;}
+        public Hash32 Hash {get;}
 
         [MethodImpl(Inline)]
         public FsmOutputRuleKey(E trigger, S target)

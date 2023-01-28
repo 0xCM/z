@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using static core;
+    using static sys;
 
     [ApiHost]
     public sealed class AsmRoutines : AppService<AsmRoutines>

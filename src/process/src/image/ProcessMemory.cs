@@ -9,7 +9,7 @@ namespace Z0
     using static sys;
     using static ImageRegions;
 
-    public partial class ProcessMemory : AppService<ProcessMemory>
+    public class ProcessMemory : AppService<ProcessMemory>
     {
         [Op, MethodImpl(Inline)]
         public static Traverser traverser(ReadOnlySpan<ProcessMemoryRegion> src, bool live)
@@ -205,7 +205,7 @@ namespace Z0
 
         public ReadOnlySeq<ProcessPartition> EmitPartitions(Process process, IApiPack dst)
         {
-            var summaries = partitions(ImageMemory.locations(process));
+            var summaries = partitions(ImageMemory.loaded(process));
             Channel.TableEmit(summaries, dst.PartitionPath());
             return summaries;
         }

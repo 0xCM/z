@@ -13,8 +13,8 @@ namespace Z0
     public ref struct ApiCodeParser
     {
         [MethodImpl(Inline), Op]
-        internal static ReadOnlySpan<byte> parsed(in ApiCodeParser parser)
-            => (parser.Offset + parser.Delta - 1) > 0 ? parser.Buffer.Slice(0, parser.Offset + parser.Delta - 1) : sys.empty<byte>();
+        internal static byte[] parsed(in ApiCodeParser parser)
+            => (parser.Offset + parser.Delta - 1) > 0 ? parser.Buffer.Slice(0, parser.Offset + parser.Delta - 1).ToArray() : sys.empty<byte>();
 
         public readonly Span<byte> Buffer;
 
@@ -29,9 +29,6 @@ namespace Z0
         readonly EncodingPatterns Patterns;
 
         public byte[] Parsed
-            => ParsedSlice.ToArray();
-
-        ReadOnlySpan<byte> ParsedSlice
             => parsed(this);
 
         internal ApiCodeParser(EncodingPatterns patterns, byte[] buffer)

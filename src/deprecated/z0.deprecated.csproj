@@ -6,6 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(ClrEcma)" />
+    <ProjectReference Include="../clr.query/z0.clr.query.csproj" />
   </ItemGroup>
 </Project>

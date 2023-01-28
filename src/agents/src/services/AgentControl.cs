@@ -8,7 +8,6 @@ namespace Z0
 
     public class AgentControl : AgentControl<AgentControl,IAgentContext>, IAgentControl
     {
-
         public AgentControl()
         {
 

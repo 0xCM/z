@@ -10,7 +10,7 @@ namespace Z0
     /// <typeparam name="S">The state type</typeparam>
     public readonly struct FsmActionRuleKey<S> : IFsmRuleKey
     {
-        public int Hash {get;}
+        public Hash32 Hash {get;}
 
         public S Source {get;}
 

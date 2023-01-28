@@ -8,7 +8,7 @@ namespace Z0
 
     using K = LlvmConfigKind;
 
-    public sealed class LlvmConfigSvc : ToolService<LlvmConfigSvc>
+    public sealed class LlvmConfigSvc : WfToolCmd<LlvmConfigSvc>
     {
         public LlvmConfigSvc()
             : base("llvm-config")

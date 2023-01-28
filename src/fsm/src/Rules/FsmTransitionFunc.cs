@@ -11,7 +11,7 @@ namespace Z0
     /// </summary>
     public class FsmTransitionFunc<E,S> : IFsmFunc<E,S>
     {
-        readonly Dictionary<int,IFsmTransitionRule<E,S>> Index;
+        readonly Dictionary<Hash32,IFsmTransitionRule<E,S>> Index;
 
         public FsmTransitionFunc(IEnumerable<IFsmTransitionRule<E,S>> rules)
             => Index = rules.Select(x => (Fsm.transitionKey(x.Trigger,x.Source).Hash, x)).ToDictionary();

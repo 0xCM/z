@@ -9,9 +9,9 @@ namespace Z0
 
     }
 
-    public interface IApiService<C> : IApiService
-        where C : IApiService<C>,new()
-    {
+    // public interface IApiService<C> : IApiService
+    //     where C : IApiService<C>,new()
+    // {
         
-    }    
+    // }    
 }

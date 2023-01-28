@@ -13,7 +13,7 @@ namespace Z0
                 wf.BuildCmd(),
                 wf.XedCmd(),
                 wf.IntelInxCmd(),
-                wf.ContextCmd(),
+                wf.ImageCmd(),
                 wf.AsmCheckCmd(),
             };
 

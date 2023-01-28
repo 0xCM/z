@@ -11,7 +11,6 @@ namespace Z0
 
     class AppController : BackgroundService
     {
-
         readonly IMonitor Monitor;
         
         public AppController(ILogger<AppController> logger, string[] args)

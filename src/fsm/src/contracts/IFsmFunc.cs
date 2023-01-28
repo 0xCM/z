@@ -4,9 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Collections.Generic;
-
     /// <summary>
     /// Characterizes a state machine partial function
     /// </summary>

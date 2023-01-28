@@ -16,7 +16,7 @@ namespace Z0
 
 
         public static IApiContext context<C>(IWfRuntime wf)
-            where C : IApiService<C>, new()
+            where C : IApiService, new()
         {
             GlobalServices.Instance.Inject(wf.XedRuntime());
             return ApiServers.context<C>(wf, () => providers(wf));            
@@ -39,7 +39,7 @@ namespace Z0
                 wf.IntelInxCmd(),
                 wf.Machines(),
                 wf.ProjectCmd(),
-                wf.ContextCmd(),
+                wf.ImageCmd(),
                 wf.WfCmd(),
                 wf.XedCmd(),
                 wf.BuildCmd(),

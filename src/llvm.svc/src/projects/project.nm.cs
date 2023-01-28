@@ -10,6 +10,8 @@ namespace Z0
     {
         Tooling Tooling => Wf.Tooling();
 
+        OmniScript OmniScript => Wf.OmniScript();
+
         [CmdOp("project/nm")]
         Outcome RunLlvmNm(CmdArgs args)
         {

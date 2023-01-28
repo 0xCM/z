@@ -9,7 +9,7 @@ namespace Z0
     using static Pow2x32;
 
     [ApiHost]
-    public partial class DumpBin : ToolService<DumpBin>
+    public partial class DumpBin : WfToolCmd<DumpBin>
     {
         const string dumpbin = "dumpbin";
 

@@ -14,7 +14,7 @@ namespace Z0
     /// </summary>
     public class FsmOutputFunc<E,S,O> : IFsmFunc
     {
-        readonly Dictionary<int,IFsmOutputRule<E,S,O>> RuleIndex;
+        readonly Dictionary<Hash32,IFsmOutputRule<E,S,O>> RuleIndex;
 
         [MethodImpl(Inline)]
         public FsmOutputFunc(IEnumerable<IFsmOutputRule<E,S,O>> Rules)

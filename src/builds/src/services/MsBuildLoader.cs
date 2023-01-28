@@ -6,21 +6,15 @@ namespace Z0
 {
     using static sys;
 
-    public class MsBuildLoader : ApiAction<MsBuildLoader>
+    public class MsBuildLoader : WfSvc<MsBuildLoader>
     {
         MsBuild MsBuild => Wf.BuildSvc();
-
-        public MsBuildLoader(IWfRuntime wf)
-            : base(wf, "projects/load")
-        {
-            Wf = wf;
-        }
 
         public Task<ExecToken> Start(IDbArchive src, Action<Build.ProjectSpec> dst)
         {
             ExecToken Worker()
             {
-                using var running = Channel.Running(ActionName);
+                using var running = Channel.Running("projects/load");
                 iter(src.Enumerate(true, FileKind.CsProj), uri => {
                     try
                     {

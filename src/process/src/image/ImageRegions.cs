@@ -75,9 +75,7 @@ namespace Z0
             public void Deposit(in ProcessMemoryRegion src)
             {
                 if((src.Protection & Protection) != 0)
-                {
                     Accepted[Position++] = src;
-                }
             }
 
             public Index<ProcessMemoryRegion> Emit()

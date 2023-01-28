@@ -6,10 +6,7 @@ namespace Z0
 {
     public interface IFsmRuleKey : IHashed
     {
-        new int Hash {get;}
 
-        Hash32 IHashed.Hash
-            => Hash;
     }
 
     public interface IFsmRuleKey<E,S> : IFsmRuleKey

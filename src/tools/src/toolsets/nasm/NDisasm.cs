@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
 
     [ApiHost]
-    public sealed class NDisasm : ToolService<NDisasm>
+    public sealed class NDisasm : WfToolCmd<NDisasm>
     {
         public NDisasm()
             : base("ndisasm")

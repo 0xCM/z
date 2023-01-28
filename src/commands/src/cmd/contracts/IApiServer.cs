@@ -15,7 +15,7 @@ namespace Z0
         Task Start();        
     }
 
-    public interface IApiServer<T> : IApiServer, IApiService<T>
+    public interface IApiServer<T> : IApiServer
         where T : IApiServer<T>,new()
     {
 

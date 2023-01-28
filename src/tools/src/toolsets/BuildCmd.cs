@@ -35,8 +35,8 @@ namespace Z0
             }
 
             var root = Archives.archive(FS.dir(args[0]));
-            var loader = new MsBuildLoader(Wf);
-            loader.Start(root,Receiver).Wait();        
+            
+            Wf.MsBuildLoader().Start(root,Receiver).Wait();        
         }
 
         [CmdOp("build/sln")]
