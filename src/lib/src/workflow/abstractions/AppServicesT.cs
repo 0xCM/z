@@ -84,7 +84,6 @@ namespace Z0
                 });
         }
 
-
         public IAppService Service(IWfRuntime wf, Type host, string name)
             => service(wf, host, name);
 

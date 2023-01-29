@@ -12,11 +12,11 @@ namespace Z0
 
         ConcurrentBag<IDisposable> Disposables = new();
 
-        readonly WfEmit Channel;
+        readonly IWfChannel Channel;
 
         internal readonly ICompositeDispenser Dispenser;
 
-        public CaptureTransport(ICompositeDispenser dispenser, WfEmit channel)        
+        public CaptureTransport(ICompositeDispenser dispenser, IWfChannel channel)        
         {
             Dispenser = dispenser;
             Channel = channel;

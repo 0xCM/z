@@ -11,7 +11,7 @@ namespace Z0
     {
         public IWfRuntime Wf {get; private set;}
 
-        public IWfChannel Channel => Emitter;
+        public IWfChannel Channel {get; private set;}
 
         public abstract Type HostType {get;}
 
@@ -32,11 +32,12 @@ namespace Z0
         public void Init(IWfRuntime wf)
         {
             Wf = wf;
-            Emitter = WfEmit.create(wf, HostType);            
-            var flow = Emitter.Creating(HostType);
+            Emitter = WfEmit.create(wf, HostType);  
+            Channel = Emitter;          
+            var flow = Channel.Creating(HostType);
             OnInit();
             Initialized();
-            Emitter.Created(flow);
+            Channel.Created(flow);
         }
 
         Files _Files;

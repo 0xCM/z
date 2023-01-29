@@ -188,15 +188,15 @@ namespace Z0
             switch (resolution)
             {
                 case TimeResolution.Date:
-                    return core.array((ushort)x.Year, (ushort)x.Month, (ushort)x.Day);
+                    return sys.array((ushort)x.Year, (ushort)x.Month, (ushort)x.Day);
                 case TimeResolution.Hour:
-                    return core.array((ushort)x.Year, (ushort)x.Month, (ushort)x.Day, (ushort)x.Hour);
+                    return sys.array((ushort)x.Year, (ushort)x.Month, (ushort)x.Day, (ushort)x.Hour);
                 case TimeResolution.Minute:
-                    return core.array((ushort)x.Year, (ushort)x.Month, (ushort)x.Day, (ushort)x.Hour, (ushort)x.Minute);
+                    return sys.array((ushort)x.Year, (ushort)x.Month, (ushort)x.Day, (ushort)x.Hour, (ushort)x.Minute);
                 case TimeResolution.Second:
-                    return core.array((ushort)x.Year, (ushort)x.Month, (ushort)x.Day, (ushort)x.Hour, (ushort)x.Minute, (ushort)x.Second);
+                    return sys.array((ushort)x.Year, (ushort)x.Month, (ushort)x.Day, (ushort)x.Hour, (ushort)x.Minute, (ushort)x.Second);
                 default:
-                    return core.array((ushort)x.Year, (ushort)x.Month, (ushort)x.Day, (ushort)x.Hour, (ushort)x.Minute, (ushort)x.Second, (ushort)x.Millisecond);
+                    return sys.array((ushort)x.Year, (ushort)x.Month, (ushort)x.Day, (ushort)x.Hour, (ushort)x.Minute, (ushort)x.Second, (ushort)x.Millisecond);
             }
         }
     }

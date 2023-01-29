@@ -6,8 +6,43 @@ namespace Z0
 {
     using static sys;
 
+    [ApiHost]
     public class Timing 
     {
+        /// <summary>
+        /// Loads a sample from an array
+        /// </summary>
+        /// <param name="src">The source span</param>
+        /// <param name="dim">The sample dimension</param>
+        /// <param name="offset">The offset into the source span from to begin the load</param>
+        /// <typeparam name="T">The sample data type</typeparam>
+        [MethodImpl(Inline), Op, Closures(UnsignedInts)]
+        public static Observations<T> observations<T>(T[] src, int dim = 1)
+            where T : unmanaged
+                => new Observations<T>(src, dim);
+
+        /// <summary>
+        /// Loads a sample from a span
+        /// </summary>
+        /// <param name="src">The source span</param>
+        /// <param name="dim">The sample dimension</param>
+        /// <param name="offset">The offset into the source span from to begin the load</param>
+        /// <typeparam name="T">The sample data type</typeparam>
+        [MethodImpl(Inline), Op, Closures(UnsignedInts)]
+        public static Observations<T> observations<T>(Span<T> src, int dim = 1)
+            where T : unmanaged
+                => new Observations<T>(src, dim);
+
+        /// <summary>
+        /// Allocates a sample
+        /// </summary>
+        /// <param name="dim">The sample dimension</param>
+        /// <param name="count">The number of observation vectors in the sample</param>
+        /// <typeparam name="T">The sample data type</typeparam>
+        [Op, Closures(UnsignedInts)]
+        public static Observations<T> observations<T>(int dim, int count)
+            where T : unmanaged
+                => new Observations<T>(sys.alloc<T>(count * dim), dim);        
         [Parser]
         public static Outcome parse(string src, out Timestamp dst)
         {

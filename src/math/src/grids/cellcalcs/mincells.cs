@@ -69,7 +69,7 @@ namespace Z0
             where T : unmanaged
         {
             var required = NatCalc.mul(m,n);
-            var cellbits = core.width<T>();
+            var cellbits = sys.width<T>();
             var whole = required/cellbits;
             if(required % cellbits == 0)
                 return (uint)whole;

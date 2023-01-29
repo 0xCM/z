@@ -8,9 +8,6 @@ namespace Z0
 
     public readonly struct ModuleArchive : IModuleArchive
     {
-        public static IModuleArchive modules(FolderPath src, bool recurse = true)
-            => new ModuleArchive(src, recurse);
-
         public readonly FolderPath Root;
 
         readonly bool Recurse;

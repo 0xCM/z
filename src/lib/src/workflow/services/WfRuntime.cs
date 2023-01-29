@@ -15,7 +15,7 @@ namespace Z0
 
         public IWfEmissions Emissions {get; private set;}
 
-        public WfEmit Emitter {get;}
+        public IWfChannel Channel {get;}
 
         TokenDispenser Tokens;
 
@@ -27,7 +27,7 @@ namespace Z0
             Verbosity = init.Verbosity;
             AppName = ExecutingPart.Assembly.PartName();
             Emissions = init.EmissionLog;           
-            Emitter = WfEmit.create(this, init.Host);
+            Channel = WfEmit.create(this, init.Host);
         }
 
         public IEventSink EventSink

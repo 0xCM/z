@@ -60,7 +60,7 @@ namespace Z0
         /// <param name="x">The date to convert to an array</param>
         [MethodImpl(Inline)]
         public static int[] GetItemArray(this Date x)
-            => core.array(x.Year, x.Month, x.Day);
+            => sys.array(x.Year, x.Month, x.Day);
 
         /// <summary>
         /// Returns the instant that is one day less than the specified instant

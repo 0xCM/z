@@ -68,7 +68,7 @@ namespace Z0
         /// <param name="count">The observation count</param>
         [MethodImpl(Inline)]
         public Observations<T> Slice(int offset, int count)
-            => new Observations<T>(core.slice(Data, offset * Dim, count * Dim), Dim);
+            => new Observations<T>(sys.slice(Data, offset * Dim, count * Dim), Dim);
 
         /// <summary>
         /// The data length

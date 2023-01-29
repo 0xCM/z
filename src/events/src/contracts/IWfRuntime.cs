@@ -28,10 +28,7 @@ namespace Z0
 
         void RedirectEmissions(IWfEmissions dst);
 
-        WfEmit Emitter {get;}
-        
-        IWfChannel Channel 
-            => Emitter;
+        IWfChannel Channel {get;}
 
         void Disposed()
         {
