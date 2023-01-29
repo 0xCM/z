@@ -6,24 +6,6 @@ namespace Z0
 {
     public class ListedFiles : SortedSeq<ListedFile>
     {
-        [Op]
-        public static string format(ListedFiles src)
-        {
-            var dst = text.emitter();
-            render(src,dst);
-            return dst.Emit();
-        }
-
-        [Op]
-        public static void render(ListedFiles src, ITextEmitter dst)
-        {
-            var formatter = Tables.formatter<ListedFile>();
-            dst.AppendLine(formatter.FormatHeader());
-            for(var i=0u; i<src.Count; i++)
-                dst.AppendLine(formatter.Format(src[i]));
-        }
-
-
         public ListedFiles()
         {
 
@@ -44,7 +26,7 @@ namespace Z0
         }
 
         public override string Format()
-            => format(this);
+            => Archives.format(this);
 
         public override string ToString()
             => Format();

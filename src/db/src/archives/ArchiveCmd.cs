@@ -25,7 +25,13 @@ namespace Z0
 
     class ArchiveCmd : WfAppCmd<ArchiveCmd>
     {
-        FileArchives FileArchives => Wf.FileArchives();
+        FileArchives FileArchives => Channel.Channeled<FileArchives>();
+
+        public static void copy(IWfChannel channel, CmdArgs args)
+            => copy(channel, FS.dir(args[0]), FS.dir(args[1]));
+        
+        public static Task<ExecToken> copy(IWfChannel channel, FolderPath src, FolderPath dst)
+            => ProcessLauncher.launch(channel, FS.path("robocopy.exe"), Cmd.args(src, dst, "/e"));
 
         [CmdOp("symlink")]
         void Link(CmdArgs args)
@@ -37,7 +43,7 @@ namespace Z0
 
         [CmdOp("copy")]
         void Copy(CmdArgs args)
-            => Archives.copy(Channel, args);
+            => copy(Channel, args);
 
         [CmdOp("files/index")]
         void FileQuery(CmdArgs args)

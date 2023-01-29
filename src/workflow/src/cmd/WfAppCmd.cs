@@ -138,14 +138,6 @@ namespace Z0
         void Script(CmdArgs args)
             => ProjectScripts.Start(args);
 
-        [CmdOp("app/deploy")]
-        void Deploy()
-        {
-            var dst = AppDb.Tools("z0/cmd").Targets().Root;
-            var src = ExecutingPart.Assembly.Path().FolderPath;
-            Archives.copy(Channel, src, dst);
-        }
-
         [CmdOp("archives/register")]
         void RegisterWorkspace(CmdArgs args)
         {

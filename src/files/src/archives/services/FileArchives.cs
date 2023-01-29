@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
     
-    public class FileArchives : AppService<FileArchives>
+    public class FileArchives : Channeled<FileArchives>
     {
         public record struct Entry : ISequential<Entry>, IComparable<Entry>
         {
@@ -46,13 +46,12 @@ namespace Z0
                 Location = src,
                 FileHash = hash.FileHash,
             };
-
         }
 
         public void Injest(IDbArchive src, IDbArchive dst)
         {
             var flow = Channel.Running($"Injesting files from {src.Root}");
-            var index = dst.Path(FS.file($"index.{Env.pid()}.{timestamp()}", FileKind.Csv));
+            var index = dst.Path(FS.file($"index.{ProcessId.current()}.{timestamp()}", FileKind.Csv));
             var buffer = bag<Entry>();
             iter(src.Enumerate("*"), path => buffer.Add(entry(path)), true);
             var entries = buffer.Array().Resequence();
@@ -60,5 +59,4 @@ namespace Z0
             Channel.Ran(flow,$"Injested {entries.Length} files");
         }
     }
-
 }

@@ -21,7 +21,7 @@ namespace Z0
 
             var identifier = src.FileName.WithoutExtension.Format();
             var name = identifier.LeftOfFirst(Chars.Dot);
-            var result = Time.parse(identifier.RightOfFirst(Chars.Dot), out var ts);
+            var result = Timing.parse(identifier.RightOfFirst(Chars.Dot), out var ts);
             if(result)
                 return new(name,ts);
             else

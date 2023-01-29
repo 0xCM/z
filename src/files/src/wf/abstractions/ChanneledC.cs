@@ -4,6 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+
+    partial class XTend 
+    {
+        public static C Channeled<C>(this IWfChannel channel)
+            where C : Channeled<C>, new()
+                => Z0.Channeled<C>.create(channel);            
+    }
+
     public abstract class Channeled<C> : Channeled, IChanneled<C>
         where C : Channeled<C>, new()
     {

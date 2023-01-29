@@ -6,6 +6,24 @@ namespace Z0
 {
     public record class AssemblyFile : IBinaryModule<AssemblyFile>, IComparable<AssemblyFile>
     {
+        /// <summary>
+        /// For a managed module, retrieves its name and returns true; otherwise, returns false
+        /// </summary>
+        /// <param name="src">The source path</param>
+        public static bool name(FilePath src, out AssemblyName dst)
+        {
+            try
+            {
+                dst = System.Reflection.AssemblyName.GetAssemblyName(src.Name.Format(PathSeparator.BS));
+                return true;
+            }
+            catch(Exception)
+            {
+                dst = null;
+                return false;
+            }
+        }        
+
         public FilePath Path {get;}
 
         public FileModuleKind ModuleKind {get;}
@@ -22,11 +40,11 @@ namespace Z0
             Version = default;
         }
 
-        public AssemblyFile(FilePath path, AssemblyName name, FileModuleKind? kind = null)
+        public AssemblyFile(FilePath path, AssemblyName name)
         {
             Path = path;
             AssemblyName = name;
-            ModuleKind = kind ?? (path.FileKind() == FileKind.Exe ? FileModuleKind.Exe : FileModuleKind.Dll);
+            ModuleKind = FileModuleKind.Managed;
             Version = name.Version;
         }
 

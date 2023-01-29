@@ -4,8 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
     using System.Linq;
+
+    using static sys;
 
     partial class EcmaEmitter
     {

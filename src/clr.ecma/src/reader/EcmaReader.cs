@@ -21,14 +21,19 @@ namespace Z0
                 {
                     using var ecma = EcmaFile.open(path);
                     var reader = ecma.Reader(); 
-                    var def = reader.ReadAssemblyDef();                    
+                    var def = reader.ReadAssemblyDef();                   
+                    var kind = FileModuleKind.Managed;
+                    if(path.Is(FileKind.Exe)) 
+                        kind |= FileModuleKind.Exe;
+                    else
+                        kind |= FileModuleKind.Dll;
                     dst.Add(new AssemblyFile(path, def.GetAssemblyName()));
                     if(math.mod(inc(ref counter),1000) == 0)
                         channel.Babble($"Found {counter} assemblies");
                 }
-                catch(Exception)
+                catch(Exception e)
                 {
-                    
+                    channel.Error(e);
                 }
             }
             );

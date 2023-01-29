@@ -46,7 +46,6 @@ namespace Z0
             var hosts = src.PartHosts();
             var catalogs = src.PartCatalogs;
             var assemblies = src.Assemblies;
-
             var counter = 0u; 
             iter(parts, part => {
                 Channel.Row(string.Format("{0:D6} | {1,-24} | {2,-16} {3}", counter++, part.Owner.GetSimpleName(), part.Owner.AssemblyVersion(), part.Owner.Path()));
@@ -125,14 +124,24 @@ namespace Z0
         void Mapped(MappedAssembly src)
         {
             var reader = src.MetadataReader();
-            Channel.Row(string.Format("{0,-8} | {1,-16} | {2,-12} | {3,-56} | {4}", src.Index, src.BaseAddress, src.FileSize, src.FileHash, reader.AssemblyName().SimpleName(), FlairKind.StatusData));
+            var name = reader.AssemblyName().SimpleName();
+            Channel.Row(string.Format("{0,-8} | {1,-16} | {2,-12} | {3,-56} | {4}", src.Index, src.BaseAddress, src.FileSize, src.FileHash, name, FlairKind.StatusData));
+        }
+
+        void Mapped(MappedModule src)
+        {
+
+            Channel.Row(string.Format("{0,-8} | {1,-16} | {2,-12} | {3,-56} | {4}", src.Index, src.BaseAddress, src.FileSize, src.FileHash, src.Path, FlairKind.StatusData));
         }
 
         [CmdOp("ecma/md")]
         void EcmaMeta(CmdArgs args)
         {
-            using var map = new ModuleMap(Channel, Mapped);
-            map.Include(EcmaWokflows.sources());
+            var sources = EcmaWokflows.sources();
+            var running = Channel.Running($"Mapping modules from {sources}");
+            using var map = new ModuleMap(Channel, Mapped, Mapped);            
+            map.Include(sources);
+            Channel.Ran(running);
         }
 
         static FilePath EcmaArchive(FilePath src)

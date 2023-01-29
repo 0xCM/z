@@ -14,7 +14,7 @@ namespace Z0
         {
             try
             {
-                dst = AssemblyName.GetAssemblyName(src.Name);
+                dst = AssemblyName.GetAssemblyName(src.Name.Format(PathSeparator.BS));
                 return true;
             }
             catch(Exception)

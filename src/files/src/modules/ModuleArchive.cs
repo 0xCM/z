@@ -28,8 +28,8 @@ namespace Z0
         public IEnumerable<AssemblyFile> Assemblies()
         {
             foreach(var path in Root.EnumerateFiles(Recurse, FS.Dll))
-                if(FS.managed(path, out var assname))
-                    yield return new AssemblyFile(path, assname);
+                if(AssemblyFile.name(path, out var name))
+                    yield return new AssemblyFile(path, name);
         }
 
         public IEnumerable<DllModule> NativeDll()

@@ -40,7 +40,7 @@ namespace Z0
             var idx = fmt.LastIndexOf(Chars.FSlash);
             if(idx == NotFound)
                 return false;
-            return Time.parse(fmt.RightOfIndex(idx), out ts);
+            return Timing.parse(fmt.RightOfIndex(idx), out ts);
         }
 
         public static bool parse(FolderPath src, out ApiPack dst)
@@ -50,7 +50,7 @@ namespace Z0
             var idx = fmt.LastIndexOf(Chars.FSlash);
             if(idx == NotFound)
                 return false;
-            var result = Time.parse(fmt.RightOfIndex(idx), out var ts);
+            var result = Timing.parse(fmt.RightOfIndex(idx), out var ts);
             if(result)
                 dst = new ApiPack(src,ts);
             else

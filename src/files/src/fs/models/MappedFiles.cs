@@ -8,7 +8,7 @@ namespace Z0
 
     using api = MemoryFiles;
 
-    public readonly struct MappedFiles : IMappedFiles
+    public class MappedFiles : IMappedFiles
     {
         readonly Index<MemoryFile> FileIndex;
 
