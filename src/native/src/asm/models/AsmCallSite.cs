@@ -3,18 +3,18 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0
-{
-    public readonly struct AsmCallSite
+{    
+    public readonly record struct AsmCallSite
     {
         [MethodImpl(Inline), Op]
         public static AsmCallSite define(LocatedSymbol caller, Address16 offset, uint4 size)
             => new AsmCallSite(caller, offset, size);
 
-        public LocatedSymbol Block {get;}
+        public readonly LocatedSymbol Block;
 
-        public Address16 BlockOffset {get;}
+        public readonly Address16 BlockOffset;
 
-        public uint4 InstSize {get;}
+        public readonly uint4 InstSize;
 
         [MethodImpl(Inline)]
         public AsmCallSite(LocatedSymbol caller, Address16 offset, uint4 size)

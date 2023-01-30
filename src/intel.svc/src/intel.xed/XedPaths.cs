@@ -15,20 +15,8 @@ namespace Z0
 
         static AppDb AppDb => AppDb.Service;
 
-        public readonly struct SvcState
-        {
-            public readonly FolderPath XedSources;
 
-            public readonly FolderPath XedTargets;
-
-            public SvcState(FolderPath src, FolderPath dst)
-            {
-                XedSources = src;
-                XedTargets = dst;
-            }
-        }
-
-        readonly SvcState State;
+        readonly XedPathSettings State;
 
         public FolderPath Sources()
             => State.XedSources;
@@ -243,7 +231,6 @@ namespace Z0
                 XedDocKind.RuleSeq => FS.file("all-enc-patterns", FS.Txt),
                 _ => FileName.Empty
             });
-
 
         XedPaths()
         {

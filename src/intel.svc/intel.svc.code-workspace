@@ -10,7 +10,17 @@
 			"path": "../native"
 		},
 		{
-			"path": "../machines"
+			"path": "../intel.shell"
+		},
+		{
+			"path": "../hex"
+		},
+		{
+			"path": "../commands"
+		},
+		{
+			"path": "L:/db/targets/xed",
+			"name": "xed.db.targets"
 		}
 	],
 	"settings": {}

@@ -6,8 +6,6 @@ namespace Z0
 {
     using System.Linq;
 
-    using static core;
-
     public readonly struct ApiOpIndex<T> : IEnumerable<KeyedValue<OpIdentity,T>>, IApiOpIndex<T>
     {
         public readonly Dictionary<OpIdentity,T> HashTable;
@@ -55,7 +53,7 @@ namespace Z0
             => HashTable.Values;
 
         IEnumerable<KeyedValue<OpIdentity,T>> KeyedValues
-            => HashTable.Select(x => kvp(x.Key, x.Value));
+            => HashTable.Select(x => sys.kv(x.Key, x.Value));
 
         public IEnumerator<KeyedValue<OpIdentity,T>> GetEnumerator()
             => KeyedValues.GetEnumerator();

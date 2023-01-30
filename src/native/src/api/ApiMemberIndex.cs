@@ -6,8 +6,6 @@ namespace Z0
 {
     using System.Linq;
     
-    using static core;
-
     public readonly struct ApiMemberIndex : IApiOpIndex<ApiMember>
     {
         readonly Dictionary<OpIdentity,ApiMember> Data;
@@ -50,7 +48,7 @@ namespace Z0
             => Duplicates;
 
         IEnumerable<KeyedValue<OpIdentity,ApiMember>> KeyedValues
-            => Data.Select(x => kvp(x.Key, x.Value));
+            => Data.Select(x => sys.kv(x.Key, x.Value));
 
         public IEnumerator<KeyedValue<OpIdentity, ApiMember>> GetEnumerator()
             => KeyedValues.GetEnumerator();

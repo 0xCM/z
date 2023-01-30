@@ -16,7 +16,7 @@ namespace Z0
 
             public readonly ReadOnlySpan<T> Target;
 
-            public Fx(in Fx src)
+            public Fx(Fx src)
             {
                 Source = recover<S>(src.Domain);
                 Target = recover<T>(src.Range);

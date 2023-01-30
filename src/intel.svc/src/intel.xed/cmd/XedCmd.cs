@@ -14,7 +14,6 @@ namespace Z0
     {
         CsLang CsLang => Wf.CsLang();
 
-
         AsmObjects AsmObjects => Wf.AsmObjects();
 
         SdmCodeGen SdmCodeGen => Wf.SdmCodeGen();
@@ -162,7 +161,6 @@ namespace Z0
             => ref Xed.Views.Patterns;
 
         XedRuntime Xed => GlobalServices.Instance.Injected<XedRuntime>();
-
 
         [CmdOp("project/xed/etl")]
         void XedCollect()

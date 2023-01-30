@@ -37,8 +37,5 @@ namespace Z0
 
             public static ChipMap Empty => new ChipMap(core.dict<ChipCode,InstIsaKinds>());
         }
-
     }
-
- 
 }

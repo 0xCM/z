@@ -209,6 +209,7 @@ namespace Z0
         public static LineCount count(FilePath src)
             => (src, count(src.ReadBytes()));
 
+
         public static void emit(ReadOnlySpan<LineStats> src, FilePath dst)
         {
             using var writer = dst.AsciWriter();

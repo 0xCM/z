@@ -22,9 +22,9 @@ namespace Z0
             get => api.size(this);
         }
 
-        [MethodImpl(Inline)]
-        public ReadOnlySpan<AsciCode> Entry(Address32 offset)
-            => api.entry(this, offset);
+        // [MethodImpl(Inline)]
+        // public ReadOnlySpan<AsciCode> Entry(Address32 offset)
+        //     => api.entry(this, offset);
 
         public string Text(in CoffSymbol sym)
             => api.format(this, sym);

@@ -5,8 +5,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XedModels;
-
     public class XedLimits
     {
         public const AsmInstKind MaxIClassMember = AsmInstKind.XTEST;
