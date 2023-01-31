@@ -1,0 +1,6 @@
+<Project>
+  <ItemGroup>
+    <ProjectReference Include="$(Math)" />
+    <ProjectReference Include="$(VCpu)" />
+  </ItemGroup>
+</Project>

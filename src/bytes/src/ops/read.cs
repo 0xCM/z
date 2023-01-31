@@ -36,7 +36,7 @@ namespace Z0
         public static void read32(ref byte* pSrc, ref MemoryPage dst, ref ushort offset)
         {
             ref var target = ref u8(dst);
-            cpu.vstore(cpu.vload(w256, pSrc), ref target, (int)offset);
+            vcpu.vstore(vcpu.vload(w256, pSrc), ref target, (int)offset);
             pSrc +=32;
             offset+= 32;
         }

@@ -229,13 +229,13 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(byte))
-                cpu.vstore(v8u(src), ref uint8(ref dst));
+                cpu.vstore(v8u(src), ref sys.uint8(ref dst));
             else if(typeof(T) == typeof(ushort))
-                cpu.vstore(v16u(src), ref uint16(ref dst));
+                cpu.vstore(v16u(src), ref sys.uint16(ref dst));
             else if(typeof(T) == typeof(uint))
-                cpu.vstore(v32u(src), ref uint32(ref dst));
+                cpu.vstore(v32u(src), ref sys.uint32(ref dst));
             else if(typeof(T) == typeof(ulong))
-                cpu.vstore(v64u(src), ref uint64(ref dst));
+                cpu.vstore(v64u(src), ref sys.uint64(ref dst));
             else
                  vstore_i(src,ref dst);
         }
@@ -245,7 +245,7 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(sbyte))
-                cpu.vstore(v8i(src), ref int8(ref dst));
+                cpu.vstore(v8i(src), ref sys.int8(ref dst));
             else if(typeof(T) == typeof(short))
                 cpu.vstore(v16i(src), ref int16(ref dst));
             else if(typeof(T) == typeof(int))
@@ -273,13 +273,13 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(byte))
-                cpu.vstore(v8u(src), ref uint8(ref dst));
+                cpu.vstore(v8u(src), ref sys.uint8(ref dst));
             else if(typeof(T) == typeof(ushort))
-                cpu.vstore(v16u(src), ref uint16(ref dst));
+                cpu.vstore(v16u(src), ref sys.uint16(ref dst));
             else if(typeof(T) == typeof(uint))
-                cpu.vstore(v32u(src), ref uint32(ref dst));
+                cpu.vstore(v32u(src), ref sys.uint32(ref dst));
             else if(typeof(T) == typeof(ulong))
-                cpu.vstore(v64u(src), ref uint64(ref dst));
+                cpu.vstore(v64u(src), ref sys.uint64(ref dst));
             else
                  vstore_i(src,ref dst);
         }
@@ -289,7 +289,7 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(sbyte))
-                cpu.vstore(v8i(src), ref int8(ref dst));
+                cpu.vstore(v8i(src), ref sys.int8(ref dst));
             else if(typeof(T) == typeof(short))
                 cpu.vstore(v16i(src), ref int16(ref dst));
             else if(typeof(T) == typeof(int))
@@ -307,7 +307,7 @@ namespace Z0
             if(typeof(T) == typeof(float))
                 cpu.vstore(v32f(src), ref float32(ref dst));
             else if(typeof(T) == typeof(double))
-                cpu.vstore(v64f(src), ref float64(ref dst));
+                cpu.vstore(v64f(src), ref sys.float64(ref dst));
             else
                 throw no<T>();
         }
@@ -317,13 +317,13 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(byte))
-                cpu.vstore(v8u(src), ref uint8(ref dst), offset);
+                cpu.vstore(v8u(src), ref sys.uint8(ref dst), offset);
             else if(typeof(T) == typeof(ushort))
-                cpu.vstore(v16u(src), ref uint16(ref dst), offset);
+                cpu.vstore(v16u(src), ref sys.uint16(ref dst), offset);
             else if(typeof(T) == typeof(uint))
-                cpu.vstore(v32u(src), ref uint32(ref dst), offset);
+                cpu.vstore(v32u(src), ref sys.uint32(ref dst), offset);
             else
-                cpu.vstore(v64u(src), ref uint64(ref dst), offset);
+                cpu.vstore(v64u(src), ref sys.uint64(ref dst), offset);
         }
 
         [MethodImpl(Inline)]
@@ -331,7 +331,7 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(sbyte))
-                cpu.vstore(v8i(src), ref int8(ref dst), offset);
+                cpu.vstore(v8i(src), ref sys.int8(ref dst), offset);
             else if(typeof(T) == typeof(short))
                 cpu.vstore(v16i(src), ref int16(ref dst), offset);
             else if(typeof(T) == typeof(int))
@@ -347,7 +347,7 @@ namespace Z0
             if(typeof(T) == typeof(float))
                 cpu.vstore(v32f(src), ref float32(ref dst), offset);
             else if(typeof(T) == typeof(double))
-                cpu.vstore(v64f(src), ref float64(ref dst), offset);
+                cpu.vstore(v64f(src), ref sys.float64(ref dst), offset);
             else
                 throw no<T>();
         }
@@ -357,13 +357,13 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(byte))
-                cpu.vstore(v8u(src), ref uint8(ref dst), offset);
+                cpu.vstore(v8u(src), ref sys.uint8(ref dst), offset);
             else if(typeof(T) == typeof(ushort))
-                cpu.vstore(v16u(src), ref uint16(ref dst), offset);
+                cpu.vstore(v16u(src), ref sys.uint16(ref dst), offset);
             else if(typeof(T) == typeof(uint))
-                cpu.vstore(v32u(src), ref uint32(ref dst), offset);
+                cpu.vstore(v32u(src), ref sys.uint32(ref dst), offset);
             else
-                cpu.vstore(v64u(src), ref uint64(ref dst), offset);
+                cpu.vstore(v64u(src), ref sys.uint64(ref dst), offset);
         }
 
         [MethodImpl(Inline)]
@@ -371,7 +371,7 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(sbyte))
-                cpu.vsave(v8i(src), ref int8(ref dst), offset);
+                cpu.vsave(v8i(src), ref sys.int8(ref dst), offset);
             else if(typeof(T) == typeof(short))
                 cpu.vstore(v16i(src), ref int16(ref dst), offset);
             else if(typeof(T) == typeof(int))
@@ -387,7 +387,7 @@ namespace Z0
             if(typeof(T) == typeof(float))
                 cpu.vstore(v32f(src), ref float32(ref dst), offset);
             else if(typeof(T) == typeof(double))
-                cpu.vstore(v64f(src), ref float64(ref dst), offset);
+                cpu.vstore(v64f(src), ref sys.float64(ref dst), offset);
             else
                 throw no<T>();
         }

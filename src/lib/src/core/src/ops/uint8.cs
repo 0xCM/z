@@ -26,20 +26,6 @@ namespace Z0
         public static ref byte uint8<T>(ref T src)
             => ref As<T,byte>(ref src);
 
-        // [MethodImpl(Inline), Op, Closures(Closure)]
-        // public static ref T uint8<T>(in byte src, out T dst)
-        // {
-        //     dst = @as<byte,T>(src);
-        //     return ref dst;
-        // }
-
-        // [MethodImpl(Inline), Op, Closures(Closure)]
-        // public static ref byte uint8<T>(in T src, out byte dst)
-        // {
-        //     dst = @as<T,byte>(src);
-        //     return ref dst;
-        // }
-
         /// <summary>
         /// Converts a nullable parametric source to a nullable <see cref='byte'/>
         /// </summary>

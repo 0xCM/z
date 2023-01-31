@@ -9,6 +9,7 @@
 
    <Import Project="$(MsBuildThisFileDirectory)src/bitvectors/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/bits/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/bytes/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/builds/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/calcs/exports.props"/>
@@ -79,6 +80,7 @@
    <Import Project="$(MsBuildThisFileDirectory)src/tools/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/validity/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/vcpu/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/workflow/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/xml/exports.props"/>

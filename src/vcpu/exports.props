@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <VCpu>$(MsBuildThisFileDirectory)z0.vcpu.csproj</VCpu>
+  </PropertyGroup>
+</Project>
