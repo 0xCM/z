@@ -36,7 +36,7 @@ namespace Z0
             => Data = data;
 
         [MethodImpl(Inline)]
-        internal SubGrid256(in SpanBlock256<T> src)
+        internal SubGrid256(SpanBlock256<T> src)
             => Data = src.LoadVector();
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Z0
         //     => src.Data.ToBlock();
 
         [MethodImpl(Inline)]
-        public static implicit operator SubGrid256<M,N,T>(in SpanBlock256<T> src)
+        public static implicit operator SubGrid256<M,N,T>(SpanBlock256<T> src)
             => new SubGrid256<M, N, T>(src);
 
         [MethodImpl(Inline)]

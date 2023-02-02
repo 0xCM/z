@@ -16,7 +16,7 @@ namespace Z0
     public interface IBlockSink128<T> : IBlockSink<W128,T>
         where T : unmanaged
     {
-        void Deposit(in SpanBlock128<T> src);
+        void Deposit(SpanBlock128<T> src);
     }
 
     [Free]
@@ -31,7 +31,7 @@ namespace Z0
     public interface IBlockSink256<T> : IBlockSink<W256,T>
         where T : unmanaged
     {
-        void Deposit(in SpanBlock256<T> src);
+        void Deposit(SpanBlock256<T> src);
     }
 
     [Free]

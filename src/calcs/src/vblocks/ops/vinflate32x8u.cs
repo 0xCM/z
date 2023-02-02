@@ -18,7 +18,7 @@ namespace Z0
         /// <param name="lo">The lo target</param>
         /// <param name="hi">The hi target</param>
         [MethodImpl(Inline), Op(inflate)]
-        public static unsafe void vinflate32x8u(in SpanBlock256<byte> src, uint offset, Vector256<ushort> lo, Vector256<ushort> hi)
+        public static unsafe void vinflate32x8u(SpanBlock256<byte> src, uint offset, Vector256<ushort> lo, Vector256<ushort> hi)
         {
             lo = v16u(ConvertToVector256Int16(gptr(src[offset])));
             hi = v16u(ConvertToVector256Int16(gptr(src[offset],16)));

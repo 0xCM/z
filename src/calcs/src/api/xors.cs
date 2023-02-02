@@ -4,10 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
     using static CalcHosts;
     using static ApiClassKind;
 
@@ -24,13 +20,13 @@ namespace Z0
                 => default(Xors256<T>);
 
         [MethodImpl(Inline), Xors, Closures(Closure)]
-        public static ref readonly SpanBlock128<T> xors<T>(in SpanBlock128<T> a, [Imm] byte count, in SpanBlock128<T> dst)
+        public static SpanBlock128<T> xors<T>(SpanBlock128<T> a, [Imm] byte count, SpanBlock128<T> dst)
             where T : unmanaged
-                => ref xors<T>(w128).Invoke(a, count, dst);
+                => xors<T>(w128).Invoke(a, count, dst);
 
         [MethodImpl(Inline), Xors, Closures(Closure)]
-        public static ref readonly SpanBlock256<T> xors<T>(in SpanBlock256<T> a, [Imm] byte count, in SpanBlock256<T> dst)
+        public static SpanBlock256<T> xors<T>(SpanBlock256<T> a, [Imm] byte count, SpanBlock256<T> dst)
             where T : unmanaged
-                => ref xors<T>(w256).Invoke(a, count, dst);
+                => xors<T>(w256).Invoke(a, count, dst);
     }
 }

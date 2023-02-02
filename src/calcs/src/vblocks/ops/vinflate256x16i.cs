@@ -15,7 +15,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">The memory source</param>
         [MethodImpl(Inline), Op(inflate)]
-        public static unsafe Vector256<short> vinflate256x16i(in SpanBlock128<sbyte> src, uint offset)
+        public static unsafe Vector256<short> vinflate256x16i(SpanBlock128<sbyte> src, uint offset)
             => ConvertToVector256Int16(gptr(src[offset]));
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">The memory source</param>
         [MethodImpl(Inline), Op(inflate)]
-        public static unsafe Vector256<short> vinflate256x16i(in SpanBlock128<byte> src, uint offset)
+        public static unsafe Vector256<short> vinflate256x16i(SpanBlock128<byte> src, uint offset)
             => ConvertToVector256Int16(gptr(src[offset]));
     }
 }

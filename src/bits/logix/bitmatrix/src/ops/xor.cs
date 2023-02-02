@@ -16,7 +16,7 @@ namespace Z0
         /// <param name="Z">The target matrix</param>
         /// <typeparam name="T">The primal type over which the matrices are constructed</typeparam>
         [MethodImpl(Inline), Xor, Closures(Closure)]
-        public static BitMatrix<T> xor<T>(in BitMatrix<T> A, in BitMatrix<T> B, in BitMatrix<T> Z)
+        public static BitMatrix<T> xor<T>(BitMatrix<T> A, BitMatrix<T> B, BitMatrix<T> Z)
             where T : unmanaged
         {
             vlogic.xor(in A.Head,in B.Head, ref Z.Head);
@@ -24,7 +24,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public static BitMatrix<N,T> xor<N,T>(in BitMatrix<N,T> A, in BitMatrix<N,T> B, in BitMatrix<N,T> C)
+        public static BitMatrix<N,T> xor<N,T>(BitMatrix<N,T> A, BitMatrix<N,T> B, BitMatrix<N,T> C)
             where N : unmanaged, ITypeNat
             where T : unmanaged
         {

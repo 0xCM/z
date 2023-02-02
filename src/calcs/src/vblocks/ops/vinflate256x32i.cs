@@ -26,7 +26,7 @@ namespace Z0
         /// <param name="src">The blocked memory source</param>
         /// <param name="dst">The target vector</param>
         [MethodImpl(Inline), Op(inflate)]
-        public static unsafe Vector256<int> vinflate256x32i(in SpanBlock128<ushort> src, uint offset)
+        public static unsafe Vector256<int> vinflate256x32i(SpanBlock128<ushort> src, uint offset)
             => ConvertToVector256Int32(gptr(src[offset]));
     }
 }

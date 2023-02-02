@@ -10,7 +10,7 @@ namespace Z0
         public readonly SpanBlock256<T> Data;
 
         [MethodImpl(Inline)]
-        public RowVector256(in SpanBlock256<T> src)
+        public RowVector256(SpanBlock256<T> src)
             => Data = src;
 
         public ref T this[int i]
@@ -56,8 +56,8 @@ namespace Z0
             where U : unmanaged
               => new RowVector256<U>(SpanBlocks.force<T,U>(Data));
 
-        public RowVector256<T> Replicate()
-            => new RowVector256<T>(Data.Replicate());
+        // public RowVector256<T> Replicate()
+        //     => new RowVector256<T>(Data.Replicate());
 
         public bool Equals(RowVector256<T> rhs)
         {
@@ -79,7 +79,7 @@ namespace Z0
 
 
         [MethodImpl(Inline)]
-        public static implicit operator RowVector256<T>(in SpanBlock256<T> src)
+        public static implicit operator RowVector256<T>(SpanBlock256<T> src)
             =>  new RowVector256<T>(src);
 
         [MethodImpl(Inline)]

@@ -46,14 +46,14 @@ namespace Z0
                 => gcalc.apply(not<T>(), src, dst);
 
         [MethodImpl(Inline), Not, Closures(Closure)]
-        public static ref readonly SpanBlock128<T> not<T>(in SpanBlock128<T> a, in SpanBlock128<T> dst)
+        public static SpanBlock128<T> not<T>(SpanBlock128<T> a, SpanBlock128<T> dst)
             where T : unmanaged
-                => ref not<T>(w128).Invoke(a, dst);
+                => not<T>(w128).Invoke(a, dst);
 
         [MethodImpl(Inline), Not, Closures(Closure)]
-        public static ref readonly SpanBlock256<T> not<T>(in SpanBlock256<T> a, in SpanBlock256<T> dst)
+        public static SpanBlock256<T> not<T>(SpanBlock256<T> a, SpanBlock256<T> dst)
             where T : unmanaged
-                => ref not<T>(w256).Invoke(a, dst);
+                => not<T>(w256).Invoke(a, dst);
 
     }
 }

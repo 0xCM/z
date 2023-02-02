@@ -13,7 +13,7 @@ namespace Z0
         /// <param name="block">The 64-bit block-relative index</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static Span<T> LoBlock<T>(this in SpanBlock128<T> src, int block)
+        public static Span<T> LoBlock<T>(this SpanBlock128<T> src, int block)
             where T : unmanaged
                 => src.Slice(block * src.BlockLength, CellCalcs.blocklength<T>(w64));
     }

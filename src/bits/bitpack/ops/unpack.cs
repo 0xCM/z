@@ -139,7 +139,7 @@ namespace Z0
         /// <param name="blocks">The number of bytes to pack</param>
         /// <param name="dst">The target buffer</param>
         [MethodImpl(Inline), Op]
-        public static void unpack(in byte src, int blocks, in SpanBlock256<uint> dst)
+        public static void unpack(in byte src, int blocks, SpanBlock256<uint> dst)
             => unpack(src, blocks, ref dst.First);
     }
 }

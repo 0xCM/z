@@ -23,7 +23,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public void Run(uint count, in SpanBlock128<T> buffer)
+        public void Run(uint count, SpanBlock128<T> buffer)
         {
             for(var i=0u; i<count; i++)
             {
@@ -55,7 +55,7 @@ namespace Z0
             Receiver = receiver;
         }
 
-        public void Run(uint count, in SpanBlock128<T> buffer)
+        public void Run(uint count, SpanBlock128<T> buffer)
         {
             for(var i=0u; i<count; i++)
             {

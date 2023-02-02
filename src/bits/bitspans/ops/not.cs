@@ -7,7 +7,7 @@ namespace Z0
     partial class BitSpans
     {
         [MethodImpl(Inline), Op]
-        public static BitSpan not(in BitSpan a, in BitSpan b)
+        public static BitSpan not(BitSpan a, BitSpan b)
         {
             var count = b.Length;
             for(var i=0; i< count; i++)
@@ -16,7 +16,7 @@ namespace Z0
         }
 
         [Op]
-        public static BitSpan not(in BitSpan x)
+        public static BitSpan not(BitSpan x)
             => not(x, alloc(x.BitCount));
     }
 }

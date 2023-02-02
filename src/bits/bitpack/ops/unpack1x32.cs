@@ -95,7 +95,7 @@ namespace Z0
         /// <param name="src">The bit source</param>
         /// <param name="dst">The bit target</param>
         [MethodImpl(Inline), Unpack]
-        public static void unpack1x32x8(uint src, in SpanBlock256<byte> dst)
+        public static void unpack1x32x8(uint src, SpanBlock256<byte> dst)
             => unpack1x32x8(src, dst.Storage);
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Z0
         /// <param name="block">The block index</param>
         /// <typeparam name="T">The source type</typeparam>
         [MethodImpl(Inline), Op]
-        public static SpanBlock256<byte> unpack1x32x8(uint src, in SpanBlock256<byte> dst, int block)
+        public static SpanBlock256<byte> unpack1x32x8(uint src, SpanBlock256<byte> dst, int block)
         {
             unpack1x32x8(src, dst.CellBlock(block));
             return dst;

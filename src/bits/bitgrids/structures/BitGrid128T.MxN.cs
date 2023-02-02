@@ -31,7 +31,7 @@ namespace Z0
             => this.Data = data;
 
         [MethodImpl(Inline)]
-        internal BitGrid128(in SpanBlock128<T> src)
+        internal BitGrid128(SpanBlock128<T> src)
             => this.Data = src.LoadVector();
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">The data source</param>
         [MethodImpl(Inline)]
-        public static implicit operator BitGrid128<M,N,T>(in SpanBlock128<T> src)
+        public static implicit operator BitGrid128<M,N,T>(SpanBlock128<T> src)
             => new BitGrid128<M,N,T>(src);
 
         /// <summary>

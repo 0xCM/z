@@ -118,7 +118,7 @@ namespace Z0
         /// <param name="A">The left matrix</param>
         /// <param name="B">The right matrix</param>
         [MethodImpl(Inline), CNonImpl]
-        public static BitMatrix64 cnonimpl(in BitMatrix64 A, in BitMatrix64 B)
+        public static BitMatrix64 cnonimpl(BitMatrix64 A, BitMatrix64 B)
         {
             var Z = BitMatrix.alloc(n64);
             vlogic.cnonimpl(in A.Head, in B.Head, ref Z.Head);

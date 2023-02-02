@@ -273,7 +273,6 @@ namespace Z0
             return block;
         }
 
-
         /// <summary>
         /// Allocates a block of specified size and fills it to capacity with asci character codes distilled from a specified source
         /// </summary>
@@ -314,27 +313,27 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static ref ByteBlock8 asci(N8 n, ReadOnlySpan<char> src, out ByteBlock8 dst)
+        public static ByteBlock8 asci(N8 n, ReadOnlySpan<char> src, out ByteBlock8 dst)
         {
             ref var bytes = ref alloc(n, out dst);
             asci(src, n, ref bytes);
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op]
-        public static ref ByteBlock16 asci(N16 n, ReadOnlySpan<char> src, out ByteBlock16 dst)
+        public static ByteBlock16 asci(N16 n, ReadOnlySpan<char> src, out ByteBlock16 dst)
         {
             ref var bytes = ref alloc(n, out dst);
             asci(src, n, ref bytes);
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op]
-        public static ref ByteBlock64 asci(N64 n, ReadOnlySpan<char> src, out ByteBlock64 dst)
+        public static ByteBlock64 asci(N64 n, ReadOnlySpan<char> src, out ByteBlock64 dst)
         {
             ref var bytes = ref alloc(n, out dst);
             asci(src, n, ref bytes);
-            return ref dst;
+            return dst;
         }
     }
 }

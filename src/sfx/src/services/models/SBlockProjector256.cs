@@ -21,7 +21,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public uint Map(in SpanBlock256<S> src, in SpanBlock256<T> dst)
+        public uint Map(SpanBlock256<S> src, SpanBlock256<T> dst)
         {
             var blocks = src.BlockCount;
             for(var i=0; i<blocks; i++)

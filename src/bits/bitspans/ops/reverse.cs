@@ -7,7 +7,7 @@ namespace Z0
     partial class BitSpans
     {
         [MethodImpl(Inline), Op]
-        public static BitSpan reverse(in BitSpan src)
+        public static BitSpan reverse(BitSpan src)
         {
             src.Storage.Reverse();
             return src;

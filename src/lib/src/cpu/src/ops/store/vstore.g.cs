@@ -144,7 +144,7 @@ namespace Z0
         /// <param name="dst">The target block</param>
         /// <typeparam name="T">The vector cell type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static void vstore<T>(Vector128<T> src, in SpanBlock128<T> dst)
+        public static void vstore<T>(Vector128<T> src, SpanBlock128<T> dst)
             where T : unmanaged
                 => vstore(src, ref dst.First);
 
@@ -156,7 +156,7 @@ namespace Z0
         /// <param name="block">The 0-based block index at which storage should begin</param>
         /// <typeparam name="T">The vector cell type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static void vstore<T>(Vector128<T> src, in SpanBlock128<T> dst, int block)
+        public static void vstore<T>(Vector128<T> src, SpanBlock128<T> dst, int block)
             where T : unmanaged
                 => vstore(src, ref dst.BlockLead(block));
 
@@ -167,7 +167,7 @@ namespace Z0
         /// <param name="dst">The target block</param>
         /// <typeparam name="T">The vector component type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static void vstore<T>(Vector256<T> src, in SpanBlock256<T> dst)
+        public static void vstore<T>(Vector256<T> src, SpanBlock256<T> dst)
             where T : unmanaged
                 => vstore(src, ref dst.First);
 
@@ -190,7 +190,7 @@ namespace Z0
         /// <param name="block">The 0-based block index at which storage should begin</param>
         /// <typeparam name="T">The vector component type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static void vstore<T>(Vector256<T> src, in SpanBlock256<T> dst, int block)
+        public static void vstore<T>(Vector256<T> src, SpanBlock256<T> dst, int block)
             where T : unmanaged
                 => vstore(src, ref dst.BlockLead(block));
 

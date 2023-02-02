@@ -4,15 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
-
     partial class BitSpans
     {
         [MethodImpl(Inline), Op]
-        public static uint ntz(in BitSpan src)
+        public static uint ntz(BitSpan src)
         {
             var count = src.Length;
             var result = 0u;

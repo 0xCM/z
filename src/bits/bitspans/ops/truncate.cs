@@ -12,7 +12,7 @@ namespace Z0
         /// <param name="src">The source bitstring</param>
         /// <param name="maxbits">The maximum length of the target bitstring</param>
         [MethodImpl(Inline), Op]
-        public static BitSpan truncate(in BitSpan src, uint maxbits)
-            => src.Length <= maxbits ? src : load(core.slice(src.Storage, 0, maxbits));
+        public static BitSpan truncate(BitSpan src, uint maxbits)
+            => src.Length <= maxbits ? src : load(sys.slice(src.Storage, 0, maxbits));
     }
 }

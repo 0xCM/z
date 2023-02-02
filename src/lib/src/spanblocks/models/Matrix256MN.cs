@@ -35,9 +35,8 @@ namespace Z0
         public static int Capacity
             => (int)NatCalc.mul<M,N>();
 
-
         [MethodImpl(Inline)]
-        public Matrix256(in SpanBlock256<T> src)
+        public Matrix256(SpanBlock256<T> src)
         {
             var count = src.CellCount;
             Require.invariant(Capacity >= src.CellCount, () => $"{nameof(Capacity)}:={Capacity} < {nameof(src.CellCount)}:={count}");
@@ -45,7 +44,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        internal Matrix256(in SpanBlock256<T> src, bool skipChecks)
+        internal Matrix256(SpanBlock256<T> src, bool skipChecks)
             => data = src;
 
         [MethodImpl(Inline)]
@@ -97,7 +96,8 @@ namespace Z0
         public Block256<M,T> GetCol(int col)
         {
             var alloc = RowVectors.blockalloc<M,T>();
-            return GetCol(col, ref alloc);
+            GetCol(col, ref alloc);
+            return alloc;
         }
 
         /// <summary>
@@ -243,7 +243,7 @@ namespace Z0
         public override int GetHashCode()
             => throw new NotSupportedException();
 
-        public static implicit operator Matrix256<M,N,T>(in SpanBlock256<T> src)
+        public static implicit operator Matrix256<M,N,T>(SpanBlock256<T> src)
             => new Matrix256<M,N,T>(src);
 
         public static implicit operator TableSpan<M,N,T>(in Matrix256<M,N,T> A)

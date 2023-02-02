@@ -196,7 +196,7 @@ namespace Z0
         /// <param name="src">The memory source</param>
         /// <param name="mask">Hi bit on selects the memory, otherwise set to zero</param>
         [MethodImpl(Inline), Op]
-        public static unsafe Vector128<int> vmaskload(in SpanBlock128<int> src, uint block, Vector128<int> mask)
+        public static unsafe Vector128<int> vmaskload(SpanBlock128<int> src, uint block, Vector128<int> mask)
             => MaskLoad(gptr(src.BlockLead(block)), mask);
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Z0
         /// <param name="src">The memory source</param>
         /// <param name="mask">Hi bit on selects the memory, otherwise set to zero</param>
         [MethodImpl(Inline), Op]
-        public static unsafe Vector128<uint> vmaskload(in SpanBlock128<uint> src, uint block, Vector128<uint> mask)
+        public static unsafe Vector128<uint> vmaskload(SpanBlock128<uint> src, uint block, Vector128<uint> mask)
             => MaskLoad(gptr(src.BlockLead(block)), mask);
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Z0
         /// <param name="src">The memory source</param>
         /// <param name="mask">Hi bit on selects the memory, otherwise set to zero</param>
         [MethodImpl(Inline), Op]
-        public static unsafe Vector256<int> vmaskload(in SpanBlock256<int> src, uint block, Vector256<int> mask)
+        public static unsafe Vector256<int> vmaskload(SpanBlock256<int> src, uint block, Vector256<int> mask)
             => MaskLoad(gptr(src.BlockLead(block)), mask);
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace Z0
         /// <param name="src">The memory source</param>
         /// <param name="mask">Hi bit on selects the memory, otherwise set to zero</param>
         [MethodImpl(Inline), Op]
-        public static unsafe Vector256<uint> vmaskload(in SpanBlock256<uint> src, uint block, Vector256<uint> mask)
+        public static unsafe Vector256<uint> vmaskload(SpanBlock256<uint> src, uint block, Vector256<uint> mask)
             => MaskLoad(gptr(src.BlockLead(block)), mask);
 
         /// <summary>
@@ -233,7 +233,7 @@ namespace Z0
         /// <param name="src">The memory source</param>
         /// <param name="mask">Hi bit on selects the memory, otherwise set to zero</param>
         [MethodImpl(Inline), Op]
-        public static unsafe Vector256<long> vmaskload(in SpanBlock256<long> src, uint block, Vector256<long> mask)
+        public static unsafe Vector256<long> vmaskload(SpanBlock256<long> src, uint block, Vector256<long> mask)
             => MaskLoad(gptr(src.BlockLead(block)), mask);
 
         /// <summary>
@@ -242,7 +242,7 @@ namespace Z0
         /// <param name="src">The memory source</param>
         /// <param name="mask">Hi bit on selects the memory, otherwise set to zero</param>
         [MethodImpl(Inline), Op]
-        public static unsafe Vector256<ulong> vmaskload(in SpanBlock256<ulong> src, uint block, Vector256<ulong> mask)
+        public static unsafe Vector256<ulong> vmaskload(SpanBlock256<ulong> src, uint block, Vector256<ulong> mask)
             => MaskLoad(gptr(src.BlockLead(block)), mask);
 
    }

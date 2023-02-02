@@ -55,12 +55,12 @@ namespace Z0
         [MethodImpl(Inline)]
         public static ref readonly BitMatrix32 xornot(in BitMatrix32 A, in BitMatrix32 B, ref BitMatrix32 Z)
         {
-            vlogic.xornot(in A.Head, in B.Head, ref Z.Head);
+            vlogic.xornot(A.Head, B.Head, ref Z.Head);
             return ref Z;
         }
 
-         [MethodImpl(Inline)]
-        public static BitMatrix64 xornot(in BitMatrix64 A, in BitMatrix64 B)
+        [MethodImpl(Inline)]
+        public static BitMatrix64 xornot(BitMatrix64 A, BitMatrix64 B)
         {
             var Z = BitMatrix.alloc(n64);
             vlogic.xornot(in A.Head, in B.Head, ref Z.Head);
@@ -68,9 +68,9 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public static ref readonly BitMatrix64 xornot(in BitMatrix64 A, in BitMatrix64 B, ref BitMatrix64 Z)
+        public static ref readonly BitMatrix64 xornot(BitMatrix64 A, BitMatrix64 B, ref BitMatrix64 Z)
         {
-            vlogic.xornot(in A.Head, in B.Head, ref Z.Head);
+            vlogic.xornot(A.Head, B.Head, ref Z.Head);
             return ref Z;
         }
    }

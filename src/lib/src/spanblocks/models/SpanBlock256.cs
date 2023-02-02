@@ -284,11 +284,11 @@ namespace Z0
             => ref Data.GetPinnableReference();
 
         [MethodImpl(Inline)]
-        public static implicit operator Span<T>(in SpanBlock256<T> src)
+        public static implicit operator Span<T>(SpanBlock256<T> src)
             => src.Data;
 
         [MethodImpl(Inline)]
-        public static implicit operator ReadOnlySpan<T>(in SpanBlock256<T> src)
+        public static implicit operator ReadOnlySpan<T>(SpanBlock256<T> src)
             => src.Data;
     }
 }

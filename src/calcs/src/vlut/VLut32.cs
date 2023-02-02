@@ -23,7 +23,7 @@ namespace Z0
             => Mask = mask;
 
         [MethodImpl(Inline)]
-        public VLut32(in SpanBlock256<byte> mask)
+        public VLut32(SpanBlock256<byte> mask)
             => Mask = gcpu.vload(mask);
 
         [MethodImpl(Inline)]

@@ -30,7 +30,7 @@ namespace Z0
             => Data = src;
 
         [MethodImpl(Inline)]
-        internal BitGrid256(in SpanBlock256<T> src)
+        internal BitGrid256(SpanBlock256<T> src)
             => Data = src.LoadVector();
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Z0
         //     => src.Data.ToBlock();
 
         [MethodImpl(Inline)]
-        public static implicit operator BitGrid256<M,N,T>(in SpanBlock256<T> src)
+        public static implicit operator BitGrid256<M,N,T>(SpanBlock256<T> src)
             => new BitGrid256<M,N,T>(src);
 
         [MethodImpl(Inline)]

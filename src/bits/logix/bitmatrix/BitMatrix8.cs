@@ -120,9 +120,9 @@ namespace Z0
         public override int GetHashCode()
             => throw new NotSupportedException();
 
-        [MethodImpl(Inline)]
-        public static implicit operator BitMatrix<byte>(BitMatrix8 src)
-            => BitMatrix.load<byte>(core.bytes(src));
+        // [MethodImpl(Inline)]
+        // public static implicit operator BitMatrix<byte>(BitMatrix8 src)
+        //     => BitMatrix.load<byte>(core.bytes(src));
 
         [MethodImpl(Inline)]
         public static explicit operator ulong(BitMatrix8 src)

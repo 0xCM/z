@@ -40,7 +40,7 @@ namespace Z0
             where T : unmanaged
         {
             [MethodImpl(Inline)]
-            public Span<bit> Invoke(in SpanBlock128<T> a, in SpanBlock128<T> b, Span<bit> dst)
+            public Span<bit> Invoke(SpanBlock128<T> a, SpanBlock128<T> b, Span<bit> dst)
                 => SpanBlocks.zip(a, b, dst, Calcs.vtestz<T>(w128));
         }
 
@@ -49,7 +49,7 @@ namespace Z0
             where T : unmanaged
         {
             [MethodImpl(Inline)]
-            public Span<bit> Invoke(in SpanBlock256<T> a, in SpanBlock256<T> b, Span<bit> dst)
+            public Span<bit> Invoke(SpanBlock256<T> a, SpanBlock256<T> b, Span<bit> dst)
                 => SpanBlocks.zip(a, b, dst, Calcs.vtestz<T>(w256));
         }
     }

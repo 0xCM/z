@@ -540,11 +540,11 @@ namespace Z0
         /// <param name="n">The grid col count</param>
         /// <typeparam name="T">The grid cell type</typeparam>
         [MethodImpl(Inline)]
-        public static ref readonly BitSpanBlocks256<T> Fill<T>(this ISource random, in BitSpanBlocks256<T> dst)
+        public static BitSpanBlocks256<T> Fill<T>(this ISource random, BitSpanBlocks256<T> dst)
             where T : unmanaged
         {
             random.Fill(dst.CellCount, ref dst.Head);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>

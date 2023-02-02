@@ -23,7 +23,7 @@ namespace Z0
             => Mask = src;
 
         [MethodImpl(Inline)]
-        public VLut16(in SpanBlock128<byte> src)
+        public VLut16(SpanBlock128<byte> src)
             => Mask = gcpu.vload(src);
 
         [MethodImpl(Inline)]

@@ -46,14 +46,14 @@ namespace Z0
                 => default(VAbs256<T>);
 
         [MethodImpl(Inline), Abs, Closures(SignedInts)]
-        public static ref readonly SpanBlock128<T> abs<T>(in SpanBlock128<T> a, in SpanBlock128<T> dst)
+        public static SpanBlock128<T> abs<T>(SpanBlock128<T> a, SpanBlock128<T> dst)
             where T : unmanaged
-                => ref abs<T>(w128).Invoke(a, dst);
+                => abs<T>(w128).Invoke(a, dst);
 
         [MethodImpl(Inline), Abs, Closures(SignedInts)]
-        public static ref readonly SpanBlock256<T> abs<T>(in SpanBlock256<T> a, in SpanBlock256<T> dst)
+        public static SpanBlock256<T> abs<T>(SpanBlock256<T> a, SpanBlock256<T> dst)
             where T : unmanaged
-                => ref abs<T>(w256).Invoke(a, dst);
+                => abs<T>(w256).Invoke(a, dst);
 
         [Closures(AllNumeric), Abs]
         public readonly struct Abs<T> : IUnaryOp<T>, IUnarySpanOp<T>
@@ -75,8 +75,8 @@ namespace Z0
             public K.Abs ApiClass => default;
 
             [MethodImpl(Inline)]
-            public ref readonly SpanBlock128<T> Invoke(in SpanBlock128<T> src, in SpanBlock128<T> dst)
-                => ref SpanBlocks.map(src, dst, Calcs.vabs<T>(w128));
+            public SpanBlock128<T> Invoke(SpanBlock128<T> src, SpanBlock128<T> dst)
+                => SpanBlocks.map(src, dst, Calcs.vabs<T>(w128));
         }
 
         [Closures(AllNumeric), Abs]
@@ -86,8 +86,8 @@ namespace Z0
             public K.Abs ApiClass => default;
 
             [MethodImpl(Inline)]
-            public ref readonly SpanBlock256<T> Invoke(in SpanBlock256<T> src, in SpanBlock256<T> dst)
-                => ref SpanBlocks.map(src, dst, Calcs.vabs<T>(w256));
+            public SpanBlock256<T> Invoke(SpanBlock256<T> src, SpanBlock256<T> dst)
+                => SpanBlocks.map(src, dst, Calcs.vabs<T>(w256));
         }
 
         [Closures(SignedInts), Abs]

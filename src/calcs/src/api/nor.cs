@@ -46,13 +46,13 @@ namespace Z0
                 => gcalc.apply(nor<T>(), a, b, dst);
 
         [MethodImpl(Inline), Nor, Closures(Closure)]
-        public static ref readonly SpanBlock128<T> nor<T>(in SpanBlock128<T> a, in SpanBlock128<T> b, in SpanBlock128<T> dst)
+        public static SpanBlock128<T> nor<T>(SpanBlock128<T> a, SpanBlock128<T> b, SpanBlock128<T> dst)
             where T : unmanaged
-                => ref nor<T>(w128).Invoke(a, b, dst);
+                => nor<T>(w128).Invoke(a, b, dst);
 
         [MethodImpl(Inline), Nor, Closures(Closure)]
-        public static ref readonly SpanBlock256<T> nor<T>(in SpanBlock256<T> a, in SpanBlock256<T> b, in SpanBlock256<T> dst)
+        public static SpanBlock256<T> nor<T>(SpanBlock256<T> a, SpanBlock256<T> b, SpanBlock256<T> dst)
             where T : unmanaged
-                => ref nor<T>(w256).Invoke(a, b, dst);
+                => nor<T>(w256).Invoke(a, b, dst);
     }
 }

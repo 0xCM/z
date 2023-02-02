@@ -27,7 +27,7 @@ namespace Z0
         /// <typeparam name="N">THe grid column count</typeparam>
         /// <typeparam name="T">The storage segment type</typeparam>
         [MethodImpl(Inline)]
-        public static void store<M,N,T>(in BitGrid128<M,N,T> src, in SpanBlock128<T> dst)
+        public static void store<M,N,T>(in BitGrid128<M,N,T> src, SpanBlock128<T> dst)
             where T : unmanaged
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
@@ -61,7 +61,7 @@ namespace Z0
         /// <typeparam name="N">THe grid column count</typeparam>
         /// <typeparam name="T">The storage segment type</typeparam>
         [MethodImpl(Inline)]
-        public static void store<M,N,T>(in BitGrid256<M,N,T> src, in SpanBlock256<T> dst)
+        public static void store<M,N,T>(in BitGrid256<M,N,T> src, SpanBlock256<T> dst)
             where T : unmanaged
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat

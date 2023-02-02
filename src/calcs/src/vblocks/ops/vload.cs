@@ -17,7 +17,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">A readonly blocked storage container</param>
         [MethodImpl(Inline), Op]
-        public static unsafe Vector128<byte> vload(in SpanBlock128<byte> src, int block)
+        public static unsafe Vector128<byte> vload(SpanBlock128<byte> src, int block)
             => LoadDquVector128(gptr(src.BlockLead(block)));
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">A readonly blocked storage container</param>
         [MethodImpl(Inline), Op]
-        public static unsafe Vector128<sbyte> vload(in SpanBlock128<sbyte> src, int block)
+        public static unsafe Vector128<sbyte> vload(SpanBlock128<sbyte> src, int block)
             => LoadDquVector128(gptr(src.BlockLead(block)));
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">A readonly blocked storage container</param>
         [MethodImpl(Inline), Op]
-        public static unsafe Vector128<short> vload(in SpanBlock128<short> src, int block)
+        public static unsafe Vector128<short> vload(SpanBlock128<short> src, int block)
             => LoadDquVector128(gptr(src.BlockLead(block)));
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">A readonly blocked storage container</param>
         [MethodImpl(Inline), Op]
-        public static unsafe Vector128<ushort> vload(in SpanBlock128<ushort> src, int block)
+        public static unsafe Vector128<ushort> vload(SpanBlock128<ushort> src, int block)
             => LoadDquVector128(gptr(src.BlockLead(block)));
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">A readonly blocked storage container</param>
         [MethodImpl(Inline), Op]
-        public static unsafe Vector128<int> vload(in SpanBlock128<int> src, int block)
+        public static unsafe Vector128<int> vload(SpanBlock128<int> src, int block)
             => LoadDquVector128(gptr(src.BlockLead(block)));
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">A readonly blocked storage container</param>
         [MethodImpl(Inline), Op]
-        public static unsafe Vector128<uint> vload(in SpanBlock128<uint> src, int block)
+        public static unsafe Vector128<uint> vload(SpanBlock128<uint> src, int block)
             => LoadDquVector128(gptr(src.BlockLead(block)));
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">A readonly memory reference</param>
         [MethodImpl(Inline), Op]
-        public static unsafe Vector128<long> vload(in SpanBlock128<long> src, int block)
+        public static unsafe Vector128<long> vload(SpanBlock128<long> src, int block)
             => LoadDquVector128(gptr(src.BlockLead(block)));
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">A readonly blocked storage container</param>
         [MethodImpl(Inline), Op]
-        public static unsafe Vector128<ulong> vload(in SpanBlock128<ulong> src, int block)
+        public static unsafe Vector128<ulong> vload(SpanBlock128<ulong> src, int block)
             => LoadDquVector128(gptr(src.BlockLead(block)));
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">A readonly blocked storage container</param>
         [MethodImpl(Inline), Op]
-        public static unsafe Vector256<byte> vload(in SpanBlock256<byte> src, int block)
+        public static unsafe Vector256<byte> vload(SpanBlock256<byte> src, int block)
             => LoadDquVector256(gptr(src.BlockLead(block)));
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">A readonly blocked storage container</param>
         [MethodImpl(Inline), Op]
-        public static unsafe Vector256<sbyte> vload(in SpanBlock256<sbyte> src, int block)
+        public static unsafe Vector256<sbyte> vload(SpanBlock256<sbyte> src, int block)
             => LoadDquVector256(gptr(src.BlockLead(block)));
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">A readonly blocked storage container</param>
         [MethodImpl(Inline), Op]
-        public static unsafe Vector256<short> vload(in SpanBlock256<short> src, int block)
+        public static unsafe Vector256<short> vload(SpanBlock256<short> src, int block)
             => LoadDquVector256(gptr(src.BlockLead(block)));
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">A readonly blocked storage container</param>
         [MethodImpl(Inline), Op]
-        public static unsafe Vector256<ushort> vload(in SpanBlock256<ushort> src, int block)
+        public static unsafe Vector256<ushort> vload(SpanBlock256<ushort> src, int block)
             => LoadDquVector256(gptr(src.BlockLead(block)));
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">A readonly blocked storage container</param>
         [MethodImpl(Inline), Op]
-        public static unsafe Vector256<int> vload(in SpanBlock256<int> src, int block)
+        public static unsafe Vector256<int> vload(SpanBlock256<int> src, int block)
             => LoadDquVector256(gptr(src.BlockLead(block)));
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">A readonly blocked storage container</param>
         [MethodImpl(Inline), Op]
-        public static unsafe Vector256<uint> vload(in SpanBlock256<uint> src, int block)
+        public static unsafe Vector256<uint> vload(SpanBlock256<uint> src, int block)
             => LoadDquVector256(gptr(src.BlockLead(block)));
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">A readonly blocked storage container</param>
         [MethodImpl(Inline), Op]
-        public static unsafe Vector256<long> vload(in SpanBlock256<long> src, int block)
+        public static unsafe Vector256<long> vload(SpanBlock256<long> src, int block)
             => LoadDquVector256(gptr(src.BlockLead(block)));
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">A readonly blocked storage container</param>
         [MethodImpl(Inline), Op]
-        public static unsafe Vector256<ulong> vload(in SpanBlock256<ulong> src, int block)
+        public static unsafe Vector256<ulong> vload(SpanBlock256<ulong> src, int block)
             => LoadDquVector256(gptr(src.BlockLead(block)));
     }
 }

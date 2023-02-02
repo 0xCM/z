@@ -108,8 +108,8 @@ namespace Z0
             public K.And ApiClass => default;
 
             [MethodImpl(Inline)]
-            public ref readonly SpanBlock128<T> Invoke(in SpanBlock128<T> a, in SpanBlock128<T> b, in SpanBlock128<T> dst)
-                => ref SpanBlocks.zip(a, b, dst, vand<T>(w128));
+            public SpanBlock128<T> Invoke(SpanBlock128<T> a, SpanBlock128<T> b, SpanBlock128<T> dst)
+                => SpanBlocks.zip(a, b, dst, vand<T>(w128));
         }
 
         [Closures(Integers), And]
@@ -119,28 +119,20 @@ namespace Z0
             public K.And ApiClass => default;
 
             [MethodImpl(Inline)]
-            public ref readonly SpanBlock256<T> Invoke(in SpanBlock256<T> a, in SpanBlock256<T> b, in SpanBlock256<T> dst)
-                => ref SpanBlocks.zip(a, b, dst, vand<T>(w256));
+            public SpanBlock256<T> Invoke(SpanBlock256<T> a, SpanBlock256<T> b, SpanBlock256<T> dst)
+                => SpanBlocks.zip(a, b, dst, vand<T>(w256));
         }
 
         [MethodImpl(Inline), And, Closures(Closure)]
-        public static ref readonly SpanBlock128<T> and<T>(in SpanBlock128<T> a, in SpanBlock128<T> b, in SpanBlock128<T> dst)
+        public static SpanBlock128<T> and<T>(SpanBlock128<T> a, SpanBlock128<T> b, SpanBlock128<T> dst)
             where T : unmanaged
-                => ref and<T>(w128).Invoke(a, b, dst);
+                => and<T>(w128).Invoke(a, b, dst);
 
         [MethodImpl(Inline), And, Closures(Closure)]
-        public static ref readonly SpanBlock256<T> and<T>(in SpanBlock256<T> a, in SpanBlock256<T> b, in SpanBlock256<T> dst)
+        public static SpanBlock256<T> and<T>(SpanBlock256<T> a, SpanBlock256<T> b, SpanBlock256<T> dst)
             where T : unmanaged
-                => ref and<T>(w256).Invoke(a, b, dst);
+                => and<T>(w256).Invoke(a, b, dst);
 
-        [MethodImpl(Inline)]
-        static SpanBlock256<T> and<T>(in SpanBlock256<T> a, in SpanBlock256<T> b, SpanBlock256<T> dst)
-            where T : unmanaged
-        {
-            for(var i=0; i<a.BlockCount; i++)
-                gcpu.vstore(gcpu.vand<T>(a.LoadVector(i), b.LoadVector(i)), ref dst.BlockLead(i));
-            return dst;
-        }
 
         /// <summary>
         /// Computes lhs[i] := lhs[i] & rhs[i] for i = 0...N-1

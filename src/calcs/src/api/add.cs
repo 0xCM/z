@@ -46,14 +46,14 @@ namespace Z0
                 => default(VAdd256<T>);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref readonly SpanBlock256<T> add<T>(in SpanBlock256<T> a, in SpanBlock256<T> b, in SpanBlock256<T> dst)
+        public static SpanBlock256<T> add<T>(SpanBlock256<T> a, SpanBlock256<T> b, SpanBlock256<T> dst)
             where T : unmanaged
-                => ref add<T>(w256).Invoke(a, b, dst);
+                => add<T>(w256).Invoke(a, b, dst);
 
        [MethodImpl(Inline), Abs, Closures(SignedInts)]
-        public static ref readonly SpanBlock128<T> add<T>(in SpanBlock128<T> a, in SpanBlock128<T> b, in SpanBlock128<T> dst)
+        public static SpanBlock128<T> add<T>(SpanBlock128<T> a, SpanBlock128<T> b, SpanBlock128<T> dst)
             where T : unmanaged
-                => ref add<T>(w128).Invoke(a, b, dst);
+                => add<T>(w128).Invoke(a, b, dst);
 
         [MethodImpl(Inline)]
         public static Block256<N,T> add<N,T>(ref Block256<N,T> a, in Block256<N,T> b)

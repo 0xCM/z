@@ -105,7 +105,7 @@ namespace Z0
         /// <param name="offset">The cell-relative offset at which to dice</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static Span<T> Slice<T>(this in SpanBlock128<T> src, int offset)
+        public static Span<T> Slice<T>(this SpanBlock128<T> src, int offset)
             where T : unmanaged
                 => src.Storage.Slice(offset);
 
@@ -117,7 +117,7 @@ namespace Z0
         /// <param name="length">The cell-relative slice length</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static Span<T> Slice<T>(this in SpanBlock128<T> src, int offset, int length)
+        public static Span<T> Slice<T>(this SpanBlock128<T> src, int offset, int length)
             where T : unmanaged
                 => src.Storage.Slice(offset,length);
 
@@ -128,7 +128,7 @@ namespace Z0
         /// <param name="offset">The cell-relative offset at which to dice</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static Span<T> Slice<T>(this in SpanBlock256<T> src, int offset)
+        public static Span<T> Slice<T>(this SpanBlock256<T> src, int offset)
             where T : unmanaged
                 => src.Storage.Slice(offset);
 
@@ -140,7 +140,7 @@ namespace Z0
         /// <param name="length">The cell-relative slice length</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static Span<T> Slice<T>(this in SpanBlock256<T> src, int offset, int length)
+        public static Span<T> Slice<T>(this SpanBlock256<T> src, int offset, int length)
             where T : unmanaged
                 => src.Storage.Slice(offset,length);
 
@@ -152,7 +152,7 @@ namespace Z0
         /// <param name="length">The cell-relative slice length</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static Span<T> Slice<T>(this in SpanBlock256<T> src, uint offset, uint length)
+        public static Span<T> Slice<T>(this SpanBlock256<T> src, uint offset, uint length)
             where T : unmanaged
                 => src.Storage.Slice((int)offset, (int)length);
 

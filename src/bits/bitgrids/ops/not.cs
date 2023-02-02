@@ -78,7 +78,7 @@ namespace Z0
         /// <param name="gx">The source grid</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline)]
-        public static BitGrid128<M,N,T> not<M,N,T>(in BitGrid128<M,N,T> gx)
+        public static BitGrid128<M,N,T> not<M,N,T>(BitGrid128<M,N,T> gx)
             where T : unmanaged
             where N : unmanaged, ITypeNat
             where M : unmanaged, ITypeNat
@@ -90,7 +90,7 @@ namespace Z0
         /// <param name="gx">The source grid</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline)]
-        public static BitGrid256<M,N,T> not<M,N,T>(in BitGrid256<M,N,T> gx)
+        public static BitGrid256<M,N,T> not<M,N,T>(BitGrid256<M,N,T> gx)
             where T : unmanaged
             where N : unmanaged, ITypeNat
             where M : unmanaged, ITypeNat
@@ -102,7 +102,7 @@ namespace Z0
         /// <param name="gx">The source grid</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline)]
-        public static BitGrid<M,N,T> not<M,N,T>(in BitGrid<M,N,T> gx, in BitGrid<M,N,T> gz)
+        public static BitGrid<M,N,T> not<M,N,T>(BitGrid<M,N,T> gx, BitGrid<M,N,T> gz)
             where T : unmanaged
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
@@ -119,7 +119,7 @@ namespace Z0
         /// <param name="gx">The source grid</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline)]
-        public static BitGrid<M,N,T> not<M,N,T>(in BitGrid<M,N,T> gx)
+        public static BitGrid<M,N,T> not<M,N,T>(BitGrid<M,N,T> gx)
             where T : unmanaged
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
@@ -132,7 +132,7 @@ namespace Z0
         /// <param name="gz">The target grid</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline)]
-        public static BitSpanBlocks256<T> not<T>(in BitSpanBlocks256<T> gx, in BitSpanBlocks256<T> gz)
+        public static BitSpanBlocks256<T> not<T>(BitSpanBlocks256<T> gx, BitSpanBlocks256<T> gz)
             where T : unmanaged
         {
             var blocks = gz.BlockCount;
@@ -147,7 +147,7 @@ namespace Z0
         /// <param name="gx">The source grid</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline)]
-        public static BitSpanBlocks256<T> not<T>(in BitSpanBlocks256<T> gx)
+        public static BitSpanBlocks256<T> not<T>(BitSpanBlocks256<T> gx)
             where T : unmanaged
                 => not(gx, alloc<T>(gx.RowCount, gx.ColCount));
     }

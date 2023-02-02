@@ -76,7 +76,7 @@ namespace Z0
         /// <param name="dst">The target block</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Broadcast, Closures(AllNumeric)]
-        public static void broadcast<T>(T src, in SpanBlock128<T> dst)
+        public static void broadcast<T>(T src, SpanBlock128<T> dst)
             where T : unmanaged
                 => dst.Fill(src);
 
@@ -87,7 +87,7 @@ namespace Z0
         /// <param name="dst">The target block</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Broadcast, Closures(AllNumeric)]
-        public static void broadcast<T>(T src, in SpanBlock256<T> dst)
+        public static void broadcast<T>(T src, SpanBlock256<T> dst)
             where T : unmanaged
                 => dst.Fill(src);
 
@@ -111,7 +111,7 @@ namespace Z0
         /// <typeparam name="S">The source type</typeparam>
         /// <typeparam name="T">The target cell type</typeparam>
         [MethodImpl(Inline)]
-        public static SpanBlock128<T> broadcast<S,T>(S src, T enabled, in SpanBlock128<T> dst)
+        public static SpanBlock128<T> broadcast<S,T>(S src, T enabled, SpanBlock128<T> dst)
             where S : unmanaged
             where T : unmanaged
         {
@@ -130,7 +130,7 @@ namespace Z0
         /// <typeparam name="S">The source type</typeparam>
         /// <typeparam name="T">The target cell type</typeparam>
         [MethodImpl(Inline)]
-        public static SpanBlock256<T> broadcast<S,T>(S src, T enabled, in SpanBlock256<T> dst)
+        public static SpanBlock256<T> broadcast<S,T>(S src, T enabled, SpanBlock256<T> dst)
             where S : unmanaged
             where T : unmanaged
         {

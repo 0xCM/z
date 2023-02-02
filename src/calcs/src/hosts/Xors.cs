@@ -14,12 +14,12 @@ namespace Z0
             where T : unmanaged
         {
             [MethodImpl(Inline)]
-            public ref readonly SpanBlock128<T> Invoke(in SpanBlock128<T> a, [Imm] byte count, in SpanBlock128<T> dst)
+            public SpanBlock128<T> Invoke(SpanBlock128<T> a, [Imm] byte count, SpanBlock128<T> dst)
             {
                 var blocks = dst.BlockCount;
                 for(var block = 0; block < blocks; block++)
                     gcpu.vstore(gcpu.vxors(a.LoadVector(block), count), ref dst.BlockLead(block));
-                return ref dst;
+                return dst;
             }
         }
 
@@ -28,12 +28,12 @@ namespace Z0
             where T : unmanaged
         {
             [MethodImpl(Inline)]
-            public ref readonly SpanBlock256<T> Invoke(in SpanBlock256<T> a, [Imm] byte count, in SpanBlock256<T> dst)
+            public SpanBlock256<T> Invoke(SpanBlock256<T> a, [Imm] byte count, SpanBlock256<T> dst)
             {
                 var blocks = dst.BlockCount;
                 for(var block = 0; block < blocks; block++)
                     gcpu.vstore(gcpu.vxors(a.LoadVector(block), count), ref dst.BlockLead(block));
-                return ref dst;
+                return dst;
             }
         }
     }

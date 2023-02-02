@@ -25,7 +25,7 @@ namespace Z0
         /// <param name="gz">The target grid</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Negate, Closures(UnsignedInts)]
-        public static BitSpanBlocks256<T> negate<T>(in BitSpanBlocks256<T> x)
+        public static BitSpanBlocks256<T> negate<T>(BitSpanBlocks256<T> x)
             where T : unmanaged
                 => BitGrid.negate(x, alloc<T>(x.RowCount, x.ColCount));
 
@@ -36,7 +36,7 @@ namespace Z0
         /// <param name="gy">The right grid</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Xor, Closures(UnsignedInts)]
-        public static BitSpanBlocks256<T> xor<T>(in BitSpanBlocks256<T> gx, in BitSpanBlocks256<T> gy)
+        public static BitSpanBlocks256<T> xor<T>(BitSpanBlocks256<T> gx, BitSpanBlocks256<T> gy)
             where T : unmanaged
         {
             var gz = alloc<T>(gx.RowCount, gx.ColCount);
@@ -51,7 +51,7 @@ namespace Z0
         /// <param name="gy">The right grid</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Xnor, Closures(UnsignedInts)]
-        public static BitSpanBlocks256<T> xnor<T>(in BitSpanBlocks256<T> gx, in BitSpanBlocks256<T> gy)
+        public static BitSpanBlocks256<T> xnor<T>(BitSpanBlocks256<T> gx, BitSpanBlocks256<T> gy)
             where T : unmanaged
         {
             var gz = alloc<T>(gx.RowCount, gx.ColCount);
@@ -66,7 +66,7 @@ namespace Z0
         /// <param name="gy">The right grid</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Or, Closures(UnsignedInts)]
-        public static BitSpanBlocks256<T> or<T>(in BitSpanBlocks256<T> gx, in BitSpanBlocks256<T> gy)
+        public static BitSpanBlocks256<T> or<T>(BitSpanBlocks256<T> gx, BitSpanBlocks256<T> gy)
             where T : unmanaged
         {
             var gz = alloc<T>(gx.RowCount, gx.ColCount);
@@ -81,7 +81,7 @@ namespace Z0
         /// <param name="gy">The right grid</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Nor, Closures(UnsignedInts)]
-        public static BitSpanBlocks256<T> nor<T>(in BitSpanBlocks256<T> gx, in BitSpanBlocks256<T> gy)
+        public static BitSpanBlocks256<T> nor<T>(BitSpanBlocks256<T> gx, BitSpanBlocks256<T> gy)
             where T : unmanaged
         {
             var gz = alloc<T>(gx.RowCount, gx.ColCount);
@@ -96,7 +96,7 @@ namespace Z0
         /// <param name="b">The right grid</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), And, Closures(UnsignedInts)]
-        public static BitSpanBlocks256<T> and<T>(in BitSpanBlocks256<T> a, in BitSpanBlocks256<T> b)
+        public static BitSpanBlocks256<T> and<T>(BitSpanBlocks256<T> a, BitSpanBlocks256<T> b)
             where T : unmanaged
         {
             var gz = alloc<T>(a.RowCount, a.ColCount);

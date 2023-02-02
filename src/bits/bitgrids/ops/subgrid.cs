@@ -147,7 +147,7 @@ namespace Z0
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
             where T : unmanaged
-                => new SubGrid128<M,N,T>(default);
+                => new SubGrid128<M,N,T>(default(Vector128<T>));
 
         /// <summary>
         /// Allocates a populated 128-bit subgrid
@@ -187,7 +187,7 @@ namespace Z0
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
             where T : unmanaged
-                => new SubGrid256<M,N,T>(default);
+                => new SubGrid256<M,N,T>(default(Vector256<T>));
 
         /// <summary>
         /// Allocates a populated 256-bit subgrid

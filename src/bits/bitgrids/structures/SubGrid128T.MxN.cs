@@ -36,7 +36,7 @@ namespace Z0
             => Data = data;
 
         [MethodImpl(Inline)]
-        internal SubGrid128(in SpanBlock128<T> src)
+        internal SubGrid128(SpanBlock128<T> src)
             => Data = src.LoadVector();
 
         [MethodImpl(Inline)]
@@ -114,7 +114,7 @@ namespace Z0
         //     => src.Data.ToBlock();
 
         [MethodImpl(Inline)]
-        public static implicit operator SubGrid128<M,N,T>(in SpanBlock128<T> src)
+        public static implicit operator SubGrid128<M,N,T>(SpanBlock128<T> src)
             => new SubGrid128<M,N,T>(src);
 
         [MethodImpl(Inline)]

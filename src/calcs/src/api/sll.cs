@@ -48,13 +48,13 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Sll, Closures(Closure)]
-        public static ref readonly SpanBlock128<T> sll<T>(in SpanBlock128<T> a, [Imm] byte count, in SpanBlock128<T> dst)
+        public static SpanBlock128<T> sll<T>(SpanBlock128<T> a, [Imm] byte count, SpanBlock128<T> dst)
             where T : unmanaged
-                => ref sll<T>(w128).Invoke(a, count, dst);
+                => sll<T>(w128).Invoke(a, count, dst);
 
         [MethodImpl(Inline), Sll, Closures(Closure)]
-        public static ref readonly SpanBlock256<T> sll<T>(in SpanBlock256<T> a, [Imm] byte count, in SpanBlock256<T> dst)
+        public static SpanBlock256<T> sll<T>(SpanBlock256<T> a, [Imm] byte count, SpanBlock256<T> dst)
             where T : unmanaged
-                => ref sll<T>(w256).Invoke(a, count, dst);
+                => sll<T>(w256).Invoke(a, count, dst);
     }
 }

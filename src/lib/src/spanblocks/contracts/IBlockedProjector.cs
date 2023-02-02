@@ -41,7 +41,7 @@ namespace Z0
         where S : unmanaged
         where T : unmanaged
     {
-        void Invoke(in SpanBlock128<S> src, in SpanBlock128<T> dst);
+        void Invoke(SpanBlock128<S> src, SpanBlock128<T> dst);
     }
 
     [Free]
@@ -49,7 +49,7 @@ namespace Z0
         where S : unmanaged
         where T : unmanaged
     {
-        void Invoke(in SpanBlock256<S> src, in SpanBlock256<T> dst);
+        void Invoke(SpanBlock256<S> src, SpanBlock256<T> dst);
     }
 
     [Free]

@@ -55,12 +55,12 @@ namespace Z0
         /// <param name="perm">The permutation definition</param>
         /// <param name="A">The source/target matrix</param>
         [Op]
-        public static ref readonly BitMatrix64 permute(in NatPerm<N64> perm, in BitMatrix64 A)
+        public static BitMatrix64 permute(NatPerm<N64> perm, BitMatrix64 A)
         {
             for(var row = 0; row < perm.Length; row++)
                 if(perm[row] != row)
                     A.RowSwap(row, perm[row]);
-            return ref A;
+            return A;
         }
 
         /// <summary>

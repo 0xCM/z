@@ -7,7 +7,7 @@ namespace Z0
     partial class BitSpans
     {
         [MethodImpl(Inline), Op]
-        public static BitSpan or(in BitSpan x, in BitSpan y, in BitSpan z)
+        public static BitSpan or(BitSpan x, BitSpan y, BitSpan z)
         {
             var count = z.Length;
             for(var i=0; i< count; i++)
@@ -16,7 +16,7 @@ namespace Z0
         }
 
         [Op]
-        public static BitSpan or(in BitSpan x, in BitSpan y)
+        public static BitSpan or(BitSpan x, BitSpan y)
             => or(x,y, alloc(y.BitCount));
     }
 }

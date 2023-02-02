@@ -18,7 +18,7 @@ namespace Z0
         where S : unmanaged
         where T : unmanaged
     {
-        uint Map(in SpanBlock128<S> src, in SpanBlock128<T> dst);
+        uint Map(SpanBlock128<S> src, SpanBlock128<T> dst);
     }
 
     [Free]
@@ -26,6 +26,6 @@ namespace Z0
         where S : unmanaged
         where T : unmanaged
     {
-        uint Map(in SpanBlock256<S> src, in SpanBlock256<T> dst);
+        uint Map(SpanBlock256<S> src, SpanBlock256<T> dst);
     }
 }

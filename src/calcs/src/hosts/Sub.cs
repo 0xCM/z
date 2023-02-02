@@ -65,8 +65,8 @@ namespace Z0
             where T : unmanaged
         {
             [MethodImpl(Inline)]
-            public ref readonly SpanBlock128<T> Invoke(in SpanBlock128<T> a, in SpanBlock128<T> b, in SpanBlock128<T> dst)
-                => ref SpanBlocks.zip(a, b, dst, Calcs.vsub<T>(w128));
+            public SpanBlock128<T> Invoke(SpanBlock128<T> a, SpanBlock128<T> b, SpanBlock128<T> dst)
+                => SpanBlocks.zip(a, b, dst, Calcs.vsub<T>(w128));
         }
 
         [Closures(AllNumeric), Sub]
@@ -74,8 +74,8 @@ namespace Z0
             where T : unmanaged
         {
             [MethodImpl(Inline)]
-            public ref readonly SpanBlock256<T> Invoke(in SpanBlock256<T> a, in SpanBlock256<T> b, in SpanBlock256<T> dst)
-                => ref SpanBlocks.zip(a, b, dst, Calcs.vsub<T>(w256));
+            public SpanBlock256<T> Invoke(SpanBlock256<T> a, SpanBlock256<T> b, SpanBlock256<T> dst)
+                => SpanBlocks.zip(a, b, dst, Calcs.vsub<T>(w256));
         }
     }
 }

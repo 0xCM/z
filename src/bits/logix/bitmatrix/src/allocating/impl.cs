@@ -13,11 +13,11 @@ namespace Z0
         /// <param name="B">The right matrix</param>
         /// <typeparam name="T">The primal type over which the matrix is constructed</typeparam>
         [MethodImpl(Inline), CImpl, Closures(UnsignedInts)]
-        public static BitMatrix<T> cimpl<T>(in BitMatrix<T> A, in BitMatrix<T> B)
+        public static BitMatrix<T> cimpl<T>(BitMatrix<T> A, BitMatrix<T> B)
             where T : unmanaged
         {
             var Z = BitMatrix.alloc<T>();
-            vlogic.cimpl(in A.Head, in B.Head, ref Z.Head);
+            vlogic.cimpl(A.Head, B.Head, ref Z.Head);
             return Z;
         }
 
@@ -27,10 +27,10 @@ namespace Z0
         /// <param name="A">The left matrix</param>
         /// <param name="B">The right matrix</param>
         [MethodImpl(Inline), Impl]
-        public static BitMatrix8 impl(in BitMatrix8 A, in BitMatrix8 B)
+        public static BitMatrix8 impl(BitMatrix8 A, BitMatrix8 B)
         {
             var Z = BitMatrix.alloc(n8);
-            vlogic.impl(in A.Head, in B.Head, ref Z.Head);
+            vlogic.impl(A.Head, B.Head, ref Z.Head);
             return Z;
         }
 

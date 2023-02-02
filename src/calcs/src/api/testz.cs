@@ -30,12 +30,12 @@ namespace Z0
                 => default(TestZ256<T>);
 
         [MethodImpl(Inline), TestZ, Closures(Closure)]
-        public static Span<bit> testz<T>(in SpanBlock128<T> a, in SpanBlock128<T> b, Span<bit> dst)
+        public static Span<bit> testz<T>(SpanBlock128<T> a, SpanBlock128<T> b, Span<bit> dst)
             where T : unmanaged
                 => testz<T>(w128).Invoke(a, b, dst);
 
         [MethodImpl(Inline), TestZ, Closures(Closure)]
-        public static Span<bit> testz<T>(in SpanBlock256<T> a, in SpanBlock256<T> b, Span<bit> dst)
+        public static Span<bit> testz<T>(SpanBlock256<T> a, SpanBlock256<T> b, Span<bit> dst)
             where T : unmanaged
                 => testz<T>(w256).Invoke(a, b, dst);
     }

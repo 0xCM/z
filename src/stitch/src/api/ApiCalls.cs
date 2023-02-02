@@ -90,14 +90,14 @@ namespace Z0
                 => define(api, a0[offset], a1[offset], result[offset]);
 
         [MethodImpl(Inline)]
-        public static ApiCall<A0,A1,R> call<A0,A1,R>(in ApiKey api, uint offset, in SpanBlock128<A0> a0, in SpanBlock128<A1> a1, in SpanBlock128<R> result)
+        public static ApiCall<A0,A1,R> call<A0,A1,R>(in ApiKey api, uint offset, SpanBlock128<A0> a0, SpanBlock128<A1> a1, SpanBlock128<R> result)
             where A0 : unmanaged
             where A1 : unmanaged
             where R : unmanaged
                 => define(api, a0[offset], a1[offset], result[offset]);
 
         [MethodImpl(Inline)]
-        public static ApiCall<A0,A1,R> call<A0,A1,R>(in ApiKey api, uint offset, in SpanBlock256<A0> a0, in SpanBlock256<A1> a1, in SpanBlock256<R> result)
+        public static ApiCall<A0,A1,R> call<A0,A1,R>(in ApiKey api, uint offset, SpanBlock256<A0> a0, SpanBlock256<A1> a1, SpanBlock256<R> result)
             where A0 : unmanaged
             where A1 : unmanaged
             where R : unmanaged

@@ -14,7 +14,7 @@ namespace Z0
         /// <param name="rows">The row content</param>
         /// <typeparam name="T">The primal type over which the matrix is constructed</typeparam>
         [MethodImpl(Inline)]
-        public static BitMatrix<T> from<T>(in RowBits<T> src)
+        public static BitMatrix<T> from<T>(RowBits<T> src)
             where T : unmanaged
         {
             if(src.RowCount != width<T>())

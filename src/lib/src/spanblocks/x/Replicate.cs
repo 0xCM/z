@@ -13,7 +13,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">The source span</param>
         /// <typeparam name="T">The element type</typeparam>
-        public static SpanBlock8<T> Replicate<T>(this in SpanBlock8<T> src)
+        public static SpanBlock8<T> Replicate<T>(this SpanBlock8<T> src)
             where T : unmanaged
                 => src.Replicate(span<T>(src.CellCount));
 
@@ -23,7 +23,7 @@ namespace Z0
         /// <param name="src">The source span</param>
         /// <typeparam name="T">The element type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static SpanBlock8<T> Replicate<T>(this in SpanBlock8<T> src, Span<T> buffer)
+        public static SpanBlock8<T> Replicate<T>(this SpanBlock8<T> src, Span<T> buffer)
             where T : unmanaged
         {
             src.CopyTo(buffer);
@@ -36,7 +36,7 @@ namespace Z0
         /// <param name="src">The source span</param>
         /// <typeparam name="T">The element type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static SpanBlock16<T> Replicate<T>(this in SpanBlock16<T> src, Span<T> buffer)
+        public static SpanBlock16<T> Replicate<T>(this SpanBlock16<T> src, Span<T> buffer)
             where T : unmanaged
         {
             src.CopyTo(buffer);
@@ -49,7 +49,7 @@ namespace Z0
         /// <param name="src">The source span</param>
         /// <typeparam name="T">The element type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static SpanBlock32<T> Replicate<T>(this in SpanBlock32<T> src, Span<T> buffer)
+        public static SpanBlock32<T> Replicate<T>(this SpanBlock32<T> src, Span<T> buffer)
             where T : unmanaged
         {
             src.CopyTo(buffer);
@@ -62,7 +62,7 @@ namespace Z0
         /// <param name="src">The source span</param>
         /// <typeparam name="T">The element type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static SpanBlock64<T> Replicate<T>(this in SpanBlock64<T> src, Span<T> buffer)
+        public static SpanBlock64<T> Replicate<T>(this SpanBlock64<T> src, Span<T> buffer)
             where T : unmanaged
         {
             src.CopyTo(buffer);
@@ -75,7 +75,7 @@ namespace Z0
         /// <param name="src">The source span</param>
         /// <typeparam name="T">The element type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static SpanBlock128<T> Replicate<T>(this in SpanBlock128<T> src, Span<T> buffer)
+        public static SpanBlock128<T> Replicate<T>(this SpanBlock128<T> src, Span<T> buffer)
             where T : unmanaged
         {
             src.CopyTo(buffer);
@@ -87,7 +87,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">The source span</param>
         /// <typeparam name="T">The element type</typeparam>
-        public static SpanBlock256<T> Replicate<T>(this in SpanBlock256<T> src)
+        public static SpanBlock256<T> Replicate<T>(this SpanBlock256<T> src)
             where T : unmanaged
                 => src.Replicate(span<T>(src.CellCount));
 
@@ -97,7 +97,7 @@ namespace Z0
         /// <param name="src">The source span</param>
         /// <typeparam name="T">The element type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static SpanBlock256<T> Replicate<T>(this in SpanBlock256<T> src, Span<T> buffer)
+        public static SpanBlock256<T> Replicate<T>(this SpanBlock256<T> src, Span<T> buffer)
             where T : unmanaged
         {
             src.CopyTo(buffer);
@@ -110,7 +110,7 @@ namespace Z0
         /// <param name="src">The source span</param>
         /// <typeparam name="T">The element type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static SpanBlock512<T> Replicate<T>(this in SpanBlock512<T> src, Span<T> buffer)
+        public static SpanBlock512<T> Replicate<T>(this SpanBlock512<T> src, Span<T> buffer)
             where T : unmanaged
         {
             src.CopyTo(buffer);

@@ -7,7 +7,7 @@ namespace Z0
     partial class BitSpans
     {
         [MethodImpl(Inline), Op]
-        public static BitSpan select(in BitSpan a, in BitSpan b, in BitSpan c, in BitSpan z)
+        public static BitSpan select(BitSpan a, BitSpan b, BitSpan c, BitSpan z)
         {
             var tmp = alloc(z.BitCount);
             not(a, tmp);
@@ -23,7 +23,7 @@ namespace Z0
         /// <param name="a">The first operand</param>
         /// <param name="b">The second operand</param>
         [Op]
-        public static BitSpan select(in BitSpan a, in BitSpan b, in BitSpan c)
+        public static BitSpan select(BitSpan a, BitSpan b, BitSpan c)
             => select(a, b, c, alloc(c.BitCount));
     }
 }

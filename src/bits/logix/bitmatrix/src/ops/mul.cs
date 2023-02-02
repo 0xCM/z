@@ -180,7 +180,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static ref BitMatrix64 mul(ref BitMatrix64 A, BitMatrix64 B)
+        public static BitMatrix64 mul(ref BitMatrix64 A, BitMatrix64 B)
         {
             const int N = 64;
             var C = B.Transpose();
@@ -193,18 +193,19 @@ namespace Z0
                 A[i] = (ulong)z;
             }
 
-            return ref A;
+            return A;
         }
 
         [Op]
-        public static BitMatrix64 mul(in BitMatrix64 A, in BitMatrix64 B)
+        public static BitMatrix64 mul(BitMatrix64 A, BitMatrix64 B)
         {
             var C = A.Replicate();
-            return mul(ref C, B);
+            mul(ref C, B);
+            return C;
         }
 
         [MethodImpl(Inline), Op]
-        public static BitVector64 mul(in BitMatrix64 A, BitVector64 B)
+        public static BitVector64 mul(BitMatrix64 A, BitVector64 B)
         {
             const int N = 64;
             var dst = BitVectors.alloc(n64);
@@ -284,7 +285,7 @@ namespace Z0
         /// <param name="Z">The target matrix</param>
         /// <typeparam name="N">The order type</typeparam>
         /// <typeparam name="T">The matrix storage type</typeparam>
-        public static BitMatrix<N,T> mul<N,T>(in BitMatrix<N,T> A, in BitMatrix<N,T> B)
+        public static BitMatrix<N,T> mul<N,T>(BitMatrix<N,T> A, BitMatrix<N,T> B)
             where N : unmanaged, ITypeNat
             where T : unmanaged
         {

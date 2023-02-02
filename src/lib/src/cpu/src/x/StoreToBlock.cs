@@ -12,7 +12,7 @@ namespace Z0
         /// <param name="src">The source vector</param>
         /// <param name="dst">The target memory</param>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static unsafe void StoreTo<T>(this Vector128<T> src, in SpanBlock128<T> dst)
+        public static unsafe void StoreTo<T>(this Vector128<T> src, SpanBlock128<T> dst)
             where T : unmanaged
                 => gcpu.vstore(src, dst);
 
@@ -23,7 +23,7 @@ namespace Z0
         /// <param name="dst">The target memory</param>
         /// <param name="block">The 0-based block index at which storage should begin</param>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static unsafe void StoreTo<T>(this Vector128<T> src, in SpanBlock128<T> dst, int block)
+        public static unsafe void StoreTo<T>(this Vector128<T> src, SpanBlock128<T> dst, int block)
             where T : unmanaged
                 => gcpu.vstore(src, dst, block);
 
@@ -33,7 +33,7 @@ namespace Z0
         /// <param name="src">The source vector</param>
         /// <param name="dst">The target memory</param>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static unsafe void StoreTo<T>(this Vector256<T> src, in SpanBlock256<T> dst)
+        public static unsafe void StoreTo<T>(this Vector256<T> src, SpanBlock256<T> dst)
             where T : unmanaged
                 => gcpu.vstore(src, dst);
 
@@ -54,7 +54,7 @@ namespace Z0
         /// <param name="dst">The target memory</param>
         /// <param name="block">The 0-based block index at which storage should begin</param>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static unsafe void StoreTo<T>(this Vector256<T> src, in SpanBlock256<T> dst, int block)
+        public static unsafe void StoreTo<T>(this Vector256<T> src, SpanBlock256<T> dst, int block)
             where T : unmanaged
                 => gcpu.vstore(src, dst, block);
 

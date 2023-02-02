@@ -46,7 +46,7 @@ namespace Z0
         /// <param name="src">The memory source</param>
         /// <param name="dst">The target vector</param>
         [MethodImpl(Inline), Op(inflate)]
-        public static unsafe Vector256<long> vinflate256x64i(in SpanBlock128<uint> src, uint offset)
+        public static unsafe Vector256<long> vinflate256x64i(SpanBlock128<uint> src, uint offset)
             => ConvertToVector256Int64(gptr(src[offset]));
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Z0
         /// <param name="src">The memory source</param>
         /// <param name="dst">The target vector</param>
         [MethodImpl(Inline), Op(inflate)]
-        public static unsafe Vector256<long> vinflate256x64i(in SpanBlock128<int> src, uint offset)
+        public static unsafe Vector256<long> vinflate256x64i(SpanBlock128<int> src, uint offset)
             => ConvertToVector256Int64(gptr(src[offset]));
     }
 }

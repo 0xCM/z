@@ -27,7 +27,7 @@ namespace Z0
                 => new BitMatrix<T>(src);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static BitMatrix<T> load<T>(in SpanBlock256<T> src)
+        public static BitMatrix<T> load<T>(SpanBlock256<T> src)
             where T : unmanaged
                 => new BitMatrix<T>(src);
 

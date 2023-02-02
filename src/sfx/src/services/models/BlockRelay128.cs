@@ -29,7 +29,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public void Deposit(in SpanBlock128<T> src)
+        public void Deposit(SpanBlock128<T> src)
             => Target.Deposit(src);
 
         [MethodImpl(Inline)]
@@ -64,7 +64,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public void Deposit(in SpanBlock128<T> src)
+        public void Deposit(SpanBlock128<T> src)
             => Sink.Deposit(src);
 
         [MethodImpl(Inline)]

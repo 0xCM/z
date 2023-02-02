@@ -40,13 +40,13 @@ namespace Z0
                 => gcalc.apply(nonimpl<T>(), a, b, dst);
 
         [MethodImpl(Inline), NonImpl, Closures(Closure)]
-        public static ref readonly SpanBlock128<T> nonimpl<T>(in SpanBlock128<T> a, in SpanBlock128<T> b, in SpanBlock128<T> dst)
+        public static SpanBlock128<T> nonimpl<T>(SpanBlock128<T> a, SpanBlock128<T> b, SpanBlock128<T> dst)
             where T : unmanaged
-                => ref nonimpl<T>(w128).Invoke(a, b, dst);
+                => nonimpl<T>(w128).Invoke(a, b, dst);
 
         [MethodImpl(Inline), NonImpl, Closures(Closure)]
-        public static ref readonly SpanBlock256<T> nonimpl<T>(in SpanBlock256<T> a, in SpanBlock256<T> b, in SpanBlock256<T> dst)
+        public static SpanBlock256<T> nonimpl<T>(SpanBlock256<T> a, SpanBlock256<T> b, SpanBlock256<T> dst)
             where T : unmanaged
-                => ref nonimpl<T>(w256).Invoke(a, b, dst);
+                => nonimpl<T>(w256).Invoke(a, b, dst);
     }
 }

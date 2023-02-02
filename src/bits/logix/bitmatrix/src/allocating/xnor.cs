@@ -20,7 +20,7 @@ namespace Z0
         /// <param name="B">The right matrix</param>
         /// <typeparam name="T">The primal type over which the matrix is constructed</typeparam>
         [MethodImpl(Inline), Xnor, Closures(UnsignedInts)]
-        public static BitMatrix<T> xnor<T>(in BitMatrix<T> A, in BitMatrix<T> B)
+        public static BitMatrix<T> xnor<T>(BitMatrix<T> A, BitMatrix<T> B)
             where T : unmanaged
         {
             var Z = BitMatrix.alloc<T>();

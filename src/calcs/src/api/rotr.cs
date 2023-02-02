@@ -30,13 +30,13 @@ namespace Z0
                 => default(Rotr256<T>);
 
         [MethodImpl(Inline), Rotr, Closures(Integers)]
-        public static ref readonly SpanBlock128<T> rotr<T>(in SpanBlock128<T> a, [Imm] byte count, in SpanBlock128<T> dst)
+        public static SpanBlock128<T> rotr<T>(SpanBlock128<T> a, [Imm] byte count, SpanBlock128<T> dst)
             where T : unmanaged
-                => ref rotr<T>(w128).Invoke(a, count, dst);
+                => rotr<T>(w128).Invoke(a, count, dst);
 
         [MethodImpl(Inline), Rotr, Closures(Integers)]
-        public static ref readonly SpanBlock256<T> rotr<T>(in SpanBlock256<T> a, [Imm] byte count, in SpanBlock256<T> dst)
+        public static SpanBlock256<T> rotr<T>(SpanBlock256<T> a, [Imm] byte count, SpanBlock256<T> dst)
             where T : unmanaged
-                => ref rotr<T>(w256).Invoke(a, count, dst);
+                => rotr<T>(w256).Invoke(a, count, dst);
     }
 }

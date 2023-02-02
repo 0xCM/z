@@ -17,7 +17,7 @@ namespace Z0
         /// <typeparam name="N">The length type</typeparam>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline)]
-        public static NatSpan<N,T> natspan<N,T>(in SpanBlock256<T> src, N n = default)
+        public static NatSpan<N,T> natspan<N,T>(SpanBlock256<T> src, N n = default)
             where N : unmanaged, ITypeNat
             where T : unmanaged
                 => NatSpans.load(src.Storage, n);
@@ -29,7 +29,7 @@ namespace Z0
         /// <param name="offset">The span index at which to begin the load</param>
         /// <typeparam name="T">The element type</typeparam>
         [MethodImpl(Inline)]
-        internal static SpanBlock256<T> safeload<N,T>(N256 n, in NatSpan<N,T> src)
+        internal static SpanBlock256<T> safeload<N,T>(N256 n, NatSpan<N,T> src)
             where T : unmanaged
             where N : unmanaged, ITypeNat
                 => SpanBlocks.safeload(n,src.Edit);

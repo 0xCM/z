@@ -25,7 +25,7 @@ namespace Z0
         /// <param name="lo">The lower target</param>
         /// <param name="hi">The upper target</param>
         [MethodImpl(Inline), Op]
-        public static unsafe Vector512<ulong> vinflate512x64u(in SpanBlock256<uint> src, uint offset)
+        public static unsafe Vector512<ulong> vinflate512x64u(SpanBlock256<uint> src, uint offset)
             => (v64u(ConvertToVector256Int64(gptr(src[offset]))),
                 v64u(ConvertToVector256Int64(gptr(src[offset],4))));
 
@@ -37,7 +37,7 @@ namespace Z0
         /// <param name="lo">The lower target</param>
         /// <param name="hi">The upper target</param>
         [MethodImpl(Inline), Op]
-        public static unsafe Vector512<ulong> vinflate512x64u(in SpanBlock128<ushort> src, uint offset)
+        public static unsafe Vector512<ulong> vinflate512x64u(SpanBlock128<ushort> src, uint offset)
             => (v64u(ConvertToVector256Int64(gptr(src[offset]))),
                 v64u(ConvertToVector256Int64(gptr(src[offset],4))));
 

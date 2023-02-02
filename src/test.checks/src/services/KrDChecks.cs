@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
-
     public class KrDChecks: Checker<KrDChecks>
     {
         public Outcome CheckSeq8u()

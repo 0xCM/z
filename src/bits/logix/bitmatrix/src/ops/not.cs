@@ -12,7 +12,7 @@ namespace Z0
         /// <param name="a">The source matrix</param>
         /// <typeparam name="T">The primal type over which the matrix is constructed</typeparam>
         [MethodImpl(Inline), Not, Closures(Closure)]
-        public static BitMatrix<T> not<T>(in BitMatrix<T> a)
+        public static BitMatrix<T> not<T>(BitMatrix<T> a)
             where T : unmanaged
                 => BitMatrixA.not(a);
 
@@ -115,10 +115,10 @@ namespace Z0
         /// </summary>
         /// <param name="A">The source matrix</param>
         [MethodImpl(Inline), Not]
-        public static BitMatrix64 not(in BitMatrix64 A)
+        public static BitMatrix64 not(BitMatrix64 A)
         {
             var Z = BitMatrix.alloc(n64);
-            vlogic.not(in A.Head, ref Z.Head);
+            vlogic.not(A.Head, ref Z.Head);
             return Z;
         }
 
@@ -128,9 +128,9 @@ namespace Z0
         /// <param name="A">The source matrix</param>
         /// <param name="Z">The target matrix</param>
         [MethodImpl(Inline), Not]
-        public static ref BitMatrix64 not(in BitMatrix64 A, ref BitMatrix64 Z)
+        public static ref BitMatrix64 not(BitMatrix64 A, ref BitMatrix64 Z)
         {
-            vlogic.not(in A.Head, ref Z.Head);
+            vlogic.not(A.Head, ref Z.Head);
             return ref Z;
         }
     }

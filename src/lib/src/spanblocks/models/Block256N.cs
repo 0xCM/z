@@ -86,7 +86,8 @@ namespace Z0
             where U:unmanaged
         {
             var dst = RowVectors.blockalloc<N,U>();
-            return Map(f, ref dst);
+            Map(f, ref dst);
+            return dst;
         }
 
         /// <summary>

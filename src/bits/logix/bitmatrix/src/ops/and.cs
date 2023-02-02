@@ -44,12 +44,12 @@ namespace Z0
         /// <typeparam name="N">The matrix order</typeparam>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline)]
-        public static ref readonly BitMatrix<N,T> and<N,T>(in BitMatrix<N,T> A, in BitMatrix<N,T> B, in BitMatrix<N,T> C)
+        public static BitMatrix<N,T> and<N,T>(BitMatrix<N,T> A, BitMatrix<N,T> B, BitMatrix<N,T> C)
             where N : unmanaged, ITypeNat
             where T : unmanaged
         {
             Calcs.and(A.Content, B.Content, C.Content);
-            return ref C;
+            return C;
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Z0
         /// <param name="A">The left matrix</param>
         /// <param name="B">The right matrix</param>
         [MethodImpl(Inline), And]
-        public static BitMatrix64 and(in BitMatrix64 A, in BitMatrix64 B)
+        public static BitMatrix64 and(BitMatrix64 A, BitMatrix64 B)
         {
             var Z = BitMatrix.alloc(n64);
             vlogic.and(in A.Head, in B.Head, ref Z.Head);

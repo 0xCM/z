@@ -22,7 +22,7 @@ namespace Z0
                 => @false<T>();
 
         [MethodImpl(Inline), False, Closures(UnsignedInts)]
-        public static BitMatrix<T> @false<T>(in BitMatrix<T> A, in BitMatrix<T> B)
+        public static BitMatrix<T> @false<T>(BitMatrix<T> A, BitMatrix<T> B)
             where T:unmanaged
                 => @false<T>();
 
@@ -33,7 +33,7 @@ namespace Z0
         /// <param name="B">The right matrix</param>
         /// <typeparam name="T">The primal type over which the matrices are constructed</typeparam>
         [MethodImpl(Inline), And, Closures(UnsignedInts)]
-        public static BitMatrix<T> and<T>(in BitMatrix<T> A, in BitMatrix<T> B)
+        public static BitMatrix<T> and<T>(BitMatrix<T> A, BitMatrix<T> B)
             where T : unmanaged
         {
             var Z = BitMatrix.alloc<T>();
@@ -77,7 +77,7 @@ namespace Z0
         /// <param name="A">The source matrix</param>
         /// <typeparam name="T">The primal type over which the matrix is constructed</typeparam>
         [MethodImpl(Inline), Not, Closures(UnsignedInts)]
-        public static BitMatrix<T> not<T>(in BitMatrix<T> A)
+        public static BitMatrix<T> not<T>(BitMatrix<T> A)
             where T : unmanaged
         {
             var Z = BitMatrix.alloc<T>();
@@ -86,7 +86,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public static BitMatrix<T> xornot<T>(in BitMatrix<T> A, in BitMatrix<T> B)
+        public static BitMatrix<T> xornot<T>(BitMatrix<T> A, BitMatrix<T> B)
             where T : unmanaged
         {
             var Z = BitMatrix.alloc<T>();
@@ -95,7 +95,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), RNot, NumericClosures(UnsignedInts)]
-        public static BitMatrix<T> rnot<T>(in BitMatrix<T> a, in BitMatrix<T> b)
+        public static BitMatrix<T> rnot<T>(BitMatrix<T> a, BitMatrix<T> b)
             where T : unmanaged
                 => BitMatrix.not(b);
 
@@ -106,7 +106,7 @@ namespace Z0
         /// <param name="B">The right matrix</param>
         /// <typeparam name="T">The primal type over which the matrix is constructed</typeparam>
         [MethodImpl(Inline), Op, Closures(UnsignedInts)]
-        public static BitMatrix<T> cnonimpl<T>(in BitMatrix<T> A, in BitMatrix<T> B)
+        public static BitMatrix<T> cnonimpl<T>(BitMatrix<T> A, BitMatrix<T> B)
             where T : unmanaged
         {
             var Z = BitMatrix.alloc<T>();
@@ -122,7 +122,7 @@ namespace Z0
         /// <typeparam name="N">The matrix order</typeparam>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline)]
-        public static BitMatrix<N,T> and<N,T>(in BitMatrix<N,T> A, in BitMatrix<N,T> B)
+        public static BitMatrix<N,T> and<N,T>(BitMatrix<N,T> A, BitMatrix<N,T> B)
             where N : unmanaged, ITypeNat
             where T : unmanaged
                 => BitMatrix.and(A, B, BitMatrix.alloc<N,T>());

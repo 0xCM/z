@@ -64,7 +64,7 @@ namespace Z0
                 => load(slice(src.Storage,firstRow, lastRow - firstRow));
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static RowBits<T> not<T>(in RowBits<T> src, in RowBits<T> dst)
+        public static RowBits<T> not<T>(RowBits<T> src, RowBits<T> dst)
             where T : unmanaged
         {
             for(var i=0; i<src.RowCount; i++)
@@ -73,7 +73,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static RowBits<T> and<T>(in RowBits<T> a, in RowBits<T> b, in RowBits<T> dst)
+        public static RowBits<T> and<T>(RowBits<T> a, RowBits<T> b, RowBits<T> dst)
             where T : unmanaged
         {
             var count = a.RowCount;
@@ -83,7 +83,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static RowBits<T> cnonimpl<T>(in RowBits<T> a, in RowBits<T> b, in RowBits<T> dst)
+        public static RowBits<T> cnonimpl<T>(RowBits<T> a, RowBits<T> b, RowBits<T> dst)
             where T : unmanaged
         {
             var count = a.RowCount;
@@ -93,7 +93,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static RowBits<T> or<T>(in RowBits<T> x, in RowBits<T> y, in RowBits<T> dst)
+        public static RowBits<T> or<T>(RowBits<T> x, RowBits<T> y, RowBits<T> dst)
             where T : unmanaged
         {
             var rc = x.RowCount;
@@ -103,7 +103,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static RowBits<T> xor<T>(in RowBits<T> x, in RowBits<T> y, in RowBits<T> dst)
+        public static RowBits<T> xor<T>(RowBits<T> x, RowBits<T> y, RowBits<T> dst)
             where T : unmanaged
         {
             var rc = x.RowCount;
@@ -113,7 +113,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static RowBits<T> nand<T>(in RowBits<T> x, in RowBits<T> y, in RowBits<T> dst)
+        public static RowBits<T> nand<T>(RowBits<T> x, RowBits<T> y, RowBits<T> dst)
             where T : unmanaged
         {
             var rc = x.RowCount;
@@ -123,7 +123,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static RowBits<T> nor<T>(in RowBits<T> a, in RowBits<T> b, in RowBits<T> dst)
+        public static RowBits<T> nor<T>(RowBits<T> a, RowBits<T> b, RowBits<T> dst)
             where T : unmanaged
         {
             var count = a.RowCount;
@@ -133,7 +133,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static RowBits<T> xnor<T>(in RowBits<T> a, in RowBits<T> b, in RowBits<T> dst)
+        public static RowBits<T> xnor<T>(RowBits<T> a, RowBits<T> b, RowBits<T> dst)
             where T : unmanaged
         {
             var count = a.RowCount;
@@ -143,42 +143,42 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static RowBits<T> not<T>(in RowBits<T> x)
+        public static RowBits<T> not<T>(RowBits<T> x)
             where T : unmanaged
                 => not(x, alloc<T>(x.RowCount));
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static RowBits<T> and<T>(in RowBits<T> x, in RowBits<T> y)
+        public static RowBits<T> and<T>(RowBits<T> x, RowBits<T> y)
             where T : unmanaged
                 => and(x,y, alloc<T>(x.RowCount));
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static RowBits<T> cnonimpl<T>(in RowBits<T> x, in RowBits<T> y)
+        public static RowBits<T> cnonimpl<T>(RowBits<T> x, RowBits<T> y)
             where T : unmanaged
                 => cnonimpl(x,y, alloc<T>(x.RowCount));
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static RowBits<T> or<T>(in RowBits<T> x, in RowBits<T> y)
+        public static RowBits<T> or<T>(RowBits<T> x, RowBits<T> y)
             where T : unmanaged
                 => or(x,y, alloc<T>(x.RowCount));
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static RowBits<T> xor<T>(in RowBits<T> x, in RowBits<T> y)
+        public static RowBits<T> xor<T>(RowBits<T> x, RowBits<T> y)
             where T : unmanaged
                 => xor(x,y, alloc<T>(x.RowCount));
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static RowBits<T> nand<T>(in RowBits<T> x, in RowBits<T> y)
+        public static RowBits<T> nand<T>(RowBits<T> x, RowBits<T> y)
             where T : unmanaged
                 => nand(x,y, alloc<T>(x.RowCount));
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static RowBits<T> nor<T>(in RowBits<T> x, in RowBits<T> y)
+        public static RowBits<T> nor<T>(RowBits<T> x, RowBits<T> y)
             where T : unmanaged
                 => nor(x,y, alloc<T>(x.RowCount));
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static RowBits<T> xnor<T>(in RowBits<T> x, in RowBits<T> y)
+        public static RowBits<T> xnor<T>(RowBits<T> x, RowBits<T> y)
             where T : unmanaged
                 => xnor(x,y, alloc<T>(x.RowCount));
     }

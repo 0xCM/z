@@ -36,7 +36,7 @@ namespace Z0
         /// <param name="src">The packed bit source</param>
         /// <param name="dst">The unpacked bit target</param>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static void unpack1x32<T>(ReadOnlySpan<T> src, in SpanBlock256<uint> dst)
+        public static void unpack1x32<T>(ReadOnlySpan<T> src, SpanBlock256<uint> dst)
             where T : unmanaged
         {
             var blockcount = dst.BlockCount;
@@ -54,7 +54,7 @@ namespace Z0
         /// <param name="block">The target block index</param>
         /// <typeparam name="T">The source type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static void unpack1x32<T>(ReadOnlySpan<T> src, in SpanBlock256<uint> dst, int block)
+        public static void unpack1x32<T>(ReadOnlySpan<T> src, SpanBlock256<uint> dst, int block)
             where T : unmanaged
         {
             const int blocklen = 8;
@@ -68,7 +68,7 @@ namespace Z0
         /// <param name="src">The packed bit source</param>
         /// <param name="dst">The unpacked bit target</param>
         [MethodImpl(Inline)]
-        public static void unpack1x32<T>(Span<T> src, in SpanBlock256<uint> dst)
+        public static void unpack1x32<T>(Span<T> src, SpanBlock256<uint> dst)
             where T : unmanaged
                 => unpack1x32(src.ReadOnly(),dst);
 
@@ -80,7 +80,7 @@ namespace Z0
         /// <param name="block">The target block index</param>
         /// <typeparam name="T">The source type</typeparam>
         [MethodImpl(Inline)]
-        public void unpack1x32<T>(Span<T> src, in SpanBlock256<uint> dst, int block)
+        public void unpack1x32<T>(Span<T> src, SpanBlock256<uint> dst, int block)
             where T : unmanaged
                 => unpack1x32(src.ReadOnly(), dst, block);
     }

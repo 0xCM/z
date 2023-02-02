@@ -43,7 +43,7 @@ namespace Z0
         /// <param name="gz">The target grid</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Negate, Closures(UnsignedInts)]
-        public static BitSpanBlocks256<T> negate<T>(in BitSpanBlocks256<T> x, in BitSpanBlocks256<T> gz)
+        public static BitSpanBlocks256<T> negate<T>(BitSpanBlocks256<T> x, BitSpanBlocks256<T> gz)
             where T : unmanaged
         {
             var blocks = gz.BlockCount;
@@ -116,7 +116,7 @@ namespace Z0
         /// <typeparam name="N">The col count type</typeparam>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline)]
-        public static BitGrid256<M,N,T> negate<M,N,T>(in BitGrid256<M,N,T> x)
+        public static BitGrid256<M,N,T> negate<M,N,T>(BitGrid256<M,N,T> x)
             where T : unmanaged
             where N : unmanaged, ITypeNat
             where M : unmanaged, ITypeNat
@@ -131,7 +131,7 @@ namespace Z0
         /// <typeparam name="N">The col count type</typeparam>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline)]
-        public static BitGrid<M,N,T> negate<M,N,T>(in BitGrid<M,N,T> x, in BitGrid<M,N,T> gz)
+        public static BitGrid<M,N,T> negate<M,N,T>(BitGrid<M,N,T> x, BitGrid<M,N,T> gz)
             where T : unmanaged
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
@@ -150,7 +150,7 @@ namespace Z0
         /// <typeparam name="N">The col count type</typeparam>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline)]
-        public static BitGrid<M,N,T> negate<M,N,T>(in BitGrid<M,N,T> x)
+        public static BitGrid<M,N,T> negate<M,N,T>(BitGrid<M,N,T> x)
             where T : unmanaged
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat

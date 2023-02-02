@@ -22,7 +22,7 @@ namespace Z0
             Source = src;
         }
 
-        public BitSpan Fill(in BitSpan dst)
+        public BitSpan Fill(BitSpan dst)
         {
             var count = dst.Length;
             var stream = Source.BitStream().Take(count);

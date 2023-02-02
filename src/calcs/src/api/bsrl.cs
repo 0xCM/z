@@ -20,13 +20,13 @@ namespace Z0
                 => default(Bsrl256<T>);
 
         [MethodImpl(Inline), Bsrl, Closures(Closure)]
-        public static ref readonly SpanBlock128<T> bsrl<T>(in SpanBlock128<T> a, [Imm] byte count, in SpanBlock128<T> dst)
+        public static SpanBlock128<T> bsrl<T>(SpanBlock128<T> a, [Imm] byte count, SpanBlock128<T> dst)
             where T : unmanaged
-                => ref bsrl<T>(w128).Invoke(a, count, dst);
+                => bsrl<T>(w128).Invoke(a, count, dst);
 
         [MethodImpl(Inline), Bsrl, Closures(Closure)]
-        public static ref readonly SpanBlock256<T> brsl<T>(in SpanBlock256<T> a, [Imm] byte count, in SpanBlock256<T> dst)
+        public static SpanBlock256<T> brsl<T>(SpanBlock256<T> a, [Imm] byte count, SpanBlock256<T> dst)
             where T : unmanaged
-                => ref bsrl<T>(w256).Invoke(a, count, dst);
+                => bsrl<T>(w256).Invoke(a, count, dst);
     }
 }

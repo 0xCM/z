@@ -35,12 +35,12 @@ namespace Z0
                 => default(NonZ256<T>);
 
         [MethodImpl(Inline), Nonz, Closures(Closure)]
-        public static Span<bit> nonz<T>(in SpanBlock128<T> a, Span<bit> dst)
+        public static Span<bit> nonz<T>(SpanBlock128<T> a, Span<bit> dst)
             where T : unmanaged
                 => nonz<T>(w128).Invoke(a, dst);
 
         [MethodImpl(Inline), Nonz, Closures(Closure)]
-        public static Span<bit> nonz<T>(in SpanBlock256<T> a, Span<bit> dst)
+        public static Span<bit> nonz<T>(SpanBlock256<T> a, Span<bit> dst)
             where T : unmanaged
                 => nonz<T>(w256).Invoke(a, dst);
     }

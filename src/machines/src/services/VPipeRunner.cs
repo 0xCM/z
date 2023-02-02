@@ -61,7 +61,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public void Deposit(in SpanBlock128<byte> src)
+        public void Deposit(SpanBlock128<byte> src)
         {
             Counter++;
         }

@@ -433,7 +433,7 @@ namespace Z0
         /// <param name="map">The grid map</param>
         /// <typeparam name="T">The segment type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static BitSpanBlocks256<T> load<T>(in SpanBlock256<T> src, ushort rows, ushort cols)
+        public static BitSpanBlocks256<T> load<T>(SpanBlock256<T> src, ushort rows, ushort cols)
             where T : unmanaged
                 => new BitSpanBlocks256<T>(src, rows, cols);
 

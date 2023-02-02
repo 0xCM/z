@@ -43,13 +43,13 @@ namespace Z0
     public interface IBlockedTernaryOp128<T> : IBlockedFunc<W128,T>
         where T : unmanaged
     {
-        ref readonly SpanBlock128<T> Invoke(in SpanBlock128<T> a, in SpanBlock128<T> b, in SpanBlock128<T> c, in SpanBlock128<T> dst);
+        SpanBlock128<T> Invoke(SpanBlock128<T> a, SpanBlock128<T> b, SpanBlock128<T> c, SpanBlock128<T> dst);
     }
 
     [Free, SFx]
     public interface IBlockedTernaryOp256<T> : IBlockedFunc<W256,T>
         where T : unmanaged
     {
-        ref readonly SpanBlock256<T> Invoke(in SpanBlock256<T> a, in SpanBlock256<T> b, in SpanBlock256<T> c,in SpanBlock256<T> dst);
+        SpanBlock256<T> Invoke(SpanBlock256<T> a, SpanBlock256<T> b, SpanBlock256<T> c,SpanBlock256<T> dst);
     }
 }

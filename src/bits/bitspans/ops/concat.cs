@@ -12,7 +12,7 @@ namespace Z0
         /// <param name="head">The leading bits</param>
         /// <param name="tail">The trailing bits</param>
         [Op]
-        public static BitSpan concat(in BitSpan head, in BitSpan tail)
+        public static BitSpan concat(BitSpan head, BitSpan tail)
         {
             Span<bit> dst = core.alloc<bit>(head.Length + tail.Length);
             head.Storage.CopyTo(dst);

@@ -14,7 +14,7 @@ namespace Z0
         /// <param name="block2">The block index of the second vector</param>
         /// <typeparam name="T">The primitive type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ConstPair<Vector128<T>> LoadVectors<T>(this in SpanBlock128<T> src, int block1, int block2)
+        public static ConstPair<Vector128<T>> LoadVectors<T>(this SpanBlock128<T> src, int block1, int block2)
             where T : unmanaged
                 => (gcpu.vload(src, block1), gcpu.vload(src, block2));
 
@@ -27,7 +27,7 @@ namespace Z0
         /// <param name="block3">The block index of the third vector</param>
         /// <typeparam name="T">The primitive type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ConstTriple<Vector128<T>> LoadVectors<T>(this in SpanBlock128<T> src, int block1, int block2, int block3)
+        public static ConstTriple<Vector128<T>> LoadVectors<T>(this SpanBlock128<T> src, int block1, int block2, int block3)
             where T : unmanaged
                 => (gcpu.vload(src, block1), gcpu.vload(src, block2), gcpu.vload(src, block3));
 
@@ -39,7 +39,7 @@ namespace Z0
         /// <param name="block2">The block index of the second vector</param>
         /// <typeparam name="T">The primitive type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ConstPair<Vector256<T>> LoadVectors<T>(this in SpanBlock256<T> src, int block1, int block2)
+        public static ConstPair<Vector256<T>> LoadVectors<T>(this SpanBlock256<T> src, int block1, int block2)
             where T : unmanaged
                 => (gcpu.vload(src, block1), gcpu.vload(src, block2));
 
@@ -52,7 +52,7 @@ namespace Z0
         /// <param name="block3">The block index of the third vector</param>
         /// <typeparam name="T">The primitive type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ConstTriple<Vector256<T>> LoadVectors<T>(this in SpanBlock256<T> src, int block1, int block2, int block3)
+        public static ConstTriple<Vector256<T>> LoadVectors<T>(this SpanBlock256<T> src, int block1, int block2, int block3)
             where T : unmanaged
                 => (gcpu.vload(src, block1), gcpu.vload(src, block2), gcpu.vload(src, block3));
     }

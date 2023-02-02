@@ -38,7 +38,7 @@ namespace Z0
         /// <param name="src">The blocked memory source</param>
         /// <param name="w">The target width</param>
         [MethodImpl(Inline), Op]
-        public static unsafe Vector256<ushort> vinflate256x16u(in SpanBlock128<byte> src, uint offset)
+        public static unsafe Vector256<ushort> vinflate256x16u(SpanBlock128<byte> src, uint offset)
             => v16u(ConvertToVector256Int16(gptr(src[offset])));
 
         [MethodImpl(Inline), Op]

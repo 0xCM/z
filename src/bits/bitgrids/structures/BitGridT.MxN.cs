@@ -17,7 +17,7 @@ namespace Z0
         internal readonly SpanBlock256<T> Data;
 
         [MethodImpl(Inline)]
-        internal BitGrid(in SpanBlock256<T> src)
+        internal BitGrid(SpanBlock256<T> src)
             => Data = src;
 
         /// <summary>

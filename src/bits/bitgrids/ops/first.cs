@@ -64,7 +64,7 @@ namespace Z0
         /// <typeparam name="N">The col count type</typeparam>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline)]
-        public static BitGrid128<M,N,T> first<M,N,T>(in SpanBlock128<T> src, M m = default, N n = default)
+        public static BitGrid128<M,N,T> first<M,N,T>(SpanBlock128<T> src, M m = default, N n = default)
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
             where T : unmanaged
@@ -80,7 +80,7 @@ namespace Z0
         /// <typeparam name="N">The col count type</typeparam>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline)]
-        public static BitGrid256<M,N,T> first<M,N,T>(in SpanBlock256<T> src, M m = default, N n = default)
+        public static BitGrid256<M,N,T> first<M,N,T>(SpanBlock256<T> src, M m = default, N n = default)
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
             where T : unmanaged

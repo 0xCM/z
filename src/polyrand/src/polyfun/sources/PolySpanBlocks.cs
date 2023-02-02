@@ -416,7 +416,7 @@ namespace Z0
         /// <param name="dst">The target block</param>
         /// <param name="block">The target block index</param>
         /// <typeparam name="T">The block cell type</typeparam>
-        public static SpanBlock128<T> SpanBlock<T>(this IBoundSource random, T min, T max, in SpanBlock128<T> dst, int block)
+        public static SpanBlock128<T> SpanBlock<T>(this IBoundSource random, T min, T max, SpanBlock128<T> dst, int block)
             where T : unmanaged
         {
             random.Fill(min,max, dst.Block(block));
@@ -432,7 +432,7 @@ namespace Z0
         /// <param name="dst">The target block</param>
         /// <param name="block">The target block index</param>
         /// <typeparam name="T">The block cell type</typeparam>
-        public static SpanBlock256<T> SpanBlock<T>(this IBoundSource random, T min, T max, in SpanBlock256<T> dst, int block)
+        public static SpanBlock256<T> SpanBlock<T>(this IBoundSource random, T min, T max, SpanBlock256<T> dst, int block)
             where T : unmanaged
         {
             random.Fill(min,max,dst.Block(block));
@@ -652,7 +652,7 @@ namespace Z0
         /// <param name="dst">The target block</param>
         /// <param name="block">The target block index</param>
         /// <typeparam name="T">The block cell type</typeparam>
-        public static SpanBlock128<T> SpanBlock<T>(this ISource random, in SpanBlock128<T> dst, int block)
+        public static SpanBlock128<T> SpanBlock<T>(this ISource random, SpanBlock128<T> dst, int block)
             where T : unmanaged
         {
             random.Fill(dst.Block(block));
@@ -666,7 +666,7 @@ namespace Z0
         /// <param name="dst">The target block</param>
         /// <param name="block">The target block index</param>
         /// <typeparam name="T">The block cell type</typeparam>
-        public static SpanBlock256<T> SpanBlock<T>(this ISource random, in SpanBlock256<T> dst, int block)
+        public static SpanBlock256<T> SpanBlock<T>(this ISource random, SpanBlock256<T> dst, int block)
             where T : unmanaged
         {
             random.Fill(dst.Block(block));
@@ -872,7 +872,7 @@ namespace Z0
         /// <param name="source">The data source</param>
         /// <param name="dst">The target block</param>
         /// <typeparam name="T">The cell type</typeparam>
-        public static void Fill<T>(this ISource source, in SpanBlock128<T> dst)
+        public static void Fill<T>(this ISource source, SpanBlock128<T> dst)
             where T : unmanaged
                 => source.Fill(dst.Storage);
 
@@ -882,7 +882,7 @@ namespace Z0
         /// <param name="src">The data source</param>
         /// <param name="dst">The target block</param>
         /// <typeparam name="T">The cell type</typeparam>
-        public static void Fill<T>(this ISource src, in SpanBlock256<T> dst)
+        public static void Fill<T>(this ISource src, SpanBlock256<T> dst)
             where T : unmanaged
                 => src.Fill(dst.Storage);
 
@@ -940,7 +940,7 @@ namespace Z0
         /// <param name="min">The inclusive lower bound</param>
         /// <param name="max">The exclusive upper bound</param>
         /// <typeparam name="T">The cell type</typeparam>
-        public static void Fill<T>(this IBoundSource src, T min, T max, in SpanBlock128<T> dst)
+        public static void Fill<T>(this IBoundSource src, T min, T max, SpanBlock128<T> dst)
             where T : unmanaged
                 => src.Fill(min,max,dst.Storage);
 
@@ -952,7 +952,7 @@ namespace Z0
         /// <param name="min">The inclusive lower bound</param>
         /// <param name="max">The exclusive upper bound</param>
         /// <typeparam name="T">The cell type</typeparam>
-        public static void Fill<T>(this IBoundSource src, T min, T max, in SpanBlock256<T> dst)
+        public static void Fill<T>(this IBoundSource src, T min, T max, SpanBlock256<T> dst)
             where T : unmanaged
                 => src.Fill(min,max,dst.Storage);
 

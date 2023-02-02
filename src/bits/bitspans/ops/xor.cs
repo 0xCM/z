@@ -7,7 +7,7 @@ namespace Z0
     partial class BitSpans
     {
         [MethodImpl(Inline), Op]
-        public static BitSpan xor(in BitSpan a, in BitSpan b, in BitSpan c)
+        public static BitSpan xor(BitSpan a, BitSpan b, BitSpan c)
         {
             var count = c.Length;
             for(var i=0; i< count; i++)
@@ -16,7 +16,7 @@ namespace Z0
         }
 
         [Op]
-        public static BitSpan xor(in BitSpan a, in BitSpan b)
+        public static BitSpan xor(BitSpan a, BitSpan b)
             => xor(a, b, alloc(b.BitCount));
     }
 }

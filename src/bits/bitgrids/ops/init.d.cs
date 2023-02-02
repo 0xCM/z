@@ -13,7 +13,7 @@ namespace Z0
         /// <param name="dst">The target block</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline),Op, Closures(AllNumeric)]
-        public static void broadcast<T>(T data, in SpanBlock256<T> dst)
+        public static void broadcast<T>(T data, SpanBlock256<T> dst)
             where T : unmanaged
                 => dst.Fill(data);
 

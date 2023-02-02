@@ -4,10 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.Runtime.CompilerServices;
-
-    using static Root;
-
     partial class BitMatrixA
     {
         /// <summary>
@@ -18,7 +14,7 @@ namespace Z0
         /// <param name="B">The target matrix</param>
         /// <typeparam name="T">The primal type over which the matrix is constructed</typeparam>
         [MethodImpl(Inline), Nand, Closures(UnsignedInts)]
-        public static BitMatrix<T> nand<T>(in BitMatrix<T> A, in BitMatrix<T> B, in BitMatrix<T> Z)
+        public static BitMatrix<T> nand<T>(BitMatrix<T> A, BitMatrix<T> B, BitMatrix<T> Z)
             where T : unmanaged
         {
             vlogic.nand(A.Head, B.Head, ref Z.Head);
@@ -32,7 +28,7 @@ namespace Z0
         /// <param name="B">The right matrix</param>
         /// <typeparam name="T">The primal type over which the matrix is constructed</typeparam>
         [MethodImpl(Inline), Nand, Closures(UnsignedInts)]
-        public static unsafe BitMatrix<T> nand<T>(in BitMatrix<T> A, in BitMatrix<T> B)
+        public static unsafe BitMatrix<T> nand<T>(BitMatrix<T> A, BitMatrix<T> B)
             where T : unmanaged
         {
             var Z = BitMatrix.alloc<T>();
@@ -46,7 +42,7 @@ namespace Z0
         /// <param name="A">The left matrix</param>
         /// <param name="B">The right matrix</param>
         [MethodImpl(Inline), Nand]
-        public static unsafe BitMatrix8 nand(in BitMatrix8 A, in BitMatrix8 B)
+        public static unsafe BitMatrix8 nand(BitMatrix8 A, BitMatrix8 B)
         {
             var Z = BitMatrix.alloc(n8);
             vlogic.nand(in A.Head, in B.Head, ref Z.Head);
@@ -59,7 +55,7 @@ namespace Z0
         /// <param name="A">The left matrix</param>
         /// <param name="B">The right matrix</param>
         [MethodImpl(Inline), Nand]
-        public static unsafe BitMatrix16 nand(in BitMatrix16 A, in BitMatrix16 B)
+        public static unsafe BitMatrix16 nand(BitMatrix16 A, BitMatrix16 B)
         {
             var Z = BitMatrix.alloc(n16);
             vlogic.nand(in A.Head, in B.Head, ref Z.Head);
@@ -72,7 +68,7 @@ namespace Z0
         /// <param name="A">The left matrix</param>
         /// <param name="B">The right matrix</param>
         [MethodImpl(Inline), Nand]
-        public static unsafe BitMatrix32 nand(in BitMatrix32 A, in BitMatrix32 B)
+        public static unsafe BitMatrix32 nand(BitMatrix32 A, BitMatrix32 B)
         {
             var Z = BitMatrix.alloc(n32);
             vlogic.nand(in A.Head, in B.Head, ref Z.Head);
@@ -85,7 +81,7 @@ namespace Z0
         /// <param name="A">The left matrix</param>
         /// <param name="B">The right matrix</param>
         [MethodImpl(Inline), Nand]
-        public static unsafe BitMatrix64 nand(in BitMatrix64 A, in BitMatrix64 B)
+        public static unsafe BitMatrix64 nand(BitMatrix64 A, BitMatrix64 B)
         {
             var Z = BitMatrix.alloc(n64);
             vlogic.nand(in A.Head, in B.Head, ref Z.Head);

@@ -10,7 +10,7 @@ namespace Z0
         /// Computes the bitwise AND between two square bitmatrices of common order
         /// </summary>
         [MethodImpl(Inline)]
-        public static BitMatrix<N,T> xor<N,T>(in BitMatrix<N,T> A, in BitMatrix<N,T> B)
+        public static BitMatrix<N,T> xor<N,T>(BitMatrix<N,T> A, BitMatrix<N,T> B)
             where N : unmanaged, ITypeNat
             where T : unmanaged
         {
@@ -94,7 +94,7 @@ namespace Z0
         /// <param name="A">The left matrix</param>
         /// <param name="B">The right matrix</param>
         [MethodImpl(Inline), Xor]
-        public static BitMatrix64 xor(in BitMatrix64 A, in BitMatrix64 B)
+        public static BitMatrix64 xor(BitMatrix64 A, BitMatrix64 B)
         {
             var Z = BitMatrix.alloc(n64);
             vlogic.xor(in A.Head,in B.Head, ref Z.Head);

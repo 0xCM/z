@@ -25,7 +25,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">The pack source</param>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ushort pack16x8x1<T>(in SpanBlock128<T> src, uint block = 0)
+        public static ushort pack16x8x1<T>(SpanBlock128<T> src, uint block = 0)
             where T : unmanaged
                 => pack16x8x1(src.BlockLead((int)block));
 

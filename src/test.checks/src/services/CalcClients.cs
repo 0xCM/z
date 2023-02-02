@@ -67,14 +67,14 @@ namespace Z0
                 => Calcs.bvor<T>().Invoke(x,y);
 
         [MethodImpl(Inline), Srl, Closures(Closure)]
-        public static ref readonly SpanBlock128<T> srl<T>(in SpanBlock128<T> a, [Imm] byte count, in SpanBlock128<T> dst)
+        public static SpanBlock128<T> srl<T>(SpanBlock128<T> a, [Imm] byte count, SpanBlock128<T> dst)
             where T : unmanaged
-                => ref Calcs.srl<T>(w128).Invoke(a, count, dst);
+                => Calcs.srl<T>(w128).Invoke(a, count, dst);
 
         [MethodImpl(Inline), Srl, Closures(Closure)]
-        public static ref readonly SpanBlock256<T> srl<T>(in SpanBlock256<T> a, [Imm] byte count, in SpanBlock256<T> dst)
+        public static SpanBlock256<T> srl<T>(SpanBlock256<T> a, [Imm] byte count, SpanBlock256<T> dst)
             where T : unmanaged
-                => ref Calcs.srl<T>(w256).Invoke(a, count, dst);
+                => Calcs.srl<T>(w256).Invoke(a, count, dst);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public ScalarBits<T> sub<T>(ScalarBits<T> x, ScalarBits<T> y)
@@ -82,13 +82,13 @@ namespace Z0
                 => Calcs.bvsub<T>().Invoke(x,y);
 
         [MethodImpl(Inline), Xor, Closures(Closure)]
-        public static ref readonly SpanBlock128<T> xor<T>(in SpanBlock128<T> a, in SpanBlock128<T> b, in SpanBlock128<T> dst)
+        public static SpanBlock128<T> xor<T>(SpanBlock128<T> a, SpanBlock128<T> b, SpanBlock128<T> dst)
             where T : unmanaged
-                => ref Calcs.xor<T>(w128).Invoke(a, b, dst);
+                => Calcs.xor<T>(w128).Invoke(a, b, dst);
 
         [MethodImpl(Inline), Xor, Closures(Closure)]
-        public static ref readonly SpanBlock256<T> xor<T>(in SpanBlock256<T> a, in SpanBlock256<T> b, in SpanBlock256<T> dst)
+        public static SpanBlock256<T> xor<T>(SpanBlock256<T> a, SpanBlock256<T> b, SpanBlock256<T> dst)
             where T : unmanaged
-                => ref Calcs.xor<T>(w256).Invoke(a, b, dst);
+                => Calcs.xor<T>(w256).Invoke(a, b, dst);
     }
 }

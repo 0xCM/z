@@ -39,13 +39,13 @@ namespace Z0
                 => gcalc.apply(Calcs.dec<T>(), src, dst);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref readonly SpanBlock128<T> dec<T>(in SpanBlock128<T> a, in SpanBlock128<T> dst)
+        public static SpanBlock128<T> dec<T>(SpanBlock128<T> a, SpanBlock128<T> dst)
             where T : unmanaged
-                => ref dec<T>(w128).Invoke(a, dst);
+                => dec<T>(w128).Invoke(a, dst);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref readonly SpanBlock256<T> dec<T>(in SpanBlock256<T> a, in SpanBlock256<T> dst)
+        public static SpanBlock256<T> dec<T>(SpanBlock256<T> a, SpanBlock256<T> dst)
             where T : unmanaged
-                => ref dec<T>(w256).Invoke(a, dst);
+                => dec<T>(w256).Invoke(a, dst);
     }
 }

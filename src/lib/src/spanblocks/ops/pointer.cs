@@ -14,7 +14,7 @@ namespace Z0
         /// <param name="src">The source block</param>
         /// <typeparam name="T">The reference type</typeparam>
         [MethodImpl(Inline),Op, Closures(Closure)]
-        public static unsafe T* ptr<T>(in SpanBlock128<T> src)
+        public static unsafe T* ptr<T>(SpanBlock128<T> src)
             where T : unmanaged
                 => gptr(src.First);
 
@@ -24,7 +24,7 @@ namespace Z0
         /// <param name="src">The source block</param>
         /// <typeparam name="T">The reference type</typeparam>
         [MethodImpl(Inline),Op, Closures(Closure)]
-        public static unsafe T* ptr<T>(in SpanBlock256<T> src)
+        public static unsafe T* ptr<T>(SpanBlock256<T> src)
             where T : unmanaged
                 => gptr(src.First);
     }

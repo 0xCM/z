@@ -13,7 +13,7 @@ namespace Z0
         /// <param name="index">The linear index of the target bit, relative to the sequence head</param>
         /// <typeparam name="T">The sequence type</typeparam>
         [MethodImpl(Inline), TestBit, Closures(Closure)]
-        public static bit testbit<T>(in SpanBlock256<T> src, int index)
+        public static bit testbit<T>(SpanBlock256<T> src, int index)
             where T : unmanaged
         {
             var pos = BitPos.bitpos<T>((uint)index);

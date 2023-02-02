@@ -52,8 +52,8 @@ namespace Z0
             where T : unmanaged
         {
             [MethodImpl(Inline)]
-            public ref readonly SpanBlock128<T> Invoke(in SpanBlock128<T> src, in SpanBlock128<T> dst)
-                => ref SpanBlocks.map(src, dst, Calcs.vinc<T>(w128));
+            public SpanBlock128<T> Invoke(SpanBlock128<T> src, SpanBlock128<T> dst)
+                => SpanBlocks.map(src, dst, Calcs.vinc<T>(w128));
         }
 
         [NumericClosures(AllNumeric), Inc]
@@ -61,8 +61,8 @@ namespace Z0
             where T : unmanaged
         {
             [MethodImpl(Inline)]
-            public ref readonly SpanBlock256<T> Invoke(in SpanBlock256<T> src, in SpanBlock256<T> dst)
-                => ref SpanBlocks.map(src, dst, Calcs.vinc<T>(w256));
+            public SpanBlock256<T> Invoke(SpanBlock256<T> src, SpanBlock256<T> dst)
+                => SpanBlocks.map(src, dst, Calcs.vinc<T>(w256));
         }
     }
 }

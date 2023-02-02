@@ -13,7 +13,7 @@ namespace Z0
         /// <param name="block">The block index</param>
         /// <typeparam name="T">The primitive type</typeparam>
         [MethodImpl(Inline)]
-        public static Vector128<T> LoadVector<T>(this in SpanBlock128<T> src)
+        public static Vector128<T> LoadVector<T>(this SpanBlock128<T> src)
             where T : unmanaged
                 => gcpu.vload(src, 0);
 
@@ -23,7 +23,7 @@ namespace Z0
         /// <param name="src">The source span</param>
         /// <typeparam name="T">The primitive type</typeparam>
         [MethodImpl(Inline)]
-        public static Vector256<T> LoadVector<T>(this in SpanBlock256<T> src)
+        public static Vector256<T> LoadVector<T>(this SpanBlock256<T> src)
             where T : unmanaged
                 => gcpu.vload(src);
 
@@ -45,7 +45,7 @@ namespace Z0
         /// <param name="block">The block index</param>
         /// <typeparam name="T">The primitive type</typeparam>
         [MethodImpl(Inline)]
-        public static Vector128<T> LoadVector<T>(this in SpanBlock128<T> src, int block)
+        public static Vector128<T> LoadVector<T>(this SpanBlock128<T> src, int block)
             where T : unmanaged
                 => gcpu.vload(src, block);
 
@@ -56,7 +56,7 @@ namespace Z0
         /// <param name="block">The block index</param>
         /// <typeparam name="T">The primitive type</typeparam>
         [MethodImpl(Inline)]
-        public static Vector256<T> LoadVector<T>(this in SpanBlock256<T> src, int block)
+        public static Vector256<T> LoadVector<T>(this SpanBlock256<T> src, int block)
             where T : unmanaged
                 => gcpu.vload(src,block);
 
@@ -67,7 +67,7 @@ namespace Z0
         /// <param name="block">The block index</param>
         /// <typeparam name="T">The primitive type</typeparam>
         [MethodImpl(Inline)]
-        public static Vector256<T> LoadVector<T>(this in SpanBlock256<T> src, uint block)
+        public static Vector256<T> LoadVector<T>(this SpanBlock256<T> src, uint block)
             where T : unmanaged
                 => gcpu.vload(src, (int)block);
 

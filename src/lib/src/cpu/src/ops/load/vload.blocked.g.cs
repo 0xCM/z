@@ -12,7 +12,7 @@ namespace Z0
         /// <param name="src">The source span</param>
         /// <typeparam name="T">The component type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static Vector128<T> vload<T>(in SpanBlock128<T> src)
+        public static Vector128<T> vload<T>(SpanBlock128<T> src)
             where T : unmanaged
                 => vload(w128, src.Storage);
 
@@ -22,7 +22,7 @@ namespace Z0
         /// <param name="src">The source span</param>
         /// <typeparam name="T">The component type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static Vector256<T> vload<T>(in SpanBlock256<T> src)
+        public static Vector256<T> vload<T>(SpanBlock256<T> src)
             where T : unmanaged
                 => vload(w256, src.Storage);
 
@@ -43,7 +43,7 @@ namespace Z0
         /// <param name="block">The block index</param>
         /// <typeparam name="T">The component type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static Vector128<T> vload<T>(in SpanBlock128<T> src, int block)
+        public static Vector128<T> vload<T>(SpanBlock128<T> src, int block)
             where T : unmanaged
                 => vload(src.BlockLead(block), out Vector128<T> x);
 
@@ -54,7 +54,7 @@ namespace Z0
         /// <param name="block">The block index</param>
         /// <typeparam name="T">The component type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static Vector256<T> vload<T>(in SpanBlock256<T> src, int block)
+        public static Vector256<T> vload<T>(SpanBlock256<T> src, int block)
             where T : unmanaged
                 => vload(src.BlockLead(block), out Vector256<T> x);
 
