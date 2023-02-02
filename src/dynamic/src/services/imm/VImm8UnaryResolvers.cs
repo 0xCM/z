@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     public readonly struct VImm8UnaryResolvers
     {
         public static V128Imm8UnaryResolver<T> create<T>(Type host, W128 w)

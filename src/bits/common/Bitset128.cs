@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
-
+    using static sys;
 
     public struct Bitset128<T>
         where T : unmanaged

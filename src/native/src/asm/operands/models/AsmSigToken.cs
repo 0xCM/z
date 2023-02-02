@@ -54,7 +54,7 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => core.bw16(this);
+            get => sys.bw16(this);
         }
 
         public override int GetHashCode()

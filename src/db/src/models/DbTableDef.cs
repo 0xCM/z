@@ -27,6 +27,5 @@ namespace Z0
         [MethodImpl(Inline)]
         public int CompareTo(DbTableDef src)
             => Name.CompareTo(src.Name);
-    }
-    
+    }   
 }

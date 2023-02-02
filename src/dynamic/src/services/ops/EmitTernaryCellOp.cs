@@ -6,7 +6,7 @@ namespace Z0
 {
     using System;
 
-    using static core;
+    using static sys;
 
     partial class Dynop
     {

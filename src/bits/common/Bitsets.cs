@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     public readonly struct Bitsets
     {
@@ -13,7 +13,7 @@ namespace Z0
             where T : unmanaged
                 => new Bitset128<T>(src);
 
-        public static string format<T>(in Bitset128<T> src, string sep = ",", int pad = 0)
+        public static string format<T>(Bitset128<T> src, string sep = ",", int pad = 0)
             where T : unmanaged
         {
             var dst = text.buffer();
