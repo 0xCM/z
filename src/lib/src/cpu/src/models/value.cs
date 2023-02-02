@@ -16,17 +16,17 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector128<byte> vector<T>(W64 w, value<T> src)
             where T : unmanaged
-                => cpu.v8u(cpu.vscalar(w128, uint64(src.Data)));
+                => vcpu.v8u(vcpu.vscalar(w128, uint64(src.Data)));
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector128<byte> vector<T>(W128 w, value<T> src)
             where T : unmanaged
-                => cpu.vload(w, src.Bytes);
+                => vcpu.vload(w, src.Bytes);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector256<byte> vector<T>(W256 w, value<T> src)
             where T : unmanaged
-                => cpu.vload(w, src.Bytes);
+                => vcpu.vload(w, src.Bytes);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Hash32 hash<T>(value<T> src)

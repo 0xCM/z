@@ -62,7 +62,7 @@ namespace Z0
             return dst.Array();
         }
 
-        public static IWfRuntime runtime(string[] args, bool verbose = true)
+        public static IWfRuntime runtime(bool verbose = true)
         {
             var factory = typeof(ApiServers);
             try
@@ -75,7 +75,6 @@ namespace Z0
                 var id = control.Id();
                 var dst = new WfInit();
                 dst.Verbosity = verbose ? LogLevel.Babble : LogLevel.Status;
-                dst.Args = args;
                 dst.LogConfig = Loggers.configure(id, AppSettings.Default.Logs());
                 dst.LogConfig.ErrorPath.CreateParentIfMissing();
                 dst.LogConfig.StatusPath.CreateParentIfMissing();
@@ -119,20 +118,20 @@ namespace Z0
             return app;
         }
 
-        public static A shell<A>(bool catalog, params string[] args)
+        public static A shell<A>()
             where A : IAppShell, new()
         {
-            var wf = runtime(args);
+            var wf = runtime();
             var app = new A();
             app.Init(wf);
             return app;
         }
 
-        public static A shell<A,C>(bool catalog, string[] args, Func<IWfRuntime,ReadOnlySeq<IApiCmdProvider>> factory, bool verbose = false)
+        public static A shell<A,C>(Func<IWfRuntime,ReadOnlySeq<IApiCmdProvider>> factory, bool verbose = false)
             where A : IAppShell, new()
             where C : IApiService, new()
         {
-            var wf = runtime(args);
+            var wf = runtime();
             var channel = wf.Channel;
             if(verbose)
                 channel.Babble("Creating api server");

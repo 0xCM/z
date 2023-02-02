@@ -6,7 +6,8 @@ namespace Z0
 {
     using static sys;
 
-    public readonly partial struct AsciG
+    [ApiHost]
+    public readonly struct AsciG
     {
         [Op,Closures(UInt8k)]
         public static AsciGrid<T> grid<T>(Symbols<T> src, uint width)

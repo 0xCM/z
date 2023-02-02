@@ -6,8 +6,6 @@ namespace Z0
 {
     public record class WfInit
     {
-        public ReadOnlySeq<string> Args;
-        
         public LogSettings LogConfig;
 
         public TokenDispenser Tokens;

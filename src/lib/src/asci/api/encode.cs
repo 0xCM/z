@@ -117,12 +117,12 @@ namespace Z0
         /// <param name="count">The number of characters to encode</param>
         /// <param name="dst">The receiver</param>
         [MethodImpl(Inline), Op]
-        public static ref readonly asci4 encode(in char src, byte count, out asci4 dst)
+        public static asci4 encode(in char src, byte count, out asci4 dst)
         {
             dst = asci4.Null;
             ref var storage = ref Unsafe.As<asci4,AsciCode>(ref dst);
             codes(src, (byte)count, ref storage);
-            return ref dst;
+            return dst;
         }
 
         /// <summary>

@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static System.Runtime.Intrinsics.X86.Sse41;
-    using static core;
+    using static sys;
 
     partial struct vpack
     {
@@ -33,6 +33,6 @@ namespace Z0
         /// <param name="i">Signals a sign extension</param>
         [MethodImpl(Inline), Op]
         public static unsafe Vector128<ushort> vunpack8x8(in byte src)
-            => gcpu.v16u(ConvertToVector128Int16(gptr(src)));
+            => vcpu.v16u(ConvertToVector128Int16(gptr(src)));
     }
 }

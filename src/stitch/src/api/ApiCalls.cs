@@ -6,8 +6,8 @@ namespace Z0
 {
     using static sys;
 
-    [ApiHost]
-    public readonly partial struct ApiCalls
+    [ApiHost,Free]
+    public class ApiCalls
     {
         const NumericKind Closure = UnsignedInts;
 
@@ -20,7 +20,7 @@ namespace Z0
         public static void serialize<T>(in T call, Span<byte> dst)
             where T : unmanaged, IApiCall<T>
         {
-            cpu.vstore(call.Api.V8u, ref first(dst));
+            vcpu.vstore(call.Api.V8u, ref first(dst));
             var remainder = slice(bytes(call), 16);
             var size = remainder.Length;
             var j=0;

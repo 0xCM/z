@@ -89,7 +89,7 @@ namespace Z0
         /// <param name="c">The third asci code</param>
         [MethodImpl(Inline), Op]
         public static asci4 define(AsciCode a, AsciCode b, AsciCode c)
-            => new asci4(Asci.pack(a, b, c, out var _ ));
+            => new asci4(pack(a, b, c, out var _ ));
 
         /// <summary>
         /// Encodes a 4-character asci sequence
@@ -100,6 +100,6 @@ namespace Z0
         /// <param name="d">The fourth asci code</param>
         [MethodImpl(Inline), Op]
         public static asci4 define(AsciCode c0, AsciCode c1, AsciCode c2, AsciCode c3)
-            => new asci4(Asci.pack(c0,c1,c2,c3, out var dst));
+            => new asci4(pack(c0,c1,c2,c3, out var dst));
    }
 }

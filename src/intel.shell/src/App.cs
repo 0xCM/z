@@ -29,7 +29,7 @@ namespace Z0
         static int main(string[] args)
         {
             var result = 0;
-            using var app = ApiServers.shell<App,AppCmd>(false, args, providers);
+            using var app = ApiServers.shell<App,AppCmd>(providers);
             try
             {
                 GlobalServices.Instance.Inject(app.Wf.XedRuntime());

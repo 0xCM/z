@@ -12,6 +12,6 @@ namespace Z0
     [ApiHost,Free]
     public partial class vcpu
     {
-
+        const NumericKind Closure = UnsignedInts;
     }
 }

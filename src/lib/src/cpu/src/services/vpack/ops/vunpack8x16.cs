@@ -5,8 +5,7 @@
 namespace Z0
 {
     using static System.Runtime.Intrinsics.X86.Avx2;
-    using static core;
-    using static cpu;
+    using static sys;
 
     partial struct vpack
     {
@@ -32,6 +31,6 @@ namespace Z0
         /// <param name="dst">The target component width</param>
         [MethodImpl(Inline), Op]
         public static unsafe Vector256<ushort> vunpack8x16(in byte src)
-            => v16u(ConvertToVector256Int16(gptr(src)));
+            => vcpu.v16u(ConvertToVector256Int16(gptr(src)));
     }
 }

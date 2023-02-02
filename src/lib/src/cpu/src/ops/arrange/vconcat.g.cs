@@ -4,12 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-    using System.Runtime.Intrinsics;
-
-    using static Root;
-    using static core;
+    using static sys;
 
     partial struct gcpu
     {
@@ -35,13 +30,13 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(byte))
-                return generic<T>(cpu.vconcat(v8u(lo), v8u(hi)));
+                return generic<T>(vcpu.vconcat(v8u(lo), v8u(hi)));
             else if(typeof(T) == typeof(ushort))
-                return generic<T>(cpu.vconcat(v16u(lo), v16u(hi)));
+                return generic<T>(vcpu.vconcat(v16u(lo), v16u(hi)));
             else if(typeof(T) == typeof(uint))
-                return generic<T>(cpu.vconcat(v32u(lo), v32u(hi)));
+                return generic<T>(vcpu.vconcat(v32u(lo), v32u(hi)));
             else if(typeof(T) == typeof(ulong))
-                return generic<T>(cpu.vconcat(v64u(lo), v64u(hi)));
+                return generic<T>(vcpu.vconcat(v64u(lo), v64u(hi)));
             else
                 return vconcat_i(lo,hi);
         }
@@ -51,13 +46,13 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(sbyte))
-                return generic<T>(cpu.vconcat(v8i(lo), v8i(hi)));
+                return generic<T>(vcpu.vconcat(v8i(lo), v8i(hi)));
             else if(typeof(T) == typeof(short))
-                return generic<T>(cpu.vconcat(v16i(lo), v16i(hi)));
+                return generic<T>(vcpu.vconcat(v16i(lo), v16i(hi)));
             else if(typeof(T) == typeof(int))
-                return generic<T>(cpu.vconcat(v32i(lo), v32i(hi)));
+                return generic<T>(vcpu.vconcat(v32i(lo), v32i(hi)));
             else if(typeof(T) == typeof(long))
-                return generic<T>(cpu.vconcat(v64i(lo), v64i(hi)));
+                return generic<T>(vcpu.vconcat(v64i(lo), v64i(hi)));
             else
                 return vconcat_f(lo,hi);
         }
@@ -67,9 +62,9 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(float))
-                return generic<T>(cpu.vconcat(v32f(lo), v32f(hi)));
+                return generic<T>(vcpu.vconcat(v32f(lo), v32f(hi)));
             else if(typeof(T) == typeof(double))
-                return generic<T>(cpu.vconcat(v64f(lo), v64f(hi)));
+                return generic<T>(vcpu.vconcat(v64f(lo), v64f(hi)));
             else
                 throw no<T>();
         }

@@ -77,11 +77,11 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static void decode(N16 n, ReadOnlySpan<byte> src, Span<char> dst)
-            => cpu.vstore(vpack.vinflate256x16u(cpu.vload(w128,src)), ref @as<ushort>(core.first(dst)));
+            => vcpu.vstore(vpack.vinflate256x16u(vcpu.vload(w128,src)), ref @as<ushort>(sys.first(dst)));
 
         [MethodImpl(Inline), Op]
         public static string decode(asci16 src)
-            => sys.@string(slice(recover<char>(core.bytes(vpack.vinflate256x16u(src.Storage))),0, src.Length));
+            => sys.@string(slice(recover<char>(sys.bytes(vpack.vinflate256x16u(src.Storage))),0, src.Length));
 
         [MethodImpl(Inline), Op]
         public static void decode(N48 n, ReadOnlySpan<byte> src, Span<char> dst)
@@ -93,7 +93,7 @@ namespace Z0
             offset+=16;
             cpu.vstore(vpack.vinflatehi256x16u(v), ref seek(target,offset));
             offset+=16;
-            decode(n16, core.slice(src,offset), core.slice(dst,offset));
+            decode(n16, sys.slice(src,offset), sys.slice(dst,offset));
         }
 
         [MethodImpl(Inline), Op]
@@ -121,7 +121,7 @@ namespace Z0
         public static void decode(N32 n, ReadOnlySpan<byte> src, Span<char> dst)
         {
             ref var target = ref @as<ushort>(first(dst));
-            var v = cpu.vload(w256, src);
+            var v = vcpu.vload(w256, src);
             cpu.vstore(vpack.vinflatelo256x16u(v), ref target);
             cpu.vstore(vpack.vinflatehi256x16u(v), ref seek(target,16));
         }
@@ -205,15 +205,15 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static void decode(AsciBlock8 src, ref char dst)
         {
-            var decoded = vpack.vinflate256x16u(cpu.vbytes(w128, src));
-            cpu.vstore(decoded.GetLower(), ref @as<char,ushort>(dst));
+            var decoded = vpack.vinflate256x16u(vcpu.vbytes(w128, src));
+            vcpu.vstore(decoded.GetLower(), ref @as<char,ushort>(dst));
         }
 
         [MethodImpl(Inline), Op]
         public static void decode(AsciBlock16 src, ref char dst)
         {
            var decoded = vpack.vinflate256x16u(src.First);
-           cpu.vstore(decoded, ref @as<char,ushort>(dst));
+           vcpu.vstore(decoded, ref @as<char,ushort>(dst));
         }
 
         [MethodImpl(Inline), Op]
@@ -251,8 +251,8 @@ namespace Z0
         public static string decode(AsciBlock64 src)
         {
             ref var storage = ref src.First;
-            var v1 = cpu.vload(w256, storage);
-            var v2 = cpu.vload(w256, sys.seek(storage, 32));
+            var v1 = vcpu.vload(w256, storage);
+            var v2 = vcpu.vload(w256, sys.seek(storage, 32));
             var x0 = vpack.vinflatelo256x16u(v1);
             var x1 = vpack.vinflatehi256x16u(v1);
             var x2 = vpack.vinflatelo256x16u(v2);

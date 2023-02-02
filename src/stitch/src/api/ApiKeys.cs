@@ -181,6 +181,5 @@ namespace Z0
 
             return new string(slice(buffer,0,j));
         }
-
     }
 }

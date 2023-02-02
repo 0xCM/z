@@ -101,11 +101,11 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static unsafe void copy(in asci16 src, ref byte dst)
-            => cpu.vstore(src.Storage, ref dst);
+            => vcpu.vstore(src.Storage, ref dst);
 
         [MethodImpl(Inline), Op]
         public static unsafe void copy(in asci16 src, Span<byte> dst)
-            => cpu.vstore(src.Storage, dst);
+            => vcpu.vstore(src.Storage, dst);
 
         [MethodImpl(Inline), Op]
         public static void store(in asci16 src, Span<char> dst)

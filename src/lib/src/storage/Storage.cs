@@ -138,7 +138,7 @@ namespace Z0
             var size = max(src.Length, Size);
             var data = slice(src, 0, size);
             if(size == Size)
-                cpu.vstore(cpu.vload(w, data), ref target);
+                vcpu.vstore(cpu.vload(w, data), ref target);
             else
                 Bytes.copy(data,  ref target);
 
@@ -178,33 +178,33 @@ namespace Z0
             const ushort Block2 = 2*32;
             const ushort Block3 = 3*32;
 
-            var v0 = cpu.vload(w256, skip(src,Block0));
-            cpu.vstore(v0, ref seek(u8(dst), Block0));
+            var v0 = vcpu.vload(w256, skip(src,Block0));
+            vcpu.vstore(v0, ref seek(u8(dst), Block0));
 
-            v0 = cpu.vload(w256, skip(src, Block1));
-            cpu.vstore(v0, ref seek(u8(dst), Block1));
+            v0 = vcpu.vload(w256, skip(src, Block1));
+            vcpu.vstore(v0, ref seek(u8(dst), Block1));
 
-            v0 = cpu.vload(w256, skip(src, Block2));
-            cpu.vstore(v0, ref seek(u8(dst), Block2));
+            v0 = vcpu.vload(w256, skip(src, Block2));
+            vcpu.vstore(v0, ref seek(u8(dst), Block2));
 
-            v0 = cpu.vload(w256, skip(src, Block3));
-            cpu.vstore(v0, ref seek(u8(dst), Block3));
+            v0 = vcpu.vload(w256, skip(src, Block3));
+            vcpu.vstore(v0, ref seek(u8(dst), Block3));
 
             return ref dst;
         }
 
         [MethodImpl(Inline), Op]
         public static ReadOnlySpan<char> inflate16u(in ByteBlock8 src)
-            => recover<char>(bytes(cpu.vlo(vpack.vinflate256x16u(cpu.vbytes(w128, u64(src))))));
+            => recover<char>(bytes(cpu.vlo(vpack.vinflate256x16u(vcpu.vbytes(w128, u64(src))))));
 
         [MethodImpl(Inline), Op]
         public static ReadOnlySpan<char> inflate16u(in ByteBlock16 src)
-            => recover<char>(bytes(cpu.vlo(vpack.vinflate256x16u(cpu.vbytes(w128, u64(src))))));
+            => recover<char>(bytes(cpu.vlo(vpack.vinflate256x16u(vcpu.vbytes(w128, u64(src))))));
 
         [MethodImpl(Inline), Op]
         public static ReadOnlySpan<char> inflate16u(in ByteBlock32 src)
         {
-            var v = cpu.vload(w256, src.Bytes);
+            var v = vcpu.vload(w256, src.Bytes);
             var lo = vpack.vinflatelo256x16u(v);
             var hi = vpack.vinflatehi256x16u(v);
             return recover<char>(sys.bytes(new V256x2(lo,hi)));

@@ -9,7 +9,7 @@ namespace Z0
     partial struct Storage
     {
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ref T broadcast<S,T>(in S src, out T dst)
+        public static T broadcast<S,T>(in S src, out T dst)
             where T : unmanaged, IStorageBlock<T>
             where S : unmanaged
         {
@@ -30,7 +30,7 @@ namespace Z0
                     seek(dst.Bytes,i) = skip(a,j++);
             }
 
-            return ref dst;
+            return dst;
         }
 
         [MethodImpl(Inline), Op, Closures(Closure)]
@@ -38,7 +38,7 @@ namespace Z0
             where T : unmanaged
         {
             var x = cpu.vbroadcast(w128, uint8(src));
-            cpu.vstore(x, ref ByteBlocks.alloc(n16, out var dst));
+            vcpu.vstore(x, ref ByteBlocks.alloc(n16, out var dst));
             return @as<ByteBlock16,ByteBlock8>(dst);
         }
 
@@ -47,7 +47,7 @@ namespace Z0
             where T : unmanaged
         {
             var x = cpu.vbroadcast(w, uint8(src));
-            cpu.vstore(x, ref ByteBlocks.alloc(n16, out var dst));
+            vcpu.vstore(x, ref ByteBlocks.alloc(n16, out var dst));
             return dst;
         }
 

@@ -18,24 +18,6 @@ namespace Z0
         public static PageBlockInfo describe(MemoryPage src)
             => new PageBlockInfo(src.Range);
 
-        // [MethodImpl(Inline)]
-        // public static void alloc(out PageBlock16x4 dst)
-        // {
-        //     dst = default;
-        // }
-
-        // [MethodImpl(Inline)]
-        // public static void alloc(out PageBlock128 dst)
-        // {
-        //     dst = default;
-        // }
-
-        // [MethodImpl(Inline)]
-        // public static void alloc(out PageBlock256 dst)
-        // {
-        //     dst = default;
-        // }
-
         [MethodImpl(Inline)]
         public static uint PageCount<T>()
             where T : unmanaged, IPageBlock<T>

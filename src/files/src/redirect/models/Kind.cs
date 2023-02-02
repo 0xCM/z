@@ -4,9 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
-    public static class CellSeq
+    partial class Redirects
     {
-   }
+        public enum Kind : byte
+        {
+            None,
+
+            Folder,
+        }
+    }
 }

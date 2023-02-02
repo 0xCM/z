@@ -67,17 +67,17 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static void pack(N16 n, ReadOnlySpan<char> src, Span<byte> dst)
-            => vstore(vpack128x8u(vload(w256, first(src))), ref first(dst));
+            => vcpu.vstore(vpack128x8u(vload(w256, first(src))), ref first(dst));
 
         [MethodImpl(Inline), Op]
         public static void pack(N32 n, ReadOnlySpan<char> src, Span<byte> dst)
         {
             ref readonly var c0 = ref first(src);
             ref var b0 = ref first(dst);
-            vstore(vpack128x8u(vload(w256, c0)), ref b0);
+            vcpu.vstore(vpack128x8u(vload(w256, c0)), ref b0);
             ref readonly var c1 = ref skip(first(src),16);
             ref var b1 = ref seek(u8(dst),16);
-            vstore(vpack128x8u(vload(w256, c1)), ref b1);
+            vcpu.vstore(vpack128x8u(vload(w256, c1)), ref b1);
         }
 
         [MethodImpl(Inline), Op]
@@ -85,16 +85,16 @@ namespace Z0
         {
             ref readonly var c0 = ref first(src);
             ref var b0 = ref first(dst);
-            vstore(vpack128x8u(vload(w256, c0)), ref b0);
+            vcpu.vstore(vpack128x8u(vload(w256, c0)), ref b0);
             ref readonly var c1 = ref skip(first(src),16);
             ref var b1 = ref seek(u8(dst),16);
-            vstore(vpack128x8u(vload(w256, c1)), ref b1);
+            vcpu.vstore(vpack128x8u(vload(w256, c1)), ref b1);
             ref readonly var c2 = ref skip(first(src),32);
             ref var b2 = ref seek(u8(dst),32);
-            vstore(vpack128x8u(vload(w256, c2)), ref b2);
+            vcpu.vstore(vpack128x8u(vload(w256, c2)), ref b2);
             ref readonly var c3 = ref skip(first(src),48);
             ref var b3 = ref seek(u8(dst),48);
-            vstore(vpack128x8u(vload(w256, c3)), ref b3);
+            vcpu.vstore(vpack128x8u(vload(w256, c3)), ref b3);
         }
 
         [MethodImpl(Inline), Op]
@@ -104,7 +104,7 @@ namespace Z0
             var unpacked = new Vector512<ushort>(vinflatelo256x16u(packed), vinflatehi256x16u(packed));
             var source = v8u(unpacked);
             var target = bytes(dst);
-            vstore(source, target);
+            vcpu.vstore(source, target);
         }
 
         [MethodImpl(Inline), Op]
@@ -113,9 +113,9 @@ namespace Z0
             var a = vinflate256x8u(vcell(src,1), 0);
             var lo = vlo256x16u(a);
             ref var target = ref u16(first(dst));
-            vstore(lo, ref seek(target,0));
+            vcpu.vstore(lo, ref seek(target,0));
             var hi = vhi256x16u(a);
-            vstore(hi, ref seek(target,16));
+            vcpu.vstore(hi, ref seek(target,16));
         }
 
         [MethodImpl(Inline), Op]

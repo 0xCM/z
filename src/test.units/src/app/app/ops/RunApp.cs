@@ -46,7 +46,7 @@ namespace Z0
         public static void Run(Index<PartId> parts, params string[] units)
         {
             var app = new A();
-            var shell = ApiServers.runtime(sys.empty<string>());
+            var shell = ApiServers.runtime();
             app.InjectShell(shell);
             app.SetMode(InDiagnosticMode);
             app.RunUnits(units);

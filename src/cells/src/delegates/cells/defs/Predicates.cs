@@ -49,13 +49,13 @@ namespace Z0
         public delegate bit BinaryPredicate64(Cell64 a, Cell64 b);
 
         [Free]
-        public delegate Bit32 BinaryPredicate128(Cell128 a, Cell128 b);
+        public delegate bit BinaryPredicate128(Cell128 a, Cell128 b);
 
         [Free]
-        public delegate Bit32 BinaryPredicate256(Cell256 a, Cell256 b);
+        public delegate bit BinaryPredicate256(Cell256 a, Cell256 b);
 
         [Free]
-        public delegate Bit32 BinaryPredicate512(Cell512 a, Cell512 b);
+        public delegate bit BinaryPredicate512(Cell512 a, Cell512 b);
 
     }
 }

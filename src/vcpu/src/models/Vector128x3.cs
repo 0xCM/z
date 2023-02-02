@@ -19,9 +19,9 @@ namespace Z0
         {
             var dst = default(Vector128x3);
             dst.Kind = NumericKinds.kind<T>();
-            dst.A = cpu.v64u(src.A);
-            dst.B = cpu.v64u(src.B);
-            dst.C = cpu.v64u(src.C);
+            dst.A = vcpu.v64u(src.A);
+            dst.B = vcpu.v64u(src.B);
+            dst.C = vcpu.v64u(src.C);
             return dst;
         }
     }

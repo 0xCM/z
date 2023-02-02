@@ -33,13 +33,14 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static bool contains(in asci64 src, char match)
             => AsciG.contains(src, (AsciCharSym)match);
+
         [MethodImpl(Inline), Op]
         public static unsafe void copy(in asci64 src, ref byte dst)
-            => cpu.vstore(src.Storage, ref dst);
+            => vcpu.vstore(src.Storage, ref dst);
 
         [MethodImpl(Inline), Op]
         public static unsafe void copy(in asci64 src, Span<byte> dst)
-            => cpu.vstore(src.Storage, dst);
+            => vcpu.vstore(src.Storage, dst);
 
         /// <summary>
         /// Presents the leading source cell as a byte reference
@@ -63,6 +64,6 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static ReadOnlySpan<AsciSymbol> symbols(in asci64 src)
-            => recover<AsciSymbol>(core.bytes(src));
+            => recover<AsciSymbol>(sys.bytes(src));
     }
 }

@@ -14,5 +14,6 @@ namespace Z0
                 => Cells.map(src,f).Storage;
  
         const NumericKind Closure = UnsignedInts;
+
     }
 }

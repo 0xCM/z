@@ -104,13 +104,10 @@ namespace Z0
 
         public override string ToString()
             => Format();
+ 
         [MethodImpl(Inline)]
         public static implicit operator ApiKey(ReadOnlySpan<byte> src)
             => new ApiKey(src);
-
-        // [MethodImpl(Inline)]
-        // public static implicit operator ReadOnlySpan<byte>(ApiKey src)
-        //     => src.Data;
 
         [MethodImpl(Inline)]
         public static implicit operator ApiKey(ReadOnlySpan<ApiKeySeg> src)

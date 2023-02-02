@@ -4,8 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using S = AsciSymbol;
     using static sys;
+
+    using S = AsciSymbol;
 
     partial struct Asci
     {

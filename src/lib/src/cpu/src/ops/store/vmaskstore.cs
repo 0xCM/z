@@ -7,7 +7,7 @@ namespace Z0
     using static System.Runtime.Intrinsics.X86.Sse2;
     using static System.Runtime.Intrinsics.X86.Avx;
     using static System.Runtime.Intrinsics.X86.Avx2;
-    using static core;
+    using static sys;
     using static SpanBlocks;
 
     partial struct cpu
