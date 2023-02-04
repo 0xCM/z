@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
 
     [ApiComplete]
-    public readonly ref struct StackMachine
+    public readonly struct StackMachine
     {
         public const byte CellSize = 8;
 

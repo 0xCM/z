@@ -6,7 +6,6 @@ namespace Z0
 {
     using static sys;
 
-
     public class CpuIdSvc : AppService<CpuIdSvc>
     {
         AppDb AppDb => AppDb.Service;
