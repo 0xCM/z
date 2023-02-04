@@ -28,7 +28,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public ReadOnlySpan<byte> Row(uint index)
-            => AsciG.row(this, index);
+            => Asci.row(this, index);
 
         public string Format()
             => Data.Format();

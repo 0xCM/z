@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
- 
     /// <summary>
     /// Realizes a Bernoulli distribution
     /// </summary>
@@ -14,7 +13,7 @@ namespace Z0
     {
         static T Zero => default;
 
-        static T One => core.one<T>();
+        static T One => sys.one<T>();
 
         public BernoulliDist(IPolyrand random, BernoulliSpec<T> spec)
             : base(random, spec)

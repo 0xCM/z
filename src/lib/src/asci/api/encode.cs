@@ -17,6 +17,19 @@ namespace Z0
             return count;
         }
 
+        public static uint encode<T>(W8 w, N5 n, in SymExpr symbol, T kind, uint offset, Span<byte> dst)
+            where T : unmanaged
+        {
+            const string RenderPattern = "{0,-2} {1,-4} {2,-2} {3,-5}";
+            var index = u8(kind);
+            var bits = BitRender.format5(index);
+            var hex = index.FormatHex(specifier:false);
+            var desc = string.Format(RenderPattern,index, symbol, hex, bits);
+            var width = desc.Length;
+            encode(desc, slice(dst,offset));
+            return (uint)width;
+        }
+
         [MethodImpl(Inline), Op]
         public static ref readonly AsciSeq encode(string src, in AsciSeq dst)
         {
@@ -344,5 +357,27 @@ namespace Z0
             encode(src, slice(dst.Bytes,0,count));
             return dst;
        }
+
+        public static void encode<S,N>(string src, out S dst)
+            where S : struct, IAsciSeq<S,N>
+            where N : unmanaged, ITypeNat
+        {
+            dst = new();
+            if(typeof(N) == typeof(N2))
+                dst = @as<asci2,S>((asci2)src);
+            else if(typeof(N) == typeof(N4))
+                dst = @as<asci4,S>((asci4)src);
+            else if(typeof(N) == typeof(N8))
+                dst = @as<asci8,S>((asci8)src);
+            else if(typeof(N) == typeof(N16))
+                dst = @as<asci16,S>((asci16)src);
+            else if(typeof(N) == typeof(N32))
+                dst = @as<asci32,S>((asci32)src);
+            else if(typeof(N) == typeof(N64))
+                dst = @as<asci64,S>((asci64)src);
+            else
+                throw no<S>();
+        }
+
     }
 }

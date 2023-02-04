@@ -8,8 +8,6 @@ namespace Z0
 
     public class BlitMachine : AppService<BlitMachine>
     {
-        IPolyrand Random;
-
         Index<byte> Buffer;
 
         uint BufferSize;
@@ -17,7 +15,6 @@ namespace Z0
         protected override void Initialized()
         {
             BufferSize = Pow2.T14;
-            Random = Rng.wyhash64();
             Buffer = alloc<byte>(BufferSize);
         }
 

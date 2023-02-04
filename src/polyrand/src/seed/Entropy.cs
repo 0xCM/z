@@ -6,7 +6,7 @@ namespace Z0
 {
     using System.Security.Cryptography;
 
-    using static core;
+    using static sys;
 
     public static class Entropy
     {

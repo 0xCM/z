@@ -70,7 +70,7 @@ namespace Z0
                 ref readonly var entry = ref dispenser.Entry(i);
                 var desc = entry.Descriptor();
                 var capacity = desc.Capacity;
-                Write(RpOps.PageBreak32);
+                Write(RP.PageBreak32);
                 Write(RP.attrib(Pad, nameof(desc.Index), desc.Index));
                 Write(RP.attrib(Pad, nameof(desc.BaseAddress), desc.BaseAddress));
                 Write(RP.attrib(Pad, nameof(desc.EndAddress), desc.EndAddress));
@@ -160,7 +160,7 @@ namespace Z0
             const uint CycleCount = 256;
 
             Task<uint> RunMachine(uint cycles)
-                => Task.Factory.StartNew(() => new VmProcess(CellCount, Rng.@default()).Run(cycles));
+                => Task.Factory.StartNew(() => new BinaryProcessor(CellCount, Rng.@default()).Run(cycles));
 
             var flow = Wf.Running("Test11");
             var clock = Time.counter(true);
@@ -193,22 +193,6 @@ namespace Z0
             count += seq.Compute(receive);
             channel.Write(string.Format("Term Count:{0}", count));
         }
-
-        // static void spin(IWfChannel channel)
-        // {
-        //     var counter = 0u;
-        //     var ticks = 0L;
-
-        //     void Receiver(long t)
-        //     {
-        //         counter++;
-        //         ticks += t;
-        //         channel.Write(string.Format("{0:D4}:{1:D12}", counter, ticks));
-        //     }
-
-        //     var spinner = new Spinner(TimeSpan.FromSeconds(1), Receiver);
-        //     spinner.Spin();
-        // }
 
         void Run(N33 n)
         {

@@ -4,13 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-    using System.Collections.Generic;
-    using System.Runtime.Intrinsics;
-
-    using static Root;
-
     using api = Perm;
 
     partial class XTend
@@ -73,7 +66,5 @@ namespace Z0
         public static NatPerm<N> Perm<N>(this IBoundSource random, N n = default)
             where N : unmanaged, ITypeNat
                 => Shuffle22(api.natural(n), random);
-
-
     }
 }

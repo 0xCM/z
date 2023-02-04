@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
 
     [ApiHost]
-    public class VmProcess
+    public class BinaryProcessor
     {
         ISource Source;
 
@@ -23,7 +23,7 @@ namespace Z0
 
         uint Cycle;
 
-        public VmProcess(uint cells, IBoundSource source)
+        public BinaryProcessor(uint cells, IBoundSource source)
         {
             Source = source;
             CellCount = cells;

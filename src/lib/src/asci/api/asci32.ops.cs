@@ -48,7 +48,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static bool contains(in asci32 src, char match)
-            => AsciG.contains(src, (AsciCharSym)match);
+            => Asci.contains(src, (AsciCharSym)match);
 
         /// <summary>
         /// Returns the index of the first source element that matches a specified value

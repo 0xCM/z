@@ -4,8 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IX86Machine
+    public interface IX86Machine : InstExecutor<AsmCode>
     {
-        void Dispatch(AsmCode asm);
+        
     }
 }

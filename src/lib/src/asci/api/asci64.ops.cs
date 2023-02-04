@@ -32,7 +32,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static bool contains(in asci64 src, char match)
-            => AsciG.contains(src, (AsciCharSym)match);
+            => Asci.contains(src, (AsciCharSym)match);
 
         [MethodImpl(Inline), Op]
         public static unsafe void copy(in asci64 src, ref byte dst)

@@ -4,11 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed class LineMapper<T> : LineMapper<LineMapper<T>, T>
+    public interface InstExecutor<C> 
     {
-        public override T Map(TextLines src)
-        {
-            throw new NotImplementedException();
-        }
+        void Submit(C inst);
     }
 }

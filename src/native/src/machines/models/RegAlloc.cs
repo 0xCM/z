@@ -34,7 +34,7 @@ namespace Z0
             Tokens = tokens;
             RegSize = spec.RegSize;
             RegCount = spec.RegCount;
-            BaseAddress = core.first(tokens).Address;
+            BaseAddress = sys.first(tokens).Address;
         }
 
         /// <summary>

@@ -4,16 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using System.Collections;
 
     public abstract class Distribution<S,T> : IDistribution<T>
         where T : unmanaged
         where S : IDistributionSpec<T>
     {
-        protected IPolyrand Polyrand {get;}
+        protected IPolySource Polyrand {get;}
 
         public S Spec {get;}
 
@@ -23,7 +20,7 @@ namespace Z0
         public DistributionKind DistKind
             => Spec.DistKind;
 
-        protected Distribution(IPolyrand random, S spec)
+        protected Distribution(IPolySource random, S spec)
         {
             Polyrand = random;
             Spec =spec;

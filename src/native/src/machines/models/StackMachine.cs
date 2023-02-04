@@ -11,9 +11,9 @@ namespace Z0
     {
         public const byte CellSize = 8;
 
-        readonly Span<StackState> State;
+        readonly Seq<StackState> State;
 
-        readonly Span<ulong> Storage;
+        readonly Seq<ulong> Storage;
 
         public StackMachine(uint capacity)
         {
@@ -35,14 +35,14 @@ namespace Z0
         /// </summary>
         [MethodImpl(Inline)]
         public ref readonly StackState state()
-            => ref first(State);
+            => ref State.First;
 
         [MethodImpl(Inline)]
         public bool Push(ulong src)
         {
             if(Index < Capacity - 1)
             {
-                seek(Storage, Index) = src;
+                Storage[Index] = src;
                 Index++;
                 Count++;
                 Current = src;
@@ -58,7 +58,7 @@ namespace Z0
             if(Count > 0)
             {
                 dst = Current;
-                Current = seek(Storage, 0);
+                Current = Storage[0];
                 Count--;
                 Index--;
                 return true;
@@ -73,13 +73,13 @@ namespace Z0
         ref ulong Current
         {
             [MethodImpl(Inline)]
-            get => ref first(State).Current;
+            get => ref State.First.Current;
         }
 
         ref uint Index
         {
             [MethodImpl(Inline)]
-            get => ref first(State).Index;
+            get => ref State.First.Index;
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Z0
         ref readonly uint Capacity
         {
             [MethodImpl(Inline)]
-            get => ref first(State).Capacity;
+            get => ref State.First.Capacity;
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Z0
         ref uint Count
         {
             [MethodImpl(Inline)]
-            get => ref first(State).Count;
+            get => ref State.First.Count;
         }
     }
 }

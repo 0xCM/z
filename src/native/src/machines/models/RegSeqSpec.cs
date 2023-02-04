@@ -6,9 +6,12 @@ namespace Z0
 {
     /// <summary>
     /// Defines a sequence of regsters of uniform width
-    /// </summary>
+    /// </summary>    
+    [Record(TableName),StructLayout(LayoutKind.Sequential,Pack =1)]
     public readonly struct RegSeqSpec
     {
+        const string TableName = "regseq";
+
         /// <summary>
         /// A surrogate key
         /// </summary>

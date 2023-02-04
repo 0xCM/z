@@ -10,7 +10,7 @@ namespace Z0
 
         readonly NativeBuffer Buffer;
 
-        readonly Index<RegAlloc> Allocated;
+        readonly Seq<RegAlloc> Allocated;
 
         public RegBank(RegFile file, NativeBuffer buffer, RegAlloc[] allocs)
         {

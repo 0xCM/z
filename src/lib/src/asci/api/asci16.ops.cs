@@ -117,7 +117,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static bool contains(in asci16 src, char match)
-            => AsciG.contains(src, (AsciCharSym)match);
+            => Asci.contains(src, (AsciCharSym)match);
 
         [MethodImpl(Inline), Op]
         public static asci16[] alloc(N16 n, int count)

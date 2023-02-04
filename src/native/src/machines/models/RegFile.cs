@@ -30,7 +30,7 @@ namespace Z0
         /// </summary>
         public readonly uint Id;
 
-        readonly Index<RegSeqSpec> Data;
+        readonly Seq<RegSeqSpec> Data;
 
         public uint SeqCount
         {

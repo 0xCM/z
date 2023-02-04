@@ -6,13 +6,18 @@ namespace Z0
 {
     using System.Linq;
 
-    using static core;
+    using static sys;
 
     /// <summary>
     /// Defines a permanent/immutable seed store to support pseudorandom reproducibility
     /// </summary>
     public static class PolySeed
     {
+        [MethodImpl(Inline)]
+        internal static ref readonly T cell<T>(ReadOnlySpan<byte> src, int offset)
+            where T : unmanaged
+                => ref first<T>(slice(src,offset));
+
         /// <summary>
         /// Produces a non-deterministic seed
         /// </summary>
@@ -69,7 +74,7 @@ namespace Z0
         /// <typeparam name="T">The data type</typeparam>
         public static T TakeSingle<T>(int offset)
             where T : unmanaged
-                => core.cell<T>(Bytes, VerifyIndex<T>(offset));
+                => PolySeed.cell<T>(Bytes, VerifyIndex<T>(offset));
 
         /// <summary>
         /// Selects a readonly span of values from the embedded source
@@ -81,7 +86,7 @@ namespace Z0
             where T : unmanaged
         {
             VerifyIndex<T>(offset* Unsafe.SizeOf<T>() + length* Unsafe.SizeOf<T>());
-            return recover<T>(Bytes, offset, length);
+            return core.recover<T>(Bytes, offset, length);
         }
 
         /// <summary>

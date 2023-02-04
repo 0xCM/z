@@ -15,7 +15,7 @@ namespace Z0
         public static ulong lookup(uint i)
         {
             var index = min(i, Count - 1);
-            return cell<ulong>(RawBytes, (int)(index*8));
+            return PolySeed.cell<ulong>(RawBytes, (int)(index*8));
         }
 
         public static ulong Seed00 => lookup(0);

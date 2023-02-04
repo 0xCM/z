@@ -14,10 +14,6 @@ namespace Z0
             public AsmTables AsmTables(IWfRuntime wf)
                 => Service<AsmTables>(wf);
 
-            public CpuIdSvc CpuId(IWfRuntime wf)
-                => Service<CpuIdSvc>(wf);
-
-
             public AsmCoreCmd AsmCoreCmd(IWfRuntime wf)
                 => Service<AsmCoreCmd>(wf);
 
@@ -51,9 +47,6 @@ namespace Z0
 
         public static AsmTables AsmTables(this IWfRuntime wf)
             => Services.AsmTables(wf);
-
-        public static CpuIdSvc CpuId(this IWfRuntime wf)
-            => Services.CpuId(wf);
 
          public static StanfordAsmCatalog StanfordCatalog(this IWfRuntime wf)
             => Services.StanfordCatalog(wf);

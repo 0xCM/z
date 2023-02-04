@@ -2,14 +2,17 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Asm
+namespace Z0
 {
     using static sys;
 
-    public class CpuIdSvc : WfSvc<CpuIdSvc>
+
+    public class CpuIdSvc : AppService<CpuIdSvc>
     {
+        AppDb AppDb => AppDb.Service;
+        
         public void EmitRecords(ReadOnlySpan<CpuIdRow> src, FilePath dst)
-            => TableEmit(src,dst);
+            => Channel.TableEmit(src,dst);
 
         public void EmitBits(ReadOnlySpan<CpuIdRow> src, FilePath dst)
         {
@@ -152,7 +155,7 @@ namespace Z0.Asm
             var input = src.Cells;
             var i = 0;
             var outcome = Outcome.Success;
-            outcome += AsciG.parse(skip(input,i++), n16, out dst.Chip);
+            outcome += Asci.parse(skip(input,i++), n16, out dst.Chip);
             outcome += HexParser.parse(skip(input,i++), out dst.Leaf);
             outcome += HexParser.parse(skip(input,i++), out dst.Subleaf);
             outcome += HexParser.parse(skip(input,i++), out dst.Eax);

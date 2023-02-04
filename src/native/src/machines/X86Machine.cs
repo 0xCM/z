@@ -117,7 +117,7 @@ namespace Z0
             rip() = CodeBase;
         }
 
-        public void Dispatch(AsmCode cmd)
+        public void Submit(AsmCode cmd)
         {
             Queue.Enqueue(cmd);
         }

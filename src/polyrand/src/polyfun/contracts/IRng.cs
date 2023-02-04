@@ -7,7 +7,7 @@ namespace Z0
     [Free]
     public interface IRng
     {
-        Label Name => RpOps.Empty;
+        Label Name => RP.Empty;
     }
 
     [Free]
