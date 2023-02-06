@@ -9,7 +9,7 @@ namespace Z0
     using static CsLiterals;
 
     [ApiComplete, LiteralProvider]
-    public readonly partial struct CsPatterns
+    public readonly struct CsPatterns
     {
         [MethodImpl(Inline)]
         public static string Term()

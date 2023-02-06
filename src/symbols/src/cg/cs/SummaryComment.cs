@@ -6,6 +6,10 @@ namespace Z0
 {
     partial struct CsModels
     {
+        [Op]
+        public static SummaryComment comment(string content)
+            => new SummaryComment(content);
+
         public readonly struct SummaryComment : ITextual
         {
             public readonly TextBlock Content;

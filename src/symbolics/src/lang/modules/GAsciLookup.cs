@@ -24,7 +24,7 @@ namespace Z0
             => specify(name, content);
 
         public ByteSpanSpec Emit(uint indent, Identifier name, string data, ITextBuffer dst)
-            => GSpanRes.ascirender(indent, name, data, dst);
+            => ByteSpans.ascirender(indent, name, data, dst);
 
         public static void Emit(FolderPath root)
         {

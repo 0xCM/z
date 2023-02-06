@@ -18,6 +18,8 @@ namespace Z0.Asm
 
         CsLang CsLang => Service(Wf.CsLang);
 
+        SymGen SymGen => Channel.Channeled<SymGen>();
+
         public void Emit(IDbArchive dst)
         {
             GenMnemonicNames(dst);
@@ -63,7 +65,7 @@ namespace Z0.Asm
                     seek(sigs,i) = forms[keys[i-1]].Sig.Format();
             }
 
-            CsLang.EmitStringTable(TargetNamespace, AsmSigTableName, SdmFormDescriptors.FormKindName, sigs, false, dst);
+            SymGen.EmitStringTable(TargetNamespace, AsmSigTableName, SdmFormDescriptors.FormKindName, sigs, false, dst);
         }
     }
 }

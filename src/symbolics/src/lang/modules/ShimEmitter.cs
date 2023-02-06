@@ -7,10 +7,54 @@ namespace Z0
     using System.Linq;
     using System.IO;
 
-    using static CsModels;
+        public struct ShimCode
+        {
+            public FilePath TargetPath;
 
+            [MethodImpl(Inline)]
+            public ShimCode(FilePath dst)
+            {
+                TargetPath = dst;
+            }
+
+            [MethodImpl(Inline)]
+            public string Generate()
+                => CodePattern;
+
+            string Arg0
+            {
+                [MethodImpl(Inline)]
+                get => TargetPath.Format(PathSeparator.BS);
+            }
+
+            string CodePattern => $@"
+using System;
+using System.Diagnostics;
+using System.Linq;
+
+class Program
+{{
+    public static int Main(string[] args)
+    {{
+        var arguments = string.Join("" "", args.Select(a => $""\""{{a}}\""""));
+        var psi = new ProcessStartInfo
+        {{
+	        FileName = {Arg0},
+	        UseShellExecute = false,
+	        Arguments = arguments,
+			CreateNoWindow = false,
+        }};
+        var process = Process.Start(psi);
+		Console.CancelKeyPress += (s, e) => {{ e.Cancel = true; }};
+        process.WaitForExit();
+        return process.ExitCode;
+    }}
+}};
+";
+        }
     public class ShimEmitter
     {
+
         public static ToolShimSpec bind(CmdArgs args, out ToolShimSpec dst)
         {
             dst.ShimName = CmdArgs.arg(args,0).Value;

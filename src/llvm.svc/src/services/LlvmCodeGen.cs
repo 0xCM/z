@@ -12,7 +12,7 @@ namespace Z0.llvm
     {
         LlvmDataProvider DataProvider => Wf.LlvmDataProvider();
 
-        CsLang CsLang => Wf.CsLang();
+        SymGen SymGen => Channel.Channeled<SymGen>();
 
         const string TargetNs = "Z0.llvm.strings";
 
@@ -50,7 +50,7 @@ namespace Z0.llvm
         {
             var src = reduce(DataProvider.AsmIdentifiers().ToItemList());
             var name = "AsmId";
-            CsLang.EmitStringTable(TargetNs, ClrEnumKind.U16, src, CgOut(staged), index);
+            SymGen.EmitStringTable(TargetNs, ClrEnumKind.U16, src, CgOut(staged), index);
             var offset = 0u;
             var buffer = text.emitter();
             buffer.IndentLineFormat(offset, "namespace {0}", "Z0");
@@ -77,6 +77,6 @@ namespace Z0.llvm
         }
 
         StringTable EmitStringTable(LlvmList src, bool staged, bool index)
-            => CsLang.EmitStringTable(TargetNs, ClrEnumKind.U32, src.ToItemList(), CgOut(staged), index);
+            => SymGen.EmitStringTable(TargetNs, ClrEnumKind.U32, src.ToItemList(), CgOut(staged), index);
    }
 }

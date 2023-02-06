@@ -10,6 +10,10 @@ namespace Z0
     {
         CsLang CsLang => Wf.CsLang();
 
+        SymbolFactories SymbolFactories => Wf.SymbolFactories();
+     
+        SymGen SymGen => Channel.Channeled<SymGen>();
+
         public IProjectWorkspace EtlSource(ProjectId src)
             => Projects.load(AppDb.Dev($"llvm.models/{src}"), src);
 
@@ -74,7 +78,7 @@ namespace Z0
         {
             var name = "HexStringArrays";
             var ns = "Z0";
-            var dst = Z0.CsLang.emitter();
+            var dst = SymGen.emitter();
             var offset = 0u;
             dst.OpenNamespace(offset, ns);
             offset += 4;
@@ -113,8 +117,6 @@ namespace Z0
             Bytes.bytespan<ushort>(0, Pow2.T11m1, offset, dst);
         }
 
-        SymbolFactories SymbolFactories => Wf.SymbolFactories();
-     
         [CmdOp("gen/syms/factories")]
         Outcome GenSymFactories(CmdArgs args)
         {
@@ -148,7 +150,7 @@ namespace Z0
             const string CommentPattern = "Specifies the maximum value of a {0}-bit number, {1:#,#}";
             const string NamePattern = "Max{0}u";
             var max = 0ul;
-            var emitter = Z0.CsLang.emitter();
+            var emitter = SymGen.emitter();
             var offset = 0u;
             emitter.OpenNamespace(offset, "Z0");
             offset+=4;
@@ -186,7 +188,7 @@ namespace Z0
             var src = AppDb.ApiTargets().Path(Name, FileKind.List);
             var types = ApiMd.types(src);
             var name = "EnumDefs";
-            CsLang.EmitReplicants(CsLang.Enums.replicant(AppDb.CgStage(name).Root, out var spec), types.Select(x => x.Type), AppDb.CgStage(name).Root);
+            SymGen.EmitReplicants(SymGen.replicant(AppDb.CgStage(name).Root, out var spec), types.Select(x => x.Type), AppDb.CgStage(name).Root);
             return true;
         }
 
