@@ -14,6 +14,123 @@ namespace Z0
          public static CsEmitter emitter()
             => new();
 
+        public void EmitSymSpan<E>(FilePath dst)
+            where E : unmanaged, Enum
+        {
+            var emitting = Channel.EmittingFile(dst);
+            var container = string.Format("{0}Data", typeof(E).Name);
+            using var writer = dst.AsciWriter();
+            EmitSymSpan<E>(container, writer);
+        }
+
+        static void EmitSymSpan<E>(Identifier container, StreamWriter dst)
+            where E : unmanaged, Enum
+        {
+            var buffer = text.buffer();
+            ByteSpans.symrender<E>(container, buffer);
+            dst.WriteLine(buffer.Emit());
+        }
+
+
+        public void EmitSymbolSpan<E>(Identifier name, FolderPath dst)
+            where E : unmanaged, Enum
+        {
+            var path = dst + FS.file(name.Format(), FS.Cs);
+            using var writer = path.Writer();
+            EmitSymbolSpan<E>(name,writer);
+        }
+
+        public void EmitSymbolSpan<E>(Identifier name, StreamWriter dst)
+            where E : unmanaged, Enum
+        {
+            var buffer = text.buffer();
+            ByteSpans.symrender<E>(name, buffer);
+            dst.WriteLine(buffer.Emit());
+        }
+
+
+        public void Emit<T>(Identifier ns, LiteralSeq<T> literals, FilePath dst)
+            where T : IComparable<T>, IEquatable<T>
+        {
+            var buffer = text.buffer();
+            var margin = 0u;
+            var typename = typeof(T).Name.ToLower();
+            var count = literals.Count;
+            buffer.IndentLine(margin, CsPatterns.NamespaceDecl(ns));
+            buffer.IndentLine(margin, Open());
+            margin += 4;
+            buffer.IndentLine(margin, "[LiteralProvider]");
+            buffer.IndentLine(margin, PublicReadonlyStruct(literals.Name));
+            buffer.IndentLine(margin, Open());
+            margin +=4;
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var literal = ref literals[i];
+                var itemName = literal.Name;
+                var itemValue = literal.Value.Format();
+                if(CsData.test(itemName))
+                    itemName = CsData.identifier(itemName);
+
+                buffer.IndentLineFormat(margin, "public const {0} {1} = {2};", typename, itemName, itemValue);
+            }
+            margin -=4;
+            buffer.IndentLine(margin, Close());
+            margin -=4;
+            buffer.IndentLine(margin, Close());
+
+            var emitting = Channel.EmittingFile(dst);
+            using var writer = dst.Writer();
+            writer.Write(buffer.Emit());
+
+            Channel.EmittedFile(emitting, count);
+        }
+ 
+        public void EmitArrayInitializer<T>(ItemList<Constant<T>> src, ITextBuffer dst)
+        {
+            var count = src.Count;
+            var keyword = CsData.keyword(typeof(T));
+            dst.AppendFormat("{0} = new {1}[{2}]{{", src.Name, keyword, count);
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var item = ref src[i];
+                dst.AppendFormat("{0},", item.Value.Format());
+            }
+            dst.Append("};");
+        }
+
+        public static void render<S,T>(SwitchMap<S,T> spec, ITextEmitter dst)
+            where S : unmanaged
+            where T : unmanaged
+        {
+            var srcType = typeof(S);
+            var eSrc = srcType.IsEnum;
+            var dstType = typeof(T);
+            var eDst = dstType.IsEnum;
+            var count = Require.equal(spec.Sources.Count, spec.Targets.Count);
+            if(count == 0)
+                return;
+
+            var margin = 0u;
+            dst.IndentLineFormat(margin, "public static {0} {1}({2} src)", dstType.CodeName(), spec.Name, srcType.CodeName());
+            margin+=4;
+            dst.IndentLine(margin, "=> src switch {");
+            margin+=4;
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var a = ref spec.Sources[i];
+                ref readonly var b = ref spec.Targets[i];
+
+                var srcCase = eSrc ? string.Format("{0}.{1}", srcType.Name, a) : a.ToString();
+                var dstCase = eDst ? string.Format("{0}.{1}", dstType.Name, b) : b.ToString();
+
+                dst.IndentLineFormat(margin, "{0} => {1},", srcCase, dstCase);
+            }
+            dst.IndentLineFormat(margin, "_ => {0}", default(T));
+
+            margin-=4;
+            dst.IndentLine(margin, "};");            
+        }
+
         static void RenderHeader(Timestamp ts, ITextEmitter dst)
             => dst.AppendLineFormat(HeaderFormat, ts);
 

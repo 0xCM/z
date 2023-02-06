@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
     using static CsModels;
 
-    public class InterfaceEmitter : AppService<InterfaceEmitter>
+    public class InterfaceEmitter
     {
         readonly Symbols<ClrAccessKind> AccessKinds;
 

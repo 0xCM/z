@@ -7,8 +7,31 @@ namespace Z0
     using static sys;
     using static CsPatterns;
 
-    public class SymbolFactories : AppService<SymbolFactories>
+    public class SymbolFactories : Channeled<SymbolFactories>
     {
+        public Index<Type> LoadTypes(FilePath src)
+        {
+            var running = Channel.Running(string.Format("Loading enum types from {0}", src.ToUri()));
+            var buffer = list<Type>();
+            using var reader = src.Utf8LineReader();
+            while(reader.Next(out var line))
+            {
+                if(line.IsEmpty)
+                    continue;
+
+                var name = line.Content.Trim();
+                var type = Type.GetType(name);
+                if(type != null)
+                    buffer.Add(type);
+                else
+                    Channel.Warn(string.Format("Unable to load {0}", name));
+            }
+
+            var dst = buffer.ToArray();
+            Channel.Ran(running, string.Format("Loaded {0} enum types from {1}", dst.Length, src.ToUri()));
+            return dst;
+        }
+
         public void Emit(string ns, string name, ReadOnlySpan<Type> enums, FilePath dst)
         {
             var flow = Channel.EmittingFile(dst);
@@ -32,7 +55,7 @@ namespace Z0
             for(var i=0; i<enums.Length; i++)
             {
                 ref readonly var type = ref skip(enums,i);
-                var adapted = ClrEnumAdapter.adapt(type);
+                var adapted = Enums.adapt(type);
                 counter += Emit(margin, adapted, dst);
             }
             margin -=4;

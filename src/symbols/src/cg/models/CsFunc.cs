@@ -10,9 +10,6 @@ namespace Z0
     {
         public class CsFunc
         {
-            public static CsFunc define(Identifier ret, Identifier name, CsOperand[] ops, params string[] body)
-                => new CsFunc(ret, name, true, ops, body);
-
             public readonly Identifier ReturnType;
 
             public readonly Identifier Name;

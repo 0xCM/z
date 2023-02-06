@@ -30,7 +30,7 @@ namespace Z0.Asm
         public void GenMnemonicNames(IDbArchive dst)
         {
             var src = Sdm.CalcMnemonics().Select(x => x.Format(MnemonicCase.Lowercase));
-            CsLang.LiteralProviders().Emit(TargetNamespace,
+            SymGen.Emit(TargetNamespace,
                 Literals.seq(MnemonicNameProvider, src.View),
                 CsLang.SourceFile(MnemonicNameProvider, dst)
                 );

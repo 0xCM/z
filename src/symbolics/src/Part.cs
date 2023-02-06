@@ -27,39 +27,13 @@ namespace Z0
         class ServiceCache : AppServices<ServiceCache>
         {
 
-            public GAsciLookup GenAsciLookups(IWfRuntime wf)
-                => Service<GAsciLookup>(wf);
-
-            public StringLitEmitter GenLiterals(IWfRuntime wf)
-                => Service<StringLitEmitter>(wf);
-
             public CsLang CsLang(IWfRuntime wf)
                 => Service<CsLang>(wf);
-
-
-            public GLiteralProvider GenLitProviders(IWfRuntime wf)
-                => Service<GLiteralProvider>(wf);
-
-            public SymbolFactories SymbolFactories(IWfRuntime wf)
-                => Service<SymbolFactories>(wf);
         }
-
-
-        public static SymbolFactories SymbolFactories(this IWfRuntime wf)
-            => Services.SymbolFactories(wf);
 
 
         static ServiceCache Services = ServiceCache.Instance;
 
-        public static GLiteralProvider GenLitProviders(this IWfRuntime wf)
-            => Services.GenLitProviders(wf);
-
-
-        public static GAsciLookup GenAsciLookups(this IWfRuntime wf)
-            => Services.GenAsciLookups(wf);
-
-        public static StringLitEmitter GenLiterals(this IWfRuntime wf)
-            => Services.GenLiterals(wf);
 
         public static CsLang CsLang(this IWfRuntime wf)
             => Services.CsLang(wf);

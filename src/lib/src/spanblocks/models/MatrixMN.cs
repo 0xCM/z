@@ -130,12 +130,12 @@ namespace Z0
             return ref dst;
         }
 
-        [MethodImpl(Inline)]
-        public Block256<M,T> GetCol(int col)
-        {
-            var alloc = RowVectors.blockalloc<M,T>();
-            return GetCol(col, ref alloc);
-        }
+        // [MethodImpl(Inline)]
+        // public Block256<M,T> GetCol(int col)
+        // {
+        //     var alloc = RowVectors.blockalloc<M,T>();
+        //     return GetCol(col, ref alloc);
+        // }
 
         /// <summary>
         /// Replaces an index-identied column of data with the content of a column vector
@@ -214,11 +214,11 @@ namespace Z0
         /// </summary>
         /// <typeparam name="U">The conversion target type</typeparam>
         [MethodImpl(Inline)]
-        public ref Matrix<M,N,U> Convert<U>(out Matrix<M,N,U> dst)
+        public Matrix<M,N,U> Convert<U>(out Matrix<M,N,U> dst)
             where U : unmanaged
         {
             dst = new Matrix<M,N,U>(Numeric.force<T,U>(data));
-            return ref dst;
+            return dst;
         }
 
         public override bool Equals(object rhs)

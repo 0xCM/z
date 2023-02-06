@@ -10,7 +10,7 @@ namespace Z0
     {
         CsLang CsLang => Wf.CsLang();
 
-        SymbolFactories SymbolFactories => Wf.SymbolFactories();
+        SymbolFactories SymbolFactories => Channel.Channeled<SymbolFactories>();
      
         SymGen SymGen => Channel.Channeled<SymGen>();
 
@@ -23,7 +23,7 @@ namespace Z0
             var name = "Uppercase";
             var content = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             var dst = text.buffer();
-            var bytes = CsLang.AsciLookups().Emit(8u, name,content, dst);
+            var bytes = AsciLookups.emit(8u, name,content, dst);
             Channel.Write(dst.Emit());
             return true;
         }
@@ -42,7 +42,7 @@ namespace Z0
                 var list = ItemLists.constants(FieldName, src.ReadLines(skipBlank:true).Storage);
                 var dst = text.buffer();
                 dst.Append("public static string[] ");
-                CsLang.EmitArrayInitializer(list,dst);
+                SymGen.EmitArrayInitializer(list,dst);
                 Channel.Write(dst.Emit());
             }
         }
@@ -59,18 +59,21 @@ namespace Z0
         {
             var src = array<uint>(34, 51, 98, 101, 264, 888, 911, 902, 3828, 13, 19);
             var dst = array<uint>(3000, 201, 197, 313145, 264801, 911122, 4, 7, 11, 54, 99);
-            var spec = CgSpecs.@switch("test", src, dst);
-            var result = CsLang.SwitchMap().Generate(spec);
-            Channel.Write(result);
+            var spec = CsModels.@switch("test", src, dst);
+            var emitter = text.emitter();
+            SymGen.render(spec,emitter);
+            Channel.Write(emitter.Emit());
+            //Channel.Write(result);
         }
 
         void GenEnumToIntSwitch()
         {
             var src = array<Hex3Kind>(Hex3Kind.x02, Hex3Kind.x03, Hex3Kind.x04);
             var dst = array<byte>(2,3,4);
-            var spec = CgSpecs.@switch("enum_test", src, dst);
-            var result = CsLang.SwitchMap().Generate(spec);
-            Channel.Write(result);
+            var spec = CsModels.@switch("enum_test", src, dst);
+            var emitter = text.emitter();
+            SymGen.render(spec,emitter);
+            Channel.Write(emitter.Emit());
         }
 
         [CmdOp("gen/hex/strings")]
@@ -85,7 +88,7 @@ namespace Z0
             dst.OpenStruct(offset, name);
             offset +=4;
 
-            var content = CsLang.HexStrings().GenArray("Hex8Strings", byte.MinValue, byte.MaxValue, LetterCaseKind.Upper);
+            var content = HexGen.array("Hex8Strings", byte.MinValue, byte.MaxValue, LetterCaseKind.Upper);
             dst.IndentLine(offset,content);
             offset -= 4;
             dst.CloseStruct(offset);
@@ -194,7 +197,7 @@ namespace Z0
 
         [CmdOp("gen/symspan")]
         void GenSymSpan()
-            => CsLang.EmitSymSpan<AsciLetterLoSym>(AppDb.CgStage().Path("symspan", FileKind.Cs));
+            => SymGen.EmitSymSpan<AsciLetterLoSym>(AppDb.CgStage().Path("symspan", FileKind.Cs));
 
         [CmdOp("gen/enum/cs/keywords")]
         Outcome CsKeywords(CmdArgs args)
@@ -208,7 +211,7 @@ namespace Z0
             {
                 var items = new ItemList<Constant<string>>("CsKeywordList", mapi(src.ReadLines(), (i,line) => new ListItem<Constant<string>>((uint)i,text.trim(line))));
                 var dst = text.buffer();
-                CsLang.EmitArrayInitializer(items,dst);
+                SymGen.EmitArrayInitializer(items,dst);
                 Channel.Write(dst.Emit());
 
             }

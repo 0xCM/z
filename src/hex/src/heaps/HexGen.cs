@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public class GHexStrings : AppService<GHexStrings>
+    public class HexGen
     {
         const string ArrayPackLine = "x{0:x}[{1:D5}:{2:D5}]={3}";
 
@@ -22,7 +22,6 @@ namespace Z0
         public static uint hexarray(W8 w, in MemoryBlock src, Span<char> dst)
             => Hex.convert(src.View, dst);
 
-
         static void EmitDelimiter(ITextBuffer dst)
             => dst.Append(", ");
 
@@ -37,7 +36,7 @@ namespace Z0
             where T : unmanaged
                 => bw64(max) - bw64(min) + 1;
 
-        public void EmitArray<T>(uint indent, string name, T min, T max, LetterCaseKind @case, ITextBuffer dst)
+        public static void emit<T>(uint indent, string name, T min, T max, LetterCaseKind @case, ITextBuffer dst)
             where T : unmanaged
         {
             EmitDecl(indent, name, dst);
@@ -56,11 +55,11 @@ namespace Z0
             dst.Append(Chars.Semicolon);
         }
 
-        public string GenArray<T>(string name, T min, T max, LetterCaseKind @case)
+        public static string array<T>(string name, T min, T max, LetterCaseKind @case)
             where T : unmanaged
         {
             var dst = text.buffer();
-            EmitArray(0u, name, min,max,@case,dst);
+            emit(0u, name, min,max,@case,dst);
             return dst.Emit();
         }
     }

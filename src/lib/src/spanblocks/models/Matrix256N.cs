@@ -81,12 +81,12 @@ namespace Z0
             return ref dst;
         }
 
-        [MethodImpl(Inline)]
-        public Block256<N,T> Col(int col)
-        {
-            var alloc = RowVectors.blockalloc<N,T>();
-            return Col(col, ref alloc);
-        }
+        // [MethodImpl(Inline)]
+        // public Block256<N,T> Col(int col)
+        // {
+        //     var alloc = RowVectors.blockalloc<N,T>();
+        //     return Col(col, ref alloc);
+        // }
 
         /// <summary>
         /// Provides access to the underlying data as a linear unblocked span

@@ -209,11 +209,11 @@ namespace Z0
         /// </summary>
         /// <typeparam name="U">The conversion target type</typeparam>
         [MethodImpl(Inline)]
-        public ref Matrix256<M,N,U> Convert<U>(out Matrix256<M,N,U> dst)
+        public Matrix256<M,N,U> Convert<U>(out Matrix256<M,N,U> dst)
             where U : unmanaged
         {
             dst = new Matrix256<M,N,U>(SpanBlocks.force<T,U>(data));
-            return ref dst;
+            return dst;
         }
 
         /// <summary>
@@ -230,11 +230,11 @@ namespace Z0
         /// </summary>
         /// <typeparam name="U">The target type</typeparam>
         [MethodImpl(Inline)]
-        public ref Matrix256<M,N,U> As<U>(out Matrix256<M,N,U> dst)
+        public Matrix256<M,N,U> As<U>(out Matrix256<M,N,U> dst)
             where U : unmanaged
         {
             dst = this.As<U>();
-            return ref dst;
+            return dst;
         }
 
         public override bool Equals(object other)

@@ -300,10 +300,9 @@ namespace Z0.Asm
             Wf.EmittedFile(flow,projects.Length);
         }
 
-
         void CheckFlags()
         {
-            var flags = Symbolic.@enum<MinidumpType>();
+            var flags = Symbols.@enum<MinidumpType>();
             var summary = flags.Describe();
             var count = summary.FieldCount;
             var details = summary.LiteralDetails;

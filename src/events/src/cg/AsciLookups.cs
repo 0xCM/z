@@ -8,7 +8,7 @@ namespace Z0
 
     using C = Chars;
 
-    public class GAsciLookup : AppService<GAsciLookup>
+    public class AsciLookups
     {
         public static ByteSpanSpec specify(Identifier name, string content)
         {
@@ -20,10 +20,7 @@ namespace Z0
             return new ByteSpanSpec(name, dst, true);
         }
 
-        public ByteSpanSpec Specify(Identifier name, string content)
-            => specify(name, content);
-
-        public ByteSpanSpec Emit(uint indent, Identifier name, string data, ITextBuffer dst)
+        public static ByteSpanSpec emit(uint indent, Identifier name, string data, ITextBuffer dst)
             => ByteSpans.ascirender(indent, name, data, dst);
 
         public static void Emit(FolderPath root)

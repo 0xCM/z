@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
     
-    public class MatchGenerator : AppService<MatchGenerator>
+    public class MatchGenerator : Channeled<MatchGenerator>
     {
         public void GenMatcher(IDbArchive root, string scope)
         {

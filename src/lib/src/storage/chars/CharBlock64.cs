@@ -88,7 +88,7 @@ namespace Z0
         public static implicit operator B(ReadOnlySpan<char> src)
             => api.init(src, out B dst);
 
-        public static B Empty => RpOps.Spaced64;
+        public static B Empty => RP.Spaced64;
 
         public static B Null => default;
     }

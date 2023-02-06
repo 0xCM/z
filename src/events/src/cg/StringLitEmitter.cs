@@ -8,7 +8,7 @@ namespace Z0
 
     using static sys;
 
-    public class StringLitEmitter : AppService<StringLitEmitter>
+    public class StringLitEmitter : Channeled<StringLitEmitter>
     {
         public void Emit(string name, ReadOnlySpan<char> src, FilePath dst)
         {

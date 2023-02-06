@@ -8,9 +8,6 @@ namespace Z0
     {
         public class CsOperand
         {
-            public static CsOperand define(Identifier type, Identifier name, params string[] mods)
-                => new CsOperand(type, name, mods);
-
             public CsOperand(Identifier type, Identifier name, params string[] mods)
             {
                 Type = type;

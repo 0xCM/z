@@ -9,7 +9,7 @@ namespace Z0
 
     using static sys;
 
-    public class CodeGenerator
+    public abstract class CodeGenerator
     {
         const string HeaderLine1 = "//-----------------------------------------------------------------------------";
 
