@@ -17,7 +17,6 @@ namespace Z0
 
         Cell128 Data;
 
-
         public CellKind Kind
             => CellKind.Cell128;
 
