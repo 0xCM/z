@@ -3,6 +3,8 @@
     <ProjectReference Include="$(ZLib)" />
     <ProjectReference Include="$(BitVectors)" />
     <ProjectReference Include="$(Assets)" />
+    <ProjectReference Include="$(Polyrand)" />
     <ProjectReference Include="$(Sfx)" />
+    <ProjectReference Include="$(Machines)" />
   </ItemGroup>
 </Project>

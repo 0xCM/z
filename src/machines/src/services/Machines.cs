@@ -56,36 +56,6 @@ namespace Z0
             Write(buffer.Emit());
         }
 
-        void DumpBss()
-        {
-            var result = Outcome.Success;
-            var dispenser = CoffSections.dispenser();
-            var entries = dispenser.Entries();
-            var count = entries.Length;
-            const sbyte Pad = -16;
-
-            Write(RP.attrib(nameof(dispenser.EntryCount), count));
-            for(ushort i=0; i<count; i++)
-            {
-                ref readonly var entry = ref dispenser.Entry(i);
-                var desc = entry.Descriptor();
-                var capacity = desc.Capacity;
-                Write(RP.PageBreak32);
-                Write(RP.attrib(Pad, nameof(desc.Index), desc.Index));
-                Write(RP.attrib(Pad, nameof(desc.BaseAddress), desc.BaseAddress));
-                Write(RP.attrib(Pad, nameof(desc.EndAddress), desc.EndAddress));
-                Write(RP.attrib(Pad, nameof(capacity.Indicator), capacity.Indicator));
-                Write(RP.attrib(Pad, nameof(capacity.CellSize), capacity.CellSize));
-                Write(RP.attrib(Pad, nameof(capacity.CellsPerSeg), capacity.CellsPerSeg));
-                Write(RP.attrib(Pad, nameof(capacity.SegSize), capacity.SegSize));
-                Write(RP.attrib(Pad, nameof(capacity.SegCount), capacity.SegCount));
-                Write(RP.attrib(Pad, nameof(capacity.SegsPerBlock), capacity.SegsPerBlock));
-                Write(RP.attrib(Pad, nameof(capacity.BlockCount), capacity.BlockCount));
-                Write(RP.attrib(Pad, nameof(capacity.BlockSize), capacity.BlockSize));
-                Write(RP.attrib(Pad, nameof(capacity.TotalSize), capacity.TotalSize));
-            }
-       }
-
         void TestStack()
         {
             var result = Outcome.Success;
@@ -104,7 +74,6 @@ namespace Z0
         {
             TestStack();
             TestMatchMachine();
-            DumpBss();
             DumpRegs();
         }
 
@@ -244,23 +213,24 @@ namespace Z0
         [Op]
         ByteSize RunCalc(W128 w)
         {
-            var buffer = Buffer3.allocated();
-            var sizes = 0ul;
-            var cells = Buffer3.BlockSize/w.DataSize;
-            ref var left = ref buffer.Block(n0).Segment<Cell128>(0);
-            ref var right = ref buffer.Block(n1).Segment<Cell128>(1);
-            ref var target = ref buffer.Block(n2).Segment<Cell128>(2);
-            var f = Calcs.vor<uint>(w);
-            for(var i=0u; i<cells; i++)
-            {
-                ref var a = ref seek(left,i);
-                a = cpu.vbroadcast(w,i);
-                ref var b = ref seek(right,i);
-                b = cpu.vbroadcast(w,i + Pow2.T12);
-                seek(target,i) = f.Invoke(a,b);
-                sizes += 3*16;
-            }
-            return sizes;
+            // var buffer = Buffer3.allocated();
+            // var sizes = 0ul;
+            // var cells = Buffer3.BlockSize/w.DataSize;
+            // ref var left = ref buffer.Block(n0).Segment<Cell128>(0);
+            // ref var right = ref buffer.Block(n1).Segment<Cell128>(1);
+            // ref var target = ref buffer.Block(n2).Segment<Cell128>(2);
+            // var f = Calcs.vor<uint>(w);
+            // for(var i=0u; i<cells; i++)
+            // {
+            //     ref var a = ref seek(left,i);
+            //     a = cpu.vbroadcast(w,i);
+            //     ref var b = ref seek(right,i);
+            //     b = cpu.vbroadcast(w,i + Pow2.T12);
+            //     seek(target,i) = cpu.vor(a,b);
+            //     sizes += 3*16;
+            // }
+            // return sizes;
+            return 0;
         }
 
         void Run(N16 n)
@@ -353,9 +323,9 @@ namespace Z0
             ref var left = ref lhs.Segment<Cell128>(0);
             ref var right = ref rhs.Segment<Cell128>(1);
             ref var target = ref dst.Segment<Cell128>(2);
-            var f = Calcs.vor<uint>(w);
-            for(var i=0u; i<cells; i++)
-                seek(target,i) = f.Invoke(seek(left,i),seek(right,i));
+            // var f = Calcs.vor<uint>(w);
+            // for(var i=0u; i<cells; i++)
+            //     seek(target,i) = f.Invoke(seek(left,i),seek(right,i));
         }
 
         void Run(N5 n)

@@ -2,19 +2,21 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
+
 namespace Z0
 {
     public static class XSvc
     {
-        sealed class Svc : AppServices<Svc>
+        sealed class ServiceCache : AppServices<ServiceCache>
         {
-            public Machines Machines(IWfRuntime wf)
-                => Service<Machines>(wf);
+
+            public CpuIdSvc CpuId(IWfRuntime wf)
+                => Service<CpuIdSvc>(wf);
         }
 
-        static Svc Services => Svc.Instance;
+        static ServiceCache Services => ServiceCache.Instance;
 
-        public static IApiService Machines(this IWfRuntime wf)
-            => Services.Machines(wf);
+        public static CpuIdSvc CpuId(this IWfRuntime wf)
+            => Services.CpuId(wf);
     }
 }

@@ -239,12 +239,12 @@ namespace Z0
             try
             {
                 var o = Fsm.observer(machine, FsmTrace.Completions | FsmTrace.Errors);
-                var events = machine.Triggers.ToArray();
-                var domain = Intervals.closed(0, events.Length);
-                var eventstream = random.Stream(domain).Select(i => events[i]);
+                var triggers = machine.Triggers.ToArray();
+                var domain = Intervals.closed(0, triggers.Length);
+                var events = random.Stream(domain).Select(i => triggers[i]);
                 machine.Start();
                 while(!machine.Finished)
-                    machine.Submit(eventstream.First());
+                    machine.Submit(events.First());
                 return machine.QueryStats();
             }
             catch(Exception e)

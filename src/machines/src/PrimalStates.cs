@@ -104,24 +104,6 @@ namespace Z0
             where T : unmanaged
                 => new PrimalFsmSpec<T>(classifier, states, events, minSamples, maxSamples, maxReceipts);
 
-        // [Op, Closures(Closure)]
-        // static FsmTransitionFunc<T,T> transition<T>(IPolyrandProvider context, PrimalFsmSpec<T> spec)
-        //     where T : unmanaged
-        // {
-        //     var sources = gcalc.stream<T>(spec.StateCount).ToArray();
-        //     var random = context.Random;
-        //     var rules = new List<FsmTransitionRule<T,T>>();
-        //     foreach(var source in sources)
-        //     {
-        //         var evss = random.Next<T>(spec.MinEventSamples, spec.MaxEventSamples);
-        //         var targets = from t in random.Distinct(spec.StateCount, evss) where gmath.neq(t,source) select t;
-        //         var events = random.Distinct(spec.EventCount, evss);
-        //         rules.AddRange(events.Zip(targets).Select(x => Fsm.transition(x.First, source, x.Second)));
-        //     }
-        //     return rules.ToFunction();
-        // }
-
-
         [Op, Closures(Closure)]
         static FsmTransitionFunc<T,T> transition<T>(IPolySource src, PrimalFsmSpec<T> spec)
             where T : unmanaged

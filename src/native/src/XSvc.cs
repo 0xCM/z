@@ -19,8 +19,6 @@ namespace Z0
             public CoffServices CoffServices(IWfRuntime wf)
                 => Service<CoffServices>(wf);
 
-            public CpuIdSvc CpuId(IWfRuntime wf)
-                => Service<CpuIdSvc>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
@@ -34,8 +32,5 @@ namespace Z0
 
         public static AsmObjects AsmObjects(this IWfRuntime wf)
             => Services.AsmObjects(wf);
-
-        public static CpuIdSvc CpuId(this IWfRuntime wf)
-            => Services.CpuId(wf);
     }
 }

@@ -1,10 +1,6 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(Process)" />
-    <ProjectReference Include="$(Native)" />
-    <ProjectReference Include="$(SFx)" />
+    <ProjectReference Include="$(ZLib)" />
     <ProjectReference Include="$(Polyrand)" />
-    <ProjectReference Include="$(Workflow)" />
-    <ProjectReference Include="$(Calcs)" />
   </ItemGroup>
 </Project>
