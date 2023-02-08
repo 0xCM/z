@@ -51,8 +51,8 @@ namespace Z0
         public string Format()
             => string.Format("{0}..{1}", Left, Right);
 
-        public string Format<S>(S content)
-            => string.Format("{0}{1}{2}", Left, content, Right);
+        public string Enclose<S>(S src)
+            => $"{Left}{src}{Right}";
 
         public override string ToString()
             => Format();

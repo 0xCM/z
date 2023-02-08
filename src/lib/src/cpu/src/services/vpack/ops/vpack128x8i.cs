@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static cpu;
+    using static vcpu;
 
     partial struct vpack
     {

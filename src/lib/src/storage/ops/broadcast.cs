@@ -38,7 +38,8 @@ namespace Z0
             where T : unmanaged
         {
             var x = vcpu.vbroadcast(w128, uint8(src));
-            vcpu.vstore(x, ref ByteBlocks.alloc(n16, out var dst));
+            ByteBlocks.alloc(n16, out var dst);
+            vcpu.vstore(x, ref dst.First);
             return @as<ByteBlock16,ByteBlock8>(dst);
         }
 
@@ -47,7 +48,8 @@ namespace Z0
             where T : unmanaged
         {
             var x = vcpu.vbroadcast(w, uint8(src));
-            vcpu.vstore(x, ref ByteBlocks.alloc(n16, out var dst));
+            ByteBlocks.alloc(n16, out var dst);
+            vcpu.vstore(x, ref dst.First);
             return dst;
         }
 
@@ -56,7 +58,8 @@ namespace Z0
             where T : unmanaged
         {
             var x = vcpu.vbroadcast(w, uint8(src));
-            vcpu.vstore(x, ref ByteBlocks.alloc(n32, out var dst));
+            ByteBlocks.alloc(n32, out var dst);
+            vcpu.vstore(x, ref dst.First);
             return dst;
         }
     }

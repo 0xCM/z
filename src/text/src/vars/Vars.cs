@@ -9,7 +9,7 @@ namespace Z0
 
     using static sys;
 
-    [ApiHost]
+    [ApiHost,Free]
     public class Vars
     {
         public static ScriptVarClass @class(ITextVarExpr kind)
@@ -92,7 +92,7 @@ namespace Z0
         /// <param name="src">The input text</param>
         /// <param name="kind">The variable kind instance</param>
         /// <param name="vf">The variable parser</param>
-        public static Dictionary<string,ITextVar> ParseFencedVars(ReadOnlySpan<char> src, ITextVarExpr kind, Func<string,ITextVar> vf)
+        public static Dictionary<string,ITextVar> vars(ReadOnlySpan<char> src, ITextVarExpr kind, Func<string,ITextVar> vf)
         {
             var count = src.Length;
             var dst = dict<string,ITextVar>();
@@ -133,99 +133,8 @@ namespace Z0
                 dst.TryAdd(name, vf(name));
             return dst;
         }
-
-        public static Dictionary<string,ITextVar> ParsePrefixedVars(ReadOnlySpan<char> src, ITextVarExpr kind, Func<string,ITextVar> vf)
-        {
-            var count = src.Length;
-            var dst = dict<string,ITextVar>();
-            var name = EmptyString;
-            var parsing = false;
-            var prefix = kind.Prefix;
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var c = ref skip(src,i);
-
-                if(!parsing)
-                {
-                    if(c == prefix)
-                    {
-                        name = EmptyString;
-                        parsing = true;
-                        i++;
-                        continue;
-                    }
-                }
-                else
-                {
-                    if(c == Chars.Space)
-                    {
-                        dst.TryAdd(name,vf(name));
-                        name = EmptyString;
-                        parsing = false;
-                    }
-                    else
-                    {
-                        name += c;
-                    }
-                }
-            }
-
-            if(nonempty(name))
-                dst.TryAdd(name,vf(name));
-            return dst;
-        }
-
-        public static Dictionary<string,ITextVar> ParsePrefixedFencedVars(ReadOnlySpan<char> src, ITextVarExpr kind, Func<string,ITextVar> vf)
-        {
-            var count = src.Length;
-            var dst = dict<string,ITextVar>();
-            var name = EmptyString;
-            var parsing = false;
-            var LD = kind.Fence.Left;
-            var RD = kind.Fence.Right;
-            var prefix = kind.Prefix;
-
-            for(var i=0; i<count-1; i++)
-            {
-                ref readonly var c0 = ref skip(src,i);
-                ref readonly var c1 = ref skip(src,i+1);
-
-                if(!parsing)
-                {
-                    if(c0 == prefix && c1 == LD)
-                    {
-                        name = EmptyString;
-                        parsing = true;
-                        i++;
-                        continue;
-                    }
-                }
-                else
-                {
-                    if(nonempty(name) && c1 == RD)
-                    {
-                        dst.TryAdd(name,vf(name));
-                        name = EmptyString;
-                        parsing = false;
-                    }
-                    else
-                    {
-                        name += c1;
-                    }
-                }
-            }
-
-            if(nonempty(name))
-                dst.TryAdd(name, vf(name));
-            return dst;
-        }
          
         const NumericKind Closure = UnsignedInts;
-
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ScriptVar<T> expr<T>(string name, T value)
-            where T : IEquatable<T>, IComparable<T>, new()
-                => new ScriptVar<T>(name,(Chars.LBrace, Chars.RBrace), value);
 
          public static string pattern(VarContextKind vck)
             => vck switch
@@ -247,40 +156,6 @@ namespace Z0
         public static Var<T> var<T>(string name, T src)
             where T : IEquatable<T>, IComparable<T>
                 => new Var<T>(name, () => src);
-
-        public static string format<T>(ScriptVar<T> src, bool name = false)
-            where T : IEquatable<T>, IComparable<T>, new()
-        {
-            var dst = RP.Null;
-            if(src.VarValue != null)
-            {
-                if(src.IsFenced)
-                {
-                    if(name && src.IsNamed)
-                    {
-                        dst = $"{src.VarName}={src.Fence.Format(src.VarValue)}";
-
-                    }
-                    else
-                        dst = src.Fence.Format(src.VarValue);
-                }
-                else if(src.IsPrefixed)
-                {
-                    if(name && src.IsNamed)
-                        dst = $"{src.VarName}={src.Prefix}{src.VarValue}";
-                    else
-                        dst = $"{src.Prefix}{src.VarValue}";
-                }
-                else
-                {
-                    if(name && src.IsNamed)
-                        dst = $"{src.VarName}={src.VarValue}";
-                    else
-                        dst = $"{src.VarValue}";
-                }
-            }
-            return dst;
-        }
 
         public static string format(Var src, bool bind = true)
             => bind ? src.Resolve().Format() : string.Format(XF.UntypedVar, src);

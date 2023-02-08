@@ -131,7 +131,7 @@ namespace Z0
         /// <summary>
         /// The '}' character code 41
         /// </summary>
-        public static AsciSymbol RBrace => AC.RParen;
+        public static AsciSymbol RBrace => AC.RBrace;
 
         /// <summary>
         /// The '*' character code 42

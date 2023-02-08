@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Free]
-    public interface IVarExpr
+    public interface IScriptVar
     {
         /// <summary>
         /// Specifies the variable fence, if any
@@ -28,5 +28,8 @@ namespace Z0
         /// </summary>
         bool IsFenced
             => Fence.Left != 0 && Fence.Right != 0;
+
+        bool IsPrefixedFence
+            => IsPrefixed && IsFenced;
     }
 }

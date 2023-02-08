@@ -4,9 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using api = Vars;
+    using api = ScriptVars;
 
-    public record class ScriptVar<T> : IVarExpr
+    public record class ScriptVar<T> : IScriptVar
         where T : IEquatable<T>, IComparable<T>, new()
     {
         public readonly @string VarName;
@@ -18,63 +18,33 @@ namespace Z0
         T _Value;
 
         [MethodImpl(Inline)]
-        public ScriptVar(AsciSymbol prefix, T? value = default)
+        public ScriptVar(string name, AsciSymbol prefix)
         {
-            _Value = value ?? new();
-            VarName = default;
-            Prefix = prefix;
-            Fence = AsciFence.Empty;
-        }
-
-        [MethodImpl(Inline)]
-        public ScriptVar(AsciFence fence, T? value = default)
-        {
-            _Value = value ?? new();
-            VarName = default;
-            Fence = fence;
-            Prefix = AsciSymbol.Empty;
-        }
-
-        [MethodImpl(Inline)]
-        public ScriptVar(AsciSymbol prefix, AsciFence fence, T? value = default)
-        {
-            _Value = value ?? new();
-            VarName = default;
-            Prefix = prefix;
-            Fence = fence;
-        }
-
-        [MethodImpl(Inline)]
-        public ScriptVar(string name, AsciSymbol prefix, T? value = default)
-        {
-            _Value = value ?? new();
             VarName = name;
             Prefix = prefix;
             Fence = AsciFence.Empty;
         }
 
         [MethodImpl(Inline)]
-        public ScriptVar(string name, AsciFence fence, T? value = default)
+        public ScriptVar(string name, AsciFence fence)
         {
-            _Value = value ?? new();
             VarName = name;
             Fence = fence;
             Prefix = AsciSymbol.Empty;
         }
 
         [MethodImpl(Inline)]
-        public ScriptVar(string name, AsciSymbol prefix, AsciFence fence, T? value = default)
+        public ScriptVar(string name, AsciSymbol prefix, AsciFence fence)
         {
-            _Value = value ?? new();
             VarName = name;
             Prefix = prefix;
             Fence = fence;
         }
 
-        AsciFence IVarExpr.Fence
+        AsciFence IScriptVar.Fence
             => Fence;
 
-        AsciSymbol IVarExpr.Prefix
+        AsciSymbol IScriptVar.Prefix
             => Prefix;
 
         public bool IsNamed
@@ -83,24 +53,8 @@ namespace Z0
             get => VarName.IsNonEmpty;
         }
 
-        public ref readonly T VarValue
-        {
-            [MethodImpl(Inline)]
-            get => ref _Value;
-        }
-
-        [MethodImpl(Inline)]
-        public ref T Assign(in T src)
-        {
-            _Value = src;
-            return ref _Value;
-        }
-
-        public virtual string Format(bool name)
-            => api.format(this,name);
-
         public virtual string Format()
-            => Format(false);
+            => api.format(this);
 
         public override string ToString()
             => Format();
@@ -117,12 +71,18 @@ namespace Z0
         public bool IsFenced
             => Fence.Left != 0 && Fence.Right != 0;
 
+        public bool IsPrefixedFence
+        {
+            [MethodImpl(Inline)]
+            get => IsPrefixed && IsFenced;
+        }
+
         [MethodImpl(Inline)]
         public static implicit operator ScriptVar<T>(string name)
             => new ScriptVar<T>(name);
 
         [MethodImpl(Inline)]
         public static implicit operator ScriptVar(ScriptVar<T> src)
-            => new ScriptVar(src.VarName, src.Prefix,src.Fence,$"{src.VarValue}");
+            => new ScriptVar(src.VarName, src.Prefix,src.Fence);
     }
 }

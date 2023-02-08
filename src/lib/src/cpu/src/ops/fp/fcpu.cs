@@ -4,9 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-    using System.Runtime.Intrinsics;
     using System.Runtime.Intrinsics.X86;
 
     using static System.Runtime.Intrinsics.X86.Sse;
@@ -16,7 +13,6 @@ namespace Z0
     using static System.Runtime.Intrinsics.X86.Sse2;
     using static System.Runtime.Intrinsics.X86.Sse3;
     using static System.Runtime.Intrinsics.X86.Ssse3;
-    using static Root;
 
     [ApiHost]
     public readonly struct fcpu

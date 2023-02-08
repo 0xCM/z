@@ -39,5 +39,24 @@ namespace Z0
     sealed class AppCmd : WfAppCmd<AppCmd>
     {
 
+        [CmdOp("text/vars")]
+        void TextExpr()
+        {
+            var buffer = text.emitter();
+            var prefix = AsciSymbols.Dollar;
+            var fence = new AsciFence(AsciSymbols.LBrace, AsciSymbols.RBrace);
+            buffer.Append("abcdefgh");
+            buffer.Append(text.prefix(prefix, fence.Enclose("var1")));
+            buffer.Append("ijklmnop");
+            buffer.Append(text.prefix(prefix, fence.Enclose("var2")));
+            buffer.Append("qrstuvwx");
+            buffer.Append(text.prefix(prefix, fence.Enclose("var3")));
+            var script = buffer.Emit();
+            Channel.Row($"Input:{script}");
+            Channel.Row($"Vars:");
+
+            var vars = ScriptVars.extract(script, prefix, fence);
+            sys.iter(vars, v => Channel.Row($"{v}"));
+        }
     }
 }

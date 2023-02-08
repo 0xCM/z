@@ -8,7 +8,7 @@ namespace Z0
     /// Describes an individual term of a permutation p, i.e. the point
     /// of evaluation i and its image p(i)
     /// </summary>
-    public readonly struct PermTerm : ITextual
+    public readonly struct PermTerm
     {
         /// <summary>
         /// The point at which the permutation is evaluated

@@ -18,6 +18,6 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static Perm32 perm32(Vector256<byte> data)
-            => new Perm32(cpu.vand(data, cpu.vbroadcast(w256, Msb8x8x3)));
+            => new Perm32(cpu.vand(data, vcpu.vbroadcast(w256, Msb8x8x3)));
     }
 }

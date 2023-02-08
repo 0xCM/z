@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     partial struct Storage
     {
         [MethodImpl(Inline), Op, Closures(Closure)]

@@ -199,7 +199,7 @@ namespace Z0
         /// </summary>
         /// <param name="f">The left permutation</param>
         /// <param name="g">The right permutation</param>
-        public readonly Perm<T> Compose(in Perm<T> g)
+        public readonly Perm<T> Compose(Perm<T> g)
         {
             var n = g.terms.Length;
             var dst = new Perm<T>(new T[n]);

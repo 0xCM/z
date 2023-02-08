@@ -9,7 +9,7 @@ namespace Z0
     using static System.Runtime.Intrinsics.X86.Sse2;
     using static System.Runtime.Intrinsics.X86.Avx2;
     using static sys;
-    using static cpu;
+    using static vcpu;
 
     partial struct vpack
     {

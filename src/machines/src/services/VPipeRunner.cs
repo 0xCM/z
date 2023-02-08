@@ -30,7 +30,7 @@ namespace Z0
         public Vector128<byte> Invoke(Vector128<byte> a)
         {
             var mask = BitMasks.even<byte>(n2,n1);
-            var bcast = cpu.vbroadcast(w128, mask);
+            var bcast = vcpu.vbroadcast(w128, mask);
             return cpu.vand(a, bcast);
         }
     }
