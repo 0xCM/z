@@ -15,7 +15,6 @@ namespace Z0
 
         static AppDb AppDb => AppDb.Service;
 
-
         readonly XedPathSettings State;
 
         public FolderPath Sources()
@@ -234,7 +233,7 @@ namespace Z0
 
         XedPaths()
         {
-            State = new (AppDb.DbIn("intel/xed.primary").Root, AppDb.DbTargets("xed").Root);
+            State = new (AppDb.XedDb().Scoped("sources"), AppDb.XedDb().Scoped("targets"));
         }
 
         static XedPaths Instance = new();

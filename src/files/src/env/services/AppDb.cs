@@ -38,6 +38,9 @@ namespace Z0
         public DbArchive Tools()
             => folder(Data.Setting(SettingNames.DevTools));
 
+        public DbArchive XedDb()
+            => folder(Data.Setting(SettingNames.XedDb));
+
         public DbArchive DbSources()
             => DbRoot().Scoped("sources");
 
