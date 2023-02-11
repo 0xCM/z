@@ -5,11 +5,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using TK = XedForms.FormTokenKind;
+    using TK = XedFormToken.TokenKind;
 
     partial class XedForms
     {
-        public static string format(FormToken src)
+        public static string format(XedFormToken src)
         {
             var dst = EmptyString;
             switch(src.Kind)

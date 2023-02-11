@@ -16,7 +16,7 @@ namespace Z0
             const string RulePattern = "{0:D2} | {1,-12} | {2,-8} | {3,-32} | ";
             const string FieldPattern = "{0,-12} {1,-24}";
             var grids = XedGrids.grids(src);
-            var stats = alloc<TableStats>(src.TableCount);
+            var stats = alloc<XedTableStats>(src.TableCount);
             for(var i=0u; i<src.TableCount; i++)
             {
                 var rows = grids.Rows(i);
@@ -47,10 +47,10 @@ namespace Z0
                     cc += row.ColCount;
                 }
 
-                seek(stats,i) = new TableStats(i, rule, new DataSize(pw, aw), new DataSize(mpw,maw),(ushort)rows.Count, cc, (byte)mcc);
+                seek(stats,i) = new XedTableStats(i, rule, new DataSize(pw, aw), new DataSize(mpw,maw),(ushort)rows.Count, cc, (byte)mcc);
             }
 
-            TableEmit(@readonly(stats), TableStats.RenderWidths, Paths.DbTable<TableStats>());
+            Channel.TableEmit(stats, Paths.DbTable<XedTableStats>(), TextEncodingKind.Asci);
         }
     }
 }

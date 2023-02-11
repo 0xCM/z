@@ -6,19 +6,19 @@
 namespace Z0
 {
     using static sys;
-    using static XedForms;
+    using static XedFormToken;
     
     public class XedFormTokens
     {
-        public readonly Index<FormToken> TokenIndex;
+        public readonly Index<XedFormToken> TokenIndex;
 
-        readonly Index<FormTokenKind,uint> Offsets;
+        readonly Index<TokenKind,uint> Offsets;
 
-        public readonly Index<FormTokenKind> Kinds;
+        public readonly Index<TokenKind> Kinds;
 
-        readonly ConstLookup<FormTokenKind, HashSet<string>> TokenNames;
+        readonly ConstLookup<TokenKind, HashSet<string>> TokenNames;
 
-        public XedFormTokens(Index<FormToken> index, Index<FormTokenKind,uint> offsets, Index<FormTokenKind> kinds, ConstLookup<FormTokenKind, HashSet<string>> names)
+        public XedFormTokens(Index<XedFormToken> index, Index<TokenKind,uint> offsets, Index<TokenKind> kinds, ConstLookup<TokenKind, HashSet<string>> names)
         {
             TokenIndex = index;
             Offsets = offsets;
@@ -26,7 +26,7 @@ namespace Z0
             TokenNames = names;
         }
 
-        public HashSet<string> Names(FormTokenKind kind)
+        public HashSet<string> Names(TokenKind kind)
         {
             if(TokenNames.Find(kind, out var dst))
                 return dst;
@@ -34,9 +34,9 @@ namespace Z0
                 return hashset<string>();
         }
 
-        public ReadOnlySpan<FormToken> Tokens(FormTokenKind kind)
+        public ReadOnlySpan<XedFormToken> Tokens(TokenKind kind)
         {
-            var dst = default(ReadOnlySpan<FormToken>);
+            var dst = default(ReadOnlySpan<XedFormToken>);
             if(kind != 0)
             {
                 var i0 = Offsets[kind];
@@ -51,7 +51,7 @@ namespace Z0
             return dst;
         }
 
-        public FormTokenKind LastKind
+        public TokenKind LastKind
         {
             [MethodImpl(Inline)]
             get => Kinds.Last;

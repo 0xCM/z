@@ -6,7 +6,8 @@
 namespace Z0
 {
     using static sys;
-
+    using static XedModels;
+    
     partial class XedRules
     {
         public Index<InstOpClass> CalcOpClasses(Index<InstOpDetail> src)

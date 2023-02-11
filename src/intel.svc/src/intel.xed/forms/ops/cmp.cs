@@ -5,11 +5,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using TK = XedForms.FormTokenKind;
+    using TK = XedFormToken.TokenKind;
 
     partial class XedForms
     {
-        public static int cmp(FormToken a, FormToken b)
+        public static int cmp(XedFormToken a, XedFormToken b)
         {
             var result = ((byte)a.Kind).CompareTo((byte)b.Kind);
             if(result == 0)

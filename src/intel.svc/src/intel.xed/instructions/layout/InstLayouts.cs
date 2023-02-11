@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static XedModels;
+    
     partial class XedRules
     {
         public class InstLayouts : IDisposable

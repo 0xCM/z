@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class XedRules
+    partial struct XedModels
     {
         public readonly struct OpModifier
         {

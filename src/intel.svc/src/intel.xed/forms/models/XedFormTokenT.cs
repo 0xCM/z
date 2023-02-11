@@ -6,15 +6,15 @@
 namespace Z0
 {
     using static sys;
-    using static XedForms;
+    using static XedFormToken;
 
-    public readonly record struct FormToken<T>
+    public readonly record struct XedFormToken<T>
         where T : unmanaged
     {
         readonly ByteBlock16 Data;
 
         [MethodImpl(Inline)]
-        public FormToken(ByteBlock16 data)
+        public XedFormToken(ByteBlock16 data)
         {
             Data = data;
         }
@@ -25,14 +25,14 @@ namespace Z0
             get => @as<T>(Data.First);
         }
 
-        public FormTokenKind Kind
+        public TokenKind Kind
         {
             [MethodImpl(Inline)]
-            get => (FormTokenKind)Data[15];
+            get => (TokenKind )Data[15];
         }
 
         [MethodImpl(Inline)]
-        public static implicit operator FormToken<T>(FormToken src)
-            => new FormToken<T>(@as<FormToken,ByteBlock16>(src));
+        public static implicit operator XedFormToken<T>(XedFormToken src)
+            => new XedFormToken<T>(@as<XedFormToken,ByteBlock16>(src));
     }
 }

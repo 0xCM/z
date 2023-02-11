@@ -5,7 +5,6 @@
 namespace Z0
 {
     using static sys;
-    using static XedRules;
     using static XedDisasmModels;
 
     partial class XedDisasm

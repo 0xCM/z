@@ -6,6 +6,7 @@
 namespace Z0
 {
     using static XedRules;
+    using static XedModels;
 
     public partial class XedDb : WfSvc<XedDb>
     {

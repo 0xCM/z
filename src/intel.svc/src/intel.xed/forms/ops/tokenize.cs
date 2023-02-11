@@ -7,36 +7,36 @@ namespace Z0
 {
     using static sys;
 
-    using TK = XedForms.FormTokenKind;
+    using TK = XedFormToken.TokenKind;
 
     partial class XedForms
     {
-        public static FormSyntax tokenize(InstForm src)
+        public static XedFormSyntax tokenize(InstForm src)
         {
             var parts = src.Format().Split(Chars.Underscore);
             var count = parts.Length;
             if(count == 0)
-                return FormSyntax.Empty;
+                return XedFormSyntax.Empty;
 
             var k=0u;
             var j=0u;
-            var tokens = alloc<FormToken>(count);
-            var @class = FormToken.Empty;
+            var tokens = alloc<XedFormToken>(count);
+            var @class = XedFormToken.Empty;
 
             if(first(parts).StartsWith("REP"))
             {
-                var rep = FormToken.Empty;
+                var rep = XedFormToken.Empty;
                 if(match(skip(parts,j++), TokenData.Tokens(TK.Rep), out rep))
                     seek(tokens,k++) = rep;
                 else
-                    Errors.Throw(AppMsg.ParseFailure.Format(nameof(FormToken), skip(parts,j-1)));
+                    Errors.Throw(AppMsg.ParseFailure.Format(nameof(XedFormToken), skip(parts,j-1)));
 
                 if(count > 1)
                 {
                     if(match(TK.InstClass, skip(parts,j++), out @class))
                         seek(tokens, k++) = @class;
                     else
-                        Errors.Throw(AppMsg.ParseFailure.Format(nameof(FormToken), skip(parts,j-1)));
+                        Errors.Throw(AppMsg.ParseFailure.Format(nameof(XedFormToken), skip(parts,j-1)));
                 }
             }
             else
@@ -46,7 +46,7 @@ namespace Z0
             }
 
 
-            return new FormSyntax(tokens);
+            return new XedFormSyntax(tokens);
         }
     }
 }

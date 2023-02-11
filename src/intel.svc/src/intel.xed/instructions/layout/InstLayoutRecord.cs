@@ -4,7 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class XedRules
+    using static XedRules;
+    
+    partial struct XedModels
     {
         [Record(TableName), StructLayout(LayoutKind.Sequential,Pack=1)]
         public struct InstLayoutRecord : IComparable<InstLayoutRecord>

@@ -5,6 +5,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static XedModels;
+    
     partial class XedRules
     {
         public readonly struct PatternOrder : IComparer<XedInstOpCode>, IComparer<InstOpDetail>, IComparer<InstGroupSeq>

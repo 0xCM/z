@@ -6,9 +6,8 @@
 namespace Z0
 {
     using static XedRules;
-    using static XedModels;
 
-    partial class XedPatterns
+    partial struct XedModels
     {
         [StructLayout(LayoutKind.Sequential, Pack=1)]
         public struct PatternOpInfo

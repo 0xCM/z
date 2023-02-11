@@ -7,25 +7,27 @@ namespace Z0
 {
     using static sys;
 
+    using static XedFormToken;
+
     public partial class XedForms : WfSvc<XedForms>
     {
         XedPaths XedPaths => Wf.XedPaths();
 
-        public static ref readonly Index<FormToken> tokens()
+        public static ref readonly Index<XedFormToken> tokens()
             => ref TokenData.TokenIndex;
 
         [MethodImpl(Inline)]
-        public static ReadOnlySpan<FormToken> tokens(FormTokenKind kind)
+        public static ReadOnlySpan<XedFormToken> tokens(TokenKind kind)
             => TokenData.Tokens(kind);
 
         [MethodImpl(Inline)]
-        public ref readonly Index<FormTokenKind> tokenkinds()
+        public ref readonly Index<TokenKind> tokenkinds()
             => ref TokenData.Kinds;
 
         public void EmitTokens()
         {
             var src = tokens();
-            var dst = alloc<FormTokenInfo>(src.Count);
+            var dst = alloc<XedFormTokenInfo>(src.Count);
             for(var i=0u; i<src.Count; i++)
             {
                 ref readonly var token = ref src[i];
@@ -35,7 +37,7 @@ namespace Z0
                 record.TokenValue = token;
             }
 
-            TableEmit(@readonly(dst), XedPaths.Table<FormTokenInfo>());
+            TableEmit(@readonly(dst), XedPaths.Table<XedFormTokenInfo>());
         }
 
         static XedFormTokens _Tokens;

@@ -5,9 +5,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XedModels;
+    using static XedRules;
 
-    partial class XedRules
+    partial struct XedModels
     {
         [StructLayout(LayoutKind.Sequential,Pack=1)]
         public record struct InstOpDetail : IComparable<InstOpDetail>

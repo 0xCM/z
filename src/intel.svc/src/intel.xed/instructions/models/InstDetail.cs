@@ -6,6 +6,7 @@
 namespace Z0
 {
     using Asm;
+    using static XedModels;
 
     partial class XedRules
     {

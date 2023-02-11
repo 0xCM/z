@@ -5,10 +5,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XedForms;
+    using static XedFormToken;
 
     [StructLayout(LayoutKind.Sequential,Pack=1), Record(TableId)]
-    public struct FormTokenInfo
+    public struct XedFormTokenInfo
     {
         const string TableId = "xed.forms.tokens";
 
@@ -16,9 +16,9 @@ namespace Z0
         public uint Seq;
 
         [Render(16)]
-        public FormTokenKind TokenKind;
+        public TokenKind TokenKind;
 
         [Render(18)]
-        public FormToken TokenValue;        
+        public XedFormToken TokenValue;        
     }    
 }

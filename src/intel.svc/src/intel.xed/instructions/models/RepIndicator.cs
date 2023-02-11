@@ -4,9 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XedModels;
-
-    partial class XedRules
+    partial struct XedModels
     {
         [DataWidth(Width)]
         public readonly record struct RepIndicator : IComparable<RepIndicator>

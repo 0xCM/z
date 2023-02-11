@@ -5,10 +5,16 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class XedForms
+    public readonly struct XedFormSyntax
     {
+        readonly ReadOnlySeq<XedFormToken> Tokens;
+
         [MethodImpl(Inline)]
-        public static HashSet<string> names(XedFormToken.TokenKind kind)
-            => TokenData.Names(kind);
-    }
+        public XedFormSyntax(XedFormToken[] src)
+        {
+            Tokens = src;
+        }
+
+        public static XedFormSyntax Empty => new XedFormSyntax(sys.empty<XedFormToken>());
+    }   
 }

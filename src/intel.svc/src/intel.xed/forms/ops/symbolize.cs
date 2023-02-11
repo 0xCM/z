@@ -7,7 +7,7 @@ namespace Z0
 {
     partial class XedForms
     {
-        public static string symbolize(FormTokenKind kind, string part)
+        public static string symbolize(XedFormToken.TokenKind kind, string part)
         {
             var dst = part;
             var atoms = TokenData.Names(kind);

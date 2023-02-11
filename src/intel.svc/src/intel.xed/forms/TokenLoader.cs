@@ -6,9 +6,8 @@
 namespace Z0
 {
     using static sys;
-    using static XedModels;
 
-    using TK = XedForms.FormTokenKind;
+    using TK = XedFormToken.TokenKind;
 
     partial class XedForms
     {
@@ -16,9 +15,9 @@ namespace Z0
         {
             public static XedFormTokens load()
             {
-                var index = alloc<FormToken>(TokenCount);
+                var index = alloc<XedFormToken>(TokenCount);
                 var i=0u;
-                var names = dict<FormTokenKind,HashSet<string>>();
+                var names = dict<TK,HashSet<string>>();
                 var tk = TK.RegClass;
                 tokens(tk, RegClassNames, ref i, index);
                 names[tk] = RegClassNames;
@@ -93,12 +92,12 @@ namespace Z0
                 names[tk] = map(@classes, c => c.ToString()).ToHashSet();
 
                 var ti = index.Sort();
-                return new XedFormTokens(ti, offsets(ti), Symbols.index<FormTokenKind>().Kinds.ToArray(), names);
+                return new XedFormTokens(ti, offsets(ti), Symbols.index<TK>().Kinds.ToArray(), names);
             }
 
-            static Index<FormTokenKind,uint> offsets(Index<FormToken> src)
+            static Index<TK,uint> offsets(Index<XedFormToken> src)
             {
-                var kind = FormTokenKind.None;
+                var kind = TK.None;
                 var dst = alloc<uint>(KindCount);
                 var j=0u;
                 for(var i=0u; i<src.Count; i++)
@@ -114,21 +113,21 @@ namespace Z0
             }
 
             [MethodImpl(Inline)]
-            static uint tokens(FormTokenKind kind, HashSet<string> names, ref uint i, Index<FormToken> dst)
+            static uint tokens(TK kind, HashSet<string> names, ref uint i, Index<XedFormToken> dst)
             {
                 var i0 = i;
                 var src = names.Index().Sort();
                 for(var j=0; j<src.Count; j++, i++)
-                    dst[i] = new FormToken(kind, src[j]);
+                    dst[i] = new XedFormToken(kind, src[j]);
                 return i - i0;
             }
 
             [MethodImpl(Inline)]
-            static uint tokens(ReadOnlySpan<AsmInstKind> classes, ref uint i, Index<FormToken> dst)
+            static uint tokens(ReadOnlySpan<AsmInstKind> classes, ref uint i, Index<XedFormToken> dst)
             {
                 var i0 = i;
                 for(var j=0; j<classes.Length; j++, i++)
-                    dst[i] = new FormToken(skip(classes,j));
+                    dst[i] = new XedFormToken(skip(classes,j));
                 return i - i0;
             }
 
@@ -175,7 +174,7 @@ namespace Z0
                 + (int)Symbols.index<AsmInstKind>().Count;
 
 
-            const FormTokenKind LastKind = FormTokenKind.Hex16Lit;
+            const TK LastKind = TK.Hex16Lit;
 
             const byte LastKindValue = (byte)LastKind;
 

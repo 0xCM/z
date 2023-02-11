@@ -5,17 +5,15 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
-    using static XedModels;
-    using static XedRules;
+    using static sys;
 
-    using TK = XedForms.FormTokenKind;
+    using TK = XedFormToken.TokenKind;
 
     partial class XedForms
     {
-        public static bool match(string src, ReadOnlySpan<FormToken> tokens, out FormToken dst)
+        public static bool match(string src, ReadOnlySpan<XedFormToken> tokens, out XedFormToken dst)
         {
-            dst = FormToken.Empty;
+            dst = XedFormToken.Empty;
             for(var i=0; i<tokens.Length; i++)
             {
                 ref readonly var token = ref skip(tokens,i);
@@ -29,17 +27,17 @@ namespace Z0
             return dst.IsNonEmpty;
         }
 
-        public static bool match(FormTokenKind kind, string src, out FormToken dst)
+        public static bool match(TK kind, string src, out XedFormToken dst)
         {
             var result = false;
-            dst = FormToken.Empty;
+            dst = XedFormToken.Empty;
             switch(kind)
             {
                 case TK.InstClass:
                 {
                     result = XedParsers.parse(src, out AsmInstClass c);
                     if(result)
-                        dst = new FormToken(c);
+                        dst = new XedFormToken(c);
                 }
                 break;
                 default:

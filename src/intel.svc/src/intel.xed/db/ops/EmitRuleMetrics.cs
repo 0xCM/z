@@ -21,7 +21,7 @@ namespace Z0
         {
             var dst = text.emitter();
             dst.AppendLine(string.Format("{0,-32} {1}", table.Sig, Paths.CheckedRulePage(table.Sig)));
-            dst.AppendLine(RpOps.PageBreak120);
+            dst.AppendLine(RP.PageBreak120);
             dst.AppendLine();
             for(var i=0; i<table.RowCount; i++)
             {
@@ -31,7 +31,7 @@ namespace Z0
                     dst.AppendLine();
 
                 var size = DataSize.Empty;
-                dst.AppendLine(RpOps.PageBreak120);
+                dst.AppendLine(RP.PageBreak120);
                 for(var j=0; j<row.CellCount; j++)
                 {
                     ref readonly var cell = ref row[j];
@@ -39,12 +39,12 @@ namespace Z0
                     dst.AppendLineFormat("{0} | {1} | {2,-26} | {3}", key, cell.Size.Format(2,2), XedRender.format(cell.Field), cell);
                 }
 
-                dst.AppendLine(RpOps.PageBreak120);
+                dst.AppendLine(RP.PageBreak120);
                 dst.AppendLine(row.Expression);
             }
 
             dst.AppendLine();
-            dst.AppendLine(RpOps.PageBreak120);
+            dst.AppendLine(RP.PageBreak120);
 
             return dst.Emit();
         }

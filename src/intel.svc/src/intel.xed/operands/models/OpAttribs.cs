@@ -5,9 +5,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
-
-    partial class XedRules
+    using static sys;
+    using static XedRules;
+    
+    partial struct XedModels
     {
         public readonly struct OpAttribs : IFixedCells<OpAttrib>
         {

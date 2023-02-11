@@ -5,7 +5,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XedRules;
     using static XedDisasmModels;
 
     partial class XedDisasm
@@ -25,10 +24,9 @@ namespace Z0
             => (uint)core.inc(ref DisasmTokens);
 
         public static Detail detail(ProjectContext context, in FileRef src)
-            => detail(context, XedDisasm.datafile(context, src));
+            => detail(context, datafile(context, src));
 
         public static Detail detail(ProjectContext context, in DataFile src)
-            => detail(XedDisasm.summary(context,src));
-
+            => detail(summary(context,src));
     }
 }
