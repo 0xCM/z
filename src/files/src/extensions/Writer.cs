@@ -34,7 +34,6 @@ namespace Z0
                 _ => FileWriters.unicode(dst, append ? FileWriteMode.Append : FileWriteMode.Overwrite)
             };
 
-
         [Op]
         public static StreamWriter AsciWriter(this FilePath dst, bool append = false)
             => FileWriters.asci(dst, append ? FileWriteMode.Append : FileWriteMode.Overwrite);

@@ -15,7 +15,7 @@ namespace Z0
                 => new (kind,src,dst);
 
         [Op]
-        public static ReadOnlySeq<Redirect<Kind,FolderPath,FolderPath>> records(FolderRedirects src)
+        public static ReadOnlySeq<Redirect<RedirectKind,FolderPath,FolderPath>> records(FolderRedirects src)
             => src.Map(x => record(x.Kind, x.Source, x.Target));
 
         [Op]

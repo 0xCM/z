@@ -4,13 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class Redirects
+    public enum RedirectKind : byte
     {
-        public enum Kind : byte
-        {
-            None,
+        None,
 
-            Folder,
-        }
-    }
+        Folder,
+    }    
 }

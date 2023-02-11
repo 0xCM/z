@@ -4,9 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.IO;
-
     partial class XFs
     {
         public static void Overwrite(this FilePath dst, string src)

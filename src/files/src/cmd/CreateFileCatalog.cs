@@ -21,6 +21,5 @@ namespace Z0.Commands
         public FolderPath Target;
 
         public Seq<FileExt> Match;
-
     }
 }

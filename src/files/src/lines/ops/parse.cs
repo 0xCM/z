@@ -18,7 +18,6 @@ namespace Z0
             return result;
         }
 
-
         static Fence<char> RangeFence
             => (Chars.LBracket, Chars.RBracket);
 
