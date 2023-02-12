@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct XedModels
+    partial class XedModels
     {
         /// <summary>
         /// Defines a structure that reflects the content of the xed "idata.txt" file

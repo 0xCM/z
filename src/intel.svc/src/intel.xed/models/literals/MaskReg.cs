@@ -7,7 +7,7 @@ namespace Z0
 {
     using Asm;
 
-    partial struct XedModels
+    partial class XedModels
     {
         [SymSource(xed), DataWidth(num2.Width)]
         public enum MaskReg : byte

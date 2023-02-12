@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct XedModels
+    partial class XedModels
     {
         [SymSource(xed), DataWidth(3,8)]
         public enum EASZ : sbyte

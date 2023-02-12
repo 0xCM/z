@@ -6,7 +6,7 @@ namespace Z0
 {
     using static XedRules;
     
-    partial struct XedModels
+    partial class XedModels
     {
         [Record(TableName), StructLayout(LayoutKind.Sequential,Pack=1)]
         public struct InstLayoutRecord : IComparable<InstLayoutRecord>

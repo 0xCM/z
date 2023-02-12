@@ -7,7 +7,7 @@ namespace Z0
 {
     using static XedRegId;
 
-    partial struct XedModels
+    partial class XedModels
     {
         public readonly struct RegIdFacets
         {

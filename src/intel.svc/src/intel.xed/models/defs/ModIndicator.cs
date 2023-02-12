@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct XedModels
+    partial class XedModels
     {
         [DataWidth(Width, 8)]
         public readonly struct ModIndicator : IComparable<ModIndicator>, IEquatable<ModIndicator>

@@ -7,7 +7,7 @@ namespace Z0
 {
     using BK = XedModels.BCastKind;
 
-    partial struct XedModels
+    partial class XedModels
     {
         [DataWidth(num5.Width)]
         public enum EMX_BROADCAST_KIND : byte

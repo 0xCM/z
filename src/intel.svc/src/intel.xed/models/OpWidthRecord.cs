@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct XedModels
+    partial class XedModels
     {
         [Record(TableId)]
         public struct OpWidthRecord : IComparable<OpWidthRecord>

@@ -5,8 +5,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [ApiHost]
-    public readonly partial struct XedModels
+    [ApiHost,Free]
+    public partial class XedModels
     {
         const string xed = nameof(xed);
     }

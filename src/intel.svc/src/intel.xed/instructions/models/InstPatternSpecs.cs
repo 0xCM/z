@@ -7,7 +7,7 @@ namespace Z0
 {
     using static XedRules;
 
-    partial struct XedModels
+    partial class XedModels
     {
         public readonly struct PatternSpecs
         {

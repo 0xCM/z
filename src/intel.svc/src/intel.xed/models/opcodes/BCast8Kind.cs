@@ -7,7 +7,7 @@ namespace Z0
 {
     using static BroadcastSymbols;
 
-    partial struct XedModels
+    partial class XedModels
     {
         [SymSource("xed"), DataWidth(num5.Width)]
         public enum BCast8Kind : byte

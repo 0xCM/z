@@ -7,7 +7,7 @@ namespace Z0
 {
     using static XedRules;
 
-    partial struct XedModels
+    partial class XedModels
     {
         [DataWidth(Width)]
         public readonly struct OpName : IComparable<OpName>

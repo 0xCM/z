@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct XedModels
+    partial class XedModels
     {
         [SymSource(xed), DataWidth(num2.Width)]
         public enum RepPrefix : byte

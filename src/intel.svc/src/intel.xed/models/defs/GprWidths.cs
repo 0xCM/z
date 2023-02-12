@@ -11,7 +11,7 @@ namespace Z0
 
     using I = XedModels.GprWidthIndex;
 
-    partial struct XedModels
+    partial class XedModels
     {
         public readonly struct GprWidth
         {

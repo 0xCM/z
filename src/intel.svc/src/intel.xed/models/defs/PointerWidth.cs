@@ -7,7 +7,7 @@ namespace Z0
 {
     using PW = XedModels.PointerWidthKind;
 
-    partial struct XedModels
+    partial class XedModels
     {
         public readonly struct PointerWidth
         {

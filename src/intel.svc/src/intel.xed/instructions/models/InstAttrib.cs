@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct XedModels
+    partial class XedModels
     {
         public readonly record struct InstAttrib : IComparable<InstAttrib>
         {

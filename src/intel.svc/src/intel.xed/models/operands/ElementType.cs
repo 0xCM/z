@@ -7,7 +7,7 @@ namespace Z0
 {
     using K = XedModels.ElementKind;
 
-    partial struct XedModels
+    partial class XedModels
     {
         [DataWidth(Width)]
         public readonly record struct ElementType : IComparable<ElementType>

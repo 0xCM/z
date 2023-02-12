@@ -7,7 +7,7 @@ namespace Z0
 {
     using static XedRules;
     
-    partial struct XedModels
+    partial class XedModels
     {
         [SymSource(xed), DataWidth(OpAttrib.KindWidth)]
         public enum OpAttribKind : byte

@@ -8,7 +8,7 @@ namespace Z0
     using static sys;
     using static MachineModes;
 
-    partial struct XedModels
+    partial class XedModels
     {
         public readonly struct OpWidthSpec
         {

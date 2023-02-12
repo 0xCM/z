@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct XedModels
+    partial class XedModels
     {
         [DataWidth(num8.Width)]
         public readonly record struct InstIsa : IComparable<InstIsa>

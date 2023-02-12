@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct XedModels
+    partial class XedModels
     {
         [DataWidth(Width), StructLayout(LayoutKind.Sequential,Pack=1)]
         public readonly record struct Visibility : IComparable<Visibility>
