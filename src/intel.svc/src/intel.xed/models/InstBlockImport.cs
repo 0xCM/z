@@ -5,10 +5,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XedModels;
     using static XedRules;
 
-    partial class XedImport
+    partial class XedModels
     {
         [StructLayout(StructLayout,Pack=1), Record(TableId)]
         public struct InstBlockImport : ISequential<InstBlockImport>, IComparable<InstBlockImport>

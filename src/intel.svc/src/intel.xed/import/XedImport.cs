@@ -86,7 +86,7 @@ namespace Z0
             => TableEmit(src, XedPaths.Imports().Table<OpWidthRecord>());
 
         void EmitChips()
-            => TableEmit(Symbolic.symkinds<ChipCode>(), Targets().Path("xed.chips", FileKind.Csv));
+            => TableEmit(Symbols.symkinds<ChipCode>(), Targets().Path("xed.chips", FileKind.Csv));
 
         void EmitChipMap()
         {

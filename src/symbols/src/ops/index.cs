@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
     
     partial struct Symbols
-    {
+    {        
         [MethodImpl(Inline)]
         public static Symbols<E> index<E>()
             where E : unmanaged, Enum

@@ -6,7 +6,7 @@ namespace Z0
 {
     using static XedModels;
 
-    partial class XedImport
+    partial class XedModels
     {
         public sealed class InstBlockLines : ConcurrentDictionary<InstForm,InstBlockLineSpec>
         {

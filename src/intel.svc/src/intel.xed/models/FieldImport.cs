@@ -5,9 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XedModels;
-
-    partial class XedRules
+    partial class XedModels
     {
         [Record(TableId), StructLayout(LayoutKind.Sequential, Pack=1)]
         public struct FieldImport : IComparable<FieldImport>

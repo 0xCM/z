@@ -7,7 +7,7 @@ namespace Z0
     using static XedModels;
     using static sys;
 
-    partial class XedImport
+    partial class XedModels
     {
         public class InstImportBlocks
         {

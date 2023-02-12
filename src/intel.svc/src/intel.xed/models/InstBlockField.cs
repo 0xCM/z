@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class XedImport
+    partial class XedModels
     {
         [SymSource("xed")]
         public enum InstBlockField : byte
