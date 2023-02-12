@@ -11,7 +11,7 @@ namespace Z0
 
     partial class XedDisasm
     {
-        public static Index<InstOpClass> opclasses(Index<Document> src)
+        public static Index<InstOpClass> opclasses(Index<DisasmDoc> src)
         {
             var buffer = hashset<InstOpClass>();
             foreach(var (summary,detail) in src)
@@ -20,7 +20,7 @@ namespace Z0
             return resequence(dst);
         }
 
-        public static Index<InstOpClass> opclasses(Document src)
+        public static Index<InstOpClass> opclasses(DisasmDoc src)
             => resequence(
                 src.Detail.Blocks.Select(x => x.DetailRow)
                    .SelectMany(x => x.Ops)

@@ -30,7 +30,7 @@ namespace Z0
                     var doc = detail(Context, src);
                     var lookup = doc.Blocks.Select(x => (x.DetailRow.IP, x)).ToDictionary();
                     var keys = lookup.Keys.Array().Sort().Index();
-                    var blocks = alloc<DetailBlock>(keys.Count);
+                    var blocks = alloc<DisasmDetailBlock>(keys.Count);
                     for(var i=0u; i<keys.Count; i++)
                     {
                         var block = lookup[keys[i]];
@@ -46,7 +46,7 @@ namespace Z0
                 return token;
             }
 
-            void Step(uint seq, in DetailBlock src, ITarget dst)
+            void Step(uint seq, in DisasmDetailBlock src, ITarget dst)
             {
                 ref readonly var detail = ref src.DetailRow;
                 ref readonly var block = ref src.SummaryLines;

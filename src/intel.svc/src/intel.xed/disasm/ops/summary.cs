@@ -11,15 +11,15 @@ namespace Z0
 
     partial class XedDisasm
     {
-        public static XedDisasmSummary summary(ProjectContext context, in DataFile src)
+        public static DisasmSummary summary(ProjectContext context, in DisasmDataFile src)
         {
-            var lines = sys.bag<XedDisasmLines>();
+            var lines = sys.bag<DisasmLines>();
             summary(src.Source, context.Root(src.Source), src.Blocks, lines).Require();
             var sorted = lines.ToArray().Sort();
-            return new XedDisasmSummary(src, src.Origin, resequence(sorted.Select(line => line.Row)), sorted);
+            return new DisasmSummary(src, src.Origin, resequence(sorted.Select(line => line.Row)), sorted);
         }
 
-        static Outcome summary(in FileRef src, in FileRef origin, Index<DisasmBlock> blocks, ConcurrentBag<XedDisasmLines> dst)
+        static Outcome summary(in FileRef src, in FileRef origin, Index<DisasmBlock> blocks, ConcurrentBag<DisasmLines> dst)
         {
             var lines = NumberedLines(blocks);
             var expr = expressions(blocks);

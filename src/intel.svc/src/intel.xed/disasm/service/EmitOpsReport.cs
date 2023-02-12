@@ -12,10 +12,10 @@ namespace Z0
 
     partial class XedDisasmSvc
     {
-        public void EmitOpsReport(ProjectContext context, Document src)
+        public void EmitOpsReport(ProjectContext context, DisasmDoc src)
             => EmitOpsReport(context, src.Detail);
 
-        void EmitOpsReport(ProjectContext context, Detail doc)
+        void EmitOpsReport(ProjectContext context, DisasmDetail doc)
         {
             var outpath = XedPaths.DisasmOpsPath(context.Project.ProjectId, doc.DataFile.Source);
             var emitting = EmittingFile(outpath);

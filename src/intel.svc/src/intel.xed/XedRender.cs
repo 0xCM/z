@@ -15,7 +15,7 @@ namespace Z0
     using static XedLiterals;
     using static core;
 
-    using OC = XedRules.OpAttribKind;
+    using OC = XedModels.OpAttribKind;
 
     public partial class XedRender
     {
@@ -352,7 +352,7 @@ namespace Z0
                 _ => '\0',
             };
 
-        public static void describe(in DetailBlockRow src, ITextEmitter dst)
+        public static void describe(in DisasmDetailBlockRow src, ITextEmitter dst)
         {
             const sbyte Pad = -XedFields.FieldRender.ColWidth;
             var pattern = RpOps.slot(0,Pad) + " | " + RpOps.slot(1);

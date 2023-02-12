@@ -10,7 +10,7 @@ namespace Z0
 
     partial class XedDisasmSvc
     {
-        public Index<Document> CalcDocs(ProjectContext context)
+        public Index<DisasmDoc> CalcDocs(ProjectContext context)
             => Data(nameof(CalcDocs), () => XedDisasm.docs(context));
     }
 }

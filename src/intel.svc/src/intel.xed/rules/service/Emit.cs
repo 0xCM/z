@@ -11,7 +11,7 @@ namespace Z0
     partial class XedRules
     {
         public Index<FieldUsage> CalcFieldDeps()
-            => Data(nameof(CalcFieldDeps), () => RuleTableDeps.fields(Xed.Views.CellTables));
+            => Data(nameof(CalcFieldDeps), () => fields(Xed.Views.CellTables));
 
         public void Emit(Index<FieldUsage> src)
         {
@@ -111,7 +111,7 @@ namespace Z0
         {
             exec(PllExec,
                 () => EmitSeq(CellParser.ruleseq()),
-                () => Emit(XedSeq.controls(), XedSeq.defs())
+                () => Emit(XedRuleSeq.controls(), XedRuleSeq.defs())
                 );
         }
 

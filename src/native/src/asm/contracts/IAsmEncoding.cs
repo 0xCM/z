@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Asm;
-
     [Free]
     public interface IAsmEncoding : IExpr
     {

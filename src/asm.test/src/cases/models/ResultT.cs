@@ -6,8 +6,7 @@ namespace Z0.Asm
 {
     partial class AsmCases
     {
-        public readonly struct Result<T> : IAsmCaseResult
-            where T : IAsmCase
+        public readonly struct Result<T>
         {
             public readonly T Case;
 
@@ -21,7 +20,7 @@ namespace Z0.Asm
             }
 
             public string Format()
-                => string.Format("{0} {1}", Outcome ? "Success:" :"Failure:", Case.Format());
+                => string.Format("{0} {1}", Outcome ? "Success:" :"Failure:", Case);
 
             public override string ToString()
                 => Format();

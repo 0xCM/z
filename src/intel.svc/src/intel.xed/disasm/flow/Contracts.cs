@@ -6,6 +6,7 @@
 namespace Z0
 {
     using static XedRules;
+    using static XedModels;
     using static XedDisasmModels;
 
     partial class XedDisasm
@@ -50,11 +51,11 @@ namespace Z0
 
         public interface IContextBuffer
         {
-            ref DataFile DataFile();
+            ref DisasmDataFile DataFile();
 
-            ref DetailBlock Block();
+            ref DisasmDetailBlock Block();
 
-            ref XedDisasmSummary Summary();
+            ref DisasmSummary Summary();
 
             ref AsmInfo AsmInfo();
 

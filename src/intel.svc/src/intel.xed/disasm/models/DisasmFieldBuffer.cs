@@ -26,7 +26,7 @@ namespace Z0
                 Props = InstFieldValues.Empty;
                 Encoding = EncodingExtract.Empty;
                 Selected = default;
-                Detail = DetailBlockRow.Empty;
+                Detail = DisasmDetailBlockRow.Empty;
             }
 
             public void Clear()
@@ -39,12 +39,12 @@ namespace Z0
                 Props = InstFieldValues.Empty;
                 Encoding = EncodingExtract.Empty;
                 Selected = default;
-                Detail = DetailBlockRow.Empty;
+                Detail = DisasmDetailBlockRow.Empty;
             }
 
             public readonly Fields Fields;
 
-            public DetailBlockRow Detail;
+            public DisasmDetailBlockRow Detail;
 
             public DisasmBlock Lines;
 

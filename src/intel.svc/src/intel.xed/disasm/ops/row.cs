@@ -38,7 +38,7 @@ namespace Z0
             return dst;
         }
 
-        static DetailBlockRow row(in XedDisasmLines src)
+        static DisasmDetailBlockRow row(in DisasmLines src)
         {
             ref readonly var lines = ref src.Block;
             ref readonly var summary = ref src.Row;
@@ -46,7 +46,7 @@ namespace Z0
             var inst = Instruction.Empty;
             parse(src, out inst);
 
-            var dst = DetailBlockRow.Empty;
+            var dst = DisasmDetailBlockRow.Empty;
             dst.Seq = summary.Seq;
             dst.DocSeq = summary.DocSeq;
             dst.OriginId = summary.OriginId;

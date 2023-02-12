@@ -27,64 +27,8 @@ namespace Z0
             return new RuleTables(dst, RuleSpecs.tables(dst));
         }
 
-        public partial class RuleTables
+        public class RuleTables
         {
-            Index<TableCriteria> _Criteria;
-
-            TableSpecs _Specs;
-
-            [MethodImpl(Inline)]
-            internal ref readonly Index<TableCriteria> Criteria()
-                => ref _Criteria;
-
-            [MethodImpl(Inline)]
-            public ref readonly TableSpecs Specs()
-                => ref _Specs;
-
-            public RuleTables()
-            {
-                _Criteria = sys.empty<TableCriteria>();
-                _Specs = TableSpecs.Empty;
-            }
-
-            public static RuleTables Empty
-                => new RuleTables();
-
-            public RuleTables(Index<TableCriteria> criteria, TableSpecs specs)
-            {
-                _Criteria = criteria;
-                _Specs = specs;
-            }
-
-            static bool seg(string src, out FieldSeg dst)
-            {
-                dst = FieldSeg.Empty;
-                var i = text.index(src, Chars.LBracket);
-                var j = text.index(src, Chars.RBracket);
-                var result = i>0 && j>i;
-                if(result)
-                {
-                    XedParsers.parse(text.left(src,i), out FieldKind field);
-                    XedParsers.segdata(src, out var data);
-                    result = field != 0 && text.nonempty(data);
-                    if(result)
-                    {
-                        var literal = XedParsers.IsBinaryLiteral(data);
-                        if(literal)
-                            dst = FieldSeg.literal(field, data);
-                        else
-                            dst = FieldSeg.symbolic(field, data);
-                    }
-                }
-                else
-                {
-                    dst = FieldSeg.symbolic(src);
-                    result = true;
-                }
-
-                return result;
-            }
-
             public static CellDatasets datasets(RuleTables tables)
             {
                 var lix = z16;
@@ -220,6 +164,99 @@ namespace Z0
                 }
 
                 return CellDatasets.create(dst, emitter.Emit());
+            }
+
+            public static Index<RuleCellRecord> records(CellTables src)
+            {
+                var seq = z16;
+                var dst = alloc<RuleCellRecord>(src.CellCount);
+                for(var i=0; i<src.TableCount; i++)
+                {
+                    ref readonly var table = ref src[i];
+                    for(var j=z16; j<table.RowCount; j++)
+                    {
+                        ref readonly var row = ref table[j];
+                        for(var k=0; k<row.CellCount; k++, seq++)
+                            seek(dst,seq) = record(seq, row[k]);
+                    }
+                }
+                return dst;
+            }
+
+            Index<TableCriteria> _Criteria;
+
+            TableSpecs _Specs;
+
+            [MethodImpl(Inline)]
+            internal ref readonly Index<TableCriteria> Criteria()
+                => ref _Criteria;
+
+            [MethodImpl(Inline)]
+            public ref readonly TableSpecs Specs()
+                => ref _Specs;
+
+            public RuleTables()
+            {
+                _Criteria = sys.empty<TableCriteria>();
+                _Specs = TableSpecs.Empty;
+            }
+
+            public static RuleTables Empty
+                => new RuleTables();
+
+            public RuleTables(Index<TableCriteria> criteria, TableSpecs specs)
+            {
+                _Criteria = criteria;
+                _Specs = specs;
+            }
+
+            static bool seg(string src, out FieldSeg dst)
+            {
+                dst = FieldSeg.Empty;
+                var i = text.index(src, Chars.LBracket);
+                var j = text.index(src, Chars.RBracket);
+                var result = i>0 && j>i;
+                if(result)
+                {
+                    XedParsers.parse(text.left(src,i), out FieldKind field);
+                    XedParsers.segdata(src, out var data);
+                    result = field != 0 && text.nonempty(data);
+                    if(result)
+                    {
+                        var literal = XedParsers.IsBinaryLiteral(data);
+                        if(literal)
+                            dst = FieldSeg.literal(field, data);
+                        else
+                            dst = FieldSeg.symbolic(field, data);
+                    }
+                }
+                else
+                {
+                    dst = FieldSeg.symbolic(src);
+                    result = true;
+                }
+
+                return result;
+            }
+
+            static RuleCellRecord record(ushort seq, in RuleCell cell)
+            {
+                ref readonly var value = ref cell.Value;
+                var dst = RuleCellRecord.Empty;
+                dst.Seq = seq++;
+                dst.Index = cell.Key.Index;
+                dst.Table = cell.TableIndex;
+                dst.Row = cell.RowIndex;
+                dst.Col = cell.CellIndex;
+                dst.Logic = cell.Logic;
+                dst.Type = value.CellKind;
+                dst.Kind = cell.TableKind;
+                dst.Rule = cell.Rule.TableName;
+                dst.Field = cell.Field;
+                dst.Value = value;
+                dst.Expression = XedRender.format(cell.Value);
+                dst.Op = cell.Operator();
+                return dst;
             }
 
             static string format(in RuleCell cell)

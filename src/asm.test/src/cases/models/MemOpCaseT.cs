@@ -6,7 +6,7 @@ namespace Z0.Asm
 {
     partial class AsmCases
     {
-        public readonly struct MemOpCase<T> : IAsmCase<MemOpCase<T>>
+        public readonly struct MemOpCase<T>
             where T : unmanaged, IMemOp<T>
         {
             public readonly T Op;

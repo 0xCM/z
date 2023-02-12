@@ -17,11 +17,11 @@ namespace Z0
 
             readonly Index<FieldKind> _FieldKinds;
 
-            DataFile _DataFile;
+            DisasmDataFile _DataFile;
 
-            DetailBlock _Block;
+            DisasmDetailBlock _Block;
 
-            XedDisasmSummary _Summary;
+            DisasmSummary _Summary;
 
             AsmInfo _AsmInfo;
 
@@ -34,15 +34,15 @@ namespace Z0
             }
 
             [MethodImpl(Inline)]
-            public ref DataFile DataFile()
+            public ref DisasmDataFile DataFile()
                 => ref _DataFile;
 
             [MethodImpl(Inline)]
-            public ref DetailBlock Block()
+            public ref DisasmDetailBlock Block()
                 => ref _Block;
 
             [MethodImpl(Inline)]
-            public ref XedDisasmSummary Summary()
+            public ref DisasmSummary Summary()
                 => ref _Summary;
 
             [MethodImpl(Inline)]
@@ -87,9 +87,9 @@ namespace Z0
             {
                 _Source = src;
                 _FieldKinds = alloc<FieldKind>(Fields.MaxCount);
-                _DataFile = XedDisasmModels.DataFile.Empty;
-                _Block = DetailBlock.Empty;
-                _Summary = XedDisasmSummary.Empty;
+                _DataFile = XedDisasmModels.DisasmDataFile.Empty;
+                _Block = DisasmDetailBlock.Empty;
+                _Summary = DisasmSummary.Empty;
                 _AsmInfo = XedRules.AsmInfo.Empty;
                 _Props = InstFieldValues.Empty;
                 _Encoding = EncodingExtract.Empty;

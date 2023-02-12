@@ -9,10 +9,10 @@ namespace Z0
 
     partial class XedDisasm
     {
-        public static Index<DataFile> datafiles(ProjectContext context, bool pll = true)
+        public static Index<DisasmDataFile> datafiles(ProjectContext context, bool pll = true)
         {
             var src = sources(context);
-            var dst = sys.bag<DataFile>();
+            var dst = sys.bag<DisasmDataFile>();
             iter(src, file => dst.Add(datafile(context,file)), pll);
             return dst.Index().Sort();
         }

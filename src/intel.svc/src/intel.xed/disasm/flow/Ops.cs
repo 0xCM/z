@@ -23,10 +23,10 @@ namespace Z0
         public static DisasmToken token()
             => (uint)core.inc(ref DisasmTokens);
 
-        public static Detail detail(ProjectContext context, in FileRef src)
+        public static DisasmDetail detail(ProjectContext context, in FileRef src)
             => detail(context, datafile(context, src));
 
-        public static Detail detail(ProjectContext context, in DataFile src)
+        public static DisasmDetail detail(ProjectContext context, in DisasmDataFile src)
             => detail(summary(context,src));
     }
 }

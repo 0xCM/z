@@ -32,7 +32,7 @@ namespace Z0
             return true;
         }
 
-        void Check(in DataFile src)
+        void Check(in DisasmDataFile src)
         {
             var context = ProjectContext();
             var project = context.Project;

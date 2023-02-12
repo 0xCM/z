@@ -6,7 +6,7 @@ namespace Z0.Asm
 {
     partial class AsmCases
     {
-        public struct JmpRel32 : IAsmCase<JmpRel32>
+        public struct JmpRel32
         {
             public @string Statment;
 

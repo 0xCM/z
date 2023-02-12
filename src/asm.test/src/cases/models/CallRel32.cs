@@ -7,7 +7,7 @@ namespace Z0.Asm
     partial class AsmCases
     {
         [ApiHost("cases.callrel32")]
-        public struct CallRel32 : IAsmCase<CallRel32>
+        public struct CallRel32
         {
             [Op]
             public static ulong f(int i, byte a, ushort b, uint c, ulong d)

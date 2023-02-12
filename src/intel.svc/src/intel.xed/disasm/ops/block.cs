@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XedRules;
+    using static XedModels;
     using static XedDisasmModels;
 
     partial class XedDisasm
@@ -13,10 +13,10 @@ namespace Z0
         public static DisasmBlock block(TextLine[] src)
             => new DisasmBlock(src);
 
-        static DetailBlock block(in XedDisasmLines src)
+        static DisasmDetailBlock block(in DisasmLines src)
         {
             parse(src, out Instruction inst);
-            return new DetailBlock(row(src), src, inst);
+            return new DisasmDetailBlock(row(src), src, inst);
         }
     }
 }

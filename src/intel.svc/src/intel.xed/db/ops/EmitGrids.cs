@@ -37,7 +37,7 @@ namespace Z0
                     }
                 }
             }
-            FileEmit(dst.Emit(), counter, Paths.DbTarget("rules.grids", FileKind.Csv));
+            Channel.FileEmit(dst.Emit(), counter, Paths.DbTarget("rules.grids", FileKind.Csv));
         }
     }
 }

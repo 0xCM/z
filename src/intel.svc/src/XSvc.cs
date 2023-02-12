@@ -73,6 +73,9 @@ namespace Z0
 
             public IApiService SdmCmd(IWfRuntime wf)
                 => Service<IntelSdmCmd>(wf);
+
+            public Xed Xed(IWfRuntime wf)
+                => Service<Xed>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
@@ -134,6 +137,9 @@ namespace Z0
         public static IApiService SdmCmd(this IWfRuntime wf)
             => Services.SdmCmd(wf);
 
+        public static Xed Xed(this IWfRuntime wf)
+            => Services.Xed(wf);
+
         public static XedToolCmd XedToolCmd(this IWfRuntime wf)
             => Services.XedToolCmd(wf);
 
@@ -143,7 +149,6 @@ namespace Z0
         public static IntelCmd IntelCmd(this IWfRuntime wf)
             => Services.IntelCmd(wf);
     }
-
 
     partial struct Msg
     {

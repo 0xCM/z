@@ -6,7 +6,8 @@
 namespace Z0
 {
     using Asm;
-    
+    using static sys;
+
     using static XedModels;
 
     using I = Asm.RFlagIndex;

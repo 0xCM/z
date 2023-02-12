@@ -7,11 +7,12 @@ namespace Z0
     using static sys;
     using static XedRules;
     using static XedDisasmModels;
+    using static XedModels;
 
     partial class XedDisasm
     {
-        public static void parse(in XedDisasmLines src, out Instruction dst)
-            => XedPatterns.instruction(src.Row.InstructionId, src.Block.Props.Content, XedDisasm.fields(src.Block), out dst);
+        public static void parse(in DisasmLines src, out Instruction dst)
+            => XedPatterns.instruction(src.Row.InstructionId, src.Block.Props.Content, fields(src.Block), out dst);
 
         public static uint parse(in DisasmBlock src, out InstFieldValues dst)
         {

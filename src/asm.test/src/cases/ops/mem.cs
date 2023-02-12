@@ -24,7 +24,6 @@ namespace Z0.Asm
 
         static Result<C> CheckEquality<C,T>(C @case, T expect, T actual)
             where T : IEquatable<T>
-            where C : IAsmCase
         {
             if(!expect.Equals(actual))
                 return new Result<C>(@case, (false, string.Format("Failure: '{0}' != '{1}'", expect, actual)));

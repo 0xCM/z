@@ -9,11 +9,11 @@ namespace Z0
 
     partial class XedDisasm
     {
-        public static Detail detail(XedDisasmSummary summary, bool pll = true)
+        public static DisasmDetail detail(DisasmSummary summary, bool pll = true)
         {
-            var dst = sys.bag<DetailBlock>();
+            var dst = sys.bag<DisasmDetailBlock>();
             iter(summary.LineIndex, lines => dst.Add(block(lines)), pll);
-            return new Detail(summary.DataFile, resequence(dst.ToArray()));
+            return new DisasmDetail(summary.DataFile, resequence(dst.ToArray()));
         }
     }
 }

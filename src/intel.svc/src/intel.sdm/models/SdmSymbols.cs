@@ -131,134 +131,134 @@ namespace Z0.Asm
             "V/I 2"
         };
 
-        static string[] OperandData = new string[]{
-            "AL",
-            "AX",
-            "EAX",
-            "RAX",
-            "DX",
+        // static string[] OperandData = new string[]{
+        //     "AL",
+        //     "AX",
+        //     "EAX",
+        //     "RAX",
+        //     "DX",
 
-            "k1",
-            "k2",
-            "k3",
+        //     "k1",
+        //     "k2",
+        //     "k3",
 
-            "mm1",
-            "mm2",
+        //     "mm1",
+        //     "mm2",
 
-            "r8",
-            "r16",
-            "r32",
-            "r64",
+        //     "r8",
+        //     "r16",
+        //     "r32",
+        //     "r64",
 
 
-            "mm2/m64",
+        //     "mm2/m64",
 
-        };
+        // };
 
-        static readonly string[] RmOpData = new string[]{
-            "r32/m8",
-            "r32/m32",
-            "r64/m64",
-            "r/m8",
-            "r/m16",
-            "r/m32",
-            "r/m64",
-        };
+        // static readonly string[] RmOpData = new string[]{
+        //     "r32/m8",
+        //     "r32/m32",
+        //     "r64/m64",
+        //     "r/m8",
+        //     "r/m16",
+        //     "r/m32",
+        //     "r/m64",
+        // };
 
-        static readonly string[] RelOpData = new string[]{
-            "rel8",
-            "rel16",
-            "rel32",
-        };
+        // static readonly string[] RelOpData = new string[]{
+        //     "rel8",
+        //     "rel16",
+        //     "rel32",
+        // };
 
-        static readonly string[] ImmOpData = new string[]{
-            "imm8",
-            "imm16",
-            "imm32",
-            "imm64",
-        };
+        // static readonly string[] ImmOpData = new string[]{
+        //     "imm8",
+        //     "imm16",
+        //     "imm32",
+        //     "imm64",
+        // };
 
-        static readonly string[] MemOpData = new string[]{
-            "m8",
-            "m16",
-            "m32",
-            "m64",
-            "m128",
-            "m256",
-        };
+        // static readonly string[] MemOpData = new string[]{
+        //     "m8",
+        //     "m16",
+        //     "m32",
+        //     "m64",
+        //     "m128",
+        //     "m256",
+        // };
 
-        static readonly string[] XmmOpData = new string[]{
-            "xmm1",
-            "xmm2",
-            "xmm3",
-            "xmm1{k1}{z}",
-            "xmm2/m16",
-            "xmm2/m32",
-            "xmm2/m64",
-            "xmm2/m128",
-            "xmm2/m128/m32bcst",
-            "xmm3/m128",
-            "xmm3/m128/m32bcst",
-            "xmm3/m128/m64bcst",
-        };
+        // static readonly string[] XmmOpData = new string[]{
+        //     "xmm1",
+        //     "xmm2",
+        //     "xmm3",
+        //     "xmm1{k1}{z}",
+        //     "xmm2/m16",
+        //     "xmm2/m32",
+        //     "xmm2/m64",
+        //     "xmm2/m128",
+        //     "xmm2/m128/m32bcst",
+        //     "xmm3/m128",
+        //     "xmm3/m128/m32bcst",
+        //     "xmm3/m128/m64bcst",
+        // };
 
-        static readonly string[] YmmOpData = new string[]{
-            "ymm1",
-            "ymm2",
-            "ymm3",
-            "ymm1{k1}{z}",
-            "ymm2/m256",
-            "ymm2/m256/m32bcst",
-            "ymm3/m256",
-            "ymm3/m256/m32bcst",
-            "ymm3/m256/m64bcst",
-        };
+        // static readonly string[] YmmOpData = new string[]{
+        //     "ymm1",
+        //     "ymm2",
+        //     "ymm3",
+        //     "ymm1{k1}{z}",
+        //     "ymm2/m256",
+        //     "ymm2/m256/m32bcst",
+        //     "ymm3/m256",
+        //     "ymm3/m256/m32bcst",
+        //     "ymm3/m256/m64bcst",
+        // };
 
-        static readonly string[] ZmmOpData = new string[]{
-            "zmm1",
-            "zmm2",
-            "zmm3",
-            "zmm1{k1}{z}",
-            "zmm2/m512/m32bcst",
-            "zmm3/m512",
-            "zmm3/m512/m32bcst",
-            "zmm3/m512/m64bcst",
-        };
+        // static readonly string[] ZmmOpData = new string[]{
+        //     "zmm1",
+        //     "zmm2",
+        //     "zmm3",
+        //     "zmm1{k1}{z}",
+        //     "zmm2/m512/m32bcst",
+        //     "zmm3/m512",
+        //     "zmm3/m512/m32bcst",
+        //     "zmm3/m512/m64bcst",
+        // };
 
-        static readonly string[] EvexData = new string[]{
-            "EVEX.vvvv",
-            "EVEX.R",
-            "EVEX.V'",
-            "EVEX.R'",
-            "EVEX.vvvv (r)",
-            "EVEX.RC",
-            "EVEX.RX",
-            "EVEX.RXB",
-            };
+        // static readonly string[] EvexData = new string[]{
+        //     "EVEX.vvvv",
+        //     "EVEX.R",
+        //     "EVEX.V'",
+        //     "EVEX.R'",
+        //     "EVEX.vvvv (r)",
+        //     "EVEX.RC",
+        //     "EVEX.RX",
+        //     "EVEX.RXB",
+        //     };
 
-        static readonly string[] OpCodeArithmeticData = new string[]{
-            "opcode + rd (w)",
-            "opcode + rd (r)",
-            "opcode + rd (r, w)",
-            };
+        // static readonly string[] OpCodeArithmeticData = new string[]{
+        //     "opcode + rd (w)",
+        //     "opcode + rd (r)",
+        //     "opcode + rd (r, w)",
+        //     };
 
-        static readonly string[] EncodingVersionData = new string[]
-        {
-            "(128-bit Legacy SSE version)",
-            "(128-bit load- and register-copy- form Legacy SSE version)",
-            "(128-bit store-form version)",
-            "(VEX.128 encoded version)",
-            "(VEX.128 and EVEX.128 encoded version)",
-            "(VEX.256 encoded version)",
-            "(VEX.256 encoded version, load - and register copy)",
-            "(VEX.256 encoded version, store-form)",
-            "(VEX.256 and EVEX.256 encoded version)",
-            "(EVEX encoded version)",
-            "(EVEX and VEX.128 encoded version)",
-            "(EVEX encoded versions, register-copy form)",
-            "(EVEX encoded versions, load-form)",
-            "(EVEX.U1.512 encoded version)",
-            "(EVEX.512 encoded version)"
-        };
+        // static readonly string[] EncodingVersionData = new string[]
+        // {
+        //     "(128-bit Legacy SSE version)",
+        //     "(128-bit load- and register-copy- form Legacy SSE version)",
+        //     "(128-bit store-form version)",
+        //     "(VEX.128 encoded version)",
+        //     "(VEX.128 and EVEX.128 encoded version)",
+        //     "(VEX.256 encoded version)",
+        //     "(VEX.256 encoded version, load - and register copy)",
+        //     "(VEX.256 encoded version, store-form)",
+        //     "(VEX.256 and EVEX.256 encoded version)",
+        //     "(EVEX encoded version)",
+        //     "(EVEX and VEX.128 encoded version)",
+        //     "(EVEX encoded versions, register-copy form)",
+        //     "(EVEX encoded versions, load-form)",
+        //     "(EVEX.U1.512 encoded version)",
+        //     "(EVEX.512 encoded version)"
+        // };
     }
 }

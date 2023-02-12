@@ -28,7 +28,7 @@ namespace Z0
                 Render = XedFields.render();
             }
 
-            public uint EmitFields(Detail src, ITextEmitter dst)
+            public uint EmitFields(DisasmDetail src, ITextEmitter dst)
             {
                 var fields = XedDisasm.fields();
                 ref readonly var data = ref src.DataFile;

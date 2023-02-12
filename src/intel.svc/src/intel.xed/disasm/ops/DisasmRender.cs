@@ -16,9 +16,9 @@ namespace Z0
 
             public static string[] OpColPatterns = new string[]{"Op{0}", "Op{0}Name", "Op{0}Val", "Op{0}Action", "Op{0}Vis", "Op{0}Width", "Op{0}WKind", "Op{0}Selector"};
 
-            public static void render(Index<DetailBlock> src, ITextEmitter dst, bool header = true)
+            public static void render(Index<DisasmDetailBlock> src, ITextEmitter dst, bool header = true)
             {
-                var formatter = Tables.formatter<DetailBlockRow>(DetailBlockRow.RenderWidths);
+                var formatter = Tables.formatter<DisasmDetailBlockRow>(DisasmDetailBlockRow.RenderWidths);
                 if(header)
                     dst.AppendLine(FormatDetailHeader(formatter));
 
@@ -26,7 +26,7 @@ namespace Z0
                     render(formatter, src[i].DetailRow, dst);
             }
 
-            public static string FormatDetailHeader(ICsvFormatter<DetailBlockRow> formatter)
+            public static string FormatDetailHeader(ICsvFormatter<DisasmDetailBlockRow> formatter)
             {
                 var headerBase = formatter.FormatHeader();
                 var j = text.lastindex(headerBase, Chars.Pipe);
@@ -56,7 +56,7 @@ namespace Z0
                 return dst.Emit();
             }
 
-            public static void render(ICsvFormatter<DetailBlockRow> formatter, in DetailBlockRow src, ITextEmitter dst)
+            public static void render(ICsvFormatter<DisasmDetailBlockRow> formatter, in DisasmDetailBlockRow src, ITextEmitter dst)
                 => dst.AppendLine(formatter.Format(src));
 
             public static string OpDetailHeader(int index)

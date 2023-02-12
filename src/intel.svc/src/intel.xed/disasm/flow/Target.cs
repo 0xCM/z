@@ -8,6 +8,7 @@ namespace Z0
     using static sys;
     using static XedRules;
     using static XedFields;
+    using static XedModels;
 
     using K = XedRules.FieldKind;
 

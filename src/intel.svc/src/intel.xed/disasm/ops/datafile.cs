@@ -9,7 +9,7 @@ namespace Z0
 
     partial class XedDisasm
     {
-        public static DataFile datafile(ProjectContext context, in FileRef src)
+        public static DisasmDataFile datafile(ProjectContext context, in FileRef src)
         {
             var dst = list<DisasmBlock>();
             var lines = src.Path.ReadNumberedLines();
@@ -41,7 +41,7 @@ namespace Z0
                     }
                 }
             }
-            return new DataFile(context.Root(src), src,dst.ToArray());
+            return new DisasmDataFile(context.Root(src), src,dst.ToArray());
         }
     }
 }

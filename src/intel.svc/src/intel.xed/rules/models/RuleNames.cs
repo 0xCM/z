@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     using Bv128 = BitVector128<ulong>;
     using Bv256 = BitVector256<ulong>;

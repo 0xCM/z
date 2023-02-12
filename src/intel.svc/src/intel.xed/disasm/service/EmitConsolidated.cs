@@ -12,10 +12,10 @@ namespace Z0
 
     partial class XedDisasmSvc
     {
-        void EmitConsolidated(ProjectContext context, Index<Document> src)
+        void EmitConsolidated(ProjectContext context, Index<DisasmDoc> src)
         {
             var summaries = sys.bag<XedDisasmRow>();
-            var details = sys.bag<DetailBlock>();
+            var details = sys.bag<DisasmDetailBlock>();
             iter(src, pair =>{
                 iter(pair.Summary.Rows, r => summaries.Add(r));
                 iter(pair.Detail.Blocks, b => details.Add(b));
@@ -27,15 +27,15 @@ namespace Z0
                 () => EmitConsolidated(context, summaries.ToArray()));
         }
 
-        void EmitOpClasses(ProjectContext context, Index<Document> src)
+        void EmitOpClasses(ProjectContext context, Index<DisasmDoc> src)
         {
             var target = EtlContext.table<InstOpClass>(context.Project.ProjectId, disasm);
             Channel.TableEmit(XedDisasm.opclasses(src).View, target);
         }
 
-        void EmitConsolidated(ProjectContext context, Index<DetailBlock> src)
+        void EmitConsolidated(ProjectContext context, Index<DisasmDetailBlock> src)
         {
-            var target = EtlContext.table<DetailBlockRow>(context.Project.ProjectId);
+            var target = EtlContext.table<DisasmDetailBlockRow>(context.Project.ProjectId);
             var buffer = text.buffer();
             DisasmRender.render(resequence(src), buffer);
             var emitting = Channel.EmittingFile(target);

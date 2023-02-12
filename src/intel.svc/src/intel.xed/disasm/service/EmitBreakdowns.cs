@@ -10,10 +10,10 @@ namespace Z0
 
     partial class XedDisasmSvc
     {
-        public void EmitBreakdowns(ProjectContext context, Index<Document> docs)
+        public void EmitBreakdowns(ProjectContext context, Index<DisasmDoc> docs)
             => iter(docs, doc => EmitBreakdowns(context, doc), PllExec);
 
-        public void EmitBreakdowns(ProjectContext context, Document doc)
+        public void EmitBreakdowns(ProjectContext context, DisasmDoc doc)
         {
             exec(PllExec,
                     () => EmitDetailReport(context, doc),

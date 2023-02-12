@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class XedRules
+    partial struct XedModels
     {
         [StructLayout(StructLayout,Pack=1),Record(TableId)]
         public record struct CpuIdImport : IComparable<CpuIdImport>, ISequential<CpuIdImport>

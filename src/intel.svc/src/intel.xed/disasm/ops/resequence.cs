@@ -26,14 +26,14 @@ namespace Z0
             return dst;
         }
 
-        public static Index<DetailBlock> resequence(Index<DetailBlock> src)
+        public static Index<DisasmDetailBlock> resequence(Index<DisasmDetailBlock> src)
         {
             var dst = src.Sort();
             for(var i=0u; i<dst.Count; i++)
             {
                 var row = dst[i].DetailRow;
                 row.Seq = i;
-                dst[i] = new DetailBlock(row, dst[i].SummaryLines, dst[i].Instruction);
+                dst[i] = new DisasmDetailBlock(row, dst[i].SummaryLines, dst[i].Instruction);
             }
             return dst;
         }

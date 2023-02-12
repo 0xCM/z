@@ -19,7 +19,7 @@ namespace Z0
         public static DisasmFieldBuffer fields()
             => DisasmFieldBuffer.allocate();
 
-        public static DisasmFieldBuffer fields(in DetailBlock src, ref DisasmFieldBuffer dst)
+        public static DisasmFieldBuffer fields(in DisasmDetailBlock src, ref DisasmFieldBuffer dst)
         {
             dst.Clear();
             ref readonly var lines = ref src.SummaryLines;

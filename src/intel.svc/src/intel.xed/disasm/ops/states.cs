@@ -11,7 +11,7 @@ namespace Z0
 
     partial class XedDisasm
     {
-        public static OperandStates states(in DataFile src, bool pll = true)
+        public static OperandStates states(in DisasmDataFile src, bool pll = true)
         {
             if(pll)
             {

@@ -8,7 +8,7 @@ namespace Z0
     using static XedRules;
     using static XedGrids;
     using static MemDb;
-    using static core;
+    using static sys;
 
     partial class XedDb
     {
