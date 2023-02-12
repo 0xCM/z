@@ -18,7 +18,7 @@ namespace Z0
         public static T vfirst<S,T>(Vector128<S> src)
             where S : unmanaged
             where T : unmanaged
-                => cpu.vcell<S,T>(src,0);
+                => vcpu.vcell<S,T>(src,0);
 
         /// <summary>
         /// Returns a reference to the leading cell

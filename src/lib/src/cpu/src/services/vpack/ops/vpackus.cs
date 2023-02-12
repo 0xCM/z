@@ -7,7 +7,7 @@ namespace Z0
     using static System.Runtime.Intrinsics.X86.Sse2;
     using static System.Runtime.Intrinsics.X86.Avx2;
     using static System.Runtime.Intrinsics.X86.Sse41;
-    using static cpu;
+    using static vcpu;
 
     partial struct vpack
     {
@@ -77,7 +77,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static Vector128<ushort> vpackus(Vector128<uint> x, Vector128<uint> y)
         {
-            var mask = cpu.vbroadcast(n128, (uint)(ushort.MaxValue));
+            var mask = vcpu.vbroadcast(n128, (uint)(ushort.MaxValue));
             var z0 = v32i(vand(x,mask));
             var z1 = v32i(vand(y,mask));
             return PackUnsignedSaturate(z0, z1);
@@ -92,7 +92,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static Vector256<byte> vpackus(Vector256<ushort> x, Vector256<ushort> y)
         {
-            var mask = cpu.vbroadcast(n256, (ushort)(byte.MaxValue));
+            var mask = vcpu.vbroadcast(n256, (ushort)(byte.MaxValue));
             var v1 = v16i(vand(x,mask));
             var v2 = v16i(vand(y,mask));
             return PackUnsignedSaturate(v1,v2);
@@ -108,7 +108,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static Vector256<ushort> vpackus(Vector256<uint> x, Vector256<uint> y)
         {
-            var mask = gcpu.vbroadcast<uint>(n256, (uint)(ushort.MaxValue));
+            var mask = vgcpu.vbroadcast<uint>(n256, (uint)(ushort.MaxValue));
             var z0 = v32i(vand(x,mask));
             var z1 = v32i(vand(y,mask));
             return PackUnsignedSaturate(z0, z1);

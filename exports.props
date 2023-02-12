@@ -78,7 +78,6 @@
    <Import Project="$(MsBuildThisFileDirectory)src/types/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/tools/exports.props"/>
 
-   <Import Project="$(MsBuildThisFileDirectory)src/validity/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/vcpu/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/workflow/exports.props"/>

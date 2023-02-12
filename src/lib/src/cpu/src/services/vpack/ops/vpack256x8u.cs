@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static cpu;
+    using static vcpu;
 
     partial struct vpack
     {
@@ -16,7 +16,7 @@ namespace Z0
         /// <param name="dst">The target vector</param>
         [MethodImpl(Inline), Op]
         public static Vector256<byte> vpack256x8u(Vector256<ushort> a, Vector256<ushort> b)
-            => vperm4x64(vpack.vpackus(a,b), Perm4L.ACBD);
+            => vperm4x64(vpackus(a,b), Perm4L.ACBD);
 
         /// <summary>
         /// (8x32u,8x32u,8x32u,8x32u) -> 32x8w

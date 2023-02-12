@@ -55,13 +55,13 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(byte))
-                return generic<T>(cpu.vdec(v8u(src)));
+                return generic<T>(vcpu.vdec(v8u(src)));
             else if(typeof(T) == typeof(ushort))
-                return generic<T>(cpu.vdec(v16u(src)));
+                return generic<T>(vcpu.vdec(v16u(src)));
             else if(typeof(T) == typeof(uint))
-                return generic<T>(cpu.vdec(v32u(src)));
+                return generic<T>(vcpu.vdec(v32u(src)));
             else if(typeof(T) == typeof(ulong))
-                return generic<T>(cpu.vdec(v64u(src)));
+                return generic<T>(vcpu.vdec(v64u(src)));
             else
                 return vdec_i(src);
         }
@@ -71,13 +71,13 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(sbyte))
-                 return generic<T>(cpu.vdec(v8i(src)));
+                 return generic<T>(vcpu.vdec(v8i(src)));
             else if(typeof(T) == typeof(short))
-                 return generic<T>(cpu.vdec(v16i(src)));
+                 return generic<T>(vcpu.vdec(v16i(src)));
             else if(typeof(T) == typeof(int))
-                 return generic<T>(cpu.vdec(v32i(src)));
+                 return generic<T>(vcpu.vdec(v32i(src)));
             else if(typeof(T) == typeof(long))
-                 return generic<T>(cpu.vdec(v64i(src)));
+                 return generic<T>(vcpu.vdec(v64i(src)));
             else
                 throw no<T>();
         }

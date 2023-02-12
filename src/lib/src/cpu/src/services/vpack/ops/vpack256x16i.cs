@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static cpu;
+    using static vcpu;
 
     partial struct vpack
     {
@@ -14,6 +14,6 @@ namespace Z0
         /// <param name="y">The second source vector</param>
         [MethodImpl(Inline), Op]
         public static Vector256<short> vpack256x16i(Vector256<int> x, Vector256<int> y)
-            => vperm4x64(vpack.vpackss(x,y), Perm4L.ACBD);
+            => vperm4x64(vpackss(x,y), Perm4L.ACBD);
     }
 }

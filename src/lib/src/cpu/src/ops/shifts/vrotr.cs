@@ -87,7 +87,7 @@ namespace Z0
         static Vector256<uint> Vector256u32
         {
             [MethodImpl(Inline), Rotr]
-            get => gcpu.vbroadcast<uint>(w256, 32u);
+            get => vbroadcast(w256, 32u);
         }
 
         static Vector128<ulong> Vector128u64

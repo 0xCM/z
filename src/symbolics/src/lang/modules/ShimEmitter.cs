@@ -4,9 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.Linq;
-    using System.IO;
-
         public struct ShimCode
         {
             public FilePath TargetPath;

@@ -18,10 +18,10 @@ namespace Z0
             where T : unmanaged
         {
             var w = w128;
-            var dst = vzero<T>(w);
+            var dst = vcpu.vzero<T>(w);
             ref var storage = ref vfirst(dst);
             vstore(src, ref storage);
-            return cover(storage, cpu.vcount<T>(w));
+            return cover(storage, vcpu.vcount<T>(w));
         }
 
         /// <summary>
@@ -34,10 +34,10 @@ namespace Z0
             where T : unmanaged
         {
             var w = w256;
-            var dst = vzero<T>(w);
+            var dst = vcpu.vzero<T>(w);
             ref var storage = ref vfirst(dst);
             vstore(src, ref storage);
-            return cover(storage, cpu.vcount<T>(w));
+            return cover(storage, vcpu.vcount<T>(w));
         }
 
         /// <summary>
@@ -50,10 +50,10 @@ namespace Z0
             where T : unmanaged
         {
             var w = w512;
-            var dst = vzero<T>(w);
+            var dst = vcpu.vzero<T>(w);
             ref var storage = ref vfirst(dst);
             vstore(src, ref storage);
-            return cover(storage, cpu.vcount<T>(w));
+            return cover(storage, vcpu.vcount<T>(w));
         }
     }
 }

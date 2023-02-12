@@ -77,11 +77,11 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static ReadOnlySpan<char> inflate16u(in ByteBlock8 src)
-            => recover<char>(bytes(cpu.vlo(vpack.vinflate256x16u(vcpu.vbytes(w128, u64(src))))));
+            => recover<char>(bytes(vcpu.vlo(vpack.vinflate256x16u(vcpu.vbytes(w128, u64(src))))));
 
         [MethodImpl(Inline), Op]
         public static ReadOnlySpan<char> inflate16u(in ByteBlock16 src)
-            => recover<char>(bytes(cpu.vlo(vpack.vinflate256x16u(vcpu.vbytes(w128, u64(src))))));
+            => recover<char>(bytes(vcpu.vlo(vpack.vinflate256x16u(vcpu.vbytes(w128, u64(src))))));
 
         [MethodImpl(Inline), Op]
         public static ReadOnlySpan<char> inflate16u(in ByteBlock32 src)

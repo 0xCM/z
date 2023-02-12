@@ -49,7 +49,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(AllNumeric)]
         public static ref T vedit<T>(in Vector128<T> src)
             where T : unmanaged
-                => ref gcpu.vref(ref edit(src));
+                => ref vcpu.vref(ref edit(src));
 
         /// <summary>
         /// Presents a readonly reference to 256-bit T-vector as a T-reference
@@ -59,7 +59,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(AllNumeric)]
         public static ref T vedit<T>(in Vector256<T> src)
             where T : unmanaged
-                => ref gcpu.vref(ref edit(src));
+                => ref vcpu.vref(ref edit(src));
 
         /// <summary>
         /// Presents a readonly reference to 512-bit T-vector as a T-reference
@@ -69,7 +69,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(AllNumeric)]
         public static ref T vedit<T>(in Vector512<T> src)
             where T : unmanaged
-                => ref gcpu.vref(ref edit(src));
+                => ref vcpu.vref(ref edit(src));
 
         /// <summary>
         /// Presents a readonly reference to 128-bit vector as a T-reference

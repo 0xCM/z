@@ -52,7 +52,7 @@ namespace Z0
         {
             var count = cpu.vcount(w, enabled);
             var buffer = gcpu.vzero<T>(w);
-            ref var dst = ref gcpu.vref(ref buffer);
+            ref var dst = ref vcpu.vref(ref buffer);
             var length = min(count, width<S>());
             for(var i=0u; i<length; i++)
                 seek(dst, i) = gbits.test(src,(byte)i) ? enabled : default;
@@ -73,7 +73,7 @@ namespace Z0
         {
             var count = cpu.vcount(w, enabled);
             var buffer = gcpu.vzero<T>(w);
-            ref var dst = ref gcpu.vref(ref buffer);
+            ref var dst = ref vcpu.vref(ref buffer);
             var length = min(count, width<S>());
             for(var i=0u; i<length; i++)
                 seek(dst, i) = gbits.test(src,(byte)i) ? enabled : default;

@@ -60,13 +60,13 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(byte))
-                return generic<T>(cpu.vbroadcast(w, uint8(src)));
+                return generic<T>(vcpu.vbroadcast(w, uint8(src)));
             else if(typeof(T) == typeof(ushort))
-                return generic<T>(cpu.vbroadcast(w, uint16(src)));
+                return generic<T>(vcpu.vbroadcast(w, uint16(src)));
             else if(typeof(T) == typeof(uint))
-                return generic<T>(cpu.vbroadcast(w, uint32(src)));
+                return generic<T>(vcpu.vbroadcast(w, uint32(src)));
             else if(typeof(T) == typeof(ulong))
-                return generic<T>(cpu.vbroadcast(w, uint64(src)));
+                return generic<T>(vcpu.vbroadcast(w, uint64(src)));
             else
                 return vbroadcast_i(w,src);
         }
@@ -76,13 +76,13 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(sbyte))
-                return generic<T>(cpu.vbroadcast(w, int8(src)));
+                return generic<T>(vcpu.vbroadcast(w, int8(src)));
             else if(typeof(T) == typeof(short))
-                return generic<T>(cpu.vbroadcast(w, int16(src)));
+                return generic<T>(vcpu.vbroadcast(w, int16(src)));
             else if(typeof(T) == typeof(int))
-                return generic<T>(cpu.vbroadcast(w, int32(src)));
+                return generic<T>(vcpu.vbroadcast(w, int32(src)));
             else if(typeof(T) == typeof(long))
-                return generic<T>(cpu.vbroadcast(w, int64(src)));
+                return generic<T>(vcpu.vbroadcast(w, int64(src)));
             else
                 return vbroadcast_f(w,src);
         }
@@ -92,9 +92,9 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(float))
-                return generic<T>(cpu.vbroadcast(w, float32(src)));
+                return generic<T>(vcpu.vbroadcast(w, float32(src)));
             else if(typeof(T) == typeof(double))
-                return generic<T>(cpu.vbroadcast(w, float64(src)));
+                return generic<T>(vcpu.vbroadcast(w, float64(src)));
             else
                 throw no<T>();
         }
@@ -104,13 +104,13 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(byte))
-                return generic<T>(cpu.vbroadcast(w, uint8(src)));
+                return generic<T>(vcpu.vbroadcast(w, uint8(src)));
             else if(typeof(T) == typeof(ushort))
-                return generic<T>(cpu.vbroadcast(w, uint16(src)));
+                return generic<T>(vcpu.vbroadcast(w, uint16(src)));
             else if(typeof(T) == typeof(uint))
-                return generic<T>(cpu.vbroadcast(w, uint32(src)));
+                return generic<T>(vcpu.vbroadcast(w, uint32(src)));
             else if(typeof(T) == typeof(ulong))
-                return generic<T>(cpu.vbroadcast(w, uint64(src)));
+                return generic<T>(vcpu.vbroadcast(w, uint64(src)));
             else
                 return vbroadcast_i(w,src);
         }
@@ -120,13 +120,13 @@ namespace Z0
             where T : unmanaged
         {
              if(typeof(T) == typeof(sbyte))
-                return generic<T>(cpu.vbroadcast(w, int8(src)));
+                return generic<T>(vcpu.vbroadcast(w, int8(src)));
             else if(typeof(T) == typeof(short))
-                return generic<T>(cpu.vbroadcast(w, int16(src)));
+                return generic<T>(vcpu.vbroadcast(w, int16(src)));
             else if(typeof(T) == typeof(int))
-                return generic<T>(cpu.vbroadcast(w, int32(src)));
+                return generic<T>(vcpu.vbroadcast(w, int32(src)));
             else if(typeof(T) == typeof(long))
-                return generic<T>(cpu.vbroadcast(w, int64(src)));
+                return generic<T>(vcpu.vbroadcast(w, int64(src)));
             else
                 return vbroadcast_f(w,src);
        }
@@ -136,9 +136,9 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(float))
-                return generic<T>(cpu.vbroadcast(w, float32(src)));
+                return generic<T>(vcpu.vbroadcast(w, float32(src)));
             else if(typeof(T) == typeof(double))
-                return generic<T>(cpu.vbroadcast(w, float64(src)));
+                return generic<T>(vcpu.vbroadcast(w, float64(src)));
             else
                 throw no<T>();
         }

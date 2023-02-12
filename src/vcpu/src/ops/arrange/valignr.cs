@@ -7,7 +7,7 @@ namespace Z0
     using static System.Runtime.Intrinsics.X86.Ssse3;
     using static System.Runtime.Intrinsics.X86.Avx2;
 
-    partial struct cpu
+    partial class vcpu
     {
         /// <summary>
         /// __m128i _mm_alignr_epi8 (__m128i a, __m128i b, int count) PALIGNR xmm, xmm/m128, imm8

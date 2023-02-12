@@ -19,13 +19,13 @@ namespace Z0
             where T : unmanaged
        {
             if(typeof(T) == typeof(byte) || typeof(T) == typeof(sbyte))
-                return generic<T>(cpu.vload(w, first(Inc128x8u)));
+                return generic<T>(vcpu.vload(w, first(Inc128x8u)));
             else if(typeof(T) == typeof(ushort) || typeof(T) == typeof(short))
-                return generic<T>(cpu.vload(w, first(Inc128x16u)));
+                return generic<T>(vcpu.vload(w, first(Inc128x16u)));
             else if(typeof(T) == typeof(uint) || typeof(T) == typeof(int) || typeof(T) == typeof(float))
-                return generic<T>(cpu.vload(w, first(Inc128x32u)));
+                return generic<T>(vcpu.vload(w, first(Inc128x32u)));
             else if(typeof(T) == typeof(ulong) || typeof(T) == typeof(long))
-                return generic<T>(cpu.vload(w, first(Inc128x64u)));
+                return generic<T>(vcpu.vload(w, first(Inc128x64u)));
             else
                 throw no<T>();
         }
@@ -40,13 +40,13 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(byte) || typeof(T) == typeof(sbyte))
-                return generic<T>(cpu.vload(w, first(Inc256x8u)));
+                return generic<T>(vcpu.vload(w, first(Inc256x8u)));
             else if(typeof(T) == typeof(ushort) || typeof(T) == typeof(short))
-                return generic<T>(cpu.vload(w, first(Inc256x16u)));
+                return generic<T>(vcpu.vload(w, first(Inc256x16u)));
             else if(typeof(T) == typeof(uint) || typeof(T) == typeof(int)  || typeof(T) == typeof(float))
-                return generic<T>(cpu.vload(w, first(Inc256x32u)));
+                return generic<T>(vcpu.vload(w, first(Inc256x32u)));
             else if(typeof(T) == typeof(ulong) || typeof(T) == typeof(long))
-                return generic<T>(cpu.vload(w, first(Inc256x64u)));
+                return generic<T>(vcpu.vload(w, first(Inc256x64u)));
             else
                 throw no<T>();
         }
@@ -61,13 +61,13 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(byte) || typeof(T) == typeof(sbyte))
-                return gcpu.vload<T>(w, Inc512x8u);
+                return vcpu.vload<T>(w, Inc512x8u);
             else if(typeof(T) == typeof(ushort) || typeof(T) == typeof(short))
-                return gcpu.vload<T>(w, Inc512x16u);
+                return vcpu.vload<T>(w, Inc512x16u);
             else if(typeof(T) == typeof(uint) || typeof(T) == typeof(int) || typeof(T) == typeof(float))
-                return gcpu.vload<T>(w, Inc512x32u);
+                return vcpu.vload<T>(w, Inc512x32u);
             else if(typeof(T) == typeof(ulong) || typeof(T) == typeof(long))
-                return gcpu.vload<T>(w,Inc512x64u);
+                return vcpu.vload<T>(w,Inc512x64u);
             else
                 throw no<T>();
         }
@@ -100,7 +100,7 @@ namespace Z0
         [MethodImpl(Inline), Inc, Closures(Integers)]
         public static Vector128<T> vinc<T>(W128 w, T x0)
             where T : unmanaged
-                => gcpu.vadd(gcpu.vinc<T>(w), x0);
+                => gcpu.vadd(vinc<T>(w), x0);
 
         /// <summary>
         /// Creates a 256-bit vector with components that increase by unit step from an initial value
@@ -111,7 +111,7 @@ namespace Z0
         [MethodImpl(Inline), Inc, Closures(Integers)]
         public static Vector256<T> vinc<T>(W256 w, T x0)
             where T : unmanaged
-                => gcpu.vadd(gcpu.vinc<T>(w), x0);
+                => gcpu.vadd(vinc<T>(w), x0);
 
         /// <summary>
         /// Creates a 256-bit vector with components that increase by unit step from an initial value
@@ -122,20 +122,20 @@ namespace Z0
         [MethodImpl(Inline)]
         public static Vector512<T> vinc<T>(W512 w, T x0)
             where T : unmanaged
-                => gcpu.vadd(gcpu.vinc<T>(w), x0);
+                => gcpu.vadd(vinc<T>(w), x0);
 
         [MethodImpl(Inline)]
         static Vector128<T> vinc_u<T>(Vector128<T> src)
             where T : unmanaged
         {
             if(typeof(T) == typeof(byte))
-                return generic<T>(cpu.vinc(v8u(src)));
+                return generic<T>(vcpu.vinc(v8u(src)));
             else if(typeof(T) == typeof(ushort))
-                return generic<T>(cpu.vinc(v16u(src)));
+                return generic<T>(vcpu.vinc(v16u(src)));
             else if(typeof(T) == typeof(uint))
-                return generic<T>(cpu.vinc(v32u(src)));
+                return generic<T>(vcpu.vinc(v32u(src)));
             else if(typeof(T) == typeof(ulong))
-                return generic<T>(cpu.vinc(v64u(src)));
+                return generic<T>(vcpu.vinc(v64u(src)));
             else
                 return vinc_i(src);
         }
@@ -145,13 +145,13 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(sbyte))
-                 return generic<T>(cpu.vinc(v8i(src)));
+                 return generic<T>(vcpu.vinc(v8i(src)));
             else if(typeof(T) == typeof(short))
-                 return generic<T>(cpu.vinc(v16i(src)));
+                 return generic<T>(vcpu.vinc(v16i(src)));
             else if(typeof(T) == typeof(int))
-                 return generic<T>(cpu.vinc(v32i(src)));
+                 return generic<T>(vcpu.vinc(v32i(src)));
             else if(typeof(T) == typeof(long))
-                 return generic<T>(cpu.vinc(v64i(src)));
+                 return generic<T>(vcpu.vinc(v64i(src)));
             else
                 throw no<T>();
         }
@@ -161,13 +161,13 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(byte))
-                return generic<T>(cpu.vinc(v8u(src)));
+                return generic<T>(vcpu.vinc(v8u(src)));
             else if(typeof(T) == typeof(ushort))
-                return generic<T>(cpu.vinc(v16u(src)));
+                return generic<T>(vcpu.vinc(v16u(src)));
             else if(typeof(T) == typeof(uint))
-                return generic<T>(cpu.vinc(v32u(src)));
+                return generic<T>(vcpu.vinc(v32u(src)));
             else if(typeof(T) == typeof(ulong))
-                return generic<T>(cpu.vinc(v64u(src)));
+                return generic<T>(vcpu.vinc(v64u(src)));
             else
                 return vinc_i(src);
         }
@@ -177,13 +177,13 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(sbyte))
-                 return generic<T>(cpu.vinc(v8i(src)));
+                 return generic<T>(vcpu.vinc(v8i(src)));
             else if(typeof(T) == typeof(short))
-                 return generic<T>(cpu.vinc(v16i(src)));
+                 return generic<T>(vcpu.vinc(v16i(src)));
             else if(typeof(T) == typeof(int))
-                 return generic<T>(cpu.vinc(v32i(src)));
+                 return generic<T>(vcpu.vinc(v32i(src)));
             else if(typeof(T) == typeof(long))
-                 return generic<T>(cpu.vinc(v64i(src)));
+                 return generic<T>(vcpu.vinc(v64i(src)));
             else
                 throw no<T>();
         }

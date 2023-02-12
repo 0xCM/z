@@ -247,7 +247,7 @@ namespace Z0
             var vSvc = Calcs.vbitlogic<T>(w);
             var buffer = Cells.alloc(w);
             ref var dst = ref Cells.to<T>(buffer);
-            var cells = gcpu.vcount<T>(w);
+            var cells = vcpu.vcount<T>(w);
             for(byte i=0; i<cells; i++)
                 seek(dst, i) = mSvc.eval(vcell(a,i), vcell(b,i), f);
             var v1 = gcpu.vload(w, dst);

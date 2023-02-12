@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static cpu;
+    using static vcpu;
 
     partial struct vpack
     {
@@ -20,7 +20,7 @@ namespace Z0
         /// </remarks>
         [MethodImpl(Inline), Op]
         public static Vector256<ushort> vpack256x16u(Vector256<uint> x, Vector256<uint> y)
-            => vperm4x64(vpack.vpackus(x,y), Perm4L.ACBD);
+            => vperm4x64(vpackus(x,y), Perm4L.ACBD);
 
         /// <summary>
         /// __m256i _mm256_packus_epi32 (__m256i a, __m256i b)VPACKUSDW ymm, ymm, ymm/m256
@@ -32,6 +32,6 @@ namespace Z0
         /// <param name="w">Specifies a zero-extended target</param>
         [MethodImpl(Inline), Op]
         public static Vector256<ushort> vpack256x16u(Vector256<int> x, Vector256<int> y)
-            => vpack.vpackus(x,y);
+            => vpackus(x,y);
     }
 }
