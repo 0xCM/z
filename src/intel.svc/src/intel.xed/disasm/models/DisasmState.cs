@@ -7,7 +7,6 @@ namespace Z0
 {
     using static XedRules;
 
-
     partial class XedDisasm
     {
         [StructLayout(LayoutKind.Sequential,Pack=1)]

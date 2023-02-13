@@ -22,7 +22,7 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public static implicit operator Value(Value<T> src)
-                => new Value(core.bw32(src.Storage));
+                => new Value(sys.bw32(src.Storage));
 
             public static Value<T> Empty => default;
         }

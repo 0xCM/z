@@ -13,7 +13,7 @@ namespace Z0
 
         [Op]
         public static byte[] buffer(ByteSize? size = null)
-            => core.alloc<byte>(size ?? DefaultBufferLength);
+            => sys.alloc<byte>(size ?? DefaultBufferLength);
 
         [Op]
         public static ApiMemberExtractor create()

@@ -5,9 +5,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XedModels;
+    using static XedRules;
 
-    partial class XedRules
+    partial class XedModels
     {
         [Record(TableId),StructLayout(LayoutKind.Sequential,Pack=1)]
         public struct InstPatternRecord : IComparable<InstPatternRecord>, ISequential<InstPatternRecord>

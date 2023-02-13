@@ -21,9 +21,9 @@ namespace Z0
                 => new RuleOp<T>(rule, op, value);
 
         [MethodImpl(Inline)]
-        public static Cell<T> cell<T>(CellKey key, T value)
+        public static GridCell<T> cell<T>(CellKey key, T value)
             where T : unmanaged,  IValue<T>, IEquatable<T>, ILogicOperand<T>
-                => new Cell<T>(key,value);
+                => new GridCell<T>(key,value);
 
         [MethodImpl(Inline)]
         public static GridCell cell(in RuleCell src)

@@ -5,9 +5,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XedModels;
-
-    partial class XedRules
+    using static XedRules;
+    partial class XedModels
     {
         [StructLayout(LayoutKind.Sequential,Pack=1)]
         public struct InstPatternSpec : IComparable<InstPatternSpec>, ISequential<InstPatternSpec>

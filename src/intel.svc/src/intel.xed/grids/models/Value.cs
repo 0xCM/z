@@ -12,7 +12,7 @@ namespace Z0
             [MethodImpl(Inline)]
             public static Value untype<T>(T src)
                 where T : unmanaged, IValue<T>
-                    => new Value(core.bw32(src.Value));
+                    => new Value(sys.bw32(src.Value));
 
             readonly ByteBlock4 Storage;
 

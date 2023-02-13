@@ -6,7 +6,6 @@
 namespace Z0
 {
     using static sys;
-    using static XedRules;
     using static XedModels;
 
     partial class XedOps

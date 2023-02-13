@@ -5,6 +5,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static XedModels;
+    
     partial class XedRules
     {
         public Index<InstPatternRecord> CalcPatternRecords(Index<InstPattern> src)

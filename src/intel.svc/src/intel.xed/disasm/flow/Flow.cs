@@ -59,10 +59,10 @@ namespace Z0
 
                 dst.Computing(seq, src.Instruction);
 
-                var asminfo = XedDisasm.asminfo(lines);
-                dst.Computed(seq, asminfo);
+                dst.Computed(seq, XedDisasm.asminfo(lines));
 
                 var props = InstFieldValues.Empty;
+
                 XedDisasm.parse(lines, out props);
                 dst.Computed(seq, props);
 
@@ -80,7 +80,6 @@ namespace Z0
 
                 var encoding = XedCode.encoding(state, asmhex);
                 dst.Computed(seq, encoding);
-
                 dst.Computed(seq, src.Instruction);
             }
         }

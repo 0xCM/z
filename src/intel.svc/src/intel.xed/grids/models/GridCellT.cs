@@ -8,28 +8,32 @@ namespace Z0
 
     partial class XedGrids
     {
-        [StructLayout(StructLayout,Pack=1)]
-        public readonly record struct Cell
+        public readonly record struct GridCell<T> : IComparable<GridCell<T>>
+            where T : unmanaged,  IValue<T>, IEquatable<T>, ILogicOperand<T>
         {
             public readonly CellKey Key;
 
-            public readonly RuleOperator Operator;
-
-            public readonly Value Value;
+            public readonly T Value;
 
             [MethodImpl(Inline)]
-            public Cell(CellKey key, RuleOperator op, Value value)
+            public GridCell(CellKey key, T value)
             {
                 Key = key;
-                Operator = op;
                 Value = value;
             }
+
+            public int CompareTo(GridCell<T> src)
+                => Key.CompareTo(src.Key);
 
             public uint Index
             {
                 [MethodImpl(Inline)]
                 get => Key.Index;
             }
+
+            // [MethodImpl(Inline)]
+            // public static implicit operator Cell(GridCell<T> src)
+            //     => new Cell(src.Key, src.Value.Operator, XedGrids.Value.untype(src.Value));
         }
     }
 }

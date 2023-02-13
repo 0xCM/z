@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class XedRules
+    partial class XedModels
     {
         public struct InstDef : IComparable<InstDef>
         {

@@ -146,5 +146,4 @@ namespace Z0
             public static DisasmDetailBlock Empty => new DisasmDetailBlock(DisasmDetailBlockRow.Empty, DisasmLines.Empty, Instruction.Empty);
         }
     }
-
 }
