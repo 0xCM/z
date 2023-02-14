@@ -44,10 +44,10 @@ namespace Z0
         [CmdOp("check/seq/prod")]
         Outcome SeqProd(CmdArgs args)
         {
-            var a = Intervals.closed(2u, 12u).Partition();
-            var b = Intervals.closed(33u, 41u).Partition();
-            var c = Seq.mul(a,b);
-            Write(SeqProducts.format(c));
+            var a = Intervals.closed(2u, 12u).Partition().ToSeq();
+            var b = Intervals.closed(33u, 41u).Partition().ToSeq();
+            var c = Seq.product(a,b);
+            Write(c.Format());
             return true;
         }
 

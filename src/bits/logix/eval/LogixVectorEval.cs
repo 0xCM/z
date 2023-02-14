@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    [ApiHost]
     public readonly struct LogixVectorEval
     {
         const NumericKind Closure = UInt64k;

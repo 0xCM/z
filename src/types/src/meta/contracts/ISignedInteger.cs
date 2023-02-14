@@ -4,9 +4,15 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
-    public interface ITypeProvider
+    [Free]
+    public interface ISignedInteger : IScalarValue
     {
-        IType Resolve(uint key);
+
+    }
+
+    [Free]
+    public interface ISignedInteger<T> : ISignedInteger, IScalarValue<T>
+        where T : unmanaged
+    {
     }
 }

@@ -2,5 +2,6 @@
   <ItemGroup>
     <ProjectReference Include="$(ZLib)" />
     <ProjectReference Include="$(Json)" />
+    <ProjectReference Include="$(Types)" />
   </ItemGroup>
 </Project>

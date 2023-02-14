@@ -8,6 +8,7 @@ namespace Z0
 
     using BCK = ApiComparisonClass;
 
+    [ApiHost]
     public readonly struct LogixPredicateEval
     {
         const NumericKind Closure = UInt64k;

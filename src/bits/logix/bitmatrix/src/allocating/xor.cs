@@ -25,7 +25,7 @@ namespace Z0
         /// <param name="B">The right matrix</param>
         /// <typeparam name="T">The primal type over which the matrices are constructed</typeparam>
         [MethodImpl(Inline), Xor, Closures(UnsignedInts)]
-        public static BitMatrix<T> xor<T>(in BitMatrix<T> A, in BitMatrix<T> B)
+        public static BitMatrix<T> xor<T>(BitMatrix<T> A, BitMatrix<T> B)
             where T : unmanaged
         {
             var Z = BitMatrix.alloc<T>();

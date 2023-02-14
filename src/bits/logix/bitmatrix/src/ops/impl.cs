@@ -13,7 +13,7 @@ namespace Z0
         /// <param name="B">The right matrix</param>
         /// <typeparam name="T">The primal type over which the matrix is constructed</typeparam>
         [MethodImpl(Inline), Impl, Closures(Closure)]
-        public static BitMatrix<T> impl<T>(in BitMatrix<T> A, in BitMatrix<T> B)
+        public static BitMatrix<T> impl<T>(BitMatrix<T> A, BitMatrix<T> B)
             where T : unmanaged
         {
             var Z = BitMatrix.alloc<T>();
@@ -29,11 +29,11 @@ namespace Z0
         /// <param name="B">The target matrix</param>
         /// <typeparam name="T">The primal type over which the matrix is constructed</typeparam>
         [MethodImpl(Inline), Impl, Closures(Closure)]
-        public static ref readonly BitMatrix<T> impl<T>(in BitMatrix<T> A, in BitMatrix<T> B, in BitMatrix<T> Z)
+        public static BitMatrix<T> impl<T>(BitMatrix<T> A, BitMatrix<T> B, BitMatrix<T> Z)
             where T : unmanaged
         {
             vlogic.impl(A.Head, B.Head, ref Z.Head);
-            return ref Z;
+            return Z;
         }
 
         /// <summary>
@@ -82,10 +82,10 @@ namespace Z0
         /// <param name="B">The right matrix</param>
         /// <param name="B">The target matrix</param>
         [MethodImpl(Inline), Impl]
-        public static ref readonly BitMatrix64 impl(in BitMatrix64 A, in BitMatrix64 B, in BitMatrix64 Z)
+        public static BitMatrix64 impl(BitMatrix64 A, BitMatrix64 B, BitMatrix64 Z)
         {
             vlogic.impl(A.Head, B.Head, ref Z.Head);
-            return ref Z;
+            return Z;
         }
     }
 }

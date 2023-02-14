@@ -2,6 +2,7 @@
   <ItemGroup>
     <ProjectReference Include="$(Symbols)" />
     <ProjectReference Include="$(Math)" />
+    <ProjectReference Include="$(Types)" />
   </ItemGroup>
   <Import Project="$(SlnProps)\usings.props"/>
   <Import Project="$(SlnProps)\microsoft.extensions.fileproviders.props"/>

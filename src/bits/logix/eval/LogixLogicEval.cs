@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
+    [ApiHost]
     public readonly struct LogixLogicEval
     {
         static BitLogix bitlogix => BitLogix.Service;

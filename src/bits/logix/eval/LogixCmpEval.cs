@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    [ApiHost]
     public static class LogixCmpEval
     {
         const NumericKind Closure = UInt64k;

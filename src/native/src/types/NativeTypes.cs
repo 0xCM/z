@@ -7,9 +7,15 @@ namespace Z0
     [ApiHost]
     public partial class NativeTypes
     {
+        public static Index<MeasuredType> symbolic(Assembly src, string group)
+        {
+            var x = src.Enums().TypeTags<SymSourceAttribute>().Storage.Where(x => x.Right.SymGroup == group).ToIndex();
+            return x.Select(x => new MeasuredType(x.Left, Sizes.measure(x.Left))).Sort();
+        }
+
         public static Index<DbTypeTable> typetables(Assembly src, string group, ICompositeDispenser dst)
         {
-            var types = MeasuredType.symbolic(src, group);
+            var types = symbolic(src, group);
             Index<DbTypeTable> tables = sys.alloc<DbTypeTable>(types.Count);
             for(var i=0; i<types.Count; i++)
                 tables[i] = typetable(types[i], dst);

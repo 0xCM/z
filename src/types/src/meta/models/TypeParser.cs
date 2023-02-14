@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public class TypeParser : AppService<TypeParser>
+    public class TypeParser
     {
         public static bool parametric(TypeSpec src)
             => text.contains(src.Text, Chars.Lt);

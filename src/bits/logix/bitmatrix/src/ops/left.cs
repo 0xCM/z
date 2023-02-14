@@ -7,16 +7,16 @@ namespace Z0
     partial class BitMatrix
     {
         [MethodImpl(Inline), LProject, Closures(Closure)]
-        public static ref readonly BitMatrix<T> left<T>(in BitMatrix<T> A, in BitMatrix<T> B)
+        public static BitMatrix<T> left<T>(BitMatrix<T> A, BitMatrix<T> B)
             where T : unmanaged
-                => ref A;
+                => A;
 
         [MethodImpl(Inline), LProject, Closures(Closure)]
-        public static ref readonly BitMatrix<T> left<T>(in BitMatrix<T> A, in BitMatrix<T> B, in BitMatrix<T> Z)
+        public static BitMatrix<T> left<T>(BitMatrix<T> A, BitMatrix<T> B, BitMatrix<T> Z)
             where T : unmanaged
         {
             Z.Update(A);
-            return ref Z;
+            return Z;
         }
     }
 }

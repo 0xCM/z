@@ -3,8 +3,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     readonly struct BitMatrixIdentityProvider : ITypeIdentityProvider
     {
         public TypeIdentity Identify(Type src)

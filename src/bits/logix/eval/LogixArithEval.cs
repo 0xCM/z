@@ -8,6 +8,7 @@ namespace Z0
 
     using UAR = ApiUnaryArithmeticClass;
 
+    [ApiHost]
     public class LogixArithEval
     {
         const NumericKind Closure = UInt64k;

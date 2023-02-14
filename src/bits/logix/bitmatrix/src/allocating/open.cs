@@ -7,7 +7,7 @@ namespace Z0
     partial class BitMatrixA
     {
         [MethodImpl(Inline), LNot, Closures(UnsignedInts)]
-        public static BitMatrix<T> lnot<T>(in BitMatrix<T> A, in BitMatrix<T> B)
+        public static BitMatrix<T> lnot<T>(BitMatrix<T> A, BitMatrix<T> B)
             where T : unmanaged
                 => not(A);
 
@@ -17,7 +17,7 @@ namespace Z0
                 => BitMatrixA.zero<T>();
 
         [MethodImpl(Inline), False, Closures(UnsignedInts)]
-        public static BitMatrix<T> @false<T>(in BitMatrix<T> A)
+        public static BitMatrix<T> @false<T>(BitMatrix<T> A)
             where T:unmanaged
                 => @false<T>();
 
@@ -48,7 +48,7 @@ namespace Z0
         /// <param name="B">The right matrix</param>
         /// <typeparam name="T">The primal type over which the matrix is constructed</typeparam>
         [MethodImpl(Inline), Or, NumericClosures(UnsignedInts)]
-        public static BitMatrix<T> or<T>(in BitMatrix<T> A, in BitMatrix<T> B)
+        public static BitMatrix<T> or<T>(BitMatrix<T> A, BitMatrix<T> B)
             where T : unmanaged
         {
             var Z = BitMatrix.alloc<T>();
@@ -63,7 +63,7 @@ namespace Z0
         /// <param name="B">The right matrix</param>
         /// <typeparam name="T">The primal type over which the matrix is constructed</typeparam>
         [MethodImpl(Inline), NonImpl, Closures(UnsignedInts)]
-        public static BitMatrix<T> nonimpl<T>(in BitMatrix<T> A, in BitMatrix<T> B)
+        public static BitMatrix<T> nonimpl<T>(BitMatrix<T> A, BitMatrix<T> B)
             where T : unmanaged
         {
             var Z = BitMatrix.alloc<T>();
@@ -134,7 +134,7 @@ namespace Z0
         /// <param name="B">The right matrix</param>
         /// <typeparam name="T">The primal type over which the matrix is constructed</typeparam>
         [MethodImpl(Inline), Nor, Closures(UnsignedInts)]
-        public static BitMatrix<T> nor<T>(in BitMatrix<T> A, in BitMatrix<T> B)
+        public static BitMatrix<T> nor<T>(BitMatrix<T> A, BitMatrix<T> B)
             where T : unmanaged
         {
             var Z = BitMatrix.alloc<T>();
@@ -150,7 +150,7 @@ namespace Z0
         /// <param name="B">The target matrix</param>
         /// <typeparam name="T">The primal type over which the matrix is constructed</typeparam>
         [MethodImpl(Inline), Nor, Closures(UnsignedInts)]
-        public static BitMatrix<T> nor<T>(in BitMatrix<T> A, in BitMatrix<T> B, in BitMatrix<T> Z)
+        public static BitMatrix<T> nor<T>(BitMatrix<T> A, BitMatrix<T> B, BitMatrix<T> Z)
             where T : unmanaged
         {
             vlogic.nor(in A.Head, in B.Head, ref Z.Head);

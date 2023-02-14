@@ -47,7 +47,8 @@ namespace Z0
             where T : unmanaged
         {
             var dst = BitMatrix.alloc<T>();
-            return oprod(x,y, ref dst);
+            oprod(x,y, ref dst);
+            return dst;
         }
     }
 }

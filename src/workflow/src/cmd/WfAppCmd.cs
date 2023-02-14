@@ -75,14 +75,14 @@ namespace Z0
         void EmitApiTables()
             => ApiMd.Emitter(AppDb.ApiTargets()).EmitApiTables(ApiAssemblies.Parts);
 
-        [CmdOp("types/systems")]
-        void TypeSys()
-        {
-            var src = TypeSystems.typedefs(ApiAssemblies.Parts);
-            iter(src, s => {
-                Channel.Row(s);
-            });
-        }
+        // [CmdOp("types/systems")]
+        // void TypeSys()
+        // {
+        //     var src = TypeSystems.typedefs(ApiAssemblies.Parts);
+        //     iter(src, s => {
+        //         Channel.Row(s);
+        //     });
+        // }
 
         [CmdOp("archives")]        
         void ListArchives(CmdArgs args)
