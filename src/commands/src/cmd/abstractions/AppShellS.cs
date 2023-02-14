@@ -19,7 +19,6 @@ namespace Z0
             
         void IAppShell.Run(string[] args)
             => Run(args);
-
         
         protected abstract void Init(IWfRuntime wf, IApiContext context);
 

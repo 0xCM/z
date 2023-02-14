@@ -20,6 +20,45 @@ namespace Z0
         public static ToolContext context()
             => new(Env.cd(), EnvVars.Empty);
 
+        public static Task<ExecToken> apiscript(IWfChannel channel, FilePath src)
+        {
+            ExecToken Exec()
+            {
+                var running = channel.Running($"Executing script {src}");
+                if(src.Missing)
+                {
+                    channel.Error(AppMsg.FileMissing.Format(src));
+                }
+                else
+                {
+                    var lines = src.ReadNumberedLines(true);
+                    var count = lines.Count;
+                    for(var i=0; i<count; i++)
+                    {
+                        ref readonly var content = ref lines[i].Content;
+                        if(Cmd.parse(content, out ApiCmdSpec spec))
+                        {
+                            try
+                            {
+                                ApiCmd.Dispatcher.Dispatch(spec.Name, spec.Args);
+                            }
+                            catch(Exception e)
+                            {
+                                channel.Error(e);
+                            }
+                        }
+                        else
+                        {
+                            channel.Error($"ParseFailure:'{content}'");
+                            break;
+                        }
+                    }
+                }
+                return channel.Ran(running);
+            }
+            return sys.start(Exec);        
+        }
+
         public static Task<ExecToken> launch(IWfChannel channel, ISysIO io, CmdArgs spec, FolderPath? wd = null)
         {
             ExecToken go()

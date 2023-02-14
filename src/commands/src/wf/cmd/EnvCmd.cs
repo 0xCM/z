@@ -35,7 +35,7 @@ namespace Z0
 
         [CmdOp("api/script")]
         void RunAppScript(CmdArgs args)
-            => ApiScripts.start(Channel, args);
+            => ProcessLauncher.apiscript(Channel, FS.path(args[0]));
 
         [CmdOp("env/stack")]
         void Stack()

@@ -17,15 +17,15 @@ namespace Z0
 
     public sealed class CmdServer : AppService<CmdServer>, ICmdServer
     {
-        internal static ICmdServer create(IExecutionContext context, Assembly[] components, CmdServerState state)
-        {
-            var dst = create(context.Wf);
-            dst.Handlers = state.Handlers;
-            dst.ExecContext = state.ExecContext;
-            dst.ApiContext = state.ApiContext;
-            dst.Runner = state.Runner;
-            return dst;
-        }
+        // internal static ICmdServer create(IExecutionContext context, Assembly[] components, CmdServerState state)
+        // {
+        //     var dst = create(context.Wf);
+        //     dst.Handlers = state.Handlers;
+        //     dst.ExecContext = state.ExecContext;
+        //     dst.ApiContext = state.ApiContext;
+        //     dst.Runner = state.Runner;
+        //     return dst;
+        // }
         
         Task<ExecToken> IApiCmdRunner.Start(string[] args)
             => Runner.Start(args);

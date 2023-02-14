@@ -6,8 +6,6 @@ namespace Z0
 {
     public interface IApiContext
     {
-        IWfChannel Channel {get;}
-
         ICmdDispatcher Dispatcher {get;}
 
         IApiService Commander {get;}
