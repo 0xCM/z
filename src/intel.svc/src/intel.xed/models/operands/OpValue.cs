@@ -5,9 +5,8 @@
 namespace Z0
 {
     using static sys;
-    using static XedModels;
 
-    partial class XedRules
+    partial class XedModels
     {
         public enum OpDataKind : byte
         {

@@ -11,9 +11,8 @@ namespace Z0
     using static VexMapKind;
     using static EvexMapKind;
     using static AsmBaseMapKind;
-    using static XedLiterals;
 
-    using V = XedLiterals.XedVexClass;
+    using V = XedVexClass;
     using I = AsmOpCodeIndex;
     using D = XedOpCodeKind;
     using X = XopMapKind;

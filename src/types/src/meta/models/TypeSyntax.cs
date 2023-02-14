@@ -25,7 +25,7 @@ namespace Z0
 
         public const string Snt = "s<n:{0},t:{1}>";
 
-        public const string Bv = "bv{0}";
+        public const string Bv = "bv<n:{0}>";
 
         public const string Seq = "seq<t:{0}>";
 

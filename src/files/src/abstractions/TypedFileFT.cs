@@ -5,8 +5,8 @@
 namespace Z0
 {
     public abstract record class TypedFile<F,T> : TypedFile<T>
-        where T : IFileType, new()
         where F : TypedFile<F,T>, new()
+        where T : IFileType, new()
     {
         protected TypedFile()
         {

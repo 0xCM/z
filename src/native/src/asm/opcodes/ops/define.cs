@@ -9,22 +9,22 @@ namespace Z0.Asm
         [MethodImpl(Inline)]
         public static bool diff(SdmOpCode oc1, SdmOpCode oc2, out AsmOcToken x)
         {
-            // var count = sys.min(oc1.TokenCount, oc2.TokenCount);
-            // for(var i=0; i<count; i++)
-            // {
-            //     ref readonly var ta = ref oc1[i];
-            //     ref readonly var tb = ref oc2[i];
-            //     if(ta.Kind == AsmOcTokenKind.Sep && tb.Kind == AsmOcTokenKind.Sep)
-            //         continue;
-
-            //     if(ta != tb)
-            //     {
-            //         x = tb;
-            //         return true;
-            //     }
-            // }
-
+            var count = sys.min(oc1.TokenCount, oc2.TokenCount);
             x = default;
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var ta = ref oc1[i];
+                ref readonly var tb = ref oc2[i];
+                if(ta.Kind == AsmOcTokenKind.Sep && tb.Kind == AsmOcTokenKind.Sep)
+                    continue;
+
+                if(ta != tb)
+                {
+                    x = tb;
+                    return true;
+                }
+            }
+
             return false;
         }
 

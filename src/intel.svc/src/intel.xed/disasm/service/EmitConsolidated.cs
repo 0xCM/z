@@ -30,7 +30,7 @@ namespace Z0
         void EmitOpClasses(ProjectContext context, Index<DisasmDoc> src)
         {
             var target = EtlContext.table<InstOpClass>(context.Project.ProjectId, disasm);
-            Channel.TableEmit(XedDisasm.opclasses(src).View, target);
+            Channel.TableEmit(opclasses(src).View, target);
         }
 
         void EmitConsolidated(ProjectContext context, Index<DisasmDetailBlock> src)

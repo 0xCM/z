@@ -6,7 +6,6 @@ namespace Z0.Asm
 {
     using static sys;
 
-
     partial class AsmSigs
     {
         static AsmMnemonic partition(ReadOnlySpan<char> src, out Index<AsmSigOpExpr> dst)

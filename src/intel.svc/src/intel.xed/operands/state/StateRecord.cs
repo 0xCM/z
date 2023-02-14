@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static XedModels;
     partial class XedRules
     {
         partial class OperandStates

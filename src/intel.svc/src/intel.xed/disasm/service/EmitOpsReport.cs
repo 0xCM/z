@@ -5,9 +5,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XedDisasm;
-    using static XedRules;
     using static sys;
+    using static XedDisasm;
+    using static XedModels;
     using static XedDisasmModels;
 
     partial class XedDisasmSvc
@@ -28,7 +28,7 @@ namespace Z0
                 ref readonly var row = ref doc[i];
                 ref readonly var detail = ref row.DetailRow;
                 var inst = detail.Instruction;
-                dst.AppendLine(RpOps.PageBreak80);
+                dst.AppendLine(RP.PageBreak80);
                 XedRender.describe(detail, dst);
                 ref readonly var ops = ref detail.Ops;
                 dst.AppendLine("Operands");

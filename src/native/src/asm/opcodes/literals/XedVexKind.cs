@@ -21,6 +21,5 @@ namespace Z0
 
         [Symbol(N.VF3, "VEX_PREFIX=3")]
         VF3 = 3
-    }
-    
+    }   
 }

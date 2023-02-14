@@ -41,6 +41,15 @@ namespace Z0
         public DbArchive XedDb()
             => folder(Data.Setting(SettingNames.XedDb));
 
+        public DbArchive SdeDb()
+            => folder(Data.Setting(SettingNames.SdeDb));
+
+        public DbArchive InxDb()
+            => folder(Data.Setting(SettingNames.InxDb));
+
+        public DbArchive SdmDb()
+            => folder(Data.Setting(SettingNames.SdmDb));
+
         public DbArchive DbSources()
             => DbRoot().Scoped("sources");
 

@@ -8,7 +8,7 @@ namespace Z0.Asm
     using static AsmOcTokens;
 
     partial class SdmOpCodes
-    {
+    { 
         public static Outcome parse(string src, out SdmOpCode dst)
         {
             var result = Outcome.Success;

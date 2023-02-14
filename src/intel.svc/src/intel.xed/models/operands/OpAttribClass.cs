@@ -5,8 +5,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XedRules;
-    
     partial class XedModels
     {
         [SymSource(xed), DataWidth(OpAttrib.KindWidth)]

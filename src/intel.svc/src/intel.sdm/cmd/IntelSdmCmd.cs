@@ -45,31 +45,28 @@ namespace Z0
         }
 
         [CmdOp("sdm/check/opcodes")]
-        Outcome CheckAsmOpCodes(CmdArgs args)
+        void CheckAsmOpCodes()
         {
             var result = Outcome.Success;
             var src = Sdm.LoadOcDetails();
             var count = src.Count;
+            var tokens = list<string>();
             for(var i=0; i<count; i++)
             {
                 ref readonly var detail = ref src[i];
                 ref readonly var input = ref detail.OpCodeExpr;
-                SdmOpCodes.parse(detail.OpCodeExpr, out var opcode).Require();
-                result = CheckEquality(input.Format(), opcode);
-                if(result.Fail)
+                tokens.Clear();
+                SdmOpCodes.tokenize(detail.OpCodeExpr, tokens);
+                var expr = tokens.Join(EmptyString);
+                if(expr != detail.OpCodeExpr)
                 {
-                    result = (false, string.Format("Equality check failed for <{0}>", input.Format().Trim()));
+                    Channel.Error($"Equality failure: {expr} != {detail.OpCodeExpr}");
                     break;
                 }
 
-                Write(string.Format("{0,-6} | {1,-16} | {2,-28} | {3}", detail.OpCodeKey, opcode.OcValue(), opcode, detail.AsmSig));
-            }
-
-            return result;
+                Channel.Row(tokens.Join(EmptyString));
+            }            
         }
-
-        static bool CheckEquality(in CharBlock36 input, in SdmOpCode parsed)
-            => input.Format().Trim().Equals(parsed.Format());
 
         [CmdOp("sdm/check/sigs")]
         Outcome CheckAsmSigs(CmdArgs args)
@@ -101,23 +98,7 @@ namespace Z0
             return true;
         }
 
-        [CmdOp("sdm/forms/query")]
-        Outcome AsmFormQuery(CmdArgs args)
-        {
-            var forms = Sdm.CalcForms();
-            var count = forms.Count;
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var form = ref forms[i];
-                ref readonly var opcode = ref form.OpCode;
-                if(SdmOpCodes.imm(opcode, out var token))
-                    Write(string.Format("{0} | {1}", token, form));
-            }
-
-            return true;
-        }
- 
-         [CmdOp("sdm/inst")]
+        [CmdOp("sdm/inst")]
         void ShowInstInfo(CmdArgs args)
         {
             var details = Sdm.LoadOcDetails();
@@ -132,7 +113,7 @@ namespace Z0
         }
 
         [CmdOp("sdm/markers")]
-        Outcome SdmMarkers(CmdArgs args)
+        Outcome SdmMarkers()
         {
             var result = Outcome.Success;
             var markers = TextMarkers.discover(typeof(BinaryFormatMarkers));

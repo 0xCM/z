@@ -5,10 +5,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XedModels;
+    using static XedRules;
+    using static XedRender;
 
-
-    partial class XedRules
+    partial class XedModels
     {
         [StructLayout(LayoutKind.Sequential, Pack=1)]
         public record struct OpSpec
@@ -19,13 +19,13 @@ namespace Z0
                 const sbyte Pad = -XedFields.FieldRender.ColWidth;
 
                 var dst = text.buffer();
-                dst.AppendFormat(RpOps.slot(0, Pad), src.Index);
+                dst.AppendFormat(RP.slot(0, Pad), src.Index);
                 dst.Append(" | ");
-                dst.AppendFormat("{0,-4}", XedRender.format(src.Name));
-                dst.AppendFormat(OpSepSlot, XedRender.format(src.Action));
-                dst.AppendFormat(OpSepSlot, XedRender.format(src.WidthCode));
-                dst.AppendFormat(OpSepSlot, XedRender.format(src.Visibility));
-                dst.AppendFormat(OpSepSlot, XedRender.format(src.OpType));
+                dst.AppendFormat("{0,-4}", format(src.Name));
+                dst.AppendFormat(OpSepSlot, format(src.Action));
+                dst.AppendFormat(OpSepSlot, format(src.WidthCode));
+                dst.AppendFormat(OpSepSlot, format(src.Visibility));
+                dst.AppendFormat(OpSepSlot, format(src.OpType));
                 if(src.Rule.IsNonEmpty)
                     dst.AppendFormat(OpSepSlot, src.Rule.Name.ToString().ToUpper());
                 else if(src.ElementType.IsNumber)
@@ -68,11 +68,11 @@ namespace Z0
             {
                 return string.Format(RenderPattern,
                         Index,
-                        XedRender.format(Name),
-                        XedRender.format(Action),
-                        XedRender.format(WidthCode),
+                        format(Name),
+                        format(Action),
+                        format(WidthCode),
                         Visibility.Code(),
-                        XedRender.format(OpType),
+                        format(OpType),
                         Rule.IsNonEmpty
                         ? string.Format("{0} => {1}", Rule, XedPaths.Service.RulePage(new RuleSig(RuleTableKind.DEC, Rule.Name)))
                         : OpType == OpType.IMM_CONST ? "1"

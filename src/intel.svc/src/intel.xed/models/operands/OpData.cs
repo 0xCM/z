@@ -4,9 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XedModels;
-
-    partial class XedRules
+    partial class XedModels
     {
         public readonly record struct OpData
         {

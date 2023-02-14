@@ -50,9 +50,6 @@ namespace Z0
             public XedDisasmSvc XedDisasm(IWfRuntime wf, XedRuntime xed)
                 => Service<XedDisasmSvc>(wf).With(xed);
 
-            public XedDisasm XedDisasm2(IWfRuntime wf, XedRuntime xed)
-                => Service<XedDisasm>(wf).With(xed);
-
             public XedDocs XedDocs(IWfRuntime wf, XedRuntime xed)
                 => Service<XedDocs>(wf).With(xed);
 

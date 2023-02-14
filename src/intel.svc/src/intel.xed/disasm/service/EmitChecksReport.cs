@@ -5,12 +5,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
     using static XedRules;
     using static XedModels;
     using static XedDisasm;
     using static XedDisasmModels;
-    using static XedLiterals;
     using static XedOps;
 
     partial class XedDisasmSvc

@@ -9,15 +9,20 @@ namespace Z0.Asm
 
     public class IntelSdmPaths : WfSvc<IntelSdmPaths>
     {
+        IDbArchive SdmDb()
+            => AppDb.SdmDb();
+        
         public IDbArchive Sources()
-            => AppDb.DbIn("intel");
+            => SdmDb().Scoped("sources");
 
         public IDbArchive Targets()
-            => AppDb.DbOut("asm.db.check");
+            => SdmDb().Scoped("targets");
 
-        public FilePath SourceTable<T>()
-            where T : struct
-                => Sources().Table<T>();
+        public IDbArchive Settings()
+            => SdmDb().Scoped("settings");
+
+        public IDbArchive Logs()
+            => SdmDb().Scoped("logs");
 
         public IDbArchive Sources(string scope)
             => Sources().Sources(scope);
@@ -26,20 +31,17 @@ namespace Z0.Asm
             where T : struct
                 => Targets().Table<T>();
 
-        public IDbArchive Logs()
-            => AppDb.Logs("intel.sdm");
-
         public FilePath SigFixupConfig()
-            => AppDb.Env().Path("asm.sigs.fixups", FileKind.Map);
+            => Settings().Path("asm.sigs.fixups", FileKind.Map);
 
         public FilePath SigNormalConfig()
-            => AppDb.Env().Path("asm.sigs.normalize", FileKind.Map);
+            => Settings().Path("asm.sigs.normalize", FileKind.Map);
 
         public FilePath OcFixupConfig()
-            => AppDb.Env().Path("asm.opcodes.fixups", FileKind.Map);
+            => Settings().Path("asm.opcodes.fixups", FileKind.Map);
 
         public FilePath SplitConfig()
-            => AppDb.Env().Path(FS.file("sdm.splits", FS.Csv));
+            => Settings().Path(FS.file("sdm.splits", FS.Csv));
 
         public FilePath SdmSrcVol(byte vol)
             => Sources().Path(FS.file(string.Format("intel-sdm-vol{0}", vol), FS.Txt));

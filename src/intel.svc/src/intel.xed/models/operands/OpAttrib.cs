@@ -5,11 +5,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XedModels;
+    using static XedRules;
 
     using K = XedModels.OpAttribKind;
 
-    partial class XedRules
+    partial class XedModels
     {
         [StructLayout(LayoutKind.Sequential,Pack=1), DataWidth(Width)]
         public readonly record struct OpAttrib : IComparable<OpAttrib>, IEquatable<OpAttrib>

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using static core;
+    using static sys;
 
     /// <summary>
     /// Characterizes a register operand representation

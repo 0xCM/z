@@ -37,6 +37,5 @@ namespace Z0.Asm
 
             return RP.Error;
         }
-
    }
 }

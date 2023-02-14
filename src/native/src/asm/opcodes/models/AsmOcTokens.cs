@@ -148,6 +148,12 @@ namespace Z0
             public const string gs = "gs";
 
             public const string fs = "fs";
+
+            public const string k1 = "{k1}";
+
+            public const string z = "{z}";
+
+            public const string k1z= "{k1}{z}";
         }
 
         [SymSource(Group), TokenKind(TK.Hex16)]
@@ -416,13 +422,13 @@ namespace Z0
         [SymSource(Group), TokenKind(TK.Mask)]
         public enum MaskToken : byte
         {
-            [Symbol("{k1}", "Indicates a mask register used as instruction writemask for instructions that do not allow zeroing-masking but support merging-masking")]
+            [Symbol(T.k1, "Indicates a mask register used as instruction writemask for instructions that do not allow zeroing-masking but support merging-masking")]
             Mask,
 
-            [Symbol("{z}", "Indicates a mask register used as instruction writemask for instructions that allow zeroing-masking")]
+            [Symbol(T.z, "Indicates a mask register used as instruction writemask for instructions that allow zeroing-masking")]
             ZeroMask,
 
-            [Symbol("{k1}{z}", "Indicates a mask register used as instruction writemask")]
+            [Symbol(T.k1z, "Indicates a mask register used as instruction writemask")]
             WriteMask,
         }
 

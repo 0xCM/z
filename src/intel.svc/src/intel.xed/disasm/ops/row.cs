@@ -12,7 +12,6 @@ namespace Z0
     using static XedOps;
     using static XedRules;
     using static XedDisasmModels;
-    using static XedLiterals;
 
     partial class XedDisasm
     {
