@@ -42,7 +42,7 @@ namespace Z0
 
         [Op]
         public static OpUri from(MethodInfo src)
-            => define(ApiUriScheme.Located, ApiIdentity.host(src.DeclaringType), src.Name, ApiIdentity.identify(src));
+            => define(ApiUriScheme.Located, host(src.DeclaringType), src.Name, identify(src));
 
         [Op]
         public static OpUri define(ApiUriScheme scheme, ApiHostUri host, string group, OpIdentity opid)
@@ -163,6 +163,7 @@ namespace Z0
             => (opid.IsEmpty
                 ? QueryText(scheme, host.Part, host.HostName, group)
                 : FullUriText(scheme, host.Part, host.HostName, group, opid)).Trim();
+
         /// <summary>
         /// Assigns identity to each value parameter (not to be confused with type parametricity) declared by a method
         /// </summary>

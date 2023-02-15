@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class XVK
+    partial class XApi
     {
         /// <summary>
         /// Returns true if a method parameter is a closed 128-bit intrinsic vector

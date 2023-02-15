@@ -9,7 +9,6 @@ namespace Z0
     {
         public const string TableId = "api.index.metrics";
 
-
         public uint HostCount;
 
         public uint AddressCount;

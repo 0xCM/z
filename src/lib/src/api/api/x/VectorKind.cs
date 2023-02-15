@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class XVK
+    partial class XApi
     {
         /// <summary>
         /// Classifies a 128-bit vector

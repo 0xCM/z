@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class XVK
+    partial class XApi
     {
         /// <summary>
         /// Determines whether a method has intrinsic parameters or return type of specified width
@@ -24,9 +24,7 @@ namespace Z0
         /// <param name="total">Whether all parameters and return type must be intrinsic</param>
         [Op]
         public static bool IsKind(this MethodInfo m, Vec256Type vk, bool total)
-        {
-            return vreflect.IsVectorized(m, vk.BitWidth, total);
-        }
+            => vreflect.IsVectorized(m, vk.BitWidth, total);
 
         /// <summary>
         /// Determines whether a method is of characterized vector kind

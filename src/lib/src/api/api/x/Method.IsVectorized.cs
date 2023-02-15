@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class XVK
+    partial class XApi
     {
         /// <summary>
         /// Determines whether a method has at least one 128-bit intrinsic vector parameter

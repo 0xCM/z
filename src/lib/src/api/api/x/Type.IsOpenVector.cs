@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class XVK
+    partial class XApi
     {
         /// <summary>
         /// Returns true if a type is an open generic 512-bit intrinsic vector

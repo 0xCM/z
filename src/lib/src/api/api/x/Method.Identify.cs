@@ -4,14 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class XVK
+    partial class XApi
     {
         /// <summary>
-        /// Returns the clr cell type of a vector of specified kind
+        /// Identifies a method
         /// </summary>
-        /// <param name="kind">The vector kind</param>
-        [MethodImpl(Inline), Op]
-        public static Type CellType(this NativeVectorKind kind)
-            => VK.celltype(kind);
+        /// <param name="m">The method to identify</param>
+        public static OpIdentity Identify(this MethodInfo m)
+            => ApiIdentity.identify(m);
     }
 }

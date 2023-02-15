@@ -6,7 +6,7 @@ namespace Z0
 {
     using System.Linq;
 
-    partial class XVK
+    partial class XApi
     {
         /// <summary>
         /// Determines whether a method has intrinsic parameters or return type
