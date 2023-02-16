@@ -6,7 +6,6 @@
 namespace Z0
 {
     using static MachineModes;
-    using static XedLiterals;
 
     using M = XedModels;
     using B = System.ReadOnlySpan<bit>;

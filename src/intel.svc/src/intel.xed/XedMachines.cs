@@ -111,7 +111,7 @@ namespace Z0
                 }
             }
 
-            InstForm Form;
+            XedInstForm Form;
 
             Fields Expressions;
 
@@ -137,7 +137,7 @@ namespace Z0
                 OpState = OperandState.Empty;
                 Pattern = XedRules.InstPattern.Empty;
                 MachineMode = default;
-                Form = InstForm.Empty;
+                Form = XedInstForm.Empty;
                 Expressions.Clear();
                 Asm = AsmInfo.Empty;
             }
@@ -278,13 +278,13 @@ namespace Z0
                 get => ref Pattern;
             }
 
-            public ref readonly InstForm InstForm
+            public ref readonly XedInstForm InstForm
             {
                 [MethodImpl(Inline)]
                 get => ref Form;
             }
 
-            public ref readonly AsmInstClass InstClass
+            public ref readonly XedInstClass InstClass
             {
                 [MethodImpl(Inline)]
                 get => ref View.iclass(Operands);
@@ -422,8 +422,8 @@ namespace Z0
             /// <summary>
             /// Specifies <see cref='InstForm'/> associated with the current <see cref='InstClass'/>
             /// </summary>
-            public Index<InstForm> ClassForms
-                => _ClassFormLookup.Find(InstClass, out var dst) ? dst : sys.empty<InstForm>();
+            public Index<XedInstForm> ClassForms
+                => _ClassFormLookup.Find(InstClass, out var dst) ? dst : sys.empty<XedInstForm>();
 
             /// <summary>
             /// Specifies <see cref='InstGroupMember'> associated with the current <see cref='InstClass'/>
@@ -454,11 +454,11 @@ namespace Z0
 
             ConstLookup<ushort,InstGroupMember> _GroupMemberLookup;
 
-            SortedLookup<AsmInstClass,Index<InstGroupMember>> _ClassGroupLookup;
+            SortedLookup<XedInstClass,Index<InstGroupMember>> _ClassGroupLookup;
 
-            SortedLookup<AsmInstClass,Index<InstPattern>> _ClassPatternLookup;
+            SortedLookup<XedInstClass,Index<InstPattern>> _ClassPatternLookup;
 
-            SortedLookup<AsmInstClass,Index<InstForm>> _ClassFormLookup;
+            SortedLookup<XedInstClass,Index<XedInstForm>> _ClassFormLookup;
         }
     }
 }

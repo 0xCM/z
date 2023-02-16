@@ -11,16 +11,16 @@ namespace Z0
         IDbArchive Root {get;}
     }
 
-    public interface IProject<K> : IProject, IKinded<K>
-        where K : unmanaged
-     {
+    // public interface IProject<K> : IProject, IKinded<K>
+    //     where K : unmanaged
+    //  {
 
-    }
+    // }
 
-    public interface IProject<P,K> : IProject<K>
-        where P : IProject<P,K>,new()
-        where K : unmanaged
-    {
+    // public interface IProject<P,K> : IProject<K>
+    //     where P : IProject<P,K>,new()
+    //     where K : unmanaged
+    // {
 
-    }
+    // }
 }

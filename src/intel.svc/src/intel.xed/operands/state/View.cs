@@ -10,8 +10,7 @@ namespace Z0
     using static XedModels;
     using static XedRules;
     using static AsmOpCodeMaps;
-    using static XedLiterals;
-    using static core;
+    using static sys;
 
     using M = XedModels;
 
@@ -53,8 +52,8 @@ namespace Z0
                 => ref @as<XedVexClass>(src.VEXVALID);
 
             [MethodImpl(Inline), Op]
-            public static ref readonly AsmInstClass iclass(in OperandState src)
-                => ref @as<AsmInstKind,AsmInstClass>(src.ICLASS);
+            public static ref readonly XedInstClass iclass(in OperandState src)
+                => ref @as<XedInstKind,XedInstClass>(src.ICLASS);
 
             [MethodImpl(Inline), Op]
             public static ref readonly BCastKind broadcast(in OperandState src)

@@ -7,10 +7,9 @@ namespace Z0
 {
     using Asm;
 
-    using static core;
+    using static sys;
     using static XedRules;
     using static XedModels;
-    using static XedLiterals;
 
     using M = XedModels;
 
@@ -19,8 +18,8 @@ namespace Z0
         public readonly struct Edit
         {
             [MethodImpl(Inline), Op]
-            public static ref AsmInstClass iclass(ref OperandState src)
-                => ref @as<AsmInstKind,AsmInstClass>(src.ICLASS);
+            public static ref XedInstClass iclass(ref OperandState src)
+                => ref @as<XedInstKind,XedInstClass>(src.ICLASS);
 
             [MethodImpl(Inline), Op]
             public static ref AsmVL vl(ref OperandState src)

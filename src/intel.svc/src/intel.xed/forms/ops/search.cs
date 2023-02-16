@@ -13,10 +13,10 @@ namespace Z0
         public static ReadOnlySpan<QueryResult> search(Index<FormImport> src, string monic, IWfChannel channel)
         {
             const string RenderPattern = "class:{0,-24} form:{1,-32} category:{2,-16} isa:{3,-16} ext:{4,-16} attribs:{5}";
-            var types = Symbols.index<InstFormType>();
+            var types = Symbols.index<XedFormType>();
             var cats = Symbols.index<CategoryKind>();
             var _isa = Symbols.index<InstIsaKind>();
-            var classes = Symbols.index<AsmInstKind>();
+            var classes = Symbols.index<XedInstKind>();
             var extensions = Symbols.index<ExtensionKind>();
             var count = src.Length;
             var dst = list<QueryResult>();

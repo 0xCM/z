@@ -67,12 +67,14 @@ namespace Z0
         public ReadOnlySeq<EncodedMember> Emit(PartId part, ReadOnlySeq<ApiEncoded> src, IApiPack dst)
             => Emit(src, dst.HexExtractPath(part), dst.CsvExtractPath(part));
 
-        public void Emit(PartId part, ReadOnlySpan<CollectedHost> src, IApiPack dst, bool pll)
-            => iter(src, code => Emit(code, dst), pll);
+        public void Emit(PartId part, ReadOnlySpan<CollectedHost> src, IDbArchive dst, bool pll)
+            => iter(src, code => EmitHex(code, dst), pll);
 
-        void Emit(CollectedHost src, IApiPack dst)
+        void EmitHex(CollectedHost src, IDbArchive dst)
         {
-            EmitHex(src.Blocks, dst.HexExtractPath(src.Host));
+            var extracts = dst.Scoped("extracts");
+            var path = extracts.Path(ApiFiles.file(src.Host, FileKind.HexDat));
+            EmitHex(src.Blocks, path);
         }
 
         ByteSize EmitHex(ReadOnlySeq<ApiEncoded> src, FilePath dst)

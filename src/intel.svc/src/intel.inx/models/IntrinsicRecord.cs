@@ -24,10 +24,10 @@ namespace Z0
         public ushort FormId;
 
         [Render(64)]
-        public InstForm InstForm;
+        public XedInstForm InstForm;
 
         [Render(18)]
-        public AsmInstClass InstClass;
+        public XedInstClass InstClass;
 
         [Render(56)]
         public Instruction InstSig;
@@ -62,8 +62,8 @@ namespace Z0
             dst.Name = EmptyString;
             dst.CpuId = CpuIdMembership.Empty;
             dst.FormId = 0;
-            dst.InstForm = InstForm.Empty;
-            dst.InstClass = AsmInstClass.Empty;
+            dst.InstForm = XedInstForm.Empty;
+            dst.InstClass = XedInstClass.Empty;
             dst.InstSig = Instruction.Empty;
             dst.Types = InstructionTypes.Empty;
             dst.Category = EmptyString;

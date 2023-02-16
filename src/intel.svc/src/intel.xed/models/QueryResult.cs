@@ -20,10 +20,10 @@ namespace Z0
             public string SearchPattern;
 
             [Render(18)]
-            public AsmInstClass InstClass;
+            public XedInstClass InstClass;
 
             [Render(64)]
-            public InstForm InstForm;
+            public XedInstForm InstForm;
 
             [Render(16)]
             public InstIsaKind Isa;

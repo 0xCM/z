@@ -92,13 +92,13 @@ namespace Z0
                 get => ref DetailRow.Offsets;
             }
 
-            public ref readonly AsmInstClass InstClass
+            public ref readonly XedInstClass InstClass
             {
                 [MethodImpl(Inline)]
                 get => ref DetailRow.Instruction;
             }
 
-            public ref readonly InstForm InstForm
+            public ref readonly XedInstForm InstForm
             {
                 [MethodImpl(Inline)]
                 get => ref DetailRow.Form;

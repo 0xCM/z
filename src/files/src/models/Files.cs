@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.Collections;
-
     using static sys;
     
     public readonly struct Files : IIndex<FilePath>

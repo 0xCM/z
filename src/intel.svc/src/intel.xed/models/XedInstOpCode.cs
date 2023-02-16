@@ -21,7 +21,7 @@ namespace Z0
         public ushort PatternId;
 
         [Render(18)]
-        public AsmInstClass InstClass;
+        public XedInstClass InstClass;
 
         [Render(8)]
         public byte Index;

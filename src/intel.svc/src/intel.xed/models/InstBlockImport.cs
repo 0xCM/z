@@ -18,13 +18,13 @@ namespace Z0
             public uint Seq;
 
             [Render(18)]
-            public AsmInstClass Class;
+            public XedInstClass Class;
 
             [Render(8)]
             public MachineMode Mode;
 
             [Render(62)]
-            public InstForm Form;
+            public XedInstForm Form;
 
             [Render(1)]
             public InstPatternBody Pattern;

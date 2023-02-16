@@ -4,7 +4,7 @@
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
 namespace Z0
-{
+{    
     [SymSource("xed"), DataWidth(num9.Width)]
     public enum XedRegId : ushort
     {

@@ -27,7 +27,7 @@ namespace Z0
 
             public MemoryAddress IP;
 
-            public AsmInstClass InstClass;
+            public XedInstClass InstClass;
 
             public AsmHexCode Encoded;
 
@@ -57,7 +57,7 @@ namespace Z0
 
             public AsmExpr Asm;
 
-            public InstForm InstForm;
+            public XedInstForm InstForm;
 
             public @string SourceName;
 

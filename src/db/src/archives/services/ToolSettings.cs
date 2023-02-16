@@ -15,17 +15,12 @@ namespace Z0
         {
             var result = Outcome.Success;
             dst = default;
-            if(src.CellCount != ToolProfile.FieldCount)
-                result = (false,Tables.FieldCountMismatch.Format(ToolProfile.FieldCount, src.CellCount));
-            else
-            {
-                var i=0;
-                dst.ToolName = src[i++].Text;
-                dst.Modifier = src[i++].Text;
-                dst.HelpCmd = src[i++].Text;
-                dst.Membership = src[i++].Text;
-                dst.Executable = FS.path(src[i++]);
-            }
+            var i=0;
+            dst.ToolName = src[i++].Text;
+            dst.Modifier = src[i++].Text;
+            dst.HelpCmd = src[i++].Text;
+            dst.Membership = src[i++].Text;
+            dst.Executable = FS.path(src[i++]);
             return result;
         } 
 
@@ -35,19 +30,14 @@ namespace Z0
             var result = TextGrids.parse(content, out var grid);
             if(result)
             {
-                if(grid.ColCount != ToolProfile.FieldCount)
-                    channel.Error(Tables.FieldCountMismatch.Format(ToolProfile.FieldCount, grid.ColCount));
-                else
+                var count = grid.RowCount;
+                for(var i=0; i<count; i++)
                 {
-                    var count = grid.RowCount;
-                    for(var i=0; i<count; i++)
-                    {
-                        result = parse(grid[i], out ToolProfile profile);
-                        if(result)
-                            dst.Include(profile.ToolName, profile);
-                        else
-                            break;
-                    }
+                    result = parse(grid[i], out ToolProfile profile);
+                    if(result)
+                        dst.Include(profile.ToolName, profile);
+                    else
+                        break;
                 }
             }
         }

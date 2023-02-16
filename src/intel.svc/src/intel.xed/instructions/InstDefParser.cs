@@ -22,8 +22,8 @@ namespace Z0
                 var buffer = list<InstDef>();
                 var reader = src.ReadNumberedLines().Select(cleanse).Where(line => line.IsNonEmpty).Reader();
                 var seq = 0u;
-                var forms = dict<uint,InstForm>();
-                var @class = AsmInstClass.Empty;
+                var forms = dict<uint,XedInstForm>();
+                var @class = XedInstClass.Empty;
                 var category = InstCategory.Empty;
                 var isa = InstIsa.Empty;
                 var ext = Extension.Empty;
@@ -52,7 +52,7 @@ namespace Z0
                                     switch(part)
                                     {
                                         case P.Form:
-                                            if(XedParsers.parse(value, out InstForm form))
+                                            if(XedParsers.parse(value, out XedInstForm form))
                                                 forms.TryAdd(seq, form);
                                         break;
                                         case P.Attributes:
@@ -71,7 +71,7 @@ namespace Z0
                                         break;
                                         case P.Class:
                                         {
-                                            if(XedParsers.parse(text.despace(value), out AsmInstClass _class))
+                                            if(XedParsers.parse(text.despace(value), out XedInstClass _class))
                                             {
                                                 if(_class != @class)
                                                 {
@@ -81,7 +81,7 @@ namespace Z0
                                                     ext = Extension.Empty;
                                                     attribs = InstAttribs.Empty;
                                                     effects = Index<XedFlagEffect>.Empty;
-                                                    form = InstForm.Empty;
+                                                    form = XedInstForm.Empty;
                                                 }
                                                 @class = _class;
                                                 dst.InstClass = _class;

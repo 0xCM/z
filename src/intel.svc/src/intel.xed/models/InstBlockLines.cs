@@ -8,7 +8,7 @@ namespace Z0
 
     partial class XedModels
     {
-        public sealed class InstBlockLines : ConcurrentDictionary<InstForm,InstBlockLineSpec>
+        public sealed class InstBlockLines : ConcurrentDictionary<XedInstForm,InstBlockLineSpec>
         {
             public InstBlockLines()
             {

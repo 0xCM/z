@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     partial struct gcpu
     {
@@ -17,7 +17,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(AllNumeric)]
         public static Vector128<T> vhi<T>(Vector128<T> src)
             where T : unmanaged
-                => generic<T>(cpu.vscalar(w128, cpu.vcell(v64u(src),1)));
+                => generic<T>(vcpu.vscalar(w128, vcpu.vcell(v64u(src),1)));
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector128<T> vhi<T>(Vector256<T> src)
@@ -36,7 +36,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(AllNumeric)]
         public static void vhi<T>(Vector256<T> src, out ulong x0, out ulong x1)
             where T : unmanaged
-                => cpu.vhi(v64u(src), out x0, out x1);
+                => vcpu.vhi(v64u(src), out x0, out x1);
 
         /// <summary>
         /// Extracts the hi 128-bit lane of the source vector to a pair
@@ -45,7 +45,7 @@ namespace Z0
         [MethodImpl(Inline), Closures(AllNumeric)]
         public static ref Pair<ulong> vhi<T>(Vector256<T> src, ref Pair<ulong> dst)
             where T : unmanaged
-                => ref cpu.vhi(v64u(src), ref dst);
+                => ref vcpu.vhi(v64u(src), ref dst);
 
         /// <summary>
         /// Extracts the lower 256-bits from the source vector

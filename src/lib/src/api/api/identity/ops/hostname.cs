@@ -7,7 +7,7 @@ namespace Z0
     partial struct ApiIdentity
     {
         public static ApiHostUri host(Type t)
-            => new ApiHostUri(t.Assembly.Id(), hostname(t));
+            => new ApiHostUri(t.Assembly.PartName(), hostname(t));
 
         public static ApiHostUri host(PartId part, string name)
             => new ApiHostUri(part,name);

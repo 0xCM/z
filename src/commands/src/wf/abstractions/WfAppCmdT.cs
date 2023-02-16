@@ -6,6 +6,15 @@ namespace Z0
 {
     using CCN = CmdContextNames;
 
+    class CmdContextNames
+    {
+        public const string fs = "fs/context";
+
+        public const string db = "db/context";
+
+        public const string sln = "sln/context";
+    }
+    
     [CmdProvider]
     public abstract class WfAppCmd<T> : WfSvc<T>, IApiService
         where T : WfAppCmd<T>, new()

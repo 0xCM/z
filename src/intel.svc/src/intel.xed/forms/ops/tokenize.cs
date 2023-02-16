@@ -11,7 +11,7 @@ namespace Z0
 
     partial class XedForms
     {
-        public static XedFormSyntax tokenize(InstForm src)
+        public static XedFormSyntax tokenize(XedInstForm src)
         {
             var parts = src.Format().Split(Chars.Underscore);
             var count = parts.Length;

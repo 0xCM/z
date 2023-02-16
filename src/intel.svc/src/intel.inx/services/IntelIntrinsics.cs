@@ -175,9 +175,8 @@ namespace Z0
             => dst.Add(new (
                 name: reader[nameof(Instruction.name)],
                 form: reader[nameof(Instruction.form)],
-                xed: Enums.parse(reader[nameof(Instruction.xed)], default(InstFormType)))
+                xed: Enums.parse(reader[nameof(Instruction.xed)], default(XedFormType)))
                 );
-
 
         static void render(ReadOnlySpan<IntrinsicDef> src, ITextEmitter dst)
         {
@@ -244,7 +243,7 @@ namespace Z0
                     dst.InstForm = inst.xed;
                     dst.FormId = (ushort)inst.xed;
                     // Not every intrinsic is associated with an instruction class
-                    AsmInstClass.parse(src.name, out dst.InstClass);
+                    XedInstClass.parse(src.name, out dst.InstClass);
                 }
             }
             catch (Exception e)

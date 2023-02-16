@@ -21,7 +21,7 @@ namespace Z0
             public ushort PatternId;
 
             [Render(18)]
-            public AsmInstClass InstClass;
+            public XedInstClass InstClass;
 
             [Render(26)]
             public XedOpCode OpCode;
@@ -36,7 +36,7 @@ namespace Z0
             public EmptyZero<bit> Scalable;
 
             [Render(52)]
-            public InstForm InstForm;
+            public XedInstForm InstForm;
 
             [Render(1)]
             public InstPatternBody Body;

@@ -5,7 +5,6 @@
 namespace Z0
 {
     using static System.Runtime.Intrinsics.X86.Sse41;
-    using static System.Runtime.Intrinsics.X86.Sse42;
     using static System.Runtime.Intrinsics.X86.Avx;
 
     partial struct cpu

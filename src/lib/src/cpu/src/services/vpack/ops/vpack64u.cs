@@ -12,7 +12,7 @@ namespace Z0
         /// <param name="src">The source vector</param>
         [MethodImpl(Inline), Op]
         public static ulong vpack64u(Vector128<ushort> src)
-            => gcpu.vcell64(vpack128x8u(src, default), 0);
+            => vgcpu.vcell64(vpack128x8u(src, default), 0);
 
         /// <summary>
         /// 8x32u -> 64u (a scalar)

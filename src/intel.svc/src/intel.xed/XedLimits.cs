@@ -7,13 +7,13 @@ namespace Z0
 {
     public class XedLimits
     {
-        public const AsmInstKind MaxIClassMember = AsmInstKind.XTEST;
+        public const XedInstKind MaxIClassMember = XedInstKind.XTEST;
 
         public Hex12 MaxIClass => (ushort)MaxIClassMember;
 
         public const byte IClassWidth = Hex12.Width;
 
-        public const InstFormType MaxIFormMember = InstFormType.XTEST;
+        public const XedFormType MaxIFormMember = XedFormType.XTEST;
 
         public Hex14 MaxIForm => (ushort)MaxIFormMember;
 

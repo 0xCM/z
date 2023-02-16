@@ -24,7 +24,7 @@ namespace Z0
         public static void copy<T>(W128 w, ReadOnlySpan<T> src, Span<T> dst)
             where T : unmanaged
         {
-            var seg = (uint)cpu.vcount<T>(w);
+            var seg = (uint)vcpu.vcount<T>(w);
             var length = src.Length;
             var blocks = length/seg;
             var rem = length % seg;
@@ -50,7 +50,7 @@ namespace Z0
         public static void copy<T>(W256 w, ReadOnlySpan<T> src, Span<T> dst)
             where T : unmanaged
         {
-            var seg = (uint)cpu.vcount<T>(w);
+            var seg = (uint)vcpu.vcount<T>(w);
             var length = src.Length;
             var blocks = length/seg;
             var rem = length % seg;

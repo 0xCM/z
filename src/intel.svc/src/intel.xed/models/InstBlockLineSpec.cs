@@ -32,7 +32,7 @@ namespace Z0
             public uint Lines;
 
             [Render(64)]
-            public InstForm Form;
+            public XedInstForm Form;
 
             [Render(1)]
             public BitVector64<InstBlockField> Fields;

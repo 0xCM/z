@@ -4,9 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XedModels;
-
-    partial class XedRules
+    partial class XedModels
     {
         [StructLayout(LayoutKind.Sequential,Pack=1)]
         public record struct AsmInfo

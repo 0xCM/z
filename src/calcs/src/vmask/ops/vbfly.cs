@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
     using static BitMaskLiterals;
-    using static gcpu;
+    using static vcpu;
 
     partial struct vmask
     {
@@ -498,9 +498,9 @@ namespace Z0
         static Vector128<T> VBF<T>(Vector128<T> x, Vector128<T> mask, byte shift)
             where T : unmanaged
         {
-            var y = vand(x, mask);
-            y = vxors(y, shift);
-            y = vxor(gcpu.vand(y, mask), x);
+            var y = gcpu.vand(x, mask);
+            y = gcpu.vxors(y, shift);
+            y = gcpu.vxor(gcpu.vand(y, mask), x);
             return y;
         }
 
@@ -514,123 +514,122 @@ namespace Z0
         static Vector256<T> VBF<T>(Vector256<T> x, Vector256<T> mask, byte shift)
             where T : unmanaged
         {
-            var y = vand(x, mask);
-            y = vxors(y, shift);
-            y = vxor(gcpu.vand(y, mask), x);
+            var y = gcpu.vand(x, mask);
+            y = gcpu.vxors(y, shift);
+            y = gcpu.vxor(gcpu.vand(y, mask), x);
             return y;
         }
 
         [MethodImpl(Inline)]
         static Vector128<byte> v666(N128 w, N8 n)
-            => cpu.vbroadcast(w, Central8x4x2);
+            => vcpu.vbroadcast(w, Central8x4x2);
 
         [MethodImpl(Inline)]
         static Vector128<ushort> v666(N128 w, N16 n)
-            => cpu.vbroadcast(w, Central16x4x2);
+            => vcpu.vbroadcast(w, Central16x4x2);
 
         [MethodImpl(Inline)]
         static Vector128<uint> v666(N128 w, N32 n)
-            => cpu.vbroadcast(w, Central32x4x2);
+            => vcpu.vbroadcast(w, Central32x4x2);
 
         [MethodImpl(Inline)]
         static Vector128<ulong> v666(N128 w, N64 n)
-            => cpu.vbroadcast(w, Central64x4x2);
+            => vcpu.vbroadcast(w, Central64x4x2);
 
         [MethodImpl(Inline)]
         static Vector128<byte> v3C(N128 w, N8 f)
-            => cpu.vbroadcast(w, Central8x8x4);
+            => vcpu.vbroadcast(w, Central8x8x4);
 
         [MethodImpl(Inline)]
         static Vector128<ushort> v3C(N128 w, N16 n)
-            => cpu.vbroadcast(w, Central16x8x4);
+            => vcpu.vbroadcast(w, Central16x8x4);
 
         [MethodImpl(Inline)]
         static Vector128<uint> v3C(N128 w, N32 n)
-            => cpu.vbroadcast(w, Central32x8x4);
+            => vcpu.vbroadcast(w, Central32x8x4);
 
         [MethodImpl(Inline)]
         static Vector128<ulong> v3C(N128 w, N64 n)
-            => cpu.vbroadcast(w,  Central64x8x4);
+            => vcpu.vbroadcast(w,  Central64x8x4);
 
         [MethodImpl(Inline)]
         static Vector128<ushort> v0FF0(N128 w, N16 n)
-            => cpu.vbroadcast(w, Central16x16x8);
+            => vcpu.vbroadcast(w, Central16x16x8);
 
         [MethodImpl(Inline)]
         static Vector128<uint> v0FF0(N128 w, N32 n)
-            => cpu.vbroadcast(w, Central32x16x8);
+            => vcpu.vbroadcast(w, Central32x16x8);
 
         [MethodImpl(Inline)]
         static Vector128<ulong> v0FF0(N128 w, N64 n)
-            => cpu.vbroadcast(w, Central64x16x8);
+            => vcpu.vbroadcast(w, Central64x16x8);
 
         [MethodImpl(Inline)]
         static Vector128<uint> v00FFFF00(N128 w)
-            => cpu.vbroadcast(w, Central32x32x16);
+            => vcpu.vbroadcast(w, Central32x32x16);
 
         [MethodImpl(Inline)]
         static Vector128<ulong> v00FFFF0000FFFF00(N128 w)
-            => cpu.vbroadcast(w, Central64x32x16);
+            => vcpu.vbroadcast(w, Central64x32x16);
 
         [MethodImpl(Inline)]
         static Vector128<ulong> v0000FFFFFFFF0000(N128 w)
-            => cpu.vbroadcast(w, Central64x64x32);
+            => vcpu.vbroadcast(w, Central64x64x32);
 
         [MethodImpl(Inline)]
         static Vector256<byte> v666(N256 w, N8 n)
-            => cpu.vbroadcast(w, Central8x4x2);
+            => vcpu.vbroadcast(w, Central8x4x2);
 
         [MethodImpl(Inline)]
         static Vector256<ushort> v666(N256 w, N16 n)
-            => cpu.vbroadcast(w, Central16x4x2);
+            => vcpu.vbroadcast(w, Central16x4x2);
 
         [MethodImpl(Inline)]
         static Vector256<uint> v666(N256 w, N32 n)
-            => gcpu.vbroadcast<uint>(w,  Central32x4x2);
+            => vcpu.vbroadcast(w,  Central32x4x2);
 
         [MethodImpl(Inline)]
         static Vector256<ulong> v666(N256 w, N64 n)
-            => cpu.vbroadcast(w, Central64x4x2);
+            => vcpu.vbroadcast(w, Central64x4x2);
 
         [MethodImpl(Inline)]
         static Vector256<byte> v3C(N256 w, N8 n)
-            => cpu.vbroadcast(w,  Central8x8x4);
+            => vcpu.vbroadcast(w,  Central8x8x4);
 
         [MethodImpl(Inline)]
         static Vector256<ushort> v3C(N256 w, N16 n)
-            => cpu.vbroadcast(w,  Central16x8x4);
+            => vcpu.vbroadcast(w,  Central16x8x4);
 
         [MethodImpl(Inline)]
         static Vector256<uint> v3C(N256 w, N32 n)
-            => gcpu.vbroadcast<uint>(w,  Central32x8x4);
+            => vcpu.vbroadcast(w,  Central32x8x4);
 
         [MethodImpl(Inline)]
         static Vector256<ulong> v3C(N256 w, N64 n)
-            => cpu.vbroadcast(w, Central64x8x4);
+            => vcpu.vbroadcast(w, Central64x8x4);
 
         [MethodImpl(Inline)]
         static Vector256<ushort> v0FF0(N256 w, N16 n)
-            => cpu.vbroadcast(w, Central16x16x8);
+            => vcpu.vbroadcast(w, Central16x16x8);
 
         [MethodImpl(Inline)]
         static Vector256<uint> v0FF0(N256 w, N32 n)
-            => gcpu.vbroadcast<uint>(w,  Central32x16x8);
+            => vcpu.vbroadcast(w,  Central32x16x8);
 
         [MethodImpl(Inline)]
         static Vector256<ulong> v0FF0(N256 w, N64 n)
-            => cpu.vbroadcast(w, Central64x16x8);
+            => vcpu.vbroadcast(w, Central64x16x8);
 
         [MethodImpl(Inline)]
         static Vector256<uint> v00FFFF00(N256 w)
-            => gcpu.vbroadcast<uint>(w,  Central32x32x16);
+            => vcpu.vbroadcast(w,  Central32x32x16);
 
         [MethodImpl(Inline)]
         static Vector256<ulong> v00FFFF0000FFFF00(N256 w)
-            => cpu.vbroadcast(w, Central64x32x16);
+            => vcpu.vbroadcast(w, Central64x32x16);
 
         [MethodImpl(Inline)]
         static Vector256<ulong> v0000FFFFFFFF0000(N256 w)
-            => cpu.vbroadcast(w, Central64x64x32);
-
+            => vcpu.vbroadcast(w, Central64x64x32);
     }
 }

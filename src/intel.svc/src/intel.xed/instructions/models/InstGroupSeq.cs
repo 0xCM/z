@@ -23,7 +23,7 @@ namespace Z0
             public ushort PatternId;
 
             [Render(18)]
-            public AsmInstClass Instruction;
+            public XedInstClass Instruction;
 
             [Render(6)]
             public ModIndicator Mod;
@@ -50,7 +50,7 @@ namespace Z0
             public AsmOcValue OpCodeBytes;
 
             [Render(1)]
-            public InstForm Form;
+            public XedInstForm Form;
 
             public AsmOpCodeClass OpCodeClass
             {

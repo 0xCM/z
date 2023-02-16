@@ -4,29 +4,19 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    class CmdServerState
-    {
-        public IApiContext ApiContext;
+    // class CmdServerState
+    // {
+    //     public IApiContext ApiContext;
 
-        public CmdHandlers Handlers;
+    //     public CmdHandlers Handlers;
 
-        public IExecutionContext ExecContext;
+    //     public IExecutionContext ExecContext;
 
-        public IApiCmdRunner Runner;
-    }
+    //     public IApiCmdRunner Runner;
+    // }
 
     public sealed class CmdServer : AppService<CmdServer>, ICmdServer
     {
-        // internal static ICmdServer create(IExecutionContext context, Assembly[] components, CmdServerState state)
-        // {
-        //     var dst = create(context.Wf);
-        //     dst.Handlers = state.Handlers;
-        //     dst.ExecContext = state.ExecContext;
-        //     dst.ApiContext = state.ApiContext;
-        //     dst.Runner = state.Runner;
-        //     return dst;
-        // }
-        
         Task<ExecToken> IApiCmdRunner.Start(string[] args)
             => Runner.Start(args);
 

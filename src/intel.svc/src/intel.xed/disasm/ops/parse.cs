@@ -27,7 +27,7 @@ namespace Z0
             var facets = alloc<Facet<string>>(count + 2);
             var k=0u;
             seek(facets,k++) = (nameof(FieldKind.ICLASS), @class);
-            seek(facets,k++) = (nameof(InstForm), form);
+            seek(facets,k++) = (nameof(XedInstForm), form);
             for(var m=0; m<count; m++,k++)
             {
                 var prop = skip(props,m);

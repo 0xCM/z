@@ -7,7 +7,6 @@ namespace Z0
 {
     using static XedModels;
     using static MachineModes;
-    using static XedLiterals;
 
     using K = XedRules.FieldKind;
     using M = XedModels;
@@ -347,8 +346,8 @@ namespace Z0
             [RuleField(K.ERROR, 1, typeof(M.ErrorKind))]
             public ErrorKind ERROR;
 
-            [RuleField(K.ICLASS, 16, typeof(AsmInstKind))]
-            public AsmInstKind ICLASS;
+            [RuleField(K.ICLASS, 16, typeof(XedInstKind))]
+            public XedInstKind ICLASS;
 
             [RuleField(K.CHIP, 8, typeof(M.ChipCode))]
             public ChipCode CHIP;

@@ -37,6 +37,37 @@ namespace Z0
             }
         }
 
+        public ExecToken RunApiScrips(FilePath src)
+        {
+            ExecToken Exec()
+            {
+                var running = Channel.Running($"Executing script {src}");
+                if(src.Missing)
+                {
+                    Channel.Error(AppMsg.FileMissing.Format(src));
+                }
+                else
+                {
+                    var script = ApiCmdScript.Empty;
+                    Cmd.parse(src, out script);
+                    ref readonly var commands = ref script.Commands;
+                    Channel.Babble($"Dispatching {commands.Count} from {src}");
+                    iter(script.Commands, cmd => {
+                        try
+                        {
+                            ApiCmd.Dispatcher.Dispatch(cmd.Name, cmd.Args);
+                        }
+                        catch(Exception e)
+                        {
+                            Channel.Error(e);
+                        }
+                    });
+                }
+                return Channel.Ran(running);
+            }
+            return sys.start(Exec).Result;        
+        }
+
         public void EmitApiCatalog()
             => EmitApiCatalog(Env.ShellData);
         

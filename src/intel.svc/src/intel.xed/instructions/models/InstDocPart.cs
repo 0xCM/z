@@ -30,13 +30,13 @@ namespace Z0
                 get => ref Inst.Ops;
             }
 
-            public ref readonly InstForm InstForm
+            public ref readonly XedInstForm InstForm
             {
                 [MethodImpl(Inline)]
                 get => ref Inst.InstForm;
             }
 
-            public AsmInstClass Classifier
+            public XedInstClass Classifier
             {
                 [MethodImpl(Inline)]
                 get => Inst.Classifier;

@@ -18,7 +18,7 @@ namespace Z0
             for(var i=0; i<src.BlockCount; i++)
             {
                 var a = vload(src,i);
-                var b = cpu.vbroadcast(w128, match);
+                var b = vcpu.vbroadcast(w128, match);
                 var c = cpu.veq(a,b);
                 var d = cpu.vtestz(c,ones);
                 if(!d)

@@ -19,10 +19,10 @@ namespace Z0
             public ushort FormId;
 
             [Render(64)]
-            public InstForm InstForm;
+            public XedInstForm InstForm;
 
             [Render(20)]
-            public AsmInstClass InstClass;
+            public XedInstClass InstClass;
 
             [Render(16)]
             public CategoryKind Category;

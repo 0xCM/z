@@ -13,7 +13,7 @@ namespace Z0
         {
             public static PatternSort comparer() => default;
 
-            public readonly AsmInstClass InstClass;
+            public readonly XedInstClass InstClass;
 
             public readonly XedOpCode OpCode;
 

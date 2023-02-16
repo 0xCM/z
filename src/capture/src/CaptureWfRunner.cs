@@ -100,23 +100,23 @@ namespace Z0
             return Channel.TableEmit(Transport.Transmit(buffer).View, dst.Table<EncodedMember>());
         }
 
-        static ApiMembers members(IWfChannel channel, ReadOnlySeq<CollectedHost> src)
-        {
-            var dst = ApiMembers.Empty;
-            var buffer = bag<ApiMember>();
-            iter(src.View, host => {
-                iter(host.Resolved.Members, member => {
-                    if(member.IsNonEmpty)
-                        buffer.Add(member);
-                    else
-                        channel.Warn($"Empty member");
-                });
-            });
-            var members = buffer.ToSeq().Sort();
-            if(members.Length != 0)
-                dst = new ApiMembers(members.First.BaseAddress, members);
-            return dst;
-        }
+        // static ApiMembers members(IWfChannel channel, ReadOnlySeq<CollectedHost> src)
+        // {
+        //     var dst = ApiMembers.Empty;
+        //     var buffer = bag<ApiMember>();
+        //     iter(src.View, host => {
+        //         iter(host.Resolved.Members, member => {
+        //             if(member.IsNonEmpty)
+        //                 buffer.Add(member);
+        //             else
+        //                 channel.Warn($"Empty member");
+        //         });
+        //     });
+        //     var members = buffer.ToSeq().Sort();
+        //     if(members.Length != 0)
+        //         dst = new ApiMembers(members.First.BaseAddress, members);
+        //     return dst;
+        // }
 
         Seq<CollectedHost> Capture(IApiCatalog src)
         {            
@@ -136,9 +136,8 @@ namespace Z0
             var code = tmp.ToArray();
             ApiCodeSvc.Emit(src.PartName, code, Target, Settings.PllExec);
             EmitAsm(dispenser, code);
-
             iter(tmp, x =>  {                
-                Cli.EmitMsil(x,Target);
+                Cli.EmitMsil(x,Target.Scoped("extracts"));
                 dst.Add(x);
                 }
             );

@@ -40,7 +40,5 @@ namespace Z0
                 FileEmit(data,dst);
             }
         }
-
-
     }
 }

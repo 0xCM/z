@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static CpuBytes;
-    using static cpu;
+    using static vcpu;
 
     partial struct vmask
     {

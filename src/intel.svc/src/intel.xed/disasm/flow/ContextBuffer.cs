@@ -7,6 +7,7 @@ namespace Z0
 {
     using static sys;
     using static XedRules;
+    using static XedModels;
     using static XedDisasmModels;
 
     partial class XedDisasm
@@ -90,7 +91,7 @@ namespace Z0
                 _DataFile = XedDisasmModels.DisasmDataFile.Empty;
                 _Block = DisasmDetailBlock.Empty;
                 _Summary = DisasmSummary.Empty;
-                _AsmInfo = XedRules.AsmInfo.Empty;
+                _AsmInfo = XedModels.AsmInfo.Empty;
                 _Props = InstFieldValues.Empty;
                 _Encoding = EncodingExtract.Empty;
             }

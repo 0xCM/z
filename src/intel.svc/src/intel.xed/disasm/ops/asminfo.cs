@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XedRules;
+    using static XedModels;
     using static XedDisasmModels;
 
     partial class XedDisasm

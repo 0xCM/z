@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static sys;
-    using static XedRules;
+    using static XedModels;
     using static XedDisasmModels;
 
     partial class XedDisasm
@@ -56,10 +56,10 @@ namespace Z0
                 return result;
             }
 
-            internal static Outcome parse(in DisasmBlock src, out AsmInstClass dst)
+            internal static Outcome parse(in DisasmBlock src, out XedInstClass dst)
             {
                 var result = Outcome.Success;
-                dst = AsmInstClass.Empty;
+                dst = XedInstClass.Empty;
                 ref readonly var content = ref src.Props.Content;
                 if(text.nonempty(content))
                 {
@@ -69,7 +69,7 @@ namespace Z0
                         var expr = text.left(content,j);
                         if(!XedParsers.parse(expr, out dst))
                         {
-                            result = (false, AppMsg.ParseFailure.Format(nameof(AsmInstClass), content));
+                            result = (false, AppMsg.ParseFailure.Format(nameof(XedInstClass), content));
                             return result;
                         }
                     }
@@ -77,10 +77,10 @@ namespace Z0
                 return result;
             }
 
-            internal static Outcome parse(in DisasmBlock src, out InstForm dst)
+            internal static Outcome parse(in DisasmBlock src, out XedInstForm dst)
             {
                 var result = Outcome.Success;
-                dst = InstForm.Empty;
+                dst = XedInstForm.Empty;
                 ref readonly var content = ref src.Props.Content;
                 if(text.nonempty(content))
                 {
@@ -94,7 +94,7 @@ namespace Z0
                             expr = text.inside(content, j, k);
                             if(!XedParsers.parse(expr, out dst))
                             {
-                                result = (false, AppMsg.ParseFailure.Format(nameof(InstForm), expr));
+                                result = (false, AppMsg.ParseFailure.Format(nameof(XedInstForm), expr));
                                 return result;
                             }
                         }
@@ -103,13 +103,13 @@ namespace Z0
                 return result;
             }
 
-            internal static void parse(in DisasmBlock src, out AsmInstClass @class, out InstForm form)
+            internal static void parse(in DisasmBlock src, out XedInstClass @class, out XedInstForm form)
             {
                 var content = text.trim(text.split(text.despace(src.Props.Content), Chars.Space));
                 XedParsers.parse(skip(content,0), out @class);
                 if(!XedParsers.parse(skip(content,1), out form))
                 {
-                    Errors.Throw(AppMsg.ParseFailure.Format(nameof(InstForm), skip(content,1)));
+                    Errors.Throw(AppMsg.ParseFailure.Format(nameof(XedInstForm), skip(content,1)));
                 }
             }
 

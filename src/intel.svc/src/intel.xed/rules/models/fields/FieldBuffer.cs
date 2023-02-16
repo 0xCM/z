@@ -34,13 +34,13 @@ namespace Z0
 
             public ReadOnlySpan<FieldKind> Selected;
 
-            public AsmInstClass Instruction
+            public XedInstClass Instruction
             {
                 [MethodImpl(Inline)]
                 get => Props.InstClass;
             }
 
-            public InstForm Form
+            public XedInstForm Form
             {
                 [MethodImpl(Inline)]
                 get => Props.InstForm;

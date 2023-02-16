@@ -14,9 +14,9 @@ namespace Z0
 
             public readonly @string form;
 
-            public readonly InstFormType xed;
+            public readonly XedFormType xed;
 
-            public Instruction(string name, string form, InstFormType xed)
+            public Instruction(string name, string form, XedFormType xed)
             {
                 this.name = name;
                 this.form = form;

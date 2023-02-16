@@ -166,6 +166,24 @@ namespace Z0
             }
         }                            
 
+        public static void parse(FilePath src, out ApiCmdScript dst)
+        {
+            var specs = list<ApiCmdSpec>();
+            var spec = ApiCmdSpec.Empty;
+            using var reader = src.Utf8LineReader();
+            var line = TextLine.Empty;
+
+            while(reader.Next(out line))
+            {
+                var content = line.Content.Trim();
+                if(text.nonempty(content))                
+                if(parse(content, out spec))
+                    specs.Add(spec);
+            }
+
+            dst = new (src, specs.ToArray());
+        }
+
         [Op]
         public static bool parse(ReadOnlySpan<char> src, out ApiCmdSpec dst)
         {
@@ -439,6 +457,5 @@ namespace Z0
 
             return (cmd,args);            
         }
-
    }
 }

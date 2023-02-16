@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static System.Runtime.Intrinsics.X86.Sse41;
-    using static core;
+    using static sys;
 
     partial struct vpack
     {
@@ -31,7 +31,7 @@ namespace Z0
         /// <param name="w">The target component width</param>
         [MethodImpl(Inline), Op]
         public static unsafe Vector128<ulong> vunpack2x64(in uint src)
-            => cpu.v64u(ConvertToVector128Int64(gptr(src)));
+            => vcpu.v64u(ConvertToVector128Int64(gptr(src)));
 
     }
 }

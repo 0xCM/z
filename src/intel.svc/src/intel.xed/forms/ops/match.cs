@@ -35,7 +35,7 @@ namespace Z0
             {
                 case TK.InstClass:
                 {
-                    result = XedParsers.parse(src, out AsmInstClass c);
+                    result = XedParsers.parse(src, out XedInstClass c);
                     if(result)
                         dst = new XedFormToken(c);
                 }

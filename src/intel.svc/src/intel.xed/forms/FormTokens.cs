@@ -87,7 +87,7 @@ namespace Z0
                 names[tk] = RepNames;
 
                 tk = TK.InstClass;
-                var @classes = Symbols.index<AsmInstKind>().Kinds;
+                var @classes = Symbols.index<XedInstKind>().Kinds;
                 tokens(@classes, ref i, index);
                 names[tk] = map(@classes, c => c.ToString()).ToHashSet();
 
@@ -123,7 +123,7 @@ namespace Z0
             }
 
             [MethodImpl(Inline)]
-            static uint tokens(ReadOnlySpan<AsmInstKind> classes, ref uint i, Index<XedFormToken> dst)
+            static uint tokens(ReadOnlySpan<XedInstKind> classes, ref uint i, Index<XedFormToken> dst)
             {
                 var i0 = i;
                 for(var j=0; j<classes.Length; j++, i++)
@@ -171,7 +171,7 @@ namespace Z0
                 + Gp8RegLitNames.Count + Gp16RegLitNames.Count + Gp32RegLitNames.Count + Gp64RegLitNames.Count + RegIndexNames.Count
                 + IsaKindNames.Count + CpuidNames.Count
                 + NonTermNames.Count + FieldNames.Count + InstCategoryNames.Count + RepNames.Count
-                + (int)Symbols.index<AsmInstKind>().Count;
+                + (int)Symbols.index<XedInstKind>().Count;
 
 
             const TK LastKind = TK.Hex16Lit;

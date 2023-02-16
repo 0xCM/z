@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static BitMasks;
+    using static vgcpu;
 
     partial struct vmask
     {
@@ -19,7 +20,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector128<T> vodd<T>(W128 w, N2 f, N1 d)
             where T : unmanaged
-                => gcpu.vbroadcast(w, odd<T>(f,d));
+                => vbroadcast(w, odd<T>(f,d));
 
         /// <summary>
         /// [10101010]
@@ -32,7 +33,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector256<T> vodd<T>(W256 w, N2 f, N1 d)
             where T : unmanaged
-                => gcpu.vbroadcast(w, odd<T>(f,d));
+                => vbroadcast(w, odd<T>(f,d));
 
         /// <summary>
         /// [11001100]
@@ -45,7 +46,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector128<T> vodd<T>(W128 w, N2 f, N2 d)
             where T : unmanaged
-                => gcpu.vbroadcast(w, odd<T>(f,d));
+                => vbroadcast(w, odd<T>(f,d));
 
         /// <summary>
         /// [11001100]
@@ -58,7 +59,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector256<T> vodd<T>(W256 w, N2 f, N2 d)
             where T : unmanaged
-                => gcpu.vbroadcast(w, odd<T>(f,d));
+                => vbroadcast(w, odd<T>(f,d));
 
         [MethodImpl(Inline), Op]
         public static Vector128<byte> vodd(W128 w)

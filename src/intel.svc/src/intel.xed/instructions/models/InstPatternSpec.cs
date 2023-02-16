@@ -21,9 +21,9 @@ namespace Z0
 
             public Extension Extension;
 
-            public AsmInstClass InstClass;
+            public XedInstClass InstClass;
 
-            public InstForm InstForm;
+            public XedInstForm InstForm;
 
             public InstAttribs Attributes;
 

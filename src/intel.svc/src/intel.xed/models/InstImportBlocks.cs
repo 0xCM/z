@@ -13,7 +13,7 @@ namespace Z0
         {
             public MemoryFile DataSource;
 
-            public SortedLookup<InstForm,uint> Forms;
+            public SortedLookup<XedInstForm,uint> Forms;
 
             public Index<InstBlockImport> Imports;
 
@@ -23,19 +23,19 @@ namespace Z0
 
             public LineMap<InstBlockLineSpec> LineMap;
 
-            public ConcurrentDictionary<InstForm,string> FormBlocks;
+            public ConcurrentDictionary<XedInstForm,string> FormBlocks;
 
-            public ConcurrentDictionary<InstForm,string> FormHeaders;
+            public ConcurrentDictionary<XedInstForm,string> FormHeaders;
 
             public InstImportBlocks()
             {
-                Forms = dict<InstForm,uint>();
+                Forms = dict<XedInstForm,uint>();
             }
 
-            public string Description(InstForm form)
+            public string Description(XedInstForm form)
                 => FormBlocks[form];
 
-            public string Header(InstForm form)
+            public string Header(XedInstForm form)
                 => FormHeaders[form];
 
             public SortedLookup<string,InstBlockImport> ImportLookup;

@@ -6,6 +6,7 @@ namespace Z0
 {
     using static BitMasks;
     using static sys;
+    using static vgcpu;
 
     partial struct vmask
     {
@@ -16,7 +17,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector128<T> vmsb<T>(W128 w)
             where T : unmanaged
-                => gcpu.vbroadcast(w, msb<T>(n1,n1));
+                => vbroadcast(w, msb<T>(n1,n1));
 
         /// <summary>
         /// [01]
@@ -27,7 +28,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector128<T> vmsb<T>(W128 w, N2 f, N1 d, T t = default)
             where T : unmanaged
-                => gcpu.vbroadcast(w, msb<T>(f,d));
+                => vbroadcast(w, msb<T>(f,d));
 
         /// <summary>
         /// [1000]
@@ -38,7 +39,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector128<T> vmsb<T>(W128 w, N4 f, N1 d)
             where T : unmanaged
-                => gcpu.vbroadcast(w, msb<T>(f,d));
+                => vbroadcast(w, msb<T>(f,d));
 
         /// <summary>
         /// [10000000]
@@ -49,7 +50,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector128<T> vmsb<T>(W128 w, N8 f, N1 d)
             where T : unmanaged
-                => gcpu.vbroadcast(w, msb<T>(f,d));
+                => vbroadcast(w, msb<T>(f,d));
 
         /// <summary>
         /// [10000000 00000000]
@@ -60,7 +61,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector128<T> vmsb<T>(W128 w, N16 f, N1 d)
             where T : unmanaged
-                => generic<T>(gcpu.vbroadcast<ulong>(w, msb(n64, f, d)));
+                => generic<T>(vbroadcast<ulong>(w, msb(n64, f, d)));
 
         /// <summary>
         /// [11000000]
@@ -73,7 +74,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector128<T> vmsb<T>(W128 w, N8 f, N2 d)
             where T : unmanaged
-                => gcpu.vbroadcast(w, msb<T>(f,d));
+                => vbroadcast(w, msb<T>(f,d));
 
         /// <summary>
         /// [11100000]
@@ -86,7 +87,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector128<T> vmsb<T>(W128 w, N8 f, N3 d)
             where T : unmanaged
-                => gcpu.vbroadcast(w, msb<T>(f,d));
+                => vbroadcast(w, msb<T>(f,d));
 
         /// <summary>
         /// [11110000]
@@ -99,7 +100,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector128<T> vmsb<T>(W128 w, N8 f, N4 d)
             where T : unmanaged
-                => gcpu.vbroadcast(w, msb<T>(f,d));
+                => vbroadcast(w, msb<T>(f,d));
 
         /// <summary>
         /// [11111000]
@@ -112,7 +113,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector128<T> vmsb<T>(W128 w, N8 f, N5 d)
             where T : unmanaged
-                => gcpu.vbroadcast(w, msb<T>(f,d));
+                => vbroadcast(w, msb<T>(f,d));
 
         /// <summary>
         /// [11111100]
@@ -125,7 +126,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector128<T> vmsb<T>(W128 w, N8 f, N6 d)
             where T : unmanaged
-                => gcpu.vbroadcast(w, msb<T>(f,d));
+                => vbroadcast(w, msb<T>(f,d));
 
         /// <summary>
         /// [11111110]
@@ -138,7 +139,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector128<T> vmsb<T>(W128 w, N8 f, N7 d)
             where T : unmanaged
-                => gcpu.vbroadcast(w, msb<T>(f,d));
+                => vbroadcast(w, msb<T>(f,d));
 
         /// <summary>
         /// The f most significant bits of each 8 bits are enabled
@@ -150,7 +151,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector128<T> vmsb<T>(W128 w, N8 f, byte d)
             where T : unmanaged
-                => generic<T>(gcpu.vbroadcast<byte>(w, msb8f(d)));
+                => generic<T>(vbroadcast<byte>(w, msb8f(d)));
 
         /// <summary>
         /// [100...00]
@@ -161,7 +162,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector256<T> vmsb<T>(W256 w)
             where T : unmanaged
-                => gcpu.vbroadcast(w, msb<T>(n1,n1));
+                => vbroadcast(w, msb<T>(n1,n1));
 
         /// <summary>
         /// [01]
@@ -174,7 +175,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector256<T> vmsb<T>(W256 w, N2 f, N1 d, T t = default)
             where T : unmanaged
-                => gcpu.vbroadcast(w, msb(f,d,t));
+                => vbroadcast(w, msb(f,d,t));
 
         /// <summary>
         /// [1000]
@@ -187,7 +188,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector256<T> vmsb<T>(W256 w, N4 f, N1 d)
             where T : unmanaged
-                => gcpu.vbroadcast(w, msb<T>(f, d));
+                => vbroadcast(w, msb<T>(f, d));
 
         /// <summary>
         /// [10000000]
@@ -200,7 +201,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector256<T> vmsb<T>(W256 w, N8 f, N1 d)
             where T : unmanaged
-                => gcpu.vbroadcast(w, msb<T>(f,d));
+                => vbroadcast(w, msb<T>(f,d));
 
         /// <summary>
         /// [10000000 00000000]
@@ -213,7 +214,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector256<T> vmsb<T>(W256 w, N16 f, N1 d, T t = default)
             where T : unmanaged
-                => generic<T>(gcpu.vbroadcast<ulong>(w, msb(n64, f, d)));
+                => generic<T>(vbroadcast<ulong>(w, msb(n64, f, d)));
 
         /// <summary>
         /// [11000000]
@@ -226,7 +227,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector256<T> vmsb<T>(W256 w, N8 f, N2 d, T t = default)
             where T : unmanaged
-                => gcpu.vbroadcast(w, msb(f,d,t));
+                => vbroadcast(w, msb(f,d,t));
 
         /// <summary>
         /// [11100000]
@@ -239,7 +240,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector256<T> vmsb<T>(W256 w, N8 f, N3 d, T t = default)
             where T : unmanaged
-                => gcpu.vbroadcast(w, msb(f,d,t));
+                => vbroadcast(w, msb(f,d,t));
 
         /// <summary>
         /// [11110000]
@@ -251,7 +252,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector256<T> vmsb<T>(W256 w, N8 f, N4 d)
             where T : unmanaged
-                => gcpu.vbroadcast(w, msb<T>(f,d));
+                => vbroadcast(w, msb<T>(f,d));
 
         /// <summary>
         /// [11111000]
@@ -263,7 +264,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector256<T> vmsb<T>(W256 w, N8 f, N5 d)
             where T : unmanaged
-                => gcpu.vbroadcast(w, msb<T>(f,d));
+                => vbroadcast(w, msb<T>(f,d));
 
         /// <summary>
         /// [11111100]
@@ -275,7 +276,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector256<T> vmsb<T>(W256 w, N8 f, N6 d)
             where T : unmanaged
-                => gcpu.vbroadcast(w, msb<T>(f,d));
+                => vbroadcast(w, msb<T>(f,d));
 
         /// <summary>
         /// [11111110]
@@ -287,7 +288,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector256<T> vmsb<T>(W256 w, N8 f, N7 d)
             where T : unmanaged
-                => gcpu.vbroadcast(w, msb<T>(f,d));
+                => vbroadcast(w, msb<T>(f,d));
 
         /// <summary>
         /// Creates a mask where f most significant bits of each 8 bits are enabled
@@ -299,6 +300,6 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector256<T> vmsb<T>(W256 w, N8 f, byte d)
             where T : unmanaged
-                => generic<T>(gcpu.vbroadcast<byte>(w, msb8f(d)));
+                => generic<T>(vbroadcast<byte>(w, msb8f(d)));
     }
 }

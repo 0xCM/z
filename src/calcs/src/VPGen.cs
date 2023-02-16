@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static gcpu;
     using static sys;
     using static Numeric;
     using static Limits;
@@ -30,7 +29,7 @@ namespace Z0
             var buffer = sys.recover<T>(sys.bytes(data));
             for(var i=0; i<len; i++)
                 seek(buffer, i) = gmath.even(i) ? a : b;
-            return vload(n, buffer);
+            return vgcpu.vload(n, buffer);
         }
 
         /// <summary>
@@ -53,7 +52,7 @@ namespace Z0
                 current = gmath.dec(current);
             }
 
-            return vload(n, buffer);
+            return vgcpu.vload(n, buffer);
         }
 
         /// <summary>
@@ -76,7 +75,7 @@ namespace Z0
                 current = gmath.dec(current);
             }
 
-            return vload(n, buffer);
+            return vgcpu.vload(n, buffer);
         }
 
         /// <summary>
@@ -98,7 +97,7 @@ namespace Z0
                 seek(buffer, i) = current;
                 current = gmath.sub(current, step);
             }
-            return vload(n, buffer);
+            return vgcpu.vload(n, buffer);
         }
 
         /// <summary>
@@ -120,7 +119,7 @@ namespace Z0
                 seek(buffer, i) = current;
                 current = gmath.sub(current, step);
             }
-            return vload(n, buffer);
+            return vgcpu.vload(n, buffer);
         }
 
         /// <summary>
@@ -142,7 +141,7 @@ namespace Z0
                 seek(buffer, i) = current;
                 current = gmath.add(current, step);
             }
-            return vload(n, buffer);
+            return vgcpu.vload(n, buffer);
         }
 
         /// <summary>
@@ -165,7 +164,7 @@ namespace Z0
                 current = gmath.add(current, step);
             }
 
-            return vload(n, buffer);
+            return vgcpu.vload(n, buffer);
         }
 
         [MethodImpl(Inline), Op]

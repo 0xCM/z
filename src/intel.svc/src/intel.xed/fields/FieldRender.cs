@@ -101,7 +101,7 @@ namespace Z0
                         break;
 
                         case K.ICLASS:
-                            r.Functions[kind] = (x => format((AsmInstClass)x));
+                            r.Functions[kind] = (x => format((XedInstClass)x));
                         break;
 
                         case K.MASK:

@@ -23,7 +23,7 @@ namespace Z0
 
         [CmdOp("api/commands")]
         void EmitCommands()
-            => Wf.ApiCmd().EmitApiCatalog();
+            => ApiCmd.EmitApiCatalog();
 
         [CmdOp("api/version")]
         void ApiVersion()
@@ -35,7 +35,7 @@ namespace Z0
 
         [CmdOp("api/script")]
         void RunAppScript(CmdArgs args)
-            => ProcessLauncher.apiscript(Channel, FS.path(args[0]));
+            => ApiCmd.RunApiScrips(FS.path(args[0]));
 
         [CmdOp("env/stack")]
         void Stack()

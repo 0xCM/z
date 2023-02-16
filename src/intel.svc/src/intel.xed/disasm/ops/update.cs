@@ -30,7 +30,7 @@ namespace Z0
             for(var i=0; i<count; i++)
             {
                 var name = skip(names,i);
-                if(name == nameof(FieldKind.ICLASS) || name == nameof(InstForm))
+                if(name == nameof(FieldKind.ICLASS) || name == nameof(XedInstForm))
                     continue;
 
                 if(XedParsers.parse(name, out FieldKind kind))

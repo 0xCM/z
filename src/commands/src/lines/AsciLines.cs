@@ -277,7 +277,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static uint asci(ReadOnlySpan<AsciCode> src, ref uint number, ref uint i, out AsciLineCover dst)
-            => asci(core.recover<AsciCode,byte>(src), ref number, ref i, out dst);
+            => asci(sys.recover<AsciCode,byte>(src), ref number, ref i, out dst);
 
         [MethodImpl(Inline), Op]
         public static AsciLineCover asci(ReadOnlySpan<byte> src, uint offset, uint length)

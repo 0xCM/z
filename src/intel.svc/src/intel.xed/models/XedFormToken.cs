@@ -66,10 +66,10 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public XedFormToken(AsmInstClass value)
+        public XedFormToken(XedInstClass value)
         {
             var data = ByteBlock16.Empty;
-            @as<AsmInstClass>(data.First) = value;
+            @as<XedInstClass>(data.First) = value;
             data[15] = (byte)TokenKind.InstClass;
             Data = data;
         }
@@ -125,8 +125,8 @@ namespace Z0
             => ref @as<Hex16>(Data.First);
 
         [MethodImpl(Inline)]
-        public ref readonly AsmInstClass InstClassValue()
-            => ref @as<AsmInstClass>(Data.First);
+        public ref readonly XedInstClass InstClassValue()
+            => ref @as<XedInstClass>(Data.First);
 
         public bool IsEmpty
         {

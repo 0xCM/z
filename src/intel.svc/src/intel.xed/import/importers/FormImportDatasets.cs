@@ -9,13 +9,13 @@ namespace Z0
     {
         class FormImportDatasets
         {
-            public ConcurrentDictionary<InstForm,string> Descriptions = new();
+            public ConcurrentDictionary<XedInstForm,string> Descriptions = new();
 
-            public ConcurrentDictionary<InstForm,string> Headers = new();
+            public ConcurrentDictionary<XedInstForm,string> Headers = new();
 
-            public SortedLookup<InstForm,uint> Sorted;
+            public SortedLookup<XedInstForm,uint> Sorted;
 
-            public void Include(InstForm form, BlockImportDatasets src)
+            public void Include(XedInstForm form, BlockImportDatasets src)
             {
                 if(form.IsNonEmpty)
                 {

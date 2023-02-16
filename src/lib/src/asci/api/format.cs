@@ -86,10 +86,10 @@ namespace Z0
         public static string format(in AsciBlock128 src)
         {
             ref var storage = ref src.First;
-            var v1 = cpu.vload(w256, storage);
-            var v2 = cpu.vload(w256, sys.seek(storage, 32*1));
-            var v3 = cpu.vload(w256, sys.seek(storage, 32*2));
-            var v4 = cpu.vload(w256, sys.seek(storage, 32*3));
+            var v1 = vcpu.vload(w256, storage);
+            var v2 = vcpu.vload(w256, sys.seek(storage, 32*1));
+            var v3 = vcpu.vload(w256, sys.seek(storage, 32*2));
+            var v4 = vcpu.vload(w256, sys.seek(storage, 32*3));
             var x0 = vpack.vinflatelo256x16u(v1);
             var x1 = vpack.vinflatehi256x16u(v1);
             var x2 = vpack.vinflatelo256x16u(v2);

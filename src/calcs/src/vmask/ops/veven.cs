@@ -41,7 +41,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector128<T> veven<T>(W128 w, N2 f, N1 d)
             where T : unmanaged
-                => gcpu.vbroadcast(w, even<T>(f,d));
+                => vgcpu.vbroadcast(w, even<T>(f,d));
 
         /// <summary>
         /// [00110011]
@@ -54,7 +54,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector128<T> veven<T>(W128 w, N2 f, N2 d)
             where T : unmanaged
-                => gcpu.vbroadcast(w, even<T>(f,d));
+                => vgcpu.vbroadcast(w, even<T>(f,d));
 
         [MethodImpl(Inline), Op]
         public static Vector128<byte> veven(W128 w)
@@ -93,7 +93,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector256<T> veven<T>(W256 w, N2 f, N1 d)
             where T : unmanaged
-                => gcpu.vbroadcast(w, even<T>(f,d));
+                => vgcpu.vbroadcast(w, even<T>(f,d));
 
         /// <summary>
         /// [00110011]
@@ -106,7 +106,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector256<T> veven<T>(W256 w, N2 f, N2 d)
             where T : unmanaged
-                => gcpu.vbroadcast(w, even<T>(f,d));
+                => vgcpu.vbroadcast(w, even<T>(f,d));
 
         [MethodImpl(Inline), Op]
         public static Vector256<byte> veven(W256 w)

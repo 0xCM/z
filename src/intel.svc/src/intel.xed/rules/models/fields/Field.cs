@@ -38,11 +38,11 @@ namespace Z0
                 => new Field((ushort)value, kind, FieldDataKind.Chip);
 
             [MethodImpl(Inline)]
-            public static Field init(FieldKind kind, AsmInstClass value)
+            public static Field init(FieldKind kind, XedInstClass value)
                 => new Field((ushort)value, kind, FieldDataKind.InstClass);
 
             [MethodImpl(Inline), Op]
-            public static AsmInstClass value(Field src, out AsmInstClass dst)
+            public static XedInstClass value(Field src, out XedInstClass dst)
             {
                 dst = src;
                 return dst;
@@ -112,8 +112,8 @@ namespace Z0
                 => (ChipCode)Data;
 
             [MethodImpl(Inline)]
-            AsmInstClass Inst()
-                => (AsmInstClass)Data;
+            XedInstClass Inst()
+                => (XedInstClass)Data;
 
             [MethodImpl(Inline)]
             BCastKind BCast()
@@ -174,11 +174,11 @@ namespace Z0
                 => src.Reg();
 
             [MethodImpl(Inline)]
-            public static implicit operator AsmInstKind(Field src)
+            public static implicit operator XedInstKind(Field src)
                 => src.Inst();
 
             [MethodImpl(Inline)]
-            public static implicit operator AsmInstClass(Field src)
+            public static implicit operator XedInstClass(Field src)
                 => src.Inst();
 
             [MethodImpl(Inline)]
@@ -214,7 +214,7 @@ namespace Z0
                 => init(src.kind, src.data);
 
             [MethodImpl(Inline)]
-            public static implicit operator Field((FieldKind kind, AsmInstClass data) src)
+            public static implicit operator Field((FieldKind kind, XedInstClass data) src)
                 => init(src.kind, src.data);
 
             [MethodImpl(Inline)]

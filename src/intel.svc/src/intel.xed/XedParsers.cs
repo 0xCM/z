@@ -46,9 +46,9 @@ namespace Z0
 
         static readonly EnumParser<FpuRegId> FpuRegs = new();
 
-        static readonly EnumParser<AsmInstKind> Classes = new();
+        static readonly EnumParser<XedInstKind> Classes = new();
 
-        static readonly EnumParser<InstFormType> Forms = new();
+        static readonly EnumParser<XedFormType> Forms = new();
 
         static readonly EnumParser<DispWidth> DispWidths = new();
 
@@ -439,39 +439,39 @@ namespace Z0
             }
         }
 
-        public static bool parse(string src, out AsmInstKind dst)
+        public static bool parse(string src, out XedInstKind dst)
             => Classes.Parse(src, out dst);
 
-        public static bool parse(string src, out AsmInstClass dst)
+        public static bool parse(string src, out XedInstClass dst)
         {
-            if(parse(src, out AsmInstKind @class))
+            if(parse(src, out XedInstKind @class))
             {
                 dst = @class;
                 return true;
             }
             else
             {
-                dst = AsmInstClass.Empty;
+                dst = XedInstClass.Empty;
                 return false;
             }
         }
 
-        public static bool parse(string src, out InstForm dst)
+        public static bool parse(string src, out XedInstForm dst)
         {
             if(empty(src))
             {
-                dst = InstForm.Empty;
+                dst = XedInstForm.Empty;
                 return true;
             }
 
-            if(Forms.Parse(src, out InstFormType type))
+            if(Forms.Parse(src, out XedFormType type))
             {
                 dst = type;
                 return true;
             }
             else
             {
-                dst = InstForm.Empty;
+                dst = XedInstForm.Empty;
                 return false;
             }
         }
@@ -534,7 +534,7 @@ namespace Z0
             }
             else
             {
-                if(src == nameof(InstForm))
+                if(src == nameof(XedInstForm))
                     dst = FieldKind.ICLASS;
                 else
                     result = FieldKinds.Parse(src, out dst);

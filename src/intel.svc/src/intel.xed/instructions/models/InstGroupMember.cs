@@ -25,7 +25,7 @@ namespace Z0
                 Pattern = pattern;
             }
 
-            public ref readonly InstForm InstForm
+            public ref readonly XedInstForm InstForm
             {
                 [MethodImpl(Inline)]
                 get => ref Pattern.InstForm;
@@ -79,7 +79,7 @@ namespace Z0
                 get => ref Seq.Mode;
             }
 
-            public ref readonly AsmInstClass Class
+            public ref readonly XedInstClass Class
             {
                 [MethodImpl(Inline)]
                 get => ref Seq.Instruction;

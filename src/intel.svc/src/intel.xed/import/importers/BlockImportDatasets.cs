@@ -18,13 +18,13 @@ namespace Z0
 
             public ConcurrentBag<InstBlockImport> BlockImports = new();
 
-            public ConcurrentDictionary<InstForm,string> FormData = new();
+            public ConcurrentDictionary<XedInstForm,string> FormData = new();
 
             static FormImportDatasets forms(BlockImportDatasets src, bool pll = true)
             {
                 var dst = new FormImportDatasets();
                 var keys = src.FormData.Keys.Index().Sort();
-                var forms = dict<InstForm,uint>();
+                var forms = dict<XedInstForm,uint>();
                 for(var i=0u; i<keys.Count; i++)
                     forms[keys[i]] = i;
                 dst.Sorted = forms;
@@ -94,7 +94,7 @@ namespace Z0
                 const string Marker = "iform:";
                 var fields = InstBlockLineSpec.Empty;
                 var buffer = list<LineInterval<InstBlockLineSpec>>();
-                var form = InstForm.Empty;
+                var form = XedInstForm.Empty;
                 var name = EmptyString;
                 var value = EmptyString;
                 var field = InstBlockField.amd_3dnow_opcode;
