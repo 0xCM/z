@@ -103,7 +103,7 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => alg.hash.marvin(Bytes);
+            get => sys.hash(Bytes);
         }
 
         public override int GetHashCode()

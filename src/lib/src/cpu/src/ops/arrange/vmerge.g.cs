@@ -54,7 +54,6 @@ namespace Z0
                 throw no<T>();
         }
 
-
         [MethodImpl(Inline)]
         static Vector512<T> vmerge_i<T>(Vector256<T> x, Vector256<T> y)
             where T : unmanaged

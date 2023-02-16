@@ -15,6 +15,6 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(AllNumeric)]
         public static Vector256<T> valt<T>(W256 w, T a, T b)
             where T : unmanaged
-                => vblend(vbroadcast(w,a), vbroadcast(w,b), cpu.vblendspec<T>(w, false));
+                => vblend(vbroadcast(w,a), vbroadcast(w,b), vcpu.vblendspec<T>(w, false));
     }
 }

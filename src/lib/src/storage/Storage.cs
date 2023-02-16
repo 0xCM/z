@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using static Bytes;
 
     [ApiHost]
     public readonly partial struct Storage
@@ -20,7 +21,7 @@ namespace Z0
             var size = max(src.Length, Size);
             var data = slice(src, 0, size);
             if(size == Size)
-                vcpu.vstore(cpu.vload(w, data), ref target);
+                vstore(vload(w, data), ref target);
             else
                 Bytes.copy(data,  ref target);
 
@@ -36,7 +37,7 @@ namespace Z0
             var size = max(src.Length, Size);
             var data = slice(src, 0, size);
             if(size == Size)
-                cpu.vstore(cpu.vload(w, data), ref target);
+                vstore(vload(w, data), ref target);
             else
                 Bytes.copy(data,  ref target);
             return ref dst;
@@ -60,37 +61,37 @@ namespace Z0
             const ushort Block2 = 2*32;
             const ushort Block3 = 3*32;
 
-            var v0 = vcpu.vload(w256, skip(src,Block0));
-            vcpu.vstore(v0, ref seek(u8(dst), Block0));
+            var v0 = vload(w256, skip(src,Block0));
+            vstore(v0, ref seek(u8(dst), Block0));
 
-            v0 = vcpu.vload(w256, skip(src, Block1));
-            vcpu.vstore(v0, ref seek(u8(dst), Block1));
+            v0 = vload(w256, skip(src, Block1));
+            vstore(v0, ref seek(u8(dst), Block1));
 
-            v0 = vcpu.vload(w256, skip(src, Block2));
-            vcpu.vstore(v0, ref seek(u8(dst), Block2));
+            v0 = vload(w256, skip(src, Block2));
+            vstore(v0, ref seek(u8(dst), Block2));
 
-            v0 = vcpu.vload(w256, skip(src, Block3));
-            vcpu.vstore(v0, ref seek(u8(dst), Block3));
+            v0 = vload(w256, skip(src, Block3));
+            vstore(v0, ref seek(u8(dst), Block3));
 
             return ref dst;
         }
 
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> inflate16u(in ByteBlock8 src)
-            => recover<char>(bytes(vcpu.vlo(vpack.vinflate256x16u(vcpu.vbytes(w128, u64(src))))));
+        // [MethodImpl(Inline), Op]
+        // public static ReadOnlySpan<char> inflate16u(in ByteBlock8 src)
+        //     => recover<char>(bytes(vcpu.vlo(vpack.vinflate256x16u(vcpu.vbytes(w128, u64(src))))));
 
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> inflate16u(in ByteBlock16 src)
-            => recover<char>(bytes(vcpu.vlo(vpack.vinflate256x16u(vcpu.vbytes(w128, u64(src))))));
+        // [MethodImpl(Inline), Op]
+        // public static ReadOnlySpan<char> inflate16u(in ByteBlock16 src)
+        //     => recover<char>(bytes(vcpu.vlo(vpack.vinflate256x16u(vcpu.vbytes(w128, u64(src))))));
 
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> inflate16u(in ByteBlock32 src)
-        {
-            var v = vcpu.vload(w256, src.Bytes);
-            var lo = vpack.vinflatelo256x16u(v);
-            var hi = vpack.vinflatehi256x16u(v);
-            return recover<char>(sys.bytes(new V256x2(lo,hi)));
-        }
+        // [MethodImpl(Inline), Op]
+        // public static ReadOnlySpan<char> inflate16u(in ByteBlock32 src)
+        // {
+        //     var v = vload(w256, src.Bytes);
+        //     var lo = vpack.vinflatelo256x16u(v);
+        //     var hi = vpack.vinflatehi256x16u(v);
+        //     return recover<char>(sys.bytes(new V256x2(lo,hi)));
+        // }
 
         [MethodImpl(Inline), Op]
         public static ref T copy<T>(ReadOnlySpan<byte> src, ref T dst)
@@ -126,7 +127,7 @@ namespace Z0
         {
             var src = new Seg512(lo,hi);
             var dst = ByteBlocks.alloc(n64);
-            Storage.copy(bytes(src), ref dst);
+            copy(bytes(src), ref dst);
             return dst;
         }
 
@@ -134,7 +135,7 @@ namespace Z0
         public static ByteBlock32 block(Vector256<byte> src)
         {
             var dst = ByteBlock32.Empty;
-            cpu.vstore(src, dst.Bytes);
+            vstore(src, dst.Bytes);
             return dst;
         }
 
@@ -142,27 +143,27 @@ namespace Z0
         public static ByteBlock16 block(Vector128<byte> src)
         {
             var dst = ByteBlock16.Empty;
-            cpu.vstore(src, dst.Bytes);
+            vstore(src, dst.Bytes);
             return dst;
         }
 
         [MethodImpl(Inline), Op]
         public static Vector128<byte> vector(W128 w, ByteBlock16 src)
-            => gcpu.vload(w, src.Bytes);
+            => vload(w, src.Bytes);
 
         [MethodImpl(Inline), Op]
         public static Vector256<byte> vector(W256 w, ByteBlock32 src)
-            => gcpu.vload(w, src.Bytes);
+            => vload(w, src.Bytes);
 
         [MethodImpl(Inline), Op]
         public static Vector128<T> vector<T>(W128 w, ByteBlock16 src)
             where T : unmanaged
-                => gcpu.vload(w, @as<T>(src.First));
+                => vgcpu.vload(w, @as<T>(src.First));
 
         [MethodImpl(Inline), Op]
         public static Vector256<T> vector<T>(W256 w, ByteBlock32 src)
             where T : unmanaged
-                => gcpu.vload(w, @as<T>(src.First));
+                => vgcpu.vload(w, @as<T>(src.First));
 
         readonly struct Seg512
         {

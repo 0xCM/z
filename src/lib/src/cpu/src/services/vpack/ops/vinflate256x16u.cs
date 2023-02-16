@@ -48,5 +48,22 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static Vector256<ushort> vinflatehi256x16u(Vector256<byte> src)
             => vinflate256x16u(vhi(src));
+
+        [MethodImpl(Inline), Op]
+        public static ReadOnlySpan<char> inflate16u(in ByteBlock8 src)
+            => recover<char>(bytes(vcpu.vlo(vpack.vinflate256x16u(vcpu.vbytes(w128, u64(src))))));
+
+        [MethodImpl(Inline), Op]
+        public static ReadOnlySpan<char> inflate16u(in ByteBlock16 src)
+            => recover<char>(bytes(vcpu.vlo(vpack.vinflate256x16u(vcpu.vbytes(w128, u64(src))))));
+
+        [MethodImpl(Inline), Op]
+        public static ReadOnlySpan<char> inflate16u(in ByteBlock32 src)
+        {
+            var v = vload(w256, src.Bytes);
+            var lo = vpack.vinflatelo256x16u(v);
+            var hi = vpack.vinflatehi256x16u(v);
+            return recover<char>(sys.bytes(new V256x2(lo,hi)));
+        }
     }
 }

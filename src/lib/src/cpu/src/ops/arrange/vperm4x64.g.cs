@@ -18,13 +18,13 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(byte))
-                return generic<T>(v8u(cpu.vperm4x64(v64u(x), spec)));
+                return generic<T>(v8u(vcpu.vperm4x64(v64u(x), spec)));
             else if(typeof(T) == typeof(ushort))
-                return generic<T>(v16u(cpu.vperm4x64(v64u(x), spec)));
+                return generic<T>(v16u(vcpu.vperm4x64(v64u(x), spec)));
             else if(typeof(T) == typeof(uint))
-                return generic<T>(v32u(cpu.vperm4x64(v64u(x), spec)));
+                return generic<T>(v32u(vcpu.vperm4x64(v64u(x), spec)));
             else if(typeof(T) == typeof(ulong))
-                return generic<T>(cpu.vperm4x64(v64u(x), spec));
+                return generic<T>(vcpu.vperm4x64(v64u(x), spec));
             else
                 return vperm4x64_i(x,spec);
         }
@@ -34,13 +34,13 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(sbyte))
-                return generic<T>(v8i(cpu.vperm4x64(v64u(x), spec)));
+                return generic<T>(v8i(vcpu.vperm4x64(v64u(x), spec)));
             else if(typeof(T) == typeof(short))
-                return generic<T>(v16i(cpu.vperm4x64(v64u(x), spec)));
+                return generic<T>(v16i(vcpu.vperm4x64(v64u(x), spec)));
             else if(typeof(T) == typeof(int))
-                return generic<T>(v32i(cpu.vperm4x64(v64u(x), spec)));
+                return generic<T>(v32i(vcpu.vperm4x64(v64u(x), spec)));
             else if(typeof(T) == typeof(long))
-                return generic<T>(cpu.vperm4x64(v64i(x), spec));
+                return generic<T>(vcpu.vperm4x64(v64i(x), spec));
             else
                 return vperm4x64_f(x,spec);
         }
@@ -50,9 +50,9 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(float))
-                return generic<T>(v32f(cpu.vperm4x64(v64f(x), spec)));
+                return generic<T>(v32f(vcpu.vperm4x64(v64f(x), spec)));
             else if(typeof(T) == typeof(double))
-                return generic<T>(cpu.vperm4x64(v64f(x), spec));
+                return generic<T>(vcpu.vperm4x64(v64f(x), spec));
             else
                 throw no<T>();
         }

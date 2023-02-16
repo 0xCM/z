@@ -7,12 +7,81 @@ namespace Z0
 {
     using static System.Runtime.Intrinsics.X86.Bmi1;
     using static System.Runtime.Intrinsics.X86.Bmi1.X64;
+    using static System.Runtime.Intrinsics.X86.Sse;
+    using static System.Runtime.Intrinsics.X86.Sse2;
+    using static System.Runtime.Intrinsics.X86.Sse3;
+    using static System.Runtime.Intrinsics.X86.Avx;
     using static sys;
 
     [ApiHost, Free]
     public unsafe partial class Bytes
     {
         const NumericKind Closure = UnsignedInts;
+
+        [MethodImpl(Inline), Op]
+        public unsafe static Vector256<byte> vload(W256 w, byte* pSrc)
+            => LoadDquVector256(pSrc);
+
+        /// <summary>
+        ///  __m256i _mm256_lddqu_si256 (__m256i const * mem_addr)
+        /// VLDDQU ymm, m256
+        /// </summary>
+        /// <param name="w">The width selector</param>
+        /// <param name="src">The data source</param>
+        [MethodImpl(Inline), Op]
+        public static unsafe Vector256<byte> vload(W256 w, in byte src)
+            => LoadDquVector256(gptr(src));
+
+        /// <summary>
+        /// __m128i _mm_lddqu_si128 (__m128i const* mem_addr) LDDQU xmm, m128
+        /// </summary>
+        /// <param name="w">The width selector</param>
+        /// <param name="src">The data source</param>
+        [MethodImpl(Inline), Op]
+        public static unsafe Vector128<byte> vload(W128 w, ReadOnlySpan<byte> src)
+            => LoadDquVector128(gptr(first(src)));
+
+        /// <summary>
+        ///  __m256i _mm256_lddqu_si256 (__m256i const * mem_addr) VLDDQU ymm, m256
+        /// </summary>
+        /// <param name="w">The width selector</param>
+        /// <param name="src">The data source</param>
+        [MethodImpl(Inline), Op]
+        public static unsafe Vector256<byte> vload(W256 w, ReadOnlySpan<byte> src)
+            => LoadDquVector256(gptr(src));
+
+        /// <summary>
+        /// Stores vector content to a specified reference
+        /// void _mm_storeu_si128 (__m128i* mem_addr, __m128i a) MOVDQU m128, xmm
+        /// </summary>
+        /// <param name="src">The source vector</param>
+        /// <param name="dst">The target memory</param>
+        [MethodImpl(Inline), Store]
+        public static unsafe void vstore(Vector128<byte> src, ref byte dst)
+            => Store(refptr(ref dst), src);
+
+
+        /// <summary>
+        /// Stores vector content to a specified reference
+        /// void _mm256_storeu_si256 (__m256i * mem_addr, __m256i a) MOVDQU m256, ymm
+        /// </summary>
+        /// <param name="src">The source vector</param>
+        /// <param name="dst">The target memory</param>
+        [MethodImpl(Inline), Store]
+        public static unsafe void vstore(Vector256<byte> src, ref byte dst)
+            => Store(refptr(ref dst),src);
+
+        [MethodImpl(Inline), Op]
+        public static unsafe void vstore(Vector256<byte> src, ref byte dst, int offset)
+            => Store(refptr(ref dst, offset), src);
+
+        [MethodImpl(Inline), Store]
+        public static unsafe void vstore(Vector256<byte> src, Span<byte> dst)
+            => vstore(src, ref first(dst));
+
+        [MethodImpl(Inline), Store]
+        public static unsafe void vstore(Vector128<byte> src, Span<byte> dst)
+            => vstore(src, ref first(dst));
 
         /// <summary>
         /// Returns a readonly reference to an index-identified source byte

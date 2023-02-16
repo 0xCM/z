@@ -14,7 +14,7 @@ namespace Z0
         /// <param name="hi">The hi spec</param>
         [MethodImpl(Inline), Op]
         public static Vector128<short> vperm4x16(Vector128<short> src, [Imm] Perm4L lo, [Imm] Perm4L hi)
-            => cpu.vpermhi4x16(cpu.vpermlo4x16(src,lo),hi);
+            => vcpu.vpermhi4x16(vcpu.vpermlo4x16(src,lo),hi);
 
         /// <summary>
         /// Shuffles the first four elements of the source vector with the lo mask and the last four elements with the hi mask
@@ -24,6 +24,6 @@ namespace Z0
         /// <param name="hi">The hi mask</param>
         [MethodImpl(Inline), Op]
         public static Vector128<ushort> vperm4x16(Vector128<ushort> src, [Imm] Perm4L lo, [Imm] Perm4L hi)
-            => cpu.vpermhi4x16(cpu.vpermlo4x16(src,lo),hi);
+            => vcpu.vpermhi4x16(vcpu.vpermlo4x16(src,lo),hi);
     }
 }

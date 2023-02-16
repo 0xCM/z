@@ -5,6 +5,9 @@
 namespace Z0
 {
     using static sys;
+    using static System.Runtime.Intrinsics.X86.Sse;
+    using static System.Runtime.Intrinsics.X86.Sse2;
+    using static System.Runtime.Intrinsics.X86.Avx;
 
     unsafe partial class Bytes
     {
@@ -36,7 +39,7 @@ namespace Z0
         public static void read32(ref byte* pSrc, ref MemoryPage dst, ref ushort offset)
         {
             ref var target = ref u8(dst);
-            vcpu.vstore(vcpu.vload(w256, pSrc), ref target, (int)offset);
+            vstore(vload(w256, pSrc), ref target, (int)offset);
             pSrc +=32;
             offset+= 32;
         }
