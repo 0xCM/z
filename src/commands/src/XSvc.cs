@@ -17,8 +17,8 @@ namespace Z0
             public ProjectScripts ProjectScripts(IWfRuntime wf)
                 => Service<ProjectScripts>(wf);
 
-            public CmdServer CmdServer(IWfRuntime wf)
-                => Service<CmdServer>(wf);
+            // public CmdServer CmdServer(IWfRuntime wf)
+            //     => Service<CmdServer>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
@@ -32,7 +32,7 @@ namespace Z0
         public static ProjectScripts ProjectScripts(this IWfRuntime wf)
             => Services.ProjectScripts(wf);
 
-        public static CmdServer CmdServer(this IWfRuntime wf)
-            => Services.CmdServer(wf);            
+        // public static CmdServer CmdServer(this IWfRuntime wf)
+        //     => Services.CmdServer(wf);            
     }
 }

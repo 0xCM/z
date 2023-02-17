@@ -6,13 +6,88 @@
 namespace Z0
 {
     using static sys;
+    using static CmdActorKind;
 
     public class ApiCmd : AppService<ApiCmd>, IApiService
     {                         
+        public static IApiCmdRunner runner(IWfRuntime wf, params Assembly[] src)
+            => new ApiCmdRunner(wf, handlers(wf,src));
+
+        static ICmdHandler handler(IWfRuntime wf, Type tHandler)
+        {
+            var handler = (ICmdHandler)Activator.CreateInstance(tHandler, new object[]{});
+            handler.Initialize(wf);
+            return handler;
+        }
+
+        static CmdHandlers handlers(IWfRuntime wf, params Assembly[] src)
+        {
+            var dst = src.Types().Concrete().Tagged<CmdHandlerAttribute>().Select(x => handler(wf,x)).Map(x => (x.Route,x)).ToDictionary();
+            dst.TryAdd(Handlers.DevNul.Route, handler(wf, typeof(Handlers.DevNul)));
+            return new (dst);
+        }
+
+        public static Outcome exec(IWfChannel channel, CmdMethod effector, CmdArgs args)
+        {
+            var output = default(object);
+            var result = Outcome.Success;
+            try
+            {
+                switch(effector.Kind)
+                {
+                    case Pure:
+                        effector.Definition.Invoke(effector.Host, new object[]{});
+                        result = Outcome.Success;
+                    break;
+                    case Receiver:
+                        effector.Definition.Invoke(effector.Host, new object[1]{args});
+                        result = Outcome.Success;
+                    break;
+                    case CmdActorKind.Emitter:
+                        output = effector.Definition.Invoke(effector.Host, new object[]{});
+                    break;
+                    case Func:
+                        output = effector.Definition.Invoke(effector.Host, new object[1]{args});
+                    break;
+                    default:
+                        result = new Outcome(false, $"Unsupported {effector.Definition}");
+                    break;
+                }
+
+                if(output != null)
+                {
+                    if(output is bool x)
+                        result = Outcome.define(x, output, x ? "Win" : "Fail");
+                    else if(output is Outcome y)
+                    {
+                        result = Outcome.success(y.Data, y.Message);
+                        if(sys.nonempty(y.Message))
+                        {
+                            if(y.Fail)
+                                channel.Error(y.Message);
+                            else
+                                channel.Babble(y.Message);
+                        }
+                    }
+                    else
+                        result = Outcome.success(output);
+                }
+            }
+            catch(Exception e)
+            {
+                var origin = AppMsg.orginate(effector.HostType.DisplayName(), effector.Definition.DisplayName(), 12);                
+                var error = Events.error(e.Message, origin, effector.HostType);
+                channel.Error(error);
+                result = (e,error.Format());
+            }
+
+           return result;
+        }
+
         public static ICmdDispatcher Dispatcher 
             => AppData.Value<ICmdDispatcher>(nameof(ICmdDispatcher));
 
-        public void RunCmd(string name, CmdArgs args)
+        public Outcome RunCmd(string name, CmdArgs args)
             => Dispatcher.Dispatch(name, args);
 
         public void RunCmd(string name)
@@ -37,7 +112,7 @@ namespace Z0
             }
         }
 
-        public ExecToken RunApiScrips(FilePath src)
+        public ExecToken RunCmdScripts(FilePath src)
         {
             ExecToken Exec()
             {
@@ -72,16 +147,13 @@ namespace Z0
             => EmitApiCatalog(Env.ShellData);
         
         public void EmitApiCatalog(CmdCatalog src, IDbArchive dst)
-            => emit(Channel, src, dst.Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv));
+        {
+            var data = src.Values;
+            iter(data, x => Channel.Row(x.Uri.Name));
+            Channel.TableEmit(data, dst.Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv));
+        }
 
         public void EmitApiCatalog(IDbArchive dst)
             => EmitApiCatalog(ApiServers.catalog(), dst);
-
-        static void emit(IWfChannel channel, CmdCatalog src, FilePath dst)
-        {
-            var data = src.Values;
-            iter(data, x => channel.Row(x.Uri.Name));
-            CsvTables.emit(channel, data, dst);
-        }
     }
 }

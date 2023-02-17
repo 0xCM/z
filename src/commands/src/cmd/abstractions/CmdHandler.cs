@@ -15,7 +15,7 @@ namespace Z0
     
         protected IWfChannel Channel {get; private set;}
 
-        protected CmdServer Server => Wf.CmdServer();
+        //protected CmdServer Server => Wf.CmdServer();
         
         protected CmdHandler()
         {
@@ -30,7 +30,7 @@ namespace Z0
 
         public abstract void Run(CmdArgs args);
 
-        public virtual Task<ExecToken> Handle(CmdArgs args)
+        public virtual Task<ExecToken> Start(CmdArgs args)
         {
             ExecToken<CmdRoute> Exec()
             {
@@ -41,10 +41,10 @@ namespace Z0
             return sys.start(() => Exec().Token);
         }
 
-        void ICmdHandler.Initialize(IExecutionContext context)
+        void ICmdHandler.Initialize(IWfRuntime wf)
         {
-            Wf = context.Wf;
-            Channel = context.Channel;
+            Wf = wf;
+            Channel = wf.Channel;
             Route = Cmd.route(GetType());
         }
     }

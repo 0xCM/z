@@ -11,8 +11,10 @@ namespace Z0
         /// </summary>
         /// <param name="args">The command arguments</param>
         /// <returns></returns>
-        Task<ExecToken> Handle(CmdArgs args);
+        Task<ExecToken> Start(CmdArgs args);
 
+        void Run(CmdArgs args);
+        
         /// <summary>
         /// Identifies a command or related group of commands as specified by the <see cref='SubCommands'/> attribute
         /// </summary>
@@ -26,7 +28,7 @@ namespace Z0
         /// <summary>
         /// Prepares a handler for command execution
         /// </summary>
-        /// <param name="context">The context in which execution will occur</param>
-        void Initialize(IExecutionContext context);
+        /// <param name="wf">The context in which execution will occur</param>
+        void Initialize(IWfRuntime wf);
     }
 }
