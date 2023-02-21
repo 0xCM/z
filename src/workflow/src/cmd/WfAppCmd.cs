@@ -20,38 +20,6 @@ namespace Z0
 
         ApiMd ApiMd => Wf.ApiMd();
 
-        [CmdOp("msi/extract")]
-        void Run(CmdArgs args)
-        {
-            var msi = FS.path(args[0]);            
-            var tool = FS.path(@"B:\tools\lesmsi\tool\lessmsi.exe");
-            var cmd = Cmd.cmdline(Cmd.args(tool, "x", msi.Format(PathSeparator.BS, false)));
-
-            Channel.Row(args[0].Value);
-            var dst = FS.dir(args[1]);
-
-            //var cmd = Cmd.cmdline(args.Prepend(Cmd.args(tool.Format(), "x")));
-            // var src = FS.path(args[0]);
-            // var tool = FS.path(@"B:\tools\lesmsi\tool\lessmsi.exe");
-            // var cmd =  Tools.cmdline(tool, src.Format());
-            // Channel.Row(args.Count);
-            // Channel.Row(args.Format());
-            //Channel.Row(cmd.Format());
-
-            //var token = CmdRunner.start(Channel, cmd).Result;            
-            // if(token.Success)
-            // {
-            //     var extract = FS.dir(src.WithoutExtension.Format());
-            //     token = Archives.copy(Channel, extract, dst).Result;
-            // }            
-        }
-
-        [CmdOp("modules/loaded")]
-        void LoadedModule(CmdArgs args)
-        {
-            iter(args, arg => Channel.Row(NativeModules.loaded(arg)));
-        }
-
         [CmdOp("api/tablegen")]
         void GenRecords()
         {
@@ -74,15 +42,6 @@ namespace Z0
         [CmdOp("api/tables")]
         void EmitApiTables()
             => ApiMd.Emitter(AppDb.ApiTargets()).EmitApiTables(ApiAssemblies.Parts);
-
-        // [CmdOp("types/systems")]
-        // void TypeSys()
-        // {
-        //     var src = TypeSystems.typedefs(ApiAssemblies.Parts);
-        //     iter(src, s => {
-        //         Channel.Row(s);
-        //     });
-        // }
 
         [CmdOp("archives")]        
         void ListArchives(CmdArgs args)
@@ -149,6 +108,16 @@ namespace Z0
         void WorkingSet()
             => Channel.Write(((ByteSize)Environment.WorkingSet));
 
+
+        [CmdOp("memory/system")]
+        void SysMem()
+        {
+            var src = WinMem.system();
+            var formatter = CsvTables.formatter<SystemMemoryInfo>(16,RecordFormatKind.KeyValuePairs);
+            Channel.Row(formatter.Format(src));
+        }
+
+
         [CmdOp("memory/query")]
         void QueryMemory(CmdArgs args)
         {            
@@ -163,16 +132,19 @@ namespace Z0
                 }
             }
 
-            var basic = default(MEMORY_BASIC_INFORMATION);
-            WinMem.vquery(@base, ref basic);
+            var basic = WinMem.basic(@base);
             Channel.Write(basic.ToString());
         }
 
         [CmdOp("memory/info")]
         void ShowMemory()
         {
-            var info = WinMem.basic();
-            var formatter = Tables.formatter<BasicMemoryInfo>(16,RecordFormatKind.KeyValuePairs);
+            var @base = ExecutingPart.Process.Adapt().BaseAddress;
+            Channel.Row(@base);
+
+            var info = WinMem.basic(@base);
+            Channel.Row(info.BaseAddress);
+            var formatter = CsvTables.formatter<BasicMemoryInfo>(16,RecordFormatKind.KeyValuePairs);
             Channel.Row(formatter.Format(info));
         }
 

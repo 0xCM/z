@@ -117,7 +117,7 @@ namespace Z0
             var target = span(buffer);
             var parts = PartNames.names();
             using var writer = dst.Utf8Writer();
-            var formatter = Tables.formatter<ApiHexIndexRow>();
+            var formatter = CsvTables.formatter<ApiHexIndexRow>();
             writer.WriteLine(formatter.FormatHeader());
             for(var i=0u; i<count; i++)
             {

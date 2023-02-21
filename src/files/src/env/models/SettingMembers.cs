@@ -5,6 +5,7 @@
 namespace Z0
 {
     using api = Settings;
+    
     public class SettingMembers : ReadOnlySeq<SettingMembers,FieldInfo>
     {
         public SettingMembers()

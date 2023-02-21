@@ -16,7 +16,7 @@ namespace Z0
             var flow = EmittingTable<AssemblyRefInfo>(dst);
             var counter = 0;
             using var writer = dst.Writer();
-            var formatter = Tables.formatter<AssemblyRefInfo>();
+            var formatter = CsvTables.formatter<AssemblyRefInfo>();
 
             foreach(var a in src)
             {
@@ -36,7 +36,7 @@ namespace Z0
             var count = src.Length;
             var counter = 0u;
             var flow = EmittingTable<AssemblyRefInfo>(dst);
-            var formatter = Tables.formatter<AssemblyRefInfo>();
+            var formatter = CsvTables.formatter<AssemblyRefInfo>();
             using var writer = dst.Writer();
             writer.WriteLine(formatter.FormatHeader());
             for(var i=0; i<count; i++)

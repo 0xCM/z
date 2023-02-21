@@ -12,6 +12,8 @@ namespace Z0
     [ApiHost]
     public class Archives
     {
+        static AppSettings AppSettings => AppSettings.Default;
+
         public static IDbArchive archive(Timestamp ts, DbArchive dst)
             => dst.Scoped(ts.Format());
 
@@ -107,7 +109,7 @@ namespace Z0
         public static Outcome bind(CmdArgs src, out CreateFileCatalog dst)
         {
             dst = new();
-            dst.Target = Env.ShellData.Root;
+            dst.Target = AppSettings.EnvDb().Scoped("files");
             var count = src.Count;
             try
             {
@@ -142,7 +144,7 @@ namespace Z0
         [Op]
         public static void render(ListedFiles src, ITextEmitter dst)
         {
-            var formatter = Tables.formatter<ListedFile>();
+            var formatter = CsvTables.formatter<ListedFile>();
             dst.AppendLine(formatter.FormatHeader());
             for(var i=0u; i<src.Count; i++)
                 dst.AppendLine(formatter.Format(src[i]));

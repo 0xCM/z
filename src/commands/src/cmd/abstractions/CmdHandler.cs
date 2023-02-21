@@ -15,8 +15,6 @@ namespace Z0
     
         protected IWfChannel Channel {get; private set;}
 
-        //protected CmdServer Server => Wf.CmdServer();
-        
         protected CmdHandler()
         {
 

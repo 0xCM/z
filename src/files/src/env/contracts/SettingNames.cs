@@ -42,5 +42,7 @@ namespace Z0
         public const string SdeDb = nameof(SdeDb);
 
         public const string InxDb = nameof(InxDb);
+
+        public const string EnvDb = nameof(EnvDb);
     }
 }

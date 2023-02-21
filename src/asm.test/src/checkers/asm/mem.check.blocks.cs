@@ -37,7 +37,7 @@ namespace Z0
 
         void CheckBlockPartitions()
         {
-            var formatter = Tables.formatter<BlockPartition>();
+            var formatter = CsvTables.formatter<BlockPartition>();
             Write(formatter.FormatHeader());
             Write(formatter.Format(BlockPartition.calc(1024, 256, 11)));
             Write(formatter.Format(BlockPartition.calc(9591191, 256, 128)));

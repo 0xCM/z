@@ -36,7 +36,7 @@ namespace Z0
                 var reader = EcmaReader.create(src);
                 var fields = reader.ReadFieldInfo();
                 var count = (uint)fields.Length;
-                var formatter = Tables.formatter<EcmaFieldInfo>();
+                var formatter = CsvTables.formatter<EcmaFieldInfo>();
                 using var writer = path.Writer();
                 writer.WriteLine(formatter.FormatHeader());
                 foreach(var item in fields)
@@ -63,7 +63,7 @@ namespace Z0
                 var handles = reader.FieldDefHandles();
                 var count = handles.Length;
                 using var writer = path.Writer();
-                var formatter = Tables.formatter<EcmaFieldDefInfo>();
+                var formatter = CsvTables.formatter<EcmaFieldDefInfo>();
                 writer.WriteLine(formatter.FormatHeader());
                 for(var j=0; j<count; j++)
                 {

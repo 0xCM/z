@@ -13,6 +13,8 @@ namespace Z0
     {
         public static IDbArchive ShellData => cd().DbArchive().Scoped(".data");
 
+        static AppSettings AppSettings => AppSettings.Default;
+        
         public static ProcessId pid() 
             => ProcessId.current();
 
@@ -86,7 +88,7 @@ namespace Z0
                 channel.Row(info);
             }
 
-            channel.FileEmit(emitter.Emit(), dst.Path(FS.file("tools", FileKind.List)));
+            channel.FileEmit(emitter.Emit(), dst.Scoped(EnvId.Format()).Path(FS.file("tools", FileKind.List)));
         }
 
         public static EnvId EnvId 
@@ -301,6 +303,5 @@ namespace Z0
                 writer.WriteLine(src[i].Format());
             return CsvTables.emit(channel, rows(src, name).View, table, ASCI);
         }
-
     }
 }

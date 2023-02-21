@@ -86,7 +86,7 @@ namespace Z0.Asm
         public void EmitHostAsm(ReadOnlySpan<HostAsmRecord> src, FolderPath root)
         {
             var thumbprints = hashset<AsmThumbprint>();
-            var formatter = Tables.formatter<HostAsmRecord>(HostAsmRecord.RenderWidths);
+            var formatter = CsvTables.formatter<HostAsmRecord>(HostAsmRecord.RenderWidths);
             var statements = src;
             var count = statements.Length;
             var host = ApiHostUri.Empty;

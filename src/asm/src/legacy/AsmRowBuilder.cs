@@ -68,7 +68,7 @@ namespace Z0.Asm
             {
                 var flow = Wf.EmittingTable<AsmDetailRow>(dst);
                 var records = span(src.Sequenced);
-                var formatter = Tables.formatter<AsmDetailRow>(AsmDetailRow.RenderWidths);
+                var formatter = CsvTables.formatter<AsmDetailRow>(AsmDetailRow.RenderWidths);
                 using var writer = dst.Writer();
                 writer.WriteLine(formatter.FormatHeader());
                 for(var i=0; i<count; i++)

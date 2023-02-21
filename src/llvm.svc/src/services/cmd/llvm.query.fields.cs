@@ -22,7 +22,7 @@ namespace Z0.llvm
                 if(result.Fail)
                     return result;
 
-                var formatter = Tables.formatter<RecordField>();
+                var formatter = CsvTables.formatter<RecordField>();
                 var selected = slice(DataProvider.DefFields(LlvmTargetName.x86).View, offset, length);
                 iter(selected, field => Row(formatter.Format(field)));
                 TableEmit(selected, LlvmPaths.QueryOut($"llvm.defs.fields.{offset}-{offset + length}", FileKind.Csv));

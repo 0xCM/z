@@ -13,7 +13,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static LoadedModule loaded(string name)
-            => new (name,GetModuleHandle(name));
+            => new (name, GetModuleHandle(name));
 
         [MethodImpl(Inline), Op]
         public static NativeModule kernel32()

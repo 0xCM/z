@@ -26,25 +26,9 @@ namespace Z0
             => FormatSpec;
 
         public string Format(in T src)
-            => FormatRecord(src, FormatSpec.FormatKind);
-
-        public string Format(in T src, RecordFormatKind kind)
-            => FormatRecord(src, kind);
-
-        public string FormatHeader()
-        {
-            if(FormatSpec.FormatKind == RecordFormatKind.Tablular)
-                return FormatSpec.Header.Format();
-            else
-            {
-                return string.Format(api.KvpPattern(FormatSpec), "Name", "Value");
-            }
-        }
-
-        string FormatRecord(in T src, RecordFormatKind fk)
         {
             api.adapt(src, ref Adapter);
-            if(fk == RecordFormatKind.Tablular)
+            if(FormatSpec.FormatKind == RecordFormatKind.Tablular)
                 return Adapter.Adapted.Format(FormatSpec);
             else
             {
@@ -52,6 +36,14 @@ namespace Z0
                 api.pairs(FormatSpec, Adapter, Buffer);
                 return Buffer.Emit();
             }
+        }
+
+        public string FormatHeader()
+        {
+            if(FormatSpec.FormatKind == RecordFormatKind.Tablular)
+                return FormatSpec.Header.Format();
+            else
+                return string.Format(api.KvpPattern(FormatSpec), "Name", "Value");
         }
     }
 }

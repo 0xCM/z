@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     public partial class PolyBits
     {
@@ -30,7 +30,7 @@ namespace Z0
 
             public static void render(ReadOnlySpan<BfSegModel> src, ITextEmitter dst, bool header = true)
             {
-                var formatter = Tables.formatter<BfSegModel>();
+                var formatter = CsvTables.formatter<BfSegModel>();
                 if(header)
                     dst.AppendLine(formatter.FormatHeader());
                 for(var i=0; i<src.Length; i++)

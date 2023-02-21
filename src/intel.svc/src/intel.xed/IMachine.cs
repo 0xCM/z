@@ -6,7 +6,7 @@ namespace Z0
 {
     public interface IMachine : IDisposable
     {
-        uint Id {get;}
+        uint MachineId {get;}
 
         void Reset();
     }

@@ -93,7 +93,7 @@ namespace Z0
         void Check(N1 n)
         {
             var bf = dataset(n);
-            var formatter = Tables.formatter<BfSegModel>();
+            var formatter = CsvTables.formatter<BfSegModel>();
             var segs = PolyBits.segs(bf);
             TableEmit(segs, AppDb.DbTargets("pb").PrefixedTable<BfSegModel>($"{bf.Name}"));
             var intervals = bf.Intervals;

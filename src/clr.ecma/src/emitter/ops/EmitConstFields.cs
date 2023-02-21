@@ -5,7 +5,6 @@
 namespace Z0
 {
     using static sys;
-    using static EcmaTables;
 
     partial class EcmaEmitter
     {
@@ -19,7 +18,7 @@ namespace Z0
                 var counter = 0u;
                 var target = dst.Metadata(EcmaSections.ConstFields).PrefixedTable<EcmaConstInfo>(src.GetSimpleName());
                 var flow = EmittingTable<EcmaConstInfo>(target);
-                var formatter = Tables.formatter<EcmaConstInfo>();
+                var formatter = CsvTables.formatter<EcmaConstInfo>();
                 using var writer = target.Writer();
                 writer.WriteLine(formatter.FormatHeader());
                 using var reader = PeReader.create(src.Path());

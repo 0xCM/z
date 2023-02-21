@@ -36,15 +36,15 @@ namespace Z0
             dst.IndentLine(margin, Chars.RBrace);
         }
         
-        public static void emit<T>(ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
-            ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
-        {
-            var formatter = CsvTables.formatter(typeof(T), rowpad, fk);
-            using var writer = dst.Writer(encoding);
-            writer.WriteLine(formatter.FormatHeader());
-            for(var i=0; i<rows.Length; i++)
-                writer.WriteLine(formatter.Format(skip(rows,i)));
-        }
+        // public static void emit<T>(ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
+        //     ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
+        // {
+        //     var formatter = CsvTables.formatter(typeof(T), rowpad, fk);
+        //     using var writer = dst.Writer(encoding);
+        //     writer.WriteLine(formatter.FormatHeader());
+        //     for(var i=0; i<rows.Length; i++)
+        //         writer.WriteLine(formatter.Format(skip(rows,i)));
+        // }
 
         [Op, Closures(Closure)]
         public static Count emit<T>(ReadOnlySpan<T> src, StreamWriter dst)
@@ -53,7 +53,7 @@ namespace Z0
         [Op, Closures(Closure)]
         public static Count emit<T>(ReadOnlySpan<T> src, RowFormatSpec spec, StreamWriter dst)
         {
-            var formatter = Tables.formatter<T>(spec);
+            var formatter = CsvTables.formatter<T>(spec);
             var count = src.Length;
             dst.WriteLine(formatter.FormatHeader());
             for(var i=0; i<count; i++)
@@ -98,7 +98,7 @@ namespace Z0
         public static Count emit<T>(ReadOnlySpan<T> src, ITextEmitter dst)
         {
             var count = src.Length;
-            var f = formatter<T>();
+            var f = CsvTables.formatter<T>();
             dst.AppendLine(f.FormatHeader());
             for(var i=0; i<count; i++)
                 dst.AppendLine(f.Format(skip(src,i)));
@@ -171,7 +171,6 @@ namespace Z0
                 return true;
             }
         }        
-
 
         internal static RowAdapter adapter(Type src)
             => new RowAdapter(src, Tables.cells(src));

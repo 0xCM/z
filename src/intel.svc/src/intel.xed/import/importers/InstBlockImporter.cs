@@ -54,7 +54,7 @@ namespace Z0
                         continue;
 
                     emitter.AppendLine(src.Header(form));
-                    emitter.WriteLine(RpOps.PageBreak120);
+                    emitter.WriteLine(RP.PageBreak120);
                     emitter.AppendLine(src.Description(form));
                     emitter.WriteLine();
                 }
@@ -65,7 +65,7 @@ namespace Z0
             {
                 const string Pattern = "{0,-6} | {1,-12} | {2,-12} | {3,-12} | {4,-12} | {5,-6} | {6,-64} | {7}";
                 var dst = XedPaths.Imports().Table<InstBlockLineSpec>();
-                var formatter = Tables.formatter<InstBlockLineSpec>();
+                var formatter = CsvTables.formatter<InstBlockLineSpec>();
                 var emitting = Channel.EmittingTable<InstBlockLineSpec>(dst);
                 using var writer = dst.AsciWriter();
                 writer.WriteLine(formatter.FormatHeader());

@@ -58,9 +58,6 @@ namespace Z0
         public static DbArchive EnvRoot()
             => FS.dir(System.Environment.GetEnvironmentVariable(SettingNames.EnvRoot));
 
-        public DbArchive Sdks()
-            => folder(Instance.Setting(SettingNames.SdkRoot));
-
         public static DbArchive SettingsRoot()
             => EnvRoot().Scoped(settings);
 
@@ -79,6 +76,9 @@ namespace Z0
         public DbArchive ProcDumps()
             => folder(Instance.Setting(SettingNames.ProcDumps));
 
+        public DbArchive EnvDb()
+            => folder(Instance.Setting(SettingNames.EnvDb));
+
         public DbArchive Capture()
             => folder(Instance.Setting(SettingNames.Capture));
 
@@ -86,7 +86,7 @@ namespace Z0
             => new DbArchive(folder(Instance.Setting(SettingNames.PkgRoot)));
 
         public FileUri Dashboard()
-            =>  uri(Instance.Setting(SettingNames.Dashboard));
+            => uri(Instance.Setting(SettingNames.Dashboard));
         
         public DbArchive Archives()
             => folder(Instance.Setting(SettingNames.Archives));
@@ -96,6 +96,18 @@ namespace Z0
 
         public DbArchive Control(string scope)
             => Control().Scoped(scope);
+
+        public DbArchive XedDb()
+            => folder(Instance.Setting(SettingNames.XedDb));
+
+        public DbArchive SdeDb()
+            => folder(Instance.Setting(SettingNames.SdeDb));
+
+        public DbArchive InxDb()
+            => folder(Instance.Setting(SettingNames.InxDb));
+
+        public DbArchive SdmDb()
+            => folder(Instance.Setting(SettingNames.SdmDb));
 
         public static ref readonly AppSettings Default
         {
@@ -127,7 +139,7 @@ namespace Z0
         {
             var dst = Z0.Setting.Empty;
             if(Find(name, out var x))
-                dst = new Setting(name,x);
+                dst = new Setting(name, x);
             return dst;
         }
 

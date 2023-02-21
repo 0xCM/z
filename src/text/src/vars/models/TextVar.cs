@@ -57,7 +57,7 @@ namespace Z0
             => Value;
 
         public string Format()
-            => Vars.format(this);
+            => TextVars.format(this);
 
         public override string ToString()
             => Format();

@@ -10,7 +10,7 @@ namespace Z0.Asm
     public class IntelSdmPaths : WfSvc<IntelSdmPaths>
     {
         IDbArchive SdmDb()
-            => AppDb.SdmDb();
+            => AppSettings.SdmDb();
         
         public IDbArchive Sources()
             => SdmDb().Scoped("sources");

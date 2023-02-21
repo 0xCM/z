@@ -5,7 +5,6 @@
 namespace Z0
 {
     using static sys;
-    using System.Text;
 
     [ApiHost]
     public class CsvTables
@@ -33,7 +32,7 @@ namespace Z0
         [Op, Closures(Closure)]
         public static Count emit<T>(ReadOnlySpan<T> src, RowFormatSpec spec, StreamWriter dst)
         {
-            var formatter = Tables.formatter<T>(spec);
+            var formatter = CsvTables.formatter<T>(spec);
             var count = src.Length;
             dst.WriteLine(formatter.FormatHeader());
             for(var i=0; i<count; i++)
@@ -78,14 +77,14 @@ namespace Z0
         public static Count emit<T>(ReadOnlySpan<T> src, ITextEmitter dst)
         {
             var count = src.Length;
-            var f = Tables.formatter<T>();
+            var f = CsvTables.formatter<T>();
             dst.AppendLine(f.FormatHeader());
             for(var i=0; i<count; i++)
                 dst.AppendLine(f.Format(skip(src,i)));
             return count;
         }        
 
-        public static ICsvFormatter<T> formatter<T>(ushort rowpad, RecordFormatKind fk, string delimiter = DefaultDelimiter)
+        public static ICsvFormatter<T> formatter<T>(ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular, string delimiter = DefaultDelimiter)
         {
             var record = typeof(T);
             var fields = Tables.cells(record).Index();
@@ -118,7 +117,7 @@ namespace Z0
         public static ICsvFormatter<T> formatter<T>(ReadOnlySpan<byte> widths, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
             => formatter<T>(rowspec<T>(widths, rowpad, fk));
 
-        public static ICsvFormatter<T> formatter<T>(RowFormatSpec spec, RecordFormatKind fk = RecordFormatKind.Tablular)
+        public static ICsvFormatter<T> formatter<T>(RowFormatSpec spec)
             => new CsvFormatter<T>(spec, TableDefs.adapter<T>());
 
         public static string format(in RowFormatSpec spec, RenderBuffers buffers, in DynamicRow src)

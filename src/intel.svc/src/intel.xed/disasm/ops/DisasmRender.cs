@@ -18,7 +18,7 @@ namespace Z0
 
             public static void render(Index<DisasmDetailBlock> src, ITextEmitter dst, bool header = true)
             {
-                var formatter = Tables.formatter<DisasmDetailBlockRow>(DisasmDetailBlockRow.RenderWidths);
+                var formatter = CsvTables.formatter<DisasmDetailBlockRow>(DisasmDetailBlockRow.RenderWidths);
                 if(header)
                     dst.AppendLine(FormatDetailHeader(formatter));
 

@@ -7,22 +7,6 @@ namespace Z0
 {
     using static sys;
 
-    sealed class QueryReceiver : FileQueries.Receiver<QueryReceiver>
-    {
-        Action<FileUri> Handler;
-        
-        public override void Matched(FileUri src)
-        {
-            Handler?.Invoke(src);
-        }
-
-        public QueryReceiver WithHandler(Action<FileUri> handler)
-        {
-            Handler = handler;
-            return this;
-        }
-    }
-
     class ArchiveCmd : WfAppCmd<ArchiveCmd>
     {
         FileArchives FileArchives => Channel.Channeled<FileArchives>();

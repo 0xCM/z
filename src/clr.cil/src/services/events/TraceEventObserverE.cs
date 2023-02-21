@@ -57,7 +57,7 @@ namespace Z0
             LogPath = log;
             EventKeyword = keyword;
             EventName = @event;
-            Formatter = Tables.formatter<E>();
+            Formatter = CsvTables.formatter<E>();
         }
 
         protected override void OnEventSourceCreated(EventSource src)

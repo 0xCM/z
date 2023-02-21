@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using api = Vars;
+    using api = TextVars;
     
     public class PatternTextExpr : TextExpr
     {

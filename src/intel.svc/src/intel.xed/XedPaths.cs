@@ -231,9 +231,11 @@ namespace Z0
                 _ => FileName.Empty
             });
 
+        static AppSettings AppSettings => AppSettings.Default;
+        
         XedPaths()
         {
-            State = new (AppDb.XedDb().Scoped("sources"), AppDb.XedDb().Scoped("targets"));
+            State = new (AppSettings.XedDb().Scoped("sources"), AppSettings.XedDb().Scoped("targets"));
         }
 
         static XedPaths Instance = new();

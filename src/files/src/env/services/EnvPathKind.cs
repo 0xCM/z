@@ -4,10 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class CsvFormatFx<T>
+    public enum EnvPathKind : byte
     {
-        static ICsvFormatter<T> Formatter = CsvTables.formatter<T>();
+        None,
 
-        public static Func<T,string> Fx => (T src) => CsvTables.formatter<T>().Format(src);
+        FileSystem,
+
+        Include,
+
+        Lib,
     }
 }

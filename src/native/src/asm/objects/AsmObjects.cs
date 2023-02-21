@@ -206,7 +206,7 @@ namespace Z0
             var project = context.Project;
             var src = project.OutFiles(FileKind.Sym).View;
             var count = src.Length;
-            var formatter = Tables.formatter<ObjSymRow>();
+            var formatter = CsvTables.formatter<ObjSymRow>();
             var buffer = list<ObjSymRow>();
             var seq = 0u;
             for(var i=0; i<count; i++)
@@ -235,7 +235,7 @@ namespace Z0
             var project = context.Project;
             var src = project.OutFiles(FileKind.ObjAsm).Storage.Sort().Index();
             var result = Outcome.Success;
-            var formatter = Tables.formatter<ObjDumpRow>();
+            var formatter = CsvTables.formatter<ObjDumpRow>();
             var buffer = sys.bag<ObjDumpRow>();
 
             iter(src, path => {

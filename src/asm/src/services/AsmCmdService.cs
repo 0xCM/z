@@ -75,7 +75,7 @@ namespace Z0.Asm
         {
             var dst = AppDb.AppData(ApiAtomic.logs).Path("bitmasks", FileKind.Csv);
             var src = BitMask.masks(typeof(BitMaskLiterals));
-            var formatter = Tables.formatter<BitMaskInfo>();
+            var formatter = CsvTables.formatter<BitMaskInfo>();
             for(var i=0; i<src.Count; i++)
             {
                 ref readonly var mask = ref src[i];

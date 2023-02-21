@@ -36,7 +36,7 @@ namespace Z0
         public IMachine Machine()
         {
             var m =  XedMachines.allocate(Xed);
-            Allocations.TryAdd(m.Id,m);
+            Allocations.TryAdd(m.MachineId,m);
             return m;
         }
 
@@ -47,7 +47,7 @@ namespace Z0
                 for(var i=0; i<Capacity; i++)
                 {
                     var machine = XedMachines.allocate(Xed);
-                    Allocations[machine.Id] = machine;
+                    Allocations[machine.MachineId] = machine;
                 }
                 Allocated = true;
             }
@@ -125,7 +125,7 @@ namespace Z0
 
             public MachineState(XedRuntime xed)
             {
-                Id = core.inc(ref Seq);
+                Id = sys.inc(ref Seq);
                 Expressions = Fields.allocate();
                 Xed = xed;
                 LoadLookups();
@@ -437,7 +437,7 @@ namespace Z0
             public Index<InstPattern> ClassPatterns
                 => _ClassPatternLookup.Find(InstClass, out var x) ? x : sys.empty<InstPattern>();
 
-            uint IMachine.Id
+            uint IMachine.MachineId
                 => Id;
 
             void LoadLookups()

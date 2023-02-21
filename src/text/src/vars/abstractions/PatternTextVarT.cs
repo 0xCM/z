@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using api = Vars;
+    using api = TextVars;
 
     /// <summary>
     /// Defines the root <see cref='ITextVarExpr'/> abstraction

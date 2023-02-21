@@ -52,7 +52,7 @@ namespace Z0
             TableId = Tables.identify(record);
             FormatSpec = spec;
             Adapter = adapter;
-            Buffers =RenderBuffers.create(spec.CellCount);
+            Buffers = RenderBuffers.create(spec.CellCount);
         }
 
         public string Format<T>(in T src)

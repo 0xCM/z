@@ -144,7 +144,7 @@ namespace Z0
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
         {
             var emitting = EmittingTable<T>(dst);
-            Tables.emit(rows, dst, encoding, rowpad, fk);
+            CsvTables.emit(Wf.Channel, rows, dst, encoding, rowpad, fk);
             return EmittedTable(emitting, rows.Length);
         }
 

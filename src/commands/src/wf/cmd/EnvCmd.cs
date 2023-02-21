@@ -9,6 +9,10 @@ namespace Z0
 
     sealed class EnvCmd : WfAppCmd<EnvCmd>
     {    
+        [CmdOp("env/modules")]
+        void LoadedModule(CmdArgs args)
+            => iter(args, arg => Channel.Row(NativeModules.loaded(arg)));
+
         [CmdOp("env/include")]
         void EnvInclude()
             => Env.path(Channel, EnvPathKind.Include, ShellData);

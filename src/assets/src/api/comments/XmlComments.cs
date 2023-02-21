@@ -38,7 +38,7 @@ namespace Z0
             var lookup = new Dictionary<FilePath, Dictionary<string,ApiComment>>();
             var csvRowFormat = dict<FilePath,List<string>>();
             var csvRows = dict<FilePath,List<ApiComment>>();
-            var formatter = Tables.formatter<ApiComment>();
+            var formatter = CsvTables.formatter<ApiComment>();
             foreach(var part in xmlData.Keys)
             {
                 var file = FS.file(string.Format("{0}.{1}", "api.comments", part.FileName.WithoutExtension.Name), FS.Csv);
@@ -75,7 +75,7 @@ namespace Z0
             var targets = dst;
             var src = Pull(dst);
             var lookup = new Dictionary<FilePath, Dictionary<string,ApiComment>>();
-            var formatter = Tables.formatter<ApiComment>();
+            var formatter = CsvTables.formatter<ApiComment>();
             foreach(var part in src.Keys)
             {
                 var id = part.FileName.WithoutExtension.Name;

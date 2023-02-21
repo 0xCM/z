@@ -4,14 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using XF = ExprPatterns;
-    using VCK = VarContextKind;
-
     using static sys;
 
     [ApiHost,Free]
-    public class Vars
+    public class TextVars
     {
+        const NumericKind Closure = UnsignedInts;
+
+        [Op]
         public static ScriptVarClass @class(ITextVarExpr kind)
         {
             if(kind.IsPrefixedFence)
@@ -31,7 +31,7 @@ namespace Z0
         public static string format(ITextVar src)
         {
             var kind = src.Expr;
-            var @class = Vars.@class(kind);
+            var @class = TextVars.@class(kind);
             if(src.IsNonEmpty)
                 return src.Value;
 
@@ -132,36 +132,6 @@ namespace Z0
             if(nonempty(name))
                 dst.TryAdd(name, vf(name));
             return dst;
-        }
-         
-        const NumericKind Closure = UnsignedInts;
-
-         public static string pattern(VarContextKind vck)
-            => vck switch
-            {
-                VCK.CmdScript => "%{0}%",
-                VCK.PsScript => "${0}",
-                VCK.BashScript => "${0}",
-                VCK.MsBuild => "$({0})",
-                _ => "{0}"
-            };
-
-        
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static Var<T> var<T>(T src)
-            where T : IEquatable<T>, IComparable<T>
-                => new Var<T>(() => src);
-
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static Var<T> var<T>(string name, T src)
-            where T : IEquatable<T>, IComparable<T>
-                => new Var<T>(name, () => src);
-
-        public static string format(Var src, bool bind = true)
-            => bind ? src.Resolve().Format() : string.Format(XF.UntypedVar, src);
-
-        public static string format<T>(Var<T> src, bool bind = true)
-            where T : IEquatable<T>, IComparable<T>, new()
-                => bind ? src.Value.ToString() : string.Format(XF.TypedVar, src);
+        }        
     }
 }
