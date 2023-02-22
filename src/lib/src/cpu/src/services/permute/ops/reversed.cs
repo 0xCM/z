@@ -41,13 +41,13 @@ namespace Z0
         /// </summary>
         [MethodImpl(Inline), Op]
         public static Perm16 reversed(W128 w)
-            => new Perm16(gcpu.vdec<byte>(w));
+            => new Perm16(vcpu.vdec<byte>(w));
 
         /// <summary>
         /// Creates the reversal of the identity permutation
         /// </summary>
         [MethodImpl(Inline), Op]
         public static Perm32 reversed(W256 w)
-            => new Perm32(gcpu.vdec<byte>(w));
+            => new Perm32(vcpu.vdec<byte>(w));
     }
 }

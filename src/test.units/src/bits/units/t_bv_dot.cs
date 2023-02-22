@@ -252,7 +252,7 @@ namespace Z0
                     var x = Random.ScalarBits<N,T>();
                     var y = Random.ScalarBits<N,T>();
                     bit a = x % y;
-                    var b = BitVectors.modprod(x,y);
+                    var b = ScalarBits.modprod(x,y);
                     Claim.eq(a,b);
                 }
             }
@@ -276,7 +276,7 @@ namespace Z0
                     var x = Random.ScalarBits<T>();
                     var y = Random.ScalarBits<T>();
                     var actual = f.Invoke(x,y);
-                    var expect = BitVectors.modprod(x,y);
+                    var expect = ScalarBits.modprod(x,y);
                     Claim.require(actual == expect);
                     base.Claim.require(actual == f.Invoke((T)x, (T)y));
                 }

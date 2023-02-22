@@ -6,7 +6,7 @@
 namespace Z0
 {
     [DataWidth(Width)]
-    public struct XedInstForm : IEquatable<XedInstForm>, IComparable<XedInstForm>
+    public struct XedInstForm : IDataType<XedInstForm>
     {
         public const byte Width = Hex14.Width;
 
@@ -28,6 +28,9 @@ namespace Z0
             get => Kind == 0;
         }
 
+        public Hash32 Hash 
+            => (uint)Kind;
+            
         [MethodImpl(Inline)]
         public bool Equals(XedInstForm src)
             => ((ushort)Kind).Equals((ushort)src.Kind);
@@ -65,7 +68,6 @@ namespace Z0
         public static explicit operator XedInstForm(ushort src)
             => new XedInstForm((XedFormType)src);
 
-        public static XedInstForm Empty => default;
+        public static XedInstForm Empty => default;    
     }
-
 }

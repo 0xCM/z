@@ -4,9 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
     using static BitMasks;
-    using static cpu;
 
     partial struct BitPack
     {

@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static vgcpu;
 
     partial class BitGrid
     {
@@ -16,7 +17,7 @@ namespace Z0
         [MethodImpl(Inline), Store, Closures(Closure)]
         public static void store<T>(Vector256<T> src, in BitSpanBlocks256<T> dst, int block)
             where T : unmanaged
-                => gcpu.vstore(src, ref dst.Data.BlockLead(block));
+                => vstore(src, ref dst.Data.BlockLead(block));
 
         /// <summary>
         /// Stores a 128-bit bitgrid to a caller-supplied target
@@ -31,7 +32,7 @@ namespace Z0
             where T : unmanaged
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
-                =>  gcpu.vstore(src.Data, dst);
+                =>  vstore(src.Data, dst);
 
         /// <summary>
         /// Allocates and stores a 128-bit bitgrid to a blocked span
@@ -48,7 +49,7 @@ namespace Z0
             where N : unmanaged, ITypeNat
         {
             var dst = SpanBlocks.alloc<T>(n128,1);
-            gcpu.vstore(src.Data, dst);
+            vstore(src.Data, dst);
             return dst;
         }
 
@@ -65,7 +66,7 @@ namespace Z0
             where T : unmanaged
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
-                => gcpu.vstore(src.Data, dst);
+                => vstore(src.Data, dst);
 
         /// <summary>
         /// Allocates and stores a 256-bit bitgrid to a blocked span
@@ -82,7 +83,7 @@ namespace Z0
             where N : unmanaged, ITypeNat
         {
             var dst = SpanBlocks.alloc<T>(n256,1);
-            gcpu.vstore(src.Data, dst);
+            vstore(src.Data, dst);
             return dst;
         }
 
@@ -99,6 +100,6 @@ namespace Z0
             where T : unmanaged
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
-                => gcpu.vstore(src, ref dst.Data.BlockLead(block));
+                => vstore(src, ref dst.Data.BlockLead(block));
     }
 }

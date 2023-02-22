@@ -5,18 +5,18 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class XedLimits
-    {
-        public const XedInstKind MaxIClassMember = XedInstKind.XTEST;
+    // public class XedLimits
+    // {
+    //     public const XedInstKind MaxIClassMember = XedInstKind.XTEST;
 
-        public Hex12 MaxIClass => (ushort)MaxIClassMember;
+    //     public Hex12 MaxIClass => (ushort)MaxIClassMember;
 
-        public const byte IClassWidth = Hex12.Width;
+    //     public const byte IClassWidth = Hex12.Width;
 
-        public const XedFormType MaxIFormMember = XedFormType.XTEST;
+    //     public const XedFormType MaxIFormMember = XedFormType.XTEST;
 
-        public Hex14 MaxIForm => (ushort)MaxIFormMember;
+    //     public Hex14 MaxIForm => (ushort)MaxIFormMember;
 
-        public const byte IFormWidth = Hex14.Width;
-    }
+    //     public const byte IFormWidth = Hex14.Width;
+    // }
 }

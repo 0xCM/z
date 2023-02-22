@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     partial struct Asci
     {
         public static Outcome parse<S,N>(string src, N n, out S dst)

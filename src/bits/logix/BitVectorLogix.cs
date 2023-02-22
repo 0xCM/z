@@ -24,7 +24,7 @@ namespace Z0
             {
                 case BLK.True: return BitVectors.@true;
                 case BLK.False: return BitVectors.@false;
-                case BLK.And: return BitVectors.and;
+                case BLK.And: return ScalarBits.and;
                 case BLK.Nand: return BitVectors.nand;
                 case BLK.Or: return BitVectors.or;
                 case BLK.Nor: return BitVectors.nor;
@@ -36,8 +36,8 @@ namespace Z0
                 case BLK.RNot: return BitVectors.rnot;
                 case BLK.Impl: return BitVectors.impl;
                 case BLK.NonImpl: return BitVectors.nonimpl;
-                case BLK.CImpl: return BitVectors.cimpl;
-                case BLK.CNonImpl: return BitVectors.cnonimpl;
+                case BLK.CImpl: return ScalarBits.cimpl;
+                case BLK.CNonImpl: return ScalarBits.cnonimpl;
                 default: throw Unsupported.value(sig<T>(kind));
            }
         }
@@ -50,7 +50,7 @@ namespace Z0
             {
                 case BLK.True: return BitVectors.@true(x,y);
                 case BLK.False: return BitVectors.@false(x,y);
-                case BLK.And: return BitVectors.and(x,y);
+                case BLK.And: return ScalarBits.and(x,y);
                 case BLK.Nand: return BitVectors.nand(x,y);
                 case BLK.Or: return BitVectors.or(x,y);
                 case BLK.Nor: return BitVectors.nor(x,y);
@@ -62,8 +62,8 @@ namespace Z0
                 case BLK.RNot: return BitVectors.rnot(x,y);
                 case BLK.Impl: return BitVectors.impl(x,y);
                 case BLK.NonImpl: return BitVectors.nonimpl(x,y);
-                case BLK.CImpl: return BitVectors.cimpl(x,y);
-                case BLK.CNonImpl: return BitVectors.cnonimpl(x,y);
+                case BLK.CImpl: return ScalarBits.cimpl(x,y);
+                case BLK.CNonImpl: return ScalarBits.cnonimpl(x,y);
                 default: throw Unsupported.value(sig<T>(kind));
             }
         }
@@ -106,7 +106,7 @@ namespace Z0
             where T : unmanaged
         {
             var len = x.Width;
-            var z = BitVectors.alloc<T>();
+            var z = ScalarBits.alloc<T>();
             for(var i=0; i< len; i++)
                 z[i] = bitlogix.Evaluate(BLK.And, x[i], y[i]);
             return z;
@@ -122,7 +122,7 @@ namespace Z0
             where T : unmanaged
         {
             var len = x.Width;
-            var z = BitVectors.alloc<T>();
+            var z = ScalarBits.alloc<T>();
             for(var i=0; i< len; i++)
                 z[i] = bitlogix.Evaluate(BLK.Nand, x[i], y[i]);
             return z;
@@ -138,7 +138,7 @@ namespace Z0
             where T : unmanaged
         {
             var len = x.Width;
-            var z = BitVectors.alloc<T>();
+            var z = ScalarBits.alloc<T>();
             for(var i=0; i< len; i++)
                 z[i] = bitlogix.Evaluate(BLK.Or, x[i], y[i]);
             return z;
@@ -154,7 +154,7 @@ namespace Z0
             where T : unmanaged
         {
             var len = x.Width;
-            var z = BitVectors.alloc<T>();
+            var z = ScalarBits.alloc<T>();
             for(var i=0; i< len; i++)
                 z[i] = bitlogix.Evaluate(BLK.Nor, x[i], y[i]);
             return z;
@@ -170,7 +170,7 @@ namespace Z0
             where T : unmanaged
         {
             var len = x.Width;
-            var z = BitVectors.alloc<T>();
+            var z = ScalarBits.alloc<T>();
             for(var i=0; i< len; i++)
                 z[i] = bitlogix.Evaluate(BLK.Xor, x[i], y[i]);
             return z;
@@ -186,7 +186,7 @@ namespace Z0
             where T : unmanaged
         {
             var len = x.Width;
-            var z = BitVectors.alloc<T>();
+            var z = ScalarBits.alloc<T>();
             for(var i=0; i< len; i++)
                 z[i] = bitlogix.Evaluate(BLK.Xnor, x[i], y[i]);
             return z;
@@ -202,7 +202,7 @@ namespace Z0
             where T : unmanaged
         {
             var len = x.Width;
-            var z = BitVectors.alloc<T>();
+            var z = ScalarBits.alloc<T>();
             for(var i=0; i< len; i++)
                 z[i] = BitLogix.Service.Evaluate(UnaryBitLogicKind.Not, x[i]);
             return z;
@@ -218,7 +218,7 @@ namespace Z0
             where T : unmanaged
         {
             var len = x.Width;
-            var z = BitVectors.alloc<T>();
+            var z = ScalarBits.alloc<T>();
             for(var i=0; i< len; i++)
                 z[i] = BitLogix.Service.Evaluate(UnaryBitLogicKind.Not, y[i]);
             return z;
@@ -234,7 +234,7 @@ namespace Z0
             where T : unmanaged
         {
             var len = x.Width;
-            var z = BitVectors.alloc<T>();
+            var z = ScalarBits.alloc<T>();
             for(var i=0; i< len; i++)
                 z[i] = bitlogix.Evaluate(BLK.Impl, x[i], y[i]);
             return z;
@@ -250,7 +250,7 @@ namespace Z0
             where T : unmanaged
         {
             var len = x.Width;
-            var z = BitVectors.alloc<T>();
+            var z = ScalarBits.alloc<T>();
             for(var i=0; i< len; i++)
                 z[i] = bitlogix.Evaluate(BLK.NonImpl, x[i], y[i]);
             return z;
@@ -266,7 +266,7 @@ namespace Z0
             where T : unmanaged
         {
             var len = x.Width;
-            var z = BitVectors.alloc<T>();
+            var z = ScalarBits.alloc<T>();
             for(var i=0; i< len; i++)
                 z[i] = bitlogix.Evaluate(BLK.CImpl, x[i], y[i]);
             return z;
@@ -282,7 +282,7 @@ namespace Z0
             where T : unmanaged
         {
             var len = x.Width;
-            var z = BitVectors.alloc<T>();
+            var z = ScalarBits.alloc<T>();
             for(var i=0; i< len; i++)
                 z[i] = bitlogix.Evaluate(BLK.CNonImpl, x[i], y[i]);
             return z;
@@ -292,7 +292,7 @@ namespace Z0
             where T : unmanaged
         {
             var len = x.Width;
-            var dst = BitVectors.alloc<T>();
+            var dst = ScalarBits.alloc<T>();
             for(var i=0; i< len; i++)
                 dst[i] = BitLogix.select(x[i], y[i], z[i]);
             return z;

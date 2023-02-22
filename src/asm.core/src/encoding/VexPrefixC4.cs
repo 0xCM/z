@@ -5,6 +5,7 @@
 namespace Z0.Asm
 {
     using static AsmPrefixCodes;
+    using static sys;
 
     [DataWidth(24), ApiComplete]
     public struct VexPrefixC4
@@ -37,33 +38,32 @@ namespace Z0.Asm
 
             public PPSeg PP {get;} = new();
 
-
             public string ToBitstring()
             {
                 var storage = CharBlock32.Empty;
                 var dst = storage.Data;
                 var i=0u;
                 i += Code.Render(dst);
-                core.seek(dst,i++) = Chars.Space;
+                seek(dst,i++) = Chars.Space;
 
                 i += RXB.Render(i,dst);
-                core.seek(dst,i++) = Chars.Space;
+                seek(dst,i++) = Chars.Space;
 
                 i += MMMMM.Render(i,dst);
-                core.seek(dst,i++) = Chars.Space;
+                seek(dst,i++) = Chars.Space;
 
                 i += W.Render(i,dst);
-                core.seek(dst,i++) = Chars.Space;
+                seek(dst,i++) = Chars.Space;
 
                 i += VVVV.Render(i,dst);
-                core.seek(dst,i++) = Chars.Space;
+                seek(dst,i++) = Chars.Space;
 
                 i += L.Render(i,dst);
-                core.seek(dst,i++) = Chars.Space;
+                seek(dst,i++) = Chars.Space;
 
                 i += PP.Render(i,dst);
 
-                return new string(core.slice(dst,0,i));
+                return new string(slice(dst,0,i));
             }
 
             public void Fill(in VexPrefixC4 src)
@@ -345,26 +345,26 @@ namespace Z0.Asm
             var dst = storage.Data;
             var i=0u;
             BitRender.render8(B0, ref i, dst);
-            core.seek(dst,i++) = Chars.Space;
+            seek(dst,i++) = Chars.Space;
 
             BitRender.render3(RXB_Bits, ref i, dst);
-            core.seek(dst,i++) = Chars.Space;
+            seek(dst,i++) = Chars.Space;
 
             BitRender.render5(MMMMM_Bits, ref i, dst);
-            core.seek(dst,i++) = Chars.Space;
+            seek(dst,i++) = Chars.Space;
 
             BitRender.render1(W_Bits, ref i, dst);
-            core.seek(dst,i++) = Chars.Space;
+            seek(dst,i++) = Chars.Space;
 
             BitRender.render4(VVVV_Bits, ref i, dst);
-            core.seek(dst,i++) = Chars.Space;
+            seek(dst,i++) = Chars.Space;
 
             BitRender.render1(L_Bits, ref i, dst);
-            core.seek(dst,i++) = Chars.Space;
+            seek(dst,i++) = Chars.Space;
 
             BitRender.render2(PP_Bits, ref i, dst);
 
-            var content = core.slice(dst,0,i);
+            var content = slice(dst,0,i);
             return new string(content);
         }
 

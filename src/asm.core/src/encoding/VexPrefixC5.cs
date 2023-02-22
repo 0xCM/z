@@ -5,6 +5,7 @@
 namespace Z0.Asm
 {
     using static AsmPrefixCodes;
+    using static sys;
 
     [DataWidth(16), ApiComplete]
     public struct VexPrefixC5
@@ -170,20 +171,20 @@ namespace Z0.Asm
             var dst = storage.Data;
             var i=0u;
             BitRender.render8(B0, ref i, dst);
-            core.seek(dst,i++) = Chars.Space;
+            seek(dst,i++) = Chars.Space;
 
             BitRender.render1(R_Bits, ref i, dst);
-            core.seek(dst,i++) = Chars.Space;
+            seek(dst,i++) = Chars.Space;
 
             BitRender.render4(VVVV_Bits, ref i, dst);
-            core.seek(dst,i++) = Chars.Space;
+            seek(dst,i++) = Chars.Space;
 
             BitRender.render1(L_Bits, ref i, dst);
-            core.seek(dst,i++) = Chars.Space;
+            seek(dst,i++) = Chars.Space;
 
             BitRender.render2(PP_Bits, ref i, dst);
 
-            return new string(core.slice(dst,0,i));
+            return new string(slice(dst,0,i));
         }
 
         const string SemanticFormat = "{0}\n{1}\n{2}";

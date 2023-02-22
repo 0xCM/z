@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using static vgcpu;
 
     using BL = ByteLogic;
 
@@ -39,7 +40,7 @@ namespace Z0
         [MethodImpl(Inline), Xor, Closures(Closure)]
         public static void xor<T>(W128 n, in T a, in T b, ref T z)
             where T : unmanaged
-                => gcpu.vstore(vxor(n, in a, in b), ref z);
+                => vstore(vxor(n, in a, in b), ref z);
 
         [MethodImpl(Inline), Xor, Closures(Closure)]
         public static void xor<T>(W128 n, int vcount, int blocklen, in T a, in T b, ref T z)
@@ -52,7 +53,7 @@ namespace Z0
         [MethodImpl(Inline), Xor, Closures(Closure)]
         public static void xor<T>(W256 n, in T a, in T b, ref T z)
             where T : unmanaged
-                => gcpu.vstore(vxor(n, in a, in b), ref z);
+                => vstore(vxor(n, in a, in b), ref z);
 
         [MethodImpl(Inline), Xor, Closures(Closure)]
         public static void xor<T>(W256 n, int vcount, int blocklen, in T a, in T b, ref T z)

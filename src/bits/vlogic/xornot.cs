@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static sys;
-    using static gcpu;
+    using static vgcpu;
 
     using BL = ByteLogic;
 
@@ -40,12 +40,12 @@ namespace Z0
         [MethodImpl(Inline), XorNot, Closures(Closure)]
         public static void xornot<T>(W128 w, in T a, in T b, ref T c)
             where T : unmanaged
-                => gcpu.vstore(vxornot(w, in a, in b), ref c);
+                => vstore(vxornot(w, in a, in b), ref c);
 
         [MethodImpl(Inline), XorNot, Closures(Closure)]
         public static void xornot<T>(W256 w, in T a, in T b, ref T c)
             where T : unmanaged
-                => gcpu.vstore(vxornot(w, in a, in b), ref c);
+                => vstore(vxornot(w, in a, in b), ref c);
 
         [MethodImpl(Inline), XorNot, Closures(Closure)]
         public static void xornot<T>(W128 w, int vcount, int blocklen, in T a, in T b, ref T c)

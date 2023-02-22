@@ -84,7 +84,7 @@ namespace Z0
         public readonly BitVector32 Lo
         {
             [MethodImpl(Inline)]
-            get => BitVectors.create(n32, (uint)Data);
+            get => api.create(n32, (uint)Data);
         }
 
         /// <summary>
@@ -93,13 +93,13 @@ namespace Z0
         public readonly BitVector32 Hi
         {
             [MethodImpl(Inline)]
-            get => BitVectors.create(n32,(uint)(Data >> 32));
+            get => api.create(n32,(uint)(Data >> 32));
         }
 
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => alg.hash.calc(Data);
+            get => sys.nhash(Data);
         }
 
         [MethodImpl(Inline)]
@@ -145,7 +145,7 @@ namespace Z0
         public V this[byte i0, byte i1]
         {
             [MethodImpl(Inline)]
-            get => BitVectors.extract(this,i0, i1);
+            get => api.extract(this,i0, i1);
         }
 
         [MethodImpl(Inline)]

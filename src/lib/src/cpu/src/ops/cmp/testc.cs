@@ -15,6 +15,6 @@ namespace Z0
 
         [MethodImpl(Inline), TestZ]
         public static bit testc(ulong a)
-            => TestC(vbroadcast(w128, a), vones<ulong>(w128));
+            => TestC(vbroadcast(w128, a), vcpu.vones<ulong>(w128));
     }
 }

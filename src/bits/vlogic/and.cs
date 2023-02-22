@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using static vgcpu;
     using static SFx;
 
     using BL = ByteLogic;
@@ -41,7 +42,7 @@ namespace Z0
         [MethodImpl(Inline), And, Closures(Closure)]
         public static void and<T>(W128 n, in T a, in T b, ref T dst)
             where T : unmanaged
-                => gcpu.vstore(and(n, a, b), ref dst);
+                => vstore(and(n, a, b), ref dst);
 
         [MethodImpl(Inline), And, Closures(Closure)]
         public static void and<T>(W128 w, int vcount, int blocklen, in T a, in T b, ref T dst)
@@ -54,7 +55,7 @@ namespace Z0
         [MethodImpl(Inline), And, Closures(Closure)]
         public static void and<T>(W256 w, in T a, in T b, ref T dst)
             where T : unmanaged
-                => gcpu.vstore(and(w, in a, in b), ref dst);
+                => vstore(and(w, in a, in b), ref dst);
 
         [MethodImpl(Inline), And, Closures(Closure)]
         public static void and<T>(W256 n, int vcount, int blocklen, in T a, in T b, ref T dst)

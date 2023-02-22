@@ -1,6 +1,5 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(Text)" />
     <ProjectReference Include="$(Math)" />
     <ProjectReference Include="$(Hex)" />
   </ItemGroup>

@@ -93,13 +93,13 @@ namespace Z0
         [MethodImpl(Inline)]
         public static ScalarBits<T> ToScalarBits<T>(this BitString src)
             where T : unmanaged
-                => BitVectors.load<T>(src);
+                => ScalarBits.load<T>(src);
 
         [MethodImpl(Inline)]
         public static ScalarBits<N,T> ToScalarBits<N,T>(this BitString src, N n = default, T t =default)
             where T : unmanaged
             where N : unmanaged, ITypeNat
-                => BitVectors.natural<N,T>(src);
+                => ScalarBits.natural<N,T>(src);
 
         [MethodImpl(Inline)]
         public static BitVector128<T> ToBitVector<T>(this BitString src, W128 n)

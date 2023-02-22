@@ -8,7 +8,5 @@ namespace Z0
     public readonly partial struct CellCalcs
     {
         const NumericKind Closure = UnsignedInts;
-
-
     }
 }

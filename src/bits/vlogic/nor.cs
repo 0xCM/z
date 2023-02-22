@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using static vgcpu;
 
     using BL = ByteLogic;
 
@@ -47,7 +48,7 @@ namespace Z0
         [MethodImpl(Inline), Nor, Closures(Closure)]
         public static void nor<T>(W128 n, in T a, in T b, ref T z)
             where T : unmanaged
-                => gcpu.vstore(vnor(n, a, b), ref z);
+                => vstore(vnor(n, a, b), ref z);
 
         [MethodImpl(Inline), Nor, Closures(Closure)]
         public static void nor<T>(W128 n, int vcount, int blocklen, in T a, in T b, ref T dst)
@@ -60,7 +61,7 @@ namespace Z0
         [MethodImpl(Inline), Nor, Closures(Closure)]
         public static void nor<T>(W256 w, in T a, in T b, ref T dst)
             where T : unmanaged
-                => gcpu.vstore(vnor(w, in a, in b), ref dst);
+                => vstore(vnor(w, in a, in b), ref dst);
 
         [MethodImpl(Inline), Nor, Closures(Closure)]
         public static void nor<T>(W256 w, int vcount, int blocklen, in T a, in T b, ref T dst)

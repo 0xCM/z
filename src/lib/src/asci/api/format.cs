@@ -102,7 +102,6 @@ namespace Z0
             var length = text.index(chars, '\0');
             var data = length == NotFound ? chars : slice(chars, 0, length);
             return new string(data);
-        }        
-
+        }
     }
 }

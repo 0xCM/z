@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using static vcpu;
 
     using M = math;
 
@@ -16,23 +17,23 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector128<byte> vector<T>(W64 w, value<T> src)
             where T : unmanaged
-                => vcpu.v8u(vcpu.vscalar(w128, uint64(src.Data)));
+                => v8u(vscalar(w128, uint64(src.Data)));
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector128<byte> vector<T>(W128 w, value<T> src)
             where T : unmanaged
-                => vcpu.vload(w, src.Bytes);
+                => vload(w, src.Bytes);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector256<byte> vector<T>(W256 w, value<T> src)
             where T : unmanaged
-                => vcpu.vload(w, src.Bytes);
+                => vload(w, src.Bytes);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Hash32 hash<T>(value<T> src)
             where T : unmanaged
         {
-            if(Refs.size<T>() == 8)
+            if(size<T>() == 8)
                 return uint8(src.Data);
             else if(size<T>() == 16)
                 return uint16(src.Data);
@@ -309,24 +310,24 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         static bit eq<T>(W128 w, value<T> a, value<T> b)
             where T : unmanaged
-                => cpu.vsame(cpu.vload(w, a.Bytes), cpu.vload(w, b.Bytes));
+                => vsame(vload(w, a.Bytes), vload(w, b.Bytes));
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         static bit eq<T>(W256 w, value<T> a, value<T> b)
             where T : unmanaged
-                => cpu.vsame(cpu.vload(w, a.Bytes), cpu.vload(w, b.Bytes));
+                => vsame(vload(w, a.Bytes), vload(w, b.Bytes));
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         static bit eq<T>(W512 w, value<T> a, value<T> b)
             where T : unmanaged
         {
-            var a0 = cpu.vload(w256, a.Bytes);
-            var b0 = cpu.vload(w256, b.Bytes);
-            var result = cpu.vsame(a0,b0);
+            var a0 = vload(w256, a.Bytes);
+            var b0 = vload(w256, b.Bytes);
+            var result = vsame(a0,b0);
 
-            var a1 = cpu.vload(w256, slice(a.Bytes, 32));
-            var b1 = cpu.vload(w256, slice(b.Bytes, 32));
-            result &= cpu.vsame(a1,b1);
+            var a1 = vload(w256, slice(a.Bytes, 32));
+            var b1 = vload(w256, slice(b.Bytes, 32));
+            result &= vsame(a1,b1);
             return result;
         }
 

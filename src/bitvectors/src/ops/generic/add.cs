@@ -4,22 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static cpu;
+    using static vcpu;
     using static sys;
 
     partial class BitVectors
     {
-        /// <summary>
-        /// Computes the arithmetic sum z := x + y for generic bitvectors x and y
-        /// </summary>
-        /// <param name="x">The left vector</param>
-        /// <param name="y">The right vector</param>
-        /// <typeparam name="T">The primal type</typeparam>
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ScalarBits<T> add<T>(ScalarBits<T> x, ScalarBits<T> y)
-            where T : unmanaged
-                => gmath.add(x.State, y.State);
-
         /// <summary>
         /// Computes the sum of two 128-bit integers
         /// </summary>
@@ -31,7 +20,7 @@ namespace Z0
             where T : unmanaged
         {
             var sum = vadd(v64u(x.State), v64u(y.State));
-            bit carry = x.Lo > cpu.vcell(sum,0);
+            bit carry = x.Lo > vcell(sum,0);
             return generic<T>(vadd(sum, vbroadcast(w128, (ulong)carry)));
         }
     }

@@ -58,7 +58,7 @@ namespace Z0
             {
                 var offset = i*seg;
                 var vSrc = gcpu.vload(w, skip(src, offset));
-                gcpu.vstore(vSrc, ref seek(dst,offset));
+                vgcpu.vstore(vSrc, ref seek(dst,offset));
             }
 
             for(var i=blocks; i<length; i++)

@@ -128,8 +128,8 @@ namespace Z0
                 var a = Random.Next<T>();
                 var b = Random.Next<T>();
                 var result1 = NumericLogixHost.eval(kind,a,b);
-                var result2 = BitVectorLogix.Service.EvalDirect(kind, BitVectors.alloc(a), BitVectors.alloc(b)).State;
-                var result3 = BitVectorLogix.Service.EvalRef(kind, BitVectors.alloc(a), BitVectors.alloc(b)).State;
+                var result2 = BitVectorLogix.Service.EvalDirect(kind, ScalarBits.alloc(a), ScalarBits.alloc(b)).State;
+                var result3 = BitVectorLogix.Service.EvalRef(kind, ScalarBits.alloc(a), ScalarBits.alloc(b)).State;
                 var result4 = VLogixOps.eval(kind, gcpu.vbroadcast(n128,a), gcpu.vbroadcast(n128,b)).ToScalar();
                 var result5 = VLogixOps.eval(kind, gcpu.vbroadcast(n256,a), gcpu.vbroadcast(n256,b)).ToScalar();
                 Claim.eq(result1, result2);

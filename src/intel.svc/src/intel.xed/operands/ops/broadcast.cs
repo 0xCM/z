@@ -27,7 +27,7 @@ namespace Z0
         {
             var dst = alloc<AsmBroadcast>(src.Length);
             for(var j=0; j<src.Length; j++)
-                seek(dst,j) = XedOps.broadcast(skip(src,j));
+                seek(dst,j) = broadcast(skip(src,j));
             return dst;
         }
 

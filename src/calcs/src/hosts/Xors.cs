@@ -5,8 +5,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static SFx;
-
     partial struct CalcHosts
     {
         [Closures(Integers), Xors]
@@ -18,7 +16,7 @@ namespace Z0
             {
                 var blocks = dst.BlockCount;
                 for(var block = 0; block < blocks; block++)
-                    gcpu.vstore(gcpu.vxors(a.LoadVector(block), count), ref dst.BlockLead(block));
+                    vgcpu.vstore(gcpu.vxors(a.LoadVector(block), count), ref dst.BlockLead(block));
                 return dst;
             }
         }
@@ -32,7 +30,7 @@ namespace Z0
             {
                 var blocks = dst.BlockCount;
                 for(var block = 0; block < blocks; block++)
-                    gcpu.vstore(gcpu.vxors(a.LoadVector(block), count), ref dst.BlockLead(block));
+                    vgcpu.vstore(gcpu.vxors(a.LoadVector(block), count), ref dst.BlockLead(block));
                 return dst;
             }
         }

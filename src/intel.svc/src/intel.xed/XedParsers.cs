@@ -124,7 +124,6 @@ namespace Z0
         public static bool IsExpr(string src)
             => IsEq(src) || IsNe(src);
 
-
         public static bool IsSeg(string src)
         {
             var i = text.index(src, Chars.LBracket);

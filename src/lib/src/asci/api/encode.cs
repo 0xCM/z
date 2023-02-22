@@ -378,6 +378,5 @@ namespace Z0
             else
                 throw no<S>();
         }
-
     }
 }

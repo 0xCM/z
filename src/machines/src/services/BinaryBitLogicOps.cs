@@ -12,26 +12,26 @@ namespace Z0
     [ApiHost]
     public readonly struct BinaryBitLogicOps
     {
-        public static ReadOnlySpan<OpEval> canonical(W1 w)
+        public static ReadOnlySpan<Eval> canonical(W1 w)
         {
             var src = inputs(w1);
-            var dst = alloc<OpEval>(64);
-            eval(src,dst);
+            var dst = alloc<Eval>(64);
+            eval(src, dst);
             return dst;
         }
 
-        public static ReadOnlySpan<OpEval> canonical(W1 w, ReadOnlySpan<OpInput> src)
+        public static ReadOnlySpan<Eval> canonical(W1 w, ReadOnlySpan<Input> src)
         {
-            var dst = alloc<OpEval>(64);
-            eval(src,dst);
+            var dst = alloc<Eval>(64);
+            eval(src, dst);
             return dst;
         }
 
-        public static ReadOnlySpan<OpInput> inputs(W1 w)
+        public static ReadOnlySpan<Input> inputs(W1 w)
         {
             var m=0u;
             var count = 64;
-            var dst = alloc<OpInput>(count);
+            var dst = alloc<Input>(count);
             for(var i=0; i<16; i++)
             {
                 var op = (K)i;
@@ -49,11 +49,11 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public static OpInput input(K kind, bit a, bit b)
-            => new OpInput(kind,a,b);
+        public static Input input(K kind, bit a, bit b)
+            => new Input(kind,a,b);
 
         [MethodImpl(Inline)]
-        public static void eval(ReadOnlySpan<OpInput> src, Span<OpEval> dst)
+        public static void eval(ReadOnlySpan<Input> src, Span<Eval> dst)
         {
             var count = math.min(src.Length, dst.Length);
             for(var i=0; i<count; i++)
@@ -61,11 +61,8 @@ namespace Z0
         }
 
         [Op]
-        public static OpEval eval(OpInput src)
+        public static Eval eval(Input src)
         {
-            const byte AIx = LeftInputIndex;
-            const byte BIx = RightInputIndex;
-            const byte RIx = ResultIndex;
             var a = src.LeftInput;
             var b = src.RightInput;
             var x = (byte)a;
@@ -74,37 +71,37 @@ namespace Z0
             switch(src.Operator)
             {
                 case K.False:
-                    return or(f, sll(x, AIx), sll(y, BIx), sll(bit.@false(a,b), RIx));
+                    return or(f, sll(x, LIx), sll(y, RIx), sll(bit.@false(a, b), TIx));
                 case K.And:
-                    return or(f, sll(x, AIx), sll(y, BIx), sll(bit.and(a,b), RIx));
+                    return or(f, sll(x, LIx), sll(y, RIx), sll(bit.and(a, b), TIx));
                 case K.CNonImpl:
-                    return or(f, sll(x, AIx), sll(y, BIx), sll(bit.cnonimpl(a,b), RIx));
+                    return or(f, sll(x, LIx), sll(y, RIx), sll(bit.cnonimpl(a, b), TIx));
                 case K.Left:
-                    return or(f, sll(x, AIx), sll(y, BIx), sll(bit.left(a,b), RIx));
+                    return or(f, sll(x, LIx), sll(y, RIx), sll(bit.left(a, b), TIx));
                 case K.NonImpl:
-                    return or(f, sll(x, AIx), sll(y, BIx), sll(bit.nonimpl(a,b), RIx));
+                    return or(f, sll(x, LIx), sll(y, RIx), sll(bit.nonimpl(a, b), TIx));
                 case K.Right:
-                    return or(f, sll(x, AIx), sll(y, BIx), sll(bit.right(a,b), RIx));
+                    return or(f, sll(x, LIx), sll(y, RIx), sll(bit.right(a, b), TIx));
                 case K.Xor:
-                    return or(f, sll(x, AIx), sll(y, BIx), sll(bit.xor(a,b), RIx));
+                    return or(f, sll(x, LIx), sll(y, RIx), sll(bit.xor(a, b), TIx));
                 case K.Or:
-                    return or(f, sll(x, AIx), sll(y, BIx), sll(bit.or(a,b), RIx));
+                    return or(f, sll(x, LIx), sll(y, RIx), sll(bit.or(a, b), TIx));
                 case K.Nor:
-                    return or(f, sll(x, AIx), sll(y, BIx), sll(bit.nor(a,b), RIx));
+                    return or(f, sll(x, LIx), sll(y, RIx), sll(bit.nor(a, b), TIx));
                 case K.Xnor:
-                    return or(f, sll(x, AIx), sll(y, BIx), sll(bit.xnor(a,b), RIx));
+                    return or(f, sll(x, LIx), sll(y, RIx), sll(bit.xnor(a,b), TIx));
                 case K.RNot:
-                    return or(f, sll(x, AIx), sll(y, BIx), sll(bit.rnot(a,b), RIx));
+                    return or(f, sll(x, LIx), sll(y, RIx), sll(bit.rnot(a,b), TIx));
                 case K.Impl:
-                    return or(f, sll(x, AIx), sll(y, BIx), sll(bit.impl(a,b), RIx));
+                    return or(f, sll(x, LIx), sll(y, RIx), sll(bit.impl(a,b), TIx));
                 case K.LNot:
-                    return or(f, sll(x, AIx), sll(y, BIx), sll(bit.lnot(a,b), RIx));
+                    return or(f, sll(x, LIx), sll(y, RIx), sll(bit.lnot(a,b), TIx));
                 case K.CImpl:
-                    return or(f, sll(x, AIx), sll(y, BIx), sll(bit.cimpl(a,b), RIx));
+                    return or(f, sll(x, LIx), sll(y, RIx), sll(bit.cimpl(a,b), TIx));
                 case K.Nand:
-                    return or(f, sll(x, AIx), sll(y, BIx), sll(bit.nand(a,b), RIx));
+                    return or(f, sll(x, LIx), sll(y, RIx), sll(bit.nand(a,b), TIx));
                 case K.True:
-                    return or(f, sll(x, AIx), sll(y, BIx), sll(bit.@true(a,b), RIx));
+                    return or(f, sll(x, LIx), sll(y, RIx), sll(bit.@true(a,b), TIx));
                 default:
                     return default;
             }
@@ -124,14 +121,14 @@ namespace Z0
             public static OpFormatter service()
                 => new OpFormatter();
 
-            Symbols<K> OpSymbols;
+            static Symbols<K> OpSymbols;
 
-            public OpFormatter()
+            static OpFormatter()
             {
                 OpSymbols = Symbols.index<K>();
             }
 
-            public string Format(OpEval src, FormatOption option = default)
+            public static string format(Eval src, FormatOption option = default)
             {
                 Span<char> dst = stackalloc char[16];
                 var i=0u;
@@ -139,7 +136,7 @@ namespace Z0
                 return text.format(slice(dst,0,length));
             }
 
-            public string Format(OpInput src, FormatOption option = default)
+            public static string format(Input src, FormatOption option = default)
             {
                 Span<char> dst = stackalloc char[16];
                 var i=0u;
@@ -154,18 +151,18 @@ namespace Z0
                 return new string(dst);
             }
 
-            uint Functional(OpEval src, ref uint i, Span<char> dst)
+            static uint Functional(Eval src, ref uint i, Span<char> dst)
             {
                 var i0 = i;
                 Functional(src.Input, ref i, dst);
                 seek(dst,i++) = Chars.Space;
                 seek(dst,i++) = Chars.Eq;
                 seek(dst,i++) = Chars.Space;
-                seek(dst,i++) = src.Result;
+                seek(dst,i++) = src.Output;
                 return i - i0;
             }
 
-            uint Functional(OpInput src, ref uint i, Span<char> dst)
+            static uint Functional(Input src, ref uint i, Span<char> dst)
             {
                 var i0 = i;
                 text.copy(OpSymbols[src.Operator].Expr.Text, ref i, dst);
@@ -177,7 +174,7 @@ namespace Z0
                 return i - i0;
             }
 
-            uint BitStrings(OpInput src, ref uint i, Span<char> dst)
+            static uint BitStrings(Input src, ref uint i, Span<char> dst)
             {
                 var i0 = i;
                 text.copy(bitstring(src.Operator), ref i, dst);
@@ -188,7 +185,7 @@ namespace Z0
                 return i - i0;
             }
 
-            uint BitStrings(OpEval src, ref uint i, Span<char> dst)
+            static uint BitStrings(Eval src, ref uint i, Span<char> dst)
             {
                 var i0 = i;
                 text.copy(bitstring(src.Operator), ref i, dst);
@@ -197,11 +194,11 @@ namespace Z0
                 seek(dst,i++) = Chars.Space;
                 seek(dst,i++) = src.RightInput;
                 seek(dst,i++) = Chars.Space;
-                seek(dst,i++) = src.Result;
+                seek(dst,i++) = src.Output;
                 return i - i0;
             }
 
-            public uint Render(OpInput src, ref uint i, Span<char> dst, FormatOption option = default)
+            static uint Render(Input src, ref uint i, Span<char> dst, FormatOption option = default)
             {
                 switch(option)
                 {
@@ -214,7 +211,7 @@ namespace Z0
                 }
             }
 
-            public uint Render(OpEval src, ref uint i, Span<char> dst, FormatOption option = default)
+            static uint Render(Eval src, ref uint i, Span<char> dst, FormatOption option = default)
             {
                 switch(option)
                 {
@@ -229,7 +226,7 @@ namespace Z0
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public readonly struct OpInput
+        public readonly struct Input
         {
             readonly byte Storage;
 
@@ -242,46 +239,46 @@ namespace Z0
             public bit LeftInput
             {
                 [MethodImpl(Inline)]
-                get => bit.test(Storage, LeftInputIndex);
+                get => bit.test(Storage, LIx);
             }
 
             public bit RightInput
             {
                 [MethodImpl(Inline)]
-                get => bit.test(Storage, RightInputIndex);
+                get => bit.test(Storage, RIx);
             }
 
             [MethodImpl(Inline)]
-            public OpInput(K f, bit x, bit y)
+            public Input(K f, bit x, bit y)
             {
-                Storage = or((byte)f, sll((byte)x, LeftInputIndex), sll((byte)y, RightInputIndex));
+                Storage = or((byte)f, sll((byte)x, LIx), sll((byte)y, RIx));
             }
 
             public string Format()
-                => OpFormatter.service().Format(this);
+                => OpFormatter.format(this);
 
             public string Format(FormatOption option)
-                => OpFormatter.service().Format(this, option);
+                => OpFormatter.format(this, option);
 
             public override string ToString()
                 => Format();
         }
 
-        const byte LeftInputIndex = 4;
+        const byte LIx = 4;
 
-        const byte RightInputIndex = 5;
+        const byte RIx = 5;
 
-        const byte ResultIndex = 6;
+        const byte TIx = 6;
 
         /// <summary>
         /// c  | b |  a | 0000
         /// </summary>
-        public readonly struct OpEval
+        public readonly struct Eval
         {
             readonly byte Storage;
 
             [MethodImpl(Inline)]
-            public OpEval(byte data)
+            public Eval(byte data)
             {
                 Storage = data;
             }
@@ -295,39 +292,39 @@ namespace Z0
             public bit LeftInput
             {
                 [MethodImpl(Inline)]
-                get => bit.test(Storage, LeftInputIndex);
+                get => bit.test(Storage, LIx);
             }
 
             public bit RightInput
             {
                 [MethodImpl(Inline)]
-                get => bit.test(Storage, RightInputIndex);
+                get => bit.test(Storage, RIx);
             }
 
-            public OpInput Input
+            public Input Input
             {
                 [MethodImpl(Inline)]
-                get => new OpInput(Operator, LeftInput,RightInput);
+                get => new Input(Operator, LeftInput, RightInput);
             }
 
-            public bit Result
+            public bit Output
             {
                 [MethodImpl(Inline)]
-                get => bit.test(Storage, ResultIndex);
+                get => bit.test(Storage, TIx);
             }
 
             public string Format()
-                => OpFormatter.service().Format(this);
+                => OpFormatter.format(this);
 
             public string Format(FormatOption option)
-                => OpFormatter.service().Format(this, option);
+                => OpFormatter.format(this, option);
 
             public override string ToString()
                 => Format();
 
             [MethodImpl(Inline)]
-            public static implicit operator OpEval(byte src)
-                => new OpEval(src);
+            public static implicit operator Eval(byte src)
+                => new Eval(src);
         }
     }
 }

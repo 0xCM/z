@@ -28,7 +28,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public readonly bit Invoke(ScalarBits<T> a, ScalarBits<T> b)
-                => BitVectors.dot(a,b);
+                => ScalarBits.dot(a,b);
 
             [MethodImpl(Inline)]
             public bit Invoke(T a, T b)

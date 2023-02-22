@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using static vgcpu;
 
     using BL = ByteLogic;
 
@@ -39,7 +40,7 @@ namespace Z0
         [MethodImpl(Inline), Nand, Closures(Closure)]
         public static void nand<T>(W128 w, in T a, in T b, ref T z)
             where T : unmanaged
-                => gcpu.vstore(vnand(w, a, b), ref z);
+                => vstore(vnand(w, a, b), ref z);
 
         [MethodImpl(Inline), Nand, Closures(Closure)]
         public static void nand<T>(W128 w, int vcount, int blocklen, in T a, in T b, ref T z)
@@ -52,7 +53,7 @@ namespace Z0
         [MethodImpl(Inline), Nand, Closures(Closure)]
         public static void nand<T>(W256 n, in T a, in T b, ref T z)
             where T : unmanaged
-                => gcpu.vstore(vnand(n, a, b), ref z);
+                => vstore(vnand(n, a, b), ref z);
 
         [MethodImpl(Inline), Nand, Closures(Closure)]
         public static void nand<T>(W256 w, int vcount, int blocklen, in T a, in T b, ref T z)

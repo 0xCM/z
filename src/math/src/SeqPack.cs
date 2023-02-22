@@ -6,7 +6,8 @@ namespace Z0
 {
     using static sys;
 
-    partial class BitVectors
+    [ApiHost,Free]
+    public class SeqPack
     {
         [MethodImpl(Inline), Op, Closures(Integers)]
         public static T packseq<T>(ReadOnlySpan<byte> src, out T dst)
@@ -102,6 +103,6 @@ namespace Z0
                 if(skip(src, i) == 1)
                     dst |= (1ul << i);
             return dst;
-        }
+        }        
     }
 }

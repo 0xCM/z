@@ -4,10 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Linq;
-    using System.Runtime.CompilerServices;
-    
     partial class math
     {
         /// <summary>

@@ -33,7 +33,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static ReadOnlySpan<AsciSymbol> symbols(in asci2 src)
-            => recover<AsciSymbol>(core.bytes(src));
+            => recover<AsciSymbol>(sys.bytes(src));
 
         /// <summary>
         /// Counts the number of characters that precede a null terminator, if any

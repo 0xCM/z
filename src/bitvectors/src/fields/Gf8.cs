@@ -28,7 +28,7 @@ namespace Z0
             byte index = 0;
             for(byte i=min; i<= max; i++)
             for(byte j=min; j<= max; j++)
-                core.add(dst, index++) = clmul(i,j);
+                sys.add(dst, index++) = clmul(i,j);
         }
 
         [MethodImpl(Inline), Op]

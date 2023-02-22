@@ -78,7 +78,7 @@ namespace Z0
         {
             var count = a.RowCount;
             for(var i=0; i<count; i++)
-                dst[i] = BitVectors.and(a[i],b[i]);
+                dst[i] = ScalarBits.and(a[i],b[i]);
             return dst;
         }
 
@@ -88,7 +88,7 @@ namespace Z0
         {
             var count = a.RowCount;
             for(var i=0; i<count; i++)
-                dst[i] = BitVectors.cnonimpl(a[i],b[i]);
+                dst[i] = ScalarBits.cnonimpl(a[i],b[i]);
             return dst;
         }
 

@@ -120,7 +120,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static bool contains(asci8 src, char match)
-            => Asci.contains(src, (AsciCharSym)match);
+            => contains(src, (AsciCharSym)match);
 
         [MethodImpl(Inline), Op]
         public static char @char(in asci8 src, Hex3Kind index)

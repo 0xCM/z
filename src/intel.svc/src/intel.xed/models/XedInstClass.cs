@@ -7,25 +7,25 @@ namespace Z0
     [DataWidth(Width)]
     public readonly struct XedInstClass : IDataType<XedInstClass>
     {
-        public static Outcome parse(string src, out XedInstClass dst)
-        {
-            var result = Outcome.Success;
-            dst = XedInstClass.Empty;
-            try
-            {
+        // public static Outcome parse(string src, out XedInstClass dst)
+        // {
+        //     var result = Outcome.Success;
+        //     dst = XedInstClass.Empty;
+        //     try
+        //     {
                 
-                result = EnumParser<XedInstKind>.Service.Parse(src, out XedInstKind kind);
-                if(result)
-                {
-                    dst = kind;
-                }
-            }
-            catch(Exception e)
-            {
-                result = e;
-            }
-            return result;
-        }
+        //         result = EnumParser<XedInstKind>.Service.Parse(src, out XedInstKind kind);
+        //         if(result)
+        //         {
+        //             dst = kind;
+        //         }
+        //     }
+        //     catch(Exception e)
+        //     {
+        //         result = e;
+        //     }
+        //     return result;
+        // }
 
         const byte Width = 11;
 

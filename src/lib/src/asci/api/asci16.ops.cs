@@ -21,7 +21,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public static C code<N>(in asci16 src, N index = default)
             where N : unmanaged, ITypeNat
-                => (C)cpu.vextract(src.Storage, index);
+                => (C)vcpu.vextract(src.Storage, index);
 
         /// <summary>
         /// Populates a 16-code asci block from the leading cells of a character span
@@ -70,9 +70,10 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static asci16 init(N16 n, ulong lo, ulong hi)
             => new asci16(Vector128.Create(lo,hi).AsByte());
+
         [MethodImpl(Inline), Op]
         public static asci16 init(N16 n, AsciCode fill = AsciCode.Space)
-            => new asci16(cpu.vbroadcast(w128, (byte)fill));
+            => new asci16(vcpu.vbroadcast(w128, (byte)fill));
 
         [MethodImpl(Inline), Op]
         public static asci16 init(N16 n, ReadOnlySpan<AsciCode> src)
@@ -117,7 +118,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static bool contains(in asci16 src, char match)
-            => Asci.contains(src, (AsciCharSym)match);
+            => contains(src, (AsciCharSym)match);
 
         [MethodImpl(Inline), Op]
         public static asci16[] alloc(N16 n, int count)

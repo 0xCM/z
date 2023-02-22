@@ -44,12 +44,12 @@ namespace Z0
 
         [MethodImpl(Inline)]
         internal BitMatrix16(Span<ushort> src)
-            => Data = core.first(core.recover<ushort,ByteBlock32>(src));
+            => Data = sys.first(sys.recover<ushort,ByteBlock32>(src));
 
         [MethodImpl(Inline)]
         internal BitMatrix16(bit fill)
         {
-            Data = cpu.vones<byte>(w256);
+            Data = vcpu.vones<byte>(w256);
         }
 
         [MethodImpl(Inline)]

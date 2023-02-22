@@ -183,7 +183,7 @@ namespace Z0
         /// <param name="y">The right vector</param>
         [MethodImpl(Inline)]
         public static ScalarBits<N,T> operator &(ScalarBits<N,T> x, ScalarBits<N,T> y)
-            => BitVectors.and(x,y);
+            => ScalarBits.and(x,y);
 
         /// <summary>
         /// Computes the bitwise AND between the operands
@@ -210,7 +210,7 @@ namespace Z0
         /// <param name="y">The right operand</param>
         [MethodImpl(Inline)]
         public static bit operator %(ScalarBits<N,T> x, ScalarBits<N,T> y)
-            => BitVectors.dot(x,y);
+            => ScalarBits.dot(x,y);
 
         /// <summary>
         /// Computes the bitwise complement of the operand

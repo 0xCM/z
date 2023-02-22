@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static vcpu;
+
     [StructLayout(LayoutKind.Sequential)]
     public struct Vector128x3<T>
         where T : unmanaged
@@ -19,9 +21,9 @@ namespace Z0
         {
             var dst = default(Vector128x3);
             dst.Kind = NumericKinds.kind<T>();
-            dst.A = vcpu.v64u(src.A);
-            dst.B = vcpu.v64u(src.B);
-            dst.C = vcpu.v64u(src.C);
+            dst.A = v64u(src.A);
+            dst.B = v64u(src.B);
+            dst.C = v64u(src.C);
             return dst;
         }
     }

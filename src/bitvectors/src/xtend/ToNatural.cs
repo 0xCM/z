@@ -48,6 +48,6 @@ namespace Z0
         public static ScalarBits<N,T> ToNatural<N,T>(this ScalarBits<T> src, N n = default)
             where T : unmanaged
             where N : unmanaged, ITypeNat
-                => BitVectors.natural<N,T>(src.State);
+                => ScalarBits.natural<N,T>(src.State);
     }
 }

@@ -6,8 +6,7 @@ namespace Z0
 {
     using System;
 
-    using static Root;
-    using static core;
+    using static sys;
     using static Numeric;
 
     public class t_ternary_logic : t_logix<t_ternary_logic>
@@ -133,7 +132,7 @@ namespace Z0
                 var a = Random.ScalarBits<T>();
                 var b = Random.ScalarBits<T>();
                 var c = Random.ScalarBits<T>();
-                var u = BitVectors.alloc<T>();
+                var u = ScalarBits.alloc<T>();
 
                 for(var j=0; j<width; j++)
                     u[j] = bitlogix.Evaluate(kind, a[j], b[j], c[j]);

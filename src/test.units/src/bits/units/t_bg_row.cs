@@ -19,7 +19,7 @@ namespace Z0
                 for(var row = 0; row<m; row++)
                 {
                     var r1 = BitGrid.row(bg,row);
-                    var r2 = BitVectors.natural(bs.Slice(row*n,n), n, z8);
+                    var r2 = ScalarBits.natural(bs.Slice(row*n,n), n, z8);
                     Claim.eq(r1,r2);
                 }
             }

@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     using V = BitVector32;
     using D = UInt32;
     using W = W32;

@@ -48,7 +48,6 @@ namespace Z0
 
                                 if(parse(name, out InstPartKind part))
                                 {
-
                                     switch(part)
                                     {
                                         case P.Form:

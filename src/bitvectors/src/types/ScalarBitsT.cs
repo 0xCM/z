@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using api = ScalarBits;
 
     /// <summary>
     /// Defines a generic bitvector over a primal cell
@@ -140,7 +141,7 @@ namespace Z0
         /// <param name="y">The right vector</param>
         [MethodImpl(Inline)]
         public static ScalarBits<T> operator &(ScalarBits<T> x, ScalarBits<T> y)
-            => BitVectors.and(x,y);
+            => api.and(x,y);
 
         /// <summary>
         /// Computes the bitwise AND between the operands
@@ -167,7 +168,7 @@ namespace Z0
         /// <param name="y">The right operand</param>
         [MethodImpl(Inline)]
         public static bit operator %(ScalarBits<T> x, ScalarBits<T> y)
-            => BitVectors.dot(x,y);
+            => api.dot(x,y);
 
         /// <summary>
         /// Computes the bitwise complement of the operand
@@ -231,7 +232,7 @@ namespace Z0
         /// <param name="src">The source vector</param>
         [MethodImpl(Inline)]
         public static ScalarBits<T> operator --(ScalarBits<T> src)
-            => BitVectors.dec(src);
+            => api.dec(src);
 
         /// <summary>
         /// Computes the arithmetic sum of the source operands.
@@ -240,7 +241,7 @@ namespace Z0
         /// <param name="y">The right operand</param>
         [MethodImpl(Inline)]
         public static ScalarBits<T> operator +(ScalarBits<T> x, ScalarBits<T> y)
-            => BitVectors.add(x,y);
+            => api.add(x,y);
 
         /// <summary>
         /// Arithmetically subtracts the second operand from the first.

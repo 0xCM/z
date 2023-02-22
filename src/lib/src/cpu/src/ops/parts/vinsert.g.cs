@@ -35,13 +35,13 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(byte))
-                return generic<T>(cpu.vinsert(v8u(src), v8u(dst), lane));
+                return generic<T>(vcpu.vinsert(v8u(src), v8u(dst), lane));
             else if(typeof(T) == typeof(ushort))
-                return generic<T>(cpu.vinsert(v16u(src), v16u(dst), lane));
+                return generic<T>(vcpu.vinsert(v16u(src), v16u(dst), lane));
             else if(typeof(T) == typeof(uint))
-                return generic<T>(cpu.vinsert(v64i(src), v64i(dst), lane));
+                return generic<T>(vcpu.vinsert(v64i(src), v64i(dst), lane));
             else if(typeof(T) == typeof(ulong))
-                return generic<T>(cpu.vinsert(v64u(src), v64u(dst), lane));
+                return generic<T>(vcpu.vinsert(v64u(src), v64u(dst), lane));
             else
                 return vinsert_i(src, dst, lane);
         }
@@ -51,13 +51,13 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(sbyte))
-                return generic<T>(cpu.vinsert(v8i(src), v8i(dst), lane));
+                return generic<T>(vcpu.vinsert(v8i(src), v8i(dst), lane));
             else if(typeof(T) == typeof(short))
-                return generic<T>(cpu.vinsert(v16i(src), v16i(dst), lane));
+                return generic<T>(vcpu.vinsert(v16i(src), v16i(dst), lane));
             else if(typeof(T) == typeof(int))
-                return generic<T>(cpu.vinsert(v32i(src), v32i(dst), lane));
+                return generic<T>(vcpu.vinsert(v32i(src), v32i(dst), lane));
             else if(typeof(T) == typeof(long))
-                return generic<T>(cpu.vinsert(v64i(src), v64i(dst), lane));
+                return generic<T>(vcpu.vinsert(v64i(src), v64i(dst), lane));
             else
                 return vinsert_f(src,dst,lane);
         }
@@ -67,9 +67,9 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(float))
-                return generic<T>(cpu.vinsert(v32f(src), v32f(dst), lane));
+                return generic<T>(vcpu.vinsert(v32f(src), v32f(dst), lane));
             else if(typeof(T) == typeof(double))
-                return generic<T>(cpu.vinsert(v64f(src), v64f(dst), lane));
+                return generic<T>(vcpu.vinsert(v64f(src), v64f(dst), lane));
             else
                 throw no<T>();
         }

@@ -243,7 +243,7 @@ namespace Z0
                     dst.InstForm = inst.xed;
                     dst.FormId = (ushort)inst.xed;
                     // Not every intrinsic is associated with an instruction class
-                    XedInstClass.parse(src.name, out dst.InstClass);
+                    XedParsers.parse(src.name, out dst.InstClass);
                 }
             }
             catch (Exception e)

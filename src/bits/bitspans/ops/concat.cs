@@ -14,10 +14,10 @@ namespace Z0
         [Op]
         public static BitSpan concat(BitSpan head, BitSpan tail)
         {
-            Span<bit> dst = core.alloc<bit>(head.Length + tail.Length);
+            Span<bit> dst = sys.alloc<bit>(head.Length + tail.Length);
             head.Storage.CopyTo(dst);
             tail.Storage.CopyTo(dst, head.Length);
-            return BitSpans.load(dst);
+            return load(dst);
         }
     }
 }

@@ -6,6 +6,7 @@ namespace Z0
 {
     using static sys;
 
+
     partial struct CellCalcs
     {
         /// <summary>

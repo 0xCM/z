@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using static vgcpu;
 
     using BL = ByteLogic;
 
@@ -49,12 +50,12 @@ namespace Z0
         [MethodImpl(Inline), Select, Closures(Closure)]
         public static void select<T>(W128 n, in T a, in T b, in T c, ref T dst)
             where T : unmanaged
-                => gcpu.vstore(vselect(n, a, b, c), ref dst);
+                => vstore(vselect(n, a, b, c), ref dst);
 
         [MethodImpl(Inline), Select, Closures(Closure)]
         public static void select<T>(W256 n, in T a, in T b, in T c, ref T dst)
             where T : unmanaged
-                => gcpu.vstore(vselect(n, a, b, c), ref dst);
+                => vstore(vselect(n, a, b, c), ref dst);
 
         [MethodImpl(Inline), Select, Closures(Closure)]
         public static void select<T>(W128 n, int vcount, int blocklen, in T a, in T b, in T c, ref T dst)

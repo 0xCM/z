@@ -16,9 +16,9 @@ namespace Z0
             where T : unmanaged
         {
             var n = BitMatrix<T>.N;
-            var dst = BitVectors.alloc<T>();
+            var dst = ScalarBits.alloc<T>();
             for(var i=0; i< n; i++)
-                dst[i] = BitVectors.dot(A[i], x);
+                dst[i] = ScalarBits.dot(A[i], x);
             return dst;
         }
 

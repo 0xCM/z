@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     /// <summary>
     /// Represents a base-2 polynomial of degree N. The represented polynomial is of the form
@@ -37,7 +37,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public GfPoly(T src)
         {
-            Data = convert<T,ulong>(src);;
+            Data = @as<T,ulong>(src);;
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Z0
         public T Scalar
         {
             [MethodImpl(Inline)]
-            get => convert<T>(Data);
+            get => @as<T>(Data);
         }
 
         /// <summary>

@@ -12,7 +12,7 @@ namespace Z0
         /// <param name="len">The length of the bitstring</param>
         [Op]
         public static BitSpan alloc(int count)
-            => load(core.alloc<bit>(count));
+            => load(sys.alloc<bit>(count));
 
         /// <summary>
         /// Allocates a bitspan with a specified length
@@ -20,6 +20,6 @@ namespace Z0
         /// <param name="len">The length of the bitstring</param>
         [Op]
         public static BitSpan alloc(uint count)
-            => load(core.alloc<bit>(count));
+            => load(sys.alloc<bit>(count));
     }
 }

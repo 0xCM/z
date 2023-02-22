@@ -65,6 +65,6 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static BitString bitstring<T>(BitVector<T> src)
             where T : unmanaged, IEquatable<T>
-                => new BitString(core.bytes(src.State));
+                => new BitString(sys.bytes(src.State));
    }
 }

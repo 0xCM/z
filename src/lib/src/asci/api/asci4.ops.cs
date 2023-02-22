@@ -71,7 +71,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static bool contains(asci4 src, char match)
-            => Asci.contains(src, (AsciCharSym)match);
+            => contains(src, (AsciCharSym)match);
 
         [MethodImpl(Inline), Op]
         public static unsafe void copy(in asci4 src, ref byte dst)

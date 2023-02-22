@@ -14,10 +14,10 @@ namespace Z0
         /// <param name="src">The source permutation</param>
         [MethodImpl(Inline), Op]
         public static Perm16 perm16(W128 w, Perm<byte> spec)
-            => new Perm16(gcpu.vload(w128, spec.Terms));
+            => new Perm16(vcpu.vload(w128, spec.Terms));
 
         [MethodImpl(Inline), Op]
         public static Perm16 perm16(Vector128<byte> data)
-            => new Perm16(cpu.vand(data, vcpu.vbroadcast(w128, Msb8x8x3)));
+            => new Perm16(vcpu.vand(data, vcpu.vbroadcast(w128, Msb8x8x3)));
     }
 }

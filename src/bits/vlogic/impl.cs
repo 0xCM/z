@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using static vgcpu;
 
     using BL = ByteLogic;
 
@@ -39,12 +40,12 @@ namespace Z0
         [MethodImpl(Inline), Impl, Closures(Closure)]
         public static void impl<T>(W128 n, in T a, in T b, ref T dst)
             where T : unmanaged
-                => gcpu.vstore(vimpl(n, a, b), ref dst);
+                => vstore(vimpl(n, a, b), ref dst);
 
         [MethodImpl(Inline), Impl, Closures(Closure)]
         public static void impl<T>(W256 n, in T a, in T b, ref T dst)
             where T : unmanaged
-                => gcpu.vstore(vimpl(n, a, b), ref dst);
+                => vstore(vimpl(n, a, b), ref dst);
 
         [MethodImpl(Inline), Impl, Closures(Closure)]
         public static void impl<T>(W128 n, int vcount, int blocklen, in T a, in T b, ref T dst)
