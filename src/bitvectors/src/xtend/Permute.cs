@@ -7,28 +7,6 @@ namespace Z0
     partial class XBv
     {
         /// <summary>
-        /// Applies a permutation to a copy of the source vector
-        /// </summary>
-        /// <param name="src">The source vector</param>
-        /// <param name="p">The permutation</param>
-        /// <typeparam name="T">The storage cell type</typeparam>
-        [MethodImpl(Inline)]
-        public static ScalarBits<T> Permute<T>(this ScalarBits<T> src, in Perm p)
-            where T : unmanaged
-                => BitVectors.perm(src,p);
-
-        /// <summary>
-        /// Applies a permutation to a copy of the source vector
-        /// </summary>
-        /// <param name="src">The source vector</param>
-        /// <param name="p">The permutation</param>
-        [MethodImpl(Inline)]
-        public static ScalarBits<N,T> Permute<N,T>(this ScalarBits<N,T> src, in Perm p)
-            where N : unmanaged, ITypeNat
-            where T : unmanaged
-                => BitVectors.perm(src,p);
-
-        /// <summary>
         /// Applies a permutation to copy of the source vector
         /// </summary>
         /// <param name="src">The source vector</param>

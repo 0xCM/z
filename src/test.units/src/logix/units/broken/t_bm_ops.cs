@@ -221,7 +221,7 @@ namespace Z0
                 SquareBitLogix.eval(op, A, B, C);
                 for(var i=0; i<n; i++)
                 {
-                    var expect = BitVectors.impl(A[i], B[i]);
+                    var expect = ScalarBits.impl(A[i], B[i]);
                     var actual = C[i];
                     Claim.eq(expect, actual);
                 }
@@ -245,7 +245,7 @@ namespace Z0
                 SquareBitLogix.eval(op, A, B, C);
                 for(var i=0; i<n; i++)
                 {
-                    var expect = BitVectors.nonimpl(A[i], B[i]);
+                    var expect = ScalarBits.nonimpl(A[i], B[i]);
                     var actual = C[i];
                     Claim.eq(expect,actual);
                 }
@@ -317,7 +317,7 @@ namespace Z0
                 SquareBitLogix.eval(op, A, B, C);
                 for(var i=0; i<n; i++)
                 {
-                    var expect = BitVectors.nand(A[i], B[i]);
+                    var expect = ScalarBits.nand(A[i], B[i]);
                     var actual = C[i];
                     Claim.eq(expect, actual);
                 }
@@ -366,7 +366,7 @@ namespace Z0
                 SquareBitLogix.eval(op, A, B, C);
                 for(var i=0; i<n; i++)
                 {
-                    var expect = BitVectors.nor(A[i], B[i]);
+                    var expect = ScalarBits.nor(A[i], B[i]);
                     var actual = C[i];
                     Claim.eq(expect, actual);
                 }

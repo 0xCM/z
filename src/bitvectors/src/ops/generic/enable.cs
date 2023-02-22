@@ -4,29 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     partial class BitVectors
     {
-        /// <summary>
-        /// Enables a bit if it is disabled
-        /// </summary>
-        /// <param name="index">The position of the bit to enable</param>
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ScalarBits<T> enable<T>(ScalarBits<T> src, byte index)
-            where T : unmanaged
-                => gbits.enable(src.State, index);
-
-        /// <summary>
-        /// Enables a bit if it is disabled
-        /// </summary>
-        /// <param name="index">The position of the bit to enable</param>
-        [MethodImpl(Inline)]
-        public static ScalarBits<N,T> enable<N,T>(ScalarBits<N,T> src, byte index)
-            where T : unmanaged
-            where N : unmanaged, ITypeNat
-                => gbits.enable(src.State, index);
-
         /// <summary>
         /// Enables a bit if it is disabled
         /// </summary>

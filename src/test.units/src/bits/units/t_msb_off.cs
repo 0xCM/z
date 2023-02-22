@@ -39,7 +39,7 @@ namespace Z0
             Claim.eq(width, bs0.PopCount());
             Claim.eq(width, bs0.Length);
 
-            base.Claim.eq(width, (BitVector32)BitVectors.pop(bv0));
+            base.Claim.eq(width, (BitVector32)ScalarBits.pop(bv0));
 
             var bs1 = bs0.Truncate(maxlen);
             Claim.eq(maxlen, bs1.PopCount());

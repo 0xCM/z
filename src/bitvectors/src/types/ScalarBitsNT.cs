@@ -144,10 +144,10 @@ namespace Z0
         public int CompareTo(ScalarBits<N,T> src)
             => bw64(this).CompareTo(bw64(src));
         public string Format(BitFormat config)
-            => BitVectors.format(this,config);
+            => ScalarBits.format(this,config);
 
         public string Format()
-            => BitVectors.format(this);
+            => ScalarBits.format(this);
 
         public override string ToString()
             => Format();
@@ -260,7 +260,7 @@ namespace Z0
         /// <param name="x">The source operand</param>
         [MethodImpl(Inline)]
         public static ScalarBits<N,T> operator -(ScalarBits<N,T> src)
-            => BitVectors.negate(src);
+            => ScalarBits.negate(src);
 
         /// <summary>
         /// Shifts the source bits leftwards
@@ -268,7 +268,7 @@ namespace Z0
         /// <param name="x">The source operand</param>
         [MethodImpl(Inline)]
         public static ScalarBits<N,T> operator <<(ScalarBits<N,T> x, int offset)
-            => BitVectors.sll(x,(byte)offset);
+            => ScalarBits.sll(x,(byte)offset);
 
         /// <summary>
         /// Shifts the source bits rightwards
@@ -276,7 +276,7 @@ namespace Z0
         /// <param name="x">The source operand</param>
         [MethodImpl(Inline)]
         public static ScalarBits<N,T> operator >>(ScalarBits<N,T> x, int offset)
-            => BitVectors.srl(x,(byte)offset);
+            => ScalarBits.srl(x,(byte)offset);
 
         /// <summary>
         /// Computes the arithmetic less than between the operands

@@ -14,7 +14,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public Vector128<T> Invoke(T a)
-                => gcpu.vbroadcast(n128, a);
+                => vgcpu.vbroadcast(n128, a);
         }
 
         [Closures(Closure)]
@@ -24,7 +24,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public Vector128<T> Invoke(S a)
-                => gcpu.vbroadcast(n128, force<S,T>(a));
+                => vgcpu.vbroadcast(n128, force<S,T>(a));
         }
 
         [Closures(Closure)]
@@ -33,7 +33,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public Vector256<T> Invoke(T a)
-                => gcpu.vbroadcast(n256, a);
+                => vgcpu.vbroadcast(n256, a);
         }
 
         [Closures(Closure)]
@@ -43,7 +43,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public Vector256<T> Invoke(S a)
-                => gcpu.vbroadcast(n256, force<S,T>(a));
+                => vgcpu.vbroadcast(n256, force<S,T>(a));
         }
     }
 }

@@ -243,10 +243,10 @@ namespace Z0
             for(var i=0; i<RepCount; i++)
             {
                 var x = Random.ScalarBits<T>(width);
-                ClaimNumeric.lteq(BitVectors.effwidth(x), width);
+                ClaimNumeric.lteq(ScalarBits.effwidth(x), width);
 
                 var y = Random.ScalarBits<T>(width);
-                ClaimNumeric.lteq(BitVectors.effwidth(y),width);
+                ClaimNumeric.lteq(ScalarBits.effwidth(y),width);
 
                 var z = x ^ y;
                 ClaimNumeric.eq(gmath.xor(x.State, y.State), z.State);

@@ -361,13 +361,10 @@ namespace Z0
             for(var i=0; i< RepCount; i++)
             {
                 var x = Random.ScalarBits<N,T>();
-                var y = BitVectors.reverse(x);
+                var y = ScalarBits.reverse(x);
                 var z = x.ToBitString().Reverse().ToScalarBits<N,T>();
                 Claim.eq(y,z);
             }
         }
-
     }
-
-
 }

@@ -12,7 +12,7 @@ namespace Z0
         /// <param name="src">The source vector</param>
         [MethodImpl(Inline)]
         public static ScalarBits<N4,byte> ToNatural(this BitVector4 src)
-            => BitVectors.inject(src.Data,n4);
+            => ScalarBits.inject(src.Data,n4);
 
         /// <summary>
         /// Converts the source bitvector to an equivalent natural bitvector
@@ -20,7 +20,7 @@ namespace Z0
         /// <param name="src">The source vector</param>
         [MethodImpl(Inline)]
         public static ScalarBits<N8,byte> ToNatural(this BitVector8 src)
-            => BitVectors.inject(src.Data,n8);
+            => ScalarBits.inject(src.Data,n8);
 
         /// <summary>
         /// Converts the source bitvector to an equivalent natural/generic bitvector
@@ -28,7 +28,7 @@ namespace Z0
         /// <param name="src">The source vector</param>
         [MethodImpl(Inline)]
         public static ScalarBits<N32,uint> ToNatural(this BitVector32 src)
-            => BitVectors.inject(src.Data,n32);
+            => ScalarBits.inject(src.Data,n32);
 
         /// <summary>
         /// Converts the source bitvector to an equivalent natural/generic bitvector
@@ -36,7 +36,7 @@ namespace Z0
         /// <param name="src">The source vector</param>
         [MethodImpl(Inline)]
         public static ScalarBits<N64,ulong> ToNatural(this BitVector64 src)
-            => BitVectors.inject(src.Data,n64);
+            => ScalarBits.inject(src.Data,n64);
 
         /// <summary>
         /// Converts a generic bitvector to natural bitvector

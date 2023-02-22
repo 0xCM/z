@@ -11,27 +11,6 @@ namespace Z0
         /// </summary>
         /// <param name="src">The source vector</param>
         /// <typeparam name="T">The primal type</typeparam>
-        [MethodImpl(Inline), Pop, Closures(Closure)]
-        public static uint pop<T>(ScalarBits<T> src)
-            where T : unmanaged
-                => gbits.pop(src.State);
-
-        /// <summary>
-        /// Counts the number of enabled bits in the source vector
-        /// </summary>
-        /// <param name="src">The source vector</param>
-        /// <typeparam name="T">The primal type</typeparam>
-        [MethodImpl(Inline)]
-        public static uint pop<N,T>(ScalarBits<N,T> src)
-            where T : unmanaged
-            where N : unmanaged, ITypeNat
-                => gbits.pop(src.State);
-
-        /// <summary>
-        /// Counts the number of enabled bits in the source vector
-        /// </summary>
-        /// <param name="src">The source vector</param>
-        /// <typeparam name="T">The primal type</typeparam>
         [MethodImpl(Inline)]
         public static uint pop<T>(in BitVector128<T> src)
             where T : unmanaged

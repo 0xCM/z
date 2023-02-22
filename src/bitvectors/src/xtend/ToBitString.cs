@@ -15,40 +15,6 @@ namespace Z0
                 => BitStrings.load(src.State, src.Width);
 
         /// <summary>
-        /// Converts the vector content to a bitring representation
-        /// </summary>
-        [MethodImpl(Inline)]
-        public static BitString ToBitString<N,T>(this ScalarBits<N,T> x)
-            where T : unmanaged
-            where N : unmanaged, ITypeNat
-                => BitVectors.bitstring(x);
-
-        /// <summary>
-        /// Converts the vector content to a bitring representation
-        /// </summary>
-        [MethodImpl(Inline)]
-        public static BitString ToBitString<N,T>(this ScalarBits<N,T> x, byte[] storage)
-            where T : unmanaged
-            where N : unmanaged, ITypeNat
-                => BitVectors.bitstring(x,storage);
-
-        /// <summary>
-        /// Extracts the represented data as a bitstring
-        /// </summary>
-        [MethodImpl(Inline)]
-        public static BitString ToBitString<T>(this ScalarBits<T> src)
-            where T : unmanaged
-                => BitVectors.bitstring(src);
-
-        /// <summary>
-        /// Extracts the represented data as a bitstring truncated to a specified width
-        /// </summary>
-        [MethodImpl(Inline)]
-        public static BitString ToBitString<T>(this ScalarBits<T> src, int width)
-            where T : unmanaged
-                => BitVectors.bitstring(src,width);
-
-        /// <summary>
         /// Creates the vector's bitstring representation
         /// </summary>
         /// <param name="src">The source bitvector</param>

@@ -118,7 +118,7 @@ namespace Z0
         {
             var rc = x.RowCount;
             for(var i=0; i<rc; i++)
-                dst[i] = BitVectors.nand(x[i],y[i]);
+                dst[i] = ScalarBits.nand(x[i],y[i]);
             return dst;
         }
 
@@ -128,7 +128,7 @@ namespace Z0
         {
             var count = a.RowCount;
             for(var i=0; i<count; i++)
-                dst[i] = BitVectors.nor(a[i],b[i]);
+                dst[i] = ScalarBits.nor(a[i],b[i]);
             return dst;
         }
 

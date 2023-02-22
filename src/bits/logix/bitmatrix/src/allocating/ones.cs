@@ -15,7 +15,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public static BitMatrix<T> ones<T>()
             where T : unmanaged
-                => BitMatrix.init<T>(BitVectors.ones<T>());
+                => BitMatrix.init<T>(ScalarBits.ones<T>());
 
         /// <summary>
         /// Allocates a 0-filled generic bitmatrix

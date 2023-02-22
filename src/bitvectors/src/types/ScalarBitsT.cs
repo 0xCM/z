@@ -100,7 +100,7 @@ namespace Z0
         public ScalarBits<T> this[byte min, byte max]
         {
             [MethodImpl(Inline)]
-            get => BitVectors.extract(this, min, max);
+            get => api.extract(this, min, max);
         }
 
         [MethodImpl(Inline)]
@@ -118,10 +118,10 @@ namespace Z0
             => bw64(this).CompareTo(bw64(src));
 
         public string Format(in BitFormat config)
-            => BitVectors.format(this,config);
+            => ScalarBits.format(this,config);
 
         public string Format()
-            => BitVectors.format(this);
+            => ScalarBits.format(this);
 
         public override string ToString()
             => Format();
@@ -184,7 +184,7 @@ namespace Z0
         /// <param name="x">The source operand</param>
         [MethodImpl(Inline)]
         public static ScalarBits<T> operator -(ScalarBits<T> src)
-            => BitVectors.negate(src);
+            => ScalarBits.negate(src);
 
         /// <summary>
         /// Shifts the source bits leftwards
@@ -192,7 +192,7 @@ namespace Z0
         /// <param name="x">The source operand</param>
         [MethodImpl(Inline)]
         public static ScalarBits<T> operator <<(ScalarBits<T> x, int offset)
-            => BitVectors.sll(x,(byte)offset);
+            => api.sll(x,(byte)offset);
 
         /// <summary>
         /// Shifts the source bits rightwards
@@ -200,7 +200,7 @@ namespace Z0
         /// <param name="x">The source operand</param>
         [MethodImpl(Inline)]
         public static ScalarBits<T> operator >>(ScalarBits<T> x, int offset)
-            => BitVectors.srl(x,(byte)offset);
+            => api.srl(x,(byte)offset);
 
         /// <summary>
         /// Returns true if the source vector is nonzero, false otherwise
@@ -224,7 +224,7 @@ namespace Z0
         /// <param name="src">The source vector</param>
         [MethodImpl(Inline)]
         public static ScalarBits<T> operator ++(ScalarBits<T> src)
-            => BitVectors.inc(src);
+            => ScalarBits.inc(src);
 
         /// <summary>
         /// Decrements the vector arithmetically
@@ -250,7 +250,7 @@ namespace Z0
         /// <param name="y">The right vector</param>
         [MethodImpl(Inline)]
         public static ScalarBits<T> operator - (ScalarBits<T> x, ScalarBits<T> y)
-            => BitVectors.sub(x,y);
+            => api.sub(x,y);
 
         /// <summary>
         /// Determines whether operand content is identical

@@ -22,20 +22,20 @@ namespace Z0
         {
             switch(kind)
             {
-                case BLK.True: return BitVectors.@true;
-                case BLK.False: return BitVectors.@false;
+                case BLK.True: return ScalarBits.@true;
+                case BLK.False: return ScalarBits.@false;
                 case BLK.And: return ScalarBits.and;
-                case BLK.Nand: return BitVectors.nand;
+                case BLK.Nand: return ScalarBits.nand;
                 case BLK.Or: return BitVectors.or;
-                case BLK.Nor: return BitVectors.nor;
+                case BLK.Nor: return ScalarBits.nor;
                 case BLK.Xor: return BitVectors.xor;
                 case BLK.Xnor: return BitVectors.xnor;
-                case BLK.Left: return BitVectors.left;
-                case BLK.Right: return BitVectors.right;
-                case BLK.LNot: return BitVectors.lnot;
-                case BLK.RNot: return BitVectors.rnot;
-                case BLK.Impl: return BitVectors.impl;
-                case BLK.NonImpl: return BitVectors.nonimpl;
+                case BLK.Left: return ScalarBits.left;
+                case BLK.Right: return ScalarBits.right;
+                case BLK.LNot: return ScalarBits.lnot;
+                case BLK.RNot: return ScalarBits.rnot;
+                case BLK.Impl: return ScalarBits.impl;
+                case BLK.NonImpl: return ScalarBits.nonimpl;
                 case BLK.CImpl: return ScalarBits.cimpl;
                 case BLK.CNonImpl: return ScalarBits.cnonimpl;
                 default: throw Unsupported.value(sig<T>(kind));
@@ -48,20 +48,20 @@ namespace Z0
         {
             switch(kind)
             {
-                case BLK.True: return BitVectors.@true(x,y);
-                case BLK.False: return BitVectors.@false(x,y);
+                case BLK.True: return ScalarBits.@true(x,y);
+                case BLK.False: return ScalarBits.@false(x,y);
                 case BLK.And: return ScalarBits.and(x,y);
-                case BLK.Nand: return BitVectors.nand(x,y);
+                case BLK.Nand: return ScalarBits.nand(x,y);
                 case BLK.Or: return BitVectors.or(x,y);
-                case BLK.Nor: return BitVectors.nor(x,y);
+                case BLK.Nor: return ScalarBits.nor(x,y);
                 case BLK.Xor: return BitVectors.xor(x,y);
                 case BLK.Xnor: return BitVectors.xnor(x,y);
-                case BLK.Left: return BitVectors.left(x,y);
-                case BLK.Right: return BitVectors.right(x,y);
-                case BLK.LNot: return BitVectors.lnot(x,y);
-                case BLK.RNot: return BitVectors.rnot(x,y);
-                case BLK.Impl: return BitVectors.impl(x,y);
-                case BLK.NonImpl: return BitVectors.nonimpl(x,y);
+                case BLK.Left: return ScalarBits.left(x,y);
+                case BLK.Right: return ScalarBits.right(x,y);
+                case BLK.LNot: return ScalarBits.lnot(x,y);
+                case BLK.RNot: return ScalarBits.rnot(x,y);
+                case BLK.Impl: return ScalarBits.impl(x,y);
+                case BLK.NonImpl: return ScalarBits.nonimpl(x,y);
                 case BLK.CImpl: return ScalarBits.cimpl(x,y);
                 case BLK.CNonImpl: return ScalarBits.cnonimpl(x,y);
                 default: throw Unsupported.value(sig<T>(kind));
@@ -74,8 +74,8 @@ namespace Z0
         {
             switch(kind)
             {
-                case BLK.True: return BitVectors.@true(x,y);
-                case BLK.False: return BitVectors.@false(x,y);
+                case BLK.True: return ScalarBits.@true(x,y);
+                case BLK.False: return ScalarBits.@false(x,y);
                 case BLK.And: return and(x,y);
                 case BLK.Nand: return nand(x,y);
                 case BLK.Or: return or(x,y);

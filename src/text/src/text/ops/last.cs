@@ -4,11 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class BitVectors
+    partial class text
     {
-        [MethodImpl(Inline), Eq, Closures(Closure)]
-        public static bit eq<T>(in ScalarBits<T> x, in ScalarBits<T> y)
-            where T : unmanaged
-                => gmath.eq(x.State, y.State);
+       [MethodImpl(Inline), Op]
+        public static char last(ReadOnlySpan<char> src)
+            => src.Length == 0 ? Chars.Null : sys.skip(src, src.Length - 1);
     }
 }

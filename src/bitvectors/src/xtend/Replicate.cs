@@ -7,27 +7,6 @@ namespace Z0
     partial class XBv
     {
         /// <summary>
-        /// Creates a copy of the source vector
-        /// </summary>
-        /// <param name="src">The source vector</param>
-        /// <typeparam name="T">The storage cell type</typeparam>
-        [MethodImpl(Inline)]
-        public static ScalarBits<T> Replicate<T>(this ScalarBits<T> src)
-            where T : unmanaged
-                 => BitVectors.replicate(src);
-
-        /// <summary>
-        /// Creates a copy of the source vector
-        /// </summary>
-        /// <param name="src">The source vector</param>
-        /// <typeparam name="T">The storage cell type</typeparam>
-        [MethodImpl(Inline)]
-        public static ScalarBits<N,T> Replicate<N,T>(this ScalarBits<N,T> src)
-            where T : unmanaged
-            where N : unmanaged, ITypeNat
-                => BitVectors.replicate(src);
-
-        /// <summary>
         /// Creates a copy of the vector
         /// </summary>
         [MethodImpl(Inline)]

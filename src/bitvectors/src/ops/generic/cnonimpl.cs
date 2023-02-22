@@ -16,6 +16,5 @@ namespace Z0
         public static BitVector128<T> cnonimpl<T>(BitVector128<T> x, BitVector128<T> y)
             where T : unmanaged
                 => gcpu.vcnonimpl(x.State, y.State);
-
    }
 }

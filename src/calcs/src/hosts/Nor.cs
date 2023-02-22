@@ -14,7 +14,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public readonly ScalarBits<T> Invoke(ScalarBits<T> a, ScalarBits<T> b)
-                => BitVectors.nor(a,b);
+                => ScalarBits.nor(a,b);
 
             [MethodImpl(Inline)]
             public T Invoke(T a, T b)
