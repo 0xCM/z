@@ -61,11 +61,11 @@ namespace Z0
             where T : unmanaged
         {
             var width = (uint)(i1 - i0);
-            if(width > core.width<T>())
+            if(width > sys.width<T>())
                 return Limits.maxval<T>();
 
             var same = i0.CellIndex == i1.CellIndex;
-            var length = ScalarCast.uint8(same ? width : (uint)core.width<T>() - i0.BitOffset);
+            var length = ScalarCast.uint8(same ? width : (uint)sys.width<T>() - i0.BitOffset);
             var part1 = slice(bitcell(src, i0), (byte)i0.BitOffset, length);
 
             if(same)

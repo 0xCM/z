@@ -11,6 +11,6 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static bit readbit<T>(in T src, uint bitpos)
             where T : unmanaged
-                => gbits.test(skip(src, bitpos / width<T>()), (byte)(bitpos % core.width<T>()));
+                => gbits.test(skip(src, bitpos / width<T>()), (byte)(bitpos % sys.width<T>()));
     }
 }

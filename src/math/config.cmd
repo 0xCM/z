@@ -1,4 +1,3 @@
 @echo off
-set ProjectId=math
-set Area=src
+set ProjectName=math
 call %~dp0..\config.cmd

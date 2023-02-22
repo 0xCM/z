@@ -1,5 +1,4 @@
 @echo off
-set ProjectId=lib
-set Area=src
+set ProjectName=lib
 call %~dp0..\config.cmd
 
