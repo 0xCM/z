@@ -75,7 +75,7 @@ namespace Z0
 
         [CmdOp("env/cpucore")]
         void ShowCurrentCore()
-            => Emitter.Write(Env.cpucore());
+            => Channel.Write(Env.cpucore());
 
         [CmdOp("env/tid")]
         void ShowThread()

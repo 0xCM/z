@@ -45,7 +45,7 @@ namespace Z0
 
         [CmdOp("archives")]        
         void ListArchives(CmdArgs args)
-            => Emitter.Row(AppDb.Archives().Folders().Delimit(Eol));
+            => Channel.Row(AppDb.Archives().Folders().Delimit(Eol));
 
         [CmdOp("archives/list")]        
         void ArchiveFiles(CmdArgs args)
@@ -91,7 +91,7 @@ namespace Z0
             
         [CmdOp("scripts")]
         void Scripts(CmdArgs args)
-            => iter(ProjectScripts.List(args), path => Emitter.Write(path.ToUri()));
+            => iter(ProjectScripts.List(args), path => Channel.Write(path.ToUri()));
 
         [CmdOp("scripts/cmd")]
         void Script(CmdArgs args)

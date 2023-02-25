@@ -59,7 +59,7 @@ namespace Z0
 
         public ReadOnlySeq<ApiEncoded> Collect(IPart part, ICompositeDispenser symbols, IApiPack dst)
         {
-            var collected = ApiCode.collect(symbols, part, Emitter);
+            var collected = ApiCode.collect(symbols, part, Channel);
             Emit(part.Id, collected, dst);
             return collected;
         }

@@ -6,7 +6,7 @@ namespace Z0
 {
     partial struct vpack
     {
-        const string inflate = ApiGroupNames.inflate;
+        const string inflate = "inflate";
 
         /// <summary>
         /// PMOVSXWD xmm, m64

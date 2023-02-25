@@ -14,7 +14,7 @@ namespace Z0
         {
            var lo = vinflate256x16u(vload(w128, src));
            var hi = vinflate256x16u(vload(w128, add(src, 16)));
-           return gcpu.vconcat(lo,hi);
+           return vgcpu.vconcat(lo,hi);
         }
 
         /// <summary>

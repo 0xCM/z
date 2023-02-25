@@ -187,7 +187,7 @@ namespace Z0
             var running = Channel.Running(string.Format("Loading tool profiles from {0}", dir));
             var sources = dir.Match("tool.profiles", FS.Csv, true);
             var dst = new Lookup<Actor,ToolProfile>();
-            iter(sources, src => ToolSettings.profiles(src,dst,Emitter));
+            iter(sources, src => ToolSettings.profiles(src,dst,Channel));
             var lookup = dst.Seal();
             Channel.Ran(running, string.Format("Collected {0} profile definitions", lookup.EntryCount));
             return lookup;

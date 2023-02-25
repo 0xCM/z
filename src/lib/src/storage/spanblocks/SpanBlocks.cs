@@ -4,12 +4,108 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static System.Runtime.Intrinsics.X86.Avx;
+    using static System.Runtime.Intrinsics.X86.Avx2;
     using static sys;
+    using static vcpu;
 
     [ApiHost]
     public readonly partial struct SpanBlocks
     {
         const NumericKind Closure = UnsignedInts;
+
+        /// <summary>
+        /// VPMOVZXDQ ymm, m128
+        /// 8x32u -> 8x64u
+        /// </summary>
+        /// <param name="src">The blocked memory source</param>
+        /// <param name="lo">The lower target</param>
+        /// <param name="hi">The upper target</param>
+        [MethodImpl(Inline), Op]
+        public static unsafe Vector512<ulong> vinflate512x64u(SpanBlock256<uint> src, uint offset)
+            => (v64u(ConvertToVector256Int64(gptr(src[offset]))),
+                v64u(ConvertToVector256Int64(gptr(src[offset],4))));
+
+        /// <summary>
+        /// VPMOVZXWQ ymm, m64
+        /// 8x16u -> 8x64u
+        /// </summary>
+        /// <param name="src">The blocked memory source</param>
+        /// <param name="lo">The lower target</param>
+        /// <param name="hi">The upper target</param>
+        [MethodImpl(Inline), Op]
+        public static unsafe Vector512<ulong> vinflate512x64u(SpanBlock128<ushort> src, uint offset)
+            => (v64u(ConvertToVector256Int64(gptr(src[offset]))),
+                v64u(ConvertToVector256Int64(gptr(src[offset],4))));
+
+        /// <summary>
+        /// VPMOVZXWD ymm, m128
+        /// 16x16u ->16x32u
+        /// </summary>
+        /// <param name="src">The blocked memory source</param>
+        [MethodImpl(Inline), Op]
+        public static unsafe Vector512<uint> vinflate512x32u(SpanBlock256<ushort> src, uint offset)
+            => (v32u(ConvertToVector256Int32(gptr(src[offset]))),
+                v32u(ConvertToVector256Int32(gptr(src[offset], 8))));
+
+        /// <summary>
+        /// VPMOVZXBQ ymm, m32
+        /// 4x8u -> 4x64u
+        /// </summary>
+        /// <param name="src">The blocked memory source</param>
+        /// <param name="dst">The target vector</param>
+        [MethodImpl(Inline), Op]
+        public static unsafe Vector256<ulong> vinflate256x64u(in SpanBlock32<byte> src, uint offset)
+            => v64u(ConvertToVector256Int64(gptr(src[offset])));
+
+        /// <summary>
+        /// VPMOVZXWQ ymm, m64
+        /// 4x16u -> 4x64u
+        /// </summary>
+        /// <param name="src">The blocked memory source</param>
+        /// <param name="dst">The target vector</param>
+        [MethodImpl(Inline), Op]
+        public static unsafe Vector256<ulong> vinflate256x64u(in SpanBlock64<ushort> src, uint offset)
+            => v64u(ConvertToVector256Int64(gptr(src[offset])));
+
+        /// <summary>
+        /// VPMOVZXDQ ymm, m128
+        /// 4x32u -> 4x64u
+        /// </summary>
+        /// <param name="src">The blocked memory source</param>
+        /// <param name="dst">The target vector</param>
+        [MethodImpl(Inline), Op]
+        public static unsafe Vector256<ulong> vinflate256x64u(SpanBlock128<uint> src, uint offset)
+            => v64u(ConvertToVector256Int64(gptr(src[offset])));
+
+        [MethodImpl(Inline), Op]
+        public static ReadOnlySpan<char> inflate16u(in ByteBlock8 src)
+            => recover<char>(sys.bytes(vcpu.vlo(vpack.vinflate256x16u(vcpu.vbytes(w128, u64(src))))));
+
+        [MethodImpl(Inline), Op]
+        public static ReadOnlySpan<char> inflate16u(in ByteBlock16 src)
+            => recover<char>(sys.bytes(vcpu.vlo(vpack.vinflate256x16u(vcpu.vbytes(w128, u64(src))))));
+
+        [MethodImpl(Inline), Op]
+        public static ReadOnlySpan<char> inflate16u(in ByteBlock32 src)
+        {
+            var v = vload(w256, src.Bytes);
+            var lo = vpack.vinflatelo256x16u(v);
+            var hi = vpack.vinflatehi256x16u(v);
+            return recover<char>(sys.bytes(new V256x2(lo,hi)));
+        }
+
+
+        /// <summary>
+        /// VPMOVSXWD ymm, m128
+        /// 16x16u ->16x32u
+        /// </summary>
+        /// <param name="src">The memory source</param>
+        /// <param name="dst">The target vector</param>
+        [MethodImpl(Inline), Op]
+        public static unsafe Vector512<int> vinflate512x32i(SpanBlock128<short> src, uint offset)
+            => (ConvertToVector256Int32(gptr(src[offset])),
+                ConvertToVector256Int32(gptr(src[offset], 8)));
 
         /// <summary>
         /// Returns true if all source blocks satisfy a specified unary predicate

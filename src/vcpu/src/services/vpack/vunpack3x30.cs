@@ -49,7 +49,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         static Vector256<uint> vsplit30x8x3Mask(uint src)
-            => cpu.vparts(m0, m1, m2, m3, m4, 0, 0, 0);
+            => vcpu.vparts(m0, m1, m2, m3, m4, 0, 0, 0);
 
         // The components are now in the following order, from lo to hi:
         // 0, 5, 1, 6, 2, 7, 3, 8, 4, 9
@@ -57,7 +57,7 @@ namespace Z0
         // Permuting would be cheaper but, in any case...
         [MethodImpl(Inline)]
         static Vector256<ushort> vsplit30x8x3Assemble(Vector256<ushort> y)
-            => cpu.vparts(w256,
+            => vcpu.vparts(w256,
                 vcell(y,0), // 0
                 vcell(y,2), // 1
                 vcell(y,4), // 2

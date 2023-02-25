@@ -29,16 +29,5 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static Vector512<int> vinflate512x32i(Vector256<short> src)
             => (vlo256x32i(src), vhi256x32i(src));
-
-        /// <summary>
-        /// VPMOVSXWD ymm, m128
-        /// 16x16u ->16x32u
-        /// </summary>
-        /// <param name="src">The memory source</param>
-        /// <param name="dst">The target vector</param>
-        [MethodImpl(Inline), Op]
-        public static unsafe Vector512<int> vinflate512x32i(SpanBlock128<short> src, uint offset)
-            => (ConvertToVector256Int32(gptr(src[offset])),
-                ConvertToVector256Int32(gptr(src[offset], 8)));
     }
 }

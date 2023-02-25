@@ -387,7 +387,7 @@ namespace Z0
                         Run(n21);
                     break;
                     case 26:
-                        run(n26,Emitter);
+                        run(n26, Channel);
                     break;
                     case 29:
                         Run(n29);

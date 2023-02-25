@@ -4,18 +4,18 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static gcpu;
+    using static vcpu;
 
     partial struct vpack
     {
         /// <summary>
-        /// Packs 16 1-bit values taken from each source byte at a specified index
+        /// Packs 32 1-bit values taken from each source byte at a specified index
         /// </summary>
         /// <param name="src">The data source</param>
         /// <param name="index">The byte-relative index from which the bit will be extracted, an integer in the range [0,7]</param>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ushort vpack16u<T>(Vector128<T> src, byte index)
+        public static uint vpack32u<T>(Vector256<T> src, byte index)
             where T : unmanaged
-                => vmask16u(src, index);
+                => vmask32u(src, index);
     }
 }

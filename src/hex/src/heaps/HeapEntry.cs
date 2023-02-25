@@ -5,13 +5,13 @@
 namespace Z0
 {
     [StructLayout(LayoutKind.Sequential,Pack=1)]
-    public readonly struct HeapEntry
+    public readonly record struct HeapEntry : IComparable<HeapEntry>
     {
         [Render(8)]
         public readonly uint Index;
 
         [Render(8)]
-        public readonly uint Offset;
+        public readonly Hex32 Offset;
 
         [Render(8)]
         public readonly uint Length;
@@ -26,5 +26,17 @@ namespace Z0
             Length = length;
             Pad = 0;
         }
+
+        const string IndexPattern = "D5";
+
+        [MethodImpl(Inline)]
+        public int CompareTo(HeapEntry src)
+            => Index.CompareTo(src.Index);
+
+        public string Format()
+            => $"[${Index.ToString(IndexPattern)}::${Offset}:${Length}]";
+
+        public override string ToString()
+            => Format();
     }
 }

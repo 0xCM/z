@@ -16,7 +16,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector128<T> vrotrx<T>(Vector128<T> src, [Imm] byte count)
             where T : unmanaged
-                => generic<T>(cpu.vrotrx(v64u(src), count));
+                => generic<T>(vcpu.vrotrx(v64u(src), count));
 
         /// <summary>
         /// Rotates the each 128-bit lane rightward at bit-level resolution
@@ -26,6 +26,6 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector256<T> vrotrx<T>(Vector256<T> src, [Imm] byte count)
             where T : unmanaged
-                => generic<T>(cpu.vrotrx(v64u(src), count));
+                => generic<T>(vcpu.vrotrx(v64u(src), count));
     }
 }

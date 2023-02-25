@@ -24,7 +24,7 @@ namespace Z0
             return result;
         } 
 
-        public static void profiles(FilePath src, Lookup<Actor,ToolProfile> dst, WfEmit channel)
+        public static void profiles(FilePath src, Lookup<Actor,ToolProfile> dst, IWfChannel channel)
         {
             var content = src.ReadUnicode();
             var result = TextGrids.parse(content, out var grid);

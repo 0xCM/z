@@ -11,8 +11,8 @@ namespace Z0
         [CmdOp("memory/checks")]
         void CheckMemAlloc()
         {
-            CheckStringAllocator(Emitter);
-            CheckLabelAllocator(Emitter);
+            CheckStringAllocator(Channel);
+            CheckLabelAllocator(Channel);
         }
 
         static void CheckStringAllocator(IWfChannel channel)

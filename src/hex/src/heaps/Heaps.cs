@@ -22,10 +22,12 @@ namespace Z0
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static SpanHeap<T> create<T>(Span<T> src, ReadOnlySpan<uint> offsets)
-            => new SpanHeap<T>(src, offsets);
+            where T : unmanaged
+                => new SpanHeap<T>(src, offsets);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static ReadOnlyHeap<T> create<T>(ReadOnlySpan<T> src, uint[] offsets)
+            where T : unmanaged
             => new ReadOnlyHeap<T>(src, offsets);
 
         [MethodImpl(Inline)]
@@ -157,6 +159,5 @@ namespace Z0
             dst = @as<HeapEntry<K,O,L>>(src);
             return dst;
         }
-
     }
 }

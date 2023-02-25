@@ -20,7 +20,7 @@ namespace Z0
         /// <param name="n">The source component count</param>
         /// <param name="w">The target component width</param>
         /// <param name="i">Signals a sign extension</param>
-        [MethodImpl(Inline), Op(inflate)]
+        [MethodImpl(Inline), Op]
         public static unsafe Vector128<long> vinflate2x8u(in byte src, out Vector128<long> dst)
             => dst = ConvertToVector128Int64(gptr(src));
 
@@ -32,7 +32,7 @@ namespace Z0
         /// <param name="src">The input component source</param>
         /// <param name="n">The source component count</param>
         /// <param name="dst">The target component width</param>
-        [MethodImpl(Inline), Op(inflate)]
+        [MethodImpl(Inline), Op]
         public static unsafe Vector128<ulong> vinflate2x8u(in byte src, out Vector128<ulong> dst)
             => dst = v64u(ConvertToVector128Int64(gptr(src)));
     }

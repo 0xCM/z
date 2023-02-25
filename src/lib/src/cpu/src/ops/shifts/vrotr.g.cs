@@ -18,13 +18,13 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(byte))
-                return generic<T>(cpu.vrotr(v8u(x), count));
+                return generic<T>(vcpu.vrotr(v8u(x), count));
             else if(typeof(T) == typeof(ushort))
-                return generic<T>(cpu.vrotr(v16u(x), count));
+                return generic<T>(vcpu.vrotr(v16u(x), count));
             else if(typeof(T) == typeof(uint))
-                return generic<T>(cpu.vrotr(v32u(x), count));
+                return generic<T>(vcpu.vrotr(v32u(x), count));
             else if(typeof(T) == typeof(ulong))
-                return generic<T>(cpu.vrotr(v64u(x), count));
+                return generic<T>(vcpu.vrotr(v64u(x), count));
             else
                 throw no<T>();
         }
@@ -39,13 +39,13 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(byte))
-                return generic<T>(cpu.vrotr(v8u(x), count));
+                return generic<T>(vcpu.vrotr(v8u(x), count));
             if(typeof(T) == typeof(ushort))
-                return generic<T>(cpu.vrotr(v16u(x), count));
+                return generic<T>(vcpu.vrotr(v16u(x), count));
             if(typeof(T) == typeof(uint))
-                return generic<T>(cpu.vrotr(v32u(x), count));
+                return generic<T>(vcpu.vrotr(v32u(x), count));
             if(typeof(T) == typeof(ulong))
-                return generic<T>(cpu.vrotr(v64u(x), count));
+                return generic<T>(vcpu.vrotr(v64u(x), count));
             else
                 throw no<T>();
         }

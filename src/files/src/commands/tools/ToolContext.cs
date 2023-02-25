@@ -35,12 +35,6 @@ namespace Z0
             IO = io;
         }
 
-        // public ToolContext Redirect(ISysIO io)
-        //     => new ToolContext(WorkingDir, Vars, ProcessCreated, io);
-
-        // public ToolContext WithVar(EnvVar var)
-        //     => new ToolContext(WorkingDir, Vars.Replace(var), ProcessCreated, IO);
-
         FolderPath IToolContext.WorkingDir 
             => WorkingDir;
 

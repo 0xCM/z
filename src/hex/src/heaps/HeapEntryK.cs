@@ -5,7 +5,7 @@
 namespace Z0
 {
     [StructLayout(LayoutKind.Sequential,Pack=1)]
-    public readonly struct HeapEntry<K>
+    public readonly record struct HeapEntry<K>
         where K : unmanaged
     {
         public readonly K Index;

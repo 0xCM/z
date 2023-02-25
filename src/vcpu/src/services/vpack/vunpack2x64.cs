@@ -32,6 +32,5 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static unsafe Vector128<ulong> vunpack2x64(in uint src)
             => vcpu.v64u(ConvertToVector128Int64(gptr(src)));
-
     }
 }
