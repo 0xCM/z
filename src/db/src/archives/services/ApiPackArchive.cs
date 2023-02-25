@@ -18,7 +18,7 @@ namespace Z0
             Root = root;
         }
 
-        FolderPath IFileArchive.Root
+        FolderPath IRootedArchive.Root
             => Root;
     }
 }

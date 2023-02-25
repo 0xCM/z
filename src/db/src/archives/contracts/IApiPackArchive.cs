@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IApiPackArchive : IFileArchive
+    public interface IApiPackArchive : IRootedArchive
     {
         DbArchive Tables()
             => new DbArchive(Root);

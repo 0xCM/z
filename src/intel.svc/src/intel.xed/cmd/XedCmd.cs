@@ -24,9 +24,18 @@ namespace Z0
 
         IntelSdm Sdm => Wf.IntelSdm();
 
+        XedProject XedProject => Wf.XedProject();
+
         public IProjectWorkspace LlvmModels(string scope)
             => Projects.load(AppDb.Dev($"llvm.models/{scope}"), scope);
 
+        [CmdOp("xed/headers")]
+        void XedHeaders()
+        {
+            var src = XedProject.KitHeaders();
+            iter(src, file => Channel.Row(file));
+        }
+        
         [CmdOp("asm/gen/specs")]
         Outcome GenInstData(CmdArgs args)
         {

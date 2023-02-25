@@ -19,7 +19,7 @@ namespace Z0
     /// of System.Diagnostics.Process, and knows how to capture output and otherwise
     /// makes calling commands very easy.
     /// </summary>
-    public sealed class CmdProcess : ICmdProcess<CmdProcess>
+    public sealed class CmdProcess
     {
         public static Task<ExecToken> start(IWfChannel channel, CmdLine cmd)
         {

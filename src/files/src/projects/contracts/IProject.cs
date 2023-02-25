@@ -4,9 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public static partial class XTend
+    public interface IProject
     {
-        public static ReadOnlySpan<TextLine> Lines(this string src, bool keepblank = false, bool trim = true)
-            => Z0.Lines.read(src, keepblank, trim);
+        @string Name {get;}
+
+        IDbArchive Root {get;}
     }
 }

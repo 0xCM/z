@@ -4,10 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface ICmdFlow<C,A,B> : IFlowCmd<A,B>, IApiCmd<C>
-        where C : IApiCmd<C>, new()
+    partial class XTend
     {
-        IActor IFlowCmd.Actor 
-            => new Actor("wf/module");
-    }   
+        public static ReadOnlySpan<TextLine> Lines(this string src, bool keepblank = false, bool trim = true)
+            => Z0.Lines.read(src, keepblank, trim);
+    }
 }

@@ -197,6 +197,13 @@ namespace Z0
             return dst;
         }
 
+        public static void emit(IWfChannel channel, IDbArchive dst)
+        {
+            emit(channel,EnvVarKind.Process, dst);
+            emit(channel,EnvVarKind.User, dst);
+            emit(channel,EnvVarKind.Machine, dst);
+        }
+
         public static ExecToken emit(IWfChannel channel, EnvVarKind kind, EnvVars vars, IDbArchive dst)
         {
             var token = ExecToken.Empty;

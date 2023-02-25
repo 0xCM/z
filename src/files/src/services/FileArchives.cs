@@ -53,7 +53,7 @@ namespace Z0
             var flow = Channel.Running($"Injesting files from {src.Root}");
             var index = dst.Path(FS.file($"index.{ProcessId.current()}.{timestamp()}", FileKind.Csv));
             var buffer = bag<Entry>();
-            iter(src.Enumerate("*"), path => buffer.Add(entry(path)), true);
+            iter(src.Enumerate(true), path => buffer.Add(entry(path)), true);
             var entries = buffer.Array().Resequence();
             Channel.TableEmit(entries, index);
             Channel.Ran(flow,$"Injested {entries.Length} files");

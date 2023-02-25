@@ -8,7 +8,7 @@ namespace Z0
     using T = System.Diagnostics.ProcessThread;
     using P = System.Diagnostics.Process;
 
-    partial class XTend
+    public static partial class XTend
     {
         public static ProcessAdapter Adapt(this P src)
             => src;

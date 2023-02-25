@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct ApiPackages : IRootedArchive
+    public readonly struct ApiPackages : IDbArchive
     {
         public readonly FolderPath Root;
 

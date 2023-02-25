@@ -43,7 +43,7 @@ namespace Z0
 
         public ReadOnlySeq<ProcessMemoryRegion> EmitRegions(Process process, IApiPack dst)
         {
-            var regions = ProcessMemory.regions(process);
+            var regions = ImageMemory.regions(process);
             EmitRegions(regions, dst.Scoped("context").Path("memory.regions", FileKind.Csv));
             return regions;
         }
@@ -83,18 +83,6 @@ namespace Z0
             seek(outcomes,i++) = DataParser.parse(skip(parts,j++), out dst.ImagePath);
             return true;
         }
-
-        [Op]
-        public static ReadOnlySeq<ProcessMemoryRegion> regions()
-            => ImageMemory.pages(MemoryNode.snapshot().Describe());
-
-        [Op]
-        public static ReadOnlySeq<ProcessMemoryRegion> regions(int procid)
-            => ImageMemory.pages(MemoryNode.snapshot(procid).Describe());
-
-        [Op]
-        public static ReadOnlySeq<ProcessMemoryRegion> regions(Process src)
-            => ImageMemory.pages(MemoryNode.snapshot(src.Id).Describe());
 
         public ReadOnlySpan<ProcessSegment> EmitMethodSegments(ProcAddresses src, ReadOnlySpan<ApiMemberInfo> methods, IDbArchive dst)
         {
@@ -217,7 +205,7 @@ namespace Z0
             => EmitHashes(MemoryStores.load(src).Addresses, dst.RegionHashPath());
 
         public void EmitSegments(IApiPack dst)
-            => EmitSegments(ProcessMemory.regions(), dst);
+            => EmitSegments(ImageMemory.regions(), dst);
 
         public void EmitSegments(ReadOnlySeq<ProcessMemoryRegion> src, IDbArchive dst)
             => Channel.TableEmit(addresses(src).Segments, dst.Scoped("context").Table<ProcessSegment>());

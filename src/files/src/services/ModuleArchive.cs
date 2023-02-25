@@ -19,7 +19,7 @@ namespace Z0
             Recurse = recurse;
         }
 
-        FolderPath IFileArchive.Root
+        FolderPath IRootedArchive.Root
             => Root;
 
         public IEnumerable<AssemblyFile> Assemblies()

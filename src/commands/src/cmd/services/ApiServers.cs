@@ -33,7 +33,7 @@ namespace Z0
             return new CmdCatalog(entries(dst));
         }
 
-        static ReadOnlySeq<ApiCmdInfo> entries(CmdUriSeq src)    
+        static ReadOnlySeq<ApiCmdInfo> entries(ReadOnlySeq<CmdUri> src)    
         {
             var entries = alloc<ApiCmdInfo>(src.Count);
             for(var i=0; i<src.Count; i++)

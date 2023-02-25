@@ -11,7 +11,7 @@ namespace Z0
         IProjectType ProjectType {get;}
 
         IEnumerable<FilePath> Files()
-            => Root.Enumerate("*", true);
+            => Root.Enumerate(true);
 
         IEnumerable<FilePath> Files(params FileKind[] kinds)
             => Root.Enumerate(true, kinds);
@@ -20,7 +20,7 @@ namespace Z0
             => Root.Enumerate(true, ext);
 
         IEnumerable<FilePath> Files(string match)
-            => Root.Enumerate(match, true);
+            => Root.Enumerate(true,match);
     }
 
     public interface IProjectArchive<K> : IProjectType

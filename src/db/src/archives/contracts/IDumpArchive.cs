@@ -6,7 +6,7 @@ namespace Z0
 {
     using static EnvFolders;
 
-    public interface IDumpArchive : IRootedArchive
+    public interface IDumpArchive : IDbArchive
     {
         IDbArchive DumpTargets(string scope)
             => new DbArchive(Root, scope);

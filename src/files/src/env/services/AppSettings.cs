@@ -103,6 +103,9 @@ namespace Z0
         public DbArchive SdeDb()
             => folder(Instance.Setting(SettingNames.SdeDb));
 
+        public DbArchive Sdks()
+            => folder(Instance.Setting(SettingNames.SdkRoot));
+
         public DbArchive InxDb()
             => folder(Instance.Setting(SettingNames.InxDb));
 

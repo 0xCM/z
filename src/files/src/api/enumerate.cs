@@ -35,9 +35,17 @@ namespace Z0
         {
             if(src.Exists)
             {
-                foreach(var kind in kinds)
-                foreach(var file in Directory.EnumerateFiles(src.Name, kind.SearchPattern(), options(recurse)))
-                    yield return new FilePath(file);
+                if(kinds.Length != 0)
+                {            
+                    foreach(var kind in kinds)
+                    foreach(var file in Directory.EnumerateFiles(src.Name, kind.SearchPattern(), options(recurse)))
+                        yield return new FilePath(file);
+                }
+                else
+                {
+                    foreach(var file in Directory.EnumerateFiles(src.Name, "*", options(recurse)))
+                        yield return new FilePath(file);
+                }
             }            
         }
 
@@ -45,9 +53,17 @@ namespace Z0
         {
             if(src.Exists)
             {
-                foreach(var ext in extensions)
-                foreach(var file in Directory.EnumerateFiles(src.Name, ext.SearchPattern, options(recurse)))
-                    yield return new FilePath(file);
+                if(extensions.Length != 0)
+                {
+                    foreach(var ext in extensions)
+                    foreach(var file in Directory.EnumerateFiles(src.Name, ext.SearchPattern, options(recurse)))
+                        yield return new FilePath(file);
+                }
+                else
+                {
+                    foreach(var file in Directory.EnumerateFiles(src.Name, "*", options(recurse)))
+                        yield return new FilePath(file);
+                }
             }            
         }
 

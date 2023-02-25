@@ -73,6 +73,10 @@ namespace Z0
 
             public Xed Xed(IWfRuntime wf)
                 => Service<Xed>(wf);
+
+            public XedProject XedProject(IWfRuntime wf)
+                => Service<XedProject>(wf);
+
         }
 
         static ServiceCache Services => ServiceCache.Instance;
@@ -145,6 +149,10 @@ namespace Z0
  
         public static IntelCmd IntelCmd(this IWfRuntime wf)
             => Services.IntelCmd(wf);
+
+        public static XedProject XedProject(this IWfRuntime wf)
+            => Services.XedProject(wf);
+
     }
 
     partial struct Msg

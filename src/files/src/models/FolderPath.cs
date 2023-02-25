@@ -66,9 +66,6 @@ namespace Z0
         public Files Files(bool recurse, params FileExt[] ext)
             => Files(this, recurse, ext);
 
-        // public Files TopFiles
-        //     => Directory.Exists(Name) ? FS.files(Directory.EnumerateFiles(Name).Map(FS.path)) : Z0.Files.Empty;
-
         public IEnumerable<FolderPath> Folders(string match, bool recurse)
             => Directory.Exists(Name) ? Directory.EnumerateDirectories(Name, match, options(recurse)).Select(FS.dir) : EnvPath.Empty;
 
@@ -134,7 +131,6 @@ namespace Z0
 
         public IEnumerable<FilePath> EnumerateFiles(bool recurse, params FileExt[] ext)
             => EnumerateFiles(this, recurse, ext);
-
 
         public IEnumerable<FilePath> EnumerateFiles(FileExt ext, bool recurse)
             => EnumerateFiles(this, ext, recurse);

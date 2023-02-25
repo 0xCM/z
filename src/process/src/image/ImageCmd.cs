@@ -41,14 +41,6 @@ namespace Z0
             }
         }
 
-        // [CmdOp("dump/parse")]
-        // public void ParseDump(CmdArgs args)
-        // {
-        //     var src = FS.path(args[0]);
-        //     using var clrmd = new ClrMdSvc(Wf);
-        //     clrmd.ParseDump(src);
-        // }
-
         [CmdOp("process/memory")]
         Outcome ShowMemHex(CmdArgs args)
         {

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IModuleArchive : IFileArchive
+    public interface IModuleArchive : IRootedArchive
     {
         IEnumerable<DllModule> NativeDll();
 

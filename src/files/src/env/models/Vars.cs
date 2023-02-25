@@ -7,8 +7,6 @@ namespace Z0
     using XF = ExprPatterns;
     using VCK = VarContextKind;
 
-    using static sys;
-
     [ApiHost,Free]
     public class Vars
     {
