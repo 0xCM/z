@@ -6,7 +6,7 @@ namespace Z0
 {
     using Names = SettingNames;
 
-    public class AppDb : IAppDb
+    public class AppDb
     {
         public static readonly Timestamp Ts = sys.timestamp();
 
@@ -67,6 +67,9 @@ namespace Z0
 
         public DbArchive AsmDb(string scope)
             => AsmDb().Scoped(scope);
+
+        public EnvDb EnvDb()
+            => new (Data.EnvDb());
 
         public DbArchive EnvSpecs()
             => DbRoot().Scoped("env");
@@ -142,10 +145,6 @@ namespace Z0
 
         public DbArchive CgStage(string scope)
             => DbTargets("cgstage").Scoped(scope);
-
-        public FilePath Settings<T>()
-            where T : struct
-                => Settings().Table<T>();
 
         public FilePath EtlTable<T>(ProjectId project)
             where T : struct

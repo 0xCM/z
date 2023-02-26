@@ -43,7 +43,7 @@ namespace Z0
 
         uint WorkerThreadId;
 
-        OpenHandle WorkerHandle;
+        SystemHandle WorkerHandle;
 
         Thread ControlThread;
 
@@ -200,7 +200,7 @@ namespace Z0
         static uint ExecutingThread()
             => Kernel32.GetCurrentThreadId();
 
-        static OpenHandle OpenThread(uint threadId)
+        static SystemHandle OpenThread(uint threadId)
             => Kernel32.OpenThread(ThreadAccess.THREAD_ALL_ACCESS, true, threadId);
     }
 }

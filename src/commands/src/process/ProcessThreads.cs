@@ -16,11 +16,11 @@ namespace Z0
             => Kernel32.GetCurrentThreadId();
 
         [MethodImpl(Inline), Op]
-        public static OpenHandle open(ThreadId threadId)
+        public static SystemHandle open(ThreadId threadId)
             => Kernel32.OpenThread(ThreadAccess.THREAD_ALL_ACCESS, true, threadId);
 
         [MethodImpl(Inline), Op]
-        public static Outcome suspend(OpenHandle handle)
+        public static Outcome suspend(SystemHandle handle)
         {
             var result = Kernel32.SuspendThread(handle);
             if(result != 0)
@@ -30,7 +30,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static Outcome resume(OpenHandle handle)
+        public static Outcome resume(SystemHandle handle)
         {
             var result = Kernel32.ResumeThread(handle);
             if(result != 0)

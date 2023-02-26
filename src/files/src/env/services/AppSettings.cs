@@ -8,6 +8,12 @@ namespace Z0
 
     public sealed class AppSettings 
     {        
+        public static ref readonly AppSettings Default
+        {
+            [MethodImpl(Inline)]
+            get => ref Instance;
+        }
+
         [MethodImpl(Inline), Op]
         static FolderPath folder(in Setting src)
             => FS.dir(src.ValueText);
@@ -106,17 +112,14 @@ namespace Z0
         public DbArchive Sdks()
             => folder(Instance.Setting(SettingNames.SdkRoot));
 
+        public DbArchive Sdk(string name)
+            => Sdks().Scoped(name);
+        
         public DbArchive InxDb()
             => folder(Instance.Setting(SettingNames.InxDb));
 
         public DbArchive SdmDb()
             => folder(Instance.Setting(SettingNames.SdmDb));
-
-        public static ref readonly AppSettings Default
-        {
-            [MethodImpl(Inline)]
-            get => ref Instance;
-        }
 
         public string Find(@string name, string @default)
         {

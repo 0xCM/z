@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     public static class XSvc
     {
         sealed class ServiceCache : AppServices<ServiceCache>
@@ -19,6 +18,9 @@ namespace Z0
             public CoffServices CoffServices(IWfRuntime wf)
                 => Service<CoffServices>(wf);
 
+            public WinSdk WinSdk(IWfRuntime wf)
+                => Service<WinSdk>(wf);
+
         }
 
         static ServiceCache Services => ServiceCache.Instance;
@@ -32,5 +34,9 @@ namespace Z0
 
         public static AsmObjects AsmObjects(this IWfRuntime wf)
             => Services.AsmObjects(wf);
+
+        public static WinSdk WinSdk(this IWfRuntime wf)
+            => Services.WinSdk(wf);
+             
     }
 }
