@@ -13,22 +13,22 @@ namespace Z0
 
         public ushort MinorRuntimeVersion;
 
-        public PeDirectory MetadataDirectory;
+        public PeDirectoryEntry MetadataDirectory;
 
         public CorFlags Flags;
 
         public Address32 EntryPointTokenOrRelativeVirtualAddress;
 
-        public PeDirectory ResourcesDirectory;
+        public PeDirectoryEntry ResourcesDirectory;
 
-        public PeDirectory StrongNameSignatureDirectory;
+        public PeDirectoryEntry StrongNameSignatureDirectory;
 
-        public PeDirectory CodeManagerTableDirectory;
+        public PeDirectoryEntry CodeManagerTableDirectory;
 
-        public PeDirectory VtableFixupsDirectory;
+        public PeDirectoryEntry VtableFixupsDirectory;
 
-        public PeDirectory ExportAddressTableJumpsDirectory;
+        public PeDirectoryEntry ExportAddressTableJumpsDirectory;
 
-        public PeDirectory ManagedNativeHeaderDirectory;
+        public PeDirectoryEntry ManagedNativeHeaderDirectory;
     }
 }

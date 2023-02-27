@@ -147,7 +147,7 @@ namespace Z0
 
         [CmdOp("cmd")]
         void Redirect(CmdArgs args)
-            => ProcessLauncher.redirect(Channel, args);
+            => ProcExec.redirect(Channel, args);
 
         [CmdOp("cd")]
         void Cd(CmdArgs args)
@@ -186,17 +186,9 @@ namespace Z0
         void Develop(CmdArgs args)
             => CodeLauncher.create(Channel).Launch(args, launched => {});
 
-        [CmdOp("devenv")]
-        void DevEnv(CmdArgs args)
-            => Tools.devenv(Channel, args[0].Value);
-
-        [CmdOp("vscode")]
-        void VsCode(CmdArgs args)
-            => Tools.vscode(Channel, args[0].Value);
-
         [CmdOp("tool")]
         void ToolHelp(CmdArgs args)
-            => Tools.start(Channel,args).Wait();
+            => ProcExec.redirect(Channel,args).Wait();
 
         [CmdOp("json/types")]
         void JsonTypes()

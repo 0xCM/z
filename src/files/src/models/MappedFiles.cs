@@ -10,7 +10,7 @@ namespace Z0
 
     public class MappedFiles : IMappedFiles
     {
-        readonly Index<MemoryFile> FileIndex;
+        readonly Index<MemoryFile> MemoryFiles;
 
         readonly Index<MemoryAddress> Addresses;
 
@@ -20,16 +20,16 @@ namespace Z0
         {
             if(src.Count != 0)
             {
-                FileIndex = src.Sort();
-                var count = FileIndex.Count;
+                MemoryFiles = src.Sort();
+                var count = MemoryFiles.Count;
                 Addresses = sys.alloc<MemoryAddress>(count);
                 for(var i=0; i<count; i++)
-                    Addresses[i] = FileIndex[i].BaseAddress;
-                FileInfo = FileIndex.Select(api.describe);
+                    Addresses[i] = MemoryFiles[i].BaseAddress;
+                FileInfo = MemoryFiles.Select(api.describe);
             }
             else
             {
-                FileIndex = Index<MemoryFile>.Empty;
+                MemoryFiles = Index<MemoryFile>.Empty;
                 Addresses = Index<MemoryAddress>.Empty;
                 FileInfo =  Index<MemoryFileInfo>.Empty;
             }
@@ -49,31 +49,31 @@ namespace Z0
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => FileIndex.IsEmpty;
+            get => MemoryFiles.IsEmpty;
         }
 
         public bool IsNonEmpty
         {
             [MethodImpl(Inline)]
-            get => FileIndex.IsNonEmpty;
+            get => MemoryFiles.IsNonEmpty;
         }
 
         public uint FileCount
         {
             [MethodImpl(Inline)]
-            get => FileIndex.Count;
+            get => MemoryFiles.Count;
         }
 
         public ref readonly MemoryFile this[ushort index]
         {
             [MethodImpl(Inline)]
-            get => ref FileIndex[index];
+            get => ref MemoryFiles[index];
         }
 
         public ref readonly MemoryFile this[MemoryAddress @base]
         {
             [MethodImpl(Inline)]
-            get => ref FileIndex[FindIndex(@base)];
+            get => ref MemoryFiles[FindIndex(@base)];
         }
 
         public Index<MemoryFileInfo> Descriptions
@@ -90,7 +90,7 @@ namespace Z0
                 for(ushort i=0; i<count; i++)
                     this[i].Dispose();
 
-                FileIndex.Clear();
+                MemoryFiles.Clear();
                 Addresses.Clear();
             }
         }

@@ -15,7 +15,7 @@ namespace Z0
             => copy(channel, FS.dir(args[0]), FS.dir(args[1]));
         
         public static Task<ExecToken> copy(IWfChannel channel, FolderPath src, FolderPath dst)
-            => ProcessLauncher.launch(channel, FS.path("robocopy.exe"), Cmd.args(src, dst, "/e"));
+            => ProcExec.launch(channel, FS.path("robocopy.exe"), Cmd.args(src, dst, "/e"));
 
         [CmdOp("symlink")]
         void Link(CmdArgs args)

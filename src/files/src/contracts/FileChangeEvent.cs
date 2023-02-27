@@ -4,7 +4,32 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using K = System.IO.WatcherChangeTypes;
+
     using static FileChangeKind;
+
+    [Flags, SymSource("files")]
+    public enum FileChangeKind : byte
+    {
+        None = 0,
+
+        [Symbol("+")]
+        Created = K.Created,
+
+        [Symbol("-")]
+        Deleted = K.Deleted,
+
+        [Symbol("M")]
+        Modified = K.Changed,
+
+        [Symbol("R")]
+        Renamed = K.Renamed,
+    }    
+
+    public interface IFileChangeReceiver : ISink<FileChangeEvent>
+    {
+        
+    }
 
     //[Event(EventKind.FileChange)]
     public readonly record struct FileChangeEvent

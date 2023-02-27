@@ -1,5 +1,4 @@
 @echo off
-set ProjectId=agents
-set Area=src
+set ProjectName=agents
+set ToolName=agency
 call %~dp0..\config.cmd
-

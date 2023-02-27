@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public abstract class AgentControl<A,C> : AppService<A>, IAgentControl<A,C>
+    public abstract class AgentControl<A,C> : IAgentControl<A,C>
         where A : AgentControl<A,C>, new()
         where C : IAgentContext
     {
@@ -45,5 +45,9 @@ namespace Z0
 
         protected virtual void OnConfigure(dynamic config) {}
 
+        public virtual void Dispose()
+        {
+            
+        }
     }
 }

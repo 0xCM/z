@@ -9,6 +9,6 @@ namespace Z0
         where T : unmanaged
     {
         public virtual ref readonly T Body
-            => ref core.@as<T>(Subject.Payload<byte[]>("Body").ToSpan());
+            => ref sys.@as<T>(Subject.Payload<byte[]>("Body").ToSpan());
     }
 }

@@ -15,10 +15,10 @@ namespace Z0
             : base(context, (server, 1u))
         {
             Agents = agents.ToList();
-            CoreNumber = (int)core;
+            CpuCore = (int)core;
         }
 
-        readonly int CoreNumber;
+        readonly int CpuCore;
 
         /// <summary>
         /// Exposes a readonly stream of the agents under management on behalf of the server
@@ -31,7 +31,9 @@ namespace Z0
 
         protected override void OnStart()
         {
-            core.thread(CurrentProcess.OsThreadId).OnSome(t => t.IdealProcessor = CoreNumber);
+            var thread = CurrentProcess.ProcessThread(CurrentProcess.OsThreadId);
+            thread.IdealProcessor = CpuCore;
+            //core.thread(CurrentProcess.OsThreadId).OnSome(t => t.IdealProcessor = CoreNumber);
             foreach(var src in Agents)
                 src.Start();
         }

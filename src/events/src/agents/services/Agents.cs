@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
 
     [ApiHost]
-    public class Agents : AppService<Agents>
+    public class Agents
     {
         public static IAgentControl control(IAgentContext context)
             => AgentControl.create(context);

@@ -1,4 +1,5 @@
 <Project>
+  <Import Project="$(SlnProps)\diagnostics.props"/>
   <ItemGroup>
     <ProjectReference Include="$(Sys)" />
     <ProjectReference Include="$(Text)" />

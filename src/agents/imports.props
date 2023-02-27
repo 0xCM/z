@@ -1,6 +1,5 @@
 <Project>
-  <Import Project="$(SlnProps)\diagnostics.props"/>
   <ItemGroup>
-    <ProjectReference Include="$(ZLib)" />
+    <ProjectReference Include="$(Commands)" />
   </ItemGroup>
 </Project>

@@ -13,6 +13,7 @@ namespace Z0
 
             public ArchiveRegistry ArchiveRegistry(IWfRuntime wf)
                 => Service<ArchiveRegistry>(wf);            
+
         }
 
         static ServiceCache Services => ServiceCache.Instance;

@@ -117,7 +117,7 @@ namespace Z0
 
         public static void modules(IDbArchive src, Action<CoffModule> dst)
         {
-            iter(src.Enumerate(true, FileKind.Exe, FileKind.Dll, FileKind.Obj, FileKind.Lib), path => {                
+            iter(src.Enumerate(true, FileKind.Exe, FileKind.Dll, FileKind.Obj, FileKind.Lib, FileKind.Sys), path => {
                 using var reader = PeReader.create(path);
                 dst(reader.ModuleInfo());
             }, true);
@@ -127,9 +127,9 @@ namespace Z0
             => new EcmaToken(state.Reader.GetToken(handle));
 
         [MethodImpl(Inline), Op]
-        public static PeDirectory directory(Address32 rva, uint size)
+        public static PeDirectoryEntry directory(Address32 rva, uint size)
         {
-            var dst = new PeDirectory();
+            var dst = new PeDirectoryEntry();
             dst.Rva = rva;
             dst.Size = size;
             return dst;
@@ -137,7 +137,6 @@ namespace Z0
 
         public ReadOnlySeq<PeSectionHeader> Headers()
             => PeReader.headers(PE);
-
 
         PeReader(FilePath src, FileStream stream, PEReader reader)
         {
@@ -238,10 +237,10 @@ namespace Z0
         public ReadOnlySpan<MemberReferenceHandle> MemberRefHandles
             => MD.MemberReferences.ToArray();
 
-        public PeDirectory ResourcesDirectory
+        public PeDirectoryEntry ResourcesDirectory
             => PeHeaders.CorHeader.ResourcesDirectory;
 
-        public PEMemoryBlock ReadSectionData(PeDirectory src)
+        public PEMemoryBlock ReadSectionData(PeDirectoryEntry src)
             => PE.GetSectionData((int)src.Rva);
 
         /// <summary>

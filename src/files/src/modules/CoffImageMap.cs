@@ -68,6 +68,5 @@ namespace Z0
             => File?.Dispose();
 
         public static CoffImageMap Empty => new();
-
     }
 }

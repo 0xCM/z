@@ -176,7 +176,6 @@ namespace Z0
                 src[i].Render(s => writer.WriteLine(s));
         }
 
-
         [CmdOp("tool/script")]
         Outcome ToolScript(CmdArgs args)
             => Tooling.RunScript(arg(args,0).Value, arg(args,1).Value);
@@ -207,7 +206,7 @@ namespace Z0
             {
                 var wd = Env.cd();
                 var options = $"-NoLogo -i -wd {text.dquote(Env.cd())}";
-                ProcessLauncher.launch(channel, new SysIO(OnA,OnB), CmdArgs.create("pwsh.exe", options), wd);
+                ProcExec.launch(channel, new SysIO(OnA,OnB), CmdArgs.create("pwsh.exe", options), wd);
             }
         }
 
@@ -262,6 +261,13 @@ namespace Z0
             {
                 Channel.Write($"{i}", src[i].Timestamp);
             }
+        }
+
+
+        [CmdOp("files/handles")]
+        void FileHandles()
+        {
+
         }
 
         [CmdOp("api/pack/list")]

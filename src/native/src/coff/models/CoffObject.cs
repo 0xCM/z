@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static sys;
+
     [StructLayout(LayoutKind.Sequential, Pack=1)]
     public readonly record struct CoffObject
     {
@@ -25,11 +27,11 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public ReadOnlySpan<byte> Bytes(Address32 address, ByteSize size)
-            => core.slice(Data.View,(uint)address, size);
+            => slice(Data.View,(uint)address, size);
 
         [MethodImpl(Inline)]
         public ReadOnlySpan<byte> Bytes(MemoryRange range)
-            => core.slice(Data.View,(uint)range.Min, range.ByteCount);
+            => slice(Data.View,(uint)range.Min, range.ByteCount);
 
         public ref readonly byte this[uint i]
         {
@@ -52,9 +54,9 @@ namespace Z0
             for(var i=0; i<count; i++)
             {
                 if(i != count - 1)
-                    dst.AppendLine(core.skip(lines,i));
+                    dst.AppendLine(skip(lines,i));
                 else
-                    dst.Append(core.skip(lines,i));
+                    dst.Append(skip(lines,i));
             }
             return dst.Emit();
         }

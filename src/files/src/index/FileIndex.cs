@@ -5,8 +5,6 @@
 namespace Z0
 {
     using static sys;
-    using System.Linq;
-    
 
     public class FileIndex
     {

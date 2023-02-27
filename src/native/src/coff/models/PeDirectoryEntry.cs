@@ -5,22 +5,22 @@
 namespace Z0
 {
     [StructLayout(LayoutKind.Sequential), Record(TableId)]
-    public record struct PeDirectory
+    public record struct PeDirectoryEntry
     {
-        public const string TableId = "pe.dirinfo";
+        public const string TableId = "pe.directory.entry";
 
         public Address32 Rva;
 
         public uint Size;
 
         [MethodImpl(Inline)]
-        public PeDirectory(DirectoryEntry src)
+        public PeDirectoryEntry(DirectoryEntry src)
         {
             Rva = src.RelativeVirtualAddress;
             Size = (uint)src.Size;
         }
 
-        public static implicit operator PeDirectory(DirectoryEntry src)
-            => new PeDirectory(src);
+        public static implicit operator PeDirectoryEntry(DirectoryEntry src)
+            => new PeDirectoryEntry(src);
     }
 }

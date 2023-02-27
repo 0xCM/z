@@ -183,18 +183,12 @@ namespace Z0
         void ExportPeInfo(CmdArgs args)
         {
             var src = Archives.archive(args[0]);
-            var dst = ShellData.Path(FS.file($"{Archives.identifier(src.Root)}.modules", FS.ext("records")));
+            var targets = FS.dir(args[1].Value).ToArchive().Scoped("coff.modules");
             var modules = bag<CoffModule>();
-            PeReader.modules(src,module => {
-                modules.Add(module);
+            PeReader.modules(src,m => {
+                var path = targets.Path(m.Path.FileName().WithExtension(FS.ext("records")));
+                Channel.FileEmit(m.ToString(), path);
             });
-            var buffer = text.emitter();
-            var context = RenderContext.create(buffer);
-            iter(modules, m => {
-                buffer.AppendLine(m.ToString());
-            });
-                        
-            Channel.FileEmit(buffer.Emit(), dst);
         }
     }
 }

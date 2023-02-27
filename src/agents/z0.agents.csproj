@@ -2,6 +2,8 @@
   <Import Project="$(ProjectProps)\usings.props"/>
   <Import Project="imports.props"/>
   <PropertyGroup>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>zagents</AssemblyName>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
 </Project>
