@@ -6,8 +6,13 @@ namespace Z0
 {
     using static sys;
 
-    partial class Symbolic
+    [ApiHost]
+    public partial class Symbolic
     {
+        [MethodImpl(Inline), Op, Closures(UInt64k)]
+        public static bit deposit<T>(in T src, ref SymStore<T> dst, out SymRef s)
+            => dst.Deposit(src, out s);
+
         [Parser]
         public static Outcome parse(string src, out SymInfo dst)
         {

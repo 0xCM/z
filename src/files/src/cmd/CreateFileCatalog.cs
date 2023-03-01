@@ -7,7 +7,7 @@ namespace Z0.Commands
     [Cmd(CmdName)]
     public record class CreateFileCatalog : Command<CreateFileCatalog>
     {
-        public const string CmdName = "files";
+        const string CmdName = "files";
 
         public CreateFileCatalog()
         {

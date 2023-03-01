@@ -5,18 +5,18 @@
 
 namespace Z0
 {
-    sealed class QueryReceiver : FileQueries.Receiver<QueryReceiver>
+    public sealed class QueryReceiver : FileQueries.Receiver<QueryReceiver>
     {
-        Action<FileUri> Handler;
+        Action<FilePath> Handler;
         
-        public override void Matched(FileUri src)
+        public override void Matched(FilePath src)
         {
             Handler?.Invoke(src);
         }
 
-        public QueryReceiver WithHandler(Action<FileUri> handler)
+        public QueryReceiver WithHandler(Action<FilePath> handler)
         {
-            Handler = handler;
+            Handler = handler;            
             return this;
         }
     }

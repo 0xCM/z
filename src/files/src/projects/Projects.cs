@@ -11,9 +11,6 @@ namespace Z0
         public static FilePath build(IProjectWorkspace src)
             => src.BuildOut() + FS.file($"{src.ProjectId}.build.flows",FileKind.Csv);
 
-        static FilePath target(IProjectWorkspace project, string name, FileKind kind = FileKind.Log)
-            => project.BuildOut()+ FS.file(name, kind.Ext());
-
         public static IProjectWorkspace load(IDbArchive root, ProjectId id)
             => new ProjectWorkspace(root, id);
 
@@ -55,7 +52,7 @@ namespace Z0
         public static ref readonly IProjectWorkspace project()
         {
             if(Project == null)
-                Errors.Throw("Project is null");
+                sys.@throw("Project is null");
             return ref Project;
         }
 

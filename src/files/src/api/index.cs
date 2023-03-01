@@ -6,11 +6,12 @@ namespace Z0
 {
     partial struct FS
     { 
-        public static FileIndex index(IEnumerable<FileUri> src)
+        public static FileIndex index(params FilePath[] src)
         {
-            var files = new HashedFiles();
-            files.Include(src);
-            return files.Index();
+            var dst = new FileIndex();
+            dst.Include(src);
+            return dst;
         }
+
     }
 }

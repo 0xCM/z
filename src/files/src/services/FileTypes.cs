@@ -3,9 +3,6 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 global using Microsoft.Extensions.FileProviders;
-global using System.Text.Json;
-global using System.Text.Json.Serialization;
-global using System.Text.Json.Nodes;
 namespace Z0
 {
     public class FileKinds
@@ -14,8 +11,11 @@ namespace Z0
             => kinds.Where(x => src.Is(x)).Length != 0;
             
         public static FileKind kind(FilePath src)
+            => kind(src.FileName);
+
+        public static FileKind kind(FileName src)
         {
-            var name = src.FileName.Format().ToLower();
+            var name = src.Format().ToLower();
             var kind = FileKind.None;
             foreach(var expr in Data)
             {
@@ -26,6 +26,7 @@ namespace Z0
                 }
             }
             return kind;
+
         }
 
         public static bool parse(string src, out FileKind dst)
@@ -38,7 +39,7 @@ namespace Z0
         {
             var dst = FileKind.None;
             var symbols = Symbols.index<FileKind>();
-            symbols.ExprKind(src.Format(), out dst);
+            EnumParser<FileKind>.Service.Parse(src.Name.Format().ToLower(), out dst);
             return dst;
         }
 

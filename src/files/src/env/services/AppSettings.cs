@@ -82,8 +82,8 @@ namespace Z0
         public DbArchive ProcDumps()
             => folder(Instance.Setting(SettingNames.ProcDumps));
 
-        public DbArchive EnvDb()
-            => folder(Instance.Setting(SettingNames.EnvDb));
+        public IEnvDb EnvDb()
+            => new EnvDb(folder(Instance.Setting(SettingNames.EnvDb)));
 
         public DbArchive Capture()
             => folder(Instance.Setting(SettingNames.Capture));

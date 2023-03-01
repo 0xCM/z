@@ -4,7 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class EnvDb : IDbArchive
+    public interface IEnvDb : IDbArchive
+    {
+
+
+    }
+    
+    public class EnvDb : IEnvDb
     {
         public EnvDb(FolderPath root)
         {

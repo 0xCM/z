@@ -11,6 +11,33 @@ namespace Z0
     [ApiHost]
     public unsafe partial class EcmaReader
     {
+        public static unsafe EcmaReader create(MemoryAddress @base, ByteSize size)
+            => new (new PEReader(@base.Pointer<byte>(), size).GetMetadata());
+
+        public static EcmaReader create(EcmaFile src)
+            => new EcmaReader(src);
+
+        [Op]
+        public static EcmaReader create(Assembly src)
+            => new EcmaReader(src);
+
+        [Op]
+        public static EcmaReader create(MetadataReader src)
+            => new EcmaReader(src);
+
+        [Op]
+        public static EcmaReader create(MemorySeg src)
+            => new EcmaReader(src);
+
+        [Op]
+        public static EcmaReader create(PEMemoryBlock src)
+            => new EcmaReader(src);
+
+
+        [MethodImpl(Inline), Op]
+        public static Address32 offset(MetadataReader reader, UserStringHandle handle)
+            => (Address32)reader.GetHeapOffset(handle);
+
         public static AssemblyFiles assemblies(IWfChannel channel, IDbArchive src)
         {
             var dst = bag<AssemblyFile>();
@@ -188,28 +215,6 @@ namespace Z0
             return count;
         }
 
-        public static unsafe EcmaReader create(MemoryAddress @base, ByteSize size)
-            => new (new PEReader(@base.Pointer<byte>(), size).GetMetadata());
-
-        public static EcmaReader create(EcmaFile src)
-            => new EcmaReader(src);
-
-        [Op]
-        public static EcmaReader create(Assembly src)
-            => new EcmaReader(src);
-
-        [Op]
-        public static EcmaReader create(MetadataReader src)
-            => new EcmaReader(src);
-
-        [Op]
-        public static EcmaReader create(MemorySeg src)
-            => new EcmaReader(src);
-
-        [Op]
-        public static EcmaReader create(PEMemoryBlock src)
-            => new EcmaReader(src);
-
         readonly MetadataReader MD;
 
         public ref readonly MetadataReader MetadataReader
@@ -272,5 +277,6 @@ namespace Z0
 
         public string _AssemblyName
             => String(ReadAssemblyDef().Name);        
+
     }
 }

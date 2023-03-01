@@ -11,6 +11,24 @@ namespace Z0
     {        
         const NumericKind Closure = UInt64k;
 
+        public static FileName filename(TableId id)
+            => filename(id, FS.Csv);
+
+        public static FileName filename(TableId id, FileExt ext)
+            => FS.file(id.Format(), ext);
+
+        public static FileName filename<T>()
+            where T : struct
+                => filename<T>(FS.Csv);
+
+        public static FileName filename<T>(FileExt ext)
+            where T : struct
+                => filename(Tables.identify<T>());
+
+        public static FileName filename<T>(string prefix)
+            where T : struct
+                => FS.file(string.Format("{0}.{1}", prefix, Tables.identify<T>()), FS.Csv);        
+
         internal const string DefaultDelimiter = " | ";
 
         public static ExecToken emit<T>(IWfChannel channel, ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,

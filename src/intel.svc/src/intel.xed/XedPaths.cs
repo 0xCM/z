@@ -77,11 +77,11 @@ namespace Z0
 
         static FileName Suffixed<T>(string suffix)
             where T : struct
-                => TableFiles.filename<T>().ChangeExtension(FS.ext(string.Format("{0}.{1}", suffix, FS.Csv)));
+                => CsvTables.filename<T>().ChangeExtension(FS.ext(string.Format("{0}.{1}", suffix, FS.Csv)));
 
         public FilePath DbTable<T>()
             where T : struct
-                 => DbTargets().Root + TableFiles.filename<T>("xed.db");
+                 => DbTargets().Root + CsvTables.filename<T>("xed.db");
 
         public FilePath DbTarget(string name, FileKind kind)
             => DbTargets().Root + FS.file(string.Format("xed.db.{0}",name), kind.Ext());
@@ -154,7 +154,7 @@ namespace Z0
 
         public FilePath InstTable<T>()
             where T : struct
-                => InstTargets().Path(TableFiles.filename<T>());
+                => InstTargets().Path(CsvTables.filename<T>());
 
         public FilePath InstTable<T>(string suffix)
             where T : struct

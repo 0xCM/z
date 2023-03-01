@@ -6,7 +6,7 @@ namespace Z0
 {
     public readonly struct NativeFunction : INativeFunction
     {
-        public readonly NativeModule Source;
+        public readonly NativeModule Module;
 
         public readonly MemoryAddress Address;
 
@@ -15,7 +15,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public NativeFunction(NativeModule src, MemoryAddress @base, string name)
         {
-            Source = src;
+            Module = src;
             Address = @base;
             Name = name;
         }
@@ -23,8 +23,8 @@ namespace Z0
         string INativeFunction.Name
             => Name;
 
-        INativeModule INativeFunction.Source
-            => Source;
+        INativeModule INativeFunction.Module
+            => Module;
 
         MemoryAddress INativeFunction.Address
             => Address;

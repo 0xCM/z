@@ -21,27 +21,35 @@ namespace Z0
             return dst;
         }
 
-        readonly ConcurrentDictionary<FileUri, HashedFile> PathLookup = new();
+        readonly ConcurrentDictionary<FilePath, HashedFile> PathLookup = new();
 
         readonly ConcurrentDictionary<Hash128, HashedFile> HashLookup = new();
 
         readonly ConcurrentDictionary<Hash128, ConcurrentBag<HashedFile>> _Duplicates = new();
 
-        void Include(HashedFile src)
+        public FileIndex()
         {
-            PathLookup.TryAdd(src.Path, src);
-            if(!HashLookup.TryAdd(src.FileHash.ContentHash, src))
-                _Duplicates.AddOrUpdate(src.FileHash.ContentHash, bag(src), (_,b) => include(src,b));
+
         }
 
-        internal FileIndex(IEnumerable<HashedFile> src)
+        bool Include(HashedFile src)
         {
-            iter(src, Include, true);
-            iter(_Duplicates.Keys, hash => {
-                require(HashLookup.TryGetValue(hash, out var file));
-                require(_Duplicates.TryGetValue(hash, out var bag));
-                bag.Add(file);
-                });                     
+            var included = false;
+            if(PathLookup.TryAdd(src.Path, src))
+            {
+                included = HashLookup.TryAdd(src.FileHash.ContentHash, src);
+                if(!included)
+                    _Duplicates.AddOrUpdate(src.FileHash.ContentHash, bag(src), (_,b) => include(src,b));
+            }
+            return included;
+        }
+
+        public bool Include(FilePath src)
+            => Include(FS.hash(src));
+
+        public void Include(IEnumerable<FilePath> src)
+        {
+            iter(src, path => Include(FS.hash(path)), true);
         }
 
         public bool Find(FileUri src, out HashedFile dst)
@@ -50,12 +58,13 @@ namespace Z0
         public ICollection<HashedFile> Members
             => PathLookup.Values;
         
-        public ICollection<FileUri> Paths
+        public ICollection<HashedFile> Unique
+            => HashLookup.Values;
+
+        public ICollection<FilePath> Paths
             => PathLookup.Keys;
         
-        public ICollection<KeyValuePair<Hash128,ConcurrentBag<HashedFile>>> Duplicates() 
+        public ICollection<KeyValuePair<Hash128,ConcurrentBag<HashedFile>>> Duplicates 
             => _Duplicates;
-        // public IEnumerable<Paired<Hash128,ConcurrentBag<HashedFile>>> Duplicates()
-        //     => from entry in LookupByHash where entry.Value.Count > 1 select Tuples.paired(entry.Key, entry.Value);
     }
 }

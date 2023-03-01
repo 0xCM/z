@@ -49,7 +49,7 @@ namespace Z0
             public ExecToken Run(IWfChannel channel)
                 => run(channel, Query, this);
 
-            public abstract void Matched(FileUri src);
+            public abstract void Matched(FilePath src);
 
             public abstract ref readonly FileQuery Query {get;}
         }

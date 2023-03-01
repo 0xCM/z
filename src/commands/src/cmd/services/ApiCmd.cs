@@ -76,7 +76,7 @@ namespace Z0
             catch(Exception e)
             {
                 var origin = AppMsg.orginate(effector.HostType.DisplayName(), effector.Definition.DisplayName(), 12);                
-                var error = Events.error(e.Message, origin, effector.HostType);
+                var error = Events.error(e.ToString(), origin, effector.HostType);
                 channel.Error(error);
                 result = (e,error.Format());
             }

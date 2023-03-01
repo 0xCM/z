@@ -18,10 +18,10 @@ namespace Z0
             => FileKinds.kind(src);
 
         public static FileKind FileKind(this FileName src)
-            => FileKinds.kind(src.Ext);
+            => FileKinds.kind(src);
 
         public static FileKind FileKind(this FilePath src)
-            => FileKinds.kind(src. FileName.Ext);
+            => FileKinds.kind(src);
 
         public static string SrcId(this FilePath src, params FileKind[] kinds)
             => src.FileName.SrcId(kinds);

@@ -4,10 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class Symbolic
+    partial class XTend
     {
-        [MethodImpl(Inline), Op, Closures(UInt64k)]
-        public static bit deposit<T>(in T src, ref SymStore<T> dst, out SymRef s)
-            => dst.Deposit(src, out s);
+        public static BinaryReader BinaryReader(this FilePath src)
+            => new BinaryReader(File.Open(src.Format(), FileMode.Open));
     }
 }

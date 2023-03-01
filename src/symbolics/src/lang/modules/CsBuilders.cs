@@ -8,9 +8,6 @@ namespace Z0
     
     public class CsBuilders
     {
-        public static PortableExecutableReference peref<T>()
-            => PortableExecutableReference.CreateFromFile(typeof(T).Assembly.Location);
-
         public static PortableExecutableReference peref(Type src)
             => PortableExecutableReference.CreateFromFile(src.Assembly.Location);
 
@@ -29,16 +26,7 @@ namespace Z0
 
         [Op]
         public static CSharpCompilation compilation(Identifier name, MetadataReference[] refs, params SyntaxTree[] syntax)
-            => compilation(name,refs).AddSyntaxTrees(syntax);
-
-
-        public static ToolShimSpec bind(CmdArgs args, out ToolShimSpec dst)
-        {
-            dst.ShimName = CmdArgs.arg(args,0).Value;
-            dst.ShimPath = FS.dir(CmdArgs.arg(args,1)) + FS.file(dst.ShimName,FileKind.Exe);
-            dst.TargetPath = FS.path(CmdArgs.arg(args,2));
-            return dst;
-        }
+            => compilation(name, refs).AddSyntaxTrees(syntax);
 
         public static EmitResult gen(ToolShimSpec spec)
         {

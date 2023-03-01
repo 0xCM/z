@@ -8,5 +8,6 @@
   </ItemGroup>
 
   <Import Project="$(SlnProps)\msbuild.props" />
+  <Import Project="$(SlnProps)\microsoft.codeanalysis.props" />
 
 </Project>

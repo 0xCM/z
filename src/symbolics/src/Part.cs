@@ -5,7 +5,6 @@
 global using Microsoft.CodeAnalysis;
 global using Microsoft.CodeAnalysis.CSharp;
 global using Microsoft.CodeAnalysis.Emit;
-
 [assembly: PartId(PartId.Symbolics)]
 namespace Z0.Parts
 {

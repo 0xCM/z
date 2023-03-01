@@ -11,7 +11,7 @@ namespace Z0
         /// <summary>
         /// D:\env\dev\winmd\win32metadata\sources\MetadataUtils\WinmdUtils.cs
         /// </summary>
-        public IEnumerable<DllImportInfo> ReadDllImports()
+        public IEnumerable<EcmaMethodImport> ReadMethodImports()
         {
             foreach (var methodDefHandle in MD.MethodDefinitions)
             {
@@ -26,7 +26,7 @@ namespace Z0
                     var declaringTypeName = String(declaringType.Name);
                     var declaringTypeNamespace = String(declaringType.Namespace);
                     var methodSignature = method.DecodeSignature<string, GenericContext>(GSTP, null);
-                    yield return new DllImportInfo(name, dllName, $"{declaringTypeNamespace}.{declaringTypeName}", methodSignature);
+                    yield return new EcmaMethodImport(name, dllName, $"{declaringTypeNamespace}.{declaringTypeName}", methodSignature);
                 }
             }
         }

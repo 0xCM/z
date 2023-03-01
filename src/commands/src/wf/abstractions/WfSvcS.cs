@@ -10,7 +10,9 @@ namespace Z0
         where S : WfSvc<S>, new()
     {
         protected static AppSettings AppSettings => AppSettings.Default;
-        
+
+        protected static IEnvDb EnvDb => AppSettings.EnvDb();
+
         ConcurrentDictionary<ProjectId, ProjectContext> _Context = new();
 
         public FileCatalog ProjectFiles { get; protected set; }

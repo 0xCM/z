@@ -13,14 +13,13 @@ namespace Z0
 
         public uint Size;
 
-        [MethodImpl(Inline)]
-        public PeDirectoryEntry(DirectoryEntry src)
-        {
-            Rva = src.RelativeVirtualAddress;
-            Size = (uint)src.Size;
-        }
+        public PeDirectoryKind Kind;
 
-        public static implicit operator PeDirectoryEntry(DirectoryEntry src)
-            => new PeDirectoryEntry(src);
+        public PeDirectoryEntry(Address32 rva, uint size, PeDirectoryKind kind)
+        {
+            Rva = rva;
+            Size = size;
+            Kind = kind;
+        }
     }
 }

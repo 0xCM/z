@@ -68,8 +68,8 @@ namespace Z0
         public DbArchive AsmDb(string scope)
             => AsmDb().Scoped(scope);
 
-        public EnvDb EnvDb()
-            => new (Data.EnvDb());
+        // public IEnvDb EnvDb()
+        //     => new (Data.EnvDb());
 
         public DbArchive EnvSpecs()
             => DbRoot().Scoped("env");

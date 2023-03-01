@@ -37,7 +37,7 @@ namespace Z0
             void EmitRecords(InstImportBlocks src)
             {
                 Channel.TableEmit(src.Imports, XedPaths.Imports().Table<InstBlockImport>());
-                var file = FS.file($"{TableFiles.filename<InstBlockImport>().WithoutExtension.Format()}.duplicates", FS.Csv);
+                var file = FS.file($"{CsvTables.filename<InstBlockImport>().WithoutExtension.Format()}.duplicates", FS.Csv);
                 Channel.TableEmit(src.Duplicates, XedPaths.Imports().Path(file));
             }
 

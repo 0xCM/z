@@ -16,8 +16,6 @@ namespace Z0
             public MsBuild BuildSvc(IWfRuntime wf)
                 => Service<MsBuild>(wf);
 
-            public MsBuildLoader MsBuildLoader(IWfRuntime wf)
-                => Service<MsBuildLoader>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
@@ -26,9 +24,5 @@ namespace Z0
         public static MsBuild BuildSvc(this IWfRuntime wf)
             => Services.BuildSvc(wf);
 
-        public static MsBuildLoader MsBuildLoader(this IWfRuntime wf)
-            => Services.MsBuildLoader(wf);
-
-        
     }
 }

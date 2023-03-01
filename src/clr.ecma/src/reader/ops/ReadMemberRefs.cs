@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
     using static EcmaTables;
 
-    partial class PeReader
+    partial class EcmaReader
     {
         public ref MemberRef ReadMemberRef(MemberReferenceHandle handle, ref MemberRef dst)
         {
@@ -30,7 +30,7 @@ namespace Z0
 
         public ReadOnlySeq<MemberRef> ReadMemberRefs()
         {
-            var handles = MemberRefHandles;
+            var handles = MemberRefHandles();
             var dst = sys.alloc<MemberRef>(handles.Length);
             ReadMemberRefs(handles,dst);
             return dst;

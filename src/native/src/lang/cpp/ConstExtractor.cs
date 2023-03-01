@@ -2,16 +2,12 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0.Lang.Cpp
 {
-    public class ProjectFolder : ProjectMember
+    public class ConstExtractor : WfSvc<ConstExtractor>
     {
-        public FolderPath Location {get;}
 
-        public ProjectFolder(IProject project, FolderPath location)
-            : base(project, location.Format())
-        {
 
-        }
+
     }
 }

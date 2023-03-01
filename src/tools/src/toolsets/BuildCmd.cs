@@ -23,21 +23,6 @@ namespace Z0
             });
         }
 
-        [CmdOp("projects/report")]
-        void EmitProjectProps(CmdArgs args)
-        {   
-            void Receiver(Build.ProjectSpec project)
-            {
-                var data = project.Format();
-                Channel.Write(data);
-                var dst = Env.ShellData.Path(project.Origin.FileName().WithoutExtension.Format(), FileKind.Cfg);
-                Channel.FileEmit(data,dst);
-            }
-
-            var root = Archives.archive(FS.dir(args[0]));
-            
-            Wf.MsBuildLoader().Start(root,Receiver).Wait();        
-        }
 
         [CmdOp("build/sln")]
         void BuildSln(CmdArgs args)

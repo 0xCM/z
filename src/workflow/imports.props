@@ -6,5 +6,6 @@
      <ProjectReference Include="$(Commands)"/>
      <ProjectReference Include="$(SFx)"/>
      <ProjectReference Include="$(Process)"/>
+     <ProjectReference Include="$(Builds)"/>
   </ItemGroup>
 </Project>

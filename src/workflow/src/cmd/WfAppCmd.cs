@@ -5,6 +5,7 @@
 namespace Z0
 {
     using Windows;
+    using Microsoft.CodeAnalysis;
     using System.Linq;
 
     using static sys;
@@ -306,6 +307,71 @@ namespace Z0
             }
 
             return result;
+        }
+
+        public class FileIndex
+        {
+
+        }
+
+        [CmdOp("pe/headers")]
+        void PeFiles(CmdArgs args)
+        {
+            var src = FS.dir(args[0]).DbArchive().Enumerate(true, FileKind.Dll, FileKind.Exe, FileKind.Obj, FileKind.Sys);
+            var dst = bag<PeSectionHeader>();
+            iter(src, path => {
+                try
+                {
+                    var flow = Channel.Running($"Reading section headers from {path}");
+                    using var reader = PeReader.create(path);
+                    var tables = reader.Tables;
+                    iter(tables.SectionHeaders, sh => dst.Add(sh));
+                    Channel.Ran(flow,$"Read {tables.SectionHeaders.Count} section headers from ${path}");
+                                        
+                }
+                catch(Exception e)
+                {
+                    Channel.Error(e);
+                }
+            });
+            
+            var path = EnvDb.Scoped("flows/import").Table<PeSectionHeader>();
+            Channel.TableEmit(dst.Array(),path);
+        }
+        [CmdOp("sln/files")]
+        void SlnFiles(CmdArgs args)
+        {
+            var src = FS.dir(args[0]).DbArchive().Enumerate(true, FileKind.Dll);
+            var dst = bag<Hash128>();
+            var refs = dict<FilePath,PortableExecutableReference>();
+
+            iter(src, path => {
+                var hash = FS.hash(path);
+                if(!dst.Contains(hash.FileHash.ContentHash))
+                {
+                    dst.Add(hash.FileHash.ContentHash);
+                    refs[path] = Compilations.peref(path);
+                    Channel.Status($"Created reference for {path}");
+                }
+                else
+                {
+                    Channel.Babble($"Skipping {path}");
+                }
+            },true);
+
+
+            // var ws = Build.workspace();
+            // ws.LoadMetadataForReferencedProjects = true;
+            // var path = FS.path(args[0]);
+            // var sln = ws.OpenSolutionAsync(path.Format()).Result;
+            // iter(sln.ProjectIds, pid => {
+            //     var project = sln.GetProject(pid);
+            //     var comp = project.GetCompilationAsync().Result;
+                
+
+            //     iter(comp.GetUsedAssemblyReferences(), aref => Channel.Row(aref.Display));
+            // });
+
         }
     }
 }

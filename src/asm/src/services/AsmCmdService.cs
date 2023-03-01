@@ -335,7 +335,7 @@ namespace Z0.Asm
         MemoryAddress GetKernel32Proc(string name = "CreateDirectoryA")
         {
             var flow = Running();
-            using var kernel = NativeModules.kernel32();
+            using var kernel = KnownModules.kernel32();
             Write(kernel);
 
             var f = NativeModules.func<OS.Delegates.GetProcAddress>(kernel, nameof(OS.Delegates.GetProcAddress));

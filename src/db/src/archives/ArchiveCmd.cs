@@ -29,32 +29,61 @@ namespace Z0
         void Copy(CmdArgs args)
             => copy(Channel, args);
 
+        [CmdOp("files/kinds")]
+        void FileKinds()
+        {
+            var src = Symbols.index<FileKind>();
+            var parser = EnumParser<FileKind>.Service;
+            iter(src.Storage, s => {
+                if(!parser.Parse(s.Expr.Format(), out FileKind kind))
+                {
+                    Channel.Error(s.Expr);                    
+                }
+                else
+                {
+                    Channel.Row(kind);
+                }
+
+            });
+        }
+
         [CmdOp("files/index")]
         void FileQuery(CmdArgs args)
         {
-            var buffer = new HashedFiles();
-            var counter = 0u;
             var query = FileQueries.query(FS.dir(args[0]));
-            var receiver = QueryReceiver.create(query, r => r.WithHandler(Handler));
-            var searching = Channel.Running($"Running file search over {query.Root}");
-            void Handler(FileUri src)
+            var index = FS.index();
+            var counter = 0u;
+            void Handler(FilePath src)
             {
-                buffer.Include(src);
+                if(index.Include(src) && src.FileKind() == FileKind.Dll)
+                {
+                    using var reader = src.BinaryReader();
+                    Span<byte> buffer = stackalloc byte[1024];
+                    var length = reader.Read(buffer);
+                    if(length >= (0x3C + 4))
+                    {
+                        var sigloc = u32(slice(buffer,0x3C, 4));
+                        if(sigloc + 4 <= 1024)
+                        {
+                            var sig = slice(buffer,sigloc, 4);
+                            Channel.Row(
+                                ((char)sig[0]).ToString() + ((char)sig[1]).ToString()
+                                );
+                        }
+                    }
+                }
 
                 if(sys.inc(ref counter) % 1000 == 0)
-                    Channel.Babble($"Found {counter} files");
+                    Channel.Babble($"Indexed {counter} files");
             }
-            
+
+            var receiver = QueryReceiver.create(query, r => r.WithHandler(Handler));
             receiver.Run(Channel);
-            Channel.Ran(searching, $"Matched {counter} files in {query.Root}");
-            var indexing = Channel.Running($"Indexing {counter} files");
-            var index = buffer.Index();
-            Channel.Ran(indexing,"Created index");
-            var duplicates = index.Duplicates();
-            iter(duplicates, d => {
-                Channel.Row($"duplicates {d.Key}:");
-                iter(d.Value, file => Channel.Row($"    {file.Path}"));
-            });
+            var duplicates = index.Duplicates.Map(x => x.Value).SelectMany(x => x);
+            var unique = index.Unique;
+            Require.equal(counter, (uint)(unique.Count + duplicates.Length));
+
+            Channel.Status($"Indexed {unique.Count} unique files with {duplicates.Length} duplicates");
         }
 
         [CmdOp("files")]

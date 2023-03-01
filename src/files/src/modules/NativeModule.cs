@@ -22,7 +22,16 @@ namespace Z0
             Owner = owner;
         }
 
-        public MemoryAddress Address
+        [MethodImpl(Inline)]
+        public MemoryAddress ProcAddress(string name)
+            => NativeModules.procaddress(this,name);
+
+        [MethodImpl(Inline)]
+        public D Proc<D>(string name)
+            where D : Delegate
+                => NativeModules.proc<D>(this, name);
+
+        public MemoryAddress BaseAddress
         {
             [MethodImpl(Inline)]
             get => Handle;
@@ -36,7 +45,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public string Format()
-            => string.Format(RP.PSx2, Address, Name);
+            => string.Format(RP.PSx2, BaseAddress, Name);
 
         [MethodImpl(Inline)]
         public static implicit operator IntPtr(NativeModule src)

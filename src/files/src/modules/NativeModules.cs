@@ -6,6 +6,16 @@ namespace Z0
 {
     using static Windows.Kernel32;
 
+    public class KnownModules 
+    {
+        internal const string Kernel32 = Windows.ImageNames.Kernel32;
+
+        [MethodImpl(Inline), Op]
+        public static NativeModule kernel32()
+            => new NativeModule(Kernel32, LoadLibrary(Kernel32));
+
+    }
+
     [ApiHost,Free]
     public class NativeModules
     {
@@ -14,14 +24,6 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static LoadedModule loaded(string name)
             => new (name, GetModuleHandle(name));
-
-        [MethodImpl(Inline), Op]
-        public static NativeModule kernel32()
-            => new NativeModule(Kernel32, LoadLibrary(Kernel32));
-
-        [MethodImpl(Inline), Op]
-        public static NativeModule load(FileName src)
-            => new NativeModule(Kernel32, LoadLibrary(src.Name));
 
         [MethodImpl(Inline), Op]
         public static NativeModule load(FilePath src)
@@ -33,11 +35,11 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static MemoryAddress procaddress(NativeModule src, string name)
-            => GetProcAddress(src.Address, name);
+            => GetProcAddress(src.BaseAddress, name);
 
         [MethodImpl(Inline), Op]
         public unsafe static FPtr fptr(NativeModule src, string name)
-            => new FPtr(GetProcAddress(src.Address,name).ToPointer());
+            => new FPtr(GetProcAddress(src.BaseAddress,name).ToPointer());
 
         [MethodImpl(Inline), Op]
         public static unsafe Delegate proc(FPtr src, Type t)
@@ -59,7 +61,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public unsafe static FPtr<D> fptr<D>(NativeModule src, string name)
             where D : Delegate
-                => new FPtr<D>(GetProcAddress(src.Address,name).ToPointer());
+                => new FPtr<D>(GetProcAddress(src.BaseAddress,name).ToPointer());
 
         [MethodImpl(Inline)]
         public static unsafe D proc<D>(FPtr src)
