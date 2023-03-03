@@ -35,13 +35,15 @@ namespace Z0
         public ExecToken Run<T>(ExecFlow<T> flow)
         {
             Process.Start();
-            Context.ProcessCreated(Process);
+            Context.ProcessStart(Process);
             var id = Process.Id;
             var name = Process.ProcessName;
             Process.BeginOutputReadLine();
             Process.BeginErrorReadLine();
+            var ran = Channel.Ran(flow, $"Executed {name}:{id}");
             Process.WaitForExit();
-            return Channel.Ran(flow, $"Executed {name}:{id}");
+            Context.ProcessExit(Process.ExitCode);
+            return ran;
         }
 
         public ExecToken Run()
@@ -51,6 +53,6 @@ namespace Z0
     partial class XTend
     {
         public static ChanneledProcess ChannelProcess(this IWfChannel src, Process process, ToolContext context)
-            => Z0.ChanneledProcess.create(src, x => x.Init(process,context));
+            => ChanneledProcess.create(src, x => x.Init(process,context));
     }
 }

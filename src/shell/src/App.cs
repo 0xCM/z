@@ -14,6 +14,8 @@ namespace Z0
                 wf.EnvCmd(),
                 wf.ImageCmd(),
                 wf.ArchiveCmd(),
+                wf.ClrCmd(),
+                wf.EcmaCmd()
             };
 
         static int main(string[] args)

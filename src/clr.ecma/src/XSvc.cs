@@ -25,6 +25,10 @@ namespace Z0
 
             public ClrSvc ClrServices(IWfRuntime wf)
                 => Service<ClrSvc>(wf);
+
+            public DataAnalyzer Analyzer(IWfRuntime wf)
+                => Service<DataAnalyzer>(wf);
+
         }
 
         static Svc Services => Svc.Instance;
@@ -46,5 +50,8 @@ namespace Z0
 
         public static ClrSvc ClrSvc(this IWfRuntime wf)
             => Services.ClrServices(wf);
+
+        public static DataAnalyzer Analyzer(this IWfRuntime wf)
+            => Services.Analyzer(wf);
     }
 }

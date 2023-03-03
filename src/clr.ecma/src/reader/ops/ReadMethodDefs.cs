@@ -5,10 +5,55 @@
 namespace Z0
 {
     using static sys;
-    using static EcmaTables;
+    using static EcmaModels;
 
     partial class EcmaReader
     {
+        public ReadOnlySeq<EcmaMethodDef> ReadMethodDefs()
+        {
+            var handles = MethodDefHandles();
+            var count = handles.Length;
+            var buffer = alloc<EcmaMethodDef>(count);
+            for(var i=0; i<count; i++)
+            {
+                ref var dst = ref seek(buffer,i);
+                ref readonly var handle = ref skip(handles,i);
+                ReadMethodDef(handle, ref dst);
+            }
+
+            return buffer;
+        }
+
+        void ReadMethodDef(MethodDefinitionHandle handle, ref EcmaMethodDef dst)        
+        {
+            var src = MD.GetMethodDefinition(handle);
+            dst.Token= EcmaTokens.token(handle);
+            dst.Attributes = src.Attributes;
+            dst.ImplAttributes = src.ImplAttributes;
+            dst.Name = String(src.Name);
+            dst.Rva = src.RelativeVirtualAddress;                
+        }
+ 
+        public ReadOnlySeq<EcmaPinvokeMethodDef> ReadPinvokeMethodDefs()
+        {
+            var buffer = list<EcmaPinvokeMethodDef>();
+            var handles = MethodDefHandles();
+            for(var i=0; i<handles.Length; i++)
+            {
+                ref readonly var handle = ref skip(handles,i);
+                var method = MD.GetMethodDefinition(handle);
+                if(IsPinvoke(method))
+                {
+                    var dst = new EcmaPinvokeMethodDef();
+                    var _dst = (EcmaMethodDef)dst;
+                    ReadMethodDef(handle, ref _dst);
+                    dst.Import = ReadMethodImport(method);
+                    buffer.Add(dst);
+                }
+            }
+            return buffer.ToArray();            
+        }
+
         public ReadOnlySpan<MethodRelations> ReadMethodDefRows()
         {
             var src = MethodDefHandles();

@@ -13,8 +13,8 @@ namespace Z0
         public void EmitApiMetadump(IDbArchive dst)
             => EmitMetadump(ApiAssemblies.Parts, dst.Metadata("metadump"));
 
-        public void EmitMetadumps(FolderPath f, bool recurse, IDbArchive dst)
-            => EmitMetadumps(Channel, Archives.modules(f, recurse), dst); 
+        public void EmitMetadumps(FolderPath src, bool recurse, IDbArchive dst)
+            => EmitMetadumps(Channel, Archives.modules(src, recurse), dst); 
 
         public void EmitMetadumps(IWfChannel channel, FolderPath root, IEnumerable<FilePath> src, IDbArchive dst)
         {

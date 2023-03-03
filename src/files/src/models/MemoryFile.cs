@@ -135,6 +135,15 @@ namespace Z0
             => api.view(this);
 
         /// <summary>
+        /// Presents file content as a readonly sequence of <see cref='byte'/> cells
+        /// </summary>
+        public ReadOnlySpan<byte> Bytes
+        {
+            [MethodImpl(Inline)]
+            get => api.view(this);
+        }
+
+        /// <summary>
         /// Presents file content as a readonly sequence of <typeparamref name='T'/> cells
         /// </summary>
         /// <typeparam name="T">The cell type</typeparam>

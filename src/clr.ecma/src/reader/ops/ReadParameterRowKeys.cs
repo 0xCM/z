@@ -5,10 +5,13 @@
 namespace Z0
 {
     using static sys;
-    using static EcmaTables;
 
     partial class EcmaReader
     {
+        [MethodImpl(Inline), Op]
+        public Parameter ReadParameter(ParameterHandle src)
+            => MD.GetParameter(src);
+
         [Op]
         public EcmaRowKeys ReadParameterRowKeys(ParameterHandleCollection src)
         {

@@ -12,6 +12,5 @@ namespace Z0
             dst.Include(src);
             return dst;
         }
-
     }
 }

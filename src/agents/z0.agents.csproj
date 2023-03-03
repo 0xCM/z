@@ -3,7 +3,7 @@
   <Import Project="imports.props"/>
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <AssemblyName>zagents</AssemblyName>
+    <AssemblyName>zspace</AssemblyName>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
 </Project>

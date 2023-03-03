@@ -5,11 +5,11 @@
 namespace Z0.Commands
 {
     [Cmd(CmdName)]
-    public record class CreateFileCatalog : Command<CreateFileCatalog>
+    public record class CatalogFiles : Command<CatalogFiles>
     {
         const string CmdName = "files";
 
-        public CreateFileCatalog()
+        public CatalogFiles()
         {
             Source = FolderPath.Empty;
             Target = FolderPath.Empty;

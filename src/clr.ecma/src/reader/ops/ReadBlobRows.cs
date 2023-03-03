@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static EcmaTables;
+    using static EcmaModels;
 
     partial class EcmaReader
     {
@@ -19,7 +19,6 @@ namespace Z0
             var values = sys.list<EcmaBlobInfo>();
             do
             {
-                var value = MD.GetBlobBytes(handle);
                 var row = new EcmaBlobInfo();
                 row.Seq = i++;
                 row.HeapSize = size;

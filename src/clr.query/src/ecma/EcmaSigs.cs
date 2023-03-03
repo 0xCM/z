@@ -6,7 +6,6 @@ namespace Z0
 {
     using static sys;
 
-
     [ApiHost]
     public unsafe class EcmaSigs
     {        

@@ -33,7 +33,6 @@ namespace Z0
         public static EcmaReader create(PEMemoryBlock src)
             => new EcmaReader(src);
 
-
         [MethodImpl(Inline), Op]
         public static Address32 offset(MetadataReader reader, UserStringHandle handle)
             => (Address32)reader.GetHeapOffset(handle);
@@ -68,6 +67,7 @@ namespace Z0
             return dst.Array();
         }
 
+        
         public static void stats(ReadOnlySpan<Assembly> src, ConcurrentBag<EcmaRowStats> dst)
             => iter(src, a => stats(a,dst), true);
 

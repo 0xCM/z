@@ -6,8 +6,8 @@ namespace Z0
 {
     public sealed class CodeLauncher : Launcher<CodeLauncher>
     {
-        Task<ExecToken> VsCode<T>(T target, ToolContext context)
-            => ProcExec.launch(Channel, FS.path("code.exe"), Cmd.args(target), context);
+        public static Task<ExecToken> start<T>(IWfChannel channel, T target, ToolContext context)
+            => ProcExec.launch(channel, FS.path("code.exe"), Cmd.args(target), context);
 
         static Option<FolderPath> dir(CmdArgs src, string name)
         {
@@ -36,7 +36,7 @@ namespace Z0
             var wsroot = dir(args,"wsroot");
             if(wsroot)
             {
-                VsCode(wsroot.Value, context).Wait();                
+                start(Channel,wsroot.Value, context).Wait();                
             }
             else
             {                
@@ -61,9 +61,9 @@ namespace Z0
                         
                     var workspaces = cd.Files(FS.ext("code-workspace"));
                     if(workspaces.IsNonEmpty)
-                        VsCode(cd + workspaces[0].FileName, context).Wait();
+                        start(Channel,cd + workspaces[0].FileName, context).Wait();
                     else
-                        VsCode(cd, context).Wait();
+                        start(Channel, cd, context).Wait();
                 }
             }
         }

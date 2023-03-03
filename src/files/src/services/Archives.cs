@@ -80,8 +80,8 @@ namespace Z0
 
         public static void catalog(IWfChannel channel, CmdArgs args)
         {
-            bind(args, out CreateFileCatalog cmd);
-            FileCatalogs.run(channel,cmd);
+            bind(args, out CatalogFiles cmd);
+            channel.Channeled<FileCatalogs>().Run(cmd);
         }
 
         public static Task<ExecToken> zip(IWfChannel channel, CmdArgs args)
@@ -105,8 +105,7 @@ namespace Z0
             return new ZipFile(dst);
         }
 
-
-        public static Outcome bind(CmdArgs src, out CreateFileCatalog dst)
+        public static Outcome bind(CmdArgs src, out CatalogFiles dst)
         {
             dst = new();
             dst.Target = AppSettings.EnvDb().Scoped("files");
@@ -131,7 +130,6 @@ namespace Z0
         
             return true;
         }   
-
 
         [Op]
         public static string format(ListedFiles src)

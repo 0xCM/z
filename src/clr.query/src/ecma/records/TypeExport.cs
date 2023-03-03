@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class EcmaTables
+    partial class EcmaModels
     {
         [Table(EcmaTableKind.ExportedType), StructLayout(LayoutKind.Sequential, Pack =1)]
         public struct TypeExport

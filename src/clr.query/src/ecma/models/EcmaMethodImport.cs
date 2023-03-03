@@ -4,32 +4,33 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class EcmaMethodImport
+    [Record(TableId), StructLayout(LayoutKind.Sequential)]
+    public struct EcmaMethodImport
     {
-        public EcmaMethodImport(string name, string dll, string declaringType, MethodSignature<string> methodSignature)
+        const string TableId = "ecma.methods.imports";
+
+        public EcmaMethodImport()
         {
-            this.Name = name;
-            this.Dll = dll;
-            this.DeclaringType = declaringType;
-            this.MethodSignature = methodSignature;
+            Name = EmptyString;
+            DeclaringType = EmptyString;
+            Dll = EmptyString;
+            MethodSignature = new MethodSignature<string>();
         }
 
-        public string DeclaringType { get; private set; }
+        public string DeclaringType;
 
-        public string Name { get; private set; }
+        public string Name;
 
-        public string Dll { get; private set; }
+        public string Dll;
 
-        public MethodSignature<string> MethodSignature { get; }
+        public MethodSignature<string> MethodSignature;
 
         public override string ToString()
-        {
-            return $"{this.Name}({this.Dll})";
-        }
+            => $"{this.Name}({this.Dll})";
 
         public override int GetHashCode()
-        {
-            return this.ToString().GetHashCode();
-        }
+            => this.ToString().GetHashCode();
+
+        public static EcmaMethodImport Empty => new();
     }
 }

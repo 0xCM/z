@@ -5,10 +5,14 @@
 namespace Z0
 {
     using static sys;
-    using static EcmaTables;
+    using static EcmaModels;
 
     partial class EcmaReader
     {
+        [MethodImpl(Inline), Op]
+        public MemberReference ReadMemberRef(MemberReferenceHandle src)
+            => MD.GetMemberReference(src);
+
         public ref MemberRef ReadMemberRef(MemberReferenceHandle handle, ref MemberRef dst)
         {
             var src = MD.GetMemberReference(handle);

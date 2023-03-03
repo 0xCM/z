@@ -121,7 +121,6 @@ namespace Z0
             Channel.Row(formatter.Format(src));
         }
 
-
         [CmdOp("memory/query")]
         void QueryMemory(CmdArgs args)
         {            
@@ -189,28 +188,6 @@ namespace Z0
         void ToolDocs(CmdArgs args)
             => iter(Tooling.LoadDocs(arg(args,0).Value), doc => Write(doc));
 
-        [CmdOp("dev")]
-        void LaunchCmdTerm(CmdArgs args)
-        {
-            var channel = Channel;
-            void OnA(string msg)
-            {
-                channel.Row(msg, FlairKind.Data);
-            }
-
-            void OnB(string msg)
-            {
-                channel.Row(msg, FlairKind.StatusData);
-            }
-            
-            if(args.Count == 0)
-            {
-                var wd = Env.cd();
-                var options = $"-NoLogo -i -wd {text.dquote(Env.cd())}";
-                ProcExec.launch(channel, new SysIO(OnA,OnB), CmdArgs.create("pwsh.exe", options), wd);
-            }
-        }
-
         [CmdOp("api/calls/check")]
         void CheckApiCalls()
         {
@@ -265,12 +242,6 @@ namespace Z0
         }
 
 
-        [CmdOp("files/handles")]
-        void FileHandles()
-        {
-
-        }
-
         [CmdOp("api/pack/list")]
         Outcome ListApiPack(CmdArgs args)
         {
@@ -309,12 +280,8 @@ namespace Z0
             return result;
         }
 
-        public class FileIndex
-        {
 
-        }
-
-        [CmdOp("pe/headers")]
+        [CmdOp("pe/import")]
         void PeFiles(CmdArgs args)
         {
             var src = FS.dir(args[0]).DbArchive().Enumerate(true, FileKind.Dll, FileKind.Exe, FileKind.Obj, FileKind.Sys);
@@ -338,40 +305,65 @@ namespace Z0
             var path = EnvDb.Scoped("flows/import").Table<PeSectionHeader>();
             Channel.TableEmit(dst.Array(),path);
         }
-        [CmdOp("sln/files")]
-        void SlnFiles(CmdArgs args)
-        {
-            var src = FS.dir(args[0]).DbArchive().Enumerate(true, FileKind.Dll);
-            var dst = bag<Hash128>();
-            var refs = dict<FilePath,PortableExecutableReference>();
 
-            iter(src, path => {
-                var hash = FS.hash(path);
-                if(!dst.Contains(hash.FileHash.ContentHash))
+
+        [CmdOp("files/kinds")]
+        void FileKinds()
+        {
+            var src = Symbols.index<FileKind>();
+            var parser = EnumParser<FileKind>.Service;
+            iter(src.Storage, s => {
+                if(!parser.Parse(s.Expr.Format(), out FileKind kind))
                 {
-                    dst.Add(hash.FileHash.ContentHash);
-                    refs[path] = Compilations.peref(path);
-                    Channel.Status($"Created reference for {path}");
+                    Channel.Error(s.Expr);                    
                 }
                 else
                 {
-                    Channel.Babble($"Skipping {path}");
+                    Channel.Row(kind);
                 }
-            },true);
 
+            });
+        }
 
-            // var ws = Build.workspace();
-            // ws.LoadMetadataForReferencedProjects = true;
-            // var path = FS.path(args[0]);
-            // var sln = ws.OpenSolutionAsync(path.Format()).Result;
-            // iter(sln.ProjectIds, pid => {
-            //     var project = sln.GetProject(pid);
-            //     var comp = project.GetCompilationAsync().Result;
-                
+        [CmdOp("files/index")]
+        void FileQuery(CmdArgs args)
+        {
+            var query = FileQueries.query(FS.dir(args[0]));
+            var index = FS.index();
+            var counter = 0u;
+            void Handler(FilePath src)
+            {
+                var kind = src.FileKind();
+                if(index.Include(src) && (kind == FileKind.Dll || kind == FileKind.Exe || kind == FileKind.Sys || kind == FileKind.Obj))
+                {
+                    using var reader = src.BinaryReader();
+                    Span<byte> buffer = stackalloc byte[1024];
+                    var length = reader.Read(buffer);
+                    if(length >= (0x3C + 4))
+                    {
+                        var sigloc = u32(slice(buffer,0x3C, 4));
+                        if(sigloc + 4 <= 1024)
+                        {
+                            var sig = slice(buffer,sigloc, 4);
+                            if((char)skip(sig,0) == 'P' && (char)skip(sig,1) == 'E' && skip(sig,2) == 0 && skip(sig,3) == 0)
+                            {
+                                Channel.Row($"PE file: {src}");
+                            }
+                        }
+                    }
+                }
 
-            //     iter(comp.GetUsedAssemblyReferences(), aref => Channel.Row(aref.Display));
-            // });
+                if(sys.inc(ref counter) % 1000 == 0)
+                    Channel.Babble($"Indexed {counter} files");
+            }
 
+            var receiver = QueryReceiver.create(query, r => r.WithHandler(Handler));
+            receiver.Run(Channel);
+            var duplicates = index.Duplicates.Map(x => x.Value).SelectMany(x => x);
+            var unique = index.Unique;
+            Require.equal(counter, (uint)(unique.Count + duplicates.Length));
+
+            Channel.Status($"Indexed {unique.Count} unique files with {duplicates.Length} duplicates");
         }
     }
 }

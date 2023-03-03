@@ -11,13 +11,5 @@ namespace Z0
         EnvVars Vars {get;}
 
         Action<Process> ProcessCreated {get;}
-
-        ISysIO IO {get;}
-    }
-
-    public interface IToolContext<C> : IToolContext
-        where C : IToolContext<C>
-    {
-
     }
 }

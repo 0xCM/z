@@ -22,14 +22,6 @@ namespace Z0
             => MD.GetMethodImplementation(src);
 
         [MethodImpl(Inline), Op]
-        public MemberReference ReadMemberRef(MemberReferenceHandle src)
-            => MD.GetMemberReference(src);
-
-        [MethodImpl(Inline), Op]
-        public Parameter ReadParameter(ParameterHandle src)
-            => MD.GetParameter(src);
-
-        [MethodImpl(Inline), Op]
         public TypeReference ReadTypeRef(TypeReferenceHandle src)
             => MD.GetTypeReference(src);
 

@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static sys;
-    using static EcmaTables;
+    using static EcmaModels;
 
     public record struct TypeDefInfo
     {

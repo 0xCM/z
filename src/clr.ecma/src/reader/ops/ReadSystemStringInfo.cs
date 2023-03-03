@@ -24,7 +24,6 @@ namespace Z0
             return counter;
         }
 
-
         public ReadOnlySeq<EcmaStringDetail> ReadSystemStringDetail()
         {
             var reader = MD;
@@ -44,6 +43,5 @@ namespace Z0
 
             return values.ToArray();
         }
-
     }
 }

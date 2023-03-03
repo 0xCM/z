@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class EcmaTables
+    partial class EcmaModels
     {
         [Table(EcmaTableKind.Module)]
         public record struct Module

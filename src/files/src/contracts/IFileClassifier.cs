@@ -6,10 +6,10 @@ namespace Z0
 {
     public interface IFileClassifier
     {
-        ReadOnlySeq<IFileType> SupportedTypes {get;}
+        HashSet<FileKind> Capability {get;}
 
-        bool Clasify(FileUri src, out IFileType dst);
+        FileClass Classify(FilePath src);        
 
-        void Classify(IEnumerable<FileUri> src, Action<FileUri, bool, IFileType> dst);
+        FileClass Classify(MemoryFile src);
     }
 }

@@ -9,10 +9,21 @@ namespace Z0
     {
         static int main(string[] args)
         {
+            if(args.Length == 0)
+            {
+                term.error("Project directory not specified");
+                return -1;
+            }
+
             var result = 0;
             using var app = ApiServers.shell<App>();
             try
             {
+                var projects = app.Wf.ProjectManager();
+                var running = ExecFlow<string>.Empty;
+                projects.Launch(FS.dir(args[0]), 
+                    p => running = app.Channel.Running($"Process started: {p.ProcessName} {p.Id}"), 
+                    e => app.Channel.Ran(running, $"Process exit code: ${e}"));
                 app.Run(args);
             }
             catch(Exception e)
@@ -25,11 +36,12 @@ namespace Z0
 
         IMonitor Monitor;
 
+        
+
         protected override void Run(string[] args)
         {
-            var root = (args.Length == 0 ? Env.cd() : FS.dir(args[0])).ToArchive();
+            var root = FS.dir(args[0]).DbArchive();
             var dst = root.Scoped("db");
-
             Monitor = DirectoryMonitor.start(root,dst,this);
             CmdLoop.start(Channel).Wait();
         }
@@ -39,7 +51,7 @@ namespace Z0
 
         public void Deposit(FileChangeEvent src)
         {
-            
+                        
         }
 
         protected override void Disposing()

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class ToolContext : IToolContext<ToolContext>
+    public class ToolContext : IToolContext
     {
         /// <summary>
         /// The working folder, if any
@@ -19,20 +19,17 @@ namespace Z0
         /// <summary>
         /// Invoked upon process creation
         /// </summary>
-        public readonly Action<Process> ProcessCreated;
+        public readonly Action<Process> ProcessStart;
 
-        /// <summary>
-        /// Standard i/o redirection
-        /// </summary>
-        public readonly ISysIO IO;
+        public readonly Action<int> ProcessExit;
         
         [MethodImpl(Inline)]
-        public ToolContext(FolderPath wd, EnvVars src, Action<Process> create = null, ISysIO io = null)
+        public ToolContext(FolderPath wd, EnvVars src, Action<Process> create = null, Action<int> exit = null)
         {
             WorkingDir = wd;
             Vars = src;
-            ProcessCreated = create ?? (p => {});
-            IO = io;
+            ProcessStart = create ?? (p => {});
+            ProcessExit = exit ?? (e => {});
         }
 
         FolderPath IToolContext.WorkingDir 
@@ -45,9 +42,6 @@ namespace Z0
             => new ToolContext(FS.dir(Environment.CurrentDirectory), EnvVars.Empty);
 
         Action<Process> IToolContext.ProcessCreated 
-            => ProcessCreated;
-
-        ISysIO IToolContext.IO 
-            => IO;
+            => ProcessStart;
     }
 }

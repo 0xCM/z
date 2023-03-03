@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public partial class EcmaTables
+    public partial class EcmaModels
     {
         public class TableAttribute : RecordAttribute
         {

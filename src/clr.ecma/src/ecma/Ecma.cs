@@ -21,21 +21,6 @@ namespace Z0
         public static ReadOnlySeq<AssemblyRefInfo> refs(Assembly src)
             => EcmaReader.create(src).ReadAssemblyRefs();
 
-        void EmitEcmaJobs()
-        {
-            var root = Env.var(EnvVarKind.Process, EnvTokens.DOTNET_ROOT, FS.dir).Value;
-            var src = root.Files(FileKind.Dll).Map(x => new FileUri(x.Format())).ToSeq();
-            var name = CmdId.identify<EmitEcmaDatasets>().Format();
-            var ts = timestamp();
-            var dst = AppDb.Jobs(CmdId.identify<EmitEcmaDatasets>().Format()).Path($"{name}.{ts}.jobs", FileKind.Json);
-            var job = new EmitEcmaDatasets();
-            job.JobId = ts;
-            job.Sources = src;
-            job.Targets = AppDb.DbTargets("tools/jobs").Folder(CmdId.identify<EmitEcmaDatasets>().Format());            
-            var data = Json.serialize(job);
-            FileEmit(data, dst);
-        }
-
         public static bool parse(string src, out EcmaToken dst)
         {
             var i = text.index(src, Chars.Colon);

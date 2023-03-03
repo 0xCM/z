@@ -8,8 +8,6 @@ namespace Z0
     {
         @string Name {get;}
 
-        FileExt Ext {get;}
-
         bool INullity.IsEmpty
             => Name.IsEmpty;
 

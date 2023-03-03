@@ -35,6 +35,8 @@ namespace Z0
 
         IDbArchive DataTarget => Env.cd().ToArchive().Scoped(".data");
 
+        DataAnalyzer Analyzer => Wf.Analyzer();
+
         [CmdOp("archive/modules")]
         void EmitModuleIndex(CmdArgs args)
         {
@@ -69,6 +71,16 @@ namespace Z0
 
         [CmdOp("clr/dump")]
         void EcmaEmitMetaDumps(CmdArgs args)
-            => EcmaEmitter.EmitMetadumps(FS.dir(args[0]), false, DataTarget.Scoped("metdumps"));
+            => EcmaEmitter.EmitMetadumps(FS.dir(args[0]), false, DataTarget.Scoped("metadumps"));
+
+        
+        [CmdOp("analyze")]
+        void Analyze(CmdArgs args)
+        {
+            var src = FS.dir(args[0]).DbArchive();
+            var dst = FS.dir(args[1]).DbArchive();
+            Analyzer.Run(src,dst);
+            
+        }
     }
 }
