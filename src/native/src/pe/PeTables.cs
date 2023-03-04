@@ -26,7 +26,6 @@ namespace Z0
             return dst;
         }
 
-
         [MethodImpl(Inline)]
         public PeTables()
         {

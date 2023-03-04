@@ -33,88 +33,6 @@ namespace Z0
             }
         }
 
-        // public static PeFileInfo ReadPeInfo(PEReader src)
-        // {
-        //     var pe = src.PEHeaders.PEHeader;
-        //     var coff = src.PEHeaders.CoffHeader;
-        //     var dst = new PeFileInfo();
-        //     dst.Machine = coff.Machine;
-        //     dst.ImageBase = pe.ImageBase;
-        //     dst.EntryPointOffset = pe.AddressOfEntryPoint;
-        //     dst.CodeOffset = pe.BaseOfCode;
-        //     dst.CodeSize = (uint)pe.SizeOfCode;
-        //     dst.DataOffset = pe.BaseOfData;
-        //     dst.ImageSize = (uint)pe.SizeOfImage;
-        //     dst.ExportDir = pe.ExportTableDirectory;
-        //     dst.ImportDir = pe.ImportTableDirectory;
-        //     dst.ResourceDir = pe.ResourceTableDirectory;
-        //     dst.RelocationDir = pe.BaseRelocationTableDirectory;
-        //     dst.ImportAddressDir = pe.ImportAddressTableDirectory;
-        //     dst.LoadConfigDir = pe.LoadConfigTableDirectory;
-        //     dst.DebugDir = pe.DebugTableDirectory;
-        //     dst.Characteristics = coff.Characteristics;
-        //     return dst;
-        // }
-
-        // public static CoffHeader ReadCoffInfo(PEReader pe)
-        // {
-        //     var src = pe.PEHeaders.CoffHeader;
-        //     var dst = new CoffHeader();
-        //     dst.Characteristics = src.Characteristics;
-        //     dst.Machine = src.Machine;
-        //     dst.NumberOfSections = (ushort)src.NumberOfSections;
-        //     dst.NumberOfSymbols = (uint)src.NumberOfSymbols;
-        //     dst.PointerToSymbolTable = src.PointerToSymbolTable;
-        //     dst.SizeOfOptionalHeader = (ushort)src.SizeOfOptionalHeader;
-        //     dst.TimeDateStamp = (uint)src.TimeDateStamp;
-        //     return dst;
-        // }
-
-        // public static CorHeaderInfo? cor(PEHeaders src)
-        // {
-        //     var cor = src.CorHeader;
-        //     var dst = default(CorHeaderInfo);
-        //     if(cor != null)
-        //     {
-        //         dst = new();
-        //         dst.MajorRuntimeVersion = cor.MajorRuntimeVersion;
-        //         dst.MinorRuntimeVersion = cor.MinorRuntimeVersion;
-        //         dst.MetadataDirectory = cor.MetadataDirectory;
-        //         dst.Flags = cor.Flags;
-        //         dst.EntryPointTokenOrRelativeVirtualAddress = cor.EntryPointTokenOrRelativeVirtualAddress;
-        //         dst.ResourcesDirectory = cor.ResourcesDirectory;
-        //         dst.StrongNameSignatureDirectory = cor.StrongNameSignatureDirectory;
-        //         dst.CodeManagerTableDirectory = cor.CodeManagerTableDirectory;
-        //         dst.VtableFixupsDirectory = cor.VtableFixupsDirectory;
-        //         dst.ExportAddressTableJumpsDirectory = cor.ExportAddressTableJumpsDirectory;
-        //         dst.ManagedNativeHeaderDirectory = cor.ManagedNativeHeaderDirectory;
-        //     }
-        //     return dst;
-        // }
-
-        // public static ReadOnlySeq<PeSectionHeader> headers(PEReader src)
-        // {
-        //     var headers = src.PEHeaders;
-        //     var pe = headers.PEHeader;
-        //     var sections = src.PEHeaders.SectionHeaders.AsSpan();
-        //     var count = sections.Length;
-        //     var buffer = sys.alloc<PeSectionHeader>(count);
-        //     for(var i=0; i<count; i++)
-        //     {
-        //         ref readonly var section = ref skip(sections,i);
-        //         ref var dst = ref seek(buffer,i);
-        //         dst.EntryPoint = (Address32)pe.AddressOfEntryPoint;
-        //         dst.CodeBase = (Address32)pe.BaseOfCode;
-        //         dst.GptRva = (Address32)pe.GlobalPointerTableDirectory.RelativeVirtualAddress;
-        //         dst.GptSize = (ByteSize)pe.GlobalPointerTableDirectory.Size;
-        //         dst.SectionFlags = section.SectionCharacteristics;
-        //         dst.SectionName = section.Name;
-        //         dst.RawDataAddress = (Address32)section.PointerToRawData;
-        //         dst.RawDataSize = (uint)section.SizeOfRawData;
-        //     }
-        //     return buffer;
-        // }
-
         public static void modules(IDbArchive src, Action<CoffModule> dst)
         {
             iter(src.Enumerate(true, FileKind.Exe, FileKind.Dll, FileKind.Obj, FileKind.Lib, FileKind.Sys), path => {
@@ -122,9 +40,6 @@ namespace Z0
                 dst(reader.ModuleInfo());
             }, true);
         }
-
-        public static EcmaRowIndex index(in PeStream state, Handle handle)
-            => new EcmaToken(state.Reader.GetToken(handle));
 
         [MethodImpl(Inline), Op]
         public static PeDirectoryEntry directory(Address32 rva, uint size)
@@ -206,23 +121,6 @@ namespace Z0
 
         MetadataReader _MD;
 
-        //PEMemoryBlock? _MetadataBlock;
-
-        // PEMemoryBlock MetadataBlock
-        // {
-        //     [MethodImpl(Inline)]
-        //     get
-        //     {
-        //         if(!_MetadataBlock.HasValue)
-        //             _MetadataBlock = PE.GetMetadata();
-        //         return _MetadataBlock.Value;
-        //     }
-        // }
-
-        // EcmaReader CliReader()
-        //     => Z0.EcmaReader.create(MetadataBlock);
-
-
         public void Dispose()
         {
             PE?.Dispose();
@@ -238,17 +136,8 @@ namespace Z0
             get => PE.PEHeaders;
         }
 
-        // public CorHeader? CorHeader
-        // {
-        //     [MethodImpl(Inline)]
-        //     get => PeHeaders.CorHeader;
-        // }
-
         public ReadOnlySpan<MemberReferenceHandle> MemberRefHandles
             => MD.MemberReferences.ToArray();
-
-        // public PeDirectoryEntry ResourcesDirectory
-        //     => PeHeaders.CorHeader.ResourcesDirectory;
 
         public PEMemoryBlock ReadSectionData(PeDirectoryEntry src)
             => PE.GetSectionData((int)src.Rva);
@@ -313,68 +202,5 @@ namespace Z0
             }
             return dst.ViewDeposited();
         }
-
-        // [Op]
-        // public unsafe bool FindResource(string name, out ResourceSeg dst)
-        // {
-        //     dst = default;
-        //     var directory = ReadSectionData(ResourcesDirectory);
-        //     var descriptions = CliReader().ReadResInfo();
-        //     var count = descriptions.Length;
-        //     for(var i=0; i<count; i++)
-        //     {
-        //         ref readonly var description = ref descriptions[i];
-        //         if(description.Name.Equals(name))
-        //         {
-        //             var blobReader = directory.GetReader((int)description.Offset, directory.Length - (int)description.Offset);
-        //             var length = blobReader.ReadUInt32();
-        //             MemoryAddress address = blobReader.CurrentPointer;
-        //             dst = new ResourceSeg(name, new MemorySeg(address,length));
-        //             return true;
-        //         }
-        //     }
-        //     return false;
-        // }
-
-        // [Op]
-        // public unsafe ReadOnlySeq<ResourceSeg> ReadResSegments()
-        // {
-        //     var resources = CliReader().ReadResInfo();
-        //     var count = resources.Length;
-        //     var dst = sys.alloc<ResourceSeg>(count);
-        //     for(var i=0u; i<count; i++)
-        //     {
-        //         ref readonly var res = ref resources[i];
-        //         var resdir = ReadSectionData(ResourcesDirectory);
-        //         var blobReader = resdir.GetReader((int)res.Offset, resdir.Length - (int)res.Offset);
-        //         var length = blobReader.ReadUInt32();
-        //         MemoryAddress address = blobReader.CurrentPointer;
-        //         seek(dst,i) = new ResourceSeg(res.Name, new MemorySeg(address,length));
-        //     }
-        //     return dst;
-        // }
-
-        // public const string OffsetPatternText = "{0,-60} | {1,-16}";
-
-        // [MethodImpl(Inline)]
-        // static string[] labels(PeFieldOffset src)
-        //     => typeof(PeFieldOffset).DeclaredInstanceFields().Select(x => x.Name);
-
-        // [MethodImpl(Inline)]
-        // static string format(PeFieldOffset src)
-        //     => RP.format(OffsetPatternText, src.Name, src.Value);
-
-
-        // [Op]
-        // public static void emit(IWfChannel channel, ReadOnlySpan<PeFieldOffset> src, FilePath dst)
-        // {
-        //     var emitter = text.emitter();
-        //     var l = labels(default(PeFieldOffset));
-        //     emitter.WriteLine(RP.format(OffsetPatternText, l[0], l[1]));
-        //     for(var i=0u; i<src.Length; i++)
-        //         emitter.WriteLine(format(skip(src,i)));                
-        //     channel.FileEmit(emitter.Emit(), dst);
-        // }
-
     }
 }

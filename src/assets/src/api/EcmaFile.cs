@@ -50,7 +50,7 @@ namespace Z0
 
         public readonly PEMemoryBlock MetaBlock;
 
-        public readonly MetadataReader MetadataReader;
+        public readonly MetadataReader MdReader;
 
         public EcmaFile(FileUri file, FileStream stream, PEReader pe)
         {
@@ -61,7 +61,7 @@ namespace Z0
             ImageBase = ImageBlock.Pointer;
             MetaBlock = pe.GetMetadata();
             MetaBase = MetaBlock.Pointer;
-            MetadataReader = pe.GetMetadataReader();
+            MdReader = pe.GetMetadataReader();
         }
 
         public string Format()

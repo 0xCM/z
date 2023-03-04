@@ -64,7 +64,7 @@ namespace Z0
         FolderPath Folder(string match)
             => Root.Folder(match);
 
-        Files Files(FileKind kind)
+        IEnumerable<FilePath> Files(FileKind kind)
             => DbFiles.Files(kind, true);
 
         Files Files(FileKind kind, bool recurse)

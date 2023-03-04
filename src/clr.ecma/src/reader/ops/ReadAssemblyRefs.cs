@@ -49,7 +49,7 @@ namespace Z0
         {
             dst.Source = MD.GetAssemblyDefinition().GetAssemblyName();
             dst.Target = src.GetAssemblyName();
-            dst.Token = ReadBlobData(src.PublicKeyOrToken);
+            dst.Token = Blob(src.PublicKeyOrToken);
             return ref dst;
         }
     }

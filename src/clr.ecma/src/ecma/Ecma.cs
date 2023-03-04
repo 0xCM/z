@@ -15,7 +15,7 @@ namespace Z0
         public static IEnumerable<AssemblyRef> refs(AssemblyFile src)
         {
             using var ecma = EcmaFile.open(src.Path);
-            return ecma.Reader().ReadAssemblyRefs2();            
+            return ecma.EcmaReader().ReadAssemblyRefs2();            
         }
 
         public static ReadOnlySeq<AssemblyRefInfo> refs(Assembly src)
@@ -303,6 +303,6 @@ namespace Z0
     partial class XTend
     {
         public static EcmaReader MetadataReader(this MappedAssembly src)
-            => EcmaReader.create(src.BaseAddress, src.FileSize);
+            => Z0.EcmaReader.create(src.BaseAddress, src.FileSize);
     }
 }

@@ -46,7 +46,7 @@ namespace Z0
                 try
                 {
                     using var ecma = EcmaFile.open(path);
-                    var reader = ecma.Reader(); 
+                    var reader = ecma.EcmaReader(); 
                     var def = reader.ReadAssemblyDef();                   
                     var kind = FileModuleKind.Managed;
                     if(path.Is(FileKind.Exe)) 
@@ -66,7 +66,6 @@ namespace Z0
             channel.Ran(running, $"Found {counter} assemblies");
             return dst.Array();
         }
-
         
         public static void stats(ReadOnlySpan<Assembly> src, ConcurrentBag<EcmaRowStats> dst)
             => iter(src, a => stats(a,dst), true);
@@ -259,8 +258,8 @@ namespace Z0
         [MethodImpl(Inline)]
         public EcmaReader(EcmaFile src)
         {
-            Segment = MemorySegs.define(src.MetadataReader.MetadataPointer, src.MetadataReader.MetadataLength);
-            MD = src.MetadataReader;
+            Segment = MemorySegs.define(src.MdReader.MetadataPointer, src.MdReader.MetadataLength);
+            MD = src.MdReader;
         }
 
         public ByteSize MetaSize
@@ -277,6 +276,5 @@ namespace Z0
 
         public string _AssemblyName
             => String(ReadAssemblyDef().Name);        
-
     }
 }

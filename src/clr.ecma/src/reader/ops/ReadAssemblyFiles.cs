@@ -13,7 +13,7 @@ namespace Z0
             var dst = new AssemblyFileInfo();
             dst.ContainsMetadata = file.ContainsMetadata;
             dst.Name = new FileUri(String(file.Name));
-            dst.Hash = ReadBlobData(file.HashValue);
+            dst.Hash = Blob(file.HashValue);
             return dst;
         }
 

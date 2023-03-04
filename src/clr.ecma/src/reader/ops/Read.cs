@@ -7,12 +7,7 @@ namespace Z0
     using static sys;
 
     partial class EcmaReader
-    {
-        public void Read(Action<MethodDebugInformation> receiver)
-        {
-            iter(MethodDebugInfoHandles(), handle => receiver(ReadDebugInfo(handle)));
-        }
-
+    {    
         [MethodImpl(Inline), Op]
         public System.Reflection.Metadata.CustomAttribute Read(CustomAttributeHandle src)
             => MD.GetCustomAttribute(src);

@@ -6,7 +6,7 @@ namespace Z0
 {
     partial class XTend
     {
-        public static EcmaReader Reader(this EcmaFile src)
-            => EcmaReader.create(src);
+        public static EcmaReader EcmaReader(this EcmaFile src)
+            => Z0.EcmaReader.create(src);
     }
 }

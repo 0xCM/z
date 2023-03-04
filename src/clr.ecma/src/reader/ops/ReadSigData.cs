@@ -10,10 +10,11 @@ namespace Z0
     {
         [MethodImpl(Inline), Op]
         public BinaryCode ReadSigData(FieldDefinition src)
-            => ReadBlobData(src.Signature);
+            => Blob(src.Signature);
 
         [MethodImpl(Inline), Op]
         public BinaryCode ReadSigData(MethodDefinition src)
-            => ReadBlobData(src.Signature);
+            => Blob(src.Signature);
+
     }
 }

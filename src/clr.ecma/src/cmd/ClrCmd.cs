@@ -71,7 +71,7 @@ namespace Z0
 
         [CmdOp("clr/dump")]
         void EcmaEmitMetaDumps(CmdArgs args)
-            => EcmaEmitter.EmitMetadumps(FS.dir(args[0]), false, DataTarget.Scoped("metadumps"));
+            => EcmaEmitter.EmitMetadumps(FS.dir(args[0]).DbArchive(), true, FS.dir(args[1]).DbArchive());
 
         
         [CmdOp("analyze")]
@@ -79,8 +79,20 @@ namespace Z0
         {
             var src = FS.dir(args[0]).DbArchive();
             var dst = FS.dir(args[1]).DbArchive();
-            Analyzer.Run(src,dst);
-            
+            Analyzer.Run(src,dst);            
+        }
+
+        [CmdOp("ecma/debug")]
+        void DebugMethods(CmdArgs args)
+        {
+            var src = FS.dir(args[0]).DbArchive().Modules();
+            iter(src.Assemblies(), a => {                
+                using var file = EcmaFile.open(a.Path);
+                
+
+            });
+
+
         }
     }
 }

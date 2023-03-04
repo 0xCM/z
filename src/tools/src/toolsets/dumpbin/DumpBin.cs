@@ -129,7 +129,7 @@ namespace Z0
 
         public static ReadOnlySeq<ToolScript> scripts(IDbArchive src, FileKind kind, IDbArchive dst)
         {
-            var files = src.Files(kind);
+            var files = src.Files(kind).Array().ToReadOnlySeq();
             var count = files.Count;
             var scripts = sys.alloc<ToolScript>(count);
             for(var i=0; i<count; i++)

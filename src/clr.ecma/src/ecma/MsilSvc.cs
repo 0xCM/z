@@ -27,7 +27,7 @@ namespace Z0
 
         public Index<MsilCapture> LoadCaptured(IApiPack src)
         {
-            var input = src.Files(FileKind.Csv);
+            var input = src.Files(FileKind.Csv).Array();
             var count = input.Length;
             var dst = Lists.list<MsilCapture>();
             var row = default(MsilCapture);

@@ -11,7 +11,7 @@ namespace Z0
             var src = MD.GetDocument(handle);
             var dst = new EcmaDocInfo();
             dst.Name = String(src.Name);
-            dst.ContentHash = ReadBlobData(src.Hash);
+            dst.ContentHash = Blob(src.Hash);
             return dst;
         }
 

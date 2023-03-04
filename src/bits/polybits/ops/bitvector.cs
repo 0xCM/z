@@ -5,11 +5,12 @@
 namespace Z0
 {
     using static sys;
+    using System.Linq;
 
     partial class PolyBits
     {
         public static Index<BfModel> bitvectors(IDbArchive sources, string filter)
-            => bitvectors(sources.Files(FileKind.Csv).Where(f => f.FileName.StartsWith(filter)));
+            => bitvectors(sources.Files(FileKind.Csv).Where(f => f.FileName.StartsWith(filter)).Array());
 
         struct BvParser : IParser<object>
         {

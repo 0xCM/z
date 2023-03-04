@@ -77,7 +77,7 @@ namespace Z0.llvm
             => LlvmSources(include).Path($"{target}.{kind}", FileKind.H);
 
         public Files TableGenHeaders(LlvmTargetName target)
-            => LlvmSources(include).Files(FileKind.H).Where(f => f.FileName.StartsWith($"{target}."));
+            => LlvmSources(include).Files(FileKind.H).Array().Where(f => f.FileName.StartsWith($"{target}."));
 
         public IDbArchive LlvmRoot
             => AppDb.LlvmRoot();

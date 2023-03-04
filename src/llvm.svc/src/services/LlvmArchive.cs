@@ -26,7 +26,7 @@ namespace Z0
             => BuildRoot().Files();
 
         public Files BuildFiles(FileKind kind)
-            => BuildRoot().Files(kind);
+            => BuildRoot().Files(kind).Array();
 
         public Files BuildFiles(params FileKind[] kinds)
             => BuildRoot().Files(kinds);
@@ -35,7 +35,7 @@ namespace Z0
             => Root.Files();
 
         public Files Files(FileKind kind)
-            => Root.Files(kind);
+            => Root.Files(kind).Array();
 
         FolderPath IRootedArchive.Root
         {

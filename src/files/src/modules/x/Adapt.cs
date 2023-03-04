@@ -18,5 +18,8 @@ namespace Z0
 
         public static ProcessModule Adapt(this M src)
             => src;
+
+        public static ModuleArchive Modules(this IDbArchive src)
+            => new ModuleArchive(src.Root);
     }
 }

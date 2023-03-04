@@ -61,7 +61,7 @@ namespace Z0
                 }
             }
 
-            return new(xmlData, lookup, csvRows, dllFiles);
+            return new(xmlData, lookup, csvRows, dllFiles.Array());
         }
 
         public static FileName CsvFile(PartId part)
