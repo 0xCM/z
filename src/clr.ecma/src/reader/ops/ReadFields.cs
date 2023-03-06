@@ -22,7 +22,7 @@ namespace Z0
             dst(field);
         }
 
-        public ReadOnlySpan<EcmaFieldInfo> ReadFieldInfo()
+        public ReadOnlySpan<EcmaFieldInfo> ReadFieldDefs()
         {
             var handles = MD.FieldDefinitions.ToReadOnlySpan();
             var count = handles.Length;

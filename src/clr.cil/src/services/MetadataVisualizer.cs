@@ -1457,7 +1457,6 @@ namespace System.Reflection.Metadata
         string RowId(Func<EntityHandle> getHandle)
             => ToString(getHandle, RowId);
 
-
         public static string GetLanguage(Guid guid)
         {
             if (guid == s_CSharpGuid)
@@ -1494,7 +1493,6 @@ namespace System.Reflection.Metadata
 
             return "{" + guid + "}";
         }
-
 
         string FormatImports(ImportScope scope)
         {
@@ -1653,7 +1651,6 @@ namespace System.Reflection.Metadata
 
             EmbedInteropTypes = 1 << 1,
         }
-
 
         public static string VisualizeCompilationMetadataReferences(BlobReader reader)
         {
@@ -1849,7 +1846,6 @@ namespace System.Reflection.Metadata
             return string.Format("{1:x} (#{0:x})", _reader.GetHeapOffset(handle), getValue(_reader, handle));
         }
 
-
         static readonly Guid s_sha1Guid = new Guid("ff1816ec-aa5e-4d10-87f7-6f4963833460");
 
         static readonly Guid s_sha256Guid = new Guid("8829d00f-11b8-4213-878b-770e8597ac16");
@@ -1927,15 +1923,15 @@ namespace System.Reflection.Metadata
         string MakeTableName(TableIndex index)
             => $"{index} (index: 0x{(byte)index:X2}, size: {_reader.GetTableRowCount(index) * _reader.GetTableRowSize(index)}): ";
 
-        static string EnumValue<T>(object value)
-            where T : IEquatable<T>
-        {
-            T integralValue = (T)value;
-            if (integralValue.Equals(default(T)))
-                return "0";
+        // static string EnumValue<T>(object value)
+        //     where T : IEquatable<T>
+        // {
+        //     T integralValue = (T)value;
+        //     if (integralValue.Equals(default(T)))
+        //         return "0";
 
-            return string.Format("0x{0:x8} ({1})", integralValue, value);
-        }
+        //     return string.Format("0x{0:x8} ({1})", integralValue, value);
+        // }
 
         public string MethodSignature(BlobHandle signatureHandle)
             => Literal(signatureHandle, (r, h) => Signature(r, (BlobHandle)h, BlobKind.MethodSignature));
@@ -2019,7 +2015,6 @@ namespace System.Reflection.Metadata
                 return $"<bad signature: {BitConverter.ToString(reader.GetBlobBytes(signatureHandle))}>";
             }
         }
-
 
         static string MethodSignature(MethodSignature<string> signature)
         {
@@ -2379,14 +2374,14 @@ namespace System.Reflection.Metadata
         }
     }
 
-    public enum HandlerKind
-    {
-        Try,
-        Catch,
-        Filter,
-        Finally,
-        Fault
-    }
+    // public enum HandlerKind
+    // {
+    //     Try,
+    //     Catch,
+    //     Filter,
+    //     Finally,
+    //     Fault
+    // }
 
     internal static class PortableCustomDebugInfoKinds
     {
@@ -2411,18 +2406,18 @@ namespace System.Reflection.Metadata
 
     internal static class Hash
     {
-        /// <summary>
-        /// This is how VB Anonymous Types combine hash values for fields.
-        /// </summary>
-        internal static int Combine(int newKey, int currentKey)
-        {
-            return unchecked((currentKey * (int)0xA5555529) + newKey);
-        }
+        // /// <summary>
+        // /// This is how VB Anonymous Types combine hash values for fields.
+        // /// </summary>
+        // internal static int Combine(int newKey, int currentKey)
+        // {
+        //     return unchecked((currentKey * (int)0xA5555529) + newKey);
+        // }
 
-        internal static int Combine(bool newKeyPart, int currentKey)
-        {
-            return Combine(currentKey, newKeyPart ? 1 : 0);
-        }
+        // internal static int Combine(bool newKeyPart, int currentKey)
+        // {
+        //     return Combine(currentKey, newKeyPart ? 1 : 0);
+        // }
 
         /// <summary>
         /// This is how VB Anonymous Types combine hash values for fields.
@@ -2442,271 +2437,271 @@ namespace System.Reflection.Metadata
             return hash;
         }
 
-        internal static int CombineValues<T>(ImmutableArray<T> values, IEqualityComparer<T> comparer = null, int maxItemsToHash = int.MaxValue)
-        {
-            if (values.IsDefaultOrEmpty)
-            {
-                return 0;
-            }
+        // internal static int CombineValues<T>(ImmutableArray<T> values, IEqualityComparer<T> comparer = null, int maxItemsToHash = int.MaxValue)
+        // {
+        //     if (values.IsDefaultOrEmpty)
+        //     {
+        //         return 0;
+        //     }
 
-            if (comparer == null)
-            {
-                comparer = EqualityComparer<T>.Default;
-            }
+        //     if (comparer == null)
+        //     {
+        //         comparer = EqualityComparer<T>.Default;
+        //     }
 
-            var hashCode = 0;
-            var count = 0;
-            foreach (var value in values)
-            {
-                if (count++ >= maxItemsToHash)
-                {
-                    break;
-                }
+        //     var hashCode = 0;
+        //     var count = 0;
+        //     foreach (var value in values)
+        //     {
+        //         if (count++ >= maxItemsToHash)
+        //         {
+        //             break;
+        //         }
 
-                // Should end up with a constrained virtual call to object.GetHashCode (i.e. avoid boxing where possible).
-                if (value != null)
-                {
-                    hashCode = Combine(comparer.GetHashCode(value), hashCode);
-                }
-            }
+        //         // Should end up with a constrained virtual call to object.GetHashCode (i.e. avoid boxing where possible).
+        //         if (value != null)
+        //         {
+        //             hashCode = Combine(comparer.GetHashCode(value), hashCode);
+        //         }
+        //     }
 
-            return hashCode;
-        }
+        //     return hashCode;
+        // }
 
-        internal static int CombineValues<T>(IEnumerable<T> values, IEqualityComparer<T> comparer = null, int maxItemsToHash = int.MaxValue)
-        {
-            if (values == null)
-            {
-                return 0;
-            }
+        // internal static int CombineValues<T>(IEnumerable<T> values, IEqualityComparer<T> comparer = null, int maxItemsToHash = int.MaxValue)
+        // {
+        //     if (values == null)
+        //     {
+        //         return 0;
+        //     }
 
-            if (comparer == null)
-            {
-                comparer = EqualityComparer<T>.Default;
-            }
+        //     if (comparer == null)
+        //     {
+        //         comparer = EqualityComparer<T>.Default;
+        //     }
 
-            var hashCode = 0;
-            var count = 0;
-            foreach (var value in values)
-            {
-                if (count++ >= maxItemsToHash)
-                {
-                    break;
-                }
+        //     var hashCode = 0;
+        //     var count = 0;
+        //     foreach (var value in values)
+        //     {
+        //         if (count++ >= maxItemsToHash)
+        //         {
+        //             break;
+        //         }
 
-                if (value != null)
-                {
-                    hashCode = Combine(comparer.GetHashCode(value), hashCode);
-                }
-            }
+        //         if (value != null)
+        //         {
+        //             hashCode = Combine(comparer.GetHashCode(value), hashCode);
+        //         }
+        //     }
 
-            return hashCode;
-        }
+        //     return hashCode;
+        // }
 
-        /// <summary>
-        /// The offset bias value used in the FNV-1a algorithm
-        /// See http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
-        /// </summary>
-        internal const int FnvOffsetBias = unchecked((int)2166136261);
+        // /// <summary>
+        // /// The offset bias value used in the FNV-1a algorithm
+        // /// See http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
+        // /// </summary>
+        // internal const int FnvOffsetBias = unchecked((int)2166136261);
 
-        /// <summary>
-        /// The generative factor used in the FNV-1a algorithm
-        /// See http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
-        /// </summary>
-        internal const int FnvPrime = 16777619;
+        // /// <summary>
+        // /// The generative factor used in the FNV-1a algorithm
+        // /// See http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
+        // /// </summary>
+        // internal const int FnvPrime = 16777619;
 
-        /// <summary>
-        /// Compute the FNV-1a hash of a sequence of bytes
-        /// See http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
-        /// </summary>
-        /// <param name="data">The sequence of bytes</param>
-        /// <returns>The FNV-1a hash of <paramref name="data"/></returns>
-        internal static int GetFNVHashCode(byte[] data)
-        {
-            int hashCode = Hash.FnvOffsetBias;
+        // /// <summary>
+        // /// Compute the FNV-1a hash of a sequence of bytes
+        // /// See http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
+        // /// </summary>
+        // /// <param name="data">The sequence of bytes</param>
+        // /// <returns>The FNV-1a hash of <paramref name="data"/></returns>
+        // internal static int GetFNVHashCode(byte[] data)
+        // {
+        //     int hashCode = Hash.FnvOffsetBias;
 
-            for (int i = 0; i < data.Length; i++)
-            {
-                hashCode = unchecked((hashCode ^ data[i]) * Hash.FnvPrime);
-            }
+        //     for (int i = 0; i < data.Length; i++)
+        //     {
+        //         hashCode = unchecked((hashCode ^ data[i]) * Hash.FnvPrime);
+        //     }
 
-            return hashCode;
-        }
+        //     return hashCode;
+        // }
 
-        /// <summary>
-        /// Compute the FNV-1a hash of a sequence of bytes and determines if the byte
-        /// sequence is valid ASCII and hence the hash code matches a char sequence
-        /// encoding the same text.
-        /// See http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
-        /// </summary>
-        /// <param name="data">The sequence of bytes that are likely to be ASCII text.</param>
-        /// <param name="length">The length of the sequence.</param>
-        /// <param name="isAscii">True if the sequence contains only characters in the ASCII range.</param>
-        /// <returns>The FNV-1a hash of <paramref name="data"/></returns>
-        internal static unsafe int GetFNVHashCode(byte* data, int length, out bool isAscii)
-        {
-            int hashCode = Hash.FnvOffsetBias;
+        // /// <summary>
+        // /// Compute the FNV-1a hash of a sequence of bytes and determines if the byte
+        // /// sequence is valid ASCII and hence the hash code matches a char sequence
+        // /// encoding the same text.
+        // /// See http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
+        // /// </summary>
+        // /// <param name="data">The sequence of bytes that are likely to be ASCII text.</param>
+        // /// <param name="length">The length of the sequence.</param>
+        // /// <param name="isAscii">True if the sequence contains only characters in the ASCII range.</param>
+        // /// <returns>The FNV-1a hash of <paramref name="data"/></returns>
+        // internal static unsafe int GetFNVHashCode(byte* data, int length, out bool isAscii)
+        // {
+        //     int hashCode = Hash.FnvOffsetBias;
 
-            byte asciiMask = 0;
+        //     byte asciiMask = 0;
 
-            for (int i = 0; i < length; i++)
-            {
-                byte b = data[i];
-                asciiMask |= b;
-                hashCode = unchecked((hashCode ^ b) * Hash.FnvPrime);
-            }
+        //     for (int i = 0; i < length; i++)
+        //     {
+        //         byte b = data[i];
+        //         asciiMask |= b;
+        //         hashCode = unchecked((hashCode ^ b) * Hash.FnvPrime);
+        //     }
 
-            isAscii = (asciiMask & 0x80) == 0;
-            return hashCode;
-        }
+        //     isAscii = (asciiMask & 0x80) == 0;
+        //     return hashCode;
+        // }
 
-        /// <summary>
-        /// Compute the FNV-1a hash of a sequence of bytes
-        /// See http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
-        /// </summary>
-        /// <param name="data">The sequence of bytes</param>
-        /// <returns>The FNV-1a hash of <paramref name="data"/></returns>
-        internal static int GetFNVHashCode(ImmutableArray<byte> data)
-        {
-            int hashCode = Hash.FnvOffsetBias;
+        // /// <summary>
+        // /// Compute the FNV-1a hash of a sequence of bytes
+        // /// See http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
+        // /// </summary>
+        // /// <param name="data">The sequence of bytes</param>
+        // /// <returns>The FNV-1a hash of <paramref name="data"/></returns>
+        // internal static int GetFNVHashCode(ImmutableArray<byte> data)
+        // {
+        //     int hashCode = Hash.FnvOffsetBias;
 
-            for (int i = 0; i < data.Length; i++)
-            {
-                hashCode = unchecked((hashCode ^ data[i]) * Hash.FnvPrime);
-            }
+        //     for (int i = 0; i < data.Length; i++)
+        //     {
+        //         hashCode = unchecked((hashCode ^ data[i]) * Hash.FnvPrime);
+        //     }
 
-            return hashCode;
-        }
+        //     return hashCode;
+        // }
 
-        /// <summary>
-        /// Compute the hashcode of a sub-string using FNV-1a
-        /// See http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
-        /// Note: FNV-1a was developed and tuned for 8-bit sequences. We're using it here
-        /// for 16-bit Unicode chars on the understanding that the majority of chars will
-        /// fit into 8-bits and, therefore, the algorithm will retain its desirable traits
-        /// for generating hash codes.
-        /// </summary>
-        /// <param name="text">The input string</param>
-        /// <param name="start">The start index of the first character to hash</param>
-        /// <param name="length">The number of characters, beginning with <paramref name="start"/> to hash</param>
-        /// <returns>The FNV-1a hash code of the substring beginning at <paramref name="start"/> and ending after <paramref name="length"/> characters.</returns>
-        internal static int GetFNVHashCode(string text, int start, int length)
-        {
-            int hashCode = Hash.FnvOffsetBias;
-            int end = start + length;
+        // /// <summary>
+        // /// Compute the hashcode of a sub-string using FNV-1a
+        // /// See http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
+        // /// Note: FNV-1a was developed and tuned for 8-bit sequences. We're using it here
+        // /// for 16-bit Unicode chars on the understanding that the majority of chars will
+        // /// fit into 8-bits and, therefore, the algorithm will retain its desirable traits
+        // /// for generating hash codes.
+        // /// </summary>
+        // /// <param name="text">The input string</param>
+        // /// <param name="start">The start index of the first character to hash</param>
+        // /// <param name="length">The number of characters, beginning with <paramref name="start"/> to hash</param>
+        // /// <returns>The FNV-1a hash code of the substring beginning at <paramref name="start"/> and ending after <paramref name="length"/> characters.</returns>
+        // internal static int GetFNVHashCode(string text, int start, int length)
+        // {
+        //     int hashCode = Hash.FnvOffsetBias;
+        //     int end = start + length;
 
-            for (int i = start; i < end; i++)
-            {
-                hashCode = unchecked((hashCode ^ text[i]) * Hash.FnvPrime);
-            }
+        //     for (int i = start; i < end; i++)
+        //     {
+        //         hashCode = unchecked((hashCode ^ text[i]) * Hash.FnvPrime);
+        //     }
 
-            return hashCode;
-        }
+        //     return hashCode;
+        // }
 
-        /// <summary>
-        /// Compute the hashcode of a sub-string using FNV-1a
-        /// See http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
-        /// </summary>
-        /// <param name="text">The input string</param>
-        /// <param name="start">The start index of the first character to hash</param>
-        /// <returns>The FNV-1a hash code of the substring beginning at <paramref name="start"/> and ending at the end of the string.</returns>
-        internal static int GetFNVHashCode(string text, int start)
-        {
-            return GetFNVHashCode(text, start, length: text.Length - start);
-        }
+        // /// <summary>
+        // /// Compute the hashcode of a sub-string using FNV-1a
+        // /// See http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
+        // /// </summary>
+        // /// <param name="text">The input string</param>
+        // /// <param name="start">The start index of the first character to hash</param>
+        // /// <returns>The FNV-1a hash code of the substring beginning at <paramref name="start"/> and ending at the end of the string.</returns>
+        // internal static int GetFNVHashCode(string text, int start)
+        // {
+        //     return GetFNVHashCode(text, start, length: text.Length - start);
+        // }
 
-        /// <summary>
-        /// Compute the hashcode of a string using FNV-1a
-        /// See http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
-        /// </summary>
-        /// <param name="text">The input string</param>
-        /// <returns>The FNV-1a hash code of <paramref name="text"/></returns>
-        internal static int GetFNVHashCode(string text)
-        {
-            return CombineFNVHash(Hash.FnvOffsetBias, text);
-        }
+        // /// <summary>
+        // /// Compute the hashcode of a string using FNV-1a
+        // /// See http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
+        // /// </summary>
+        // /// <param name="text">The input string</param>
+        // /// <returns>The FNV-1a hash code of <paramref name="text"/></returns>
+        // internal static int GetFNVHashCode(string text)
+        // {
+        //     return CombineFNVHash(Hash.FnvOffsetBias, text);
+        // }
 
-        /// <summary>
-        /// Compute the hashcode of a string using FNV-1a
-        /// See http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
-        /// </summary>
-        /// <param name="text">The input string</param>
-        /// <returns>The FNV-1a hash code of <paramref name="text"/></returns>
-        internal static int GetFNVHashCode(System.Text.StringBuilder text)
-        {
-            int hashCode = Hash.FnvOffsetBias;
-            int end = text.Length;
+        // /// <summary>
+        // /// Compute the hashcode of a string using FNV-1a
+        // /// See http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
+        // /// </summary>
+        // /// <param name="text">The input string</param>
+        // /// <returns>The FNV-1a hash code of <paramref name="text"/></returns>
+        // internal static int GetFNVHashCode(System.Text.StringBuilder text)
+        // {
+        //     int hashCode = Hash.FnvOffsetBias;
+        //     int end = text.Length;
 
-            for (int i = 0; i < end; i++)
-            {
-                hashCode = unchecked((hashCode ^ text[i]) * Hash.FnvPrime);
-            }
+        //     for (int i = 0; i < end; i++)
+        //     {
+        //         hashCode = unchecked((hashCode ^ text[i]) * Hash.FnvPrime);
+        //     }
 
-            return hashCode;
-        }
+        //     return hashCode;
+        // }
 
-        /// <summary>
-        /// Compute the hashcode of a sub string using FNV-1a
-        /// See http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
-        /// </summary>
-        /// <param name="text">The input string as a char array</param>
-        /// <param name="start">The start index of the first character to hash</param>
-        /// <param name="length">The number of characters, beginning with <paramref name="start"/> to hash</param>
-        /// <returns>The FNV-1a hash code of the substring beginning at <paramref name="start"/> and ending after <paramref name="length"/> characters.</returns>
-        internal static int GetFNVHashCode(char[] text, int start, int length)
-        {
-            int hashCode = Hash.FnvOffsetBias;
-            int end = start + length;
+        // /// <summary>
+        // /// Compute the hashcode of a sub string using FNV-1a
+        // /// See http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
+        // /// </summary>
+        // /// <param name="text">The input string as a char array</param>
+        // /// <param name="start">The start index of the first character to hash</param>
+        // /// <param name="length">The number of characters, beginning with <paramref name="start"/> to hash</param>
+        // /// <returns>The FNV-1a hash code of the substring beginning at <paramref name="start"/> and ending after <paramref name="length"/> characters.</returns>
+        // internal static int GetFNVHashCode(char[] text, int start, int length)
+        // {
+        //     int hashCode = Hash.FnvOffsetBias;
+        //     int end = start + length;
 
-            for (int i = start; i < end; i++)
-            {
-                hashCode = unchecked((hashCode ^ text[i]) * Hash.FnvPrime);
-            }
+        //     for (int i = start; i < end; i++)
+        //     {
+        //         hashCode = unchecked((hashCode ^ text[i]) * Hash.FnvPrime);
+        //     }
 
-            return hashCode;
-        }
+        //     return hashCode;
+        // }
 
-        /// <summary>
-        /// Compute the hashcode of a single character using the FNV-1a algorithm
-        /// See http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
-        /// Note: In general, this isn't any more useful than "char.GetHashCode". However,
-        /// it may be needed if you need to generate the same hash code as a string or
-        /// substring with just a single character.
-        /// </summary>
-        /// <param name="ch">The character to hash</param>
-        /// <returns>The FNV-1a hash code of the character.</returns>
-        internal static int GetFNVHashCode(char ch)
-        {
-            return Hash.CombineFNVHash(Hash.FnvOffsetBias, ch);
-        }
+        // /// <summary>
+        // /// Compute the hashcode of a single character using the FNV-1a algorithm
+        // /// See http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
+        // /// Note: In general, this isn't any more useful than "char.GetHashCode". However,
+        // /// it may be needed if you need to generate the same hash code as a string or
+        // /// substring with just a single character.
+        // /// </summary>
+        // /// <param name="ch">The character to hash</param>
+        // /// <returns>The FNV-1a hash code of the character.</returns>
+        // internal static int GetFNVHashCode(char ch)
+        // {
+        //     return Hash.CombineFNVHash(Hash.FnvOffsetBias, ch);
+        // }
 
-        /// <summary>
-        /// Combine a string with an existing FNV-1a hash code
-        /// See http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
-        /// </summary>
-        /// <param name="hashCode">The accumulated hash code</param>
-        /// <param name="text">The string to combine</param>
-        /// <returns>The result of combining <paramref name="hashCode"/> with <paramref name="text"/> using the FNV-1a algorithm</returns>
-        internal static int CombineFNVHash(int hashCode, string text)
-        {
-            foreach (char ch in text)
-            {
-                hashCode = unchecked((hashCode ^ ch) * Hash.FnvPrime);
-            }
+        // /// <summary>
+        // /// Combine a string with an existing FNV-1a hash code
+        // /// See http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
+        // /// </summary>
+        // /// <param name="hashCode">The accumulated hash code</param>
+        // /// <param name="text">The string to combine</param>
+        // /// <returns>The result of combining <paramref name="hashCode"/> with <paramref name="text"/> using the FNV-1a algorithm</returns>
+        // internal static int CombineFNVHash(int hashCode, string text)
+        // {
+        //     foreach (char ch in text)
+        //     {
+        //         hashCode = unchecked((hashCode ^ ch) * Hash.FnvPrime);
+        //     }
 
-            return hashCode;
-        }
+        //     return hashCode;
+        // }
 
-        /// <summary>
-        /// Combine a char with an existing FNV-1a hash code
-        /// See http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
-        /// </summary>
-        /// <param name="hashCode">The accumulated hash code</param>
-        /// <param name="ch">The new character to combine</param>
-        /// <returns>The result of combining <paramref name="hashCode"/> with <paramref name="ch"/> using the FNV-1a algorithm</returns>
-        internal static int CombineFNVHash(int hashCode, char ch)
-        {
-            return unchecked((hashCode ^ ch) * Hash.FnvPrime);
-        }
+        // /// <summary>
+        // /// Combine a char with an existing FNV-1a hash code
+        // /// See http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
+        // /// </summary>
+        // /// <param name="hashCode">The accumulated hash code</param>
+        // /// <param name="ch">The new character to combine</param>
+        // /// <returns>The result of combining <paramref name="hashCode"/> with <paramref name="ch"/> using the FNV-1a algorithm</returns>
+        // internal static int CombineFNVHash(int hashCode, char ch)
+        // {
+        //     return unchecked((hashCode ^ ch) * Hash.FnvPrime);
+        // }
     }
 }

@@ -272,7 +272,7 @@ namespace Z0
 
             if(result)
             {
-                var listing = Archives.listing(pack.Files());
+                var listing = Archives.listing(pack.Files().Array());
                 var dst = AppDb.AppData().PrefixedTable<ListedFile>($"api.pack.{pack.Timestamp}");
                 Channel.TableEmit(listing, dst);
             }
@@ -306,6 +306,9 @@ namespace Z0
             Channel.TableEmit(dst.Array(),path);
         }
 
+        [CmdOp("shell")]
+        void LaunchShell(CmdArgs args)
+            => ProcExec.devshell(Channel,args);
 
         [CmdOp("files/kinds")]
         void FileKinds()
@@ -325,6 +328,15 @@ namespace Z0
             });
         }
 
+
+        [CmdOp("runtime/files")]
+        void RuntimeFiles()
+        {
+            var root = FS.dir(RuntimeEnvironment.GetRuntimeDirectory()).DbArchive();
+            var files = root.Files();
+            iter(files, file => Channel.Row(file));
+
+        }
         [CmdOp("files/index")]
         void FileQuery(CmdArgs args)
         {

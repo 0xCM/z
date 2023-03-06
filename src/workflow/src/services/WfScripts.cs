@@ -154,7 +154,7 @@ namespace Z0
         void RunScript(IProjectWorkspace project, FileKind kind, FilePath script, Action<CmdFlow> receiver)
         {
             var flows = list<CmdFlow>();
-            var files = project.SourceFiles(kind, false);
+            var files = project.SourceFiles(kind, false).Array();
             int length = files.Length;
             for(var i=0; i<length; i++)
             {

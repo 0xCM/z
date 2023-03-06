@@ -1,5 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <LlvmSvc>$(MsBuildThisFileDirectory)z0.llvm.svc.csproj</LlvmSvc>
-  </PropertyGroup>
-</Project>

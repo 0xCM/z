@@ -56,7 +56,7 @@ namespace Z0
 
         public HexFileData LoadObjHex(ProjectContext context)
         {
-            var src = ObjHex(context.Project.ProjectId).Files(FileKind.HexDat);
+            var src = ObjHex(context.Project.ProjectId).Files(FileKind.HexDat).Array();
             var count = src.Length;
             var dst = dict<FilePath,Index<HexDataRow>>(count);
             for(var i=0; i<count; i++)

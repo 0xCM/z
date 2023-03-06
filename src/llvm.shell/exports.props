@@ -1,5 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <LlvmShell>$(MsBuildThisFileDirectory)z0.llvm.shell.csproj</LlvmShell>
-  </PropertyGroup>
-</Project>

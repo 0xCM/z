@@ -14,7 +14,13 @@ namespace Z0
         public static IDbArchive ShellData => cd().DbArchive().Scoped(".data");
 
         static AppSettings AppSettings => AppSettings.Default;
-        
+
+        public static IEnvDb db(FolderPath root)
+            => new EnvDb(root);
+
+        public static IEnvDb db()
+            => AppSettings.EnvDb();
+
         public static ProcessId pid() 
             => ProcessId.current();
 
@@ -24,33 +30,8 @@ namespace Z0
         public static uint tid()
             => Kernel32.GetCurrentThreadId();
 
-        public static ReadOnlySeq<EnvReport> reports(IWfChannel channel, IDbArchive dst)
-        {
-            var flow = channel.Running();
-            var src = reports();
-            iter(src, report => emit(channel,report, dst));
-            channel.Ran(flow);
-            return src;
-        }
-
-        public static ExecToken report(IWfChannel channel, EnvVarKind kind, IDbArchive dst)
-        {
-            var token = ExecToken.Empty;
-            switch(kind)
-            {
-                case EnvVarKind.Process:
-                     token = emit(channel, kind, dst);
-                break;
-                case EnvVarKind.User:
-                    token = emit(channel, kind, dst);
-                break;
-                case EnvVarKind.Machine:
-                    token = emit(channel, kind, dst);
-                break;
-            }
-
-            return token;
-        }
+        public static EnvReports reports(IWfChannel channel)
+            => channel.Channeled<EnvReports>();
 
         static uint KeySeq = 0;
         
@@ -76,49 +57,10 @@ namespace Z0
             return new (buffer.Values.Array().Sort());
         }
 
-        public static void tools(IWfChannel channel, IDbArchive dst)
-        {
-            var catalog = tools();
-            var counter = 0u;
-            var emitter = text.emitter();
-            foreach(var tool in catalog)
-            {               
-                var info = string.Format("{0,-36} {1}", tool.Name, tool.Path); 
-                emitter.AppendLine(info);
-                channel.Row(info);
-            }
-
-            channel.FileEmit(emitter.Emit(), dst.Scoped(EnvId.Format()).Path(FS.file("tools", FileKind.List)));
-        }
-
         public static EnvId EnvId 
         {
             get => var(EnvVarKind.Process, nameof(EnvId), x => new EnvId(x));
             set => apply(new EnvVar(nameof(EnvId), value.Format()), EnvVarKind.Process);
-        }
-
-        public static EnvReport report(EnvVarKind kind)
-            => new EnvReport(EnvId, kind, vars(kind));
-
-        public static ReadOnlySeq<EnvReport> reports()
-        {
-            var dst = sys.alloc<EnvReport>(3);
-            dst[(byte)EnvVarKind.Process] = report(EnvVarKind.Process);
-            dst[(byte)EnvVarKind.User] = report(EnvVarKind.User);
-            dst[(byte)EnvVarKind.Machine] = report(EnvVarKind.Machine);            
-            return dst;        
-        }
-
-        public static ExecToken emit(IWfChannel channel, EnvReport src, IDbArchive dst)
-            => emit(channel, src.Kind, src.Vars, src.EnvId.IsEmpty ? dst.Scoped("default") : dst.Scoped(src.EnvId));
-
-        public static ExecToken EmitReports(IWfChannel channel, IDbArchive dst)
-        {
-            var running = channel.Running();
-            emit(channel, EnvVarKind.Process, dst);
-            emit(channel, EnvVarKind.User, dst);
-            emit(channel, EnvVarKind.Machine, dst);
-            return channel.Ran(running);
         }
 
         public static FolderPath cd()
@@ -197,45 +139,6 @@ namespace Z0
             return dst;
         }
 
-        public static void emit(IWfChannel channel, IDbArchive dst)
-        {
-            emit(channel,EnvVarKind.Process, dst);
-            emit(channel,EnvVarKind.User, dst);
-            emit(channel,EnvVarKind.Machine, dst);
-        }
-
-        public static ExecToken emit(IWfChannel channel, EnvVarKind kind, EnvVars vars, IDbArchive dst)
-        {
-            var token = ExecToken.Empty;
-            if(vars.IsNonEmpty)
-            {
-                vars.Iter(v => channel.Write(v.Format()));
-                token = emit(channel, vars, kind, dst.Root);
-            }
-            return token;
-        }
-
-        public static ExecToken emit(IWfChannel channel, EnvVarKind kind, IDbArchive dst)
-        {
-            var vars = EnvVars.Empty;
-            var token = ExecToken.Empty;
-            switch(kind)
-            {
-                case EnvVarKind.Machine:
-                    vars = machine();
-                break;
-                case EnvVarKind.Process:
-                    vars = process();
-                break;
-                case EnvVarKind.User:
-                    vars = user();
-                break;
-            }
-
-            token = emit(channel, kind, vars, dst);
-            return token;
-        }
-
         public static EnvVars vars(EnvVarKind kind)
         {
             var dst = list<EnvVar>();
@@ -258,57 +161,5 @@ namespace Z0
 
         public static void apply(EnvVar src, EnvVarKind kind)
             => Environment.SetEnvironmentVariable(src.Name, src.Value, (EnvironmentVariableTarget)kind);
-
-        public static ReadOnlySeq<EnvVarRow> rows(EnvVars src, string name)
-        {
-            const char Sep = ';';
-            var buffer = list<EnvVarRow>();
-            var k=0u;
-            for(var i=0; i<src.Count; i++)
-            {
-                ref readonly var v = ref src[i];
-                var vName = v.Name;
-                var vValue = v.Value;
-
-                if(v.Contains(Sep))
-                {
-                    var parts = text.split(vValue,Sep).Index();
-                    for(var j=0; j<parts.Count; j++)
-                    {
-                        ref readonly var part = ref parts[j];
-                        var dst = new EnvVarRow();
-                        dst.Seq = k++;
-                        dst.EnvName = name;
-                        dst.VarName = vName;
-                        dst.VarValue = part;
-                        dst.Join = Sep.ToString();
-                        buffer.Add(dst);
-                    }
-                }
-                else
-                {
-                    var dst = new EnvVarRow();
-                    dst.Seq = k++;
-                    dst.EnvName = name;
-                    dst.VarName = vName;
-                    dst.VarValue = vValue;
-                    dst.Join = EmptyString;
-                    buffer.Add(dst);
-                }
-            }
-
-            return buffer.ToIndex();
-        }
-
-        static ExecToken emit(IWfChannel channel, EnvVars src, EnvVarKind kind, FolderPath dst)
-        {
-            var name =  $"{ExecutingPart.Name}.{EnumRender.format(kind)}";
-            var table = dst + FS.file($"{name}.settings",FileKind.Csv);
-            var env = dst + FS.file($"{name}", FileKind.Cfg);
-            using var writer = env.AsciWriter();
-            for(var i=0; i<src.Count; i++)
-                writer.WriteLine(src[i].Format());
-            return CsvTables.emit(channel, rows(src, name).View, table, ASCI);
-        }
     }
 }

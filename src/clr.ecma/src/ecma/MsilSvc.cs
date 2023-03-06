@@ -51,7 +51,7 @@ namespace Z0
             return dst.Emit();
         }
 
-        public Files MetadataFiles(IApiPack src)
+        public IEnumerable<FilePath> MetadataFiles(IApiPack src)
             => src.Metadata().Files(FileKind.MsilDat);
 
         public Index<MsilRow> LoadMetadata(FilePath src)

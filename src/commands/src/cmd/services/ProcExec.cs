@@ -23,6 +23,34 @@ namespace Z0
         public static ToolContext context()
             => new(Env.cd(), EnvVars.Empty);
 
+        public static void devshell(IWfChannel channel, CmdArgs args)
+        {
+            var profile = args[0].Value;
+            var cwd = args.Count > 1 ? FS.dir(args[1]) : Env.cd();
+            devshell(channel, profile, CmdArgs.Empty, cwd);  
+        }
+
+        [Op]
+        public static void devshell(IWfChannel channel, string profile, CmdArgs args, FolderPath cwd, EnvVars? vars = null)
+        {
+            var flow = channel.Running($"Launching {profile} shell");
+            var psi = new ProcessStartInfo
+            {
+                FileName = "wt.exe",
+                CreateNoWindow = false,
+                Arguments = $"nt --profile {profile} -d {cwd}",
+                RedirectStandardError = false,
+                RedirectStandardOutput = false,
+                RedirectStandardInput = false
+            };
+
+            if(vars != null)
+                iter(vars.View, v => psi.Environment.Add(v.Name, v.Value));
+            var process = sys.process(psi);
+            process.Start();
+            channel.Ran(flow, $"Launched {profile} shell");
+        }
+
         [Op]
         public static Task<ExecToken> launch(IWfChannel channel, FilePath path, CmdArgs args, ToolContext? context = null)
         {
@@ -63,6 +91,45 @@ namespace Z0
         public static Task<ExecToken> launch(IWfChannel channel, CmdArgs args, ToolContext? context = null)
             => launch(channel, FS.path(args[0]), args.Skip(1), context);
 
+        public static Task<ExecToken> redirect(IWfChannel channel, CmdArgs args, FilePath status, FilePath? error = null)
+        {
+            FilePath _error = error == null ? (status + FS.ext("errors")) : error.Value;
+            ExecToken Run()
+            {
+                var c0Name=$"{Environment.ProcessId}.channels.0";
+                var h0 = $"# {args} -> ${status}";
+
+                var c1Name = $"{Environment.ProcessId}.channels.1";
+                var h1 = $"# {args} -> ${_error}";
+                
+                using var c0 = status.Utf8Writer(true);
+                c0.WriteLine($"# {c0Name}");
+                c0.WriteLine(h0);
+
+                using var c1 = _error.Utf8Writer(true);
+                c1.WriteLine($"# {c1Name}");
+                c1.WriteLine(h1);
+
+                void Channel0(string msg)
+                {
+                    channel.Row(msg, FlairKind.Data);
+                    c0.WriteLine(msg);
+                }
+
+                void Channel1(string msg)
+                {
+                    channel.Row(msg, FlairKind.StatusData);
+                    c1.WriteLine(msg);
+                }
+
+                var io = new SysIO(Channel0, Channel1);
+                var running = channel.Running($"{args} -> ({status}, {_error})");
+                return channel.Ran(running, run(io, args, context()));
+            }
+
+            return sys.start(Run);
+
+        }
         public static Task<ExecToken> redirect(IWfChannel channel, CmdArgs args)
         {
             ExecToken Run()

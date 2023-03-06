@@ -56,7 +56,7 @@ namespace Z0
 
         public Index<McAsmDoc> CollectSyntaxDocs(ProjectContext context)
         {
-            var src = SynAsmSources(context.Project).View;
+            var src = SynAsmSources(context.Project).Array();
             var count = src.Length;
             var dst = list<McAsmDoc>();
             for(var i=0; i<count; i++)
@@ -66,7 +66,7 @@ namespace Z0
 
         public Index<McAsmDoc> CalcMcAsmDocs(IProjectWorkspace src)
         {
-            var files = FileCatalog.load(src.ProjectFiles().Storage.ToSortedSpan()).Docs(FileKind.McAsm);
+            var files = FileCatalog.load(src.ProjectFiles().Array().ToSortedSpan()).Docs(FileKind.McAsm);
             var count = files.Count;
             var dst = alloc<McAsmDoc>(count);
             for(var i=0; i<count; i++)
@@ -105,7 +105,7 @@ namespace Z0
             return dst;
         }
 
-        public Files SynAsmSources(IProjectWorkspace src)
+        public IEnumerable<FilePath> SynAsmSources(IProjectWorkspace src)
             => src.OutFiles(FileKind.SynAsm);
 
         public CoffSymIndex LoadSymbols(ProjectId id)
@@ -204,7 +204,7 @@ namespace Z0
         {
             var result = Outcome.Success;
             var project = context.Project;
-            var src = project.OutFiles(FileKind.Sym).View;
+            var src = project.OutFiles(FileKind.Sym).Array();
             var count = src.Length;
             var formatter = CsvTables.formatter<ObjSymRow>();
             var buffer = list<ObjSymRow>();
@@ -233,7 +233,7 @@ namespace Z0
         public Index<ObjDumpRow> CalcObjRows(ProjectContext context)
         {
             var project = context.Project;
-            var src = project.OutFiles(FileKind.ObjAsm).Storage.Sort().Index();
+            var src = project.OutFiles(FileKind.ObjAsm).Array().Sort().Index();
             var result = Outcome.Success;
             var formatter = CsvTables.formatter<ObjDumpRow>();
             var buffer = sys.bag<ObjDumpRow>();
@@ -352,7 +352,7 @@ namespace Z0
         public Index<AsmSyntaxRow> CollectAsmSyntax(ProjectContext context)
         {
             var project = context.Project;
-            var logs = project.OutFiles(FileKind.SynAsmLog).View;
+            var logs = project.OutFiles(FileKind.SynAsmLog).Array();
             var dst = AsmSyntaxTable(project.ProjectId);
             var count = logs.Length;
             var buffer = list<AsmSyntaxRow>();

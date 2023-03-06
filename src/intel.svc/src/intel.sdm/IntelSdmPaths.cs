@@ -7,6 +7,8 @@ namespace Z0.Asm
     using static SdmModels;
     using static ApiAtomic;
 
+    using System.Linq;
+
     public class IntelSdmPaths : WfSvc<IntelSdmPaths>
     {
         IDbArchive SdmDb()

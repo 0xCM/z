@@ -11,10 +11,10 @@ namespace Z0
         IDbArchive Home() 
             => this;
 
-        Files SourceFiles(bool recurse = true)
+        IEnumerable<FilePath> SourceFiles(bool recurse = true)
             => Home().Sources("src").Files(recurse);
 
-        Files SourceFiles(FileKind kind, bool recurse = true)
+        IEnumerable<FilePath> SourceFiles(FileKind kind, bool recurse = true)
             => Home().Sources("src").Files(kind, recurse);
 
         FolderPath SrcDir()
@@ -23,19 +23,19 @@ namespace Z0
         FolderPath SrcDir(string name)
             => SrcDir() + FS.folder(Name);
 
-        Files Scripts()
+        IEnumerable<FilePath> Scripts()
             => Home().Sources("scripts").Files();
 
         FilePath Script(string name)
             => Home().Sources("scripts").Path(name, FileKind.Cmd);
 
-        Files ProjectFiles()
+        IEnumerable<FilePath> ProjectFiles()
             => Home().Root.AllFiles;
         
         FolderPath BuildOut()
             => Scoped(".out").Root;
 
-        Files OutFiles(FileKind kind)
+        IEnumerable<FilePath> OutFiles(FileKind kind)
             => Home().Sources(".out").Files(kind);
     }
 }

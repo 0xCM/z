@@ -33,10 +33,6 @@ namespace Z0
         void ApiVersion()
             => Channel.Write(ExecutingPart.Assembly.AssemblyVersion());
 
-        [CmdOp("env/tools")]
-        void EnvTools()
-            => Cmd.emit(Channel, Env.tools(), ShellData);
-
         [CmdOp("api/script")]
         void RunAppScript(CmdArgs args)
             => ApiCmd.RunCmdScripts(FS.path(args[0]));
@@ -55,19 +51,7 @@ namespace Z0
 
         [CmdOp("env/reports")]
         void EmitEnv(CmdArgs args)
-            => reports(Channel, ShellData);
-
-        [CmdOp("env/machine")]
-        void EmitMachineEnv()
-            => report(Channel, EnvVarKind.Machine, ShellData);
-
-        [CmdOp("env/user")]
-        void EmitUserEnv()
-            => report(Channel, EnvVarKind.User, ShellData);
-
-        [CmdOp("env/process")]
-        void EmitProcessEnv()
-            => report(Channel, EnvVarKind.Process, ShellData);
+            => Env.reports(Channel).Capture(AppSettings.EnvDb().Scoped("env"));
 
         [CmdOp("env/pid")]
         void ProcessId()
@@ -107,13 +91,6 @@ namespace Z0
             jobs.Root.Folders(true).Iter(f => Write(f.Format()));
         }
 
-        [CmdOp("env/cfg")]
-        void EnvCfg(CmdArgs args)
-        {
-            var src = Env.report(EnvVarKind.Process);
-            var cfg = src.Vars;
-            
-        }
 
         [CmdOp("env/id")]
         void EvId(CmdArgs args)

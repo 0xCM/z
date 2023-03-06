@@ -19,13 +19,13 @@ namespace Z0
             Location = dir;
         }
 
-        public Files Asm()
+        public IEnumerable<FilePath> Asm()
             => Location.AsmExtracts(Part);
 
-        public Files Msil()
+        public IEnumerable<FilePath> Msil()
             => Location.MsilExtracts(Part);
 
-        public Files Hex()
+        public IEnumerable<FilePath> Hex()
             => Location.HexExtracts(Part);
     }
 }

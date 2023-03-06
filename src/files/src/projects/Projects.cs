@@ -40,7 +40,7 @@ namespace Z0
                 DataParser.parse(cells.Next(), out dst.SourcePath).Require();
                 DataParser.parse(cells.Next(), out dst.TargetPath).Require();
             }
-            return new(FileCatalog.load(src.ProjectFiles().Storage.ToSortedSpan()), buffer);
+            return new(FileCatalog.load(src.ProjectFiles().Array().ToSortedSpan()), buffer);
         }
 
         [MethodImpl(Inline), Op]

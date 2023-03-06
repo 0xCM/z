@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using System.Linq;
     using static sys;
     using static Build;
 
@@ -22,19 +23,19 @@ namespace Z0
         {
             var src = AppDb.DevProject(project);
             var files = src.Scoped("props/deps").Files(FileKind.Props);
-            return LoadProjects(files);
+            return LoadProjects(files.Array());
         }
 
         public ReadOnlySeq<ProjectSpec> Exports(IDbArchive src)
         {
             var files = src.Files().Where(x => x.FileName == FS.file("exports", FileKind.Props));
-            return LoadProjects(files);
+            return LoadProjects(files.Array());
         }
 
         public ReadOnlySeq<ProjectSpec> Imports(IDbArchive src)
         {
             var files = src.Files().Where(x => x.FileName == FS.file("imports", FileKind.Props));
-            return LoadProjects(files);
+            return LoadProjects(files.Array());
         }
 
         public void EmitCfg(ReadOnlySeq<ProjectSpec> src, string kind, IDbArchive dst)

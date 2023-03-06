@@ -16,7 +16,7 @@ namespace Z0
             return ProcExec.launch(Channel, path, CmdArgs.Empty, ToolContext.Default);
         }
 
-        public Files List(CmdArgs args)
+        public IEnumerable<FilePath> List(CmdArgs args)
             => AppDb.Service.ProjectLib(arg(args, 0).Value).Scoped(scripts).Files();
     }
 }

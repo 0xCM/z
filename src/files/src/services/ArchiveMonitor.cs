@@ -31,7 +31,6 @@ namespace Z0
             Start();
         }
 
-
         public void Dispose()
             => Watcher?.Dispose();
 

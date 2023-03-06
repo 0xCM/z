@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using System.Linq;
+
     public interface IApiPack : IDbArchive, IExpr
     {
         Timestamp Timestamp {get;}
@@ -32,22 +34,22 @@ namespace Z0
         FilePath ExtractPath(ApiHostUri host, FileKind kind)
             => Extracts().Path(ApiFiles.file(host, kind));
 
-        Files HexExtracts()
+        IEnumerable<FilePath> HexExtracts()
             => Extracts().Files(FileKind.HexDat);
 
-        Files HexExtracts(PartId part)
+        IEnumerable<FilePath> HexExtracts(PartId part)
             => HexExtracts().Where(path => path.FileName.StartsWith($"{part.PartName().Format()}."));
 
-        Files AsmExtracts()
+        IEnumerable<FilePath> AsmExtracts()
             => Extracts().Files(FileKind.Asm);
 
-        Files AsmExtracts(PartId part)
+        IEnumerable<FilePath> AsmExtracts(PartId part)
             => AsmExtracts().Where(path => path.FileName.StartsWith($"{part.PartName().Format()}."));
 
-        Files MsilExtracts()
+        IEnumerable<FilePath> MsilExtracts()
             => Extracts().Files(FileKind.Il);
 
-        Files MsilExtracts(PartId part)
+        IEnumerable<FilePath> MsilExtracts(PartId part)
             => MsilExtracts().Where(path => path.FileName.StartsWith($"{part.PartName().Format()}."));
 
         IApiPackArchive Archive()

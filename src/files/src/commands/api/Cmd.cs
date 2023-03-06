@@ -12,19 +12,6 @@ namespace Z0
         public static ReadOnlySeq<IToolExecutor> executors(params Assembly[] src)
             => src.Types().Tagged<CmdExecutorAttribute>().Concrete().Map(x => (IToolExecutor)Activator.CreateInstance(x));
 
-        public static void emit(IWfChannel channel, ToolCatalog src, IDbArchive dst)
-        {
-            var emitter = text.emitter();
-            foreach(var tool in src)
-            {               
-                var info = string.Format("{0:D5} | {1,-48} | {2}", tool.Seq, tool.Name, tool.Path); 
-                emitter.AppendLine(info);
-                channel.Row(info);
-            }
-
-            channel.FileEmit(emitter.Emit(), dst.Path(FS.file("tools", FileKind.Csv)));
-        }
-
         [Op, Closures(UInt64k)]
         public static ToolCmd tool<T>(Tool tool, in T src)
             where T : struct
@@ -283,10 +270,6 @@ namespace Z0
         public static string format(CmdField src)
             => string.Format($"{src.Name}:{src.Description}");
 
-        [Op]
-        public static CmdLine cmd<T>(T src)
-            => $"cmd.exe /c {src}";
-
         public static CmdArgs args<T>(params T[] src)
             where T : new()
         {
@@ -339,16 +322,24 @@ namespace Z0
         public static CmdLine pwsh(FilePath src)
             => string.Format("pwsh.exe {0}", src.Format(PathSeparator.BS));        
 
-        [Op]
-        public static CmdLine cmd(string spec)
-            => string.Format("cmd.exe /c {0}", spec);
-
         public static CmdLine cmdline(params CmdArg[] args)
             => new CmdLine(args);
 
         public static CmdLine cmdline(params object[] args)
             => new CmdLine(args.Select(x => x?.ToString() ?? EmptyString));
-            
+
+        [Op]
+        public static CmdLine cmd<T>(T src)
+            => $"cmd.exe /c {src}";
+
+        [Op]
+        public static CmdLine cmd(string spec)
+            => string.Format("cmd.exe /c {0}", spec);
+
+        [Op]
+        public static CmdLine cmd(FilePath src, CmdArgs args)
+            => string.Format("cmd.exe /c {0} {1}", args.Format());
+
         [Op]
         public static CmdLine cmd(FilePath src, string args)
             => string.Format("cmd.exe /c {0} {1}", src.Format(PathSeparator.BS), args);

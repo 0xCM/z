@@ -12,6 +12,9 @@ namespace Z0
     [ApiHost]
     public class Ecma : WfSvc<Ecma>
     {
+        public static EcmaDb db(IWfRuntime wf, IDbArchive root)
+            => new EcmaDb(wf,root);
+
         public static IEnumerable<AssemblyRef> refs(AssemblyFile src)
         {
             using var ecma = EcmaFile.open(src.Path);

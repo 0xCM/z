@@ -5,7 +5,8 @@
 namespace Z0
 {
     using static sys;
-    
+    using System.Linq;
+
     class BuildCmd : WfAppCmd<BuildCmd>
     {
         MsBuild BuildSvc => Wf.BuildSvc();

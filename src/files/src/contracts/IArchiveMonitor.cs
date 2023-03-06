@@ -9,6 +9,8 @@ namespace Z0
 
     public interface IMonitor : IDisposable
     {
+        void Start();
+        
         void Stop();
     }
 

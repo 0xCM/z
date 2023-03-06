@@ -9,7 +9,7 @@ namespace Z0
         public void EmitSectionHeaders(IDbArchive src, IDbArchive dst)
             => EmitSectionHeaders(src.Files(FileKind.Dll, FileKind.Exe, FileKind.Obj), dst.Table<PeSectionHeader>());
 
-        public void EmitSectionHeaders(ReadOnlySpan<FilePath> src, FilePath dst)
+        public void EmitSectionHeaders(IEnumerable<FilePath> src, FilePath dst)
         {
             try
             {

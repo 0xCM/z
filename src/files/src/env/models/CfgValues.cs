@@ -137,7 +137,6 @@ namespace Z0
 
             public override int GetHashCode()
                 => Hash;
-
         }        
     }
 }

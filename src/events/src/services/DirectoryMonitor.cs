@@ -9,7 +9,7 @@ namespace Z0
         public static IMonitor start(IDbArchive src, IDbArchive dst, params IFileChangeReceiver[] receivers)
             => new DirectoryMonitor(src, dst);
 
-        readonly IWorkerLog Target;
+        readonly IWorkerLog Log;
 
         readonly IDbArchive Sources;
 
@@ -19,15 +19,14 @@ namespace Z0
 
         readonly ReadOnlySeq<IFileChangeReceiver> Receivers;
 
-        DirectoryMonitor(IDbArchive src, IDbArchive dst, params IFileChangeReceiver[] receivers)
+        protected DirectoryMonitor(IDbArchive src, IDbArchive dst, params IFileChangeReceiver[] receivers)
         {
             Receivers = receivers;
             var ts = Timestamp.now();
             var id = FS.identifier(src.Root);
-            var settings = new LogSettings(dst.Path($"{id}.{ts}",FileKind.Log), dst.Path($"{ts}.errors", FileKind.Log));
-            Target = Loggers.worker(settings);
+            Log = Loggers.worker(new LogSettings(dst.Path($"{id}.{ts}",FileKind.Log), dst.Path($"{ts}.errors", FileKind.Log)));
             Sources = src;
-            Service = ArchiveMonitor.start(Sources, Change);
+            Service = ArchiveMonitor.start(Sources, OnChange);
             Running = Events.running(GetType(), $"Initializing monitor over {Sources.Root}/*.*");
             term.emit(Running);
         }
@@ -38,26 +37,26 @@ namespace Z0
         public void Dispose()
         {
             Service?.Dispose();
-            Target?.Dispose();
+            Log?.Dispose();
             Ran();
         }
 
-        void Change(FileChangeEvent e)
+        protected virtual void OnChange(FileChangeEvent e)
         {
             var message = e.Format();
             term.babble(message);
-            Target.LogStatus(message);
-            Brodcast(e);
+            Log?.LogStatus(message);
+            sys.start(() => sys.iter(Receivers, r => r.Deposit(e)));
         }
 
-        void Brodcast(FileChangeEvent e)
+        public void Start()
         {
-            sys.start(() => sys.iter(Receivers, r => r.Deposit(e)));
+            Service?.Stop();
         }
 
         public void Stop()
         {
-            Dispose();
+            Service?.Stop();
         }
     }
 }

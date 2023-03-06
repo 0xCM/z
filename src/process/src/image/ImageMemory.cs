@@ -45,7 +45,7 @@ namespace Z0
 
         public static ExecToken emit(IWfChannel channel, Timestamp ts, IDbArchive dst)
         {
-            Env.emit(channel,dst.Scoped("context"));
+            EnvReports.capture(channel, dst.Scoped("context"));
             var map = ImageMemory.map();
             channel.FileEmit(map.ToString(), dst.Scoped("context").Path("process.image", FileKind.Map));            
             return emit(channel, Process.GetCurrentProcess(), ts, dst);
@@ -186,7 +186,6 @@ namespace Z0
             }
             return buffer.Sort().Resequence();
         }
-
 
         /// <summary>
         /// Captures state information about a specified process

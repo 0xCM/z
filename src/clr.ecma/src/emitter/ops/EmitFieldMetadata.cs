@@ -34,7 +34,7 @@ namespace Z0
                 var path = dst.Metadata(EcmaSections.MemberFields).PrefixedTable<EcmaFieldInfo>(name);
                 var flow = EmittingTable<EcmaFieldInfo>(path);
                 var reader = EcmaReader.create(src);
-                var fields = reader.ReadFieldInfo();
+                var fields = reader.ReadFieldDefs();
                 var count = (uint)fields.Length;
                 var formatter = CsvTables.formatter<EcmaFieldInfo>();
                 using var writer = path.Writer();

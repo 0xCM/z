@@ -69,10 +69,10 @@ namespace Z0
             {
                 Channel.Status($"Loading project from {ws.Home()}");
                 Projects.project(ws);
-                ProjectFiles = FileCatalog.load(Projects.project().ProjectFiles().Storage.ToSortedSpan());
+                ProjectFiles = FileCatalog.load(Projects.project().ProjectFiles().Array().ToSortedSpan());
                 var dir = ws.Home();
                 if (dir.Exists)
-                    Files(ws.SourceFiles());
+                    Files(ws.SourceFiles().Array());
                 Channel.Status($"Project={Projects.project()}");
             }
         }

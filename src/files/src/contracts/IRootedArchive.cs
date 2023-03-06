@@ -52,35 +52,36 @@ namespace Z0
             where T : struct
                 => DbFiles.PrefixedTable<T>(prefix);
 
-        Files Files()
+        IEnumerable<FilePath> Files()
             => DbFiles.Files(true);
 
-        Files Files(bool recurse)
+        IEnumerable<FilePath> Files(bool recurse)
             => DbFiles.Files(recurse);
 
-        Files Files(FileExt ext)
+        IEnumerable<FilePath> Files(FileExt ext)
             => DbFiles.Files(ext);
-
-        FolderPath Folder(string match)
-            => Root.Folder(match);
 
         IEnumerable<FilePath> Files(FileKind kind)
             => DbFiles.Files(kind, true);
 
-        Files Files(FileKind kind, bool recurse)
+        IEnumerable<FilePath> Files(FileKind kind, bool recurse)
             => DbFiles.Files(kind, recurse);
 
-        Files Files(params FileKind[] kinds)
+        IEnumerable<FilePath> Files(params FileKind[] kinds)
             => DbFiles.Files(true, kinds);
 
-        Files Files(string scope, params FileKind[] kinds)
+        IEnumerable<FilePath> Files(string scope, params FileKind[] kinds)
             => DbFiles.Files(scope, true, kinds);
 
         FileName File(string name, FileKind kind)
             => DbFiles.File(name, kind);
 
+
         FilePath Path(string name, FileKind kind)
             => DbFiles.Path(name, kind);
+
+        FolderPath Folder(string match)
+            => Root.Folder(match);
 
         FilePath Path(FileName file)
             => DbFiles.Path(file);

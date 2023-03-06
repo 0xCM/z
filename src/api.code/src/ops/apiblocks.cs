@@ -26,7 +26,7 @@ namespace Z0
 
         [Op]
         public static SortedIndex<ApiCodeBlock> apiblocks(IApiPack src, bool pll = true)
-            => apicode(src.HexExtracts(), pll);
+            => apicode(src.HexExtracts().Array(), pll);
 
         [Op]
         public static Index<ApiCodeBlock> apiblocks(FilePath src)

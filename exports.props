@@ -52,9 +52,6 @@
    <Import Project="$(MsBuildThisFileDirectory)src/lib/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/linq/exports.props"/>
 
-   <Import Project="$(MsBuildThisFileDirectory)src/llvm.shell/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/llvm.svc/exports.props"/>
-
    <Import Project="$(MsBuildThisFileDirectory)src/math/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/machines/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/monitor/exports.props"/>

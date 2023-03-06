@@ -94,28 +94,28 @@ namespace Z0
         public FolderPath Folder(string match)
             => Root.Folder(match);
 
-        public Files Files()
+        public IEnumerable<FilePath> Files()
             => Root.Files(true);
 
-        public Files Files(bool recursive)
+        public IEnumerable<FilePath> Files(bool recursive)
             => Root.Files(recursive);
 
-        public Files Files(string scope, bool recursive)
+        public IEnumerable<FilePath> Files(string scope, bool recursive)
             => Root.Files(recursive);
 
-        public Files Files(string scope, bool recurse, FileKind kind)
+        public IEnumerable<FilePath> Files(string scope, bool recurse, FileKind kind)
             => Root.Files(scope, recurse, kind);
 
-        public Files Files(bool recurse, params FileKind[] kinds)
+        public IEnumerable<FilePath> Files(bool recurse, params FileKind[] kinds)
             => Root.Files(recurse, kinds);
 
-        public Files Files(string scope, bool recurse, params FileKind[] kinds)
+        public IEnumerable<FilePath> Files(string scope, bool recurse, params FileKind[] kinds)
             => Root.Files(scope, recurse, kinds);
 
-        public Files Files(FileKind kind, bool recurse = true)
+        public IEnumerable<FilePath> Files(FileKind kind, bool recurse = true)
             => Root.Files(kind.Ext(), recurse);
 
-        public Files Files(FileExt ext, bool recurse = true)
+        public IEnumerable<FilePath> Files(FileExt ext, bool recurse = true)
             => Root.Files(ext, recurse);
 
         public IEnumerable<FilePath> Enumerate(bool recursive, string pattern)
