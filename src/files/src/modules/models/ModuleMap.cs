@@ -29,42 +29,59 @@ namespace Z0
             NativeMapped = native;
         }
 
+        public ICollection<MappedModule> Modules => Data.Values;
+
         public void Dispose()
         {
-            iter(Data.Values, x => x.Dispose());
+            iter(Modules, x => x.Dispose());
         }
 
-        public void Include(IEnumerable<FolderPath> src)
+        public bool Find(MemoryAddress address, out MappedModule dst)
         {
-            iter(src, dir => {
-                var modules = Archives.modules(dir).Members();
-                iter(modules, module => {
-                    if(module.IsManaged)
+            var found = false;
+            dst = null;
+            foreach(var module in Modules.AsParallel())
+            {
+                if(!found)
+                    found = address >= module.BaseAddress && address <= module.LastAddress;                    
+            }
+            return found;        
+        }
+
+        public void Include(IDbArchive src)
+        {
+            iter(Archives.modules(src.Root).Members(), module => {
+                if(module.IsManaged)
+                {
+                    try
                     {
-                        try
-                        {
-                            IncludeAssembly(module);
-                        }
-                        catch(Exception e)
-                        {
-                            Channel.Error(e);
-                        }
+                        IncludeAssembly(module);
                     }
-                    else
+                    catch(IOException)
                     {
-                        // try
-                        // {
-                        //     IncludeNative(module);
-                        // }
-                        // catch(Exception e)
-                        // {
-                        //     Channel.Error(e);
-                        // }
+
+                    }
+                    catch(Exception e)
+                    {
+                        Channel.Error(e);
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        IncludeNative(module);
+                    }
+                    catch(IOException)
+                    {
                         
                     }
-                }, true);
-
-            });
+                    catch(Exception e)
+                    {
+                        Channel.Error(e);
+                    }                        
+                }
+            }, true);
         }
 
         bool IncludeNative(BinaryModule src)
@@ -78,23 +95,19 @@ namespace Z0
             else
             {
                 HashCodes.Add(hash.FileHash.ContentHash);
-                var mapped = new MappedModule(sys.inc(ref Index), MemoryFiles.map(src.Path), hash.FileHash);
+                var mapped = new MappedModule(sys.inc(ref Index), FileModuleKind.Native, MemoryFiles.map(src.Path), hash.FileHash);
                 Data.TryAdd(mapped.Index, mapped);
                 NativeMapped(mapped);
                 
             }
             return result;
-
         }
+
         bool IncludeAssembly(BinaryModule src)
         {
             var hash = FS.hash(src.Path);
             var result = false;
-            if(HashCodes.Contains(hash.FileHash.ContentHash))
-            {
-                Channel.Babble($"Duplicate skipped {src.Path}");
-            }
-            else
+            if(!HashCodes.Contains(hash.FileHash.ContentHash))
             {
                 HashCodes.Add(hash.FileHash.ContentHash);
                 var mapped = new MappedAssembly(sys.inc(ref Index), MemoryFiles.map(src.Path), hash.FileHash);

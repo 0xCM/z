@@ -67,8 +67,8 @@ namespace Z0
             {
                 ref readonly var component = ref skip(src,i);
                 var reader = EcmaReader.create(component);
-                seek(dst,j++) = reader.StringHeapRef(EcmaStringKind.System);
-                seek(dst,j++) = reader.StringHeapRef(EcmaStringKind.User);
+                seek(dst,j++) = reader.StringHeap(EcmaStringKind.System);
+                seek(dst,j++) = reader.StringHeap(EcmaStringKind.User);
             }
             return buffer;
         }

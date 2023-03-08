@@ -3,7 +3,7 @@ call %~dp0..\config.cmd
 set Packed=%DevPacks%\zpack\packed
 set Unpacked=%DevPacks%\zpack\unpacked
 set Stage=%DevPacks%\zpack\stage
-set PackSln=dotnet pack %SlnFilePath% --output %Stage% %BuildProps% --include-source -p:DebugType=embedded
+set PackSln=dotnet pack %SlnFilePath% --output %Stage% %BuildProps% -p:DebugType=embedded
 set UnpackCmd=nuget init %Stage% %Unpacked%
 mkdir %Stage% 1>nul 2>nul
 call %PackSln%

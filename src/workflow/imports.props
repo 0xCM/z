@@ -7,5 +7,6 @@
      <ProjectReference Include="$(SFx)"/>
      <ProjectReference Include="$(Process)"/>
      <ProjectReference Include="$(Builds)"/>
+     <ProjectReference Include="$(Lang)"/>
   </ItemGroup>
 </Project>

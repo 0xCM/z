@@ -56,7 +56,7 @@ namespace Z0
             => Wf.Warn(content, caller, file, line);
 
         public void Error<T>(T content, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
-            => Wf.Error(Host, core.require(content), caller, file, line);
+            => Wf.Error(Host, content, caller, file, line);
 
         public void Write<T>(T content)
             => Wf.Data(Host, content);
@@ -142,11 +142,7 @@ namespace Z0
 
         public ExecToken TableEmit<T>(ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
-        {
-            var emitting = EmittingTable<T>(dst);
-            CsvTables.emit(Wf.Channel, rows, dst, encoding, rowpad, fk);
-            return EmittedTable(emitting, rows.Length);
-        }
+                => CsvTables.emit(Wf.Channel, rows, dst, encoding, rowpad, fk);
 
         public ExecToken TableEmit<T>(Index<T> rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
@@ -165,15 +161,16 @@ namespace Z0
                 => TableEmit(src.View, dst, encoding, rowpad, fk);
 
         public ExecToken TableEmit<T>(ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding)
-        {
-            var emitting = EmittingTable<T>(dst);
-            var formatter = CsvTables.formatter(typeof(T));
-            using var writer = dst.Emitter(encoding);
-            writer.WriteLine(formatter.FormatHeader());
-            for (var i = 0; i < rows.Length; i++)
-                writer.WriteLine(formatter.Format(skip(rows, i)));
-            return EmittedTable(emitting, rows.Length, dst);
-        }
+            => CsvTables.emit(Wf.Channel, rows, dst, encoding);
+        // {
+        //     var emitting = EmittingTable<T>(dst);
+        //     var formatter = CsvTables.formatter(typeof(T));
+        //     using var writer = dst.Emitter(encoding);
+        //     writer.WriteLine(formatter.FormatHeader());
+        //     for (var i = 0; i < rows.Length; i++)
+        //         writer.WriteLine(formatter.Format(skip(rows, i)));
+        //     return EmittedTable(emitting, rows.Length, dst);
+        // }
 
         public ExecToken TableEmit<T>(ReadOnlySpan<T> src, ReadOnlySpan<byte> widths, TextEncodingKind encoding, FilePath dst)
         {

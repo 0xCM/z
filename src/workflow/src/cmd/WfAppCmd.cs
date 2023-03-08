@@ -7,6 +7,8 @@ namespace Z0
     using Windows;
     using Microsoft.CodeAnalysis;
     using System.Linq;
+    using Lang;
+
 
     using static sys;
 
@@ -280,7 +282,6 @@ namespace Z0
             return result;
         }
 
-
         [CmdOp("pe/import")]
         void PeFiles(CmdArgs args)
         {
@@ -306,9 +307,9 @@ namespace Z0
             Channel.TableEmit(dst.Array(),path);
         }
 
-        [CmdOp("shell")]
+        [CmdOp("devshell")]
         void LaunchShell(CmdArgs args)
-            => ProcExec.devshell(Channel,args);
+            => DevShells.start(Channel,args);
 
         [CmdOp("files/kinds")]
         void FileKinds()
@@ -328,6 +329,16 @@ namespace Z0
             });
         }
 
+        [CmdOp("env/gen")]
+        void EnvGen(CmdArgs args)
+        {
+            var env = new EnvId(args[0].Value);
+            var report = EnvReports.load(AppSettings.EnvDb(), env);
+            iter(report.Tools, t => Channel.Row(t.Name));
+            // var cg = lang.Ts.Generator(Wf);
+            // var dst = FS.dir(args[1].Value);
+            // cg.GenTokens(env, dst.DbArchive());
+        }
 
         [CmdOp("runtime/files")]
         void RuntimeFiles()
@@ -335,8 +346,9 @@ namespace Z0
             var root = FS.dir(RuntimeEnvironment.GetRuntimeDirectory()).DbArchive();
             var files = root.Files();
             iter(files, file => Channel.Row(file));
-
         }
+
+        
         [CmdOp("files/index")]
         void FileQuery(CmdArgs args)
         {

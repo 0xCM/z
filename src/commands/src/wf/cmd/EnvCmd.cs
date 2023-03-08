@@ -51,7 +51,7 @@ namespace Z0
 
         [CmdOp("env/reports")]
         void EmitEnv(CmdArgs args)
-            => Env.reports(Channel).Capture(AppSettings.EnvDb().Scoped("env"));
+            => Env.reports(Channel).Capture();
 
         [CmdOp("env/pid")]
         void ProcessId()

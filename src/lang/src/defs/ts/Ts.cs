@@ -10,6 +10,10 @@ namespace Z0.Lang
         public static Token<@string> token(string name, @string value)
             => new (name,value);
 
+        public static FileExt TsExt => FS.ext("ts");
+
+        public static FileExt TsxExt => FS.ext("tsx");
+
         public Ts()
             :base("ts", "typescript")
         {
@@ -21,5 +25,8 @@ namespace Z0.Lang
             
         public SourceFile Source(FilePath path, string content)
             => lang.source(LanguageName, path,content);
+
+        public ICodeGen Generator(IWfRuntime wf)
+            => TsGen.create(wf);
     }
 }

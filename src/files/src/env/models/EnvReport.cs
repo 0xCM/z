@@ -12,11 +12,14 @@ namespace Z0
 
         public readonly EnvVars Vars;
 
-        public EnvReport(EnvId id, EnvVarKind kind, EnvVars vars)
+        public readonly ToolCatalog Tools;
+
+        public EnvReport(EnvId id, EnvVarKind kind, EnvVars vars, ToolCatalog tools)
         {
             EnvId = id;
             Kind = kind;
             Vars = vars;
+            Tools = tools;
         }
     }
 }

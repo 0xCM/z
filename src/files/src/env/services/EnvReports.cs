@@ -6,17 +6,18 @@ namespace Z0
 {
     using static sys;
 
-    using Windows;
-
     public class EnvReports : Channeled<EnvReports>
-    {
+    {        
         public ExecToken Capture(IDbArchive dst)
             => capture(Channel,dst);
+
+        public ExecToken Capture()
+            => Capture(cfgroot(Settings.EnvDb()));
 
         public static ExecToken capture(IWfChannel channel, IDbArchive dst)
         {
             var running = channel.Running();
-            var targets = dst.Scoped(Env.EnvId);
+            var targets = cfgroot(dst).Scoped(Env.EnvId);
             emit(channel, EnvVarKind.Process, targets);
             emit(channel, EnvVarKind.User, targets);
             emit(channel, EnvVarKind.Machine, targets);
@@ -25,7 +26,34 @@ namespace Z0
         }
 
         public static EnvReport load(IEnvDb src, EnvId name)
-            => new EnvReport(name,EnvVarKind.Process, Env.vars(src.Scoped(name).Path($"zfx.process", FileKind.Cfg)));
+            => new EnvReport(name,EnvVarKind.Process, Env.vars(cfgpath(src, name)), tools(toolpath(src, name)));
+
+        static ToolCatalog tools(FilePath src)
+        {
+            using var reader = src.LineReader(TextEncodingKind.Utf8);
+            var keys = list<ToolKey>();
+            reader.Next(out var header);
+            var line = TextLine.Empty;
+            while(reader.Next(out line))
+            {
+                var row = text.trim(text.split(line.Content, Chars.Pipe)).ToSeq();
+                var i=0;
+                DataParser.parse(row[i++], out uint seq);
+                DataParser.parse(row[i++], out @string name);
+                DataParser.parse(row[i++], out FilePath path);
+                keys.Add(new ToolKey(seq, path));            
+            }
+            return keys.Map(x => new LocatedTool(x));            
+        }
+
+        static FilePath cfgpath(IDbArchive src, EnvId name)
+            => cfgroot(src).Scoped(name).Path($"process", FileKind.Cfg);
+
+        static FilePath toolpath(IDbArchive src, EnvId name)
+            => cfgroot(src).Scoped(name).Path("tools", FileKind.Csv);
+
+        static IDbArchive cfgroot(IDbArchive src)
+            => src.Scoped("cfg");
 
         static void emit(IWfChannel channel, ToolCatalog src, IDbArchive dst)
         {

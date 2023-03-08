@@ -5,7 +5,6 @@
 namespace Z0
 {
     using static sys;
-
     public class ProcExec
     {        
         public static ToolContext context(FolderPath? work = null, params EnvVar[] vars)
@@ -22,34 +21,6 @@ namespace Z0
 
         public static ToolContext context()
             => new(Env.cd(), EnvVars.Empty);
-
-        public static void devshell(IWfChannel channel, CmdArgs args)
-        {
-            var profile = args[0].Value;
-            var cwd = args.Count > 1 ? FS.dir(args[1]) : Env.cd();
-            devshell(channel, profile, CmdArgs.Empty, cwd);  
-        }
-
-        [Op]
-        public static void devshell(IWfChannel channel, string profile, CmdArgs args, FolderPath cwd, EnvVars? vars = null)
-        {
-            var flow = channel.Running($"Launching {profile} shell");
-            var psi = new ProcessStartInfo
-            {
-                FileName = "wt.exe",
-                CreateNoWindow = false,
-                Arguments = $"nt --profile {profile} -d {cwd}",
-                RedirectStandardError = false,
-                RedirectStandardOutput = false,
-                RedirectStandardInput = false
-            };
-
-            if(vars != null)
-                iter(vars.View, v => psi.Environment.Add(v.Name, v.Value));
-            var process = sys.process(psi);
-            process.Start();
-            channel.Ran(flow, $"Launched {profile} shell");
-        }
 
         [Op]
         public static Task<ExecToken> launch(IWfChannel channel, FilePath path, CmdArgs args, ToolContext? context = null)

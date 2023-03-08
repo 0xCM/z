@@ -99,6 +99,48 @@ namespace Z0
             return start(run);
         }
 
+        static Task<ExecToken> ungzip(IWfChannel channel, FilePath src, FilePath dst)
+        {
+            ExecToken run()
+            {
+                var running = channel.Running($"Extracting {src} to {dst}");
+                using (var stream = src.Stream())
+                {
+                    using(var expansion = new GZipStream(stream, CompressionMode.Decompress))
+                    using (var target = dst.Stream())
+                    {
+                        expansion.CopyTo(target);
+                    }
+
+                }
+                return channel.Ran(running, $"Extracted {src} to {dst}");
+            }
+            return start(run);
+        }
+
+        public static Task<ExecToken> unzip(IWfChannel channel, FilePath src, FolderPath dst)
+        {
+            ExecToken run()
+            {
+                var running = channel.Running($"Extracting {src} to {dst}");
+                using (var stream = src.Stream())
+                {
+                    var zip = new ZipArchive(stream);
+                    foreach (var entry in zip.Entries)
+                    {
+                        var extractedFilePath = (dst + FS.file(entry.FullName)).CreateParentIfMissing();
+                        using (var zfs = entry.Open())
+                        {
+                            using (var extractedFileStream = extractedFilePath.Stream())
+                                zfs.CopyTo(extractedFileStream);
+                        }
+                    }
+                }
+                return channel.Ran(running, $"Extracted {src} to {dst}");
+            }
+            return start(run);
+        }
+        
         public static ZipFile zip(FolderPath src, FilePath dst)
         {
             System.IO.Compression.ZipFile.CreateFromDirectory(src.Format(), dst.Format(), CompressionLevel.Fastest, true);

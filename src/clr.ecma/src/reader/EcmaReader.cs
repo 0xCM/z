@@ -67,12 +67,6 @@ namespace Z0
             return dst.Array();
         }
         
-        public static void stats(ReadOnlySpan<Assembly> src, ConcurrentBag<EcmaRowStats> dst)
-            => iter(src, a => stats(a,dst), true);
-
-        public static void stats(Assembly src, ConcurrentBag<EcmaRowStats> dst)
-            => stats(EcmaReader.create(src), dst);
-
         public static IEnumerable<AssemblyRefInfo> refs(IEnumerable<AssemblyFile> src)
         {
             foreach(var file in src.AsParallel())
@@ -88,40 +82,6 @@ namespace Z0
         public ByteSize CalcTableSize(TableIndex table)
             => MD.GetTableRowCount(table)*MD.GetTableRowSize(table);
 
-        public static ReadOnlySeq<EcmaRowStats> stats(EcmaReader reader)
-        {
-            var dst = bag<EcmaRowStats>();
-            stats(reader,dst);
-            return dst.Array().Sort();
-        }
-
-        [Op]
-        public static void stats(EcmaReader reader, ConcurrentBag<EcmaRowStats> dst)
-        {
-            var indicies = Symbols.values<TableIndex,byte>();
-            var counts = reader.GetRowCounts(indicies);
-            var offsets = reader.GetTableOffsets(indicies);
-            var sizes = reader.GetRowSizes(indicies);            
-            var name = reader._AssemblyName;
-            for(byte j=0; j<counts.Count; j++)
-            {
-                var table = (TableIndex)j;
-                var rowcount = counts[table];
-                var rowsize = sizes[table];
-                if(rowcount != 0)
-                {
-                    var entry = new EcmaRowStats();
-                    entry.AssemblyName = name;
-                    entry.TableName = table.ToString();
-                    entry.TableOffset = offsets[table];
-                    entry.TableIndex = j;
-                    entry.RowCount = rowcount;
-                    entry.RowSize = rowsize;
-                    entry.TableSize = rowcount*rowsize;
-                    dst.Add(entry);
-                }
-            }
-        }
 
         [MethodImpl(Inline), Op]
         public unsafe static MetadataReaderProvider provider(Assembly src)

@@ -15,6 +15,8 @@ namespace Z0
         public readonly FileHash FileHash;
 
         readonly MemoryFile File;
+        
+        public readonly FileModuleKind ModuleKind;
 
         MappedModule()
         {
@@ -24,14 +26,31 @@ namespace Z0
             FileHash = default;
         }
 
-        public MappedModule(uint index, MemoryFile file, FileHash hash)
+        public MappedModule(uint index, FileModuleKind kind, MemoryFile file, FileHash hash)
         {
             Index = index;
+            ModuleKind = kind;
             Path = file.Path;
             Memory = new (file.BaseAddress, file.FileSize);
             FileHash = hash;                
             File = file;
         }
+
+        public MappedModuleInfo Describe()
+        {
+            var dst = new MappedModuleInfo();
+            dst.Seq = Index;
+            dst.ModuleKind = ModuleKind;
+            dst.Path = Path;
+            dst.BaseAddress = Memory.BaseAddress;
+            dst.Size = Memory.Size;
+            dst.FileHash = FileHash;
+            return dst;
+        }
+
+        [MethodImpl(Inline)]
+        public AddressSpace Addresses()
+            => new AddressSpace(Index, new (BaseAddress, FileSize));
 
         public bool IsEmpty
         {
@@ -49,6 +68,12 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             get => Memory.Address;
+        }
+
+        public MemoryAddress LastAddress
+        {
+            [MethodImpl(Inline)]
+            get => BaseAddress + Memory.Size;
         }
 
         public ByteSize FileSize

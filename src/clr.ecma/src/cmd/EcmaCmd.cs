@@ -134,14 +134,16 @@ namespace Z0
             Channel.Row(string.Format("{0,-8} | {1,-16} | {2,-12} | {3,-56} | {4}", src.Index, src.BaseAddress, src.FileSize, src.FileHash, src.Path, FlairKind.StatusData));
         }
 
-        [CmdOp("ecma/md")]
+        [CmdOp("modules/map")]
         void EcmaMeta(CmdArgs args)
         {
-            var sources = EcmaWokflows.sources();
-            var running = Channel.Running($"Mapping modules from {sources}");
-            using var map = new ModuleMap(Channel, Mapped, Mapped);            
-            map.Include(sources);
-            Channel.Ran(running);
+            var svc = Channel.Channeled<ModuleArchives>();
+            var sources = FS.dir(args[0]).DbArchive();
+            using var map = svc.Map(sources);
+            // var running = Channel.Running($"Mapping modules from {sources}");
+            // using var map = new ModuleMap(Channel, Mapped, Mapped);            
+            // map.Include(sources);
+            // Channel.Ran(running);
         }
 
         static FilePath EcmaArchive(FilePath src)

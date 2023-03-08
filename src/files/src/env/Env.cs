@@ -15,6 +15,23 @@ namespace Z0
 
         static AppSettings AppSettings => AppSettings.Default;
 
+        public static EnvVars merge(EnvVars a, EnvVars b)
+        {
+            var dst = a.View.Map(x => (x.Name, x)).ToDictionary();
+            iter(b.View, v => {
+                var name = v.Name;
+                switch(name)
+                {
+                    case EnvTokens.PATH:
+                    case EnvTokens.LIB:
+                    case EnvTokens.INCLUDE:
+                        dst[name] = new (name,text.join(';',v.Value, dst[name]));
+                    break;
+                }
+            });
+            return dst.Values.Array();
+        }
+
         public static IEnvDb db(FolderPath root)
             => new EnvDb(root);
 

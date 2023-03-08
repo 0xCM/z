@@ -10,7 +10,7 @@ namespace Z0
             => new MappedAssembly(0, MemoryFiles.map(src), default);
         
         public MappedAssembly(uint index, MemoryFile file, FileHash hash)
-            : base(index, file, hash)
+            : base(index, FileModuleKind.Managed, file, hash)
         {
 
         }

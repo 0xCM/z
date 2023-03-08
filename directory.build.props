@@ -2,9 +2,7 @@
   <Import Project="versions.props"/>
   <PropertyGroup>
     <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
-    <EnablePreviewFeatures>True</EnablePreviewFeatures>
     <GenerateRequiresPreviewFeaturesAttribute>False</GenerateRequiresPreviewFeaturesAttribute>
-    <EnablePreviewFeatures>True</EnablePreviewFeatures>
     <Configuration>Release</Configuration>
     <OptimizeImplicitlyTriggeredBuild>True</OptimizeImplicitlyTriggeredBuild>
     <PublishRelease>true</PublishRelease>
@@ -19,12 +17,7 @@
     <Optimize>true</Optimize>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ImplicitUsings>enable</ImplicitUsings>
-    <DebugSymbols>true</DebugSymbols>
-    <IncludeSymbols>true</IncludeSymbols>
-    <IncludeSource>true</IncludeSource>
     <DebugType>embedded</DebugType>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <EnablePreviewFeatures>true</EnablePreviewFeatures>
     <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

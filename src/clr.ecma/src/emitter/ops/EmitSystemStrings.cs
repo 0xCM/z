@@ -29,14 +29,14 @@ namespace Z0
         public void EmitSystemStrings(ReadOnlySeq<Assembly> src, IDbArchive dst)
             => iter(src, a => EmitSystemStrings(a, dst), PllExec);
 
-        public void EmitSystemStrings(Assembly src, IDbArchive dst)
+
+        public void EmitSystemStrings(EcmaReader src, IDbArchive dst)
         {
-            void Exec()
-            {
-                var reader = EcmaReader.create(src);
-                Channel.TableEmit(reader.ReadSystemStringDetail(), dst.Path($"{src.GetSimpleName()}.ecma.strings.system", FileKind.Csv), UTF16);
-            }
-            Try(Exec);
+            var name = src.AssemblyName().SimpleName();
+            Channel.TableEmit(src.ReadSystemStringDetail(), dst.Path($"{name}.ecma.strings.system", FileKind.Csv), UTF16);
         }
+
+        public void EmitSystemStrings(Assembly src, IDbArchive dst)
+            => EmitSystemStrings(EcmaReader.create(src), dst);
     }
 }

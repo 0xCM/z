@@ -9,6 +9,8 @@ namespace Z0
     {
         protected IWfChannel Channel;
 
+        protected AppSettings Settings => AppSettings.Default;
+
         protected void Connect(IWfChannel channel)
         {
             Channel = channel;

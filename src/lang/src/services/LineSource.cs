@@ -7,6 +7,7 @@ namespace Z0
 
     public readonly struct LineSource : ITokenSource<TextLine>
     {
+
         readonly LineReader Reader;
 
         internal LineSource(LineReader src)

@@ -3,6 +3,6 @@
   <PropertyGroup>
     <FrameworkMoniker>net6.0</FrameworkMoniker>
     <Version>$(ZVer)</Version>
-    <LangVersion>11</LangVersion>
+    <LangVersion>Preview</LangVersion>
   </PropertyGroup>
 </Project>
