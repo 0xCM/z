@@ -4,13 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using api = TextVars;
-
-    /// <summary>
-    /// Defines the root <see cref='ITextVarExpr'/> abstraction
-    /// </summary>
-    /// <typeparam name="T">The concrete expression type</typeparam>
-    public abstract class PatternTextVar<T> : ITextVarExpr
+    public abstract class PatternTextVar<T>
         where T : PatternTextVar<T>
     {
         /// <summary>
@@ -34,8 +28,5 @@ namespace Z0
         /// </summary>
         public virtual bool IsFenced 
             => Fence.Left != '\0' && Fence.Right != '\0';
-
-        public ScriptVarClass Class  
-            => api.@class(this);
     }
 }

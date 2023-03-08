@@ -10,7 +10,7 @@ namespace Z0
         {
             string fx(T input)
             {
-                return Tables.formatter<T>(fieldwidth ?? DefaultFieldWidth, rowpad).Format(input);
+                return CsvTables.formatter<T>(fieldwidth ?? DefaultFieldWidth, rowpad).Format(input);
             }
             return fx;
         }

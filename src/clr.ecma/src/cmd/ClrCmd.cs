@@ -33,48 +33,21 @@ namespace Z0
 
         ClrSvc ClrSvc => Wf.ClrSvc();
 
-        IDbArchive DataTarget => Env.cd().ToArchive().Scoped(".data");
+        IEnvDb DataTarget => AppSettings.EnvDb();
 
         DataAnalyzer Analyzer => Wf.Analyzer();
 
-        [CmdOp("archive/modules")]
-        void EmitModuleIndex(CmdArgs args)
-        {
-            var src = Archives.modules(FS.dir(args[0])).Members();
-            iter(src, m => Channel.Row(m));
-
-        }   
-
-        [CmdOp("clr/refs")]
-        void EmitModuleRefs(CmdArgs args)
-        {
-            var dir = FS.dir(args[0]);
-            var src = Archives.modules(dir).Assemblies();
-            var dst = bag<AssemblyRef>();
-            iter(src, client => iter(Ecma.refs(client), c => dst.Add(c)), true);
-            var sorted = dst.Array().Sort();
-            var emitter = text.emitter();
-            iter(sorted, f => emitter.AppendLineFormat("{0}"));
-
-            // var refs = EcmaReader.refs(src).ToSeq().Sort();
-            // var name = $"{Archives.identifier(dir)}.assembly-refs";
-            // Channel.TableEmit(refs, DataTarget.Path(name, FileKind.Csv));            
-        }   
 
         [CmdOp("clr/types")]
         void ListTypes(CmdArgs args)
         {
             var dir = FS.dir(args[0]);
             var src = Archives.modules(dir).Assemblies();
-            ApiMd.Emitter(Archives.archive(DataTarget.Root)).EmitTypeLists(src);
+            ApiMd.Emitter(Archives.archive(DataTarget.Scoped("clr"))).EmitTypeLists(src);
         }
 
-        [CmdOp("clr/dump")]
-        void EcmaEmitMetaDumps(CmdArgs args)
-            => EcmaEmitter.EmitMetadumps(FS.dir(args[0]).DbArchive(), true, FS.dir(args[1]).DbArchive());
 
-        
-        [CmdOp("analyze")]
+        [CmdOp("files/analyze")]
         void Analyze(CmdArgs args)
         {
             var src = FS.dir(args[0]).DbArchive();
@@ -87,12 +60,8 @@ namespace Z0
         {
             var src = FS.dir(args[0]).DbArchive().Modules();
             iter(src.Assemblies(), a => {                
-                using var file = EcmaFile.open(a.Path);
-                
-
+                using var file = Ecma.file(a.Path);                
             });
-
-
         }
     }
 }

@@ -8,31 +8,44 @@ namespace Z0
     {
         None,
 
+        BaseRelocationTable,
+
+        BoundImportTable,
+
+        CertificateTable,
+
+        CodeManagerTable,
+
+        CorHeaderTable,
+
+        DebugTable,
+
+        DelayImportTable,
+
+        ExceptionTable,
+
         ExportTable,
 
-        ImportTable,
+        ExportAddressTableJumps,
 
-        ResourceTable,
-
-        BaseRelocationTable,
+        GlobalPointerTable,
 
         ImportAddressTable,
 
+        ImportTable,
+
         LoadConfigTable,
 
-        DebugTable,
+        ManagedNativeHeader,
 
         MetadataTable,
 
         StrongNameSignature,
 
-        CodeManagerTable,
+        ResourceTable,
+
+        ThreadLocalStorageTable,
 
         VtableFixups,
-
-        ExportAddressTableJumps,
-
-        ManagedNativeHeader
-
     }
 }

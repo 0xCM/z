@@ -13,14 +13,14 @@ namespace Z0
         [Op, Closures(Closure)]
         public static RowFormatSpec rowspec<T>(ReadOnlySpan<byte> widths, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
         {
-            var header = Tables.header<T>(widths);
+            var header = CsvTables.header<T>(widths);
             return rowspec(header, header.Cells.Select(x => x.CellFormat), rowpad, fk);
         }
 
         [Op, Closures(Closure)]
         public static RowFormatSpec rowspec<T>(byte width, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
         {
-            var header = Tables.header<T>(width);
+            var header = CsvTables.header<T>(width);
             return rowspec(header, header.Cells.Select(x => x.CellFormat), rowpad, fk);
         }
     }

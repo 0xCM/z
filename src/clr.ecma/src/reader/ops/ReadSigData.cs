@@ -15,6 +15,5 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public BinaryCode ReadSigData(MethodDefinition src)
             => Blob(src.Signature);
-
     }
 }

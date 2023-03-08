@@ -73,9 +73,11 @@ namespace Z0
         IEnumerable<FilePath> Files(string scope, params FileKind[] kinds)
             => DbFiles.Files(scope, true, kinds);
 
+        IEnumerable<FilePath> Files(bool recurse, params FileExt[] ext)
+            => DbFiles.Files(recurse, ext);
+
         FileName File(string name, FileKind kind)
             => DbFiles.File(name, kind);
-
 
         FilePath Path(string name, FileKind kind)
             => DbFiles.Path(name, kind);

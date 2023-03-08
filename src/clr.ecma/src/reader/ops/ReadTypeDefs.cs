@@ -7,13 +7,6 @@ namespace Z0
     using static sys;
     using static EcmaModels;
 
-    public record struct TypeDefInfo
-    {
-        public @string Name;
-
-        public TypeAttributes Attributes;
-    }
-
     partial class EcmaReader
     {
         [Op]
@@ -34,7 +27,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public TypeDefinition Read(TypeDefinitionHandle src)
+        public TypeDefinition ReadTypeDef(TypeDefinitionHandle src)
             => MD.GetTypeDefinition(src);
     }
 }

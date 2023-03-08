@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using api = TextVars;
+    using api = Vars;
     
     public class PatternTextExpr : TextExpr
     {
@@ -13,9 +13,9 @@ namespace Z0
             => new PatternTextExpr(body);
 
         public PatternTextExpr(string body)
-            : base(body, TextVar.Kind)
+            : base(body)
         {
-            VarLookup = api.vars(body, TextVar.Kind, name => new TextVar(name));
+            VarLookup = api.vars(body, TextVar.Kind.Fence, name => new TextVar(name));
         }
     }
 }

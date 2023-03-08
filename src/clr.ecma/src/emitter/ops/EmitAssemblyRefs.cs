@@ -17,10 +17,9 @@ namespace Z0
             var counter = 0;
             using var writer = dst.Writer();
             var formatter = CsvTables.formatter<AssemblyRefInfo>();
-
             foreach(var a in src)
             {
-                var reader = a.MetadataReader();
+                var reader = a.EcmaReader();
                 var refs = reader.ReadAssemblyRefs();
                 foreach(var @ref in refs)
                 {

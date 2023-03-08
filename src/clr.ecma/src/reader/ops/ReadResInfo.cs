@@ -9,10 +9,6 @@ namespace Z0
 
     partial class EcmaReader
     {
-        [Op]
-        public ReadOnlySpan<ManifestResourceHandle> ResourceHandles()
-            => MD.ManifestResources.ToReadOnlySpan();
-
         [MethodImpl(Inline), Op]
         public ReadOnlySeq<ManifestResourceInfo> ReadResInfo()
         {

@@ -27,7 +27,7 @@ namespace Z0
 
         public string Format(in T src)
         {
-            api.adapt(src, ref Adapter);
+            CsvTables.adapt(src, ref Adapter);
             if(FormatSpec.FormatKind == RecordFormatKind.Tablular)
                 return Adapter.Adapted.Format(FormatSpec);
             else

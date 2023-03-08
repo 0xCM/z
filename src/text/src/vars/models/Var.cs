@@ -9,45 +9,56 @@ namespace Z0
     /// <summary>
     /// Defines a variable
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, Pack=1)]
-    public class Var<T> : IVar<T>
-        where T : IEquatable<T>, IComparable<T>
+    public class Var : IVar
     {
         public readonly @string Name;
 
-        readonly Func<T> Resolver;
+        readonly Option<object> _Value;
 
-        public readonly Type VarType;
+        public readonly Type ValueType;
 
-        [MethodImpl(Inline)]
-        public Var(Func<T> resolver)
-        {
-            Name = default;
-            Resolver = resolver;
-            VarType = typeof(T);
-        }
+        public readonly char Prefix;
+
+        public readonly Fence<char> Fence;
 
         [MethodImpl(Inline)]
-        public Var(string name, Func<T> resolver)
+        public Var(string name, Type type, object value, char? prefix = null, Fence<char>? fence=null)
         {
             Name = name;
-            Resolver = resolver;
-            VarType = typeof(T);
+            ValueType = type;
+            _Value = value;
+            Prefix = prefix ?? Chars.Dollar;
+            Fence = fence ?? (Chars.LBrace,Chars.RBrace);
         }
 
-        public bool IsNamed
+        char IVar.Prefix
+            => Prefix;
+
+        Fence<char> IVar.Fence
+            => Fence;
+
+        public object Value()
+            => _Value.Value;
+
+        public bool HasValue
         {
             [MethodImpl(Inline)]
-            get => Name.IsEmpty;
+            get => _Value.IsSome();
         }
 
         @string IVar.Name
             => Name;
 
+        bool IsPrefixed => Prefix != 0;
+
+        bool IsFenced => Fence.Left != 0 && Fence.Right != 0;
+
+        bool IsPrefixedFence => IsPrefixed && IsFenced;
+
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => Name.IsEmpty;
+            get => Name.IsNonEmpty;
         }
 
         public bool IsNonEmpty
@@ -62,20 +73,10 @@ namespace Z0
             get => Name.Hash;
         }
 
-        public override int GetHashCode()
-            => Hash;
-
-        public T Value
-            => Resolver();
-
         public string Format()
             => api.format(this);
 
         public override string ToString()
             => Format();
-
-        [MethodImpl(Inline)]
-        public static implicit operator Var(Var<T> src)
-            => new Var(src.Name, typeof(T), () => src.Resolver());
     }
 }

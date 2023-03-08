@@ -5,6 +5,7 @@
 namespace Z0
 {
     using System.Net;
+    using System.Net.Http;
     
     #pragma warning disable SYSLIB0014
 
@@ -15,23 +16,32 @@ namespace Z0
             ExecToken Run()
             {
                 var running = Channel.Running($"Downloading {src} to {dst}");
-                dst.CreateParentIfMissing();
-                var request = HttpWebRequest.Create(src);
-                var response = request.GetResponse();
-                using (var writer = dst.BinaryWriter())
+                dst.Delete().CreateParentIfMissing();
+                try
                 {
-                    var buffer = new byte[Pow2.T14];
-                    var remainder = response.ContentLength;
-                    while (remainder > 0)
+                    var request = HttpWebRequest.Create(src);
+                    var response = request.GetResponse();
+                    using (var writer = dst.BinaryWriter())
                     {
-                        var written = response.GetResponseStream().Read(buffer, 0, buffer.Length);
-                        if (written == 0)
-                            break;
-                        writer.Write(buffer, 0, written);
-                        remainder -= written;
+                        var buffer = new byte[Pow2.T14];
+                        var remainder = response.ContentLength;
+                        while (remainder > 0)
+                        {
+                            var written = response.GetResponseStream().Read(buffer, 0, buffer.Length);
+                            if (written == 0)
+                                break;
+                            writer.Write(buffer, 0, written);
+                            remainder -= written;
+                        }
                     }
+                    return Channel.Ran(running, $"Downloaded {src} to {dst}");
+
                 }
-                return Channel.Ran(running, $"Downloaded {src} to {dst}");
+                catch(Exception e)
+                {
+                    Channel.Error(e);
+                    return ExecToken.Empty;
+                }
             }
             return sys.start(Run);
         }    

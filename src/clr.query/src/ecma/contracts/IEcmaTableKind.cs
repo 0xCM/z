@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     public interface IEcmaTableKind<K> : IEcmaRowKey
         where K : unmanaged, IEcmaTableKind<K>
     {

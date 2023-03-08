@@ -282,30 +282,6 @@ namespace Z0
             return result;
         }
 
-        [CmdOp("pe/import")]
-        void PeFiles(CmdArgs args)
-        {
-            var src = FS.dir(args[0]).DbArchive().Enumerate(true, FileKind.Dll, FileKind.Exe, FileKind.Obj, FileKind.Sys);
-            var dst = bag<PeSectionHeader>();
-            iter(src, path => {
-                try
-                {
-                    var flow = Channel.Running($"Reading section headers from {path}");
-                    using var reader = PeReader.create(path);
-                    var tables = reader.Tables;
-                    iter(tables.SectionHeaders, sh => dst.Add(sh));
-                    Channel.Ran(flow,$"Read {tables.SectionHeaders.Count} section headers from ${path}");
-                                        
-                }
-                catch(Exception e)
-                {
-                    Channel.Error(e);
-                }
-            });
-            
-            var path = EnvDb.Scoped("flows/import").Table<PeSectionHeader>();
-            Channel.TableEmit(dst.Array(),path);
-        }
 
         [CmdOp("devshell")]
         void LaunchShell(CmdArgs args)

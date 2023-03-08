@@ -4,15 +4,31 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using VCK = VarContextKind;
     using static sys;
 
     [ApiHost,Free]
-    public class TextVars
+    public class Vars
     {
         const NumericKind Closure = UnsignedInts;
 
+        public static string pattern(VarContextKind vck)
+            => vck switch
+            {
+                VCK.CmdScript => "%{0}%",
+                VCK.PsScript => "${0}",
+                VCK.BashScript => "${0}",
+                VCK.MsBuild => "$({0})",
+                _ => "{0}"
+            };
+        
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static Var<T> var<T>(string name, T value = default)
+            where T : IEquatable<T>, IComparable<T>
+                => new Var<T>(name, value = default);
+
         [Op]
-        public static ScriptVarClass @class(ITextVarExpr kind)
+        public static ScriptVarClass @class(IVar kind)
         {
             if(kind.IsPrefixedFence)
                 return ScriptVarClass.PrefixedFence;
@@ -24,64 +40,45 @@ namespace Z0
                 return 0;
         }
 
-        /// <summary>
-        /// Formats a specified <see cref='ITextVar'/> variable
-        /// </summary>
-        /// <param name="src">The variable to parse</param>
-        public static string format(ITextVar src)
+        public static string format(IVar src)
         {
-            var kind = src.Expr;
-            var @class = TextVars.@class(kind);
-            if(src.IsNonEmpty)
-                return src.Value;
+            var @class = Vars.@class(src);
+            if(src.HasValue)
+                return src.Value().ToString();
 
             switch(@class)
             {
                 case ScriptVarClass.PrefixedFence:
-                    return string.Format("{0}{1}{2}{3}", kind.Prefix, kind.Fence.Left, src.Name, kind.Fence.Right);
+                    return string.Format("{0}{1}{2}{3}", src.Prefix, src.Fence.Left, src.Name, src.Fence.Right);
                 case ScriptVarClass.Fenced:
-                    return string.Format("{0}{1}{2}", kind.Fence.Left, src.Name, kind.Fence.Right);
+                    return string.Format("{0}{1}{2}", src.Fence.Left, src.Name, src.Fence.Right);
                 case ScriptVarClass.Prefixed:
-                    return string.Format("{0}{1}", kind.Prefix, src.Name);
+                    return string.Format("{0}{1}", src.Prefix, src.Name);
             }
             return EmptyString;
         }
 
-        public static string EvalFencedVarExpr(string expr, ICollection<ITextVar> vars, ITextVarExpr kind)
+        public static string eval(string expr, ICollection<IVar> vars)
         {
             var result = expr;
-            var LD = kind.Fence.Left;
-            var RD = kind.Fence.Right;
             foreach(var v in vars)
             {
-                if(v.IsNonEmpty)
-                    result = text.replace(result, string.Format("{0}{1}{2}", LD, v.Name, RD), v.Value);
+                if(v.HasValue)
+                {
+                    
+                    result = text.replace(result, string.Format("{0}{1}{2}{3}", v.Prefix, v.Fence.Left, v.Name, v.Fence.Right), v.Value().ToString());
+                }
             }
             return result;
         }
 
-        public static string EvalPrefixFencedVarExpr(string expr, ICollection<ITextVar> vars, ITextVarExpr kind)
+        public static string eval(string expr, ICollection<IVar> vars, Fence<char> fence)
         {
             var result = expr;
-            var LD = kind.Fence.Left;
-            var RD = kind.Fence.Right;
-            var prefix = kind.Prefix;
             foreach(var v in vars)
             {
-                if(v.IsNonEmpty)
-                    result = text.replace(result, string.Format("{0}{1}{2}{3}", prefix, LD, v.Name, RD), v.Value);
-            }
-            return result;
-        }
-
-        public static string EvalPrefixedVarExpr(string expr, ICollection<ITextVar> vars, ITextVarExpr kind)
-        {
-            var result = expr;
-            var prefix = kind.Prefix;
-            foreach(var v in vars)
-            {
-                if(v.IsNonEmpty)
-                    result = text.replace(result, string.Format("{0}{1}", prefix, v.Name), v.Value);
+                if(v.HasValue)
+                    result = text.replace(result, string.Format("{0}{1}{2}", fence.Left, v.Name, fence.Right), v.Value().ToString());
             }
             return result;
         }
@@ -92,14 +89,14 @@ namespace Z0
         /// <param name="src">The input text</param>
         /// <param name="kind">The variable kind instance</param>
         /// <param name="vf">The variable parser</param>
-        public static Dictionary<string,ITextVar> vars(ReadOnlySpan<char> src, ITextVarExpr kind, Func<string,ITextVar> vf)
+        public static Dictionary<string,IVar> vars(ReadOnlySpan<char> src, Fence<char> fence, Func<string,IVar> vf)
         {
             var count = src.Length;
-            var dst = dict<string,ITextVar>();
+            var dst = dict<string,IVar>();
             var name = EmptyString;
             var parsing = false;
-            var LD = kind.Fence.Left;
-            var RD = kind.Fence.Right;
+            var LD = fence.Left;
+            var RD = fence.Right;
             for(var i=0; i<count; i++)
             {
                 ref readonly var c = ref skip(src,i);
@@ -133,5 +130,6 @@ namespace Z0
                 dst.TryAdd(name, vf(name));
             return dst;
         }        
+
     }
 }

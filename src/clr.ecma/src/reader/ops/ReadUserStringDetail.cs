@@ -22,7 +22,7 @@ namespace Z0
 
             do
             {
-                dst.Add(new EcmaStringDetail(seq: counter++, size, HeapOffset(handle), String(handle)));
+                dst.Add(new EcmaStringDetail(seq: counter++, size, EcmaHeaps.offset(MD, handle), String(handle)));
                 handle = MD.GetNextHandle(handle);
             }
             while (!handle.IsNil);

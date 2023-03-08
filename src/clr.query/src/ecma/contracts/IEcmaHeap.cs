@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IEcmaHeap : ITextual
+    public interface IEcmaHeap
     {
         MemoryAddress BaseAddress {get;}
 

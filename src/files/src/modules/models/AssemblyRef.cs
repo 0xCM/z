@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+
     public readonly struct AssemblyRef : IDataType<AssemblyRef>, IArrow<ClrAssemblyName,ClrAssemblyName>
     {
         public readonly ClrAssemblyName Source;
@@ -56,12 +57,13 @@ namespace Z0
             return result;
         }
 
-        public static AssemblyRef Empty => new AssemblyRef(ClrAssemblyName.Empty, ClrAssemblyName.Empty);
-
         ClrAssemblyName IArrow<ClrAssemblyName, ClrAssemblyName>.Source 
             => Source;
 
         ClrAssemblyName IArrow<ClrAssemblyName, ClrAssemblyName>.Target     
             => Target;
+
+        public static AssemblyRef Empty => new AssemblyRef(ClrAssemblyName.Empty, ClrAssemblyName.Empty);
+
     }
 }

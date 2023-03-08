@@ -17,6 +17,6 @@ namespace Z0
 
         Guid = 0x72,
 
-        String = 0x78,
+        SystemString = 0x78,
     }
 }

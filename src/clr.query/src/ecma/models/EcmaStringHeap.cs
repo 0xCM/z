@@ -8,14 +8,14 @@ namespace Z0
 
     public readonly record struct EcmaStringHeap : IEcmaHeap<EcmaStringHeap>
     {
+        public readonly EcmaHeapKind HeapKind {get;}
+
         public readonly MemoryAddress BaseAddress {get;}
 
         public readonly ByteSize Size {get;}
 
-        public readonly EcmaHeapKind HeapKind {get;}
-
         [MethodImpl(Inline)]
-        public EcmaStringHeap(MemoryAddress @base, ByteSize size, EcmaHeapKind kind)
+        public EcmaStringHeap(EcmaHeapKind kind, MemoryAddress @base, ByteSize size)
         {
             BaseAddress = @base;
             Size = size;

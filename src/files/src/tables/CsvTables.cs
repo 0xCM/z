@@ -11,6 +11,44 @@ namespace Z0
     {        
         const NumericKind Closure = UInt64k;
 
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static ref RowAdapter<T> adapt<T>(in T src, ref RowAdapter<T> adapter)
+        {
+            adapter.Source = src;
+            adapter.Index++;
+            load(adapter.Source, ref adapter.Row);
+            return ref adapter;
+        }
+
+
+        [Op, Closures(Closure)]
+        public static void load<T>(in T src, ref DynamicRow<T> dst)
+        {
+            var tr = __makeref(edit(src));
+            for(var i=0u; i<dst.FieldCount; i++)
+                dst[i] = dst.Fields[i].Definition.GetValueDirect(tr);
+        }
+
+        /// <summary>
+        /// Adapts a <see cref='ClrTableCells'/> sequence to a <typeparamref name='T'/> parametric row
+        /// </summary>
+        /// <param name="fields">The record fields</param>
+        /// <typeparam name="T">The record type</typeparam>
+        [Op, Closures(Closure)]
+        public static RowAdapter<T> adapter<T>(in ClrTableCells fields)
+            => new RowAdapter<T>(fields);
+
+        /// <summary>
+        /// Creates a <see cref='RowAdapter{T}'/> predicated a specified <typeparamref name='T'/>
+        /// </summary>
+        /// <typeparam name="T">The row type</typeparam>
+        [Op, Closures(Closure)]
+        public static RowAdapter<T> adapter<T>()
+            => adapter<T>(CsvTables.cells<T>());
+
+        public static ReadOnlySeq<Type> types(params Assembly[] src)
+            => src.Types().Tagged<RecordAttribute>();
+
         public static FileName filename(TableId id)
             => filename(id, FS.Csv);
 
@@ -105,7 +143,7 @@ namespace Z0
         public static ICsvFormatter<T> formatter<T>(ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular, string delimiter = DefaultDelimiter)
         {
             var record = typeof(T);
-            var fields = Tables.cells(record).Index();
+            var fields = cells(record).Index();
             var count = fields.Length;
             var buffer = alloc<HeaderCell>(count);
             for(var i=0u; i<count; i++)
@@ -117,7 +155,7 @@ namespace Z0
 
         public static CsvFormatter formatter(Type record, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular, string delimiter = DefaultDelimiter)
         {
-            var fields = Tables.cells(record).Index();
+            var fields = cells(record).Index();
             var count = fields.Length;
             var buffer = alloc<HeaderCell>(count);
             for(var i=0u; i<count; i++)
@@ -134,6 +172,14 @@ namespace Z0
         /// <typeparam name="T">The record type</typeparam>
         public static ICsvFormatter<T> formatter<T>(ReadOnlySpan<byte> widths, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
             => formatter<T>(rowspec<T>(widths, rowpad, fk));
+
+        /// <summary>
+        /// Defines a <typeparamref name='T'/> record formatter
+        /// </summary>
+        /// <param name="widths">The column widths</param>
+        /// <typeparam name="T">The record type</typeparam>
+        public static ICsvFormatter<T> formatter<T>(byte fieldwidth, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
+            => CsvTables.formatter<T>(Tables.rowspec<T>(fieldwidth, rowpad, fk));
 
         public static ICsvFormatter<T> formatter<T>(RowFormatSpec spec)
             => new CsvFormatter<T>(spec, TableDefs.adapter<T>());
@@ -309,5 +355,97 @@ namespace Z0
             }
             return buffer;
         }
+
+
+        /// <summary>
+        /// Discerns a <see cref='ClrTableCells'/> for a parametrically-identified record type
+        /// </summary>
+        /// <typeparam name="T">The record type</typeparam>
+        [Op, Closures(Closure)]
+        public static ClrTableCell[] cells<T>()
+            => cells(typeof(T));
+
+        /// <summary>
+        /// Discerns a <see cref='ClrTableCells'/> for a specified record type
+        /// </summary>
+        /// <param name="src">The record type</typeparam>
+        [Op]
+        public static ClrTableCell[] cells(Type src)
+        {
+            var fields = src.DeclaredPublicInstanceFields().Ignore().Index();
+            var count = fields.Count;
+            var dst = sys.alloc<ClrTableCell>(count);
+            for(var i=z32; i<count; i++)
+            {
+                ref readonly var field = ref fields[i];
+                var tag = field.Tag<RenderAttribute>();
+                if(tag)
+                {
+                    var tv = tag.Value;
+                    seek(dst,i) = new ClrTableCell(new CellRenderSpec(i, tv.Width, TextFormat.formatter(field.FieldType, (ushort)tv.Style)), field);
+                }
+                else
+                {
+                    seek(dst,i) = new ClrTableCell(new CellRenderSpec(i, 16, TextFormat.formatter(field.FieldType)), field);
+                }
+
+            }
+            return dst;
+        }
+ 
+        /// <summary>
+        /// Creates a row header for parametrically-identified record type
+        /// </summary>
+        /// <param name="widths">The cell render widths</param>
+        /// <typeparam name="T">The record type</typeparam>
+        public static RowHeader header<T>(ReadOnlySpan<byte> widths, string delimiter = DefaultDelimiter)
+            => header(typeof(T), widths);
+
+        /// <summary>
+        /// Creates a row header for parametrically-identified record type and uniform field width
+        /// </summary>
+        /// <param name="fieldwidht">The uniform field width</param>
+        /// <typeparam name="T">The record type</typeparam>
+        public static RowHeader header<T>(byte fieldwidth, string delimiter = DefaultDelimiter)
+            => header(typeof(T), fieldwidth, delimiter);
+
+        /// <summary>
+        /// Creates a row header for a specified record type record type and uniform field width
+        /// </summary>
+        /// <param name="fieldwidht">The uniform field width</param>
+        /// <typeparam name="T">The record type</typeparam>
+        public static RowHeader header(Type record, byte fieldwidth, string delimiter = DefaultDelimiter)
+        {
+            var _fields = CsvTables.cells(record).ToReadOnlySpan();
+            var count = _fields.Length;
+            var buffer = alloc<HeaderCell>(count);
+            var cells = span(buffer);
+            for(var i=0u; i<count; i++)
+                seek(cells, i) = new HeaderCell(i, skip(_fields,i).CellName, fieldwidth);
+            return new RowHeader(buffer, delimiter);
+        }
+
+        /// <summary>
+        /// Creates a row header for a specified record type
+        /// </summary>
+        /// <param name="widths">The cell render widths</param>
+        public static RowHeader header(Type record, ReadOnlySpan<byte> widths, string delimiter = DefaultDelimiter)
+        {
+            var _fields = CsvTables.cells(record).ToReadOnlySpan();
+            var count = _fields.Length;
+            if(count != widths.Length)
+                sys.@throw(FieldCountMismatch.Format(count, widths.Length));
+            var buffer = alloc<HeaderCell>(count);
+            var cells = span(buffer);
+            for(var i=0u; i<count; i++)
+            {
+                ref readonly var field = ref skip(_fields,i);
+                seek(cells,i) = new HeaderCell(i, field.CellName, skip(widths,i));
+            }
+            return new RowHeader(buffer, delimiter);
+        }
+
+        static MsgPattern<Count,Count> FieldCountMismatch
+            => "The target requires {0} fields but {1} were found in the source";
     }
 }

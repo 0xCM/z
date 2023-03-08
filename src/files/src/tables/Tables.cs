@@ -36,16 +36,6 @@ namespace Z0
             dst.IndentLine(margin, Chars.RBrace);
         }
         
-        // public static void emit<T>(ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
-        //     ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
-        // {
-        //     var formatter = CsvTables.formatter(typeof(T), rowpad, fk);
-        //     using var writer = dst.Writer(encoding);
-        //     writer.WriteLine(formatter.FormatHeader());
-        //     for(var i=0; i<rows.Length; i++)
-        //         writer.WriteLine(formatter.Format(skip(rows,i)));
-        // }
-
         [Op, Closures(Closure)]
         public static Count emit<T>(ReadOnlySpan<T> src, StreamWriter dst)
             => emit(src, Tables.rowspec<T>(24), dst);
@@ -173,7 +163,7 @@ namespace Z0
         }        
 
         internal static RowAdapter adapter(Type src)
-            => new RowAdapter(src, Tables.cells(src));
+            => new RowAdapter(src, CsvTables.cells(src));
 
         [MethodImpl(Inline)]
         internal static ref RowAdapter adapt<T>(in T src, ref RowAdapter adapter)

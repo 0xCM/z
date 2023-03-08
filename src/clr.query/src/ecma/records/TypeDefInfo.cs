@@ -4,11 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    class AssemblyChangeReceiver : Channeled<AssemblyChangeReceiver>, IFileChangeReceiver
+    partial class EcmaModels
     {
-        public void Deposit(FileChangeEvent src)
+        public record struct TypeDefInfo
         {
-            
+            public @string Name;
+
+            public TypeAttributes Attributes;
         }
     }
 }

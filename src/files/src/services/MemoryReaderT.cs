@@ -52,6 +52,33 @@ namespace Z0
             return count;
         }
 
+        [MethodImpl(Inline)]
+        public uint Read(uint offset, uint cells, Span<T> dst)
+        {
+            var count = min(cells, (uint)State.Remaining);
+            memory.read<T>(Source, (int)offset, ref first(dst), (int)count);
+            State.Advance((uint)count);
+            return count;
+        }
+
+        [MethodImpl(Inline)]
+        public bool Next(out T dst)
+        {
+            if(HasNext)
+            {
+                var _dst = default(T);
+                memory.read<T>(Source, State.Position, ref _dst);                
+                dst = _dst;
+                State.Advance(1);
+                return true;
+            }
+            else
+            {
+                dst = default;
+                return false;
+            }
+        }
+
         /// <summary>
         /// Reads a specified number of elements if they exist or fewer if not and deposits the values in a caller-suppled target
         /// Returns the actual number of elements read

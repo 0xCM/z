@@ -21,5 +21,11 @@ namespace Z0
             Size = size;
             Kind = kind;
         }
+
+        public string Format()
+            => $"{Kind}:[{Rva}..{Rva + Size}] = {(ByteSize)Size}b";
+
+        public override string ToString()
+            => Format();
     }
 }

@@ -24,6 +24,5 @@ namespace Z0
             [Render(1)]
             public EcmaSig Sig;
         }
-
     }
 }

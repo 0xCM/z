@@ -30,7 +30,7 @@ namespace Z0
         uint ReadUserStrings(List<string> dst)
         {
             var counter = 0u;
-            int size = HeapSize(HeapIndex.UserString);
+            int size = EcmaHeaps.size(MD, HeapIndex.UserString);
             if (size == 0)
                 return counter;
 
@@ -49,7 +49,7 @@ namespace Z0
         uint ReadSystemStrings(List<string> dst)
         {
             var counter = 0u;
-            int size = HeapSize(HeapIndex.String);
+            int size = EcmaHeaps.size(MD, HeapIndex.String);
             if (size == 0)
                 return counter;
 

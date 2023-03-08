@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using api = Vars;
+
     public class TextVar : ITextVar
     {
         public static VarKind Kind = new VarKind();
@@ -32,6 +34,11 @@ namespace Z0
             Value = val;
         }
 
+        public bool HasValue
+        {
+            [MethodImpl(Inline)]
+            get => sys.nonempty(Value);
+        }
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
@@ -50,16 +57,13 @@ namespace Z0
             get => text.nonempty(Value);
         }
 
-        ITextVarExpr ITextVar.Expr
-            => Kind;
-
-        @string IVar<@string>.Value
-            => Value;
-
         public string Format()
-            => TextVars.format(this);
+            => api.format(this);
 
         public override string ToString()
             => Format();
+
+        @string IVar<@string>.Value()
+            => Value;
     }
 }

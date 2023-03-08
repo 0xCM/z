@@ -4,23 +4,21 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using api = TextVars;
+    using api = Vars;
 
     public class TextExpr
     {
-        protected Dictionary<string,ITextVar> VarLookup;
+        protected Dictionary<string,IVar> VarLookup;
 
         public string Body {get;}
 
-        public ITextVarExpr VarExpr {get;}
 
-        public TextExpr(string body, ITextVarExpr exr)
+        public TextExpr(string body)
         {
             Body = body;
-            VarExpr = exr;
         }
 
-        public ITextVar this[string var]
+        public IVar this[string var]
         {
             [MethodImpl(Inline)]
             get => VarLookup[var];
@@ -29,24 +27,13 @@ namespace Z0
             set => VarLookup[var] = value;
         }
 
-        public ICollection<ITextVar> Vars
+        public ICollection<IVar> Vars
         {
             [MethodImpl(Inline)]
             get => VarLookup.Values;
         }
 
         public virtual string Eval()
-        {
-            switch(VarExpr.Class)
-            {
-                case ScriptVarClass.PrefixedFence:
-                    return api.EvalPrefixFencedVarExpr(Body, Vars, VarExpr);
-                case ScriptVarClass.Fenced:
-                    return api.EvalFencedVarExpr(Body, Vars, VarExpr);
-                case ScriptVarClass.Prefixed:
-                    return api.EvalPrefixedVarExpr(Body, Vars, VarExpr);
-            }
-            return EmptyString;
-        }
+            => api.eval(Body, Vars);
     }
 }

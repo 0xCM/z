@@ -7,6 +7,9 @@ namespace Z0
     partial class XTend
     {
         public static EcmaReader EcmaReader(this EcmaFile src)
-            => Z0.EcmaReader.create(src);
+            => Ecma.reader(src);
+
+        public static ReadOnlySeq<uint> Terminators(this EcmaStringHeap src)
+            => EcmaHeaps.terminators(src);
     }
 }

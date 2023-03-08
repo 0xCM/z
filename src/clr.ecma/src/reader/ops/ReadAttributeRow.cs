@@ -15,7 +15,7 @@ namespace Z0
             dst.Parent = src.Parent;
             dst.Constructor = src.Constructor;
             dst.Value = src.Value;
-            dst.ValueOffset = HeapOffset(src.Value);
+            dst.ValueOffset = EcmaHeaps.offset(MD, src.Value);
             return dst;
         }
     }

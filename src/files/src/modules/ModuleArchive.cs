@@ -24,7 +24,14 @@ namespace Z0
 
         public IEnumerable<AssemblyFile> Assemblies()
         {
-            foreach(var path in Root.EnumerateFiles(Recurse, FS.Dll))
+            foreach(var path in Root.EnumerateFiles(Recurse, FS.Dll, FS.WinMd))
+                if(AssemblyFile.name(path, out var name))
+                    yield return new AssemblyFile(path, name);
+        }
+
+        public IEnumerable<AssemblyFile> WinMd()
+        {
+            foreach(var path in Root.EnumerateFiles(Recurse, FS.WinMd))
                 if(AssemblyFile.name(path, out var name))
                     yield return new AssemblyFile(path, name);
         }
@@ -65,7 +72,7 @@ namespace Z0
             var pdb = from module in Pdb() select generalize(module);
             return managed.Union(native).Union(obj).Union(exe).Union(pdb).Union(lib);
         }
-
+        
         public IEnumerable<PdbModule> Pdb()
         {
             foreach(var path in Root.EnumerateFiles(Recurse, FS.Pdb))

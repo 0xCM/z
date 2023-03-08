@@ -9,20 +9,11 @@ namespace Z0
     {
         const string TableId = "section.headers";
 
-        [Render(32)]
-        public FileName ModuleName;
+        [Render(12)]
+        public uint Seq;
 
         [Render(16)]
         public string SectionName;
-
-        [Render(16)]
-        public Address32 CodeBase;
-
-        [Render(16)]
-        public Address32 GptRva;
-
-        [Render(16)]
-        public ByteSize GptSize;
 
         [Render(16)]
         public Address32 RawDataAddress;
@@ -30,13 +21,7 @@ namespace Z0
         [Render(16)]
         public ByteSize RawDataSize;
 
-        [Render(16)]
-        public Address32 EntryPoint;
-
         [Render(48)]
         public SectionCharacteristics SectionFlags;
-
-        [Render(1)]
-        public FilePath ModulePath;
     }
 }

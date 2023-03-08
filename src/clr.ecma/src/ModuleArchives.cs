@@ -5,7 +5,7 @@
 namespace Z0
 {    
     public class ModuleArchives : Channeled<ModuleArchives>
-    {
+    {        
         public ModuleMap Map(IDbArchive src)
         {
             var running = Channel.Running($"Mapping modules from {src.Root}");
@@ -18,20 +18,14 @@ namespace Z0
             return map;
         }
 
-
         void AssemblyMapped(MappedAssembly src)
         {
-            var reader = src.MetadataReader();
-            var name = reader.AssemblyName().SimpleName();
             Channel.Status($"Mapped managed module {src.Path}");
-            //Channel.Row(string.Format("{0,-8} | {1,-16} | {2,-16} | {3,-12} | {4,-56} | {5}", src.Index, src.ModuleKind, src.BaseAddress, src.FileSize, src.FileHash, name, FlairKind.StatusData));
         }
 
         void NativeMapped(MappedModule src)
         {
             Channel.Status($"Mapped native module {src.Path}");
-
-            //Channel.Row(string.Format("{0,-8} | {1,-16} | {2,-16} | {3,-12} | {4,-56} | {5}", src.Index, src.ModuleKind, src.BaseAddress, src.FileSize, src.FileHash, src.Path, FlairKind.StatusData));
         }
     }
 }

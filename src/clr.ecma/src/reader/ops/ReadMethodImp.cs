@@ -4,9 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct Tables
-    {
-        public static Index<Type> types(params Assembly[] src)
-            => src.Types().Tagged<RecordAttribute>();
+    using static sys;
+
+    partial class EcmaReader
+    {    
+        [MethodImpl(Inline), Op]
+        public MethodImplementation ReadMethodImpl(MethodImplementationHandle src)
+            => MD.GetMethodImplementation(src);
     }
 }

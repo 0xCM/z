@@ -9,9 +9,9 @@ namespace Z0
         [Op]
         public EcmaHeap ReadGuidHeap()
         {
-            var offset = HeapOffset(MetadataTokens.GuidHandle(0));
+            var offset = EcmaHeaps.offset(MD, MetadataTokens.GuidHandle(0));
             var @base = Segment.BaseAddress + offset;
-            return new EcmaHeap(EcmaHeapKind.Guid, @base, HeapSize(HeapIndex.Guid));
+            return new EcmaHeap(EcmaHeapKind.Guid, @base, EcmaHeaps.size(MD, HeapIndex.Guid));
         }
     }
 }

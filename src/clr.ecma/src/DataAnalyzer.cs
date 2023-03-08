@@ -46,7 +46,6 @@ namespace Z0
             => sys.start(Flow);
     }
 
-
     public class DataAnalyzer : WfSvc<DataAnalyzer>
     {
         public ExecToken Run(IDbArchive src, IDbArchive dst)
@@ -55,5 +54,4 @@ namespace Z0
             return result;
         }
     }
-
 }

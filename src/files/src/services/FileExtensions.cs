@@ -43,6 +43,11 @@ namespace Z0
         public static FileExt Dll => ext(dll);
 
         /// <summary>
+        /// Defines the winmd <see cref='FileExt'/>
+        /// </summary>
+        public static FileExt WinMd => ext("winmd");
+
+        /// <summary>
         /// Defines the <see cref='exe'/> <see cref='FileExt'/>
         /// </summary>
         public static FileExt Exe => ext(exe);

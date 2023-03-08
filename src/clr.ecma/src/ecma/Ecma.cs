@@ -12,12 +12,15 @@ namespace Z0
     [ApiHost]
     public class Ecma : WfSvc<Ecma>
     {
-        public static EcmaDb db(IWfRuntime wf, IDbArchive root)
-            => new EcmaDb(wf,root);
+        public static EcmaFile file(FilePath src)
+            => EcmaFile.open(src);
 
+        public static EcmaReader reader(EcmaFile src)
+            => EcmaReader.create(src);
+            
         public static IEnumerable<AssemblyRef> refs(AssemblyFile src)
         {
-            using var ecma = EcmaFile.open(src.Path);
+            using var ecma = file(src.Path);
             return ecma.EcmaReader().ReadAssemblyRefs2();            
         }
 
@@ -305,7 +308,7 @@ namespace Z0
 
     partial class XTend
     {
-        public static EcmaReader MetadataReader(this MappedAssembly src)
+        public static EcmaReader EcmaReader(this MappedAssembly src)
             => Z0.EcmaReader.create(src.BaseAddress, src.FileSize);
     }
 }

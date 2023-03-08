@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [EcmaRecord(EcmaTableKind.ImportScope), StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential)]
     public struct ImportScopeRow
     {
         [Render(12)]

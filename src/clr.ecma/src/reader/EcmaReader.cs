@@ -45,7 +45,7 @@ namespace Z0
             iter(src.Enumerate(true, FileKind.Dll, FileKind.Exe), path => {
                 try
                 {
-                    using var ecma = EcmaFile.open(path);
+                    using var ecma = Ecma.file(path);
                     var reader = ecma.EcmaReader(); 
                     var def = reader.ReadAssemblyDef();                   
                     var kind = FileModuleKind.Managed;
@@ -71,8 +71,8 @@ namespace Z0
         {
             foreach(var file in src.AsParallel())
             {
-                using var ecma = EcmaFile.open(file.Path);
-                var reader = EcmaReader.create(ecma);
+                using var ecma = Ecma.file(file.Path);
+                var reader = Ecma.reader(ecma);
                 var refs = reader.ReadAssemblyRefs().Storage;
                 foreach(var r in refs)
                     yield return r;                
@@ -81,7 +81,6 @@ namespace Z0
 
         public ByteSize CalcTableSize(TableIndex table)
             => MD.GetTableRowCount(table)*MD.GetTableRowSize(table);
-
 
         [MethodImpl(Inline), Op]
         public unsafe static MetadataReaderProvider provider(Assembly src)
@@ -220,6 +219,12 @@ namespace Z0
         {
             Segment = MemorySegs.define(src.MdReader.MetadataPointer, src.MdReader.MetadataLength);
             MD = src.MdReader;
+        }
+
+        public MemoryAddress BaseAddress
+        {
+            [MethodImpl(Inline)]
+            get => Segment.BaseAddress;
         }
 
         public ByteSize MetaSize

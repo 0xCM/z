@@ -8,7 +8,7 @@ namespace Z0
 
     public readonly struct EcmaStringIndex : IEcmaHeapKey<EcmaStringIndex>
     {
-        public EcmaHeapKind HeapKind => EcmaHeapKind.String;
+        public EcmaHeapKind HeapKind => EcmaHeapKind.SystemString;
 
         public uint Value {get;}
 

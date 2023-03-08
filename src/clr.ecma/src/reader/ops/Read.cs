@@ -13,10 +13,6 @@ namespace Z0
             => MD.GetCustomAttribute(src);
 
         [MethodImpl(Inline), Op]
-        public MethodImplementation Read(MethodImplementationHandle src)
-            => MD.GetMethodImplementation(src);
-
-        [MethodImpl(Inline), Op]
         public TypeReference ReadTypeRef(TypeReferenceHandle src)
             => MD.GetTypeReference(src);
 
