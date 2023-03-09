@@ -1,41 +1,41 @@
-//-----------------------------------------------------------------------------
-// Copyright   :  (c) Chris Moore, 2020
-// License     :  MIT
-//-----------------------------------------------------------------------------
-namespace Z0
-{
-    using E = Microsoft.Build.Evaluation;
+// //-----------------------------------------------------------------------------
+// // Copyright   :  (c) Chris Moore, 2020
+// // License     :  MIT
+// //-----------------------------------------------------------------------------
+// namespace Z0
+// {
+//     using E = Microsoft.Build.Evaluation;
 
-    partial class Build
-    {
-        public record class ProjectItem : IProjectItem
-        {
-            readonly E.ProjectItem Data;
+//     partial class Build
+//     {
+//         public record class ProjectItem : IProjectItem
+//         {
+//             readonly E.ProjectItem Data;
 
-            public string Type
-                => Data.ItemType;
+//             public string Type
+//                 => Data.ItemType;
 
-            internal ProjectItem(E.ProjectItem src)
-            {
-                Data = src;
-            }
+//             internal ProjectItem(E.ProjectItem src)
+//             {
+//                 Data = src;
+//             }
 
-            public string Include
-                => Data.EvaluatedInclude;
+//             public string Include
+//                 => Data.EvaluatedInclude;
 
-            public virtual string Format()
-            {
-                var dst = text.emitter();
-                dst.Append($"{Type}");
-                if(text.nonempty(Include))
-                    dst.AppendLine($"={Include}");
+//             public virtual string Format()
+//             {
+//                 var dst = text.emitter();
+//                 dst.Append($"{Type}");
+//                 if(text.nonempty(Include))
+//                     dst.AppendLine($"={Include}");
 
-                return dst.Emit();
-            }
+//                 return dst.Emit();
+//             }
 
 
-            public override string ToString()
-                => Format();
-        }
-    }
-}
+//             public override string ToString()
+//                 => Format();
+//         }
+//     }
+// }

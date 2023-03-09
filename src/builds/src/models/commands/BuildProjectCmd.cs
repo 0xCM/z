@@ -19,7 +19,7 @@ namespace Z0
 
         public string Platform;
 
-        public LogVerbosity Verbosity;
+        //public LogVerbosity Verbosity;
 
         public uint MaxCpuCount;
 

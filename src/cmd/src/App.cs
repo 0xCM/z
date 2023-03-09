@@ -40,7 +40,6 @@ namespace Z0
                 wf.ImageCmd(),
                 wf.WfCmd(),
                 wf.XedCmd(),
-                wf.BuildCmd(),
                 wf.XedToolCmd(),
                 wf.CalcChecker(),
                 wf.TestCmd(),

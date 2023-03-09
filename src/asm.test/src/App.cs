@@ -10,7 +10,6 @@ namespace Z0
         static ReadOnlySeq<IApiCmdProvider> providers(IWfRuntime wf)
             => new IApiCmdProvider[]{
                 wf.WfCmd(),
-                wf.BuildCmd(),
                 wf.XedCmd(),
                 wf.IntelInxCmd(),
                 wf.ImageCmd(),
