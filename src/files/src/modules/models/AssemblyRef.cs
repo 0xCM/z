@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     public readonly struct AssemblyRef : IDataType<AssemblyRef>, IArrow<ClrAssemblyName,ClrAssemblyName>
     {
         public readonly ClrAssemblyName Source;

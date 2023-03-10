@@ -27,9 +27,5 @@ namespace Z0
         {
             Reader = EcmaReader.create(src);
         }
-
-        public EcmaTableSource<T> TableSouce<T>()
-            where T : struct, IRecord<T>
-                => new EcmaTableSource<T>(Reader);
     }
 }

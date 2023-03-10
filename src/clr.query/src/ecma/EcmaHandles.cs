@@ -12,7 +12,7 @@ namespace Z0
         [Parser]
 
         [MethodImpl(Inline), Op]
-        public static EcmaTableKind table(Handle handle)
+        public static TableIndex table(Handle handle)
             => EcmaHandleData.from(handle).Table;
 
         [MethodImpl(Inline), Op]
@@ -33,7 +33,7 @@ namespace Z0
         public static EcmaHandleData datahandle(EntityHandle src)
         {
             var row = uint32(src) & 0xFFFFFF;
-            var kind = (EcmaTableKind)(uint32(src) >> 24);
+            var kind = (TableIndex)(uint32(src) >> 24);
             return new EcmaHandleData(kind,row);
         }
 
@@ -114,22 +114,10 @@ namespace Z0
             => u32(src.MetadataToken) & 0xFFFFFF;
 
         [Op]
-        public static void load(ReadOnlySpan<EcmaHandle> src, Span<EcmaHandleRow> dst)
-        {
-            var count = src.Length;
-            for(var i=0u; i<count; i++)
-            {
-                ref readonly var handle = ref skip(src,i);
-                ref var record = ref seek(dst,i);
-                record.Address = handle.Pointer.Address;
-                record.Token = handle.Token;
-                record.Kind = handle.Kind;
-            }
-        }
-
-        [Op]
         public static ReadOnlySpan<EcmaHandle<RuntimeTypeHandle>> types(Assembly src)
         {
+            var s = "";
+            ref readonly var x = ref s.GetPinnableReference();
             var metadata = src.Types();
             var count = metadata.Length;
             var buffer = sys.alloc<EcmaHandle<RuntimeTypeHandle>>(count);

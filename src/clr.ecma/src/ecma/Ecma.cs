@@ -18,10 +18,10 @@ namespace Z0
         public static EcmaReader reader(EcmaFile src)
             => EcmaReader.create(src);
             
-        public static IEnumerable<AssemblyRef> refs(AssemblyFile src)
+        public static IEnumerable<AssemblyRefInfo> refs(FilePath src)
         {
-            using var ecma = file(src.Path);
-            return ecma.EcmaReader().ReadAssemblyRefs2();            
+            using var ecma = file(src);
+            return ecma.EcmaReader().ReadAssemblyRefs();            
         }
 
         public static ReadOnlySeq<AssemblyRefInfo> refs(Assembly src)
@@ -68,7 +68,7 @@ namespace Z0
             => @as<Handle,EcmaHandleData>(src);
 
         [Op]
-        public static TableIndex? index(EntityHandle handle)
+        public static TableIndex? table(EntityHandle handle)
         {
             if(MetadataTokens.TryGetTableIndex(handle.Kind, out var table))
                 return table;
@@ -77,7 +77,7 @@ namespace Z0
         }
 
         [Op]
-        public static TableIndex? index(Handle handle)
+        public static TableIndex? table(Handle handle)
         {
             if(MetadataTokens.TryGetTableIndex(handle.Kind, out var table))
                 return table;
@@ -166,46 +166,6 @@ namespace Z0
         }
 
         /// <summary>
-        /// Defines a parametric table source over a specified <see cref='Assembly'/>
-        /// </summary>
-        /// <param name="src">The origin</param>
-        /// <typeparam name="T">The record type</typeparam>
-        [Op]
-        public static EcmaTableSource<T> source<T>(Assembly src)
-            where T : struct, IRecord<T>
-                => new EcmaTableSource<T>(src);
-
-        /// <summary>
-        /// Defines a parametric table source over a specified <see cref='MetadataReader'/>
-        /// </summary>
-        /// <param name="src">The origin</param>
-        /// <typeparam name="T">The record type</typeparam>
-        [Op]
-        public static EcmaTableSource<T> source<T>(MetadataReader src)
-            where T : struct, IRecord<T>
-                => new EcmaTableSource<T>(src);
-
-        /// <summary>
-        /// Defines a parametric table source over a specified <see cref='MemorySeg'/>
-        /// </summary>
-        /// <param name="src">The origin</param>
-        /// <typeparam name="T">The record type</typeparam>
-        [Op]
-        public static EcmaTableSource<T> source<T>(MemorySeg src)
-            where T : struct, IRecord<T>
-                => new EcmaTableSource<T>(src);
-
-        /// <summary>
-        /// Defines a parametric table source over a specified <see cref='PEMemoryBlock'/>
-        /// </summary>
-        /// <param name="src">The origin</param>
-        /// <typeparam name="T">The record type</typeparam>
-        [Op]
-        public static EcmaTableSource<T> source<T>(PEMemoryBlock src)
-            where T : struct, IRecord<T>
-                => new EcmaTableSource<T>(src);
-
-        /// <summary>
         /// Defines a <see cref='EcmaDataSource'/> over a specified <see cref='Assembly'/>
         /// </summary>
         /// <param name="src">The origin</param>
@@ -238,33 +198,18 @@ namespace Z0
             => new EcmaDataSource(src);
 
 
-        [MethodImpl(Inline)]
-        public static EcmaRowKey<K> key<K,T>(T handle, K k = default)
-            where K : unmanaged, IEcmaTableKind<K>
-            where T : unmanaged
-                => uint32(handle);
+        public static ReadOnlySpan<Sym<TableIndex>> TableKinds()
+            => Symbols.index<TableIndex>().View;
 
-        public static Index<byte,EcmaTableKind> TableKinds()
-        {
-            const byte MaxTableId = (byte)EcmaTableKind.CustomDebugInformation;
-            var values = Enums.literals<EcmaTableKind,byte>().Where(x => x < MaxTableId).Sort().View;
-            var src = recover<EcmaTableKind>(values);
-            var buffer = alloc<EcmaTableKind>(MaxTableId + 1);
-            ref var dst = ref first(buffer);
-            for(byte i=0; i<values.Length; i++)
-                seek(dst,skip(values,i)) = (EcmaTableKind)i;
-            return buffer;
-        }
-
-        public static EcmaRowKeys keys<K,T>(ReadOnlySpan<T> handles, K k = default)
+        public static EcmaRowKeys keys<T>(ReadOnlySpan<T> handles)
             where T : unmanaged
-            where K : unmanaged, IEcmaTableKind<K>
         {
             var count = handles.Length;
             var buffer = alloc<EcmaRowKey>(count);
             ref var dst = ref first(buffer);
             for(var i=0; i<count; i++)
-                seek(dst,i) = key<K,T>(skip(handles,i));
+            {}
+                //seek(dst,i) = new EcmaRowKey(kind, skip(handles,i));
             return buffer;
         }
 

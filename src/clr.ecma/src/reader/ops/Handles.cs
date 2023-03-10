@@ -16,6 +16,10 @@ namespace Z0
         public static Handle handle(EcmaHandleData src)
             => @as<EcmaHandleData,Handle>(src);
 
+        [MethodImpl(Inline), Op]
+        public ReadOnlySpan<TypeDefinitionHandle> TypeDefHandles()
+            => MD.TypeDefinitions.ToReadOnlySpan();
+
         [Op]
         public ReadOnlySpan<TypeReferenceHandle> TypeRefHandles()
             => MD.TypeReferences.ToReadOnlySpan();

@@ -85,11 +85,11 @@ namespace Z0
             {
                 var k = MetadataTokens.ConstantHandle((int)i);
                 var entry = reader.GetConstant(k);
-                var parent = new EcmaRowIndex(MD.GetToken(entry.Parent));
+                var parent = (EcmaToken)MD.GetToken(entry.Parent);
                 var blob = reader.GetBlobBytes(entry.Value);
                 ref var target = ref seek(dst, i - 1u);
                 target.Seq = counter++;
-                target.ParentId = parent.Token;
+                target.ParentId = parent;
                 target.Source = parent.Table.ToString();
                 target.DataType = entry.TypeCode;
                 target.Content = blob;

@@ -13,7 +13,21 @@ namespace Z0
     {
         [Op]
         public static string format(EcmaSig src)
-            => EcmaSigFormat.format(src);
+        {
+            var sb = new StringBuilder();
+            int length = src.Data.Length;
+            for (int i = 0; i < length; i++)
+            {
+                if (i == 0) sb.AppendFormat("SIG [");
+                else sb.AppendFormat(" ");
+                sb.Append(Int8ToHex(src.Data[i]));
+            }
+            sb.AppendFormat("]");
+            return sb.ToString();
+        }
+
+        static string Int8ToHex(int int8)
+            => int8.ToString("X2");
 
         public BinaryCode Data {get;}
 

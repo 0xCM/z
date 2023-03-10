@@ -7,13 +7,13 @@ namespace Z0
     [Record(TableId), StructLayout(LayoutKind.Sequential,Pack=1)]
     public struct EcmaRowStats : IComparable<EcmaRowStats>
     {
-        const string TableId = "ecma.rowstats";
+        const string TableId = "ecma.stats";
 
         [Render(48)]
         public @string AssemblyName;
 
         [Render(12)]
-        public byte TableIndex;
+        public Hex8 TableIndex;
 
         [Render(32)]
         public @string TableName;

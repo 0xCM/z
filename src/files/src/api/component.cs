@@ -13,5 +13,8 @@ namespace Z0
         [Op]
         public static FileName component(PartId part, FileExt x1, FileExt x2)
             => FS.file(string.Format("z0.{0}", part.Format()), x1, x2);
+
+        public static ReadOnlySeq<string> components(FolderPath src)
+            => src.Format(PathSeparator.FS).Remove(":").Split(Chars.FSlash);
     }
 }

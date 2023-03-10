@@ -1,4 +1,3 @@
 @echo off
-set ProjectId=clr.cil
-set Area=src
+set ProjectName=clr.cil
 call %~dp0..\config.cmd

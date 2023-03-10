@@ -17,7 +17,7 @@ namespace Z0
         public static EcmaHandleData from(EntityHandle src)
         {
             var row = uint32(src) & 0xFFFFFF;
-            var kind = (EcmaTableKind)(uint32(src) >> 24);
+            var kind = (TableIndex)(uint32(src) >> 24);
             return new EcmaHandleData(kind,row);
         }
 
@@ -27,10 +27,10 @@ namespace Z0
 
         public readonly uint RowId;
 
-        public readonly EcmaTableKind Table;
+        public readonly TableIndex Table;
 
         [MethodImpl(Inline)]
-        public EcmaHandleData(EcmaTableKind table, uint row)
+        public EcmaHandleData(TableIndex table, uint row)
         {
             RowId = row;
             Table = table;

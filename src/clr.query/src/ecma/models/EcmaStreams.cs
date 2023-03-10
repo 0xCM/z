@@ -4,16 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [StructLayout(LayoutKind.Sequential,Pack =1)]
-    public struct EcmaStreamHeader
-    {
-        public Address32 Offset;
-        
-        public uint Size;
-        
-        public string Name;
-    }
-
     public enum MetadataStreamKind : byte
     {
         Illegal,

@@ -7,7 +7,7 @@ namespace Z0
     partial class EcmaEmitter
     {
         public void EmitSectionHeaders(IDbArchive src, IDbArchive dst)
-            => EmitSectionHeaders(src.Files(FileKind.Dll, FileKind.Exe, FileKind.Obj), dst.Table<PeSectionHeader>());
+            => EmitSectionHeaders(src.Files(FileKind.Dll, FileKind.Exe, FileKind.Obj, FileKind.Lib, FileKind.Obj), dst.Table<PeSectionHeader>());
 
         public void EmitSectionHeaders(IEnumerable<FilePath> src, FilePath dst)
         {

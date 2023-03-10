@@ -58,6 +58,16 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
+        public T Read<T>()
+            where T : unmanaged
+        {
+            var dst = default(T);
+            memory.read((T*)Source, State.Position, ref dst);
+            Advance(size<T>());
+            return dst;
+        }
+
+        [MethodImpl(Inline), Op]
         public int Read(int offset, int requested, Span<byte> dst)
         {
             int count = min(requested, State.Remaining);

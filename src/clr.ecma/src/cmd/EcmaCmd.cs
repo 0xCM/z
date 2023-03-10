@@ -5,9 +5,8 @@
 namespace Z0
 {
     using System.Linq;
-
+    using static EcmaModels;
     using static sys;
-    using static Env;
 
     partial class EcmaCmd : WfAppCmd<EcmaCmd>
     {
@@ -83,10 +82,6 @@ namespace Z0
         void EmitStrings(CmdArgs args)
             => EcmaEmitter.EmitStrings(ApiAssemblies.Parts, AppDb.ApiTargets("ecma/strings"));
 
-        [CmdOp("ecma/emit/stats")]
-        void EmitStats(CmdArgs args)
-            => EcmaEmitter.EmitRowStats(ApiAssemblies.Parts, AppDb.ApiTargets("ecma").Table<EcmaRowStats>());
-
         [CmdOp("ecma/emit/blobs")]
         void EmitBlobs(CmdArgs args)
             => EcmaEmitter.EmitBlobs(ApiAssemblies.Parts, AppDb.ApiTargets("ecma/blobs"));
@@ -110,30 +105,47 @@ namespace Z0
         void EmitHeaders()
             => EcmaEmitter.EmitSectionHeaders(sys.controller().RuntimeArchive(), Dst);
 
+        static FolderPath nested(FolderPath root, FilePath src)
+            => root + FS.folder(FS.components(src.FolderPath).Join('/'));
+
+        static FolderPath nested(FolderPath root, FolderPath src)
+            => root + FS.folder(FS.components(src).Join('/'));
+
+        [CmdOp("ecma/emit/stats")]
+        void EcmaEmitStats(CmdArgs args)
+        {
+            var src = FS.dir(args[0]);
+            var modules = Archives.modules(src).Assemblies();
+            var stats = EcmaReader.stats(modules.Select(x => x.Path));
+            var folder = nested(DataTarget.Scoped("clr").Root, src);
+            var path = folder.DbArchive().Table<EcmaRowStats>();
+            Channel.TableEmit(stats,path);
+        }
+
         [CmdOp("ecma/emit/typedefs")]
         void EmitTypeDefs(CmdArgs args)
         {
-            var modules = Archives.modules(FS.dir(args[0])).Assemblies();
-            iter(modules, module => {
-                using var file = Ecma.file(module.Path);
+            var src = Archives.modules(FS.dir(args[0])).Assemblies();
+            iter(src, path => {                
+                using var file = Ecma.file(path.Path);
                 var reader = Ecma.reader(file);
-                reader.ReadTypeDefs(td => {
-                    Channel.Row(td);
-                });               
+                if(!reader.IsReferenceAssembly())
+                {
+                    var defs = reader.ReadTypeDefs();
+                    var folder = nested(DataTarget.Scoped("clr").Root, path.Path);
+                    Channel.TableEmit(defs,  folder.DbArchive().Table<TypeDefInfo>(path.Path.FileName.WithoutExtension.Format()));
+                }
+
+            }, true);        
+        }
+
+        [CmdOp("ecma/tables/kinds")]
+        void EmitEcmaTables()
+        {
+            var src = Ecma.TableKinds();
+            iter(src, x => {
+                Channel.Row(string.Format("{0:x2} {1}", (byte)x.Value, x.Name));
             });
-        }
-
-        void Mapped(MappedAssembly src)
-        {
-            var reader = src.EcmaReader();
-            var name = reader.AssemblyName().SimpleName();
-            Channel.Row(string.Format("{0,-8} | {1,-16} | {2,-12} | {3,-56} | {4}", src.Index, src.BaseAddress, src.FileSize, src.FileHash, name, FlairKind.StatusData));
-        }
-
-        void Mapped(MappedModule src)
-        {
-
-            Channel.Row(string.Format("{0,-8} | {1,-16} | {2,-12} | {3,-56} | {4}", src.Index, src.BaseAddress, src.FileSize, src.FileHash, src.Path, FlairKind.StatusData));
         }
 
         [CmdOp("modules/map")]
@@ -153,7 +165,6 @@ namespace Z0
                 if(file.Value.IsNot(FS.ext("resources.dll")))
                 {
                     EcmaEmitter.EmitMetadump(file.Value, EcmaArchive(file.Value));
-                    var path = EcmaArchive(file.Value);                    
                     }
                 }, PllExec);
         }
@@ -191,37 +202,26 @@ namespace Z0
             });
         }
 
-        [CmdOp("pe/dirs")]
+        [CmdOp("pe/emit/headers")]
         void PeDirs(CmdArgs args)
         {
             var archives = Channel.Channeled<ModuleArchives>();
             var sources = FS.dir(args[0]).DbArchive();
             var modules = Archives.modules(sources.Root);
-            var sf = CsvTables.formatter<PeSectionHeader>();
+            var headers = bag<PeSectionHeader>();
+            var dirs = bag<PeDirectoryEntry>();
+            
             iter(modules.Members(), member => {
                 if(member.Path.FileKind() != FileKind.Pdb)
                 {
                     try
                     {
-                        var emitter = text.emitter();
                         using var reader = PeReader.create(member.Path);
                         var tables = reader.Tables;
                         var sections = tables.SectionHeaders;
-                        iter(sections, section => {
-                            emitter.AppendLine(sf.Format(section));
-                        });
-                        
+                        iter(sections, section => headers.Add(section));
                         var directories = tables.Directories;
-                        if(directories.EntryCount != 0)
-                        {
-                            emitter.AppendLine(member.Path);
-                            iter(directories.Values, e => 
-                                {
-                                    if(e.Size != 0)
-                                        emitter.IndentLine(4, e.Format());
-                                });
-                            Channel.Row(emitter.Emit());
-                        }
+                        iter(directories.Values, e => dirs.Add(e));                    
                     }
                     catch(BadImageFormatException)
                     {
@@ -229,6 +229,8 @@ namespace Z0
                     }
                 }
             });
+
+            //Channel.TableEmit(headers.Array().Sort(),)
         }
 
         [CmdOp("ecma/dump")]
@@ -276,16 +278,16 @@ namespace Z0
             });;
         }
 
-        [CmdOp("ecma/refs")]
+        [CmdOp("ecma/emit/refs")]
         void EmitModuleRefs(CmdArgs args)
         {
             var dir = FS.dir(args[0]);                        
             var src = Archives.modules(dir).Assemblies();
-            var dst = bag<AssemblyRef>();
-            iter(src, client => iter(Ecma.refs(client), c => dst.Add(c)), true);
+            var dst = bag<AssemblyRefInfo>();
+            iter(src, asmfile => iter(Ecma.refs(asmfile.Path), c => dst.Add(c)), true);
             var sorted = dst.Array().Sort();
-            var name = $"{Archives.identifier(dir)}.assembly-refs";
-            Channel.TableEmit(sorted, DataTarget.Scoped("clr").Path(name, FileKind.Csv));            
+            var folder = nested(DataTarget.Scoped("clr").Root, dir);
+            Channel.TableEmit(sorted, folder.DbArchive().Table<AssemblyRef>());  
         }   
 
         public record class EcmaHeapInfo

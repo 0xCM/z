@@ -47,7 +47,7 @@ namespace Z0
                 EmitMethodDefs(src, dst);
 
             if(options.EmitCliRowStats)
-                EmitRowStats(src, dst);
+                EmitTableStats(src, dst);
         }
     }
 }

@@ -18,6 +18,12 @@ namespace Z0
             Value = ((uint)table << 24) | (index & 0xFFFFFF);
         }
 
+        [MethodImpl(Inline)]
+        public EcmaRowKey(TableIndex table, uint index)
+        {
+            Value = ((uint)table << 24) | (index & 0xFFFFFF);
+        }
+
         public EcmaTableKind Table
         {
             [MethodImpl(Inline)]

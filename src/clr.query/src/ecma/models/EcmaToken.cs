@@ -75,10 +75,16 @@ namespace Z0
             Data = (uint)table << 24 | (row & 0xFFFFFF);
         }
 
-        public EcmaTableKind Table
+        [MethodImpl(Inline)]
+        public EcmaToken(TableIndex table, uint row)
+        {
+            Data = (uint)table << 24 | (row & 0xFFFFFF);
+        }
+
+        public TableIndex Table
         {
             [MethodImpl(Inline)]
-            get => (EcmaTableKind)(Data >> 24);
+            get => (TableIndex)(Data >> 24);
         }
 
         public uint Row
@@ -165,6 +171,10 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator EcmaToken(EntityHandle src)
+            => MetadataTokens.GetToken(src);
+
+        [MethodImpl(Inline)]
+        public static implicit operator EcmaToken(TypeDefinitionHandle src)
             => MetadataTokens.GetToken(src);
 
         [MethodImpl(Inline)]

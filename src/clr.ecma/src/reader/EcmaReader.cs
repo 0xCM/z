@@ -211,6 +211,7 @@ namespace Z0
         public EcmaReader(MetadataReader src)
         {
             Segment = MemorySegs.define(src.MetadataPointer, src.MetadataLength);
+            
             MD = src;
         }
 

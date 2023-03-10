@@ -19,11 +19,11 @@ namespace Z0
 
             public TypeLayout Layout;
 
-            public EcmaRowIndex Extends;
+            public EcmaRowKey Extends;
 
-            public EcmaRowIndex FieldList;
+            public EcmaRowKey FieldList;
 
-            public EcmaRowIndex MethodList;
+            public EcmaRowKey MethodList;
         }       
     }
 }

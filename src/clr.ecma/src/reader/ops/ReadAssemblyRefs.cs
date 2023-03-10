@@ -8,7 +8,7 @@ namespace Z0
 
     partial class EcmaReader
     {
-        public EcmaModels.AssemblyRef ReadAssemblyRefRow(AssemblyReferenceHandle handle)
+        public EcmaModels.AssemblyRef ReadAssemblyRef(AssemblyReferenceHandle handle)
         {
             var src = MD.GetAssemblyReference(handle);
             var dst = default(EcmaModels.AssemblyRef);
@@ -20,12 +20,7 @@ namespace Z0
             dst.Name = src.Name;
             return dst;
         }
-        [Op]
-        public IEnumerable<AssemblyRef> ReadAssemblyRefs2()
-        {
-            var src = MD.GetAssemblyDefinition().GetAssemblyName();
-            return AssemblyRefHandles().Select(h => new AssemblyRef(src, MD.GetAssemblyReference(h).GetAssemblyName()));
-        }
+
 
         [Op]
         public ReadOnlySeq<AssemblyRefInfo> ReadAssemblyRefs()

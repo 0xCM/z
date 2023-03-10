@@ -25,8 +25,13 @@ namespace Z0
         public IEnumerable<AssemblyFile> Assemblies()
         {
             foreach(var path in Root.EnumerateFiles(Recurse, FS.Dll, FS.WinMd))
-                if(AssemblyFile.name(path, out var name))
-                    yield return new AssemblyFile(path, name);
+            {
+                if(!path.Format().EndsWith("resources.dll"))
+                {
+                    if(AssemblyFile.name(path, out var name))
+                        yield return new AssemblyFile(path, name);
+                }
+            }
         }
 
         public IEnumerable<AssemblyFile> WinMd()

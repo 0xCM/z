@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Binary>$(MsBuildThisFileDirectory)z0.binary.csproj</Binary>
+  </PropertyGroup>
+</Project>

@@ -12,7 +12,7 @@ namespace Z0
                 () => EmitLocatedMetadata(src, dst.Scoped("ecma/hex").Delete(), 64),
                 () => EmitAssemblyRefs(src, dst.Scoped("ecma").Delete()),
                 () => EmitStrings(src, dst.Scoped("ecma/strings").Delete()),
-                () => EmitRowStats(src, dst.Scoped("ecma").Table<EcmaRowStats>()),
+                () => EmitTableStats(src, dst.Scoped("ecma").Table<EcmaRowStats>()),
                 () => EmitMsilMetadata(src, dst.Scoped("ecma/msil.dat").Delete()),
                 () => EmitBlobs(src, dst.Scoped("ecma/blobs").Delete()),
                 () => EmitMetadumps(Channel, src, dst.Scoped("ecma/dumps").Delete()),

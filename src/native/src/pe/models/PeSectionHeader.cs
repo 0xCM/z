@@ -11,7 +11,7 @@ namespace Z0
 
         [Render(12)]
         public uint Seq;
-
+        
         [Render(16)]
         public string SectionName;
 

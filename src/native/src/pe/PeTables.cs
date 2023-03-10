@@ -8,16 +8,6 @@ namespace Z0
 
     public class PeTables
     {
-        ReadOnlySeq<PeSectionHeader> _SectionHeaders;
-        
-        CoffHeader _CoffHeader;
-
-        CorHeaderInfo _CorHeader;
-
-        PeFileInfo _PeInfo;
-
-        ConstLookup<PeDirectoryKind,PeDirectoryEntry> _Directories;
-
         public static PeTables load(PeReader src)
         {
             var dst = new PeTables();
@@ -28,6 +18,17 @@ namespace Z0
             dst._PeInfo = peinfo(src.PE);
             return dst;
         }
+
+        ReadOnlySeq<PeSectionHeader> _SectionHeaders;
+        
+        CoffHeader _CoffHeader;
+
+        CorHeaderInfo _CorHeader;
+
+        PeFileInfo _PeInfo;
+
+        ConstLookup<PeDirectoryKind,PeDirectoryEntry> _Directories;
+
 
         [MethodImpl(Inline)]
         public PeTables()
@@ -75,17 +76,11 @@ namespace Z0
                     {
                         ref readonly var section = ref skip(sections,i);
                         ref var dst = ref seek(buffer,i);
-                        //dst.ModuleName = src.ModulePath.FileName;
-                        // dst.EntryPoint = (Address32)pe.AddressOfEntryPoint;
-                        // dst.CodeBase = (Address32)pe.BaseOfCode;
-                        // dst.GptRva = (Address32)pe.GlobalPointerTableDirectory.RelativeVirtualAddress;
-                        // dst.GptSize = (ByteSize)pe.GlobalPointerTableDirectory.Size;
                         dst.Seq = i;
                         dst.SectionFlags = section.SectionCharacteristics;
                         dst.SectionName = section.Name;
                         dst.RawDataAddress = (Address32)section.PointerToRawData;
                         dst.RawDataSize = (uint)section.SizeOfRawData;
-                        //dst.ModulePath = src.ModulePath;
                     }
                 }
             }
