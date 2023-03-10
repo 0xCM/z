@@ -102,7 +102,6 @@ namespace Z0
                 IlViz.DumpMethod(row.MaxStack, row.Code.View, builder);
                 writer.WriteLine(builder.ToString());
                 writer.WriteLine();
-
             }
 
             Wf.EmittedFile(flow, count);
