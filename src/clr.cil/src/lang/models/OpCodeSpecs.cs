@@ -35,7 +35,7 @@ namespace Z0
 
             public const int StackChangeShift = 28;               // XXXX0000000000000000000000000000
 
-            public static Index<OpCode> All()
+            public static ReadOnlySeq<OpCode> All()
                 => typeof(OpCodeSpecs).StaticProperties().Where(p => p.PropertyType == typeof(OpCode)).Values().Cast<OpCode>();
 
             const int NopFlags =

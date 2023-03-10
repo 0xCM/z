@@ -12,7 +12,6 @@ namespace Z0
 
     partial struct MsilCodeModels
     {
-
         public readonly struct OpCodeLoader
         {
             [MethodImpl(Inline), Op]

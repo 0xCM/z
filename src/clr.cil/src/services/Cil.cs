@@ -5,11 +5,36 @@
 namespace Z0
 {
     using static System.Reflection.Metadata.ILOpCode;
-
+    using static MsilCodeModels;
+    using static sys;
     using K = System.Reflection.Metadata.ILOpCode;
 
-    public partial class Cil
+    public class Cil
     {
+        static ReadOnlySeq<MsilOpCode> _OpCodes;
+
+        static uint OpCodeCount;
+
+        static void LoadOpCodes()
+        {
+            var buffer = alloc<MsilOpCode>(300);
+            var count = OpCodeLoader.load(ref first(buffer));
+            _OpCodes = buffer;
+            OpCodeCount = count;            
+        }
+
+        static Cil()
+        {
+            LoadOpCodes();
+            //_OpCodes = typeof(OpCodeSpecs).StaticProperties().Where(p => p.PropertyType == typeof(OpCode)).Values().Cast<OpCode>();
+        }
+
+        [MethodImpl(Inline)]
+        public ReadOnlySpan<MsilOpCode> OpCodes()
+            => _OpCodes.View;
+
+        //public ref ReadOnlySeq<OpCode> OpCodes() => ref _OpCodes;
+
         [Op]
         public static string keyword(ILOpCode src)
         {

@@ -6,7 +6,10 @@ namespace Z0.Binary
 {
     public abstract class ByteStream : Stream<byte> 
     {
+        protected ByteStream(MemoryAddress @base, uint length)
+            : base(@base,length)            
+        {
 
+        }
     }
-
 }

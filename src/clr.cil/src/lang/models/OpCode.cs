@@ -9,7 +9,6 @@ namespace Z0
 
     partial struct MsilCodeModels
     {
-
         public readonly struct OpCode : IEquatable<OpCode>
         {
             public readonly OpCodeValue Value;
