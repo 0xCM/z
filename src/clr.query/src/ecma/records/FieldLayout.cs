@@ -4,9 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class EcmaModels
+    partial class EcmaTables
     {
-        [Table(EcmaTableKind.FieldLayout), StructLayout(LayoutKind.Sequential, Pack =1)]
+        [Table(TableIndex.FieldLayout), StructLayout(LayoutKind.Sequential, Pack =1)]
         public struct FieldLayout : IEcmaRecord<FieldLayout>
         {
             public uint Offset;

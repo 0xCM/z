@@ -4,13 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class EcmaModels
+    partial class EcmaTables
     {
-        [Record(TableId), StructLayout(LayoutKind.Sequential,Pack=1)]
+        [Table(TableIndex.Document), StructLayout(LayoutKind.Sequential,Pack=1)]
         public struct Document : IEcmaRecord<Document>
         {
-            const string TableId = "documents";
-
             [Render(12)]
             public EcmaBlobIndex Name;
 

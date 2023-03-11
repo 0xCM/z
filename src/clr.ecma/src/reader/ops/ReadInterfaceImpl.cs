@@ -26,7 +26,7 @@ namespace Z0
             {
                 ref readonly var handle = ref skip(handles,i);
                 var iface = (TypeDefinitionHandle)ReadInterfaceImpl(handle).Interface;
-                seek(dst,i) = ReadTypeDef(iface);
+                seek(dst,i) = MD.GetTypeDefinition(iface);
 
             }
             return dst;

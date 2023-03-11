@@ -4,13 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class EcmaModels
+    partial class EcmaTables
     {
-        [Record(TableId), StructLayout(LayoutKind.Sequential,Pack=1)]
+        [Table(TableIndex.AssemblyRef), StructLayout(LayoutKind.Sequential,Pack=1)]
         public struct AssemblyRef : IEcmaRecord<AssemblyRef>
         {
-            const string TableId = "ecma.assemblies.refs";
-
             [Render(12)]
             public EcmaBlobIndex Token;
 

@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     using N = N32;
     using W = W256;
     using A = asci32;
@@ -85,12 +83,6 @@ namespace Z0
             [MethodImpl(Inline)]
             get => Size;
         }
-
-        // public ReadOnlySpan<byte> View
-        // {
-        //     [MethodImpl(Inline)]
-        //     get => api.bytes(this);
-        // }
 
         public ReadOnlySpan<char> Decoded
         {

@@ -74,8 +74,5 @@ namespace Z0
 
         public EmitterSpec<T> LoadEmitter<T>(Identifier name, ReadOnlySpan<byte> src)
             => DFx.emitter<T>(name, DFx.load(src, Offset, Reserve(src.Length)));
-
-        //var _f = Marshal.GetDelegateForFunctionPointer<DelegateBindings.cpuid>(block.Address);
-        // var f = DynamicOperations.binop<ulong>(RoutineName, block);
     }
 }

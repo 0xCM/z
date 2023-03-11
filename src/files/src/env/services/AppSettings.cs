@@ -70,6 +70,9 @@ namespace Z0
         public DbArchive Control()
             => folder(Instance.Setting(SettingNames.Control));
 
+        public DbArchive WinKits()
+            => folder(Instance.Setting(SettingNames.WinKits));
+
         public DbArchive DbRoot()
             => folder(Instance.Setting(SettingNames.DbRoot));
 
@@ -78,6 +81,9 @@ namespace Z0
 
         public DbArchive DevOps()
             => folder(Instance.Setting(SettingNames.DevOps));
+
+        public DbArchive DevPacks()
+            => folder(Instance.Setting(SettingNames.DevPacks));
 
         public DbArchive ProcDumps()
             => folder(Instance.Setting(SettingNames.ProcDumps));

@@ -13,6 +13,7 @@ namespace Z0
                 wf.EnvCmd(),
                 wf.ImageCmd(),
                 wf.ArchiveCmd(),
+                wf.WinMdCmd(),
                 wf.ClrCmd(),
                 wf.EcmaCmd()
             };

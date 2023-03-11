@@ -5,7 +5,7 @@
 namespace Z0
 {
     using System.Linq;
-    using static EcmaModels;
+    using static EcmaTables;
     using static sys;
 
     partial class EcmaCmd : WfAppCmd<EcmaCmd>
@@ -148,6 +148,20 @@ namespace Z0
             });
         }
 
+        [CmdOp("ecma/emit/mdheader")]
+        void EmitMdHeader(CmdArgs args)
+        {
+            var source = FS.dir(args[0]).DbArchive();
+            var assemblies = Archives.modules(source.Root).Assemblies();
+            iter(assemblies, a => {
+                using var file = EcmaFile.open(a.Path);
+                var reader = file.EcmaReader();
+                var memory = reader.Memory();
+                var header = memory.ReadMetadataRoot();
+                Channel.Row(header);
+            });
+        }
+
         [CmdOp("modules/map")]
         void EcmaMeta(CmdArgs args)
         {
@@ -262,22 +276,6 @@ namespace Z0
             Channel.TableEmit(dst.Array(),path);
         }
 
-        [CmdOp("winmd/rsp")]
-        void WinMdResponse(CmdArgs args)
-        {
-            var src = FS.dir(args[0]).ToArchive();
-            iter(src.Files(true, FS.ext("rsp")), path => {
-                Channel.Row(path, FlairKind.StatusData);
-                WinMd.parse(path, out WinMd.ResponseFile response);
-                iter(response.Options.Keys, name => {
-                    Channel.Row($"--{name}");
-                    iter(response.Options[name],  value => {
-                        Channel.Row(value);
-                    });
-                });
-            });;
-        }
-
         [CmdOp("ecma/emit/refs")]
         void EmitModuleRefs(CmdArgs args)
         {
@@ -289,21 +287,6 @@ namespace Z0
             var folder = nested(DataTarget.Scoped("clr").Root, dir);
             Channel.TableEmit(sorted, folder.DbArchive().Table<AssemblyRef>());  
         }   
-
-        public record class EcmaHeapInfo
-        {
-            [Render(12)]
-            public EcmaHeapKind HeapKind;
-
-            [Render(16)]
-            public MemoryAddress BaseAddress;
-
-            [Render(16)]
-            public ByteSize Size;
-
-            [Render(1)]
-            public FilePath Source;
-        }
 
         [Op]
         public static ExecToken emit(IWfChannel channel, MemorySeg src, FilePath dst, byte bpl = HexCsvRow.BPL)

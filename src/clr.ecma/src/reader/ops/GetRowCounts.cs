@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static sys;
-    using static EcmaModels;
+    using static EcmaTables;
 
     partial class EcmaReader
     {

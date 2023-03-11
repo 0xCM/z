@@ -4,13 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class EcmaModels
+    partial class EcmaTables
     {
-        [Table(EcmaTableKind.MethodSemantics), StructLayout(LayoutKind.Sequential, Pack=1)]
-        public struct MethodSemantics
+        [Table(TableIndex.MethodSemantics), StructLayout(LayoutKind.Sequential, Pack=1)]
+        public struct MethodSemantics : IEcmaRecord<MethodSemantics>
         {
-            const string TableId = "ecma.methods.semantics";
-
             public MethodSemanticsAttributes Semantic;
 
             public EcmaRowKey Method;

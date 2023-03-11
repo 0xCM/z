@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class EcmaModels
+    partial class EcmaTables
     {     
-        [Table(EcmaTableKind.Field), StructLayout(LayoutKind.Sequential, Pack =1)]
-        public struct Field
+        [Table(TableIndex.Field), StructLayout(LayoutKind.Sequential, Pack =1)]
+        public struct Field : IEcmaRecord<Field>
         {
             [Render(12)]
             public EcmaStringIndex Name;

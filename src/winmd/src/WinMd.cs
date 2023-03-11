@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using System.Linq;
 
     public partial class WinMd : WfSvc<WinMd>
     {
@@ -12,20 +13,6 @@ namespace Z0
         {
             var parser = new ResponseFileParser(src);
             dst = parser.Parse();            
-        }
-
-        public class SymbolicPath
-        {
-            public readonly string Expression;
-
-            public FilePath Resolve(params Var[] vars)
-            {
-                var dst = Expression;
-                iter(vars, v => {
-                    
-                });
-                return FS.path(dst);
-            }
         }
 
         public class OptionNames
@@ -44,29 +31,48 @@ namespace Z0
 
             public const string Exclude = "exclude";
 
+            public const string FileDirectory = "file-directory";
+
+            public const string WithType = "with-type";
+
         }
+
         public enum OptionKind : byte
         {
+            [Symbol(EmptyString)]
             None,
 
+            [Symbol(OptionNames.Traverse)]
             Traverse,
 
+            [Symbol(OptionNames.Namespace)]
             Namespace,
 
+            [Symbol(OptionNames.File)]
             File,
 
+            [Symbol(OptionNames.FileDirectory)]
+            FileDirectory,
+
+            [Symbol(OptionNames.Output)]
             Output,
 
+            [Symbol(OptionNames.HeaderFile)]
             HeaderFile,
 
+            [Symbol(OptionNames.IncludeDirectory)]
             IncludeDirectory,
 
+            [Symbol(OptionNames.Exclude)]
             Exclude,
+
+            [Symbol(OptionNames.WithType)]
+            WithType,
         }
 
         public interface IOption
         {
-            @string Name {get;}
+            OptionKind Kind {get;}
 
             IOptionValue Value {get;}            
         }
@@ -74,12 +80,19 @@ namespace Z0
         public interface IOptionValue
         {
             object Data {get;}
+
+            string Format();
+
+            T As<T>()
+                => (T)Data;
         }
 
         public abstract record class OptionValue<R,V> : IOptionValue
             where R : OptionValue<R,V>,new()
         {
             public readonly V Data;
+
+            public static R Empty => new();
 
             protected OptionValue(V value)
             {
@@ -88,55 +101,64 @@ namespace Z0
 
             object IOptionValue.Data    
                 => Data;
+
+            public string Format()
+                => Data?.ToString() ?? "<null>";
+
+            public override string ToString()
+                => Format();
+
         }
 
         public abstract record class Option<R,V> : IOption
             where R : Option<R,V>,new()
             where V : IOptionValue
         {
-            public readonly @string Name;
+            public readonly OptionKind Kind;
 
             public readonly V Value;
 
-            protected Option(string name, V value)
+            protected Option(OptionKind kind, V value)
             {
-                Name = name;
+                Kind = kind;
                 Value = value;
             }
 
             IOptionValue IOption.Value
                 => Value;
 
-            @string IOption.Name    
-                => Name;
+            OptionKind IOption.Kind
+                => Kind;
         }
 
         public sealed record class Option : Option<Option,IOptionValue>
         {
             public Option()
-                : base(EmptyString,null)
+                : base(0,null)
             {
 
             }
 
-            public Option(string name, IOptionValue value)
-                : base(name,value)
+            public Option(OptionKind kind, IOptionValue value)
+                : base(kind, value)
             {
 
             }
         }
-        public sealed record class OptionValue : OptionValue<OptionValue,object>
+
+        public sealed record class OptionValue<V> : OptionValue<OptionValue<V>, V>
+            where V : new()
         {
             public OptionValue()
-                : base(@string.Empty)
+                : base(new V())
             {}
 
-            public OptionValue(object value)
+            public OptionValue(V value)
                 : base(value)
             {
 
             }
-        }        
+        }
 
         public sealed record class PathValue : OptionValue<PathValue,FilePath>
         {
@@ -149,33 +171,30 @@ namespace Z0
             {
 
             }
+
+            [MethodImpl(Inline)]
+            public static implicit operator PathValue(FilePath src)
+                => new(src);
         }
 
         public record class ResponseFile
         {
             public readonly FilePath Path;
             
-            public readonly ConstLookup<string, ReadOnlySeq<IOptionValue>> Options;
+            public readonly ICollection<IOption> Options;
 
-            public ResponseFile(FilePath path, ConstLookup<string, ReadOnlySeq<IOptionValue>> options)
+            public ResponseFile(FilePath path, ICollection<IOption> options)
             {
                 Path = path;
                 Options = options;
             }    
         }
 
-        public record class FileTraversal
-        {
-            public readonly FilePath Path;
-        }
-
         public class ResponseFileParser
         {
             readonly FilePath Source;
 
-            readonly List<IOptionValue> OptionValues = new();
-
-            readonly Dictionary<string,ReadOnlySeq<IOptionValue>> OptionLookup = new();
+            readonly List<IOption> Options = new();
 
             public ResponseFileParser(FilePath src)
             {
@@ -185,53 +204,60 @@ namespace Z0
 
             string OptionName;
 
-            bool Parse(string src, out IOptionValue value)
+            static Option option<T>(OptionKind kind, T value) 
+                where T : new()
+                    => new Option(kind, new OptionValue<T>(value));
+
+            
+            bool Parse(@string src, out IOption value)
             {
-                value = new OptionValue(src);
+                value = option(0,src);
                 switch(OptionName)
                 {
                     case OptionNames.Exclude:
-                        value = new OptionValue(src);
+                        value = option(OptionKind.Exclude, src);
                     break;
                     case OptionNames.File:
-                        value = new OptionValue(FS.path(src));
+                        value = option(OptionKind.File, FS.path(src));
                     break;
                     case OptionNames.HeaderFile:
-                        value = new OptionValue(FS.path(src));
+                        value = option(OptionKind.HeaderFile, FS.path(src));
+                    break;
+                    case OptionNames.FileDirectory:
+                        value = option(OptionKind.FileDirectory, FS.dir(src));
                     break;
                     case OptionNames.IncludeDirectory:
-                        value = new OptionValue(FS.dir(src));
+                        value = option(OptionKind.IncludeDirectory, FS.dir(src));
                     break;
                     case OptionNames.Namespace:
-                        value = new OptionValue(src);
+                        value = option(OptionKind.Namespace, src);
                     break;
                     case OptionNames.Output:
-                        value = new OptionValue(FS.path(src));
+                        value = option(OptionKind.Output, FS.dir(src));
                     break;
-                    case OptionNames.Traverse:
-                        value = new OptionValue(FS.path(src));
+                    case OptionNames.Traverse:                        
+                       value = option(OptionKind.Traverse, FS.path(src));
                     break;
-
+                   case OptionNames.WithType:
+                        value = option(OptionKind.WithType, FS.dir(src));
+                    break;
+ 
                 }
                 return value != null;
             }
+
             void Parse(TextLine src)
             {
                 var content = text.trim(src.Content);
                 var i = text.index(content, "--");
                 if(i >=0)
                 {
-                    if(text.nonempty(OptionName) && OptionValues.Count != 0)
-                    {
-                        OptionLookup[OptionName] = OptionValues.ToSeq();
-                    }
-                    OptionValues.Clear();
-                    OptionName = text.right(content,i);
+                    OptionName = text.right(content,i + "--".Length - 1);
                 }
                 else
                 {
-                    if(Parse(content, out IOptionValue value))
-                        OptionValues.Add(value);
+                    if(Parse(content, out IOption option))
+                        Options.Add(option);
                 }
             }
 
@@ -244,7 +270,7 @@ namespace Z0
                     Parse(line);
                 }
                 
-                return new ResponseFile(Source,OptionLookup);
+                return new ResponseFile(Source, Options);
             }
         }
     }

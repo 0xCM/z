@@ -3,6 +3,7 @@
     <ProjectReference Include="$(Workflow)" />
     <ProjectReference Include="$(Diagnostics)" />
     <ProjectReference Include="$(ClrEcma)" />
+    <ProjectReference Include="$(WinMd)" />
     <ProjectReference Include="$(Tools)" />
   </ItemGroup>
 </Project>

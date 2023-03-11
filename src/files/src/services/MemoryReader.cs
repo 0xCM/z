@@ -30,6 +30,10 @@ namespace Z0
         public unsafe static MemoryReader create(byte* pSrc, ByteSize size)
             => new MemoryReader(pSrc, size);
 
+        [MethodImpl(Inline), Op]
+        public static MemoryReader create(MemorySeg src)
+            => new MemoryReader(src.Pointer(), src.Size);
+
         readonly byte* Source;
 
         MemoryReaderState<byte> State;
@@ -58,19 +62,45 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
+        public T* Pointer<T>()
+            where T : unmanaged
+                => (T*)seek(Source, State.Position);
+
+        [MethodImpl(Inline), Op]
+        public string ReadUtf8(uint maxlen)
+        {
+            var b = Read<byte>();
+            var length = 0;
+            while(b != 0 && length < maxlen)
+            {
+                length++;
+                b = Read<byte>();
+            }
+            return text.utf8(cover(Pointer<byte>(), length));
+        }
+
+        [MethodImpl(Inline), Op]
         public T Read<T>()
             where T : unmanaged
         {
-            var dst = default(T);
-            memory.read((T*)Source, State.Position, ref dst);
+            var pSrc = (T*)(Source + State.Position);
+            var value = *pSrc;
             Advance(size<T>());
-            return dst;
+            return value;
+        }
+
+        [MethodImpl(Inline), Op]
+        public ReadOnlySpan<byte> Read(uint requested)
+        {
+            var count = (uint)min(requested, State.Remaining);
+            Advance(count);
+            return cover(Pointer<byte>(), count);
         }
 
         [MethodImpl(Inline), Op]
         public int Read(int offset, int requested, Span<byte> dst)
         {
-            int count = min(requested, State.Remaining);
+            var count = min(requested, State.Remaining);
             memory.read(Source, offset, ref first(dst), count);
             Advance((uint)count);
             return count;

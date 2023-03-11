@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class EcmaModels
+    partial class EcmaTables
     {
-        [Table(EcmaTableKind.ExportedType), StructLayout(LayoutKind.Sequential, Pack =1)]
-        public struct TypeExport
+        [Table(TableIndex.ExportedType), StructLayout(LayoutKind.Sequential, Pack =1)]
+        public struct TypeExport : IEcmaRecord<TypeExport>
         {
             public const string TableId= "ecma.types.exports";
 

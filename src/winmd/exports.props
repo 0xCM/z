@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <WinMd>$(MsBuildThisFileDirectory)z0.winmd.csproj</WinMd>
+  </PropertyGroup>
+</Project>

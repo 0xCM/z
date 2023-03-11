@@ -44,5 +44,9 @@ namespace Z0
         public const string InxDb = nameof(InxDb);
 
         public const string EnvDb = nameof(EnvDb);
+
+        public const string WinKits = nameof(WinKits);
+
+        public const string DevPacks = nameof(DevPacks);
     }
 }

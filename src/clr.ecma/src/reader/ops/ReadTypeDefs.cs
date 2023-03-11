@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static sys;
-    using static EcmaModels;
+    using static EcmaTables;
 
     partial class EcmaReader
     {
@@ -17,47 +17,49 @@ namespace Z0
             for(var i=0; i<count; i++)
             {
                 ref readonly var handle = ref skip(src,i);
-                var def = ReadTypeDef(handle);
+                var def = MD.GetTypeDefinition(handle);
                 ref var dst = ref buffer[i];
                 dst.Token = handle;
                 dst.Name = String(def.Name);
                 dst.Attributes = def.Attributes;
+                if(def.IsNested)
+                {
+                    var declarer = MD.GetTypeDefinition(def.GetDeclaringType());
+                    dst.DeclaringType = String(declarer.Name);
+                    dst.Namespace = String(declarer.Namespace);                    
+                }
+                else
+                {
+                    dst.Namespace = String(def.Namespace);
+                }
+
                 var @base = def.BaseType;
-                if(!@base.IsNil)
+                if(!def.BaseType.IsNil)
                 {
                     switch((@base.Kind))
                     {
                         case HandleKind.TypeDefinition: 
                         {
-                            var pdef = ReadTypeDef((TypeDefinitionHandle)@base);
-                            dst.BaseName = String(pdef.Name);
-                            
+                            dst.BaseName = String(MD.GetTypeDefinition((TypeDefinitionHandle)def.BaseType).Name);
                         }                                                       
                         break;
                         case HandleKind.TypeReference:
                         {
-                            var tref = ReadTypeRef((TypeReferenceHandle)@base);
-                            dst.BaseName = String(tref.Name);
-                        }
-                        break;
-                        case HandleKind.TypeSpecification:
-                        {
-                            var tspec = ReadTypeSpec((TypeSpecificationHandle)@base);
-                            dst.BaseName = tspec.Signature.ToString();
+                            dst.BaseName = String(MD.GetTypeReference((TypeReferenceHandle)def.BaseType).Name);
                         }
                         break;
                     }
-                }                
+                }
+
+                var full = dst.Name;                        
+                if(dst.DeclaringType.IsNonEmpty)
+                    full = $"{dst.DeclaringType}.{full}";
+                if(dst.Namespace.IsNonEmpty)
+                    full = $"{dst.Namespace}.{full}";
+                dst.FullName = full;
+
             }
             return buffer;
         }
-
-        [MethodImpl(Inline), Op]
-        public TypeSpecification ReadTypeSpec(TypeSpecificationHandle src)
-            => MD.GetTypeSpecification(src);
-
-        [MethodImpl(Inline), Op]
-        public TypeDefinition ReadTypeDef(TypeDefinitionHandle src)
-            => MD.GetTypeDefinition(src);
     }
 }

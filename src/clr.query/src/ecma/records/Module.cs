@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class EcmaModels
+    partial class EcmaTables
     {
-        [Table(EcmaTableKind.Module)]
-        public record struct Module
+        [Table(TableIndex.Module)]
+        public record struct Module : IEcmaRecord<Module>
         {
             public ushort Generation;
 

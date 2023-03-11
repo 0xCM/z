@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class EcmaModels
+    partial class EcmaTables
     {
         [Record(TableId), StructLayout(LayoutKind.Sequential, Pack=1)]
         public struct MethodRelations

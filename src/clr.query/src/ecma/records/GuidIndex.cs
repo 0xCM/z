@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class EcmaModels
+    partial class EcmaTables
     {
         public readonly struct GuidIndex : IEcmaHeapKey<GuidIndex>
         {

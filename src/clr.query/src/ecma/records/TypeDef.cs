@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class EcmaModels
+    partial class EcmaTables
     {
-        [Record(TableId), StructLayout(LayoutKind.Sequential, Pack = 1)]
-        public struct TypeDef
+        [Table(TableIndex.TypeDef), StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct TypeDef : IEcmaRecord<TypeDef>
         {
             public const string TableId = "ecma.typedefs";
 

@@ -140,10 +140,6 @@ namespace Z0
         public static Index<ApiMember> jit(ApiCompleteType src)
             => members(complete(src.HostType, CommonExclusions).Select(m => new JittedMethod(src.HostUri, m, ClrJit.jit(m))));
 
-        // [Op]
-        // static ApiMember[] direct(IApiHost src)
-        //     => direct(src.HostType);
-
         [Op]
         static ApiMember[] direct(Type src)
         {

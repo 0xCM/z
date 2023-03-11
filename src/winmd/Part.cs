@@ -2,15 +2,10 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+[assembly: PartId("winmd")]
+namespace Z0.Parts
 {
-    [StructLayout(LayoutKind.Sequential,Pack =1)]
-    public struct EcmaStreamHeader
+    public sealed class WinMd : Part<WinMd>
     {
-        public Address32 Offset;
-        
-        public uint Size;
-        
-        public string Name;
     }
 }
