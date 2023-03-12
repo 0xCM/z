@@ -8,9 +8,9 @@ namespace Z0
 
     partial class EcmaReader
     {
-        [Op]
-        public ReadOnlySpan<EcmaRowKey> ReadIntefaceImplKeys(TypeDefinition src)
-            => src.GetInterfaceImplementations().Map(x => EcmaHandles.key(MD.GetInterfaceImplementation(x).Interface)).ToReadOnlySpan();
+        // [Op]
+        // public ReadOnlySpan<EcmaRowKey> ReadIntefaceImplKeys(TypeDefinition src)
+        //     => src.GetInterfaceImplementations().Map(x => EcmaHandles.key(MD.GetInterfaceImplementation(x).Interface)).ToReadOnlySpan();
 
         [MethodImpl(Inline), Op]
         public InterfaceImplementation ReadInterfaceImpl(InterfaceImplementationHandle src)

@@ -8,21 +8,6 @@ namespace Z0
 
     public class ClrSvc : WfSvc<ClrSvc>
     {
-        EcmaEmitter EcmaEmitter => Wf.EcmaEmitter();
-
-        public Task<ExecToken> EmitModuleRefs(FolderPath src)
-        {
-            ExecToken impl()
-            {
-                var running = Channel.Running();
-                var modules = Archives.modules(src);
-                
-
-                return Channel.Ran(running);
-            }
-
-            return start(impl);
-        }
     }
 
     class ClrCmd : WfAppCmd<ClrCmd>
@@ -31,12 +16,10 @@ namespace Z0
 
         ApiMd ApiMd => Wf.ApiMd();
 
-        ClrSvc ClrSvc => Wf.ClrSvc();
 
         IEnvDb DataTarget => AppSettings.EnvDb();
 
         DataAnalyzer Analyzer => Wf.Analyzer();
-
 
         [CmdOp("clr/types")]
         void ListTypes(CmdArgs args)

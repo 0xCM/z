@@ -8,7 +8,6 @@ namespace Z0
     {
         public static void emit(StackTrace src, IWfChannel channel)
         {
-            //var trace = new StackTrace(true);
             var frames = src.GetFrames().ToReadOnlySeq();
             for(var i=0; i<frames.Count; i++)
                 channel.Write(describe(frames[i]));

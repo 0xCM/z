@@ -215,9 +215,6 @@ namespace Z0
         public void EmitHeap(SymHeap src, IDbArchive dst)
             => HeapEmissions.emit(Channel, src, dst.Table<SymHeapRecord>());
 
-        // public void EmitHeap(SymHeap src)
-        //     => HeapEmissions.emit(Channel, src, Target.Table<SymHeapRecord>());
-
         public void EmitTypeLists(params Assembly[] src)
         {            
             emit(Channel, EnumTypes(src), Target.Path("api.types.enums", FileKind.List));
