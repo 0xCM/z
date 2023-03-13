@@ -90,7 +90,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         static string format<T>(JsonSeq<T> src)
             where T : IJsonValue, new()
-            => src.Content?.ToString() ?? EmptyString;
+                => src.Content?.ToString() ?? EmptyString;
 
         static IEnumerable<FieldInfo> SettingFields<S>()
             => typeof(S).InstanceFields();
@@ -106,7 +106,7 @@ namespace Z0
             where T : IJsonValue, new()
                 => new JsonArray<T>(src.Array());
 
-        public static IJsonEmitter emitter(ITextEmitter dst)
+        public static JsonEmitter emitter(ITextEmitter dst)
             => new JsonEmitter(dst);
 
         [Op, Closures(Closure)]

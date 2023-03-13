@@ -7,8 +7,6 @@ namespace Z0
     using Windows;
     using Microsoft.CodeAnalysis;
     using System.Linq;
-    using Lang;
-
 
     using static sys;
 
@@ -146,7 +144,7 @@ namespace Z0
         {
             var match = FS.file("dbghelp", FileKind.Dll);
             var path = WinSdk.DebuggerFiles(FileKind.Dll).Where(path => path.FileName == match).First();
-            var handle = SystemHandle.own(Kernel32.LoadLibrary(path.Format()));
+            using var handle = SystemHandle.own(Kernel32.LoadLibrary(path.Format()));
             using var dst = new DbgHelp(path,handle);
             var ops = dst.Operations;
             Channel.Row($"{dst.Handle.Address} {dst.Path}");

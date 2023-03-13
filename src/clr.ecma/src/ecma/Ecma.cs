@@ -17,7 +17,8 @@ namespace Z0
 
         public static EcmaReader reader(EcmaFile src)
             => EcmaReader.create(src);
-            
+
+                    
         public static IEnumerable<AssemblyRefInfo> refs(FilePath src)
         {
             using var ecma = file(src);

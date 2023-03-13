@@ -41,17 +41,17 @@ namespace Z0
 
         public readonly uint SymbolCount;
 
-        public readonly Index<Identifier> Names;
+        public readonly Seq<Identifier> Names;
 
-        public readonly Index<SymVal> Values;
+        public readonly Seq<SymVal> Values;
 
-        public readonly Index<SymExpr> Symbols;
+        public readonly Seq<SymExpr> Symbols;
 
-        public readonly Index<TextBlock> Descriptions;
+        public readonly Seq<TextBlock> Descriptions;
 
-        public readonly Index<uint> Positions;
+        public readonly Seq<uint> Positions;
 
-        public Index<SymInfo> Records()
+        public Seq<SymInfo> Records()
         {
             var buffer = alloc<SymInfo>(SymbolCount);
             for(var i=0; i <SymbolCount; i++)

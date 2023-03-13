@@ -35,6 +35,15 @@ namespace Z0
         public void EmitMetadumps(IWfChannel channel, IEnumerable<Assembly> src, IDbArchive dst)
             => iter(src, x => EmitMetadump(Channel, x, dst.Path(x.GetSimpleName(), FileKind.Txt)), PllExec);
 
+        public ExecToken EmitMetadump(MetadataReader reader, FilePath dst)
+        {
+            var token = ExecToken.Empty;
+            var flow = EmittingFile(dst);
+            using var target = dst.Writer();
+            MsilCodeModels.mdv(reader, target).Visualize();
+            return Emitter.EmittedFile(flow);
+        }
+
         public ExecToken EmitMetadump(FilePath src, FilePath dst)
         {
             var token = ExecToken.Empty;
@@ -42,12 +51,9 @@ namespace Z0
             {
                 if(EcmaReader.valid(src))
                 {
-                    var flow = EmittingFile(dst);
                     using var stream = File.OpenRead(src.Name);
                     using var pe = ImageMemory.pe(stream);
-                    using var target = dst.Writer();
-                    MsilCodeModels.mdv(pe.GetMetadataReader(), target).Visualize();
-                    token = Emitter.EmittedFile(flow);
+                    token = EmitMetadump(pe.GetMetadataReader(), dst);                    
                 }
             }
             catch(BadImageFormatException bfe)

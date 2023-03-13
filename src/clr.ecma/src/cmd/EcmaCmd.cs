@@ -183,9 +183,6 @@ namespace Z0
                 }, PllExec);
         }
 
-        static Outcome<FilePath> parse(string src)
-            => FS.path(src);
-
         [CmdOp("ecma/emit/dumps")]
         void EmitMetaDumps()
             => EcmaEmitter.EmitMetadumps(Channel, ApiAssemblies.Parts, AppDb.ApiTargets("ecma/dumps"));
@@ -193,15 +190,20 @@ namespace Z0
         [CmdOp("ecma/dump")]
         void EmitCliDump(CmdArgs args)
         {
-            foreach(var arg in args)
-            {
-                var value = arg.Value;
-                var src = FS.path(value);
-                if(src.Is(FileKind.List))
-                    EmitMetadumps(ListArchives.load(Channel, src, parse));
-                else
-                    EcmaEmitter.EmitMetadump(src, EcmaArchive(src));
-            }
+            var src = FS.dir(args[0]);
+            var assemblies = Archives.modules(src).Assemblies();
+            var index = FS.index(assemblies.Select(x => x.Path));
+            var dst = AppSettings.EnvDb().Scoped("libs/dotnet");
+            iter(index.Unique, entry => {
+                using var file = MappedAssembly.map(entry.Path);
+                var reader = file.EcmaReader();
+                var name = reader.AssemblyName();
+                var version = name.Version;
+                var hash = entry.FileHash.ContentHash;
+                var ext = entry.Path.Ext();
+                var target = dst.Path($"{name.SimpleName()}.{version}.{ext}.{(Hex32)(uint)file.FileSize}.{(Hex64)hash.Lo}", FileKind.Txt);
+                EcmaEmitter.EmitMetadump(reader.MetadataReader,target);
+            },true);
         }
 
         [CmdOp("coff/modules")]

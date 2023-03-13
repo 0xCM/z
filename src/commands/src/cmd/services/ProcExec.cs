@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+
     public class ProcExec
     {        
         public static ToolContext context(FolderPath? work = null, params EnvVar[] vars)
@@ -68,10 +69,10 @@ namespace Z0
             ExecToken Run()
             {
                 var c0Name=$"{Environment.ProcessId}.channels.0";
-                var h0 = $"# {args} -> ${status}";
+                var h0 = $"# {args} -> {status}";
 
                 var c1Name = $"{Environment.ProcessId}.channels.1";
-                var h1 = $"# {args} -> ${_error}";
+                var h1 = $"# {args} -> {_error}";
                 
                 using var c0 = status.Utf8Writer(true);
                 c0.WriteLine($"# {c0Name}");
@@ -101,17 +102,18 @@ namespace Z0
             return sys.start(Run);
 
         }
+
         public static Task<ExecToken> redirect(IWfChannel channel, CmdArgs args)
         {
             ExecToken Run()
             {
                 var c0Name=$"{Environment.ProcessId}.channels.0";
                 var c0Path = AppDb.Service.AppData().Path(c0Name, FileKind.Log);
-                var h0 = $"# {args} -> ${c0Path}";
+                var h0 = $"# {args} -> {c0Path}";
 
                 var c1Name = $"{Environment.ProcessId}.channels.1";
                 var c1Path = AppDb.Service.AppData().Path(c1Name, FileKind.Log);
-                var h1 = $"# {args} -> ${c1Path}";
+                var h1 = $"# {args} -> {c1Path}";
                 
                 using var c0 = c0Path.Utf8Writer(true);
                 c0.WriteLine($"# {c0Name}");

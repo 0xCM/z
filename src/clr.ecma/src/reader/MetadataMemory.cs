@@ -1,0 +1,116 @@
+//-----------------------------------------------------------------------------
+// Copyright   :  (c) Chris Moore, 2020
+// License     :  MIT
+//-----------------------------------------------------------------------------
+namespace Z0
+{
+    using static sys;
+
+    public unsafe struct MetadataMemory
+    {
+        readonly MemorySeg Source;
+        
+        readonly uint LastPosition;
+
+        uint Position;
+
+        [MethodImpl(Inline)]
+        public MetadataMemory(MemorySeg src, uint offset = 0)
+        {
+            Source = src;
+            Position = offset;
+            LastPosition = src.Size;
+        }
+
+        [MethodImpl(Inline)]
+        uint Remaining()
+            => Position <= LastPosition ? LastPosition - Position : 0;
+
+        [MethodImpl(Inline)]
+        void Advance(ByteSize size)
+        {
+            Position += size;
+        }
+
+        [MethodImpl(Inline)]
+        ReadOnlySpan<byte> Bytes()
+            => Source.View;
+
+        [MethodImpl(Inline)]
+        ReadOnlySpan<byte> Bytes(uint offset)
+            => slice(Source.View, offset);
+
+
+        [MethodImpl(Inline)]
+        T* Pointer<T>()
+            where T : unmanaged
+                => (Source.BaseAddress + Position).Pointer<T>();
+
+        [MethodImpl(Inline)]
+        T Read<T>()
+            where T : unmanaged
+        {
+            var value = *Pointer<T>();
+            Advance(size<T>());
+            return value;
+        }
+
+        ReadOnlySpan<byte> Read(uint requested)
+        {
+            var length = Position + requested < LastPosition ? requested : Remaining();
+            var data = slice(Bytes(),Position, length);
+            Advance(length);
+            return data;
+        }
+
+        [MethodImpl(Inline)]
+        byte Read()
+            => Read<byte>();
+
+        int Find(byte value)
+        {
+            var src = Bytes(Position);
+            var pos = -1;
+            for(var i=0; i<src.Length; i++)
+            {
+                if(skip(src,i) == value)
+                {
+                    pos = i;
+                    break;
+                }
+            }
+            return pos;
+        }
+        [MethodImpl(Inline)]
+        public MetadataRoot ReadMetadataRoot()
+        {
+            var dst = new MetadataRoot();
+            dst.Signature = Require.equal(Read<uint>(), EcmaConstants.COR20MetadataSignature);
+            dst.MajorVersion = Read<ushort>();
+            dst.MinorVersion = Read<ushort>();
+            dst.Reserved = Read<uint>();
+            dst.IdentitySize = Read<uint>();
+            var version = Read(dst.IdentitySize);
+            dst.MetadataVersion = text.utf8(version);
+            Require.equal(Read<ushort>(),0);
+            dst.StreamCount = Read<ushort>();
+            var streams = alloc<EcmaStreamHeader>(dst.StreamCount);
+            for(var i=0; i<dst.StreamCount; i++)
+            {
+                ref var stream = ref seek(streams,i);
+                stream.Offset = Read<uint>();
+                stream.Size = Read<uint>();
+                var pos = Find(0);
+                if(pos > 0)
+                {
+                    var length = (uint)(pos + (pos % 4));
+                    stream.Name = new asci32(Read(length));
+
+                }
+            
+            }
+            dst.StreamHeaders = streams;
+            return dst;
+        }
+    }
+}

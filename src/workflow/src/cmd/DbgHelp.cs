@@ -10,6 +10,10 @@ namespace Z0
 
     public unsafe partial class DbgHelpOps
     {
+        public DbgHelpOps()
+        {
+        }
+
         public sealed class SymInitialize : NativeOp<SymInitialize>
         {
             readonly delegate* unmanaged<ulong*, sbyte*, bool, bool> Op;

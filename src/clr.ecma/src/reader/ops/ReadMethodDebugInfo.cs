@@ -12,6 +12,7 @@ namespace Z0
 
         public BinaryCode SequencePoints;
     }
+
     partial class EcmaReader
     {
         [MethodImpl(Inline), Op]

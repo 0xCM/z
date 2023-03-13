@@ -36,7 +36,7 @@ namespace Z0
             get=> Name.IsNonEmpty;
         }
 
-        public void Render(IJsonEmitter dst)
+        public void Render(JsonEmitter dst)
         {
             dst.Prop(Name,Value);
         }

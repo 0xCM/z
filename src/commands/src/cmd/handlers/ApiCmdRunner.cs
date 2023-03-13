@@ -61,7 +61,8 @@ namespace Z0
 
         void Usage(ITextEmitter dst)
         {
-            dst.AppendLine("Usage: zfx <command> [args..]");
+            var host = sys.controller().GetSimpleName();
+            dst.AppendLine($"Usage: {host} <command> [args..]");
             dst.IndentLine(4, "<command> =");
             iter(Handlers.Routes, fx => dst.IndentLine(4,$"| {fx}"));
         }

@@ -6,13 +6,13 @@ namespace Z0
 {
     using System.Text.Json;
 
-    public class JsonEmitter : IJsonEmitter
+    public class JsonEmitter
     {
         readonly JsonOptions Options;
 
         readonly ITextEmitter Buffer;
 
-        public static void render<T>(JsonArray<T> src, IJsonEmitter dst)
+        public static void render<T>(JsonArray<T> src, JsonEmitter dst)
             where T : IJsonValue, new()
         {
             dst.OpenArray();
@@ -55,19 +55,13 @@ namespace Z0
             Buffer.Append(text.concat(text.quote(name), Chars.Colon, text.quote(value)));
         }
 
-        public void Object<T>(T src)
-        {
-            Buffer.AppendLine(JsonSerializer.Serialize(src, Options.Serializer));
-        }
         
         public void Serialize<T>(T src)
-            where T : IJsonValue
         {
             Buffer.Append(JsonSerializer.Serialize(src, Options.Serializer));        
         }
 
         public void Serialize<T>(IEnumerable<T> src)
-            where T : IJsonValue
         {
             Buffer.Append(JsonSerializer.Serialize(src.Array(), Options.Serializer));
         }

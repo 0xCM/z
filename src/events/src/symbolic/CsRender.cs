@@ -66,7 +66,7 @@ namespace Z0
         public static void EnumReplicant(uint offset, Type type, ITextEmitter dst)
         {
             dst.AppendLine();
-            CsRender.@enum(offset, Symbols.set(type), dst);
+            @enum(offset, Symbols.set(type), dst);
         }
 
         public static void @enum<T>(uint offset, Identifier name, ReadOnlySpan<Literal<T>> literals, ITextEmitter dst)

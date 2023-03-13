@@ -161,6 +161,10 @@ namespace Z0
             => (long)src.Value;
 
         [MethodImpl(Inline)]
+        public static explicit operator H(Hash64 src)
+            => src.Value;
+
+        [MethodImpl(Inline)]
         public static explicit operator H(MemoryAddress src)
             => new H((uint)src.Location);
     }

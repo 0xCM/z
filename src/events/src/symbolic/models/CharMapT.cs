@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static sys;
-
+    
     public readonly ref struct CharMap<T>
         where T : unmanaged
     {
