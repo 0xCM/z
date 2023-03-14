@@ -40,9 +40,9 @@ namespace Z0
         static CSharpCompilation compilation(ToolShimSpec config)
         {
             Require.invariant(config.TargetPath.Exists, () => $"The file {config.TargetPath}, it must exist");
-            var refs = CsBuilders.perefs(typeof(object), typeof(Enumerable), typeof(ProcessStartInfo));
+            var refs = perefs(typeof(object), typeof(Enumerable), typeof(ProcessStartInfo));
             var code = new ShimCode(config.ShimPath);
-            return CsBuilders.compilation(config.ShimName.Format(), refs, CsBuilders.parse(code.Generate()));
+            return compilation(config.ShimName.Format(), refs, parse(code.Generate()));
         }
     }
 }

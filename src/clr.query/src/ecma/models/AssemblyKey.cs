@@ -25,6 +25,12 @@ namespace Z0
             Mvid = mvid;
         }
 
+        public @string Identifier
+        {
+            [MethodImpl(Inline)]
+            get => $"{Name}.{Version}";
+        }
+
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
@@ -34,6 +40,12 @@ namespace Z0
         public override int GetHashCode()
             => Hash;
 
+        public string Format()
+            => Identifier;
+
+        public override string ToString()
+            => Format();
+            
         [MethodImpl(Inline)]
         public int CompareTo(AssemblyKey src)
         {

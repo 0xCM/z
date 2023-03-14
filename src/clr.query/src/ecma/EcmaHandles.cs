@@ -82,24 +82,24 @@ namespace Z0
             => uint32(src) & 0xFFFFFF;
 
         [MethodImpl(Inline), Op]
-        public static EcmaTableKind table(Type src)
-            => (EcmaTableKind)(u32(src.MetadataToken) >> 24);
+        public static TableIndex table(Type src)
+            => (TableIndex)(u32(src.MetadataToken) >> 24);
 
         [MethodImpl(Inline), Op]
-        public static EcmaTableKind table(MethodInfo src)
-            => (EcmaTableKind)(u32(src.MetadataToken) >> 24);
+        public static TableIndex table(MethodInfo src)
+            => (TableIndex)(u32(src.MetadataToken) >> 24);
 
         [MethodImpl(Inline), Op]
-        public static EcmaTableKind table(EventInfo src)
-            => (EcmaTableKind)(u32(src.MetadataToken) >> 24);
+        public static TableIndex table(EventInfo src)
+            => (TableIndex)(u32(src.MetadataToken) >> 24);
 
         [MethodImpl(Inline), Op]
-        public static EcmaTableKind table(FieldInfo src)
-            => (EcmaTableKind)(u32(src.MetadataToken) >> 24);
+        public static TableIndex table(FieldInfo src)
+            => (TableIndex)(u32(src.MetadataToken) >> 24);
 
         [MethodImpl(Inline), Op]
-        public static EcmaTableKind table(PropertyInfo src)
-             => (EcmaTableKind)(u32(src.MetadataToken) >> 24);
+        public static TableIndex table(PropertyInfo src)
+             => (TableIndex)(u32(src.MetadataToken) >> 24);
 
         [MethodImpl(Inline), Op]
         public static uint row(Type src)

@@ -15,7 +15,8 @@ namespace Z0
                 wf.ArchiveCmd(),
                 wf.WinMdCmd(),
                 wf.ClrCmd(),
-                wf.EcmaCmd()
+                wf.EcmaCmd(),
+                wf.CsGenCmd(),
             };
 
         static int main(string[] args)

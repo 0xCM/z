@@ -28,6 +28,9 @@ namespace Z0
 
             public CsLang CsLang(IWfRuntime wf)
                 => Service<CsLang>(wf);
+
+            public IApiService CsGenCmd(IWfRuntime wf)
+                => Service<CsGenCmd>(wf);
         }
 
 
@@ -36,5 +39,8 @@ namespace Z0
 
         public static CsLang CsLang(this IWfRuntime wf)
             => Services.CsLang(wf);
+
+        public static IApiService CsGenCmd(this IWfRuntime wf)
+            => Services.CsGenCmd(wf);
     }
 }

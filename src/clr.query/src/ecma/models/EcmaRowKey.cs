@@ -24,10 +24,10 @@ namespace Z0
             Value = ((uint)table << 24) | (index & 0xFFFFFF);
         }
 
-        public EcmaTableKind Table
+        public TableIndex Table
         {
             [MethodImpl(Inline)]
-            get => (EcmaTableKind)(Value >> 24);
+            get => (TableIndex)(Value >> 24);
         }
 
         public bool IsEmpty

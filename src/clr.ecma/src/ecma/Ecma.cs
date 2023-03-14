@@ -12,6 +12,21 @@ namespace Z0
     [ApiHost]
     public class Ecma : WfSvc<Ecma>
     {
+        
+        public static AssemblyIndex index()
+            => new();
+
+        public static AssemblyIndex index(IEnumerable<AssemblyFile> src)
+        {
+            var index = new AssemblyIndex();
+            index.Include(src);
+            index = index.Seal();
+            return index;
+        }
+
+        public static AssemblyIndex index(FolderPath root)
+            => index(Archives.modules(root).AssemblyFiles());
+
         public static EcmaFile file(FilePath src)
             => EcmaFile.open(src);
 

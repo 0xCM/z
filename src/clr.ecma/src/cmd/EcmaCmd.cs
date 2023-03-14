@@ -148,13 +148,31 @@ namespace Z0
             });
         }
 
-        [CmdOp("ecma/emit/mdheader")]
-        void EmitMdHeader(CmdArgs args)
+        [CmdOp("ecma/emit/streams")]
+        void EmitEcmaStreams(CmdArgs args)
         {
             var source = FS.dir(args[0]).DbArchive();
             var assemblies = Archives.modules(source.Root).AssemblyFiles();
+            var dst = bag<EcmaStreamHeader>();
             iter(assemblies, a => {
                 using var file = EcmaFile.open(a.Path);
+                var reader = file.EcmaReader();
+                var memory = reader.Memory();
+                var root = memory.ReadMetadataRoot();
+                var tables = EcmaStreams.tables(root);
+                var blobs = EcmaStreams.blobs(root);
+                
+            });
+
+        }
+        [CmdOp("ecma/emit/mdroots")]
+        void EmitMdHeader(CmdArgs args)
+        {
+            var index = Ecma.index(FS.dir(args[0]));
+
+            var source = FS.dir(args[0]).DbArchive();
+            iter(index.Entries(), entry => {
+                using var file = EcmaFile.open(entry.Path);
                 var reader = file.EcmaReader();
                 var memory = reader.Memory();
                 var header = memory.ReadMetadataRoot();
@@ -232,25 +250,17 @@ namespace Z0
                         if(a.GetType() == typeof(BinaryFormatterAttribute))
                             Channel.Row(t);
                     });
-
                 }
                 
             });
-
-            //iter(records, r => Channel.Row(r));
         }
-
 
         [CmdOp("ecma/index")]
         void IndexAssemblies(CmdArgs args)
         {
             const string RenderPattern ="{0,-64} | {1,-16} | {2,-16} | {3}";
             var locations = list<string>();
-
-            var src = Archives.modules(FS.dir(args[0])).AssemblyFiles();
-            var index = new AssemblyIndex();
-            index.Include(src);
-            index = index.Seal();
+            var index = Ecma.index(FS.dir(args[0]));
             iter(index.Entries(), entry => {
                 locations.Add(entry.Path.Format(PathSeparator.FS));
             });
@@ -430,18 +440,112 @@ namespace Z0
             Channel.TableEmit(dst.Array(), AppSettings.EnvDb().Scoped("clr").Path("ecma.heaps", FileKind.Csv));
         }
 
+
+        void ExtractStructs(Assembly src)
+        {
+            var types = src.Structs().NonGeneric();
+            var dst = CsGen.emitter();
+            var identifier = src.GetSimpleName();
+            dst.Namespace(identifier);
+            var margin = 0u;
+            iter(types, t => {
+                var fields = t.DeclaredPublicInstanceFields().Where(f => !f.IsCompilerGenerated());
+                if(fields.Length != 0)
+                {
+                    dst.OpenStruct(margin, t.Name, false);
+                    margin+=4;
+
+                    iter(fields, f => {
+
+                    var typename = CsData.keyword(f.FieldType);
+                    if(empty(typename))
+                        typename = f.FieldType.Name;                
+                        dst.PublicField(margin, typename, f.Name);
+                    });
+                    margin-=4;
+                    dst.CloseStruct(margin);
+                }
+            });
+
+            var output = AppSettings.EnvDb().Scoped("clr").Path($"{identifier}.structs", FileKind.Cs);
+            Channel.FileEmit(dst.Emit(), output);
+
+        }
+
         [CmdOp("srm/extract")]
         void SrmExtract(CmdArgs args)
         {
             var src = typeof(System.Reflection.Metadata.MetadataReader).Assembly;
-            var symbols = map(src.Enums(), e => Symbols.set(e));
-            var dst = text.emitter();
-            
+            ExtractStructs(src);
+            ExtractEnums(src);
+        }
+        
+        void ExtractEnums(Assembly src)
+        {
+            var symbols = map(src.Enums().NonGeneric(), e => Symbols.set(e));
+            var dst = CsGen.emitter();
+            var margin = 0u;
+            var identifier = src.GetSimpleName();
+            dst.FileHeader();
+            dst.UsingNamespace(nameof(System));
+            dst.AppendLine();
+            dst.Namespace(margin, identifier);
+            dst.AppendLine();
             iter(symbols, s => {
-                CsRender.@enum(0, s,dst);
-                Channel.Row(dst.Emit());
+                dst.Symbols(margin, s, false);
+                dst.AppendLine();
             });
+            var output = AppSettings.EnvDb().Scoped("clr").Path($"{identifier}.enums", FileKind.Cs);
+            Channel.FileEmit(dst.Emit(), output);
+        }
 
+        [CmdOp("enums/extract")]
+        void ExtractEnums(CmdArgs args)
+        {
+            ExtractEnums(typeof(Microsoft.CodeAnalysis.AssemblyIdentity).Assembly);
+            ExtractEnums(typeof(Microsoft.CodeAnalysis.CSharp.CSharpCompilation).Assembly);
+            ExtractEnums(typeof(System.Reflection.Metadata.MetadataReader).Assembly);            
+        }
+
+        [CmdOp("ecma/compile")]
+        void Compilations(CmdArgs args)
+        {
+            var src = Archives.modules(FS.dir(args[0]), false).AssemblyFiles();
+            var identifer = "test.a";
+            var refs = list<PortableExecutableReference>();
+            var dst = CsGen.emitter();
+            var namespaces = hashset<string>();
+            refs.Add(MetadataReference.CreateFromFile(typeof(object).Assembly.Location));
+            iter(src, file => {
+                refs.Add(MetadataReference.CreateFromFile(file.Path.Format()));
+                using var ecma = Ecma.file(file.Path);                
+                var reader = ecma.EcmaReader();
+                namespaces.AddRange(reader.ReadNamespaceNames().View);
+             });
+
+            iter(namespaces, ns => dst.UsingNamespace(0,ns));                                                    
+
+            dst.AppendLine(@"
+                class App
+                {
+                    static void Main(string[] args)
+                    {
+                        
+                    }
+                }
+            ");
+
+
+            var code = dst.Emit().Join(Chars.NL);
+            Channel.Row(code);
+            var syntax = CSharpSyntaxTree.ParseText(code);
+            var compOptions = new CSharpCompilationOptions(OutputKind.ConsoleApplication, allowUnsafe:true, metadataImportOptions:MetadataImportOptions.All);                    
+            var compilation = CSharpCompilation.Create(identifer, syntaxTrees: new []{syntax}, references: refs, options:compOptions);            
+            var output = AppSettings.EnvDb().Scoped("clr").Path(identifer, FileKind.Exe).Delete();
+            var emitOptions = new EmitOptions(false, DebugInformationFormat.Embedded, includePrivateMembers:true);
+            using var stream = output.Stream();            
+            var result = compilation.Emit(stream,options:emitOptions);
+           
         }
     }
 }

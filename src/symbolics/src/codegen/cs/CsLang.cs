@@ -52,7 +52,7 @@ namespace Z0
 
         static Index<string> HeaderCells = new string[]{
             "//-----------------------------------------------------------------------------",
-            "// Copyright   :  (c) Chris Moore, 2022",
+            "// Copyright   :  (c) Chris Moore, 2023",
             "// License     :  MIT",
             "// Generated   : {0}",
             "//-----------------------------------------------------------------------------",

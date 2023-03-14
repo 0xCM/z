@@ -66,6 +66,12 @@ namespace Z0
         public ICollection<Entry> Entries() 
             => Lookup.Values;
 
+        public ICollection<AssemblyKey> Keys()
+            => Keysets.Keys;
+
+        public IEnumerable<Entry> Entries(AssemblyKey key)
+            => Keysets[key];
+
         public record struct Entry : IComparable<Entry>, ISequential<Entry>
         {
             public uint Seq;
@@ -91,6 +97,30 @@ namespace Z0
                 get => Key.Hash | Path.Hash;
             }
             
+            public @string Name
+            {
+                [MethodImpl(Inline)]
+                get => Key.Name;
+            }
+
+            public AssemblyVersion Version
+            {
+                [MethodImpl(Inline)]
+                get => Key.Version;
+            }
+
+            public Guid Mvid
+            {
+                [MethodImpl(Inline)]
+                get => Key.Mvid;
+            }
+
+            public @string Identifier
+            {
+                [MethodImpl(Inline)]
+                get => Key.Identifier;
+            }
+
             uint ISequential.Seq { get => Seq; set => Seq = value; }
 
             public override int GetHashCode()
@@ -107,6 +137,16 @@ namespace Z0
                 }
                 return result;
             }
+        }
+    }
+
+    partial class XTend
+    {
+        public static AssemblyIndex CreateAssemblyIndex(this IEnumerable<AssemblyFile> src)
+        {
+            var dst = new AssemblyIndex();
+            dst.Include(src);
+            return dst.Seal();
         }
     }
 }

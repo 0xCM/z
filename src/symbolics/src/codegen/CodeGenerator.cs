@@ -13,13 +13,20 @@ namespace Z0
     {
         const string HeaderLine1 = "//-----------------------------------------------------------------------------";
 
-        const string HeaderLine2 = "// Copyright   :  (c) Chris Moore, 2021";
+        const string HeaderLine2 = "// Copyright   :  (c) Chris Moore, 2023";
 
         const string HeaderLine3 = "// License     :  MIT";
 
-        const string HeaderLine4 = "// Generated   : {0:yyyy-MM-dd H:mm:ss zzz}";
+        const string HeaderLine4 = "//-----------------------------------------------------------------------------";
 
-        const string HeaderLine5 = "//-----------------------------------------------------------------------------";
+        public static string FileHeader
+            => text.join(
+                Eol,
+                HeaderLine1,
+                HeaderLine2,
+                HeaderLine3,
+                HeaderLine4);
+
 
         public const string Level0 = "";
 
@@ -119,15 +126,6 @@ namespace Z0
 
         protected virtual string[] StaticUsings
             => DefaultTypes;
-
-        public static string FileHeader
-            => text.join(
-                Eol,
-                HeaderLine1,
-                HeaderLine2,
-                HeaderLine3,
-                string.Format(HeaderLine4, now()),
-                HeaderLine5);
 
         public static void EmitFileHeader(TextWriter dst)
         {

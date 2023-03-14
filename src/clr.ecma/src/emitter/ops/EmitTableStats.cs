@@ -8,8 +8,7 @@ namespace Z0
     using static EcmaTables;
 
     partial class EcmaEmitter
-    {
-        
+    {        
         public void EmitTableStats(ReadOnlySpan<Assembly> src, IDbArchive dst)
         {
             var buffer = bag<EcmaRowStats>();

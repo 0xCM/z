@@ -7,10 +7,12 @@ namespace Z0
     [StructLayout(LayoutKind.Sequential)]
     public record struct EcmaStreamHeader
     {
-        public uint Offset;
+        public Hex32 Offset;
 
         public uint Size;
 
         public string Name;
+
+        public EcmaStreamKind StreamKind;
     }
 }

@@ -29,6 +29,7 @@ namespace Z0
                 wf.EnvCmd(),
                 wf.AsmCoreCmd(),
                 wf.AsmCmdSvc(),
+                wf.CsGenCmd(),
                 //wf.AsmCheckCmd(),
                 wf.CaptureCmd(),
                 wf.AsmDbCmd(),

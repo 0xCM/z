@@ -4,11 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Reflection;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
     using static ReflectionFlags;
 
     partial class ClrQuery
@@ -19,6 +14,6 @@ namespace Z0
         /// <param name="src">The source type</param>
         [MethodImpl(Inline), Op]
         public static FieldInfo[] Fields(this Type src)
-            => src.GetFields(BF_All);
+            => src.GetFields(BF_All);        
     }
 }

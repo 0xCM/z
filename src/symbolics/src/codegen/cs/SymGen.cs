@@ -11,9 +11,6 @@ namespace Z0
 
     public class SymGen : Channeled<SymGen>
     {
-         public static CsEmitter emitter()
-            => new();
-
         public void EmitSymSpan<E>(FilePath dst)
             where E : unmanaged, Enum
         {

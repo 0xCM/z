@@ -7,6 +7,8 @@ namespace Z0
     [StructLayout(LayoutKind.Sequential)]
     public record struct MetadataRoot
     {
+        public MemoryAddress BaseAddress;
+
         public Hex32 Signature;
 
         public ushort MajorVersion;
@@ -21,6 +23,19 @@ namespace Z0
 
         public ushort StreamCount;
 
+        public EcmaStreamHeader TableStreamHeader;
+
+        public EcmaStreamHeader StringStreamHeader;
+
+        public EcmaStreamHeader UserStringStreamHeader;
+
+        public EcmaStreamHeader BlobStreamHeader;
+
+        public EcmaStreamHeader GuidStreamHeader;
+
         public ReadOnlySeq<EcmaStreamHeader> StreamHeaders;
+
+        public Hex32 TableOffset;
     }
+    
 }
