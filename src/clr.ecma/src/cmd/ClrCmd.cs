@@ -25,7 +25,7 @@ namespace Z0
         void ListTypes(CmdArgs args)
         {
             var dir = FS.dir(args[0]);
-            var src = Archives.modules(dir).Assemblies();
+            var src = Archives.modules(dir).AssemblyFiles();
             ApiMd.Emitter(Archives.archive(DataTarget.Scoped("clr"))).EmitTypeLists(src);
         }
 
@@ -42,7 +42,7 @@ namespace Z0
         void DebugMethods(CmdArgs args)
         {
             var src = FS.dir(args[0]).DbArchive().Modules();
-            iter(src.Assemblies(), a => {                
+            iter(src.AssemblyFiles(), a => {                
                 using var file = Ecma.file(a.Path);                
             });
         }

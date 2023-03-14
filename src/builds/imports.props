@@ -1,13 +1,9 @@
 <Project>
   <ItemGroup>
     <ProjectReference Include="$(ZLib)" />
-    <ProjectReference Include="$(Process)" />
-    <ProjectReference Include="$(Db)" />
-    <ProjectReference Include="$(ZXml)" />
-    <ProjectReference Include="$(Assets)" />
   </ItemGroup>
 
-  <Import Project="$(SlnProps)\msbuild.props" />
-  <Import Project="$(SlnProps)\microsoft.codeanalysis.props" />
+  <!-- <Import Project="$(SlnProps)\msbuild.props" />
+  <Import Project="$(SlnProps)\microsoft.codeanalysis.props" /> -->
 
 </Project>

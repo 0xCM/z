@@ -115,7 +115,7 @@ namespace Z0
         void EcmaEmitStats(CmdArgs args)
         {
             var src = FS.dir(args[0]);
-            var modules = Archives.modules(src).Assemblies();
+            var modules = Archives.modules(src).AssemblyFiles();
             var stats = EcmaReader.stats(modules.Select(x => x.Path));
             var folder = nested(DataTarget.Scoped("clr").Root, src);
             var path = folder.DbArchive().Table<EcmaRowStats>();
@@ -125,7 +125,7 @@ namespace Z0
         [CmdOp("ecma/emit/typedefs")]
         void EmitTypeDefs(CmdArgs args)
         {
-            var src = Archives.modules(FS.dir(args[0])).Assemblies();
+            var src = Archives.modules(FS.dir(args[0])).AssemblyFiles();
             iter(src, path => {                
                 using var file = Ecma.file(path.Path);
                 var reader = Ecma.reader(file);
@@ -152,7 +152,7 @@ namespace Z0
         void EmitMdHeader(CmdArgs args)
         {
             var source = FS.dir(args[0]).DbArchive();
-            var assemblies = Archives.modules(source.Root).Assemblies();
+            var assemblies = Archives.modules(source.Root).AssemblyFiles();
             iter(assemblies, a => {
                 using var file = EcmaFile.open(a.Path);
                 var reader = file.EcmaReader();
@@ -191,7 +191,7 @@ namespace Z0
         void EmitCliDump(CmdArgs args)
         {
             var src = FS.dir(args[0]);
-            var assemblies = Archives.modules(src).Assemblies();
+            var assemblies = Archives.modules(src).AssemblyFiles();
             var index = FS.index(assemblies.Select(x => x.Path));
             var dst = AppSettings.EnvDb().Scoped("libs/dotnet");
             iter(index.Unique, entry => {
@@ -204,6 +204,78 @@ namespace Z0
                 var target = dst.Path($"{name.SimpleName()}.{version}.{ext}.{(Hex32)(uint)file.FileSize}.{(Hex64)hash.Lo}", FileKind.Txt);
                 EcmaEmitter.EmitMetadump(reader.MetadataReader,target);
             },true);
+        }
+
+        [CmdOp("ecma/modules")]
+        void EcmaCheck(CmdArgs args)
+        {
+            var paths = Archives.modules(FS.dir(args[0])).AssemblyPaths();
+            var dst = AppSettings.EnvDb().Scoped("assemblies/records");
+            iter(paths, path => {
+                using var file = Ecma.file(path);
+                var reader = file.EcmaReader();
+                var name = reader.AssemblyName();
+                var row = reader.ReadModuleRow().Context(reader);
+                Channel.Row(string.Format("{0,-64} | {1,-16} | {2}", name.SimpleName(), name.Version, row.Mvid));                
+            }, true);
+        }
+
+        [CmdOp("formatters/list")]
+        void CheckBinaryFormatters()
+        {
+            var types = Assembly.GetExecutingAssembly().Types();
+            iter(types, t => {
+                if(t.Name == "StringFormatter")
+                {
+                    var attribs = t.GetCustomAttributes();
+                    iter(attribs, a => {
+                        if(a.GetType() == typeof(BinaryFormatterAttribute))
+                            Channel.Row(t);
+                    });
+
+                }
+                
+            });
+
+            //iter(records, r => Channel.Row(r));
+        }
+
+
+        [CmdOp("ecma/index")]
+        void IndexAssemblies(CmdArgs args)
+        {
+            const string RenderPattern ="{0,-64} | {1,-16} | {2,-16} | {3}";
+            var locations = list<string>();
+
+            var src = Archives.modules(FS.dir(args[0])).AssemblyFiles();
+            var index = new AssemblyIndex();
+            index.Include(src);
+            index = index.Seal();
+            iter(index.Entries(), entry => {
+                locations.Add(entry.Path.Format(PathSeparator.FS));
+            });
+            iter(index.Distinct(), entry => {
+                Channel.Row(string.Format(RenderPattern, entry.Key.Name, entry.FileSize, entry.Key.Version, entry.Key.Mvid));
+            });
+
+            iter(index.Duplicates(), entry => {
+                Channel.Row(string.Format(RenderPattern, entry.Key.Name, entry.FileSize, entry.Key.Version, entry.Key.Mvid), FlairKind.StatusData);
+            });
+
+            var buffer = sys.span<byte>(2024);
+            foreach(var input in locations)
+            {
+                try
+                {
+                    buffer.Clear();
+                    BinaryFormatters.verify(input,buffer);
+                    Channel.Status($"Verified {input}");
+                }
+                catch(Exception e)
+                {
+                    Channel.Error(e.Message);
+                }
+            }
         }
 
         [CmdOp("coff/modules")]
@@ -282,12 +354,28 @@ namespace Z0
         void EmitModuleRefs(CmdArgs args)
         {
             var dir = FS.dir(args[0]);                        
-            var src = Archives.modules(dir).Assemblies();
-            var dst = bag<AssemblyRefInfo>();
-            iter(src, asmfile => iter(Ecma.refs(asmfile.Path), c => dst.Add(c)), true);
-            var sorted = dst.Array().Sort();
-            var folder = nested(DataTarget.Scoped("clr").Root, dir);
-            Channel.TableEmit(sorted, folder.DbArchive().Table<AssemblyRef>());  
+            var src = Archives.modules(dir).AssemblyFiles();
+            var buffer = bag<EcmaDependencySet>();
+            iter(src, file => {
+                using var ecma = Ecma.file(file.Path);
+                var reader = ecma.EcmaReader();
+                buffer.Add(reader.ReadDependencySet());
+            });
+
+            iter(buffer, set => {
+                iter(set.NativeDependencies, native => {
+                    Channel.Row($"{native.Source}.{native.SourceVersion} -> {native.TargetName}");
+                });
+            });
+
+            // iter(src, file => {
+            //     using var ecma = Ecma.file(file.Path);
+            //     var reader = ecma.EcmaReader();
+            //     iter(reader.ReadManagedDeps(), dep => dst.Add(dep));
+            // });
+            // var sorted = dst.Array();
+            // var folder = nested(DataTarget.Scoped("clr").Root, dir);
+            // Channel.TableEmit(sorted, folder.DbArchive().Table<ManagedDependency>());  
         }   
 
         [Op]
@@ -321,7 +409,7 @@ namespace Z0
         [CmdOp("ecma/heaps")]
         void EmitEcmaHeaps(CmdArgs args)
         {
-            var src = Archives.modules(FS.dir(args[0])).Assemblies();
+            var src = Archives.modules(FS.dir(args[0])).AssemblyFiles();
             var dst = bag<EcmaHeapInfo>();
             var db = AppSettings.EnvDb().Scoped("clr");
             iter(src, a => {
@@ -340,6 +428,20 @@ namespace Z0
                 
             });
             Channel.TableEmit(dst.Array(), AppSettings.EnvDb().Scoped("clr").Path("ecma.heaps", FileKind.Csv));
+        }
+
+        [CmdOp("srm/extract")]
+        void SrmExtract(CmdArgs args)
+        {
+            var src = typeof(System.Reflection.Metadata.MetadataReader).Assembly;
+            var symbols = map(src.Enums(), e => Symbols.set(e));
+            var dst = text.emitter();
+            
+            iter(symbols, s => {
+                CsRender.@enum(0, s,dst);
+                Channel.Row(dst.Emit());
+            });
+
         }
     }
 }

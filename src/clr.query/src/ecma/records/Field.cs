@@ -24,5 +24,33 @@ namespace Z0
             [Render(1)]
             public FieldAttributes Attributes;
         }
+
+        public readonly struct FieldContext : IEcmaContext<FieldContext,Field>
+        {
+            public readonly Field Record;
+            
+            public IEcmaReader Reader {get;}
+
+            public FieldContext(IEcmaReader reader, Field record)
+            {
+                Reader = reader;
+                Record = record;
+            }
+
+            public string Name 
+                => Reader.String(Record.Name);
+
+            public ReadOnlySpan<byte> Sig
+                => Reader.Blob(Record.Sig);
+            
+            public Address32 Offset
+                => Record.Offset;
+
+            public ReadOnlySpan<byte> Marshal
+                => Reader.Blob(Record.Marshal);
+
+            public FieldAttributes Attributes
+                => Record.Attributes;
+        }
     }
 }

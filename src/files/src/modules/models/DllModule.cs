@@ -42,8 +42,5 @@ namespace Z0
         public static implicit operator BinaryModule(DllModule src)
             => new BinaryModule(src.Path, src.ModuleKind);
 
-        [MethodImpl(Inline)]
-        public static implicit operator ImagePath(DllModule src)
-            => src.Path;
     }
 }

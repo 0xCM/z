@@ -8,27 +8,14 @@ namespace Z0
 
     public class JsonEmitter
     {
-        readonly JsonOptions Options;
+        readonly JsonSerializerOptions Options;
 
         readonly ITextEmitter Buffer;
 
-        public static void render<T>(JsonArray<T> src, JsonEmitter dst)
-            where T : IJsonValue, new()
-        {
-            dst.OpenArray();
-            var count = src.Length;
-            for(var i=0; i<count; i++)
-            {
-                //src[i].Render(dst);
-                if(i != count - 1)
-                    dst.Delimit();
-            }
-            dst.CloseArray();
-        }
 
-        public JsonEmitter(ITextEmitter dst)
+        internal JsonEmitter(ITextEmitter dst, JsonSerializerOptions options)
         {
-            Options = new ();
+            Options = options;
             Buffer= dst;
         }
 
@@ -54,22 +41,16 @@ namespace Z0
         {
             Buffer.Append(text.concat(text.quote(name), Chars.Colon, text.quote(value)));
         }
-
-        
+       
         public void Serialize<T>(T src)
         {
-            Buffer.Append(JsonSerializer.Serialize(src, Options.Serializer));        
+            Buffer.Append(JsonSerializer.Serialize(src, Options));        
         }
-
-        public void Serialize<T>(IEnumerable<T> src)
-        {
-            Buffer.Append(JsonSerializer.Serialize(src.Array(), Options.Serializer));
-        }
-
+        
         public void Serialize<T>(T[] src) 
             where T : IJsonValue
         {
-
+            Buffer.Append(JsonSerializer.Serialize(src, Options));
         }
     }
 }

@@ -98,7 +98,7 @@ namespace Z0
         public ByteSize Size
         {
             [MethodImpl(Inline)]
-            get => Info.Length;
+            get => FS.size(this);
         }
 
         [MethodImpl(Inline)]

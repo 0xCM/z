@@ -155,27 +155,21 @@ namespace Z0
             => FS.file(id.Format(), ext);
 
         public static FileName filename<T>()
-            where T : struct
                 => filename<T>(FS.Csv);
 
         public static FileName filename<T>(FileExt ext)
-            where T : struct
-                => filename(TableId.identify<T>());
+            => filename(TableId.identify<T>());
 
         public static FileName filename<T>(string prefix)
-            where T : struct
-                => FS.file(string.Format("{0}.{1}", prefix, TableId.identify<T>()), FS.Csv);
+            => FS.file(string.Format("{0}.{1}", prefix, TableId.identify<T>()), FS.Csv);
         public FilePath Table<T>()
-            where T : struct
                 => Root + filename<T>();
 
         public FilePath Table<T>(ProjectId id)
-            where T : struct
                 => Root + filename<T>(id.Format());
 
         public FilePath PrefixedTable<T>(string prefix)
-            where T : struct
-                => Root + filename<T>(prefix);
+            => Root + filename<T>(prefix);
 
         public static FileName file(string @class, string name, FileKind kind)
             => FS.file(string.Format("{0}.{1}", @class, name), kind.Ext());

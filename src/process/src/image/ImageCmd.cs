@@ -122,6 +122,7 @@ namespace Z0
                 Channel.Error("No joy");
             }
         }
+
         [CmdOp("process/context")]
         void ProcContext(CmdArgs args)
             => ImageMemory.dump(Channel, args, AppSettings.ProcDumps());

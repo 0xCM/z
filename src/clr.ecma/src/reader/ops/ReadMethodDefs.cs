@@ -107,7 +107,7 @@ namespace Z0
                 info.Attributes = row.Attributes;
                 info.ImplAttributes = row.ImplAttributes;
                 info.Rva = row.Rva;
-                info.CliSig = Blob(row.SigKey);
+                info.CliSig = BlobArray(row.SigKey);
                 info.Name = String(row.NameKey);
             }
             return dst;
@@ -130,7 +130,7 @@ namespace Z0
                 def.Attributes = src.Attributes;
                 def.ImplAttributes = src.ImplAttributes;
                 def.Rva = src.Rva;
-                def.CliSig = Blob(src.SigKey);
+                def.CliSig = BlobArray(src.SigKey);
                 def.Name = String(src.NameKey);
                 dst.Add(def);
             }

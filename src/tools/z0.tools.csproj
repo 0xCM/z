@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(ProjectProps)\usings.props"/>
   <ItemGroup>
-     <ProjectReference Include="$(Builds)"/>
      <ProjectReference Include="$(Native)"/>
      <ProjectReference Include="$(Process)"/>
      <ProjectReference Include="$(Circuits)"/>

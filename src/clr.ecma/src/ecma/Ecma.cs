@@ -17,16 +17,15 @@ namespace Z0
 
         public static EcmaReader reader(EcmaFile src)
             => EcmaReader.create(src);
-
                     
-        public static IEnumerable<AssemblyRefInfo> refs(FilePath src)
+        public static IEnumerable<EcmaTables.AssemblyRef> refs(FilePath src)
         {
             using var ecma = file(src);
-            return ecma.EcmaReader().ReadAssemblyRefs();            
+            return ecma.EcmaReader().ReadAssemblyRefRows();            
         }
 
-        public static ReadOnlySeq<AssemblyRefInfo> refs(Assembly src)
-            => EcmaReader.create(src).ReadAssemblyRefs();
+        public static ReadOnlySeq<EcmaTables.AssemblyRef> refs(Assembly src)
+            => EcmaReader.create(src).ReadAssemblyRefRows();
 
         public static bool parse(string src, out EcmaToken dst)
         {

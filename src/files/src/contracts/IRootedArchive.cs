@@ -41,16 +41,13 @@ namespace Z0
             => DbFiles.Sources(name);
 
         FilePath Table<T>()
-            where T : struct
-                => DbFiles.Table<T>();
+            => DbFiles.Table<T>();
 
         FilePath Table<T>(ProjectId id)
-            where T : struct
                 => DbFiles.Table<T>(id);
 
         FilePath PrefixedTable<T>(string prefix)
-            where T : struct
-                => DbFiles.PrefixedTable<T>(prefix);
+            => DbFiles.PrefixedTable<T>(prefix);
 
         IEnumerable<FilePath> Files()
             => DbFiles.Files(true);

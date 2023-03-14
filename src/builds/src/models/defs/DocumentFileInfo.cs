@@ -41,9 +41,9 @@ namespace Z0
             /// <summary>
             /// The <see cref="SourceCodeKind"/> of this document.
             /// </summary>
-            public SourceCodeKind SourceCodeKind;
+            public object SourceCodeKind;
 
-            public DocumentFileInfo(FilePath path, string logical, bool linked, bool generated, SourceCodeKind kind)
+            public DocumentFileInfo(FilePath path, string logical, bool linked, bool generated, object kind)
             {
                 FilePath = path;
                 LogicalPath = logical;

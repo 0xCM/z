@@ -5,13 +5,42 @@
 namespace Z0
 {
     using System.Text.Json;
+
     using static JsonTypes;
     using static JsonValues;
+    using static sys;
 
     [ApiHost]
     public partial class Json
     {
         const NumericKind Closure = UInt64k;
+
+        [Op, Closures(Closure)]
+        public static JsonDocument document(ReadOnlySeq<byte> src)
+            => JsonDocument.Parse(src.Storage);
+            
+        [Op, Closures(Closure)]
+        public static JsonDocument document<T>(T src)
+            => JsonSerializer.SerializeToDocument(src, options());
+
+        public static void render<T>(JsonArray<T> src, JsonEmitter dst)
+            where T : IJsonValue, new()
+        {
+            dst.OpenArray();
+            var count = src.Length;
+            for(var i=0; i<count; i++)
+            {
+                if(i != count - 1)
+                    dst.Delimit();
+            }
+            dst.CloseArray();
+        }
+
+        public static void register(IEnumerable<JsonConverter> src)
+            => Converters.AddRange(src);
+
+        public static void register(params JsonConverter[] src)
+            => Converters.AddRange(src);
 
         public static JV<Record,T> record<T>(in T src)
             where T : new()
@@ -75,39 +104,75 @@ namespace Z0
         public static JV<Text,JsonText> text(string value)
             => new JsonText(value);
 
+        public static JsonSerializerOptions options()
+        {
+            var options = new JsonSerializerOptions{
+                WriteIndented = true,
+                IncludeFields = true,
+                AllowTrailingCommas = true,
+                IgnoreReadOnlyFields = false                
+            };
+            iter(Converters, converter => options.Converters.Add(converter));
+            return options;
+        }
+
         [Op, Closures(Closure)]
-        public static string serialize<T>(T src, bool indented = true)
-            => JsonSerializer.Serialize(src, new JsonSerializerOptions{
-                IncludeFields= true,
-                WriteIndented = indented
-            });
+        public static T materialize<T>(string src)
+            => JsonSerializer.Deserialize<T>(src, JsonOptions.Default.Serializer);
+
+        [Op, Closures(Closure)]
+        public static T materialize<T>(FileUri src)
+        {
+            using var reader = src.Utf8Reader();
+            var data = reader.ReadToEnd();
+            return materialize<T>(data);
+        }
+
+        public static T materialize2<T>(FileUri src)
+            where T : new()
+        {
+            var kvp = new Dictionary<string,string>();
+            var dst = new T();
+            var fields = typeof(T).GetFields(BindingFlags.Instance).Select(x => (x.Name, x)).ToDictionary();
+            absorb(src, kvp);
+            foreach(var key in kvp.Keys)
+            {
+                if(fields.TryGetValue(key, out FieldInfo f))
+                {
+                    var dstType = f.FieldType;
+                    Option.Try(() => Convert.ChangeType(kvp[key], dstType)).OnSome(value => f.SetValue(dst,value));
+                }
+            }
+            return dst;
+        }
+
+        [Op, Closures(Closure)]
+        public static string serialize<T>(T src)
+            => JsonSerializer.Serialize(src, options());
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static JsonText jtext<T>(JsonSeq<T> src)
             where T : IJsonValue, new()
-            => new (format(src));
+                => new (format(src));
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         static string format<T>(JsonSeq<T> src)
             where T : IJsonValue, new()
                 => src.Content?.ToString() ?? EmptyString;
-
-        static IEnumerable<FieldInfo> SettingFields<S>()
-            => typeof(S).InstanceFields();
-
+        
         public static JsonArray<T> array<T>(params T[] src)
             where T : IJsonValue, new()
                 => new JsonArray<T>(src);
                         
-        public static JsonStream stream(StreamReader src)
-            => new JsonStream(src);
+        // public static JsonStream stream(StreamReader src)
+        //     => new JsonStream(src);
             
         public static JsonArray<T> array<T>(IEnumerable<T> src)
             where T : IJsonValue, new()
                 => new JsonArray<T>(src.Array());
 
         public static JsonEmitter emitter(ITextEmitter dst)
-            => new JsonEmitter(dst);
+            => new JsonEmitter(dst, options());
 
         [Op, Closures(Closure)]
         public static Utf8JsonWriter writer(Stream stream, JsonOptions options)
@@ -145,6 +210,42 @@ namespace Z0
                     }
                 }
             }
+        }
+        
+        static List<JsonConverter> Converters = new();
+
+        class StringConverter : JsonConverter<@string>
+        {
+            public override @string Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) 
+                => reader.GetString();
+
+            public override void Write(Utf8JsonWriter writer, @string src, JsonSerializerOptions options) 
+                => writer.WriteStringValue(src);
+        }        
+
+        class FilePathConverter : JsonConverter<FilePath>
+        {
+            public override FilePath Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) 
+                => FS.path(reader.GetString());
+
+            public override void Write(Utf8JsonWriter writer, FilePath src, JsonSerializerOptions options) 
+                => writer.WriteStringValue(src.Format(PathSeparator.FS));
+        }        
+
+        class FolderPathConverter : JsonConverter<FolderPath>
+        {
+            public override FolderPath Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) 
+                => FS.dir(reader.GetString());
+
+            public override void Write(Utf8JsonWriter writer, FolderPath src, JsonSerializerOptions options) 
+                => writer.WriteStringValue(src.Format(PathSeparator.FS));
+        }        
+
+        static Json()
+        {
+            register(new StringConverter());
+            register(new FilePathConverter());
+            register(new FolderPathConverter());
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Z0
         [Op]
         public ReadOnlySpan<ManifestResourceHandle> ResourceHandles()
             => MD.ManifestResources.ToReadOnlySpan();
-
+        
         [MethodImpl(Inline), Op]
         public static Handle handle(EcmaHandleData src)
             => @as<EcmaHandleData,Handle>(src);

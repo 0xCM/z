@@ -35,8 +35,5 @@ namespace Z0
             get => Path.Is(FileKind.Dll);
         }
 
-        [MethodImpl(Inline)]
-        public static implicit operator ImagePath(CoffImage src)
-            => src.Path;
     }
 }

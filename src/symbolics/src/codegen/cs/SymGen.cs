@@ -31,7 +31,6 @@ namespace Z0
             dst.WriteLine(buffer.Emit());
         }
 
-
         public void EmitSymbolSpan<E>(Identifier name, FolderPath dst)
             where E : unmanaged, Enum
         {
@@ -47,7 +46,6 @@ namespace Z0
             ByteSpans.symrender<E>(name, buffer);
             dst.WriteLine(buffer.Emit());
         }
-
 
         public void Emit<T>(Identifier ns, LiteralSeq<T> literals, FilePath dst)
             where T : IComparable<T>, IEquatable<T>

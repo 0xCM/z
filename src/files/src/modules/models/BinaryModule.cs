@@ -61,8 +61,5 @@ namespace Z0
             get => (ModuleKind & FileModuleKind.Obj) != 0;
         }
 
-        [MethodImpl(Inline)]
-        public static implicit operator ImagePath(BinaryModule src)
-            => src.Path;
     }
 }

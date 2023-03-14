@@ -40,7 +40,6 @@ namespace Z0
         ReadOnlySpan<byte> Bytes(uint offset)
             => slice(Source.View, offset);
 
-
         [MethodImpl(Inline)]
         T* Pointer<T>()
             where T : unmanaged
@@ -81,6 +80,32 @@ namespace Z0
             }
             return pos;
         }
+
+        string ReadAlignedAsciString(N4 n)
+        {
+            Span<char> dst = stackalloc char[32];
+            var i = 0u;
+            var finished = false;
+            while(i < 32 && !finished)
+            {
+                var data = bytes(Read<uint>());
+                for(var j=0; j<4; j++)
+                {
+                    ref readonly var c = ref skip(data,j);
+                    if(c == 0)
+                    {
+                        finished = true;
+                        break;
+                    }
+                    
+                    seek(dst, i++) = (char)c;
+                }
+                if(finished)
+                    break;
+            }
+            return sys.@string(dst);
+        }
+
         [MethodImpl(Inline)]
         public MetadataRoot ReadMetadataRoot()
         {
@@ -100,14 +125,7 @@ namespace Z0
                 ref var stream = ref seek(streams,i);
                 stream.Offset = Read<uint>();
                 stream.Size = Read<uint>();
-                var pos = Find(0);
-                if(pos > 0)
-                {
-                    var length = (uint)(pos + (pos % 4));
-                    stream.Name = new asci32(Read(length));
-
-                }
-            
+                stream.Name = ReadAlignedAsciString(n4);            
             }
             dst.StreamHeaders = streams;
             return dst;

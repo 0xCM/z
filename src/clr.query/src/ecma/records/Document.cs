@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------
-// Copyright   :  (c) Chris Moore, 2020
+// Copyright   :  (c) Chris Moore, 2023
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0
@@ -13,13 +13,13 @@ namespace Z0
             public EcmaBlobIndex Name;
 
             [Render(12)]
-            public GuidIndex HashAlgorithm;
+            public EcmaGuidIndex HashAlgorithm;
 
             [Render(12)]
             public EcmaBlobIndex Hash;
 
             [Render(12)]
-            public GuidIndex Language;
+            public EcmaGuidIndex Language;
         }       
     }
 }

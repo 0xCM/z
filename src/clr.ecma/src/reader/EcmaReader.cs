@@ -8,18 +8,25 @@ namespace Z0
 
     using System.Linq;
 
-    public record struct EcmaStreamHeader
-    {
-        public uint Offset;
-
-        public uint Size;
-
-        public asci32 Name;
-    }
-
     [ApiHost]
-    public unsafe partial class EcmaReader
+    public unsafe partial class EcmaReader : IEcmaReader
     {
+        [MethodImpl(Inline), Op]
+        public string String(EcmaStringIndex index)
+            => MD.GetString(index);
+
+        [MethodImpl(Inline), Op]
+        public Guid Guid(EcmaGuidIndex index)
+            => MD.GetGuid(index);
+
+        [MethodImpl(Inline), Op]
+        public ReadOnlySpan<byte> Blob(EcmaBlobIndex index)
+            => MD.GetBlobBytes(index);
+
+        [MethodImpl(Inline), Op]
+        public byte[] BlobArray(EcmaBlobIndex index)
+            => MD.GetBlobBytes(index);
+
         public static unsafe EcmaReader create(MemoryAddress @base, ByteSize size)
             => new (new PEReader(@base.Pointer<byte>(), size).GetMetadata());
 
@@ -76,13 +83,13 @@ namespace Z0
             return dst.Array();
         }
         
-        public static IEnumerable<AssemblyRefInfo> refs(IEnumerable<AssemblyFile> src)
+        public static IEnumerable<EcmaTables.AssemblyRef> refs(IEnumerable<AssemblyFile> src)
         {
             foreach(var file in src.AsParallel())
             {
                 using var ecma = Ecma.file(file.Path);
                 var reader = Ecma.reader(ecma);
-                var refs = reader.ReadAssemblyRefs().Storage;
+                var refs = reader.ReadAssemblyRefRows().Storage;
                 foreach(var r in refs)
                     yield return r;                
             }

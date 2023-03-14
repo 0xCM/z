@@ -6,6 +6,12 @@ namespace Z0
 {
     using static sys;
 
+    partial class XTend
+    {
+        public static void AddRange<T>(this HashSet<T> dst, IEnumerable<T> src)
+            => iter(src, item=> dst.Add(item));
+    }
+
     public struct Sequential<T>
         where T : unmanaged
     {

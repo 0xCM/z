@@ -13,13 +13,13 @@ namespace Z0
 
             public EcmaStringIndex Name;
 
-            public GuidIndex MVId;
+            public EcmaGuidIndex MVId;
 
-            public GuidHandle GenerationId;
+            public EcmaGuidIndex GenerationId;
 
-            public GuidHandle BaseGenerationId;
+            public EcmaGuidIndex BaseGenerationId;
 
-            public Module(ushort generation, EcmaStringIndex name, GuidIndex mvId, GuidHandle encId, GuidHandle encBaseId)
+            public Module(ushort generation, EcmaStringIndex name, EcmaGuidIndex mvId, EcmaGuidIndex encId, EcmaGuidIndex encBaseId)
             {
                 this.Generation = generation;
                 this.Name = name;
@@ -27,6 +27,35 @@ namespace Z0
                 this.GenerationId = encId;
                 this.BaseGenerationId = encBaseId;
             }
+        }
+
+        public readonly struct ModuleContext : IEcmaContext<ModuleContext,Module>
+        {
+            public readonly Module Record;
+
+            public IEcmaReader Reader {get;}
+
+            public ModuleContext(IEcmaReader reader, Module record)
+            {
+                Reader = reader;
+                Record = record;
+            }
+
+            public ushort Generation
+                => Record.Generation;
+
+            public string Name 
+                => Reader.String(Record.Name);
+
+            public Guid Mvid
+                => Reader.Guid(Record.MVId);
+
+            public Guid GenerationId
+                => Reader.Guid(Record.GenerationId);
+
+            public Guid BaseGenerationId
+                => Reader.Guid(Record.BaseGenerationId);
+
         }
     }
 }

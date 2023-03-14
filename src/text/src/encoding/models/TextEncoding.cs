@@ -10,24 +10,6 @@ namespace Z0
 
     public readonly unsafe struct TextEncoding : ITextEncoding<TextEncoding>
     {
-        public static TextEncoding Utf8
-        {
-            [MethodImpl(Inline), Op]
-            get => new TextEncoding(Encoding.UTF8);
-        }
-
-        public static TextEncoding Unicode
-        {
-            [MethodImpl(Inline), Op]
-            get => new TextEncoding(Encoding.Unicode);
-        }
-
-        public static TextEncoding Asci
-        {
-            [MethodImpl(Inline), Op]
-            get => new TextEncoding(Encoding.ASCII);
-        }
-
         readonly Encoding Encoding;
 
         [MethodImpl(Inline)]
@@ -154,8 +136,6 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator TextEncoding(Encoding src)
-            => new TextEncoding(src);
-
-        public static TextEncoding Default => Utf8;
+            => new TextEncoding(src);        
     }
 }
