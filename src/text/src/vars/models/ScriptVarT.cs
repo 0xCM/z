@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using api = ScriptVars;
+    using api = Vars;
 
     public record class ScriptVar<T> : IScriptVar
-        where T : IEquatable<T>, IComparable<T>, new()
+        where T : IEquatable<T>, INullity, new()
     {
         public readonly @string VarName;
 
@@ -18,27 +18,12 @@ namespace Z0
         T _Value;
 
         [MethodImpl(Inline)]
-        public ScriptVar(string name, AsciSymbol prefix)
-        {
-            VarName = name;
-            Prefix = prefix;
-            Fence = AsciFence.Empty;
-        }
-
-        [MethodImpl(Inline)]
-        public ScriptVar(string name, AsciFence fence)
-        {
-            VarName = name;
-            Fence = fence;
-            Prefix = AsciSymbol.Empty;
-        }
-
-        [MethodImpl(Inline)]
-        public ScriptVar(string name, AsciSymbol prefix, AsciFence fence)
+        public ScriptVar(string name, AsciSymbol prefix, AsciFence fence, T value = default)
         {
             VarName = name;
             Prefix = prefix;
             Fence = fence;
+            _Value = value;
         }
 
         AsciFence IScriptVar.Fence
@@ -47,17 +32,20 @@ namespace Z0
         AsciSymbol IScriptVar.Prefix
             => Prefix;
 
-        public bool IsNamed
+        [MethodImpl(Inline)]
+        public bool Value(out T value)
         {
-            [MethodImpl(Inline)]
-            get => VarName.IsNonEmpty;
+            if(IsResolved())
+            {
+                value = _Value;
+                return true;
+            }
+            else
+            {
+                value = default;
+                return false;
+            }
         }
-
-        public virtual string Format()
-            => api.format(this);
-
-        public override string ToString()
-            => Format();
 
         /// <summary>
         /// Indicates whether the variable is prefixed
@@ -77,12 +65,44 @@ namespace Z0
             get => IsPrefixed && IsFenced;
         }
 
+        public bool IsEmpty
+        {
+            [MethodImpl(Inline)]
+            get => VarName.IsEmpty;
+        }
+
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => VarName.IsNonEmpty;
+        }
+
+        public Hash32 Hash
+        {
+            [MethodImpl(Inline)]
+            get => VarName.Hash;
+        }
+
+        [MethodImpl(Inline)]
+        public void Resolve(in T src)
+            => _Value = src;
+
+        public virtual string Format()
+            => api.format(this);
+
+        public override string ToString()
+            => Format();
+
+        [MethodImpl(Inline)]
+        public bool IsResolved()
+            => _Value?.IsNonEmpty ?? false;
+
         [MethodImpl(Inline)]
         public static implicit operator ScriptVar<T>(string name)
             => new ScriptVar<T>(name);
 
         [MethodImpl(Inline)]
         public static implicit operator ScriptVar(ScriptVar<T> src)
-            => new ScriptVar(src.VarName, src.Prefix,src.Fence);
+            => new ScriptVar(src.VarName, src.Prefix,src.Fence, src._Value?.ToString() ?? EmptyString);
     }
 }

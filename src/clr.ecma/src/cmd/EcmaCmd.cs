@@ -180,13 +180,6 @@ namespace Z0
             });
         }
 
-        [CmdOp("modules/map")]
-        void EcmaMeta(CmdArgs args)
-        {
-            var svc = Channel.Channeled<ModuleArchives>();
-            var sources = FS.dir(args[0]).DbArchive();
-            using var map = svc.Map(sources);
-        }
 
         static FilePath EcmaArchive(FilePath src)
             => AppDb.Archive("ecma").Path(src.FileName.WithExtension(FS.ext($"{src.Hash}.txt")));
@@ -218,7 +211,7 @@ namespace Z0
                 var name = reader.AssemblyName();
                 var version = name.Version;
                 var hash = entry.FileHash.ContentHash;
-                var ext = entry.Path.Ext();
+                var ext = entry.Path.Ext;
                 var target = dst.Path($"{name.SimpleName()}.{version}.{ext}.{(Hex32)(uint)file.FileSize}.{(Hex64)hash.Lo}", FileKind.Txt);
                 EcmaEmitter.EmitMetadump(reader.MetadataReader,target);
             },true);
@@ -255,38 +248,6 @@ namespace Z0
             });
         }
 
-        [CmdOp("ecma/index")]
-        void IndexAssemblies(CmdArgs args)
-        {
-            const string RenderPattern ="{0,-64} | {1,-16} | {2,-16} | {3}";
-            var locations = list<string>();
-            var index = Ecma.index(FS.dir(args[0]));
-            iter(index.Entries(), entry => {
-                locations.Add(entry.Path.Format(PathSeparator.FS));
-            });
-            iter(index.Distinct(), entry => {
-                Channel.Row(string.Format(RenderPattern, entry.Key.Name, entry.FileSize, entry.Key.Version, entry.Key.Mvid));
-            });
-
-            iter(index.Duplicates(), entry => {
-                Channel.Row(string.Format(RenderPattern, entry.Key.Name, entry.FileSize, entry.Key.Version, entry.Key.Mvid), FlairKind.StatusData);
-            });
-
-            var buffer = sys.span<byte>(2024);
-            foreach(var input in locations)
-            {
-                try
-                {
-                    buffer.Clear();
-                    BinaryFormatters.verify(input,buffer);
-                    Channel.Status($"Verified {input}");
-                }
-                catch(Exception e)
-                {
-                    Channel.Error(e.Message);
-                }
-            }
-        }
 
         [CmdOp("coff/modules")]
         void ExportPeInfo(CmdArgs args)
@@ -335,30 +296,6 @@ namespace Z0
         void EcmaEmitMetaDumps(CmdArgs args)
             => EcmaEmitter.EmitMetadumps(FS.dir(args[0]).DbArchive(), true, FS.dir(args[1]).DbArchive());
 
-        [CmdOp("pe/import")]
-        void PeFiles(CmdArgs args)
-        {
-            var src = FS.dir(args[0]).DbArchive().Enumerate(true, FileKind.Dll, FileKind.Exe, FileKind.Obj, FileKind.Sys);
-            var dst = bag<PeSectionHeader>();
-            iter(src, path => {
-                try
-                {
-                    var flow = Channel.Running($"Reading section headers from {path}");
-                    using var reader = PeReader.create(path);
-                    var tables = reader.Tables;
-                    iter(tables.SectionHeaders, sh => dst.Add(sh));
-                    Channel.Ran(flow,$"Read {tables.SectionHeaders.Count} section headers from ${path}");
-                                        
-                }
-                catch(Exception e)
-                {
-                    Channel.Error(e);
-                }
-            });
-            
-            var path = EnvDb.Scoped("flows/import").Table<PeSectionHeader>();
-            Channel.TableEmit(dst.Array(),path);
-        }
 
         [CmdOp("ecma/emit/refs")]
         void EmitModuleRefs(CmdArgs args)
@@ -377,15 +314,6 @@ namespace Z0
                     Channel.Row($"{native.Source}.{native.SourceVersion} -> {native.TargetName}");
                 });
             });
-
-            // iter(src, file => {
-            //     using var ecma = Ecma.file(file.Path);
-            //     var reader = ecma.EcmaReader();
-            //     iter(reader.ReadManagedDeps(), dep => dst.Add(dep));
-            // });
-            // var sorted = dst.Array();
-            // var folder = nested(DataTarget.Scoped("clr").Root, dir);
-            // Channel.TableEmit(sorted, folder.DbArchive().Table<ManagedDependency>());  
         }   
 
         [Op]
@@ -440,73 +368,7 @@ namespace Z0
             Channel.TableEmit(dst.Array(), AppSettings.EnvDb().Scoped("clr").Path("ecma.heaps", FileKind.Csv));
         }
 
-
-        void ExtractStructs(Assembly src)
-        {
-            var types = src.Structs().NonGeneric();
-            var dst = CsGen.emitter();
-            var identifier = src.GetSimpleName();
-            dst.Namespace(identifier);
-            var margin = 0u;
-            iter(types, t => {
-                var fields = t.DeclaredPublicInstanceFields().Where(f => !f.IsCompilerGenerated());
-                if(fields.Length != 0)
-                {
-                    dst.OpenStruct(margin, t.Name, false);
-                    margin+=4;
-
-                    iter(fields, f => {
-
-                    var typename = CsData.keyword(f.FieldType);
-                    if(empty(typename))
-                        typename = f.FieldType.Name;                
-                        dst.PublicField(margin, typename, f.Name);
-                    });
-                    margin-=4;
-                    dst.CloseStruct(margin);
-                }
-            });
-
-            var output = AppSettings.EnvDb().Scoped("clr").Path($"{identifier}.structs", FileKind.Cs);
-            Channel.FileEmit(dst.Emit(), output);
-
-        }
-
-        [CmdOp("srm/extract")]
-        void SrmExtract(CmdArgs args)
-        {
-            var src = typeof(System.Reflection.Metadata.MetadataReader).Assembly;
-            ExtractStructs(src);
-            ExtractEnums(src);
-        }
         
-        void ExtractEnums(Assembly src)
-        {
-            var symbols = map(src.Enums().NonGeneric(), e => Symbols.set(e));
-            var dst = CsGen.emitter();
-            var margin = 0u;
-            var identifier = src.GetSimpleName();
-            dst.FileHeader();
-            dst.UsingNamespace(nameof(System));
-            dst.AppendLine();
-            dst.Namespace(margin, identifier);
-            dst.AppendLine();
-            iter(symbols, s => {
-                dst.Symbols(margin, s, false);
-                dst.AppendLine();
-            });
-            var output = AppSettings.EnvDb().Scoped("clr").Path($"{identifier}.enums", FileKind.Cs);
-            Channel.FileEmit(dst.Emit(), output);
-        }
-
-        [CmdOp("enums/extract")]
-        void ExtractEnums(CmdArgs args)
-        {
-            ExtractEnums(typeof(Microsoft.CodeAnalysis.AssemblyIdentity).Assembly);
-            ExtractEnums(typeof(Microsoft.CodeAnalysis.CSharp.CSharpCompilation).Assembly);
-            ExtractEnums(typeof(System.Reflection.Metadata.MetadataReader).Assembly);            
-        }
-
         [CmdOp("ecma/compile")]
         void Compilations(CmdArgs args)
         {

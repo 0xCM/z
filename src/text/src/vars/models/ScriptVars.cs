@@ -4,37 +4,15 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     [ApiHost]
-    public class CmdVars : IIndex<CmdVar>
+    public class ScriptVars : IIndex<CmdVar>
     {
         const NumericKind Closure = UnsignedInts;
-
-        [Op]
-        public static CmdVars create()
-            => new CmdVar[255];
-
-        [Op]
-        public static CmdVars create(ushort count)
-            => new CmdVar[count];
-
-        public static CmdVars load(params Pair<string>[] src)
-        {
-            var dst = new CmdVar[src.Length];
-            for(var i=0; i<src.Length; i++)
-                seek(dst,i) = skip(src,i);
-            return dst;
-        }
-
-        [MethodImpl(Inline), Op]
-        public static CmdVars load(CmdVar[] src)
-            => src;
 
         readonly Index<CmdVar> Data;
 
         [MethodImpl(Inline)]
-        public CmdVars(CmdVar[] src)
+        public ScriptVars(CmdVar[] src)
         {
             Data = src;
         }
@@ -79,8 +57,9 @@ namespace Z0
             for(var i=0; i<count; i++)
             {
                 ref readonly var item = ref this[i];
+                if(item.Value(out var value))
                 if(item.IsNonEmpty)
-                    dst.AppendLineFormat("set {0}={1}", item.Name, item.Value);
+                    dst.AppendLineFormat("set {0}={1}", item.VarName, value);
             }
             return dst.Emit();
         }
@@ -89,14 +68,14 @@ namespace Z0
             => Format();
 
         [MethodImpl(Inline)]
-        public static implicit operator CmdVars(CmdVar[] src)
-            => new CmdVars(src);
+        public static implicit operator ScriptVars(CmdVar[] src)
+            => new ScriptVars(src);
 
         [MethodImpl(Inline)]
-        public static implicit operator CmdVar[](CmdVars src)
+        public static implicit operator CmdVar[](ScriptVars src)
             => src.Data;
 
-        public static CmdVars Empty
+        public static ScriptVars Empty
         {
             [MethodImpl(Inline)]
             get => sys.array<CmdVar>();

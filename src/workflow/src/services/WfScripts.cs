@@ -33,7 +33,7 @@ namespace Z0
         void RunExe(CmdFlow flow)
         {
             var running = Channel.Running(string.Format("Executing {0}", flow.TargetPath.ToUri()));
-            var result = OmniScript.Run(flow.TargetPath, CmdVars.Empty, quiet: true, out var response);
+            var result = OmniScript.Run(flow.TargetPath, ScriptVars.Empty, quiet: true, out var response);
             if (result.Fail)
                 Channel.Error(result.Message);
             else
@@ -45,7 +45,7 @@ namespace Z0
             }
         }
 
-        Outcome RunToolScript(FilePath src, CmdVars vars, bool quiet, out ReadOnlySpan<CmdFlow> flows)
+        Outcome RunToolScript(FilePath src, ScriptVars vars, bool quiet, out ReadOnlySpan<CmdFlow> flows)
         {
             flows = default;
             var result = Outcome.Success;

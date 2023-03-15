@@ -29,6 +29,8 @@ namespace Z0
             public DataAnalyzer Analyzer(IWfRuntime wf)
                 => Service<DataAnalyzer>(wf);
 
+            public IApiService ProjectsCmd(IWfRuntime wf)
+                => Service<ProjectsCmd>(wf);
         }
 
         static Svc Services => Svc.Instance;
@@ -53,5 +55,9 @@ namespace Z0
 
         public static DataAnalyzer Analyzer(this IWfRuntime wf)
             => Services.Analyzer(wf);
+
+        public static IApiService ProjectsCmd(this IWfRuntime wf)
+            => Services.ProjectsCmd(wf);
+
     }
 }

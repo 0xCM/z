@@ -5,7 +5,7 @@
 namespace Z0
 {
     [StructLayout(LayoutKind.Sequential)]
-    public record struct MappedModuleInfo : ISequential<MappedModuleInfo>
+    public record struct MappedModuleRecord : ISequential<MappedModuleRecord>
     {
         // {0,-8} | {1,-16} | {2,-16} | {3,-12} | {4,-56} | {5}
         [Render(8)]
@@ -28,7 +28,7 @@ namespace Z0
 
         uint ISequential.Seq { get => Seq; set => Seq = value; }
 
-        public int CompareTo(MappedModuleInfo src)
+        public int CompareTo(MappedModuleRecord src)
             => BaseAddress.CompareTo(src.BaseAddress);   
     }
 }

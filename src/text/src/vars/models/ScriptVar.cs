@@ -4,17 +4,16 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly record struct ProjectSetting
+    public sealed record class ScriptVar : ScriptVar<@string>
     {
-        public readonly @string Key;
-
-        public readonly dynamic Value;
-
         [MethodImpl(Inline)]
-        internal ProjectSetting(@string key, dynamic value)
+        public ScriptVar(string name, AsciSymbol prefix, AsciFence fence, @string value = default)
+            : base(name, prefix, fence, value)
         {
-            Key = key;
-            Value = value;
+
         }
-    }
+
+        public override string ToString()
+            => Format();
+    }    
 }

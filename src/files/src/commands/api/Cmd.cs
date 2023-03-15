@@ -37,7 +37,7 @@ namespace Z0
             => new (CmdArgs.arg(args,index).Value);
 
         [MethodImpl(Inline), Op]
-        public static ToolScript script(FilePath src, CmdVars vars)
+        public static ToolScript script(FilePath src, ScriptVars vars)
             => new ToolScript(src, vars);
 
         [MethodImpl(Inline), Op]

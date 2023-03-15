@@ -48,9 +48,9 @@ namespace Z0
             return found;        
         }
 
-        public void Include(IDbArchive src)
+        public void Include(IDbArchive src, bool recurse = false)
         {
-            iter(Archives.modules(src.Root).Members(), module => {
+            iter(Archives.modules(src.Root, recurse).Members(), module => {
                 if(module.IsManaged)
                 {
                     try

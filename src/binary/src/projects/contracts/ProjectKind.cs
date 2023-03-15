@@ -4,17 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct ToolScript
+    partial class ProjectModels
     {
-        public readonly FilePath Script;
-
-        public readonly ScriptVars Vars;
-
-        [MethodImpl(Inline)]
-        public ToolScript(FilePath script, ScriptVars vars)
+        public enum ProjectKind : byte
         {
-            Script = script;
-            Vars = vars;
+            None,
+
+            Binary,
         }
     }
 }

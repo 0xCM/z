@@ -36,32 +36,33 @@ namespace Z0
         Outcome ExecVarScript(string SrcId, FilePath script)
         {
             var result = Outcome.Success;
-            var vars = CmdVars.load(("SrcId", SrcId));
+            var vars = Vars.cmdvars(("SrcId", SrcId));
             var cmd = new CmdLine(script.Format(PathSeparator.BS));
             return OmniScript.Run(cmd, vars, out var response);
         }
 
-        Outcome AsmConfig(CmdArgs args)
-        {
-            var result = OmniScript.Run(FolderPath.Empty + FS.file("log-config",FileKind.Cmd), out var response);
-            if(result.Fail)
-                return result;
+        // Outcome AsmConfig(CmdArgs args)
+        // {
+        //     var result = OmniScript.Run(FolderPath.Empty + FS.file("log-config",FileKind.Cmd), out var response);
+        //     if(result.Fail)
+        //         return result;
 
-            var src = Settings.parse(response, Chars.Colon);
-            var count = src.Length;
-            var vars = new CmdVar[count];
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var facet = ref src[i];
-                seek(vars,i) = new (facet.Name, facet.Value);
-            }
+        //     var src = Settings.parse(response, Chars.Colon);
+        //     var count = src.Length;
+        //     var vars = new CmdVar[count];
+        //     for(var i=0; i<count; i++)
+        //     {
+        //         ref readonly var facet = ref src[i];
+        //         seek(vars,i) = new (facet.Name, facet.Value);
+        //     }
 
-            iter(vars, v => Write(v.Name,
-                v.Evaluated ? string.Format("{0} (Evaluated)", v.Value) : string.Format("{0} (Symbolic)", v.Value))
-                );
+        //     iter(vars, v => Write(v.VarName,
+        //         if(v.Value(out var _value))
+        //         v.Evaluated ? string.Format("{0} (Evaluated)", v.Value) : string.Format("{0} (Symbolic)", v.Value))
+        //         );
 
-            return result;
-        }
+        //     return result;
+        // }
 
 
         [CmdOp("hexify")]

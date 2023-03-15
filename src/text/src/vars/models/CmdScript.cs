@@ -8,33 +8,37 @@ namespace Z0
     {
         public readonly @string Name;
 
-        readonly CmdPattern Data;
+        public readonly @string Body;
 
         [MethodImpl(Inline)]
-        public CmdScript(CmdPattern src)
-        {
-            Name = EmptyString;
-            Data = src;
-        }
-
-        [MethodImpl(Inline)]
-        public CmdScript(string name, CmdPattern src)
+        public CmdScript(string name, string body)
         {
             Name = name;
-            Data = src;
+            Body = body;
         }
 
         public string Format()
-            => Data.Format();
+            => Body.Format();
 
         public override string ToString()
             => Format();
 
+        public bool IsEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Body.IsEmpty;
+        }
+
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Body.IsNonEmpty;
+        }
 
         public static CmdScript Empty
         {
             [MethodImpl(Inline)]
-            get => new CmdScript(CmdPattern.Empty);
+            get => new CmdScript(EmptyString, EmptyString);
         }
     }
 }

@@ -6,17 +6,17 @@ namespace Z0
 {
     public readonly record struct HashedFile : IDataType<HashedFile>, IDataString
     {
-        public readonly FileUri Path;
+        public readonly FilePath Path;
 
         public readonly FileHash FileHash;
 
         public HashedFile()
         {
-            Path = FileUri.Empty;
+            Path = FilePath.Empty;
             FileHash = default;
         }
 
-        public HashedFile(FileUri path, FileHash hash)
+        public HashedFile(FilePath path, FileHash hash)
         {
             Path = path;
             FileHash = hash;

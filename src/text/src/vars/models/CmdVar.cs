@@ -4,50 +4,20 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public struct CmdVar
+    public record class CmdVar : ScriptVar<@string>
     {
-        public readonly @string Name;
-
-        object _Value;
+        [MethodImpl(Inline)]
+        public CmdVar(string name, object value)
+            : base(name, AsciSymbol.Empty, (AsciSymbols.Percent, AsciSymbols.Percent), value?.ToString() ?? EmptyString)
+        {
+        }
 
         [MethodImpl(Inline)]
         public CmdVar(string name)
+            : this(name, @string.Empty)
         {
-            Name = name;
-            _Value = EmptyString;
+
         }
-
-        [MethodImpl(Inline)]
-        public CmdVar(string name, object value)
-        {
-            Name = name;
-            _Value = value;
-        }
-
-        public string Value
-        {
-            [MethodImpl(Inline)]
-            get => _Value?.ToString() ?? EmptyString;
-        }
-
-        public bool IsNonEmpty
-        {
-            [MethodImpl(Inline)]
-            get => text.nonempty(Value);
-        }
-
-        public bool IsEmpty
-        {
-            [MethodImpl(Inline)]
-            get => text.empty(Value);
-        }
-
-        public bool Evaluated
-            => IsNonEmpty && (text.index(Value,'%') < 0 && text.index(Value,'$') < 0);
-
-        [MethodImpl(Inline)]
-        public string Format()
-            => Value;
 
         public override string ToString()
             => Format();

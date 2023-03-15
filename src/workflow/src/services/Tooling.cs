@@ -139,7 +139,7 @@ namespace Z0
             {
                 ref readonly var cmd = ref commands[i];
                 var tool = cmd.Tool;
-                result = OmniScript.Run(cmd, CmdVars.Empty, out var response);
+                result = OmniScript.Run(cmd, ScriptVars.Empty, out var response);
                 if(result.Fail)
                 {
                     Channel.Error(result.Message);

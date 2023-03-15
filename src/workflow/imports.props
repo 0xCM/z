@@ -8,5 +8,7 @@
      <ProjectReference Include="$(Process)"/>
      <ProjectReference Include="$(Builds)"/>
      <ProjectReference Include="$(Lang)"/>
+    <ProjectReference Include="$(Binary)" />
+
   </ItemGroup>
 </Project>

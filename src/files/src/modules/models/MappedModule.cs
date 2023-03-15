@@ -36,9 +36,9 @@ namespace Z0
             File = file;
         }
 
-        public MappedModuleInfo Describe()
+        public MappedModuleRecord Describe()
         {
-            var dst = new MappedModuleInfo();
+            var dst = new MappedModuleRecord();
             dst.Seq = Index;
             dst.ModuleKind = ModuleKind;
             dst.Path = Path;

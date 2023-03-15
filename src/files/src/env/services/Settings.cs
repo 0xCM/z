@@ -160,6 +160,22 @@ namespace Z0
             return result;
         }
 
+        public static Seq<Setting> config(FilePath src)
+        {
+            var dst = list<Setting>();
+            using var reader = src.Utf8LineReader();
+            var line = TextLine.Empty;
+            while(reader.Next(out line))
+            {
+                if(line.IsNonEmpty)
+                {
+                    var parts = line.Split(Chars.Eq);
+                    if(parts.Length == 2)
+                        dst.Add(new Setting(skip(parts,0), skip(parts,1)));
+                }
+            }
+            return dst.Array();
+        }
         public static Seq<Setting> load(FilePath src)
         {
             var data = src.ReadLines(true);
@@ -171,7 +187,6 @@ namespace Z0
                 Require.equal(parts.Length,2);
                 seek(dst,i-1)= new Setting(text.trim(sys.skip(parts,0)), text.trim(sys.skip(parts,1)));
             }
-
             return dst;
         }
 

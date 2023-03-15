@@ -91,8 +91,8 @@ namespace Z0
             public static ToolScript DumpLib(FilePath input, IDbArchive dst)
                 => Cmd.script(dst.Path("dump-lib",FileKind.Cmd), vars(input.FolderPath, input.FileName, dst.Root));
 
-            static CmdVars vars(FolderPath SrcDir, FileName SrcFile, FolderPath DstDir)
-                => CmdVars.load(
+            static ScriptVars vars(FolderPath SrcDir, FileName SrcFile, FolderPath DstDir)
+                => Vars.cmdvars(
                     ("SrcDir", SrcDir.Format(PathSeparator.BS)),
                     ("SrcFile", SrcFile.Format()),
                     ("DstDir", DstDir.Format(PathSeparator.BS))
@@ -153,8 +153,6 @@ namespace Z0
             return scripts;
         }
 
-        Tooling Tooling => Wf.Tooling();
-
         public Identifier ScriptId(CmdName cmd, FileKind kind)
             => string.Format("{0}.{1}.{2}", Id, kind.Format(), CmdSymbols[cmd].Expr);
 
@@ -163,40 +161,40 @@ namespace Z0
         {
             var emitter = text.emitter();
             foreach(var module in src)
-                emitter.AppendLine(Expr(cmd, module.Path, output).Format());
-            return new CmdScript(name, emitter.Emit());
+                emitter.AppendLine(Expr(cmd, module.Path, output));
+            return new CmdScript(cmd.ToString(),emitter.Emit());
         }
 
-        public CmdPattern Expr(CmdName name, FilePath src, IDbArchive dst)
+        public string Expr(CmdName name, FilePath src, IDbArchive dst)
         {
             var subdir = dst.Root + FS.folder(src.FileName.WithoutExtension.Name);
             subdir.Create();
             var output = subdir + src.FileName.ChangeExtension(outkind(name));
             var source = src.Format(PS);
             var target = output.Format(PS);
-            var pattern = ScriptPattern.Empty;
+            var expr = EmptyString;
             switch(name)
             {
                 case CmdName.EmitAsm:
-                    pattern = ScriptPattern.create("dumpbin.disasm", string.Format("dumpbin /DISASM:{2} /OUT:{1} {0}", source, target, "NOBYTES"));
+                    expr = string.Format("dumpbin /DISASM:{2} /OUT:{1} {0}", source, target, "NOBYTES");
                     break;
                 case CmdName.EmitRawData:
-                    pattern = ScriptPattern.create("dumpbin.rawdata", string.Format("dumpbin /RAWDATA:1,32 /OUT:{1} {0}", source, target));
+                    expr = string.Format("dumpbin /RAWDATA:1,32 /OUT:{1} {0}", source, target);
                     break;
                 case CmdName.EmitHeaders:
-                    pattern = ScriptPattern.create("dumpbin.headers", string.Format("dumpbin /HEADERS /OUT:{1} {0}", source, target));
+                    expr = string.Format("dumpbin /HEADERS /OUT:{1} {0}", source, target);
                     break;
                 case CmdName.EmitRelocations:
-                    pattern = ScriptPattern.create("dumpbin.relocations", string.Format("dumpbin /RELOCATIONS /OUT:{1} {0}", src.Format(PS), output.Format(PS)));
+                    expr = string.Format("dumpbin /RELOCATIONS /OUT:{1} {0}", src.Format(PS), output.Format(PS));
                     break;
                 case CmdName.EmitExports:
-                    pattern = ScriptPattern.create("dumpbin.exports", string.Format("dumpbin /EXPORTS /OUT:{1} {0}", source, target));
+                    expr = string.Format("dumpbin /EXPORTS /OUT:{1} {0}", source, target);
                     break;
                 case CmdName.EmitLoadConfig:
-                    pattern = ScriptPattern.create("dumpbin.loadconfig", string.Format("dumpbin /LOADCONFIG /OUT:{1} {0}", src.Format(PS), output.Format(PS)));
+                    expr = string.Format("dumpbin /LOADCONFIG /OUT:{1} {0}", src.Format(PS), output.Format(PS));
                     break;
             }
-            return ScriptPattern.expr(pattern);
+            return expr;
         }
 
         public static FileName scriptfile(FileKind kind)

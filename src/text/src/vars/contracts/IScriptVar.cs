@@ -8,14 +8,14 @@ namespace Z0
     public interface IScriptVar
     {
         /// <summary>
-        /// Specifies the variable fence, if any
-        /// </summary>
-        AsciFence Fence {get;}
-
-        /// <summary>
         /// Specifies the varible prefix, if any
         /// </summary>
         AsciSymbol Prefix {get;}
+
+        /// <summary>
+        /// Specifies the variable fence, if any
+        /// </summary>
+        AsciFence Fence {get;}
 
         /// <summary>
         /// Indicates whether the variable is prefixed
@@ -31,5 +31,11 @@ namespace Z0
 
         bool IsPrefixedFence
             => IsPrefixed && IsFenced;
+    }
+
+    public interface IScriptVar<T> : IScriptVar
+        where T : IEquatable<T>, INullity, new()    
+    {
+        bool Value(out T value);
     }
 }
