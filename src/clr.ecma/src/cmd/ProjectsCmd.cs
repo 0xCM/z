@@ -145,14 +145,14 @@ namespace Z0
         void PrintConfig(CmdArgs args)
         {
             var root = FS.dir(args[0]);
-            var config = ProjectSettings.load(root);
+            var config = Z0.ProjectFiles.load(root);
             Channel.Row(config.Format());
         }
 
         [CmdOp("projects/create")]
         void CreateProject(CmdArgs args)
         {
-            ProjectSettings.kind(args[0], out var kind);
+            Z0.ProjectFiles.kind(args[0], out var kind);
             var root = FS.dir(args[1]);
             var project = Models.CreateProject(kind, root);
             

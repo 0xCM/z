@@ -8,7 +8,6 @@ namespace Z0
     {
         dynamic Content {get;}
 
-        IJsonType Type {get;}
     }
 
     public interface IJsonValue<V> : IJsonValue

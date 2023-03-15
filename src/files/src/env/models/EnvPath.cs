@@ -61,6 +61,8 @@ namespace Z0
             return result;
         }
 
+        public override string ToString()
+            => Format();
         public override string Format()
             => FS.format(this);
 

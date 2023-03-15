@@ -160,9 +160,9 @@ namespace Z0
             return result;
         }
 
-        public static Seq<Setting> config(FilePath src)
+        public static Seq<CmdSetting> cmd(FilePath src)
         {
-            var dst = list<Setting>();
+            var dst = list<CmdSetting>();
             using var reader = src.Utf8LineReader();
             var line = TextLine.Empty;
             while(reader.Next(out line))
@@ -178,7 +178,7 @@ namespace Z0
                         {
                             var name = text.trim(text.right(left, i + "set".Length - 1));
                             var value = text.trim(skip(parts,1));
-                            dst.Add(new Setting(name, value));
+                            dst.Add(new CmdSetting(name, value));
                         }
                     }
                 }

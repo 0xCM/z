@@ -12,7 +12,6 @@ namespace Z0
 
         readonly ITextEmitter Buffer;
 
-
         internal JsonEmitter(ITextEmitter dst, JsonSerializerOptions options)
         {
             Options = options;
@@ -48,9 +47,13 @@ namespace Z0
         }
         
         public void Serialize<T>(T[] src) 
-            where T : IJsonValue
         {
             Buffer.Append(JsonSerializer.Serialize(src, Options));
+        }
+
+        public void Serialize<T>(ReadOnlySeq<T> src) 
+        {
+            Buffer.Append(JsonSerializer.Serialize(src.Storage, Options));
         }
     }
 }

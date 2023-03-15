@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static JsonTypes;
-
     [ApiHost]
     public partial class JsonValues
     {

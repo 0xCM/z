@@ -4,9 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
-    using static ProjectSettings;
+    using static ProjectFiles;
 
     public partial class ProjectModels : Channeled<ProjectModels>
     {
@@ -15,7 +13,7 @@ namespace Z0
         {
             var archive = root.DbArchive();
             var cfgpath = archive.Path("config", FileKind.Cmd);
-            var config = ProjectSettings.load(root);
+            var config = ProjectFiles.load(root);
             var kind = config.Kind();
             var project = default(IProject);
             switch(kind)
@@ -37,11 +35,35 @@ namespace Z0
             var project = default(IProject);
             var config = ConfigFile.Empty;
             var archive = root.DbArchive();
-            var cfgpath = archive.Path("config", FileKind.Cmd);
-            if(cfgpath.Exists)
-                config = ProjectSettings.load(root);
+            var develop = LaunchScript.Empty;
+            var workpsace = WorkspaceFile.Empty;
+            if(ConfigFile.path(root).Exists)
+                config = ProjectFiles.load(root);
             else
-                config = ProjectSettings.configure(kind, root);
+            {
+                config = ProjectFiles.configure(kind, root);
+                ProjectFiles.save(Channel, config);
+            }
+            if(LaunchScript.path(root).Exists)
+            {
+                develop = LaunchScript.load(root);
+            }
+            else
+            {
+                develop = LaunchScript.create(root);
+                ProjectFiles.save(Channel, develop);
+            }
+
+            if(WorkspaceFile.path(root).Exists)
+            {
+
+            }
+            else
+            {
+                workpsace = new WorkspaceFile(WorkspaceFile.path(root), new WorkspaceFolder(@string.Empty, FS.dir(".")));
+                ProjectFiles.save(Channel, workpsace);
+            }
+
             switch(kind)
             {
                 case ProjectKind.Binary:
@@ -51,7 +73,7 @@ namespace Z0
                     project = new Project(kind,root);
                 break;
             }
-            ProjectSettings.save(Channel, config, cfgpath);
+
             return project;
         }
 

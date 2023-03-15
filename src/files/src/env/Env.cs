@@ -107,7 +107,7 @@ namespace Z0
             => new (EnvTokens.LIB, path(EnvTokens.LIB));
 
         public static EnvVar<EnvPath> PATH()
-            => new (EnvTokens.PATH,path(EnvTokens.PATH));
+            => new (EnvTokens.PATH, path(EnvTokens.PATH));
 
         public static ExecToken<EnvPath> path(IWfChannel channel, EnvPathKind kind, IDbArchive dst, EnvVarKind envkind = EnvVarKind.Process)
         {            

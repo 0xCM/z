@@ -150,23 +150,10 @@ namespace Z0
         public static string serialize<T>(T src)
             => JsonSerializer.Serialize(src, options());
 
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static JsonText jtext<T>(JsonSeq<T> src)
-            where T : IJsonValue, new()
-                => new (format(src));
-
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        static string format<T>(JsonSeq<T> src)
-            where T : IJsonValue, new()
-                => src.Content?.ToString() ?? EmptyString;
-        
         public static JsonArray<T> array<T>(params T[] src)
             where T : IJsonValue, new()
                 => new JsonArray<T>(src);
                         
-        // public static JsonStream stream(StreamReader src)
-        //     => new JsonStream(src);
-            
         public static JsonArray<T> array<T>(IEnumerable<T> src)
             where T : IJsonValue, new()
                 => new JsonArray<T>(src.Array());

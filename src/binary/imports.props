@@ -1,5 +1,6 @@
 <Project>
   <ItemGroup>
     <ProjectReference Include="$(Files)" />
+    <ProjectReference Include="$(Json)" />
   </ItemGroup>
 </Project>
