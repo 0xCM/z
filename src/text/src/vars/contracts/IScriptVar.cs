@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Free]
-    public interface IScriptVar
+    public interface IScriptVar : IVar
     {
         /// <summary>
         /// Specifies the varible prefix, if any
@@ -33,9 +33,9 @@ namespace Z0
             => IsPrefixed && IsFenced;
     }
 
-    public interface IScriptVar<T> : IScriptVar
+    public interface IScriptVar<T> : IScriptVar, IVar<T>
         where T : IEquatable<T>, INullity, new()    
     {
-        bool Value(out T value);
+        
     }
 }

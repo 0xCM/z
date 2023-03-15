@@ -149,27 +149,14 @@ namespace Z0
             Channel.Row(config.Format());
         }
 
-        // public void VarValidate()
-        // {
-        //     const string Pattern = "{0} {1} {2} {3}({4},{5});";
-        //     var result = Outcome.Success;
-        //     var pattern = text.pattern(Pattern, "public", "static", "uint", "f", "x", "y");
-        //     var dst = new TextVar("dst");
-        //     var src1 = new TextVar("src1");
-        //     var src2 = new TextVar("src2");
-        //     var body = string.Format("{0}, {1}, {2}", dst, src1, src2);
-        //     var x = PatternTextExpr.init(body);
-        //     var vars = x.Vars;
-        //     Require.equal(vars.Count,3);
-        //     x["dst"] = new TextVar("dst", (Identifier)"abc");
-        //     x["src1"] = new TextVar("src1", (Identifier)"def");
-        //     x["src2"] = new TextVar("src2", (Identifier)"hij");
-
-        //     var _result = x.Eval();
-        //     Require.equal("abc, def, hij", _result);
-        // }
-
-
+        [CmdOp("projects/create")]
+        void CreateProject(CmdArgs args)
+        {
+            ProjectSettings.kind(args[0], out var kind);
+            var root = FS.dir(args[1]);
+            var project = Models.CreateProject(kind, root);
+            
+        }
         [CmdOp("projects/vars")]
         void TextExpr()
         {

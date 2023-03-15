@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
 
     partial class text
-    {
+    {        
         [MethodImpl(Inline), Op]
         public static uint lowercase(ReadOnlySpan<char> src, ref uint i, Span<char> dst)
         {

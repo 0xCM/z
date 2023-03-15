@@ -9,7 +9,7 @@ namespace Z0
         public readonly @string Name;
 
         public readonly @string Body;
-
+        
         [MethodImpl(Inline)]
         public CmdScript(string name, string body)
         {

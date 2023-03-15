@@ -23,7 +23,7 @@ namespace Z0
 
         public @string SrcId;
 
-        public ScriptVars ToCmdVars()
+        public CmdVars ToCmdVars()
             => Vars.cmdvars(
             (nameof(SrcDir), SrcDir.IsNonEmpty ? SrcDir.Format(PathSeparator.BS) : EmptyString),
             (nameof(SrcFile), SrcFile.IsNonEmpty ? SrcFile.Format() : EmptyString),

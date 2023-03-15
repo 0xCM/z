@@ -10,6 +10,28 @@ namespace Z0
 
     public partial class ProjectModels : Channeled<ProjectModels>
     {
+        
+        public IProject LoadProject(FolderPath root)
+        {
+            var archive = root.DbArchive();
+            var cfgpath = archive.Path("config", FileKind.Cmd);
+            var config = ProjectSettings.load(root);
+            var kind = config.Kind();
+            var project = default(IProject);
+            switch(kind)
+            {
+                case ProjectKind.Binary:
+                    project = new BinaryProject(root, new FileIndex());
+
+                break;
+                default:
+                    project = new Project(kind, root);
+
+                break;
+            }
+            return project;
+        }
+
         public IProject CreateProject(ProjectKind kind, FolderPath root)
         {
             var project = default(IProject);
@@ -29,6 +51,7 @@ namespace Z0
                     project = new Project(kind,root);
                 break;
             }
+            ProjectSettings.save(Channel, config, cfgpath);
             return project;
         }
 

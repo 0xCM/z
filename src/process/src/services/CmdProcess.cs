@@ -56,15 +56,15 @@ namespace Z0
         }
 
         [Op]
-        public static Outcome run(CmdLine cmd, ScriptVars vars, Receiver<string> status, Receiver<string> error, out ReadOnlySpan<TextLine> response)
+        public static Outcome run(CmdLine cmd, CmdVars vars, Receiver<string> status, Receiver<string> error, out ReadOnlySpan<TextLine> response)
             => run(cmd, vars, FilePath.Empty, status,error, out response);
 
         [Op]
         public static Outcome run(CmdLine cmd, Receiver<string> status, Receiver<string> error, out ReadOnlySpan<TextLine> response)
-            => run(cmd, ScriptVars.Empty, FilePath.Empty, status,error, out response);
+            => run(cmd, CmdVars.Empty, FilePath.Empty, status,error, out response);
 
         [Op]
-        public static Outcome run(CmdLine cmd, ScriptVars vars, FilePath log, Receiver<string> status, Receiver<string> error, out ReadOnlySpan<TextLine> response)
+        public static Outcome run(CmdLine cmd, CmdVars vars, FilePath log, Receiver<string> status, Receiver<string> error, out ReadOnlySpan<TextLine> response)
         {
             response = sys.empty<TextLine>();
             var result = Outcome.Success;
@@ -92,7 +92,7 @@ namespace Z0
         public static CmdProcess create(CmdLine cmd)
             => new CmdProcess(cmd);
         [Op]
-        public static CmdProcess create(CmdLine cmd, ScriptVars? vars, Receiver<string> status, Receiver<string> error)
+        public static CmdProcess create(CmdLine cmd, CmdVars? vars, Receiver<string> status, Receiver<string> error)
         {
             var options = new CmdProcessOptions();
             include(vars, options);
@@ -109,14 +109,14 @@ namespace Z0
         }       
 
         [Op]
-        public static CmdProcess create(CmdLine cmd, ScriptVars? vars)
+        public static CmdProcess create(CmdLine cmd, CmdVars? vars)
         {
             var options = new CmdProcessOptions();
             include(vars, options);
             return new CmdProcess(cmd, options);
         }
 
-        static void include(ScriptVars? src, CmdProcessOptions dst)
+        static void include(CmdVars? src, CmdProcessOptions dst)
         {
             if(src != null)
             {
@@ -125,7 +125,7 @@ namespace Z0
                 {
                     ref readonly var v = ref src[i];
                     if(v.Value(out var value))
-                        dst.AddEnvironmentVariable(v.VarName, value);
+                        dst.AddEnvironmentVariable(v.Name, value);
                 }
             }
         }

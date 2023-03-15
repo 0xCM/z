@@ -26,6 +26,8 @@ namespace Z0
 
             public const string SlnCmd = nameof(SlnCmd);
             
+            public const string SlnPaths = nameof(SlnPaths);
+            
             public const string ProjectKind = nameof(ProjectKind);
         }
 
@@ -38,18 +40,19 @@ namespace Z0
                 Settings = settings;
             }     
             
-            // public IEnumerable<Setting> Vars()
-            // {
-            //     foreach(var setting in Settings)
-            //     {
-                    
-            //     }
-            // }
+            public ProjectKind Kind()
+            {
+                var kind = ProjectKind.None;
+                var settings = Settings.Where(x => x.Name == SettingNames.ProjectKind);
+                if(settings.IsNonEmpty)
+                    ProjectSettings.kind(settings.First.ValueText, out kind);
+                return kind;
+            }
 
             public string Format()
             {
                 var dst = text.emitter();
-                sys.iter(Settings, setting => dst.AppendLine(setting.Format()));
+                sys.iter(Settings, setting => dst.AppendLine($"set {setting.Name}={setting.Value}"));
                 return dst.Emit();
             }
 
@@ -57,6 +60,17 @@ namespace Z0
                 => Format();
 
             public static ConfigFile Empty => new ConfigFile(sys.empty<Setting>());
+        }
+
+        public static void kind(string src, out ProjectKind dst)
+        {
+            dst = ProjectKind.None;
+            switch(src.ToLower())
+            {
+                case "binary":
+                    dst = ProjectKind.Binary;
+                break;
+            }
         }
 
         public static ConfigFile configure(ProjectKind kind, FolderPath root)

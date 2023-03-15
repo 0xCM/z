@@ -8,10 +8,10 @@ namespace Z0
     {
         public readonly FilePath Script;
 
-        public readonly ScriptVars Vars;
+        public readonly CmdVars Vars;
 
         [MethodImpl(Inline)]
-        public ToolScript(FilePath script, ScriptVars vars)
+        public ToolScript(FilePath script, CmdVars vars)
         {
             Script = script;
             Vars = vars;

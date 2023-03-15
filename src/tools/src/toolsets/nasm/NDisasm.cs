@@ -15,11 +15,11 @@ namespace Z0
 
         }
 
-        public static CmdScript script(Bitness mode, FilePath src, FilePath dst)
+        public static NamedValue<string> script(Bitness mode, FilePath src, FilePath dst)
         {
             const string Pattern = "{0} -b {1} -p intel {2} > {3}";
             var name = src.FileName.WithoutExtension.Format();
-            return new CmdScript(name,string.Format(Pattern, (byte)mode, "ndisasm", src.Format(PathSeparator.BS), dst.Format(PathSeparator.BS)));
+            return new (name,string.Format(Pattern, (byte)mode, "ndisasm", src.Format(PathSeparator.BS), dst.Format(PathSeparator.BS)));
         }
 
         public FilePath Job(Bitness mode, FolderPath input, FolderPath output)
@@ -37,17 +37,17 @@ namespace Z0
             {
                 ref readonly var script = ref skip(_scripts,i);
                 ref var path = ref seek(paths,i);
-                path = scriptDir + FS.file(script.Name.Format(), FS.Cmd);
+                path = scriptDir + FS.file(script.Name, FS.Cmd);
                 path.Overwrite(script.Format());
                 writer.WriteLine(string.Format("call {0}", path.Format(PathSeparator.BS)));
             }
             return runner;
         }
 
-        public static ReadOnlySpan<CmdScript> scripts(Bitness mode, ReadOnlySpan<FilePath> src, FolderPath dst)
+        public static ReadOnlySpan<NamedValue<string>> scripts(Bitness mode, ReadOnlySpan<FilePath> src, FolderPath dst)
         {
             var count = src.Length;
-            var buffer = alloc<CmdScript>(count);
+            var buffer = alloc<NamedValue<string>>(count);
             ref var target = ref first(buffer);
             for(var i=0; i<count; i++)
             {

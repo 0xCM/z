@@ -9,28 +9,27 @@ namespace Z0
     {
         @string Name {get;}
 
-        object Value();
-
-        bool HasValue  {get;}
-
-        char Prefix => Chars.Dollar;
-
-        Fence<char> Fence => (Chars.LBrace, Chars.RBrace);
-
-        bool IsPrefixed => Prefix != 0;
-
-        bool IsFenced => Fence.Left != 0 && Fence.Right != 0;
-
-        bool IsPrefixedFence => IsPrefixed && IsFenced;
+        bool Value(out object value);
     }
 
     [Free]
     public interface IVar<T> : IVar
-        where T : IEquatable<T>, IComparable<T>
+        where T : IEquatable<T>, INullity, new()    
     {
-        new T Value();
+        bool Value(out T value);
 
-        object IVar.Value() 
-            => Value();
+        bool IVar.Value(out object value) 
+        {
+            if(Value(out T _value))
+            {
+                value = _value;
+                return true;
+            }
+            else
+            {
+                value = null;
+                return false;
+            }
+        }
     }
 }

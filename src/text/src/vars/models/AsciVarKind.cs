@@ -4,14 +4,19 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public enum ScriptVarClass : byte
+    [Flags]
+    public enum AsciVarKind : uint
     {
         None = 0,
 
-        Fenced = 1,
+        Cmd = 1,
 
-        Prefixed = 2,
+        Bash = 2,
 
-        PrefixedFence = Fenced | Prefixed
+        Powershell = 3,
+
+        MsBuild = 4,
+
+        Template = 5,
     }
 }

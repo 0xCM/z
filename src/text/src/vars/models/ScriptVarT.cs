@@ -6,10 +6,10 @@ namespace Z0
 {
     using api = Vars;
 
-    public record class ScriptVar<T> : IScriptVar
+    public record class ScriptVar<T> : IScriptVar<T>
         where T : IEquatable<T>, INullity, new()
     {
-        public readonly @string VarName;
+        public readonly @string Name;
 
         public readonly AsciFence Fence;
 
@@ -20,7 +20,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public ScriptVar(string name, AsciSymbol prefix, AsciFence fence, T value = default)
         {
-            VarName = name;
+            Name = name;
             Prefix = prefix;
             Fence = fence;
             _Value = value;
@@ -31,6 +31,9 @@ namespace Z0
 
         AsciSymbol IScriptVar.Prefix
             => Prefix;
+
+        @string IVar.Name
+            => Name;
 
         [MethodImpl(Inline)]
         public bool Value(out T value)
@@ -68,19 +71,19 @@ namespace Z0
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => VarName.IsEmpty;
+            get => Name.IsEmpty;
         }
 
         public bool IsNonEmpty
         {
             [MethodImpl(Inline)]
-            get => VarName.IsNonEmpty;
+            get => Name.IsNonEmpty;
         }
 
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => VarName.Hash;
+            get => Name.Hash;
         }
 
         [MethodImpl(Inline)]
@@ -103,6 +106,6 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator ScriptVar(ScriptVar<T> src)
-            => new ScriptVar(src.VarName, src.Prefix,src.Fence, src._Value?.ToString() ?? EmptyString);
+            => new ScriptVar(src.Name, src.Prefix,src.Fence, src._Value?.ToString() ?? EmptyString);
     }
 }

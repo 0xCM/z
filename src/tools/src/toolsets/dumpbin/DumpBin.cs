@@ -91,7 +91,7 @@ namespace Z0
             public static ToolScript DumpLib(FilePath input, IDbArchive dst)
                 => Cmd.script(dst.Path("dump-lib",FileKind.Cmd), vars(input.FolderPath, input.FileName, dst.Root));
 
-            static ScriptVars vars(FolderPath SrcDir, FileName SrcFile, FolderPath DstDir)
+            static CmdVars vars(FolderPath SrcDir, FileName SrcFile, FolderPath DstDir)
                 => Vars.cmdvars(
                     ("SrcDir", SrcDir.Format(PathSeparator.BS)),
                     ("SrcFile", SrcFile.Format()),
@@ -156,13 +156,13 @@ namespace Z0
         public Identifier ScriptId(CmdName cmd, FileKind kind)
             => string.Format("{0}.{1}.{2}", Id, kind.Format(), CmdSymbols[cmd].Expr);
 
-        public CmdScript Script<T>(string name, CmdName cmd, IEnumerable<T> src, IDbArchive output)
+        public string Script<T>(string name, CmdName cmd, IEnumerable<T> src, IDbArchive output)
             where T : IBinaryModule
         {
             var emitter = text.emitter();
             foreach(var module in src)
                 emitter.AppendLine(Expr(cmd, module.Path, output));
-            return new CmdScript(cmd.ToString(),emitter.Emit());
+            return emitter.Emit();
         }
 
         public string Expr(CmdName name, FilePath src, IDbArchive dst)
@@ -247,9 +247,10 @@ namespace Z0
         FilePath GenScript<T>(CmdName cmd, IEnumerable<T> src, FileKind kind, IDbArchive dst)
             where T : IBinaryModule
         {
+            var name = ScriptId(cmd, kind).ToString();
             var script = Script(ScriptId(cmd, kind), cmd, src, dst);
-            var path = dst.Path(FS.file(script.Name.Format(), FS.Cmd));
-            Channel.FileEmit(script.Format(), path);
+            var path = dst.Path(FS.file(name, FS.Cmd));
+            Channel.FileEmit(script, path);
             return path;
         }
 

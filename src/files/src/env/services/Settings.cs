@@ -171,7 +171,16 @@ namespace Z0
                 {
                     var parts = line.Split(Chars.Eq);
                     if(parts.Length == 2)
-                        dst.Add(new Setting(skip(parts,0), skip(parts,1)));
+                    {
+                        var left = skip(parts,0);
+                        var i = text.index(left, "set");
+                        if(i>= 0)
+                        {
+                            var name = text.trim(text.right(left, i + "set".Length - 1));
+                            var value = text.trim(skip(parts,1));
+                            dst.Add(new Setting(name, value));
+                        }
+                    }
                 }
             }
             return dst.Array();
