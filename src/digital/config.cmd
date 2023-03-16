@@ -1,3 +1,3 @@
 @echo off
-set ProjectName=bv2
+set ProjectName=digital
 call %~dp0..\config.cmd

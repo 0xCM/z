@@ -2,12 +2,21 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Binary
+namespace Z0
 {
-    public class Streams
+    public partial class BinaryStreams
     {
         public static IBinaryStream stream(FilePath src)
             => new FileStream(src);
 
+        public class ByteStream : BinaryStream<byte> 
+        {
+            protected ByteStream(MemoryAddress @base, uint length)
+                : base(@base,length)            
+            {
+
+            }
+
+        }
     }
 }

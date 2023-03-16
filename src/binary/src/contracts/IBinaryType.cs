@@ -2,11 +2,16 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Binary
+namespace Z0
 {
-    public interface IStreamLocator<T>
-        where T : unmanaged
+    public interface IBinaryType
     {
-        MemoryAddress Locate(IBinaryRule rule, IBinaryStream<T> src);
+        @string Name {get;}
+    }
+
+    public interface IBinaryType<T> : IBinaryType
+        where T : BinaryType
+    {
+
     }
 }

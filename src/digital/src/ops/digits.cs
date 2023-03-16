@@ -655,8 +655,8 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static ReadOnlySpan<C> digits(N16 n, Base10 @base, ReadOnlySpan<C> src)
         {
-            var storage = ByteBlock16.Empty;
-            var dst = recover<C>(storage.Bytes);
+            var storage = CharBlock8.Empty;
+            var dst = recover<C>(bytes(storage));
             var count = digits(base10, src, dst);
             return count == 0 ? default : slice(dst,0,count);
         }

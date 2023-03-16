@@ -45,7 +45,7 @@ namespace Z0
         {
             var storage = CharBlock16.Null;
             var buffer = storage.Data;
-            Asci.convert(src, buffer);
+            AsciSymbols.convert(src, buffer);
             return NumericParser.parse(@base, buffer, out dst);
         }
 
