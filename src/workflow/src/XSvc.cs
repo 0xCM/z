@@ -25,9 +25,18 @@ namespace Z0
 
             public ApiPacks ApiPacks(IWfRuntime wf)
                 => Service<ApiPacks>(wf);
+
+
+            public IApiService CsGenCmd(IWfRuntime wf)
+                => Service<CsGenCmd>(wf);
+
         }
 
         static ServiceCache Services => ServiceCache.Instance;
+
+
+        public static IApiService CsGenCmd(this IWfRuntime wf)
+            => Services.CsGenCmd(wf);
 
         public static MemoryChecks MemoryChecks(this IWfRuntime wf)
             => Services.MemoryChecks(wf);         

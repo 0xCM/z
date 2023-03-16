@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public partial class CsLang : AppService<CsLang>
+    public partial class CsLang : Channeled<CsLang>
     {
 
         public StringLitEmitter StringLits()
@@ -86,8 +86,5 @@ namespace Z0
 
     }
 
-    public class CsCode : AppService<CsCode>
-    {
 
-    }
 }

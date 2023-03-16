@@ -10,6 +10,9 @@ global using System.Runtime.InteropServices;
 global using System.Text.Json;
 global using System.Text.Json.Nodes;
 global using System.Text.Json.Serialization;
+global using Microsoft.CodeAnalysis;
+global using Microsoft.CodeAnalysis.CSharp;
+global using Microsoft.CodeAnalysis.Emit;
 global using static Z0.Root;
 [assembly: PartId(PartId.Lang)]
 namespace Z0.Parts

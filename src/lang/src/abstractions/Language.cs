@@ -4,6 +4,21 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Lang
 {
+    // [Language]
+    // public abstract class Language : ILanguage
+    // {
+    //     public LanguageCode Name {get;}
+
+    //     protected Language()
+    //     {
+    //         Name = 0;
+    //     }
+
+    //     protected Language(LanguageCode name)
+    //     {
+    //         Name = name;
+    //     }
+    // }     
     public abstract class Language : ILanguage
     {
         protected Language(string id, string name)

@@ -8,8 +8,6 @@ namespace Z0
 
     public class AsmGenCmd : WfAppCmd<AsmGenCmd>
     {
-        CsLang CsLang => Wf.CsLang();
-
         SymbolFactories SymbolFactories => Channel.Channeled<SymbolFactories>();
      
         SymGen SymGen => Channel.Channeled<SymGen>();

@@ -16,7 +16,7 @@ namespace Z0.Asm
 
         const string MnemonicNameProvider = "AsmMnemonicNames";
 
-        CsLang CsLang => Service(Wf.CsLang);
+        CsLang CsLang => Channel.Channeled<CsLang>();
 
         SymGen SymGen => Channel.Channeled<SymGen>();
 

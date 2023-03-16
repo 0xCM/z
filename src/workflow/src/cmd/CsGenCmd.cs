@@ -12,7 +12,7 @@ namespace Z0
 
         SymbolFactories SymbolFactories => Channel.Channeled<SymbolFactories>();
 
-        CsLang CsLang => Wf.CsLang();
+        CsLang CsLang => Channel.Channeled<CsLang>();
 
         [CmdOp("gen/asci/bytes")]
         Outcome EmitAsciBytes(CmdArgs args)

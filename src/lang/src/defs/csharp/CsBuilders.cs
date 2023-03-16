@@ -5,7 +5,9 @@
 namespace Z0
 {
     using System.Linq;
-    
+    using Microsoft.CodeAnalysis;
+    using Microsoft.CodeAnalysis.CSharp;
+
     public class CsBuilders
     {
         public static PortableExecutableReference peref(Type src)

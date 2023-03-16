@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class XTend
+    public static partial class XTend
     {
         [Op]
         public static string DottedName(this Type src)

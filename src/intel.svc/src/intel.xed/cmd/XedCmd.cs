@@ -12,7 +12,7 @@ namespace Z0
 
     public partial class XedCmd : WfAppCmd<XedCmd>
     {
-        CsLang CsLang => Wf.CsLang();
+        CsLang CsLang => Channel.Channeled<CsLang>();
 
         AsmObjects AsmObjects => Wf.AsmObjects();
 

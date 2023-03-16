@@ -26,21 +26,10 @@ namespace Z0
         class ServiceCache : AppServices<ServiceCache>
         {
 
-            public CsLang CsLang(IWfRuntime wf)
-                => Service<CsLang>(wf);
-
-            public IApiService CsGenCmd(IWfRuntime wf)
-                => Service<CsGenCmd>(wf);
         }
 
 
         static ServiceCache Services = ServiceCache.Instance;
 
-
-        public static CsLang CsLang(this IWfRuntime wf)
-            => Services.CsLang(wf);
-
-        public static IApiService CsGenCmd(this IWfRuntime wf)
-            => Services.CsGenCmd(wf);
     }
 }

@@ -6,6 +6,7 @@ namespace Z0
 {
     using static sys;
     using static CsPatterns;
+    using static CsModels;
     
     using System.Linq;
 
