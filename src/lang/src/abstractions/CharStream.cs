@@ -44,7 +44,7 @@ namespace Z0
         public override bool Next(out char dst)
         {
             var result = false;
-            dst = AsciNull.Literal;
+            dst = '0';
             if(IsNonEmpty)
             {
                 dst = Buffer[Index++];

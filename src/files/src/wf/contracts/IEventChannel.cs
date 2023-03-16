@@ -19,7 +19,7 @@ namespace Z0
 
         ExecToken Ran<T>(ExecFlow<T> flow, [CallerName] string msg = null);
 
-        ExecToken Ran(ExecFlow flow);
+        ExecToken Ran(ExecFlow flow, bool success = true);
         
         ExecToken Ran<T>(ExecFlow<T> flow, string msg, FlairKind flair = FlairKind.Ran);
 

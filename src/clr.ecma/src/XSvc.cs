@@ -17,7 +17,7 @@ namespace Z0
             public MsilSvc MsilSvc(IWfRuntime wf)
                 => Service<MsilSvc>(wf);
 
-            public EcmaCmd EcmaCmd(IWfRuntime wf)
+            public IApiService EcmaCmd(IWfRuntime wf)
                 => Service<EcmaCmd>(wf);
 
             public ClrCmd ClrCmd(IWfRuntime wf)
@@ -31,6 +31,10 @@ namespace Z0
 
             public IApiService ProjectsCmd(IWfRuntime wf)
                 => Service<ProjectsCmd>(wf);
+
+            public IApiService BinaryCmd(IWfRuntime wf)
+                => Service<BinaryCmd>(wf);
+
         }
 
         static Svc Services => Svc.Instance;
@@ -58,6 +62,9 @@ namespace Z0
 
         public static IApiService ProjectsCmd(this IWfRuntime wf)
             => Services.ProjectsCmd(wf);
+
+        public static IApiService BinaryCmd(this IWfRuntime wf)
+            => Services.BinaryCmd(wf);
 
     }
 }

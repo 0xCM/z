@@ -3,6 +3,5 @@
   <ItemGroup>
     <ProjectReference Include="$(Json)" />
     <ProjectReference Include="$(Files)" />
-    <ProjectReference Include="$(Commands)" />
   </ItemGroup>
 </Project>

@@ -10,7 +10,7 @@ namespace Z0
     {
         public void RunChecks(IApiPack src)
         {
-            CaptureWfChecks.run(src, Emitter);            
+            CaptureWfChecks.run(src, Channel);            
         }
 
         static CaptureWfRunner runner(IWfRuntime wf, CaptureWfSettings settings, IApiPack dst, CaptureTransport transport)

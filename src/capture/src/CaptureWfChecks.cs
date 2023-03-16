@@ -21,7 +21,7 @@ namespace Z0
 
         }
 
-        public static void run(IApiPack src, WfEmit channel)
+        public static void run(IApiPack src, IWfChannel channel)
         {
             // var log = text.emitter();
             // var capacity = Pow2.T16;

@@ -18,6 +18,7 @@ namespace Z0
                 wf.EcmaCmd(),
                 wf.CsGenCmd(),
                 wf.ProjectsCmd(),
+                wf.BinaryCmd(),
             };
 
         static int main(string[] args)

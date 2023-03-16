@@ -6,22 +6,22 @@ namespace Z0
 {
     public ref struct CheckResourcesStep
     {
-        readonly IWfRuntime Wf;
+        readonly IWfChannel Channel;
 
         readonly FilePath Source;
 
         [MethodImpl(Inline)]
-        public CheckResourcesStep(IWfRuntime wf, FilePath src)
+        public CheckResourcesStep(IWfChannel wf, FilePath src)
         {
-            Wf = wf;
+            Channel = wf;
             Source = src;
         }
 
         public void Run()
         {
-            var flow = Wf.Running(nameof(CheckResourcesStep));
+            var flow = Channel.Running(nameof(CheckResourcesStep));
             TryRun();
-            Wf.Ran(flow);
+            Channel.Ran(flow);
         }
 
         void Execute()
@@ -29,7 +29,7 @@ namespace Z0
             using var map = MemoryFiles.map(Source);
             var @base = map.BaseAddress;
             var sig = map.View(0, 2).AsUInt16();
-            Wf.Status(map.Description);
+            Channel.Status(map.Description);
         }
 
         void TryRun()
@@ -40,7 +40,7 @@ namespace Z0
             }
             catch(Exception e)
             {
-                Wf.Error(e);
+                Channel.Error(e);
             }
         }
 

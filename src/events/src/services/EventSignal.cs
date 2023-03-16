@@ -8,12 +8,12 @@ namespace Z0
 
     public class EventSignal
     {
-        readonly AppEventSource Source;
+        readonly Type Source;
 
         readonly IEventSink Sink;
 
         [MethodImpl(Inline)]
-        public EventSignal(IEventSink sink, AppEventSource src)
+        public EventSignal(IEventSink sink, Type src)
         {
             Source = src;
             Sink = sink;
@@ -28,21 +28,21 @@ namespace Z0
 
         public RunningEvent Running()
         {
-            var e = running(Source.Type);
+            var e = running(Source);
             Raise(e);
             return e;
         }
 
         public RunningEvent<T> Running<T>(T data)
         {
-            var e = running(Source.Type, data);
+            var e = running(Source, data);
             Raise(e);
             return e;
         }
 
         public RanEvent<T> Ran<T>(T msg)
         {
-            var ev = ran(Source.Type, msg);
+            var ev = ran(Source, msg);
             Raise(ev);
             return ev;
         }
@@ -84,91 +84,91 @@ namespace Z0
 
         public EmittingTableEvent EmittingTable(Type table, FilePath dst)
         {
-            var ev = emittingTable(Source.Type, table, dst);
+            var ev = emittingTable(Source, table, dst);
             Raise(ev);
             return ev;
         }
 
         public EmittingTableEvent<T> EmittingTable<T>(FilePath dst)
         {
-            var ev = emittingTable<T>(Source.Type, dst);
+            var ev = emittingTable<T>(Source, dst);
             Raise(ev);
             return ev;
         }
 
         public EmittedTableEvent<T> EmittedTable<T>(Count count, FilePath dst)
         {
-            var e = emittedTable<T>(Source.Type, count, dst);
+            var e = emittedTable<T>(Source, count, dst);
             Raise(e);
             return e;
         }
 
         public EmittedTableEvent EmittedTable(Type table, Count count, FilePath dst)
         {
-            var ev = emittedTable(Source.Type, TableId.identify(table), count, dst);
+            var ev = emittedTable(Source, TableId.identify(table), count, dst);
             Raise(ev);
             return ev;
         }
 
         public EmittingFileEvent EmittingFile(FilePath dst)
         {
-            var ev = emittingFile(Source.Type, dst);
+            var ev = emittingFile(Source, dst);
             Raise(ev);
             return ev;
         }
 
         public EmittedFileEvent EmittedFile(Count count, FilePath dst)
         {
-            var ev = emittedFile(Source.Type, dst, count);
+            var ev = emittedFile(Source, dst, count);
             Raise(ev);
             return ev;
         }
 
         public EmittedFileEvent EmittedFile(FileEmission ran)
         {
-            var ev = emittedFile(Source.Type, ran.Target);
+            var ev = emittedFile(Source, ran.Target);
             Raise(ev);
             return ev;
         }
 
         public EmittedFileEvent<T> EmittedFile<T>(FilePath dst, T msg)
         {
-            var ev = emittedFile(Source.Type, dst, msg);
+            var ev = emittedFile(Source, dst, msg);
             Raise(ev);
             return ev;
         }
 
         public StatusEvent<T> Status<T>(T data, FlairKind flair = FlairKind.Status)
         {
-            var ev = status(Source.Type, data, flair);
+            var ev = status(Source, data, flair);
             Raise(ev);
             return ev;
         }
 
         public BabbleEvent<T> Babble<T>(T data)
         {
-            var ev = babble(Source.Type, data);
+            var ev = babble(Source, data);
             Raise(ev);
             return ev;
         }
 
         public ErrorEvent<string> Error(Exception e, EventOrigin origin)
         {
-            var ev = error(Source.Type, e, origin);
+            var ev = error(Source, e, origin);
             Raise(ev);
             return ev;
         }
 
         public ErrorEvent<T> Error<T>(T msg, EventOrigin origin)
         {
-            var ev = error(Source.Type, msg, origin);
+            var ev = error(Source, msg, origin);
             Raise(ev);
             return ev;
         }
 
         public WarnEvent<T> Warn<T>(T msg, EventOrigin origin)
         {
-            var ev = warn(Source.Type, msg, origin);
+            var ev = warn(Source, msg, origin);
             Raise(ev);
             return ev;
         }

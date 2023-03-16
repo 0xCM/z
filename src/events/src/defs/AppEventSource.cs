@@ -20,6 +20,10 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator AppEventSource(Type src)
-            => new AppEventSource(src);
+            => new AppEventSource(src);                
+
+        [MethodImpl(Inline)]
+        public static implicit operator Type(AppEventSource src)
+            => src.Type;
     }
 }

@@ -42,33 +42,33 @@ namespace Z0
             return Flow(data);
         }
 
-        ExecFlow<T> Running<T>(AppEventSource host, T msg)
+        ExecFlow<T> Running<T>(Type host, T msg)
         {
             signal(EventSink, host).Running(msg);
             return Flow(msg);
         }
 
-        ExecFlow<string> Running(AppEventSource host, [CallerName] string caller = null)
+        ExecFlow<string> Running(Type host, [CallerName] string caller = null)
         {
             signal(EventSink, host).Running(caller);
             return Flow(caller);
         }
 
-        ExecToken Ran(ExecFlow src)        
+        ExecToken Ran(ExecFlow src, bool success = true)
         {
-            var token = Completed(src);
+            var token = Completed(src, success);
             signal(EventSink).Ran(src);
             return token;
         }
 
-        ExecToken Ran<T>(ExecFlow<T> src)
+        ExecToken Ran<T>(ExecFlow<T> src, bool success = true)
         {
-            var token = Completed(src);
+            var token = Completed(src, success);
             signal(EventSink).Ran(src.Data);
             return token;
         }
 
-        ExecToken Ran<T>(AppEventSource host, ExecFlow<T> src, FlairKind flair = FlairKind.Ran)
+        ExecToken Ran<T>(Type host, ExecFlow<T> src, FlairKind flair = FlairKind.Ran)
         {
             var token = Completed(src);
             signal(EventSink, host).Ran(src.Data);
@@ -131,9 +131,9 @@ namespace Z0
             return Flow(host);
         }
 
-        ExecToken Created(ExecFlow<Type> flow)
+        ExecToken Created(ExecFlow<Type> flow, Type host)
         {
-            signal(EventSink).Created(flow.Data);
+            signal(EventSink, host).Created(flow.Data);
             return Completed(flow);
         }
 

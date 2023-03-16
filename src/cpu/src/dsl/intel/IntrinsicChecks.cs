@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Expr;
     using dsl.intel;
     using dsl.intel.intrinsics;
 
@@ -12,11 +11,10 @@ namespace Z0
 
     using K = dsl.intel.IntrinsicName;
 
-
     [ApiHost]
     public sealed class IntrinsicsChecks : PageBank16x4x4<IntrinsicsChecks>
     {
-        public static IntrinsicsChecks create(WfEmit channel)
+        public static IntrinsicsChecks create(IWfChannel channel)
         {
             var dst = new IntrinsicsChecks();
             dst.Channel = channel;
@@ -26,7 +24,7 @@ namespace Z0
 
         const NumericKind Closure = UnsignedInts;
 
-        WfEmit Channel;
+        IWfChannel Channel;
 
         IPolySource Random;
 

@@ -7,11 +7,7 @@ namespace Z0
     [Event(Kind)]
     public readonly struct RunningEvent<T> : IInitialEvent<RunningEvent<T>>
     {
-        public const string EventName = GlobalEvents.Running;
-
         public const EventKind Kind = EventKind.Running;
-
-        public static EventLevel Level => FlairKind.Status;
 
         public EventId EventId {get;}
 

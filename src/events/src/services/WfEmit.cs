@@ -7,18 +7,27 @@ namespace Z0
     using static sys;
     using static Events;
 
-    public class WfEmit : IWfChannel
+    partial class XTend
     {
-        public static WfEmit create(IWfRuntime wf, AppEventSource host)
-            => new WfEmit(wf, host);
+        public static IWfChannel Rehost(this IWfChannel channel, Type host)
+            => WfChannel.create(((WfChannel)channel).Wf, host);
+    }
 
-        readonly IWfRuntime Wf;
+    public class WfChannel : IWfChannel
+    {
+        public static WfChannel create(IWfRuntime wf, Type host)
+            => new WfChannel(wf, host);
 
-        readonly AppEventSource Host;
+        internal readonly IWfRuntime Wf;
 
-        WfEmit(IWfRuntime wf, AppEventSource host)
+        readonly Type Host;
+
+        readonly IEventSink EventSink;
+
+        WfChannel(IWfRuntime wf, Type host)
         {
             Wf = wf;
+            EventSink = wf.EventSink;
             Host = host;
         }
 
@@ -27,15 +36,29 @@ namespace Z0
 
         }
 
+        ExecToken NextExecToken() => Wf.NextExecToken();
+
+        ExecFlow<T> Flow<T>(T data)
+            => new ExecFlow<T>(this, data, NextExecToken());
+
+        TableFlow<T> TableFlow<T>(FilePath dst)
+            => new TableFlow<T>(this, dst, NextExecToken());
+
+        FileEmission Flow(FilePath dst)
+            => new FileEmission(NextExecToken(), dst, 0);
+
         public ExecToken Completed(ExecFlow src, bool success = true)
             => TokenDispenser.close(src, success);
 
         public EventId Raise<E>(E e)
             where E : IEvent
-                => Wf.Raise(e);
+        {
+            EventSink.Deposit(e);
+            return e.EventId;
+        }
 
         public void Babble<T>(T content)
-            => Wf.Babble(Host, content);
+            => signal(EventSink, Host).Raise(babble(Host,content));
 
         public void Babble(string pattern, params object[] args)
             => Wf.Babble(Host, string.Format(pattern, args));
@@ -56,7 +79,7 @@ namespace Z0
             => Wf.Warn(content, caller, file, line);
 
         public void Error<T>(T content, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
-            => Wf.Error(Host, content, caller, file, line);
+            => signal(EventSink, Host).Error(content, Events.originate("WorkflowError", caller, file, line));
 
         public void Write<T>(T content)
             => Wf.Data(Host, content);
@@ -83,7 +106,7 @@ namespace Z0
             => Wf.Creating(service);
 
         public ExecToken Created(ExecFlow<Type> flow)
-            => Wf.Created(flow);
+            => Wf.Created(flow, Host);
 
         public ExecToken Completed<T>(ExecFlow<T> flow, Type host, Exception e, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
             => Wf.Completed(flow, host, e, caller, file, line);
@@ -94,11 +117,11 @@ namespace Z0
         public ExecFlow<T> Running<T>(T msg)
             => Wf.Running(Host, msg);
 
-        public ExecFlow<string> Running([CallerName] string msg = null)
-            => Wf.Running(Host, msg);
+        public ExecFlow<string> Running([CallerName] string caller = null)
+            => Wf.Running(Host, caller);
 
-        public ExecToken Ran<T>(ExecFlow<T> flow, [CallerName] string msg = null)
-            => Wf.Ran(Host, flow.WithMsg(msg));
+        public ExecToken Ran<T>(ExecFlow<T> flow, [CallerName] string caller = null)
+            => Wf.Ran(Host, flow.WithMsg(caller));
 
         public ExecToken Ran<T>(ExecFlow<T> flow, string msg, FlairKind flair = FlairKind.Ran)
             => Wf.Ran(Host, flow.WithMsg(msg), flair);
@@ -128,8 +151,8 @@ namespace Z0
         public ExecToken EmittedFile(FileEmission flow)
             => Wf.EmittedFile(flow);
 
-        public ExecToken Ran(ExecFlow flow)
-            => Wf.Ran(flow);
+        public ExecToken Ran(ExecFlow flow, bool success = true)
+            => Wf.Ran(flow, success);
 
         public ExecToken EmittedBytes(FileEmission flow, ByteSize size)
             => EmittedFile(flow, AppMsg.EmittedBytes.Capture(size, flow.Target));
@@ -162,16 +185,7 @@ namespace Z0
 
         public ExecToken TableEmit<T>(ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding)
             => CsvTables.emit(Wf.Channel, rows, dst, encoding);
-        // {
-        //     var emitting = EmittingTable<T>(dst);
-        //     var formatter = CsvTables.formatter(typeof(T));
-        //     using var writer = dst.Emitter(encoding);
-        //     writer.WriteLine(formatter.FormatHeader());
-        //     for (var i = 0; i < rows.Length; i++)
-        //         writer.WriteLine(formatter.Format(skip(rows, i)));
-        //     return EmittedTable(emitting, rows.Length, dst);
-        // }
-
+ 
         public ExecToken TableEmit<T>(ReadOnlySpan<T> src, ReadOnlySpan<byte> widths, TextEncodingKind encoding, FilePath dst)
         {
             var flow = Wf.EmittingTable<T>(Host, dst);

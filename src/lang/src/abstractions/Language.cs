@@ -12,11 +12,11 @@ namespace Z0.Lang
             LanguageName = name;
         }
 
-        public readonly asci8 LanguageCode;
+        public readonly @string LanguageCode;
 
         public readonly string LanguageName;
 
-        asci8 ILanguage.LanguageCode 
+        @string ILanguage.LanguageCode 
             => LanguageCode;
 
         string ILanguage.LanguageName 

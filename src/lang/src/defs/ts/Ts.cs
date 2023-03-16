@@ -26,7 +26,7 @@ namespace Z0.Lang
         public SourceFile Source(FilePath path, string content)
             => lang.source(LanguageName, path,content);
 
-        public ICodeGen Generator(IWfRuntime wf)
+        public ICodeGen Generator(IWfChannel wf)
             => TsGen.create(wf);
     }
 }

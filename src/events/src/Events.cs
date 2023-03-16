@@ -37,10 +37,6 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static EventSignal signal(IEventSink sink, AppEventSource src)
-            => new EventSignal(sink, src);
-
-        [MethodImpl(Inline), Op]
         public static EventSignal signal(IEventSink dst)
             => new EventSignal(dst, dst.Host);
 

@@ -8,68 +8,76 @@ namespace Z0
 
     public class BinaryTypes
     {
+        public static BinaryRecordType record(string name, params IBinaryField[] fields)
+            => new BinaryRecordType(name, fields);
+
+        public static IntegerType signed(ushort width) 
+            => new (Sign.Signed, width);
+        
+        public static IntegerType unsigned(ushort width) 
+            => new (Sign.Unsigned, width);
+        
+        public static AlignedSegment segment(string name, ByteSize size, ByteSize alignment) 
+            => new (name, size, alignment);
+
+        public static UnmanagedType unmanaged(string name, BitWidth width)
+            => new UnmanagedType(name,width, width);
+
+        public static UnmanagedType unmanged<T>()
+            where T : unmanaged
+                => new UnmanagedType(typeof(T).Name, width<T>(), width<T>());
+
+        public enum Sign : sbyte
+        {
+            Signed = -1,
+
+            None = 0,
+
+            Unsigned = 1
+        }
+
+        public static bool parse(char c, out Sign dst)
+        {
+            var result = false;
+            dst = 0;
+            switch(c)
+            {
+                case 'i':
+                    dst = Sign.Signed;
+                    result = true;
+                break;
+                case 'u':
+                    dst = Sign.Unsigned;
+                    result = true;
+                break;                                       
+            }
+            
+            return result;
+        }
+
         public static bool parse(ReadOnlySpan<char> src, out IntegerType dst)
         {
             var result = false;
-            var count = src.Length;
             dst = default;
-            var sign = default(char);
-            Span<DecimalDigitSym> digits = stackalloc DecimalDigitSym[6];
-            for(var i=0; i<src.Length; i++)
+            Span<char> buffer = stackalloc char[6];
+            result = parse(first(src), out Sign sign);
+            if(result && DigitParsers.parse(base10, slice(src,1), out ushort width))
             {
-                ref readonly var c = ref skip(src,i);
-                if(i == 0)
-                {
-                    switch(c)
-                    {
-                        case 'i':
-                            sign = 'i';
-                        break;
-                        case 'u':
-                            sign = 'u';
-                        break;                        
-                    }
-                    if(sign == 0)
-                        break;
-                }
-                else
-                {
-                    switch(c)
-                    {
-                        case '0':
-                        break;
-                        case '1':
-                        break;
-                        case '2':
-                        break;
-                        case '3':
-                        break;
-                        case '4':
-                        break;
-                        case '5':
-                        break;
-                        case '6':
-                        break;
-                        case '7':
-                        break;
-                        case '8':
-                        break;
-                        case '9':
-                        break;
-                    }
-                }
+                dst = new IntegerType(sign, width);
+                result = true;
             }
             return result;
         }
-        public static IntegerType integer(bool signed, uint width)
-            => new (signed,width);
+
+        public static IntegerType integer(Sign sign, ushort width)
+            => new (sign,width);
 
         public static BinarySeq seq(BinaryType ct, uint n)
             => new BinarySeq(ct,n);
 
-        public abstract record class SegmentType : BinaryType
+        public abstract record class BinarySegment : BinaryType
         {
-            protected SegmentType(@string name)
+            protected BinarySegment(@string name)
                 : base(name)
             {
                 
@@ -85,32 +93,61 @@ namespace Z0
             }
         }
 
-        public record class Aligned : SegmentType
+        public record class AlignedSegment : BinarySegment
         {
-            public Aligned(@string name, ByteSize aligment)
+            public AlignedSegment(@string name, ByteSize size, ByteSize aligment)
                 : base(name)
             {
+                Size = size;
                 Alignment = aligment;
             }
 
-            public readonly ByteSize Alignment;           
+            public readonly ByteSize Size;
+
+            public readonly ByteSize Alignment;
         }
 
-        public sealed record class IntegerType : BinaryType
+        public record class UnmanagedType : BinaryType
         {
-            internal static string name(bool signed, BitWidth width)
-                => signed ? $"i{(uint)width}" : $"u{(uint)width}";
-
-            internal IntegerType(bool signed, BitWidth width)
-                : base(name(signed,width))
+            public UnmanagedType(@string name, BitWidth width, BitWidth aligned)
+                : base(name)
             {
-                Signed = signed;
                 Width = width;
+                AlignedWidth = aligned;
             }
 
-            public readonly bool Signed;
-
             public readonly BitWidth Width;
+
+            public readonly BitWidth AlignedWidth;
+        }
+
+        public sealed record class IntegerType : UnmanagedType
+        {
+            internal static string name(Sign sign, ushort width)
+                => sign == Sign.Signed  ? $"i{width}" : $"u{width}";
+
+            internal IntegerType(Sign sign, ushort width)
+                : base(name(sign, width), width, BinaryCalcs.align(width, 8))
+            {
+                Sign = sign;
+            }
+
+            public readonly Sign Sign;
+
+            public Hash32 Hash
+            {
+                [MethodImpl(Inline)]
+                get => (Hash16)(ushort)Sign | (Hash16)(ushort)Width;
+            }
+
+            public override int GetHashCode()
+                => Hash;
+            
+            public bool Equals(IntegerType src)
+                => Sign == src.Sign && Width == src.Width;
+
+            public override string ToString()
+                => Name;
         }
 
         public record class BinarySeq : BinaryType
@@ -128,9 +165,9 @@ namespace Z0
             public readonly uint CellCount;            
         }
 
-        public record class RecordType : BinaryType
+        public record class BinaryRecordType : BinaryType
         {
-            public RecordType(@string name, IBinaryField[] fields)
+            public BinaryRecordType(@string name, IBinaryField[] fields)
                 : base(name)
             {
                 Fields = fields;

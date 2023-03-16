@@ -11,6 +11,10 @@ namespace Z0
     partial struct Digital
     {
         [Op]
+        public static Outcome parse(Base10 @base, ReadOnlySpan<char> src, out ushort dst)
+            => NumericParser.parse(@base, src, out dst);
+
+        [Op]
         public static Outcome parse(Base10 @base, ReadOnlySpan<C> src, out ushort dst)
         {
             var storage = CharBlock16.Null;

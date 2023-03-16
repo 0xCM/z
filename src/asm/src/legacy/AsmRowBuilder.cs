@@ -6,7 +6,7 @@ namespace Z0.Asm
 {
     using System.Linq;
 
-    using static core;
+    using static sys;
 
     public sealed class AsmRowBuilder : AppService<AsmRowBuilder>
     {
@@ -50,7 +50,7 @@ namespace Z0.Asm
         Index<AsmDetailRow> BuildRows(ReadOnlySpan<ApiCodeBlock> src)
         {
             var count = src.Length;
-            var flow = Wf.Running(Msg.CreatingAsmRowsFromBlocks.Format(count));
+            var flow = Channel.Running(Msg.CreatingAsmRowsFromBlocks.Format(count));
             var dst = list<AsmDetailRow>();
             for(var i=0u; i<count; i++)
                 dst.AddRange(BuildRows(skip(src,i)));
@@ -66,7 +66,7 @@ namespace Z0.Asm
             var count = src.Count;
             if(count != 0)
             {
-                var flow = Wf.EmittingTable<AsmDetailRow>(dst);
+                var flow = Channel.EmittingTable<AsmDetailRow>(dst);
                 var records = span(src.Sequenced);
                 var formatter = CsvTables.formatter<AsmDetailRow>(AsmDetailRow.RenderWidths);
                 using var writer = dst.Writer();
@@ -76,7 +76,7 @@ namespace Z0.Asm
                     ref readonly var record = ref skip(records,i);
                     writer.WriteLine(formatter.Format(record));
                 }
-                Wf.EmittedTable(flow, count);
+                Channel.EmittedTable(flow, count);
             }
             return count;
         }

@@ -6,7 +6,7 @@ namespace Z0.Lang
 {
     public record class SourceFile
     {
-        public asci8 Language;
+        public @string Language;
 
         public FilePath Location;
 
@@ -16,10 +16,10 @@ namespace Z0.Lang
         {
             Location = FilePath.Empty;
             Content = TextBlock.Empty;
-            Language = asci8.Null;
+            Language = @string.Empty;
         }
 
-        public SourceFile(asci8 lang, FilePath location, string content)
+        public SourceFile(@string lang, FilePath location, string content)
         {
             Language = lang;
             Location = location;

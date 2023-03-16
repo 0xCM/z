@@ -88,7 +88,7 @@ namespace Z0
                 if(verbose)
                     term.emit(Events.babble(factory, "Created event broker"));
 
-                dst.Host = new AppEventSource(typeof(WfRuntime));
+                dst.Host = typeof(WfRuntime);
                 
                 if(verbose)
                     term.emit(Events.babble(factory, "Created host"));

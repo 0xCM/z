@@ -46,7 +46,7 @@ namespace Z0
             EndSeq = 0;
             Success = false;
         }
-
+    
         public Hash32 Hash
         {
             [MethodImpl(Inline)]

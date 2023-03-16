@@ -27,7 +27,7 @@ namespace Z0
             Verbosity = init.Verbosity;
             AppName = ExecutingPart.Assembly.PartName();
             Emissions = init.EmissionLog;           
-            Channel = WfEmit.create(this, init.Host);
+            Channel = WfChannel.create(this, init.Host);
         }
 
         public IEventSink EventSink

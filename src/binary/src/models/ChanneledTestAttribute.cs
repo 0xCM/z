@@ -2,14 +2,10 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Lang
+namespace Z0
 {
-    using static JsonValues;
-
-    [ApiHost]
-    public partial class Records
+    public class ChanneledTestAttribute : Attribute
     {
-        public static Token token(@string name, @string value)
-            => new (name,value);
+
     }
 }

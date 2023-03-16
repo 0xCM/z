@@ -7,7 +7,6 @@ namespace Z0
 {
     using static XedRules;
     using static XedModels;
-    using static XedImport;    
     using static sys;
 
     public class XedViews
@@ -20,16 +19,16 @@ namespace Z0
         internal void Store<T>(XedRecordType kind, T data)
         {
             @as<object,T>(DataStores[(byte)kind]) = data;
-            Emit.Status(FlairKind.StatusData, $"Computed {kind}");
+            Emit.Row($"Computed {kind}", FlairKind.StatusData);
         }
 
         readonly Index<object> DataStores;
 
         readonly XedRuntime Xed;
 
-        readonly WfEmit Emit;
+        readonly IWfChannel Emit;
 
-        internal XedViews(XedRuntime xed, Func<WfEmit> svc)
+        internal XedViews(XedRuntime xed, Func<IWfChannel> svc)
         {
             Emit = svc();
             Xed = xed;

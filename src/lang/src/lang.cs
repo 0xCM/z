@@ -7,7 +7,7 @@ namespace Z0.Lang
     [ApiHost]
     public partial class lang
     {
-        public static SourceFile source(asci8 lang, FilePath path, string content)
+        public static SourceFile source(@string lang, FilePath path, string content)
             => new SourceFile(lang,path,content);
             
         [Op]

@@ -15,7 +15,7 @@ namespace Z0
 
         public abstract Type HostType {get;}
 
-        public WfEmit Emitter {get; private set;}
+        public WfChannel Emitter {get; private set;}
 
         void IChanneled.Connect(Z0.IWfChannel channel)
         {
@@ -32,7 +32,7 @@ namespace Z0
         public void Init(IWfRuntime wf)
         {
             Wf = wf;
-            Emitter = WfEmit.create(wf, HostType);  
+            Emitter = WfChannel.create(wf, HostType);  
             Channel = Emitter;          
             var flow = Channel.Creating(HostType);
             OnInit();

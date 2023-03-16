@@ -62,7 +62,7 @@ namespace Z0
             var fields = reader.ReadLine().SplitClean(Chars.Pipe);
             if(fields.Length != MsilRow.FieldCount)
             {
-                Wf.Error(Tables.FieldCountMismatch.Format(MsilRow.FieldCount, fields.Length));
+                Channel.Error(Tables.FieldCountMismatch.Format(MsilRow.FieldCount, fields.Length));
                 return Index<MsilRow>.Empty;
             }
 
@@ -74,10 +74,10 @@ namespace Z0
                 if(outcome)
                     dst.Add(row);
                 else
-                    Wf.Warn(line);
+                    Channel.Warn(line);
             }
 
-            Wf.Ran(flow, dst.Count);
+            Channel.Ran(flow, dst.Count);
             return dst.Emit();
         }
 
@@ -104,7 +104,7 @@ namespace Z0
                 writer.WriteLine();
             }
 
-            Wf.EmittedFile(flow, count);
+            Channel.EmittedFile(flow, count);
         }
 
         public void EmitCode(Index<MemberCodeBlock> src, FilePath path)
@@ -138,7 +138,7 @@ namespace Z0
                     dst.AppendLine();
                 }
 
-                Wf.EmittedFile(flow, count);
+                Channel.EmittedFile(flow, count);
             }
         }
 
@@ -178,7 +178,7 @@ namespace Z0
                     writer.WriteLine(formatter.Format(row));
                 }
 
-                Wf.EmittedTable(flow, count);
+                Channel.EmittedTable(flow, count);
             }
             return buffer;
         }

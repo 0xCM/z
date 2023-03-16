@@ -23,8 +23,10 @@ namespace Z0.Lang
     {
     }
     
-    class TsGen : WfSvc<TsGen>, ITsGen
+    class TsGen : Channeled<TsGen>, ITsGen
     {
+        static AppSettings AppSettings => AppSettings.Default;
+
         public ExecToken GenTokens(EnvId env, IDbArchive dst)
         {            
             var ts = lang.Ts;            

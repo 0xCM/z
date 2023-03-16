@@ -3,11 +3,11 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0
-{
+{    
     public partial class BinaryModels
     {        
         public record class BinaryField<T> : IBinaryField<T>
-            where T : BinaryType
+            where T : IBinaryType
         {
             public readonly @string Name;
 
@@ -27,7 +27,7 @@ namespace Z0
         }
 
         public record class AlignedField<T> : BinaryField<T>
-            where T : BinaryType
+            where T : IBinaryType
         {
             public AlignedField(@string name, T type, ByteSize alignment)
                 : base(name,type)
@@ -37,6 +37,5 @@ namespace Z0
 
             public readonly ByteSize Alignment;
         }
-
     }
 }
