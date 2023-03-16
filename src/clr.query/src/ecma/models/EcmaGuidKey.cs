@@ -4,34 +4,34 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct EcmaGuidIndex : IEcmaHeapKey<EcmaGuidIndex>
+    public readonly struct EcmaGuidKey : IEcmaHeapKey<EcmaGuidKey>
     {
         public EcmaHeapKind HeapKind => EcmaHeapKind.Guid;
 
         public uint Value {get;}
 
         [MethodImpl(Inline)]
-        public EcmaGuidIndex(uint value)
+        public EcmaGuidKey(uint value)
         {
             Value = value;
         }
 
         [MethodImpl(Inline)]
-        public EcmaGuidIndex(GuidHandle value)
+        public EcmaGuidKey(GuidHandle value)
         {
             Value = sys.u32(value);
         }
 
         [MethodImpl(Inline)]
-        public static implicit operator EcmaGuidIndex(GuidHandle src)
-            => new EcmaGuidIndex(src);
+        public static implicit operator EcmaGuidKey(GuidHandle src)
+            => new EcmaGuidKey(src);
 
         [MethodImpl(Inline)]
-        public static implicit operator GuidHandle(EcmaGuidIndex src)
-            => sys.@as<EcmaGuidIndex,GuidHandle>(src);
+        public static implicit operator GuidHandle(EcmaGuidKey src)
+            => sys.@as<EcmaGuidKey,GuidHandle>(src);
 
         [MethodImpl(Inline)]
-        public static implicit operator EcmaHeapKey(EcmaGuidIndex src)
+        public static implicit operator EcmaHeapKey(EcmaGuidKey src)
             => new EcmaHeapKey(src.HeapKind, src.Value);
     }
     

@@ -15,7 +15,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public static BitString bitstring<T>(BitVector128<T> x)
             where T : unmanaged
-                => BitStrings.load(x.State, x.Width);
+                => vbits.bitstring(x.State, x.Width);
 
         /// <summary>
         /// Converts the vector to a bitstring representation
@@ -26,7 +26,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public static BitString bitstring<T>(BitVector256<T> x)
             where T : unmanaged
-                => BitStrings.load(x.State, x.Width);
+                => vbits.bitstring(x.State, x.Width);
 
 
         [MethodImpl(Inline), Op]

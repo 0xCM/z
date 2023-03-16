@@ -6,8 +6,8 @@ namespace Z0
 {
     partial class EcmaTables
     {
-        [Table(TableIndex.ExportedType), StructLayout(LayoutKind.Sequential, Pack =1)]
-        public struct TypeExportRow : IEcmaRecord<TypeExportRow>
+        [EcmaRow(TableIndex.ExportedType), StructLayout(LayoutKind.Sequential, Pack =1)]
+        public struct TypeExportRow : IEcmaRow<TypeExportRow>
         {
             public const string TableId= "ecma.types.exports";
 
@@ -15,10 +15,10 @@ namespace Z0
             public EcmaRowKey TypeDefId;
 
             [Render(16)]
-            public EcmaStringIndex TypeName;
+            public EcmaStringKey TypeName;
 
             [Render(16)]
-            public EcmaStringIndex TypeNamespace;
+            public EcmaStringKey TypeNamespace;
 
             [Render(16)]
             public EcmaRowKey Implementation;

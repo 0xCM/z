@@ -18,10 +18,10 @@ namespace Z0
             public Address32 Rva;
 
             [Render(12)]
-            public EcmaStringIndex NameKey;
+            public EcmaStringKey NameKey;
 
             [Render(12)]
-            public EcmaBlobIndex SigKey;
+            public EcmaBlobKey SigKey;
 
             [Render(12)]
             public EcmaRowKey FirstParam;

@@ -6,23 +6,23 @@ namespace Z0
 {
     partial class EcmaTables
     {
-        [Table(TableIndex.AssemblyRef), StructLayout(LayoutKind.Sequential,Pack=1)]
-        public struct AssemblyRefRow : IEcmaRecord<AssemblyRefRow>
+        [EcmaRow(TableIndex.AssemblyRef), StructLayout(LayoutKind.Sequential,Pack=1)]
+        public struct AssemblyRefRow : IEcmaRow<AssemblyRefRow>
         {
             [Render(12)]
-            public EcmaBlobIndex Token;
+            public EcmaBlobKey Token;
 
             [Render(12)]
-            public EcmaStringIndex Name;
+            public EcmaStringKey Name;
 
             [Render(12)]
             public AssemblyVersion Version;
 
             [Render(12)]
-            public EcmaStringIndex Culture;
+            public EcmaStringKey Culture;
 
             [Render(12)]
-            public EcmaBlobIndex Hash;
+            public EcmaBlobKey Hash;
 
             [Render(1)]
             public AssemblyFlags Flags;

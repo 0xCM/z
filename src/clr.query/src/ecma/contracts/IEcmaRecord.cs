@@ -8,8 +8,8 @@ namespace Z0
     {
     }
 
-    public interface IEcmaRecord<T> : IEcmaRecord
-        where T : unmanaged, IEcmaRecord<T>
+    public interface IEcmaRow<T> : IEcmaRecord
+        where T : unmanaged, IEcmaRow<T>
     {
     }
 }

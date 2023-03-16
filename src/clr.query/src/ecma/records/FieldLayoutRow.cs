@@ -6,8 +6,8 @@ namespace Z0
 {
     partial class EcmaTables
     {
-        [Table(TableIndex.FieldLayout), StructLayout(LayoutKind.Sequential, Pack =1)]
-        public struct FieldLayoutRow : IEcmaRecord<FieldLayoutRow>
+        [EcmaRow(TableIndex.FieldLayout), StructLayout(LayoutKind.Sequential, Pack =1)]
+        public struct FieldLayoutRow : IEcmaRow<FieldLayoutRow>
         {
             public uint Offset;
 

@@ -12,19 +12,19 @@ namespace Z0
     public unsafe partial class EcmaReader : IEcmaReader
     {
         [MethodImpl(Inline), Op]
-        public string String(EcmaStringIndex index)
+        public string String(EcmaStringKey index)
             => MD.GetString(index);
 
         [MethodImpl(Inline), Op]
-        public Guid Guid(EcmaGuidIndex index)
+        public Guid Guid(EcmaGuidKey index)
             => MD.GetGuid(index);
 
         [MethodImpl(Inline), Op]
-        public ReadOnlySpan<byte> Blob(EcmaBlobIndex index)
+        public ReadOnlySpan<byte> Blob(EcmaBlobKey index)
             => MD.GetBlobBytes(index);
 
         [MethodImpl(Inline), Op]
-        public byte[] BlobArray(EcmaBlobIndex index)
+        public byte[] BlobArray(EcmaBlobKey index)
             => MD.GetBlobBytes(index);
 
         public static unsafe EcmaReader create(MemoryAddress @base, ByteSize size)

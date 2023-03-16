@@ -17,10 +17,10 @@ namespace Z0
         {
             var src = MD.GetMemberReference(handle);
             dst.Token = EcmaTokens.token(handle);
-            dst.Name = MD.GetString(src.Name);
+            dst.Name = src.Name;
             dst.Parent = EcmaTokens.token(src.Parent);
             dst.RefKind = (MemberRefKind)src.GetKind();
-            dst.Sig = MD.GetBlobBytes(src.Signature);
+            dst.Sig = src.Signature;
             return ref dst;
         }
 

@@ -13,12 +13,6 @@ namespace Z0
             => Value = value;
 
         [MethodImpl(Inline)]
-        public EcmaRowKey(EcmaTableKind table, uint index)
-        {
-            Value = ((uint)table << 24) | (index & 0xFFFFFF);
-        }
-
-        [MethodImpl(Inline)]
         public EcmaRowKey(TableIndex table, uint index)
         {
             Value = ((uint)table << 24) | (index & 0xFFFFFF);
@@ -86,7 +80,7 @@ namespace Z0
             => src.Prior();
 
         [MethodImpl(Inline)]
-        public static implicit operator EcmaRowKey((EcmaTableKind table, uint index) src)
+        public static implicit operator EcmaRowKey((TableIndex table, uint index) src)
             => new EcmaRowKey(src.table, src.index);
 
         [MethodImpl(Inline)]
@@ -108,7 +102,7 @@ namespace Z0
         public static EcmaRowKey Empty
         {
             [MethodImpl(Inline)]
-            get => new EcmaRowKey(EcmaTableKind.Invalid, 0);
+            get => new EcmaRowKey(0, 0);
         }
     }
 }

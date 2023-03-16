@@ -18,7 +18,7 @@ namespace Z0
             for(var i=0; i<count; i++)
             {
                 ref readonly var handle = ref skip(handles,i);
-                seek(dst,i) = new ModuleRef(handle, String(MD.GetModuleReference(handle).Name));
+                seek(dst,i) = new ModuleRef(handle, MD.GetModuleReference(handle).Name);
 
             }
             return dst;

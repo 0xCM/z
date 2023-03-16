@@ -6,8 +6,8 @@ namespace Z0
 {
     partial class EcmaTables
     {
-        [Table(TableIndex.MethodSemantics), StructLayout(LayoutKind.Sequential, Pack=1)]
-        public struct MethodSemanticsRow : IEcmaRecord<MethodSemanticsRow>
+        [EcmaRow(TableIndex.MethodSemantics), StructLayout(LayoutKind.Sequential, Pack=1)]
+        public struct MethodSemanticsRow : IEcmaRow<MethodSemanticsRow>
         {
             public MethodSemanticsAttributes Semantic;
 

@@ -32,7 +32,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public ref ManifestResourceRow ReadResInfo(in ManifestResource src, ref ManifestResourceRow dst)
         {
-            dst.Name = String(src.Name);
+            dst.Name = src.Name;
             dst.Offset = (ulong)src.Offset;
             dst.Attributes = src.Attributes;
             return ref dst;

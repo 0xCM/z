@@ -249,39 +249,6 @@ namespace Z0
             => new BitString(bitseq);
 
         /// <summary>
-        /// Populates a bitstring from a 128-bit cpu vector
-        /// </summary>
-        /// <param name="src">The source vector</param>
-        /// <param name="maxbits">The maximum number of bits to extract from the source</param>
-        /// <typeparam name="T">The vector component type</typeparam>
-        [MethodImpl(Inline)]
-        public static BitString load<T>(Vector128<T> src, int? maxbits = null)
-            where T : unmanaged
-                => scalars(cover(vcpu.vref(ref src), cpu.vcount<T>(W128.W)), maxbits);
-
-        /// <summary>
-        /// Populates a bitstring from a 256-bit cpu vector
-        /// </summary>
-        /// <param name="src">The source vector</param>
-        /// <param name="maxbits">The maximum number of bits to extract</param>
-        /// <typeparam name="T">The vector component type</typeparam>
-        [MethodImpl(Inline)]
-        public static BitString load<T>(Vector256<T> src, int? maxbits = null)
-            where T : unmanaged
-                => scalars(cover(vcpu.vref(ref src), cpu.vcount<T>(W256.W)), maxbits);
-
-        /// <summary>
-        /// Populates a bitstring from a 256-bit cpu vector
-        /// </summary>
-        /// <param name="src">The source vector</param>
-        /// <param name="maxbits">The maximum number of bits to extract</param>
-        /// <typeparam name="T">The vector component type</typeparam>
-        [MethodImpl(Inline)]
-        public static BitString load<T>(Vector512<T> src, int? maxbits = null)
-            where T : unmanaged
-                => scalars(cover(vcpu.vref(ref src), cpu.vcount<T>(W512.W)), maxbits);
-
-        /// <summary>
         /// Constructs a bitstring from primal value
         /// </summary>
         /// <param name="src">The source value</param>
@@ -384,7 +351,7 @@ namespace Z0
             src = src.RemoveBlanks().Remove("_").Remove("0b");
             var len = src.Length;
             var lastix = len - 1;
-            Span<byte> dst = core.alloc<byte>(len);
+            Span<byte> dst = sys.alloc<byte>(len);
             for(var i=0; i<= lastix; i++)
                 dst[lastix - i] = src[i] == bit.Zero ? (byte)0 : (byte)1;
             return new BitString(dst);

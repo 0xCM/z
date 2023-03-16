@@ -7,20 +7,20 @@ namespace Z0
     using static sys;
 
     [StructLayout(StructLayout, Pack=1)]
-    public readonly struct EcmaBlobIndex : IEcmaHeapKey<EcmaBlobIndex>
+    public readonly struct EcmaBlobKey : IEcmaHeapKey<EcmaBlobKey>
     {
         public EcmaHeapKind HeapKind => EcmaHeapKind.Blob;
 
         public readonly uint Value;
 
         [MethodImpl(Inline)]
-        public EcmaBlobIndex(uint src)
+        public EcmaBlobKey(uint src)
         {
             Value = src;
         }
 
         [MethodImpl(Inline)]
-        public EcmaBlobIndex(BlobHandle src)
+        public EcmaBlobKey(BlobHandle src)
         {
             Value = u32(src);
         }
@@ -35,15 +35,15 @@ namespace Z0
             => Format();
 
         [MethodImpl(Inline)]
-        public static implicit operator BlobHandle(EcmaBlobIndex src)
-            => @as<EcmaBlobIndex,BlobHandle>(src);
+        public static implicit operator BlobHandle(EcmaBlobKey src)
+            => @as<EcmaBlobKey,BlobHandle>(src);
 
         [MethodImpl(Inline)]
-        public static implicit operator EcmaBlobIndex(BlobHandle src)
-            => new EcmaBlobIndex(src);
+        public static implicit operator EcmaBlobKey(BlobHandle src)
+            => new EcmaBlobKey(src);
 
         [MethodImpl(Inline)]
-        public static implicit operator EcmaHeapKey(EcmaBlobIndex src)
+        public static implicit operator EcmaHeapKey(EcmaBlobKey src)
             => new EcmaHeapKey(src.HeapKind, src.Value);
     }
 }

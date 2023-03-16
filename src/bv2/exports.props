@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <BitVectors>$(MsBuildThisFileDirectory)z0.bitvectors.csproj</BitVectors>
+  </PropertyGroup>
+</Project>

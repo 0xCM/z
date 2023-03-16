@@ -6,8 +6,8 @@ namespace Z0
 {
     partial class EcmaTables
     {
-        [Table(TableIndex.GenericParamConstraint), StructLayout(LayoutKind.Sequential,Pack =1)]
-        public struct GenericParamConstraintRow : IEcmaRecord<GenericParamConstraintRow>
+        [EcmaRow(TableIndex.GenericParamConstraint), StructLayout(LayoutKind.Sequential,Pack =1)]
+        public struct GenericParamConstraintRow : IEcmaRow<GenericParamConstraintRow>
         {
             /// <summary>
             /// An index into the GenericParam table, specifying to which generic parameter this row refers

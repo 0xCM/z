@@ -6,7 +6,7 @@ namespace Z0
 {
     partial class EcmaTables
     {
-        [Table(TableIndex.MemberRef), StructLayout(LayoutKind.Sequential, Pack =1)]
+        [EcmaRow(TableIndex.MemberRef), StructLayout(LayoutKind.Sequential, Pack =1)]
         public struct MemberRefRow
         {
             [Render(12)]
@@ -16,13 +16,13 @@ namespace Z0
             public EcmaToken Parent;
 
             [Render(48)]
-            public string Name;
+            public EcmaStringKey Name;
 
             [Render(12)]
             public MemberRefKind RefKind;
 
             [Render(1)]
-            public EcmaSig Sig;
+            public EcmaBlobKey Sig;
         }
     }
 }

@@ -6,11 +6,11 @@ namespace Z0
 {
     partial class EcmaTables
     {
-        [Table(TableIndex.ManifestResource), StructLayout(LayoutKind.Sequential,Pack=1)]
-        public struct ManifestResourceRow
+        [EcmaRow(TableIndex.ManifestResource), StructLayout(LayoutKind.Sequential,Pack=1)]
+        public struct ManifestResourceRow : IEcmaRow<ManifestResourceRow>
         {
             [Render(32)]
-            public string Name;
+            public EcmaStringKey Name;
 
             [Render(12)]
             public MemoryAddress Offset;

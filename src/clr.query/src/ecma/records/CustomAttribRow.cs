@@ -6,8 +6,8 @@ namespace Z0
 {
     partial class EcmaTables
     {
-        [Table(TableIndex.CustomAttribute), StructLayout(LayoutKind.Sequential,Pack=1)]
-        public struct CustomAttribRow : IEcmaRecord<CustomAttribRow>
+        [EcmaRow(TableIndex.CustomAttribute), StructLayout(LayoutKind.Sequential,Pack=1)]
+        public struct CustomAttribRow : IEcmaRow<CustomAttribRow>
         {
             [Render(12)]
             public EcmaRowKey Parent;
@@ -16,7 +16,7 @@ namespace Z0
             public EcmaRowKey Constructor;
 
             [Render(12)]
-            public EcmaBlobIndex Value;
+            public EcmaBlobKey Value;
 
             [Render(12)]
             public Address32 ValueOffset;

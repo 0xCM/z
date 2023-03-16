@@ -8,7 +8,7 @@ namespace Z0
     public struct ImportScopeRow
     {
         [Render(12)]
-        public EcmaBlobIndex Imports;
+        public EcmaBlobKey Imports;
     }
     
 }

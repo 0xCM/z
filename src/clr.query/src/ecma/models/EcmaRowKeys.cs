@@ -8,10 +8,10 @@ namespace Z0
     {
         readonly Index<EcmaRowKey> Data;
 
-        public readonly EcmaTableKind Table;
+        public readonly TableIndex Table;
 
         [MethodImpl(Inline)]
-        public EcmaRowKeys(Index<EcmaRowKey> src, EcmaTableKind table = default)
+        public EcmaRowKeys(Index<EcmaRowKey> src, TableIndex table = default)
         {
             Data = src;
             Table = table;
@@ -68,7 +68,7 @@ namespace Z0
             => new EcmaRowKeys(src);
 
         [MethodImpl(Inline)]
-        public static implicit operator EcmaRowKeys((EcmaRowKey[] keys, EcmaTableKind table) src)
+        public static implicit operator EcmaRowKeys((EcmaRowKey[] keys, TableIndex table) src)
             => new EcmaRowKeys(src.keys, src.table);
     }
 }

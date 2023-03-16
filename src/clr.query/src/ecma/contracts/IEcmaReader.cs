@@ -6,10 +6,10 @@ namespace Z0
 {
     public interface IEcmaReader
     {
-        string String(EcmaStringIndex key);
+        string String(EcmaStringKey key);
 
-        Guid Guid(EcmaGuidIndex key);
+        Guid Guid(EcmaGuidKey key);
 
-        ReadOnlySpan<byte> Blob(EcmaBlobIndex key);
+        ReadOnlySpan<byte> Blob(EcmaBlobKey key);
     }
 }

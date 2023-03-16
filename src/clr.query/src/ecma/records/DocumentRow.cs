@@ -6,20 +6,20 @@ namespace Z0
 {
     partial class EcmaTables
     {
-        [Table(TableIndex.Document), StructLayout(LayoutKind.Sequential,Pack=1)]
-        public struct DocumentRow : IEcmaRecord<DocumentRow>
+        [EcmaRow(TableIndex.Document), StructLayout(LayoutKind.Sequential,Pack=1)]
+        public struct DocumentRow : IEcmaRow<DocumentRow>
         {
             [Render(12)]
-            public EcmaBlobIndex Name;
+            public EcmaBlobKey Name;
 
             [Render(12)]
-            public EcmaGuidIndex HashAlgorithm;
+            public EcmaGuidKey HashAlgorithm;
 
             [Render(12)]
-            public EcmaBlobIndex Hash;
+            public EcmaBlobKey Hash;
 
             [Render(12)]
-            public EcmaGuidIndex Language;
+            public EcmaGuidKey Language;
         }       
     }
 }

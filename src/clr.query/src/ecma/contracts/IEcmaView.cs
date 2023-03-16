@@ -11,7 +11,7 @@ namespace Z0
     }
 
     public interface IEcmaView<C,R> : IEcmaView
-        where R : unmanaged, IEcmaRecord<R>
+        where R : unmanaged, IEcmaRow<R>
         where C : IEcmaView<C,R>
     {
     }    

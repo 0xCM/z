@@ -6,20 +6,20 @@ namespace Z0
 {
     partial class EcmaTables
     {
-        [Table(TableIndex.Module)]
-        public record struct ModuleRow : IEcmaRecord<ModuleRow>
+        [EcmaRow(TableIndex.Module)]
+        public record struct ModuleRow : IEcmaRow<ModuleRow>
         {
             public ushort Generation;
 
-            public EcmaStringIndex Name;
+            public EcmaStringKey Name;
 
-            public EcmaGuidIndex MVId;
+            public EcmaGuidKey MVId;
 
-            public EcmaGuidIndex GenerationId;
+            public EcmaGuidKey GenerationId;
 
-            public EcmaGuidIndex BaseGenerationId;
+            public EcmaGuidKey BaseGenerationId;
 
-            public ModuleRow(ushort generation, EcmaStringIndex name, EcmaGuidIndex mvId, EcmaGuidIndex encId, EcmaGuidIndex encBaseId)
+            public ModuleRow(ushort generation, EcmaStringKey name, EcmaGuidKey mvId, EcmaGuidKey encId, EcmaGuidKey encBaseId)
             {
                 this.Generation = generation;
                 this.Name = name;

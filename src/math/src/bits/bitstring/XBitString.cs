@@ -35,80 +35,6 @@ namespace Z0
 
         public static string FormatBlockedBits(this ulong src, int width)
             => api.blocked(src, BitFormatter.blocked(width));        
-        /// <summary>
-        /// Extracts a 128-bit cpu vector from a bitsring of sufficient length
-        /// </summary>
-        /// <param name="src">The source bits</param>
-        /// <param name="w">The bit width selector</param>
-        /// <param name="t">The component type representative</param>
-        /// <typeparam name="T">The target vector component type</typeparam>
-        [MethodImpl(Inline)]
-        public static Vector128<T> ToCpuVector<T>(this BitString src, N128 w, T t = default)
-            where T : unmanaged
-                => src.Pack().Recover<byte,T>().Blocked(w).LoadVector();
-
-        /// <summary>
-        /// Extracts a 256-bit cpu vector from a bitsring of sufficient length
-        /// </summary>
-        /// <param name="src">The source bits</param>
-        /// <param name="w">The bit width selector</param>
-        /// <param name="t">The component type representative</param>
-        /// <typeparam name="T">The target vector component type</typeparam>
-        [MethodImpl(Inline)]
-        public static Vector256<T> ToCpuVector<T>(this BitString src, N256 w, T t = default)
-            where T : unmanaged
-                => src.Pack().Recover<byte,T>().Blocked(w).LoadVector();
-
-        /// <summary>
-        /// Block-formats the vector, e.g. [01010101 01010101 ... 01010101] where by default the size of each block is the bit-width of a component
-        /// </summary>
-        /// <param name="src">The source vector</param>
-        /// <typeparam name="T">The component type</typeparam>
-        public static string FormatBlockedBits<T>(this Vector128<T> src, int width, uint? maxbits = null)
-            where T : unmanaged
-                => text.bracket(src.ToBitString((int?)maxbits).Format(BitFormatter.blocked(width, Chars.Space, maxbits)));
-
-        /// <summary>
-        /// Block-formats the vector, e.g. [01010101 01010101 ... 01010101] where default the size of each block is the bit-width of a component
-        /// </summary>
-        /// <param name="src">The source vector</param>
-        /// <typeparam name="T">The component type</typeparam>
-        public static string FormatBlockedBits<T>(this Vector256<T> src, int width, uint? maxbits = null)
-            where T : unmanaged
-                => text.bracket(src.ToBitString((int?)maxbits).Format(BitFormatter.blocked(width, Chars.Space, maxbits)));
-
-        /// <summary>
-        /// Formats vector bits
-        /// </summary>
-        /// <param name="src">The source vector</param>
-        /// <typeparam name="T">The underlying primal type</typeparam>
-        public static string FormatBits<T>(this Vector128<T> src, int? maxbits = null,  bool tlz = false, bool specifier = false, int? blockWidth = null,
-            char? blocksep = null, int? rowWidth = null)
-                where T : unmanaged
-                    => src.ToBitString(maxbits).Format(BitFormatter.define(tlz, specifier, blockWidth, blocksep, rowWidth,null));
-
-        /// <summary>
-        /// Formats vector bits
-        /// </summary>
-        /// <param name="src">The source vector</param>
-        /// <typeparam name="T">The underlying primal type</typeparam>
-        public static string FormatBits<T>(this Vector256<T> src, int? maxbits = null, bool tlz = false, bool specifier = false, int? blockWidth = null,
-            char? blocksep = null, int? rowWidth = null)
-                where T : unmanaged
-                    => src.ToBitString(maxbits).Format(BitFormatter.define(tlz, specifier, blockWidth, blocksep, rowWidth,null));
-                    
-        /// <summary>
-        /// Shuffles bitstring content as determined by a permutation
-        /// </summary>
-        /// <param name="src">The source span</param>
-        /// <param name="p">The permutation to apply</param>
-        public static BitString Permute(this BitString src, Perm p)
-        {
-            var dst = api.alloc(p.Length);
-            for(var i = 0; i<p.Length; i++)
-                dst[i] = src[p[i]];
-            return dst;
-        }
 
         /// <summary>
         /// Pretends the source bitstring is an mxn matrix and computes the transposition matrix of dimension nxm encoded as a bitstring
@@ -224,62 +150,7 @@ namespace Z0
             where T : unmanaged
                 => api.scalars(src, maxbits);
 
-        /// <summary>
-        /// Converts blocked content to a bitstring
-        /// </summary>
-        /// <param name="src">The source bits</param>
-        [MethodImpl(Inline)]
-        public static BitString ToBitString<T>(this SpanBlock64<T> src, int? maxbits = null)
-            where T : unmanaged
-                => api.scalars(src.Storage, maxbits ?? w64);
 
-        /// <summary>
-        /// Converts blocked content to a bitstring
-        /// </summary>
-        /// <param name="src">The source bits</param>
-        [MethodImpl(Inline)]
-        public static BitString ToBitString<T>(this SpanBlock128<T> src, int? maxbits = null)
-            where T : unmanaged
-                => api.scalars(src.Storage, maxbits ?? w128);
-
-        /// <summary>
-        /// Converts datablock content to a bitstring
-        /// </summary>
-        /// <param name="src">The source bits</param>
-        [MethodImpl(Inline)]
-        public static BitString ToBitString<T>(this SpanBlock256<T> src, int? maxbits = null)
-            where T : unmanaged
-                => api.scalars(src.Storage, maxbits ?? w256);
-
-        /// <summary>
-        /// Converts an 128-bit intrinsic vector representation to a bitstring
-        /// </summary>
-        /// <param name="src">The source vector</param>
-        /// <typeparam name="T">The underlying primal type</typeparam>
-        [MethodImpl(Inline)]
-        public static BitString ToBitString<T>(this Vector128<T> src, int? maxbits = null)
-            where T : unmanaged
-                => api.load(src, maxbits);
-
-        /// <summary>
-        /// Converts an 256-bit vector representation to a bitstring
-        /// </summary>
-        /// <param name="src">The source vector</param>
-        /// <typeparam name="T">The underlying primal type</typeparam>
-        [MethodImpl(Inline)]
-        public static BitString ToBitString<T>(this Vector256<T> src, int? maxbits = null)
-            where T : unmanaged
-                => api.load(src, maxbits);
-
-        /// <summary>
-        /// Converts a 512-bit vector representation to a bitstring
-        /// </summary>
-        /// <param name="src">The source vector</param>
-        /// <typeparam name="T">The underlying primal type</typeparam>
-        [MethodImpl(Inline)]
-        public static BitString ToBitString<T>(this Vector512<T> src, int? maxbits = null)
-            where T : unmanaged
-                => api.load(src, maxbits);
 
         /// <summary>
         /// Converts an enumeration value to a bitstring

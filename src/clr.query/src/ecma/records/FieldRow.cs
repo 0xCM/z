@@ -6,20 +6,20 @@ namespace Z0
 {
     partial class EcmaTables
     {     
-        [Table(TableIndex.Field), StructLayout(LayoutKind.Sequential, Pack =1)]
-        public struct FieldRow : IEcmaRecord<FieldRow>
+        [EcmaRow(TableIndex.Field), StructLayout(LayoutKind.Sequential, Pack =1)]
+        public struct FieldRow : IEcmaRow<FieldRow>
         {
             [Render(12)]
-            public EcmaStringIndex Name;
+            public EcmaStringKey Name;
 
             [Render(12)]
-            public EcmaBlobIndex Sig;
+            public EcmaBlobKey Sig;
 
             [Render(12)]
             public Address32 Offset;
 
             [Render(12)]
-            public EcmaBlobIndex Marshal;
+            public EcmaBlobKey Marshal;
 
             [Render(1)]
             public FieldAttributes Attributes;

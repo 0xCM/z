@@ -9,6 +9,71 @@ namespace Z0
     partial class XSb
     {
         /// <summary>
+        /// Shuffles bitstring content as determined by a permutation
+        /// </summary>
+        /// <param name="src">The source span</param>
+        /// <param name="p">The permutation to apply</param>
+        public static BitString Permute(this BitString src, Perm p)
+        {
+            var dst = BitStrings.alloc(p.Length);
+            for(var i = 0; i<p.Length; i++)
+                dst[i] = src[p[i]];
+            return dst;
+        }
+
+        /// <summary>
+        /// Extracts a 128-bit cpu vector from a bitsring of sufficient length
+        /// </summary>
+        /// <param name="src">The source bits</param>
+        /// <param name="w">The bit width selector</param>
+        /// <param name="t">The component type representative</param>
+        /// <typeparam name="T">The target vector component type</typeparam>
+        [MethodImpl(Inline)]
+        public static Vector128<T> ToCpuVector<T>(this BitString src, N128 w, T t = default)
+            where T : unmanaged
+                => src.Pack().Recover<byte,T>().Blocked(w).LoadVector();
+
+        /// <summary>
+        /// Extracts a 256-bit cpu vector from a bitsring of sufficient length
+        /// </summary>
+        /// <param name="src">The source bits</param>
+        /// <param name="w">The bit width selector</param>
+        /// <param name="t">The component type representative</param>
+        /// <typeparam name="T">The target vector component type</typeparam>
+        [MethodImpl(Inline)]
+        public static Vector256<T> ToCpuVector<T>(this BitString src, N256 w, T t = default)
+            where T : unmanaged
+                => src.Pack().Recover<byte,T>().Blocked(w).LoadVector();
+
+
+        /// <summary>
+        /// Converts blocked content to a bitstring
+        /// </summary>
+        /// <param name="src">The source bits</param>
+        [MethodImpl(Inline)]
+        public static BitString ToBitString<T>(this SpanBlock64<T> src, int? maxbits = null)
+            where T : unmanaged
+                => BitStrings.scalars(src.Storage, maxbits ?? w64);
+
+        /// <summary>
+        /// Converts blocked content to a bitstring
+        /// </summary>
+        /// <param name="src">The source bits</param>
+        [MethodImpl(Inline)]
+        public static BitString ToBitString<T>(this SpanBlock128<T> src, int? maxbits = null)
+            where T : unmanaged
+                => BitStrings.scalars(src.Storage, maxbits ?? w128);
+
+        /// <summary>
+        /// Converts datablock content to a bitstring
+        /// </summary>
+        /// <param name="src">The source bits</param>
+        [MethodImpl(Inline)]
+        public static BitString ToBitString<T>(this SpanBlock256<T> src, int? maxbits = null)
+            where T : unmanaged
+                => BitStrings.scalars(src.Storage, maxbits ?? w256);
+
+        /// <summary>
         /// Clones a 32-bit blocked container
         /// </summary>
         /// <param name="src">The source span</param>

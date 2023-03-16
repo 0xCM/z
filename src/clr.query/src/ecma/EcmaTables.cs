@@ -6,9 +6,9 @@ namespace Z0
 {
     public partial class EcmaTables
     {
-        public class TableAttribute : RecordAttribute
+        public class EcmaRowAttribute : RecordAttribute
         {
-            public TableAttribute(TableIndex kind)
+            public EcmaRowAttribute(TableIndex kind)
                 : base($"Ecma.{kind}")
             {
                 Kind = kind;
