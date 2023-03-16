@@ -22,6 +22,12 @@ namespace Z0
             FileHash = hash;
         }
 
+        public Hash128 ContentHash
+        {
+            [MethodImpl(Inline)]
+            get => FileHash.ContentHash;
+        }
+
         public Hash32 Hash
         {
             [MethodImpl(Inline)]

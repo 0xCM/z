@@ -21,7 +21,7 @@ namespace Z0
         public ByteSize Size;
 
         [Render(56)]
-        public FileHash FileHash;
+        public Hash128 ContentHash;
 
         [Render(1)]
         public FilePath Path;

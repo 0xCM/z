@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public readonly record struct AssemblyKey
+    public readonly record struct AssemblyKey : IComparable<AssemblyKey>
     {
         [Render(64)]
         public readonly @string Name;
@@ -58,5 +58,8 @@ namespace Z0
             }
             return result;
         }
+
+        public bool Equals(AssemblyKey key)
+            => Name == key.Name && Version == key.Version && Mvid == key.Mvid;
     }
 }

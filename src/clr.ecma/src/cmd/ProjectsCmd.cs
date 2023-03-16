@@ -29,7 +29,7 @@ namespace Z0
         {
             const string RenderPattern ="{0,-64} | {1,-16} | {2,-16} | {3}";
             var locations = list<string>();
-            var index = Ecma.index(FS.dir(args[0]));
+            var index = Ecma.index(Channel, FS.dir(args[0]));
             iter(index.Entries(), entry => {
                 locations.Add(entry.Path.Format(PathSeparator.FS));
             });

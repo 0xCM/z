@@ -20,13 +20,16 @@ namespace Z0
 
         readonly Dictionary<AssemblyKey,HashSet<Entry>> Keysets = new();
 
-        static Entry entry(AssemblyFile src)
-        {
-            using var ecma = Ecma.file(src.Path);
-            var reader = ecma.EcmaReader();
-            var module = reader.ReadModuleRow().View(reader);
-            return new Entry(inc(ref Seq), src.Path, src.Path.Size, src.AssemblyName.SimpleName, src.Version, module.Mvid);
-        }
+        // static Entry entry(AssemblyFile src)
+        // {
+        //     using var ecma = Ecma.file(src.Path);
+        //     var reader = ecma.EcmaReader();
+        //     var module = reader.ReadModuleRow().View(reader);
+        //     return new Entry(inc(ref Seq), src.Path, src.Path.Size, src.AssemblyName.SimpleName, src.Version, module.Mvid);
+        // }
+
+        public AssemblyMap Map()
+            => new AssemblyMap(Seal());
 
         public AssemblyIndex Seal()
         {
@@ -36,19 +39,26 @@ namespace Z0
             _Distinct = sys.alloc<Entry>(count);
             var i=0;
             iter(keys, key => _Distinct[i++] = Keysets[key].First());
+            _Distinct.Sort();
             return this;
         }
 
         public void Include(AssemblyFile src)
         {
-            var e = entry(src);
-            Lookup.TryAdd(src.Path, e);
-            lock(Keysets)
+            using var ecma = Ecma.file(src.Path);
+            var reader = ecma.EcmaReader();
+            if(!reader.IsReferenceAssembly())
             {
-                if(Keysets.ContainsKey(e.Key))
-                    Keysets[e.Key].Add(e);
-                else
-                    Keysets[e.Key] = sys.hashset(e);
+                var module = reader.ReadModuleRow().View(reader);
+                var entry = new Entry(inc(ref Seq), src.Path, src.Path.Size, src.AssemblyName.SimpleName, src.Version, module.Mvid);
+                Lookup.TryAdd(src.Path, entry);
+                lock(Keysets)
+                {
+                    if(Keysets.ContainsKey(entry.Key))
+                        Keysets[entry.Key].Add(entry);
+                    else
+                        Keysets[entry.Key] = sys.hashset(entry);
+                }
             }
         }
         
@@ -69,6 +79,7 @@ namespace Z0
         public ICollection<AssemblyKey> Keys()
             => Keysets.Keys;
 
+        
         public IEnumerable<Entry> Entries(AssemblyKey key)
             => Keysets[key];
 

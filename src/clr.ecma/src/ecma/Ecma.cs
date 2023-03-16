@@ -21,8 +21,21 @@ namespace Z0
             return index;
         }
 
-        public static AssemblyIndex index(FolderPath root)
-            => index(Archives.modules(root).AssemblyFiles());
+        public static AssemblyIndex index(IWfChannel channel, FolderPath root)
+        {
+            var counter = 0u;
+            var index = new AssemblyIndex();
+            var files = Archives.modules(root).AssemblyFiles();
+            iter(files, file => {
+                index.Include(file);
+                if(counter++ % 100 == 0)
+                {
+                    channel.Row($"Indexed {counter} assemblies");
+                }
+                
+            }, true);
+            return index.Seal();
+        }
 
         public static EcmaFile file(FilePath src)
             => EcmaFile.open(src);

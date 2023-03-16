@@ -95,7 +95,7 @@ namespace Z0
             else
             {
                 HashCodes.Add(hash.FileHash.ContentHash);
-                var mapped = new MappedModule(sys.inc(ref Index), FileModuleKind.Native, MemoryFiles.map(src.Path), hash.FileHash);
+                var mapped = new MappedModule(sys.inc(ref Index), FileModuleKind.Native, MemoryFiles.map(src.Path), hash.FileHash.ContentHash);
                 Data.TryAdd(mapped.Index, mapped);
                 NativeMapped(mapped);
                 
@@ -110,7 +110,7 @@ namespace Z0
             if(!HashCodes.Contains(hash.FileHash.ContentHash))
             {
                 HashCodes.Add(hash.FileHash.ContentHash);
-                var mapped = new MappedAssembly(sys.inc(ref Index), MemoryFiles.map(src.Path), hash.FileHash);
+                var mapped = new MappedAssembly(sys.inc(ref Index), MemoryFiles.map(src.Path), hash.FileHash.ContentHash);
                 Data.TryAdd(mapped.Index, mapped);
                 AssemblyMapped(mapped);
             }

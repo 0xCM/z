@@ -148,6 +148,42 @@ namespace Z0
             });
         }
 
+        void Validate(AssemblyIndex src)
+        {
+            iter(src.Distinct(), entry => {
+                var hashA = FS.hash(entry.Path).ContentHash;
+                iter(src.Entries(entry.Key), e => {
+                    Require.equal(hashA, FS.hash(e.Path).ContentHash);
+                });
+                Channel.Row($"Validated {entry.Key}");
+            }, true);
+        }
+
+        [CmdOp("ecma/traverse")]
+        void EcmaTraverse(CmdArgs args)
+        {
+            var src = Ecma.index(Channel, FS.dir(args[0]));
+            using var map = src.Map();
+            iter(map.Keys, key => {
+                var assembly = map[key];
+                Channel.Row(string.Format("{0,-48} | {1,-16} | {2,-12}",
+                    key, 
+                    assembly.BaseAddress, 
+                    assembly.FileSize 
+                    ));
+            });
+            // Validate(src);
+            // iter(src.Distinct(), entry => {
+            //     var es = src.Entries(entry.Key);
+            //     Channel.Row(RP.PageBreak180);
+            //     Channel.Row(entry.Key, FlairKind.StatusData);
+            //     iter(es, e => {
+            //         Channel.Row(e.Path);
+            //     });                
+            // });
+
+        }
+        
         [CmdOp("ecma/emit/streams")]
         void EmitEcmaStreams(CmdArgs args)
         {
@@ -168,7 +204,7 @@ namespace Z0
         [CmdOp("ecma/emit/mdroots")]
         void EmitMdHeader(CmdArgs args)
         {
-            var src = Ecma.index(FS.dir(args[0]));
+            var src = Ecma.index(Channel, FS.dir(args[0]));
             iter(src.Entries(), entry => {
                 using var file = EcmaFile.open(entry.Path);
                 var reader = file.EcmaReader();
@@ -367,7 +403,7 @@ namespace Z0
         [CmdOp("ecma/pinvokes")]
         void PInvokes(CmdArgs args)
         {
-             var src = Ecma.index(FS.dir(args[0]));
+             var src = Ecma.index(Channel, FS.dir(args[0]));
             iter(src.Entries(), entry => {
                 var counter = 0u;
                 using var ecma = Ecma.file(entry.Path);                
