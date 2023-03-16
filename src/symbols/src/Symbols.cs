@@ -14,7 +14,12 @@ namespace Z0
         [MethodImpl(Inline)]
         public static ClrEnumAdapter<E> @enum<E>()
             where E : unmanaged, Enum
+     
                 => default;
+
+        [MethodImpl(Inline), Op, Closures(UInt64k)]
+        public static bit deposit<T>(in T src, ref SymStore<T> dst, out SymRef s)
+            => dst.Deposit(src, out s);
 
         [Op]
         public static uint example(SymStore<string> store, Span<SymRef> refs, Span<string> found)

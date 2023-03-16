@@ -59,7 +59,6 @@
     <ProjectReference Include="$(Rules)" />
 
     <ProjectReference Include="$(SosCmd)" />
-    <ProjectReference Include="$(Symbolics)" />
     <ProjectReference Include="$(Sys)" />
 
     <ProjectReference Include="$(TestChecks)" />
