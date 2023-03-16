@@ -12,8 +12,7 @@ namespace Z0
     using C = AsciCode;
     using S = AsciSymbol;
     using N = N128;
-
-    using api = Asci;
+    using api = AsciBlocks;
 
     /// <summary>
     /// Defines 128 bytes of storage

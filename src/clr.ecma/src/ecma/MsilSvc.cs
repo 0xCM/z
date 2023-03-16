@@ -16,7 +16,7 @@ namespace Z0
 
         const string CilEncodedHeader = CommentToken + "Encoded[{0}] = [{1}]";
 
-        const string CilPageBreak = CommentToken + RpOps.PageBreak120;
+        const string CilPageBreak = CommentToken + RP.PageBreak120;
 
         ILVisualizer IlViz;
 

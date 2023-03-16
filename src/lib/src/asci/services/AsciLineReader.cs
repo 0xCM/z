@@ -44,7 +44,7 @@ namespace Z0
             if(_line == null)
                 return false;
             var buffer = Buffer();
-            var count = Asci.encode(_line, buffer);
+            var count = AsciSymbols.encode(_line, buffer);
             var data = slice(buffer,0,count);
 
             LineCount++;

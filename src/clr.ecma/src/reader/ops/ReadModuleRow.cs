@@ -9,10 +9,10 @@ namespace Z0
 
     partial class EcmaReader
     {
-        public Module ReadModuleRow()
+        public ModuleRow ReadModuleRow()
         {
             var src = MD.GetModuleDefinition();
-            return new Module((ushort)src.Generation, src.Name, src.Mvid, src.GenerationId, src.BaseGenerationId);
+            return new ModuleRow((ushort)src.Generation, src.Name, src.Mvid, src.GenerationId, src.BaseGenerationId);
         }
     }            
 }

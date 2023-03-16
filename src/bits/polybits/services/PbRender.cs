@@ -15,7 +15,7 @@ namespace Z0
                 const string RenderPattern = "{0,-12} | {1}";
                 dst.WriteLine();
                 dst.AppendLineFormat(RenderPattern, "BitPattern", seq.ToString("D2"));
-                dst.WriteLine(RpOps.PageBreak120);
+                dst.WriteLine(RP.PageBreak120);
                 dst.AppendLineFormat(RenderPattern,  nameof(BpInfo.Origin), src.Origin);
                 dst.AppendLineFormat(RenderPattern,  nameof(BpInfo.Name), src.Name);
                 dst.AppendLineFormat(RenderPattern,  nameof(BpInfo.Pattern), src.Pattern);
@@ -24,7 +24,7 @@ namespace Z0
                 dst.AppendLineFormat(RenderPattern,  nameof(BpInfo.DataType), src.DataType.DisplayName());
                 dst.AppendLineFormat(RenderPattern,  nameof(BpInfo.Descriptor), src.Descriptor);
                 dst.AppendLineFormat(RenderPattern, "Segments", EmptyString);
-                dst.AppendLine(RpOps.PageBreak120);
+                dst.AppendLine(RP.PageBreak120);
                 render(src.Segs, dst);
             }
 

@@ -9,14 +9,14 @@ namespace Z0
     partial class EcmaEmitter
     {        
         public void EmitAssemblyRefs(ReadOnlySpan<Assembly> src, IDbArchive dst)
-            => EmitAssemblyRefs(src, dst.Table<EcmaTables.AssemblyRef>());
+            => EmitAssemblyRefs(src, dst.Table<EcmaTables.AssemblyRefRow>());
         
         public void EmitAssemblyRefs(IEnumerable<MappedAssembly> src, FilePath dst)
         {
-            var flow = EmittingTable<EcmaTables.AssemblyRef>(dst);
+            var flow = EmittingTable<EcmaTables.AssemblyRefRow>(dst);
             var counter = 0;
             using var writer = dst.Writer();
-            var formatter = CsvTables.formatter<EcmaTables.AssemblyRef>();
+            var formatter = CsvTables.formatter<EcmaTables.AssemblyRefRow>();
             foreach(var a in src)
             {
                 var reader = a.EcmaReader();
@@ -34,8 +34,8 @@ namespace Z0
         {
             var count = src.Length;
             var counter = 0u;
-            var flow = EmittingTable<EcmaTables.AssemblyRef>(dst);
-            var formatter = CsvTables.formatter<EcmaTables.AssemblyRef>();
+            var flow = EmittingTable<EcmaTables.AssemblyRefRow>(dst);
+            var formatter = CsvTables.formatter<EcmaTables.AssemblyRefRow>();
             using var writer = dst.Writer();
             writer.WriteLine(formatter.FormatHeader());
             for(var i=0; i<count; i++)

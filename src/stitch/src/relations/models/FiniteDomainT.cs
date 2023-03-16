@@ -8,11 +8,11 @@ namespace Z0
     {
         public abstract class FiniteDomain<T>
         {
-            public NameOld Name {get;}
+            public @string Name {get;}
 
             protected Index<T> Data;
 
-            protected FiniteDomain(NameOld name)
+            protected FiniteDomain(@string name)
             {
                 Name = name;
             }

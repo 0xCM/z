@@ -9,7 +9,7 @@ namespace Z0
     using B = ByteBlock2048;
     using api = Storage;
 
-    [StructLayout(LayoutKind.Sequential, Size = (int)Size, Pack=1), DataTypeAttributeD("block<n:2048,t:u8>")]
+    [StructLayout(LayoutKind.Sequential, Size = (int)Size, Pack=1)]
     public struct ByteBlock2048 : IStorageBlock<B>
     {
         public const ushort Size = 2048;

@@ -13,7 +13,7 @@ namespace Z0
         public static string format(in CpuIdExchange src)
         {
             const string FormatPattern = "fx:{0} subfx:{1} => eax:{2} ebx:{3} ecx:{4} edx:{5}";
-            return RpOps.format(FormatPattern, src.Fx, src.SubFx, src.Eax, src.Ebx, src.Ecx, src.Edx);
+            return string.Format(FormatPattern, src.Fx, src.SubFx, src.Eax, src.Ebx, src.Ecx, src.Edx);
         }
 
         public uint Fx;

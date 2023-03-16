@@ -4,9 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-    using System.Linq;
-
     public partial class WinMd : WfSvc<WinMd>
     {
         public static void parse(FilePath src, out ResponseFile dst)

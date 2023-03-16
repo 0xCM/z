@@ -16,6 +16,7 @@ namespace Z0
     {
 
     }
+
     public interface ISchema
     {
 

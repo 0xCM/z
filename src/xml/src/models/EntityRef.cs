@@ -4,16 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.Runtime.CompilerServices;
     using System.Xml;
-
-    using static Root;
 
     partial struct XmlParts
     {
-        public readonly struct EntityRef : IXmlPart<NameOld>
+        public readonly struct EntityRef : IXmlPart<TextBlock>
         {
-            public NameOld Value {get;}
+            public TextBlock Value {get;}
 
             [MethodImpl(Inline)]
             public EntityRef(string value)

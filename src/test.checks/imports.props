@@ -3,7 +3,6 @@
     <ProjectReference Include="$(Bits)" />
     <ProjectReference Include="$(Symbolics)" />
     <ProjectReference Include="$(Polyrand)" />
-    <ProjectReference Include="$(Validity)" />
     <ProjectReference Include="$(Wf)" />
     <ProjectReference Include="$(ApiMd)" />
     <ProjectReference Include="$(ApiCode)" />

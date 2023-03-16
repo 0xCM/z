@@ -34,7 +34,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static ByteBlock2 asci(N2 n, ReadOnlySpan<char> src)
         {
-            var dst = alloc(n);
+            var dst = ByteBlock2.Empty;
             asci(src,dst.Bytes);
             return dst;
         }
@@ -47,7 +47,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static ByteBlock3 asci(N3 n, ReadOnlySpan<char> src)
         {
-            var dst = alloc(n);
+            var dst = ByteBlock3.Empty;
             asci(src,dst.Bytes);
             return dst;
         }
@@ -60,7 +60,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static ByteBlock4 asci(N4 n, ReadOnlySpan<char> src)
         {
-            var dst = alloc(n);
+            var dst = ByteBlock4.Empty;
             asci(src,dst.Bytes);
             return dst;
         }
@@ -73,7 +73,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static ByteBlock5 asci(N5 n, ReadOnlySpan<char> src)
         {
-            var dst = alloc(n);
+            var dst = ByteBlock5.Empty;
             asci(src,dst.Bytes);
             return dst;
         }
@@ -86,7 +86,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static ByteBlock6 asci(N6 n, ReadOnlySpan<char> src)
         {
-            var dst = alloc(n);
+            var dst = ByteBlock6.Empty;
             asci(src,dst.Bytes);
             return dst;
         }
@@ -99,7 +99,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static ByteBlock7 asci(N7 n, ReadOnlySpan<char> src)
         {
-            var dst = alloc(n);
+            var dst = ByteBlock7.Empty;
             asci(src,dst.Bytes);
             return dst;
         }
@@ -112,7 +112,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static ByteBlock8 asci(N8 n, ReadOnlySpan<char> src)
         {
-            var dst = alloc(n);
+            var dst = ByteBlock8.Empty;
             asci(src,dst.Bytes);
             return dst;
         }
@@ -125,7 +125,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static ByteBlock9 asci(N9 n, ReadOnlySpan<char> src)
         {
-            var dst = alloc(n);
+            var dst = ByteBlock9.Empty;
             asci(src,dst.Bytes);
             return dst;
         }

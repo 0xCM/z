@@ -15,6 +15,5 @@ namespace Z0.Binary
             CellWidth = width;
             CellCount = count;
         }
-
     }
 }

@@ -5,7 +5,7 @@
 namespace Z0
 {
     using System.Linq;
-    using static EcmaTables;
+
     using static sys;
 
     partial class EcmaCmd : WfAppCmd<EcmaCmd>
@@ -168,10 +168,8 @@ namespace Z0
         [CmdOp("ecma/emit/mdroots")]
         void EmitMdHeader(CmdArgs args)
         {
-            var index = Ecma.index(FS.dir(args[0]));
-
-            var source = FS.dir(args[0]).DbArchive();
-            iter(index.Entries(), entry => {
+            var src = Ecma.index(FS.dir(args[0]));
+            iter(src.Entries(), entry => {
                 using var file = EcmaFile.open(entry.Path);
                 var reader = file.EcmaReader();
                 var memory = reader.Memory();
@@ -179,7 +177,6 @@ namespace Z0
                 Channel.Row(header);
             });
         }
-
 
         static FilePath EcmaArchive(FilePath src)
             => AppDb.Archive("ecma").Path(src.FileName.WithExtension(FS.ext($"{src.Hash}.txt")));
@@ -226,7 +223,7 @@ namespace Z0
                 using var file = Ecma.file(path);
                 var reader = file.EcmaReader();
                 var name = reader.AssemblyName();
-                var row = reader.ReadModuleRow().Context(reader);
+                var row = reader.ReadModuleRow().View(reader);
                 Channel.Row(string.Format("{0,-64} | {1,-16} | {2}", name.SimpleName(), name.Version, row.Mvid));                
             }, true);
         }
@@ -243,8 +240,7 @@ namespace Z0
                         if(a.GetType() == typeof(BinaryFormatterAttribute))
                             Channel.Row(t);
                     });
-                }
-                
+                }                
             });
         }
 
@@ -367,8 +363,24 @@ namespace Z0
             });
             Channel.TableEmit(dst.Array(), AppSettings.EnvDb().Scoped("clr").Path("ecma.heaps", FileKind.Csv));
         }
-
         
+        [CmdOp("ecma/pinvokes")]
+        void PInvokes(CmdArgs args)
+        {
+             var src = Ecma.index(FS.dir(args[0]));
+            iter(src.Entries(), entry => {
+                var counter = 0u;
+                using var ecma = Ecma.file(entry.Path);                
+                var reader = ecma.EcmaReader();
+                var defs = reader.ReadPinvokeMethodDefs();
+                iter(defs, d => {
+                    var import = d.Import;
+                    counter++;
+                    Channel.Row(counter.ToString("D5") + $" {entry.Path.FileName} -> {import.Dll}::{import.DeclaringType}:{import.Name}:{EcmaSigs.format(import.MethodSignature)}");
+                });
+            });                        
+        }
+
         [CmdOp("ecma/compile")]
         void Compilations(CmdArgs args)
         {

@@ -17,7 +17,6 @@ namespace Z0
         dynamic Output {get;}
     }
 
-
     public interface IOpEvaluation<S> : IOpEvaluation
     {
         new S Input {get;}

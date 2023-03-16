@@ -9,6 +9,20 @@ namespace Z0
     [ApiHost]
     public unsafe class EcmaSigs
     {        
+        public static string format<T>(MethodSignature<T> src)
+        {
+            var dst = text.emitter();
+            var types = src.ParameterTypes;
+            for(var i=0; i<types.Length; i++)
+            {
+                var type = types[i];
+                dst.Append(type);
+                dst.Append(" -> ");
+            }
+            dst.Append(src.ReturnType);
+            return dst.Emit();
+        }
+
         public static EcmaSigParser parser()
             => new EcmaSigParser();
 

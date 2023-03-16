@@ -10,12 +10,6 @@ namespace Z0
     [ApiHost]
     public static class EcmaContext
     {
-        [MethodImpl(Inline), Op]
-        public static ModuleContext Context(this Module row, IEcmaReader reader)
-            => new ModuleContext(reader,row);
 
-        [MethodImpl(Inline), Op]
-        public static FieldContext Context(this Field row, IEcmaReader reader)
-            => new FieldContext(reader,row);
     }
 }

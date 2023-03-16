@@ -60,6 +60,5 @@ namespace Z0
             [MethodImpl(Inline)]
             get => (ModuleKind & FileModuleKind.Obj) != 0;
         }
-
     }
 }

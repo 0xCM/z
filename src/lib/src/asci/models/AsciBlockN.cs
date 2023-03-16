@@ -8,7 +8,7 @@ namespace Z0
 
     using C = AsciCode;
     using S = AsciSymbol;
-    using api = Asci;
+    using api = AsciBlocks;
 
     public readonly ref struct AsciBlock<N>
         where N : unmanaged, ITypeNat

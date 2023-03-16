@@ -4,15 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Commands;
-
     using static sys;
     using static Bytes;
 
     [ApiHost]
     public class Ecma : WfSvc<Ecma>
-    {
-        
+    {        
         public static AssemblyIndex index()
             => new();
 
@@ -33,13 +30,13 @@ namespace Z0
         public static EcmaReader reader(EcmaFile src)
             => EcmaReader.create(src);
                     
-        public static IEnumerable<EcmaTables.AssemblyRef> refs(FilePath src)
+        public static IEnumerable<EcmaTables.AssemblyRefRow> refs(FilePath src)
         {
             using var ecma = file(src);
             return ecma.EcmaReader().ReadAssemblyRefRows();            
         }
 
-        public static ReadOnlySeq<EcmaTables.AssemblyRef> refs(Assembly src)
+        public static ReadOnlySeq<EcmaTables.AssemblyRefRow> refs(Assembly src)
             => EcmaReader.create(src).ReadAssemblyRefRows();
 
         public static bool parse(string src, out EcmaToken dst)

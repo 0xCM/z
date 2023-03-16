@@ -68,12 +68,6 @@ namespace Z0
             get => Buffer.Capacity().TotalSize;
         }
 
-        Span<byte> Cells
-        {
-            [MethodImpl(Inline)]
-            get => Buffer.Storage();
-        }
-
         [MethodImpl(Inline)]
         ref byte Cell(uint index)
             => ref MemorySections.cell(Buffer, index);

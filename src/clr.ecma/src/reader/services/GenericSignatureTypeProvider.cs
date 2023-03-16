@@ -241,9 +241,8 @@ namespace Z0
             }
 
             public string GetGenericInstantiation(string genericType, ImmutableArray<string> typeArguments)
-            {
-                throw new NotImplementedException();
-            }
+                => $"{genericType}<{text.join(Chars.Comma,typeArguments)}>";
+
         }
     }
 }

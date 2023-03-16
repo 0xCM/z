@@ -4,10 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.Runtime.CompilerServices;
     using System.Xml;
-
-    using static Root;
 
     partial struct XmlParts
     {

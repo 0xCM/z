@@ -4,8 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
     using System.Linq;
+
+    using static sys;
     using static WinMd;
 
     class WinMdCmd : WfAppCmd<WinMdCmd>
@@ -41,7 +42,6 @@ namespace Z0
                 });
             });;
         }
-
 
         [CmdOp("winmd/types")]
         void WinMdTypes()

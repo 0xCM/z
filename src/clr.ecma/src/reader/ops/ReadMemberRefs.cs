@@ -13,7 +13,7 @@ namespace Z0
         public MemberReference ReadMemberRef(MemberReferenceHandle src)
             => MD.GetMemberReference(src);
 
-        public ref MemberRef ReadMemberRef(MemberReferenceHandle handle, ref MemberRef dst)
+        public ref MemberRefRow ReadMemberRef(MemberReferenceHandle handle, ref MemberRefRow dst)
         {
             var src = MD.GetMemberReference(handle);
             dst.Token = EcmaTokens.token(handle);
@@ -25,17 +25,17 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public void ReadMemberRefs(ReadOnlySpan<MemberReferenceHandle> src, Span<MemberRef> dst)
+        public void ReadMemberRefs(ReadOnlySpan<MemberReferenceHandle> src, Span<MemberRefRow> dst)
         {
             var count = src.Length;
             for(var i=0u; i<count; i++)
                 ReadMemberRef(skip(src,i), ref seek(dst,i));
         }
 
-        public ReadOnlySeq<MemberRef> ReadMemberRefs()
+        public ReadOnlySeq<MemberRefRow> ReadMemberRefs()
         {
             var handles = MemberRefHandles();
-            var dst = sys.alloc<MemberRef>(handles.Length);
+            var dst = sys.alloc<MemberRefRow>(handles.Length);
             ReadMemberRefs(handles,dst);
             return dst;
         }

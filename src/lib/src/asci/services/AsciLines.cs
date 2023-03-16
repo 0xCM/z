@@ -36,8 +36,8 @@ namespace Z0
                     var i = SQ.index(content, sep);
                     if(i > 0)
                     {
-                        var name = Asci.format(SQ.left(content,i));
-                        var value = Asci.format(SQ.right(content,i));
+                        var name = AsciSymbols.format(SQ.left(content,i));
+                        var value = AsciSymbols.format(SQ.right(content,i));
                         dst.Add(new Setting(name, value));
                     }
                 }
@@ -48,9 +48,6 @@ namespace Z0
         [MethodImpl(Inline), Op]
         static BinaryCode tobytes(string src)
             => Encoding.ASCII.GetBytes(src);
-
-        public static AsciProcessor<T> processor<T>(IWfChannel channel, uint buffer, Func<MemoryAddress,uint,T> f)
-            => new AsciProcessor<T>(channel, buffer,f);
 
         public static uint settings(ref AsciLineReader src, Type type, char sep, out object dst)
         {
@@ -106,11 +103,11 @@ namespace Z0
                     var i = SQ.index(content, sep);
                     if(i > 0)
                     {
-                        var name = Asci.format(SQ.left(content,i));
+                        var name = AsciSymbols.format(SQ.left(content,i));
                         var data = SQ.right(content,i);
                         if(members.Member(name, out var field))
                         {
-                            if(ValueDynamic.parse(Asci.format(data), field.FieldType, out var value))
+                            if(ValueDynamic.parse(AsciSymbols.format(data), field.FieldType, out var value))
                             {
                                 field.SetValue(dst,value);
                                 counter++;
@@ -133,7 +130,7 @@ namespace Z0
             var data = tobytes(line).Storage;
             state.LineCount++;
 
-            if(AsciLines.number(data, out var length, out var num))
+            if(number(data, out var length, out var num))
                 dst = new AsciLineCover<byte>(data);
             else
                 dst = new AsciLineCover<byte>(data);

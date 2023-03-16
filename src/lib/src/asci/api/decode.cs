@@ -21,33 +21,6 @@ namespace Z0
             => src;
 
         [MethodImpl(Inline), Op]
-        public static uint decode(ReadOnlySpan<C> src, Span<char> dst)
-        {
-            var count = (uint)src.Length;
-            for(var i=0; i<count; i++)
-                seek(dst,i) = decode(skip(src,i));
-            return count;
-        }
-
-        [MethodImpl(Inline), Op]
-        public static uint decode(ReadOnlySpan<S> src, Span<char> dst)
-        {
-            var count = (uint)src.Length;
-            for(var i=0; i<count; i++)
-                seek(dst,i) = decode(skip(src,i));
-            return count;
-        }
-
-        [MethodImpl(Inline), Op]
-        public static uint decode(ReadOnlySpan<byte> src, Span<char> dst)
-        {
-            var count = min(src.Length, dst.Length);
-            for(var i=0u; i<count; i++)
-                seek(dst,i) = (char)skip(src,i);
-            return (uint)count;
-        }
-
-        [MethodImpl(Inline), Op]
         public static string decode(asci2 src)
         {
             var storage = 0u;
@@ -113,7 +86,7 @@ namespace Z0
         public static string decode(ReadOnlySpan<byte> src, out string dst)
         {
             Span<char> buffer = stackalloc char[src.Length];
-            decode(src, buffer);
+            AsciSymbols.decode(src, buffer);
             dst = sys.@string(buffer);
             return dst;
         }
@@ -132,7 +105,7 @@ namespace Z0
         {
             var lo = vpack.vinflatelo256x16u(src.Storage);
             var hi = vpack.vinflatehi256x16u(src.Storage);
-            return new(slice(recover<char>(core.bytes(new V256x2(lo,hi))), 0, src.Length));
+            return new(slice(recover<char>(sys.bytes(new V256x2(lo,hi))), 0, src.Length));
         }
 
         [MethodImpl(Inline), Op]
@@ -150,7 +123,7 @@ namespace Z0
             var x1 = vpack.vinflatehi256x16u(x.Lo);
             var x2 = vpack.vinflatelo256x16u(x.Hi);
             var x3 = vpack.vinflatehi256x16u(x.Hi);
-            return new(slice(recover<char>(core.bytes(new V256x4(x0, x1, x2, x3))),0, src.Length));
+            return new(slice(recover<char>(sys.bytes(new V256x4(x0, x1, x2, x3))),0, src.Length));
         }
 
         [MethodImpl(Inline), Op]
@@ -159,11 +132,6 @@ namespace Z0
             decode(src.Lo, ref dst);
             decode(src.Hi, ref seek(dst, 32));
         }
-
-        [MethodImpl(Inline), Op]
-        public static uint decode<N>(in AsciBlock<N> src, Span<char> dst)
-            where N : unmanaged, ITypeNat
-                => decode(src.Codes,dst);
 
         [MethodImpl(Inline), Op]
         public static uint decode(ReadOnlySpan<C> src, Span<char> dst, bool stopOnNull = true)
@@ -190,80 +158,43 @@ namespace Z0
         public static uint decode(ReadOnlySpan<byte> src, Span<char> dst, bool stopOnNull = true)
             => decode(recover<byte,C>(src), dst, stopOnNull);
 
-        [MethodImpl(Inline), Op]
-        public static string decode(AsciBlock4 src)
+        public static unsafe void decode(MemoryFile src, Action<CharBlock32> receiver)
         {
-            var storage = 0ul;
-            ref var dst = ref sys.@as<ulong,char>(storage);
-            ref readonly var input = ref sys.@as<byte,uint>(src.First);
-            sys.seek(dst, 0) = (char)(byte)(input >> 0);
-            sys.seek(dst, 1) = (char)(byte)(input >> 8);
-            sys.seek(dst, 2) = (char)(byte)(input >> 16);
-            sys.seek(dst, 3) = (char)(byte)(input >> 24);
-            return new (sys.cover(dst, ByteBlock4.Size));
+            var size = src.FileSize;
+            var blocks = (uint)size/32;
+            var remainder = (uint)size%32;
+            decode(src, blocks, remainder, receiver);
         }
 
-        [MethodImpl(Inline), Op]
-        public static void decode(AsciBlock8 src, ref char dst)
+        public static unsafe void decode(MemoryFile src, uint blocks, uint remainder, Action<CharBlock32> receiver)
         {
-            var decoded = vpack.vinflate256x16u(vbytes(w128, src));
-            vstore(decoded.GetLower(), ref @as<char,ushort>(dst));
-        }
-
-        [MethodImpl(Inline), Op]
-        public static void decode(AsciBlock16 src, ref char dst)
-        {
-           var decoded = vpack.vinflate256x16u(src.First);
-           vstore(decoded, ref @as<char,ushort>(dst));
-        }
-
-        [MethodImpl(Inline), Op]
-        public static void decode(AsciBlock32 src, ref char dst)
-        {
-            decode(src.Lo, ref dst);
-            decode(src.Hi, ref sys.seek(dst, 16));
-        }
-
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> decode(AsciBlock16 src)
-        {
-            var dst = CharBlock16.Null;
-            decode(src, ref dst.First);
-            var length = text.index(dst.Data, '\0');
-            if(length == NotFound)
-                return dst.Data;
-            else
-                return slice(dst.Data, 0, length);
-        }
-
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> decode(AsciBlock32 src)
-        {
+            const uint BlockSize = 32;
+            var counter = 0u;
+            var seg = src.Segment();
+            var offset = src.BaseAddress;
             var dst = CharBlock32.Null;
-            decode(src, ref dst.First);
-            var length = text.index(dst.Data, '\0');
-            if(length == NotFound)
-                return dst.Data;
-            else
-                return slice(dst.Data, 0, length);
+            for(var i=0u; i<blocks; i++)
+            {
+                decode(offset, BlockSize, out dst);
+                receiver(dst);
+                offset = offset + BlockSize;
+            }
+            decode(offset, remainder, out dst);
+            receiver(dst);
         }
 
-        [MethodImpl(Inline), Op]
-        public static string decode(AsciBlock64 src)
+        public static unsafe void decode(MemoryAddress src, uint size, out CharBlock32 dst)
         {
-            ref var storage = ref src.First;
-            var v1 = vload(w256, storage);
-            var v2 = vload(w256, sys.seek(storage, 32));
-            var x0 = vpack.vinflatelo256x16u(v1);
-            var x1 = vpack.vinflatehi256x16u(v1);
-            var x2 = vpack.vinflatelo256x16u(v2);
-            var x3 = vpack.vinflatehi256x16u(v2);
-            var chars = recover<char>(sys.bytes(new V256x4(x0, x1, x2, x3)));
-            var length = text.index(chars, '\0');
-            if(length == NotFound)
-                return new(chars);
+            var input = sys.cover(src.Pointer<byte>(), size);
+            dst = CharBlock32.Null;
+            var buffer = recover<ushort>(dst.Data);
+            if(size == 32)
+                gcpu.vstore(Asci.decode(vcpu.vload(w256, input)), buffer);
             else
-                return new (slice(chars, 0, length));
-        }
+            {
+                for(var i=0; i<size; i++)
+                    seek(buffer,i) = skip(input,i);
+            }
+        }            
     }
 }

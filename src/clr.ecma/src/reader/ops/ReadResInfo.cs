@@ -10,10 +10,10 @@ namespace Z0
     partial class EcmaReader
     {
         [MethodImpl(Inline), Op]
-        public ReadOnlySeq<ManifestResourceInfo> ReadResInfo()
+        public ReadOnlySeq<ManifestResourceRow> ReadResInfo()
         {
             var handles = ResourceHandles();
-            return ReadResInfo(handles, sys.alloc<ManifestResourceInfo>(handles.Length));
+            return ReadResInfo(handles, sys.alloc<ManifestResourceRow>(handles.Length));
         }
 
         [MethodImpl(Inline), Op]
@@ -21,7 +21,7 @@ namespace Z0
             => MetadataTokens.ManifestResourceHandle((int)row);
 
         [MethodImpl(Inline), Op]
-        public ReadOnlySeq<ManifestResourceInfo> ReadResInfo(ReadOnlySpan<ManifestResourceHandle> src, Seq<ManifestResourceInfo> dst)
+        public ReadOnlySeq<ManifestResourceRow> ReadResInfo(ReadOnlySpan<ManifestResourceHandle> src, Seq<ManifestResourceRow> dst)
         {
             var count = src.Length;
             for(var i=0u; i<count; i++)
@@ -30,7 +30,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public ref ManifestResourceInfo ReadResInfo(in ManifestResource src, ref ManifestResourceInfo dst)
+        public ref ManifestResourceRow ReadResInfo(in ManifestResource src, ref ManifestResourceRow dst)
         {
             dst.Name = String(src.Name);
             dst.Offset = (ulong)src.Offset;

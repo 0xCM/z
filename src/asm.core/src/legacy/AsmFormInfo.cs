@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    public readonly struct AsmFormInfo : ISyntaxPart<AsmFormInfo>
+    public readonly struct AsmFormInfo
     {
         public readonly TextBlock OpCode;
 

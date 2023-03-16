@@ -427,7 +427,6 @@ namespace Z0
             set => Subject.MinWorkingSet = value;
         }
 
-
         //
         // Summary:
         //     Gets the modules that have been loaded by the associated process.

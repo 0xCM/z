@@ -15,7 +15,7 @@ namespace Z0
         public void EmitMemberRefs(Assembly src, IDbArchive dst)
         {
             var reader = EcmaReader.create(src);
-            Channel.TableEmit(reader.ReadMemberRefs(), dst.Table<MemberRef>(src.GetSimpleName()));
+            Channel.TableEmit(reader.ReadMemberRefs(), dst.Table<MemberRefRow>(src.GetSimpleName()));
         }
     }
 }

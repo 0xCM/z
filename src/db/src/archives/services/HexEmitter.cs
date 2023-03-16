@@ -9,7 +9,7 @@ namespace Z0
     using static sys;
 
     [ApiHost]
-    public sealed class HexEmitter : AppService<HexEmitter>
+    public sealed class HexEmitter
     {
         const byte Bpl = 40;
 
@@ -124,7 +124,7 @@ namespace Z0
             var offset = 0ul;
             var @base = src.Min;
             var formatter = HexDataFormatter.create(src.Min, bpl);
-            dst.WriteLine(text.concat($"Address".PadRight(12), RpOps.SpacedPipe, "Data"));
+            dst.WriteLine(text.concat($"Address".PadRight(12), RP.SpacedPipe, "Data"));
             for(var i=0; i<pages; i++)
             {
                 var size = reader.Read((int)offset, PageSize, buffer);

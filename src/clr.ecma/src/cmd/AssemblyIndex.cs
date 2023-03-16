@@ -24,7 +24,7 @@ namespace Z0
         {
             using var ecma = Ecma.file(src.Path);
             var reader = ecma.EcmaReader();
-            var module = reader.ReadModuleRow().Context(reader);
+            var module = reader.ReadModuleRow().View(reader);
             return new Entry(inc(ref Seq), src.Path, src.Path.Size, src.AssemblyName.SimpleName, src.Version, module.Mvid);
         }
 

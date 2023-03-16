@@ -13,6 +13,15 @@ namespace Z0
         public static string @string(sbyte offset, sbyte count)
             => text.slice(AsciCharString, offset, count);
 
+        [MethodImpl(Inline), Op]
+        public static int encode(ReadOnlySpan<char> src, Span<byte> dst)
+        {
+            var count = min(src.Length, dst.Length);
+            for(var i=0u; i<count; i++)
+                seek(dst,i) = (byte)skip(src,i);
+            return count;
+        }
+
         /// <summary>
         /// Returns the uint16 asci scalar values corresponding to the asci codes [offset, ..., offset + count] where offset <= (2^7-1) - count
         /// </summary>

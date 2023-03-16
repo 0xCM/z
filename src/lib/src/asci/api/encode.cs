@@ -151,7 +151,6 @@ namespace Z0
             return dst;
         }
 
-
         /// <summary>
         /// Populates a 4-code asci block from the leading cells of a character span
         /// </summary>
@@ -270,93 +269,6 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static asci64 encode(N64 n, ReadOnlySpan<char> src)
             => encode(src, out asci64 dst);
-
-        [MethodImpl(Inline), Op]
-        public static AsciBlock4 encode(string src, out AsciBlock4 dst)
-            => encode(span(src), out dst);
-
-        [MethodImpl(Inline), Op]
-        public static AsciBlock8 encode(string src, out AsciBlock8 dst)
-            => encode(span(src), out dst);
-
-        [MethodImpl(Inline), Op]
-        public static AsciBlock16 encode(string src, out AsciBlock16 dst)
-            => encode(span(src), out dst);
-
-        [MethodImpl(Inline), Op]
-        public static AsciBlock32 encode(string src, out AsciBlock32 dst)
-            => encode(span(src), out dst);
-
-        [MethodImpl(Inline), Op]
-        public static AsciBlock64 encode(string src, out AsciBlock64 dst)
-            => encode(span(src), out dst);
-
-        [MethodImpl(Inline), Op]
-        public static AsciBlock128 encode(string src, out AsciBlock128 dst)
-            => encode(span(src), out dst);
-
-        [MethodImpl(Inline), Op]
-        public static AsciBlock4 encode(ReadOnlySpan<char> src, out AsciBlock4 dst)
-        {
-            dst = default;
-            var count = min(ByteBlock4.N, src.Length);
-            encode(src, slice(dst.Bytes,0,count));
-            return dst;
-        }
-
-        [MethodImpl(Inline), Op]
-        public static AsciBlock8 encode(ReadOnlySpan<char> src, out AsciBlock8 dst)
-        {
-            dst = default;
-            var count = min(ByteBlock8.N, src.Length);
-            encode(src, slice(dst.Bytes,0,count));
-            return dst;
-        }
-
-        [MethodImpl(Inline), Op]
-        public static AsciBlock16 encode(ReadOnlySpan<char> src, out AsciBlock16 dst)
-        {
-            dst = default;
-            var count = min(ByteBlock16.N, src.Length);
-            encode(src, slice(dst.Bytes,0,count));
-            return dst;
-        }
-
-        [MethodImpl(Inline), Op]
-        public static AsciBlock24 encode(ReadOnlySpan<char> src, out AsciBlock24 dst)
-        {
-            dst = default;
-            var count = min(ByteBlock24.N, src.Length);
-            encode(src, slice(dst.Bytes,0,count));
-            return dst;
-        }
-
-        [MethodImpl(Inline), Op]
-        public static AsciBlock32 encode(ReadOnlySpan<char> src, out AsciBlock32 dst)
-        {
-            dst = AsciBlock32.Empty;
-            var count = min(ByteBlock32.N, src.Length);
-            encode(src, slice(dst.Bytes,0,count));
-            return dst;
-        }
-
-        [MethodImpl(Inline), Op]
-        public static AsciBlock64 encode(ReadOnlySpan<char> src, out AsciBlock64 dst)
-        {
-            dst = AsciBlock64.Empty;
-            var count = min(ByteBlock64.N, src.Length);
-            encode(src, slice(dst.Bytes,0,count));
-            return dst;
-        }
-
-        [MethodImpl(Inline), Op]
-        public static AsciBlock128 encode(ReadOnlySpan<char> src, out AsciBlock128 dst)
-        {
-            dst = AsciBlock128.Empty;
-            var count = min(ByteBlock128.N, src.Length);
-            encode(src, slice(dst.Bytes,0,count));
-            return dst;
-       }
 
         public static void encode<S,N>(string src, out S dst)
             where S : struct, IAsciSeq<S,N>

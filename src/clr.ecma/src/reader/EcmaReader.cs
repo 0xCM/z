@@ -83,7 +83,7 @@ namespace Z0
             return dst.Array();
         }
         
-        public static IEnumerable<EcmaTables.AssemblyRef> refs(IEnumerable<AssemblyFile> src)
+        public static IEnumerable<EcmaTables.AssemblyRefRow> refs(IEnumerable<AssemblyFile> src)
         {
             foreach(var file in src.AsParallel())
             {

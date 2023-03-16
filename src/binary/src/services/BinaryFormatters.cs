@@ -13,7 +13,7 @@ namespace Z0
         {
             dst.Clear();
             var a = encode(input, dst);
-            var b = decode(dst,  out T output);
+            var b = decode(dst, out T output);
             Require.equal(a,b);
             if(!a.Equals(b))
                 @throw($"{text.squote(input) != text.squote(output)}");

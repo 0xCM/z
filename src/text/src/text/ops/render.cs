@@ -18,6 +18,10 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
+        public static uint render(ReadOnlySpan<AsciSymbol> src, ref uint i, Span<char> dst)
+            => render(recover<AsciSymbol,AsciCode>(src), ref i, dst);
+
+        [MethodImpl(Inline), Op]
         public static uint render(ReadOnlySpan<char> src, ref uint i, Span<byte> dst)
         {
             var i0=i;

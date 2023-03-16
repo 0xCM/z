@@ -102,7 +102,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public Vector128<T> ToVector()
-            => gcpu.vload<T>(w128, sys.bytes(Data));
+            => vgcpu.vload<T>(w128, sys.bytes(Data));
 
         [MethodImpl(Inline)]
         public bool Equals(Cell128<T> src)

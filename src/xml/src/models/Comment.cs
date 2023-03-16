@@ -6,9 +6,9 @@ namespace Z0
 {
     partial struct XmlParts
     {
-        public readonly struct Comment : IXmlPart<NameOld>
+        public readonly struct Comment : IXmlPart<TextBlock>
         {
-            public NameOld Value{get;}
+            public TextBlock Value{get;}
 
             [MethodImpl(Inline)]
             public Comment(string value)

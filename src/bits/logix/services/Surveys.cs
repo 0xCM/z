@@ -159,7 +159,7 @@ namespace Z0
         {
             var dst = text.buffer();
             dst.AppendLine(src.Name);
-            dst.AppendLine(RpOps.PageBreak80);
+            dst.AppendLine(RP.PageBreak80);
             for(var i=0; i<src.Questions.Length; i++)
                 dst.AppendLine(format(src.Questions[i]));
                     return dst.ToString();

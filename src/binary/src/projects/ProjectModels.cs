@@ -7,8 +7,7 @@ namespace Z0
     using static ProjectFiles;
 
     public partial class ProjectModels : Channeled<ProjectModels>
-    {
-        
+    {        
         public IProject LoadProject(FolderPath root)
         {
             var archive = root.DbArchive();

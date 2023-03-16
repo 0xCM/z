@@ -8,9 +8,9 @@ namespace Z0
 
     partial struct XmlParts
     {
-        public readonly struct ElementEnd : IXmlPart<NameOld>
+        public readonly struct ElementEnd : IXmlPart<TextBlock>
         {
-            public NameOld Value {get;}
+            public TextBlock Value {get;}
 
             public XmlNodeType Kind => XmlNodeType.EndElement;
 
