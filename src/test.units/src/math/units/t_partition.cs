@@ -52,7 +52,7 @@ namespace Z0
             var dst = Partitions.measured(src,1);
             var fmt = dst.Map(x => x.ToString()).Join(", ");
             Claim.eq(src.Length() + 1, dst.Length);
-            ClaimNumeric.eq(Arrays.from(5,6,7,8,9,10,11,12).ToSpan(),dst);
+            ClaimNumeric.eq(sys.array(5,6,7,8,9,10,11,12).ToSpan(),dst);
         }
 
         public void part1()

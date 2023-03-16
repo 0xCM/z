@@ -12,7 +12,7 @@ namespace Z0.Lang
         void CheckLexers(CmdArgs args)
         {
             var source = FS.path(args[0].Value);
-            using var chars = lang.chars(source);
+            using var chars = FS.chars(source);
             var buffer = new char[1024];
             var lexer = lang.splitter(' ', buffer);
             var tokens = lexer.Lex(chars);

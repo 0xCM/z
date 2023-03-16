@@ -8,6 +8,10 @@ namespace Z0
 
     partial struct FS
     {
+        [Op]
+        public static CharSource chars(FilePath src)
+            => new CharStream(src.Utf8Reader());            
+
         public static void clear(FolderPath src, bool recurse = false)
         {
             if(Directory.Exists(src.Name))

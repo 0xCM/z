@@ -6,6 +6,10 @@ namespace Z0
 {
     public readonly struct LineSource : ITokenSource<TextLine>
     {
+        [Op]
+        public static LineSource lines(FilePath src)
+            => new LineSource(src.Utf8LineReader());
+
         readonly LineReader Reader;
 
         internal LineSource(LineReader src)
