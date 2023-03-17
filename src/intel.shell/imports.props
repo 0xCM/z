@@ -1,5 +1,6 @@
 <Project>
   <ItemGroup>
     <ProjectReference Include="$(IntelSvc)" />
+    <ProjectReference Include="$(Workflow)" />
   </ItemGroup>
 </Project>

@@ -11,6 +11,7 @@
     <ProjectReference Include="$(Coff)" />
     <ProjectReference Include="$(Db)" />
     <ProjectReference Include="$(Stitch)" />
+    <ProjectReference Include="$(Lang)" />
     <PackageReference Include="Iced" Version="1.4.0" />
   </ItemGroup>
 </Project>

@@ -5,7 +5,6 @@
      <ProjectReference Include="$(Process)"/>
      <ProjectReference Include="$(Circuits)"/>
      <ProjectReference Include="$(Db)"/>
-     <ProjectReference Include="$(Workflow)"/>
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>

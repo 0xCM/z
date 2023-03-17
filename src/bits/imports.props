@@ -8,6 +8,5 @@
     <ProjectReference Include="$(Calcs)" />
     <ProjectReference Include="$(Graphs)" />
     <ProjectReference Include="$(Grids)" />
-    <ProjectReference Include="$(Workflow)" />
   </ItemGroup>
 </Project>

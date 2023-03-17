@@ -2,9 +2,9 @@
   <ItemGroup>
     <ProjectReference Include="$(Bits)" />
     <ProjectReference Include="$(Polyrand)" />
-    <ProjectReference Include="$(Wf)" />
     <ProjectReference Include="$(ApiMd)" />
     <ProjectReference Include="$(ApiCode)" />
     <ProjectReference Include="$(Machines)" />
+    <ProjectReference Include="$(Workflow)" />
   </ItemGroup>
 </Project>

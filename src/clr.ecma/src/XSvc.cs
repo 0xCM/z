@@ -17,23 +17,8 @@ namespace Z0
             public MsilSvc MsilSvc(IWfRuntime wf)
                 => Service<MsilSvc>(wf);
 
-            public IApiService EcmaCmd(IWfRuntime wf)
-                => Service<EcmaCmd>(wf);
-
-            public ClrCmd ClrCmd(IWfRuntime wf)
-                => Service<ClrCmd>(wf);
-
-            public ClrSvc ClrServices(IWfRuntime wf)
-                => Service<ClrSvc>(wf);
-
             public DataAnalyzer Analyzer(IWfRuntime wf)
                 => Service<DataAnalyzer>(wf);
-
-            public IApiService ProjectsCmd(IWfRuntime wf)
-                => Service<ProjectsCmd>(wf);
-
-            public IApiService BinaryCmd(IWfRuntime wf)
-                => Service<BinaryCmd>(wf);
 
         }
 
@@ -48,23 +33,7 @@ namespace Z0
         public static Ecma Ecma(this IWfRuntime wf)
             => Services.Ecma(wf);
 
-        public static IApiService EcmaCmd(this IWfRuntime wf)
-            => Services.EcmaCmd(wf);
-
-        public static IApiService ClrCmd(this IWfRuntime wf)
-            => Services.ClrCmd(wf);
-
-        public static ClrSvc ClrSvc(this IWfRuntime wf)
-            => Services.ClrServices(wf);
-
         public static DataAnalyzer Analyzer(this IWfRuntime wf)
             => Services.Analyzer(wf);
-
-        public static IApiService ProjectsCmd(this IWfRuntime wf)
-            => Services.ProjectsCmd(wf);
-
-        public static IApiService BinaryCmd(this IWfRuntime wf)
-            => Services.BinaryCmd(wf);
-
     }
 }

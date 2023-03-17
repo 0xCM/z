@@ -20,19 +20,19 @@ namespace Z0
             var input = ByteBlock4.Empty;
 
             input = 0xFF000000;
-            output = Storage.trim(input).Format();
+            output = TrimmedBlocks.trim(input).Format();
 
             input = 0xFF0000;
-            output = Storage.trim(input).Format();
+            output = TrimmedBlocks.trim(input).Format();
 
             input = 0xFF00;
-            output = Storage.trim(input).Format();
+            output = TrimmedBlocks.trim(input).Format();
 
             input = 0xFF;
-            output = Storage.trim(input).Format();
+            output = TrimmedBlocks.trim(input).Format();
 
             input = 0x0;
-            output = Storage.trim(input).Format();
+            output = TrimmedBlocks.trim(input).Format();
         }
 
         void CheckBlockPartitions()

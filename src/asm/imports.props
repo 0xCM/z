@@ -3,5 +3,6 @@
     <ProjectReference Include="$(AsmCore)" />
     <ProjectReference Include="$(ClrEcma)" />
     <ProjectReference Include="$(Polyrand)" />
+    <ProjectReference Include="$(Workflow)" />
   </ItemGroup>
 </Project>

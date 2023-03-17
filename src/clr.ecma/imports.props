@@ -1,8 +1,11 @@
 <Project>
+  <Import Project="$(SlnProps)\microsoft.codeanalysis.props"/>
+
   <ItemGroup>
     <ProjectReference Include="$(Diagnostics)"/>
     <ProjectReference Include="$(LangEmit)" />
     <ProjectReference Include="$(Bits)"/>
     <ProjectReference Include="$(ClrCil)"/>
+    <ProjectReference Include="$(Binary)"/>
   </ItemGroup>
 </Project>
