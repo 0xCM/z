@@ -9,7 +9,12 @@ namespace Z0
     public class EcmaStreams
     {
         public static EcmaTableStream tables(MetadataRoot root)
-            => new EcmaTableStream(root.BaseAddress + root.TableStreamHeader.Offset, root.TableStreamHeader.Size);
+        {
+           var dst =  new EcmaTableStream(root.BaseAddress + root.TableStreamHeader.Offset, root.TableStreamHeader.Size);
+            
+
+           return dst;
+        }
 
         public static EcmaBlobStream blobs(MetadataRoot root)
             => new EcmaBlobStream(root.BaseAddress + root.BlobStreamHeader.Offset, root.BlobStreamHeader.Size);

@@ -22,11 +22,11 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static Perm32 unsize(in NatPerm<N32,byte> spec)
-            => new Perm32(gcpu.vload(w256, spec.Terms));
+            => new Perm32(vgcpu.vload(w256, spec.Terms));
 
         [MethodImpl(Inline), Op]
         public static Perm16 unsize(in NatPerm<N16,byte> spec)
-            => new Perm16(gcpu.vload(w128, spec.Terms));
+            => new Perm16(vgcpu.vload(w128, spec.Terms));
 
         /// <summary>
         /// Defines the permutation (0 -> terms[0], 1 -> terms[1], ..., n - 1 -> terms[n-1])

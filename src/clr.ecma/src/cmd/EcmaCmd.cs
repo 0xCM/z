@@ -197,6 +197,8 @@ namespace Z0
                 var root = memory.ReadMetadataRoot();
                 var tables = EcmaStreams.tables(root);
                 var blobs = EcmaStreams.blobs(root);
+                var strings = EcmaStreams.strings(root,false);
+
                 
             });
 

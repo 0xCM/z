@@ -30,6 +30,7 @@ namespace Z0
         }
     }
 
+
     public unsafe struct MetadataMemory
     {
         readonly MemorySeg Source;

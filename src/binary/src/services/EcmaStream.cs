@@ -18,6 +18,7 @@ namespace Z0
             Size = size;
             Kind = kind;
         }
+        
     }
 
     public record class EcmaTableStream : EcmaStream

@@ -127,7 +127,7 @@ namespace Z0
         }
 
         public ReadOnlySpan<byte> ToSpan()
-            => slice(Data.Bytes, 0, Z0.Storage.trim(Data).TrimmedSize);
+            => slice(Data.Bytes, 0, TrimmedBlocks.trim(Data).TrimmedSize);
 
         public Hash32 Hash
         {
@@ -138,7 +138,7 @@ namespace Z0
         public byte TrimmedSize
         {
             [MethodImpl(Inline)]
-            get => (byte)Z0.Storage.trim(Data).TrimmedSize;
+            get => (byte)TrimmedBlocks.trim(Data).TrimmedSize;
         }
 
         public ReadOnlySpan<byte> Trimmed
@@ -157,7 +157,7 @@ namespace Z0
             => format(this);
 
         public string Format(bool prespec, bool uppercase)
-            => Z0.Storage.trim(Data).Format();
+            => TrimmedBlocks.trim(Data).Format();
 
         public override string ToString()
             => Format();

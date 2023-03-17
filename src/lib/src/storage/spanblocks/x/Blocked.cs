@@ -8,6 +8,7 @@ namespace Z0
 
     partial class XSb
     {
+
         /// <summary>
         /// Retrieves, at most, one cell's worth of bits defined by an inclusive bit index range
         /// </summary>

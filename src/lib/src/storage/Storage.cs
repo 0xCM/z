@@ -13,6 +13,41 @@ namespace Z0
         const NumericKind Closure = UnsignedInts;
 
         [MethodImpl(Inline), Op]
+        public static T block<T>(ReadOnlySpan<byte> src)
+            where T : unmanaged, IStorageBlock
+        {
+            var dst = default(T);
+            copy(src, ref dst);
+            return dst;
+        }
+
+        [MethodImpl(Inline)]
+        public static bool empty<T>(in T src)
+            where T : unmanaged, IStorageBlock<T>
+        {
+            var b = src.Bytes;
+            var count = b.Length;
+            var empty = true;
+            for(var i=0; i<count; i++)
+            {
+                if(skip(b,i) != 0)
+                {
+                    empty=false;
+                    break;
+                }
+            }
+            return empty;
+        }
+ 
+        public static string format<T>(in T src)
+            where T : unmanaged, IStorageBlock<T>
+                => src.Bytes.FormatHex();
+
+        public static string format<T>(in T src, char sep, bool prespec=false, bool uppercase = false)
+            where T : unmanaged, IStorageBlock<T>
+                => src.Bytes.FormatHex(sep, prespec:prespec, uppercase:uppercase);
+
+        [MethodImpl(Inline), Op]
         public static ref ByteBlock16 copy(ReadOnlySpan<byte> src, ref ByteBlock16 dst)
         {
             const ushort Size = ByteBlock16.Size;
@@ -162,58 +197,5 @@ namespace Z0
             }
         }
 
-        [MethodImpl(Inline), Op]
-        public static T block<T>(ReadOnlySpan<byte> src)
-            where T : unmanaged, IStorageBlock
-        {
-            var dst = default(T);
-            copy(src, ref dst);
-            return dst;
-        }
-
-        [MethodImpl(Inline)]
-        public static TrimmedBlock<T> trim<T>(in T src)
-            where T : unmanaged, IStorageBlock<T>
-                => src;
-
-        [MethodImpl(Inline)]
-        public static ByteSize size<T>(in TrimmedBlock<T> src)
-            where T : unmanaged, IStorageBlock<T>
-        {
-            var data = src.BlockData;
-            var length = (int)src.BlockSize;
-            var size = 0;
-            for(var i=length-1; i>=0; i--)
-            {
-                ref readonly var b = ref skip(data,i);
-                if(b == 0)
-                    continue;
-                else
-                {
-                    size = i + 1;
-                    break;
-                }
-
-            }
-            return size;
-        }
-
-        [MethodImpl(Inline)]
-        public static bool empty<T>(in T src)
-            where T : unmanaged, IStorageBlock<T>
-        {
-            var b = src.Bytes;
-            var count = b.Length;
-            var empty = true;
-            for(var i=0; i<count; i++)
-            {
-                if(skip(b,i) != 0)
-                {
-                    empty=false;
-                    break;
-                }
-            }
-            return empty;
-        }
     }
 }
