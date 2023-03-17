@@ -8,8 +8,8 @@ namespace Z0
     {
         HashSet<FileKind> Capability {get;}
 
-        FileClass Classify(FilePath src);        
+        KindedFile Classify(FilePath src);        
 
-        FileClass Classify(MemoryFile src);
+        KindedFile Classify(MemoryFile src);
     }
 }

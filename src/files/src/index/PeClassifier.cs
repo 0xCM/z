@@ -17,15 +17,15 @@ namespace Z0
             
         public HashSet<FileKind> Capability => _Capability;
 
-        public FileClass Classify(FilePath src)
+        public KindedFile Classify(FilePath src)
         {
             using var file = MemoryFiles.map(src);
             return Classify(file);
         }
 
-        public FileClass Classify(MemoryFile src)
+        public KindedFile Classify(MemoryFile src)
         {
-            var @class = FileClass.Empty;
+            var @class = KindedFile.Empty;
             if(src.FileSize >= 0x3C + 4)
             {
                 var sigloc = u32(src.Slice(0x3C,4));
@@ -34,7 +34,7 @@ namespace Z0
                     var sig = src.Slice(sigloc,4);
                     if((char)skip(sig,0) == 'P' && (char)skip(sig,1) == 'E' && skip(sig,2) == 0 && skip(sig,3) == 0)
                     {
-                        @class = new FileClass(src.Path, src.Path.FileKind());
+                        @class = new KindedFile(src.Path, src.Path.FileKind());
                     }
                 }
             }

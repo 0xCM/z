@@ -1,1 +1,0 @@
-diskpart -s vhd-attach.diskpart

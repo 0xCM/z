@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+
     using Commands;
 
     public class FileCatalogs : Channeled<FileCatalogs>
@@ -50,11 +51,11 @@ namespace Z0
 
             public bool Equals(Entry src)
                 => Location.Equals(src.Location) && ContentHash == src.ContentHash && LocationHash == src.LocationHash;
+
             uint ISequential.Seq 
                 { get => Seq; set => Seq = value; }
 
             public static Entry Empty => new();
-
         }
 
         public static Entry entry(MemoryFile src)
@@ -104,7 +105,7 @@ namespace Z0
             Channel.Ran(running, counter);
         }
 
-        static void enumerate(IWfChannel channel, FolderPath input,  ReadOnlySeq<FileExt> match, Action<FilePath> dst, bool pll = true)
+        static void enumerate(IWfChannel channel, FolderPath input, ReadOnlySeq<FileExt> match, Action<FilePath> dst, bool pll = true)
         {
             var src = match.IsEmpty ? FS.enumerate(input,"*.*", true) : FS.enumerate(input, true, match.Storage);
             var counter = 0u;
@@ -121,25 +122,14 @@ namespace Z0
             channel.Ran(flow, $"Found {counter} files from {input}");
         }
 
-        readonly PeClassifier PeClassifier = new();
-
         Entry Steps(FilePath src)
         {
             var info = FS.info(src);
             var e = Entry.Empty;
             if(info.Length != 0)
             {
-            using var file = MemoryFiles.map(src);
-            e = entry(file);
-            var kind = src.FileKind();
-            if(PeClassifier.Capability.Contains(kind))
-            {
-                var @class = PeClassifier.Classify(file);
-                if(@class.IsNonEmpty)
-                {
-                    Channel.Babble($"PE file:{src}");
-                }
-            }
+                using var file = MemoryFiles.map(src);
+                e = entry(file);
             }
             return e;            
         }

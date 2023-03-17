@@ -1,6 +1,0 @@
-<Project>
-  <Import Project="$(DevRoot)\props\microsoft.codeanalysis.props" />
-  <ItemGroup>
-    <ProjectReference Include="$(Commands)" />
-  </ItemGroup>
-</Project>

@@ -330,26 +330,10 @@ namespace Z0
             var counter = 0u;
             void Handler(FilePath src)
             {
+                index.Include(src);
                 var kind = src.FileKind();
-                if(index.Include(src) && (kind == FileKind.Dll || kind == FileKind.Exe || kind == FileKind.Sys || kind == FileKind.Obj))
-                {
-                    using var reader = src.BinaryReader();
-                    Span<byte> buffer = stackalloc byte[256];
-                    var length = reader.Read(buffer);
-                    if(length >= (0x3C + 4))
-                    {
-                        var sigloc = u32(slice(buffer,0x3C, 4));
-                        if(sigloc + 4 <= 1024)
-                        {
-                            var sig = slice(buffer,sigloc, 4);
-                            if((char)skip(sig,0) == 'P' && (char)skip(sig,1) == 'E' && skip(sig,2) == 0 && skip(sig,3) == 0)
-                            {
-                                Channel.Row($"PE file: {src}");
-                            }
-                        }
-                    }
-                }
-
+                if((kind == FileKind.Dll || kind == FileKind.Exe || kind == FileKind.Sys || kind == FileKind.Obj) && PeFileFormat.test(src))
+                    Channel.Row($"PE File: {src}");
                 if(sys.inc(ref counter) % 1000 == 0)
                     Channel.Babble($"Indexed {counter} files");
             }

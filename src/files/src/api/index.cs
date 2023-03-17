@@ -8,6 +8,7 @@ namespace Z0
     { 
         public static FileIndex index()
             => new FileIndex();
+            
         public static FileIndex index(IEnumerable<FilePath> src)
         {
             var dst = new FileIndex();

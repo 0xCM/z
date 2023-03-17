@@ -1,7 +1,0 @@
-create vdisk file="C:\Work\lib\vhdx\Drive00.vhdx" maximum=5000 type=expandable
-select vdisk file="C:\Work\lib\vhdx\Drive00.vhdx"
-attach vdisk
-create partition primary
-assign mount = "C:\Work\lib\vhdx\Drive00"
-format quick fs=ntfs label= "pdms-vhdx-00"
-

@@ -1,1 +1,0 @@
-diskpart -s vhd-detach.diskpart

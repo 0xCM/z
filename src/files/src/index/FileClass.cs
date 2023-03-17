@@ -3,30 +3,54 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0
-{
-    [StructLayout(LayoutKind.Sequential)]
-    public readonly record struct FileClass
+{    
+    public record struct FileClass : IDataType<FileClass>, IDataString
     {
-        public readonly FilePath Path;
+        public readonly @string Name;
 
-        public readonly FileKind Kind;
-
-        public FileClass(FilePath path, FileKind kind)
+        [MethodImpl(Inline)]
+        public FileClass(string name)
         {
-            Path = path;
-            Kind = kind;
+            Name = name;
         }
 
         public bool IsEmpty
         {
-            get => Kind == 0;            
+            [MethodImpl(Inline)]
+            get => Name.IsEmpty;
         }
 
         public bool IsNonEmpty
         {
-            get => Kind != 0;            
+            [MethodImpl(Inline)]
+            get => Name.IsNonEmpty;
         }
 
-        public static FileClass Empty => new FileClass(FilePath.Empty, FileKind.None);
-    }        
+        public Hash32 Hash
+        {
+            [MethodImpl(Inline)]
+            get => Name.Hash;
+        }
+
+        public override int GetHashCode()
+            => Hash;
+
+        [MethodImpl(Inline)]
+        public bool Equals(FileClass src)
+            => Name == src.Name;
+
+        [MethodImpl(Inline)]
+        public int CompareTo(FileClass src)
+            => Name.CompareTo(src.Name);
+    
+        public string Format()
+            => Name;
+
+        public override string ToString()
+            => Format();
+
+        [MethodImpl(Inline)]
+        public static implicit operator FileClass(string name)
+            => new (name);
+    }
 }
