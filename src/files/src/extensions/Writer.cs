@@ -9,6 +9,9 @@ namespace Z0
 
     partial class XTend
     {
+        public static BinaryWriter BinaryWriter(this FilePath dst)
+            => new BinaryWriter(File.Open(dst.EnsureParentExists().Name, FileMode.Create), Encoding.ASCII);
+
         [Op]
         public static StreamWriter Writer(this FilePath dst, bool append)
             => FS.writer(dst, append ? FileWriteMode.Append : FileWriteMode.Overwrite, Encoding.UTF8);

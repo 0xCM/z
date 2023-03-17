@@ -13,7 +13,7 @@ namespace Z0
         public EcmaToken Token;
 
         [Render(48)]
-        public @string Name;
+        public string Name;
 
         [Render(48)]
         public @string FullName;

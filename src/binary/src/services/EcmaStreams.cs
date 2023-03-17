@@ -10,10 +10,25 @@ namespace Z0
     {
         public static EcmaTableStream tables(MetadataRoot root)
         {
-           var dst =  new EcmaTableStream(root.BaseAddress + root.TableStreamHeader.Offset, root.TableStreamHeader.Size);
-            
-
-           return dst;
+            var @base = root.BaseAddress + root.TableStreamHeader.Offset;
+            var size = root.TableStreamHeader.Size;
+            var dst =  new EcmaTableStream(@base, root.TableStreamHeader.Size);
+            var reader = MemoryReaders.reader(@base,size);
+            dst.Reserved1 = reader.Read<uint>();
+            dst.MajorVersion = reader.Read<byte>();
+            dst.MinorVersion = reader.Read<byte>();
+            dst.HeapSizes = reader.Read<byte>();
+            dst.Reserved2 = reader.Read<byte>();
+            dst.Present = reader.Read<EcmaTableMask>();
+            dst.Sorted = reader.Read<ulong>();
+            dst.TableCount = (byte)bits.pop((ulong)dst.Present);
+            var counts = alloc<uint>(dst.TableCount);
+            for(var i=0; i<dst.TableCount; i++)
+            {
+                counts[i] = reader.Read<uint>();
+            }
+            dst.RowCounts = counts;
+            return dst;
         }
 
         public static EcmaBlobStream blobs(MetadataRoot root)

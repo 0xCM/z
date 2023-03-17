@@ -112,7 +112,6 @@ namespace Z0
         public static string Format(this Swap[] src)
             => string.Join(" -> ", src.Map(x => x.Format()));
 
-
         /// <summary>
         /// Constructs the canonical literal representation of a natural permutation on 4 symbols
         /// </summary>

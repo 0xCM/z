@@ -1,0 +1,96 @@
+Description:
+  .NET Native IL Compiler
+
+Usage:
+  ilc <input-file-path>... [options]
+
+Arguments:
+  <input-file-path>  Input file(s)
+
+Options:
+  -r, --reference <reference>                                                                                              Reference file(s) for compilation []
+  -o, --out <out>                                                                                                          Output file path
+  -O, --optimize                                                                                                           Enable optimizations
+  --optimize-space, --Os                                                                                                   Enable optimizations, favor code space
+  --optimize-time, --Ot                                                                                                    Enable optimizations, favor code speed
+  -m, --mibc <mibc>                                                                                                        Mibc file(s) for profile guided optimization []
+  -g, --debug                                                                                                              Emit debugging information
+  --gdwarf-5                                                                                                               Generate source-level debug information with dwarf version 5
+  --nativelib                                                                                                              Compile as static or shared library
+  --splitinit                                                                                                              Split initialization of an executable between the library entrypoint and a main entrypoint
+  --exportsfile <exportsfile>                                                                                              File to write exported method definitions
+  --dgmllog <dgmllog>                                                                                                      Save result of dependency analysis as DGML
+  --fulllog                                                                                                                Save detailed log of dependency analysis
+  --scandgmllog <scandgmllog>                                                                                              Save result of scanner dependency analysis as DGML
+  --scanfulllog                                                                                                            Save detailed log of scanner dependency analysis
+  --verbose                                                                                                                Enable verbose logging
+  --systemmodule <systemmodule>                                                                                            System module name (default: System.Private.CoreLib) [default: System.Private.CoreLib]
+  --multifile                                                                                                              Compile only input files (do not compile referenced assemblies)
+  --waitfordebugger                                                                                                        Pause to give opportunity to attach debugger
+  --resilient                                                                                                              Ignore unresolved types, methods, and assemblies. Defaults to false
+  --codegenopt <codegenopt>                                                                                                Define a codegen option []
+  --rdxml <rdxml>                                                                                                          RD.XML file(s) for compilation []
+  --descriptor <descriptor>                                                                                                ILLinkTrim.Descriptor file(s) for compilation []
+  --map <map>                                                                                                              Generate a map file
+  --mstat <mstat>                                                                                                          Generate an mstat file
+  --metadatalog <metadatalog>                                                                                              Generate a metadata log file
+  --nometadatablocking                                                                                                     Ignore metadata blocking for internal implementation details
+  --completetypemetadata                                                                                                   Generate complete metadata for types
+  --reflectiondata <reflectiondata>                                                                                        Reflection data to generate (one of: all, none)
+  --scanreflection                                                                                                         Scan IL for reflection patterns
+  --scan                                                                                                                   Use IL scanner to generate optimized code (implied by -O)
+  --noscan                                                                                                                 Do not use IL scanner to generate optimized code
+  --ildump <ildump>                                                                                                        Dump IL assembly listing for compiler-generated IL
+  --stacktracedata                                                                                                         Emit data to support generating stack trace strings at runtime
+  --methodbodyfolding                                                                                                      Fold identical method bodies
+  --initassembly <initassembly>                                                                                            Assembly(ies) with a library initializer []
+  --appcontextswitch <appcontextswitch>                                                                                    System.AppContext switches to set (format: 'Key=Value') []
+  --feature <feature>                                                                                                      Feature switches to apply (format: 'Namespace.Name=[true|false]' []
+  --runtimeopt <runtimeopt>                                                                                                Runtime options to set []
+  --parallelism <parallelism>                                                                                              Maximum number of threads to use during compilation [default: 24]
+  --instruction-set <instruction-set>                                                                                      Instruction set to allow or disallow
+  --guard <guard>                                                                                                          Enable mitigations. Options: 'cf': CFG (Control Flow Guard, Windows only)
+  --dehydrate                                                                                                              Dehydrate runtime data structures
+  --preinitstatics                                                                                                         Interpret static constructors at compile time if possible (implied by -O)
+  --nopreinitstatics                                                                                                       Do not interpret static constructors at compile time
+  --nowarn <nowarn>                                                                                                        Disable specific warning messages []
+  --singlewarn                                                                                                             Generate single AOT/trimming warning per assembly
+  --notrimwarn                                                                                                             Disable warnings related to trimming
+  --noaotwarn                                                                                                              Disable warnings related to AOT
+  --singlewarnassembly <singlewarnassembly>                                                                                Generate single AOT/trimming warning for given assembly []
+  --nosinglewarnassembly <nosinglewarnassembly>                                                                            Expand AOT/trimming warnings for given assembly []
+  --directpinvoke <directpinvoke>                                                                                          PInvoke to call directly []
+  --directpinvokelist <directpinvokelist>                                                                                  File with list of PInvokes to call directly []
+  --maxgenericcycle <maxgenericcycle>                                                                                      Max depth of generic cycle [default: 4]
+  --root <root>                                                                                                            Fully generate given assembly []
+  --conditionalroot <conditionalroot>                                                                                      Fully generate given assembly if it's used []
+  --trim <trim>                                                                                                            Trim the specified assembly []
+  --defaultrooting                                                                                                         Root assemblies that are not marked [IsTrimmable]
+  --targetarch <ARM|ARM64|LoongArch64|Unknown|Wasm32|X64|X86>                                                              Target architecture for cross compilation [default: X64]
+  --targetos <FreeBSD|iOS|iOSSimulator|Linux|MacCatalyst|NetBSD|OSX|SunOS|tvOS|tvOSSimulator|Unknown|WebAssembly|Windows>  Target OS for cross compilation [default: Windows]
+  --jitpath <jitpath>                                                                                                      Path to JIT compiler library
+  --singlemethodtypename <singlemethodtypename>                                                                            Single method compilation: assembly-qualified name of the owning type
+  --singlemethodname <singlemethodname>                                                                                    Single method compilation: name of the method
+  --singlemethodgenericarg <singlemethodgenericarg>                                                                        Single method compilation: generic arguments to the method
+  --make-repro-path <make-repro-path>                                                                                      Path where to place a repro package
+  -v, --version                                                                                                            Show version information
+  -?, -h, --help                                                                                                           Show help and usage information
+
+
+Options may be passed on the command line, or via response file. On the command line switch values may be specified by passing the option followed by a space followed by the value of the option, or by specifying a : between option and switch value. A response file is specified by passing the @ symbol before the response file name. In a response file all options must be specified on their own lines, and only the : syntax for switches is supported.
+
+Use the '--' option to disambiguate between input files that have begin with -- and options. After a '--' option, all arguments are considered to be input files. If no input files begin with '--' then this option is not necessary.
+
+Valid switches for --targetos are: 'windows', 'linux', 'freebsd', 'osx', 'maccatalyst', 'ios', 'iossimulator', 'tvos', 'tvossimulator'. The default value is 'windows'
+
+Valid switches for --targetarch are: 'arm', 'arm64', 'x86', 'x64'. The default value is 'x64'
+
+The allowable values for the --instruction-set option are described in the table below. Each architecture has a different set of valid instruction sets, and multiple instruction sets may be specified by separating the instructions sets by a ','. For example 'avx2,bmi,lzcnt'
+arm: 
+arm64: base, neon, aes, crc, dotprod, rdma, sha1, sha2, lse, rcpc
+x86: base, sse, sse2, sse3, ssse3, sse4.1, sse4.2, avx, avx2, aes, bmi, bmi2, fma, lzcnt, pclmul, popcnt, avxvnni, movbe, serialize, avx512f, avx512f_vl, avx512bw, avx512bw_vl, avx512cd, avx512cd_vl, avx512dq, avx512dq_vl
+x64: base, sse, sse2, sse3, ssse3, sse4.1, sse4.2, avx, avx2, aes, bmi, bmi2, fma, lzcnt, pclmul, popcnt, avxvnni, movbe, serialize, avx512f, avx512f_vl, avx512bw, avx512bw_vl, avx512cd, avx512cd_vl, avx512dq, avx512dq_vl
+
+The following CPU names are predefined groups of instruction sets and can be used in --instruction-set too:
+x86-x64, x86-x64-v2, x86-x64-v3, skylake, x86-x64-v4, armv8-a, armv8.1-a, armv8.2-a, armv8.3-a, armv8.4-a, armv8.5-a, armv8.6-a, apple-m1
+

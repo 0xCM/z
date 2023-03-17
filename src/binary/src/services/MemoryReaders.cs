@@ -8,6 +8,9 @@ namespace Z0
 
     public partial class MemoryReaders
     {
+        public static MemoryReader reader(MemoryAddress @base, ByteSize size, uint offset = 0)
+            => new MemoryReader(@base, size,offset);
+            
         public unsafe abstract class MemoryReader<R>
         {
             protected readonly MemoryAddress BaseAddress;
@@ -18,6 +21,8 @@ namespace Z0
 
             protected uint Position;
 
+            protected readonly uint LastPosition;
+
             [MethodImpl(Inline)]
             protected MemoryReader(MemoryAddress src, ByteSize size, uint offset = 0)
             {
@@ -25,6 +30,7 @@ namespace Z0
                 Position = offset;
                 Size = size;
                 LastAddress = BaseAddress + size;
+                LastPosition = size;
             }
 
             [MethodImpl(Inline)]
@@ -33,19 +39,22 @@ namespace Z0
                 Position += size;
             }
 
+            protected ReadOnlySpan<byte> Bytes()
+                => cover(BaseAddress.Pointer<byte>(), Size);
 
-            protected ReadOnlySpan<byte> Bytes
-            {
-                [MethodImpl(Inline)]
-                get => cover(BaseAddress.Pointer<byte>(), Size);
-            }
 
+            [MethodImpl(Inline)]
+            protected ReadOnlySpan<byte> Bytes(uint offset)
+                => slice(Bytes(), offset);
 
             [MethodImpl(Inline)]
             protected T* Pointer<T>()
                 where T : unmanaged
                     => (BaseAddress + Position).Pointer<T>();
 
+            [MethodImpl(Inline)]
+            protected uint Remaining()
+                => Position <= LastPosition ? LastPosition - Position : 0;
 
             [MethodImpl(Inline)]
             public T Read<T>()
@@ -54,6 +63,14 @@ namespace Z0
                 var value = *Pointer<T>();
                 Advance(size<T>());
                 return value;
+            }
+
+            public ReadOnlySpan<byte> Read(uint requested)
+            {
+                var length = Position + requested < LastPosition ? requested : Remaining();
+                var data = slice(Bytes(),Position, length);
+                Advance(length);
+                return data;
             }
 
             [MethodImpl(Inline)]
@@ -81,7 +98,6 @@ namespace Z0
             {
 
             }
-
 
         }
         

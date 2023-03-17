@@ -164,12 +164,6 @@ namespace Z0
         public void OpenClass(string name, bool partial = false)
             => OpenClass(0, name, partial);
 
-        public void CloseClass(uint offset)
-            => IndentLine(offset,"}");
-
-        public void CloseClass()
-            => CloseClass(0);
-
         public void OpenStruct(uint offset, string name, bool @readonly = true, bool partial = false)
         {
             const string P0 = "public readonly struct {0}";

@@ -280,7 +280,6 @@ namespace Z0
             return result;
         }
 
-
         [CmdOp("devshell")]
         void LaunchShell(CmdArgs args)
             => DevShells.start(Channel,args);
@@ -335,7 +334,7 @@ namespace Z0
                 if(index.Include(src) && (kind == FileKind.Dll || kind == FileKind.Exe || kind == FileKind.Sys || kind == FileKind.Obj))
                 {
                     using var reader = src.BinaryReader();
-                    Span<byte> buffer = stackalloc byte[1024];
+                    Span<byte> buffer = stackalloc byte[256];
                     var length = reader.Read(buffer);
                     if(length >= (0x3C + 4))
                     {

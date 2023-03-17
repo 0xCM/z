@@ -70,12 +70,6 @@ namespace Z0
             => Data = token;
 
         [MethodImpl(Inline)]
-        public EcmaToken(EcmaTableKind table, uint row)
-        {
-            Data = (uint)table << 24 | (row & 0xFFFFFF);
-        }
-
-        [MethodImpl(Inline)]
         public EcmaToken(TableIndex table, uint row)
         {
             Data = (uint)table << 24 | (row & 0xFFFFFF);
@@ -179,7 +173,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator EcmaToken(ModuleReferenceHandle src)
-            => new EcmaToken(EcmaTableKind.ModuleRef, sys.@as<ModuleReferenceHandle,uint>(src));
+            => new EcmaToken(TableIndex.ModuleRef, sys.@as<ModuleReferenceHandle,uint>(src));
 
         public static EcmaToken Empty
             => default;

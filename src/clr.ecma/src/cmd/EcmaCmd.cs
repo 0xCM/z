@@ -187,10 +187,9 @@ namespace Z0
         [CmdOp("ecma/emit/streams")]
         void EmitEcmaStreams(CmdArgs args)
         {
-            var source = FS.dir(args[0]).DbArchive();
-            var assemblies = Archives.modules(source.Root).AssemblyFiles();
+            var src = Ecma.index(Channel, FS.dir(args[0]));
             var dst = bag<EcmaStreamHeader>();
-            iter(assemblies, a => {
+            iter(src.Distinct(), a => {
                 using var file = EcmaFile.open(a.Path);
                 var reader = file.EcmaReader();
                 var memory = reader.Memory();
@@ -198,8 +197,22 @@ namespace Z0
                 var tables = EcmaStreams.tables(root);
                 var blobs = EcmaStreams.blobs(root);
                 var strings = EcmaStreams.strings(root,false);
-
-                
+                Channel.Row(RP.PageBreak180, FlairKind.StatusData);
+                Channel.Row(a.Path);
+                Channel.Row(tables.Present);
+                Channel.Row(tables.Sorted.ToBitString());
+                var counts = tables.RowCounts;
+                var b = new bits<ulong>(64,(ulong)tables.Present);
+                var j=0;
+                for(byte i=0; i<64; i++)
+                {
+                    if(b[i])
+                    {
+                        var table = (TableIndex)i;
+                        var count = counts[j++];
+                        Channel.Row(string.Format("{0,-24} {1}", table, count));
+                    }
+                }
             });
 
         }
@@ -456,8 +469,61 @@ namespace Z0
             var output = AppSettings.EnvDb().Scoped("clr").Path(identifer, FileKind.Exe).Delete();
             var emitOptions = new EmitOptions(false, DebugInformationFormat.Embedded, includePrivateMembers:true);
             using var stream = output.Stream();            
-            var result = compilation.Emit(stream,options:emitOptions);
-           
+            var result = compilation.Emit(stream,options:emitOptions);          
+        }
+
+        static Assembly[] CodeAnalysis 
+            => FS.path(ExecutingPart.Assembly.Location).FolderPath.DbArchive().Files(FileKind.Dll, false).Where(f => f.FileName.StartsWith("Microsoft.CodeAnalysis")).Map(x => Assembly.LoadFile(x.Format()));
+
+
+        [CmdOp("roslyn/nodes")]
+        void RoslnNodes()
+        {
+            iter(CodeAnalysis, a => {
+                var reader = EcmaReader.create(a);
+                var name = a.GetSimpleName();
+                if(name == "Microsoft.CodeAnalysis.CSharp")
+                {
+                    var counter = 0u;
+                    var types = dict<string,Type>();
+                    var ancestors = dict<Type,Type>();
+                    Channel.Row(name, FlairKind.StatusData);
+                    var deps = reader.ReadDependencySet();
+                    iter(deps.ManagedDependencies, d => Channel.Row($"  --> {d.TargetName}"));
+                    var ft = a.Types().Where(t => !t.FullName.Contains("<"));
+
+                    iter(ft, t => types[t.FullName] = t);
+                    iter(ft, t => {
+                        ancestors[t] = t.BaseType;
+                    });
+                    var margin = 0u;
+                    iter(ancestors, kvp => {
+                        var def = text.emitter();
+                        var type = kvp.Key;
+                        var parent = kvp.Value;
+                        if(!type.Name.Contains("<") && nonempty(type.Namespace))
+                        {
+                            if(parent != null)
+                                def.Append(string.Format("{0:D5} {1}.{2} -> {3}.{4}", counter++, type.Namespace, type.Name, parent.Namespace, parent.Name));
+                            else
+                                def.Append(string.Format("{0:D5} {1}.{2}", counter++, type.Namespace, type.Name));
+                            Channel.Row(def.Emit());
+                        }
+
+                    });
+                }
+                // var types = reader.ReadTypeDefs();
+                // var counter = 0u;
+                // iter(types, t => {
+                //     if(!t.Name.Contains("<"))
+                //     {
+                //         if(t.Namespace.IsEmpty)
+                //             Channel.Row(string.Format("{0:D5} {1}", counter++, t.Name));
+                //         else
+                //             Channel.Row(string.Format("{0:D5} {1}.{2}", counter++, t.Namespace, t.Name));
+                //     }
+                // });
+            });
         }
     }
 }
