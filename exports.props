@@ -60,6 +60,7 @@
 
    <Import Project="$(MsBuildThisFileDirectory)src/polyrand/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/process/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/projects/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/stitch/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/symbols/exports.props"/>
