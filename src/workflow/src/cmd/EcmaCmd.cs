@@ -25,17 +25,11 @@ namespace Z0
         void EcmaEmit()
             => EcmaEmitter.Emit(ApiAssemblies.Parts, EcmaEmissionSettings.Default, AppDb.ApiTargets("ecma"));
 
-        public static ReadOnlySeq<Assembly> Parts(FolderPath src)
-        {
-            var modules = Archives.modules(src,false).Members().Where(x => FS.managed(x.Path) && !x.Path.FileName.Contains("System.Private.CoreLib"));
-            return modules.Where(m => m.Path.FileName.StartsWith("z0.")).Map(x => Assembly.LoadFile(x.Path.Format()));
-        }
-
         [CmdOp("api/parts")]
         void ApiPartList()
         {
             var root = FS.path(controller().Location).FolderPath;
-            var src  = Parts(root);
+            var src  = Archives.parts(root);
             iter(src, a => Write(a.Path()));
         }
 
@@ -108,18 +102,17 @@ namespace Z0
         static FolderPath nested(FolderPath root, FilePath src)
             => root + FS.folder(FS.components(src.FolderPath).Join('/'));
 
-        static FolderPath nested(FolderPath root, FolderPath src)
-            => root + FS.folder(FS.components(src).Join('/'));
-
         [CmdOp("ecma/emit/stats")]
         void EcmaEmitStats(CmdArgs args)
         {
             var src = FS.dir(args[0]);
-            var modules = Archives.modules(src).AssemblyFiles();
-            var stats = EcmaReader.stats(modules.Select(x => x.Path));
-            var folder = nested(DataTarget.Scoped("clr").Root, src);
-            var path = folder.DbArchive().Table<EcmaRowStats>();
-            Channel.TableEmit(stats,path);
+            var modules = Archives.modules(src);
+            EcmaEmitter.EmitTableStats(modules, DataTarget.Scoped("clr"));
+            //var modules = Archives.modules(src).AssemblyFiles();
+            // var stats = EcmaReader.stats(modules.Select(x => x.Path));
+            // var folder = Archives.nested(DataTarget.Scoped("clr").Root, src);
+            // var path = folder.DbArchive().Table<EcmaRowStats>();
+            // Channel.TableEmit(stats,path);
         }
 
         [CmdOp("ecma/emit/typedefs")]

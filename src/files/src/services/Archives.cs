@@ -5,6 +5,7 @@
 namespace Z0
 {
     using System.IO.Compression;
+    using System.Linq;
     using Commands;
 
     using static sys;
@@ -12,6 +13,13 @@ namespace Z0
     [ApiHost]
     public class Archives
     {
+        public static FolderPath nested(FolderPath root, FilePath src)
+            => root + FS.folder(FS.components(src.FolderPath).Join('/'));
+
+        public static FolderPath nested(FolderPath root, FolderPath src)
+            => root + FS.folder(FS.components(src).Join('/'));
+
+
         static AppSettings AppSettings => AppSettings.Default;
 
         public static IDbArchive archive(Timestamp ts, DbArchive dst)
@@ -57,6 +65,12 @@ namespace Z0
 
         public static IModuleArchive modules(FolderPath src, bool recurse = true)
             => new ModuleArchive(src, recurse);
+
+        public static ReadOnlySeq<Assembly> parts(FolderPath src)
+        {
+            var modules = Archives.modules(src,false).Members().Where(x => FS.managed(x.Path) && !x.Path.FileName.Contains("System.Private.CoreLib"));
+            return modules.Where(m => m.Path.FileName.StartsWith("z0.")).Map(x => Assembly.LoadFile(x.Path.Format()));
+        }
 
         public static ExecToken symlink(IWfChannel channel, CmdArgs args)
         {
