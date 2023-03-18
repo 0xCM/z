@@ -24,9 +24,6 @@ namespace Z0
             public bool IsEmpty 
                 => Json.empty(this);
 
-            public IJsonType Type 
-                => Json.type(this);
-
             dynamic IJsonValue.Content 
                 => Content;
 
@@ -34,7 +31,6 @@ namespace Z0
                 => Json.format(this);
 
             public static JV Empty => new();
-
         }
 
         public record class JV<V> : IJsonValue<V>
@@ -51,9 +47,6 @@ namespace Z0
             {
                 Content = value;
             }
-
-            public IJsonType Type 
-                => Json.type(this);
 
             public bool IsEmpty 
                 => Json.empty(this);
@@ -96,9 +89,6 @@ namespace Z0
             {
                 Content = value;
             }
-
-            public IJsonType Type 
-                => Json.type(this);
 
             public bool IsEmpty 
                 => Json.empty(this);

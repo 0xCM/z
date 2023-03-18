@@ -242,6 +242,15 @@ namespace Z0
 
             //var header = Memory.Read<MetadataHeader>();
  
+        public EcmaMvid Mvid()
+            => Guid(MD.GetModuleDefinition().Mvid);
+
+        public AssemblyKey AssemblyKey()
+        {
+            var name = AssemblyName();
+            return new AssemblyKey(name.SimpleName(), name.Version, Mvid());
+        }
+
         public MemoryAddress BaseAddress
         {
             [MethodImpl(Inline)]

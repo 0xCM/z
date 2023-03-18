@@ -17,9 +17,17 @@ namespace Z0
 
             public ImageCmd ImageCmd(IWfRuntime wf)
                 => Service<ImageCmd>(wf);
+
+            public WfScripts ToolScripts(IWfRuntime wf)                
+                => Service<WfScripts>(wf);
+
+
         }
 
         static ServiceCache Services => ServiceCache.Instance;
+
+        public static WfScripts ToolScripts(this IWfRuntime wf)
+            => Services.ToolScripts(wf);
 
         public static ImageRegions ImageRegions(this IWfRuntime wf)
             => Services.ImageRegions(wf);

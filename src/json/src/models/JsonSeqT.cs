@@ -5,7 +5,6 @@
 namespace Z0
 {
     public sealed record class JsonSeq<T> : IJsonSource<JsonSeq<T>>
-        where T : IJsonValue
     {
         public readonly Seq<T> Content;
 

@@ -21,7 +21,7 @@ namespace Z0
             }                
         }
 
-        public readonly FileUri Uri;
+        public readonly FilePath Path;
 
         public readonly MemoryAddress ImageBase;
 
@@ -37,9 +37,9 @@ namespace Z0
 
         public readonly MetadataReader MdReader;
 
-        public EcmaFile(FileUri file, FileStream stream, PEReader pe)
+        public EcmaFile(FilePath file, FileStream stream, PEReader pe)
         {
-            Uri = file;
+            Path = file;
             Stream = stream;
             PeReader = pe;
             ImageBlock = pe.GetEntireImage();            
@@ -50,12 +50,15 @@ namespace Z0
         }
 
         public string Format()
-            => Uri.Format();
+            => Path.Format();
 
         public void Dispose()
         {
             PeReader?.Dispose();
             Stream?.Dispose();            
         }
+
+        public AssemblyFile AssemblyFile()
+            => new AssemblyFile(Path, MdReader.GetAssemblyDefinition().GetAssemblyName());
     }
 }

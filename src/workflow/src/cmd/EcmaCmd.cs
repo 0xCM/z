@@ -343,23 +343,31 @@ namespace Z0
         void EcmaEmitMetaDumps(CmdArgs args)
             => EcmaEmitter.EmitMetadumps(FS.dir(args[0]).DbArchive(), true, FS.dir(args[1]).DbArchive());
 
-
-        [CmdOp("ecma/emit/refs")]
+        [CmdOp("ecma/index")]
         void EmitModuleRefs(CmdArgs args)
         {
             var dir = FS.dir(args[0]);                        
             var src = Archives.modules(dir).AssemblyFiles();
-            var buffer = bag<EcmaDependencySet>();
+            var index = Ecma.index();
+            var counter = 0u;
+            var members = cdict<AssemblyKey, EcmaProjectFile>();
             iter(src, file => {
                 using var ecma = Ecma.file(file.Path);
-                var reader = ecma.EcmaReader();
-                buffer.Add(reader.ReadDependencySet());
-            });
+                var reader = ecma.EcmaReader();                
+                index.Include(ecma);
+                counter++;
+                var deps = reader.ReadDependencySet();
+                var key = ecma.AssemblyFile();
+                var member = new EcmaProjectFile(reader.AssemblyKey(), ecma.AssemblyFile(),deps);
+                members.TryAdd(member.Key, member);
 
-            iter(buffer, set => {
-                iter(set.NativeDependencies, native => {
-                    Channel.Row($"{native.Source}.{native.SourceVersion} -> {native.TargetName}");
-                });
+                if(counter % 1000 == 0)
+                    Channel.Row($"Indexed {counter} assemblies");
+            }, true);
+
+            iter(members.Keys, key => {
+                var file = members[key];
+                Channel.Row(file.Format());
             });
         }   
 

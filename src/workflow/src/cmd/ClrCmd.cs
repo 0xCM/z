@@ -5,11 +5,7 @@
 namespace Z0
 {
     using static sys;
-
-    public class ClrSvc : WfSvc<ClrSvc>
-    {
-    }
-
+    
     class ClrCmd : WfAppCmd<ClrCmd>
     {
         EcmaEmitter EcmaEmitter => Wf.EcmaEmitter();

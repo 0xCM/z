@@ -7,7 +7,6 @@ namespace Z0
     public interface IJsonValue : IExpr
     {
         dynamic Content {get;}
-
     }
 
     public interface IJsonValue<V> : IJsonValue

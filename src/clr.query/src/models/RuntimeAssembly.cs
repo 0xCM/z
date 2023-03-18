@@ -8,10 +8,10 @@ namespace Z0
     {
         public readonly Assembly Component;
 
-        public readonly FilePath Location;
+        public readonly FileUri Location;
 
         [MethodImpl(Inline)]
-        public RuntimeAssembly(Assembly src, FilePath path)
+        public RuntimeAssembly(Assembly src, FileUri path)
         {
             Component = Require.notnull(src);
             Location = path;
@@ -29,6 +29,6 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator RuntimeAssembly(Assembly src)
-            => new RuntimeAssembly(src, new FilePath(src.Location));   
+            => new RuntimeAssembly(src, new FileUri(src.Location));   
     }
 }

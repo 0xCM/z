@@ -10,6 +10,77 @@ namespace Z0
     using static JsonValues;
     using static sys;
 
+    public abstract class JsonTraverser<T>
+        where T : JsonTraverser<T>
+    {
+        public static void traverse(JsonDocument src, T dst)
+        {
+            dst.Traverse(src.RootElement);
+        }
+
+        public virtual void Traversed(JsonObject src) {}
+
+        void Traverse(JsonObject src) 
+        {
+            iter(src, Traverse);
+        }
+
+        void Traverse(JsonArray src) 
+        {
+
+        }
+
+        void Traverse(JsonElement src)
+        {
+            switch(src.ValueKind)
+            {
+                case JsonValueKind.Object:
+                    iter(src.EnumerateObject(), Traverse);
+                break;
+                case JsonValueKind.Array:
+                    iter(src.EnumerateArray(), Traverse);
+                break;
+                case JsonValueKind.String:
+                    Traverse(src.GetString());
+                break;
+                case JsonValueKind.False:
+                    Traverse(src.GetBoolean());
+                break;
+                case JsonValueKind.True:
+                    Traverse(src.GetBoolean());
+                break;
+                case JsonValueKind.Null:
+                break;
+                case JsonValueKind.Number:
+                    
+                break;
+            }
+
+        }
+
+
+        void Traverse(string src)
+        {
+
+        }
+
+        void Traverse(bool src)
+        {
+            
+        }
+
+        void Traverse(KeyValuePair<string,JsonNode> src) 
+        {   
+            
+        }
+
+        void Traverse(JsonProperty src) 
+        {
+            
+
+        }
+
+    }
     [ApiHost]
     public partial class Json
     {
@@ -22,6 +93,12 @@ namespace Z0
         [Op, Closures(Closure)]
         public static JsonDocument document<T>(T src)
             => JsonSerializer.SerializeToDocument(src, options());
+
+        public static Utf8JsonReader reader(ReadOnlySpan<byte> src)
+            => new Utf8JsonReader(src);
+
+        public static Utf8JsonReader reader(FilePath src)
+            => reader(src.ReadBytes());
 
         public static void render<T>(JsonArray<T> src, JsonEmitter dst)
             where T : IJsonValue, new()
@@ -36,12 +113,6 @@ namespace Z0
             dst.CloseArray();
         }
 
-        public static void register(IEnumerable<JsonConverter> src)
-            => Converters.AddRange(src);
-
-        public static void register(params JsonConverter[] src)
-            => Converters.AddRange(src);
-
         public static JV<Record,T> record<T>(in T src)
             where T : new()
                 => src;
@@ -55,11 +126,6 @@ namespace Z0
 
         public static bool empty(IJsonValue src)
             => src.Content is null || (src.Content is @string s && s == @string.Empty);
-
-        public static IJsonType type(IJsonValue value)
-        {
-            throw new NotImplementedException();
-        }
 
         [Op]
         public static JV<I8,sbyte> i8(sbyte value)
@@ -112,8 +178,7 @@ namespace Z0
                 AllowTrailingCommas = true,
                 IgnoreReadOnlyFields = false                
             };
-            iter(Converters, converter => options.Converters.Add(converter));
-            return options;
+            return JsonConverters.coverters(options);
         }
 
         [Op, Closures(Closure)]
@@ -151,11 +216,11 @@ namespace Z0
             => JsonSerializer.Serialize(src, options());
 
         public static JsonArray<T> array<T>(params T[] src)
-            where T : IJsonValue, new()
+            where T : new()
                 => new JsonArray<T>(src);
                         
         public static JsonArray<T> array<T>(IEnumerable<T> src)
-            where T : IJsonValue, new()
+            where T : new()
                 => new JsonArray<T>(src.Array());
 
         public static JsonEmitter emitter(ITextEmitter dst)
@@ -167,13 +232,12 @@ namespace Z0
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static JsonProp<T> prop<T>(string name, T value)
-            where T : IJsonValue, new()
+            where T : new()
                 => new (name,value);
 
         [MethodImpl(Inline), Op]
         public static JsonText json(string src)
             => new JsonText(src);
-
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static JsonText jtext<T>(T src)
@@ -197,42 +261,6 @@ namespace Z0
                     }
                 }
             }
-        }
-        
-        static List<JsonConverter> Converters = new();
-
-        class StringConverter : JsonConverter<@string>
-        {
-            public override @string Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) 
-                => reader.GetString();
-
-            public override void Write(Utf8JsonWriter writer, @string src, JsonSerializerOptions options) 
-                => writer.WriteStringValue(src);
-        }        
-
-        class FilePathConverter : JsonConverter<FilePath>
-        {
-            public override FilePath Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) 
-                => FS.path(reader.GetString());
-
-            public override void Write(Utf8JsonWriter writer, FilePath src, JsonSerializerOptions options) 
-                => writer.WriteStringValue(src.Format(PathSeparator.FS));
-        }        
-
-        class FolderPathConverter : JsonConverter<FolderPath>
-        {
-            public override FolderPath Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) 
-                => FS.dir(reader.GetString());
-
-            public override void Write(Utf8JsonWriter writer, FolderPath src, JsonSerializerOptions options) 
-                => writer.WriteStringValue(src.Format(PathSeparator.FS));
-        }        
-
-        static Json()
-        {
-            register(new StringConverter());
-            register(new FilePathConverter());
-            register(new FolderPathConverter());
         }
     }
 }

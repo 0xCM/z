@@ -25,7 +25,7 @@ namespace Z0
         {
             var result = AssemblyName.CompareTo(src.AssemblyName);
             if(result == 0)
-                result = Path.CompareTo(src.Path);
+                result = Path.Format(). CompareTo(src.Path.Format());
             return result;
         }
     }

@@ -15,10 +15,10 @@ namespace Z0
         public readonly AssemblyVersion Version;
 
         [Render(1)]
-        public readonly Guid Mvid;
+        public readonly EcmaMvid Mvid;
 
         [MethodImpl(Inline)]
-        public AssemblyKey(@string name, AssemblyVersion version, Guid mvid)
+        public AssemblyKey(@string name, AssemblyVersion version, EcmaMvid mvid)
         {
             Name = name;
             Version = version;

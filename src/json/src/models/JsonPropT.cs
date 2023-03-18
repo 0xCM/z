@@ -5,7 +5,7 @@
 namespace Z0
 {
     public record struct JsonProp<T>
-        where T : IJsonValue, new()
+        where T : new()
     {
         public readonly @string Name;
 

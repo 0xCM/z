@@ -14,9 +14,6 @@ namespace Z0
             public WfAppCmd WfCmd(IWfRuntime wf)
                 => Service<WfAppCmd>(wf);
 
-            public WfScripts ToolScripts(IWfRuntime wf)                
-                => Service<WfScripts>(wf);
-
             public ProcessMemory ProcessMemory(IWfRuntime wf)                
                 => Service<ProcessMemory>(wf);
 
@@ -41,15 +38,9 @@ namespace Z0
 
             public IApiService BinaryCmd(IWfRuntime wf)
                 => Service<BinaryCmd>(wf);
-
-            public ClrSvc ClrServices(IWfRuntime wf)
-                => Service<ClrSvc>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
-
-        public static ClrSvc ClrSvc(this IWfRuntime wf)
-            => Services.ClrServices(wf);
 
         public static IApiService CsGenCmd(this IWfRuntime wf)
             => Services.CsGenCmd(wf);
@@ -65,9 +56,6 @@ namespace Z0
 
         public static WfAppCmd WfCmd(this IWfRuntime wf)
             => Services.WfCmd(wf);
-
-        public static WfScripts ToolScripts(this IWfRuntime wf)
-            => Services.ToolScripts(wf);
 
         public static ApiPacks ApiPacks(this IWfRuntime wf)
             => Services.ApiPacks(wf);

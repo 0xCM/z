@@ -20,14 +20,6 @@ namespace Z0
 
         readonly Dictionary<AssemblyKey,HashSet<Entry>> Keysets = new();
 
-        // static Entry entry(AssemblyFile src)
-        // {
-        //     using var ecma = Ecma.file(src.Path);
-        //     var reader = ecma.EcmaReader();
-        //     var module = reader.ReadModuleRow().View(reader);
-        //     return new Entry(inc(ref Seq), src.Path, src.Path.Size, src.AssemblyName.SimpleName, src.Version, module.Mvid);
-        // }
-
         public AssemblyMap Map()
             => new AssemblyMap(Seal());
 
@@ -43,15 +35,14 @@ namespace Z0
             return this;
         }
 
-        public void Include(AssemblyFile src)
+        public void Include(EcmaFile ecma)
         {
-            using var ecma = Ecma.file(src.Path);
             var reader = ecma.EcmaReader();
+            var file = ecma.AssemblyFile();
             if(!reader.IsReferenceAssembly())
             {
-                var module = reader.ReadModuleRow().View(reader);
-                var entry = new Entry(inc(ref Seq), src.Path, src.Path.Size, src.AssemblyName.SimpleName, src.Version, module.Mvid);
-                Lookup.TryAdd(src.Path, entry);
+                var entry = new Entry(inc(ref Seq), file.Path, file.Path.Size, reader.AssemblyKey());
+                Lookup.TryAdd(file.Path, entry);
                 lock(Keysets)
                 {
                     if(Keysets.ContainsKey(entry.Key))
@@ -60,6 +51,13 @@ namespace Z0
                         Keysets[entry.Key] = sys.hashset(entry);
                 }
             }
+
+        }
+
+        public void Include(AssemblyFile src)
+        {
+            using var ecma = Ecma.file(src.Path);
+            Include(ecma);
         }
         
         public void Include(IEnumerable<AssemblyFile> src)
@@ -78,7 +76,6 @@ namespace Z0
 
         public ICollection<AssemblyKey> Keys()
             => Keysets.Keys;
-
         
         public IEnumerable<Entry> Entries(AssemblyKey key)
             => Keysets[key];
@@ -94,12 +91,12 @@ namespace Z0
             public readonly AssemblyKey Key;
 
             [MethodImpl(Inline)]
-            public Entry(uint seq, FilePath path, ByteSize size, @string name, AssemblyVersion version, Guid mvid)
+            public Entry(uint seq, FilePath path, ByteSize size, AssemblyKey key)
             {
                 Seq = (uint)seq;
                 Path = path;
                 FileSize = size;
-                Key = new (name,version,mvid);
+                Key = key;
             }
 
             public Hash32 Hash
@@ -120,7 +117,7 @@ namespace Z0
                 get => Key.Version;
             }
 
-            public Guid Mvid
+            public EcmaMvid Mvid
             {
                 [MethodImpl(Inline)]
                 get => Key.Mvid;

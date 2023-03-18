@@ -4,8 +4,20 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class Json
+    public class JsonConverters
     {
+        public static void register(IEnumerable<JsonConverter> src)
+            => Converters.AddRange(src);
+
+        public static void register(params JsonConverter[] src)
+            => Converters.AddRange(src);
+
+        public static JsonSerializerOptions coverters(JsonSerializerOptions dst)
+        {
+            sys.iter(Converters, converter => dst.Converters.Add(converter));
+            return dst;
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -270,5 +282,81 @@ namespace Z0
             dst = default!;
             return false;
         }
+
+
+        class BitWidthConverter : JsonConverter<BitWidth>
+        {
+            public override BitWidth Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) 
+            {
+                var dst = BitWidth.Zero;
+                Sizes.parse(reader.GetString(), out dst);
+                return dst;            
+            }
+
+            public override void Write(Utf8JsonWriter writer, BitWidth src, JsonSerializerOptions options) 
+                => writer.WriteStringValue(src.Content.ToString());
+        }        
+
+        class ByteSizeConverter : JsonConverter<ByteSize>
+        {
+            public override ByteSize Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) 
+            {
+                var dst = ByteSize.Zero;
+                Sizes.parse(reader.GetString(), out dst);
+                return dst;            
+            }
+
+            public override void Write(Utf8JsonWriter writer, ByteSize src, JsonSerializerOptions options) 
+                => writer.WriteStringValue(src.Content.ToString());
+        }        
+
+        class StringConverter : JsonConverter<@string>
+        {
+            public override @string Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) 
+                => reader.GetString();
+
+            public override void Write(Utf8JsonWriter writer, @string src, JsonSerializerOptions options) 
+                => writer.WriteStringValue(src);
+        }        
+
+        class FilePathConverter : JsonConverter<FilePath>
+        {
+            public override FilePath Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) 
+                => FS.path(reader.GetString());
+
+            public override void Write(Utf8JsonWriter writer, FilePath src, JsonSerializerOptions options) 
+                => writer.WriteStringValue(src.Format(PathSeparator.FS));
+        }        
+
+        class FileUriConverter : JsonConverter<FileUri>
+        {
+            public override FileUri Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) 
+                => new FileUri(reader.GetString());
+
+            public override void Write(Utf8JsonWriter writer, FileUri src, JsonSerializerOptions options) 
+                => writer.WriteStringValue(src.Format());
+        }        
+
+        class FolderPathConverter : JsonConverter<FolderPath>
+        {
+            public override FolderPath Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) 
+                => FS.dir(reader.GetString());
+
+            public override void Write(Utf8JsonWriter writer, FolderPath src, JsonSerializerOptions options) 
+                => writer.WriteStringValue(src.Format(PathSeparator.FS));
+        }        
+
+        static JsonConverters()
+        {
+            register(new StringConverter());
+            register(new FilePathConverter());
+            register(new FolderPathConverter());
+            register(new BitWidthConverter());
+            register(new ByteSizeConverter());
+            register(new FileUriConverter());
+        }
+
+        static List<JsonConverter> Converters = new();
     }
+    
 }

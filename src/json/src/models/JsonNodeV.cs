@@ -7,7 +7,7 @@ namespace Z0
     public record class JsonNode<V> : IJsonNode<V>
         where V : new()
     {     
-        protected JsonNode(JsonNode src)
+        public JsonNode(JsonNode src)
         {
             Data = src;
         }
@@ -21,10 +21,10 @@ namespace Z0
             => false;
 
         public virtual T GetValue<T>()
-            => Json.convert<T>(Data);
+            => JsonConverters.convert<T>(Data);
 
         public bool TryGetValue<T>(out T value)
-            => Json.convert(Data, out value);
+            => JsonConverters.convert(Data, out value);
 
         [MethodImpl(Inline)]
         public static implicit operator JsonNode<V>(byte src)
