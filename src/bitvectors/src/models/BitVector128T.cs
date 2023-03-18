@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static cpu;
+    using static vcpu;
 
     using api = BitVectors;
 
@@ -280,7 +280,7 @@ namespace Z0
         public static Vector128<T> Ones
         {
             [MethodImpl(Inline)]
-            get => gcpu.vones<T>(w128);
+            get => vcpu.vones<T>(w128);
         }
 
         public static BitVector128<T> Zero => default;

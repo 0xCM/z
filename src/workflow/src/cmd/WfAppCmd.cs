@@ -16,7 +16,7 @@ namespace Z0
 
     }
 
-    public class WfAppCmd : WfAppCmd<WfAppCmd>
+    public unsafe class WfAppCmd : WfAppCmd<WfAppCmd>
     {
         
         ArchiveRegistry ArchiveRegistry => Wf.ArchiveRegistry();
@@ -358,18 +358,49 @@ namespace Z0
 		[DllImport(ImageNames.Kernel32, CharSet = CharSet.Auto, SetLastError = true)]
 		public static extern IntPtr GetCurrentProcess();
 
+        [DllImport(ImageNames.PsApi, SetLastError = true), Free]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool EnumProcesses([Out] ProcessId* lpidProcess, [In]uint cb, [Out] uint* lpcbNeeded);
 
+        [DllImport(ImageNames.PsApi, SetLastError = true), Free]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool EnumProcessModulesEx([In] HANDLE hProcess, [Out] void *lphModule, [In] uint cb, [Out] uint* lpcbNeeded, [In] uint dwFilterFlag);
+        
         [CmdOp("procinfo")]
         unsafe void ProcInfo()
         {
             var process = GetCurrentProcess();
             var dst = default(PROCESS_BASIC_INFORMATION);
             NtDll.NtQueryInformationProcess(process, PROCESSINFOCLASS.ProcessBasicInformation, &dst, size<PROCESS_BASIC_INFORMATION>(), out var length);
-            
+            Require.equal(length, size<PROCESS_BASIC_INFORMATION>());
             Channel.Row(dst.ToString());
             Channel.Row($"Peb:{dst.PebBaseAddress}");
 
             //NtDll.NtQueryInformationProcess()
+
+        }
+
+
+        [CmdOp("procenum")]
+        void ProcEnum()
+        {
+            var needed = 0u;
+            var max = 2024u;
+            var buffer = alloc<ProcessId>(max);
+            fixed(ProcessId* pBuffer = &buffer[0])
+            {
+                var result = EnumProcesses(pBuffer, max*4, &needed);                
+                if(result)
+                {
+                    var count = min(max,needed/4);
+                    var values = slice(span(buffer), 0, count);
+                    values.Sort();
+                    for(var i=0; i<count; i++)
+                    {
+                        Channel.Row(string.Format("{0:D5} {1}", i, skip(buffer,i)));
+                    }
+                }
+            }
 
         }
     }
