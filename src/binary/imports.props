@@ -1,8 +1,0 @@
-<Project>
-  <ItemGroup>
-    <ProjectReference Include="$(Files)" />
-    <ProjectReference Include="$(Json)" />
-    <ProjectReference Include="$(Digital)" />
-    <ProjectReference Include="$(Events)" />
-  </ItemGroup>
-</Project>

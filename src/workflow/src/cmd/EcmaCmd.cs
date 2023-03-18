@@ -272,21 +272,6 @@ namespace Z0
             }, true);
         }
 
-        [CmdOp("formatters/list")]
-        void CheckBinaryFormatters()
-        {
-            var types = Assembly.GetExecutingAssembly().Types();
-            iter(types, t => {
-                if(t.Name == "StringFormatter")
-                {
-                    var attribs = t.GetCustomAttributes();
-                    iter(attribs, a => {
-                        if(a.GetType() == typeof(BinaryFormatterAttribute))
-                            Channel.Row(t);
-                    });
-                }                
-            });
-        }
 
 
         [CmdOp("coff/modules")]

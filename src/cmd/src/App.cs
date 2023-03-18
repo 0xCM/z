@@ -30,7 +30,6 @@ namespace Z0
                 wf.AsmCoreCmd(),
                 wf.AsmCmdSvc(),
                 wf.CsGenCmd(),
-                wf.ProjectsCmd(),
                 wf.CaptureCmd(),
                 wf.AsmDbCmd(),
                 wf.EcmaCmd(),

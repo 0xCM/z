@@ -7,7 +7,6 @@
 
    <Import Project="$(MsBuildThisFileDirectory)src/bitvectors/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/bits/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/binary/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/builds/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/calcs/exports.props"/>
@@ -60,7 +59,6 @@
 
    <Import Project="$(MsBuildThisFileDirectory)src/polyrand/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/process/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/projects/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/stitch/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/symbols/exports.props"/>

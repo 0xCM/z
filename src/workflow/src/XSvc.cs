@@ -23,7 +23,6 @@ namespace Z0
             public ApiPacks ApiPacks(IWfRuntime wf)
                 => Service<ApiPacks>(wf);
 
-
             public IApiService CsGenCmd(IWfRuntime wf)
                 => Service<CsGenCmd>(wf);
 
@@ -33,11 +32,6 @@ namespace Z0
             public ClrCmd ClrCmd(IWfRuntime wf)
                 => Service<ClrCmd>(wf);
 
-            public IApiService ProjectsCmd(IWfRuntime wf)
-                => Service<ProjectsCmd>(wf);
-
-            public IApiService BinaryCmd(IWfRuntime wf)
-                => Service<BinaryCmd>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
@@ -65,13 +59,6 @@ namespace Z0
 
         public static IApiService ClrCmd(this IWfRuntime wf)
             => Services.ClrCmd(wf);
-
-        public static IApiService ProjectsCmd(this IWfRuntime wf)
-            => Services.ProjectsCmd(wf);
-
-        public static IApiService BinaryCmd(this IWfRuntime wf)
-            => Services.BinaryCmd(wf);
-
-
+ 
     }
 }
