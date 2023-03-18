@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    partial struct Perm
+    partial struct Permute
     {
         /// <summary>
         /// Shuffles span content as determined by a permutation
@@ -16,7 +16,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static void apply<T>(Perm p, ReadOnlySpan<T> src, Span<T> dst)
         {
-            var terms = span(p.terms);
+            var terms = p.Terms.View;
             var count = terms.Length;
             for(var i=0u; i<count; i++)
                 seek(dst,i) = skip(src,(uint)skip(terms,i));

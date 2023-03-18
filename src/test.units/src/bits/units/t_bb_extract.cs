@@ -4,10 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
     using System.Linq;
 
-    using static core;
+    using static sys;
     using static Intervals;
 
     public class t_bb_extract : t_bits<t_bb_extract>

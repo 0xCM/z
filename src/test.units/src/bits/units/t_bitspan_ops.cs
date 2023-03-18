@@ -4,10 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
-    using static Root;
-    using static core;
+    using static sys;
 
     public class t_bitspan_ops : t_bits<t_bitspan_ops>
     {
@@ -282,7 +279,7 @@ namespace Z0
         {
             void check()
             {
-                Span<byte> bytes = stackalloc byte[(int)size(t)];
+                Span<byte> bytes = stackalloc byte[(int)size<T>()];
                 for(var i=0; i < RepCount; i++)
                 {
                     var src = Random.Next<T>();

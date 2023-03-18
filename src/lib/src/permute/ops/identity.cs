@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct Perm
+    partial struct Permute
     {
         /// <summary>
         /// Defines the identity permutation on 4 symbols
@@ -20,7 +20,7 @@ namespace Z0
         /// <param name="n">The symbol count selector</param>
         [MethodImpl(Inline), Op]
         public static Perm8L identity(N8 n)
-            => Perm.assemble(
+            => Permute.assemble(
                 Perm8L.A, Perm8L.B, Perm8L.C, Perm8L.D,
                 Perm8L.E, Perm8L.F, Perm8L.G, Perm8L.H);
 
@@ -30,7 +30,7 @@ namespace Z0
         /// <param name="n">The symbol count selector</param>
         [MethodImpl(Inline), Op]
         public static Perm16L identity(N16 n)
-            => Perm.assemble(
+            => Permute.assemble(
                 Perm16L.X0, Perm16L.X1, Perm16L.X2, Perm16L.X3,
                 Perm16L.X4, Perm16L.X5, Perm16L.X6, Perm16L.X7,
                 Perm16L.X8, Perm16L.X9, Perm16L.XA, Perm16L.XB,

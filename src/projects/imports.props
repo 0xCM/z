@@ -2,5 +2,8 @@
   <ItemGroup>
     <ProjectReference Include="$(Files)" />
     <ProjectReference Include="$(Json)" />
+    <ProjectReference Include="$(Commands)" />
+    <ProjectReference Include="$(Lang)" />
+    <ProjectReference Include="$(ClrEcma)" />
   </ItemGroup>
 </Project>

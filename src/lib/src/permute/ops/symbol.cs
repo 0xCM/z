@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct Perm
+    partial struct Permute
     {
          /// <summary>
         /// Attempts to extract an index-identified permutation symbol

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using api = Perm;
+    using api = Permute;
 
     partial class XTend
     {
@@ -15,7 +15,7 @@ namespace Z0
         [MethodImpl(Inline)]
         static ref readonly Perm shuffle(in Perm src, IBoundSource random)
         {
-            random.Shuffle(src.Terms);
+            random.Shuffle(src.Terms.View);
             return ref src;
         }
 

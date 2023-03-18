@@ -11,6 +11,10 @@ namespace Z0
             None,
 
             Binary,
+
+            CSharp,
+
+            Cil,
         }
     }
 }

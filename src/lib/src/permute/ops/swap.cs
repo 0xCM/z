@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct Perm
+    partial struct Permute
     {
         /// <summary>
         /// Defines a transposition for a permutation of natural length

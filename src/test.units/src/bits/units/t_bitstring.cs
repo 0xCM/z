@@ -4,11 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
     using System.Linq;
 
-    using static Root;
-    using static core;
+    using static sys;
 
     public class t_bitstring : t_bits<t_bitstring>
     {

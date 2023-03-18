@@ -26,7 +26,7 @@ namespace Z0
             var pbs_actual = BitStrings.scalar((byte)p);
             Claim.eq(pbs_expect, pbs_actual);
 
-            var p_assembled = Perm.assemble(Perm4L.D, Perm4L.C, Perm4L.B, Perm4L.A);
+            var p_assembled = Permute.assemble(Perm4L.D, Perm4L.C, Perm4L.B, Perm4L.A);
             Claim.eq(p, p_assembled);
 
             var pformat_actual = PermSymbolic.bitmap(p);
@@ -231,7 +231,7 @@ namespace Z0
             {
                 var perm = perms.First();
                 Claim.contains(all,perm);
-                var symbols = Z0.Perm.symbols(perm);
+                var symbols = Permute.symbols(perm);
                 Claim.eq(4, symbols.Length);
             }
         }
@@ -382,7 +382,7 @@ namespace Z0
             var symbol = default(SymVal<Perm4L>);
             for(var i=0; i<expect.Length; i++)
             {
-                base.Claim.require(Z0.Perm.symbol(perm, i, out symbol));
+                base.Claim.require(Permute.symbol(perm, i, out symbol));
                 Claim.eq(expect[i], symbol.Value);
             }
         }

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct Perm
+    partial struct Permute
     {
         /// <summary>
         /// Computes the digits corresponding to each 4-bit segment of the permutation spec as

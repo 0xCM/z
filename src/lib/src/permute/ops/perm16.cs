@@ -6,7 +6,7 @@ namespace Z0
 {
     using static BitMaskLiterals;
 
-    partial struct Perm
+    partial struct Permute
     {
         /// <summary>
         /// Creates a fixed 16-bit permutation over a generic permutation over 16 elements

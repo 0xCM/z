@@ -4,10 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
-    using static core;
-    using static Root;
+    using static sys;
 
     public class t_bm_create : t_bits<t_bm_create>
     {

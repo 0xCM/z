@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     public class t_bitparts : t_bits<t_bitparts>
     {
         // public void bitpart_64x1()

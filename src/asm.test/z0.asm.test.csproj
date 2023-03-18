@@ -9,5 +9,4 @@
   <ItemGroup>
     <EmbeddedResource Include="assets/**/*.*" />
   </ItemGroup>
-
 </Project>

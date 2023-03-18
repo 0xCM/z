@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    partial struct Perm
+    partial struct Permute
     {
         [MethodImpl(Inline), Op]
         public static bool symbols(Perm4L src, Span<SymVal<Perm4L>> dst)

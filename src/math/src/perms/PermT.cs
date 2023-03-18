@@ -14,6 +14,14 @@ namespace Z0
         where T : unmanaged
     {
         /// <summary>
+        /// Defines an identity permutation on n symbols
+        /// </summary>
+        /// <param name="n">The permutation length</param>
+        [MethodImpl(Inline)]
+        public static Perm<T> identity(T n)
+            => new Perm<T>(gcalc.stream(default, gmath.dec(n)));
+
+        /// <summary>
         /// Defines the permutation (0 -> terms[0], 1 -> terms[1], ..., n - 1 -> terms[n-1]) where n is the length of the array
         /// </summary>
         readonly Span<T> terms;
@@ -26,7 +34,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public Perm(T n, (T i, T j)[] swaps)
         {
-            terms = Perm.Identity(n).terms;
+            terms = identity(n).terms;
             Swap(swaps);
         }
 
@@ -38,7 +46,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public Perm(T n, Swap<T>[] swaps)
         {
-            terms = Perm.Identity(n).terms;
+            terms = identity(n).terms;
             Swap(swaps);
         }
 
@@ -51,7 +59,7 @@ namespace Z0
             => terms = src;
 
         public Perm(IEnumerable<T> src)
-            => terms = src.ToArray();
+            => terms = src.Array();
 
         [MethodImpl(Inline)]
         public Perm(T n, T[] src)
@@ -64,9 +72,9 @@ namespace Z0
             for(var i=0; i< m; i++)
                 terms[i] = src[i];
 
-            var identity = Perm.Identity(n);
+            var id = identity(n);
             for(var i=m; i< count; i++)
-                terms[i] = identity[i - m];
+                terms[i] = id[i - m];
         }
 
         ref T Head
@@ -298,7 +306,7 @@ namespace Z0
         /// <param name="n">The permutation length</param>
         [MethodImpl(Inline)]
         public static implicit operator Perm<T>(T n)
-            => Perm.Identity(n);
+            => identity(n);
 
         /// <summary>
         /// Computes the composition h of f and g where f and g have common length n and h(i) = g(f(i)) for i = 0, ... n-1

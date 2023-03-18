@@ -11,7 +11,7 @@ namespace Z0
 
         public void perm_swap_8u()
         {
-            var id = Perm.identity((byte)32);
+            var id = Permute.identity((byte)32);
             var p = id.Replicate();
             p.Swap(3,4).Swap(4,5).Swap(5,6);
             Claim.eq(p[6], id[3]);
@@ -20,10 +20,10 @@ namespace Z0
         void perm_create<T>(T m, T n)
             where T : unmanaged
         {
-            var perm = Z0.Perm.identity(n);
+            var perm = Permute.identity(n);
             var lengths = gcalc.stream(m,n);
             core.iter(lengths, i => {
-                var p = Z0.Perm.identity(i);
+                var p = Permute.identity(i);
                 var cycle = p.Cycle(default(T));
                 Claim.eq(cycle.Length, 1);
             });

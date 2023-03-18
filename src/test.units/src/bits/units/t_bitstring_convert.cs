@@ -4,13 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
-    using static core;
-
-
     public class t_bitstring_convert : t_bits<t_bitstring_convert>
     {
         /// <summary>

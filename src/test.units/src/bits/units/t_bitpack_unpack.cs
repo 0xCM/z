@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     public class t_bitpack_unpack : t_bits<t_bitpack_unpack>
     {
         public void unpack_64x1()

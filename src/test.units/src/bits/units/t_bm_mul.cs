@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     public class t_bm_mul : t_bits<t_bm_mul>
     {
         static BitMatrix8 bmm(BitMatrix8 A, BitMatrix8 B)

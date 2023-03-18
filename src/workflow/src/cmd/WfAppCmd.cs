@@ -10,8 +10,15 @@ namespace Z0
 
     using static sys;
 
+    [StructLayout(LayoutKind.Sequential,Size=8)]
+    public readonly record struct HANDLE
+    {
+
+    }
+
     public class WfAppCmd : WfAppCmd<WfAppCmd>
     {
+        
         ArchiveRegistry ArchiveRegistry => Wf.ArchiveRegistry();
 
         ProjectScripts ProjectScripts => Wf.ProjectScripts();
@@ -24,6 +31,7 @@ namespace Z0
 
         WinSdk WinSdk => Wf.WinSdk();
 
+    
         [CmdOp("api/tablegen")]
         void GenRecords()
         {
@@ -345,6 +353,24 @@ namespace Z0
             Require.equal(counter, (uint)(unique.Count + duplicates.Length));
 
             Channel.Status($"Indexed {unique.Count} unique files with {duplicates.Length} duplicates");
+        }
+
+		[DllImport(ImageNames.Kernel32, CharSet = CharSet.Auto, SetLastError = true)]
+		public static extern IntPtr GetCurrentProcess();
+
+
+        [CmdOp("procinfo")]
+        unsafe void ProcInfo()
+        {
+            var process = GetCurrentProcess();
+            var dst = default(PROCESS_BASIC_INFORMATION);
+            NtDll.NtQueryInformationProcess(process, PROCESSINFOCLASS.ProcessBasicInformation, &dst, size<PROCESS_BASIC_INFORMATION>(), out var length);
+            
+            Channel.Row(dst.ToString());
+            Channel.Row($"Peb:{dst.PebBaseAddress}");
+
+            //NtDll.NtQueryInformationProcess()
+
         }
     }
 }

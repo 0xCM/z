@@ -4,9 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
-    using static core;
+    using static sys;
 
     public sealed class t_bitstream : t_bits<t_bitstream>
     {

@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     public class t_gather : t_bits<t_gather>
     {
         public void gather_masks()

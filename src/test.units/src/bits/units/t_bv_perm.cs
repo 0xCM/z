@@ -8,7 +8,7 @@ namespace Z0
     {
         public void pbv_perm_8()
         {
-            var perm = Z0.Perm.natural<N8>((2,3), (6,7));
+            var perm = Permute.natural<N8>((2,3), (6,7));
             var bs1 = ((byte)0b10001101).ToBitString();
             var bs2 = BitStrings.parse("01001101");
             var bs3 = bs1.Permute(perm);
@@ -17,7 +17,7 @@ namespace Z0
 
         public void pbv_perm_16()
         {
-            var p2 = Perm.natural<N16>((1,10), (2,11), (3, 8));
+            var p2 = Permute.natural<N16>((1,10), (2,11), (3, 8));
             var bsx2 = ((ushort)0b1000110111000100).ToBitString();
             var bsy2 =  BitStrings.load(bsx2.BitSeq.Permute(p2).ToArray());
             var bsz2 = bsx2.Permute(p2);
@@ -26,7 +26,7 @@ namespace Z0
 
         public void pbv_perm_32()
         {
-            var p1 = Perm.natural(n32, (31,0), (30,1), (29,2));
+            var p1 = Permute.natural(n32, (31,0), (30,1), (29,2));
             Claim.eq(p1[0],31);
             Claim.eq(p1[1],30);
             Claim.eq(p1[2],29);
@@ -35,7 +35,7 @@ namespace Z0
 
         public void pbv_perm_64()
         {
-            var p = Perm.natural(n64, (0,1),(1,2),(2,3),(3,4),(4,5),(5,6));
+            var p = Permute.natural(n64, (0,1),(1,2),(2,3),(3,4),(4,5),(5,6));
             var bv = BitVectors.perm(BitVector64.One,p);
             Claim.eq((byte)bv[6], (byte)1);
 

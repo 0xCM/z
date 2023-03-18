@@ -75,7 +75,7 @@ namespace Z0
             for(var i= 0; i<RepCount; i++)
             {
                 //Creates an "exchange" matrix
-                var perm = Z0.Perm.natural(n8).Reverse();
+                var perm = Permute.natural(n8).Reverse();
                 var mat = perm.ToBitMatrix();
 
                 var v1 = Random.BitVector(n8);

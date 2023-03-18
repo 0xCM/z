@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct Perm
+    partial struct Permute
     {
         // <summary>
         /// Constructs a permutation of length four from four ordered symbols

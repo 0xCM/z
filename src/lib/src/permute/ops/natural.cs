@@ -7,7 +7,7 @@ namespace Z0
     /// <summary>
     /// Defines a permutation over the integers [0, 1, ..., n - 1] where n is the permutation length
     /// </summary>
-    partial struct Perm
+    partial struct Permute
     {
         /// <summary>
         /// Defines an identity permutation of natural length and applies a specified sequence of transpostions
@@ -120,7 +120,7 @@ namespace Z0
         {
             if(terms.Length != TypeNats.nat32i(n))
                 AppErrors.ThrowInvariantFailure($"{n} != {terms.Length}");
-            return new NatPerm<N,T>(Perm.init(terms));
+            return new NatPerm<N,T>(Permute.init(terms));
         }
 
         public static NatPerm<N,T> natural<N,T>(N n, Span<T> terms)
