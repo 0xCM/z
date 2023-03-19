@@ -1,4 +1,3 @@
 @echo off
-set ProjectId=containers
-set Area=src
+set ProjectName=containers
 call %~dp0..\config.cmd

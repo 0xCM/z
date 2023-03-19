@@ -1,5 +1,4 @@
 @echo off
-set ProjectId=db
-set Area=src
+set ProjectName=db
 call %~dp0..\config.cmd
 

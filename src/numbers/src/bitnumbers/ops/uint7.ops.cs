@@ -43,7 +43,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static U inc(U x)
-            => !x.IsMax ? new U(core.add(x.Value, 1), false) : U.Min;
+            => !x.IsMax ? new U(sys.add(x.Value, 1), false) : U.Min;
 
         [MethodImpl(Inline), Op]
         public static U dec(U x)
@@ -272,10 +272,10 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static Span<bit> bits(uint24 src)
         {
-            var storage = ByteBlock24.Empty;
-            var dst = recover<bit>(storage.Bytes);
+            var storage = 0u;
+            var dst = recover<bit>(bytes(storage));
             bits(src,dst);
-            return dst;
+            return slice(dst,0,3);
         }
 
         [MethodImpl(Inline), Op]

@@ -1,6 +1,5 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(ZLib)" />
     <ProjectReference Include="$(Numbers)" />
     <ProjectReference Include="$(EMath)" />
     <ProjectReference Include="$(Dynamic)" />

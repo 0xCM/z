@@ -30,16 +30,17 @@ namespace Z0
             }
             return new CmdMethods(dst);
         }
-        
+
+
         public static CmdMethods methods(IWfRuntime wf, params Assembly[] src)
-        {
-            var providers = ApiServers.providers(src);
+        {            
+            var providers = ApiServers.providers(src.Length == 0 ? ApiAssemblies.Parts : src);
             var types = providers.ServiceTypes();
             var dst = dict<string,CmdMethod>();
             iter(types, t => {
                 var method = t.StaticMethods().Public().Where(m => m.Name == "create").First();
                 var service = (IApiService)method.Invoke(null, new object[]{wf});
-                iter(ApiServers.methods(service).Defs, m => dst.TryAdd(m.CmdName, m));
+                iter(methods(service).Defs, m => dst.TryAdd(m.CmdName, m));
             });
 
             return new (dst);
@@ -124,6 +125,12 @@ namespace Z0
             }
         }
         
+        public static ApiShell shell(IWfRuntime wf)
+            => shell(wf.Channel, methods(wf));
+            
+        public static ApiShell shell(IWfChannel channel, CmdMethods methods)
+            => new ApiShell(channel, new ApiDispatcher(channel, methods));
+
         public static A shell<A>(string[] args, IWfRuntime wf, IApiContext context, bool verbose = false)
             where A : IAppShell, new()
         {            
@@ -207,7 +214,6 @@ namespace Z0
             return new (dst);
         }
 
- 
         static ReadOnlySeq<ApiCmdInfo> entries(ReadOnlySeq<CmdUri> src)    
         {
             var entries = alloc<ApiCmdInfo>(src.Count);

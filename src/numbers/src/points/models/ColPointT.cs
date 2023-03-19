@@ -32,7 +32,7 @@ namespace Z0
 
 
         public override int GetHashCode()
-            => (int)alg.hash.combine(u32(X), u32(Y));
+            => sys.nhash(u32(X), u32(Y));
 
         public override bool Equals(object src)
             => src is ColPoint<T> p && Equals(p);

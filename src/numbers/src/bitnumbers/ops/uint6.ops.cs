@@ -34,7 +34,7 @@ namespace Z0
         /// <param name="a">The source operand</param>
         [MethodImpl(Inline), Op]
         public static U inc(U a)
-            => !a.IsMax ? new U(core.add(a.Value, 1), false) : U.Min;
+            => !a.IsMax ? new U(sys.add(a.Value, 1), false) : U.Min;
 
         [MethodImpl(Inline), Op]
         public static U dec(U a)

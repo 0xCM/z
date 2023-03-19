@@ -131,7 +131,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static ushort seg16(N0 n, U src)
-            => core.u16(src);
+            => sys.u16(src);
 
         [MethodImpl(Inline), Op]
         public static ushort seg16(N1 n, U src)
@@ -139,15 +139,15 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static byte seg8(N0 n, uint24 src)
-            => skip(core.bytes(src),0);
+            => skip(sys.bytes(src),0);
 
         [MethodImpl(Inline), Op]
         public static byte seg8(N1 n, uint24 src)
-            => skip(core.bytes(src), 1);
+            => skip(sys.bytes(src), 1);
 
         [MethodImpl(Inline), Op]
         public static byte seg8(N2 n, uint24 src)
-            => skip(core.bytes(src), 2);
+            => skip(sys.bytes(src), 2);
 
         [MethodImpl(Inline), Op]
         public static ref byte seg8(N0 n, ref uint24 src)
@@ -212,7 +212,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static ref U inc(in U a)
         {
-            ref var b = ref core.edit(a);
+            ref var b = ref sys.edit(a);
             b.Value++;
 
             if(b.Value > Mask)
@@ -224,7 +224,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static ref U dec(in U a)
         {
-            ref var b = ref core.edit(a);
+            ref var b = ref sys.edit(a);
             b.Value--;
 
             if(b.Value > Mask)

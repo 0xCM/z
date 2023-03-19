@@ -31,7 +31,7 @@ namespace Z0
             => X == src.X && Y == src.Y;
 
         public override int GetHashCode()
-            => (int)alg.hash.combine(u32(X), u32(Y));
+            => (int)sys.nhash(u32(X), u32(Y));
 
         public override bool Equals(object src)
             => src is Point<T> p && Equals(p);

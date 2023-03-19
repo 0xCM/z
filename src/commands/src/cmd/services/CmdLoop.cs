@@ -7,16 +7,26 @@ namespace Z0
 {
     public class CmdLoop
     {
-        static ICmdDispatcher Dispatcher => ApiCmd.Dispatcher;
-
         public static Task start(IWfChannel channel)
             => sys.start(new CmdLoop(channel).Run);
-            
+
+        public static Task start(IWfChannel channel, ICmdDispatcher dispatcher)
+            => sys.start(new CmdLoop(channel, dispatcher).Run);
+
         readonly IWfChannel Channel;
+
+        readonly ICmdDispatcher Dispatcher;
+
+        CmdLoop(IWfChannel channel, ICmdDispatcher dispatcher)
+        {
+            Channel = channel;
+            Dispatcher = dispatcher;
+        }
 
         CmdLoop(IWfChannel channel)
         {
             Channel = channel;
+            Dispatcher = ApiCmd.Dispatcher;
         }
 
         ApiCmdSpec Next()

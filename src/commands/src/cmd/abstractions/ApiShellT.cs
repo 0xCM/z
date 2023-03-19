@@ -21,6 +21,22 @@ namespace Z0
         {
             base.Init(wf);
             Commander = context.Commander;            
+        }        
+    }
+
+    public class ApiShell
+    {
+        readonly IWfChannel Channel;
+
+        readonly ICmdDispatcher Dispatcher;
+
+        public ApiShell(IWfChannel channel, ICmdDispatcher disp)
+        {
+            Channel = channel;
+            Dispatcher = disp;
         }
+
+        public void Run()
+            => CmdLoop.start(Channel, Dispatcher).Wait();
     }
 }

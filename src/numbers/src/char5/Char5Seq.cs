@@ -64,8 +64,8 @@ namespace Z0
         [MethodImpl(Inline)]
         public static Char5Seq literal(BitNumber<byte> src)
         {
-            var storage = ByteBlock8.Empty;
-            var dst = recover<Char5>(storage.Bytes);
+            var storage = 0ul;
+            var dst = recover<Char5>(bytes(storage));
             var i=0;
             var n = (int)src.Width;
             dst[i++] = Code.Zero;
@@ -191,7 +191,7 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get =>(int)alg.hash.combine((uint)Data, (uint)(Data >> 32));
+            get =>(int)sys.nhash((uint)Data, (uint)(Data >> 32));
         }
 
         public override int GetHashCode()

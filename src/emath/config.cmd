@@ -1,5 +1,3 @@
 @echo off
-set ProjectId=emath
-set Area=src
+set ProjectName=emath
 call %~dp0..\config.cmd
-

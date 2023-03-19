@@ -29,10 +29,5 @@ namespace Z0
             else
                 return (false, string.Format("Command '{0}' unrecognized", name));
         }
-
-        public Task<ExecToken> Dispatch(ICmd cmd)
-        {
-            throw no<int>();
-        }
     }
 }

@@ -47,7 +47,7 @@ namespace Z0
 
         static int parse(string src, Span<bit> dst)
         {
-            var input = core.span(BitParser.cleanse(src)).Reverse();
+            var input = sys.span(BitParser.cleanse(src)).Reverse();
             var result = true;
             var count = min(input.Length, dst.Length);
             var counter = 0;

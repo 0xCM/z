@@ -29,7 +29,7 @@ namespace Z0
             get
             {
                 var x = Convert(w32);
-                return alg.hash.combine(x.X,x.Y);
+                return sys.nhash(x.X,x.Y);
             }
         }
 

@@ -42,7 +42,7 @@ namespace Z0
             {
                 dst.IndentLine(margin, string.Format("<{0}>", GroupKind));
                 margin+=2;
-                core.iter(Members, member => dst.IndentLine(margin,member.ToString()));
+                sys.iter(Members, member => dst.IndentLine(margin,member.ToString()));
                 margin-=2;
                 dst.IndentLine(margin, string.Format("</{0}>",GroupKind));
             }

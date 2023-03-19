@@ -11,17 +11,6 @@ namespace Z0
 
         Outcome Dispatch(string action);
 
-        Task<ExecToken> Dispatch(ICmd cmd);
-
         ICmdMethods Commands {get;}
-    }
-        
-    // public interface ICmdDispatcher<C> : ICmdDispatcher
-    //     where C : ICmd, new()
-    // {
-    //     Task<ExecToken> Dispatch(C cmd);
-
-    //     Task<ExecToken> ICmdDispatcher.Dispatch(ICmd cmd)
-    //         => Dispatch((C)cmd);
-    // }
+    }    
 }

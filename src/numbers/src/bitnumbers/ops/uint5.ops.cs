@@ -163,7 +163,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static U inc(U x)
-            => !x.IsMax ? new U(core.add(x.Value, 1), false) : U.Min;
+            => !x.IsMax ? new U(sys.add(x.Value, 1), false) : U.Min;
 
         [MethodImpl(Inline), Op]
         public static U add(U x, U y)

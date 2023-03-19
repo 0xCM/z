@@ -1,4 +1,3 @@
 @echo off
-set ProjectId=numbers
-set Area=src
+set ProjectName=numbers
 call %~dp0..\config.cmd

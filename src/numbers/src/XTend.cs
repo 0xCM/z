@@ -5,7 +5,6 @@
 
 namespace Z0
 {
-    using static core;
     using System.IO;
 
     [ApiHost]

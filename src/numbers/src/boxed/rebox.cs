@@ -70,7 +70,7 @@ namespace Z0
                 case NK.F64:
                     return box((double)src, dst);
             }
-            return Errors.Throw<object>($"The type {type} is not supported");
+            return sys.@throw<object>($"The type {type} is not supported");
         }
     }
 }

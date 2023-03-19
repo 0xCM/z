@@ -4,9 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static cpu;
     using static Numeric;
-
+    using static vcpu;
     using NK = NumericKind;
     using api = Variant;
 
@@ -128,7 +127,7 @@ namespace Z0
         [MethodImpl(Inline)]
         Vector128<T> to<T>()
             where T : unmanaged
-                => core.generic<T>(Storage);
+                => sys.generic<T>(Storage);
 
         [MethodImpl(Inline)]
         internal T cell<T>(byte index)
@@ -155,7 +154,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         static Vector128<ulong> SetWidth(Vector128<ulong> src, uint width)
-            => v64u(cpu.vcell(v32u(src), 3, width));
+            => v64u(vcpu.vcell(v32u(src), 3, width));
 
         [MethodImpl(Inline)]
         public static bool operator ==(variant x, variant y)
@@ -299,51 +298,51 @@ namespace Z0
             return dst;
         }
 
-        [Op]
-        public static variant integer(object src, byte width, bool signed)
-        {
-            var value = variant.Zero;
-            if(src == null)
-                return value;
+        // [Op]
+        // public static variant integer(object src, byte width, bool signed)
+        // {
+        //     var value = variant.Zero;
+        //     if(src == null)
+        //         return value;
 
-            if(signed)
-            {
-                switch(width)
-                {
-                    case 8:
-                        value = (sbyte)NumericBox.rebox(src, NumericKind.I8);
-                    break;
-                    case 16:
-                        value = (short)NumericBox.rebox(src, NumericKind.I16);
-                    break;
-                    case 32:
-                        value = (int)NumericBox.rebox(src, NumericKind.I32);
-                    break;
-                    case 64:
-                        value = (long)NumericBox.rebox(src, NumericKind.I64);
-                    break;
-                }
-            }
-            else
-            {
-                switch(width)
-                {
-                    case 8:
-                        value = (byte)NumericBox.rebox(src, NumericKind.U8);
-                    break;
-                    case 16:
-                        value = (ushort)NumericBox.rebox(src, NumericKind.U16);
-                    break;
-                    case 32:
-                        value = (uint)NumericBox.rebox(src, NumericKind.U32);
-                    break;
-                    case 64:
-                        value = (ulong)NumericBox.rebox(src, NumericKind.U64);
-                    break;
-                }
-            }
-            return value;
-        }
+        //     if(signed)
+        //     {
+        //         switch(width)
+        //         {
+        //             case 8:
+        //                 value = (sbyte)NumericBox.rebox(src, NumericKind.I8);
+        //             break;
+        //             case 16:
+        //                 value = (short)NumericBox.rebox(src, NumericKind.I16);
+        //             break;
+        //             case 32:
+        //                 value = (int)NumericBox.rebox(src, NumericKind.I32);
+        //             break;
+        //             case 64:
+        //                 value = (long)NumericBox.rebox(src, NumericKind.I64);
+        //             break;
+        //         }
+        //     }
+        //     else
+        //     {
+        //         switch(width)
+        //         {
+        //             case 8:
+        //                 value = (byte)NumericBox.rebox(src, NumericKind.U8);
+        //             break;
+        //             case 16:
+        //                 value = (ushort)NumericBox.rebox(src, NumericKind.U16);
+        //             break;
+        //             case 32:
+        //                 value = (uint)NumericBox.rebox(src, NumericKind.U32);
+        //             break;
+        //             case 64:
+        //                 value = (ulong)NumericBox.rebox(src, NumericKind.U64);
+        //             break;
+        //         }
+        //     }
+        //     return value;
+        // }
 
         [MethodImpl(Inline), Op, Closures(AllNumeric)]
         public static variant from<T>(T src)
@@ -374,7 +373,7 @@ namespace Z0
         [MethodImpl(Inline)]
         static Vector128<T> vector<T>(variant src)
             where T : unmanaged
-                => core.generic<T>(src.Storage);
+                => sys.generic<T>(src.Storage);
 
         [MethodImpl(Inline)]
         static variant from(Vector128<ulong> src)
@@ -382,23 +381,23 @@ namespace Z0
 
         [MethodImpl(Inline)]
         static Vector128<ulong> store(ulong value, NK kind)
-            => cpu.vparts((ulong)value, (ulong)kind);
+            => vcpu.vparts((ulong)value, (ulong)kind);
 
         [MethodImpl(Inline)]
         static Vector128<ulong> store(long value, NK kind)
-            => cpu.vparts((ulong)value, (ulong)kind);
+            => vcpu.vparts((ulong)value, (ulong)kind);
 
         [MethodImpl(Inline)]
         static Vector128<ulong> store(double value, NK kind)
             => Vector128.Create(value).WithElement(1, (double)kind).AsUInt64();
 
-        [MethodImpl(Inline), Op]
-        public static unsafe variant scalar(Enum src)
-        {
-            var kind = src.GetType().GetEnumUnderlyingType().NumericKind();
-            var converted = (ulong)NumericBox.rebox(src,NumericKind.U64);
-            return define(converted, kind);
-        }
+        // [MethodImpl(Inline), Op]
+        // public static unsafe variant scalar(Enum src)
+        // {
+        //     var kind = src.GetType().GetEnumUnderlyingType().NumericKind();
+        //     var converted = (ulong)NumericBox.rebox(src,NumericKind.U64);
+        //     return define(converted, kind);
+        // }
 
         [MethodImpl(Inline), Op]
         public static variant define(object src, Type dst)
