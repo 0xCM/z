@@ -110,7 +110,7 @@ namespace Z0
         }
 
         public void ParseDump(FilePath src)
-            => Wf.DumpParser().ParseDump(src);
+            => Channel.Channeled<DumpParser>().ParseDump(src);
 
         public IEnumerable<ClrHandle> Handles()
             => Runtime.EnumerateHandles();

@@ -1,7 +1,7 @@
 <Project>
   <Import Project="$(SlnProps)\diagnostics.props" />
   <ItemGroup>
-    <ProjectReference Include="$(ApiCode)" />
-    <ProjectReference Include="$(Process)" />
+    <ProjectReference Include="$(Files)" />
+    <ProjectReference Include="$(Events)" />
   </ItemGroup>
 </Project>

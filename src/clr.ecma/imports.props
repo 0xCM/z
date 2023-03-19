@@ -7,5 +7,6 @@
     <ProjectReference Include="$(Bits)"/>
     <ProjectReference Include="$(ClrCil)"/>
     <ProjectReference Include="$(Binary)"/>
+    <ProjectReference Include="$(Process)"/>
   </ItemGroup>
 </Project>

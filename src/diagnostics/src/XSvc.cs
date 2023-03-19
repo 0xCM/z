@@ -6,16 +6,16 @@ namespace Z0
 {
     public static class XSvc
     {
-        sealed class Svc : AppServices<Svc>
-        {
-            public DumpParser DumpParser(IWfRuntime wf)
-                => Service<DumpParser>(wf);
+        // sealed class Svc : AppServices<Svc>
+        // {
+        //     public DumpParser DumpParser(IWfRuntime wf)
+        //         => Service<DumpParser>(wf);
 
-        }
+        // }
 
-        static Svc Services => Svc.Instance;
+        // static Svc Services => Svc.Instance;
 
-        public static DumpParser DumpParser(this IWfRuntime wf)
-            => Services.DumpParser(wf);
+        // public static DumpParser DumpParser(this IWfRuntime wf)
+        //     => Services.DumpParser(wf);
     }
 }
