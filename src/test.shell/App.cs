@@ -7,8 +7,8 @@ namespace Z0
     [Free]
     sealed class App : ApiShell<App>
     {
-        public static IApiCmdProvider[] providers(IWfRuntime wf)
-            => new IApiCmdProvider[]{
+        public static IApiService[] providers(IWfRuntime wf)
+            => new IApiService[]{
                 CheckCmd.create(wf)
             };
 

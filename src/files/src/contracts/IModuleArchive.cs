@@ -6,11 +6,7 @@ namespace Z0
 {
     public interface IModuleArchive : IRootedArchive
     {
-        IEnumerable<DllModule> NativeDll();
-
         IEnumerable<ObjModule> Obj();
-
-        IEnumerable<PdbModule> Pdb();
 
         IEnumerable<ExeModule> Exe();
 

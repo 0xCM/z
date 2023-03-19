@@ -1,11 +1,11 @@
 //-----------------------------------------------------------------------------
-// Copyright   :  (c) Chris Moore, 2020
+// Copyright   :  (c) Chris Moore, 2023
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed class WfShellCmd : WfAppCmd<WfShellCmd>
+    public class JsonTranformerAttribute : Attribute
     {
 
-    }
+    }   
 }

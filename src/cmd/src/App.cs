@@ -22,9 +22,9 @@ namespace Z0
             return ApiServers.context<C>(wf, () => providers(wf));            
         }
         
-        public static ReadOnlySeq<IApiCmdProvider> providers(IWfRuntime wf)
+        public static ReadOnlySeq<IApiService> providers(IWfRuntime wf)
         {
-            var providers = new IApiCmdProvider[]{
+            var providers = new IApiService[]{
                 wf.AncestryChecks(),
                 wf.EnvCmd(),
                 wf.AsmCoreCmd(),
@@ -34,7 +34,6 @@ namespace Z0
                 wf.AsmDbCmd(),
                 wf.EcmaCmd(),
                 wf.ArchiveCmd(),
-                wf.ClrCmd(),
                 wf.IntelInxCmd(),
                 wf.Machines(),
                 wf.ImageCmd(),

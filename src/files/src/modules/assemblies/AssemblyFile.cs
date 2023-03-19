@@ -24,7 +24,7 @@ namespace Z0
             }
         }        
 
-        public FilePath Path {get;}
+        public readonly FilePath Path;
 
         public readonly ClrAssemblyName AssemblyName;
         
@@ -43,6 +43,9 @@ namespace Z0
             AssemblyName = name;
             Version = name.Version;
         }
+
+        FilePath IFile.Path 
+            => Path;
 
         public FileModuleKind ModuleKind => FileModuleKind.Managed;
 
@@ -75,6 +78,6 @@ namespace Z0
             return result;
         }
 
-        public static AssemblyFile Empty => new AssemblyFile();       
+        public static AssemblyFile Empty => new AssemblyFile();
     }
 }

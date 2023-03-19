@@ -53,6 +53,7 @@ namespace Z0
             return result;
 
         }
+
         [StructLayout(LayoutKind.Sequential, Size =4)]
         public readonly record struct Signature
         {
@@ -63,9 +64,7 @@ namespace Z0
             public static ref readonly Signature Value => ref @as<Signature>(MatchData);
 
             static ReadOnlySpan<byte> MatchData => new byte[Size]{(byte)AsciCode.P, (byte)AsciCode.E, (byte)AsciCode.Null, (byte)AsciCode.Null};
-
         }
-
         public PeFileFormat()
             : base("pe")
         {

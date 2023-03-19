@@ -13,19 +13,14 @@ namespace Z0
 
         public uint Size;
 
-        public PeDirectoryKind Kind;
-
-        public PeDirectoryEntry(Address32 rva, uint size, PeDirectoryKind kind)
+        public PeDirectoryEntry(Address32 rva, uint size)
         {
             Rva = rva;
             Size = size;
-            Kind = kind;
         }
 
-        public string Format()
-            => $"{Kind}:[{Rva}..{Rva + Size}] = {(ByteSize)Size}b";
-
-        public override string ToString()
-            => Format();
+        [MethodImpl(Inline)]
+        public static implicit operator PeDirectoryEntry(DirectoryEntry src)
+            => new PeDirectoryEntry(src.RelativeVirtualAddress, (uint)src.Size);            
     }
 }

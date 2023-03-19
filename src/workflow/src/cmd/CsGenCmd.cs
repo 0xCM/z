@@ -5,14 +5,16 @@
 namespace Z0
 {
     using static sys;
+    using Lang;
 
     class CsGenCmd : WfAppCmd<CsGenCmd>
     {
         SymGen SymGen => Channel.Channeled<SymGen>();
 
-        SymbolFactories SymbolFactories => Channel.Channeled<SymbolFactories>();
-
         CsLang CsLang => Channel.Channeled<CsLang>();
+
+        SymbolFactories SymbolFactories => Channel.Channeled<SymbolFactories>();
+     
 
         [CmdOp("gen/asci/bytes")]
         Outcome EmitAsciBytes(CmdArgs args)
@@ -22,6 +24,17 @@ namespace Z0
             var dst = text.buffer();
             var bytes = AsciLookups.emit(8u, name,content, dst);
             Channel.Write(dst.Emit());
+            return true;
+        }
+
+        [CmdOp("gen/enum/replicants")]
+        Outcome GenEnums(CmdArgs args)
+        {
+            const string Name = "api.types.enums";
+            var src = AppDb.ApiTargets().Path(Name, FileKind.List);
+            var types = ApiMd.types(src);
+            var name = "EnumDefs";
+            SymGen.EmitReplicants(SymGen.replicant(AppDb.CgStage(name).Root, out var spec), types.Select(x => x.Type), AppDb.CgStage(name).Root);
             return true;
         }
 
@@ -114,7 +127,6 @@ namespace Z0
             Bytes.bytespan<ushort>(0, 511, offset, dst);
             Bytes.bytespan<ushort>(0, Pow2.T11m1, offset, dst);
         }
-
         
         [CmdOp("gen/strings/ints")]
         Outcome GenIntStrings(CmdArgs args)
@@ -155,6 +167,28 @@ namespace Z0
 
             }
             return true;
+        }
+
+
+        [CmdOp("gen/syms/factories")]
+        Outcome GenSymFactories(CmdArgs args)
+        {
+            var name = "AsmRegTokens";
+            var dst = AppDb.CgStage().Path(name, FileKind.Cs);
+            var src = ApiAssemblies.Parts.Types().Where(x => x.Tagged<SymSourceAttribute>());
+            SymbolFactories.Emit("Z0.Asm", name, src, dst);
+            return true;
+        }
+
+        [CmdOp("lexers/check")]
+        void CheckLexers(CmdArgs args)
+        {
+            var source = FS.path(args[0].Value);
+            using var chars = FS.chars(source);
+            var buffer = new char[1024];
+            var lexer = lang.splitter(' ', buffer);
+            var tokens = lexer.Lex(chars);
+            iter(tokens, t => Row(string.Format("{0:D5} {1}", t.Index, sys.@string(t.Expr))));
         }
     }
 }

@@ -34,8 +34,5 @@ namespace Z0
 
         public static ProjectManager ProjectManager(this IWfRuntime wf)
             => Services.ProjectManager(wf);
-
-        // public static CmdServer CmdServer(this IWfRuntime wf)
-        //     => Services.CmdServer(wf);            
     }
 }

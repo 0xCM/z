@@ -4,7 +4,17 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public abstract record class EcmaDependency
+    public interface IModuleDependency
+    {
+
+    }
+    
+    public abstract record class ModuleDependency : IModuleDependency
+    {
+
+    }
+
+    public abstract record class EcmaDependency : ModuleDependency
     {
         [Render(64)]
         public ClrAssemblyName Source;

@@ -237,11 +237,9 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public MetadataMemory Memory(uint offset = 0)
-            => new MetadataMemory(Segment, offset);
+        public MetadataMemory Memory()
+            => PeFiles.metadata(Segment);
 
-            //var header = Memory.Read<MetadataHeader>();
- 
         public EcmaMvid Mvid()
             => Guid(MD.GetModuleDefinition().Mvid);
 

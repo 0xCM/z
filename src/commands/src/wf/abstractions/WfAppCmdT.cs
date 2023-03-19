@@ -14,7 +14,7 @@ namespace Z0
 
         public const string sln = "sln/context";
     }
-    
+
     [CmdProvider]
     public abstract class WfAppCmd<T> : WfSvc<T>, IApiService
         where T : WfAppCmd<T>, new()

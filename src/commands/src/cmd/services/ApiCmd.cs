@@ -10,22 +10,22 @@ namespace Z0
 
     public class ApiCmd : AppService<ApiCmd>, IApiService
     {                         
-        public static IApiCmdRunner runner(IWfRuntime wf, params Assembly[] src)
-            => new ApiCmdRunner(wf, handlers(wf,src));
+        // public static IApiCmdRunner runner(IWfRuntime wf, params Assembly[] src)
+        //     => new ApiCmdRunner(wf, handlers(wf,src));
 
-        static ICmdHandler handler(IWfRuntime wf, Type tHandler)
-        {
-            var handler = (ICmdHandler)Activator.CreateInstance(tHandler, new object[]{});
-            handler.Initialize(wf);
-            return handler;
-        }
+        // static ICmdHandler handler(IWfRuntime wf, Type tHandler)
+        // {
+        //     var handler = (ICmdHandler)Activator.CreateInstance(tHandler, new object[]{});
+        //     handler.Initialize(wf);
+        //     return handler;
+        // }
 
-        static CmdHandlers handlers(IWfRuntime wf, params Assembly[] src)
-        {
-            var dst = src.Types().Concrete().Tagged<CmdHandlerAttribute>().Select(x => handler(wf,x)).Map(x => (x.Route,x)).ToDictionary();
-            dst.TryAdd(Handlers.DevNul.Route, handler(wf, typeof(Handlers.DevNul)));
-            return new (dst);
-        }
+        // static CmdHandlers handlers(IWfRuntime wf, params Assembly[] src)
+        // {
+        //     var dst = src.Types().Concrete().Tagged<CmdHandlerAttribute>().Select(x => handler(wf,x)).Map(x => (x.Route,x)).ToDictionary();
+        //     dst.TryAdd(Handlers.DevNul.Route, handler(wf, typeof(Handlers.DevNul)));
+        //     return new (dst);
+        // }
 
         public static Outcome exec(IWfChannel channel, CmdMethod effector, CmdArgs args)
         {

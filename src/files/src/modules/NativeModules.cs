@@ -13,7 +13,6 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static NativeModule kernel32()
             => new NativeModule(Kernel32, LoadLibrary(Kernel32));
-
     }
 
     [ApiHost,Free]

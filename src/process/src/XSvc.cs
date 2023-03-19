@@ -21,7 +21,8 @@ namespace Z0
             public WfScripts ToolScripts(IWfRuntime wf)                
                 => Service<WfScripts>(wf);
 
-
+             public Tooling Tooling(IWfRuntime wf)
+                => Service<Tooling>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
@@ -37,5 +38,9 @@ namespace Z0
 
         public static IApiService ImageCmd(this IWfRuntime wf)
             => Services.ImageCmd(wf);
+
+        public static Tooling Tooling(this IWfRuntime wf)
+            => Services.Tooling(wf);             
+             
     }
 }

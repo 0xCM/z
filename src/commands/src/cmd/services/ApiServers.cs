@@ -5,6 +5,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using System.Linq;
+
     using static sys;
 
     public class ApiServers : AppService
@@ -12,13 +14,39 @@ namespace Z0
         public override Type HostType 
             => typeof(ApiServers);
 
-        const string InitializingRuntime = "Initializing runtime";
+        public static AppCmdProviders providers(params Assembly[] src)
+            => src.Types().Tagged<CmdProviderAttribute>().Concrete().Map(x => new AppCmdProvider(x));
+
+        public static CmdMethods methods(IApiService host)
+        {
+            var src = host.GetType().DeclaredInstanceMethods().Tagged<CmdOpAttribute>();
+            var dst = dict<string,CmdMethod>();
+            var count = src.Length;
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var mi = ref skip(src,i);
+                var tag = mi.Tag<CmdOpAttribute>().Require();
+                dst.TryAdd(tag.Name, new CmdMethod(tag.Name, classify(mi),  mi, host));                
+            }
+            return new CmdMethods(dst);
+        }
         
-        static RenderPattern<Duration> InitializedRuntime => "Initialized runtime:{0}";
+        public static CmdMethods methods(IWfRuntime wf, params Assembly[] src)
+        {
+            var providers = ApiServers.providers(src);
+            var types = providers.ServiceTypes();
+            var dst = dict<string,CmdMethod>();
+            iter(types, t => {
+                var method = t.StaticMethods().Public().Where(m => m.Name == "create").First();
+                var service = (IApiService)method.Invoke(null, new object[]{wf});
+                iter(ApiServers.methods(service).Defs, m => dst.TryAdd(m.CmdName, m));
+            });
 
-        static RenderPattern<LogSettings> ConfiguredAppLogs => "Configured app logs:{0}";
+            return new (dst);
+        }
 
-        static RenderPattern<IWfEmissions> ConfiguredEmissionLogs => "Configured emisson logs:{0}";
+        public static IApiCmdRunner runner(IWfRuntime wf, params Assembly[] src)
+            => new ApiCmdRunner(wf, handlers(wf,src));
 
         public static CmdCatalog catalog()
             => catalog(ApiCmd.Dispatcher);
@@ -32,20 +60,6 @@ namespace Z0
                 seek(dst,i) = defs[i].Uri;
             return new CmdCatalog(entries(dst));
         }
-
-        static ReadOnlySeq<ApiCmdInfo> entries(ReadOnlySeq<CmdUri> src)    
-        {
-            var entries = alloc<ApiCmdInfo>(src.Count);
-            for(var i=0; i<src.Count; i++)
-            {
-                ref readonly var uri = ref src[i];
-                ref var entry = ref seek(entries,i);
-                entry.Uri = uri;
-                entry.Hash = uri.Hash;
-                entry.Name = uri.Name;
-            }
-            return entries.Sort().Resequence();        
-        }        
 
         public static ReadOnlySeq<ServiceSpec> services(Assembly[] src)
         {
@@ -127,7 +141,7 @@ namespace Z0
             return app;
         }
 
-        public static A shell<A,C>(Func<IWfRuntime,ReadOnlySeq<IApiCmdProvider>> factory, bool verbose = false)
+        public static A shell<A,C>(Func<IWfRuntime,ReadOnlySeq<IApiService>> factory, bool verbose = false)
             where A : IAppShell, new()
             where C : IApiService, new()
         {
@@ -145,11 +159,11 @@ namespace Z0
             return app;
         }
 
-        public static IApiContext context<C>(IWfRuntime wf, Func<ReadOnlySeq<IApiCmdProvider>> factory, bool verbose = false)
+        public static IApiContext context<C>(IWfRuntime wf, Func<ReadOnlySeq<IApiService>> factory, bool verbose = false)
             where C : IApiService, new()
                 => context<C>(wf, wf.Channel, factory(), verbose);
 
-        static IApiContext context<C>(IWfRuntime wf, IWfChannel channel, ReadOnlySeq<IApiCmdProvider> providers, bool verbose = false)
+        static IApiContext context<C>(IWfRuntime wf, IWfChannel channel, ReadOnlySeq<IApiService> providers, bool verbose = false)
             where C : IApiService, new()
         {
             var service = new C();                        
@@ -157,18 +171,56 @@ namespace Z0
             return new ApiContext(service, channel, dispatcher(service, channel, providers, verbose));            
         }
 
-        static ICmdDispatcher dispatcher<T>(T service, IWfChannel channel, ReadOnlySeq<IApiCmdProvider> providers, bool verbose = false)
+        static ICmdDispatcher dispatcher<T>(T service, IWfChannel channel, ReadOnlySeq<IApiService> providers, bool verbose = false)
+            where T : IApiService
         {
             if(verbose)
                 channel.Babble($"Discovering {service} dispatchers");
 
             var dst = dict<string,CmdMethod>();
-            iter(effectors(service), r => dst.TryAdd(r.CmdName, r));
+            //iter(effectors(service), r => dst.TryAdd(r.CmdName, r));
             iter(providers, p => iter(effectors(p), r => dst.TryAdd(r.CmdName, r)));
             var dispatcher = new ApiDispatcher(channel, new CmdMethods(dst));
             AppData.Value(nameof(ICmdDispatcher), dispatcher);
             return dispatcher;
         }    
+
+        const string InitializingRuntime = "Initializing runtime";
+        
+        static RenderPattern<Duration> InitializedRuntime => "Initialized runtime:{0}";
+
+        static RenderPattern<LogSettings> ConfiguredAppLogs => "Configured app logs:{0}";
+
+        static RenderPattern<IWfEmissions> ConfiguredEmissionLogs => "Configured emisson logs:{0}";
+
+        static ICmdHandler handler(IWfRuntime wf, Type tHandler)
+        {
+            var handler = (ICmdHandler)Activator.CreateInstance(tHandler, new object[]{});
+            handler.Initialize(wf);
+            return handler;
+        }
+
+        static CmdHandlers handlers(IWfRuntime wf, params Assembly[] src)
+        {
+            var dst = src.Types().Concrete().Tagged<CmdHandlerAttribute>().Select(x => handler(wf,x)).Map(x => (x.Route,x)).ToDictionary();
+            dst.TryAdd(Handlers.DevNul.Route, handler(wf, typeof(Handlers.DevNul)));
+            return new (dst);
+        }
+
+ 
+        static ReadOnlySeq<ApiCmdInfo> entries(ReadOnlySeq<CmdUri> src)    
+        {
+            var entries = alloc<ApiCmdInfo>(src.Count);
+            for(var i=0; i<src.Count; i++)
+            {
+                ref readonly var uri = ref src[i];
+                ref var entry = ref seek(entries,i);
+                entry.Uri = uri;
+                entry.Hash = uri.Hash;
+                entry.Name = uri.Name;
+            }
+            return entries.Sort().Resequence();        
+        }        
 
         [Op]
         static ReadOnlySeq<CmdMethod> effectors(object host)
@@ -217,7 +269,5 @@ namespace Z0
             }
             return dst;
         }
-
-
     }
 }

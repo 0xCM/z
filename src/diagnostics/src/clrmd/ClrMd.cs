@@ -6,9 +6,13 @@ namespace Z0
 {
     using System.Linq;
     using Microsoft.Diagnostics.Runtime;
+    using Microsoft.Diagnostics.Runtime.DacInterface;
 
     public sealed class ClrMdSvc : IDisposable
     {
+        public static ClrMdSvc create(IWfRuntime wf, ProcessId? process  = null)
+            => new ClrMdSvc(wf, process ?? Process.GetCurrentProcess().Id);
+
         [MethodImpl(Inline)]
         public static bool hot(ClrMethod src)
         {
@@ -50,7 +54,7 @@ namespace Z0
 
         ClrRuntime Runtime;
 
-        int ProcId;
+        ProcessId ProcId;
 
         Process Proc;
 
@@ -60,15 +64,16 @@ namespace Z0
 
         IWfRuntime Wf;
         
-        public ClrMdSvc(IWfRuntime wf)
+        public ClrMdSvc(IWfRuntime wf, ProcessId procid)
         {
             Wf = wf;
             Channel = wf.Channel;
-            ProcId = Process.GetCurrentProcess().Id;
-            Proc = Process.GetProcessById(ProcId);
-            ChildProcessTracker.AddProcess(Proc);
+            ProcId = procid;
+            Proc = Process.GetProcessById((int)ProcId);
+            //ChildProcessTracker.AddProcess(Proc);
             Attach();            
         }
+
 
         public void Attach()
         {
@@ -76,7 +81,7 @@ namespace Z0
                 return;
 
             Channel.Babble(string.Format("Attaching to {0}", ProcId));
-            Target = DataTarget.CreateSnapshotAndAttach(ProcId);
+            Target = DataTarget.CreateSnapshotAndAttach((int)ProcId);
             Runtime = Target.ClrVersions.Single().CreateRuntime();
             Channel.Babble("Attached");
         }
@@ -106,6 +111,18 @@ namespace Z0
 
         public void ParseDump(FilePath src)
             => Wf.DumpParser().ParseDump(src);
+
+        public IEnumerable<ClrHandle> Handles()
+            => Runtime.EnumerateHandles();
+
+        public IEnumerable<ModuleInfo> Modules()
+            => ClrInfo().DataTarget.EnumerateModules();
+
+        public IEnumerable<ClrModule> ClrModules()
+            => Runtime.EnumerateModules();
+
+        public ClrInfo ClrInfo()
+            => Runtime.ClrInfo;
 
         public void Dispose()
         {

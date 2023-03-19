@@ -8,8 +8,6 @@ namespace Z0
 
     public class AsmGenCmd : WfAppCmd<AsmGenCmd>
     {
-        SymbolFactories SymbolFactories => Channel.Channeled<SymbolFactories>();
-     
         SymGen SymGen => Channel.Channeled<SymGen>();
 
         public IProjectWorkspace EtlSource(ProjectId src)
@@ -50,28 +48,6 @@ namespace Z0
 
             return true;
         }
-
-        [CmdOp("gen/syms/factories")]
-        Outcome GenSymFactories(CmdArgs args)
-        {
-            var name = "AsmRegTokens";
-            var dst = AppDb.CgStage().Path(name, FileKind.Cs);
-            var src = typeof(AsmRegTokens).GetNestedTypes().Where(x => x.Tagged<SymSourceAttribute>());
-            SymbolFactories.Emit("Z0.Asm", name, src, dst);
-            return true;
-        }
-
-        [CmdOp("gen/enum/replicants")]
-        Outcome GenEnums(CmdArgs args)
-        {
-            const string Name = "api.types.enums";
-            var src = AppDb.ApiTargets().Path(Name, FileKind.List);
-            var types = ApiMd.types(src);
-            var name = "EnumDefs";
-            SymGen.EmitReplicants(SymGen.replicant(AppDb.CgStage(name).Root, out var spec), types.Select(x => x.Type), AppDb.CgStage(name).Root);
-            return true;
-        }
-
 
     }
 }

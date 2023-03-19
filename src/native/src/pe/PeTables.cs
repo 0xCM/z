@@ -16,6 +16,7 @@ namespace Z0
             dst._CoffHeader = coff(src.PE);
             dst._CorHeader = cor(src.PE.PEHeaders);
             dst._PeInfo = peinfo(src.PE);
+            dst._DirectoryRows = rows(src.ModulePath.FileName, dst._Directories);
             return dst;
         }
 
@@ -29,6 +30,7 @@ namespace Z0
 
         ConstLookup<PeDirectoryKind,PeDirectoryEntry> _Directories;
 
+        ReadOnlySeq<PeDirectoryRow> _DirectoryRows;
 
         [MethodImpl(Inline)]
         public PeTables()
@@ -39,13 +41,32 @@ namespace Z0
         public ref readonly ReadOnlySeq<PeSectionHeader> SectionHeaders => ref _SectionHeaders;
 
         public ref readonly ConstLookup<PeDirectoryKind,PeDirectoryEntry> Directories => ref _Directories;
-
+        
+        public ref readonly ReadOnlySeq<PeDirectoryRow> DirectoryRows => ref _DirectoryRows;
+        
         public ref readonly CoffHeader CoffHeader => ref _CoffHeader;
 
         public ref readonly CorHeaderInfo CorHeader => ref _CorHeader;
 
         public ref readonly PeFileInfo PeInfo => ref _PeInfo;
 
+        static ReadOnlySeq<PeDirectoryRow> rows(FileName file,  ConstLookup<PeDirectoryKind,PeDirectoryEntry> src)
+        {
+            var count = src.EntryCount;
+            var dst = alloc<PeDirectoryRow>(count);
+            var i=0u;
+            iter(src.Keys, key => {
+                var entry = src[key];
+                seek(dst,i++) = new PeDirectoryRow{
+                    File = file,
+                    Kind = key,
+                    Rva = entry.Rva,
+                    Size = entry.Size
+                };
+            });
+            return dst;
+
+        }
         static CoffHeader coff(PEReader pe)
         {
             var src = pe.PEHeaders.CoffHeader;
@@ -96,21 +117,24 @@ namespace Z0
                 dst = new();
                 dst.MajorRuntimeVersion = cor.MajorRuntimeVersion;
                 dst.MinorRuntimeVersion = cor.MinorRuntimeVersion;
-                dst.MetadataDirectory = cor.MetadataDirectory.WithKind(PeDirectoryKind.MetadataTable);
+                dst.MetadataDirectory = cor.MetadataDirectory;
                 dst.Flags = cor.Flags;
                 dst.EntryPointTokenOrRelativeVirtualAddress = cor.EntryPointTokenOrRelativeVirtualAddress;
-                dst.ResourcesDirectory = cor.ResourcesDirectory.WithKind(PeDirectoryKind.ResourceTable);
-                dst.StrongNameSignatureDirectory = cor.StrongNameSignatureDirectory.WithKind(PeDirectoryKind.StrongNameSignature);
-                dst.CodeManagerTableDirectory = cor.CodeManagerTableDirectory.WithKind(PeDirectoryKind.CodeManagerTable);
-                dst.VtableFixupsDirectory = cor.VtableFixupsDirectory.WithKind(PeDirectoryKind.VtableFixups);
-                dst.ExportAddressTableJumpsDirectory = cor.ExportAddressTableJumpsDirectory.WithKind(PeDirectoryKind.ExportAddressTableJumps);
-                dst.ManagedNativeHeaderDirectory = cor.ManagedNativeHeaderDirectory.WithKind(PeDirectoryKind.ManagedNativeHeader);
+                dst.ResourcesDirectory = cor.ResourcesDirectory;
+                dst.StrongNameSignatureDirectory = cor.StrongNameSignatureDirectory;
+                dst.CodeManagerTableDirectory = cor.CodeManagerTableDirectory;
+                dst.VtableFixupsDirectory = cor.VtableFixupsDirectory;
+                dst.ExportAddressTableJumpsDirectory = cor.ExportAddressTableJumpsDirectory;
+                dst.ManagedNativeHeaderDirectory = cor.ManagedNativeHeaderDirectory;
             }
             return dst;
         }
 
-        static void entry(PeDirectoryKind kind, DirectoryEntry src, Dictionary<PeDirectoryKind,PeDirectoryEntry> dst) 
-            => dst[kind] = src.WithKind(kind);
+        static void entry(PeDirectoryKind kind, DirectoryEntry src, Dictionary<PeDirectoryKind,PeDirectoryEntry> dst)
+        {
+            if(src.Size != 0)
+                dst[kind] = src;
+        }
 
         static ConstLookup<PeDirectoryKind,PeDirectoryEntry> directories(PEReader src)
         {
@@ -127,7 +151,7 @@ namespace Z0
                     entry(PeDirectoryKind.DebugTable, pe.DebugTableDirectory, dst);
                     entry(PeDirectoryKind.DelayImportTable, pe.DelayImportTableDirectory, dst);
                     entry(PeDirectoryKind.ExceptionTable, pe.ExceptionTableDirectory, dst);
-                    entry(PeDirectoryKind.ExceptionTable, pe.ExportTableDirectory, dst);
+                    entry(PeDirectoryKind.ExportTable, pe.ExportTableDirectory, dst);
                     entry(PeDirectoryKind.GlobalPointerTable, pe.GlobalPointerTableDirectory, dst);
                     entry(PeDirectoryKind.ImportAddressTable, pe.ImportAddressTableDirectory, dst);
                     entry(PeDirectoryKind.ImportTable, pe.ImportTableDirectory, dst);
@@ -149,6 +173,7 @@ namespace Z0
             }
             return dst;
         }
+        
         static PeFileInfo peinfo(PEReader src)
         {
             var dst = new PeFileInfo();
@@ -166,22 +191,16 @@ namespace Z0
                     dst.CodeSize = (uint)pe.SizeOfCode;
                     dst.DataOffset = pe.BaseOfData;
                     dst.ImageSize = (uint)pe.SizeOfImage;
-                    dst.ExportDir = pe.ExportTableDirectory.WithKind(PeDirectoryKind.ExportTable);
-                    dst.ImportDir = pe.ImportTableDirectory.WithKind(PeDirectoryKind.ImportTable);
-                    dst.ResourceDir = pe.ResourceTableDirectory.WithKind(PeDirectoryKind.ResourceTable);
-                    dst.RelocationDir = pe.BaseRelocationTableDirectory.WithKind(PeDirectoryKind.BaseRelocationTable);
-                    dst.ImportAddressDir = pe.ImportAddressTableDirectory.WithKind(PeDirectoryKind.ImportAddressTable);
-                    dst.LoadConfigDir = pe.LoadConfigTableDirectory.WithKind(PeDirectoryKind.LoadConfigTable);
-                    dst.DebugDir = pe.DebugTableDirectory.WithKind(PeDirectoryKind.DebugTable);
+                    dst.ExportDir = pe.ExportTableDirectory;
+                    dst.ImportDir = pe.ImportTableDirectory;
+                    dst.ResourceDir = pe.ResourceTableDirectory;
+                    dst.RelocationDir = pe.BaseRelocationTableDirectory;
+                    dst.ImportAddressDir = pe.ImportAddressTableDirectory;
+                    dst.LoadConfigDir = pe.LoadConfigTableDirectory;
+                    dst.DebugDir = pe.DebugTableDirectory;
                 }
             }
             return dst;
         }
-   }
-
-   partial class XTend
-   {
-        public static PeDirectoryEntry WithKind(this DirectoryEntry src, PeDirectoryKind kind)
-            => new PeDirectoryEntry(src.RelativeVirtualAddress, (uint)src.Size, kind);
    }
 }

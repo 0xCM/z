@@ -5,6 +5,7 @@
 namespace Z0
 {
     using System.Linq;
+    using Windows;
 
     using static sys;
 
@@ -17,6 +18,8 @@ namespace Z0
         ApiMd ApiMd => Wf.ApiMd();
 
         IEnvDb DataTarget => AppSettings.EnvDb();
+
+        DataAnalyzer Analyzer => Wf.Analyzer();
 
         static IApiPack Dst
             => ApiPacks.create();
@@ -272,8 +275,6 @@ namespace Z0
             }, true);
         }
 
-
-
         [CmdOp("coff/modules")]
         void ExportPeInfo(CmdArgs args)
         {
@@ -286,6 +287,49 @@ namespace Z0
             });
         }
 
+        [CmdOp("pe/headers")]
+        void PeHeaders(CmdArgs args)
+        {
+            var sources = FS.dir(args[0]).DbArchive();
+            var modules = Archives.modules(sources.Root);
+            iter(modules.Members(), member => {
+                using var map = PeMap.create(member.Path);
+                if(PeFiles.test(map.Segment()))
+                {
+                    var memory = map.PeMemory();
+                    var dos = memory.DosHeader;
+                    var coff = memory.CoffHeader;
+                    Channel.Row(coff);
+                }
+
+            });
+        }
+
+        [CmdOp("pe/tables")]
+        unsafe void EmitPeTables(CmdArgs args)
+        {
+            var sources = FS.dir(args[0]).DbArchive();
+            var label = args.Count > 1 ? args[1].Value.Format() : FS.identifier(sources.Root);
+            var dst = EnvDb.Scoped("pe").Path($"{label}.directories", FileKind.Csv);
+            var modules = Archives.modules(sources.Root);
+            var rows = list<PeDirectoryRow>();
+            iter(modules.Members(), member => {
+                using var reader = PeReader.create(member.Path);
+                var tables = reader.Tables;
+                rows.AddRange(tables.DirectoryRows);
+                iter(tables.DirectoryRows, row => {
+                    if(row.Kind == PeDirectoryKind.DebugTable)
+                    {
+                        var debug = *((IMAGE_DEBUG_DIRECTORY*)reader.ReadSectionData(row.Entry()).Pointer);
+                        var seg = new MemorySeg<Address32,uint>((Address32)debug.AddressOfRawData, debug.SizeOfData);
+                        Channel.Row(seg.Format());                        
+                    }
+                });
+            });        
+
+            var records = rows.Array().Sort().Resequence();
+            Channel.TableEmit(records, dst);
+        }
         [CmdOp("pe/emit/headers")]
         void PeDirs(CmdArgs args)
         {
@@ -336,7 +380,7 @@ namespace Z0
                 counter++;
                 var deps = reader.ReadDependencySet();
                 var key = ecma.AssemblyFile();
-                var member = new EcmaProjectFile(reader.AssemblyKey(), ecma.AssemblyFile(),deps);
+                var member = new EcmaProjectFile(reader.AssemblyKey(), ecma.AssemblyFile(), deps);
                 members.TryAdd(member.Key, member);
 
                 if(counter % 1000 == 0)
@@ -510,6 +554,32 @@ namespace Z0
                 //     }
                 // });
             });
+        }
+
+
+        [CmdOp("files/analyze")]
+        void Analyze(CmdArgs args)
+        {
+            var src = FS.dir(args[0]).DbArchive();
+            var dst = FS.dir(args[1]).DbArchive();
+            Analyzer.Run(src,dst);            
+        }
+
+        [CmdOp("ecma/debug")]
+        void DebugMethods(CmdArgs args)
+        {
+            var src = FS.dir(args[0]).DbArchive().Modules();
+            iter(src.AssemblyFiles(), a => {                
+                using var file = Ecma.file(a.Path);                
+            });
+        }
+
+        [CmdOp("clr/types")]
+        void ListTypes(CmdArgs args)
+        {
+            var dir = FS.dir(args[0]);
+            var src = Archives.modules(dir).AssemblyFiles();
+            ApiMd.Emitter(Archives.archive(DataTarget.Scoped("clr"))).EmitTypeLists(src);
         }
     }
 }

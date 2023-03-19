@@ -8,9 +8,6 @@ namespace Z0
     {
         class ServiceCache : AppServices<ServiceCache>
         {
-             public Tooling Tooling(IWfRuntime wf)
-                => Service<Tooling>(wf);
-
             public WfAppCmd WfCmd(IWfRuntime wf)
                 => Service<WfAppCmd>(wf);
 
@@ -25,13 +22,6 @@ namespace Z0
 
             public IApiService CsGenCmd(IWfRuntime wf)
                 => Service<CsGenCmd>(wf);
-
-            public IApiService EcmaCmd(IWfRuntime wf)
-                => Service<EcmaCmd>(wf);
-
-            public ClrCmd ClrCmd(IWfRuntime wf)
-                => Service<ClrCmd>(wf);
-
         }
 
         static ServiceCache Services => ServiceCache.Instance;
@@ -45,20 +35,10 @@ namespace Z0
         public static ProcessMemory ProcessMemory(this IWfRuntime wf)
             => Services.ProcessMemory(wf);
 
-        public static Tooling Tooling(this IWfRuntime wf)
-            => Services.Tooling(wf);             
-
         public static WfAppCmd WfCmd(this IWfRuntime wf)
             => Services.WfCmd(wf);
 
         public static ApiPacks ApiPacks(this IWfRuntime wf)
             => Services.ApiPacks(wf);
-
-        public static IApiService EcmaCmd(this IWfRuntime wf)
-            => Services.EcmaCmd(wf);
-
-        public static IApiService ClrCmd(this IWfRuntime wf)
-            => Services.ClrCmd(wf);
- 
     }
 }

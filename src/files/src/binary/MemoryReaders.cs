@@ -12,6 +12,7 @@ namespace Z0
             => new MemoryReader(@base, size,offset);
             
         public unsafe abstract class MemoryReader<R>
+            where R : MemoryReader<R>
         {
             protected readonly MemoryAddress BaseAddress;
             
@@ -39,18 +40,30 @@ namespace Z0
                 Position += size;
             }
 
+            [MethodImpl(Inline)]
+            public R Seek(uint offset)
+            {
+                Position = offset;
+                return (R)this;
+            }
+
+            [MethodImpl(Inline)]
             protected ReadOnlySpan<byte> Bytes()
                 => cover(BaseAddress.Pointer<byte>(), Size);
-
 
             [MethodImpl(Inline)]
             protected ReadOnlySpan<byte> Bytes(uint offset)
                 => slice(Bytes(), offset);
 
             [MethodImpl(Inline)]
-            protected T* Pointer<T>()
+            public T* Pointer<T>()
                 where T : unmanaged
                     => (BaseAddress + Position).Pointer<T>();
+
+            [MethodImpl(Inline)]
+            public T* Pointer<T>(Address32 offset)
+                where T : unmanaged
+                    => (BaseAddress + offset).Pointer<T>();
 
             [MethodImpl(Inline)]
             protected uint Remaining()
@@ -65,6 +78,10 @@ namespace Z0
                 return value;
             }
 
+            [MethodImpl(Inline)]
+            public T View<T>(Address32 offset)
+                where T : unmanaged
+                    => *Pointer<T>(offset);
             public ReadOnlySpan<byte> Read(uint requested)
             {
                 var length = Position + requested < LastPosition ? requested : Remaining();
@@ -88,7 +105,6 @@ namespace Z0
             [MethodImpl(Inline)]
             public ulong Read(N8 n)
                 => Read<ulong>();
-
         }
 
         public sealed class MemoryReader : MemoryReader<MemoryReader>
@@ -98,8 +114,6 @@ namespace Z0
             {
 
             }
-
-        }
-        
+        }       
     }
 }

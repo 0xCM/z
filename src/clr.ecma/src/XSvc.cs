@@ -20,6 +20,12 @@ namespace Z0
             public DataAnalyzer Analyzer(IWfRuntime wf)
                 => Service<DataAnalyzer>(wf);
 
+            public IApiService EcmaCmd(IWfRuntime wf)
+                => Service<EcmaCmd>(wf);
+
+            public ModuleResolvers ModuleResolvers(IWfRuntime wf)
+                => Service<ModuleResolvers>(wf);
+
         }
 
         static Svc Services => Svc.Instance;
@@ -35,5 +41,12 @@ namespace Z0
 
         public static DataAnalyzer Analyzer(this IWfRuntime wf)
             => Services.Analyzer(wf);
+
+        public static IApiService EcmaCmd(this IWfRuntime wf)
+            => Services.EcmaCmd(wf);             
+
+        public static ModuleResolvers ModuleResolvers(this IWfRuntime wf)
+            => Services.ModuleResolvers(wf);             
+             
     }
 }

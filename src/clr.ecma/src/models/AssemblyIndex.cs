@@ -147,14 +147,4 @@ namespace Z0
             }
         }
     }
-
-    partial class XTend
-    {
-        public static AssemblyIndex CreateAssemblyIndex(this IEnumerable<AssemblyFile> src)
-        {
-            var dst = new AssemblyIndex();
-            dst.Include(src);
-            return dst.Seal();
-        }
-    }
 }

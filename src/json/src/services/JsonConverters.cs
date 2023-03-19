@@ -283,80 +283,100 @@ namespace Z0
             return false;
         }
 
-
-        class BitWidthConverter : JsonConverter<BitWidth>
+        class BitWidthTransform : JsonTransform<BitWidth>
         {
-            public override BitWidth Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) 
+            protected override BitWidth Read(ref Utf8JsonReader src) 
             {
                 var dst = BitWidth.Zero;
-                Sizes.parse(reader.GetString(), out dst);
+                Sizes.parse(src.GetString(), out dst);
                 return dst;            
             }
 
-            public override void Write(Utf8JsonWriter writer, BitWidth src, JsonSerializerOptions options) 
-                => writer.WriteStringValue(src.Content.ToString());
+            protected override void Write(BitWidth src, Utf8JsonWriter dst) 
+                => dst.WriteStringValue(src.Content.ToString());
         }        
 
-        class ByteSizeConverter : JsonConverter<ByteSize>
+        class ByteSizeTransform : JsonTransform<ByteSize>
         {
-            public override ByteSize Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) 
+            protected override ByteSize Read(ref Utf8JsonReader src) 
             {
                 var dst = ByteSize.Zero;
-                Sizes.parse(reader.GetString(), out dst);
+                Sizes.parse(src.GetString(), out dst);
                 return dst;            
             }
 
-            public override void Write(Utf8JsonWriter writer, ByteSize src, JsonSerializerOptions options) 
-                => writer.WriteStringValue(src.Content.ToString());
+            protected override void Write(ByteSize src, Utf8JsonWriter dst) 
+                => dst.WriteStringValue(src.Content.ToString());
         }        
 
-        class StringConverter : JsonConverter<@string>
+        class StringTransform : JsonTransform<@string>
         {
-            public override @string Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) 
-                => reader.GetString();
+            protected override @string Read(ref Utf8JsonReader src) 
+                => src.GetString();
 
-            public override void Write(Utf8JsonWriter writer, @string src, JsonSerializerOptions options) 
-                => writer.WriteStringValue(src);
+            protected override void Write(@string src, Utf8JsonWriter dst) 
+                => dst.WriteStringValue(src);
         }        
 
-        class FilePathConverter : JsonConverter<FilePath>
+        class FilePathTransform : JsonTransform<FilePath>
         {
-            public override FilePath Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) 
-                => FS.path(reader.GetString());
+            protected override FilePath Read(ref Utf8JsonReader src) 
+                => FS.path(src.GetString());
 
-            public override void Write(Utf8JsonWriter writer, FilePath src, JsonSerializerOptions options) 
-                => writer.WriteStringValue(src.Format(PathSeparator.FS));
+            protected override void Write(FilePath src, Utf8JsonWriter dst) 
+                => dst.WriteStringValue(src.Format(PathSeparator.FS));
         }        
 
-        class FileUriConverter : JsonConverter<FileUri>
+        class FileUriTransform : JsonTransform<FileUri>
         {
-            public override FileUri Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) 
-                => new FileUri(reader.GetString());
+            protected override FileUri Read(ref Utf8JsonReader src) 
+                => new FileUri(src.GetString());
 
-            public override void Write(Utf8JsonWriter writer, FileUri src, JsonSerializerOptions options) 
-                => writer.WriteStringValue(src.Format());
+            protected override void Write(FileUri src, Utf8JsonWriter dst) 
+                => dst.WriteStringValue(src.Format());
         }        
 
-        class FolderPathConverter : JsonConverter<FolderPath>
+        class FolderPathTransform : JsonTransform<FolderPath>
         {
-            public override FolderPath Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) 
-                => FS.dir(reader.GetString());
+            protected override FolderPath Read(ref Utf8JsonReader src) 
+                => FS.dir(src.GetString());
 
-            public override void Write(Utf8JsonWriter writer, FolderPath src, JsonSerializerOptions options) 
-                => writer.WriteStringValue(src.Format(PathSeparator.FS));
+            protected override void Write(FolderPath src, Utf8JsonWriter dst) 
+                => dst.WriteStringValue(src.Format(PathSeparator.FS));
+        }        
+
+        class AssemblyVersionTransform : JsonTransform<AssemblyVersion>
+        {
+            protected override AssemblyVersion Read(ref Utf8JsonReader src)             
+            {
+                throw no<AssemblyVersion>();
+
+            }
+
+            protected override void Write(AssemblyVersion src, Utf8JsonWriter dst) 
+            {
+                dst.WritePropertyName(nameof(src.Major));
+                dst.WriteNumberValue(src.Major);
+                dst.WritePropertyName(nameof(src.Minor));
+                dst.WriteNumberValue(src.Minor);
+                dst.WritePropertyName(nameof(src.Build));
+                dst.WriteNumberValue(src.Build);
+                dst.WritePropertyName(nameof(src.Revision));
+                dst.WriteNumberValue(src.Revision);
+            }
         }        
 
         static JsonConverters()
         {
-            register(new StringConverter());
-            register(new FilePathConverter());
-            register(new FolderPathConverter());
-            register(new BitWidthConverter());
-            register(new ByteSizeConverter());
-            register(new FileUriConverter());
+            register(new StringTransform());
+            register(new FilePathTransform());
+            register(new FolderPathTransform());
+            register(new BitWidthTransform());
+            register(new ByteSizeTransform());
+            register(new FileUriTransform());
+            register(new AssemblyVersionTransform());
         }
 
         static List<JsonConverter> Converters = new();
-    }
-    
+    }    
 }

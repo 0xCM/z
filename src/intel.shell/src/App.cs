@@ -7,8 +7,8 @@ namespace Z0
     [Free]
     sealed class App : ApiShell<App>
     {
-        static ReadOnlySeq<IApiCmdProvider> providers(IWfRuntime wf)
-            => new IApiCmdProvider[]{
+        static ReadOnlySeq<IApiService> providers(IWfRuntime wf)
+            => new IApiService[]{
                 wf.WfCmd(),
                 wf.EnvCmd(),
                 wf.ImageCmd(),

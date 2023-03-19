@@ -36,6 +36,5 @@ namespace Z0
         public ReadOnlySeq<EcmaStreamHeader> StreamHeaders;
 
         public Hex32 TableOffset;
-    }
-    
+    }   
 }

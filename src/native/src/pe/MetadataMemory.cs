@@ -9,28 +9,6 @@ namespace Z0
     using EC = EcmaConstants;
     using SK = EcmaStreamKind;
 
-    public class PeMap : IDisposable
-    {
-        readonly MemoryFile File;
-
-        public PeMap(MemoryFile file)
-        {
-            File = file;
-        }
-
-        public MemoryAddress BaseAddress 
-            => File.BaseAddress;
-        
-        public ByteSize Size
-            => File.FileSize;
-
-        public void Dispose()
-        {
-            File.Dispose();
-        }
-    }
-
-
     public unsafe struct MetadataMemory
     {
         readonly MemorySeg Source;

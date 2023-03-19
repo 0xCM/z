@@ -32,7 +32,6 @@ namespace Z0
                         yield return path;
                 }
             }
-
         }
 
         public IEnumerable<AssemblyFile> AssemblyFiles()
@@ -52,13 +51,6 @@ namespace Z0
             foreach(var path in Root.EnumerateFiles(Recurse, FS.WinMd))
                 if(AssemblyFile.name(path, out var name))
                     yield return new AssemblyFile(path, name);
-        }
-
-        public IEnumerable<DllModule> NativeDll()
-        {
-            foreach(var path in Root.EnumerateFiles(Recurse, FS.Dll))
-                if(FS.native(path))
-                    yield return new DllModule(path);
         }
 
         public IEnumerable<DllModule> Dll()
@@ -82,21 +74,13 @@ namespace Z0
 
         public IEnumerable<BinaryModule> Members()
         {
-            var managed = from module in AssemblyFiles() select generalize(module);
-            var native = from module in NativeDll() select generalize(module);
+            var dll = from module in Dll() select generalize(module);
             var lib = from module in Lib() select generalize(module);
             var obj = from module in Obj() select generalize(module);
             var exe = from module in Exe() select generalize(module);
-            var pdb = from module in Pdb() select generalize(module);
-            return managed.Union(native).Union(obj).Union(exe).Union(pdb).Union(lib);
+            return dll.Union(obj).Union(exe).Union(lib);
         }
         
-        public IEnumerable<PdbModule> Pdb()
-        {
-            foreach(var path in Root.EnumerateFiles(Recurse, FS.Pdb))
-                yield return new PdbModule(path);
-        }
-
         public IEnumerable<ObjModule> Obj()
         {
             foreach(var path in Root.EnumerateFiles(Recurse, FS.Obj))

@@ -8,7 +8,6 @@ namespace Z0
     public interface IBinaryModule : IFile
     {
         FileModuleKind ModuleKind {get;}
-
     }
 
     [Free]

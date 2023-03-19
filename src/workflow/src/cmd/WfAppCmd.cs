@@ -17,8 +17,7 @@ namespace Z0
     }
 
     public unsafe class WfAppCmd : WfAppCmd<WfAppCmd>
-    {
-        
+    {        
         ArchiveRegistry ArchiveRegistry => Wf.ArchiveRegistry();
 
         ProjectScripts ProjectScripts => Wf.ProjectScripts();
@@ -355,53 +354,39 @@ namespace Z0
             Channel.Status($"Indexed {unique.Count} unique files with {duplicates.Length} duplicates");
         }
 
-		[DllImport(ImageNames.Kernel32, CharSet = CharSet.Auto, SetLastError = true)]
-		public static extern IntPtr GetCurrentProcess();
 
-        [DllImport(ImageNames.PsApi, SetLastError = true), Free]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool EnumProcesses([Out] ProcessId* lpidProcess, [In]uint cb, [Out] uint* lpcbNeeded);
-
-        [DllImport(ImageNames.PsApi, SetLastError = true), Free]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool EnumProcessModulesEx([In] HANDLE hProcess, [Out] void *lphModule, [In] uint cb, [Out] uint* lpcbNeeded, [In] uint dwFilterFlag);
-        
-        [CmdOp("procinfo")]
-        unsafe void ProcInfo()
+        [CmdOp("api/servers")]
+        void ApiCommandServices()
         {
-            var process = GetCurrentProcess();
-            var dst = default(PROCESS_BASIC_INFORMATION);
-            NtDll.NtQueryInformationProcess(process, PROCESSINFOCLASS.ProcessBasicInformation, &dst, size<PROCESS_BASIC_INFORMATION>(), out var length);
-            Require.equal(length, size<PROCESS_BASIC_INFORMATION>());
-            Channel.Row(dst.ToString());
-            Channel.Row($"Peb:{dst.PebBaseAddress}");
+            var providers = ApiServers.providers(ApiAssemblies.Parts);
+            var types = providers.ServiceTypes();
+            var dst = dict<CmdUri,CmdMethod>();
+            iter(types, t => {
+                var method = t.StaticMethods().Public().Where(m => m.Name == "create").First();
+                var service = (IApiService)method.Invoke(null, new object[]{Wf});
+                iter(ApiServers.methods(service).Defs, m => dst.TryAdd(m.Uri, m));
+            });
 
-            //NtDll.NtQueryInformationProcess()
+            var methods = dst.Values.ToSeq().Sort();
+            iter(methods, m => Channel.Row(m.Uri));
 
         }
 
-
-        [CmdOp("procenum")]
-        void ProcEnum()
+        [CmdOp("clrmd")]
+        void ClrMd()
         {
-            var needed = 0u;
-            var max = 2024u;
-            var buffer = alloc<ProcessId>(max);
-            fixed(ProcessId* pBuffer = &buffer[0])
-            {
-                var result = EnumProcesses(pBuffer, max*4, &needed);                
-                if(result)
-                {
-                    var count = min(max,needed/4);
-                    var values = slice(span(buffer), 0, count);
-                    values.Sort();
-                    for(var i=0; i<count; i++)
-                    {
-                        Channel.Row(string.Format("{0:D5} {1}", i, skip(buffer,i)));
-                    }
-                }
-            }
+            using var clrmd = ClrMdSvc.create(Wf);
+            iter(clrmd.Modules(), module => {
+                
+                Channel.Row($"{(MemoryAddress)module.ImageBase} {module.FileName}");
+                var pdb = module.Pdb;
+                if(pdb != null)
+                    Channel.Row($"Pdb: {pdb.Guid} {pdb.Path}");
 
+                });
+            // iter(clrmd.Modules(), m => {
+            //     Channel.Row($"{(MemoryAddress)m.Address} {m.Name}");
+            // });
         }
     }
 }

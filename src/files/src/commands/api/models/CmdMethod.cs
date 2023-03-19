@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed class CmdMethod
+    public sealed class CmdMethod : IComparable<CmdMethod>
     {
         public readonly @string CmdName;
 
@@ -31,6 +31,9 @@ namespace Z0
             [MethodImpl(Inline)]
             get => Host.GetType();
         }
+
+        public int CompareTo(CmdMethod src)
+            => Format().CompareTo(src.Format());
 
         public string Format()
             => Uri.Format();

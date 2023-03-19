@@ -218,7 +218,7 @@ namespace Z0
         public ReadOnlySeq<FilePath> GenScripts(IModuleArchive src, IDbArchive dst)
         {
             var paths = list<FilePath>();
-            var dll = src.NativeDll();
+            var dll = src.Dll();
             var sid = Identifier.Empty;
             var cmd = DumpBin.CmdName.None;
             var ext = FileExt.Empty;
