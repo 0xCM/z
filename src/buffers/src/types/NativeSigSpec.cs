@@ -12,7 +12,7 @@ namespace Z0
 
         public readonly NativeType ReturnType;
 
-        public readonly Index<NativeOpDef> Operands;
+        public readonly Seq<NativeOpDef> Operands;
 
         [MethodImpl(Inline)]
         public NativeSigSpec(string scope, string name, NativeType ret, params NativeOpDef[] ops)

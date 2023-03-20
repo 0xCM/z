@@ -8,6 +8,7 @@
    <Import Project="$(MsBuildThisFileDirectory)src/bitvectors/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/bits/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/builds/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/buffers/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/calcs/exports.props"/>
 

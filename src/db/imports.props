@@ -3,6 +3,7 @@
     <ProjectReference Include="$(Commands)" />
     <ProjectReference Include="$(Numbers)" />
     <ProjectReference Include="$(Json)" />
+    <ProjectReference Include="$(Buffers)" />
     <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="$(MsExtVer)" />
     <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="$(MsExtVer)" />
   </ItemGroup>

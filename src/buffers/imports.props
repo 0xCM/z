@@ -1,0 +1,7 @@
+<Project>
+  <Import Project="$(SlnProps)\usings.props"/>
+
+  <ItemGroup>
+    <ProjectReference Include="$(ZLib)" />
+  </ItemGroup>
+</Project>
