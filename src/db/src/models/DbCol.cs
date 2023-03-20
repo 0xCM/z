@@ -27,7 +27,7 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => HashCodes.hash(ColName.GetHashCode(),Pos);
+            get => ColName.Hash | (Hash16)Pos;
         }
 
         public override int GetHashCode()

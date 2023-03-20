@@ -76,7 +76,7 @@ namespace Z0
 
         void CalcTypeTables()
         {
-            Views.Store(I.TypeTables, NativeTypes.typetables(typeof(XedDb).Assembly,"xed", Alloc.Composite()));
+            Views.Store(I.TypeTables, MemDb.typetables(typeof(XedDb).Assembly,"xed", Alloc.Composite()));
             Views.Store(I.TypeTableRows, MemDb.rows(Views.TypeTables));
         }
 

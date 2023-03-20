@@ -14,6 +14,9 @@ namespace Z0
             public ArchiveRegistry ArchiveRegistry(IWfRuntime wf)
                 => Service<ArchiveRegistry>(wf);            
 
+            public IApiService DbCmd(IWfRuntime wf)
+                => Service<DbCmd>(wf);
+
         }
 
         static ServiceCache Services => ServiceCache.Instance;
@@ -23,5 +26,9 @@ namespace Z0
 
         public static ArchiveRegistry ArchiveRegistry(this IWfRuntime wf)
             => Services.ArchiveRegistry(wf);
+
+        public static IApiService DbCmd(this IWfRuntime wf)
+            => Services.DbCmd(wf);
+
     }
 }
