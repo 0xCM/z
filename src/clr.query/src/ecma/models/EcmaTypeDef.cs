@@ -5,12 +5,15 @@
 namespace Z0
 {
     [Record(TableId), StructLayout(LayoutKind.Sequential, Pack = 1)]
-    public record struct TypeDefInfo
+    public record struct EcmaTypeDef : IComparable<EcmaTypeDef>
     {
         const string TableId = "ecma.typedefs";
-        
+
         [Render(16)]            
         public EcmaToken Token;
+
+        [Render(48)]            
+        public AssemblyKey Assembly;
 
         [Render(48)]
         public string Name;
@@ -29,5 +32,13 @@ namespace Z0
 
         [Render(1)]
         public TypeAttributes Attributes;
+
+        public int CompareTo(EcmaTypeDef src)
+        {
+            var result = Assembly.CompareTo(src.Assembly);
+            if(result == 0)
+                result = FullName.CompareTo(src.FullName);
+            return result;
+        }
     }
 }

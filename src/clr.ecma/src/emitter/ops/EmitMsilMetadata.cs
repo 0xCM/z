@@ -5,7 +5,6 @@
 namespace Z0
 {
     using static sys;
-    using static EcmaTables;
 
     partial class EcmaEmitter
     {
@@ -18,7 +17,7 @@ namespace Z0
             {
                 var methods = ReadOnlySpan<MsilRow>.Empty;
                 var srcPath = FS.path(src.Location);
-                if(EcmaReader.valid(srcPath))
+                if(Ecma.valid(srcPath))
                 {
                     using var reader = PeReader.create(srcPath);
                     methods = reader.ReadMsil();

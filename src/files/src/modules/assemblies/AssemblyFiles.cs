@@ -8,6 +8,20 @@ namespace Z0
     
     public class AssemblyFiles : Seq<AssemblyFiles, AssemblyFile>
     {
+        public static ReadOnlySeq<AssemblyListEntry> records(ReadOnlySpan<AssemblyFile> src)
+        {
+            var dst = bag<AssemblyListEntry>();
+            iter(src, file => {
+                dst.Add(new AssemblyListEntry{
+                    AssemblyName = file.AssemblyName,
+                    Version = file.Version,
+                    Md5Hash = FS.hash(file.Path).FileHash.ContentHash,
+                    Path = file.Path
+                });
+            }, true);
+            return dst.Array().Sort();
+
+        }
         public AssemblyFiles()
         {
 
@@ -23,17 +37,6 @@ namespace Z0
             => new AssemblyFiles(src);
 
         public ReadOnlySeq<AssemblyListEntry> Records()
-        {
-            var dst = bag<AssemblyListEntry>();
-            iter(this, file => {
-                dst.Add(new AssemblyListEntry{
-                    AssemblyName = file.AssemblyName.SimpleName,
-                    Version = file.AssemblyName.Version,
-                    Md5Hash = FS.hash(file.Path).FileHash.ContentHash,
-                    Path = file.Path
-                });
-            }, true);
-            return dst.Array().Sort();
-        }
+            => records(this.View);
     }
 }

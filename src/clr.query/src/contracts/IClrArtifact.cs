@@ -22,9 +22,6 @@ namespace Z0
         /// </summary>
         ClrArtifactKind Kind {get;}
 
-        EcmaArtifactRef Ref
-            => new EcmaArtifactRef(Token, Kind ,Name);
-
         bool INullity.IsEmpty
             => sys.empty(Name);
 

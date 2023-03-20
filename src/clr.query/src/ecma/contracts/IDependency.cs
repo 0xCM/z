@@ -4,12 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
+    public interface IDependency
+    {
 
-    partial class EcmaReader
-    {    
-        [MethodImpl(Inline), Op]
-        public TypeReference ReadTypeRef(TypeReferenceHandle src)
-            => MD.GetTypeReference(src);        
     }
 }

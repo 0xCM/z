@@ -4,17 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IModuleDependency
-    {
-
-    }
-    
-    public abstract record class ModuleDependency : IModuleDependency
-    {
-
-    }
-
-    public abstract record class EcmaDependency : ModuleDependency
+    public abstract record class EcmaDependency : Dependency
     {
         [Render(64)]
         public ClrAssemblyName Source;
@@ -24,11 +14,11 @@ namespace Z0
 
         [Render(16)]
         public EcmaDependencyKind DependencyKind;
-    }        
+    }
 
     public abstract record class EcmaDependency<D> : EcmaDependency, IComparable<D>
         where D : EcmaDependency<D>
     {
-        public abstract int CompareTo(D src);
-    }    
+        public abstract int CompareTo(D other);
+    }
 }

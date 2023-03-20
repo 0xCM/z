@@ -15,7 +15,7 @@ namespace Z0
             var counts = GetRowCounts(indicies);
             var offsets = GetTableOffsets(indicies);
             var sizes = GetRowSizes(indicies);            
-            var name = _AssemblyName;
+            var name = String(ReadAssemblyDef().Name);
             for(byte j=0; j<counts.Count; j++)
             {
                 var table = (TableIndex)j;

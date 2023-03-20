@@ -6,16 +6,16 @@ namespace Z0
 {
     public interface IModuleResolver
     {
-        IBinaryModule Resolve(IModuleDependency dependency);
+        IBinaryModule Resolve(IDependency dependency);
     }
 
     public interface IModuleResolver<D,M> : IModuleResolver
         where M : IBinaryModule
-        where D : IModuleDependency
+        where D : IDependency
     {        
         M Resolve(D dependency);
 
-        IBinaryModule IModuleResolver.Resolve(IModuleDependency dependency)
+        IBinaryModule IModuleResolver.Resolve(IDependency dependency)
             => Resolve((D)dependency);
     }
 }

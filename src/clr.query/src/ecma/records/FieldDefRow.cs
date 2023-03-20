@@ -7,7 +7,7 @@ namespace Z0
     partial class EcmaTables
     {     
         [EcmaRow(TableIndex.Field), StructLayout(LayoutKind.Sequential, Pack =1)]
-        public struct FieldRow : IEcmaRow<FieldRow>
+        public struct FieldDefRow : IEcmaRow<FieldDefRow>
         {
             [Render(12)]
             public EcmaStringKey Name;

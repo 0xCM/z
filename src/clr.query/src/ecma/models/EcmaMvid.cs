@@ -49,5 +49,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public static implicit operator EcmaMvid(Guid src)
             => new EcmaMvid(src);
+        
+        public static EcmaMvid Empty => new EcmaMvid(Guid.Empty);
     }
 }

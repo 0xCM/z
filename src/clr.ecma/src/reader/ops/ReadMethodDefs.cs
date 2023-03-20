@@ -92,6 +92,9 @@ namespace Z0
             return ref dst;
         }
 
+        public MethodDefinition ReadMethodDef(MethodDefinitionHandle handle)
+            => MD.GetMethodDefinition(handle);
+
         public ReadOnlySeq<EcmaMethodInfo> ReadMethodDefInfo()
         {
             var rows = ReadMethodDefRows();
@@ -113,9 +116,6 @@ namespace Z0
             return dst;
         }
 
-        public AssemblyName AssemblyName()
-            => MD.GetAssemblyDefinition().GetAssemblyName();
-
         public uint ReadMethodDefs(List<EcmaMethodInfo> dst)
         {
             var rows = ReadMethodDefRows();
@@ -126,7 +126,7 @@ namespace Z0
                 ref readonly var src = ref skip(rows,i);
                 var def = new EcmaMethodInfo();
                 def.Token = src.Token;
-                def.Component = MD.GetAssemblyDefinition().GetAssemblyName().SimpleName();
+                def.Component = AssemblyName().SimpleName();
                 def.Attributes = src.Attributes;
                 def.ImplAttributes = src.ImplAttributes;
                 def.Rva = src.Rva;

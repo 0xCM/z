@@ -9,11 +9,11 @@ namespace Z0
 
     partial class EcmaReader
     {
-        public ReadOnlySeq<TypeDefInfo> ReadTypeDefs()
+        public ReadOnlySeq<EcmaTypeDef> ReadTypeDefs()
         {
             var src = TypeDefHandles();
             var count = src.Length;
-            var buffer = alloc<TypeDefInfo>(count);
+            var buffer = alloc<EcmaTypeDef>(count);
             for(var i=0; i<count; i++)
             {
                 ref readonly var handle = ref skip(src,i);
@@ -22,6 +22,7 @@ namespace Z0
                 dst.Token = handle;
                 dst.Name = String(def.Name);
                 dst.Attributes = def.Attributes;
+                dst.Assembly = AssemblyKey();
                 if(def.IsNested)
                 {
                     var declarer = MD.GetTypeDefinition(def.GetDeclaringType());

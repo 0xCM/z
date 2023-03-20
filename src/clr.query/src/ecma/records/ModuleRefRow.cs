@@ -7,13 +7,13 @@ namespace Z0
     partial class EcmaTables
     {
         [EcmaRow(TableIndex.ModuleRef), StructLayout(LayoutKind.Sequential, Pack =1)]
-        public struct ModuleRef
+        public struct ModuleRefRow
         {
             public EcmaToken Token;
 
             public EcmaStringKey Name;
 
-            public ModuleRef(EcmaToken token, EcmaStringKey name)
+            public ModuleRefRow(EcmaToken token, EcmaStringKey name)
             {
                 Token = token;
                 Name = name;

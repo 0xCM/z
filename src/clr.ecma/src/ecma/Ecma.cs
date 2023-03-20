@@ -6,16 +6,103 @@ namespace Z0
 {
     using static sys;
     using static Bytes;
+    using System.Linq;
+    using static EcmaTables;
 
     [ApiHost]
     public class Ecma : WfSvc<Ecma>
     {        
-        public static AssemblyIndex index()
-            => new();
+        /// <summary>
+        /// Loads an assembly + pdb
+        /// </summary>
+        /// <param name="image">The assembly path</param>
+        /// <param name="pdb">The pdb path</param>
+        [Op]
+        public static Assembly assembly(FilePath image, FilePath pdb)
+            => Assembly.Load(image.ReadBytes(), pdb.ReadBytes());
 
-        public static AssemblyIndex index(IEnumerable<AssemblyFile> src)
+        [Op]
+        public static EcmaModuleInfo describe(Assembly src)
         {
-            var index = new AssemblyIndex();
+            var dst = new EcmaModuleInfo();
+            var adapted = Clr.adapt(src);
+            dst.ImgPath = Ecma.location(src);
+            Ecma.pdbpath(adapted, out dst.PdbPath);
+            Ecma.xmlpath(adapted, out dst.XmlPath);
+            dst.MetadatSize = (ByteSize)adapted.RawMetadata.Length;
+            return dst;
+        }
+
+        public static IEnumerable<FilePath> valid(DbArchive src, FileKind kind)
+            => from file in src.Enumerate(true, $"*.{kind.Ext()}") where valid(file) select file;                        
+
+        [MethodImpl(Inline), Op]
+        public unsafe static MetadataReaderProvider provider(Assembly src)
+        {
+            var metadata = ClrAssembly.metadata(src);
+            return provider(metadata.BaseAddress.Pointer<byte>(), metadata.Size);
+        }
+
+        [MethodImpl(Inline), Op]
+        public unsafe static MetadataReaderProvider provider(byte* pSrc, ByteSize size)
+            => MetadataReaderProvider.FromMetadataImage(pSrc, size);
+
+        [MethodImpl(Inline), Op]
+        public static MetadataReaderProvider provider(Stream stream, MetadataStreamOptions options = MetadataStreamOptions.Default)
+            => MetadataReaderProvider.FromMetadataStream(stream, options);
+
+        [MethodImpl(Inline), Op]
+        public unsafe static MetadataReaderProvider pdbProvider(byte* pSrc, ByteSize size)
+            => MetadataReaderProvider.FromPortablePdbImage(pSrc, size);
+
+        [MethodImpl(Inline), Op]
+        public static MetadataReaderProvider pdbProvider(Stream src, MetadataStreamOptions options = MetadataStreamOptions.Default)
+            => MetadataReaderProvider.FromPortablePdbStream(src, options);
+
+        [Op]
+        public static bool valid(FilePath src)
+        {
+            try
+            {
+                using var stream = File.OpenRead(src.Name);
+                using var reader = new PEReader(stream);
+                return reader.HasMetadata;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+        }
+
+        [MethodImpl(Inline), Op]
+        public static FilePath location(ClrAssembly src)
+            => FS.path(src.Definition.Location);
+
+        [Op]
+        public static FileUri xmlpath(ClrAssembly src, out FileUri dst)
+        {
+            var candidate = FS.path(Path.ChangeExtension(src.Definition.Location, FS.Xml.Name));
+            dst = candidate.Exists ? candidate : FilePath.Empty;
+            return dst;
+        }
+
+        [Op]
+        public static FileUri pdbpath(ClrAssembly src, out FileUri dst)
+        {
+            var candidate = FS.path(Path.ChangeExtension(src.Definition.Location, FS.Pdb.Name));
+            dst = candidate.Exists ? candidate : FilePath.Empty;
+            return dst;
+        }
+
+        public static AssemblyIndex index(IWfChannel channel)
+            => channel.Channeled<AssemblyIndex>();
+
+        public static AssemblyImporter importer(IWfChannel channel)
+            => channel.Channeled<AssemblyImporter>();
+            
+        public static AssemblyIndex index(IWfChannel channel, IEnumerable<AssemblyFile> src)
+        {
+            var index = channel.Channeled<AssemblyIndex>();
             index.Include(src);
             index = index.Seal();
             return index;
@@ -24,7 +111,7 @@ namespace Z0
         public static AssemblyIndex index(IWfChannel channel, FolderPath root)
         {
             var counter = 0u;
-            var index = new AssemblyIndex();
+            var index = channel.Channeled<AssemblyIndex>();
             var files = Archives.modules(root).AssemblyFiles();
             iter(files, file => {
                 index.Include(file);

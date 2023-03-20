@@ -93,7 +93,7 @@ namespace Z0
                 dst.AppendLine(skip(src,i));
         }
 
-        public static void Indent<T>(this StreamWriter dst,  uint margin, T src)
+        public static void Indent<T>(this StreamWriter dst, uint margin, T src)
             => dst.Append(string.Format("{0}{1}", new string(Chars.Space, (int)margin), src));
 
         public static void IndentFormat<T>(this StreamWriter dst, uint margin, string format, T src)

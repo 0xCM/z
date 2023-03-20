@@ -26,21 +26,28 @@ namespace Z0
 
         public readonly FilePath Path;
 
-        public readonly ClrAssemblyName AssemblyName;
+        public readonly @string AssemblyName;
         
         public readonly AssemblyVersion Version;
 
         public AssemblyFile()
         {
             Path = FileUri.Empty;
-            AssemblyName = ClrAssemblyName.Empty;
+            AssemblyName = @string.Empty;
             Version = default;
+        }
+
+        public AssemblyFile(FilePath path, AssemblyKey key)
+        {
+            Path = path;
+            AssemblyName = key.Name;
+            Version = key.Version;
         }
 
         public AssemblyFile(FilePath path, AssemblyName name)
         {
             Path = path;
-            AssemblyName = name;
+            AssemblyName = name.SimpleName();
             Version = name.Version;
         }
 

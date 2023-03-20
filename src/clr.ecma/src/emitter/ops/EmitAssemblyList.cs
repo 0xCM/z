@@ -8,5 +8,9 @@ namespace Z0
     {
         public void EmitAssemblyList(IDbArchive src, FilePath dst)    
             => Channel.TableEmit(EcmaReader.assemblies(Channel, src).Records(), dst);
+        
+        public void EmitAssemblyList(ReadOnlySpan<AssemblyFile> src, FilePath dst)
+            => Channel.TableEmit(AssemblyFiles.records(src), dst);
+
     }
 }

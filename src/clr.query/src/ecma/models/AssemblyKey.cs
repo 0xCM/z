@@ -4,9 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
-    public readonly record struct AssemblyKey : IComparable<AssemblyKey>
+    public readonly record struct AssemblyKey : IDataType<AssemblyKey>
     {
         [Render(64)]
         public readonly @string Name;
@@ -28,13 +26,25 @@ namespace Z0
         public @string Identifier
         {
             [MethodImpl(Inline)]
-            get => $"{Name}.{Version}";
+            get => $"{Name}/{Version}";
         }
 
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => Name.Hash | sys.hash(@as<AssemblyVersion,ulong>(Version)) | nhash(Mvid);
+            get => Mvid.Hash;
+        }
+
+        public bool IsEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Name.IsEmpty || Mvid.IsEmpty;
+        }
+
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Name.IsNonEmpty && Mvid.IsNonEmpty;
         }
 
         public override int GetHashCode()
@@ -60,6 +70,8 @@ namespace Z0
         }
 
         public bool Equals(AssemblyKey key)
-            => Name == key.Name && Version == key.Version && Mvid == key.Mvid;
+            => Mvid == key.Mvid;
+
+        public static AssemblyKey Empty => new AssemblyKey(@string.Empty, AssemblyVersion.Empty, EcmaMvid.Empty);
     }
 }

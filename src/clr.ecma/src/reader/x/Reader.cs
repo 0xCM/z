@@ -11,5 +11,13 @@ namespace Z0
 
         public static ReadOnlySeq<uint> Terminators(this EcmaStringHeap src)
             => EcmaHeaps.terminators(src);
+
+        const TypeAttributes Forwarder = (TypeAttributes)0x00200000;
+
+        // reference: D:\env\dev\dotnet\vendor\runtime\src\libraries\System.Reflection.Metadata\src\System\Reflection\System.Reflection.cs
+        public static bool IsForwarder(this TypeAttributes flags)
+        {
+            return (flags & Forwarder) != 0;
+        }
     }
 }

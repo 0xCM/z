@@ -10,24 +10,24 @@ namespace Z0
     partial class XTend
     {
         [MethodImpl(Inline), Op]
-        public static FieldView View(this FieldRow row, IEcmaReader reader)
+        public static FieldView View(this FieldDefRow row, IEcmaReader reader)
             => new FieldView(reader,row);
 
         [MethodImpl(Inline), Op]
         public static ModuleView View(this ModuleRow row, IEcmaReader reader)
             => new ModuleView(reader,row);
-
     }
+    
     [ApiHost]
     public partial class EcmaViews
     {
-        public readonly struct FieldView : IEcmaView<FieldView,FieldRow>
+        public readonly struct FieldView : IEcmaView<FieldView,FieldDefRow>
         {
-            public readonly FieldRow Record;
+            public readonly FieldDefRow Record;
             
             public IEcmaReader Reader {get;}
 
-            public FieldView(IEcmaReader reader, FieldRow record)
+            public FieldView(IEcmaReader reader, FieldDefRow record)
             {
                 Reader = reader;
                 Record = record;

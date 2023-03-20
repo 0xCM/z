@@ -49,7 +49,7 @@ namespace Z0
             var token = ExecToken.Empty;
             try
             {
-                if(EcmaReader.valid(src))
+                if(Ecma.valid(src))
                 {
                     using var stream = File.OpenRead(src.Name);
                     using var pe = ImageMemory.pe(stream);

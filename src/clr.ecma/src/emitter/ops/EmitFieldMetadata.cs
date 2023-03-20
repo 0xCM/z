@@ -54,21 +54,21 @@ namespace Z0
             try
             {
                 var name = src.GetSimpleName();
-                var path = dst.Metadata(EcmaSections.FieldDefs).PrefixedTable<EcmaFieldDefInfo>(name);
+                var path = dst.Metadata(EcmaSections.FieldDefs).PrefixedTable<EcmaFieldDef>(name);
                 if(path.Exists)
                     Errors.ThrowWithOrigin(AppMsg.FileExists.Format(path));
 
-                var flow = EmittingTable<EcmaFieldDefInfo>(path);
+                var flow = EmittingTable<EcmaFieldDef>(path);
                 var reader = EcmaReader.create(src);
                 var handles = reader.FieldDefHandles();
                 var count = handles.Length;
                 using var writer = path.Writer();
-                var formatter = CsvTables.formatter<EcmaFieldDefInfo>();
+                var formatter = CsvTables.formatter<EcmaFieldDef>();
                 writer.WriteLine(formatter.FormatHeader());
                 for(var j=0; j<count; j++)
                 {
-                    var row = new FieldRow();
-                    var info = new EcmaFieldDefInfo();
+                    var row = new FieldDefRow();
+                    var info = new EcmaFieldDef();
                     ref readonly var handle = ref skip(handles,j);
                     reader.Row(handle, ref row);
                     info.Token = EcmaTokens.token(handle);

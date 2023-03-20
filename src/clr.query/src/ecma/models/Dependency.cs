@@ -4,12 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
+    public abstract record class Dependency : IDependency
+    {
 
-    partial class EcmaReader
-    {    
-        [MethodImpl(Inline), Op]
-        public TypeReference ReadTypeRef(TypeReferenceHandle src)
-            => MD.GetTypeReference(src);        
+    }
+
+    public abstract record class Dependency<D> : Dependency, IComparable<D>
+        where D : Dependency<D>
+    {
+        public abstract int CompareTo(D src);
     }
 }

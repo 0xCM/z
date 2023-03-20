@@ -36,7 +36,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public ref FieldRow Row(FieldDefinitionHandle handle, ref FieldRow dst)
+        public ref FieldDefRow Row(FieldDefinitionHandle handle, ref FieldDefRow dst)
         {
             var src = MD.GetFieldDefinition(handle);
             dst.Attributes = src.Attributes;
