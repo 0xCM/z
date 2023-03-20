@@ -122,7 +122,6 @@ namespace Z0
                 () => EmitSymLits(symlits),
                 () => EmitApiLiterals(src),
                 () => EmitParsers(src),
-                () => EmitApiDeps(),
                 () => EmitApiTables(src),
                 () => EmitApiTokens(src),
                 () => EmitCmdDefs(src),
@@ -224,23 +223,6 @@ namespace Z0
         public void EmitApiComments()
             => Comments.Collect(Target.Scoped(comments));
 
-        public void EmitApiDeps()
-        {
-            var src = ExecutingPart.Assembly;
-            var path = Target.Path($"{src.GetSimpleName()}", FileKind.DepsList);
-            if(path.Exists)
-                EmitApiDeps(src, path);
-        }
-
-        public void EmitApiDeps(Assembly src, FilePath dst)
-        {
-            var deps = JsonDeps.load(src);
-            var buffer = list<string>();
-            iteri(deps.RuntimeLibs(), (i,lib) => buffer.Add(string.Format("{0:D4}:{1}",i,lib)));
-            var emitter = text.emitter();
-            iter(buffer, line => emitter.AppendLine(line));
-            Channel.FileEmit(emitter.Emit(), buffer.Count, dst);
-        }
 
         public void EmitApiSymbols(params Assembly[] src)
             => Channel.TableEmit(Symbols.symlits(src), Target.Table<SymLiteralRow>(), UTF16);

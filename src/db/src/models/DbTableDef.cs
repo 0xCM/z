@@ -11,7 +11,7 @@ namespace Z0
 
         public readonly asci32 Name;
 
-        public readonly Index<DbCol> Cols;
+        public readonly ReadOnlySeq<DbCol> Cols;
 
         [MethodImpl(Inline)]
         public DbTableDef(uint seq, asci32 name, DbCol[] cols)
