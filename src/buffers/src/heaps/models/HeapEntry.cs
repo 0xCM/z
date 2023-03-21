@@ -5,38 +5,55 @@
 namespace Z0
 {
     [StructLayout(LayoutKind.Sequential,Pack=1)]
-    public readonly record struct HeapEntry : IComparable<HeapEntry>
+    public readonly record struct HeapEntry : IDataType<HeapEntry>, IDataString
     {
         [Render(8)]
-        public readonly uint Index;
+        public readonly Address32 Offset;
 
         [Render(8)]
-        public readonly Hex32 Offset;
-
-        [Render(8)]
-        public readonly uint Length;
-
-        readonly uint Pad;
+        public readonly uint Size;
 
         [MethodImpl(Inline)]
-        public HeapEntry(uint index, uint offset, uint length)
+        public HeapEntry(Address32 offset, uint length)
         {
-            Index = index;
             Offset = offset;
-            Length = length;
-            Pad = 0;
+            Size = length;
         }
 
-        const string IndexPattern = "D5";
+        public bool IsEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Size == 0;
+        }
+
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Size != 0;
+        }
+
+        public Hash32 Hash
+        {
+            [MethodImpl(Inline)]
+            get => Offset.Hash | (Hash32)Size;
+        }
+
+        public bool Equals(HeapEntry src)
+            => Offset == src.Offset && Size == src.Size;
+
+        public override int GetHashCode()
+            => Hash;
 
         [MethodImpl(Inline)]
         public int CompareTo(HeapEntry src)
-            => Index.CompareTo(src.Index);
+            => Offset.CompareTo(src.Offset);
 
         public string Format()
-            => $"[${Index.ToString(IndexPattern)}::${Offset}:${Length}]";
+            => $"[{Offset}:{Size}]";
 
         public override string ToString()
             => Format();
+        
+        public static HeapEntry Empty => default;
     }
 }

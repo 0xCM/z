@@ -12,13 +12,8 @@ namespace Z0
         const NumericKind Closure = UnsignedInts;
 
         [MethodImpl(Inline), Op]
-        public static MemoryHeap memory(MemoryAddress @base, Span<byte> data, Span<Address32> offsets)
-            => new MemoryHeap(@base, data,offsets);
-
-        [MethodImpl(Inline)]
-        public static Span<T> cells<T>(in MemoryHeap src)
-            where T : unmanaged
-                => recover<T>(src.Data);
+        public static MappedHeap mapped(MemoryFile src)
+            => new MappedHeap(src);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static SpanHeap<T> create<T>(Span<T> src, ReadOnlySpan<uint> offsets)
@@ -28,24 +23,11 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static ReadOnlyHeap<T> create<T>(ReadOnlySpan<T> src, uint[] offsets)
             where T : unmanaged
-            => new ReadOnlyHeap<T>(src, offsets);
-
-        [MethodImpl(Inline)]
-        public static Span<T> entry<T>(in MemoryHeap src, uint index)
-            where T : unmanaged
-        {
-            if(index > src.EntryCount - 1)
-                return Span<T>.Empty;
-            ref readonly var i0 = ref src.Offset(index);
-            if(index < src.EntryCount - 1)
-                return slice(cells<T>(src), (uint)i0, (uint)(src.Offset(index + 1) - i0));
-            else
-                return slice(cells<T>(src), (uint)i0);
-        }
+                => new ReadOnlyHeap<T>(src, offsets);
 
         [MethodImpl(Inline), Op]
-        public static HeapEntry entry(uint index, uint offset, uint length)
-            => new HeapEntry(index, offset, length);
+        public static HeapEntry entry(Address32 offset, uint size)
+            => new HeapEntry(offset, size);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static HeapEntry<K> entry<K>(K index, uint offset, uint length)
@@ -104,44 +86,44 @@ namespace Z0
                 return slice(src.Segments, i0);
         }
 
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static ReadOnlySpan<T> segment<T>(in ReadOnlyHeap<T> src, uint index)
-        {
-            if(index > src.LastSegment + 1)
-                return ReadOnlySpan<T>.Empty;
-            ref readonly var i0 = ref skip(src.Offsets,index);
-            if(index < src.LastSegment)
-                return slice(src.Segments, i0, skip(src.Offsets,index + 1) - i0);
-            else
-                return slice(src.Segments, i0);
-        }
+        // [MethodImpl(Inline), Op, Closures(Closure)]
+        // public static ReadOnlySpan<T> segment<T>(in ReadOnlyHeap<T> src, uint index)
+        // {
+        //     if(index > src.LastSegment + 1)
+        //         return ReadOnlySpan<T>.Empty;
+        //     ref readonly var i0 = ref skip(src.Offsets,index);
+        //     if(index < src.LastSegment)
+        //         return slice(src.Segments, i0, skip(src.Offsets,index + 1) - i0);
+        //     else
+        //         return slice(src.Segments, i0);
+        // }
 
-        [MethodImpl(Inline)]
-        internal static Span<T> segment<K,T>(Heap<K,T> src, K index)
-            where K : unmanaged
-        {
-            var _index = bw32(index);
-            var _next = @as<uint,K>(_index + 1);
-            if(_index > src.LastSegment + 1)
-                return Span<T>.Empty;
-            var start = src.Offset(index);
-            if(_index < src.LastSegment)
-                return slice(src.Cells, start, src.Offset(_next) - start);
-            else
-                return slice(src.Cells, start);
-        }
+        // [MethodImpl(Inline)]
+        // internal static Span<T> segment<K,T>(Heap<K,T> src, K index)
+        //     where K : unmanaged
+        // {
+        //     var _index = bw32(index);
+        //     var _next = @as<uint,K>(_index + 1);
+        //     if(_index > src.LastSegment + 1)
+        //         return Span<T>.Empty;
+        //     var start = src.Offset(index);
+        //     if(_index < src.LastSegment)
+        //         return slice(src.Cells, start, src.Offset(_next) - start);
+        //     else
+        //         return slice(src.Cells, start);
+        // }
 
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        internal static Span<T> segment<T>(Heap<T> src, uint index)
-        {
-            if(index > src.CellCount - 1)
-                return Span<T>.Empty;
-            ref readonly var i0 = ref src.Offset(index);
-            if(index < src.CellCount - 1)
-                return slice(src.Cells, i0, src.Offset(index + 1) - i0);
-            else
-                return slice(src.Cells, i0);
-        }
+        // [MethodImpl(Inline), Op, Closures(Closure)]
+        // internal static Span<T> segment<T>(Heap<T> src, uint index)
+        // {
+        //     if(index > src.CellCount - 1)
+        //         return Span<T>.Empty;
+        //     ref readonly var i0 = ref src.Offset(index);
+        //     if(index < src.CellCount - 1)
+        //         return slice(src.Cells, i0, src.Offset(index + 1) - i0);
+        //     else
+        //         return slice(src.Cells, i0);
+        // }
 
         [MethodImpl(Inline)]
         public static ReadOnlySpan<byte> serialize<K,O,L>(in HeapEntry<K,O,L> src)

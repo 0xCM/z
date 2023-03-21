@@ -6,24 +6,9 @@ namespace Z0
 {
     using static sys;
 
-    public interface IHeapReceiver<S>
-    {
-        void Receive(in S src, in MemoryHeap dst);
-    }
-
     partial class ApiCode
     {
-        public static void located(IDbArchive src, IHeapReceiver<FilePath> receiver)
-            => iter(src.Files(FileKind.LocatedHex), file => located(file, receiver), PllExec);   
-
-        public static void located(FilePath src, IHeapReceiver<FilePath> receiver)
-            => receiver.Receive(src, located(src));               
-
-        /// <summary>
-        /// Reconsitiutes a <see cref='MemoryHeap'/> from a representation serialized  as <see cref='FileKind.LocatedHex'/>
-        /// </summary>
-        /// <param name="src"></param>
-        public static MemoryHeap located(FilePath src)
+        public static void located(FilePath src)
         {
             var data = span<byte>(src.Size);
             var offsets = list<Address32>();
@@ -59,7 +44,8 @@ namespace Z0
                 }
 
             }
-            return new MemoryHeap(@base, data, offsets.ToArray());
+            throw new NotImplementedException();
+            //return new MemoryHeap(@base, src.Size, offsets.ToArray());
         }
 
         public static void located(FilePath src, Receiver<HexCsvRow> dst)

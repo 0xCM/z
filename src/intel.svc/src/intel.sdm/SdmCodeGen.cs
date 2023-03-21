@@ -10,6 +10,8 @@ namespace Z0.Asm
     {
         IntelSdm Sdm => Wf.IntelSdm();
 
+        StringTables StringTables => Channel.Channeled<StringTables>();
+        
         const string TargetNamespace = "Z0.Asm";
 
         const string AsmSigTableName = "AsmSigST";
@@ -65,7 +67,7 @@ namespace Z0.Asm
                     seek(sigs,i) = forms[keys[i-1]].Sig.Format();
             }
 
-            SymGen.EmitStringTable(TargetNamespace, AsmSigTableName, SdmFormDescriptors.FormKindName, sigs, false, dst);
+            StringTables.EmitStringTable(TargetNamespace, AsmSigTableName, SdmFormDescriptors.FormKindName, sigs, false, dst);
         }
     }
 }

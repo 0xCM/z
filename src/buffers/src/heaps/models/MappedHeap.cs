@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public unsafe class MappedHeap: IDisposable
+    public unsafe class MappedHeap : IDisposable
     {
         const uint DirectoryOffset = 4;
 
@@ -20,41 +20,41 @@ namespace Z0
             Base = src.BaseAddress;
         }
 
-        ReadOnlySpan<byte> Storage
+        ReadOnlySpan<byte> Bytes
         {
             [MethodImpl(Inline)]
             get => sys.cover(Base.Pointer<byte>(), Source.FileSize);
         }
         
-        ReadOnlySpan<byte> HeapData
+        ReadOnlySpan<byte> Storage
         {
             [MethodImpl(Inline)]
-            get => slice(Storage, DirectoryOffset + (EntryCount*size<HeapEntry>()));
+            get => slice(Bytes, DirectoryOffset + (EntryCount*size<HeapEntry>()));
         }
 
         public uint EntryCount
         {
             [MethodImpl(Inline)]
-            get => first(uint32(Storage));
+            get => first(uint32(Bytes));
         }
 
         public ReadOnlySpan<HeapEntry> Directory
         {
             [MethodImpl(Inline)]
-            get => slice(recover<HeapEntry>(slice(Storage,DirectoryOffset)),EntryCount);
+            get => slice(recover<HeapEntry>(slice(Bytes,DirectoryOffset)),EntryCount);
         }
 
         [MethodImpl(Inline)]
         public ref readonly HeapEntry Entry(uint index)
-            => ref skip(Directory,index);
+            => ref skip(Directory, index);
 
         [MethodImpl(Inline)]
-        public ReadOnlySpan<byte> EntryData(HeapEntry entry)
-            => slice(HeapData, entry.Offset, entry.Length);
+        public ReadOnlySpan<byte> Data(HeapEntry entry)
+            => slice(Storage, (uint)entry.Offset, entry.Size);
 
         [MethodImpl(Inline)]
-        public ReadOnlySpan<byte> EntryData(uint index)
-            => EntryData(Entry(index));
+        public ReadOnlySpan<byte> Data(uint index)
+            => Data(Entry(index));
 
 
         public void Dispose()
