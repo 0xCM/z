@@ -3,5 +3,6 @@
 
   <ItemGroup>
     <ProjectReference Include="$(ZLib)" />
+    <ProjectReference Include="$(Numbers)" />
   </ItemGroup>
 </Project>
