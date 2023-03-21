@@ -6,8 +6,11 @@ namespace Z0
 {
     using static sys;
 
-    partial class StringTables
+    [ApiHost]
+    public sealed partial class StringTables
     {
+        const NumericKind Closure = UnsignedInts;
+
         public static StringTable create<K>(SymbolStrings<K> src)
             where K : unmanaged
                 => create(spec(src), src.Entries);
@@ -71,6 +74,74 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
+        public static StringTableDef spec<K>(SymbolStrings<K> spec)
+            where K : unmanaged
+            => new StringTableDef(
+                index: spec.IndexName,
+                table: spec.TableName,
+                indexNs: spec.IndexNs,
+                tableNs: spec.TableNs,
+                indexType: spec.IndexType,
+                emitIndex: spec.EmitIndex,
+                parametric: spec.Parametric
+                );
+
+        [MethodImpl(Inline), Op]
+        public static StringTableDef spec(Identifier tableNs, Identifier tableName, Identifier indexNs, Identifier indexName, ClrIntegerType indexType, bool emitIndex)
+            => new StringTableDef(tableNs, tableName, indexName, indexNs, indexType, true, emitIndex);
+
+        public static Index<string> strings<K>(ItemList<K,string> src)
+            where K : unmanaged
+        {
+            var count = src.Length;
+            var dst = sys.alloc<string>(count);
+            for(var i=0; i<count; i++)
+                seek(dst, i) = src[i].Value;
+            return dst;
+        }
+        
+        [MethodImpl(Inline), Op]
+        public static ReadOnlySpan<char> entry(StringTable src, int i)
+        {
+            var i0 = src.Offsets[i];
+            var count = src.EntryCount;
+            if(i < count-1)
+            {
+                var i1 = src.Offsets[i+1];
+                var length = i1 - i0;
+                return slice(src.Content.View, i0, length);
+            }
+            else
+                return slice(src.Content.View, i0);
+        }
+
+         [Op]
+        public static Index<StringTableRow> rows<K>(ItemList<K,string> src)
+            where K : unmanaged
+        {
+            var count = src.Count;
+            var dst = sys.alloc<StringTableRow>(count);
+            rows(src,dst);
+            return dst;
+        }
+
+        [Op]
+        public static uint rows<K>(ItemList<K,string> src, Span<StringTableRow> dst)
+            where K : unmanaged
+        {
+            var entries = src.View;
+            var count = (uint)min(entries.Length,dst.Length);
+            for(var j=0u; j<count; j++)
+            {
+                ref var row = ref seek(dst,j);
+                row.Index = j;
+                row.Content = src[j].Value;
+                row.Table = src.Name;
+            }
+            return count;
+        }
+
+         [MethodImpl(Inline), Op]
         static uint copy(ReadOnlySpan<char> src, ref uint i, Span<char> dst)
         {
             var i0 = i;
@@ -78,6 +149,6 @@ namespace Z0
             for(var j=0; j<count; j++)
                 seek(dst,i++) = skip(src,j);
             return i - i0;
-        }
+        }      
     }
 }

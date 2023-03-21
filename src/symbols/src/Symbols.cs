@@ -67,31 +67,31 @@ namespace Z0
         public static SymStore<T> store<T>(uint capacity)
             => new SymStore<T>((uint)inc(ref SegCount), sys.alloc<T>(capacity));
 
-        [MethodImpl(Inline), Op]
-        static uint copy(ReadOnlySpan<char> src, ref uint i, Span<char> dst)
-        {
-            var i0 = i;
-            var count = src.Length;
-            for(var j=0; j<count; j++)
-                seek(dst,i++) = skip(src,j);
-            return i - i0;
-        }
+        // [MethodImpl(Inline), Op]
+        // static uint copy(ReadOnlySpan<char> src, ref uint i, Span<char> dst)
+        // {
+        //     var i0 = i;
+        //     var count = src.Length;
+        //     for(var j=0; j<count; j++)
+        //         seek(dst,i++) = skip(src,j);
+        //     return i - i0;
+        // }
 
-        static string Table<K>(string name = null)
-            where K : unmanaged
-                => name ?? (typeof(K).Name + "ST");
+        // static string Table<K>(string name = null)
+        //     where K : unmanaged
+        //         => name ?? (typeof(K).Name + "ST");
 
-        static string Index<K>(string name = null)
-            where K : unmanaged
-                => name ?? typeof(K).Name;
+        // static string Index<K>(string name = null)
+        //     where K : unmanaged
+        //         => name ?? typeof(K).Name;
 
-        static string IndexNs<K>(string name = null)
-            where K : unmanaged
-                => name ?? "Z0";
+        // static string IndexNs<K>(string name = null)
+        //     where K : unmanaged
+        //         => name ?? "Z0";
 
-        static string TableNs<K>(string name = null)
-            where K : unmanaged
-                => name ?? "Z0.Strings";
+        // static string TableNs<K>(string name = null)
+        //     where K : unmanaged
+        //         => name ?? "Z0.Strings";
 
         [Op,Closures(Closure)]
         public static ItemList<K,string> expressions<K>(Symbols<K> src, string name = null)
