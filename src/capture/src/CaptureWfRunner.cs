@@ -47,8 +47,8 @@ namespace Z0
 
             if(Settings.EmitMetadata)
             {
-                ApiMd.Emitter(Target).Emit(src);
-                CliEmitter.Emit(src.Assemblies, Settings.CliEmissions, Target);
+                //ApiMd.Emitter(Target).Emit(src);
+                //CliEmitter.Emit(src.Assemblies, Settings.CliEmissions, Target);
             }
 
             if(Settings.EmitRegions)

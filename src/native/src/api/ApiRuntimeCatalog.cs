@@ -51,7 +51,7 @@ namespace Z0
             get => _ComponentNames;
         }
 
-        public Index<Assembly> Assemblies
+        public Assembly[] Assemblies
         {
             [MethodImpl(Inline)]
             get => _PartComponents;
@@ -74,7 +74,7 @@ namespace Z0
             return false;
         }
 
-        public Index<IApiHost> PartHosts(params PartName[] parts)
+        public IApiHost[] PartHosts(params PartName[] parts)
         {
             if(parts.Length == 0)
                 return _ApiHosts;

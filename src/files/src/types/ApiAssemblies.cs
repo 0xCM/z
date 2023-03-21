@@ -29,7 +29,7 @@ namespace Z0
         {
             var root = FS.path(controller().Location).FolderPath;                    
             var modules = Archives.modules(root,false).Members().Where(x => FS.managed(x.Path) && !x.Path.FileName.Contains("System.Private.CoreLib"));
-            return modules.Where(m => m.FileName. StartsWith("z0.")).Map(x => Assembly.LoadFile(x.Path.Format()));         
+            return modules.Where(m => m.FileName.StartsWith("z0.")).Map(x => Assembly.LoadFile(x.Path.Format())).Where(x => x.PartName().IsNonEmpty);
         }
     }
 }

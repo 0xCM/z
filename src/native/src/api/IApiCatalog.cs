@@ -8,12 +8,12 @@ namespace Z0
     public interface IApiCatalog
     {
         ApiPartCatalogs PartCatalogs {get;}
-        
-        Index<IApiHost> PartHosts(params PartName[] parts);
+
+        Assembly[] Assemblies {get;}
+
+        IApiHost[] PartHosts(params PartName[] parts);
 
         IPart[] Parts {get;}
-
-        Index<Assembly> Assemblies {get;}
 
         bool Assembly(PartName part, out Assembly dst);
     }

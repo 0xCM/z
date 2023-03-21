@@ -26,7 +26,6 @@ namespace Z0
             var parts = hashset<PartName>();
             if(args.Count != 0)
             {
-                var src = FS.path(ExecutingPart.Assembly.Location).FolderPath;
                 iter(args, arg => {
                     if(PartNames.parse(arg.Value, out var name))
                         parts.Add(name);
@@ -35,12 +34,11 @@ namespace Z0
                 });
 
                 settings.Parts = parts.ToSeq();
-                catalog = ApiCatalog.catalog(ApiCatalog.colocated(ExecutingPart.Assembly));
+                catalog = ApiCatalog.catalog();
             }
             else
             {
-                var search = ApiCatalog.colocated(ExecutingPart.Assembly);
-                foreach(var a in search)
+                foreach(var a in ApiCatalog.components())
                 {
                     if(ApiCatalog.part(a, out IPart part))
                     {

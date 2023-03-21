@@ -362,11 +362,36 @@ namespace Z0
             });            
         }
 
+        [CmdOp("api/assemblies")]
+        void ApiPartCompare()
+        {
+            var left = ApiCatalog.catalog().Assemblies.Map(x => (x.GetSimpleName(), x)).ToDictionary();
+            var right = ApiAssemblies.Parts.Map(x => (x.GetSimpleName(), x)).ToDictionary();
+            var lKeys = left.Keys.ToHashSet();
+            var rKeys = right.Keys.ToHashSet();
+            var common = hashset<string>();
+            common.Include(lKeys);
+            common.IntersectWith(rKeys);
+
+            var union = hashset<string>();
+            union.Include(lKeys);
+            union.Include(rKeys);
+
+            var missing = union.Where(x => !common.Contains(x));
+            iter(missing, m => {
+                Channel.Warn($"Missing: {m}");
+            });
+
+            //var count = Require.equal(left.Count, right.Count);
+
+
+        }
 
         [CmdOp("files/types")]
         void FileTypes()
         {
-            var types = FileIndex.types(ApiAssemblies.Parts);
+            var src = ApiCatalog.catalog().Assemblies;
+            var types = FileIndex.types(src);
             iter(types, t => {
                 Channel.Row(t.Format());
             });
