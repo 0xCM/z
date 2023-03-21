@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using System.Linq;
+
     using static sys;
     using static Bytes;
-    using System.Linq;
-    using static EcmaTables;
 
     [ApiHost]
     public class Ecma : WfSvc<Ecma>

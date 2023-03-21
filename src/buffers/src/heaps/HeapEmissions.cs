@@ -10,7 +10,7 @@ namespace Z0
     public sealed class HeapEmissions
     {
         public static void emit(IWfChannel channel, SymHeap src, FilePath dst)
-            => CsvTables.emit(channel, Symbols.records(src).View, dst, TextEncodingKind.Unicode);
+            => CsvTables.emit(channel, SymHeaps.records(src).View, dst, TextEncodingKind.Unicode);
 
         public static void emit(IWfChannel channel, SymHeap src, IDbArchive dst)
             => emit(channel, src, dst.Table<SymHeapRecord>());

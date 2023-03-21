@@ -31,7 +31,6 @@ namespace Z0
             Emit(catalog.Assemblies);
         }
 
-
         public void EmitTypeLists(IEnumerable<AssemblyFile> src)
         {
             iter(src, file => {
@@ -129,7 +128,7 @@ namespace Z0
                 () => EmitTypeLists(src),
                 () => EmitApiSymbols(src),
                 () => EmitPartList(src),
-                () => EmitSymHeap(Symbols.heap(symlits))
+                () => EmitSymHeap(SymHeaps.heap(symlits))
             );
         }
 

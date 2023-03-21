@@ -158,7 +158,7 @@ namespace Z0
             public AssemblyKey Key 
             {
                 [MethodImpl(Inline)]
-                get => new AssemblyKey(Name,Version,Mvid);
+                get => new AssemblyKey(Name, Version, TargetFramework, Mvid);
             }
 
             public Hash32 Hash
@@ -176,20 +176,7 @@ namespace Z0
                 => Hash;
 
             public int CompareTo(Entry src)
-            {
-                var result = Name.CompareTo(src.Name);
-                if(result == 0)
-                {
-                    result = Version.CompareTo(src.Version);
-                    if(result == 0)
-                    {
-                        result = TargetFramework.CompareTo(src.TargetFramework); 
-                        if(result == 0)
-                            result = Mvid.CompareTo(src.Mvid);
-                    }
-                }
-                return result;
-            }
+                => Key.CompareTo(src.Key);
         }
     }
 }

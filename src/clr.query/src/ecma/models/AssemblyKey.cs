@@ -12,13 +12,17 @@ namespace Z0
         [Render(12)]
         public readonly AssemblyVersion Version;
 
+        [Render(16)]
+        public readonly @string TargetFramework;
+        
         [Render(1)]
         public readonly EcmaMvid Mvid;
 
         [MethodImpl(Inline)]
-        public AssemblyKey(@string name, AssemblyVersion version, EcmaMvid mvid)
+        public AssemblyKey(@string name, AssemblyVersion version, @string framework, EcmaMvid mvid)
         {
             Name = name;
+            TargetFramework = framework;
             Version = version;
             Mvid = mvid;
         }
@@ -64,14 +68,18 @@ namespace Z0
             {
                 result = Version.CompareTo(src.Version);
                 if(result == 0)
-                    result = Mvid.CompareTo(src.Mvid);
+                {
+                    result = TargetFramework.CompareTo(src.TargetFramework); 
+                    if(result == 0)
+                        result = Mvid.CompareTo(src.Mvid);
+                }
             }
             return result;
         }
-
+ 
         public bool Equals(AssemblyKey key)
             => Mvid == key.Mvid;
 
-        public static AssemblyKey Empty => new AssemblyKey(@string.Empty, AssemblyVersion.Empty, EcmaMvid.Empty);
+        public static AssemblyKey Empty => new AssemblyKey(@string.Empty, AssemblyVersion.Empty, @string.Empty, EcmaMvid.Empty);
     }
 }

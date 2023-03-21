@@ -7,7 +7,7 @@ namespace Z0
 {
     class ArchiveCmd : WfAppCmd<ArchiveCmd>
     {
-        FileCatalogs FileArchives => Channel.Channeled<FileCatalogs>();
+        FileIndex FileIndex => Channel.Channeled<FileIndex>();
 
         public static void copy(IWfChannel channel, CmdArgs args)
             => copy(channel, FS.dir(args[0]), FS.dir(args[1]));
@@ -37,7 +37,7 @@ namespace Z0
 
         [CmdOp("archives/injest")]
         void InjestFiles(CmdArgs args)
-            => FileArchives.Index(Archives.archive(FS.dir(args[0])), AppDb.Catalogs().Scoped("files"));
+            => FileIndex.Index(Archives.archive(FS.dir(args[0])), AppDb.Catalogs().Scoped("files"));
 
         [CmdOp("nuget/stage")]
         void DevPack(CmdArgs args)

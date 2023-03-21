@@ -12,7 +12,7 @@ namespace Z0
 
     class CatalogFilesJob : AnalyticsJob<CatalogFilesJob>
     {
-        FileCatalogs FileArchives => Channel.Channeled<FileCatalogs>();
+        FileIndex FileArchives => Channel.Channeled<FileIndex>();
 
         IDbArchive Source;
         

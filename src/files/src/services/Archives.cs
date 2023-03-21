@@ -95,7 +95,7 @@ namespace Z0
         public static void catalog(IWfChannel channel, CmdArgs args)
         {
             bind(args, out CatalogFiles cmd);
-            channel.Channeled<FileCatalogs>().Run(cmd);
+            channel.Channeled<FileIndex>().Run(cmd);
         }
 
         public static Task<ExecToken> zip(IWfChannel channel, CmdArgs args)

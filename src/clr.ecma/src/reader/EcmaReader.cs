@@ -11,22 +11,6 @@ namespace Z0
     [ApiHost]
     public unsafe partial class EcmaReader : IEcmaReader
     {
-        [MethodImpl(Inline), Op]
-        public string String(EcmaStringKey index)
-            => MD.GetString(index);
-
-        [MethodImpl(Inline), Op]
-        public Guid Guid(EcmaGuidKey index)
-            => MD.GetGuid(index);
-
-        [MethodImpl(Inline), Op]
-        public ReadOnlySpan<byte> Blob(EcmaBlobKey index)
-            => MD.GetBlobBytes(index);
-
-        [MethodImpl(Inline), Op]
-        public byte[] BlobArray(EcmaBlobKey index)
-            => MD.GetBlobBytes(index);
-
         public static unsafe EcmaReader create(MemoryAddress @base, ByteSize size)
             => new (new PEReader(@base.Pointer<byte>(), size).GetMetadata());
 
@@ -98,7 +82,6 @@ namespace Z0
         public ByteSize CalcTableSize(TableIndex table)
             => MD.GetTableRowCount(table)*MD.GetTableRowSize(table);
 
-
         [Op]
         public static uint describe(ReadOnlySpan<Assembly> src, Span<EcmaModuleInfo> dst)
         {
@@ -159,6 +142,22 @@ namespace Z0
 
         AssemblyName _AssemblyName;
 
+        [MethodImpl(Inline), Op]
+        public string String(EcmaStringKey index)
+            => MD.GetString(index);
+
+        [MethodImpl(Inline), Op]
+        public Guid Guid(EcmaGuidKey index)
+            => MD.GetGuid(index);
+
+        [MethodImpl(Inline), Op]
+        public ReadOnlySpan<byte> Blob(EcmaBlobKey index)
+            => MD.GetBlobBytes(index);
+
+        [MethodImpl(Inline), Op]
+        public byte[] BlobArray(EcmaBlobKey index)
+            => MD.GetBlobBytes(index);
+
         [MethodImpl(Inline)]
         public MetadataMemory Memory()
             => PeFiles.metadata(Segment);
@@ -176,7 +175,7 @@ namespace Z0
         public AssemblyKey AssemblyKey()
         {
             if(_AssemblyKey.IsEmpty)
-                _AssemblyKey = new AssemblyKey(AssemblyName().SimpleName(), AssemblyName().Version, Mvid());
+                _AssemblyKey = new AssemblyKey(AssemblyName().SimpleName(), AssemblyName().Version, ReadTargetFramework(), Mvid());
             return _AssemblyKey;            
         }
 

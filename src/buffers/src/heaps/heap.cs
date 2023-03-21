@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
     
-    partial struct Symbols
+    public partial class SymHeaps
     {        
         public static SymHeap heap<E>()
             where E : unmanaged, Enum

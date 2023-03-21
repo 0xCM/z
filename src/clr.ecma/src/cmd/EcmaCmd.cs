@@ -180,7 +180,7 @@ namespace Z0
 
         }
         
-        [CmdOp("ecma/emit/streams")]
+        [CmdOp("ecma/streams")]
         void EmitEcmaStreams(CmdArgs args)
         {
             var src = Ecma.index(Channel, FS.dir(args[0]));
@@ -375,56 +375,12 @@ namespace Z0
             index.Report(dst);
         }   
 
-        [Op]
-        public static ExecToken emit(IWfChannel channel, MemorySeg src, FilePath dst, byte bpl = HexCsvRow.BPL)
-        {
-            var reader = MemoryReader.create<byte>(src.Range);
-            var flow = channel.EmittingTable<HexCsvRow>(dst);
-            var @base = src.BaseAddress;
-            var offset = MemoryAddress.Zero;
-            using var writer = dst.Writer();
-            var counter = 0u;
-            var lines = 0u;
-            while(reader.Next(out var b))
-            {
-                writer.Append(b.ToString("x2"));
-                
-                counter++;
-                var newline = counter % bpl == 0;
-                if(reader.HasNext && !newline)
-                    writer.Append(" ");
-
-                if(newline)
-                {
-                    writer.AppendLine();
-                    lines++;
-                }
-            }
-            return channel.EmittedTable(flow, lines);
-        }
-
         [CmdOp("ecma/heaps")]
         void EmitEcmaHeaps(CmdArgs args)
         {
-            var src = Archives.modules(FS.dir(args[0])).AssemblyFiles();
-            var dst = bag<EcmaHeapInfo>();
-            var db = AppSettings.EnvDb().Scoped("clr");
-            iter(src, a => {
-                using var file = Ecma.file(a.Path);
-                var reader = Ecma.reader(file);
-                var heap = EcmaHeaps.strings(reader.MetadataReader, EcmaStringKind.System, reader.BaseAddress);
-                var info = new EcmaHeapInfo();
-                info.HeapKind = EcmaHeapKind.SystemString;
-                info.BaseAddress = heap.BaseAddress;
-                info.Size = heap.Size;
-                info.Source = a.Path;
-                dst.Add(info);
-                var seg = new MemorySeg(heap.BaseAddress, heap.Size);
-                var path = db.Path(a.Path.FileName.Format() + "SystemStrings", FileKind.Hex);
-                emit(Channel, seg, path);        
-                
-            });
-            Channel.TableEmit(dst.Array(), AppSettings.EnvDb().Scoped("clr").Path("ecma.heaps", FileKind.Csv));
+            var src = FS.dir(args[0]).DbArchive();
+            var dst = EnvDb.Scoped("ecma");
+            EcmaHeaps.emit(Channel,src,dst);
         }
         
         [CmdOp("ecma/pinvokes")]
