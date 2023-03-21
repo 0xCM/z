@@ -80,7 +80,7 @@ namespace Z0
         ClrEventListener OpenEventLog(Timestamp ts)
             => RuntimeEvents.observe(AppDb.AppData().Path($"clr.events.{ts}", FileKind.Log));
 
-        void EmitAsm(ICompositeDispenser symbols, PartId part, ReadOnlySeq<ApiEncoded> src, IApiPack dst)
+        void EmitAsm(ICompositeDispenser symbols, PartName part, ReadOnlySeq<ApiEncoded> src, IApiPack dst)
         {
             var buffer = alloc<AsmRoutine>(src.Count);
             var emitter = text.emitter();

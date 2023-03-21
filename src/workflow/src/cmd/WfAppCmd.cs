@@ -328,7 +328,49 @@ namespace Z0
             iter(files, file => Channel.Row(file));
         }
 
-        
+        [CmdOp("api/parts")]
+        void ApiPartList()
+        {
+            var root = FS.path(controller().Location).FolderPath;
+            var src  = Archives.parts(root);
+            iter(src, OnPart);
+        }
+
+        void OnPart(Assembly src)
+        {
+            Channel.Row(src.Path());
+            var types = src.Types().Tagged(nameof(FileTypeAttribute));
+            iter(types, t => Channel.Row($"  {t.Name}"));
+        }
+
+        [CmdOp("api/catalog")]
+        void EmitApiCatalog()
+        {
+            var src = ApiCatalog.catalog();
+            var parts = src.Parts;
+            var hosts = src.PartHosts();
+            var catalogs = src.PartCatalogs;
+            var assemblies = src.Assemblies;
+            var counter = 0u; 
+            iter(parts, part => {
+                Channel.Row(string.Format("{0:D6} | {1,-24} | {2,-16} {3}", counter++, part.Owner.GetSimpleName(), part.Owner.AssemblyVersion(), part.Owner.Path()));
+            });
+
+            counter=0u;
+            iter(hosts, host => {
+                Channel.Row(string.Format("{0:D6} | {1,-16} | {2}", counter++, host.Assembly.GetSimpleName(), host.HostUri));
+            });            
+        }
+
+
+        [CmdOp("files/types")]
+        void FileTypes()
+        {
+            var types = FileIndex.types(ApiAssemblies.Parts);
+            iter(types, t => {
+                Channel.Row(t.Format());
+            });
+        }
         [CmdOp("files/index")]
         void FileQuery(CmdArgs args)
         {
@@ -353,7 +395,6 @@ namespace Z0
 
             Channel.Status($"Indexed {unique.Count} unique files with {duplicates.Length} duplicates");
         }
-
 
         [CmdOp("api/servers")]
         void ApiCommandServices()

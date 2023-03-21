@@ -6,14 +6,14 @@ namespace Z0
 {
     public class ApiPartFiles
     {
-        public static ApiPartFiles create(IApiPack src, PartId part)
+        public static ApiPartFiles create(IApiPack src, PartName part)
             => new ApiPartFiles(part, src);
 
-        public readonly PartId Part;
+        public readonly PartName Part;
 
         readonly IApiPack Location;
 
-        public ApiPartFiles(PartId part, IApiPack dir)
+        public ApiPartFiles(PartName part, IApiPack dir)
         {
             Part = part;
             Location = dir;

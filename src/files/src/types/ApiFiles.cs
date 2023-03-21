@@ -17,7 +17,7 @@ namespace Z0
             => FS.folder(host.HostName);
 
         [MethodImpl(Inline), Op]
-        public static FolderName folder(PartId part)
+        public static FolderName folder(PartName part)
             => FS.folder(part.Format());
 
         [Op]

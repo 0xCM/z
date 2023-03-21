@@ -18,9 +18,9 @@ namespace Z0
         {
             Config = config;
             var pulse =  SourcedEvents.emitter(context,
-                AgentIdentityPool.NextAgentId(PartId),
+                AgentIdentityPool.NextAgentId(Part),
                 new PulseEmitterConfig(new TimeSpan(0,0,1)));
-            Worker = Agents.process(context, PartId, config.CoreNumber, new IAgent[]{pulse});
+            Worker = Agents.process(context, Part, config.CoreNumber, new IAgent[]{pulse});
         }
 
         protected override async void OnStart()

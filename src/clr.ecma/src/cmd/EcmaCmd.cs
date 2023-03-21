@@ -28,33 +28,6 @@ namespace Z0
         void EcmaEmit()
             => EcmaEmitter.Emit(ApiAssemblies.Parts, EcmaEmissionSettings.Default, AppDb.ApiTargets("ecma"));
 
-        [CmdOp("api/parts")]
-        void ApiPartList()
-        {
-            var root = FS.path(controller().Location).FolderPath;
-            var src  = Archives.parts(root);
-            iter(src, a => Write(a.Path()));
-        }
-
-        [CmdOp("api/catalog")]
-        void EmitApiCatalog()
-        {
-            var src = ApiCatalog.catalog();
-            var parts = src.Parts;
-            var hosts = src.PartHosts();
-            var catalogs = src.PartCatalogs;
-            var assemblies = src.Assemblies;
-            var counter = 0u; 
-            iter(parts, part => {
-                Channel.Row(string.Format("{0:D6} | {1,-24} | {2,-16} {3}", counter++, part.Owner.GetSimpleName(), part.Owner.AssemblyVersion(), part.Owner.Path()));
-            });
-
-            counter=0u;
-            iter(hosts, host => {
-                Channel.Row(string.Format("{0:D6} | {1,-16} | {2}", counter++, host.Assembly.GetSimpleName(), host.HostUri));
-            });            
-        }
-
         [CmdOp("ecma/emit/parts")]
         void EmitPartEcma()
             => EcmaEmitter.EmitCatalogs(ApiAssemblies.Parts, AppDb.ApiTargets());

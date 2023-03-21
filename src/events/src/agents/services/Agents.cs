@@ -58,7 +58,7 @@ namespace Z0
                     corenum = 0;
             }
 
-            var eventSink = SourcedEvents.sink(context, (complex.PartId, complex.HostId));
+            var eventSink = SourcedEvents.sink(context, (complex.Part, complex.HostId));
             complex.Configure(configs, eventSink);
             await complex.Start();
             AgentComplex.Complex = complex;

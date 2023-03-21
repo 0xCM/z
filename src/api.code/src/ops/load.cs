@@ -30,7 +30,7 @@ namespace Z0
         }
 
         [Op]
-        public static ApiMemberCode load(IWfChannel channel, IApiPack src, ICompositeDispenser symbols, PartId part)
+        public static ApiMemberCode load(IWfChannel channel, IApiPack src, ICompositeDispenser symbols, PartName part)
         {
             load(channel, src, part, out var seq, out var code);
             return members(symbols, seq, code);

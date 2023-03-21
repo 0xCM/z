@@ -4,7 +4,17 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct FS
+    public record class CmdFile : TypedFile<CmdFile,CmdFileType>
     {
+        public CmdFile()
+        {
+
+        }
+
+        public CmdFile(FilePath src)
+            : base(src)
+        {
+
+        }        
     }
 }

@@ -116,7 +116,7 @@ namespace Z0
             var tmp = sys.bag<CollectedHost>();
             ApiCode.gather(src, dispenser, tmp, log, Settings.PllExec);
             var code = tmp.ToArray();
-            ApiCodeSvc.Emit(src.PartName, code, Target, Settings.PllExec);
+            ApiCodeSvc.Emit(code, Target, Settings.PllExec);
             EmitAsm(dispenser, code);
             iter(tmp, x =>  {                
                 Cli.EmitMsil(x,Target.Scoped("extracts"));

@@ -29,7 +29,7 @@ namespace Z0.Asm
             get => (byte)Instruction.InstructionSize;
         }
 
-        public PartId Part
+        public PartName Part
         {
             [MethodImpl(Inline)]
             get => Encoded.OpUri.Part;

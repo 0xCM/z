@@ -28,7 +28,7 @@ namespace Z0
         DbArchive Extracts()
             => Targets("extracts");
 
-        FilePath ExtractPath(PartId part, FileKind kind)
+        FilePath ExtractPath(PartName part, FileKind kind)
             => Extracts().Path(FS.file(part.Format(), kind));
 
         FilePath ExtractPath(ApiHostUri host, FileKind kind)
@@ -37,31 +37,31 @@ namespace Z0
         IEnumerable<FilePath> HexExtracts()
             => Extracts().Files(FileKind.HexDat);
 
-        IEnumerable<FilePath> HexExtracts(PartId part)
-            => HexExtracts().Where(path => path.FileName.StartsWith($"{part.PartName().Format()}."));
+        IEnumerable<FilePath> HexExtracts(PartName part)
+            => HexExtracts().Where(path => path.FileName.StartsWith($"{part.Format()}."));
 
         IEnumerable<FilePath> AsmExtracts()
             => Extracts().Files(FileKind.Asm);
 
-        IEnumerable<FilePath> AsmExtracts(PartId part)
-            => AsmExtracts().Where(path => path.FileName.StartsWith($"{part.PartName().Format()}."));
+        IEnumerable<FilePath> AsmExtracts(PartName part)
+            => AsmExtracts().Where(path => path.FileName.StartsWith($"{part.Format()}."));
 
         IEnumerable<FilePath> MsilExtracts()
             => Extracts().Files(FileKind.Il);
 
-        IEnumerable<FilePath> MsilExtracts(PartId part)
-            => MsilExtracts().Where(path => path.FileName.StartsWith($"{part.PartName().Format()}."));
+        IEnumerable<FilePath> MsilExtracts(PartName part)
+            => MsilExtracts().Where(path => path.FileName.StartsWith($"{part.Format()}."));
 
         IApiPackArchive Archive()
             => ApiPackArchive.create(Root);
 
-        FilePath HexExtractPath(PartId src)
+        FilePath HexExtractPath(PartName src)
             => ExtractPath(src, FileKind.HexDat);
 
-        FilePath CsvExtractPath(PartId part)
+        FilePath CsvExtractPath(PartName part)
             => ExtractPath(part, FileKind.Csv);
 
-        FilePath AsmExtractPath(PartId part)
+        FilePath AsmExtractPath(PartName part)
             => ExtractPath(part, FileKind.Asm);
 
         FilePath HexExtractPath(ApiHostUri src)

@@ -17,7 +17,7 @@ namespace Z0
             Kind = format;
         }
 
-        public PartId Part
+        public PartName Part
         {
             [MethodImpl(Inline)]
             get => Member.Uri.Part;

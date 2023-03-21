@@ -282,12 +282,6 @@ namespace Z0.Asm
             return result;
         }
 
-        void ResolveApi(IApiCatalog src, params PartId[] parts)
-        {
-            var resolver = Wf.ApiResolver();
-            resolver.ResolveParts(src,parts);
-        }
-
         void GenSlnScript()
         {
             const string Pattern = "dotnet sln add {0}";

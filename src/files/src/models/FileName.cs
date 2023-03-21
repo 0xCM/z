@@ -26,16 +26,12 @@ namespace Z0
             => new FileName(name, ext);
 
         [Op]
-        public static FileName file(PartId part, FileExt ext)
-            => file(part.Format(), ext);
+        public static FileName file(PartName part, FileExt ext)
+            => FS.file(part.Format(), ext);
 
         [Op]
-        public static FileName file(PartId part, FileKind kind)
-            => file(part.Format(), kind.Ext());
-
-        [MethodImpl(Inline), Op]
-        public static FileName file(Identifier name, string type)
-            => new FileName(name.Content, FileExt.ext(type));
+        public static FileName file(PartName part, FileKind kind)
+            => FS.file(part.Format(), kind.Ext());
 
         public static FileName file(string name, FileKind kind)
             => new FileName(name, kind.Ext());
@@ -99,7 +95,7 @@ namespace Z0
             => this + ext;
 
         public FileName ChangeExtension(FileExt ext)
-            => file(Path.GetFileNameWithoutExtension(Name), ext);
+            => FS.file(Path.GetFileNameWithoutExtension(Name), ext);
 
         public FileName ChangeExtension(FileKind kind)
             => file(Path.GetFileNameWithoutExtension(Name), kind);

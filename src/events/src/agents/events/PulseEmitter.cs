@@ -20,7 +20,7 @@ namespace Z0
         }
 
         void OnPulse(object sender, ElapsedEventArgs args)
-            => Context.EventLog.Receive(SourcedEvents.pulse(PartId, HostId, Time.timestamp()));
+            => Context.EventLog.Receive(SourcedEvents.pulse(Part, HostId, Time.timestamp()));
 
         Timer Timer {get;}
 

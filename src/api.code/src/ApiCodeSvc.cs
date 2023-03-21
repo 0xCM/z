@@ -8,7 +8,7 @@ namespace Z0
 
     public partial class ApiCodeSvc : AppService<ApiCodeSvc>
     {
-        public ReadOnlySeq<ApiHexIndexRow> EmitHexIndex(SortedIndex<ApiCodeBlock> src, IApiPack dst)
+        public ReadOnlySeq<ApiHexIndexRow> EmitHexIndex(SortedIndex<ApiCodeBlock> src, IDbArchive dst)
             => EmitIndex(SortedSpans.define(src.Storage), dst.Targets().Path("api.index", FileKind.Csv));
 
         public Index<ApiCodeRow> EmitApiHex(ApiHostUri uri, ReadOnlySpan<MemberCodeBlock> src, IApiPack dst)
@@ -60,14 +60,14 @@ namespace Z0
         public ReadOnlySeq<ApiEncoded> Collect(IPart part, ICompositeDispenser symbols, IApiPack dst)
         {
             var collected = ApiCode.collect(symbols, part, Channel);
-            Emit(part.Id, collected, dst);
+            Emit(part.Name, collected, dst);
             return collected;
         }
 
-        public ReadOnlySeq<EncodedMember> Emit(PartId part, ReadOnlySeq<ApiEncoded> src, IApiPack dst)
+        public ReadOnlySeq<EncodedMember> Emit(PartName part, ReadOnlySeq<ApiEncoded> src, IApiPack dst)
             => Emit(src, dst.HexExtractPath(part), dst.CsvExtractPath(part));
 
-        public void Emit(PartId part, ReadOnlySpan<CollectedHost> src, IDbArchive dst, bool pll)
+        public void Emit(ReadOnlySpan<CollectedHost> src, IDbArchive dst, bool pll)
             => iter(src, code => EmitHex(code, dst), pll);
 
         void EmitHex(CollectedHost src, IDbArchive dst)

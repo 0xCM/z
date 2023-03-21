@@ -18,7 +18,7 @@ namespace Z0
         /// <summary>
         /// Identifies the server to which the agent belongs
         /// </summary>
-        public uint PartId {get;}
+        public uint Part {get;}
 
         /// <summary>
         /// Identifies the agent relative to the server
@@ -36,7 +36,7 @@ namespace Z0
 
         protected Agent(IAgentContext context, AgentIdentity id)
         {
-            PartId = id.PartId;
+            Part = id.PartId;
             HostId = id.HostId;
             Context = context;
             context.Register(this);
@@ -55,7 +55,7 @@ namespace Z0
                 if(_State == value)
                     return;
 
-                var transition = new AgentTransition((PartId,HostId), 0ul, _State, value);
+                var transition = new AgentTransition((Part,HostId), 0ul, _State, value);
                 _State = value;
 
                 Context.EventLog.AgentTransitioned(transition);

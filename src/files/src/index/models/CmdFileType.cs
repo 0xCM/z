@@ -4,7 +4,15 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct FS
+    public record class CmdFileType : FileType<CmdFileType>
     {
+        public CmdFileType()
+            : base("cmd")
+        {
+
+        }
+
+        public override FileExt Ext 
+            => FS.ext("cmd");
     }
 }

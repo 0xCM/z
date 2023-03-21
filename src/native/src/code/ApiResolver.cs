@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
 
     [ApiHost]
-    public class ApiResolver : AppService<ApiResolver>
+    public class ApiResolver : Channeled<ApiResolver>
     {
         readonly HashSet<string> Exclusions;
 

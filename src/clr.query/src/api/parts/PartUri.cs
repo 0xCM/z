@@ -12,7 +12,7 @@ namespace Z0
         /// <summary>
         /// The assembly identifier, constrained to the defining enumeration
         /// </summary>
-        public PartId Id {get;}
+        public PartName Id {get;}
 
         /// <summary>
         /// The uri content
@@ -28,10 +28,10 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public PartUri(PartId id)
+        public PartUri(PartName id)
         {
             Id = id;
-            UriText = id != 0 ? id.Format() : EmptyString;
+            UriText = id.Format();
             Hash = sys.hash(UriText);
         }
 
@@ -55,6 +55,6 @@ namespace Z0
         public override string ToString()
             => Format();
         public static PartUri Empty
-            => new PartUri(0);
+            => new PartUri(PartName.Empty);
     }
 }

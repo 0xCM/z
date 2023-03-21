@@ -64,10 +64,10 @@ namespace Z0
             return new(xmlData, lookup, csvRows, dllFiles.Array());
         }
 
-        public static FileName CsvFile(PartId part)
+        public static FileName CsvFile(PartName part)
             => FS.file(string.Format("api.comments.z0", part.Format()), FS.Csv);
 
-        public static FileName XmlFile(PartId part)
+        public static FileName XmlFile(PartName part)
             => FS.file(string.Format("api.comments.z0", part.Format()), FS.Xml);
 
         public void Collect(IDbArchive dst)

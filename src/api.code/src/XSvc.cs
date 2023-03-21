@@ -11,13 +11,8 @@ namespace Z0
             public ApiCodeSvc ApiCode(IWfRuntime wf)
                 => Service<ApiCodeSvc>(wf);
 
-            public ApiResolver ApiResolver(IWfRuntime wf)
-                => Service<ApiResolver>(wf);
-
             public ApiResProvider ApiResProvider(IWfRuntime wf)
                 => Service<ApiResProvider>(wf);
-
-
         }
 
         static Svc Services => Svc.Instance;
@@ -25,9 +20,6 @@ namespace Z0
 
         public static ApiCodeSvc ApiCode(this IWfRuntime wf)
             => Services.ApiCode(wf);
-
-        public static ApiResolver ApiResolver(this IWfRuntime wf)
-            => Services.ApiResolver(wf);
 
         public static ApiResProvider ApiResProvider(this IWfRuntime wf)
             => Services.ApiResProvider(wf);

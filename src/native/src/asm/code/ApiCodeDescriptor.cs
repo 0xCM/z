@@ -9,7 +9,7 @@ namespace Z0
     {
         public const string TableId = "apicode";
 
-        public ApiPartKind Part;
+        public PartName Part;
 
         public @string Host;
 

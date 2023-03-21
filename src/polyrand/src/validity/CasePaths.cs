@@ -4,17 +4,16 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     public readonly struct CasePaths
     {
-        public PartId PartId {get;}
+        public PartName PartId {get;}
 
         public FolderPath Root {get;}
 
         public Type UnitType {get;}
 
         [MethodImpl(Inline)]
-        public CasePaths(FolderPath root, PartId part, Type subject)
+        public CasePaths(FolderPath root, PartName part, Type subject)
         {
             PartId = part;
             Root = root;

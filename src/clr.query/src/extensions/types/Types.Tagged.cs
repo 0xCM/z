@@ -7,6 +7,9 @@ namespace Z0
 {
     partial class ClrQuery
     {
+        public static Type[] Tagged(this Type[] src, string name)
+            => src.Where(t => t.Tagged(name));
+            
         /// <summary>
         /// Selects source types from the stream to which a parametrically-identified attribute is applied
         /// </summary>
