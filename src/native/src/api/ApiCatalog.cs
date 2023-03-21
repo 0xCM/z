@@ -10,21 +10,30 @@ namespace Z0
 
     public class ApiCatalog : AppService<ApiCatalog>
     {
-        public static Assembly[] components()
-            => colocated(ExecutingPart.Assembly);
+        // public static Assembly[] components()
+        //     => colocated(ExecutingPart.Assembly);
 
-        public static Assembly[] components(FolderPath src)
-        {
-            var dst = list<Assembly>();
-            foreach(var path in libs(src))
-            {
-                var assembly = Assembly.LoadFrom(path.Name);
-                if(assembly.PartName().IsNonEmpty)
-                    dst.Add(assembly);
-            }
+        public static Assembly[] components()        
+            => ApiAssemblies.Components;
 
-            return dst.ToArray();
-        }
+        // {
+        //     var root = FS.path(controller().Location).FolderPath;                    
+        //     var modules = Archives.modules(root, false).Members().Where(x => FS.managed(x.Path) && !x.Path.FileName.Contains("System.Private.CoreLib"));
+        //     return modules.Where(m => m.FileName.StartsWith("z0.")).Map(x => Assembly.LoadFile(x.Path.Format())).Where(x => x.PartName().IsNonEmpty);
+        // }
+
+        // public static Assembly[] components(FolderPath src)
+        // {
+        //     var dst = list<Assembly>();
+        //     foreach(var path in libs(src))
+        //     {
+        //         var assembly = Assembly.LoadFrom(path.Name);
+        //         if(assembly.PartName().IsNonEmpty)
+        //             dst.Add(assembly);
+        //     }
+
+        //     return dst.ToArray();
+        // }
     
         public static ReadOnlySeq<ApiCatalogEntry> catalog(ApiMembers src)
         {
@@ -85,7 +94,7 @@ namespace Z0
         }
 
         public static IApiCatalog catalog()
-            => catalog(colocated(ExecutingPart.Assembly));
+            => catalog(components());
 
         public static ApiPartCatalog catalog(Assembly src)
             => new ApiPartCatalog(src.PartName(), src, complete(src), hosts(src), SvcHostTypes(src));
@@ -165,7 +174,7 @@ namespace Z0
             }
         }    
 
-       static IApiCatalog catalog(IPart[] src)
+        static IApiCatalog catalog(IPart[] src)
         {
             var catalogs = src.Select(x => catalog(x.Owner)).Where(c => c.IsIdentified);
             var dst = new ApiRuntimeCatalog(
@@ -220,8 +229,8 @@ namespace Z0
             return index;
         }
 
-        static Assembly[] colocated(Assembly src)
-            => components(FS.path(src.Location).FolderPath);
+        // static Assembly[] colocated(Assembly src)
+        //     => components(FS.path(src.Location).FolderPath);
 
         [Op]
         static IApiHost host(PartName part, Type type)
@@ -231,21 +240,21 @@ namespace Z0
             return new ApiHost(type, uri.HostName, part, uri, declared, index(declared));
         }
 
-        static ReadOnlySeq<FilePath> libs(FolderPath src)
-        {            
-            var candidates = src.Files(FileKind.Dll);
-            var dst = list<FilePath>();
-            foreach(var file in candidates)
-            {
-                if(file.FileName.Contains("System.Private.CoreLib"))
-                    continue;
+        // static ReadOnlySeq<FilePath> libs(FolderPath src)
+        // {            
+        //     var candidates = src.Files(FileKind.Dll);
+        //     var dst = list<FilePath>();
+        //     foreach(var file in candidates)
+        //     {
+        //         if(file.FileName.Contains("System.Private.CoreLib"))
+        //             continue;
 
-                if(FS.managed(file))
-                    dst.Add(file);
-            }
+        //         if(FS.managed(file))
+        //             dst.Add(file);
+        //     }
 
-            return dst.Array();
-        }
+        //     return dst.Array();
+        // }
 
         [Op]
         static Index<ApiCompleteType> complete(Assembly src)

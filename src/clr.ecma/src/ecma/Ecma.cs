@@ -21,6 +21,12 @@ namespace Z0
         public static Assembly assembly(FilePath image, FilePath pdb)
             => Assembly.Load(image.ReadBytes(), pdb.ReadBytes());
 
+        public static EcmaMvid mvid(Assembly src)
+            => Ecma.reader(src).Mvid();
+
+        public static AssemblyKey key(Assembly src)
+            => Ecma.reader(src).AssemblyKey();
+
         [Op]
         public static EcmaModuleInfo describe(Assembly src)
         {
@@ -271,11 +277,9 @@ namespace Z0
             }, true);
         }
 
-        public bool Reader(Assembly src, out EcmaReader dst)
-        {
-            dst = EcmaReader.create(src);
-            return true;
-        }
+
+        public static EcmaReader reader(Assembly src)
+            => EcmaReader.create(src);
 
         /// <summary>
         /// Defines a <see cref='EcmaDataSource'/> over a specified <see cref='Assembly'/>

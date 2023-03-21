@@ -19,7 +19,6 @@ namespace Z0
         public static FolderPath nested(FolderPath root, FolderPath src)
             => root + FS.folder(FS.components(src).Join('/'));
 
-
         static AppSettings AppSettings => AppSettings.Default;
 
         public static IDbArchive archive(Timestamp ts, DbArchive dst)

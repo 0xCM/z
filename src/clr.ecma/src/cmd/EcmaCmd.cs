@@ -26,35 +26,35 @@ namespace Z0
 
         [CmdOp("ecma/emit")]
         void EcmaEmit()
-            => EcmaEmitter.Emit(ApiAssemblies.Parts, EcmaEmissionSettings.Default, AppDb.ApiTargets("ecma"));
+            => EcmaEmitter.Emit(ApiAssemblies.Components, EcmaEmissionSettings.Default, AppDb.ApiTargets("ecma"));
 
         [CmdOp("ecma/emit/parts")]
         void EmitPartEcma()
-            => EcmaEmitter.EmitCatalogs(ApiAssemblies.Parts, AppDb.ApiTargets());
+            => EcmaEmitter.EmitCatalogs(ApiAssemblies.Components, AppDb.ApiTargets());
 
         [CmdOp("ecma/emit/hex")]
         void EmitApiHex()
-            => EcmaEmitter.EmitLocatedMetadata(ApiAssemblies.Parts, AppDb.ApiTargets("ecma/hex"), 64);
+            => EcmaEmitter.EmitLocatedMetadata(ApiAssemblies.Components, AppDb.ApiTargets("ecma/hex"), 64);
 
         [CmdOp("ecma/emit/assembly-refs")]
         void EmitAssmeblyRefs(CmdArgs args)
-            => EcmaEmitter.EmitAssemblyRefs(ApiAssemblies.Parts, AppDb.ApiTargets("ecma"));
+            => EcmaEmitter.EmitAssemblyRefs(ApiAssemblies.Components, AppDb.ApiTargets("ecma"));
 
         [CmdOp("ecma/emit/method-defs")]
         void EmitMethodDefs(CmdArgs args)
-            => EcmaEmitter.EmitMethodDefs(ApiAssemblies.Parts, AppDb.ApiTargets("ecma/methods.defs").Delete());
+            => EcmaEmitter.EmitMethodDefs(ApiAssemblies.Components, AppDb.ApiTargets("ecma/methods.defs").Delete());
 
         [CmdOp("ecma/emit/member-refs")]
         void EmitMemberRefs(CmdArgs args)
-            => EcmaEmitter.EmitMemberRefs(ApiAssemblies.Parts, AppDb.ApiTargets("ecma/members.refs"));
+            => EcmaEmitter.EmitMemberRefs(ApiAssemblies.Components, AppDb.ApiTargets("ecma/members.refs"));
 
         [CmdOp("ecma/emit/strings")]
         void EmitStrings(CmdArgs args)
-            => EcmaEmitter.EmitStrings(ApiAssemblies.Parts, AppDb.ApiTargets("ecma/strings"));
+            => EcmaEmitter.EmitStrings(ApiAssemblies.Components, AppDb.ApiTargets("ecma/strings"));
 
         [CmdOp("ecma/emit/blobs")]
         void EmitBlobs(CmdArgs args)
-            => EcmaEmitter.EmitBlobs(ApiAssemblies.Parts, AppDb.ApiTargets("ecma/blobs"));
+            => EcmaEmitter.EmitBlobs(ApiAssemblies.Components, AppDb.ApiTargets("ecma/blobs"));
 
         [CmdOp("ecma/emit/msil")]
         void EmitMsil()
@@ -65,11 +65,11 @@ namespace Z0
 
         [CmdOp("ecma/emit/msildat")]
         void EmitMsilData()
-            => EcmaEmitter.EmitMsilMetadata(ApiAssemblies.Parts, AppDb.ApiTargets("ecma/msil.dat"));
+            => EcmaEmitter.EmitMsilMetadata(ApiAssemblies.Components, AppDb.ApiTargets("ecma/msil.dat"));
 
         [CmdOp("ecma/emit/literals")]
         void EmitLiterals()
-            => ApiMd.Emitter(AppDb.ApiTargets()).EmitLiterals(ApiAssemblies.Parts);
+            => ApiMd.Emitter(AppDb.ApiTargets()).EmitLiterals(ApiAssemblies.Components);
 
         [CmdOp("ecma/emit/headers")]
         void EmitHeaders()
@@ -213,7 +213,7 @@ namespace Z0
 
         [CmdOp("ecma/emit/dumps")]
         void EmitMetaDumps()
-            => EcmaEmitter.EmitMetadumps(Channel, ApiAssemblies.Parts, AppDb.ApiTargets("ecma/dumps"));
+            => EcmaEmitter.EmitMetadumps(Channel, ApiAssemblies.Components, AppDb.ApiTargets("ecma/dumps"));
 
         [CmdOp("ecma/dump")]
         void EmitCliDump(CmdArgs args)

@@ -131,7 +131,7 @@ namespace Z0
         ReadOnlySeq<IApiHost> CalcApiHosts()
         {
             var dst = sys.bag<IApiHost>();
-            iter(ApiAssemblies.Parts, a => iter(ApiCatalog.hosts(a), h => dst.Add(h)), PllExec);
+            iter(ApiAssemblies.Components, a => iter(ApiCatalog.hosts(a), h => dst.Add(h)), PllExec);
             return dst.Array();
         }
 

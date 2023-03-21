@@ -11,7 +11,7 @@ namespace Z0
     public class FileIndex : Channeled<FileIndex>
     {
         public static FileTypes types(params Assembly[] src)
-            => new (src.Types().Tagged(nameof(FileTypeAttribute)).Concrete().Map(x => (IFileType)Activator.CreateInstance(x)).ToHashSet());     
+            => new (src.Types().Tagged<FileTypeAttribute>().Concrete().Map(x => (IFileType)Activator.CreateInstance(x)).ToHashSet());     
 
         public static Entry entry(MemoryFile src)
         {

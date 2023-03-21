@@ -35,7 +35,7 @@ namespace Z0
         void GenRecords()
         {
             var buffer = text.emitter();
-            var src = ApiAssemblies.Parts;
+            var src = ApiAssemblies.Components;
             var defs = TableDefs.defs(src);
             iter(defs, src => Tables.generate(0u,src,buffer));
             var dst = AppDb.CgStage("api.tables").Path("replicants", FileKind.Cs);
@@ -44,15 +44,15 @@ namespace Z0
 
         [CmdOp("api/emit")]
         void ApiEmit()
-            => ApiMd.Emitter(AppDb.ApiTargets()).Emit(ApiAssemblies.Parts);
+            => ApiMd.Emitter(AppDb.ApiTargets()).Emit(ApiAssemblies.Components);
 
         [CmdOp("api/types")]
         void EmitApiTypes()
-            => ApiMd.Emitter(AppDb.ApiTargets()).EmitApiTypes(ApiAssemblies.Parts);
+            => ApiMd.Emitter(AppDb.ApiTargets()).EmitApiTypes(ApiAssemblies.Components);
 
         [CmdOp("api/tables")]
         void EmitApiTables()
-            => ApiMd.Emitter(AppDb.ApiTargets()).EmitApiTables(ApiAssemblies.Parts);
+            => ApiMd.Emitter(AppDb.ApiTargets()).EmitApiTables(ApiAssemblies.Components);
 
         [CmdOp("archives")]        
         void ListArchives(CmdArgs args)
@@ -68,7 +68,7 @@ namespace Z0
         [CmdOp("tokens/types")]
         void TokenTypes()
         {
-            var types = Tokens.types(ApiAssemblies.Parts);
+            var types = Tokens.types(ApiAssemblies.Components);
             ApiMd.Emitter(Archives.archive(Env.cd() + FS.folder(".data"))).EmitTypeList(types, FS.file("tokens.types", FileKind.List));
         }
 
@@ -365,21 +365,27 @@ namespace Z0
         [CmdOp("api/assemblies")]
         void ApiPartCompare()
         {
-            var left = ApiCatalog.catalog().Assemblies.Map(x => (x.GetSimpleName(), x)).ToDictionary();
-            var right = ApiAssemblies.Parts.Map(x => (x.GetSimpleName(), x)).ToDictionary();
+            // var left = ApiCatalog.catalog().Assemblies.Map(x => (x.GetSimpleName(), x)).ToDictionary();
+            //var right = ApiAssemblies.Parts.Map(x => (x.GetSimpleName(), x)).ToDictionary();
+            var left = ApiCatalog.components().Map(x => (x.GetSimpleName(), x)).ToDictionary();
+            var right = ApiCatalog.components().Map(x => (x.GetSimpleName(), x)).ToDictionary();
             var lKeys = left.Keys.ToHashSet();
             var rKeys = right.Keys.ToHashSet();
             var common = hashset<string>();
             common.Include(lKeys);
             common.IntersectWith(rKeys);
+            iter(common, name => {
+                var a = left[name];
+                var b = right[name];
+                var kA = Ecma.key(a);
+                var kB = Ecma.key(b);
+                if(!object.ReferenceEquals(a,b))
+                    Channel.Row($"{kA} != {kB}");
+                // if(!object.ReferenceEquals(a,b))
+                // {
+                //     Channel.Row($"neq(objref,{a},{b})");
+                // }
 
-            var union = hashset<string>();
-            union.Include(lKeys);
-            union.Include(rKeys);
-
-            var missing = union.Where(x => !common.Contains(x));
-            iter(missing, m => {
-                Channel.Warn($"Missing: {m}");
             });
 
             //var count = Require.equal(left.Count, right.Count);
@@ -396,6 +402,7 @@ namespace Z0
                 Channel.Row(t.Format());
             });
         }
+
         [CmdOp("files/index")]
         void FileQuery(CmdArgs args)
         {
@@ -424,7 +431,7 @@ namespace Z0
         [CmdOp("api/servers")]
         void ApiCommandServices()
         {
-            var providers = ApiServers.providers(ApiAssemblies.Parts);
+            var providers = ApiServers.providers(ApiAssemblies.Components);
             var types = providers.ServiceTypes();
             var dst = dict<CmdUri,CmdMethod>();
             iter(types, t => {

@@ -10,7 +10,7 @@ namespace Z0
 
     public class ApiAssemblies : ClrAssemblySet
     {
-        public static Assembly[] Parts => _Parts;
+        public static Assembly[] Components => _Parts;
 
         public ApiAssemblies()
             : base(_Parts)
@@ -22,14 +22,14 @@ namespace Z0
 
         static ApiAssemblies()
         {
-            _Parts = parts();
+            _Parts = components();
         }
 
-        static Assembly[] parts()        
+        static Assembly[] components()        
         {
             var root = FS.path(controller().Location).FolderPath;                    
             var modules = Archives.modules(root,false).Members().Where(x => FS.managed(x.Path) && !x.Path.FileName.Contains("System.Private.CoreLib"));
-            return modules.Where(m => m.FileName.StartsWith("z0.")).Map(x => Assembly.LoadFile(x.Path.Format())).Where(x => x.PartName().IsNonEmpty);
+            return modules.Where(m => m.FileName.StartsWith("z0.")).Map(x => Assembly.UnsafeLoadFrom(x.Path.Format())).Where(x => x.PartName().IsNonEmpty);
         }
     }
 }

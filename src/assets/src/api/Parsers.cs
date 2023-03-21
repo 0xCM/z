@@ -13,7 +13,7 @@ namespace Z0
 
         }
 
-        MultiParser Mp() => Cache.get(nameof(Mp), (Func<MultiParser>)(() => new MultiParser((ConcurrentDictionary<Type, IParser>)Z0.ApiParsers.discover(ApiAssemblies.Parts))));
+        MultiParser Mp() => Cache.get(nameof(Mp), (Func<MultiParser>)(() => new MultiParser((ConcurrentDictionary<Type, IParser>)Z0.ApiParsers.discover(ApiAssemblies.Components))));
 
         public IParser RecordParser(Type t)
             => Mp().RecordParser(t);

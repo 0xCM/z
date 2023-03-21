@@ -34,7 +34,7 @@ namespace Z0
 
         public static CmdMethods methods(IWfRuntime wf, params Assembly[] src)
         {            
-            var providers = ApiServers.providers(src.Length == 0 ? ApiAssemblies.Parts : src);
+            var providers = ApiServers.providers(src.Length == 0 ? ApiAssemblies.Components : src);
             var types = providers.ServiceTypes();
             var dst = dict<string,CmdMethod>();
             iter(types, t => {

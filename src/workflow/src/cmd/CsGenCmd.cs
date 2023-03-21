@@ -175,7 +175,7 @@ namespace Z0
         {
             var name = "AsmRegTokens";
             var dst = AppDb.CgStage().Path(name, FileKind.Cs);
-            var src = ApiAssemblies.Parts.Types().Where(x => x.Tagged<SymSourceAttribute>());
+            var src = ApiAssemblies.Components.Types().Where(x => x.Tagged<SymSourceAttribute>());
             SymbolFactories.Emit("Z0.Asm", name, src, dst);
             return true;
         }
