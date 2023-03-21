@@ -37,9 +37,7 @@ namespace Z0
 
         ExecToken Flow()
         {
-            var entries = FileArchives.Index(Source, Target);
-
-            return entries;
+            return default;
         }
 
         public override Task<ExecToken> Run()

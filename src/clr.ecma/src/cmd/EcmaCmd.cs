@@ -223,12 +223,12 @@ namespace Z0
             var index = FS.index(assemblies.Select(x => x.Path));
             var dst = AppSettings.EnvDb().Scoped("libs/dotnet");
             iter(index.Unique, entry => {
-                using var file = MappedAssembly.map(entry.Path);
+                using var file = MappedAssembly.map(entry.Location);
                 var reader = file.EcmaReader();
                 var name = reader.AssemblyName();
                 var version = name.Version;
                 var hash = entry.FileHash.ContentHash;
-                var ext = entry.Path.Ext;
+                var ext = entry.Location.Ext;
                 var target = dst.Path($"{name.SimpleName()}.{version}.{ext}.{(Hex32)(uint)file.FileSize}.{(Hex64)hash.Lo}", FileKind.Txt);
                 EcmaEmitter.EmitMetadump(reader.MetadataReader,target);
             },true);

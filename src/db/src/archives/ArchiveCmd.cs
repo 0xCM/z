@@ -35,10 +35,6 @@ namespace Z0
         void NugetFiles(CmdArgs args)
             => Archives.nupkg(Channel, args);
 
-        [CmdOp("archives/injest")]
-        void InjestFiles(CmdArgs args)
-            => FileIndex.Index(Archives.archive(FS.dir(args[0])), AppDb.Catalogs().Scoped("files"));
-
         [CmdOp("nuget/stage")]
         void DevPack(CmdArgs args)
             => DevPacks.stage(Channel, PackageKind.Nuget, FS.dir(arg(args,0)));

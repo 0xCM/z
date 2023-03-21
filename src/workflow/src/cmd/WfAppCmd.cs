@@ -397,35 +397,39 @@ namespace Z0
         void FileTypes()
         {
             var src = ApiCatalog.catalog().Assemblies;
-            var types = FileIndex.types(src);
+            var types = Archives.FileTypes(src);
             iter(types, t => {
                 Channel.Row(t.Format());
             });
         }
 
+        // [CmdOp("archives/injest")]
+        // void InjestFiles(CmdArgs args)
+        //     => FileIndex.Index(Archives.archive(FS.dir(args[0])), AppDb.Catalogs().Scoped("files"));
+
+
         [CmdOp("files/index")]
         void FileQuery(CmdArgs args)
         {
-            var query = FileQueries.query(FS.dir(args[0]));
-            var index = FS.index();
-            var counter = 0u;
-            void Handler(FilePath src)
-            {
-                index.Include(src);
-                var kind = src.FileKind();
-                if((kind == FileKind.Dll || kind == FileKind.Exe || kind == FileKind.Sys || kind == FileKind.Obj) && PeFileFormat.test(src))
-                    Channel.Row($"PE File: {src}");
-                if(sys.inc(ref counter) % 1000 == 0)
-                    Channel.Babble($"Indexed {counter} files");
-            }
+            var query = Archives.query(FS.dir(args[0]));
+            Archives.index(Channel, query, EnvDb.Scoped("indices"));
 
-            var receiver = QueryReceiver.create(query, r => r.WithHandler(Handler));
-            receiver.Run(Channel);
-            var duplicates = index.Duplicates.Map(x => x.Value).SelectMany(x => x);
-            var unique = index.Unique;
-            Require.equal(counter, (uint)(unique.Count + duplicates.Length));
+            // var index = FS.index();
+            // var counter = 0u;
+            // void Handler(FilePath src)
+            // {
+            //     index.Include(src);
+            //     if(sys.inc(ref counter) % 1000 == 0)
+            //         Channel.Babble($"Indexed {counter} files");
+            // }
 
-            Channel.Status($"Indexed {unique.Count} unique files with {duplicates.Length} duplicates");
+            // var receiver = QueryReceiver.create(query, r => r.WithHandler(Handler));
+            // receiver.Run(Channel);
+            // var duplicates = index.Duplicates.Map(x => x.Value).SelectMany(x => x);
+            // var unique = index.Unique;
+            // Require.equal(counter, (uint)(unique.Count + duplicates.Length));
+
+            //Channel.Status($"Indexed {unique.Count} unique files with {duplicates.Length} duplicates");
         }
 
         [CmdOp("api/servers")]
