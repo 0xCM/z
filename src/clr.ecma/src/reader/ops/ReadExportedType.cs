@@ -11,6 +11,5 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public ExportedType ReadExportedType(ExportedTypeHandle src)
             => MD.GetExportedType(src);
-
     }
 }

@@ -11,22 +11,6 @@ namespace Z0
     [DataWidth(Width,StorageWidth)]
     public readonly struct Hex6
     {
-        // [Parser]
-        // public static Outcome parse(string src, out H dst)
-        // {
-        //     var outcome = Hex.parse8u(src, out var x);
-        //     dst = new H((K)(x & 0b111111));
-        //     return outcome;
-        // }
-
-        // [Parser]
-        // public static Outcome parse(ReadOnlySpan<char> src, out H dst)
-        // {
-        //     var outcome = Hex.parse8u(src, out var x);
-        //     dst = new H((K)(x & 0b111111));
-        //     return outcome;
-        // }
-
         public const byte Width = 6;
 
         public const byte StorageWidth = 8;

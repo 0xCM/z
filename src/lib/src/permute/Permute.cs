@@ -16,7 +16,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static Vector128<byte> shuffles(NatPerm<N16> src)
-            => cpu.vload(w128, (byte)first(src.Terms));
+            => vcpu.vload(w128, (byte)first(src.Terms));
 
         [MethodImpl(Inline), Op]
         public static Perm32 unsize(in NatPerm<N32,byte> spec)
@@ -25,12 +25,6 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static Perm16 unsize(in NatPerm<N16,byte> spec)
             => new Perm16(vgcpu.vload(w128, spec.Terms));
-
-        /// <summary>
-        /// Defines the permutation (0 -> terms[0], 1 -> terms[1], ..., n - 1 -> terms[n-1])
-        /// where n is the length of the array
-        /// </summary>
-        readonly int[] terms;
 
         /// <summary>
         /// Creates a generic permutation by application of a sequence of transpositions to the identity permutation

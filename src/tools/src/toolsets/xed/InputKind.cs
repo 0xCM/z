@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class XedDomain
+    partial class XedTool
     {
         [SymSource(group)]
         public enum InputKind : byte

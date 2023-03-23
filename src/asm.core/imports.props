@@ -10,6 +10,7 @@
     <ProjectReference Include="$(Tools)" />
     <ProjectReference Include="$(ApiCode)" />
     <ProjectReference Include="$(Coff)" />
+    <ProjectReference Include="$(Process)" />
     <ProjectReference Include="$(Db)" />
     <ProjectReference Include="$(Stitch)" />
     <ProjectReference Include="$(Lang)" />

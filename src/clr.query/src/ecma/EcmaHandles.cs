@@ -58,6 +58,14 @@ namespace Z0
             => handle(new EcmaHandleData(src.Table, src.Row));
 
         [MethodImpl(Inline), Op]
+        public static MethodDefinitionHandle MethodDef(EcmaToken token)
+            => @as<EcmaToken,MethodDefinitionHandle>(token);
+
+        [MethodImpl(Inline), Op]
+        public static TypeDefinitionHandle typedef(EcmaToken token)            
+            => @as<EcmaToken,TypeDefinitionHandle>(token);
+
+        [MethodImpl(Inline), Op]
         public static Handle handle(EcmaHandleData src)
             => @as<EcmaHandleData,Handle>(src);
 

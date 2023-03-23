@@ -4,9 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    /// <summary>
-    /// Defines a permutation over the integers [0, 1, ..., n - 1] where n is the permutation length
-    /// </summary>
     partial struct Permute
     {
         /// <summary>

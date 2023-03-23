@@ -8,6 +8,32 @@ namespace Z0
 
     using static sys;
 
+    partial class XTend
+    {
+        /// <summary>
+        /// Shuffles span content as determined by a permutation
+        /// </summary>
+        /// <param name="src">The source span</param>
+        /// <param name="p">The permutation to apply</param>
+        public static Span<T> Permute<T>(this ReadOnlySpan<T> src, Perm p)
+        {
+            Span<T> dst = new T[src.Length];
+            for(var i=0; i<p.Length; i++)
+                dst[i] = src[p[i]];
+            return dst;
+        }
+
+        /// <summary>
+        /// Shuffles span content as determined by a permutation
+        /// </summary>
+        /// <param name="src">The source span</param>
+        /// <param name="p">The permutation to apply</param>
+        [MethodImpl(Inline)]
+        public static Span<T> Permute<T>(this Span<T> src, Perm p)
+            => src.ReadOnly().Permute(p);
+    }
+
+
     public readonly struct Perm
     {
         /// <summary>

@@ -1,6 +1,5 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(Containers)" />
     <ProjectReference Include="$(Digital)" />
     <ProjectReference Include="$(BitVectors)" />
   </ItemGroup>

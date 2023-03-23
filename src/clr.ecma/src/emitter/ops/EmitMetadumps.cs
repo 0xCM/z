@@ -36,12 +36,20 @@ namespace Z0
             => iter(src, x => EmitMetadump(Channel, x, dst.Path(x.GetSimpleName(), FileKind.Txt)), PllExec);
 
         public ExecToken EmitMetadump(MetadataReader reader, FilePath dst)
-        {
+        {            
             var token = ExecToken.Empty;
-            var flow = EmittingFile(dst);
-            using var target = dst.Writer();
-            MsilCodeModels.mdv(reader, target).Visualize();
-            return Emitter.EmittedFile(flow);
+            try
+            {
+                var flow = EmittingFile(dst);
+                using var target = dst.Writer();
+                MsilCodeModels.mdv(reader, target).Visualize();
+                token = Emitter.EmittedFile(flow);
+            }
+            catch(Exception e)
+            {
+                Channel.Error(e);
+            }
+            return token;            
         }
 
         public ExecToken EmitMetadump(FilePath src, FilePath dst)

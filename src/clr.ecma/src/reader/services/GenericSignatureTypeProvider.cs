@@ -242,7 +242,6 @@ namespace Z0
 
             public string GetGenericInstantiation(string genericType, ImmutableArray<string> typeArguments)
                 => $"{genericType}<{text.join(Chars.Comma,typeArguments)}>";
-
         }
     }
 }

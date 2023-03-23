@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XedDomain;
+    using static XedTool;
 
     [StructLayout(LayoutKind.Sequential, Pack=1), Cmd(CmdName)]
     public struct XedToolCmdSpec

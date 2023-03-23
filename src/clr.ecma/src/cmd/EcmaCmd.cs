@@ -131,7 +131,7 @@ namespace Z0
         [CmdOp("ecma/traverse")]
         void EcmaTraverse(CmdArgs args)
         {
-            var src = Ecma.index(Channel, FS.dir(args[0]));
+            var src = AssemblyIndex.create(Channel, FS.dir(args[0]).DbArchive());
             using var map = src.Map();
             iter(map.Keys, key => {
                 var assembly = map[key];
@@ -153,6 +153,22 @@ namespace Z0
 
         }
         
+        [CmdOp("ecma/methods")]
+        void EmitEcmaMethods(CmdArgs args)
+        {
+            var src = Ecma.index(Channel, FS.dir(args[0]));
+            var dst = EnvDb.Scoped("indices");
+            src.Report(dst);
+            var distinct = src.Distinct();
+            iter(distinct, entry => {
+                using var file = Ecma.file(entry.Path);
+                var reader = file.EcmaReader();
+                var methods = reader.ReadMethodDefs();
+            }, true);
+
+
+
+        }
         [CmdOp("ecma/streams")]
         void EmitEcmaStreams(CmdArgs args)
         {
@@ -255,7 +271,7 @@ namespace Z0
             var targets = FS.dir(args[1].Value).ToArchive().Scoped("coff.modules");
             var modules = bag<CoffModule>();
             PeReader.modules(src,m => {
-                var path = targets.Path(m.Path.FileName().WithExtension(FS.ext("records")));
+                var path = targets.Path(m.Path.FileName.WithExtension(FS.ext("records")));
                 Channel.FileEmit(m.ToString(), path);
             });
         }
@@ -338,14 +354,22 @@ namespace Z0
         void EcmaEmitMetaDumps(CmdArgs args)
             => EcmaEmitter.EmitMetadumps(FS.dir(args[0]).DbArchive(), true, FS.dir(args[1]).DbArchive());
 
-        [CmdOp("ecma/import")]
+        [CmdOp("ecma/index")]
         void EcmaImport(CmdArgs args)
         {
-            var dir = FS.dir(args[0]);                        
-            var src = Archives.modules(dir).AssemblyFiles();
-            var index = Ecma.index(Channel, src).Seal();
-            var dst = EnvDb.Scoped("ecma/imports");
-            index.Report(dst);
+            var index = AssemblyIndex.create(Channel, FS.dir(args[0]).DbArchive());
+            var label = args.Count > 1 ? args[1].Value.Format() : EmptyString;
+            var dst = EnvDb.Scoped("ecma/indices");
+            index.Report(dst, label);
+            var distict = index.Distinct();
+            iter(distict, entry => {
+                var path = EnvDb.Scoped("ecma/dumps").Path(FS.file($"{entry.Name}.{entry.Mvid}", FileKind.Txt));
+                if(!path.Exists)
+                {
+                    using var file = Ecma.file(entry.Path);
+                    EcmaEmitter.EmitMetadump(file.MdReader, path);
+                }
+            }, true);
         }   
 
         [CmdOp("ecma/heaps")]
@@ -453,17 +477,6 @@ namespace Z0
 
                     });
                 }
-                // var types = reader.ReadTypeDefs();
-                // var counter = 0u;
-                // iter(types, t => {
-                //     if(!t.Name.Contains("<"))
-                //     {
-                //         if(t.Namespace.IsEmpty)
-                //             Channel.Row(string.Format("{0:D5} {1}", counter++, t.Name));
-                //         else
-                //             Channel.Row(string.Format("{0:D5} {1}.{2}", counter++, t.Namespace, t.Name));
-                //     }
-                // });
             });
         }
 

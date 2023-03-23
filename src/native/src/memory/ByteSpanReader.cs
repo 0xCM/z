@@ -154,7 +154,7 @@ namespace Z0
                         ref readonly var cell = ref skip(data,j);
                         if(j == 0)
                         {
-                            var a = core.address(cell);
+                            var a = sys.address(cell);
                             if(segment.BaseAddress == a)
                                 seek(dst,i) = a;
                         }
@@ -215,7 +215,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public ReadOnlySpan<byte> Span<N>(N n)
             where N : unmanaged, ITypeNat
-            => span(Data, n);
+                => span(Data, n);
 
         [MethodImpl(Inline)]
         public ref readonly byte First<N>(N n)

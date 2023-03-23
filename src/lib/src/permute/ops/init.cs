@@ -4,19 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    /// <summary>
-    /// Defines a permutation over the integers [0, 1, ..., n - 1] where n is the permutation length
-    /// </summary>
     partial struct Permute
     {
-        //  /// <summary>
-        // /// Defines an untyped permutation determined by values in a source span
-        // /// </summary>
-        // /// <param name="src">The source span</param>
-        // [MethodImpl(Inline), Op]
-        // public static Permute Init(ReadOnlySpan<int> src)
-        //     => new Permute(src.ToArray());
-
         /// <summary>
         /// Creates a permutation from the elements in a readonly span
         /// </summary>

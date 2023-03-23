@@ -41,7 +41,12 @@ namespace Z0
             => sys.bytes(Value).SequenceCompareTo(sys.bytes(src.Value));
 
         public string Format()
-            => sys.bytes(Value).FormatHex();
+        {
+            var bytes = sys.bytes(Value);
+            var lo = sys.@as<Hex64>(bytes);
+            var hi = sys.@as<Hex64>(sys.slice(bytes,8));
+            return $"{hi}{lo}";
+        }
 
         public override string ToString()
             => Format();

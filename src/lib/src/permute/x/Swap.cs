@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using api = Permute;
+
     partial class XTend
     {
         /// <summary>
@@ -17,5 +19,20 @@ namespace Z0
         public static void Swap<T>(this Span<T> src, uint i, uint j)
             where T : unmanaged
                 => Swaps.swap(src,i,j);
+
+        /// <summary>
+        /// Applies a sequence of transpositions to source span elements
+        /// </summary>
+        /// <param name="src">The source and target span</param>
+        /// <param name="i">The first index</param>
+        /// <param name="j">The second index</param>
+        /// <typeparam name="T">The element type</typeparam>
+        [MethodImpl(Inline)]
+        public static Span<T> Swap<T>(this Span<T> src, params Swap[] swaps)
+            where T : unmanaged
+        {
+            api.apply(src, swaps);
+            return src;
+        }
     }
 }

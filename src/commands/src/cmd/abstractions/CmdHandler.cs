@@ -9,7 +9,9 @@ namespace Z0
     {
         CmdRoute Route;
 
-        protected AppSettings AppSettings => AppSettings.Default;
+        protected static AppSettings AppSettings => AppSettings.Default;
+        
+        protected static IEnvDb EnvDb => AppSettings.EnvDb();
         
         protected IWfRuntime Wf {get; private set;}
     

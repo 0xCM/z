@@ -8,7 +8,7 @@ namespace Z0
 
     using System.Linq;
 
-    public class AssemblyIndex : Channeled<AssemblyIndex>
+    public class AssemblyIndex
     {
         static uint Seq;
 
@@ -20,10 +20,41 @@ namespace Z0
 
         readonly Dictionary<AssemblyKey,HashSet<Entry>> Keysets = new();
 
+        public static AssemblyIndex create(IWfChannel channel, IDbArchive src)
+        {
+            var index = new AssemblyIndex(channel, src);
+            index.Calc();
+            return index.Seal();        
+        }
+
+        readonly IWfChannel Channel;
+
+        readonly IDbArchive Source;
+
+        AssemblyIndex(IWfChannel channel, IDbArchive src)
+        {
+            Channel = channel;
+            Source =src;
+        }
+
+        void Calc()
+        {
+            var files = Archives.modules(Source.Root).AssemblyFiles();
+            var counter = 0u;
+            iter(files, file => {
+                using var ecma = Ecma.file(file.Path);
+                Include(ecma);
+                if(++counter % 100 == 0)
+                    Channel.Babble($"Indexed {counter} assemblies");
+                
+            }, true);
+
+        }
+
         public AssemblyMap Map()
             => new AssemblyMap(Seal());
 
-        public AssemblyIndex Seal()
+        AssemblyIndex Seal()
         {
             _Duplicates = Keysets.Values.Where(x => x.Count > 1).SelectMany(x => x).Array().Sort().Resequence();
             var keys = Keysets.Keys;
@@ -42,10 +73,11 @@ namespace Z0
             return buffer.Array().Sort().Resequence();
         }
 
-        public void Report(IDbArchive dst)
+        public void Report(IDbArchive dst, string label = null)
         {
-            Channel.TableEmit(Report(), dst.Path("assemlyindex", FileKind.Csv));
-            Channel.TableEmit(Distinct(), dst.Path("assemblyindex.distinct", FileKind.Csv));
+            var _label = text.ifempty(label,  ((Hex32)Source.Root.Hash).Format());
+            Channel.TableEmit(Report(), dst.Path($"assemblies.index.{_label}", FileKind.Csv));
+            Channel.TableEmit(Distinct(), dst.Path($"assemblies.index.distinct.{_label}", FileKind.Csv));
         }
 
         public void CopyTo(IDbArchive dst)
@@ -65,7 +97,7 @@ namespace Z0
             });
         }
 
-        public void Include(EcmaFile ecma)
+        void Include(EcmaFile ecma)
         {
             var reader = ecma.EcmaReader();
             var file = ecma.AssemblyFile();
@@ -83,20 +115,6 @@ namespace Z0
                     }                
                 }
             }
-
-            if(Seq != 0 && Seq % 100 == 0)
-                Channel.Babble($"Indexed {Seq} assemblies");
-        }
-
-        public void Include(AssemblyFile src)
-        {
-            using var ecma = Ecma.file(src.Path);
-            Include(ecma);
-        }
-        
-        public void Include(IEnumerable<AssemblyFile> src)
-        {
-            iter(src, Include, true);
         }
 
         public ReadOnlySeq<Entry> Duplicates()

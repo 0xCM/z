@@ -6,9 +6,9 @@ namespace Z0
 {
     using static sys;
 
-    public class HexDataReader : AppService<HexDataReader>
+    public class HexDataReader
     {
-        public HexFileStats Stats(FilePath src)
+        public static HexFileStats stats(FilePath src)
         {
             using var reader = src.LineReader(TextEncodingKind.Asci);
             var line = TextLine.Empty;
@@ -41,19 +41,19 @@ namespace Z0
             return stats;
         }
 
-        public Index<HexFileStats> Stats(ReadOnlySpan<FilePath> src)
+        public static Index<HexFileStats> stats(ReadOnlySpan<FilePath> src)
         {
             var count = src.Length;
             var dst = alloc<HexFileStats>(count);
             for(var i=0; i<count; i++)
             {
                 ref readonly var path = ref skip(src,i);
-                seek(dst,i) = Stats(path);
+                seek(dst,i) = stats(path);
             }
             return dst;
         }
 
-        public uint ReadData(in HexFileStats stats, uint offset, Span<byte> dst)
+        public static uint data(in HexFileStats stats, uint offset, Span<byte> dst)
         {
             var lines = stats.Path.ReadNumberedLines();
             var count = lines.Count;
@@ -75,7 +75,7 @@ namespace Z0
             return i - offset;
         }
 
-        public Index<HexDataRow> Read(FilePath src)
+        public static Index<HexDataRow> rows(IWfChannel channel, FilePath src)
         {
             var lines = src.ReadNumberedLines();
             var count = lines.Count;
@@ -109,7 +109,7 @@ namespace Z0
 
             if(result.Fail)
             {
-                Channel.Error(result.Message);
+                channel.Error(result.Message);
                 return sys.empty<HexDataRow>();
             }
 

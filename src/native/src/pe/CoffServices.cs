@@ -11,7 +11,7 @@ namespace Z0
     {
         AppDb AppDb => AppDb.Service;
 
-        HexDataReader HexReader => Wf.HexDataReader();
+        //HexDataReader HexReader => Wf.HexDataReader();
 
         Symbols<CoffSectionKind> SectionKinds;
 
@@ -60,7 +60,7 @@ namespace Z0
             var count = src.Length;
             var dst = dict<FilePath,Index<HexDataRow>>(count);
             for(var i=0; i<count; i++)
-                dst[src[i]] = HexReader.Read(src[i]);
+                dst[src[i]] = HexDataReader.rows(Channel, src[i]);
 
             return dst;
         }

@@ -100,35 +100,8 @@ namespace Z0
             return dst;
         }
 
-        public static AssemblyIndex index(IWfChannel channel)
-            => channel.Channeled<AssemblyIndex>();
-
-        public static AssemblyImporter importer(IWfChannel channel)
-            => channel.Channeled<AssemblyImporter>();
-            
-        public static AssemblyIndex index(IWfChannel channel, IEnumerable<AssemblyFile> src)
-        {
-            var index = channel.Channeled<AssemblyIndex>();
-            index.Include(src);
-            index = index.Seal();
-            return index;
-        }
-
         public static AssemblyIndex index(IWfChannel channel, FolderPath root)
-        {
-            var counter = 0u;
-            var index = channel.Channeled<AssemblyIndex>();
-            var files = Archives.modules(root).AssemblyFiles();
-            iter(files, file => {
-                index.Include(file);
-                if(counter++ % 100 == 0)
-                {
-                    channel.Row($"Indexed {counter} assemblies");
-                }
-                
-            }, true);
-            return index.Seal();
-        }
+            => AssemblyIndex.create(channel,root.DbArchive());
 
         public static EcmaFile file(FilePath src)
             => EcmaFile.open(src);

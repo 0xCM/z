@@ -10,105 +10,6 @@ namespace Z0
 
     using api = Permute;
 
-    partial class XTend
-    {
-        public static Swap[] Unsized<N>(this NatSwap<N>[] src)
-            where N : unmanaged, ITypeNat
-        {
-            var dst = new Swap[src.Length];
-            for(var i=0; i<src.Length; i++)
-                dst[i] = src[i];
-            return dst;
-        }
-
-        public static Swap<T>[] Unsized<N,T>(this NatSwap<N,T>[] src)
-            where N : unmanaged, ITypeNat
-            where T : unmanaged
-        {
-            var dst = new Swap<T>[src.Length];
-            for(var i=0; i<src.Length; i++)
-                dst[i] = src[i];
-            return dst;
-        }
-
-        /// <summary>
-        /// Shuffles span content as determined by a permutation
-        /// </summary>
-        /// <param name="src">The source span</param>
-        /// <param name="p">The permutation to apply</param>
-        public static Span<T> Permute<T>(this ReadOnlySpan<T> src, Perm p)
-        {
-            Span<T> dst = new T[src.Length];
-            for(var i=0; i<p.Length; i++)
-                dst[i] = src[p[i]];
-            return dst;
-        }
-
-        /// <summary>
-        /// Shuffles span content as determined by a permutation
-        /// </summary>
-        /// <param name="src">The source span</param>
-        /// <param name="p">The permutation to apply</param>
-        [MethodImpl(Inline)]
-        public static Span<T> Permute<T>(this Span<T> src, Perm p)
-            => src.ReadOnly().Permute(p);
-
-        /// <summary>
-        /// Applies a sequence of transpositions to source span elements
-        /// </summary>
-        /// <param name="src">The source and target span</param>
-        /// <param name="i">The first index</param>
-        /// <param name="j">The second index</param>
-        /// <typeparam name="T">The element type</typeparam>
-        [MethodImpl(Inline)]
-        public static Span<T> Swap<T>(this Span<T> src, params Swap[] swaps)
-            where T : unmanaged
-        {
-            api.apply(src, swaps);
-            return src;
-        }
-
-        /// <summary>
-        /// Formats a sequence of successive transpositions (a chain)
-        /// </summary>
-        /// <param name="src">The transpositions</param>
-        [MethodImpl(Inline)]
-        public static string Format(this Swap[] src)
-            => string.Join(" -> ", src.Map(x => x.Format()));
-
-        /// <summary>
-        /// Constructs the canonical literal representation of a natural permutation on 4 symbols
-        /// </summary>
-        /// <param name="src">The natural permutation</param>
-        [MethodImpl(Inline)]
-        public static Perm4L ToLiteral(this NatPerm<N4> src)
-            => api.pack(src);
-
-        /// <summary>
-        /// Constructs the canonical literal representation of a natural permutation on 8 symbols
-        /// </summary>
-        /// <param name="src">The natural permutation</param>
-        [MethodImpl(Inline)]
-        public static Perm8L ToLiteral(this NatPerm<N8> src)
-            => api.pack(src);
-
-        /// <summary>
-        /// Constructs the canonical literal representation of a natural permutation on 16 symbols
-        /// </summary>
-        /// <param name="src">The natural permutation</param>
-        [MethodImpl(Inline)]
-        public static Perm16L ToLiteral(this NatPerm<N16> src)
-            => api.pack(src);
-
-        /// <summary>
-        /// Defines a shuffle spec from a permutation
-        /// </summary>
-        /// <param name="src">The defining permutation</param>
-        [MethodImpl(Inline)]
-        public static Vector128<byte> ToShuffleSpec(this NatPerm<N16> src)
-            => api.shuffles(src);
-
-    }
     /// <summary>
     /// Defines a permutation of natural length N over the natural numbers 0,1,...,N-1
     /// </summary>
@@ -380,5 +281,67 @@ namespace Z0
         [MethodImpl(Inline)]
         public static bool operator !=(NatPerm<N> f, NatPerm<N> g)
             => !f.Equals(g);
+    }
+
+    partial class XTend
+    {
+        public static Swap[] Unsized<N>(this NatSwap<N>[] src)
+            where N : unmanaged, ITypeNat
+        {
+            var dst = new Swap[src.Length];
+            for(var i=0; i<src.Length; i++)
+                dst[i] = src[i];
+            return dst;
+        }
+
+        public static Swap<T>[] Unsized<N,T>(this NatSwap<N,T>[] src)
+            where N : unmanaged, ITypeNat
+            where T : unmanaged
+        {
+            var dst = new Swap<T>[src.Length];
+            for(var i=0; i<src.Length; i++)
+                dst[i] = src[i];
+            return dst;
+        }
+
+        /// <summary>
+        /// Formats a sequence of successive transpositions (a chain)
+        /// </summary>
+        /// <param name="src">The transpositions</param>
+        [MethodImpl(Inline)]
+        public static string Format(this Swap[] src)
+            => string.Join(" -> ", src.Map(x => x.Format()));
+
+        /// <summary>
+        /// Constructs the canonical literal representation of a natural permutation on 4 symbols
+        /// </summary>
+        /// <param name="src">The natural permutation</param>
+        [MethodImpl(Inline)]
+        public static Perm4L ToLiteral(this NatPerm<N4> src)
+            => api.pack(src);
+
+        /// <summary>
+        /// Constructs the canonical literal representation of a natural permutation on 8 symbols
+        /// </summary>
+        /// <param name="src">The natural permutation</param>
+        [MethodImpl(Inline)]
+        public static Perm8L ToLiteral(this NatPerm<N8> src)
+            => api.pack(src);
+
+        /// <summary>
+        /// Constructs the canonical literal representation of a natural permutation on 16 symbols
+        /// </summary>
+        /// <param name="src">The natural permutation</param>
+        [MethodImpl(Inline)]
+        public static Perm16L ToLiteral(this NatPerm<N16> src)
+            => api.pack(src);
+
+        /// <summary>
+        /// Defines a shuffle spec from a permutation
+        /// </summary>
+        /// <param name="src">The defining permutation</param>
+        [MethodImpl(Inline)]
+        public static Vector128<byte> ToShuffleSpec(this NatPerm<N16> src)
+            => api.shuffles(src);
     }
 }

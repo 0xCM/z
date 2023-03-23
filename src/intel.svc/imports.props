@@ -4,5 +4,6 @@
     <ProjectReference Include="$(Cpu)" />
     <ProjectReference Include="$(ZXml)" />
     <ProjectReference Include="$(Tools)" />
+    <ProjectReference Include="$(Containers)" />
   </ItemGroup>
 </Project>

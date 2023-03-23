@@ -9,6 +9,25 @@ namespace Z0
 
     partial class EcmaReader
     {
+        public ReadOnlySeq<EcmaMember> ReadMembers()
+        {
+            var types = TypeDefHandles();
+            var dst = bag<EcmaMember>();
+            var key = AssemblyKey();
+            iter(types, t => {
+                var typedef = MD.GetTypeDefinition(t);                
+                var typename = String(typedef.Name);
+                var declarer = MD.GetTypeDefinition(typedef.GetDeclaringType());
+                var declname = String(declarer.Name);
+                var ns = String(typedef.Namespace);
+
+                iter(typedef.GetMethods(), m => {
+                    var member = new EcmaMember();
+                    
+                });
+            }, true);
+            return dst.Array().Sort();
+        }
         public ReadOnlySeq<EcmaMethodDef> ReadMethodDefs()
         {
             var handles = MethodDefHandles();

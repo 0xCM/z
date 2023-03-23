@@ -16,6 +16,7 @@ namespace Z0
         IWfChannel Channel;
 
         IWfRuntime Wf;
+        
         public static ApiMdEmitter init(IWfRuntime wf, IDbArchive dst)
         {
             var svc = new ApiMdEmitter();
