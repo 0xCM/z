@@ -7,8 +7,6 @@ namespace Z0
 {
     class ArchiveCmd : WfAppCmd<ArchiveCmd>
     {
-        FileIndex FileIndex => Channel.Channeled<FileIndex>();
-
         public static void copy(IWfChannel channel, CmdArgs args)
             => copy(channel, FS.dir(args[0]), FS.dir(args[1]));
         

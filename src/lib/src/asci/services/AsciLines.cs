@@ -19,7 +19,7 @@ namespace Z0
     public class AsciLines
     {
         public static SettingLookup lookup(FilePath src, char sep)
-        {
+        {            
             var dst = list<Setting>();
             var line = AsciLineCover.Empty;
             var quoted = new Fence<AsciCode>(AsciCode.SQuote, AsciCode.SQuote);

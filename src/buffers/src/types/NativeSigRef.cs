@@ -15,8 +15,6 @@ namespace Z0
 
         const uint OpCountOffset = 0;
 
-        const uint TypeSize = 2;
-
         const uint ScopeSize = StringSize;
 
         const uint NameSize = StringSize;

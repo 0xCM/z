@@ -23,6 +23,9 @@ namespace Z0
             public ApiServers ApiServers(IWfRuntime wf)
                 => Service<ApiServers>(wf);
 
+             public IApiService ArchiveCmd(IWfRuntime wf)
+                => Service<ArchiveCmd>(wf);
+
         }
 
         static ServiceCache Services => ServiceCache.Instance;
@@ -41,5 +44,8 @@ namespace Z0
 
         public static ProjectManager ProjectManager(this IWfRuntime wf)
             => Services.ProjectManager(wf);
+
+        public static IApiService ArchiveCmd(this IWfRuntime wf)
+            => Services.ArchiveCmd(wf);
     }
 }

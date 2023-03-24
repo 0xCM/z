@@ -14,7 +14,7 @@ namespace Z0
 
     [ApiHost]
     public class Archives
-    {
+    {        
         public static FileTypes FileTypes(params Assembly[] src)
             => new (src.Types().Tagged<FileTypeAttribute>().Concrete().Map(x => (IFileType)Activator.CreateInstance(x)).ToHashSet());     
 

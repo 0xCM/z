@@ -2,7 +2,6 @@
   <Import Project="$(SlnProps)\usings.props"/>
 
   <ItemGroup>
-    <ProjectReference Include="$(ZLib)" />
     <ProjectReference Include="$(Numbers)" />
     <ProjectReference Include="$(Lang)" />
   </ItemGroup>
