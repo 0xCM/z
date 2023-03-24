@@ -78,6 +78,5 @@ namespace Z0
             else
                 return Events.row(data, FlairKind.Babble);
         }
-
     }
 }

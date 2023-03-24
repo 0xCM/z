@@ -30,7 +30,6 @@ namespace Z0
 
         WinSdk WinSdk => Wf.WinSdk();
 
-    
         [CmdOp("api/tablegen")]
         void GenRecords()
         {
@@ -362,11 +361,19 @@ namespace Z0
             });            
         }
 
+        [CmdOp("files/types")]
+        void FileTypes()
+        {
+            var src = ApiCatalog.catalog().Assemblies;
+            var types = Archives.FileTypes(src);
+            iter(types, t => {
+                Channel.Row(t.Format());
+            });
+        }
+
         [CmdOp("api/assemblies")]
         void ApiPartCompare()
         {
-            // var left = ApiCatalog.catalog().Assemblies.Map(x => (x.GetSimpleName(), x)).ToDictionary();
-            //var right = ApiAssemblies.Parts.Map(x => (x.GetSimpleName(), x)).ToDictionary();
             var left = ApiCatalog.components().Map(x => (x.GetSimpleName(), x)).ToDictionary();
             var right = ApiCatalog.components().Map(x => (x.GetSimpleName(), x)).ToDictionary();
             var lKeys = left.Keys.ToHashSet();
@@ -381,50 +388,7 @@ namespace Z0
                 var kB = Ecma.key(b);
                 if(!object.ReferenceEquals(a,b))
                     Channel.Row($"{kA} != {kB}");
-                // if(!object.ReferenceEquals(a,b))
-                // {
-                //     Channel.Row($"neq(objref,{a},{b})");
-                // }
-
             });
-
-            //var count = Require.equal(left.Count, right.Count);
-
-
-        }
-
-        [CmdOp("files/types")]
-        void FileTypes()
-        {
-            var src = ApiCatalog.catalog().Assemblies;
-            var types = Archives.FileTypes(src);
-            iter(types, t => {
-                Channel.Row(t.Format());
-            });
-        }
-
-        [CmdOp("files/index")]
-        void FileQuery(CmdArgs args)
-        {
-            var sources = FS.dir(args[0]);
-            Archives.index(Channel, Archives.query(sources), EnvDb.Nested("indices", sources));
-        }
-
-        [CmdOp("api/servers")]
-        void ApiCommandServices()
-        {
-            var providers = ApiServers.providers(ApiAssemblies.Components);
-            var types = providers.ServiceTypes();
-            var dst = dict<CmdUri,CmdMethod>();
-            iter(types, t => {
-                var method = t.StaticMethods().Public().Where(m => m.Name == "create").First();
-                var service = (IApiService)method.Invoke(null, new object[]{Wf});
-                iter(ApiServers.methods(service).Defs, m => dst.TryAdd(m.Uri, m));
-            });
-
-            var methods = dst.Values.ToSeq().Sort();
-            iter(methods, m => Channel.Row(m.Uri));
-
         }
 
         [CmdOp("clrmd")]

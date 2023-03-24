@@ -5,6 +5,9 @@
 
 namespace Z0
 {
+    using static sys;
+    using System.Linq;
+
     class ArchiveCmd : WfAppCmd<ArchiveCmd>
     {
         public static void copy(IWfChannel channel, CmdArgs args)
@@ -36,5 +39,28 @@ namespace Z0
         [CmdOp("nuget/stage")]
         void DevPack(CmdArgs args)
             => DevPacks.stage(Channel, PackageKind.Nuget, FS.dir(arg(args,0)));
+
+        [CmdOp("files/index")]
+        void FileQuery(CmdArgs args)
+        {
+            var sources = FS.dir(args[0]);
+            Archives.index(Channel, Archives.query(sources), EnvDb.Nested("indices", sources));
+        }
+
+        [CmdOp("api/servers")]
+        void ApiCommandServices()
+        {
+            var providers = ApiServers.providers(ApiAssemblies.Components);
+            var types = providers.ServiceTypes();
+            var dst = dict<CmdUri,CmdMethod>();
+            iter(types, t => {
+                var method = t.StaticMethods().Public().Where(m => m.Name == "create").First();
+                var service = (IApiService)method.Invoke(null, new object[]{Wf});
+                iter(ApiServers.methods(service).Defs, m => dst.TryAdd(m.Uri, m));
+            });
+
+            var methods = dst.Values.ToSeq().Sort();
+            iter(methods, m => Channel.Row(m.Uri));
+        }
     }
 }

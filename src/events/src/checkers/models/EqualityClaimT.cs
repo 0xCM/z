@@ -18,6 +18,11 @@ namespace Z0
             Expect = expect;
         }
 
+        public bool IsEmpty
+        {
+            get => false;            
+        }
+        
         public string Format()
             => string.Format("claim(equal<{0}>(actual:{1}, expect:{2}))", typeof(C).DisplayName(),  Actual, Expect);
 

@@ -73,7 +73,7 @@ namespace Z0
             => typeof(ApiServers);
 
         public static AppCmdProviders providers(params Assembly[] src)
-            => src.Types().Tagged<CmdProviderAttribute>().Concrete().Map(x => new AppCmdProvider(x));
+            => new (src.Types().Tagged<CmdProviderAttribute>().Concrete());
 
         public static CmdMethods methods(IApiService host)
         {

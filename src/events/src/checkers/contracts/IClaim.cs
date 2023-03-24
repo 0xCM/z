@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Free]
-    public interface IClaim : IExprDeprecated
+    public interface IClaim : IExpr
     {
     }
 }

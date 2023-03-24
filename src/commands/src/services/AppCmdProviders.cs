@@ -6,13 +6,16 @@ namespace Z0
 {
     public class AppCmdProviders
     {
-        readonly ReadOnlySeq<AppCmdProvider> Providers;
+        static IApiService service(IWfRuntime wf, Type type)
+            => (IApiService)type.Method("create").Invoke(null, new object[]{wf});
+
+        readonly ReadOnlySeq<Type> Providers;
 
         ReadOnlySeq<IApiService> _Services;
         
         readonly object Locker = new();
         
-        public AppCmdProviders(AppCmdProvider[] src)
+        public AppCmdProviders(Type[] src)
         {
             Providers = src;
             _Services = new();
@@ -23,17 +26,12 @@ namespace Z0
             lock(Locker)
             {
                 if(_Services.IsEmpty)
-                {
-                    _Services = Providers.Map(x => x.Service(wf));
-                }
+                    _Services = Providers.Map(x => service(wf,x));
             }
             return _Services;
         }
         
         public Type[] ServiceTypes() 
-            => Providers.Select(x => x.ServiceType).Storage;
-        
-        public static implicit operator AppCmdProviders(AppCmdProvider[] src)
-            => new AppCmdProviders(src);
+            => Providers.Storage;        
     }
 }
