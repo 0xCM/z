@@ -21,6 +21,8 @@ namespace Z0
     {
         protected ApiCmd ApiCmd => Wf.ApiCmd();
 
+        protected ApiServers ApiServers => Wf.ApiServers();
+
         protected WfAppCmd()
         {
         }
@@ -52,8 +54,8 @@ namespace Z0
             Channel.Write($"{Name}={ContextValue(Name)}");
         }
 
-        public void RunCmd(string name)
-            => ApiCmd.RunCmd(name);
+        // public void RunCmd(string name)
+        //     => ApiCmd.RunCmd(name);
 
         public virtual void Loop()
             => CmdLoop.start(Channel).Wait();

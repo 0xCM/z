@@ -8,9 +8,67 @@ namespace Z0
     using System.Linq;
 
     using static sys;
+    using static CmdActorKind;
 
     public class ApiServers : AppService
     {
+        public static Outcome exec(IWfChannel channel, CmdMethod method, CmdArgs args)
+        {
+            var output = default(object);
+            var result = Outcome.Success;
+            try
+            {
+                switch(method.Kind)
+                {
+                    case Pure:
+                        method.Definition.Invoke(method.Host, new object[]{});
+                        result = Outcome.Success;
+                    break;
+                    case Receiver:
+                        method.Definition.Invoke(method.Host, new object[1]{args});
+                        result = Outcome.Success;
+                    break;
+                    case CmdActorKind.Emitter:
+                        output = method.Definition.Invoke(method.Host, new object[]{});
+                    break;
+                    case Func:
+                        output = method.Definition.Invoke(method.Host, new object[1]{args});
+                    break;
+                    default:
+                        result = new Outcome(false, $"Unsupported {method.Definition}");
+                    break;
+                }
+
+                if(output != null)
+                {
+                    if(output is bool x)
+                        result = Outcome.define(x, output, x ? "Win" : "Fail");
+                    else if(output is Outcome y)
+                    {
+                        result = Outcome.success(y.Data, y.Message);
+                        if(sys.nonempty(y.Message))
+                        {
+                            if(y.Fail)
+                                channel.Error(y.Message);
+                            else
+                                channel.Babble(y.Message);
+                        }
+                    }
+                    else
+                        result = Outcome.success(output);
+                }
+            }
+            catch(Exception e)
+            {
+                var origin = AppMsg.orginate(method.HostType.DisplayName(), method.Definition.DisplayName(), 12);                
+                var error = Events.error(e.ToString(), origin, method.HostType);
+                channel.Error(error);
+                result = (e,error.Format());
+            }
+
+           return result;
+        }
+
         public override Type HostType 
             => typeof(ApiServers);
 
@@ -30,7 +88,6 @@ namespace Z0
             }
             return new CmdMethods(dst);
         }
-
 
         public static CmdMethods methods(IWfRuntime wf, params Assembly[] src)
         {            
@@ -170,6 +227,40 @@ namespace Z0
             where C : IApiService, new()
                 => context<C>(wf, wf.Channel, factory(), verbose);
 
+        public void EmitCmdDefs(Assembly[] src, IDbArchive dst)
+            => Cmd.emit(Channel, Cmd.defs(src), dst);
+
+        public ExecToken RunCmdScripts(FilePath src)
+        {
+            ExecToken Exec()
+            {
+                var running = Channel.Running($"Executing script {src}");
+                if(src.Missing)
+                {
+                    Channel.Error(AppMsg.FileMissing.Format(src));
+                }
+                else
+                {
+                    var script = ApiCmdScript.Empty;
+                    Cmd.parse(src, out script);
+                    ref readonly var commands = ref script.Commands;
+                    Channel.Babble($"Dispatching {commands.Count} from {src}");
+                    iter(script.Commands, cmd => {
+                        try
+                        {
+                            ApiCmd.Dispatcher.Dispatch(cmd.Name, cmd.Args);
+                        }
+                        catch(Exception e)
+                        {
+                            Channel.Error(e);
+                        }
+                    });
+                }
+                return Channel.Ran(running);
+            }
+            return sys.start(Exec).Result;        
+        }
+
         static IApiContext context<C>(IWfRuntime wf, IWfChannel channel, ReadOnlySeq<IApiService> providers, bool verbose = false)
             where C : IApiService, new()
         {
@@ -185,7 +276,6 @@ namespace Z0
                 channel.Babble($"Discovering {service} dispatchers");
 
             var dst = dict<string,CmdMethod>();
-            //iter(effectors(service), r => dst.TryAdd(r.CmdName, r));
             iter(providers, p => iter(effectors(p), r => dst.TryAdd(r.CmdName, r)));
             var dispatcher = new ApiDispatcher(channel, new CmdMethods(dst));
             AppData.Value(nameof(ICmdDispatcher), dispatcher);

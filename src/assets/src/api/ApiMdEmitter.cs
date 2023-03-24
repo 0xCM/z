@@ -27,6 +27,8 @@ namespace Z0
             return svc;
         }
 
+        ApiServers ApiServers => Wf.ApiServers();
+
         public void Emit(IApiCatalog catalog)
         {
             Emit(catalog.Assemblies);
@@ -40,8 +42,7 @@ namespace Z0
                     var types = file.Load().Types();
                     var @base = Archives.identifier(file.Path.FolderPath);
                     var filename = FS.file($"{@base}.{file.Path.FileName.WithoutExtension}", FileKind.List);
-                    var path = Target.Path(filename);
-                    emit(Channel, types, path);
+                    emit(Channel, types, Target.Path(filename));
                 }
                 catch(Exception)
                 {
@@ -91,7 +92,6 @@ namespace Z0
             var count = input.Length;
             var buffer = sys.alloc<Paired<FieldRef,string>>(count);
             ref var emissions = ref first(buffer);
-
             using var writer = dst.Writer();
             writer.WriteLine(FormatHeader());
 
@@ -185,10 +185,8 @@ namespace Z0
         public void EmitApiLiterals(params Assembly[] src)
             => EmitApiLiterals(apilits(src));
 
-        ApiCmd ApiCmd => Wf.ApiCmd();
-
         public void EmitCmdDefs(params Assembly[] src)
-            => ApiCmd.EmitCmdDefs(src, Target);
+            => ApiServers.EmitCmdDefs(src, Target);
 
         public void EmitApiTypes(Assembly[] src)
             => Channel.TableEmit(ApiTypes.describe(ApiTypes.data(src)), Target.Table<ApiTypeInfo>());

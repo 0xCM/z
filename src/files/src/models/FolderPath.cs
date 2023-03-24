@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.IO;
     using System.Linq;
 
     public readonly struct FolderPath : IFsEntry<FolderPath>

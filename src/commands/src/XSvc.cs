@@ -19,12 +19,19 @@ namespace Z0
 
             public ProjectManager ProjectManager(IWfRuntime wf)
                 => Service<ProjectManager>(wf);
+
+            public ApiServers ApiServers(IWfRuntime wf)
+                => Service<ApiServers>(wf);
+
         }
 
         static ServiceCache Services => ServiceCache.Instance;
         
         public static ApiCmd ApiCmd(this IWfRuntime wf)
             => Services.ApiCmd(wf);
+
+        public static ApiServers ApiServers(this IWfRuntime wf)
+            => Services.ApiServers(wf);
 
         public static IApiService EnvCmd(this IWfRuntime wf)
             => Services.EnvCmd(wf);

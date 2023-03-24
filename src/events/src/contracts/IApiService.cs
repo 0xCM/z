@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IApiService : IAppService, IApiCmdProvider
+    public interface IApiService : IAppService
     {     
 
     }

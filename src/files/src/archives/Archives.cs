@@ -31,7 +31,7 @@ namespace Z0
         }
 
         static FilePath IndexPath(IDbArchive src, IDbArchive dst)
-            =>  dst.Path(FS.file($"files.index.{(Hex32)src.Root.Hash}", FileKind.Csv));
+            =>  dst.Path(FS.file($"files.index", FileKind.Csv));
 
         public static ExecToken<FilePath> index(IWfChannel channel, FileQuery query, IDbArchive dst)
         {
@@ -51,7 +51,7 @@ namespace Z0
             });
 
             var target = IndexPath(query.Root.DbArchive(), dst);
-            var entries = buffer.Values.Array().Resequence();
+            var entries = buffer.Values.Array().Sort().Resequence();
             return(channel.TableEmit(entries, target), target);
         }
 
@@ -102,14 +102,6 @@ namespace Z0
             return channel.Ran(running);
         }
 
-        // public static ExecToken query(IWfChannel channel, FileQuery query, Receiver dst)
-        // {
-        //     var running = channel.Running($"Executing query over {query.Root}");
-        //     var matcher = Archives.matcher(query);
-        //     iter(matcher.GetResultsInFullPath(query.Root.Format()), f => dst.Matched(new FileUri(f)), dst.Pll);
-        //     return channel.Ran(running);
-        // }
-         
         public static FolderPath nested(FolderPath root, FilePath src)
             => root + FS.folder(FS.components(src.FolderPath).Join('/'));
 
@@ -472,7 +464,6 @@ namespace Z0
             }
             else
                 return(false, outcome.Message);
-        }
-         
+        }        
     }
 }

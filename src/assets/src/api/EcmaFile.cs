@@ -33,6 +33,8 @@ namespace Z0
 
         public readonly PEMemoryBlock ImageBlock;
 
+        public readonly ByteSize ImageSize;
+
         public readonly PEMemoryBlock MetaBlock;
 
         public readonly MetadataReader MdReader;
@@ -47,6 +49,13 @@ namespace Z0
             MetaBlock = pe.GetMetadata();
             MetaBase = MetaBlock.Pointer;
             MdReader = pe.GetMetadataReader();
+            ImageSize = ImageBlock.Length;
+        }
+
+        public ReadOnlySpan<byte> ImageData
+        {
+            [MethodImpl(Inline)]
+            get => sys.cover(ImageBase.Pointer<byte>(), ImageSize);
         }
 
         public string Format()

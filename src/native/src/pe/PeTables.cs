@@ -16,7 +16,7 @@ namespace Z0
             dst._CoffHeader = coff(src.PE);
             dst._CorHeader = cor(src.PE.PEHeaders);
             dst._PeInfo = peinfo(src.PE);
-            dst._DirectoryRows = rows(src.ModulePath.FileName, dst._Directories);
+            dst._DirectoryRows = rows(src.Source.FileName, dst._Directories);
             return dst;
         }
 
@@ -99,10 +99,11 @@ namespace Z0
                         ref readonly var section = ref skip(sections,i);
                         ref var dst = ref seek(buffer,i);
                         dst.Seq = i;
+                        dst.File = src.Source.FileName;
                         dst.SectionFlags = section.SectionCharacteristics;
                         dst.SectionName = section.Name;
-                        dst.RawDataAddress = (Address32)section.PointerToRawData;
-                        dst.RawDataSize = (uint)section.SizeOfRawData;
+                        dst.SectionBase = (Address32)section.PointerToRawData;
+                        dst.SectionSize = (uint)section.SizeOfRawData;
                     }
                 }
             }

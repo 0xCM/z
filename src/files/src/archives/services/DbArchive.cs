@@ -64,6 +64,15 @@ namespace Z0
         public DbArchive Scoped(string scope)
             => new DbArchive(Root + FS.folder(scope));
 
+        public DbArchive Scoped(ReadOnlySeq<string> src)
+            => Scoped(text.join(Chars.FSlash, src));
+
+        public DbArchive Nested(FolderPath src)
+            => Scoped(FS.components(src));
+
+        public DbArchive Nested(string scope, FolderPath src)
+            => Scoped(scope).Scoped(FS.components(src));
+
         public DbArchive Logs()
             => Targets("logs");
 

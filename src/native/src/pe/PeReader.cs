@@ -55,20 +55,20 @@ namespace Z0
 
         PeReader(FilePath src, FileStream stream, PEReader reader)
         {
-            ModulePath = src;
+            Source = src;
             Stream = stream;
             PE = reader;
         }
 
         PeReader(FilePath src)
         {
-            ModulePath = src;
+            Source = src;
             Stream = File.OpenRead(src.Name);
             PE = new PEReader(Stream);     
             Tables = PeTables.load(this);
         }
 
-        public readonly FilePath ModulePath;
+        public readonly FilePath Source;
 
         readonly FileStream Stream;
 
@@ -128,7 +128,7 @@ namespace Z0
         }
 
         public CoffModule ModuleInfo()
-            => new CoffModule(ModulePath, Tables.PeInfo, Tables.CoffHeader, Tables.CorHeader, Tables.SectionHeaders);
+            => new CoffModule(Source, Tables.PeInfo, Tables.CoffHeader, Tables.CorHeader, Tables.SectionHeaders);
 
         public PEHeaders PeHeaders
         {
@@ -190,7 +190,7 @@ namespace Z0
                         {
                             MethodRva = (Address32)rva,
                             Token = EcmaTokens.token(method),
-                            ImageName = ModulePath.FileName.Format(),
+                            ImageName = Source.FileName.Format(),
                             BodySize = body.Size,
                             LocalInit = body.LocalVariablesInitialized,
                             MaxStack = body.MaxStack,

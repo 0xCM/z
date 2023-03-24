@@ -40,6 +40,15 @@ namespace Z0
         DbArchive Scoped(string name)
             => DbFiles.Sources(name);
 
+        DbArchive Scoped(ReadOnlySeq<string> src)
+            => DbFiles.Scoped(src);
+            
+        DbArchive Nested(FolderPath src)
+            => DbFiles.Nested(src);
+
+        DbArchive Nested(string scope, FolderPath src)
+            => DbFiles.Nested(scope, src);
+
         FilePath Table<T>()
             => DbFiles.Table<T>();
 

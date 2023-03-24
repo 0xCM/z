@@ -103,7 +103,7 @@ namespace Z0
             var file = ecma.AssemblyFile();
             if(!reader.IsReferenceAssembly())
             {
-                var entry = new Entry(inc(ref Seq), file.Path, file.Path.Size, reader.ReadTargetFramework(), reader.AssemblyKey());
+                var entry = new Entry(inc(ref Seq), file.Path, file.Path.Size, reader.ReadTargetFramework(), reader.AssemblyKey(), md5(ecma.ImageData));
                 if(Lookup.TryAdd(file.Path, entry))
                 {
                     lock(Keysets)
@@ -152,11 +152,14 @@ namespace Z0
             [Render(12)]
             public readonly Kb FileSize;
 
+            [Render(48)]
+            public readonly Hash128 ContentHash;
+
             [Render(1)]
             public readonly FilePath Path;
 
             [MethodImpl(Inline)]
-            public Entry(uint seq, FilePath path, ByteSize size, string framework, AssemblyKey key)
+            public Entry(uint seq, FilePath path, ByteSize size, string framework, AssemblyKey key, Hash128 hash)
             {
                 Seq = (uint)seq;
                 Path = path;
@@ -165,6 +168,7 @@ namespace Z0
                 Version = key.Version;
                 Name = key.Name;
                 Mvid = key.Mvid;
+                ContentHash = hash;
             }
 
             public bool IsEmpty

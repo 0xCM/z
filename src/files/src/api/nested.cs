@@ -4,13 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IChecker : IApiService
+    partial struct FS
     {
-        void Run(IEventTarget dst, bool pll);
-
-        void Run(bool pll, IEventTarget dst)
-            => Run(dst,pll);
-
-        ref readonly Index<string> Specs {get;}
+        [Op]
+        public static NestedFolder nested(FolderPath root, FolderPath src)
+            => new NestedFolder(root, components(src));
     }
 }

@@ -35,7 +35,7 @@ namespace Z0
 
         [CmdOp("api/script")]
         void RunAppScript(CmdArgs args)
-            => ApiCmd.RunCmdScripts(FS.path(args[0]));
+            => ApiServers.RunCmdScripts(FS.path(args[0]));
 
         [CmdOp("env/stack")]
         void Stack()

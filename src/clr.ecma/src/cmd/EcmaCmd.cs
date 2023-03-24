@@ -75,15 +75,12 @@ namespace Z0
         void EmitHeaders()
             => EcmaEmitter.EmitSectionHeaders(sys.controller().RuntimeArchive(), Dst);
 
-        static FolderPath nested(FolderPath root, FilePath src)
-            => root + FS.folder(FS.components(src.FolderPath).Join('/'));
-
         [CmdOp("ecma/emit/stats")]
         void EcmaEmitStats(CmdArgs args)
         {
             var src = FS.dir(args[0]);
             var modules = Archives.modules(src);
-            EcmaEmitter.EmitTableStats(modules, DataTarget.Scoped("clr"));
+            EcmaEmitter.EmitTableStats(modules, EnvDb.Nested("clr", src));
             //var modules = Archives.modules(src).AssemblyFiles();
             // var stats = EcmaReader.stats(modules.Select(x => x.Path));
             // var folder = Archives.nested(DataTarget.Scoped("clr").Root, src);
@@ -95,14 +92,15 @@ namespace Z0
         void EmitTypeDefs(CmdArgs args)
         {
             var src = Archives.modules(FS.dir(args[0])).AssemblyFiles();
-            iter(src, path => {                
-                using var file = Ecma.file(path.Path);
-                var reader = Ecma.reader(file);
+            iter(src, file => {                
+                using var ecma = Ecma.file(file.Path);
+                var path = file.Path;
+                var reader = Ecma.reader(ecma);
                 if(!reader.IsReferenceAssembly())
                 {
                     var defs = reader.ReadTypeDefs();
-                    var folder = nested(DataTarget.Scoped("clr").Root, path.Path);
-                    Channel.TableEmit(defs,  folder.DbArchive().Table<EcmaTypeDef>(path.Path.FileName.WithoutExtension.Format()));
+                    var folder = FS.nested(EnvDb.Scoped("clr").Root, path.FolderPath);
+                    Channel.TableEmit(defs,  folder.DbArchive().Table<EcmaTypeDef>(file.Path.FileName.WithoutExtension.Format()));
                 }
 
             }, true);        
@@ -165,10 +163,8 @@ namespace Z0
                 var reader = file.EcmaReader();
                 var methods = reader.ReadMethodDefs();
             }, true);
-
-
-
         }
+
         [CmdOp("ecma/streams")]
         void EmitEcmaStreams(CmdArgs args)
         {
@@ -319,26 +315,26 @@ namespace Z0
             var records = rows.Array().Sort().Resequence();
             Channel.TableEmit(records, dst);
         }
+
         [CmdOp("pe/emit/headers")]
         void PeDirs(CmdArgs args)
         {
             var archives = Channel.Channeled<ModuleArchives>();
-            var sources = FS.dir(args[0]).DbArchive();
+            var root = FS.dir(args[0]);
+            var sources = root.DbArchive();
             var modules = Archives.modules(sources.Root);
             var headers = bag<PeSectionHeader>();
             var dirs = bag<PeDirectoryEntry>();
-            
             iter(modules.Members(), member => {
                 if(member.Path.FileKind() != FileKind.Pdb)
                 {
                     try
                     {
+                        var rel = FS.relative(root, member.Path);
                         using var reader = PeReader.create(member.Path);
                         var tables = reader.Tables;
-                        var sections = tables.SectionHeaders;
-                        iter(sections, section => headers.Add(section));
-                        var directories = tables.Directories;
-                        iter(directories.Values, e => dirs.Add(e));                    
+                        iter(tables.SectionHeaders, section => headers.Add(section.WithFile(FS.file(rel.Format()))));
+                        iter(tables.Directories.Values, e => dirs.Add(e));                    
                     }
                     catch(BadImageFormatException)
                     {
@@ -347,7 +343,7 @@ namespace Z0
                 }
             });
 
-            //Channel.TableEmit(headers.Array().Sort(),)
+            Channel.TableEmit(headers.Array().Sort().Resequence(), EnvDb.Nested("pe", root).Path("sections.headers", FileKind.Csv));
         }
 
         [CmdOp("ecma/dump")]
@@ -363,12 +359,13 @@ namespace Z0
             index.Report(dst, label);
             var distict = index.Distinct();
             iter(distict, entry => {
-                var path = EnvDb.Scoped("ecma/dumps").Path(FS.file($"{entry.Name}.{entry.Mvid}", FileKind.Txt));
-                if(!path.Exists)
-                {
-                    using var file = Ecma.file(entry.Path);
-                    EcmaEmitter.EmitMetadump(file.MdReader, path);
-                }
+                
+                // var path = EnvDb.Scoped("ecma/dumps").Path(FS.file($"{entry.Name}.{entry.Mvid}", FileKind.Txt));
+                // if(!path.Exists)
+                // {
+                //     using var file = Ecma.file(entry.Path);
+                //     EcmaEmitter.EmitMetadump(file.MdReader, path);
+                // }
             }, true);
         }   
 
@@ -479,7 +476,6 @@ namespace Z0
                 }
             });
         }
-
 
         [CmdOp("files/analyze")]
         void Analyze(CmdArgs args)

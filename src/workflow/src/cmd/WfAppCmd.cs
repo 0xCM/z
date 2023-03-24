@@ -403,33 +403,11 @@ namespace Z0
             });
         }
 
-        // [CmdOp("archives/injest")]
-        // void InjestFiles(CmdArgs args)
-        //     => FileIndex.Index(Archives.archive(FS.dir(args[0])), AppDb.Catalogs().Scoped("files"));
-
-
         [CmdOp("files/index")]
         void FileQuery(CmdArgs args)
         {
-            var query = Archives.query(FS.dir(args[0]));
-            Archives.index(Channel, query, EnvDb.Scoped("indices"));
-
-            // var index = FS.index();
-            // var counter = 0u;
-            // void Handler(FilePath src)
-            // {
-            //     index.Include(src);
-            //     if(sys.inc(ref counter) % 1000 == 0)
-            //         Channel.Babble($"Indexed {counter} files");
-            // }
-
-            // var receiver = QueryReceiver.create(query, r => r.WithHandler(Handler));
-            // receiver.Run(Channel);
-            // var duplicates = index.Duplicates.Map(x => x.Value).SelectMany(x => x);
-            // var unique = index.Unique;
-            // Require.equal(counter, (uint)(unique.Count + duplicates.Length));
-
-            //Channel.Status($"Indexed {unique.Count} unique files with {duplicates.Length} duplicates");
+            var sources = FS.dir(args[0]);
+            Archives.index(Channel, Archives.query(sources), EnvDb.Nested("indices", sources));
         }
 
         [CmdOp("api/servers")]
@@ -459,7 +437,6 @@ namespace Z0
                 var pdb = module.Pdb;
                 if(pdb != null)
                     Channel.Row($"Pdb: {pdb.Guid} {pdb.Path}");
-
                 });
             // iter(clrmd.Modules(), m => {
             //     Channel.Row($"{(MemoryAddress)m.Address} {m.Name}");
