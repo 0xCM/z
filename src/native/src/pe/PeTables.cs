@@ -67,6 +67,7 @@ namespace Z0
             return dst;
 
         }
+
         static CoffHeader coff(PEReader pe)
         {
             var src = pe.PEHeaders.CoffHeader;
