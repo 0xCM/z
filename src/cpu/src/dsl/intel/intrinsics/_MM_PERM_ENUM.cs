@@ -10,18 +10,46 @@ namespace Z0.dsl.intel
     [SymSource("dsl.intrinsics")]
     public enum _MM_PERM_ENUM : byte
     {
-        _MM_PERM_AAAA = 0x00, _MM_PERM_AAAB = 0x01, _MM_PERM_AAAC = 0x02,
-        _MM_PERM_AAAD = 0x03, _MM_PERM_AABA = 0x04, _MM_PERM_AABB = 0x05,
-        _MM_PERM_AABC = 0x06, _MM_PERM_AABD = 0x07, _MM_PERM_AACA = 0x08,
-        _MM_PERM_AACB = 0x09, _MM_PERM_AACC = 0x0A, _MM_PERM_AACD = 0x0B,
+        _MM_PERM_AAAA = 0x00, 
+        
+        _MM_PERM_AAAB = 0x01, 
+        
+        _MM_PERM_AAAC = 0x02,
+
+        _MM_PERM_AAAD = 0x03, 
+        
+        _MM_PERM_AABA = 0x04, 
+        
+        _MM_PERM_AABB = 0x05,
+
+        _MM_PERM_AABC = 0x06, 
+        
+        _MM_PERM_AABD = 0x07, 
+        
+        _MM_PERM_AACA = 0x08,
+
+        _MM_PERM_AACB = 0x09, 
+        
+        _MM_PERM_AACC = 0x0A, 
+        
+        _MM_PERM_AACD = 0x0B,
+
         _MM_PERM_AADA = 0x0C, _MM_PERM_AADB = 0x0D, _MM_PERM_AADC = 0x0E,
+
         _MM_PERM_AADD = 0x0F, _MM_PERM_ABAA = 0x10, _MM_PERM_ABAB = 0x11,
+
         _MM_PERM_ABAC = 0x12, _MM_PERM_ABAD = 0x13, _MM_PERM_ABBA = 0x14,
+
         _MM_PERM_ABBB = 0x15, _MM_PERM_ABBC = 0x16, _MM_PERM_ABBD = 0x17,
+
         _MM_PERM_ABCA = 0x18, _MM_PERM_ABCB = 0x19, _MM_PERM_ABCC = 0x1A,
+
         _MM_PERM_ABCD = 0x1B, _MM_PERM_ABDA = 0x1C, _MM_PERM_ABDB = 0x1D,
+
         _MM_PERM_ABDC = 0x1E, _MM_PERM_ABDD = 0x1F, _MM_PERM_ACAA = 0x20,
+
         _MM_PERM_ACAB = 0x21, _MM_PERM_ACAC = 0x22, _MM_PERM_ACAD = 0x23,
+
         _MM_PERM_ACBA = 0x24, _MM_PERM_ACBB = 0x25, _MM_PERM_ACBC = 0x26,
         _MM_PERM_ACBD = 0x27, _MM_PERM_ACCA = 0x28, _MM_PERM_ACCB = 0x29,
         _MM_PERM_ACCC = 0x2A, _MM_PERM_ACCD = 0x2B, _MM_PERM_ACDA = 0x2C,

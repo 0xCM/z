@@ -16,34 +16,39 @@ namespace Z0
 
         public string ReadTargetFramework()
         {
-            var attribs = MD.GetAssemblyDefinition().GetCustomAttributes().Select(x => MD.GetCustomAttribute(x));
-            var target = EmptyString;
-            foreach(var attrib in attribs)
+            try
             {
-                var cons = attrib.Constructor;
-                switch(cons.Kind)
+                var attribs = MD.GetAssemblyDefinition().GetCustomAttributes().Select(x => MD.GetCustomAttribute(x));
+                foreach(var attrib in attribs)
                 {
-                    case HandleKind.MemberReference:
+                    var cons = attrib.Constructor;
+                    switch(cons.Kind)
                     {
-                        var mref = ReadMemberRef((MemberReferenceHandle)cons);
-                        var parent = mref.Parent;
-                        var type = MD.GetTypeReference((TypeReferenceHandle)parent);
-                        var name = String(type.Name);
-                        if(name == nameof(TargetFrameworkAttribute))
+                        case HandleKind.MemberReference:
                         {
-                            var values = attrib.GetParameterValues(MD);
-                            target = values[0];
+                            var mref = ReadMemberRef((MemberReferenceHandle)cons);
+                            var parent = mref.Parent;
+                            var type = MD.GetTypeReference((TypeReferenceHandle)parent);
+                            var name = String(type.Name);
+                            if(name == nameof(TargetFrameworkAttribute))
+                            {
+                                return attrib.GetParameterValues(MD)[0];
+                            }
+                            
                         }
-                        
-                    }
-                    break;
-                    case HandleKind.MethodDefinition:
-                        var mdef = ReadMethodDef((MethodDefinitionHandle)cons);
-                        
-                    break;
-                }                                
+                        break;
+                        case HandleKind.MethodDefinition:
+                            var mdef = ReadMethodDef((MethodDefinitionHandle)cons);
+                            
+                        break;
+                    }                                
+                }
             }
-            return target;
+            catch(Exception e)
+            {
+                term.warn(e);
+            }
+            return EmptyString;
         }
     }
 }

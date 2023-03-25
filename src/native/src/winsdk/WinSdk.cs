@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class WinSdk : WfSvc<WinSdk>
+    public class WinSdk : AppService<WinSdk>
     {
         public IDbArchive Root()
-            => AppSettings.Sdk("windows");
+            => AppSettings.Default.Sdk("windows");
 
         public IDbArchive Kit()
             => Root().Scoped("kit");

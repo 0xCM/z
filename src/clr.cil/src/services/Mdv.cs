@@ -324,7 +324,6 @@ namespace System.Reflection.Metadata
             writer.WriteLine();
         }
 
-
         public static void VisualizeMethodIL(MetadataVisualizer visualizer, MetadataReader mdReader, PEReader peReader)
         {
             foreach (var methodHandle in mdReader.MethodDefinitions)

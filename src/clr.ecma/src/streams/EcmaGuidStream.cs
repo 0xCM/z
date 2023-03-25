@@ -2,12 +2,14 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Lang.Cpp
+namespace Z0
 {
-    public class ConstExtractor : WfSvc<ConstExtractor>
+    public record class EcmaGuidStream : EcmaStream
     {
+        public EcmaGuidStream(MemoryAddress @base, ByteSize size)
+            : base(@base,size,EcmaStreamKind.Blob)
+        {
 
-
-
+        }
     }
 }

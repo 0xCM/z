@@ -73,11 +73,10 @@ namespace Z0
             return buffer.Array().Sort().Resequence();
         }
 
-        public void Report(IDbArchive dst, string label = null)
+        public void Report(IDbArchive dst)
         {
-            var _label = text.ifempty(label,  ((Hex32)Source.Root.Hash).Format());
-            Channel.TableEmit(Report(), dst.Path($"assemblies.index.{_label}", FileKind.Csv));
-            Channel.TableEmit(Distinct(), dst.Path($"assemblies.index.distinct.{_label}", FileKind.Csv));
+            Channel.TableEmit(Report(), dst.Path($"assemblies.index", FileKind.Csv));
+            Channel.TableEmit(Distinct(), dst.Path($"assemblies.index.distinct", FileKind.Csv));
         }
 
         public void CopyTo(IDbArchive dst)

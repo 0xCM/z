@@ -7,10 +7,6 @@ namespace Msil
 
     public sealed class ILReader : IEnumerable<ILInlineInstruction>, IEnumerable
     {
-        static readonly Type s_runtimeMethodInfoType = Type.GetType("System.Reflection.RuntimeMethodInfo");
-
-        static readonly Type s_runtimeConstructorInfoType = Type.GetType("System.Reflection.RuntimeConstructorInfo");
-
         static readonly OpCode[] s_OneByteOpCodes;
 
         static readonly OpCode[] s_TwoByteOpCodes;
@@ -20,9 +16,9 @@ namespace Msil
             s_OneByteOpCodes = new OpCode[0x100];
             s_TwoByteOpCodes = new OpCode[0x100];
 
-            foreach (FieldInfo fi in typeof(OpCodes).GetFields(BindingFlags.Public | BindingFlags.Static))
+            foreach (var field in typeof(OpCodes).GetFields(BindingFlags.Public | BindingFlags.Static))
             {
-                OpCode opCode = (OpCode)fi.GetValue(null);
+                OpCode opCode = (OpCode)field.GetValue(null);
                 ushort value = unchecked((ushort)opCode.Value);
                 if (value < 0x100)
                 {

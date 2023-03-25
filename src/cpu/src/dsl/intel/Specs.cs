@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0.dsl.intel
 {
-    using Expr;
-
     using static math;
     using static BitNumbers;
 

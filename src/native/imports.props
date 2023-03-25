@@ -3,6 +3,6 @@
     <ProjectReference Include="$(Numbers)" />
     <ProjectReference Include="$(EMath)" />
     <ProjectReference Include="$(Dynamic)" />
-    <ProjectReference Include="$(Db)" />
+    <ProjectReference Include="$(Buffers)" />
   </ItemGroup>
 </Project>

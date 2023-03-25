@@ -14,9 +14,12 @@ namespace Z0
     //     case the InternalAddRuntimeType method is called which uses ELEMENT_TYPE_INTERNAL.
     //     We need to support this case when we're decompiling IL emitted for DynamicMethods.
 
+    /// <summary>
+    /// Taken from https://github.com/dotnet/runtime/src/libraries/System.Linq.Expressions/tests/ILReader/SigParser.cs
+    /// </summary>
     [ApiHost]
     public class EcmaSigParser
-    {
+    {        
         /*
 
         Sig ::= MethodDefSig | MethodRefSig | StandAloneMethodSig | FieldSig | PropertySig | LocalVarSig
@@ -185,7 +188,10 @@ namespace Z0
         int pbEnd;
 
         // a method with given elem_type
-        protected virtual void NotifyBeginMethod(sig_elem_type elem_type) { }
+        protected virtual void NotifyBeginMethod(sig_elem_type elem_type) 
+        {
+
+         }
 
         protected virtual void NotifyEndMethod() { }
 
@@ -198,15 +204,24 @@ namespace Z0
         protected virtual void NotifyEndRetType() { }
 
         // starting a parameter
-        protected virtual void NotifyBeginParam() { }
+        protected virtual void NotifyBeginParam() 
+        { 
+
+        }
 
         protected virtual void NotifyEndParam() { }
 
         // sentinel indication the location of the "..." in the method signature
-        protected virtual void NotifySentinal() { }
+        protected virtual void NotifySentinal() 
+        { 
+
+        }
 
         // number of generic parameters in this method signature (if any)
-        protected virtual void NotifyGenericParamCount(sig_count count) { }
+        protected virtual void NotifyGenericParamCount(sig_count count) 
+        {
+
+        }
 
         // a field with given elem_type
         protected virtual void NotifyBeginField(sig_elem_type elem_type) { }
@@ -269,32 +284,56 @@ namespace Z0
         protected virtual void NotifyVoid() { }
 
         // the type has the indicated custom modifiers (which can be optional or required)
-        protected virtual void NotifyCustomMod(sig_elem_type cmod, int token, sig_index_type indexType, int index) { }
+        protected virtual void NotifyCustomMod(sig_elem_type cmod, int token, sig_index_type indexType, int index) 
+        {
+
+        }
 
         // the type is a simple type, the elem_type defines it fully
-        protected virtual void NotifyTypeSimple(sig_elem_type elem_type) { }
+        protected virtual void NotifyTypeSimple(sig_elem_type elem_type) 
+        {
+
+         }
 
         // the type is specified by the given index of the given index type (normally a type index in the type metadata)
         // this callback is normally qualified by other ones such as NotifyTypeClass or NotifyTypeValueType
-        protected virtual void NotifyTypeDefOrRef(int token, sig_index_type indexType, int index) { }
+        protected virtual void NotifyTypeDefOrRef(int token, sig_index_type indexType, int index) 
+        {
+
+        }
 
         // number indicates the number of type specifications for the generic types that will follow
-        protected virtual void NotifyTypeGenericInst(sig_mem_number number) { }
+        protected virtual void NotifyTypeGenericInst(sig_mem_number number) 
+        { 
+
+        }
 
         // the type is the type of the nth generic type parameter for the class
-        protected virtual void NotifyTypeGenericTypeVariable(sig_mem_number number) { }
+        protected virtual void NotifyTypeGenericTypeVariable(sig_mem_number number) 
+        { 
+
+        }
 
         // the type is the type of the nth generic type parameter for the member
-        protected virtual void NotifyTypeGenericMemberVariable(sig_mem_number number) { }
+        protected virtual void NotifyTypeGenericMemberVariable(sig_mem_number number) 
+        { 
+
+        }
 
         // the type will be a value type
         protected virtual void NotifyTypeValueType() { }
 
         // the type will be a class
-        protected virtual void NotifyTypeClass() { }
+        protected virtual void NotifyTypeClass() 
+        {
+
+         }
 
         // the type is a pointer to a type (nested type notifications follow)
-        protected virtual void NotifyTypePointer() { }
+        protected virtual void NotifyTypePointer() 
+        {
+
+        }
 
         // the type is a function pointer, followed by the type of the function
         protected virtual void NotifyTypeFunctionPointer() { }
@@ -389,8 +428,7 @@ namespace Z0
         [Op]
         bool ParseMethod(sig_elem_type elem_type)
         {
-            // MethodDefSig ::= [[HASTHIS] [EXPLICITTHIS]] (DEFAULT|VARARG|GENERIC GenParamCount)
-            //                    ParamCount RetType Param* [SENTINEL Param+]
+            // MethodDefSig ::= [[HASTHIS] [EXPLICITTHIS]] (DEFAULT|VARARG|GENERIC GenParamCount) ParamCount RetType Param* [SENTINEL Param+]
 
             NotifyBeginMethod(elem_type);
 

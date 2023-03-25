@@ -5,21 +5,19 @@
 namespace Z0
 {
     [StructLayout(LayoutKind.Sequential,Pack=1)]
-    public record class EcmaMethodDef
+    public record struct EcmaMethodDef
     {
-        [Render(12)]
         public EcmaToken Token;
 
-        [Render(32)]
         public string Name;
 
-        [Render(12)]
         public Address32 Rva;
+        
+        public BinaryCode SigData;
 
-        [Render(32)]
+        public MethodAttributes Attributes;
+
         public MethodImplAttributes ImplAttributes;
 
-        [Render(1)]
-        public MethodAttributes Attributes;
     }
 }

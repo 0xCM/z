@@ -4,18 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public enum EcmaMemberKind : byte
-    {
-        None,
-
-        Class,
-
-        Field,
-
-        Method,
-
-        Property,
-    }
     public record class EcmaMember : IComparable<EcmaMember>
     {        
         [Render(12)]

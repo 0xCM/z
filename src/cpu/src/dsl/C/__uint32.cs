@@ -169,7 +169,7 @@ namespace Z0.dsl.C
 
         [MethodImpl(Inline)]
         public static D operator ++ (D x)
-            =>  ++x.Data;
+            => ++x.Data;
 
         public static D zero => 0;
 

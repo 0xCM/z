@@ -21,15 +21,22 @@ namespace Z0
         public EcmaMethodImport ReadMethodImport(MethodDefinition src)
         {
             var dst = EcmaMethodImport.Empty;
+            try
+            {
             if(IsPinvoke(src))
             {
                 var import = src.GetImport();
                 var moduleRef = MD.GetModuleReference(import.Module);
                 var declaringType = MD.GetTypeDefinition(src.GetDeclaringType());
                 dst.Name = String(src.Name);
-                dst.Dll = MD.GetString(moduleRef.Name);
+                dst.Library = String(moduleRef.Name);
                 dst.DeclaringType = $"{String(declaringType.Namespace)}.{String(declaringType.Name)}";
                 dst.MethodSignature = src.DecodeSignature<string, GenericContext>(GSTP, null);
+            }
+            }
+            catch(Exception)
+            {
+                term.warn($"Reading import for {AssemblyKey()}::{src.Name} failed");
             }
 
             return dst;            

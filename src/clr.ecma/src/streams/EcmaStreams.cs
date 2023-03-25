@@ -34,8 +34,8 @@ namespace Z0
         public static EcmaBlobStream blobs(MetadataRoot root)
             => new EcmaBlobStream(root.BaseAddress + root.BlobStreamHeader.Offset, root.BlobStreamHeader.Size);
 
-        public static EcmaBlobStream guids(MetadataRoot root)
-            => new EcmaBlobStream(root.BaseAddress + root.BlobStreamHeader.Offset, root.BlobStreamHeader.Size);
+        public static EcmaGuidStream guids(MetadataRoot root)
+            => new EcmaGuidStream(root.BaseAddress + root.GuidStreamHeader.Offset, root.GuidStreamHeader.Size);
 
         public static EcmaStringStream strings(MetadataRoot root, bool user)
             => new EcmaStringStream(
@@ -43,5 +43,4 @@ namespace Z0
                 user ? root.UserStringStreamHeader.Size : root.StringStreamHeader.Size, 
                 user);
     }
-
 }

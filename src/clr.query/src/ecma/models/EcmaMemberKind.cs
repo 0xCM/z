@@ -4,8 +4,16 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public record class EcmaPinvokeMethodDef : EcmaMethodDef
+    public enum EcmaMemberKind : byte
     {
-        public EcmaMethodImport Import;
-    }   
+        None,
+
+        Class,
+
+        Field,
+
+        Method,
+
+        Property,
+    }
 }

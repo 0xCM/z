@@ -8,24 +8,24 @@ namespace Z0
 
     partial class EcmaReader
     {
-        [MethodImpl(Inline), Op]
+        [Op]
         public string String(UserStringHandle handle)
             => MD.GetUserString(handle);
 
-        [MethodImpl(Inline), Op]
+        [Op]
         public string String(DocumentNameBlobHandle handle)
             => MD.GetString(handle);
 
-        [MethodImpl(Inline), Op]
-        public string String(StringHandle src)
-            => MD.GetString(src);
+        [Op]
+        public string String(StringHandle handle)
+            => MD.GetString(handle);
 
-        public uint Strings(EcmaStringKind kind, List<string> dst)
-            => kind switch {
-                EcmaStringKind.User => ReadUserStrings(dst),
-                EcmaStringKind.System => ReadSystemStrings(dst),
-                _ => 0u
-            };
+        // public uint Strings(EcmaStringKind kind, List<string> dst)
+        //     => kind switch {
+        //         EcmaStringKind.User => ReadUserStrings(dst),
+        //         EcmaStringKind.System => ReadSystemStrings(dst),
+        //         _ => 0u
+        //     };
 
         uint ReadUserStrings(List<string> dst)
         {

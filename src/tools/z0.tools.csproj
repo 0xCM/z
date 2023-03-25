@@ -2,6 +2,7 @@
   <Import Project="$(ProjectProps)\usings.props"/>
   <ItemGroup>
      <ProjectReference Include="$(Native)"/>
+     <ProjectReference Include="$(Commands)"/>
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>
