@@ -4,9 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     [ApiComplete]
-    struct Msg
+    partial struct Msg
     {
 
         public static MsgPattern<string> ChipCodeNotFound => "Code for chip {0} not found";

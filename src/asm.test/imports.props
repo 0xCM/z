@@ -1,6 +1,6 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(AsmCore)" />
+    <ProjectReference Include="$(Asm)" />
     <ProjectReference Include="$(IntelSvc)" />
     <ProjectReference Include="$(Workflow)" />
   </ItemGroup>

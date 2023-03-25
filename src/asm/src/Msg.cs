@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [ApiComplete]
     partial struct Msg
     {
         public static MsgPattern<Count> CollectingBlocks => "Collecting code blocks from {0} routines";
