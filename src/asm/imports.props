@@ -4,5 +4,8 @@
     <ProjectReference Include="$(ClrEcma)" />
     <ProjectReference Include="$(Polyrand)" />
     <ProjectReference Include="$(Workflow)" />
+    <ProjectReference Include="$(ApiCode)" />
+    <PackageReference Include="Iced" Version="1.4.0" />
   </ItemGroup>
+
 </Project>

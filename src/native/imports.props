@@ -4,5 +4,6 @@
     <ProjectReference Include="$(EMath)" />
     <ProjectReference Include="$(Dynamic)" />
     <ProjectReference Include="$(Buffers)" />
+    <ProjectReference Include="$(AsmCore)" />
   </ItemGroup>
 </Project>

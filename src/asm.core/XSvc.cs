@@ -9,12 +9,12 @@ namespace Z0
     [ApiHost]
     public static class XSvc
     {
-        sealed class Svc : AppServices<Svc>
-        {
+        // sealed class Svc : AppServices<Svc>
+        // {
 
-        }
+        // }
 
-        static Svc Services => Svc.Instance;
+        // static Svc Services => Svc.Instance;
 
 
     }
