@@ -41,7 +41,7 @@ namespace Z0
                     }
                 }
             }
-            return new DisasmDataFile(context.Root(src), src,dst.ToArray());
+            return new DisasmDataFile(context.Root(src.Path), src,dst.ToArray());
         }
     }
 }

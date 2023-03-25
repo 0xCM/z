@@ -53,10 +53,10 @@ namespace Z0
         public AsmInlineComment Comment;
 
         [Render(1)]
-        public _FileUri Source;
+        public FilePath Source;
 
         public string DocName
-            => Source.Path.FileName.Format();
+            => Source.FileName.Format();
 
         public AsmRowKey RowKey
         {

@@ -27,7 +27,7 @@ namespace Z0
         XedProject XedProject => Wf.XedProject();
 
         public IProjectWorkspace LlvmModels(string scope)
-            => Projects.load(AppDb.Dev($"llvm.models/{scope}"), scope);
+            => Projects.load(AppDb.Dev($"llvm.models/{scope}"));
 
         [CmdOp("xed/headers")]
         void XedHeaders()

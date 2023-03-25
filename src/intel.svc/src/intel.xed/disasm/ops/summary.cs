@@ -14,7 +14,7 @@ namespace Z0
         public static DisasmSummary summary(ProjectContext context, in DisasmDataFile src)
         {
             var lines = sys.bag<DisasmLines>();
-            summary(src.Source, context.Root(src.Source), src.Blocks, lines).Require();
+            summary(src.Source, context.Root(src.Source.Path), src.Blocks, lines).Require();
             var sorted = lines.ToArray().Sort();
             return new DisasmSummary(src, src.Origin, resequence(sorted.Select(line => line.Row)), sorted);
         }

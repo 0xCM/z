@@ -10,7 +10,7 @@ namespace Z0
     {
         const string SectionMarker = "Disassembly of section ";
 
-        _FileUri Source;
+        FilePath Source;
 
         ObjDumpRow Row;
 
@@ -84,7 +84,7 @@ namespace Z0
                     {
                         Row = ObjDumpRow.Init(src);
                         Row.Section = Section;
-                        Row.Source = path.ToUri().LineRef(N);
+                        Row.Source = new FileUri(path.Format()).LineRef(N);
                         result = DataParser.parse(text.left(content, k), out Row.IP);
                         if(result.Fail)
                         {

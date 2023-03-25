@@ -10,10 +10,6 @@ namespace Z0
     {
         SymGen SymGen => Channel.Channeled<SymGen>();
 
-        public IProjectWorkspace EtlSource(ProjectId src)
-            => Projects.load(AppDb.Dev($"llvm.models/{src}"), src);
-
-
         [CmdOp("gen/limits")]
         Outcome XedCheck(CmdArgs args)
         {

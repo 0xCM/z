@@ -137,7 +137,7 @@ namespace Z0
                     docid = row.OriginId;
                     blockname = row.BlockName;
                     source = row.Source;
-                    docname = row.Source.Path.FileName.Format();
+                    docname = row.Source.FileName.Format();
                     @base = row.BlockAddress;
                 }
 
@@ -161,7 +161,7 @@ namespace Z0
 
                 docid = row.OriginId;
                 blockname = row.BlockName;
-                docname = row.Source.Path.FileName.Format();
+                docname = row.Source.FileName.Format();
                 @base = row.BlockAddress;
                 size += row.Size;
 
