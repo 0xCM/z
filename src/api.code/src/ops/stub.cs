@@ -21,7 +21,7 @@ namespace Z0
             ByteReader.read6(data, buffer);
             if(JmpRel32.test(buffer))
             {
-                stub = ApiNative.asmhex(slice(buffer, 0, StubSize));
+                stub = AsmHexApi.asmhex(slice(buffer, 0, StubSize));
                 Rip rip = (src, StubSize);
                 target = AsmRel.target(rip, stub.Bytes);
             }

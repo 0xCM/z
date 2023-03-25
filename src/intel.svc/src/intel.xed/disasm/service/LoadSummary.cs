@@ -36,7 +36,7 @@ namespace Z0
                 result = EncodingId.parse(skip(cells, j++), out dst.EncodingId);
                 result = AsmParsers.parse(skip(cells, j++), out dst.InstructionId);
                 result = DataParser.parse(skip(cells, j++), out dst.IP);
-                result = ApiNative.parse(skip(cells, j++), out dst.Encoded);
+                result = AsmHexApi.parse(skip(cells, j++), out dst.Encoded);
                 result = DataParser.parse(skip(cells, j++), out dst.Size);
                 result = AsmExpr.parse(skip(cells, j++), out dst.Asm);
                 result = DataParser.parse(skip(cells, j++), out dst.Source);

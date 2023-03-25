@@ -28,12 +28,12 @@ namespace Z0
 
         public ObjDumpParser()
         {
-            Reset(FileRef.Empty);
+            Reset(FilePath.Empty);
         }
 
-        void Reset(in FileRef src)
+        void Reset(FilePath path)
         {
-            Row = ObjDumpRow.Init(src);
+            Row = ObjDumpRow.Init(path);
             Section = EmptyString;
             Buffer = new();
             ParsingSection = false;
@@ -42,14 +42,13 @@ namespace Z0
             N = LineNumber.Empty;
         }
 
-        public Outcome Parse(ProjectContext context, in FileRef src, List<ObjDumpRow> dst)
+        public Outcome Parse(ProjectContext context, FilePath src, List<ObjDumpRow> dst)
         {
             var result = Outcome.Success;
-            var path = src.Path;
-            var data = path.ReadLines().Where(x => x != null).View;
+            var data = src.ReadLines().Where(x => x != null).View;
             var count = data.Length;
             var docseq = 0u;
-            var origin = context.Root(path);
+            var origin = context.Root(src);
             for(var x=0; x<count; x++)
             {
                 N++;
@@ -84,7 +83,7 @@ namespace Z0
                     {
                         Row = ObjDumpRow.Init(src);
                         Row.Section = Section;
-                        Row.Source = new FileUri(path.Format()).LineRef(N);
+                        Row.Source = new FileUri(src.Format()).LineRef(N);
                         result = DataParser.parse(text.left(content, k), out Row.IP);
                         if(result.Fail)
                         {
@@ -98,7 +97,7 @@ namespace Z0
                         if(y > 0)
                         {
                             var hex = text.trim(text.left(asm, y));
-                            result = ApiNative.parse(hex, out Row.Encoded);
+                            result = AsmHexApi.parse(hex, out Row.Encoded);
                             if(result.Fail)
                             {
                                 result = (false, AppMsg.ParseFailure.Format(nameof(AsmHexCode), hex));
@@ -135,7 +134,7 @@ namespace Z0
             return result;
         }
 
-        public Outcome Parse(ProjectContext context, in FileRef src, out Index<ObjDumpRow> dst)
+        public Outcome Parse(ProjectContext context, FilePath src, out Index<ObjDumpRow> dst)
         {
             Reset(src);
             var result = Parse(context, src, Buffer);

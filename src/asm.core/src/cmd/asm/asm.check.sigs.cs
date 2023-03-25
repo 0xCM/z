@@ -109,7 +109,7 @@ namespace Z0
             for(var i=0; i<count; i++)
             {
                 ref readonly var line = ref skip(lines,i);
-                ApiNative.parse(line, out var code);
+                AsmHexApi.parse(line, out var code);
                 Write(code.Format());
             }
         }

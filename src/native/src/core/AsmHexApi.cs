@@ -7,18 +7,25 @@ namespace Z0
     using static sys;
 
     [ApiHost]
-    public class ApiNative
+    public class AsmHexApi
     {
+        [StructLayout(LayoutKind.Sequential,Size=16)]
+        struct ByteBlock16
+        {
+            public static ByteBlock16 Empty => default;
+        }
+
         [Op]
         public static bool parse(ReadOnlySpan<char> src, out AsmHexCode dst)
         {
             var buffer = ByteBlock16.Empty;
-            var result = Hex.parse(src, buffer.Bytes);
+            var bytes = sys.bytes(buffer);
+            var result = Hex.parse(src, bytes);
             if(result)
             {
                 var size = Demand.lteq((byte)result.Data,(byte)15);
-                var data = slice(buffer.Bytes,0,size);
-                buffer[15] = size;
+                var data = slice(bytes,0,size);
+                seek(bytes,15) = size;
                 dst = new AsmHexCode(@as<ByteBlock16,Cell128>(buffer));
             }
             else

@@ -243,11 +243,8 @@ namespace Z0.Asm
 
         [MethodImpl(Inline), Op]
         public static BinaryCode code(in CodeBlock src, uint offset, byte size)
-            => core.slice(src.View, offset, size).ToArray();
+            => sys.slice(src.View, offset, size).ToArray();
 
-        [Op]
-        public static string bitstring(in AsmHexCode src)
-            => ApiNative.bitstring(src);
 
         [MethodImpl(Inline), Op]
         public static void encode(RexPrefix a0, Hex8 a1, Imm64 a2, AsmHexWriter dst)

@@ -48,7 +48,7 @@ namespace Z0
             if(!outcome)
                 return outcome;
 
-            outcome = ApiNative.parse(skip(input, i++).View, out dst.Encoded);
+            outcome = AsmHexApi.parse(skip(input, i++).View, out dst.Encoded);
             if(!outcome)
                 return outcome;
 

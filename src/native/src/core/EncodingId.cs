@@ -21,8 +21,8 @@ namespace Z0
         [Op]
         public static EncodingId from(MemoryAddress ip, ReadOnlySpan<byte> encoding)
         {
-            var storage = ByteBlock8.Empty;
-            var dst = storage.Bytes;
+            var storage = 0ul;
+            var dst = sys.bytes(storage);
             var ipbytes = bytes((uint)ip);
             var size = (byte)encoding.Length;
             var k=7;

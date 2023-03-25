@@ -36,7 +36,7 @@ namespace Z0
             var project = context.Project.ProjectId;
             EtlTargets(project).Delete();
             Channel.TableEmit(context.FileIndex.Members().Array().Sort().Resequence(), AppDb.EtlTable(project,"files.catalog"));
-            var objects = CalcObjRows(context);
+            var objects = Channel.Channeled<ObjDump>().CalcObjRows(context);
             Channel.TableEmit(objects, AppDb.EtlTable<ObjDumpRow>(project));
             var blocks = AsmObjects.blocks(objects);
             Channel.TableEmit(blocks, AppDb.EtlTable<ObjBlock>(project));
@@ -112,7 +112,7 @@ namespace Z0
             => Coff.LoadSymIndex(id);
 
         public Index<ObjDumpRow> LoadRows(ProjectId id)
-            => CoffObjects.rows(AppDb.EtlTable<ObjDumpRow>(id));
+            => ObjDump.rows(AppDb.EtlTable<ObjDumpRow>(id));
 
         public Index<ObjBlock> LoadBlocks(ProjectId id)
             => blocks(AppDb.EtlTable<ObjBlock>(id));
@@ -230,35 +230,6 @@ namespace Z0
             return buffer.ToArray();
         }
 
-        public Index<ObjDumpRow> CalcObjRows(ProjectContext context)
-        {
-            var project = context.Project;
-            var src = context.Docs(FileKind.ObjAsm).Array().Sort().Index();
-            var result = Outcome.Success;
-            var formatter = CsvTables.formatter<ObjDumpRow>();
-            var buffer = sys.bag<ObjDumpRow>();
-
-            iter(src, member => {
-                result = CoffObjects.parse(context, member, out var records);
-                if(result.Fail)
-                {
-                    Channel.Error(result.Message);
-                    return;
-                }
-
-                var docseq = 0u;
-                for(var j=0; j<records.Count; j++)
-                {
-                    ref var record = ref records[j];
-                    if(record.IsBlockStart)
-                        continue;
-
-                    buffer.Add(record);
-                }
-            }, PllExec);
-
-            return buffer.ToArray().Sort().Resequence();
-        }
 
         public void EmitRecoded(ProjectContext context, ReadOnlySeq<AsmCodeBlocks> blocks)
         {
@@ -302,7 +273,7 @@ namespace Z0
             for(var i=0; i<count; i++)
             {
                 ref readonly var file = ref files[i];
-                var result = CoffObjects.parse(context, file, out var rows);
+                var result = ObjDump.parse(context, file.Path, out var rows);
                 if(result.Fail)
                     Errors.Throw(result.Message);
 
@@ -445,7 +416,7 @@ namespace Z0
                 if(xi > 0)
                 {
                     var enc = text.right(body,xi + EncodingMarker.Length + 1);
-                    if(ApiNative.parse(enc, out var encoding))
+                    if(AsmHexApi.parse(enc, out var encoding))
                     {
                         record.Encoded = encoding;
                         ip += encoding.Size;
@@ -516,7 +487,7 @@ namespace Z0
                     continue;
                 }
 
-                result = ApiNative.parse(hex, out dst.Encoded);
+                result = AsmHexApi.parse(hex, out dst.Encoded);
                 if(result.Fail)
                 {
                     result = (false, string.Format("Line {0}, field {1}", line.LineNumber, nameof(dst.Encoded)));

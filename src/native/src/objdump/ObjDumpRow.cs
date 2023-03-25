@@ -86,10 +86,10 @@ namespace Z0
             return result;
         }
 
-        public static ObjDumpRow Init(in FileRef src)
+        public static ObjDumpRow Init(FilePath path)
         {
             var dst = Empty();
-            dst.OriginId = src.DocId;
+            dst.OriginId = (Hex32)path.Hash;
             return dst;
         }
 

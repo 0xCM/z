@@ -55,7 +55,7 @@ namespace Z0
         }
 
         public string BitString
-            => ApiNative.bitstring(this);
+            => AsmHexApi.bitstring(this);
 
         public override int GetHashCode()
             => Hash;
@@ -65,7 +65,7 @@ namespace Z0
             => Data.Equals(src.Data);
 
         public string Format()
-            => ApiNative.format(this);
+            => AsmHexApi.format(this);
 
         public override string ToString()
             => Format();
@@ -76,19 +76,19 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator AsmHexCode(BinaryCode src)
-            => ApiNative.asmhex(src.View);
+            => AsmHexApi.asmhex(src.View);
 
         [MethodImpl(Inline)]
         public static implicit operator AsmHexCode(ReadOnlySpan<byte> src)
-            => ApiNative.asmhex(src);
+            => AsmHexApi.asmhex(src);
 
         [MethodImpl(Inline)]
         public static implicit operator AsmHexCode(byte[] src)
-            => ApiNative.asmhex(src);
+            => AsmHexApi.asmhex(src);
 
         [MethodImpl(Inline)]
         public static implicit operator AsmHexCode(string src)
-            => ApiNative.asmhex(src);
+            => AsmHexApi.asmhex(src);
 
         public static AsmHexCode Empty
         {

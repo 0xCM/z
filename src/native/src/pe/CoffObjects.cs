@@ -33,7 +33,7 @@ namespace Z0
                 result = DataParser.parse(data[j++], out dst.BlockName);
                 result = AddressParser.parse(data[j++], out dst.IP);
                 result = DataParser.parse(data[j++], out dst.Size);
-                result = ApiNative.parse(data[j++].View, out dst.Encoded);
+                result = AsmHexApi.parse(data[j++].View, out dst.Encoded);
                 dst.Asm = text.trim(data[j++].Text);
                 result = AsmInlineComment.parse(data[j++].View, out dst.Comment);
                 result = DataParser.parse(data[j++], out dst.Source);
@@ -41,9 +41,6 @@ namespace Z0
 
             return buffer;
         }
-
-        public static Outcome parse(ProjectContext context, in FileRef src, out Index<ObjDumpRow> dst)
-            => new ObjDumpParser().Parse(context, src, out dst);
 
         public static Outcome parse(string src, ref uint seq, out ObjSymRow dst)
         {

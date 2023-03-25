@@ -8,6 +8,6 @@ namespace Z0.Asm
     {
         [Op]
         public static string bitstring(in AsmHexCode src)
-            => ApiNative.bitstring(src);
+            => AsmHexApi.bitstring(src);
     }
 }

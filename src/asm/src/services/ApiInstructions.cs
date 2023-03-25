@@ -35,7 +35,7 @@ namespace Z0.Asm
                 target.Encoded = instruction.AsmHex;
                 target.Sig = instruction.AsmSig;
                 target.OpCode = instruction.OpCode;
-                target.Bitstring = ApiNative.bitstring(instruction.AsmHex);
+                target.Bitstring = AsmHexApi.bitstring(instruction.AsmHex);
                 target.OpUri = src.Uri;
             }
             return count;
@@ -63,7 +63,7 @@ namespace Z0.Asm
                 AsmSigInfo.parse(instruction.OpCode.InstructionString, out statement.Sig);
                 statement.Encoded = asm.asmhex(bytes.Slice(offset, size));
                 statement.OpCode = opcode;
-                statement.Bitstring = ApiNative.bitstring(statement.Encoded);
+                statement.Bitstring = AsmHexApi.bitstring(statement.Encoded);
                 dst.Add(statement);
 
                 offset += size;

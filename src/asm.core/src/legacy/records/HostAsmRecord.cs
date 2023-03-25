@@ -35,13 +35,13 @@ namespace Z0
                 return result;
 
             AsmExpr.parse(skip(cells,i++), out dst.Expression);
-            dst.Encoded = ApiNative.asmhex(skip(cells, i++));
+            dst.Encoded = AsmHexApi.asmhex(skip(cells, i++));
             result = AsmSigInfo.parse(skip(cells, i++), out dst.Sig);
             if(result.Fail)
                 return result;
 
             dst.OpCode = skip(cells, i++);
-            dst.Bitstring = ApiNative.bitstring(dst.Encoded);
+            dst.Bitstring = AsmHexApi.bitstring(dst.Encoded);
 
             result = ApiIdentity.parse(skip(cells, i++), out dst.OpUri);
             if(result.Fail)
