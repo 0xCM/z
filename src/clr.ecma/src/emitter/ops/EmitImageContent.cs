@@ -10,7 +10,7 @@ namespace Z0
     {
         public void EmitImageContent(IApiPack dst)
         {
-            var flow = Running();
+            var flow = Channel.Running();
             iter(ApiAssemblies.Components, c => EmitImageContent(c, dst), PllExec);
             Ran(flow);
         }
@@ -19,7 +19,7 @@ namespace Z0
         public MemoryRange EmitImageContent(Assembly src, IApiPack dst, byte bpl = HexCsvRow.BPL)
         {
             var path =  dst.Metadata("image.content").PrefixedTable<HexCsvRow>(src.GetSimpleName());
-            var flow = EmittingTable<HexCsvRow>(path);
+            var flow = Channel.EmittingTable<HexCsvRow>(path);
             var @base = ImageMemory.@base(src);
             var formatter = HexDataFormatter.create(@base, bpl);
             using var stream = FS.path(src.Location).Utf8Reader();
@@ -41,7 +41,7 @@ namespace Z0
                 k = Read(reader, buffer);
             }
 
-            EmittedTable(flow, lines);
+            Channel.EmittedTable(flow, lines);
             return (@base, @base + offset);
         }
 

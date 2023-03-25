@@ -146,7 +146,7 @@ namespace Z0
                     continue;
                 }
 
-                Babble(string.Format("Executed '{0}'", cmd.Format()));
+                Channel.Babble(string.Format("Executed '{0}'", cmd.Format()));
 
                 // if(paths.Find(tool, out var path))
                 // {

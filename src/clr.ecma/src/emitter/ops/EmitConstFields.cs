@@ -17,7 +17,7 @@ namespace Z0
             {
                 var counter = 0u;
                 var target = dst.Metadata(EcmaSections.ConstFields).PrefixedTable<EcmaConstInfo>(src.GetSimpleName());
-                var flow = EmittingTable<EcmaConstInfo>(target);
+                var flow = Channel.EmittingTable<EcmaConstInfo>(target);
                 var formatter = CsvTables.formatter<EcmaConstInfo>();
                 using var writer = target.Writer();
                 writer.WriteLine(formatter.FormatHeader());
@@ -26,11 +26,11 @@ namespace Z0
                 var count = constants.Length;
                 for(var i=0; i<count; i++)
                     writer.WriteLine(formatter.Format(skip(constants,i)));
-                EmittedTable(flow, counter);
+                Channel.EmittedTable(flow, counter);
             }
             catch(Exception e)
             {
-                Error(e);
+                Channel.Error(e);
             }
         }
     }

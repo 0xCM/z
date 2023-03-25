@@ -13,7 +13,7 @@ namespace Z0
         public uint Seq;
 
         [Render(12)]
-        public readonly uint DocId;
+        public uint DocId;
 
         [Render(12)]
         public readonly FileKind Kind;
@@ -78,7 +78,6 @@ namespace Z0
 
         FileKind IFileRef.Kind
             => Kind;
-
 
         public static FileRef Empty => default;
 

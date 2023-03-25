@@ -73,24 +73,16 @@ namespace Z0
             Channel.Row(Env.cd());
         }
 
-        //[CmdOp("env/cfg")]
-        void LoadCfg(CmdArgs args)
-        {
-            var src = args.Count != 0 ? FS.dir(args.First) : Env.cd();
-            
-        }        
-
         [CmdOp("jobs/types")]
         void ListJobTypes()
         {
             var db = AppSettings.Default.DbRoot();
-            Write(db.Root);
-            Write(RP.PageBreak80);
+            Channel.Write(db.Root);
+            Channel.Write(RP.PageBreak80);
             var jobs = db.Sources("jobs");
-            Write($"Jobs: {jobs.Root}");
-            jobs.Root.Folders(true).Iter(f => Write(f.Format()));
+            Channel.Write($"Jobs: {jobs.Root}");
+            jobs.Root.Folders(true).Iter(f => Channel.Write(f.Format()));
         }
-
 
         [CmdOp("env/id")]
         void EvId(CmdArgs args)

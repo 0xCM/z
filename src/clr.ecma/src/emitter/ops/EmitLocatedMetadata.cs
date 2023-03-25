@@ -19,13 +19,13 @@ namespace Z0
         {
             try
             {
-                var flow = EmittingFile(dst);
+                var flow = Channel.EmittingFile(dst);
                 ByteSize size = HexEmitter.emit(ClrAssembly.metadata(src), bpl, dst);
-                EmittedBytes(flow, size);
+                Channel.EmittedBytes(flow, size);
             }
             catch(Exception e)
             {
-                Error(e);
+                Channel.Error(e);
             }
         }
     }

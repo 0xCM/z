@@ -15,7 +15,7 @@ namespace Z0
             {
                 var total = Count.Zero;
                 var formatter = CsvTables.formatter<PeSectionHeader>();
-                var flow = EmittingTable<PeSectionHeader>(dst);
+                var flow = Channel.EmittingTable<PeSectionHeader>(dst);
                 using var writer = dst.AsciWriter();
                 writer.WriteLine(formatter.FormatHeader());
                 foreach(var file in src)
@@ -28,11 +28,11 @@ namespace Z0
 
                     total += count;
                 }
-                EmittedTable(flow, total);
+                Channel.EmittedTable(flow, total);
             }
             catch(Exception e)
             {
-                Error(e);
+                Channel.Error(e);
             }
         }
     }

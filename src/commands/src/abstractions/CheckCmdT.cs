@@ -29,7 +29,7 @@ namespace Z0
 
         public override sealed void Loop()
         {
-            Status($"Running {Services.EntryCount} checkers");
+            Channel.Status($"Running {Services.EntryCount} checkers");
             iter(Services.Values, svc => svc.Run(EventLog, Pll), Pll);
         }
 
@@ -49,7 +49,7 @@ namespace Z0
             foreach(var svc in Services.Values)
                 foreach(var c in svc.Specs)
                     dst.Add(c);
-            iter(dst, cmd => Write(cmd));
+            iter(dst, cmd => Channel.Write(cmd));
             return dst.ToArray();
         }
 

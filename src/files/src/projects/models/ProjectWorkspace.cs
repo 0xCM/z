@@ -19,10 +19,13 @@ namespace Z0
         FolderPath IRootedArchive.Root 
             => Root.Root;
 
+        public FileIndex FileIndex {get;}
+
         [MethodImpl(Inline)]
         public ProjectWorkspace(IDbArchive src, ProjectId id)
         {
             Root = src;
+            FileIndex = FS.index(src.Files());
             ProjectId = id;
         }        
     }

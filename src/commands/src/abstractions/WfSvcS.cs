@@ -15,27 +15,11 @@ namespace Z0
 
         ConcurrentDictionary<ProjectId, ProjectContext> _Context = new();
 
-        public FileCatalog ProjectFiles { get; protected set; }
-        
         protected static AppDb AppDb => AppDb.Service;
 
-        protected static EtlTasks EtlDb => new EtlTasks(AppDb);
-    
         [MethodImpl(Inline)]
         public IProjectWorkspace Project()
             => Projects.project();
-
-        protected void Try(Action f, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
-        {
-            try
-            {
-                f();
-            }
-            catch (Exception e)
-            {
-                Channel.Error(e, caller, file, line);
-            }
-        }
 
         protected ProjectContext ProjectContext()
         {
@@ -45,36 +29,24 @@ namespace Z0
 
         [CmdOp("project/home")]
         protected void ProjectHome()
-            => Write(ProjectContext().Project.Home());
+            => Channel.Write(ProjectContext().Project.Root);
 
         [CmdOp("project/files")]
-        protected void ListProjectFiles(CmdArgs args)
+        protected void ListProjectFiles()
         {
-            if (args.Count != 0)
-                iter(ProjectContext().Files.Docs(arg(args, 0)), file => Write(file.Format()));
-            else
-                iter(ProjectContext().Files.Docs(), file => Write(file.Format()));
+            iter(ProjectContext().FileIndex.Members(), member => Channel.Row(member.Location));                
         }
 
-        [CmdOp("project")]
+        [CmdOp("project/load")]
         public void LoadProject(CmdArgs args)
-            => LoadProjectSources(EtlDb.EtlSource(args[0].Format()));
+            => LoadProjectSources(Projects.load(FS.dir(args[0]).DbArchive()));
 
-        protected void LoadProjectSources(IProjectWorkspace ws)
+        void LoadProjectSources(IProjectWorkspace src)
         {
-            var result = Outcome.Success;
-            if (ws == null)
-                Channel.Error("Project unspecified");
-            else
-            {
-                Channel.Status($"Loading project from {ws.Home()}");
-                Projects.project(ws);
-                ProjectFiles = FileCatalog.load(Projects.project().ProjectFiles().Array().ToSortedSpan());
-                var dir = ws.Home();
-                if (dir.Exists)
-                    Files(ws.SourceFiles().Array());
-                Channel.Status($"Project={Projects.project()}");
-            }
+            var loading = Channel.Running($"Loading project from {src.Root}");
+            Projects.project(src);
+            Files(src.Files().Array().Sort());
+            Channel.Ran(loading, $"Project={Projects.project().Root.Name}");
         }
 
         public new void Babble(string pattern, params object[] args)

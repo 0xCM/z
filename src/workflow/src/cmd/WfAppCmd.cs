@@ -61,7 +61,7 @@ namespace Z0
         void ArchiveFiles(CmdArgs args)
         {
             var src = AppDb.Archive(arg(args,0).Value);
-            iter(src.Files(true), file => Write(file.ToUri()));
+            iter(src.Files(true), file => Channel.Write(file.ToUri()));
         }
 
         [CmdOp("tokens/types")]
@@ -80,7 +80,7 @@ namespace Z0
             for(var i=0; i<count; i++)
             {
                 ref readonly var token = ref tokens[i];
-                Write(token.Format());
+                Channel.Write(token.Format());
             }
         }
 
@@ -192,7 +192,7 @@ namespace Z0
 
         [CmdOp("tool/docs")]
         void ToolDocs(CmdArgs args)
-            => iter(Tooling.LoadDocs(arg(args,0).Value), doc => Write(doc));
+            => iter(Tooling.LoadDocs(arg(args,0).Value), doc => Channel.Write(doc));
 
         [CmdOp("api/calls/check")]
         void CheckApiCalls()

@@ -40,7 +40,7 @@ namespace Z0
         {
             DocSource = src;
             var result = Outcome.Success;
-            var data = FS.readlines(DocSource.Path).View;
+            var data = FS.readlines(src.Path).View;
             var count = (uint)data.Length;
             DocSeq = 0;
             LabelSeq = 0;
@@ -57,7 +57,7 @@ namespace Z0
             for(var i=0u; i<count; i++)
                 Parse(skip(data,i));
 
-            return new McAsmDoc(DocSource, Directives, BlockLabels, SourceLines, Instructions, Encodings, Syntax, DocLines);
+            return new McAsmDoc(src.Path, Directives, BlockLabels, SourceLines, Instructions, Encodings, Syntax, DocLines);
         }
 
         public Outcome Parse(FileRef src, out McAsmDoc dst)

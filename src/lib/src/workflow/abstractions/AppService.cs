@@ -146,6 +146,18 @@ namespace Z0
                 _Data.Clear();
         }
 
+        protected void Try(Action f, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
+        {
+            try
+            {
+                f();
+            }
+            catch (Exception e)
+            {
+                Channel.Error(e, caller, file, line);
+            }
+        }
+
         static ConcurrentDictionary<Type,object> ServiceCache {get;}
             = new();
 

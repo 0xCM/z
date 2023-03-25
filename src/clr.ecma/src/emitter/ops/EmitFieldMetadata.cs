@@ -12,9 +12,9 @@ namespace Z0
         public void EmitFieldMetadata(ReadOnlySpan<Assembly> src, IDbArchive dst)
         {
             var count = 0u;
-            var flow = Running(src.Length);
+            var flow = Channel.Running(src.Length);
             iter(src, part => EmitFieldMetadata(part, dst), true);
-            Ran(flow, count);
+            Channel.Ran(flow, count);
         }
 
         void EmitFieldMetadata(Assembly src, IDbArchive dst)
@@ -32,7 +32,7 @@ namespace Z0
             {
                 var name = src.GetSimpleName();
                 var path = dst.Metadata(EcmaSections.MemberFields).PrefixedTable<EcmaFieldInfo>(name);
-                var flow = EmittingTable<EcmaFieldInfo>(path);
+                var flow = Channel.EmittingTable<EcmaFieldInfo>(path);
                 var reader = EcmaReader.create(src);
                 var fields = reader.ReadFieldDefs();
                 var count = (uint)fields.Length;
@@ -41,11 +41,11 @@ namespace Z0
                 writer.WriteLine(formatter.FormatHeader());
                 foreach(var item in fields)
                     writer.WriteLine(formatter.Format(item));
-                EmittedTable(flow, count);
+                Channel.EmittedTable(flow, count);
             }
             catch(Exception e)
             {
-                Error(e.Message);
+                Channel.Error(e.Message);
             }
         }
 
@@ -58,7 +58,7 @@ namespace Z0
                 if(path.Exists)
                     Errors.ThrowWithOrigin(AppMsg.FileExists.Format(path));
 
-                var flow = EmittingTable<EcmaFieldDef>(path);
+                var flow = Channel.EmittingTable<EcmaFieldDef>(path);
                 var reader = EcmaReader.create(src);
                 var handles = reader.FieldDefHandles();
                 var count = handles.Length;
@@ -78,11 +78,11 @@ namespace Z0
                     info.Name = reader.String(row.Name);
                     writer.WriteLine(formatter.Format(info));
                 }
-                EmittedTable(flow, count);
+                Channel.EmittedTable(flow, count);
             }
             catch(Exception e)
             {
-                Error(e);
+                Channel.Error(e);
             }
         }
     }

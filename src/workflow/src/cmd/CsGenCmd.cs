@@ -45,7 +45,7 @@ namespace Z0
             const string FieldName = "CsKeywordList";
             if(!src.Exists)
             {
-                Error(FS.missing(src));
+                Channel.Error(FS.missing(src));
             }
             else
             {
@@ -188,7 +188,7 @@ namespace Z0
             var buffer = new char[1024];
             var lexer = lang.splitter(' ', buffer);
             var tokens = lexer.Lex(chars);
-            iter(tokens, t => Row(string.Format("{0:D5} {1}", t.Index, sys.@string(t.Expr))));
+            iter(tokens, t => Channel.Row(string.Format("{0:D5} {1}", t.Index, sys.@string(t.Expr))));
         }
     }
 }

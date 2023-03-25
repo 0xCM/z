@@ -38,6 +38,8 @@ namespace Z0
             PathRefs = new();
         }
 
+        public static FileCatalog Empty => new();
+        
         public Index<FileRef> Docs(string match)
             => PathRefs.Values.Array().Where(x => x.Path.Contains(match));
 
@@ -51,7 +53,7 @@ namespace Z0
             => Docs().Where(e => e.Kind == k0 || e.Kind == k1 || e.Kind == k2);
 
         public Index<FileRef> Docs()
-            => map(IdMap.Keys, k => Doc(k)).Sort().Resequence();
+            => PathRefs.Values.Array(); //map(IdMap.Keys, k => Doc(k)).Sort().Resequence();
 
         public FileRef Doc(FilePath path)
         {

@@ -107,7 +107,7 @@ namespace Z0
             ref readonly var header = ref view.Header;
             var strings = view.StringTable;
             var sections = view.SectionHeaders;
-            var origin = context.Root(src);
+            var origin = context.Root(src.Path);
             for(var j=0u; j<sections.Length; j++)
             {
                 ref readonly var section = ref skip(sections,j);
@@ -247,7 +247,7 @@ namespace Z0
             var symcount = view.SymCount;
             if(symcount != 0)
             {
-                var origin = context.Root(file);
+                var origin = context.Root(file.Path);
                 var syms = view.Symbols;
                 var strings = view.StringTable;
                 var size = 0u;

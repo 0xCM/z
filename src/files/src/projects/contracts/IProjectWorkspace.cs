@@ -6,36 +6,36 @@ namespace Z0
 {
     public interface IProjectWorkspace : IDbArchive
     {
-        ProjectId ProjectId  => Name;
+        FileIndex FileIndex {get;}
+
+        ProjectId ProjectId 
+            => Name;
 
         IDbArchive Home() 
             => this;
 
         IEnumerable<FilePath> SourceFiles(bool recurse = true)
-            => Home().Sources("src").Files(recurse);
+            => Scoped("src").Files(recurse);
 
         IEnumerable<FilePath> SourceFiles(FileKind kind, bool recurse = true)
-            => Home().Sources("src").Files(kind, recurse);
+            => Scoped("src").Files(kind, recurse);
 
         FolderPath SrcDir()
-            => Home().Sources("src").Root;
+            => Scoped("src").Root;
 
         FolderPath SrcDir(string name)
-            => SrcDir() + FS.folder(Name);
+            => Scoped($"src/{name}");
 
-        IEnumerable<FilePath> Scripts()
-            => Home().Sources("scripts").Files();
+        IEnumerable<FilePath> CmdScripts()
+            => Scoped("cmd").Files(FileKind.Cmd);
 
-        FilePath Script(string name)
-            => Home().Sources("scripts").Path(name, FileKind.Cmd);
+        FilePath CmdScript(string name)
+            => Scoped("cmd").Path(name, FileKind.Cmd);
 
-        IEnumerable<FilePath> ProjectFiles()
-            => Home().Root.AllFiles;
-        
         FolderPath BuildOut()
-            => Scoped(".out").Root;
+            => Scoped("build").Root;
 
         IEnumerable<FilePath> OutFiles(FileKind kind)
-            => Home().Sources(".out").Files(kind);
+            => Scoped("build").Files(kind);
     }
 }

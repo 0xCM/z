@@ -31,7 +31,7 @@ namespace Z0
 
         }
 
-        public McAsmDoc(in FileRef src,
+        public McAsmDoc(FilePath src,
             ConstLookup<LineNumber,AsmDirective> directives,
             ConstLookup<LineNumber,AsmBlockLabel> labels,
             ConstLookup<LineNumber,AsmSourceLine> sources,
@@ -41,7 +41,7 @@ namespace Z0
             ConstLookup<LineNumber,AsmSourceLine> doc
             )
         {
-            Path = src.Path;
+            Path = src;
             _Directives = directives;
             _BlockLabels = labels;
             _SourceLines = sources;

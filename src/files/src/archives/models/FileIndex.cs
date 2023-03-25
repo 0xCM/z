@@ -6,7 +6,6 @@ namespace Z0
 {
     using static sys;
 
-
     public class FileIndex : Channeled<FileIndex>
     {
         public static FileTypes types(params Assembly[] src)
@@ -47,6 +46,8 @@ namespace Z0
 
         readonly ConcurrentDictionary<Hash128, FileIndexEntry> HashLookup = new();
 
+        readonly ConcurrentDictionary<FileKind, ConcurrentBag<FileIndexEntry>> KindLookup = new();
+
         readonly ConcurrentDictionary<Hash128, ConcurrentBag<FileIndexEntry>> _Duplicates = new();
 
         public FileIndex()
@@ -58,6 +59,7 @@ namespace Z0
         {
             var included = false;
             var entry = Archives.IndexEntry(src);
+            var kind = src.FileKind();
             var hash = FS.hash(src);
             if(PathLookup.TryAdd(src, entry))
             {
@@ -65,12 +67,14 @@ namespace Z0
                 if(!included)
                     _Duplicates.AddOrUpdate(hash.ContentHash, bag(entry), (_,b) => include(entry,b));
             }
+            KindLookup.AddOrUpdate(kind, bag(entry), (_,b) => include(entry,b));
             return included;
         }
 
         public void Include(IEnumerable<FilePath> src)
             => iter(src, path => Include(path), true);
-        public ICollection<FileIndexEntry> Members
+
+        public ICollection<FileIndexEntry> Members()
             => PathLookup.Values;
         
         public ICollection<FileIndexEntry> Unique
@@ -79,5 +83,10 @@ namespace Z0
         public ICollection<FilePath> Paths
             => PathLookup.Keys;
         
+        public ICollection<FileKind> Kinds
+            => KindLookup.Keys;
+        
+        public IEnumerable<FileIndexEntry> Members(FileKind kind)
+            => KindLookup[kind];
     }
 }

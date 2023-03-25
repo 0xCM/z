@@ -16,9 +16,9 @@ namespace Z0
         static FileFlow flow(in CmdFlow src)
             => new FileFlow(flow(src.Tool, src.SourcePath, src.TargetPath));
 
-        ConstLookup<_FileUri,List<_FileUri>> Children;
+        ConstLookup<FilePath,List<FilePath>> Children;
 
-        ConstLookup<_FileUri,_FileUri> Ancestors;
+        ConstLookup<FilePath,FilePath> Ancestors;
 
         public readonly FileCatalog Files;
 
@@ -27,8 +27,8 @@ namespace Z0
             Files = files;
             var count = src.Length;
             var flows = sys.alloc<FileFlow>(count);
-            var lookup = dict<_FileUri,List<_FileUri>>();
-            var lineage = dict<_FileUri,_FileUri>();
+            var lookup = dict<FilePath,List<FilePath>>();
+            var lineage = dict<FilePath,FilePath>();
 
             for(var i=0; i<count; i++)
             {
@@ -65,7 +65,7 @@ namespace Z0
             => Files.Docs(kind).Where(e => Children.ContainsKey(e.Path));
 
         public Index<FileRef> Sources()
-            => map(Children.Keys, x => Files.Doc(x.Path));
+            => map(Children.Keys, x => Files.Doc(x));
 
         public bool Root(FilePath dst, out FileRef source)
         {
@@ -104,11 +104,11 @@ namespace Z0
             }
         }
 
-        public bool Source(_FileUri target, out FileRef prior)
+        public bool Source(FilePath target, out FileRef prior)
         {
             if(Ancestors.Find(target, out var uri))
             {
-                prior = Files.Doc(uri.Path);
+                prior = Files.Doc(uri);
                 return true;
             }
             else
@@ -121,7 +121,7 @@ namespace Z0
         public Index<FileRef> Targets(FilePath src)
         {
             if(Children.Find(src, out var targets))
-                return sys.map(targets, x => Files.Doc(x.Path));
+                return sys.map(targets, x => Files.Doc(x));
             else
                 return sys.empty<FileRef>();
         }
@@ -150,5 +150,7 @@ namespace Z0
                 DescribeTargets(indent, target, dst);
             }
         }
+
+        public static CmdFlows Empty => new CmdFlows(FileCatalog.Empty, sys.empty<CmdFlow>());
     }
 }

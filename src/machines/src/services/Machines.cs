@@ -25,7 +25,7 @@ namespace Z0
 
         void EventRaised(IEvent e)
         {
-            Write(e.Format());
+            Channel.Write(e.Format());
         }
 
         protected override void Initialized()
@@ -53,7 +53,7 @@ namespace Z0
         {
             var buffer = text.buffer();
             X86Machine.state(Machine,buffer);
-            Write(buffer.Emit());
+            Channel.Write(buffer.Emit());
         }
 
         void TestStack()
@@ -65,7 +65,7 @@ namespace Z0
             stack.Push(3);
             while(stack.Pop(out var cell))
             {
-                Write(cell);
+                Channel.Write(cell);
             }
         }
 
@@ -102,12 +102,12 @@ namespace Z0
             var result = Outcome.Success;
             var spec = Match3x8.specify(n,src);
             var machine = Match3x8.create(spec);
-            Write(spec.Format());
+            Channel.Write(spec.Format());
             var i = machine.Run(input);
             var matched = i>=0;
             var msg = matched ? string.Format("Matched: i={0}",i) : "Unmatched";
             result = (matched, msg);
-            Write(result.Message);
+            Channel.Write(result.Message);
             return result;
         }
 
@@ -131,7 +131,7 @@ namespace Z0
             Task<uint> RunMachine(uint cycles)
                 => Task.Factory.StartNew(() => new BinaryProcessor(CellCount, Rng.@default()).Run(cycles));
 
-            var flow = Wf.Running("Test11");
+            var flow = Channel.Running("Test11");
             var clock = Time.counter(true);
             var count = 0ul;
             var tasks = sys.stream(0u,JobCount).Map(i => RunMachine(CycleCount));
@@ -140,7 +140,7 @@ namespace Z0
                 count += t.Result;
 
             var time = clock.Elapsed();
-            Wf.Ran(flow, string.Format("Processed {0:##,#} items in {1} ms", count, time.Ms));
+            Channel.Ran(flow, string.Format("Processed {0:##,#} items in {1} ms", count, time.Ms));
         }
 
         void Run(N19 n)
@@ -180,7 +180,7 @@ namespace Z0
             {
                 ref readonly var input = ref skip(inputs,i);
                 ref readonly var result = ref skip(eval,i);
-                Write(string.Format("{0:D2} | {1}", i, result.Format(BinaryBitLogicOps.FormatOption.Bitstrings)));
+                Channel.Write(string.Format("{0:D2} | {1}", i, result.Format(BinaryBitLogicOps.FormatOption.Bitstrings)));
             }
         }
 
@@ -191,7 +191,7 @@ namespace Z0
             for(var i=0; i<count; i++)
             {
                 ref readonly var eval = ref skip(evals,i);
-                Write(eval.Format());
+                Channel.Write(eval.Format());
             }
         }
 
@@ -252,7 +252,7 @@ namespace Z0
             for(var i=0; i<count; i++)
             {
                 ref readonly var j = ref first(recover<uint>(bytes(skip(src,i))));
-                Write(string.Format("{0:D4}:{1}",i, j.FormatHex()));
+                Channel.Write(string.Format("{0:D4}:{1}",i, j.FormatHex()));
             }
 
             Channel.Row(block.Describe());

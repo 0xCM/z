@@ -40,7 +40,7 @@ namespace Z0
             var token = ExecToken.Empty;
             try
             {
-                var flow = EmittingFile(dst);
+                var flow = Channel.EmittingFile(dst);
                 using var target = dst.Writer();
                 MsilCodeModels.mdv(reader, target).Visualize();
                 token = Emitter.EmittedFile(flow);
@@ -66,11 +66,11 @@ namespace Z0
             }
             catch(BadImageFormatException bfe)
             {
-                Error(bfe);
+                Channel.Error(bfe);
             }
             catch(Exception e)
             {
-                Error(e);
+                Channel.Error(e);
             }
             return token;
         }

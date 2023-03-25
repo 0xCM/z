@@ -13,7 +13,7 @@ namespace Z0
         
         public void EmitAssemblyRefs(IEnumerable<MappedAssembly> src, FilePath dst)
         {
-            var flow = EmittingTable<EcmaTables.AssemblyRefRow>(dst);
+            var flow = Channel.EmittingTable<EcmaTables.AssemblyRefRow>(dst);
             var counter = 0;
             using var writer = dst.Writer();
             var formatter = CsvTables.formatter<EcmaTables.AssemblyRefRow>();
@@ -27,20 +27,20 @@ namespace Z0
                     counter++;
                 }
             }
-            EmittedTable(flow, counter);
+            Channel.EmittedTable(flow, counter);
         }
 
         public void EmitAssemblyRefs(ReadOnlySpan<Assembly> src, FilePath dst)
         {
             var count = src.Length;
             var counter = 0u;
-            var flow = EmittingTable<EcmaTables.AssemblyRefRow>(dst);
+            var flow = Channel.EmittingTable<EcmaTables.AssemblyRefRow>(dst);
             var formatter = CsvTables.formatter<EcmaTables.AssemblyRefRow>();
             using var writer = dst.Writer();
             writer.WriteLine(formatter.FormatHeader());
             for(var i=0; i<count; i++)
                 EmitAssemblyRefs(skip(src,i), formatter, writer);
-            EmittedTable(flow, counter);
+            Channel.EmittedTable(flow, counter);
         }
 
         void EmitAssemblyRefs(Assembly src, ICsvFormatter formatter, StreamWriter dst)
@@ -51,7 +51,7 @@ namespace Z0
                 var count = refs.Length;
                 if(count == 0)
                 {
-                    Babble($"{src.FullName} has no references");
+                    Channel.Babble($"{src.FullName} has no references");
                 }
                 else
                 {
@@ -61,7 +61,7 @@ namespace Z0
             }
             catch(Exception e)
             {
-                Error(e);
+                Channel.Error(e);
             }
         }
     }

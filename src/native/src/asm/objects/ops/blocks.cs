@@ -39,7 +39,7 @@ namespace Z0
                 }
                 seek(blockbuffer,i) = new AsmCodeBlock(composite.Symbol(blockaddress,blockname), codebuffer);
             }
-            var origin = context.Root(file);
+            var origin = context.Root(file.Path);
             return new AsmCodeBlocks(composite.Label(origin.DocName), origin.DocId, blockbuffer);
         }
 
@@ -86,7 +86,7 @@ namespace Z0
                     seek(blockbuffer,j) = new AsmCodeBlock(composite.Symbol(blockaddress, blockname), codebuffer);
                 }
 
-                var origin = FileCatalog.load(project.ProjectFiles().Array().ToSortedSpan()).Doc(group.Key);
+                var origin = FileCatalog.load(project.Files().Array().ToSortedSpan()).Doc(group.Key);
                 seek(buffer,i) = new AsmCodeBlocks(composite.Label(origin.DocName), origin.DocId, blockbuffer);
             }
             return buffer;

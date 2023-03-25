@@ -35,7 +35,7 @@ namespace Z0
         {
             var project = context.Project.ProjectId;
             EtlTargets(project).Delete();
-            Channel.TableEmit(context.Files.Docs(), AppDb.EtlTable(project,"sources.catalog"));
+            Channel.TableEmit(context.FileIndex.Members().Array().Sort().Resequence(), AppDb.EtlTable(project,"files.catalog"));
             var objects = CalcObjRows(context);
             Channel.TableEmit(objects, AppDb.EtlTable<ObjDumpRow>(project));
             var blocks = AsmObjects.blocks(objects);
@@ -66,7 +66,7 @@ namespace Z0
 
         public Index<McAsmDoc> CalcMcAsmDocs(IProjectWorkspace src)
         {
-            var files = FileCatalog.load(src.ProjectFiles().Array().ToSortedSpan()).Docs(FileKind.McAsm);
+            var files = FileCatalog.load(src.Files().Array().ToSortedSpan()).Docs(FileKind.McAsm);
             var count = files.Count;
             var dst = alloc<McAsmDoc>(count);
             for(var i=0; i<count; i++)
@@ -233,13 +233,13 @@ namespace Z0
         public Index<ObjDumpRow> CalcObjRows(ProjectContext context)
         {
             var project = context.Project;
-            var src = project.OutFiles(FileKind.ObjAsm).Array().Sort().Index();
+            var src = context.Docs(FileKind.ObjAsm).Array().Sort().Index();
             var result = Outcome.Success;
             var formatter = CsvTables.formatter<ObjDumpRow>();
             var buffer = sys.bag<ObjDumpRow>();
 
-            iter(src, path => {
-                result = CoffObjects.parse(context, context.Doc(path), out var records);
+            iter(src, member => {
+                result = CoffObjects.parse(context, member, out var records);
                 if(result.Fail)
                 {
                     Channel.Error(result.Message);
@@ -421,7 +421,7 @@ namespace Z0
                 syntax = Fenced.unfence(syntax, Brackets, out var semantic) ? text.parenthetical(semantic) : syntax;
                 var body = b.Replace(Chars.Tab, Chars.Space);
                 var record = new AsmSyntaxRow();
-                var orign = context.Root(src);
+                var orign = context.Root(src.Path);
                 record.OriginId = orign.DocId;
                 record.OriginName = orign.DocName;
                 record.DocSeq = docseq++;

@@ -14,13 +14,13 @@ namespace Z0
             => project.BuildOut().Clear(true);
 
         public void BuildAsm(IProjectWorkspace src)
-            => RunScripts(src, FileKind.Asm, src.Script("build-asm"), false);
+            => RunScripts(src, FileKind.Asm, src.CmdScript("build-asm"), false);
 
         public void BuildC(IProjectWorkspace src, bool runexe = false)
-            => RunScripts(src, FileKind.C, src.Script("build-c"), runexe);
+            => RunScripts(src, FileKind.C, src.CmdScript("build-c"), runexe);
 
         public void BuildCpp(IProjectWorkspace src, bool runexe = false)
-            => RunScripts(src, FileKind.Cpp, src.Script("build-cpp"), runexe);
+            => RunScripts(src, FileKind.Cpp, src.CmdScript("build-cpp"), runexe);
 
         public void RunScripts(IProjectWorkspace project, FileKind kind, FilePath script, bool runexe)
         {
@@ -120,7 +120,7 @@ namespace Z0
 
         void ReceiveCmdStatus(in string src)
         {
-            Write(src);
+            Channel.Write(src);
         }
 
         void ReceiveCmdError(in string src)
@@ -166,14 +166,14 @@ namespace Z0
                     flows.AddRange(result.Data);
                     foreach(var flow in result.Data)
                     {
-                        Status(flow.Format());
+                        Channel.Status(flow.Format());
                         receiver.Invoke(flow);
                     }
                 }
             }
 
             if(flows.Count != 0)
-                Channel.TableEmit(flows.ViewDeposited(), Projects.build(project));
+                Channel.TableEmit(flows.ViewDeposited(), Projects.flowpath(project));
         }
     }
 }
