@@ -50,7 +50,7 @@ namespace Z0
             return dst.ToArray();
         }
 
-        public Index<McAsmDoc> CalcMcAsmDocs(IProjectWorkspace src)
+        public Index<McAsmDoc> CalcMcAsmDocs(IProject src)
         {
             var files = FileCatalog.load(src.Files().Array().ToSortedSpan()).Docs(FileKind.McAsm);
             var count = files.Count;
@@ -60,8 +60,8 @@ namespace Z0
             return dst;
         }
 
-        public Index<ObjSymRow> LoadObjSyms(IProjectWorkspace project)
-            => LoadObjSyms(AppDb.EtlTable<ObjSymRow>(project.ProjectId));
+        public Index<ObjSymRow> LoadObjSyms(IProject project)
+            => LoadObjSyms(AppDb.EtlTable<ObjSymRow>(project.Name));
 
         public Index<ObjSymRow> LoadObjSyms(FilePath src)
         {

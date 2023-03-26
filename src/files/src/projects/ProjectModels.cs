@@ -4,13 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class ProjectModels
-    {
-        // public interface IProject
-        // {
-        //     FolderPath Root {get;}
-
-        //     ProjectKind Kind {get;}
-        // }
+    public partial class ProjectModels : Channeled<ProjectModels>
+    {        
     }
 }

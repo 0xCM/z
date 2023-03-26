@@ -4,24 +4,41 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class Project : IProject
+    partial class ProjectModels
     {
-        public @string Name {get;}
-
-        public IDbArchive Root {get;}
-
-        public Project(string name, IDbArchive root)
+        public record class Project : IProject
         {
-            Name = name;
-            Root = root;
-        }
+            public readonly @string Name;
 
-        public Project()
-        {
-            Name = EmptyString;
-            Root = DbArchive.Empty;
-        }
+            public readonly IDbArchive Root;
 
-        public static Project Empty => new Project();
+            public readonly ProjectKind Kind;
+
+            public Project(FolderPath root)
+            {
+                Name = root.FolderName.Format();
+                Kind = 0;
+                Root = root.DbArchive();
+            }
+
+            public Project(ProjectKind kind, FolderPath root)
+            {
+                Name = root.FolderName.Format();
+                Kind = kind;
+                Root = root.DbArchive();
+            }
+
+            protected Project(ProjectKind kind)
+            {
+                Kind = kind;
+                Root = FolderPath.Empty.DbArchive();
+            }            
+
+            IDbArchive IProject.Root
+                => Root;
+
+            @string IProject.Name
+                => Name;
+        }
     }
 }

@@ -4,21 +4,18 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class ProjectModels
+    public enum ProjectKind : byte
     {
-        public enum ProjectKind : byte
-        {
-            None,
+        None,
 
-            Binary,
+        Binary,
 
-            CSharp,
+        CSharp,
 
-            Cil,
+        Cil,
 
-            Cpp,
-            
-            Aggregate,
-        }
-    }
+        Cpp,
+        
+        Aggregate,
+    }    
 }

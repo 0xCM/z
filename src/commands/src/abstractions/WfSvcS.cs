@@ -41,8 +41,7 @@ namespace Z0
         public void LoadProject(CmdArgs args)
         {
             var root = FS.dir(args[0]);
-
-            LoadProjectSources(new Project(root.FolderName.Format(), root.DbArchive()));
+            LoadProjectSources(new ProjectModels.Project(root));
         }
 
         void LoadProjectSources(IProject src)

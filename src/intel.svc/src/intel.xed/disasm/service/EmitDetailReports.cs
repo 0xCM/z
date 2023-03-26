@@ -12,9 +12,6 @@ namespace Z0
     {
         public void EmitDetailReport(ProjectContext context, DisasmDoc doc)
         {
-            //var targets = context.ProjectDatasets("xed.disasm");
-            //var targets = context.ProjectDatasets("xed.disasm");
-            //var target = targets.Path(doc.Origin.Path.FileName.WithoutExtension + FS.ext("xed.disasm.details.csv"));
             var target = XedPaths.DisasmDetailPath(context.Project.Name, doc.DataSource);
             var dst = text.emitter();
             DisasmRender.render(doc.DetailBlocks, dst);

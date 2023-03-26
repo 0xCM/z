@@ -127,7 +127,7 @@ namespace Z0
             {
                 kind(args[0], out var k);
                 var root = FS.dir(args[1]);
-                var project = Models.CreateProject(k, root);
+                var project = Services.CreateProject(k, root);
                 
             }
             [CmdOp("projects/vars")]
