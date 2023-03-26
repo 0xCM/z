@@ -89,7 +89,11 @@ namespace Z0
         [Op, Closures(Closure)]
         public static JsonDocument document(ReadOnlySeq<byte> src)
             => JsonDocument.Parse(src.Storage);
-            
+
+        [Op, Closures(Closure)]
+        public static JsonDocument document(FilePath src)
+            => JsonDocument.Parse(src.ReadBytes());
+
         [Op, Closures(Closure)]
         public static JsonDocument document<T>(T src)
             => JsonSerializer.SerializeToDocument(src, options());

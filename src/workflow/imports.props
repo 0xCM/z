@@ -11,6 +11,5 @@
      <ProjectReference Include="$(Binary)" />
      <ProjectReference Include="$(ClrEcma)" />
      <ProjectReference Include="$(Projects)" />
-
   </ItemGroup>
 </Project>

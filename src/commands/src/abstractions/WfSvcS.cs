@@ -39,7 +39,45 @@ namespace Z0
 
         [CmdOp("project/load")]
         public void LoadProject(CmdArgs args)
-            => LoadProjectSources(Projects.load(FS.dir(args[0]).DbArchive()));
+        {
+            var doc = Json.document(FS.path(args[0]));
+            var env = Env.process();
+            var root = doc.RootElement;
+            AsciFence fence = (AsciSymbols.LBrace, AsciSymbols.RBrace);
+            var prefix = AsciSymbols.Dollar;
+            var found = list<ScriptVar>();
+            iter(root.EnumerateObject(), o => {
+                switch(o.Name)
+                {
+                    case "folders":
+                        iter(o.Value.EnumerateArray(), folder => {
+                            var expr = folder.ToString();
+                            var vars = Vars.extract(expr, prefix, fence);
+                            iter(vars.Keys, key => {
+                                if(env.Find(key, out var value))
+                                {
+                                    found.Add(Vars.var(key, prefix, fence, value));
+                                }
+                            });
+
+                            var eval = FS.dir(Vars.eval(expr, found.Array()));
+                            if(eval.Exists)
+                            {
+                                
+                            }
+                            else
+                            {
+                                Channel.Error($"Not found: {eval}");
+                            }
+                            
+                        }
+                            );
+                    break;
+                }
+            });
+            
+            //LoadProjectSources(Projects.load(FS.dir(args[0]).DbArchive()));
+        }
 
         void LoadProjectSources(IProjectWorkspace src)
         {

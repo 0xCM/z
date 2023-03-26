@@ -71,6 +71,9 @@ namespace Z0
             return dst.Emit();
         }
 
+        public static ScriptVar var(string name, AsciSymbol prefix, AsciFence fence, @string value = default)
+            => new ScriptVar(name,prefix, fence, value);
+            
         public static string eval(string expr, ICollection<IScriptVar> vars)
         {
             var result = expr;

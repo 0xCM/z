@@ -164,9 +164,6 @@ namespace Z0
             return dst.ToArray().Sort();
         }
         
-        public static EnvVars vars(params Pair<string>[] src)
-            => src.Map(x => new EnvVar(x.Left,x.Right));
-
         public static EnvVars machine()
             => vars(EnvVarKind.Machine);
 

@@ -78,9 +78,10 @@ namespace Z0
                 c0.WriteLine($"# {c0Name}");
                 c0.WriteLine(h0);
 
-                using var c1 = _error.Utf8Writer(true);
-                c1.WriteLine($"# {c1Name}");
-                c1.WriteLine(h1);
+                var c1 = default(StreamWriter);
+                // using var c1 = _error.Utf8Writer(true);
+                // c1.WriteLine($"# {c1Name}");
+                // c1.WriteLine(h1);
 
                 void Channel0(string msg)
                 {
@@ -90,17 +91,27 @@ namespace Z0
 
                 void Channel1(string msg)
                 {
+                    if(c1 == null)
+                    {
+                        c1 = _error.Utf8Writer(true);
+                        c1.WriteLine($"# {c1Name}");
+                        c1.WriteLine(h1);
+                    }
+
                     channel.Row(msg, FlairKind.StatusData);
                     c1.WriteLine(msg);
                 }
 
                 var io = new SysIO(Channel0, Channel1);
                 var running = channel.Running($"{args} -> ({status}, {_error})");
-                return channel.Ran(running, run(io, args, context()));
+
+                var token = channel.Ran(running, run(io, args, context()));
+                c1?.Dispose();
+                return token;
+
             }
 
             return sys.start(Run);
-
         }
 
         public static Task<ExecToken> redirect(IWfChannel channel, CmdArgs args)
@@ -119,9 +130,8 @@ namespace Z0
                 c0.WriteLine($"# {c0Name}");
                 c0.WriteLine(h0);
 
-                using var c1 = c1Path.Utf8Writer(true);
-                c1.WriteLine($"# {c1Name}");
-                c1.WriteLine(h1);
+                //using var c1 = c1Path.Utf8Writer(true);
+                var c1 = default(StreamWriter);
 
                 void Channel0(string msg)
                 {
@@ -131,6 +141,13 @@ namespace Z0
 
                 void Channel1(string msg)
                 {
+                    if(c1 == null)
+                    {
+                        c1 = c1Path.Utf8Writer(true);
+                        c1.WriteLine($"# {c1Name}");
+                        c1.WriteLine(h1);
+                    }
+
                     channel.Row(msg, FlairKind.StatusData);
                     c1.WriteLine(msg);
                 }
@@ -138,7 +155,9 @@ namespace Z0
                 var io = new SysIO(Channel0, Channel1);
                 var running = channel.Running($"{args} -> ({c0Path}, {c1Path})");
                 var status = run(io, args, context());
-                return channel.Ran(running, status);
+                var token = channel.Ran(running, status);
+                c1?.Dispose();
+                return token;
             }
 
             return sys.start(Run);
