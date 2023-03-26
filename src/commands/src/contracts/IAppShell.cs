@@ -3,13 +3,14 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0
-{
-    public interface IAppShell : IAppService
+{    
+    public interface IApiShell : IDisposable
     {
-        void OnExit();
+        void Run();
+    }    
 
-        void Run(string[] args);
-
+    public interface IAppShell : IApiShell, IAppService
+    {
         void Init(IWfRuntime wf, IApiContext context);
     }   
 }

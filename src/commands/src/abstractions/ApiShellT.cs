@@ -14,7 +14,7 @@ namespace Z0
             Commander?.Dispose();
         }
 
-        protected override void Run(string[] args)
+        protected override void Run()
             => CmdLoop.start(Channel).Wait();
 
         protected override void Init(IWfRuntime wf, IApiContext context)
@@ -22,26 +22,5 @@ namespace Z0
             base.Init(wf);
             Commander = context.Commander;            
         }        
-    }
-
-    public class ApiShell : IDisposable
-    {
-        public readonly IWfChannel Channel;
-
-        readonly ICmdDispatcher Dispatcher;
-
-        public ApiShell(IWfChannel channel, ICmdDispatcher disp)
-        {
-            Channel = channel;
-            Dispatcher = disp;
-        }
-
-        public void Dispose()
-        {
-            
-        }
-
-        public void Run()
-            => CmdLoop.start(Channel, Dispatcher).Wait();
     }
 }

@@ -27,8 +27,10 @@ namespace Z0
 
         [CmdOp("api/commands")]
         void EmitCommands()
-            => ApiCmd.EmitApiCatalog();
-
+        {
+            ApiServers.EmitApiCatalog(EnvDb);
+        }
+    
         [CmdOp("api/version")]
         void ApiVersion()
             => Channel.Write(ExecutingPart.Assembly.AssemblyVersion());
@@ -170,11 +172,5 @@ namespace Z0
         [CmdOp("tool")]
         void ToolHelp(CmdArgs args)
             => ProcExec.redirect(Channel,args).Wait();
-
-        [CmdOp("json/types")]
-        void JsonTypes()
-        {
-            iter(Z0.JsonTypes.Types, t => Channel.Row(t));
-        }
     }
 }

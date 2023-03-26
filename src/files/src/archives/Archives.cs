@@ -15,23 +15,10 @@ namespace Z0
     [ApiHost]
     public class Archives
     {        
+        static AppSettings AppSettings => AppSettings.Default;
+
         public static FileTypes FileTypes(params Assembly[] src)
             => new (src.Types().Tagged<FileTypeAttribute>().Concrete().Map(x => (IFileType)Activator.CreateInstance(x)).ToHashSet());     
-
-        static void exec(IWfChannel channel, CatalogFiles cmd)
-            => index(channel, query(cmd.Source, cmd.Match), cmd.Target.DbArchive());
-
-        internal static FileIndexEntry IndexEntry(FilePath src)
-        {
-            var hash = FS.hash(src);
-            var dst = new FileIndexEntry();
-            dst.Path = src;
-            dst.FileHash = hash.FileHash;
-            return dst;
-        }
-
-        static FilePath IndexPath(IDbArchive src, IDbArchive dst)
-            =>  dst.Path(FS.file($"files.index", FileKind.Csv));
 
         public static ExecToken<FilePath> index(IWfChannel channel, FileQuery query, IDbArchive dst)
         {
@@ -68,9 +55,6 @@ namespace Z0
             return dst;
         }
 
-        [MethodImpl(Inline), Op]
-        static SearchPattern pattern(params string[] src)
-            => string.Join(Chars.Pipe, src);
 
         public static FileQuery query(FolderPath src, string match, params FileExt[] ext)
         {
@@ -107,8 +91,6 @@ namespace Z0
 
         public static FolderPath nested(FolderPath root, FolderPath src)
             => root + FS.folder(FS.components(src).Join('/'));
-
-        static AppSettings AppSettings => AppSettings.Default;
 
         public static IDbArchive archive(Timestamp ts, DbArchive dst)
             => dst.Scoped(ts.Format());
@@ -202,25 +184,7 @@ namespace Z0
             return start(run);
         }
 
-        static Task<ExecToken> ungzip(IWfChannel channel, FilePath src, FilePath dst)
-        {
-            ExecToken run()
-            {
-                var running = channel.Running($"Extracting {src} to {dst}");
-                using (var stream = src.Stream())
-                {
-                    using(var expansion = new GZipStream(stream, CompressionMode.Decompress))
-                    using (var target = dst.Stream())
-                    {
-                        expansion.CopyTo(target);
-                    }
-
-                }
-                return channel.Ran(running, $"Extracted {src} to {dst}");
-            }
-            return start(run);
-        }
-
+ 
         public static Task<ExecToken> unzip(IWfChannel channel, FilePath src, FolderPath dst)
         {
             ExecToken run()
@@ -431,7 +395,7 @@ namespace Z0
             return true;
         }
 
-       public static string identifier(FolderPath src)
+        public static string identifier(FolderPath src)
             => FS.identifier(src);
 
         public static FileName timestamped(string name, FileExt ext)
@@ -465,5 +429,24 @@ namespace Z0
             else
                 return(false, outcome.Message);
         }        
+
+       static void exec(IWfChannel channel, CatalogFiles cmd)
+            => index(channel, query(cmd.Source, cmd.Match), cmd.Target.DbArchive());
+
+        internal static FileIndexEntry IndexEntry(FilePath src)
+        {
+            var hash = FS.hash(src);
+            var dst = new FileIndexEntry();
+            dst.Path = src;
+            dst.FileHash = hash.FileHash;
+            return dst;
+        }
+
+        static FilePath IndexPath(IDbArchive src, IDbArchive dst)
+            =>  dst.Path(FS.file($"files.index", FileKind.Csv));
+
+        [MethodImpl(Inline), Op]
+        static SearchPattern pattern(params string[] src)
+            => string.Join(Chars.Pipe, src);
     }
 }

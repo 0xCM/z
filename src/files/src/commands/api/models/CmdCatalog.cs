@@ -13,8 +13,5 @@ namespace Z0
         {
             Data = src;
         }
-
-        public static Symbols<CmdKind> kinds()
-            => Symbols.index<CmdKind>();
     }
 }

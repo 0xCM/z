@@ -22,16 +22,16 @@ namespace Z0
         static int main(string[] args)
         {
             var result = 0;
-            //using var app = ApiServers.shell<App,AppCmd>(providers);
-            using var wf = ApiServers.runtime(false);
-            using var app = ApiServers.shell(wf);
+            using var app = ApiServers.shell<App,AppCmd>(providers);
+            // using var wf = ApiServers.runtime(false);
+            // using var app = ApiServers.shell(wf);
             try
             {
                 app.Run();
             }
             catch(Exception e)
             {
-                app.Channel.Error(e);
+                term.error(e);
                 result = -1;
             }
             return result;

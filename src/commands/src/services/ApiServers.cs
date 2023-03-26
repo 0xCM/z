@@ -21,18 +21,11 @@ namespace Z0
         public static AppCmdProviders providers(params Assembly[] src)
             => new (src.Types().Tagged<CmdProviderAttribute>().Concrete());
 
-        public static CmdMethods methods(IApiService host)
+        public void EmitApiCatalog(IDbArchive dst)
         {
-            var src = host.GetType().DeclaredInstanceMethods().Tagged<CmdOpAttribute>();
-            var dst = dict<string,CmdMethod>();
-            var count = src.Length;
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var mi = ref skip(src,i);
-                var tag = mi.Tag<CmdOpAttribute>().Require();
-                dst.TryAdd(tag.Name, new CmdMethod(tag.Name, classify(mi),  mi, host));                
-            }
-            return new CmdMethods(dst);
+            var data = catalog().Values;
+            iter(data, x => Channel.Row(x.Uri.Name));
+            Channel.TableEmit(data, dst.Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv));
         }
 
         public static CmdMethods methods(IWfRuntime wf, params Assembly[] src)
@@ -49,6 +42,20 @@ namespace Z0
             return new (dst);
         }
 
+        static CmdMethods methods(IApiService host)
+        {
+            var src = host.GetType().DeclaredInstanceMethods().Tagged<CmdOpAttribute>();
+            var dst = dict<string,CmdMethod>();
+            var count = src.Length;
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var mi = ref skip(src,i);
+                var tag = mi.Tag<CmdOpAttribute>().Require();
+                dst.TryAdd(tag.Name, new CmdMethod(tag.Name, classify(mi),  mi, host));                
+            }
+            return new CmdMethods(dst);
+        }
+
         public static IApiCmdRunner runner(IWfRuntime wf, params Assembly[] src)
             => new ApiCmdRunner(wf, handlers(wf,src));
 
@@ -57,12 +64,19 @@ namespace Z0
 
         public static CmdCatalog catalog(ICmdDispatcher src)
         {
-            ref readonly var defs = ref src.Commands.Defs;
+            var defs = src.Commands.Defs;
             var count = defs.Count;
-            var dst = alloc<CmdUri>(count);
+            var dst = alloc<ApiCmdInfo>(count);
             for(var i=0; i<count; i++)
-                seek(dst,i) = defs[i].Uri;
-            return new CmdCatalog(entries(dst));
+            {
+                ref readonly var uri = ref defs[i].Uri;
+                ref var entry = ref seek(dst,i);
+                entry.Uri = uri;
+                entry.Hash = uri.Hash;
+                entry.Name = uri.Name;
+            }
+
+            return new CmdCatalog(dst);
         }
 
         public static ReadOnlySeq<ServiceSpec> services(Assembly[] src)
@@ -128,12 +142,12 @@ namespace Z0
             }
         }
         
-        public static ApiShell shell(IWfRuntime wf)
-            => shell(wf.Channel, methods(wf));
+        public static IApiShell shell(IWfRuntime wf)
+            => shell(wf, methods(wf));
             
-        public static ApiShell shell(IWfChannel channel, CmdMethods methods)
-            => new ApiShell(channel, new ApiDispatcher(channel, methods));
-
+        public static IApiShell shell(IWfRuntime wf, CmdMethods methods)
+            => new ApiShell(wf,new ApiDispatcher(wf.Channel, methods));
+        
         public static A shell<A>(string[] args, IWfRuntime wf, IApiContext context, bool verbose = false)
             where A : IAppShell, new()
         {            

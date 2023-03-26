@@ -12,17 +12,15 @@ namespace Z0
 
         }
 
-        protected abstract void Run(string[] args);
-
-        void IAppShell.OnExit()
-            => OnExit();
+        protected abstract void Run();
             
-        void IAppShell.Run(string[] args)
-            => Run(args);
-        
-        protected abstract void Init(IWfRuntime wf, IApiContext context);
+        void IApiShell.Run()
+            => Run();
 
         void IAppShell.Init(IWfRuntime wf, IApiContext context)
             => Init(wf,context);
+
+        protected abstract void Init(IWfRuntime wf, IApiContext context);
+
     }
 }
