@@ -159,8 +159,8 @@ namespace Z0
             => MD.GetBlobBytes(index);
 
         [MethodImpl(Inline)]
-        public MetadataMemory Memory()
-            => PeFiles.metadata(Segment);
+        public MetadataMemory Memory(AssemblyKey assembly)
+            => Ecma.memory(Segment, assembly);
 
         public EcmaMvid Mvid()
             => Guid(MD.GetModuleDefinition().Mvid);
@@ -172,10 +172,21 @@ namespace Z0
             return _AssemblyName;
         }
 
+        Hash128 _ContentHash;
+
+        Hash128 ContentHash()
+        {
+            if(_ContentHash.Hi == 0 && _ContentHash.Lo == 0)
+            {
+                _ContentHash = md5(Segment.View);
+            }
+            return _ContentHash;
+        }
+
         public AssemblyKey AssemblyKey()
         {
             if(_AssemblyKey.IsEmpty)
-                _AssemblyKey = new AssemblyKey(AssemblyName().SimpleName(), AssemblyName().Version, ReadTargetFramework(), Mvid());
+                _AssemblyKey = new AssemblyKey(AssemblyName().SimpleName(), AssemblyName().Version, ReadTargetFramework(), Mvid(), ContentHash());
             return _AssemblyKey;            
         }
 

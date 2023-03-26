@@ -15,7 +15,7 @@ namespace Z0
         {
             var hash = FS.hash(src);
             return new FileIndexEntry{
-                Location = src.Path,
+                Path = src.Path,
                 FileHash = hash.FileHash,                
             };
         }
@@ -24,7 +24,7 @@ namespace Z0
         {
             var hash = FS.hash(src);
             var dst = new FileIndexEntry();
-            dst.Location = src;
+            dst.Path = src;
             dst.FileHash = hash.FileHash;
             return dst;
         }
@@ -77,7 +77,7 @@ namespace Z0
         public ICollection<FileIndexEntry> Members()
             => PathLookup.Values;
         
-        public ICollection<FileIndexEntry> Unique
+        public ICollection<FileIndexEntry> Distinct()
             => HashLookup.Values;
 
         public ICollection<FilePath> Paths

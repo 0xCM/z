@@ -24,9 +24,9 @@ namespace Z0
         }        
     }
 
-    public class ApiShell
+    public class ApiShell : IDisposable
     {
-        readonly IWfChannel Channel;
+        public readonly IWfChannel Channel;
 
         readonly ICmdDispatcher Dispatcher;
 
@@ -34,6 +34,11 @@ namespace Z0
         {
             Channel = channel;
             Dispatcher = disp;
+        }
+
+        public void Dispose()
+        {
+            
         }
 
         public void Run()

@@ -12,6 +12,9 @@ namespace Z0
     [ApiHost]
     public class Ecma : WfSvc<Ecma>
     {        
+        public static MetadataMemory memory(MemorySeg src, AssemblyKey assembly)  
+            => new MetadataMemory(src, assembly);
+
         /// <summary>
         /// Loads an assembly + pdb
         /// </summary>

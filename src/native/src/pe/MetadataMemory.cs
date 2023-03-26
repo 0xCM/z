@@ -17,12 +17,15 @@ namespace Z0
 
         uint Position;
 
+        public readonly AssemblyKey AssemblyKey;
+
         [MethodImpl(Inline)]
-        public MetadataMemory(MemorySeg src, uint offset = 0)
+        public MetadataMemory(MemorySeg src, AssemblyKey assembly)
         {
             Source = src;
-            Position = offset;
+            Position = 0;
             LastPosition = src.Size;
+            AssemblyKey = assembly;
         }
 
         [MethodImpl(Inline)]
@@ -126,6 +129,7 @@ namespace Z0
         public MetadataRoot ReadMetadataRoot()
         {
             var dst = new MetadataRoot();
+            dst.Assembly = AssemblyKey;
             dst.BaseAddress = Source.BaseAddress;
             dst.Signature = Require.equal(Read<uint>(), EcmaConstants.COR20MetadataSignature);
             dst.MajorVersion = Read<ushort>();
@@ -136,34 +140,32 @@ namespace Z0
             dst.MetadataVersion = text.utf8(version);
             Require.equal(Read<ushort>(),0);
             dst.StreamCount = Read<ushort>();
-            var streams = alloc<EcmaStreamHeader>(dst.StreamCount);
             for(var i=0; i<dst.StreamCount; i++)
             {
-                ref var stream = ref seek(streams,i);
-                stream.Offset = Read<uint>();
-                stream.Size = Read<uint>();
-                stream.Name = ReadAlignedAsciString(n4);   
-                stream.StreamKind = StreamKind(stream.Name);
-                switch(stream.StreamKind)
+                var header = new EcmaStreamHeader();
+                header.Offset = Read<uint>();
+                header.Size = Read<uint>();
+                header.Name = ReadAlignedAsciString(n4);   
+                header.StreamKind = StreamKind(header.Name);
+                switch(header.StreamKind)
                 {
                     case SK.Blob:
-                        dst.BlobStreamHeader = stream;
+                        dst.BlobStreamHeader = header;
                     break;
                     case SK.Guid:
-                        dst.GuidStreamHeader = stream;
+                        dst.GuidStreamHeader = header;
                     break;
                     case SK.String:
-                        dst.StringStreamHeader = stream;
+                        dst.StringStreamHeader = header;
                     break;
                     case SK.UserString:
-                        dst.UserStringStreamHeader = stream;
+                        dst.UserStringStreamHeader = header;
                     break;
                     case SK.CompressedTable:
-                        dst.TableStreamHeader = stream;
+                        dst.TableStreamHeader = header;
                         break;
                 }
             }
-            dst.StreamHeaders = streams;
             dst.TableOffset = Position;
             return dst;
         }

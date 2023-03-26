@@ -8,7 +8,7 @@ namespace Z0
     {
         public readonly record struct SourceKind : IDataType<SourceKind>, IDataString
         {
-            public readonly asci16 Name;
+            public readonly @string Name;
 
             [MethodImpl(Inline)]
             public SourceKind(string name)

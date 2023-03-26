@@ -15,16 +15,20 @@ namespace Z0
         [Render(16)]
         public readonly @string TargetFramework;
         
-        [Render(1)]
+        [Render(48)]
         public readonly EcmaMvid Mvid;
 
+        [Render(1)]
+        public readonly Hash128 ContentHash;
+        
         [MethodImpl(Inline)]
-        public AssemblyKey(@string name, AssemblyVersion version, @string framework, EcmaMvid mvid)
+        public AssemblyKey(@string name, AssemblyVersion version, @string framework, EcmaMvid mvid, Hash128 chash)
         {
             Name = name;
             TargetFramework = framework;
             Version = version;
             Mvid = mvid;
+            ContentHash = chash;
         }
 
         public @string Identifier
@@ -80,6 +84,6 @@ namespace Z0
         public bool Equals(AssemblyKey key)
             => Mvid == key.Mvid;
 
-        public static AssemblyKey Empty => new AssemblyKey(@string.Empty, AssemblyVersion.Empty, @string.Empty, EcmaMvid.Empty);
+        public static AssemblyKey Empty => new AssemblyKey(@string.Empty, AssemblyVersion.Empty, @string.Empty, EcmaMvid.Empty, default);
     }
 }

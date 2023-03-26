@@ -216,10 +216,8 @@ namespace Z0
             return buffer.ToArray();
         }
 
-
         public void EmitRecoded(ProjectContext context, ReadOnlySeq<AsmCodeBlocks> blocks)
         {
-            //RecodedTargets(context.Project.ProjectId).Clear();
             for(var i=0; i<blocks.Count; i++)
                 RecodeBlocks(context.Project.Name, blocks[i]);
         }

@@ -9,10 +9,17 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static BinaryCode utf8(string src)
             => Encoding.UTF8.GetBytes(src);
-
+    
         [MethodImpl(Inline), Op]
         public static string utf8(ReadOnlySpan<byte> src)
-            => Encoding.UTF8.GetString(src);
+        {
+            var i = SQ.nullpos(sys.recover<AsciCode>(src));
+            if(i > 0)                        
+                return Encoding.UTF8.GetString(sys.slice(src,0, i));
+            else
+                return Encoding.UTF8.GetString(src);
+
+        }
 
         [MethodImpl(Inline), Op]
         public static void utf8(ReadOnlySpan<byte> src, Span<char> dst)

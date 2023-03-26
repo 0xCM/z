@@ -5,13 +5,8 @@
 namespace Z0
 {
     [StructLayout(LayoutKind.Sequential,Pack=1)]
-    public readonly record struct DbDataType : IDataType<DbDataType>, IKeyed<uint>
+    public readonly record struct DbDataType : IDataType<DbDataType>, IKeyed<Name>
     {
-        /// <summary>
-        /// Specifies a surrogate key
-        /// </summary>
-        public readonly uint Key;
-
         /// <summary>
         /// Specifies the name of the domain type
         /// </summary>
@@ -38,9 +33,8 @@ namespace Z0
         public readonly Name Refinement;
 
         [MethodImpl(Inline)]
-        public DbDataType(uint seq, Name name, Name prim, DataSize size, bit refines, Name refinement)
+        public DbDataType(Name name, Name prim, DataSize size, bit refines, Name refinement)
         {
-            Key = seq;
             Primitive = prim;
             Name = name;
             Size = size;
@@ -57,14 +51,14 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => (Hash32)Key | Name.Hash | Primitive.Hash | Size.Hash | Refines.Hash | Refinement.Hash;
+            get => Name.Hash | Primitive.Hash | Size.Hash | Refines.Hash | Refinement.Hash;
         }
 
-        uint IKeyed<uint>.Key 
-            => Key;
+        Name IKeyed<Name>.Key
+            => Name;
 
         [MethodImpl(Inline)]
         public int CompareTo(DbDataType src)
-            => Key.CompareTo(src.Key);
+            => Name.CompareTo(src.Name);
     }    
 }

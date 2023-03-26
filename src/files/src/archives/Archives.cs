@@ -25,7 +25,7 @@ namespace Z0
         {
             var hash = FS.hash(src);
             var dst = new FileIndexEntry();
-            dst.Location = src;
+            dst.Path = src;
             dst.FileHash = hash.FileHash;
             return dst;
         }

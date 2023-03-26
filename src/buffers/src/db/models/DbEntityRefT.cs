@@ -5,13 +5,13 @@
 namespace Z0
 {
     [StructLayout(LayoutKind.Sequential,Pack=1)]
-    public readonly record struct EntityRef<T>: IComparable<EntityRef<T>>
+    public readonly record struct DbEntityRef<T>: IComparable<DbEntityRef<T>>
         where T : unmanaged, IEquatable<T>, IComparable<T>
     {
         public readonly T Key;
 
         [MethodImpl(Inline)]
-        public EntityRef(T key)
+        public DbEntityRef(T key)
         {
             Key  = key;
         }
@@ -26,10 +26,10 @@ namespace Z0
             => Hash;
 
         [MethodImpl(Inline)]
-        public int CompareTo(EntityRef<T> src)
+        public int CompareTo(DbEntityRef<T> src)
             => Key.CompareTo(src.Key);
 
-        public bool Equals(EntityRef<T> src)
+        public bool Equals(DbEntityRef<T> src)
             => Key.Equals(src.Key);
     }    
 }

@@ -5,7 +5,6 @@
 namespace Z0
 {
     using static sys;
-
     public sealed class AppSettings 
     {        
         public static ref readonly AppSettings Default
@@ -15,11 +14,11 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        static FolderPath folder(in Setting src)
+        internal static FolderPath folder(in Setting src)
             => FS.dir(src.ValueText);
 
         [MethodImpl(Inline), Op]
-        static FileUri uri(in Setting src)
+        internal static FileUri uri(in Setting src)
             => new (src.ValueText);
 
         readonly Dictionary<@string,string> Lookup;
@@ -63,6 +62,9 @@ namespace Z0
 
         public static DbArchive EnvRoot()
             => FS.dir(System.Environment.GetEnvironmentVariable(SettingNames.EnvRoot));
+
+        public static LlvmSettings LlvmSettings()
+            => new (folder(Instance.Setting(SettingNames.LlvmRoot)));
 
         public static DbArchive SettingsRoot()
             => EnvRoot().Scoped(settings);

@@ -26,14 +26,14 @@ namespace Z0
                 Body = settings;
             }     
             
-            public ProjectKind Kind()
-            {
-                var kind = ProjectKind.None;
-                var settings = Body.Where(x => x is ISetting s && s.Name == ProjectServices.SettingNames.ProjectKind);
-                if(settings.IsNonEmpty)
-                    ProjectServices.kind((settings.First as ISetting).Name, out kind);
-                return kind;
-            }
+            // public ProjectKind Kind()
+            // {
+            //     var kind = ProjectKind.None;
+            //     var settings = Body.Where(x => x is ISetting s && s.Name == ProjectServices.SettingNames.ProjectKind);
+            //     if(settings.IsNonEmpty)
+            //         ProjectServices.kind((settings.First as ISetting).Name, out kind);
+            //     return kind;
+            // }
 
             public string Format()
             {

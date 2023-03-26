@@ -31,6 +31,8 @@ namespace Z0
                     member.DeclaringType = declname;
                     member.Name = String(method.Name);                                    
                 });
+
+                
             }, true);
             return dst.Array().Sort();
         }
@@ -39,10 +41,15 @@ namespace Z0
         {
             foreach(var handle in MD.MethodDefinitions)
             {
-                var src = ReadMethodDef(handle);
+                var src = ReadMethodDef(handle);                
                 var dst = new EcmaMethodDef();
+                var declarer = MD.GetTypeDefinition(src.GetDeclaringType());
+                var declname = String(declarer.Name);
+                var ns = String(declarer.Namespace);
+                dst.DeclaringType = declname;
+                dst.Namespace = ns;
                 dst.Token = EcmaTokens.token(handle);
-                dst.Name = String(src.Name);
+                dst.MethodName = String(src.Name);
                 dst.SigData = Blob(src.Signature);
                 dst.Attributes = src.Attributes;
                 dst.ImplAttributes = src.ImplAttributes;

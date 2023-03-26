@@ -14,5 +14,11 @@ namespace Z0
         public string Name;
 
         public EcmaStreamKind StreamKind;
+
+        public string Format()
+            => string.Format("{0}:{1,-8}", Offset, (ByteSize)Size);
+        
+        public override string ToString()
+            => Format();
     }
 }

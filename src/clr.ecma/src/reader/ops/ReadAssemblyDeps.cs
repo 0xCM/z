@@ -8,31 +8,6 @@ namespace Z0
 
     partial class EcmaReader
     {
-        public ManagedDependency ReadManagedDependency(AssemblyReferenceHandle handle)
-        {
-            var src = MD.GetAssemblyReference(handle);
-            var dst = new ManagedDependency();
-            dst.DependencyKind = EcmaDependencyKind.Managed;
-            dst.Source = AssemblyName();
-            dst.SourceVersion = dst.Source.Version;
-            dst.TargetName = src.GetAssemblyName();
-            dst.TargetVersion = src.Version;
-            dst.TargetKey = u64(Blob(src.PublicKeyOrToken).View);
-            dst.TargetHash = Blob(src.HashValue);
-            return dst;
-        }
-
-        public NativeDependency ReadNativeDependency(ModuleReferenceHandle handle)
-        {
-            var src = MD.GetModuleReference(handle);
-            var dst = new NativeDependency();
-            dst.DependencyKind = EcmaDependencyKind.Native;
-            dst.Source = AssemblyName();
-            dst.SourceVersion = dst.Source.Version;
-            dst.TargetName = String(src.Name);
-            return dst;
-        }
-
         public ReadOnlySeq<NativeDependency> ReadNativeDeps()
         {
             var native = ModuleRefHandles();
@@ -67,5 +42,28 @@ namespace Z0
             dst.NativeDependencies = ReadNativeDeps();
             return dst;
         }
+
+        public ManagedDependency ReadManagedDependency(AssemblyReferenceHandle handle)
+        {
+            var src = MD.GetAssemblyReference(handle);
+            var dst = new ManagedDependency();
+            dst.Source = AssemblyName();
+            dst.SourceVersion = dst.Source.Version;
+            dst.TargetName = src.GetAssemblyName();
+            dst.TargetVersion = src.Version;
+            dst.TargetKey = u64(Blob(src.PublicKeyOrToken).View);
+            return dst;
+        }
+
+        public NativeDependency ReadNativeDependency(ModuleReferenceHandle handle)
+        {
+            var src = MD.GetModuleReference(handle);
+            var dst = new NativeDependency();
+            dst.Source = AssemblyName();
+            dst.SourceVersion = dst.Source.Version;
+            dst.TargetName = String(src.Name);
+            return dst;
+        }
+
     }
 }

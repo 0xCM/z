@@ -6,7 +6,6 @@ namespace Z0
 {
     public abstract class ModuleResolver<D,M> : IModuleResolver<D,M>
         where M : IBinaryModule
-        where D : IDependency
     {
         public abstract M Resolve(D dependency);
 

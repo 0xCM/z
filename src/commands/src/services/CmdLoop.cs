@@ -26,7 +26,7 @@ namespace Z0
         CmdLoop(IWfChannel channel)
         {
             Channel = channel;
-            Dispatcher = ApiCmd.Dispatcher;
+            Dispatcher = ApiServers.Dispatcher;
         }
 
         ApiCmdSpec Next()

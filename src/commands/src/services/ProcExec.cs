@@ -79,10 +79,6 @@ namespace Z0
                 c0.WriteLine(h0);
 
                 var c1 = default(StreamWriter);
-                // using var c1 = _error.Utf8Writer(true);
-                // c1.WriteLine($"# {c1Name}");
-                // c1.WriteLine(h1);
-
                 void Channel0(string msg)
                 {
                     channel.Row(msg, FlairKind.Data);
@@ -130,7 +126,6 @@ namespace Z0
                 c0.WriteLine($"# {c0Name}");
                 c0.WriteLine(h0);
 
-                //using var c1 = c1Path.Utf8Writer(true);
                 var c1 = default(StreamWriter);
 
                 void Channel0(string msg)

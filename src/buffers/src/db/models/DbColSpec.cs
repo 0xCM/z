@@ -7,25 +7,25 @@ namespace Z0
     [StructLayout(LayoutKind.Sequential,Pack=1)]
     public record struct DbColSpec : IEntity<DbColSpec,uint>
     {
-        public readonly uint Key;
+        public readonly uint Pos;
 
         public readonly DbDataType Type;
 
         public readonly Name Name;
 
         [MethodImpl(Inline)]
-        public DbColSpec(uint key, DbDataType type, Name name)
+        public DbColSpec(uint pos, DbDataType type, Name name)
         {
-            Key = key;
+            Pos = pos;
             Type = type;
             Name = name;
         }
 
         uint IKeyed<uint>.Key
-            => Key;
+            => Pos;
 
         [MethodImpl(Inline)]
         public int CompareTo(DbColSpec src)
-            => Key.CompareTo(src.Key);
+            => Pos.CompareTo(src.Pos);
     }   
 }

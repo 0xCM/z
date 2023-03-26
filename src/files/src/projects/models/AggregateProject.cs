@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.Text.Json;
-
     partial class ProjectModels
     {
         public sealed record class AggregateProject : Project<AggregateProject>
@@ -19,11 +17,9 @@ namespace Z0
             public AggregateProject(FilePath path, ReadOnlySeq<FolderPath> folders)
                 : base(ProjectKind.Aggregate, path.FolderPath)
             {
-                JsonDoc = Json.document(path.ReadBytes());
+                
                 Folders = folders;        
             }
-
-            public JsonDocument JsonDoc {get;}
 
             public ReadOnlySeq<FolderPath> Folders {get;}
         }

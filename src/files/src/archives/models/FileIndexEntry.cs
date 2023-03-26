@@ -16,12 +16,12 @@ namespace Z0
         public FileHash FileHash;
 
         [Render(1)]
-        public FilePath Location;
+        public FilePath Path;
 
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => Location.Hash;
+            get => Path.Hash;
         }
 
         public Hash128 ContentHash
@@ -53,10 +53,10 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public int CompareTo(FileIndexEntry src)
-            => Location.CompareTo(src.Location);
+            => Path.CompareTo(src.Path);
 
         public bool Equals(FileIndexEntry src)
-            => Location.Equals(src.Location) && ContentHash == src.ContentHash && LocationHash == src.LocationHash;
+            => Path.Equals(src.Path) && ContentHash == src.ContentHash && LocationHash == src.LocationHash;
 
         uint ISequential.Seq 
             { get => Seq; set => Seq = value; }

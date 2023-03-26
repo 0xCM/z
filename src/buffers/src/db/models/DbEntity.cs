@@ -10,12 +10,12 @@ namespace Z0
 
         public readonly Name Name;
 
-        public readonly ReadOnlySeq<Relation32> Rels;
+        public readonly ReadOnlySeq<DbRelation> Rels;
 
         public readonly ReadOnlySeq<DbColSpec> Cols;
 
         [MethodImpl(Inline)]
-        public DbEntity(uint key, Name name, DbColSpec[] cols, Relation32[] rels)
+        public DbEntity(uint key, Name name, DbColSpec[] cols, DbRelation[] rels)
         {
             Key = key;
             Name = name;

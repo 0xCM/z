@@ -9,11 +9,11 @@ namespace Z0
         public abstract record class ProjectMember<M>
             where M : ProjectMember<M>, new()
         {
-            public readonly asci32 MemberName;
+            public readonly @string MemberName;
 
             protected ProjectMember()
             {
-                MemberName = asci32.Null;
+                MemberName = EmptyString;
             }
 
             protected ProjectMember(string name)

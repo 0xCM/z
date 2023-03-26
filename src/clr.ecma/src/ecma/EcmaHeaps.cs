@@ -8,8 +8,6 @@ namespace Z0
 
     public class EcmaHeaps
     {
-        static AppSettings AppSettings => AppSettings.Default;
-
         [Op]
         public static ExecToken emit(IWfChannel channel, MemorySeg src, FilePath dst, byte bpl = HexCsvRow.BPL)
         {
@@ -41,23 +39,24 @@ namespace Z0
         public static void emit(IWfChannel channel, IDbArchive src, IDbArchive dst)
         {
             var buffer = bag<EcmaHeapInfo>();
-            var db = AppSettings.EnvDb().Scoped("clr");
-            iter(Archives.modules(src.Root).AssemblyFiles(), a => {
-                using var file = Ecma.file(a.Path);
+            var db = dst.Nested("ecma.heaps", src.Root);
+            var index = Ecma.index(channel, src.Root);
+            iter(index.Distinct(), entry => {
+                using var file = Ecma.file(entry.Path);
                 var reader = Ecma.reader(file);
                 var heap = EcmaHeaps.strings(reader.MetadataReader, EcmaStringKind.System, reader.BaseAddress);
                 var info = new EcmaHeapInfo();
                 info.HeapKind = EcmaHeapKind.SystemString;
                 info.BaseAddress = heap.BaseAddress;
                 info.Size = heap.Size;
-                info.Source = a.Path;
+                info.Source = entry.Path;
                 buffer.Add(info);
                 var seg = new MemorySeg(heap.BaseAddress, heap.Size);
-                var path = db.Path(a.Path.FileName.Format() + "SystemStrings", FileKind.Hex);
+                var path = db.Path(entry.Path.FileName.Format() + "SystemStrings", FileKind.Hex);
                 emit(channel, seg, path);        
                 
             });
-            channel.TableEmit(buffer.Array(), dst.Path("ecma.heaps", FileKind.Csv));
+            channel.TableEmit(buffer.Array(), db.Path("ecma.heaps", FileKind.Csv));
         }
         
         [Op]

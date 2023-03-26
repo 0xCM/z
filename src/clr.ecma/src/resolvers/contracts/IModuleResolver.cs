@@ -11,7 +11,6 @@ namespace Z0
 
     public interface IModuleResolver<D,M> : IModuleResolver
         where M : IBinaryModule
-        where D : IDependency
     {        
         M Resolve(D dependency);
 

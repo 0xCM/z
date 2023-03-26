@@ -9,15 +9,15 @@ namespace Z0
     {
         public readonly uint Key;
 
-        public readonly asci32 Name;
+        public readonly Name TableName;
 
         public readonly ReadOnlySeq<DbCol> Cols;
 
         [MethodImpl(Inline)]
-        public DbTableDef(uint seq, asci32 name, DbCol[] cols)
+        public DbTableDef(uint seq, Name name, DbCol[] cols)
         {
             Key = seq;
-            Name = name;
+            TableName = name;
             Cols = cols;
         }
 
@@ -26,6 +26,6 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public int CompareTo(DbTableDef src)
-            => Name.CompareTo(src.Name);
+            => TableName.CompareTo(src.TableName);
     }   
 }

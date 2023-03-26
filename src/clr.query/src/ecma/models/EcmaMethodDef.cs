@@ -9,7 +9,11 @@ namespace Z0
     {
         public EcmaToken Token;
 
-        public string Name;
+        public @string Namespace;
+
+        public @string DeclaringType;
+
+        public @string MethodName;
 
         public Address32 Rva;
         
@@ -18,6 +22,5 @@ namespace Z0
         public MethodAttributes Attributes;
 
         public MethodImplAttributes ImplAttributes;
-
     }
 }

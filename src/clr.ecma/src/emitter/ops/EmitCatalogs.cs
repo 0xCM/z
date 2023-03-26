@@ -15,7 +15,7 @@ namespace Z0
                 () => EmitTableStats(src, dst.Scoped("ecma").Table<EcmaRowStats>()),
                 () => EmitMsilMetadata(src, dst.Scoped("ecma/msil.dat").Delete()),
                 () => EmitBlobs(src, dst.Scoped("ecma/blobs").Delete()),
-                () => EmitMetadumps(Channel, src, dst.Scoped("ecma/dumps").Delete()),
+                () => EmitDump(Channel, src, dst.Scoped("ecma/dumps").Delete()),
                 () => EmitMemberRefs(src, dst.Scoped("ecma/members.refs").Delete()),
                 () => EmitMethodDefs(src, dst.Scoped("ecma/methods.defs").Delete()),
                 () => {}

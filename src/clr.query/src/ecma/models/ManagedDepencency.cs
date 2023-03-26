@@ -4,8 +4,16 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed record class ManagedDependency : EcmaDependency<ManagedDependency>, IComparable<ManagedDependency>
+    public sealed record class ManagedDependency : IComparable<ManagedDependency>
     {
+        const string TableName = "ecma.deps.managed";
+
+        [Render(64)]
+        public ClrAssemblyName Source;
+
+        [Render(16)]
+        public AssemblyVersion SourceVersion;        
+
         [Render(64)]
         public ClrAssemblyName TargetName;
 
@@ -15,10 +23,7 @@ namespace Z0
         [Render(32)]
         public Hex64 TargetKey;
 
-        [Render(32)]
-        public BinaryCode TargetHash;
-
-        public override int CompareTo(ManagedDependency src)
+        public int CompareTo(ManagedDependency src)
         {
             var result = Source.CompareTo(src.Source);
             if(result == 0)

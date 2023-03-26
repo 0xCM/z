@@ -30,7 +30,7 @@ namespace Z0
         public bool LocalInit;
 
         [Render(32)]
-        public ClrMemberName MethodName;
+        public @string MethodName;
 
         [Render(1)]
         public BinaryCode Code;

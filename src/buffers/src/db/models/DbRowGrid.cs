@@ -60,5 +60,4 @@ namespace Z0
         public DbColGrid<T> Columns()
             => new DbColGrid<T>(this);
     }
-
 }

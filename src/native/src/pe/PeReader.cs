@@ -194,7 +194,7 @@ namespace Z0
                             BodySize = body.Size,
                             LocalInit = body.LocalVariablesInitialized,
                             MaxStack = body.MaxStack,
-                            MethodName = Clr.membername(MD.GetString(definition.Name)),
+                            MethodName = MD.GetString(definition.Name),
                             Code = body.GetILBytes(),
                         });
                     }

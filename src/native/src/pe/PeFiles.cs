@@ -26,7 +26,7 @@ namespace Z0
         public static PeMemory pe(MemorySeg src)
             => new PeMemory(src);
 
-        public static MetadataMemory metadata(MemorySeg src)  
-            => new MetadataMemory(src);
+        public static MetadataMemory metadata(MemorySeg src, AssemblyKey assembly)  
+            => new MetadataMemory(src, assembly);
     }   
 }

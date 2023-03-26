@@ -7,17 +7,24 @@ namespace Z0
     /// <summary>
     /// Defines typetable content
     /// </summary>
-    [StructLayout(LayoutKind.Sequential,Pack=1)]
+    [StructLayout(LayoutKind.Sequential,Pack=1), Record(TableName)]
     public readonly record struct DbTypeTable : IEntity<DbTypeTable,uint>, IComparable<DbTypeTable>
     {
+        const string TableName = "db.typetables";
+
+        [Render(8)]
         public readonly uint Key;
 
+        [Render(48)]
         public readonly Label TypeName;
 
+        [Render(16)]
         public readonly byte PackedWidth;
 
+        [Render(16)]
         public readonly uint NativeWidth;
 
+        [Render(12)]
         public readonly ushort RowCount;
 
         public readonly ReadOnlySeq<TypeTableRow> Rows;

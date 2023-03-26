@@ -17,7 +17,7 @@ namespace Z0
                 EmitFieldMetadata(src, dst);
 
             if(options.EmitApiMetadump)
-                EmitMetadumps(Channel, src,dst);
+                EmitDump(Channel, src,dst);
 
             if(options.EmitSectionHeaders)
                 EmitSectionHeaders(sys.controller().RuntimeArchive(), dst);

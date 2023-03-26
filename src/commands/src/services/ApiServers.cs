@@ -12,63 +12,9 @@ namespace Z0
 
     public class ApiServers : AppService
     {
-        public static Outcome exec(IWfChannel channel, CmdMethod method, CmdArgs args)
-        {
-            var output = default(object);
-            var result = Outcome.Success;
-            try
-            {
-                switch(method.Kind)
-                {
-                    case Pure:
-                        method.Definition.Invoke(method.Host, new object[]{});
-                        result = Outcome.Success;
-                    break;
-                    case Receiver:
-                        method.Definition.Invoke(method.Host, new object[1]{args});
-                        result = Outcome.Success;
-                    break;
-                    case CmdActorKind.Emitter:
-                        output = method.Definition.Invoke(method.Host, new object[]{});
-                    break;
-                    case Func:
-                        output = method.Definition.Invoke(method.Host, new object[1]{args});
-                    break;
-                    default:
-                        result = new Outcome(false, $"Unsupported {method.Definition}");
-                    break;
-                }
-
-                if(output != null)
-                {
-                    if(output is bool x)
-                        result = Outcome.define(x, output, x ? "Win" : "Fail");
-                    else if(output is Outcome y)
-                    {
-                        result = Outcome.success(y.Data, y.Message);
-                        if(sys.nonempty(y.Message))
-                        {
-                            if(y.Fail)
-                                channel.Error(y.Message);
-                            else
-                                channel.Babble(y.Message);
-                        }
-                    }
-                    else
-                        result = Outcome.success(output);
-                }
-            }
-            catch(Exception e)
-            {
-                var origin = AppMsg.orginate(method.HostType.DisplayName(), method.Definition.DisplayName(), 12);                
-                var error = Events.error(e.ToString(), origin, method.HostType);
-                channel.Error(error);
-                result = (e,error.Format());
-            }
-
-           return result;
-        }
-
+        public static Outcome exec(string name, CmdArgs args)
+            => Dispatcher.Dispatch(name, args);
+            
         public override Type HostType 
             => typeof(ApiServers);
 
@@ -107,7 +53,7 @@ namespace Z0
             => new ApiCmdRunner(wf, handlers(wf,src));
 
         public static CmdCatalog catalog()
-            => catalog(ApiCmd.Dispatcher);
+            => catalog(Dispatcher);
 
         public static CmdCatalog catalog(ICmdDispatcher src)
         {
@@ -248,7 +194,7 @@ namespace Z0
                     iter(script.Commands, cmd => {
                         try
                         {
-                            ApiCmd.Dispatcher.Dispatch(cmd.Name, cmd.Args);
+                            Dispatcher.Dispatch(cmd.Name, cmd.Args);
                         }
                         catch(Exception e)
                         {
@@ -259,6 +205,66 @@ namespace Z0
                 return Channel.Ran(running);
             }
             return sys.start(Exec).Result;        
+        }
+
+        internal static ICmdDispatcher Dispatcher 
+            => AppData.Value<ICmdDispatcher>(nameof(ICmdDispatcher));
+
+        internal static Outcome exec(IWfChannel channel, CmdMethod method, CmdArgs args)
+        {
+            var output = default(object);
+            var result = Outcome.Success;
+            try
+            {
+                switch(method.Kind)
+                {
+                    case Pure:
+                        method.Definition.Invoke(method.Host, new object[]{});
+                        result = Outcome.Success;
+                    break;
+                    case Receiver:
+                        method.Definition.Invoke(method.Host, new object[1]{args});
+                        result = Outcome.Success;
+                    break;
+                    case CmdActorKind.Emitter:
+                        output = method.Definition.Invoke(method.Host, new object[]{});
+                    break;
+                    case Func:
+                        output = method.Definition.Invoke(method.Host, new object[1]{args});
+                    break;
+                    default:
+                        result = new Outcome(false, $"Unsupported {method.Definition}");
+                    break;
+                }
+
+                if(output != null)
+                {
+                    if(output is bool x)
+                        result = Outcome.define(x, output, x ? "Win" : "Fail");
+                    else if(output is Outcome y)
+                    {
+                        result = Outcome.success(y.Data, y.Message);
+                        if(sys.nonempty(y.Message))
+                        {
+                            if(y.Fail)
+                                channel.Error(y.Message);
+                            else
+                                channel.Babble(y.Message);
+                        }
+                    }
+                    else
+                        result = Outcome.success(output);
+                }
+            }
+            catch(Exception e)
+            {
+                var origin = AppMsg.orginate(method.HostType.DisplayName(), method.Definition.DisplayName(), 12);                
+                var error = Events.error(e.ToString(), origin, method.HostType);
+                channel.Error(error);
+                result = (e,error.Format());
+            }
+
+           return result;
         }
 
         static IApiContext context<C>(IWfRuntime wf, IWfChannel channel, ReadOnlySeq<IApiService> providers, bool verbose = false)

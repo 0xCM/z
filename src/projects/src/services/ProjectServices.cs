@@ -5,10 +5,28 @@
 namespace Z0
 {
     using static sys;
+    using static CmdExpr;
     using static ProjectModels;
 
     public partial class ProjectServices : WfSvc<ProjectServices>
     {
+            public static LaunchScript LaunchCmd(FolderPath root)
+            {
+                var dst = text.emitter();
+                dst.AppendLine(call(cwd(script("config"))));
+                dst.AppendLine(set(EnvTokens.PATH, (@string)$"{var(ProjectServices.SettingNames.SlnPaths)};{var(EnvTokens.PATH)}"));
+                dst.AppendLine(set(ProjectServices.SettingNames.WsRoot, cwd()));
+                dst.AppendLine(set(ProjectServices.SettingNames.WsPath, cwd()));
+                dst.AppendLine(var(ProjectServices.SettingNames.VsCode));
+                return new LaunchScript(root + FS.file("develop", FileKind.Cmd), new CmdScript("develop", dst.Emit()));
+            }
+
+            public static LaunchScript load(FolderPath root)
+            {
+                var path = root + FS.file("develop", FileKind.Cmd);
+                return new LaunchScript(path, new CmdScript(path.FileName.WithoutExtension.Format(), path.ReadText()));
+            }
+
         public IProject CreateProject(ProjectKind kind, FolderPath root)
         {
             var project = default(IProject);
@@ -25,11 +43,11 @@ namespace Z0
             }
             if(LaunchScript.path(root).Exists)
             {
-                develop = LaunchScript.load(root);
+                develop = LaunchCmd(root);
             }
             else
             {
-                develop = LaunchScript.create(root);
+                develop = LaunchCmd(root);
                 ProjectServices.save(Channel, develop);
             }
 
@@ -45,11 +63,11 @@ namespace Z0
 
             switch(kind)
             {
-                case ProjectKind.Binary:
-                    project = new BinaryProject(root, new FileIndex());
-                break;
+                // case ProjectKind.Binary:
+                //     project = new BinaryProject(root, new FileIndex());
+                // break;
                 default:
-                    project = new ProjectModels.Project(kind,root);
+                    project = new Project(kind,root);
                 break;
             }
 

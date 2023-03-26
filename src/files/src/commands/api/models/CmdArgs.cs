@@ -53,6 +53,16 @@ namespace Z0
             return dst;
         }
 
+        public CmdArgs Replicate()
+        {
+            var dst = alloc<CmdArg>(Count);
+            for(var i=0; i<Count; i++)
+            {
+                seek(dst,i) = this[i];
+            }
+            return dst;
+        }
+
         public CmdArgs Prepend(params CmdArg[] src)
             => new CmdArgs(src).Concat(this);
 

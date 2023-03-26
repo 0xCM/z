@@ -58,6 +58,9 @@ namespace Z0
             get => sys.cover(ImageBase.Pointer<byte>(), ImageSize);
         }
 
+        public MethodBodyBlock MethodBody(Address32 rva)
+            => PeReader.GetMethodBody((int)rva);
+
         public string Format()
             => Path.Format();
 

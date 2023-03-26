@@ -11,16 +11,28 @@ namespace Z0
     [ApiHost]
     public class MemDb : IMemDb
     {
-        public static ReadOnlySeq<MeasuredType> symbolic(Assembly src, string group)
+        public static ReadOnlySeq<MeasuredType> measured(Assembly src, string group)
         {
-            var x = src.Enums().TypeTags<SymSourceAttribute>().Storage.Where(x => x.Right.SymGroup == group).ToIndex();
+            var x = src.Enums().NonGeneric().TypeTags<SymSourceAttribute>().Storage.Where(x => x.Right.SymGroup == group).ToIndex();
             return x.Select(x => new MeasuredType(x.Left, Sizes.measure(x.Left))).Sort();
+        }
+
+        public static ReadOnlySeq<MeasuredType> measured(Assembly src)
+            => src.Enums().NonGeneric().Select(x => new MeasuredType(x, Sizes.measure(x))).Sort();
+
+        public static ReadOnlySeq<DbTypeTable> typetables(Assembly src, ICompositeDispenser dst)
+        {
+            var types = measured(src);
+            Seq<DbTypeTable> tables = sys.alloc<DbTypeTable>(types.Count);
+            for(var i=0; i<types.Count; i++)
+                tables[i] = typetable(types[i], dst);
+            return tables.Sort();
         }
 
         public static ReadOnlySeq<DbTypeTable> typetables(Assembly src, string group, ICompositeDispenser dst)
         {
-            var types = symbolic(src, group);
-            Index<DbTypeTable> tables = sys.alloc<DbTypeTable>(types.Count);
+            var types = measured(src, group);
+            Seq<DbTypeTable> tables = sys.alloc<DbTypeTable>(types.Count);
             for(var i=0; i<types.Count; i++)
                 tables[i] = typetable(types[i], dst);
             return tables.Sort();
@@ -29,7 +41,7 @@ namespace Z0
         public static DbTypeTable typetable(MeasuredType type, ICompositeDispenser dst)
         {
             var symbols = Symbols.syminfo(type.Definition);
-            Index<TypeTableRow> rows = sys.alloc<TypeTableRow>(symbols.Count);
+            Seq<TypeTableRow> rows = sys.alloc<TypeTableRow>(symbols.Count);
             for(var j=0; j<symbols.Count; j++)
             {
                 ref readonly var sym = ref symbols[j];
@@ -51,8 +63,7 @@ namespace Z0
                 type.Size,
                 rows
                 );
-        }
-         
+        }         
 
         public static DbGrid<T> grid<T>(Dim2<uint> shape)
             => new DbGrid<T>(new DbRowGrid<T>(shape), new DbColGrid<T>(shape));
@@ -229,8 +240,8 @@ namespace Z0
             => sys.inc(ref ObjSeqSource[kind]);
 
         [MethodImpl(Inline), Op]
-        public static DbDataType type(uint seq, Name name, Name primitive, DataSize size, Name refinement = default)
-            => new DbDataType(seq, name, primitive, size, refinement.IsNonEmpty, refinement);
+        public static DbDataType type(Name name, Name primitive, DataSize size, Name refinement = default)
+            => new DbDataType(name, primitive, size, refinement.IsNonEmpty, refinement);
  
         [MethodImpl(Inline)]
         static AllocToken token(MemoryAddress @base, uint offset, uint size)
