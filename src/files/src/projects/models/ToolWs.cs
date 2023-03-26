@@ -8,34 +8,13 @@ namespace Z0
     using static sys;
 
     /// <summary>
-    /// Defines a container for tool representation and control
-    /// </summary>
-    public sealed class ToolProject : Project
-    {
-        public readonly ToolConfig Config;
-
-        public ToolProject()
-        {
-
-        }
-
-        public ToolProject(ToolConfig config)
-            : base(config.Tool.Name, new DbArchive(config.ToolHome))
-        {
-            Config = config;
-        }
-    }
-
-    /// <summary>
     /// Defines a collection of tool controllers
     /// </summary>
-    public sealed class ToolWs : Project, IToolWs
+    public sealed class ToolWs : IToolWs
     {
-        public static ToolProject project(ToolConfig config)
-            => new ToolProject(config);
+        public @string Name {get;}
 
-        public static ReadOnlySeq<ToolProject> projects(ReadOnlySpan<ToolConfig> src)
-            => src.Map(project);
+        public IDbArchive Root {get;}
 
         Dictionary<Actor,ToolConfig> ConfigLookup;
 
@@ -47,8 +26,9 @@ namespace Z0
         }
 
         public ToolWs(Tool tool, FolderPath home)
-            : base(tool.Name, new DbArchive(home))
         {
+            Name = tool.Name;
+            Root = home.DbArchive();
             Tool = tool;
             ConfigLookup = dict<Actor,ToolConfig>();
             Configs = array<ToolConfig>();

@@ -43,10 +43,10 @@ namespace Z0
             return new AsmCodeBlocks(composite.Label(origin.DocName), origin.DocId, blockbuffer);
         }
 
-        static Index<AsmCodeBlocks> blocks(IProjectWorkspace project, Index<ObjDumpRow> src, CompositeBuffers dispenser)
+        static Index<AsmCodeBlocks> blocks(IEnumerable<FilePath> files, Index<ObjDumpRow> rows, CompositeBuffers dispenser)
         {
             var collected = dict<uint, AsmCodeBlocks>();
-            var groups = src.GroupBy(x => x.OriginId).Array();
+            var groups = rows.GroupBy(x => x.OriginId).Array();
             var buffer = alloc<AsmCodeBlocks>(groups.Length);
             var composite = dispenser.Composite();
             for(var i=0; i<groups.Length; i++)
@@ -86,7 +86,7 @@ namespace Z0
                     seek(blockbuffer,j) = new AsmCodeBlock(composite.Symbol(blockaddress, blockname), codebuffer);
                 }
 
-                var origin = FileCatalog.load(project.Files().Array().ToSortedSpan()).Doc(group.Key);
+                var origin = FileCatalog.load(files.Array().ToSortedSpan()).Doc(group.Key);
                 seek(buffer,i) = new AsmCodeBlocks(composite.Label(origin.DocName), origin.DocId, blockbuffer);
             }
             return buffer;

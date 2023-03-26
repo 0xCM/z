@@ -11,7 +11,6 @@ namespace Z0
     {
         public void Collect(ProjectContext context)
         {
-            var project = context.Project.ProjectId;
             var docs = CalcDocs(context);
             exec(PllExec,
                 () => EmitConsolidated(context, docs),

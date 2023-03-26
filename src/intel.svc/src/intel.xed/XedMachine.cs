@@ -116,8 +116,6 @@ namespace Z0
 
         MachineState RuntimeState;
 
-        readonly IProjectWorkspace Ws;
-
         readonly Channel _Emitter;
 
         static int Seq;
@@ -150,7 +148,6 @@ namespace Z0
         internal XedMachine(XedRuntime xed)
         {
             Xed = xed;
-            Ws = Projects.load(AppDb.DbOut());
             RuntimeState = new(NextId());
             _Emitter = Channel.create(this, StatusWriter);
             LoadLookups();

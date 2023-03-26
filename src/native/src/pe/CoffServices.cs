@@ -29,12 +29,12 @@ namespace Z0
         public CoffSymIndex CollectSymIndex(ProjectContext context)
             => new CoffSymIndex(CollectHeaders(context), CollectSymbols(context));
 
-        public DbArchive ObjHex(ProjectId project)
-            => AppDb.EtlTargets(project).Targets(objhex);
+        public DbArchive ObjHex(string name)
+            => AppDb.EtlTargets(name).Targets(objhex);
 
         public Outcome CollectObjHex(ProjectContext context)
         {
-            var targets = ObjHex(context.Project.ProjectId);
+            var targets = ObjHex(context.Project.Name);
             targets.Clear();
             var result = Outcome.Success;
             var files = context.Files.Docs(FileKind.Obj, FileKind.O);
@@ -56,7 +56,7 @@ namespace Z0
 
         public HexFileData LoadObjHex(ProjectContext context)
         {
-            var src = ObjHex(context.Project.ProjectId).Files(FileKind.HexDat).Array();
+            var src = ObjHex(context.Project.Name).Files(FileKind.HexDat).Array();
             var count = src.Length;
             var dst = dict<FilePath,Index<HexDataRow>>(count);
             for(var i=0; i<count; i++)
@@ -156,7 +156,7 @@ namespace Z0
         public Index<CoffSection> CollectHeaders(ProjectContext context)
         {
             var records = CalcObjHeaders(context);
-            Channel.TableEmit(records, EtlContext.table<CoffSection>(context.Project.ProjectId));
+            Channel.TableEmit(records, EtlContext.table<CoffSection>(context.Project.Name));
             return records;
         }
 
@@ -334,7 +334,7 @@ namespace Z0
             var records = buffer.ToArray().Sort();
             for(var i=0u; i<records.Length; i++)
                 seek(records,i).Seq = i;
-            Channel.TableEmit(records, EtlContext.table<CoffSymRecord>(context.Project.ProjectId));
+            Channel.TableEmit(records, EtlContext.table<CoffSymRecord>(context.Project.Name));
             return records;
         }
     }

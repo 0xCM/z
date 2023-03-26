@@ -15,7 +15,7 @@ namespace Z0
             //var targets = context.ProjectDatasets("xed.disasm");
             //var targets = context.ProjectDatasets("xed.disasm");
             //var target = targets.Path(doc.Origin.Path.FileName.WithoutExtension + FS.ext("xed.disasm.details.csv"));
-            var target = XedPaths.DisasmDetailPath(context.Project.ProjectId, doc.DataSource);
+            var target = XedPaths.DisasmDetailPath(context.Project.Name, doc.DataSource);
             var dst = text.emitter();
             DisasmRender.render(doc.DetailBlocks, dst);
             var emitting = Channel.EmittingFile(target);

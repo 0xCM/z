@@ -14,28 +14,14 @@ namespace Z0
 
         CoffServices Coff => Wf.CoffServices();
 
-        public AsmCodeMap MapAsm(IProjectWorkspace ws, CompositeBuffers dst)
-        {
-            var entries = map(ws, LoadRows(ws.ProjectId), dst);
-            Channel.TableEmit(entries, AppDb.EtlTable<AsmCodeMapEntry>(ws.ProjectId));
-            return new AsmCodeMap(entries);
-        }
-
-        public AsmCodeMap MapAsm(IProjectWorkspace ws, Index<ObjDumpRow> src, CompositeBuffers dst)
-        {
-            var entries = map(ws, src, dst);
-            Channel.TableEmit(entries, AppDb.EtlTable<AsmCodeMapEntry>(ws.ProjectId));
-            return new AsmCodeMap(entries);
-        }
-
-        IDbArchive EtlTargets(ProjectId project)
-            => AppDb.EtlTargets(project);
+        IDbArchive EtlTargets(string name)
+            => AppDb.EtlTargets(name);
 
         public void RunEtl(ProjectContext context)
         {
-            var project = context.Project.ProjectId;
+            var project = context.Project.Name;
             EtlTargets(project).Delete();
-            Channel.TableEmit(context.FileIndex.Members().Array().Sort().Resequence(), AppDb.EtlTable(project,"files.catalog"));
+            Channel.TableEmit(context.Files.Docs().Array().Sort().Resequence(), AppDb.EtlTable(project,"files.catalog"));
             var objects = Channel.Channeled<ObjDump>().CalcObjRows(context);
             Channel.TableEmit(objects, AppDb.EtlTable<ObjDumpRow>(project));
             var blocks = AsmObjects.blocks(objects);
@@ -105,19 +91,19 @@ namespace Z0
             return dst;
         }
 
-        public IEnumerable<FilePath> SynAsmSources(IProjectWorkspace src)
-            => src.OutFiles(FileKind.SynAsm);
+        public IEnumerable<FilePath> SynAsmSources(IProject src)
+            => src.BuildFiles(FileKind.SynAsm);
 
-        public CoffSymIndex LoadSymbols(ProjectId id)
+        public CoffSymIndex LoadSymbols(string id)
             => Coff.LoadSymIndex(id);
 
-        public Index<ObjDumpRow> LoadRows(ProjectId id)
+        public Index<ObjDumpRow> LoadRows(string id)
             => ObjDump.rows(AppDb.EtlTable<ObjDumpRow>(id));
 
-        public Index<ObjBlock> LoadBlocks(ProjectId id)
+        public Index<ObjBlock> LoadBlocks(string id)
             => blocks(AppDb.EtlTable<ObjBlock>(id));
 
-        public Index<AsmInstructionRow> LoadInstructions(ProjectId project)
+        public Index<AsmInstructionRow> LoadInstructions(string project)
         {
             const byte FieldCount = AsmInstructionRow.FieldCount;
             var src = AppDb.EtlTable<AsmInstructionRow>(project);
@@ -147,8 +133,8 @@ namespace Z0
             return buffer;
         }
 
-        public FilePath AsmInstructionTable(ProjectId project)
-            => EtlContext.table<AsmInstructionRow>(project);
+        public FilePath AsmInstructionTable(string name)
+            => EtlContext.table<AsmInstructionRow>(name);
 
         public Index<AsmInstructionRow> CollectMcInstructions(ProjectContext context)
         {
@@ -184,27 +170,27 @@ namespace Z0
             }
 
             var records = buffer.ToArray();
-            Channel.TableEmit(records, AsmInstructionTable(project.ProjectId));
+            Channel.TableEmit(records, AsmInstructionTable(project.Name));
             return records;
         }
 
-        public IDbArchive RecodedTargets(ProjectId id)
-            => AppDb.EtlTargets("mc.recoded").Targets(id.Format());
+        public IDbArchive RecodedTargets(string name)
+            => AppDb.EtlTargets("mc.recoded").Targets(name);
 
-        public FilePath RecodedTarget(ProjectId project, string origin)
-            => RecodedTargets(project).Path(origin, FileKind.Asm);
+        public FilePath RecodedTarget(string name, string origin)
+            => RecodedTargets(name).Path(origin, FileKind.Asm);
 
-        public FilePath AsmRowPath(ProjectId project, string origin)
-            => AppDb.EtlTargets(project).Targets("asm.csv").Path(origin, FileKind.Csv);
+        public FilePath AsmRowPath(string name, string origin)
+            => AppDb.EtlTargets(name).Targets("asm.csv").Path(origin, FileKind.Csv);
 
         public void EmitObjSyms(ProjectContext context, ReadOnlySpan<ObjSymRow> src)
-            => Channel.TableEmit(src, AppDb.EtlTargets(context.Project.ProjectId).Table<ObjSymRow>());
+            => Channel.TableEmit(src, AppDb.EtlTargets(context.Project.Name).Table<ObjSymRow>());
 
         public Index<ObjSymRow> CalcObjSyms(ProjectContext context)
         {
             var result = Outcome.Success;
             var project = context.Project;
-            var src = project.OutFiles(FileKind.Sym).Array();
+            var src = project.BuildFiles(FileKind.Sym).Array();
             var count = src.Length;
             var formatter = CsvTables.formatter<ObjSymRow>();
             var buffer = list<ObjSymRow>();
@@ -235,13 +221,13 @@ namespace Z0
         {
             //RecodedTargets(context.Project.ProjectId).Clear();
             for(var i=0; i<blocks.Count; i++)
-                RecodeBlocks(context.Project.ProjectId, blocks[i]);
+                RecodeBlocks(context.Project.Name, blocks[i]);
         }
 
-        void RecodeBlocks(ProjectId project, in AsmCodeBlocks src)
+        void RecodeBlocks(string name, in AsmCodeBlocks src)
         {
             const string intel_syntax = ".intel_syntax noprefix";
-            var asmpath = RecodedTarget(project, src.OriginName.Format());
+            var asmpath = RecodedTarget(name, src.OriginName.Format());
             var emitting = Channel.EmittingFile(asmpath);
             var counter = 0u;
             using var writer = asmpath.AsciWriter();
@@ -279,7 +265,7 @@ namespace Z0
 
                 var blocks = AsmObjects.blocks(context, file, ref seq, rows, alloc);
                 dst.Add(blocks);
-                EmitAsmRows(context, blocks, AsmRowPath(context.Project.ProjectId, file.Path.FileName.Format()));
+                EmitAsmRows(context, blocks, AsmRowPath(context.Project.Name, file.Path.FileName.Format()));
             }
             return dst.ToArray();
         }
@@ -317,14 +303,14 @@ namespace Z0
             Channel.TableEmit(buffer, dst);
         }
 
-        public FilePath AsmSyntaxTable(ProjectId project)
-            => EtlContext.table<AsmSyntaxRow>(project);
+        public FilePath AsmSyntaxTable(string name)
+            => EtlContext.table<AsmSyntaxRow>(name);
 
         public Index<AsmSyntaxRow> CollectAsmSyntax(ProjectContext context)
         {
             var project = context.Project;
-            var logs = project.OutFiles(FileKind.SynAsmLog).Array();
-            var dst = AsmSyntaxTable(project.ProjectId);
+            var logs = project.BuildFiles(FileKind.SynAsmLog).Array();
+            var dst = AsmSyntaxTable(project.Name);
             var count = logs.Length;
             var buffer = list<AsmSyntaxRow>();
             var seq = 0u;

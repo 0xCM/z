@@ -12,11 +12,17 @@ namespace Z0
 
             public IApiService ProjectCmd(IWfRuntime wf)
                 => Service<ProjectServices.ProjectCmd>(wf);
+
+            public ProjectServices ProjectServices(IWfRuntime wf)
+                => Service<ProjectServices>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
 
         public static IApiService ProjectCmd(this IWfRuntime wf)
             => Services.ProjectCmd(wf);
+
+        public static ProjectServices ProjectServices(this IWfRuntime wf)
+            => Services.ProjectServices(wf);
     }
 }

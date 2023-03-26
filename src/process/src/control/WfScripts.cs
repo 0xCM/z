@@ -10,19 +10,19 @@ namespace Z0
     {
         OmniScript OmniScript => Wf.OmniScript();
 
-        public FolderPath CleanOutDir(IProjectWorkspace project)
-            => project.BuildOut().Clear(true);
+        public void CleanOutDir(IProject project)
+            => project.Build().Clear();
 
-        public void BuildAsm(IProjectWorkspace src)
+        public void BuildAsm(IProject src)
             => RunScripts(src, FileKind.Asm, src.CmdScript("build-asm"), false);
 
-        public void BuildC(IProjectWorkspace src, bool runexe = false)
+        public void BuildC(IProject src, bool runexe = false)
             => RunScripts(src, FileKind.C, src.CmdScript("build-c"), runexe);
 
-        public void BuildCpp(IProjectWorkspace src, bool runexe = false)
+        public void BuildCpp(IProject src, bool runexe = false)
             => RunScripts(src, FileKind.Cpp, src.CmdScript("build-cpp"), runexe);
 
-        public void RunScripts(IProjectWorkspace project, FileKind kind, FilePath script, bool runexe)
+        public void RunScripts(IProject project, FileKind kind, FilePath script, bool runexe)
         {
             if(!script.Exists)
                 sys.@throw(AppMsg.NotFound.Format(script));
@@ -128,7 +128,7 @@ namespace Z0
             Channel.Write(src, FlairKind.Error);
         }
 
-        Outcome RunProjectScript(IProjectWorkspace project, string srcid, FilePath script, bool quiet, out ReadOnlySpan<CmdFlow> flows)
+        Outcome RunProjectScript(IProject project, string srcid, FilePath script, bool quiet, out ReadOnlySpan<CmdFlow> flows)
         {
             var result = Outcome.Success;
             var vars = WsCmdVars.create();
@@ -136,7 +136,7 @@ namespace Z0
             return RunToolScript(script, vars.ToCmdVars(), quiet, out flows);
         }
 
-        Outcome<Index<CmdFlow>> RunScript(IProjectWorkspace project, FilePath script, string srcid)
+        Outcome<Index<CmdFlow>> RunScript(IProject project, FilePath script, string srcid)
         {
             var cmdflows = list<CmdFlow>();
             var result = RunProjectScript(project, srcid, script, true, out var flows);
@@ -151,7 +151,7 @@ namespace Z0
             return result;
         }
 
-        void RunScript(IProjectWorkspace project, FileKind kind, FilePath script, Action<CmdFlow> receiver)
+        void RunScript(IProject project, FileKind kind, FilePath script, Action<CmdFlow> receiver)
         {
             var flows = list<CmdFlow>();
             var files = project.SourceFiles(kind, false).Array();

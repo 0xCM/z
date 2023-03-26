@@ -8,27 +8,30 @@ namespace Z0
     {
         public record class Project : IProject
         {
-            public readonly FolderPath Root;
+            public readonly @string Name;
+
+            public readonly IDbArchive Root;
 
             public readonly ProjectKind Kind;
         
             public Project(ProjectKind kind, FolderPath root)
             {
+                Name = root.FolderName.Format();
                 Kind = kind;
-                Root = root;
+                Root = root.DbArchive();
             }
 
             protected Project(ProjectKind kind)
             {
                 Kind = kind;
-                Root = FolderPath.Empty;
+                Root = FolderPath.Empty.DbArchive();
             }            
 
-            FolderPath IProject.Root
+            IDbArchive IProject.Root
                 => Root;
 
-            ProjectKind IProject.Kind
-                => Kind;
+            @string IProject.Name
+                => Name;
         }
     }
 }

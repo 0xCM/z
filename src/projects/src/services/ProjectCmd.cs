@@ -11,13 +11,24 @@ namespace Z0
         internal class ProjectCmd : WfAppCmd<ProjectCmd>
         {
             ProjectModels Models => Channel.Channeled<ProjectModels>();
-        
+
+            ProjectServices Services => Wf.ProjectServices();
+            
             [CmdOp("projects/modules")]
             void EcmaMeta(CmdArgs args)
             {
                 var svc = Channel.Channeled<ModuleArchives>();
                 var sources = FS.dir(args[0]).DbArchive();
                 using var map = svc.Map(sources,true);
+            }
+
+            [CmdOp("projects/load")]
+            void Load(CmdArgs args)
+            {
+                var project = Services.LoadProject(FS.path(args[0]));
+                Channel.Row($"{project.Name}:{project.Root}");
+
+                
             }
 
 

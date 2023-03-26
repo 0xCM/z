@@ -29,13 +29,13 @@ namespace Z0
 
         void EmitOpClasses(ProjectContext context, Index<DisasmDoc> src)
         {
-            var target = EtlContext.table<InstOpClass>(context.Project.ProjectId, disasm);
+            var target = EtlContext.table<InstOpClass>(context.Project.Name, disasm);
             Channel.TableEmit(opclasses(src).View, target);
         }
 
         void EmitConsolidated(ProjectContext context, Index<DisasmDetailBlock> src)
         {
-            var target = EtlContext.table<DisasmDetailBlockRow>(context.Project.ProjectId);
+            var target = EtlContext.table<DisasmDetailBlockRow>(context.Project.Name);
             var buffer = text.buffer();
             DisasmRender.render(resequence(src), buffer);
             var emitting = Channel.EmittingFile(target);
@@ -45,6 +45,6 @@ namespace Z0
         }
 
         void EmitConsolidated(ProjectContext context, Index<XedDisasmRow> src)
-            => Channel.TableEmit(resequence(src), EtlContext.table<XedDisasmRow>(context.Project.ProjectId));
+            => Channel.TableEmit(resequence(src), EtlContext.table<XedDisasmRow>(context.Project.Name));
     }
 }

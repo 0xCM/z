@@ -26,8 +26,8 @@ namespace Z0
 
         XedProject XedProject => Wf.XedProject();
 
-        public IProjectWorkspace LlvmModels(string scope)
-            => Projects.load(AppDb.Dev($"llvm.models/{scope}"));
+        public IDbArchive LlvmModels(string scope)
+            => AppDb.Dev($"llvm.models/{scope}");
 
         [CmdOp("xed/headers")]
         void XedHeaders()
@@ -66,7 +66,7 @@ namespace Z0
             foreach(var mnemonic in sources.Keys)
             {
                 var file = AsmFileSpec.define(mnemonic, sources[mnemonic].ToArray());
-                var dst = LlvmModels("mc.models").SrcDir("asm") + FS.file(file.Name, FileKind.Asm);
+                var dst = LlvmModels("mc.models").Scoped("asm").Path(FS.file(file.Name, FileKind.Asm));
                 Channel.FileEmit(file.Format(), dst);
             }
 
@@ -155,7 +155,7 @@ namespace Z0
             foreach(var mnemonic in sources.Keys)
             {
                 var file = AsmFileSpec.define(mnemonic.Format(), sources[mnemonic].ToArray());
-                var dst = file.Path(LlvmModels("mc.models.g").SrcDir("asm"));
+                var dst = file.Path(LlvmModels("mc.models.g").Scoped("asm"));
                 EmittedFile(EmittingFile(dst), file.Save(dst));
             }
 

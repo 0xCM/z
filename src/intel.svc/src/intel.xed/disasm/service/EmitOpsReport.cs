@@ -17,7 +17,7 @@ namespace Z0
 
         void EmitOpsReport(ProjectContext context, DisasmDetail doc)
         {
-            var outpath = XedPaths.DisasmOpsPath(context.Project.ProjectId, doc.DataFile.Source);
+            var outpath = XedPaths.DisasmOpsPath(context.Project.Name, doc.DataFile.Source);
             var emitting = EmittingFile(outpath);
             using var dst = outpath.AsciEmitter();
             dst.AppendLineFormat(RenderCol2, "DataSource", doc.Source.Path.ToUri().Format());

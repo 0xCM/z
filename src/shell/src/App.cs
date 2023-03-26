@@ -16,6 +16,7 @@ namespace Z0
                 wf.WinMdCmd(),
                 wf.EcmaCmd(),
                 wf.CsGenCmd(),
+                wf.ProjectCmd()
             };
 
         static int main(string[] args)

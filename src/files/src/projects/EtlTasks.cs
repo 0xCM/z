@@ -13,8 +13,8 @@ namespace Z0
             AppDb = db;
         }
 
-        public IProjectWorkspace EtlSource(IDbArchive src)
-            => Projects.load(src);
+        // public IProjectWorkspace EtlSource(IDbArchive src)
+        //     => Projects.load(src);
 
         public FilePath EtlTable<T>(ProjectId project) where T : struct
             => EtlTargets(project).Table<T>(project.Format());

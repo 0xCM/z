@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using static sys;
-
     partial struct asm
     {
         [MethodImpl(Inline), Op]

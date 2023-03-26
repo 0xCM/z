@@ -4,13 +4,29 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
     using Asm;
+
+    using static sys;
+
     partial class AsmObjects
     {
-        static Index<AsmCodeMapEntry> map(IProjectWorkspace project, Index<ObjDumpRow> src, CompositeBuffers dispenser)
+        public AsmCodeMap MapAsm(IProject project, CompositeBuffers dst)
         {
-            var distilled = blocks(project, src, dispenser);
+            var entries = map(project.Files(), LoadRows(project.Name), dst);
+            Channel.TableEmit(entries, AppDb.EtlTable<AsmCodeMapEntry>(project.Name));
+            return new AsmCodeMap(entries);
+        }
+
+        public AsmCodeMap MapAsm(IProject project, Index<ObjDumpRow> src, CompositeBuffers dst)
+        {
+            var entries = map(project.Files(), src, dst);
+            Channel.TableEmit(entries, AppDb.EtlTable<AsmCodeMapEntry>(project.Name));
+            return new AsmCodeMap(entries);
+        }
+
+        static Index<AsmCodeMapEntry> map(IEnumerable<FilePath> files, Index<ObjDumpRow> src, CompositeBuffers dispenser)
+        {
+            var distilled = blocks(files, src, dispenser);
             var entries = list<AsmCodeMapEntry>();
             for(var i=0; i<distilled.Count; i++)
             {

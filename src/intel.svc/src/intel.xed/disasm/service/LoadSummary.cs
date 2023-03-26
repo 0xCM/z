@@ -9,10 +9,10 @@ namespace Z0
 
     partial class XedDisasmSvc
     {
-        public Index<XedDisasmRow> LoadSummary(ProjectId id)
+        public Index<XedDisasmRow> LoadSummary(string name)
         {
             const byte FieldCount = XedDisasmRow.FieldCount;
-            var src = EtlContext.table<XedDisasmRow>(id);
+            var src = EtlContext.table<XedDisasmRow>(name);
             var lines = slice(src.ReadNumberedLines().View,1);
             var count = lines.Length;
             var buffer = alloc<XedDisasmRow>(count);

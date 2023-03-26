@@ -59,7 +59,7 @@ namespace Z0
                     case LayoutCellKind.None:
                     break;
                     default:
-                        Error($"{key}");
+                        Channel.Error($"{key}");
                     break;
                 }
             }

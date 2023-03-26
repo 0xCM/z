@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
     /// <summary>
     /// Defines a tool flag argument
     /// </summary>

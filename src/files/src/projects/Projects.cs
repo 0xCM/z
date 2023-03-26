@@ -8,13 +8,13 @@ namespace Z0
 
     public class Projects
     {
-        public static IProjectWorkspace load(IDbArchive root)
-            => new ProjectWorkspace(root, root.Root.FolderName.Format());
+        // public static IProjectWorkspace load(IDbArchive root)
+        //     => new ProjectWorkspace(root, root.Root.FolderName.Format());
 
-        public static FilePath flowpath(IProjectWorkspace src)
-            => src.BuildOut() + FS.file($"{src.ProjectId}.build.flows",FileKind.Csv);
+        public static FilePath flowpath(IProject src)
+            => src.Build().Path(FS.file($"{src.Name}.build.flows",FileKind.Csv));
 
-        public static ProjectContext context(IProjectWorkspace src)
+        public static ProjectContext context(IProject src)
             => new ProjectContext(src, flows(src));
 
         static Outcome parse(string src, out Tool dst)
@@ -23,7 +23,7 @@ namespace Z0
             return true;
         }
 
-        static CmdFlows flows(IProjectWorkspace src)
+        static CmdFlows flows(IProject src)
         {
             var path = Projects.flowpath(src);
             if(path.Exists)
@@ -51,9 +51,9 @@ namespace Z0
                 return CmdFlows.Empty;
         }
 
-        static IProjectWorkspace Project;
+        static IProject Project;
 
-        public static ref readonly IProjectWorkspace project()
+        public static ref readonly IProject project()
         {
             if(Project == null)
                 sys.@throw("Project is null");
@@ -61,7 +61,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public static ref readonly IProjectWorkspace project(IProjectWorkspace src)
+        public static ref readonly IProject project(IProject src)
         {
             Project = src;
             return ref Project;

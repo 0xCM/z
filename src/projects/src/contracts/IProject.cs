@@ -6,11 +6,11 @@ namespace Z0
 {
     partial class ProjectModels
     {
-        public interface IProject
-        {
-            FolderPath Root {get;}
+        // public interface IProject
+        // {
+        //     FolderPath Root {get;}
 
-            ProjectKind Kind {get;}
-        }
+        //     ProjectKind Kind {get;}
+        // }
     }
 }

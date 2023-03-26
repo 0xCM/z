@@ -9,6 +9,46 @@ namespace Z0
 
     public partial class ProjectServices : WfSvc<ProjectServices>
     {
+        public IProject LoadProject(FilePath src)
+        {
+            var doc = Json.document(src);
+            var env = Env.process();
+            var root = doc.RootElement;
+            AsciFence fence = (AsciSymbols.LBrace, AsciSymbols.RBrace);
+            var prefix = AsciSymbols.Dollar;
+            var folders = list<FolderPath>();
+            var found = list<ScriptVar>();            
+            iter(root.EnumerateObject(), o => {
+                switch(o.Name)
+                {
+                    case "folders":
+                        iter(o.Value.EnumerateArray(), folder => {
+                            var expr = folder.ToString();
+                            var vars = Vars.extract(expr, prefix, fence);
+                            iter(vars.Keys, key => {
+                                if(env.Find(key, out var value))
+                                {
+                                    found.Add(Vars.var(key, prefix, fence, value));
+                                }
+                            });
+
+                            var eval = FS.dir(Vars.eval(expr, found.Array()));
+                            if(eval.Exists)
+                            {
+                                folders.Add(eval);
+                            }
+                            else
+                            {
+                                Channel.Error($"Not found: {eval}");
+                            }                            
+                        });
+                    break;
+                }
+            });
+            
+            return new AggregateProject(src, folders.Array());
+        }
+
         public void EmitApiDeps(IDbArchive dst)
         {
             var src = ExecutingPart.Assembly;

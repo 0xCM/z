@@ -95,8 +95,8 @@ namespace Z0
         public DbArchive ApiTargets(string scope)
             => DbTargets($"api/{scope}");
 
-        public DbArchive EtlTargets(ProjectId project)
-            => DbTargets().Scoped("projects").Scoped(project.Format());
+        public DbArchive EtlTargets(string name)
+            => DbTargets().Scoped("projects").Scoped(name);
 
         public DbArchive SlnRoot()
             => Dev().Scoped("z0");
@@ -146,12 +146,12 @@ namespace Z0
         public DbArchive CgStage(string scope)
             => DbTargets("cgstage").Scoped(scope);
 
-        public FilePath EtlTable<T>(ProjectId project)
+        public FilePath EtlTable<T>(string name)
             where T : struct
-                => EtlTargets(project).Table<T>(project.Format());
+                => EtlTargets(name).Table<T>(name);
 
-        public FilePath EtlTable(ProjectId project, string name)
-            => EtlTargets(project).Path($"{project}.{name}", FileKind.Csv);
+        public FilePath EtlTable(string scope, string name)
+            => EtlTargets(scope).Path($"{scope}.{name}", FileKind.Csv);
 
         public DbArchive Toolbase()
             => folder(Data.Setting(Names.Toolbase));  

@@ -36,7 +36,7 @@ namespace Z0.Asm
         {
             var count = src.Length;
             var result = Outcome.Success;
-            var flow = EmittingFile(dst);
+            var flow = Channel.EmittingFile(dst);
             var counter = 0u;
             using var writer = dst.Writer(encoding.Right);
             for(var i=0; i<count; i++)
@@ -45,7 +45,7 @@ namespace Z0.Asm
                 if(input.IsEmpty)
                 {
                     result = (false,string.Format("A supplied source path at index {0} is empty", i));
-                    Error(result.Message);
+                    Channel.Error(result.Message);
                 }
                 if(!input.Exists)
                 {
@@ -53,7 +53,7 @@ namespace Z0.Asm
                     Error(result.Message);
                 }
 
-                var processing = Running(string.Format("Appending {0} to {1}", input.ToUri(), dst.ToUri()));
+                var processing = Channel.Running(string.Format("Appending {0} to {1}", input.ToUri(), dst.ToUri()));
                 using var reader = input.Reader(encoding.Left);
                 var line = reader.ReadLine();
                 while(line != null)
@@ -62,9 +62,9 @@ namespace Z0.Asm
                     counter++;
                     line = reader.ReadLine();
                 }
-                Ran(processing);
+                Channel.Ran(processing);
             }
-            EmittedFile(flow,counter);
+            Channel.EmittedFile(flow,counter);
         }
 
         public Outcome<uint> CreateLinedDoc(FilePath src, FilePath dst, Pair<TextEncodingKind> encoding)

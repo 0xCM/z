@@ -15,7 +15,7 @@ namespace Z0
         void Etl()
             => Etl(Project());
 
-        public void Etl(IProjectWorkspace project)
+        public void Etl(IProject project)
         {
             var context = Projects.context(project);
             AsmObjects.RunEtl(context);

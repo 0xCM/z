@@ -13,18 +13,18 @@ namespace Z0
 
         protected static IEnvDb EnvDb => AppSettings.EnvDb();
 
-        ConcurrentDictionary<ProjectId, ProjectContext> _Context = new();
+        ConcurrentDictionary<string, ProjectContext> _Context = new();
 
         protected static AppDb AppDb => AppDb.Service;
 
         [MethodImpl(Inline)]
-        public IProjectWorkspace Project()
+        public IProject Project()
             => Projects.project();
 
         protected ProjectContext ProjectContext()
         {
             var project = Project();
-            return _Context.GetOrAdd(project.ProjectId, _ => Projects.context(project));
+            return _Context.GetOrAdd(project.Name, _ => Projects.context(project));
         }
 
         [CmdOp("project/home")]
@@ -34,52 +34,18 @@ namespace Z0
         [CmdOp("project/files")]
         protected void ListProjectFiles()
         {
-            iter(ProjectContext().FileIndex.Members(), member => Channel.Row(member.Location));                
+            iter(ProjectContext().Files.Docs(), member => Channel.Row(member.Path));                
         }
 
         [CmdOp("project/load")]
         public void LoadProject(CmdArgs args)
         {
-            var doc = Json.document(FS.path(args[0]));
-            var env = Env.process();
-            var root = doc.RootElement;
-            AsciFence fence = (AsciSymbols.LBrace, AsciSymbols.RBrace);
-            var prefix = AsciSymbols.Dollar;
-            var found = list<ScriptVar>();
-            iter(root.EnumerateObject(), o => {
-                switch(o.Name)
-                {
-                    case "folders":
-                        iter(o.Value.EnumerateArray(), folder => {
-                            var expr = folder.ToString();
-                            var vars = Vars.extract(expr, prefix, fence);
-                            iter(vars.Keys, key => {
-                                if(env.Find(key, out var value))
-                                {
-                                    found.Add(Vars.var(key, prefix, fence, value));
-                                }
-                            });
+            var root = FS.dir(args[0]);
 
-                            var eval = FS.dir(Vars.eval(expr, found.Array()));
-                            if(eval.Exists)
-                            {
-                                
-                            }
-                            else
-                            {
-                                Channel.Error($"Not found: {eval}");
-                            }
-                            
-                        }
-                            );
-                    break;
-                }
-            });
-            
-            //LoadProjectSources(Projects.load(FS.dir(args[0]).DbArchive()));
+            LoadProjectSources(new Project(root.FolderName.Format(), root.DbArchive()));
         }
 
-        void LoadProjectSources(IProjectWorkspace src)
+        void LoadProjectSources(IProject src)
         {
             var loading = Channel.Running($"Loading project from {src.Root}");
             Projects.project(src);
