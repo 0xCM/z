@@ -9,21 +9,21 @@ namespace Z0
     partial class ApiCode
     {
         [Op]
-        public static void gather(IApiPartCatalog src, ICompositeDispenser dispenser, ConcurrentBag<CollectedHost> dst, IWfChannel log, bool pll)
-            => iter(jit(src, log), member => dst.Add(gather(member, dispenser, log)), pll);
+        public static void gather(IWfChannel channel, IApiPartCatalog src, ICompositeDispenser dispenser, ConcurrentBag<CollectedHost> dst, bool pll)
+            => iter(jit(channel, src), member => dst.Add(gather(channel, member, dispenser)), pll);
 
         [Op]
-        static ConcurrentBag<ApiHostMembers> jit(IApiPartCatalog src, IWfChannel log)
+        public static ReadOnlySeq<ApiEncoded> gather(IWfChannel channel, ReadOnlySpan<MethodEntryPoint> src, ICompositeDispenser dispenser)
+            => parse(channel, raw(channel, dispenser, src)).Values.Array().Sort();
+
+        [Op]
+        static ConcurrentBag<ApiHostMembers> jit(IWfChannel channel, IApiPartCatalog src)
         {
             var members = bag<ApiHostMembers>();
-            iter(src.ApiHosts, host => ClrJit.jit(host, members, log));
-            iter(src.ApiTypes, type => ClrJit.jit(type, members, log));      
+            iter(src.ApiHosts, host => ClrJit.jit(host, members, channel));
+            iter(src.ApiTypes, type => ClrJit.jit(type, members, channel));      
             return members;          
         }
-
-        [Op]
-        public static ReadOnlySeq<ApiEncoded> gather(ReadOnlySpan<MethodEntryPoint> src, ICompositeDispenser dispenser, IWfChannel log)
-            => parse(raw(dispenser, src, log), log).Values.Array().Sort();
 
         [Op]
         static Outcome gather(in RawMemberCode raw, Span<byte> buffer, out CollectedCodeExtract dst)
@@ -45,11 +45,11 @@ namespace Z0
         }
 
         [Op]
-        static CollectedHost gather(ApiHostMembers src, ICompositeDispenser dst, IWfChannel log)
-            => new (src, gather(entries(src.Members), dst, log));
+        static CollectedHost gather(IWfChannel channel, ApiHostMembers src, ICompositeDispenser dst)
+            => new (src, gather(channel, entries(src.Members), dst));
 
         [Op]
-        static Index<RawMemberCode> raw(ICompositeDispenser dispenser, ReadOnlySpan<MethodEntryPoint> src, IWfChannel log)
+        static Index<RawMemberCode> raw(IWfChannel channel, ICompositeDispenser dispenser, ReadOnlySpan<MethodEntryPoint> src)
         {
             var code = sys.alloc<RawMemberCode>(src.Length);
             for(var i=0; i<src.Length; i++)
@@ -57,13 +57,13 @@ namespace Z0
                 ref readonly var entry = ref skip(src,i);
                 var buffer = sys.bytes(Cells.alloc(w64));
                 ByteReader.read5(entry.Location.Ref<byte>(), buffer);
-                seek(code, i) = raw(entry, dispenser, log);
+                seek(code, i) = raw(channel, entry, dispenser);
             }
             return code;
         }
 
         [Op]
-        static RawMemberCode raw(MethodEntryPoint src, ICompositeDispenser dispenser, IWfChannel log)
+        static RawMemberCode raw(IWfChannel channel, MethodEntryPoint src, ICompositeDispenser dispenser)
         {
             var dst = new RawMemberCode();
             dst.Entry = src.Location;

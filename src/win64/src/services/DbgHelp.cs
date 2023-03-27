@@ -17,8 +17,8 @@ namespace Z0
         {
             var match = FS.file("dbghelp", FileKind.Dll);
             var path = WinSdk.DebuggerFiles(FileKind.Dll).Where(path => path.FileName == match).First();
-            var module = new Image(path, ImageHandle.own(Kernel32.LoadLibrary(path.Format())));
-            return module;            
+            var image = ImageHandle.own(Kernel32.LoadLibrary(path.Format()));
+            return new (path, image);
         }
 
         [DllImport(ImageNames.DbgHelp, SetLastError = true)]

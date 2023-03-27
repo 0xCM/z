@@ -24,7 +24,7 @@ namespace Z0
         /// Adapted from dotnet/BenchmarkDotNet/src/BenchmarkDotNet.Disassembler.x64/ClrMdDisassembler.cs
         /// </summary>
         /// <param name="method"></param>
-        public static Index<IlEncodingMap> map(ClrMethod method)
+        public static ReadOnlySeq<IlEncodingMap> map(ClrMethod method)
         {
             // it's better to use one single map rather than few small ones
             // it's simply easier to get next instruction when decoding ;)
@@ -33,10 +33,10 @@ namespace Z0
             {
                 var hotColdInfo = method.HotColdInfo;
                 dst = hotColdInfo.ColdSize <= 0
-                    ? new[] {new IlEncodingMap(0xFFFF,  hotColdInfo.HotStart, hotColdInfo.HotStart + hotColdInfo.HotSize)}
+                    ? new[] {new IlEncodingMap(0xFFFF, hotColdInfo.HotStart, hotColdInfo.HotStart + hotColdInfo.HotSize)}
                     : new[]
                       {
-                            new IlEncodingMap(0xFFFF,  hotColdInfo.HotStart, hotColdInfo.HotStart + hotColdInfo.HotSize),
+                            new IlEncodingMap(0xFFFF, hotColdInfo.HotStart, hotColdInfo.HotStart + hotColdInfo.HotSize),
                             new IlEncodingMap(0xFFFF, hotColdInfo.ColdStart, hotColdInfo.ColdStart + hotColdInfo.ColdSize)
                       };
             }
@@ -112,6 +112,9 @@ namespace Z0
         public void ParseDump(FilePath src)
             => Channel.Channeled<DumpParser>().ParseDump(src);
 
+        public ClrMethod? Method(ClrHandle handle)
+            => Runtime.GetMethodByHandle(handle.Address);
+
         public IEnumerable<ClrHandle> Handles()
             => Runtime.EnumerateHandles();
 
@@ -121,6 +124,9 @@ namespace Z0
         public IEnumerable<ClrModule> ClrModules()
             => Runtime.EnumerateModules();
 
+        public ClrType ClrType(MemoryAddress methods)
+            => Runtime.GetTypeByMethodTable(methods);
+            
         public ClrInfo ClrInfo()
             => Runtime.ClrInfo;
 

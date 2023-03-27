@@ -4,15 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Asm;
-
-     using static sys;
+    using static sys;
 
     partial class ApiCode
     {
         const byte ZeroLimit = 10;
 
-        static ConcurrentDictionary<ApiToken,ApiEncoded> parse(ReadOnlySpan<RawMemberCode> src, IWfChannel log)
+        static ConcurrentDictionary<ApiToken,ApiEncoded> parse(IWfChannel channel, ReadOnlySpan<RawMemberCode> src)
         {
             var count = src.Length;
             var buffer = span<byte>(Pow2.T16);
@@ -43,7 +41,7 @@ namespace Z0
                 }
             }
 
-            return parse(dst, log);
+            return parse(dst, channel);
         }
 
         static ConcurrentDictionary<ApiToken,ApiEncoded> parse(Dictionary<ApiHostUri,CollectedCodeExtracts> src, IWfChannel log)

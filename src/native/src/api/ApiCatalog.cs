@@ -13,7 +13,7 @@ namespace Z0
         public static Assembly[] components()        
             => ApiAssemblies.Components;
 
-        public static ReadOnlySeq<ApiCatalogEntry> catalog(ApiMembers src)
+        public static ReadOnlySeq<ApiCatalogEntry> entries(ApiMembers src)
         {
             var dst = sys.alloc<ApiCatalogEntry>(src.Count);
             if(src.IsNonEmpty)
@@ -37,7 +37,7 @@ namespace Z0
             return dst;
         }        
 
-        public static Index<ApiCatalogEntry> catalog(FilePath src, IWfChannel channel)
+        public static Index<ApiCatalogEntry> entries(IWfChannel channel, FilePath src)
         {
             var rows = list<ApiCatalogEntry>();
             using var reader = src.Utf8Reader();

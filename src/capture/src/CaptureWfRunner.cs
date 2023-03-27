@@ -39,16 +39,10 @@ namespace Z0
             if(Settings.EmitCatalog)
             {
                 var members = Transport.Resolved(ApiQuery.members(collected.SelectMany(x => x.Resolved.Members)));
-                var rebased = Transport.Rebased(ApiCatalog.catalog(members));
+                var rebased = Transport.Rebased(ApiCatalog.entries(members));
                 var path = Target.Table<ApiCatalogEntry>();
                 Channel.TableEmit(rebased, path, UTF8);
-                Transport.Reloaded(ApiCatalog.catalog(path, Channel));
-            }
-
-            if(Settings.EmitMetadata)
-            {
-                //ApiMd.Emitter(Target).Emit(src);
-                //CliEmitter.Emit(src.Assemblies, Settings.CliEmissions, Target);
+                Transport.Reloaded(ApiCatalog.entries(Channel, path));
             }
 
             if(Settings.EmitRegions)
@@ -66,17 +60,12 @@ namespace Z0
             return blocks;
         }
 
-
         ICompositeDispenser Dispenser
             => Transport.Dispenser;
-
-        ApiMd ApiMd => Wf.ApiMd();
 
         AsmDecoder AsmDecoder => Wf.AsmDecoder();
 
         ApiCodeSvc ApiCodeSvc => Wf.ApiCode();
-
-        EcmaEmitter CliEmitter => Wf.EcmaEmitter();
 
         ApiPacks ApiPacks => Wf.ApiPacks();
 
@@ -111,10 +100,10 @@ namespace Z0
             return collected;
         }
 
-        void Capture(IApiPartCatalog src, ICompositeDispenser dispenser, ConcurrentBag<CollectedHost> dst, IWfChannel log)
+        void Capture(IApiPartCatalog src, ICompositeDispenser dispenser, ConcurrentBag<CollectedHost> dst, IWfChannel channel)
         {
             var tmp = sys.bag<CollectedHost>();
-            ApiCode.gather(src, dispenser, tmp, log, Settings.PllExec);
+            ApiCode.gather(channel, src, dispenser, tmp, Settings.PllExec);
             var code = tmp.ToArray();
             ApiCodeSvc.Emit(code, Target, Settings.PllExec);
             EmitAsm(dispenser, code);

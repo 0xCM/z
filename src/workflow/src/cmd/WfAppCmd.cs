@@ -4,10 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Windows;
-    using Microsoft.CodeAnalysis;
-    using System.Linq;
-
     using static sys;
 
     [StructLayout(LayoutKind.Sequential,Size=8)]
@@ -366,14 +362,49 @@ namespace Z0
         [CmdOp("clrmd")]
         void ClrMd()
         {
+            var encodings = cdict<MemoryAddress, ApiEncoded>();
+            using var dispenser = CompositeBuffers.composite();
+            iter(ApiAssemblies.Components, assembly => {
+                iter(ApiCode.collect(Channel, assembly, dispenser), encoded => {
+                    encodings.TryAdd(encoded.Token.TargetAddress, encoded);
+                },true);
+            }, true);
+
             using var clrmd = ClrMdSvc.create(Wf);
-            iter(clrmd.Modules(), module => {
-                
+            iter(clrmd.Modules(), module => {                
                 Channel.Row($"{(MemoryAddress)module.ImageBase} {module.FileName}");
                 var pdb = module.Pdb;
                 if(pdb != null)
                     Channel.Row($"Pdb: {pdb.Guid} {pdb.Path}");
+                                
                 });
+            
+            var counter = 0u;
+            iter(clrmd.ClrModules(), module => {
+                Channel.Row($"{(MemoryAddress)module.Address} {(MemoryAddress)module.AssemblyAddress} {(MemoryAddress)module.MetadataAddress} {module.AssemblyName}");
+                var tables = module.EnumerateTypeDefToMethodTableMap().Array();
+                for(var i=0; i<tables.Length; i++)
+                {
+                    (MemoryAddress table, EcmaToken token) = skip(tables,i);
+                    var type = clrmd.ClrType(table);
+                    Channel.Row($"{table} {token} {type.Name}");
+                    iter(type.Methods, method => {
+                        iter(method.ILOffsetMap, ilmap => {
+                            var address = (MemoryAddress)ilmap.StartAddress;
+                            var size = (ByteSize)(ilmap.EndAddress - ilmap.StartAddress);
+                            var md = (EcmaToken)method.MetadataToken;
+                            var found = (bit)encodings.TryGetValue(address, out var encoding);
+                            var info = string.Format("{0} {1:D6} {2,-12} {3}:{4,-8} {5}", found, counter++, md, address, size, $"{type.Name}.{method.Name}");
+                            Channel.Row(info);
+                        });                        
+                    });
+                }
+            });
+
+            iter(clrmd.Handles(), handle => {
+                var obj = handle.Object;
+
+            });
         }
 
         [CmdOp("dbghelp")]

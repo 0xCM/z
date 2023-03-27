@@ -12,5 +12,6 @@
      <ProjectReference Include="$(ClrEcma)" />
      <ProjectReference Include="$(Projects)" />
      <ProjectReference Include="$(Win64)" />
+     <ProjectReference Include="$(ApiCode)" />
   </ItemGroup>
 </Project>
