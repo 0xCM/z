@@ -5,5 +5,7 @@
     <ProjectReference Include="$(Dynamic)" />
     <ProjectReference Include="$(Buffers)" />
     <ProjectReference Include="$(AsmCore)" />
+    <ProjectReference Include="$(Win64)" />
+    <ProjectReference Include="$(Projects)" />
   </ItemGroup>
 </Project>

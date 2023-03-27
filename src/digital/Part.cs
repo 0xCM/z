@@ -2,16 +2,11 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+[assembly: PartId("digital")]
+namespace Z0.Parts
 {
-    public static class XSvc
+    public sealed class Digital : Part<Digital>
     {
-        sealed class Svc : AppServices<Svc>
-        {
-
-        }
-
-        static Svc Services => Svc.Instance;
 
     }
 }

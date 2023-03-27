@@ -24,6 +24,6 @@ namespace Z0
 
         Win32DbgFormat = P2ᐞ07 << Win32,
 
-        Win64DbgFormat = P2ᐞ08 << Win64,
+        Win64DbgFormat = P2ᐞ08 << NasmDebugFormat.Win64,
     }
 }

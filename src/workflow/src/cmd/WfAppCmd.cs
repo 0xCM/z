@@ -20,15 +20,13 @@ namespace Z0
     {        
         ArchiveRegistry ArchiveRegistry => Wf.ArchiveRegistry();
 
-        ProjectScripts ProjectScripts => Wf.ProjectScripts();
-
         ProcessMemory ProcessMemory => Wf.ProcessMemory();
 
         Tooling Tooling => Wf.Tooling();
 
         ApiMd ApiMd => Wf.ApiMd();
 
-        WinSdk WinSdk => Wf.WinSdk();
+        WinSdk WinSdk => WinSdk.create();
 
         [CmdOp("api/tablegen")]
         void GenRecords()
@@ -266,10 +264,6 @@ namespace Z0
             return result;
         }
 
-        [CmdOp("devshell")]
-        void LaunchShell(CmdArgs args)
-            => DevProjects.shell(Channel,args);
-
         [CmdOp("files/kinds")]
         void FileKinds()
         {
@@ -383,14 +377,11 @@ namespace Z0
         }
 
         [CmdOp("dbghelp")]
-        void DbgHelp()
+        void DbgHelpCmd()
         {
-            var match = FS.file("dbghelp", FileKind.Dll);
-            var path = WinSdk.DebuggerFiles(FileKind.Dll).Where(path => path.FileName == match).First();
-            using var handle = SystemHandle.own(Kernel32.LoadLibrary(path.Format()));
-            using var dst = new DbgHelp(path,handle);
-            var ops = dst.Operations;
-            Channel.Row($"{dst.Handle.Address} {dst.Path}");
+            using var module = DbgHelp.load();
+            var ops = module.Operations;
+            Channel.Row($"{module.Handle.Address} {module.Path}");
             iter(ops, op => Channel.Row($"{op.Address} {op.Name}"));
         }
     }

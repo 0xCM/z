@@ -2,16 +2,14 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Windows
 {
-    public static class XSvc
+    /// <summary>
+    /// https://learn.microsoft.com/en-us/windows/win32/secauthz/standard-access-rights
+    /// </summary>
+    [Flags]
+    public enum StandardAccessFlags
     {
-        sealed class Svc : AppServices<Svc>
-        {
-
-        }
-
-        static Svc Services => Svc.Instance;
 
     }
 }

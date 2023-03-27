@@ -1,5 +1,7 @@
 <Project>
+  <Import Project="$(SlnProps)\microsoft.extensions.props"/>
   <ItemGroup>
-    <ProjectReference Include="$(ClrEcma)" />
+    <ProjectReference Include="$(Events)" />
+    <ProjectReference Include="$(Json)" />    
   </ItemGroup>
 </Project>

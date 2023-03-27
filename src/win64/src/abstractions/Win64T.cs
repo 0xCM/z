@@ -4,14 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public static class XSvc
+    public abstract class Win64<T> : Win64
+        where T : Win64<T>, new()
     {
-        sealed class Svc : AppServices<Svc>
-        {
-
-        }
-
-        static Svc Services => Svc.Instance;
 
     }
 }

@@ -374,8 +374,8 @@ namespace Z0
 
             Channel.TableEmit(managed.Array().Sort(), EnvDb.Nested("ecma", src).Path("ecma.deps.managed", FileKind.Csv));
             Channel.TableEmit(native.Array().Sort(), EnvDb.Nested("ecma", src).Path("ecma.deps.native", FileKind.Csv));
-
         }
+        
         [CmdOp("ecma/pinvokes")]
         void PInvokes(CmdArgs args)
         {   
@@ -434,46 +434,44 @@ namespace Z0
             var result = compilation.Emit(stream,options:emitOptions);          
         }
 
-        static Assembly[] CodeAnalysis 
-            => FS.path(ExecutingPart.Assembly.Location).FolderPath.DbArchive().Files(FileKind.Dll, false).Where(f => f.FileName.StartsWith("Microsoft.CodeAnalysis")).Map(x => Assembly.LoadFile(x.Format()));
-
+        static FilePath[] CodeAnalysis
+            => FS.path(ExecutingPart.Assembly.Location).FolderPath.DbArchive().Files(FileKind.Dll,true).Where(f => f.FileName.StartsWith("Microsoft.CodeAnalysis")).Array();
 
         [CmdOp("roslyn/nodes")]
         void RoslnNodes()
         {
-            iter(CodeAnalysis, a => {
-                var reader = EcmaReader.create(a);
-                var name = a.GetSimpleName();
-                if(name == "Microsoft.CodeAnalysis.CSharp")
-                {
-                    var counter = 0u;
-                    var types = dict<string,Type>();
-                    var ancestors = dict<Type,Type>();
-                    Channel.Row(name, FlairKind.StatusData);
-                    var deps = reader.ReadDependencySet();
-                    iter(deps.ManagedDependencies, d => Channel.Row($"  --> {d.TargetName}"));
-                    var ft = a.Types().Where(t => !t.FullName.Contains("<"));
+            iter(CodeAnalysis, path => {
+                using var ecma = Ecma.file(path);
+                var reader = ecma.EcmaReader();
+                var key = reader.AssemblyKey();
+                var counter = 0u;
+                var depscount = 0u;
+                var types = dict<string,EcmaTypeDef>();
+                Channel.Row(key.Name, FlairKind.StatusData);
+                var deps = reader.ReadDependencySet();
+                iter(deps.NativeDependencies, d =>  Channel.Row(string.Format("{0:D5} {1} --> {2}", depscount++, d.Source, d.TargetName), FlairKind.StatusData));
+                iter(deps.ManagedDependencies, d => Channel.Row(string.Format("{0:D5} {1} --> {2}/{3}",depscount++, d.Source, d.TargetName,d.TargetVersion), FlairKind.StatusData));
+                var typedefs = reader.ReadTypeDefs();
+                iter(typedefs, t => {
+                    if(!t.Name.Contains("<") && !t.Name.Contains("."))
+                    {
+                        types[t.FullName] = t;
+                    }
+                });
 
-                    iter(ft, t => types[t.FullName] = t);
-                    iter(ft, t => {
-                        ancestors[t] = t.BaseType;
-                    });
-                    var margin = 0u;
-                    iter(ancestors, kvp => {
-                        var def = text.emitter();
-                        var type = kvp.Key;
-                        var parent = kvp.Value;
-                        if(!type.Name.Contains("<") && nonempty(type.Namespace))
-                        {
-                            if(parent != null)
-                                def.Append(string.Format("{0:D5} {1}.{2} -> {3}.{4}", counter++, type.Namespace, type.Name, parent.Namespace, parent.Name));
-                            else
-                                def.Append(string.Format("{0:D5} {1}.{2}", counter++, type.Namespace, type.Name));
-                            Channel.Row(def.Emit());
-                        }
-
-                    });
-                }
+                iter(types.Keys, name => {
+                    var type = types[name];         
+                    var def = text.emitter();      
+                    if(type.BaseName.IsNonEmpty)                     
+                    {
+                        def.Append(string.Format("{0:D5} {1} -> {2}", counter++, type.FullName, type.BaseName));
+                    }
+                    else
+                    {
+                        def.Append(string.Format("{0:D5} {1}", counter++, type.FullName));
+                    }
+                    Channel.Row(def.Emit());
+                });
             });
         }
 
@@ -483,23 +481,6 @@ namespace Z0
             var src = FS.dir(args[0]).DbArchive();
             var dst = FS.dir(args[1]).DbArchive();
             Analyzer.Run(src,dst);            
-        }
-
-        [CmdOp("ecma/debug")]
-        void DebugMethods(CmdArgs args)
-        {
-            var src = FS.dir(args[0]).DbArchive().Modules();
-            iter(src.AssemblyFiles(), a => {                
-                using var file = Ecma.file(a.Path);                
-            });
-        }
-
-        [CmdOp("clr/types")]
-        void ListTypes(CmdArgs args)
-        {
-            var dir = FS.dir(args[0]);
-            var src = Archives.modules(dir).AssemblyFiles();
-            //ApiMd.Emitter(Archives.index(EnvDb.Scoped("clr"), FileIndexKind.Files)).EmitTypeLists(src);
         }
     }
 }

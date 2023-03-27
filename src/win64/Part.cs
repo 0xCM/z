@@ -2,16 +2,11 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+[assembly: PartId("win64")]
+namespace Z0.Parts
 {
-    public static class XSvc
+    public sealed class Win64 : Part<Win64>
     {
-        sealed class Svc : AppServices<Svc>
-        {
-
-        }
-
-        static Svc Services => Svc.Instance;
 
     }
 }

@@ -14,9 +14,6 @@ namespace Z0
             public ApiCmd ApiCmd(IWfRuntime wf)
                 => Service<ApiCmd>(wf);
 
-            public ProjectScripts ProjectScripts(IWfRuntime wf)
-                => Service<ProjectScripts>(wf);
-
             public ApiServers ApiServers(IWfRuntime wf)
                 => Service<ApiServers>(wf);
 
@@ -34,9 +31,6 @@ namespace Z0
 
         public static IApiService EnvCmd(this IWfRuntime wf)
             => Services.EnvCmd(wf);
-
-        public static ProjectScripts ProjectScripts(this IWfRuntime wf)
-            => Services.ProjectScripts(wf);
 
         public static IApiService ArchiveCmd(this IWfRuntime wf)
             => Services.ArchiveCmd(wf);

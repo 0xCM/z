@@ -3,23 +3,24 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0
-{
-    using Windows;
-
+{    
     public abstract class NativeOp<F> : INativeOp<F>
         where F : NativeOp<F>
     {
         public string Name {get;}
 
-        public SystemHandle Module {get;}
+        public NativeImage Image {get;}
 
         public MemoryAddress Address {get;}
 
-        protected NativeOp(string name, SystemHandle module)
+        protected NativeOp(NativeImage image, string name)
         {
             Name = name;
-            Module = module;
-            Address = Kernel32.GetProcAddress(module, name);
+            Image = image;
+            Address = image.ProcAddress(name);
         }
+
+        ImageHandle INativeOp.Image
+            => Image.Handle;
     }
 }

@@ -24,7 +24,25 @@ namespace Z0
         }
 
         public static Task<ExecToken> exec(IWfChannel channel, CmdArgs args)
-            => DevProjects.exec(channel, args);
+        {
+            var path = AppDb.Service.ProjectLib(args[0]).Scoped("cmd").Path(args[1], FileKind.Cmd);
+            return ProcExec.launch(channel, path, CmdArgs.Empty, ToolContext.Default);
+        }
+
+        public static Task<ExecToken> shell(IWfChannel channel, CmdArgs args)
+        {
+            ExecToken Run()
+            {
+                var profile = args[0].Value;
+                var cwd = args.Count > 1 ? FS.dir(args[1]) : Env.cd();
+                return DevProjects.shell(channel, profile, cwd);  
+            }
+            return sys.start(Run);
+        }
+
+        [CmdOp("dev/shell")]
+        void LaunchShell(CmdArgs args)
+            => shell(Channel,args);
 
         [CmdOp("develop")]
         void Develop(CmdArgs args)

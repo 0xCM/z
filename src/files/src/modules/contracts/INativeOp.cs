@@ -9,7 +9,7 @@ namespace Z0
     {
         string Name {get;}
 
-        SystemHandle Module {get;}
+        ImageHandle Image {get;}
 
         MemoryAddress Address {get;}
     }

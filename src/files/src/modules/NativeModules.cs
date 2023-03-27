@@ -37,6 +37,10 @@ namespace Z0
             => GetProcAddress(src.BaseAddress, name);
 
         [MethodImpl(Inline), Op]
+        public static MemoryAddress procaddress(MemoryAddress @base, string name)
+            => GetProcAddress(@base, name);
+
+        [MethodImpl(Inline), Op]
         public unsafe static FPtr fptr(NativeModule src, string name)
             => new FPtr(GetProcAddress(src.BaseAddress,name).ToPointer());
 
@@ -68,8 +72,19 @@ namespace Z0
                 => (D)Marshal.GetDelegateForFunctionPointer(src,typeof(D));
 
         [MethodImpl(Inline)]
+        public static unsafe D proc<D>(MemoryAddress src)
+            where D : Delegate
+                => (D)Marshal.GetDelegateForFunctionPointer(src,typeof(D));
+
+        [MethodImpl(Inline)]
         public static D proc<D>(NativeModule src, string name)
             where D : Delegate
                 => (D)Marshal.GetDelegateForFunctionPointer(procaddress(src,name), typeof(D));
+
+        [MethodImpl(Inline)]
+        public static D proc<D>(MemoryAddress src, string name)
+            where D : Delegate
+                => (D)Marshal.GetDelegateForFunctionPointer(procaddress(src,name), typeof(D));
+
     }
 }

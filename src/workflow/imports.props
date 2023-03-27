@@ -11,5 +11,6 @@
      <ProjectReference Include="$(Binary)" />
      <ProjectReference Include="$(ClrEcma)" />
      <ProjectReference Include="$(Projects)" />
+     <ProjectReference Include="$(Win64)" />
   </ItemGroup>
 </Project>
