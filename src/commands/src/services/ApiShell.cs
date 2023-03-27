@@ -10,9 +10,12 @@ namespace Z0
 
         IWfRuntime Wf;
 
-        public ApiShell(IWfRuntime wf, ICmdDispatcher dispatcher)
+        public ReadOnlySeq<string> Args {get;}
+
+        public ApiShell(IWfRuntime wf, ICmdDispatcher dispatcher, params string[] args)
         {
             Wf = wf;
+            Args = args;
             Dispatcher = dispatcher;
         }
 

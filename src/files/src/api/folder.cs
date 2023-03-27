@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using System.Linq;
+
     partial struct FS
     {
         [MethodImpl(Inline), Op]

@@ -4,19 +4,21 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public record class Package : IFilePackage
+    public record class Package : IFilePackage, IComparable<Package>
     {
-        public readonly FileUri Location;
-
+        [Render(16)]
         public readonly PackageKind PackageKind;
 
-        protected Package(FileUri location, PackageKind kind)
+        [Render(1)]
+        public readonly FilePath Location;
+
+        protected Package(FilePath location, PackageKind kind)
         {
             Location = location;
             PackageKind = kind;
         }
 
-        FileUri IFilePackage.Location 
+        FilePath IFilePackage.Location 
             => Location;
 
         PackageKind IFilePackage.PackageKind 
@@ -27,5 +29,8 @@ namespace Z0
 
         public override string ToString()
             => Format();
+        
+        public int CompareTo(Package src)
+            => Location.CompareTo(src.Location);
     }
 }

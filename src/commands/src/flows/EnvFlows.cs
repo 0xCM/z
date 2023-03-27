@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
     using static Env;
 
-    sealed class EnvCmd : WfAppCmd<EnvCmd>
+    public sealed class EnvFlows : WfAppCmd<EnvFlows>
     {    
         [CmdOp("env/modules")]
         void LoadedModule(CmdArgs args)
@@ -108,18 +108,6 @@ namespace Z0
                 Channel.Write(msg);            
         }
 
-        [CmdOp("nuget/download")]
-        void NugetDownload(CmdArgs args)
-        {
-            var name = args[0].Value;
-            var version = args[1].Value;
-            var id = $"{name}.{version}";
-            var dst = AppSettings.PkgRoot().Scoped("downloads").Path(id, FS.ext("nupkg"));
-            var src = new Uri($"https://www.nuget.org/api/v2/package/{name}/{version}");
-            var service = Channel.Channeled<Downloader>();
-            service.DownloadFile(src, dst);            
-        }
-
         [CmdOp("version")]
         void Version()
             => Channel.Row($"[z0.{ExecutingPart.Name}-v{ExecutingPart.Assembly.AssemblyVersion()}]({ExecutingPart.Assembly.Path().ToUri()})");
@@ -165,12 +153,8 @@ namespace Z0
            });
         }
 
-        [CmdOp("develop")]
-        void Develop(CmdArgs args)
-            => CodeLauncher.create(Channel).Launch(args, launched => {});
-
         [CmdOp("tool")]
         void ToolHelp(CmdArgs args)
-            => ProcExec.redirect(Channel,args).Wait();
+            => ProcExec.redirect(Channel,args).Wait();        
     }
 }

@@ -7,24 +7,24 @@ namespace Z0
     [Free]
     sealed class App : ApiShell<App>
     {
-        static ReadOnlySeq<IApiService> providers(IWfRuntime wf)
-            => new IApiService[]{
-                wf.WfCmd(),
-                wf.EnvCmd(),
-                wf.ImageCmd(),
-                wf.ArchiveCmd(),
-                wf.WinMdCmd(),
-                wf.EcmaCmd(),
-                wf.CsGenCmd(),
-                wf.ProjectCmd()
-            };
+        // static ReadOnlySeq<IApiService> providers(IWfRuntime wf)
+        //     => new IApiService[]{
+        //         wf.WfCmd(),
+        //         wf.EnvCmd(),
+        //         wf.ImageCmd(),
+        //         wf.ArchiveCmd(),
+        //         wf.WinMdCmd(),
+        //         wf.EcmaCmd(),
+        //         wf.CsGenCmd(),
+        //         wf.ProjectCmd()
+        //     };
 
         static int main(string[] args)
         {
             var result = 0;
-            using var app = ApiServers.shell<App,AppCmd>(providers);
-            // using var wf = ApiServers.runtime(false);
-            // using var app = ApiServers.shell(wf);
+            //using var app = ApiServers.shell<App,AppCmd>(providers);
+            //using var wf = ApiServers.runtime(false);
+            using var app = ApiServers.shell(ApiServers.runtime(false), args);
             try
             {
                 app.Run();

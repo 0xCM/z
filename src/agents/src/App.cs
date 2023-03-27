@@ -7,6 +7,7 @@ namespace Z0
     [Free]
     sealed class App : ApiShell<App>, IFileChangeReceiver
     {
+
         static int main(string[] args)
         {
             if(args.Length == 0)
@@ -16,15 +17,15 @@ namespace Z0
             }
 
             var result = 0;
-            using var app = ApiServers.shell<App>();
+            using var app = ApiServers.shell<App>(args);
             try
             {
-                var projects = app.Wf.ProjectManager();
+                var channel = app.Channel;
                 var running = ExecFlow<string>.Empty;
-                projects.Launch(FS.dir(args[0]), 
-                    p => running = app.Channel.Running($"Process started: {p.ProcessName} {p.Id}"), 
-                    e => app.Channel.Ran(running, $"Process exit code: ${e}"));
-                app.Run(args);
+                DevProjects.launch(channel, FS.dir(args[0]), 
+                    p => running = channel.Running($"Process started: {p.ProcessName} {p.Id}"), 
+                    e => channel.Ran(running, $"Process exit code: ${e}"));
+                app.Run();
             }
             catch(Exception e)
             {
@@ -36,9 +37,9 @@ namespace Z0
 
         IMonitor Monitor;
         
-        protected override void Run(string[] args)
+        protected override void Run()
         {
-            var root = FS.dir(args[0]).DbArchive();
+            var root = FS.dir(Args[0]).DbArchive();
             var dst = root.Scoped("db");
             Monitor = DirectoryMonitor.start(root,dst,this);
             CmdLoop.start(Channel).Wait();

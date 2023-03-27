@@ -68,7 +68,8 @@ namespace Z0
         void TokenTypes()
         {
             var types = Tokens.types(ApiAssemblies.Components);
-            ApiMd.Emitter(Archives.archive(Env.cd() + FS.folder(".data"))).EmitTypeList(types, FS.file("tokens.types", FileKind.List));
+            var archive = (Env.cd() + FS.folder(".data")).DbArchive();
+            ApiMd.Emitter(archive).EmitTypeList(types, FS.file("tokens.types", FileKind.List));    
         }
 
         [CmdOp("tokens/opcodes")]
@@ -95,18 +96,9 @@ namespace Z0
                 var data = text.parenthetical(text.join(Chars.Comma, 
                     token.Index, token.Kind, @string(token.Name), @string(token.Expr)));
                 Channel.Row(data);
-                //Channel.Row($"{token.Index},{token.Kind},{sys.@string(token.Name)}, {sys.@string(token.Expr)});
             }
         }
             
-        [CmdOp("scripts")]
-        void Scripts(CmdArgs args)
-            => iter(ProjectScripts.List(args), path => Channel.Write(path.ToUri()));
-
-        [CmdOp("scripts/cmd")]
-        void Script(CmdArgs args)
-            => ProjectScripts.Start(args);
-
         [CmdOp("archives/register")]
         void RegisterWorkspace(CmdArgs args)
         {
@@ -114,12 +106,11 @@ namespace Z0
             iter(ArchiveRegistry.Entries(), entry => Channel.Row(entry));            
         }
 
-        [CmdOp("memory/working")]
+        [CmdOp("system/memory/working")]
         void WorkingSet()
             => Channel.Write(((ByteSize)Environment.WorkingSet));
 
-
-        [CmdOp("memory/system")]
+        [CmdOp("system/memory/system")]
         void SysMem()
         {
             var src = WinMem.system();
@@ -127,7 +118,7 @@ namespace Z0
             Channel.Row(formatter.Format(src));
         }
 
-        [CmdOp("memory/query")]
+        [CmdOp("process/memory/query")]
         void QueryMemory(CmdArgs args)
         {            
             var @base = ExecutingPart.Process.Adapt().BaseAddress;
@@ -145,19 +136,7 @@ namespace Z0
             Channel.Write(basic.ToString());
         }
 
-        [CmdOp("dbghelp")]
-        void DbgHelp()
-        {
-            var match = FS.file("dbghelp", FileKind.Dll);
-            var path = WinSdk.DebuggerFiles(FileKind.Dll).Where(path => path.FileName == match).First();
-            using var handle = SystemHandle.own(Kernel32.LoadLibrary(path.Format()));
-            using var dst = new DbgHelp(path,handle);
-            var ops = dst.Operations;
-            Channel.Row($"{dst.Handle.Address} {dst.Path}");
-            iter(ops, op => Channel.Row($"{op.Address} {op.Name}"));
-        }
-
-        [CmdOp("memory/info")]
+        [CmdOp("process/memory/info")]
         void ShowMemory()
         {
             var @base = ExecutingPart.Process.Adapt().BaseAddress;
@@ -169,9 +148,10 @@ namespace Z0
             Channel.Row(formatter.Format(info));
         }
 
-        [CmdOp("memory/emit")]
+        [CmdOp("process/memory/emit")]
         void EmitRegions()
             => ProcessMemory.EmitRegions(Process.GetCurrentProcess(), ApiPacks.create());
+
 
         [CmdOp("api/emit/impls")]
         void EmitImplMaps()
@@ -288,7 +268,7 @@ namespace Z0
 
         [CmdOp("devshell")]
         void LaunchShell(CmdArgs args)
-            => DevShells.start(Channel,args);
+            => DevProjects.shell(Channel,args);
 
         [CmdOp("files/kinds")]
         void FileKinds()
@@ -330,9 +310,7 @@ namespace Z0
         [CmdOp("api/parts")]
         void ApiPartList()
         {
-            var root = FS.path(controller().Location).FolderPath;
-            var src  = Archives.parts(root);
-            iter(src, OnPart);
+            iter(ApiAssemblies.Components, OnPart);
         }
 
         void OnPart(Assembly src)
@@ -402,9 +380,18 @@ namespace Z0
                 if(pdb != null)
                     Channel.Row($"Pdb: {pdb.Guid} {pdb.Path}");
                 });
-            // iter(clrmd.Modules(), m => {
-            //     Channel.Row($"{(MemoryAddress)m.Address} {m.Name}");
-            // });
+        }
+
+        [CmdOp("dbghelp")]
+        void DbgHelp()
+        {
+            var match = FS.file("dbghelp", FileKind.Dll);
+            var path = WinSdk.DebuggerFiles(FileKind.Dll).Where(path => path.FileName == match).First();
+            using var handle = SystemHandle.own(Kernel32.LoadLibrary(path.Format()));
+            using var dst = new DbgHelp(path,handle);
+            var ops = dst.Operations;
+            Channel.Row($"{dst.Handle.Address} {dst.Path}");
+            iter(ops, op => Channel.Row($"{op.Address} {op.Name}"));
         }
     }
 }

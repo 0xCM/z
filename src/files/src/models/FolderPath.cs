@@ -8,12 +8,6 @@ namespace Z0
 
     public readonly struct FolderPath : IFsEntry<FolderPath>
     {
-        const string FolderJoinPattern = "{0}/{1}";
-
-        const string FileJoinPattern = "{0}/{1}";
-
-        const string All = "*";
-
         public PathPart Name {get;}
 
         public Drive Drive
@@ -66,16 +60,16 @@ namespace Z0
             => Files(this, recurse, ext);
 
         public IEnumerable<FolderPath> Folders(string match, bool recurse)
-            => Directory.Exists(Name) ? Directory.EnumerateDirectories(Name, match, options(recurse)).Select(FS.dir) : EnvPath.Empty;
+            => FS.folders(this, match, recurse);
 
         public IEnumerable<FolderPath> Folders(bool recurse = false)
-            => Directory.Exists(Name) ? Directory.EnumerateDirectories(Name, "*", options(recurse)).Select(FS.dir) : EnvPath.Empty;
+            => FS.folders(this, recurse);
 
         public FolderPath Folder(string match)
             => Folders(match, false).FirstOrDefault(FolderPath.Empty);
 
         public IEnumerable<FolderPath> TopFolders
-            => Folders(All, false);
+            => Folders(FolderPatterns.All, false);
 
         /// <summary>
         /// Recursively enumerates all files in the folder
@@ -86,15 +80,14 @@ namespace Z0
         static EnumerationOptions options(bool recurse)
             => new EnumerationOptions{
                 RecurseSubdirectories = recurse,
-                IgnoreInaccessible = false,
-                
+                IgnoreInaccessible = false,                
             };
 
         public FolderPath Subdir(string name)
             => this + FS.folder(name);
 
-        public Files Match(string pattern, bool recurse)
-            => Exists ? FS.files(Directory.EnumerateFiles(Name, pattern, option(recurse)).Map(FS.path)) : Z0.Files.Empty;
+        // public Files Match(string pattern, bool recurse)
+        //     => Exists ? FS.files(Directory.EnumerateFiles(Name, pattern, option(recurse)).Map(FS.path)) : Z0.Files.Empty;
 
         public Files Match(string pattern, FileExt ext, bool recurse)
             => Exists ? Files(ext, recurse).Where(f => f.Name.Contains(pattern)) : Z0.Files.Empty;
@@ -115,11 +108,11 @@ namespace Z0
             => Files(true).Where(f => FileKinds.@is(f,kinds));
 
         public Files Files(bool recurse)
-            => Exists ? Directory.EnumerateFiles(Name, All, option(recurse)).Map(FS.path) : Z0.Files.Empty;
+            => Exists ? Directory.EnumerateFiles(Name, FolderPatterns.All, option(recurse)).Map(FS.path) : Z0.Files.Empty;
 
         public Index<FolderPath> SubDirs(bool recurse = false)
             => Directory.Exists(Name)
-            ? Directory.EnumerateDirectories(Name, All, option(recurse)).Map(FS.dir)
+            ? Directory.EnumerateDirectories(Name, FolderPatterns.All, option(recurse)).Map(FS.dir)
             : sys.empty<FolderPath>();
 
         public IEnumerable<FilePath> EnumerateFiles(bool recurse)
@@ -244,7 +237,7 @@ namespace Z0
         static IEnumerable<FilePath> EnumerateFiles(FolderPath src, bool recurse)
         {
             if(src.Exists)
-                foreach(var file in Directory.EnumerateFiles(src.Name, All, option(recurse)))
+                foreach(var file in Directory.EnumerateFiles(src.Name, FolderPatterns.All, option(recurse)))
                     yield return FS.path(file);
         }
 
@@ -253,14 +246,14 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static FolderPath operator +(FolderPath a, FolderName b)
-            => new FolderPath(string.Format(FolderJoinPattern, a.Name.Format(), b.Name.Format()));
+            => new FolderPath(string.Format(FolderPatterns.Join, a.Name.Format(), b.Name.Format()));
 
         [MethodImpl(Inline)]
         public static FilePath operator +(FolderPath a, FileName b)
-            => new FilePath(string.Format(FileJoinPattern, a.Name.Format(), b.Name.Format()));
+            => new FilePath(string.Format(FolderPatterns.Join, a.Name.Format(), b.Name.Format()));
 
         [MethodImpl(Inline)]
         public static FilePath operator +(FolderPath a, RelativeFilePath b)
-            => new FilePath(string.Format(FileJoinPattern, a.Name.Format(), b.Name.Format()));
+            => new FilePath(string.Format(FolderPatterns.Join, a.Name.Format(), b.Name.Format()));
     }
 }

@@ -60,7 +60,7 @@ namespace Z0
             var paths = path(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL);
             var buffer = dict<ToolKey,LocatedTool>();
             iter(paths, dir => {
-                iter(FS.enumerate(dir, false, FileKind.Exe, FileKind.Cmd, FileKind.Bat), path => {                
+                iter(FS.files(dir, false, FileKind.Exe, FileKind.Cmd, FileKind.Bat), path => {                
                     var include = path.FolderPath != FS.dir("C:/WINDOWS/System32/");
                     include &= (path.FolderPath != FS.dir("C:/WINDOWS"));
                     if(include)

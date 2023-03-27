@@ -9,9 +9,9 @@ namespace Z0
     {
         public static void Main(params string[] args)
         {
-            using var app = ApiServers.shell<App>();            
+            using var app = ApiServers.shell<App>(args);  
             app.Commander = context<AppShellCmd>(app.Wf).Commander;
-            app.Run(args);
+            app.Run();
         }
 
 

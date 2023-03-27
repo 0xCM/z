@@ -4,12 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed record class NugetPackge : Package<NugetPackge>
+    public abstract record class Package<P> : Package
+        where P : Package<P>
     {
-        public NugetPackge(FileUri src)
-            : base(src, PackageKind.Nuget)
+        protected Package(FilePath location, PackageKind kind)
+            : base(location,kind)
         {
-
         }
     }
 }

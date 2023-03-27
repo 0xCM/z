@@ -4,21 +4,16 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public enum PackageKind : byte
+    public enum FileIndexKind : byte
     {
         None,
 
-        Zip,
-        
-        Nuget,
+        Files,
 
-        Msi
-    }
+        Folders,
 
-    public interface IFilePackage
-    {
-        FileUri Location {get;}
+        Assemblies,
 
-        PackageKind PackageKind {get;}
+        Pe,
     }
 }

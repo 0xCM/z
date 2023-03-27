@@ -499,7 +499,7 @@ namespace Z0
         {
             var dir = FS.dir(args[0]);
             var src = Archives.modules(dir).AssemblyFiles();
-            ApiMd.Emitter(Archives.archive(EnvDb.Scoped("clr"))).EmitTypeLists(src);
+            //ApiMd.Emitter(Archives.index(EnvDb.Scoped("clr"), FileIndexKind.Files)).EmitTypeLists(src);
         }
     }
 }

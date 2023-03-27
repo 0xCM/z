@@ -142,21 +142,21 @@ namespace Z0
             }
         }
         
-        public static IApiShell shell(IWfRuntime wf)
-            => shell(wf, methods(wf));
+        public static IApiShell shell(IWfRuntime wf, params string[] args)
+            => shell(wf, methods(wf), args);
             
-        public static IApiShell shell(IWfRuntime wf, CmdMethods methods)
-            => new ApiShell(wf,new ApiDispatcher(wf.Channel, methods));
+        public static IApiShell shell(IWfRuntime wf, CmdMethods methods, params string[] args)
+            => new ApiShell(wf,new ApiDispatcher(wf.Channel, methods), args);
         
         public static A shell<A>(string[] args, IWfRuntime wf, IApiContext context, bool verbose = false)
             where A : IAppShell, new()
         {            
             var app = new A();
-            app.Init(wf, context);
+            app.Init(wf, context, args);
             return app;
         }
 
-        public static A shell<A>()
+        public static A shell<A>(params string[] args)
             where A : IAppShell, new()
         {
             var wf = runtime();

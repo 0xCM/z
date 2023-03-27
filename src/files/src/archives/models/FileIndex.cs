@@ -6,8 +6,10 @@ namespace Z0
 {
     using static sys;
 
-    public class FileIndex : Channeled<FileIndex>
+    public class FileIndex
     {
+        public static FileIndex create()
+            => new();
         public static FileTypes types(params Assembly[] src)
             => new (src.Types().Tagged<FileTypeAttribute>().Concrete().Map(x => (IFileType)Activator.CreateInstance(x)).ToHashSet());     
 
@@ -50,15 +52,27 @@ namespace Z0
 
         readonly ConcurrentDictionary<Hash128, ConcurrentBag<FileIndexEntry>> _Duplicates = new();
 
+        ReadOnlySeq<FileIndexEntry> SortedEntries;
+
         public FileIndex()
         {
 
         }
 
-        public bool Include(FilePath src)
+
+        public FileIndex Seal()
+        {
+            SortedEntries = HashLookup.Values.Array().Sort().Resequence();
+            return this;
+        }
+
+        public ReadOnlySeq<FileIndexEntry> Sorted()
+            => SortedEntries;
+            
+        public Outcome<FileIndexEntry> Include(FilePath src)
         {
             var included = false;
-            var entry = Archives.IndexEntry(src);
+            var entry = FileIndex.entry(src);
             var kind = src.FileKind();
             var hash = FS.hash(src);
             if(PathLookup.TryAdd(src, entry))
@@ -68,7 +82,7 @@ namespace Z0
                     _Duplicates.AddOrUpdate(hash.ContentHash, bag(entry), (_,b) => include(entry,b));
             }
             KindLookup.AddOrUpdate(kind, bag(entry), (_,b) => include(entry,b));
-            return included;
+            return (included,entry);
         }
 
         public void Include(IEnumerable<FilePath> src)

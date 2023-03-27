@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public class ProcExec
+    public class ProcExec : Stateless<ProcExec>
     {        
         public static ToolContext context(FolderPath? work = null, params EnvVar[] vars)
             => new (work ?? Env.cd(), vars);

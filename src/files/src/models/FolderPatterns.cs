@@ -4,12 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public abstract record class Package<P> : Package
-        where P : Package<P>
+    readonly struct FolderPatterns
     {
-        protected Package(FileUri location, PackageKind kind)
-            : base(location,kind)
-        {
-        }
+        public const string Join = "{0}/{1}";
+
+        public const string All = "*";
     }
 }

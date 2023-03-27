@@ -87,6 +87,9 @@ namespace Z0
         public DbArchive DevPacks()
             => folder(Instance.Setting(SettingNames.DevPacks));
 
+        public IDbArchive DevPacks(string scope)
+            => DevPacks().Scoped(scope);
+            
         public DbArchive ProcDumps()
             => folder(Instance.Setting(SettingNames.ProcDumps));
 
@@ -98,6 +101,12 @@ namespace Z0
 
         public IDbArchive PkgRoot()
             => new DbArchive(folder(Instance.Setting(SettingNames.PkgRoot)));
+
+        public IDbArchive Publications()
+            => new DbArchive(folder(Instance.Setting(SettingNames.PubRoot)));
+
+        public IDbArchive Publications(string scope)
+            => Publications().Scoped(scope);
 
         public FileUri Dashboard()
             => uri(Instance.Setting(SettingNames.Dashboard));

@@ -9,7 +9,7 @@ namespace Z0
         class ServiceCache : AppServices<ServiceCache>
         {
              public IApiService EnvCmd(IWfRuntime wf)
-                => Service<EnvCmd>(wf);
+                => Service<EnvFlows>(wf);
 
             public ApiCmd ApiCmd(IWfRuntime wf)
                 => Service<ApiCmd>(wf);
@@ -17,15 +17,11 @@ namespace Z0
             public ProjectScripts ProjectScripts(IWfRuntime wf)
                 => Service<ProjectScripts>(wf);
 
-            public ProjectManager ProjectManager(IWfRuntime wf)
-                => Service<ProjectManager>(wf);
-
             public ApiServers ApiServers(IWfRuntime wf)
                 => Service<ApiServers>(wf);
 
              public IApiService ArchiveCmd(IWfRuntime wf)
-                => Service<ArchiveCmd>(wf);
-
+                => Service<ArchiveFlows>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
@@ -41,9 +37,6 @@ namespace Z0
 
         public static ProjectScripts ProjectScripts(this IWfRuntime wf)
             => Services.ProjectScripts(wf);
-
-        public static ProjectManager ProjectManager(this IWfRuntime wf)
-            => Services.ProjectManager(wf);
 
         public static IApiService ArchiveCmd(this IWfRuntime wf)
             => Services.ArchiveCmd(wf);

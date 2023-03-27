@@ -32,7 +32,7 @@ namespace Z0
             try
             {
                 GlobalServices.Instance.Inject(app.Wf.XedRuntime());
-                app.Run(args);
+                app.Run();
             }
             catch(Exception e)
             {

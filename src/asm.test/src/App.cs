@@ -24,7 +24,7 @@ namespace Z0
             app.Commander = context.Commander;
             try
             {
-                app.Run(args);
+                app.Run();
             }
             catch(Exception e)
             {

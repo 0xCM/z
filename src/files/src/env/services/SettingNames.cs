@@ -33,6 +33,8 @@ namespace Z0
 
         public const string PkgRoot = nameof(PkgRoot);
 
+        public const string PubRoot = nameof(PubRoot);
+
         public const string Dashboard = nameof(Dashboard);
 
         public const string XedDb = nameof(XedDb);

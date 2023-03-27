@@ -33,7 +33,6 @@ namespace Z0
             : base(name)
         {
         }
-
     }
 
     public class PeFileFormat : BinaryFormat<PeFileFormat>

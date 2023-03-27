@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.IO.Compression;
     using System.Linq;
     using Microsoft.Extensions.FileSystemGlobbing;
 
@@ -13,84 +12,40 @@ namespace Z0
     using static sys;
 
     [ApiHost]
-    public class Archives
+    public class Archives : Stateless<Archives>
     {        
-        static AppSettings AppSettings => AppSettings.Default;
+        public static FolderIndex index(IWfChannel channel, FolderQuery q)
+        {
+            var flow = channel.Running($"Indexing {q.Root}");
+            var index = new FolderIndex();
+            iter(FS.folders(q.Root, q.Match, true), folder => index.Include(folder),true);
+            channel.Ran(flow);
+            return index.Seal();
+        }
+
+        public static FileIndex index(IWfChannel channel, FileQuery q)
+        {
+            var flow = channel.Running($"Indexing {q.Root}");
+            var counter = 0u;
+            var matcher = FS.matcher(q);
+            var index = FileIndex.create();
+            void Include(FilePath src)
+            {
+                index.Include(src).OnSuccess(entry => {
+                    inc(ref counter);                    
+                });
+
+                if(counter % 1000 == 0)
+                    channel.Row($"Indexed {counter} files");
+            }
+
+            FS.search(q, path => Include(path));
+            channel.Ran(flow);
+            return index.Seal();
+        }
 
         public static FileTypes FileTypes(params Assembly[] src)
             => new (src.Types().Tagged<FileTypeAttribute>().Concrete().Map(x => (IFileType)Activator.CreateInstance(x)).ToHashSet());     
-
-        public static ExecToken<FilePath> index(IWfChannel channel, FileQuery query, IDbArchive dst)
-        {
-            var flow = channel.Running($"Indexing {query.Root}");
-            var buffer = cdict<FileHash,FileIndexEntry>();
-            var counter = 0u;
-            Archives.query(channel, query, path => {
-                var entry = Archives.IndexEntry(path);
-                if(entry.IsNonEmpty)
-                {
-                    buffer.TryAdd(entry.FileHash, entry);
-                    sys.inc(ref counter);
-
-                    if(counter%1000 == 0)
-                        channel.Row($"Indexed {counter} files");
-                }                
-            });
-
-            var target = IndexPath(query.Root.DbArchive(), dst);
-            var entries = buffer.Values.Array().Sort().Resequence();
-            return(channel.TableEmit(entries, target), target);
-        }
-
-        public static FileQuery query(FolderPath src, params FileExt[] ext)
-        {
-            var dst = new FileQuery();
-            var filter = FileFilter.Empty;
-            if(ext.Length != 0)
-                filter.Extensions = ext;
-            else
-                filter.Inclusions = array(SearchPattern.All);
-            dst.Root = src;
-            dst.Filter = filter;
-            return dst;
-        }
-
-
-        public static FileQuery query(FolderPath src, string match, params FileExt[] ext)
-        {
-            var dst = new FileQuery();
-            var filter = FileFilter.Empty;
-            filter.Extensions = ext;
-            filter.Inclusions = array(pattern(match));
-            dst.Root = src;
-            dst.Filter = filter;
-            return dst;
-        }
-
-        public static Matcher matcher(FileQuery query)
-        {
-            var matcher = new Matcher();  
-            var filter = query.Filter;
-            iter(filter.Extensions, t => matcher.AddInclude($"${t.SearchPattern}${Z0.SearchPattern.All}" ));
-            iter(filter.FileKinds, t => matcher.AddInclude($"${t.Ext().SearchPattern}${Z0.SearchPattern.All}" ));
-            iter(filter.Inclusions, i => matcher.AddInclude(i.Format()));
-            iter(filter.Exclusions, x => matcher.AddExclude(x.Format()));
-            return matcher;
-        }
-
-        public static ExecToken query(IWfChannel channel, FileQuery query, Action<FilePath> dst)        
-        {
-            var running = channel.Running($"Executing query over {query.Root}");
-            var matcher = Archives.matcher(query);
-            iter(matcher.GetResultsInFullPath(query.Root.Format()), f => dst(FS.path(f)), true);
-            return channel.Ran(running);
-        }
-
-        public static FolderPath nested(FolderPath root, FilePath src)
-            => root + FS.folder(FS.components(src.FolderPath).Join('/'));
-
-        public static FolderPath nested(FolderPath root, FolderPath src)
-            => root + FS.folder(FS.components(src).Join('/'));
 
         public static IDbArchive archive(Timestamp ts, DbArchive dst)
             => dst.Scoped(ts.Format());
@@ -124,24 +79,8 @@ namespace Z0
             return Lines.map(intervals.ToArray());
         }
 
-        public static EnvPath folders(ReadOnlySpan<string> src)
-            => src.Map(FS.dir);
-
-        public static IDbArchive archive(string src)
-            => new DbArchive(FS.dir(src));
-
-        public static IDbArchive archive(FolderPath root)
-            => new DbArchive(root);
-
-
         public static IModuleArchive modules(FolderPath src, bool recurse = true)
             => new ModuleArchive(src, recurse);
-
-        public static ReadOnlySeq<Assembly> parts(FolderPath src)
-        {
-            var modules = Archives.modules(src,false).Members().Where(x => FS.managed(x.Path) && !x.Path.FileName.Contains("System.Private.CoreLib"));
-            return modules.Where(m => m.Path.FileName.StartsWith("z0.")).Map(x => Assembly.LoadFile(x.Path.Format()));
-        }
 
         public static ExecToken symlink(IWfChannel channel, CmdArgs args)
         {
@@ -163,82 +102,6 @@ namespace Z0
             return channel.Ran(running);
         }
 
-        public static void catalog(IWfChannel channel, CmdArgs args)
-        {
-            bind(args, out CatalogFiles cmd);
-            exec(channel, cmd);
-        }
-
-        public static Task<ExecToken> zip(IWfChannel channel, CmdArgs args)
-            => zip(channel, FS.dir(args[0]), FS.path(args[1]));
-
-        public static Task<ExecToken> zip(IWfChannel channel, FolderPath src, FilePath dst)
-        {
-            ExecToken run()
-            {
-                var msg = $"{src} -> {dst}";
-                var running = channel.Running(msg);
-                zip(src, dst);
-                return channel.Ran(running, msg); 
-            }
-            return start(run);
-        }
-
- 
-        public static Task<ExecToken> unzip(IWfChannel channel, FilePath src, FolderPath dst)
-        {
-            ExecToken run()
-            {
-                var running = channel.Running($"Extracting {src} to {dst}");
-                using (var stream = src.Stream())
-                {
-                    var zip = new ZipArchive(stream);
-                    foreach (var entry in zip.Entries)
-                    {
-                        var extractedFilePath = (dst + FS.file(entry.FullName)).CreateParentIfMissing();
-                        using (var zfs = entry.Open())
-                        {
-                            using (var extractedFileStream = extractedFilePath.Stream())
-                                zfs.CopyTo(extractedFileStream);
-                        }
-                    }
-                }
-                return channel.Ran(running, $"Extracted {src} to {dst}");
-            }
-            return start(run);
-        }
-        
-        public static ZipFile zip(FolderPath src, FilePath dst)
-        {
-            System.IO.Compression.ZipFile.CreateFromDirectory(src.Format(), dst.Format(), CompressionLevel.Fastest, true);
-            return new ZipFile(dst);
-        }
-
-        public static Outcome bind(CmdArgs src, out CatalogFiles dst)
-        {
-            dst = new();
-            dst.Target = AppSettings.EnvDb().Scoped("files");
-            var count = src.Count;
-            try
-            {
-                if(count >= 1)
-                    dst.Source = FS.dir(src[0]);
-                
-                if(count >= 2)
-                    switch(src[1].Value)
-                    {
-                        case "--ext":
-                        dst.Match = sys.map(text.split(src[2].Value, Chars.Semicolon), x => FS.ext(x));
-                        break;
-                    }
-            }
-            catch(Exception e)
-            {
-                return e;
-            }
-        
-            return true;
-        }   
 
         [Op]
         public static string format(ListedFiles src)
@@ -249,7 +112,7 @@ namespace Z0
         }
 
         [Op]
-        public static void render(ListedFiles src, ITextEmitter dst)
+        static void render(ListedFiles src, ITextEmitter dst)
         {
             var formatter = CsvTables.formatter<ListedFile>();
             dst.AppendLine(formatter.FormatHeader());
@@ -322,57 +185,6 @@ namespace Z0
             return sys.start(run);
         }
 
-        public static void nupkg(IWfChannel channel, CmdArgs args)
-        {
-            var src = FS.dir(args[0]);
-            iter(packages(src, PackageKind.Nuget), p => channel.Write(p));
-        }
-
-        public static FileKind filekind(PackageKind src)
-            => src switch{
-                PackageKind.Zip => FileKind.Zip,
-                PackageKind.Nuget => FileKind.Nuget,
-                PackageKind.Msi => FileKind.Msi,
-                _ => FileKind.None
-            };
-
-        public static ReadOnlySeq<Package> packages(FolderPath src, PackageKind kind)
-        {
-            var files = src.EnumerateFiles(filekind(kind).Ext(), true).ToSeq();
-            var count = files.Count;
-            var dst = alloc<Package>(count);
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var file = ref files[i];
-                var uri = $"file://{file.Name.Text}";
-                seek(dst,i) = package(new FileUri(uri));
-            }
-            return dst;
-        }
-
-        public static Package package(FileUri src)
-        {
-            var kind = src.Ext().FileKind();
-            var dst = default(Package);
-            switch(kind)
-            {
-                case FileKind.Zip:
-                    dst = new ZipFile(src);
-                break;
-                case FileKind.Msi:
-                    dst = new MsiFile(src);
-                break;
-                case FileKind.Nuget:
-                    dst = new NugetPackge(src);
-                break;
-                default:
-                    sys.@throw($"File type for '{src}' unknown");
-                break;
-            }
-            return dst;
-        }
-         
-
         [Parser]
         public static bool parse(string src, out FilePoint dst)
         {
@@ -430,23 +242,13 @@ namespace Z0
                 return(false, outcome.Message);
         }        
 
-       static void exec(IWfChannel channel, CatalogFiles cmd)
-            => index(channel, query(cmd.Source, cmd.Match), cmd.Target.DbArchive());
-
-        internal static FileIndexEntry IndexEntry(FilePath src)
-        {
-            var hash = FS.hash(src);
-            var dst = new FileIndexEntry();
-            dst.Path = src;
-            dst.FileHash = hash.FileHash;
-            return dst;
-        }
-
-        static FilePath IndexPath(IDbArchive src, IDbArchive dst)
-            =>  dst.Path(FS.file($"files.index", FileKind.Csv));
-
-        [MethodImpl(Inline), Op]
-        static SearchPattern pattern(params string[] src)
-            => string.Join(Chars.Pipe, src);
+        public static string name(FileIndexKind kind)
+            => kind switch {
+                FileIndexKind.Folders => "folders.index",
+                FileIndexKind.Files=> "files.index",
+                FileIndexKind.Assemblies=> "assemblies.index",
+                FileIndexKind.Pe=> "pe.index",
+                _ => EmptyString
+            };
     }
 }

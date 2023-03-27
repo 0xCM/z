@@ -128,16 +128,16 @@ namespace Z0
             => Root.Files(ext, recurse);
 
         public IEnumerable<FilePath> Enumerate(bool recursive, string pattern)
-            => FS.enumerate(Root, pattern, recursive);
+            => FS.files(Root, pattern, recursive);
 
         public IEnumerable<FilePath> Enumerate(bool recurse, params FileKind[] kinds)
-            => FS.enumerate(Root, recurse, kinds);
+            => FS.files(Root, recurse, kinds);
 
         public IEnumerable<FilePath> Enumerate(bool recurse, params FileExt[] ext)
-            => FS.enumerate(Root, recurse, ext);
+            => FS.files(Root, recurse, ext);
 
         public IEnumerable<FilePath> Files(bool recurse, params FileExt[] ext)
-            => FS.enumerate(Root, recurse, ext);
+            => FS.files(Root, recurse, ext);
 
         public FileName File(string name, FileKind kind)
             => FS.file(name, kind.Ext());

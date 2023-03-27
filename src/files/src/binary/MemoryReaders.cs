@@ -106,14 +106,5 @@ namespace Z0
             public ulong Read(N8 n)
                 => Read<ulong>();
         }
-
-        public sealed class MemoryReader : MemoryReader<MemoryReader>
-        {
-            public MemoryReader(MemoryAddress @base, ByteSize size, uint offset = 0)
-                : base(@base, size, offset)
-            {
-
-            }
-        }       
     }
 }
