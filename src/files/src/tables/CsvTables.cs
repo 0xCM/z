@@ -5,11 +5,154 @@
 namespace Z0
 {
     using static sys;
+    using static CsvFormatter;
 
     [ApiHost]
     public class CsvTables
     {        
         const NumericKind Closure = UInt64k;
+
+        internal static RowAdapter adapter(Type src)
+            => new RowAdapter(src, CsvTables.cells(src));
+
+        internal static string format(in RowFormatSpec spec, RenderBuffers buffers, in DynamicRow src)
+        {
+            var content = src.Format(spec.Pattern, buffers);
+            var pad = spec.RowPad;
+            if(pad == 0)
+                return content;
+            else
+                return content.PadRight(pad);
+        }
+
+        public static void generate(uint margin, CsvTableDef spec, ITextEmitter dst)
+        {
+            dst.IndentLine(margin, "[Record(TableId), StructLayout(LayoutKind.Sequential,Pack=1)]");
+            dst.IndentLineFormat(margin, "public struct {0}", spec.TypeName);
+            dst.IndentLine(margin, Chars.LBrace);
+            dst.IndentLineFormat(margin,"public const string TableId = \"{0}\";", spec.TableName);
+            margin += 4;
+
+            ref readonly var fields = ref spec.Columns;
+            for(var i=0; i<fields.Count; i++)
+            {
+                dst.AppendLine();
+                ref readonly var field = ref fields[i];
+                dst.IndentLineFormat(margin,"public {0} {1};", field.DataType, field.Name);
+            }
+
+            margin -= 4;
+            dst.IndentLine(margin, Chars.RBrace);
+        }
+        
+
+        [Op]
+        public static Outcome parse(TextLine src, char delimiter, byte fields, out RowHeader dst)
+        {
+            dst = RowHeader.Empty;
+            if(src.IsEmpty)
+            {
+                return (false,"The source text is empty");
+            }
+            else
+            {
+                try
+                {
+                    var parts = src.Split(delimiter, false);
+                    var count = parts.Length;
+                    if(count != fields)
+                        return (false, Tables.FieldCountMismatch.Format(fields, dst.Length));
+
+                    var cells = alloc<HeaderCell>(count);
+                    ref var cell = ref first(cells);
+                    for(var i=0u; i<count; i++)
+                    {
+                        ref readonly var content = ref skip(parts,i);
+                        var length = (ushort)content.Length;
+                        var name = text.trim(content);
+                        seek(cell,i) = new HeaderCell(i, name, length);
+                    }
+                    dst = new RowHeader(cells, delimiter);
+                    return true;
+                }
+                catch(Exception e)
+                {
+                    dst = RowHeader.Empty;
+                    return e;
+                }
+            }
+        }
+
+
+        public static Outcome cells(TextLine src, char delimiter, byte fields, out ReadOnlySpan<string> dst)
+        {
+            var cells = src.Split(Chars.Pipe, true);
+            dst = default;
+            if(cells.Length != fields)
+            {
+                return (false, Tables.FieldCountMismatch.Format(fields, cells.Length));
+            }
+            else
+            {
+                dst = cells;
+                return true;
+            }
+        }        
+
+        [Op, Closures(Closure)]
+        public static uint cells<T>(in RowFormatSpec rowspec, in DynamicRow<T> row, Span<string> dst)
+        {
+            var count = (uint)min(rowspec.CellCount, row.CellCount);
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var value = ref row[i];
+                ref readonly var spec = ref rowspec[i];
+                var cellpad = spec.Width.Pattern();
+                seek(dst, i) = string.Format(cellpad, spec.Pattern.Format(value));
+            }
+
+            return count;
+        }
+
+        [MethodImpl(Inline), Op]
+        public static CsvTableDef def(TableId name, Identifier type, params ColumDef[] cols)
+            => new CsvTableDef(name, type, cols);
+
+        [Op]
+        public static CsvTableDef def(Type src)
+        {
+            var fields = src.PublicInstanceFields();
+            var count = fields.Length;
+            if(count == 0)
+                return new CsvTableDef(TableId.identify(src), src.Name, sys.empty<ColumDef>());
+            var specs = alloc<ColumDef>(count);
+            for(var i=z16; i<count; i++)
+            {
+                var field = skip(fields,i);
+                seek(specs,i) = new ColumDef(i, ClrTableCol.name(field), field.FieldType.CodeName());
+            }
+
+            return new CsvTableDef(TableId.identify(src), src.Name, specs);
+        }
+
+        [Op]
+        public static Index<CsvTableDef> defs(ReadOnlySpan<Type> src)
+        {
+            var count = src.Length;
+            var dst = alloc<CsvTableDef>(count);
+            for(var i=0; i<count; i++)
+                seek(dst,i) = def(skip(src,i));
+            return dst;
+        }
+
+        [Op]
+        public static Index<CsvTableDef> defs(params Assembly[] src)
+            => defs(src.Types().Concrete().Tagged<RecordAttribute>());
+
+        public static CsvTableDef def<T>()
+            where T : struct
+                => def(typeof(T));        
+
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static ref RowAdapter<T> adapt<T>(in T src, ref RowAdapter<T> adapter)
@@ -30,12 +173,12 @@ namespace Z0
         }
 
         /// <summary>
-        /// Adapts a <see cref='ClrTableCells'/> sequence to a <typeparamref name='T'/> parametric row
+        /// Adapts a <see cref='ClrTableCols'/> sequence to a <typeparamref name='T'/> parametric row
         /// </summary>
         /// <param name="fields">The record fields</param>
         /// <typeparam name="T">The record type</typeparam>
         [Op, Closures(Closure)]
-        public static RowAdapter<T> adapter<T>(in ClrTableCells fields)
+        public static RowAdapter<T> adapter<T>(in ClrTableCols fields)
             => new RowAdapter<T>(fields);
 
         /// <summary>
@@ -150,7 +293,7 @@ namespace Z0
                 seek(buffer, i) = new HeaderCell(i, fields[i].CellName, fields[i].CellWidth);
             var header = new RowHeader(buffer, DefaultDelimiter);
             var spec = rowspec(header, header.Cells.Select(x => x.CellFormat), rowpad, fk);
-            return new CsvFormatter.Formatter2<T>(spec, Tables.adapter(record));
+            return new CsvFormatter.Formatter2<T>(spec, CsvTables.adapter(record));
         }
 
         public static CsvFormatter formatter(Type record, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular, string delimiter = DefaultDelimiter)
@@ -162,7 +305,7 @@ namespace Z0
                 seek(buffer, i) = new HeaderCell(i, fields[i].CellName, fields[i].CellWidth);
             var header = new RowHeader(buffer, delimiter);
             var spec = rowspec(header, header.Cells.Select(x => x.CellFormat), rowpad, fk);
-            return new CsvFormatter(record, spec, Tables.adapter(record));
+            return new CsvFormatter(record, spec, CsvTables.adapter(record));
         }
 
         /// <summary>
@@ -182,18 +325,17 @@ namespace Z0
             => CsvTables.formatter<T>(Tables.rowspec<T>(fieldwidth, rowpad, fk));
 
         public static ICsvFormatter<T> formatter<T>(RowFormatSpec spec)
-            => new CsvFormatter<T>(spec, TableDefs.adapter<T>());
+            => new CsvFormatter<T>(spec, Tables.adapter<T>());
 
-        public static string format(in RowFormatSpec spec, RenderBuffers buffers, in DynamicRow src)
-        {
-            var content = src.Format(spec.Pattern, buffers);
-            var pad = spec.RowPad;
-            if(pad == 0)
-                return content;
-            else
-                return content.PadRight(pad);
-        }
-
+        // public static string format(in RowFormatSpec spec, RenderBuffers buffers, in DynamicRow src)
+        // {
+        //     var content = src.Format(spec.Pattern, buffers);
+        //     var pad = spec.RowPad;
+        //     if(pad == 0)
+        //         return content;
+        //     else
+        //         return content.PadRight(pad);
+        // }
 
         public static CsvTableReader<T> reader<T>(FilePath src, RowParser<T> parser, bool header = true)
             => new CsvTableReader<T>(src, parser, header);
@@ -312,7 +454,7 @@ namespace Z0
         [Op, Closures(Closure)]
         public static RowFormatSpec rowspec<T>(ReadOnlySpan<byte> widths, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
         {
-            var header = TableDefs.header<T>(widths);
+            var header = CsvTables.header<T>(widths);
             return rowspec(header, header.Cells.Select(x => x.CellFormat), rowpad, fk);
         }
 
@@ -320,7 +462,7 @@ namespace Z0
         public static RowFormatSpec rowspec<T>(byte width, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
             where T : struct
         {
-            var header = TableDefs.header<T>(width);
+            var header = CsvTables.header<T>(width);
             return rowspec(header, header.Cells.Select(x => x.CellFormat), rowpad, fk);
         }        
 
@@ -358,23 +500,23 @@ namespace Z0
 
 
         /// <summary>
-        /// Discerns a <see cref='ClrTableCells'/> for a parametrically-identified record type
+        /// Discerns a <see cref='ClrTableCols'/> for a parametrically-identified record type
         /// </summary>
         /// <typeparam name="T">The record type</typeparam>
         [Op, Closures(Closure)]
-        public static ClrTableCell[] cells<T>()
+        public static ClrTableCol[] cells<T>()
             => cells(typeof(T));
 
         /// <summary>
-        /// Discerns a <see cref='ClrTableCells'/> for a specified record type
+        /// Discerns a <see cref='ClrTableCols'/> for a specified record type
         /// </summary>
         /// <param name="src">The record type</typeparam>
         [Op]
-        public static ClrTableCell[] cells(Type src)
+        public static ClrTableCol[] cells(Type src)
         {
             var fields = src.DeclaredPublicInstanceFields().Ignore().Index();
             var count = fields.Count;
-            var dst = sys.alloc<ClrTableCell>(count);
+            var dst = sys.alloc<ClrTableCol>(count);
             for(var i=z32; i<count; i++)
             {
                 ref readonly var field = ref fields[i];
@@ -382,11 +524,11 @@ namespace Z0
                 if(tag)
                 {
                     var tv = tag.Value;
-                    seek(dst,i) = new ClrTableCell(new CellRenderSpec(i, tv.Width, TextFormat.formatter(field.FieldType, (ushort)tv.Style)), field);
+                    seek(dst,i) = new ClrTableCol(new CellRenderSpec(i, tv.Width, TextFormat.formatter(field.FieldType, (ushort)tv.Style)), field);
                 }
                 else
                 {
-                    seek(dst,i) = new ClrTableCell(new CellRenderSpec(i, 16, TextFormat.formatter(field.FieldType)), field);
+                    seek(dst,i) = new ClrTableCol(new CellRenderSpec(i, 16, TextFormat.formatter(field.FieldType)), field);
                 }
 
             }
@@ -445,6 +587,7 @@ namespace Z0
             return new RowHeader(buffer, delimiter);
         }
 
+ 
         static MsgPattern<Count,Count> FieldCountMismatch
             => "The target requires {0} fields but {1} were found in the source";
     }

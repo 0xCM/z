@@ -6,7 +6,7 @@ namespace Z0
 {
     using System.Linq;
 
-    using static core;
+    using static sys;
 
     partial class TestApp<A>
     {
@@ -30,7 +30,7 @@ namespace Z0
         void EmitTestCaseLog(FilePath dst, TestCaseRecord[] records)
         {
             if(records.Length != 0)
-                Tables.emit(@readonly(records), dst);
+                CsvTables.emit(@readonly(records), dst);
         }
     }
 }

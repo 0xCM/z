@@ -33,8 +33,8 @@ namespace Z0
         {
             var buffer = text.emitter();
             var src = ApiAssemblies.Components;
-            var defs = TableDefs.defs(src);
-            iter(defs, src => Tables.generate(0u,src,buffer));
+            var defs = CsvTables.defs(src);
+            iter(defs, src => CsvTables.generate(0u,src,buffer));
             var dst = AppDb.CgStage("api.tables").Path("replicants", FileKind.Cs);
             Channel.FileEmit(buffer.Emit(),dst);         
         }

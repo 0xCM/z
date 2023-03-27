@@ -7,10 +7,50 @@ namespace Z0
     using System.Text;
     using System.IO;
 
+    using static sys;
+
     using M = Microsoft.Extensions.DependencyModel;
 
     public partial class JsonDeps
     {
+        public static Task<ExecToken> import(IWfChannel channel, IDbArchive src, IDbArchive dst)
+        {
+            ExecToken Import()
+            {          
+                try
+                {  
+                    var flow = channel.Running($"Importing json deps from {src}");
+                    var buffer = cdict<DependencyKey, DependencyRecord>();
+                    var counter = 0u;
+                    var paths = src.Files(FileKind.JsonDeps, true);
+                    iter(paths, path => {
+                        var deps = JsonDeps.parse(path);
+                        iter(deps.Libs(), lib => {
+                                iter(lib.Dependencies, dep => {
+                                    var record = new DependencyRecord();
+                                    record.JsonFile = path;
+                                    record.Type = lib.Type;
+                                    record.Source = new (lib.Name, lib.Version);
+                                    record.Target = new (dep.Name, dep.Version);
+                                    buffer.TryAdd(new (record.Source, record.Target), record);
+                                });                                                                                                    
+                            });                            
+                        if(++counter % 100 == 0)
+                            channel.Babble($"Parsed {counter} dependency files");
+                    }, true);
+                    var records = buffer.Values.Array().Sort();
+                    channel.TableEmit(records, dst.Nested("dotnet", src.Root).Table<DependencyRecord>());
+                    return channel.Ran(flow, $"Imported {records.Length} dependency records");
+                }
+                catch(Exception e)
+                {
+                    channel.Error(e);
+                    return ExecToken.Empty;
+                }
+            }
+            return sys.start(Import);
+        }        
+
         [Op]
         public static ProjectDeps load(Assembly src)
             => new ProjectDeps(M.DependencyContext.Load(src));
@@ -37,20 +77,11 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static LibDep lib(string assembly, string version)
+        internal static LibDep extract(M.Dependency src)
         {
             var dst = new LibDep();
-            dst.Name= assembly;
-            dst.Version = version;
-            return dst;
-        }
-
-        [MethodImpl(Inline), Op]
-        public static ProjectDependency project(string assembly, string version)
-        {
-            var dst = new ProjectDependency();
-            dst.AssemblyName = assembly;
-            dst.AssemblyVersion = version;
+            dst.Name= src.Name;
+            dst.Version = src.Version;
             return dst;
         }
 
@@ -96,7 +127,7 @@ namespace Z0
 
         [Op]
         internal static LibDep[] dependencies(M.CompilationLibrary src)
-            => src.Dependencies.Map(d => lib(d.Name, d.Version));
+            => src.Dependencies.Map(extract);
 
         [Op]
         internal static ref TargetInfo extract(M.DependencyContext context, ref TargetInfo dst)

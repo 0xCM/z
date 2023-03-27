@@ -11,7 +11,7 @@ namespace Z0
         public static void render<K,V>(ValueClassifier<K,V> src, ITextEmitter dst)
             where K : unmanaged, Enum
             where V : unmanaged
-                => Tables.emit(src.Classes, dst);
+                => CsvTables.emit(src.Classes, dst);
 
         const NumericKind Closure = UnsignedInts;
 

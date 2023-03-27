@@ -15,5 +15,13 @@ namespace Z0
             for(var i=0u; i<dst.FieldCount; i++)
                 dst[i] = dst.Fields[i].Definition.GetValueDirect(tr);
         }
+
+        internal static void load<T>(T src, ref DynamicRow dst)
+        {
+            var tr = __makeref(edit(src));
+            for(var i=0u; i<dst.FieldCount; i++)
+                dst[i] = dst.Cells[i].Definition.GetValueDirect(tr);
+        }
+
     }
 }

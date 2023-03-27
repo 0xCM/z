@@ -180,7 +180,7 @@ namespace Z0.Asm
         {
             var dst = FilePath.Empty;
             var flow = EmittingTable<HostAsmRecord>(dst);
-            EmittedTable(flow, Tables.emit(src, HostAsmRecord.RenderWidths, dst));
+            EmittedTable(flow, CsvTables.emit(src, HostAsmRecord.RenderWidths, dst));
         }
 
         AsmInstructionBlock Decode(in ApiCodeBlock src)

@@ -190,7 +190,7 @@ namespace Z0
         {
             var flow = Wf.EmittingTable<T>(Host, dst);
             var spec = Tables.rowspec<T>(widths, z16);
-            var count = Tables.emit(src, spec, encoding, dst);
+            var count = CsvTables.emit(src, spec, encoding, dst);
             return Wf.EmittedTable(Host, flow, count);
         }
 

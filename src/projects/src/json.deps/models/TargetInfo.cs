@@ -5,7 +5,7 @@
 namespace Z0
 {
     partial class JsonDeps
-    {
+    {        
         public record struct TargetInfo
         {
             public string Framework;

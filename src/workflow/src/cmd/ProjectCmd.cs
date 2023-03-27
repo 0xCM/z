@@ -8,8 +8,12 @@ namespace Z0
 
     internal class ProjectCmd : WfAppCmd<ProjectCmd>
     {
-        ProjectServices Services => Channel.Channeled<ProjectServices>();
-        
+        [CmdOp("jsondeps/import")]
+        void ImportJsonDeps(CmdArgs args)
+        {
+            var token = JsonDeps.import(Channel, FS.archive(args[0]), EnvDb).Result;
+        }        
+
         [CmdOp("projects/modules")]
         void EcmaMeta(CmdArgs args)
         {
@@ -21,7 +25,7 @@ namespace Z0
         [CmdOp("projects/load")]
         void Load(CmdArgs args)
         {
-            var project = Services.LoadProject(FS.path(args[0]));
+            var project = Projects.load(Channel, FS.path(args[0]));
             Channel.Row($"{project.Name}:{project.Root}");                
         }
 
@@ -120,9 +124,9 @@ namespace Z0
         {
             Projects.kind(args[0], out var k);
             var root = FS.dir(args[1]);
-            var project = Services.CreateProject(k, root);
-            
+            var project = Projects.create(Channel, k, root);            
         }
+
         [CmdOp("projects/vars")]
         void TextExpr()
         {

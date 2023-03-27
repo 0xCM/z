@@ -15,12 +15,12 @@ namespace Z0
         /// <summary>
         /// The record fields
         /// </summary>
-        public readonly ClrTableCells Cells;
+        public readonly ClrTableCols Cells;
 
         readonly Index<object> Values;
 
         [MethodImpl(Inline)]
-        public DynamicRow(ClrTableCells cells, object[] values)
+        public DynamicRow(ClrTableCols cells, object[] values)
         {
             Cells = cells;
             Values = values;

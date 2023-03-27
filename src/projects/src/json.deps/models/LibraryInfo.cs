@@ -11,11 +11,11 @@ namespace Z0
         {
             const string TableName = "jsondeps.libs";
 
-            public string Type;
-
             public string Name;
 
             public string Version;
+
+            public string Type;
 
             public string Hash;
 

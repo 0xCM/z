@@ -4,15 +4,15 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed class ClrTableCells : Seq<ClrTableCells,ClrTableCell>
+    public sealed class ClrTableCols : Seq<ClrTableCols,ClrTableCol>
     {
-        public ClrTableCells()
+        public ClrTableCols()
         {
 
         }
 
         [MethodImpl(Inline)]
-        public ClrTableCells(ClrTableCell[] src)
+        public ClrTableCols(ClrTableCol[] src)
             : base(src)
         {
         }
@@ -23,7 +23,7 @@ namespace Z0
             => Data[index].Format(value);
 
         [MethodImpl(Inline)]
-        public static implicit operator ClrTableCells(ClrTableCell[] src)
-            => new ClrTableCells(src);
+        public static implicit operator ClrTableCols(ClrTableCol[] src)
+            => new ClrTableCols(src);
     }
 }

@@ -4,15 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using api = TableDefs;
-
     /// <summary>
     /// Defines a row over a specified record type
     /// </summary>
     /// <typeparam name="T">The record type</typeparam>
     public struct RowAdapter<T>
     {
-        public readonly ClrTableCells Fields
+        public readonly ClrTableCols Fields
         {
             [MethodImpl(Inline)]
             get => Row.Fields;
@@ -25,16 +23,16 @@ namespace Z0
         internal DynamicRow<T> Row;
 
         [MethodImpl(Inline)]
-        internal RowAdapter(ClrTableCells fields)
+        internal RowAdapter(ClrTableCols fields)
         {
             Source = default;
             Index = 0;
-            Row = api.dynarow<T>(fields);
+            Row = Tables.dynarow<T>(fields);
         }
 
         [MethodImpl(Inline)]
         public RowAdapter<T> Adapt(in T src)
-            => api.adapt(src, ref this);
+            => Tables.adapt(src, ref this);
 
         public ref readonly object this[uint index]
         {

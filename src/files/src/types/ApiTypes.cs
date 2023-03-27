@@ -41,7 +41,7 @@ namespace Z0
             for(var i=0; i<tables.Count; i++)
             {
                 ref readonly var type = ref tables[i];
-                var fields = TableDefs.cells(type);
+                var fields = Tables.columns(type);
                 var total = 0u;
                 var id = TableId.identify(type).Format();
                 var typename = type.DisplayName();
@@ -79,7 +79,6 @@ namespace Z0
             }
             return buffer;
         }
-
 
         [Op]
         public static ReadOnlySeq<DataFlowSpec> flows(Assembly[] src)

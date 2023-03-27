@@ -7,7 +7,7 @@ namespace Z0
     /// <summary>
     /// Describes a column in a table
     /// </summary>
-    public readonly struct ClrTableCell
+    public readonly struct ClrTableCol
     {
         /// <summary>
         /// The 0-based, declaration order of the field
@@ -38,7 +38,7 @@ namespace Z0
             => src.Tag<FieldAttribute>().MapValueOrDefault(a => text.ifempty(a.FieldName, src.Name), src.Name);
 
         [MethodImpl(Inline)]
-        public ClrTableCell(CellRenderSpec spec, FieldInfo def)
+        public ClrTableCol(CellRenderSpec spec, FieldInfo def)
         {
             RenderSpec = spec;
             Require.invariant(spec.Width > 0);

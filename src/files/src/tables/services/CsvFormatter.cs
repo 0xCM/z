@@ -26,7 +26,7 @@ namespace Z0
             public string Format(in T src)
             {
                 api.adapt(src, ref Adapter);
-                return api.format(FormatSpec, Buffers, Adapter.Adapted);
+                return CsvTables.format(FormatSpec, Buffers, Adapter.Adapted);
             }
 
             public string FormatHeader()
@@ -58,7 +58,7 @@ namespace Z0
         public string Format<T>(in T src)
         {
             api.adapt<T>(src, ref Adapter);
-            return api.format(FormatSpec, Buffers, Adapter.Adapted);
+            return CsvTables.format(FormatSpec, Buffers, Adapter.Adapted);
         }
 
         public string FormatHeader()
@@ -90,7 +90,7 @@ namespace Z0
             public readonly Type RowType;
 
             [MethodImpl(Inline)]
-            internal RowAdapter(Type type, ClrTableCells fields)
+            internal RowAdapter(Type type, ClrTableCols fields)
             {
                 RowType = type;
                 Source = type;

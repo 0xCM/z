@@ -15,7 +15,7 @@ namespace Z0
         [Render(24)]
         public readonly TableId Id;
 
-        public readonly ClrTableCells Cells;
+        public readonly ClrTableCols Cells;
 
         public readonly LayoutKind? Layout;
 
@@ -26,7 +26,7 @@ namespace Z0
         public readonly uint? Size;
 
         [MethodImpl(Inline)]
-        public ClrTable(Type type, TableId id, ClrTableCell[] fields, LayoutKind? layout, CharSet? charset, byte? pack, uint? size)
+        public ClrTable(Type type, TableId id, ClrTableCol[] fields, LayoutKind? layout, CharSet? charset, byte? pack, uint? size)
         {
 
             Type = type;
