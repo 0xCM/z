@@ -4,9 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.Linq;
-    using Microsoft.Extensions.FileSystemGlobbing;
-
     using Commands;
 
     using static sys;
@@ -101,7 +98,6 @@ namespace Z0
                 result = FS.symlink((FolderPath)cmd.Source, (FolderPath)cmd.Target, cmd.Overwrite);
             return channel.Ran(running);
         }
-
 
         [Op]
         public static string format(ListedFiles src)

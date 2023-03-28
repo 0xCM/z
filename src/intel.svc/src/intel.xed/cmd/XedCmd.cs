@@ -14,8 +14,6 @@ namespace Z0
     {
         CsLang CsLang => Channel.Channeled<CsLang>();
 
-        AsmObjects AsmObjects => Wf.AsmObjects();
-
         SdmCodeGen SdmCodeGen => Wf.SdmCodeGen();
 
         XedPaths XedPaths => Xed.Paths;

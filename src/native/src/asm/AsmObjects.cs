@@ -8,7 +8,7 @@ namespace Z0
 
     using static sys;
 
-    public partial class AsmObjects : AppService<AsmObjects>
+    public class AsmObjects : AppService<AsmObjects>
     {
         AppDb AppDb => AppDb.Service;
 
@@ -17,21 +17,23 @@ namespace Z0
         IDbArchive EtlTargets(string name)
             => AppDb.EtlTargets(name);
 
+        ObjDump ObjDump => Channel.Channeled<ObjDump>();
+
         public void RunEtl(ProjectContext context)
         {
             var project = context.Project.Name;
             EtlTargets(project).Delete();
             Channel.TableEmit(context.Files.Docs().Array().Sort().Resequence(), AppDb.EtlTable(project,"files.catalog"));
-            var objects = Channel.Channeled<ObjDump>().CalcObjRows(context);
+            var objects = ObjDump.CalcObjRows(context);
             Channel.TableEmit(objects, AppDb.EtlTable<ObjDumpRow>(project));
-            var blocks = AsmObjects.blocks(objects);
+            var blocks = ObjDump.blocks(objects);
             Channel.TableEmit(blocks, AppDb.EtlTable<ObjBlock>(project));
             using var alloc = CompositeBuffers.create();
-            MapAsm(context.Project, objects, alloc);
-            var asmrows = EmitAsmRows(context, alloc);
+            ObjDump.MapAsm(context.Project, objects, alloc);
+            var asmrows = ObjDump.EmitAsmRows(context, alloc);
             EmitRecoded(context, asmrows);
-            var syms = CalcObjSyms(context);
-            EmitObjSyms(context, syms);
+            var syms = ObjDump.CalcObjSyms(context);
+            ObjDump.EmitObjSyms(context, syms);
             Coff.Collect(context);
             CollectAsmSyntax(context);
             CollectMcInstructions(context);
@@ -60,36 +62,6 @@ namespace Z0
             return dst;
         }
 
-        public Index<ObjSymRow> LoadObjSyms(IProject project)
-            => LoadObjSyms(AppDb.EtlTable<ObjSymRow>(project.Name));
-
-        public Index<ObjSymRow> LoadObjSyms(FilePath src)
-        {
-            const byte FieldCount = ObjSymRow.FieldCount;
-            var result = Outcome.Success;
-            var lines = src.ReadLines(true);
-            var count = lines.Count - 1;
-            var dst = alloc<ObjSymRow>(count);
-            var j=0;
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var line = ref lines[i+1];
-                var cells = text.trim(text.split(line, Chars.Pipe));
-                Require.equal(cells.Length,FieldCount);
-                var reader = cells.Reader();
-                ref var row = ref seek(dst,i);
-                DataParser.parse(reader.Next(), out row.Seq).Require();
-                DataParser.parse(reader.Next(), out row.DocSeq).Require();
-                HexParser.parse(reader.Next(), out row.OriginId).Require();
-                HexParser.parse(reader.Next(), out row.Offset).Require();
-                SymCodes.ExprKind(reader.Next(), out row.Code);
-                SymKinds.ExprKind(reader.Next(), out row.Kind);
-                DataParser.parse(reader.Next(), out row.Name).Require();
-                DataParser.parse(reader.Next(), out row.Source).Require();
-            }
-
-            return dst;
-        }
 
         public IEnumerable<FilePath> SynAsmSources(IProject src)
             => src.BuildFiles(FileKind.SynAsm);
@@ -97,11 +69,8 @@ namespace Z0
         public CoffSymIndex LoadSymbols(string id)
             => Coff.LoadSymIndex(id);
 
-        public Index<ObjDumpRow> LoadRows(string id)
-            => ObjDump.rows(AppDb.EtlTable<ObjDumpRow>(id));
-
         public Index<ObjBlock> LoadBlocks(string id)
-            => blocks(AppDb.EtlTable<ObjBlock>(id));
+            => ObjDump.blocks(AppDb.EtlTable<ObjBlock>(id));
 
         public Index<AsmInstructionRow> LoadInstructions(string project)
         {
@@ -183,39 +152,6 @@ namespace Z0
         public FilePath AsmRowPath(string name, string origin)
             => AppDb.EtlTargets(name).Targets("asm.csv").Path(origin, FileKind.Csv);
 
-        public void EmitObjSyms(ProjectContext context, ReadOnlySpan<ObjSymRow> src)
-            => Channel.TableEmit(src, AppDb.EtlTargets(context.Project.Name).Table<ObjSymRow>());
-
-        public Index<ObjSymRow> CalcObjSyms(ProjectContext context)
-        {
-            var result = Outcome.Success;
-            var project = context.Project;
-            var src = project.BuildFiles(FileKind.Sym).Array();
-            var count = src.Length;
-            var formatter = CsvTables.formatter<ObjSymRow>();
-            var buffer = list<ObjSymRow>();
-            var seq = 0u;
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var path = ref skip(src,i);
-                var origin = context.Root(path);
-                var fref = context.Doc(path);
-                using var reader = path.Utf8LineReader();
-                var counter = 0u;
-                while(reader.Next(out var line))
-                {
-                    if(CoffObjects.parse(line.Content, ref counter, out var sym))
-                    {
-                        sym.Seq = seq++;
-                        sym.OriginId = origin.DocId;
-                        buffer.Add(sym);
-                    }
-                }
-            }
-
-            return buffer.ToArray();
-        }
-
         public void EmitRecoded(ProjectContext context, ReadOnlySeq<AsmCodeBlocks> blocks)
         {
             for(var i=0; i<blocks.Count; i++)
@@ -246,59 +182,6 @@ namespace Z0
             }
 
             Channel.EmittedFile(emitting,counter);
-        }
-
-        public Index<AsmCodeBlocks> EmitAsmRows(ProjectContext context, CompositeBuffers alloc)
-        {
-            var files = context.Files.Docs(FileKind.ObjAsm);
-            var count = files.Count;
-            var seq = 0u;
-            var dst = list<AsmCodeBlocks>();
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var file = ref files[i];
-                var result = ObjDump.parse(context, file.Path, out var rows);
-                if(result.Fail)
-                    Errors.Throw(result.Message);
-
-                var blocks = AsmObjects.blocks(context, file, ref seq, rows, alloc);
-                dst.Add(blocks);
-                EmitAsmRows(context, blocks, AsmRowPath(context.Project.Name, file.Path.FileName.Format()));
-            }
-            return dst.ToArray();
-        }
-
-        public void EmitAsmRows(ProjectContext context, in AsmCodeBlocks src, FilePath dst)
-        {
-            var buffer = alloc<AsmCodeRow>(src.LineCount);
-            var k=0u;
-            var distinct = hashset<Hex64>();
-            for(var i=0; i<src.Count; i++)
-            {
-                ref readonly var block = ref src[i];
-                var count = block.Count;
-                for(var j=0; j<count; j++, k++)
-                {
-                    ref readonly var code = ref block[j];
-                    ref var record = ref seek(buffer,k);
-                    record.Seq = k;
-                    record.DocSeq = code.DocSeq;
-                    record.EncodingId = code.EncodingId;
-                    record.OriginId = code.OriginId;
-                    record.InstructionId = asm.instid(code.OriginId, code.IP, code.Encoding);
-                    record.OriginName = src.OriginName;
-                    record.BlockBase = block.Label.Location;
-                    record.BlockName = block.Label.Name;
-                    record.IP = code.IP;
-                    record.Size = code.Encoded.Size;
-                    record.Encoded = code.Encoded;
-                    record.Asm = code.Asm;
-                    if(!distinct.Add(record.EncodingId))
-                        Channel.Warn(string.Format("Duplicate identifier:{0}", record.EncodingId));
-                }
-            }
-
-            Channel.TableEmit(buffer, dst);
         }
 
         public FilePath AsmSyntaxTable(string name)
@@ -394,7 +277,7 @@ namespace Z0
                 if (ci > 0)
                     AsmExpr.parse(text.left(body, ci), out record.Asm);
                 else
-                    record.Asm = RpOps.Empty;
+                    record.Asm = RP.Empty;
 
                 var xi = text.index(body, EncodingMarker);
                 if(xi > 0)

@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     partial class XTend 
     {
         public static C Channeled<C>(this IWfChannel channel)

@@ -19,5 +19,7 @@ namespace Z0
         IEnumerable<LibModule> Lib();
 
         IEnumerable<BinaryModule> Members();
+
+        IEnumerable<FilePath> Unmanaged();
     }
 }

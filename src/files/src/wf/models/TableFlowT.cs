@@ -6,7 +6,7 @@ namespace Z0
 {
     public readonly struct TableFlow<T>
     {
-        readonly IEventChannel Wf;
+        readonly IEventChannel Channel;
 
         public readonly ExecToken Token;
 
@@ -17,7 +17,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public TableFlow(IEventChannel wf, FilePath dst, in ExecToken token, uint count = 0)
         {
-            Wf = wf;
+            Channel = wf;
             Token = token;
             Target = dst;
             EmissionCount = count;
@@ -25,14 +25,14 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public TableFlow<T> WithCount(Count count)
-            => new TableFlow<T>(Wf, Target, Token, count);
+            => new TableFlow<T>(Channel, Target, Token, count);
 
         [MethodImpl(Inline)]
         public TableFlow<T> WithToken(ExecToken token)
-            => new TableFlow<T>(Wf, Target, token, EmissionCount);
+            => new TableFlow<T>(Channel, Target, token, EmissionCount);
 
         [MethodImpl(Inline)]
         public static implicit operator ExecFlow(TableFlow<T> src)
-            => new ExecFlow(src.Wf, src.Token);
+            => new ExecFlow(src.Channel, src.Token);
     }
 }

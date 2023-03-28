@@ -5,6 +5,18 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+
+    public abstract class RunLoop
+    {
+
+    }
+
+    public abstract class RunLoop<L> : RunLoop
+        where L : RunLoop<L>, new()
+    {
+
+    }    
+
     public class CmdLoop
     {
         public static Task start(IWfChannel channel)

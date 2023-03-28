@@ -4,10 +4,16 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IWfTask
+    public interface IChannel2x1<T>
+        where T : unmanaged
     {
-        Task<ExecToken> Start(IWfChannel channel);
+        void Send(T x0, T x1, out T y0);
+    }
 
-        ExecToken Run(IWfChannel channel);
+    public interface IChannel2x1<F,T> : IChannel2x1<T>
+        where F : unmanaged, IChannel2x1<F,T>
+        where T : unmanaged
+    {
+
     }
 }

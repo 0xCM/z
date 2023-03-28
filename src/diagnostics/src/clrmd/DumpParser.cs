@@ -11,8 +11,6 @@ namespace Z0
 
     public sealed class DumpParser : Channeled<DumpParser>
     {
-        AppDb AppDb => AppDb.Service;
-        
         void Emit(ProcDumpName name, ReadOnlySpan<DR.ModuleInfo> src)
             => Channel.TableEmit(src,  AppDb.Archive($"dumps/{name}").Table<DR.ModuleInfo>(name.Format()));
 

@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     public readonly record struct ArgPrefix : IDataType<ArgPrefix>
     {
         [MethodImpl(Inline), Op]

@@ -24,5 +24,14 @@ namespace Z0
         ExecToken Ran<T>(ExecFlow<T> flow, string msg, FlairKind flair = FlairKind.Ran);
 
         ExecToken<D> Ran<D>(ExecFlow src, D data, FlairKind flair = FlairKind.Ran);
+
+        ExecFlow<T> Executing<T>(T cmd, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
+            where T : IApiCmd<T>, new()
+                => Running(cmd);
+
+        ExecToken Executed<T>(ExecFlow<T> flow, [CallerName] string msg = null)
+            where T : IApiCmd<T>, new()
+                => Ran(flow, msg);
+
     }
 }

@@ -6,6 +6,7 @@ namespace Z0
 {
     using static sys;
 
+
     public class ProcExec : Stateless<ProcExec>
     {        
         public static ToolContext context(FolderPath? work = null, params EnvVar[] vars)
@@ -63,46 +64,47 @@ namespace Z0
         public static Task<ExecToken> launch(IWfChannel channel, CmdArgs args, ToolContext? context = null)
             => launch(channel, FS.path(args[0]), args.Skip(1), context);
 
-        public static Task<ExecToken> redirect(IWfChannel channel, CmdArgs args, FilePath status, FilePath? error = null)
+        public static Task<ExecToken> redirect(IWfChannel channel, CmdArgs args, FilePath status, Action<string> receiver = null)
         {
-            FilePath _error = error == null ? (status + FS.ext("errors")) : error.Value;
+            FilePath alt = (status + FS.ext("alt"));
             ExecToken Run()
             {
-                var c0Name=$"{Environment.ProcessId}.channels.0";
-                var h0 = $"# {args} -> {status}";
-
-                var c1Name = $"{Environment.ProcessId}.channels.1";
-                var h1 = $"# {args} -> {_error}";
-                
-                using var c0 = status.Utf8Writer(true);
-                c0.WriteLine($"# {c0Name}");
-                c0.WriteLine(h0);
-
                 var c1 = default(StreamWriter);
-                void Channel0(string msg)
+                var c0 = default(StreamWriter);
+                var token = ExecToken.Empty;
+                
+                try
                 {
-                    channel.Row(msg, FlairKind.Data);
-                    c0.WriteLine(msg);
-                }
-
-                void Channel1(string msg)
-                {
-                    if(c1 == null)
+                    void Channel0(string msg)
                     {
-                        c1 = _error.Utf8Writer(true);
-                        c1.WriteLine($"# {c1Name}");
-                        c1.WriteLine(h1);
+                        if(c0 == null)
+                            c0 = status.Utf8Writer(false);
+                        c0.WriteLine(msg);
+                        receiver?.Invoke(msg);
                     }
 
-                    channel.Row(msg, FlairKind.StatusData);
-                    c1.WriteLine(msg);
+                    void Channel1(string msg)
+                    {
+                        if(c1 == null)
+                            c1 = alt.Utf8Writer(true);                     
+
+                        channel.Row(msg, FlairKind.StatusData);
+                        c1.WriteLine(msg);
+                    }
+
+                    var io = new SysIO(Channel0, Channel1);
+                    var running = channel.Running($"{args} -> ({status}, {alt})");
+                    token = channel.Ran(running, run(io, args, context()));
                 }
-
-                var io = new SysIO(Channel0, Channel1);
-                var running = channel.Running($"{args} -> ({status}, {_error})");
-
-                var token = channel.Ran(running, run(io, args, context()));
-                c1?.Dispose();
+                catch(Exception e)
+                {
+                    channel.Error(e.Message);
+                }
+                finally
+                {
+                    c0?.Dispose();
+                    c1?.Dispose();
+                }
                 return token;
 
             }

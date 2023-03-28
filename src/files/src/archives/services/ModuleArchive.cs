@@ -72,6 +72,15 @@ namespace Z0
                 yield return new LibModule(path);
         }
 
+        public IEnumerable<FilePath> Unmanaged()
+        {
+            foreach(var member in Members())
+            {
+                if(!AssemblyFile.name(member.Path, out _))
+                    yield return member.Path;
+            }
+        }
+
         public IEnumerable<BinaryModule> Members()
         {
             var dll = from module in Dll() select generalize(module);

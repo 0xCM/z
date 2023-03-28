@@ -415,5 +415,83 @@ namespace Z0
             Channel.Row($"{module.Handle.Address} {module.Path}");
             iter(ops, op => Channel.Row($"{op.Address} {op.Name}"));
         }
+
+        [CmdOp("loop/run")]
+        void CheckLoops()
+        {
+            var psi = new ProcessStartInfo
+            {
+                CreateNoWindow = true,
+                RedirectStandardInput = true,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true, 
+                UseShellExecute = false,
+                FileName = "cmd.exe",
+            };
+            using var process = sys.process(psi);
+            process.EnableRaisingEvents = true;
+            process.OutputDataReceived += OnOutput;
+            process.ErrorDataReceived += OnError;
+            process.Exited += OnExit;
+            process.Start();
+
+            var writer = process.StandardInput;
+            var reader = process.StandardOutput;
+            var running = true;
+            // var loop = new StreamLoop();
+            // loop.Init(reader, writer, cts.Token);
+            // loop.Start(Channel);
+
+            void OnExit(object sender, EventArgs e)
+            {
+                Channel.Babble("Received exit event");
+                running = false;
+            }
+            
+            void OnOutput(object sender, DataReceivedEventArgs e)
+            {
+                //Channel.Write(e.Data);
+            }
+
+            void OnError(object sender, DataReceivedEventArgs e)
+            {
+                //Channel.Error(e.Data);
+            }
+
+            void Read()
+            {
+                while(running)   
+                {
+                    var line = reader.ReadLine();
+                    if(line == "stop")
+                    {
+                        running = false;
+                        Channel.Status("Received stop signal", FlairKind.StatusData);
+                        writer.WriteLineAsync("exit");
+                    }
+                    else
+                    {
+                        Channel.Write(line);
+                    }
+                }
+            }
+
+            void Run()
+            {
+                var flow = Channel.Running();
+                writer.WriteLine("dir");
+                writer.WriteLine("c:");
+                writer.WriteLine("dir");
+                writer.WriteLine("echo stop");
+                process.WaitForExit();
+                Channel.Ran(flow);
+                running = false;
+            }
+            var reading = sys.start(Read);
+            var runner = sys.start(Run);            
+            var waiting = Channel.Running($"Waiting for {process.Id} exit");
+            runner.Wait();
+            Channel.Ran(waiting, $"Process finished");
+        }
     }
 }

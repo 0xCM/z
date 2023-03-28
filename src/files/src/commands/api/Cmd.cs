@@ -300,14 +300,6 @@ namespace Z0
             }
         }
 
-        [MethodImpl(Inline)]
-        public static FileFlow flow(in CmdFlow src)
-            => new FileFlow(flow(src.Tool, src.SourcePath, src.TargetPath));
-
-        [MethodImpl(Inline)]
-        public static DataFlow<Actor,S,T> flow<S,T>(Tool tool, S src, T dst)
-            => new DataFlow<Actor,S,T>(FlowId.identify(tool,src,dst), tool,src,dst);        
-
         [MethodImpl(Inline), Op]
         public static CmdUri uri(CmdKind kind, string? part, string? host, string? name)
             => new CmdUri(kind, part, host, name);
@@ -371,18 +363,19 @@ namespace Z0
         }
 
         public static CmdArg arg(object src)
-        {            
-            var data = src?.ToString() ?? EmptyString;
-            var i = text.index(data, '=');
-            var name = EmptyString;
-            var value = data;
-            if(i > 0)
-            {
-                name = text.left(data,i).RemoveAny('-');
-                value = text.right(data,i);
-            }
-            return new (name,value);
-        }
+            => new CmdArg(src?.ToString() ?? EmptyString);
+        // {            
+        //     var data = src?.ToString() ?? EmptyString;
+        //     var i = text.index(data, '=');
+        //     var name = EmptyString;
+        //     var value = data;
+        //     if(i > 0)
+        //     {
+        //         name = text.left(data,i).RemoveAny('-');
+        //         value = text.right(data,i);
+        //     }
+        //     return new (name,value);
+        // }
 
         public static CmdArgs args(params object[] src)
         {

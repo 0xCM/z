@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IWfChannel : IEventChannel, IMsgChannel, ITableChannel, IFileChannel, ICmdChannel
+    public interface IWfChannel : IEventChannel, IMsgChannel, ITableChannel, IFileChannel
     {
 
     }

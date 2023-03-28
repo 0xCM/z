@@ -9,7 +9,11 @@ namespace Z0
     {
         protected IWfChannel Channel;
 
-        protected AppSettings Settings => AppSettings.Default;
+        protected static AppSettings Settings => AppSettings.Default;
+
+        protected static AppDb AppDb => AppDb.Service;
+
+        protected static IEnvDb EnvDb => Settings.EnvDb();
 
         protected void Connect(IWfChannel channel)
         {

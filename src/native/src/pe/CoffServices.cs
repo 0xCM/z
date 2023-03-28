@@ -11,8 +11,6 @@ namespace Z0
     {
         AppDb AppDb => AppDb.Service;
 
-        //HexDataReader HexReader => Wf.HexDataReader();
-
         Symbols<CoffSectionKind> SectionKinds;
 
         public CoffServices()
