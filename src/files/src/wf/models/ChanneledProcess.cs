@@ -10,9 +10,9 @@ namespace Z0
     {
         Process Process;
         
-        ToolContext Context;
+        ToolExecSpec Context;
         
-        internal void Init(Process process, ToolContext context)
+        internal void Init(Process process, ToolExecSpec context)
         {
             Process = process;
             Context = context;
@@ -52,7 +52,7 @@ namespace Z0
 
     partial class XTend
     {
-        public static ChanneledProcess ChannelProcess(this IWfChannel src, Process process, ToolContext context)
+        public static ChanneledProcess ChannelProcess(this IWfChannel src, Process process, ToolExecSpec context)
             => ChanneledProcess.create(src, x => x.Init(process,context));
     }
 }

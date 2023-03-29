@@ -1,11 +1,12 @@
 //-----------------------------------------------------------------------------
-// Copyright   :  (c) Chris Moore, 2023
+// Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+[assembly: PartId("asci")]
+namespace Z0.Parts
 {
-    public interface IToolExecutor
+    public sealed class Asci : Part<Asci>
     {
-        Task<ExecToken> Execute(ToolExecSpec context, ICmd command);
+
     }
 }

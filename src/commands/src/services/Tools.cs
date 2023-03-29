@@ -31,8 +31,8 @@ namespace Z0
                     continue;
 
 
-                var name = text.trim(Asci.format(SQ.left(content,i)));
-                var desc = text.trim(Asci.format(SQ.right(content,i)));
+                var name = text.trim(AsciSymbols.format(SQ.left(content,i)));
+                var desc = text.trim(AsciSymbols.format(SQ.right(content,i)));
                 dst.Add(flag(name, desc));
             }
             return dst.ToArray();

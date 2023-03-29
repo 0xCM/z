@@ -6,7 +6,7 @@ namespace Z0
 {
     public sealed class CodeLauncher : Launcher<CodeLauncher>
     {
-        public static Task<ExecToken> start<T>(IWfChannel channel, T target, ToolContext context)
+        public static Task<ExecToken> start<T>(IWfChannel channel, T target, ToolExecSpec context)
             => ProcExec.launch(channel, FS.path("code.exe"), Cmd.args(target), context);
 
         static Option<FolderPath> dir(CmdArgs src, string name)
@@ -31,7 +31,7 @@ namespace Z0
         public override void Launch(CmdArgs args, Action<Process> launched)
         {
             var cd = Env.cd();
-            var context = ProcExec.context(cd, EnvVars.Empty, launched);
+            var context = ProcExec.spec(cd, EnvVars.Empty, launched);
             var token = ExecToken.Empty;
             var wsroot = dir(args,"wsroot");
             if(wsroot)
@@ -56,7 +56,7 @@ namespace Z0
                             result[j++] = path[i];
 
                         Channel.Babble(result.Format());
-                        context = ProcExec.context(cd, new EnvVar(EnvTokens.PATH, result.Format()));
+                        context = ProcExec.spec(cd, new EnvVar(EnvTokens.PATH, result.Format()));
                     }
                         
                     var workspaces = cd.Files(FS.ext("code-workspace"));

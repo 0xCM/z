@@ -32,7 +32,7 @@ namespace Z0.Asm
         {
             var count = src.RowCount;
             for(byte i=0; i<count; i++)
-                dst.WriteLine(Asci.format(src.Row(i), Buffer()));
+                dst.WriteLine(AsciSymbols.format(src.Row(i), Buffer()));
             return (uint)count;
         }
 

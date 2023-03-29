@@ -6,6 +6,7 @@
     <ProjectReference Include="$(ClrCil)" />
     <ProjectReference Include="$(Events)" />
     <ProjectReference Include="$(Hex)" />
+    <ProjectReference Include="$(Asci)" />
     <ProjectReference Include="$(Cells)" />
     <ProjectReference Include="$(Types)" />
     <ProjectReference Include="$(Files)" />

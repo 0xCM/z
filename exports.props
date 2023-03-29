@@ -1,6 +1,8 @@
 <Project>
    <Import Project="$(MsBuildThisFileDirectory)src/api.code/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/assets/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/asci/exports.props"/>
+
    <Import Project="$(MsBuildThisFileDirectory)src/asm/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/asm.core/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/asm.test/exports.props"/>

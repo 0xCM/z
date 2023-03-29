@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <Asci>$(MsBuildThisFileDirectory)z0.asci.csproj</Asci>
+  </PropertyGroup>
+</Project>

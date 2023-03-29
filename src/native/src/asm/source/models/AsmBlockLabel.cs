@@ -18,8 +18,8 @@ namespace Z0
             if(i < 0)
                 return false;
 
-            label = new AsmBlockLabel(Asci.format(SQ.left(content, i)).Trim());
-            expr = Asci.format(SQ.right(content, i)).Replace(Chars.Tab,Chars.Space).Trim();
+            label = new AsmBlockLabel(AsciSymbols.format(SQ.left(content, i)).Trim());
+            expr = AsciSymbols.format(SQ.right(content, i)).Replace(Chars.Tab,Chars.Space).Trim();
 
             return true;
         }

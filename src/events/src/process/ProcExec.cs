@@ -6,31 +6,33 @@ namespace Z0
 {
     using static sys;
 
-
     public class ProcExec : Stateless<ProcExec>
     {        
-        public static ToolContext context(FolderPath? work = null, params EnvVar[] vars)
-            => new (work ?? Env.cd(), vars);
+        public static ToolExecSpec spec(FolderPath? work = null, params EnvVar[] vars)
+            => new (FilePath.Empty, CmdArgs.Empty, work ?? Env.cd(), vars, null, null);
 
-        public static ToolContext context(FolderPath work, params EnvVar[] vars)
-            => new(work, vars);
+        public static ToolExecSpec spec(FolderPath work, params EnvVar[] vars)
+            => new(FilePath.Empty, CmdArgs.Empty, work, vars, null, null);
 
-        public static ToolContext context(FolderPath work, EnvVars vars, Action<Process> created)
-            => new(work, vars, created);
+        public static ToolExecSpec spec(FolderPath work, EnvVars vars, Action<Process> created)
+            => new(FilePath.Empty, CmdArgs.Empty, work, vars, created, null);
 
-        public static ToolContext context(FolderPath work, EnvVars vars, Action<Process> created, Action<int> exit)
-            => new(work, vars, created, exit);
+        public static ToolExecSpec spec(FolderPath work, EnvVars vars, Action<Process> created, Action<int> exit)
+            => new(FilePath.Empty, CmdArgs.Empty, work, vars, created, exit);
 
-        public static ToolContext context()
-            => new(Env.cd(), EnvVars.Empty);
+        public static ToolExecSpec spec()
+            => new(FilePath.Empty, CmdArgs.Empty, Env.cd(), EnvVars.Empty, null, null);
+
+        public static ToolExecSpec spec(FilePath tool, CmdArgs args)
+            => new(tool, args,Env.cd(), EnvVars.Empty, null, null);
 
         [Op]
-        public static Task<ExecToken> launch(IWfChannel channel, FilePath path, CmdArgs args, ToolContext? context = null)
+        public static Task<ExecToken> launch(IWfChannel channel, FilePath tool, CmdArgs args, ToolExecSpec? context = null)
         {
-            var ctx = context ?? ToolContext.Default;
+            var ctx = context ?? ToolExecSpec.Default;
             var psi = new ProcessStartInfo
             {
-                FileName = path.Format(),
+                FileName = tool.Format(),
                 Arguments = Cmd.join(args),
                 CreateNoWindow = true,
                 WorkingDirectory = ctx.WorkingDir.Format(),
@@ -48,7 +50,7 @@ namespace Z0
                 {
                     using var process = sys.process(psi);
                     var channeled = channel.ChannelProcess(process, ctx);
-                    token = channeled.Run(channel.Running($"Executing '{path}' with arguments '{args}"));
+                    token = channeled.Run(channel.Running($"Executing '{tool}' with arguments '{args}"));
                     term.cmd();
                 }
                 catch(Exception e)
@@ -61,12 +63,13 @@ namespace Z0
             return sys.start(Run);
         }    
 
-        public static Task<ExecToken> launch(IWfChannel channel, CmdArgs args, ToolContext? context = null)
+        public static Task<ExecToken> launch(IWfChannel channel, CmdArgs args, ToolExecSpec? context = null)
             => launch(channel, FS.path(args[0]), args.Skip(1), context);
 
-        public static Task<ExecToken> redirect(IWfChannel channel, CmdArgs args, FilePath status, Action<string> receiver = null)
+        public static Task<ExecToken> redirect(IWfChannel channel, FilePath tool, CmdArgs args, FilePath status, Action<string> receiver = null)
         {
             FilePath alt = (status + FS.ext("alt"));
+
             ExecToken Run()
             {
                 var c1 = default(StreamWriter);
@@ -75,7 +78,7 @@ namespace Z0
                 
                 try
                 {
-                    void Channel0(string msg)
+                    void OnStatus(string msg)
                     {
                         if(c0 == null)
                             c0 = status.Utf8Writer(false);
@@ -83,7 +86,7 @@ namespace Z0
                         receiver?.Invoke(msg);
                     }
 
-                    void Channel1(string msg)
+                    void OnError(string msg)
                     {
                         if(c1 == null)
                             c1 = alt.Utf8Writer(true);                     
@@ -92,9 +95,9 @@ namespace Z0
                         c1.WriteLine(msg);
                     }
 
-                    var io = new SysIO(Channel0, Channel1);
-                    var running = channel.Running($"{args} -> ({status}, {alt})");
-                    token = channel.Ran(running, run(io, args, context()));
+
+                    var running = channel.Running(args);
+                    token = channel.Ran(running, run(spec(tool, args), OnStatus, OnError));
                 }
                 catch(Exception e)
                 {
@@ -151,7 +154,7 @@ namespace Z0
 
                 var io = new SysIO(Channel0, Channel1);
                 var running = channel.Running($"{args} -> ({c0Path}, {c1Path})");
-                var status = run(io, args, context());
+                var status = run(io, args, spec());
                 var token = channel.Ran(running, status);
                 c1?.Dispose();
                 return token;
@@ -160,13 +163,66 @@ namespace Z0
             return sys.start(Run);
         }
 
-        static ExecStatus run(ISysIO io, CmdArgs spec, ToolContext context)
+        static ExecStatus run(ToolExecSpec context, Action<string> status, Action<string> error)
         {
-            var values = spec.Values();
+            var psi = new ProcessStartInfo(context.ToolPath.Format(), context.Args.Format())
+            {
+                UseShellExecute = false,
+                RedirectStandardError = true,
+                RedirectStandardOutput = true,
+                ErrorDialog = false,
+                CreateNoWindow = true,
+                RedirectStandardInput = false,
+                WorkingDirectory = context.WorkingDir.Format(PathSeparator.BS)
+            };
+
+            iter(context.Vars, v => psi.Environment.Add(v.Name, v.Value));
+
+            void OnStatus(object sender, DataReceivedEventArgs e)
+            {
+                if(sys.nonempty(e.Data))
+                    status(e.Data);
+            }
+    
+            void OnError(object sender, DataReceivedEventArgs e)
+            {
+                if(sys.nonempty(e.Data))
+                    error(e.Data);
+            }
+
+            var flow = default(ExecStatus);
+            try
+            {                
+                using var process = sys.process(psi);
+                process.OutputDataReceived += OnStatus;
+                process.ErrorDataReceived += OnError;
+                process.Start();
+                context.ProcessStart(process);
+                flow.StartTime = sys.now();
+                flow.Id = process.Id;
+                process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
+                process.WaitForExit();
+                flow.HasExited = true;
+                flow.ExitTime = sys.now();
+                flow.Duration = flow.ExitTime - flow.StartTime;
+                flow.ExitCode = process.ExitCode;
+                context.ProcessExit(process.ExitCode);
+            }
+            catch(Exception e)
+            {
+                error(e.ToString());
+            }
+            return flow;
+        }
+
+        static ExecStatus run(ISysIO io, CmdArgs args, ToolExecSpec context)
+        {
+            var values = args.Values();
             Demand.gt(values.Count, 0u);
             var name = values.First;
             var path = FS.path(values.First);            
-            var psi = new ProcessStartInfo(path.Format(), spec.Skip(1).Format())
+            var psi = new ProcessStartInfo(path.Format(), args.Skip(1).Format())
             {
                 UseShellExecute = false,
                 RedirectStandardError = true,

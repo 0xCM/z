@@ -29,14 +29,14 @@ namespace Z0
             i = SQ.index(remainder, AsciCode.Space);
             if(i == NotFound)
             {
-                var monic = new AsmMnemonic(Asci.format(remainder).Trim());
+                var monic = new AsmMnemonic(AsciSymbols.format(remainder).Trim());
                 var operands = Span<char>.Empty;
                 dst = AsmExpr.define(monic, operands);
             }
             else
             {
-                var monic = new AsmMnemonic(Asci.format(slice(remainder,0, i)).Trim());
-                var operands = Asci.format(slice(remainder,i)).Trim();
+                var monic = new AsmMnemonic(AsciSymbols.format(slice(remainder,0, i)).Trim());
+                var operands = AsciSymbols.format(slice(remainder,i)).Trim();
                 dst = AsmExpr.define(monic, operands);
             }
 

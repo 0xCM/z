@@ -1,11 +1,11 @@
 //-----------------------------------------------------------------------------
-// Copyright   :  (c) Chris Moore, 2023
+// Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IToolExecutor
+    public static partial class XTend
     {
-        Task<ExecToken> Execute(ToolExecSpec context, ICmd command);
+        const NumericKind Closure = UnsignedInts;
     }
 }

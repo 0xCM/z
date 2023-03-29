@@ -26,7 +26,7 @@ namespace Z0
         public static Task<ExecToken> exec(IWfChannel channel, CmdArgs args)
         {
             var path = AppDb.Service.ProjectLib(args[0]).Scoped("cmd").Path(args[1], FileKind.Cmd);
-            return ProcExec.launch(channel, path, CmdArgs.Empty, ToolContext.Default);
+            return ProcExec.launch(channel, path, CmdArgs.Empty, ToolExecSpec.Default);
         }
 
         public static Task<ExecToken> shell(IWfChannel channel, CmdArgs args)
