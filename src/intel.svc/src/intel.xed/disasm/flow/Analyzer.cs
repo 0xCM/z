@@ -34,7 +34,7 @@ namespace Z0
 
             void OnBegin(uint seq, in Instruction src)
             {
-                Output.AppendLine(RpOps.PageBreak100);
+                Output.AppendLine(RP.PageBreak100);
                 Output.AppendLineFormat(PaddedSlots, "Seq", seq);
                 Output.AppendLineFormat(PaddedSlots, nameof(src.Id), src.Id);
                 Output.AppendLineFormat(PaddedSlots, nameof(src.Asm), src.Asm);

@@ -63,7 +63,7 @@ namespace Z0
                 {
                     var value = @as<sbyte>(data);
                     if(value < 0)
-                        dst = RpOps.format("-{0}",(((byte)((~((byte)value) + 1))).FormatHex(zpad:false, uppercase:true)));
+                        dst = RP.format("-{0}",(((byte)((~((byte)value) + 1))).FormatHex(zpad:false, uppercase:true)));
                     else
                         dst = ((byte)value).FormatHex(zpad:false, uppercase:true);
                 }
@@ -72,7 +72,7 @@ namespace Z0
                 {
                     var value = @as<short>(data);
                     if(value < 0)
-                        dst = RpOps.format("-{0}", ((ushort)((~((ushort)value) + 1))).FormatHex(zpad:false, uppercase:true));
+                        dst = RP.format("-{0}", ((ushort)((~((ushort)value) + 1))).FormatHex(zpad:false, uppercase:true));
                     else
                         dst = (((ushort)value).FormatHex(zpad:false, uppercase:true));
                 }
@@ -82,7 +82,7 @@ namespace Z0
                     var value = @as<int>(data);
 
                     if(value < 0)
-                        dst = RpOps.format("-{0}",((uint)((~((uint)value) + 1))).FormatHex(zpad:false, uppercase:true));
+                        dst = RP.format("-{0}",((uint)((~((uint)value) + 1))).FormatHex(zpad:false, uppercase:true));
                     else
                         dst = (((uint)value).FormatHex(zpad:false, uppercase:true));
                 }
@@ -91,7 +91,7 @@ namespace Z0
                 {
                     var value = @as<long>(data);
                     if(value < 0)
-                        dst = RpOps.format("-{0}", ((ulong)((~((ulong)value) + 1))).FormatHex(zpad:false, uppercase:true));
+                        dst = RP.format("-{0}", ((ulong)((~((ulong)value) + 1))).FormatHex(zpad:false, uppercase:true));
                     else
                         dst = (((ulong)value).FormatHex(zpad:false, uppercase:true));
 

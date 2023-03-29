@@ -145,7 +145,7 @@ namespace Z0
                     {
                         var statement = text.left(LineContent, (char)asmcomment.Marker).Trim();
                         if(statement.Length != 0)
-                            statement = RpOps.Spaced4 + statement;
+                            statement = RP.Spaced4 + statement;
 
                         var comment = asmcomment.Content;
                         if(comment.Contains(InstructionMarker))

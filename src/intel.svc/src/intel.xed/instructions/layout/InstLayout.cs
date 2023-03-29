@@ -55,7 +55,7 @@ namespace Z0
             public string Format()
             {
                 var dst = text.emitter();
-                var slot = RpOps.slot(0,-LayoutCell.RenderWidth);
+                var slot = RP.slot(0,-LayoutCell.RenderWidth);
                 for(var i=0; i<Count; i++)
                 {
                     if(i != 0)

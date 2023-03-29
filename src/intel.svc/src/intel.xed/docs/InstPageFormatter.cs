@@ -29,7 +29,7 @@ namespace Z0
                 return buffer.Array().Sort();
             }
 
-            const string InstSep = RpOps.PageBreak160 + RpOps.PageBreak20;
+            const string InstSep = RP.PageBreak160 + RP.PageBreak20;
 
             public static string page(InstPattern pattern)
             {

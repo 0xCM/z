@@ -109,7 +109,7 @@ namespace Z0
             return j;
         }
  
-         const string RenderDelimiter = RpOps.SpacedPipe;
+         const string RenderDelimiter = RP.SpacedPipe;
 
         public string FormatBitstring(in BinaryCode src)
             => BitFormat.Format(src.Storage.Reverse());

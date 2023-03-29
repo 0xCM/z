@@ -29,7 +29,7 @@ namespace Z0
             public void Render(uint seq, ITextEmitter dst)
             {
                 dst.AppendLineFormat("{0:D5}: {1:D3} | {2,-3} | {3}", (uint)Offset, seq, TableKind, TableName);
-                dst.AppendLine(RpOps.PageBreak120);
+                dst.AppendLine(RP.PageBreak120);
                 var trimmed = text.trim(Data.Select(x => text.despace(x.Content.Replace("|", "=>").Replace("->", "=>")))).Index();
                 var max = (uint)trimmed.Storage.Select(x => x.Length).Max();
                 for(var j=0u; j<Data.Count; j++)

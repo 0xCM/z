@@ -355,7 +355,7 @@ namespace Z0
         public static void describe(in DisasmDetailBlockRow src, ITextEmitter dst)
         {
             const sbyte Pad = -XedFields.FieldRender.ColWidth;
-            var pattern = RpOps.slot(0,Pad) + " | " + RpOps.slot(1);
+            var pattern = RP.slot(0,Pad) + " | " + RP.slot(1);
 
             dst.AppendLineFormat(pattern, nameof(src.InstructionId), src.InstructionId);
             dst.AppendLineFormat(pattern, nameof(src.Asm), src.Asm);
@@ -825,7 +825,7 @@ namespace Z0
                 src.Offsets.HasDisp ? src.Disp.Format() : EmptyString,
                 src.Offsets.HasImm1 ? src.Imm1.Format() : EmptyString
                 );
-            return string.Format("{0}{1}{2}",header, RpOps.Eol, content);
+            return string.Format("{0}{1}{2}",header, Chars.Eol, content);
         }
 
         static string nsize<T>(T src)

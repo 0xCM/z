@@ -34,7 +34,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public string Format()
-            => string.Format(RpOps.Tuple2, Source, Trigger);
+            => string.Format(RP.Tuple2, Source, Trigger);
 
         public override string ToString()
             => Format();

@@ -315,7 +315,7 @@ namespace Z0
 
         const string RexRemove = "rex ";
 
-        const string PageBreak = RpOps.PageBreak160;
+        const string PageBreak = RP.PageBreak160;
 
         const string StatementCommentPattern = "{0,-20} | {1,-6} | [{2} <-> {3}]";
 

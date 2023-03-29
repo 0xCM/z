@@ -25,7 +25,7 @@ namespace Z0.Asm
 
         public static string header(in MemberEncoding src)
         {
-            const string PageBreak = "#" + CharText.Space + RpOps.PageBreak160;
+            const string PageBreak = "#" + CharText.Space + RP.PageBreak160;
             const AsmCommentMarker CommentMarker = AsmCommentMarker.Hash;
             const sbyte Pad = -14;
             var dst = text.buffer();
@@ -40,7 +40,7 @@ namespace Z0.Asm
 
         public static string header(in ApiEncoded src)
         {
-            const string PageBreak = "#" + CharText.Space + RpOps.PageBreak160;
+            const string PageBreak = "#" + CharText.Space + RP.PageBreak160;
             const AsmCommentMarker CommentMarker = AsmCommentMarker.Hash;
             const sbyte Pad = -14;
             var dst = text.buffer();

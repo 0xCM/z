@@ -19,7 +19,7 @@ namespace Z0
             var dst = text.buffer();
             Span<T> kinds = stackalloc T[Bitset128<T>.Capacity];
             var count = src.Members(kinds);
-            var slot = RpOps.slot(0,(sbyte)pad);
+            var slot = RP.slot(0,(sbyte)pad);
             for(var i=0; i<count; i++)
             {
                 if(i != 0)

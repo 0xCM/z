@@ -248,8 +248,8 @@ namespace Z0
                 var title = ok ? "Success" : "Failure";
                 var normalized = BitStrings.normalize(m.Text);
                 var bs = BitStrings.scalar(m.Data);
-                var expr = RpOps.format("{0} {1} {2}", normalized, sym, bs);
-                var description = RpOps.format("{0,-12} | {1,-14} | {2}", title, m.Name, expr);
+                var expr = RP.format("{0} {1} {2}", normalized, sym, bs);
+                var description = RP.format("{0,-12} | {1,-14} | {2}", title, m.Name, expr);
                 Log(description);
             }
         }

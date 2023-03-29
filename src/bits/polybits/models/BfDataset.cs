@@ -19,7 +19,7 @@ namespace Z0
             var count = widths.Count;
             for(var i=0u; i<count; i++)
             {
-                var slot = RpOps.slot(i, math.negate((sbyte)widths[i]));
+                var slot = RP.slot(i, math.negate((sbyte)widths[i]));
                 dst.Append(slot);
                 if(i != count - 1)
                     dst.Append(sep);
@@ -43,7 +43,7 @@ namespace Z0
             {
                 ref readonly var field = ref src.Fields[i];
                 ref readonly var w = ref src.Width(field);
-                var slot = RpOps.slot(i, math.negate((sbyte)w));
+                var slot = RP.slot(i, math.negate((sbyte)w));
                 dst.Append(slot);
                 if(i != src.FieldCount - 1)
                     dst.Append(Chars.Space);

@@ -36,7 +36,7 @@ namespace Z0
 
             for(byte i=0; i<AttribCount; i++,j++,k++)
             {
-                seek(slots,j) = RpOps.slot(j, AttribPad);
+                seek(slots,j) = RP.slot(j, AttribPad);
                 seek(headers,k) = string.Format("Attrib{0:D2}", i);
             }
 

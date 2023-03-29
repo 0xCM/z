@@ -39,12 +39,12 @@ namespace Z0
                     ref readonly var block = ref src[i];
                     XedDisasm.fields(block, ref fields);
 
-                    dst.AppendLine(RpOps.PageBreak240);
+                    dst.AppendLine(RP.PageBreak240);
                     dst.AppendLine(block.Lines.Format());
-                    dst.AppendLine(RpOps.PageBreak100);
+                    dst.AppendLine(RP.PageBreak100);
 
                     XedRender.describe(fields, dst);
-                    dst.AppendLine(RpOps.PageBreak100);
+                    dst.AppendLine(RP.PageBreak100);
 
                     var kinds = fields.Selected;
                     for(var k=0; k<kinds.Length; k++)

@@ -49,9 +49,9 @@ namespace Z0
                 var ochex = XedRender.format(ocbyte);
                 var ocbits = BitRender.format8x4(ocbyte);
 
-                dst.WriteLine(RpOps.PageBreak240);
+                dst.WriteLine(RP.PageBreak240);
                 dst.AppendLine(lines.Format());
-                dst.WriteLine(RpOps.PageBreak80);
+                dst.WriteLine(RP.PageBreak80);
 
                 dst.AppendLineFormat(RenderPattern, nameof(detail.Instruction), detail.Instruction);
                 dst.AppendLineFormat(RenderPattern, nameof(summary.InstructionId), summary.InstructionId);
@@ -59,7 +59,7 @@ namespace Z0
                 dst.AppendLineFormat("{0,-24} | {1,-5} {2}", asmhex, ip, asmtxt);
                 dst.AppendLineFormat(RenderPattern, "OcMap", ockind);
                 dst.AppendLine(encoding.Format());
-                dst.WriteLine(RpOps.PageBreak80);
+                dst.WriteLine(RP.PageBreak80);
 
                 if(state.OSZ)
                 {
