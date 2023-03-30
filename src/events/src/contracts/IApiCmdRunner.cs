@@ -10,6 +10,6 @@ namespace Z0
 
         ExecToken Run(string[] args);
 
-        CmdHandlers Handlers {get;}
+        //CmdHandlers Handlers {get;}
     }
 }
