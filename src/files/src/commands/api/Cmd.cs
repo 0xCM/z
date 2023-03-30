@@ -9,41 +9,6 @@ namespace Z0
     [ApiHost]
     public class Cmd 
     {   
-        public static ReadOnlySeq<IToolExecutor> executors(params Assembly[] src)
-            => src.Types().Tagged<CmdExecutorAttribute>().Concrete().Map(x => (IToolExecutor)Activator.CreateInstance(x));
-
-        [Op, Closures(UInt64k)]
-        public static ToolCmd tool<T>(Tool tool, in T src)
-            where T : struct
-        {
-            var t = typeof(T);
-            var fields = Clr.fields(t);
-            var count = fields.Length;
-            var reflected = sys.alloc<ClrFieldValue>(count);
-            ClrFields.values(src, fields, reflected);
-            var buffer = sys.alloc<CmdArg>(count);
-            var target = span(buffer);
-            var values = @readonly(reflected);
-            for(var i=0u; i<count; i++)
-            {
-                ref readonly var fv = ref skip(values,i);
-                seek(target,i) = new CmdArg(fv.Field.Name, fv.Value?.ToString() ?? EmptyString);
-            }
-            return new ToolCmd(tool, Cmd.identify(t), buffer);
-        }        
-
-        [Op, Closures(UInt64k)]
-        public static Tool tool(CmdArgs args, byte index = 0)
-            => new (CmdArgs.arg(args,index).Value);
-
-        [MethodImpl(Inline), Op]
-        public static ToolScript script(FilePath src, CmdVars vars)
-            => new ToolScript(src, vars);
-
-        [MethodImpl(Inline), Op]
-        public static ToolCmdLine cmdline(FilePath tool, params string[] src)
-            => new ToolCmdLine(tool, src);
-
         [Op]
         internal static EventOrigin origin(string name, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
             => new EventOrigin(name, new CallingMember(caller, file, line ?? 0));
@@ -109,23 +74,6 @@ namespace Z0
 
         static Type[] tagged(Assembly[] src)
             =>  src.Types().Tagged<CmdAttribute>();
-
-        public static string format(IToolCmd src)
-        {
-            var count = src.Args.Count;
-            var buffer = text.buffer();
-            buffer.AppendFormat("{0}{1}", src.Tool, Chars.LParen);
-            for(var i=0; i<count; i++)
-            {
-                var arg = src.Args[i];
-                buffer.AppendFormat(RP.Assign, arg.Name, arg.Value);
-                if(i != count - 1)
-                    buffer.Append(", ");
-            }
-
-            buffer.Append(Chars.RParen);
-            return buffer.Emit();
-        }
 
         public static string format<T>(T src)
             where T : ICmd, new()

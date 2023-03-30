@@ -6,19 +6,6 @@ namespace Z0.Tools
 {
     using static sys;
 
-    public record class ToolDef
-    {
-        public Name ToolName;
-
-
-        
-    }
-
-
-    public class ToolDisatcher
-    {
-
-    }
     sealed class ObjDumpProcess : ToolProcess<ObjDumpProcess>
     {
         protected override FilePath ToolPath 

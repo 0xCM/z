@@ -8,7 +8,6 @@ namespace Z0
     {
         class ServiceCache : AppServices<ServiceCache>
         {
-
             public ImageRegions ImageRegions(IWfRuntime wf)
                 => Service<ImageRegions>(wf);
 
@@ -20,9 +19,6 @@ namespace Z0
 
             public WfScripts ToolScripts(IWfRuntime wf)                
                 => Service<WfScripts>(wf);
-
-             public Tooling Tooling(IWfRuntime wf)
-                => Service<Tooling>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
@@ -37,10 +33,6 @@ namespace Z0
             => Services.OmniScript(wf);
 
         public static IApiService ImageCmd(this IWfRuntime wf)
-            => Services.ImageCmd(wf);
-
-        public static Tooling Tooling(this IWfRuntime wf)
-            => Services.Tooling(wf);             
-             
+            => Services.ImageCmd(wf);             
     }
 }

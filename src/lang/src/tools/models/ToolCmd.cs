@@ -11,11 +11,11 @@ namespace Z0
     {
         public readonly Tool Tool;
 
+        public readonly CmdId CmdId;
+
         public readonly string Type;
         
         public readonly CmdArgs Args;
-
-        public readonly CmdId CmdId;
 
         [MethodImpl(Inline)]
         public ToolCmd(Tool tool, string type, params CmdArg[] args)
@@ -36,7 +36,7 @@ namespace Z0
             => Hash;
 
         public string Format()
-            => Cmd.format(this);
+            => Tooling.format(this);
 
         public override string ToString()
             => Format();

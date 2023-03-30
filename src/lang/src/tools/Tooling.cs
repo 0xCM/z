@@ -6,9 +6,88 @@ namespace Z0
 {
     using static sys;
 
-    public class Tooling : WfSvc<Tooling>
+    public class Tooling : Channeled<Tooling>
     {
-        OmniScript OmniScript => Wf.OmniScript();
+        public static ReadOnlySeq<IToolExecutor> executors(params Assembly[] src)
+            => src.Types().Tagged<CmdExecutorAttribute>().Concrete().Map(x => (IToolExecutor)Activator.CreateInstance(x));
+
+        public static string format(IToolCmd src)
+        {
+            var count = src.Args.Count;
+            var buffer = text.buffer();
+            buffer.AppendFormat("{0}{1}", src.Tool, Chars.LParen);
+            for(var i=0; i<count; i++)
+            {
+                var arg = src.Args[i];
+                buffer.AppendFormat(RP.Assign, arg.Name, arg.Value);
+                if(i != count - 1)
+                    buffer.Append(", ");
+            }
+
+            buffer.Append(Chars.RParen);
+            return buffer.Emit();
+        }
+
+        [MethodImpl(Inline), Op]
+        public static ToolFlagSpec flag(string name, string desc)
+            => new ToolFlagSpec(name, desc);
+
+        public static ReadOnlySeq<ToolFlagSpec> flags(FilePath src)
+        {
+            var k = z16;
+            var dst = list<ToolFlagSpec>();
+            using var reader = src.AsciLineReader();
+            while(reader.Next(out var line))
+            {
+                var content = line.Codes;
+                var i = SQ.index(content, AsciCode.Colon);
+                if(i == NotFound)
+                    i = SQ.index(content, AsciCode.Eq);
+                if(i == NotFound)
+                    i = SQ.index(content, AsciCode.FS);
+                
+                if(i == NotFound)
+                    continue;
+
+
+                var name = text.trim(AsciSymbols.format(SQ.left(content,i)));
+                var desc = text.trim(AsciSymbols.format(SQ.right(content,i)));
+                dst.Add(flag(name, desc));
+            }
+            return dst.ToArray();
+        }
+
+        [MethodImpl(Inline), Op]
+        public static ToolScript script(FilePath src, CmdVars vars)
+            => new ToolScript(src, vars);
+
+        [MethodImpl(Inline), Op]
+        public static ToolCmdLine cmdline(FilePath tool, params string[] src)
+            => new ToolCmdLine(tool, src);
+
+        [Op, Closures(UInt64k)]
+        public static ToolCmd cmd<T>(Tool tool, in T src)
+            where T : struct
+        {
+            var t = typeof(T);
+            var fields = Clr.fields(t);
+            var count = fields.Length;
+            var reflected = sys.alloc<ClrFieldValue>(count);
+            ClrFields.values(src, fields, reflected);
+            var buffer = sys.alloc<CmdArg>(count);
+            var target = span(buffer);
+            var values = @readonly(reflected);
+            for(var i=0u; i<count; i++)
+            {
+                ref readonly var fv = ref skip(values,i);
+                seek(target,i) = new CmdArg(fv.Field.Name, fv.Value?.ToString() ?? EmptyString);
+            }
+            return new ToolCmd(tool, Cmd.identify(t), buffer);
+        }        
+
+        [Op, Closures(UInt64k)]
+        public static Tool tool(CmdArgs args, byte index = 0)
+            => new (CmdArgs.arg(args,index).Value);
 
         public FilePath ConfigScript(Tool tool)
             => Home(tool).ConfigScript(ApiAtomic.config, FileKind.Cmd);
@@ -29,7 +108,7 @@ namespace Z0
             => Home(tool).Script(name, kind);
 
         public SettingLookup LoadCfg(Tool tool)
-            => Settings.parse(Home(tool).Script("tools", FileKind.Cfg).ReadNumberedLines(), Chars.Eq);
+            => Z0.Settings.parse(Home(tool).Script("tools", FileKind.Cfg).ReadNumberedLines(), Chars.Eq);
 
         public ConstLookup<Actor,ToolProfile> InferProfiles(FolderPath src)
         {
@@ -71,21 +150,21 @@ namespace Z0
                 return FilePath.Empty;
         }
 
-        public SettingLookup Setup(Tool tool)
-        {
-            var script = ConfigScript(tool);
-            var result = OmniScript.Run(script, out _);
-            return LoadCfg(tool);
-        }
+        // public SettingLookup Setup(Tool tool)
+        // {
+        //     var script = ConfigScript(tool);
+        //     var result = OmniScript.Run(script, out _);
+        //     return LoadCfg(tool);
+        // }
 
-        public Outcome RunScript(Actor tool, string name)
-        {
-            var path = Script(tool, name, FileKind.Cmd);
-            if(!path.Exists)
-                return (false, FS.missing(path));
-            else
-                return OmniScript.Run(path, out var _);
-        }
+        // public Outcome RunScript(Actor tool, string name)
+        // {
+        //     var path = Script(tool, name, FileKind.Cmd);
+        //     if(!path.Exists)
+        //         return (false, FS.missing(path));
+        //     else
+        //         return OmniScript.Run(path, out var _);
+        // }
 
         public Index<string> LoadDocs(string tool)
         {
@@ -122,7 +201,7 @@ namespace Z0
                 ref readonly var profile = ref skip(profiles,i);
                 if(profile.HelpCmd.IsEmpty)
                     continue;
-                dst.Add(Cmd.cmdline(FS.path(profile.ToolName), string.Format("{0} {1}", profile.Executable.Format(PathSeparator.BS), profile.HelpCmd)));
+                dst.Add(Tooling.cmdline(FS.path(profile.ToolName), string.Format("{0} {1}", profile.Executable.Format(PathSeparator.BS), profile.HelpCmd)));
             }
             dst.Sort();
             return dst.ToArray();
@@ -139,7 +218,7 @@ namespace Z0
             {
                 ref readonly var cmd = ref commands[i];
                 var tool = cmd.Tool;
-                result = OmniScript.Run(cmd, CmdVars.Empty, out var response);
+                //result = OmniScript.Run(cmd, CmdVars.Empty, out var response);
                 if(result.Fail)
                 {
                     Channel.Error(result.Message);
@@ -148,19 +227,6 @@ namespace Z0
 
                 Channel.Babble(string.Format("Executed '{0}'", cmd.Format()));
 
-                // if(paths.Find(tool, out var path))
-                // {
-                //     var length = response.Length;
-                //     var emitting = Channel.EmittingFile(path);
-                //     using var writer = path.UnicodeWriter();
-                //     for(var j=0; j<length; j++)
-                //         writer.WriteLine(skip(response, j).Content);
-                //     Channel.EmittedFile(emitting,length);
-
-                //     docs.Add(new ToolHelpDoc(tool,path));
-                // }
-                // else
-                //     Warn(string.Format("{0} has no help path", tool));
             }
 
             return docs.ToArray();
@@ -192,5 +258,6 @@ namespace Z0
             Channel.Ran(running, string.Format("Collected {0} profile definitions", lookup.EntryCount));
             return lookup;
         }
+             
     }
 }

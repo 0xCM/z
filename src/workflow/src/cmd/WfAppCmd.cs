@@ -18,7 +18,7 @@ namespace Z0
 
         ProcessMemory ProcessMemory => Wf.ProcessMemory();
 
-        Tooling Tooling => Wf.Tooling();
+        Tooling Tooling => Channel.Channeled<Tooling>();
 
         ApiMd ApiMd => Wf.ApiMd();
 
@@ -156,13 +156,13 @@ namespace Z0
                 src[i].Render(s => writer.WriteLine(s));
         }
 
-        [CmdOp("tool/script")]
-        Outcome ToolScript(CmdArgs args)
-            => Tooling.RunScript(arg(args,0).Value, arg(args,1).Value);
+        // [CmdOp("tool/script")]
+        // Outcome ToolScript(CmdArgs args)
+        //     => Tooling.RunScript(arg(args,0).Value, arg(args,1).Value);
 
-        [CmdOp("tool/setup")]
-        void ConfigureTool(CmdArgs args)
-            => Tooling.Setup(Cmd.tool(args));
+        // [CmdOp("tool/setup")]
+        // void ConfigureTool(CmdArgs args)
+        //     => Tooling.Setup(Cmd.tool(args));
 
         [CmdOp("tool/docs")]
         void ToolDocs(CmdArgs args)
