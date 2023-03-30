@@ -79,6 +79,9 @@ namespace Z0
         public static IModuleArchive modules(FolderPath src, bool recurse = true)
             => new ModuleArchive(src, recurse);
 
+        public static IModuleArchive modules(IDbArchive src, bool recurse = true)
+            => new ModuleArchive(src.Root, recurse);
+
         public static ExecToken symlink(IWfChannel channel, CmdArgs args)
         {
             var a0 = args[0].Value;

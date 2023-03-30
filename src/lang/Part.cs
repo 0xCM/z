@@ -12,6 +12,8 @@ global using System.Text.Json.Nodes;
 global using System.Text.Json.Serialization;
 global using Microsoft.CodeAnalysis;
 global using Microsoft.CodeAnalysis.CSharp;
+global using Microsoft.CodeAnalysis.CSharp.Syntax;
+
 global using Microsoft.CodeAnalysis.Emit;
 global using static Z0.Root;
 [assembly: PartId(PartId.Lang)]

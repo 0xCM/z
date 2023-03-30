@@ -86,7 +86,6 @@ namespace Z0
         public override string ToString()
             => Text;
 
-
         bool INullity.IsEmpty
             => IsEmpty;
 

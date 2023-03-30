@@ -21,7 +21,6 @@ namespace Z0.Lang
                 Pos = 0;
             }
 
-
             public override LexerKind Kind 
                 => default;
 

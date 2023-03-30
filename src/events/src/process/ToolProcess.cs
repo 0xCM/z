@@ -46,6 +46,5 @@ namespace Z0
             var task = ProcExec.redirect(Channel, ToolPath, args, TargetPath);            
             return task.ContinueWith(t => Ran(flow));  
         }
-
     }
 }

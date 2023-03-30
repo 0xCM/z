@@ -25,18 +25,18 @@ namespace Z0
             return vand(y,m);
         }
 
-        // /// <summary>
-        // /// Shifts each each component rightward by a specified bitcount
-        // /// </summary>
-        // /// <param name="src">The source vector</param>
-        // /// <param name="count">The bitcount</param>
-        // [MethodImpl(Inline), Srl]
-        // public static Vector128<sbyte> vsrl(Vector128<sbyte> src, [Imm] byte count)
-        // {
-        //     var x = v16u(ShiftRightLogical(vpack.vinflate256x16i(src),count));
-        //     var y = vand(x, v16u(vbroadcast(w256, byte.MaxValue)));
-        //     return v8i(vpack.vpack128x8u(y));
-        // }
+        /// <summary>
+        /// Shifts each each component rightward by a specified bitcount
+        /// </summary>
+        /// <param name="src">The source vector</param>
+        /// <param name="count">The bitcount</param>
+        [MethodImpl(Inline), Srl]
+        public static Vector128<sbyte> vsrl(Vector128<sbyte> src, [Imm] byte count)
+        {
+            var x = v16u(ShiftRightLogical(vpack.vinflate256x16i(src),count));
+            var y = vand(x, v16u(vbroadcast(w256, byte.MaxValue)));
+            return v8i(vpack.vpack128x8u(y));
+        }
 
         /// <summary>
         /// __m128i _mm_srli_epi16 (__m128i a, int immediate) PSRLW xmm, imm8
@@ -98,19 +98,19 @@ namespace Z0
         public static Vector128<ulong> vsrl(Vector128<ulong> src, [Imm] byte count)
             => ShiftRightLogical(src, count);
 
-        // /// <summary>
-        // /// Shifts each each component rightward by a specified bitcount
-        // /// </summary>
-        // /// <param name="src">The source vector</param>
-        // /// <param name="count">The bitcount</param>
-        // [MethodImpl(Inline), Srl]
-        // public static Vector256<sbyte> vsrl(Vector256<sbyte> src, [Imm] byte count)
-        // {
-        //     var x = v16u(ShiftRightLogical(vpack.vinflate256x16i(vlo(src)),count));
-        //     var y = v16u(ShiftRightLogical(vpack.vinflate256x16i(vhi(src)),count));
-        //     var m = v16u(vbroadcast(w256, byte.MaxValue));
-        //     return v8i(vpack.vpack256x8u(vand(x,m), vand(y,m)));
-        // }
+        /// <summary>
+        /// Shifts each each component rightward by a specified bitcount
+        /// </summary>
+        /// <param name="src">The source vector</param>
+        /// <param name="count">The bitcount</param>
+        [MethodImpl(Inline), Srl]
+        public static Vector256<sbyte> vsrl(Vector256<sbyte> src, [Imm] byte count)
+        {
+            var x = v16u(ShiftRightLogical(vpack.vinflate256x16i(vlo(src)),count));
+            var y = v16u(ShiftRightLogical(vpack.vinflate256x16i(vhi(src)),count));
+            var m = v16u(vbroadcast(w256, byte.MaxValue));
+            return v8i(vpack.vpack256x8u(vand(x,m), vand(y,m)));
+        }
 
         /// <summary>
         /// Shifts each each component rightward by a specified bitcount
@@ -185,31 +185,31 @@ namespace Z0
         public static Vector256<ulong> vsrl(Vector256<ulong> src, [Imm] byte count)
             => ShiftRightLogical(src, count);
 
-        // /// <summary>
-        // /// Shifts each source vector component rightwards by an amount specified in the first component of the offset vector
-        // /// </summary>
-        // /// <param name="src">The source vector</param>
-        // /// <param name="count">The offset vector</param>
-        // [MethodImpl(Inline), Srl]
-        // public static Vector128<byte> vsrl(Vector128<byte> src, Vector128<byte> count)
-        // {
-        //     var y = v16u(count);
-        //     var dst = vsrl(vpack.vinflate256x16u(src),y);
-        //     return vpack.vpack128x8u(dst);
-        // }
+        /// <summary>
+        /// Shifts each source vector component rightwards by an amount specified in the first component of the offset vector
+        /// </summary>
+        /// <param name="src">The source vector</param>
+        /// <param name="count">The offset vector</param>
+        [MethodImpl(Inline), Srl]
+        public static Vector128<byte> vsrl(Vector128<byte> src, Vector128<byte> count)
+        {
+            var y = v16u(count);
+            var dst = vsrl(vpack.vinflate256x16u(src),y);
+            return vpack.vpack128x8u(dst);
+        }
 
-        // /// <summary>
-        // /// Shifts each source vector component rightwards by an amount specified in the first component of the offset vector
-        // /// </summary>
-        // /// <param name="src">The source vector</param>
-        // /// <param name="count">The offset vector</param>
-        // [MethodImpl(Inline), Srl]
-        // public static Vector128<sbyte> vsrl(Vector128<sbyte> src, Vector128<sbyte> count)
-        // {
-        //     var y = v16i(count);
-        //     var dst = vsrl(vpack.vinflate256x16i(src),y);
-        //     return vpack.vpack128x8i(dst);
-        // }
+        /// <summary>
+        /// Shifts each source vector component rightwards by an amount specified in the first component of the offset vector
+        /// </summary>
+        /// <param name="src">The source vector</param>
+        /// <param name="count">The offset vector</param>
+        [MethodImpl(Inline), Srl]
+        public static Vector128<sbyte> vsrl(Vector128<sbyte> src, Vector128<sbyte> count)
+        {
+            var y = v16i(count);
+            var dst = vsrl(vpack.vinflate256x16i(src),y);
+            return vpack.vpack128x8i(dst);
+        }
 
         /// <summary>
         ///  __m128i _mm_srl_epi16 (__m128i a, __m128i count) PSRLW xmm, xmm/m128
@@ -270,33 +270,33 @@ namespace Z0
         public static Vector128<ulong> vsrl(Vector128<ulong> src, Vector128<ulong> count)
             => ShiftRightLogical(src, count);
 
-        // /// <summary>
-        // /// Shifts each source vector component rightwards by an amount specified in the first component of the offset vector
-        // /// </summary>
-        // /// <param name="src">The source vector</param>
-        // /// <param name="count">The offset vector</param>
-        // [MethodImpl(Inline), Srl]
-        // public static Vector256<sbyte> vsrl(Vector256<sbyte> src, Vector128<sbyte> count)
-        // {
-        //     var y = v16i(count);
-        //     var lo = vsrl(vpack.vinflate256x16i(vlo(src)), y);
-        //     var hi = vsrl(vpack.vinflate256x16i(vhi(src)),y);
-        //     return vpack.vpack256x8i(lo, hi);
-        // }
+        /// <summary>
+        /// Shifts each source vector component rightwards by an amount specified in the first component of the offset vector
+        /// </summary>
+        /// <param name="src">The source vector</param>
+        /// <param name="count">The offset vector</param>
+        [MethodImpl(Inline), Srl]
+        public static Vector256<sbyte> vsrl(Vector256<sbyte> src, Vector128<sbyte> count)
+        {
+            var y = v16i(count);
+            var lo = vsrl(vpack.vinflate256x16i(vlo(src)), y);
+            var hi = vsrl(vpack.vinflate256x16i(vhi(src)),y);
+            return vpack.vpack256x8i(lo, hi);
+        }
 
-        // /// <summary>
-        // /// Shifts each source vector component rightwards by an amount specified in the first component of the offset vector
-        // /// </summary>
-        // /// <param name="src">The source vector</param>
-        // /// <param name="count">The offset vector</param>
-        // [MethodImpl(Inline), Srl]
-        // public static Vector256<byte> vsrl(Vector256<byte> src, Vector128<byte> count)
-        // {
-        //     var y = v16u(count);
-        //     var lo = vsrl(vpack.vinflate256x16u(vlo(src)),y);
-        //     var hi = vsrl(vpack.vinflate256x16u(vhi(src)),y);
-        //     return vpack.vpack256x8u(lo, hi);
-        // }
+        /// <summary>
+        /// Shifts each source vector component rightwards by an amount specified in the first component of the offset vector
+        /// </summary>
+        /// <param name="src">The source vector</param>
+        /// <param name="count">The offset vector</param>
+        [MethodImpl(Inline), Srl]
+        public static Vector256<byte> vsrl(Vector256<byte> src, Vector128<byte> count)
+        {
+            var y = v16u(count);
+            var lo = vsrl(vpack.vinflate256x16u(vlo(src)),y);
+            var hi = vsrl(vpack.vinflate256x16u(vhi(src)),y);
+            return vpack.vpack256x8u(lo, hi);
+        }
 
         /// <summary>
         /// __m256i _mm256_srl_epi16 (__m256i a, __m128i count)VPSRLW ymm, ymm, xmm/m128

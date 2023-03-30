@@ -12,20 +12,20 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static BitVector16 mul(BitVector16 a, BitVector16 b)
-            => cpu.clmulr(n16, a.State,b.State,Redux.State);
+            => vcpu.clmulr(n16, a.State,b.State,Redux.State);
 
-        /// <summary>
-        /// Computes the full multiplication table for GF512
-        /// </summary>
-        /// <param name="dst">The target matrix</param>
-        public static Matrix256<N512,ushort> products(out Matrix256<N512,ushort> dst)
-        {
-            dst = Matrix.blockalloc<N512,ushort>();
-            for(ushort i=1; i < MemberCount; i++)
-            for(ushort j=1; j < MemberCount; j++)
-                dst[i, j] = Gf512.mul(i,j);
-            return dst;
-        }
+        // /// <summary>
+        // /// Computes the full multiplication table for GF512
+        // /// </summary>
+        // /// <param name="dst">The target matrix</param>
+        // public static Matrix256<N512,ushort> products(out Matrix256<N512,ushort> dst)
+        // {
+        //     dst = Matrix.blockalloc<N512,ushort>();
+        //     for(ushort i=1; i < MemberCount; i++)
+        //     for(ushort j=1; j < MemberCount; j++)
+        //         dst[i, j] = Gf512.mul(i,j);
+        //     return dst;
+        // }
 
         public static BitVector16 mul_ref(BitVector16 a, BitVector16 b)
         {

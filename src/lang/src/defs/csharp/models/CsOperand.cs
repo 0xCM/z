@@ -5,7 +5,7 @@
 namespace Z0
 {
     partial struct CsModels
-    {
+    {        
         public class CsOperand
         {
             public CsOperand(Identifier type, Identifier name, params string[] mods)

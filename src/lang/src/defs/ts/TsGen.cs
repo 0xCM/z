@@ -48,10 +48,9 @@ namespace Z0.Lang
                 var token = ts.DefineToken(v.Name, v.Value);
                 dst.AppendLine(token.Format());
             });    
-            Channel.FileEmit(dst.Emit(),cmd.Target + FS.file("vars", FS.ext("ts")));
+            Channel.FileEmit(dst.Emit(), cmd.Target + FS.file("vars", FS.ext("ts")));
 
-            var tools = Env.tools();
-            iter(tools, tool => {
+            iter(report.Tools, tool => {
                 var name = $"{tool.Path.FileName.WithoutExtension.Format()}_path";
                 var value = tool.Path.Format(PathSeparator.FS);
                 var token = ts.DefineToken(name, value);

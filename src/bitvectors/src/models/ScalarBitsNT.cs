@@ -6,7 +6,6 @@ namespace Z0
 {
     using static sys;
     using static Numeric;
-    using api = BitVectors;
 
     /// <summary>
     /// Defines a natural bitvector over a primal cell
@@ -226,7 +225,7 @@ namespace Z0
         /// <param name="x">The source operand</param>
         [MethodImpl(Inline)]
         public static ScalarBits<N,T> operator ++(ScalarBits<N,T> src)
-            =>  gmath.eq(src.Data,MaxValue) ? core.zero<T>() : gmath.inc(src.Data);
+            =>  gmath.eq(src.Data,MaxValue) ? sys.zero<T>() : gmath.inc(src.Data);
 
         /// <summary>
         /// Computes the bitwise complement of the operand

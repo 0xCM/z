@@ -18,11 +18,10 @@ namespace Z0
         [CmdOp("gen/asci/bytes")]
         Outcome EmitAsciBytes(CmdArgs args)
         {
-            var name = "Uppercase";
-            var content = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             var dst = text.buffer();
-            var bytes = AsciLookups.emit(8u, name,content, dst);
-            Channel.Write(dst.Emit());
+            var upper = AsciLookups.emit(8u, "AsciUpper", "ABCDEFGHIJKLMNOPQRSTUVWXYZ", dst);
+            var lower = AsciLookups.emit(8u, "AsciLower", "abcdefghijklmnopqrstuvwxyz", dst);
+            Channel.Row(dst.Emit());
             return true;
         }
 
@@ -71,7 +70,7 @@ namespace Z0
             var spec = CsModels.@switch("test", src, dst);
             var emitter = text.emitter();
             SymGen.render(spec,emitter);
-            Channel.Write(emitter.Emit());
+            Channel.Row(emitter.Emit());
             //Channel.Write(result);
         }
 
@@ -82,7 +81,7 @@ namespace Z0
             var spec = CsModels.@switch("enum_test", src, dst);
             var emitter = text.emitter();
             SymGen.render(spec,emitter);
-            Channel.Write(emitter.Emit());
+            Channel.Row(emitter.Emit());
         }
 
         [CmdOp("gen/hex/strings")]
@@ -167,7 +166,6 @@ namespace Z0
             }
             return true;
         }
-
 
         [CmdOp("gen/syms/factories")]
         Outcome GenSymFactories(CmdArgs args)

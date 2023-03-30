@@ -11,9 +11,9 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static byte clmul(byte a, byte b)
         {
-            var p = cpu.clmul(a,b);
-            p ^= cpu.clmul((byte)(p >> 3), Reducer);
-            p ^= cpu.clmul((byte)(p >> 3), Reducer);
+            var p = vcpu.clmul(a,b);
+            p ^= vcpu.clmul((byte)(p >> 3), Reducer);
+            p ^= vcpu.clmul((byte)(p >> 3), Reducer);
             return (byte)p;
         }
 
@@ -35,21 +35,21 @@ namespace Z0
         public static void products(ref byte dst)
             => products(1, (byte)0b111, ref dst);
 
-        /// <summary>
-        /// Creates a complete multiplication table
-        /// </summary>
-        /// <param name="min">The minimum operand value</param>
-        /// <param name="max">The maximum operand value</param>
-        public static Matrix256<N7,byte> products()
-        {
-            var dst = Matrix.blockalloc<N7,byte>();
-            products(1, (byte)0b111, ref dst.Unblocked[0]);
-            return dst;
-        }
+        // /// <summary>
+        // /// Creates a complete multiplication table
+        // /// </summary>
+        // /// <param name="min">The minimum operand value</param>
+        // /// <param name="max">The maximum operand value</param>
+        // public static Matrix256<N7,byte> products()
+        // {
+        //     var dst = Matrix.blockalloc<N7,byte>();
+        //     products(1, (byte)0b111, ref dst.Unblocked[0]);
+        //     return dst;
+        // }
 
-        public static string FormatTable<N,T>(Matrix256<N,T> src)
-            where T : unmanaged
-            where N: unmanaged, ITypeNat
-                => src.Format(render:x => BitStrings.scalar(x).Format());
+        // public static string FormatTable<N,T>(Matrix256<N,T> src)
+        //     where T : unmanaged
+        //     where N: unmanaged, ITypeNat
+        //         => src.Format(render:x => BitStrings.scalar(x).Format());
     }
 }

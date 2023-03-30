@@ -1,9 +1,10 @@
 <Project>
   <Import Project="$(SlnProps)\usings.props"/>
-  <Import Project="$(DevRoot)\props\microsoft.codeanalysis.props" />
+  <Import Project="$(SlnProps)\microsoft.codeanalysis.props" />
   <ItemGroup>
     <ProjectReference Include="$(Json)" />
     <ProjectReference Include="$(Files)" />
     <ProjectReference Include="$(Events)" />
+    <ProjectReference Include="$(Asci)" />
   </ItemGroup>
 </Project>
