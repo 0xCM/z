@@ -41,7 +41,7 @@ namespace Z0
             => GetProcAddress(@base, name);
 
         [MethodImpl(Inline), Op]
-        public static NativeExport export(NativeImage src, string name)
+        public static NativeExport export(ImageHandle src, string name)
             => new NativeExport(name, GetProcAddress(src, name));
 
         [MethodImpl(Inline), Op]
@@ -55,15 +55,6 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static unsafe Delegate proc(FPtr src, Type t)
             => Marshal.GetDelegateForFunctionPointer(src,t);
-
-        [MethodImpl(Inline), Op]
-        public static NativeFunction func(NativeModule src, string name)
-            => new NativeFunction(src, procaddress(src,name), name);
-
-        [MethodImpl(Inline), Op]
-        public static NativeFunction<D> func<D>(NativeModule src, string name)
-            where D : Delegate
-                => new NativeFunction<D>(src, procaddress(src,name), name, proc<D>(src,name));
 
         [MethodImpl(Inline), Op]
         public static Delegate proc(NativeModule src, Type t, string name)

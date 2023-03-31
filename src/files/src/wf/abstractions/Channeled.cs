@@ -22,9 +22,6 @@ namespace Z0
 
         IWfChannel IChanneled.Channel 
             => Channel;
-
-        void IChanneled.Connect(IWfChannel channel)
-            => Channel = channel;
             
         protected Channeled(IWfChannel channel)
         {

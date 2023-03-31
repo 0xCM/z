@@ -48,7 +48,7 @@ namespace Z0.Asm
             if(!src.Exists)
             {
                 result = (false,FS.missing(src));
-                Error(result.Message);
+                Channel.Error(result.Message);
                 return result;
             }
 

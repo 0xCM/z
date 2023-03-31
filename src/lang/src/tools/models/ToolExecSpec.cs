@@ -47,7 +47,6 @@ namespace Z0
             ProcessExit = exit ?? (e => {});
         }
 
-
         public static ToolExecSpec Default 
             => new ToolExecSpec(FilePath.Empty, CmdArgs.Empty, FS.dir(Environment.CurrentDirectory), EnvVars.Empty, null, null);
     }

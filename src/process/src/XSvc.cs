@@ -14,9 +14,6 @@ namespace Z0
             public OmniScript OmniScript(IWfRuntime wf)
                 => Service<OmniScript>(wf);
 
-            public ImageCmd ImageCmd(IWfRuntime wf)
-                => Service<ImageCmd>(wf);
-
             public WfScripts ToolScripts(IWfRuntime wf)                
                 => Service<WfScripts>(wf);
         }
@@ -32,7 +29,5 @@ namespace Z0
         public static OmniScript OmniScript(this IWfRuntime wf)
             => Services.OmniScript(wf);
 
-        public static IApiService ImageCmd(this IWfRuntime wf)
-            => Services.ImageCmd(wf);             
     }
 }

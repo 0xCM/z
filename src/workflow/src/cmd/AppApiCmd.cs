@@ -354,10 +354,18 @@ namespace Z0
         [CmdOp("sosdac")]
         void SosDac()
         {
-            var src = FS.path(sys.controller().Location).FolderPath + FS.file("mscordaccore", FileKind.Dll);
-            using var dac = ClrDac.load(src);
-            Channel.Row($"{dac.BaseAddress}:{dac.MainAddress}");
+            // using var lib = ImageHandle.own(Windows.Kernel32.LoadLibrary("kernel32.dll"));
+            // Channel.Row(lib.Address);
+            // var loader = Win64.procaddress(lib, "LoadLibraryA");
+            // Channel.Row(loader);
+            var kernel32 = WinImage.kernel32();
+            Channel.Row(kernel32.BaseAddress);
+
+            // var src = FS.path(sys.controller().Location).FolderPath + FS.file("mscordaccore", FileKind.Dll);
+            // using var dac = ClrDac.load(src,loader);
+            // Channel.Row($"{dac.BaseAddress}:{dac.BaseAddress}");
         }
+
         [CmdOp("clrmd")]
         void ClrMd()
         {
@@ -405,6 +413,5 @@ namespace Z0
 
             });
         }
-
     }
 }

@@ -31,21 +31,21 @@ namespace Z0
             const uint FirstLine = 70;
             var widths = SourceWidths;
 
-            Babble(string.Format("Parsing {0}", src));
+            Channel.Babble(string.Format("Parsing {0}", src));
             if(!src.Exists)
             {
-                Error(FS.missing(src));
+                Channel.Error(FS.missing(src));
                 return default;
             }
 
             var input = src.ReadNumberedLines();
             if(input.Length < 80)
             {
-                Error(string.Format("Bad format: {0}", src));
+                Channel.Error(string.Format("Bad format: {0}", src));
                 return default;
             }
 
-            Babble(string.Format("Read {0} source lines", input.Length));
+            Channel.Babble(string.Format("Read {0} source lines", input.Length));
 
             var lines = slice(input.View, FirstLine);
             var count = lines.Length;

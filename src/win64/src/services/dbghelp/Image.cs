@@ -6,19 +6,19 @@ namespace Z0
 {
     partial class DbgHelp
     {
-        public unsafe partial class Image : NativeImage
+        public unsafe class Image : NativeImage
         {            
-            readonly Index<INativeOp> Ops;
+            readonly Index<INativeFunction> Ops;
 
             public Image(FilePath path, ImageHandle handle)
                 : base(path, handle)
             {
-                Ops = new INativeOp[]{
+                Ops = new INativeFunction[]{
                     new SymInitialize(this),
                 };
             }
 
-            public override ReadOnlySeq<INativeOp> Operations
+            public override ReadOnlySeq<INativeFunction> Operations
             {
                 [MethodImpl(Inline)]
                 get => Ops;

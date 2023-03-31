@@ -20,7 +20,7 @@ namespace Z0.Asm
             if(!src.Exists)
                 sys.@throw($"{src.ToUri()} has gone missing");
             var dst = SdmPaths.SdmDstVol(vol);
-            var emitting = EmittingFile(dst);
+            var emitting = Channel.EmittingFile(dst);
             var counter = 0u;
             using var reader = src.UnicodeLineReader();
             using var writer = dst.UnicodeWriter();

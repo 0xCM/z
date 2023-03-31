@@ -21,8 +21,7 @@ namespace Z0
 
         protected override void Initialized()        
         {
-            Factories = ConstLookup<Type,Func<IChecker>>.Empty;
-            //Factories = Checkers.factories(Wf, ApiRuntime.colocated(ExecutingPart.Assembly));
+            Factories = ConstLookup<Type,Func<IChecker>>.Empty;            
         }
 
         protected virtual bool Pll {get;}

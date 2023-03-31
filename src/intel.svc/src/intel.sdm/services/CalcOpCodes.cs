@@ -202,7 +202,7 @@ namespace Z0.Asm
 
                         default:
                             valid = false;
-                            Warn(string.Format("Column {0} unrecognized", col.Name));
+                            Channel.Warn(string.Format("Column {0} unrecognized", col.Name));
                             break;
                     }
                 }

@@ -21,8 +21,8 @@ namespace Z0
         {
             const byte count = 32;
             const byte Target = 0x48;
-            var input = cpu.vload(w256,x7ffaa76f0ae0);
-            var mask = cpu.vindices(input, Target);
+            var input = vcpu.vload(w256,x7ffaa76f0ae0);
+            var mask = vcpu.vindices(input, Target);
             var bits = recover<bit>(bytes(new Cell256<byte>()));
             BitPack.unpack1x32x8(mask, bits);
             var buffer = ByteBlock32.Empty;
@@ -47,7 +47,7 @@ namespace Z0
             var a = Intervals.closed(2u, 12u).Partition().ToSeq();
             var b = Intervals.closed(33u, 41u).Partition().ToSeq();
             var c = Seq.product(a,b);
-            Write(c.Format());
+            Channel.Write(c.Format());
             return true;
         }
 
@@ -267,7 +267,7 @@ namespace Z0
             }
             },true);
 
-            Status(string.Format("Verifified {0} lookup operations", rows*cols));
+            Channel.Status(string.Format("Verifified {0} lookup operations", rows*cols));
 
             return true;
         }
@@ -278,13 +278,13 @@ namespace Z0
             Span<byte> buffer = stackalloc byte[32];
             var emitter = text.buffer();
             points(new BitRange(0, 2), buffer,emitter);
-            Write(emitter.Emit());
+            Channel.Write(emitter.Emit());
             points(new BitRange(5, 3), buffer,emitter);
-            Write(emitter.Emit());
+            Channel.Write(emitter.Emit());
             points(new BitRange(6, 7), buffer,emitter);
-            Write(emitter.Emit());
+            Channel.Write(emitter.Emit());
             points(new BitRange(1, 4), buffer,emitter);
-            Write(emitter.Emit());
+            Channel.Write(emitter.Emit());
             return true;
         }
 

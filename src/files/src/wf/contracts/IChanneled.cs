@@ -7,8 +7,6 @@ namespace Z0
     public interface IChanneled : IService
     {
         IWfChannel Channel {get;}
-
-        void Connect(IWfChannel channel);
     }
 
     public interface IChanneled<C> : IChanneled, IService<C>

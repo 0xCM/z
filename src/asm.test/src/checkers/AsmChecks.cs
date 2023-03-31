@@ -30,7 +30,7 @@ namespace Z0
             var flags = new StatusFlags();
             flags.OF(true);
             flags.SF(true);
-            Write(flags.Format());
+            Channel.Write(flags.Format());
             return result;
         }
 
@@ -54,19 +54,19 @@ namespace Z0
             var segments = VexPrefixC4.segments();
 
             var vp0 = VexPrefixC4.define(byte.MaxValue, byte.MaxValue);
-            Write(vp0.FormatSemantic());
+            Channel.Write(vp0.FormatSemantic());
             segments.Fill(vp0);
-            Write(segments.ToBitstring());
+            Channel.Write(segments.ToBitstring());
 
             var vp1 = VexPrefixC4.init(VexRXB.L0_V0F38, VexM.x0F3A, bit.On, 0b1111, VexLengthCode.L1, VexOpCodeExtension.F3);
-            Write(vp1.FormatSemantic());
+            Channel.Write(vp1.FormatSemantic());
             segments.Fill(vp1);
-            Write(segments.ToBitstring());
+            Channel.Write(segments.ToBitstring());
 
             var vp2 = VexPrefixC4.define(0xe3, 0x69);
-            Write(vp2.FormatSemantic());
+            Channel.Write(vp2.FormatSemantic());
             segments.Fill(vp2);
-            Write(segments.ToBitstring());
+            Channel.Write(segments.ToBitstring());
 
             return true;
         }
@@ -78,11 +78,11 @@ namespace Z0
             const string Oc1 = "REX.W + 05 id";
 
             var asm0 = AsmSpecs.and(gp32.edx, 0xC1C1);
-            Write($"{asm0}");
+            Channel.Write($"{asm0}");
 
             var opcode = SdmOpCode.Empty;
             var result = SdmOpCodes.parse(Oc0, out opcode);
-            Write($"{Oc0} -> {opcode}");
+            Channel.Write($"{Oc0} -> {opcode}");
         }
 
         [CmdOp("asm/check/jmp")]
@@ -125,7 +125,7 @@ namespace Z0
                 var relTarget = (int)disp + (int)JmpRel32.InstSize;
                 @string statement = string.Format("jmp near ptr {0:x}h", relTarget);
                 Require.equal(statement, expect.Statment);
-                Write(statement);
+                Channel.Write(statement);
             }
         }
 
@@ -146,7 +146,7 @@ namespace Z0
             var code1 = AsmHexApi.asmhex("e9 58 10 00 00");
 
             if(!code0.Equals(code1))
-                Error(string.Format("{0} != {1}", code1, code0));
+                Channel.Error(string.Format("{0} != {1}", code1, code0));
 
             var label1 = 0x0065;
             var ip1 = @base + label1;
@@ -154,7 +154,7 @@ namespace Z0
             var actual1 = JmpRel32.encode((ip1,sz), @return);
             var expect1 = AsmHexApi.asmhex("e9 4d 10 00 00");
             if(!actual1.Equals(expect1))
-                Error(string.Format("{0} != {1}", expect1, actual1));
+                Channel.Error(string.Format("{0} != {1}", expect1, actual1));
 
             var label2 = 0x0070;
             var ip2 = @base + label2;
@@ -162,7 +162,7 @@ namespace Z0
             var actual2 = JmpRel32.encode((ip2,sz), @return);
             var expect2 = AsmHexApi.asmhex("e9 42 10 00 00");
             if(!actual2.Equals(expect2))
-                Error(string.Format("{0} != {1}", expect2, actual2));
+                Channel.Error(string.Format("{0} != {1}", expect2, actual2));
 
             var label3 = 0x007b;
             var ip3 = @base + label3;
@@ -170,7 +170,7 @@ namespace Z0
             var actual3 = JmpRel32.encode((ip3,sz), @return);
             var expect3 = AsmHexApi.asmhex("e9 37 10 00 00");
             if(!actual3.Equals(expect3))
-                Error(string.Format("{0} != {1}", expect3, actual3));
+                Channel.Error(string.Format("{0} != {1}", expect3, actual3));
         }
 
         void CheckJmp32(N2 n)
@@ -190,7 +190,7 @@ namespace Z0
 
             var enc2 = CallRel32.encode(rip, Target);
             if(enc1 != enc2)
-                Error(string.Format("Encoding mismatch '{0}' != '{1}'", enc1, enc2));
+                Channel.Error(string.Format("Encoding mismatch '{0}' != '{1}'", enc1, enc2));
 
             var box = new RipBox(Base, uint.MaxValue);
             if(!box.IP(Source))
@@ -199,11 +199,11 @@ namespace Z0
             box.Advance(InstSize, dx, out var target1);
 
             if(target1 != Target)
-                Error("Computed target did not match expected target");
+                Channel.Error("Computed target did not match expected target");
 
             var target2 = AsmRel.target(rip, enc1);
             if(target2 != Target)
-                Error("Computed target did not match expected target");
+                Channel.Error("Computed target did not match expected target");
         }
 
         [CmdOp("asm/check/hex")]
@@ -227,7 +227,7 @@ namespace Z0
             var buffer = alloc<byte>(count/2);
             var size = Digital.pack(dst,buffer);
             var output = buffer.FormatHex(HexOptionData.CompactHexOptions);
-            Write(Require.equal(Data,output));
+            Channel.Write(Require.equal(Data,output));
             return result;
         }
 
@@ -239,7 +239,7 @@ namespace Z0
             for(var i=0; i<results.Count; i++)
             {
                 ref readonly var r = ref results[i];
-                Write(r.Format());
+                Channel.Write(r.Format());
             }
         }
 
@@ -269,10 +269,10 @@ namespace Z0
             var sz16 = Sized.native(w16);
             var sz32 = Sized.native(w32);
             var sz64 = Sized.native(w64);
-            Write(sz8);
-            Write(sz16);
-            Write(sz32);
-            Write(sz64);
+            Channel.Write(sz8);
+            Channel.Write(sz16);
+            Channel.Write(sz32);
+            Channel.Write(sz64);
 
             return (result, result ? "Pass" : "Fail");
         }
@@ -341,7 +341,7 @@ namespace Z0
                 const ulong IP = Base + Offset;
                 var rip = AsmRel.rip(IP, 5);
                 var call = AsmRel.call(rip, (Disp32)Disp);
-                Write(call.Format());
+                Channel.Write(call.Format());
             }
 
 
@@ -376,7 +376,7 @@ namespace Z0
                     dst.AppendLineFormat(RenderPattern, nameof(Target), (MemoryAddress)Target);
                     dst.AppendLineFormat(RenderPattern, "Disp",  disp1);
 
-                    Write(dst.Emit(), FlairKind.StatusData);
+                    Channel.Write(dst.Emit(), FlairKind.StatusData);
                 }
                 else
                 {
@@ -445,15 +445,15 @@ namespace Z0
 
             var check1 = CheckEquality(text1,text2);
             if(check1.Fail)
-               Error(check1.Message);
+               Channel.Error(check1.Message);
             else
-                Status(check1.Message);
+                Channel.Status(check1.Message);
 
             var check2 = CheckEquality(text1,text3);
             if(check2.Fail)
-               Error(check2.Message);
+               Channel.Error(check2.Message);
             else
-                Status(check2.Message);            
+                Channel.Status(check2.Message);            
         }
 
         static Outcome CheckEquality(string a, string b)

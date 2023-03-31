@@ -28,21 +28,7 @@ namespace Z0
             }
         }
 
-        public class NativeImageResolver
-        {
-            readonly IDbArchive Root;
 
-
-            public NativeImageResolver(IDbArchive root)
-            {
-                Root = root;
-            }
-
-            public NativeImage Resolve(FileName name)
-            {
-                return default;
-            }
-        }
     }
 
 }

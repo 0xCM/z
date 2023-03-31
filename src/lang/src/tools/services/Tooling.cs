@@ -150,22 +150,6 @@ namespace Z0
                 return FilePath.Empty;
         }
 
-        // public SettingLookup Setup(Tool tool)
-        // {
-        //     var script = ConfigScript(tool);
-        //     var result = OmniScript.Run(script, out _);
-        //     return LoadCfg(tool);
-        // }
-
-        // public Outcome RunScript(Actor tool, string name)
-        // {
-        //     var path = Script(tool, name, FileKind.Cmd);
-        //     if(!path.Exists)
-        //         return (false, FS.missing(path));
-        //     else
-        //         return OmniScript.Run(path, out var _);
-        // }
-
         public Index<string> LoadDocs(string tool)
         {
             var src = Docs(tool);

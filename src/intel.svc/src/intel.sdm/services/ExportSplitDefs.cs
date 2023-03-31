@@ -50,7 +50,7 @@ namespace Z0.Asm
                 if(!input.Exists)
                 {
                     result = (false,FS.Msg.DoesNotExist.Format(input));
-                    Error(result.Message);
+                    Channel.Error(result.Message);
                 }
 
                 var processing = Channel.Running(string.Format("Appending {0} to {1}", input.ToUri(), dst.ToUri()));
@@ -69,12 +69,12 @@ namespace Z0.Asm
 
         public Outcome<uint> CreateLinedDoc(FilePath src, FilePath dst, Pair<TextEncodingKind> encoding)
         {
-            var flow = Wf.Running(string.Format("{0} => {1}", src.ToUri(), dst.ToUri()));
+            var flow = Channel.Running(string.Format("{0} => {1}", src.ToUri(), dst.ToUri()));
             var outcome = Lines.copy(src,dst,encoding);
             if(outcome)
-                Wf.Ran(flow, string.Format("Emitted {0} lines", outcome.Data));
+                Channel.Ran(flow, string.Format("Emitted {0} lines", outcome.Data));
             else
-                Error(outcome.Message);
+                Channel.Error(outcome.Message);
             return outcome;
         }
 

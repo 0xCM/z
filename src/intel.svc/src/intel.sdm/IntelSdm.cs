@@ -26,7 +26,7 @@ namespace Z0.Asm
 
         public void RunEtl()
         {
-            var running = Running();
+            var running = Channel.Running();
             try
             {
                 Clear();

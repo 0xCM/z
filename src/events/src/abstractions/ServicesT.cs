@@ -39,15 +39,15 @@ namespace Z0
                 return (S)Lookup.GetOrAdd(svcid<S>(name), _ => new S().Factory(channel));
         }
 
-        public static IChanneled service(IWfChannel channel, Type host, string name)
-        {
-            lock(ServiceLock)
-                return (IChanneled)Lookup.GetOrAdd(svcid(host, name), _ => {
-                    var service = (IChanneled)Activator.CreateInstance(host);
-                    service.Connect(channel);
-                    return service;
-                });
-        }
+        // public static IChanneled service(IWfChannel channel, Type host, string name)
+        // {
+        //     lock(ServiceLock)
+        //         return (IChanneled)Lookup.GetOrAdd(svcid(host, name), _ => {
+        //             var service = (IChanneled)Activator.CreateInstance(host);
+        //             service.Connect(channel);
+        //             return service;
+        //         });
+        // }
 
         public static S service<S>(IWfChannel channel, string name, Func<IWfChannel,S> factory)
             where S : IChanneled<S>, new()

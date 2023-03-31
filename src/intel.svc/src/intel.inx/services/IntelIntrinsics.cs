@@ -48,7 +48,7 @@ namespace Z0
         public void EmitDeclarations(IntelIntrinsicPaths paths, ReadOnlySpan<IntrinsicDef> src)
         {
             var dst = paths.DeclTarget();
-            var flow = EmittingFile(dst);
+            var flow = Channel.EmittingFile(dst);
             var count = src.Length;
             using var writer = dst.Writer();
             for(var i=0; i<count; i++)

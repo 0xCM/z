@@ -46,7 +46,7 @@ namespace Z0
             var src = Xed.Views.Patterns;
             var dst = XedPaths.DocTarget("instructions.detail", FileKind.Txt);
             var formatter = InstPageFormatter.create();
-            var emitting = EmittingFile(dst);
+            var emitting = Channel.EmittingFile(dst);
             using var writer = dst.AsciWriter();
             for(var j=0; j<src.Count; j++)
                 writer.Write(formatter.Format(src[j]));

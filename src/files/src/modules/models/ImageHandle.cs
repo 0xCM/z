@@ -14,7 +14,6 @@ namespace Z0
 
         public IntPtr Handle {get;}
 
-        [MethodImpl(Inline)]
         public ImageHandle(IntPtr value)
         {
             Handle = value;
@@ -59,10 +58,6 @@ namespace Z0
         public static implicit operator IntPtr(ImageHandle src)
             => src.Handle;
 
-        [MethodImpl(Inline)]
-        public static implicit operator ImageHandle(IntPtr src)
-            => new ImageHandle(src);
-        
         [MethodImpl(Inline)]
         public static implicit operator MemoryAddress(ImageHandle src)
             => src.Address;

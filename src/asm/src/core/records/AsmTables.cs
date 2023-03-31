@@ -136,13 +136,13 @@ namespace Z0.Asm
             const string TableId = HostAsmRecord.TableId;
             var counter = 0u;
             var dst = sys.bag<HostAsmRecord>();
-            var flow = Running(string.Format("Parsing {0} records from {1} documents", TableId, src.Count));
+            var flow = Channel.Running(string.Format("Parsing {0} records from {1} documents", TableId, src.Count));
             if(pll)
             {
-                Status(ParsingDocs.Format(src.Length));
+                Channel.Status(ParsingDocs.Format(src.Length));
                 var results = rows(src, dst);
                 foreach(var result in results)
-                    result.OnSuccess(count => counter += count).OnFailure(msg => Error(msg));
+                    result.OnSuccess(count => counter += count).OnFailure(msg => Channel.Error(msg));
             }
             else
             {
@@ -150,7 +150,7 @@ namespace Z0.Asm
                 {
                     var parsed = rows(file, dst);
                     if(parsed.Fail)
-                        Error(FileParseError.Format(file, parsed.Message));
+                        Channel.Error(FileParseError.Format(file, parsed.Message));
                     else
                         counter += parsed.Data;
                 }
@@ -171,7 +171,7 @@ namespace Z0.Asm
         {
             var records = Lists.list<AsmDetailRow>(Pow2.T18);
             var paths = src;
-            var flow = Running(string.Format("Loading {0} asm recordsets", paths.Length));
+            var flow = Channel.Running(string.Format("Loading {0} asm recordsets", paths.Length));
             var count = paths.Length;
             var counter = 0u;
             for(var i=0; i<count; i++)
@@ -200,7 +200,7 @@ namespace Z0.Asm
         Outcome<Count> LoadDetails(FilePath path, DataList<AsmDetailRow> dst)
         {
             var rowtype = path.FileName.WithoutExtension.Format().RightOfLast(Chars.Dot);
-            var flow = Running(string.Format("Loading {0} rows from {1}", rowtype, path.ToUri()));
+            var flow = Channel.Running(string.Format("Loading {0} rows from {1}", rowtype, path.ToUri()));
             var result = TextGrids.load(path, out var doc);
             var kRows = 0;
             if(result)
@@ -230,7 +230,7 @@ namespace Z0.Asm
             }
             else
             {
-                Error(result.Message);
+                Channel.Error(result.Message);
             }
 
             return (true,kRows);

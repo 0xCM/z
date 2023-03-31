@@ -29,7 +29,7 @@ namespace Z0
 
         ReadOnlySpan<ApiHostRes> Emit(ReadOnlySpan<ApiHostBlocks> src, FolderPath dst, bool build = true)
         {
-            var running = Running();
+            var running = Channel.Running();
             var count = src.Length;
             var counter = 0u;
             var buffer = alloc<ApiHostRes>(count);
@@ -63,7 +63,7 @@ namespace Z0
         {
             if(empty(src.Host.HostName))
             {
-                Warn(string.Format("Cannot emit {0} because host name is undefined", target.ToUri()));
+                Channel.Warn(string.Format("Cannot emit {0} because host name is undefined", target.ToUri()));
                 return ApiHostRes.Empty;
             }
 

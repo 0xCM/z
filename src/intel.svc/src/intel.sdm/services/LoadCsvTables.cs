@@ -77,7 +77,7 @@ namespace Z0.Asm
                     var valcount = values.Length;
 
                     if(valcount != cols.Count)
-                        Warn($"{valcount} != {cols.Count}");
+                        Channel.Warn($"{valcount} != {cols.Count}");
 
                     if(valcount != 0)
                     {
@@ -91,7 +91,7 @@ namespace Z0.Asm
                 {
                     var labels = content.SplitClean(ColSep);
                     if(labels.Length == 0)
-                        Warn(string.Format("Expected header"));
+                        Channel.Warn(string.Format("Expected header"));
 
                     if(labels.Length != 0)
                     {

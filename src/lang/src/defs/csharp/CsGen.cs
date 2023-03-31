@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     public class CsGen
     {
          public static CsEmitter emitter()

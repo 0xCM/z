@@ -100,7 +100,7 @@ namespace Z0
 
         void Process(uint batch, uint counter, ReadOnlySpan<TextLine> src, Span<CultRecord> dst)
         {
-            var processing = Running(ProcessingBatch.Format(batch, counter));
+            var processing = Channel.Running(ProcessingBatch.Format(batch, counter));
             var parsed = slice(dst, 0, Parse(src, dst));
             Process(parsed);
             Ran(processing, ProcessedBatch.Format(batch, counter, parsed.Length, BatchSize));

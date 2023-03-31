@@ -245,7 +245,6 @@ namespace Z0.Asm
         public static BinaryCode code(in CodeBlock src, uint offset, byte size)
             => sys.slice(src.View, offset, size).ToArray();
 
-
         [MethodImpl(Inline), Op]
         public static void encode(RexPrefix a0, Hex8 a1, Imm64 a2, AsmHexWriter dst)
             => dst.Write(a0,a1,a2);

@@ -79,10 +79,10 @@ namespace Z0.Asm
             for(var i=0; i<src.Count; i++)
             {
                 ref readonly var mask = ref src[i];
-                Row(formatter.Format(mask));
+                Channel.Row(formatter.Format(mask));
                 Write(mask.Text);
             }
-            TableEmit(src,dst,TextEncodingKind.Unicode);
+            Channel.TableEmit(src,dst,TextEncodingKind.Unicode);
 
         }
 
@@ -128,7 +128,7 @@ namespace Z0.Asm
             const uint CellCount = 512;
             Span<char> buffer = stackalloc char[CellWidth];
             var dst = AppDb.CgStage().Root + FS.file("bitseq", FS.Cs);
-            var flow = EmittingFile(dst);
+            var flow = Channel.EmittingFile(dst);
             using var writer = dst.AsciWriter();
             writer.WriteLine("    public readonly struct GeneratedBits");
             writer.WriteLine("    {");
@@ -324,23 +324,6 @@ namespace Z0.Asm
             // var outcount = Pipes.flow(input,output);
 
             // Wf.Ran(flow, $"Ran {incount} -> {outcount} values through pipe");
-        }
-
-        MemoryAddress GetKernel32Proc(string name = "CreateDirectoryA")
-        {
-            var flow = Running();
-            using var kernel = KnownModules.kernel32();
-            Write(kernel);
-
-            var f = NativeModules.func<OS.Delegates.GetProcAddress>(kernel, nameof(OS.Delegates.GetProcAddress));
-            Write(f);
-
-            var address = (MemoryAddress)f.Invoke(kernel, name);
-            Write(address);
-
-            Ran(flow);
-
-            return address;
         }
 
         static ReadOnlySpan<byte> JmpRaxCode

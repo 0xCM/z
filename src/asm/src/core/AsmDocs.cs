@@ -26,7 +26,7 @@ namespace Z0
         public void EmitRegDocs()
         {
             var dst = AppDb.ApiTargets("asm.docs").Path("asm.regs.strings", FileKind.Cs);
-            var emitting = EmittingFile(dst);
+            var emitting = Channel.EmittingFile(dst);
             using var writer = dst.Writer();
             writer.WriteLine(Regs.Gp8LoRegs().ToNameArray("Gp8LoRegs"));
             writer.WriteLine(Regs.Gp8HiRegs().ToNameArray("Gp8HiRegs"));
@@ -49,7 +49,7 @@ namespace Z0
         public void EmitRexDocs()
         {
             var dst = AppDb.ApiTargets("asm.docs").Path("rex.bits", FileKind.Csv);
-            var emitting = EmittingFile(dst);
+            var emitting = Channel.EmittingFile(dst);
             var bits = RexPrefix.Range();
             using var writer = dst.AsciWriter();
             var buffer = text.buffer();
@@ -70,7 +70,7 @@ namespace Z0
         public void EmitModRmDocs()
         {
             var path = AppDb.ApiTargets("asm.docs").Path("asm.docs.modrm.bits", FileKind.Csv);
-            var flow = EmittingFile(path);
+            var flow = Channel.EmittingFile(path);
             using var writer = path.AsciWriter();
             var dst = span<char>(256*128);
             var count = AsmBytes.ModRmTable(dst);
@@ -104,7 +104,7 @@ namespace Z0
         uint EmitConditionDocs<T>(ReadOnlySpan<T> src, FilePath dst)
             where T : IConditional
         {
-            var emitting = EmittingFile(dst);
+            var emitting = Channel.EmittingFile(dst);
             using var writer = dst.AsciWriter();
             var count = src.Length;
             var counter = 0u;
