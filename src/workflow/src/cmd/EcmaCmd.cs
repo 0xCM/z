@@ -9,6 +9,92 @@ namespace Z0
 
     using static sys;
 
+    class ArchiveWorkflows : WfAppCmd<ArchiveWorkflows>
+    {
+        EcmaEmitter EcmaEmitter => Wf.EcmaEmitter();
+
+        StringDispenser StringDispenser;
+
+        public ArchiveWorkflows()
+        {
+            
+        }
+        ConcurrentDictionary<FolderPath,AssemblyIndex> Assemblies = new();
+
+        new ConcurrentDictionary<FolderPath,FileIndex> Files = new();
+
+        ConcurrentDictionary<FolderPath,ReadOnlySeq<EcmaRowStats>> EcmaStats = new();
+
+        ConcurrentDictionary<FolderPath,ReadOnlySeq<EcmaTypeDef>> EcmaTypeDefs = new();
+
+        ConcurrentDictionary<FolderPath,ReadOnlySeq<MetadataRoot>> EcmaRoots = new();
+
+        AssemblyIndex GetAssemblyIndex(IDbArchive src)
+            => Assemblies.GetOrAdd(src.Root,  _ => Ecma.index(Channel, src));
+
+        ReadOnlySeq<EcmaRowStats> GetEcmaStats(IDbArchive src)
+            => EcmaStats.GetOrAdd(src.Root, _ => Ecma.stats(GetAssemblyIndex(src)));
+
+        FileIndex GetFileIndex(IDbArchive src)
+            => Files.GetOrAdd(src.Root, _ => FS.index(src.Files()));
+
+        ReadOnlySeq<EcmaTypeDef> CalcTypeDefs(IDbArchive src)
+        {
+            var dst = bag<EcmaTypeDef>();
+            iter(GetAssemblyIndex(src).Distinct(), file => {
+            using var ecma = Ecma.file(file.Path);
+            var reader = Ecma.reader(ecma);
+            iter(reader.ReadTypeDefs(), t => {
+                if(!t.Name.Contains("<") && !t.DeclaringType.Contains("<"))
+                    dst.Add(t);
+            }                
+            );
+            
+            }, true);
+            return dst.Array().Sort();
+        }
+
+        ReadOnlySeq<MetadataRoot> CalcMetadataRoots(IDbArchive src)
+        {
+            var dst = bag<MetadataRoot>();
+            iter(GetAssemblyIndex(src).Distinct(), entry => {
+                using var file = EcmaFile.open(entry.Path);
+                var reader = file.EcmaReader();
+                var memory = reader.Memory(reader.AssemblyKey());
+                var root = memory.ReadMetadataRoot();
+                dst.Add(root);                
+            });
+            return dst.Array().Sort();
+        }
+
+        ReadOnlySeq<MetadataRoot> GetMetadataRoots(IDbArchive src)
+            => EcmaRoots.GetOrAdd(src.Root, _ => CalcMetadataRoots(src));
+
+        ReadOnlySeq<EcmaTypeDef> GetTypeDefs(IDbArchive src)
+            => EcmaTypeDefs.GetOrAdd(src.Root, _ => CalcTypeDefs(src));
+
+        [CmdOp("ecma/stats")]
+        void EcmaEmitStats(CmdArgs args)
+        {
+            var src = FS.archive(args[0]);
+            Channel.TableEmit(GetEcmaStats(src), EnvDb.Nested("ecma", src).Table<EcmaRowStats>());                        
+        }
+
+        [CmdOp("ecma/typedefs")]
+        void EmitTypeDefs(CmdArgs args)
+        {
+            var src = FS.archive(args[0]);
+            Channel.TableEmit(GetTypeDefs(src), EnvDb.Nested("ecma", src).Table<EcmaTypeDef>());
+        }
+
+        [CmdOp("ecma/roots")]
+        void EmitMdHeader(CmdArgs args)
+        {
+            var src = FS.archive(args[0]);
+            Channel.TableEmit(GetMetadataRoots(src), EnvDb.Nested("ecma", src).Table<MetadataRoot>());
+        }
+    }
+
     class EcmaCmd : WfAppCmd<EcmaCmd>
     {
         Ecma Ecma => Wf.Ecma();
@@ -73,31 +159,6 @@ namespace Z0
         void EmitHeaders()
             => EcmaEmitter.EmitSectionHeaders(sys.controller().RuntimeArchive(), Dst);
 
-        [CmdOp("ecma/stats")]
-        void EcmaEmitStats(CmdArgs args)
-        {
-            var src = FS.dir(args[0]);
-            var modules = Archives.modules(src);
-            EcmaEmitter.EmitTableStats(modules, EnvDb);
-        }
-
-        [CmdOp("ecma/typedefs")]
-        void EmitTypeDefs(CmdArgs args)
-        {
-            var src = FS.archive(args[0]);
-            var index = AssemblyIndex.create(Channel, src);
-            var dst = bag<EcmaTypeDef>();
-            iter(index.Distinct(), file => {
-                using var ecma = Ecma.file(file.Path);
-                var reader = Ecma.reader(ecma);
-                iter(reader.ReadTypeDefs(), t => {
-                    if(!t.Name.Contains("<") && !t.DeclaringType.Contains("<"))
-                        dst.Add(t);
-                });
-            }, true);        
-
-            Channel.TableEmit(dst.Array().Sort(),  EnvDb.Nested("ecma", src).Table<EcmaTypeDef>());
-        }
 
         [CmdOp("ecma/tables/kinds")]
         void EmitEcmaTables()
@@ -197,23 +258,6 @@ namespace Z0
             });
         }
         
-        [CmdOp("ecma/roots")]
-        void EmitMdHeader(CmdArgs args)
-        {
-            var src = FS.dir(args[0]);
-            var index = Ecma.index(Channel, src);
-            var rows = bag<MetadataRoot>();
-            iter(index.Distinct(), entry => {
-                using var file = EcmaFile.open(entry.Path);
-                var reader = file.EcmaReader();
-                var memory = reader.Memory(reader.AssemblyKey());
-                var root = memory.ReadMetadataRoot();
-                rows.Add(root);                
-            });
-
-            Channel.TableEmit(rows.Array().Sort(), EnvDb.Nested("ecma", src).Table<MetadataRoot>());
-        }
-
         [CmdOp("ecma/dump")]
         void EmitCliDump(CmdArgs args)
         {
@@ -392,12 +436,17 @@ namespace Z0
             var index = Ecma.index(Channel, src);
             Ecma.EmitReports(index, EnvDb);
             var deps = Ecma.CalcDependencies(index, EnvDb);
+            var managed = deps.SelectMany(x => x.ManagedDependencies).Sort();
+            var native = deps.SelectMany(x => x.NativeDependencies).Sort();
+            Channel.TableEmit(managed, EnvDb.Nested("ecma", src).Table<ManagedDependency>());
+            Channel.TableEmit(native, EnvDb.Nested("ecma", src).Table<NativeDependency>());
+
         }
         
         [CmdOp("ecma/pinvokes")]
         void PInvokes(CmdArgs args)
         {   
-            var src = FS.dir(args[0]);
+            var src = FS.archive(args[0]);
             var index = Ecma.index(Channel, src);
             var dst = bag<EcmaPinvoke>();
              iter(index.Distinct(), entry => {

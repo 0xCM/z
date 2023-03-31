@@ -8,10 +8,10 @@ namespace Z0
     {
         readonly NativeTypeSeq Data;
 
-        public readonly string Name;
+        public readonly Label Name;
 
         [MethodImpl(Inline)]
-        public NativeUnion(string name, NativeTypeSeq src)
+        public NativeUnion(Label name, NativeTypeSeq src)
         {
             Name = name;
             Data = src;

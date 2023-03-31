@@ -27,6 +27,7 @@ namespace Z0
             return index.Seal();        
         }
 
+
         readonly IWfChannel Channel;
 
         public readonly IDbArchive Source;

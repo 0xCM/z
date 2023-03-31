@@ -11,12 +11,12 @@ namespace Z0
     {
         public readonly NativeKind PrimalKind;
 
-        public readonly asci64 TypeName;
+        public readonly Label TypeName;
 
         public readonly DataSize Size;
 
         [MethodImpl(Inline)]
-        public PrimalType(NativeKind kind, asci64 name, AlignedWidth width)
+        public PrimalType(NativeKind kind, Label name, AlignedWidth width)
         {
             PrimalKind = kind;
             TypeName = name;
@@ -30,7 +30,7 @@ namespace Z0
         }
 
         public string Format()
-            => TypeName;
+            => TypeName.Format();
 
         public override string ToString()
             => Format();

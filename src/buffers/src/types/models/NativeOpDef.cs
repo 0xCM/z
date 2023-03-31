@@ -9,14 +9,14 @@ namespace Z0
     [StructLayout(LayoutKind.Sequential,Pack=1)]
     public readonly struct NativeOpDef
     {
-        public readonly string Name;
+        public readonly Label Name;
 
         public readonly NativeType Type;
 
         public readonly NativeOpMod Mod;
 
         [MethodImpl(Inline)]
-        public NativeOpDef(string name, NativeType type, NativeOpMod mod = default)
+        public NativeOpDef(Label name, NativeType type, NativeOpMod mod = default)
         {
             Name = name;
             Type = type;
@@ -65,4 +65,3 @@ namespace Z0
             => new NativeOpDef(src.name, src.type, src.mod);
     }
 }
-

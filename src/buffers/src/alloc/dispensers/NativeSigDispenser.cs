@@ -42,8 +42,8 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        NativeOp Operand(string name, NativeType type, NativeOpMod mod = default)
-            => new NativeOp(Labels.Label(name), type, mod);
+        NativeOp Operand(Label name, NativeType type, NativeOpMod mod = default)
+            => new NativeOp(name, type, mod);
 
         public NativeSigRef Sig(string scope, string opname, NativeType ret, params NativeOpDef[] opspecs)
         {

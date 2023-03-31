@@ -4,9 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class NativeTypes
+    public sealed class Dispense : Dispense<Dispense>
     {
-        public static NativeUnion union(Label name, NativeTypeSeq members)
-            => new NativeUnion(name, members);
+
     }
 }

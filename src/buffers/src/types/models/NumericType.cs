@@ -16,12 +16,12 @@ namespace Z0
     {
         public readonly TypeKey Key;
 
-        public readonly asci64 TypeName;
+        public readonly Label TypeName;
 
         public readonly DataSize Size;
 
         [MethodImpl(Inline)]
-        public NumericType(TypeKey key, asci64 name, DataSize size)
+        public NumericType(TypeKey key, Label name, DataSize size)
         {
             Key = key;
             TypeName = name;
@@ -29,7 +29,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public NumericType(TypeKey key, asci64 name, byte packed)
+        public NumericType(TypeKey key, Label name, byte packed)
         {
             Key = key;
             TypeName = name;
@@ -46,14 +46,14 @@ namespace Z0
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => TypeName.IsNull;
+            get => TypeName.IsEmpty;
         }
 
         public int CompareTo(NumericType src)
             => TypeName.CompareTo(src.TypeName);
 
         public string Format()
-            => TypeName;
+            => TypeName.Format();
 
         public override string ToString()
             => Format();

@@ -6,7 +6,7 @@ namespace Z0
 {
     using static BitMaskLiterals;
     using static sys;
-    using static cpu;
+    using static vcpu;
 
     partial struct Bitfields
     {
@@ -47,7 +47,7 @@ namespace Z0
         /// <param name="index">The cell-relative bit index from [0,7] </param>
         [MethodImpl(Inline), Op]
         public static byte pack8x1(ReadOnlySpan<byte> src)
-            => (byte)pack16x1(cpu.v8u(vscalar(w128,@as<ulong>(src))),0);
+            => (byte)pack16x1(v8u(vscalar(w128,@as<ulong>(src))),0);
 
         /// <summary>
         /// Packs 16 1-bit values taken from an index-identified bit of each source byte
@@ -118,10 +118,10 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         static ushort pack16x1(Vector128<byte> src, byte index)
-            => cpu.vmovemask(src,index);
+            => vcpu.vmovemask(src,index);
 
         [MethodImpl(Inline), Op]
         static uint pack32x1(Vector256<byte> src, byte index)
-            => cpu.vmovemask(src,index);
+            => vcpu.vmovemask(src,index);
     }
 }

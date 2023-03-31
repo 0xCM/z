@@ -16,7 +16,7 @@ namespace Z0
     {
         public readonly TypeKey Key;
 
-        public readonly asci64 TypeName;
+        public readonly Label TypeName;
 
         public readonly PrimalType Base;
 
@@ -25,7 +25,7 @@ namespace Z0
         public readonly DataSize Size;
 
         [MethodImpl(Inline)]
-        public LiteralType(TypeKey id, asci64 name, PrimalType @base, DataSize size)
+        public LiteralType(TypeKey id, Label name, PrimalType @base, DataSize size)
         {
             Key = id;
             TypeName = name;
@@ -43,14 +43,14 @@ namespace Z0
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => TypeName.IsNull;
+            get => TypeName.IsEmpty;
         }
 
         public int CompareTo(LiteralType src)
             => TypeName.CompareTo(src.TypeName);
 
         public string Format()
-            => TypeName;
+            => TypeName.Format();
 
         public override string ToString()
             => Format();
@@ -71,7 +71,7 @@ namespace Z0
                 typeof(void),
             };
 
-            public static LiteralType Null => literal(P.Empty.Key, P.Empty.TypeName, P.Empty, DataSize.Zero);
+            public static LiteralType Null => literal(P.Empty.Key, Label.Empty, P.Empty, DataSize.Zero);
 
             public static LiteralType U1 => literal(P.U1.Key, P.U1.TypeName, P.U1, (1,8));
 

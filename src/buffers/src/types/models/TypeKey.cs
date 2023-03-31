@@ -108,5 +108,4 @@ namespace Z0
 
         public static TypeKey Zero => FirstKey;
     }
-
 }

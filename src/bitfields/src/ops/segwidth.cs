@@ -15,12 +15,12 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static byte segwidth<T>(in Bitfield256<T> src, byte index)
             where T : unmanaged
-                => cpu.vcell(src.Widths, index);
+                => vcpu.vcell(src.Widths, index);
 
         [MethodImpl(Inline)]
         public static byte segwidth<E,T>(in Bitfield256<E,T> src, E index)
             where E : unmanaged
             where T : unmanaged
-                => cpu.vcell(src.Widths, bw8(index));
+                => vcpu.vcell(src.Widths, bw8(index));
     }
 }

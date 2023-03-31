@@ -10,15 +10,15 @@ namespace Z0
     public class DataTypes
     {
         [MethodImpl(Inline), Op]
-        public static PrimalType primitive(NativeKind kind, asci64 name, AlignedWidth width)
+        public static PrimalType primitive(NativeKind kind, Label name, AlignedWidth width)
             => new PrimalType(kind, name,width);
 
         [MethodImpl(Inline), Op]
-        public static LiteralType literal(TypeKey key, asci64 name, PrimalType @base, DataSize size)
+        public static LiteralType literal(TypeKey key, Label name, PrimalType @base, DataSize size)
             => new LiteralType(key, name, @base, size);
 
         [MethodImpl(Inline), Op]
-        public static LiteralType literal(TypeKey key, asci64 name, PrimalType @base, byte size)
+        public static LiteralType literal(TypeKey key, Label name, PrimalType @base, byte size)
             => new LiteralType(key, name, @base, (size,size));
 
         [MethodImpl(Inline)]
@@ -40,15 +40,15 @@ namespace Z0
             => typed(name, @base.Key, size);
 
         [MethodImpl(Inline), Op]
-        public static NumericType numeric(TypeKey key, asci64 name, DataSize size)
+        public static NumericType numeric(TypeKey key, Label name, DataSize size)
             => new NumericType(key, name, size);
 
         [MethodImpl(Inline), Op]
-        public static NumericType numeric(TypeKey key, asci64 name, byte width)
+        public static NumericType numeric(TypeKey key, Label name, byte width)
             => new NumericType(key, name, width);
 
         [MethodImpl(Inline), Op]
-        public static NumericType numeric(PrimalType key, asci64 name, NumWidth width)
+        public static NumericType numeric(PrimalType key, Label name, NumWidth width)
             => numeric(key, name, width);
 
         public static TypeKey NextKey(DataTypeKind kind)

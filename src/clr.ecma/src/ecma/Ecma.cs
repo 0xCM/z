@@ -12,6 +12,9 @@ namespace Z0
     [ApiHost]
     public class Ecma : WfSvc<Ecma>
     {        
+        public static ReadOnlySeq<EcmaRowStats> stats(AssemblyIndex src)
+            => EcmaReader.stats(src.Distinct().Select(x => x.Path));
+
         public static MemberKey key(EcmaMethodDef src)
             => new (src.Assembly, src.Token, src.Namespace, src.DeclaringType, src.MethodName);
 
@@ -190,7 +193,7 @@ namespace Z0
         }
 
         public static AssemblyIndex index(IWfChannel channel, FolderPath root)
-            => AssemblyIndex.create(channel,root.DbArchive());
+            => AssemblyIndex.create(channel, root.DbArchive());
 
         public static AssemblyIndex index(IWfChannel channel, IDbArchive root)
             => AssemblyIndex.create(channel, root);

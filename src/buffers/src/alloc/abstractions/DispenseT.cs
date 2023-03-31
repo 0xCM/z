@@ -6,11 +6,6 @@ namespace Z0
 {
     using static sys;
 
-    public sealed class Dispense : Dispense<Dispense>
-    {
-
-    }
-
     public abstract class Dispense<T>
         where T : Dispense<T>, new()
     {

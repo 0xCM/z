@@ -30,12 +30,12 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static void store<T>(T src, byte field, ref Bitfield256<T> dst)
             where T : unmanaged
-                => dst.State = cpu.vcell(dst.State, field, gmath.and(src, dst.Mask(field)));
+                => dst.State = vcpu.vcell(dst.State, field, gmath.and(src, dst.Mask(field)));
 
         [MethodImpl(Inline)]
         public static void store<E,T>(T src, E field, ref Bitfield256<E,T> dst)
             where E : unmanaged
             where T : unmanaged
-                => dst.State = cpu.vcell(dst.State, bw8(field), gmath.and(src, dst.Mask(field)));
+                => dst.State = vcpu.vcell(dst.State, bw8(field), gmath.and(src, dst.Mask(field)));
    }
 }

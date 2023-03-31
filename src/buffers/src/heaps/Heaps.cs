@@ -48,43 +48,43 @@ namespace Z0
                 => new HeapEntry<K,V,L>(index, offset, length);
 
 
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static Span<T> segment<T>(in BinaryHeap src, uint index)
-            where T : unmanaged
-        {
-            if(index > src.Capacity - 1)
-                return Span<T>.Empty;
-            ref readonly var i0 = ref src.Offset(index);
-            if(index < src.Capacity - 1)
-                return slice(src.Cells<T>(), i0, src.Offset(index + 1) - i0);
-            else
-                return slice(src.Cells<T>(), i0);
-        }
+        // [MethodImpl(Inline), Op, Closures(Closure)]
+        // public static Span<T> segment<T>(in BinaryHeap src, uint index)
+        //     where T : unmanaged
+        // {
+        //     if(index > src.Capacity - 1)
+        //         return Span<T>.Empty;
+        //     ref readonly var i0 = ref src.Offset(index);
+        //     if(index < src.Capacity - 1)
+        //         return slice(src.Cells<T>(), i0, src.Offset(index + 1) - i0);
+        //     else
+        //         return slice(src.Cells<T>(), i0);
+        // }
 
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static Span<T> segment<T>(in BinaryHeap<T> src, uint index)
-            where T : unmanaged
-        {
-            if(index > src.Capacity - 1)
-                return Span<T>.Empty;
-            ref readonly var i0 = ref src.Offset(index);
-            if(index < src.Capacity - 1)
-                return slice(src.Cells, i0, src.Offset(index + 1) - i0);
-            else
-                return slice(src.Cells, i0);
-        }
+        // [MethodImpl(Inline), Op, Closures(Closure)]
+        // public static Span<T> segment<T>(in BinaryHeap<T> src, uint index)
+        //     where T : unmanaged
+        // {
+        //     if(index > src.Capacity - 1)
+        //         return Span<T>.Empty;
+        //     ref readonly var i0 = ref src.Offset(index);
+        //     if(index < src.Capacity - 1)
+        //         return slice(src.Cells, i0, src.Offset(index + 1) - i0);
+        //     else
+        //         return slice(src.Cells, i0);
+        // }
 
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static Span<T> segment<T>(in SpanHeap<T> src, uint index)
-        {
-            if(index > src.SegCount - 1)
-                return Span<T>.Empty;
-            ref readonly var i0 = ref skip(src.Offsets,index);
-            if(index < src.LastSegment)
-                return slice(src.Segments, i0, skip(src.Offsets,index + 1) - i0);
-            else
-                return slice(src.Segments, i0);
-        }
+        // [MethodImpl(Inline), Op, Closures(Closure)]
+        // public static Span<T> segment<T>(in SpanHeap<T> src, uint index)
+        // {
+        //     if(index > src.SegCount - 1)
+        //         return Span<T>.Empty;
+        //     ref readonly var i0 = ref skip(src.Offsets,index);
+        //     if(index < src.LastSegment)
+        //         return slice(src.Segments, i0, skip(src.Offsets,index + 1) - i0);
+        //     else
+        //         return slice(src.Segments, i0);
+        // }
 
         // [MethodImpl(Inline), Op, Closures(Closure)]
         // public static ReadOnlySpan<T> segment<T>(in ReadOnlyHeap<T> src, uint index)
