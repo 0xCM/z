@@ -192,7 +192,7 @@ namespace Z0
             i=0;
             storage = 0;
             buffer.Clear();
-            Bitfields.unpack4x1(src,buffer);
+            BitPack.unpack4x1(src,buffer);
             output = BitPack.scalar<uint>(buffer);
             Require.equal(input,output);
             count = BitRender.render32x4(sep, storage, ref i, dst);
@@ -209,7 +209,7 @@ namespace Z0
             i=0;
             storage = 0;
             buffer.Clear();
-            Bitfields.unpack4x1(src, buffer);
+            BitPack.unpack4x1(src, buffer);
             output = BitPack.scalar<uint>(buffer);
             Require.equal(input,output);
             count = BitRender.render32x4(sep, storage, ref i, dst);
@@ -226,7 +226,7 @@ namespace Z0
             i=0;
             storage = 0;
             buffer.Clear();
-            Bitfields.unpack4x1(src,buffer);
+            BitPack.unpack4x1(src,buffer);
             output = BitPack.scalar<uint>(buffer);
             Require.equal(input,output);
             count = BitRender.render32x4(sep, storage, ref i, dst);
@@ -243,7 +243,7 @@ namespace Z0
             i=0;
             storage = 0;
             buffer.Clear();
-            Bitfields.unpack4x1(src,buffer);
+            BitPack.unpack4x1(src,buffer);
             output = BitPack.scalar<uint>(buffer);
             Require.equal(input,output);
             count = BitRender.render32x4(sep, storage, ref i, dst);
@@ -260,7 +260,7 @@ namespace Z0
             i=0;
             storage = 0;
             buffer.Clear();
-            Bitfields.unpack4x1(src,buffer);
+            BitPack.unpack4x1(src,buffer);
             output = BitPack.scalar<uint>(buffer);
             Require.equal(input,output);
             count = BitRender.render32x4(sep, storage, ref i, dst);
@@ -282,7 +282,7 @@ namespace Z0
         {
             var storage = ByteBlock64.Empty;
             var unpacked = recover<bit>(storage.Bytes);
-            Bitfields.unpack64x1(input, unpacked);
+            BitPack.unpack64x1((ulong)input, unpacked);
             BitVector64 packed = Bitfields.pack64x1(unpacked);
 
             Require.equal(input, packed);

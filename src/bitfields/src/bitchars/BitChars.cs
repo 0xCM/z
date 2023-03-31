@@ -163,7 +163,7 @@ namespace Z0
         }        
     }
 
-    partial class XTend
+    public static partial class XTend
     {
         public static BitChar ToBitChar(this bit src)
             => BitChars.from(src);

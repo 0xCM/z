@@ -19,7 +19,7 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(byte))
-                Bitfields.unpack8x32(uint8(src), dst);
+                BitPack.unpack8x32(uint8(src), dst);
             else if(typeof(T) == typeof(ushort))
                 BitPack.unpack1x16x32(uint16(src), dst);
             else if(typeof(T) == typeof(uint))
@@ -43,7 +43,7 @@ namespace Z0
             var bytes = src.Bytes();
             ref readonly var input = ref first(bytes);
             for(var block=0; block<blockcount; block++)
-                Bitfields.unpack8x32(skip(input, block), dst.CellBlock(block));
+                BitPack.unpack8x32(skip(input, block), dst.CellBlock(block));
         }
 
         /// <summary>

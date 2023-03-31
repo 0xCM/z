@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <BitFields>$(MsBuildThisFileDirectory)z0.bitfields.csproj</BitFields>
+  </PropertyGroup>
+</Project>

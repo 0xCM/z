@@ -24,13 +24,13 @@ namespace Z0
         {
             var width = src.Width;
             if(size<T>() == 8)
-                Bitfields.unpack8x1(u8(src), dst);
+                BitPack.unpack8x1(u8(src), dst);
             else if(size<T>() <= 16)
                 Bitfields.unpack16x1(u16(src), dst);
             else if(size<T>() <= 32)
-                Bitfields.unpack64x1(u32(src), dst);
+                BitPack.unpack64x1(u32(src), dst);
             else
-                Bitfields.unpack64x1(u64(src), dst);
+                BitPack.unpack64x1(u64(src), dst);
         }
 
         [MethodImpl(Inline), Unpack, Closures(Closure)]

@@ -10,11 +10,11 @@ namespace Z0
     using static ApiAtomic;
 
     [ApiHost]
-    public partial class PolyBits : WfSvc<PolyBits>
+    public partial class PolyBits : AppService<PolyBits>
     {
         const NumericKind Closure = UInt64k;
 
-        DbArchive Targets => AppDb.DbTargets().Targets(polybits);
+        DbArchive Targets => AppDb.Service. DbTargets().Targets(polybits);
 
         [CmdOp("api/emit/bitmasks")]
         void EmitApiBitMasks()
@@ -24,7 +24,7 @@ namespace Z0
             => Data("BitMasks", () => BitMask.masks(typeof(BitMaskLiterals)));
 
         public void Emit(Index<BitMaskInfo> src)
-            => Channel.TableEmit(src, AppDb.ApiTargets().Table<BitMaskInfo>());
+            => Channel.TableEmit(src, AppDb.Service.ApiTargets().Table<BitMaskInfo>());
 
         public Index<BfModel> BvEmit(IDbArchive sources, string filter, FolderPath dst)
             => BvEmit(PolyBits.bitvectors(sources, filter), dst);

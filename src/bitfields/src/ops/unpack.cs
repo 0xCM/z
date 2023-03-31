@@ -12,33 +12,6 @@ namespace Z0
     partial struct Bitfields
     {
         /// <summary>
-        /// Partitions the source into 8 segments, each of effective width 1
-        /// </summary>
-        /// <param name="src">The packed source bits</param>
-        /// <param name="dst">The target buffer</param>
-        [MethodImpl(Inline), Op]
-        public static void unpack8x1(byte src, Span<bit> dst)
-            => BitPack.unpack1x8(src, ref u8(first(dst)));
-
-        /// <summary>
-        /// Distributes the first 4 source bits acros 4 segments, each of effective width of 1
-        /// </summary>
-        /// <param name="src">The packed source bits</param>
-        /// <param name="dst">The target buffer</param>
-        [MethodImpl(Inline), Op]
-        public static void unpack4x1(byte src, Span<bit> dst)
-            => first(recover<bit,uint>(dst)) = bits.scatter((uint)src, lsb<uint>(n8, n1));
-
-        /// <summary>
-        /// Partitions the source into 8 segments, each of effective width 1
-        /// </summary>
-        /// <param name="src">The packed source bits</param>
-        /// <param name="dst">The target buffer</param>
-        [MethodImpl(Inline), Op]
-        public static void unpack8x1(byte src, Span<byte> dst)
-            => BitPack.unpack1x8(src, ref first(dst));
-
-        /// <summary>
         /// Partitions the source into 16 segments, each of effective width 1
         /// </summary>
         /// <param name="src">The packed source bits</param>
@@ -61,14 +34,6 @@ namespace Z0
         public static void unpack16x1(ushort src, Span<bit> dst)
             => unpack16x1(src, recover<bit,byte>(dst));
 
-        /// <summary>
-        /// Partitions the source into 64 segments, each of effective width 1
-        /// </summary>
-        /// <param name="src">The source value</param>
-        /// <param name="dst">The target span</param>
-        [MethodImpl(Inline), Op]
-        public static void unpack64x1(ulong src, Span<bit> dst)
-            => BitPack.upack64x1(src, dst);
 
         /// <summary>
         /// Partitions a the source into 2 segments, each of effective width of 4
@@ -289,20 +254,5 @@ namespace Z0
         public static Vector128<ushort> unpack8x16(ulong src)
             => vlo(vpack.vinflate256x16u(vbytes(w128, src)));
 
-        /// <summary>
-        /// Unpacks 8 source bits over 8 32-bit target segments
-        /// </summary>
-        /// <param name="src">The source bits</param>
-        /// <param name="buffer">The intermediate buffer</param>
-        /// <param name="dst">The target buffer</param>
-        [MethodImpl(Inline), Op]
-        public static void unpack8x32(byte src, Span<uint> dst)
-        {
-            var buffer = z64;
-            ref var tmp = ref uint8(ref buffer);
-            ref var lead = ref first(dst);
-            BitPack.unpack1x8(src, ref tmp);
-            vpack.vinflate8x256x32u(tmp).StoreTo(ref lead);
-        }
     }
 }
