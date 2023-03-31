@@ -110,7 +110,6 @@ namespace Z0
         {
             for(var i=0; i< state.Src.Count; state.SrcPos++)
                 step(ref state);
-
         }
 
         public CmdArgs Parse(string[] src)

@@ -5,95 +5,13 @@
 namespace Z0
 {
     using System.Linq;
+    using Microsoft.CodeAnalysis;
+    using Microsoft.CodeAnalysis.CSharp;
+
+
     using Windows;
 
     using static sys;
-
-    class ArchiveWorkflows : WfAppCmd<ArchiveWorkflows>
-    {
-        EcmaEmitter EcmaEmitter => Wf.EcmaEmitter();
-
-        StringDispenser StringDispenser;
-
-        public ArchiveWorkflows()
-        {
-            
-        }
-        ConcurrentDictionary<FolderPath,AssemblyIndex> Assemblies = new();
-
-        new ConcurrentDictionary<FolderPath,FileIndex> Files = new();
-
-        ConcurrentDictionary<FolderPath,ReadOnlySeq<EcmaRowStats>> EcmaStats = new();
-
-        ConcurrentDictionary<FolderPath,ReadOnlySeq<EcmaTypeDef>> EcmaTypeDefs = new();
-
-        ConcurrentDictionary<FolderPath,ReadOnlySeq<MetadataRoot>> EcmaRoots = new();
-
-        AssemblyIndex GetAssemblyIndex(IDbArchive src)
-            => Assemblies.GetOrAdd(src.Root,  _ => Ecma.index(Channel, src));
-
-        ReadOnlySeq<EcmaRowStats> GetEcmaStats(IDbArchive src)
-            => EcmaStats.GetOrAdd(src.Root, _ => Ecma.stats(GetAssemblyIndex(src)));
-
-        FileIndex GetFileIndex(IDbArchive src)
-            => Files.GetOrAdd(src.Root, _ => FS.index(src.Files()));
-
-        ReadOnlySeq<EcmaTypeDef> CalcTypeDefs(IDbArchive src)
-        {
-            var dst = bag<EcmaTypeDef>();
-            iter(GetAssemblyIndex(src).Distinct(), file => {
-            using var ecma = Ecma.file(file.Path);
-            var reader = Ecma.reader(ecma);
-            iter(reader.ReadTypeDefs(), t => {
-                if(!t.Name.Contains("<") && !t.DeclaringType.Contains("<"))
-                    dst.Add(t);
-            }                
-            );
-            
-            }, true);
-            return dst.Array().Sort();
-        }
-
-        ReadOnlySeq<MetadataRoot> CalcMetadataRoots(IDbArchive src)
-        {
-            var dst = bag<MetadataRoot>();
-            iter(GetAssemblyIndex(src).Distinct(), entry => {
-                using var file = EcmaFile.open(entry.Path);
-                var reader = file.EcmaReader();
-                var memory = reader.Memory(reader.AssemblyKey());
-                var root = memory.ReadMetadataRoot();
-                dst.Add(root);                
-            });
-            return dst.Array().Sort();
-        }
-
-        ReadOnlySeq<MetadataRoot> GetMetadataRoots(IDbArchive src)
-            => EcmaRoots.GetOrAdd(src.Root, _ => CalcMetadataRoots(src));
-
-        ReadOnlySeq<EcmaTypeDef> GetTypeDefs(IDbArchive src)
-            => EcmaTypeDefs.GetOrAdd(src.Root, _ => CalcTypeDefs(src));
-
-        [CmdOp("ecma/stats")]
-        void EcmaEmitStats(CmdArgs args)
-        {
-            var src = FS.archive(args[0]);
-            Channel.TableEmit(GetEcmaStats(src), EnvDb.Nested("ecma", src).Table<EcmaRowStats>());                        
-        }
-
-        [CmdOp("ecma/typedefs")]
-        void EmitTypeDefs(CmdArgs args)
-        {
-            var src = FS.archive(args[0]);
-            Channel.TableEmit(GetTypeDefs(src), EnvDb.Nested("ecma", src).Table<EcmaTypeDef>());
-        }
-
-        [CmdOp("ecma/roots")]
-        void EmitMdHeader(CmdArgs args)
-        {
-            var src = FS.archive(args[0]);
-            Channel.TableEmit(GetMetadataRoots(src), EnvDb.Nested("ecma", src).Table<MetadataRoot>());
-        }
-    }
 
     class EcmaCmd : WfAppCmd<EcmaCmd>
     {
@@ -158,7 +76,6 @@ namespace Z0
         [CmdOp("ecma/emit/headers")]
         void EmitHeaders()
             => EcmaEmitter.EmitSectionHeaders(sys.controller().RuntimeArchive(), Dst);
-
 
         [CmdOp("ecma/tables/kinds")]
         void EmitEcmaTables()
@@ -500,6 +417,54 @@ namespace Z0
             var result = compilation.Emit(stream,options:emitOptions);          
         }
 
+const string SyntaxTest = @"
+// The PE signature bytes that follows the DOS stub header.
+static const char PEMagic[] = {'P', 'E', '\0', '\0'};
+
+static const char BigObjMagic[] = {
+    '\xc7', '\xa1', '\xba', '\xd1', '\xee', '\xba', '\xa9', '\x4b',
+    '\xaf', '\x20', '\xfa', '\xf6', '\x6a', '\xa4', '\xdc', '\xb8',
+};
+
+static const char ClGlObjMagic[] = {
+    '\x38', '\xfe', '\xb3', '\x0c', '\xa5', '\xd9', '\xab', '\x4d',
+    '\xac', '\x9b', '\xd6', '\xb6', '\x22', '\x26', '\x53', '\xc2',
+};
+
+// The signature bytes that start a .res file.
+static const char WinResMagic[] = {
+    '\x00', '\x00', '\x00', '\x00', '\x20', '\x00', '\x00', '\x00',
+    '\xff', '\xff', '\x00', '\x00', '\xff', '\xff', '\x00', '\x00',
+};
+
+// Sizes in bytes of various things in the COFF format.
+enum {
+  Header16Size = 20,
+  Header32Size = 56,
+  NameSize = 8,
+  Symbol16Size = 18,
+  Symbol32Size = 20,
+  SectionSize = 40,
+  RelocationSize = 10
+};
+
+";
+        [CmdOp("csharp/parse")]
+        void ParseCSharp(CmdArgs args)
+        {
+
+            var src = FS.archive(args[0]);         
+            var parser = new SyntaxNodeParser(Channel);
+            
+            parser.ParseNode(CSharpSyntaxTree.ParseText(SyntaxTest).GetRoot());
+            // iter(src.Files(FileKind.Cs), path => {
+            //     var syntax = CSharpSyntaxTree.ParseText(path.ReadText());
+            //     var root = syntax.GetRoot();
+            //     iter(root.ChildNodes(), child => parser.ParseNode(child));
+                                    
+            // });
+
+        }
         static FilePath[] CodeAnalysis
             => FS.path(ExecutingPart.Assembly.Location).FolderPath.DbArchive().Files(FileKind.Dll,true).Where(f => f.FileName.StartsWith("Microsoft.CodeAnalysis")).Array();
 
@@ -508,7 +473,10 @@ namespace Z0
         {
             iter(CodeAnalysis, path => {
                 using var ecma = Ecma.file(path);
+                var data = ecma.ImageData.ToArray();
+                
                 var reader = ecma.EcmaReader();
+
                 var key = reader.AssemblyKey();
                 var counter = 0u;
                 var depscount = 0u;
@@ -557,8 +525,6 @@ namespace Z0
             Channel.Row($"{module.Handle.Address} {module.Path}");
             iter(ops, op => Channel.Row($"{op.Address} {op.Name}"));
         }
-
-
 
         [CmdOp("loop/run")]
         void CheckLoops()

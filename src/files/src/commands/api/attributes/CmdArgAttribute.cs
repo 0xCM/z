@@ -19,10 +19,8 @@ namespace Z0
             Description = EmptyString;
         }
 
-
         public string Name {get;}
 
         public string Description {get;}
-
     }
 }

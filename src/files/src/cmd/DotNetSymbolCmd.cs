@@ -2,42 +2,45 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0.Commands
 {
-    [Settings(Id)]
-    public struct SymGatherSpec : ISettings<SymGatherSpec>
-    {
-        const string Id = "symbolics.collector.settings";
+    [Cmd(CommandName)]
+    public record class DotNetSymbolCmd : Command<DotNetSymbolCmd>
+    {        
+        public const string CommandName = "dotnet/symbol";
+    
+        [CmdArg]
+        public FilePath Source;
 
         [CmdFlag("--recurse-subdirectories")]
-        public bool Recurse;
+        public bit Recurse;
         
         [CmdFlag("--symbols")]
-        public bool Symbols;
+        public bit Symbols;
         
         [CmdFlag("--debugging")]
-        public bool Debugging;
+        public bit Debugging;
         
         [CmdFlag("--modules")]
-        public bool Modules;
+        public bit Modules;
         
         [CmdFlag("--windows-pdbs")]
-        public bool ForceWindowsPdbs;        
+        public bit ForceWindowsPdbs;        
 
         [CmdFlag("--host-only")]
-        public bool HostOnly;
+        public bit HostOnly;
         
         [CmdFlag("--verifycore")]
-        public bool Verify;
+        public bit Verify;
 
         [CmdFlag("--diagnostics")]
-        public bool Diagnostics;
+        public bit Diagnostics;
 
         [CmdFlag("--microsoft-symbol-server")]
-        public bool UseMsServer;
+        public bit UseMsServer;
 
         [CmdFlag("--overwrite")]
-        public bool Overwrite;
+        public bit Overwrite;
 
         [CmdArg("--internal-server")]
         public Uri InternalServer;

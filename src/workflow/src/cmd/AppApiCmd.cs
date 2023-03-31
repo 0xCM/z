@@ -22,7 +22,7 @@ namespace Z0
             var buffer = text.emitter();
             var src = ApiAssemblies.Components;
             var defs = CsvTables.defs(src);
-            iter(defs, src => CsvTables.generate(0u,src,buffer));
+            iter(defs, src => CsvTables.generate(0u, src, buffer));
             var dst = AppDb.CgStage("api.tables").Path("replicants", FileKind.Cs);
             Channel.FileEmit(buffer.Emit(),dst);         
         }
@@ -147,14 +147,6 @@ namespace Z0
             for(var i=0; i<src.Count; i++)
                 src[i].Render(s => writer.WriteLine(s));
         }
-
-        // [CmdOp("tool/script")]
-        // Outcome ToolScript(CmdArgs args)
-        //     => Tooling.RunScript(arg(args,0).Value, arg(args,1).Value);
-
-        // [CmdOp("tool/setup")]
-        // void ConfigureTool(CmdArgs args)
-        //     => Tooling.Setup(Cmd.tool(args));
 
         [CmdOp("tool/docs")]
         void ToolDocs(CmdArgs args)

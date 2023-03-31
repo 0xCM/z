@@ -12,14 +12,7 @@ namespace Z0.Tools
             : base("llvm-readobj")
         {}
 
-        public enum CommandKind : byte
-        {
-            None,
-
-            EmitExports
-        }
     }
-
 
     class LlvmReadObj : ToolWfCmd<LlvmReadObj,ReadObjFlow>
     {

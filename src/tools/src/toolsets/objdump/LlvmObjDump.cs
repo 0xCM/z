@@ -17,14 +17,6 @@ namespace Z0.Tools
     public abstract record class ObjDumpCmd<C>
         where C : ObjDumpCmd<C>,new()
     {
-        public enum CommandKind : byte
-        {
-            None,
-
-            EmitSymbols,
-
-            Disassemble
-        }
 
     }
 
