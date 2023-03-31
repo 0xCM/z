@@ -11,7 +11,16 @@ namespace Z0
     using static CmdActorKind;
 
     public class ApiServers : AppService
-    {
+    {        
+        public static IApiShell shell(IWfRuntime wf, string[] args, params Assembly[] parts)
+            => new ApiShell(wf, dispatcher(wf, parts), args);
+
+        public static IApiShell shell(string[] args, params Assembly[] parts)
+        {
+            var wf = runtime(false);
+            return new ApiShell(wf, dispatcher(wf, parts), args);
+        }
+
         public static Outcome exec(string name, CmdArgs args)
             => Dispatcher.Dispatch(name, args);
             
@@ -26,34 +35,6 @@ namespace Z0
             var data = catalog().Values;
             iter(data, x => Channel.Row(x.Uri.Name));
             Channel.TableEmit(data, dst.Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv));
-        }
-
-        public static CmdMethods methods(IWfRuntime wf, params Assembly[] src)
-        {            
-            var providers = ApiServers.providers(src.Length == 0 ? ApiAssemblies.Components : src);
-            var types = providers.ServiceTypes();
-            var dst = dict<string,CmdMethod>();
-            iter(types, t => {
-                var method = t.StaticMethods().Public().Where(m => m.Name == "create").First();
-                var service = (IApiService)method.Invoke(null, new object[]{wf});
-                iter(methods(service).Defs, m => dst.TryAdd(m.CmdName, m));
-            });
-
-            return new (dst);
-        }
-
-        static CmdMethods methods(IApiService host)
-        {
-            var src = host.GetType().DeclaredInstanceMethods().Tagged<CmdOpAttribute>();
-            var dst = dict<string,CmdMethod>();
-            var count = src.Length;
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var mi = ref skip(src,i);
-                var tag = mi.Tag<CmdOpAttribute>().Require();
-                dst.TryAdd(tag.Name, new CmdMethod(tag.Name, classify(mi),  mi, host));                
-            }
-            return new CmdMethods(dst);
         }
 
         public static IApiCmdRunner runner(IWfRuntime wf, params Assembly[] src)
@@ -141,20 +122,14 @@ namespace Z0
                 throw;
             }
         }
-        
-        public static IApiShell shell(IWfRuntime wf, params string[] args)
-            => shell(wf, methods(wf), args);
-            
-        public static IApiShell shell(IWfRuntime wf, CmdMethods methods, params string[] args)
-            => new ApiShell(wf,new ApiDispatcher(wf.Channel, methods), args);
-        
-        public static A shell<A>(string[] args, IWfRuntime wf, IApiContext context, bool verbose = false)
-            where A : IAppShell, new()
-        {            
-            var app = new A();
-            app.Init(wf, context, args);
-            return app;
-        }
+
+        // public static A shell<A>(string[] args, IWfRuntime wf, IApiContext context, bool verbose = false)
+        //     where A : IAppShell, new()
+        // {            
+        //     var app = new A();
+        //     app.Init(wf, context, args);
+        //     return app;
+        // }
 
         public static A shell<A>(params string[] args)
             where A : IAppShell, new()
@@ -165,23 +140,23 @@ namespace Z0
             return app;
         }
 
-        public static A shell<A,C>(Func<IWfRuntime,ReadOnlySeq<IApiService>> factory, bool verbose = false)
-            where A : IAppShell, new()
-            where C : IApiService, new()
-        {
-            var wf = runtime();
-            var channel = wf.Channel;
-            if(verbose)
-                channel.Babble("Creating api server");
+        // public static A shell<A,C>(Func<IWfRuntime,ReadOnlySeq<IApiService>> factory, bool verbose = false)
+        //     where A : IAppShell, new()
+        //     where C : IApiService, new()
+        // {
+        //     var wf = runtime();
+        //     var channel = wf.Channel;
+        //     if(verbose)
+        //         channel.Babble("Creating api server");
 
-            var app = new A();
-            var providers = factory(wf);
-            app.Init(wf, context<C>(wf, channel, providers));
+        //     var app = new A();
+        //     var providers = factory(wf);
+        //     app.Init(wf, context<C>(wf, channel, providers));
 
-            if(verbose)
-                channel.Babble($"Created {providers.Length} command providers");
-            return app;
-        }
+        //     if(verbose)
+        //         channel.Babble($"Created {providers.Length} command providers");
+        //     return app;
+        // }
 
         public static IApiContext context<C>(IWfRuntime wf, Func<ReadOnlySeq<IApiService>> factory, bool verbose = false)
             where C : IApiService, new()
@@ -280,6 +255,38 @@ namespace Z0
 
            return result;
         }
+
+        static ICmdDispatcher dispatcher(IWfRuntime wf, params Assembly[] parts)
+        {
+            var providers = ApiServers.providers(parts.Length == 0 ? ApiAssemblies.Components : parts);
+            var types = providers.ServiceTypes();
+            var dst = dict<string,CmdMethod>();
+            iter(types, t => {
+                var method = t.StaticMethods().Public().Where(m => m.Name == "create").First();
+                var service = (IApiService)method.Invoke(null, new object[]{wf});
+                iter(methods(service).Defs, m => dst.TryAdd(m.CmdName, m));
+            });
+
+            ICmdDispatcher dispatcher = new ApiDispatcher(wf.Channel, new CmdMethods(dst));
+            AppData.Value(nameof(ICmdDispatcher), dispatcher);
+            return dispatcher;
+        }
+
+
+        static CmdMethods methods(IApiService host)
+        {
+            var src = host.GetType().DeclaredInstanceMethods().Tagged<CmdOpAttribute>();
+            var dst = dict<string,CmdMethod>();
+            var count = src.Length;
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var mi = ref skip(src,i);
+                var tag = mi.Tag<CmdOpAttribute>().Require();
+                dst.TryAdd(tag.Name, new CmdMethod(tag.Name, classify(mi),  mi, host));                
+            }
+            return new CmdMethods(dst);
+        }
+
 
         static IApiContext context<C>(IWfRuntime wf, IWfChannel channel, ReadOnlySeq<IApiService> providers, bool verbose = false)
             where C : IApiService, new()

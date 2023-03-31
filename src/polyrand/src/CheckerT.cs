@@ -10,7 +10,7 @@ namespace Z0
     public abstract class Checker<T> : WfAppCmd<T>, IChecker
         where T : Checker<T>, new()
     {
-        readonly ConstLookup<string,MethodInfo> Methods;
+        readonly ConstLookup<string,MethodInfo> MethodLookup;
 
         public readonly Index<string> CheckSpecs;
 
@@ -20,13 +20,15 @@ namespace Z0
 
         readonly string SvcName;
 
+        public ReadOnlySpan<MethodInfo> Checks => MethodLookup.Values;
+
         protected Checker()
         {
             SvcName = Checkers.name(typeof(T));
             var methods = cdict<string,MethodInfo>();
             Checkers.methods(HostType,methods);
-            Methods = methods;
-            CheckSpecs = Methods.Keys.ToArray();
+            MethodLookup = methods;
+            CheckSpecs = MethodLookup.Keys.ToArray();
             Queue = EventQueue.allocate(GetType(), EventRaised);
         }
 
@@ -148,7 +150,7 @@ namespace Z0
         {
             try
             {
-                iter(Methods.Values, m => Run(m,log), pll);
+                iter(MethodLookup.Values, m => Run(m,log), pll);
             }
             catch(Exception e)
             {

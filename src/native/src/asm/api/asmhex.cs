@@ -27,8 +27,17 @@ namespace Z0.Asm
             var data = slice(bytes(src), 0, size);
             var storage = 0ul;
             var buffer = bytes(storage);
-            core.reverse(data, buffer);
+            sys.reverse(data, buffer);
             return new AsmHexCode(Cells.cell128(u64(first(buffer)), (ulong)size << 56));
         }
+
+        [Op]
+        public static AsmHexCode asmhex(string src)
+        {
+            var dst = AsmHexCode.Empty;
+            parse(src.Trim(), out dst);
+            return dst;
+        }
+
     }
 }

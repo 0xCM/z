@@ -13,6 +13,6 @@ namespace Z0
         /// <param name="src">The target</param>
         [MethodImpl(Inline), Op]
         public static void unpack16x16(in Cell128 src, Span<ushort> dst)
-            => gcpu.vstore(vpack.vinflate256x16u(src), dst);
+            => vgcpu.vstore(vpack.vinflate256x16u(src), dst);
     }
 }

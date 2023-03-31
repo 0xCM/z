@@ -11,7 +11,7 @@ namespace Z0
     using K = AsmOcTokenKind;
     using P = Pow2x32;
 
-    partial class AsmCheckCmd
+    partial class AsmCheckCmd_X
     {
        static ReadOnlySpan<byte> x7ffaa76f0ae0
             => new byte[32]{0x0f,0x1f,0x44,0x00,0x00,0x48,0x8b,0xd1,0x48,0xb9,0x50,0x0f,0x24,0xa5,0xfa,0x7f,0x00,0x00,0x48,0xb8,0x30,0xdd,0x99,0xa6,0xfa,0x7f,0x00,0x00,0x48,0xff,0xe0,0};
@@ -76,18 +76,6 @@ namespace Z0
             return 0;
         }
 
-        [CmdOp("asm/stubs/check")]
-        void CheckStubDispatch()
-        {
-            // var stubs = Jumps;
-            // if(stubs.Create<ulong>(0))
-            //     Write(stubs.EncodeDispatch(0).FormatHexData());
-
-            var dispatcher = new X86Dispatcher(12);
-            dispatcher.Create<ulong>(0);
-            var encoded = dispatcher.Encode(0);
-            Write(encoded.FormatHexData());
-        }
 
         [Free]
         public interface ICalc64
@@ -146,48 +134,6 @@ namespace Z0
             return true;
         }
 
-        public class TableInfo
-        {
-            public ulong Count;
-
-            public uint M;
-
-            public uint N;
-        }
-
-        [CmdOp("check/md/arrays")]
-        unsafe Outcome CheckMdArrays(CmdArgs args)
-        {
-            var m = 0xF;
-            var n = 0xA;
-            var data = new ulong[m,n];
-            for(var i=0; i<m; i++)
-            for(var j=0; j<n; j++)
-                data[i,j] = (ulong)(i*j);
-
-
-            fixed(ulong* pSrc = data)
-            {
-                MemoryAddress @base = pSrc;
-                var pCurrent = pSrc;
-                for(var i=0; i<m; i++)
-                {
-                    for(var j=0; j<n; j++)
-                    {
-                        MemoryAddress loc = pCurrent;
-                        var a = *pCurrent++;
-                        Require.equal(a, (ulong)(i*j));
-                        Write(string.Format("{0} {1} {2}x{3}={4}", loc, loc - @base, i, j, a));
-                    }
-                }
-            }
-
-            var dst = Unsafe.As<TableInfo>(data);
-            Write(string.Format("{0}={1}x{2}", dst.Count, dst.M, dst.N));
-
-            return true;
-        }
-
         Parsers Parsers => new();
 
         [CmdOp("check/api/parsers")]
@@ -198,29 +144,6 @@ namespace Z0
             {
                 Require.equal(x,dst);
             }
-            return true;
-        }
-
-        [CmdOp("check/bitfields")]
-        Outcome CheckBitFields(CmdArgs args)
-        {
-            var storage = ByteBlock32.Empty;
-            var buffer = storage.Bytes;
-            byte segwidth = 8;
-            ReadOnlySpan<byte> indices = new byte[]{3,33,59,61,101,203};
-            gbits.enable(buffer, indices);
-            var segcount = buffer.Length;
-            for(var i=z8; i<segcount; i++)
-            {
-                ref readonly var cell = ref skip(buffer,i);
-                var offset = (byte)(i*segwidth);
-                if(cell != 0)
-                {
-                    var seg = BitfieldSeg.define(cell, offset, segwidth);
-                    Write(seg.Format());
-                }
-            }
-
             return true;
         }
 

@@ -39,29 +39,25 @@ namespace Z0
         MemoryAddress IBufferAllocation.BaseAddress
             => BaseAddress;
 
-        public ref NativeCell<T> this[uint i]
+        public ref T this[uint i]
         {
             [MethodImpl(Inline)]
             get => ref Cell(i);
         }
 
-        public ref NativeCell<T> this[int i]
+        public ref T this[int i]
         {
             [MethodImpl(Inline)]
             get => ref Cell(i);
         }
 
         [MethodImpl(Inline)]
-        public ref NativeCell<T> Cell(uint index)
-            => ref sys.@as<NativeCell<T>>((BaseAddress + CellSize*index).Pointer());
+        public ref T Cell(uint index)
+            => ref sys.@as<T>((BaseAddress + CellSize*index).Pointer());
 
         [MethodImpl(Inline)]
-        public ref NativeCell<T> Cell(int index)
+        public ref T Cell(int index)
             => ref Cell((uint)index);
-
-        [MethodImpl(Inline)]
-        public ref T Content(uint index)
-            => ref Cell(index).Content;
 
         public void Dispose()
             => NativeCells.free(Id);

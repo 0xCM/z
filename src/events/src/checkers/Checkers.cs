@@ -15,10 +15,10 @@ namespace Z0
             => string.Format("{0}.{1}", name(src.DeclaringType), src.Name);
 
         public static void methods(Type src, ConcurrentDictionary<string,MethodInfo> dst)
-            => iter(src.DeclaredMethods().WithArity(0), m => dst.TryAdd(name(m), m));
+            => iter(src.DeclaredMethods().Unignored().WithArity(0), m => dst.TryAdd(name(m), m));
 
         public static void methods(Type src, ConcurrentBag<MethodInfo> dst)
-            => iter(src.DeclaredMethods().WithArity(0), m => dst.Add(m));
+            => iter(src.DeclaredMethods().Unignored().WithArity(0), m => dst.Add(m));
 
         public static IEventTarget target(IWfChannel channel)
             => CheckEventTarget.create(channel);

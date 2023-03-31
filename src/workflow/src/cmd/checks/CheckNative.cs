@@ -6,17 +6,16 @@ namespace Z0
 {
     using static sys;
 
-    public sealed class AncestryChecks : Checker<AncestryChecks>
+    sealed class CheckNative : Checker<CheckNative>
     {
         [CmdOp("native/checks")]
         void RunNativeChecks()
         {
             var t0 = NativeTypes.seg(NativeSegKind.Seg128x16i);
-            Write(t0.Format());
+            Channel.Write(t0.Format());
 
             var t1 = NativeTypes.seg(NativeSegKind.Seg16u);
-            Write(t1.Format());
-
+            Channel.Write(t1.Format());
             CheckNativeAlloc();
         }
 
@@ -31,7 +30,7 @@ namespace Z0
             for(var i=0u; i<count; i++)
             {
                 var offset = i*n;
-                native.Content(i) = new string(slice(bits, offset, n));
+                native[i] = new string(slice(bits, offset, n));
             }
         }
 
@@ -47,6 +46,7 @@ namespace Z0
             var ancestors = Ancestors.create(dispenser);
 
             ancestors.Parse(Case0, out var @case0);
+            Channel.Write($"{Case0} -> {@case0}");
             ancestors.Parse(Case1, out var @case1);
             ancestors.Parse(Case2, out var @case2);
             ancestors.Parse(Case3, out var @case3);

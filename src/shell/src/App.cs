@@ -10,7 +10,7 @@ namespace Z0
         public static int Main(params string[] args)
         {
             var result = 0;
-            using var app = ApiServers.shell(ApiServers.runtime(false), args);
+            using var app = ApiServers.shell(args);
             try
             {
                 app.Run();

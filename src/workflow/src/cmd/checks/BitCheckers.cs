@@ -12,12 +12,13 @@ namespace Z0
         public static void run(IWfRuntime wf, bool pll = true)
         {
             var checkers = new BitCheckers(wf);
-            checkers.Run(Checkers.target(wf.Channel), pll);
+            var dst = Checkers.target(wf.Channel);
+            checkers.Run(dst, pll);
         }
 
-        public void Run(IEventTarget log, bool pll)
+        public void Run(IEventTarget dst, bool pll)
         {
-            Checkers.run(pll,GetType(), log,
+            Checkers.run(pll,GetType(), dst,
                 (nameof(CheckBitNumbers), CheckBitNumbers),
                 (nameof(CheckBitReplication), CheckBitReplication),
                 (nameof(CheckSegVars), CheckSegVars),

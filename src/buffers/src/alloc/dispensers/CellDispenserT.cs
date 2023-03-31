@@ -13,11 +13,11 @@ namespace Z0
 
         readonly MemoryDispenser Dispenser;
 
-        public CellDispenser(uint partition)
+        public CellDispenser(uint count)
             : base(true)
         {
             CellSize = sys.size<T>();
-            CellCount = partition;
+            CellCount = count;
             Dispenser = Dispense.memory(CellCount*CellSize);
         }
 

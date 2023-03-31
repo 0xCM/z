@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class AsmCheckExec
+    class AsmCheckExec
     {
         public static void run(IWfChannel channel)
         {

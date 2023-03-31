@@ -2,7 +2,7 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Asm
+namespace Z0
 {
     using static sys;
     
@@ -80,6 +80,6 @@ namespace Z0.Asm
         public static implicit operator AsmHexCode(AsmEncoding<K,T> src)
             => src.ToAsmHex();
 
-        public static AsmEncoding<T> Empty => default;
+        public static AsmEncoding<K,T> Empty => default;
     }
 }

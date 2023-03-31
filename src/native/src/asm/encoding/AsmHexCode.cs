@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using Asm;
 
     public record struct AsmHexCode : IDataString<AsmHexCode>
     {     
@@ -76,19 +77,19 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator AsmHexCode(BinaryCode src)
-            => AsmHexApi.asmhex(src.View);
+            => asm.asmhex(src.View);
 
         [MethodImpl(Inline)]
         public static implicit operator AsmHexCode(ReadOnlySpan<byte> src)
-            => AsmHexApi.asmhex(src);
+            => asm.asmhex(src);
 
         [MethodImpl(Inline)]
         public static implicit operator AsmHexCode(byte[] src)
-            => AsmHexApi.asmhex(src);
+            => asm.asmhex(src);
 
         [MethodImpl(Inline)]
         public static implicit operator AsmHexCode(string src)
-            => AsmHexApi.asmhex(src);
+            => asm.asmhex(src);
 
         public static AsmHexCode Empty
         {

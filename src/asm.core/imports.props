@@ -4,5 +4,6 @@
     <ProjectReference Include="$(Cells)" />
     <ProjectReference Include="$(Events)" />
     <ProjectReference Include="$(Numbers)" />
+    <ProjectReference Include="$(BitFields)" />
   </ItemGroup>
 </Project>

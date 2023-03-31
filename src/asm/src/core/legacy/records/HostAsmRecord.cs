@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using Asm;
 
     [Record(TableId), StructLayout(LayoutKind.Sequential)]
     public struct HostAsmRecord : IComparable<HostAsmRecord>
@@ -35,7 +36,7 @@ namespace Z0
                 return result;
 
             AsmExpr.parse(skip(cells,i++), out dst.Expression);
-            dst.Encoded = AsmHexApi.asmhex(skip(cells, i++));
+            dst.Encoded = asm.asmhex(skip(cells, i++));
             result = AsmSigInfo.parse(skip(cells, i++), out dst.Sig);
             if(result.Fail)
                 return result;

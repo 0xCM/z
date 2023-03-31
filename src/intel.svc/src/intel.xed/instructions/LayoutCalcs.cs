@@ -22,7 +22,7 @@ namespace Z0
                 var counter = 0u;
                 for(var i=0; i<count; i++)
                 {
-                    var segref = new SegRef<LayoutCell>(blocks[i].Location, size);
+                    var segref = new SegRef<LayoutCell>(sys.address(blocks[i]), size);
                     counter += layout(src[i], segref, out dst[i]);
                     layouts.Record(i) = record(dst[i]);
                 }
@@ -43,12 +43,10 @@ namespace Z0
                     if(layout.Count == 0)
                         continue;
 
-                    //var buffer = comps.Cells(k, layout.Count);
-                    ref var _buffer = ref comps.Content(k);
+                    ref var _buffer = ref comps[k];
                     for(var j=0; j<layout.Count; j++, k++)
                     {
                         ref readonly var cell = ref layout[j];
-                        var address = comps[k].Location;
                         seek(_buffer,j) = new LayoutComponent(cell.Field, cell.Kind, (ulong)cell);
                     }
                     seek(vectors,k) = new LayoutVector(memory.segref(_buffer, layout.Count));

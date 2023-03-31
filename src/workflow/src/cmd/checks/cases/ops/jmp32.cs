@@ -25,7 +25,7 @@ namespace Z0.Asm
             var dst = new JmpRel32();
             Require.invariant(DataParser.parse(source, out dst.Source), () => source);
             dst.Statment = statement;
-            dst.Encoding = AsmHexApi.asmhex(encoding);
+            dst.Encoding = asm.asmhex(encoding);
             dst.Disp = AsmRel.disp32(dst.Encoding.Bytes);
             Require.invariant(DataParser.parse(target, out dst.RelativeTarget), () => target);
             return dst;

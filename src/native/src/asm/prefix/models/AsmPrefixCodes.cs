@@ -7,7 +7,6 @@ namespace Z0
     using Asm;
 
     using static Hex8Kind;
-    using static XedLiterals;
 
     using NBK = NumericBaseKind;
 

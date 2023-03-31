@@ -8,14 +8,10 @@ namespace Z0
     {
         class ServiceCache : AppServices<ServiceCache>
         {
-            public AsmCheckCmd AsmChecks(IWfRuntime wf)
-                => Service<AsmCheckCmd>(wf);
 
         }
 
         static ServiceCache Services => ServiceCache.Instance;
 
-        public static AsmCheckCmd AsmCheckCmd(this IWfRuntime wf)
-            => Services.AsmChecks(wf);
     }
 }

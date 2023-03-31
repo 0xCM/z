@@ -22,6 +22,21 @@ namespace Z0
     {
         DbArchive Targets => AppDb.DbOut().Targets(polybits);
 
+        [CmdOp("bitcheckers/run")]
+        void RunChecks()
+        {
+            BitCheckers.run(Wf, true);            
+        }
+
+        [CmdOp("checkers/run")]
+        void CheckBits()
+        {
+            CheckRunner.create(Wf).Run(PllExec, 
+                BitfieldChecks.create(Wf),
+                PbChecks.create(Wf)
+            );
+        }    
+
         public void Check()
         {
             Targets.Delete();

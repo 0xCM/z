@@ -10,25 +10,11 @@ namespace Z0
     {
         sealed class ServiceCache : AppServices<ServiceCache>
         {
-            public AncestryChecks AncestryChecks(IWfRuntime wf)
-                => Service<AncestryChecks>(wf);
-
-            public BitLogicChecker BitLogicChecker(IWfRuntime wf)
-                => Service<BitLogicChecker>(wf);
-
-            public CalcChecker CalcChecker(IWfRuntime wf)
-                => Service<CalcChecker>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
 
-        public static AncestryChecks AncestryChecks(this IWfRuntime wf)
-            => Services.AncestryChecks(wf);
 
-        public static BitLogicChecker BitLogicChecker(this IWfRuntime wf)
-            => Services.BitLogicChecker(wf);
 
-        public static IApiService CalcChecker(this IWfRuntime wf)
-            => Services.CalcChecker(wf);
     }
 }

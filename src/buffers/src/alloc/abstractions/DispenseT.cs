@@ -37,9 +37,9 @@ namespace Z0
         public static SymbolDispenser symbols()
             => dispenser(() => new SymbolDispenser());
 
-        public static CellDispenser<C> cells<C>(uint partition)
+        public static CellDispenser<C> cells<C>(uint count)
             where C : unmanaged
-                => dispenser(() => new CellDispenser<C>(partition));
+                => dispenser(() => new CellDispenser<C>(count));
 
         public static StringDispenser strings()
             => dispenser(() => new StringDispenser());

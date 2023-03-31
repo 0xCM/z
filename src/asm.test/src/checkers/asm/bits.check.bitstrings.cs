@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    partial class AsmCheckCmd
+    partial class AsmCheckCmd_X
     {
         ReadOnlySpan<byte> Input => new byte[]{0x44, 0x01, 0x58,0x04};
 

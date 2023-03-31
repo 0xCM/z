@@ -60,7 +60,6 @@ namespace Z0
         public static void unpack8x1(byte src, Span<byte> dst)
             => BitPack.unpack1x8(src, ref first(dst));
 
-
         /// <summary>
         /// Partitions the source into 64 segments, each of effective width 1
         /// </summary>

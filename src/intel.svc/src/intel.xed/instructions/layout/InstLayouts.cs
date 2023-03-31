@@ -23,7 +23,6 @@ namespace Z0
                 Records = sys.alloc<InstLayoutRecord>(src.Length);;
             }
 
-
             public uint BlockCount
             {
                 [MethodImpl(Inline)]
@@ -42,14 +41,14 @@ namespace Z0
             public ref readonly InstLayoutBlock Block(int i)
             {
                 ref readonly var block = ref Blocks[i];
-                return ref block.Content;
+                return ref block;
             }
 
             [MethodImpl(Inline)]
             public ref readonly InstLayoutBlock Block(uint i)
             {
                 ref readonly var block = ref Blocks[i];
-                return ref block.Content;
+                return ref block;
             }
 
             public uint LayoutCount
