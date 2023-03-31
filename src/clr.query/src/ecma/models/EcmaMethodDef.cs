@@ -7,6 +7,8 @@ namespace Z0
     [StructLayout(LayoutKind.Sequential,Pack=1)]
     public record struct EcmaMethodDef
     {
+        public AssemblyKey Assembly;
+        
         public EcmaToken Token;
 
         public @string Namespace;

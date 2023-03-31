@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed class CodeLauncher : Launcher<CodeLauncher>
+    public sealed class CodeLauncher : ProcessLauncher<CodeLauncher>
     {
         public static Task<ExecToken> start<T>(IWfChannel channel, T target, ToolExecSpec context)
-            => ProcExec.launch(channel, FS.path("code.exe"), Cmd.args(target), context);
+            => ToolExec.run(channel, FS.path("code.exe"), Cmd.args(target), context);
 
         static Option<FolderPath> dir(CmdArgs src, string name)
         {
@@ -31,7 +31,7 @@ namespace Z0
         public override void Launch(CmdArgs args, Action<Process> launched)
         {
             var cd = Env.cd();
-            var context = ProcExec.spec(cd, EnvVars.Empty, launched);
+            var context = ToolExec.spec(cd, EnvVars.Empty, launched);
             var token = ExecToken.Empty;
             var wsroot = dir(args,"wsroot");
             if(wsroot)
@@ -42,7 +42,7 @@ namespace Z0
             {                
                 var launcher = cd + FS.file("develop", FileKind.Cmd);
                 if(launcher.Exists)
-                    ProcExec.launch(Channel, Cmd.args(launcher), context).Wait(); 
+                    ToolExec.run(Channel, Cmd.args(launcher), context).Wait(); 
                 else
                 {
                     var bin = cd + FS.folder("node_modules/.bin");             
@@ -56,7 +56,7 @@ namespace Z0
                             result[j++] = path[i];
 
                         Channel.Babble(result.Format());
-                        context = ProcExec.spec(cd, new EnvVar(EnvTokens.PATH, result.Format()));
+                        context = ToolExec.spec(cd, new EnvVar(EnvTokens.PATH, result.Format()));
                     }
                         
                     var workspaces = cd.Files(FS.ext("code-workspace"));

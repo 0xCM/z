@@ -11,12 +11,12 @@ namespace Z0
         public static PeTables load(PeReader src)
         {
             var dst = new PeTables();
-            dst._Directories = directories(src.PE);
+            dst._PeInfo = peinfo(src);
+            dst._Directories = directories(src);
             dst._SectionHeaders = sections(src);
-            dst._CoffHeader = coff(src.PE);
+            dst._CoffHeader = coff(src.PE);        
             dst._CorHeader = cor(src.PE.PEHeaders);
-            dst._PeInfo = peinfo(src.PE);
-            dst._DirectoryRows = rows(src.Source.FileName, dst._Directories);
+            dst._DirectoryRows = rows(src.Source.FileName, dst.Directories);
             return dst;
         }
 
@@ -28,7 +28,7 @@ namespace Z0
 
         PeFileInfo _PeInfo;
 
-        ConstLookup<PeDirectoryKind,PeDirectoryEntry> _Directories;
+        PeDirectoryEntries _Directories;
 
         ReadOnlySeq<PeDirectoryRow> _DirectoryRows;
 
@@ -40,7 +40,7 @@ namespace Z0
 
         public ref readonly ReadOnlySeq<PeSectionHeader> SectionHeaders => ref _SectionHeaders;
 
-        public ref readonly ConstLookup<PeDirectoryKind,PeDirectoryEntry> Directories => ref _Directories;
+        public ReadOnlySpan<PeDirectoryEntry> Directories => sys.recover<PeDirectoryEntry>(sys.bytes(_Directories));
         
         public ref readonly ReadOnlySeq<PeDirectoryRow> DirectoryRows => ref _DirectoryRows;
         
@@ -50,22 +50,20 @@ namespace Z0
 
         public ref readonly PeFileInfo PeInfo => ref _PeInfo;
 
-        static ReadOnlySeq<PeDirectoryRow> rows(FileName file,  ConstLookup<PeDirectoryKind,PeDirectoryEntry> src)
+        static ReadOnlySeq<PeDirectoryRow> rows(FileName file,  ReadOnlySpan<PeDirectoryEntry> src)
         {
-            var count = src.EntryCount;
+            var count = src.Length;
             var dst = alloc<PeDirectoryRow>(count);
             var i=0u;
-            iter(src.Keys, key => {
-                var entry = src[key];
+            iter(src, entry => {
                 seek(dst,i++) = new PeDirectoryRow{
                     File = file,
-                    Kind = key,
+                    Kind = (PeDirectoryKind)i,
                     Rva = entry.Rva,
                     Size = entry.Size
                 };
             });
             return dst;
-
         }
 
         static CoffHeader coff(PEReader pe)
@@ -132,59 +130,17 @@ namespace Z0
             return dst;
         }
 
-        static void entry(PeDirectoryKind kind, DirectoryEntry src, Dictionary<PeDirectoryKind,PeDirectoryEntry> dst)
+        static PeFileInfo peinfo(PeReader src)
         {
-            if(src.Size != 0)
-                dst[kind] = src;
-        }
-
-        static ConstLookup<PeDirectoryKind,PeDirectoryEntry> directories(PEReader src)
-        {
-            var dst = dict<PeDirectoryKind,PeDirectoryEntry>();
-            if(src.PEHeaders != null)
-            {
-                var pe = src.PEHeaders.PEHeader;
-                if(pe != null)
-                {
-                    entry(PeDirectoryKind.BaseRelocationTable, pe.BaseRelocationTableDirectory, dst);
-                    entry(PeDirectoryKind.BoundImportTable, pe.BoundImportTableDirectory, dst);
-                    entry(PeDirectoryKind.CertificateTable, pe.CertificateTableDirectory, dst);
-                    entry(PeDirectoryKind.CorHeaderTable, pe.CorHeaderTableDirectory, dst);
-                    entry(PeDirectoryKind.DebugTable, pe.DebugTableDirectory, dst);
-                    entry(PeDirectoryKind.DelayImportTable, pe.DelayImportTableDirectory, dst);
-                    entry(PeDirectoryKind.ExceptionTable, pe.ExceptionTableDirectory, dst);
-                    entry(PeDirectoryKind.ExportTable, pe.ExportTableDirectory, dst);
-                    entry(PeDirectoryKind.GlobalPointerTable, pe.GlobalPointerTableDirectory, dst);
-                    entry(PeDirectoryKind.ImportAddressTable, pe.ImportAddressTableDirectory, dst);
-                    entry(PeDirectoryKind.ImportTable, pe.ImportTableDirectory, dst);
-                    entry(PeDirectoryKind.LoadConfigTable, pe.LoadConfigTableDirectory, dst);
-                    entry(PeDirectoryKind.ResourceTable, pe.ResourceTableDirectory, dst);
-                    entry(PeDirectoryKind.ThreadLocalStorageTable, pe.ThreadLocalStorageTableDirectory, dst);
-                }
-
-                var cor = src.PEHeaders.CorHeader;
-                if(cor != null)
-                {
-                    entry(PeDirectoryKind.CodeManagerTable, cor.CodeManagerTableDirectory,dst);
-                    entry(PeDirectoryKind.VtableFixups, cor.VtableFixupsDirectory,dst);
-                    entry(PeDirectoryKind.ExportAddressTableJumps, cor.ExportAddressTableJumpsDirectory,dst);
-                    entry(PeDirectoryKind.ManagedNativeHeader, cor.ManagedNativeHeaderDirectory,dst);
-                    entry(PeDirectoryKind.MetadataTable, cor.MetadataDirectory,dst);
-                    entry(PeDirectoryKind.StrongNameSignature, cor.StrongNameSignatureDirectory,dst);
-                }
-            }
-            return dst;
-        }
-        
-        static PeFileInfo peinfo(PEReader src)
-        {
+            var PE = src.PE;
             var dst = new PeFileInfo();
-            if(src.PEHeaders != null)
+            if(PE.PEHeaders != null)
             {            
-                var pe = src.PEHeaders.PEHeader;
-                var coff = src.PEHeaders.CoffHeader;
+                var coff = PE.PEHeaders.CoffHeader;
+                dst.FileName = src.Source.FileName;
                 dst.Machine = coff.Machine;
                 dst.Characteristics = coff.Characteristics;
+                var pe = PE.PEHeaders.PEHeader;
                 if(pe != null)
                 {
                     dst.ImageBase = pe.ImageBase;
@@ -193,14 +149,31 @@ namespace Z0
                     dst.CodeSize = (uint)pe.SizeOfCode;
                     dst.DataOffset = pe.BaseOfData;
                     dst.ImageSize = (uint)pe.SizeOfImage;
-                    dst.ExportDir = pe.ExportTableDirectory;
-                    dst.ImportDir = pe.ImportTableDirectory;
-                    dst.ResourceDir = pe.ResourceTableDirectory;
-                    dst.RelocationDir = pe.BaseRelocationTableDirectory;
-                    dst.ImportAddressDir = pe.ImportAddressTableDirectory;
-                    dst.LoadConfigDir = pe.LoadConfigTableDirectory;
-                    dst.DebugDir = pe.DebugTableDirectory;
                 }
+            }
+            return dst;
+        }
+
+        static PeDirectoryEntries directories(PeReader src)
+        {
+            var dst = new PeDirectoryEntries();
+            var pe = src.PE.PEHeaders.PEHeader;
+            if(pe != null)
+            {
+                dst.ExportTable = pe.ExportTableDirectory;
+                dst.ImportTable = pe.ImportTableDirectory;
+                dst.ExceptionTable = pe.ExceptionTableDirectory;
+                dst.CertificateTable = pe.CertificateTableDirectory;
+                dst.GlobalPointerTable = pe.GlobalPointerTableDirectory;
+                dst.TlsTable = pe.ThreadLocalStorageTableDirectory;
+                dst.LoadConfigTable = pe.LoadConfigTableDirectory;
+                dst.BoundImportTable = pe.BoundImportTableDirectory;
+                dst.ResourceTable = pe.ResourceTableDirectory;
+                dst.RelocationTable = pe.BaseRelocationTableDirectory;
+                dst.ImportAddressTable = pe.ImportAddressTableDirectory;
+                dst.DebugTable = pe.DebugTableDirectory;
+                dst.CorHeader = pe.CorHeaderTableDirectory;
+                dst.DelayImportTable = pe.DelayImportTableDirectory;
             }
             return dst;
         }

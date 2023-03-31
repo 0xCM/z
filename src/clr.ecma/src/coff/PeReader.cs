@@ -33,13 +33,13 @@ namespace Z0
             }
         }
 
-        public static void modules(IDbArchive src, Action<CoffModule> dst)
-        {
-            iter(src.Enumerate(true, FileKind.Exe, FileKind.Dll, FileKind.Obj, FileKind.Lib, FileKind.Sys), path => {
-                using var reader = PeReader.create(path);
-                dst(reader.ModuleInfo());
-            }, true);
-        }
+        // public static void modules(IDbArchive src, Action<CoffModule> dst)
+        // {
+        //     iter(src.Enumerate(true, FileKind.Exe, FileKind.Dll, FileKind.Obj, FileKind.Lib, FileKind.Sys), path => {
+        //         using var reader = PeReader.create(path);
+        //         dst(reader.ModuleInfo());
+        //     }, true);
+        // }
 
         [MethodImpl(Inline), Op]
         public static PeDirectoryEntry directory(Address32 rva, uint size)
@@ -141,6 +141,9 @@ namespace Z0
 
         public PEMemoryBlock ReadSectionData(PeDirectoryEntry src)
             => PE.GetSectionData((int)src.Rva);
+
+        public ref readonly PeFileInfo PeInfo() 
+            => ref Tables.PeInfo;
 
         /// <summary>
         /// Determines whether the source image is r2r

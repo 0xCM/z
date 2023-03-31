@@ -84,8 +84,8 @@ namespace Z0
         [CmdOp("ecma/typedefs")]
         void EmitTypeDefs(CmdArgs args)
         {
-            var src = FS.dir(args[0]);
-            var index = AssemblyIndex.create(Channel, src.DbArchive());
+            var src = FS.archive(args[0]);
+            var index = AssemblyIndex.create(Channel, src);
             var dst = bag<EcmaTypeDef>();
             iter(index.Distinct(), file => {
                 using var ecma = Ecma.file(file.Path);
@@ -129,32 +129,23 @@ namespace Z0
             using var dispenser = Dispense.strings(Pow2.T16);
             var src = FS.dir(args[0]);
             var index = Ecma.index(Channel, src);
+
             index.Report(EnvDb.Nested("ecma", src));
-            var names = list<StringRef>();
+
+            var keys = bag<MemberKey>();
             var distinct = index.Distinct();
             var counter = 0u;
             iter(distinct, entry => {
                 using var file = Ecma.file(entry.Path);
                 var reader = file.EcmaReader();
                 var key = reader.AssemblyKey();
-                var methods = reader.ReadMethodDefs();
+                var methods = reader.ReadMethodDefs().Where(m => !text.contains(m.MethodName, '<') && !text.contains(m.DeclaringType, '<'));
                 iter(methods, method => {
-                    var name = method.MethodName;
-                    var ns = method.Namespace;
-                    var decl = method.DeclaringType;
-
-                    if(!text.contains(name, '<') && !text.contains(decl, '<'))
-                    {
-                        if(ns.IsNonEmpty && decl.IsNonEmpty)
-                            names.Add(dispenser.String($"{key}/{ns}/{decl}/{method.MethodName}"));
-                        else if(ns.IsNonEmpty)
-                            names.Add(dispenser.String($"{key}/{ns}/{method.MethodName}"));
-                        else
-                            names.Add(dispenser.String($"{key}/{method.MethodName}"));
-                    }
+                    keys.Add(Ecma.key(method));
                 });
-            });
-            iter(names, name => Channel.Row(string.Format("{0:D6} {1}", counter++, name)));
+            },true);
+            
+            Channel.TableEmit(keys.Array().Sort(), EnvDb.Nested("ecma", src).Table<MemberKey>());
         }
 
         [CmdOp("db/typetables")]
@@ -247,13 +238,27 @@ namespace Z0
             var src = FS.dir(args[0]);
             var targets = EnvDb;
             var modules = bag<CoffModule>();
+            var peinfo = cdict<FilePath, PeFileInfo>();
+            var coffheaders = cdict<FilePath, CoffHeader>();
+            var corheadrs = dict<FilePath, CorHeaderInfo>();
+            var secheaders = dict<FilePath, List<PeSectionHeader>>();
             var index = FS.index(Archives.modules(src).Members().Select(x => x.Path));
             var emitter = text.emitter();
             iter(index.Distinct(), entry => {
                 try
                 {
                     using var reader = PeReader.create(entry.Path);
-                    emitter.AppendLine(reader.ModuleInfo());
+                    var module = reader.ModuleInfo();
+                    peinfo.TryAdd(entry.Path, module.PeInfo);
+                    coffheaders.TryAdd(entry.Path, module.CoffHeader);
+                    if(module.CorHeader != null)
+                        corheadrs.TryAdd(entry.Path, module.CorHeader);
+                    var secheaerlist = new List<PeSectionHeader>();
+                    secheaders.TryAdd(entry.Path, secheaerlist);
+                    iter(module.Sections, sec => secheaerlist.Add(sec));
+                
+
+                    emitter.AppendLine(module);
                 }
                 catch(Exception e)
                 {
@@ -261,8 +266,13 @@ namespace Z0
                 }
             });
 
-            var path = targets.Nested("coff.modules", src).Path("coff", FS.ext("modules"));
-            Channel.FileEmit(emitter.Emit(),path);
+            iter(peinfo.Keys, path => {
+
+
+            });
+
+            // var path = targets.Nested("coff.modules", src).Path("coff", FS.ext("modules"));
+            // Channel.FileEmit(emitter.Emit(),path);
         }
 
         void MapPeHeaders(CmdArgs args)
@@ -312,10 +322,29 @@ namespace Z0
             Channel.TableEmit(rows.Array().Sort().Resequence(), EnvDb.Nested("pe", src).Path("pe.directories", FileKind.Csv));
         }
 
+        [CmdOp("pe/info")]
+        void EmitPeInfo(CmdArgs args)
+        {
+            var src = FS.dir(args[0]);
+            var entries = FS.index(Archives.modules(src).Members().Select(x => x.Path)).Distinct();
+            var info = sys.bag<PeFileInfo>();
+            iter(entries, entry => {
+                try
+                {
+                    using var reader = PeReader.create(entry.Path);
+                    info.Add(reader.PeInfo());
+                }
+                catch(BadImageFormatException e)
+                {
+                    Channel.Warn(e.Message);
+                }
+            }, true);
+            Channel.TableEmit(info.Array().Sort(), EnvDb.Nested("pe", src).Table<PeFileInfo>());
+        }
+
         [CmdOp("pe/headers")]
         void EmitPeHeaders(CmdArgs args)
         {
-            var archives = Channel.Channeled<ModuleArchives>();
             var src = FS.dir(args[0]);
             var index = FS.index(Archives.modules(src).Members().Select(x => x.Path));
             var headers = bag<PeSectionHeader>();
@@ -327,7 +356,7 @@ namespace Z0
                     using var reader = PeReader.create(entry.Path);
                     var tables = reader.Tables;
                     iter(tables.SectionHeaders, section => headers.Add(section.WithFile(FS.file(rel.Format()))));
-                    iter(tables.Directories.Values, e => dirs.Add(e));                    
+                    iter(tables.Directories, e => dirs.Add(e));                    
                 }
                 catch(Exception e)
                 {
@@ -345,10 +374,9 @@ namespace Z0
         [CmdOp("ecma/index")]
         void EcmaImport(CmdArgs args)
         {
-            var src = FS.dir(args[0]);
-            var index = AssemblyIndex.create(Channel, src.DbArchive());
-            var dst = EnvDb.Nested("indices", src);
-            index.Report(dst);
+            var src = FS.archive(args[0]);
+            var index = Ecma.index(Channel, src);
+            Ecma.EmitReports(index, EnvDb);
         }   
 
         [CmdOp("ecma/heaps")]
@@ -360,20 +388,10 @@ namespace Z0
         [CmdOp("ecma/deps")]
         void EmitEcmaDeps(CmdArgs args)
         {
-            var src = FS.dir(args[0]);
+            var src = FS.archive(args[0]);
             var index = Ecma.index(Channel, src);
-            var managed = bag<ManagedDependency>();
-            var native = bag<NativeDependency>();
-            iter(index.Distinct(), entry => {
-                using var ecma = Ecma.file(entry.Path);                
-                var reader = ecma.EcmaReader();
-                var deps = reader.ReadDependencySet();
-                managed.AddRange(deps.ManagedDependencies);
-                native.AddRange(deps.NativeDependencies);                
-            },true);
-
-            Channel.TableEmit(managed.Array().Sort(), EnvDb.Nested("ecma", src).Path("ecma.deps.managed", FileKind.Csv));
-            Channel.TableEmit(native.Array().Sort(), EnvDb.Nested("ecma", src).Path("ecma.deps.native", FileKind.Csv));
+            Ecma.EmitReports(index, EnvDb);
+            var deps = Ecma.CalcDependencies(index, EnvDb);
         }
         
         [CmdOp("ecma/pinvokes")]
@@ -422,7 +440,6 @@ namespace Z0
                 }
             ");
 
-
             var code = dst.Emit().Join(Chars.NL);
             Channel.Row(code);
             var syntax = CSharpSyntaxTree.ParseText(code);
@@ -447,10 +464,10 @@ namespace Z0
                 var counter = 0u;
                 var depscount = 0u;
                 var types = dict<string,EcmaTypeDef>();
-                Channel.Row(key.Name, FlairKind.StatusData);
-                var deps = reader.ReadDependencySet();
-                iter(deps.NativeDependencies, d =>  Channel.Row(string.Format("{0:D5} {1} --> {2}", depscount++, d.Source, d.TargetName), FlairKind.StatusData));
-                iter(deps.ManagedDependencies, d => Channel.Row(string.Format("{0:D5} {1} --> {2}/{3}",depscount++, d.Source, d.TargetName,d.TargetVersion), FlairKind.StatusData));
+                Channel.Row(key.Name, FlairKind.StatusData);                
+                var deps = Ecma.CalcDependencies(ecma);
+                iter(deps.NativeDependencies, d =>  Channel.Row(string.Format("{0:D5} {1} --> {2}", depscount++, d.SourceName, d.TargetName), FlairKind.StatusData));
+                iter(deps.ManagedDependencies, d => Channel.Row(string.Format("{0:D5} {1} --> {2}/{3}",depscount++, d.SourceName, d.TargetName,d.TargetVersion), FlairKind.StatusData));
                 var typedefs = reader.ReadTypeDefs();
                 iter(typedefs, t => {
                     if(!t.Name.Contains("<") && !t.Name.Contains("."))
@@ -481,6 +498,92 @@ namespace Z0
             var src = FS.dir(args[0]).DbArchive();
             var dst = FS.dir(args[1]).DbArchive();
             Analyzer.Run(src,dst);            
+        }
+
+        [CmdOp("dbghelp")]
+        void DbgHelpCmd()
+        {
+            using var module = DbgHelp.load();
+            var ops = module.Operations;
+            Channel.Row($"{module.Handle.Address} {module.Path}");
+            iter(ops, op => Channel.Row($"{op.Address} {op.Name}"));
+        }
+
+
+
+        [CmdOp("loop/run")]
+        void CheckLoops()
+        {
+            var psi = new ProcessStartInfo
+            {
+                CreateNoWindow = true,
+                RedirectStandardInput = true,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true, 
+                UseShellExecute = false,
+                FileName = "cmd.exe",
+            };
+            using var process = sys.process(psi);
+            process.EnableRaisingEvents = true;
+            process.OutputDataReceived += OnOutput;
+            process.ErrorDataReceived += OnError;
+            process.Exited += OnExit;
+            process.Start();
+
+            var writer = process.StandardInput;
+            var reader = process.StandardOutput;
+            var running = true;
+
+            void OnExit(object sender, EventArgs e)
+            {
+                Channel.Babble("Received exit event");
+                running = false;
+            }
+            
+            void OnOutput(object sender, DataReceivedEventArgs e)
+            {
+
+            }
+
+            void OnError(object sender, DataReceivedEventArgs e)
+            {
+
+            }
+
+            void Read()
+            {
+                while(running)   
+                {
+                    var line = reader.ReadLine();
+                    if(line == "stop")
+                    {
+                        running = false;
+                        Channel.Status("Received stop signal", FlairKind.StatusData);
+                        writer.WriteLineAsync("exit");
+                    }
+                    else
+                    {
+                        Channel.Write(line);
+                    }
+                }
+            }
+
+            void Run()
+            {
+                var flow = Channel.Running();
+                writer.WriteLine("dir");
+                writer.WriteLine("c:");
+                writer.WriteLine("dir");
+                writer.WriteLine("echo stop");
+                process.WaitForExit();
+                Channel.Ran(flow);
+                running = false;
+            }
+            var reading = sys.start(Read);
+            var runner = sys.start(Run);            
+            var waiting = Channel.Running($"Waiting for {process.Id} exit");
+            runner.Wait();
+            Channel.Ran(waiting, $"Process finished");
         }
     }
 }

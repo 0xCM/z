@@ -6,7 +6,7 @@ namespace Z0
 {
     using Windows;
 
-    public class NativeImage : IDisposable
+    public unsafe class NativeImage : IDisposable
     {
         public readonly FilePath Path;
 
@@ -28,6 +28,10 @@ namespace Z0
             => sys.empty<INativeOp>();
 
         [MethodImpl(Inline)]
+        public NativeExport Export(string name)
+            => NativeModules.export(this, name);
+
+        [MethodImpl(Inline)]
         public MemoryAddress ProcAddress(string name)
             => NativeModules.procaddress(BaseAddress, name);
 
@@ -40,5 +44,13 @@ namespace Z0
         {
             Kernel32.CloseHandle(Handle);
         }
+
+        [MethodImpl(Inline)]
+        public static implicit operator void*(NativeImage src)
+            => src.BaseAddress.Pointer();        
+ 
+        [MethodImpl(Inline)]
+        public static implicit operator IntPtr(NativeImage src)
+            => src.Handle;
     }
 }

@@ -46,8 +46,14 @@ namespace Z0
         DbArchive Nested(FolderPath src)
             => DbFiles.Nested(src);
 
+        DbArchive Nested(IDbArchive src)
+            => DbFiles.Nested(src.Root);
+
         DbArchive Nested(string scope, FolderPath src)
             => DbFiles.Nested(scope, src);
+
+        DbArchive Nested(string scope, IDbArchive src)
+            => DbFiles.Nested(scope, src.Root);
 
         FilePath Table<T>()
             => DbFiles.Table<T>();

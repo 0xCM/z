@@ -46,6 +46,7 @@ namespace Z0
                 var declarer = MD.GetTypeDefinition(src.GetDeclaringType());
                 var declname = String(declarer.Name);
                 var ns = String(declarer.Namespace);
+                dst.Assembly = AssemblyKey();
                 dst.DeclaringType = declname;
                 dst.Namespace = ns;
                 dst.Token = EcmaTokens.token(handle);

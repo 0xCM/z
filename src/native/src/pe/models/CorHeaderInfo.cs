@@ -4,13 +4,15 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [StructLayout(LayoutKind.Sequential,Pack =1)]
+    [StructLayout(LayoutKind.Sequential,Pack =1), Record(TableName)]
     public record class CorHeaderInfo
     {
         const string TableName = "corheader";
 
+        [Render(20)]
         public ushort MajorRuntimeVersion;
 
+        [Render(20)]
         public ushort MinorRuntimeVersion;
 
         public PeDirectoryEntry MetadataDirectory;

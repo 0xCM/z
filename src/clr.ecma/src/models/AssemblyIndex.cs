@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static sys;
-
+    
     using System.Linq;
 
     public class AssemblyIndex
@@ -29,7 +29,7 @@ namespace Z0
 
         readonly IWfChannel Channel;
 
-        readonly IDbArchive Source;
+        public readonly IDbArchive Source;
 
         AssemblyIndex(IWfChannel channel, IDbArchive src)
         {

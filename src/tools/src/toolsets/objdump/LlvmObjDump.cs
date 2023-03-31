@@ -12,50 +12,73 @@ namespace Z0.Tools
             => AppSettings.LlvmSettings().Tool("llvm-objdump");
     }
 
-    class LlvmObjDump : WfAppCmd<LlvmObjDump>
+    sealed class ReadObjProcess : ToolProcess<ReadObjProcess>
+    {
+        protected override FilePath ToolPath 
+            => AppSettings.LlvmSettings().Tool("llvm-readobj");
+    }
+
+    public abstract class ToolWfCmd<T,P> : WfAppCmd<T>
+        where T : ToolWfCmd<T,P>, new()
+        where P : ToolProcess<P>, new()
+    {
+        protected static FileIndex index(IDbArchive src)
+            => FS.index(Archives.modules(src).Unmanaged());
+
+        protected Task<ExecToken> Start(CmdArgs args, FilePath src, FilePath dst)   
+        {
+            var process = ToolProcess<P>.init(Channel, src, dst);
+            return process.Start(args);
+        }
+    }
+
+    class LlvmReadObj : ToolWfCmd<LlvmReadObj, ReadObjProcess>
+    {
+        [CmdOp("llvm/readobj/coff-exports")]
+        void CoffExports(CmdArgs args)
+        {
+            var src = FS.archive(args[0]);
+            var dst = EnvDb.Nested("llvm-readobj", src.Root).Clear();
+            iter(index(src).Distinct(), entry => {
+                var filename = FS.file(entry.Path.FileName.Format() + "." + entry.Path.Hash.Format(false), FS.ext("exports"));
+                Start(Cmd.args(entry.Path.Format(PathSeparator.FS), "--coff-exports"), entry.Path, dst.Path(filename));
+            }, true);
+        }
+    }
+
+    class LlvmObjDump : ToolWfCmd<LlvmObjDump, ObjDumpProcess>
     {       
-        readonly FilePath Tool;
 
         public LlvmObjDump()
         {
-            Tool = AppSettings.LlvmSettings().Tool("llvm-objdump");
+
         }
 
         [CmdOp("llvm/objdump/symbols")]
         void EmitSymbols(CmdArgs args)
         {
             var src = FS.archive(args[0]);
-            var index = sources(src);
-            var output = EnvDb.Nested(Tool.FileName.WithoutExtension.Format(), src.Root).Clear();
-            iter(index.Distinct(), entry => {
-                EmitSymbols(entry, output);
+            var dst = EnvDb.Nested("llvm-objdump", src.Root).Clear();
+            iter(index(src).Distinct(), entry => {
+                var cmdargs = Cmd.args(entry.Path.Format(PathSeparator.FS), "--syms", "--demangle");
+                var filename = FS.file(entry.Path.FileName.Format() + "." + entry.Path.Hash.Format(false), FS.ext("symtables"));
+                Start(Cmd.args(entry.Path.Format(PathSeparator.FS), "--syms", "--demangle"),entry.Path, dst.Path(filename));
             }, true);
         }
 
-        Task<ExecToken> EmitSymbols(FileIndexEntry entry, IDbArchive dst)
-        {
-            var cmdargs = Cmd.args(entry.Path.Format(PathSeparator.FS), "--syms", "--demangle");
-            var filename = FS.file(entry.Path.FileName.Format() + "." + entry.Path.Hash.Format(false), FS.ext("symtables"));
-            var process = ObjDumpProcess.init(Channel, entry.Path, dst.Path(filename));
-            return process.Start(cmdargs);            
-        }
-
-        static FileIndex sources(IDbArchive src)
+        protected static FileIndex sources(IDbArchive src)
             => FS.index(Archives.modules(src).Unmanaged());
 
         [CmdOp("llvm/objdump/disasm")]
         void Disassemble(CmdArgs args)
         {
             var src = FS.archive(args[0]);
-            var index = sources(src);
-            var output = EnvDb.Nested(Tool.FileName.WithoutExtension.Format(), src.Root).Clear();            
-            iter(index.Distinct(), entry => {
-                var cmdargs = Cmd.args(entry.Path.Format(PathSeparator.FS), "--x86-asm-syntax=intel", "--disassemble", "--symbolize-operands", "--demangle");
+            var output = EnvDb.Nested("llvm-objdump", src.Root).Clear();            
+            iter(index(src).Distinct(), entry => {
                 var filename = FS.file(entry.Path.FileName.Format() + "." + entry.Path.Hash.Format(false), FileKind.Asm);
-                var process = ObjDumpProcess.init(Channel, entry.Path, output.Path(filename));
-                process.Start(cmdargs);
+                Start(Cmd.args(entry.Path.Format(PathSeparator.FS), "--x86-asm-syntax=intel", "--disassemble", "--symbolize-operands", "--demangle"), 
+                    entry.Path, output.Path(filename));
             },true);
         }
     }
 }
-

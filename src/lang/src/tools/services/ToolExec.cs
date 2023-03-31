@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public class ProcExec : Stateless<ProcExec>
+    public class ToolExec : Stateless<ToolExec>
     {        
         public static ToolExecSpec spec(FolderPath? work = null, params EnvVar[] vars)
             => new (FilePath.Empty, CmdArgs.Empty, work ?? Env.cd(), vars, null, null);
@@ -27,7 +27,7 @@ namespace Z0
             => new(tool, args,Env.cd(), EnvVars.Empty, null, null);
 
         [Op]
-        public static Task<ExecToken> launch(IWfChannel channel, FilePath tool, CmdArgs args, ToolExecSpec? context = null)
+        public static Task<ExecToken> run(IWfChannel channel, FilePath tool, CmdArgs args, ToolExecSpec? context = null)
         {
             var ctx = context ?? ToolExecSpec.Default;
             var psi = new ProcessStartInfo
@@ -63,8 +63,8 @@ namespace Z0
             return sys.start(Run);
         }    
 
-        public static Task<ExecToken> launch(IWfChannel channel, CmdArgs args, ToolExecSpec? context = null)
-            => launch(channel, FS.path(args[0]), args.Skip(1), context);
+        public static Task<ExecToken> run(IWfChannel channel, CmdArgs args, ToolExecSpec? context = null)
+            => run(channel, FS.path(args[0]), args.Skip(1), context);
 
         public static Task<ExecToken> redirect(IWfChannel channel, FilePath tool, CmdArgs args, FilePath status, Action<string> receiver = null)
         {

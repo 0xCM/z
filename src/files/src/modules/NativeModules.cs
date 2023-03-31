@@ -29,7 +29,7 @@ namespace Z0
             => new NativeModule(src.Name, LoadLibrary(src.Name));
 
         [MethodImpl(Inline), Op]
-        public static DllMainDelegate main(NativeModule src)
+        public static DllMainDelegate dllmain(NativeModule src)
             => proc<DllMainDelegate>(src, nameof(OS.Delegates.DllMain));
 
         [MethodImpl(Inline), Op]
@@ -41,9 +41,17 @@ namespace Z0
             => GetProcAddress(@base, name);
 
         [MethodImpl(Inline), Op]
-        public unsafe static FPtr fptr(NativeModule src, string name)
-            => new FPtr(GetProcAddress(src.BaseAddress,name).ToPointer());
+        public static NativeExport export(NativeImage src, string name)
+            => new NativeExport(name, GetProcAddress(src, name));
 
+        [MethodImpl(Inline), Op]
+        public unsafe static FPtr fptr(NativeModule src, string name)
+            => new FPtr(GetProcAddress(src.BaseAddress, name).ToPointer());
+
+        [MethodImpl(Inline), Op]
+        public unsafe static FPtr fptr(NativeExport src)
+            => new (src.Address.Pointer());
+    
         [MethodImpl(Inline), Op]
         public static unsafe Delegate proc(FPtr src, Type t)
             => Marshal.GetDelegateForFunctionPointer(src,t);
@@ -85,6 +93,5 @@ namespace Z0
         public static D proc<D>(MemoryAddress src, string name)
             where D : Delegate
                 => (D)Marshal.GetDelegateForFunctionPointer(procaddress(src,name), typeof(D));
-
     }
 }

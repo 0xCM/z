@@ -4,10 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IApiCmdRunner
+    public abstract class ProcessLauncher<L> : Channeled<L>
+        where L : ProcessLauncher<L>, new()
     {
-        Task<ExecToken> Start(string[] args);   
-
-        ExecToken Run(string[] args);
+        public abstract void Launch(CmdArgs args, Action<Process> launched);
     }
 }

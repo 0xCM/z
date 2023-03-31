@@ -19,6 +19,12 @@ namespace Z0
             Size = size;
         }
 
+        public string Format()
+            => $"{Rva}:{Size}";
+
+        public override string ToString()
+            => Format();
+            
         [MethodImpl(Inline)]
         public static implicit operator PeDirectoryEntry(DirectoryEntry src)
             => new PeDirectoryEntry(src.RelativeVirtualAddress, (uint)src.Size);            

@@ -64,16 +64,16 @@ namespace Z0
 
         IWfRuntime Wf;
         
+        SOSDac DacInterface;
+
         public ClrMdSvc(IWfRuntime wf, ProcessId procid)
         {
             Wf = wf;
             Channel = wf.Channel;
             ProcId = procid;
             Proc = Process.GetProcessById((int)ProcId);
-            //ChildProcessTracker.AddProcess(Proc);
             Attach();            
         }
-
 
         public void Attach()
         {
@@ -83,6 +83,7 @@ namespace Z0
             Channel.Babble(string.Format("Attaching to {0}", ProcId));
             Target = DataTarget.CreateSnapshotAndAttach((int)ProcId);
             Runtime = Target.ClrVersions.Single().CreateRuntime();
+            DacInterface = Runtime.DacLibrary.SOSDacInterface;
             Channel.Babble("Attached");
         }
 

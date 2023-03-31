@@ -16,7 +16,7 @@ namespace Z0
             => copy(channel, FS.archive(args[0]), FS.archive(args[1]));
         
         public static Task<ExecToken> copy(IWfChannel channel, IDbArchive src, IDbArchive dst)
-            => ProcExec.launch(channel, FS.path("robocopy.exe"), Cmd.args(src.Root.Format(PathSeparator.FS, true), dst.Root.Format(PathSeparator.FS, true), "/e"));
+            => ToolExec.run(channel, FS.path("robocopy.exe"), Cmd.args(src.Root.Format(PathSeparator.FS, true), dst.Root.Format(PathSeparator.FS, true), "/e"));
         
         public static Task<ExecToken> zip(IWfChannel channel, CmdArgs args)
             => PkgArchives.zip(channel, FS.dir(args[0]), FS.path(args[1]));

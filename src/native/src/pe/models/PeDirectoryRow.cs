@@ -4,8 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    [StructLayout(LayoutKind.Sequential,Pack=1), Record(TableName)]
     public record struct PeDirectoryRow : ISequential<PeDirectoryRow>, IComparable<PeDirectoryRow>
     {
+        const string TableName = "pe.directories";
+
+        [Render(8)]
         public uint Seq;
 
         [Render(64)]
@@ -25,6 +29,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public PeDirectoryEntry Entry()
             => new (Rva,Size);
+            
         public int CompareTo(PeDirectoryRow src)
         {
             var result = File.CompareTo(src.File);

@@ -23,7 +23,23 @@ namespace Z0
         protected virtual string RunningMsg => $"Executing {ToolPath}:{Args}";
 
         protected virtual string RanMsg => $"Executed {ToolPath}:{Args}";
+        
+        protected ToolProcess()
+        {
 
+        }
+
+
+        void OnStart(ExecToken token)
+        {
+
+        }
+
+        void OnFinish(ExecToken token)
+        {
+
+        }
+        
         ExecFlow<string> Running()
         {
             var flow = Channel.Running(RunningMsg);
@@ -43,7 +59,7 @@ namespace Z0
         public Task<ExecToken> Start(CmdArgs args)
         {
             var flow = Running();
-            var task = ProcExec.redirect(Channel, ToolPath, args, TargetPath);            
+            var task = ToolExec.redirect(Channel, ToolPath, args, TargetPath);            
             return task.ContinueWith(t => Ran(flow));  
         }
     }

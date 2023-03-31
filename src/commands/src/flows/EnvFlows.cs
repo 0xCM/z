@@ -118,7 +118,7 @@ namespace Z0
 
         [CmdOp("cmd")]
         void Redirect(CmdArgs args)
-            => ProcExec.redirect(Channel, args);
+            => ToolExec.redirect(Channel, args);
 
         [CmdOp("cd")]
         void Cd(CmdArgs args)
@@ -155,6 +155,6 @@ namespace Z0
 
         [CmdOp("tool")]
         void ToolHelp(CmdArgs args)
-            => ProcExec.redirect(Channel,args).Wait();        
+            => ToolExec.redirect(Channel,args).Wait();        
     }
 }

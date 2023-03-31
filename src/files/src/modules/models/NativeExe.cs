@@ -4,9 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public abstract class Launcher<L> : Channeled<L>
-        where L : Launcher<L>, new()
+    public class NativeExe : NativeImage
     {
-        public abstract void Launch(CmdArgs args, Action<Process> launched);
-    }
+        public NativeExe(FilePath path, ImageHandle handle)
+            : base(path,handle)
+        {
+
+        }
+    }    
 }
