@@ -9,5 +9,6 @@
     <StartupObject>Z0.App</StartupObject>
     <RootNamespace>z0</RootNamespace>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+    <BaseAddress>0x7ff725590000</BaseAddress>
   </PropertyGroup>
 </Project>

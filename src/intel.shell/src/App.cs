@@ -7,44 +7,43 @@ namespace Z0
     [Free]
     sealed class App : ApiShell<App>
     {
-        static ReadOnlySeq<IApiService> providers(IWfRuntime wf)
-            => new IApiService[]{
-                wf.WfCmd(),
-                wf.EnvCmd(),
-                wf.ImageCmd(),
-                wf.ArchiveCmd(),
-                wf.XedCmd(),
-                wf.AsmCoreCmd(),
-                wf.AsmDbCmd(),
-                wf.AsmGenCmd(),
-                wf.AsmFlowCmd(),
-                wf.PbCmd(),
-                wf.SdmCmd(),
-                wf.XedToolCmd(),
-                wf.IntelInxCmd(),
-                wf.IntelCmd()
-            };
+        // static ReadOnlySeq<IApiService> providers(IWfRuntime wf)
+        //     => new IApiService[]{
+        //         wf.WfCmd(),
+        //         wf.EnvCmd(),
+        //         wf.ImageCmd(),
+        //         wf.ArchiveCmd(),
+        //         wf.XedCmd(),
+        //         wf.AsmCoreCmd(),
+        //         wf.AsmDbCmd(),
+        //         wf.AsmGenCmd(),
+        //         wf.AsmFlowCmd(),
+        //         wf.PbCmd(),
+        //         wf.SdmCmd(),
+        //         wf.XedToolCmd(),
+        //         wf.IntelInxCmd(),
+        //         wf.IntelCmd()
+        //     };
 
-        static int main(string[] args)
+        public static int Main(params string[] args)
         {
             var result = 0;
-            using var app = ApiServers.shell<App,AppCmd>(providers);
+            //using var app = ApiServers.shell<App,AppCmd>(providers);
+            //using var wf = ApiServers.runtime(false);
+            var wf = ApiServers.runtime(false);
+            GlobalServices.Instance.Inject(wf.XedRuntime());
+            using var app = ApiServers.shell(wf, args);
             try
             {
-                GlobalServices.Instance.Inject(app.Wf.XedRuntime());
                 app.Run();
             }
             catch(Exception e)
             {
-                app.Channel.Error(e);
+                term.error(e);
                 result = -1;
             }
-            //ProcessControl.Control().Dispose();
             return result;
         }
-
-        public static int Main(params string[] args)
-            => main(args);
     }
 
     sealed class AppCmd : WfAppCmd<AppCmd>

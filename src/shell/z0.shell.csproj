@@ -6,5 +6,6 @@
     <AssemblyName>zsh</AssemblyName>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <PublishSingleFile>true</PublishSingleFile>
+    <BaseAddress>0x7ff725590000</BaseAddress>
   </PropertyGroup>
 </Project>
