@@ -6,13 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    [StructLayout(LayoutKind.Sequential,Size=8)]
-    public readonly record struct HANDLE
-    {
-
-    }
-
-    public unsafe class WfAppCmd : WfAppCmd<WfAppCmd>
+    unsafe class AppApiCmd : WfAppCmd<AppApiCmd>
     {        
         ArchiveRegistry ArchiveRegistry => Wf.ArchiveRegistry();
 

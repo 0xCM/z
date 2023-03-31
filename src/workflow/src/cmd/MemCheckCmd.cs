@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
     
-    public class MemoryChecks : WfAppCmd<MemoryChecks>
+    class MemCheckCmd : WfAppCmd<MemCheckCmd>
     {
         [CmdOp("memory/checks")]
         void CheckMemAlloc()

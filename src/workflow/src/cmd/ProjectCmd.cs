@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    internal class ProjectCmd : WfAppCmd<ProjectCmd>
+    class ProjectCmd : WfAppCmd<ProjectCmd>
     {
         [CmdOp("jsondeps/import")]
         void ImportJsonDeps(CmdArgs args)

@@ -9,7 +9,7 @@ namespace Z0
 
     using static sys;
 
-    partial class EcmaCmd : WfAppCmd<EcmaCmd>
+    class EcmaCmd : WfAppCmd<EcmaCmd>
     {
         Ecma Ecma => Wf.Ecma();
 

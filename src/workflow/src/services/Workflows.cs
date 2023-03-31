@@ -6,9 +6,34 @@
 namespace Z0
 {
     using Commands;
+    using System.Linq;
 
-    public sealed class ArchiveFlows : WfAppCmd<ArchiveFlows>
+    public class Workflows : WfSvc<Workflows>
     {
+        public static IEnumerable<IDbArchive> DotNetSdks(IDbArchive root)
+            => from f in root.Folders(true, ".dotnet") select f.DbArchive();
+            
+        public static Task<ExecToken> sdkmerge(IWfChannel channel, CmdArgs args)
+        {
+            ExecToken Run()
+            {
+                var src = FS.archive(args[0]);
+                var dotnet = src.Path("dotnet", FileKind.Exe);
+                var token = ExecToken.Empty;
+                if(!dotnet.Exists)
+                {
+                    channel.Error($"Not found:{dotnet}");
+                }
+                else
+                {
+                    token = Workflows.copy(channel, src, AppSettings.Publications("dotnet/root")).Result;
+                }
+                return token;
+            }
+            return sys.start(Run);
+        }
+
+
         public static ExecToken symlink(IWfChannel channel, CmdArgs args)
             => Archives.symlink(channel, args);
 
@@ -89,49 +114,5 @@ namespace Z0
             var index = Archives.index(channel,q);
             return channel.TableEmit(index.Sorted(), IndexPath(q.Root.DbArchive(), FileIndexKind.Files, dst));
         }
-
-        [CmdOp("symlink")]
-        void Link(CmdArgs args)
-            => symlink(Channel, args);
-
-        [CmdOp("files/zip")]
-        void Zip(CmdArgs args)
-            => zip(Channel, args);
-
-        [CmdOp("files/copy")]
-        void Copy(CmdArgs args)
-            => copy(Channel, args);
-
-        [CmdOp("files/catalog")]
-        void CatalogFiles(CmdArgs args)
-            => catalog(Channel, args);
-
-        [CmdOp("nuget/index")]
-        void NugetFiles(CmdArgs args)
-            => PkgArchives.nupkg(Channel, FS.dir(args[0]));
-
-        [CmdOp("nuget/download")]
-        void NugetDownload(CmdArgs args)
-        {
-            var name = args[0].Value;
-            var version = args[1].Value;
-            var id = $"{name}.{version}";
-            var dst = AppSettings.PkgRoot().Scoped("downloads").Path(id, FS.ext("nupkg"));
-            var src = new Uri($"https://www.nuget.org/api/v2/package/{name}/{version}");
-            var service = Channel.Channeled<Downloader>();
-            service.DownloadFile(src, dst);            
-        }
-
-        [CmdOp("devpacks/stage")]
-        void DevPack(CmdArgs args)
-            => DevPacks.stage(Channel, PackageKind.Nuget, FS.dir(arg(args,0)));
-
-        [CmdOp("files/index")]
-        void FileQueryCmd(CmdArgs args)
-            => index(Channel, FileIndexKind.Files, args);
-
-        [CmdOp("folders/index")]
-        void Folders(CmdArgs args)
-            => index(Channel, FileIndexKind.Folders, args);
     }
 }

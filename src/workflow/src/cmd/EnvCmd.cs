@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
     using static Env;
 
-    public sealed class EnvFlows : WfAppCmd<EnvFlows>
+    sealed class EnvCmd : WfAppCmd<EnvCmd>
     {    
         [CmdOp("env/modules")]
         void LoadedModule(CmdArgs args)
