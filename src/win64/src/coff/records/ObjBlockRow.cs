@@ -5,7 +5,7 @@
 namespace Z0
 {
     [StructLayout(LayoutKind.Sequential, Pack=1), Record(TableId)]
-    public record struct ObjBlock
+    public record struct ObjBlockRow
     {
         public const string TableId = "obj.blocks";
 
@@ -30,7 +30,7 @@ namespace Z0
         public ByteSize BlockSize;
 
         [Render(1)]
-        public _FileUri Source;
+        public FilePath Source;
 
         public AsmRowKey RowKey
         {

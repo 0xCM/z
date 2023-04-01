@@ -7,7 +7,7 @@ namespace Z0
     using W = AsmColWidths;
 
     [Record(TableId), StructLayout(LayoutKind.Sequential,Pack=1)]
-    public record struct CoffSymRecord : IComparable<CoffSymRecord>
+    public record struct CoffSymRow : IComparable<CoffSymRow>
     {
         const string TableId = "coff.symbols";
 
@@ -41,15 +41,15 @@ namespace Z0
         public @string Name;
 
         [Render(1)]
-        public _FileUri Source;
+        public FilePath Source;
 
-        public AsmRowKey RowKey
-        {
-            [MethodImpl(Inline)]
-            get => (Seq,Section,OriginId);
-        }
+        // public AsmRowKey RowKey
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => (Seq,Section,OriginId);
+        // }
 
-        public int CompareTo(CoffSymRecord src)
+        public int CompareTo(CoffSymRow src)
         {
             var result = Source.Format().CompareTo(src.Source.Format());
             if(result  == 0)

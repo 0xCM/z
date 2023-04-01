@@ -29,7 +29,6 @@ namespace Z0
             return result;
         }
 
-
         [CmdOp("asm/check/cases")]
         Outcome EmitAsmCases(CmdArgs args)
         {

@@ -4,18 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Asm;
     using static sys;
     using static PbChecks.Field32;
-    using static Asm.RegClasses;
 
     using FK = PbChecks.Field32.FieldName;
     using FW = PbChecks.Field32.FieldWidth;
 
     public class PbChecks : Checker<PbChecks>
     {
-
-
         new ITextEmitter Emitter;
 
         public void CheckBitParser()

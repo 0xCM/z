@@ -521,9 +521,9 @@ enum {
         void DbgHelpCmd()
         {
             using var module = DbgHelp.load();
-            var ops = module.Operations;
-            Channel.Row($"{module.Handle.Address} {module.Path}");
-            iter(ops, op => Channel.Row($"{op.Address} {op.Name}"));
+            // var ops = module.Operations;
+            // Channel.Row($"{module.Handle.Address} {module.Path}");
+            // iter(ops, op => Channel.Row($"{op.Address} {op.Name}"));
         }
 
         [CmdOp("loop/run")]

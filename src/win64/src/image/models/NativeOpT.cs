@@ -4,8 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {    
-    public abstract class NativeOp<F> : INativeFunction<F>
-        where F : NativeOp<F>
+    public abstract class NativeFunction<F> : INativeFunction
+        where F : NativeFunction<F>
     {
         public string Name {get;}
 
@@ -13,14 +13,12 @@ namespace Z0
 
         public MemoryAddress Address {get;}
 
-        protected NativeOp(NativeImage image, string name)
+        protected NativeFunction(NativeImage image, string name)
         {
             Name = name;
             Image = image;
             Address = image.ProcAddress(name);
         }
 
-        ImageHandle INativeFunction.Image
-            => Image.Handle;
     }
 }

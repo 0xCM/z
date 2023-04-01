@@ -12,6 +12,5 @@ namespace Z0
         }
 
         static ServiceCache Services => ServiceCache.Instance;
-
     }
 }

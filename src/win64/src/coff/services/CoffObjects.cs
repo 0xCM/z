@@ -49,7 +49,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static SymAddress address(in CoffSymRecord row)
+        public static SymAddress address(in CoffSymRow row)
         {
             var lo = (ushort)row.OriginId;
             var section = row.Section > Pow2.T15 ? (ushort) ((ushort.MaxValue - row.Section) + byte.MaxValue) : row.Section;

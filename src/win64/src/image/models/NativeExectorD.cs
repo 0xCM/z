@@ -9,23 +9,23 @@ namespace Z0
     {
         public readonly ImageHandle Image;
 
-        public readonly MemoryAddress Address;
+        public readonly MemoryAddress ProcAddress;
 
-        public readonly string Name;
+        public readonly string ProcName;
 
-        public readonly D Invoke;
+        public readonly D F;
 
         [MethodImpl(Inline)]
         public NativeExector(ImageHandle src, MemoryAddress @base, string name, D f)
         {
             Image = src;
-            Address = @base;
-            Name = name;
-            Invoke = f;
+            ProcAddress = @base;
+            ProcName = name;
+            F = f;
         }
 
         public string Format()
-            => string.Format(RP.PSx3, Address, Image, Name);
+            => string.Format(RP.PSx3, ProcAddress, Image, ProcName);
 
         public override string ToString()
             => Format();

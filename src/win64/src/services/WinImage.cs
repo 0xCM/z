@@ -11,7 +11,7 @@ namespace Z0
 
           [Op]
           public static Kernel32 kernel32()
-               => (Kernel32)Cache.GetOrAdd(nameof(Kernel32), _ => (Kernel32)Kernel32Image.load());
+               => (Kernel32Image)Cache.GetOrAdd(nameof(Kernel32), _ => Kernel32Image.load());
 
           [Op]
           public static Func<FilePath,ImageHandle> loader()

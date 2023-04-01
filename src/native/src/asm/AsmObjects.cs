@@ -27,7 +27,7 @@ namespace Z0
             var objects = ObjDump.CalcObjRows(context);
             Channel.TableEmit(objects, AppDb.EtlTable<ObjDumpRow>(project));
             var blocks = ObjDump.blocks(objects);
-            Channel.TableEmit(blocks, AppDb.EtlTable<ObjBlock>(project));
+            Channel.TableEmit(blocks, AppDb.EtlTable<ObjBlockRow>(project));
             using var alloc = CompositeBuffers.create();
             ObjDump.MapAsm(context.Project, objects, alloc);
             var asmrows = ObjDump.EmitAsmRows(context, alloc);
@@ -69,8 +69,8 @@ namespace Z0
         public CoffSymIndex LoadSymbols(string id)
             => Coff.LoadSymIndex(id);
 
-        public Index<ObjBlock> LoadBlocks(string id)
-            => ObjDump.blocks(AppDb.EtlTable<ObjBlock>(id));
+        public Index<ObjBlockRow> LoadBlocks(string id)
+            => ObjDump.blocks(AppDb.EtlTable<ObjBlockRow>(id));
 
         public Index<AsmInstructionRow> LoadInstructions(string project)
         {

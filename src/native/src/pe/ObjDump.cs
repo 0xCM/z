@@ -272,17 +272,17 @@ namespace Z0
             return buffer;
         }
 
-        public static Index<ObjBlock> blocks(FilePath path)
+        public static Index<ObjBlockRow> blocks(FilePath path)
         {
             var lines = path.ReadLines(true);
             var reader = lines.Storage.Reader();
             reader.Next();
-            var buffer = alloc<ObjBlock>(lines.Length - 1);
+            var buffer = alloc<ObjBlockRow>(lines.Length - 1);
             var i=0u;
             while(reader.Next(out var line))
             {
                 var cells = text.split(line,Chars.Pipe);
-                Require.equal(ObjBlock.FieldCount, cells.Length);
+                Require.equal(ObjBlockRow.FieldCount, cells.Length);
                 ref var dst = ref seek(buffer,i++);
                 var src = cells.Reader();
                 DataParser.parse(src.Next(), out dst.Seq).Require();
@@ -296,7 +296,7 @@ namespace Z0
             return buffer;
         }
 
-        public static Index<ObjBlock> blocks(Index<ObjDumpRow> src)
+        public static Index<ObjBlockRow> blocks(Index<ObjDumpRow> src)
         {
             src.Sort();
             var count = src.Count;
@@ -305,10 +305,10 @@ namespace Z0
             var docname = EmptyString;
             var blockname = EmptyString;
             var @base = MemoryAddress.Zero;
-            var dst = list<ObjBlock>();
+            var dst = list<ObjBlockRow>();
             var size = 0u;
             var number = 0u;
-            var source = _FileUri.Empty;
+            var source = FilePath.Empty;
             for(var i=0; i<count; i++)
             {
                 ref readonly var row = ref src[i];
@@ -323,7 +323,7 @@ namespace Z0
 
                 if(row.BlockName != blockname)
                 {
-                    var block = new ObjBlock();
+                    var block = new ObjBlockRow();
                     block.Seq = seq++;
                     block.OriginId = docid;
                     block.BlockAddress = @base;
@@ -347,7 +347,7 @@ namespace Z0
 
                 if(i==count-1)
                 {
-                    var block = new ObjBlock();
+                    var block = new ObjBlockRow();
                     block.Seq = seq++;
                     block.OriginId = docid;
                     block.BlockName = blockname;

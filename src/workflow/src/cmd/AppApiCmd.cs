@@ -6,6 +6,7 @@ namespace Z0
 {
     using static sys;
 
+    
     unsafe class AppApiCmd : WfAppCmd<AppApiCmd>
     {        
         ArchiveRegistry ArchiveRegistry => Wf.ArchiveRegistry();
@@ -352,6 +353,10 @@ namespace Z0
             // Channel.Row(loader);
             var kernel32 = WinImage.kernel32();
             Channel.Row(kernel32.BaseAddress);
+            var root = controller().Path().FolderPath;
+            using var lib = kernel32.LoadLibrary(controller().Folder() + FS.file("mscordaccore", FileKind.Dll));
+            Channel.Row(lib.Address);
+            //kernel32.LoadLibrary(FS.file("mscordaccore", FileKind.Dll))
 
             // var src = FS.path(sys.controller().Location).FolderPath + FS.file("mscordaccore", FileKind.Dll);
             // using var dac = ClrDac.load(src,loader);

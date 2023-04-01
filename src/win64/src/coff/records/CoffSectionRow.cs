@@ -9,7 +9,7 @@ namespace Z0
     using W = AsmColWidths;
 
     [Record(TableId), StructLayout(LayoutKind.Sequential)]
-    public record struct CoffSection : IComparable<CoffSection>
+    public record struct CoffSectionRow : IComparable<CoffSectionRow>
     {
         public const string TableId = "coff.sections";
 
@@ -48,7 +48,7 @@ namespace Z0
         [Render(1)]
         public FilePath Source;
 
-        public int CompareTo(CoffSection src)
+        public int CompareTo(CoffSectionRow src)
         {
             var result = Source.Format().CompareTo(src.Source.Format());
             if(result  == 0)

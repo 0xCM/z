@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public abstract class ImageRef<I> : INativeImage
+    public abstract class ImageRef<I> : IImageRef
         where I : INativeImage, new()
     {
         readonly I Image;
@@ -14,15 +14,16 @@ namespace Z0
             Image = image;            
         }
 
-        public ImageHandle Handle => Image.Handle;
-
-        public MemoryAddress BaseAddress => Image.BaseAddress;
-
-        public FilePath Path => Image.Path;
-
-        void IDisposable.Dispose()
+        public ImageHandle Handle 
         {
-
+            [MethodImpl(Inline)]
+            get => Image.Handle;
         }
+
+        public MemoryAddress BaseAddress 
+            => Image.BaseAddress;
+
+        public FilePath Path 
+            => Image.Path;
     }
 }

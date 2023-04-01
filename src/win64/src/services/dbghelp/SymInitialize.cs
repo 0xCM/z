@@ -6,7 +6,7 @@ namespace Z0
 {
     unsafe partial class DbgHelp
     {
-        public sealed class SymInitialize : NativeOp<SymInitialize>
+        public sealed class SymInitialize : NativeFunction<SymInitialize>
         {
             readonly delegate* unmanaged<ulong*, sbyte*, bool, bool> Op;
 

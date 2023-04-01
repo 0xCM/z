@@ -5,12 +5,16 @@
 namespace Z0
 {
     [Free]
-    public interface INativeImage : IDisposable
+    public interface IImageRef
     {
-        MemoryAddress BaseAddress {get;}
-     
         FilePath Path {get;}
 
+        MemoryAddress BaseAddress {get;}
+    }    
+
+    [Free]
+    public interface INativeImage : IImageRef, IDisposable
+    {
         ImageHandle Handle {get;}
     }
 }

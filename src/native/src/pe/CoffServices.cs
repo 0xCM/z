@@ -87,9 +87,9 @@ namespace Z0
             return kind;
         }
 
-        public Index<CoffSection> CalcObjSections(ProjectContext context, in FileRef src)
+        public Index<CoffSectionRow> CalcObjSections(ProjectContext context, in FileRef src)
         {
-            var buffer = list<CoffSection>();
+            var buffer = list<CoffSectionRow>();
             var seq = 0u;
             CalcObjHeaders(context, src,buffer);
             var records = buffer.ToArray().Sort();
@@ -98,7 +98,7 @@ namespace Z0
             return records;
         }
 
-        void CalcObjHeaders(ProjectContext context, in FileRef src, List<CoffSection> records)
+        void CalcObjHeaders(ProjectContext context, in FileRef src, List<CoffSectionRow> records)
         {
             var obj = LoadObj(src);
             var view = CoffObjectView.cover(obj.Data);
@@ -111,7 +111,7 @@ namespace Z0
                 ref readonly var section = ref skip(sections,j);
                 var number = j+1 ;
                 var name = CoffObjects.format(strings, section.Name);
-                var record = default(CoffSection);
+                var record = default(CoffSectionRow);
                 record.OriginId = origin.DocId;
                 record.SectionNumber = (ushort)number;
                 record.SectionName = name;
@@ -126,13 +126,13 @@ namespace Z0
             }
         }
 
-        public Index<CoffSection> CalcObjHeaders(ProjectContext context)
+        public Index<CoffSectionRow> CalcObjHeaders(ProjectContext context)
         {
             var project = context.Project;
             var src = LoadObjData(context);
             var entries = src.Entries;
             var count = entries.Count;
-            var buffer = list<CoffSection>();
+            var buffer = list<CoffSectionRow>();
             for(var i=0; i<count; i++)
             {
                 ref readonly var entry = ref entries[i];
@@ -151,27 +151,27 @@ namespace Z0
             return records;
         }
 
-        public Index<CoffSection> CollectHeaders(ProjectContext context)
+        public Index<CoffSectionRow> CollectHeaders(ProjectContext context)
         {
             var records = CalcObjHeaders(context);
-            Channel.TableEmit(records, EtlContext.table<CoffSection>(context.Project.Name));
+            Channel.TableEmit(records, EtlContext.table<CoffSectionRow>(context.Project.Name));
             return records;
         }
 
         public CoffSymIndex LoadSymIndex(ProjectId project)
             => new CoffSymIndex(LoadHeaders(project), LoadSymbols(project));
 
-        public Index<CoffSymRecord> LoadSymbols(ProjectId project)
+        public Index<CoffSymRow> LoadSymbols(ProjectId project)
         {
-            var src = EtlContext.table<CoffSymRecord>(project);
+            var src = EtlContext.table<CoffSymRow>(project);
             var lines = src.ReadLines(true);
             var count = lines.Count - 1;
-            Index<CoffSymRecord> dst = alloc<CoffSymRecord>(count);
+            Index<CoffSymRow> dst = alloc<CoffSymRow>(count);
             for(var i=0; i<count; i++)
             {
                 ref readonly var line = ref lines[i+1];
                 var cells = text.trim(text.split(line,Chars.Pipe));
-                Require.equal(cells.Length, CoffSymRecord.FieldCount);
+                Require.equal(cells.Length, CoffSymRow.FieldCount);
                 var reader = cells.Reader();
                 ref var row = ref dst[i];
                 DataParser.parse(reader.Next(), out row.Seq).Require();
@@ -188,19 +188,19 @@ namespace Z0
             return dst;
         }
 
-        public Index<CoffSection> LoadHeaders(ProjectId project)
+        public Index<CoffSectionRow> LoadHeaders(ProjectId project)
         {
-            var src = EtlContext.table<CoffSection>(project);
+            var src = EtlContext.table<CoffSectionRow>(project);
             var lines = src.ReadLines(true);
             var count = lines.Count - 1;
-            var buffer = alloc<CoffSection>(count);
+            var buffer = alloc<CoffSectionRow>(count);
             var docreader = lines.Storage.Reader();
             docreader.Next();
             var i=0u;
             while(docreader.Next(out var line))
             {
                 var cells = text.trim(text.split(line,Chars.Pipe));
-                Require.equal(cells.Length, CoffSection.FieldCount);
+                Require.equal(cells.Length, CoffSectionRow.FieldCount);
 
                 var reader = cells.Reader();
                 ref var row = ref seek(buffer,i++);
@@ -236,7 +236,7 @@ namespace Z0
             return result;
         }
 
-        void CalcSymbols(ProjectContext context, in FileRef file, ref uint seq, List<CoffSymRecord> buffer)
+        void CalcSymbols(ProjectContext context, in FileRef file, ref uint seq, List<CoffSymRow> buffer)
         {
             var obj = CoffObjects.load(file);
             var objData = obj.Data.View;
@@ -255,7 +255,7 @@ namespace Z0
                     var symtext = strings.Text(sym);
                     if(nonempty(symtext))
                     {
-                        var record = default(CoffSymRecord);
+                        var record = default(CoffSymRow);
                         var name = sym.Name;
                         record.Seq = seq++;
                         record.OriginId = origin.DocId;
@@ -274,9 +274,9 @@ namespace Z0
             }
         }
 
-        public Index<CoffSymRecord> CalcSymbols(ProjectContext context)
+        public Index<CoffSymRow> CalcSymbols(ProjectContext context)
         {
-            var buffer = list<CoffSymRecord>();
+            var buffer = list<CoffSymRow>();
             var files = context.Files.Docs(FileKind.Obj, FileKind.O);
             var count = files.Count;
             var seq = 0u;
@@ -285,9 +285,9 @@ namespace Z0
             return buffer.ToArray();
         }
 
-        public Index<CoffSymRecord> CollectSymbols(ProjectContext context)
+        public Index<CoffSymRow> CollectSymbols(ProjectContext context)
         {
-            var buffer = list<CoffSymRecord>();
+            var buffer = list<CoffSymRow>();
             var src = LoadObjData(context);
             var files = context.Files;
             var paths = src.Paths.Array();
@@ -313,7 +313,7 @@ namespace Z0
                     var symtext = strings.Text(sym);
                     if(nonempty(symtext))
                     {
-                        var record = default(CoffSymRecord);
+                        var record = default(CoffSymRow);
                         var name = sym.Name;
                         record.OriginId = origin.DocId;
                         record.Address = name.NameKind == CoffNameKind.String ? Address32.Zero : name.Address;
@@ -332,7 +332,7 @@ namespace Z0
             var records = buffer.ToArray().Sort();
             for(var i=0u; i<records.Length; i++)
                 seek(records,i).Seq = i;
-            Channel.TableEmit(records, EtlContext.table<CoffSymRecord>(context.Project.Name));
+            Channel.TableEmit(records, EtlContext.table<CoffSymRow>(context.Project.Name));
             return records;
         }
     }

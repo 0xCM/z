@@ -6,33 +6,33 @@ namespace Z0
 {
     public class CoffSymIndex
     {
-        readonly Index<CoffSection> SectionData;
+        readonly Index<CoffSectionRow> SectionData;
 
-        readonly Index<CoffSymRecord> SymData;
+        readonly Index<CoffSymRow> SymData;
 
-        public CoffSymIndex(CoffSection[] sections, CoffSymRecord[] syms)
+        public CoffSymIndex(CoffSectionRow[] sections, CoffSymRow[] syms)
         {
             SectionData = sections;
             SymData = syms;
         }
 
         [MethodImpl(Inline)]
-        public ReadOnlySpan<CoffSymRecord> Symbols()
+        public ReadOnlySpan<CoffSymRow> Symbols()
             => SymData;
 
         [MethodImpl(Inline)]
-        public ReadOnlySpan<CoffSymRecord> Symbols(Hex32 doc)
+        public ReadOnlySpan<CoffSymRow> Symbols(Hex32 doc)
             => SymData.Where(x => x.OriginId == doc);
 
         [MethodImpl(Inline)]
-        public ReadOnlySpan<CoffSymRecord> Symbols(Hex32 docid, ushort section)
+        public ReadOnlySpan<CoffSymRow> Symbols(Hex32 docid, ushort section)
             => SymData.Where(x => x.OriginId == docid && x.Section == section);
 
         [MethodImpl(Inline)]
-        public ReadOnlySpan<CoffSection> Sections()
+        public ReadOnlySpan<CoffSectionRow> Sections()
             => SectionData;
 
-        public bool Symbol(Hex32 docid, Address32 address, out CoffSymRecord dst)
+        public bool Symbol(Hex32 docid, Address32 address, out CoffSymRow dst)
         {
             var result = false;
             dst = default;
@@ -50,6 +50,6 @@ namespace Z0
             return result;
         }
 
-        public static CoffSymIndex Empty => new CoffSymIndex(sys.empty<CoffSection>(),sys.empty<CoffSymRecord>());
+        public static CoffSymIndex Empty => new CoffSymIndex(sys.empty<CoffSectionRow>(),sys.empty<CoffSymRow>());
     }
 }

@@ -29,10 +29,15 @@ namespace Z0
             }
 
             public MemoryAddress GetProcAddress(string name)
-                => GetProcAddressExec.Invoke(Handle, name);
+                => GetProcAddressExec.F(Handle, name);
 
             public ImageHandle LoadLibrary(FilePath path)
-                => ImageHandle.own(GetProcAddressExec.Invoke(Handle, path.Format(PathSeparator.BS)));
+            {
+                if(!path.Exists)
+                    sys.@throw(FS.missing(path));
+
+                return ImageHandle.own(LoadLibraryExec.F(path.Format(PathSeparator.BS)));
+            }
 
             [MethodImpl(Inline)]
             public static implicit operator Kernel32(Kernel32Image src)
@@ -43,6 +48,7 @@ namespace Z0
         {
             public static Kernel32Image load()
                 => load(FS.dir("c:/windows/system32") + FS.file("kernel32", FileKind.Dll));
+            
         }
     }
 }
