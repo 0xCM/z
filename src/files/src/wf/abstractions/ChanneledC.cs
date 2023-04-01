@@ -17,10 +17,10 @@ namespace Z0
         public static C create(IWfChannel channel)
             => new C().Factory(channel);
 
-        static C connect(IWfChannel channel)
+        static C init(IWfChannel channel)
         {
             var service = new C();
-            service.Connect(channel);
+            service.Init(channel);
             return service;
         }
 
@@ -31,7 +31,7 @@ namespace Z0
             return dst;
         }
 
-        public virtual Func<IWfChannel,C> Factory => connect;
+        public virtual Func<IWfChannel,C> Factory => init;
 
         protected Channeled(IWfChannel channel)
             : base(channel)

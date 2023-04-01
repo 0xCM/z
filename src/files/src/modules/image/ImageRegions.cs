@@ -9,7 +9,7 @@ namespace Z0
     using static sys;
 
     [Free]
-    public class ImageRegions : AppService<ImageRegions>
+    public class ImageRegions : Channeled<ImageRegions>
     {
         public readonly ref struct Traverser
         {

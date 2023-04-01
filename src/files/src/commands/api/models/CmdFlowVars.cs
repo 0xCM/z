@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public struct WsCmdVars
+    public struct CmdFlowVars
     {
-        public static WsCmdVars create()
-            => new WsCmdVars();
+        public static CmdFlowVars create()
+            => new CmdFlowVars();
 
         public @string Actor;
 

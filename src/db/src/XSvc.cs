@@ -9,13 +9,9 @@ namespace Z0
         class ServiceCache : AppServices<ServiceCache>
         {
 
-            public ArchiveRegistry ArchiveRegistry(IWfRuntime wf)
-                => Service<ArchiveRegistry>(wf);            
         }
 
         static ServiceCache Services => ServiceCache.Instance;
 
-        public static ArchiveRegistry ArchiveRegistry(this IWfRuntime wf)
-            => Services.ArchiveRegistry(wf);
     }
 }

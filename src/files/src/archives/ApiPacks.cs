@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
 
     [ApiHost]
-    public sealed class ApiPacks : AppService<ApiPacks>
+    public sealed class ApiPacks : Channeled<ApiPacks>
     {
         public static IApiPack create()
             => create(AppDb.Ts);

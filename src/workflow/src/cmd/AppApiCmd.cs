@@ -9,7 +9,7 @@ namespace Z0
     
     unsafe class AppApiCmd : WfAppCmd<AppApiCmd>
     {        
-        ArchiveRegistry ArchiveRegistry => Wf.ArchiveRegistry();
+        ArchiveRegistry ArchiveRegistry => Channel.Channeled<ArchiveRegistry>();
 
         ProcessMemory ProcessMemory => Wf.ProcessMemory();
 

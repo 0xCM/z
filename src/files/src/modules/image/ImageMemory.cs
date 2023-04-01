@@ -36,13 +36,6 @@ namespace Z0
             return dump(channel, src, targets.Path("process",FileKind.Dmp));
         }
 
-        static ExecToken dump(IWfChannel channel, ProcessAdapter src, FilePath dst)
-        {
-            var running = channel.EmittingFile(dst);
-            DumpEmitter.dump(src, dst);
-            return channel.EmittedBytes(running, dst.Size);
-        }
-
         public static ExecToken emit(IWfChannel channel, Timestamp ts, IDbArchive dst)
         {
             EnvReports.capture(channel, dst.Scoped("context"));
@@ -50,20 +43,6 @@ namespace Z0
             channel.FileEmit(map.ToString(), dst.Scoped("context").Path("process.image", FileKind.Map));            
             return emit(channel, Process.GetCurrentProcess(), ts, dst);
         }
-
-        static ExecToken emit(IWfChannel channel, ProcessAdapter src, Timestamp ts, IDbArchive dst)
-        {
-            var running = channel.Running($"Emiting context for process {src.Id} based at {src.BaseAddress} from {src.Uri}");
-            modules(channel, src, dst);
-            var file = ProcDumpName.path(src, ts, dst);
-            var dumping = channel.EmittingFile(file);
-            DumpEmitter.dump(src, file);
-            channel.EmittedBytes(dumping, file.Size);
-            return channel.Ran(running, $"Emitted context for process {src.Id}");   
-        }
-        
-        static ExecToken modules(IWfChannel channel, Process src, IDbArchive dst)
-            => channel.TableEmit(ImageMemory.modules(src), dst.Scoped("context").Path("process.modules",FileKind.Csv));        
 
         [Op]
         public static ImageLocation location(ProcessModule src)
@@ -99,6 +78,28 @@ namespace Z0
 
         public static PEReader pe(Stream src)
             => new PEReader(src);
+
+        static ExecToken dump(IWfChannel channel, ProcessAdapter src, FilePath dst)
+        {
+            var running = channel.EmittingFile(dst);
+            DumpEmitter.dump(src, dst);
+            return channel.EmittedBytes(running, dst.Size);
+        }
+
+
+        static ExecToken emit(IWfChannel channel, ProcessAdapter src, Timestamp ts, IDbArchive dst)
+        {
+            var running = channel.Running($"Emiting context for process {src.Id} based at {src.BaseAddress} from {src.Uri}");
+            modules(channel, src, dst);
+            var file = ProcDumpName.path(src, ts, dst);
+            var dumping = channel.EmittingFile(file);
+            DumpEmitter.dump(src, file);
+            channel.EmittedBytes(dumping, file.Size);
+            return channel.Ran(running, $"Emitted context for process {src.Id}");   
+        }
+        
+        static ExecToken modules(IWfChannel channel, Process src, IDbArchive dst)
+            => channel.TableEmit(ImageMemory.modules(src), dst.Scoped("context").Path("process.modules",FileKind.Csv));        
 
         [MethodImpl(Inline), Op]
         public static ref ProcessSegment segment(in ProcessMemoryRegion src, ref ProcessSegment dst)
@@ -187,6 +188,28 @@ namespace Z0
             return buffer.Sort().Resequence();
         }
 
+        [Op]
+        public static ReadOnlySeq<ProcessMemoryRegion> regions(Process src)
+            => regions(MemoryNode.snapshot(src.Id).Describe());
+
+        [Op]
+        public static ReadOnlySeq<ProcessMemoryRegion> regions()
+            => regions(MemoryNode.snapshot().Describe());
+
+        [Op]
+        public static ReadOnlySeq<ProcessMemoryRegion> regions(int procid)
+            => regions(MemoryNode.snapshot(procid).Describe());
+
+        public static ReadOnlySeq<ProcessMemoryRegion> regions(ReadOnlySpan<MemoryRangeInfo> src)
+        {
+            var count = src.Length;
+            var buffer = alloc<ProcessMemoryRegion>(count);
+            ref var dst = ref first(buffer);
+            for(var i=0u; i<count; i++)
+                fill(skip(src,i), i, out seek(dst,i));
+            return buffer.Resequence();
+        }
+
         /// <summary>
         /// Captures state information about a specified process
         /// </summary>
@@ -221,28 +244,6 @@ namespace Z0
         }
 
         static _FileUri Nul => FolderPath.Empty +  FS.file("dev",FS.ext("null"));
-
-        [Op]
-        public static ReadOnlySeq<ProcessMemoryRegion> regions(Process src)
-            => regions(MemoryNode.snapshot(src.Id).Describe());
-
-        [Op]
-        public static ReadOnlySeq<ProcessMemoryRegion> regions()
-            => regions(MemoryNode.snapshot().Describe());
-
-        [Op]
-        public static ReadOnlySeq<ProcessMemoryRegion> regions(int procid)
-            => regions(MemoryNode.snapshot(procid).Describe());
-
-        public static ReadOnlySeq<ProcessMemoryRegion> regions(ReadOnlySpan<MemoryRangeInfo> src)
-        {
-            var count = src.Length;
-            var buffer = alloc<ProcessMemoryRegion>(count);
-            ref var dst = ref first(buffer);
-            for(var i=0u; i<count; i++)
-                fill(skip(src,i), i, out seek(dst,i));
-            return buffer.Resequence();
-        }
 
         static ProcessMemoryRegion fill(in MemoryRangeInfo src, uint index, out ProcessMemoryRegion dst)
         {

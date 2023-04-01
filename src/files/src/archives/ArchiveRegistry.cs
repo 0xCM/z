@@ -6,9 +6,9 @@ namespace Z0
 {
     using static sys;
 
-    public class ArchiveRegistry : AppService<ArchiveRegistry>
+    public class ArchiveRegistry : Channeled<ArchiveRegistry>
     {
-        FilePath RegistryPath => AppDb.Service.Settings("workspaces", FileKind.Csv);
+        FilePath RegistryPath => AppDb.Settings("workspaces", FileKind.Csv);
 
         ICsvFormatter<Entry> EntryFormatter = CsvTables.formatter<Entry>();
 

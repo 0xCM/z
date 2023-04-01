@@ -9,7 +9,7 @@ namespace Z0
     using static sys;
     using static ImageRegions;
 
-    public class ProcessMemory : AppService<ProcessMemory>
+    public class ProcessMemory : Channeled<ProcessMemory>
     {
         [Op, MethodImpl(Inline)]
         public static Traverser traverser(ReadOnlySpan<ProcessMemoryRegion> src, bool live)

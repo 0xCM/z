@@ -31,4 +31,10 @@ namespace Z0
             Files = root.Files(false, Exe, Dll, Pdb, FS.ext("json"), Xml).Where(x => !x.Name.Contains("System.Private.CoreLib"));
         }
     }
+
+    partial class XTend
+    {
+        public static IDbArchive RuntimeArchive(this Assembly src)
+            => Z0.RuntimeArchive.load(src);
+    }    
 }

@@ -8,7 +8,7 @@ namespace Z0
 
     using static sys;
 
-    public class CultProcessor : WfSvc<CultProcessor>, IEtlService
+    public class CultProcessor : WfSvc<CultProcessor>
     {
         const uint BatchSize = Pow2.T16;
 

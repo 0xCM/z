@@ -35,7 +35,7 @@ namespace Z0
         
         public Hex16 SegSs;
         
-        public BitVector32 EFlags;
+        public uint EFlags;
 
         public Hex64 Dr0;
         

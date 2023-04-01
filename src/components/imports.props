@@ -24,7 +24,6 @@
     <ProjectReference Include="$(ClrEcma)" />
     <ProjectReference Include="$(ClrCil)" />
 
-    <ProjectReference Include="$(Db)" />
     <ProjectReference Include="$(Diagnostics)" />
     <ProjectReference Include="$(Digital)" />
     <ProjectReference Include="$(Dynamic)" />

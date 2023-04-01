@@ -15,6 +15,11 @@ namespace Z0
 
 
         void IDisposable.Dispose() {}
+
+        void IChanneled.Init(IWfChannel channel)
+        {
+
+        }
     }
 
     /// <summary>

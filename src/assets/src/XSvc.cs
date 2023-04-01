@@ -8,7 +8,6 @@ namespace Z0
     {
         sealed class ServiceCache : AppServices<ServiceCache>
         {
-
             public ApiMd ApiMetadata(IWfRuntime wf)
                 => Service<ApiMd>(wf);
 

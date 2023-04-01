@@ -6,21 +6,24 @@ namespace Z0
 {
     public static class XSvc
     {
+        class ChannelCache : AppChannels<ChannelCache>
+        {
+
+            public ProcessMemory ProcessMemory(IWfChannel channel)                
+                => service<ProcessMemory>(channel);
+
+        }
+
         class ServiceCache : AppServices<ServiceCache>
         {
-            public ProcessMemory ProcessMemory(IWfRuntime wf)                
-                => Service<ProcessMemory>(wf);
-
-            public ApiPacks ApiPacks(IWfRuntime wf)
-                => Service<ApiPacks>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
 
-        public static ProcessMemory ProcessMemory(this IWfRuntime wf)
-            => Services.ProcessMemory(wf);
+        static ChannelCache Channels => ChannelCache.Instance;
 
-        public static ApiPacks ApiPacks(this IWfRuntime wf)
-            => Services.ApiPacks(wf);
+
+        public static ProcessMemory ProcessMemory(this IWfRuntime wf)
+            => Channels.ProcessMemory(wf.Channel);
     }
 }

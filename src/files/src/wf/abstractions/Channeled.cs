@@ -15,7 +15,7 @@ namespace Z0
 
         protected static IEnvDb EnvDb => Settings.EnvDb();
 
-        protected void Connect(IWfChannel channel)
+        public void Init(IWfChannel channel)
         {
             Channel = channel;
         }

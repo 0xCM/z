@@ -9,6 +9,21 @@ namespace Z0
     [ApiHost]
     public static class XSvc
     {
+        sealed class ChannelCache : AppChannels<ChannelCache>
+        {
+            public ApiPacks ApiPacks(IWfChannel channel)
+                => service<ApiPacks>(channel);
+        }
+
+        static ChannelCache Channels => ChannelCache.Instance;
+
+
+        public static ApiPacks ApiPacks(this IWfRuntime wf)
+            => Channels.ApiPacks(wf.Channel);
+
+        public static ApiPacks ApiPacks(this IWfChannel channel)
+            => Channels.ApiPacks(channel);
+
         sealed class ServiceCache : AppServices<ServiceCache>
         {
             public CaptureWfCmd CaptureCmd(IWfRuntime wf)
@@ -17,6 +32,7 @@ namespace Z0
             public CaptureWf CaptureWf(IWfRuntime wf)
                 => Service<CaptureWf>(wf);
         }
+
 
         static ServiceCache Services => ServiceCache.Instance;
 

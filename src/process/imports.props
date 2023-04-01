@@ -1,6 +1,5 @@
 <Project>
   <ItemGroup>
     <ProjectReference Include="$(Commands)" />
-    <ProjectReference Include="$(Db)" />
   </ItemGroup>
 </Project>

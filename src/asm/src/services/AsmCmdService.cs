@@ -14,7 +14,7 @@ namespace Z0.Asm
 
         AsmTables AsmTables => Service(Wf.AsmTables);
 
-        ApiPacks ApiPacks => Wf.ApiPacks();
+        ApiPacks ApiPacks => Channel.Channeled<ApiPacks>();
 
         IPolyrand Random;
 

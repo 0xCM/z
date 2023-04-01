@@ -8,9 +8,6 @@ namespace Z0
     {
         class ServiceCache : AppServices<ServiceCache>
         {
-            public ImageRegions ImageRegions(IWfRuntime wf)
-                => Service<ImageRegions>(wf);
-
             public OmniScript OmniScript(IWfRuntime wf)
                 => Service<OmniScript>(wf);
 
@@ -23,8 +20,6 @@ namespace Z0
         public static WfScripts ToolScripts(this IWfRuntime wf)
             => Services.ToolScripts(wf);
 
-        public static ImageRegions ImageRegions(this IWfRuntime wf)
-            => Services.ImageRegions(wf);
 
         public static OmniScript OmniScript(this IWfRuntime wf)
             => Services.OmniScript(wf);

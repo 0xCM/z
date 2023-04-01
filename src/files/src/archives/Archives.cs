@@ -11,6 +11,36 @@ namespace Z0
     [ApiHost]
     public class Archives : Stateless<Archives>
     {                
+        public static ItemList<uint,string> list(IWfChannel channel, FilePath src)
+            => list(channel, src, x => (Outcome<string>)text.trim(x));
+
+        public static ItemList<uint,T> list<T>(IWfChannel channel, FilePath src, Func<string,Outcome<T>> parser)
+        {
+            var dst = sys.list<ListItem<uint, T>>();
+            var counter = 0u;
+            var result = Outcome<T>.Empty;
+            var line = EmptyString;
+            using var reader = src.Utf8Reader();
+            while(true)
+            {
+                line = reader.ReadLine();
+                if(empty(line))
+                    break;
+                
+                result = parser(line);
+                if(result)
+                {
+                    dst.Add((counter++, result.Data));
+                }
+                else
+                {
+                    channel.Error(result.Message);
+                    break;
+                }                                
+            }
+            return dst.Array();            
+        }
+
         public static FolderIndex index(IWfChannel channel, FolderQuery q)
         {
             var flow = channel.Running($"Indexing {q.Root}");
@@ -53,7 +83,7 @@ namespace Z0
             const uint BufferLength = 256;
             var count = relations.Length;
             var buffer = span<TextLine>(BufferLength);
-            var intervals = list<LineInterval<string>>();
+            var intervals = sys.list<LineInterval<string>>();
             for(var i=0;i<count; i++)
             {
                 ref readonly var relation = ref relations[i];

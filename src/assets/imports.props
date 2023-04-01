@@ -2,8 +2,8 @@
   <ItemGroup>
     <ProjectReference Include="$(ZLib)" />
     <ProjectReference Include="$(Symbolics)" />
-    <ProjectReference Include="$(Db)" />
     <ProjectReference Include="$(Native)" />
     <ProjectReference Include="$(Stitch)" />
+    <ProjectReference Include="$(Commands)" />
   </ItemGroup>
 </Project>
