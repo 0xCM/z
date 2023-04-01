@@ -81,7 +81,7 @@ namespace Z0
         public ReadOnlySpan<CoffSymbol> Symbols
         {
             [MethodImpl(Inline)]
-            get => CoffObjects.symbols(Data, SymTableOffset, SymCount);
+            get => CoffStrings.symbols(Data, SymTableOffset, SymCount);
         }
 
         /// <summary>

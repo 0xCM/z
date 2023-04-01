@@ -9,22 +9,22 @@ namespace Z0
     {
         public ReadOnlySeq<string> Args {get; private set;}
 
+        public void Init(IWfRuntime wf, ReadOnlySeq<string> args)
+        {
+            base.Init(wf);
+            Args = args;
+        }
+
         protected virtual void OnExit()
         {
 
         }
 
         protected abstract void Run();
-            
-        void IApiShell.Run()
-            => Run();
 
-        void IAppShell.Init(IWfRuntime wf, IApiContext context, params string[] args)
+        void IAppShell.Run()
         {
-            Args = args;
-            Init(wf,context);
+            Run();
         }
-            
-        protected abstract void Init(IWfRuntime wf, IApiContext context);
     }
 }

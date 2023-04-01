@@ -15,8 +15,6 @@ namespace Z0
         public static void Main(params string[] args)
         {
             using var app = ApiServers.shell<App>(args);
-            var context = ApiServers.context<AppShellCmd>(app.Wf, () => providers(app.Wf));
-            app.Commander = context.Commander;
             app.Run();            
         } 
     }

@@ -198,11 +198,11 @@ namespace Z0
         {            
             var src = FS.dir(args[0]);
             var targets = EnvDb;
-            var modules = bag<CoffModule>();
+            var modules = bag<CoffObjectData>();
             var peinfo = cdict<FilePath, PeFileInfo>();
             var coffheaders = cdict<FilePath, CoffHeader>();
-            var corheadrs = dict<FilePath, CorHeaderInfo>();
-            var secheaders = dict<FilePath, List<PeSectionHeader>>();
+            var corheadrs = dict<FilePath, PeCorHeader>();
+            var secheaders = dict<FilePath, List<SectionHeaderRow>>();
             var index = FS.index(Archives.modules(src).Members().Select(x => x.Path));
             var emitter = text.emitter();
             iter(index.Distinct(), entry => {
@@ -214,7 +214,7 @@ namespace Z0
                     coffheaders.TryAdd(entry.Path, module.CoffHeader);
                     if(module.CorHeader != null)
                         corheadrs.TryAdd(entry.Path, module.CorHeader);
-                    var secheaerlist = new List<PeSectionHeader>();
+                    var secheaerlist = new List<SectionHeaderRow>();
                     secheaders.TryAdd(entry.Path, secheaerlist);
                     iter(module.Sections, sec => secheaerlist.Add(sec));
                 
@@ -308,7 +308,7 @@ namespace Z0
         {
             var src = FS.dir(args[0]);
             var index = FS.index(Archives.modules(src).Members().Select(x => x.Path));
-            var headers = bag<PeSectionHeader>();
+            var headers = bag<SectionHeaderRow>();
             var dirs = bag<PeDirectoryEntry>();
             iter(index.Distinct(), entry => {
                 try

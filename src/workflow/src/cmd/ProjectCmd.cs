@@ -33,7 +33,7 @@ namespace Z0
         void PeFiles(CmdArgs args)
         {
             var src = FS.dir(args[0]).DbArchive().Enumerate(true, FileKind.Dll, FileKind.Exe, FileKind.Obj, FileKind.Sys);
-            var dst = bag<PeSectionHeader>();
+            var dst = bag<SectionHeaderRow>();
             iter(src, path => {
                 try
                 {
@@ -50,7 +50,7 @@ namespace Z0
                 }
             });
             
-            var path = EnvDb.Scoped("flows/import").Table<PeSectionHeader>();
+            var path = EnvDb.Scoped("flows/import").Table<SectionHeaderRow>();
             Channel.TableEmit(dst.Array(),path);
         }
 

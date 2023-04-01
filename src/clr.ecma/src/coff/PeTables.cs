@@ -20,11 +20,11 @@ namespace Z0
             return dst;
         }
 
-        ReadOnlySeq<PeSectionHeader> _SectionHeaders;
+        ReadOnlySeq<SectionHeaderRow> _SectionHeaders;
         
         CoffHeader _CoffHeader;
 
-        CorHeaderInfo _CorHeader;
+        PeCorHeader _CorHeader;
 
         PeFileInfo _PeInfo;
 
@@ -38,7 +38,7 @@ namespace Z0
             
         }
 
-        public ref readonly ReadOnlySeq<PeSectionHeader> SectionHeaders => ref _SectionHeaders;
+        public ref readonly ReadOnlySeq<SectionHeaderRow> SectionHeaders => ref _SectionHeaders;
 
         public ReadOnlySpan<PeDirectoryEntry> Directories => sys.recover<PeDirectoryEntry>(sys.bytes(_Directories));
         
@@ -46,7 +46,7 @@ namespace Z0
         
         public ref readonly CoffHeader CoffHeader => ref _CoffHeader;
 
-        public ref readonly CorHeaderInfo CorHeader => ref _CorHeader;
+        public ref readonly PeCorHeader CorHeader => ref _CorHeader;
 
         public ref readonly PeFileInfo PeInfo => ref _PeInfo;
 
@@ -80,10 +80,10 @@ namespace Z0
             return dst;
         }
 
-        static ReadOnlySeq<PeSectionHeader> sections(PeReader src)
+        static ReadOnlySeq<SectionHeaderRow> sections(PeReader src)
         {
             var headers = src.PE.PEHeaders;
-            var buffer = sys.empty<PeSectionHeader>();
+            var buffer = sys.empty<SectionHeaderRow>();
             if(headers != null)
             {
                 var pe = headers.PEHeader;
@@ -91,7 +91,7 @@ namespace Z0
                 {
                     var sections = headers.SectionHeaders.AsSpan();
                     var count = sections.Length;
-                    buffer = sys.alloc<PeSectionHeader>(count);
+                    buffer = sys.alloc<SectionHeaderRow>(count);
                     for(var i=0u; i<count; i++)
                     {
                         ref readonly var section = ref skip(sections,i);
@@ -108,10 +108,10 @@ namespace Z0
             return buffer;
         }
 
-        static CorHeaderInfo? cor(PEHeaders src)
+        static PeCorHeader? cor(PEHeaders src)
         {
             var cor = src.CorHeader;
-            var dst = default(CorHeaderInfo);
+            var dst = default(PeCorHeader);
             if(cor != null)
             {
                 dst = new();

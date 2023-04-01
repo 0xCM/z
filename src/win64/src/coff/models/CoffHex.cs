@@ -6,13 +6,13 @@ namespace Z0
 {
     public class CoffHex
     {
-        public readonly CoffObject Object;
+        public readonly CoffObjectData Object;
 
         public readonly Index<HexDataRow> HexRows;
 
         public readonly BinaryCode HexData;
 
-        public CoffHex(CoffObject coff, HexDataRow[] hex, BinaryCode compacted)
+        public CoffHex(CoffObjectData coff, HexDataRow[] hex, BinaryCode compacted)
         {
             Object = coff;
             HexRows =  hex;

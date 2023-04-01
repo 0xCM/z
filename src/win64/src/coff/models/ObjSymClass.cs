@@ -15,7 +15,7 @@ namespace Z0
         public ObjSymClass(ObjSymCode code)
         {
             Code = code;
-            Kind = ObjSymCalcs.kind(code);
+            Kind = CoffObjects.kind(code);
         }
 
         public Hash32 Hash

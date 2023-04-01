@@ -13,12 +13,28 @@ namespace Z0
     public class ApiServers : AppService
     {        
         public static IApiShell shell(IWfRuntime wf, string[] args, params Assembly[] parts)
-            => new ApiShell(wf, dispatcher(wf, parts), args);
+        {
+            var shell = new ApiShell();
+            shell.Init(wf, args,dispatcher(wf, parts));
+            return shell;
+        }
 
         public static IApiShell shell(string[] args, params Assembly[] parts)
         {
             var wf = runtime(false);
-            return new ApiShell(wf, dispatcher(wf, parts), args);
+            var shell = new ApiShell();
+            shell.Init(wf, args, dispatcher(wf, parts));
+            return shell;
+        }
+
+        public static A shell<A>(string[] args, params Assembly[] parts)
+            where A : IApiShell, new()
+        {
+            var wf = runtime();
+            var shell = new A();
+            shell.Init(wf, args, dispatcher(wf, parts));
+            //app.Init(wf);
+            return shell;
         }
 
         public static Outcome exec(string name, CmdArgs args)
@@ -122,45 +138,6 @@ namespace Z0
                 throw;
             }
         }
-
-        // public static A shell<A>(string[] args, IWfRuntime wf, IApiContext context, bool verbose = false)
-        //     where A : IAppShell, new()
-        // {            
-        //     var app = new A();
-        //     app.Init(wf, context, args);
-        //     return app;
-        // }
-
-        public static A shell<A>(params string[] args)
-            where A : IAppShell, new()
-        {
-            var wf = runtime();
-            var app = new A();
-            app.Init(wf);
-            return app;
-        }
-
-        // public static A shell<A,C>(Func<IWfRuntime,ReadOnlySeq<IApiService>> factory, bool verbose = false)
-        //     where A : IAppShell, new()
-        //     where C : IApiService, new()
-        // {
-        //     var wf = runtime();
-        //     var channel = wf.Channel;
-        //     if(verbose)
-        //         channel.Babble("Creating api server");
-
-        //     var app = new A();
-        //     var providers = factory(wf);
-        //     app.Init(wf, context<C>(wf, channel, providers));
-
-        //     if(verbose)
-        //         channel.Babble($"Created {providers.Length} command providers");
-        //     return app;
-        // }
-
-        public static IApiContext context<C>(IWfRuntime wf, Func<ReadOnlySeq<IApiService>> factory, bool verbose = false)
-            where C : IApiService, new()
-                => context<C>(wf, wf.Channel, factory(), verbose);
 
         public void EmitCmdDefs(Assembly[] src, IDbArchive dst)
             => Cmd.emit(Channel, Cmd.defs(src), dst);
@@ -272,7 +249,6 @@ namespace Z0
             return dispatcher;
         }
 
-
         static CmdMethods methods(IApiService host)
         {
             var src = host.GetType().DeclaredInstanceMethods().Tagged<CmdOpAttribute>();
@@ -287,27 +263,26 @@ namespace Z0
             return new CmdMethods(dst);
         }
 
+        // static IApiContext context<C>(IWfRuntime wf, IWfChannel channel, ReadOnlySeq<IApiService> providers, bool verbose = false)
+        //     where C : IApiService, new()
+        // {
+        //     var service = new C();                        
+        //     service.Init(wf);
+        //     return new ApiContext(service, channel, dispatcher(service, channel, providers, verbose));            
+        // }
 
-        static IApiContext context<C>(IWfRuntime wf, IWfChannel channel, ReadOnlySeq<IApiService> providers, bool verbose = false)
-            where C : IApiService, new()
-        {
-            var service = new C();                        
-            service.Init(wf);
-            return new ApiContext(service, channel, dispatcher(service, channel, providers, verbose));            
-        }
+        // static ICmdDispatcher dispatcher<T>(T service, IWfChannel channel, ReadOnlySeq<IApiService> providers, bool verbose = false)
+        //     where T : IApiService
+        // {
+        //     if(verbose)
+        //         channel.Babble($"Discovering {service} dispatchers");
 
-        static ICmdDispatcher dispatcher<T>(T service, IWfChannel channel, ReadOnlySeq<IApiService> providers, bool verbose = false)
-            where T : IApiService
-        {
-            if(verbose)
-                channel.Babble($"Discovering {service} dispatchers");
-
-            var dst = dict<string,CmdMethod>();
-            iter(providers, p => iter(effectors(p), r => dst.TryAdd(r.CmdName, r)));
-            var dispatcher = new ApiDispatcher(channel, new CmdMethods(dst));
-            AppData.Value(nameof(ICmdDispatcher), dispatcher);
-            return dispatcher;
-        }    
+        //     var dst = dict<string,CmdMethod>();
+        //     iter(providers, p => iter(effectors(p), r => dst.TryAdd(r.CmdName, r)));
+        //     var dispatcher = new ApiDispatcher(channel, new CmdMethods(dst));
+        //     AppData.Value(nameof(ICmdDispatcher), dispatcher);
+        //     return dispatcher;
+        // }    
 
         const string InitializingRuntime = "Initializing runtime";
         
@@ -331,34 +306,34 @@ namespace Z0
             return new (dst);
         }
 
-        static ReadOnlySeq<ApiCmdInfo> entries(ReadOnlySeq<CmdUri> src)    
-        {
-            var entries = alloc<ApiCmdInfo>(src.Count);
-            for(var i=0; i<src.Count; i++)
-            {
-                ref readonly var uri = ref src[i];
-                ref var entry = ref seek(entries,i);
-                entry.Uri = uri;
-                entry.Hash = uri.Hash;
-                entry.Name = uri.Name;
-            }
-            return entries.Sort().Resequence();        
-        }        
+        // static ReadOnlySeq<ApiCmdInfo> entries(ReadOnlySeq<CmdUri> src)    
+        // {
+        //     var entries = alloc<ApiCmdInfo>(src.Count);
+        //     for(var i=0; i<src.Count; i++)
+        //     {
+        //         ref readonly var uri = ref src[i];
+        //         ref var entry = ref seek(entries,i);
+        //         entry.Uri = uri;
+        //         entry.Hash = uri.Hash;
+        //         entry.Name = uri.Name;
+        //     }
+        //     return entries.Sort().Resequence();        
+        // }        
 
-        [Op]
-        static ReadOnlySeq<CmdMethod> effectors(object host)
-        {
-            var src = host.GetType().DeclaredInstanceMethods().Tagged<CmdOpAttribute>();
-            var dst = alloc<CmdMethod>(src.Length);
-            var count = src.Length;
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var mi = ref skip(src,i);
-                var tag = mi.Tag<CmdOpAttribute>().Require();
-                seek(dst,i) = new CmdMethod(tag.Name, classify(mi),  mi, host);
-            }
-            return dst;
-        }
+        // [Op]
+        // static ReadOnlySeq<CmdMethod> effectors(object host)
+        // {
+        //     var src = host.GetType().DeclaredInstanceMethods().Tagged<CmdOpAttribute>();
+        //     var dst = alloc<CmdMethod>(src.Length);
+        //     var count = src.Length;
+        //     for(var i=0; i<count; i++)
+        //     {
+        //         ref readonly var mi = ref skip(src,i);
+        //         var tag = mi.Tag<CmdOpAttribute>().Require();
+        //         seek(dst,i) = new CmdMethod(tag.Name, classify(mi),  mi, host);
+        //     }
+        //     return dst;
+        // }
 
         static CmdActorKind classify(MethodInfo src)
         {

@@ -33,14 +33,6 @@ namespace Z0
             }
         }
 
-        // public static void modules(IDbArchive src, Action<CoffModule> dst)
-        // {
-        //     iter(src.Enumerate(true, FileKind.Exe, FileKind.Dll, FileKind.Obj, FileKind.Lib, FileKind.Sys), path => {
-        //         using var reader = PeReader.create(path);
-        //         dst(reader.ModuleInfo());
-        //     }, true);
-        // }
-
         [MethodImpl(Inline), Op]
         public static PeDirectoryEntry directory(Address32 rva, uint size)
         {
@@ -50,7 +42,7 @@ namespace Z0
             return dst;
         }
 
-        public ReadOnlySeq<PeSectionHeader> SectionHeaders()
+        public ReadOnlySeq<SectionHeaderRow> SectionHeaders()
             => Tables.SectionHeaders;
 
         PeReader(FilePath src, FileStream stream, PEReader reader)
@@ -127,8 +119,8 @@ namespace Z0
             Stream?.Dispose();
         }
 
-        public CoffModule ModuleInfo()
-            => new CoffModule(Source, Tables.PeInfo, Tables.CoffHeader, Tables.CorHeader, Tables.SectionHeaders);
+        public CoffModuleInfo ModuleInfo()
+            => new CoffModuleInfo(Source, Tables.PeInfo, Tables.CoffHeader, Tables.CorHeader, Tables.SectionHeaders);
 
         public PEHeaders PeHeaders
         {

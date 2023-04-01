@@ -4,15 +4,16 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {    
-    public interface IApiShell : IDisposable
+    public interface IAppShell : IDisposable
     {
-        ReadOnlySeq<string> Args {get;}
-
         void Run();
+
+        void Init(IWfRuntime wf, ReadOnlySeq<string> args);
+    }
+
+    public interface IApiShell : IAppShell
+    {
+        void Init(IWfRuntime wf, ReadOnlySeq<string> args, ICmdDispatcher dispatcher);
     }    
 
-    public interface IAppShell : IApiShell, IAppService
-    {
-        void Init(IWfRuntime wf, IApiContext context, params string[] args);
-    }   
 }

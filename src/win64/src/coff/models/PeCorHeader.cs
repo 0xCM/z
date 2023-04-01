@@ -5,7 +5,7 @@
 namespace Z0
 {
     [StructLayout(LayoutKind.Sequential,Pack =1), Record(TableName)]
-    public record class CorHeaderInfo
+    public record class PeCorHeader
     {
         const string TableName = "corheader";
 

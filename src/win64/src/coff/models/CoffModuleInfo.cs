@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Free]
-    public record class CoffModule
+    public record class CoffModuleInfo
     {
         public readonly FilePath Path;
 
@@ -13,12 +13,12 @@ namespace Z0
 
         public readonly CoffHeader CoffHeader;
 
-        public readonly CorHeaderInfo? CorHeader;
+        public readonly PeCorHeader? CorHeader;
 
-        public readonly ReadOnlySeq<PeSectionHeader> Sections;
+        public readonly ReadOnlySeq<SectionHeaderRow> Sections;
 
         [MethodImpl(Inline)]
-        public CoffModule(FilePath path, PeFileInfo info, CoffHeader coff, CorHeaderInfo? cor, ReadOnlySeq<PeSectionHeader> sections)
+        public CoffModuleInfo(FilePath path, PeFileInfo info, CoffHeader coff, PeCorHeader? cor, ReadOnlySeq<SectionHeaderRow> sections)
         {
             Path = path;
             PeInfo = info;            

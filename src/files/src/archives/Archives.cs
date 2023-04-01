@@ -10,7 +10,7 @@ namespace Z0
 
     [ApiHost]
     public class Archives : Stateless<Archives>
-    {        
+    {                
         public static FolderIndex index(IWfChannel channel, FolderQuery q)
         {
             var flow = channel.Running($"Indexing {q.Root}");

@@ -4,25 +4,34 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class ApiShell : IApiShell
+    public class ApiShell : ApiShell<ApiShell>
     {
-        ICmdDispatcher Dispatcher;
+        // ICmdDispatcher Dispatcher;
 
-        IWfRuntime Wf;
+        // IWfRuntime Wf;
+        // ReadOnlySeq<string> Args;
 
-        public ReadOnlySeq<string> Args {get;}
+        // public ApiShell(IWfRuntime wf, ICmdDispatcher dispatcher, params string[] args)
+        // {
+        //     Wf = wf;
+        //     Args = args;
+        //     Dispatcher = dispatcher;
+        // }
 
-        public ApiShell(IWfRuntime wf, ICmdDispatcher dispatcher, params string[] args)
-        {
-            Wf = wf;
-            Args = args;
-            Dispatcher = dispatcher;
-        }
+        // public void Dispose()
+        //     => Wf.Dispose();
 
-        public void Dispose()
-            => Wf.Dispose();
+        // public void Run()
+        //     => CmdLoop.start(Wf.Channel, Dispatcher).Wait();
 
-        public void Run()
-            => CmdLoop.start(Wf.Channel, Dispatcher).Wait();
+        // public void Init(IWfRuntime wf, ReadOnlySeq<string> args, ICmdDispatcher dispatcher)
+        // {
+            
+        // }
+
+        // public void Init(IWfRuntime wf, ReadOnlySeq<string> args)
+        // {
+        //     throw new NotImplementedException();
+        // }
     }
 }

@@ -5,10 +5,109 @@
 namespace Z0
 {
     using static sys;
+    using static ObjSymCode;
+    using static ObjSymKind;
 
     [ApiHost,Free]
     public class CoffObjects : AppService<CoffObjects>
     {
+        public static Outcome<CoffHex> hex(CoffObjectData src, HexDataRow[] rows)
+        {
+            var result = validate(src, rows, out var hex);
+            if(result)
+                return new CoffHex(src, rows, hex);
+            else
+                return result;
+        }
+
+        public static Outcome validate(CoffObjectData src, HexDataRow[] rows, out BinaryCode hex)
+        {
+            hex = BinaryRows.pack(rows);
+            var hexsize = hex.Size;
+            var objsize = src.Size;
+            if(hexsize != objsize)
+                return (false,string.Format("Size mismatch: {0} != {1}", objsize, hexsize));
+
+            var objData = src.Data;
+            var hexData = hex;
+            var size = (uint)objsize;
+            for(var j=0u; j<size; j++)
+            {
+                MemoryAddress offset = j;
+                ref readonly var a = ref src[j];
+                ref readonly var b = ref hex[j];
+                if(a != b)
+                    return (false, string.Format("{0} != {1} at offset {2}", a.FormatHex(), b.FormatHex(), offset));
+            }
+
+            return true;
+        }
+
+        [Op]
+        public static ObjSymKind kind(ObjSymCode code)
+        {
+            var kind = ObjSymKind.None;
+            switch(code)
+            {
+                case a:
+                case A:
+                    kind = AbsoluteSymbol;
+                break;
+                case b:
+                    kind = BssSection;
+                break;
+                case B:
+                    kind = BssObject;
+                break;
+                case C:
+                    kind = Common;
+                break;
+                case d:
+                    kind = DataSection;
+                break;
+                case D:
+                    kind = DataObject;
+                break;
+                case i:
+                case l:
+                case n:
+                    kind = CoffDebugSymbol;
+                break;
+
+                case s:
+                case S:
+                    kind = DebugSymbol;
+                break;
+                case r:
+                    kind = ReadOnlyDataSection;
+                break;
+                case R:
+                    kind = ReadOnlyDataObject;
+                break;
+                case t:
+                    kind = CodeSection;
+                break;
+                case T:
+                    kind = CodeObject;
+                break;
+                case U:
+                    kind = UndefinedSymbol;
+                break;
+                case V:
+                case v:
+                case w:
+                case W:
+                case N_STAB:
+                    kind = Other;
+                break;
+            }
+            return kind;
+        }
+
+        [MethodImpl(Inline), Op]
+        public static CoffObjectData load(FilePath path)
+            => new CoffObjectData(path, path.ReadBytes());
+
         public static Outcome parse(string src, ref uint seq, out ObjSymRow dst)
         {
             var result = Outcome.Success;
@@ -34,7 +133,7 @@ namespace Z0
                         dst.Code = ObjSymCode.T;
                     else if(dst.Code == ObjSymCode.r && dst.Name != ".rdata")
                         dst.Code = ObjSymCode.R;
-                    dst.Kind = ObjSymCalcs.kind(dst.Code);
+                    dst.Kind = kind(dst.Code);
                 }
             }
             return result;
@@ -73,87 +172,6 @@ namespace Z0
             }
             return dst;
         }
-
-        [MethodImpl(Inline), Op]
-        public static uint size(in CoffStringTable src)
-            => first(recover<uint>(slice(src.Data,0,4)));
-
-        public static string format(in CoffStringTable src, in CoffSymbol sym)
-        {
-            ref readonly var name = ref sym.Name;
-            var value = sym.Value;
-            var kind = name.NameKind;
-            var address = kind == CoffNameKind.String ? Address32.Zero : name.Address;
-            var dst = EmptyString;
-            if(value < Hex16.Max)
-            {
-                if(address.IsNonZero)
-                    dst = entry(src, name.Address).Format();
-                else
-                {
-                    if(kind == CoffNameKind.String)
-                    {
-                        var len = length(src,sym.Name);
-                        dst = recover<AsciCode>(slice(bytes(name), 0,len)).Format();
-                    }
-                }
-            }
-            return dst;
-        }
-
-        [MethodImpl(Inline), Op]
-        public static uint length(in CoffStringTable strings, Address32 offset)
-        {
-            var data = slice(strings.Data, (uint)offset);
-            var max = strings.Data.Length;
-            var len = 0u;
-            var i=0u;
-            while(i < max && (sbyte)skip(data,i++) > 0)
-                len++;
-            return len;
-        }
-
-        [MethodImpl(Inline), Op]
-        public static uint length(in CoffStringTable strings, CoffSymbolName name)
-        {
-            var kind = name.NameKind;
-            var len  = 0u;
-            if(kind == CoffNameKind.String)
-                len = AQ.length(recover<AsciCode>(bytes(name)));
-            else if(kind == CoffNameKind.Address)
-                len = length(strings, name.Address);
-            return len;
-        }
-
-        public static string format(in CoffStringTable strings, CoffSymbolName name)
-        {
-            var len = length(strings, name);
-            var dst = EmptyString;
-            if(len <= 8)
-                dst = recover<AsciCode>(slice(bytes(name),0,len)).Format();
-            else if(name.Address.IsNonZero)
-                dst = entry(strings, name.Address).Format();
-            return dst;
-        }
-
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<AsciCode> entry(in CoffStringTable strings, Address32 offset)
-        {
-            var data = slice(strings.Data, (uint)offset);
-            return recover<AsciCode>(slice(data,0, length(strings,offset)));
-        }
-
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<CoffSymbol> symbols(ReadOnlySpan<byte> src, uint offset, uint count)
-            => slice(recover<CoffSymbol>(slice(src,offset)), 0, count);
-
-        [MethodImpl(Inline), Op]
-        public static CoffObject load(in FileRef fref)
-            => new CoffObject(fref.Path, fref.Path.ReadBytes());
-
-        [MethodImpl(Inline), Op]
-        public static CoffObject load(FilePath path)
-            => new CoffObject(path, path.ReadBytes());
 
         [MethodImpl(Inline), Op]
         public static Timestamp timestamp(Hex32 src)

@@ -4,23 +4,23 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public abstract class ApiShell<S> : AppShell<S>
+    public abstract class ApiShell<S> : AppShell<S>, IApiShell
         where S : ApiShell<S>, new()
     {
-        protected IApiService Commander;
+        protected ICmdDispatcher Dispatcher;
+        
+        public void Init(IWfRuntime wf, ReadOnlySeq<string> args, ICmdDispatcher dispatcher)
+        {
+            base.Init(wf, args);
+            Dispatcher = dispatcher;
+        }
 
         protected override void Disposing()
         {
-            Commander?.Dispose();
+            
         }
 
         protected override void Run()
             => CmdLoop.start(Channel).Wait();
-
-        protected override void Init(IWfRuntime wf, IApiContext context)
-        {
-            base.Init(wf);
-            Commander = context.Commander;            
-        }        
     }
 }

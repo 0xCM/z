@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using api = CoffObjects;
+    using api = CoffStrings;
 
     public ref struct CoffStringTable
     {

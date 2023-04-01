@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using static core;
+    using static sys;
 
     public class ApiResPackUnpacker : AppService<ApiResPackUnpacker>
     {
@@ -21,7 +21,7 @@ namespace Z0.Asm
             var decoder = Wf.AsmDecoder();
             var buffer = text.buffer();
             var sequence = 0u;
-            var segments = list<MemorySeg>(30000);
+            var segments = new List<MemorySeg>(30000);
             var asmFlow = EmittingFile(asmpath);
             var hexFlow = EmittingFile(hexpath);
             using var asmwriter = asmpath.Writer();
@@ -85,7 +85,7 @@ namespace Z0.Asm
             {
                 ref readonly var seg = ref skip(src,i);
                 buffer.Clear();
-                writer.WriteLine(ApiCodeBlocks.pack(seg, i, buffer));
+                writer.WriteLine(BinaryRows.pack(seg, i, buffer));
             }
             EmittedFile(flow, count);
         }

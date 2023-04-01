@@ -7,15 +7,15 @@ namespace Z0
     partial class EcmaEmitter
     {
         public void EmitSectionHeaders(IDbArchive src, IDbArchive dst)
-            => EmitSectionHeaders(src.Files(FileKind.Dll, FileKind.Exe, FileKind.Obj, FileKind.Lib, FileKind.Obj), dst.Table<PeSectionHeader>());
+            => EmitSectionHeaders(src.Files(FileKind.Dll, FileKind.Exe, FileKind.Obj, FileKind.Lib, FileKind.Obj), dst.Table<SectionHeaderRow>());
 
         public void EmitSectionHeaders(IEnumerable<FilePath> src, FilePath dst)
         {
             try
             {
                 var total = Count.Zero;
-                var formatter = CsvTables.formatter<PeSectionHeader>();
-                var flow = Channel.EmittingTable<PeSectionHeader>(dst);
+                var formatter = CsvTables.formatter<SectionHeaderRow>();
+                var flow = Channel.EmittingTable<SectionHeaderRow>(dst);
                 using var writer = dst.AsciWriter();
                 writer.WriteLine(formatter.FormatHeader());
                 foreach(var file in src)

@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Record(TableId), StructLayout(LayoutKind.Sequential)]
-    public record struct PeSectionHeader : IComparable<PeSectionHeader>, ISequential<PeSectionHeader>
+    public record struct SectionHeaderRow : IComparable<SectionHeaderRow>, ISequential<SectionHeaderRow>
     {
         const string TableId = "section.headers";
 
@@ -29,13 +29,13 @@ namespace Z0
 
         uint ISequential.Seq { get => Seq; set => Seq = value; }
 
-        public PeSectionHeader WithFile(FileName src)
+        public SectionHeaderRow WithFile(FileName src)
         {
             File = src;
             return this;
         }
 
-        public int CompareTo(PeSectionHeader src)
+        public int CompareTo(SectionHeaderRow src)
         {
             var result = File.CompareTo(src.File);
             if(result == 0)
