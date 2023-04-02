@@ -4,14 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     [StructLayout(StructLayout,Pack=1)]
     public readonly record struct AllocToken : IComparable<AllocToken>
     {
         public readonly MemoryAddress Base;
 
-        public readonly uint Offset;
+        public readonly Hex32 Offset;
 
         public readonly uint Size;
 
@@ -23,10 +21,16 @@ namespace Z0
             Size = size;
         }
 
+        public MemorySeg Segment
+        {
+            [MethodImpl(Inline)]
+            get => new (Base + Offset, Size);
+        }
+
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => hash(Base);
+            get => Segment.Hash;
         }
 
         public bool IsEmpty

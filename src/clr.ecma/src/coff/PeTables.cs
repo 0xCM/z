@@ -40,6 +40,7 @@ namespace Z0
 
         public ref readonly ReadOnlySeq<SectionHeaderRow> SectionHeaders => ref _SectionHeaders;
 
+
         public ReadOnlySpan<PeDirectoryEntry> Directories => sys.recover<PeDirectoryEntry>(sys.bytes(_Directories));
         
         public ref readonly ReadOnlySeq<PeDirectoryRow> DirectoryRows => ref _DirectoryRows;
@@ -137,7 +138,7 @@ namespace Z0
             if(PE.PEHeaders != null)
             {            
                 var coff = PE.PEHeaders.CoffHeader;
-                dst.FileName = src.Source.FileName;
+                dst.File = src.Source.FileName;
                 dst.Machine = coff.Machine;
                 dst.Characteristics = coff.Characteristics;
                 var pe = PE.PEHeaders.PEHeader;

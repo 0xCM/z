@@ -7,12 +7,15 @@ namespace Z0
     using System.Reflection.PortableExecutable;
 
     [StructLayout(LayoutKind.Sequential), Record(TableId)]
-    public record struct PeFileInfo : IComparable<PeFileInfo>
+    public record struct PeFileInfo : IComparable<PeFileInfo>, ISequential<PeFileInfo>
     {
         public const string TableId = "pe.info";
 
+        [Render(8)]
+        public uint Seq;
+
         [Render(64)]
-        public FileName FileName;
+        public FileName File;
 
         /// <summary>
         /// Specifies the target machine's CPU architecture.
@@ -54,7 +57,7 @@ namespace Z0
         /// The loaded image size
         /// </summary>
         [Render(16)]
-        public uint ImageSize;
+        public ByteSize ImageSize;
 
         /// <summary>
         /// https://docs.microsoft.com/en-us/dotnet/api/system.reflection.portableexecutable.characteristics?view=net-5.0
@@ -62,7 +65,9 @@ namespace Z0
         [Render(1)]
         public Characteristics Characteristics;
 
+        uint ISequential.Seq { get => Seq; set => Seq = value; }
+
         public int CompareTo(PeFileInfo src)
-            => FileName.CompareTo(src.FileName);
+            => File.CompareTo(src.File);
    }
 }

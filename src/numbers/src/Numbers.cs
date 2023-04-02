@@ -172,5 +172,27 @@ namespace Z0
         public static num32 num<T>(N32 n, T src)
             where T : unmanaged
                 => (num32)u32(src);
+
+        [MethodImpl(Inline)]
+        public static num4 num4(ReadOnlySpan<byte> src, uint index)
+        {
+            var cell = MemoryScales.index(4, -2, index);
+            ref readonly var b = ref skip(src, cell.Offset);
+            var dst = cell.Aligned ? num(n4,b) : num(n4, math.srl(b , (byte)cell.CellWidth));
+            return dst;
+        }
+
+        [MethodImpl(Inline)]
+        public static void write(num4 src, uint index, Span<byte> dst)
+        {
+            const byte UpperMask = 0xF0;
+            const byte LowerMask = 0x0F;
+            var cell = MemoryScales.index(4, -2, index);
+            ref var c = ref seek(dst, cell.Offset);
+            if(cell.Aligned)
+                c = math.or(math.and(c, UpperMask), src);
+            else
+                c = math.or(math.sll(src, (byte)cell.CellWidth), math.and(c, LowerMask));
+        }
     }
 }

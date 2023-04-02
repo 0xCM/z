@@ -22,7 +22,7 @@ namespace Z0
         public Address32 Rva;
 
         [Render(1)]
-        public uint Size;
+        public ByteSize Size;
 
         uint ISequential.Seq { get => Seq; set => Seq = value; }
 

@@ -75,74 +75,111 @@ namespace Z0
         /// </summary>
         public bool UnmangagedDisposal = false;
 
+        [MethodImpl(Inline)]
+        public MemoryFileSpec WithCapacity(long size)
+        {
+            Capacity = size;
+            return this;
+        }
+
         /// <summary>
         /// Sets the <see cref='Mode'/> value to <see cref='M.CreateNew'/>
         /// </summary>
         [MethodImpl(Inline)]
-        public void EnableModeCreateNew()
-            => Mode = M.CreateNew;
+        public MemoryFileSpec WithCreateNewMode()
+        {
+            Mode = M.CreateNew;
+            return this;
+        }
 
         /// <summary>
         /// Sets the <see cref='Mode'/> value to <see cref='M.Create'/>
         /// </summary>
         [MethodImpl(Inline)]
-        public void EnableModeCreate()
-            => Mode = M.Create;
+        public MemoryFileSpec WithCreateMode()
+        {
+            Mode = M.Create;
+            return this;
+        }
 
         /// <summary>
         /// Sets the <see cref='Mode'/> value to <see cref='M.OpenOrCreate'/>
         /// </summary>
         [MethodImpl(Inline)]
-        public void EnableModeOpenOrCreate()
-            => Mode = M.OpenOrCreate;
+        public MemoryFileSpec WithOpenOrCreateMode()
+        {
+            Mode = M.OpenOrCreate;
+            return this;
+        }
 
         /// <summary>
         /// Sets the <see cref='Mode'/> value to <see cref='M.Truncate'/>
         /// </summary>
         [MethodImpl(Inline)]
-        public void EnableModeTruncate()
-            => Mode = M.Truncate;
+        public MemoryFileSpec WithTruncateMode()
+        {
+            Mode = M.Truncate;
+            return this;
+        }
 
         /// <summary>
         /// Sets the <see cref='Access'/> value to <see cref='A.ReadWrite'/>
         /// </summary>
         [MethodImpl(Inline)]
-        public void EnableAccessReadWrite()
-            => Access = A.ReadWrite;
+        public MemoryFileSpec WithReadWriteAccess()
+        {
+            Access = A.ReadWrite;
+            return this;
+        }
 
         /// <summary>
         /// Sets the <see cref='Access'/> value to <see cref='A.Read'/>
         /// </summary>
         [MethodImpl(Inline)]
-        public void EnableAccessRead()
-            => Access = A.Read;
+        public MemoryFileSpec WithReadAccess()
+        {
+            Access = A.Read;
+            return this;
+        }
 
         /// <summary>
         /// Sets the <see cref='Access'/> value to <see cref='A.Write'/>
         /// </summary>
         [MethodImpl(Inline)]
-        public void EnableAccessWrite()
-            => Access = A.Write;
+        public MemoryFileSpec WithWriteAccess()
+        {
+            Access = A.Write;
+            return this;
+        }
 
         /// <summary>
         /// Sets the <see cref='Access'/> value to <see cref='A.CopyOnWrite'/>
         /// </summary>
         [MethodImpl(Inline)]
-        public void EnableAccessCopyOnWrite()
-            => Access = A.CopyOnWrite;
+        public MemoryFileSpec WithCopyOnWriteAccess()
+        {
+            Access = A.CopyOnWrite;
+            return this;
+        }
 
         /// <summary>
         /// Sets the <see cref='Access'/> value to <see cref='A.ReadExecute'/>
         /// </summary>
         [MethodImpl(Inline)]
-        public void EnableAccessReadExecute()
-            => Access = A.ReadExecute;
+        public MemoryFileSpec WithReadExecuteAccess()
+        {
+            Access = A.ReadExecute;
+            return this;
+        }
 
         /// <summary>
         /// Sets the <see cref='Access'/> value to <see cref='A.ReadWriteExecute'/>
         /// </summary>
         [MethodImpl(Inline)]
-        public void EnableGodAccess()
-            => Access = A.ReadWriteExecute;
+        public MemoryFileSpec WithGodPower()
+        {
+            Access = A.ReadWriteExecute;
+            return this;
+        }
     }
 }

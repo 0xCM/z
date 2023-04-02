@@ -31,8 +31,16 @@ namespace Z0
         public MemoryFile(MemoryFileSpec spec)
         {
             Path = spec.Path;
-            FileSize = (ulong)Path.Info.Length;
-            File = MemoryMappedFile.CreateFromFile(spec.Path.Name, spec.Mode, spec.MapName, spec.Capacity, spec.Access);
+            if(Path.Exists)
+            {
+                File = MemoryMappedFile.CreateFromFile(spec.Path.Name, spec.Mode, spec.MapName, spec.Capacity, spec.Access);
+                FileSize = (ulong)Path.Info.Length;
+            }
+            else
+            {
+                File = MemoryMappedFile.CreateNew(spec.Path.Name, spec.Capacity, spec.Access);
+                FileSize = spec.Capacity;
+            }
             ViewAccessor = File.CreateViewAccessor(0, FileSize);
             ViewAccessor.SafeMemoryMappedViewHandle.AcquirePointer(ref Base);
             BaseAddress = Base;
@@ -40,12 +48,13 @@ namespace Z0
             if(spec.Stream)
                 ViewStream = File.CreateViewStream();
             else
-                ViewStream = null;
+                ViewStream = null;            
         }
 
         internal MemoryFile(FilePath path, bool stream = false)
         {
             Path = path;
+            Require.invariant(path.Exists);
             FileSize = (ulong)Path.Info.Length;
             File = MemoryMappedFile.CreateFromFile(path.Name);
             ViewAccessor = File.CreateViewAccessor(0, FileSize);
@@ -58,6 +67,9 @@ namespace Z0
                 ViewStream = null;
         }
 
+        public void Flush()
+            => ViewAccessor.Flush();
+            
         public void Dispose()
         {
             ViewAccessor?.Dispose();

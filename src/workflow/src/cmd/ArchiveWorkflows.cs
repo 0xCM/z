@@ -90,5 +90,29 @@ namespace Z0
             var src = FS.archive(args[0]);
             Channel.TableEmit(GetMetadataRoots(src), EnvDb.Nested("ecma", src).Table<MetadataRoot>());
         }
+        
+        [CmdOp("memdb/store")]
+        void LoadMemDb(CmdArgs args)
+        {
+            var db = MemDb.open(EnvDb.Path("memdb", FS.ext("dat")), new Gb(1));
+            Channel.Row(db.Description.Path);
+            var src = FS.archive(args[0]);
+            var files = src.Files();
+            var tokens = dict<FilePath, AllocToken>();
+            foreach(var file in files)
+            {
+                var token = db.Store(file.ReadBytes());
+                if(token.IsNonEmpty)
+                {
+                    tokens[file] = token;
+                    Channel.Row(string.Format("{0} | {1,-12} | {2}",token.Base + token.Offset, (ByteSize)token.Size, file));
+                }
+                else
+                {
+                    Channel.Warn("Capacity exceeded");
+                    break;
+                }
+            }
+        }
     }
 }

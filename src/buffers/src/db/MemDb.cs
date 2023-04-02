@@ -5,12 +5,14 @@
 namespace Z0
 {
     using static sys;
-    using static Numbers;
-    using static math;
 
     [ApiHost]
     public class MemDb : IMemDb
     {
+        [MethodImpl(Inline), Op]
+        public static DbDataType type(Name name, Name primitive, DataSize size, Name refinement = default)
+            => new DbDataType(name, primitive, size, refinement.IsNonEmpty, refinement);
+ 
         public static ReadOnlySeq<MeasuredType> measured(Assembly src, string group)
         {
             var x = src.Enums().NonGeneric().TypeTags<SymSourceAttribute>().Storage.Where(x => x.Right.SymGroup == group).ToIndex();
@@ -75,16 +77,16 @@ namespace Z0
         public static DbCol col(ushort pos, Name name, ReadOnlySpan<byte> widths)
             => new DbCol(pos, name, skip(widths, pos));
 
-        public static IMemDb open(FilePath store)
+        public static MemDb open(FilePath store)
             => open(store,0);
 
-        public static IMemDb open(FilePath store, ByteSize capacity)
+        public static MemDb open(FilePath store, ByteSize capacity)
             => Opened.GetOrAdd(store, s =>  new MemDb(s, capacity));
 
-        public static IMemDb open(FilePath store, Gb capacity)
+        public static MemDb open(FilePath store, Gb capacity)
             => Opened.GetOrAdd(store, s =>  new MemDb(s, capacity.Size));
 
-        public static IMemDb open(FilePath store, Mb capacity)
+        public static MemDb open(FilePath store, Mb capacity)
             => Opened.GetOrAdd(store, s =>  new MemDb(s, capacity.Size));
 
         public static Index<DbCol> resequence(Index<DbCol> left, Index<DbCol> right)
@@ -156,28 +158,6 @@ namespace Z0
             channel.FileEmit(cDst.Emit(), m, AppDb.Service.Logs().Targets(scope).Path($"{scope}.cols.{suffix}", FileKind.Txt), TextEncodingKind.Asci);
         }
 
-        [MethodImpl(Inline)]
-        public static num4 read(ReadOnlySpan<byte> src, uint index, out num4 dst)
-        {
-            var cell = MemoryScales.index(4, -2, index);
-            ref readonly var b = ref skip(src, cell.Offset);
-            dst = cell.Aligned ? num(n4,b) : num(n4, srl(b , (byte)cell.CellWidth));
-            return dst;
-        }
-
-        [MethodImpl(Inline)]
-        public static void write(num4 src, uint index, Span<byte> dst)
-        {
-            const byte UpperMask = 0xF0;
-            const byte LowerMask = 0x0F;
-            var cell = MemoryScales.index(4, -2, index);
-            ref var c = ref seek(dst, cell.Offset);
-            if(cell.Aligned)
-                c = or(and(c, UpperMask), src);
-            else
-                c = or(sll(src, (byte)cell.CellWidth), and(c, LowerMask));
-        }
-
         readonly MemoryFile DbMap;
 
         public readonly MemoryFileInfo Description;
@@ -190,22 +170,25 @@ namespace Z0
             get => DbMap.FileSize;
         }
 
-        public MemDb(FilePath path)
+        public MemoryAddress BaseAddress 
         {
-            var spec = MemoryFileSpec.init(path.CreateParentIfMissing());
-            spec.EnableAccessReadWrite();
-            spec.EnableModeOpenOrCreate();
-            spec.Stream = true;
-            DbMap = new MemoryFile(spec);
-            Description = DbMap.Description;
+            [MethodImpl(Inline)]
+            get => DbMap.BaseAddress;
         }
+
+        // public MemDb(FilePath path)
+        // {
+        //     var spec = MemoryFileSpec.init(path.CreateParentIfMissing());
+        //     spec.WithReadWriteAccess();
+        //     spec.WithOpenOrCreateMode();
+        //     spec.Stream = true;
+        //     DbMap = new MemoryFile(spec);
+        //     Description = DbMap.Description;
+        // }
 
         public MemDb(FilePath path, ByteSize size)
         {
-            var spec = MemoryFileSpec.init(path.CreateParentIfMissing());
-            spec.Capacity = size;
-            spec.EnableAccessReadWrite();
-            spec.EnableModeOpenOrCreate();
+            var spec = MemoryFileSpec.init(path.CreateParentIfMissing()).WithCapacity(size).WithOpenOrCreateMode().WithReadWriteAccess();
             spec.Stream = true;
             DbMap = new MemoryFile(spec);
             Description = DbMap.Description;
@@ -221,8 +204,14 @@ namespace Z0
             DbMap.Stream.Seek(Offset, System.IO.SeekOrigin.Begin);
             DbMap.Stream.Write(src);
             Offset = next;
-            return token(DbMap.BaseAddress, offset, size);
+            DbMap.Flush();
+            return new AllocToken(DbMap.BaseAddress, offset, size);
+
         }
+
+        [MethodImpl(Inline)]
+        public AllocToken Token(uint offset, ByteSize size)
+            => new (BaseAddress,offset,size);
 
         [MethodImpl(Inline)]
         public ReadOnlySpan<byte> Load(AllocToken token)
@@ -238,14 +227,6 @@ namespace Z0
         [MethodImpl(Inline)]
         public static uint NextSeq(DbObjectKind kind)
             => sys.inc(ref ObjSeqSource[kind]);
-
-        [MethodImpl(Inline), Op]
-        public static DbDataType type(Name name, Name primitive, DataSize size, Name refinement = default)
-            => new DbDataType(name, primitive, size, refinement.IsNonEmpty, refinement);
- 
-        [MethodImpl(Inline)]
-        static AllocToken token(MemoryAddress @base, uint offset, uint size)
-            => new AllocToken(@base,offset, size);
 
         public static Index<MemoryFileInfo> Allocated()
             => Opened.Values.Map(x => x.Description);

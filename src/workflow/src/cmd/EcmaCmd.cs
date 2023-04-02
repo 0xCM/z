@@ -13,6 +13,14 @@ namespace Z0
 
     using static sys;
 
+    public record struct DebugDirectoryRow
+    {
+        public uint Seq;
+
+        public FileName File;
+        
+    }
+
     class EcmaCmd : WfAppCmd<EcmaCmd>
     {
         Ecma Ecma => Wf.Ecma();
@@ -137,26 +145,6 @@ namespace Z0
                 
             }, true);
             Channel.TableEmit(dst.Array().Sort(), EnvDb.Nested("ecma", src).Table<MemberComments>());
-            // var src = XmlComments.elements(FS.archive(args[0]));
-            // iter(src.Keys, path => {
-            //     var data = src[path];
-            //     iter(data.Keys, key => {
-            //         Channel.Row($"{key}:{data[key]}");
-            //     });
-            // });
-            //var dataset = XmlComments.dataset(Channel,src);
-            // var xml = dataset.FileXml;
-            // iter(xml.Keys, path => {
-            //     var data = xml[path];
-            //     Channel.Row(path);
-            //     Channel.Row($"{data.Keys.Count} comment entries");
-                
-            // });
-            //Channel.TableEmit(dataset.CommentRows, EnvDb.Nested("ecma", src).Table<ApiComment>());
-            
-
-
-
         }
 
         [CmdOp("db/typetables")]
@@ -265,8 +253,6 @@ namespace Z0
 
             });
 
-            // var path = targets.Nested("coff.modules", src).Path("coff", FS.ext("modules"));
-            // Channel.FileEmit(emitter.Emit(),path);
         }
 
         void MapPeHeaders(CmdArgs args)
@@ -301,8 +287,8 @@ namespace Z0
                     iter(tables.DirectoryRows, row => {
                         if(row.Kind == PeDirectoryKind.DebugTable)
                         {
-                            var debug = *((IMAGE_DEBUG_DIRECTORY*)reader.ReadSectionData(row.Entry()).Pointer);
-                            var seg = new MemorySeg<Address32,uint>((Address32)debug.AddressOfRawData, debug.SizeOfData);
+                            var dbdir = *((IMAGE_DEBUG_DIRECTORY*)reader.ReadSectionData(row.Entry()).Pointer);
+                            var seg = new MemorySeg<Address32,uint>((Address32)dbdir.AddressOfRawData, dbdir.SizeOfData);
                             Channel.Row(seg.Format());                        
                         }
                     });
@@ -313,52 +299,52 @@ namespace Z0
                 }
             });        
 
-            Channel.TableEmit(rows.Array().Sort().Resequence(), EnvDb.Nested("pe", src).Path("pe.directories", FileKind.Csv));
+            Channel.TableEmit(rows.Array().Sort().Resequence(), EnvDb.Nested("pe", src).Table<PeDirectoryRow>());
         }
 
         [CmdOp("pe/info")]
-        void EmitPeInfo(CmdArgs args)
+        unsafe void EmitPeInfo(CmdArgs args)
         {
-            var src = FS.dir(args[0]);
-            var entries = FS.index(Archives.modules(src).Members().Select(x => x.Path)).Distinct();
-            var info = sys.bag<PeFileInfo>();
-            iter(entries, entry => {
-                try
-                {
-                    using var reader = PeReader.create(entry.Path);
-                    info.Add(reader.PeInfo());
-                }
-                catch(BadImageFormatException e)
-                {
-                    Channel.Warn(e.Message);
-                }
-            }, true);
-            Channel.TableEmit(info.Array().Sort(), EnvDb.Nested("pe", src).Table<PeFileInfo>());
-        }
-
-        [CmdOp("pe/headers")]
-        void EmitPeHeaders(CmdArgs args)
-        {
-            var src = FS.dir(args[0]);
+            var src = FS.archive(args[0]);
             var index = FS.index(Archives.modules(src).Members().Select(x => x.Path));
             var headers = bag<SectionHeaderRow>();
-            var dirs = bag<PeDirectoryEntry>();
+            var dirs = bag<PeDirectoryRow>();
+            var info = sys.bag<PeFileInfo>();
+            var debug = sys.bag<IMAGE_DEBUG_DIRECTORY>();
             iter(index.Distinct(), entry => {
                 try
                 {
-                    var rel = FS.relative(src, entry.Path);
+                    var rel = FS.relative(src.Root, entry.Path);
                     using var reader = PeReader.create(entry.Path);
                     var tables = reader.Tables;
+                    info.Add(reader.PeInfo());
                     iter(tables.SectionHeaders, section => headers.Add(section.WithFile(FS.file(rel.Format()))));
-                    iter(tables.Directories, e => dirs.Add(e));                    
+                    iter(tables.DirectoryRows, dir => {
+                            if(dir.Size != 0)
+                            {
+                                dirs.Add(dir);
+                                if(dir.Kind == PeDirectoryKind.DebugTable)
+                                {
+                                    var dbdir = *((IMAGE_DEBUG_DIRECTORY*)reader.ReadSectionData(dir.Entry()).Pointer);
+                                    var seg = new MemorySeg<Address32,uint>((Address32)dbdir.AddressOfRawData, dbdir.SizeOfData);
+                                    debug.Add(dbdir);
+
+                                }
+
+                            }
+                        });  
+                    Channel.Row($"Indexed {entry.Path}");
                 }
                 catch(Exception e)
                 {
                     Channel.Warn($"{e.Message}: {entry.Path}");
                 }
-            });
+            }, true);
 
-            Channel.TableEmit(headers.Array().Sort().Resequence(), EnvDb.Nested("pe", src).Path("pe.headers", FileKind.Csv));
+            Channel.TableEmit(headers.Array().Sort().Resequence(), EnvDb.Nested("pe", src).Table<SectionHeaderRow>());
+            Channel.TableEmit(dirs.Array().Sort().Resequence(), EnvDb.Nested("pe", src).Table<PeDirectoryRow>());
+            Channel.TableEmit(info.Array().Sort().Resequence(), EnvDb.Nested("pe", src).Table<PeFileInfo>());
+
         }
 
         [CmdOp("ecma/dump")]
