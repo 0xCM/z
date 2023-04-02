@@ -13,6 +13,7 @@ namespace Z0
     {
         const string TableId = "settings";
 
+        [Render(12)]
         public readonly SettingType Type;
 
         [Render(32)]
@@ -33,7 +34,7 @@ namespace Z0
         public Setting(@string name, SettingType type, object value)
         {
             Name = name;
-            Type = api.type(value);
+            Type = type;
             Value = value ?? EmptyString;
         }
 

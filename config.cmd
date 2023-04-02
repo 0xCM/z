@@ -116,5 +116,6 @@ set DeployProps=-p:PublishReadyToRun=true -p:DebugType=pdbonly -p:PublishDocumen
 set DeployProps=-p:PublishReadyToRun=true -p:DebugType=pdbonly
 set DeployApp=dotnet publish %ProjectPath% --output %DeployPath% %ConfigOption% %VerbosityOption% %FrameworkOption% %DeployProps% %DeployLog%
 set ShellBuildProps=/p:Configuration=Release /p:Platform=x64 /p:RuntimIdentifier=win-x64 /p:DebugType=Embedded -bl:%BuildLogs%\z0.%ProjectName%.binlog
+set ProjectBuildProps=/p:Configuration=Release /p:Platform=x64 /p:RuntimIdentifier=win-x64 /p:DebugType=Embedded -bl:%BuildLogs%\z0.%ProjectName%.binlog
 set BuildToolOptions=--verbosity normal -m:24
 set BuildTool=dotnet build %BuildToolOptions%

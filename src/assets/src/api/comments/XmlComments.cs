@@ -8,24 +8,33 @@ namespace Z0
     using System.IO;
     using System.Linq;
 
-    using static ApiAtomic;
     using static sys;
 
-    using CT = ApiCommentTarget;
-
     public sealed partial class XmlComments : AppService<XmlComments>
-    {
-        public CommentDataset Calc()
+    {    
+        public static ConstLookup<FilePath, Dictionary<string,string>> elements(IDbArchive src)
         {
-            var targets = AppDb.Service.ApiTargets(comments);
+            var paths = src.Files(FileKind.Xml);
+            var lookup = cdict<FilePath, Dictionary<string,string>>();
+            iter(paths, path => {
+                var data = xmldata(path.ReadText());
+                if(data.Count != 0)
+                {
+                    lookup.TryAdd(path,data);
+                }
+                }, true);
+            return lookup;
+        }
+
+        public static XmlCommentData dataset(IWfChannel channel, IDbArchive src)
+        {
             var dllPaths = list<FilePath>();
             var xmlData = new Dictionary<FilePath, Dictionary<string,string>>();
-            var archive = sys.controller().RuntimeArchive();
-            var dllFiles = archive.Files(FileKind.Dll);
-            var xmlFiles = archive.Files(FileKind.Xml);
+            var dllFiles = src.Files(FileKind.Dll);
+            var xmlFiles = src.Files(FileKind.Xml);
             foreach(var xmlfile in xmlFiles)
             {
-                var elements = ParseXmlData(xmlfile.ReadText());
+                var elements = xmldata(xmlfile.ReadText());
                 if(elements.Count != 0)
                 {
                     xmlData[xmlfile] = elements;
@@ -39,47 +48,43 @@ namespace Z0
             var csvRowFormat = dict<FilePath,List<string>>();
             var csvRows = dict<FilePath,List<ApiComment>>();
             var formatter = CsvTables.formatter<ApiComment>();
-            foreach(var part in xmlData.Keys)
+            foreach(var path in xmlData.Keys)
             {
-                var file = FS.file(string.Format("{0}.{1}", "api.comments", part.FileName.WithoutExtension.Name), FS.Csv);
-                var path = targets.Path(file);
+                var running = channel.Running($"Processing {path}");
                 var docs = dict<string,ApiComment>();
-                lookup[part] = docs;
+                lookup[path] = docs;
                 csvRowFormat[path] = new();
                 csvRows[path] = new();
 
-                var kvp = xmlData[part];
+                var kvp = xmlData[path];
                 foreach(var key in kvp.Keys)
                 {
-                    var result = parse(key, kvp[key], out ApiComment comment);
-                    if(result)
-                    {
+                    var result = ParseComent(key, kvp[key]);
+                    result.OnSuccess(comment => {
                         docs[key] = comment;
                         csvRows[path].Add(comment);
                         csvRowFormat[path].Add(formatter.Format(comment));
-                    }
+                    }).OnFailure(() => {
+                        channel.Warn($"'{key}:{kvp[key]}' parse failure");
+                    });
                 }
+
+                channel.Ran(running, $"Processed {path}");
             }
 
             return new(xmlData, lookup, csvRows, dllFiles.Array());
         }
 
-        public static FileName CsvFile(PartName part)
-            => FS.file(string.Format("api.comments.z0", part.Format()), FS.Csv);
-
-        public static FileName XmlFile(PartName part)
-            => FS.file(string.Format("api.comments.z0", part.Format()), FS.Xml);
-
-        public void Collect(IDbArchive dst)
+        public ConstLookup<FilePath, Dictionary<string,ApiComment>> Collect(IDbArchive archive, IDbArchive dst)
         {
             var targets = dst;
-            var src = Pull(dst);
+            var src = XmlComments.elements(archive);
             var lookup = new Dictionary<FilePath, Dictionary<string,ApiComment>>();
             var formatter = CsvTables.formatter<ApiComment>();
             foreach(var part in src.Keys)
             {
                 var id = part.FileName.WithoutExtension.Name;
-                var file = FS.file($"{part.FileName.WithoutExtension}.{comments}", FileKind.Csv);
+                var file = FS.file($"{part.FileName.WithoutExtension}.{ApiAtomic.comments}", FileKind.Csv);
                 var path = targets.Path(file);
                 var flow = Channel.EmittingTable<ApiComment>(path);
                 var docs = new Dictionary<string, ApiComment>();
@@ -96,56 +101,7 @@ namespace Z0
                 }
                 Channel.EmittedTable(flow, kvp.Count);
             }
-        }
-
-        static bool parse(string key, string value, out ApiComment dst)
-        {
-            var parts = key.SplitClean(Chars.Colon);
-            var result = parts.Length >= 2 && parts[0].Length == 1;
-            for(var i=0; i<parts.Length; i++)
-            {
-                ref readonly var part = ref skip(parts,i);
-                if(nonempty(part))
-                {
-                    ref readonly var c = ref first(part);
-                    switch(target(c))
-                    {
-                        case CT.Type:
-                        break;
-                        case CT.Method:
-                        break;
-                        case CT.Field:
-                        break;
-                        case CT.Property:
-                        break;
-                        case CT.Operand:
-                        break;
-                        case CT.Param:
-                        break;
-                        default:
-                            break;
-                    }
-                }
-            }
-
-            if(result)
-
-                result = parse(target(parts[0][0]), parts[1], value, out dst);
-            else
-                dst = ApiComment.Empty;
-            return result;
-        }
-
-        static bool parse(ApiCommentTarget target, string name, string data, out ApiComment comment)
-        {
-            var result = false;
-            comment = ApiComment.Empty;
-            if(Summary.parse(data, out var summary))
-            {
-                comment = new ApiComment(target, name, summary.Format());
-                result = true;
-            }
-            return result;
+            return lookup;
         }
 
         static ApiCommentTarget target(char src)
@@ -156,54 +112,21 @@ namespace Z0
                 'F' => ApiCommentTarget.Field,
                 _ => ApiCommentTarget.None,
             };
-
-        ConstLookup<FilePath, Dictionary<string,string>> Pull(IDbArchive dst)
-        {
-            var archive = sys.controller().RuntimeArchive();
-            var paths = archive.Files(FileKind.Xml);
-            var lookup = cdict<FilePath, Dictionary<string,string>>();
-            var t = default(ApiComment);
-            iter(paths, path => {
-                var data = ParseXmlFile(path, dst, out var packpath);
-                if(data.Count != 0)
-                {
-                    lookup.TryAdd(path,data);
-                }
-                }, true);
-            return lookup;
-        }
-
-        Dictionary<string,string> ParseXmlFile(FilePath src, IDbArchive dst, out FilePath target)
-        {
-            var data = src.ReadText();
-            var parsed = ParseXmlData(data);
-            target = FilePath.Empty;
-            if(parsed.Count != 0)
-            {
-                target = dst.Targets().Path(FS.file($"{src.FileName.WithoutExtension}.{comments}", FileKind.Xml));
-                src.CopyTo(target);
-            }
-            return parsed;
-        }
-
-        static Dictionary<string,string> ParseXmlData(string src)
+        
+        static Dictionary<string,string> xmldata(string src)
         {
             var index = new Dictionary<string, string>();
-            using var xmlReader = XmlReader.Create(new StringReader(src));
-            while (xmlReader.Read())
+            using var reader = XmlReader.Create(new StringReader(src));
+            while (reader.Read())
             {
-                if (xmlReader.NodeType == XmlNodeType.Element && xmlReader.Name == "member")
+                if (reader.NodeType == XmlNodeType.Element && reader.Name == "member")
                 {
-                    string raw_name = xmlReader["name"];
-                    index[raw_name] = xmlReader.ReadInnerXml();
+                    string raw_name = reader["name"];
+                    index[raw_name] = reader.ReadInnerXml();
                 }
             }
             return index;
         }
-
-        [MethodImpl(Inline)]
-        static KeyValuePair<K,V> kvp<K,V>(K key, V value)
-            => new KeyValuePair<K,V>(key,value);
 
         static Dictionary<string,string> Replacements = new (new KeyValuePair<string,string>[]{
                     kvp("&gt;",">"),
@@ -213,23 +136,8 @@ namespace Z0
         static ApiComment comment(ApiCommentTarget target, string name, string summary)
         {
             var content = summary;
-            core.iter(Replacements,kvp => content = text.replace(content, kvp.Key,kvp.Value));
-            return new ApiComment(target,name, content);
-        }
-
-        static bool parse2(string key, string value, out ApiComment dst)
-        {
-            var components = key.SplitClean(Chars.Colon);
-            var result = false;
-            dst = ApiComment.Empty;
-            if(components.Length == 2 && components[0].Length == 1)
-            {
-                var summary = text.replace(
-                              Fenced.unfence(value, Fenced.define("<summary>", "</summary>"))
-                                 .RemoveAny((char)AsciControlSym.CR, (char)AsciControlSym.LF).Trim(), Chars.Pipe, Chars.Caret);
-                result = parse(target(components[0][0]), components[1], summary, out dst);
-            }
-            return result;
+            sys.iter(Replacements,kvp => content = text.replace(content, kvp.Key,kvp.Value));
+            return new ApiComment(target, name, content);
         }
 
         static ParseResult<ApiComment> ParseComent(string key, string value)
@@ -237,10 +145,8 @@ namespace Z0
             var components = key.SplitClean(Chars.Colon);
             if(components.Length == 2 && components[0].Length == 1)
             {
-                var summary = text.replace(
-                              Fenced.unfence(value, Fenced.define("<summary>", "</summary>"))
-                                 .RemoveAny((char)AsciControlSym.CR, (char)AsciControlSym.LF).Trim(), Chars.Pipe, Chars.Caret);
-
+                var content = text.remove(text.remove(value, "<para>"), "</para>");
+                var summary = text.despace(text.replace(Fenced.unfence(content, Fenced.define("<summary>", "</summary>")).RemoveAny((char)AsciControlSym.CR, (char)AsciControlSym.LF).Trim(), Chars.Pipe, Chars.Caret));
                 return ParseResult.win(key, comment(target(components[0][0]), components[1], summary));
             }
             else

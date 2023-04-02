@@ -5,7 +5,7 @@
 namespace Z0.Handlers
 {
     [CmdRoute(Route)]
-    sealed class DevNul : CmdHandler
+    public sealed class DevNul : CmdHandler
     {
         public const string Route = "dev/null";
 

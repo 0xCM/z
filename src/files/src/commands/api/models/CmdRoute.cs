@@ -69,6 +69,18 @@ namespace Z0
             get => Path.IsNonEmpty;            
         }
 
+        public CmdRoute Refine(params string[] src)
+        {
+            var count = Data.Length + src.Length;
+            var dst = sys.alloc<string>(Data.Length + src.Length);
+            var j=0u;
+            for(var i=0; i< Data.Length; i++)
+                sys.seek(dst,j++) = Data[i];
+            for(var i=0; i< src.Length; i++)
+                sys.seek(dst,j++) = src[i];
+            return new CmdRoute(dst);            
+        }
+
         public override int GetHashCode()
             => Hash;
 

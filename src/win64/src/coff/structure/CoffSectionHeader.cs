@@ -1,9 +1,13 @@
+//-----------------------------------------------------------------------------
+// Copyright   :  (c) Chris Moore, 2023
+// License     :  MIT
+//-----------------------------------------------------------------------------
 namespace Z0
 {
     using Windows;
 
     [StructLayout(LayoutKind.Sequential, Pack=1)]
-    public record struct ImageSectionHeader
+    public record struct CoffSectionHeader
     {
         public CoffSymbolName Name;
 
@@ -23,6 +27,7 @@ namespace Z0
 
         public ushort NumberOfLinenumbers;
 
-        public ImageSectionFlags Characteristics;
+        public ImageSectionFlags Characteristics;        
     }
+
 }

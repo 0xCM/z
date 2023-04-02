@@ -22,8 +22,13 @@ namespace Z0
 
         }
 
+        Seq<CmdRoute> _Routes;
+
         public virtual ReadOnlySeq<@string> SubCommands {get;} 
             = sys.empty<@string>();
+
+        public ReadOnlySeq<CmdRoute> Routes
+            => _Routes;
 
         CmdRoute ICmdHandler.Route
             => Route;        
@@ -46,6 +51,9 @@ namespace Z0
             Wf = wf;
             Channel = wf.Channel;
             Route = Cmd.route(GetType());
+            _Routes = sys.alloc<CmdRoute>(SubCommands.Count);
+            var j=0;
+            sys.iter(SubCommands, sub => _Routes[j++] = Route.Refine(sub));
         }
     }
 }

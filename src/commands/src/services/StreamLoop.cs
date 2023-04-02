@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class StreamLoop : RunLoop<StreamLoop>
+    public class StreamLoop
     {
         Thread Control;
 

@@ -6,6 +6,9 @@ namespace Z0
 {
     public record class FileQuery : PathQuery<FileQuery>
     {
+        public static FileQuery create(IDbArchive src, params FileExt[] ext)
+            => create(src.Root, ext);
+            
         public static FileQuery create(FolderPath src, params FileExt[] ext)
         {
             var filter = FileFilter.Empty;

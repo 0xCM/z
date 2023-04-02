@@ -11,9 +11,9 @@ namespace Z0
     [ApiHost]
     public class Env
     {
-        public static IDbArchive ShellData => cd().DbArchive().Scoped(".data");
-
         static AppSettings AppSettings => AppSettings.Default;
+
+        public static IDbArchive ShellData => AppSettings.EnvDb().Scoped("shells");
 
         public static EnvVars merge(EnvVars a, EnvVars b)
         {

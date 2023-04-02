@@ -31,10 +31,10 @@ namespace Z0
             ContentHash = chash;
         }
 
-        public @string Identifier
+        public VersionedName Identifier
         {
             [MethodImpl(Inline)]
-            get => $"{Name}/{Version}";
+            get => new (Name,Version);
         }
 
         public Hash32 Hash
@@ -59,7 +59,7 @@ namespace Z0
             => Hash;
 
         public string Format()
-            => Identifier;
+            => Identifier.Format();
 
         public override string ToString()
             => Format();

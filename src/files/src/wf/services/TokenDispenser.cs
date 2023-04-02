@@ -15,6 +15,9 @@ namespace Z0
         public static ExecToken open()
             => Service.Open();
 
+        public static ExecToken close(ExecToken src, bool success = true)
+            => Service.Close(src, success);
+
         public static ExecToken close(ExecFlow src, bool success = true)
             => Service.Close(src.Token, success);
 
@@ -30,7 +33,7 @@ namespace Z0
 
         static TokenDispenser Instance;
         
-        private TokenDispenser()
+        TokenDispenser()
         {
             StartToken = 0;
             EndToken = 0;

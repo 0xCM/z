@@ -105,7 +105,7 @@ namespace Z0
         void EmitEcmaMethods(CmdArgs args)
         {
             using var dispenser = Dispense.strings(Pow2.T16);
-            var src = FS.dir(args[0]);
+            var src = FS.archive(args[0]);
             var index = Ecma.index(Channel, src);
 
             index.Report(EnvDb.Nested("ecma", src));
@@ -124,6 +124,39 @@ namespace Z0
             },true);
             
             Channel.TableEmit(keys.Array().Sort(), EnvDb.Nested("ecma", src).Table<MemberKey>());
+        }
+
+        [CmdOp("ecma/comments")]
+        void EcmaComments(CmdArgs args)
+        {
+            var src = FS.archive(args[0]);
+            var comments = Ecma.comments(Channel, src);
+            var dst = bag<MemberComments>();
+            iter(comments.Commented, name => {
+                iter(comments.Comments(name).Values, x => dst.Add(x));
+                
+            }, true);
+            Channel.TableEmit(dst.Array().Sort(), EnvDb.Nested("ecma", src).Table<MemberComments>());
+            // var src = XmlComments.elements(FS.archive(args[0]));
+            // iter(src.Keys, path => {
+            //     var data = src[path];
+            //     iter(data.Keys, key => {
+            //         Channel.Row($"{key}:{data[key]}");
+            //     });
+            // });
+            //var dataset = XmlComments.dataset(Channel,src);
+            // var xml = dataset.FileXml;
+            // iter(xml.Keys, path => {
+            //     var data = xml[path];
+            //     Channel.Row(path);
+            //     Channel.Row($"{data.Keys.Count} comment entries");
+                
+            // });
+            //Channel.TableEmit(dataset.CommentRows, EnvDb.Nested("ecma", src).Table<ApiComment>());
+            
+
+
+
         }
 
         [CmdOp("db/typetables")]

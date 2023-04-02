@@ -7,12 +7,12 @@ namespace Z0
     public abstract class ApiShell<S> : AppShell<S>, IApiShell
         where S : ApiShell<S>, new()
     {
-        protected ICmdDispatcher Dispatcher;
+        protected ICmdRunner CmdRunner;
         
-        public void Init(IWfRuntime wf, ReadOnlySeq<string> args, ICmdDispatcher dispatcher)
+        public void Init(IWfRuntime wf, ReadOnlySeq<string> args, ICmdRunner runner)
         {
             base.Init(wf, args);
-            Dispatcher = dispatcher;
+            CmdRunner = runner;
         }
 
         protected override void Disposing()
@@ -20,7 +20,10 @@ namespace Z0
             
         }
 
+        ICmdRunner IApiShell.Runner
+            => CmdRunner;
+            
         protected override void Run()
-            => CmdLoop.start(Channel).Wait();
+            => CmdLoop.start(Channel, CmdRunner).Wait();
     }
 }

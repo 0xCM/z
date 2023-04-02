@@ -1,16 +1,13 @@
-
 //-----------------------------------------------------------------------------
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface ICmdDispatcher
+    public interface IAppShell : IDisposable
     {
-        Outcome Dispatch(string action, CmdArgs args);
+        void Run();
 
-        Outcome Dispatch(string action);
-
-        ICmdMethods Commands {get;}
-    }    
+        void Init(IWfRuntime wf, ReadOnlySeq<string> args);
+    }
 }

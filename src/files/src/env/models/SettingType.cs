@@ -59,15 +59,6 @@ namespace Z0
     {
         None,
 
-        [Symbol("asci16")]
-        Asci16,
-
-        [Symbol("asci32")]
-        Asci32,
-
-        [Symbol("asci64")]
-        Asci64,
-
         [Symbol("bit")]
         Bit,
 

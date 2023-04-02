@@ -5,29 +5,23 @@
 
 namespace Z0
 {
-    using static Workflows;
-
     sealed class ArchiveCmd : WfAppCmd<ArchiveCmd>
     {
         [CmdOp("symlink")]
         void Link(CmdArgs args)
-            => symlink(Channel, args);
+            => ArchiveCommands.symlink(Channel, args);
 
         [CmdOp("files/zip")]
         void Zip(CmdArgs args)
-            => zip(Channel, args);
+            => ArchiveCommands.zip(Channel, args);
 
         [CmdOp("files/copy")]
         void Copy(CmdArgs args)
-            => copy(Channel, args);
-
-        [CmdOp("files/catalog")]
-        void CatalogFiles(CmdArgs args)
-            => catalog(Channel, args);
+            => ArchiveCommands.copy(Channel, args).Wait();
 
         [CmdOp("nuget/index")]
         void NugetFiles(CmdArgs args)
-            => PkgArchives.nupkg(Channel, FS.dir(args[0]));
+            => PkgArchives.nupkg(Channel, FS.dir(args[0])).Wait();
 
         [CmdOp("nuget/download")]
         void NugetDownload(CmdArgs args)
@@ -47,10 +41,10 @@ namespace Z0
 
         [CmdOp("files/index")]
         void FileQueryCmd(CmdArgs args)
-            => index(Channel, FileIndexKind.Files, args);
+            => ArchiveCommands.index(Channel, FileIndexKind.Files, args).Wait();
 
         [CmdOp("folders/index")]
         void Folders(CmdArgs args)
-            => index(Channel, FileIndexKind.Folders, args);
+            => ArchiveCommands.index(Channel, FileIndexKind.Folders, args).Wait();
     }
 }

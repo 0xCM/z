@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public record class AssemblyFile : IBinaryModule<AssemblyFile>, IComparable<AssemblyFile>
+    public sealed record class AssemblyFile : IBinaryModule<AssemblyFile>, IComparable<AssemblyFile>
     {
         /// <summary>
         /// For a managed module, retrieves its name and returns true; otherwise, returns false
@@ -54,7 +54,35 @@ namespace Z0
         FilePath IFile.Path 
             => Path;
 
-        public FileModuleKind ModuleKind => FileModuleKind.Managed;
+        public VersionedName Identifier
+            => new (AssemblyName, Version.ToVersion64());
+
+        public FileModuleKind ModuleKind 
+            => FileModuleKind.Managed;
+
+        public FilePath CommentsFile 
+            => Path.ChangeExtension(FS.ext("xml"));
+
+        public FilePath PdbFile
+            => Path.ChangeExtension(FS.ext("pdb"));
+
+        public bool HasComments 
+            => CommentsFile.Exists;
+
+        public bool HasPdb 
+            => PdbFile.Exists;
+
+        public bool Equals(AssemblyFile src)
+            => Path == src.Path && AssemblyName == src.AssemblyName && Version == src.Version;
+
+        public Hash32 Hash
+        {
+            [MethodImpl(Inline)]
+            get => Path.Hash;
+        }
+
+        public override int GetHashCode()
+            => Hash;
 
         public bool IsEmpty
         {

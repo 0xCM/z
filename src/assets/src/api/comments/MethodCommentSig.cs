@@ -55,7 +55,7 @@ namespace Z0
 
             for(var i=0; i<count; i++)
             {
-                dst.Append(CommentDataset.TypeDisplayName(Operands[i]));
+                dst.Append(XmlCommentData.TypeDisplayName(Operands[i]));
                 dst.Append(" -> ");
             }
             dst.Append("| todo");

@@ -25,6 +25,9 @@ namespace Z0
             get => Data.Size;
         }
 
+        public ReadOnlySpan<byte> Bytes()
+            => Data.View;
+
         [MethodImpl(Inline)]
         public ReadOnlySpan<byte> Bytes(Address32 address, ByteSize size)
             => slice(Data.View,(uint)address, size);
@@ -63,7 +66,7 @@ namespace Z0
 
         public override string ToString()
             => Format();
-            
+                    
         public static CoffObjectData Empty
             => new CoffObjectData(FilePath.Empty, BinaryCode.Empty);
     }

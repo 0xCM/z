@@ -4,31 +4,34 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XmlComments;
-
-    /// <summary>
-    ///
-    /// </summary>
     [Record(TableId)]
-    public struct ApiComment
+    public struct ApiComment : IComparable<ApiComment>
     {
         const string TableId = "api.comments";
 
         [Render(12)]
-        public ApiCommentTarget Target;
+        public readonly ApiCommentTarget Target;
 
         [Render(140)]
-        public string TargetName;
+        public readonly @string TargetName;
 
         [Render(1)]
-        public string Summary;
+        public readonly @string Summary;
 
         [MethodImpl(Inline)]
         public ApiComment(ApiCommentTarget target, string name, string summary)
         {
             Target = target;
-            TargetName = CommentDataset.TypeDisplayName(name);
+            TargetName = XmlCommentData.TypeDisplayName(name);
             Summary = summary;
+        }
+
+        public int CompareTo(ApiComment src)
+        {
+            var result = TargetName.CompareTo(src.TargetName);
+            if(result == 0)
+                result = ((byte)Target).CompareTo((byte)src.Target);
+            return result;
         }
 
         public static ApiComment Empty => new ApiComment(0, EmptyString, EmptyString);

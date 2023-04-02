@@ -18,107 +18,10 @@ namespace Z0
     [Free,ApiHost]
     public class AsciLines
     {
-        public static SettingLookup lookup(FilePath src, char sep)
-        {            
-            var dst = list<Setting>();
-            var line = AsciLineCover.Empty;
-            var quoted = new Fence<AsciCode>(AsciCode.SQuote, AsciCode.SQuote);
-            using var reader = src.AsciLineReader();
-            while(reader.Next(out line))
-            {
-                var content = line.Codes;
-                var length = content.Length;
-                if(length != 0)
-                {
-                    if(SQ.hash(first(content)))
-                        continue;
-
-                    var i = SQ.index(content, sep);
-                    if(i > 0)
-                    {
-                        var name = AsciSymbols.format(SQ.left(content,i));
-                        var value = AsciSymbols.format(SQ.right(content,i));
-                        dst.Add(new Setting(name, value));
-                    }
-                }
-            }
-            return new SettingLookup(dst.ToArray());
-        } 
 
         [MethodImpl(Inline), Op]
         static BinaryCode tobytes(string src)
             => Encoding.ASCII.GetBytes(src);
-
-        public static uint settings(ref AsciLineReader src, Type type, char sep, out object dst)
-        {
-            dst = Activator.CreateInstance(type);
-            var counter = 0u;
-            var line = AsciLineCover.Empty;
-            var members = Settings.members(type);
-            while(src.Next(out line))
-            {
-                var content = line.Codes;
-                var length = content.Length;
-                if(length != 0)
-                {
-                    if(SQ.hash(first(content)))
-                        continue;
-
-                    var i = SQ.index(content, sep);
-                    if(i > 0)
-                    {
-                        var name = AsciSymbols.format(SQ.left(content,i));
-                        var data = SQ.right(content,i);
-                        if(members.Member(name, out var field))
-                        {
-                            if(ValueDynamic.parse(AsciSymbols.format(data), field.FieldType, out var value))
-                            {
-                                field.SetValue(dst, value);
-                                counter++;
-                            }
-                        }
-                    }
-                }
-            }
-
-            return counter;
-        }
-
-        public static uint settings<T>(ref AsciLineReader src, char sep, out T dst)
-            where T : new()
-        {
-            dst = new();
-            var counter = 0u;
-            var line = AsciLineCover.Empty;
-            var members = Settings.members<T>();
-            while(src.Next(out line))
-            {
-                var content = line.Codes;
-                var length = content.Length;
-                if(length != 0)
-                {
-                    if(SQ.hash(first(content)))
-                        continue;
-
-                    var i = SQ.index(content, sep);
-                    if(i > 0)
-                    {
-                        var name = AsciSymbols.format(SQ.left(content,i));
-                        var data = SQ.right(content,i);
-                        if(members.Member(name, out var field))
-                        {
-                            if(ValueDynamic.parse(AsciSymbols.format(data), field.FieldType, out var value))
-                            {
-                                field.SetValue(dst,value);
-                                counter++;
-                            }
-                        }
-                    }
-                }
-            }
-
-            return counter;
-        }
 
         [Op]
         public static bool next(ref LineReaderState state, out AsciLineCover<byte> dst)
@@ -205,7 +108,6 @@ namespace Z0
         [Op]
         public static LineCount count(FilePath src)
             => (src, count(src.ReadBytes()));
-
 
         public static void emit(ReadOnlySpan<LineStats> src, FilePath dst)
         {

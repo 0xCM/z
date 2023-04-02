@@ -19,8 +19,6 @@ namespace Z0
     public abstract class WfAppCmd<T> : WfSvc<T>, IApiService
         where T : WfAppCmd<T>, new()
     {
-        protected ApiCmd ApiCmd => Wf.ApiCmd();
-
         protected ApiServers ApiServers => Wf.ApiServers();
 
         protected WfAppCmd()
@@ -55,6 +53,6 @@ namespace Z0
         }
 
         public virtual void Loop()
-            => CmdLoop.start(Channel).Wait();
+            => CmdLoop.start(Channel, CmdRunner).Wait();
    }
 }

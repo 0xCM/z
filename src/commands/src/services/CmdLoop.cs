@@ -5,40 +5,19 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
-    public abstract class RunLoop
-    {
-
-    }
-
-    public abstract class RunLoop<L> : RunLoop
-        where L : RunLoop<L>, new()
-    {
-
-    }    
-
     public class CmdLoop
     {
-        public static Task start(IWfChannel channel)
-            => sys.start(new CmdLoop(channel).Run);
-
-        public static Task start(IWfChannel channel, ICmdDispatcher dispatcher)
-            => sys.start(new CmdLoop(channel, dispatcher).Run);
+        public static Task start(IWfChannel channel, ICmdRunner runner)
+            => sys.start(new CmdLoop(channel, runner).Run);
 
         readonly IWfChannel Channel;
 
-        readonly ICmdDispatcher Dispatcher;
+        readonly ICmdRunner Runner;
 
-        CmdLoop(IWfChannel channel, ICmdDispatcher dispatcher)
+        CmdLoop(IWfChannel channel, ICmdRunner runner)
         {
             Channel = channel;
-            Dispatcher = dispatcher;
-        }
-
-        CmdLoop(IWfChannel channel)
-        {
-            Channel = channel;
-            Dispatcher = ApiServers.Dispatcher;
+            Runner = runner;
         }
 
         ApiCmdSpec Next()
@@ -70,7 +49,7 @@ namespace Z0
         {
             try
             {
-                Dispatcher.Dispatch(cmd.Name, cmd.Args);
+                Runner.RunCommand(cmd.Name, cmd.Args);
             }
             catch(Exception e)
             {

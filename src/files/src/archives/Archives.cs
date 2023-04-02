@@ -71,6 +71,22 @@ namespace Z0
             return index.Seal();
         }
 
+        static FilePath IndexPath(IDbArchive src, FileIndexKind kind, IDbArchive dst)
+            => dst.Path(FS.file(name(kind), FileKind.Csv));
+
+        public static ExecToken index(IWfChannel channel, FileQuery q, IDbArchive dst)
+        {
+            var index = Archives.index(channel,q);
+            return channel.TableEmit(index.Sorted(), IndexPath(q.Root.DbArchive(), FileIndexKind.Files, dst));
+        }
+
+        public static ExecToken index(IWfChannel channel, FolderQuery q, IDbArchive dst)
+        {
+            var index = Archives.index(channel,q);
+            var target = IndexPath(q.Root.DbArchive(), FileIndexKind.Folders, dst);
+            return channel.TableEmit(index.Sorted(), target);
+        }
+
         public static FileTypes FileTypes(params Assembly[] src)
             => new (src.Types().Tagged<FileTypeAttribute>().Concrete().Map(x => (IFileType)Activator.CreateInstance(x)).ToHashSet());     
 

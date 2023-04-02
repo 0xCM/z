@@ -9,6 +9,77 @@ namespace Z0
     [ApiHost]
     public class Settings
     {
+        public static uint settings(ref AsciLineReader src, Type type, char sep, out object dst)
+        {
+            dst = Activator.CreateInstance(type);
+            var counter = 0u;
+            var line = AsciLineCover.Empty;
+            var members = Settings.members(type);
+            while(src.Next(out line))
+            {
+                var content = line.Codes;
+                var length = content.Length;
+                if(length != 0)
+                {
+                    if(SQ.hash(first(content)))
+                        continue;
+
+                    var i = SQ.index(content, sep);
+                    if(i > 0)
+                    {
+                        var name = AsciSymbols.format(SQ.left(content,i));
+                        var data = SQ.right(content,i);
+                        if(members.Member(name, out var field))
+                        {
+                            if(ValueDynamic.parse(AsciSymbols.format(data), field.FieldType, out var value))
+                            {
+                                field.SetValue(dst, value);
+                                counter++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return counter;
+        }
+
+        public static uint settings<T>(ref AsciLineReader src, char sep, out T dst)
+            where T : new()
+        {
+            dst = new();
+            var counter = 0u;
+            var line = AsciLineCover.Empty;
+            var members = Settings.members<T>();
+            while(src.Next(out line))
+            {
+                var content = line.Codes;
+                var length = content.Length;
+                if(length != 0)
+                {
+                    if(SQ.hash(first(content)))
+                        continue;
+
+                    var i = SQ.index(content, sep);
+                    if(i > 0)
+                    {
+                        var name = AsciSymbols.format(SQ.left(content,i));
+                        var data = SQ.right(content,i);
+                        if(members.Member(name, out var field))
+                        {
+                            if(ValueDynamic.parse(AsciSymbols.format(data), field.FieldType, out var value))
+                            {
+                                field.SetValue(dst,value);
+                                counter++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return counter;
+        }
+
         [Op]
         public static SettingLookup parse(ReadOnlySpan<TextLine> src, char sep)
         {
@@ -62,15 +133,15 @@ namespace Z0
                 => new (typeof(T).PublicInstanceFields().Select(f => new Setting(f.Name, f.GetValue(src))));
 
         public static SettingLookup lookup(FilePath src, char sep)
-        {
+        {            
             var dst = list<Setting>();
-            var line = TextLine.Empty;
-            var quoted = new Fence<char>(Chars.SQuote, Chars.SQuote);
-            using var reader = src.Utf8LineReader();
+            var line = AsciLineCover.Empty;
+            var quoted = new Fence<AsciCode>(AsciCode.SQuote, AsciCode.SQuote);
+            using var reader = src.AsciLineReader();
             while(reader.Next(out line))
             {
-                var length = line.Length;
-                var content = line.Content;
+                var content = line.Codes;
+                var length = content.Length;
                 if(length != 0)
                 {
                     if(SQ.hash(first(content)))
@@ -78,7 +149,11 @@ namespace Z0
 
                     var i = SQ.index(content, sep);
                     if(i > 0)
-                        dst.Add(new Setting(text.left(content,i), text.right(content,i)));
+                    {
+                        var name = AsciSymbols.format(SQ.left(content,i));
+                        var value = AsciSymbols.format(SQ.right(content,i));
+                        dst.Add(new Setting(name, value));
+                    }
                 }
             }
             return new SettingLookup(dst.ToArray());
@@ -276,10 +351,22 @@ namespace Z0
                 dst = SettingType.Bool;
             else if(src == typeof(string))
                 dst = SettingType.String;
-            else if(src == typeof(FilePath) || src == typeof(_FileUri))
+            else if(src == typeof(FilePath) || src == typeof(_FileUri) || src == typeof(FileUri))
                 dst = SettingType.File;
             else if(src == typeof(FolderPath))
                 dst = SettingType.Folder;
+            else if(src == typeof(bit))
+                dst = SettingType.Bit;
+            else if(src.IsIntegral())
+                dst = SettingType.Integer;
+            else if(src == typeof(Version64) || src == typeof(Version128) || src == typeof(AssemblyVersion))
+                dst = SettingType.Version;
+            else if(src == typeof(char))
+                dst = SettingType.Char;
+            else if(src.IsEnum)
+                dst = SettingType.Enum;
+            else
+                dst = SettingType.String;
             return dst;
         }
 

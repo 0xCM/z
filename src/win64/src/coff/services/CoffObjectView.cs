@@ -48,10 +48,10 @@ namespace Z0
             get => Header.NumberOfSections;
         }
 
-        public ReadOnlySpan<ImageSectionHeader> SectionHeaders
+        public ReadOnlySpan<CoffSectionHeader> SectionHeaders
         {
             [MethodImpl(Inline)]
-            get => recover<ImageSectionHeader>(slice(Data, SectionHeaderOffset, SectionHeaderCount*size<ImageSectionHeader>()));
+            get => recover<CoffSectionHeader>(slice(Data, SectionHeaderOffset, SectionHeaderCount*size<CoffSectionHeader>()));
         }
 
         public Timestamp Timestamp
@@ -60,28 +60,28 @@ namespace Z0
             get => CoffObjects.timestamp(Header.TimeDateStamp);
         }
 
-        public ref readonly uint SymCount
+        public ref readonly uint SymbolCount
         {
             [MethodImpl(Inline)]
             get => ref Header.NumberOfSymbols;
         }
 
-        public ref readonly uint SymTableOffset
+        public ref readonly uint SymbolTableOffset
         {
             [MethodImpl(Inline)]
             get => ref @as<Address32,uint>(Header.PointerToSymbolTable);
         }
 
-        public ByteSize SymTableSize
+        public ByteSize SymbolTableSize
         {
             [MethodImpl(Inline)]
-            get => SymCount*size<CoffSymbol>();
+            get => SymbolCount*size<CoffSymbol>();
         }
 
         public ReadOnlySpan<CoffSymbol> Symbols
         {
             [MethodImpl(Inline)]
-            get => CoffStrings.symbols(Data, SymTableOffset, SymCount);
+            get => CoffStrings.symbols(Data, SymbolTableOffset, SymbolCount);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Z0
         public CoffStringTable StringTable
         {
             [MethodImpl(Inline)]
-            get => new CoffStringTable(slice(Data, SymTableOffset + SymTableSize));
+            get => new CoffStringTable(slice(Data, SymbolTableOffset + SymbolTableSize));
         }
     }
 }

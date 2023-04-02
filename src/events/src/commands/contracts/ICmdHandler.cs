@@ -30,5 +30,8 @@ namespace Z0
         /// </summary>
         /// <param name="wf">The context in which execution will occur</param>
         void Initialize(IWfRuntime wf);
+
+
+        ReadOnlySeq<CmdRoute> Routes {get;}
     }
 }

@@ -27,12 +27,12 @@ namespace Z0
         [Symbol("P")]
         Property,
 
-        // <param name="m"></param>
-        [Symbol("param")]
-        Operand,
+        // // <param name="m"></param>
+        // [Symbol("param")]
+        // Operand,
 
-        // <typeparam name="N">The number of contained bits</typeparam>
-        [Symbol("typeparam")]
-        Param,
+        // // <typeparam name="N">The number of contained bits</typeparam>
+        // [Symbol("typeparam")]
+        // Param,
     }
 }

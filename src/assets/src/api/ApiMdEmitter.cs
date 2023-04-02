@@ -219,7 +219,7 @@ namespace Z0
         }
 
         public void EmitApiComments()
-            => Comments.Collect(Target.Scoped(comments));
+            => Comments.Collect(controller().RuntimeArchive(), Target.Scoped(comments));
 
 
         public void EmitApiSymbols(params Assembly[] src)
@@ -247,9 +247,6 @@ namespace Z0
 
         void EmitSymHeap(SymHeap src)
             => SymHeaps.emit(Channel, src, Target.Table<SymHeapRecord>());
-
-        void EmitComments()
-            => Comments.Collect(Target);
 
         ReadOnlySeq<AssetCatalogEntry> EmitAssets(ReadOnlySeq<ComponentAssets> src)
         {

@@ -112,7 +112,7 @@ namespace Z0
                 record.OriginId = origin.DocId;
                 record.SectionNumber = (ushort)number;
                 record.SectionName = name;
-                record.SectionKind = CalcSectionKind(name);
+                record.SectionKind = CoffObjects.SectionKind(name);
                 record.RawDataAddress = section.PointerToRawData;
                 record.RawDataSize = section.SizeOfRawData;
                 record.RelocAddress = section.PointerToRelocations;
@@ -239,7 +239,7 @@ namespace Z0
             var objData = obj.Data.View;
             var offset = 0u;
             var view = CoffObjectView.cover(obj.Data, offset);
-            var symcount = view.SymCount;
+            var symcount = view.SymbolCount;
             if(symcount != 0)
             {
                 var origin = context.Root(file.Path);
@@ -298,7 +298,7 @@ namespace Z0
                 var objData = obj.Data.View;
                 var offset = 0u;
                 var view = CoffObjectView.cover(obj.Data, offset);
-                var symcount = view.SymCount;
+                var symcount = view.SymbolCount;
                 if(symcount == 0)
                     continue;
 

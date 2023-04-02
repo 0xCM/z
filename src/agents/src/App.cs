@@ -42,7 +42,7 @@ namespace Z0
             var root = FS.dir(Args[0]).DbArchive();
             var dst = root.Scoped("db");
             Monitor = DirectoryMonitor.start(root,dst,this);
-            CmdLoop.start(Channel).Wait();
+            CmdLoop.start(Channel, CmdRunner).Wait();
         }
 
         public static int Main(params string[] args)

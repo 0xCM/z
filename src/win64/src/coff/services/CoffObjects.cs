@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using System.Linq;
     using static sys;
     using static ObjSymCode;
     using static ObjSymKind;
@@ -11,6 +12,23 @@ namespace Z0
     [ApiHost,Free]
     public class CoffObjects : AppService<CoffObjects>
     {
+        static Symbols<CoffSectionKind> SectionKinds = Symbols.index<CoffSectionKind>();
+
+        public static IEnumerable<CoffSectionHeaders> sections(IWfChannel channel, IEnumerable<CoffObject> objects)
+        {
+            foreach(var obj in objects.AsParallel())
+                yield return new CoffSectionHeaders(obj.Path, obj.SectionHeaders.ToArray());
+        }
+
+        public static CoffSectionKind SectionKind(string name)
+        {
+            var kind = CoffSectionKind.Unknown;
+            if(SectionKinds.MapExpr(name, out var sym))
+                kind = sym.Kind;
+            return kind;
+        }
+
+
         public static Outcome<CoffHex> hex(CoffObjectData src, HexDataRow[] rows)
         {
             var result = validate(src, rows, out var hex);
@@ -104,7 +122,10 @@ namespace Z0
             return kind;
         }
 
-        [MethodImpl(Inline), Op]
+        public static CoffObject @object(FilePath path)
+            => new CoffObject(load(path));
+
+        [Op]
         public static CoffObjectData load(FilePath path)
             => new CoffObjectData(path, path.ReadBytes());
 

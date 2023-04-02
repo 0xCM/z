@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IApiContext
+    public interface IApiShell : IAppShell
     {
-        ICmdDispatcher Dispatcher {get;}
+        ICmdRunner Runner {get;}
 
-        IApiService Commander {get;}
-    }
+        void Init(IWfRuntime wf, ReadOnlySeq<string> args, ICmdRunner dispatcher);
+    }    
 }

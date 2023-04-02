@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    partial class ImageCmd : WfAppCmd<ImageCmd>
+    class ProcessCmd : WfAppCmd<ProcessCmd>
     {        
         [CmdOp("process/memory")]
         Outcome ShowMemHex(CmdArgs args)

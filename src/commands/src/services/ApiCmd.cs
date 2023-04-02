@@ -7,13 +7,11 @@ namespace Z0
 {
     using static sys;
 
-    public class ApiCmd : AppService<ApiCmd>, IApiService
+    public class ApiCmd : WfSvc<ApiCmd>, IApiService
     {                         
         public void RunCmd(string name)
         {
-            var result = ApiServers.Dispatcher.Dispatch(name);
-            if(result.Fail)
-                Channel.Error(result.Message);
+            CmdRunner.RunCommand(name);
         }
 
         public void EmitApiCatalog()

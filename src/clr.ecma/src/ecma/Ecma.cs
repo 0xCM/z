@@ -12,6 +12,9 @@ namespace Z0
     [ApiHost]
     public class Ecma : WfSvc<Ecma>
     {        
+        public static AssemblyComments comments(IWfChannel channel, IDbArchive src)
+            => new AssemblyComments(channel, src);
+            
         public static ReadOnlySeq<EcmaRowStats> stats(AssemblyIndex src)
             => EcmaReader.stats(src.Distinct().Select(x => x.Path));
 

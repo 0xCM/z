@@ -37,7 +37,7 @@ namespace Z0
 
         [CmdOp("api/script")]
         void RunAppScript(CmdArgs args)
-            => ApiServers.RunCmdScripts(FS.path(args[0]));
+            => ApiServers.Runner.RunCommandScript(FS.path(args[0]));
 
         [CmdOp("env/stack")]
         void Stack()
@@ -140,17 +140,6 @@ namespace Z0
                 Channel.Row(AppSettings.Default.Format());
             else
                 Channel.Row(AppSettings.Default.Absorb(FS.path(args.First.Value)));
-        }
-
-        [CmdOp("services")]
-        void GetServices()
-        {
-           var services = ApiServers.services(ApiAssemblies.Components);
-           iter(services, svc => {
-            var fmt = svc.Format();
-            if(text.nonempty(fmt))
-                Channel.Row(fmt);
-           });
         }
 
         [CmdOp("tool")]
