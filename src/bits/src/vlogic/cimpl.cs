@@ -30,12 +30,12 @@ namespace Z0
         [MethodImpl(Inline), CImpl, Closures(Closure)]
         public static Vector128<T> vcimpl<T>(W128 w, in T a, in T b)
             where T : unmanaged
-                => gcpu.vcimpl(gcpu.vload(w, a), gcpu.vload(w, b));
+                => vgcpu.vcimpl(vgcpu.vload(w, a), vgcpu.vload(w, b));
 
         [MethodImpl(Inline), CImpl, Closures(Closure)]
         public static Vector256<T> vcimpl<T>(W256 w, in T a, in T b)
             where T : unmanaged
-                => gcpu.vcimpl(gcpu.vload(w, a), gcpu.vload(w, b));
+                => vgcpu.vcimpl(vgcpu.vload(w, a), vgcpu.vload(w, b));
 
         [MethodImpl(Inline), CImpl, Closures(Closure)]
         public static void cimpl<T>(W128 w, in T a, in T b, ref T dst)

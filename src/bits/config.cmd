@@ -1,3 +1,3 @@
 @echo off
-set ProjectName=bits
+set ProjectName=bitfields
 call %~dp0..\config.cmd

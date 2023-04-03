@@ -26,7 +26,7 @@ namespace Z0
             var blocks = src.BlockCount;
             for(var i=0; i<blocks; i++)
             {
-                gcpu.vstore(VMap.Invoke(gcpu.vload(src,i)), dst, i);
+                gcpu.vstore(VMap.Invoke(SpanBlocks.vload(src,i)), dst, i);
                 Counter++;
             }
             return Counter;

@@ -67,19 +67,5 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static Vector128<byte> aesKeyGen(Vector128<byte> src,byte imm8)
             => AES.KeygenAssist(src,imm8);
-
-        [MethodImpl(Inline), Op]
-        public static void aesEncode(SpanBlock128<byte> src, Vector128<byte> key, SpanBlock128<byte> dst)
-        {
-            for(var block = 0; block < src.BlockCount; block++)
-                 vcpu.vstore(aesEncode(src.LoadVector(block),key), ref dst.BlockLead(block));
-        }
-
-        [MethodImpl(Inline), Op]
-        public static void aesdec(SpanBlock128<byte> src, Vector128<byte> key, SpanBlock128<byte> dst)
-        {
-            for(var block = 0; block < src.BlockCount; block++)
-                 vcpu.vstore(aesDecode(src.LoadVector(block),key), ref dst.BlockLead(block));
-        }
     }
 }

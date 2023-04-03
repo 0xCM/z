@@ -32,16 +32,16 @@ namespace Z0
         public static Vector128<T> vnot<T>(W128 w, in T src)
             where T : unmanaged
         {
-            gcpu.vload(src, out Vector128<T> dst);
-            return gcpu.vnot(dst);
+            vgcpu.vload(src, out Vector128<T> dst);
+            return vgcpu.vnot(dst);
         }
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector256<T> vnot<T>(W256 w, in T src)
             where T : unmanaged
         {
-            gcpu.vload(src, out Vector256<T> dst);
-            return gcpu.vnot(dst);
+            vgcpu.vload(src, out Vector256<T> dst);
+            return vgcpu.vnot(dst);
         }
 
         [MethodImpl(Inline), Op, Closures(Closure)]

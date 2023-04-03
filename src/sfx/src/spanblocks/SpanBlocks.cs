@@ -14,6 +14,209 @@ namespace Z0
     {
         const NumericKind Closure = UnsignedInts;
 
+        [MethodImpl(Inline), Op]
+        public static void aesEncode(SpanBlock128<byte> src, Vector128<byte> key, SpanBlock128<byte> dst)
+        {
+            for(var block = 0; block < src.BlockCount; block++)
+                 vcpu.vstore(vcpu.aesEncode(src.LoadVector(block),key), ref dst.BlockLead(block));
+        }
+
+        [MethodImpl(Inline), Op]
+        public static void aesdec(SpanBlock128<byte> src, Vector128<byte> key, SpanBlock128<byte> dst)
+        {
+            for(var block = 0; block < src.BlockCount; block++)
+                 vcpu.vstore(vcpu.aesDecode(src.LoadVector(block),key), ref dst.BlockLead(block));
+        }
+
+        /// <summary>
+        /// Loads a 128-bit vector from the first 128-bit source block
+        /// </summary>
+        /// <param name="src">The source span</param>
+        /// <typeparam name="T">The component type</typeparam>
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static Vector128<T> vload<T>(SpanBlock128<T> src)
+            where T : unmanaged
+                => vgcpu.vload(w128, src.Storage);
+
+        /// <summary>
+        /// Loads a 256-bit vector from the leading source block
+        /// </summary>
+        /// <param name="src">The source span</param>
+        /// <typeparam name="T">The component type</typeparam>
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static Vector256<T> vload<T>(SpanBlock256<T> src)
+            where T : unmanaged
+                => vgcpu.vload(w256, src.Storage);
+
+        /// <summary>
+        /// Loads a 512-bit vector from the leading source block
+        /// </summary>
+        /// <param name="src">The source span</param>
+        /// <typeparam name="T">The component type</typeparam>
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static Vector512<T> vload<T>(in SpanBlock512<T> src)
+            where T : unmanaged
+                => vgcpu.vload(w512, src.Storage);
+
+        /// <summary>
+        /// Loads a block-identified 128-bit vector
+        /// </summary>
+        /// <param name="src">The source span</param>
+        /// <param name="block">The block index</param>
+        /// <typeparam name="T">The component type</typeparam>
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static Vector128<T> vload<T>(SpanBlock128<T> src, int block)
+            where T : unmanaged
+                => vgcpu.vload(src.BlockLead(block), out Vector128<T> x);
+
+        /// <summary>
+        /// Loads a block-identified 256-bit vector
+        /// </summary>
+        /// <param name="src">The source span</param>
+        /// <param name="block">The block index</param>
+        /// <typeparam name="T">The component type</typeparam>
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static Vector256<T> vload<T>(SpanBlock256<T> src, int block)
+            where T : unmanaged
+                => vgcpu.vload(src.BlockLead(block), out Vector256<T> x);
+
+        /// <summary>
+        /// Loads a block-identified 512-bit vector
+        /// </summary>
+        /// <param name="src">The source span</param>
+        /// <param name="block">The block index</param>
+        /// <typeparam name="T">The component type</typeparam>
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static Vector512<T> vload<T>(in SpanBlock512<T> src, int block)
+            where T : unmanaged
+                => vgcpu.vload(src.BlockLead(block), out Vector512<T> x);
+
+        /// <summary>
+        /// Stores the source vector to the head of a blocked container
+        /// </summary>
+        /// <param name="src">The source vector</param>
+        /// <param name="dst">The target block</param>
+        /// <typeparam name="T">The vector cell type</typeparam>
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static void vstore<T>(Vector128<T> src, SpanBlock128<T> dst)
+            where T : unmanaged
+                => vgcpu.vstore(src, ref dst.First);
+
+        /// <summary>
+        /// Stores the source vector to a specified block in a blocked container
+        /// </summary>
+        /// <param name="src">The source vector</param>
+        /// <param name="dst">The target block</param>
+        /// <param name="block">The 0-based block index at which storage should begin</param>
+        /// <typeparam name="T">The vector cell type</typeparam>
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static void vstore<T>(Vector128<T> src, SpanBlock128<T> dst, int block)
+            where T : unmanaged
+                => vgcpu.vstore(src, ref dst.BlockLead(block));
+
+        /// <summary>
+        /// Stores the source vector to a blocked container
+        /// </summary>
+        /// <param name="src">The source vector</param>
+        /// <param name="dst">The target block</param>
+        /// <typeparam name="T">The vector component type</typeparam>
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static void vstore<T>(Vector256<T> src, SpanBlock256<T> dst)
+            where T : unmanaged
+                => vgcpu.vstore(src, ref dst.First);
+
+        /// <summary>
+        /// Stores the source vector to a blocked container
+        /// </summary>
+        /// <param name="src">The source vector</param>
+        /// <param name="dst">The target block</param>
+        /// <typeparam name="T">The vector component type</typeparam>
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static void vstore<T>(Vector512<T> src, in SpanBlock512<T> dst)
+            where T : unmanaged
+                => vgcpu.vstore(src, ref dst.First);
+
+        /// <summary>
+        /// Stores the source vector to a specified block in a blocked container
+        /// </summary>
+        /// <param name="src">The source vector</param>
+        /// <param name="dst">The target block</param>
+        /// <param name="block">The 0-based block index at which storage should begin</param>
+        /// <typeparam name="T">The vector component type</typeparam>
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static void vstore<T>(Vector256<T> src, SpanBlock256<T> dst, int block)
+            where T : unmanaged
+                => vgcpu.vstore(src, ref dst.BlockLead(block));
+
+        /// <summary>
+        /// Stores the source vector to a specified block in a blocked container
+        /// </summary>
+        /// <param name="src">The source vector</param>
+        /// <param name="dst">The target block</param>
+        /// <param name="block">The 0-based block index at which storage should begin</param>
+        /// <typeparam name="T">The vector component type</typeparam>
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        public static void vstore<T>(Vector512<T> src, in SpanBlock512<T> dst, int block)
+            where T : unmanaged
+                => vgcpu.vstore(src, ref dst.BlockLead(block));
+
+
+        /// <summary>
+        /// __m128i _mm_maskload_epi32 (int const* mem_addr, __m128i mask) VPMASKMOVD xmm, xmm, m128
+        /// </summary>
+        /// <param name="src">The memory source</param>
+        /// <param name="mask">Hi bit on selects the memory, otherwise set to zero</param>
+        [MethodImpl(Inline), Op]
+        public static unsafe Vector128<int> vmaskload(SpanBlock128<int> src, uint block, Vector128<int> mask)
+            => MaskLoad(gptr(src.BlockLead(block)), mask);
+
+        /// <summary>
+        /// __m128i _mm_maskload_epi32 (int const* mem_addr, __m128i mask) VPMASKMOVD xmm, xmm, m128
+        /// </summary>
+        /// <param name="src">The memory source</param>
+        /// <param name="mask">Hi bit on selects the memory, otherwise set to zero</param>
+        [MethodImpl(Inline), Op]
+        public static unsafe Vector128<uint> vmaskload(SpanBlock128<uint> src, uint block, Vector128<uint> mask)
+            => MaskLoad(gptr(src.BlockLead(block)), mask);
+
+        /// <summary>
+        /// __m256i _mm256_maskload_epi32 (int const* mem_addr, __m256i mask) VPMASKMOVD ymm, ymm, m256
+        /// </summary>
+        /// <param name="src">The memory source</param>
+        /// <param name="mask">Hi bit on selects the memory, otherwise set to zero</param>
+        [MethodImpl(Inline), Op]
+        public static unsafe Vector256<int> vmaskload(SpanBlock256<int> src, uint block, Vector256<int> mask)
+            => MaskLoad(gptr(src.BlockLead(block)), mask);
+
+        /// <summary>
+        /// Conditionally loads source cells per a specified mask
+        /// __m256i _mm256_maskload_epi32 (int const* mem_addr, __m256i mask) VPMASKMOVD ymm, ymm, m256
+        /// </summary>
+        /// <param name="src">The memory source</param>
+        /// <param name="mask">Hi bit on selects the memory, otherwise set to zero</param>
+        [MethodImpl(Inline), Op]
+        public static unsafe Vector256<uint> vmaskload(SpanBlock256<uint> src, uint block, Vector256<uint> mask)
+            => MaskLoad(gptr(src.BlockLead(block)), mask);
+
+        /// <summary>
+        /// __m256i _mm256_maskload_epi64 (__int64 const* mem_addr, __m256i mask) VPMASKMOVQ ymm, ymm, m256
+        /// </summary>
+        /// <param name="src">The memory source</param>
+        /// <param name="mask">Hi bit on selects the memory, otherwise set to zero</param>
+        [MethodImpl(Inline), Op]
+        public static unsafe Vector256<long> vmaskload(SpanBlock256<long> src, uint block, Vector256<long> mask)
+            => MaskLoad(gptr(src.BlockLead(block)), mask);
+
+        /// <summary>
+        /// __m256i _mm256_maskload_epi64 (__int64 const* mem_addr, __m256i mask) VPMASKMOVQ ymm, ymm, m256
+        /// </summary>
+        /// <param name="src">The memory source</param>
+        /// <param name="mask">Hi bit on selects the memory, otherwise set to zero</param>
+        [MethodImpl(Inline), Op]
+        public static unsafe Vector256<ulong> vmaskload(SpanBlock256<ulong> src, uint block, Vector256<ulong> mask)
+            => MaskLoad(gptr(src.BlockLead(block)), mask);
+
+ 
         [Op, Closures(Closure)]
         public static void outcome<T>(SpanBlock128<T> x, SpanBlock128<T> y, Vector128<T> expect, Vector128<T> actual, Vector128<T> result, ITextBuffer dst)
             where T : unmanaged
@@ -135,23 +338,6 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static unsafe Vector256<ulong> vinflate256x64u(SpanBlock128<uint> src, uint offset)
             => v64u(ConvertToVector256Int64(gptr(src[offset])));
-
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> inflate16u(in ByteBlock8 src)
-            => recover<char>(sys.bytes(vcpu.vlo(vpack.vinflate256x16u(vcpu.vbytes(w128, u64(src))))));
-
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> inflate16u(in ByteBlock16 src)
-            => recover<char>(sys.bytes(vcpu.vlo(vpack.vinflate256x16u(vcpu.vbytes(w128, u64(src))))));
-
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> inflate16u(in ByteBlock32 src)
-        {
-            var v = vload(w256, src.Bytes);
-            var lo = vpack.vinflatelo256x16u(v);
-            var hi = vpack.vinflatehi256x16u(v);
-            return recover<char>(sys.bytes(new V256x2(lo,hi)));
-        }
 
 
         /// <summary>

@@ -32,12 +32,12 @@ namespace Z0
         [MethodImpl(Inline), And, Closures(Closure)]
         public static Vector128<T> and<T>(W128 w, in T a, in T b)
             where T : unmanaged
-                => gcpu.vand(gcpu.vload(w, a), gcpu.vload(w, b));
+                => vgcpu.vand(vgcpu.vload(w, a), vgcpu.vload(w, b));
 
         [MethodImpl(Inline), And, Closures(Closure)]
         public static Vector256<T> and<T>(W256 w, in T a, in T b)
             where T : unmanaged
-                => gcpu.vand(gcpu.vload(w, a), gcpu.vload(w, b));
+                => vgcpu.vand(vgcpu.vload(w, a), vgcpu.vload(w, b));
 
         [MethodImpl(Inline), And, Closures(Closure)]
         public static void and<T>(W128 n, in T a, in T b, ref T dst)

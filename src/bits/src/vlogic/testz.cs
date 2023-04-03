@@ -30,18 +30,18 @@ namespace Z0
         public static bit vtestz<T>(W128 w, in T a, in T b)
             where T : unmanaged
         {
-            gcpu.vload(a, out Vector128<T> vA);
-            gcpu.vload(b, out Vector128<T> vB);
-            return gcpu.vtestz(vA,vB);
+            vgcpu.vload(a, out Vector128<T> vA);
+            vgcpu.vload(b, out Vector128<T> vB);
+            return vgcpu.vtestz(vA,vB);
         }
 
         [MethodImpl(Inline), TestZ, Closures(Closure)]
         public static bit vtestz<T>(W256 w, in T a, in T b)
             where T : unmanaged
         {
-            gcpu.vload(a, out Vector256<T> vA);
-            gcpu.vload(b, out Vector256<T> vB);
-            return gcpu.vtestz(vA,vB);
+            vgcpu.vload(a, out Vector256<T> vA);
+            vgcpu.vload(b, out Vector256<T> vB);
+            return vgcpu.vtestz(vA,vB);
         }
 
         [MethodImpl(Inline), TestZ, Closures(Closure)]

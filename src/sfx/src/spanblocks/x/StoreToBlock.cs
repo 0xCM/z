@@ -6,6 +6,8 @@ namespace Z0
 {
     partial class XTend
     {
+        const NumericKind Closure = UnsignedInts;
+        
         /// <summary>
         /// Stores vector content to a caller-supplied block
         /// </summary>
@@ -14,7 +16,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static unsafe void StoreTo<T>(this Vector128<T> src, SpanBlock128<T> dst)
             where T : unmanaged
-                => gcpu.vstore(src, dst);
+                => SpanBlocks.vstore(src, dst);
 
         /// <summary>
         /// Stores vector content to a specified block in a blocked container
@@ -25,7 +27,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static unsafe void StoreTo<T>(this Vector128<T> src, SpanBlock128<T> dst, int block)
             where T : unmanaged
-                => gcpu.vstore(src, dst, block);
+                => SpanBlocks.vstore(src, dst, block);
 
         /// <summary>
         /// Stores vector content to a caller-supplied block
@@ -35,7 +37,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static unsafe void StoreTo<T>(this Vector256<T> src, SpanBlock256<T> dst)
             where T : unmanaged
-                => gcpu.vstore(src, dst);
+                => SpanBlocks.vstore(src, dst);
 
         /// <summary>
         /// Stores vector content to a caller-supplied block
@@ -45,7 +47,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static unsafe void StoreTo<T>(this Vector512<T> src, in SpanBlock512<T> dst)
             where T : unmanaged
-                => gcpu.vstore(src, dst);
+                => SpanBlocks.vstore(src, dst);
 
         /// <summary>
         /// Stores vector content to a specified block in a blocked container
@@ -56,7 +58,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static unsafe void StoreTo<T>(this Vector256<T> src, SpanBlock256<T> dst, int block)
             where T : unmanaged
-                => gcpu.vstore(src, dst, block);
+                => SpanBlocks.vstore(src, dst, block);
 
         /// <summary>
         /// Stores vector content to a specified block in a blocked container
@@ -67,6 +69,6 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static unsafe void StoreTo<T>(this Vector512<T> src, in SpanBlock512<T> dst, int block)
             where T : unmanaged
-                => gcpu.vstore(src, dst, block);
+                => SpanBlocks.vstore(src, dst, block);
     }
 }

@@ -41,7 +41,7 @@ namespace Z0
             var ones = gcpu.vones<T>(w);
             for(var i=0; i<src.BlockCount; i++)
             {
-                var a = gcpu.vload(src,i);
+                var a = SpanBlocks.vload(src,i);
                 var b = gcpu.vbroadcast(w, match);
                 var c = gcpu.veq(a,b);
                 var d = gcpu.vtestz(c, ones);
@@ -65,7 +65,7 @@ namespace Z0
             var ones = gcpu.vones<T>(w);
             for(var i=0; i<src.BlockCount; i++)
             {
-                var a = gcpu.vload(src,i);
+                var a = SpanBlocks.vload(src,i);
                 var b = gcpu.vbroadcast(w, match);
                 var c = gcpu.veq(a,b);
                 var d = gcpu.vtestz(c, ones);

@@ -16,7 +16,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static ConstPair<Vector128<T>> LoadVectors<T>(this SpanBlock128<T> src, int block1, int block2)
             where T : unmanaged
-                => (gcpu.vload(src, block1), gcpu.vload(src, block2));
+                => (SpanBlocks.vload(src, block1), SpanBlocks.vload(src, block2));
 
         /// <summary>
         /// Loads 3 block-indexed 128-bit vectors
@@ -29,7 +29,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static ConstTriple<Vector128<T>> LoadVectors<T>(this SpanBlock128<T> src, int block1, int block2, int block3)
             where T : unmanaged
-                => (gcpu.vload(src, block1), gcpu.vload(src, block2), gcpu.vload(src, block3));
+                => (SpanBlocks.vload(src, block1), SpanBlocks.vload(src, block2), SpanBlocks.vload(src, block3));
 
         /// <summary>
         /// Loads 2 block-indexed 256-bit vectors
@@ -41,7 +41,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static ConstPair<Vector256<T>> LoadVectors<T>(this SpanBlock256<T> src, int block1, int block2)
             where T : unmanaged
-                => (gcpu.vload(src, block1), gcpu.vload(src, block2));
+                => (SpanBlocks.vload(src, block1), SpanBlocks.vload(src, block2));
 
         /// <summary>
         /// Loads 3 block-indexed 256-bit vectors
@@ -54,6 +54,6 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static ConstTriple<Vector256<T>> LoadVectors<T>(this SpanBlock256<T> src, int block1, int block2, int block3)
             where T : unmanaged
-                => (gcpu.vload(src, block1), gcpu.vload(src, block2), gcpu.vload(src, block3));
+                => (SpanBlocks.vload(src, block1), SpanBlocks.vload(src, block2), SpanBlocks.vload(src, block3));
     }
 }

@@ -30,12 +30,12 @@ namespace Z0
         [MethodImpl(Inline), XorNot, Closures(Closure)]
         public static Vector128<T> vxornot<T>(W128 w, in T a, in T b)
             where T : unmanaged
-                => gcpu.vxornot(vload(w, in a), vload(w, in b));
+                => vgcpu.vxornot(vload(w, in a), vload(w, in b));
 
         [MethodImpl(Inline), XorNot, Closures(Closure)]
         public static Vector256<T> vxornot<T>(W256 w, in T a, in T b)
             where T : unmanaged
-                => gcpu.vxornot(vload(w, in a),vload(w, in b));
+                => vgcpu.vxornot(vload(w, in a),vload(w, in b));
 
         [MethodImpl(Inline), XorNot, Closures(Closure)]
         public static void xornot<T>(W128 w, in T a, in T b, ref T c)
@@ -56,7 +56,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), XorNot, Closures(Closure)]
-        public static void xornot<T>(W256 w, int vcount, int blocklen,  in T a, in T b, ref T c)
+        public static void xornot<T>(W256 w, int vcount, int blocklen, in T a, in T b, ref T c)
             where T : unmanaged
         {
             for(int i=0, offset = 0; i < vcount; i++, offset += blocklen)

@@ -30,12 +30,12 @@ namespace Z0
         [MethodImpl(Inline), Nand, Closures(Closure)]
         public static Vector128<T> vnand<T>(W128 w, in T a, in T b)
             where T : unmanaged
-                => gcpu.vnand(gcpu.vload(w, a), gcpu.vload(w, b));
+                => vgcpu.vnand(vgcpu.vload(w, a), vgcpu.vload(w, b));
 
         [MethodImpl(Inline), Nand, Closures(Closure)]
         public static Vector256<T> vnand<T>(N256 w, in T a, in T b)
             where T : unmanaged
-                => gcpu.vnand(gcpu.vload(w, a), gcpu.vload(w, b));
+                => vgcpu.vnand(vgcpu.vload(w, a), vgcpu.vload(w, b));
 
         [MethodImpl(Inline), Nand, Closures(Closure)]
         public static void nand<T>(W128 w, in T a, in T b, ref T z)

@@ -31,18 +31,18 @@ namespace Z0
         public static Vector128<T> vnor<T>(W128 w, in T a, in T b)
             where T : unmanaged
         {
-            gcpu.vload(in a, out Vector128<T> vA);
-            gcpu.vload(in b, out Vector128<T> vB);
-            return gcpu.vnor(vA,vB);
+            vgcpu.vload(in a, out Vector128<T> vA);
+            vgcpu.vload(in b, out Vector128<T> vB);
+            return vgcpu.vnor(vA,vB);
         }
 
         [MethodImpl(Inline), Nor, Closures(Closure)]
         public static Vector256<T> vnor<T>(W256 w, in T a, in T b)
             where T : unmanaged
         {
-            gcpu.vload(in a, out Vector256<T> vA);
-            gcpu.vload(in b, out Vector256<T> vB);
-            return gcpu.vnor(vA,vB);
+            vgcpu.vload(in a, out Vector256<T> vA);
+            vgcpu.vload(in b, out Vector256<T> vB);
+            return vgcpu.vnor(vA,vB);
         }
 
         [MethodImpl(Inline), Nor, Closures(Closure)]

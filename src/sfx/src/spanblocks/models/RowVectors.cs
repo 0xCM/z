@@ -97,7 +97,7 @@ namespace Z0
             where N : unmanaged, ITypeNat
             where T : unmanaged
         {
-            var components = range<N,T>(first).ToArray();
+            var components = range<N,T>(first).Array();
             return load<N,T>(components);
         }
 
@@ -105,7 +105,7 @@ namespace Z0
             where N : unmanaged, ITypeNat
             where T : unmanaged
         {
-            var components = range<N,T>(first).ToArray();
+            var components = range<N,T>(first).Array();
             return load<N,T>(components);
         }
 
