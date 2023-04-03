@@ -1,3 +1,4 @@
 @echo off
-set ProjectName=asm.core
+set ProjectName=api.code
 call %~dp0..\config.cmd
+

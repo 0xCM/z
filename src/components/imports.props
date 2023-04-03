@@ -5,7 +5,6 @@
     <ProjectReference Include="$(ApiMd)" />
     <ProjectReference Include="$(Alloc)" />
     <ProjectReference Include="$(Asm)" />
-    <ProjectReference Include="$(AsmCore)" />
     <ProjectReference Include="$(AsmPrototypes)" />
     <ProjectReference Include="$(AsmSvc)" />
     <ProjectReference Include="$(Assets)" />

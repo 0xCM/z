@@ -14,9 +14,6 @@ namespace Z0
             public AsmEtl AsmEtl(IWfRuntime wf)
                 => Service<AsmEtl>(wf);
 
-            public AsmDecoder AsmDecoder(IWfRuntime wf)
-                => Service<AsmDecoder>(wf);
-
             public HostAsmEmitter HostAsmEmitter(IWfRuntime wf)
                 => Service<HostAsmEmitter>(wf);
 
@@ -37,9 +34,6 @@ namespace Z0
 
             public ApiImmEmitter ImmEmitter(IWfRuntime wf)
                 => Service<ApiImmEmitter>(wf);
-
-            public ApiCapture ApiCapture(IWfRuntime wf)
-                => Service<ApiCapture>(wf);
 
             public AsmCmdService AsmCmdSvc(IWfRuntime wf)
                 => Service<AsmCmdService>(wf);
@@ -87,9 +81,6 @@ namespace Z0
         public static AsmJmpPipe AsmJmpPipe(this IWfRuntime wf)
             => Services.AsmJmpPipe(wf);
 
-        public static AsmDecoder AsmDecoder(this IWfRuntime wf)
-            => Services.AsmDecoder(wf);
-
         public static ProcessAsmSvc ProcessAsmSvc(this IWfRuntime wf)
             => Services.ProcessAsm(wf);
 
@@ -102,9 +93,7 @@ namespace Z0
         public static ICaptureCore CaptureCore(this IWfRuntime wf)
             => Asm.CaptureCore.create(wf);
 
-        public static ApiCapture ApiCapture(this IWfRuntime wf)
-            => Services.ApiCapture(wf);
-
+ 
         public static AsmCmdService AsmCmdSvc(this IWfRuntime wf)
             => Services.AsmCmdSvc(wf);
 
@@ -119,9 +108,6 @@ namespace Z0
 
          public static AsmDocs AsmDocs(this IWfRuntime wf)
             => Services.AsmDocs(wf);
-
-         public static AsmFlowCmd AsmFlowCmd(this IWfRuntime wf)
-           => Services.AsmFlowCmd(wf);
 
          public static CultProcessor CultProcessor(this IWfRuntime wf)
             => Services.CultProcessor(wf);

@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public class CaptureWfChecks : Checker<CaptureWfChecks>
+    public class CaptureWfChecks : WfAppCmd<CaptureWfChecks>
     {
         [CmdOp("asm/check/hex")]
         void Hello()

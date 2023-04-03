@@ -91,7 +91,7 @@ namespace Z0.Asm
         Index<Imm8R> RefinedValues(MethodInfo src)
             => Imm8.refined(RefiningParameter(src));
 
-        ReadOnlySpan<AsmRoutine> EmitDirectRefinements(in CaptureExchange exchange, IApiHost host, IAsmImmWriter dst)
+        ReadOnlySpan<AsmRoutine> EmitDirectRefinements(CaptureExchange exchange, IApiHost host, IAsmImmWriter dst)
         {
             var groups = ApiQuery.imm(host,ImmRefinementKind.Refined);
             var uri = host.HostUri;
@@ -146,7 +146,7 @@ namespace Z0.Asm
             return routines.ViewDeposited();
         }
 
-        ReadOnlySpan<AsmRoutine> EmitUnrefined(IApiCatalog src, in CaptureExchange exchange, Index<Imm8R> imm8, Index<PartName> parts, IApiPack dst)
+        ReadOnlySpan<AsmRoutine> EmitUnrefined(IApiCatalog src, CaptureExchange exchange, Index<Imm8R> imm8, Index<PartName> parts, IApiPack dst)
         {
             var routines = list<AsmRoutine>();
             routines.AddRange(EmitUnrefinedDirect(src, exchange, imm8, parts, dst));
@@ -154,7 +154,7 @@ namespace Z0.Asm
             return routines.ViewDeposited();
         }
 
-        ReadOnlySpan<AsmRoutine> EmitRefined(IApiCatalog src, in CaptureExchange exchange, Index<PartName> parts, IApiPack dst)
+        ReadOnlySpan<AsmRoutine> EmitRefined(IApiCatalog src, CaptureExchange exchange, Index<PartName> parts, IApiPack dst)
         {
             var routines = list<AsmRoutine>();
             var hosts = src.PartHosts(parts);
@@ -167,7 +167,7 @@ namespace Z0.Asm
             return routines.ViewDeposited();
         }
 
-        Index<AsmRoutine> EmitUnrefinedDirect(IApiCatalog src, in CaptureExchange exchange, Index<Imm8R> imm8, Index<PartName> parts, IApiPack dst)
+        Index<AsmRoutine> EmitUnrefinedDirect(IApiCatalog src, CaptureExchange exchange, Index<Imm8R> imm8, Index<PartName> parts, IApiPack dst)
         {
             var routines = list<AsmRoutine>();
             foreach(var host in src.PartHosts(parts))
@@ -179,7 +179,7 @@ namespace Z0.Asm
             return routines.ToArray();
         }
 
-        Index<AsmRoutine> EmitUnrefinedDirect(IApiCatalog src, in CaptureExchange exchange, Index<ApiGroupNG> groups, Index<Imm8R> imm8, IAsmImmWriter dst)
+        Index<AsmRoutine> EmitUnrefinedDirect(IApiCatalog src, CaptureExchange exchange, Index<ApiGroupNG> groups, Index<Imm8R> imm8, IAsmImmWriter dst)
         {
             var routines = list<AsmRoutine>();
             var unary = from g in groups

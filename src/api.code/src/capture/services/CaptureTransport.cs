@@ -14,7 +14,7 @@ namespace Z0
 
         readonly IWfChannel Channel;
 
-        internal readonly ICompositeDispenser Dispenser;
+        public readonly ICompositeDispenser Dispenser;
 
         public CaptureTransport(ICompositeDispenser dispenser, IWfChannel channel)        
         {

@@ -2,7 +2,7 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Asm
+namespace Z0
 {
     using System;
     using System.Collections;
@@ -10,7 +10,7 @@ namespace Z0.Asm
     using System.Collections.Generic;
     using System.Linq;
 
-    using static Root;
+    using Asm;
 
     /// <summary>
     /// Defines an *unbased* sequence of instructions
@@ -22,7 +22,7 @@ namespace Z0.Asm
         public ApiCodeBlock Code {get;}
 
         [MethodImpl(Inline)]
-        internal AsmInstructionBlock(OpUri uri, IceInstruction[] src, BinaryCode code)
+        public AsmInstructionBlock(OpUri uri, IceInstruction[] src, BinaryCode code)
         {
             _Instructions = src;
             if(_Instructions.IsNonEmpty)

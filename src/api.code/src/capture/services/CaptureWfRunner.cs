@@ -67,9 +67,9 @@ namespace Z0
 
         ApiCodeSvc ApiCodeSvc => Wf.ApiCode();
 
-        ApiPacks ApiPacks => Wf.ApiPacks();
+        ApiPacks ApiPacks => Channel.Channeled<ApiPacks>();
 
-        ProcessMemory Regions => Wf.ProcessMemory();
+        ProcessMemory Regions => Channel.Channeled<ProcessMemory>();
 
         Ecma Cli => Wf.Ecma();
 
