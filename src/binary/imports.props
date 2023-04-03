@@ -1,0 +1,9 @@
+<Project>
+  <ItemGroup>
+    <ProjectReference Include="$(BitVectors)"/>
+    <ProjectReference Include="$(Symbols)"/>
+    <ProjectReference Include="$(Digital)"/>
+    <ProjectReference Include="$(Files)"/>
+    <ProjectReference Include="$(Events)"/>
+  </ItemGroup>
+</Project>

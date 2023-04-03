@@ -33,7 +33,7 @@ namespace Z0
             get
             {
                 var q = Convert(w32);
-                return alg.hash.combine(q.X, q.Y, q.Z);
+                return nhash(q.X, q.Y, q.Z);
             }
         }
 

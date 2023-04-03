@@ -17,15 +17,15 @@ namespace Z0
             where T : unmanaged
         {
             if(index < 64)
-                return generic<T>(cpu.vparts(w128, bits.enable(src.Lo,index), src.Hi));
+                return generic<T>(vcpu.vparts(w128, bits.enable(src.Lo,index), src.Hi));
             else
-                return generic<T>(cpu.vparts(w128, src.Lo, bits.enable(src.Hi,(byte)(index-64))));
+                return generic<T>(vcpu.vparts(w128, src.Lo, bits.enable(src.Hi,(byte)(index-64))));
         }
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static BitVector256<T> enable<T>(BitVector256<T> src, byte pos)
             where T : unmanaged
-                => pos < 128 ? gcpu.vinsert(enable(src.Lo, pos), src.State, LaneIndex.L0) : gcpu.vinsert(enable(src.Hi, (byte)(pos - 128)), src.State, LaneIndex.L1);
+                => pos < 128 ? vgcpu.vinsert(enable(src.Lo, pos), src.State, LaneIndex.L0) : vgcpu.vinsert(enable(src.Hi, (byte)(pos - 128)), src.State, LaneIndex.L1);
 
     }
 }

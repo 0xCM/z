@@ -14,7 +14,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public static BitVector128<T> negate<T>(in BitVector128<T> x)
             where T : unmanaged
-                => gcpu.vnegate(x.State);
+                => vgcpu.vnegate(x.State);
 
         /// <summary>
         /// Computes the two's complement bitvector z := ~x + 1 for a bitvector x
@@ -24,6 +24,6 @@ namespace Z0
         [MethodImpl(Inline)]
         public static BitVector256<T> negate<T>(in BitVector256<T> x)
             where T : unmanaged
-                => gcpu.vnegate(x.State);
+                => vgcpu.vnegate(x.State);
     }
 }

@@ -91,15 +91,15 @@ namespace Z0
 
         [MethodImpl(Inline), TestZ]
         static bit testz(ulong a, ulong b)
-            => TestZ(cpu.vbroadcast(w128, a), cpu.vbroadcast(w128, b));
+            => TestZ(vcpu.vbroadcast(w128, a), vcpu.vbroadcast(w128, b));
 
         [MethodImpl(Inline), TestZ]
         static bit testc(ulong a, ulong b)
-            => TestC(cpu.vbroadcast(w128, a), cpu.vbroadcast(w128, b));
+            => TestC(vcpu.vbroadcast(w128, a), vcpu.vbroadcast(w128, b));
 
         [MethodImpl(Inline), TestZ]
         static bit testc(ulong a)
-            => TestC(cpu.vbroadcast(w128, a), gcpu.vones<ulong>(w128));
+            => TestC(vcpu.vbroadcast(w128, a), vgcpu.vones<ulong>(w128));
 
         static W64 w => default;
     }

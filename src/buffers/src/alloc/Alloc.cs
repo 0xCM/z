@@ -63,9 +63,9 @@ namespace Z0
         public SymbolDispenser Symbols()
             => (SymbolDispenser)Data.GetOrAdd(AllocationKind.Symbol, k => Dispense.symbols());
 
-        public CellDispenser<T> Cells<T>(uint partition)
+        public CellDispenser<T> Cells<T>(uint count)
             where T : unmanaged
-                => (CellDispenser<T>)Data.GetOrAdd(AllocationKind.Cell, k => Dispense.cells<T>(partition));
+                => (CellDispenser<T>)Data.GetOrAdd(AllocationKind.Cell, k => Dispense.cells<T>(count));
 
         public Label Label(string content)
             => Labels().Label(content);

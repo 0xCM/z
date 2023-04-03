@@ -15,7 +15,7 @@ namespace Z0
         [MethodImpl(Inline), Select, Closures(Closure)]
         public static BitVector128<T> select<T>(in BitVector128<T> x, in BitVector128<T> y, in BitVector128<T> z)
             where T : unmanaged
-                => gcpu.vselect(x.State, y.State, z.State);
+                => vgcpu.vselect(x.State, y.State, z.State);
 
         /// <summary>
         /// Computes the bitvector z := x ^ y from bitvectors x and y
@@ -26,7 +26,7 @@ namespace Z0
         [MethodImpl(Inline), Select, Closures(Closure)]
         public static BitVector256<T> select<T>(in BitVector256<T> x, in BitVector256<T> y, in BitVector256<T> z)
             where T : unmanaged
-                => gcpu.vselect(x.State, y.State, z.State);
+                => vgcpu.vselect(x.State, y.State, z.State);
 
     }
 }

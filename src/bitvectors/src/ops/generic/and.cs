@@ -15,7 +15,7 @@ namespace Z0
         [MethodImpl(Inline), And, Closures(Closure)]
         public static BitVector128<T> and<T>(in BitVector128<T> x, in BitVector128<T> y)
             where T : unmanaged
-                => gcpu.vand(x.State, y.State);
+                => vgcpu.vand(x.State, y.State);
 
         /// <summary>
         /// Computes the bitvector z := x & y from bitvectors x and y
@@ -26,7 +26,7 @@ namespace Z0
         [MethodImpl(Inline), And, Closures(Closure)]
         public static BitVector256<T> and<T>(in BitVector256<T> x, in BitVector256<T> y)
             where T : unmanaged
-                => gcpu.vand(x.State, y.State);
+                => vgcpu.vand(x.State, y.State);
 
         /// <summary>
         /// Creates a copy of the source vector

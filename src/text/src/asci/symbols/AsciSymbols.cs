@@ -6,119 +6,29 @@ namespace Z0
 {
     using static sys;
 
-    using C = AsciCode;
-    using static AsciSymbols;
-
-
     [ApiHost]
     public readonly partial struct AsciSymbols
     {        
-        // [MethodImpl(Inline), Op]
-        // public static ReadOnlySpan<C> whitespace()
-        //     => Whitespace;
-
-        // static ReadOnlySpan<C> Whitespace
-        //     => new C[]{C.CR, C.FF, C.NL, C.Space, C.Tab, C.VTab};
-
         [MethodImpl(Inline), Op]
-        static uint available(ReadOnlySpan<byte> src)
+        public static int cmp(ReadOnlySpan<AsciCode> left, ReadOnlySpan<AsciCode> right)
         {
-            var present = 0u;
-            var count = src.Length;
+            var result = -1;
+            var count = min(left.Length,right.Length);
             for(var i=0; i<count; i++)
             {
-                if(skip(src,i) != 0)
-                    present++;
-                else
+                var a = (char)skip(left,i);
+                var b = (char)skip(right,i);
+                result = a.CompareTo(b);
+                if(result != 0)
                     break;
             }
-            return present;
+            return result;
         }
+
 
         [MethodImpl(Inline), Op]
         public static int length(ReadOnlySpan<byte> src)
             => foundnot(search(src, z8), src.Length);
-
-        [MethodImpl(Inline), Op]
-        public static int search(in byte src, int count, byte match)
-        {
-            for(var i=0u; i<count; i++)
-                if(skip(src,i) == match)
-                    return (int)i;
-            return NotFound;
-        }
-
-        [MethodImpl(Inline), Op]
-        public static int search(ReadOnlySpan<byte> src, byte match)
-        {
-            var count = src.Length;
-            for(var i=0u; i<count; i++)
-                if(skip(src, i) == match)
-                    return (int)i;
-            return NotFound;
-        }
-
-
-        /// <summary>
-        /// Tests whether a character is an uppercase asci letter character
-        /// </summary>
-        /// <param name="c">The character to test</param>
-        [MethodImpl(Inline), Op]
-        public static bool letter(UpperCased @case, char c)
-            => (C)c >= AsciCodeFacets.MinUpperLetter && (C)c <= AsciCodeFacets.MaxUpperLetter;
-
-        /// <summary>
-        /// Tests whether a character is a lowercase asci letter character
-        /// </summary>
-        /// <param name="c">The character to test</param>
-        [MethodImpl(Inline), Op]
-        public static bool letter(LowerCased @case, char c)
-            => (C)c >= AsciCodeFacets.MinLowerLetter && (C)c <= AsciCodeFacets.MaxLowerLetter;
-
-        /// <summary>
-        /// Tests whether a character is an asci letter character
-        /// </summary>
-        /// <param name="c">The character to test</param>
-        [MethodImpl(Inline), Op]
-        public static bool letter(char c)
-            => letter(UpperCase, c) || letter(LowerCase, c);
-
-        /// <summary>
-        /// Transforms an uppercase character [A..Z] to the corresponding lowercase character [a..z];
-        /// if the source character is not in the letter domain, the input is returned unharmed
-        /// </summary>
-        /// <param name="src">The source character</param>
-        [MethodImpl(Inline), Op]
-        public static char lowercase(char src)
-             => letter(UpperCase, src)  ? lowercase((AsciLetterUpCode)src)  : src;
-
-        [MethodImpl(Inline), Op]
-        public static char lowercase(AsciLetterUpCode src)
-            => skip(AsciSymbols.LowercaseLetters, (uint)src - (uint)AsciCodeFacets.MinUpperLetter);
-
-        /// <summary>
-        /// if given a lowercase character [a..z], produces the corresponding uppercase character [A..z]
-        /// Otherwise, returns the input unharmed
-        /// </summary>
-        /// <param name="src">The source character</param>
-        [MethodImpl(Inline), Op]
-        public static char uppercase(char src)
-             => letter(LowerCase, src) ? uppercase((AsciLetterLoCode)src) : src;
-
-        [MethodImpl(Inline), Op]
-        public static char uppercase(AsciLetterLoCode src)
-            => skip(UppercaseLetters,(uint)src - (uint)AsciLetterLoCode.First);
-
-
-        [MethodImpl(Inline), Op]
-        public static ByteSize unpack(ReadOnlySpan<char> src, Span<byte> dst)
-        {
-            var count = src.Length;
-            var j=0u;
-            for(var i=0u; i<count; i++, j+=2)
-                seek(dst,j) = (byte)skip(src,i);
-            return count;
-        }
 
         [MethodImpl(Inline), Op]
         public static void store(ReadOnlySpan<byte> src, char fill, Span<char> dst)
@@ -129,82 +39,6 @@ namespace Z0
                 ref readonly var next = ref skip(src,i);
                 seek(dst,i) = next == 0 ? fill : @char(skip(src,i));
             }
-        }
-
-        [MethodImpl(Inline), Op]
-        public static int encode(ReadOnlySpan<char> src, Span<byte> dst)
-        {
-            var count = min(src.Length, dst.Length);
-            for(var i=0u; i<count; i++)
-                seek(dst,i) = (byte)skip(src,i);
-            return count;
-        }
-
-        /// <summary>
-        /// Encodes a single character
-        /// </summary>
-        /// <param name="src">The character to encode</param>
-        [MethodImpl(Inline), Op]
-        public static AsciCode encode(char src)
-            => (AsciCode)src;
-
-        [MethodImpl(Inline), Op]
-        public static int encode(ReadOnlySpan<char> src, ref byte dst)
-            => encode(first(src), src.Length, ref dst);
-
-        /// <summary>
-        /// Encodes each source string and packs the result into the target
-        /// </summary>
-        /// <param name="src">The encoding source</param>
-        /// <param name="dst">The encoding target</param>
-        [MethodImpl(Inline), Op]
-        public static int encode(ReadOnlySpan<string> src, Span<byte> dst)
-        {
-            var j = 0;
-            for(var i=0u; i<src.Length; i++)
-                j += AsciSymbols.encode(skip(src, i), dst.Slice(j));
-            return j + 1;
-        }
-
-        /// <summary>
-        /// Encodes each source string and packs the result into the target, interspersed by a supplied delimiter
-        /// </summary>
-        /// <param name="src">The encoding source</param>
-        /// <param name="dst">The encoding target</param>
-        [MethodImpl(Inline), Op]
-        public static uint encode(ReadOnlySpan<string> src, Span<byte> dst, byte delimiter)
-        {
-            var j=0u;
-            for(var i=0u; i<src.Length; i++)
-            {
-                j += (uint)(AsciSymbols.encode(skip(src, i), sys.slice(dst,j)));
-                seek(dst, ++j) = delimiter;
-            }
-            return j + 1;
-        }
-
-        [MethodImpl(Inline), Op]
-        public static int encode(in char src, int count, ref byte dst)
-        {
-            for(var i=0u; i<count; i++)
-                seek(dst,i) = (byte)skip(src,i);
-            return count;
-        }
-
-        /// <summary>
-        /// Encodes a sequence of source characters and stores a result in a caller-supplied
-        /// T-parametric target with cells assumed to be at least 16 bits wide
-        /// </summary>
-        /// <param name="src">The data source</param>
-        /// <param name="dst">The target</param>
-        /// <typeparam name="T">The target cell type</typeparam>
-        [MethodImpl(Inline), Op]
-        public static int encode<T>(ReadOnlySpan<char> src, Span<T> dst)
-        {
-            var count = min(src.Length, dst.Length);
-            for(var i=0u; i<count; i++)
-                seek(dst,i) = @as<T>((byte)skip(src,i));
-            return count;
         }
          
         [MethodImpl(Inline)]

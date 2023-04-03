@@ -14,6 +14,6 @@ namespace Z0
         [MethodImpl(Inline)]
         public static BitVector128<T> impl<T>(in BitVector128<T> x, in BitVector128<T> y)
             where T : unmanaged
-                => gcpu.vimpl(x.State, y.State);
+                => vgcpu.vimpl(x.State, y.State);
    }
 }

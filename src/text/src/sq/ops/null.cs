@@ -23,7 +23,6 @@ namespace Z0
         public static bit @null(S src)
             => src.Code == AsciCode.Null;
 
-
         /// <summary>
         /// Returns true if the source is the null terminator
         /// </summary>

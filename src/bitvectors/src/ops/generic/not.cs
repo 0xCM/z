@@ -35,7 +35,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public static BitVector128<T> not<T>(in BitVector128<T> x)
             where T : unmanaged
-                => gcpu.vnot(x.State);
+                => vgcpu.vnot(x.State);
 
         /// <summary>
         /// Computes the bitwise complement z:= ~x of a bitvector x
@@ -45,6 +45,6 @@ namespace Z0
         [MethodImpl(Inline)]
         public static BitVector256<T> not<T>(in BitVector256<T> x)
             where T : unmanaged
-                => gcpu.vnot(x.State);
+                => vgcpu.vnot(x.State);
     }
 }

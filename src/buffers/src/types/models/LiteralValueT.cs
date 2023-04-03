@@ -21,6 +21,6 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator LiteralValue(LiteralValue<T> src)
-            => new LiteralValue(src.Type, core.bw64(src.Value));
+            => new LiteralValue(src.Type, sys.bw64(src.Value));
     }
 }

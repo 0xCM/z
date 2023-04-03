@@ -25,7 +25,6 @@ namespace Z0
         public static string decode(asci16 src)
             => sys.@string(slice(recover<char>(sys.bytes(vpack.vinflate256x16u(src.Storage))),0, src.Length));
 
-
         [MethodImpl(Inline)]
         public static ref readonly asci16 cast<A>(N16 n, in A src)
             where A : unmanaged, IByteSeq

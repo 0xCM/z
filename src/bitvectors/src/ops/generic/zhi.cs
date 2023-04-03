@@ -33,6 +33,6 @@ namespace Z0
         [MethodImpl(Inline)]
         public static BitVector128<T> zhi<T>(in BitVector128<T> x)
             where T : unmanaged
-                => gcpu.vzhi(x.State);
+                => vgcpu.vzhi(x.State);
     }
 }

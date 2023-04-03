@@ -1,0 +1,7 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="imports.props"/>
+  <Import Project="$(SlnProps)\usings.props"/>
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
+</Project>

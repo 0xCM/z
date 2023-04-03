@@ -294,7 +294,7 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => alg.hash.calc(Value);
+            get => nhash(Value);
         }
 
         public string Format()

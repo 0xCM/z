@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static sys;
     partial struct SymbolicQuery
     {
         [MethodImpl(Inline), Op]
@@ -21,5 +22,6 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static int cmp(Span<char> a, Span<char> b)
             => cmp(a.ReadOnly(), b.ReadOnly());
+        
     }
 }

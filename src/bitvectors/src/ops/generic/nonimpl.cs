@@ -14,7 +14,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public static BitVector128<T> nonimpl<T>(in BitVector128<T> x, in BitVector128<T> y)
             where T : unmanaged
-                => gcpu.vnonimpl(x.State, y.State);
+                => vgcpu.vnonimpl(x.State, y.State);
 
         /// <summary>
         /// Computes the material nonimplication, equivalent to the bitwise expression a & (~b) for operands a and b
@@ -24,6 +24,6 @@ namespace Z0
         [MethodImpl(Inline)]
         public static BitVector256<T> nonimpl<T>(in BitVector256<T> x, in BitVector256<T> y)
             where T : unmanaged
-                => gcpu.vnonimpl(x.State, y.State);
+                => vgcpu.vnonimpl(x.State, y.State);
     }
 }

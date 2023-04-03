@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class BitVectors
+    public class ChanneledTestAttribute : Attribute
     {
 
     }

@@ -38,7 +38,7 @@ namespace Z0
         [MethodImpl(Inline), Xnor, Closures(Closure)]
         public static BitVector128<T> xnor<T>(in BitVector128<T> x, in BitVector128<T> y)
             where T : unmanaged
-                => gcpu.vxnor(x.State,y.State);
+                => vgcpu.vxnor(x.State,y.State);
 
         /// <summary>
         /// Computes the bitvector z := ~(x ^ y) from bitvectors x and y
@@ -49,6 +49,6 @@ namespace Z0
         [MethodImpl(Inline), Xnor, Closures(Closure)]
         public static BitVector256<T> xnor<T>(in BitVector256<T> x, in BitVector256<T> y)
             where T : unmanaged
-                => gcpu.vxnor(x.State,y.State);
+                => vgcpu.vxnor(x.State,y.State);
     }
 }

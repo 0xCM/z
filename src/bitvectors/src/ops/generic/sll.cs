@@ -14,7 +14,7 @@ namespace Z0
         [MethodImpl(Inline), Sll, Closures(Closure)]
         public static BitVector128<T> sll<T>(in BitVector128<T> x, byte offset)
             where T : unmanaged
-                => gcpu.vsllx(x.State,offset);
+                => vgcpu.vsllx(x.State,offset);
 
         /// <summary>
         /// Computes z := x >> s for a bitvector x and shift offset s
@@ -24,6 +24,6 @@ namespace Z0
         [MethodImpl(Inline), Sll, Closures(Closure)]
         public static BitVector256<T> sll<T>(in BitVector256<T> x, byte offset)
             where T : unmanaged
-                => gcpu.vsllx(x.State,offset);
+                => vgcpu.vsllx(x.State,offset);
     }
 }

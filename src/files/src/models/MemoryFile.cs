@@ -37,8 +37,9 @@ namespace Z0
                 FileSize = (ulong)Path.Info.Length;
             }
             else
-            {
-                File = MemoryMappedFile.CreateNew(spec.Path.Name, spec.Capacity, spec.Access);
+            {   
+                System.IO.File.Create(Path.Format()).Dispose();
+                File = MemoryMappedFile.CreateFromFile(spec.Path.Name, spec.Mode, spec.MapName, spec.Capacity, spec.Access);
                 FileSize = spec.Capacity;
             }
             ViewAccessor = File.CreateViewAccessor(0, FileSize);
@@ -85,18 +86,18 @@ namespace Z0
             get => ref Description.EndAddress;
         }
 
-        public void Accessor(Action<MemoryMappedViewAccessor> f)
-        {
-            using var accessor = File.CreateViewAccessor();
-            f(accessor);
-        }
+        // public void Accessor(Action<MemoryMappedViewAccessor> f)
+        // {
+        //     using var accessor = File.CreateViewAccessor();
+        //     f(accessor);
+        // }
 
-        public void Accessor(Action<MemoryMappedViewAccessor> f, uint offset)
-        {
-            var size = EndAddress - (BaseAddress + offset);
-            using var accessor = File.CreateViewAccessor(offset,size);
-            f(accessor);
-        }
+        // public void Accessor(Action<MemoryMappedViewAccessor> f, uint offset)
+        // {
+        //     var size = EndAddress - (BaseAddress + offset);
+        //     using var accessor = File.CreateViewAccessor(offset,size);
+        //     f(accessor);
+        // }
 
         public ref readonly MemoryMappedViewStream Stream
         {

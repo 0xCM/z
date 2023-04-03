@@ -3,6 +3,5 @@
     <ProjectReference Include="$(Math)" />
     <ProjectReference Include="$(VCpu)" />
     <ProjectReference Include="$(ClrQuery)" />
-    <ProjectReference Include="$(ZLib)" />
   </ItemGroup>
 </Project>

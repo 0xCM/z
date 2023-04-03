@@ -97,7 +97,7 @@ namespace Z0
         public BitVector128<T> Lo
         {
             [MethodImpl(Inline)]
-            get => gcpu.vlo(Data);
+            get => vgcpu.vlo(Data);
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Z0
         public BitVector128<T> Hi
         {
             [MethodImpl(Inline)]
-            get => gcpu.vhi(Data);
+            get => vgcpu.vhi(Data);
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Z0
         public static Vector256<T> Ones
         {
             [MethodImpl(Inline)]
-            get => gcpu.vones<T>(w256);
+            get => vgcpu.vones<T>(w256);
         }
     }
 }

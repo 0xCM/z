@@ -58,7 +58,7 @@ namespace Z0
         }
 
         public string Format()
-            => string.Format("{0,-8} {1}", EndPos, Offset, core.bytes(Value).FormatBits());
+            => string.Format("{0,-8} {1}", EndPos, Offset, sys.bytes(Value).FormatBits());
 
         public override string ToString()
             => Format();

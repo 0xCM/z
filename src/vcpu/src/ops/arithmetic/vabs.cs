@@ -36,16 +36,16 @@ namespace Z0
         public static Vector128<int> vabs(Vector128<int> src)
             => v32i(Abs(src));
 
-        // /// <summary>
-        // /// Computes the absolute value of each source component
-        // /// </summary>
-        // /// <param name="src">The source vector</param>
-        // [MethodImpl(Inline), Abs]
-        // public static Vector128<long> vabs(Vector128<long> src)
-        // {
-        //     var mask = vnegate(vsrl(src, 63));
-        //     return vsub(vxor(mask, src), mask);
-        // }
+        /// <summary>
+        /// Computes the absolute value of each source component
+        /// </summary>
+        /// <param name="src">The source vector</param>
+        [MethodImpl(Inline), Abs]
+        public static Vector128<long> vabs(Vector128<long> src)
+        {
+            var mask = vnegate(vsrl(src, 63));
+            return vsub(vxor(mask, src), mask);
+        }
 
         /// <summary>
         ///  __m256i _mm256_abs_epi8 (__m256i a) VPABSB ymm, ymm/m256
@@ -74,15 +74,15 @@ namespace Z0
         public static Vector256<int> vabs(Vector256<int> src)
             => v32i(Abs(src));
 
-        // /// <summary>
-        // /// Computes the absolute value of each source component
-        // /// </summary>
-        // /// <param name="src">The source vector</param>
-        // [MethodImpl(Inline), Abs]
-        // public static Vector256<long> vabs(Vector256<long> src)
-        // {
-        //     var mask = vnegate(vsrl(src, 63));
-        //     return vsub(vxor(mask, src), mask);
-        // }
+        /// <summary>
+        /// Computes the absolute value of each source component
+        /// </summary>
+        /// <param name="src">The source vector</param>
+        [MethodImpl(Inline), Abs]
+        public static Vector256<long> vabs(Vector256<long> src)
+        {
+            var mask = vnegate(vsrl(src, 63));
+            return vsub(vxor(mask, src), mask);
+        }
     }
 }

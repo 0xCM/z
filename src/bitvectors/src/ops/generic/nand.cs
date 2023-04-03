@@ -14,6 +14,6 @@ namespace Z0
         [MethodImpl(Inline)]
         public static BitVector128<T> nand<T>(BitVector128<T> x, BitVector128<T> y)
             where T : unmanaged
-                => gcpu.vnand(x.State, y.State);
+                => vgcpu.vnand(x.State, y.State);
    }
 }

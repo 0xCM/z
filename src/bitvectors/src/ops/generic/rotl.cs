@@ -15,7 +15,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public static BitVector128<T> rotl<T>(in BitVector128<T> src, byte count)
             where T : unmanaged
-                => gcpu.vrotlx(src.State, count);
+                => vgcpu.vrotlx(src.State, count);
 
         /// <summary>
         /// Rotates source bits leftward
@@ -26,7 +26,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public static BitVector256<T> rotl<T>(in BitVector256<T> src, byte count)
             where T : unmanaged
-                => gcpu.vrotlx(src.State, count);
+                => vgcpu.vrotlx(src.State, count);
 
     }
 }

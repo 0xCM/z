@@ -4,7 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class BitVectors
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
+    public class BinaryFormatterAttribute : Attribute
     {
 
     }

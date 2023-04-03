@@ -11,6 +11,7 @@
    <Import Project="$(MsBuildThisFileDirectory)src/bitfields/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/builds/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/buffers/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/binary/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/calcs/exports.props"/>
 

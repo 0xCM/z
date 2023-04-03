@@ -4,7 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class BitVectors
+    partial class BinaryFormatters
     {
+        sealed class GuidFormatter : UnmanagedFormatter<Guid> {}
     }
 }

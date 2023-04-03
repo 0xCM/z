@@ -15,6 +15,6 @@ namespace Z0
         [MethodImpl(Inline)]
         public static BitVector128<T> nor<T>(in BitVector128<T> x, in BitVector128<T> y)
             where T : unmanaged
-                => gcpu.vnor(x.State,y.State);
+                => vgcpu.vnor(x.State,y.State);
     }
 }

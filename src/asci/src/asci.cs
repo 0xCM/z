@@ -5,7 +5,6 @@
 namespace Z0
 {
     using static sys;
-    using static AsciSymbols;
 
     using C = AsciCode;
 
@@ -145,6 +144,7 @@ namespace Z0
             else
                 return ReadOnlySpan<char>.Empty;
         }        
+
         [MethodImpl(Inline), Op]
         public static ReadOnlySpan<C> whitespace()
             => Whitespace;

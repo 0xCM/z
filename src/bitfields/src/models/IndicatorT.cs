@@ -23,7 +23,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         static byte hipos()
-            => (byte)(core.width<T>() - 1);
+            => (byte)(sys.width<T>() - 1);
 
         public bit Enabled
         {

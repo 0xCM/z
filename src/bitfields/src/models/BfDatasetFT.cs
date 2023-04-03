@@ -127,6 +127,6 @@ namespace Z0
         [MethodImpl(Inline)]
         public K Extract<K>(F field, T src)
             where K : unmanaged
-                => core.@as<T,K>(api.extract(this, field, src));
+                => sys.@as<T,K>(api.extract(this, field, src));
     }
 }

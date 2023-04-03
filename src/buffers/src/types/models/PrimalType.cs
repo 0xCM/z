@@ -98,9 +98,9 @@ namespace Z0
             public static ref readonly PrimalType type(NativeKind kind)
             {
                 if(kind <= LastKind)
-                    return ref core.skip(_Types,(byte)kind);
+                    return ref sys.skip(_Types,(byte)kind);
                 else
-                    return ref core.first(_Types);
+                    return ref sys.first(_Types);
             }
 
             public static implicit operator Index<NativeKind,PrimalType>(Intrinsic src)
