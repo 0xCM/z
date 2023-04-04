@@ -16,9 +16,5 @@ namespace Z0
         public EcmaDependencyKind DependencyKind;
     }
 
-    public abstract record class EcmaDependency<D> : EcmaDependency, IComparable<D>
-        where D : EcmaDependency<D>
-    {
-        public abstract int CompareTo(D other);
-    }
+
 }

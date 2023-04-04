@@ -7,9 +7,9 @@ namespace Z0
     partial class EcmaEmitter
     {
         public void EmitAssemblyList(IDbArchive src, FilePath dst)    
-            => Channel.TableEmit(EcmaReader.assemblies(Channel, src).Records(), dst);
+            => Channel.TableEmit(Ecma.list(Ecma.assemblies(Channel, src).View), dst);
         
         public void EmitAssemblyList(ReadOnlySpan<AssemblyFile> src, FilePath dst)
-            => Channel.TableEmit(AssemblyFiles.records(src), dst);
+            => Channel.TableEmit(Ecma.list(src), dst);
     }
 }

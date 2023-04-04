@@ -17,8 +17,6 @@ namespace Z0
             BaseAddress = @base;
             Size = size;
             Kind = kind;
-        }
-        
+        }        
     }
-
 }

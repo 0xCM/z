@@ -22,23 +22,23 @@ namespace Z0
         FolderPath IRootedArchive.Root
             => Root;
 
-        public IEnumerable<FilePath> AssemblyPaths()
-        {
-            foreach(var path in Root.EnumerateFiles(Recurse, FS.Dll, FS.WinMd))
-            {
-                if(!path.Format().EndsWith("resources.dll"))
-                {
-                    if(AssemblyFile.name(path, out var name))
-                        yield return path;
-                }
-            }
-        }
+        // public IEnumerable<FilePath> AssemblyPaths()
+        // {
+        //     foreach(var path in Root.EnumerateFiles(Recurse, FS.Dll, FS.WinMd))
+        //     {
+        //         if(!path.Format().EndsWith("resources.dll", true, null))
+        //         {
+        //             if(AssemblyFile.name(path, out var name))
+        //                 yield return path;
+        //         }
+        //     }
+        // }
 
         public IEnumerable<AssemblyFile> AssemblyFiles()
         {
             foreach(var path in Root.EnumerateFiles(Recurse, FS.Dll, FS.WinMd))
             {
-                if(!path.Format().EndsWith("resources.dll"))
+                if(!path.Format().EndsWith("resources.dll", true, null))
                 {
                     if(AssemblyFile.name(path, out var name))
                         yield return new AssemblyFile(path, name);

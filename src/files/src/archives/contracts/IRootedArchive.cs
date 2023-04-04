@@ -43,51 +43,6 @@ namespace Z0
         DbArchive Scoped(ReadOnlySeq<string> src)
             => DbFiles.Scoped(src);
             
-        DbArchive Nested(FolderPath src)
-            => DbFiles.Nested(src);
-
-        DbArchive Nested(IDbArchive src)
-            => DbFiles.Nested(src.Root);
-
-        DbArchive Nested(string scope, FolderPath src)
-            => DbFiles.Nested(scope, src);
-
-        DbArchive Nested(string scope, IDbArchive src)
-            => DbFiles.Nested(scope, src.Root);
-
-        FilePath Table<T>()
-            => DbFiles.Table<T>();
-
-        FilePath Table<T>(ProjectId id)
-                => DbFiles.Table<T>(id);
-
-        FilePath PrefixedTable<T>(string prefix)
-            => DbFiles.PrefixedTable<T>(prefix);
-
-        IEnumerable<FilePath> Files()
-            => DbFiles.Files(true);
-
-        IEnumerable<FilePath> Files(bool recurse)
-            => DbFiles.Files(recurse);
-
-        IEnumerable<FilePath> Files(FileExt ext)
-            => DbFiles.Files(ext);
-
-        IEnumerable<FilePath> Files(FileKind kind)
-            => DbFiles.Files(kind, true);
-
-        IEnumerable<FilePath> Files(FileKind kind, bool recurse)
-            => DbFiles.Files(kind, recurse);
-
-        IEnumerable<FilePath> Files(params FileKind[] kinds)
-            => DbFiles.Files(true, kinds);
-
-        IEnumerable<FilePath> Files(string scope, params FileKind[] kinds)
-            => DbFiles.Files(scope, true, kinds);
-
-        IEnumerable<FilePath> Files(bool recurse, params FileExt[] ext)
-            => DbFiles.Files(recurse, ext);
-
         FileName File(string name, FileKind kind)
             => DbFiles.File(name, kind);
 

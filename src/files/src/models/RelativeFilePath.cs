@@ -23,7 +23,7 @@ namespace Z0
 
         public PathPart Name
             => Location.Format(PathSeparator.FS);
-
+        
         public bool IsEmpty
         {
             [MethodImpl(Inline)]

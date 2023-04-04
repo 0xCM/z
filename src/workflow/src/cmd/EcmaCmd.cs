@@ -97,16 +97,16 @@ namespace Z0
         [CmdOp("ecma/traverse")]
         void EcmaTraverse(CmdArgs args)
         {
-            var src = AssemblyIndex.create(Channel, FS.dir(args[0]).DbArchive());
-            using var map = src.Map();
-            iter(map.Keys, key => {
-                var assembly = map[key];
-                Channel.Row(string.Format("{0,-48} | {1,-16} | {2,-12}",
-                    key, 
-                    assembly.BaseAddress, 
-                    assembly.FileSize 
-                    ));
-            });
+            // var src = AssemblyIndex.create(Channel, FS.dir(args[0]).DbArchive());
+            // using var map = src.AssemblyMap();
+            // iter(map.Keys, key => {
+            //     var assembly = map[key];
+            //     Channel.Row(string.Format("{0,-48} | {1,-16} | {2,-12}",
+            //         key, 
+            //         assembly.BaseAddress, 
+            //         assembly.FileSize 
+            //         ));
+            // });
         }
         
      
@@ -269,13 +269,6 @@ namespace Z0
         void EcmaEmitMetaDumps(CmdArgs args)
             => EcmaEmitter.EmitDump(FS.dir(args[0]).DbArchive(), EnvDb);
 
-        [CmdOp("ecma/index")]
-        void EcmaImport(CmdArgs args)
-        {
-            var src = FS.archive(args[0]);
-            var index = Ecma.index(Channel, src);
-            Ecma.EmitReports(index, EnvDb);
-        }   
 
         [CmdOp("ecma/heaps")]
         void EmitEcmaHeaps(CmdArgs args)
@@ -283,23 +276,6 @@ namespace Z0
             EcmaHeaps.emit(Channel,FS.dir(args[0]).DbArchive(),EnvDb);
         }
         
-        [CmdOp("ecma/pinvokes")]
-        void PInvokes(CmdArgs args)
-        {   
-            var src = FS.archive(args[0]);
-            var index = Ecma.index(Channel, src);
-            var dst = bag<EcmaPinvoke>();
-             iter(index.Distinct(), entry => {
-                var counter = 0u;
-                using var ecma = Ecma.file(entry.Path);                
-                var reader = ecma.EcmaReader();
-                var defs = reader.ReadPinvokes();
-                dst.AddRange(defs);
-            });
-
-            var path = EnvDb.Nested("ecma", src).Path("ecma.pinvokes", FileKind.Csv);
-            Channel.TableEmit(dst.Array().Sort(), path);
-        }
 
         [CmdOp("ecma/compile")]
         void Compilations(CmdArgs args)

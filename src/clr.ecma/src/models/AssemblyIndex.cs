@@ -22,27 +22,34 @@ namespace Z0
 
         public static AssemblyIndex create(IWfChannel channel, IDbArchive src)
         {
-            var index = new AssemblyIndex(channel, src);
-            index.Calc();
-            return index.Seal();        
+            var index = new AssemblyIndex(channel,src);
+            index.Calc(src);
+            var dst = index.Seal();
+            return index;
         }
 
+        public static AssemblyIndex create(IWfChannel channel, AssemblyFiles src)
+        {
+            var index = new AssemblyIndex(channel,src.Source);
+            index.Calc(src);
+            var dst = index.Seal();            
+            return index;
+        }
 
         readonly IWfChannel Channel;
-
+        
         public readonly IDbArchive Source;
 
         AssemblyIndex(IWfChannel channel, IDbArchive src)
         {
             Channel = channel;
-            Source =src;
+            Source = src;
         }
 
-        void Calc()
+        void Calc(AssemblyFiles src)
         {
-            var files = Archives.modules(Source.Root).AssemblyFiles();
             var counter = 0u;
-            iter(files, file => {
+            iter(src, file => {
                 using var ecma = Ecma.file(file.Path);
                 Include(ecma);
                 if(++counter % 100 == 0)
@@ -52,8 +59,17 @@ namespace Z0
 
         }
 
-        public AssemblyMap Map()
-            => new AssemblyMap(Seal());
+        void Calc(IDbArchive src)
+        {
+            var files = Archives.modules(src.Root).AssemblyFiles();
+            var counter = 0u;
+            iter(files, file => {
+                using var ecma = Ecma.file(file.Path);
+                Include(ecma);
+                if(++counter % 100 == 0)
+                    Channel.Babble($"Indexed {counter} assemblies");                
+            }, true);
+        }
 
         AssemblyIndex Seal()
         {
@@ -74,11 +90,11 @@ namespace Z0
             return buffer.Array().Sort().Resequence();
         }
 
-        public void Report(IDbArchive dst)
-        {
-            Channel.TableEmit(Report(), dst.Path($"assemblies.index", FileKind.Csv));
-            Channel.TableEmit(Distinct(), dst.Path($"assemblies.index.distinct", FileKind.Csv));
-        }
+        // public void Report(IDbArchive dst)
+        // {
+        //     Channel.TableEmit(Report(), dst.Path($"assemblies.index", FileKind.Csv));
+        //     Channel.TableEmit(Distinct(), dst.Path($"assemblies.index.distinct", FileKind.Csv));
+        // }
 
         public void CopyTo(IDbArchive dst)
         {

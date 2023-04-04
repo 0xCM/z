@@ -37,36 +37,6 @@ namespace Z0
         public static Address32 offset(MetadataReader reader, UserStringHandle handle)
             => (Address32)reader.GetHeapOffset(handle);
 
-        public static AssemblyFiles assemblies(IWfChannel channel, IDbArchive src)
-        {
-            var dst = bag<AssemblyFile>();
-            var counter = 0u;
-            var running = channel.Running($"Searching {src.Root} for assemlies");
-            iter(src.Enumerate(true, FileKind.Dll, FileKind.Exe), path => {
-                try
-                {
-                    using var ecma = Ecma.file(path);
-                    var reader = ecma.EcmaReader(); 
-                    var def = reader.ReadAssemblyDef();                   
-                    var kind = FileModuleKind.Managed;
-                    if(path.Is(FileKind.Exe)) 
-                        kind |= FileModuleKind.Exe;
-                    else
-                        kind |= FileModuleKind.Dll;
-                    dst.Add(new AssemblyFile(path, def.GetAssemblyName()));
-                    if(math.mod(inc(ref counter),1000) == 0)
-                        channel.Babble($"Found {counter} assemblies");
-                }
-                catch(Exception e)
-                {
-                    channel.Error(e);
-                }
-            }
-            );
-            channel.Ran(running, $"Found {counter} assemblies");
-            return dst.Array();
-        }
-        
         public static IEnumerable<EcmaTables.AssemblyRefRow> refs(IEnumerable<AssemblyFile> src)
         {
             foreach(var file in src.AsParallel())
@@ -82,14 +52,14 @@ namespace Z0
         public ByteSize CalcTableSize(TableIndex table)
             => MD.GetTableRowCount(table)*MD.GetTableRowSize(table);
 
-        [Op]
-        public static uint describe(ReadOnlySpan<Assembly> src, Span<EcmaModuleInfo> dst)
-        {
-            var count = (uint)min(src.Length, dst.Length);
-            for(var i=0; i<count; i++)
-                seek(dst,i) = Ecma.describe(skip(src,i));
-            return count;
-        }
+        // [Op]
+        // public static uint describe(ReadOnlySpan<Assembly> src, Span<EcmaModuleInfo> dst)
+        // {
+        //     var count = (uint)min(src.Length, dst.Length);
+        //     for(var i=0; i<count; i++)
+        //         seek(dst,i) = Ecma.describe(skip(src,i));
+        //     return count;
+        // }
 
         readonly MetadataReader MD;
 

@@ -85,6 +85,9 @@ namespace Z0
         public DbArchive Targets()
             => Root;
 
+        public RelativeFilePath Relative(FilePath src)
+            => FS.relative(Root, src);
+
         public IEnumerable<RelativeFilePath> Relative(IEnumerable<FilePath> src)
             => FS.relative(Root,src);
 
@@ -164,18 +167,19 @@ namespace Z0
             => FS.file(id.Format(), ext);
 
         public static FileName filename<T>()
-                => filename<T>(FS.Csv);
+            => filename<T>(FS.Csv);
 
         public static FileName filename<T>(FileExt ext)
             => filename(TableId.identify<T>());
 
         public static FileName filename<T>(string prefix)
             => FS.file(string.Format("{0}.{1}", prefix, TableId.identify<T>()), FS.Csv);
+
         public FilePath Table<T>()
-                => Root + filename<T>();
+            => Root + filename<T>();
 
         public FilePath Table<T>(ProjectId id)
-                => Root + filename<T>(id.Format());
+            => Root + filename<T>(id.Format());
 
         public FilePath PrefixedTable<T>(string prefix)
             => Root + filename<T>(prefix);

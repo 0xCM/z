@@ -199,16 +199,13 @@ namespace Z0
             => FS.file(id.Format(), ext);
 
         public static FileName filename<T>()
-            where T : struct
-                => filename<T>(FS.Csv);
+            => filename<T>(FS.Csv);
 
         public static FileName filename<T>(FileExt ext)
-            where T : struct
-                => filename(Tables.identify<T>());
+            => filename(Tables.identify<T>());
 
         public static FileName filename<T>(string prefix)
-            where T : struct
-                => FS.file(string.Format("{0}.{1}", prefix, Tables.identify<T>()), FS.Csv);        
+            => FS.file(string.Format("{0}.{1}", prefix, Tables.identify<T>()), FS.Csv);        
 
         internal const string DefaultDelimiter = " | ";
 

@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using System.Linq;
 
     public class EcmaHeaps
     {
@@ -139,6 +140,17 @@ namespace Z0
         {
             var offset = EcmaHeaps.offset(reader, MetadataTokens.StringHandle(0));
             return new EcmaStringHeap(EcmaHeapKind.SystemString, @base + offset, EcmaHeaps.size(reader, HeapIndex.String));
+        }
+
+        public static IEnumerable<EcmaStringHeap> strings(IEnumerable<AssemblyFile> src)
+        {
+            foreach(var file in src.AsParallel())
+            {
+                using var ecma = Ecma.file(file.Path);
+                var reader = ecma.EcmaReader();
+                yield return strings(reader.MetadataReader, EcmaStringKind.System, reader.BaseAddress);
+                yield return strings(reader.MetadataReader, EcmaStringKind.User, reader.BaseAddress);
+            }
         }
 
         public static Index<EcmaStringHeap> strings(ReadOnlySpan<Assembly> src)

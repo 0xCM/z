@@ -16,5 +16,11 @@ namespace Z0
 
         public static ReadOnlySeq<string> components(FolderPath src)
             => src.Format(PathSeparator.FS).Remove(":").Split(Chars.FSlash);
+
+        public static ReadOnlySeq<string> components(RelativePath src)
+            => src.Format(PathSeparator.FS).Remove(":").Split(Chars.FSlash);
+
+        public static ReadOnlySeq<string> components(RelativeFilePath src)
+            => src.Format(PathSeparator.FS).Remove(":").Split(Chars.FSlash);
     }
 }
