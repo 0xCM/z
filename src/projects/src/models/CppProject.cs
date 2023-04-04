@@ -6,7 +6,7 @@ namespace Z0
 {
     partial class ProjectModels
     {    
-        public abstract record class CppProject : Project<CIlProject>
+        public sealed record class CppProject : Project<CppProject>
         {
             public CppProject()
                 : base(ProjectKind.Cpp, FolderPath.Empty)
@@ -15,7 +15,7 @@ namespace Z0
             }
 
             public CppProject(FolderPath path)
-                : base(ProjectKind.Cil, path)
+                : base(ProjectKind.Cpp, path)
             {
 
                 

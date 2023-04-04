@@ -14,8 +14,8 @@ namespace Z0
 
             }
 
-            public CIlProject(FilePath path)
-                : base(ProjectKind.Cil, path.FolderPath)
+            public CIlProject(FolderPath root)
+                : base(ProjectKind.Cil, root)
             {
 
                 

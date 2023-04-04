@@ -8,18 +8,15 @@ namespace Z0
     {    
         public record class BinaryProject : Project<BinaryProject>
         {
-            public readonly FileIndex Files;   
 
             public BinaryProject()
                 : base(ProjectKind.Binary)
             {
-                Files = new();
             }
 
-            public BinaryProject(FolderPath root, FileIndex files)
+            public BinaryProject(FolderPath root)
                 : base(ProjectKind.Binary, root)
             {
-                Files = files;
             }
         }
     }    

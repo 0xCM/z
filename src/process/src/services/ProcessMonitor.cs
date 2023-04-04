@@ -3,16 +3,13 @@ namespace Z0
 {
     using Windows;
     using System.Management;
-    //using System.Security.Principal;
 
     public class ProcessMonitor : IDisposable
     {
         public static ProcessMonitor start(IWfChannel channel, Action<ModuleLoadInfo> receiver = null)
         {
             var monitor = new ProcessMonitor(channel, receiver);
-            var thread = sys.thread(() => monitor.Run());
-            thread.Start();
-            //sys.start(monitor.Run);
+            monitor.Start();
             return monitor;
         }
 
@@ -99,6 +96,8 @@ namespace Z0
 
         bool Cancelled = false;
 
+        Thread Control;
+
         ProcessMonitor(IWfChannel channel, Action<ModuleLoadInfo> receiver)
         {
             Channel = channel;
@@ -136,6 +135,12 @@ namespace Z0
                 Channel.RowFormat("{0,15} Process Name: {1}", "[+]", process.ProcessName);
                 Channel.RowFormat("{0,15} Process User: {1}", "[+]", GetProcessUser(process));
             }
+        }
+
+        public void Start()
+        {
+            Control = sys.thread(() => Run());
+            Control.Start();
         }
 
         void Run()
@@ -182,34 +187,34 @@ namespace Z0
             //However, we cannot use the WHERE clause because the 
             var startWatch = new ManagementEventWatcher(new WqlEventQuery("SELECT * FROM Win32_ModuleLoadTrace"));
 
-            ManagementBaseObject e = startWatch.WaitForNextEvent();
+            var e = startWatch.WaitForNextEvent();
 
-            if (((ManagementBaseObject)e)["SECURITY_DESCRIPTOR"] != null)
-                trace.SECURITY_DESCRIPTOR = (sbyte[])((ManagementBaseObject)e)["SECURITY_DESCRIPTOR"];
+            if (e["SECURITY_DESCRIPTOR"] != null)
+                trace.SECURITY_DESCRIPTOR = (sbyte[])e["SECURITY_DESCRIPTOR"];
 
-            if (((ManagementBaseObject)e)["TIME_CREATED"] != null)
-                trace.TIME_CREATED = new Timestamp((UInt64)((ManagementBaseObject)e)["TIME_CREATED"]);
+            if ((e)["TIME_CREATED"] != null)
+                trace.TIME_CREATED = new Timestamp((UInt64)(e)["TIME_CREATED"]);
             
-            if (((ManagementBaseObject)e)["FileName"] != null)
-                trace.FileName = FS.path((string)((ManagementBaseObject)e)["FileName"]);
+            if ((e)["FileName"] != null)
+                trace.FileName = FS.path((string)(e)["FileName"]);
 
-            if (((ManagementBaseObject)e)["DefaultBase"] != null)
-                trace.DefaultBase = (UInt64)((ManagementBaseObject)e)["DefaultBase"];
+            if ((e)["DefaultBase"] != null)
+                trace.DefaultBase = (UInt64)(e)["DefaultBase"];
 
-            if (((ManagementBaseObject)e)["ImageBase"] != null)
-                trace.ImageBase = (UInt64)((ManagementBaseObject)e)["ImageBase"];
+            if ((e)["ImageBase"] != null)
+                trace.ImageBase = (UInt64)(e)["ImageBase"];
 
-            if (((ManagementBaseObject)e)["ImageChecksum"] != null)
-            trace.ImageChecksum = (UInt32)((ManagementBaseObject)e)["ImageChecksum"];
+            if ((e)["ImageChecksum"] != null)
+            trace.ImageChecksum = (UInt32)(e)["ImageChecksum"];
 
-            if (((ManagementBaseObject)e)["ImageSize"] != null)
-                trace.ImageSize = (UInt64)((ManagementBaseObject)e)["ImageSize"];
+            if ((e)["ImageSize"] != null)
+                trace.ImageSize = (UInt64)(e)["ImageSize"];
 
-            if (((ManagementBaseObject)e)["ProcessID"] != null)
-                trace.ProcessID = (UInt32)((ManagementBaseObject)e)["ProcessID"];
+            if ((e)["ProcessID"] != null)
+                trace.ProcessID = (UInt32)(e)["ProcessID"];
 
-            if (((ManagementBaseObject)e)["TimeDateSTamp"] != null)
-                trace.TimeDateSTamp = (UInt32)((ManagementBaseObject)e)["TimeDateSTamp"];
+            if ((e)["TimeDateSTamp"] != null)
+                trace.TimeDateSTamp = (UInt32)(e)["TimeDateSTamp"];
 
             return trace;
         }

@@ -60,10 +60,10 @@ namespace Z0
             seek(dst,1) = new MemoryRange(address(Block16x4x1), _BlockSize);
             seek(dst,2) = new MemoryRange(address(Block16x4x2), _BlockSize);
             seek(dst,3) = new MemoryRange(address(Block16x4x3), _BlockSize);
-            WinMem.liberate(address(Block16x4x0), size<B>());
-            WinMem.liberate(address(Block16x4x1), size<B>());
-            WinMem.liberate(address(Block16x4x2), size<B>());
-            WinMem.liberate(address(Block16x4x3), size<B>());
+            memory.liberate(address(Block16x4x0), size<B>());
+            memory.liberate(address(Block16x4x1), size<B>());
+            memory.liberate(address(Block16x4x2), size<B>());
+            memory.liberate(address(Block16x4x3), size<B>());
             Description.BankSize = BankSize;
             Description.BlockCount = BlockCount;
             Description.BlockSize = BlockSize;

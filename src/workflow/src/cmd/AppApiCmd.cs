@@ -97,43 +97,7 @@ namespace Z0
         void WorkingSet()
             => Channel.Write(((ByteSize)Environment.WorkingSet));
 
-        [CmdOp("system/memory/system")]
-        void SysMem()
-        {
-            var src = WinMem.system();
-            var formatter = CsvTables.formatter<SystemMemoryInfo>(16,RecordFormatKind.KeyValuePairs);
-            Channel.Row(formatter.Format(src));
-        }
 
-        [CmdOp("process/memory/query")]
-        void QueryMemory(CmdArgs args)
-        {            
-            var @base = ExecutingPart.Process.Adapt().BaseAddress;
-            if(args.Count != 0)
-            {
-                var result = DataParser.parse(args[0].Value, out @base);
-                if(result.Fail)
-                {
-                    Channel.Error($"Could not parse ${args[0].Value} as an address");
-                    return;
-                }
-            }
-
-            var basic = WinMem.basic(@base);
-            Channel.Write(basic.ToString());
-        }
-
-        [CmdOp("process/memory/info")]
-        void ShowMemory()
-        {
-            var @base = ExecutingPart.Process.Adapt().BaseAddress;
-            Channel.Row(@base);
-
-            var info = WinMem.basic(@base);
-            Channel.Row(info.BaseAddress);
-            var formatter = CsvTables.formatter<BasicMemoryInfo>(16,RecordFormatKind.KeyValuePairs);
-            Channel.Row(formatter.Format(info));
-        }
 
         [CmdOp("process/memory/emit")]
         void EmitRegions()
@@ -344,26 +308,6 @@ namespace Z0
             });
         }
 
-        [CmdOp("sosdac")]
-        void SosDac()
-        {
-            // using var lib = ImageHandle.own(Windows.Kernel32.LoadLibrary("kernel32.dll"));
-            // Channel.Row(lib.Address);
-            // var loader = Win64.procaddress(lib, "LoadLibraryA");
-            // Channel.Row(loader);
-            var kernel32 = WinImage.kernel32();
-            var address = kernel32.GetExport("GetProcAddress");
-            Channel.Row(address);
-
-            var root = controller().Path().FolderPath;
-            using var lib = kernel32.LoadLibrary(controller().Folder() + FS.file("mscordaccore", FileKind.Dll));
-            Channel.Row(lib.BaseAddress);
-            //kernel32.LoadLibrary(FS.file("mscordaccore", FileKind.Dll))
-
-            // var src = FS.path(sys.controller().Location).FolderPath + FS.file("mscordaccore", FileKind.Dll);
-            // using var dac = ClrDac.load(src,loader);
-            // Channel.Row($"{dac.BaseAddress}:{dac.BaseAddress}");
-        }
 
         [CmdOp("clrmd")]
         void ClrMd()

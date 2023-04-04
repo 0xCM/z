@@ -14,8 +14,8 @@ namespace Z0
 
             }
 
-            public CsProject(FilePath path)
-                : base(ProjectKind.CSharp, path.FolderPath)
+            public CsProject(FolderPath root)
+                : base(ProjectKind.CSharp, root)
             {
 
                 

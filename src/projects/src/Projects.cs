@@ -10,7 +10,7 @@ namespace Z0
 
     using Names = Projects.SettingNames;
 
-    public partial class Projects
+    public class Projects
     {
         public static IProject create(IWfChannel channel, ProjectKind kind, FolderPath root)
         {
@@ -18,7 +18,6 @@ namespace Z0
             var config = ConfigFile.Empty;
             var archive = root.DbArchive();
             var develop = LaunchScript.Empty;
-            var workpsace = WorkspaceFile.Empty;
             if(ConfigFile.path(root).Exists)
                 config = Projects.configuration(root);
             else
@@ -42,10 +41,9 @@ namespace Z0
             }
             else
             {
-                workpsace = new WorkspaceFile(WorkspaceFile.path(root), new WorkspaceFolder(@string.Empty, FS.dir(".")));
-                Projects.save(channel, workpsace);
             }
 
+        
             return new Project(kind,root);
         }
 
@@ -200,5 +198,33 @@ namespace Z0
             Project = src;
             return ref Project;
         }
+
+
+        public class SettingNames 
+        {
+            public const string SlnRoot = nameof(SlnRoot);
+
+            public const string SlnName = nameof(SlnName);
+
+            public const string SlnSite = nameof(SlnSite);
+
+            public const string SlnBuild = nameof(SlnBuild);
+
+            public const string SlnVendor = nameof(SlnVendor);
+
+            public const string SlnPub = nameof(SlnPub);
+
+            public const string SlnCmd = nameof(SlnCmd);
+            
+            public const string SlnPaths = nameof(SlnPaths);
+
+            public const string ProjectKind = nameof(ProjectKind);
+
+            public const string WsRoot = nameof(WsRoot);
+
+            public const string WsPath = nameof(WsPath);
+
+            public const string VsCode = nameof(VsCode);
+        }   
     }
 }

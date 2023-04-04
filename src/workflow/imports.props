@@ -1,4 +1,5 @@
 <Project>
+  <Import Project="$(SlnProps)/dotnet.libraries.props"/>
   <ItemGroup>
      <ProjectReference Include="$(Assets)"/>
      <ProjectReference Include="$(Polyrand)"/>

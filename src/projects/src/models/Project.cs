@@ -39,6 +39,9 @@ namespace Z0
 
             @string IProject.Name
                 => Name;
+
+            ProjectKind IProject.Kind 
+                => Kind;
         }
     }
 }

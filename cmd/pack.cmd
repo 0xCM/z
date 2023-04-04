@@ -4,7 +4,7 @@ set Packed=%DevPacks%\zpack\packed
 set Unpacked=%DevPacks%\zpack\unpacked
 set Stage=%DevPacks%\zpack\stage
 set PlatformName="Any CPU"
-set PackSln=dotnet pack %SlnFilePath% --include-source --output %Stage% %PackBuildProps%
+set PackSln=dotnet pack %SlnFilePath% --output %Stage% %PackBuildProps%
 set UnpackCmd=nuget init %Stage% %Unpacked%
 mkdir %Stage% 1>nul 2>nul
 call %PackSln%

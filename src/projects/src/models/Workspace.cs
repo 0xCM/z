@@ -1,35 +1,38 @@
-// //-----------------------------------------------------------------------------
-// // Copyright   :  (c) Chris Moore, 2020
-// // License     :  MIT
-// //-----------------------------------------------------------------------------
-// namespace Z0
-// {
-//     public class Workspace : Project, IWorkspace
-//     {
-//         public ReadOnlySeq<ISolution> Solutions {get;}
+//-----------------------------------------------------------------------------
+// Copyright   :  (c) Chris Moore, 2020
+// License     :  MIT
+//-----------------------------------------------------------------------------
+namespace Z0
+{
+    partial class ProjectModels
+    {
+        public class Workspace : IProject
+        {
+            public readonly WorkspaceFile File;
 
-//         [MethodImpl(Inline)]
-//         public Workspace(string name, IDbArchive root, ReadOnlySeq<ISolution> solutions)
-//             : base(name,root)
-//         {
-//             Solutions = solutions;            
-//         }
+            public readonly ReadOnlySeq<IProject> Projects;
 
-//         public Workspace()
-//         {
+            public Workspace(WorkspaceFile file)
+            {
+                File = file;
+                Projects = sys.empty<IProject>();
+            }
+
+            public Workspace(WorkspaceFile file, params IProject[] projects)
+            {
+                File = file;
+                Projects = projects;
+            }
+
+            public ProjectKind Kind 
+                => ProjectKind.Aggregate;
             
-//         }
+            public IDbArchive Root 
+                => File.Path.FolderPath.DbArchive();
 
-//         public bool IsEmpty
-//         {
-//             [MethodImpl(Inline)]
-//             get => Root.IsEmpty;
-//         }
+            public @string Name 
+                => Root.Name;
 
-//         public bool IsNonEmpty
-//         {
-//             [MethodImpl(Inline)]
-//             get => Root.IsNonEmpty;
-//         }
-//     }
-// }
+        }
+    }
+}

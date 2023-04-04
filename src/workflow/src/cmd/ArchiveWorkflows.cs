@@ -297,5 +297,11 @@ namespace Z0
             Channel.TableEmit(src, EnvDb.Nested("pe", Source).Table<PeFileInfo>());
             PeFileInfoRows.TryAdd(Source.Root, src);
         }
+
+        [CmdOp("analyze")]
+        void Analyzie(CmdArgs args)
+        {
+
+        }
     }
 }
