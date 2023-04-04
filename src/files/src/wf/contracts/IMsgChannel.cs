@@ -27,5 +27,8 @@ namespace Z0
         void Write(string content, FlairKind flair);
 
         void Write<T>(string name, T value);
+
+        void RowFormat(string format, params object[] parameters)
+            => Row(string.Format(format, parameters));
     }
 }

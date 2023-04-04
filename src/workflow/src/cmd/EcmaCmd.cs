@@ -109,48 +109,11 @@ namespace Z0
             });
         }
         
-        [CmdOp("ecma/methods")]
-        void EmitEcmaMethods(CmdArgs args)
-        {
-            using var dispenser = Dispense.strings(Pow2.T16);
-            var src = FS.archive(args[0]);
-            var index = Ecma.index(Channel, src);
-
-            index.Report(EnvDb.Nested("ecma", src));
-
-            var keys = bag<MemberKey>();
-            var distinct = index.Distinct();
-            var counter = 0u;
-            iter(distinct, entry => {
-                using var file = Ecma.file(entry.Path);
-                var reader = file.EcmaReader();
-                var key = reader.AssemblyKey();
-                var methods = reader.ReadMethodDefs().Where(m => !text.contains(m.MethodName, '<') && !text.contains(m.DeclaringType, '<'));
-                iter(methods, method => {
-                    keys.Add(Ecma.key(method));
-                });
-            },true);
-            
-            Channel.TableEmit(keys.Array().Sort(), EnvDb.Nested("ecma", src).Table<MemberKey>());
-        }
-
-        [CmdOp("ecma/comments")]
-        void EcmaComments(CmdArgs args)
-        {
-            var src = FS.archive(args[0]);
-            var comments = Ecma.comments(Channel, src);
-            var dst = bag<MemberComments>();
-            iter(comments.Commented, name => {
-                iter(comments.Comments(name).Values, x => dst.Add(x));
-                
-            }, true);
-            Channel.TableEmit(dst.Array().Sort(), EnvDb.Nested("ecma", src).Table<MemberComments>());
-        }
-
+     
         [CmdOp("db/typetables")]
         void TypeTables()
         {
-            using var dispenser = CompositeBuffers.composite();
+            using var dispenser = Dispense.composite();
             var formatter = CsvTables.formatter<TypeTableRow>();
             var buffer = bag<TypeTableRow>();
             iter(ApiAssemblies.Components, assembly => {
@@ -302,51 +265,6 @@ namespace Z0
             Channel.TableEmit(rows.Array().Sort().Resequence(), EnvDb.Nested("pe", src).Table<PeDirectoryRow>());
         }
 
-        [CmdOp("pe/info")]
-        unsafe void EmitPeInfo(CmdArgs args)
-        {
-            var src = FS.archive(args[0]);
-            var index = FS.index(Archives.modules(src).Members().Select(x => x.Path));
-            var headers = bag<SectionHeaderRow>();
-            var dirs = bag<PeDirectoryRow>();
-            var info = sys.bag<PeFileInfo>();
-            var debug = sys.bag<IMAGE_DEBUG_DIRECTORY>();
-            iter(index.Distinct(), entry => {
-                try
-                {
-                    var rel = FS.relative(src.Root, entry.Path);
-                    using var reader = PeReader.create(entry.Path);
-                    var tables = reader.Tables;
-                    info.Add(reader.PeInfo());
-                    iter(tables.SectionHeaders, section => headers.Add(section.WithFile(FS.file(rel.Format()))));
-                    iter(tables.DirectoryRows, dir => {
-                            if(dir.Size != 0)
-                            {
-                                dirs.Add(dir);
-                                if(dir.Kind == PeDirectoryKind.DebugTable)
-                                {
-                                    var dbdir = *((IMAGE_DEBUG_DIRECTORY*)reader.ReadSectionData(dir.Entry()).Pointer);
-                                    var seg = new MemorySeg<Address32,uint>((Address32)dbdir.AddressOfRawData, dbdir.SizeOfData);
-                                    debug.Add(dbdir);
-
-                                }
-
-                            }
-                        });  
-                    Channel.Row($"Indexed {entry.Path}");
-                }
-                catch(Exception e)
-                {
-                    Channel.Warn($"{e.Message}: {entry.Path}");
-                }
-            }, true);
-
-            Channel.TableEmit(headers.Array().Sort().Resequence(), EnvDb.Nested("pe", src).Table<SectionHeaderRow>());
-            Channel.TableEmit(dirs.Array().Sort().Resequence(), EnvDb.Nested("pe", src).Table<PeDirectoryRow>());
-            Channel.TableEmit(info.Array().Sort().Resequence(), EnvDb.Nested("pe", src).Table<PeFileInfo>());
-
-        }
-
         [CmdOp("ecma/dump")]
         void EcmaEmitMetaDumps(CmdArgs args)
             => EcmaEmitter.EmitDump(FS.dir(args[0]).DbArchive(), EnvDb);
@@ -363,20 +281,6 @@ namespace Z0
         void EmitEcmaHeaps(CmdArgs args)
         {
             EcmaHeaps.emit(Channel,FS.dir(args[0]).DbArchive(),EnvDb);
-        }
-        
-        [CmdOp("ecma/deps")]
-        void EmitEcmaDeps(CmdArgs args)
-        {
-            var src = FS.archive(args[0]);
-            var index = Ecma.index(Channel, src);
-            Ecma.EmitReports(index, EnvDb);
-            var deps = Ecma.CalcDependencies(index, EnvDb);
-            var managed = deps.SelectMany(x => x.ManagedDependencies).Sort();
-            var native = deps.SelectMany(x => x.NativeDependencies).Sort();
-            Channel.TableEmit(managed, EnvDb.Nested("ecma", src).Table<ManagedDependency>());
-            Channel.TableEmit(native, EnvDb.Nested("ecma", src).Table<NativeDependency>());
-
         }
         
         [CmdOp("ecma/pinvokes")]

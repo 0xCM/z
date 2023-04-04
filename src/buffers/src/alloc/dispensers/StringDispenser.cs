@@ -8,15 +8,15 @@ namespace Z0
 
     public class StringDispenser : Dispenser<StringDispenser>, IStringDispenser
     {
-        const uint Capacity = Pow2.T12;
+        public const uint DefaultCapacity = Pow2.T16;
 
         readonly Dictionary<long,StringAllocator> Allocators;
 
-        public StringDispenser(uint capacity = Capacity)
+        public StringDispenser(uint capacity = DefaultCapacity)
             : base(true)
         {
             Allocators = new();
-            Allocators[Seq] = StringAllocator.alloc(Capacity);
+            Allocators[Seq] = StringAllocator.alloc(DefaultCapacity);
         }
 
         protected override void Dispose()
@@ -32,7 +32,7 @@ namespace Z0
                 var alloc = Allocators[Seq];
                 if(!alloc.Alloc(content, out dst))
                 {
-                    alloc = StringAllocator.alloc(Capacity);
+                    alloc = StringAllocator.alloc(DefaultCapacity);
                     alloc.Alloc(content, out dst);
                     Allocators[next()] = alloc;
                 }

@@ -68,31 +68,6 @@ namespace Z0
 
         public readonly PeTables Tables;
 
-        public ReadOnlySpan<EcmaConstInfo> Constants(ref uint counter)
-        {
-            var reader = MD;
-            var count = ConstantCount();
-            var dst = sys.span<EcmaConstInfo>(count);
-            for(var i=1u; i<=count; i++)
-            {
-                var k = MetadataTokens.ConstantHandle((int)i);
-                var entry = reader.GetConstant(k);
-                var parent = (EcmaToken)MD.GetToken(entry.Parent);
-                var blob = reader.GetBlobBytes(entry.Value);
-                ref var target = ref seek(dst, i - 1u);
-                target.Seq = counter++;
-                target.ParentId = parent;
-                target.Source = parent.Table.ToString();
-                target.DataType = entry.TypeCode;
-                target.Content = blob;
-            }
-            return dst;
-        }
-
-        [MethodImpl(Inline), Op]
-        public int ConstantCount()
-            => MD.GetTableRowCount(I.Constant);
-
         public MetadataReader MD
         {
             [MethodImpl(Inline)]

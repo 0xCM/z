@@ -8,19 +8,19 @@ namespace Z0
 
     public class Alloc : IDisposable
     {
-        public Alloc create() => new Alloc();
+        public static Alloc create() => new Alloc();
 
-        public static CompositeDispenser composite()
-            => Dispense.dispenser(() => new CompositeDispenser());
+        // public static CompositeDispenser composite()
+        //     => Dispense.dispenser(() => new CompositeDispenser());
 
-        public static CompositeDispenser composite(MemoryDispenser memory, StringDispenser strings, LabelDispenser labels, SymbolDispenser symbols, SourceDispenser source)
-            => Dispense.dispenser(() => new CompositeDispenser(memory, strings, labels, symbols, source));
+        // public static CompositeDispenser composite(MemoryDispenser memory, StringDispenser strings, LabelDispenser labels, SymbolDispenser symbols, SourceDispenser source)
+        //     => Dispense.dispenser(() => new CompositeDispenser(memory, strings, labels, symbols, source));
 
-        public static NativeSigDispenser sigs()
-            => Dispense.dispenser(() => new NativeSigDispenser());
+        // public static NativeSigDispenser sigs()
+        //     => Dispense.dispenser(() => new NativeSigDispenser());
 
-        public static NativeSigDispenser sigs(MemoryDispenser mem, StringDispenser strings, LabelDispenser labels)
-            => Dispense.dispenser(() => new NativeSigDispenser(mem, strings, labels));
+        // public static NativeSigDispenser sigs(MemoryDispenser mem, StringDispenser strings, LabelDispenser labels)
+        //     => Dispense.dispenser(() => new NativeSigDispenser(mem, strings, labels));
 
         protected enum AllocationKind : byte
         {
@@ -45,23 +45,23 @@ namespace Z0
 
         protected ConcurrentDictionary<AllocationKind,IAllocDispenser> Data = new();
 
-        public LabelDispenser Labels()
-            => (LabelDispenser)Data.GetOrAdd(AllocationKind.Label, k => Dispense.labels());
+        public LabelDispenser Labels(uint capacity = LabelDispenser.DefaultCapacity)
+            => (LabelDispenser)Data.GetOrAdd(AllocationKind.Label, k => Dispense.labels(capacity));
 
-        public MemoryDispenser Memory()
-            => (MemoryDispenser)Data.GetOrAdd(AllocationKind.Memory, k => Dispense.memory());
+        public MemoryDispenser Memory(uint capacity = MemoryDispenser.DefaultCapacity)
+            => (MemoryDispenser)Data.GetOrAdd(AllocationKind.Memory, k => Dispense.memory(capacity));
 
-        public PageDispenser Pages()
-            => (PageDispenser)Data.GetOrAdd(AllocationKind.Page, k => Dispense.pages());
+        public PageDispenser Pages(uint pages = SourceDispenser.DefaultCapacity)
+            => (PageDispenser)Data.GetOrAdd(AllocationKind.Page, k => Dispense.pages(pages));
 
-        public SourceDispenser Source()
-            => (SourceDispenser)Data.GetOrAdd(AllocationKind.Source, k => Dispense.source());
+        public SourceDispenser Source(uint capacity = SourceDispenser.DefaultCapacity)
+            => (SourceDispenser)Data.GetOrAdd(AllocationKind.Source, k => Dispense.source(capacity));
 
-        public StringDispenser Strings()
-            => (StringDispenser)Data.GetOrAdd(AllocationKind.String, k => Dispense.strings());
+        public StringDispenser Strings(uint capacity = StringDispenser.DefaultCapacity)
+            => (StringDispenser)Data.GetOrAdd(AllocationKind.String, k => Dispense.strings(capacity));
 
-        public SymbolDispenser Symbols()
-            => (SymbolDispenser)Data.GetOrAdd(AllocationKind.Symbol, k => Dispense.symbols());
+        public SymbolDispenser Symbols(uint capacity = SymbolDispenser.DefaultCapacity)
+            => (SymbolDispenser)Data.GetOrAdd(AllocationKind.Symbol, k => Dispense.symbols(capacity));
 
         public CellDispenser<T> Cells<T>(uint count)
             where T : unmanaged
@@ -72,6 +72,18 @@ namespace Z0
 
         public StringRef String(string content)
             => Strings().String(content);
+
+        public CompositeDispenser Composite()
+            => (CompositeDispenser)Data.GetOrAdd(AllocationKind.Composite, k => Dispense.composite(Memory(), Strings(), Labels(), Symbols(), Source()));
+
+        public NativeSigDispenser Sigs()
+            => (NativeSigDispenser)Data.GetOrAdd(AllocationKind.NativeSig, k => Dispense.sigs(Memory(), Strings(), Labels()));
+
+        public NativeSigRef Sig(string scope, string name, NativeType ret, params NativeOpDef[] ops)
+            => Sigs().Sig(scope, name,ret,ops);
+
+        public NativeSigRef Sig(NativeSigSpec spec)
+            => Sigs().Sig(spec);
 
         public void Dispose()
         {

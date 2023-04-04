@@ -63,7 +63,6 @@ namespace Z0
             get => MainModule.BaseAddress;
         }
 
-
         void OnExit(object sender, EventArgs args)
             => sys.iter(ExitHandlers, h => start(() => h));
 
@@ -307,7 +306,7 @@ namespace Z0
             get => new ProcessModule(Subject.MainModule);
         }
 
-        public FileUri Uri
+        public FilePath Path
         {
             [MethodImpl(Inline)]
             get => new(MainModule.Path.ToUri().Format());

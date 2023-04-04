@@ -12,7 +12,7 @@ namespace Z0
     {
         [CmdOp("dotnet/sdks/merge")]
         void SdkMerge(CmdArgs args)
-            => sdkmerge(Channel,args);
+            => sdkmerge(Channel,args).Wait();
         
         [CmdOp("dotnet/sdks/list")]
         void ListSdks(CmdArgs args)

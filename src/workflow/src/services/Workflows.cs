@@ -8,6 +8,8 @@ namespace Z0
     using Commands;
     using System.Linq;
 
+    using static sys;
+
     public class ArchiveCommands : Stateless<ArchiveCommands>
     {
         public static ExecToken symlink(IWfChannel channel, CmdArgs args)
@@ -16,8 +18,21 @@ namespace Z0
         public static Task<ExecToken> copy(IWfChannel channel, CmdArgs args)
             => copy(channel, FS.archive(args[0]), FS.archive(args[1]));
         
-        public static Task<ExecToken> copy(IWfChannel channel, IDbArchive src, IDbArchive dst)
-            => ToolExec.run(channel, FS.path("robocopy.exe"), Cmd.args(src.Root.Format(PathSeparator.FS, true), dst.Root.Format(PathSeparator.FS, true), "/e"));
+        public static Task<ExecToken> copy(IWfChannel channel, IDbArchive src, IDbArchive dst, ExclusionFilter? exclusions = null)
+        {
+            var args = list<CmdArg>();
+            args.Add(src.Root.Format(PathSeparator.FS, true));
+            args.Add(dst.Root.Format(PathSeparator.FS, true));
+            args.Add("/e");
+            if(exclusions != null)
+            {
+                var patterns = exclusions.Value.Patterns;
+                for(var i=0; i<patterns.Count; i++)
+                    args.Add($"/xf {patterns[i]}");
+            }
+
+            return ToolExec.run(channel, FS.path("robocopy.exe"), args.Array());                    
+        }
         
         public static Task<ExecToken> zip(IWfChannel channel, CmdArgs args)
             => PkgArchives.zip(channel, FS.dir(args[0]), FS.path(args[1]));
@@ -42,7 +57,6 @@ namespace Z0
 
             return sys.start(Run);
         }
-
     }
 
     public class Workflows : WfSvc<Workflows>
@@ -63,7 +77,7 @@ namespace Z0
                 }
                 else
                 {
-                    token = ArchiveCommands.copy(channel, src, AppSettings.Publications("dotnet/root")).Result;
+                    token = ArchiveCommands.copy(channel, src, AppSettings.Publications("dotnet/root"), ExclusionFilter.create("dotnet.exe")).Result;
                 }
                 return token;
             }
@@ -107,10 +121,5 @@ namespace Z0
         
             return true;
         }   
-
-
-        static ExecToken exec(IWfChannel channel, CatalogFiles cmd)            
-            => Archives.index(channel, FileQuery.create(cmd.Source, cmd.Match), cmd.Target.DbArchive());
-
     }
 }

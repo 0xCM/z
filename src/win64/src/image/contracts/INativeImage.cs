@@ -5,16 +5,16 @@
 namespace Z0
 {
     [Free]
-    public interface IImageRef
+    public interface INativeImage : IDisposable
     {
         FilePath Path {get;}
 
         MemoryAddress BaseAddress {get;}
-    }    
 
-    [Free]
-    public interface INativeImage : IImageRef, IDisposable
-    {
         ImageHandle Handle {get;}
+
+        MemoryAddress GetProcAddress(string name);
+
+        NativeExport GetExport(Label name);
     }
 }

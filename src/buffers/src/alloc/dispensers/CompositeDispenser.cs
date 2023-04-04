@@ -28,7 +28,7 @@ namespace Z0
             Memory = memory;
             Labels = labels;
             Strings = strings;
-            Sigs = CompositeBuffers.sigs(memory, strings, labels);
+            Sigs = Dispense.sigs(memory, strings, labels);
         }
 
         internal CompositeDispenser()
@@ -39,7 +39,7 @@ namespace Z0
             Memory = Dispense.memory();
             Labels = Dispense.labels();
             Strings = Dispense.strings();
-            Sigs = CompositeBuffers.sigs(Memory, Strings, Labels);
+            Sigs = Dispense.sigs(Memory, Strings, Labels);
         }
 
         protected override void Dispose()

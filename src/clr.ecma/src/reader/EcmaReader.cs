@@ -138,6 +138,31 @@ namespace Z0
             MD = src.MdReader;            
         }
 
+        public ReadOnlySpan<EcmaConstInfo> ReadConstants(ref uint counter)
+        {
+            var reader = MD;
+            var count = ConstantCount();
+            var dst = sys.span<EcmaConstInfo>(count);
+            for(var i=1u; i<=count; i++)
+            {
+                var k = MetadataTokens.ConstantHandle((int)i);
+                var entry = reader.GetConstant(k);
+                var parent = (EcmaToken)MD.GetToken(entry.Parent);
+                var blob = reader.GetBlobBytes(entry.Value);
+                ref var target = ref seek(dst, i - 1u);
+                target.Seq = sys.inc(ref counter);
+                target.Token = k;
+                target.Parent = parent;
+                target.DataType = entry.TypeCode;
+                target.Content = blob;
+            }
+            return dst;
+        }
+
+        [MethodImpl(Inline), Op]
+        public int ConstantCount()
+            => MD.GetTableRowCount(TableIndex.Constant);
+
         AssemblyKey _AssemblyKey;
 
         AssemblyName _AssemblyName;

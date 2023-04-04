@@ -15,7 +15,7 @@ namespace Z0
         public byte this[byte i]
         {
             [MethodImpl(Inline)]
-            get => cpu.vcell(Mask, i);
+            get => vcpu.vcell(Mask, i);
         }
 
         [MethodImpl(Inline)]
@@ -23,12 +23,8 @@ namespace Z0
             => Mask = mask;
 
         [MethodImpl(Inline)]
-        public VLut32(SpanBlock256<byte> mask)
-            => Mask = gcpu.vload(w256, mask.Storage);
-
-        [MethodImpl(Inline)]
         public VLut32(ReadOnlySpan<byte> mask)
-            => Mask = gcpu.vload(w256,mask);
+            => Mask = vgcpu.vload(w256,mask);
 
         [MethodImpl(Inline)]
         public Vector256<byte> Select(Vector256<byte> items)

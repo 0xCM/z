@@ -20,6 +20,8 @@ namespace Z0
 
         IEnumerable<BinaryModule> Members();
 
+        IEnumerable<FilePath> MemberPaths();
+
         IEnumerable<FilePath> Unmanaged();
     }
 }

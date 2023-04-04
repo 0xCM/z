@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Asm;
-
     using static sys;
 
     public class AsmObjects : AppService<AsmObjects>

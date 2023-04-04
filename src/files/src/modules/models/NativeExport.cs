@@ -6,15 +6,14 @@ namespace Z0
 {
     public readonly record struct NativeExport
     {
-        public readonly string Name;
+        public readonly Label Name;
 
         public readonly MemoryAddress Address;
 
-        public NativeExport(string name, MemoryAddress address)
+        public NativeExport(Label name, MemoryAddress address)
         {
             Name = name;
             Address = address;
-        }
-        
+        }       
     }
 }

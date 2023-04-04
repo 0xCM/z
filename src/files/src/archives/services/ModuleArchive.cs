@@ -90,6 +90,15 @@ namespace Z0
             return dll.Union(obj).Union(exe).Union(lib);
         }
         
+        public IEnumerable<FilePath> MemberPaths()
+        {
+            var dll = from module in Dll() select module.Path;
+            var lib = from module in Lib() select module.Path;
+            var obj = from module in Obj() select module.Path;
+            var exe = from module in Exe() select module.Path;
+            return dll.Union(obj).Union(exe).Union(lib);
+        }
+        
         public IEnumerable<ObjModule> Obj()
         {
             foreach(var path in Root.EnumerateFiles(Recurse, FS.Obj))

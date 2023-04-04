@@ -19,7 +19,7 @@ namespace Z0
             Handle = value;
         }
 
-        public MemoryAddress Address
+        public MemoryAddress BaseAddress
         {
             [MethodImpl(Inline)]
             get => Handle;
@@ -44,7 +44,7 @@ namespace Z0
         }
 
         public string Format()
-            => Address.Format();
+            => BaseAddress.Format();
 
         public override string ToString()
             => Format();
@@ -52,7 +52,11 @@ namespace Z0
         [MethodImpl(Inline)]
         public unsafe T* Pointer<T>()
             where T : unmanaged 
-                => Address.Pointer<T>();
+                => BaseAddress.Pointer<T>();
+
+        [MethodImpl(Inline)]
+        public static implicit operator ImageHandle(IntPtr src)
+            => new ImageHandle(src);
 
         [MethodImpl(Inline)]
         public static implicit operator IntPtr(ImageHandle src)
@@ -60,6 +64,6 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator MemoryAddress(ImageHandle src)
-            => src.Address;
+            => src.BaseAddress;
     }
 }

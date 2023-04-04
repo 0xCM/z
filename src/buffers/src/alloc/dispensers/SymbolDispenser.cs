@@ -8,15 +8,15 @@ namespace Z0
 
     public class SymbolDispenser : Dispenser<SymbolDispenser>, ISymbolDispenser
     {
-        const uint Capacity = Pow2.T12;
+        public const uint DefaultCapacity = Pow2.T12;
 
         readonly Dictionary<long,LabelAllocator> Allocators;
 
-        public SymbolDispenser(uint capacity = Capacity)
+        public SymbolDispenser(uint capacity = DefaultCapacity)
             : base(true)
         {
             Allocators = new();
-            Allocators[Seq] = LabelAllocator.alloc(Capacity);
+            Allocators[Seq] = LabelAllocator.alloc(DefaultCapacity);
         }
 
         protected override void Dispose()
@@ -32,7 +32,7 @@ namespace Z0
                 var allocator = Allocators[Seq];
                 if(!allocator.Alloc(content, out label))
                 {
-                    allocator = LabelAllocator.alloc(Capacity);
+                    allocator = LabelAllocator.alloc(DefaultCapacity);
                     allocator.Alloc(content, out label);
                     Allocators[next()] = allocator;
                 }

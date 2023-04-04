@@ -6,43 +6,15 @@ namespace Z0
 {
     using Windows;
 
-    public unsafe class NativeImage : IDisposable
+    public unsafe class NativeImage : NativeImage<NativeImage>
     {
-        public readonly ImageHandle Handle;
+        public NativeImage()
+        {
 
-        public readonly FilePath Path;
-
+        }
         public NativeImage(FilePath path, ImageHandle handle)
+            : base(path,handle)
         {
-            Path = path;
-            Handle = handle;
-        }
-
-        public MemoryAddress BaseAddress
-        {
-            [MethodImpl(Inline)]
-            get => Handle;
-        }
-
-        public virtual ReadOnlySeq<INativeFunction> Operations 
-            => sys.empty<INativeFunction>();
-
-        [MethodImpl(Inline)]
-        public NativeExport Export(string name)
-            => NativeModules.export(Handle, name);
-
-        [MethodImpl(Inline)]
-        public MemoryAddress ProcAddress(string name)
-            => NativeModules.procaddress(BaseAddress, name);
-
-        [MethodImpl(Inline)]
-        public D Proc<D>(string name)
-            where D : Delegate
-                => NativeModules.proc<D>(BaseAddress, name);
-
-        public void Dispose()
-        {
-            Kernel32.CloseHandle(Handle);
         }
 
         [MethodImpl(Inline)]

@@ -9,16 +9,15 @@ namespace Z0
     {
         public string Name {get;}
 
-        public NativeImage Image {get;}
+        public INativeImage Image {get;}
 
         public MemoryAddress Address {get;}
 
-        protected NativeFunction(NativeImage image, string name)
+        protected NativeFunction(INativeImage image, string name)
         {
             Name = name;
             Image = image;
-            Address = image.ProcAddress(name);
+            Address = image.GetProcAddress(name);
         }
-
     }
 }

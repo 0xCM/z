@@ -4,10 +4,55 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using Windows;
+
     using static sys;
 
-    class ProcessCmd : WfAppCmd<ProcessCmd>
-    {        
+    unsafe class ProcessCmd : WfAppCmd<ProcessCmd>
+    {      
+        [CmdOp("process/info")]
+        unsafe void ProcInfo()
+        {
+           var dst = ProcessControl.basic();
+            Channel.Row(dst.ToString());
+            Channel.Row($"Peb:{dst.PebBaseAddress}");
+        }
+
+        void Display(ReadOnlySpan<ProcessId> src)
+        {
+            var path = FilePath.Empty;
+            var @base = MemoryAddress.Zero;
+            var process = default(ProcessAdapter);
+
+            for(var i=0; i<src.Length; i++)
+            {
+                ref readonly var pid = ref skip(src,i);
+                if(ProcessControl.find(pid, out process))
+                {
+                    path = process.Path;
+                    @base = process.BaseAddress;
+                }
+
+                Channel.Row(string.Format("{0:D5} {1} {2} {3}", i, pid, @base, path));
+            }
+
+        }
+        [CmdOp("process/enum")]
+        void ProcEnum()
+        {
+            var counter = 0u;
+            var process = default(ProcessAdapter);
+            var path = FilePath.Empty;
+            var @base = MemoryAddress.Zero;
+            Display(ProcessControl.executing());
+        }
+
+        [CmdOp("process/monitor")]
+        void MonitorProcLoads()
+        {
+            ProcessMonitor.start(Channel);
+        }
+
         [CmdOp("process/memory")]
         Outcome ShowMemHex(CmdArgs args)
         {
@@ -26,7 +71,6 @@ namespace Z0
                     var hex = data.FormatHex();
                     Channel.Write(string.Format("{0,-16}: {1}", address, hex));
                 }
-
             }
             return result;
         }

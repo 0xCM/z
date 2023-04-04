@@ -21,24 +21,6 @@ namespace Z0.alg
 
         const NumericKind Closure = UnsignedInts;
 
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static Hash32 calc<T>(Vector128<T> src)
-            where T : unmanaged
-        {
-            var data = cpu.v64u(src);
-            return combine(calc(cpu.vcell(data,0)), calc(cpu.vcell(data,1)));
-        }
-
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static Hash32 calc<T>(Vector256<T> src)
-            where T : unmanaged
-                => combine(calc(gcpu.vlo(src)), calc(gcpu.vhi(src)));
-
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static Hash32 calc<T>(Vector512<T> src)
-            where T : unmanaged
-                => combine(calc(gcpu.vlo(src)), calc(gcpu.vhi(src)));
-
         /// <summary>
         /// Creates an unsigned calc code
         /// </summary>

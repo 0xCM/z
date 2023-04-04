@@ -23,12 +23,8 @@ namespace Z0
             => Mask = src;
 
         [MethodImpl(Inline)]
-        public VLut16(SpanBlock128<byte> src)
-            => Mask = gcpu.vload(w128, src.Storage);
-
-        [MethodImpl(Inline)]
         public VLut16(ReadOnlySpan<byte> src)
-            => Mask = gcpu.vload(w128, src);
+            => Mask = vgcpu.vload(w128, src);
 
         [MethodImpl(Inline)]
         public Vector128<byte> Select(Vector128<byte> items)

@@ -5,20 +5,36 @@
 namespace Z0
 {
     using static sys;
+    using System.Linq;
+    using Microsoft.CodeAnalysis;
+    using Microsoft.CodeAnalysis.CSharp;
+
+    using Windows;
+
 
     class ArchiveWorkflows : WfAppCmd<ArchiveWorkflows>
     {
+        ApiMd ApiMd => Wf.ApiMd();
+
         EcmaEmitter EcmaEmitter => Wf.EcmaEmitter();
 
-        StringDispenser StringDispenser;
+        Ecma Ecma => Wf.Ecma();
+        //Alloc Alloc;
+
+        IDbArchive Source;
+
+        Alloc Alloc;
 
         public ArchiveWorkflows()
         {
-            
+            Alloc = Alloc.create();
         }
-        ConcurrentDictionary<FolderPath,AssemblyIndex> Assemblies = new();
+        
+        ConcurrentDictionary<FolderPath,AssemblyIndex> AssemblyIndex = new();
 
-        new ConcurrentDictionary<FolderPath,FileIndex> Files = new();
+        ConcurrentDictionary<FolderPath,FileIndex> FileIndex = new();
+
+        ConcurrentDictionary<FolderPath,FileIndex> ModuleIndex = new();
 
         ConcurrentDictionary<FolderPath,ReadOnlySeq<EcmaRowStats>> EcmaStats = new();
 
@@ -26,14 +42,27 @@ namespace Z0
 
         ConcurrentDictionary<FolderPath,ReadOnlySeq<MetadataRoot>> EcmaRoots = new();
 
+        ConcurrentDictionary<FolderPath,ReadOnlySeq<SectionHeaderRow>> SectionHeaderRows = new();
+
+        ConcurrentDictionary<FolderPath,ReadOnlySeq<PeDirectoryRow>> PeDirectoryRows = new();
+
+        ConcurrentDictionary<FolderPath,ReadOnlySeq<PeFileInfo>> PeFileInfoRows = new();
+
+        ConcurrentDictionary<FolderPath,ReadOnlySeq<MemberComments>> MemberCommentRows = new();
+
+        ConcurrentDictionary<FolderPath,ReadOnlySeq<EcmaDependencySet>> EcmaDependencySets = new();
+
         AssemblyIndex GetAssemblyIndex(IDbArchive src)
-            => Assemblies.GetOrAdd(src.Root,  _ => Ecma.index(Channel, src));
+            => AssemblyIndex.GetOrAdd(src.Root,  _ => Ecma.index(Channel, src));
+
+        AssemblyIndex GetAssemblyIndex()
+            => AssemblyIndex.GetOrAdd(Source.Root,  _ => Ecma.index(Channel, Source));
 
         ReadOnlySeq<EcmaRowStats> GetEcmaStats(IDbArchive src)
             => EcmaStats.GetOrAdd(src.Root, _ => Ecma.stats(GetAssemblyIndex(src)));
 
         FileIndex GetFileIndex(IDbArchive src)
-            => Files.GetOrAdd(src.Root, _ => FS.index(src.Files()));
+            => FileIndex.GetOrAdd(src.Root, _ => FS.index(src.Files()));
 
         ReadOnlySeq<EcmaTypeDef> CalcTypeDefs(IDbArchive src)
         {
@@ -73,31 +102,119 @@ namespace Z0
         [CmdOp("ecma/stats")]
         void EcmaEmitStats(CmdArgs args)
         {
-            var src = FS.archive(args[0]);
-            Channel.TableEmit(GetEcmaStats(src), EnvDb.Nested("ecma", src).Table<EcmaRowStats>());                        
+            Source = FS.archive(args[0]);
+            Channel.TableEmit(GetEcmaStats(Source), EnvDb.Nested("ecma", Source).Table<EcmaRowStats>());                        
         }
 
         [CmdOp("ecma/typedefs")]
         void EmitTypeDefs(CmdArgs args)
         {
-            var src = FS.archive(args[0]);
-            Channel.TableEmit(GetTypeDefs(src), EnvDb.Nested("ecma", src).Table<EcmaTypeDef>());
+            Source = FS.archive(args[0]);
+            Channel.TableEmit(GetTypeDefs(Source), EnvDb.Nested("ecma", Source).Table<EcmaTypeDef>());
         }
 
         [CmdOp("ecma/roots")]
         void EmitMdHeader(CmdArgs args)
         {
-            var src = FS.archive(args[0]);
-            Channel.TableEmit(GetMetadataRoots(src), EnvDb.Nested("ecma", src).Table<MetadataRoot>());
+            Source = FS.archive(args[0]);
+            Channel.TableEmit(GetMetadataRoots(Source), EnvDb.Nested("ecma", Source).Table<MetadataRoot>());
+        }
+
+        ReadOnlySeq<MemberComments> CalcMemberComments()
+        {            
+            var comments = Ecma.comments(Channel, Source);
+            var dst = bag<MemberComments>();
+            iter(comments.Commented, name => {
+                iter(comments.Comments(name).Values, x => dst.Add(x));                
+            }, true);
+            return dst.Array().Sort();
+        }
+
+        ReadOnlySeq<MemberComments> GetMemberComments()
+            =>  MemberCommentRows.GetOrAdd(Source.Root, _ => CalcMemberComments());
+
+        [CmdOp("ecma/comments")]
+        void EcmaComments(CmdArgs args)
+        {
+            Source = FS.archive(args[0]);
+            Channel.TableEmit(GetMemberComments(), EnvDb.Nested("ecma", Source).Table<MemberComments>());
+        }
+
+        ReadOnlySeq<EcmaDependencySet> GetDependencies(AssemblyIndex src)
+            => EcmaDependencySets.GetOrAdd(src.Source.Root, _ => Ecma.CalcDependencies(src,EnvDb));        
+            
+        [CmdOp("ecma/const")]
+        void EmitLiterals(CmdArgs args)
+        {
+            var dst = bag<EcmaConstInfo>();
+            Source = FS.archive(args[0]);
+            var index = GetAssemblyIndex();
+            var seq = 0u;
+            iter(index.Distinct(), entry => {
+                using var file = Ecma.file(entry.Path);
+                var reader = file.EcmaReader();
+                iter(reader.ReadConstants(ref seq), k => dst.Add(k));
+            }, true);
+            Channel.TableEmit(dst.Array(), EnvDb.Nested("ecma", Source).Table<EcmaConstInfo>());
+        }
+
+        [CmdOp("ecma/reports")]
+        void EmitEcmaReports(CmdArgs args)
+        {
+            Source = FS.archive(args[0]);
+            var index = GetAssemblyIndex();
+            Ecma.EmitReports(index, EnvDb);
+
+        }
+        [CmdOp("ecma/deps")]
+        void EmitEcmaDeps(CmdArgs args)
+        {
+            Source = FS.archive(args[0]);
+            var index = GetAssemblyIndex();
+            var deps = GetDependencies(index);
+            Emit(deps);
         }
         
+        void Emit(ReadOnlySeq<EcmaDependencySet> src)
+        {
+            var managed = src.SelectMany(x => x.ManagedDependencies).Sort();
+            var native = src.SelectMany(x => x.NativeDependencies).Sort();
+            Channel.TableEmit(managed, EnvDb.Nested("ecma", Source).Table<ManagedDependency>());
+            Channel.TableEmit(native, EnvDb.Nested("ecma", Source).Table<NativeDependency>());
+        }
+
+        [CmdOp("ecma/methods")]
+        void EmitEcmaMethods(CmdArgs args)
+        {
+            var dispenser = Alloc.Strings();
+            var src = FS.archive(args[0]);
+            var index = Ecma.index(Channel, src);
+
+            index.Report(EnvDb.Nested("ecma", src));
+
+            var keys = bag<MemberKey>();
+            var distinct = index.Distinct();
+            var counter = 0u;
+            iter(distinct, entry => {
+                using var file = Ecma.file(entry.Path);
+                var reader = file.EcmaReader();
+                var key = reader.AssemblyKey();
+                var methods = reader.ReadMethodDefs().Where(m => !text.contains(m.MethodName, '<') && !text.contains(m.DeclaringType, '<'));
+                iter(methods, method => {
+                    keys.Add(Ecma.key(dispenser,method));
+                });
+            },true);
+            
+            Channel.TableEmit(keys.Array().Sort(), EnvDb.Nested("ecma", src).Table<MemberKey>());
+        }
+
         [CmdOp("memdb/store")]
         void LoadMemDb(CmdArgs args)
         {
             var db = MemDb.open(EnvDb.Path("memdb", FS.ext("dat")), new Gb(1));
             Channel.Row(db.Description.Path);
-            var src = FS.archive(args[0]);
-            var files = src.Files();
+            Source = FS.archive(args[0]);
+            var files = Source.Files();
             var tokens = dict<FilePath, AllocToken>();
             foreach(var file in files)
             {
@@ -113,6 +230,72 @@ namespace Z0
                     break;
                 }
             }
+        }
+
+        FileIndex Modules()
+            => ModuleIndex.GetOrAdd(Source.Root, _ => FS.index(Archives.modules(Source).MemberPaths()));
+
+        [CmdOp("pe/info")]
+        unsafe void EmitPeInfo(CmdArgs args)
+        {
+            Source = FS.archive(args[0]);
+            var index = Modules();
+            var headers = bag<SectionHeaderRow>();
+            var dirs = bag<PeDirectoryRow>();
+            var info = sys.bag<PeFileInfo>();
+            var debug = sys.bag<IMAGE_DEBUG_DIRECTORY>();
+            iter(index.Distinct(), entry => {
+                try
+                {
+                    var rel = FS.relative(Source.Root, entry.Path);
+                    using var reader = PeReader.create(entry.Path);
+                    var tables = reader.Tables;
+                    info.Add(reader.PeInfo());
+                    iter(tables.SectionHeaders, section => headers.Add(section.WithFile(FS.file(rel.Format()))));
+                    iter(tables.DirectoryRows, dir => {
+                            if(dir.Size != 0)
+                            {
+                                dirs.Add(dir);
+                                if(dir.Kind == PeDirectoryKind.DebugTable)
+                                {
+                                    var dbdir = *((IMAGE_DEBUG_DIRECTORY*)reader.ReadSectionData(dir.Entry()).Pointer);
+                                    var seg = new MemorySeg<Address32,uint>((Address32)dbdir.AddressOfRawData, dbdir.SizeOfData);
+                                    debug.Add(dbdir);
+
+                                }
+
+                            }
+                        });  
+                    Channel.Row($"Indexed {entry.Path}");
+                }
+                catch(Exception e)
+                {
+                    Channel.Warn($"{e.Message}: {entry.Path}");
+                }
+            }, true);
+
+            exec(true, 
+                () => Emit(headers.Array().Sort().Resequence()),
+                () => Emit(dirs.Array().Sort().Resequence()), 
+                () => Emit(info.Array().Sort().Resequence()));
+        }
+
+        void Emit(ReadOnlySeq<SectionHeaderRow> src)
+        {
+            Channel.TableEmit(src, EnvDb.Nested("pe", Source).Table<SectionHeaderRow>());
+            SectionHeaderRows.TryAdd(Source.Root, src);                
+        }
+
+        void Emit(ReadOnlySeq<PeDirectoryRow> src)
+        {
+            Channel.TableEmit(src, EnvDb.Nested("pe", Source).Table<PeDirectoryRow>());
+            PeDirectoryRows.TryAdd(Source.Root, src);
+                
+        }
+        void Emit(ReadOnlySeq<PeFileInfo> src)
+        {
+            Channel.TableEmit(src, EnvDb.Nested("pe", Source).Table<PeFileInfo>());
+            PeFileInfoRows.TryAdd(Source.Root, src);
         }
     }
 }

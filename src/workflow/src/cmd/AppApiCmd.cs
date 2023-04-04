@@ -352,10 +352,12 @@ namespace Z0
             // var loader = Win64.procaddress(lib, "LoadLibraryA");
             // Channel.Row(loader);
             var kernel32 = WinImage.kernel32();
-            Channel.Row(kernel32.BaseAddress);
+            var address = kernel32.GetExport("GetProcAddress");
+            Channel.Row(address);
+
             var root = controller().Path().FolderPath;
             using var lib = kernel32.LoadLibrary(controller().Folder() + FS.file("mscordaccore", FileKind.Dll));
-            Channel.Row(lib.Address);
+            Channel.Row(lib.BaseAddress);
             //kernel32.LoadLibrary(FS.file("mscordaccore", FileKind.Dll))
 
             // var src = FS.path(sys.controller().Location).FolderPath + FS.file("mscordaccore", FileKind.Dll);
@@ -367,7 +369,7 @@ namespace Z0
         void ClrMd()
         {
             var encodings = cdict<MemoryAddress, ApiEncoded>();
-            using var dispenser = CompositeBuffers.composite();
+            using var dispenser = Dispense.composite();
             iter(ApiAssemblies.Components, assembly => {
                 iter(ApiCode.collect(Channel, assembly, dispenser), encoded => {
                     encodings.TryAdd(encoded.Token.TargetAddress, encoded);

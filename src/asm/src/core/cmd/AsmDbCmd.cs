@@ -14,8 +14,6 @@ namespace Z0
 
         StanfordAsmCatalog StanfordCatalog => Wf.StanfordCatalog();
 
-        AsmDocs AsmDocs => Wf.AsmDocs();
-
         [CmdOp("stanford/etl")]
         void StanfordEtl()
             => StanfordCatalog.RunEtl();
@@ -34,15 +32,8 @@ namespace Z0
             Cult.RunEtl();
             Nasm.RunEtl();
             StanfordCatalog.RunEtl();
-            EmitAsmSymbols();
-            AsmDocs.Emit();
+            
         }
 
-        void EmitAsmSymbols()
-        {
-            TableEmit(AsmTokens.OcTokenDefs.View, AppDb.ApiTargets().Path("api.asm.tokens.opcodes", FileKind.Csv), UTF16);
-            TableEmit(AsmTokens.SigTokenDefs.View, AppDb.ApiTargets().Path("api.asm.tokens.sigs", FileKind.Csv), UTF16);
-            TableEmit(AsmTokens.TokenDefs.View, AppDb.ApiTargets().Path("api.asm.tokens", FileKind.Csv), UTF16);
-        }
     }
 }

@@ -16,16 +16,16 @@ namespace Z0
         public readonly EcmaToken MemberToken;
 
         [Render(48)]
-        public readonly @string Namespace;
+        public readonly StringRef Namespace;
 
         [Render(48)]
-        public readonly @string DeclaringType;
+        public readonly StringRef DeclaringType;
         
         [Render(1)]
 
-        public readonly @string MemberName;
+        public readonly StringRef MemberName;
 
-        public MemberKey(AssemblyKey assembly, EcmaToken token, string ns, string decl, string member)
+        public MemberKey(AssemblyKey assembly, EcmaToken token, StringRef ns, StringRef decl, StringRef member)
         {
             Assembly = assembly;
             MemberToken = token;

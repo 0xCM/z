@@ -9,8 +9,6 @@ namespace Z0
 
     public partial class AsmCoreCmd : WfAppCmd<AsmCoreCmd>
     {
-        AsmRegSets Regs => Service(AsmRegSets.create);
-
         OmniScript OmniScript => Wf.OmniScript();
         
         StanfordAsmCatalog StanfordCatalog => Wf.StanfordCatalog();

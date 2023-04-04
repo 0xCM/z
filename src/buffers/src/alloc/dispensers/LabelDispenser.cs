@@ -8,15 +8,15 @@ namespace Z0
 
     public class LabelDispenser : Dispenser<LabelDispenser>, ILabelDispenser
     {
-        const uint Capacity = Pow2.T12*4;
+        public const uint DefaultCapacity = Pow2.T12*4;
 
         readonly Dictionary<long,LabelAllocator> Allocators;
 
-        public LabelDispenser(uint capacity = Capacity)
+        public LabelDispenser(uint capacity = DefaultCapacity)
             : base(true)
         {
             Allocators = new();
-            Allocators[Seq] = LabelAllocator.alloc(Capacity);
+            Allocators[Seq] = LabelAllocator.alloc(DefaultCapacity);
         }
 
         public Label Label(string content)
@@ -27,7 +27,7 @@ namespace Z0
                 var alloc = Allocators[Seq];
                 if(!alloc.Alloc(content, out label))
                 {
-                    alloc = LabelAllocator.alloc(Capacity);
+                    alloc = LabelAllocator.alloc(DefaultCapacity);
                     alloc.Alloc(content, out label);
                     Allocators[next()] = alloc;
                 }

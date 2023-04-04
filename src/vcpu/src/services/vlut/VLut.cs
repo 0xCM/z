@@ -16,19 +16,11 @@ namespace Z0
             => new VLut16(src);
 
         [MethodImpl(Inline), Init]
-        public static VLut16 init(SpanBlock128<byte> src)
-            => new VLut16(src);
-
-        [MethodImpl(Inline), Init]
         public static VLut32 init(Vector256<byte> src)
             => new VLut32(src);
 
         [MethodImpl(Inline), Init]
         public static VLut32 init(ReadOnlySpan<byte> src, N32 n)
-            => new VLut32(src);
-
-        [MethodImpl(Inline), Init]
-        public static VLut32 init(SpanBlock256<byte> src)
             => new VLut32(src);
 
         [MethodImpl(Inline), Op]

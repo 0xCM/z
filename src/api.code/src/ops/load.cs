@@ -12,7 +12,7 @@ namespace Z0
         public static ApiMemberCode load(IWfChannel channel, IApiPack src, PartName part)
         {
             load(channel, src, part, out var seq, out var code);
-            return members(CompositeBuffers.composite(), seq, code);
+            return members(Dispense.composite(), seq, code);
         }
 
         [Op]

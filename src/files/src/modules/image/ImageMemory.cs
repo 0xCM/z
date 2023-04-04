@@ -89,7 +89,7 @@ namespace Z0
 
         static ExecToken emit(IWfChannel channel, ProcessAdapter src, Timestamp ts, IDbArchive dst)
         {
-            var running = channel.Running($"Emiting context for process {src.Id} based at {src.BaseAddress} from {src.Uri}");
+            var running = channel.Running($"Emiting context for process {src.Id} based at {src.BaseAddress} from {src.Path}");
             modules(channel, src, dst);
             var file = ProcDumpName.path(src, ts, dst);
             var dumping = channel.EmittingFile(file);

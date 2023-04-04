@@ -7,16 +7,16 @@ namespace Z0
     [Record(TableId), StructLayout(LayoutKind.Sequential)]
     public struct EcmaConstInfo
     {
-        const string TableId = "ecma.fields.const";
+        const string TableId = "ecma.const";
 
         [Render(8)]
         public uint Seq;
 
-        [Render(16)]
-        public EcmaToken ParentId;
-
         [Render(32)]
-        public string Source;
+        public EcmaToken Token;
+
+        [Render(16)]
+        public EcmaToken Parent;
 
         [Render(16)]
         public ConstantTypeCode DataType;

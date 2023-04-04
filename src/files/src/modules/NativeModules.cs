@@ -37,12 +37,16 @@ namespace Z0
             => GetProcAddress(src.BaseAddress, name);
 
         [MethodImpl(Inline), Op]
-        public static MemoryAddress procaddress(MemoryAddress @base, string name)
-            => GetProcAddress(@base, name);
+        public static MemoryAddress procaddress(ImageHandle src, Label name)
+            => GetProcAddress(src.BaseAddress, name.Format());
 
         [MethodImpl(Inline), Op]
-        public static NativeExport export(ImageHandle src, string name)
-            => new NativeExport(name, GetProcAddress(src, name));
+        public static NativeExport export(ImageHandle src, Label name)
+            => new NativeExport(name, procaddress(src,name));
+
+        [MethodImpl(Inline), Op]
+        public static MemoryAddress procaddress(MemoryAddress @base, string name)
+            => GetProcAddress(@base, name);
 
         [MethodImpl(Inline), Op]
         public unsafe static FPtr fptr(NativeModule src, string name)

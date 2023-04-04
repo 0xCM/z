@@ -6,15 +6,15 @@ namespace Z0
 {
     public class MemoryDispenser : Dispenser<MemoryDispenser>, IMemoryDispenser
     {
-        const uint Capacity = Pow2.T12*16;
+        public const uint DefaultCapacity = Pow2.T12*16;
 
         readonly Dictionary<long,MemAllocator> Allocators;
 
-        public MemoryDispenser(uint capacity = Capacity)
+        public MemoryDispenser(uint capacity = DefaultCapacity)
             : base(true)
         {
             Allocators = new();
-            Allocators[Seq] = MemAllocator.alloc(Capacity);
+            Allocators[Seq] = MemAllocator.alloc(DefaultCapacity);
         }
 
         protected override void Dispose()
@@ -30,8 +30,8 @@ namespace Z0
                 var allocator = Allocators[Seq];
                 if(!allocator.Alloc(size, out dst))
                 {
-                    if(size < Capacity)
-                        allocator = MemAllocator.alloc(Capacity);
+                    if(size < DefaultCapacity)
+                        allocator = MemAllocator.alloc(DefaultCapacity);
                     else
                         allocator = MemAllocator.alloc(size);
 

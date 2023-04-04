@@ -18,8 +18,8 @@ namespace Z0
         public static ReadOnlySeq<EcmaRowStats> stats(AssemblyIndex src)
             => EcmaReader.stats(src.Distinct().Select(x => x.Path));
 
-        public static MemberKey key(EcmaMethodDef src)
-            => new (src.Assembly, src.Token, src.Namespace, src.DeclaringType, src.MethodName);
+        public static MemberKey key(StringDispenser dispenser, EcmaMethodDef src)
+            => new (src.Assembly, src.Token, dispenser.String(src.Namespace), dispenser.String(src.DeclaringType), dispenser.String(src.MethodName));
 
         public ReadOnlySeq<EcmaDependencySet> CalcDependencies(AssemblyIndex index, IDbArchive dst)
         {

@@ -10,16 +10,16 @@ namespace Z0
 
         object locker;
 
-        const uint Capacity = 64;
+        public const uint DefaultPageCount = 64;
 
         static ByteSize PageSize => Pow2.T12;
 
-        public PageDispenser(uint capacity = Capacity)
+        public PageDispenser(uint capacity = DefaultPageCount)
             : base(true)
         {
             Allocators = new();
             locker = new();
-            Allocators[Seq] = PageAllocator.alloc(Capacity);
+            Allocators[Seq] = PageAllocator.alloc(DefaultPageCount);
         }
 
         public MemorySeg Page()
@@ -30,7 +30,7 @@ namespace Z0
                 address = Allocators[Seq].Alloc();
                 if(address == 0)
                 {
-                    var allocator = PageAllocator.alloc(Capacity);
+                    var allocator = PageAllocator.alloc(DefaultPageCount);
                     Allocators[next()] = allocator;
                     address = allocator.Alloc();
                 }

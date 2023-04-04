@@ -47,9 +47,6 @@ namespace Z0
             public StanfordAsmCatalog StanfordCatalog(IWfRuntime wf)
                 => Service<StanfordAsmCatalog>(wf);
 
-            public AsmDocs AsmDocs(IWfRuntime wf)
-                => Service<AsmDocs>(wf);
-
             public CultProcessor CultProcessor(IWfRuntime wf)
                 => Service<CultProcessor>(wf);
  
@@ -105,9 +102,6 @@ namespace Z0
 
          public static StanfordAsmCatalog StanfordCatalog(this IWfRuntime wf)
             => Services.StanfordCatalog(wf);
-
-         public static AsmDocs AsmDocs(this IWfRuntime wf)
-            => Services.AsmDocs(wf);
 
          public static CultProcessor CultProcessor(this IWfRuntime wf)
             => Services.CultProcessor(wf);

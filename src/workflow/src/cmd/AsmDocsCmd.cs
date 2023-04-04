@@ -9,10 +9,11 @@ namespace Z0
 
     using Asm;
 
-    public class AsmDocs : WfSvc<AsmDocs>
+    class AsmDocsCmd : WfAppCmd<AsmDocsCmd>
     {
         AsmRegSets Regs => Service(AsmRegSets.create);
 
+        [CmdOp("asm/emit/docs")]
         public void Emit()
         {
             EmitRexDocs();
@@ -21,9 +22,17 @@ namespace Z0
             EmitConditionDocs();
             EmitRegDocs();
             EmitRexBDocs();
+            EmitAsmTokens();
         }
 
-        public void EmitRegDocs()
+        void EmitAsmTokens()
+        {
+            TableEmit(AsmTokens.OcTokenDefs.View, AppDb.ApiTargets().Path("api.asm.tokens.opcodes", FileKind.Csv), UTF16);
+            TableEmit(AsmTokens.SigTokenDefs.View, AppDb.ApiTargets().Path("api.asm.tokens.sigs", FileKind.Csv), UTF16);
+            TableEmit(AsmTokens.TokenDefs.View, AppDb.ApiTargets().Path("api.asm.tokens", FileKind.Csv), UTF16);
+        }
+
+        void EmitRegDocs()
         {
             var dst = AppDb.ApiTargets("asm.docs").Path("asm.regs.strings", FileKind.Cs);
             var emitting = Channel.EmittingFile(dst);
@@ -46,7 +55,7 @@ namespace Z0
             EmittedFile(emitting,4);
         }
 
-        public void EmitRexDocs()
+        void EmitRexDocs()
         {
             var dst = AppDb.ApiTargets("asm.docs").Path("rex.bits", FileKind.Csv);
             var emitting = Channel.EmittingFile(dst);
@@ -58,7 +67,7 @@ namespace Z0
             EmittedFile(emitting,count);
         }
 
-        public void EmitSibDocs()
+        void EmitSibDocs()
         {
             var rows = AsmBytes.SibRows().View;
             TableEmit(rows, AppDb.ApiTargets("asm.docs").Path("asm.docs.sib.bits", FileKind.Csv));
@@ -67,7 +76,7 @@ namespace Z0
             TableEmit(codes.View, AppDb.ApiTargets("asm.docs").Path("asm.docs.sib.regs", FileKind.Csv));
         }
 
-        public void EmitModRmDocs()
+        void EmitModRmDocs()
         {
             var path = AppDb.ApiTargets("asm.docs").Path("asm.docs.modrm.bits", FileKind.Csv);
             var flow = Channel.EmittingFile(path);
@@ -79,7 +88,7 @@ namespace Z0
             EmittedFile(flow, count);
         }
 
-        public void EmitRexBDocs()
+        void EmitRexBDocs()
         {
             var tokens = Symbols.index<RexBToken>();
             var g = RexBGenerator.create(Wf);
@@ -95,7 +104,7 @@ namespace Z0
             }
         }
 
-        public void EmitConditionDocs()
+        void EmitConditionDocs()
         {
             EmitConditionDocs(Conditions.jcc8(), AppDb.ApiTargets("asm.docs").Path("jcc8", FileKind.Txt));
             EmitConditionDocs(Conditions.jcc32(), AppDb.ApiTargets("asm.docs").Path("jcc32", FileKind.Txt));

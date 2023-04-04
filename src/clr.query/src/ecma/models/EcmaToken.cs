@@ -144,6 +144,10 @@ namespace Z0
             => new EcmaToken(src);
 
         [MethodImpl(Inline)]
+        public static implicit operator EcmaToken(ConstantHandle src)
+            => MetadataTokens.GetToken(src);
+
+        [MethodImpl(Inline)]
         public static implicit operator EcmaToken(MethodInfo src)
             => new EcmaToken(src);
 

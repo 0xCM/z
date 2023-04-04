@@ -8,15 +8,15 @@ namespace Z0
 
     public class SourceDispenser : Dispenser<SourceDispenser>, ISourceDispenser
     {
-        const uint Capacity = Pow2.T12*8;
+        public const uint DefaultCapacity = Pow2.T12*8;
 
         readonly Dictionary<long,SourceAllocator> Allocators;
 
-        public SourceDispenser(uint capacity = Capacity)
+        public SourceDispenser(uint capacity = DefaultCapacity)
             : base(true)
         {
             Allocators = new();
-            Allocators[Seq] = SourceAllocator.alloc(Capacity);
+            Allocators[Seq] = SourceAllocator.alloc(DefaultCapacity);
         }
 
         protected override void Dispose()
@@ -32,7 +32,7 @@ namespace Z0
                 var alloc = Allocators[Seq];
                 if(!alloc.Alloc(src, out dst))
                 {
-                    alloc = SourceAllocator.alloc(Capacity);
+                    alloc = SourceAllocator.alloc(DefaultCapacity);
                     alloc.Alloc(src, out dst);
                     Allocators[next()] = alloc;
                 }

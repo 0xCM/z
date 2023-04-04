@@ -14,38 +14,28 @@ namespace Z0
 
         ImageHandle INativeImage.Handle
             => Handle;
-            
+
         public static I load(FilePath path)
         {
             var dst = new I();
             Require.invariant(path.Exists);
-            dst.Handle = ImageHandle.own(Kernel32.LoadLibrary(path.Format(PathSeparator.BS)));
+            dst.Handle = Kernel32.LoadLibrary(path.Format(PathSeparator.BS));
             Require.invariant(dst.Handle.IsNonEmpty);
             dst.Path = path;
-            dst.OnImageLoad(dst.Handle);
-            return dst;
-        }
-
-        public static I load(FilePath path, Func<FilePath,ImageHandle> loader)
-        {
-            var dst = new I();
-            Require.invariant(path.Exists);
-            dst.Path = path;
-            dst.Handle = loader(path);
-            dst.OnImageLoad(dst.Handle);
             return dst;
         }
 
         protected NativeImage()
         {
-
+            Path = FilePath.Empty;            
         }
 
-        protected virtual void OnImageLoad(ImageHandle handle)
+        protected NativeImage(FilePath path, ImageHandle handle)
         {
-
+            Path = path;
+            Handle = handle;
         }
-
+        
         public void Dispose()
         {
             Kernel32.CloseHandle(Handle);
@@ -60,11 +50,11 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public NativeExport Export(string name)
+        public NativeExport GetExport(Label name)
             => NativeModules.export(Handle, name);
 
         [MethodImpl(Inline)]
-        public MemoryAddress ProcAddress(string name)
+        public MemoryAddress GetProcAddress(string name)
             => NativeModules.procaddress(BaseAddress, name);
 
         [MethodImpl(Inline)]

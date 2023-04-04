@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using api = Permute;
-
     partial class XTend
     {
         /// <summary>
@@ -31,7 +29,7 @@ namespace Z0
         public static Span<T> Swap<T>(this Span<T> src, params Swap[] swaps)
             where T : unmanaged
         {
-            api.apply(src, swaps);
+            Permute.apply(src, swaps);
             return src;
         }
     }

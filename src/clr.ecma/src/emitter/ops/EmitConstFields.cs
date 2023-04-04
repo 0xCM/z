@@ -21,8 +21,10 @@ namespace Z0
                 var formatter = CsvTables.formatter<EcmaConstInfo>();
                 using var writer = target.Writer();
                 writer.WriteLine(formatter.FormatHeader());
-                using var reader = PeReader.create(src.Path());
-                var constants = reader.Constants(ref counter);
+                using var ecma = Ecma.file(src.Path());
+                var reader = ecma.EcmaReader();
+                //using var reader = PeReader.create(src.Path());
+                var constants = reader.ReadConstants(ref counter);
                 var count = constants.Length;
                 for(var i=0; i<count; i++)
                     writer.WriteLine(formatter.Format(skip(constants,i)));

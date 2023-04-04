@@ -72,6 +72,7 @@ namespace Z0
                 else
                     break;
             }
+
             for(var i=l0-1; i>=0; i--)
             {
                 ref readonly var b = ref skip(data,i);
@@ -100,14 +101,14 @@ namespace Z0
         {
             var aBytes = a.Storage.Bytes;
             var bBytes = b.Storage.Bytes;
-            var a256 = cpu.vload(w256, slice(aBytes,0, 32));
-            var b256 = cpu.vload(w256, slice(bBytes,0, 32));
-            var result = cpu.vtestc(cpu.veq(a256,b256));
+            var a256 = vcpu.vload(w256, slice(aBytes,0, 32));
+            var b256 = vcpu.vload(w256, slice(bBytes,0, 32));
+            var result = vcpu.vtestc(vcpu.veq(a256,b256));
             if(result)
             {
-                var a128 = cpu.vload(w128, slice(aBytes,32, 16));
-                var b128 = cpu.vload(w128, slice(bBytes,32, 16));
-                result = cpu.vtestc(cpu.veq(a128,b128));
+                var a128 = vcpu.vload(w128, slice(aBytes,32, 16));
+                var b128 = vcpu.vload(w128, slice(bBytes,32, 16));
+                result = vcpu.vtestc(vcpu.veq(a128,b128));
             }
             return result;
         }
@@ -262,7 +263,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static uint hash(in text47 src)
-            => alg.hash.marvin(src.Bytes);
+            => sys.hash(src.Bytes);
 
         [MethodImpl(Inline), Op]
         static uint available(ReadOnlySpan<char> src)

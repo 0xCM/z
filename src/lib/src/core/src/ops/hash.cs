@@ -119,32 +119,5 @@ namespace Z0
         [MethodImpl(Inline)]
         public static Hash32 hash<T>(T a, T b, T c, T d)
             => HashCodes.Generic.hash(a,b,c,d);
-
-        [MethodImpl(Inline)]
-        public static Hash32 hash<T>(Vector128<T> src)
-            where T : unmanaged
-            =>  alg.ghash.calc(src);
-
-        [MethodImpl(Inline)]
-        public static Hash32 hash<T>(Vector256<T> src)
-            where T : unmanaged
-                => alg.hash.calc(src);
-
-        [MethodImpl(Inline)]
-        public static Hash32 hash<T>(Vector512<T> src)
-            where T : unmanaged
-                => alg.hash.calc(src);
-
-        [MethodImpl(Inline)]
-        public static Hash64 hash64<X,Y>(X x, Y y)
-            => alg.ghash.calc64(x,y);
-
-        [MethodImpl(Inline)]
-        public static Hash64 hash64(Type x, Type y)
-            => alg.hash.combine(x,y);
-
-        [MethodImpl(Inline)]
-        public static Hash64 hash64(Type x, Type y, Type z)
-             => alg.hash.combine(x,y,z);
     }
 }

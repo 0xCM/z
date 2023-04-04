@@ -1,3 +1,7 @@
+//-----------------------------------------------------------------------------
+// Copyright   :  None
+// License     :  Any, except GPL or variants thereof
+//-----------------------------------------------------------------------------
 namespace Windows
 {
     [StructLayout(StructLayout,Pack =1)]
