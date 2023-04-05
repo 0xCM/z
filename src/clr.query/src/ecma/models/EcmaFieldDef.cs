@@ -12,14 +12,20 @@ namespace Z0
         [Render(12)]
         public EcmaToken Token;
 
+        [Render(48)]            
+        public AssemblyKey Assembly;
+
         [Render(48)]
-        public string Name;
+        public @string DeclaringType;
+
+        [Render(24)]
+        public @string Namespace;
+
+        [Render(48)]
+        public @string Name;
 
         [Render(32)]
         public EcmaSig CliSig;
-
-        [Render(64)]
-        public string Component;
 
         [Render(1)]
         public FieldAttributes Attributes;

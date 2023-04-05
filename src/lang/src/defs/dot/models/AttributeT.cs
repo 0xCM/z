@@ -2,12 +2,14 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0.Lang.Dot
 {
-    using static sys;
-    using static EcmaTables;
-
-    partial class EcmaReader
+    public record class Attribute<T> : Attribute
     {
+        protected Attribute(string name, T value)
+            : base(name,value)
+        {
+        }         
+
     }
 }

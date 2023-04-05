@@ -13,7 +13,7 @@ namespace Z0
         public void EmitTableStats(IModuleArchive src, IDbArchive dst)
         {
             var modules = src.AssemblyFiles();
-            var stats = EcmaReader.stats(modules.Select(x => x.Path));
+            var stats = Ecma.stats(modules.Select(x => x.Path));
             Channel.TableEmit(stats, dst.Nested("ecma",src.Root).Table<EcmaRowStats>());
         }
 

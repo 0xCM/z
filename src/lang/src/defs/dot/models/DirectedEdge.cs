@@ -2,11 +2,15 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-[assembly: PartId("win64")]
-namespace Z0.Parts
+namespace Z0.Lang.Dot
 {
-    public sealed class Win64 : Part<Win64>
+    public record class DirectedEdge : Edge
     {
+        public DirectedEdge(Node src, params Node[] dst)
+            : base(src,dst)
+        {
+        }
 
+        protected override string EdgeGlyph => "->";
     }
 }

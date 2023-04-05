@@ -8,8 +8,6 @@ namespace Z0
 
     using static sys;
 
-    using I = System.Reflection.Metadata.Ecma335.TableIndex;
-
     public class PeReader : IDisposable
     {
         [Op]

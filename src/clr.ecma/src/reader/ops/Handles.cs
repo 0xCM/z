@@ -92,7 +92,6 @@ namespace Z0
         public ReadOnlySpan<CustomDebugInformationHandle> CustomDebugInfoHandles()
             => MD.CustomDebugInformation.ToReadOnlySpan();
 
-
         [Op]
         public ReadOnlySpan<ModuleReferenceHandle> ModuleRefHandles()
         {

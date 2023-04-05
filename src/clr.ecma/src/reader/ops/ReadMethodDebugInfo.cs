@@ -6,13 +6,6 @@ namespace Z0
 {
     using static sys;
 
-    public struct MethodDebugInfo
-    {
-        public ImmutableArray<string> Sig;
-
-        public BinaryCode SequencePoints;
-    }
-
     partial class EcmaReader
     {
         [MethodImpl(Inline), Op]

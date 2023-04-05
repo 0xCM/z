@@ -9,6 +9,20 @@ namespace Z0
 
     partial class EcmaReader
     {        
+        /// <summary>
+        /// Returns the offset from the metadata base to each included metadata table
+        /// </summary>
+        /// <returns></returns>
+        [Op]
+        Index<TableIndex,Address32> GetTableOffsets(ReadOnlySeq<KeyedValue<TableIndex,byte>> indices)
+        {
+            var count = indices.Count;
+            var dst = sys.alloc<Address32>(count);
+            for(var i=0; i<count; i++)
+                seek(dst,i) = (uint)MD.GetTableMetadataOffset(indices[i].Key);
+            return dst;
+        }
+
         public void ReadTableStats(ConcurrentBag<EcmaRowStats> dst)
         {
             var indicies = Symbols.values<TableIndex,byte>();
@@ -36,17 +50,6 @@ namespace Z0
             }
          }
 
-        public static ReadOnlySeq<EcmaRowStats> stats(IEnumerable<FilePath> src)
-        {
-            var dst = bag<EcmaRowStats>();
-
-            iter(src, path => {
-                using var file = Ecma.file(path);
-                var reader = Ecma.reader(file);
-                reader.ReadTableStats(dst);                
-            }, true);
-            return dst.Array().Sort();
-        }
         public static void stats(ReadOnlySpan<Assembly> src, ConcurrentBag<EcmaRowStats> dst)
             => iter(src, a => stats(a,dst), true);
 

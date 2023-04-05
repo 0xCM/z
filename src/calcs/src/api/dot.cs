@@ -10,7 +10,7 @@ namespace Z0
 
     partial struct Calcs
     {
-        [MethodImpl(Inline), Factory(Dot), Closures(Closure)]
+        [MethodImpl(Inline), Closures(Closure)]
         public static DotProduct<T> dot<T>()
             where T : unmanaged
                 => sfunc<DotProduct<T>>();

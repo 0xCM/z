@@ -6,7 +6,7 @@ namespace Z0
 {
     using System.Xml;
     using System.IO;
-    using System.Linq;
+
     using static sys;
 
     public class AssemblyComments

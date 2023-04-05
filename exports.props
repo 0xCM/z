@@ -77,7 +77,6 @@
 
    <Import Project="$(MsBuildThisFileDirectory)src/vcpu/exports.props"/>
 
-   <Import Project="$(MsBuildThisFileDirectory)src/win64/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/workflow/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/xml/exports.props"/>
 

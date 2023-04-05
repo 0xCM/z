@@ -22,7 +22,7 @@ namespace Z0
             dst(field);
         }
 
-        public ReadOnlySpan<EcmaFieldInfo> ReadFieldDefs()
+        public ReadOnlySpan<EcmaFieldInfo> ReadFieldInfo()
         {
             var handles = MD.FieldDefinitions.ToReadOnlySpan();
             var count = handles.Length;
@@ -36,23 +36,18 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public ref FieldDefRow Row(FieldDefinitionHandle handle, ref FieldDefRow dst)
+        public FieldDefRow ReadFieldDefRow(FieldDefinitionHandle handle)
         {
-            var src = MD.GetFieldDefinition(handle);
-            dst.Attributes = src.Attributes;
-            dst.Name = src.Name;
-            dst.Sig = src.Signature;
-            dst.Offset = (uint)src.GetOffset();
-            dst.Marshal = src.GetMarshallingDescriptor();
-            return ref dst;
+            var dst = new FieldDefRow();            
+            var def = MD.GetFieldDefinition(handle);
+            dst.Attributes = def.Attributes;
+            var type = MD.GetTypeDefinition(def.GetDeclaringType());
+            dst.Name = def.Name;
+            dst.Sig = def.Signature;
+            dst.Offset = (uint)def.GetOffset();
+            dst.Marshal = def.GetMarshallingDescriptor();
+            return dst;
         }
 
-        EcmaName ReadFieldName(StringHandle handle, Count seq)
-        {
-            var value = MD.GetString(handle);
-            var offset = MD.GetHeapOffset(handle);
-            var size = MD.GetHeapSize(HeapIndex.String);
-            return new EcmaName(seq, size, (Address32)offset, value);
-        }
     }
 }

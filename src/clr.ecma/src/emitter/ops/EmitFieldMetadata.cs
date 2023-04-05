@@ -34,7 +34,7 @@ namespace Z0
                 var path = dst.Metadata(EcmaSections.MemberFields).PrefixedTable<EcmaFieldInfo>(name);
                 var flow = Channel.EmittingTable<EcmaFieldInfo>(path);
                 var reader = EcmaReader.create(src);
-                var fields = reader.ReadFieldDefs();
+                var fields = reader.ReadFieldInfo();
                 var count = (uint)fields.Length;
                 var formatter = CsvTables.formatter<EcmaFieldInfo>();
                 using var writer = path.Writer();
@@ -51,39 +51,39 @@ namespace Z0
 
         void EmitFieldDefs(Assembly src, IDbArchive dst)
         {
-            try
-            {
-                var name = src.GetSimpleName();
-                var path = dst.Metadata(EcmaSections.FieldDefs).PrefixedTable<EcmaFieldDef>(name);
-                if(path.Exists)
-                    Errors.ThrowWithOrigin(AppMsg.FileExists.Format(path));
+            // try
+            // {
+            //     var name = src.GetSimpleName();
+            //     var path = dst.Metadata(EcmaSections.FieldDefs).PrefixedTable<EcmaFieldDef>(name);
+            //     if(path.Exists)
+            //         Errors.ThrowWithOrigin(AppMsg.FileExists.Format(path));
 
-                var flow = Channel.EmittingTable<EcmaFieldDef>(path);
-                var reader = EcmaReader.create(src);
-                var handles = reader.FieldDefHandles();
-                var count = handles.Length;
-                using var writer = path.Writer();
-                var formatter = CsvTables.formatter<EcmaFieldDef>();
-                writer.WriteLine(formatter.FormatHeader());
-                for(var j=0; j<count; j++)
-                {
-                    var row = new FieldDefRow();
-                    var info = new EcmaFieldDef();
-                    ref readonly var handle = ref skip(handles,j);
-                    reader.Row(handle, ref row);
-                    info.Token = EcmaTokens.token(handle);
-                    info.Component = name;
-                    info.Attributes = row.Attributes;
-                    info.CliSig = reader.BlobArray(row.Sig);
-                    info.Name = reader.String(row.Name);
-                    writer.WriteLine(formatter.Format(info));
-                }
-                Channel.EmittedTable(flow, count);
-            }
-            catch(Exception e)
-            {
-                Channel.Error(e);
-            }
+            //     var flow = Channel.EmittingTable<EcmaFieldDef>(path);
+            //     var reader = EcmaReader.create(src);
+            //     var handles = reader.FieldDefHandles();
+            //     var count = handles.Length;
+            //     using var writer = path.Writer();
+            //     var formatter = CsvTables.formatter<EcmaFieldDef>();
+            //     writer.WriteLine(formatter.FormatHeader());
+            //     for(var j=0; j<count; j++)
+            //     {
+            //         var row = new FieldDefRow();
+            //         var info = new EcmaFieldDef();
+            //         ref readonly var handle = ref skip(handles,j);
+            //         reader.Row(handle, ref row);
+            //         info.Token = EcmaTokens.token(handle);
+            //         info.Component = name;
+            //         info.Attributes = row.Attributes;
+            //         info.CliSig = reader.BlobArray(row.Sig);
+            //         info.Name = reader.String(row.Name);
+            //         writer.WriteLine(formatter.Format(info));
+            //     }
+            //     Channel.EmittedTable(flow, count);
+            // }
+            // catch(Exception e)
+            // {
+            //     Channel.Error(e);
+            // }
         }
     }
 }

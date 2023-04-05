@@ -7,7 +7,7 @@ namespace Z0
     [Record(TableId), StructLayout(LayoutKind.Sequential, Pack = 1)]
     public record struct EcmaTypeDef : IComparable<EcmaTypeDef>
     {
-        const string TableId = "ecma.typedefs";
+        const string TableId = "ecma.types";
 
         [Render(16)]            
         public EcmaToken Token;

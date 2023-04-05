@@ -2,11 +2,17 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-[assembly: PartId(PartId.ClrEcma)]
-namespace Z0.Parts
+namespace Z0.Lang.Dot
 {
-    public sealed class ClrEcma : Part<ClrEcma>
+    public abstract record class Statement : IExpr
     {
+        public virtual bool IsEmpty => false;
+
+        public abstract string Format();
+
+        public sealed override string ToString()
+            => Format();
 
     }
+
 }

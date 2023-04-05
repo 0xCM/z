@@ -1,5 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <Win64>$(MsBuildThisFileDirectory)z0.win64.csproj</Win64>
-  </PropertyGroup>
-</Project>

@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-    using static EcmaTables;
-
-    partial class EcmaReader
+    public struct MethodDebugInfo
     {
+        public ImmutableArray<string> Sig;
+
+        public BinaryCode SequencePoints;
     }
 }

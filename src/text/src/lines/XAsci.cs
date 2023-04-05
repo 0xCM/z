@@ -6,6 +6,14 @@ namespace Z0
 {
     partial class XTend
     {
+        public static void AddRange<T>(this HashSet<T> dst, IEnumerable<T> src)
+            => sys.iter(src, item=> dst.Add(item));
+    }
+
+
+    partial class XTend
+    {
+
         [MethodImpl(Inline)]
         public static int FirstIndexOf<T>(this T src, AsciCharSym match)
             where T : unmanaged,IAsciSeq

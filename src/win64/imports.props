@@ -1,7 +1,0 @@
-<Project>
-  <ItemGroup>
-    <ProjectReference Include="$(Events)" />
-    <ProjectReference Include="$(Asci)" />
-    <ProjectReference Include="$(Buffers)" />
-  </ItemGroup>
-</Project>

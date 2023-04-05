@@ -13,6 +13,15 @@ namespace Z0
     [ApiHost]
     public class Ecma : WfSvc<Ecma>
     {        
+        public static EcmaReader reader(MappedAssembly src)
+            => EcmaReader.create(src.BaseAddress, src.FileSize);
+
+        public static EcmaReader reader(EcmaFile src)
+            => EcmaReader.create(src);
+
+        public static EcmaReader reader(Assembly src)
+            => EcmaReader.create(src);
+
         public static ReadOnlySeq<AssemblyListEntry> list(ReadOnlySpan<AssemblyFile> src)
         {
             var dst = bag<AssemblyListEntry>();
@@ -30,34 +39,6 @@ namespace Z0
         public static AssemblyFiles assemblies(IWfChannel channel, IDbArchive src)
             => new (src,Archives.modules(src).AssemblyFiles().Array());
             
-        // {
-        //     var dst = bag<AssemblyFile>();
-        //     var counter = 0u;
-        //     var running = channel.Running($"Searching {src.Root} for assemlies");
-        //     iter(src.Enumerate(true, FileKind.Dll, FileKind.Exe), path => {
-        //         try
-        //         {
-        //             using var ecma = Ecma.file(path);
-        //             var reader = ecma.EcmaReader(); 
-        //             var def = reader.ReadAssemblyDef();                   
-        //             var kind = FileModuleKind.Managed;
-        //             if(path.Is(FileKind.Exe)) 
-        //                 kind |= FileModuleKind.Exe;
-        //             else
-        //                 kind |= FileModuleKind.Dll;
-        //             dst.Add(new AssemblyFile(path, def.GetAssemblyName()));
-        //             if(math.mod(inc(ref counter),1000) == 0)
-        //                 channel.Babble($"Found {counter} assemblies");
-        //         }
-        //         catch(Exception e)
-        //         {
-        //             channel.Error(e);
-        //         }
-        //     });
-        //     channel.Ran(running, $"Found {counter} assemblies");
-        //     return new (src,dst.Array());
-        // }
-
         public static MetadataMemory memory(MemorySeg src, AssemblyKey assembly)  
             => new MetadataMemory(src, assembly);
 
@@ -95,7 +76,18 @@ namespace Z0
             => new AssemblyComments(channel, src);
             
         public static ReadOnlySeq<EcmaRowStats> stats(AssemblyIndex src)
-            => EcmaReader.stats(src.Distinct().Select(x => x.Path));
+            => stats(src.Distinct().Select(x => x.Path));
+
+        public static ReadOnlySeq<EcmaRowStats> stats(IEnumerable<FilePath> src)
+        {
+            var dst = bag<EcmaRowStats>();
+            iter(src, path => {
+                using var file = Ecma.file(path);
+                var reader = Ecma.reader(file);
+                reader.ReadTableStats(dst);                
+            }, true);
+            return dst.Array().Sort();
+        }
 
         public static MemberKey key(CompositeDispenser dispenser, EcmaMethodDef src)
             => new (src.Assembly, src.Token, dispenser.String(src.Namespace), dispenser.String(src.DeclaringType), dispenser.String(src.MethodName));
@@ -155,9 +147,6 @@ namespace Z0
         public static EcmaFile file(FilePath src)
             => EcmaFile.open(src);
 
-        public static EcmaReader reader(EcmaFile src)
-            => EcmaReader.create(src);
-                    
         public static IEnumerable<EcmaTables.AssemblyRefRow> refs(FilePath src)
         {
             using var ecma = file(src);
@@ -273,7 +262,6 @@ namespace Z0
             dst.TargetName = reader.String(src.Name);
             return dst;
         }
-
 
         public static bool parse(string src, out EcmaToken dst)
         {
@@ -407,10 +395,6 @@ namespace Z0
             }, true);
         }
 
-
-        public static EcmaReader reader(Assembly src)
-            => EcmaReader.create(src);
-
         /// <summary>
         /// Defines a <see cref='EcmaDataSource'/> over a specified <see cref='Assembly'/>
         /// </summary>
@@ -445,18 +429,6 @@ namespace Z0
 
         public static ReadOnlySpan<Sym<TableIndex>> TableKinds()
             => Symbols.index<TableIndex>().View;
-
-        public static EcmaRowKeys keys<T>(ReadOnlySpan<T> handles)
-            where T : unmanaged
-        {
-            var count = handles.Length;
-            var buffer = alloc<EcmaRowKey>(count);
-            ref var dst = ref first(buffer);
-            for(var i=0; i<count; i++)
-            {}
-                //seek(dst,i) = new EcmaRowKey(kind, skip(handles,i));
-            return buffer;
-        }
 
         public static void visualize(FilePath src, FilePath dst)
             => Mdv.run(src.Name, dst.Name);
@@ -495,10 +467,4 @@ namespace Z0
             return length;
         }
    }
-
-    partial class XTend
-    {
-        public static EcmaReader EcmaReader(this MappedAssembly src)
-            => Z0.EcmaReader.create(src.BaseAddress, src.FileSize);
-    }
 }
