@@ -23,28 +23,5 @@ namespace Z0
                 Def = def;
             }
         }
-
-        public sealed class Methods : ReadOnlySeq<Methods, Method>
-        {
-            public AssemblyKey AssemblyKey;
-
-            public FilePath AssemblyPath;
-
-            public VersionedName AssemblyName
-                => AssemblyKey.Identifier;
-
-            public Methods()                    
-            {
-                AssemblyKey = AssemblyKey.Empty;
-            }
-
-            public Methods(AssemblyKey key, FilePath path, params Method[] src)
-                : base(src)
-            {
-                AssemblyPath = path;
-                AssemblyKey = key;
-            }
-        }        
     }
-
 }

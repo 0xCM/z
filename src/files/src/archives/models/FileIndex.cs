@@ -59,8 +59,7 @@ namespace Z0
 
         }
 
-
-        public FileIndex Seal()
+        internal FileIndex Seal()
         {
             SortedEntries = HashLookup.Values.Array().Sort().Resequence();
             return this;

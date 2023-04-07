@@ -90,12 +90,6 @@ namespace Z0
             return buffer.Array().Sort().Resequence();
         }
 
-        // public void Report(IDbArchive dst)
-        // {
-        //     Channel.TableEmit(Report(), dst.Path($"assemblies.index", FileKind.Csv));
-        //     Channel.TableEmit(Distinct(), dst.Path($"assemblies.index.distinct", FileKind.Csv));
-        // }
-
         public void CopyTo(IDbArchive dst)
         {
             var src = Distinct();
@@ -154,7 +148,7 @@ namespace Z0
             public uint Seq;
 
             [Render(64)]
-            public readonly @string Name;
+            public readonly VersionedName Name;
 
             [Render(16)]
             public readonly AssemblyVersion Version;
@@ -182,7 +176,7 @@ namespace Z0
                 TargetFramework = framework;
                 FileSize = size.Kb;
                 Version = key.Version;
-                Name = key.Name;
+                Name = key.AssemblyName;
                 Mvid = key.Mvid;
                 ContentHash = hash;
             }
@@ -206,7 +200,7 @@ namespace Z0
             }
                     
             public AssemblyFile File 
-                => new AssemblyFile(Path, Key);
+                => new AssemblyFile(Path, Name);
 
             uint ISequential.Seq { get => Seq; set => Seq = value; }
 

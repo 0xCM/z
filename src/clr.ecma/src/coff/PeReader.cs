@@ -8,7 +8,7 @@ namespace Z0
 
     using static sys;
 
-    public class PeReader : IDisposable
+    public unsafe class PeReader : IDisposable
     {
         [Op]
         public static PeReader create(FilePath src)
@@ -30,18 +30,6 @@ namespace Z0
                 return false;
             }
         }
-
-        [MethodImpl(Inline), Op]
-        public static PeDirectoryEntry directory(Address32 rva, uint size)
-        {
-            var dst = new PeDirectoryEntry();
-            dst.Rva = rva;
-            dst.Size = size;
-            return dst;
-        }
-
-        public ReadOnlySeq<SectionHeaderRow> SectionHeaders()
-            => Tables.SectionHeaders;
 
         PeReader(FilePath src, FileStream stream, PEReader reader)
         {
@@ -86,6 +74,17 @@ namespace Z0
 
         MetadataReader _MD;
 
+        //PEMemoryBlock _Image;
+
+        MemorySeg _Image;
+
+        public ref readonly MemorySeg GetImage()
+        {
+            if(_Image.IsEmpty)
+                _Image = new (PE.GetEntireImage().Pointer, PE.GetEntireImage().Length);
+            return ref _Image;            
+        }
+
         public void Dispose()
         {
             PE?.Dispose();
@@ -101,8 +100,8 @@ namespace Z0
             get => PE.PEHeaders;
         }
 
-        public ReadOnlySpan<MemberReferenceHandle> MemberRefHandles
-            => MD.MemberReferences.ToArray();
+        // public ReadOnlySpan<MemberReferenceHandle> MemberRefHandles
+        //     => MD.MemberReferences.ToArray();
 
         public PEMemoryBlock ReadSectionData(PeDirectoryEntry src)
             => PE.GetSectionData((int)src.Rva);

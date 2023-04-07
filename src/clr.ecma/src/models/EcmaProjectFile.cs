@@ -24,7 +24,7 @@ namespace Z0
         public string Format()
         {
             var dst = text.emitter();
-            dst.AppendLine($"{Key.Name}/{Key.Version}/{Source.Path}");
+            dst.AppendLine($"{Key.AssemblyName}/{Key.Version}/{Source.Path}");
             iter(Dependencies.ManagedDependencies, v => dst.AppendLine($"  --> managed/{v.TargetName}/v{v.TargetVersion}"));
             iter(Dependencies.NativeDependencies, v => dst.AppendLine($"  --> native/{v.TargetName}"));
             return dst.Emit();

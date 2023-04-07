@@ -10,10 +10,10 @@ namespace Z0
         const string Table = "assemblies.list";
 
         [Render(64)]
-        public @string AssemblyName;
+        public VersionedName AssemblyName;
 
         [Render(12)]
-        public AssemblyVersion Version;
+        public AssemblyVersion AssemblyVersion;
 
         [Render(56)]
         public Hash128 Md5Hash;

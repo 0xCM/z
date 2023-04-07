@@ -12,7 +12,7 @@ namespace Z0
             const string TableName = "members.keys";
 
             [Render(48)]
-            public readonly AssemblyKey Assembly;
+            public readonly VersionedName Assembly;
 
             [Render(12)]
             public readonly EcmaToken MemberToken;
@@ -27,7 +27,7 @@ namespace Z0
 
             public readonly StringRef MemberName;
 
-            public MemberKey(AssemblyKey assembly, EcmaToken token, StringRef ns, StringRef decl, StringRef member)
+            public MemberKey(VersionedName assembly, EcmaToken token, StringRef ns, StringRef decl, StringRef member)
             {
                 Assembly = assembly;
                 MemberToken = token;

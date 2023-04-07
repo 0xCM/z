@@ -9,15 +9,22 @@ namespace Z0
     {
         const string TableName = "ecma.methods";
 
-        public AssemblyKey Assembly;
-        
+        [Render(12)]
         public EcmaToken Token;
 
+        public AssemblyKey AssemblyKey;
+
+        [Render(48)]            
+        public VersionedName AssemblyName;
+        
+        [Render(24)]
         public @string Namespace;
 
+        [Render(24)]
         public @string DeclaringType;
 
-        public @string MethodName;
+        [Render(24)]
+        public @string Name;
 
         public Address32 Rva;
         
@@ -31,10 +38,10 @@ namespace Z0
             => new EcmaMember{
                 Token = Token,
                 Kind = EcmaMemberKind.Method,                
-                Assembly = Assembly,
+                AssemblyName = AssemblyName,
                 Namespace = Namespace,
                 DeclaringType = DeclaringType,
-                Name = MethodName,
+                Name = Name,
             };
         public int CompareTo(EcmaMethodDef src)
             => Member().CompareTo(src.Member());

@@ -8,9 +8,9 @@ namespace Z0
     using static sys;
 
     [ApiHost]
-    public ref struct ColumnSet
+    public struct ColumnSet
     {
-        readonly Span<ColumDef> Columns;
+        readonly Seq<ColumDef> Columns;
 
         ushort Index;
 
@@ -26,13 +26,13 @@ namespace Z0
         public ColumnSet(uint capacity)
         {
             Index = 0;
-            Columns = span<ColumDef>(capacity);
+            Columns = alloc<ColumDef>(capacity);
         }
 
         [MethodImpl(Inline),Op]
         public ColumnSet WithColumn(in ColumDef src)
         {
-            seek(Columns, Index++) = src;
+            Columns[Index++] = src;
             return this;
         }
     }

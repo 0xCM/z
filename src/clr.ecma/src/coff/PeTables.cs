@@ -40,7 +40,6 @@ namespace Z0
 
         public ref readonly ReadOnlySeq<SectionHeaderRow> SectionHeaders => ref _SectionHeaders;
 
-
         public ReadOnlySpan<PeDirectoryEntry> Directories => sys.recover<PeDirectoryEntry>(sys.bytes(_Directories));
         
         public ref readonly ReadOnlySeq<PeDirectoryRow> DirectoryRows => ref _DirectoryRows;

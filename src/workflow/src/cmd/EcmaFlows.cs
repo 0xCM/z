@@ -13,10 +13,6 @@ namespace Z0
 
     class EcmaFlows : WfAppCmd<EcmaFlows>
     {
-        ApiMd ApiMd => Wf.ApiMd();
-
-        Ecma Ecma => Wf.Ecma();
-
         IDbArchive Source;
 
         Alloc Alloc;
@@ -32,11 +28,11 @@ namespace Z0
 
         ConcurrentDictionary<FolderPath,ReadOnlySeq<EcmaRowStats>> EcmaStats = new();
 
-        ConcurrentDictionary<FolderPath,ReadOnlySeq<EcmaTypeDef>> EcmaTypeDefs = new();
+        ConcurrentDictionary<AssemblyFile,AssemblyTypes> EcmaTypeDefs = new();
 
         ConcurrentDictionary<FolderPath,AssemblyFiles> AssemblyFiles = new();
 
-        ConcurrentDictionary<FilePath,ReadOnlySeq<EcmaModels.Methods>> MethodDefs = new();
+        ConcurrentDictionary<FilePath,ReadOnlySeq<AssemblyMethods>> MethodDefs = new();
 
         ConcurrentDictionary<FolderPath,ReadOnlySeq<MetadataRoot>> EcmaRoots = new();
 
@@ -52,6 +48,18 @@ namespace Z0
 
         ConcurrentDictionary<FolderPath,ReadOnlySeq<EcmaPinvoke>> EcmaPinvokes = new();
 
+        const string Tag = "projects";
+
+        ApiMd ApiMd => Wf.ApiMd();
+
+        Ecma Ecma => Wf.Ecma();
+
+        IDbArchive Target 
+            => EnvDb.Nested(Tag, Source);
+
+        FilePath EcmaTablePath<T>(AssemblyFile file)
+            => EnvDb.Nested(Tag, Source).PrefixedTable<T>(file.Path.FileName.WithoutExtension.Format());
+
         AssemblyFiles GetAssemblyFiles()
             => AssemblyFiles.GetOrAdd(Source.Root, _ => Ecma.assemblies(Channel,Source));
 
@@ -64,8 +72,8 @@ namespace Z0
         ReadOnlySeq<MetadataRoot> GetMetadataRoots(IDbArchive src)
             => EcmaRoots.GetOrAdd(src.Root, _ => CalcMetadataRoots(src));
 
-        ReadOnlySeq<EcmaTypeDef> GetTypeDefs(IDbArchive src)
-            => EcmaTypeDefs.GetOrAdd(src.Root, _ => CalcTypeDefs(src));
+        AssemblyTypes GetTypeDefs(AssemblyFile src)
+            => EcmaTypeDefs.GetOrAdd(src, _ => CalcTypeDefs(src));
 
         ReadOnlySeq<MemberComments> GetMemberComments()
             =>  MemberCommentRows.GetOrAdd(Source.Root, _ => Ecma.CalcMemberComments(Source));
@@ -76,22 +84,33 @@ namespace Z0
         ReadOnlySeq<EcmaPinvoke> GetPinvokes()
             => EcmaPinvokes.GetOrAdd(Source.Root, _ => CalcPinvokes(Source));
 
-        ReadOnlySeq<EcmaTypeDef> CalcTypeDefs(IDbArchive src)
+        AssemblyTypes CalcTypeDefs(AssemblyFile file)
         {
-            var dst = bag<EcmaTypeDef>();
-            iter(GetAssemblyIndex().Distinct(), file => {
+            var types = bag<EcmaTypeDef>();
             using var ecma = Ecma.file(file.Path);
             var reader = Ecma.reader(ecma);
             iter(reader.ReadTypeDefs(), t => {
                 if(!t.Name.Contains("<") && !t.DeclaringType.Contains("<"))
-                    dst.Add(t);
-            }                
-            );
-                
-            }, true);
-            return dst.Array().Sort();
+                    types.Add(t);
+            });
+            return new AssemblyTypes(file, types.Array().Sort());
+
         }
 
+        ReadOnlySeq<AssemblyTypes> CalcTypeDefs()
+        {
+            var dst = bag<AssemblyTypes>();
+            iter(GetAssemblyIndex().Distinct(), entry => {
+                    dst.Add(CalcTypeDefs(new AssemblyFile(entry.Path, entry.Key.AssemblyName)));
+                }, true);                
+            return dst.Array();
+        }
+
+        ReadOnlySeq<AssemblyTypes> GetTypeDefs()
+        {
+            return CalcTypeDefs();
+            
+        }
         ReadOnlySeq<MetadataRoot> CalcMetadataRoots(IDbArchive src)
         {
             var dst = bag<MetadataRoot>();
@@ -119,20 +138,19 @@ namespace Z0
             return dst.Array().Sort();
         }
 
-        ReadOnlySeq<EcmaModels.Methods> CalcMethods()
+        ReadOnlySeq<AssemblyMethods> CalcMethods()
         {
             var dispenser = Alloc.Composite();
             var index = GetAssemblyIndex();
-            var dst = bag<EcmaModels.Methods>();
+            var dst = bag<AssemblyMethods>();
             var distinct = index.Distinct();
             var counter = 0u;
             iter(distinct, entry => {
                 using var file = Ecma.file(entry.Path);
                 var reader = file.EcmaReader();
                 var key = reader.AssemblyKey();
-                var methods = reader.ReadMethodDefs().Where(m => !text.contains(m.MethodName, '<') && !text.contains(m.DeclaringType, '<'))
-                    .Map(m => new EcmaModels.Method(Ecma.key(dispenser, m), m));
-                dst.Add(new (key, entry.Path, methods));
+                var methods = reader.ReadMethodInfo().Where(m => !text.contains(m.MethodName, '<') && !text.contains(m.DeclaringType, '<'));
+                dst.Add(new AssemblyMethods(new AssemblyFile(entry.Path,key.AssemblyName), methods.Storage));
                 if((++counter % 1000) == 0)
                 {
                     Channel.Row($"Computed methods for {counter} assemblies");
@@ -142,45 +160,46 @@ namespace Z0
             return dst.Array();
         }
 
-        ReadOnlySeq<EcmaModels.Methods> GetMethodDefs()
+        ReadOnlySeq<AssemblyMethods> GetMethodDefs()
             => CalcMethods();
 
-        void Emit(ReadOnlySeq<EcmaModels.Methods> src)
+        FileIndex GetModules()
+            => ModuleIndex.GetOrAdd(Source.Root, _ => FS.index(Archives.modules(Source).MemberPaths()));
+    
+        void Emit(ReadOnlySeq<AssemblyMethods> src)
         {
-            iter(src, m => {
-                var root = EnvDb.Scoped("ecma");
-                var folder = EnvDb.Nested("ecma", Source);
-                var dst =  EnvDb.Nested("ecma", Source).Path(FS.file($"{m.AssemblyKey.Name}.{m.AssemblyKey.Version}.{m.Hash}.ecma.methods", FileKind.Csv));                
-                Channel.TableEmit(m.View, dst);
+            iter(src, methods => {                
+                if(methods.IsNonEmpty)
+                    Channel.TableEmit(methods.View,EcmaTablePath<EcmaMethodInfo>(methods.File));
             },true);
         }
 
         void Emit(ReadOnlySeq<MemberComments> src)
         {
-            Channel.TableEmit(src, EnvDb.Nested("ecma", Source).Table<MemberComments>());
+            Channel.TableEmit(src, Target.Table<MemberComments>());
         }
 
         void Emit(ReadOnlySeq<SectionHeaderRow> src)
         {
-            Channel.TableEmit(src, EnvDb.Nested("pe", Source).Table<SectionHeaderRow>());
+            Channel.TableEmit(src, Target.Table<SectionHeaderRow>());
             SectionHeaderRows.TryAdd(Source.Root, src);                
         }
 
         void Emit(ReadOnlySeq<PeDirectoryRow> src)
         {
-            Channel.TableEmit(src, EnvDb.Nested("pe", Source).Table<PeDirectoryRow>());
+            Channel.TableEmit(src, Target.Table<PeDirectoryRow>());
             PeDirectoryRows.TryAdd(Source.Root, src);                
         }
 
         void Emit(ReadOnlySeq<PeFileInfo> src)
         {
-            Channel.TableEmit(src, EnvDb.Nested("pe", Source).Table<PeFileInfo>());
+            Channel.TableEmit(src, Target.Table<PeFileInfo>());
             PeFileInfoRows.TryAdd(Source.Root, src);
         }
 
         void Emit(ReadOnlySeq<EcmaPinvoke> pinvokes)
         {
-            var path = EnvDb.Nested("ecma", Source).Path("ecma.pinvokes", FileKind.Csv);
+            var path = Target.Path("ecma.pinvokes", FileKind.Csv);
             Channel.TableEmit(pinvokes, path);
         }
 
@@ -188,23 +207,31 @@ namespace Z0
         {
             var managed = src.SelectMany(x => x.ManagedDependencies).Sort();
             var native = src.SelectMany(x => x.NativeDependencies).Sort();
-            Channel.TableEmit(managed, EnvDb.Nested("ecma", Source).Table<ManagedDependency>());
-            Channel.TableEmit(native, EnvDb.Nested("ecma", Source).Table<NativeDependency>());
+            Channel.TableEmit(managed, Target.Table<ManagedDependency>());
+            Channel.TableEmit(native, Target.Table<NativeDependency>());
         }
 
         void EmitStats()
         {
-            Channel.TableEmit(GetEcmaStats(), EnvDb.Nested("ecma", Source).Table<EcmaRowStats>());
+            Channel.TableEmit(GetEcmaStats(), Target.Table<EcmaRowStats>());
         }
+
 
         void EmitTypeDefs()
         {
-            Channel.TableEmit(GetTypeDefs(Source), EnvDb.Nested("ecma", Source).Table<EcmaTypeDef>());
+            var defs = GetTypeDefs();
+            iter(defs, def => {
+                if(def.IsNonEmpty)
+                {
+                    var dst = Target.PrefixedTable<EcmaTypeDef>(def.File.Path.FileName.WithoutExtension.Format());
+                    Channel.TableEmit(def.View, EcmaTablePath<EcmaTypeDef>(def.File));
+                }
+            },true);
         }
 
         void EmitMetadataRoots()
         {
-            Channel.TableEmit(GetMetadataRoots(Source), EnvDb.Nested("ecma", Source).Table<MetadataRoot>());
+            Channel.TableEmit(GetMetadataRoots(Source), Target.Table<MetadataRoot>());
         }
 
         void EmitReports()
@@ -218,7 +245,7 @@ namespace Z0
         }
 
         void EmitMethodDefs()
-        {
+        {            
             Emit(GetMethodDefs());
         }
 
@@ -272,7 +299,7 @@ namespace Z0
                 var reader = file.EcmaReader();
                 iter(reader.ReadConstants(ref seq), k => dst.Add(k));
             }, true);
-            Channel.TableEmit(dst.Array(), EnvDb.Nested("ecma", Source).Table<EcmaConstInfo>());
+            Channel.TableEmit(dst.Array(), Target.Table<EcmaConstInfo>());
         }
 
         [CmdOp("ecma/reports")]
@@ -299,24 +326,41 @@ namespace Z0
         void EmitEcmaMethods(CmdArgs args)
         {
             Source = FS.archive(args[0]);
-            var defs = GetMethodDefs();
-            var lookup = defs.GroupBy(x => x.AssemblyName).Map(x => (x.Key, x.ToHashSet())).ToDictionary();
-            iter(lookup.Keys, k => {
-                var value = lookup[k];
-                if(value.Count > 1)
-                {
-                    iter(value, v => Channel.Row(v.AssemblyPath));
-                }
-            });            
+            EmitMethodDefs();
         }
 
-        [CmdOp("ecma/analyze")]
+        [CmdOp("projects/analyze")]
         void EmitEcmaAnalyses(CmdArgs args)
         {
             Source = FS.archive(args[0]);
+            EmitPeInfo();
+            EmitPinvokes();
             EmitReports();
             EmitStats();
             EmitDeps();
+        }
+
+        [CmdOp("coff/objects")]
+        void ReadCoffHeaders(CmdArgs args)
+        {
+            Source = FS.archive(args[0]);
+            var objects = GetModules().Distinct().Where(e => e.Path.Is(FileKind.Obj));
+            var formatter = CsvTables.formatter<CoffHeader>();
+            var counter = 0u;
+            iter(objects, obj => {
+                var o = CoffObjects.@object(obj.Path);
+                var strings = o.Strings;
+                foreach(var symbol in o.Symbols)
+                {
+                    Channel.Row(string.Format("{0,-48} | {1,-8} | {2,-12} | {3,-8} | {4}", obj.Path.FileName, symbol.Section, symbol.Value, symbol.Type, strings.Text(symbol)));
+                }
+
+                foreach(var section in o.SectionHeaders)
+                {
+                    Channel.Row(string.Format("{0,-12} | {1} | {2}", section.Name, section.PointerToRawData, section.PointerToRelocations));
+                }
+                
+            });
         }
 
         [CmdOp("libs/docs")]
@@ -351,14 +395,62 @@ namespace Z0
             }
         }
 
-        FileIndex Modules()
-            => ModuleIndex.GetOrAdd(Source.Root, _ => FS.index(Archives.modules(Source).MemberPaths()));
+        unsafe Dictionary<PeDirectoryKind,IImageDirectory> CalcDirectories(PeReader reader)
+        {
+            var directories = reader.Tables.DirectoryRows;
+            var image = reader.GetImage();
+            var memory = MemoryReaders.reader(image);
+            var dst = dict<PeDirectoryKind,IImageDirectory>();
+            iter(directories, d => {
+                var kind = d.Kind;
+                var data = memory.View(d.Rva, d.Size);
+                switch(kind)
+                {
+                    case PeDirectoryKind.BaseRelocationTable:
+                    break;   
+                    case PeDirectoryKind.ExportTable:
+                        dst[kind] = memory.View<ExportDirectory>(d.Rva);
+                    break;   
+                    case PeDirectoryKind.ImportTable:
+                    break;   
+                }
+            });
 
-        [CmdOp("pe/info")]
-        unsafe void EmitPeInfo(CmdArgs args)
+            return dst;
+        }
+        
+
+        void EmitDirectories()
+        {
+            var src = GetModules();
+            iter(src.Distinct(), entry => {
+                try
+                {
+                    using var reader = PeReader.create(entry.Path);                
+                    var directories = CalcDirectories(reader);
+                    iter(directories.Keys, k => {
+                        var directory = directories[k];
+                        Channel.Row(entry.Path, FlairKind.StatusData);
+                        Channel.Row(directory.Format());
+                    });
+                }
+                catch(Exception e)
+                {
+                    Channel.Warn($"{e.Message}: {entry.Path}");
+                }
+            },false);
+        }
+
+        [CmdOp("pe/directories")]
+        void EmitPeDirectories(CmdArgs args)
         {
             Source = FS.archive(args[0]);
-            var index = Modules();
+            EmitDirectories();
+
+        }
+        unsafe void EmitPeInfo()
+        {
+            var index = GetModules();
             var headers = bag<SectionHeaderRow>();
             var dirs = bag<PeDirectoryRow>();
             var info = sys.bag<PeFileInfo>();
@@ -397,6 +489,13 @@ namespace Z0
                 () => Emit(headers.Array().Sort().Resequence()),
                 () => Emit(dirs.Array().Sort().Resequence()), 
                 () => Emit(info.Array().Sort().Resequence()));
+             
+        }
+        [CmdOp("pe/info")]
+        unsafe void EmitPeInfo(CmdArgs args)
+        {
+            Source = FS.archive(args[0]);
+            EmitPeInfo();
         }
     }
 }

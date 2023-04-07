@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public class TableRows
+    public class TableBuilder
     {
         List<TableRow> Data;
 
@@ -16,10 +16,10 @@ namespace Z0
 
         string Source;
 
-        public static TableRows create()
-            => new TableRows(0);
+        public static TableBuilder create()
+            => new TableBuilder(0);
 
-        public TableRows(uint kind)
+        public TableBuilder(uint kind)
         {
             Kind = kind;
             Source = EmptyString;
@@ -27,43 +27,43 @@ namespace Z0
             Cols = array<TableColumn>();
         }
 
-        public TableRows WithKind(uint kind)
+        public TableBuilder WithKind(uint kind)
         {
             Kind = kind;
             return this;
         }
 
-        public TableRows WithSource(string src)
+        public TableBuilder WithSource(string src)
         {
             Source = src;
             return this;
         }
 
-        public TableRows WithRow(in TableRow row)
+        public TableBuilder WithRow(in TableRow row)
         {
             Data.Add(row);
             return this;
         }
 
-        public TableRows WithColumns(TableColumn[] cols)
+        public TableBuilder WithColumns(TableColumn[] cols)
         {
             Cols = cols;
             return this;
         }
 
-        public TableRows WithRow(TableCell[] cells)
+        public TableBuilder WithRow(TableCell[] cells)
         {
             Data.Add(new TableRow(0, cells));
             return this;
         }
 
-        public TableRows WithRow(string[] cells)
+        public TableBuilder WithRow(string[] cells)
         {
             Data.Add(new TableRow(0, cells.Select(x => new TableCell(x))));
             return this;
         }
 
-        public TableRows WithRows(ReadOnlySpan<TableRow> src)
+        public TableBuilder WithRows(ReadOnlySpan<TableRow> src)
         {
             var count = src.Length;
             for(var i=0; i<count; i++)
@@ -71,7 +71,7 @@ namespace Z0
             return this;
         }
 
-        public TableRows IfNonEmpty(Action f)
+        public TableBuilder IfNonEmpty(Action f)
         {
             if(IsNonEmpty)
                 f();
@@ -90,7 +90,7 @@ namespace Z0
             return dst;
         }
 
-        public TableRows Clear()
+        public TableBuilder Clear()
         {
             Data.Clear();
             Cols.Clear();

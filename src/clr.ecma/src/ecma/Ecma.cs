@@ -13,6 +13,15 @@ namespace Z0
     [ApiHost]
     public class Ecma : WfSvc<Ecma>
     {        
+        public static AssemblyKey key(Assembly src)
+            => Ecma.reader(src).AssemblyKey();
+
+        public static MemberKey key(CompositeDispenser dispenser, EcmaMethodDef src)
+            => new (src.AssemblyName, src.Token, dispenser.String(src.Namespace), dispenser.String(src.DeclaringType), dispenser.String(src.Name));
+
+        public static MemberKey key(CompositeDispenser dispenser, EcmaMember src)
+            => new (src.AssemblyName, src.Token, dispenser.String(src.Namespace), dispenser.String(src.DeclaringType), dispenser.String(src.Name));
+
         public static EcmaReader reader(MappedAssembly src)
             => EcmaReader.create(src.BaseAddress, src.FileSize);
 
@@ -28,7 +37,7 @@ namespace Z0
             iter(src, file => {
                 dst.Add(new AssemblyListEntry{
                     AssemblyName = file.AssemblyName,
-                    Version = file.Version,
+                    AssemblyVersion = file.Version,
                     Md5Hash = FS.hash(file.Path).FileHash.ContentHash,
                     Path = file.Path
                 });
@@ -54,9 +63,6 @@ namespace Z0
         public static EcmaMvid mvid(Assembly src)
             => Ecma.reader(src).Mvid();
 
-        public static AssemblyKey key(Assembly src)
-            => Ecma.reader(src).AssemblyKey();
-
         [Op]
         public static EcmaModuleInfo describe(Assembly src)
         {
@@ -70,7 +76,7 @@ namespace Z0
         }
 
         public static IEnumerable<FilePath> valid(DbArchive src, FileKind kind)
-            => from file in src.Enumerate(true, $"*.{kind.Ext()}") where valid(file) select file;                        
+            => from file in src.Files(true, kind) where valid(file) select file;                        
 
         public static AssemblyComments comments(IWfChannel channel, IDbArchive src)
             => new AssemblyComments(channel, src);
@@ -88,9 +94,6 @@ namespace Z0
             }, true);
             return dst.Array().Sort();
         }
-
-        public static MemberKey key(CompositeDispenser dispenser, EcmaMethodDef src)
-            => new (src.Assembly, src.Token, dispenser.String(src.Namespace), dispenser.String(src.DeclaringType), dispenser.String(src.MethodName));
 
         [MethodImpl(Inline), Op]
         public unsafe static MetadataReaderProvider provider(Assembly src)
@@ -170,7 +173,6 @@ namespace Z0
                 return false;
             }
         }
-
 
         public ReadOnlySeq<MemberComments> CalcMemberComments(IDbArchive src)
         {            

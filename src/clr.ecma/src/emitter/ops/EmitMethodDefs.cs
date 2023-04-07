@@ -17,24 +17,21 @@ namespace Z0
             void Exec()
             {
                 var reader = EcmaReader.create(src);
-                var buffer = list<EcmaMethodInfo>();
-                reader.ReadMethodDefs(buffer);
-                Channel.TableEmit(buffer.ViewDeposited(), dst.PrefixedTable<EcmaMethodInfo>(src.GetSimpleName()));
+                Channel.TableEmit(reader.ReadMethodInfo(), dst.PrefixedTable<EcmaMethodInfo>(src.GetSimpleName()));
             }
 
             Try(Exec);
         }
 
-        public void EmitMethodDefs(IEnumerable<AssemblyFile> src, IDbArchive dst)
-            => iter(src, a => EmitMethodDefs(a, dst), PllExec);
+        // public void EmitMethodInfo(IEnumerable<AssemblyFile> src, IDbArchive dst)
+        //     => iter(src, a => EmitMethodInfo(a, dst), PllExec);
 
-        void EmitMethodDefs(AssemblyFile src, IDbArchive dst)
-        {
-            using var file = Ecma.file(src.Path);
-            var reader = file.EcmaReader();
-            var buffer = list<EcmaMethodInfo>();
-            reader.ReadMethodDefs(buffer);
-            Channel.TableEmit(buffer.ViewDeposited(), dst.PrefixedTable<EcmaMethodInfo>(src.AssemblyName));
-        }
+        // void EmitMethodInfo(AssemblyFile src, IDbArchive dst)
+        // {
+        //     using var file = Ecma.file(src.Path);
+        //     var reader = file.EcmaReader();
+        //     var buffer = list<EcmaMethodInfo>();
+        //     Channel.TableEmit(reader.ReadMethodInfo(), dst.PrefixedTable<EcmaMethodInfo>(src.AssemblyName.Format()));
+        // }
     }
 }

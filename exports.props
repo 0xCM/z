@@ -9,7 +9,6 @@
    <Import Project="$(MsBuildThisFileDirectory)src/bitvectors/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/bits/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/bitfields/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/builds/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/buffers/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/binary/exports.props"/>
 
@@ -31,7 +30,6 @@
    <Import Project="$(MsBuildThisFileDirectory)src/cmd/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/digital/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/diagnostics/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/dynamic/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/events/exports.props"/>

@@ -41,6 +41,12 @@ namespace Z0
             return dst.Array();            
         }
 
+        public static FileIndex index(IDbArchive src, params FileExt[] ext)
+            => FS.index(src.Files(true,ext));
+
+        public static FileIndex index(IDbArchive src, params FileKind[] kinds)
+            => FS.index(src.Files(true,kinds));
+
         public static FolderIndex index(IWfChannel channel, FolderQuery q)
         {
             var flow = channel.Running($"Indexing {q.Root}");

@@ -181,7 +181,7 @@ namespace Z0
         public AssemblyKey AssemblyKey()
         {
             if(_AssemblyKey.IsEmpty)
-                _AssemblyKey = new AssemblyKey(AssemblyName().SimpleName(), AssemblyName().Version, ReadTargetFramework(), Mvid(), ContentHash());
+                _AssemblyKey = new AssemblyKey(AssemblyName().GetVersionedName(), AssemblyName().Version, ReadTargetFramework(), Mvid(), ContentHash());
             return _AssemblyKey;            
         }
 

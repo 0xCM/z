@@ -14,13 +14,13 @@ namespace Z0
             => Root.Enumerate(true);
 
         IEnumerable<FilePath> Files(params FileKind[] kinds)
-            => Root.Enumerate(true, kinds);
+            => Root.Files(true, kinds);
 
         IEnumerable<FilePath> Files(params FileExt[] ext)
-            => Root.Enumerate(true, ext);
+            => Root.Files(true, ext);
 
         IEnumerable<FilePath> Files(string match)
-            => Root.Enumerate(true,match);
+            => Root.Files(true,match);
     }
 
     public interface IProjectArchive<K> : IProjectType

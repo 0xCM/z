@@ -1,5 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <Diagnostics>$(MsBuildThisFileDirectory)z0.diagnostics.csproj</Diagnostics>
-  </PropertyGroup>
-</Project>

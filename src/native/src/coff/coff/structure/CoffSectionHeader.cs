@@ -17,11 +17,11 @@ namespace Z0
 
         public uint SizeOfRawData;
 
-        public uint PointerToRawData;
+        public Address32 PointerToRawData;
 
-        public uint PointerToRelocations;
+        public Address32 PointerToRelocations;
 
-        public uint PointerToLinenumbers;
+        public Address32 PointerToLinenumbers;
 
         public ushort NumberOfRelocations;
 

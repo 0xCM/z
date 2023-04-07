@@ -4,7 +4,6 @@
     <ProjectReference Include="$(EMath)" />
     <ProjectReference Include="$(Dynamic)" />
     <ProjectReference Include="$(Buffers)" />
-    <ProjectReference Include="$(Win64)" />
     <ProjectReference Include="$(Projects)" />
     <ProjectReference Include="$(BitFields)" />
   </ItemGroup>

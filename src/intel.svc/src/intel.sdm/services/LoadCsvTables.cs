@@ -46,7 +46,7 @@ namespace Z0.Asm
             var cols = Seq<TableColumn>.Empty;
             var rows = list<TableRow>();
             var rowidx = z16;
-            var table = TableRows.create();
+            var table = TableBuilder.create();
             var tables = list<Table>();
             using var reader = src.LineReader(TextEncodingKind.Utf8);
             while(reader.Next(out var line))

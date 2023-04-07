@@ -13,7 +13,7 @@ namespace Z0
         public EcmaMemberKind Kind;
 
         [Render(48)]            
-        public AssemblyKey Assembly;
+        public VersionedName AssemblyName;
 
         [Render(24)]
         public @string Namespace;
@@ -26,7 +26,7 @@ namespace Z0
 
         public int CompareTo(EcmaMember src)
         {
-            var result = Assembly.CompareTo(src.Assembly);
+            var result = AssemblyName.CompareTo(src.AssemblyName);
             if(result == 0)
             {
                 if(result == 0)

@@ -38,7 +38,7 @@ namespace Z0
                         }
                         break;
                         case HandleKind.MethodDefinition:
-                            var mdef = ReadMethodDef((MethodDefinitionHandle)cons);
+                            var mdef = MD.GetMethodDefinition((MethodDefinitionHandle)cons);
                             
                         break;
                     }                                

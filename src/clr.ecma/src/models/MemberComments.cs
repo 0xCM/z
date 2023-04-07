@@ -8,7 +8,7 @@ namespace Z0
     public record class MemberComments : IComparable<MemberComments>
     {
         const string TableName = "api.comments";
-
+        
         [Render(64)]
         public readonly VersionedName AssemblyName;
 
@@ -21,14 +21,13 @@ namespace Z0
         [Render(1)]
         public readonly @string Data;
 
-        public MemberComments(VersionedName assembly, ApiCommentTarget kind, @string name, @string data)
+        public MemberComments(AssemblyFile file, ApiCommentTarget kind, @string name, @string data)
         {
-            AssemblyName = assembly;
+            AssemblyName = file.Identifier;
             MemberKind = kind;
             MemberName = name;
             Data = data;
         }
-
 
         public Hash32 Hash
         {

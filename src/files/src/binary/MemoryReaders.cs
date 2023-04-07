@@ -10,7 +10,10 @@ namespace Z0
     {
         public static MemoryReader reader(MemoryAddress @base, ByteSize size, uint offset = 0)
             => new MemoryReader(@base, size,offset);
-            
+
+        public static MemoryReader reader(MemorySeg src)
+            => new MemoryReader(src.BaseAddress, src.Size);
+
         public unsafe abstract class MemoryReader<R>
             where R : MemoryReader<R>
         {
@@ -82,6 +85,27 @@ namespace Z0
             public T View<T>(Address32 offset)
                 where T : unmanaged
                     => *Pointer<T>(offset);
+            
+            public ReadOnlySpan<byte> View(Address32 offset, ByteSize size)
+            {
+                var src = BaseAddress + offset;
+                if(src + size < LastAddress)
+                    return cover(src.Pointer<byte>(), size);
+                else
+                    return sys.empty<byte>();
+            }
+
+            public ReadOnlySpan<T> View<T>(Address32 offset, uint count)
+                where T : unmanaged
+            {
+                var src = BaseAddress + offset;
+                var size = size<T>()*count;
+                if(src + size < LastAddress)
+                    return cover(src.Pointer<T>(), size);
+                else
+                    return sys.empty<T>();
+            }
+
             public ReadOnlySpan<byte> Read(uint requested)
             {
                 var length = Position + requested < LastPosition ? requested : Remaining();

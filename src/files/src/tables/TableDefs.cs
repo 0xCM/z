@@ -102,11 +102,11 @@ namespace Z0
         [Op]
         static Type build(ModuleBuilder mb, CsvTableDef spec)
         {
-            var tb = valueType(mb, spec.TypeName, ExplicitAnsi);
+            var tb = @struct(mb, spec.TypeName, ExplicitAnsi);
             var fields = spec.Columns;
             var pos = z16;
             foreach(var f in fields)
-                column(pos++, f.Name, f.DataType);
+                field(tb, f.Name, f.DataType);
             var type = tb.CreateType();
             return type;
         }
@@ -114,9 +114,5 @@ namespace Z0
         [Op]
         public static uint offset(Type host, FieldInfo field)
             => (uint)Marshal.OffsetOf(host, field.Name);
-
-        [Op]
-        public static uint[] offsets(Type host, Index<FieldInfo> fields)
-            => fields.Select(f => offset(host,f));
     }
 }

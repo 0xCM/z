@@ -12,6 +12,5 @@ namespace Z0
         public static T ReadUnmanaged<T>(this BinaryReader src)
             where T : unmanaged
                 => @as<T>(span(src.ReadBytes((int)size<T>())));
-
     }
 }

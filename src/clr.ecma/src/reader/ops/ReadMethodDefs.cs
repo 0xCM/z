@@ -27,7 +27,7 @@ namespace Z0
                     member.Token = EcmaTokens.token(handle);
                     member.Kind = EcmaMemberKind.Method;
                     member.Namespace = ns;
-                    member.Assembly = key;
+                    member.AssemblyName = key.AssemblyName;
                     member.DeclaringType = declname;
                     member.Name = String(method.Name);                                    
                 });
@@ -41,16 +41,17 @@ namespace Z0
         {
             foreach(var handle in MD.MethodDefinitions)
             {
-                var src = ReadMethodDef(handle);                
+                var src = MD.GetMethodDefinition(handle);
                 var dst = new EcmaMethodDef();
                 var declarer = MD.GetTypeDefinition(src.GetDeclaringType());
                 var declname = String(declarer.Name);
                 var ns = String(declarer.Namespace);
-                dst.Assembly = AssemblyKey();
+                dst.AssemblyName = AssemblyKey().AssemblyName;
+                dst.AssemblyKey = AssemblyKey();
                 dst.DeclaringType = declname;
                 dst.Namespace = ns;
                 dst.Token = EcmaTokens.token(handle);
-                dst.MethodName = String(src.Name);
+                dst.Name = String(src.Name);
                 dst.SigData = Blob(src.Signature);
                 dst.Attributes = src.Attributes;
                 dst.ImplAttributes = src.ImplAttributes;
@@ -97,49 +98,32 @@ namespace Z0
             return ref dst;
         }
 
-        public MethodDefinition ReadMethodDef(MethodDefinitionHandle handle)
-            => MD.GetMethodDefinition(handle);
-
-        public ReadOnlySeq<EcmaMethodInfo> ReadMethodDefInfo()
+        public ReadOnlySeq<EcmaMethodInfo> ReadMethodInfo()
         {
+            var handles = MethodDefHandles();
+            var count = handles.Length;
             var rows = ReadMethodDefRows();
-            var count = rows.Length;
-            var dst = alloc<EcmaMethodInfo>(count);
-            var assembly = AssemblyName().SimpleName();
+            var buffer = alloc<EcmaMethodInfo>(count);
+            var assembly = AssemblyName();
             for(var i=0; i<count; i++)
             {
-                ref readonly var row = ref skip(rows,i);
-                ref var info = ref seek(dst,i);
-                info.Token = row.Token;
-                info.Component = assembly;
-                info.Attributes = row.Attributes;
-                info.ImplAttributes = row.ImplAttributes;
-                info.Rva = row.Rva;
-                info.CliSig = BlobArray(row.SigKey);
-                info.Name = String(row.NameKey);
+                ref readonly var handle = ref skip(handles,i);
+                var def = MD.GetMethodDefinition(handle);
+                var declarer = MD.GetTypeDefinition(def.GetDeclaringType());
+                seek(buffer,i) = new EcmaMethodInfo{
+                    AssemblyName = assembly,
+                    Attributes = def.Attributes,
+                    CliSig = BlobArray(def.Signature),
+                    DeclaringType = String(declarer.Name),
+                    Namespace = String(declarer.Namespace),
+                    ImplAttributes = def.ImplAttributes,
+                    MethodName = String(def.Name),
+                    Rva = def.RelativeVirtualAddress,
+                    Token = handle                    
+                };                        
             }
-            return dst;
+            return buffer.Sort();            
         }
 
-        public uint ReadMethodDefs(List<EcmaMethodInfo> dst)
-        {
-            var rows = ReadMethodDefRows();
-            var count = rows.Length;
-            var counter = 0u;
-            for(var i=0; i<count; i++, counter++)
-            {
-                ref readonly var src = ref skip(rows,i);
-                var def = new EcmaMethodInfo();
-                def.Token = src.Token;
-                def.Component = AssemblyName().SimpleName();
-                def.Attributes = src.Attributes;
-                def.ImplAttributes = src.ImplAttributes;
-                def.Rva = src.Rva;
-                def.CliSig = BlobArray(src.SigKey);
-                def.Name = String(src.NameKey);
-                dst.Add(def);
-            }
-            return counter;
-        }        
     }
 }

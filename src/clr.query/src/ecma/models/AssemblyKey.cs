@@ -7,7 +7,7 @@ namespace Z0
     public readonly record struct AssemblyKey : IDataType<AssemblyKey>
     {
         [Render(64)]
-        public readonly @string Name;
+        public readonly VersionedName AssemblyName;
 
         [Render(12)]
         public readonly AssemblyVersion Version;
@@ -22,19 +22,13 @@ namespace Z0
         public readonly Hash128 ContentHash;
         
         [MethodImpl(Inline)]
-        public AssemblyKey(@string name, AssemblyVersion version, @string framework, EcmaMvid mvid, Hash128 chash)
+        public AssemblyKey(VersionedName name, AssemblyVersion version, @string framework, EcmaMvid mvid, Hash128 chash)
         {
-            Name = name;
+            AssemblyName = name;
             TargetFramework = framework;
             Version = version;
             Mvid = mvid;
             ContentHash = chash;
-        }
-
-        public VersionedName Identifier
-        {
-            [MethodImpl(Inline)]
-            get => new (Name,Version);
         }
 
         public Hash32 Hash
@@ -46,20 +40,20 @@ namespace Z0
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => Name.IsEmpty || Mvid.IsEmpty;
+            get => AssemblyName.IsEmpty || Mvid.IsEmpty;
         }
 
         public bool IsNonEmpty
         {
             [MethodImpl(Inline)]
-            get => Name.IsNonEmpty && Mvid.IsNonEmpty;
+            get => AssemblyName.IsNonEmpty && Mvid.IsNonEmpty;
         }
 
         public override int GetHashCode()
             => Hash;
 
         public string Format()
-            => Identifier.Format();
+            => AssemblyName.Format();
 
         public override string ToString()
             => Format();
@@ -67,7 +61,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public int CompareTo(AssemblyKey src)
         {
-            var result = Name.CompareTo(src.Name);
+            var result = AssemblyName.CompareTo(src.AssemblyName);
             if(result == 0)
             {
                 result = Version.CompareTo(src.Version);
@@ -84,6 +78,6 @@ namespace Z0
         public bool Equals(AssemblyKey key)
             => Mvid == key.Mvid;
 
-        public static AssemblyKey Empty => new AssemblyKey(@string.Empty, AssemblyVersion.Empty, @string.Empty, EcmaMvid.Empty, default);
+        public static AssemblyKey Empty => new AssemblyKey(VersionedName.Empty, AssemblyVersion.Empty, @string.Empty, EcmaMvid.Empty, default);
     }
 }

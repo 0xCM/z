@@ -54,7 +54,7 @@ namespace Z0
                         iter(data.Keys, name => {
                             if(parse(name, out var kind, out var _name))
                             {
-                                _comments.TryAdd(name, new MemberComments(file.Identifier, kind, _name, data[name]));
+                                _comments.TryAdd(name, new MemberComments(file, kind, _name, data[name]));
                             }
                             else
                                 Channel.Warn($"Name parse error:{name}");

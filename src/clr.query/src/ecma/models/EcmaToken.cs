@@ -173,11 +173,15 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator EcmaToken(TypeDefinitionHandle src)
-            => MetadataTokens.GetToken(src);
+            => EcmaTokens.token(src);
 
         [MethodImpl(Inline)]
         public static implicit operator EcmaToken(ModuleReferenceHandle src)
-            => new EcmaToken(TableIndex.ModuleRef, sys.@as<ModuleReferenceHandle,uint>(src));
+            => EcmaTokens.token(src);
+
+       [MethodImpl(Inline)]
+        public static implicit operator EcmaToken(MethodDefinitionHandle src)
+            => EcmaTokens.token(src);
 
         public static EcmaToken Empty
             => default;

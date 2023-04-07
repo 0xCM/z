@@ -71,6 +71,6 @@ namespace Z0
         }
 
         public AssemblyFile AssemblyFile()
-            => new AssemblyFile(Path, MdReader.GetAssemblyDefinition().GetAssemblyName());
+            => new AssemblyFile(Path, MdReader.GetAssemblyDefinition().GetAssemblyName().GetVersionedName());
     }
 }

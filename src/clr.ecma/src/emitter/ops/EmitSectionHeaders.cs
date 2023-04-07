@@ -21,7 +21,7 @@ namespace Z0
                 foreach(var file in src)
                 {
                     using var reader = PeReader.create(file);
-                    var headers = reader.SectionHeaders();
+                    var headers = reader.Tables.SectionHeaders;
                     var count = headers.Length;
                     for(var i=0u; i<count; i++)
                         writer.WriteLine(formatter.Format(headers[i]));

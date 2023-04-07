@@ -63,6 +63,9 @@ namespace Z0
         IEnumerable<FilePath> Files(bool recurse)
             => Root.Files(recurse);
 
+        IEnumerable<FilePath> Files(bool recurse, string pattern)
+            => FS.files(Root, pattern, recurse);
+
         IEnumerable<FilePath> Files(FileExt ext)
             => DbFiles.Files(ext);
 
@@ -79,8 +82,11 @@ namespace Z0
             => DbFiles.Files(scope, true, kinds);
 
         IEnumerable<FilePath> Files(bool recurse, params FileExt[] ext)
-            => DbFiles.Files(recurse, ext);
+            => FS.files(Root, recurse, ext);
             
+        IEnumerable<FilePath> Files(bool recurse, params FileKind[] kinds)
+             => FS.files(Root, recurse, kinds);
+
         IDbArchive Delete()
         {
             Root.Delete();

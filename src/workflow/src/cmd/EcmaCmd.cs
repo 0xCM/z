@@ -93,21 +93,6 @@ namespace Z0
                 Channel.Row(string.Format("{0:x2} {1}", (byte)x.Value, x.Name));
             });
         }
-
-        [CmdOp("ecma/traverse")]
-        void EcmaTraverse(CmdArgs args)
-        {
-            // var src = AssemblyIndex.create(Channel, FS.dir(args[0]).DbArchive());
-            // using var map = src.AssemblyMap();
-            // iter(map.Keys, key => {
-            //     var assembly = map[key];
-            //     Channel.Row(string.Format("{0,-48} | {1,-16} | {2,-12}",
-            //         key, 
-            //         assembly.BaseAddress, 
-            //         assembly.FileSize 
-            //         ));
-            // });
-        }
         
      
         [CmdOp("db/typetables")]
@@ -235,40 +220,10 @@ namespace Z0
             });
         }
 
-        [CmdOp("pe/directories")]
-        unsafe void EmitPeDirectories(CmdArgs args)
-        {
-            var src = FS.dir(args[0]);
-            var index = FS.index(Archives.modules(src).Members().Select(x => x.Path));
-            var rows = list<PeDirectoryRow>();
-            iter(index.Distinct(), entry => {
-                try
-                {
-                    using var reader = PeReader.create(entry.Path);
-                    var tables = reader.Tables;
-                    rows.AddRange(tables.DirectoryRows);
-                    iter(tables.DirectoryRows, row => {
-                        if(row.Kind == PeDirectoryKind.DebugTable)
-                        {
-                            var dbdir = *((IMAGE_DEBUG_DIRECTORY*)reader.ReadSectionData(row.Entry()).Pointer);
-                            var seg = new MemorySeg<Address32,uint>((Address32)dbdir.AddressOfRawData, dbdir.SizeOfData);
-                            Channel.Row(seg.Format());                        
-                        }
-                    });
-                }
-                catch(Exception e)
-                {
-                    Channel.Warn($"{e.Message}: {entry.Path}");
-                }
-            });        
-
-            Channel.TableEmit(rows.Array().Sort().Resequence(), EnvDb.Nested("pe", src).Table<PeDirectoryRow>());
-        }
 
         [CmdOp("ecma/dump")]
         void EcmaEmitMetaDumps(CmdArgs args)
             => EcmaEmitter.EmitDump(FS.dir(args[0]).DbArchive(), EnvDb);
-
 
         [CmdOp("ecma/heaps")]
         void EmitEcmaHeaps(CmdArgs args)
@@ -380,7 +335,7 @@ enum {
                 var counter = 0u;
                 var depscount = 0u;
                 var types = dict<string,EcmaTypeDef>();
-                Channel.Row(key.Name, FlairKind.StatusData);                
+                Channel.Row(key.AssemblyName, FlairKind.StatusData);                
                 var deps = Ecma.CalcDependencies(ecma);
                 iter(deps.NativeDependencies, d =>  Channel.Row(string.Format("{0:D5} {1} --> {2}", depscount++, d.SourceName, d.TargetName), FlairKind.StatusData));
                 iter(deps.ManagedDependencies, d => Channel.Row(string.Format("{0:D5} {1} --> {2}/{3}",depscount++, d.SourceName, d.TargetName,d.TargetVersion), FlairKind.StatusData));

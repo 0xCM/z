@@ -22,13 +22,14 @@ namespace Z0.Tools
         protected override bool Include(FilePath src)
             => src.Is(FileKind.Exe) || src.Is(FileKind.Obj) || src.Is(FileKind.Dll);
 
-        [CmdOp("llvm/readobj/exports")]
+        [CmdOp("lib/exports")]
         void CoffExports(CmdArgs args)
         {
             var src = FS.archive(args[0]);
-            var dst = EnvDb.Nested("llvm-readobj", src.Root).Clear();
-            iter(Sources(args), entry => {
-                var filename = FS.file(entry.Path.FileName.Format() + "." + entry.Path.Hash.Format(false), FS.ext("exports"));                
+            var index = Archives.index(src, FileKind.Lib);
+            var dst = EnvDb.Nested("coff", src.Root).Clear();
+            iter(index.Distinct(), entry => {
+                var filename = FS.file(entry.Path.FileName.Format() + "." + entry.Path.Hash.Format(false), FS.ext("lib.exports"));                
                 Run(Cmd.args(entry.Path.Format(PathSeparator.FS), "--coff-exports"), entry.Path, dst.Path(filename));
             }, true);
         }

@@ -4,6 +4,17 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    partial class XTend
+    {
+        static Version64 GetVersion64(this AssemblyName src)
+            => new Version64((ushort)src.Version.Major, (ushort)src.Version.Minor, (ushort)src.Version.Build, (ushort)src.Version.Revision);
+
+        public static VersionedName GetVersionedName(this AssemblyName src)
+            => new (src.SimpleName(), src.GetVersion64());
+    }
+
+
+
     public record struct VersionedName : IComparable<VersionedName>
     {
         public readonly @string Name;
@@ -27,6 +38,18 @@ namespace Z0
         public bool Equals(VersionedName src)
             => Name == src.Name && Version == src.Version;
 
+        public bool IsEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Name.IsEmpty;
+        }
+
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Name.IsNonEmpty;
+        }
+
         [MethodImpl(Inline)]
         public int CompareTo(VersionedName src)
         {
@@ -44,5 +67,11 @@ namespace Z0
         
         public override string ToString()
             => Format();
+
+        [MethodImpl(Inline)]
+        public static implicit operator VersionedName(AssemblyName src)
+            => src.GetVersionedName();
+
+        public static VersionedName Empty => new VersionedName(EmptyString, default);
     }
 }

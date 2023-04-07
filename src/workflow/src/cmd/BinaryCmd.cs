@@ -20,11 +20,11 @@ namespace Z0
                 locations.Add(entry.Path.Format(PathSeparator.FS));
             });
             iter(index.Distinct(), entry => {
-                Channel.Row(string.Format(RenderPattern, entry.Key.Name, entry.FileSize, entry.Key.Version, entry.Key.Mvid));
+                Channel.Row(string.Format(RenderPattern, entry.Key.AssemblyName, entry.FileSize, entry.Key.Version, entry.Key.Mvid));
             });
 
             iter(index.Duplicates(), entry => {
-                Channel.Row(string.Format(RenderPattern, entry.Key.Name, entry.FileSize, entry.Key.Version, entry.Key.Mvid), FlairKind.StatusData);
+                Channel.Row(string.Format(RenderPattern, entry.Key.AssemblyName, entry.FileSize, entry.Key.Version, entry.Key.Mvid), FlairKind.StatusData);
             });
 
             var buffer = sys.span<byte>(2024);
@@ -42,6 +42,7 @@ namespace Z0
                 }
             }
         }
+
 
         [CmdOp("binary/test")]
         void RunTests()

@@ -32,7 +32,7 @@ namespace Z0
         [CmdOp("projects/pe")]
         void PeFiles(CmdArgs args)
         {
-            var src = FS.dir(args[0]).DbArchive().Enumerate(true, FileKind.Dll, FileKind.Exe, FileKind.Obj, FileKind.Sys);
+            var src = FS.dir(args[0]).DbArchive().Files(true, FileKind.Dll, FileKind.Exe, FileKind.Obj, FileKind.Sys);
             var dst = bag<SectionHeaderRow>();
             iter(src, path => {
                 try

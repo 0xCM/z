@@ -11,7 +11,7 @@ namespace Z0
     {
         public ReadOnlySeq<EcmaFieldDef> ReadFieldDefs()
         {
-            var name = AssemblyKey().Identifier;
+            var name = AssemblyKey().AssemblyName;
             var handles = FieldDefHandles();
             var count = handles.Length;
             var buffer = sys.list<EcmaFieldDef>();

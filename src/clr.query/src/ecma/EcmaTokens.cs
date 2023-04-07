@@ -40,6 +40,10 @@ namespace Z0
             => new EcmaToken(src);
 
         [MethodImpl(Inline), Op]
+        public static EcmaToken token(TypeDefinitionHandle src)
+            => MetadataTokens.GetToken(src);
+
+        [MethodImpl(Inline), Op]
         public static EcmaToken token(ParameterInfo src)
             => new EcmaToken(src);
 
