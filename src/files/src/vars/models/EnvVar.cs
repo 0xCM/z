@@ -82,7 +82,6 @@ namespace Z0
         public static implicit operator string(EnvVar src)
             => src.Value;
 
-
         public static EnvVar Empty
         {
             [MethodImpl(Inline)]
