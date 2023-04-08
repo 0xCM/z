@@ -26,7 +26,7 @@ namespace Z0
         public static Task<ExecToken> exec(IWfChannel channel, CmdArgs args)
         {
             var path = AppDb.Service.ProjectLib(args[0]).Scoped("cmd").Path(args[1], FileKind.Cmd);
-            return ToolExec.run(channel, path, CmdArgs.Empty, ToolExecSpec.Default);
+            return Tooling.run(channel, path, CmdArgs.Empty, ToolCmdSpec.Default);
         }
 
         public static Task<ExecToken> shell(IWfChannel channel, CmdArgs args)
@@ -35,7 +35,7 @@ namespace Z0
             {
                 var profile = args[0].Value;
                 var cwd = args.Count > 1 ? FS.dir(args[1]) : Env.cd();
-                return DevProjects.shell(channel, profile, cwd);  
+                return Tooling.shell(channel, profile, cwd);  
             }
             return sys.start(Run);
         }

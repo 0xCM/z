@@ -31,18 +31,18 @@ namespace Z0
         }
 
         protected virtual IToolStreamWriter CreateStatusWriter(FilePath dst)
-            => ToolFlows.writer(dst);
+            => Tooling.writer(dst);
 
         protected virtual IToolStreamWriter CreateErrorWriter(FilePath dst)
-            => ToolFlows.writer(dst);
+            => Tooling.writer(dst);
 
         Task<ExecStatus> Start(CmdArgs args, FilePath tool, FilePath src, FilePath dst)   
         {
-            var spec = ToolExec.spec(tool, args);  
+            var spec = Tooling.spec(tool, args);  
             SourcePath = src;
             TargetStream = CreateStatusWriter(dst);
             ErrorStream = CreateErrorWriter(dst + FS.ext("errors"));
-            var status = ToolFlows.start(this, spec);
+            var status = Tooling.start(this, spec);
             return status;
         }
         

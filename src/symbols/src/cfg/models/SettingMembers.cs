@@ -4,10 +4,20 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using api = Settings;
-    
     public class SettingMembers : ReadOnlySeq<SettingMembers,FieldInfo>
     {
+        public static string format(SettingMembers src, char sep)
+        {
+            var dst = text.emitter();
+            for(var i=0; i<src.Count; i++)
+            {
+                ref readonly var member = ref src[i];
+                dst.AppendLine($"{member.Name}{sep}{member.FieldType.DisplayName()}");
+            }
+
+            return dst.Emit();
+        }
+
         public SettingMembers()
         {
 
@@ -36,6 +46,6 @@ namespace Z0
         }
 
         public override string Format()
-            => api.format(this, Chars.Eq);
+            => format(this, Chars.Eq);
     }
 }

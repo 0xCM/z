@@ -9,7 +9,6 @@ namespace Z0
     {
         Tool Tool {get;}
         
-        string Type {get;}
 
         CmdArgs Args 
             => CmdArgs.Empty;

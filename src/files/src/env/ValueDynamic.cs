@@ -10,12 +10,83 @@ namespace Z0
 
     public class ValueDynamic
     {
+        public static uint settings(ref AsciLineReader src, Type type, char sep, out object dst)
+        {
+            dst = Activator.CreateInstance(type);
+            var counter = 0u;
+            var line = AsciLineCover.Empty;
+            var members = Settings.members(type);
+            while(src.Next(out line))
+            {
+                var content = line.Codes;
+                var length = content.Length;
+                if(length != 0)
+                {
+                    if(SQ.hash(first(content)))
+                        continue;
+
+                    var i = SQ.index(content, sep);
+                    if(i > 0)
+                    {
+                        var name = AsciSymbols.format(SQ.left(content,i));
+                        var data = SQ.right(content,i);
+                        if(members.Member(name, out var field))
+                        {
+                            if(parse(AsciSymbols.format(data), field.FieldType, out var value))
+                            {
+                                field.SetValue(dst, value);
+                                counter++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return counter;
+        }
+
+        public static uint settings<T>(ref AsciLineReader src, char sep, out T dst)
+            where T : new()
+        {
+            dst = new();
+            var counter = 0u;
+            var line = AsciLineCover.Empty;
+            var members = Settings.members<T>();
+            while(src.Next(out line))
+            {
+                var content = line.Codes;
+                var length = content.Length;
+                if(length != 0)
+                {
+                    if(SQ.hash(first(content)))
+                        continue;
+
+                    var i = SQ.index(content, sep);
+                    if(i > 0)
+                    {
+                        var name = AsciSymbols.format(SQ.left(content,i));
+                        var data = SQ.right(content,i);
+                        if(members.Member(name, out var field))
+                        {
+                            if(ValueDynamic.parse(AsciSymbols.format(data), field.FieldType, out var value))
+                            {
+                                field.SetValue(dst,value);
+                                counter++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return counter;
+        }
+
         public static uint parse<T>(ReadOnlySpan<string> src, char sep, out T dst)
             where T : new()
         {
             dst = new();
             var counter = 0u;
-            var settings = Settings.parse(src, sep);
+            var settings = Settings.lookup(src, sep);
             var fields = typeof(T).PublicInstanceFields().Select(x => (x.Name,x)).ToDictionary();
             var count = src.Length;
             for(var i=0; i<count; i++)

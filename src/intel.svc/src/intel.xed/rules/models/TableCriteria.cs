@@ -109,7 +109,7 @@ namespace Z0
                 => new TableCriteria(id, Sig, Rows);
 
             public ReadOnlySpan<TextLine> Lines()
-                => Format().Lines(trim:false);
+                => Z0.Lines.read(Format(), trim:false);
 
             public string Format()
                 => XedRender.format(this);

@@ -130,7 +130,7 @@ namespace Z0
         }
 
         [Op]
-        public static Index<LineCount> count(ReadOnlySpan<FilePath> src)
+        public static Index<LineCount> count(ReadOnlySpan<FileUri> src)
         {
             var dst = bag<LineCount>();
             iter(src, path => dst.Add(count(path)), true);

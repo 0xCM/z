@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class ToolExecSpec
+    public class ToolCmdSpec
     {
         /// <summary>
         /// The path to the tool
@@ -37,7 +37,7 @@ namespace Z0
         public readonly Action<int> ProcessExit;
         
         [MethodImpl(Inline)]
-        public ToolExecSpec(FilePath tool, CmdArgs args, FolderPath wd, EnvVars src, Action<Process> create, Action<int> exit)
+        public ToolCmdSpec(FilePath tool, CmdArgs args, FolderPath wd, EnvVars src, Action<Process> create, Action<int> exit)
         {
             ToolPath = tool;
             Args = args;
@@ -47,7 +47,7 @@ namespace Z0
             ProcessExit = exit ?? (e => {});
         }
 
-        public static ToolExecSpec Default 
-            => new ToolExecSpec(FilePath.Empty, CmdArgs.Empty, FS.dir(Environment.CurrentDirectory), EnvVars.Empty, null, null);
+        public static ToolCmdSpec Default 
+            => new ToolCmdSpec(FilePath.Empty, CmdArgs.Empty, FS.dir(Environment.CurrentDirectory), EnvVars.Empty, null, null);
     }
 }

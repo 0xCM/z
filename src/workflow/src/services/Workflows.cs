@@ -31,7 +31,7 @@ namespace Z0
                     args.Add($"/xf {patterns[i]}");
             }
 
-            return ToolExec.run(channel, FS.path("robocopy.exe"), args.Array());                    
+            return Tooling.run(channel, FS.path("robocopy.exe"), args.Array());                    
         }
         
         public static Task<ExecToken> zip(IWfChannel channel, CmdArgs args)

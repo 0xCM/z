@@ -6,20 +6,6 @@ namespace Z0
 {
     using static sys;
 
-    partial class XTend
-    {
-        [Op]
-        public static AsciLineReader AsciLineReader(this FilePath src)
-            => new AsciLineReader(src.AsciReader());
-
-        [Op]
-        public static AsciLineReader AsciLineReader(this FileUri src)
-            => new AsciLineReader(src.AsciReader());
-
-        public static ReadOnlySpan<TextLine> Lines(this string src, bool keepblank = false, bool trim = true)
-            => Z0.Lines.read(src, keepblank, trim);
-    }
-
     public struct AsciLineReader : IDisposable
     {
         readonly StreamReader Source;

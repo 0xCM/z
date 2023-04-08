@@ -59,7 +59,7 @@ namespace Z0
         public Task<ExecToken> Start(CmdArgs args)
         {
             var flow = Running();
-            var task = ToolExec.redirect(Channel, ToolPath, args, TargetPath);            
+            var task = Tooling.redirect(Channel, ToolPath, args, TargetPath);            
             return task.ContinueWith(t => Ran(flow));  
         }
     }

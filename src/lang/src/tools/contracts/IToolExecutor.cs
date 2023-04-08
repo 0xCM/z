@@ -6,6 +6,6 @@ namespace Z0
 {
     public interface IToolExecutor
     {
-        Task<ExecToken> Execute(ToolExecSpec context, ICmd command);
+        Task<ExecToken> Execute(ToolCmdSpec context, ICmd command);
     }
 }

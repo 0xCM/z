@@ -12,9 +12,6 @@ namespace Z0
     {
         const string TableId = "settings";
 
-        [Render(12)]
-        public readonly SettingType Type;
-
         /// <summary>
         /// The setting name
         /// </summary>
@@ -32,15 +29,6 @@ namespace Z0
         {
             Name = name;
             Value = value;
-            Type = Settings.type(value);
-        }
-
-        [MethodImpl(Inline)]
-        public Setting(@string name, SettingType type, T value)
-        {
-            Name = name;
-            Value = value;
-            Type = Settings.type(value);
         }
 
         public Setting NonGeneric

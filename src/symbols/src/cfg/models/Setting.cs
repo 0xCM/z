@@ -10,11 +10,8 @@ namespace Z0
 
     [Record(TableId)]
     public readonly record struct Setting : ISetting, IDataType<Setting>
-    {
+    {        
         const string TableId = "settings";
-
-        [Render(12)]
-        public readonly SettingType Type;
 
         [Render(32)]
         public readonly @string Name;
@@ -25,17 +22,8 @@ namespace Z0
         [MethodImpl(Inline)]
         public Setting(@string name, object value)
         {
-            Type = api.type(value);
             Name = name;
             Value = value;
-        }
-
-        [MethodImpl(Inline)]
-        public Setting(@string name, SettingType type, object value)
-        {
-            Name = name;
-            Type = type;
-            Value = value ?? EmptyString;
         }
 
         public string ValueText
@@ -83,7 +71,7 @@ namespace Z0
         public static Setting Empty
         {
             [MethodImpl(Inline)]
-            get => new (EmptyString, 0, EmptyString);
+            get => new (EmptyString, EmptyString);
         }
     }
 }

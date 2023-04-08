@@ -23,7 +23,7 @@ namespace Z0
                     {
                         var content = text.trim(Fenced.unfence(src, SummaryFence));
                         iter(Replacements, kvp => content = text.replace(content, kvp.Key, kvp.Value));
-                        dst = new (map(content.Lines(), x=> x.Content).Concat(Chars.Eol));
+                        dst = new (map(Lines.read(content), x=> x.Content).Concat(Chars.Eol));
                         result = true;
                     }
                 }

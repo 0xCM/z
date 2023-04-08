@@ -5,6 +5,16 @@
 namespace Z0
 {
     using static sys;
+    
+    public static class XSettings
+    {
+        public static FolderPath Folder(this Setting src)
+            => FS.dir(src.ValueText);
+
+        public static FileUri File(this Setting src)
+            => FS.path(src.ValueText);
+    }
+
     public sealed class AppSettings 
     {        
         public static ref readonly AppSettings Default
@@ -13,36 +23,11 @@ namespace Z0
             get => ref Instance;
         }
 
-        [MethodImpl(Inline), Op]
-        internal static FolderPath folder(in Setting src)
-            => FS.dir(src.ValueText);
-
-        [MethodImpl(Inline), Op]
-        internal static FileUri uri(in Setting src)
-            => new (src.ValueText);
-
         readonly Dictionary<@string,string> Lookup;
 
         const string settings = nameof(settings);
 
         const string logs = nameof(logs);
-
-        public static T lookup<T>(SettingLookup src)
-            where T : new()
-        {
-            var dst = new T();
-            var members = Settings.members<T>();
-            for(var i=0; i<members.Count; i++)
-            {
-                ref readonly var member = ref members[i];
-                if(src.Find(member.Name, out var setting))
-                {
-                    member.SetValue(dst, setting.Value);
-                }
-            }
-
-            return dst;
-        }
         
         public AppSettings()
         {
@@ -64,55 +49,55 @@ namespace Z0
             => FS.dir(System.Environment.GetEnvironmentVariable(SettingNames.EnvRoot));
 
         public static LlvmSettings LlvmSettings()
-            => new (folder(Instance.Setting(SettingNames.LlvmRoot)));
+            => new (Instance.Setting(SettingNames.LlvmRoot).Folder());
 
         public static DbArchive SettingsRoot()
             => EnvRoot().Scoped(settings);
 
         public DbArchive Control()
-            => folder(Instance.Setting(SettingNames.Control));
+            => Instance.Setting(SettingNames.Control).Folder();
 
         public DbArchive WinKits()
-            => folder(Instance.Setting(SettingNames.WinKits));
+            => Instance.Setting(SettingNames.WinKits).Folder();
 
         public DbArchive DbRoot()
-            => folder(Instance.Setting(SettingNames.DbRoot));
+            => Instance.Setting(SettingNames.DbRoot).Folder();
 
         public DbArchive DevRoot()
-            => folder(Instance.Setting(SettingNames.DevRoot));
+            => Instance.Setting(SettingNames.DevRoot).Folder();
 
         public DbArchive DevOps()
-            => folder(Instance.Setting(SettingNames.DevOps));
+            => Instance.Setting(SettingNames.DevOps).Folder();
 
         public DbArchive DevPacks()
-            => folder(Instance.Setting(SettingNames.DevPacks));
+            => Instance.Setting(SettingNames.DevPacks).Folder();
 
         public IDbArchive DevPacks(string scope)
             => DevPacks().Scoped(scope);
             
         public DbArchive ProcDumps()
-            => folder(Instance.Setting(SettingNames.ProcDumps));
+            => Instance.Setting(SettingNames.ProcDumps).Folder();
 
         public IEnvDb EnvDb()
-            => new EnvDb(folder(Instance.Setting(SettingNames.EnvDb)));
+            => new EnvDb(Instance.Setting(SettingNames.EnvDb).Folder());
 
         public DbArchive Capture()
-            => folder(Instance.Setting(SettingNames.Capture));
+            => Instance.Setting(SettingNames.Capture).Folder();
 
         public IDbArchive PkgRoot()
-            => new DbArchive(folder(Instance.Setting(SettingNames.PkgRoot)));
+            => new DbArchive(Instance.Setting(SettingNames.PkgRoot).Folder());
 
         public IDbArchive Publications()
-            => new DbArchive(folder(Instance.Setting(SettingNames.PubRoot)));
+            => new DbArchive(Instance.Setting(SettingNames.PubRoot).Folder());
 
         public IDbArchive Publications(string scope)
             => Publications().Scoped(scope);
 
         public FileUri Dashboard()
-            => uri(Instance.Setting(SettingNames.Dashboard));
+            => Instance.Setting(SettingNames.Dashboard).File();
         
         public DbArchive Archives()
-            => folder(Instance.Setting(SettingNames.Archives));
+            => Instance.Setting(SettingNames.Archives).Folder();
 
         public DbArchive Logs() 
             => DbRoot().Scoped(logs);
@@ -121,22 +106,22 @@ namespace Z0
             => Control().Scoped(scope);
 
         public DbArchive XedDb()
-            => folder(Instance.Setting(SettingNames.XedDb));
+            => Instance.Setting(SettingNames.XedDb).Folder();
 
         public DbArchive SdeDb()
-            => folder(Instance.Setting(SettingNames.SdeDb));
+            => Instance.Setting(SettingNames.SdeDb).Folder();
 
         public DbArchive Sdks()
-            => folder(Instance.Setting(SettingNames.SdkRoot));
+            => Instance.Setting(SettingNames.SdkRoot).Folder();
 
         public DbArchive Sdk(string name)
             => Sdks().Scoped(name);
         
         public DbArchive InxDb()
-            => folder(Instance.Setting(SettingNames.InxDb));
+            => Instance.Setting(SettingNames.InxDb).Folder();
 
         public DbArchive SdmDb()
-            => folder(Instance.Setting(SettingNames.SdmDb));
+            => Instance.Setting(SettingNames.SdmDb).Folder();
 
         public string Find(@string name, string @default)
         {

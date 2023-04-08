@@ -1,66 +1,66 @@
-//-----------------------------------------------------------------------------
-// Copyright   :  (c) Chris Moore, 2020
-// License     :  MIT
-//-----------------------------------------------------------------------------
-namespace Z0
-{
-    using static sys;
+// //-----------------------------------------------------------------------------
+// // Copyright   :  (c) Chris Moore, 2020
+// // License     :  MIT
+// //-----------------------------------------------------------------------------
+// namespace Z0
+// {
+//     using static sys;
 
-    public abstract class ChannelIterator<T>
-    {
-        protected ChannelIterator(IWfChannel channel)
-        {
-            Channel = channel;
-        }
+//     public abstract class ChannelIterator<T>
+//     {
+//         protected ChannelIterator(IWfChannel channel)
+//         {
+//             Channel = channel;
+//         }
 
-        protected readonly IWfChannel Channel;
+//         protected readonly IWfChannel Channel;
 
-        public Task<ExecToken> Start()
-        {
-            ExecToken Run()
-            {
-                var flow = Channel.Running();
-                Iterate(Select());
-                return Channel.Ran(flow);
+//         public Task<ExecToken> Start()
+//         {
+//             ExecToken Run()
+//             {
+//                 var flow = Channel.Running();
+//                 Iterate(Select());
+//                 return Channel.Ran(flow);
 
-            }
-            return start(Run);
-        }        
+//             }
+//             return start(Run);
+//         }        
 
-        protected abstract IEnumerable<T> Select();
+//         protected abstract IEnumerable<T> Select();
     
-        IEnumerable<T> Iterate(IEnumerable<T> src)
-        {            
-            var it = src.GetEnumerator();
-            var item = Next(it, out var @continue);
-            while(@continue)
-            {
-                if(item != null)
-                    yield return item;
+//         IEnumerable<T> Iterate(IEnumerable<T> src)
+//         {            
+//             var it = src.GetEnumerator();
+//             var item = Next(it, out var @continue);
+//             while(@continue)
+//             {
+//                 if(item != null)
+//                     yield return item;
                 
-                if(!@continue)
-                    break;
-                item = Next(it, out @continue);
-            }
-        }
+//                 if(!@continue)
+//                     break;
+//                 item = Next(it, out @continue);
+//             }
+//         }
 
-        T Next(IEnumerator<T> src, out bool @continue)
-        {
-            var item = default(T);
-            try
-            {
-                @continue = src.MoveNext();
-                item = src.Current;
-                Traversed(item);
-            }
-            catch(Exception e)
-            {
-                Channel.Babble($"Trapped {e}");
-                @continue = true;
-            }
-            return item;
-        }
+//         T Next(IEnumerator<T> src, out bool @continue)
+//         {
+//             var item = default(T);
+//             try
+//             {
+//                 @continue = src.MoveNext();
+//                 item = src.Current;
+//                 Traversed(item);
+//             }
+//             catch(Exception e)
+//             {
+//                 Channel.Babble($"Trapped {e}");
+//                 @continue = true;
+//             }
+//             return item;
+//         }
 
-        protected virtual void Traversed(T item) {}
-    }
-}
+//         protected virtual void Traversed(T item) {}
+//     }
+// }

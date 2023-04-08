@@ -9,6 +9,10 @@ namespace Z0
         public static BinaryReader BinaryReader(this FilePath src)
             => new BinaryReader(File.Open(src.Format(), FileMode.Open, FileAccess.Read, FileShare.Read));
 
+        [Op]
+        public static AsciLineReader AsciLineReader(this FilePath src)
+            => new AsciLineReader(src.AsciReader());
+            
         /// <summary>
         /// Creates a reader initialized with the source file; caller-disposal required
         /// </summary>
