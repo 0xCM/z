@@ -24,7 +24,7 @@ namespace Z0
                     () => EmitRecords(src),
                     () => EmitBlockDetail(src),
                     () => EmitLineMap(src),
-                    () => EmitStats(AsciLines.stats(src.DataSource, 400000))
+                    () => EmitStats(AsciLines.stats(src.DataSource.Bytes, 400000))
                 );
             }
 

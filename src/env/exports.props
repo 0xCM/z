@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <ZEnv>$(MsBuildThisFileDirectory)z0.env.csproj</ZEnv>
+  </PropertyGroup>
+</Project>

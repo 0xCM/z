@@ -12,5 +12,12 @@ namespace Z0
         /// <param name="src">The file path</param>
         public static byte[] ReadBytes(this FilePath src)
             => FS.bytes(src);
+
+        /// <summary>
+        /// Reads the full content of a file into a byte array
+        /// </summary>
+        /// <param name="src">The file path</param>
+        public static byte[] ReadBytes(this FileUri src)
+            => FS.bytes(src);
     }
 }

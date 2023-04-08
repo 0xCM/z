@@ -4,9 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class XTend
+    public record class CmdSetting : CmdSetting<@string>
     {
-        public static ReadOnlySpan<TextLine> Lines(this string src, bool keepblank = false, bool trim = true)
-            => Z0.Lines.read(src, keepblank, trim);
-    }
+        public CmdSetting(string name, @string value)
+            : base(name,value)
+        {
+
+        }        
+   }
 }

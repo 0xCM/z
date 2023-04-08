@@ -41,6 +41,21 @@ namespace Z0
             return count;
         }
 
+        [MethodImpl(Inline), Op]
+        public static ref ProcessSegment segment(in ProcessMemoryRegion src, ref ProcessSegment dst)
+        {
+            dst.Seq = src.Seq;
+            dst.Selector = src.BaseAddress.Quadrant(n2);
+            dst.Base = src.BaseAddress.Lo();
+            dst.Size = src.Size;
+            dst.PageCount = src.Size/PageSize;
+            dst.Range = (src.BaseAddress, src.MaxAddress);
+            dst.Type = src.Type;
+            dst.Protection = src.Protection;
+            dst.Label = src.ImageName;
+            return ref dst;
+        }
+
         void Include(uint index, in ProcessMemoryRegion src)
         {
             var id = src.ImageName;
@@ -55,7 +70,7 @@ namespace Z0
             {
                 var sidx = (ushort)Index(src.BaseAddress.Quadrant(n2));
                 Bases[sidx].Add(Tuples.paired(src.BaseAddress.Lo(), (uint)src.Size));
-                ImageMemory.segment(src, ref Segments[index]);
+                segment(src, ref Segments[index]);
             }
         }
 

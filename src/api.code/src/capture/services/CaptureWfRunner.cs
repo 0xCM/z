@@ -49,7 +49,7 @@ namespace Z0
                 Regions.EmitRegions(Process.GetCurrentProcess(), Target);
 
             if(Settings.EmitContext)
-                ImageMemory.emit(Channel, Target.Timestamp, Target);
+                EnvReports.context(Channel, Target.Timestamp, Target);
 
             if(Settings.RunChecks)
             {

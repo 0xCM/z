@@ -28,13 +28,4 @@ namespace Z0
         public static implicit operator CmdSetting(CmdSetting<T> src)
             => new CmdSetting(src.Name, src.Value?.ToString() ?? EmptyString);
     }
-
-    public record class CmdSetting : CmdSetting<@string>
-    {
-        public CmdSetting(string name, @string value)
-            : base(name,value)
-        {
-
-        }        
-   }
 }

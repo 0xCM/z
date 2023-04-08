@@ -1,0 +1,6 @@
+<Project>
+  <ItemGroup>
+    <ProjectReference Include="$(Files)" />
+  </ItemGroup>
+  <Import Project="$(SlnProps)\usings.props"/>
+</Project>

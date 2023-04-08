@@ -36,13 +36,6 @@ namespace Z0
             return dump(channel, src, targets.Path("process",FileKind.Dmp));
         }
 
-        public static ExecToken emit(IWfChannel channel, Timestamp ts, IDbArchive dst)
-        {
-            EnvReports.capture(channel, dst.Scoped("context"));
-            var map = ImageMemory.map();
-            channel.FileEmit(map.ToString(), dst.Scoped("context").Path("process.image", FileKind.Map));            
-            return emit(channel, Process.GetCurrentProcess(), ts, dst);
-        }
 
         [Op]
         public static ImageLocation location(ProcessModule src)
@@ -84,36 +77,6 @@ namespace Z0
             var running = channel.EmittingFile(dst);
             DumpEmitter.dump(src, dst);
             return channel.EmittedBytes(running, dst.Size);
-        }
-
-
-        static ExecToken emit(IWfChannel channel, ProcessAdapter src, Timestamp ts, IDbArchive dst)
-        {
-            var running = channel.Running($"Emiting context for process {src.Id} based at {src.BaseAddress} from {src.Path}");
-            modules(channel, src, dst);
-            var file = ProcDumpName.path(src, ts, dst);
-            var dumping = channel.EmittingFile(file);
-            DumpEmitter.dump(src, file);
-            channel.EmittedBytes(dumping, file.Size);
-            return channel.Ran(running, $"Emitted context for process {src.Id}");   
-        }
-        
-        static ExecToken modules(IWfChannel channel, Process src, IDbArchive dst)
-            => channel.TableEmit(ImageMemory.modules(src), dst.Scoped("context").Path("process.modules",FileKind.Csv));        
-
-        [MethodImpl(Inline), Op]
-        public static ref ProcessSegment segment(in ProcessMemoryRegion src, ref ProcessSegment dst)
-        {
-            dst.Seq = src.Seq;
-            dst.Selector = src.BaseAddress.Quadrant(n2);
-            dst.Base = src.BaseAddress.Lo();
-            dst.Size = src.Size;
-            dst.PageCount = src.Size/PageSize;
-            dst.Range = (src.BaseAddress, src.MaxAddress);
-            dst.Type = src.Type;
-            dst.Protection = src.Protection;
-            dst.Label = src.ImageName;
-            return ref dst;
         }
 
         public static ProcessImageMap map()

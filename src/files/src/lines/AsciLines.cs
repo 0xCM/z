@@ -8,17 +8,9 @@ namespace Z0
 
     using D = DecimalDigitFacets;
 
-    partial class XTend
-    {
-        [Op]
-        public static AsciLineReader AsciLineReader(this FilePath src)
-            => new AsciLineReader(src.AsciReader());
-    }
-
     [Free,ApiHost]
     public class AsciLines
     {
-
         [MethodImpl(Inline), Op]
         static BinaryCode tobytes(string src)
             => Encoding.ASCII.GetBytes(src);
@@ -106,10 +98,10 @@ namespace Z0
         }
 
         [Op]
-        public static LineCount count(FilePath src)
-            => (src, count(src.ReadBytes()));
+        public static LineCount count(FileUri src)
+            => new (src, count(src.ReadBytes()));
 
-        public static void emit(ReadOnlySpan<LineStats> src, FilePath dst)
+        public static void emit(ReadOnlySpan<LineStats> src, FileUri dst)
         {
             using var writer = dst.AsciWriter();
             writer.WriteLine(LineStats.Header);
@@ -145,25 +137,25 @@ namespace Z0
             return dst.ToArray().Sort();
         }
 
-        public static Index<LineStats> stats(MemoryFile src, uint buffer = 0)
-        {
-            var dst = list<LineStats>(buffer);
-            var data = src.View();
-            var last = 0u;
-            var counter = 0u;
-            for(var i=0u; i<data.Length; i++)
-            {
-                if(SQ.nl(skip(data,i)))
-                {
-                    var offset = i;
-                    var length = (byte)(offset - last);
-                    dst.Add(new LineStats(counter++, offset, length));
-                    last = offset;
-                }
-            }
+        // public static Index<LineStats> stats(MemoryFile src, uint buffer = 0)
+        // {
+        //     var dst = list<LineStats>(buffer);
+        //     var data = src.View();
+        //     var last = 0u;
+        //     var counter = 0u;
+        //     for(var i=0u; i<data.Length; i++)
+        //     {
+        //         if(SQ.nl(skip(data,i)))
+        //         {
+        //             var offset = i;
+        //             var length = (byte)(offset - last);
+        //             dst.Add(new LineStats(counter++, offset, length));
+        //             last = offset;
+        //         }
+        //     }
 
-            return dst.Array();
-        }
+        //     return dst.Array();
+        // }
 
         [MethodImpl(Inline)]
         public static AsciLineCover<T> asci<T>(ReadOnlySpan<T> src)
@@ -259,13 +251,6 @@ namespace Z0
                 }
             }
             return length;
-        }
-
-        public static void load(FilePath src)
-        {
-            using var map = MemoryFiles.map(src);
-            var data = map.View<AsciSymbol>();
-            var count = AsciLines.count(data);
         }
 
         [MethodImpl(Inline), Op]

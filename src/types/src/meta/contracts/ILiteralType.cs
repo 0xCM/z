@@ -4,13 +4,5 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface ILiteralType : IType
-    {
 
-    }
-
-    public interface ILiteralType<V> : ILiteralType, IValued<V>
-    {
-
-    }
 }

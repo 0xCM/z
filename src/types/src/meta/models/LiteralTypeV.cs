@@ -4,11 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    /// <summary>
-    /// Lifts literal values to type
-    /// </summary>
-    /// <typeparam name="K"></typeparam>
-    public class LiteralType<V> : ILiteralType<V>
+    public class LiteralType<V>
     {
         public Identifier Name {get;}
 

@@ -33,6 +33,7 @@
    <Import Project="$(MsBuildThisFileDirectory)src/dynamic/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/events/exports.props"/>
+   <Import Project="$(MsBuildThisFileDirectory)src/env/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/emath/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/fsm/exports.props"/>

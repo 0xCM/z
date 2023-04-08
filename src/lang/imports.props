@@ -5,6 +5,7 @@
     <ProjectReference Include="$(Json)" />
     <ProjectReference Include="$(Files)" />
     <ProjectReference Include="$(Events)" />
+    <ProjectReference Include="$(ZEnv)" />
     <ProjectReference Include="$(Asci)" />
   </ItemGroup>
 </Project>

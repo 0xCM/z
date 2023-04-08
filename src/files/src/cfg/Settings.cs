@@ -124,7 +124,7 @@ namespace Z0
             channel.FileEmit(emitter.Emit(),dst, encoding);            
         }
 
-        public static T lookup<T>(FilePath src)
+        public static T lookup<T>(FileUri src)
             where T : ISettings, new()
                 => AppSettings.lookup<T>(lookup(src, Chars.Eq));
 
@@ -132,7 +132,7 @@ namespace Z0
             where T : new()
                 => new (typeof(T).PublicInstanceFields().Select(f => new Setting(f.Name, f.GetValue(src))));
 
-        public static SettingLookup lookup(FilePath src, char sep)
+        public static SettingLookup lookup(FileUri src, char sep)
         {            
             var dst = list<Setting>();
             var line = AsciLineCover.Empty;
@@ -235,7 +235,7 @@ namespace Z0
             return result;
         }
 
-        public static Seq<CmdSetting> cmd(FilePath src)
+        public static Seq<CmdSetting> cmd(FileUri src)
         {
             var dst = list<CmdSetting>();
             using var reader = src.Utf8LineReader();
@@ -261,7 +261,7 @@ namespace Z0
             return dst.Array();
         }
 
-        public static Seq<Setting> load(FilePath src)
+        public static Seq<Setting> load(FileUri src)
         {
             var data = src.ReadLines(true);
             var dst = sys.alloc<Setting>(data.Length - 1);
@@ -351,9 +351,9 @@ namespace Z0
                 dst = SettingType.Bool;
             else if(src == typeof(string))
                 dst = SettingType.String;
-            else if(src == typeof(FilePath) || src == typeof(_FileUri) || src == typeof(FileUri))
+            else if(src.Name == "FilePath" || src.Name == "_FileUri" || src.Name == "FileUri")
                 dst = SettingType.File;
-            else if(src == typeof(FolderPath))
+            else if(src.Name == "FolderPath")
                 dst = SettingType.Folder;
             else if(src == typeof(bit))
                 dst = SettingType.Bit;
