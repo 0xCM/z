@@ -3,6 +3,7 @@
   <ItemGroup>
      <ProjectReference Include="$(Native)"/>
      <ProjectReference Include="$(Commands)"/>
+     <ProjectReference Include="$(Process)"/>
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>

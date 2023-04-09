@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------
-// Copyright   :  (c) Chris Moore, 2020
+// Copyright   :  (c) Chris Moore, 2023
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0
@@ -32,6 +32,8 @@ namespace Z0
 
         enum Token : byte
         {
+            None,
+
             Char,
 
             Space,
