@@ -17,5 +17,9 @@ namespace Z0
         ExecFlow<T> Running<T>(T msg);
 
         ExecToken Ran<T>(ExecFlow<T> flow, [CallerName] string msg = null);
+
+        ExecStatus Run(ToolCmd command, FilePath dst);
+
+        ExecStatus Run(ToolCmd command);
     }
 }

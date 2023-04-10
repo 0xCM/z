@@ -13,8 +13,6 @@ namespace Z0
 
         ProcessMemory ProcessMemory => Wf.ProcessMemory();
 
-        Tooling Tooling => Channel.Channeled<Tooling>();
-
         ApiMd ApiMd => Wf.ApiMd();
 
         [CmdOp("api/tablegen")]
@@ -113,9 +111,6 @@ namespace Z0
                 src[i].Render(s => writer.WriteLine(s));
         }
 
-        [CmdOp("tool/docs")]
-        void ToolDocs(CmdArgs args)
-            => iter(Tooling.LoadDocs(arg(args,0).Value), doc => Channel.Write(doc));
 
         [CmdOp("api/calls/check")]
         void CheckApiCalls()

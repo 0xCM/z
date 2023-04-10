@@ -4,8 +4,31 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static sys;
+    
     public class CmdDef : IComparable<CmdDef>
     {
+        [Op]
+        public static string format(CmdDef src)
+        {
+            var buffer = text.buffer();
+            render(src, buffer);
+            return buffer.Emit();
+        }
+
+        [Op]
+        static void render(CmdDef src, ITextBuffer dst)
+        {
+            dst.Append(src.Source.Name);
+            var fields = src.Fields.View;;
+            var count = fields.Length;
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var field = ref skip(fields,count);
+                dst.Append(string.Format(" | {0}:{1}", field.Name, field.Description));
+            }
+        }
+
         public readonly CmdRoute Route;
 
         public readonly Type Source;
@@ -72,7 +95,7 @@ namespace Z0
             => Route.CompareTo(src.Route);
 
         public string Format()
-            => Cmd.format(this);
+            => format(this);
 
         public override string ToString()
             => Format();

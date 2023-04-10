@@ -14,12 +14,6 @@ namespace Z0.Tools
 
     }
     
-    public abstract record class ObjDumpCmd<C>
-        where C : ObjDumpCmd<C>,new()
-    {
-
-    }
-
     class LlvmObjDump : ToolWfCmd<LlvmObjDump,ObjDumpFlow>
     {       
         protected override FilePath ToolPath 
@@ -40,7 +34,7 @@ namespace Z0.Tools
             var dst = EnvDb.Nested("llvm-objdump", src.Root).Clear();
             iter(Sources(args), entry => {
                 var filename = FS.file(entry.Path.FileName.Format() + "." + entry.Path.Hash.Format(false), FS.ext("symtables"));
-                Run(Cmd.args(entry.Path.Format(PathSeparator.FS), "--syms", "--demangle"),entry.Path, dst.Path(filename));
+                Run(Cmd.args(entry.Path.Format(PathSeparator.FS), "--syms", "--demangle"), dst.Path(filename));
             }, true);
         }
 
@@ -51,7 +45,7 @@ namespace Z0.Tools
             var dst = EnvDb.Nested("llvm-objdump", src.Root).Clear();
             iter(Sources(args), entry => {
                 var filename = FS.file(entry.Path.FileName.Format() + "." + entry.Path.Hash.Format(false), FileKind.Asm);
-                Run(Cmd.args(entry.Path.Format(PathSeparator.FS), "--x86-asm-syntax=intel", "--disassemble", "--symbolize-operands", "--demangle"), entry.Path, dst.Path(filename));
+                Run(Cmd.args(entry.Path.Format(PathSeparator.FS), "--x86-asm-syntax=intel", "--disassemble", "--symbolize-operands", "--demangle"), dst.Path(filename));
             }, true);
         }
     }

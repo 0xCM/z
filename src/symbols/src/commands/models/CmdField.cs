@@ -11,6 +11,9 @@ namespace Z0
     /// </summary>
     public readonly record struct CmdField : IComparable<CmdField>
     {
+        public static string format(CmdField src)
+            => string.Format($"{src.Name}:{src.Description}");
+
         /// <summary>
         /// The backing rutime field
         /// </summary>
@@ -68,7 +71,7 @@ namespace Z0
             => Hash;
 
         public string Format()
-            => Cmd.format(this);
+            => format(this);
 
         public override string ToString()
             => Format();

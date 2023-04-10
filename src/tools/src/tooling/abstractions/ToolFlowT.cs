@@ -7,8 +7,6 @@ namespace Z0
     public abstract class ToolFlow<T> : Channeled<T>, IToolFlow
         where T : ToolFlow<T>, new()
     {
-        FilePath SourcePath;
-
         IToolStreamWriter TargetStream;
 
         IToolStreamWriter ErrorStream;
@@ -24,10 +22,22 @@ namespace Z0
             ToolName = toolname;
         }
 
-        public ExecStatus Run(CmdArgs args, FilePath tool, FilePath src, FilePath dst)
+        public ExecStatus Run(ToolCmd command, FilePath dst)
         {
             using var flow = create(Channel);
-            return flow.Start(args, tool, src,dst).Result;
+            return flow.Start(command, dst).Result;
+        }
+
+        public ExecStatus Run(ToolCmd command)
+        {
+            using var flow = create(Channel);
+            return flow.Start(command).Result;
+        }
+
+        public ExecStatus Run(CmdArgs args, FilePath tool, FilePath dst)
+        {
+            using var flow = create(Channel);
+            return flow.Start(args, tool, dst).Result;
         }
 
         protected virtual IToolStreamWriter CreateStatusWriter(FilePath dst)
@@ -36,16 +46,26 @@ namespace Z0
         protected virtual IToolStreamWriter CreateErrorWriter(FilePath dst)
             => Tooling.writer(dst);
 
-        Task<ExecStatus> Start(CmdArgs args, FilePath tool, FilePath src, FilePath dst)   
+        Task<ExecStatus> Start(CmdArgs args, FilePath tool, FilePath dst)   
         {
             var spec = Tooling.spec(tool, args);  
-            SourcePath = src;
             TargetStream = CreateStatusWriter(dst);
             ErrorStream = CreateErrorWriter(dst + FS.ext("errors"));
             var status = Tooling.start(this, spec);
             return status;
         }
-        
+
+        Task<ExecStatus> Start(ToolCmd cmd, FilePath dst)   
+        {
+            TargetStream = CreateStatusWriter(dst);
+            ErrorStream = CreateErrorWriter(dst + FS.ext("errors"));
+            var status = Tooling.start(this, cmd);
+            return status;
+        }
+
+        Task<ExecStatus> Start(ToolCmd cmd)   
+            => Tooling.start(this, cmd);
+
         void IToolFlow.OnStart(ExecToken token)
         {
             Token = token;
@@ -58,24 +78,26 @@ namespace Z0
         
         void IToolFlow.OnError(TextLine src)
         {
-            ErrorStream.Write(src);
+            ErrorStream?.Write(src);
             OnError(src);
         }
 
         void IToolFlow.OnStatus(TextLine src)
         {
-            TargetStream.Write(src);
+            TargetStream?.Write(src);
             OnStatus(src);
         }
 
         protected virtual void OnStatus(TextLine src)
         {
-
+            if(TargetStream == null)
+                Channel.Row(src);
         }
 
         protected virtual void OnError(TextLine src)
         {
-            
+            if(ErrorStream == null)
+                Channel.Error(src);
         }
 
         ExecFlow<M> IToolFlow.Running<M>(M msg)
@@ -88,7 +110,6 @@ namespace Z0
         {
             TargetStream?.Dispose();
             ErrorStream?.Dispose();
-
         }
         void IDisposable.Dispose()
         {

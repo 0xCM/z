@@ -9,21 +9,39 @@ namespace Z0
     /// </summary>
     public record class ToolCmd : IToolCmd
     {
-        public readonly Tool Tool;
+        /// <summary>
+        /// The tool path
+        /// </summary>
+        public readonly FilePath ToolPath;
 
-        public readonly CmdArgs Args;
+        /// <summary>
+        /// The command arguments
+        /// </summary>
+        public readonly ToolCmdArgs Args;
+
+        /// <summary>
+        /// The working folder, if any
+        /// </summary>
+        public readonly FolderPath WorkingDir;
+
+        /// <summary>
+        /// Environment variables to use, if any
+        /// </summary>
+        public readonly EnvVars Vars;
 
         [MethodImpl(Inline)]
-        public ToolCmd(Tool tool, params CmdArg[] args)
+        public ToolCmd(FilePath tool, ToolCmdArgs args, FolderPath work, EnvVars vars)
         {            
-            Tool = tool;
+            ToolPath = tool;
             Args = args;
+            WorkingDir = work;
+            Vars = vars;
         }
 
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => Tool.Hash | Args.Hash;
+            get => ToolPath.Hash | Args.Hash;
         }
 
         public override int GetHashCode()
@@ -38,14 +56,14 @@ namespace Z0
         public static ToolCmd Empty
         {
             [MethodImpl(Inline)]
-            get => new ToolCmd(Actor.Empty, EmptyString);
+            get => new ToolCmd(FilePath.Empty, ToolCmdArgs.Empty, FolderPath.Empty, EnvVars.Empty);
         }
 
-        CmdArgs IToolCmd.Args
+        ToolCmdArgs IToolCmd.Args
             => Args;
 
-        Tool IToolCmd.Tool
-             => Tool;
+        FilePath IToolCmd.ToolPath
+             => ToolPath;
 
         CmdId ICmd.CmdId 
             => EmptyString;

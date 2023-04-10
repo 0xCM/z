@@ -9,6 +9,39 @@ namespace Z0
     [ApiHost]
     public class Cmd 
     {   
+        [Op, Closures(UInt64k)]
+        public static CmdArgs reflect<T>(in T src)
+            where T : struct
+        {
+            var t = typeof(T);
+            var fields = Clr.fields(t);
+            var count = fields.Length;
+            var reflected = sys.alloc<ClrFieldValue>(count);
+            ClrFields.values(src, fields, reflected);
+            var buffer = sys.alloc<CmdArg>(count);
+            var target = span(buffer);
+            var values = @readonly(reflected);
+            for(var i=0u; i<count; i++)
+            {
+                ref readonly var fv = ref skip(values,i);
+                seek(target,i) = new CmdArg(fv.Field.Name, fv.Value?.ToString() ?? EmptyString);
+            }
+            return buffer;
+        }        
+
+        public static CmdArgs args<T>(T src)
+            where T : ICmd
+                => typeof(T).DeclaredInstanceFields().Select(f => new CmdArg(f.Name, f.GetValue(src)?.ToString() ?? EmptyString));
+
+        public static CmdArgs args<T>(params T[] src)
+            where T : new()
+        {
+            var dst = alloc<CmdArg>(src.Length);
+            for(ushort i=0; i<src.Length; i++)
+                seek(dst,i) = new CmdArg<T>(skip(src,i));
+            return new (dst);
+        }
+
         public static ReadOnlySpan<CmdFlow> flows(ReadOnlySpan<TextLine> src)
         {
             var count = src.Length;
@@ -61,9 +94,6 @@ namespace Z0
             return dst.Emit();
         }
 
-        public static CmdUri uri(string name, object host)
-            => new(CmdKind.App, host.GetType().Assembly.PartName().Format(), host.GetType().DisplayName(), name);
-
         public static CmdLine cmdline(FilePath src)
         {
             if(src.Is(FileKind.Cmd))
@@ -90,14 +120,6 @@ namespace Z0
             return new CmdField(i, src, name, src.FieldType.DisplayName(), desc);
         }
 
-        [Op]
-        public static CmdUri uri(MethodInfo src)
-        {
-            var host = src.DeclaringType;
-            var name = src.Tag<CmdOpAttribute>().MapValueOrElse(a => a.Name, () => src.DisplayName());
-            return Cmd.uri(CmdKind.App, host.Assembly.PartName().Format(), host.DisplayName(), name);        
-        }
-        
         public static CmdDefs defs(Assembly[] src)
             => new (tagged(src).Concrete().Select(def).Sort());
 
@@ -169,32 +191,6 @@ namespace Z0
             return true;
         }        
 
-        public static string format(ApiCmdSpec src)
-        {
-            if(src.IsEmpty)
-                return EmptyString;
-
-            var dst = text.buffer();
-            dst.Append(src.Name);
-            var count = src.Args.Count;
-            for(ushort i=0; i<count; i++)
-            {
-                var arg = src.Args[i];
-                if(nonempty(arg.Name))
-                {
-                    dst.Append(Chars.Space);
-                    dst.Append(arg.Name);
-                }
-
-                if(nonempty(arg.Value))
-                {
-                    dst.Append(Chars.Space);
-                    dst.Append(arg.Value);
-                }
-            }
-            return dst.Emit();
-        }
-
         [Op]
         public static CmdRoute route(Type src)
         {
@@ -238,10 +234,6 @@ namespace Z0
                 return spec.Name;
         }
 
-        public static CmdArgs args<T>(T src)
-            where T : ICmd
-                => typeof(T).DeclaredInstanceFields().Select(f => new CmdArg(f.Name, f.GetValue(src)?.ToString() ?? EmptyString));
-
         public static ICmd reify(Type src)
             => (ICmd)Activator.CreateInstance(src);
 
@@ -249,43 +241,6 @@ namespace Z0
             where C : ICmd, new()
             where P : INullity, new()
                 => new CmdResult<C, P>(spec,token,suceeded,payload);
-
-        public static string format(CmdField src)
-            => string.Format($"{src.Name}:{src.Description}");
-
-        public static CmdArgs args<T>(params T[] src)
-            where T : new()
-        {
-            var dst = alloc<CmdArg>(src.Length);
-            for(ushort i=0; i<src.Length; i++)
-                seek(dst,i) = new CmdArg<T>(skip(src,i));
-            return new (dst);
-        }
-
-        [Op]
-        public static string format(CmdDef src)
-        {
-            var buffer = text.buffer();
-            render(src, buffer);
-            return buffer.Emit();
-        }
-
-        [Op]
-        static void render(CmdDef src, ITextBuffer dst)
-        {
-            dst.Append(src.Source.Name);
-            var fields = src.Fields.View;;
-            var count = fields.Length;
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var field = ref skip(fields,count);
-                dst.Append(string.Format(" | {0}:{1}", field.Name, field.Description));
-            }
-        }
-
-        [MethodImpl(Inline), Op]
-        public static CmdUri uri(CmdKind kind, string? part, string? host, string? name)
-            => new CmdUri(kind, part, host, name);
 
         [Op]
         public static CmdLine pwsh(string spec)

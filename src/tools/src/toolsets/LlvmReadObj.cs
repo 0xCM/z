@@ -30,7 +30,7 @@ namespace Z0.Tools
             var dst = EnvDb.Nested("coff", src.Root).Clear();
             iter(index.Distinct(), entry => {
                 var filename = FS.file(entry.Path.FileName.Format() + "." + entry.Path.Hash.Format(false), FS.ext("lib.exports"));                
-                Run(Cmd.args(entry.Path.Format(PathSeparator.FS), "--coff-exports"), entry.Path, dst.Path(filename));
+                Run(Cmd.args(entry.Path.Format(PathSeparator.FS), "--coff-exports"), dst.Path(filename));
             }, true);
         }
     }

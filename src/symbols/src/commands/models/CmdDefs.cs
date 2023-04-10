@@ -13,7 +13,7 @@ namespace Z0
             Lookup = ConstLookup<@string,CmdDef>.Empty;
         }
 
-        internal CmdDefs(CmdDef[] src)
+        public CmdDefs(CmdDef[] src)
             : base(src)
         {
             Lookup = src.Select(x => (x.Route.Path,x)).ToDictionary();

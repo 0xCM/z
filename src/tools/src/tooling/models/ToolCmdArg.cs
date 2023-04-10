@@ -4,29 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public enum ArgPrefixKind : byte
-    {
-        None,
-
-        Dash,
-
-        Dashes,
-
-        FSlash,
-    }
-
-    public enum ArgSepKind : byte
-    {
-        None,
-
-        Space,
-
-        Eq,
-
-        Colon,
-
-    }
-
     public record struct ToolCmdArg
     {
         public ArgPrefixKind Prefix;
@@ -35,6 +12,30 @@ namespace Z0
 
         public ArgSepKind Sep;
 
-        public @string Value;
+        public ArgValue Value;
+
+        public ToolCmdArg()
+        {
+            Prefix = 0;
+            Name = @string.Empty;
+            Sep = 0;
+            Value = ArgValue.Empty;
+        }
+
+        public ToolCmdArg(ArgPrefixKind prefix, @string name, ArgSepKind sep, ArgValue value)
+        {
+            Prefix = prefix;
+            Name = name;
+            Sep = sep;
+            Value = value;
+        }
+
+        public string Format()
+            => Tooling.format(this);
+
+        public override string ToString()
+            => Format();
+
+        public static ToolCmdArg Empty => default;
     }
 }

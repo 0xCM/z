@@ -4,11 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [Free]
-    public interface IToolCmd : ICmd
+    public interface IToolService : IAppService
     {
-        FilePath ToolPath {get;}
-        
-        ToolCmdArgs Args {get;}
+        ToolCmdArgs ParseArgs(string src);
+
+        IToolFlow ToolFlow();
     }
 }

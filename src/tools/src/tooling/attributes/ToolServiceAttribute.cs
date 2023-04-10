@@ -1,14 +1,12 @@
 //-----------------------------------------------------------------------------
-// Copyright   :  (c) Chris Moore, 2020
+// Copyright   :  (c) Chris Moore, 2023
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [Free]
-    public interface IToolCmd : ICmd
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
+    public class ToolServiceAttribute : Attribute
     {
-        FilePath ToolPath {get;}
-        
-        ToolCmdArgs Args {get;}
+
     }
 }

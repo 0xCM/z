@@ -6,6 +6,26 @@ namespace Z0
 {
     using static sys;
 
+    public struct BdDisasmCmd
+    {
+        public FilePath ToolPath;
+
+        public FilePath BinPath;
+
+        public Bitness AsmBitMode;
+
+        public bool EmitBitfields;
+
+        public bool EmitDetails;
+
+        public FilePath OutputPath;
+
+        public string CmdName
+        {
+            get => nameof(BdDisasmCmd);
+        }
+    }
+
     [ApiHost]
     public sealed class BdDisasm
     {

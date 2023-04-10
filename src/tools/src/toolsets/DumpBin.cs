@@ -77,6 +77,7 @@ namespace Z0.Tools
 
             NOBYTES = P2ᐞ18,
         }
+
         internal class Scripts
         {
             public static ToolScript DumpObj(FilePath input, IDbArchive dst)

@@ -8,9 +8,13 @@ namespace Z0
     {
         class ServiceCache : AppServices<ServiceCache>
         {
-
+            public Tooling Tooling(IWfRuntime wf) 
+                => Service<Tooling>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
+
+        public static Tooling Tooling(this IWfRuntime wf)
+            => Services.Tooling(wf);
     }
 }

@@ -6,8 +6,53 @@ namespace Z0
 {
     using static sys;
 
-    public class Tooling : Channeled<Tooling>
+    public partial class Tooling : WfAppCmd<Tooling>
     {
+
+        class ServiceCache : AppServices<ServiceCache>
+        {
+            
+        }
+
+        static readonly ServiceCache ToolServices = new();
+
+        [CmdOp("tool/docs")]
+        void ToolDocs(CmdArgs args)
+            => iter(LoadDocs(arg(args,0).Value), doc => Channel.Write(doc));
+
+        public static ToolCmd command(FilePath tool, params ToolCmdArg[] args)
+            => new (tool,args, Env.cd(), EnvVars.Empty);
+
+        public static ToolCmd command(FilePath tool, ToolCmdArgs args)
+            => new (tool, args, Env.cd(), EnvVars.Empty);
+
+        public static ToolCmd command(FilePath tool, ToolCmdArgs args, FolderPath work)
+            => new (tool,args, work, EnvVars.Empty);
+
+        public static ToolCmd command(FilePath tool, ToolCmdArgs args, FolderPath work, params EnvVar[] vars)
+            => new (tool,args, work, vars);
+
+
+        public static ToolCmdArg flag(ArgPrefixKind prefix, string name)
+            => new ToolCmdArg{
+                Prefix = prefix,
+                Name = name,
+            };
+
+        public static ToolCmdArg option(ArgPrefixKind prefix, string name, ArgSepKind sep, ArgValue value)
+            => new ToolCmdArg{
+                Prefix = prefix,
+                Name = name,
+                Sep = sep,
+                Value = value
+            };
+
+        public static ToolCmdArg arg(string name, ArgValue value)
+            => new ToolCmdArg{
+                Name = name,
+                Value = value
+            };
+        
         public static ToolCmdSpec spec(FolderPath? work = null, params EnvVar[] vars)
             => new (FilePath.Empty, CmdArgs.Empty, work ?? Env.cd(), vars, null, null);
 
@@ -28,10 +73,10 @@ namespace Z0
 
         public static IToolStreamWriter writer(FilePath src)
             => new ToolStreamWriter(src);
-
+         
         public static Task<ExecStatus> start(IToolFlow flow, ToolCmdSpec spec)
             => sys.start(() => run(flow, spec));
-            
+         
         static ExecStatus run(IToolFlow flow, ToolCmdSpec spec)
         {
             var i=0u;
@@ -132,7 +177,6 @@ namespace Z0
                 token = channel.Ran(flow, $"Launched {profile} shell: {process.Id}");
             return token;
         }
-
 
         [Op]
         public static Task<ExecToken> run(IWfChannel channel, FilePath tool, CmdArgs args, ToolCmdSpec? spec = null)
@@ -384,22 +428,6 @@ namespace Z0
         public static ReadOnlySeq<IToolExecutor> executors(params Assembly[] src)
             => src.Types().Tagged<CmdExecutorAttribute>().Concrete().Map(x => (IToolExecutor)Activator.CreateInstance(x));
 
-        public static string format(IToolCmd src)
-        {
-            var count = src.Args.Count;
-            var buffer = text.buffer();
-            buffer.AppendFormat("{0}{1}", src.Tool, Chars.LParen);
-            for(var i=0; i<count; i++)
-            {
-                var arg = src.Args[i];
-                buffer.AppendFormat(RP.Assign, arg.Name, arg.Value);
-                if(i != count - 1)
-                    buffer.Append(", ");
-            }
-
-            buffer.Append(Chars.RParen);
-            return buffer.Emit();
-        }
 
         [MethodImpl(Inline), Op]
         public static ToolFlagSpec flag(string name, string desc)
@@ -438,29 +466,14 @@ namespace Z0
         public static ToolCmdLine cmdline(FilePath tool, params string[] src)
             => new ToolCmdLine(tool, src);
 
-        [Op, Closures(UInt64k)]
-        public static ToolCmd cmd<T>(Tool tool, in T src)
-            where T : struct
-        {
-            var t = typeof(T);
-            var fields = Clr.fields(t);
-            var count = fields.Length;
-            var reflected = sys.alloc<ClrFieldValue>(count);
-            ClrFields.values(src, fields, reflected);
-            var buffer = sys.alloc<CmdArg>(count);
-            var target = span(buffer);
-            var values = @readonly(reflected);
-            for(var i=0u; i<count; i++)
-            {
-                ref readonly var fv = ref skip(values,i);
-                seek(target,i) = new CmdArg(fv.Field.Name, fv.Value?.ToString() ?? EmptyString);
-            }
-            return new ToolCmd(tool, buffer);
-        }        
+        // [Op, Closures(UInt64k)]
+        // public static Tool tool(CmdArgs args, byte index = 0)
+        //     => new (CmdArgs.arg(args,index).Value);
 
-        [Op, Closures(UInt64k)]
-        public static Tool tool(CmdArgs args, byte index = 0)
-            => new (CmdArgs.arg(args,index).Value);
+
+        public T Tool<T>()
+            where T : IToolService, new()
+                => ToolServices.Service<T>(Wf);
 
         public FilePath ConfigScript(Tool tool)
             => Home(tool).ConfigScript(ApiAtomic.config, FileKind.Cmd);
@@ -589,22 +602,6 @@ namespace Z0
             return docs.ToArray();
         }
  
-        public ConstLookup<ToolIdOld,ToolHelpDoc> LoadHelpDocs(IDbArchive src)
-        {
-            var dst = dict<ToolIdOld,ToolHelpDoc>();
-            var files = src.Files(FileKind.Help);
-            iter(files, file =>{
-                var fmt = file.FileName.Format();
-                var i = text.index(fmt, Chars.Dot);
-                if(i > 0)
-                {
-                    var tool = text.left(fmt,i);
-                    dst.TryAdd(tool, new ToolHelpDoc(tool, file, file.ReadAsci()));
-                }
-            });
-            return dst;
-        }
-
         public ConstLookup<Actor,ToolProfile> LoadProfileLookup(FolderPath dir)
         {
             var running = Channel.Running(string.Format("Loading tool profiles from {0}", dir));

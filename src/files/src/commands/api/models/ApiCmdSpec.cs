@@ -4,8 +4,35 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static sys;
     public record class ApiCmdSpec : IApiCmd<ApiCmdSpec>
     {
+        public static string format(ApiCmdSpec src)
+        {
+            if(src.IsEmpty)
+                return EmptyString;
+
+            var dst = text.buffer();
+            dst.Append(src.Name);
+            var count = src.Args.Count;
+            for(ushort i=0; i<count; i++)
+            {
+                var arg = src.Args[i];
+                if(nonempty(arg.Name))
+                {
+                    dst.Append(Chars.Space);
+                    dst.Append(arg.Name);
+                }
+
+                if(nonempty(arg.Value))
+                {
+                    dst.Append(Chars.Space);
+                    dst.Append(arg.Value);
+                }
+            }
+            return dst.Emit();
+        }
+
         public readonly @string Name;
 
         public readonly CmdArgs Args;
@@ -37,7 +64,7 @@ namespace Z0
         }
 
         public string Format()
-            => Cmd.format(this);
+            => format(this);
 
         public override string ToString()
             => Format();
