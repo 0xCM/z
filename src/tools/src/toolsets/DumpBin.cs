@@ -5,7 +5,6 @@
 namespace Z0.Tools
 {
     using static sys;
-    using static DumpBin.Scripts;
     using static Pow2x32;
 
     [ApiHost]
@@ -78,28 +77,6 @@ namespace Z0.Tools
             NOBYTES = P2ᐞ18,
         }
 
-        internal class Scripts
-        {
-            public static ToolScript DumpObj(FilePath input, IDbArchive dst)
-                => Tooling.script(dst.Path("dump-obj",FileKind.Cmd), vars(input.FolderPath, input.FileName, dst.Root));
-
-            public static ToolScript DumpDll(FilePath input, IDbArchive dst)
-                => Tooling.script(dst.Path("dump-dll",FileKind.Cmd), vars(input.FolderPath, input.FileName, dst.Root));
-
-            public static ToolScript DumpExe(FilePath input, IDbArchive dst)
-                => Tooling.script(dst.Path("dump-exe",FileKind.Cmd), vars(input.FolderPath, input.FileName, dst.Root));
-
-            public static ToolScript DumpLib(FilePath input, IDbArchive dst)
-                => Tooling.script(dst.Path("dump-lib",FileKind.Cmd), vars(input.FolderPath, input.FileName, dst.Root));
-
-            static CmdVars vars(FolderPath SrcDir, FileName SrcFile, FolderPath DstDir)
-                => Vars.cmdvars(
-                    ("SrcDir", SrcDir.Format(PathSeparator.BS)),
-                    ("SrcFile", SrcFile.Format()),
-                    ("DstDir", DstDir.Format(PathSeparator.BS))
-                    );
-        }
-
         public static FileKind outkind(CmdName name)
         {
             var dst = FileKind.None;
@@ -128,31 +105,6 @@ namespace Z0.Tools
             return dst;
         }
 
-        public static ReadOnlySeq<ToolScript> scripts(IDbArchive src, FileKind kind, IDbArchive dst)
-        {
-            var files = src.Files(kind).Array().ToReadOnlySeq();
-            var count = files.Count;
-            var scripts = sys.alloc<ToolScript>(count);
-            for(var i=0; i<count; i++)
-            {
-                switch(kind)
-                {
-                    case FileKind.Dll:
-                        seek(scripts,i) = DumpDll(files[i], dst);
-                    break;
-                    case FileKind.Exe:
-                        seek(scripts,i) = DumpExe(files[i], dst);
-                    break;
-                    case FileKind.Obj:
-                        seek(scripts,i) = DumpObj(files[i], dst);
-                    break;
-                    case FileKind.Lib:
-                        seek(scripts,i) = DumpLib(files[i], dst);
-                    break;
-                }
-            }
-            return scripts;
-        }
 
         public Identifier ScriptId(CmdName cmd, FileKind kind)
             => string.Format("{0}.{1}.{2}", Id, kind.Format(), CmdSymbols[cmd].Expr);

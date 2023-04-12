@@ -4,9 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static sys;
     [ApiHost]
     public class Events
     {
+        [Op]
+        public static EventOrigin origin(string name, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
+            => new EventOrigin(name, new CallingMember(caller, file, line ?? 0));
+
         [Op]
         public static StackFrame frame(int index)
             => new StackFrame(index);

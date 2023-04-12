@@ -62,7 +62,7 @@ namespace Z0
             if(result.Fail)
                 return result;
 
-            flows = Cmd.flows(response);
+            flows = CmdFlows.flows(response);
 
             return result;
         }

@@ -1,92 +1,92 @@
-//-----------------------------------------------------------------------------
-// Copyright   :  (c) Chris Moore, 2020
-// License     :  MIT
-//-----------------------------------------------------------------------------
-namespace Z0
-{
-    using static sys;
+// //-----------------------------------------------------------------------------
+// // Copyright   :  (c) Chris Moore, 2020
+// // License     :  MIT
+// //-----------------------------------------------------------------------------
+// namespace Z0
+// {
+//     using static sys;
 
-    /// <summary>
-    /// Specifies a kinded option
-    /// </summary>
-    public readonly record struct OptionSpec<K> : IOptionSpec<K>
-        where K : unmanaged
-    {
-        /// <summary>
-        /// The option name
-        /// </summary>
-        public readonly @string Name {get;}
+//     /// <summary>
+//     /// Specifies a kinded option
+//     /// </summary>
+//     public readonly record struct OptionSpec<K> : IOptionSpec<K>
+//         where K : unmanaged
+//     {
+//         /// <summary>
+//         /// The option name
+//         /// </summary>
+//         public readonly @string Name {get;}
 
-        /// <summary>
-        /// The option kind
-        /// </summary>
-        public readonly K Kind {get;}
+//         /// <summary>
+//         /// The option kind
+//         /// </summary>
+//         public readonly K Kind {get;}
 
-        /// <summary>
-        /// A description for the option, if available
-        /// </summary>
-        public readonly @string Description {get;}
+//         /// <summary>
+//         /// A description for the option, if available
+//         /// </summary>
+//         public readonly @string Description {get;}
 
-        [MethodImpl(Inline)]
-        public OptionSpec(K kind)
-        {
-            Name = kind.ToString();
-            Kind = kind;
-            Description = EmptyString;
-        }
+//         [MethodImpl(Inline)]
+//         public OptionSpec(K kind)
+//         {
+//             Name = kind.ToString();
+//             Kind = kind;
+//             Description = EmptyString;
+//         }
 
-        [MethodImpl(Inline)]
-        public OptionSpec(string name, K kind)
-        {
-            Name = name;
-            Kind = kind;
-            Description = EmptyString;
-        }
+//         [MethodImpl(Inline)]
+//         public OptionSpec(string name, K kind)
+//         {
+//             Name = name;
+//             Kind = kind;
+//             Description = EmptyString;
+//         }
 
-        [MethodImpl(Inline)]
-        public OptionSpec(string name, K kind, string description)
-        {
-            Name = name;
-            Kind = kind;
-            Description = description;
-        }
+//         [MethodImpl(Inline)]
+//         public OptionSpec(string name, K kind, string description)
+//         {
+//             Name = name;
+//             Kind = kind;
+//             Description = description;
+//         }
 
-        public Hash32 Hash
-        {
-            [MethodImpl(Inline)]
-            get => Name.Hash | nhash(Kind) | hash(Description);
-        }
+//         public Hash32 Hash
+//         {
+//             [MethodImpl(Inline)]
+//             get => Name.Hash | nhash(Kind) | hash(Description);
+//         }
 
-        public bool IsEmpty
-        {
-            [MethodImpl(Inline)]
-            get => Name.IsEmpty;
-        }
+//         public bool IsEmpty
+//         {
+//             [MethodImpl(Inline)]
+//             get => Name.IsEmpty;
+//         }
 
-        public bool IsNonEmpty
-        {
-            [MethodImpl(Inline)]
-            get => Name.IsNonEmpty;
-        }
+//         public bool IsNonEmpty
+//         {
+//             [MethodImpl(Inline)]
+//             get => Name.IsNonEmpty;
+//         }
 
-        [MethodImpl(Inline)]
-        public string Format()
-            => Name;
+//         [MethodImpl(Inline)]
+//         public string Format()
+//             => Name;
 
-        public override string ToString()
-            => Format();
+//         public override string ToString()
+//             => Format();
 
-        [MethodImpl(Inline)]
-        public static implicit operator OptionSpec(OptionSpec<K> src)
-            => new OptionSpec(src.Name, src.Description);
+//         [MethodImpl(Inline)]
+//         public static implicit operator OptionSpec(OptionSpec<K> src)
+//             => new OptionSpec(src.Name, src.Description);
 
-        /// <summary>
-        /// Specifies the empty option
-        /// </summary>
-        public static OptionSpec<K> Empty
-        {
-            [MethodImpl(Inline)]
-            get => new OptionSpec<K>(EmptyString, default(K));
-        }
-    }
-}
+//         /// <summary>
+//         /// Specifies the empty option
+//         /// </summary>
+//         public static OptionSpec<K> Empty
+//         {
+//             [MethodImpl(Inline)]
+//             get => new OptionSpec<K>(EmptyString, default(K));
+//         }
+//     }
+// }

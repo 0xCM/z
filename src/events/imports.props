@@ -1,9 +1,10 @@
 <Project>
   <Import Project="$(SlnProps)\diagnostics.props"/>
+  <Import Project="$(SlnProps)\microsoft.etw.props"/>
   <ItemGroup>
-    <ProjectReference Include="$(Sys)" />
     <ProjectReference Include="$(Text)" />
     <ProjectReference Include="$(Files)" />
+    <ProjectReference Include="$(Json)" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="$(MsExtVer)" />
   </ItemGroup>
 </Project>

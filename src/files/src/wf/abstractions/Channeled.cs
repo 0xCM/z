@@ -18,7 +18,10 @@ namespace Z0
         public void Init(IWfChannel channel)
         {
             Channel = channel;
+            Initialized();
         }
+
+        protected virtual void Initialized()  {}
 
         IWfChannel IChanneled.Channel 
             => Channel;

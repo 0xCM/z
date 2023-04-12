@@ -327,6 +327,42 @@ namespace Z0
                 => dst.WriteStringValue(src.Format(PathSeparator.FS));
         }        
 
+        class TimestampTransform : JsonTransform<Timestamp>
+        {
+            protected override Timestamp Read(ref Utf8JsonReader src) 
+            {
+                if(Timing.parse(src.GetString(), out var dst))
+                {
+                    return dst;
+                }
+                else
+                {
+                    return Timestamp.Zero;
+                }
+            }
+
+            protected override void Write(Timestamp src, Utf8JsonWriter dst) 
+                => dst.WriteStringValue(src.Format());
+        }        
+
+        class ProcessIdTransform : JsonTransform<ProcessId>
+        {
+            protected override ProcessId Read(ref Utf8JsonReader src) 
+            {
+                if(ProcessId.parse(src.GetString(), out var dst))
+                {
+                    return dst;
+                }
+                else
+                {
+                    return ProcessId.Empty;
+                }
+            }
+
+            protected override void Write(ProcessId src, Utf8JsonWriter dst) 
+                => dst.WriteStringValue(src.Format());
+        }        
+
         class FileUriTransform : JsonTransform<FileUri>
         {
             protected override FileUri Read(ref Utf8JsonReader src) 
@@ -335,6 +371,16 @@ namespace Z0
             protected override void Write(FileUri src, Utf8JsonWriter dst) 
                 => dst.WriteStringValue(src.Format());
         }        
+
+        class EventIdTransform : JsonTransform<EventId>
+        {
+            protected override EventId Read(ref Utf8JsonReader src) 
+                => src.GetString();
+
+            protected override void Write(EventId src, Utf8JsonWriter dst) 
+                => dst.WriteStringValue(src.Format());
+        }        
+
 
         class FolderPathTransform : JsonTransform<FolderPath>
         {
@@ -348,7 +394,7 @@ namespace Z0
         class AssemblyVersionTransform : JsonTransform<AssemblyVersion>
         {
             protected override AssemblyVersion Read(ref Utf8JsonReader src)             
-            {
+            {                
                 throw no<AssemblyVersion>();
 
             }
@@ -368,6 +414,9 @@ namespace Z0
 
         static JsonConverters()
         {
+            register(new EventIdTransform());
+            register(new TimestampTransform());
+            register(new ProcessIdTransform());
             register(new StringTransform());
             register(new FilePathTransform());
             register(new FolderPathTransform());

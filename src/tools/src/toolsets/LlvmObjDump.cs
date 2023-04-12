@@ -32,9 +32,13 @@ namespace Z0.Tools
         {
             var src = FS.archive(args[0]);
             var dst = EnvDb.Nested("llvm-objdump", src.Root).Clear();
+            var command = Tooling.command(ToolPath, 
+                Tooling.flag("--syms"), 
+                Tooling.flag("--demangle")
+                );
             iter(Sources(args), entry => {
                 var filename = FS.file(entry.Path.FileName.Format() + "." + entry.Path.Hash.Format(false), FS.ext("symtables"));
-                Run(Cmd.args(entry.Path.Format(PathSeparator.FS), "--syms", "--demangle"), dst.Path(filename));
+                Run(command, dst.Path(filename));
             }, true);
         }
 
@@ -43,9 +47,16 @@ namespace Z0.Tools
         {
             var src = FS.archive(args[0]);
             var dst = EnvDb.Nested("llvm-objdump", src.Root).Clear();
+            var command = Tooling.command(ToolPath, 
+                Tooling.flag("--disassemble"), 
+                Tooling.flag("--symbolize-operands"),
+                Tooling.flag("--demangle"),
+                Tooling.option(ArgPrefixKind.Dashes, "x86-asm-syntax", ArgSepKind.Eq, "intel")
+                );
+
             iter(Sources(args), entry => {
                 var filename = FS.file(entry.Path.FileName.Format() + "." + entry.Path.Hash.Format(false), FileKind.Asm);
-                Run(Cmd.args(entry.Path.Format(PathSeparator.FS), "--x86-asm-syntax=intel", "--disassemble", "--symbolize-operands", "--demangle"), dst.Path(filename));
+                Run(command, dst.Path(filename));
             }, true);
         }
     }

@@ -8,10 +8,8 @@ namespace Z0
     {
         class ChannelCache : AppChannels<ChannelCache>
         {
-
             public ProcessMemory ProcessMemory(IWfChannel channel)                
                 => service<ProcessMemory>(channel);
-
         }
 
         class ServiceCache : AppServices<ServiceCache>

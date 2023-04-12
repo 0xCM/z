@@ -17,6 +17,5 @@ namespace Z0
 
         public static bool parse(string src, out ArgPrefixKind dst)
             => ArgPrefixParser.Parse(src, out dst);
-
     }
 }

@@ -6,8 +6,8 @@ namespace Z0
 {
     public interface IApiShell : IAppShell
     {
-        ICmdRunner Runner {get;}
+        IApiCmdRunner Runner {get;}
 
-        void Init(IWfRuntime wf, ReadOnlySeq<string> args, ICmdRunner dispatcher);
+        void Init(IWfRuntime wf, ReadOnlySeq<string> args, IApiCmdRunner dispatcher);
     }    
 }

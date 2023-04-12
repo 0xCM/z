@@ -10,7 +10,7 @@ namespace Z0
         const string TableId = "api.commands";
 
         [Render(22)]
-        public CmdRoute Route;
+        public ApiCmdRoute Route;
 
         [Render(22)]
         public @string CmdType;
@@ -26,6 +26,5 @@ namespace Z0
 
         [Render(32)]
         public @string Expression;
-
     }    
 }

@@ -20,7 +20,6 @@ namespace Z0
             {
                 var path = dst.Metadata(EcmaSections.SystemStrings).PrefixedTable<EcmaStringDetail>(src.GetSimpleName());
                 var reader = EcmaReader.create(src);
-                //using var reader = PeReader.create(FS.path(src.Location));
                 Channel.TableEmit(reader.ReadSystemStringDetail(), path, UTF16);
             }
             Try(Exec);

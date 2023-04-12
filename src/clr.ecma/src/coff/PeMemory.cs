@@ -28,12 +28,14 @@ namespace Z0
         void ReadHeaders()
         {
             _DosHeader = Reader.Read<IMAGE_DOS_HEADER>();
-            Require.equal(_DosHeader.e_magic, IMAGE_DOS_HEADER.MAGIC);
-            
+            Require.equal(_DosHeader.e_magic, IMAGE_DOS_HEADER.MAGIC);            
             var sigoffset = Reader.Seek(PeSig.LocationOffset).Read<uint>();
             var headerOffset = sigoffset + PeSig.Size;
             _CoffHeader = Reader.Seek(headerOffset).Read<CoffHeader>();
         }
+
+        public byte* Pointer(Address32 offset)
+            => (Source.BaseAddress + offset).Pointer<byte>();
 
         public ref readonly IMAGE_DOS_HEADER DosHeader 
             => ref _DosHeader;

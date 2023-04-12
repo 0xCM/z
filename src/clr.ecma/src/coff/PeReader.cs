@@ -100,9 +100,6 @@ namespace Z0
             get => PE.PEHeaders;
         }
 
-        // public ReadOnlySpan<MemberReferenceHandle> MemberRefHandles
-        //     => MD.MemberReferences.ToArray();
-
         public PEMemoryBlock ReadSectionData(PeDirectoryEntry src)
             => PE.GetSectionData((int)src.Rva);
 

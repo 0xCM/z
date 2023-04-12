@@ -29,20 +29,9 @@ namespace Z0
             return Tooling.run(channel, path, CmdArgs.Empty, ToolCmdSpec.Default);
         }
 
-        public static Task<ExecToken> shell(IWfChannel channel, CmdArgs args)
-        {
-            ExecToken Run()
-            {
-                var profile = args[0].Value;
-                var cwd = args.Count > 1 ? FS.dir(args[1]) : Env.cd();
-                return Tooling.shell(channel, profile, cwd);  
-            }
-            return sys.start(Run);
-        }
-
         [CmdOp("dev/shell")]
         void LaunchShell(CmdArgs args)
-            => shell(Channel,args);
+            => Tooling.shell(Channel,args);
 
         [CmdOp("develop")]
         void Develop(CmdArgs args)

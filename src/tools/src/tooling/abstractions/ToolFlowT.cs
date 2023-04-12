@@ -34,11 +34,11 @@ namespace Z0
             return flow.Start(command).Result;
         }
 
-        public ExecStatus Run(CmdArgs args, FilePath tool, FilePath dst)
-        {
-            using var flow = create(Channel);
-            return flow.Start(args, tool, dst).Result;
-        }
+        // public ExecStatus Run(CmdArgs args, FilePath tool, FilePath dst)
+        // {
+        //     using var flow = create(Channel);
+        //     return flow.Start(args, tool, dst).Result;
+        // }
 
         protected virtual IToolStreamWriter CreateStatusWriter(FilePath dst)
             => Tooling.writer(dst);
@@ -46,14 +46,14 @@ namespace Z0
         protected virtual IToolStreamWriter CreateErrorWriter(FilePath dst)
             => Tooling.writer(dst);
 
-        Task<ExecStatus> Start(CmdArgs args, FilePath tool, FilePath dst)   
-        {
-            var spec = Tooling.spec(tool, args);  
-            TargetStream = CreateStatusWriter(dst);
-            ErrorStream = CreateErrorWriter(dst + FS.ext("errors"));
-            var status = Tooling.start(this, spec);
-            return status;
-        }
+        // Task<ExecStatus> Start(CmdArgs args, FilePath tool, FilePath dst)   
+        // {
+        //     var spec = Tooling.spec(tool, args);  
+        //     TargetStream = CreateStatusWriter(dst);
+        //     ErrorStream = CreateErrorWriter(dst + FS.ext("errors"));
+        //     var status = Tooling.start(this, spec);
+        //     return status;
+        // }
 
         Task<ExecStatus> Start(ToolCmd cmd, FilePath dst)   
         {

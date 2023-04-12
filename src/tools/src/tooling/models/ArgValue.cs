@@ -16,7 +16,7 @@ namespace Z0
         public string Format()
         {
             var dst = EmptyString;
-            var kind = Kind();
+            var kind = Type();
             if(kind != 0)
                 dst = Data.ToString();
             return dst;
@@ -37,32 +37,32 @@ namespace Z0
             get => !IsEmpty;
         }
 
-        public ArgValueKind Kind()
+        public ToolArgType Type()
         {
-            var kind = ArgValueKind.None;
+            var kind = ToolArgType.None;
             if(Data is string)
             {
-                kind = ArgValueKind.String;
+                kind = ToolArgType.String;
             }
             else if(Data is FilePath || Data is FileUri)
             {
-                kind = ArgValueKind.File;
+                kind = ToolArgType.File;
             }
             else if(Data is FolderPath)
             {
-                kind = ArgValueKind.Folder;
+                kind = ToolArgType.Folder;
             }
             else if(Data is bit)
             {
-                kind = ArgValueKind.Bit;
+                kind = ToolArgType.Bit;
             }
             else if(Data is bool)
             {
-                kind = ArgValueKind.Bool;
+                kind = ToolArgType.Bool;
             }
             else if(Data is int || Data is uint)
             {
-                kind = ArgValueKind.Integer;
+                kind = ToolArgType.Integer;
             }
             return kind;
         }

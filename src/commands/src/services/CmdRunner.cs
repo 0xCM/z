@@ -5,20 +5,20 @@
 namespace Z0
 {
     using static sys;
-    using static CmdActorKind;
+    using static ApiActorKind;
 
-    class CmdRunner : ICmdRunner
+    class ApiCmdRunner : IApiCmdRunner
     {
-        readonly ICmdMethods Methods;
+        readonly IApiCmdMethods Methods;
 
         readonly IWfChannel Channel;
 
         readonly CmdHandlers Handlers;
         
-        readonly CmdCatalog CmdCatalog;
+        readonly ApiCmdCatalog CmdCatalog;
 
         [MethodImpl(Inline)]
-        public CmdRunner(IWfChannel channel, ICmdMethods methods, CmdHandlers handlers)
+        public ApiCmdRunner(IWfChannel channel, IApiCmdMethods methods, CmdHandlers handlers)
         {
             Methods = methods;
             Channel = channel;
@@ -26,10 +26,10 @@ namespace Z0
             CmdCatalog = catalog(methods);
         }
 
-        CmdCatalog ICmdRunner.Catalog 
+        ApiCmdCatalog IApiCmdRunner.Catalog 
             => CmdCatalog;
 
-        static CmdCatalog catalog(ICmdMethods methods)
+        static ApiCmdCatalog catalog(IApiCmdMethods methods)
         {
             var defs = methods.Defs;
             var count = defs.Count;
@@ -43,7 +43,7 @@ namespace Z0
                 entry.Name = uri.Name;
             }
 
-            return new CmdCatalog(dst);
+            return new ApiCmdCatalog(dst);
         }
 
         public ExecToken RunCommand(string[] _args)
@@ -83,7 +83,7 @@ namespace Z0
                 else
                 {
                     var script = ApiCmdScript.Empty;
-                    Cmd.parse(src, out script);
+                    ApiCmd.parse(src, out script);
                     ref readonly var commands = ref script.Commands;
                     Channel.Babble($"Dispatching {commands.Count} from {src}");
                     iter(script.Commands, cmd => {
@@ -150,7 +150,7 @@ namespace Z0
             return result;
         }
 
-        Outcome Run(CmdMethod method, CmdArgs args)
+        Outcome Run(ApiCmdMethod method, CmdArgs args)
         {
             var output = default(object);
             var result = Outcome.Success;
@@ -166,7 +166,7 @@ namespace Z0
                         method.Definition.Invoke(method.Host, new object[1]{args});
                         result = Outcome.Success;
                     break;
-                    case CmdActorKind.Emitter:
+                    case ApiActorKind.Emitter:
                         output = method.Definition.Invoke(method.Host, new object[]{});
                     break;
                     case Func:

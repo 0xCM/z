@@ -7,14 +7,14 @@ namespace Z0
 {
     public class CmdLoop
     {
-        public static Task start(IWfChannel channel, ICmdRunner runner)
+        public static Task start(IWfChannel channel, IApiCmdRunner runner)
             => sys.start(new CmdLoop(channel, runner).Run);
 
         readonly IWfChannel Channel;
 
-        readonly ICmdRunner Runner;
+        readonly IApiCmdRunner Runner;
 
-        CmdLoop(IWfChannel channel, ICmdRunner runner)
+        CmdLoop(IWfChannel channel, IApiCmdRunner runner)
         {
             Channel = channel;
             Runner = runner;
@@ -23,7 +23,7 @@ namespace Z0
         ApiCmdSpec Next()
         {
             var input = term.prompt(string.Format("{0}> ", "cmd"));
-            if(Cmd.parse(input, out ApiCmdSpec cmd))
+            if(ApiCmd.parse(input, out ApiCmdSpec cmd))
             {
                 return cmd;
             }

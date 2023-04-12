@@ -22,16 +22,5 @@ namespace Z0
 
             Try(Exec);
         }
-
-        // public void EmitMethodInfo(IEnumerable<AssemblyFile> src, IDbArchive dst)
-        //     => iter(src, a => EmitMethodInfo(a, dst), PllExec);
-
-        // void EmitMethodInfo(AssemblyFile src, IDbArchive dst)
-        // {
-        //     using var file = Ecma.file(src.Path);
-        //     var reader = file.EcmaReader();
-        //     var buffer = list<EcmaMethodInfo>();
-        //     Channel.TableEmit(reader.ReadMethodInfo(), dst.PrefixedTable<EcmaMethodInfo>(src.AssemblyName.Format()));
-        // }
     }
 }

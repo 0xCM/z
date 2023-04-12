@@ -1,6 +1,7 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(Files)" />
+    <ProjectReference Include="$(Commands)" />
     <ProjectReference Include="$(Events)" />
+    <ProjectReference Include="$(Files)" />
   </ItemGroup>
 </Project>

@@ -6,6 +6,16 @@ namespace Z0
 {
     public sealed class CodeLauncher : ProcessLauncher<CodeLauncher>
     {
+        // public static void launch(IWfChannel channel, FolderPath root, Action<Process> start, Action<int> exit)
+        // {
+        //     var context = Tooling.spec(root, EnvVars.Empty, start, exit);
+        //     var workspaces = root.Files(FS.ext("code-workspace"));
+        //     if(workspaces.IsNonEmpty)
+        //         CodeLauncher.start(channel, root + workspaces[0].FileName, context).Wait();
+        //     else
+        //         CodeLauncher.start(channel, root, context).Wait();
+        // }
+
         public static Task<ExecToken> start<T>(IWfChannel channel, T target, ToolCmdSpec context)
             => Tooling.run(channel, FS.path("code.exe"), Cmd.args(target), context);
 

@@ -419,7 +419,6 @@ namespace Z0
             return dst;
         }
         
-
         void EmitDirectories()
         {
             var src = GetModules();

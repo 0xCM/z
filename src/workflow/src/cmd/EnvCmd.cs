@@ -4,6 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using Microsoft.Diagnostics.Tracing.Parsers;
+    using Microsoft.Diagnostics.Tracing.Parsers.Kernel;
+    using Microsoft.Diagnostics.Tracing.Session;
+    using System.Diagnostics.Eventing.Reader;
+
     using static sys;
     using static Env;
 
@@ -145,5 +150,44 @@ namespace Z0
         [CmdOp("tool")]
         void ToolHelp(CmdArgs args)
             => Tooling.redirect(Channel,args).Wait();        
+
+        
+        void EmitEtwRecords(string provider)
+        {
+            try
+            {
+                var filename = FS.file(provider, FileKind.Xml);
+                var path = EnvDb.Scoped("etw").Path(filename);
+                var xml = RegisteredTraceEventParser.GetManifestForRegisteredProvider(provider);
+                Channel.FileEmit(xml, path);
+            }
+            catch(Exception e)
+            {
+                Channel.Warn(e.Message);
+            }
+        }
+
+        [CmdOp("etw/events")]
+        void EtwProviders()
+        {
+            var providers = EventLogSession.GlobalSession.GetProviderNames();
+            iter(providers, EmitEtwRecords,true);
+        }
+
+
+        [CmdOp("process/monitor/start")]
+        void ProcMonStart()
+        {
+            var monitor = Channel.ProcessMonitor();
+            monitor.Start();
+        }
+
+        [CmdOp("process/monitor/stop")]
+        void ProcMonStop()
+        {
+            var monitor = Channel.ProcessMonitor();
+            monitor.Stop();
+        }
+
     }
 }

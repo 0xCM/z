@@ -8,8 +8,8 @@ namespace Z0
     {
         class ServiceCache : AppServices<ServiceCache>
         {
-            public ApiCmd ApiCmd(IWfRuntime wf)
-                => Service<ApiCmd>(wf);
+            public ApiCmdSvc ApiCmd(IWfRuntime wf)
+                => Service<ApiCmdSvc>(wf);
 
             public ApiServers ApiServers(IWfRuntime wf)
                 => Service<ApiServers>(wf);
@@ -18,7 +18,7 @@ namespace Z0
 
         static ServiceCache Services => ServiceCache.Instance;
         
-        public static ApiCmd ApiCmd(this IWfRuntime wf)
+        public static ApiCmdSvc ApiCmd(this IWfRuntime wf)
             => Services.ApiCmd(wf);
 
         public static ApiServers ApiServers(this IWfRuntime wf)

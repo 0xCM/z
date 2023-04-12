@@ -1,8 +1,9 @@
 @echo off
 call %~dp0..\config.cmd
-set DeployProps=-p:PublishReadyToRun=false -p:DebugType=embedded -p:PublishSingleFile=true -p:PublishDocumentationFiles=false -p:IncludeNativeLibrariesInSingleFile=true
-set DeployPath=%DevTools%\%BuildPrefix%\%ProjectName%
-set DeployApp=dotnet publish %ProjectPath% --output %DeployPath% %ConfigOption% %VerbosityOption% %FrameworkOption% %DeployProps% %DeployLog%
-call %DeployApp%
-if errorlevel 1 goto:eof
-robocopy %DeployPath% %DevTools%\%BuildPrefix% /e
+set FrameworkOption=--framework %FrameworkMoniker%
+set ConfigOption=--configuration %ConfigName%
+set DeployProps=-p:PublishReadyToRun=false -p:DebugType=embedded /p:RuntimIdentifier=win-x64 /p:Platform=x64
+set DeployLog=-bl:%BuildLogs%\z0.%ProjectName%.deploy.binlog
+set DeployPath=d:\tools\z0\agents
+set DeployApp=dotnet publish %ProjectPath% --output %DeployPath% %FrameworkOption% %ConfigOption% %VerbosityOption% %DeployProps% %DeployLog%
+%DeployApp%

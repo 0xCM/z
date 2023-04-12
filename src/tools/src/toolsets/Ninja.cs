@@ -35,7 +35,15 @@ namespace Z0.Tools
             void NinjaCommands(CmdArgs args)
             {
                 var src = FS.archive(args[0]);
-                Tool.Commands(src);
+                var target = args.Length > 1 ? args[1].Value.Format() : EmptyString;
+                Tool.Commands(src, target);
+            }
+
+            [CmdOp("ninja/targets")]
+            void NinjaTargets(CmdArgs args)
+            {
+                var src = FS.archive(args[0]);
+                Tool.Targets(src);
             }
 
             [CmdOp("ninja/data")]
@@ -65,12 +73,19 @@ namespace Z0.Tools
             return dst;
         }
 
-        public void Commands(IDbArchive src)
+        public void Commands(IDbArchive src, string target = null)
         {
             var command = Tooling.command(ToolPath, NinjaToolArgs(src, "commands"));
+            var suffix = EmptyString;
+            var name = "ninja.commands";
+            if(text.nonempty(target))
+            {
+                command = Tooling.command(command.ToolPath, command.Args + Tooling.arg(EmptyString, target));
+                suffix = text.replace(target, Chars.FSlash, Chars.Dot);
+                name = $"{name}.{suffix}";
+            }
             var flow = ToolFlow();
-            var dst = src.Path("ninja.commands", FileKind.Cmd);        
-            flow.Run(command, dst);
+            flow.Run(command, src.Path(name, FileKind.Cmd));
         }
 
         public void Targets(IDbArchive src)

@@ -7,7 +7,7 @@ namespace Z0
     [CmdHandler]
     public abstract class CmdHandler : ICmdHandler
     {
-        CmdRoute Route;
+        ApiCmdRoute Route;
 
         protected static AppSettings AppSettings => AppSettings.Default;
         
@@ -22,22 +22,22 @@ namespace Z0
 
         }
 
-        Seq<CmdRoute> _Routes;
+        Seq<ApiCmdRoute> _Routes;
 
         public virtual ReadOnlySeq<@string> SubCommands {get;} 
             = sys.empty<@string>();
 
-        public ReadOnlySeq<CmdRoute> Routes
+        public ReadOnlySeq<ApiCmdRoute> Routes
             => _Routes;
 
-        CmdRoute ICmdHandler.Route
+        ApiCmdRoute ICmdHandler.Route
             => Route;        
 
         public abstract void Run(CmdArgs args);
 
         public virtual Task<ExecToken> Start(CmdArgs args)
         {
-            ExecToken<CmdRoute> Exec()
+            ExecToken<ApiCmdRoute> Exec()
             {
                 var flow = Channel.Running(Route);
                 Run(args);
@@ -50,8 +50,8 @@ namespace Z0
         {
             Wf = wf;
             Channel = wf.Channel;
-            Route = Cmd.route(GetType());
-            _Routes = sys.alloc<CmdRoute>(SubCommands.Count);
+            Route = ApiCmd.route(GetType());
+            _Routes = sys.alloc<ApiCmdRoute>(SubCommands.Count);
             var j=0;
             sys.iter(SubCommands, sub => _Routes[j++] = Route.Refine(sub));
         }

@@ -11,6 +11,15 @@ namespace Z0
 
     public class ApiServers : AppService
     {        
+        public static IApiShell app<T>(string[] args)
+            where T : IApiShell,new()
+        {
+            var dst = new T();
+            var wf = runtime();
+            dst.Init(wf,args);
+            return dst;
+        }
+
         public static IApiShell shell(IWfRuntime wf, string[] args, params Assembly[] parts)
         {
             var shell = new ApiShell();
@@ -35,11 +44,11 @@ namespace Z0
             return shell;
         }
 
-        static ICmdRunner runner(IWfRuntime wf, params Assembly[] parts)
+        static IApiCmdRunner runner(IWfRuntime wf, params Assembly[] parts)
         {
             var _parts = parts.Length == 0 ? ApiAssemblies.Components : parts;
-            var runner = (ICmdRunner)new CmdRunner(wf.Channel, methods(wf, _parts), handlers(wf, _parts));
-            AppData.Value(nameof(ICmdRunner), runner);
+            var runner = (IApiCmdRunner)new ApiCmdRunner(wf.Channel, methods(wf, _parts), handlers(wf, _parts));
+            AppData.Value(nameof(IApiCmdRunner), runner);
             return runner;
         }
 
@@ -57,16 +66,16 @@ namespace Z0
             return handler;
         }
 
-        static CmdMethods methods(IWfRuntime wf, Assembly[] parts)
+        static ApiCmdMethods methods(IWfRuntime wf, Assembly[] parts)
         {
             var types = parts.Types().Concrete().Tagged<CmdProviderAttribute>();
-            var dst = dict<string,CmdMethod>();
+            var dst = dict<string,ApiCmdMethod>();
             iter(types.Tagged<CmdProviderAttribute>().Concrete(), t => {
                 var method = t.StaticMethods().Public().Where(m => m.Name == "create").First();
                 var service = (IApiService)method.Invoke(null, new object[]{wf});
                 iter(methods(service).Defs, m => dst.TryAdd(m.CmdName, m));
             });
-            return new CmdMethods(dst);
+            return new ApiCmdMethods(dst);
         }
 
         public override Type HostType 
@@ -127,27 +136,55 @@ namespace Z0
             }
         }
 
+
         public void EmitCmdDefs(Assembly[] src, IDbArchive dst)
-            => Cmd.emit(Channel, Cmd.defs(src), dst);
+            => emit(Channel, ApiCmd.defs(src), dst);
 
-        public static ICmdRunner Runner 
-            => AppData.Value<ICmdRunner>(nameof(ICmdRunner));
+        static ReadOnlySeq<CmdFieldRow> fields(ReadOnlySpan<ApiCmdDef> src)
+        {
+            var count = src.Select(x => x.FieldCount).Sum();
+            var dst = alloc<CmdFieldRow>(count);
+            var k=0u;
+            for(var i=0; i<src.Length; i++)
+            {
+                var type = Require.notnull(skip(src,i));
+                var instance = Require.notnull(Activator.CreateInstance(type.Source));
+                for(var j=0; j<type.FieldCount; j++,k++)
+                {
+                    ref var row = ref seek(dst,k);
+                    ref readonly var field = ref type.Fields[j];
+                    row.Route = type.Route;
+                    row.Index = field.Index;
+                    row.CmdType = type.Source.DisplayName();
+                    row.Name = field.Name;
+                    row.Expression = field.Description;
+                    row.DataType = field.DataType;
+                }
+            }
+            return dst;
+        }
 
-        public static CmdCatalog catalog()
+        static ExecToken emit(IWfChannel channel, ApiCmdDefs src, IDbArchive dst)
+            => channel.TableEmit(fields(src.View), dst.Table<CmdFieldRow>());                
+
+        public static IApiCmdRunner Runner 
+            => AppData.Value<IApiCmdRunner>(nameof(IApiCmdRunner));
+
+        public static ApiCmdCatalog catalog()
             => Runner.Catalog;
 
-        static CmdMethods methods(IApiService host)
+        static ApiCmdMethods methods(IApiService host)
         {
             var src = host.GetType().DeclaredInstanceMethods().Tagged<CmdOpAttribute>();
-            var dst = dict<string,CmdMethod>();
+            var dst = dict<string,ApiCmdMethod>();
             var count = src.Length;
             for(var i=0; i<count; i++)
             {
                 ref readonly var mi = ref skip(src,i);
                 var tag = mi.Tag<CmdOpAttribute>().Require();
-                dst.TryAdd(tag.Name, new CmdMethod(tag.Name, classify(mi),  mi, host));                
+                dst.TryAdd(tag.Name, new ApiCmdMethod(tag.Name, classify(mi),  mi, host));                
             }
-            return new CmdMethods(dst);
+            return new ApiCmdMethods(dst);
         }
 
         const string InitializingRuntime = "Initializing runtime";
@@ -158,9 +195,9 @@ namespace Z0
 
         static RenderPattern<IWfEmissions> ConfiguredEmissionLogs => "Configured emisson logs:{0}";
 
-        static CmdActorKind classify(MethodInfo src)
+        static ApiActorKind classify(MethodInfo src)
         {
-            var dst = CmdActorKind.None;
+            var dst = ApiActorKind.None;
             var arity = src.ArityValue();
             var @void = src.HasVoidReturn();
             switch(arity)
@@ -169,10 +206,10 @@ namespace Z0
                     switch(@void)
                     {
                         case false:
-                            dst = CmdActorKind.Pure;
+                            dst = ApiActorKind.Pure;
                         break;
                         case true:
-                            dst = CmdActorKind.Emitter;
+                            dst = ApiActorKind.Emitter;
                         break;
                     }
                 break;
@@ -180,10 +217,10 @@ namespace Z0
                     switch(@void)
                     {
                         case true:
-                            dst = CmdActorKind.Receiver;
+                            dst = ApiActorKind.Receiver;
                         break;
                         case false:
-                            dst = CmdActorKind.Func;
+                            dst = ApiActorKind.Func;
                         break;
                     }
                 break;

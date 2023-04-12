@@ -17,7 +17,13 @@ namespace Z0
 
         protected virtual void OnExit()
         {
+            Channel.Status("Application Exit", FlairKind.Ran);
+        }
 
+        protected sealed override void Disposing()
+        {
+            OnExit();
+            AppGlobals.Dispose(Channel);            
         }
 
         protected abstract void Run();

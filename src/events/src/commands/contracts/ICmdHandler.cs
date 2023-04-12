@@ -18,7 +18,7 @@ namespace Z0
         /// <summary>
         /// Identifies a command or related group of commands as specified by the <see cref='SubCommands'/> attribute
         /// </summary>
-        CmdRoute Route {get;}
+        ApiCmdRoute Route {get;}
 
         /// <summary>
         /// The subcommands, if any
@@ -31,7 +31,6 @@ namespace Z0
         /// <param name="wf">The context in which execution will occur</param>
         void Initialize(IWfRuntime wf);
 
-
-        ReadOnlySeq<CmdRoute> Routes {get;}
+        ReadOnlySeq<ApiCmdRoute> Routes {get;}
     }
 }

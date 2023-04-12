@@ -7,7 +7,7 @@ namespace Z0
 {
     using static sys;
 
-    public class ApiCmd : WfSvc<ApiCmd>, IApiService
+    public class ApiCmdSvc : WfSvc<ApiCmdSvc>, IApiService
     {                         
         public void RunCmd(string name)
         {
@@ -17,7 +17,7 @@ namespace Z0
         public void EmitApiCatalog()
             => EmitApiCatalog(Env.ShellData);
         
-        public void EmitApiCatalog(CmdCatalog src, IDbArchive dst)
+        public void EmitApiCatalog(ApiCmdCatalog src, IDbArchive dst)
         {
             var data = src.Values;
             iter(data, x => Channel.Row(x.Uri.Name));

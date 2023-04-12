@@ -13,12 +13,6 @@ namespace Z0
         protected static FileIndex index(IDbArchive src)
             => FS.index(Archives.modules(src).Unmanaged());
 
-        protected ExecStatus Run(CmdArgs args, FilePath dst)
-        {
-            var flow = Channel.Channeled<F>();
-            return flow.Run(args, ToolPath, dst);
-        }
-
         protected ExecStatus Run(ToolCmd cmd, FilePath dst)
         {
             var flow = Channel.Channeled<F>();

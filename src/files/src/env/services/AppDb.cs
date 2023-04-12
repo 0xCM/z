@@ -29,12 +29,6 @@ namespace Z0
         public DbArchive Archives()
             => Data.Archives();
 
-        public DbArchive DevProjects()
-            => Dev().Scoped("projects");
-
-        public DbArchive DevProject(string name)
-            => DevProjects().Scoped(name);
-
         public DbArchive Tools()
             => folder(Data.Setting(SettingNames.DevTools));
 

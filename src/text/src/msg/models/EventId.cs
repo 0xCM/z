@@ -14,6 +14,10 @@ namespace Z0
         public static EventId define(Type host, EventKind kind)
             => new EventId(host, kind);
 
+        [MethodImpl(Inline)]
+        public static EventId define(string name, Timestamp ts)
+            => new EventId(name,ts);
+
         public string Identifier {get;}
 
         public Timestamp Ts {get;}

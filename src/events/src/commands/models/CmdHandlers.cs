@@ -8,23 +8,23 @@ namespace Z0
     
     public class CmdHandlers
     {
-        readonly Dictionary<CmdRoute, ICmdHandler> Lookup;
+        readonly Dictionary<ApiCmdRoute, ICmdHandler> Lookup;
         
         readonly ICmdHandler Empty;
 
-        public CmdHandlers(Dictionary<CmdRoute, ICmdHandler> lookup)
+        public CmdHandlers(Dictionary<ApiCmdRoute, ICmdHandler> lookup)
         {
             Lookup = lookup;
             Empty = Lookup[DevNul.Route];
         }
 
-        public bool Handler(CmdRoute name, out ICmdHandler dst)
+        public bool Handler(ApiCmdRoute name, out ICmdHandler dst)
         {
             dst = Empty;
             return Lookup.TryGetValue(name, out dst);
         }
 
-        public ICollection<CmdRoute> Routes 
+        public ICollection<ApiCmdRoute> Routes 
             => Lookup.Keys;
     }
 }

@@ -11,6 +11,31 @@ namespace Z0
     {
         const NumericKind Closure = UnsignedInts;
 
+        public static bool parse(string src, out IVarAssignment dst)
+        {
+            dst = default;
+            var i = text.index(src, '=');
+            if(i>0)
+            {
+                var decl = text.left(src,i);
+                var value = text.right(src,i);
+                var j = text.index(decl, ':');
+                var type = j > 0 ? text.right(decl,j) : EmptyString;
+                var name = j > 0 ? text.left(decl,j) : decl;
+                dst = Vars.assign(Vars.var(name,type), value);
+            }
+            return dst != null;
+        }
+
+        public static VarDef var(@string name, @string? type = null, @string? usage = null)
+            => new VarDef(name, type ?? EmptyString, usage ?? EmptyString);
+
+        public static VarAssignment<T> assign<T>(VarDef def, T value)
+            => new VarAssignment<T>(def, value);
+
+        public static VarAssignment<T> assign<T>(@string name, T value)
+            => assign(var(name), value);
+
         public static CmdVars cmdvars(params Pair<string>[] src)
         {
             var dst = new CmdVar[src.Length];

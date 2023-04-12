@@ -11,6 +11,6 @@ namespace Z0
             Route = name;
         }
 
-        public readonly CmdRoute Route;
+        public readonly ApiCmdRoute Route;
     }
 }

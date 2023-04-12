@@ -3,7 +3,7 @@
   <Import Project="imports.props"/>
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <AssemblyName>zspace</AssemblyName>
+    <AssemblyName>agents</AssemblyName>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
 </Project>

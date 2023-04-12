@@ -32,6 +32,7 @@ namespace Z0
             try
             {
                 FS.write(content + Eol, Status);
+                Status.Flush();
             }
             catch(Exception error)
             {

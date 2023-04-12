@@ -11,25 +11,6 @@ namespace Z0
         public void EmitAssemblyRefs(ReadOnlySpan<Assembly> src, IDbArchive dst)
             => EmitAssemblyRefs(src, dst.Table<EcmaTables.AssemblyRefRow>());
         
-        // public void EmitAssemblyRefs(IEnumerable<MappedAssembly> src, FilePath dst)
-        // {
-        //     var flow = Channel.EmittingTable<EcmaTables.AssemblyRefRow>(dst);
-        //     var counter = 0;
-        //     using var writer = dst.Writer();
-        //     var formatter = CsvTables.formatter<EcmaTables.AssemblyRefRow>();
-        //     foreach(var a in src)
-        //     {
-        //         var reader = a.EcmaReader();
-        //         var refs = reader.ReadAssemblyRefRows();
-        //         foreach(var @ref in refs)
-        //         {
-        //             writer.WriteLine(formatter.Format(@ref));
-        //             counter++;
-        //         }
-        //     }
-        //     Channel.EmittedTable(flow, counter);
-        // }
-
         public void EmitAssemblyRefs(ReadOnlySpan<Assembly> src, FilePath dst)
         {
             var count = src.Length;

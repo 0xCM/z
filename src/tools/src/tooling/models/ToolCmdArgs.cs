@@ -76,5 +76,11 @@ namespace Z0
 
         public static ToolCmdArgs operator +(ToolCmdArgs a, ToolCmdArgs b)
             => a.Concat(b);
+
+        public static ToolCmdArgs operator +(ToolCmdArgs a, ToolCmdArg b)
+            => a.Concat(sys.array(b));
+
+        public static ToolCmdArgs operator +(ToolCmdArg a, ToolCmdArgs b)
+            => b.Prepend(a);
     }
 }
