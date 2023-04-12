@@ -15,16 +15,13 @@ namespace Z0
         where T : IApiCmd<T>, new()
     {
         ApiCmdRoute Route
-            => ApiCmd.route(typeof(T));
+            => ApiCmdRoute.route(typeof(T));
         
-        ReadOnlySeq<CmdField> Fields 
-            => ApiCmd.fields(typeof(T));
-
         CmdId ICmd.CmdId
             => CmdId.identify<T>();
 
         string IExpr.Format()
-            => ApiCmd.format((T)this);
+            => ApiCmdSpec.format((T)this);
 
         CmdUri IApiCmd.Uri
             => new(CmdKind.App, GetType().Assembly.PartName().Format(), GetType().DisplayName(), CmdId.Format());

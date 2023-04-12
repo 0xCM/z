@@ -32,7 +32,6 @@ namespace Z0
             where T : ICmd
                 => typeof(T).DeclaredInstanceFields().Select(f => new CmdArg(f.Name, f.GetValue(src)?.ToString() ?? EmptyString));
 
- 
         public static CmdArg arg(FieldInfo src)
         {
             var attrib = src.Tag<CmdArgAttribute>();
@@ -45,7 +44,7 @@ namespace Z0
             => new (tagged(src).Concrete().Select(def).Sort());
 
         public static ApiCmdDef def(Type src)
-            => new ApiCmdDef(route(src), src, fields(src));
+            => new ApiCmdDef(ApiCmdRoute.route(src), src, fields(src));
 
         public static ReadOnlySeq<CmdField> fields(Type src)
             => src.PublicInstanceFields().Mapi((i,x) =>  field((ushort)i,x));
@@ -53,31 +52,6 @@ namespace Z0
         static Type[] tagged(Assembly[] src)
             =>  src.Types().Tagged<CmdAttribute>();
 
-        public static string format<T>(T src)
-            where T : ICmd, new()
-        {
-            var buffer = text.emitter();
-            buffer.AppendFormat("{0}{1}", src.CmdId, Chars.LParen);
-
-            var fields = ClrFields.instance(typeof(T));
-            if(fields.Length != 0)
-                render(src, fields, buffer);
-
-            buffer.Append(Chars.RParen);
-            return buffer.Emit();
-        }
-
-        static void render(object src, ReadOnlySpan<ClrFieldAdapter> fields, ITextEmitter dst)
-        {
-            var count = fields.Length;
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var field = ref skip(fields,i);
-                dst.AppendFormat(RP.Assign, field.Name, field.GetValue(src));
-                if(i != count - 1)
-                    dst.Append(", ");
-            }
-        }                            
 
         public static void parse(FileUri src, out ApiCmdScript dst)
         {
@@ -111,33 +85,6 @@ namespace Z0
             }
             return true;
         }        
-
-        [Op]
-        public static ApiCmdRoute route(Type src)
-        {
-            var dst = ApiCmdRoute.Empty;
-            var t0 = src.Tag<CmdRouteAttribute>();
-            if(t0)
-            {
-                dst = t0.Value.Route;
-            }
-            else
-            {
-                var t1 = src.Tag<CmdAttribute>();
-                if(t1)
-                {
-                    var name = t1.Value.Name;
-                    if(nonempty(name))
-                        dst = name;
-                }
-            }
-            if(dst.IsEmpty)
-            {
-                dst = src.DisplayName();
-            }
-
-            return dst;
-        }
 
         [Op]
         public static @string identify(Type spec)

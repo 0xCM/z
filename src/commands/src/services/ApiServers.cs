@@ -11,6 +11,15 @@ namespace Z0
 
     public class ApiServers : AppService
     {        
+        public override Type HostType 
+            => typeof(ApiServers);
+
+        public static IApiCmdRunner Runner 
+            => AppData.Value<IApiCmdRunner>(nameof(IApiCmdRunner));
+
+        public static ApiCmdCatalog catalog()
+            => Runner.Catalog;
+
         public static IApiShell app<T>(string[] args)
             where T : IApiShell,new()
         {
@@ -78,16 +87,6 @@ namespace Z0
             return new ApiCmdMethods(dst);
         }
 
-        public override Type HostType 
-            => typeof(ApiServers);
-
-        public void EmitApiCatalog(IDbArchive dst)
-        {
-            var data = Runner.Catalog.Values;
-            iter(data, x => Channel.Row(x.Uri.Name));
-            Channel.TableEmit(data, dst.Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv));
-        }
-
         public static IWfRuntime runtime(bool verbose = true)
         {
             var factory = typeof(ApiServers);
@@ -135,43 +134,6 @@ namespace Z0
                 throw;
             }
         }
-
-
-        public void EmitCmdDefs(Assembly[] src, IDbArchive dst)
-            => emit(Channel, ApiCmd.defs(src), dst);
-
-        static ReadOnlySeq<CmdFieldRow> fields(ReadOnlySpan<ApiCmdDef> src)
-        {
-            var count = src.Select(x => x.FieldCount).Sum();
-            var dst = alloc<CmdFieldRow>(count);
-            var k=0u;
-            for(var i=0; i<src.Length; i++)
-            {
-                var type = Require.notnull(skip(src,i));
-                var instance = Require.notnull(Activator.CreateInstance(type.Source));
-                for(var j=0; j<type.FieldCount; j++,k++)
-                {
-                    ref var row = ref seek(dst,k);
-                    ref readonly var field = ref type.Fields[j];
-                    row.Route = type.Route;
-                    row.Index = field.Index;
-                    row.CmdType = type.Source.DisplayName();
-                    row.Name = field.Name;
-                    row.Expression = field.Description;
-                    row.DataType = field.DataType;
-                }
-            }
-            return dst;
-        }
-
-        static ExecToken emit(IWfChannel channel, ApiCmdDefs src, IDbArchive dst)
-            => channel.TableEmit(fields(src.View), dst.Table<CmdFieldRow>());                
-
-        public static IApiCmdRunner Runner 
-            => AppData.Value<IApiCmdRunner>(nameof(IApiCmdRunner));
-
-        public static ApiCmdCatalog catalog()
-            => Runner.Catalog;
 
         static ApiCmdMethods methods(IApiService host)
         {

@@ -4,11 +4,20 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using System.CommandLine.Parsing;
+
     using static sys;
 
     [ApiHost]
     public class Cmd 
     {   
+        public static bool parse(string src, out CmdLine dst)
+        {
+            dst = CmdLine.Empty;
+            dst = new (CliParser.SplitCommandLine(src).Map(x => new CmdArg(x)));
+            return true;
+        }
+
         public static CmdArgs args<T>(params T[] src)
             where T : new()
         {

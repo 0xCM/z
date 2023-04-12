@@ -54,11 +54,11 @@ namespace Z0
         public static void Compute<T>(Vector256<T> a, Vector256<T> b, Vector256<T> cin, out Vector256<T> sum, out Vector256<T> cout)
             where T : unmanaged
         {
-            var a0 = gcpu.vxor(a,b);
-            var b0 = gcpu.vand(a0,cin);
-            var c0 = gcpu.vand(a,b);
-            sum = gcpu.vxor(a0, cin);
-            cout = gcpu.vor(b0, c0);
+            var a0 = vgcpu.vxor(a,b);
+            var b0 = vgcpu.vand(a0,cin);
+            var c0 = vgcpu.vand(a,b);
+            sum = vgcpu.vxor(a0, cin);
+            cout = vgcpu.vor(b0, c0);
         }
 
         [MethodImpl(Inline), Op, NumericClosures(UnsignedInts)]
@@ -73,11 +73,11 @@ namespace Z0
         public static void Compute<T>(Vector128<T> a, Vector128<T> b, Vector128<T> cin, out Vector128<T> sum, out Vector128<T> cout)
             where T : unmanaged
         {
-            var a0 = gcpu.vxor(a,b);
-            var b0 = gcpu.vand(a0,cin);
-            var c0 = gcpu.vand(a,b);
-            sum = gcpu.vxor(a0, cin);
-            cout = gcpu.vor(b0, c0);
+            var a0 = vgcpu.vxor(a,b);
+            var b0 = vgcpu.vand(a0,cin);
+            var c0 = vgcpu.vand(a,b);
+            sum = vgcpu.vxor(a0, cin);
+            cout = vgcpu.vor(b0, c0);
         }
 
         [MethodImpl(Inline), Op, NumericClosures(UnsignedInts)]

@@ -50,7 +50,7 @@ namespace Z0
         {
             Wf = wf;
             Channel = wf.Channel;
-            Route = ApiCmd.route(GetType());
+            Route = ApiCmdRoute.route(GetType());
             _Routes = sys.alloc<ApiCmdRoute>(SubCommands.Count);
             var j=0;
             sys.iter(SubCommands, sub => _Routes[j++] = Route.Refine(sub));

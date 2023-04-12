@@ -112,9 +112,9 @@ namespace Z0
         public static Vector512<T> vcsa<T>(Vector256<T> a, Vector256<T> b, Vector256<T> c)
             where T : unmanaged
         {
-            var u = gcpu.vxor(a,b);
-            var lo = gcpu.vxor(u,c);
-            var hi = gcpu.vor(gcpu.vand(a,b), gcpu.vand(u,c));
+            var u = vgcpu.vxor(a,b);
+            var lo = vgcpu.vxor(u,c);
+            var hi = vgcpu.vor(vgcpu.vand(a,b), vgcpu.vand(u,c));
             return(lo,hi);
         }
     }

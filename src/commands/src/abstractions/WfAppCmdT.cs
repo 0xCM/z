@@ -53,6 +53,6 @@ namespace Z0
         }
 
         public virtual void Loop()
-            => CmdLoop.start(Channel, CmdRunner).Wait();
+            => ApiCmdLoop.start(Channel, CmdRunner).Wait();
    }
 }

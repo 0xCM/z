@@ -5,8 +5,34 @@
 namespace Z0
 {
     using static sys;
+
     public record class ApiCmdSpec : IApiCmd<ApiCmdSpec>
     {
+        public static string format<T>(T src)
+            where T : ICmd, new()
+        {
+            var buffer = text.emitter();
+            buffer.AppendFormat("{0}{1}", src.CmdId, Chars.LParen);
+            var fields = ClrFields.instance(typeof(T));
+            if(fields.Length != 0)
+                render(src, fields, buffer);
+
+            buffer.Append(Chars.RParen);
+            return buffer.Emit();
+        }
+
+        static void render(object src, ReadOnlySpan<ClrFieldAdapter> fields, ITextEmitter dst)
+        {
+            var count = fields.Length;
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var field = ref skip(fields,i);
+                dst.AppendFormat(RP.Assign, field.Name, field.GetValue(src));
+                if(i != count - 1)
+                    dst.Append(", ");
+            }
+        }                            
+
         public static string format(ApiCmdSpec src)
         {
             if(src.IsEmpty)

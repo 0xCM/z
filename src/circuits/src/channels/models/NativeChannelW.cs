@@ -31,7 +31,7 @@ namespace Z0
         internal NativeChannel(uint cells, ChannelMask mask = default)
         {
             CellCount = cells;
-            Capacity = cells*core.width<W>();
+            Capacity = cells*sys.width<W>();
             Mask = mask;
         }
 

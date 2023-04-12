@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
     using static ApiActorKind;
 
-    class ApiCmdRunner : IApiCmdRunner
+    public class ApiCmdRunner : IApiCmdRunner
     {
         readonly IApiCmdMethods Methods;
 

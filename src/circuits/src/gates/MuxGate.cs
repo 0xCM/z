@@ -19,15 +19,15 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public Vector128<T> Invoke(Vector128<T> x, Vector128<T> y, Vector128<T> z)
-                => gcpu.vselect(x,y,z);
+                => vgcpu.vselect(x,y,z);
 
             [MethodImpl(Inline)]
             public Vector256<T> Invoke(Vector256<T> x, Vector256<T> y, Vector256<T> z)
-                => gcpu.vselect(x,y,z);
+                => vgcpu.vselect(x,y,z);
 
             [MethodImpl(Inline)]
             public Vector512<T> Invoke(Vector512<T> x, Vector512<T> y, Vector512<T> z)
-                => gcpu.vselect(x,y,z);
+                => vgcpu.vselect(x,y,z);
         }
     }
 }

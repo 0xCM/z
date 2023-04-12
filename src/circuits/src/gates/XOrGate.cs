@@ -26,7 +26,7 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public Vector128<T> Invoke(Vector128<T> a, Vector128<T> b)
-                => gcpu.vxor(a,b);
+                => vgcpu.vxor(a,b);
 
             /// <summary>
             /// Computes 256 boolean XOR functions simultaneously
@@ -35,7 +35,7 @@ namespace Z0
             /// <param name="y">The right operands</param>
             [MethodImpl(Inline)]
             public Vector256<T> Invoke(Vector256<T> a, Vector256<T> b)
-                => gcpu.vxor(a,b);
+                => vgcpu.vxor(a,b);
 
             /// <summary>
             /// Computes 512 boolean XOR functions simultaneously
@@ -44,7 +44,7 @@ namespace Z0
             /// <param name="y">The right operands</param>
             [MethodImpl(Inline)]
             public Vector512<T> Invoke(in Vector512<T> a, in Vector512<T> b)
-                => gcpu.vxor<T>(a,b);
+                => vgcpu.vxor<T>(a,b);
         }
     }
 }

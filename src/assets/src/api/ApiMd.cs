@@ -10,6 +10,13 @@ namespace Z0
 
     public sealed class ApiMd : AppService<ApiMd>
     {
+        public static void emit(IWfChannel channel, ApiCmdCatalog src, IDbArchive dst)
+        {
+            var data = src.Values;
+            iter(data, x => channel.Row(x.Uri.Name));
+            channel.TableEmit(data, dst.Path(ExecutingPart.Name.Format() + ".commands", FileKind.Csv));
+        }
+
         [Parser]
         public static Outcome parse(string src, out SymInfo dst)
         {

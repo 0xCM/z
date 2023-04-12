@@ -13,7 +13,27 @@ namespace Z0
     public class ArchiveCommands : Stateless<ArchiveCommands>
     {
         public static ExecToken symlink(IWfChannel channel, CmdArgs args)
-            => Archives.symlink(channel, args);
+        {
+            var a0 = args[0].Value;
+            var a1 = args[1].Value;
+            var result = Outcome.Failure;
+            var isfile = (new FileInfo(a0)).Exists;
+            var cmd = CreateSymLink.Empty;        
+            if(isfile)
+                cmd = new (FS.path(a0), FS.path(a1), true);
+            else
+                cmd = new (FS.dir(a0), FS.dir(a1), true);
+
+            var running = channel.Running();
+            if(cmd.Kind == Windows.SymLinkKind.File)
+                result = FS.symlink((FilePath)cmd.Source, (FilePath)cmd.Target, cmd.Overwrite);
+            else
+                result = FS.symlink((FolderPath)cmd.Source, (FolderPath)cmd.Target, cmd.Overwrite);
+            return channel.Ran(running);
+        }
+
+        // public static ExecToken symlink(IWfChannel channel, CmdArgs args)
+        //     => Archives.symlink(channel, args);
 
         public static Task<ExecToken> copy(IWfChannel channel, CmdArgs args)
             => copy(channel, FS.archive(args[0]), FS.archive(args[1]));

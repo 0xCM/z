@@ -5,16 +5,16 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class CmdLoop
+    public class ApiCmdLoop
     {
         public static Task start(IWfChannel channel, IApiCmdRunner runner)
-            => sys.start(new CmdLoop(channel, runner).Run);
+            => sys.start(new ApiCmdLoop(channel, runner).Run);
 
         readonly IWfChannel Channel;
 
         readonly IApiCmdRunner Runner;
 
-        CmdLoop(IWfChannel channel, IApiCmdRunner runner)
+        ApiCmdLoop(IWfChannel channel, IApiCmdRunner runner)
         {
             Channel = channel;
             Runner = runner;

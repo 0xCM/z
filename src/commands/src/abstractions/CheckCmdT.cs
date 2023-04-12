@@ -55,7 +55,7 @@ namespace Z0
         public void Run(CmdArgs args)
         {
             if(args.Count == 0)
-                CmdLoop.start(Channel, CmdRunner).Wait();
+                ApiCmdLoop.start(Channel, CmdRunner).Wait();
             else
             {
                 var count = args.Count;

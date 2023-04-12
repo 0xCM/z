@@ -19,6 +19,6 @@ namespace Z0
             => CmdRunner;
             
         protected override void Run()
-            => CmdLoop.start(Channel, CmdRunner).Wait();
+            => ApiCmdLoop.start(Channel, CmdRunner).Wait();
     }
 }

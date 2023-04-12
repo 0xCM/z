@@ -32,9 +32,7 @@ namespace Z0
 
         [CmdOp("api/commands")]
         void EmitCommands()
-        {
-            ApiServers.EmitApiCatalog(EnvDb);
-        }
+            => ApiMd.emit(Channel, ApiServers.catalog(), EnvDb);
     
         [CmdOp("api/version")]
         void ApiVersion()

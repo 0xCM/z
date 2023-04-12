@@ -41,7 +41,7 @@ namespace Z0
             /// <param name="y">The right operands</param>
             [MethodImpl(Inline)]
             public Vector128<T> Invoke(Vector128<T> x, Vector128<T> y)
-                => gcpu.vand(x,y);
+                => vgcpu.vand(x,y);
 
             /// <summary>
             /// Computes 256 boolean OR functions simultaneously
@@ -50,7 +50,7 @@ namespace Z0
             /// <param name="y">The right operands</param>
             [MethodImpl(Inline)]
             public Vector256<T> Invoke(Vector256<T> a, Vector256<T> b)
-                => gcpu.vand<T>(a,b);
+                => vgcpu.vand<T>(a,b);
 
             /// <summary>
             /// Computes 512 boolean OR functions simultaneously
@@ -59,7 +59,7 @@ namespace Z0
             /// <param name="y">The right operands</param>
             [MethodImpl(Inline)]
             public Vector512<T> Invoke(in Vector512<T> a, in Vector512<T> b)
-                => gcpu.vand<T>(a,b);
+                => vgcpu.vand<T>(a,b);
         }
     }
 }
