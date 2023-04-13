@@ -13,8 +13,6 @@ namespace Z0
             => new (src.SimpleName(), src.GetVersion64());
     }
 
-
-
     public record struct VersionedName : IComparable<VersionedName>
     {
         public readonly @string Name;

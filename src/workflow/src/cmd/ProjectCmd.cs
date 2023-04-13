@@ -144,7 +144,7 @@ namespace Z0
             Channel.Row($"Input:{script}");
             Channel.Row($"Vars:");
 
-            var vars = Vars.extract(script, prefix, fence);
+            var vars = CmdScripts.extract(script, prefix, fence);
             sys.iter(vars, v => Channel.Row($"{v}"));
         }
     }    

@@ -56,9 +56,16 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public bool Read(ref byte dst)
         {
-            memory.read(Source, State.Position, ref dst);
-            Advance();
-            return State.HasNext;
+            if(State.HasNext)
+            {
+                memory.read(Source, State.Position, ref dst);
+                Advance();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         [MethodImpl(Inline), Op]
@@ -67,16 +74,22 @@ namespace Z0
                 => (T*)seek(Source, State.Position);
 
         [MethodImpl(Inline), Op]
-        public string ReadUtf8(uint maxlen)
+        public bool ReadUtf8(out string dst)
         {
+            dst = EmptyString;
+            if(!State.HasNext)
+                return false;
+
             var b = Read<byte>();
             var length = 0;
-            while(b != 0 && length < maxlen)
+            var finished = false;
+            while(!finished && b != 0)
             {
                 length++;
-                b = Read<byte>();
+                finished = Read(ref b);
             }
-            return text.utf8(cover(Pointer<byte>(), length));
+            dst = text.utf8(cover(Pointer<byte>(), length));
+            return true;
         }
 
         [MethodImpl(Inline), Op]

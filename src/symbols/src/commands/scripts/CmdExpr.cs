@@ -14,7 +14,7 @@ namespace Z0
 
         public static CmdExpr set<V>(string name, V value) 
             where V : IEquatable<V>, INullity, new()
-                => new CmdSetting<V>(name,value);
+                => new CmdExpr<V>(name,value);
 
         public static CmdExpr script(string name) => $"{name}.cmd";
 

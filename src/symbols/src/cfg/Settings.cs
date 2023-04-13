@@ -107,31 +107,6 @@ namespace Z0
             return new SettingLookup(dst.ToArray());
         } 
         
-        public static Seq<CmdSetting> cmd(FileUri src)
-        {
-            var dst = list<CmdSetting>();
-            using var reader = src.Utf8LineReader();
-            var line = TextLine.Empty;
-            while(reader.Next(out line))
-            {
-                if(line.IsNonEmpty)
-                {
-                    var parts = line.Split(Chars.Eq);
-                    if(parts.Length == 2)
-                    {
-                        var left = skip(parts,0);
-                        var i = text.index(left, "set");
-                        if(i>= 0)
-                        {
-                            var name = text.trim(text.right(left, i + "set".Length - 1));
-                            var value = text.trim(skip(parts,1));
-                            dst.Add(new CmdSetting(name, value));
-                        }
-                    }
-                }
-            }
-            return dst.Array();
-        }
 
         public static Seq<Setting> load(FileUri src)
         {

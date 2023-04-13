@@ -20,9 +20,7 @@ namespace Z0
         public static WfScripts ToolScripts(this IWfRuntime wf)
             => Services.ToolScripts(wf);
 
-
         public static OmniScript OmniScript(this IWfRuntime wf)
             => Services.OmniScript(wf);
-
     }
 }

@@ -30,22 +30,22 @@ namespace Z0
         IEnumerable<FilePath> Enumerate(bool recurse, params FileExt[] extensions)
              => FS.files(Root, recurse, extensions);
 
-        DbArchive Metadata()
+        IDbArchive Metadata()
             => Targets("metadata");
 
-        DbArchive Metadata(string scope)
+        IDbArchive Metadata(string scope)
             => Metadata().Targets(scope);
 
-        DbArchive Nested(FolderPath src)
+        IDbArchive Nested(FolderPath src)
             => DbFiles.Nested(src);
 
-        DbArchive Nested(IDbArchive src)
+        IDbArchive Nested(IDbArchive src)
             => DbFiles.Nested(src.Root);
 
-        DbArchive Nested(string scope, FolderPath src)
+        IDbArchive Nested(string scope, FolderPath src)
             => DbFiles.Nested(scope, src);
 
-        DbArchive Nested(string scope, IDbArchive src)
+        IDbArchive Nested(string scope, IDbArchive src)
             => DbFiles.Nested(scope, src.Root);
 
         FilePath Table<T>()

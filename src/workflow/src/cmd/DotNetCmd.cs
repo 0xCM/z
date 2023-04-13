@@ -14,12 +14,6 @@ namespace Z0
         void SdkMerge(CmdArgs args)
             => sdkmerge(Channel,args).Wait();
         
-        [CmdOp("dotnet/publish")]
-        void DotNetPublish(CmdArgs args)
-        {
-            
-
-        }
         [CmdOp("dotnet/sdks/list")]
         void ListSdks(CmdArgs args)
         {

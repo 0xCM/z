@@ -9,7 +9,6 @@ namespace Z0
 
     public partial class Tooling : WfAppCmd<Tooling>
     {
-
         [Op]
         public static CmdLine pwsh(string spec)
             => $"pwsh.exe {spec}";

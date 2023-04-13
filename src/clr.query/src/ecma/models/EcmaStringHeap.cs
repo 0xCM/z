@@ -8,18 +8,24 @@ namespace Z0
 
     public readonly record struct EcmaStringHeap : IEcmaHeap<EcmaStringHeap>
     {
-        public readonly EcmaHeapKind HeapKind {get;}
+        public readonly HeapIndex HeapKind {get;}
 
         public readonly MemoryAddress BaseAddress {get;}
 
         public readonly ByteSize Size {get;}
 
         [MethodImpl(Inline)]
-        public EcmaStringHeap(EcmaHeapKind kind, MemoryAddress @base, ByteSize size)
+        public EcmaStringHeap(HeapIndex kind, MemoryAddress @base, ByteSize size)
         {
             BaseAddress = @base;
             Size = size;
             HeapKind = kind;
+        }
+
+        public MemoryRange Range
+        {
+            [MethodImpl(Inline)]
+            get => MemoryRange.define(BaseAddress, Size);            
         }
 
         public unsafe ReadOnlySpan<byte> Data
@@ -41,11 +47,11 @@ namespace Z0
         }
 
         public string Format()
-            => string.Format(MemoryRange.define(BaseAddress, Size).Format());
+            => string.Format(Range.Format());
 
         public override string ToString()
             => Format();
-
+        
         public static EcmaStringHeap Empty
         {
             [MethodImpl(Inline)]

@@ -11,9 +11,9 @@ namespace Z0
 
         public readonly AsciFence Fence;
 
-        public readonly AsciVarKind Kind;
+        public readonly ScriptVarKind Kind;
 
-        public VarPattern(AsciVarKind kind, AsciSymbol prefix, AsciFence fence)
+        public VarPattern(ScriptVarKind kind, AsciSymbol prefix, AsciFence fence)
         {
             Kind = kind;
             Prefix = prefix;

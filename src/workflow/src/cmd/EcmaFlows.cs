@@ -9,7 +9,6 @@ namespace Z0
     using Windows;
 
     using static sys;
-    using static EcmaModels;
 
     class EcmaFlows : WfAppCmd<EcmaFlows>
     {
@@ -57,8 +56,11 @@ namespace Z0
         IDbArchive Target 
             => EnvDb.Nested(Tag, Source);
 
-        FilePath EcmaTablePath<T>(AssemblyFile file)
-            => EnvDb.Nested(Tag, Source).PrefixedTable<T>(file.Path.FileName.WithoutExtension.Format());
+        FilePath TablePath<T>(string scope, AssemblyFile file)
+        {            
+            var filename = CsvTables.filename<T>(file.Path.FileName.WithoutExtension.Format(), file.Path.Hash.Format());
+            return EnvDb.Nested(Tag, (IDbArchive)Source.Scoped(scope)).Path(filename);
+        }
 
         AssemblyFiles GetAssemblyFiles()
             => AssemblyFiles.GetOrAdd(Source.Root, _ => Ecma.assemblies(Channel,Source));
@@ -81,6 +83,20 @@ namespace Z0
         ReadOnlySeq<EcmaDependencySet> GetDependencies(AssemblyIndex src)
             => EcmaDependencySets.GetOrAdd(src.Source.Root, _ => Ecma.CalcDependencies(src));        
 
+        ReadOnlySeq<EcmaPinvoke> CalcPinvokes(IDbArchive src)
+        {
+            var index = GetAssemblyIndex();
+            var dst = bag<EcmaPinvoke>();
+            iter(index.Distinct(), entry => {
+                using var ecma = Ecma.file(entry.Path);                
+                var reader = ecma.EcmaReader();
+                var defs = reader.ReadPinvokes();
+                dst.AddRange(defs);
+            },true);
+            
+            return dst.Array().Sort();
+        }
+
         ReadOnlySeq<EcmaPinvoke> GetPinvokes()
             => EcmaPinvokes.GetOrAdd(Source.Root, _ => CalcPinvokes(Source));
 
@@ -94,7 +110,6 @@ namespace Z0
                     types.Add(t);
             });
             return new AssemblyTypes(file, types.Array().Sort());
-
         }
 
         ReadOnlySeq<AssemblyTypes> CalcTypeDefs()
@@ -108,9 +123,9 @@ namespace Z0
 
         ReadOnlySeq<AssemblyTypes> GetTypeDefs()
         {
-            return CalcTypeDefs();
-            
+            return CalcTypeDefs();            
         }
+
         ReadOnlySeq<MetadataRoot> CalcMetadataRoots(IDbArchive src)
         {
             var dst = bag<MetadataRoot>();
@@ -121,20 +136,6 @@ namespace Z0
                 var root = memory.ReadMetadataRoot();
                 dst.Add(root);                
             });
-            return dst.Array().Sort();
-        }
-
-        ReadOnlySeq<EcmaPinvoke> CalcPinvokes(IDbArchive src)
-        {
-            var index = GetAssemblyIndex();
-            var dst = bag<EcmaPinvoke>();
-            iter(index.Distinct(), entry => {
-                using var ecma = Ecma.file(entry.Path);                
-                var reader = ecma.EcmaReader();
-                var defs = reader.ReadPinvokes();
-                dst.AddRange(defs);
-            },true);
-            
             return dst.Array().Sort();
         }
 
@@ -170,7 +171,7 @@ namespace Z0
         {
             iter(src, methods => {                
                 if(methods.IsNonEmpty)
-                    Channel.TableEmit(methods.View,EcmaTablePath<EcmaMethodInfo>(methods.File));
+                    Channel.TableEmit(methods.View, TablePath<EcmaMethodInfo>("methods", methods.File));
             },true);
         }
 
@@ -199,8 +200,7 @@ namespace Z0
 
         void Emit(ReadOnlySeq<EcmaPinvoke> pinvokes)
         {
-            var path = Target.Path("ecma.pinvokes", FileKind.Csv);
-            Channel.TableEmit(pinvokes, path);
+            Channel.TableEmit(pinvokes, Target.Table<EcmaPinvoke>());
         }
 
         void Emit(ReadOnlySeq<EcmaDependencySet> src)
@@ -216,15 +216,42 @@ namespace Z0
             Channel.TableEmit(GetEcmaStats(), Target.Table<EcmaRowStats>());
         }
 
+        [CmdOp("ecma/heaps")]
+        unsafe void EmitEcmaHeaps(CmdArgs args)
+        {
+            Source = FS.archive(args[0]);
+            iter(GetAssemblyIndex().Distinct(), src => {
+                using var file = Ecma.file(src.Path);
+                var reader = file.EcmaReader();
+                var @base = reader.BaseAddress;
+                Channel.RowFormat("{0,-16} | {1,-16} | {2,-12} | {3}", HeapIndex.UserString, @base + reader.GetHeapOffset(HeapIndex.UserString), reader.GetHeapSize(HeapIndex.UserString), file.Path);
+                Channel.RowFormat("{0,-16} | {1,-16} | {2,-12} | {3}", HeapIndex.String, @base + reader.GetHeapOffset(HeapIndex.String), reader.GetHeapSize(HeapIndex.String), file.Path);
+                Channel.RowFormat("{0,-16} | {1,-16} | {2,-12} | {3}", HeapIndex.Blob, @base + reader.GetHeapOffset(HeapIndex.Blob), reader.GetHeapSize(HeapIndex.Blob), file.Path);
+                Channel.RowFormat("{0,-16} | {1,-16} | {2,-12} | {3}", HeapIndex.Guid, @base + reader.GetHeapOffset(HeapIndex.Guid), reader.GetHeapSize(HeapIndex.Guid), file.Path);
+                {
+                    var size = reader.GetHeapSize(HeapIndex.String);
+                    if(size != 0)
+                    {
+                        var start = @base + reader.GetHeapOffset(HeapIndex.String);
+                        var data = cover(start.Pointer<byte>(), size);
+                        Utf8.decode(data, out var s);
+                        iter(s.Split(Chars.Null), x => {
+                            if(!text.contains(x, '<'))
+                                Channel.Row(x);
+                        });
 
+                    }
+                }
+            });
+        }
+        
         void EmitTypeDefs()
         {
             var defs = GetTypeDefs();
             iter(defs, def => {
                 if(def.IsNonEmpty)
                 {
-                    var dst = Target.PrefixedTable<EcmaTypeDef>(def.File.Path.FileName.WithoutExtension.Format());
-                    Channel.TableEmit(def.View, EcmaTablePath<EcmaTypeDef>(def.File));
+                    Channel.TableEmit(def.View, TablePath<EcmaTypeDef>("types", def.File));
                 }
             },true);
         }

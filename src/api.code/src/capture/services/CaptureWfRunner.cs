@@ -49,7 +49,7 @@ namespace Z0
                 Regions.EmitRegions(Process.GetCurrentProcess(), Target);
 
             if(Settings.EmitContext)
-                EnvReports.context(Channel, Target.Timestamp, Target);
+                Env.context(Channel, Target.Timestamp, Target);
 
             if(Settings.RunChecks)
             {

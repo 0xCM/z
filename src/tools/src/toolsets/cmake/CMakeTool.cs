@@ -35,40 +35,39 @@ namespace Z0.Tools
         
         public CMakeCache ParseCache(FilePath src)
         {
-            var lines = src.ReadLines(true);
-            var usage = EmptyString;
-            var type = EmptyString;
-            var name = EmptyString;
-            var vars = list<IVarAssignment>();
+            // var usage = EmptyString;
+            // var type = EmptyString;
+            // var name = EmptyString;
+            // var vars = list<IVarAssignment>();
 
-            foreach(var line in lines)
-            {
-                if(text.begins(line,"//"))
-                {
-                    var i = text.index(line, "//");
-                    if(nonempty(usage))
-                        usage += Chars.Space;
+            // foreach(var line in lines)
+            // {
+            //     if(text.begins(line,"//"))
+            //     {
+            //         var i = text.index(line, "//");
+            //         if(nonempty(usage))
+            //             usage += Chars.Space;
 
-                    usage += text.trim(text.despace(text.remove(text.right(line, i + "//".Length - 1), "\\n")));
-                }
-                else if(text.contains(line, "="))
-                {
-                    if(Vars.parse(line, out var assigment))
-                    {
-                        if(nonempty(usage))
-                        {
-                            var def = assigment.Def.WithUsage(usage);
-                            vars.Add(Vars.assign(def, assigment.Value));
-                        }
-                        else
-                            vars.Add(assigment);
-                    }
-                    usage = EmptyString;
-                    type = EmptyString;
-                    name = EmptyString;
-                }
-            }
-            return new CMakeCache(src, vars.Array());
+            //         usage += text.trim(text.despace(text.remove(text.right(line, i + "//".Length - 1), "\\n")));
+            //     }
+            //     else if(text.contains(line, "="))
+            //     {
+            //         if(Vars.parse(line, out var assigment))
+            //         {
+            //             if(nonempty(usage))
+            //             {
+            //                 var def = assigment.Def.WithUsage(usage);
+            //                 vars.Add(Vars.assign(def, assigment.Value));
+            //             }
+            //             else
+            //                 vars.Add(assigment);
+            //         }
+            //         usage = EmptyString;
+            //         type = EmptyString;
+            //         name = EmptyString;
+            //     }
+            // }
+            return new CMakeCache(src, Vars.assigments(src.ReadLines(true), "//"));
         }
 
         public ReadOnlySeq<VarAssignment> ExtractVars(IDbArchive src)

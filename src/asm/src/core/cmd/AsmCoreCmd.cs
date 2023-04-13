@@ -34,7 +34,7 @@ namespace Z0
         Outcome ExecVarScript(string SrcId, FilePath script)
         {
             var result = Outcome.Success;
-            var vars = Vars.cmdvars(("SrcId", SrcId));
+            var vars = CmdScripts.vars(("SrcId", SrcId));
             var cmd = new CmdLine(script.Format(PathSeparator.BS));
             return OmniScript.Run(cmd, vars, out var response);
         }

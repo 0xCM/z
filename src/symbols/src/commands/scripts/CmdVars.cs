@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using api = Vars;
-
     public class CmdVars : Seq<CmdVars, CmdVar>
     {
         public CmdVars()
@@ -20,7 +18,7 @@ namespace Z0
         }
 
         public override string Format()
-            => api.format(this);
+            => CmdScripts.format(this);
 
         public override string ToString()
             => Format();

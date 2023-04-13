@@ -36,7 +36,7 @@ namespace Z0
             public override string ToString()
                 => Format();
 
-            public static ConfigFile Empty => new ConfigFile(FilePath.Empty, sys.empty<CmdSetting>());
+            public static ConfigFile Empty => new ConfigFile(FilePath.Empty, sys.empty<CmdSetExpr>());
         }
     }
 }

@@ -21,8 +21,6 @@ namespace Z0
             Data = src;
         }
 
-        static CmdArg EmptyArg = CmdArg.Empty;
-
         public new CmdArg this[int i]
         {
             [MethodImpl(Inline)]
@@ -63,6 +61,9 @@ namespace Z0
             return dst;
         }
 
+        public CmdArgs Prefixed(string prefix)
+            => Storage.Where(x => text.begins(x.Name, prefix));
+
         public CmdArgs Prepend(params CmdArg[] src)
             => new CmdArgs(src).Concat(this);
 
@@ -76,6 +77,8 @@ namespace Z0
             => new CmdArgs(src);
 
         public static CmdArgs operator +(CmdArgs a, CmdArgs b)
-            => a.Concat(b);
+            => a.Concat(b);                   
+
+        static CmdArg EmptyArg = CmdArg.Empty;
     }
 }

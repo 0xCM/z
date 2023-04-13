@@ -4,10 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-    using static EcmaTables;
-
-    partial class EcmaReader
+    public record class CmdSetExpr : CmdExpr<@string>
     {
-    }
+        public CmdSetExpr(string name, @string value)
+            : base(name,value)
+        {
+
+        }        
+   }
 }

@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Flags]
-    public enum AsciVarKind : uint
+    public enum ScriptVarKind : uint
     {
         None = 0,
 

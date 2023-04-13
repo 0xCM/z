@@ -10,7 +10,10 @@ namespace Z0
 
         ByteSize Size {get;}
 
-        EcmaHeapKind HeapKind {get;}
+        MemoryRange Range 
+            => new MemoryRange(BaseAddress, Size);
+
+        HeapIndex HeapKind {get;}
 
         ReadOnlySpan<byte> Data {get;}
     }
@@ -19,5 +22,11 @@ namespace Z0
         where T : struct, IEcmaHeap<T>
     {
 
+    }
+
+    partial class XTend
+    {
+        public static MemoryReader GetMemoryReader(this IEcmaHeap src)
+            => MemoryReader.create(src.Range);
     }
 }

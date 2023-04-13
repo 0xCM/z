@@ -8,18 +8,7 @@ namespace Z0
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
 
-
-    using Windows;
-
     using static sys;
-
-    public record struct DebugDirectoryRow
-    {
-        public uint Seq;
-
-        public FileName File;
-        
-    }
 
     class EcmaCmd : WfAppCmd<EcmaCmd>
     {
@@ -94,7 +83,6 @@ namespace Z0
             });
         }
         
-     
         [CmdOp("db/typetables")]
         void TypeTables()
         {
@@ -224,13 +212,6 @@ namespace Z0
         [CmdOp("ecma/dump")]
         void EcmaEmitMetaDumps(CmdArgs args)
             => EcmaEmitter.EmitDump(FS.dir(args[0]).DbArchive(), EnvDb);
-
-        [CmdOp("ecma/heaps")]
-        void EmitEcmaHeaps(CmdArgs args)
-        {
-            EcmaHeaps.emit(Channel,FS.dir(args[0]).DbArchive(),EnvDb);
-        }
-        
 
         [CmdOp("ecma/compile")]
         void Compilations(CmdArgs args)

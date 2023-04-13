@@ -9,7 +9,6 @@ namespace Z0.Commands
     [Cmd(CmdName)]
     public sealed record class CreateSymLink : Command<CreateSymLink>
     {            
-
         public const string CmdName = "symlink";
 
         public FsEntry Source;

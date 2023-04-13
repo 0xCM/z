@@ -14,5 +14,7 @@ namespace Z0
         public const string LIB = nameof(LIB);
 
         public const string DOTNET_ROOT = nameof(DOTNET_ROOT);
+
+        public const string EnvId = nameof(EnvId);
     }
 }

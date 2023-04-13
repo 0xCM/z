@@ -4,14 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public record class CmdSetting<T>  : CmdExpr, ISetting<T>
+    public record class CmdExpr<T>  : CmdExpr, ISetting<T>
         where T : IEquatable<T>, INullity, new()
     {
         public readonly @string Name;
 
         public readonly T Value;
 
-        public CmdSetting(string name, T value)
+        public CmdExpr(string name, T value)
             : base($"set {name}=${value}")
         {
             Name = name;
@@ -25,7 +25,7 @@ namespace Z0
         @string INamed.Name 
             => Name;
 
-        public static implicit operator CmdSetting(CmdSetting<T> src)
-            => new CmdSetting(src.Name, src.Value?.ToString() ?? EmptyString);
+        public static implicit operator CmdSetExpr(CmdExpr<T> src)
+            => new CmdSetExpr(src.Name, src.Value?.ToString() ?? EmptyString);
     }
 }

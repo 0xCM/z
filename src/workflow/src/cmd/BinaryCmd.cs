@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Windows;
-
     using static sys;
 
     unsafe class BinaryCmd : WfAppCmd<BinaryCmd>
@@ -42,7 +40,6 @@ namespace Z0
                 }
             }
         }
-
 
         [CmdOp("binary/test")]
         void RunTests()

@@ -45,14 +45,15 @@ namespace Z0
             return Instance;
         }
 
-        public static DbArchive EnvRoot()
-            => FS.dir(System.Environment.GetEnvironmentVariable(SettingNames.EnvRoot));
+
+        public IDbArchive EnvRoot()
+            => _EnvRoot();
+
+        public IDbArchive SettingsRoot()
+            => _SettingsRoot();
 
         public static LlvmSettings LlvmSettings()
             => new (Instance.Setting(SettingNames.LlvmRoot).Folder());
-
-        public static DbArchive SettingsRoot()
-            => EnvRoot().Scoped(settings);
 
         public DbArchive Control()
             => Instance.Setting(SettingNames.Control).Folder();
@@ -161,8 +162,14 @@ namespace Z0
         public override string ToString()
             => Format();
 
+        static DbArchive _EnvRoot()
+            => FS.dir(System.Environment.GetEnvironmentVariable(SettingNames.EnvRoot));
+
+        static DbArchive _SettingsRoot()
+            => _EnvRoot().Scoped(settings);
+
         static AppSettings load()
-            => new AppSettings(Settings.load(SettingsRoot().Path(FS.file("z0.settings", FileKind.Csv))));
+            => new AppSettings(Settings.load(_SettingsRoot().Path(FS.file("z0.settings", FileKind.Csv))));
 
         static AppSettings Instance = load();
     }

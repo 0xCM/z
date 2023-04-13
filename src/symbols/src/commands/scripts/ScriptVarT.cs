@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using api = Vars;
-
     public record class ScriptVar<T> : IScriptVar<T>
         where T : IEquatable<T>, INullity, new()
     {
@@ -91,7 +89,7 @@ namespace Z0
             => _Value = src;
 
         public virtual string Format()
-            => api.format(this);
+            => CmdScripts.format(this);
 
         public override string ToString()
             => Format();

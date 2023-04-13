@@ -56,7 +56,7 @@ namespace Z0
 
         [CmdOp("env/reports")]
         void EmitEnv(CmdArgs args)
-            => Env.reports(Channel).Capture();
+            => Env.EmitReports(Channel);
 
         [CmdOp("env/pid")]
         void ProcessId()
@@ -92,15 +92,15 @@ namespace Z0
         [CmdOp("env/id")]
         void EvId(CmdArgs args)
         {
-            var id = Env.EnvId;
+            var id = Env.id();
             var msg = EmptyString;
             if(args.IsNonEmpty)
             {
-                Env.EnvId = args.First.Value;
+                Env.id(args.First.Value);
                 if(id.IsNonEmpty)
-                    msg = $"{id} -> {Env.EnvId}";
+                    msg = $"{id} -> {Env.id()}";
                 else
-                    msg = $"{Env.EnvId}";
+                    msg = $"{Env.id()}";
             }
             else
             {
@@ -148,7 +148,6 @@ namespace Z0
         [CmdOp("tool")]
         void ToolHelp(CmdArgs args)
             => Tooling.redirect(Channel,args).Wait();        
-
         
         void EmitEtwRecords(string provider)
         {
@@ -172,7 +171,6 @@ namespace Z0
             iter(providers, EmitEtwRecords,true);
         }
 
-
         [CmdOp("process/monitor/start")]
         void ProcMonStart()
         {
@@ -186,6 +184,5 @@ namespace Z0
             var monitor = Channel.ProcessMonitor();
             monitor.Stop();
         }
-
     }
 }

@@ -21,7 +21,6 @@ namespace Z0
         [Render(32)]
         public EcmaMethodImport MethodImport;
 
-
         public int CompareTo(EcmaPinvoke src)
         {
             var result = Assembly.CompareTo(src.Assembly);

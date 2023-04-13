@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     partial class Tooling
     {
         public static Task<ExecToken> redirect(IWfChannel channel, FilePath tool, CmdArgs args, FilePath status, Action<string> receiver = null)

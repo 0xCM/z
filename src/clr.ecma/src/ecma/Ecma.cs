@@ -37,7 +37,7 @@ namespace Z0
             iter(src, file => {
                 dst.Add(new AssemblyListEntry{
                     AssemblyName = file.AssemblyName,
-                    AssemblyVersion = file.Version,
+                    AssemblyVersion = file.AssemblyName.Version.ToAssemblyVersion(),
                     Md5Hash = FS.hash(file.Path).FileHash.ContentHash,
                     Path = file.Path
                 });

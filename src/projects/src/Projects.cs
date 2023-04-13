@@ -62,15 +62,15 @@ namespace Z0
                     case "folders":
                         iter(o.Value.EnumerateArray(), folder => {
                             var expr = folder.ToString();
-                            var vars = Vars.extract(expr, prefix, fence);
+                            var vars = CmdScripts.extract(expr, prefix, fence);
                             iter(vars.Keys, key => {
                                 if(env.Find(key, out var value))
                                 {
-                                    found.Add(Vars.var(key, prefix, fence, value));
+                                    found.Add(CmdScripts.var(key, prefix, fence, value));
                                 }
                             });
 
-                            var eval = FS.dir(Vars.eval(expr, found.Array()));
+                            var eval = FS.dir(CmdScripts.eval(expr, found.Array()));
                             if(eval.Exists)
                             {
                                 folders.Add(eval);
@@ -119,12 +119,12 @@ namespace Z0
         }        
 
         public static ConfigFile configuration(FolderPath root)
-            => new ConfigFile(root + FS.file("config", FileKind.Cmd), Z0.Settings.cmd(root + FS.file("config", FileKind.Cmd)));   
+            => new ConfigFile(root + FS.file("config", FileKind.Cmd), CmdScripts.setx(root + FS.file("config", FileKind.Cmd)));   
 
         public static ConfigFile configure(ProjectKind kind, FolderPath root)
         {
             var path = root + FS.file("config", FileKind.Cmd);
-            var settings = list<CmdSetting>();
+            var settings = list<CmdSetExpr>();
             settings.Add(new (SettingNames.ProjectKind, kind.ToString()));
             settings.Add(new (SettingNames.SlnName, root.FolderName.Format()));
             settings.Add(new (SettingNames.SlnRoot, $"%~dp0..\\%{SettingNames.SlnName}%"));
@@ -198,7 +198,6 @@ namespace Z0
             Project = src;
             return ref Project;
         }
-
 
         public class SettingNames 
         {

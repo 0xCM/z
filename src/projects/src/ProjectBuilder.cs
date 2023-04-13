@@ -6,9 +6,10 @@ namespace Z0
 {
     using System.Linq;
     using Microsoft.CodeAnalysis;
+    using Microsoft.CodeAnalysis.Emit;
     using Microsoft.CodeAnalysis.CSharp;
 
-    public class CsBuilders
+    public class ProjectBuilder
     {
         public static PortableExecutableReference peref(Type src)
             => PortableExecutableReference.CreateFromFile(src.Assembly.Location);

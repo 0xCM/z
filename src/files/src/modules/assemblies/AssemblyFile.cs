@@ -28,35 +28,17 @@ namespace Z0
 
         public readonly VersionedName AssemblyName;
         
-        public readonly AssemblyVersion Version;
-
         public AssemblyFile()
         {
             Path = FileUri.Empty;
             AssemblyName = VersionedName.Empty;
-            Version = default;
         }
-
-        // public AssemblyFile(FilePath path, AssemblyKey key)
-        // {
-        //     Path = path;
-        //     AssemblyName = key.Name;
-        //     Version = key.Version;
-        // }
 
         public AssemblyFile(FilePath path, VersionedName name)
         {
             Path = path;
             AssemblyName = name;
-            Version = name.Version.ToAssemblyVersion();
         }
-
-        // public AssemblyFile(FilePath path, AssemblyName name)
-        // {
-        //     Path = path;
-        //     AssemblyName = new(name.SimpleName(), new AssemblyVersion(name.Version).);
-        //     Version = name.Version;
-        // }
 
         FilePath IFile.Path 
             => Path;
@@ -80,7 +62,7 @@ namespace Z0
             => PdbFile.Exists;
 
         public bool Equals(AssemblyFile src)
-            => Path == src.Path && AssemblyName == src.AssemblyName && Version == src.Version;
+            => Path == src.Path && AssemblyName == src.AssemblyName;
 
         public Hash32 Hash
         {
@@ -107,7 +89,7 @@ namespace Z0
             => Assembly.LoadFrom(Path.Format());
 
         public string Format()
-            => Path.IsNonEmpty ? Path.Format() : $"{AssemblyName}.{Version}";
+            => Path.IsNonEmpty ? Path.Format() : $"{AssemblyName}";
 
         public override string ToString()
             => Format();

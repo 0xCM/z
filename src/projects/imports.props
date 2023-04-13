@@ -4,5 +4,6 @@
     <ProjectReference Include="$(Events)" />
     <ProjectReference Include="$(Json)" />    
     <ProjectReference Include="$(ZEnv)" />
+    <ProjectReference Include="$(Lang)" />
   </ItemGroup>
 </Project>

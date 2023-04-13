@@ -32,9 +32,6 @@ namespace Z0
             return channel.Ran(running);
         }
 
-        // public static ExecToken symlink(IWfChannel channel, CmdArgs args)
-        //     => Archives.symlink(channel, args);
-
         public static Task<ExecToken> copy(IWfChannel channel, CmdArgs args)
             => copy(channel, FS.archive(args[0]), FS.archive(args[1]));
         

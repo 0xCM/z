@@ -9,14 +9,14 @@ namespace Z0
     [StructLayout(StructLayout, Pack=1)]
     public readonly struct EcmaHeap : IEcmaHeap<EcmaHeap>
     {        
-        public readonly EcmaHeapKind HeapKind;
+        public readonly HeapIndex HeapKind;
 
         public readonly MemoryAddress BaseAddress;
 
         public readonly ByteSize Size;
 
         [MethodImpl(Inline)]
-        public EcmaHeap(EcmaHeapKind kind, MemoryAddress @base, ByteSize size)
+        public EcmaHeap(HeapIndex kind, MemoryAddress @base, ByteSize size)
         {
             HeapKind = kind;
             BaseAddress = @base;
@@ -35,7 +35,7 @@ namespace Z0
         ByteSize IEcmaHeap.Size
             => Size;
 
-        EcmaHeapKind IEcmaHeap.HeapKind 
+        HeapIndex IEcmaHeap.HeapKind 
             => HeapKind;
 
         public string Format()

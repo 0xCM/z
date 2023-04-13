@@ -30,8 +30,10 @@ namespace Z0
         static ProcessControl Instance = new();
 
         [DllImport(ImageNames.PsApi, SetLastError = true), Free]
-        [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool EnumProcesses([Out] ProcessId* lpidProcess, [In]uint cb, [Out] uint* lpcbNeeded);
+
+        [DllImport("ntdll.dll"), Free]
+		static extern NTSTATUS NtQueryInformationProcess([In] IntPtr ProcessHandle, [In] PROCESSINFOCLASS ProcessInformationClass, [Out] PROCESS_BASIC_INFORMATION* ProcessInformation, uint ProcessInformationLength, out uint ReturnLength);
 
         public static ReadOnlySpan<ProcessId> executing()
         {
@@ -56,7 +58,7 @@ namespace Z0
         {
             var process = Kernel32.GetCurrentProcess();
             var dst = default(PROCESS_BASIC_INFORMATION);
-            NtDll.NtQueryInformationProcess(process, PROCESSINFOCLASS.ProcessBasicInformation, &dst, size<PROCESS_BASIC_INFORMATION>(), out var length);
+            NtQueryInformationProcess(process, PROCESSINFOCLASS.ProcessBasicInformation, &dst, size<PROCESS_BASIC_INFORMATION>(), out var length);
             Require.equal(length, size<PROCESS_BASIC_INFORMATION>());
             return dst;
         }

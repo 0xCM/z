@@ -86,14 +86,11 @@ namespace Z0
             var header = src.ReadUnmanaged<IndexHeader>();
             var size = header.Size;
             var count = header.EntryCount;
-
             var entries = alloc<Entry>(header.EntryCount);
             var @base = src.ReadUnmanaged<MemoryAddress>();
             for(var i=0; i<(uint)header.EntryCount; i++)
             {
-                seek(entries,i) = src.ReadUnmanaged<Entry>();
-                
-
+                seek(entries,i) = src.ReadUnmanaged<Entry>();                
             }
         }        
     }

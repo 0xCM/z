@@ -31,7 +31,7 @@ namespace Z0.Lang
         {            
             var ts = lang.Ts;            
             var emitter = text.emitter();
-            var report = EnvReports.load(AppSettings.EnvDb(), env);
+            var report = Env.load(AppSettings.EnvDb(), env);
             iter(report.Vars, v => {
                 var token = ts.DefineToken(v.Name, v.Value);
                 emitter.AppendLine(token.Format());
@@ -43,7 +43,7 @@ namespace Z0.Lang
         {            
             var ts = lang.Ts;            
             var dst = text.emitter();
-            var report = EnvReports.load(AppSettings.EnvDb(), cmd.Name);
+            var report = Env.load(AppSettings.EnvDb(), cmd.Name);
             iter(report.Vars, v => {
                 var token = ts.DefineToken(v.Name, v.Value);
                 dst.AppendLine(token.Format());

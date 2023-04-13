@@ -107,6 +107,5 @@ namespace Z0
             t.Param8 = p8;
             return t;
         }
-
     }
 }

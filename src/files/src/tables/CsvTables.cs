@@ -161,7 +161,6 @@ namespace Z0
             }
         }
 
-
         public static Outcome cells(TextLine src, char delimiter, byte fields, out ReadOnlySpan<string> dst)
         {
             var cells = src.Split(Chars.Pipe, true);
@@ -284,6 +283,9 @@ namespace Z0
 
         public static FileName filename<T>(string prefix)
             => FS.file(string.Format("{0}.{1}", prefix, Tables.identify<T>()), FS.Csv);        
+
+        public static FileName filename<T>(string prefix, string suffix)
+            => FS.file(string.Format("{0}.{1}.{2}", prefix, Tables.identify<T>(), suffix), FS.Csv);        
 
         internal const string DefaultDelimiter = " | ";
 

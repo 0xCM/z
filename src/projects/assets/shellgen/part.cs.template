@@ -1,0 +1,26 @@
+[assembly: PartId("${ProjectName}")]
+namespace Z0.Parts
+{
+    public sealed class ${ProjectName} : Part<${ProjectName}>
+    {
+    }
+}
+namespace Z0
+{
+    public static partial class XSvc
+    {
+        internal partial class ServiceCache : AppServices<ServiceCache>
+        {
+        }
+
+        internal partial class ChannelCache : AppChannels<ChannelCache>
+        {
+
+
+        }
+
+        static ServiceCache Services => ServiceCache.Instance;
+
+        static ChannelCache Channels => ChannelCache.Instance;
+    }
+}
