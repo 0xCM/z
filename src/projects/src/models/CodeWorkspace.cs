@@ -6,7 +6,7 @@ namespace Z0
 {
     partial class ProjectModels
     {
-        public record class WorkspaceFile : ProjectFile<WorkspaceFile>
+        public record class CodeWorkspace : ProjectFile<CodeWorkspace>
         {
             public static FilePath path(FolderPath root) 
                 => root + FS.file(root.FolderName.Format(), FS.ext("code-workspace"));
@@ -15,19 +15,19 @@ namespace Z0
 
             public ReadOnlySeq<WorkspaceFolder> Folders {get;}
 
-            public WorkspaceFile()
+            public CodeWorkspace()
             {
                 Path = FilePath.Empty;
                 Folders = sys.empty<WorkspaceFolder>();
             }
 
-            public WorkspaceFile(FilePath path, params WorkspaceFolder[] folders)
+            public CodeWorkspace(FilePath path, params WorkspaceFolder[] folders)
             {
                 Path = path;
                 Folders = folders;
             }
 
-            public static WorkspaceFile Empty => new WorkspaceFile(FilePath.Empty, sys.empty<WorkspaceFolder>());
+            public static CodeWorkspace Empty => new CodeWorkspace(FilePath.Empty, sys.empty<WorkspaceFolder>());
         }
     }
 }

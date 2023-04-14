@@ -35,7 +35,7 @@ namespace Z0
                 Projects.save(channel, develop);
             }
 
-            if(WorkspaceFile.path(root).Exists)
+            if(CodeWorkspace.path(root).Exists)
             {
 
             }
@@ -87,7 +87,7 @@ namespace Z0
             return new AggregateProject(src, folders.Array());
         }
 
-        public static ExecToken save(IWfChannel channel, WorkspaceFile src)   
+        public static ExecToken save(IWfChannel channel, CodeWorkspace src)   
         {
             var buffer = text.emitter();
             var emitter = Json.emitter(buffer);

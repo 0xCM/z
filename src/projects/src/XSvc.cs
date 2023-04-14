@@ -4,15 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IProjectTarget
+    public static partial class XSvc
     {
+        internal partial class ServiceCache : AppServices<ServiceCache>
+        {
 
+        }        
+
+        static ServiceCache Services => ServiceCache.Instance;
     }
-
-    public interface IProjectTarget<T> : IProjectTarget
-        where T : IProjectTarget<T>, new()
-    {
-
-    }
-
 }

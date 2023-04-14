@@ -4,9 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using System.Text.Json;
+
     partial class ProjectModels
     {
-        public class WorkspaceFolder
+        public record class WorkspaceFolder
         {
             public @string Name;
 

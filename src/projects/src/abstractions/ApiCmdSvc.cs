@@ -1,20 +1,27 @@
+
 //-----------------------------------------------------------------------------
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public static class XSvc
+    public class ApiCmdSvc : WfSvc<ApiCmdSvc>, IApiService
+    {                         
+        public void RunCmd(string name)
+        {
+            CmdRunner.RunCommand(name);
+        }
+    }
+
+    partial class XSvc
     {
-        class ServiceCache : AppServices<ServiceCache>
+        partial class ServiceCache
         {
             public ApiCmdSvc ApiCmd(IWfRuntime wf)
                 => Service<ApiCmdSvc>(wf);
-
-            public ApiServers ApiServers(IWfRuntime wf)
-                => Service<ApiServers>(wf);
         }
 
-        static ServiceCache Services => ServiceCache.Instance;        
+        public static ApiCmdSvc ApiCmd(this IWfRuntime wf)
+            => Services.ApiCmd(wf);
     }
 }

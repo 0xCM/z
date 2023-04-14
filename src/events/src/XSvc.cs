@@ -4,15 +4,15 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public static class XSvc
+    public static partial class XSvc
     {
-        class ChannelCache : AppChannels<ChannelCache>
+        internal partial class ChannelCache : AppChannels<ChannelCache>
         {
             public ProcessTracer ProcessMonitor(IWfChannel channel)
                 => service<ProcessTracer>(channel);
         }
 
-        class ServiceCache : AppServices<ServiceCache>
+        internal partial class ServiceCache : AppServices<ServiceCache>
         {
         }
 

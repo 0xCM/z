@@ -16,7 +16,6 @@ namespace Z0
         public static DataFlow<Actor,S,T> flow<S,T>(Tool tool, S src, T dst)
             => new DataFlow<Actor,S,T>(FlowId.identify(tool,src,dst), tool,src,dst);        
 
-
         public static ReadOnlySpan<CmdFlow> flows(ReadOnlySpan<TextLine> src)
         {
             var count = src.Length;

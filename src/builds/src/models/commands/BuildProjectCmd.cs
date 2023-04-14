@@ -6,23 +6,23 @@ namespace Z0
 {
     using static Build;
     
-    [Cmd(CmdName)]
-    public struct BuildProjectCmd : IApiCmd<BuildProjectCmd>
-    {
-        public const string CmdName = "build";
+    // [Cmd(CmdName)]
+    // public struct BuildProjectCmd : IApiCmd<BuildProjectCmd>
+    // {
+    //     public const string CmdName = "build";
 
-        public FilePath ProjectPath;
+    //     public FilePath ProjectPath;
 
-        public FilePath LogFile;
+    //     public FilePath LogFile;
 
-        public string Configuration;
+    //     public string Configuration;
 
-        public string Platform;
+    //     public string Platform;
 
-        //public LogVerbosity Verbosity;
+    //     //public LogVerbosity Verbosity;
 
-        public uint MaxCpuCount;
+    //     public uint MaxCpuCount;
 
-        public bool Graph;
-    }
+    //     public bool Graph;
+    // }
 }

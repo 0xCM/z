@@ -190,4 +190,16 @@ namespace Z0
             return dst;
         }
     }
+
+    partial class XSvc
+    {
+        partial class ServiceCache
+        {
+            public ApiServers ApiServers(IWfRuntime wf)
+                => Service<ApiServers>(wf);            
+        }
+
+        public static ApiServers ApiServers(this IWfRuntime wf)
+            => Services.ApiServers(wf);
+    }
 }
