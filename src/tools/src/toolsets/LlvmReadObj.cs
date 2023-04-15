@@ -9,7 +9,6 @@ namespace Z0.Tools
     class ReadObjFlow : ToolFlow<ReadObjFlow>
     {
         public ReadObjFlow()
-            : base("llvm-readobj")
         {}
 
     }

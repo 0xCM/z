@@ -56,22 +56,6 @@ namespace Z0
             var dst = text.emitter();
             render(src, dst);
             return dst.Emit();
-
-
-            // var count = src.Args.Count;
-            // var buffer = text.buffer();
-            // buffer.Append(src.ToolPath);
-            // for(var i=0; i<count; i++)
-            // {
-            //     var arg = src.Args[i];
-            //     buffer.AppendFormat(RP.Assign, arg.Name, arg.Value);
-            //     if(i != count - 1)
-            //         buffer.Append(", ");
-            // }
-
-            // buffer.Append(Chars.RParen);
-            // return buffer.Emit();
         }
-
     }
 }

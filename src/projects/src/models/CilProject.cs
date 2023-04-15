@@ -6,7 +6,7 @@ namespace Z0
 {
     partial class ProjectModels
     {    
-        public sealed record class CIlProject : Project<CIlProject>
+        public sealed record class CIlProject : DevProject<CIlProject>
         {
             public CIlProject()
                 : base(ProjectKind.CSharp, FolderPath.Empty)

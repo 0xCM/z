@@ -4,9 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Tools
 {
-    using Z0;
-    using static sys;
-
     public class Ninja : ToolService<Ninja>
     {
         class Flow : ToolFlow<Flow>
@@ -52,7 +49,6 @@ namespace Z0.Tools
                 var src = FS.archive(args[0]);
                 Tool.Data(src);
             }
-
         }
 
         static FilePath ToolPath => FS.path("ninja.exe");

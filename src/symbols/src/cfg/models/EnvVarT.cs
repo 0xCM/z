@@ -10,7 +10,7 @@ namespace Z0
     /// Defines a value-parametric environment variable
     /// </summary>
     [Record(TableId)]
-    public readonly record struct EnvVar<T> : IDataType<EnvVar<T>>
+    public readonly record struct EnvVar<T> : IDataType<EnvVar<T>>, IVarAssignment<T>
         where T : IEquatable<T>
     {
         const string TableId = "env.vars.{0}";
@@ -44,10 +44,16 @@ namespace Z0
             get => hash(Format());
         }
 
+        public VarDef Def 
+            => new VarDef(Name, EmptyString, EmptyString);
+
+        T IVarAssignment<T>.Value 
+            => Value;
+
         public override int GetHashCode()
             => Hash;
 
-        public EnvVar<T> Revalue(T value)
+        public EnvVar<T> WithValue(T value)
             => new EnvVar<T>(Name, value);
 
         public string Format()

@@ -9,7 +9,6 @@ namespace Z0.Tools
     class ObjDumpFlow : ToolFlow<ObjDumpFlow>
     {
         public ObjDumpFlow()
-            : base("llvm-objdump")
         {}
 
     }

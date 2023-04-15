@@ -6,7 +6,7 @@ namespace Z0
 {
     using Asm;
 
-    using static core;
+    using static sys;
 
     using static XedModels;
 
@@ -37,7 +37,7 @@ namespace Z0
             (RegKind.MM7,XedRegId.MMX7),
         }).Storage.ToDictionary();
 
-        static Dictionary<XedRegId,RegKind> XR = core.map(RX, x => paired(x.Value, x.Key)).ToDictionary();
+        static Dictionary<XedRegId,RegKind> XR = sys.map(RX, x => Tuples.paired(x.Value, x.Key)).ToDictionary();
 
         static XedRegMap create()
         {

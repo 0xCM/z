@@ -44,7 +44,7 @@ namespace Z0
                 if(i < names.Count - 1)
                 {
                     var i1 = offsets[i+1];
-                    var seg = core.segment(view, i0, i1 - 1);
+                    var seg = sys.segment(view, i0, i1 - 1);
                     var parts = list<TextLine>();
                     for(var j=0; j<seg.Length; j++)
                     {
@@ -63,7 +63,7 @@ namespace Z0
                 }
                 else
                 {
-                    var seg = core.slice(view, i0);
+                    var seg = sys.slice(view, i0);
                     var parts = list<TextLine>();
                     for(var j=0; j<seg.Length; j++)
                     {

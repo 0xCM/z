@@ -10,4 +10,13 @@ namespace Z0
 
         dynamic Value {get;}
     }
+
+    public interface IVarAssignment<T> : IVarAssignment
+    {
+        new T Value {get;}
+        
+        dynamic IVarAssignment.Value
+            => Value;
+
+    }
 }

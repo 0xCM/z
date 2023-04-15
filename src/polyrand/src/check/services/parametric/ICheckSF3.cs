@@ -6,7 +6,7 @@ namespace Z0
 {
     using System;
 
-    using static core;
+    using static sys;
 
     public interface ICheckSF<T0,T1,T2,R> : ICheckSF
         where T0 : unmanaged, IEquatable<T0>

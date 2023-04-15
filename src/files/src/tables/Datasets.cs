@@ -9,26 +9,6 @@ namespace Z0
     [ApiHost, Free]
     public class Datasets
     {
-        static void AppendLine(TableColumns cols, object[] args, ITextBuffer dst)
-            => dst.AppendLine(cols.Format(args));
-
-        public static void emit<T>(TableColumns cols, T[] rows, FilePath dst)
-        {
-            var count = rows.Length;
-            if(count != 0)
-            {
-                var buffer = text.buffer();
-                buffer.AppendLine(cols.Header);
-                var type = first(rows)?.GetType() ?? typeof(void);
-                if(type.IsNonEmpty())
-                {
-                    var fields = type.InstanceFields().NonPublic();
-                    iter(rows, d => AppendLine(cols, fields.Select(x => x.GetValue(d)),buffer));
-                }
-                dst.Overwrite(buffer.Emit());
-            }
-        }
-
         public struct ColumnBuffer
         {
             public readonly TableColumns Cols;

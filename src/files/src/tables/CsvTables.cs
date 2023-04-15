@@ -6,11 +6,31 @@ namespace Z0
 {
     using static sys;
     using static CsvFormatter;
-
+    using static Datasets;
     [ApiHost]
     public class CsvTables
     {        
         const NumericKind Closure = UInt64k;
+
+        static void AppendLine(TableColumns cols, object[] args, ITextBuffer dst)
+            => dst.AppendLine(cols.Format(args));
+
+        public static void emit<T>(TableColumns cols, T[] rows, FilePath dst)
+        {
+            var count = rows.Length;
+            if(count != 0)
+            {
+                var buffer = text.buffer();
+                buffer.AppendLine(cols.Header);
+                var type = first(rows)?.GetType() ?? typeof(void);
+                if(type.IsNonEmpty())
+                {
+                    var fields = type.InstanceFields();
+                    iter(rows, d => AppendLine(cols, fields.Select(x => x.GetValue(d)),buffer));
+                }
+                dst.Overwrite(buffer.Emit());
+            }
+        }
 
         public static ReadOnlySpan<Table> load<E>(IWfChannel channel, ReadOnlySpan<FilePath> src)
             where E : unmanaged, Enum
@@ -123,7 +143,6 @@ namespace Z0
             dst.IndentLine(margin, Chars.RBrace);
         }
         
-
         [Op]
         public static Outcome parse(TextLine src, char delimiter, byte fields, out RowHeader dst)
         {
@@ -403,16 +422,6 @@ namespace Z0
 
         public static ICsvFormatter<T> formatter<T>(RowFormatSpec spec)
             => new CsvFormatter<T>(spec, Tables.adapter<T>());
-
-        // public static string format(in RowFormatSpec spec, RenderBuffers buffers, in DynamicRow src)
-        // {
-        //     var content = src.Format(spec.Pattern, buffers);
-        //     var pad = spec.RowPad;
-        //     if(pad == 0)
-        //         return content;
-        //     else
-        //         return content.PadRight(pad);
-        // }
 
         public static CsvTableReader<T> reader<T>(FilePath src, RowParser<T> parser, bool header = true)
             => new CsvTableReader<T>(src, parser, header);

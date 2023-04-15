@@ -6,7 +6,7 @@ namespace Z0
 {
     partial class ProjectModels
     {    
-        public sealed record class CppProject : Project<CppProject>
+        public sealed record class CppProject : DevProject<CppProject>
         {
             public CppProject()
                 : base(ProjectKind.Cpp, FolderPath.Empty)

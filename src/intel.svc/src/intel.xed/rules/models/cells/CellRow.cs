@@ -69,11 +69,11 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public ReadOnlySpan<RuleCell> Antecedants()
-                => core.slice(Cells.View,0,AntecedantCount);
+                => sys.slice(Cells.View,0,AntecedantCount);
 
             [MethodImpl(Inline)]
             public ReadOnlySpan<RuleCell> Consequents()
-                => core.slice(Cells.View,ConsequentOffset);
+                => sys.slice(Cells.View,ConsequentOffset);
 
             public bool HasConsequent
             {

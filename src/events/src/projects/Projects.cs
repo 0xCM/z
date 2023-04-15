@@ -6,7 +6,6 @@ namespace Z0
 {
     using static sys;
     using static CmdExpr;
-    using static ProjectModels;
 
     using Names = Projects.SettingNames;
 
@@ -15,10 +14,10 @@ namespace Z0
         public static IProject create(IWfChannel channel, ProjectKind kind, FolderPath root)
         {
             var project = default(IProject);
-            var config = ConfigFile.Empty;
+            var config = ProjectConfigFile.Empty;
             var archive = root.DbArchive();
             var develop = LaunchScript.Empty;
-            if(ConfigFile.path(root).Exists)
+            if(ProjectConfigFile.path(root).Exists)
                 config = Projects.configuration(root);
             else
             {
@@ -44,7 +43,7 @@ namespace Z0
             }
 
         
-            return new Project(kind,root);
+            return new DevProject(kind,root);
         }
 
         public static IProject load(IWfChannel channel, FilePath src)
@@ -100,7 +99,7 @@ namespace Z0
         public static ExecToken save(IWfChannel channel, LaunchScript src)   
             => channel.FileEmit(src.Script.Body, src.Path);
 
-        public static ExecToken save(IWfChannel channel, ConfigFile src)
+        public static ExecToken save(IWfChannel channel, ProjectConfigFile src)
         {
             var buffer = text.emitter();
             iter(src.Body, setting => buffer.AppendLine(setting.Format()));
@@ -118,10 +117,10 @@ namespace Z0
             }
         }        
 
-        public static ConfigFile configuration(FolderPath root)
-            => new ConfigFile(root + FS.file("config", FileKind.Cmd), CmdScripts.setx(root + FS.file("config", FileKind.Cmd)));   
+        public static ProjectConfigFile configuration(FolderPath root)
+            => new ProjectConfigFile(root + FS.file("config", FileKind.Cmd), CmdScripts.setx(root + FS.file("config", FileKind.Cmd)));   
 
-        public static ConfigFile configure(ProjectKind kind, FolderPath root)
+        public static ProjectConfigFile configure(ProjectKind kind, FolderPath root)
         {
             var path = root + FS.file("config", FileKind.Cmd);
             var settings = list<CmdSetExpr>();
@@ -129,7 +128,7 @@ namespace Z0
             settings.Add(new (SettingNames.SlnName, root.FolderName.Format()));
             settings.Add(new (SettingNames.SlnRoot, $"%~dp0..\\%{SettingNames.SlnName}%"));
             settings.Add(new (SettingNames.SlnCmd, $"%{SettingNames.SlnRoot}%\\cmd"));
-            return new ConfigFile(path,settings.Array());
+            return new ProjectConfigFile(path,settings.Array());
         }
 
         public static LaunchScript launcher(FolderPath root)
@@ -143,45 +142,45 @@ namespace Z0
             return new LaunchScript(root + FS.file("develop", FileKind.Cmd), new CmdScript("develop", dst.Emit()));
         }
 
-        public static FilePath flowpath(IProject src)
-            => src.Build().Path(FS.file($"{src.Name}.build.flows",FileKind.Csv));
+        // public static FilePath flowpath(IProject src)
+        //     => src.Build().Path(FS.file($"{src.Name}.build.flows",FileKind.Csv));
 
-        public static ProjectContext context(IProject src)
-            => new ProjectContext(src, flows(src));
+        // public static ProjectContext context(IProject src)
+        //     => new ProjectContext(src, flows(src));
 
-        static Outcome parse(string src, out Tool dst)
-        {
-            dst = text.trim(src);
-            return true;
-        }
+        // static Outcome parse(string src, out Tool dst)
+        // {
+        //     dst = text.trim(src);
+        //     return true;
+        // }
 
-        static CmdFlows flows(IProject src)
-        {
-            var path = Projects.flowpath(src);
-            if(path.Exists)
-            {
-                var lines = path.ReadLines(TextEncodingKind.Asci,true);
-                var buffer = sys.alloc<CmdFlow>(lines.Length - 1);
-                var reader = lines.Storage.Reader();
-                reader.Next(out _);
-                var i = 0u;
-                while(reader.Next(out var line))
-                {
-                    var parts = text.trim(text.split(line, Chars.Pipe));
-                    Require.equal(parts.Length, CmdFlow.FieldCount);
-                    var cells = parts.Reader();
-                    ref var dst = ref seek(buffer,i++);
-                    parse(cells.Next(), out dst.Tool).Require();
-                    DataParser.parse(cells.Next(), out dst.SourceName).Require();
-                    DataParser.parse(cells.Next(), out dst.TargetName).Require();
-                    DataParser.parse(cells.Next(), out dst.SourcePath).Require();
-                    DataParser.parse(cells.Next(), out dst.TargetPath).Require();
-                }
-                return new(FileCatalog.load(src.Files().Array().ToSortedSpan()), buffer);
-            }
-            else
-                return CmdFlows.Empty;
-        }
+        // static CmdFlows flows(IProject src)
+        // {
+        //     var path = Projects.flowpath(src);
+        //     if(path.Exists)
+        //     {
+        //         var lines = path.ReadLines(TextEncodingKind.Asci,true);
+        //         var buffer = sys.alloc<CmdFlow>(lines.Length - 1);
+        //         var reader = lines.Storage.Reader();
+        //         reader.Next(out _);
+        //         var i = 0u;
+        //         while(reader.Next(out var line))
+        //         {
+        //             var parts = text.trim(text.split(line, Chars.Pipe));
+        //             Require.equal(parts.Length, CmdFlow.FieldCount);
+        //             var cells = parts.Reader();
+        //             ref var dst = ref seek(buffer,i++);
+        //             parse(cells.Next(), out dst.Tool).Require();
+        //             DataParser.parse(cells.Next(), out dst.SourceName).Require();
+        //             DataParser.parse(cells.Next(), out dst.TargetName).Require();
+        //             DataParser.parse(cells.Next(), out dst.SourcePath).Require();
+        //             DataParser.parse(cells.Next(), out dst.TargetPath).Require();
+        //         }
+        //         return new(FileCatalog.load(src.Files().Array().ToSortedSpan()), buffer);
+        //     }
+        //     else
+        //         return CmdFlows.Empty;
+        // }
 
         static IProject Project;
 

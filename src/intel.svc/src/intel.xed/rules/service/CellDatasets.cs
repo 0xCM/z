@@ -23,7 +23,7 @@ namespace Z0
                 dst._Tables = tables.Sort();
                 dst._Cells = tables.SelectMany(x => x.Rows.SelectMany(x => x.Cells)).Sort();
                 dst._Sigs = tables.Select(x => x.Sig).Sort();
-                dst._TableCells = core.pairings(src.Map(x => Tuples.paired(x.Key,x.Value)));
+                dst._TableCells = Tuples.pairings(src.Map(x => Tuples.paired(x.Key,x.Value)));
                 return dst;
             }
 

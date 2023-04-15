@@ -7,7 +7,7 @@ namespace Z0
     public sealed class CodeLauncher : ProcessLauncher<CodeLauncher>
     {
         public static Task<ExecToken> start<T>(IWfChannel channel, T target, ToolCmdSpec context)
-            => Tooling.run(channel, FS.path("code.exe"), Cmd.args(target), context);
+            => Tooling.start(channel, FS.path("code.exe"), Cmd.args(target), context);
 
         static Option<FolderPath> dir(CmdArgs src, string name)
         {
@@ -42,7 +42,7 @@ namespace Z0
             {                
                 var launcher = cd + FS.file("develop", FileKind.Cmd);
                 if(launcher.Exists)
-                    Tooling.run(Channel, Cmd.args(launcher), context).Wait(); 
+                    Tooling.start(Channel, Cmd.args(launcher), context).Wait(); 
                 else
                 {
                     var bin = cd + FS.folder("node_modules/.bin");             

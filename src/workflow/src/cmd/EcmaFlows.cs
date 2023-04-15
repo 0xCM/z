@@ -472,15 +472,15 @@ namespace Z0
         {
             Source = FS.archive(args[0]);
             EmitDirectories();
-
         }
+
         unsafe void EmitPeInfo()
         {
             var index = GetModules();
             var headers = bag<SectionHeaderRow>();
             var dirs = bag<PeDirectoryRow>();
             var info = sys.bag<PeFileInfo>();
-            var debug = sys.bag<IMAGE_DEBUG_DIRECTORY>();
+            var debug = cdict<FilePath,IMAGE_DEBUG_DIRECTORY>();
             iter(index.Distinct(), entry => {
                 try
                 {
@@ -496,9 +496,7 @@ namespace Z0
                                 if(dir.Kind == PeDirectoryKind.DebugTable)
                                 {
                                     var dbdir = *((IMAGE_DEBUG_DIRECTORY*)reader.ReadSectionData(dir.Entry()).Pointer);
-                                    var seg = new MemorySeg<Address32,uint>((Address32)dbdir.AddressOfRawData, dbdir.SizeOfData);
-                                    debug.Add(dbdir);
-
+                                    debug[entry.Path] = dbdir;
                                 }
 
                             }

@@ -4,13 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
-    partial class ProjectModels
+    public abstract record class ProjectFile<F> : IProjectFile<F>
+        where F : ProjectFile<F>, new()
     {
-        public abstract record class ProjectFile<F> : IProjectFile<F>
-            where F : ProjectFile<F>, new()
-        {
 
-        }
-    }
+    }    
 }

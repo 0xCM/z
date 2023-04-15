@@ -6,7 +6,7 @@ namespace Z0
 {
     partial class ProjectModels
     {    
-        public sealed record class CsProject : Project<CsProject>
+        public sealed record class CsProject : DevProject<CsProject>
         {
             public CsProject()
                 : base(ProjectKind.CSharp, FolderPath.Empty)

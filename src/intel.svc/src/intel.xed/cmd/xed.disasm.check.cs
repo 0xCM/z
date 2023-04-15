@@ -17,7 +17,7 @@ namespace Z0
 
         public void Etl(IProject project)
         {
-            var context = Projects.context(project);
+            var context = ApiCmd.context(project);
             //AsmObjects.RunEtl(context);
             Xed.Disasm.Collect(context);
         }

@@ -3,11 +3,14 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Windows
-{
+{    
+    /// <summary>
+    /// https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-image_debug_directory
+    /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack=1)]
-    public struct IMAGE_DEBUG_DIRECTORY
+    public record struct IMAGE_DEBUG_DIRECTORY
     {
-        public uint Characteristics;
+        uint Characteristics;
 
         public uint TimeDateStamp;
 
@@ -17,10 +20,19 @@ namespace Windows
 
         public IMAGE_DEBUG_TYPE Type;
 
+        /// <summary>
+        /// The size of the debugging information, in bytes. This value does not include the debug directory itself
+        /// </summary>
         public uint SizeOfData;
 
-        public uint AddressOfRawData;
+        /// <summary>
+        /// The address of the debugging information when the image is loaded, relative to the image base.
+        /// </summary>
+        public Address32 AddressOfRawData;
 
-        public uint PointerToRawData;
+        /// <summary>
+        /// A file pointer to the debugging information.
+        /// </summary>
+        public Address32 PointerToRawData;        
     }
 }

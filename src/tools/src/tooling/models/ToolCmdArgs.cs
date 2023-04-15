@@ -17,7 +17,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public ToolCmdArgs(ToolCmdArg[] src)
+        public ToolCmdArgs(params ToolCmdArg[] src)
             : base(src)
         {
             Data = src;

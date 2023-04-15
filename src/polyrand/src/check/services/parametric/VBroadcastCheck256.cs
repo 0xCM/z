@@ -19,7 +19,7 @@ namespace Z0
 
         public bit Invoke(S a, Vector256<T> x)
         {
-            var count = cpu.vcount<T>(w256);
+            var count = vcpu.vcount<T>(w256);
             var result = bit.On;
             var y = x.As<T,S>();
             for(var i=0; i< count; i++)

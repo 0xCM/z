@@ -8,8 +8,14 @@ namespace Z0
 
     partial class Tooling
     {
+        public static Task<ExecStatus> start(IWfChannel channel, ToolCmd cmd)
+            => start(ToolFlow.create(channel), cmd);
+
+        public static Task<ExecStatus> start(IToolFlow flow, ToolCmd cmd)
+            => sys.start(() => run(flow, cmd));
+
         [Op]
-        public static Task<ExecToken> run(IWfChannel channel, FilePath tool, CmdArgs args, ToolCmdSpec? spec = null)
+        public static Task<ExecToken> start(IWfChannel channel, FilePath tool, CmdArgs args, ToolCmdSpec? spec = null)
         {
             var ctx = spec ?? ToolCmdSpec.Default;
             var psi = new ProcessStartInfo
@@ -45,8 +51,8 @@ namespace Z0
             return sys.start(Run);
         }    
 
-        public static Task<ExecToken> run(IWfChannel channel, CmdArgs args, ToolCmdSpec? spec = null)
-            => run(channel, FS.path(args[0]), args.Skip(1), spec);
+        public static Task<ExecToken> start(IWfChannel channel, CmdArgs args, ToolCmdSpec? spec = null)
+            => start(channel, FS.path(args[0]), args.Skip(1), spec);
 
         static ExecStatus run(ToolCmdSpec context, Action<string> status, Action<string> error)
         {
@@ -158,12 +164,6 @@ namespace Z0
             return flow;
         }
 
-        // public static Task<ExecStatus> start(IToolFlow flow, ToolCmdSpec spec)
-        //     => sys.start(() => run(flow, spec));
-         
-        public static Task<ExecStatus> start(IToolFlow flow, ToolCmd cmd)
-            => sys.start(() => run(flow, cmd));
-
         static ExecStatus run(IToolFlow flow, ToolCmd cmd)
         {
             var i=0u;
@@ -231,76 +231,5 @@ namespace Z0
             }
             return status;
         }
-
-        // static ExecStatus run(IToolFlow flow, ToolCmdSpec spec)
-        // {
-        //     var i=0u;
-        //     var j=0u;
-        //     var tool = spec.ToolPath;
-        //     var args = spec.Args;
-        //     var psi = new ProcessStartInfo(tool.Format(), args.Format())
-        //     {
-        //         UseShellExecute = false,
-        //         RedirectStandardError = true,
-        //         RedirectStandardOutput = true,
-        //         ErrorDialog = false,
-        //         CreateNoWindow = true,
-        //         RedirectStandardInput = false,
-        //         WorkingDirectory = spec.WorkingDir.Format(PathSeparator.BS)
-        //     };
-
-        //     iter(spec.Vars, v => psi.Environment.Add(v.Name, v.Value));
-
-        //     void OnStatus(object sender, DataReceivedEventArgs e)
-        //     {
-        //         if(sys.nonempty(e.Data))
-        //         {
-        //             inc(ref i);
-        //             flow.OnStatus((i,e.Data));
-        //         }                    
-        //     }
-    
-        //     void OnError(object sender, DataReceivedEventArgs e)
-        //     {
-        //         if(sys.nonempty(e.Data))
-        //         {
-        //             inc(ref j);
-        //             flow.OnError((j,e.Data));
-        //         }
-        //     }
-
-        //     var status = default(ExecStatus);
-        //     var running = flow.Running($"{tool}:{args}");
-        //     status.Token = running.Token;
-        //     try
-        //     {                
-        //         using var process = sys.process(psi);
-        //         process.OutputDataReceived += OnStatus;
-        //         process.ErrorDataReceived += OnError;
-        //         process.Start();
-        //         flow.OnStart(running.Token);
-        //         status.StartTime = sys.now();
-        //         status.Id = process.Id;
-        //         process.BeginOutputReadLine();
-        //         process.BeginErrorReadLine();
-        //         process.WaitForExit();
-        //         status.HasExited = true;
-        //         status.ExitTime = sys.now();
-        //         status.Duration = status.ExitTime - status.StartTime;
-        //         status.ExitCode = process.ExitCode;
-        //         flow.OnFinish(status);
-        //         flow.Ran(running);
-        //     }
-        //     catch(Exception e)
-        //     {
-        //         inc(ref j);
-        //         status.ExitCode = -1;
-        //         flow.OnError((j,e.ToString()));
-        //         flow.OnFinish(status);
-
-        //     }
-        //     return status;
-        // }
-
     }
 }

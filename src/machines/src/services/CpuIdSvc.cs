@@ -179,7 +179,7 @@ namespace Z0
             var dst = list<CpuIdRow>();
             while(current != null)
             {
-                var data = text.row(current,Chars.Pipe);
+                var data = TextDoc.row(current,Chars.Pipe);
                 if(data.CellCount != FieldCount)
                     Errors.Throw(Tables.FieldCountMismatch.Format(FieldCount, data.CellCount));
 

@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public readonly struct NasmListing : IRenderCapable<NasmListing>
+    public readonly struct NasmListing
     {
         public FilePath Source {get;}
 
@@ -19,7 +19,7 @@ namespace Z0
             Lines = lines;
         }
 
-        public void Render(ITextBuffer dst)
+        public void Render(ITextEmitter dst)
         {
             var src = Lines.View;
             var count = src.Length;
@@ -44,7 +44,11 @@ namespace Z0
         }
 
         public string Format()
-            => RenderCapable.format(this);
+        {
+            var dst = text.emitter();
+            Render(dst);
+            return dst.Emit();
+        }
 
 
         public override string ToString()

@@ -21,7 +21,7 @@ namespace Z0
             }
 
             public new static TableSpecs Empty
-                => new TableSpecs(core.dict<RuleSig,TableSpec>());
+                => new TableSpecs(sys.dict<RuleSig,TableSpec>());
 
             public static implicit operator TableSpecs(Dictionary<RuleSig,TableSpec> src)
                 => new TableSpecs(src);

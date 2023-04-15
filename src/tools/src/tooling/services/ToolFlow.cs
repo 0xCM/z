@@ -4,10 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class text
+    public class ToolFlow : ToolFlow<ToolFlow>
     {
-        [Op]
-        public static TextRow row(string src, char delimiter)
-            => !string.IsNullOrEmpty(src) ? src.SplitClean(delimiter).Select(x => new TextBlock(x)) : TextRow.Empty;
+
     }
 }

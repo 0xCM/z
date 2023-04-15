@@ -8,6 +8,10 @@ namespace Z0
 
     public sealed class TextDoc
     {
+        [Op]
+        public static TextRow row(string src, char delimiter)
+            => !string.IsNullOrEmpty(src) ? src.SplitClean(delimiter).Select(x => new TextBlock(x)) : TextRow.Empty;
+
         public FileUri Location {get;}
 
         Index<TextLine> Data;

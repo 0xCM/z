@@ -26,7 +26,7 @@ namespace Z0
         protected ProjectContext ProjectContext()
         {
             var project = Project();
-            return _Context.GetOrAdd(project.Name, _ => Projects.context(project));
+            return _Context.GetOrAdd(project.Name, _ => ApiCmd.context(project));
         }
 
         [CmdOp("project/home")]
@@ -43,7 +43,7 @@ namespace Z0
         public void LoadProject(CmdArgs args)
         {
             var root = FS.dir(args[0]);
-            LoadProjectSources(new ProjectModels.Project(root));
+            LoadProjectSources(new DevProject(root));
         }
 
         void LoadProjectSources(IProject src)

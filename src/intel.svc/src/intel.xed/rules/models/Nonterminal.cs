@@ -12,7 +12,7 @@ namespace Z0
         {
             public const byte Width = num9.Width;
 
-            public static DataSize DataSize => (Width,core.width<RuleName>());
+            public static DataSize DataSize => (Width,sys.width<RuleName>());
 
             public readonly RuleName Name;
 

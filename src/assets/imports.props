@@ -3,6 +3,5 @@
     <ProjectReference Include="$(Symbolics)" />
     <ProjectReference Include="$(Native)" />
     <ProjectReference Include="$(Stitch)" />
-    <ProjectReference Include="$(Commands)" />
   </ItemGroup>
 </Project>

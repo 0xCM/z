@@ -10,6 +10,7 @@ namespace Z0
     {
         public static FileIndex create()
             => new();
+            
         public static FileTypes types(params Assembly[] src)
             => new (src.Types().Tagged<FileTypeAttribute>().Concrete().Map(x => (IFileType)Activator.CreateInstance(x)).ToHashSet());     
 

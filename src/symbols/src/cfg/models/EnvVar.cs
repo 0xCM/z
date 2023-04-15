@@ -10,7 +10,7 @@ namespace Z0
     /// Defines a nonparametric environment variable
     /// </summary>
     [Record(TableId)]
-    public readonly record struct EnvVar : IDataType<EnvVar>
+    public readonly record struct EnvVar : IDataType<EnvVar>, IVarAssignment
     {
         const string TableId = "env";
 
@@ -48,6 +48,12 @@ namespace Z0
             get => sys.nonempty(Name);
         }
 
+        public VarDef Def 
+            => new VarDef(Name, EmptyString, EmptyString);
+
+        dynamic IVarAssignment.Value 
+            => Value;
+
         public bool Contains(string match)
             => text.contains(Value,match);
 
@@ -57,13 +63,12 @@ namespace Z0
         public bool Contains(char match)
             => text.contains(Value,match);
 
-        public EnvVar Revalue(@string value)
+        public EnvVar WitValue(@string value)
             => new EnvVar(Name, value);
 
         [MethodImpl(Inline)]
         public string Format()
             => sys.nonempty(Value) ? string.Format("{0}={1}", Name, Value) : $"{Name}=";
-
 
         public override string ToString()
             => Format();
@@ -78,9 +83,11 @@ namespace Z0
         public int CompareTo(EnvVar src)
             => Name.CompareTo(src.Name);
 
+
         [MethodImpl(Inline)]
         public static implicit operator string(EnvVar src)
             => src.Value;
+
 
         public static EnvVar Empty
         {

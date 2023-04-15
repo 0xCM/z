@@ -6,9 +6,8 @@ namespace Z0
 {
     partial class ProjectModels
     {    
-        public record class BinaryProject : Project<BinaryProject>
+        public record class BinaryProject : DevProject<BinaryProject>
         {
-
             public BinaryProject()
                 : base(ProjectKind.Binary)
             {

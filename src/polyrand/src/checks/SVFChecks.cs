@@ -4,8 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static cpu;
-    using static core;
+    using static vcpu;
+    using static sys;
 
     using K = OperatorClasses;
 

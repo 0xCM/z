@@ -65,7 +65,7 @@ namespace Z0
             => Format();
         public override string Format()
             => FS.format(this);
-
+        
         [MethodImpl(Inline)]
         public static implicit operator EnvPath(FolderPath[] src)
             => new EnvPath(src);

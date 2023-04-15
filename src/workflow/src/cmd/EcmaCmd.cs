@@ -208,7 +208,6 @@ namespace Z0
             });
         }
 
-
         [CmdOp("ecma/dump")]
         void EcmaEmitMetaDumps(CmdArgs args)
             => EcmaEmitter.EmitDump(FS.dir(args[0]).DbArchive(), EnvDb);

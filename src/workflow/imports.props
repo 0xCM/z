@@ -2,7 +2,6 @@
   <ItemGroup>
      <ProjectReference Include="$(Assets)"/>
      <ProjectReference Include="$(Polyrand)"/>
-     <ProjectReference Include="$(Commands)"/>
      <ProjectReference Include="$(SFx)"/>
      <ProjectReference Include="$(Process)"/>
      <ProjectReference Include="$(Builds)"/>

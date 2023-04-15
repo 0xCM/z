@@ -71,51 +71,5 @@ namespace Z0
 
         public static VarAssignment<T> assign<T>(@string name, T value)
             => assign(var(name), value);
-
-
-        // public static ScriptVar var(string name, AsciSymbol prefix, AsciFence fence, @string value = default)
-        //     => new ScriptVar(name,prefix, fence, value);
-            
-        // public static string eval(string expr, ICollection<IScriptVar> vars)
-        // {
-        //     var result = expr;
-        //     foreach(var v in vars)
-        //     {
-        //         if(v.Value(out var value))
-        //             result = text.replace(result, string.Format("{0}{1}{2}{3}", v.Prefix, v.Fence.Left, v.Name, v.Fence.Right), value.ToString());
-        //     }
-        //     return result;
-        // }
-
-        // public static Dictionary<string,ScriptVar> extract(ReadOnlySpan<char> src, AsciSymbol prefix, AsciFence fence)
-        // {
-        //     var dst = dict<string,ScriptVar>();
-        //     var count = src.Length;
-        //     var lpos = -1;
-        //     var rpos = -1;
-        //     var parsing = false;
-        //     for(var i=0; i<count; i++)
-        //     {
-        //         ref readonly var c0 = ref skip(src,i);
-        //         if(c0 == prefix)
-        //         {
-        //             if(i < count -1)
-        //             {
-        //                 parsing = skip(src,++i) == fence.Left;
-        //                 lpos = i + 1;
-        //             }
-        //         }
-        //         else if(c0 == fence.Right && parsing)
-        //         {
-        //             rpos = i - 1;                    
-        //             var name = sys.@string(text.segment(src, lpos, rpos));
-        //             dst.TryAdd(name, new ScriptVar(name,prefix,fence));
-        //             lpos = -1;
-        //             rpos = -1;                    
-        //         }
-        //     }
-
-        //     return dst;
-        // }
     }
 }

@@ -12,9 +12,6 @@ namespace Z0.Tools
     {
         class Flow : ToolFlow<Flow>
         {
-            public Flow()
-                : base("cmake")
-            {}
 
         }
 

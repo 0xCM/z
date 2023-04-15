@@ -12,14 +12,14 @@ namespace Z0.Tools
 
         public ExecToken RunScript(FilePath src)
         {
-            var token = Tooling.run(Channel, PythonPath, Cmd.args(src)).Result;
+            var token = Tooling.start(Channel, PythonPath, Cmd.args(src)).Result;
             return token;
         }
 
         public ExecToken RunScript(FilePath src, CmdArgs args)
-            => Tooling.run(Channel, PythonPath, Cmd.args(src) + args).Result;
+            => Tooling.start(Channel, PythonPath, Cmd.args(src) + args).Result;
 
         public ExecToken RunCommand(CmdArgs args)
-            => Tooling.run(Channel, PythonPath, args).Result;
+            => Tooling.start(Channel, PythonPath, args).Result;
     }
 }

@@ -81,7 +81,7 @@ namespace Z0
             public CellValue(InstFieldSeg src)
             {
                 var data = ByteBlock16.Empty;
-                core.@as<InstFieldSeg>(data.First) = src;
+                sys.@as<InstFieldSeg>(data.First) = src;
                 data[FieldIndex] = (byte)src.Field;
                 data[ClassIndex] = (byte)CK.InstSeg;
                 Data = data;

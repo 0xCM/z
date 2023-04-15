@@ -164,6 +164,8 @@ namespace Z0
         public bool Contains(string substring)
             => FileName.Contains(substring);
 
+        public bool Prefixed(FolderPath src)
+            => Format().StartsWith(src.Format());
         public bool IsEmpty
         {
             [MethodImpl(Inline)]

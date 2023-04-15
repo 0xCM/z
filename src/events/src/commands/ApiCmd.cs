@@ -8,6 +8,9 @@ namespace Z0
 
     public class ApiCmd
     {
+        public static ProjectContext context(IProject src)
+            => new ProjectContext(src, CmdFlows.flows(src));
+
         [Op, Closures(UInt64k)]
         public static CmdArgs reflect<T>(in T src)
             where T : struct

@@ -133,7 +133,7 @@ namespace Z0
             }
 
             if(flows.Count != 0)
-                Channel.TableEmit(flows.ViewDeposited(), Projects.flowpath(project));
+                Channel.TableEmit(flows.ViewDeposited(), CmdFlows.flowpath(project));
         }
     }
 }

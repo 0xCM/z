@@ -91,7 +91,7 @@ namespace Z0
             => new (tool,args, work, EnvVars.Empty);
 
         public static ToolCmd command(FilePath tool, ToolCmdArgs args, FolderPath work, params EnvVar[] vars)
-            => new (tool,args, work, vars);
+            => new (tool, args, work, vars);
 
         public static ToolCmdArg flag(ArgPrefixKind prefix, string name)
             => new ToolCmdArg{

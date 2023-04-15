@@ -116,7 +116,7 @@ namespace Z0
             where T : unmanaged
         {
             if(terms.Length != TypeNats.nat32i(n))
-                AppErrors.ThrowInvariantFailure($"{n} != {terms.Length}");
+                sys.@throw($"{n} != {terms.Length}");
             return new NatPerm<N,T>(Permute.init(terms));
         }
 

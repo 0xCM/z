@@ -11,6 +11,9 @@ namespace Z0
         public static FolderPath Folder(this Setting src)
             => FS.dir(src.ValueText);
 
+        public static IDbArchive DbArchive(this Setting src)
+            => FS.archive(src.ValueText);
+
         public static FileUri File(this Setting src)
             => FS.path(src.ValueText);
     }
@@ -72,6 +75,12 @@ namespace Z0
 
         public DbArchive DevPacks()
             => Instance.Setting(SettingNames.DevPacks).Folder();
+
+        public IDbArchive BuildKits()
+            => Instance.Setting(SettingNames.BuildKits).DbArchive();
+
+        public IDbArchive BuildKits(string scope)
+            => BuildKits().Scoped(scope);
 
         public IDbArchive DevPacks(string scope)
             => DevPacks().Scoped(scope);

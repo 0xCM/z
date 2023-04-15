@@ -12,7 +12,7 @@ namespace Z0
         public readonly struct Fields
         {
             public static Fields allocate()
-                => new Fields(core.alloc<Field>(Fields.MaxCount));
+                => new Fields(sys.alloc<Field>(Fields.MaxCount));
 
             [MethodImpl(Inline), Op]
             public static Field field<T>(FieldKind kind, T value)
