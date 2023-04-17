@@ -76,8 +76,8 @@ namespace Z0
         [MethodImpl(Inline), Op]
         static SourceText store(ReadOnlySpan<char> src, uint offset, StringBuffer dst)
         {
-            var length = src.Length;
-            if(length <= byte.MaxValue && StringBuffers.store(src, offset, dst))
+            var length = (uint)src.Length;
+            if(StringBuffers.store(src, offset, dst))
                 return new SourceText(dst.Address(offset), length);
             else
                 return SourceText.Empty;

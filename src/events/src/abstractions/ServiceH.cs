@@ -4,7 +4,16 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public abstract class Service<H> : IService<H>
+    public abstract class Service
+    {
+        protected static AppSettings AppSettings => AppSettings.Default;
+
+        protected static IEnvDb EnvDb => AppSettings.EnvDb();
+
+        protected static AppDb AppDb => AppDb.Service;
+    }
+
+    public abstract class Service<H> : Service, IService<H>
         where H : Service<H>, new()
     {
         /// <summary>

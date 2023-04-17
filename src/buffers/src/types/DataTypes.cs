@@ -32,11 +32,11 @@ namespace Z0
                 => literal(type.Key,value);
 
         [MethodImpl(Inline), Op]
-        public static TypedLiteral typed(asci64 name, TypeKey @base, DataSize size)
+        public static TypedLiteral typed(Label name, TypeKey @base, DataSize size)
             => new TypedLiteral(name, @base, size);
 
         [MethodImpl(Inline), Op]
-        public static TypedLiteral typed(asci64 name, LiteralType @base, DataSize size)
+        public static TypedLiteral typed(Label name, LiteralType @base, DataSize size)
             => typed(name, @base.Key, size);
 
         [MethodImpl(Inline), Op]

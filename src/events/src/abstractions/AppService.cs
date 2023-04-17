@@ -6,8 +6,9 @@ namespace Z0
 {
     using static sys;
 
+
     [WfService]
-    public abstract class AppService : IAppService
+    public abstract class AppService :  IAppService
     {
         public IWfRuntime Wf {get; private set;}
 

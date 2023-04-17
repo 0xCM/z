@@ -4,11 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [Free]
-    public interface ISourceDispenser : IAllocDispenser<SourceText>
+    public interface ISourceLine
     {
-        SourceText SourceText(string src);
+        LineNumber LineNumber {get;}
 
-        SourceText SourceText(ReadOnlySpan<string> src);
+        SourceText Source {get;}
     }
 }

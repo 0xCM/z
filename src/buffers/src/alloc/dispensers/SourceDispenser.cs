@@ -24,9 +24,12 @@ namespace Z0
             iter(Allocators.Values, a => a.Dispose());
         }
 
-        public SourceText Source(string src)
+        public SourceLine SourceLine(TextLine src)
+            => new SourceLine(src.LineNumber, SourceText(src.Content));
+
+        public SourceText SourceText(string src)
         {
-            var dst = SourceText.Empty;
+            var dst = Z0.SourceText.Empty;
             lock(Locker)
             {
                 var alloc = Allocators[Seq];
@@ -40,11 +43,11 @@ namespace Z0
             return dst;
         }
 
-        public SourceText Source(ReadOnlySpan<string> src)
+        public SourceText SourceText(ReadOnlySpan<string> src)
         {
             var dst = text.buffer();
             iter(src, x => dst.AppendLine(x));
-            return Source(dst.Emit());
+            return SourceText(dst.Emit());
         }
    }
 }

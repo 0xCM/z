@@ -25,17 +25,8 @@ namespace Z0
         public static CompositeDispenser composite(MemoryDispenser memory, StringDispenser strings, LabelDispenser labels, SymbolDispenser symbols, SourceDispenser source)
             => dispenser(() => new CompositeDispenser(memory, strings, labels, symbols, source));
 
-        // public static MemoryDispenser memory(ByteSize capacity)
-        //     => dispenser(() => new MemoryDispenser(capacity));
-
-        // public static SourceDispenser source(ByteSize capacity)
-        //     => dispenser(() => new SourceDispenser(capacity));
-
         public static SourceDispenser source(uint capacity = SourceDispenser.DefaultCapacity)
             => dispenser(() => new SourceDispenser(capacity));
-
-        // public static SymbolDispenser symbols(ByteSize capacity)
-        //     => dispenser(() => new SymbolDispenser(capacity));
 
         public static SymbolDispenser symbols(uint capacity = SymbolDispenser.DefaultCapacity)
             => dispenser(() => new SymbolDispenser());
@@ -47,9 +38,6 @@ namespace Z0
         public static StringDispenser strings(uint capacity = StringDispenser.DefaultCapacity)
             => dispenser(() => new StringDispenser(capacity));
 
-        // public static StringDispenser strings(ByteSize capacity)
-        //     => dispenser(() => new StringDispenser(capacity));
-
         public static PageDispenser pages(uint count = PageDispenser.DefaultPageCount)
             => dispenser(() => new PageDispenser(count));
 
@@ -58,11 +46,6 @@ namespace Z0
 
         public static NativeSigDispenser sigs(MemoryDispenser mem, StringDispenser strings, LabelDispenser labels)
             => dispenser(() => new NativeSigDispenser(mem, strings, labels));
-
-
-        // public static PageDispenser pages(uint count)
-        //     => dispenser(() => new PageDispenser(count));
-
 
         public static D dispenser<D>(Func<D> f)
             where D : IAllocDispenser

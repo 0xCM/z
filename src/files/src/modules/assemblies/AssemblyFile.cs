@@ -104,4 +104,10 @@ namespace Z0
 
         public static AssemblyFile Empty => new AssemblyFile();
     }
+
+    partial class XTend
+    {
+        public static AssemblyFile GetAssemblyFile(this Assembly src)
+            =>  new AssemblyFile(src.Path(), src.GetName());    
+    }
 }

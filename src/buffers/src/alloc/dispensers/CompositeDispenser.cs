@@ -12,7 +12,7 @@ namespace Z0
 
         SourceDispenser Sources;
 
-        MemoryDispenser Memory;
+        MemoryDispenser Memories;
 
         LabelDispenser Labels;
 
@@ -25,7 +25,7 @@ namespace Z0
         {
             Symbols = symbols;
             Sources = source;
-            Memory = memory;
+            Memories = memory;
             Labels = labels;
             Strings = strings;
             Sigs = Dispense.sigs(memory, strings, labels);
@@ -36,17 +36,17 @@ namespace Z0
         {
             Symbols = Dispense.symbols();
             Sources = Dispense.source();
-            Memory = Dispense.memory();
+            Memories = Dispense.memory();
             Labels = Dispense.labels();
             Strings = Dispense.strings();
-            Sigs = Dispense.sigs(Memory, Strings, Labels);
+            Sigs = Dispense.sigs(Memories, Strings, Labels);
         }
 
         protected override void Dispose()
         {
             (Symbols as IDisposable).Dispose();
             (Sources as IDisposable).Dispose();
-            (Memory  as IDisposable).Dispose();
+            (Memories  as IDisposable).Dispose();
             (Labels as IDisposable).Dispose();
             (Strings as IDisposable).Dispose();
         }
@@ -68,12 +68,16 @@ namespace Z0
             => Symbols.Symbol(location,name);
 
         [MethodImpl(Inline)]
-        public HexRef Reserve(ByteSize size)
-            => Memory.Memory(size);
+        public MemorySeg Memory(ByteSize size)
+            => Memories.Memory(size);
 
         [MethodImpl(Inline)]
-        public SourceText Source(string content)
-            => Sources.Source(content);
+        public SourceText SourceText(string content)
+            => Sources.SourceText(content);
+
+        [MethodImpl(Inline)]
+        public SourceLine SourceLine(TextLine src)
+            => Sources.SourceLine(src);
 
         [MethodImpl(Inline)]
         public Label Label(string content)
@@ -84,14 +88,14 @@ namespace Z0
             => Strings.String(content);
 
         [MethodImpl(Inline)]
-        public SourceText Source(ReadOnlySpan<string> src)
-            => Sources.Source(src);
+        public SourceText SourceText(ReadOnlySpan<string> src)
+            => Sources.SourceText(src);
 
         [MethodImpl(Inline)]
         public HexRef Store(ReadOnlySpan<byte> src)
         {
             var size = src.Length;
-            var hex = Reserve(size);
+            var hex = Memory(size);
             var dst = hex.Edit;
             for(var j=0; j<size; j++)
                 seek(dst,j) = skip(src,j);
@@ -99,6 +103,6 @@ namespace Z0
         }
 
         MemorySeg IMemoryDispenser.Memory(ByteSize size)
-            => Memory.Memory(size);
+            => Memories.Memory(size);
     }
 }

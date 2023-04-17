@@ -74,8 +74,6 @@ namespace Z0
 
         MetadataReader _MD;
 
-        //PEMemoryBlock _Image;
-
         MemorySeg _Image;
 
         public ref readonly MemorySeg GetImage()
@@ -131,6 +129,9 @@ namespace Z0
             }
         }
 
+        public MethodBodyBlock GetMethodBody(Address32 rva)
+            => PE.GetMethodBody((int)rva);
+
         public ReadOnlySpan<MsilRow> ReadMsil()
         {
             var dst = list<MsilRow>();
@@ -149,7 +150,7 @@ namespace Z0
                     var rva = definition.RelativeVirtualAddress;
                     if(rva != 0)
                     {
-                        var body = PE.GetMethodBody(rva);
+                        var body = GetMethodBody(rva);
                         dst.Add(new MsilRow
                         {
                             MethodRva = (Address32)rva,

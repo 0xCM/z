@@ -20,6 +20,5 @@ namespace Z0
         }
 
         public ReadOnlySeq<FolderPath> Folders {get;}
-    }
-    
+    }    
 }

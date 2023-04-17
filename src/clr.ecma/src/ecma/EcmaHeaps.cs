@@ -9,13 +9,6 @@ namespace Z0
 
     public class EcmaHeaps
     {
-        // [Op]
-        // public static EcmaHeap blobs(MetadataReader reader, MemoryAddress @base)
-        // {
-        //     var offset = EcmaHeaps.offset(reader, MetadataTokens.BlobHandle(0));
-        //     return new EcmaHeap(EcmaHeapKind.Blob, @base + offset, EcmaHeaps.size(reader, HeapIndex.Blob));
-        // }
-
         [Op]
         public static ExecToken emit(IWfChannel channel, MemorySeg src, FilePath dst, byte bpl = HexCsvRow.BPL)
         {

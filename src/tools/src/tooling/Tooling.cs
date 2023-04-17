@@ -6,7 +6,6 @@ namespace Z0
 {
     using static sys;
 
-
     public partial class Tooling : WfAppCmd<Tooling>
     {
         [Op]
@@ -247,5 +246,18 @@ namespace Z0
             iter(src.Files(), file => dst.Add(file.ReadText()));
             return dst.ToIndex();
         }
+    }
+
+
+    partial class XSvc
+    {
+        partial class ServiceCache
+        {
+            public Tooling Tooling(IWfRuntime wf) 
+                => Service<Tooling>(wf);
+        }
+
+        public static Tooling Tooling(this IWfRuntime wf)
+            => Services.Tooling(wf);
     }
 }

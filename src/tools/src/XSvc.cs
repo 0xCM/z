@@ -4,30 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Z0.Tools;
-    public static class XSvc
+    public static partial class XSvc
     {
-        class ServiceCache : AppServices<ServiceCache>
+        partial class ServiceCache : AppServices<ServiceCache>
         {
-            public Tooling Tooling(IWfRuntime wf) 
-                => Service<Tooling>(wf);
 
-            public CMakeTool CMake(IWfRuntime wf)
-                => Service<CMakeTool>(wf);
-
-            public Python Python(IWfRuntime wf)
-                => Service<Python>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
-
-        public static Tooling Tooling(this IWfRuntime wf)
-            => Services.Tooling(wf);
-
-        public static CMakeTool CMake(this IWfRuntime wf)
-            => Services.CMake(wf);
-
-        public static Python Python(this IWfRuntime wf)
-            => Services.Python(wf);             
     }
 }

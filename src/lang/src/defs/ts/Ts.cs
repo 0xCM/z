@@ -23,9 +23,6 @@ namespace Z0.Lang
         public Token<@string> DefineToken(string name, @string value)
             => token(name,value);
             
-        public SourceFile Source(FilePath path, string content)
-            => lang.source(LanguageName, path,content);
-
         public ICodeGen Generator(IWfChannel wf)
             => TsGen.create(wf);
     }

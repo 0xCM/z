@@ -52,15 +52,6 @@ namespace Z0
         public ByteSize CalcTableSize(TableIndex table)
             => MD.GetTableRowCount(table)*MD.GetTableRowSize(table);
 
-        // [Op]
-        // public static uint describe(ReadOnlySpan<Assembly> src, Span<EcmaModuleInfo> dst)
-        // {
-        //     var count = (uint)min(src.Length, dst.Length);
-        //     for(var i=0; i<count; i++)
-        //         seek(dst,i) = Ecma.describe(skip(src,i));
-        //     return count;
-        // }
-
         readonly MetadataReader MD;
 
         public ref readonly MetadataReader MetadataReader

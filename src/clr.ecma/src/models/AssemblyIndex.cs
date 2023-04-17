@@ -20,6 +20,8 @@ namespace Z0
 
         readonly Dictionary<AssemblyKey,HashSet<Entry>> Keysets = new();
 
+        readonly Dictionary<VersionedName,Entry> _VersionedEntries = new();
+
         public static AssemblyIndex create(IWfChannel channel, IDbArchive src)
         {
             var index = new AssemblyIndex(channel,src);
@@ -80,6 +82,7 @@ namespace Z0
             var i=0;
             iter(keys, key => _Distinct[i++] = Keysets[key].First());
             _Distinct.Sort().Resequence();
+            iter(_Distinct, entry => _VersionedEntries.TryAdd(entry.Name, entry));
             return this;
         }
 
@@ -139,6 +142,9 @@ namespace Z0
         public ICollection<AssemblyKey> Keys()
             => Keysets.Keys;
         
+        public IReadOnlyDictionary<VersionedName,Entry> VersionedEntries()
+            => _VersionedEntries;
+            
         public IEnumerable<Entry> Entries(AssemblyKey key)
             => Keysets[key];
 

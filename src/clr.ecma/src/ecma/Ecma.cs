@@ -12,7 +12,48 @@ namespace Z0
     
     [ApiHost]
     public class Ecma : WfSvc<Ecma>
-    {        
+    {   
+        public static ReadOnlySpan<MsilRow> msil(IWfChannel channel, AssemblyFile src)     
+        {
+            var dst = list<MsilRow>();
+            using var pe = PeReader.create(src.Path);
+            var reader = EcmaReader.create(pe.MD);
+            var types = reader.MetadataReader.TypeDefinitions.ToArray();
+            var typeCount = types.Length;
+            for(var k=0u; k<typeCount; k++)
+            {
+                 var hType = skip(types, k);
+                 var methods = reader.MetadataReader.GetTypeDefinition(hType).GetMethods().Array();
+                 var methodCount = methods.Length;
+                 var definitions = map(methods, m=> reader.MetadataReader.GetMethodDefinition(m));
+                 for(var i=0u; i<methodCount; i++)
+                 {
+                    ref readonly var method = ref skip(methods,i);
+                    ref readonly var definition = ref skip(definitions,i);
+                    var rva = definition.RelativeVirtualAddress;
+                    if(rva != 0)
+                    {
+                        var body =  pe.GetMethodBody(rva);
+                        dst.Add(new MsilRow
+                        {
+                            MethodRva = (Address32)rva,
+                            Token = EcmaTokens.token(method),
+                            ImageName = src.Path.FileName.Format(),
+                            BodySize = body.Size,
+                            LocalInit = body.LocalVariablesInitialized,
+                            MaxStack = body.MaxStack,
+                            MethodName = reader.MetadataReader.GetString(definition.Name),
+                            Code = body.GetILBytes(),
+                        });
+                    }
+                 }
+            }
+            return dst.ViewDeposited();
+        }
+
+        public static void emit(IWfChannel channel, VersionedName name, ReadOnlySpan<MsilRow> src, IDbArchive dst)
+            => channel.TableEmit(src, dst.Table<MsilRow>($"{name.Name}.{name.Version}"));
+
         public static AssemblyKey key(Assembly src)
             => Ecma.reader(src).AssemblyKey();
 
@@ -184,86 +225,84 @@ namespace Z0
             return dst.Array().Sort();
         }
 
-        public ReadOnlySeq<EcmaDependencySet> CalcDependencies(AssemblyIndex index)
-        {
-            var deps = bag<EcmaDependencySet>();
-            var managed = bag<ManagedDependency>();
-            var native = bag<NativeDependency>();
-            iter(index.Distinct(), entry => {
-                using var file = Ecma.file(entry.Path);
-                var set = CalcDependencies(file);
-                managed.AddRange(set.ManagedDependencies);
-                native.AddRange(set.NativeDependencies);
-                deps.Add(set);                                
-            },true);
+        // public ReadOnlySeq<EcmaDependencySet> CalcDependencies(AssemblyIndex index)
+        // {
+        //     var deps = bag<EcmaDependencySet>();
+        //     var managed = bag<ManagedDependency>();
+        //     var native = bag<NativeDependency>();
+        //     iter(index.Distinct(), entry => {
+        //         using var file = Ecma.file(entry.Path);
+        //         var set = CalcDependencies(file);
+        //         managed.AddRange(set.ManagedDependencies);
+        //         native.AddRange(set.NativeDependencies);
+        //         deps.Add(set);                                
+        //     },true);
 
-            return deps.Array().Sort();
-        }
+        //     return deps.Array().Sort();
+        // }
 
-        public EcmaDependencySet CalcDependencies(EcmaFile file)
-        {
-            var reader = Ecma.reader(file);
-            var dst = new EcmaDependencySet();
-            dst.SourcePath = file.Path;
-            dst.SourceName = reader.AssemblyName();
-            dst.SourceVersion = dst.SourceName.Version;
-            dst.ManagedDependencies = CalcManagedDeps(file.Path, reader);
-            dst.NativeDependencies = CalcNativeDeps(file.Path, reader);
-            return dst;
-        }
+        // public EcmaDependencySet CalcDependencies(EcmaFile file)
+        // {
+        //     var reader = Ecma.reader(file);
+        //     var dst = new EcmaDependencySet();
+        //     dst.SourcePath = file.Path;
+        //     dst.SourceName = reader.AssemblyName();
+        //     dst.SourceVersion = dst.SourceName.Version;
+        //     dst.ManagedDependencies = CalcManagedDeps(file.Path, reader);
+        //     dst.NativeDependencies = CalcNativeDeps(file.Path, reader);
+        //     return dst;
+        // }
+
+        // static ReadOnlySeq<NativeDependency> CalcNativeDeps(FilePath path, EcmaReader reader)
+        // {
+        //     var native = reader.ModuleRefHandles();
+        //     var count = native.Length;
+        //     var dst = alloc<NativeDependency>(count);
+        //     for(var i=0; i<native.Length; i++)
+        //         seek(dst,i) = CalcNativeDependency(path, reader, skip(native,i));
+        //     return dst;
+        // }
+
+        // static ReadOnlySeq<ManagedDependency> CalcManagedDeps(FilePath path, EcmaReader reader)
+        // {
+        //     var managed = reader.AssemblyRefHandles();
+        //     var count = managed.Length;
+        //     var dst = alloc<ManagedDependency>(count);
+        //     var j=0u;
+        //     for(var i=0; i<managed.Length; i++, j++)
+        //         seek(dst,j) = CalcManagedDependency(path, reader, skip(managed,i));
+        //     return dst;
+        // }
+
+        // static ManagedDependency CalcManagedDependency(FilePath path, EcmaReader reader, AssemblyReferenceHandle handle)
+        // {
+        //     var src = reader.MetadataReader.GetAssemblyReference(handle);            
+        //     var dst = new ManagedDependency();
+        //     dst.SourceName = reader.AssemblyName();
+        //     dst.SourceVersion = dst.SourceName.Version;
+        //     dst.SourceKeyToken = u64(reader.AssemblyName().GetPublicKeyToken());
+        //     dst.TargetName = src.GetAssemblyName();
+        //     dst.TargetVersion = src.Version;
+        //     dst.TargetKeyToken = u64(reader.Blob(src.PublicKeyOrToken).View);
+        //     return dst;
+        // }
+
+        // static NativeDependency CalcNativeDependency(FilePath path, EcmaReader reader, ModuleReferenceHandle handle)
+        // {
+        //     var src = reader.MetadataReader.GetModuleReference(handle);
+        //     var dst = new NativeDependency();
+        //     dst.SourceName = reader.AssemblyName();
+        //     dst.SourceVersion = dst.SourceName.Version;
+        //     dst.SourceKeyToken = u64(reader.AssemblyName().GetPublicKeyToken());
+        //     dst.TargetName = reader.String(src.Name).ToLower();
+        //     return dst;
+        // }
 
         public void EmitReports(AssemblyIndex index, IDbArchive dst)
         {
             Channel.TableEmit(index.Report(), dst.Nested("ecma", index.Source).Path("assemblies.index", FileKind.Csv));
             Channel.TableEmit(index.Distinct(), dst.Nested("ecma", index.Source).Path("assemblies.index.distinct", FileKind.Csv));
         }        
-
-        public ReadOnlySeq<NativeDependency> CalcNativeDeps(FilePath path, EcmaReader reader)
-        {
-            var native = reader.ModuleRefHandles();
-            var count = native.Length;
-            var dst = alloc<NativeDependency>(count);
-            for(var i=0; i<native.Length; i++)
-            {
-                seek(dst,i) = CalcNativeDependency(path, reader, skip(native,i));
-            }
-            return dst;
-        }
-
-        public ReadOnlySeq<ManagedDependency> CalcManagedDeps(FilePath path, EcmaReader reader)
-        {
-            var managed = reader.AssemblyRefHandles();
-            var count = managed.Length;
-            var dst = alloc<ManagedDependency>(count);
-            var j=0u;
-            for(var i=0; i<managed.Length; i++, j++)
-                seek(dst,j) = CalcManagedDependency(path, reader, skip(managed,i));
-            return dst;
-        }
-
-        ManagedDependency CalcManagedDependency(FilePath path, EcmaReader reader, AssemblyReferenceHandle handle)
-        {
-            var src = reader.MetadataReader.GetAssemblyReference(handle);            
-            var dst = new ManagedDependency();
-            dst.SourceName = reader.AssemblyName();
-            dst.SourceVersion = dst.SourceName.Version;
-            dst.SourceKeyToken = u64(reader.AssemblyName().GetPublicKeyToken());
-            dst.TargetName = src.GetAssemblyName();
-            dst.TargetVersion = src.Version;
-            dst.TargetKeyToken = u64(reader.Blob(src.PublicKeyOrToken).View);
-            return dst;
-        }
-
-        NativeDependency CalcNativeDependency(FilePath path, EcmaReader reader, ModuleReferenceHandle handle)
-        {
-            var src = reader.MetadataReader.GetModuleReference(handle);
-            var dst = new NativeDependency();
-            dst.SourceName = reader.AssemblyName();
-            dst.SourceVersion = dst.SourceName.Version;
-            dst.SourceKeyToken = u64(reader.AssemblyName().GetPublicKeyToken());
-            dst.TargetName = reader.String(src.Name);
-            return dst;
-        }
 
         public static bool parse(string src, out EcmaToken dst)
         {

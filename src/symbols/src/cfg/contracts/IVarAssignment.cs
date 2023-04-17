@@ -17,6 +17,5 @@ namespace Z0
         
         dynamic IVarAssignment.Value
             => Value;
-
     }
 }

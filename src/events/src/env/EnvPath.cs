@@ -8,6 +8,19 @@ namespace Z0
     
     public sealed class EnvPath : Seq<EnvPath,FolderPath>, IEquatable<EnvPath>
     {
+        public static string format(EnvPath src, char sep = Chars.Semicolon)
+        {
+            var dst = text.emitter();
+            var count = src.Count;
+            for(var i=0; i<count; i++)
+            {
+                dst.Append(src[i].Format(PathSeparator.BS));
+                if(i != count - 1)
+                    dst.Append(sep);
+            }
+            return dst.Emit();
+        }
+
         public EnvPath()
         {
 
@@ -64,7 +77,7 @@ namespace Z0
         public override string ToString()
             => Format();
         public override string Format()
-            => FS.format(this);
+            => format(this);
         
         [MethodImpl(Inline)]
         public static implicit operator EnvPath(FolderPath[] src)

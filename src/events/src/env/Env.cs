@@ -8,10 +8,37 @@ namespace Z0
 
     using Windows;
 
+    public interface IResolver
+    {
+        bool Resolve(dynamic src, out dynamic dst);
+    }
+
+    public interface IResolver<S,T> : IResolver
+    {
+        bool Resolve(S src, out T dst);
+
+        bool IResolver.Resolve(dynamic src, out dynamic dst)
+        {
+            var _dst = default(T);
+            var result = Resolve((S)src, out _dst);
+            dst = _dst;
+            return result;
+        }
+    }
+
+    public abstract class Resolver<S,T> : IResolver<S,T>
+    {
+        public abstract bool Resolve(S src, out T dst);
+    }
+
     [ApiHost]
     public class Env
     {
         static AppSettings AppSettings => AppSettings.Default;
+
+        static EnvResolvers _Resolvers = new();
+
+        public ref readonly EnvResolvers resolvers() => ref _Resolvers;
 
         public static IDbArchive root()
             => AppSettings.EnvRoot();
@@ -104,7 +131,7 @@ namespace Z0
         public static ExecToken<EnvPath> path(IWfChannel channel, EnvPathKind kind, IDbArchive dst, EnvVarKind envkind = EnvVarKind.Process)
         {            
             var name = kind switch {
-              EnvPathKind.FileSystem => EnvTokens.PATH,
+              EnvPathKind.Bin => EnvTokens.PATH,
               EnvPathKind.Include => EnvTokens.INCLUDE,
               EnvPathKind.Lib => EnvTokens.LIB,
                 _ => EmptyString

@@ -6,7 +6,7 @@ namespace Z0
 {
     using R = System.Reflection;
 
-    public readonly struct ClrModuleAdapter : IClrArtifact<ClrModuleAdapter>
+    public readonly struct ClrModuleAdapter
     {
         readonly R.Module Definition;
 
@@ -43,18 +43,6 @@ namespace Z0
             [MethodImpl(Inline)]
             get => Definition.ScopeName;
         }
-
-        // public bool IsEmpty
-        // {
-        //     [MethodImpl(Inline)]
-        //     get => Definition is null;
-        // }
-
-        // public bool IsNonEmpty
-        // {
-        //     [MethodImpl(Inline)]
-        //     get => !IsEmpty;
-        // }
 
         [MethodImpl(Inline)]
         public static implicit operator ClrModuleAdapter(R.Module src)

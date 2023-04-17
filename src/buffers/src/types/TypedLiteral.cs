@@ -7,14 +7,14 @@ namespace Z0
     [StructLayout(StructLayout,Pack=1)]
     public readonly record struct TypedLiteral : IDataType<TypedLiteral>
     {
-        public readonly asci64 LiteralName;
+        public readonly Label LiteralName;
 
         public readonly TypeKey Base;
 
         public readonly DataSize Size;
 
         [MethodImpl(Inline)]
-        public TypedLiteral(asci64 literal, TypeKey @base, DataSize size)
+        public TypedLiteral(Label literal, TypeKey @base, DataSize size)
         {
             LiteralName = literal;
             Base = @base;
@@ -24,13 +24,13 @@ namespace Z0
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => LiteralName.IsNull;
+            get => LiteralName.IsEmpty;
         }
 
         public bool IsNonEmpty
         {
             [MethodImpl(Inline)]
-            get => !LiteralName.IsNull;
+            get => LiteralName.IsNonEmpty;
         }
 
         public Hash32 Hash

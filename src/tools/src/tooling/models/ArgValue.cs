@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public record struct ArgValue
+    public record struct ArgValue : IToolArgValue
     {
         readonly dynamic Data;
 

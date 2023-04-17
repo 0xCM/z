@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public record struct ToolCmdArg
+    public record class ToolCmdArg
     {
         public ArgPrefixKind Prefix;
 

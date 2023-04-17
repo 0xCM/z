@@ -13,11 +13,11 @@ namespace Z0
 
         protected static IEnvDb EnvDb => AppSettings.EnvDb();
 
+        protected static AppDb AppDb => AppDb.Service;
+
         protected static IApiCmdRunner CmdRunner => ApiServers.Runner;
         
         ConcurrentDictionary<string, ProjectContext> _Context = new();
-
-        protected static AppDb AppDb => AppDb.Service;
 
         [MethodImpl(Inline)]
         public IProject Project()
