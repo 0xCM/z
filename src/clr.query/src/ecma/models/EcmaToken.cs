@@ -179,8 +179,20 @@ namespace Z0
         public static implicit operator EcmaToken(ModuleReferenceHandle src)
             => EcmaTokens.token(src);
 
-       [MethodImpl(Inline)]
+        [MethodImpl(Inline)]
+        public static implicit operator EcmaToken(FieldDefinitionHandle src)
+            => EcmaTokens.token(src);
+
+        [MethodImpl(Inline)]
         public static implicit operator EcmaToken(MethodDefinitionHandle src)
+            => EcmaTokens.token(src);
+
+        [MethodImpl(Inline)]
+        public static implicit operator EcmaToken(AssemblyReferenceHandle src)
+            => EcmaTokens.token(src);
+
+        [MethodImpl(Inline)]
+        public static implicit operator EcmaToken(AssemblyFileHandle src)
             => EcmaTokens.token(src);
 
         public static EcmaToken Empty

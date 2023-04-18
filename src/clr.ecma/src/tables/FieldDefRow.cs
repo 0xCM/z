@@ -10,6 +10,12 @@ namespace Z0
         public struct FieldDefRow : IEcmaRow<FieldDefRow>
         {
             [Render(12)]
+            public EcmaToken Index;
+
+            [Render(12)]
+            public EcmaToken DeclaringType;
+
+            [Render(12)]
             public EcmaStringKey Name;
 
             [Render(12)]

@@ -22,10 +22,10 @@ namespace Z0
         }
 
         protected AppEventSource Host 
-            => HostType;
+            => GetType();
 
-        public override Type HostType
-            => typeof(H);
+        // public override Type HostType
+        //     => typeof(H);
 
         protected void Babble(string pattern, params object[] args)
             => Channel.Babble(pattern, args);

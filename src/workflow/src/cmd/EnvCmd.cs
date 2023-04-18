@@ -33,10 +33,6 @@ namespace Z0
         void ApiVersion()
             => Channel.Write(ExecutingPart.Assembly.AssemblyVersion());
 
-        [CmdOp("api/script")]
-        void RunAppScript(CmdArgs args)
-            => ApiServers.Runner.RunCommandScript(FS.path(args[0]));
-
         [CmdOp("env/stack")]
         void Stack()
             => Channel.Write(Environment.StackTrace);
@@ -156,6 +152,25 @@ namespace Z0
         {
             var monitor = Channel.ProcessMonitor();
             monitor.Stop();
+        }
+
+        [CmdOp("ecma/test")]
+        void EcmaTests()
+        {
+            var files = ModuleArchives.modules(FS.dir(@"D:\tools\z0\win64")).AssemblyFiles();
+            iter(files, file => {
+
+                using var ecma = Ecma.file(file.Path);
+                var reader = ecma.EcmaReader();
+                var refs = reader.ReadMethodDefRows();
+                iter(refs, r => {
+
+                    Channel.Row($"{r.DeclaringType}::{r.Index}");
+                });
+
+            });
+
+            
         }
     }
 }

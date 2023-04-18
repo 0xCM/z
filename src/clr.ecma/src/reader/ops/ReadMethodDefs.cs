@@ -60,16 +60,16 @@ namespace Z0
             }
         }
 
-        public ReadOnlySpan<MethodRelations> ReadMethodDefRows()
+        public ReadOnlySpan<MethodDefRow> ReadMethodDefRows()
         {
             var src = MethodDefHandles();
             var count = src.Length;
-            var dst = alloc<MethodRelations>(count);
+            var dst = alloc<MethodDefRow>(count);
             Read(src,dst);
             return dst;
         }
 
-        public uint Read(ReadOnlySpan<MethodDefinitionHandle> src, Span<MethodRelations> dst)
+        public uint Read(ReadOnlySpan<MethodDefinitionHandle> src, Span<MethodDefRow> dst)
         {
             var count = (uint)min(src.Length, dst.Length);
             for(var i=0; i<count; i++)
@@ -78,10 +78,11 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public ref MethodRelations Read(MethodDefinitionHandle handle, ref MethodRelations dst)
+        public ref MethodDefRow Read(MethodDefinitionHandle handle, ref MethodDefRow dst)
         {
             var src = MD.GetMethodDefinition(handle);
-            dst.Token = EcmaTokens.token(handle);
+            dst.Index = EcmaTokens.token(handle);
+            dst.DeclaringType = src.GetDeclaringType();
             dst.Attributes = src.Attributes;
             dst.ImplAttributes  = src.ImplAttributes;
             dst.Rva = src.RelativeVirtualAddress;

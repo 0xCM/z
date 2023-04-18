@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.Linq;
-
     using static sys;
 
     public class ApiAssemblies : ClrAssemblySet
@@ -29,7 +27,6 @@ namespace Z0
         {
             var root = FS.path(controller().Location).FolderPath;
             var _modules = root.Files(FileKind.Dll).Where(x => x.FileName.StartsWith("z0."));
-            //var modules = ModuleArchives.modules(root,false).Members().Where(x => FS.managed(x.Path) && !x.Path.FileName.Contains("System.Private.CoreLib"));
             return _modules.Map(x => Assembly.UnsafeLoadFrom(x.Format())).Where(x => x.PartName().IsNonEmpty);
         }
     }

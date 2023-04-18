@@ -26,7 +26,7 @@ namespace Z0
         {
             SvcName = Checkers.name(typeof(T));
             var methods = cdict<string,MethodInfo>();
-            Checkers.methods(HostType,methods);
+            Checkers.methods(GetType(),methods);
             MethodLookup = methods;
             CheckSpecs = MethodLookup.Keys.ToArray();
             Queue = EventQueue.allocate(GetType(), EventRaised);

@@ -6,10 +6,16 @@ namespace Z0
 {
     public struct AssemblyFileInfo
     {
-        public FileUri Name;
+        [Render(12)]
+        public EcmaToken Index;
 
+        [Render(22)]
+        public bool ContainsMetadata;
+
+        [Render(48)]
         public BinaryCode Hash;
 
-        public bool ContainsMetadata;
+        [Render(1)]
+        public FileUri Name;
     }
 }

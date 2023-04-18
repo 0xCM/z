@@ -6,13 +6,14 @@ namespace Z0
 {
     partial class EcmaTables
     {
-        [Record(TableId), StructLayout(LayoutKind.Sequential, Pack=1)]
-        public struct MethodRelations
+        [EcmaRow(TableIndex.MethodDef), StructLayout(LayoutKind.Sequential,Pack=1)]
+        public struct MethodDefRow : IEcmaRow<MethodDefRow>
         {
-            const string TableId = "ecma.methods.relations";
+            [Render(12)]
+            public EcmaToken Index;
 
             [Render(12)]
-            public EcmaToken Token;
+            public EcmaToken DeclaringType;
 
             [Render(12)]
             public Address32 Rva;

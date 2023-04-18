@@ -9,7 +9,7 @@ namespace Z0
     {
         const string TableName = "ecma.fieldinfo";
 
-        public EcmaToken Token;
+        public EcmaToken Index;
 
         public Address32 Offset;
 

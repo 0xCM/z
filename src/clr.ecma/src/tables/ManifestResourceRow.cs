@@ -6,18 +6,17 @@ namespace Z0
 {
     partial class EcmaTables
     {
-        [EcmaRow(TableIndex.ModuleRef), StructLayout(LayoutKind.Sequential, Pack =1)]
-        public struct ModuleRefRow
+        [EcmaRow(TableIndex.ManifestResource), StructLayout(LayoutKind.Sequential,Pack=1)]
+        public struct ManifestResourceRow : IEcmaRow<ManifestResourceRow>
         {
-            public EcmaToken Token;
-
+            [Render(12)]
             public EcmaStringKey Name;
 
-            public ModuleRefRow(EcmaToken token, EcmaStringKey name)
-            {
-                Token = token;
-                Name = name;
-            }
+            [Render(12)]
+            public MemoryAddress Offset;
+
+            [Render(1)]
+            public ManifestResourceAttributes Attributes;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Z0
 
         public IWfChannel Channel {get; private set;}
 
-        public abstract Type HostType {get;}
+        //public virtual Type HostType {get;}
 
         public WfChannel Emitter {get; private set;}
 
@@ -27,9 +27,9 @@ namespace Z0
         public void Init(IWfRuntime wf)
         {
             Wf = wf;
-            Emitter = WfChannel.create(wf, HostType);  
+            Emitter = WfChannel.create(wf, GetType());  
             Channel = Emitter;          
-            var flow = Channel.Creating(HostType);
+            var flow = Channel.Creating(GetType());
             OnInit();
             Initialized();
             Channel.Created(flow);

@@ -7,6 +7,9 @@ namespace Z0
     public struct EcmaAssemblyRef
     {
         [Render(12)]
+        public EcmaToken Index;
+
+        [Render(12)]
         public BinaryCode Token;
 
         [Render(48)]

@@ -19,7 +19,6 @@ namespace Z0
             {
                 ref readonly var handle = ref skip(handles,i);
                 seek(dst,i) = new ModuleRefRow(handle, MD.GetModuleReference(handle).Name);
-
             }
             return dst;
         }

@@ -10,10 +10,10 @@ namespace Z0
         public struct CustomAttribRow : IEcmaRow<CustomAttribRow>
         {
             [Render(12)]
-            public EcmaRowKey Parent;
+            public EcmaToken Parent;
 
             [Render(12)]
-            public EcmaRowKey Constructor;
+            public EcmaToken Constructor;
 
             [Render(12)]
             public EcmaBlobKey Value;

@@ -55,8 +55,7 @@ namespace Z0
         static Type[] tagged(Assembly[] src)
             =>  src.Types().Tagged<CmdAttribute>();
 
-
-        public static void parse(FileUri src, out ApiCmdScript dst)
+        public static void parse(FilePath src, out ApiCmdScript dst)
         {
             var specs = list<ApiCmdSpec>();
             var spec = ApiCmdSpec.Empty;

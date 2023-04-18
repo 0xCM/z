@@ -11,6 +11,7 @@ namespace Z0
         {
             var file = MD.GetAssemblyFile(src);
             var dst = new AssemblyFileInfo();
+            dst.Index = src;
             dst.ContainsMetadata = file.ContainsMetadata;
             dst.Name = new FileUri(String(file.Name));
             dst.Hash = Blob(file.HashValue);

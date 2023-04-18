@@ -9,21 +9,29 @@ namespace Z0
         [EcmaRow(TableIndex.TypeDef), StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct TypeDefRow : IEcmaRow<TypeDefRow>
         {
-            public const string TableId = "ecma.typedefs";
+            [Render(1)]
+            public EcmaToken Index;
 
-            public TypeAttributes Flags;
-
+            [Render(12)]
             public EcmaStringKey TypeName;
 
+            [Render(12)]
             public EcmaStringKey Namespace;
 
+            [Render(16)]
             public TypeLayout Layout;
 
-            public EcmaRowKey Extends;
+            [Render(12)]
+            public EcmaToken BaseType;
 
-            public EcmaRowKey FieldList;
+            [Render(12)]
+            public EcmaToken FieldList;
 
-            public EcmaRowKey MethodList;
+            [Render(12)]
+            public EcmaToken MethodList;
+ 
+            [Render(1)]
+            public TypeAttributes Attributes;
         }       
     }
 }

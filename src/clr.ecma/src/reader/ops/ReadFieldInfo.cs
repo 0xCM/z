@@ -13,7 +13,7 @@ namespace Z0
         {
             var entry = MD.GetFieldDefinition(handle);
             var field = new EcmaFieldInfo();
-            field.Token = EcmaTokens.token(handle);
+            field.Index = handle;
             field.Offset = (uint)entry.GetOffset();
             field.Rva = entry.GetRelativeVirtualAddress();
             field.FieldName = MD.GetString(entry.Name);
@@ -35,19 +35,25 @@ namespace Z0
             return dst;
         }
 
-        [MethodImpl(Inline), Op]
-        public FieldDefRow ReadFieldDefRow(FieldDefinitionHandle handle)
+        public ReadOnlySeq<FieldDefRow> ReadFieldDefRows()
         {
-            var dst = new FieldDefRow();            
-            var def = MD.GetFieldDefinition(handle);
-            dst.Attributes = def.Attributes;
-            var type = MD.GetTypeDefinition(def.GetDeclaringType());
-            dst.Name = def.Name;
-            dst.Sig = def.Signature;
-            dst.Offset = (uint)def.GetOffset();
-            dst.Marshal = def.GetMarshallingDescriptor();
+            var handles = FieldDefHandles();
+            var count = handles.Length;
+            var dst = alloc<FieldDefRow>(count);
+            for(var i=0; i<count; i++)
+            {
+                var handle = skip(handles,i);
+                var def = MD.GetFieldDefinition(handle);
+                ref var row = ref seek(dst,i);
+                row.Index = handle;
+                row.DeclaringType = def.GetDeclaringType();
+                row.Marshal = def.GetMarshallingDescriptor();
+                row.Name = def.Name;
+                row.Attributes = def.Attributes;
+                row.Offset = def.GetOffset();
+                row.Sig = def.Signature;                
+            }
             return dst;
         }
-
     }
 }

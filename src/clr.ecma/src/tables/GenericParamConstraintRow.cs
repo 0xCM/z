@@ -12,14 +12,16 @@ namespace Z0
             /// <summary>
             /// An index into the GenericParam table, specifying to which generic parameter this row refers
             /// </summary>
-            public EcmaRowKey Owner;
+            [Render(12)]
+            public EcmaToken Owner;
 
             /// <summary>
             /// An index into the TypeDef, TypeRef, or TypeSpec tables,
             /// specifying from which class this generic parameter is constrained to derive;
             /// or which interface this generic parameter is constrained to implement
             /// </summary>
-            public EcmaRowKey Constraint;
+            [Render(12)]
+            public EcmaToken Constraint;
         }
     }
 }

@@ -9,8 +9,6 @@ namespace Z0
         [EcmaRow(TableIndex.ExportedType), StructLayout(LayoutKind.Sequential, Pack =1)]
         public struct TypeExportRow : IEcmaRow<TypeExportRow>
         {
-            public const string TableId= "ecma.types.exports";
-
             [Render(12)]
             public EcmaRowKey TypeDefId;
 

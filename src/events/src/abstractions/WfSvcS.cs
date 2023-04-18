@@ -15,7 +15,7 @@ namespace Z0
 
         protected static AppDb AppDb => AppDb.Service;
 
-        protected static IApiCmdRunner CmdRunner => ApiServers.Runner;
+        protected static IApiCmdRunner CmdRunner => ApiCmdRunner.Service();
         
         ConcurrentDictionary<string, ProjectContext> _Context = new();
 

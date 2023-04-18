@@ -9,11 +9,17 @@ namespace Z0
         [EcmaRow(TableIndex.MethodSemantics), StructLayout(LayoutKind.Sequential, Pack=1)]
         public struct MethodSemanticsRow : IEcmaRow<MethodSemanticsRow>
         {
-            public MethodSemanticsAttributes Semantic;
+            [Render(12)]
+            public EcmaToken Index;
 
-            public EcmaRowKey Method;
+            [Render(12)]
+            public EcmaToken Method;
 
-            public EcmaRowKey Association;
+            [Render(12)]
+            public EcmaToken Association;
+
+            [Render(1)]
+            public MethodSemanticsAttributes Semantics;
         }    
     }
 }

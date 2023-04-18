@@ -10,7 +10,10 @@ namespace Z0
         public struct AssemblyRefRow : IEcmaRow<AssemblyRefRow>
         {
             [Render(12)]
-            public EcmaBlobKey Token;
+            public EcmaToken Index;
+
+            [Render(12)]
+            public EcmaBlobKey KeyOrToken;
 
             [Render(12)]
             public EcmaStringKey Name;

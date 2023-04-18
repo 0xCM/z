@@ -16,10 +16,10 @@ namespace Z0
         public ref MemberRefRow ReadMemberRef(MemberReferenceHandle handle, ref MemberRefRow dst)
         {
             var src = MD.GetMemberReference(handle);
-            dst.Token = EcmaTokens.token(handle);
+            dst.Index = EcmaTokens.token(handle);
             dst.Name = src.Name;
-            dst.Parent = EcmaTokens.token(src.Parent);
-            dst.RefKind = (MemberRefKind)src.GetKind();
+            dst.Class = EcmaTokens.token(src.Parent);
+            dst.RefKind = src.GetKind();
             dst.Sig = src.Signature;
             return ref dst;
         }
