@@ -50,7 +50,7 @@ namespace Z0
 
         public void Include(IDbArchive src, bool recurse = false)
         {
-            iter(Archives.modules(src.Root, recurse).Members(), module => {
+            iter(ModuleArchives.modules(src.Root, recurse).Members(), module => {
                 if(module.IsManaged)
                 {
                     try

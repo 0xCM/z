@@ -63,7 +63,7 @@ namespace Z0
 
         void Calc(IDbArchive src)
         {
-            var files = Archives.modules(src.Root).AssemblyFiles();
+            var files = ModuleArchives.modules(src.Root).AssemblyFiles();
             var counter = 0u;
             iter(files, file => {
                 using var ecma = Ecma.file(file.Path);

@@ -11,7 +11,7 @@ namespace Z0
         where F : ToolFlow<F>, new()
     {
         protected static FileIndex index(IDbArchive src)
-            => FS.index(Archives.modules(src).Unmanaged());
+            => FS.index(ModuleArchives.modules(src).Unmanaged());
 
         protected ExecStatus Run(ToolCmd cmd, FilePath dst)
         {

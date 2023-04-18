@@ -1,6 +1,6 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(Files)" />
+    <ProjectReference Include="$(Events)" />
   </ItemGroup>
   <Import Project="$(SlnProps)\usings.props"/>
 </Project>

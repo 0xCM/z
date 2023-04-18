@@ -27,9 +27,10 @@ namespace Z0
 
         static Assembly[] components()        
         {
-            var root = FS.path(controller().Location).FolderPath;                    
-            var modules = Archives.modules(root,false).Members().Where(x => FS.managed(x.Path) && !x.Path.FileName.Contains("System.Private.CoreLib"));
-            return modules.Where(m => m.FileName.StartsWith("z0.")).Map(x => Assembly.UnsafeLoadFrom(x.Path.Format())).Where(x => x.PartName().IsNonEmpty);
+            var root = FS.path(controller().Location).FolderPath;
+            var _modules = root.Files(FileKind.Dll).Where(x => x.FileName.StartsWith("z0."));
+            //var modules = ModuleArchives.modules(root,false).Members().Where(x => FS.managed(x.Path) && !x.Path.FileName.Contains("System.Private.CoreLib"));
+            return _modules.Map(x => Assembly.UnsafeLoadFrom(x.Format())).Where(x => x.PartName().IsNonEmpty);
         }
     }
 }

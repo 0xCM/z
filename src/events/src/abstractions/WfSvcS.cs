@@ -21,7 +21,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public IProject Project()
-            => Projects.project();
+            => ProjectCache.project();
 
         protected ProjectContext ProjectContext()
         {
@@ -49,9 +49,9 @@ namespace Z0
         void LoadProjectSources(IProject src)
         {
             var loading = Channel.Running($"Loading project from {src.Root}");
-            Projects.project(src);
+            ProjectCache.project(src);
             Files(src.Files().Array().Sort());
-            Channel.Ran(loading, $"Project={Projects.project().Root.Name}");
+            Channel.Ran(loading, $"Project={ProjectCache.project().Root.Name}");
         }
 
         public new void Babble(string pattern, params object[] args)

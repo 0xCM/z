@@ -87,7 +87,7 @@ namespace Z0
         }
 
         public static AssemblyFiles assemblies(IWfChannel channel, IDbArchive src)
-            => new (src,Archives.modules(src).AssemblyFiles().Array());
+            => new (src, ModuleArchives.modules(src).AssemblyFiles().Array());
             
         public static MetadataMemory memory(MemorySeg src, AssemblyKey assembly)  
             => new MetadataMemory(src, assembly);

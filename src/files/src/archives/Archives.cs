@@ -127,13 +127,6 @@ namespace Z0
             return Lines.map(intervals.ToArray());
         }
 
-        public static IModuleArchive modules(FolderPath src, bool recurse = true)
-            => new ModuleArchive(src, recurse);
-
-        public static IModuleArchive modules(IDbArchive src, bool recurse = true)
-            => new ModuleArchive(src.Root, recurse);
-
-
         [Op]
         public static string format(ListedFiles src)
         {
