@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     partial class Tooling
     {
         static readonly EnumParser<ArgPrefixKind> ArgPrefixParser = new();

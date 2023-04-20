@@ -10,8 +10,6 @@ namespace Z0
 
         IEnumerable<ExeModule> Exe();
 
-        //IEnumerable<FilePath> AssemblyPaths();
-
         IEnumerable<AssemblyFile> AssemblyFiles();
 
         IEnumerable<DllModule> Dll();

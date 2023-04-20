@@ -43,7 +43,7 @@ namespace Z0
             Source = src;
             Stream = File.OpenRead(src.Name);
             PE = new PEReader(Stream);     
-            Tables = PeTables.load(this);
+            Tables = PeTables.load(src, PE);
         }
 
         public readonly FilePath Source;
@@ -88,9 +88,6 @@ namespace Z0
             PE?.Dispose();
             Stream?.Dispose();
         }
-
-        public CoffModuleInfo ModuleInfo()
-            => new CoffModuleInfo(Source, Tables.PeInfo, Tables.CoffHeader, Tables.CorHeader, Tables.SectionHeaders);
 
         public PEHeaders PeHeaders
         {

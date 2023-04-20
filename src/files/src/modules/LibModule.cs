@@ -26,7 +26,6 @@ namespace Z0
 
         public FileExt DefaultExt
             =>  FS.Lib;
-
         public string Format()
             => Path.Format();
 

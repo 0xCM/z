@@ -8,13 +8,7 @@ namespace Z0
 
     public class FileIndex
     {
-        public static FileIndex create()
-            => new();
-            
-        public static FileTypes types(params Assembly[] src)
-            => new (src.Types().Tagged<FileTypeAttribute>().Concrete().Map(x => (IFileType)Activator.CreateInstance(x)).ToHashSet());     
-
-        public static FileIndexEntry entry(MemoryFile src)
+        static FileIndexEntry entry(MemoryFile src)
         {
             var hash = FS.hash(src);
             return new FileIndexEntry{
@@ -23,7 +17,7 @@ namespace Z0
             };
         }
 
-        public static FileIndexEntry entry(FilePath src)
+        static FileIndexEntry entry(FilePath src)
         {
             var hash = FS.hash(src);
             var dst = new FileIndexEntry();
@@ -55,7 +49,7 @@ namespace Z0
 
         ReadOnlySeq<FileIndexEntry> SortedEntries;
 
-        public FileIndex()
+        internal FileIndex()
         {
 
         }

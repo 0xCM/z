@@ -19,8 +19,8 @@ namespace Z0
             if(options.EmitApiMetadump)
                 EmitDump(Channel, src,dst);
 
-            if(options.EmitSectionHeaders)
-                EmitSectionHeaders(sys.controller().RuntimeArchive(), dst);
+            // if(options.EmitSectionHeaders)
+            //     EmitSectionHeaders(sys.controller().RuntimeArchive(), dst);
 
             if(options.EmitMsilMetadata)
                 EmitMsilMetadata(src, dst);

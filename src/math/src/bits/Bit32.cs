@@ -10,7 +10,7 @@ namespace Z0
     /// An anti-succinct representation of a bit
     /// </summary>
     [ApiHost]
-    public readonly struct Bit32 : ITextual
+    public readonly struct Bit32
     {
         public const char Zero = '0';
 

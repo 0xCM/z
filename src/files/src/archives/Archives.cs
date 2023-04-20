@@ -4,12 +4,18 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     using static sys;
 
     [ApiHost]
     public class Archives : Stateless<Archives>
     {                
+        public static FileIndex index(IEnumerable<FilePath> src)
+        {
+            var dst = new FileIndex();
+            dst.Include(src);
+            return dst.Seal();
+        }
+
         public static ItemList<uint,string> list(IWfChannel channel, FilePath src)
             => list(channel, src, x => (Outcome<string>)text.trim(x));
 
@@ -41,10 +47,10 @@ namespace Z0
         }
 
         public static FileIndex index(IDbArchive src, params FileExt[] ext)
-            => FS.index(src.Files(true,ext));
+            => index(src.Files(true,ext));
 
         public static FileIndex index(IDbArchive src, params FileKind[] kinds)
-            => FS.index(src.Files(true,kinds));
+            => index(src.Files(true, kinds));
 
         public static FolderIndex index(IWfChannel channel, FolderQuery q)
         {
@@ -60,7 +66,7 @@ namespace Z0
             var flow = channel.Running($"Indexing {q.Root}");
             var counter = 0u;
             var matcher = FS.matcher(q);
-            var index = FileIndex.create();
+            var index = new FileIndex();
             void Include(FilePath src)
             {
                 index.Include(src).OnSuccess(entry => {
@@ -92,12 +98,6 @@ namespace Z0
             return channel.TableEmit(index.Sorted(), target);
         }
 
-        public static FileTypes FileTypes(params Assembly[] src)
-            => new (src.Types().Tagged<FileTypeAttribute>().Concrete().Map(x => (IFileType)Activator.CreateInstance(x)).ToHashSet());     
-
-        public static IDbArchive archive(Timestamp ts, DbArchive dst)
-            => dst.Scoped(ts.Format());
-
         public static LineMap<string> map<T>(Index<TextLine> lines, Index<T> relations)
             where T : struct, ILineRelations<T>
         {
@@ -125,23 +125,6 @@ namespace Z0
             }
 
             return Lines.map(intervals.ToArray());
-        }
-
-        [Op]
-        public static string format(ListedFiles src)
-        {
-            var dst = text.emitter();
-            render(src,dst);
-            return dst.Emit();
-        }
-
-        [Op]
-        static void render(ListedFiles src, ITextEmitter dst)
-        {
-            var formatter = CsvTables.formatter<ListedFile>();
-            dst.AppendLine(formatter.FormatHeader());
-            for(var i=0u; i<src.Count; i++)
-                dst.AppendLine(formatter.Format(src[i]));
         }
 
         public static ListedFile listing(FilePath src)
@@ -209,62 +192,37 @@ namespace Z0
             return sys.start(run);
         }
 
-        [Parser]
-        public static bool parse(string src, out FilePoint dst)
-        {
-            dst = FilePoint.Empty;
-            var indices = text.indices(src,Chars.Colon);
-            if(indices.Length < 2)
-                return false;
+        // public static FileName timestamped(string name, FileExt ext)
+        //     => FS.file(string.Format("{0}.{1}", name, (sys.timestamp()).Format()),ext);
 
-            var j = indices.Length -1;
-            ref readonly var i0 = ref indices[j-1];
-            ref readonly var i1 = ref indices[j];
-            var l = text.inside(src,i0,i1);
-            var c = text.right(src, i1);
-            if(uint.TryParse(l, out var line) && uint.TryParse(c, out var col))
-            {
-                var loc = (line,col);
-                var path = FS.path(text.left(src,i0));
-                dst = new FilePoint(path,loc);
-            }
-            return true;
-        }
+        // [Op]
+        // public static FilePath timestamped(FilePath src)
+        // {
+        //     var name = src.FileName.WithoutExtension;
+        //     var ext = src.Ext;
+        //     var stamped = FS.file(string.Format("{0}.{1}.{2}", name, sys.timestamp(), ext));
+        //     return src.FolderPath + stamped;
+        // }
 
-        public static string identifier(FolderPath src)
-            => FS.identifier(src);
+        // public static Outcome timestamp(FolderPath src, out Timestamp dst)
+        // {
+        //     dst = Timestamp.Zero;
+        //     if(src.IsEmpty)
+        //         return false;
 
-        public static FileName timestamped(string name, FileExt ext)
-            => FS.file(string.Format("{0}.{1}", name, (sys.timestamp()).Format()),ext);
+        //     var fmt = src.Format(PathSeparator.FS);
+        //     var idx = fmt.LastIndexOf(Chars.FSlash);
+        //     if(idx == NotFound)
+        //         return false;
 
-        [Op]
-        public static FilePath timestamped(FilePath src)
-        {
-            var name = src.FileName.WithoutExtension;
-            var ext = src.Ext;
-            var stamped = FS.file(string.Format("{0}.{1}.{2}", name, sys.timestamp(), ext));
-            return src.FolderPath + stamped;
-        }
-
-        public static Outcome timestamp(FolderPath src, out Timestamp dst)
-        {
-            dst = Timestamp.Zero;
-            if(src.IsEmpty)
-                return false;
-
-            var fmt = src.Format(PathSeparator.FS);
-            var idx = fmt.LastIndexOf(Chars.FSlash);
-            if(idx == NotFound)
-                return false;
-
-            var outcome = Timing.parse(fmt.RightOfIndex(idx), out dst);
-            if(outcome)
-            {
-                return true;
-            }
-            else
-                return(false, outcome.Message);
-        }        
+        //     var outcome = Timing.parse(fmt.RightOfIndex(idx), out dst);
+        //     if(outcome)
+        //     {
+        //         return true;
+        //     }
+        //     else
+        //         return(false, outcome.Message);
+        // }        
 
         public static string name(FileIndexKind kind)
             => kind switch {

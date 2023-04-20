@@ -13,7 +13,7 @@ namespace Z0
             => create(AppDb.Ts);
 
         public static IApiPack create(Timestamp ts)
-            => new ApiPack(Archives.archive(ts, AppDb.Service.Capture()).Root, ts);
+            => new ApiPack(FileStamps.archive(ts, AppDb.Service.Capture()).Root, ts);
             
         public static ReadOnlySeq<IApiPack> discover()
         {

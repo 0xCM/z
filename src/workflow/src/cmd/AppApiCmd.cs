@@ -269,10 +269,9 @@ namespace Z0
         }
 
         [CmdOp("files/types")]
-        void FileTypes()
+        void ShowFileTypes()
         {
-            var src = ApiCatalog.catalog().Assemblies;
-            var types = Archives.FileTypes(src);
+            var types = FileTypes.discover(ApiCatalog.catalog().Assemblies);
             iter(types, t => {
                 Channel.Row(t.Format());
             });

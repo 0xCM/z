@@ -11,7 +11,7 @@ namespace Z0
         where F : ToolFlow<F>, new()
     {
         protected static FileIndex index(IDbArchive src)
-            => FS.index(ModuleArchives.modules(src).Unmanaged());
+            => Archives.index(ModuleArchives.modules(src).Unmanaged());
 
         protected ExecStatus Run(ToolCmd cmd, FilePath dst)
         {
@@ -36,7 +36,7 @@ namespace Z0
             if(args.IsNonEmpty)
             {
                 var archive = FS.archive(args[0]);
-                var index = FS.index(archive.Files().Where(Include));
+                var index = Archives.index(archive.Files().Where(Include));
                 foreach(var file in index.Distinct())
                     yield return file;
             }

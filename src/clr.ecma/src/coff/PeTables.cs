@@ -8,15 +8,16 @@ namespace Z0
 
     public class PeTables
     {
-        public static PeTables load(PeReader src)
+        public static PeTables load(FilePath path, PEReader reader)
         {
-            var dst = new PeTables();
-            dst._PeInfo = peinfo(src);
-            dst._Directories = directories(src);
-            dst._SectionHeaders = sections(src);
-            dst._CoffHeader = coff(src.PE);        
-            dst._CorHeader = cor(src.PE.PEHeaders);
-            dst._DirectoryRows = rows(src.Source.FileName, dst.Directories);
+            var dst = new PeTables(path);
+            var dirs = directories(reader);
+            dst._PeInfo = peinfo(path, reader);
+            dst._Directories = dirs;
+            dst._SectionHeaders = sections(path,reader);
+            dst._CoffHeader = coff(reader);        
+            dst._CorHeader = cor(reader.PEHeaders);
+            dst._DirectoryRows = rows(path.FileName, dst.Directories);
             return dst;
         }
 
@@ -32,23 +33,35 @@ namespace Z0
 
         ReadOnlySeq<PeDirectoryRow> _DirectoryRows;
 
+        public readonly FilePath Source;
+
         [MethodImpl(Inline)]
-        public PeTables()
+        public PeTables(FilePath path)
         {
-            
+            Source = path;
         }
 
-        public ref readonly ReadOnlySeq<SectionHeaderRow> SectionHeaders => ref _SectionHeaders;
 
-        public ReadOnlySpan<PeDirectoryEntry> Directories => sys.recover<PeDirectoryEntry>(sys.bytes(_Directories));
+        public CoffModuleInfo ModuleInfo()
+            => new CoffModuleInfo(Source, PeInfo, CoffHeader, CorHeader, SectionHeaders);
+
+        public ref readonly ReadOnlySeq<SectionHeaderRow> SectionHeaders 
+            => ref _SectionHeaders;
+
+        public ReadOnlySpan<PeDirectoryEntry> Directories 
+            => sys.recover<PeDirectoryEntry>(sys.bytes(_Directories));
         
-        public ref readonly ReadOnlySeq<PeDirectoryRow> DirectoryRows => ref _DirectoryRows;
+        public ref readonly ReadOnlySeq<PeDirectoryRow> DirectoryRows 
+            => ref _DirectoryRows;
         
-        public ref readonly CoffHeader CoffHeader => ref _CoffHeader;
+        public ref readonly CoffHeader CoffHeader 
+            => ref _CoffHeader;
 
-        public ref readonly PeCorHeader CorHeader => ref _CorHeader;
+        public ref readonly PeCorHeader CorHeader 
+            => ref _CorHeader;
 
-        public ref readonly PeFileInfo PeInfo => ref _PeInfo;
+        public ref readonly PeFileInfo PeInfo 
+            => ref _PeInfo;
 
         static ReadOnlySeq<PeDirectoryRow> rows(FileName file,  ReadOnlySpan<PeDirectoryEntry> src)
         {
@@ -80,9 +93,9 @@ namespace Z0
             return dst;
         }
 
-        static ReadOnlySeq<SectionHeaderRow> sections(PeReader src)
+        static ReadOnlySeq<SectionHeaderRow> sections(FilePath src, PEReader reader)
         {
-            var headers = src.PE.PEHeaders;
+            var headers = reader.PEHeaders;
             var buffer = sys.empty<SectionHeaderRow>();
             if(headers != null)
             {
@@ -97,7 +110,7 @@ namespace Z0
                         ref readonly var section = ref skip(sections,i);
                         ref var dst = ref seek(buffer,i);
                         dst.Seq = i;
-                        dst.File = src.Source.FileName;
+                        dst.File = src.FileName;
                         dst.SectionFlags = section.SectionCharacteristics;
                         dst.SectionName = section.Name;
                         dst.SectionBase = (Address32)section.PointerToRawData;
@@ -130,17 +143,16 @@ namespace Z0
             return dst;
         }
 
-        static PeFileInfo peinfo(PeReader src)
+        static PeFileInfo peinfo(FilePath src, PEReader reader)
         {
-            var PE = src.PE;
             var dst = new PeFileInfo();
-            if(PE.PEHeaders != null)
+            if(reader.PEHeaders != null)
             {            
-                var coff = PE.PEHeaders.CoffHeader;
-                dst.File = src.Source.FileName;
+                var coff = reader.PEHeaders.CoffHeader;
+                dst.File = src.FileName;
                 dst.Machine = coff.Machine;
                 dst.Characteristics = coff.Characteristics;
-                var pe = PE.PEHeaders.PEHeader;
+                var pe = reader.PEHeaders.PEHeader;
                 if(pe != null)
                 {
                     dst.ImageBase = pe.ImageBase;
@@ -154,10 +166,10 @@ namespace Z0
             return dst;
         }
 
-        static PeDirectoryEntries directories(PeReader src)
+        static PeDirectoryEntries directories(PEReader reader)
         {
             var dst = new PeDirectoryEntries();
-            var pe = src.PE.PEHeaders.PEHeader;
+            var pe = reader.PEHeaders.PEHeader;
             if(pe != null)
             {
                 dst.ExportTable = pe.ExportTableDirectory;

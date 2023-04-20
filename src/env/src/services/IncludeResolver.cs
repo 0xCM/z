@@ -19,7 +19,7 @@ namespace Z0
         public IncludeResolver(EnvVar<EnvPath> paths)
         {
             Folders = paths.Value.Array();
-            iter(Folders, path => Index.TryAdd(path, FS.index(path.EnumerateFiles(true))), true);
+            iter(Folders, path => Index.TryAdd(path, Archives.index(path.EnumerateFiles(true))), true);
             _Resolutions = (from f in Folders from entry in Index.Values from path in entry.Paths select path).Array();
         }
 
