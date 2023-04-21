@@ -221,7 +221,7 @@ namespace Z0
         void EnvGen(CmdArgs args)
         {
             var env = new EnvId(args[0].Value);
-            var report = Env.load(AppSettings.EnvDb(), env);
+            var report = EnvReports.load(AppSettings.EnvDb(), env);
             iter(report.Tools, t => Channel.Row(t.Name));
             // var cg = lang.Ts.Generator(Wf);
             // var dst = FS.dir(args[1].Value);

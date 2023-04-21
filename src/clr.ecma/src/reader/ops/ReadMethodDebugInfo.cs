@@ -5,13 +5,10 @@
 namespace Z0
 {
     using static sys;
+    using static Ecma;
 
     partial class EcmaReader
     {
-        [MethodImpl(Inline), Op]
-        public MethodDebugInformation ReadMethodDebugInfo(MethodDebugInformationHandle src)
-            => MD.GetMethodDebugInformation(src);
-        
         public ReadOnlySeq<MethodDebugInfo> ReadMethodDebugInfo()
         {
             var handles = MethodDebugInfoHandles();
@@ -26,5 +23,9 @@ namespace Z0
             }
             return buffer;
         }
+
+        [MethodImpl(Inline), Op]
+        public MethodDebugInformation ReadMethodDebugInfo(MethodDebugInformationHandle src)
+            => MD.GetMethodDebugInformation(src);        
     }
 }

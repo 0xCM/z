@@ -8,10 +8,9 @@ namespace Z0
 
     using static sys;
     using static Bytes;
-    using static EcmaModels;
     
     [ApiHost]
-    public class Ecma : WfSvc<Ecma>
+    public partial class Ecma : WfSvc<Ecma>
     {   
         public static ReadOnlySpan<MsilRow> msil(IWfChannel channel, AssemblyFile src)     
         {
@@ -57,7 +56,7 @@ namespace Z0
         public static AssemblyKey key(Assembly src)
             => Ecma.reader(src).AssemblyKey();
 
-        public static MemberKey key(CompositeDispenser dispenser, EcmaMethodDef src)
+        public static MemberKey key(CompositeDispenser dispenser, MethodDef src)
             => new (src.AssemblyName, src.Token, dispenser.String(src.Namespace), dispenser.String(src.DeclaringType), dispenser.String(src.Name));
 
         public static MemberKey key(CompositeDispenser dispenser, EcmaMember src)
@@ -191,13 +190,13 @@ namespace Z0
         public static EcmaFile file(FilePath src)
             => EcmaFile.open(src);
 
-        public static IEnumerable<EcmaTables.AssemblyRefRow> refs(FilePath src)
+        public static IEnumerable<AssemblyRefRow> refs(FilePath src)
         {
             using var ecma = file(src);
             return ecma.EcmaReader().ReadAssemblyRefRows();            
         }
 
-        public static ReadOnlySeq<EcmaTables.AssemblyRefRow> refs(Assembly src)
+        public static ReadOnlySeq<AssemblyRefRow> refs(Assembly src)
             => EcmaReader.create(src).ReadAssemblyRefRows();
 
         [Op]
@@ -224,79 +223,6 @@ namespace Z0
             }, true);
             return dst.Array().Sort();
         }
-
-        // public ReadOnlySeq<EcmaDependencySet> CalcDependencies(AssemblyIndex index)
-        // {
-        //     var deps = bag<EcmaDependencySet>();
-        //     var managed = bag<ManagedDependency>();
-        //     var native = bag<NativeDependency>();
-        //     iter(index.Distinct(), entry => {
-        //         using var file = Ecma.file(entry.Path);
-        //         var set = CalcDependencies(file);
-        //         managed.AddRange(set.ManagedDependencies);
-        //         native.AddRange(set.NativeDependencies);
-        //         deps.Add(set);                                
-        //     },true);
-
-        //     return deps.Array().Sort();
-        // }
-
-        // public EcmaDependencySet CalcDependencies(EcmaFile file)
-        // {
-        //     var reader = Ecma.reader(file);
-        //     var dst = new EcmaDependencySet();
-        //     dst.SourcePath = file.Path;
-        //     dst.SourceName = reader.AssemblyName();
-        //     dst.SourceVersion = dst.SourceName.Version;
-        //     dst.ManagedDependencies = CalcManagedDeps(file.Path, reader);
-        //     dst.NativeDependencies = CalcNativeDeps(file.Path, reader);
-        //     return dst;
-        // }
-
-        // static ReadOnlySeq<NativeDependency> CalcNativeDeps(FilePath path, EcmaReader reader)
-        // {
-        //     var native = reader.ModuleRefHandles();
-        //     var count = native.Length;
-        //     var dst = alloc<NativeDependency>(count);
-        //     for(var i=0; i<native.Length; i++)
-        //         seek(dst,i) = CalcNativeDependency(path, reader, skip(native,i));
-        //     return dst;
-        // }
-
-        // static ReadOnlySeq<ManagedDependency> CalcManagedDeps(FilePath path, EcmaReader reader)
-        // {
-        //     var managed = reader.AssemblyRefHandles();
-        //     var count = managed.Length;
-        //     var dst = alloc<ManagedDependency>(count);
-        //     var j=0u;
-        //     for(var i=0; i<managed.Length; i++, j++)
-        //         seek(dst,j) = CalcManagedDependency(path, reader, skip(managed,i));
-        //     return dst;
-        // }
-
-        // static ManagedDependency CalcManagedDependency(FilePath path, EcmaReader reader, AssemblyReferenceHandle handle)
-        // {
-        //     var src = reader.MetadataReader.GetAssemblyReference(handle);            
-        //     var dst = new ManagedDependency();
-        //     dst.SourceName = reader.AssemblyName();
-        //     dst.SourceVersion = dst.SourceName.Version;
-        //     dst.SourceKeyToken = u64(reader.AssemblyName().GetPublicKeyToken());
-        //     dst.TargetName = src.GetAssemblyName();
-        //     dst.TargetVersion = src.Version;
-        //     dst.TargetKeyToken = u64(reader.Blob(src.PublicKeyOrToken).View);
-        //     return dst;
-        // }
-
-        // static NativeDependency CalcNativeDependency(FilePath path, EcmaReader reader, ModuleReferenceHandle handle)
-        // {
-        //     var src = reader.MetadataReader.GetModuleReference(handle);
-        //     var dst = new NativeDependency();
-        //     dst.SourceName = reader.AssemblyName();
-        //     dst.SourceVersion = dst.SourceName.Version;
-        //     dst.SourceKeyToken = u64(reader.AssemblyName().GetPublicKeyToken());
-        //     dst.TargetName = reader.String(src.Name).ToLower();
-        //     return dst;
-        // }
 
         public void EmitReports(AssemblyIndex index, IDbArchive dst)
         {

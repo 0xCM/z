@@ -14,30 +14,6 @@ namespace Z0
         public static PeReader create(FilePath src)
             => new PeReader(src);
 
-        public static bool create(FilePath src, out PeReader dst)
-        {
-            var stream = File.OpenRead(src.Name);
-            try
-            {                
-                var reader = new PEReader(stream, PEStreamOptions.PrefetchMetadata);
-                dst = new PeReader(src, stream, reader);
-                return true;
-            }
-            catch(Exception)
-            {
-                stream.Dispose();
-                dst = default;
-                return false;
-            }
-        }
-
-        PeReader(FilePath src, FileStream stream, PEReader reader)
-        {
-            Source = src;
-            Stream = stream;
-            PE = reader;
-        }
-
         PeReader(FilePath src)
         {
             Source = src;
@@ -100,6 +76,23 @@ namespace Z0
 
         public ref readonly PeFileInfo PeInfo() 
             => ref Tables.PeInfo;
+
+        /// <summary>
+        /// Get the index in the image byte array corresponding to the RVA
+        /// </summary>
+        /// <param name="reader">PE reader representing the executable image to parse</param>
+        /// <param name="rva">The relative virtual address</param>
+        public int GetOffset(Address32 rva)
+        {
+            var index = PeHeaders.GetContainingSectionIndex((int)rva);
+            var result = -1;
+            if (index > 0)
+            {
+                var section = PE.PEHeaders.SectionHeaders[index];
+                result = (int)(rva - (Address32)section.VirtualAddress + (Address32)section.PointerToRawData);
+            }
+            return result;
+        }
 
         /// <summary>
         /// Determines whether the source image is r2r

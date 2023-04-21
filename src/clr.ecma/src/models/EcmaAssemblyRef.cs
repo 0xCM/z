@@ -4,27 +4,30 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public struct EcmaAssemblyRef
+    partial class Ecma
     {
-        [Render(12)]
-        public EcmaToken Index;
+        public record class AssemblyRef
+        {
+            [Render(12)]
+            public EcmaToken Index;
 
-        [Render(12)]
-        public BinaryCode Token;
+            [Render(12)]
+            public BinaryCode Token;
 
-        [Render(48)]
-        public @string Name;
+            [Render(48)]
+            public @string Name;
 
-        [Render(16)]
-        public AssemblyVersion Version;
+            [Render(16)]
+            public AssemblyVersion Version;
 
-        [Render(16)]
-        public @string Culture;
-        
-        [Render(24)]
-        public BinaryCode Hash;
+            [Render(16)]
+            public @string Culture;
+            
+            [Render(24)]
+            public BinaryCode Hash;
 
-        [Render(1)]
-        public AssemblyFlags Flags;
+            [Render(1)]
+            public AssemblyFlags Flags;
+        }
     }
 }

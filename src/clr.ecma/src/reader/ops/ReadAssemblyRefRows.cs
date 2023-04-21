@@ -5,13 +5,14 @@
 namespace Z0
 {
     using static sys;
+    using static Ecma;
 
     partial class EcmaReader
     {
-        public EcmaTables.AssemblyRefRow ReadAssemblyRefRow(AssemblyReferenceHandle handle)
+        public AssemblyRefRow ReadAssemblyRefRow(AssemblyReferenceHandle handle)
         {
             var src = MD.GetAssemblyReference(handle);
-            var dst = default(EcmaTables.AssemblyRefRow);
+            var dst = default(AssemblyRefRow);
             dst.Index = handle;
             dst.Culture = src.Culture;
             dst.Flags = src.Flags;
@@ -23,19 +24,19 @@ namespace Z0
         }
 
         [Op]
-        public ReadOnlySeq<EcmaTables.AssemblyRefRow> ReadAssemblyRefRows()
+        public ReadOnlySeq<AssemblyRefRow> ReadAssemblyRefRows()
         {
             var src = AssemblyRefHandles();
-            var buffer = alloc<EcmaTables.AssemblyRefRow>(src.Length);
+            var buffer = alloc<AssemblyRefRow>(src.Length);
             for(var i=0; i<src.Length; i++)
                 seek(buffer,i) = ReadAssemblyRefRow(skip(src,i));            
             return buffer;
         }
 
-        public EcmaAssemblyRef ReadAssemblyRef(AssemblyReferenceHandle handle)
+        public AssemblyRef ReadAssemblyRef(AssemblyReferenceHandle handle)
         {
             var row = ReadAssemblyRefRow(handle);
-            var dst = new EcmaAssemblyRef();
+            var dst = new AssemblyRef();
             dst.Index = handle;
             dst.Token = BlobArray(row.KeyOrToken);
             dst.Culture = String(row.Culture);
@@ -46,14 +47,12 @@ namespace Z0
             return dst;
         }
 
-        public ReadOnlySeq<EcmaAssemblyRef> ReadAssemblyRefs()
+        public ReadOnlySeq<AssemblyRef> ReadAssemblyRefs()
         {
             var src = AssemblyRefHandles();
-            var dst = alloc<EcmaAssemblyRef>(src.Length);
+            var dst = alloc<AssemblyRef>(src.Length);
             for(var i=0; i<src.Length; i++)
-            {
                 seek(dst,i) = ReadAssemblyRef(skip(src,i));
-            }
             return dst;
         }
     }

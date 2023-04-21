@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static EcmaReader;
+    
     partial class XTend
     {
         const TypeAttributes NestedMask = (TypeAttributes)0x00000006;

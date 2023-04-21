@@ -5,18 +5,19 @@
 namespace Z0
 {
     using static sys;
+    using static Ecma;
 
     partial class EcmaEmitter
     {        
         public void EmitAssemblyRefs(ReadOnlySpan<Assembly> src, IDbArchive dst)
-            => EmitAssemblyRefs(src, dst.Table<EcmaTables.AssemblyRefRow>());
+            => EmitAssemblyRefs(src, dst.Table<AssemblyRefRow>());
         
         public void EmitAssemblyRefs(ReadOnlySpan<Assembly> src, FilePath dst)
         {
             var count = src.Length;
             var counter = 0u;
-            var flow = Channel.EmittingTable<EcmaTables.AssemblyRefRow>(dst);
-            var formatter = CsvTables.formatter<EcmaTables.AssemblyRefRow>();
+            var flow = Channel.EmittingTable<AssemblyRefRow>(dst);
+            var formatter = CsvTables.formatter<AssemblyRefRow>();
             using var writer = dst.Writer();
             writer.WriteLine(formatter.FormatHeader());
             for(var i=0; i<count; i++)

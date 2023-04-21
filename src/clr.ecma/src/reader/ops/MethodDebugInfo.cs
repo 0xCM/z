@@ -4,10 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public struct MethodDebugInfo
+    partial class Ecma
     {
-        public ImmutableArray<string> Sig;
+        public struct MethodDebugInfo
+        {
+            public ImmutableArray<string> Sig;
 
-        public BinaryCode SequencePoints;
+            public BinaryCode SequencePoints;
+        }
+
     }
 }

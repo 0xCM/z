@@ -47,7 +47,7 @@ namespace Z0
 
         [CmdOp("env/reports")]
         void EmitEnv(CmdArgs args)
-            => Env.EmitReports(Channel);
+            => EnvReports.emit(Channel, EnvDb);
 
         [CmdOp("env/pid")]
         void ProcessId()
@@ -167,10 +167,7 @@ namespace Z0
 
                     Channel.Row($"{r.DeclaringType}::{r.Index}");
                 });
-
-            });
-
-            
+            });           
         }
     }
 }

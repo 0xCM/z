@@ -61,7 +61,7 @@ namespace Z0
             => Hash;
 
         public string Format()
-            => $"{Name}/{Version}";
+            => $"{Name}.{Version}";
         
         public override string ToString()
             => Format();

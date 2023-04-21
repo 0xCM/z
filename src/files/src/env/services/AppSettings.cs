@@ -48,7 +48,6 @@ namespace Z0
             return Instance;
         }
 
-
         public IDbArchive EnvRoot()
             => _EnvRoot();
 

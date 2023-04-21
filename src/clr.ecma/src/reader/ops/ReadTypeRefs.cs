@@ -4,8 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static EcmaTables;
     using static sys;
+    using static Ecma;
+
     partial class EcmaReader
     {            
         public ReadOnlySeq<TypeRefRow> ReadTypeRefs()

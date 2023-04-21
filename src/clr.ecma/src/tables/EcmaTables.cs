@@ -4,17 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public partial class EcmaTables
+    public class EcmaRowAttribute : RecordAttribute
     {
-        public class EcmaRowAttribute : RecordAttribute
+        public EcmaRowAttribute(TableIndex kind)
+            : base($"Ecma.{kind}")
         {
-            public EcmaRowAttribute(TableIndex kind)
-                : base($"Ecma.{kind}")
-            {
-                Kind = kind;
-            }                
+            Kind = kind;
+        }                
 
-            public readonly TableIndex Kind;
-        }        
-    }
+        public readonly TableIndex Kind;
+    }        
 }

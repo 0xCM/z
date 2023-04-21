@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using static Ecma;
 
     using System.Linq;
 
@@ -37,7 +38,7 @@ namespace Z0
         public static Address32 offset(MetadataReader reader, UserStringHandle handle)
             => (Address32)reader.GetHeapOffset(handle);
 
-        public static IEnumerable<EcmaTables.AssemblyRefRow> refs(IEnumerable<AssemblyFile> src)
+        public static IEnumerable<AssemblyRefRow> refs(IEnumerable<AssemblyFile> src)
         {
             foreach(var file in src.AsParallel())
             {

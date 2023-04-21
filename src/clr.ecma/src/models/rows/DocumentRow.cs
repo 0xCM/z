@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class EcmaTables
+    partial class Ecma
     {
         [EcmaRow(TableIndex.Document), StructLayout(LayoutKind.Sequential,Pack=1)]
         public struct DocumentRow : IEcmaRow<DocumentRow>

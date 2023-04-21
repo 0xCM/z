@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class EcmaTables
+    partial class Ecma
     {
         [EcmaRow(TableIndex.TypeDef), StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct TypeDefRow : IEcmaRow<TypeDefRow>
@@ -19,7 +19,7 @@ namespace Z0
             public EcmaStringKey Namespace;
 
             [Render(16)]
-            public TypeLayout Layout;
+            public Ecma.TypeLayout Layout;
 
             [Render(12)]
             public EcmaToken BaseType;

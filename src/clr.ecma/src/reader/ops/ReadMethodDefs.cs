@@ -6,6 +6,7 @@ namespace Z0
 {
     using static sys;
     using static EcmaTables;
+    using static Ecma;
 
     partial class EcmaReader
     {
@@ -37,12 +38,12 @@ namespace Z0
             return dst.Array().Sort();
         }
 
-        public IEnumerable<EcmaMethodDef> ReadMethodDefs()
+        public IEnumerable<MethodDef> ReadMethodDefs()
         {
             foreach(var handle in MD.MethodDefinitions)
             {
                 var src = MD.GetMethodDefinition(handle);
-                var dst = new EcmaMethodDef();
+                var dst = new MethodDef();
                 var declarer = MD.GetTypeDefinition(src.GetDeclaringType());
                 var declname = String(declarer.Name);
                 var ns = String(declarer.Namespace);
@@ -125,6 +126,5 @@ namespace Z0
             }
             return buffer.Sort();            
         }
-
     }
 }

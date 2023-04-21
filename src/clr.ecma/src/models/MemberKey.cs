@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class EcmaModels
+    partial class Ecma
     {
         [StructLayout(LayoutKind.Sequential,Pack=1), Record(TableName)]
         public record class MemberKey : IComparable<MemberKey>
@@ -70,6 +70,5 @@ namespace Z0
                 return result;
             }
         }
-
     }
 }

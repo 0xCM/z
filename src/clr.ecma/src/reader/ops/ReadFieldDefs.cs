@@ -5,19 +5,19 @@
 namespace Z0
 {
     using static sys;
-    using static EcmaTables;
+    using static Ecma;
 
     partial class EcmaReader
     {
-        public ReadOnlySeq<EcmaFieldDef> ReadFieldDefs()
+        public ReadOnlySeq<FieldDef> ReadFieldDefs()
         {
             var name = AssemblyKey().AssemblyName;
             var handles = FieldDefHandles();
             var count = handles.Length;
-            var buffer = sys.list<EcmaFieldDef>();
+            var buffer = sys.list<FieldDef>();
             for(var j=0; j<count; j++)
             {
-                var dst = new EcmaFieldDef();
+                var dst = new FieldDef();
                 ref readonly var handle = ref skip(handles,j);
                 var def = MD.GetFieldDefinition(handle);
                 var type = MD.GetTypeDefinition(def.GetDeclaringType());

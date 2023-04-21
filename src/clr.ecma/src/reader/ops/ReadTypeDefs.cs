@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    using static EcmaTables;
+    using static Ecma;
 
     partial class EcmaReader
     {
@@ -23,7 +23,7 @@ namespace Z0
                 row.Attributes = def.Attributes;
                 row.TypeName = def.Name;
                 row.Namespace = def.Namespace;
-                row.Layout = def.GetLayout();
+                row.Layout = ReadTypeLayout(handle);
                 row.BaseType = def.BaseType;
                 var field = def.GetFields().TryGetFirst(x => true);
                 if(field)

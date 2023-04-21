@@ -9,23 +9,14 @@ namespace Z0
     partial class EcmaEmitter
     {
         public void EmitMsilMetadata(ReadOnlySeq<Assembly> src, IDbArchive dst)
-            => iter(src, a => EmitMsilMetadata(a,dst), true);
+            => iter(src, a => EmitMsilMetadata(a.GetAssemblyFile(),dst), true);
 
-        public void EmitMsilMetadata(Assembly src, IDbArchive dst)
+        public void EmitMsilMetadata(AssemblyFile src, IDbArchive dst)
         {
-            void Exec()
-            {
-                var methods = ReadOnlySpan<MsilRow>.Empty;
-                var srcPath = FS.path(src.Location);
-                if(Ecma.valid(srcPath))
-                {
-                    using var reader = PeReader.create(srcPath);
-                    methods = reader.ReadMsil();
-                    if(methods.Length != 0)
-                        Channel.TableEmit(methods, dst.Table<MsilRow>(src.GetSimpleName()));
-                }
-            }
-            Try(Exec);
-        }            
+            using var reader = PeReader.create(src.Path);
+            var methods = reader.ReadMsil();
+            if(methods.Length != 0)
+                Channel.TableEmit(methods, dst.Table<MsilRow>(src.AssemblyName.Format()));
+        }
     }
 }

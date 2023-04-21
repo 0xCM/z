@@ -36,7 +36,6 @@ namespace Z0
             return dump(channel, src, targets.Path("process",FileKind.Dmp));
         }
 
-
         [Op]
         public static ImageLocation location(ProcessModule src)
             =>  new ImageLocation(
