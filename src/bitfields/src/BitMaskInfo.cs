@@ -16,7 +16,7 @@ namespace Z0
         public NumericBaseKind Base;
 
         [Render(12)]
-        public TypeSpec DataType;
+        public @string DataType;
 
         [Render(82)]
         public BitMaskData MaskData;

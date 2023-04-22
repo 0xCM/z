@@ -23,7 +23,7 @@ namespace Z0
         ClrEnumKind IClrEnumType.EnumKind
             => EnumKind;
 
-        Identifier IType.Name
+        Identifier IClrType.Name
             => Name;
 
         public string Format()

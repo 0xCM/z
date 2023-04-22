@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public class EnvReports
+    public class EnvReports : Stateless<EnvReports>
     {
         static uint KeySeq = 0;
         
@@ -22,15 +22,25 @@ namespace Z0
         static FilePath toolpath(IDbArchive src, EnvId name)
             => cfgroot(src).Scoped(name).Path("tools", FileKind.Csv);
 
+        public static ExecToken emit(IWfChannel channel)
+        {
+            var running = channel.Running();
+            var targets = cfgroot(EnvDb).Scoped(Env.id());
+            emit(channel, targets);
+            // tools(channel, targets);
+            // emit(channel, EnvVarKind.Process, targets);
+            // emit(channel, EnvVarKind.User, targets);
+            // emit(channel, EnvVarKind.Machine, targets);
+            return channel.Ran(running);
+        }
 
         public static ExecToken emit(IWfChannel channel, IDbArchive dst)
         {
             var running = channel.Running();
-            var targets = cfgroot(dst).Scoped(Env.id());
-            tools(channel, targets);
-            emit(channel, EnvVarKind.Process, targets);
-            emit(channel, EnvVarKind.User, targets);
-            emit(channel, EnvVarKind.Machine, targets);
+            tools(channel, dst);
+            emit(channel, EnvVarKind.Process, dst);
+            emit(channel, EnvVarKind.User, dst);
+            emit(channel, EnvVarKind.Machine, dst);
             return channel.Ran(running);
         }
 

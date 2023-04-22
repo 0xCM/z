@@ -20,7 +20,7 @@ namespace Z0
         static ref BitMaskInfo map(in NumericLiteral src, ref BitMaskInfo dst)
         {
             dst.Name = src.Name;
-            dst.DataType = src.Data?.GetType() ?? typeof(void);
+            dst.DataType = (src.Data?.GetType() ?? typeof(void)).Name;
             dst.MaskData = BitMaskData.infer(src.Data);
             dst.Text = src.Text;
             dst.Base = src.Base;

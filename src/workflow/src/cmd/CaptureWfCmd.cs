@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public class CaptureWfCmd : WfAppCmd<CaptureWfCmd>
+    class CaptureWfCmd : WfAppCmd<CaptureWfCmd>
     {
         ApiPacks ApiPacks => Wf.ApiPacks();
 

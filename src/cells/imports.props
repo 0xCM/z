@@ -1,7 +1,7 @@
 <Project>
   <ItemGroup>
     <ProjectReference Include="$(Text)" />
-    <ProjectReference Include="$(Types)" />
     <ProjectReference Include="$(Hex)" />
+    <ProjectReference Include="$(ClrQuery)" />
   </ItemGroup>
 </Project>

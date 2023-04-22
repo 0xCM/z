@@ -10,7 +10,6 @@
    <Import Project="$(MsBuildThisFileDirectory)src/bits/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/bitfields/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/buffers/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/binary/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/calcs/exports.props"/>
 
@@ -71,7 +70,6 @@
    <Import Project="$(MsBuildThisFileDirectory)src/test.shell/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/test.units/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/text/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/types/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/tools/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/vcpu/exports.props"/>

@@ -45,7 +45,7 @@ namespace Z0
             => dispenser(() => new NativeSigDispenser());
 
         public static NativeSigDispenser sigs(MemoryDispenser mem, StringDispenser strings, LabelDispenser labels)
-            => dispenser(() => new NativeSigDispenser(mem, strings, labels));
+            => dispenser(() => new NativeSigDispenser(mem, strings));
 
         public static D dispenser<D>(Func<D> f)
             where D : IAllocDispenser

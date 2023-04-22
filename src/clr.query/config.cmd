@@ -1,4 +1,4 @@
 @echo off
-set Area=src
-set ProjectId=clr.query
+set ProjectName=clr.query
 call %~dp0..\config.cmd
+

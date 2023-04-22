@@ -2,6 +2,6 @@
   <ItemGroup>
     <ProjectReference Include="$(Text)" />
     <ProjectReference Include="$(Hex)" />
-    <ProjectReference Include="$(Types)" />
+    <ProjectReference Include="$(ClrQuery)" />
   </ItemGroup>
 </Project>

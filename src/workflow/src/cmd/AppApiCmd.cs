@@ -25,6 +25,14 @@ namespace Z0
             Channel.FileEmit(buffer.Emit(),dst);         
         }
 
+        [CmdOp("api/commands")]
+        void EmitCommands()
+            => ApiMd.emit(Channel, ApiServers.catalog(), EnvDb);
+    
+        [CmdOp("api/version")]
+        void ApiVersion()
+            => Channel.Write(ExecutingPart.Assembly.AssemblyVersion());
+
         [CmdOp("api/emit")]
         void ApiEmit()
             => ApiMd.Emitter(AppDb.ApiTargets()).Emit(ApiAssemblies.Components);
@@ -36,6 +44,16 @@ namespace Z0
         [CmdOp("api/tables")]
         void EmitApiTables()
             => ApiMd.Emitter(AppDb.ApiTargets()).EmitApiTables(ApiAssemblies.Components);
+
+        [CmdOp("api/settings")]
+        void ReadSettings(CmdArgs args)
+        {
+            if(args.IsEmpty)
+                Channel.Row(AppSettings.Default.Format());
+            else
+                Channel.Row(AppSettings.Default.Absorb(FS.path(args.First.Value)));
+        }
+
 
         [CmdOp("archives")]        
         void ListArchives(CmdArgs args)

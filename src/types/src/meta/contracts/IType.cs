@@ -31,19 +31,6 @@ namespace Z0
             => Sized.bw64(Kind);
     }
 
-    public interface ISizedType : IType
-    {
-        BitWidth ContentWidth {get;}
-
-        BitWidth StorageWidth {get;}
-
-        bool INullity.IsEmpty
-            => StorageWidth == 0;
-
-        bool INullity.IsNonEmpty
-            => StorageWidth != 0;
-    }
-
     [Free]
     public interface ISizedType<K> : ISizedType, IType<K>
         where K : unmanaged

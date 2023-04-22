@@ -4,12 +4,30 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IClrType : IType<PrimalKind>
+    public interface IClrType : INullity, IExpr
     {
+        Identifier Name {get;}
+
+        ulong Kind => 0;
+
+        bool INullity.IsEmpty 
+            => Name.IsEmpty;
+
+        bool INullity.IsNonEmpty 
+            => !IsEmpty;
+
+        string IExpr.Format()
+            => Name;
 
     }
 
-    public interface IClrEnumType : IClrType
+    public interface IClrType<K> : IClrType
+        where K : unmanaged
+    {
+        new K Kind {get;}
+
+    }
+    public interface IClrEnumType : IClrType<PrimalKind>
     {
         ClrEnumKind EnumKind {get;}
 
@@ -22,10 +40,10 @@ namespace Z0
         BitWidth StorageWidth
             => PrimalBits.width(EnumKind);
 
-        PrimalKind IType<PrimalKind>.Kind
+        PrimalKind IClrType<PrimalKind>.Kind
             => ScalarKind;
 
-        ulong IType.Kind
+        ulong IClrType.Kind
             => (ulong)PrimalBits.width(EnumKind);
     }
 }

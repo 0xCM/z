@@ -9,6 +9,52 @@ namespace Z0
     [ApiHost]
     public class DataTypes
     {
+        public static DataSize measure(Type src)
+        {
+            var dst = DataSize.Empty;
+            var width = bitsize(src);
+            var tag = src.Tag<DataWidthAttribute>();
+            if(src.IsEnum)
+            {
+                width = Sizes.bits(PrimalBits.width(Enums.@base(src)));
+                if(tag)
+                    dst = new (tag.Value.PackedWidth, width);
+                else
+                    dst = (width, width);
+            }
+            else
+            {
+                if(tag)
+                    dst = new (tag.Value.PackedWidth, width);
+                else
+                    dst = (width,width);
+            }
+            return dst;
+        }
+
+        static uint bitsize(Type src)
+        {
+            if(src is null || src == typeof(void) || src == typeof(Null))
+                return 0;
+            try
+            {
+                var type = typeof(SizeCalc<>).MakeGenericType(src);
+                var method = first(type.StaticMethods().Public());
+                return ((uint)method.Invoke(null, sys.empty<object>()))*8;
+            }
+            catch(Exception)
+            {
+                return 0;
+            }
+        }
+
+        readonly struct SizeCalc<T>
+        {
+            [MethodImpl(Inline)]
+            public static uint calc()
+                => (uint)Unsafe.SizeOf<T>();
+        }
+
         [MethodImpl(Inline), Op]
         public static PrimalType primitive(NativeKind kind, Label name, AlignedWidth width)
             => new PrimalType(kind, name,width);

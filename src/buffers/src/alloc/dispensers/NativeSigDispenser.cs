@@ -12,16 +12,13 @@ namespace Z0
 
         readonly StringDispenser Strings;
 
-        readonly LabelDispenser Labels;
-
         readonly ConcurrentDictionary<Hex64,NativeSigRef> Dispensed;
 
-        internal NativeSigDispenser(MemoryDispenser mem, StringDispenser strings, LabelDispenser labels)
+        internal NativeSigDispenser(MemoryDispenser mem, StringDispenser strings)
             : base(false)
         {
             Memory = mem;
             Strings = strings;
-            Labels = labels;
             Dispensed = new();
         }
 
@@ -30,7 +27,6 @@ namespace Z0
         {
             Memory = Dispense.memory();
             Strings = Dispense.strings();
-            Labels = Dispense.labels();
             Dispensed = new();
         }
 
@@ -38,7 +34,6 @@ namespace Z0
         {
             (Memory as IDisposable).Dispose();
             (Strings as IDisposable).Dispose();
-            (Labels as IDisposable).Dispose();
         }
 
         [MethodImpl(Inline)]
