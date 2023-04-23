@@ -12,6 +12,27 @@ namespace Z0
     [ApiHost]
     public partial class Ecma : WfSvc<Ecma>
     {   
+        [MethodImpl(Inline)]
+        public static EcmaHandleData data(Handle src)
+            => EcmaHandleData.from(src);
+
+        [Op]
+        public static bool match(Index<Type> src, EcmaToken id, out Type matched)
+        {
+            for(var i=0; i<src.Length; i++)
+            {
+                var candidate = src[i];
+                if(candidate.MetadataToken == id)
+                {
+                    matched = candidate;
+                    return true;
+                }
+
+            }
+            matched = default;
+            return false;
+        }
+
         public static ReadOnlySpan<MsilRow> msil(IWfChannel channel, AssemblyFile src)     
         {
             var dst = list<MsilRow>();

@@ -27,10 +27,6 @@ namespace Z0
             var running = channel.Running();
             var targets = cfgroot(EnvDb).Scoped(Env.id());
             emit(channel, targets);
-            // tools(channel, targets);
-            // emit(channel, EnvVarKind.Process, targets);
-            // emit(channel, EnvVarKind.User, targets);
-            // emit(channel, EnvVarKind.Machine, targets);
             return channel.Ran(running);
         }
 

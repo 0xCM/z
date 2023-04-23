@@ -8,7 +8,7 @@ namespace Z0
 
     partial class Tooling
     {
-       class ServiceCache : AppServices<ServiceCache>
+        class ServiceCache : AppServices<ServiceCache>
         {
             
         }

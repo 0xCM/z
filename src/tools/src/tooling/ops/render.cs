@@ -8,54 +8,40 @@ namespace Z0
 
     partial class Tooling
     {
-        static readonly EnumRender<ArgSepKind> ArgSepRender = new();
+        // static readonly EnumRender<ArgSepKind> ArgSepRender = new();
 
-        static readonly EnumRender<ArgPrefixKind> ArgPrefixRender = new();
+        // static readonly EnumRender<ArgPrefixKind> ArgPrefixRender = new();
 
-        public static void render(ArgSepKind src, ITextEmitter dst)
-            => dst.Append(ArgSepRender.Format(src));
+        // public static void render(ArgSepKind src, ITextEmitter dst)
+        //     => dst.Append(ArgSepRender.Format(src));
 
-        public static void render(ArgPrefixKind src, ITextEmitter dst)
-            => dst.Append(ArgPrefixRender.Format(src));
+        // public static void render(ArgPrefixKind src, ITextEmitter dst)
+        //     => dst.Append(ArgPrefixRender.Format(src));
 
-        public static string format(ToolCmdArg src)
-        {
-            var dst = text.emitter();
-            render(src,dst);
-            return dst.Emit();
-        }
+        // public static string format(ToolCmdArg src)
+        // {
+        //     var dst = text.emitter();
+        //     render(src,dst);
+        //     return dst.Emit();
+        // }
 
-        public static void render(ToolCmdArg src, ITextEmitter dst)
-        {
-            render(src.Prefix, dst);
-            dst.Append(src.Name);
-            render(src.Sep, dst);
-            dst.Append(src.Value.Format());
-        }
+        // public static void render(ToolCmdArg src, ITextEmitter dst)
+        // {
+        //     render(src.Prefix, dst);
+        //     dst.Append(src.Name);
+        //     render(src.Sep, dst);
+        //     dst.Append(src.Value.Format());
+        // }
 
-        public static void render(ToolCmdArgs src, ITextEmitter dst)
-        {
-            for(var i=0; i<src.Count; i++)
-            {
-                if(i != 0)
-                    dst.Append(Chars.Space);
+        // public static void render(ToolCmdArgs src, ITextEmitter dst)
+        // {
+        //     for(var i=0; i<src.Count; i++)
+        //     {
+        //         if(i != 0)
+        //             dst.Append(Chars.Space);
                 
-                render(src[i], dst);
-            }
-        }
-
-        public static void render(ToolCmd src, ITextEmitter dst)
-        {
-            dst.Append(src.ToolPath);
-            dst.Append(Chars.Space);
-            render(src.Args, dst);            
-        }
-        
-        public static string format(ToolCmd src)
-        {
-            var dst = text.emitter();
-            render(src, dst);
-            return dst.Emit();
-        }
+        //         render(src[i], dst);
+        //     }
+        // }
     }
 }

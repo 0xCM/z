@@ -80,76 +80,6 @@ namespace Z0
         void ToolDocs(CmdArgs args)
             => iter(LoadDocs(arg(args,0).Value), doc => Channel.Write(doc));
 
-        public static ToolCmd command(FilePath tool, params ToolCmdArg[] args)
-            => new (tool,args, Env.cd(), EnvVars.Empty);
-
-        public static ToolCmd command(FilePath tool, ToolCmdArgs args)
-            => new (tool, args, Env.cd(), EnvVars.Empty);
-
-        public static ToolCmd command(FilePath tool, ToolCmdArgs args, FolderPath work)
-            => new (tool,args, work, EnvVars.Empty);
-
-        public static ToolCmd command(FilePath tool, ToolCmdArgs args, FolderPath work, params EnvVar[] vars)
-            => new (tool, args, work, vars);
-
-        public static ToolCmdArg flag(ArgPrefixKind prefix, string name)
-            => new ToolCmdArg{
-                Prefix = prefix,
-                Name = name,
-            };
-
-        public static ToolCmdArg flag(string src)
-        {
-            var prefix = ArgPrefixKind.None;
-            var name = EmptyString;
-            var dst = ToolCmdArg.Empty;
-            var i = text.index(src,"--");
-            if(i >= 0)
-            {
-                prefix = ArgPrefixKind.Dashes;
-                name = text.right(src, i + "--".Length - 1);                
-            }
-            else
-            {
-                i = text.index(src,"-");
-                if(i >=0)
-                {
-                    prefix = ArgPrefixKind.Dash;
-                    name = text.right(src, i);
-                }
-                else
-                {
-
-                    i = text.index(src, "/");
-                    if(i >=0)
-                    {
-                        prefix = ArgPrefixKind.FSlash;
-                        name = text.right(src, i);
-                    }
-                }
-            }
-
-            if(nonempty(name))
-            {   
-                dst = flag(prefix,name);
-            }
-
-            return dst;                           
-        }
-    
-        public static ToolCmdArg option(ArgPrefixKind prefix, string name, ArgSepKind sep, ArgValue value)
-            => new ToolCmdArg{
-                Prefix = prefix,
-                Name = name,
-                Sep = sep,
-                Value = value
-            };
-
-        public static ToolCmdArg arg(string name, ArgValue value)
-            => new ToolCmdArg{
-                Name = name,
-                Value = value
-            };
         
         public static ToolCmdSpec spec(FolderPath? work = null, params EnvVar[] vars)
             => new (FilePath.Empty, CmdArgs.Empty, work ?? Env.cd(), vars, null, null);
@@ -168,9 +98,6 @@ namespace Z0
 
         public static ToolCmdSpec spec(FilePath tool, CmdArgs args)
             => new(tool, args,Env.cd(), EnvVars.Empty, null, null);
-
-        public static IToolStreamWriter writer(FilePath src)
-            => new ToolStreamWriter(src);
          
         public static Task<ExecToken> shell(IWfChannel channel, CmdArgs args)
         {
@@ -210,10 +137,6 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static ToolCmdLine cmdline(FilePath tool, params string[] src)
             => new ToolCmdLine(tool, src);
-
-        public T Tool<T>()
-            where T : IToolService, new()
-                => ToolServices.Service<T>(Wf);
 
         public FilePath ConfigScript(Tool tool)
             => Home(tool).ConfigScript(ApiAtomic.config, FileKind.Cmd);
