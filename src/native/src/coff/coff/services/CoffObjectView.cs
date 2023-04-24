@@ -6,12 +6,13 @@ namespace Z0
 {
     using static sys;
 
+
     [ApiComplete]
     public ref struct CoffObjectView
     {
         [MethodImpl(Inline)]
-        public static CoffObjectView cover(ReadOnlySpan<byte> src, uint offset = 0)
-            => new CoffObjectView(src,offset);
+        public static CoffObjectView cover(ReadOnlySpan<byte> src)
+            => new CoffObjectView(src,0u);
 
         readonly ReadOnlySpan<byte> Data;
 

@@ -4,6 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Windows
 {
+    /// <summary>
+    /// https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-image_coff_symbols_header
+    /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack=1)]
     public struct COFF_SYMBOLS_HEADER
     {

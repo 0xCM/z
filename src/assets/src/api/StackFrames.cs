@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public record struct StackFrames
+    public record class StackFrames
     {
         public static void emit(StackTrace src, IWfChannel channel)
         {

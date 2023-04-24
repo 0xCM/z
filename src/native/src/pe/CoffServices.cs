@@ -237,8 +237,7 @@ namespace Z0
         {
             var obj = CoffObjects.load(file.Path);
             var objData = obj.Data.View;
-            var offset = 0u;
-            var view = CoffObjectView.cover(obj.Data, offset);
+            var view = CoffObjectView.cover(obj.Data);
             var symcount = view.SymbolCount;
             if(symcount != 0)
             {
@@ -296,8 +295,7 @@ namespace Z0
                 var obj = src[objPath];
                 var file = files.Doc(objPath);
                 var objData = obj.Data.View;
-                var offset = 0u;
-                var view = CoffObjectView.cover(obj.Data, offset);
+                var view = CoffObjectView.cover(obj.Data);
                 var symcount = view.SymbolCount;
                 if(symcount == 0)
                     continue;

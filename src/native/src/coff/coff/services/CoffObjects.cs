@@ -10,9 +10,17 @@ namespace Z0
     using static ObjSymKind;
 
     [ApiHost,Free]
-    public class CoffObjects : AppService<CoffObjects>
+    public unsafe class CoffObjects : AppService<CoffObjects>
     {
         static Symbols<CoffSectionKind> SectionKinds = Symbols.index<CoffSectionKind>();
+
+        [MethodImpl(Inline), Op]
+        public static Timestamp timestamp(Hex32 src)
+            => Time.epoch(TimeSpan.FromSeconds(src));
+
+        [MethodImpl(Inline), Op]
+        public static ref readonly CoffHeader header(ReadOnlySpan<byte> src, uint offset)
+            => ref skip(recover<CoffHeader>(src), offset);
 
         public static IEnumerable<CoffSectionHeaders> sections(IWfChannel channel, IEnumerable<CoffObject> objects)
         {
@@ -193,14 +201,6 @@ namespace Z0
             }
             return dst;
         }
-
-        [MethodImpl(Inline), Op]
-        public static Timestamp timestamp(Hex32 src)
-            => Time.epoch(TimeSpan.FromSeconds(src));
-
-        [MethodImpl(Inline), Op]
-        public static ref readonly CoffHeader header(ReadOnlySpan<byte> src, uint offset)
-            => ref skip(recover<CoffHeader>(src), offset);
 
         public static readonly Symbols<ObjSymCode> SymCodes = Symbols.index<ObjSymCode>();
 
