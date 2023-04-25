@@ -11,6 +11,5 @@
     <ProjectReference Include="$(Files)" />
     <ProjectReference Include="$(Bytes)" />
     <ProjectReference Include="$(VCpu)" />
-    <ProjectReference Include="$(Json)" />
   </ItemGroup>
 </Project>

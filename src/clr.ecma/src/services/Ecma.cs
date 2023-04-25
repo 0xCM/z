@@ -139,8 +139,8 @@ namespace Z0
         public static IEnumerable<FilePath> valid(DbArchive src, FileKind kind)
             => from file in src.Files(true, kind) where valid(file) select file;                        
 
-        public static AssemblyComments comments(IWfChannel channel, IDbArchive src)
-            => new AssemblyComments(channel, src);
+        internal static AssemblyCommentCalcs comments(IWfChannel channel, IDbArchive src)
+            => new AssemblyCommentCalcs(channel, src);
             
         public static ReadOnlySeq<EcmaRowStats> stats(AssemblyIndex src)
             => stats(src.Distinct().Select(x => x.Path));

@@ -2,7 +2,6 @@
   <Import Project="$(SlnProps)\usings.props"/>
   <Import Project="$(SlnProps)\microsoft.codeanalysis.props" />
   <ItemGroup>
-    <ProjectReference Include="$(Json)" />
     <ProjectReference Include="$(Files)" />
     <ProjectReference Include="$(Events)" />
     <ProjectReference Include="$(ZEnv)" />

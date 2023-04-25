@@ -9,13 +9,14 @@ namespace Z0
 
     using static sys;
 
-    public class AssemblyComments
+
+    class AssemblyCommentCalcs
     {
         readonly IWfChannel Channel;
 
         readonly IDbArchive Source;
 
-        public AssemblyComments(IWfChannel channel, IDbArchive src)
+        public AssemblyCommentCalcs(IWfChannel channel, IDbArchive src)
         {
             Channel = channel;
             Source = src;
@@ -31,6 +32,7 @@ namespace Z0
         SortedLookup<VersionedName, ConstLookup<string,string>> Lookup;
 
         SortedLookup<VersionedName, ConstLookup<string,MemberComments>> CommentLookup;
+
 
         public ref readonly AssemblyIndex Assemblies()
         {

@@ -103,7 +103,6 @@ namespace Z0
 
         [Op, Closures(Closure)]
         public static void values<T>(in T src, ReadOnlySpan<ClrFieldAdapter> fields, Span<ClrFieldValue> dst)
-            where T : struct
         {
             ref var target = ref first(dst);
             var tRef = __makeref(edit(src));
@@ -117,7 +116,6 @@ namespace Z0
 
         [Op, Closures(Closure)]
         public static void values<T>(in T src, ReadOnlySpan<FieldInfo> fields, Span<ClrFieldValue> dst)
-            where T : struct
         {
             ref var target = ref first(dst);
             var tRef = __makeref(edit(src));
@@ -130,7 +128,7 @@ namespace Z0
         }
 
         [Op, Closures(Closure)]
-        public static StructFields<T> values<T>(in T src, FieldInfo[] fields)
+        public static StructFields<T> StructFields<T>(in T src, FieldInfo[] fields)
             where T : struct
         {
             var tr = __makeref(edit(src));

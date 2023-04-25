@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     public sealed class ApiCmdDefs : Seq<ApiCmdDefs, ApiCmdDef>
     {    
         readonly ConstLookup<@string,ApiCmdDef> Lookup;

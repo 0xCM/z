@@ -12,7 +12,7 @@ namespace Z0
 
         ExecToken RunCommand(string action);
 
-        ExecToken RunCommandScript(FilePath src);
+        ExecToken RunScript(FilePath src);
         
         ApiCmdCatalog Catalog {get;}       
     }    

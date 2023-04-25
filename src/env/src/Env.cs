@@ -144,24 +144,24 @@ namespace Z0
         public static void apply(EnvVar src, EnvVarKind kind)
             => Environment.SetEnvironmentVariable(src.Name, src.Value, (EnvironmentVariableTarget)kind);
 
-        public static ExecToken context(IWfChannel channel, Timestamp ts, IDbArchive dst)
-        {
-            EnvReports.emit(channel, dst.Scoped("context"));
-            var map = ImageMemory.map();
-            channel.FileEmit(map.ToString(), dst.Scoped("context").Path("process.image", FileKind.Map));            
-            return emit(channel, Process.GetCurrentProcess(), ts, dst);
-        }
+        // public static ExecToken context(IWfChannel channel, Timestamp ts, IDbArchive dst)
+        // {
+        //     EnvReports.emit(channel, dst.Scoped("context"));
+        //     var map = ImageMemory.map();
+        //     channel.FileEmit(map.ToString(), dst.Scoped("context").Path("process.image", FileKind.Map));            
+        //     return emit(channel, Process.GetCurrentProcess(), ts, dst);
+        // }
 
-        static ExecToken emit(IWfChannel channel, ProcessAdapter src, Timestamp ts, IDbArchive dst)
-        {
-            var running = channel.Running($"Emiting context for process {src.Id} based at {src.BaseAddress} from {src.Path}");
-            modules(channel, src, dst);
-            var file = ProcDumpName.path(src, ts, dst);
-            var dumping = channel.EmittingFile(file);
-            DumpEmitter.dump(src, file);
-            channel.EmittedBytes(dumping, file.Size);
-            return channel.Ran(running, $"Emitted context for process {src.Id}");   
-        }
+        // static ExecToken emit(IWfChannel channel, ProcessAdapter src, Timestamp ts, IDbArchive dst)
+        // {
+        //     var running = channel.Running($"Emiting context for process {src.Id} based at {src.BaseAddress} from {src.Path}");
+        //     modules(channel, src, dst);
+        //     var file = ProcDumpName.path(src, ts, dst);
+        //     var dumping = channel.EmittingFile(file);
+        //     DumpEmitter.dump(src, file);
+        //     channel.EmittedBytes(dumping, file.Size);
+        //     return channel.Ran(running, $"Emitted context for process {src.Id}");   
+        // }
 
         public static EnvVars merge(EnvVars a, EnvVars b)
         {
@@ -180,7 +180,7 @@ namespace Z0
             return dst.Values.Array();
         }
 
-        static ExecToken modules(IWfChannel channel, Process src, IDbArchive dst)
-            => channel.TableEmit(ImageMemory.modules(src), dst.Scoped("context").Path("process.modules",FileKind.Csv));
+        // static ExecToken modules(IWfChannel channel, Process src, IDbArchive dst)
+        //     => channel.TableEmit(ImageMemory.modules(src), dst.Scoped("context").Path("process.modules",FileKind.Csv));
     }
 }

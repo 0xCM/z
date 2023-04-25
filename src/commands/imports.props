@@ -1,6 +1,5 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(Json)" />
     <ProjectReference Include="$(Lang)" />
     <ProjectReference Include="$(Projects)" />
   </ItemGroup>

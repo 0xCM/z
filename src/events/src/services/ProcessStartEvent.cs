@@ -40,9 +40,6 @@ namespace Z0
         }
 
         public string Format()
-            => Json.serialize(this);
-
-        public override string ToString()
-            => Format();
+            => ToString();        
     }
 }

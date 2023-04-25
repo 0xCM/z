@@ -1,5 +1,5 @@
 @echo off
-call %EnvRoot%\buildkits\core\config.cmd
+call %EnvRoot%\buildkits\native\config.cmd
 set DOTNET_ROOT=K:\dist\dotnet\unpacked\dotnet-sdk-v6.0.303
 set PATH=%DOTNET_ROOT%;%PATH%
 set SlnName=z0

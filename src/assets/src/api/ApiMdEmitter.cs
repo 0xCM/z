@@ -27,8 +27,6 @@ namespace Z0
             return svc;
         }
 
-        ApiServers ApiServers => Wf.ApiServers();
-
         public void Emit(IApiCatalog catalog)
         {
             Emit(catalog.Assemblies);
@@ -118,14 +116,14 @@ namespace Z0
         {
             var symlits = Symbols.symlits(src);
             exec(true,
-                () => EmitDataFlows(src),
+                //() => EmitDataFlows(src),
                 () => EmitSymLits(symlits),
                 () => EmitApiLiterals(src),
                 () => EmitParsers(src),
-                () => EmitApiTables(src),
+                //() => EmitApiTables(src),
                 () => EmitApiTokens(src),
-                () => EmitCmdDefs(src),
-                () => EmitApiTypes(src),
+                //() => EmitCmdDefs(src),
+                //() => EmitApiTypes(src),
                 () => EmitTypeLists(src),
                 () => EmitApiSymbols(src),
                 () => EmitPartList(src),
@@ -217,10 +215,9 @@ namespace Z0
             var defs = ApiCmd.defs(src);
             emit(Channel, defs, Target);
         }
-            //=> ApiServers.EmitCmdDefs(src, Target);
 
-        public void EmitApiTypes(Assembly[] src)
-            => Channel.TableEmit(ApiTypes.describe(ApiTypes.data(src)), Target.Table<ApiTypeInfo>());
+        // public void EmitApiTypes(Assembly[] src)
+        //     => Channel.TableEmit(ApiTypes.describe(ApiTypes.data(src)), Target.Table<ApiTypeInfo>());
 
         public void EmitPartList(params Assembly[] src)
         {
@@ -231,11 +228,11 @@ namespace Z0
             Channel.FileEmit(dst.Emit(), Target.Path("api.parts", FileKind.List));
         }
 
-        public void EmitDataFlows(params Assembly[] src)
-            => Emit(ApiTypes.flows(src));
+        // public void EmitDataFlows(params Assembly[] src)
+        //     => Emit(ApiTypes.flows(src));
 
-        public void EmitApiTables(ReadOnlySeq<Assembly> src)
-            => Channel.TableEmit(ApiTypes.tablefields(src), Target.Table<ApiTableField>());
+        // public void EmitApiTables(ReadOnlySeq<Assembly> src)
+        //     => Channel.TableEmit(ApiTypes.tablefields(src), Target.Table<ApiTableField>());
 
         public void EmitApiTokens(params Assembly[] src)
             => EmitApiTokens(CalcApiTokens(src));
@@ -251,7 +248,6 @@ namespace Z0
 
         public void EmitApiComments()
             => Comments.Collect(controller().RuntimeArchive(), Target.Scoped(comments));
-
 
         public void EmitApiSymbols(params Assembly[] src)
             => Channel.TableEmit(Symbols.symlits(src), Target.Table<SymLiteralRow>(), UTF16);
@@ -316,9 +312,6 @@ namespace Z0
 
         void Emit(string name, ReadOnlySeq<SymInfo> src)
             => Channel.TableEmit(src, Target.Scoped(tokens).PrefixedTable<SymInfo>(name), TextEncodingKind.Unicode);
-
-        void Emit(ReadOnlySpan<CmdFieldRow> src)
-            => Channel.TableEmit(src, Target.Table<CmdFieldRow>());
 
         void EmitApiLiterals(ReadOnlySpan<ApiLiteralInfo> src)
             => Channel.TableEmit(src, Target.Table<ApiLiteralInfo>(), TextEncodingKind.Unicode);

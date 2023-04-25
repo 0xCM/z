@@ -157,7 +157,7 @@ namespace Z0
             iter(Handlers.Routes, fx => dst.IndentLine(4,$"| {fx}"));
         }
  
-        public ExecToken RunCommandScript(FilePath src)
+        public ExecToken RunScript(FilePath src)
         {
             ExecToken Exec()
             {

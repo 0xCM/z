@@ -4,7 +4,6 @@
   <ItemGroup>
     <ProjectReference Include="$(Text)" />
     <ProjectReference Include="$(Files)" />
-    <ProjectReference Include="$(Json)" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="$(MsExtVer)" />
   </ItemGroup>
 </Project>

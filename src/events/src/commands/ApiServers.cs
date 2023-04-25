@@ -9,9 +9,6 @@ namespace Z0
 
     public class ApiServers : AppService
     {        
-        // public override Type HostType 
-        //     => GetType();
-
         public static ApiCmdCatalog catalog()
             => ApiCmdRunner.Service().Catalog;
 

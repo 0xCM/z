@@ -13,27 +13,24 @@ namespace Z0
 
         [Op, Closures(UInt64k)]
         public static CmdArgs reflect<T>(in T src)
-            where T : struct
         {
             var t = typeof(T);
-            var fields = Clr.fields(t);
+            var fields = t.PublicInstanceFields();
             var count = fields.Length;
             var reflected = sys.alloc<ClrFieldValue>(count);
             ClrFields.values(src, fields, reflected);
-            var buffer = sys.alloc<CmdArg>(count);
-            var target = span(buffer);
-            var values = @readonly(reflected);
+            var dst = sys.alloc<CmdArg>(count);
             for(var i=0u; i<count; i++)
             {
-                ref readonly var fv = ref skip(values,i);
-                seek(target,i) = new CmdArg(fv.Field.Name, fv.Value?.ToString() ?? EmptyString);
+                ref readonly var fv = ref skip(reflected,i);
+                seek(dst,i) = new CmdArg(fv.Field.Name, fv.Value?.ToString() ?? EmptyString);
             }
-            return buffer;
+            return dst;
         }        
 
-        public static CmdArgs args<T>(T src)
+        public static CmdArgs args<T>()
             where T : ICmd
-                => typeof(T).DeclaredInstanceFields().Select(f => new CmdArg(f.Name, f.GetValue(src)?.ToString() ?? EmptyString));
+                => typeof(T).DeclaredInstanceFields().Select(arg);
 
         public static CmdArg arg(FieldInfo src)
         {
@@ -129,7 +126,6 @@ namespace Z0
 
                 }
             });
-
 
             return (cmd,args);            
         }

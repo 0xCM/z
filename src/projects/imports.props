@@ -2,7 +2,6 @@
   <Import Project="$(SlnProps)\microsoft.extensions.props"/>
   <ItemGroup>
     <ProjectReference Include="$(Events)" />
-    <ProjectReference Include="$(Json)" />    
     <ProjectReference Include="$(ZEnv)" />
     <ProjectReference Include="$(Lang)" />
   </ItemGroup>

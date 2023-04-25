@@ -8,19 +8,27 @@ namespace Z0
 
     public class EnvReports : Stateless<EnvReports>
     {
-        static uint KeySeq = 0;
-        
-        static ToolKey key(FilePath path)
-            => new (inc(ref KeySeq), path);
+        public static ExecToken context(IWfChannel channel, Timestamp ts, IDbArchive dst)
+        {
+            emit(channel, dst.Scoped("context"));
+            var map = ImageMemory.map();
+            channel.FileEmit(map.ToString(), dst.Scoped("context").Path("process.image", FileKind.Map));            
+            return emit(channel, Process.GetCurrentProcess(), ts, dst);
+        }
 
-        static IDbArchive cfgroot(IDbArchive src)
-            => src.Scoped("cfg");
+        static ExecToken emit(IWfChannel channel, ProcessAdapter src, Timestamp ts, IDbArchive dst)
+        {
+            var running = channel.Running($"Emiting context for process {src.Id} based at {src.BaseAddress} from {src.Path}");
+            modules(channel, src, dst);
+            var file = ProcDumpName.path(src, ts, dst);
+            var dumping = channel.EmittingFile(file);
+            DumpEmitter.dump(src, file);
+            channel.EmittedBytes(dumping, file.Size);
+            return channel.Ran(running, $"Emitted context for process {src.Id}");   
+        }
 
-        static FilePath cfgpath(IDbArchive src, EnvId name)
-            => cfgroot(src).Scoped(name).Path("process", FileKind.Cfg);
-
-        static FilePath toolpath(IDbArchive src, EnvId name)
-            => cfgroot(src).Scoped(name).Path("tools", FileKind.Csv);
+        static ExecToken modules(IWfChannel channel, Process src, IDbArchive dst)
+            => channel.TableEmit(ImageMemory.modules(src), dst.Scoped("context").Path("process.modules",FileKind.Csv));
 
         public static ExecToken emit(IWfChannel channel)
         {
@@ -33,10 +41,10 @@ namespace Z0
         public static ExecToken emit(IWfChannel channel, IDbArchive dst)
         {
             var running = channel.Running();
-            tools(channel, dst);
-            emit(channel, EnvVarKind.Process, dst);
             emit(channel, EnvVarKind.User, dst);
             emit(channel, EnvVarKind.Machine, dst);
+            tools(channel, dst);
+            emit(channel, EnvVarKind.Process, dst);
             return channel.Ran(running);
         }
 
@@ -61,6 +69,20 @@ namespace Z0
 
         public static EnvReport load(IEnvDb src, EnvId id)
             => new EnvReport(id,EnvVarKind.Process, Env.vars(cfgpath(src, id)), tools(toolpath(src, id)));
+
+        static uint KeySeq = 0;
+        
+        static ToolKey key(FilePath path)
+            => new (inc(ref KeySeq), path);
+
+        static IDbArchive cfgroot(IDbArchive src)
+            => src.Scoped("cfg");
+
+        static FilePath cfgpath(IDbArchive src, EnvId name)
+            => cfgroot(src).Scoped(name).Path("process", FileKind.Cfg);
+
+        static FilePath toolpath(IDbArchive src, EnvId name)
+            => cfgroot(src).Scoped(name).Path("tools", FileKind.Csv);
 
         static ToolCatalog tools(FilePath src)
         {
