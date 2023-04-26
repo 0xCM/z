@@ -58,13 +58,6 @@ namespace Z0
             "//-----------------------------------------------------------------------------",
             };
 
-
-        static FilePath ReplicantCodePath(EnumReplicantSpec spec, string ns)
-            => spec.Target + FS.file(string.Format("{0}.{1}", ns, text.ifempty(spec.DeclaringType, "EnumDefs")), FS.Cs);
-
-        static FilePath ReplicantDataPath(EnumReplicantSpec spec, string ns)
-            => spec.Target + FS.file(string.Format("{0}.{1}", ns, text.ifempty(spec.DeclaringType, "EnumDefs")), FS.Csv);
-
        static string HeaderFormat = HeaderCells.Join(Chars.Eol);            
  
         ConstLookup<CgTarget,string> TargetExpressions;

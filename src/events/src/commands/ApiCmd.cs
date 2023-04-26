@@ -40,18 +40,6 @@ namespace Z0
             return new (name,desc);
         }
 
-        public static ApiCmdDefs defs(Assembly[] src)
-            => new (tagged(src).Concrete().Select(def).Sort());
-
-        public static ApiCmdDef def(Type src)
-            => new ApiCmdDef(ApiCmdRoute.route(src), src, fields(src));
-
-        public static ReadOnlySeq<CmdField> fields(Type src)
-            => src.PublicInstanceFields().Mapi((i,x) =>  field((ushort)i,x));
-
-        static Type[] tagged(Assembly[] src)
-            =>  src.Types().Tagged<CmdAttribute>();
-
         public static void parse(FilePath src, out ApiCmdScript dst)
         {
             var specs = list<ApiCmdSpec>();
@@ -109,27 +97,6 @@ namespace Z0
             where P : INullity, new()
                 => new CmdResult<C, P>(spec,token,suceeded,payload);
 
-        public static BoundCmd<T> bind<T>(ApiCmdDefs defs, CmdArgs args)
-            where T : IApiCmd<T>,new()
-        {
-            var cmd = new T();
-            var def = ApiCmdDef.Empty;
-            defs.Find(cmd.Route, out def);
-            iteri(args.View, (i,arg) => {
-                var field = CmdField.Empty;
-                if(arg.IsNamed)
-                    def.Field(arg.Name, out field);
-                else
-                    def.Field((ushort)i, out field);                
-                if(field.IsNonEmpty)
-                {
-
-                }
-            });
-
-            return (cmd,args);            
-        }
-   
         static CmdArg arg(object src)
             => new CmdArg(src?.ToString() ?? EmptyString);
 
@@ -141,12 +108,5 @@ namespace Z0
             return new (dst);
         }
 
-        static CmdField field(ushort i, FieldInfo src)
-        {
-            var attrib = src.Tag<CmdArgAttribute>();
-            var name = attrib.MapValueOrDefault(a => a.Name, src.Name);
-            var desc = attrib.MapValueOrDefault(a => a.Description, EmptyString);
-            return new CmdField(i, src, name, src.FieldType.DisplayName(), desc);
-        }        
     }
 }

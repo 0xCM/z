@@ -6,9 +6,6 @@ namespace Z0
 {
     using static sys;
 
-    /// <summary>
-    /// Represents an attribute within a <see cref='ApiCmdDef'/>
-    /// </summary>
     public readonly record struct CmdField : IComparable<CmdField>
     {
         public static string format(CmdField src)

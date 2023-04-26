@@ -180,44 +180,8 @@ namespace Z0
             Channel.FileEmit(emitter.Emit(), parsers.Count, Target.Path("api.parsers", FileKind.Csv));
         }
 
-        static ReadOnlySeq<CmdFieldRow> fields(ReadOnlySpan<ApiCmdDef> src)
-        {
-            var count = src.Select(x => x.FieldCount).Sum();
-            var dst = alloc<CmdFieldRow>(count);
-            var k=0u;
-            for(var i=0; i<src.Length; i++)
-            {
-                var type = Require.notnull(skip(src,i));
-                var instance = Require.notnull(Activator.CreateInstance(type.Source));
-                for(var j=0; j<type.FieldCount; j++,k++)
-                {
-                    ref var row = ref seek(dst,k);
-                    ref readonly var field = ref type.Fields[j];
-                    row.Route = type.Route;
-                    row.Index = field.Index;
-                    row.CmdType = type.Source.DisplayName();
-                    row.Name = field.Name;
-                    row.Expression = field.Description;
-                    row.DataType = field.DataType;
-                }
-            }
-            return dst;
-        }
-
-        static ExecToken emit(IWfChannel channel, ApiCmdDefs src, IDbArchive dst)
-            => channel.TableEmit(fields(src.View), dst.Table<CmdFieldRow>());                
-
         public void EmitApiLiterals(params Assembly[] src)
             => EmitApiLiterals(apilits(src));
-
-        public void EmitCmdDefs(params Assembly[] src)
-        {
-            var defs = ApiCmd.defs(src);
-            emit(Channel, defs, Target);
-        }
-
-        // public void EmitApiTypes(Assembly[] src)
-        //     => Channel.TableEmit(ApiTypes.describe(ApiTypes.data(src)), Target.Table<ApiTypeInfo>());
 
         public void EmitPartList(params Assembly[] src)
         {
@@ -227,12 +191,6 @@ namespace Z0
                 dst.AppendLine(seq[i].GetName().FullName);
             Channel.FileEmit(dst.Emit(), Target.Path("api.parts", FileKind.List));
         }
-
-        // public void EmitDataFlows(params Assembly[] src)
-        //     => Emit(ApiTypes.flows(src));
-
-        // public void EmitApiTables(ReadOnlySeq<Assembly> src)
-        //     => Channel.TableEmit(ApiTypes.tablefields(src), Target.Table<ApiTableField>());
 
         public void EmitApiTokens(params Assembly[] src)
             => EmitApiTokens(CalcApiTokens(src));
