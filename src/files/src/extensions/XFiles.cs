@@ -34,7 +34,7 @@ namespace Z0
             for(var i=0; i<count; i++)
             {
                 ref readonly var kind = ref skip(kinds,i);
-                var ext = kind.Ext();
+                var ext = kind.Ext().Format();
                 var j = text.index(file, "." + ext);
                 if(j >0)
                 {
