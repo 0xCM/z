@@ -184,6 +184,10 @@ namespace Z0
             => EcmaTokens.token(src);
 
         [MethodImpl(Inline)]
+        public static implicit operator EcmaToken(PropertyDefinitionHandle src)
+            => EcmaTokens.token(src);
+
+        [MethodImpl(Inline)]
         public static implicit operator EcmaToken(MethodDefinitionHandle src)
             => EcmaTokens.token(src);
 

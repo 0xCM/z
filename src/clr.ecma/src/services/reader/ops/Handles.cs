@@ -61,7 +61,7 @@ namespace Z0
             => MD.EventDefinitions.ToReadOnlySpan();
 
         [Op]
-        public ReadOnlySpan<PropertyDefinitionHandle> PropDefHandles()
+        public ReadOnlySpan<PropertyDefinitionHandle> PropertyDefHandles()
             => MD.PropertyDefinitions.ToReadOnlySpan();
 
         [Op]

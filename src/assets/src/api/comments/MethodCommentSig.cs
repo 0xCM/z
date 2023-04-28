@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XmlComments;
-
     public readonly struct MethodCommentSig
     {
         public static MethodCommentSig from(in ApiComment src)

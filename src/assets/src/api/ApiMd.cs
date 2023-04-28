@@ -81,7 +81,6 @@ namespace Z0
                 var type = Type.GetType(line) ?? typeof(void);
                 seek(dst,i) = type;
             }
-
             
             return new (src.FileName().WithoutExtension.Name, dst);
         }

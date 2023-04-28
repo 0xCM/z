@@ -100,6 +100,22 @@ namespace Z0
             MD = src.MdReader;            
         }
 
+        [MethodImpl(Inline), Op]
+        public BinaryCode Blob(BlobHandle src)
+            => MD.GetBlobBytes(src);
+
+        [Op]
+        public string String(UserStringHandle handle)
+            => MD.GetUserString(handle);
+
+        [Op]
+        public string String(DocumentNameBlobHandle handle)
+            => MD.GetString(handle);
+
+        [Op]
+        public string String(StringHandle handle)
+            => MD.GetString(handle);
+                        
         public ReadOnlySpan<EcmaConstInfo> ReadConstants(ref uint counter)
         {
             var reader = MD;

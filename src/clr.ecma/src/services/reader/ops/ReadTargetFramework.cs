@@ -32,7 +32,7 @@ namespace Z0
                             var name = String(type.Name);
                             if(name == nameof(TargetFrameworkAttribute))
                             {
-                                return attrib.GetParameterValues(MD)[0];
+                                return attrib.GetAttributeParameterValues(MD)[0];
                             }
                             
                         }

@@ -5,6 +5,7 @@
 namespace Z0
 {
     using System.Linq;
+    
     public class XmlCommentData
     {
         public readonly SortedLookup<FilePath,TargetXml> FileXml;
