@@ -13,6 +13,15 @@ namespace Z0
     {
         static AppSettings AppSettings => AppSettings.Default;
 
+        public static EnvVar<EnvPath> INCLUDE()
+            => new (EnvTokens.INCLUDE, path(EnvTokens.INCLUDE));
+
+        public static EnvVar<EnvPath> LIB()
+            => new (EnvTokens.LIB, path(EnvTokens.LIB));
+
+        public static EnvVar<EnvPath> PATH()
+            => new (EnvTokens.PATH, path(EnvTokens.PATH));
+
         public static IDbArchive root()
             => AppSettings.EnvRoot();
 
@@ -68,15 +77,6 @@ namespace Z0
             return map(values, FS.dir);
         }
 
-        public static EnvVar<EnvPath> INCLUDE()
-            => new (EnvTokens.INCLUDE, path(EnvTokens.INCLUDE));
-
-        public static EnvVar<EnvPath> LIB()
-            => new (EnvTokens.LIB, path(EnvTokens.LIB));
-
-        public static EnvVar<EnvPath> PATH()
-            => new (EnvTokens.PATH, path(EnvTokens.PATH));
-
         public static ExecToken<EnvPath> path(IWfChannel channel, EnvPathKind kind, IDbArchive dst, EnvVarKind envkind = EnvVarKind.Process)
         {            
             var name = kind switch {
@@ -90,24 +90,6 @@ namespace Z0
             channel.Row(data);
             var emitted = channel.FileEmit(data, dst.Path(FS.file($"paths.{kind}", FileKind.List)));
             return (emitted, folders);
-        }
-
-        public static EnvVars vars(FilePath src)
-        {
-            var k = z16;
-            var dst = list<EnvVar>();
-            var line = TextLine.Empty;
-            var buffer = sys.alloc<char>(1024*4);
-            using var reader = src.Utf8LineReader();
-            while(reader.Next(out line))
-            {
-                var content = line.Content;
-                var i = SQ.index(content, Chars.Eq);
-                if(i == NotFound)
-                    continue;
-                dst.Add(new (text.left(content,i), text.right(content,i)));
-            }
-            return dst.ToArray().Sort();
         }
 
         public static EnvVar<T> var<T>(string name, Func<string,T> parser)
@@ -144,25 +126,29 @@ namespace Z0
         public static void apply(EnvVar src, EnvVarKind kind)
             => Environment.SetEnvironmentVariable(src.Name, src.Value, (EnvironmentVariableTarget)kind);
 
-        // public static ExecToken context(IWfChannel channel, Timestamp ts, IDbArchive dst)
-        // {
-        //     EnvReports.emit(channel, dst.Scoped("context"));
-        //     var map = ImageMemory.map();
-        //     channel.FileEmit(map.ToString(), dst.Scoped("context").Path("process.image", FileKind.Map));            
-        //     return emit(channel, Process.GetCurrentProcess(), ts, dst);
-        // }
+        public static ToolCatalog tools(bool reload = false)
+        {
+            if(_Tools == null || reload)
+            {
+                var paths = Env.path(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL);
+                var buffer = dict<ToolKey,LocatedTool>();
+                iter(paths, dir => {
+                    iter(FS.files(dir, false, FileKind.Exe, FileKind.Cmd, FileKind.Bat), path => {                
+                        var include = path.FolderPath != FS.dir("C:/WINDOWS/System32/");
+                        include &= (path.FolderPath != FS.dir("C:/WINDOWS"));
+                        if(include)
+                        {
+                            var k = key(path);
+                            buffer.TryAdd(k, new LocatedTool(k));
+                        }
+                    });
+                });
 
-        // static ExecToken emit(IWfChannel channel, ProcessAdapter src, Timestamp ts, IDbArchive dst)
-        // {
-        //     var running = channel.Running($"Emiting context for process {src.Id} based at {src.BaseAddress} from {src.Path}");
-        //     modules(channel, src, dst);
-        //     var file = ProcDumpName.path(src, ts, dst);
-        //     var dumping = channel.EmittingFile(file);
-        //     DumpEmitter.dump(src, file);
-        //     channel.EmittedBytes(dumping, file.Size);
-        //     return channel.Ran(running, $"Emitted context for process {src.Id}");   
-        // }
-
+                _Tools = new (buffer.Values.Array().Sort());
+            }
+            return _Tools;
+        }       
+ 
         public static EnvVars merge(EnvVars a, EnvVars b)
         {
             var dst = a.View.Map(x => (x.Name, x)).ToDictionary();
@@ -180,7 +166,11 @@ namespace Z0
             return dst.Values.Array();
         }
 
-        // static ExecToken modules(IWfChannel channel, Process src, IDbArchive dst)
-        //     => channel.TableEmit(ImageMemory.modules(src), dst.Scoped("context").Path("process.modules",FileKind.Csv));
+        static ToolCatalog _Tools;
+
+        static uint KeySeq = 0;
+        
+        static ToolKey key(FilePath path)
+            => new (inc(ref KeySeq), path);
     }
 }

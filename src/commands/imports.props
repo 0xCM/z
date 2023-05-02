@@ -1,6 +1,6 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(Lang)" />
-    <ProjectReference Include="$(Projects)" />
+    <ProjectReference Include="$(Events)" />
+    <ProjectReference Include="$(ZEnv)" />
   </ItemGroup>
 </Project>

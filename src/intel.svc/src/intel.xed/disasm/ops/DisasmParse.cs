@@ -40,7 +40,7 @@ namespace Z0
                     var k = text.index(src, Chars.Colon);
                     if(k > 0)
                     {
-                        var parts = text.words(text.right(src,k));
+                        var parts = SQ.words(text.right(src,k));
                         if(parts.Length >=3)
                         {
                             var count = Hex.parse(parts[2], buffer);

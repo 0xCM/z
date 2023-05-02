@@ -6,7 +6,6 @@ namespace Z0
 {
     using static sys;
 
-
     [ApiComplete]
     public ref struct CoffObjectView
     {

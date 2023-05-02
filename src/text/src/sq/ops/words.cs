@@ -6,9 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    using SQ = SymbolicQuery;
-
-    partial class text
+    partial struct SymbolicQuery
     {
         public static Index<string> words(ReadOnlySpan<char> src)
         {

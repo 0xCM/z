@@ -7,7 +7,7 @@ namespace Z0
     [Record(TableId), StructLayout(LayoutKind.Sequential)]
     public record struct SectionHeaderRow : IComparable<SectionHeaderRow>, ISequential<SectionHeaderRow>
     {
-        const string TableId = "pe.sections.headers";
+        const string TableId = "image.sections.headers";
 
         [Render(12)]
         public uint Seq;

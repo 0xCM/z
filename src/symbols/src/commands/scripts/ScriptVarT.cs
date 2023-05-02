@@ -89,7 +89,18 @@ namespace Z0
             => _Value = src;
 
         public virtual string Format()
-            => CmdScripts.format(this);
+        {
+            var dst = EmptyString;
+            if(IsPrefixedFence)
+                dst = string.Format("{0}{1}{2}{3}", Prefix, Fence.Left, Name, Fence.Right);
+            else if(IsPrefixed)
+                dst = string.Format("{0}{1}", Prefix, Name);
+            else if(IsFenced)
+                dst = string.Format("{0}{1}{2}", Fence.Left, Name, Fence.Right);
+            else
+                dst = Name;
+            return dst;
+        }
 
         public override string ToString()
             => Format();

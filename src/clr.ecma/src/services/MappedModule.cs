@@ -102,6 +102,5 @@ namespace Z0
             => File?.Dispose();
 
         public static MappedModule Empty => new();
-
     }
 }

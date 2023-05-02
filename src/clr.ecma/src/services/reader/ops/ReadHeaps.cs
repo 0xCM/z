@@ -15,40 +15,29 @@ namespace Z0
         [Op]
         public EcmaHeap ReadBlobHeap()
         {
-            var heap = EcmaHeap.Empty;
-            var size = GetHeapSize(HeapIndex.Blob);
-            var offset = GetHeapOffset(HeapIndex.Blob);
-            return new EcmaHeap(HeapIndex.Blob, BaseAddress + offset, size);
+            var kind = HeapIndex.Blob;
+            return new EcmaHeap(kind, BaseAddress + GetHeapOffset(kind), GetHeapSize(kind));
         }
 
         [Op]
         public EcmaHeap ReadGuidHeap()
         {
-            var heap = EcmaHeap.Empty;
-            var size = GetHeapSize(HeapIndex.Guid);
-            if(size !=0)
-                heap = new EcmaHeap(HeapIndex.Guid, BaseAddress + GetHeapOffset(HeapIndex.Guid), size);
-            return heap;
+            var kind = HeapIndex.Guid;
+            return new EcmaHeap(kind, BaseAddress + GetHeapOffset(kind), GetHeapSize(kind));
         }
 
         [Op]
-        public EcmaStringHeap ReadUserStringHeap()
+        public EcmaHeap ReadUserStringHeap()
         {
-            var heap = EcmaStringHeap.Empty;
-            var size = GetHeapSize(HeapIndex.UserString);
-            if(size != 0)
-                heap = new EcmaStringHeap(HeapIndex.UserString, BaseAddress + GetHeapOffset(HeapIndex.UserString), size);
-            return heap;
+            var kind = HeapIndex.UserString;
+            return new EcmaHeap(kind, BaseAddress + GetHeapOffset(kind), GetHeapSize(kind));
         }
 
         [Op]
-        public EcmaStringHeap ReadSystemStringHeap()
+        public EcmaHeap ReadSystemStringHeap()
         {
-            var heap = EcmaStringHeap.Empty;
-            var size = GetHeapSize(HeapIndex.String);
-            if(size != 0)
-                heap = new EcmaStringHeap(HeapIndex.String, BaseAddress + GetHeapOffset(HeapIndex.String), size);
-            return heap;
+            var kind = HeapIndex.String;
+            return new EcmaHeap(kind, BaseAddress + GetHeapOffset(kind), GetHeapSize(kind));
         }
     }
 }

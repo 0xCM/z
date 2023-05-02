@@ -5,36 +5,10 @@
 namespace Z0
 {
     using static sys;
-    
+
     [ApiHost,Free]    
     public class CmdScripts
     {
-        public static Seq<CmdSetExpr> setx(FileUri src)
-        {
-            var dst = list<CmdSetExpr>();
-            using var reader = src.Utf8LineReader();
-            var line = TextLine.Empty;
-            while(reader.Next(out line))
-            {
-                if(line.IsNonEmpty)
-                {
-                    var parts = line.Split(Chars.Eq);
-                    if(parts.Length == 2)
-                    {
-                        var left = skip(parts,0);
-                        var i = text.index(left, "set");
-                        if(i>= 0)
-                        {
-                            var name = text.trim(text.right(left, i + "set".Length - 1));
-                            var value = text.trim(skip(parts,1));
-                            dst.Add(new CmdSetExpr(name, value));
-                        }
-                    }
-                }
-            }
-            return dst.Array();
-        }
-
         public static CmdVars vars(params Pair<string>[] src)
         {
             var dst = new CmdVar[src.Length];
@@ -120,7 +94,7 @@ namespace Z0
                 else if(c0 == fence.Right && parsing)
                 {
                     rpos = i - 1;                    
-                    var name = sys.@string(text.segment(src, lpos, rpos));
+                    var name = sys.@string(SQ.segment(src, lpos, rpos));
                     dst.TryAdd(name, new ScriptVar(name,prefix,fence));
                     lpos = -1;
                     rpos = -1;                    

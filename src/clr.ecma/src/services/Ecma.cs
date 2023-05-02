@@ -83,9 +83,6 @@ namespace Z0
         public static MemberKey key(CompositeDispenser dispenser, EcmaMember src)
             => new (src.AssemblyName, src.Token, dispenser.String(src.Namespace), dispenser.String(src.DeclaringType), dispenser.String(src.Name));
 
-        public static EcmaReader reader(MappedAssembly src)
-            => EcmaReader.create(src.BaseAddress, src.FileSize);
-
         public static EcmaReader reader(EcmaFile src)
             => EcmaReader.create(src);
 
@@ -109,9 +106,6 @@ namespace Z0
         public static AssemblyFiles assemblies(IWfChannel channel, IDbArchive src)
             => new (src, ModuleArchives.modules(src).AssemblyFiles().Array());
             
-        public static MetadataMemory memory(MemorySeg src, AssemblyKey assembly)  
-            => new MetadataMemory(src, assembly);
-
         /// <summary>
         /// Loads an assembly + pdb
         /// </summary>

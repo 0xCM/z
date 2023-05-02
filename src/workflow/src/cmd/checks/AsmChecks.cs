@@ -195,7 +195,6 @@ c5 f8 99 c8";
             return true;
         }
 
-
         [CmdOp("asm/check/bitfields")]
         void CheckBitFields()
         {
@@ -790,5 +789,25 @@ c5 f8 99 c8";
             return true;
         }
 
+        static string format(ScriptVar v)        
+        {
+            var dst = EmptyString;
+            if(v.IsPrefixedFence)
+            {
+                var prefix = v.Prefix;
+                var fence = v.Fence;
+                var name = v.Name.Cells;
+                Span<char> buffer = stackalloc char[name.Length + 1 + 2];
+                var i=0;
+                seek(buffer,i++) = prefix;
+                seek(buffer,i++) = fence.Left;
+                for(var j=0; j<name.Length; j++)
+                    seek(buffer, i++) = skip(name,j);
+                seek(buffer,i++) = fence.Right;
+
+                dst = sys.@string(buffer);
+            }
+            return dst;
+        }
     }
 }

@@ -46,7 +46,7 @@ namespace Z0
                 ref readonly var input = ref first(src);
                 ref var output = ref first(dst);
                 for(var i=0; i<k; i++)
-                    seek(output,i) = EcmaSigs.sig(skip(input,i));
+                    seek(output,i) = sig(skip(input,i));
             }
         }
 

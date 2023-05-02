@@ -79,7 +79,6 @@ namespace Z0
         [CmdOp("tool/docs")]
         void ToolDocs(CmdArgs args)
             => iter(LoadDocs(arg(args,0).Value), doc => Channel.Write(doc));
-
         
         public static ToolCmdSpec spec(FolderPath? work = null, params EnvVar[] vars)
             => new (FilePath.Empty, CmdArgs.Empty, work ?? Env.cd(), vars, null, null);
@@ -99,40 +98,40 @@ namespace Z0
         public static ToolCmdSpec spec(FilePath tool, CmdArgs args)
             => new(tool, args,Env.cd(), EnvVars.Empty, null, null);
          
-        public static Task<ExecToken> shell(IWfChannel channel, CmdArgs args)
-        {
-            ExecToken Run()
-            {
-                var profile = args[0].Value;
-                var cwd = args.Count > 1 ? FS.dir(args[1]) : Env.cd();
-                return shell(channel, profile, cwd);  
-            }
-            return sys.start(Run);
-        }
+        // public static Task<ExecToken> shell(IWfChannel channel, CmdArgs args)
+        // {
+        //     ExecToken Run()
+        //     {
+        //         var profile = args[0].Value;
+        //         var cwd = args.Count > 1 ? FS.dir(args[1]) : Env.cd();
+        //         return shell(channel, profile, cwd);  
+        //     }
+        //     return sys.start(Run);
+        // }
 
-        [Op]
-        public static ExecToken shell(IWfChannel channel, string profile, FolderPath cwd)
-        {
-            var flow = channel.Running($"Launching {profile} shell");
-            var psi = new ProcessStartInfo
-            {
-                FileName = @"d:\tools\wt\wt.exe",
-                CreateNoWindow = false,
-                UseShellExecute = false,
-                Arguments = $"nt --profile {profile} -d {cwd}",
-                RedirectStandardError = false,
-                RedirectStandardOutput = false,
-                RedirectStandardInput = false,
-            };
-            var process = sys.process(psi);
-            var result = process.Start();
-            var token = ExecToken.Empty;
-            if(!result)
-                channel.Error("Process creation failed");
-            else
-                token = channel.Ran(flow, $"Launched {profile} shell: {process.Id}");
-            return token;
-        }
+        // [Op]
+        // public static ExecToken shell(IWfChannel channel, string profile, FolderPath cwd)
+        // {
+        //     var flow = channel.Running($"Launching {profile} shell");
+        //     var psi = new ProcessStartInfo
+        //     {
+        //         FileName = @"d:\tools\wt\wt.exe",
+        //         CreateNoWindow = false,
+        //         UseShellExecute = false,
+        //         Arguments = $"nt --profile {profile} -d {cwd}",
+        //         RedirectStandardError = false,
+        //         RedirectStandardOutput = false,
+        //         RedirectStandardInput = false,
+        //     };
+        //     var process = sys.process(psi);
+        //     var result = process.Start();
+        //     var token = ExecToken.Empty;
+        //     if(!result)
+        //         channel.Error("Process creation failed");
+        //     else
+        //         token = channel.Ran(flow, $"Launched {profile} shell: {process.Id}");
+        //     return token;
+        // }
 
         [MethodImpl(Inline), Op]
         public static ToolCmdLine cmdline(FilePath tool, params string[] src)

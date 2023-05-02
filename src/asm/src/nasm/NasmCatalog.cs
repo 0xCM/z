@@ -21,7 +21,7 @@ namespace Z0
             {
                 var i1 = text.index(src, i0 + 1, Chars.LBracket);
                 if(i1 >0)
-                    return text.segment(src,i0 + 1, i1 - 1).Trim();
+                    return SQ.segment(src,i0 + 1, i1 - 1).Trim();
             }
             return default;
         }

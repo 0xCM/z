@@ -7,26 +7,29 @@ namespace Z0
     [Record(TableId), StructLayout(LayoutKind.Sequential)]
     public struct EcmaMethodImport : IComparable<EcmaMethodImport>
     {
-        const string TableId = "ecma.methods.imports";
+        const string TableId = "methods.pinvokes";
 
         public EcmaMethodImport()
         {
-            Name = EmptyString;
+            MethodName = EmptyString;
             DeclaringType = EmptyString;
             Library = EmptyString;
+            TargetName = EmptyString;
             MethodSignature = new MethodSignature<string>();
         }
 
-        public string DeclaringType;
+        public @string DeclaringType;
 
-        public string Name;
+        public @string MethodName;
 
-        public string Library;
+        public @string TargetName;
+
+        public @string Library;
 
         public MethodSignature<string> MethodSignature;
 
         public override string ToString()
-            => $"{Library}::{Name}";
+            => $"{Library}::{MethodName} -> ${TargetName}";
 
         public override int GetHashCode()
             => this.ToString().GetHashCode();
@@ -36,7 +39,7 @@ namespace Z0
             var result = Library.CompareTo(src.Library);
             if(result == 0)
             {
-                result = Name.CompareTo(src.Name);
+                result = MethodName.CompareTo(src.MethodName);
                 if(result == 0)
                     result = DeclaringType.CompareTo(src.DeclaringType);
             }

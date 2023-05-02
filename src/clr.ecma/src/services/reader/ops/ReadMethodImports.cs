@@ -21,16 +21,17 @@ namespace Z0
             var dst = EcmaMethodImport.Empty;
             try
             {
-            if(IsPinvoke(src))
-            {
-                var import = src.GetImport();
-                var moduleRef = MD.GetModuleReference(import.Module);
-                var declaringType = MD.GetTypeDefinition(src.GetDeclaringType());
-                dst.Name = String(src.Name);
-                dst.Library = String(moduleRef.Name);
-                dst.DeclaringType = $"{String(declaringType.Namespace)}.{String(declaringType.Name)}";
-                dst.MethodSignature = src.DecodeSignature<string, GenericContext>(GSTP, null);
-            }
+                if(IsPinvoke(src))
+                {
+                    var import = src.GetImport();
+                    var moduleRef = MD.GetModuleReference(import.Module);
+                    var declaringType = MD.GetTypeDefinition(src.GetDeclaringType());
+                    dst.TargetName = String(import.Name);
+                    dst.MethodName = String(src.Name);
+                    dst.Library = String(moduleRef.Name);
+                    dst.DeclaringType = $"{String(declaringType.Namespace)}.{String(declaringType.Name)}";
+                    dst.MethodSignature = src.DecodeSignature<string, GenericContext>(GSTP, null);
+                }
             }
             catch(Exception)
             {

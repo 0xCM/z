@@ -3,6 +3,5 @@
 
   <ItemGroup>
     <ProjectReference Include="$(Numbers)" />
-    <ProjectReference Include="$(Lang)" />
   </ItemGroup>
 </Project>

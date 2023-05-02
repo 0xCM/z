@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using static Tuples;
 
     using C = AsciCode;
     using S = AsciSymbol;
@@ -12,20 +13,24 @@ namespace Z0
     partial struct SymbolicQuery
     {
         [MethodImpl(Inline), Op]
+        public static Pair<int> indices(ReadOnlySpan<char> src, Fence<char> fence)
+            => pair(index(src, fence.Left), lastindex(src,fence.Right));
+
+        [MethodImpl(Inline), Op]
         public static Pair<int> indices(ReadOnlySpan<char> src, S first, S second)
-            => Tuples.pair(index(src, first), index(src,second));
+            => pair(index(src, first), index(src,second));
 
         [MethodImpl(Inline), Op]
         public static Pair<int> indices(ReadOnlySpan<C> src, Fence<C> fence)
-            => Tuples.pair(index(src, fence.Left), index(src,fence.Right));
+            => pair(index(src, fence.Left), index(src,fence.Right));
 
         [MethodImpl(Inline), Op]
         public static Pair<int> indices(ReadOnlySpan<C> src, Fence<char> fence)
-            => Tuples.pair(index(src, fence.Left), index(src,fence.Right));
+            => pair(index(src, fence.Left), index(src,fence.Right));
 
         [MethodImpl(Inline), Op]
         public static Pair<int> indices(ReadOnlySpan<C> src, S first, S second)
-            => Tuples.pair(index(src, first), index(src,second));
+            => pair(index(src, first), index(src,second));
 
         [MethodImpl(Inline), Op]
         public static uint indices(ReadOnlySpan<char> src, S match, Span<uint> dst)

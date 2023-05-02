@@ -25,7 +25,7 @@ namespace Z0
         
         CoffHeader _CoffHeader;
 
-        PeCorHeader _CorHeader;
+        CorHeader _CorHeader;
 
         PeFileInfo _PeInfo;
 
@@ -41,10 +41,6 @@ namespace Z0
             Source = path;
         }
 
-
-        public CoffModuleInfo ModuleInfo()
-            => new CoffModuleInfo(Source, PeInfo, CoffHeader, CorHeader, SectionHeaders);
-
         public ref readonly ReadOnlySeq<SectionHeaderRow> SectionHeaders 
             => ref _SectionHeaders;
 
@@ -57,7 +53,7 @@ namespace Z0
         public ref readonly CoffHeader CoffHeader 
             => ref _CoffHeader;
 
-        public ref readonly PeCorHeader CorHeader 
+        public ref readonly CorHeader CorHeader 
             => ref _CorHeader;
 
         public ref readonly PeFileInfo PeInfo 
@@ -121,10 +117,10 @@ namespace Z0
             return buffer;
         }
 
-        static PeCorHeader? cor(PEHeaders src)
+        static CorHeader cor(PEHeaders src)
         {
             var cor = src.CorHeader;
-            var dst = default(PeCorHeader);
+            var dst = default(CorHeader);
             if(cor != null)
             {
                 dst = new();
@@ -132,7 +128,7 @@ namespace Z0
                 dst.MinorRuntimeVersion = cor.MinorRuntimeVersion;
                 dst.MetadataDirectory = cor.MetadataDirectory;
                 dst.Flags = cor.Flags;
-                dst.EntryPointTokenOrRelativeVirtualAddress = cor.EntryPointTokenOrRelativeVirtualAddress;
+                dst.EntryPoint = cor.EntryPointTokenOrRelativeVirtualAddress;
                 dst.ResourcesDirectory = cor.ResourcesDirectory;
                 dst.StrongNameSignatureDirectory = cor.StrongNameSignatureDirectory;
                 dst.CodeManagerTableDirectory = cor.CodeManagerTableDirectory;

@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     partial class text
     {
         [MethodImpl(Inline), Op]

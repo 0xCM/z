@@ -9,7 +9,6 @@ namespace Z0
 
     using static sys;
 
-
     class AssemblyCommentCalcs
     {
         readonly IWfChannel Channel;

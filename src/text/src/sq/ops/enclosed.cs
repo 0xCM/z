@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static sys;
+
     partial struct SymbolicQuery
     {
         [Op]

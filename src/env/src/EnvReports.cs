@@ -43,48 +43,33 @@ namespace Z0
             var running = channel.Running();
             emit(channel, EnvVarKind.User, dst);
             emit(channel, EnvVarKind.Machine, dst);
-            tools(channel, dst);
+            save(channel, Env.tools(),dst);            
             emit(channel, EnvVarKind.Process, dst);
             return channel.Ran(running);
         }
 
-        public static ToolCatalog tools()
-        {
-            var paths = Env.path(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL);
-            var buffer = dict<ToolKey,LocatedTool>();
-            iter(paths, dir => {
-                iter(FS.files(dir, false, FileKind.Exe, FileKind.Cmd, FileKind.Bat), path => {                
-                    var include = path.FolderPath != FS.dir("C:/WINDOWS/System32/");
-                    include &= (path.FolderPath != FS.dir("C:/WINDOWS"));
-                    if(include)
-                    {
-                        var k = key(path);
-                        buffer.TryAdd(k, new LocatedTool(k));
-                    }
-                });
-            });
-
-            return new (buffer.Values.Array().Sort());
-        }       
-
         public static EnvReport load(IEnvDb src, EnvId id)
-            => new EnvReport(id,EnvVarKind.Process, Env.vars(cfgpath(src, id)), tools(toolpath(src, id)));
+            => new EnvReport(id,EnvVarKind.Process, vars(cfgpath(src, id)), tools(toolpath(src, id)));
 
-        static uint KeySeq = 0;
-        
-        static ToolKey key(FilePath path)
-            => new (inc(ref KeySeq), path);
+        public static EnvVars vars(FilePath src)
+        {
+            var k = z16;
+            var dst = list<EnvVar>();
+            var line = TextLine.Empty;
+            var buffer = sys.alloc<char>(1024*4);
+            using var reader = src.Utf8LineReader();
+            while(reader.Next(out line))
+            {
+                var content = line.Content;
+                var i = SQ.index(content, Chars.Eq);
+                if(i == NotFound)
+                    continue;
+                dst.Add(new (text.left(content,i), text.right(content,i)));
+            }
+            return dst.ToArray().Sort();
+        }
 
-        static IDbArchive cfgroot(IDbArchive src)
-            => src.Scoped("cfg");
-
-        static FilePath cfgpath(IDbArchive src, EnvId name)
-            => cfgroot(src).Scoped(name).Path("process", FileKind.Cfg);
-
-        static FilePath toolpath(IDbArchive src, EnvId name)
-            => cfgroot(src).Scoped(name).Path("tools", FileKind.Csv);
-
-        static ToolCatalog tools(FilePath src)
+        public static ToolCatalog tools(FilePath src)
         {
             using var reader = src.LineReader(TextEncodingKind.Utf8);
             var keys = list<ToolKey>();
@@ -102,9 +87,8 @@ namespace Z0
             return keys.Map(x => new LocatedTool(x));            
         }
 
-        static void tools(IWfChannel channel, IDbArchive dst)
+        static void save(IWfChannel channel, ToolCatalog catalog, IDbArchive dst)
         {
-            var catalog = tools();
             var counter = 0u;
             var emitter = text.emitter();
             foreach(var tool in catalog)
@@ -130,6 +114,16 @@ namespace Z0
 
             channel.FileEmit(emitter.Emit(), dst.Path(FS.file("tools", FileKind.Csv)));
         }
+
+
+        static IDbArchive cfgroot(IDbArchive src)
+            => src.Scoped("cfg");
+
+        static FilePath cfgpath(IDbArchive src, EnvId name)
+            => cfgroot(src).Scoped(name).Path("process", FileKind.Cfg);
+
+        static FilePath toolpath(IDbArchive src, EnvId name)
+            => cfgroot(src).Scoped(name).Path("tools", FileKind.Csv);
 
         static ExecToken emit(IWfChannel channel, EnvVarKind kind, EnvVars vars, IDbArchive dst)
         {
@@ -214,6 +208,5 @@ namespace Z0
 
             return buffer.ToIndex();
         }
- 
     }
 }

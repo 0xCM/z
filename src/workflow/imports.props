@@ -5,7 +5,6 @@
      <ProjectReference Include="$(SFx)"/>
      <ProjectReference Include="$(Process)"/>
      <ProjectReference Include="$(Builds)"/>
-     <ProjectReference Include="$(Lang)"/>
      <ProjectReference Include="$(Binary)" />
      <ProjectReference Include="$(ClrEcma)" />
      <ProjectReference Include="$(ApiCode)" />

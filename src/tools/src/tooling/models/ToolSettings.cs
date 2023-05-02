@@ -44,7 +44,7 @@ namespace Z0
 
         public static ToolSettings load(FilePath src)
         {
-            var data = Env.vars(src);
+            var data = EnvReports.vars(src);
             var dst = new ToolSettings();
             var setting = @string.Empty;
             if(data.Find(nameof(S.Tool), out setting))

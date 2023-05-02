@@ -1,5 +1,7 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(Projects)" />
+    <ProjectReference Include="$(Events)" />
+    <ProjectReference Include="$(ZEnv)" />
+    <ProjectReference Include="$(Asci)" />
   </ItemGroup>
 </Project>

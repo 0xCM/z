@@ -161,9 +161,9 @@ namespace Z0
         public byte[] BlobArray(EcmaBlobKey index)
             => MD.GetBlobBytes(index);
 
-        [MethodImpl(Inline)]
-        public MetadataMemory Memory(AssemblyKey assembly)
-            => Ecma.memory(Segment, assembly);
+        // [MethodImpl(Inline)]
+        // public MetadataMemory Memory(AssemblyKey assembly)
+        //     => Ecma.memory(Segment, assembly);
 
         public EcmaMvid Mvid()
             => Guid(MD.GetModuleDefinition().Mvid);
@@ -189,7 +189,7 @@ namespace Z0
         public AssemblyKey AssemblyKey()
         {
             if(_AssemblyKey.IsEmpty)
-                _AssemblyKey = new AssemblyKey(AssemblyName().GetVersionedName(), AssemblyName().Version, ReadTargetFramework(), Mvid(), ContentHash());
+                _AssemblyKey = new AssemblyKey(AssemblyName().GetVersionedName(), AssemblyName().Version, ReadTargetFramework(), Mvid());
             return _AssemblyKey;            
         }
 

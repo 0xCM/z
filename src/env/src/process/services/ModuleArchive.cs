@@ -24,7 +24,7 @@ namespace Z0
 
         public IEnumerable<AssemblyFile> AssemblyFiles()
         {
-            foreach(var path in Root.EnumerateFiles(Recurse, FS.Dll, FS.WinMd))
+            foreach(var path in Root.EnumerateFiles(Recurse, FS.Dll, FS.WinMd).AsParallel())
             {
                 if(!path.Format().EndsWith("resources.dll", true, null))
                 {
@@ -36,7 +36,7 @@ namespace Z0
 
         public IEnumerable<AssemblyFile> WinMd()
         {
-            foreach(var path in Root.EnumerateFiles(Recurse, FS.WinMd))
+            foreach(var path in Root.EnumerateFiles(Recurse, FS.WinMd).AsParallel())
                 if(AssemblyFile.name(path, out var name))
                     yield return new AssemblyFile(path, name);
         }

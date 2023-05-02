@@ -196,7 +196,7 @@ namespace Z0
             public AssemblyKey Key 
             {
                 [MethodImpl(Inline)]
-                get => new AssemblyKey(Name, Version, TargetFramework, Mvid, ContentHash);
+                get => new AssemblyKey(Name, Version, TargetFramework, Mvid);
             }
 
             public Hash32 Hash

@@ -5,9 +5,9 @@
 namespace Z0
 {
     [StructLayout(LayoutKind.Sequential,Pack =1), Record(TableName)]
-    public record class PeCorHeader
+    public record struct CorHeader
     {
-        const string TableName = "corheader";
+        const string TableName = "assemblies.corheader";
 
         [Render(20)]
         public ushort MajorRuntimeVersion;
@@ -19,7 +19,7 @@ namespace Z0
 
         public CorFlags Flags;
 
-        public Address32 EntryPointTokenOrRelativeVirtualAddress;
+        public Address32 EntryPoint;
 
         public PeDirectoryEntry ResourcesDirectory;
 
@@ -31,6 +31,6 @@ namespace Z0
 
         public PeDirectoryEntry ExportAddressTableJumpsDirectory;
 
-        public PeDirectoryEntry ManagedNativeHeaderDirectory;
+        public PeDirectoryEntry ManagedNativeHeaderDirectory;        
     }
 }
