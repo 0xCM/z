@@ -1,0 +1,7 @@
+<Project>
+    <ItemGroup>
+        <Content Include="$(GlobalDeps)/SOS.dll" CopyToOutputDirectory="PreserveNewest"/>
+        <Reference Include="$(GlobalDeps)/SOS.Hosting.dll"/>
+        <Reference Include="$(GlobalDeps)/SOS.Extensions.dll"/>      
+    </ItemGroup>
+</Project>

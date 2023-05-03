@@ -1,0 +1,10 @@
+<Project>
+  <ItemGroup>
+      <Reference Include="$(GlobalDeps)/ClangSharp.dll"/>
+      <Reference Include="$(GlobalDeps)/ClangSharp.Interop.dll"/>
+      <Reference Include="$(GlobalDeps)/ClangSharp.PInvokeGenerator.dll"/>
+      <Reference Include="$(GlobalDeps)/ClangSharpPInvokeGenerator.dll"/>
+      <Reference Include="$(GlobalDeps)/LLVMSharp.dll"/>
+      <Reference Include="$(GlobalDeps)/LLVMSharp.Interop.dll"/>
+  </ItemGroup>
+</Project>

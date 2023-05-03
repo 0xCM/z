@@ -1,0 +1,27 @@
+<Project>
+  <ItemGroup>
+        <PackageReference Include="Microsoft.Windows.EventTracing.BootPrefetch" Version="$(EtwVesion)" />
+        <PackageReference Include="Microsoft.Windows.EventTracing.Cpu" Version="$(EtwVesion)" />
+        <PackageReference Include="Microsoft.Windows.EventTracing.Disk" Version="$(EtwVesion)" />
+        <PackageReference Include="Microsoft.Windows.EventTracing.Events" Version="$(EtwVesion)" />
+        <PackageReference Include="Microsoft.Windows.EventTracing.File" Version="$(EtwVesion)" />
+        <PackageReference Include="Microsoft.Windows.EventTracing.Graphics" Version="$(EtwVesion)" />
+        <PackageReference Include="Microsoft.Windows.EventTracing.HyperV" Version="$(EtwVesion)" />
+        <PackageReference Include="Microsoft.Windows.EventTracing.Memory" Version="$(EtwVesion)" />
+        <PackageReference Include="Microsoft.Windows.EventTracing.Metadata" Version="$(EtwVesion)" />
+        <PackageReference Include="Microsoft.Windows.EventTracing.Network" Version="$(EtwVesion)" />
+        <PackageReference Include="Microsoft.Windows.EventTracing.Power" Version="$(EtwVesion)" />
+        <PackageReference Include="Microsoft.Windows.EventTracing.Processes" Version="$(EtwVesion)" />
+        <PackageReference Include="Microsoft.Windows.EventTracing.Processing" Version="$(EtwVesion)" />
+        <PackageReference Include="Microsoft.Windows.EventTracing.Processing.Community" Version="$(EtwVesion)" />
+        <PackageReference Include="Microsoft.Windows.EventTracing.Processing.OutputRedirection" Version="$(EtwVesion)" />
+        <PackageReference Include="Microsoft.Windows.EventTracing.Processing.Toolkit" Version="1.11.0" />
+        <PackageReference Include="Microsoft.Windows.EventTracing.Regions" Version="$(EtwVesion)" />
+        <PackageReference Include="Microsoft.Windows.EventTracing.Registry" Version="$(EtwVesion)" />
+        <PackageReference Include="Microsoft.Windows.EventTracing.ScheduledTasks" Version="$(EtwVesion)" />
+        <PackageReference Include="Microsoft.Windows.EventTracing.Services" Version="$(EtwVesion)" />
+        <PackageReference Include="Microsoft.Windows.EventTracing.Syscalls" Version="$(EtwVesion)" />
+        <PackageReference Include="Microsoft.Windows.EventTracing.Utc" Version="$(EtwVesion)" />
+        <PackageReference Include="Microsoft.Windows.EventTracing.WindowInFocus" Version="$(EtwVesion)" />
+  </ItemGroup>
+</Project>

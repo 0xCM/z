@@ -1,0 +1,10 @@
+<Project>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Runtime.MonoAOTCompiler.Task" Version="$(FxVer)" />
+    <PackageReference Include="Microsoft.NET.Runtime.MonoTargets.Sdk" Version="$(FxVer)" />
+    <PackageReference Include="Microsoft.NET.Workload.Mono.ToolChain.Manifest-6.0.300" Version="6.0.11" />
+    <PackageReference Include="Microsoft.NET.Workload.Mono.ToolChain.Manifest-6.0.400" Version="6.0.11" />
+    <PackageReference Include="Microsoft.NET.Workload.Mono.ToolChain.net6.Manifest-7.0.100" Version="7.0.0" />
+    <PackageReference Include="Microsoft.NET.Workload.Mono.ToolChain.net7.Manifest-7.0.100" Version="7.0.0" />    
+  </ItemGroup>
+</Project>

@@ -1,0 +1,26 @@
+<Project>
+  <PropertyGroup>
+    <ZSysVer>0.0.94</ZSysVer>
+    <ZVer>0.0.286</ZVer>
+    <MsBuildVer>17.6.0-preview-23174-01</MsBuildVer>
+    <NugetVersion>6.6.0-preview.3.57</NugetVersion>
+    <SystemCommandLineVersion>2.0.0-beta4.22564.1</SystemCommandLineVersion>
+
+    <IlcVersion>7.0.4</IlcVersion>
+    <MsDiaVer>1.6.0</MsDiaVer>
+    <MsDiaRuntimeVer>2.2.332302</MsDiaRuntimeVer>
+    <MsDebugVersion>20230202.1638.0</MsDebugVersion>
+    <CodeAnalysisVer>4.5.0</CodeAnalysisVer>
+    <FxVer>7.0.0</FxVer>
+    <MsExtVer>7.0.0</MsExtVer>
+    <EfCoreVer>7.0.0</EfCoreVer>
+    <ClangSharpVer>15.0.2</ClangSharpVer>
+    <MsProseVersion>8.20.0</MsProseVersion>
+    <WinSdkContractVersion>10.0.25314-preview</WinSdkContractVersion>
+    <YamlDotNetVersion>13.0.2</YamlDotNetVersion>
+    <MarkdigVersion>0.31.0</MarkdigVersion>
+    <EtwVesion>1.11.109</EtwVesion>
+    <MessagePackVersion>2.5.108</MessagePackVersion>
+  </PropertyGroup>
+</Project>
+

@@ -1,0 +1,9 @@
+<Project>
+    <ItemGroup>
+        <Reference Include="$(GlobalDeps)/Microsoft.DiaSymReader.dll"/>
+        <Reference Include="$(GlobalDeps)/Microsoft.DiaSymReader.Converter.dll"/>
+        <Reference Include="$(GlobalDeps)/Microsoft.DiaSymReader.PortablePdb.dll"/>
+        <Reference Include="$(GlobalDeps)/Microsoft.FileFormats.dll"/>
+        <Reference Include="$(GlobalDeps)/Microsoft.SymbolStore.dll"/>
+    </ItemGroup>
+</Project>

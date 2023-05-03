@@ -1,0 +1,17 @@
+<Project>
+  <ItemGroup>
+    <Reference Include="$(DotNetSdkBuild)/Microsoft.DotNet.InternalAbstractions.dll" />
+    <Reference Include="$(DotNetSdkBuild)/Microsoft.DotNet.NativeWrapper.dll" />
+    <Reference Include="$(DotNetSdkBuild)/Microsoft.DotNet.SdkResolver.dll" />
+    <Reference Include="$(DotNetSdkBuild)/Microsoft.DotNet.TemplateLocator.dll" />
+
+    <Reference Include="$(DotNetSdkBuild)/Microsoft.Deployment.DotNet.Releases.dll" />
+    <Reference Include="$(DotNetSdkBuild)/Microsoft.NET.HostModel.dll" />
+
+    <Reference Include="$(DotNetSdkBuild)/Microsoft.TemplateEngine.Core.dll" />
+    <Reference Include="$(DotNetSdkBuild)/Microsoft.TemplateEngine.Orchestrator.RunnableProjects.dll" />
+    
+    <Reference Include="$(DotNetSdkFileRoot)/testhost.dll" />
+    
+  </ItemGroup>
+</Project>

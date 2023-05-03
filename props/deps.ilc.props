@@ -1,0 +1,11 @@
+<Project>
+  <ItemGroup>
+    <Reference Include="$(GlobalDeps)/ILCompiler.Reflection.ReadyToRun.dll"/>
+    <Reference Include="$(GlobalDeps)/ILCompiler.TypeSystem.dll"/>
+    <Reference Include="$(GlobalDeps)/ilc.dll"/>
+    <Reference Include="$(GlobalDeps)/ILCompiler.Compiler.dll"/>
+    <Reference Include="$(GlobalDeps)/ILCompiler.DependencyAnalysisFramework.dll"/>
+    <Reference Include="$(GlobalDeps)/ILCompiler.MetadataTransform.dll"/>
+    <Reference Include="$(GlobalDeps)/ILCompiler.RyuJit.dll"/>
+  </ItemGroup>
+</Project>

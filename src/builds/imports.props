@@ -1,6 +1,0 @@
-<Project>
-  <ItemGroup>
-    <ProjectReference Include="$(Files)" />
-  </ItemGroup>
-
-</Project>

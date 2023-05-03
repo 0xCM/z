@@ -1,8 +1,12 @@
 <Project>
-  <Import Project="props\versions.props"/>
   <PropertyGroup>
-    <FrameworkMoniker>net6.0</FrameworkMoniker>
+      <DotNetVersion>6.0.303</DotNetVersion>
+      <LangVersion>Preview</LangVersion>
+      <FrameworkMoniker>net6.0</FrameworkMoniker>
+  </PropertyGroup>
+
+  <Import Project="props\versions.props"/>
+  <PropertyGroup>  
     <Version>$(ZVer)</Version>
-    <LangVersion>Preview</LangVersion>
   </PropertyGroup>
 </Project>

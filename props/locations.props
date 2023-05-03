@@ -1,0 +1,22 @@
+<Project>
+  <PropertyGroup>  
+    <ProjectProps>$(SlnRoot)\props</ProjectProps>
+    <SlnBuild>$(SlnRoot)\build</SlnBuild>
+    <SlnLibs>$(SlnRoot)\lib</SlnLibs>
+    <SlnSrc>$(SlnRoot)\src</SlnSrc>
+    <SlnBin>$(SlnBuild)\bin</SlnBin>
+    <OutputPath>$(SlnBuild)\bin\$(MsBuildProjectName)\$(Configuration)</OutputPath>
+    <IntermediateRoot>$(SlnBuild)\obj\$(MsBuildProjectName)\$(Configuration)</IntermediateRoot>
+    <IntermediateBuildDir>$(IntermediateRoot)</IntermediateBuildDir>
+    <BaseIntermediateOutputPath>$(IntermediateRoot)</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(IntermediateRoot)</IntermediateOutputPath>
+    <Publications>v:/pub</Publications>
+    <CoreLibs>v:/pub/libs</CoreLibs>
+    <GlobalDeps>v:/pub/deps</GlobalDeps>
+    <DotNetSdkBuild>$(Publications)/dotnet/tool</DotNetSdkBuild>
+    <RuntimeArtifacts>D:/env/dev/dotnet/vendor/runtime/artifacts</RuntimeArtifacts>
+    <CoreClrRoot>$(RuntimeArtifacts)/bin/coreclr/windows.x64.Release</CoreClrRoot>
+    <IlcRoot>$(CoreClrRoot)/ilc</IlcRoot>
+    <DotNetSdkFileRoot>$(DOTNET_ROOT)/sdk/$(DotNetVersion)</DotNetSdkFileRoot>
+  </PropertyGroup>
+</Project>
