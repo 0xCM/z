@@ -13,7 +13,6 @@ namespace Z0
         [MethodImpl(Inline)]
         public static bool IsNested(this TypeAttributes flags)
             => (flags & NestedMask) != 0;
-
-
+        
     }
 }

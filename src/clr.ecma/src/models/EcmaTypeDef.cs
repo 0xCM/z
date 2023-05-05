@@ -16,9 +16,9 @@ namespace Z0
         public AssemblyKey Assembly;
 
         [Render(48)]
-        public string Name;
+        public @string Name;
 
-        [Render(48)]
+        [Render(96)]
         public @string FullName;
         
         [Render(48)]

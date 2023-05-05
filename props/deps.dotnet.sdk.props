@@ -4,6 +4,7 @@
     <Reference Include="$(DotNetSdkBuild)/Microsoft.DotNet.NativeWrapper.dll" />
     <Reference Include="$(DotNetSdkBuild)/Microsoft.DotNet.SdkResolver.dll" />
     <Reference Include="$(DotNetSdkBuild)/Microsoft.DotNet.TemplateLocator.dll" />
+    <Reference Include="$(DotNetSdkBuild)/Microsoft.Build.NuGetSdkResolver.dll" />
 
     <Reference Include="$(DotNetSdkBuild)/Microsoft.Deployment.DotNet.Releases.dll" />
     <Reference Include="$(DotNetSdkBuild)/Microsoft.NET.HostModel.dll" />

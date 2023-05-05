@@ -5,8 +5,7 @@
 namespace Z0
 {
     partial class Ecma
-    {
-        
+    {        
         [EcmaRow(TableIndex.TypeDef), StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct TypeDefRow : IEcmaRow<TypeDefRow>
         {

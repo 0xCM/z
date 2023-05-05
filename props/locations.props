@@ -11,9 +11,10 @@
     <BaseIntermediateOutputPath>$(IntermediateRoot)</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(IntermediateRoot)</IntermediateOutputPath>
     <Publications>v:/pub</Publications>
-    <CoreLibs>v:/pub/libs</CoreLibs>
-    <GlobalDeps>v:/pub/deps</GlobalDeps>
+    <CoreLibs>$(Publications)/libs</CoreLibs>
+    <GlobalDeps>$(Publications)/deps</GlobalDeps>
     <DotNetSdkBuild>$(Publications)/dotnet/tool</DotNetSdkBuild>
+    <DotNetSdkTasks>$(Publications)/dotnet/tasks</DotNetSdkTasks>
     <RuntimeArtifacts>D:/env/dev/dotnet/vendor/runtime/artifacts</RuntimeArtifacts>
     <CoreClrRoot>$(RuntimeArtifacts)/bin/coreclr/windows.x64.Release</CoreClrRoot>
     <IlcRoot>$(CoreClrRoot)/ilc</IlcRoot>

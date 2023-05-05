@@ -25,28 +25,8 @@ namespace Z0
             => MD.TypeReferences.ToReadOnlySpan();
 
         [Op]
-        public ReadOnlySpan<CustomAttributeHandle> CustomAttribHandles()
-            => MD.CustomAttributes.ToReadOnlySpan();
-
-        [Op]
-        public ReadOnlySpan<DeclarativeSecurityAttributeHandle> DeclSecurityHandles()
-            => MD.DeclarativeSecurityAttributes.ToReadOnlySpan();
-
-        [Op]
-        public ReadOnlySpan<MemberReferenceHandle> MemberRefHandles()
-            => MD.MemberReferences.ToReadOnlySpan();
-
-        [Op]
         public ReadOnlySpan<AssemblyReferenceHandle> AssemblyRefHandles()
             => MD.AssemblyReferences.ToReadOnlySpan();
-
-        [Op]
-        public ReadOnlySpan<AssemblyFileHandle> AssemblyFileHandles()
-            => MD.AssemblyFiles.ToReadOnlySpan();
-
-        [Op]
-        public ReadOnlySpan<ExportedTypeHandle> ExportedTypeHandles()
-             => MD.ExportedTypes.ToReadOnlySpan();
 
         [Op]
         public ReadOnlySpan<MethodDefinitionHandle> MethodDefHandles()
@@ -65,28 +45,8 @@ namespace Z0
             => MD.PropertyDefinitions.ToReadOnlySpan();
 
         [Op]
-        public ReadOnlySpan<DocumentHandle> DocHandles()
-            => MD.Documents.ToReadOnlySpan();
-
-        [Op]
         public ReadOnlySpan<MethodDebugInformationHandle> MethodDebugInfoHandles()
             => MD.MethodDebugInformation.ToReadOnlySpan();
-
-        [Op]
-        public ReadOnlySpan<LocalScopeHandle> LocalScopeHandles()
-            => MD.LocalScopes.ToReadOnlySpan();
-
-        [Op]
-        public ReadOnlySpan<LocalVariableHandle> LocalVarHandles()
-            => MD.LocalVariables.ToReadOnlySpan();
-
-        [Op]
-        public ReadOnlySpan<LocalConstantHandle> LocalConstantHandles()
-            => MD.LocalConstants.ToReadOnlySpan();
-
-        [Op]
-        public ReadOnlySpan<ImportScopeHandle> ImportScopeHandles()
-            => MD.ImportScopes.ToReadOnlySpan();
 
         [Op]
         public ReadOnlySpan<CustomDebugInformationHandle> CustomDebugInfoHandles()

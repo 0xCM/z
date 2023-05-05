@@ -1,8 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(ProjectProps)\usings.props"/>
-  <Import Project="imports.props"/>
+  <Import Project="$(ProjectProps)\usings.props" />
+  <Import Project="imports.props" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>$(FrameworkMoniker)</TargetFramework>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="System.CommandLine" Version="2.0.0-dev" />
+  </ItemGroup>
 </Project>

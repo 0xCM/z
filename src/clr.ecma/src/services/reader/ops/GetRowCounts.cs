@@ -13,12 +13,13 @@ namespace Z0
             => MD.GetTableRowCount(index);
 
         [Op]
-        public Index<TableIndex,uint> GetRowCounts(ReadOnlySeq<KeyedValue<TableIndex,byte>> indices)
+        public Index<TableIndex,uint> GetRowCounts()
         {
-            var count = indices.Count;
+            var index = Symbols.values<TableIndex,byte>();
+            var count = index.Count;
             var dst = sys.alloc<uint>(count);
             for(var i=0; i<count; i++)
-                seek(dst,i) = (uint)GetRowCount(indices[i].Key);
+                seek(dst,i) = (uint)GetRowCount(index[i].Key);
             return dst;
         }
     }

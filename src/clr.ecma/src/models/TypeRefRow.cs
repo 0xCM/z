@@ -30,9 +30,6 @@ namespace Z0
                 * a TypeRef token, if this is a nested type (which can be determined by, for example, inspecting the Flags column in its TypeDef table - the accessibility subfield is one of the tdNestedXXX set) [ERROR]
                 * a ModuleRef token, if the target type is defined in another module within the same Assembly as this one [ERROR]
                 * a Module token, if the target type is defined in the current module - this should not occur in a CLI (“compressed metadata”) module [WARNING] an AssemblyRef token, if the target type is defined in a different Assembly from the current module [ERROR]";
-
         }        
-
-
     }
 }

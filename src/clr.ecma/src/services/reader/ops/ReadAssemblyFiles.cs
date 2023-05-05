@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using System.Linq;
+
     partial class EcmaReader
     {
         [MethodImpl(Inline), Op]
@@ -18,7 +20,7 @@ namespace Z0
             return dst;
         }
 
-        public ReadOnlySeq<AssemblyFileInfo> ReadAssemblyFiles()
-            => AssemblyFileHandles().Map(ReadAssemblyFile);
+        public IEnumerable<AssemblyFileInfo> ReadAssemblyFiles()
+            => MD.AssemblyFiles.Select(ReadAssemblyFile);
     }
 }

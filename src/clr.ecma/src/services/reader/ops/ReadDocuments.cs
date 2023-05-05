@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using System.Linq;
+
     partial class EcmaReader
     {
         public EcmaDocInfo ReadDocInfo(DocumentHandle handle)
@@ -15,7 +17,7 @@ namespace Z0
             return dst;
         }
 
-        public ReadOnlySeq<EcmaDocInfo> ReadDocInfo()
-            => DocHandles().Map(ReadDocInfo);
+        public IEnumerable<EcmaDocInfo> ReadDocInfo()
+            => MD.Documents.Select(ReadDocInfo);
     }
 }

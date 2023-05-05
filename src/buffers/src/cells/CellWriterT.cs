@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static sys;
-    
+
     public unsafe class CellWriter<S> : IDisposable
         where S : unmanaged
     {
@@ -19,8 +19,8 @@ namespace Z0
             OwnsResources = owns;
         }
 
-
-        void Write(PinnedPtr<S> src, uint count)
+        [MethodImpl(Inline)]
+        void Write(in PinnedPtr<S> src, uint count)
         {
             Writer.Write(recover<S,char>(cover(src.First,count)));
             src.Dispose();

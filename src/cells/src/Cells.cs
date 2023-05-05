@@ -30,8 +30,5 @@ namespace Z0
             return load(recover<T>(slice(src,0, src.Length - rem)));            
         }
 
-        public static CellWriter<T> writer<T>(BinaryWriter writer)
-            where T : unmanaged
-                => new CellWriter<T>(writer,false);
     }
 }

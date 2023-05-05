@@ -1,0 +1,9 @@
+<Project>
+    <ItemGroup>
+      <Reference Include="$(GlobalDeps)/Mono.Cecil.dll"/>
+      <Reference Include="$(GlobalDeps)/Mono.Cecil.Mdb.dll"/>
+      <Reference Include="$(GlobalDeps)/Mono.Cecil.Pdb.dll"/>
+      <Reference Include="$(GlobalDeps)/Mono.Cecil.Rocks.dll"/>
+      <Reference Include="$(GlobalDeps)/TerraFX.Interop.Windows.dll"/>
+    </ItemGroup>
+</Project>

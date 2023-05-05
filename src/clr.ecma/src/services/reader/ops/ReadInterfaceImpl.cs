@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     partial class EcmaReader
     {
         [MethodImpl(Inline), Op]
@@ -13,19 +11,13 @@ namespace Z0
             => MD.GetInterfaceImplementation(src);
 
         [Op]
-        public ReadOnlySpan<TypeDefinition> ReadInterfaceImpl(TypeDefinition src)
+        public IEnumerable<TypeDefinition> ReadInterfaceImpl(TypeDefinition src)
         {
-            var handles = src.GetInterfaceImplementations().ToSpan();
-            var count = handles.Length;
-            var dst = span<TypeDefinition>(count);
-            for(var i=0; i<count; i++)
+            foreach(var handle in src.GetInterfaceImplementations())
             {
-                ref readonly var handle = ref skip(handles,i);
                 var iface = (TypeDefinitionHandle)ReadInterfaceImpl(handle).Interface;
-                seek(dst,i) = MD.GetTypeDefinition(iface);
-
+                yield return MD.GetTypeDefinition(iface);
             }
-            return dst;
         }
     }
 }

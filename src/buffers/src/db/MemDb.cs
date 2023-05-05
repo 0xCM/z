@@ -7,8 +7,15 @@ namespace Z0
     using static sys;
 
     [ApiHost]
-    public class MemDb : IMemDb
+    public sealed class MemDb : IMemDb
     {
+        public static PersistentAllocator allocator(IMemDb db, ByteSize? @default = null)
+            => new PersistentAllocator(db, @default);
+
+        [MethodImpl(Inline), Op]
+        public static PersistentMemory memory(IMemDb src, asci32 name, ByteSize size)
+            => new (name, src.Reserve(size));
+
         [MethodImpl(Inline), Op]
         public static DbDataType type(Name name, Name primitive, DataSize size, Name refinement = default)
             => new DbDataType(name, primitive, size, refinement.IsNonEmpty, refinement);
@@ -170,21 +177,17 @@ namespace Z0
             get => DbMap.FileSize;
         }
 
+        public ByteSize Size
+        {
+            [MethodImpl(Inline)]
+            get => DbMap.FileSize;
+        }
+
         public MemoryAddress BaseAddress 
         {
             [MethodImpl(Inline)]
             get => DbMap.BaseAddress;
         }
-
-        // public MemDb(FilePath path)
-        // {
-        //     var spec = MemoryFileSpec.init(path.CreateParentIfMissing());
-        //     spec.WithReadWriteAccess();
-        //     spec.WithOpenOrCreateMode();
-        //     spec.Stream = true;
-        //     DbMap = new MemoryFile(spec);
-        //     Description = DbMap.Description;
-        // }
 
         public MemDb(FilePath path, ByteSize size)
         {
@@ -194,19 +197,38 @@ namespace Z0
             Description = DbMap.Description;
         }
 
+        public void Store<T>(AllocToken token, ReadOnlySpan<T> src)
+            where T : unmanaged
+        {
+            var size = Demand.lteq((ulong)src.Length * size<T>(), token.Size);
+            var offset = token.Offset;
+            DbMap.Stream.Seek(Offset, System.IO.SeekOrigin.Begin);
+            DbMap.Stream.Write(recover<T,byte>(src));
+            DbMap.Flush();
+        }
+
         public AllocToken Store(ReadOnlySpan<byte> src)
         {
             var size = (uint)src.Length;
             var offset = Offset;
             var next = (uint)(Offset + src.Length);
-            if(next > Capacity)
+            if(next > Size)
                 return AllocToken.Empty;
             DbMap.Stream.Seek(Offset, System.IO.SeekOrigin.Begin);
             DbMap.Stream.Write(src);
             Offset = next;
             DbMap.Flush();
             return new AllocToken(DbMap.BaseAddress, offset, size);
+        }
 
+        public AllocToken Reserve(ByteSize size)
+        {
+            var offset = Offset;
+            var next = (uint)(Offset + size);
+            if(next > Size)
+                return AllocToken.Empty;
+            Offset = next;
+            return new AllocToken(DbMap.BaseAddress, offset, size);
         }
 
         [MethodImpl(Inline)]

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IMemDb
+    public interface IMemDb : IBufferAllocation
     {
         MemoryFileInfo Description {get;}
 
@@ -12,9 +12,25 @@ namespace Z0
 
         AllocToken Store(ReadOnlySpan<byte> src);
 
+        void Store<T>(AllocToken token, ReadOnlySpan<T> src)
+            where T : unmanaged;
+        
+        AllocToken Reserve(ByteSize size);
+        
         Span<byte> Edit(AllocToken token);
 
         ulong Capacity
             => Description.Size;
+        
+        MemoryAddress IBufferAllocation.BaseAddress
+            => Description.BaseAddress;
+        
+        ByteSize IBufferAllocation.Size
+            => Description.Size;
+        
+        void IDisposable.Dispose()
+        {
+
+        }
     }
 }

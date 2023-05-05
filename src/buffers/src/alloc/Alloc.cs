@@ -29,6 +29,8 @@ namespace Z0
             Composite,
 
             Cell,
+
+            Persistent,
         }
 
         protected ConcurrentDictionary<AllocationKind,IAllocDispenser> Data = new();
@@ -47,6 +49,9 @@ namespace Z0
 
         public StringDispenser Strings(uint capacity = StringDispenser.DefaultCapacity)
             => (StringDispenser)Data.GetOrAdd(AllocationKind.String, k => Dispense.strings(capacity));
+
+        public PersistentDispenser Persistent(ByteSize? capacity = null, ByteSize? segsize = null, IDbArchive? root = null, FilePath? first = null)
+            => (PersistentDispenser)Data.GetOrAdd(AllocationKind.Persistent, k => Dispense.persistent(capacity, segsize, root, first));
 
         public SymbolDispenser Symbols(uint capacity = SymbolDispenser.DefaultCapacity)
             => (SymbolDispenser)Data.GetOrAdd(AllocationKind.Symbol, 

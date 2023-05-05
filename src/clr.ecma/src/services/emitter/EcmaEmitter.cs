@@ -10,44 +10,33 @@ namespace Z0
                 
         public void Emit(Assembly[] src, EcmaEmissionSettings options, IDbArchive dst)
         {
-            if(options.EmitAssemblyRefs)
-                EmitAssemblyRefs(src, dst);
+            // if(options.EmitAssemblyRefs)
+            //     EmitAssemblyRefs(src, dst);
 
-            if(options.EmitFieldMetadata)
-                EmitFieldMetadata(src, dst);
+            // if(options.EmitApiMetadump)
+            //     EmitDump(Channel, src,dst);
 
-            if(options.EmitApiMetadump)
-                EmitDump(Channel, src,dst);
+            // if(options.EmitMsilMetadata)
+            //     EmitMsilMetadata(src, dst);
 
-            // if(options.EmitSectionHeaders)
-            //     EmitSectionHeaders(sys.controller().RuntimeArchive(), dst);
+            // if(options.EmitMsilCode)
+            //     Cli.EmitMsil(dst);
 
-            if(options.EmitMsilMetadata)
-                EmitMsilMetadata(src, dst);
+            // if(options.EmitCliStrings)
+            // {
+            //     EmitUserStrings(src, dst);
+            //     EmitSystemStrings(src, dst);
+            // }
 
-            if(options.EmitMsilCode)
-                Cli.EmitMsil(dst);
+            // if(options.EmitMetadataHex)
+            //     EmitLocatedMetadata(src, dst);
 
-            if(options.EmitCliStrings)
-            {
-                EmitUserStrings(src, dst);
-                EmitSystemStrings(src, dst);
-            }
 
-            if(options.EmitMetadataHex)
-                EmitLocatedMetadata(src, dst);
+            // if(options.EmitCliBlobs)
+            //     EmitBlobs(src, dst);
 
-            if(options.EmitCliConstants)
-                EmitConstFields(src, dst);
-
-            if(options.EmitCliBlobs)
-                EmitBlobs(src, dst);
-
-            if(options.EmitMethodDefs)
-                EmitMethodDefs(src, dst);
-
-            if(options.EmitCliRowStats)
-                EmitTableStats(src, dst);
+            // if(options.EmitMethodDefs)
+            //     EmitMethodDefs(src, dst);
         }
     }
 }

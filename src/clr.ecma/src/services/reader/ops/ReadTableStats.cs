@@ -6,28 +6,14 @@ namespace Z0
 {
     using static sys;
 
+
     partial class EcmaReader
     {        
-        /// <summary>
-        /// Returns the offset from the metadata base to each included metadata table
-        /// </summary>
-        /// <returns></returns>
-        [Op]
-        Index<TableIndex,Address32> GetTableOffsets(ReadOnlySeq<KeyedValue<TableIndex,byte>> indices)
-        {
-            var count = indices.Count;
-            var dst = sys.alloc<Address32>(count);
-            for(var i=0; i<count; i++)
-                seek(dst,i) = (uint)MD.GetTableMetadataOffset(indices[i].Key);
-            return dst;
-        }
-
         public void ReadTableStats(ConcurrentBag<EcmaRowStats> dst)
         {
-            var indicies = Symbols.values<TableIndex,byte>();
-            var counts = GetRowCounts(indicies);
-            var offsets = GetTableOffsets(indicies);
-            var sizes = GetRowSizes(indicies);            
+            var counts = GetRowCounts();
+            var offsets = GetTableOffsets();
+            var sizes = GetRowSizes();            
             var name = String(ReadAssemblyDef().Name);
             for(byte j=0; j<counts.Count; j++)
             {

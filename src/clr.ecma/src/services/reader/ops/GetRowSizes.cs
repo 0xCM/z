@@ -9,12 +9,13 @@ namespace Z0
     partial class EcmaReader
     {
         [Op]
-        public Index<TableIndex,byte> GetRowSizes(ReadOnlySeq<KeyedValue<TableIndex,byte>> indices)
+        public Index<TableIndex,byte> GetRowSizes()
         {
-            var count = indices.Count;
+            var index = Symbols.values<TableIndex,byte>();
+            var count = index.Count;
             var dst = sys.alloc<byte>(count);
             for(byte i=0; i<count; i++)
-                seek(dst,i) = (byte)MD.GetTableRowSize(indices[i].Key);
+                seek(dst,i) = (byte)MD.GetTableRowSize(index[i].Key);
             return dst;
         }
     }
