@@ -51,15 +51,5 @@ namespace Z0
         [Op]
         public ReadOnlySpan<CustomDebugInformationHandle> CustomDebugInfoHandles()
             => MD.CustomDebugInformation.ToReadOnlySpan();
-
-        [Op]
-        public ReadOnlySpan<ModuleReferenceHandle> ModuleRefHandles()
-        {
-            var count = MD.GetTableRowCount(TableIndex.ModuleRef);
-            var dst = alloc<ModuleReferenceHandle>(count);
-            for(var i=1; i<=count; i++)
-                seek(dst,i-1) = MetadataTokens.ModuleReferenceHandle(i);
-            return dst;
-        }
     }
 }

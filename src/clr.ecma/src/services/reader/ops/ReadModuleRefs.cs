@@ -5,13 +5,30 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.Linq;
     using static sys;
-    using static Ecma;
+
 
     partial class EcmaReader
     {
-        public ReadOnlySeq<ModuleRefRow> ReadModuleRefs()
-            => from h in ModuleRefHandles() select new ModuleRefRow(h, MD.GetModuleReference(h).Name);
+
+        [Op]
+        public ReadOnlySpan<ModuleReferenceHandle> ModuleRefHandles()
+        {
+            var count = MD.GetTableRowCount(TableIndex.ModuleRef);
+            var dst = alloc<ModuleReferenceHandle>(count);
+            for(var i=1; i<=count; i++)
+                seek(dst,i-1) = MetadataTokens.ModuleReferenceHandle(i);
+            return dst;
+        }
+
+        // public ReadOnlySeq<ModuleRefRow> ReadModuleRefs()
+        // {
+        //     var count = MD.GetTableRowCount(TableIndex.ModuleRef);
+        //     var dst = sys.alloc<ModuleRefRow>(count);
+
+            
+        //     // var handles = ModuleRefHandles();
+        //     // from h in ModuleRefHandles() select new ModuleRefRow(h, MD.GetModuleReference(h).Name);
+        // }
     }
 }
