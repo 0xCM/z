@@ -21,17 +21,17 @@ namespace Z0
         /// <summary>
         /// Start of text
         /// </summary>
-        public static AsciSymbol SOT => AC.SOT;
+        public static AsciSymbol STX => AC.STX;
 
         /// <summary>
         /// End of text
         /// </summary>
-        public static AsciSymbol EOT => AC.EOT;
+        public static AsciSymbol ETX => AC.ETX;
 
         /// <summary>
         /// End of transmission
         /// </summary>
-        public static AsciSymbol EOTR => AC.EOTR;
+        public static AsciSymbol EOTR => AC.EOT;
 
         /// <summary>
         /// Enquiry
@@ -46,7 +46,7 @@ namespace Z0
         /// <summary>
         /// Hell's bells; asci code 7
         /// </summary>
-        public static AsciSymbol Bell => AC.Bell;
+        public static AsciSymbol BEL => AC.BEL;
 
         /// <summary>
         /// The backspace control symbol '\b'; asci code 8

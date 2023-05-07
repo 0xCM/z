@@ -4,53 +4,58 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-    using static AsciChars;
+    using api = AsciTables;
 
     /// <summary>
     /// Defines a contiguous sequence of ascii character codes/characters
     /// </summary>
     public readonly struct AsciTable
     {
-        /// <summary>
-        /// Returns the asci characters corresponding to the asci codes [offset, ..., offset + count] where offset <= (2^7-1) - count
-        /// </summary>
-        /// <param name="offset">The zero-based offset</param>
-        /// <param name="count">Tne number of characters to select</param>
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> chars(sbyte offset, sbyte count)
-            => slice(recover<char>(CharBytes), offset, count);
-
-        /// <summary>
-        /// Returns the asci codes [offset, ..., offset + count] where offset <= (2^7-1) - count
-        /// </summary>
-        /// <param name="offset">The zero-based offset</param>
-        /// <param name="count">Tne number of codes to select</param>
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<AsciCode> codes(sbyte offset, sbyte count)
-            => recover<AsciCode>(slice(AsciChars.CodeBytes, offset, count));
-
         public readonly AsciTableKind Kind;
 
         public readonly sbyte Count;
 
         /// <summary>
+        /// Specifies the first code value
+        /// </summary>
+        public readonly sbyte MinValue;
+
+        /// <summary>
+        /// Specifies the last code value
+        /// </summary>
+        public readonly sbyte MaxValue;
+
+        /// <summary>
         /// Specifies the first code
         /// </summary>
-        readonly sbyte Min;
+        public readonly AsciCode MinCode;
 
         /// <summary>
         /// Specifies the last code
         /// </summary>
-        readonly sbyte Max;
+        public readonly AsciCode MaxCode;
+
+        /// <summary>
+        /// Specifies the first symbol
+        /// </summary>
+        public readonly AsciSymbol MinSymbol;
+
+        /// <summary>
+        /// Specifies the last symbol
+        /// </summary>
+        public readonly AsciSymbol MaxSymbol;
 
         [MethodImpl(Inline), Op]
         public AsciTable(AsciTableKind kind, AsciCode min, AsciCode max)
         {
             Kind = kind;
-            Min = (sbyte)min;
-            Max = (sbyte)max;
-            Count = (sbyte)((sbyte)(Max - Min) + 1);
+            MinCode = min;
+            MaxCode = max;
+            MinSymbol = min;
+            MaxSymbol = max;
+            MinValue = (sbyte)min;
+            MaxValue = (sbyte)max;
+            Count = (sbyte)((sbyte)(MaxValue - MinValue) + 1);
         }
 
         /// <summary>
@@ -59,7 +64,7 @@ namespace Z0
         public ReadOnlySpan<AsciCode> Codes
         {
             [MethodImpl(Inline), Op]
-            get => codes(Min, Count);
+            get => api.codes(MinValue, Count);
         }
 
         /// <summary>
@@ -68,7 +73,7 @@ namespace Z0
         public ReadOnlySpan<AsciSymbol> Symbols
         {
             [MethodImpl(Inline), Op]
-            get => recover<AsciCode,AsciSymbol>(Codes);
+            get => api.symbols(MinValue,Count);    
         }
 
         /// <summary>
@@ -77,7 +82,7 @@ namespace Z0
         public ReadOnlySpan<char> Chars
         {
             [MethodImpl(Inline), Op]
-            get => chars(Min,Count);
+            get => api.chars(MinValue,Count);
         }
     }
 }

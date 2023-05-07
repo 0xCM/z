@@ -14,5 +14,7 @@ namespace Z0
         LowerLetters = 2,
 
         UpperLetters = 4,
+
+        Full = 128,
     }
 }
