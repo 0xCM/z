@@ -47,7 +47,7 @@ namespace Z0
             => Data;
 
         public string Format()
-            => NativeRender.format(this);
+            => NativeSigs.format(this);
 
         public override string ToString()
             => Format();

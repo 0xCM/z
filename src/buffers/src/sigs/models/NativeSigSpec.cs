@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct NativeSigSpec
+    public readonly record struct NativeSigSpec
     {
         public readonly string Scope;
 
@@ -36,10 +36,10 @@ namespace Z0
         }
 
         public string Format()
-            => NativeRender.format(this);
+            => NativeSigs.format(this);
 
         public string Format(SigFormatStyle style)
-            => NativeRender.format(this, style);
+            => NativeSigs.format(this, style);
 
         public override string ToString()
             => Format();

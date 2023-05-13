@@ -7,7 +7,7 @@ namespace Z0
     using static NativeOpMods;
 
     [StructLayout(LayoutKind.Sequential,Pack=1)]
-    public readonly struct NativeOpDef
+    public readonly record struct NativeOpDef
     {
         public readonly Label Name;
 
@@ -48,10 +48,10 @@ namespace Z0
             => Modify(Const | Mod);
 
         public string Format()
-            => NativeRender.format(this);
+            => NativeSigs.format(this);
 
         public string Format(SigFormatStyle style)
-            => NativeRender.format(this, style);
+            => NativeSigs.format(this, style);
 
         public override string ToString()
             => Format();

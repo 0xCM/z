@@ -22,7 +22,7 @@ namespace Z0
                 var j = text.index(decl, ':');
                 var type = j > 0 ? text.right(decl,j) : EmptyString;
                 var name = j > 0 ? text.left(decl,j) : decl;
-                dst = Vars.assign(Vars.var(name,type), value);
+                dst = assign(Vars.var(name,type), value);
             }
             return dst != null;
         }

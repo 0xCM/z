@@ -5,7 +5,7 @@
 namespace Z0
 {
     [StructLayout(LayoutKind.Sequential,Pack=1)]
-    public readonly struct NativeOp
+    public readonly record struct NativeOp
     {
         public const uint StorageSize = 12;
 
@@ -24,10 +24,10 @@ namespace Z0
         }
 
         public string Format()
-            => NativeRender.format(this);
+            => NativeSigs.format(this);
 
         public string Format(SigFormatStyle style)
-            => NativeRender.format(this, style);
+            => NativeSigs.format(this, style);
 
         public override string ToString()
             => Format();

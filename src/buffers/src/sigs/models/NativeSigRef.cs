@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
 
     [StructLayout(LayoutKind.Sequential,Pack=1)]
-    public struct NativeSigRef
+    public readonly record struct NativeSigRef
     {
         const uint StringSize = 16;
 
@@ -91,10 +91,10 @@ namespace Z0
         }
 
         public string Format()
-            => NativeRender.format(this);
+            => NativeSigs.format(this);
 
         public string Format(SigFormatStyle style)
-            => NativeRender.format(this, style);
+            => NativeSigs.format(this, style);
 
         public override string ToString()
             => Format();

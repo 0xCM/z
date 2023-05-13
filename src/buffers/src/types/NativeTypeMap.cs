@@ -114,7 +114,7 @@ namespace Z0
             }
 
             public string Format()
-                => NativeRender.format(this);
+                => NativeSigs.format(this);
 
             public override string ToString()
                 => Format();

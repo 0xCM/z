@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
     using static NativeTypeMap;
 
-    public class NativeRender
+    public class NativeSigs
     {
         public static string format(MapEntry src)
             => string.Format("{0} -> {1}", src.Source, src.Target);

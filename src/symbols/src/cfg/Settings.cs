@@ -66,25 +66,10 @@ namespace Z0
             }
         }
 
-        // public static void store(IWfChannel channel, ReadOnlySpan<Setting> src, FileUri dst, TextEncodingKind encoding = TextEncodingKind.Asci)
-        // {
-        //     var emitter = text.emitter();
-        //     iter(src, x=> emitter.AppendLine(x.Format()));
-        //     channel.FileEmit(emitter.Emit(),dst, encoding);            
-        // }
-
-        // public static void store<T>(IWfChannel channel, ReadOnlySpan<Setting<T>> src, FileUri dst, TextEncodingKind encoding = TextEncodingKind.Asci)
-        // {
-        //     var emitter = text.emitter();
-        //     iter(src, x=> emitter.AppendLine(x.Format()));
-        //     channel.FileEmit(emitter.Emit(),dst, encoding);            
-        // }
-
         public static SettingLookup lookup(FileUri src, char sep)
         {            
             var dst = list<Setting>();
             var line = AsciLineCover.Empty;
-            var quoted = new Fence<AsciCode>(AsciCode.SQuote, AsciCode.SQuote);
             using var reader = src.AsciLineReader();
             while(reader.Next(out line))
             {
@@ -107,7 +92,6 @@ namespace Z0
             return new SettingLookup(dst.ToArray());
         } 
         
-
         public static Seq<Setting> load(FileUri src)
         {
             var data = src.ReadLines(true);

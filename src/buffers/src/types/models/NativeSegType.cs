@@ -56,7 +56,7 @@ namespace Z0
             => Hash;
 
         public string Format()
-            => NativeRender.format(this);
+            => NativeSigs.format(this);
 
         public override string ToString()
             => Format();
