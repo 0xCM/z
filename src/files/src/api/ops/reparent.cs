@@ -4,11 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [Free]
-    public interface IApiCmdMethods
-    {
-        bool Find(string spec, out ApiCmdMethod op);
+    using static sys;
 
-        ref readonly ReadOnlySeq<ApiCmdMethod> Defs {get;}
+    partial struct FS
+    {
+        public static FilePath reparent(FilePath src, FolderPath dst)
+            => dst + src.FileName;
     }
 }

@@ -1,7 +1,7 @@
 <Project>
   <ItemGroup>
     <PackageReference Include="Nito.AsyncEx" Version="5.1.2"/>
-    <PackageReference Include="Microsoft.Debugging.Platform.DbgX" Version="20230330.1.0"/>
+    <PackageReference Include="Microsoft.Debugging.Platform.DbgX" Version="$(DebugXVersion)"/>
     <PackageReference Include="Microsoft.Debugging.Platform.DbgEng" Version="$(MsDebugVersion)"/>
     <PackageReference Include="Microsoft.Debugging.Platform.SymSrv" Version="$(MsDebugVersion)"/>
     <PackageReference Include="Microsoft.Debugging.Platform.SrcSrv" Version="$(MsDebugVersion)"/>

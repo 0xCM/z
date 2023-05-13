@@ -6,8 +6,8 @@ namespace Z0
 {
     public unsafe sealed class PersistentAllocation : Allocation<byte>
     {
-        public static PersistentAllocation alloc(IMemDb src, asci32 name, ByteSize size)
-            => new(MemDb.memory(src, name, size));
+        // public static PersistentAllocation alloc(IMemDb src, ByteSize size)
+        //     => new(MemDb.memory(src, size));
 
         public override MemoryAddress BaseAddress => Memory.BaseAddress;
 

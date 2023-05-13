@@ -63,6 +63,11 @@ namespace Z0
             get => Info.LastWriteTime;
         }
 
+        public _FileUri Absolute
+        {
+            get => FS.absolute(Source);
+        }
+
         /// <summary>
         /// The size of the file in bytes
         /// </summary>

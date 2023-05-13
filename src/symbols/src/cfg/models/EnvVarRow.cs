@@ -13,7 +13,7 @@ namespace Z0
         public uint Seq;
 
         [Render(16)]
-        public @string EnvName;
+        public EnvId EnvName;
 
         [Render(64)]
         public @string VarName;

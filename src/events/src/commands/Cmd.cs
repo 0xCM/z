@@ -11,6 +11,23 @@ namespace Z0
     [ApiHost]
     public class Cmd 
     {   
+        [Op, Closures(UInt64k)]
+        public static CmdArgs reflect<T>(in T src)
+        {
+            var t = typeof(T);
+            var fields = t.PublicInstanceFields();
+            var count = fields.Length;
+            var reflected = sys.alloc<ClrFieldValue>(count);
+            ClrFields.values(src, fields, reflected);
+            var dst = sys.alloc<CmdArg>(count);
+            for(var i=0u; i<count; i++)
+            {
+                ref readonly var fv = ref skip(reflected,i);
+                seek(dst,i) = new CmdArg(fv.Field.Name, fv.Value?.ToString() ?? EmptyString);
+            }
+            return dst;
+        }        
+
         public static bool parse(string src, out CmdLine dst)
         {
             dst = CmdLine.Empty;

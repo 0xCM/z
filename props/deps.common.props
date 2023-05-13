@@ -1,4 +1,5 @@
 <Project>
+  <Import Project="deps.codeanalysis.props" />
   <ItemGroup>
 
     <PackageReference Include="NuGet.Build.Tasks" Version="$(NugetVersion)"/>
@@ -20,21 +21,6 @@
 
     <PackageReference Include="Microsoft.Build.Locator" Version="1.5.5" ExcludeAssets="build"/>    
     <PackageReference Include="MSBuild.StructuredLogger" Version="2.1.790" />    
-
-    <PackageReference Include="Microsoft.CodeAnalysis" Version="$(CodeAnalysisVer)"/>
-    <PackageReference Include="Microsoft.CodeAnalysis.Features" Version="$(CodeAnalysisVer)"/>
-    <PackageReference Include="Microsoft.CodeAnalysis.EditorFeatures.Text" Version="$(CodeAnalysisVer)"/>
-    <PackageReference Include="Microsoft.CodeAnalysis.Scripting" Version="$(CodeAnalysisVer)"/>
-    <PackageReference Include="Microsoft.CodeAnalysis.Scripting.Common" Version="$(CodeAnalysisVer)" />      
-    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="$(CodeAnalysisVer)"/>
-    <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="$(CodeAnalysisVer)"/>
-
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="$(CodeAnalysisVer)" />      
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="$(CodeAnalysisVer)"/>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Features" Version="$(CodeAnalysisVer)"/>
-
-    <PackageReference Include="Microsoft.CodeAnalysis.Compilers" Version="$(CodeAnalysisVer)"/>
-    <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="$(CodeAnalysisVer)"/>
 
   </ItemGroup>
 </Project>

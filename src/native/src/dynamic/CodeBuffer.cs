@@ -22,7 +22,7 @@ namespace Z0
 
         CodeBuffer(ByteSize size)
         {
-            Code = memory.native(size);
+            Code = NativeBuffers.alloc(size);
             Capacity = size;
             Clear();
         }

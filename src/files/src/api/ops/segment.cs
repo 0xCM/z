@@ -8,6 +8,9 @@ namespace Z0
 
     partial struct FS
     {
+        public static string[] segments(FilePath src)
+            => text.split(src.Format(PathSeparator.FS).Replace("//", "/"), Chars.FSlash);
+
         /// <summary>
         /// Returns a contiguous sequence of source paths that are contained by <paramref name='subdir'/>
         /// </summary>

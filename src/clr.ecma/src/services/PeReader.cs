@@ -122,40 +122,74 @@ namespace Z0
         public MethodBodyBlock GetMethodBody(Address32 rva)
             => PE.GetMethodBody((int)rva);
 
-        public ReadOnlySpan<MsilRow> ReadMsil()
+        public static IEnumerable<MsilRow> msil(FilePath path, PEReader reader)        
         {
+            var md = reader.GetMetadataReader();
+            var types = md.TypeDefinitions;
             var dst = list<MsilRow>();
-            var types = MD.TypeDefinitions.ToArray();
-            var typeCount = types.Length;
-            for(var k=0u; k<typeCount; k++)
+            
+            foreach(var type in types) 
             {
-                 var hType = skip(types, k);
-                 var methods = MD.GetTypeDefinition(hType).GetMethods().Array();
-                 var methodCount = methods.Length;
-                 var definitions = map(methods, m=> MD.GetMethodDefinition(m));
-                 for(var i=0u; i<methodCount; i++)
+                 var methods = md.GetTypeDefinition(type).GetMethods();
+                 foreach(var method in methods)
                  {
-                    ref readonly var method = ref skip(methods,i);
-                    ref readonly var definition = ref skip(definitions,i);
+                    var definition = md.GetMethodDefinition(method);
                     var rva = definition.RelativeVirtualAddress;
                     if(rva != 0)
                     {
-                        var body = GetMethodBody(rva);
-                        dst.Add(new MsilRow
+                        var body = reader.GetMethodBody(rva);
+                        var row = new MsilRow
                         {
                             MethodRva = (Address32)rva,
                             Token = EcmaTokens.token(method),
-                            ImageName = Source.FileName.Format(),
+                            ImageName = path.FileName.Format(),
                             BodySize = body.Size,
                             LocalInit = body.LocalVariablesInitialized,
                             MaxStack = body.MaxStack,
-                            MethodName = MD.GetString(definition.Name),
+                            MethodName = md.GetString(definition.Name),
                             Code = body.GetILBytes(),
-                        });
+                        };
+                        yield return row;
                     }
                  }
-            }
-            return dst.ViewDeposited();
+            };
+        }
+
+        public ReadOnlySpan<MsilRow> ReadMsil()
+        {
+            return msil(Source, PE).Array();
+            // var dst = list<MsilRow>();
+            // var types = MD.TypeDefinitions.ToArray();
+            // var typeCount = types.Length;
+            // for(var k=0u; k<typeCount; k++)
+            // {
+            //      var hType = skip(types, k);
+            //      var methods = MD.GetTypeDefinition(hType).GetMethods().Array();
+            //      var methodCount = methods.Length;
+            //      var definitions = map(methods, m=> MD.GetMethodDefinition(m));
+            //      for(var i=0u; i<methodCount; i++)
+            //      {
+            //         ref readonly var method = ref skip(methods,i);
+            //         ref readonly var definition = ref skip(definitions,i);
+            //         var rva = definition.RelativeVirtualAddress;
+            //         if(rva != 0)
+            //         {
+            //             var body = GetMethodBody(rva);
+            //             dst.Add(new MsilRow
+            //             {
+            //                 MethodRva = (Address32)rva,
+            //                 Token = EcmaTokens.token(method),
+            //                 ImageName = Source.FileName.Format(),
+            //                 BodySize = body.Size,
+            //                 LocalInit = body.LocalVariablesInitialized,
+            //                 MaxStack = body.MaxStack,
+            //                 MethodName = MD.GetString(definition.Name),
+            //                 Code = body.GetILBytes(),
+            //             });
+            //         }
+            //      }
+            // }
+            //return dst.ViewDeposited();
         }
     }
 }

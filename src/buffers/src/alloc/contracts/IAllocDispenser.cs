@@ -9,10 +9,4 @@ namespace Z0
     {
 
     }
-
-    [Free]
-    public interface IAllocDispenser<T> : IAllocDispenser
-    {
-
-    }
 }

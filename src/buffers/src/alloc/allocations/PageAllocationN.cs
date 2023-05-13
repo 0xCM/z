@@ -22,7 +22,7 @@ namespace Z0
 
         public PageAllocation()
         {
-            Buffer = memory.native(PageSize*Typed.nat32u<N>());
+            Buffer = NativeBuffers.alloc(PageSize*Typed.nat32u<N>());
         }
 
         public void Dispose()

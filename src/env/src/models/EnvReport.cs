@@ -6,20 +6,20 @@ namespace Z0
 {
     public sealed record class EnvReport
     {
-        public readonly EnvId EnvId;
-
-        public readonly EnvVarKind Kind;
+        public readonly EnvId EnvName;
 
         public readonly EnvVars Vars;
 
         public readonly ToolCatalog Tools;
 
-        public EnvReport(EnvId id, EnvVarKind kind, EnvVars vars, ToolCatalog tools)
+        public readonly ReadOnlySeq<EnvVarRow> Rows;
+
+        public EnvReport(EnvId name, EnvVars vars, ToolCatalog tools, ReadOnlySeq<EnvVarRow> rows)
         {
-            EnvId = id;
-            Kind = kind;
+            EnvName = name;
             Vars = vars;
             Tools = tools;
+            Rows = rows;
         }
     }
 }

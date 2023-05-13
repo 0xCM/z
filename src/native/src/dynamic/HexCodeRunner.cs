@@ -42,7 +42,7 @@ namespace Z0
 
         public HexCodeRunner(IWfRuntime wf, IWfChannel channel)
         {
-            CodeBuffer = memory.native(Pow2.T10);
+            CodeBuffer = NativeBuffers.alloc(Pow2.T10);
             Channel = channel;
         }
 

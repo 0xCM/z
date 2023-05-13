@@ -10,8 +10,6 @@ namespace Z0
 
         IDbArchive Root {get;}
         
-        ProjectKind Kind {get;}
-
         IEnumerable<FilePath> Files() 
             => Root.Files();
 

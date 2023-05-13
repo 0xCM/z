@@ -84,7 +84,7 @@ namespace Z0
             => Labels.Label(content);
 
         [MethodImpl(Inline)]
-        public StringRef String(string content)
+        public StringRef String(ReadOnlySpan<char> content)
             => Strings.String(content);
 
         [MethodImpl(Inline)]

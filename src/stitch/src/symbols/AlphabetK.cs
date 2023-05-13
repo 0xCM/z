@@ -32,7 +32,7 @@ namespace Z0
         {
             Name = name;
             var count = (uint)src.Length;
-            Buffer = memory.native<K>(count);
+            Buffer = NativeBuffers.alloc<K>(count);
             _Chars = src;
             for(var i=0u; i<src.Length; i++)
             {
@@ -41,7 +41,6 @@ namespace Z0
                 _Chars[i] = atom;
             }
         }
-
 
         [MethodImpl(Inline)]
         public ref readonly K Char(uint key)

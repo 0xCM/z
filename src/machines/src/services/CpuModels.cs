@@ -14,9 +14,9 @@ namespace Z0
             where T : unmanaged
                 => new CpuCore<T>(id);
 
-        public static Stack<T> stack<T>(uint capacity)
+        public static FixedStack<T> stack<T>(uint capacity)
             where T : unmanaged
-                => new Stack<T>(sys.alloc<T>(capacity));
+                => new FixedStack<T>(sys.alloc<T>(capacity));
 
         public static CpuModel<T> cpu<T>(uint cores)
             where T : unmanaged

@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Free]
-    public interface ILabelDispenser : IAllocDispenser<Label>
+    public interface ILabelDispenser : IAllocDispenser
     {
         Label Label(string content);
     }

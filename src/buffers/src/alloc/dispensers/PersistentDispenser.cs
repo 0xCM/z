@@ -12,6 +12,8 @@ namespace Z0
 
         static IDbArchive DefaultStorage => AppSettings.Default.EnvDb().Scoped("dat");
 
+        static ByteSize PageSize => Pow2.T12;
+
         readonly Dictionary<long,PersistentAllocator> Allocators = new();
 
         readonly IDbArchive StorageRoot;
@@ -28,17 +30,17 @@ namespace Z0
             StorageRoot = root ??(DefaultStorage);
             var name = first != null ? first.Value.FileName : FS.file(Guid.NewGuid().ToString(), FS.ext("dat"));
             var path = first != null ? first.Value : StorageRoot.Path(name);
-            AddAllocator(path);
+            CreateAllocator(path);
         }
 
-        PersistentAllocator AddAllocator(FilePath path)
+        PersistentAllocator CreateAllocator(FilePath path)
         {
             var i = next();
             Allocators[i] = new PersistentAllocator(MemDb.open(path, Capacity), SegmentSize);
             return Allocators[i];
         }
 
-        PersistentMemory Dispense(asci32 name, ByteSize size, out PersistentAllocator _alloc)
+        PersistentMemory Dispense(ByteSize size, out PersistentAllocator _alloc)
         {
             var dst = PersistentMemory.Empty;
             if(size > Capacity)
@@ -47,32 +49,50 @@ namespace Z0
             lock(Locker)
             {
                 _alloc = Allocators[Seq];
-                if(!_alloc.Alloc(name, size, out dst))
+                if(!_alloc.Alloc(size, out dst))
                 {
                     var file = Guid.NewGuid().ToString();
-                    _alloc = AddAllocator(StorageRoot.Path(FS.file(file, FS.ext("dat"))));
+                    _alloc = CreateAllocator(StorageRoot.Path(FS.file(file, FS.ext("dat"))));
                     _alloc.Alloc(size, out dst);
                 }
 
             }
             return dst;
         }
-
-        public PersistentMemory Dispense(asci32 name, ByteSize size)
-            => Dispense(name, size, out _);
-
-        [MethodImpl(Inline)]
-        public PersistentMemory Dispense(ByteSize size)
-            => Dispense(Guid.NewGuid().ToString(), size);
-
-        [MethodImpl(Inline)]
-        PersistentMemory Dispense(ByteSize size, out PersistentAllocator alloc)
-            => Dispense(Guid.NewGuid().ToString(), size, out alloc);
-
-        protected override void Dispose()
+        
+        public AllocToken Store<T>(ReadOnlySpan<T> src)
+            where T : unmanaged
         {
-            
+            var size = src.Length * sys.size<T>();
+            var token = AllocToken.Empty;
+            var alloc = default(PersistentAllocator);
+            if(size > Capacity)
+                sys.@throw($"ALlocation capacity of {Capacity} exceeded by {size - Capacity}");
+            lock(Locker)
+            {
+                alloc = Allocators[Seq];
+                var memory = PersistentMemory.Empty;
+                if(!alloc.Alloc(size, out memory))
+                {
+                    var file = Guid.NewGuid().ToString();
+                    alloc = CreateAllocator(StorageRoot.Path(FS.file(file, FS.ext("dat"))));
+                    alloc.Alloc(size, out memory);
+                }
+                token = memory.Token;
+            }
+            alloc.Store(token, src);
+            return token;
         }
+        public PersistentMemory Dispense(ByteSize size)
+            => Dispense(size, out _);
+
+        // [MethodImpl(Inline)]
+        // public PersistentMemory Dispense(ByteSize size)
+        //     => Dispense(Guid.NewGuid().ToString(), size);
+
+        // [MethodImpl(Inline)]
+        // PersistentMemory Dispense(ByteSize size, out PersistentAllocator alloc)
+        //     => Dispense(Guid.NewGuid().ToString(), size, out alloc);
 
         [MethodImpl(Inline)]
         public MemorySeg Memory(ByteSize size)
@@ -126,5 +146,22 @@ namespace Z0
 
         public Label Label(string src)
             => Label(span(src));
+
+        public MemorySeg Page()
+        {
+            var memory = Memory(PageSize);
+            return new MemorySeg(memory.BaseAddress, memory.Size);
+        }
+
+        public MemorySeg Pages(byte count)
+        {
+            var memory = Memory(PageSize*count);
+            return new MemorySeg(memory.BaseAddress, memory.Size);
+        }
+
+        protected override void Dispose()
+        {
+            
+        }
     }
 }

@@ -38,6 +38,16 @@ namespace Z0
         public static IWfEmissions emission(FilePath dst)
             => new EmissionLog(dst);
 
+        public static IWorkerLog worker(FilePath dst, bool delete = true)
+        {
+            if(delete)
+                dst.Delete();
+            var errors = dst.ChangeExtension(FS.ext("errors.log"));
+            if(delete)
+                errors.Delete();
+            return worker(new LogSettings(dst, errors));
+        }
+
         [MethodImpl(Inline), Op]
         public static IWorkerLog worker(LogSettings config)
             => new WorkerLog(config);

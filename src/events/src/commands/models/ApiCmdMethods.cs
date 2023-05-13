@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class ApiCmdMethods : IApiCmdMethods
+    public class ApiCmdMethods
     {
         readonly Dictionary<string,ApiCmdMethod> Lookup;
 

@@ -13,10 +13,6 @@ namespace Z0
             => MD.ManifestResources.ToReadOnlySpan();
         
         [MethodImpl(Inline), Op]
-        public static Handle handle(EcmaHandleData src)
-            => @as<EcmaHandleData,Handle>(src);
-
-        [MethodImpl(Inline), Op]
         public ReadOnlySpan<TypeDefinitionHandle> TypeDefHandles()
             => MD.TypeDefinitions.ToReadOnlySpan();
 
@@ -37,19 +33,11 @@ namespace Z0
             => MD.FieldDefinitions.ToReadOnlySpan();
 
         [Op]
-        public ReadOnlySpan<EventDefinitionHandle> EventDefHandles()
-            => MD.EventDefinitions.ToReadOnlySpan();
-
-        [Op]
         public ReadOnlySpan<PropertyDefinitionHandle> PropertyDefHandles()
             => MD.PropertyDefinitions.ToReadOnlySpan();
 
         [Op]
         public ReadOnlySpan<MethodDebugInformationHandle> MethodDebugInfoHandles()
             => MD.MethodDebugInformation.ToReadOnlySpan();
-
-        [Op]
-        public ReadOnlySpan<CustomDebugInformationHandle> CustomDebugInfoHandles()
-            => MD.CustomDebugInformation.ToReadOnlySpan();
     }
 }

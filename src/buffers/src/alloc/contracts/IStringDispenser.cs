@@ -5,8 +5,8 @@
 namespace Z0
 {
     [Free]
-    public interface IStringDispenser : IAllocDispenser<StringRef>
+    public interface IStringDispenser : IAllocDispenser
     {
-        StringRef String(string content);
+        StringRef String(ReadOnlySpan<char> content);
     }
 }

@@ -22,80 +22,7 @@ namespace Z0
             return runner;
         }
 
-        static ICmdHandler handler(IWfRuntime wf, Type tHandler)
-        {
-            var handler = (ICmdHandler)Activator.CreateInstance(tHandler, new object[]{});
-            handler.Initialize(wf);
-            return handler;
-        }
-
-        static CmdHandlers handlers(IWfRuntime wf, Assembly[] src)
-        {
-            var dst = src.Types().Concrete().Tagged<CmdHandlerAttribute>().Select(x => handler(wf,x)).Map(x => (x.Route,x)).ToDictionary();
-            dst.TryAdd(Z0.Handlers.DevNul.Route, handler(wf, typeof(Handlers.DevNul)));
-            return new (dst);
-        }
-
-        static ApiCmdMethods methods(IWfRuntime wf, Assembly[] parts)
-        {
-            var types = parts.Types().Concrete().Tagged<CmdProviderAttribute>();
-            var dst = dict<string,ApiCmdMethod>();
-            iter(types.Tagged<CmdProviderAttribute>().Concrete(), t => {
-                var method = t.StaticMethods().Public().Where(m => m.Name == "create").First();
-                var service = (IApiService)method.Invoke(null, new object[]{wf});
-                iter(methods(service).Defs, m => dst.TryAdd(m.CmdName, m));
-            });
-            return new ApiCmdMethods(dst);
-        }
-
-        static ApiCmdMethods methods(IApiService host)
-        {
-            var src = host.GetType().DeclaredInstanceMethods().Tagged<CmdOpAttribute>();
-            var dst = dict<string,ApiCmdMethod>();
-            var count = src.Length;
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var mi = ref skip(src,i);
-                var tag = mi.Tag<CmdOpAttribute>().Require();
-                dst.TryAdd(tag.Name, new ApiCmdMethod(tag.Name, classify(mi),  mi, host));                
-            }
-            return new ApiCmdMethods(dst);
-        }
-
-        static ApiActorKind classify(MethodInfo src)
-        {
-            var dst = ApiActorKind.None;
-            var arity = src.ArityValue();
-            var @void = src.HasVoidReturn();
-            switch(arity)
-            {
-                case 0:
-                    switch(@void)
-                    {
-                        case false:
-                            dst = ApiActorKind.Pure;
-                        break;
-                        case true:
-                            dst = ApiActorKind.Emitter;
-                        break;
-                    }
-                break;
-                case 1:
-                    switch(@void)
-                    {
-                        case true:
-                            dst = ApiActorKind.Receiver;
-                        break;
-                        case false:
-                            dst = ApiActorKind.Func;
-                        break;
-                    }
-                break;
-            }
-            return dst;
-        }
-
-        readonly IApiCmdMethods Methods;
+        readonly ApiCmdMethods Methods;
 
         readonly IWfChannel Channel;
 
@@ -104,7 +31,7 @@ namespace Z0
         readonly ApiCmdCatalog CmdCatalog;
 
         [MethodImpl(Inline)]
-        public ApiCmdRunner(IWfChannel channel, IApiCmdMethods methods, CmdHandlers handlers)
+        public ApiCmdRunner(IWfChannel channel, ApiCmdMethods methods, CmdHandlers handlers)
         {
             Methods = methods;
             Channel = channel;
@@ -115,48 +42,6 @@ namespace Z0
         ApiCmdCatalog IApiCmdRunner.Catalog 
             => CmdCatalog;
 
-        static ApiCmdCatalog catalog(IApiCmdMethods methods)
-        {
-            var defs = methods.Defs;
-            var count = defs.Count;
-            var dst = sys.alloc<ApiCmdInfo>(count);
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var uri = ref defs[i].Uri;
-                ref var entry = ref seek(dst,i);
-                entry.Uri = uri;
-                entry.Hash = uri.Hash;
-                entry.Name = uri.Name;
-            }
-
-            return new ApiCmdCatalog(dst);
-        }
-
-        public ExecToken RunCommand(string[] _args)
-        {
-            var token = ExecToken.Empty;
-            var args = _args.ToSeq();
-            if(args.IsEmpty)
-            {
-                var dst = text.emitter();
-                Usage(dst);
-                Channel.Row(dst.Emit());
-            }
-            else
-            {
-                token = RunCommand(args[0], sys.mapi(sys.slice(args.View,1), (i,value) => Cmd.arg(value)));
-            }
-            return token;
-        }
-
-        void Usage(ITextEmitter dst)
-        {
-            var host = sys.controller().GetSimpleName();
-            dst.AppendLine($"Usage: {host} <command> [args..]");
-            dst.IndentLine(4, "<command> =");
-            iter(Handlers.Routes, fx => dst.IndentLine(4,$"| {fx}"));
-        }
- 
         public ExecToken RunScript(FilePath src)
         {
             ExecToken Exec()
@@ -214,6 +99,31 @@ namespace Z0
 
         public ExecToken RunCommand(string action)
             => RunCommand(action, CmdArgs.Empty);
+
+        public ExecToken RunCommand(string[] input)
+        {
+            var token = ExecToken.Empty;
+            var args = input.ToSeq();
+            if(args.IsEmpty)
+            {
+                var dst = text.emitter();
+                Usage(dst);
+                Channel.Row(dst.Emit());
+            }
+            else
+            {
+                token = RunCommand(args[0], sys.mapi(sys.slice(args.View,1), (i,value) => Cmd.arg(value)));
+            }
+            return token;
+        }
+
+        void Usage(ITextEmitter dst)
+        {
+            var host = sys.controller().GetSimpleName();
+            dst.AppendLine($"Usage: {host} <command> [args..]");
+            dst.IndentLine(4, "<command> =");
+            iter(Handlers.Routes, fx => dst.IndentLine(4,$"| {fx}"));
+        } 
 
         Outcome Run(ICmdHandler handler, CmdArgs args)
         {
@@ -291,6 +201,96 @@ namespace Z0
             }
 
            return result;
+        }
+
+        static ApiCmdCatalog catalog(ApiCmdMethods methods)
+        {
+            var defs = methods.Defs;
+            var count = defs.Count;
+            var dst = sys.alloc<ApiCmdInfo>(count);
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var uri = ref defs[i].Uri;
+                ref var entry = ref seek(dst,i);
+                entry.Uri = uri;
+                entry.Hash = uri.Hash;
+                entry.Name = uri.Name;
+            }
+
+            return new ApiCmdCatalog(dst);
+        }
+
+        static ICmdHandler handler(IWfRuntime wf, Type tHandler)
+        {
+            var handler = (ICmdHandler)Activator.CreateInstance(tHandler, new object[]{});
+            handler.Initialize(wf);
+            return handler;
+        }
+
+        static CmdHandlers handlers(IWfRuntime wf, Assembly[] src)
+        {
+            var dst = src.Types().Concrete().Tagged<CmdHandlerAttribute>().Select(x => handler(wf,x)).Map(x => (x.Route,x)).ToDictionary();
+            dst.TryAdd(Z0.Handlers.DevNul.Route, handler(wf, typeof(Handlers.DevNul)));
+            return new (dst);
+        }
+
+        static ApiCmdMethods methods(IWfRuntime wf, Assembly[] parts)
+        {
+            var types = parts.Types().Concrete().Tagged<CmdProviderAttribute>();
+            var dst = dict<string,ApiCmdMethod>();
+            iter(types.Tagged<CmdProviderAttribute>().Concrete(), t => {
+                var method = t.StaticMethods().Public().Where(m => m.Name == "create").First();
+                var service = (IApiService)method.Invoke(null, new object[]{wf});
+                iter(methods(service).Defs, m => dst.TryAdd(m.CmdName, m));
+            });
+            return new ApiCmdMethods(dst);
+        }
+
+        static ApiCmdMethods methods(IApiService host)
+        {
+            var src = host.GetType().DeclaredInstanceMethods().Tagged<CmdOpAttribute>();
+            var dst = dict<string,ApiCmdMethod>();
+            var count = src.Length;
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var mi = ref skip(src,i);
+                var tag = mi.Tag<CmdOpAttribute>().Require();
+                dst.TryAdd(tag.Name, new ApiCmdMethod(tag.Name, classify(mi),  mi, host));                
+            }
+            return new ApiCmdMethods(dst);
+        }
+
+        static ApiActorKind classify(MethodInfo src)
+        {
+            var dst = ApiActorKind.None;
+            var arity = src.ArityValue();
+            var @void = src.HasVoidReturn();
+            switch(arity)
+            {
+                case 0:
+                    switch(@void)
+                    {
+                        case false:
+                            dst = ApiActorKind.Pure;
+                        break;
+                        case true:
+                            dst = ApiActorKind.Emitter;
+                        break;
+                    }
+                break;
+                case 1:
+                    switch(@void)
+                    {
+                        case true:
+                            dst = ApiActorKind.Receiver;
+                        break;
+                        case false:
+                            dst = ApiActorKind.Func;
+                        break;
+                    }
+                break;
+            }
+            return dst;
         }
     }
 }

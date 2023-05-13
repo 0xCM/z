@@ -19,9 +19,9 @@ namespace Z0
         public void Run(ITextEmitter dst)
         {
             var count = Pow2.T12;
-            using var buffer0 = memory.native<uint>(count);
-            using var buffer1 = memory.native<uint>(count);
-            using var buffer2 = memory.native<uint>(count);
+            using var buffer0 = NativeBuffers.alloc<uint>(count);
+            using var buffer1 = NativeBuffers.alloc<uint>(count);
+            using var buffer2 = NativeBuffers.alloc<uint>(count);
             Random.Fill(buffer0.Edit);
             Random.Fill(buffer1.Edit);
             var r0 = MemorySeq.reader(buffer0);

@@ -12,9 +12,9 @@ namespace Z0
         public static PersistentAllocator allocator(IMemDb db, ByteSize? @default = null)
             => new PersistentAllocator(db, @default);
 
-        [MethodImpl(Inline), Op]
-        public static PersistentMemory memory(IMemDb src, asci32 name, ByteSize size)
-            => new (name, src.Reserve(size));
+        // [MethodImpl(Inline), Op]
+        // public static PersistentMemory memory(IMemDb src, ByteSize size)
+        //     => new (src.Reserve(size));
 
         [MethodImpl(Inline), Op]
         public static DbDataType type(Name name, Name primitive, DataSize size, Name refinement = default)
@@ -200,11 +200,25 @@ namespace Z0
         public void Store<T>(AllocToken token, ReadOnlySpan<T> src)
             where T : unmanaged
         {
-            var size = Demand.lteq((ulong)src.Length * size<T>(), token.Size);
-            var offset = token.Offset;
-            DbMap.Stream.Seek(Offset, System.IO.SeekOrigin.Begin);
+            Demand.lteq((ulong)src.Length * size<T>(), token.Size);
+            DbMap.Stream.Seek(token.Offset, System.IO.SeekOrigin.Begin);
             DbMap.Stream.Write(recover<T,byte>(src));
             DbMap.Flush();
+        }
+
+        public AllocToken Store<T>(ReadOnlySpan<T> src)
+            where T : unmanaged
+        {
+            var size = sys.size<T>()*(uint)src.Length;
+            var offset = Offset;
+            var next = (uint)(Offset + size);
+            if(next > Size)
+                return AllocToken.Empty;
+            DbMap.Stream.Seek(Offset, System.IO.SeekOrigin.Begin);
+            DbMap.Stream.Write(recover<T,byte>(src));
+            Offset = next;
+            DbMap.Flush();
+            return new AllocToken(DbMap.BaseAddress, offset, size);
         }
 
         public AllocToken Store(ReadOnlySpan<byte> src)

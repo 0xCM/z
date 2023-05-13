@@ -1,16 +1,18 @@
 <Project>
   <PropertyGroup>
-    <ZSysVer>0.0.98</ZSysVer>
-    <ZVer>0.0.294</ZVer>
+    <ZSysVer>0.0.102</ZSysVer>
+    <ZVer>0.0.310</ZVer>
     <MsBuildVer>17.6.0-preview-23174-01</MsBuildVer>
     <NugetVersion>6.6.0-preview.3.57</NugetVersion>
     <SystemCommandLineVersion>2.0.0-beta4.22564.1</SystemCommandLineVersion>
+    <CodeAnalysisVersion>4.7.0-dev</CodeAnalysisVersion>
+
+    <MsDebugVersion>20230328.919.0</MsDebugVersion>
+    <DebugXVersion>20230430.1.0</DebugXVersion>
 
     <IlcVersion>7.0.4</IlcVersion>
     <MsDiaVer>1.6.0</MsDiaVer>
     <MsDiaRuntimeVer>2.2.332302</MsDiaRuntimeVer>
-    <MsDebugVersion>20230202.1638.0</MsDebugVersion>
-    <CodeAnalysisVer>4.5.0</CodeAnalysisVer>
     <FxVer>7.0.0</FxVer>
     <MsExtVer>7.0.0</MsExtVer>
     <EfCoreVer>7.0.0</EfCoreVer>

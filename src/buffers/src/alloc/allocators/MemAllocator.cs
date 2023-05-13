@@ -20,7 +20,7 @@ namespace Z0
         internal MemAllocator(ByteSize size)
         {
             Size = size;
-            Buffer = memory.native(size);
+            Buffer = NativeBuffers.alloc(size);
             MaxAddress = Buffer.Address(size);
             Offset = 0;
         }

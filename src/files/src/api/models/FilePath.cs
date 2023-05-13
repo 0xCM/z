@@ -9,9 +9,6 @@ namespace Z0
 
     public readonly struct FilePath : IFsEntry<FilePath>
     {
-        public static RelativeFilePath relative(FolderPath root, FilePath src)
-            => new RelativeFilePath(new RelativePath(Path.GetRelativePath(root.Format(), src.Format())));
-
         public PathPart Name {get;}
 
         [MethodImpl(Inline)]
@@ -68,6 +65,11 @@ namespace Z0
             get => new (Path.GetExtension(Name).TrimStart('.'));
         }
 
+        public FilePath Absolute
+        {
+            get => FS.absolute(this);
+        }
+
         public FolderPath FolderPath
         {
             [MethodImpl(Inline)]
@@ -122,7 +124,7 @@ namespace Z0
             => !Is(x1,x2);
 
         public RelativeFilePath Relative(FolderPath src)
-            => relative(src, this);
+            => FS.relative(src, this);
 
         public FilePath WithoutExtension
             => FolderPath + FileName.WithoutExtension;
@@ -146,13 +148,14 @@ namespace Z0
             => File.ReadAllText(Name, Encoding.Unicode);
 
         public RelativeFilePath RelativeTo(FolderPath src)
-            => relative(src, this);
+            => FS.relative(src, this);
 
-        [MethodImpl(Inline)]
+        public FilePath Reparent(FolderPath dst)
+            => FS.reparent(this, dst);
+
         public FilePath Replace(char src, char dst)
             => new FilePath(Name.Replace(src,dst));
 
-        [MethodImpl(Inline)]
         public FilePath Replace(string src, string dst)
             => new FilePath(Name.Replace(src,dst));
 

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class Projects
+    public class ProjectHolder
     {
         static IProject Project;
 

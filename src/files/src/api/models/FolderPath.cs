@@ -50,6 +50,11 @@ namespace Z0
             get => FS.folder(Info.Name);
         }
 
+        public FolderPath Absolute
+        {
+            get => FS.absolute(this);
+        }
+
         public Files Files(FileExt ext, bool recurse = false)
             => Files(this, ext, recurse);
 

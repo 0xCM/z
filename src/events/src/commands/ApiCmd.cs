@@ -6,39 +6,24 @@ namespace Z0
 {
     using static sys;
 
+
     public class ApiCmd
     {
         public static ProjectContext context(IProject src)
             => new ProjectContext(src, CmdFlows.flows(src));
 
-        [Op, Closures(UInt64k)]
-        public static CmdArgs reflect<T>(in T src)
-        {
-            var t = typeof(T);
-            var fields = t.PublicInstanceFields();
-            var count = fields.Length;
-            var reflected = sys.alloc<ClrFieldValue>(count);
-            ClrFields.values(src, fields, reflected);
-            var dst = sys.alloc<CmdArg>(count);
-            for(var i=0u; i<count; i++)
-            {
-                ref readonly var fv = ref skip(reflected,i);
-                seek(dst,i) = new CmdArg(fv.Field.Name, fv.Value?.ToString() ?? EmptyString);
-            }
-            return dst;
-        }        
 
-        public static CmdArgs args<T>()
-            where T : ICmd
-                => typeof(T).DeclaredInstanceFields().Select(arg);
+        // public static CmdArgs args<T>()
+        //     where T : ICmd
+        //         => typeof(T).DeclaredInstanceFields().Select(arg);
 
-        public static CmdArg arg(FieldInfo src)
-        {
-            var attrib = src.Tag<CmdArgAttribute>();
-            var name = attrib.MapValueOrDefault(a => a.Name, src.Name);
-            var desc = attrib.MapValueOrDefault(a => a.Description, EmptyString);
-            return new (name,desc);
-        }
+        // public static CmdArg arg(FieldInfo src)
+        // {
+        //     var attrib = src.Tag<CmdArgAttribute>();
+        //     var name = attrib.MapValueOrDefault(a => a.Name, src.Name);
+        //     var desc = attrib.MapValueOrDefault(a => a.Description, EmptyString);
+        //     return new (name,desc);
+        // }
 
         public static void parse(FilePath src, out ApiCmdScript dst)
         {
@@ -107,6 +92,5 @@ namespace Z0
                 seek(dst,i) = arg(skip(src,i));
             return new (dst);
         }
-
     }
 }

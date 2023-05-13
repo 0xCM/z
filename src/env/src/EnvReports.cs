@@ -8,6 +8,13 @@ namespace Z0
 
     public class EnvReports : Stateless<EnvReports>
     {
+        public static EnvReport process()
+        {
+            var vars = Env.vars(EnvVarKind.Process);
+            var id = Env.id();
+            return new EnvReport(id, vars, Env.tools(), rows(vars, id));
+        }
+
         public static ExecToken context(IWfChannel channel, Timestamp ts, IDbArchive dst)
         {
             emit(channel, dst.Scoped("context"));
@@ -15,20 +22,6 @@ namespace Z0
             channel.FileEmit(map.ToString(), dst.Scoped("context").Path("process.image", FileKind.Map));            
             return emit(channel, Process.GetCurrentProcess(), ts, dst);
         }
-
-        static ExecToken emit(IWfChannel channel, ProcessAdapter src, Timestamp ts, IDbArchive dst)
-        {
-            var running = channel.Running($"Emiting context for process {src.Id} based at {src.BaseAddress} from {src.Path}");
-            modules(channel, src, dst);
-            var file = ProcDumpName.path(src, ts, dst);
-            var dumping = channel.EmittingFile(file);
-            DumpEmitter.dump(src, file);
-            channel.EmittedBytes(dumping, file.Size);
-            return channel.Ran(running, $"Emitted context for process {src.Id}");   
-        }
-
-        static ExecToken modules(IWfChannel channel, Process src, IDbArchive dst)
-            => channel.TableEmit(ImageMemory.modules(src), dst.Scoped("context").Path("process.modules",FileKind.Csv));
 
         public static ExecToken emit(IWfChannel channel)
         {
@@ -41,15 +34,19 @@ namespace Z0
         public static ExecToken emit(IWfChannel channel, IDbArchive dst)
         {
             var running = channel.Running();
-            emit(channel, EnvVarKind.User, dst);
-            emit(channel, EnvVarKind.Machine, dst);
-            save(channel, Env.tools(),dst);            
-            emit(channel, EnvVarKind.Process, dst);
+            var name = Env.id();
+            emit(channel, name, EnvVarKind.User, dst);
+            emit(channel, name, EnvVarKind.Machine, dst);
+            save(channel, name, Env.tools(),dst);            
+            emit(channel, name, EnvVarKind.Process, dst);
             return channel.Ran(running);
         }
 
         public static EnvReport load(IEnvDb src, EnvId id)
-            => new EnvReport(id,EnvVarKind.Process, vars(cfgpath(src, id)), tools(toolpath(src, id)));
+        {
+            var _vars = vars(cfgpath(src, id));
+            return new EnvReport(id, _vars, tools(toolpath(src, id)), rows(_vars, Env.id()));
+        }
 
         public static EnvVars vars(FilePath src)
         {
@@ -87,7 +84,45 @@ namespace Z0
             return keys.Map(x => new LocatedTool(x));            
         }
 
-        static void save(IWfChannel channel, ToolCatalog catalog, IDbArchive dst)
+        public static ExecToken emit(IWfChannel channel, EnvId name, EnvVarKind kind, EnvVars vars, IDbArchive dst)
+        {
+            var token = ExecToken.Empty;
+            if(vars.IsNonEmpty)
+            {
+                vars.Iter(v => channel.Write(v.Format()));
+                token = emit(channel, name, kind, vars, dst.Root);
+            }
+            return token;
+        }
+
+        public static void emit(IWfChannel channel, ToolCatalog src, IDbArchive dst)
+        {
+            var emitter = text.emitter();
+            foreach(var tool in src)
+            {               
+                var info = string.Format("{0:D5} | {1,-48} | {2}", tool.Seq, tool.Name, tool.Path); 
+                emitter.AppendLine(info);
+                channel.Row(info);
+            }
+
+            channel.FileEmit(emitter.Emit(), dst.Path(FS.file("tools", FileKind.Csv)));
+        }
+
+        static ExecToken emit(IWfChannel channel, ProcessAdapter src, Timestamp ts, IDbArchive dst)
+        {
+            var running = channel.Running($"Emiting context for process {src.Id} based at {src.BaseAddress} from {src.Path}");
+            modules(channel, src, dst);
+            var file = ProcDumpName.path(src, ts, dst);
+            var dumping = channel.EmittingFile(file);
+            DumpEmitter.dump(src, file);
+            channel.EmittedBytes(dumping, file.Size);
+            return channel.Ran(running, $"Emitted context for process {src.Id}");   
+        }
+
+        static ExecToken modules(IWfChannel channel, Process src, IDbArchive dst)
+            => channel.TableEmit(ImageMemory.modules(src), dst.Scoped("context").Path("process.modules",FileKind.Csv));
+
+        static void save(IWfChannel channel, EnvId name, ToolCatalog catalog, IDbArchive dst)
         {
             var counter = 0u;
             var emitter = text.emitter();
@@ -102,20 +137,6 @@ namespace Z0
             emit(channel, catalog, dst);
         }
 
-        static void emit(IWfChannel channel, ToolCatalog src, IDbArchive dst)
-        {
-            var emitter = text.emitter();
-            foreach(var tool in src)
-            {               
-                var info = string.Format("{0:D5} | {1,-48} | {2}", tool.Seq, tool.Name, tool.Path); 
-                emitter.AppendLine(info);
-                channel.Row(info);
-            }
-
-            channel.FileEmit(emitter.Emit(), dst.Path(FS.file("tools", FileKind.Csv)));
-        }
-
-
         static IDbArchive cfgroot(IDbArchive src)
             => src.Scoped("cfg");
 
@@ -125,18 +146,7 @@ namespace Z0
         static FilePath toolpath(IDbArchive src, EnvId name)
             => cfgroot(src).Scoped(name).Path("tools", FileKind.Csv);
 
-        static ExecToken emit(IWfChannel channel, EnvVarKind kind, EnvVars vars, IDbArchive dst)
-        {
-            var token = ExecToken.Empty;
-            if(vars.IsNonEmpty)
-            {
-                vars.Iter(v => channel.Write(v.Format()));
-                token = emit(channel, vars, kind, dst.Root);
-            }
-            return token;
-        }
-
-        static ExecToken emit(IWfChannel channel, EnvVarKind kind, IDbArchive dst)
+        static ExecToken emit(IWfChannel channel, EnvId name, EnvVarKind kind, IDbArchive dst)
         {
             var vars = EnvVars.Empty;
             var token = ExecToken.Empty;
@@ -153,13 +163,12 @@ namespace Z0
                 break;
             }
 
-            token = emit(channel, kind, vars, dst);
+            token = emit(channel, name, kind, vars, dst);
             return token;
         }
 
-        static ExecToken emit(IWfChannel channel, EnvVars src, EnvVarKind kind, FolderPath dst)
+        static ExecToken emit(IWfChannel channel, EnvId name, EnvVarKind kind, EnvVars src, FolderPath dst)
         {
-            var name =  EnumRender.format(kind);
             var table = dst + FS.file($"{name}.settings",FileKind.Csv);
             var env = dst + FS.file($"{name}", FileKind.Cfg);
             using var writer = env.AsciWriter();
@@ -168,7 +177,7 @@ namespace Z0
             return CsvTables.emit(channel, rows(src, name).View, table, ASCI);
         }
 
-        static ReadOnlySeq<EnvVarRow> rows(EnvVars src, string name)
+        static ReadOnlySeq<EnvVarRow> rows(EnvVars src, EnvId name)
         {
             const char Sep = ';';
             var buffer = list<EnvVarRow>();

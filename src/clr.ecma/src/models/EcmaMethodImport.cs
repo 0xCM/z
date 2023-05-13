@@ -7,7 +7,7 @@ namespace Z0
     [Record(TableId), StructLayout(LayoutKind.Sequential)]
     public struct EcmaMethodImport : IComparable<EcmaMethodImport>
     {
-        const string TableId = "methods.pinvokes";
+        const string TableId = "assemblies.imports";
 
         public EcmaMethodImport()
         {

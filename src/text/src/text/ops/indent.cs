@@ -4,12 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class ProjectModels
+    partial class text
     {
-        public abstract record class ProjectRule<R> : ProjectMember<R>, IProjectRule<R>
-            where R : ProjectRule<R>, new()
-        {
+        static string padding(uint width)
+            => new string(Chars.Space, (int)width);
 
-        }
+        public static string indent<T>(uint offset, T src)
+            => string.Format("{0}{1}", padding(offset), src);
     }
 }

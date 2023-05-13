@@ -25,6 +25,5 @@ namespace Z0
         }
 
         public static LaunchScript Empty => new LaunchScript(FilePath.Empty, CmdScript.Empty);
-    }
-    
+    }   
 }

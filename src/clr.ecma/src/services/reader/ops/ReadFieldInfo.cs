@@ -9,31 +9,31 @@ namespace Z0
 
     partial class EcmaReader
     {
-        public void ReadFieldInfo(FieldDefinitionHandle handle, Action<EcmaFieldInfo> dst)
-        {
-            var entry = MD.GetFieldDefinition(handle);
-            var field = new EcmaFieldInfo();
-            field.Index = handle;
-            field.Offset = (uint)entry.GetOffset();
-            field.Rva = entry.GetRelativeVirtualAddress();
-            field.FieldName = MD.GetString(entry.Name);
-            field.Attribs = entry.Attributes;
-            field.Sig = ReadSigData(entry);
-            dst(field);
-        }
+        // public void ReadFieldInfo(FieldDefinitionHandle handle, Action<AssemblyField> dst)
+        // {
+        //     var entry = MD.GetFieldDefinition(handle);
+        //     var field = new AssemblyField();
+        //     field.Index = handle;
+        //     field.Offset = (uint)entry.GetOffset();
+        //     field.Rva = entry.GetRelativeVirtualAddress();
+        //     field.FieldName = MD.GetString(entry.Name);
+        //     field.Attribs = entry.Attributes;
+        //     field.Sig = ReadSigData(entry);
+        //     dst(field);
+        // }
 
-        public ReadOnlySpan<EcmaFieldInfo> ReadFieldInfo()
-        {
-            var handles = MD.FieldDefinitions.ToReadOnlySpan();
-            var count = handles.Length;
-            var dst = alloc<EcmaFieldInfo>(count);
-            for(var i=0u; i<count; i++)
-            {
-                ref readonly var handle = ref skip(handles,i);
-                ReadFieldInfo(handle, f => seek(dst,i) = f);
-            }
-            return dst;
-        }
+        // public ReadOnlySpan<AssemblyField> ReadFieldInfo()
+        // {
+        //     var handles = MD.FieldDefinitions.ToReadOnlySpan();
+        //     var count = handles.Length;
+        //     var dst = alloc<AssemblyField>(count);
+        //     for(var i=0u; i<count; i++)
+        //     {
+        //         ref readonly var handle = ref skip(handles,i);
+        //         ReadFieldInfo(handle, f => seek(dst,i) = f);
+        //     }
+        //     return dst;
+        // }
 
         public ReadOnlySeq<FieldDefRow> ReadFieldDefRows()
         {

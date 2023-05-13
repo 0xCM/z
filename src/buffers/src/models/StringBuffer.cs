@@ -17,7 +17,7 @@ namespace Z0
 
         internal StringBuffer(uint count)
         {
-            Buffer = memory.native<char>(count);
+            Buffer = NativeBuffers.alloc<char>(count);
         }
 
         public void Dispose()

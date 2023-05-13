@@ -10,7 +10,7 @@ namespace Z0
     {
         public static PeTables load(FilePath path, PEReader reader)
         {
-            var dst = new PeTables(path);
+            var dst = new PeTables();
             var dirs = directories(reader);
             dst._PeInfo = peinfo(path, reader);
             dst._Directories = dirs;
@@ -33,12 +33,9 @@ namespace Z0
 
         ReadOnlySeq<PeDirectoryRow> _DirectoryRows;
 
-        public readonly FilePath Source;
-
         [MethodImpl(Inline)]
-        public PeTables(FilePath path)
+        PeTables()
         {
-            Source = path;
         }
 
         public ref readonly ReadOnlySeq<SectionHeaderRow> SectionHeaders 

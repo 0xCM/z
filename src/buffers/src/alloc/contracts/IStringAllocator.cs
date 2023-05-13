@@ -10,4 +10,10 @@ namespace Z0
     {
         bool Alloc(ReadOnlySpan<char> src, out T dst);
     }
+
+    [Free]
+    public interface IStringAllocator : IStringAllocator<StringRef>
+    {
+        
+    }
 }

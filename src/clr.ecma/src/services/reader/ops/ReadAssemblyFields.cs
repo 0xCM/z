@@ -4,7 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public partial class ProjectModels : Channeled<ProjectModels>
-    {        
+    partial class EcmaReader
+    {
+
     }
 }

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IPersistentDispenser : IMemoryDispenser, IStringDispenser, ISourceDispenser, ILabelDispenser
+    public interface IPersistentDispenser : IMemoryDispenser, IStringDispenser, ISourceDispenser, ILabelDispenser, IPageDispenser
     {
 
     }

@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Free]
-    public interface ISourceDispenser : IAllocDispenser<SourceText>
+    public interface ISourceDispenser : IAllocDispenser
     {
         SourceText SourceText(string src);
 

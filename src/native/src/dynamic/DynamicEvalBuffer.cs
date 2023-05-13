@@ -15,7 +15,7 @@ namespace Z0
 
         public DynamicEvalBuffer(ByteSize size, byte count)
         {
-            _Buffers = memory.native(size,count);
+            _Buffers = NativeBuffers.alloc(size,count);
             Tokens = _Buffers.Tokenize();
         }
 

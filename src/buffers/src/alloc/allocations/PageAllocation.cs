@@ -20,7 +20,7 @@ namespace Z0
         PageAllocation(uint pages)
         {
             PageCount = pages;
-            Buffer = memory.native(PageSize*PageCount);
+            Buffer = NativeBuffers.alloc(PageSize*PageCount);
         }
 
 

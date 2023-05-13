@@ -29,7 +29,7 @@ namespace Z0
                 size += (spec.RegSize.ByteCount*spec.RegCount);
             }
 
-            var buffer = memory.native(size);
+            var buffer = NativeBuffers.alloc(size);
             buffer.Clear();
             var @base = buffer.BaseAddress;
             var address = @base;

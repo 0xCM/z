@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.Text.Json;
-
     public record class WorkspaceFolder
     {
         public @string Name;
@@ -27,5 +25,4 @@ namespace Z0
         public static implicit operator WorkspaceFolder(FolderPath path)
             => new WorkspaceFolder(path);            
     }
-
 }

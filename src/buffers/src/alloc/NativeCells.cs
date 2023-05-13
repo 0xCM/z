@@ -12,7 +12,7 @@ namespace Z0
         {
             id = inc(ref Allocation);
             var sz = count * size<T>();
-            var buffer = memory.native(sz);
+            var buffer = NativeBuffers.alloc(sz);
             Allocations.TryAdd(id,buffer);
             return new NativeCells<T>(id, buffer.BaseAddress, size<T>(), count);
         }

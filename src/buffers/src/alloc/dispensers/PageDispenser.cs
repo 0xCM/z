@@ -7,7 +7,7 @@ namespace Z0
     public class PageDispenser : Dispenser<PageDispenser>, IPageDispenser
     {
         readonly Dictionary<long,IPageAllocator> Allocators;
-
+        
         object locker;
 
         public const uint DefaultPageCount = 64;

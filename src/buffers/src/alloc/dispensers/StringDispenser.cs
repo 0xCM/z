@@ -24,7 +24,7 @@ namespace Z0
             iter(Allocators.Values, a => a.Dispose());
         }
 
-        public StringRef String(string content)
+        public StringRef String(ReadOnlySpan<char> content)
         {
             var dst = StringRef.Empty;
             lock(Locker)

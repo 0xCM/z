@@ -1,7 +1,0 @@
-<Project>
-  <Import Project="$(SlnProps)\microsoft.extensions.props"/>
-  <ItemGroup>
-    <ProjectReference Include="$(Events)" />
-    <ProjectReference Include="$(ZEnv)" />
-  </ItemGroup>
-</Project>

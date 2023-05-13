@@ -84,7 +84,7 @@ namespace Z0
 
         ulong* SYS;
 
-        Stack<ulong> Stack;
+        FixedStack<ulong> Stack;
 
         PageDispenser Ram;
 

@@ -8,13 +8,11 @@ namespace Z0
     {
         public ToolCatalog()
         {
-
         }
 
         public ToolCatalog(LocatedTool[] src)
             : base(src)
         {
-            
         }
 
         public static implicit operator ToolCatalog(LocatedTool[] src)

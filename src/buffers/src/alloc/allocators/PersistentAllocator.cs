@@ -24,26 +24,24 @@ namespace Z0
         public ByteSize Size 
             => Db.Size;
 
-        public bool Alloc(asci32 name, ByteSize size, out PersistentMemory dst)
+        public bool Alloc(ByteSize size, out PersistentMemory dst)
         {
-            dst = MemDb.memory(Db, name, size);
+            dst = new(Db.Reserve(size));
             var result = dst.IsNonEmpty;
             if(result)
                 Allocations.Add(dst);
-
             return result;
-
         }
 
         public void Store<T>(AllocToken token, ReadOnlySpan<T> src)
             where T : unmanaged
                 => Db.Store(token, src);
 
-        public bool Alloc(ByteSize size, out PersistentMemory dst)
-            => Alloc(Guid.NewGuid().ToString(), size, out dst);
+        // public bool Alloc(ByteSize size, out PersistentMemory dst)
+        //     => Alloc(Guid.NewGuid().ToString(), size, out dst);
 
         public bool Alloc(out PersistentMemory dst)
-            => Alloc(Guid.NewGuid().ToString(), SegmentSize, out dst);
+            => Alloc(SegmentSize, out dst);
 
         public void Dispose()
         {
