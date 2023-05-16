@@ -32,10 +32,5 @@ namespace Z0
             => Name;
     }
 
-    [Free]
-    public interface IClrArtifact<A> : IClrArtifact
-        where A : struct, IClrArtifact<A>
-    {
 
-    }
 }

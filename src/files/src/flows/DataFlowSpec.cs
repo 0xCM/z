@@ -7,21 +7,19 @@ namespace Z0
     [Record(TableId)]
     public struct DataFlowSpec : IComparable<DataFlowSpec>
     {
-        public const string TableId = "api.dataflow.specs";
-
-        public const byte FieldCount = 4;
+        const string TableId = "api.dataflows.specs";
 
         [Render(16)]
-        public Actor Actor;
+        public @string Actor;
 
         [Render(16)]
-        public string Source;
+        public @string Source;
 
         [Render(16)]
-        public string Target;
+        public @string Target;
 
         [Render(1)]
-        public string Description;
+        public @string Description;
 
         public int CompareTo(DataFlowSpec src)
         {
@@ -38,8 +36,6 @@ namespace Z0
             {
                 return i;
             }
-        }
-
-        public static ReadOnlySpan<byte> RenderWidths => new byte[FieldCount]{16,16,16,1};
+        }        
     }
 }

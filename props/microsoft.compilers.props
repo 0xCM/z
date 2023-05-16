@@ -2,9 +2,5 @@
     <ItemGroup>
       <PackageReference Include="runtime.win-x64.Microsoft.DotNet.ILCompiler" Version="$(IlcVersion)"/>
       <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="$(IlcVersion)"/>
-      <PackageReference Include="Microsoft.Net.Compilers.Toolset" Version="$(CodeAnalysisVersion)">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-      </PackageReference>      
     </ItemGroup>
 </Project>

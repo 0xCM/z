@@ -12,10 +12,10 @@ namespace Z0
 
         public readonly ReadOnlySeq<DbRelation> Rels;
 
-        public readonly ReadOnlySeq<DbColSpec> Cols;
+        public readonly ReadOnlySeq<DbCol> Cols;
 
         [MethodImpl(Inline)]
-        public DbEntity(uint key, Name name, DbColSpec[] cols, DbRelation[] rels)
+        public DbEntity(uint key, Name name, DbCol[] cols, DbRelation[] rels)
         {
             Key = key;
             Name = name;

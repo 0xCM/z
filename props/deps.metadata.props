@@ -4,6 +4,12 @@
       <Reference Include="$(GlobalDeps)/Mono.Cecil.Mdb.dll"/>
       <Reference Include="$(GlobalDeps)/Mono.Cecil.Pdb.dll"/>
       <Reference Include="$(GlobalDeps)/Mono.Cecil.Rocks.dll"/>
-      <Reference Include="$(GlobalDeps)/TerraFX.Interop.Windows.dll"/>
+      <Reference Include="$(GlobalDeps)/AsmResolver.dll"/>
+      <Reference Include="$(GlobalDeps)/AsmResolver.DotNet.dll"/>
+      <Reference Include="$(GlobalDeps)/AsmResolver.DotNet.Dynamic.dll"/>
+      <Reference Include="$(GlobalDeps)/AsmResolver.PE.dll"/>
+      <Reference Include="$(GlobalDeps)/AsmResolver.PE.File.dll"/>
+      <Reference Include="$(GlobalDeps)/AsmResolver.PE.Win32Resources.dll"/>
+      <Reference Include="$(GlobalDeps)/AsmResolver.Symbols.Pdb.dll"/>
     </ItemGroup>
 </Project>

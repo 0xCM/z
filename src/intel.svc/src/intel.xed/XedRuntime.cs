@@ -9,7 +9,6 @@ namespace Z0
     using static XedRules;
     using static XedPatterns;
     using static XedModels;
-    using static XedImport;
 
     using I = XedRecordType;
 
@@ -76,8 +75,8 @@ namespace Z0
 
         void CalcTypeTables()
         {
-            Views.Store(I.TypeTables, MemDb.typetables(typeof(XedDb).Assembly,"xed", Alloc.Composite()));
-            Views.Store(I.TypeTableRows, MemDb.rows(Views.TypeTables));
+            Views.Store(I.TypeTables, TypeTables.typetables(typeof(XedDb).Assembly,"xed", Alloc.Composite()));
+            Views.Store(I.TypeTableRows, TypeTables.rows(Views.TypeTables));
         }
 
         void RunCalcs()

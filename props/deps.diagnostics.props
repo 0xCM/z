@@ -4,9 +4,6 @@
         <Reference Include="$(GlobalDeps)/Microsoft.Diagnostics.Runtime.Utilities.dll"/>
         <Reference Include="$(GlobalDeps)/Microsoft.Diagnostics.DebugServices.dll"/>
         <Reference Include="$(GlobalDeps)/Microsoft.Diagnostics.DebugServices.Implementation.dll"/>
-        <Reference Include="$(GlobalDeps)/Microsoft.Diagnostics.ExtensionCommands.dll"/>
-
-        <!-- <Reference Include="$(GlobalDeps)/Microsoft.Diagnostics.NETCore.Client.dll"/> -->
-
+        <Reference Include="$(GlobalDeps)/Microsoft.Diagnostics.ExtensionCommands.dll"/>        
     </ItemGroup>
 </Project>

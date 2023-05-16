@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct MeasuredType : IComparable<MeasuredType>
+    public readonly record struct MeasuredType : IComparable<MeasuredType>
     {        
         public readonly Type Definition;
 

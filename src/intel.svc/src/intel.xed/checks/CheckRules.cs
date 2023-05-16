@@ -13,7 +13,7 @@ namespace Z0
         [CmdOp("xed/db/check")]
         void CheckMemDb()
         {
-            MemDb.check(Channel);
+            DbBuilder.check(Channel);
             var size = 1073741824ul;
             var mb = size/1024;
             var db = Xed.XedDb.Store;

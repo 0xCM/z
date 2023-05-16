@@ -58,9 +58,9 @@ namespace Z0
             return dst;
         }
 
-        [MethodImpl(Inline)]
-        public AddressSpace Addresses()
-            => new AddressSpace(Index, new (BaseAddress, FileSize));
+        // [MethodImpl(Inline)]
+        // public AddressSpace Addresses()
+        //     => new AddressSpace(Index, new (BaseAddress, FileSize));
 
         public bool IsEmpty
         {
