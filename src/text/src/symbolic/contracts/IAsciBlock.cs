@@ -5,8 +5,8 @@
 namespace Z0
 {
     [Free]
-    public interface IAsciBlock<A> : IStorageBlock<A>
-        where A : unmanaged, IAsciBlock<A>
+    public interface IAsciBlock<A> : IStorageBlock<A>, IUnmanaged<A>, IEquatable<A>
+        where A : unmanaged, IAsciBlock<A>, IEquatable<A>
     {
         ref byte First {get;}
 

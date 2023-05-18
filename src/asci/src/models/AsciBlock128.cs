@@ -18,7 +18,7 @@ namespace Z0
     /// Defines 128 bytes of storage
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Size = Size, Pack=1), ApiComplete]
-    public struct AsciBlock128 : IAsciBlock<A>
+    public record struct AsciBlock128 : IAsciBlock<A>
     {
        public static A Empty => default;
 

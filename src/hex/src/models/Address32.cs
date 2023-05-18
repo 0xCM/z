@@ -100,6 +100,14 @@ namespace Z0
             => new A(src);
 
         [MethodImpl(Inline)]
+        public static implicit operator A(byte src)
+            => new A(src);
+
+        [MethodImpl(Inline)]
+        public static implicit operator A(ushort src)
+            => new A(src);
+
+        [MethodImpl(Inline)]
         public static explicit operator Address32(IntPtr src)
             => (uint)src.ToInt32();
 

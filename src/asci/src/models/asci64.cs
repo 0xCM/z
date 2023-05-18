@@ -13,7 +13,7 @@ namespace Z0
     using api = Asci;
 
     [DataWidth(512)]
-    public readonly struct asci64 : IAsciSeq<A,N>
+    public readonly struct asci64 : IAsciSeq<A,N>, IUnmanaged<A>
     {
         public const int Size = 64;
 

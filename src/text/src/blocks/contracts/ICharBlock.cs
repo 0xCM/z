@@ -59,7 +59,7 @@ namespace Z0
             => sys.nonempty(Data);
     }
  
-    public interface ICharBlock<T> : ICharBlock, IComparable<T>, IEquatable<T>, IStorageBlock<T>
+    public interface ICharBlock<T> : ICharBlock, IComparable<T>, IEquatable<T>, IStorageBlock<T>, IUnmanaged<T>
         where T : unmanaged, ICharBlock<T>
     {
         ByteSize ISized.ByteCount

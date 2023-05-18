@@ -12,19 +12,6 @@ namespace Z0
         public static ProjectContext context(IProject src)
             => new ProjectContext(src, CmdFlows.flows(src));
 
-
-        // public static CmdArgs args<T>()
-        //     where T : ICmd
-        //         => typeof(T).DeclaredInstanceFields().Select(arg);
-
-        // public static CmdArg arg(FieldInfo src)
-        // {
-        //     var attrib = src.Tag<CmdArgAttribute>();
-        //     var name = attrib.MapValueOrDefault(a => a.Name, src.Name);
-        //     var desc = attrib.MapValueOrDefault(a => a.Description, EmptyString);
-        //     return new (name,desc);
-        // }
-
         public static void parse(FilePath src, out ApiCmdScript dst)
         {
             var specs = list<ApiCmdSpec>();

@@ -14,7 +14,7 @@ namespace Z0
     /// Defines an asci code sequence of length 4
     /// </summary>
     [DataWidth(32)]
-    public readonly struct asci4 : IAsciSeq<A,N>
+    public readonly struct asci4 : IAsciSeq<A,N>, IUnmanaged<A>
     {
         public const uint Size = 4;
 

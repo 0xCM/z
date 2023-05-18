@@ -10,10 +10,6 @@ namespace Z0
     public sealed class DbBuilder
     {
         [MethodImpl(Inline), Op]
-        public static DbDataType type(Name name, Name primitive, DataSize size, Name refinement = default)
-            => new DbDataType(name, primitive, size, refinement.IsNonEmpty, refinement);
-
-        [MethodImpl(Inline), Op]
         public static DbCol col(ushort pos, Name name, ReadOnlySpan<byte> widths)
             => new DbCol(pos, name, skip(widths, pos));
 

@@ -14,7 +14,7 @@ namespace Z0
     /// <summary>
     /// Defines an asci code sequence of length 2
     /// </summary>
-    public readonly record struct asci2 : IAsciSeq<A,N>
+    public readonly record struct asci2 : IAsciSeq<A,N>, IUnmanaged<A>
     {
         internal readonly S Storage;
 

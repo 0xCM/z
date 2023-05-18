@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly record struct Name : IDataType<Name>, IExpr
+    public readonly record struct Name : IDataType<Name>, IExpr, IUnmanaged<Name>
     {
         public readonly asci64 Data;
 

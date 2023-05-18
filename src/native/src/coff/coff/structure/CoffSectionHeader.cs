@@ -13,7 +13,7 @@ namespace Z0
 
         public uint VirtualSize;
 
-        public uint VirtualAddress;
+        public Address32 VirtualAddress;
 
         public uint SizeOfRawData;
 
