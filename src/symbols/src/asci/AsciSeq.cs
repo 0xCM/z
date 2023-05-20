@@ -57,6 +57,7 @@ namespace Z0
         public static AsciSeq<A> seq<A>(A content)
             where A : unmanaged, IAsciSeq<A>
                 => new AsciSeq<A>(content);        
+ 
         [MethodImpl(Inline), Op]
         public static ref readonly AsciSeq encode(string src, in AsciSeq dst)
         {

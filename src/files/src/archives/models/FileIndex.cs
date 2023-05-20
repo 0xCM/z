@@ -5,18 +5,10 @@
 namespace Z0
 {
     using static sys;
+    using System.Linq;
 
     public class FileIndex
     {
-        static FileIndexEntry entry(MemoryFile src)
-        {
-            var hash = FS.hash(src);
-            return new FileIndexEntry{
-                Path = src.Path,
-                FileHash = hash.FileHash,                
-            };
-        }
-
         static FileIndexEntry entry(FilePath src)
         {
             var hash = FS.hash(src);
@@ -42,8 +34,6 @@ namespace Z0
         readonly ConcurrentDictionary<FilePath, FileIndexEntry> PathLookup = new();
 
         readonly ConcurrentDictionary<Hash128, FileIndexEntry> HashLookup = new();
-
-        readonly ConcurrentDictionary<FileKind, ConcurrentBag<FileIndexEntry>> KindLookup = new();
 
         readonly ConcurrentDictionary<Hash128, ConcurrentBag<FileIndexEntry>> _Duplicates = new();
 
@@ -75,7 +65,6 @@ namespace Z0
                 if(!included)
                     _Duplicates.AddOrUpdate(hash.ContentHash, bag(entry), (_,b) => include(entry,b));
             }
-            KindLookup.AddOrUpdate(kind, bag(entry), (_,b) => include(entry,b));
             return (included,entry);
         }
 
@@ -91,10 +80,8 @@ namespace Z0
         public ICollection<FilePath> Paths
             => PathLookup.Keys;
         
-        public ICollection<FileKind> Kinds
-            => KindLookup.Keys;
-        
-        public IEnumerable<FileIndexEntry> Members(FileKind kind)
-            => KindLookup[kind];
+        public IEnumerable<FileIndexEntry> Duplicates()
+            => from d in _Duplicates.Values from e in d select e;
+
     }
 }

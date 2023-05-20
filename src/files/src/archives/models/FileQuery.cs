@@ -32,7 +32,6 @@ namespace Z0
         static SearchPattern pattern(params string[] src)
             => string.Join(Chars.Pipe, src);
 
-
         public FileFilter Filter;
 
         public FileQuery()

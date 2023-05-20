@@ -9,6 +9,5 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static Version64 ToVersion64(this AssemblyVersion src)
             => sys.@as<AssemblyVersion,Version64>(src);
-
     }
 }

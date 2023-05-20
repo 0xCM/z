@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public record class LaunchScript : ProjectFile<LaunchScript>
+    public record class LaunchScript
     {
         public static FilePath path(FolderPath root) => root + FS.file("develop", FileKind.Cmd);
 
