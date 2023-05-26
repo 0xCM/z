@@ -11,5 +11,6 @@
       <Reference Include="$(GlobalDeps)/AsmResolver.PE.File.dll"/>
       <Reference Include="$(GlobalDeps)/AsmResolver.PE.Win32Resources.dll"/>
       <Reference Include="$(GlobalDeps)/AsmResolver.Symbols.Pdb.dll"/>
+      <Reference Include="$(GlobalDeps)/ICSharpCode.Decompiler.dll"/>
     </ItemGroup>
 </Project>

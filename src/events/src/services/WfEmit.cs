@@ -189,7 +189,7 @@ namespace Z0
         public ExecToken TableEmit<T>(ReadOnlySpan<T> src, ReadOnlySpan<byte> widths, TextEncodingKind encoding, FilePath dst)
         {
             var flow = Wf.EmittingTable<T>(Host, dst);
-            var spec = Tables.rowspec<T>(widths, z16);
+            var spec = CsvTables.rowspec<T>(widths, z16);
             var count = CsvTables.emit(src, spec, encoding, dst);
             return Wf.EmittedTable(Host, flow, count);
         }

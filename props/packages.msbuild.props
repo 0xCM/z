@@ -1,0 +1,9 @@
+<Project>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Build.Runtime" Version="$(MsBuildVer)" />
+    <PackageReference Include="Microsoft.Build" Version="$(MsBuildVer)" />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="$(MsBuildVer)" />
+    <PackageReference Include="Microsoft.Build.Locator" Version="1.5.5" ExcludeAssets="build"/>    
+    <PackageReference Include="MSBuild.StructuredLogger" Version="2.1.790" />    
+  </ItemGroup>
+</Project>

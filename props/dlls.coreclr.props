@@ -1,0 +1,13 @@
+<Project>
+  <ItemGroup>
+        <Reference Include="$(RuntimeArtifacts)/bin/LibraryImportGenerator/Release/netstandard2.0/Microsoft.Interop.LibraryImportGenerator.dll"/>
+        <Reference Include="$(RuntimeArtifacts)/bin/Microsoft.Interop.SourceGeneration/Release/netstandard2.0/Microsoft.Interop.SourceGeneration.dll"/>
+        <Reference Include="$(RuntimeArtifacts)/bin/coreclr/windows.x64.Release/ilc/ilc.dll"/>
+        <Reference Include="$(RuntimeArtifacts)/bin/coreclr/windows.x64.Release/ilc/ILCompiler.Compiler.dll"/>
+        <Reference Include="$(RuntimeArtifacts)/bin/coreclr/windows.x64.Release/ilc/ILCompiler.DependencyAnalysisFramework.dll"/>
+        <Reference Include="$(RuntimeArtifacts)/bin/coreclr/windows.x64.Release/ilc/ILCompiler.MetadataTransform.dll"/>
+        <Reference Include="$(RuntimeArtifacts)/bin/coreclr/windows.x64.Release/ilc/ILCompiler.RyuJit.dll"/>
+        <Reference Include="$(RuntimeArtifacts)/bin/coreclr/windows.x64.Release/ilc/ILCompiler.TypeSystem.dll"/>
+        <Reference Include="$(RuntimeArtifacts)/bin/coreclr/windows.x64.Release/ILCompiler.Reflection.ReadyToRun.dll"/>
+  </ItemGroup>
+</Project>

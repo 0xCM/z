@@ -6,109 +6,11 @@ namespace Z0
 {
     using static sys;
     using static CsvFormatter;
-    using static Datasets;
+
     [ApiHost]
     public class CsvTables
     {        
         const NumericKind Closure = UInt64k;
-
-        static void AppendLine(TableColumns cols, object[] args, ITextBuffer dst)
-            => dst.AppendLine(cols.Format(args));
-
-        public static void emit<T>(TableColumns cols, T[] rows, FilePath dst)
-        {
-            var count = rows.Length;
-            if(count != 0)
-            {
-                var buffer = text.buffer();
-                buffer.AppendLine(cols.Header);
-                var type = first(rows)?.GetType() ?? typeof(void);
-                if(type.IsNonEmpty())
-                {
-                    var fields = type.InstanceFields();
-                    iter(rows, d => AppendLine(cols, fields.Select(x => x.GetValue(d)),buffer));
-                }
-                dst.Overwrite(buffer.Emit());
-            }
-        }
-
-        public static ReadOnlySpan<Table> load<E>(IWfChannel channel, ReadOnlySpan<FilePath> src)
-            where E : unmanaged, Enum
-
-        {
-            var filecount = src.Length;
-            var dst = list<Table>();
-            for(var i=0; i<filecount; i++)
-                dst.AddRange(load<E>(channel, skip(src,i)).ToArray());
-
-            return dst.ViewDeposited();
-        }
-
-        public static ReadOnlySpan<Table> load<E>(IWfChannel channel, FilePath src)
-            where E : unmanaged, Enum
-        {
-            const string ColSep = "|";
-            var result = Outcome.Success;
-            var foundtable = false;
-            var parsingrows = false;
-            var rowcount = 0;
-            var cols = Seq<TableColumn>.Empty;
-            var rows = list<TableRow>();
-            var rowidx = z16;
-            var table = TableBuilder.create();
-            var tables = list<Table>();
-            using var reader = src.LineReader(TextEncodingKind.Utf8);
-            while(reader.Next(out var line))
-            {
-                if(line.IsEmpty && !parsingrows)
-                    continue;
-
-                if(parsingrows && line.IsEmpty)
-                {
-                    table.IfNonEmpty(() => tables.Add(table.Emit()));
-                    foundtable = false;
-                    parsingrows = false;
-                    rowcount = 0;
-                    continue;
-                }
-
-                var content = line.Content;
-
-                if(parsingrows)
-                {
-                    var values = content.SplitClean(ColSep);
-                    var valcount = values.Length;
-
-                    if(valcount != cols.Count)
-                        channel.Warn($"{valcount} != {cols.Count}");
-
-                    if(valcount != 0)
-                    {
-                        table.WithRow(values);
-                        rowcount++;
-                    }
-                    continue;
-                }
-
-                if(foundtable && !parsingrows)
-                {
-                    var labels = content.SplitClean(ColSep);
-                    if(labels.Length == 0)
-                        channel.Warn(string.Format("Expected header"));
-
-                    if(labels.Length != 0)
-                    {
-                        cols = columns<E>(labels);
-                        table.WithColumns(cols);
-                        parsingrows = true;
-                    }
-                }
-            }
-
-            table.IfNonEmpty(() => tables.Add(table.Emit()));
-
-            return tables.ViewDeposited();
-        }
 
         internal static RowAdapter adapter(Type src)
             => new RowAdapter(src, CsvTables.cells(src));

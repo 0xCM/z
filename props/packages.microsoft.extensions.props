@@ -1,8 +1,8 @@
 <Project>
-  <Import Project="microsoft.extensions.fileproviders.props" />
-  <Import Project="microsoft.extensions.logging.props" />
-  <Import Project="microsoft.extensions.configuration.props" />
-  <Import Project="microsoft.extensions.dependencies.props" />
+  <Import Project="packages.microsoft.extensions.fileproviders.props" />
+  <Import Project="packages.microsoft.extensions.logging.props" />
+  <Import Project="packages.microsoft.extensions.configuration.props" />
+  <Import Project="packages.microsoft.extensions.dependencies.props" />
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="7.0.0">

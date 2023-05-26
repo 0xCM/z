@@ -1,0 +1,7 @@
+<Project>
+  <ItemGroup>
+        <PackageReference Include="System.Management" Version="8.0.0-preview.4.23259.5" />
+        <PackageReference Include="System.Management.Automation" Version="7.4.0-preview.3" />
+  </ItemGroup>
+
+</Project>

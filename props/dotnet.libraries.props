@@ -1,5 +1,0 @@
-<Project>
-  <ItemGroup>
-    <Reference Include="V:/pub/libs/interop/NtApiDotNet.dll"/>
-  </ItemGroup>
-</Project>

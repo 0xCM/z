@@ -4,5 +4,5 @@
     <ProjectReference Include="$(Math)" />
   </ItemGroup>
   <Import Project="$(SlnProps)\usings.props"/>
-  <Import Project="$(SlnProps)\microsoft.extensions.fileproviders.props"/>
+  <Import Project="$(SlnProps)\packages.microsoft.extensions.fileproviders.props"/>
 </Project>

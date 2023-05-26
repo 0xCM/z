@@ -4,7 +4,6 @@
     <ProjectReference Include="$(Polyrand)" />
     <ProjectReference Include="$(Db)" />
     <ProjectReference Include="$(ClrEcma)" />
-    <PackageReference Include="Iced" Version="1.4.0" />
-    
+    <PackageReference Include="Iced" Version="1.4.0" />    
   </ItemGroup>
 </Project>

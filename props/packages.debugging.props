@@ -6,6 +6,7 @@
     <PackageReference Include="Microsoft.Debugging.Platform.SymSrv" Version="$(MsDebugVersion)"/>
     <PackageReference Include="Microsoft.Debugging.Platform.SrcSrv" Version="$(MsDebugVersion)"/>
     <PackageReference Include="Microsoft.Debugging.DataModel.DbgModelApiXtn" Version="$(MsDebugVersion)" />    
-    <PackageReference Include="Microsoft.Debugging.TargetModel.SDK" Version="$(MsDebugVersion)" />    
+    <PackageReference Include="Microsoft.Debugging.TargetModel.SDK" Version="$(MsDebugVersion)" />
+    <PackageReference Include="Microsoft.DotNet.RemoteExecutor" Version="7.0.0-beta.22316.2" />
   </ItemGroup>
 </Project>

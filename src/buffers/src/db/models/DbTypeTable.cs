@@ -8,7 +8,7 @@ namespace Z0
     /// Defines typetable content
     /// </summary>
     [StructLayout(LayoutKind.Sequential,Pack=1), Record(TableName)]
-    public readonly record struct DbTypeTable : IEntity<DbTypeTable,uint>, IComparable<DbTypeTable>
+    public readonly record struct DbTypeTable : IComparable<DbTypeTable>
     {
         const string TableName = "db.typetables";
 
@@ -39,9 +39,6 @@ namespace Z0
             RowCount = (ushort)rows.Length;
             Rows = rows;
         }
-
-        uint IKeyed<uint>.Key 
-            => Key;
 
         [MethodImpl(Inline)]
         public int CompareTo(DbTypeTable src)

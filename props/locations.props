@@ -15,7 +15,8 @@
     <GlobalDeps>$(Publications)/deps</GlobalDeps>
     <DotNetSdkBuild>$(Publications)/dotnet/tool</DotNetSdkBuild>
     <DotNetSdkTasks>$(Publications)/dotnet/tasks</DotNetSdkTasks>
-    <RuntimeArtifacts>D:/env/dev/dotnet/vendor/runtime/artifacts</RuntimeArtifacts>
+    <RuntimeArtifacts>D:/env/dev/deps/vendor/dotnet-runtime/artifacts</RuntimeArtifacts>
+    <NugetCache>C:/cache/nuget</NugetCache>
     <CoreClrRoot>$(RuntimeArtifacts)/bin/coreclr/windows.x64.Release</CoreClrRoot>
     <IlcRoot>$(CoreClrRoot)/ilc</IlcRoot>
     <DotNetSdkFileRoot>$(DOTNET_ROOT)/sdk/$(DotNetVersion)</DotNetSdkFileRoot>

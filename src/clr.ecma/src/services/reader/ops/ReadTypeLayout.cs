@@ -9,7 +9,7 @@ namespace Z0
         public Ecma.TypeLayout ReadTypeLayout(TypeDefinitionHandle typeDef)
         {
             var dst = Ecma.TypeLayout.Empty;            
-            var def = MetadataReader.GetTypeDefinition(typeDef);
+            var def = MD.GetTypeDefinition(typeDef);
             var kind = LayoutKind.Auto;
             switch (def.Attributes & TypeAttributes.LayoutMask)
             {

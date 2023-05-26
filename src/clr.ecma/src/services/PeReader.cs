@@ -19,7 +19,6 @@ namespace Z0
             Source = src;
             Stream = File.OpenRead(src.Name);
             PE = new PEReader(Stream);     
-            Tables = PeTables.load(src, PE);
         }
 
         public readonly FilePath Source;
@@ -27,8 +26,6 @@ namespace Z0
         readonly FileStream Stream;
 
         internal readonly PEReader PE;
-
-        public readonly PeTables Tables;
 
         public MetadataReader MD
         {
@@ -74,8 +71,8 @@ namespace Z0
         public PEMemoryBlock ReadSectionData(PeDirectoryEntry src)
             => PE.GetSectionData((int)src.Rva);
 
-        public ref readonly PeFileInfo PeInfo() 
-            => ref Tables.PeInfo;
+        // public ref readonly PeFileInfo PeInfo() 
+        //     => ref Tables.PeInfo;
 
         /// <summary>
         /// Get the index in the image byte array corresponding to the RVA
@@ -156,40 +153,7 @@ namespace Z0
         }
 
         public ReadOnlySpan<MsilRow> ReadMsil()
-        {
-            return msil(Source, PE).Array();
-            // var dst = list<MsilRow>();
-            // var types = MD.TypeDefinitions.ToArray();
-            // var typeCount = types.Length;
-            // for(var k=0u; k<typeCount; k++)
-            // {
-            //      var hType = skip(types, k);
-            //      var methods = MD.GetTypeDefinition(hType).GetMethods().Array();
-            //      var methodCount = methods.Length;
-            //      var definitions = map(methods, m=> MD.GetMethodDefinition(m));
-            //      for(var i=0u; i<methodCount; i++)
-            //      {
-            //         ref readonly var method = ref skip(methods,i);
-            //         ref readonly var definition = ref skip(definitions,i);
-            //         var rva = definition.RelativeVirtualAddress;
-            //         if(rva != 0)
-            //         {
-            //             var body = GetMethodBody(rva);
-            //             dst.Add(new MsilRow
-            //             {
-            //                 MethodRva = (Address32)rva,
-            //                 Token = EcmaTokens.token(method),
-            //                 ImageName = Source.FileName.Format(),
-            //                 BodySize = body.Size,
-            //                 LocalInit = body.LocalVariablesInitialized,
-            //                 MaxStack = body.MaxStack,
-            //                 MethodName = MD.GetString(definition.Name),
-            //                 Code = body.GetILBytes(),
-            //             });
-            //         }
-            //      }
-            // }
-            //return dst.ViewDeposited();
-        }
+            => msil(Source, PE).Array();
+
     }
 }
