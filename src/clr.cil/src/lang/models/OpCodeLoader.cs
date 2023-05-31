@@ -6,11 +6,11 @@ namespace Z0
     using static sys;
 
     using C = System.Reflection.Metadata.ILOpCode;
-    using CT = MsilCodeModels.OpCodeType;
-    using OT = MsilCodeModels.OperandType;
-    using SB = MsilCodeModels.StackBehaviour;
+    using CT = CilModels.OpCodeType;
+    using OT = CilModels.OperandType;
+    using SB = CilModels.StackBehaviour;
 
-    partial struct MsilCodeModels
+    partial struct CilModels
     {
         public readonly struct OpCodeLoader
         {

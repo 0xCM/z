@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    partial struct MsilCodeModels
+    partial struct CilModels
     {
         public readonly struct OpCodeName
         {

@@ -7,6 +7,7 @@ namespace System.Reflection.Metadata
     using System.Collections.Immutable;
     using System.Diagnostics;
     using System.IO;
+    using System.IO.Compression;
     using System.Linq;
     using System.Reflection.Metadata.Ecma335;
     using System.Text;
@@ -31,13 +32,15 @@ namespace System.Reflection.Metadata
 
         readonly Dictionary<BlobHandle, BlobKind> _blobKinds = new Dictionary<BlobHandle, BlobKind>();
 
+        private readonly ImmutableDictionary<EntityHandle, EntityHandle> _encAddedMemberToParentMap;
+
         MetadataVisualizer(TextWriter writer, IReadOnlyList<MetadataReader> readers, MetadataVisualizerOptions options = MetadataVisualizerOptions.None)
         {
             _writer = writer;
             _readers = readers;
             _options = options;
             _signatureVisualizer = new SignatureVisualizer(this);
-
+            _encAddedMemberToParentMap = ImmutableDictionary<EntityHandle, EntityHandle>.Empty;
             if (readers.Count > 1)
             {
                 var deltaReaders = new List<MetadataReader>(readers.Skip(1));
@@ -164,6 +167,24 @@ namespace System.Reflection.Metadata
             _writer.WriteLine(line);
         }
 
+        public string MethodSignature(BlobHandle signatureHandle)
+            => Literal(signatureHandle, (r, h) => Signature(r, (BlobHandle)h, BlobKind.MethodSignature));
+
+        public string StandaloneSignature(BlobHandle signatureHandle)
+            => Literal(signatureHandle, (r, h) => Signature(r, (BlobHandle)h, BlobKind.StandAloneSignature));
+
+        public string MemberReferenceSignature(BlobHandle signatureHandle)
+            => Literal(signatureHandle, (r, h) => Signature(r, (BlobHandle)h, BlobKind.MemberRefSignature));
+
+        public string MethodSpecificationSignature(BlobHandle signatureHandle)
+            => Literal(signatureHandle, (r, h) => Signature(r, (BlobHandle)h, BlobKind.MethodSpec));
+
+        public string TypeSpecificationSignature(BlobHandle signatureHandle)
+            => Literal(signatureHandle, (r, h) => Signature(r, (BlobHandle)h, BlobKind.TypeSpec));
+
+        public string FieldSignature(BlobHandle hSig)
+            => FieldSignature(() => hSig);
+
         public string Literal(StringHandle handle)
             => Literal(handle, (r, h) => "'" + r.GetString((StringHandle)h) + "'");
 
@@ -229,6 +250,12 @@ namespace System.Reflection.Metadata
             VisualizeMethodBody(body, method, methodHandle);
         }
 
+        public string GetString(StringHandle handle) =>
+            Literal(handle, (r, h) => r.GetString((StringHandle)h), noHeapReferences: true);
+
+        public string GetString(UserStringHandle handle) =>
+            Literal(handle, (r, h) => r.GetUserString((UserStringHandle)h), noHeapReferences: true);
+
         public string RowId(EntityHandle handle)
             => handle.IsNil ? "nil" : $"#{_reader.GetRowNumber(handle):x}";
 
@@ -241,6 +268,461 @@ namespace System.Reflection.Metadata
         {
             return Get(handle, (reader, h) => reader.GetStandaloneSignature((StandaloneSignatureHandle)h).Signature);
         }
+
+        public string QualifiedTypeDefinitionName(TypeDefinitionHandle handle)
+        {
+            var builder = new StringBuilder();
+            Recurse(handle, isLastPart: true);
+            return builder.ToString();
+
+            void Recurse(TypeDefinitionHandle typeDefinitionHandle, bool isLastPart)
+            {
+                try
+                {
+                    var generationDeclaringTypeDef = GetGenerationTypeDefinition(typeDefinitionHandle);
+                    var declaringTypeDefHandle = _reader.GetTypeDefinition(typeDefinitionHandle).GetDeclaringType();
+
+                    if (declaringTypeDefHandle.IsNil)
+                    {
+                        if (!generationDeclaringTypeDef.Namespace.IsNil)
+                        {
+                            builder.Append(GetString(generationDeclaringTypeDef.Namespace)).Append('.');
+                        }
+                    }
+                    else
+                    {
+                        Recurse(declaringTypeDefHandle, isLastPart: false);
+                    }
+
+                    var name = GetString(generationDeclaringTypeDef.Name);
+                    builder.Append(name);
+                }
+                catch (BadImageFormatException)
+                {
+                    builder.Append(BadMetadataStr);
+                }
+
+                if (!isLastPart)
+                {
+                    builder.Append('.');
+                }
+            }
+        }
+
+        public string QualifiedMethodName(MethodDefinitionHandle handle, TypeDefinitionHandle scope = default)
+            => QualifiedMemberName(
+                handle,
+                scope,
+                entity => entity.Name,
+                entity => entity.GetDeclaringType(),
+                (reader, handle) => reader.GetMethodDefinition((MethodDefinitionHandle)handle));
+
+        public string QualifiedFieldName(FieldDefinitionHandle handle, TypeDefinitionHandle scope = default)
+            => QualifiedMemberName(
+                handle,
+                scope,
+                entity => entity.Name,
+                entity => entity.GetDeclaringType(),
+                (reader, handle) => reader.GetFieldDefinition((FieldDefinitionHandle)handle));
+
+
+        public string QualifiedMemberReferenceName(MemberReferenceHandle handle)
+        {
+            try
+            {
+                var memberReference = GetGenerationMemberReference(handle);
+                return QualifiedName(memberReference.Parent) + "." + GetString(memberReference.Name);
+            }
+            catch (BadImageFormatException)
+            {
+                return BadMetadataStr;
+            }
+        }
+
+        public string QualifiedTypeReferenceName(TypeReferenceHandle handle)
+        {
+            try
+            {
+                var typeReference = GetGenerationTypeDefinition(handle);
+                return GetString(typeReference.Namespace) + "." + GetString(typeReference.Name);
+            }
+            catch (BadImageFormatException)
+            {
+                return BadMetadataStr;
+            }
+        }
+
+        public string QualifiedMethodSpecificationName(MethodSpecificationHandle handle)
+        {
+            MethodSpecification methodSpecification;
+            try
+            {
+                methodSpecification = GetGenerationMethodSpecification(handle);
+            }
+            catch (BadImageFormatException)
+            {
+                return BadMetadataStr;
+            }
+
+            string qualifiedName;
+            try
+            {
+                qualifiedName = QualifiedName(methodSpecification.Method);
+            }
+            catch (BadImageFormatException)
+            {
+                qualifiedName = BadMetadataStr;
+            }
+
+            string typeArguments;
+            try
+            {
+                typeArguments = GetGenerationEntity(methodSpecification.Signature, (reader, handle) => Signature(reader, (BlobHandle)handle, BlobKind.MethodSpec));
+            }
+            catch (BadImageFormatException)
+            {
+                typeArguments = BadMetadataStr;
+            }
+
+            return qualifiedName + "<" + typeArguments + ">";
+        }
+
+        public string QualifiedTypeSpecificationName(TypeSpecificationHandle handle)
+        {
+            TypeSpecification typeSpecification;
+            try
+            {
+                typeSpecification = GetGenerationTypeSpecification(handle);
+            }
+            catch (BadImageFormatException)
+            {
+                return BadMetadataStr;
+            }
+
+            BlobHandle signature;
+            try
+            {
+                signature = typeSpecification.Signature;
+            }
+            catch (BadImageFormatException)
+            {
+                return BadMetadataStr;
+            }
+
+            return GetGenerationEntity(signature, (reader, handle) => Signature(reader, (BlobHandle)handle, BlobKind.TypeSpec));
+        }
+
+        public string QualifiedName(EntityHandle handle, TypeDefinitionHandle scope = default)
+            => handle.Kind switch
+            {
+                HandleKind.TypeDefinition => QualifiedTypeDefinitionName((TypeDefinitionHandle)handle),
+                HandleKind.MethodDefinition => QualifiedMethodName((MethodDefinitionHandle)handle, scope),
+                HandleKind.FieldDefinition => QualifiedFieldName((FieldDefinitionHandle)handle, scope),
+                HandleKind.MemberReference => QualifiedMemberReferenceName((MemberReferenceHandle)handle),
+                HandleKind.TypeReference => QualifiedTypeReferenceName((TypeReferenceHandle)handle),
+                HandleKind.MethodSpecification => QualifiedMethodSpecificationName((MethodSpecificationHandle)handle),
+                HandleKind.TypeSpecification => QualifiedTypeSpecificationName((TypeSpecificationHandle)handle),
+                _ => null
+            };
+
+        public string VisualizeMethodBody(MethodBodyBlock body, MethodDefinitionHandle methodHandle)
+        {
+            var builder = new StringBuilder();
+
+            var token = Token(methodHandle, displayTable: false);
+            builder.AppendLine($"Method '{StringUtilities.EscapeNonPrintableCharacters(QualifiedMethodName(methodHandle))}' ({token})");
+
+            if (!body.LocalSignature.IsNil)
+            {
+                builder.AppendLine($"  Locals: {StandaloneSignature(() => GetGenerationLocalSignature(body.LocalSignature).Signature)}");
+            }
+
+            var declaringTypeDefHandle = _encAddedMemberToParentMap.TryGetValue(methodHandle, out var parentHandle) ? 
+                (TypeDefinitionHandle)parentHandle :
+                GetGenerationMethodDefinition(methodHandle).GetDeclaringType();
+
+            new ILVisualizer(this, scope: declaringTypeDefHandle).DumpMethod(
+                builder,
+                body.MaxStack,
+                body.GetILContent().ToReadOnlySpan(),
+                sys.empty<ILVisualizer.LocalInfo>(),
+                sys.empty<ILVisualizer.HandlerSpan>());
+
+            builder.AppendLine();
+
+            var result = builder.ToString();
+            _writer.Write(result);
+            return result;
+        }
+
+        /// <summary>
+        /// Returns entity definition that can be used to read its metadata.
+        /// The entity is local to the generation that introduced it and can't be used to look up related entities such as declaring type, etc.
+        /// since the metadata tables contain aggregate metadata tokens and not generation-relative ones, which is stored in the returned entity.
+        /// </summary>
+        TEntity GetGenerationEntity<TEntity>(Handle handle, Func<MetadataReader, Handle, TEntity> getter)
+        {
+            if (_aggregator != null)
+            {
+                var generationHandle = _aggregator.GetGenerationHandle(handle, out int generation);
+                return getter(_readers[generation], generationHandle);
+            }
+            else
+            {
+                return getter(_reader, handle);
+            }
+        }
+
+        static string GetValueChecked(Func<MetadataReader, Handle, string> getValue, MetadataReader reader, Handle handle)
+        {
+            try
+            {
+                return getValue(reader, handle);
+            }
+            catch (BadImageFormatException)
+            {
+                return BadMetadataStr;
+            }
+        }
+
+        string Literal(Handle handle, Func<MetadataReader, Handle, string> getValue, bool noHeapReferences)
+        {
+            if (handle.IsNil)
+            {
+                return "nil";
+            }
+
+            if (_aggregator != null)
+            {
+                Handle generationHandle = _aggregator.GetGenerationHandle(handle, out int generation);
+
+                var generationReader = _readers[generation];
+                string value = GetValueChecked(getValue, generationReader, generationHandle);
+                int offset = generationReader.GetHeapOffset(handle);
+                int generationOffset = generationReader.GetHeapOffset(generationHandle);
+
+                if (noHeapReferences)
+                {
+                    return value;
+                }
+                else if (offset == generationOffset)
+                {
+                    return $"{value} (#{offset:x})";
+                }
+                else
+                {
+                    return $"{value} (#{offset:x}/{generation}:{generationOffset:x})";
+                }
+            }
+
+            if (IsDelta)
+            {
+                // we can't resolve the literal without aggregate reader
+                return $"#{_reader.GetHeapOffset(handle):x}";
+            }
+
+            int heapOffset = MetadataTokens.GetHeapOffset(handle);
+
+            // virtual heap handles don't have offset:
+            bool displayHeapOffset = !noHeapReferences && heapOffset >= 0;
+
+            return GetValueChecked(getValue, _reader, handle) + (displayHeapOffset ? $" (#{heapOffset:x})" : "");
+        }
+
+        TypeDefinition GetGenerationTypeDefinition(TypeDefinitionHandle handle)
+            => GetGenerationEntity(handle, (reader, handle) => reader.GetTypeDefinition((TypeDefinitionHandle)handle));
+
+        MethodDefinition GetGenerationMethodDefinition(MethodDefinitionHandle handle)
+            => GetGenerationEntity(handle, (reader, handle) => reader.GetMethodDefinition((MethodDefinitionHandle)handle));
+
+        MemberReference GetGenerationMemberReference(MemberReferenceHandle handle)
+            => GetGenerationEntity(handle, (reader, handle) => reader.GetMemberReference((MemberReferenceHandle)handle));
+
+        TypeReference GetGenerationTypeDefinition(TypeReferenceHandle handle)
+            => GetGenerationEntity(handle, (reader, handle) => reader.GetTypeReference((TypeReferenceHandle)handle));
+
+        MethodSpecification GetGenerationMethodSpecification(MethodSpecificationHandle handle)
+            => GetGenerationEntity(handle, (reader, handle) => reader.GetMethodSpecification((MethodSpecificationHandle)handle));
+
+        TypeSpecification GetGenerationTypeSpecification(TypeSpecificationHandle handle)
+            => GetGenerationEntity(handle, (reader, handle) => reader.GetTypeSpecification((TypeSpecificationHandle)handle));
+
+        StandaloneSignature GetGenerationLocalSignature(StandaloneSignatureHandle handle)
+            => GetGenerationEntity(handle, (reader, handle) => reader.GetStandaloneSignature((StandaloneSignatureHandle)handle));
+
+        string QualifiedMemberName<TMemberEntity>(
+            EntityHandle memberHandle,
+            TypeDefinitionHandle scope,
+            Func<TMemberEntity, StringHandle> nameGetter,
+            Func<TMemberEntity, TypeDefinitionHandle> declaringTypeGetter,
+            Func<MetadataReader, Handle, TMemberEntity> entityGetter)
+        {
+            try
+            {
+                var member = GetGenerationEntity(memberHandle, entityGetter);
+                var declaringTypeDefHandle = _encAddedMemberToParentMap.TryGetValue(memberHandle, out var parentHandle) ? (TypeDefinitionHandle)parentHandle : declaringTypeGetter(member);
+
+                var typeQualification = declaringTypeDefHandle != scope && !declaringTypeDefHandle.IsNil ? QualifiedTypeDefinitionName(declaringTypeDefHandle) + "." : "";
+                var memberName = GetString(nameGetter(member));
+
+                return typeQualification + memberName;
+            }
+            catch (BadImageFormatException)
+            {
+                return BadMetadataStr;
+            }
+        }
+
+        public string TryDecodeCustomDebugInformation(CustomDebugInformation entry)
+        {
+            Guid kind;
+            BlobReader blobReader;
+
+            try
+            {
+                kind = _reader.GetGuid(entry.Kind);
+                blobReader = _reader.GetBlobReader(entry.Value);
+            }
+            catch
+            {
+                // error is already reported
+                return null;
+            }
+
+            if (kind == PortableCustomDebugInfoKinds.AsyncMethodSteppingInformationBlob)
+            {
+                return TryDecodeAsyncMethodSteppingInformation(blobReader);
+            }
+
+            if (kind == PortableCustomDebugInfoKinds.SourceLink)
+            {
+                return VisualizeSourceLink(blobReader);
+            }
+
+            if (kind == CompilationMetadataReferences)
+            {
+                return VisualizeCompilationMetadataReferences(blobReader);
+            }
+
+            if (kind == CompilationOptions)
+            {
+                return VisualizeCompilationOptions(blobReader);
+            }
+
+            if (kind == PortableCustomDebugInfoKinds.EmbeddedSource)
+            {
+                return VisualizeEmbeddedSource(blobReader);
+            }
+
+            return null;
+        }
+
+        private delegate TResult FuncRef<TArg, TResult>(ref TArg arg); 
+
+        private static string TryRead<T>(ref BlobReader reader, ref bool error, FuncRef<BlobReader, T> read, Func<T, string> toString = null)
+        {
+            if (error)
+            {
+                return BadMetadataStr;
+            }
+
+            T value;
+            try
+            {
+                value = read(ref reader);
+            }
+            catch (BadImageFormatException)
+            {
+                error = true;
+                return BadMetadataStr;
+            }
+
+            return (toString != null) ? toString(value) : value.ToString();
+        }
+
+
+        private static string TryDecodeAsyncMethodSteppingInformation(BlobReader reader)
+        {
+            var builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            bool error = false;
+            var catchHandlerOffsetStr = TryRead(ref reader, ref error, (ref BlobReader reader) => reader.ReadUInt32(), value => (value == 0) ? null : $"0x{value - 1:X4}");
+                
+            if (catchHandlerOffsetStr != null)
+            {
+                builder.AppendLine($"  CatchHandlerOffset: {catchHandlerOffsetStr}");
+            }
+
+            if (error) goto onError;
+
+            while (reader.RemainingBytes > 0)
+            {
+                var yieldOffsetStr = TryRead(ref reader, ref error, (ref BlobReader reader) => reader.ReadUInt32(), value => $"0x{value:X4}");
+                var resumeOffsetStr = TryRead(ref reader, ref error, (ref BlobReader reader) => reader.ReadUInt32(), value => $"0x{value:X4}");
+                var moveNextMethodRowIdStr = TryRead(ref reader, ref error, (ref BlobReader reader) => reader.ReadCompressedInteger(), value => $"0x06{value:X6}");
+
+                builder.AppendLine($"  Yield: {yieldOffsetStr}, Resume: {resumeOffsetStr}, MoveNext: {moveNextMethodRowIdStr}");
+                if (error) goto onError;
+            }
+
+            onError:
+
+            if (error)
+            {
+                builder.AppendLine("  Remaining bytes: " + FormatBytes(reader.ReadBytes(reader.RemainingBytes)));
+            }
+
+            builder.AppendLine("}");
+            return builder.ToString();
+        }
+
+        public static string FormatBytes(byte[] blob)
+        {
+            int length = blob.Length;
+            string suffix = "";
+
+
+            return BitConverter.ToString(blob, 0, length) + suffix;
+        }
+
+        public static string VisualizeEmbeddedSource(BlobReader reader)
+        {
+            var builder = new StringBuilder();
+            builder.AppendLine(">>>");
+            int format = -1;
+            try { format = reader.ReadInt32(); } catch { };
+            byte[] bytes = null;
+            try { bytes = reader.ReadBytes(reader.RemainingBytes); } catch { };
+
+            if (format > 0 && bytes != null)
+            {
+                try
+                {
+                    using var compressedStream = new MemoryStream(bytes, writable: false);
+                    using var uncompressedStream = new MemoryStream();
+                    using var deflate = new DeflateStream(compressedStream, CompressionMode.Decompress);
+                    deflate.CopyTo(uncompressedStream);
+                    bytes = uncompressedStream.ToArray();
+                }
+                catch
+                {
+                    bytes = null;
+                };
+            }
+
+            if (format < 0 || bytes == null)
+            {
+                builder.AppendLine(BadMetadataStr);
+            }
+            else
+            {
+                builder.AppendLine(Encoding.UTF8.GetString(bytes));
+                builder.AppendLine("<<< End of Embedded Source");
+            }
+            return builder.ToString();
+        }
+
 
         public void VisualizeMethodBody(MethodBodyBlock body, MethodDefinition method, MethodDefinitionHandle methodHandle)
         {
@@ -264,7 +746,6 @@ namespace System.Reflection.Metadata
 
             _writer.Write(builder.ToString());
         }
-
 
         public void WriteModule()
         {
@@ -1610,39 +2091,39 @@ namespace System.Reflection.Metadata
             WriteTable(table);
         }
 
-        public string TryDecodeCustomDebugInformation(CustomDebugInformation entry)
-        {
-            Guid kind;
-            BlobReader blobReader;
+        // public string TryDecodeCustomDebugInformation(CustomDebugInformation entry)
+        // {
+        //     Guid kind;
+        //     BlobReader blobReader;
 
-            try
-            {
-                kind = _reader.GetGuid(entry.Kind);
-                blobReader = _reader.GetBlobReader(entry.Value);
-            }
-            catch
-            {
-                // error is already reported
-                return null;
-            }
+        //     try
+        //     {
+        //         kind = _reader.GetGuid(entry.Kind);
+        //         blobReader = _reader.GetBlobReader(entry.Value);
+        //     }
+        //     catch
+        //     {
+        //         // error is already reported
+        //         return null;
+        //     }
 
-            if (kind == PortableCustomDebugInfoKinds.SourceLink)
-            {
-                return VisualizeSourceLink(blobReader);
-            }
+        //     if (kind == PortableCustomDebugInfoKinds.SourceLink)
+        //     {
+        //         return VisualizeSourceLink(blobReader);
+        //     }
 
-            if (kind == CompilationMetadataReferences)
-            {
-                return VisualizeCompilationMetadataReferences(blobReader);
-            }
+        //     if (kind == CompilationMetadataReferences)
+        //     {
+        //         return VisualizeCompilationMetadataReferences(blobReader);
+        //     }
 
-            if (kind == CompilationOptions)
-            {
-                return VisualizeCompilationOptions(blobReader);
-            }
+        //     if (kind == CompilationOptions)
+        //     {
+        //         return VisualizeCompilationOptions(blobReader);
+        //     }
 
-            return null;
-        }
+        //     return null;
+        // }
 
         [Flags]
         enum MetadataReferenceFlags
@@ -1923,34 +2404,6 @@ namespace System.Reflection.Metadata
         string MakeTableName(TableIndex index)
             => $"{index} (index: 0x{(byte)index:X2}, size: {_reader.GetTableRowCount(index) * _reader.GetTableRowSize(index)}): ";
 
-        // static string EnumValue<T>(object value)
-        //     where T : IEquatable<T>
-        // {
-        //     T integralValue = (T)value;
-        //     if (integralValue.Equals(default(T)))
-        //         return "0";
-
-        //     return string.Format("0x{0:x8} ({1})", integralValue, value);
-        // }
-
-        public string MethodSignature(BlobHandle signatureHandle)
-            => Literal(signatureHandle, (r, h) => Signature(r, (BlobHandle)h, BlobKind.MethodSignature));
-
-        public string StandaloneSignature(BlobHandle signatureHandle)
-            => Literal(signatureHandle, (r, h) => Signature(r, (BlobHandle)h, BlobKind.StandAloneSignature));
-
-        public string MemberReferenceSignature(BlobHandle signatureHandle)
-            => Literal(signatureHandle, (r, h) => Signature(r, (BlobHandle)h, BlobKind.MemberRefSignature));
-
-        public string MethodSpecificationSignature(BlobHandle signatureHandle)
-            => Literal(signatureHandle, (r, h) => Signature(r, (BlobHandle)h, BlobKind.MethodSpec));
-
-        public string TypeSpecificationSignature(BlobHandle signatureHandle)
-            => Literal(signatureHandle, (r, h) => Signature(r, (BlobHandle)h, BlobKind.TypeSpec));
-
-        public string FieldSignature(BlobHandle hSig)
-            => FieldSignature(() => hSig);
-
         string FieldSignature(Func<BlobHandle> getHandle)
             => Literal(getHandle, BlobKind.FieldSignature, (r, h) => Signature(r, h, BlobKind.FieldSignature));
 
@@ -2079,7 +2532,7 @@ namespace System.Reflection.Metadata
                 }
             }
 
-            private string RowId(EntityHandle handle)
+            string RowId(EntityHandle handle)
                 => _visualizer.RowId(handle);
 
             public string GetTypeFromDefinition(MetadataReader reader, TypeDefinitionHandle handle, byte rawTypeKind = 0)

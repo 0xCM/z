@@ -5,13 +5,17 @@
 namespace Z0
 {
     using static System.Reflection.Metadata.ILOpCode;
-    using static MsilCodeModels;
+    using static CilModels;
     using static sys;
 
     using K = System.Reflection.Metadata.ILOpCode;
 
     public class Cil
     {
+        public static MetadataVisualizer mdv(MetadataReader src, StreamWriter dst)
+            => new MetadataVisualizer(src,dst);
+
+
         static ReadOnlySeq<MsilOpCode> _OpCodes;
 
         static uint OpCodeCount;

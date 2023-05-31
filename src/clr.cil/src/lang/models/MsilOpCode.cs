@@ -3,7 +3,7 @@
 // See the LICENSE file in the project root for more information.
 namespace Z0
 {
-    using static MsilCodeModels;
+    using static CilModels;
 
     [Record(TableId), StructLayout(StructLayout,Pack=1)]
     public struct MsilOpCode

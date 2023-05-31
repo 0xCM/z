@@ -11,6 +11,5 @@ namespace Z0
 
         public static IModuleArchive modules(IDbArchive src, bool recurse = true)
             => new ModuleArchive(src.Root, recurse);
-
     }
 }

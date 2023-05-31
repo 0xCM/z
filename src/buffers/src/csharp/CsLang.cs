@@ -8,14 +8,11 @@ namespace Z0
 
     public partial class CsLang : Channeled<CsLang>
     {
-
         public StringLitEmitter StringLits()
             => Channel.Channeled<StringLitEmitter>();
         
-
         string TargetExpr(CgTarget target)
             => TargetExpressions[target];
-
 
         public FolderPath ProjectRoot(CgTarget target)
             => CgRoot + FS.folder(TargetExpr(target));

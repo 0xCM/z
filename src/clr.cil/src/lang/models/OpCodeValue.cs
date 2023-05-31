@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial struct MsilCodeModels
+    partial struct CilModels
     {
         public enum OpCodeValue : ushort
         {

@@ -25,8 +25,29 @@ namespace Z0.Asm
             dst.OpUri = ApiIdentity.hex(method.DeclaringType.ApiHostUri(), method.Name, id);
             dst.TermCode = term;
             dst.Msil = ClrDynamic.msil(parsed.Address, dst.OpUri, method);
-            dst.CliSig = EcmaSigs.sig(method);
+            dst.CliSig = sig(method);
             return dst;
+        }
+
+        [MethodImpl(Inline), Op]
+        static EcmaSig sig(MemberInfo src)
+        {
+            sig(src, out EcmaSig dst);
+            return dst;
+        }
+
+        static bool sig(MemberInfo src, out EcmaSig dst)
+        {
+            try
+            {
+                dst = src.Module.ResolveSignature(src.MetadataToken);
+                return true;
+            }
+            catch
+            {
+                dst = EcmaSig.Empty;
+                return false;
+            }
         }
 
         public Option<ApiCaptureBlock> Capture(in CaptureExchange exchange, OpIdentity id, in DynamicDelegate src)

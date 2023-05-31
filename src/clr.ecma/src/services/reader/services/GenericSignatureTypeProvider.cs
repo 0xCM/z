@@ -84,7 +84,7 @@ namespace Z0
                 if (definition.IsNested)
                 {
                     TypeDefinitionHandle declaringTypeHandle = definition.GetDeclaringType();
-                    return GetTypeFromDefinition(reader, declaringTypeHandle, 0) + "/" + name;
+                    return GetTypeFromDefinition(reader, declaringTypeHandle, 0) + "+" + name;
                 }
 
                 return name;

@@ -46,11 +46,6 @@ namespace Z0
             return dst;
         }
          
-        [MethodImpl(Inline), Op]
-        static Span<char> expr(SymHeap src, uint index)
-            => sys.slice(src.Expr.Edit, src.ExprOffsets[index], src.ExprLengths[index]);
-
-
         public static void emit(IWfChannel channel, SymHeap src, FilePath dst)
             => CsvTables.emit(channel, SymHeaps.records(src).View, dst, TextEncodingKind.Unicode);
 

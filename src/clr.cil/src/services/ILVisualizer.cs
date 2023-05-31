@@ -49,6 +49,67 @@ namespace System.Reflection.Metadata
             }
         }
 
+        private readonly MetadataVisualizer _metadataVisualizer;
+        private readonly TypeDefinitionHandle _scope;
+
+        public ILVisualizer()
+        {
+
+        }
+        public ILVisualizer(MetadataVisualizer metadataVisualizer, TypeDefinitionHandle scope)
+        {
+            _metadataVisualizer = metadataVisualizer;
+            _scope = scope;
+        }
+
+        public virtual string VisualizeSymbol(uint token, OperandType operandType)
+        {
+            if(_metadataVisualizer == null)
+            {
+            return string.Format(CultureInfo.InvariantCulture, "0x{0:X8}", token);
+            }
+            else
+            {
+                var handle = MetadataTokens.EntityHandle((int)token);
+                var tokenString = _metadataVisualizer.Token(handle, displayTable: false);
+                var name = _metadataVisualizer.QualifiedName(handle, _scope);
+                return (name != null) ? $"'{StringUtilities.EscapeNonPrintableCharacters(name)}' ({tokenString})" : tokenString;
+
+            }
+        }
+
+        public virtual string VisualizeUserString(uint token)
+        {
+            if(_metadataVisualizer == null)
+                return string.Format(CultureInfo.InvariantCulture, "0x{0:X8}", token);
+            else
+            {
+                var handle = (UserStringHandle)MetadataTokens.Handle((int)token);
+                return '"' + StringUtilities.EscapeNonPrintableCharacters(_metadataVisualizer.GetString(handle)) + '"';
+            }
+        }
+
+
+            // public override string VisualizeUserString(uint token)
+            // {
+            //     var handle = (UserStringHandle)MetadataTokens.Handle((int)token);
+            //     return '"' + StringUtilities.EscapeNonPrintableCharacters(_metadataVisualizer.GetString(handle)) + '"';
+            // }
+
+            // public string VisualizeSymbol(uint token, OperandType operandType)
+            // {
+            //     var handle = MetadataTokens.EntityHandle((int)token);
+            //     var tokenString = _metadataVisualizer.Token(handle, displayTable: false);
+            //     var name = _metadataVisualizer.QualifiedName(handle, _scope);
+            //     return (name != null) ? $"'{StringUtilities.EscapeNonPrintableCharacters(name)}' ({tokenString})" : tokenString;
+            // }
+
+            // public string VisualizeUserString(uint token)
+            // {
+            //     var handle = (UserStringHandle)MetadataTokens.Handle((int)token);
+            //     return '"' + StringUtilities.EscapeNonPrintableCharacters(_metadataVisualizer.GetString(handle)) + '"';
+            // }
+
         public enum HandlerKind
         {
             Try,
@@ -139,11 +200,6 @@ namespace System.Reflection.Metadata
 
         public const string IndentString = "  ";
 
-        public virtual string VisualizeUserString(uint token)
-            => string.Format(CultureInfo.InvariantCulture, "0x{0:X8}", token);
-
-        public virtual string VisualizeSymbol(uint token, OperandType operandType)
-            => string.Format(CultureInfo.InvariantCulture, "0x{0:X8}", token);
 
         public virtual string VisualizeLocalType(object type)
             => string.Format(CultureInfo.InvariantCulture, "0x{0:X8}", type);
@@ -197,13 +253,13 @@ namespace System.Reflection.Metadata
             }
         }
 
-        public string DumpMethod(int maxStack, ReadOnlySpan<byte> ilBytes, ReadOnlySpan<LocalInfo> locals, IReadOnlyList<HandlerSpan> exceptionHandlers,
-            IReadOnlyDictionary<int, string> markers = null, bool localsAreZeroed = true)
-        {
-            var builder = new StringBuilder();
-            DumpMethod(builder, maxStack, ilBytes, locals, exceptionHandlers, markers, localsAreZeroed);
-            return builder.ToString();
-        }
+        // public string DumpMethod(int maxStack, ReadOnlySpan<byte> ilBytes, ReadOnlySpan<LocalInfo> locals, IReadOnlyList<HandlerSpan> exceptionHandlers,
+        //     IReadOnlyDictionary<int, string> markers = null, bool localsAreZeroed = true)
+        // {
+        //     var builder = new StringBuilder();
+        //     DumpMethod(builder, maxStack, ilBytes, locals, exceptionHandlers, markers, localsAreZeroed);
+        //     return builder.ToString();
+        // }
 
         public void DumpMethod(StringBuilder dst, int maxStack, ReadOnlySpan<byte> ilBytes, ReadOnlySpan<LocalInfo> locals,
             IReadOnlyList<HandlerSpan> exceptionHandlers, IReadOnlyDictionary<int, string> markers = null, bool localsAreZeroed = true)

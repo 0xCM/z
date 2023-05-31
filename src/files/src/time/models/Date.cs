@@ -46,7 +46,7 @@ namespace System
     [XmlSchemaProvider("GetSchema")]
     [DebuggerStepThrough]
     [DataTypeAttributeD("date")]
-    public partial struct Date : IEquatable<Date>, IComparable<Date>, IComparable, IFormattable, IXmlSerializable
+    public struct Date : IEquatable<Date>, IComparable<Date>, IComparable, IFormattable, IXmlSerializable
     {
         /// <summary>
         /// Defines a <see cref="DateRange"/> bounded below by <paramref name="MinDate"/>
