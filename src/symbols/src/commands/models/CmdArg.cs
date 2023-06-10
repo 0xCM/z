@@ -18,6 +18,7 @@ namespace Z0
         {
             Name = EmptyString;
             Value = value;
+            
         }
 
         [MethodImpl(Inline)]

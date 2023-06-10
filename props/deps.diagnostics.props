@@ -6,4 +6,19 @@
         <Reference Include="$(GlobalDeps)/Microsoft.Diagnostics.DebugServices.Implementation.dll"/>
         <Reference Include="$(GlobalDeps)/Microsoft.Diagnostics.ExtensionCommands.dll"/>        
     </ItemGroup>
+
+  <Target Name="DignosticsLibs">
+    <ItemGroup>
+        <BuildOutputInPackage Include="$(GlobalDeps)/Microsoft.Diagnostics.Runtime.dll"/>
+        <BuildOutputInPackage Include="$(GlobalDeps)/Microsoft.Diagnostics.Runtime.Utilities.dll"/>
+        <BuildOutputInPackage Include="$(GlobalDeps)/Microsoft.Diagnostics.DebugServices.dll"/>
+        <BuildOutputInPackage Include="$(GlobalDeps)/Microsoft.Diagnostics.DebugServices.Implementation.dll"/>
+        <BuildOutputInPackage Include="$(GlobalDeps)/Microsoft.Diagnostics.ExtensionCommands.dll"/>        
+   </ItemGroup>
+  </Target>
+
+  <PropertyGroup>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);DignosticsLibs</TargetsForTfmSpecificBuildOutput>
+  </PropertyGroup>
+
 </Project>

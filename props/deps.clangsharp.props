@@ -7,4 +7,19 @@
       <Reference Include="$(GlobalDeps)/LLVMSharp.dll"/>
       <Reference Include="$(GlobalDeps)/LLVMSharp.Interop.dll"/>
   </ItemGroup>
+
+  <Target Name="CLangSharpLibs">
+    <ItemGroup>
+      <BuildOutputInPackage Include="$(GlobalDeps)/ClangSharp.dll"/>
+      <BuildOutputInPackage Include="$(GlobalDeps)/ClangSharp.Interop.dll"/>
+      <BuildOutputInPackage Include="$(GlobalDeps)/ClangSharp.PInvokeGenerator.dll"/>
+      <BuildOutputInPackage Include="$(GlobalDeps)/ClangSharpPInvokeGenerator.dll"/>
+      <BuildOutputInPackage Include="$(GlobalDeps)/LLVMSharp.dll"/>
+      <BuildOutputInPackage Include="$(GlobalDeps)/LLVMSharp.Interop.dll"/>
+    </ItemGroup>
+  </Target>
+
+  <PropertyGroup>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CLangSharpLibs</TargetsForTfmSpecificBuildOutput>
+  </PropertyGroup>
 </Project>

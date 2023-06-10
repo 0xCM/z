@@ -1,7 +1,9 @@
 <Project>
   <ItemGroup>
     <Reference Include="$(DotNetSdkBuild)/Microsoft.DotNet.InternalAbstractions.dll" />
-    <Reference Include="$(DotNetSdkBuild)/Microsoft.DotNet.NativeWrapper.dll" />
+
+    <!-- <Reference Include="$(DotNetSdkBuild)/Microsoft.DotNet.NativeWrapper.dll" /> -->
+
     <Reference Include="$(DotNetSdkBuild)/Microsoft.DotNet.SdkResolver.dll" />
     <Reference Include="$(DotNetSdkBuild)/Microsoft.DotNet.TemplateLocator.dll" />
 
@@ -14,4 +16,28 @@
     <Reference Include="$(DotNetSdkFileRoot)/testhost.dll" />
     
   </ItemGroup>
+  
+  <Target Name="NetSdkLibs">
+    <ItemGroup>
+      <BuildOutputInPackage Include="$(DotNetSdkBuild)/Microsoft.DotNet.InternalAbstractions.dll" />
+
+      <!-- <BuildOutputInPackage Include="$(DotNetSdkBuild)/Microsoft.DotNet.NativeWrapper.dll" /> -->
+
+      <BuildOutputInPackage Include="$(DotNetSdkBuild)/Microsoft.DotNet.SdkResolver.dll" />
+      <BuildOutputInPackage Include="$(DotNetSdkBuild)/Microsoft.DotNet.TemplateLocator.dll" />
+
+      <BuildOutputInPackage Include="$(DotNetSdkBuild)/Microsoft.Deployment.DotNet.Releases.dll" />
+      <BuildOutputInPackage Include="$(DotNetSdkBuild)/Microsoft.NET.HostModel.dll" />
+
+      <BuildOutputInPackage Include="$(DotNetSdkBuild)/Microsoft.TemplateEngine.Core.dll" />
+      <BuildOutputInPackage Include="$(DotNetSdkBuild)/Microsoft.TemplateEngine.Orchestrator.RunnableProjects.dll" />
+      
+      <BuildOutputInPackage Include="$(DotNetSdkFileRoot)/testhost.dll" />        
+    </ItemGroup>
+  </Target>
+
+  <PropertyGroup>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);NetSdkLibs</TargetsForTfmSpecificBuildOutput>
+  </PropertyGroup>
+
 </Project>

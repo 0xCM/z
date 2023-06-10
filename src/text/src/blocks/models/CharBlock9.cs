@@ -74,7 +74,6 @@ namespace Z0
             [MethodImpl(Inline)]
             get => api.length(this);
         }
-
         public string Format()
             => api.format(this);
 

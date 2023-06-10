@@ -1,6 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(ProjectProps)\usings.props"/>
-  <Import Project="imports.props"/>
+
+  <ItemGroup>
+     <ProjectReference Include="$(Native)"/>
+     <ProjectReference Include="$(Process)"/>
+  </ItemGroup>
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <AssemblyName>agents</AssemblyName>

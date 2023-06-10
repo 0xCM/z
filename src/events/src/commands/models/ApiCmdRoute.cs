@@ -4,37 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-    
     public readonly record struct ApiCmdRoute : IDataType<ApiCmdRoute>, IDataString<ApiCmdRoute>
     {
-        [Op]
-        public static ApiCmdRoute route(Type src)
-        {
-            var dst = ApiCmdRoute.Empty;
-            var t0 = src.Tag<CmdRouteAttribute>();
-            if(t0)
-            {
-                dst = t0.Value.Route;
-            }
-            else
-            {
-                var t1 = src.Tag<CmdAttribute>();
-                if(t1)
-                {
-                    var name = t1.Value.Name;
-                    if(nonempty(name))
-                        dst = name;
-                }
-            }
-            if(dst.IsEmpty)
-            {
-                dst = src.DisplayName();
-            }
-
-            return dst;
-        }
-
         [Parser]
         public static bool parse(string src, out ApiCmdRoute dst)
         {

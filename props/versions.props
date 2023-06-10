@@ -1,11 +1,12 @@
 <Project>
   <PropertyGroup>
-    <ZSysVer>0.0.112</ZSysVer>
-    <ZVer>0.0.414</ZVer>
+    <ZSysVer>0.0.114</ZSysVer>
+    <ZVer>0.0.424</ZVer>
+    <ZFxVer>0.0.1003</ZFxVer>
     <MsBuildVer>17.6.0-preview-23174-01</MsBuildVer>
     <NugetVersion>6.6.0-preview.3.57</NugetVersion>
     <SystemCommandLineVersion>2.0.0-beta4.22564.1</SystemCommandLineVersion>
-    <CodeAnalysisVersion>4.7.0-dev</CodeAnalysisVersion>
+    <CodeAnalysisVersion>4.7.0-1</CodeAnalysisVersion>
 
     <XUnitAssertVersion>2.4.2</XUnitAssertVersion>
     <MsDebugVersion>20230328.919.0</MsDebugVersion>

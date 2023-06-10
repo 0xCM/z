@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct FolderName : IFsEntry<FolderName>
+    public readonly record struct FolderName : IFsEntry<FolderName>
     {
         public static FolderName version(byte major, byte minor, byte revision)
             => new (string.Format("{0}.{1}.{2}", major, minor, revision));

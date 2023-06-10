@@ -14,6 +14,10 @@ namespace Z0
 
         Receiver,
 
-        Func
+        Func,
+
+        ContextReceiver,
+
+        ContextFunc,
     }
 }

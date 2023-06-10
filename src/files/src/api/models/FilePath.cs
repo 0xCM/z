@@ -7,7 +7,7 @@ namespace Z0
     using System.IO;
     using System.Text;
 
-    public readonly struct FilePath : IFsEntry<FilePath>
+    public readonly record struct FilePath : IFsEntry<FilePath>
     {
         public PathPart Name {get;}
 
@@ -93,6 +93,9 @@ namespace Z0
             [MethodImpl(Inline)]
             get => Info.LastWriteTime;
         }
+
+        public string[] Components
+            => FS.components(this);
 
         /// <summary>
         /// The size of the file in bytes
@@ -201,10 +204,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public bool Equals(FilePath src)
             => Name.Equals(src.Name);
-
-        public override bool Equals(object src)
-            => src is FilePath x && x.Name.Equals(Name);
-                       
+                      
         [MethodImpl(Inline)]
         public string Format(PathSeparator sep, bool quote = false)
             => quote ? text.dquote(Name.Format(sep)) : Name.Format(sep);
@@ -222,14 +222,6 @@ namespace Z0
 
         public static implicit operator FilePath(FileUri src)
             => new FilePath(src.Format());
-
-        [MethodImpl(Inline)]
-        public static bool operator ==(FilePath a, FilePath b)
-            => a.Equals(b);
-
-        [MethodImpl(Inline)]
-        public static bool operator !=(FilePath a, FilePath b)
-            => !a.Equals(b);
 
         public static FilePath Empty
         {

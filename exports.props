@@ -65,7 +65,6 @@
    <Import Project="$(MsBuildThisFileDirectory)src/test.shell/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/test.units/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/text/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/tools/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/vcpu/exports.props"/>
 

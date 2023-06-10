@@ -8,89 +8,45 @@ namespace Z0
 
     public record class ApiCmdSpec : IApiCmd<ApiCmdSpec>
     {
-        public static string format<T>(T src)
-            where T : ICmd, new()
-        {
-            var buffer = text.emitter();
-            buffer.AppendFormat("{0}{1}", src.CmdId, Chars.LParen);
-            var fields = ClrFields.instance(typeof(T));
-            if(fields.Length != 0)
-                render(src, fields, buffer);
-
-            buffer.Append(Chars.RParen);
-            return buffer.Emit();
-        }
-
-        static void render(object src, ReadOnlySpan<ClrFieldAdapter> fields, ITextEmitter dst)
-        {
-            var count = fields.Length;
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var field = ref skip(fields,i);
-                dst.AppendFormat(RP.Assign, field.Name, field.GetValue(src));
-                if(i != count - 1)
-                    dst.Append(", ");
-            }
-        }                            
-
-        public static string format(ApiCmdSpec src)
-        {
-            if(src.IsEmpty)
-                return EmptyString;
-
-            var dst = text.buffer();
-            dst.Append(src.Name);
-            var count = src.Args.Count;
-            for(ushort i=0; i<count; i++)
-            {
-                var arg = src.Args[i];
-                if(nonempty(arg.Name))
-                {
-                    dst.Append(Chars.Space);
-                    dst.Append(arg.Name);
-                }
-
-                if(nonempty(arg.Value))
-                {
-                    dst.Append(Chars.Space);
-                    dst.Append(arg.Value);
-                }
-            }
-            return dst.Emit();
-        }
-
-        public readonly @string Name;
+        public readonly ApiCmdRoute Route;
 
         public readonly CmdArgs Args;
 
         [MethodImpl(Inline)]
         public ApiCmdSpec()
         {
-            Name = EmptyString;
+            Route = EmptyString;
             Args = CmdArgs.Empty;
         }
 
         [MethodImpl(Inline)]
-        public ApiCmdSpec(string name, CmdArgs args)
+        public ApiCmdSpec(ApiCmdRoute route, CmdArgs args)
         {
-            Name = name;
+            Route = route;
+            Args = args;
+        }
+
+        [MethodImpl(Inline)]
+        public ApiCmdSpec(string route, CmdArgs args)
+        {
+            Route = route;
             Args = args;
         }
 
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => Name.IsEmpty;
+            get => Route.IsEmpty;
         }
 
         public bool IsNonEmpty
         {
             [MethodImpl(Inline)]
-            get => Name.IsNonEmpty;
+            get => Route.IsNonEmpty;
         }
 
         public string Format()
-            => format(this);
+            => ApiCmd.format(this);
 
         public override string ToString()
             => Format();

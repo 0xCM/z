@@ -391,14 +391,14 @@ namespace Z0
 
             for(var i=0; i<CycleCount; i++)
             {
-                C = SquareBitLogix.eval(op, A, B, Z);
-                opcount++;
-                for(var sample=0; sample< RepCount; sample++)
-                {
-                    SquareBitLogix.eval(op, Z, A, Z);
-                    SquareBitLogix.eval(op, B, Z, Z);
-                    opcount +=2;
-                }
+                // C = SquareBitLogix.eval(op, A, B, Z);
+                // opcount++;
+                // for(var sample=0; sample< RepCount; sample++)
+                // {
+                //     SquareBitLogix.eval(op, Z, A, Z);
+                //     SquareBitLogix.eval(op, B, Z, Z);
+                //     opcount +=2;
+                // }
             }
 
             clock.Stop();

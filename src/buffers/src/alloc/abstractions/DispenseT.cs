@@ -44,9 +44,6 @@ namespace Z0
         public static NativeSigDispenser sigs()
             => dispenser(() => new NativeSigDispenser());
 
-        public static PersistentDispenser persistent(ByteSize? capacity = null, ByteSize? segsize = null, IDbArchive? root = null, FilePath? first = null)
-            => dispenser(() => new PersistentDispenser(capacity, segsize, root, first));
-
         public static NativeSigDispenser sigs(MemoryDispenser mem, StringDispenser strings, LabelDispenser labels)
             => dispenser(() => new NativeSigDispenser(mem, strings));
 

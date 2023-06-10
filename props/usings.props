@@ -17,6 +17,7 @@
     <Using Include="System.Runtime.Intrinsics" />
     <Using Include="System.Runtime.CompilerServices" />
     <Using Include="System.Runtime.InteropServices" />
+    <Using Include="System.Diagnostics.CodeAnalysis"/>
     <Using Include="System.Text" />
     <Using Include="System.Threading" />
     <Using Include="System.Threading.Tasks" />

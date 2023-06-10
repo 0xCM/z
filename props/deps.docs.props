@@ -3,6 +3,18 @@
       <Reference Include="$(GlobalDeps)/MessagePack.dll"/>
       <Reference Include="$(GlobalDeps)/MessagePack.Annotations.dll"/>
       <Reference Include="$(GlobalDeps)/YamlDotNet.dll"/>
-      <Reference Include="$(GlobalDeps)/Markdig.dll" Aliases="MarkdigUnsigned"/>
   </ItemGroup>
+
+  <Target Name="DocsLibs">
+    <ItemGroup>
+      <BuildOutputInPackage Include="$(GlobalDeps)/MessagePack.dll"/>
+      <BuildOutputInPackage Include="$(GlobalDeps)/MessagePack.Annotations.dll"/>
+      <BuildOutputInPackage Include="$(GlobalDeps)/YamlDotNet.dll"/>
+    </ItemGroup>
+  </Target>
+
+  <PropertyGroup>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);DocsLibs</TargetsForTfmSpecificBuildOutput>
+  </PropertyGroup>
+
 </Project>

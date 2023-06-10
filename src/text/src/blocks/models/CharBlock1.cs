@@ -30,6 +30,7 @@ namespace Z0
 
         public static N1 N => default;
 
+
         /// <summary>
         /// Presents block content as an editable buffer
         /// </summary>

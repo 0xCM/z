@@ -24,7 +24,7 @@ namespace Z0
         public static IApiShell shell(IWfRuntime wf, string[] args, params Assembly[] parts)
         {
             var shell = new ApiShell();
-            shell.Init(wf, args, ApiCmdRunner.runner(wf, parts));
+            shell.Init(wf, args, ApiCmd.runner(wf, parts));
             return shell;
         }
 
@@ -32,7 +32,7 @@ namespace Z0
         {
             var wf = runtime(false);
             var shell = new ApiShell();
-            shell.Init(wf, args, ApiCmdRunner.runner(wf, parts));
+            shell.Init(wf, args, ApiCmd.runner(wf, parts));
             return shell;
         }
 
@@ -41,7 +41,7 @@ namespace Z0
         {
             var wf = runtime();
             var shell = new A();
-            shell.Init(wf, args, ApiCmdRunner.runner(wf, parts));
+            shell.Init(wf, args, ApiCmd.runner(wf, parts));
             return shell;
         }
 

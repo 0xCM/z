@@ -8,9 +8,9 @@
     <OptimizeImplicitlyTriggeredBuild>True</OptimizeImplicitlyTriggeredBuild>
     <PublishRelease>true</PublishRelease>
     <PackRelease>true</PackRelease>
-    <TargetFramework>$(FrameworkMoniker)</TargetFramework>
-    <TargetRuntime>$(FrameworkMoniker)</TargetRuntime>
-    <Platforms>x64</Platforms>
+    <TargetFramework>net6.0</TargetFramework>
+    <!-- <TargetRuntime>$(FrameworkMoniker)</TargetRuntime> -->
+    <!-- <Platforms>x64</Platforms> -->
     <TieredCompilation>false</TieredCompilation>
     <TieredCompilationQuickJit>false</TieredCompilationQuickJit>
     <TieredCompilationQuickJitForLoops>false</TieredCompilationQuickJitForLoops>

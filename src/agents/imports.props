@@ -1,5 +1,2 @@
 <Project>
-  <ItemGroup>
-    <ProjectReference Include="$(Tools)" />
-  </ItemGroup>
 </Project>

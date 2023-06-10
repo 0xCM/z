@@ -11,7 +11,7 @@ namespace Z0
             => CmdId.identify<C>();
         
         public override string Format()
-            => ApiCmdSpec.format((C)this);
+            => IApiCmd<C>.format((C)this);
 
         public static C Empty => new();
     }        

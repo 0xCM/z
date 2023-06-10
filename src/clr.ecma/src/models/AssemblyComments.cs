@@ -32,7 +32,6 @@ namespace Z0
 
         SortedLookup<VersionedName, ConstLookup<string,MemberComments>> CommentLookup;
 
-
         public ref readonly AssemblyIndex Assemblies()
         {
             if(_Assemblies == null)

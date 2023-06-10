@@ -9,9 +9,6 @@ namespace Z0
     [ApiHost]
     public sealed class MemDb : IMemDb
     {
-        public static PersistentAllocator allocator(IMemDb db, ByteSize? @default = null)
-            => new PersistentAllocator(db, @default);
- 
         public static MemDb open(FilePath store)
             => open(store,0);
 

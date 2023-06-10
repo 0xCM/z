@@ -39,6 +39,9 @@ namespace Z0
             get => Name.IsNonEmpty;
         }
 
+        public string[] Components
+            => FS.components(this);
+            
         public FolderPath(PathPart name)
         {
             Name = PathPart.normalize(name.EndsWith(Chars.FSlash) || name.EndsWith(Chars.BSlash) ? name.RemoveLast() : name);

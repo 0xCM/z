@@ -5,7 +5,6 @@
 namespace Z0
 {
     using static sys;
-
     using api = CharBlocks;
     using B = CharBlock8;
 
@@ -25,6 +24,13 @@ namespace Z0
         CharBlock4 Lo;
 
         CharBlock4 Hi;
+
+        // [UnscopedRef]
+        // public Span<char> StackBuffer
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => cover<B,char>(this, CharCount);
+        // }
 
         /// <summary>
         /// The block content presented as an editable buffer

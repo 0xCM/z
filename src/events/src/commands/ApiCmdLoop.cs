@@ -23,21 +23,13 @@ namespace Z0
         ApiCmdSpec Next()
         {
             var input = term.prompt(string.Format("{0}> ", "cmd"));
-            if(ApiCmd.parse(input, out ApiCmdSpec cmd))
-            {
-                return cmd;
-            }
-            else
-            {
-                Channel.Error($"ParseFailure:{input}");
-                return ApiCmdSpec.Empty;
-            }
+            return ApiCmd.spec(input);
         }
 
         void Run()
         {
             var input = Next();
-            while(input.Name != ".exit")
+            while(input.Route != ".exit")
             {
                 if(input.IsNonEmpty)
                     RunCmd(input);
@@ -49,7 +41,7 @@ namespace Z0
         {
             try
             {
-                Runner.RunCommand(cmd.Name, cmd.Args);
+                Runner.RunCommand(cmd);
             }
             catch(Exception e)
             {

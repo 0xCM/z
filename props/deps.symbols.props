@@ -6,4 +6,19 @@
         <Reference Include="$(GlobalDeps)/Microsoft.FileFormats.dll"/>
         <Reference Include="$(GlobalDeps)/Microsoft.SymbolStore.dll"/>
     </ItemGroup>
+
+    <Target Name="SymbolLibs">
+      <ItemGroup>
+        <BuildOutputInPackage Include="$(GlobalDeps)/Microsoft.DiaSymReader.dll"/>
+        <BuildOutputInPackage Include="$(GlobalDeps)/Microsoft.DiaSymReader.Converter.dll"/>
+        <BuildOutputInPackage Include="$(GlobalDeps)/Microsoft.DiaSymReader.PortablePdb.dll"/>
+        <BuildOutputInPackage Include="$(GlobalDeps)/Microsoft.FileFormats.dll"/>
+        <BuildOutputInPackage Include="$(GlobalDeps)/Microsoft.SymbolStore.dll"/>
+      </ItemGroup>
+    </Target>
+
+    <PropertyGroup>
+      <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);SymbolLibs</TargetsForTfmSpecificBuildOutput>
+    </PropertyGroup>
+
 </Project>

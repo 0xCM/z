@@ -19,6 +19,7 @@ namespace Z0
 
         CharBlock128 Hi;
 
+
         public Span<char> Data
         {
             [MethodImpl(Inline)]

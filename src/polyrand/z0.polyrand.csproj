@@ -4,6 +4,5 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <DebugSymbols>true</DebugSymbols>
-    <TargetFramework>$(FrameworkMoniker)</TargetFramework>
   </PropertyGroup>
 </Project>

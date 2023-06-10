@@ -8,4 +8,21 @@
     <Reference Include="$(GlobalDeps)/ILCompiler.MetadataTransform.dll"/>
     <Reference Include="$(GlobalDeps)/ILCompiler.RyuJit.dll"/>
   </ItemGroup>
+
+  <Target Name="IlcLibs">
+    <ItemGroup>
+      <BuildOutputInPackage Include="$(GlobalDeps)/ILCompiler.Reflection.ReadyToRun.dll"/>
+      <BuildOutputInPackage Include="$(GlobalDeps)/ILCompiler.TypeSystem.dll"/>
+      <BuildOutputInPackage Include="$(GlobalDeps)/ilc.dll"/>
+      <BuildOutputInPackage Include="$(GlobalDeps)/ILCompiler.Compiler.dll"/>
+      <BuildOutputInPackage Include="$(GlobalDeps)/ILCompiler.DependencyAnalysisFramework.dll"/>
+      <BuildOutputInPackage Include="$(GlobalDeps)/ILCompiler.MetadataTransform.dll"/>
+      <BuildOutputInPackage Include="$(GlobalDeps)/ILCompiler.RyuJit.dll"/>
+    </ItemGroup>
+  </Target>
+
+  <PropertyGroup>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);IlcLibs</TargetsForTfmSpecificBuildOutput>
+  </PropertyGroup>
+
 </Project>

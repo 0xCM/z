@@ -4,4 +4,16 @@
         <Reference Include="$(GlobalDeps)/SOS.Hosting.dll"/>
         <Reference Include="$(GlobalDeps)/SOS.Extensions.dll"/>      
     </ItemGroup>
+  <Target Name="SosLibs">
+    <ItemGroup>
+        <BuildOutputInPackage Include="$(GlobalDeps)/SOS.dll"/>
+        <BuildOutputInPackage Include="$(GlobalDeps)/SOS.Hosting.dll"/>
+        <BuildOutputInPackage Include="$(GlobalDeps)/SOS.Extensions.dll"/>      
+    </ItemGroup>
+  </Target>
+
+  <PropertyGroup>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);SosLibs</TargetsForTfmSpecificBuildOutput>
+  </PropertyGroup>
+
 </Project>

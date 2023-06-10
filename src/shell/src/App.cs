@@ -19,7 +19,7 @@ namespace Z0
                 }
                 else
                 {                                
-                    shell.Runner.RunCommand(args);
+                    shell.Runner.RunCommand(ApiCmd.spec(args));
                 }
             }
             catch(Exception e)
@@ -31,29 +31,4 @@ namespace Z0
             return result;
         }
     }
-        
-    // [Free]
-    // sealed class App : ApiShell<App>
-    // {
-    //     public static int Main(params string[] args)
-    //     {
-    //         var result = 0;
-    //         using var app = ApiServers.shell(args);
-    //         try
-    //         {
-    //             app.Run();
-    //         }
-    //         catch(Exception e)
-    //         {
-    //             term.error(e);
-    //             result = -1;
-    //         }
-    //         return result;
-    //     }
-    // }
-
-    // sealed class AppCmd : WfAppCmd<AppCmd>
-    // {
-
-    // }
 }

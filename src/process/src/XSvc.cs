@@ -4,9 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public static class XSvc
+    public static partial class XSvc
     {
-        class ServiceCache : AppServices<ServiceCache>
+        partial class ServiceCache : AppServices<ServiceCache>
         {
             public OmniScript OmniScript(IWfRuntime wf)
                 => Service<OmniScript>(wf);

@@ -19,6 +19,7 @@ global using System.Threading;
 global using System.Threading.Tasks;
 global using System.IO;
 global using System.Text;
+global using System.Diagnostics.CodeAnalysis;
 
 global using static Z0.Root;
 global using static Z0.ApiAtomic;

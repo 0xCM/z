@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.Linq;
-
     using static sys;
     using static ApiActorKind;
 
@@ -13,14 +11,6 @@ namespace Z0
     {
         public static IApiCmdRunner Service()
             => AppService.AppData.Value<IApiCmdRunner>(nameof(IApiCmdRunner));
-
-        internal static IApiCmdRunner runner(IWfRuntime wf, Assembly[] parts)
-        {
-            var _parts = parts.Length == 0 ? ApiAssemblies.Components : parts;
-            var runner = (IApiCmdRunner)new ApiCmdRunner(wf.Channel, methods(wf, _parts), handlers(wf, _parts));
-            AppService.AppData.Value(nameof(IApiCmdRunner), runner);
-            return runner;
-        }
 
         readonly ApiCmdMethods Methods;
 
@@ -36,7 +26,7 @@ namespace Z0
             Methods = methods;
             Channel = channel;
             Handlers = handlers;
-            CmdCatalog = catalog(methods);
+            CmdCatalog = ApiCmd.catalog(methods);
         }
 
         ApiCmdCatalog IApiCmdRunner.Catalog 
@@ -53,14 +43,13 @@ namespace Z0
                 }
                 else
                 {
-                    var script = ApiCmdScript.Empty;
-                    ApiCmd.parse(src, out script);
+                    var script = ApiCmd.script(src);
                     ref readonly var commands = ref script.Commands;
                     Channel.Babble($"Dispatching {commands.Count} from {src}");
                     iter(script.Commands, cmd => {
                         try
                         {
-                            RunCommand(cmd.Name, cmd.Args);
+                            RunCommand(cmd);
                         }
                         catch(Exception e)
                         {
@@ -73,18 +62,18 @@ namespace Z0
             return sys.start(Exec).Result;        
         }
 
-        public ExecToken RunCommand(string route, CmdArgs args)
+        public ExecToken RunCommand(ApiCmdSpec spec)
         {
             var token = TokenDispenser.open();
             var result = Outcome.Success;
             try
             {
-                if(Handlers.Handler(route, out var handler))
-                    result = Run(handler,args);
-                else if(Methods.Find(route, out var fx))
-                    result = Run(fx, args);            
+                if(Handlers.Handler(spec.Route, out var handler))
+                    result = Run(handler, spec.Args);
+                else if(Methods.Find(spec.Route.Format(), out var fx))
+                    result = Run(fx, spec.Args);            
                 else
-                    result = (false,string.Format("Command '{0}' unrecognized", route));
+                    result = (false,string.Format("Command '{0}' unrecognized", spec.Route));
                 token = TokenDispenser.close(token, result);
             }
             catch(Exception e)
@@ -94,36 +83,11 @@ namespace Z0
             }
             if(result.Fail)
                 Channel.Error(result.Message);
-            return token;
+            return token;            
         }
 
         public ExecToken RunCommand(string action)
-            => RunCommand(action, CmdArgs.Empty);
-
-        public ExecToken RunCommand(string[] input)
-        {
-            var token = ExecToken.Empty;
-            var args = input.ToSeq();
-            if(args.IsEmpty)
-            {
-                var dst = text.emitter();
-                Usage(dst);
-                Channel.Row(dst.Emit());
-            }
-            else
-            {
-                token = RunCommand(args[0], sys.mapi(sys.slice(args.View,1), (i,value) => Cmd.arg(value)));
-            }
-            return token;
-        }
-
-        void Usage(ITextEmitter dst)
-        {
-            var host = sys.controller().GetSimpleName();
-            dst.AppendLine($"Usage: {host} <command> [args..]");
-            dst.IndentLine(4, "<command> =");
-            iter(Handlers.Routes, fx => dst.IndentLine(4,$"| {fx}"));
-        } 
+            => RunCommand(new ApiCmdSpec(action, CmdArgs.Empty));
 
         Outcome Run(ICmdHandler handler, CmdArgs args)
         {
@@ -150,23 +114,29 @@ namespace Z0
         {
             var output = default(object);
             var result = Outcome.Success;
+            var context = new ApiContext(method) as IApiContext;
+            var host = method.Host;
             try
             {
                 switch(method.Kind)
                 {
                     case Pure:
-                        method.Definition.Invoke(method.Host, new object[]{});
-                        result = Outcome.Success;
+                        method.Definition.Invoke(host, new object[]{});
                     break;
                     case Receiver:
-                        method.Definition.Invoke(method.Host, new object[1]{args});
-                        result = Outcome.Success;
+                        method.Definition.Invoke(host, new object[1]{args});
                     break;
                     case ApiActorKind.Emitter:
-                        output = method.Definition.Invoke(method.Host, new object[]{});
+                        output = method.Definition.Invoke(host, new object[]{});
                     break;
                     case Func:
-                        output = method.Definition.Invoke(method.Host, new object[1]{args});
+                        output = method.Definition.Invoke(host, new object[1]{args});
+                    break;
+                    case ContextReceiver:
+                        method.Definition.Invoke(host, new object[2]{context, args});
+                    break;
+                    case ContextFunc:
+                        output = method.Definition.Invoke(host, new object[2]{context,args});
                     break;
                     default:
                         result = new Outcome(false, $"Unsupported {method.Definition}");
@@ -201,96 +171,6 @@ namespace Z0
             }
 
            return result;
-        }
-
-        static ApiCmdCatalog catalog(ApiCmdMethods methods)
-        {
-            var defs = methods.Defs;
-            var count = defs.Count;
-            var dst = sys.alloc<ApiCmdInfo>(count);
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var uri = ref defs[i].Uri;
-                ref var entry = ref seek(dst,i);
-                entry.Uri = uri;
-                entry.Hash = uri.Hash;
-                entry.Name = uri.Name;
-            }
-
-            return new ApiCmdCatalog(dst);
-        }
-
-        static ICmdHandler handler(IWfRuntime wf, Type tHandler)
-        {
-            var handler = (ICmdHandler)Activator.CreateInstance(tHandler, new object[]{});
-            handler.Initialize(wf);
-            return handler;
-        }
-
-        static CmdHandlers handlers(IWfRuntime wf, Assembly[] src)
-        {
-            var dst = src.Types().Concrete().Tagged<CmdHandlerAttribute>().Select(x => handler(wf,x)).Map(x => (x.Route,x)).ToDictionary();
-            dst.TryAdd(Z0.Handlers.DevNul.Route, handler(wf, typeof(Handlers.DevNul)));
-            return new (dst);
-        }
-
-        static ApiCmdMethods methods(IWfRuntime wf, Assembly[] parts)
-        {
-            var types = parts.Types().Concrete().Tagged<CmdProviderAttribute>();
-            var dst = dict<string,ApiCmdMethod>();
-            iter(types.Tagged<CmdProviderAttribute>().Concrete(), t => {
-                var method = t.StaticMethods().Public().Where(m => m.Name == "create").First();
-                var service = (IApiService)method.Invoke(null, new object[]{wf});
-                iter(methods(service).Defs, m => dst.TryAdd(m.CmdName, m));
-            });
-            return new ApiCmdMethods(dst);
-        }
-
-        static ApiCmdMethods methods(IApiService host)
-        {
-            var src = host.GetType().DeclaredInstanceMethods().Tagged<CmdOpAttribute>();
-            var dst = dict<string,ApiCmdMethod>();
-            var count = src.Length;
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var mi = ref skip(src,i);
-                var tag = mi.Tag<CmdOpAttribute>().Require();
-                dst.TryAdd(tag.Name, new ApiCmdMethod(tag.Name, classify(mi),  mi, host));                
-            }
-            return new ApiCmdMethods(dst);
-        }
-
-        static ApiActorKind classify(MethodInfo src)
-        {
-            var dst = ApiActorKind.None;
-            var arity = src.ArityValue();
-            var @void = src.HasVoidReturn();
-            switch(arity)
-            {
-                case 0:
-                    switch(@void)
-                    {
-                        case false:
-                            dst = ApiActorKind.Pure;
-                        break;
-                        case true:
-                            dst = ApiActorKind.Emitter;
-                        break;
-                    }
-                break;
-                case 1:
-                    switch(@void)
-                    {
-                        case true:
-                            dst = ApiActorKind.Receiver;
-                        break;
-                        case false:
-                            dst = ApiActorKind.Func;
-                        break;
-                    }
-                break;
-            }
-            return dst;
         }
     }
 }
