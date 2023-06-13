@@ -68,7 +68,6 @@ namespace Z0
         public bool Equals(SymIdentity src)
             => string.Equals(Data, src.Data);
 
-
         public override string ToString()
             => Format();
 

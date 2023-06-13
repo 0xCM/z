@@ -28,7 +28,7 @@ namespace Z0
 
             public readonly char Symbol;
 
-            public readonly text15 Keyword;
+            public readonly asci16 Keyword;
 
             public PointerWidth(PointerWidthKind src)
             {

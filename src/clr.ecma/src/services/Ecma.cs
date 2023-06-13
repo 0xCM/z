@@ -394,11 +394,11 @@ namespace Z0
             => new EcmaDataSource(src);
 
         /// <summary>
-        /// Defines a <see cref='EcmaDataSource'/> over a specified <see cref='MemorySeg'/>
+        /// Defines a <see cref='EcmaDataSource'/> over a specified <see cref='MemorySegment'/>
         /// </summary>
         /// <param name="src">The origin</param>
         [Op]
-        public static EcmaDataSource source(MemorySeg src)
+        public static EcmaDataSource source(MemorySegment src)
             => new EcmaDataSource(src);
 
         /// <summary>

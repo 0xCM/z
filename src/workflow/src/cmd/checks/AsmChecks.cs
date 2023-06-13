@@ -325,7 +325,7 @@ c5 f8 99 c8";
             var sz = (byte)5;
 
             // 005ah jmp near ptr 10b7h                            ; JMP rel32                        | E9 cd                            | 5   | e9 58 10 00 00
-            var label0 = 0x005a;
+            var label0 = 0x005au;
             var ip0 = @base + label0;
 
             var dx0 = AsmRel.disp32((ip0, sz), @return);
@@ -336,7 +336,7 @@ c5 f8 99 c8";
             if(!code0.Equals(code1))
                 Channel.Error(string.Format("{0} != {1}", code1, code0));
 
-            var label1 = 0x0065;
+            var label1 = 0x0065u;
             var ip1 = @base + label1;
             var dx1 = AsmRel.disp32((ip1,sz), @return);
             var actual1 = JmpRel32.encode((ip1,sz), @return);
@@ -344,7 +344,7 @@ c5 f8 99 c8";
             if(!actual1.Equals(expect1))
                 Channel.Error(string.Format("{0} != {1}", expect1, actual1));
 
-            var label2 = 0x0070;
+            var label2 = 0x0070u;
             var ip2 = @base + label2;
             var dx2 = AsmRel.disp32((ip2,sz), @return);
             var actual2 = JmpRel32.encode((ip2,sz), @return);
@@ -352,7 +352,7 @@ c5 f8 99 c8";
             if(!actual2.Equals(expect2))
                 Channel.Error(string.Format("{0} != {1}", expect2, actual2));
 
-            var label3 = 0x007b;
+            var label3 = 0x007bu;
             var ip3 = @base + label3;
             var dx3 = AsmRel.disp32((ip3,sz), @return);
             var actual3 = JmpRel32.encode((ip3,sz), @return);

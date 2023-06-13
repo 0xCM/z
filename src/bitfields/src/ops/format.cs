@@ -28,19 +28,36 @@ namespace Z0
 
         [Op]
         public static string format(Bitfield8 src)
-            => text.format(render(src));
+        {
+            var buffer = CharBlock16.Null.Data;
+            var count = render(src, buffer);
+            return new string(slice(buffer, 0, count));
+        }
+
 
         [Op]
         public static string format(Bitfield16 src)
-            => text.format(render(src));
+        {
+            var buffer = CharBlock32.Null.Data;
+            var count = render(src, buffer);
+            return new string(slice(buffer, 0, count));
+        }
 
         [Op]
         public static string format(Bitfield32 src)
-            => text.format(render(src));
+        {
+            var buffer = CharBlock64.Null.Data;
+            var count = render(src, buffer);
+            return new string(slice(buffer, 0, count));
+        }
 
         [Op]
         public static string format(Bitfield64 src)
-            => text.format(render(src));
+        {
+            var buffer = CharBlock128.Null.Data;
+            var count = render(src, buffer);
+            return new string(slice(buffer, 0, count));
+        }
 
         /// <summary>
         /// Formats a field segments as {typeof(V):Name}:{TrimmedBits}

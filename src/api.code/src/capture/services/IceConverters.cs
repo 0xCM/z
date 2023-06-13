@@ -30,7 +30,7 @@ namespace Z0.Asm
                     case Iced.OpKind.NearBranch32:
                     case Iced.OpKind.NearBranch64:
                         address = src.NearBranchTarget;
-                        return address > ushort.MaxValue ? address : MemoryAddress.Zero;
+                        return address > (uint)ushort.MaxValue ? address : MemoryAddress.Zero;
                     case Iced.OpKind.Immediate16:
                     case Iced.OpKind.Immediate8to16:
                     case Iced.OpKind.Immediate8to32:
@@ -39,16 +39,16 @@ namespace Z0.Asm
                     case Iced.OpKind.Immediate32:
                     case Iced.OpKind.Immediate64:
                         address = src.GetImmediate(i);
-                        return address > ushort.MaxValue ? address : MemoryAddress.Zero;
+                        return address > (uint)ushort.MaxValue ? address : MemoryAddress.Zero;
                     case Iced.OpKind.Memory64:
                         address = src.MemoryAddress64;
-                        return address > ushort.MaxValue ? address : MemoryAddress.Zero;
+                        return address > (uint)ushort.MaxValue ? address : MemoryAddress.Zero;
                     case Iced.OpKind.Memory when src.IsIPRelativeMemoryOperand:
                         address = src.IPRelativeMemoryAddress;
-                        return address > ushort.MaxValue ? address : MemoryAddress.Zero;
+                        return address > (uint)ushort.MaxValue ? address : MemoryAddress.Zero;
                     case Iced.OpKind.Memory:
                         address = src.MemoryDisplacement;
-                        return address > ushort.MaxValue ? address : MemoryAddress.Zero;
+                        return address > (uint)ushort.MaxValue ? address : MemoryAddress.Zero;
                 }
             }
 

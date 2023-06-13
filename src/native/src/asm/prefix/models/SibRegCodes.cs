@@ -10,10 +10,10 @@ namespace Z0
         const string TableId = "sib.regcodes";
 
         [Render(5)]
-        public text7 Base;
+        public asci8 Base;
 
         [Render(5)]
-        public text7 Index;
+        public asci8 Index;
 
         [Render(5)]
         public uint2 Scale;

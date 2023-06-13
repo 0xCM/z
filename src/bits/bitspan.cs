@@ -37,8 +37,9 @@ namespace Z0
         {
             var storage = ByteBlock32.Empty;
             var dst = recover<T>(storage.Bytes);
-            gcpu.vstore(src.State, dst);
-            return BitSpans.create(@readonly(dst), buffer);
+            vgcpu.vstore(src.State, dst);
+            BitPack.unpack(dst, buffer);
+            return new BitSpan(buffer);
         }
         /// <summary>
         /// Converts the vector to a bitspan representation

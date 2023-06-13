@@ -180,7 +180,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static Span<byte> LaneMerge16u()
+        public static ByteBlock32 LaneMerge16u()
         {
             //<lo = i,i+2,i+4 ... n-2 | hi = i+1, i + 3, i+5, ... n-1 >
             //components: 0, 2, 4, 6, 8, 10, 12, 14, 1, 3, 5, 7, 9, 11, 13, 15
@@ -208,7 +208,7 @@ namespace Z0
             seek(dst,k++) = j += 2;
             seek(dst,k++) = j += 2;
 
-            return storage.Bytes;
+            return storage;
         }
 
         /// <summary>

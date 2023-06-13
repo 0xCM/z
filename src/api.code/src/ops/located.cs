@@ -29,7 +29,7 @@ namespace Z0
                     if(!result)
                         sys.@throw(AppMsg.ParseFailure.Format("Location", left.Format()));
 
-                    if(@base == 0)
+                    if(@base == 0u)
                         @base = address;
 
                     var right = SQ.right(codes,i);

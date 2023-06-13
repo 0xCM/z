@@ -356,7 +356,7 @@ namespace Z0.Asm
                 var result = TestJmpRax(tc, i, out var delta);
                 if(result)
                 {
-                    var location = address - delta;
+                    var location = address - (uint)delta;
                     Wf.Status($"Jmp RAX found at {location.Format()}");
                     break;
                 }

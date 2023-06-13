@@ -1,15 +1,2 @@
 <Project>
-  <ItemGroup>
-    <ProjectReference Include="$(Text)" />
-    <ProjectReference Include="$(Math)" />
-    <ProjectReference Include="$(ClrQuery)" />
-    <ProjectReference Include="$(ClrCil)" />
-    <ProjectReference Include="$(Events)" />
-    <ProjectReference Include="$(Hex)" />
-    <ProjectReference Include="$(Asci)" />
-    <ProjectReference Include="$(Cells)" />
-    <ProjectReference Include="$(Files)" />
-    <ProjectReference Include="$(Bytes)" />
-    <ProjectReference Include="$(VCpu)" />
-  </ItemGroup>
 </Project>

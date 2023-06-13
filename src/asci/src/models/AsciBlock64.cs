@@ -17,7 +17,7 @@ namespace Z0
     /// Defines 64 bytes of storage
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Size = Size, Pack=1), ApiComplete]
-    public record struct AsciBlock64 : IAsciBlock<A>
+    public record struct AsciBlock64
     {
         public const ushort Size = 64;
 
@@ -42,55 +42,50 @@ namespace Z0
         [MethodImpl(Inline)]
         public static A encode(ReadOnlySpan<char> src)
             => api.encode(src, out A _);
+
         public Span<byte> Bytes
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => bytes(this);
         }
 
         public Span<C> Codes
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => recover<C>(Bytes);
         }
 
         public Span<S> Symbols
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => recover<S>(Bytes);
         }
 
         public ref S this[int index]
         {
-            [MethodImpl(Inline)]
-            get => ref seek(Symbols,index);
+            [MethodImpl(Inline), UnscopedRef]
+            get => ref sys.seek(Symbols,index);
         }
 
         public ref S this[uint index]
         {
-            [MethodImpl(Inline)]
-            get => ref seek(Symbols,index);
+            [MethodImpl(Inline), UnscopedRef]
+            get => ref sys.seek(Symbols,index);
         }
 
         public ref byte First
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref first(Bytes);
         }
 
-        [MethodImpl(Inline)]
+        [MethodImpl(Inline), UnscopedRef]
         public Span<T> Storage<T>()
             where T : unmanaged
                 => recover<T>(Bytes);
 
-        public ReadOnlySpan<char> Chars
-        {
-            [MethodImpl(Inline)]
-            get => api.decode(this);
-        }
-
         public string Format()
-            => text.format(Chars);
+            => api.decode(this);
 
         public override string ToString()
             => Format();

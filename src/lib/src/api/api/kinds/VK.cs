@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using System.Linq;
+    
     [ApiHost]
     public static partial class XVK
     {

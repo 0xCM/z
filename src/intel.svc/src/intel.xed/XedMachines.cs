@@ -150,8 +150,6 @@ namespace Z0
 
             void Load(in CellValue src)
             {
-                ref readonly var fk = ref src.Field;
-                ref readonly var ck = ref src.CellKind;
 
             }
 

@@ -149,7 +149,7 @@ namespace Z0
         public static A Zero
         {
              [MethodImpl(Inline)]
-             get => 0;
+             get => 0u;
         }
     }
 }

@@ -64,8 +64,8 @@ namespace Z0
 
             public byte Nonterminals(out Span<Nonterminal> dst)
             {
-                var storage = ByteBlock32.Empty;
-                dst = core.recover<Nonterminal>(storage.Bytes);
+                var storage = sys.span<byte>(32);
+                dst = sys.recover<Nonterminal>(storage);
                 var j=z8;
                 for(var i=0; i<Count; i++)
                 {

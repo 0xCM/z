@@ -21,18 +21,18 @@ namespace Z0
             return BitRender.render8x4(src, ref i, dst);
         }
 
-        [CmdOp("asm/check/vmask")]
-        unsafe void TestVCpu()
-        {
-            var v0 = vmask.veven<byte>(w128, n2, n2);
-            var v0bits = v0.ToBitSpan();
-            var options = BitFormatter.configure();
-            options.BlockWidth = 8;
-            Write(v0bits.Format(options));
-            var v1 = vmask.veven<byte>(w256, n2, n2);
-            var v1bits = v1.ToBitSpan();
-            Write(v1bits.Format(options));
-        }
+        // [CmdOp("asm/check/vmask")]
+        // unsafe void TestVCpu()
+        // {
+        //     var v0 = vmask.veven<byte>(w128, n2, n2);
+        //     var v0bits = v0.ToBitSpan();
+        //     var options = BitFormatter.configure();
+        //     options.BlockWidth = 8;
+        //     Write(v0bits.Format(options));
+        //     var v1 = vmask.veven<byte>(w256, n2, n2);
+        //     var v1bits = v1.ToBitSpan();
+        //     Write(v1bits.Format(options));
+        // }
 
         [CmdOp("asm/check/bitstrings")]
         Outcome CheckBitstrings(CmdArgs args)
@@ -52,19 +52,19 @@ namespace Z0
             var v = vpack.vunpack32x8(0xF0F0F0F0);
             Write(v.FormatBlockedBits(8));
 
-            CheckBitSpans();
+            //CheckBitSpans();
             CheckBitFormatter();
             return true;
         }
 
-        void CheckBitSpans()
-        {
-            var result = Outcome.Success;
-            var options = BitFormat.Default.WithBlockWidth(8);
-            var v1 = vmask.vmsb<byte>(w128, n8, n7);
-            var b1 = v1.ToBitSpan();
-            Write(b1.Format(options));
-        }
+        // void CheckBitSpans()
+        // {
+        //     var result = Outcome.Success;
+        //     var options = BitFormat.Default.WithBlockWidth(8);
+        //     var v1 = vmask.vmsb<byte>(w128, n8, n7);
+        //     var b1 = v1.ToBitSpan();
+        //     Write(b1.Format(options));
+        // }
 
         void CheckBitFormatter()
         {

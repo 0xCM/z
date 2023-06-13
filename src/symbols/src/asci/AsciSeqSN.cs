@@ -48,13 +48,13 @@ namespace Z0
 
         public Span<C> Codes
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => recover<byte,C>(bytes(Content));
         }
 
         public Span<S> Symbols
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => recover<byte,S>(bytes(Content));
         }
 

@@ -85,7 +85,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">The source assembly</param>
         [MethodImpl(Inline), Op]
-        public static unsafe MemorySeg metadata(Assembly src)
+        public static unsafe MemorySegment metadata(Assembly src)
             => ClrAssembly.metadata(src);
 
         [MethodImpl(Inline), Op]

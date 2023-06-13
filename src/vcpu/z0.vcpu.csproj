@@ -1,7 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="imports.props"/>
+  <ItemGroup>
+    <ProjectReference Include="$(Math)" />
+    <ProjectReference Include="$(Hex)" />
+    <ProjectReference Include="$(Symbols)" />
+  </ItemGroup>
   <Import Project="$(ProjectProps)\usings.props"/>
   <PropertyGroup>
+    <NoWarn>$(NoWarn);CA1857</NoWarn>
     <OutputType>Library</OutputType>
   </PropertyGroup>
 </Project>

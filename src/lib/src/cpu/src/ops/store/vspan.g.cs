@@ -8,6 +8,11 @@ namespace Z0
     
     partial struct gcpu
     {
+        [MethodImpl(Inline), Op]
+        [Closures(NumericKind.UnsignedInts)]
+        public static Span<T> cover<T>(T src, int count)
+            => MemoryMarshal.CreateSpan(ref edit(in src), count);
+
         /// <summary>
         /// Deposits source vector content to a span without heap allocation
         /// </summary>

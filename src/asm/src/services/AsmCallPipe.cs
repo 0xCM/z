@@ -64,7 +64,7 @@ namespace Z0.Asm
                 dst.InstructionSize = call.InstructionSize;
                 dst.Source = call.IP;
                 dst.TargetOffset = (uint)offset;
-                dst.Target =  (call.IP + call.InstructionSize) + offset;
+                dst.Target =  (call.IP + call.InstructionSize) + (uint)offset;
                 dst.Instruction = call.Statment;
                 dst.Encoded = call.Encoded;
             }

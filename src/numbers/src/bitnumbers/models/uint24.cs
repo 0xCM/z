@@ -191,11 +191,11 @@ namespace Z0
             get => Value;
         }
 
-        public Span<bit> _Bits
-        {
-            [MethodImpl(Inline)]
-            get => bits(this);
-        }
+        // public Span<bit> _Bits
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => bits(this);
+        // }
 
         [MethodImpl(Inline)]
         public int CompareTo(U src)

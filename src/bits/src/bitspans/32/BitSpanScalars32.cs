@@ -16,27 +16,28 @@ namespace Z0
             var buffer = ByteBlocks.alloc(n8);
             ref var tmp = ref ByteBlocks.first<byte>(ref buffer);
 
-            var storage = ByteBlocks.alloc(n32);
-            ref var target = ref ByteBlocks.first<uint>(ref storage);
+            Span<byte> storage = new byte[32];
+            ref var target = ref sys.first(sys.recover<uint>(storage));
 
             BitPack.unpack1x8(src, ref tmp);
             vpack.vinflate8x256x32u(tmp, 0, ref target);
-            return BitSpans32.load(storage.Storage<uint>().Recover<Bit32>());
+            return BitSpans32.load(storage.Recover<Bit32>());
         }
 
         [MethodImpl(Inline), Op]
         public static BitSpan32 from(ushort src)
         {
+
             var buffer = ByteBlocks.alloc(n16);
             ref var tmp = ref ByteBlocks.first<byte>(ref buffer);
 
-            var storage = ByteBlocks.alloc(n64);
-            ref var target = ref ByteBlocks.first<uint>(ref storage);
+            Span<byte> storage = new byte[64];
+            ref var target = ref sys.first(sys.recover<uint>(storage));
 
             BitPack.unpack1x16x8(src, ref tmp);
             vpack.vinflate8x256x32u(tmp, 0, ref target);
             vpack.vinflate8x256x32u(tmp, 1, ref target);
-            return BitSpans32.load(storage.Storage<uint>().Recover<Bit32>());
+            return BitSpans32.load(storage.Recover<Bit32>());
         }
 
         [MethodImpl(Inline), Op]
@@ -45,15 +46,15 @@ namespace Z0
             var buffer = ByteBlocks.alloc(n32);
             ref var tmp = ref ByteBlocks.first<byte>(ref buffer);
 
-            var block = ByteBlocks.alloc(n128);
-            ref var target = ref ByteBlocks.first<uint>(ref block);
+            Span<byte> storage = new byte[128];
+            ref var target = ref sys.first(sys.recover<uint>(storage));
 
             BitPack.unpack1x32x8(src, ref tmp);
             vpack.vinflate8x256x32u(tmp, 0, ref target);
             vpack.vinflate8x256x32u(tmp, 1, ref target);
             vpack.vinflate8x256x32u(tmp, 2, ref target);
             vpack.vinflate8x256x32u(tmp, 3, ref target);
-            return BitSpans32.load(block.Storage<Bit32>());
+            return BitSpans32.load(storage.Recover<Bit32>());
         }
 
         [MethodImpl(Inline), Op]

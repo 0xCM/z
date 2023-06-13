@@ -12,7 +12,7 @@ namespace Z0
         /// <param name="A">The source matrix</param>
         [MethodImpl(Inline), Op]
         public static BitMatrix<N8,byte> natural(in BitMatrix8 A)
-            => new BitMatrix<N8,byte>(A.Bytes.Replicate());
+            => new BitMatrix<N8,byte>(sys.bytes(A));
 
         /// <summary>
         /// Projects, without allocation, a primal bitmatrix onto a generic bitmatrix of natural order
@@ -20,7 +20,7 @@ namespace Z0
         /// <param name="A">The source matrix</param>
         [MethodImpl(Inline), Op]
         public static BitMatrix<N16,byte> natural(in BitMatrix16 A)
-            => new BitMatrix<N16,byte>(A.Bytes);
+            => new BitMatrix<N16,byte>(sys.bytes(A));
 
         /// <summary>
         /// Projects, without allocation, a primal bitmatrix onto a generic bitmatrix of natural order
@@ -95,7 +95,5 @@ namespace Z0
             where N : unmanaged, ITypeNat
             where T : unmanaged
                 => new BitMatrix<M,N,T>(data);
-
-
     }
 }

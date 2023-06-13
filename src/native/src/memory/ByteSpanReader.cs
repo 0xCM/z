@@ -47,7 +47,7 @@ namespace Z0
          }
 
         [MethodImpl(Inline), Op]
-        public static Index<MemorySeg> segments(ByteSpanProvider src)
+        public static Index<MemorySegment> segments(ByteSpanProvider src)
             => src.SegRefs();
 
         [MethodImpl(Inline), Op]
@@ -98,7 +98,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static MemorySeg[] refs(ByteSpanProvider src)
+        public static MemorySegment[] refs(ByteSpanProvider src)
              => src.SegRefs();
 
         [MethodImpl(Inline), Op]
@@ -182,14 +182,14 @@ namespace Z0
         internal ByteSpanReader(ByteSpanProvider data)
             => Data = data;
 
-        public MemorySeg[] Refs
+        public MemorySegment[] Refs
         {
             [MethodImpl(Inline)]
             get => Data.SegRefs();
         }
 
         [MethodImpl(Inline), Op]
-        public Index<MemorySeg> Segments()
+        public Index<MemorySegment> Segments()
             => segments(Data);
 
         [MethodImpl(Inline), Op]

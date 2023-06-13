@@ -9,9 +9,6 @@ namespace Z0
         IRuleExpr Source => Antecedant;
 
         IRuleExpr Target => Consequent;
-
-        RuleExprKind IRuleExpr.ExprKind
-            => RuleExprKind.Production;
     }
 
     public interface IProduction<S,T> : IProduction, IRule<S,T>

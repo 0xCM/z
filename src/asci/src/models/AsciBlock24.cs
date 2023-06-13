@@ -17,7 +17,7 @@ namespace Z0
     /// Defines 24 bytes of storage
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Size = Size, Pack=1), ApiComplete]
-    public record struct AsciBlock24 : IAsciBlock<A>
+    public record struct AsciBlock24
     {
         public const ushort Size = 24;
 
@@ -44,42 +44,41 @@ namespace Z0
             => api.encode(src, out A _);
         public Span<byte> Bytes
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => bytes(this);
         }
 
         public Span<C> Codes
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => recover<C>(Bytes);
         }
 
         public Span<S> Symbols
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => recover<S>(Bytes);
         }
 
         public ref S this[int index]
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref sys.seek(Symbols,index);
         }
 
         public ref S this[uint index]
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref sys.seek(Symbols,index);
         }
 
         public ref byte First
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref first(Bytes);
         }
 
-
-        [MethodImpl(Inline)]
+        [MethodImpl(Inline), UnscopedRef]
         public Span<T> Storage<T>()
             where T : unmanaged
                 => recover<T>(Bytes);

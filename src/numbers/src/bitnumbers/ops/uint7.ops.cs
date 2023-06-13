@@ -269,14 +269,14 @@ namespace Z0
         public static uint7 extend(W7 w, uint2 src)
             => new U(src.Value);
 
-        [MethodImpl(Inline), Op]
-        public static Span<bit> bits(uint24 src)
-        {
-            var storage = 0u;
-            var dst = recover<bit>(bytes(storage));
-            bits(src,dst);
-            return slice(dst,0,3);
-        }
+        // [MethodImpl(Inline), Op]
+        // public static Span<bit> bits(uint24 src)
+        // {
+        //     var storage = 0u;
+        //     var dst = recover<bit>(bytes(storage));
+        //     bits(src,dst);
+        //     return slice(dst,0,3);
+        // }
 
         [MethodImpl(Inline), Op]
         public static uint bits(uint24 src, Span<bit> dst)

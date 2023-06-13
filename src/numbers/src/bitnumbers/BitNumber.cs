@@ -24,7 +24,7 @@ namespace Z0
             BitNumber.parse(f0,n, out BitNumber<T> roundtrip);
             Require.equal(f0, roundtrip.Format());
             var storage = ByteBlock32.Empty;
-            var bits = BitNumber.parse(f0, n, storage);
+            var bits = BitNumber.parse(f0, n, ref storage);
             var f1 = bits.ToArray().Reverse().Select(x => x.Format()).Concat();
             Require.equal(f0,f1);
             log.AppendLine(string.Format("{0:D2} | {1:X4} | {2}", width, scalar, f0));
@@ -43,7 +43,6 @@ namespace Z0
             else
                 return u64(src).ToBitString((byte)n.NatValue);
         }
-
 
         static int parse(string src, Span<bit> dst)
         {
@@ -68,14 +67,14 @@ namespace Z0
             return result ? counter : -1;
         }
 
-        public static Span<bit> parse<N,B>(string src, N n, B buffer)
+        public static Span<bit> parse<N,B>(string src, N n, ref B buffer)
             where N : unmanaged, ITypeNat
-            where B : unmanaged, IStorageBlock<B>
+            where B : unmanaged
         {
             var length = (byte)BitParser.cleanse(src).Length;
             var width = (byte)n.NatValue;
             Require.invariant(length >= width);
-            var dst = recover<bit>(buffer.Bytes);
+            var dst = recover<bit>(sys.bytes(buffer));
             var count = Require.equal((byte)parse(src, dst),width);
             var result= slice(dst,0,count);
             return result;

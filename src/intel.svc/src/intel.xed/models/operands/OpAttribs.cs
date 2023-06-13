@@ -9,7 +9,7 @@ namespace Z0
     
     partial class XedModels
     {
-        public readonly struct OpAttribs : IFixedCells<OpAttrib>
+        public readonly struct OpAttribs
         {
             readonly ByteBlock32 Data;
 
@@ -54,13 +54,13 @@ namespace Z0
 
             public Span<OpAttrib> Edit
             {
-                [MethodImpl(Inline)]
-                get => recover<OpAttrib>(Data.Bytes);
+                [MethodImpl(Inline), UnscopedRef]
+                get => recover<OpAttrib>(sys.bytes(Data));
             }
 
             public ReadOnlySpan<OpAttrib> View
             {
-                [MethodImpl(Inline)]
+                [MethodImpl(Inline), UnscopedRef]
                 get => Edit;
             }
 
@@ -72,21 +72,21 @@ namespace Z0
 
             public ref readonly OpAttrib this[int i]
             {
-                [MethodImpl(Inline)]
+                [MethodImpl(Inline), UnscopedRef]
                 get => ref seek(Edit,i);
             }
 
             public ref readonly OpAttrib this[uint i]
             {
-                [MethodImpl(Inline)]
+                [MethodImpl(Inline), UnscopedRef]
                 get => ref seek(Edit,i);
             }
 
-            public override string ToString()
-                => Format();
+            // public override string ToString()
+            //     => Format();
 
-            public string Format()
-                => (this as IExpr).Format();
+            // public string Format()
+            //     => (this as IExpr).Format();
 
             public bool Search(OpAttribKind @class, out OpAttrib dst)
                 => XedPatterns.first(this, @class, out dst);

@@ -6,12 +6,12 @@ namespace Z0.Asm
 {
     public readonly struct RegNameSet : IIndex<AsmRegName>
     {
-        public readonly text15 Name;
+        public readonly asci16 Name;
 
         readonly Index<AsmRegName> Data;
 
         [MethodImpl(Inline)]
-        public RegNameSet(text15 name, AsmRegName[] src)
+        public RegNameSet(asci16 name, AsmRegName[] src)
         {
             Name = name;
             Data = src;
@@ -84,6 +84,6 @@ namespace Z0.Asm
         public static implicit operator RegNameSet((string name, AsmRegName[] regs) src)
             => new RegNameSet(src.name, src.regs);
 
-        public static RegNameSet Empty => new RegNameSet(text15.Empty, sys.empty<AsmRegName>());
+        public static RegNameSet Empty => new RegNameSet(asci16.Null, sys.empty<AsmRegName>());
     }
 }

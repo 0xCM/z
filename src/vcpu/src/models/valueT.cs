@@ -50,11 +50,11 @@ namespace Z0
 
         public Span<byte> Bytes
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => bytes(Data);
         }
 
-        [MethodImpl(Inline)]
+        [MethodImpl(Inline), UnscopedRef]
         public ref S As<S>()
             where S : unmanaged
                 => ref @as<S>(Bytes);
@@ -77,9 +77,9 @@ namespace Z0
         public static explicit operator value<T>(ReadOnlySpan<byte> src)
             => from<T>(src);
 
-        [MethodImpl(Inline)]
-        public static implicit operator Span<byte>(value<T> src)
-            => src.Bytes;
+        // [MethodImpl(Inline)]
+        // public static implicit operator Span<byte>(value<T> src)
+        //     => src.Bytes;
 
         [MethodImpl(Inline)]
         public static explicit operator value<T>(Span<byte> src)

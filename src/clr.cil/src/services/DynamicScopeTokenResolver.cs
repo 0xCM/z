@@ -79,7 +79,8 @@ namespace Msil
             return null;
         }
 
-        public Type AsType(int token) => Type.GetTypeFromHandle((RuntimeTypeHandle)this[token]);
+        public Type AsType(int token)
+            => Type.GetTypeFromHandle((RuntimeTypeHandle)this[token]);
 
         public MethodBase AsMethod(int token)
         {

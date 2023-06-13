@@ -14,7 +14,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static T block<T>(ReadOnlySpan<byte> src)
-            where T : unmanaged, IStorageBlock
+            where T : unmanaged
         {
             var dst = default(T);
             copy(src, ref dst);
@@ -23,9 +23,9 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static bool empty<T>(in T src)
-            where T : unmanaged, IStorageBlock<T>
+            where T : unmanaged
         {
-            var b = src.Bytes;
+            var b = sys.bytes(src);
             var count = b.Length;
             var empty = true;
             for(var i=0; i<count; i++)
@@ -40,12 +40,12 @@ namespace Z0
         }
  
         public static string format<T>(in T src)
-            where T : unmanaged, IStorageBlock<T>
-                => src.Bytes.FormatHex();
+            where T : unmanaged
+                => sys.bytes(src).FormatHex();
 
         public static string format<T>(in T src, char sep, bool prespec=false, bool uppercase = false)
-            where T : unmanaged, IStorageBlock<T>
-                => src.Bytes.FormatHex(sep, prespec:prespec, uppercase:uppercase);
+            where T : unmanaged
+                => sys.bytes(src).FormatHex(sep, prespec:prespec, uppercase:uppercase);
 
         [MethodImpl(Inline), Op]
         public static ref ByteBlock16 copy(ReadOnlySpan<byte> src, ref ByteBlock16 dst)
@@ -113,11 +113,12 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static ref T copy<T>(ReadOnlySpan<byte> src, ref T dst)
-            where T : unmanaged, IStorageBlock
+            where T : unmanaged
         {
-            var size = max(src.Length, dst.ByteCount);
+
+            var size = max(src.Length, sys.size<T>());
             ref var target = ref u8(dst);
-            if(size == dst.ByteCount)
+            if(size == size<T>())
                 dst = @as<T>(src);
             else
                 Bytes.copy(slice(src, 0, size), ref target);
@@ -196,6 +197,5 @@ namespace Z0
                 Hi = hi;
             }
         }
-
     }
 }

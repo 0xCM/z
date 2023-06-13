@@ -53,15 +53,15 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<byte> load(ReadOnlySpan<MemorySeg> src, MemorySlot n)
+        public static ReadOnlySpan<byte> load(ReadOnlySpan<MemorySegment> src, MemorySlot n)
             => MemorySegs.load(src,n);
 
         [MethodImpl(Inline), Op]
-        public static ref readonly byte cell(ReadOnlySpan<MemorySeg> src, MemorySlot n, int i)
+        public static ref readonly byte cell(ReadOnlySpan<MemorySegment> src, MemorySlot n, int i)
             => ref MemorySegs.cell(src,n,i);
 
         [MethodImpl(Inline)]
-        public static ulong sib(ReadOnlySpan<MemorySeg> refs, in MemorySlot n, int i, byte scale, ushort offset)
+        public static ulong sib(ReadOnlySpan<MemorySegment> refs, in MemorySlot n, int i, byte scale, ushort offset)
             => MemorySegs.sib(refs, n, i, scale, offset);
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Z0
             {
                 ref readonly var address = ref skip(src,i);
                 ref var target = ref seek(dst,i);
-                if(address == 0)
+                if(address == 0u)
                     continue;
 
                 target.Index = i;

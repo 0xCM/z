@@ -12,109 +12,109 @@ namespace Z0
     {
         ByteBlock128 Storage;
 
-        [MethodImpl(Inline)]
+        [MethodImpl(Inline), UnscopedRef]
         public ref ulong R(RegIndex index)
             => ref seek64(Storage.Bytes,index);
 
         public ref ulong this[byte index]
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref seek64(Storage.Bytes,index);
         }
 
         public ref ulong R0
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref R(0);
         }
 
         public ref ulong R1
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref R(1);
         }
 
         public ref ulong R2
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref R(2);
         }
 
         public ref ulong R3
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref R(3);
         }
 
         public ref ulong R4
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref R(4);
         }
 
         public ref ulong R5
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref R(5);
         }
 
         public ref ulong R6
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref R(6);
         }
 
         public ref ulong R7
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref R(7);
         }
 
         public ref ulong R8
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref R(8);
         }
 
         public ref ulong R9
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref R(9);
         }
 
         public ref ulong R10
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref R(10);
         }
 
         public ref ulong R11
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref R(11);
         }
 
         public ref ulong R12
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref R(12);
         }
 
         public ref ulong R13
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref R(13);
         }
 
         public ref ulong R14
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref R(14);
         }
 
         public ref ulong R15
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref R(15);
         }
     }

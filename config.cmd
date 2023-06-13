@@ -1,7 +1,7 @@
 @echo off
 call %EnvRoot%\buildkits\native\config.cmd
-set DOTNET_ROOT=K:\dist\dotnet\unpacked\dotnet-sdk-6.0.303
-set PATH=%DOTNET_ROOT%;%PATH%
+: set DOTNET_ROOT=K:\dist\dotnet\unpacked\dotnet-sdk-6.0.303
+: set PATH=%DOTNET_ROOT%;%PATH%
 set SlnName=z0
 set SlnRoot=%~dp0..\%SlnName%
 set SlnFilePath=%SlnRoot%\%SlnName%.sln

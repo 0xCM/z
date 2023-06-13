@@ -117,16 +117,16 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public ref readonly Hex8 Hex8Value()
-            => ref @as<Hex8>(Data.First);
+        public Hex8 Hex8Value()
+            => @as<Hex8>(Data.First);
 
         [MethodImpl(Inline)]
-        public ref readonly Hex16 Hex16Value()
-            => ref @as<Hex16>(Data.First);
+        public Hex16 Hex16Value()
+            => @as<Hex16>(Data.First);
 
         [MethodImpl(Inline)]
-        public ref readonly XedInstClass InstClassValue()
-            => ref @as<XedInstClass>(Data.First);
+        public XedInstClass InstClassValue()
+            => @as<XedInstClass>(Data.First);
 
         public bool IsEmpty
         {

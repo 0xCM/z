@@ -26,15 +26,15 @@ namespace Z0
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => Location == 0;
+            get => Location == 0u;
         }
 
         public bool IsNonEmpty
         {
             [MethodImpl(Inline)]
-            get => Location != 0;
+            get => Location != 0u;
         }
 
-        public static MethodEntryPoint Empty => new MethodEntryPoint(0,OpUri.Empty, EmptyString);
+        public static MethodEntryPoint Empty => new MethodEntryPoint(0u,OpUri.Empty, EmptyString);
     }
 }

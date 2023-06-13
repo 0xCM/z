@@ -6,10 +6,10 @@ namespace Z0
 {
     public readonly record struct AsmRegName : IDataType<AsmRegName>
     {
-        readonly text7 Data;
+        readonly asci8 Data;
 
         [MethodImpl(Inline)]
-        public AsmRegName(text7 name)
+        public AsmRegName(asci8 name)
         {
             Data = name;
         }
@@ -44,19 +44,19 @@ namespace Z0
             => Data.Equals(src.Data);
 
         public string Format()
-            => FixedChars.trim(Data).Format();
+            => Data.Format();
 
         public override string ToString()
             => Format();
 
         [MethodImpl(Inline)]
-        public static implicit operator AsmRegName(text7 src)
+        public static implicit operator AsmRegName(asci8 src)
             => new AsmRegName(src);
 
         [MethodImpl(Inline)]
-        public static implicit operator text7(AsmRegName src)
+        public static implicit operator asci8(AsmRegName src)
             => src.Data;
 
-        public static AsmRegName Empty => new AsmRegName(text7.Empty);
+        public static AsmRegName Empty => new AsmRegName(asci8.Null);
     }
 }

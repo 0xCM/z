@@ -1,6 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(SlnProps)\usings.props"/>
+  <Import Project="$(SlnProps)\packages.microsoft.extensions.fileproviders.props"/>
+  <ItemGroup>
+    <ProjectReference Include="../symbols/z0.symbols.csproj" />
+    <ProjectReference Include="../math/z0.math.csproj" />
+  </ItemGroup>
+
   <PropertyGroup>
     <OutputType>Library</OutputType>
   </PropertyGroup>
-  <Import Project="imports.props"/>
 </Project>

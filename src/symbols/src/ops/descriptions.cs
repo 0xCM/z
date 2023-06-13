@@ -17,5 +17,6 @@ namespace Z0
             for(var i=0u; i<count; i++)
                 seek(dst,i) = src[i].Description;
         }
+
     }
 }

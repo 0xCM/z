@@ -18,7 +18,7 @@ namespace Z0
             Reader = EcmaReader.create(src);
         }
 
-        internal EcmaDataSource(MemorySeg src)
+        internal EcmaDataSource(MemorySegment src)
         {
             Reader = EcmaReader.create(src);
         }

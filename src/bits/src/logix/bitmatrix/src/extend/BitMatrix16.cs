@@ -6,12 +6,12 @@ namespace Z0
 {
     public static class BitMatrix16x
     {
-        /// <summary>
-        /// Converts the matrix to a bitvector
-        /// </summary>
-        [MethodImpl(Inline)]
-        public static BitBlock<N256,ushort> ToCells(this BitMatrix16 A)
-            => BitBlocks.load(A.Content, n256);
+        // /// <summary>
+        // /// Converts the matrix to a bitvector
+        // /// </summary>
+        // [MethodImpl(Inline)]
+        // public static BitBlock<N256,ushort> ToCells(this BitMatrix16 A)
+        //     => BitBlocks.load(A.Content, n256);
 
         /// <summary>
         /// Creates the matrix determined by a permutation
@@ -26,19 +26,19 @@ namespace Z0
             return dst;
         }
 
-        /// <summary>
-        /// Creates a generic matrix from the primal source data
-        /// </summary>
-        [MethodImpl(Inline)]
-        public static BitMatrix<ushort> ToGeneric(this BitMatrix16 A)
-            => new BitMatrix<ushort>(A.Content);
+        // /// <summary>
+        // /// Creates a generic matrix from the primal source data
+        // /// </summary>
+        // [MethodImpl(Inline)]
+        // public static BitMatrix<ushort> ToGeneric(this BitMatrix16 A)
+        //     => new BitMatrix<ushort>(A.Content);
 
-        /// <summary>
-        /// Converts the source matrix to a square matrix of natural order
-        /// </summary>
-        [MethodImpl(Inline)]
-        public static BitMatrix<N16,ushort> ToNatural(this BitMatrix16 A)
-            => BitMatrix.load(n16,A.Content);
+        // /// <summary>
+        // /// Converts the source matrix to a square matrix of natural order
+        // /// </summary>
+        // [MethodImpl(Inline)]
+        // public static BitMatrix<N16,ushort> ToNatural(this BitMatrix16 A)
+        //     => BitMatrix.load(n16,A.Content);
 
         /// <summary>
         /// Converts the source matrix to a square matrix of natural order

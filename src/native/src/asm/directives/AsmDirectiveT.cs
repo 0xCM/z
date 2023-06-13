@@ -9,7 +9,7 @@ namespace Z0
     public abstract class AsmDirective<T> : IAsmDirective
         where T : AsmDirective<T>
     {
-        public readonly text15 Name;
+        public readonly asci16 Name;
 
         public readonly AsmDirectiveOp Op0;
 
@@ -20,9 +20,9 @@ namespace Z0
         public readonly AsmDirectiveOp Op3;
 
         [MethodImpl(Inline)]
-        public AsmDirective(text15 name, AsmDirectiveOp op0 = default, AsmDirectiveOp op1 = default, AsmDirectiveOp op2 = default, AsmDirectiveOp op3 = default)
+        public AsmDirective(asci16 name, AsmDirectiveOp op0 = default, AsmDirectiveOp op1 = default, AsmDirectiveOp op2 = default, AsmDirectiveOp op3 = default)
         {
-            Name = name.IsNonEmpty ? (name[0] == Chars.Dot ? sys.slice(name.Bytes,1) : name.Bytes) : default(ReadOnlySpan<byte>);
+            Name = new(name.IsNonEmpty ? (name[0] == AsciCode.Dot ? sys.slice(sys.bytes(name),1) : sys.bytes(name)) : default(ReadOnlySpan<byte>));
             Op0 = op0;
             Op1 = op1;
             Op2 = op2;
@@ -41,7 +41,7 @@ namespace Z0
             get => Name.IsEmpty;
         }
 
-        text15 IAsmDirective.Name
+        asci16 IAsmDirective.Name
             => Name;
 
         AsmDirectiveOp IAsmDirective.Op0

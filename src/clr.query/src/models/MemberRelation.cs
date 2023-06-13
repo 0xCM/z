@@ -7,7 +7,7 @@ namespace Z0
     /// <summary>
     /// Defines a directed association between two data members
     /// </summary>
-    public readonly struct MemberRelation
+    public readonly struct ClrMemberRelation
     {
         /// <summary>
         /// The supplier member
@@ -20,7 +20,7 @@ namespace Z0
         public readonly ClrMember Target {get;}
 
         [MethodImpl(Inline)]
-        public MemberRelation(ClrMember s, ClrMember t)
+        public ClrMemberRelation(ClrMember s, ClrMember t)
         {
             Source = s;
             Target = t;
@@ -40,7 +40,7 @@ namespace Z0
 
 
         [MethodImpl(Inline)]
-        public static implicit operator MemberRelation((MemberInfo src, MemberInfo dst) a)
-            => new MemberRelation(a.src, a.dst);
+        public static implicit operator ClrMemberRelation((MemberInfo src, MemberInfo dst) a)
+            => new ClrMemberRelation(a.src, a.dst);
     }
 }

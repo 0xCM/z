@@ -14,11 +14,11 @@ namespace Z0
         {
             public Disp RELBRVal;
 
-            public text31 AGENVal;
+            public asci32 AGENVal;
 
-            public text31 MEM0Val;
+            public asci32 MEM0Val;
 
-            public text31 MEM1Val;
+            public asci32 MEM1Val;
 
             public OperandState RuleState;
 

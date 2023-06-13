@@ -24,6 +24,5 @@ namespace Z0
             => string.Format("{0}({1},{2})", OpName, A.Format(), B.Format());
 
         public abstract F Create(E a, E b);
-
     }
 }

@@ -16,7 +16,7 @@ namespace Z0
             public OpWidthCode Code;
 
             [Render(12)]
-            public text15 Name;
+            public asci16 Name;
 
             [Render(12)]
             public ElementType ElementType;

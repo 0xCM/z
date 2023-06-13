@@ -162,22 +162,22 @@ namespace Z0
                 Data = data;
             }
 
-            public ref readonly CK CellKind
+            public CK CellKind
             {
-                [MethodImpl(Inline)]
-                get => ref @as<CK>(Data[ClassIndex]);
+                [MethodImpl(Inline), UnscopedRef]
+                get => @as<CK>(Data[ClassIndex]);
             }
 
-            public ref readonly RuleCellType CellType
+            public RuleCellType CellType
             {
-                [MethodImpl(Inline)]
-                get => ref @as<RuleCellType>(Data[ClassIndex]);
+                [MethodImpl(Inline), UnscopedRef]
+                get => @as<RuleCellType>(Data[ClassIndex]);
             }
 
-            public ref readonly FieldKind Field
+            public FieldKind Field
             {
-                [MethodImpl(Inline)]
-                get => ref @as<FieldKind>(Data[FieldIndex]);
+                [MethodImpl(Inline), UnscopedRef]
+                get => @as<FieldKind>(Data[FieldIndex]);
             }
 
             public bit IsExpr
@@ -228,10 +228,10 @@ namespace Z0
                 get => CellType.IsNonterm;
             }
 
-            public ref readonly byte Position
+            public byte Position
             {
-                [MethodImpl(Inline)]
-                get => ref Data[PosIndex];
+                [MethodImpl(Inline), UnscopedRef]
+                get => Data[PosIndex];
             }
 
             [MethodImpl(Inline)]
@@ -253,57 +253,57 @@ namespace Z0
             public override bool Equals(object src)
                 => src is CellValue p && Equals(p);
 
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             public ref readonly Hex8 AsHexLit()
-                => ref @as<Hex8>(Data.First);
+                => ref @as<Hex8>(sys.bytes(this));
+
+            [MethodImpl(Inline), UnscopedRef]
+            public MachineMode AsMode()
+                => @as<MachineMode>(Data.First);
+
+            [MethodImpl(Inline), UnscopedRef]
+            public SegVar AsSegVar()
+                => @as<SegVar>(Data.First);
 
             [MethodImpl(Inline)]
-            public ref readonly MachineMode AsMode()
-                => ref @as<MachineMode>(Data.First);
+            public WidthVar AsWidthVar()
+                => @as<WidthVar>(Data.First);
 
             [MethodImpl(Inline)]
-            public ref readonly SegVar AsSegVar()
-                => ref @as<SegVar>(Data.First);
+            public byte AsByte()
+                => @as<byte>(Data.First);
 
             [MethodImpl(Inline)]
-            public ref readonly WidthVar AsWidthVar()
-                => ref @as<WidthVar>(Data.First);
+            public ushort AsWord()
+                => @as<ushort>(Data.First);
 
             [MethodImpl(Inline)]
-            public ref readonly byte AsByte()
-                => ref @as<byte>(Data.First);
-
-            [MethodImpl(Inline)]
-            public ref readonly ushort AsWord()
-                => ref @as<ushort>(Data.First);
-
-            [MethodImpl(Inline)]
-            public ref readonly Nonterminal AsNonterm()
-                => ref @as<Nonterminal>(Data.First);
+            public Nonterminal AsNonterm()
+                => @as<Nonterminal>(sys.bytes(Data));
 
             [MethodImpl(Inline)]
             public CellExpr ToCellExpr()
                 => new CellExpr((OperatorKind)Data[OpIndex], new FieldValue(Field, @as<ulong>(Data.First), CellKind));
 
-            [MethodImpl(Inline)]
-            public ref readonly uint5 AsBitLit()
-                => ref @as<uint5>(Data.First);
+            [MethodImpl(Inline), UnscopedRef]
+            public uint5 AsBitLit()
+                => @as<uint5>(Data.First);
 
-            [MethodImpl(Inline)]
-            public ref readonly Hex16 AsHex16()
-                => ref @as<Hex16>(Data.First);
+            [MethodImpl(Inline), UnscopedRef]
+            public Hex16 AsHex16()
+                => @as<Hex16>(Data.First);
 
-            [MethodImpl(Inline)]
-            public ref readonly RuleOperator AsOperator()
-                => ref @as<RuleOperator>(Data.First);
+            [MethodImpl(Inline), UnscopedRef]
+            public RuleOperator AsOperator()
+                => @as<RuleOperator>(Data.First);
 
             [MethodImpl(Inline)]
             public RuleKeyword ToKeyword()
                 => RuleKeyword.from(@as<KeywordKind>(Data.First));
 
             [MethodImpl(Inline)]
-            public ref readonly InstFieldSeg AsInstSeg()
-                => ref @as<InstFieldSeg>(Data.First);
+            public InstFieldSeg AsInstSeg()
+                => @as<InstFieldSeg>(Data.First);
 
             [MethodImpl(Inline)]
             public FieldSeg ToFieldSeg()

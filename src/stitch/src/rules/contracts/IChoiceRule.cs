@@ -8,7 +8,5 @@ namespace Z0
     {
         Index<IRuleExpr> Terms {get;}
 
-        RuleExprKind IRuleExpr.ExprKind
-            => RuleExprKind.Choice;
     }
 }

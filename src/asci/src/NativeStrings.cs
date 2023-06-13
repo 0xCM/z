@@ -107,104 +107,104 @@ namespace Z0
             return k;
         }
 
-        [MethodImpl(Inline), Op]
-        public static @string<CharBlock1> c16(N1 n, string src = EmptyString)
-            => src;
+        // [MethodImpl(Inline), Op]
+        // public static @string<CharBlock1> c16(N1 n, string src = EmptyString)
+        //     => src;
 
-        [MethodImpl(Inline), Op]
-        public static @string<CharBlock2> c16(N2 n, string src = EmptyString)
-            => src;
+        // [MethodImpl(Inline), Op]
+        // public static @string<CharBlock2> c16(N2 n, string src = EmptyString)
+        //     => src;
 
-        [MethodImpl(Inline), Op]
-        public static @string<CharBlock3> c16(N3 n, string src = EmptyString)
-            => src;
+        // [MethodImpl(Inline), Op]
+        // public static @string<CharBlock3> c16(N3 n, string src = EmptyString)
+        //     => src;
 
-        [MethodImpl(Inline), Op]
-        public static @string<CharBlock4> c16(N4 n, string src = EmptyString)
-            => src;
+        // [MethodImpl(Inline), Op]
+        // public static @string<CharBlock4> c16(N4 n, string src = EmptyString)
+        //     => src;
 
-        [MethodImpl(Inline), Op]
-        public static @string<CharBlock5> c16(N5 n, string src = EmptyString)
-            => src;
+        // [MethodImpl(Inline), Op]
+        // public static @string<CharBlock5> c16(N5 n, string src = EmptyString)
+        //     => src;
 
-        [MethodImpl(Inline), Op]
-        public static @string<CharBlock6> c16(N6 n, string src = EmptyString)
-            => src;
+        // [MethodImpl(Inline), Op]
+        // public static @string<CharBlock6> c16(N6 n, string src = EmptyString)
+        //     => src;
 
-        [MethodImpl(Inline), Op]
-        public static @string<CharBlock7> c16(N7 n, string src = EmptyString)
-            => src;
+        // [MethodImpl(Inline), Op]
+        // public static @string<CharBlock7> c16(N7 n, string src = EmptyString)
+        //     => src;
 
-        [MethodImpl(Inline), Op]
-        public static @string<CharBlock8> c16(N8 n, string src = EmptyString)
-            => src;
+        // [MethodImpl(Inline), Op]
+        // public static @string<CharBlock8> c16(N8 n, string src = EmptyString)
+        //     => src;
 
-        [MethodImpl(Inline), Op]
-        public static @string<CharBlock9> c16(N9 n, string src = EmptyString)
-            => src;
+        // [MethodImpl(Inline), Op]
+        // public static @string<CharBlock9> c16(N9 n, string src = EmptyString)
+        //     => src;
 
-        [MethodImpl(Inline), Op]
-        public static @string<CharBlock10> c16(N10 n, string src = EmptyString)
-            => src;
+        // [MethodImpl(Inline), Op]
+        // public static @string<CharBlock10> c16(N10 n, string src = EmptyString)
+        //     => src;
 
-        [MethodImpl(Inline), Op]
-        public static @string<CharBlock11> c16(N11 n, string src = EmptyString)
-            => src;
+        // [MethodImpl(Inline), Op]
+        // public static @string<CharBlock11> c16(N11 n, string src = EmptyString)
+        //     => src;
 
-        [MethodImpl(Inline), Op]
-        public static @string<CharBlock12> c16(N12 n, string src = EmptyString)
-            => src;
+        // [MethodImpl(Inline), Op]
+        // public static @string<CharBlock12> c16(N12 n, string src = EmptyString)
+        //     => src;
 
-        [MethodImpl(Inline), Op]
-        public static @string<CharBlock13> c16(N13 n, string src = EmptyString)
-            => src;
+        // [MethodImpl(Inline), Op]
+        // public static @string<CharBlock13> c16(N13 n, string src = EmptyString)
+        //     => src;
 
-        [MethodImpl(Inline), Op]
-        public static @string<CharBlock14> c16(N14 n, string src = EmptyString)
-            => src;
+        // [MethodImpl(Inline), Op]
+        // public static @string<CharBlock14> c16(N14 n, string src = EmptyString)
+        //     => src;
 
-        [MethodImpl(Inline), Op]
-        public static @string<CharBlock15> c16(N15 n, string src = EmptyString)
-            => src;
+        // [MethodImpl(Inline), Op]
+        // public static @string<CharBlock15> c16(N15 n, string src = EmptyString)
+        //     => src;
 
-        [MethodImpl(Inline), Op]
-        public static @string<CharBlock16> c16(N16 n, string src = EmptyString)
-            => src;
+        // [MethodImpl(Inline), Op]
+        // public static @string<CharBlock16> c16(N16 n, string src = EmptyString)
+        //     => src;
 
-        [MethodImpl(Inline), Op]
-        public static @string<CharBlock24> c16(N24 n, string src = EmptyString)
-            => src;
+        // [MethodImpl(Inline), Op]
+        // public static @string<CharBlock24> c16(N24 n, string src = EmptyString)
+        //     => src;
 
-        [MethodImpl(Inline), Op]
-        public static @string<CharBlock32> c16(N32 n, string src = EmptyString)
-            => src;
+        // [MethodImpl(Inline), Op]
+        // public static @string<CharBlock32> c16(N32 n, string src = EmptyString)
+        //     => src;
 
-        [MethodImpl(Inline), Op]
-        public static @string<CharBlock48> c16(N48 n, string src = EmptyString)
-            => src;
+        // [MethodImpl(Inline), Op]
+        // public static @string<CharBlock48> c16(N48 n, string src = EmptyString)
+        //     => src;
 
-        [MethodImpl(Inline), Op]
-        public static @string<CharBlock64> c16(N64 n, string src = EmptyString)
-            => src;
+        // [MethodImpl(Inline), Op]
+        // public static @string<CharBlock64> c16(N64 n, string src = EmptyString)
+        //     => src;
 
-        [MethodImpl(Inline), Op]
-        public static @string<CharBlock80> c16(N80 n, string src = EmptyString)
-            => src;
+        // [MethodImpl(Inline), Op]
+        // public static @string<CharBlock80> c16(N80 n, string src = EmptyString)
+        //     => src;
 
-        [MethodImpl(Inline), Op]
-        public static @string<CharBlock84> c16(N84 n, string src = EmptyString)
-            => src;
+        // [MethodImpl(Inline), Op]
+        // public static @string<CharBlock84> c16(N84 n, string src = EmptyString)
+        //     => src;
 
-        [MethodImpl(Inline), Op]
-        public static @string<CharBlock128> c16(N128 n, string src = EmptyString)
-            => src;
+        // [MethodImpl(Inline), Op]
+        // public static @string<CharBlock128> c16(N128 n, string src = EmptyString)
+        //     => src;
 
-        [MethodImpl(Inline), Op]
-        public static @string<CharBlock256> c16(N256 n, string src = EmptyString)
-            => src;
+        // [MethodImpl(Inline), Op]
+        // public static @string<CharBlock256> c16(N256 n, string src = EmptyString)
+        //     => src;
 
-        [MethodImpl(Inline), Op]
-        public static @string<CharBlock512> c16(N512 n, string src = EmptyString)
-            => src;
+        // [MethodImpl(Inline), Op]
+        // public static @string<CharBlock512> c16(N512 n, string src = EmptyString)
+        //     => src;
     }
 }

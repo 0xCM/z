@@ -68,7 +68,7 @@ namespace Z0
         {
             var dst = new ObjDumpRow();
             dst.Section = TextBlock.Empty;
-            dst.BlockAddress = 0;
+            dst.BlockAddress = 0u;
             dst.BlockName = TextBlock.Empty;
             dst.IP = 0;
             dst.Encoded = BinaryCode.Empty;

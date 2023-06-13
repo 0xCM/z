@@ -10,15 +10,15 @@ namespace Z0.Asm
     public class AsmDirectives
     {
         [MethodImpl(Inline), Op]
-        public static AsmSectionDirective section(text15 name, CoffSectionFlags flags, CoffComDatKind comdat, AsmDirectiveOp data)
+        public static AsmSectionDirective section(asci16 name, CoffSectionFlags flags, CoffComDatKind comdat, AsmDirectiveOp data)
             => new AsmSectionDirective(name, flags, comdat, data);
 
         [MethodImpl(Inline), Op]
-        public static AsmSectionDirective section(text15 name, CoffSectionFlags flags, CoffComDatKind comdat, string data)
+        public static AsmSectionDirective section(asci16 name, CoffSectionFlags flags, CoffComDatKind comdat, string data)
             => new AsmSectionDirective(name,flags,comdat, operand(data));
 
         [MethodImpl(Inline), Op]
-        public static AsmSectionDirective section(text15 name, CoffSectionFlags flags, CoffComDatKind comdat, AsmLabel label)
+        public static AsmSectionDirective section(asci16 name, CoffSectionFlags flags, CoffComDatKind comdat, AsmLabel label)
             => new AsmSectionDirective(name, flags,comdat, label.Name.Format());
 
         [Op]
@@ -71,18 +71,18 @@ namespace Z0.Asm
             => define(".8byte", src);
 
         [MethodImpl(Inline), Op]
-        public static AsmDirective define(text15 name)
+        public static AsmDirective define(asci16 name)
             => new AsmDirective(name);
 
         public static AsmDirective define(AsmDirectiveKind kind, AsmDirectiveOp op0 = default, AsmDirectiveOp op1 = default, AsmDirectiveOp op2 = default)
             => new AsmDirective(Symbols.index<AsmDirectiveKind>()[kind].Expr.Format(),op0,op1,op2);
 
         [MethodImpl(Inline), Op]
-        public static AsmDirective define(text15 name, AsmDirectiveOp op0, AsmDirectiveOp op1, AsmDirectiveOp op2 = default)
+        public static AsmDirective define(asci16 name, AsmDirectiveOp op0, AsmDirectiveOp op1, AsmDirectiveOp op2 = default)
             => new AsmDirective(name, op0, op1, op2);
 
         [Op]
-        public static AsmDirective define(text15 name, ReadOnlySpan<AsmDirectiveOp> args)
+        public static AsmDirective define(asci16 name, ReadOnlySpan<AsmDirectiveOp> args)
         {
             var dst = define(name);
             switch(args.Length)
@@ -103,7 +103,7 @@ namespace Z0.Asm
         }
 
         [MethodImpl(Inline)]
-        public static AsmDirective define<T>(text15 name, T arg)
+        public static AsmDirective define<T>(asci16 name, T arg)
             => new AsmDirective(name, new AsmDirectiveOp<T>(arg));
 
         [Parser]

@@ -47,7 +47,7 @@ namespace Z0.Asm
                 case RegClassCode.FLAG:
                     return Flag.RegName(size);
             }
-            return text7.Empty;
+            return asci8.Null;
         }
     }
 }

@@ -10,14 +10,14 @@ namespace Z0.Asm
     public readonly struct JccInfo<K>
         where K : unmanaged
     {
-        public readonly text7 Name;
+        public readonly asci8 Name;
 
         public readonly NativeSize Size;
 
         public readonly K Code;
 
         [MethodImpl(Inline)]
-        public JccInfo(K code, text7 name, NativeSize size)
+        public JccInfo(K code, asci8 name, NativeSize size)
         {
             Name = name;
             Size = size;

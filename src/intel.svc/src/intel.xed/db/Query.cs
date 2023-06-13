@@ -23,29 +23,6 @@ namespace Z0
                     public XedRegId OUTREG;
                 }
 
-                public struct Aligned
-                {
-                    ByteBlock64 Storage;
-
-                    Span<byte> Data
-                    {
-                        [MethodImpl(Inline)]
-                        get => Storage.Bytes;
-                    }
-
-                    public Span<Row> Rows
-                    {
-                        [MethodImpl(Inline)]
-                        get => recover<Row>(Data);
-                    }
-
-                    public ref Row this[byte i]
-                    {
-                        [MethodImpl(Inline)]
-                        get => ref seek(Rows,i);
-                    }
-
-                }
 
                 /// <summary>
                 /// 00 | [032:013] | [032:013] | GPR32_B.DEC                      | [08:01] REXB                     | [08:03] RM                       | [16:09] OUTREG

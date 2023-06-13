@@ -33,7 +33,7 @@ namespace Z0
         public MemoryRange Origin
         {
             [MethodImpl(Inline)]
-            get => new MemoryRange(BaseAddress, Encoded.Length);
+            get => new MemoryRange(BaseAddress, (Address32)Encoded.Length);
         }
 
         public byte[] Storage

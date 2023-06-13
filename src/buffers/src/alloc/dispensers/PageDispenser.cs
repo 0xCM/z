@@ -28,7 +28,7 @@ namespace Z0
             lock(locker)
             {
                 address = Allocators[Seq].Alloc();
-                if(address == 0)
+                if(address == 0u)
                 {
                     var allocator = PageAllocator.alloc(DefaultPageCount);
                     Allocators[next()] = allocator;

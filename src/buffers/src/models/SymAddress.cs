@@ -25,7 +25,7 @@ namespace Z0
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => Selector == 0 && Address == 0;
+            get => Selector == 0 && Address == 0u;
         }
 
         public bool IsNonEmpty

@@ -131,7 +131,7 @@ namespace Z0.Asm
 
         [Op]
         public static string format(in TableNumber src)
-            => text.format(src.String);
+            => src.String;
 
         [Op]
         public static void render(in LineNumber line, in TableNumber table, ITextBuffer dst)

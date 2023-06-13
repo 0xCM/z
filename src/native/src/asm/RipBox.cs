@@ -19,9 +19,9 @@ namespace Z0
         public RipBox(MemoryAddress @base, ByteSize size)
         {
             PhysicalBase = @base;
-            VirtualBase = 0;
+            VirtualBase = 0u;
             Size = size;
-            _IP = 0;
+            _IP = 0u;
         }
 
         [MethodImpl(Inline)]
@@ -77,7 +77,7 @@ namespace Z0
             }
             else
             {
-                dst = 0;
+                dst = 0u;
                 return false;
             }
         }
@@ -85,7 +85,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public bool Advance(byte sz, Disp32 dx, out MemoryAddress dst)
         {
-            var _next = sz + (MemoryAddress)(int)dx + _IP;
+            var _next = (uint)sz + (MemoryAddress)(int)dx + _IP;
             if(Contains(_next))
             {
                 _IP = _next;
@@ -94,7 +94,7 @@ namespace Z0
             }
             else
             {
-                dst = 0;
+                dst = 0u;
                 return false;
             }
         }

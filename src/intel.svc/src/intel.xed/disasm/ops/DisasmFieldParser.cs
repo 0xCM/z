@@ -64,7 +64,7 @@ namespace Z0
                 => FieldParser.parse(src, kind, ref dstate.RuleState).IsNonEmpty;
 
 
-            static Outcome parse(string src, out text31 dst)
+            static Outcome parse(string src, out asci32 dst)
             {
                 dst = src ?? EmptyString;
                 return true;

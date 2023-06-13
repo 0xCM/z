@@ -50,7 +50,7 @@ namespace Z0
 
         public Span<byte> Bytes
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => bytes(Data);
         }
 

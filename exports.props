@@ -1,4 +1,6 @@
 <Project>
+
+
    <Import Project="$(MsBuildThisFileDirectory)src/api.code/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/assets/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/asci/exports.props"/>
@@ -64,7 +66,6 @@
    <Import Project="$(MsBuildThisFileDirectory)src/test.checks/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/test.shell/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/test.units/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/text/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/vcpu/exports.props"/>
 

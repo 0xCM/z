@@ -7,5 +7,4 @@
     <PackageReference Include="z0.sys.api" Version="$(ZSysVer)" />
     <PackageReference Include="z0.bit" Version="$(ZSysVer)" />
   </ItemGroup>
-
 </Project>

@@ -26,7 +26,7 @@ namespace Z0
             => emit((@base,  @base + size), dst, bpl);
 
         [Op]
-        public unsafe static uint emit2(MemorySeg src, FilePath dst)
+        public unsafe static uint emit2(MemorySegment src, FilePath dst)
         {
             var line = text.emitter();
             using var writer = dst.Writer();
@@ -69,7 +69,7 @@ namespace Z0
         }
 
         [Op]
-        public unsafe static uint emit(MemorySeg src, uint bpl, FilePath dst)
+        public unsafe static uint emit(MemorySegment src, uint bpl, FilePath dst)
         {
             var line = text.emitter();
             using var writer = dst.Writer();

@@ -21,7 +21,8 @@ namespace Z0
 
         public static string format(AsmOcValue src)
         {
-            var data = src.Trimmed;
+            var data = slice(sys.bytes(src), 0, src.TrimmedSize);
+            //var data = src.Trimmed;
             var dst = "0x00";
             switch(data.Length)
             {
@@ -98,20 +99,20 @@ namespace Z0
 
         public ref readonly Hex8 FirstByte
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref @as<Hex8>(this[0]);
         }
 
         public ref readonly byte this[int i]
         {
-            [MethodImpl(Inline)]
-            get => ref Data[i];
+            [MethodImpl(Inline), UnscopedRef]
+            get => ref skip(sys.bytes(this), i);
         }
 
         public ref readonly byte this[uint i]
         {
-            [MethodImpl(Inline)]
-            get => ref Data[i];
+            [MethodImpl(Inline), UnscopedRef]
+            get => ref skip(sys.bytes(this), i);
         }
 
         [MethodImpl(Inline)]
@@ -126,8 +127,8 @@ namespace Z0
             return dst;
         }
 
-        public ReadOnlySpan<byte> ToSpan()
-            => slice(Data.Bytes, 0, TrimmedBlocks.trim(Data).TrimmedSize);
+        // public ReadOnlySpan<byte> ToSpan()
+        //     => slice(Data.Bytes, 0, TrimmedBlocks.trim(Data).TrimmedSize);
 
         public Hash32 Hash
         {
@@ -137,20 +138,20 @@ namespace Z0
 
         public byte TrimmedSize
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => (byte)TrimmedBlocks.trim(Data).TrimmedSize;
         }
 
-        public ReadOnlySpan<byte> Trimmed
-        {
-            [MethodImpl(Inline)]
-            get => slice(Data.Bytes, 0, TrimmedSize);
-        }
+        // public ReadOnlySpan<byte> Trimmed
+        // {
+        //     [MethodImpl(Inline), UnscopedRef]
+        //     get => slice(Data.Bytes, 0, TrimmedSize);
+        // }
 
         public ReadOnlySpan<byte> Bytes
         {
-            [MethodImpl(Inline)]
-            get => Data.Bytes;
+            [MethodImpl(Inline), UnscopedRef]
+            get => sys.bytes(Data);
         }
 
         public string Format()

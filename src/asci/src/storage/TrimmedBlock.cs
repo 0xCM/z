@@ -6,17 +6,18 @@ namespace Z0
 {
     using api = TrimmedBlocks;
     using static sys;
+
     public class TrimmedBlocks
     {
         [MethodImpl(Inline)]
         public static TrimmedBlock<T> trim<T>(in T src)
-            where T : unmanaged, IStorageBlock<T>
+            where T : unmanaged
                 => src;
         
         public static string format<T>(in TrimmedBlock<T> src)
-            where T : unmanaged, IStorageBlock<T>
+            where T : unmanaged
         {
-            var sz = size(src);
+            var sz = sys.size<T>();
             if(sz == 0)
                 sz = 1;
             return sys.slice(src.BlockData, 0, sz).FormatHex();
@@ -24,7 +25,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static ByteSize size<T>(in TrimmedBlock<T> src)
-            where T : unmanaged, IStorageBlock<T>
+            where T : unmanaged
         {
             var data = src.BlockData;
             var length = (int)src.BlockSize;
@@ -44,8 +45,10 @@ namespace Z0
             return size;
         }
     }
+    
+    
     public readonly struct TrimmedBlock<T>
-        where T : unmanaged, IStorageBlock<T>
+        where T : unmanaged
     {
         public readonly T Block;
 
@@ -58,7 +61,7 @@ namespace Z0
         public ByteSize BlockSize
         {
             [MethodImpl(Inline)]
-            get => Block.ByteCount;
+            get => size<T>();
         }
 
         public ByteSize TrimmedSize
@@ -69,8 +72,8 @@ namespace Z0
 
         public ReadOnlySpan<byte> BlockData
         {
-            [MethodImpl(Inline)]
-            get => Block.Bytes;
+            [MethodImpl(Inline), UnscopedRef]
+            get => sys.bytes(Block);
         }
 
         public string Format()

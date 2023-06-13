@@ -653,9 +653,8 @@ namespace Z0
         /// <param name="base">The mathematical base</param>
         /// <param name="src">The data source</param>
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<C> digits(N16 n, Base10 @base, ReadOnlySpan<C> src)
+        public static ReadOnlySpan<C> digits(N16 n, Base10 @base, ReadOnlySpan<C> src, ref CharBlock8 storage)
         {
-            var storage = CharBlock8.Empty;
             var dst = recover<C>(bytes(storage));
             var count = digits(base10, src, dst);
             return count == 0 ? default : slice(dst,0,count);
@@ -668,9 +667,8 @@ namespace Z0
         /// <param name="base">The mathematical base</param>
         /// <param name="src">The data source</param>
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> digits(N16 n, Base10 @base, ReadOnlySpan<char> src)
+        public static ReadOnlySpan<char> digits(N16 n, Base10 @base, ReadOnlySpan<char> src, ref CharBlock16 storage)
         {
-            var storage = CharBlock16.Null;
             var dst = storage.Data;
             var count = digits(base10, src, dst);
             return count == 0 ? default : slice(dst,0,count);

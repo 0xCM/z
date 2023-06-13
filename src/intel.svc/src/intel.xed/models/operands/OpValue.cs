@@ -23,10 +23,10 @@ namespace Z0
 
         public struct OpValue
         {
-            public ref readonly OpNameKind Name
+            public OpNameKind Name
             {
                 [MethodImpl(Inline)]
-                get => ref @as<OpNameKind>(_Data[0]);
+                get => @as<OpNameKind>(_Data[0]);
             }
 
             readonly ByteBlock16 _Data;
@@ -71,34 +71,34 @@ namespace Z0
                 _Data = data;
             }
 
-            internal ref readonly Disp Disp
+            internal Disp Disp
             {
-                [MethodImpl(Inline)]
-                get => ref @as<Disp>(_Data[2]);
+                [MethodImpl(Inline), UnscopedRef]
+                get => @as<Disp>(_Data[2]);
             }
 
-            ref readonly MemoryScale Scale
+            MemoryScale Scale
             {
                 [MethodImpl(Inline)]
-                get => ref @as<MemoryScale>(_Data[2]);
+                get => @as<MemoryScale>(_Data[2]);
             }
 
-            ref readonly Register Reg
+            Register Reg
             {
                 [MethodImpl(Inline)]
-                get => ref @as<Register>(_Data[2]);
+                get => @as<Register>(_Data[2]);
             }
 
-            ref readonly Imm Imm
+            Imm Imm
             {
                 [MethodImpl(Inline)]
-                get => ref @as<Imm>(_Data[2]);
+                get => @as<Imm>(_Data[2]);
             }
 
-            public ref readonly OpDataKind DataKind
+            public OpDataKind DataKind
             {
                 [MethodImpl(Inline)]
-                get => ref @as<OpDataKind>(_Data[1]);
+                get => @as<OpDataKind>(_Data[1]);
             }
 
             public string Format()

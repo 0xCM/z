@@ -13,7 +13,7 @@ namespace Z0
     /// Covers 64 bytes of storage
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Size = (int)Size, Pack=1)]
-    public struct ByteBlock64 : IStorageBlock<B>
+    public struct ByteBlock64
     {
         public const ushort Size = 64;
 
@@ -32,19 +32,19 @@ namespace Z0
 
         public Span<byte> Bytes
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => bytes(this);
         }
 
         public ref byte First
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref first(Bytes);
         }
 
         public bool IsEmpty
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => api.empty(this);
         }
 
@@ -56,27 +56,27 @@ namespace Z0
 
         public ref byte this[int index]
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref seek(First,index);
         }
 
         public ref byte this[uint index]
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref seek(First,index);
         }
 
-        [MethodImpl(Inline)]
+        [MethodImpl(Inline), UnscopedRef]
         public Span<T> Storage<T>()
             where T : unmanaged
                 => recover<T>(Bytes);
 
-        [MethodImpl(Inline)]
+        [MethodImpl(Inline), UnscopedRef]
         public ref T Cell<T>(int index)
             where T : unmanaged
                 => ref seek(Storage<T>(), index);
 
-        [MethodImpl(Inline)]
+        [MethodImpl(Inline), UnscopedRef]
         public ref T Cell<T>(uint index)
             where T : unmanaged
                 => ref seek(Storage<T>(), index);

@@ -11,6 +11,21 @@ namespace Z0
         public const string HexPackPattern = "x{0:x}[{1:D5}:{2:D5}]=<{3}>";
     }
 
+    partial class XHex
+    {
+        [MethodImpl(Inline)]
+        internal static uint Max(this uint[] src)
+        {
+            var result = 0u;
+            for(var i=0; i<src.Length; i++)
+            {
+                ref readonly var x = ref seek(src,i);
+                if(x > result)
+                    result = x;
+            }
+            return result;
+        }
+    }
     partial struct Hex
     {
         [Op]

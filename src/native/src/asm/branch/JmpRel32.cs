@@ -60,7 +60,7 @@ namespace Z0.Asm
         [MethodImpl(Inline)]
         public JmpRel32(Rip src, LocatedSymbol dst)
         {
-            Source = src.Address - InstSize;
+            Source = src.Address - (uint)InstSize;
             Target = dst;
         }
 

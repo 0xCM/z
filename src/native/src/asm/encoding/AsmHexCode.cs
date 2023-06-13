@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
     using Asm;
 
-    public record struct AsmHexCode : IDataString<AsmHexCode>
+    public record struct AsmHexCode 
     {     
         const byte SizeIndex = 15;
 
@@ -21,13 +21,13 @@ namespace Z0
 
         public Span<byte> Bytes
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => bytes(Data);
         }
 
         public ref byte Size
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref seek(Bytes, SizeIndex);
         }
 
@@ -39,13 +39,13 @@ namespace Z0
 
         public ref byte this[byte index]
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref seek(Bytes, index);
         }
 
         public ref byte this[sbyte index]
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref seek(Bytes, index < 0 ? 0 : (byte)index);
         }
 

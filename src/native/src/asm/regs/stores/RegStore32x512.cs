@@ -10,23 +10,23 @@ namespace Z0
 
     public struct RegStore32x512
     {
-        readonly Index<ByteBlock64> Storage;
+        readonly Seq<byte> Storage;
 
         public RegStore32x512()
         {
-            Storage = alloc<ByteBlock64>(32);
+            Storage = alloc<byte>(64*32);
         }
 
         [MethodImpl(Inline)]
         public ref xmm Xmm(byte n)
-            => ref Storage[n].Cell<xmm>(0);
+            => ref @as<xmm>(Storage[n]);
 
         [MethodImpl(Inline)]
         public ref ymm Ymm(byte n)
-            => ref Storage[n].Cell<ymm>(0);
+            => ref @as<ymm>(Storage[n]);
 
         [MethodImpl(Inline)]
         public ref zmm Zmm(byte n)
-            => ref Storage[n].Cell<zmm>(0);
+            => ref @as<zmm>(Storage[n]);
     }
 }

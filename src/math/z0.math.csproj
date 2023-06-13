@@ -1,7 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="imports.props"/>
   <Import Project="$(ProjectProps)\usings.props"/>
+
+  <ItemGroup>
+    <ProjectReference Include="$(Hex)" />
+    <ProjectReference Include="$(ClrQuery)" />
+  </ItemGroup>
 
   <PropertyGroup>
     <OutputType>Library</OutputType>

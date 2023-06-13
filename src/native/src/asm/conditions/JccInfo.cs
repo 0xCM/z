@@ -9,14 +9,14 @@ namespace Z0.Asm
     {
         public readonly JccKind Kind;
 
-        public readonly text7 Name;
+        public readonly asci8 Name;
 
         public readonly NativeSize Size;
 
         public readonly byte Code;
 
         [MethodImpl(Inline)]
-        public JccInfo(Jcc8Code code, text7 name)
+        public JccInfo(Jcc8Code code, asci8 name)
         {
             Code = (byte)code;
             Name = name;
@@ -25,7 +25,7 @@ namespace Z0.Asm
         }
 
         [MethodImpl(Inline)]
-        public JccInfo(Jcc8AltCode code, text7 name)
+        public JccInfo(Jcc8AltCode code, asci8 name)
         {
             Code = (byte)code;
             Name = name;
@@ -34,7 +34,7 @@ namespace Z0.Asm
         }
 
         [MethodImpl(Inline)]
-        public JccInfo(Jcc32Code code, text7 name)
+        public JccInfo(Jcc32Code code, asci8 name)
         {
             Code = (byte)code;
             Name = name;
@@ -43,7 +43,7 @@ namespace Z0.Asm
         }
 
         [MethodImpl(Inline)]
-        public JccInfo(Jcc32AltCode code, text7 name)
+        public JccInfo(Jcc32AltCode code, asci8 name)
         {
             Code = (byte)code;
             Name = name;

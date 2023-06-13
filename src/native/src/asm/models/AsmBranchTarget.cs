@@ -60,13 +60,13 @@ namespace Z0
         public bool IsNonEmpty
         {
             [MethodImpl(Inline)]
-            get => Address != 0;
+            get => Address != 0u;
         }
 
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => Address == 0;
+            get => Address == 0u;
         }
 
         public static AsmBranchTarget Empty

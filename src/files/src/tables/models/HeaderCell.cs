@@ -29,6 +29,18 @@ namespace Z0
             get => Name.Hash;
         }
 
+        [MethodImpl(Inline)]
+        public HeaderCell Rename(string name)
+            => new HeaderCell(Index,name, Width);
+
+        [MethodImpl(Inline)]
+        public HeaderCell Resize(RenderWidth width)
+            => new HeaderCell(Index,Name, width);
+
+        [MethodImpl(Inline)]
+        public HeaderCell WithIndex(uint index)
+            => new HeaderCell(index, Name, Width);
+
         public override int GetHashCode()
             => Hash;
 

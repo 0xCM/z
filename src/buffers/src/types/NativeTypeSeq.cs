@@ -6,17 +6,11 @@ namespace Z0
 {
     using static sys;
 
-    public readonly struct NativeTypeSeq : INaturalSeq<N16,NativeType>
+    public readonly struct NativeTypeSeq : IEnumerable<NativeType>
     {
         readonly ByteBlock32 Storage;
 
         static N16 N => default;
-
-        Span<byte> Bytes
-        {
-            [MethodImpl(Inline)]
-            get => Storage.Bytes;
-        }
 
         public byte MaxCount
         {
@@ -32,25 +26,25 @@ namespace Z0
 
         public Span<NativeType> Edit
         {
-            [MethodImpl(Inline)]
-            get => recover<NativeType>(Bytes);
+            [MethodImpl(Inline), UnscopedRef]
+            get => recover<NativeType>(sys.bytes(this));
         }
 
         public ReadOnlySpan<NativeType> View
         {
-            [MethodImpl(Inline)]
-            get => recover<NativeType>(Bytes);
+            [MethodImpl(Inline), UnscopedRef]
+            get => recover<NativeType>(sys.bytes(this));
         }
 
         public ref NativeType this[uint i]
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref seek(Edit,i);
         }
 
         public ref NativeType this[int i]
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref seek(Edit,i);
         }
 

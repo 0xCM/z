@@ -27,7 +27,7 @@ namespace Z0
             => new EcmaReader(src);
 
         [Op]
-        public static EcmaReader create(MemorySeg src)
+        public static EcmaReader create(MemorySegment src)
             => new EcmaReader(src);
 
         [Op]
@@ -61,7 +61,7 @@ namespace Z0
             get => ref MD;
         }
 
-        readonly MemorySeg Segment;
+        readonly MemorySegment Segment;
 
         GenericSignatureTypeProvider GSTP = new GenericSignatureTypeProvider();
 
@@ -73,7 +73,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public EcmaReader(MemorySeg src)
+        public EcmaReader(MemorySegment src)
         {
             Segment = src;
             MD = new MetadataReader(Segment.BaseAddress.Pointer<byte>(), Segment.Size);            
@@ -82,21 +82,21 @@ namespace Z0
         [MethodImpl(Inline)]
         public EcmaReader(PEMemoryBlock src)
         {
-            Segment = MemorySegs.define(src.Pointer, src.Length);
+            Segment = new(src.Pointer, src.Length);
             MD = new MetadataReader(Segment.BaseAddress.Pointer<byte>(), Segment.Size);        
         }
 
         [MethodImpl(Inline)]
         public EcmaReader(MetadataReader src)
         {
-            Segment = MemorySegs.define(src.MetadataPointer, src.MetadataLength);
+            Segment = new(src.MetadataPointer, src.MetadataLength);
             MD = src;
         }
 
         [MethodImpl(Inline)]
         public EcmaReader(EcmaFile src)
         {
-            Segment = MemorySegs.define(src.MdReader.MetadataPointer, src.MdReader.MetadataLength);
+            Segment = new(src.MdReader.MetadataPointer, src.MdReader.MetadataLength);
             MD = src.MdReader;            
         }
 

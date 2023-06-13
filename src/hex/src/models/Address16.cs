@@ -92,7 +92,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator MemoryAddress(Address16 src)
-            => src.Location;
+            => (ulong)src.Location;
 
         [MethodImpl(Inline)]
         public static implicit operator A(T src)

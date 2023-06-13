@@ -1,7 +1,0 @@
-<Project>
-  <ItemGroup>
-    <ProjectReference Include="$(Text)" />
-    <ProjectReference Include="$(ClrQuery)" />
-  </ItemGroup>
-  <Import Project="$(SlnProps)\usings.props"/>
-</Project>

@@ -40,11 +40,11 @@ namespace Z0
             get => ((uint)Mode << 29) | (((uint)Class << 24) | (uint)Value);
         }
 
-        public ref readonly Hex8 FirstByte
-        {
-            [MethodImpl(Inline)]
-            get => ref Value.FirstByte;
-        }
+        // public ref readonly Hex8 FirstByte
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => ref Value.FirstByte;
+        // }
 
         public bool IsEmpty
         {

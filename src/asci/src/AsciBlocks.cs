@@ -15,6 +15,21 @@ namespace Z0
     {
         const NumericKind Closure = UnsignedInts;
 
+        internal static string format<B>(in B src)
+            where B : unmanaged
+        {
+            var size = sys.size<B>();
+            Span<char> dst = stackalloc char[(int)size];
+            var count = AsciSymbols.decode(sys.bytes(src), dst);
+            return new string(slice(dst,0,count));        
+        }
+
+        internal static string format(AsciBlock32 src)
+        {
+            var dst = CharBlock32.Empty;
+            return new string(decode(src, ref dst));
+        }
+
         public static string format<N>(AsciBlock<N> src)
             where N : unmanaged, ITypeNat
         {
@@ -51,11 +66,12 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static T load<T>(ReadOnlySpan<C> src, out T target)
-            where T : unmanaged, IAsciBlock<T>
+            where T : unmanaged
         {
+            var size = sys.size<T>();
             target = default(T);
-            var count = min(src.Length,target.ByteCount);
-            ref var dst = ref @as<C>(target.First);
+            var count = min(src.Length,size);
+            ref var dst = ref @as<C>(sys.first(sys.bytes(target)));
             for(var i=0; i<count; i++)
                 seek(dst, i) = skip(src, i);
             return target;
@@ -63,11 +79,12 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static T load<T>(ReadOnlySpan<S> src, out T target)
-            where T : unmanaged, IAsciBlock<T>
+            where T : unmanaged
         {
             target = default(T);
-            var count = min(src.Length,target.ByteCount);
-            ref var dst = ref @as<S>(target.First);
+            var size = sys.size<T>();
+            var count = min(src.Length,size);
+            ref var dst = ref @as<S>(sys.first(sys.bytes(target)));
             for(var i=0; i<count; i++)
                 seek(dst, i) = skip(src, i);
             return target;
@@ -166,9 +183,8 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> decode(AsciBlock16 src)
+        public static ReadOnlySpan<char> decode(AsciBlock16 src, ref CharBlock16 dst)
         {
-            var dst = CharBlock16.Null;
             decode(src, ref dst.First);
             var length = text.index(dst.Data, '\0');
             if(length == NotFound)
@@ -185,9 +201,8 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> decode(AsciBlock32 src)
+        public static ReadOnlySpan<char> decode(AsciBlock32 src, ref CharBlock32 dst)
         {
-            var dst = CharBlock32.Null;
             decode(src, ref dst.First);
             var length = text.index(dst.Data, '\0');
             if(length == NotFound)

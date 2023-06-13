@@ -8,7 +8,7 @@ namespace Z0
 
     public sealed record class ClrAssemblyName : IDataType<ClrAssemblyName>
     {
-        public readonly FileUri CodeBase;
+        //public readonly FileUri CodeBase;
 
         public readonly string FullName;
 
@@ -18,7 +18,7 @@ namespace Z0
 
         ClrAssemblyName()
         {
-            CodeBase = FileUri.Empty;
+            //CodeBase = FileUri.Empty;
             FullName = EmptyString;
             SimpleName = EmptyString;
             Version = default;
@@ -27,7 +27,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public ClrAssemblyName(AssemblyName src)
         {
-            CodeBase = new (src.CodeBase ?? EmptyString);
+            //CodeBase = new (src.CodeBase ?? EmptyString);
             FullName = src.FullName;
             SimpleName = src.SimpleName();
             Version = api.version(src);
@@ -36,7 +36,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public ClrAssemblyName(Assembly src)
         {
-            CodeBase = new(src.GetName().CodeBase ?? EmptyString);
+            //CodeBase = new(src.GetName().CodeBase ?? EmptyString);
             FullName = src.GetName().FullName;
             SimpleName = src.GetName().SimpleName();
             Version = api.version(src.GetName());

@@ -14,11 +14,12 @@ namespace Z0
         /// </summary>
         /// <param name="src">The data source</param>
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<ushort> unpack16x32(in Cell256 src)
+        public static ByteBlock64 unpack16x32(in Cell256 src)
         {
-            var dst = recover<ushort>(ByteBlocks.alloc(n64).Bytes);
+            var storage = ByteBlock64.Empty;
+            var dst = recover<ushort>(storage.Bytes);
             unpack16x32(src,dst);
-            return dst;
+            return storage;
         }
 
         /// <summary>

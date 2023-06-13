@@ -21,7 +21,7 @@ namespace Z0
             public NativeSize RegSize;
 
             [Render(8)]
-            public text7 RegName;
+            public asci8 RegName;
 
             [Render(8)]
             public byte RegIndex;

@@ -23,22 +23,22 @@ namespace Z0
             get => Data.Count;
         }
 
-        public ReadOnlySpan<NativeType> Members
-        {
-            [MethodImpl(Inline)]
-            get => Data.View;
-        }
+        // public ReadOnlySpan<NativeType> Members
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => Data.View;
+        // }
 
-        public ref NativeType this[uint i]
-        {
-            [MethodImpl(Inline)]
-            get => ref Data[i];
-        }
+        // public ref NativeType this[uint i]
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => ref Data[i];
+        // }
 
-        public ref NativeType this[int i]
-        {
-            [MethodImpl(Inline)]
-            get => ref Data[i];
-        }
+        // public ref NativeType this[int i]
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => ref Data[i];
+        // }
     }
 }

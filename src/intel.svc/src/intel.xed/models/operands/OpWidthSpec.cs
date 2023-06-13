@@ -37,7 +37,7 @@ namespace Z0
             }
 
             [MethodImpl(Inline)]
-            OpWidthSpec(OpWidthCode code, MachineMode mode, text15 name, BitSegType seg, ushort n, ElementType t, ushort cw, ushort bw)
+            OpWidthSpec(OpWidthCode code, MachineMode mode, asci16 name, BitSegType seg, ushort n, ElementType t, ushort cw, ushort bw)
             {
                 Code = code;
                 Mode = mode;
@@ -68,7 +68,7 @@ namespace Z0
 
             public readonly GprWidth Gpr;
 
-            public readonly text15 Name;
+            public readonly asci16 Name;
 
             public readonly ElementType CellType;
 

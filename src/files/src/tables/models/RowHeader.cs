@@ -10,23 +10,6 @@ namespace Z0
 
     public readonly struct RowHeader : IIndex<HeaderCell>, ITextual
     {
-        /// <summary>
-        /// Formats a <see cref='RowHeader'/>
-        /// </summary>
-        /// <param name="src">The source header</param>
-        public static string format(RowHeader src)
-        {
-            var dst = new StringBuilder();
-            for(var i=0; i<src.Count; i++)
-            {
-                if(i != 0)
-                    dst.Append(src.Delimiter);
-
-                dst.Append(src[i].Format());
-            }
-            return dst.ToString();
-        }
-
         public Index<HeaderCell> Cells {get;}
 
         public string Delimiter {get;}
@@ -84,7 +67,17 @@ namespace Z0
         }
 
         public string Format()
-            => format(this);
+        {
+            var dst = new StringBuilder();
+            for(var i=0; i<Count; i++)
+            {
+                if(i != 0)
+                    dst.Append(Delimiter);
+
+                dst.Append(this[i].Format());
+            }
+            return dst.ToString();
+        }
 
         public override string ToString()
             => Format();

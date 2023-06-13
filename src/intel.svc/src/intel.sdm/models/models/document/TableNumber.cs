@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using static core;
-
     partial struct SdmModels
     {
         public readonly struct TableNumber
@@ -18,16 +16,11 @@ namespace Z0.Asm
                 Storage = data;
             }
 
-            public ReadOnlySpan<char> Data
-            {
-                [MethodImpl(Inline)]
-                get => Storage.Data;
-            }
 
-            public ReadOnlySpan<char> String
+            public string String
             {
                 [MethodImpl(Inline)]
-                get => Storage.String;
+                get => Storage.Format();
             }
 
             public static TableNumber Empty

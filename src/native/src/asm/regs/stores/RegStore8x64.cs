@@ -12,61 +12,61 @@ namespace Z0
     {
         ByteBlock64 Storage;
 
-        [MethodImpl(Inline)]
+        [MethodImpl(Inline), UnscopedRef]
         public ref ulong R(RegIndex index)
-            => ref seek64(Storage.Bytes,index);
+            => ref seek64(bytes(this),index);
 
         public ref ulong this[byte index]
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref seek64(Storage.Bytes,index);
         }
 
         public ref ulong R0
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref R(0);
         }
 
         public ref ulong R1
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref R(1);
         }
 
         public ref ulong R2
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref R(2);
         }
 
         public ref ulong R3
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref R(3);
         }
 
         public ref ulong R4
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref R(4);
         }
 
         public ref ulong R5
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref R(5);
         }
 
         public ref ulong R6
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref R(6);
         }
 
         public ref ulong R7
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref R(7);
         }
 

@@ -63,7 +63,7 @@ namespace Z0
         /// </summary>
         public Span<byte> Bytes
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => Data.Bytes;
         }
 
@@ -72,7 +72,7 @@ namespace Z0
         /// </summary>
         public Span<ushort> Content
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => recover<ushort>(Bytes);
         }
 
@@ -81,7 +81,7 @@ namespace Z0
         /// </summary>
         public ref ushort Head
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref @as<ushort>(Data.First);
         }
 
@@ -112,7 +112,7 @@ namespace Z0
         /// <param name="row">The row index</param>
         public ref BitVector16 this[int row]
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref Unsafe.As<ushort,BitVector16>(ref seek(Head, row));
         }
 
@@ -163,9 +163,9 @@ namespace Z0
         public override int GetHashCode()
             => throw new NotSupportedException();
 
-        [MethodImpl(Inline)]
-        public static implicit operator BitMatrix<ushort>(in BitMatrix16 src)
-            => BitMatrix.load(src.Content);
+        // [MethodImpl(Inline)]
+        // public static implicit operator BitMatrix<ushort>(in BitMatrix16 src)
+        //     => BitMatrix.load(src.Content);
 
         /// <summary>
         /// Computes the bitwise and of the operands

@@ -13,7 +13,7 @@ namespace Z0
             const string TableId = "xed.fields.import";
 
             [Render(32)]
-            public text31 Name;
+            public asci32 Name;
 
             [Render(32)]
             public EnumFormat<XedFieldType> FieldType;

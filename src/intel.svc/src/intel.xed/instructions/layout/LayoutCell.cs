@@ -65,40 +65,40 @@ namespace Z0
                 Data = data;
             }
 
-            public ref readonly FieldKind Field
+            public FieldKind Field
             {
                 [MethodImpl(Inline)]
-                get => ref @as<FieldKind>(Data[14]);
+                get => @as<FieldKind>(Data[14]);
             }
 
             [MethodImpl(Inline)]
-            public ref readonly Hex8 AsHexLit()
-                => ref @as<Hex8>(Data.First);
+            public Hex8 AsHexLit()
+                => @as<Hex8>(Data.First);
 
             [MethodImpl(Inline)]
-            public ref readonly uint5 AsBitLit()
-                => ref @as<uint5>(Data.First);
+            public uint5 AsBitLit()
+                => @as<uint5>(Data.First);
 
             [MethodImpl(Inline)]
-            public ref readonly WidthVar AsWidthVar()
-                => ref @as<WidthVar>(Data.First);
+            public WidthVar AsWidthVar()
+                => @as<WidthVar>(Data.First);
 
             [MethodImpl(Inline)]
-            public ref readonly FieldSeg AsFieldSeg()
-                => ref @as<FieldSeg>(Data.First);
+            public FieldSeg AsFieldSeg()
+                => @as<FieldSeg>(Data.First);
 
             [MethodImpl(Inline)]
-            public ref readonly SegVar AsSegVar()
-                => ref @as<SegVar>(Data.First);
+            public SegVar AsSegVar()
+                => @as<SegVar>(Data.First);
 
             [MethodImpl(Inline)]
-            public ref readonly Nonterminal AsNonterm()
-                => ref @as<Nonterminal>(Data.First);
+            public Nonterminal AsNonterm()
+                => @as<Nonterminal>(Data.First);
 
-            public ref readonly LayoutCellKind Kind
+            public LayoutCellKind Kind
             {
                 [MethodImpl(Inline)]
-                get => ref @as<LayoutCellKind>(Data[15]);
+                get => @as<LayoutCellKind>(Data[15]);
             }
 
             public bool IsRule

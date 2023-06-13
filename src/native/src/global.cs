@@ -120,9 +120,9 @@ namespace global
             return new AsmHexCode(Cells.cell128(u64(first(buffer)), (ulong)size << 56));
         }
 
-        [MethodImpl(Inline), Op]
-        public static Span<byte> encoded(AsmHexCode src)
-            => slice(src.Bytes, 0, src.Size);
+        // [MethodImpl(Inline), Op]
+        // public static Span<byte> encoded(AsmHexCode src)
+        //     => slice(src.Bytes, 0u, src.Size);
 
         [Op]
         public static uint render(AsmHexCode src, ref uint i, Span<char> dst)

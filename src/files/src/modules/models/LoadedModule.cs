@@ -19,7 +19,7 @@ namespace Z0
         public bool IsValid
         {
             [MethodImpl(Inline)]
-            get => Address != 0;
+            get => Address != 0u;
         }
 
         public string Format()

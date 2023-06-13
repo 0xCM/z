@@ -18,7 +18,7 @@ namespace Z0
             public byte Seq;
 
             [Render(12)]
-            public text15 Name;
+            public asci16 Name;
 
             [Render(6)]
             public char Symbol;

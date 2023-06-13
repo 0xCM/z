@@ -18,7 +18,7 @@ namespace Z0
     /// Defines 16 bytes of storage
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Size = Size, Pack=1), ApiComplete]
-    public record struct AsciBlock16 : IAsciBlock<A>
+    public record struct AsciBlock16
     {
         public static A Empty => default;
 
@@ -48,68 +48,50 @@ namespace Z0
 
         public Span<byte> Bytes
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => bytes(this);
         }
 
         public Span<C> Codes
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => recover<C>(Bytes);
         }
 
         public Span<S> Symbols
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => recover<S>(Bytes);
         }
 
         public ref S this[int index]
         {
-            [MethodImpl(Inline)]
-            get => ref seek(Symbols,index);
+            [MethodImpl(Inline), UnscopedRef]
+            get => ref sys.seek(Symbols,index);
         }
 
         public ref S this[uint index]
         {
-            [MethodImpl(Inline)]
-            get => ref seek(Symbols,index);
+            [MethodImpl(Inline), UnscopedRef]
+            get => ref sys.seek(Symbols,index);
         }
 
         public ref byte First
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref first(Bytes);
         }
 
-        public ref H Lo
-        {
-            [MethodImpl(Inline)]
-            get => ref @as<H>(First);
-        }
-
-        public ref H Hi
-        {
-            [MethodImpl(Inline)]
-            get => ref seek(@as<H>(First), 1);
-        }
-
-        public ReadOnlySpan<char> Chars
-        {
-            [MethodImpl(Inline)]
-            get => api.decode(this);
-        }
-
-        public string Format()
-            => text.format(Chars);
-
-        public override string ToString()
-            => Format();
-
-        [MethodImpl(Inline)]
+        [MethodImpl(Inline), UnscopedRef]
         public Span<T> Storage<T>()
             where T : unmanaged
                 => recover<T>(Bytes);
+
+        public string Format()
+            => api.format(this);
+
+        public override string ToString()
+            => Format();
 
         [MethodImpl(Inline)]
         public static implicit operator B(A src)

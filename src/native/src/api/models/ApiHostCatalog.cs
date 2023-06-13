@@ -23,13 +23,13 @@ namespace Z0
         public MemoryAddress MinAddress
         {
             [MethodImpl(Inline)]
-            get => IsNonEmpty ? Members[0].BaseAddress : 0;
+            get => IsNonEmpty ? Members[0].BaseAddress : 0u;
         }
 
         public MemoryAddress MaxAddress
         {
             [MethodImpl(Inline)]
-            get =>  IsNonEmpty ? Members[MemberCount - 1].BaseAddress : 0;
+            get =>  IsNonEmpty ? Members[MemberCount - 1].BaseAddress : 0u;
         }
 
         /// <summary>

@@ -8,8 +8,8 @@ namespace Z0
 
     public class MemberRelations
     {
-        public static MemberRelation define<S,T>(Expression<Func<S,object>> s, Expression<Func<T,object>> t)
-            => new MemberRelation(s.GetDataMember(), t.GetDataMember());
+        public static ClrMemberRelation define<S,T>(Expression<Func<S,object>> s, Expression<Func<T,object>> t)
+            => new ClrMemberRelation(s.GetDataMember(), t.GetDataMember());
 
         public static RelationBuilder<S,T> build<S,T>()
             => new RelationBuilder<S,T>();
@@ -17,8 +17,8 @@ namespace Z0
 
     public class RelationBuilder<S,T>
     {
-        HashSet<MemberRelation> Relations {get;}
-            = new HashSet<MemberRelation>();
+        HashSet<ClrMemberRelation> Relations {get;}
+            = new HashSet<ClrMemberRelation>();
 
         public RelationBuilder<S,T> Include(Expression<Func<S, object>> s, Expression<Func<T,object>> t)
         {

@@ -11,12 +11,12 @@ namespace Z0
     /// </summary>
     public readonly struct FieldRef : INullity
     {
-        public readonly MemorySeg Segment;
+        public readonly MemorySegment Segment;
 
         public readonly FieldInfo Field;
 
         [MethodImpl(Inline)]
-        public FieldRef(FieldInfo field, MemorySeg seg)
+        public FieldRef(FieldInfo field, MemorySegment seg)
         {
             Segment = seg;
             Field = field;
@@ -222,10 +222,10 @@ namespace Z0
         }
 
         public static FieldRef Empty
-            => new FieldRef(EmptyVessels.EmptyField, MemorySeg.Empty);
+            => new FieldRef(EmptyVessels.EmptyField, MemorySegment.Empty);
 
         [MethodImpl(Inline)]
-        public static implicit operator FieldRef((FieldInfo field, MemorySeg location) src)
+        public static implicit operator FieldRef((FieldInfo field, MemorySegment location) src)
             => new FieldRef(src.field, src.location );
     }
 }

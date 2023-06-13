@@ -3,5 +3,6 @@
   <Import Project="$(ProjectProps)\usings.props"/>
   <PropertyGroup>
     <OutputType>Library</OutputType>
+    <NoWarn>$(NoWarn);CA1857</NoWarn>
   </PropertyGroup>
 </Project>

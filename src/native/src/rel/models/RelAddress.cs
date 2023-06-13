@@ -22,7 +22,7 @@ namespace Z0
         public bool IsEmpty
         {
              [MethodImpl(Inline)]
-             get => Base == 0 && Offset == 0;
+             get => Base == 0u && Offset == 0u;
         }
 
         public bool IsNonEmpty
@@ -76,11 +76,11 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static RelAddress operator-(RelAddress x, byte y)
-            => new RelAddress(x.Base, x.Offset - y);
+            => new RelAddress(x.Base, x.Offset - (uint)y);
 
         [MethodImpl(Inline)]
         public static RelAddress operator-(RelAddress x, ushort y)
-            => new RelAddress(x.Base, x.Offset - y);
+            => new RelAddress(x.Base, x.Offset - (uint)y);
 
         [MethodImpl(Inline)]
         public static RelAddress operator-(RelAddress x, uint y)

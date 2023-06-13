@@ -13,12 +13,12 @@ namespace Z0
         /// </summary>
         /// <param name="src">The source assembly</param>
         [MethodImpl(Inline), Op]
-        public static unsafe MemorySeg metadata(Assembly src)
+        public static unsafe MemorySegment metadata(Assembly src)
         {
             if(src.TryGetRawMetadata(out var ptr, out var len))
-                return new MemorySeg(ptr,len);
+                return new MemorySegment(ptr,len);
             else
-                return MemorySeg.Empty;
+                return MemorySegment.Empty;
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Z0
             get => Definition.GetSimpleName();
         }
 
-        public MemorySeg Metadata
+        public MemorySegment Metadata
         {
             [MethodImpl(Inline)]
             get => metadata(this);

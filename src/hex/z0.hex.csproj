@@ -1,6 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(ProjectProps)\usings.props"/>
   <PropertyGroup>
     <OutputType>Library</OutputType>
   </PropertyGroup>
-  <Import Project="imports.props"/>
+  <ItemGroup>
+    <PackageReference Include="z0.text" Version="$(ZSysVer)" />      
+  </ItemGroup>
 </Project>

@@ -51,14 +51,6 @@ namespace Z0
             X1 = src.Hi;
         }
 
-        // [MethodImpl(Inline)]
-        // public Cell512(ByteBlock64 src)
-        // {
-        //     var v = src.Vector<ulong>();
-        //     X0 = v.Lo;
-        //     X1 = v.Hi;
-        // }
-
         [MethodImpl(Inline)]
         public static Cell512 init<T>(in Vector512<T> src)
             where T : unmanaged
@@ -68,7 +60,6 @@ namespace Z0
         public Vector512<T> ToVector<T>()
             where T : unmanaged
                 => @as<Cell512,Vector512<T>>(this);
-                //gcpu.vload(w512, @as<F,T>(this));
 
         [MethodImpl(Inline)]
         public Vector256<T> LoVector<T>()
@@ -88,7 +79,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public bool Equals(Vector512<ulong> src)
-            => Lo == src.Lo && Hi == src.Hi;
+            => Lo.ToVector<ulong>() == src.Lo && Hi.ToVector<ulong>() == src.Hi;
 
         public override int GetHashCode()
             => HashCode.Combine(X0,X1);

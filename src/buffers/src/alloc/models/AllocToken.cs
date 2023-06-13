@@ -11,7 +11,7 @@ namespace Z0
 
         public readonly Hex32 Offset;
 
-        public readonly uint Size;
+        public readonly Size32 Size;
 
         [MethodImpl(Inline)]
         public AllocToken(MemoryAddress @base, uint offset, uint size)

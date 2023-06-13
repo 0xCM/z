@@ -255,43 +255,43 @@ namespace Z0.Asm
 
         public ReadOnlySpan<byte> Data
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => _Data.Bytes;
         }
 
         public ref readonly RegOp Reg
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref @as<RegOp>(Data);
         }
 
         public ref readonly MemOp Mem
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref @as<MemOp>(Data);
         }
 
         public ref readonly Imm Imm
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get  => ref @as<Imm>(Data);
         }
 
         public ref readonly RegMask RegMask
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref @as<RegMask>(Data);
         }
 
         public ref readonly Rel Rel
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref @as<Rel>(Data);
         }
 
         public ref readonly Disp Disp
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref @as<Disp>(Data);
         }
 

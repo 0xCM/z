@@ -34,31 +34,31 @@ namespace Z0
 
         public Span<byte> Bytes
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => Data.Bytes;
         }
 
         public ref T First
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref @as<T>(Data.First);
         }
 
         public Span<T> Cells
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => recover<T>(Data.Bytes);
         }
 
         public ref T this[int i]
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref seek(First,i);
         }
 
         public ref T this[uint i]
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref seek(First,i);
         }
 

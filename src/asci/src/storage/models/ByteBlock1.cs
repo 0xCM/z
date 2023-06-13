@@ -10,7 +10,7 @@ namespace Z0
     using api = Storage;
 
     [StructLayout(LayoutKind.Sequential, Size = Size, Pack=1)]
-    public struct ByteBlock1 : IStorageBlock<B>
+    public struct ByteBlock1
     {
         public static N1 N => default;
 
@@ -20,39 +20,51 @@ namespace Z0
 
         public Span<byte> Bytes
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => bytes(this);
         }
 
         public ref byte First
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref first(Bytes);
+        }
+
+        public bool IsEmpty
+        {
+            [MethodImpl(Inline), UnscopedRef]
+            get => api.empty(this);
+        }
+
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => !api.empty(this);
         }
 
         public ref byte this[int index]
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref seek(First,index);
         }
 
         public ref byte this[uint index]
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref seek(First,index);
         }
 
-        [MethodImpl(Inline)]
+        [MethodImpl(Inline), UnscopedRef]
         public Span<T> Storage<T>()
             where T : unmanaged
                 => recover<T>(Bytes);
 
-        [MethodImpl(Inline)]
+        [MethodImpl(Inline), UnscopedRef]
         public ref T Cell<T>(int index)
             where T : unmanaged
                 => ref seek(Storage<T>(), index);
 
-        [MethodImpl(Inline)]
+        [MethodImpl(Inline), UnscopedRef]
         public ref T Cell<T>(uint index)
             where T : unmanaged
                 => ref seek(Storage<T>(), index);

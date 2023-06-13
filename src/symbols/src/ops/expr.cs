@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     partial struct Symbols
     {
         public static SymExpr expr<E>(E src)

@@ -12,7 +12,7 @@ namespace Z0
     public readonly struct PermSymbolic
     {
         [Op]
-        public static ReadOnlySpan<char> bitblock(Perm4L src, bool bracketed = true)
+        public static string bitblock(Perm4L src, bool bracketed = true)
         {
             var storage = 0ul;
             var bits8u = cover(@as<byte>(storage),8);
@@ -44,7 +44,7 @@ namespace Z0
             if(bracketed)
                 seek(chars,i++) = Chars.RBracket;
 
-            return slice(chars,0,i);
+            return new (slice(chars,0,i));
         }
 
         /// <summary>
@@ -64,10 +64,9 @@ namespace Z0
             BitPack.unpack1x8((byte)src, bitbuffer);
             var bits = recover<bit>(bitbuffer);
             var block = bitblock(src, true);
-
             var codomain = CharBlock4.Null;
             letters(n, @readonly(bits), codomain.Data);
-            return string.Format(Pattern, text.format(block), Domain, text.format(codomain.Data));
+            return string.Format(Pattern, block, Domain, text.format(codomain.Data));
         }
 
         [MethodImpl(Inline), Op]

@@ -58,7 +58,7 @@ namespace Z0
         public static MemorySymbol Empty
         {
             [MethodImpl(Inline)]
-            get => new MemorySymbol(0, 0, 0, 0, SymExpr.Empty);
+            get => new MemorySymbol(0u, 0u, 0u, 0u, SymExpr.Empty);
         }
     }
 }

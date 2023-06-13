@@ -11,11 +11,11 @@ namespace Z0
     {
         public CoffSymbolName Name;
 
-        public uint VirtualSize;
+        public Size32 VirtualSize;
 
         public Address32 VirtualAddress;
 
-        public uint SizeOfRawData;
+        public Size32 SizeOfRawData;
 
         public Address32 PointerToRawData;
 

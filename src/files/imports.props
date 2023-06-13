@@ -1,8 +1,0 @@
-<Project>
-  <ItemGroup>
-    <ProjectReference Include="$(Symbols)" />
-    <ProjectReference Include="$(Math)" />
-  </ItemGroup>
-  <Import Project="$(SlnProps)\usings.props"/>
-  <Import Project="$(SlnProps)\packages.microsoft.extensions.fileproviders.props"/>
-</Project>

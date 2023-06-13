@@ -38,13 +38,13 @@ namespace Z0.Asm
             switch(k)
             {
                 case NearBranch16:
-                    return target(BTK.Near, src.NearBranch16, BTW.Branch16);
+                    return target(BTK.Near, (uint)src.NearBranch16, BTW.Branch16);
                 case NearBranch32:
                     return target(BTK.Near, src.NearBranch32, BTW.Branch32);
                 case NearBranch64:
                     return target(BTK.Near, src.NearBranch64, BTW.Branch64);
                 case FarBranch16:
-                    return target(BTK.Far, src.FarBranch16, BTW.Branch16, (Address16)src.FarBranchSelector);
+                    return target(BTK.Far, (uint)src.FarBranch16, BTW.Branch16, (Address16)src.FarBranchSelector);
                 case FarBranch32:
                     return target(BTK.Far, src.FarBranch32, BTW.Branch32, (Address16)src.FarBranchSelector);
             }

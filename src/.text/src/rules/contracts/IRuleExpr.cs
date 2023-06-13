@@ -9,9 +9,6 @@ namespace Z0
         bool IsTerminal
             => false;
 
-        RuleExprKind ExprKind
-            => RuleExprKind.None;
-
         bool INullity.IsEmpty
             => false;
     }

@@ -10,7 +10,7 @@ namespace Z0
     /// Reserves 4 pages of memory that cover 2^14 = 16,384 bytes
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Size = (int)Size)]
-    public struct PageBlock4 : IPageBlock<PageBlock4>
+    public struct PageBlock4
     {
         public const uint Size = PageCount*PageSize;
 
@@ -18,30 +18,29 @@ namespace Z0
 
         public Span<byte> Bytes
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => bytes(this);
         }
 
         public ref byte First
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref first(Bytes);
         }
 
-        [MethodImpl(Inline)]
+        [MethodImpl(Inline), UnscopedRef]
         public Span<T> Storage<T>()
             where T : unmanaged
                 => recover<T>(Bytes);
 
-        [MethodImpl(Inline)]
+        [MethodImpl(Inline), UnscopedRef]
         public ref T Cell<T>(int index)
             where T : unmanaged
                 => ref seek(Storage<T>(), index);
 
-        [MethodImpl(Inline)]
+        [MethodImpl(Inline), UnscopedRef]
         public ref T Cell<T>(uint index)
             where T : unmanaged
                 => ref seek(Storage<T>(), index);
-
     }
 }

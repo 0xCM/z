@@ -73,7 +73,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static Span<uint> unpack1x32x32(uint src)
+        public static ByteBlock128 unpack1x32x32(uint src)
         {
             var buffer = ByteBlocks.alloc(n32);
             ref var tmp = ref ByteBlocks.first<byte>(ref buffer);
@@ -86,7 +86,7 @@ namespace Z0
             vpack.vinflate8x256x32u(tmp, 1, ref target);
             vpack.vinflate8x256x32u(tmp, 2, ref target);
             vpack.vinflate8x256x32u(tmp, 3, ref target);
-            return block.Storage<uint>();
+            return block;
         }
 
         /// <summary>

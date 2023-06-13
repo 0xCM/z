@@ -37,19 +37,21 @@ namespace Z0
             TokenCount = counter;
         }
 
-        [MethodImpl(Inline)]
+        [MethodImpl(Inline), UnscopedRef]
         Span<AsmOcToken> Buffer()
             => recover<AsmOcToken>(bytes(Data));
 
         ref ushort Settings
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref seek(recover<ushort>(bytes(Data)), TokenCapacity-1);
         }
 
+        [MethodImpl(Inline), UnscopedRef]
         public ReadOnlySpan<AsmOcToken> Tokens()
             => Buffer();
 
+        [MethodImpl(Inline), UnscopedRef]
         public Span<AsmOcToken> Tokens(AsmOcTokenKind kind)
             => Tokens().Where(t => t.Kind == kind);
 
@@ -78,19 +80,19 @@ namespace Z0
 
         public ref byte TokenCount
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref @as<byte>(Settings);
         }
 
         public ref AsmOcToken this[uint i]
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref seek(Buffer(), i);
         }
 
         public ref AsmOcToken this[int i]
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref seek(Buffer(), i);
         }
 

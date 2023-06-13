@@ -6,7 +6,7 @@ namespace Z0
 {
     public sealed class AsmDirective : AsmDirective<AsmDirective>
     {
-        public AsmDirective(text15 name, AsmDirectiveOp op0 = default, AsmDirectiveOp op1 = default, AsmDirectiveOp op2 = default)
+        public AsmDirective(asci16 name, AsmDirectiveOp op0 = default, AsmDirectiveOp op1 = default, AsmDirectiveOp op2 = default)
             : base(name,op0,op1,op2)
         {
 

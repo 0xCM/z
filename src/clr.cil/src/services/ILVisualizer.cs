@@ -90,26 +90,6 @@ namespace System.Reflection.Metadata
         }
 
 
-            // public override string VisualizeUserString(uint token)
-            // {
-            //     var handle = (UserStringHandle)MetadataTokens.Handle((int)token);
-            //     return '"' + StringUtilities.EscapeNonPrintableCharacters(_metadataVisualizer.GetString(handle)) + '"';
-            // }
-
-            // public string VisualizeSymbol(uint token, OperandType operandType)
-            // {
-            //     var handle = MetadataTokens.EntityHandle((int)token);
-            //     var tokenString = _metadataVisualizer.Token(handle, displayTable: false);
-            //     var name = _metadataVisualizer.QualifiedName(handle, _scope);
-            //     return (name != null) ? $"'{StringUtilities.EscapeNonPrintableCharacters(name)}' ({tokenString})" : tokenString;
-            // }
-
-            // public string VisualizeUserString(uint token)
-            // {
-            //     var handle = (UserStringHandle)MetadataTokens.Handle((int)token);
-            //     return '"' + StringUtilities.EscapeNonPrintableCharacters(_metadataVisualizer.GetString(handle)) + '"';
-            // }
-
         public enum HandlerKind
         {
             Try,
@@ -252,14 +232,6 @@ namespace System.Reflection.Metadata
                 i++;
             }
         }
-
-        // public string DumpMethod(int maxStack, ReadOnlySpan<byte> ilBytes, ReadOnlySpan<LocalInfo> locals, IReadOnlyList<HandlerSpan> exceptionHandlers,
-        //     IReadOnlyDictionary<int, string> markers = null, bool localsAreZeroed = true)
-        // {
-        //     var builder = new StringBuilder();
-        //     DumpMethod(builder, maxStack, ilBytes, locals, exceptionHandlers, markers, localsAreZeroed);
-        //     return builder.ToString();
-        // }
 
         public void DumpMethod(StringBuilder dst, int maxStack, ReadOnlySpan<byte> ilBytes, ReadOnlySpan<LocalInfo> locals,
             IReadOnlyList<HandlerSpan> exceptionHandlers, IReadOnlyDictionary<int, string> markers = null, bool localsAreZeroed = true)

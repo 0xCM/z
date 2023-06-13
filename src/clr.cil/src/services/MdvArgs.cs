@@ -117,13 +117,13 @@ namespace System.Reflection.Metadata
             return result;
         }
 
-        private static string ParseValueArg(string[] args, string name)
+        static string ParseValueArg(string[] args, string name)
         {
             string prefix = "/" + name + ":";
             return args.Where(arg => arg.StartsWith(prefix, StringComparison.Ordinal)).Select(arg => arg.Substring(prefix.Length)).LastOrDefault();
         }
 
-        private static bool ParseFlagArg(string[] args, string name, bool defaultValue)
+        static bool ParseFlagArg(string[] args, string name, bool defaultValue)
         {
             string onStr1 = "/" + name;
             string onStr2 = "/" + name + "+";

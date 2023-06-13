@@ -12,11 +12,11 @@ namespace Z0
 
         RegStore8x64 Values;
 
-        [MethodImpl(Inline)]
+        [MethodImpl(Inline), UnscopedRef]
         public ref AsmRegName RegName(byte index)
             => ref seek(recover<AsmRegName>(Names.Bytes), index);
 
-        [MethodImpl(Inline)]
+        [MethodImpl(Inline), UnscopedRef]
         public ref ulong RegVal(byte index)
             => ref Values[index];
 

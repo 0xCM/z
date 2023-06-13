@@ -32,7 +32,7 @@ namespace Z0.dsl.intel
             get => Width/CellWidth;
         }
 
-        [MethodImpl(Inline)]
+        [MethodImpl(Inline), UnscopedRef]
         public ref double Cell(int i)
             => ref Data[i];
 

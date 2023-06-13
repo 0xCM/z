@@ -44,13 +44,13 @@ namespace Z0
 
         public Span<T> Cells
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => Data.Bytes().Recover<T>();
         }
 
         public ref T Head
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref first(Cells);
         }
 
@@ -82,7 +82,7 @@ namespace Z0
         /// <summary>
         /// Reads/writes an index-identified cell
         /// </summary>
-        [MethodImpl(Inline)]
+        [MethodImpl(Inline), UnscopedRef]
         public ref T Cell(int index)
             => ref Unsafe.Add(ref Head, index);
 

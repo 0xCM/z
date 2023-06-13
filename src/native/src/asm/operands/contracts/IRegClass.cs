@@ -8,7 +8,7 @@ namespace Z0.Asm
     {
         RegClassCode Kind {get;}
 
-        text7 Name
+        asci8 Name
             => Kind.ToString();
 
         string ITextual.Format()

@@ -126,7 +126,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator MemoryAddress(H src)
-            => src.Value;
+            => (ulong)src.Value;
 
         [MethodImpl(Inline)]
         public static explicit operator H(MemoryAddress src)

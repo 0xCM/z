@@ -94,10 +94,10 @@ namespace Z0
                 Data = data;
             }
 
-            public ref readonly KeywordKind KeywordKind
+            public KeywordKind KeywordKind
             {
                 [MethodImpl(Inline)]
-                get => ref core.@as<KeywordKind>(Data[15]);
+                get => sys.@as<KeywordKind>(Data[15]);
             }
 
             [MethodImpl(Inline)]

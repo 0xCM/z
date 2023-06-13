@@ -6,7 +6,7 @@ namespace Z0
 {
     public interface IAsmDirective : IAsmSourcePart
     {
-        text15 Name {get;}
+        asci16 Name {get;}
 
         AsmDirectiveOp Op0 {get;}
 

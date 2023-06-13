@@ -50,13 +50,13 @@ namespace Z0
 
         public Span<AsciCode> Codes
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => recover<byte,AsciCode>(bytes(Content));
         }
 
         public Span<AsciSymbol> Symbols
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => recover<byte,AsciSymbol>(bytes(Content));
         }
 

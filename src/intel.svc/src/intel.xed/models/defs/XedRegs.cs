@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     partial class XedModels
     {
@@ -15,13 +15,13 @@ namespace Z0
 
             public ref readonly byte Count
             {
-                [MethodImpl(Inline)]
+                [MethodImpl(Inline), UnscopedRef]
                 get => ref Storage[31];
             }
 
             public ref readonly XedRegId this[byte index]
             {
-                [MethodImpl(Inline)]
+                [MethodImpl(Inline), UnscopedRef]
                 get => ref seek(recover<XedRegId>(Storage.Bytes),index);
             }
 

@@ -18,7 +18,7 @@ namespace Z0.Asm
         {
             ByteBlock32 State;
 
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             ref byte Cell(uint index)
                 => ref seek(State.First, index);
 

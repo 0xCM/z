@@ -14,7 +14,7 @@ namespace Z0.Asm
         const NumericKind Closure = UnsignedInts;
 
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static JccInfo<K> jcc<K>(K kind, text7 name, NativeSize size)
+        public static JccInfo<K> jcc<K>(K kind, asci8 name, NativeSize size)
             where K : unmanaged
                 => new JccInfo<K>(kind, name, size);
 
@@ -130,9 +130,9 @@ namespace Z0.Asm
 
         Index<Jcc32AltCode> _AltJcc32Codes;
 
-        Index<text7> _ConditionNames;
+        Index<asci8> _ConditionNames;
 
-        Index<text7> _AltConditionNames;
+        Index<asci8> _AltConditionNames;
 
         Index<TextBlock> _ConditionInfo;
 
@@ -142,13 +142,13 @@ namespace Z0.Asm
 
         Index<TextBlock> _AltJcc8Info;
 
-        Index<text7> _Jcc8Names;
+        Index<asci8> _Jcc8Names;
 
-        Index<text7> _AltJcc8Names;
+        Index<asci8> _AltJcc8Names;
 
-        Index<text7> _Jcc32Names;
+        Index<asci8> _Jcc32Names;
 
-        Index<text7> _AltJcc32Names;
+        Index<asci8> _AltJcc32Names;
 
         Index<TextBlock> _Jcc32Info;
 
@@ -166,8 +166,8 @@ namespace Z0.Asm
             _CCAlt = alloc<ConditionAlt>(ConditionCount);
 
 
-            _ConditionNames = alloc<text7>(ConditionCount);
-            _AltConditionNames = alloc<text7>(ConditionCount);
+            _ConditionNames = alloc<asci8>(ConditionCount);
+            _AltConditionNames = alloc<asci8>(ConditionCount);
 
             _ConditionInfo = alloc<TextBlock>(ConditionCount);
             _AltConditionInfo = alloc<TextBlock>(ConditionCount);
@@ -177,10 +177,10 @@ namespace Z0.Asm
             _Jcc32Codes = alloc<Jcc32Code>(ConditionCount);
             _AltJcc32Codes = alloc<Jcc32AltCode>(ConditionCount);
 
-            _Jcc8Names = alloc<text7>(ConditionCount);
-            _AltJcc8Names = alloc<text7>(ConditionCount);
-            _Jcc32Names = alloc<text7>(ConditionCount);
-            _AltJcc32Names = alloc<text7>(ConditionCount);
+            _Jcc8Names = alloc<asci8>(ConditionCount);
+            _AltJcc8Names = alloc<asci8>(ConditionCount);
+            _Jcc32Names = alloc<asci8>(ConditionCount);
+            _AltJcc32Names = alloc<asci8>(ConditionCount);
 
             _Jcc8Info = alloc<TextBlock>(ConditionCount);
             _AltJcc8Info = alloc<TextBlock>(ConditionCount);
@@ -188,41 +188,51 @@ namespace Z0.Asm
             _AltJcc32Info = alloc<TextBlock>(ConditionCount);
         }
 
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        static void expressions<T>(Symbols<T> src, Span<asci8> dst)
+            where T : unmanaged
+        {
+            var count = min(src.Length,dst.Length);
+            var view = src.View;
+            for(var i=0u; i<count; i++)
+                seek(dst,i) = src[i].Expr.Format();
+        }
+         
         void Load()
         {
             var ccA = Symbols.index<Condition>();
             Require.equal((uint)ccA.Length, ConditionCount);
-            FixedChars.expr(ccA, _ConditionNames.Edit);
+            expressions(ccA, _ConditionNames.Edit);
             Symbols.descriptions(ccA, _ConditionInfo.Edit);
             Symbols.kinds(ccA, _CC.Edit);
 
             var ccB = Symbols.index<ConditionAlt>();
             Require.equal((uint)ccB.Length, ConditionCount);
-            FixedChars.expr(ccB, _AltConditionNames.Edit);
+            expressions(ccB, _AltConditionNames.Edit);
             Symbols.descriptions(ccB, _AltConditionInfo.Edit);
             Symbols.kinds(ccB, _CCAlt.Edit);
 
             var jcc8a = Symbols.index<Jcc8Code>();
             Require.equal(jcc8a.Count, ConditionCount);
-            FixedChars.expr(jcc8a, _Jcc8Names.Edit);
+            expressions(jcc8a, _Jcc8Names.Edit);
             Symbols.descriptions(jcc8a, _Jcc8Info.Edit);
             Symbols.kinds(jcc8a, _Jcc8Codes.Edit);
 
             var jcc8b = Symbols.index<Jcc8AltCode>();
             Require.equal(jcc8b.Count, ConditionCount);
-            FixedChars.expr(jcc8b, _AltJcc8Names.Edit);
+            expressions(jcc8b, _AltJcc8Names.Edit);
             Symbols.descriptions(jcc8b, _AltJcc8Info.Edit);
             Symbols.kinds(jcc8b, _AltJcc8Codes.Edit);
 
             var jcc32a = Symbols.index<Jcc32Code>();
             Require.equal(jcc32a.Count, ConditionCount);
-            FixedChars.expr(jcc32a, _Jcc32Names.Edit);
+            expressions(jcc32a, _Jcc32Names.Edit);
             Symbols.descriptions(jcc32a, _Jcc32Info.Edit);
             Symbols.kinds(jcc32a, _Jcc32Codes.Edit);
 
             var jcc32b = Symbols.index<Jcc32AltCode>();
             Require.equal(jcc32b.Count, ConditionCount);
-            FixedChars.expr(jcc32b, _AltJcc32Names.Edit);
+            expressions(jcc32b, _AltJcc32Names.Edit);
             Symbols.descriptions(jcc32b, _AltJcc32Info.Edit);
             Symbols.kinds(jcc32b, _AltJcc32Codes.Edit);
         }
@@ -253,15 +263,15 @@ namespace Z0.Asm
             => _AltJcc32Codes.View;
 
         [MethodImpl(Inline)]
-        public ReadOnlySpan<text7> Names(bit alt = default)
+        public ReadOnlySpan<asci8> Names(bit alt = default)
             => alt ? _AltConditionNames.View : _ConditionNames.View;
 
         [MethodImpl(Inline)]
-        public ref readonly text7 Name(Condition src)
+        public ref readonly asci8 Name(Condition src)
             => ref _ConditionNames[(byte)src];
 
         [MethodImpl(Inline)]
-        public ref readonly text7 Name(ConditionAlt src)
+        public ref readonly asci8 Name(ConditionAlt src)
             => ref _ConditionNames[(byte)src];
 
         [MethodImpl(Inline)]
@@ -273,7 +283,7 @@ namespace Z0.Asm
             => ref _AltConditionInfo[(byte)src];
 
         [MethodImpl(Inline)]
-        public ref readonly text7 Name(Jcc8Code src)
+        public ref readonly asci8 Name(Jcc8Code src)
             => ref _Jcc8Names[(byte)(src - Jcc8Base)];
 
         [MethodImpl(Inline)]
@@ -281,7 +291,7 @@ namespace Z0.Asm
             => ref _Jcc8Info[(byte)(src - Jcc8Base)];
 
         [MethodImpl(Inline)]
-        public ref readonly text7 Name(Jcc8AltCode src)
+        public ref readonly asci8 Name(Jcc8AltCode src)
             => ref _AltJcc8Names[(byte)(src - Jcc8Base)];
 
         [MethodImpl(Inline)]
@@ -289,7 +299,7 @@ namespace Z0.Asm
             => ref _AltJcc8Info[(byte)(src - Jcc8Base)];
 
         [MethodImpl(Inline)]
-        public ref readonly text7 Name(Jcc32Code src)
+        public ref readonly asci8 Name(Jcc32Code src)
             => ref _Jcc32Names[(byte)(src - Jcc32Base)];
 
         [MethodImpl(Inline)]
@@ -297,7 +307,7 @@ namespace Z0.Asm
             => ref _Jcc32Info[(byte)(src - Jcc32Base)];
 
         [MethodImpl(Inline)]
-        public ref readonly text7 Name(Jcc32AltCode src)
+        public ref readonly asci8 Name(Jcc32AltCode src)
             => ref _AltJcc32Names[(byte)(src - Jcc32Base)];
 
         [MethodImpl(Inline)]

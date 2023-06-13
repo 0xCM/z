@@ -97,12 +97,12 @@ namespace Z0
             return new ApiKeyJoin(left,right);
         }
 
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> render(ApiKeySeg src)
-        {
-            ushort data = src;
-            return HexRender.render(LowerCase, data);
-        }
+        // [MethodImpl(Inline), Op]
+        // public static ReadOnlySpan<char> render(ApiKeySeg src)
+        // {
+        //     ushort data = src;
+        //     return HexRender.render(LowerCase, data);
+        // }
 
         [MethodImpl(Inline), Op]
         public static void render(ApiKeySeg src, Span<char> dst)
@@ -124,13 +124,11 @@ namespace Z0
         public static byte render<N>(ApiKey src, N n, byte offset, Span<char> dst)
             where N : unmanaged, ITypeNat
         {
-            var data = span16u(src);
-            var chars = HexRender.render(LowerCase,skip(data, n.NatValue));
-            seek(dst,offset + 0) = skip(chars,3);
-            seek(dst,offset + 1) = skip(chars,2);
-            seek(dst,offset + 2) = skip(chars,1);
-            seek(dst,offset + 3) = skip(chars,0);
-            return 4;
+            return HexRender.hexrender(LowerCase,skip(span16u(src), n.NatValue), dst);
+            // seek(dst,offset + 0) = skip(chars,3);
+            // seek(dst,offset + 1) = skip(chars,2);
+            // seek(dst,offset + 2) = skip(chars,1);
+            // seek(dst,offset + 3) = skip(chars,0);            
         }
 
         [MethodImpl(Inline)]

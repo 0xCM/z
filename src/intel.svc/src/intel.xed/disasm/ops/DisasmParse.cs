@@ -23,7 +23,7 @@ namespace Z0
                 var j = XDIS.Length;
                 var k = text.index(src, Chars.Colon);
                 var length = k-j;
-                dst = 0;
+                dst = 0u;
                 if(j >= 0 && length > 0)
                     result = DataParser.parse(text.slice(src,j,length).Trim(), out dst);
                 return result;

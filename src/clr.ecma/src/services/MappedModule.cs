@@ -61,13 +61,13 @@ namespace Z0
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => Memory.Address == 0;
+            get => Memory.Address == 0u;
         }
 
         public bool IsNonEmpty
         {
             [MethodImpl(Inline)]
-            get => Memory.Address != 0;
+            get => Memory.Address != 0u;
         }
 
         public MemoryAddress BaseAddress

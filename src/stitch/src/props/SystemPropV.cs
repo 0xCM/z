@@ -24,6 +24,5 @@ namespace Z0
 
         public string Format()
             => Value.ToString();
-
     }
 }

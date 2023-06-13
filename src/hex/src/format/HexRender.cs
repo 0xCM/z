@@ -327,128 +327,130 @@ namespace Z0
         /// </summary>
         /// <param name="src">The byte value</param>
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> render(UpperCased @case, byte src)
-            => chars(first(UpperHexDigits),src);
+        public static byte hexrender(UpperCased @case, byte src, Span<char> dst)
+            => render(first(UpperHexDigits),src, dst);
 
         /// <summary>
         /// Computes the 2-character hex representation of a byte
         /// </summary>
         /// <param name="src">The byte value</param>
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> render(LowerCased @case, byte src)
-            => chars(first(LowerHexDigits),src);
-
-        /// <summary>
-        /// Computes the 2-character hex representation of a signed byte
-        /// </summary>
-        /// <param name="src">The byte value</param>
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> render(UpperCased @case, sbyte src)
-            => render(@case, (byte)src);
-
-        /// <summary>
-        /// Computes the 2-character hex representation of a signed byte
-        /// </summary>
-        /// <param name="src">The byte value</param>
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> render(LowerCased @case, sbyte src)
-            => render(@case, (byte)src);
-
-        /// <summary>
-        /// Computes the 4-character hex representation of a signed 16-bit integer
-        /// </summary>
-        /// <param name="src">The byte value</param>
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> render(UpperCased @case, short src)
-            => render(@case, (ushort)src);
-
-        /// <summary>
-        /// Computes the 4-character hex representation of a signed 16-bit integer
-        /// </summary>
-        /// <param name="src">The byte value</param>
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> render(LowerCased @case, short src)
-            => render(@case, (ushort)src);
+        public byte hexrender(LowerCased @case, byte src, Span<char> dst)
+            => render(first(LowerHexDigits),src, dst);
 
         /// <summary>
         /// Computes the 4-character hex representation of an unsigned 16-bit integer
         /// </summary>
         /// <param name="src">The byte value</param>
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> render(UpperCased @case, ushort src)
-            => chars(first(UpperHexDigits),src);
+        public static byte hexrender(LowerCased @case, ushort src, Span<char> dst)
+            => render(first(LowerHexDigits), src, dst);
+
+        /// <summary>
+        /// Computes the 8-character hex representation of a signed 32-bit integer
+        /// </summary>
+        /// <param name="src">The byte value</param>
+        [MethodImpl(Inline), Op]
+        public static byte hexrender(UpperCased @case, int src, Span<char> dst)
+            => render(first(UpperHexDigits), (uint)src, dst);
+
+        /// <summary>
+        /// Computes the 16-character hex representation of a signed 64-bit integer
+        /// </summary>
+        /// <param name="src">The byte value</param>
+        [MethodImpl(Inline), Op]
+        public static byte hexrender(LowerCased @case, long src, Span<char> dst)
+            => render(first(LowerHexDigits), (ulong)src, dst);
+
+        /// <summary>
+        /// Computes the 16-character hex representation of an unsigned 64-bit integer
+        /// </summary>
+        /// <param name="src">The byte value</param>
+        [MethodImpl(Inline), Op]
+        public static byte hexrender(LowerCased @case, ulong src, Span<char> dst)
+            => render(first(LowerHexDigits), src, dst);
 
         /// <summary>
         /// Computes the 4-character hex representation of an unsigned 16-bit integer
         /// </summary>
         /// <param name="src">The byte value</param>
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> render(LowerCased @case, ushort src)
-            => chars(first(LowerHexDigits),src);
-
-        /// <summary>
-        /// Computes the 8-character hex representation of a signed 32-bit integer
-        /// </summary>
-        /// <param name="src">The byte value</param>
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> render(UpperCased @case, int src)
-            => render(@case, (uint)src);
-
-        /// <summary>
-        /// Computes the 8-character hex representation of a signed 32-bit integer
-        /// </summary>
-        /// <param name="src">The byte value</param>
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> render(LowerCased @case, int src)
-            => render(@case, (uint)src);
+        public static byte hexrender(UpperCased @case, ushort src, Span<char> dst)
+            => render(first(UpperHexDigits),src, dst);
 
         /// <summary>
         /// Computes the 8-character hex representation of an unsigned 32-bit integer
         /// </summary>
         /// <param name="src">The byte value</param>
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> render(UpperCased @case, uint src)
-            => chars(first(UpperHexDigits), src);
+        public static byte hexrender(UpperCased @case, uint src, Span<char> dst)
+            => render(first(UpperHexDigits), src, dst);
 
         /// <summary>
         /// Computes the 8-character hex representation of an unsigned 32-bit integer
         /// </summary>
         /// <param name="src">The byte value</param>
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> render(LowerCased @case, uint src)
-            => chars(first(LowerHexDigits), src);
+        public static byte hexrender(LowerCased @case, uint src, Span<char> dst)
+            => render(first(LowerHexDigits), src, dst);
 
-        /// <summary>
-        /// Computes the 16-character hex representation of a signed 64-bit integer
-        /// </summary>
-        /// <param name="src">The byte value</param>
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> render(UpperCased @case, long src)
-            => render(@case, (ulong)src);
 
-        /// <summary>
-        /// Computes the 16-character hex representation of a signed 64-bit integer
-        /// </summary>
-        /// <param name="src">The byte value</param>
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> render(LowerCased @case, long src)
-            => render(@case, (ulong)src);
+        // /// <summary>
+        // /// Computes the 2-character hex representation of a signed byte
+        // /// </summary>
+        // /// <param name="src">The byte value</param>
+        // [MethodImpl(Inline), Op]
+        // public static ReadOnlySpan<char> render(UpperCased @case, sbyte src)
+        //     => render(@case, (byte)src);
 
-        /// <summary>
-        /// Computes the 16-character hex representation of an unsigned 64-bit integer
-        /// </summary>
-        /// <param name="src">The byte value</param>
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> render(UpperCased @case, ulong src)
-            => chars(first(UpperHexDigits), src);
+        // /// <summary>
+        // /// Computes the 2-character hex representation of a signed byte
+        // /// </summary>
+        // /// <param name="src">The byte value</param>
+        // [MethodImpl(Inline), Op]
+        // public static ReadOnlySpan<char> render(LowerCased @case, sbyte src)
+        //     => render(@case, (byte)src);
 
-        /// <summary>
-        /// Computes the 16-character hex representation of an unsigned 64-bit integer
-        /// </summary>
-        /// <param name="src">The byte value</param>
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> render(LowerCased @case, ulong src)
-            => chars(first(LowerHexDigits), src);
+        // /// <summary>
+        // /// Computes the 4-character hex representation of a signed 16-bit integer
+        // /// </summary>
+        // /// <param name="src">The byte value</param>
+        // [MethodImpl(Inline), Op]
+        // public static ReadOnlySpan<char> render(UpperCased @case, short src)
+        //     => render(@case, (ushort)src);
+
+        // /// <summary>
+        // /// Computes the 4-character hex representation of a signed 16-bit integer
+        // /// </summary>
+        // /// <param name="src">The byte value</param>
+        // [MethodImpl(Inline), Op]
+        // public static ReadOnlySpan<char> render(LowerCased @case, short src)
+        //     => render(@case, (ushort)src);
+
+        // /// <summary>
+        // /// Computes the 8-character hex representation of a signed 32-bit integer
+        // /// </summary>
+        // /// <param name="src">The byte value</param>
+        // [MethodImpl(Inline), Op]
+        // public static ReadOnlySpan<char> render(LowerCased @case, int src)
+        //     => render(@case, (uint)src);
+
+        // /// <summary>
+        // /// Computes the 16-character hex representation of a signed 64-bit integer
+        // /// </summary>
+        // /// <param name="src">The byte value</param>
+        // [MethodImpl(Inline), Op]
+        // public static ReadOnlySpan<char> render(UpperCased @case, long src)
+        //     => render(@case, (ulong)src);
+
+
+        // /// <summary>
+        // /// Computes the 16-character hex representation of an unsigned 64-bit integer
+        // /// </summary>
+        // /// <param name="src">The byte value</param>
+        // [MethodImpl(Inline), Op]
+        // public static ReadOnlySpan<char> render(UpperCased @case, ulong src)
+        //     => chars(first(UpperHexDigits), src);
 
         [MethodImpl(Inline), Op]
         public static ReadOnlySpan<char> render(in HexString<Hex1Kind> src, Hex1Kind kind)
@@ -600,46 +602,81 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        static ReadOnlySpan<char> chars(in byte codes, byte src)
+        static byte render(in byte codes, byte src, Span<char> dst)
         {
-            var storage = CharBlock2.Null;
-            ref var dst = ref storage.First;
+            const byte count = 2;
             seek(dst,0) = (char)skip(codes, (byte)(0xF & src));
             seek(dst,1) = (char)skip(codes, (byte)((src >> 4) & 0xF));
-            return storage.Data;
+            return count;
         }
 
         [MethodImpl(Inline)]
-        static ReadOnlySpan<char> chars(in byte codes, ushort src)
+        static byte render(in byte codes, ushort src, Span<char> dst)
         {
-            const int count = 4;
-            var storage = CharBlock4.Null;
-            ref var dst = ref storage.First;
+            const byte count = 4;
             for(var i=0; i<count; i++)
                 seek(dst, i) = (char)skip(codes, (uint)((src >> i*4) & 0xF));
-            return storage.Data;
+            return count;
         }
 
-        [MethodImpl(Inline), Op]
-        static ReadOnlySpan<char> chars(in byte codes, uint src)
+        static byte render(in byte codes, uint src, Span<char> dst)
         {
             const byte count = 8;
-            var storage = CharBlock8.Null;
-            ref var dst = ref storage.First;
             for(byte i=0; i < count; i++)
                 seek(dst, i) = (char)skip(in codes, (uint) ((src >> i*4) & 0xF));
-            return storage.Data;
+            return count;
         }
 
-        [MethodImpl(Inline)]
-        static ReadOnlySpan<char> chars(in byte codes, ulong src)
+        static byte render(in byte codes, ulong src, Span<char> dst)
         {
             const byte count = 16;
-            var storage = CharBlock16.Null;
-            ref var dst = ref storage.First;
-            for(byte i=0; i<count; i++)
+            for(byte i=0; i < count; i++)
                 seek(dst, i) = (char)skip(in codes, (uint) ((src >> i*4) & 0xF));
-            return storage.Data;
+            return count;
         }
+
+        // [MethodImpl(Inline)]
+        // static ReadOnlySpan<char> chars(in byte codes, byte src)
+        // {
+        //     var storage = CharBlock2.Null;
+        //     ref var dst = ref storage.First;
+        //     seek(dst,0) = (char)skip(codes, (byte)(0xF & src));
+        //     seek(dst,1) = (char)skip(codes, (byte)((src >> 4) & 0xF));
+        //     return storage.Data;
+        // }
+
+
+        // [MethodImpl(Inline)]
+        // static ReadOnlySpan<char> chars(in byte codes, ushort src)
+        // {
+        //     const int count = 4;
+        //     var storage = CharBlock4.Null;
+        //     ref var dst = ref storage.First;
+        //     for(var i=0; i<count; i++)
+        //         seek(dst, i) = (char)skip(codes, (uint)((src >> i*4) & 0xF));
+        //     return storage.Data;
+        // }
+
+        // [MethodImpl(Inline), Op]
+        // static ReadOnlySpan<char> chars(in byte codes, uint src)
+        // {
+        //     const byte count = 8;
+        //     var storage = CharBlock8.Null;
+        //     ref var dst = ref storage.First;
+        //     for(byte i=0; i < count; i++)
+        //         seek(dst, i) = (char)skip(in codes, (uint) ((src >> i*4) & 0xF));
+        //     return storage.Data;
+        // }
+
+        // [MethodImpl(Inline)]
+        // static ReadOnlySpan<char> chars(in byte codes, ulong src)
+        // {
+        //     const byte count = 16;
+        //     var storage = CharBlock16.Null;
+        //     ref var dst = ref storage.First;
+        //     for(byte i=0; i<count; i++)
+        //         seek(dst, i) = (char)skip(in codes, (uint) ((src >> i*4) & 0xF));
+        //     return storage.Data;
+        // }
     }
 }

@@ -87,7 +87,7 @@ namespace Z0
             => BaseAddress.CompareTo(src.BaseAddress);
 
         public static ApiMember Empty
-            => new ApiMember(OpUri.Empty, EmptyVessels.EmptyMethod, 0, ApiMsil.Empty);
+            => new ApiMember(OpUri.Empty, EmptyVessels.EmptyMethod, 0u, ApiMsil.Empty);
 
         ApiMsil IApiMember.Msil
             => Msil;

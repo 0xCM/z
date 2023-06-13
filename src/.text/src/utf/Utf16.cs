@@ -62,6 +62,6 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static bool nonempty(utf16p src)
-            => memory.address(src.pData) != 0 && (*src.pData != 0);
+            => memory.address(src.pData) != 0u && (*src.pData != 0);
     }
 }
