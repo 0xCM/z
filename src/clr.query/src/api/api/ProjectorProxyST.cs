@@ -39,5 +39,4 @@ namespace Z0
         public static implicit operator ValueMap<S,T>(ValueProjectorProxy<S,T> src)
             => src.Project;
     }
-
 }

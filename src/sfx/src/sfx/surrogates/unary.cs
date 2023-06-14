@@ -16,8 +16,8 @@ namespace Z0
         /// <param name="t">An operand type representative to aid type inference</param>
         /// <typeparam name="T">The operand type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static UnaryOp<T> unary<T>(D.UnaryOp<T> f, OpIdentity id, T t = default)
-            => new UnaryOp<T>(f,id);
+        public static UnarySurrogate<T> unary<T>(D.UnaryOp<T> f, OpIdentity id, T t = default)
+            => new UnarySurrogate<T>(f,id);
 
         /// <summary>
         /// Defines a delegate-predicated structural operator
@@ -26,7 +26,7 @@ namespace Z0
         /// <param name="t">An operand type representative to aid type inference</param>
         /// <typeparam name="T">The operand type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static UnaryOp<T> unary<T>(D.UnaryOp<T> f, string name, T t = default)
-            => new UnaryOp<T>(f,name);
+        public static UnarySurrogate<T> unary<T>(D.UnaryOp<T> f, string name, T t = default)
+            => new UnarySurrogate<T>(f,name);
     }
 }

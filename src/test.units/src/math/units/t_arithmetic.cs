@@ -9,7 +9,7 @@ namespace Z0
     public class t_arithmetic : t_mathsvc<t_arithmetic>
     {
         [MethodImpl(Inline)]
-        void add_check<T>(S.BinaryOp<T> f, T t = default)
+        void add_check<T>(BinarySurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.add<T>();
@@ -19,7 +19,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        void sub_check<T>(S.BinaryOp<T> f, T t = default)
+        void sub_check<T>(BinarySurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.sub<T>();
@@ -29,7 +29,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        void mul_check<T>(S.BinaryOp<T> f, T t = default)
+        void mul_check<T>(BinarySurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.mul<T>();
@@ -39,7 +39,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        void div_check<T>(S.BinaryOp<T> f, T t = default)
+        void div_check<T>(BinarySurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.div<T>();
@@ -49,7 +49,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        void mod_check<T>(S.BinaryOp<T> f, T t = default)
+        void mod_check<T>(BinarySurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.mod<T>();
@@ -59,7 +59,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        void modmul_check<T>(S.TernaryOp<T> f, T t = default)
+        void modmul_check<T>(TernarySurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.modmul<T>();
@@ -69,7 +69,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        void clamp_check<T>(S.BinaryOp<T> f, T t = default)
+        void clamp_check<T>(BinarySurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.clamp<T>();
@@ -79,7 +79,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        void inc_check<T>(S.UnaryOp<T> f, T t = default)
+        void inc_check<T>(UnarySurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.inc<T>();
@@ -89,7 +89,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        void dec_check<T>(S.UnaryOp<T> f, T t = default)
+        void dec_check<T>(UnarySurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.dec<T>();
@@ -99,7 +99,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        void negate_check<T>(S.UnaryOp<T> f, T t = default)
+        void negate_check<T>(UnarySurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.negate<T>();
@@ -109,7 +109,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        void abs_check<T>(S.UnaryOp<T> f, T t = default)
+        void abs_check<T>(UnarySurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.abs<T>();
@@ -208,7 +208,7 @@ namespace Z0
             mod_check(S.binary(fmath.mod, name, z32f));
             mod_check(S.binary(fmath.mod, name, z64f));
         }
-
+        
 
         public void modmul_check()
         {

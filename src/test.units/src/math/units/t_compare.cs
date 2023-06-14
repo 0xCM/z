@@ -6,6 +6,8 @@ namespace Z0
 {
     using S = Surrogates;
 
+    using static Surrogates;
+
     public class t_compare : t_mathsvc<t_compare>
     {
         public void eq_check()
@@ -25,7 +27,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        void eq_check<T>(S.BinaryPredicate<T> f, T t = default)
+        void eq_check<T>(BinaryPredSurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.eq<T>();
@@ -51,7 +53,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        void neq_check<T>(S.BinaryPredicate<T> f, T t = default)
+        void neq_check<T>(BinaryPredSurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.neq<T>();
@@ -76,7 +78,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        void gt_check<T>(S.BinaryPredicate<T> f, T t = default)
+        void gt_check<T>(BinaryPredSurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.gt<T>();
@@ -100,7 +102,7 @@ namespace Z0
             gteq_check(S.predicate(fmath.gteq, name, z64f));
         }
 
-        void gteq_check<T>(S.BinaryPredicate<T> f, T t = default)
+        void gteq_check<T>(BinaryPredSurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.gteq<T>();
@@ -124,7 +126,7 @@ namespace Z0
             lt_check(S.predicate(fmath.lt, name, z64f));
         }
 
-        void lt_check<T>(S.BinaryPredicate<T> f, T t = default)
+        void lt_check<T>(BinaryPredSurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.lt<T>();
@@ -148,7 +150,7 @@ namespace Z0
             lteq_check(S.predicate(fmath.lteq, name, z64f));
         }
 
-        void lteq_check<T>(S.BinaryPredicate<T> f, T t = default)
+        void lteq_check<T>(BinaryPredSurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.lteq<T>();
@@ -172,7 +174,7 @@ namespace Z0
             max_check(S.binary(fmath.max, name, z64f));
         }
 
-        void max_check<T>(S.BinaryOp<T> f, T t = default)
+        void max_check<T>(BinarySurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.max<T>();
@@ -196,7 +198,7 @@ namespace Z0
             min_check(S.binary(fmath.min, name, z64f));
         }
 
-        void min_check<T>(S.BinaryOp<T> f, T t = default)
+        void min_check<T>(BinarySurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.min<T>();

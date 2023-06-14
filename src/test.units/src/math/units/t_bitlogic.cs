@@ -10,7 +10,7 @@ namespace Z0
 
     public class t_bitlogic : t_mathsvc<t_bitlogic>
     {
-        void and_check<T>(S.BinaryOp<T> f, T t = default)
+        void and_check<T>(BinarySurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = C.and<T>();
@@ -19,7 +19,7 @@ namespace Z0
             validator.CheckSpanMatch(f,g);
         }
 
-        void or_check<T>(S.BinaryOp<T> f, T t = default)
+        void or_check<T>(BinarySurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.or<T>();
@@ -28,7 +28,7 @@ namespace Z0
             validator.CheckSpanMatch(f,g);
         }
 
-        void xor_check<T>(S.BinaryOp<T> f, T t = default)
+        void xor_check<T>(BinarySurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.xor<T>();
@@ -37,7 +37,7 @@ namespace Z0
             validator.CheckSpanMatch(f,g);
         }
 
-        void nand_check<T>(S.BinaryOp<T> f, T t = default)
+        void nand_check<T>(BinarySurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.nand<T>();
@@ -46,7 +46,7 @@ namespace Z0
             validator.CheckSpanMatch(f,g);
         }
 
-        void nor_check<T>(S.BinaryOp<T> f, T t = default)
+        void nor_check<T>(BinarySurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.nor<T>();
@@ -55,7 +55,7 @@ namespace Z0
             validator.CheckSpanMatch(f,g);
         }
 
-        void xnor_check<T>(S.BinaryOp<T> f, T t = default)
+        void xnor_check<T>(BinarySurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.xnor<T>();
@@ -64,7 +64,7 @@ namespace Z0
             validator.CheckSpanMatch(f,g);
         }
 
-        void not_check<T>(S.UnaryOp<T> f, T t = default)
+        void not_check<T>(UnarySurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.not<T>();
@@ -74,7 +74,7 @@ namespace Z0
         }
 
 
-        void impl_check<T>(S.BinaryOp<T> f, T t = default)
+        void impl_check<T>(BinarySurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.impl<T>();
@@ -83,7 +83,7 @@ namespace Z0
             validator.CheckSpanMatch(f,g);
         }
 
-        void nonimpl_check<T>(S.BinaryOp<T> f, T t = default)
+        void nonimpl_check<T>(BinarySurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.nonimpl<T>();
@@ -92,7 +92,7 @@ namespace Z0
             validator.CheckSpanMatch(f,g);
         }
 
-        void cimpl_check<T>(S.BinaryOp<T> f, T t = default)
+        void cimpl_check<T>(BinarySurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.cimpl<T>();
@@ -101,7 +101,7 @@ namespace Z0
             validator.CheckSpanMatch(f,g);
         }
 
-        void cnonimpl_check<T>(S.BinaryOp<T> f, T t = default)
+        void cnonimpl_check<T>(BinarySurrogate<T> f, T t = default)
             where T : unmanaged, IEquatable<T>
         {
             var g = Calcs.cnonimpl<T>();

@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using D = Z0;
-
     partial class Surrogates
     {
         /// <summary>
@@ -15,8 +13,8 @@ namespace Z0
         /// <param name="t">An operand type representative to aid type inference</param>
         /// <typeparam name="T">The operand type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static TernaryOp<T> ternary<T>(D.TernaryOp<T> f, string name, T t = default)
-            => new TernaryOp<T>(f,name);
+        public static BinarySurrogate<T> binary<T>(BinaryOp<T> f, string name, T t = default)
+            => new BinarySurrogate<T>(f, name);
 
         /// <summary>
         /// Defines a delegate-predicated structural operator with identity
@@ -26,7 +24,7 @@ namespace Z0
         /// <param name="t">An operand type representative to aid type inference</param>
         /// <typeparam name="T">The operand type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static TernaryOp<T> ternary<T>(D.TernaryOp<T> f, OpIdentity id, T t = default)
-            => new TernaryOp<T>(f,id);
+        public static BinarySurrogate<T> binary<T>(BinaryOp<T> f, OpIdentity id, T t = default)
+            => new BinarySurrogate<T>(f,id);
     }
 }

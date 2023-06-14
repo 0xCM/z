@@ -9,24 +9,24 @@ namespace Z0
     partial class Surrogates
     {
         /// <summary>
-        /// Defines a delegate-predicated structural operator
+        /// Defines a delegate-predicated structural emitter
         /// </summary>
         /// <param name="f">The source delegate</param>
         /// <param name="t">An operand type representative to aid type inference</param>
         /// <typeparam name="T">The operand type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static BinaryOp<T> binary<T>(D.BinaryOp<T> f, string name, T t = default)
-            => new BinaryOp<T>(f, name);
+        public static SurrogateEmitter<T> emitter<T>(Producer<T> f, string name, T t = default)
+            => new SurrogateEmitter<T>(f,name);
 
         /// <summary>
-        /// Defines a delegate-predicated structural operator with identity
+        /// Defines an identified structural emitter predicated on a delegate
         /// </summary>
         /// <param name="f">The source delegate</param>
         /// <param name="id">The sfunc identity</param>
         /// <param name="t">An operand type representative to aid type inference</param>
-        /// <typeparam name="T">The operand type</typeparam>
+        /// <typeparam name="T">The emission type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static BinaryOp<T> binary<T>(D.BinaryOp<T> f, OpIdentity id, T t = default)
-            => new BinaryOp<T>(f,id);
+        public static SurrogateEmitter<T> emitter<T>(Producer<T> f, OpIdentity id, T t = default)
+            => new SurrogateEmitter<T>(f,id);
     }
 }

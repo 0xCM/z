@@ -15,8 +15,8 @@ namespace Z0
         /// <param name="t">An operand type representative to aid type inference</param>
         /// <typeparam name="T">The operand type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static BinaryPredicate<T> predicate<T>(D.BinaryPredicate<T> f, string name, T t = default)
-            => new BinaryPredicate<T>(f,name);
+        public static BinaryPredSurrogate<T> predicate<T>(D.BinaryPredicate<T> f, string name, T t = default)
+            => new BinaryPredSurrogate<T>(f,name);
 
         /// <summary>
         /// Defines a delegate-predicated structural predicate with identity
@@ -26,8 +26,8 @@ namespace Z0
         /// <param name="t">An operand type representative to aid type inference</param>
         /// <typeparam name="T">The operand type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static UnaryPredicate<T> predicate<T>(D.UnaryPredicate<T> f, OpIdentity id, T t = default)
-            => new UnaryPredicate<T>(f, id);
+        public static UnaryPredSurrogate<T> predicate<T>(D.UnaryPredicate<T> f, OpIdentity id, T t = default)
+            => new UnaryPredSurrogate<T>(f, id);
 
         /// <summary>
         /// Defines a delegate-predicated structural predicate with identity
@@ -37,7 +37,7 @@ namespace Z0
         /// <param name="t">An operand type representative to aid type inference</param>
         /// <typeparam name="T">The operand type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static BinaryPredicate<T> predicate<T>(D.BinaryPredicate<T> f, OpIdentity id, T t = default)
-            => new BinaryPredicate<T>(f,id);
+        public static BinaryPredSurrogate<T> predicate<T>(D.BinaryPredicate<T> f, OpIdentity id, T t = default)
+            => new BinaryPredSurrogate<T>(f,id);
     }
 }
