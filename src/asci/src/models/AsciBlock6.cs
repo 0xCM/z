@@ -6,9 +6,9 @@ namespace Z0
 {
     using static sys;
 
-    using A = AsciBlock8;
-    using B = ByteBlock8;
-    using N = N8;
+    using A = AsciBlock6;
+    using B = ByteBlock6;
+    using N = N6;
     using C = AsciCode;
     using S = AsciSymbol;
     using api = AsciBlocks;
@@ -17,17 +17,26 @@ namespace Z0
     /// Defines 16 bytes of storage
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Size = Size, Pack=1), ApiComplete]
-    public record struct AsciBlock8
+    public record struct AsciBlock6
     {
         public static A Empty => default;
 
-        public const ushort Size = 8;
+        public const ushort Size = 6;
 
         public static N N => default;
 
         public static A zero() => Empty;
 
         public A Zero => zero();
+
+        [MethodImpl(Inline), Op]
+        public static A encode(ReadOnlySpan<char> src, out A dst)
+        {
+            dst = default;
+            var count = min(A.N, src.Length);
+            api.encode(src, slice(dst.Bytes,0,count));
+            return dst;
+        }
 
         [MethodImpl(Inline)]
         public static A load(ReadOnlySpan<C> src)
@@ -39,11 +48,11 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static A encode(string src)
-            => api.encode(src, out A _);
+            => encode(src, out A _);
 
         [MethodImpl(Inline)]
         public static A encode(ReadOnlySpan<char> src)
-            => api.encode(src, out A _);
+            => encode(src, out A _);
 
         public Span<byte> Bytes
         {
@@ -91,16 +100,12 @@ namespace Z0
             => @as<A,B>(src);
 
         [MethodImpl(Inline)]
-        public static implicit operator ulong(A src)
-            => sys.u64(src);
-
-        [MethodImpl(Inline)]
         public static implicit operator A(string src)
-            => api.encode(src, out A _);
+            => encode(src, out A _);
 
         [MethodImpl(Inline)]
         public static implicit operator A(ReadOnlySpan<char> src)
-            => api.encode(src, out A _);
+            => encode(src, out A _);
 
         [MethodImpl(Inline)]
         public static implicit operator A(ReadOnlySpan<C> src)
