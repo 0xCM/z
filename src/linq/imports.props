@@ -1,5 +1,6 @@
 <Project>
   <ItemGroup>
     <ProjectReference Include="$(SFx)" />
+    <ProjectReference Include="$(ZLib)" />
   </ItemGroup>
 </Project>

@@ -46,7 +46,7 @@ namespace Z0.Asm
         public uint Hash
         {
             [MethodImpl(Inline)]
-            get => alg.hash.calc(Value);
+            get => sys.hash(Value);
         }
 
         public override int GetHashCode()

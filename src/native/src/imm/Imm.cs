@@ -265,7 +265,7 @@ namespace Z0
             => src is Imm x && Equals(x);
 
         public override int GetHashCode()
-            => (int)alg.hash.calc(Value | ((ulong)(ImmKind) << 56));
+            => (int)sys.hash(Value | ((ulong)(ImmKind) << 56));
 
         public string Format()
             => format(this);

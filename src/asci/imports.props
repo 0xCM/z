@@ -1,9 +1,0 @@
-<Project>
-  <ItemGroup>
-    <ProjectReference Include="$(VCpu)" />
-    <ProjectReference Include="$(Files)" />
-    <ProjectReference Include="$(Cells)" />
-    <ProjectReference Include="$(Events)" />
-  </ItemGroup>
-
-</Project>

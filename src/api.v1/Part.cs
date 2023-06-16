@@ -2,13 +2,11 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+[assembly: PartId("api.v1")]
+namespace Z0.Parts
 {
-
-    [ApiHost]
-    public static partial class XTend
+    public sealed class ApiV1 : Part<ApiV1>
     {
-        const NumericKind Closure = Root.UnsignedInts;
 
     }
 }

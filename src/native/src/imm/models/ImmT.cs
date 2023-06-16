@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static Numeric;
-    using static core;
+    using static sys;
 
     public readonly struct Imm<T> : IImm<Imm<T>,T>
         where T : unmanaged
@@ -98,7 +98,7 @@ namespace Z0
         public uint Hash
         {
             [MethodImpl(Inline)]
-            get => alg.ghash.calc(Value);
+            get => sys.hash(Value);
         }
 
         public bool IsZero

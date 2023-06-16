@@ -31,7 +31,7 @@ namespace Z0.Asm
         [Op]
         public static SdmOpCode define(ReadOnlySpan<AsmOcToken> src)
         {
-            var storage = core.@as<AsmOcToken,Cell512>(src);
+            var storage = Cell512.Empty;
             var tokens = sys.recover<AsmOcToken>(sys.bytes(storage));
             var counter = z8;
             for(var i=0; i<SdmOpCode.TokenCapacity; i++)

@@ -70,6 +70,30 @@ namespace Z0
             => create(math.negate(src.Value));
 
         [MethodImpl(Inline)]
+        public static bit eq(T a, T b)
+            => a.Value == b.Value;
+
+        [MethodImpl(Inline)]
+        public static bit ne(T a, T b)
+            => a.Value != b.Value;
+
+        [MethodImpl(Inline)]
+        public static bit gt(T a, T b)
+            => a.Value > b.Value;
+
+        [MethodImpl(Inline)]
+        public static bit ge(T a, T b)
+            => a.Value >= b.Value;
+
+        [MethodImpl(Inline)]
+        public static bit lt(T a, T b)
+            => a.Value < b.Value;
+
+        [MethodImpl(Inline)]
+        public static bit le(T a, T b)
+            => a.Value <= b.Value;
+
+        [MethodImpl(Inline)]
         public static T invert(T src)
            => cover((D)(math.and(math.not(src.Value), MaxValue)));
 

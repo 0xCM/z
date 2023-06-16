@@ -66,7 +66,7 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => core.hash(Content);
+            get => sys.hash(Content);
         }
 
         public override int GetHashCode()

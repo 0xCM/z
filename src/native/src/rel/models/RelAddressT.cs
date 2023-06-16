@@ -21,7 +21,7 @@ namespace Z0
         public DataWidth Grain
         {
             [MethodImpl(Inline)]
-            get => core.width<T>();
+            get => sys.width<T>();
         }
 
         public bool IsEmpty

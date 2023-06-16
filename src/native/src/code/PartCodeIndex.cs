@@ -64,7 +64,7 @@ namespace Z0
 
         static PartCodeIndexEntry[] entries(in PartCodeIndex src)
         {
-            var buffer = core.list<PartCodeIndexEntry>(src.Data.Count);
+            var buffer = new List<PartCodeIndexEntry>(src.Data.Count);
             foreach(var item in src.Data)
                 buffer.Add(new PartCodeIndexEntry(item.Key, item.Value));
             return buffer.ToArray();

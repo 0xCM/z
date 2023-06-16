@@ -4,14 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using static core;
+    using static sys;
 
     [StructLayout(LayoutKind.Sequential, Pack=1)]
     public readonly struct JmpRel32 : IAsmRelInst<Disp32>
     {
         [MethodImpl(Inline), Op]
         public static bool test(ReadOnlySpan<byte> encoding)
-            => encoding.Length >= InstSize && core.first(encoding) == OpCode;
+            => encoding.Length >= InstSize && sys.first(encoding) == OpCode;
 
         /// <summary>
         /// Jump near, relative

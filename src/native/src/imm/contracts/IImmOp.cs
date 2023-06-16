@@ -43,9 +43,9 @@ namespace Z0
         new T Value {get;}
 
         ulong IImmOp.Value
-            => core.bw64(Value);
+            => sys.bw64(Value);
 
         NativeSize IAsmOp.Size
-            => Sizes.native(core.width<T>());
+            => Sizes.native(sys.width<T>());
     }
 }

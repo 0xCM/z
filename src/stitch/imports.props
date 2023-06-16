@@ -2,5 +2,6 @@
   <ItemGroup>
     <ProjectReference Include="$(ClrQuery)" />
     <ProjectReference Include="$(SFx)" />
+    <ProjectReference Include="$(ZLib)" />
   </ItemGroup>
 </Project>

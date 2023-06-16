@@ -48,7 +48,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public ReadOnlySpan<K> Letters(uint offset, uint count)
-            => core.cover(Buffer[offset],count);
+            => sys.cover(Buffer[offset],count);
 
         public ref K this[uint index]
         {

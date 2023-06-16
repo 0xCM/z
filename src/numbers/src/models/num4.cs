@@ -64,6 +64,30 @@ namespace Z0
         public static T set(T src, byte pos, bit state)
             => math.lt(pos, Width) ? cover(bit.set(src.Value, pos, state)) : src;
 
+        [MethodImpl(Inline)]
+        public static bit eq(T a, T b)
+            => a.Value == b.Value;
+
+        [MethodImpl(Inline)]
+        public static bit ne(T a, T b)
+            => a.Value != b.Value;
+
+        [MethodImpl(Inline)]
+        public static bit gt(T a, T b)
+            => a.Value > b.Value;
+
+        [MethodImpl(Inline)]
+        public static bit ge(T a, T b)
+            => a.Value >= b.Value;
+
+        [MethodImpl(Inline)]
+        public static bit lt(T a, T b)
+            => a.Value < b.Value;
+
+        [MethodImpl(Inline)]
+        public static bit le(T a, T b)
+            => a.Value <= b.Value;
+
         [MethodImpl(Inline), Op]
         public static T negate(T src)
             => create(math.negate(src.Value));

@@ -53,6 +53,10 @@ namespace Z0
             => @as<D,T>(src);
 
         [MethodImpl(Inline)]
+        public static T reduce(T src)
+            => throw new NotSupportedException();
+
+        [MethodImpl(Inline)]
         public static T force<A>(A src)
             where A : unmanaged
                 => cover(bw64(src));

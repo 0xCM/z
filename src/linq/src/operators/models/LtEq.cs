@@ -10,7 +10,7 @@ namespace Z0
     using System.Runtime.CompilerServices;
 
     using static Root;
-    using static core;
+    using static sys;
     using static LinqXPress;
 
     partial struct ModelsDynamic

@@ -1,0 +1,12 @@
+<Project>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AnalysisServices.AdomdClient.NetCore.retail.amd64" Version="19.65.4" />
+    <PackageReference Include="Microsoft.AnalysisServices.NetCore.retail.amd64" Version="19.65.4" />
+    <PackageReference Include="Microsoft.AnalysisServices.Tabular.Tmdl.NetCore.retail.amd64" Version="19.65.4-TmdlPreview" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
+    <PackageReference Include="Microsoft.SqlServer.DacFx" Version="162.0.52" />
+    <PackageReference Include="Microsoft.SqlServer.Server" Version="1.0.0" />
+    <PackageReference Include="Microsoft.SqlServer.TransactSql.ScriptDom" Version="161.8817.2" />
+    <PackageReference Include="Microsoft.SqlServer.XEvent.XELite" Version="2023.1.30.3" />
+  </ItemGroup>
+</Project>

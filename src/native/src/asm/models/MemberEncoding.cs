@@ -62,7 +62,7 @@ namespace Z0
         public ReadOnlySpan<byte> Data
         {
             [MethodImpl(Inline)]
-            get => core.cover(TargetAddress.Ref<byte>(), _Size);
+            get => sys.cover(TargetAddress.Ref<byte>(), _Size);
         }
 
         public AsmHexCode AsmHex

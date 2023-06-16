@@ -1,9 +1,6 @@
 <Project>
   <ItemGroup>
     <Reference Include="$(DotNetSdkBuild)/Microsoft.DotNet.InternalAbstractions.dll" />
-
-    <!-- <Reference Include="$(DotNetSdkBuild)/Microsoft.DotNet.NativeWrapper.dll" /> -->
-
     <Reference Include="$(DotNetSdkBuild)/Microsoft.DotNet.SdkResolver.dll" />
     <Reference Include="$(DotNetSdkBuild)/Microsoft.DotNet.TemplateLocator.dll" />
 
@@ -20,9 +17,6 @@
   <Target Name="NetSdkLibs">
     <ItemGroup>
       <BuildOutputInPackage Include="$(DotNetSdkBuild)/Microsoft.DotNet.InternalAbstractions.dll" />
-
-      <!-- <BuildOutputInPackage Include="$(DotNetSdkBuild)/Microsoft.DotNet.NativeWrapper.dll" /> -->
-
       <BuildOutputInPackage Include="$(DotNetSdkBuild)/Microsoft.DotNet.SdkResolver.dll" />
       <BuildOutputInPackage Include="$(DotNetSdkBuild)/Microsoft.DotNet.TemplateLocator.dll" />
 

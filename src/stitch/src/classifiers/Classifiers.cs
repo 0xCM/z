@@ -59,7 +59,7 @@ namespace Z0
             return new ValueClassifier(src.Name,
                 src._Partitions,
                 src._Symbols,
-                src.Values.MapArray(x => new LabeledValue<ulong>(x.Label, core.bw64(x.Value.Content))),
+                src.Values.MapArray(x => new LabeledValue<ulong>(x.Label, sys.bw64(x.Value.Content))),
                 src.Classes.MapArray(c => untype(c)));
         }
 

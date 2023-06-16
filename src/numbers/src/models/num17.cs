@@ -62,6 +62,10 @@ namespace Z0
             => @as<D,T>(src);
 
         [MethodImpl(Inline)]
+        public static T reduce(T src)
+            => cover(math.mod(src.Value, Mod));
+
+        [MethodImpl(Inline)]
         public static T force<A>(A src)
             where A : unmanaged
                 => T.crop(bw32(src));

@@ -44,7 +44,7 @@ namespace Z0
         public uint Hash
         {
             [MethodImpl(Inline)]
-            get => alg.hash.marvin(Text);
+            get => sys.hash(Text);
         }
 
         public string Format()

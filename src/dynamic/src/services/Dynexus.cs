@@ -174,12 +174,12 @@ namespace Z0
         [MethodImpl(Inline)]
         CellDelegate Emit(OpIdentity id, U f, Type operatorType, Type operandType, BufferToken dst)
             => Emit(id, functype:operatorType, result:operandType,
-                    args:core.array(operandType, operandType), dst.Handle);
+                    args:sys.array(operandType, operandType), dst.Handle);
 
         [MethodImpl(Inline)]
         CellDelegate Emit(OpIdentity id, B f, Type operatorType, Type operandType, BufferToken dst)
             => Emit(id, functype:operatorType, result:operandType,
-                    args:core.array(operandType, operandType), dst.Handle);
+                    args:sys.array(operandType, operandType), dst.Handle);
 
         [MethodImpl(Inline)]
         UnaryOp<T> EmitUnaryOp<T>(OpIdentity id, BufferToken dst)
@@ -198,15 +198,15 @@ namespace Z0
 
         [MethodImpl(Inline)]
         CellDelegate EmitUnaryOp(OpIdentity id, Type operatorType, Type operandType, BufferToken dst)
-            => Emit(id, functype: operatorType, result: operandType, args: core.array(operandType), dst.Handle);
+            => Emit(id, functype: operatorType, result: operandType, args: sys.array(operandType), dst.Handle);
 
         [MethodImpl(Inline)]
         CellDelegate EmitBinaryOp(OpIdentity id, Type operatorType, Type operandType, BufferToken dst)
-            => Emit(id, functype:operatorType, result:operandType, args: core.array(operandType, operandType), dst.Handle);
+            => Emit(id, functype:operatorType, result:operandType, args: sys.array(operandType, operandType), dst.Handle);
 
         [MethodImpl(Inline)]
         CellDelegate EmitTernaryOp(OpIdentity id, Type operatorType, Type operandType, BufferToken dst)
-            => Emit(id, functype:operatorType, result:operandType, args: core.array(operandType, operandType, operandType), dst.Handle);
+            => Emit(id, functype:operatorType, result:operandType, args: sys.array(operandType, operandType, operandType), dst.Handle);
 
         CellDelegate Emit(OpIdentity id, Type functype, Type result, Type[] args, IntPtr dst)
         {

@@ -121,7 +121,7 @@ namespace Z0
             else if(n == 7)
                 return ref cell(src, n7, i);
             else
-                return ref core.first(src.SegZ);
+                return ref sys.first(src.SegZ);
         }
 
         [MethodImpl(Inline)]
@@ -132,7 +132,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public static ref readonly byte first<N>(ByteSpanProvider src, N n)
             where N : unmanaged, ITypeNat
-                => ref core.first(span(src, n));
+                => ref sys.first(span(src, n));
 
         [MethodImpl(Inline), Op]
         public static ReadOnlySpan<byte> leads(ByteSpanProvider src)
@@ -175,7 +175,7 @@ namespace Z0
         public static ReadOnlySpan<Utf8Point> Utf8Points
         {
             [MethodImpl(Inline)]
-            get => core.recover<byte,Utf8Point>(ByteSpanProvider.Storage.Seg(n7, n0));
+            get => sys.recover<byte,Utf8Point>(ByteSpanProvider.Storage.Seg(n7, n0));
         }
 
         [MethodImpl(Inline)]

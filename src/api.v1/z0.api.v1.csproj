@@ -1,10 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(SlnProps)\usings.props" />
   <ItemGroup>
-    <ProjectReference Include="$(VCpu)" />
-    <ProjectReference Include="$(Files)" />
-    <ProjectReference Include="$(Cells)" />
+    <ProjectReference Include="$(Math)" />
+    <ProjectReference Include="$(ClrQuery)" />
+    <ProjectReference Include="$(ClrCil)" />
     <ProjectReference Include="$(Events)" />
+    <ProjectReference Include="$(Asci)" />
+    <ProjectReference Include="$(Files)" />
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>

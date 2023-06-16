@@ -45,7 +45,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static bool isCall32(ReadOnlySpan<byte> encoding)
-            => encoding.Length >= CallRel32.InstSize && core.first(encoding) == CallRel32.OpCode;
+            => encoding.Length >= CallRel32.InstSize && sys.first(encoding) == CallRel32.OpCode;
 
         [MethodImpl(Inline), Op]
         public static bool isJmp8(ReadOnlySpan<byte> encoding)

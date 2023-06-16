@@ -12,7 +12,7 @@ namespace Z0
         [Op, Closures(Integers)]
         public static @enum<E> init<E>(E src)
             where E : unmanaged
-                => new (cpu.vparts(w128, Sized.bw64(src), (ulong)Enums.kind<E>()));
+                => new (vcpu.vparts(w128, Sized.bw64(src), (ulong)Enums.kind<E>()));
     }
 
     public struct @enum<E>

@@ -11,7 +11,6 @@ namespace Z0
     {
         public T Value;
 
-
         [MethodImpl(Inline)]
         public num(T value)
             => Value = value;

@@ -47,7 +47,7 @@ namespace Z0
         [Op]
         static uint store(ReadOnlySpan<byte> src, Span<byte> dst)
         {
-            var size = (uint)core.min(src.Length, dst.Length);
+            var size = (uint)sys.min(src.Length, dst.Length);
             var rem = 0u;
             var dep = 0u;
             if(size >= Align32)

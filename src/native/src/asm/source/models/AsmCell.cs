@@ -24,7 +24,7 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => core.hash(core.hash(Content.Value),(uint)PartKind);
+            get => sys.hash(sys.hash(Content.Value),(uint)PartKind);
         }
 
         public override int GetHashCode()

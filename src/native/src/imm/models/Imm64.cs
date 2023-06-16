@@ -59,7 +59,7 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => core.hash(Value);
+            get => sys.hash(Value);
         }
 
 

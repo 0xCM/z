@@ -3,6 +3,7 @@
     <ProjectReference Include="$(Events)" />
     <ProjectReference Include="$(Cells)" />
     <ProjectReference Include="$(VCpu)" />
-    <ProjectReference Include="$(ZLib)" />
+    <ProjectReference Include="$(ApiV1)" />
+
   </ItemGroup>
 </Project>

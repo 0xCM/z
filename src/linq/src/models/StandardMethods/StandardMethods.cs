@@ -9,7 +9,7 @@ namespace Z0.DynamicModels
     using System.Collections.Generic;
 
     using static Root;
-    using static core;
+    using static sys;
 
     /// <summary>
     /// Collects standard method classifications

@@ -78,7 +78,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public bool Equals(AsmSigOp src)
-            => core.bw64(this) == core.bw64(src);
+            => sys.bw64(this) == sys.bw64(src);
 
         public string Format()
             => AsmSigs.format(this);
