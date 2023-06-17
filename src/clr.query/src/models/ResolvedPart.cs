@@ -4,17 +4,18 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using System.Linq;
     public readonly struct ResolvedPart
     {
         public readonly PartName Part;
 
-        public readonly FilePath Location;
+        public readonly FileUri Location;
 
         public readonly Index<ResolvedHost> Hosts;
 
         public readonly uint MethodCount;
 
-        public ResolvedPart(PartName part, FilePath location, Index<ResolvedHost> hosts)
+        public ResolvedPart(PartName part, FileUri location, Index<ResolvedHost> hosts)
         {
             Part = part;
             Location = location;
@@ -25,7 +26,7 @@ namespace Z0
         public static ResolvedPart Empty
         {
             [MethodImpl(Inline)]
-            get => new ResolvedPart(PartName.Empty, FilePath.Empty, sys.empty<ResolvedHost>());
+            get => new ResolvedPart(PartName.Empty, FileUri.Empty, sys.empty<ResolvedHost>());
         }
     }
 }

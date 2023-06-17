@@ -8,12 +8,12 @@ namespace Z0
     {
         public readonly ApiHostUri Host;
 
-        public readonly Index<ResolvedMethod> Methods;
+        public readonly ReadOnlySeq<ResolvedMethod> Methods;
 
         public readonly MemoryAddress BaseAddress;
 
         [MethodImpl(Inline)]
-        public ResolvedHost(ApiHostUri uri, MemoryAddress @base, Index<ResolvedMethod> methods)
+        public ResolvedHost(ApiHostUri uri, MemoryAddress @base, ReadOnlySeq<ResolvedMethod> methods)
         {
             Host = uri;
             Methods = methods;

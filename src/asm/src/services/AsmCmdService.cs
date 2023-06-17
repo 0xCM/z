@@ -64,13 +64,6 @@ namespace Z0.Asm
         }
 
 
-        void CheckHexExec()
-        {
-            HexCodeRunner.slots(Channel);
-            var runner = new HexCodeRunner(Wf,Emitter);
-            runner.RunAlgs();
-        }
-
         void EmitBitMasks()
         {
             var dst = AppDb.AppData(ApiAtomic.logs).Path("bitmasks", FileKind.Csv);
@@ -89,7 +82,6 @@ namespace Z0.Asm
         [CmdOp("calcs/check")]
         void Hello()
         {
-            CheckHexExec();
             EmitBitMasks();
         }
 
