@@ -68,7 +68,7 @@ namespace Z0
             var dst = new RawMemberCode();
             dst.Entry = src.Location;
             dst.Uri = src.Uri;
-            var target = stub(src.Location, out dst.StubCode);
+            var target = AsmBytes.stub(src.Location, out dst.StubCode);
             dst.Target = target;
             if(target != src.Location)
             {

@@ -22,11 +22,11 @@ namespace Z0
 
         [Op]
         public static MemorySeg data(SpanResAccessor src)
-            => AccessorData(ApiCode.stub(src.Member.Location, out _));
+            => AccessorData(AsmBytes.stub(src.Member.Location, out _));
 
         [Op]
         public static MemorySeg code(SpanResAccessor src)
-            => new (ApiCode.stub(src.Member.Location, out _), 24);
+            => new (AsmBytes.stub(src.Member.Location, out _), 24);
 
         /// <summary>
         /// Queries the source type for ByteSpan property getters

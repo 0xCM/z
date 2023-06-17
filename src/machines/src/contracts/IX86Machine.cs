@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IX86Machine : InstExecutor<AsmCode>
+    public interface IX86Machine : InstExecutor<AsmCodeRecord>
     {
         
     }

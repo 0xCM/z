@@ -129,7 +129,7 @@ namespace Z0
             for(var i=0; i<count; i++)
             {
                 ref readonly var line = ref skip(lines,i);
-                AsmHexApi.parse(line, out var code);
+                AsmBytes.parse(line, out var code);
                 Write(code.Format());
             }
         }
@@ -406,7 +406,7 @@ c5 f8 99 c8";
                 var disp = AsmRel.disp32(expect.Encoding.Bytes);
                 Require.equal(disp, expect.Disp);
                 var source = expect.Source;
-                Rip rip = (source, JmpRel32.InstSize);
+                AsmRip rip = (source, JmpRel32.InstSize);
                 MemoryAddress target = (MemoryAddress)((long)rip + (int)disp);
                 Require.equal(AsmRel.disp32(rip, target), disp);
                 Require.equal(AsmRel.target(rip, expect.Encoding.Bytes), target);

@@ -48,7 +48,7 @@ namespace Z0
             if(!outcome)
                 return outcome;
 
-            outcome = AsmHexApi.parse(skip(input, i++).View, out dst.Encoded);
+            outcome = AsmBytes.parse(skip(input, i++).View, out dst.Encoded);
             if(!outcome)
                 return outcome;
 

@@ -8,12 +8,12 @@ namespace Z0
     {
         public readonly LocatedSymbol Label;
 
-        public readonly Index<AsmCode> Code;
+        public readonly Index<AsmCodeRecord> Code;
 
         public readonly ByteSize Size;
 
         [MethodImpl(Inline)]
-        public AsmCodeBlock(LocatedSymbol label, AsmCode[] src)
+        public AsmCodeBlock(LocatedSymbol label, AsmCodeRecord[] src)
         {
             Label = label;
             Code = src;
@@ -26,13 +26,13 @@ namespace Z0
             get => Code.Count;
         }
 
-        public ref readonly AsmCode this[uint i]
+        public ref readonly AsmCodeRecord this[uint i]
         {
             [MethodImpl(Inline)]
             get => ref Code[i];
         }
 
-        public ref readonly AsmCode this[int i]
+        public ref readonly AsmCodeRecord this[int i]
         {
             [MethodImpl(Inline)]
             get => ref Code[i];

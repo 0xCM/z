@@ -28,19 +28,19 @@ namespace Z0
             => (long)(dst - rip);
 
         [MethodImpl(Inline), Op]
-        public static Disp8 disp8(Rip rip, MemoryAddress dst)
+        public static Disp8 disp8(AsmRip rip, MemoryAddress dst)
             => (sbyte)((long)dst - (long)rip);
 
         [MethodImpl(Inline), Op]
-        public static Disp16 disp16(Rip rip, MemoryAddress dst)
+        public static Disp16 disp16(AsmRip rip, MemoryAddress dst)
             => (Disp16)((long)dst - (long)rip);
 
         [MethodImpl(Inline), Op]
-        public static Disp32 disp32(Rip rip, MemoryAddress dst)
+        public static Disp32 disp32(AsmRip rip, MemoryAddress dst)
             => (Disp32)((long)dst - (long)rip);
 
         [MethodImpl(Inline), Op]
-        public static Disp64 disp64(Rip rip, MemoryAddress dst)
+        public static Disp64 disp64(AsmRip rip, MemoryAddress dst)
             => (Disp64)((long)dst - (long)rip);
 
         [MethodImpl(Inline), Op]
@@ -60,7 +60,7 @@ namespace Z0
             => @as<Disp32>(slice(encoding,1,4));
 
         [MethodImpl(Inline), Op]
-        public static CallRel32 call(Rip rip, Disp32 disp)
+        public static CallRel32 call(AsmRip rip, Disp32 disp)
             => new CallRel32(rip, AsmRel.target(rip,disp));
 
         [MethodImpl(Inline), Op]
@@ -75,7 +75,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static MemoryAddress target(Rip rip, Disp8 disp)
+        public static MemoryAddress target(AsmRip rip, Disp8 disp)
             => (MemoryAddress)((long)rip + (sbyte)disp);
 
         [MethodImpl(Inline), Op]
@@ -97,11 +97,11 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static MemoryAddress target(Rip rip, Disp32 disp)
+        public static MemoryAddress target(AsmRip rip, Disp32 disp)
             => (MemoryAddress)((long)rip + (long)disp);
 
         [MethodImpl(Inline), Op]
-        public static MemoryAddress target(Rip rip, ReadOnlySpan<byte> encoding)
+        public static MemoryAddress target(AsmRip rip, ReadOnlySpan<byte> encoding)
             => (MemoryAddress)((long)rip + (int)disp32(encoding));
 
         [MethodImpl(Inline), Op]
@@ -117,15 +117,15 @@ namespace Z0
             => new (JmpRel8.OpCode, AsmRel.disp8((src, JmpRel8.InstSize) ,dst), JmpRel8.InstSize, src, dst, default);
 
         [MethodImpl(Inline)]
-        public static Rip rip(MemoryAddress callsite, byte instsize)
-            => new Rip(callsite, instsize);
+        public static AsmRip rip(MemoryAddress callsite, byte instsize)
+            => new AsmRip(callsite, instsize);
 
         [MethodImpl(Inline), Op]
         public static AsmOpKind kind(NativeSize size)
             => AsmOps.kind(AsmOpClass.Rel, size);
 
         [MethodImpl(Inline), Op]
-        public static JmpRel32 jmp32(Rip src, MemoryAddress dst)
+        public static JmpRel32 jmp32(AsmRip src, MemoryAddress dst)
             => new JmpRel32(src, dst);
 
         [MethodImpl(Inline), Op]
@@ -133,7 +133,7 @@ namespace Z0
             => new JmpRel32(src, dst);
 
         [MethodImpl(Inline), Op]
-        public static JmpRel32 jmp32(Rip rip, Disp32 disp)
+        public static JmpRel32 jmp32(AsmRip rip, Disp32 disp)
             => new JmpRel32(rip.Address, AsmRel.target(rip, disp));
     }
 }

@@ -2,14 +2,14 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Asm
+namespace Z0
 {
     using static sys;
 
     public readonly struct CallRel32 : IAsmRelInst<Disp32>
     {
         [MethodImpl(Inline), Op]
-        public static byte encode(Rip src, MemoryAddress dst, ref byte hex)
+        public static byte encode(AsmRip src, MemoryAddress dst, ref byte hex)
         {
             const byte Size = 5;
             seek(hex, 0) = CallRel32.OpCode;
@@ -18,7 +18,7 @@ namespace Z0.Asm
         }
 
         [MethodImpl(Inline), Op]
-        public static AsmHexCode encode(Rip rip, MemoryAddress dst)
+        public static AsmHexCode encode(AsmRip rip, MemoryAddress dst)
         {
             var encoded = AsmHexCode.Empty;
             var bytes = encoded.Bytes;
@@ -42,13 +42,13 @@ namespace Z0.Asm
         }
 
         [MethodImpl(Inline)]
-        public CallRel32(Rip src, LocatedSymbol dst)
+        public CallRel32(AsmRip src, LocatedSymbol dst)
         {
             Source = src.Address - (uint)InstSize;
             Target = dst;
         }
 
-        public Rip Rip
+        public AsmRip Rip
         {
             [MethodImpl(Inline)]
             get => (Source.Location, InstSize);

@@ -5,7 +5,7 @@
 namespace Z0
 {
     [StructLayout(LayoutKind.Sequential, Pack=1)]
-    public readonly record struct AsmCode
+    public readonly record struct AsmCodeRecord
     {
         public readonly uint Seq;
 
@@ -22,7 +22,7 @@ namespace Z0
         public readonly HexRef Encoded;
 
         [MethodImpl(Inline)]
-        public AsmCode(EncodingId id, uint seq, uint docseq, Hex32 origin, SourceText asm, MemoryAddress ip, HexRef code)
+        public AsmCodeRecord(EncodingId id, uint seq, uint docseq, Hex32 origin, SourceText asm, MemoryAddress ip, HexRef code)
         {
             Seq = seq;
             DocSeq = docseq;
@@ -56,6 +56,6 @@ namespace Z0
         public override string ToString()
             => Format();
 
-        public static AsmCode Empty => default;
+        public static AsmCodeRecord Empty => default;
     }
 }

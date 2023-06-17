@@ -95,7 +95,7 @@ namespace Z0
             Channel.EmittedFile(emitting,count);
             var encoded = alloc<EncodedMember>(count);
             for(var i=0; i<count; i++)
-                seek(encoded,i) = ApiCode.member(collected[i]);
+                seek(encoded,i) = AsmBytes.member(collected[i]);
             var rebase = min(encoded.Select(x => (ulong)x.EntryAddress).Min(), encoded.Select(x => (ulong)x.TargetAddress).Min());
             for(var i=0; i<count; i++)
             {

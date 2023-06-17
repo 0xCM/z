@@ -70,7 +70,7 @@ namespace Z0
             var pattern = arg(args,1).Value;
             var files = FS.files(FS.dir(src), pattern, true);
             var dst = AppDb.DbTargets("hexify");
-            ApiCode.hexify(Channel, files, dst);
+            AsmBytes.hexify(Channel, files, dst);
         }
 
         Outcome LoadStanfordForms()

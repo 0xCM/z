@@ -29,25 +29,5 @@ namespace Z0
             return size;
         }
 
-        [Op]
-        public static Outcome hexdat(FilePath src, out BinaryCode dst)
-        {
-            var result = Outcome.Success;
-            var cells = src.ReadLines().SelectMany(x => text.split(x,Chars.Space));
-            var count = cells.Count;
-            var data = sys.alloc<byte>(count);
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var cell = ref cells[i];
-                result = Hex.parse8u(cell, out seek(data,i));
-                if(result.Fail)
-                    break;
-            }
-            if(result)
-                dst = data;
-            else
-                dst = BinaryCode.Empty;
-            return result;
-        }
     }
 }

@@ -178,7 +178,7 @@ namespace Z0
             Channel.TableEmit(buffer, dst);
         }
 
-        public static AsmCode code(CompositeDispenser dispenser, in AsmEncodingInfo src)
+        public static AsmCodeRecord code(CompositeDispenser dispenser, in AsmEncodingInfo src)
         {
             ref readonly var code = ref src.Encoded;
             var size = code.Size;
@@ -187,7 +187,7 @@ namespace Z0
             var hexdst = hex.Edit;
             for(var j=0; j<size; j++)
                 seek(hexdst,j) = skip(hexsrc,j);
-            return new AsmCode(EncodingId.from(src.IP, code), src.Seq, src.DocSeq, src.OriginId, dispenser.SourceText(src.Asm.Format()), src.IP, hex);
+            return new AsmCodeRecord(EncodingId.from(src.IP, code), src.Seq, src.DocSeq, src.OriginId, dispenser.SourceText(src.Asm.Format()), src.IP, hex);
         }
 
         public static AsmCodeBlocks blocks(ProjectContext context, in FileRef file, ref uint seq, Index<ObjDumpRow> src, CompositeBuffers dispenser)
@@ -201,7 +201,7 @@ namespace Z0
                 var blockcode = block.Array();
                 var blockname = first(blockcode).BlockName.Format();
                 var blockaddress = block.Key;
-                var codebuffer = alloc<AsmCode>(blockcode.Length);
+                var codebuffer = alloc<AsmCodeRecord>(blockcode.Length);
                 for(var k=0; k<blockcode.Length; k++)
                 {
                     ref readonly var row = ref skip(blockcode,k);
@@ -246,7 +246,7 @@ namespace Z0
 
                     var blockname = block.Key.Format();
                     var blockaddress = first(blockcode).BlockAddress;
-                    var codebuffer = alloc<AsmCode>(blockcode.Length);
+                    var codebuffer = alloc<AsmCodeRecord>(blockcode.Length);
                     for(var k=0; k<blockcode.Length; k++)
                     {
                         ref readonly var row = ref skip(blockcode,k);
@@ -440,7 +440,7 @@ namespace Z0
                 result = DataParser.parse(data[j++], out dst.BlockName);
                 result = AddressParser.parse(data[j++], out dst.IP);
                 result = DataParser.parse(data[j++], out dst.Size);
-                result = AsmHexApi.parse(data[j++].View, out dst.Encoded);
+                result = AsmBytes.parse(data[j++].View, out dst.Encoded);
                 dst.Asm = text.trim(data[j++].Text);
                 result = AsmInlineComment.parse(data[j++].View, out dst.Comment);
                 result = DataParser.parse(data[j++], out dst.Source);

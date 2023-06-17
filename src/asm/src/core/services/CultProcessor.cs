@@ -206,7 +206,7 @@ namespace Z0
             var bitstring = RP.Error;
             var formatted = FormatBytes(comment, out var count);
             if(Hex.hexdata(formatted, out var parsed))
-                bitstring = AsmHexApi.asmhex(parsed).BitString;
+                bitstring = asm.asmhex(parsed).BitString;
 
             if(count != 0)
                 comment = string.Format(StatementCommentPattern, comment, count, formatted, bitstring);

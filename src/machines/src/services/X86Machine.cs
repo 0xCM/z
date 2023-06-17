@@ -94,7 +94,7 @@ namespace Z0
 
         Task Dispatcher;
 
-        ConcurrentQueue<AsmCode> Queue;
+        ConcurrentQueue<AsmCodeRecord> Queue;
 
         bool Verbose;
 
@@ -117,12 +117,12 @@ namespace Z0
             rip() = CodeBase;
         }
 
-        public void Submit(AsmCode cmd)
+        public void Submit(AsmCodeRecord cmd)
         {
             Queue.Enqueue(cmd);
         }
 
-        void Execute(AsmCode cmd)
+        void Execute(AsmCodeRecord cmd)
         {
 
         }

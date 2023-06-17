@@ -56,7 +56,7 @@ namespace Z0
         }
 
         public string BitString
-            => AsmHexApi.bitstring(this);
+            => asm.bitstring(this);
 
         public override int GetHashCode()
             => Hash;
@@ -66,7 +66,7 @@ namespace Z0
             => Data.Equals(src.Data);
 
         public string Format()
-            => AsmHexApi.format(this);
+            => asm.format(this);
 
         public override string ToString()
             => Format();

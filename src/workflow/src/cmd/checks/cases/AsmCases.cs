@@ -14,7 +14,7 @@ namespace Z0.Asm
             dst.Seq = seq;
             dst.Mnemonic = monic;
             SdmOpCodes.parse(oc.Format(), out dst.OpCode);
-            AsmHexApi.parse(encoding.Format(), out dst.Encoding);
+            AsmBytes.parse(encoding.Format(), out dst.Encoding);
             AsmSigs.parse(sig.Format(), out dst.Sig);
             dst.Asm = statement.Format();
             return dst;

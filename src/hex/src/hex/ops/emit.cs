@@ -26,10 +26,11 @@ namespace Z0
             return result;
         }
     }
+
     partial struct Hex
     {
         [Op]
-        public static ByteSize emit(Index<MemorySeg> src, StreamWriter dst)
+        public static ByteSize emit(Index<MemorySegment> src, StreamWriter dst)
         {
             var buffer = sys.span<char>(src.Select(x => (uint)x.Size).Storage.Max()*2);
             var total = 0u;
@@ -47,21 +48,21 @@ namespace Z0
         }
 
         [Op]
-        public static ByteSize emit(MemorySeg src, uint bpl, StreamWriter dst)
+        public static ByteSize emit(MemorySegment src, uint bpl, StreamWriter dst)
         {
             var div = src.Length/bpl;
             var mod = src.Length % bpl;
             var count = div + (mod != 0 ? 1 : 0);
-            var buffer = sys.alloc<MemorySeg>(count);
+            var buffer = sys.alloc<MemorySegment>(count);
             var @base = src.BaseAddress;
             var offset = MemoryAddress.Zero;
             for(var i=0; i<div; i++)
             {
-                seek(buffer,i) = new MemorySeg(@base + offset, bpl);
+                seek(buffer,i) = new MemorySegment(@base + offset, bpl);
                 offset += bpl;
             }
             if(mod !=0)
-                seek(buffer, div) = new MemorySeg(@base + offset, mod);
+                seek(buffer, div) = new MemorySegment(@base + offset, mod);
             return emit(buffer, dst);
         }
     }

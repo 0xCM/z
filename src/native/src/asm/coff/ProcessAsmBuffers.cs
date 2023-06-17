@@ -65,7 +65,7 @@ namespace Z0.Asm
 
             dst.Statement = text.trim(skip(parts,i++));
 
-            outcome += AsmHexApi.parse(skip(parts,i++), out dst.Encoded);
+            outcome += AsmBytes.parse(skip(parts,i++), out dst.Encoded);
             if(outcome.Fail)
                 return (false, string.Format(ErrorPattern, nameof(dst.Encoded), src.LineNumber));
 
@@ -76,7 +76,7 @@ namespace Z0.Asm
             dst.OpCode = skip(parts, i++);
 
             var bitstring = skip(parts,i++);
-            dst.Bitstring = AsmHexApi.bitstring(dst.Encoded);
+            dst.Bitstring = asm.bitstring(dst.Encoded);
 
             outcome += ApiIdentity.parse(skip(parts,i++), out dst.OpUri);
             if(outcome.Fail)

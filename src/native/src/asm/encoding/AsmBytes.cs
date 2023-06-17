@@ -14,6 +14,153 @@ namespace Z0
         const NumericKind Closure = UnsignedInts;
 
         [MethodImpl(Inline), Op]
+        public static ByteSize size(ReadOnlySpan<HexDataRow> src)
+        {
+            var dst = 0ul;
+            for(var i=0; i<src.Length; i++)
+                dst += skip(src,i).Data.Count;
+            return dst;
+        }
+
+        [MethodImpl(Inline), Op]
+        public static ByteSize size(ReadOnlySpan<BinaryCode> src)
+        {
+            var dst = 0ul;
+            for(var i=0; i<src.Length; i++)
+                dst += skip(src,i).Count;
+            return dst;
+        }
+        
+        [Op]
+        public static bool parse(ReadOnlySpan<char> src, out AsmHexCode dst)
+        {
+            var buffer = ByteBlock16.Empty;
+            var bytes = sys.bytes(buffer);
+            var result = Hex.parse(src, bytes);
+            if(result)
+            {
+                var size = Demand.lteq((byte)result.Data,(byte)15);
+                var data = slice(bytes,0,size);
+                seek(bytes,15) = size;
+                dst = new AsmHexCode(@as<ByteBlock16,Cell128>(buffer));
+            }
+            else
+                dst = AsmHexCode.Empty;
+            return result;
+        }
+
+        public static void hexify(IWfChannel channel, FilePath src, FilePath dst, byte bpl = HexCsvRow.BPL)
+        {
+            var emitting = channel.EmittingFile(dst);
+            using var stream = src.Stream();
+            using var reader = stream.BinaryReader();
+            using var writer = dst.AsciWriter();
+            var buffer = sys.alloc<byte>(bpl);
+            var @base = MemoryAddress.Zero;
+            var formatter = HexDataFormatter.create(@base, bpl);
+            writer.WriteLine(string.Concat($"Address".PadRight(HexCsvRow.AddressWidth), RP.SpacedPipe, "Data"));
+            var k = Read(reader, buffer);
+            var offset = MemoryAddress.Zero;
+            var lines = 0;
+            while(k != 0)
+            {
+                writer.WriteLine(formatter.FormatLine(buffer, offset, Chars.Pipe));
+
+                offset += k;
+                lines++;
+
+                buffer.Clear();
+                k = Read(reader, buffer);
+            }   
+            channel.EmittedFile(emitting, $"Emitted {(ByteSize)offset} bytes to {dst}");
+        }
+
+        [MethodImpl(Inline), Op]
+        static uint Read(BinaryReader src, Span<byte> dst)
+            => (uint)src.Read(dst);
+
+        public static void hexify(IWfChannel channel, IEnumerable<FilePath> src, FolderPath dst, byte bpl = HexCsvRow.BPL, bool pll = true)
+            => iter(src, file => hexify(channel, file, dst + file.FileName.ChangeExtension(FileKind.Hex), bpl));
+
+        [Op]
+        public static Outcome hexdat(FilePath src, out BinaryCode dst)
+        {
+            var result = Outcome.Success;
+            var cells = src.ReadLines().SelectMany(x => text.split(x,Chars.Space));
+            var count = cells.Count;
+            var data = sys.alloc<byte>(count);
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var cell = ref cells[i];
+                result = Hex.parse8u(cell, out seek(data,i));
+                if(result.Fail)
+                    break;
+            }
+            if(result)
+                dst = data;
+            else
+                dst = BinaryCode.Empty;
+            return result;
+        }
+
+        [MethodImpl(Inline), Op]
+        public static MemoryBlock max(ReadOnlySpan<MemoryBlock> src)
+        {
+            var max = MemoryBlock.Empty;
+            var count = src.Length;
+            if(count == 0)
+                return max;
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var block = ref skip(src,i);
+                if(block.Size > max.Size)
+                    max = block;
+            }
+            return max;
+        }
+
+        [Op]
+        public static EncodedMember member(in ApiEncoded src)
+        {
+            var token = src.Token;
+            var dst = new EncodedMember();
+            dst.Id = token.Id;
+            dst.EntryAddress = token.EntryAddress;
+            dst.TargetAddress = token.TargetAddress;
+            if(token.EntryAddress != token.TargetAddress)
+            {
+                dst.Disp = AsmRel.disp32((token.EntryAddress, JmpRel32.InstSize), token.TargetAddress);
+                dst.StubAsm = string.Format("jmp near ptr {0:x}h", (int)AsmRel.target(dst.Disp));
+            }
+            dst.CodeSize = (ushort)src.Code.Size;
+            dst.Sig = token.Sig.Format();
+            dst.Uri = token.Uri.Format();
+            var result = ApiIdentity.parse(dst.Uri, out var uri);
+            if(result.Fail)
+                Errors.Throw(AppMsg.ParseFailure.Format(nameof(uri), dst.Uri));
+            dst.Host = uri.Host.Format();
+            return dst;
+        }
+
+        [Op]
+        public static MemoryAddress stub(MemoryAddress src, out AsmHexCode stub)
+        {
+            const byte StubSize = JmpRel32.InstSize;
+            stub = AsmHexCode.Empty;
+            var target = src;
+            var buffer = sys.bytes(Cells.alloc(w64));
+            ref var data = ref src.Ref<byte>();
+            ByteReader.read6(data, buffer);
+            if(JmpRel32.test(buffer))
+            {
+                stub = asm.asmhex(slice(buffer, 0, StubSize));
+                AsmRip rip = (src, StubSize);
+                target = AsmRel.target(rip, stub.Bytes);
+            }
+            return target;
+        }
+
+        [MethodImpl(Inline), Op]
         public static void pack(in EncodingOffsets src, Span<byte> dst)
         {
             var offsets = @readonly(bytes(src));
@@ -263,7 +410,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static void encode(Rip a0, Jcc8 a1, AsmHexWriter dst)
+        public static void encode(AsmRip a0, Jcc8 a1, AsmHexWriter dst)
             => dst.Write(a1.JccCode, AsmRel.target(a0, a1.Disp));
 
         [MethodImpl(Inline), Op]

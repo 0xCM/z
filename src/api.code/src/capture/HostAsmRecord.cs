@@ -42,7 +42,7 @@ namespace Z0
                 return result;
 
             dst.OpCode = skip(cells, i++);
-            dst.Bitstring = AsmHexApi.bitstring(dst.Encoded);
+            dst.Bitstring = asm.bitstring(dst.Encoded);
 
             result = ApiIdentity.parse(skip(cells, i++), out dst.OpUri);
             if(result.Fail)

@@ -6,9 +6,9 @@ namespace Z0
 {
     partial struct Hex
     {
-        [Op, Closures(Closure)]
-        public static string format<T>(UpperCased @case, T value)
-            where T : unmanaged
-                => new string(render<T>(@case, value));
+        // [Op, Closures(Closure)]
+        // public static string format<T>(UpperCased @case, T value)
+        //     where T : unmanaged
+        //         => new string(render<T>(@case, value));
     }
 }

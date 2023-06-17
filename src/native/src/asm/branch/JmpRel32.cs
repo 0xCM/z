@@ -2,7 +2,7 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Asm
+namespace Z0
 {
     using static sys;
 
@@ -20,7 +20,7 @@ namespace Z0.Asm
         /// <param name="rip">The callsite, i.e. the location at which the jmp instruction begins</param>
         /// <param name="target">The target address</param>
         [MethodImpl(Inline), Op]
-        public static void encode(Rip rip, MemoryAddress target, Span<byte> dst)
+        public static void encode(AsmRip rip, MemoryAddress target, Span<byte> dst)
         {
             var i=0;
             seek(dst, i++) = JmpRel32.OpCode;
@@ -29,7 +29,7 @@ namespace Z0.Asm
         }
 
         [MethodImpl(Inline), Op]
-        public static AsmHexCode encode(Rip rip, MemoryAddress target)
+        public static AsmHexCode encode(AsmRip rip, MemoryAddress target)
         {
             var storage = ByteBlock16.Empty;
             var buffer = storage.Bytes;
@@ -58,7 +58,7 @@ namespace Z0.Asm
         }
 
         [MethodImpl(Inline)]
-        public JmpRel32(Rip src, LocatedSymbol dst)
+        public JmpRel32(AsmRip src, LocatedSymbol dst)
         {
             Source = src.Address - (uint)InstSize;
             Target = dst;
@@ -82,7 +82,7 @@ namespace Z0.Asm
             get => AsmRel.disp32(Rip, TargetAddress);
         }
 
-        public Rip Rip
+        public AsmRip Rip
         {
             [MethodImpl(Inline)]
             get => (Source.Location, InstSize);

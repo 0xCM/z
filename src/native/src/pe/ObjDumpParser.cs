@@ -97,7 +97,7 @@ namespace Z0
                         if(y > 0)
                         {
                             var hex = text.trim(text.left(asm, y));
-                            result = AsmHexApi.parse(hex, out Row.Encoded);
+                            result = AsmBytes.parse(hex, out Row.Encoded);
                             if(result.Fail)
                             {
                                 result = (false, AppMsg.ParseFailure.Format(nameof(AsmHexCode), hex));

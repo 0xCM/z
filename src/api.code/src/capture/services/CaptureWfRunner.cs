@@ -73,7 +73,7 @@ namespace Z0
             var count = src.Count;
             var buffer = sys.alloc<EncodedMember>(count);
             for(var i=0; i<count; i++)
-                seek(buffer,i) = ApiCode.member(src[i]);
+                seek(buffer,i) = AsmBytes.member(src[i]);
             var rebase = min(buffer.Select(x => (ulong)x.EntryAddress).Min(), buffer.Select(x => (ulong)x.TargetAddress).Min());
             for(var i=0; i<count; i++)
             {

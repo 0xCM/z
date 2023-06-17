@@ -2,14 +2,14 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Asm
+namespace Z0
 {
-    public readonly struct Rip
+    public readonly struct AsmRip
     {
         public readonly MemoryAddress Address;
 
         [MethodImpl(Inline)]
-        public Rip(MemoryAddress callsite, byte instsize)
+        public AsmRip(MemoryAddress callsite, byte instsize)
         {
             Address = callsite + instsize;
         }
@@ -21,23 +21,23 @@ namespace Z0.Asm
             => Format();
 
         [MethodImpl(Inline)]
-        public static implicit operator Rip((MemoryAddress call, byte instsize) src)
-            => new Rip(src.call, src.instsize);
+        public static implicit operator AsmRip((MemoryAddress call, byte instsize) src)
+            => new AsmRip(src.call, src.instsize);
 
         [MethodImpl(Inline)]
-        public static implicit operator MemoryAddress(Rip src)
+        public static implicit operator MemoryAddress(AsmRip src)
             => src.Address;
 
         [MethodImpl(Inline)]
-        public static explicit operator int(Rip src)
+        public static explicit operator int(AsmRip src)
             => (int)src.Address;
 
         [MethodImpl(Inline)]
-        public static explicit operator long(Rip src)
+        public static explicit operator long(AsmRip src)
             => (long)src.Address;
 
         [MethodImpl(Inline)]
-        public static explicit operator ulong(Rip src)
+        public static explicit operator ulong(AsmRip src)
             => src.Address;
     }
 }

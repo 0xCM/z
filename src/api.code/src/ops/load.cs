@@ -39,7 +39,7 @@ namespace Z0
         [Op]
         public static void load(IWfChannel channel,  IApiPack src, ApiHostUri host, out Seq<EncodedMember> index, out BinaryCode data)
         {
-            hexdat(src.HexExtractPath(host), out data).Require();
+            AsmBytes.hexdat(src.HexExtractPath(host), out data).Require();
             parse(src.CsvExtractPath(host), out index).Require();
         }
         
@@ -60,7 +60,7 @@ namespace Z0
         static BinaryCode bincode(IWfChannel channel, IApiPack src, PartName part)
         {
             var dst = BinaryCode.Empty;
-            var result = hexdat(src.HexExtractPath(part), out dst);
+            var result = AsmBytes.hexdat(src.HexExtractPath(part), out dst);
             if(result.Fail)
             {
                 channel.Error(result.Message);
