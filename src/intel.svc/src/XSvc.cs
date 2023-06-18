@@ -14,6 +14,9 @@ namespace Z0
     {
         sealed class ServiceCache : AppServices<ServiceCache>
         {
+            public CpuIdSvc CpuId(IWfRuntime wf)
+                => Service<CpuIdSvc>(wf);
+
             public IntelIntrinsics IntelInx(IWfRuntime wf)
                 => Service<IntelIntrinsics>(wf);
 
@@ -152,6 +155,9 @@ namespace Z0
 
         public static XedProject XedProject(this IWfRuntime wf)
             => Services.XedProject(wf);
+
+        public static CpuIdSvc CpuId(this IWfRuntime wf)
+            => Services.CpuId(wf);
 
     }
 

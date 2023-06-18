@@ -5,8 +5,6 @@
 
 namespace Z0
 {
-    using Asm;
-
     public class SdeSvc : WfSvc<SdeSvc>
     {
         CpuIdSvc CpuId => Wf.CpuId();

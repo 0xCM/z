@@ -10,13 +10,9 @@ namespace Z0
         sealed class ServiceCache : AppServices<ServiceCache>
         {
 
-            public CpuIdSvc CpuId(IWfRuntime wf)
-                => Service<CpuIdSvc>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
 
-        public static CpuIdSvc CpuId(this IWfRuntime wf)
-            => Services.CpuId(wf);
     }
 }

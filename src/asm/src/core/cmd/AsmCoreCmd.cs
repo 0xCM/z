@@ -13,31 +13,31 @@ namespace Z0
         
         StanfordAsmCatalog StanfordCatalog => Wf.StanfordCatalog();
 
-        Outcome AsmExe(CmdArgs args)
-        {
-            var result = Outcome.Success;
-            var id = arg(args,0).Value;
-            var script = FilePath.Empty;
-            result = ExecVarScript(id, script);
-            if(result.Fail)
-                return result;
-            //var exe = AsmWs.ExePath(id);
-            var exe = FilePath.Empty;
-            var clock = Time.counter(true);
-            var process = Process.Start(exe.Format());
-            process.WaitForExit();
-            var duration = clock.Elapsed();
-            Write(string.Format("runtime:{0}", duration));
-            return result;
-        }
+        // Outcome AsmExe(CmdArgs args)
+        // {
+        //     var result = Outcome.Success;
+        //     var id = arg(args,0).Value;
+        //     var script = FilePath.Empty;
+        //     result = ExecVarScript(id, script);
+        //     if(result.Fail)
+        //         return result;
+        //     //var exe = AsmWs.ExePath(id);
+        //     var exe = FilePath.Empty;
+        //     var clock = Time.counter(true);
+        //     var process = Process.Start(exe.Format());
+        //     process.WaitForExit();
+        //     var duration = clock.Elapsed();
+        //     Write(string.Format("runtime:{0}", duration));
+        //     return result;
+        // }
 
-        Outcome ExecVarScript(string SrcId, FilePath script)
-        {
-            var result = Outcome.Success;
-            var vars = CmdScripts.vars(("SrcId", SrcId));
-            var cmd = new CmdLine(script.Format(PathSeparator.BS));
-            return OmniScript.Run(cmd, vars, out var response);
-        }
+        // Outcome ExecVarScript(string SrcId, FilePath script)
+        // {
+        //     var result = Outcome.Success;
+        //     var vars = CmdScripts.vars(("SrcId", SrcId));
+        //     var cmd = new CmdLine(script.Format(PathSeparator.BS));
+        //     return OmniScript.Run(cmd, vars, out var response);
+        // }
 
         // Outcome AsmConfig(CmdArgs args)
         // {

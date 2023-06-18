@@ -1,8 +1,0 @@
-<Project>
-  <ItemGroup>
-    <ProjectReference Include="$(Digital)" />
-    <ProjectReference Include="$(BitVectors)" />
-    <ProjectReference Include="$(Cells)" />
-    <ProjectReference Include="$(Asci)" />
-  </ItemGroup>
-</Project>

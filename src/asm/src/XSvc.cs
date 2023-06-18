@@ -50,9 +50,6 @@ namespace Z0
             public CultProcessor CultProcessor(IWfRuntime wf)
                 => Service<CultProcessor>(wf);
  
-            public AsmFlowCmd AsmFlowCmd(IWfRuntime wf)
-                => Service<AsmFlowCmd>(wf);
-
             public AsmDbCmd AsmDbCmd(IWfRuntime wf)
                 => Service<AsmDbCmd>(wf);
 
@@ -89,7 +86,6 @@ namespace Z0
 
         public static ICaptureCore CaptureCore(this IWfRuntime wf)
             => Asm.CaptureCore.create(wf);
-
  
         public static AsmCmdService AsmCmdSvc(this IWfRuntime wf)
             => Services.AsmCmdSvc(wf);

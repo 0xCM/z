@@ -17,32 +17,6 @@ namespace Z0
             return true;
         }
 
-        public static Outcome parse(ReadOnlySpan<AsciCode> src, out AsmExpr dst)
-        {
-            dst = AsmExpr.Empty;
-            var outcome = Outcome.Success;
-            var i = SQ.SkipWhitespace(src);
-            if(i == NotFound)
-                return (false,"Input was empty");
-
-            var remainder = slice(src,i);
-            i = SQ.index(remainder, AsciCode.Space);
-            if(i == NotFound)
-            {
-                var monic = new AsmMnemonic(AsciSymbols.format(remainder).Trim());
-                var operands = Span<char>.Empty;
-                dst = AsmExpr.define(monic, operands);
-            }
-            else
-            {
-                var monic = new AsmMnemonic(AsciSymbols.format(slice(remainder,0, i)).Trim());
-                var operands = AsciSymbols.format(slice(remainder,i)).Trim();
-                dst = AsmExpr.define(monic, operands);
-            }
-
-            return outcome;
-        }
-
         [Op]
         public static AsmExpr define(AsmMnemonic monic, ReadOnlySpan<char> operands)
             => new AsmExpr(string.Format("{0} {1}", monic.Format(MnemonicCase.Lowercase), text.format(operands)));

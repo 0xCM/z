@@ -21,7 +21,7 @@ namespace Z0
         public UnarySurrogate(Z0.UnaryOp<T> f, string name)
         {
             F = f;
-            Id = SFxIdentity.identity<T>(name);
+            Id = OpIdentity.Empty;
         }
 
         [MethodImpl(Inline)]

@@ -4,39 +4,43 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct BinaryPredSurrogate<T> : IFunc<T,T,bit>
+    /// <summary>
+    /// Captures a delegate that is exposed as an emitter
+    /// </summary>
+    public readonly struct SurrogateEmitter<T> : ISFxEmitter<T>
     {
-        readonly BinaryPredicate<T> F;
-
         public OpIdentity Id {get;}
 
+        readonly Producer<T> F;
+
         [MethodImpl(Inline)]
-        public BinaryPredSurrogate(Z0.BinaryPredicate<T> f, OpIdentity id)
+        public SurrogateEmitter(Producer<T> f, OpIdentity id)
         {
             F = f;
             Id = id;
         }
 
         [MethodImpl(Inline)]
-        public BinaryPredSurrogate(BinaryPredicate<T> f, string name)
+        public SurrogateEmitter(Producer<T> f, string name)
         {
             F = f;
-            Id = SFxIdentity.identity<T>(name);
+
+            Id = OpIdentity.Empty;
+            //Id = SFxIdentity.identity<T>(name);
         }
 
         [MethodImpl(Inline)]
-        public bit Invoke(T a, T b)
-            => F(a,b);
+        public T Invoke() => F();
 
-        public BinaryPredicate<T> Subject
+        public Producer<T> Subject
         {
             [MethodImpl(Inline)]
             get => F;
         }
 
         [MethodImpl(Inline)]
-        public SurogateFunc<T,T,bit> AsFunc()
-                => SFx.surrogate(this);
+        public SurrogateFunc<T> AsFunc()
+            => SFx.surrogate(this);
 
         [MethodImpl(Inline)]
         public string Format()
@@ -46,7 +50,11 @@ namespace Z0
             => Format();
 
         [MethodImpl(Inline)]
-        public static implicit operator SurogateFunc<T,T,bit>(BinaryPredSurrogate<T> src)
+        public static implicit operator SurrogateFunc<T>(SurrogateEmitter<T> src)
             => src.AsFunc();
+
+        [MethodImpl(Inline)]
+        public static implicit operator SurrogateEmitter<T>(SurrogateFunc<T> src)
+            => SFx.canonical(src);
     }
 }

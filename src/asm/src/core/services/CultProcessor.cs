@@ -50,11 +50,6 @@ namespace Z0
 
         void RunEtl(FilePath src, IDbArchive dst)
         {            
-            //var targets = AppDb.AsmDb().Targets(cult);
-            // AsmLines = new();
-            // Summaries = new();
-            // DetailRoot = targets.Root + FS.folder("details");
-            // HexCharBuffer = sys.alloc<char>(HexBufferLength);
             var output = span<CultRecord>(BatchSize);
             var input = span<TextLine>(BatchSize);
             using var reader = src.AsciReader();

@@ -4,35 +4,40 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct BinarySurrogate<T> : IBinaryOp<T>
+    public readonly struct BinaryPredSurrogate<T> : IFunc<T,T,bit>
     {
-        readonly BinaryOp<T> F;
+        readonly BinaryPredicate<T> F;
 
         public OpIdentity Id {get;}
 
         [MethodImpl(Inline)]
-        public BinarySurrogate(BinaryOp<T> f, OpIdentity id)
+        public BinaryPredSurrogate(Z0.BinaryPredicate<T> f, OpIdentity id)
         {
             F = f;
             Id = id;
         }
 
         [MethodImpl(Inline)]
-        public BinarySurrogate(BinaryOp<T> f, string name)
+        public BinaryPredSurrogate(BinaryPredicate<T> f, string name)
         {
             F = f;
-            Id = SFxIdentity.identity<T>(name);
+            Id = OpIdentity.Empty;
+            //Id = SFxIdentity.identity<T>(name);
         }
 
         [MethodImpl(Inline)]
-        public T Invoke(T a, T b)
-            => F(a, b);
+        public bit Invoke(T a, T b)
+            => F(a,b);
 
-        public BinaryOp<T> Subject
+        public BinaryPredicate<T> Subject
         {
             [MethodImpl(Inline)]
             get => F;
         }
+
+        [MethodImpl(Inline)]
+        public SurogateFunc<T,T,bit> AsFunc()
+                => SFx.surrogate(this);
 
         [MethodImpl(Inline)]
         public string Format()
@@ -42,15 +47,7 @@ namespace Z0
             => Format();
 
         [MethodImpl(Inline)]
-        public SurogateFunc<T,T,T> AsFunc()
-            => SFx.surrogate(this);
-
-        [MethodImpl(Inline)]
-        public static implicit operator SurogateFunc<T,T,T>(BinarySurrogate<T> src)
+        public static implicit operator SurogateFunc<T,T,bit>(BinaryPredSurrogate<T> src)
             => src.AsFunc();
-
-        [MethodImpl(Inline)]
-        public static implicit operator BinarySurrogate<T>(SurogateFunc<T,T,T> src)
-            => SFx.canonical(src);
     }
 }

@@ -31,9 +31,7 @@ namespace Z0
         {
             Cult.RunEtl();
             Nasm.RunEtl();
-            StanfordCatalog.RunEtl();
-            
+            StanfordCatalog.RunEtl();            
         }
-
     }
 }
