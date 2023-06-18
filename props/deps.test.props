@@ -1,5 +1,5 @@
 <Project>
     <ItemGroup>
-        <Reference Include="$(GlobalDeps)/xunit.assert.dll"/>        
+        <!-- <Reference Include="$(GlobalDeps)/xunit.assert.dll"/>         -->
     </ItemGroup>
 </Project>

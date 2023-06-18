@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed record class ExecutedProcess
+    public record struct ExecutedProcess
     {
         public readonly ExecutingProcess ExecSpec;
 
@@ -19,6 +19,6 @@ namespace Z0
             Token = token;
         }
 
-        public ref readonly ProcessId Id => ref ExecSpec.Id;
+        public ProcessId Id => ExecSpec.Id;
     }
 }

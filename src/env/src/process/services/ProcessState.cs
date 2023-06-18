@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {    
-    public class ProcessState : IDisposable
+    public class ProcessState
     {
         static ConcurrentDictionary<ProcessId,ExecutingProcess> _Executing = new();
 
@@ -26,10 +26,5 @@ namespace Z0
 
         public static ICollection<ExecutedProcess> Finished()
             => _Completed.Values;
-
-        public void Dispose()
-        {
-            sys.iter(_Executing.Values, p => p.Adapted.Close());
-        }
     }
 }

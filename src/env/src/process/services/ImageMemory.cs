@@ -143,7 +143,7 @@ namespace Z0
                 dst.BaseAddress = module.BaseAddress;
                 dst.EntryAddress = module.EntryPointAddress;
                 dst.MaxAddress = dst.BaseAddress + module.ModuleMemorySize;
-                dst.MemorySize = module.ModuleMemorySize;
+                dst.Size = module.ModuleMemorySize;
                 dst.Version = ((uint)module.FileVersionInfo.FileMajorPart, (uint)module.FileVersionInfo.FileMinorPart);
                 dst.ImagePath = module.Path;
             }

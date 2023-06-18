@@ -4,31 +4,19 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed record class ExecutingProcess
+    public record struct ExecutingProcess
     {
-        public ExecutingProcess(CmdLine cmd, ProcessAdapter? process)
-        {
-            CmdLine = cmd;
-            Started = process?.StartTime ?? Timestamp.Zero;
-            Id = process?.Id ?? ProcessId.Empty;
-            Adapted = process!;
-        }
-
         public readonly ProcessId Id;
 
         public readonly CmdLine CmdLine;   
 
         public readonly Timestamp Started;
-        
-        public readonly ProcessAdapter Adapted;
 
-        public void Close()
-            => Adapted.Close();
-            
-        public bool Finished
+        public ExecutingProcess(CmdLine cmd, ProcessAdapter? process)
         {
-            [MethodImpl(Inline)]
-            get => Adapted.HasExited;
+            CmdLine = cmd;
+            Started = process?.StartTime ?? Timestamp.Zero;
+            Id = process?.Id ?? ProcessId.Empty;
         }
 
         public bool IsNonEmpty
@@ -42,9 +30,6 @@ namespace Z0
             [MethodImpl(Inline)]
             get => Id.IsEmpty;
         }        
-
-        // public ExecStatus Status()
-        //     => ProcessLauncher.status(this);
 
         public static ExecutingProcess Empty 
             => new (CmdLine.Empty, null);
