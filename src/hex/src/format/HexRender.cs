@@ -11,6 +11,86 @@ namespace Z0
     public class HexRender
     {
         [MethodImpl(Inline), Op]
+        public static uint hexchars(Hex8 src, LowerCased @case, Span<char> dst)
+        {
+            var i=0u;
+            HexRender.render(@case, src, ref i, dst);
+            return i;
+        }
+
+        [MethodImpl(Inline), Op]
+        public static uint hexchars(Hex8 src, UpperCased @case, Span<char> dst)
+        {
+            var i=0u;
+            HexRender.render(@case, src, ref i, dst);
+            return i;
+        }
+
+        [MethodImpl(Inline), Op]
+        public static uint hexchars(Hex16 src, LowerCased @case, Span<char> dst)
+        {
+            var i=0u;
+            var data = sys.bytes(src);
+            var count = data.Length;
+            for(var j=0; j<count; j++)
+            {
+                ref readonly var b = ref skip(data, j);
+                render(@case, (Hex8)b, ref i, dst);
+                if(j != count - 1)
+                    seek(dst, i++) = Chars.Space;
+            }
+            return i;
+        }
+
+        [MethodImpl(Inline), Op]
+        public static uint hexchars(Hex16 src, UpperCased @case, Span<char> dst)
+        {
+            var i=0u;
+            var data = sys.bytes(src);
+            var count = data.Length;
+            for(var j=0; j<count; j++)
+            {
+                ref readonly var b = ref skip(data, j);
+                render(@case, (Hex8)b, ref i, dst);
+                if(j != count - 1)
+                    seek(dst, i++) = Chars.Space;
+            }
+            return i;
+        }
+
+        [MethodImpl(Inline), Op]
+        public static uint hexchars(Hex32 src, LowerCased @case, Span<char> dst)
+        {
+            var i=0u;
+            var data = sys.bytes(src);
+            var count = data.Length;
+            for(var j=0; j<count; j++)
+            {
+                ref readonly var b = ref skip(data, j);
+                render(@case, (Hex8)b, ref i, dst);
+                if(j != count - 1)
+                    seek(dst, i++) = Chars.Space;
+            }
+            return i;
+        }
+
+        [MethodImpl(Inline), Op]
+        public static uint hexchars(Hex32 src, UpperCased @case, Span<char> dst)
+        {
+            var i=0u;
+            var data = sys.bytes(src);
+            var count = data.Length;
+            for(var j=0; j<count; j++)
+            {
+                ref readonly var b = ref skip(data, j);
+                render(@case, (Hex8)b, ref i, dst);
+                if(j != count - 1)
+                    seek(dst, i++) = Chars.Space;
+            }
+            return i;
+        }
+
+        [MethodImpl(Inline), Op]
         public static uint hexchars(Hex64 src, LowerCased @case, Span<char> dst)
         {
             var i=0u;
@@ -562,6 +642,7 @@ namespace Z0
             return count;
         }
 
+        [MethodImpl(Inline)]
         static byte render(in byte codes, uint src, Span<char> dst)
         {
             const byte count = 8;
@@ -570,6 +651,7 @@ namespace Z0
             return count;
         }
 
+        [MethodImpl(Inline)]
         static byte render(in byte codes, ulong src, Span<char> dst)
         {
             const byte count = 16;

@@ -31,9 +31,9 @@ namespace Z0
             var line = text.emitter();
             using var writer = dst.Writer();
             var pSrc = src.BaseAddress.Pointer<ulong>();
-            var last =  src.LastAddress.Pointer<ulong>();
+            var last = src.LastAddress.Pointer<ulong>();
             var current = MemoryAddress.Zero;
-            var offset = 1;
+            var offset = 0u;
             var restart = true;
             var bpl = 64;
             var i = 0u;
@@ -54,7 +54,7 @@ namespace Z0
                 i += HexRender.hexchars(*pSrc, LowerCase, ref i, buffer);
                 seek(buffer, i++) = Chars.Space;
 
-                if(offset % bpl == 0)
+                if(offset != 0 && offset % bpl == 0)
                 {
                     writer.WriteLine(text.format(slice(buffer,0, i)));
                     buffer.Clear();

@@ -10,7 +10,7 @@ namespace Z0
     public sealed class MemDb : IMemDb
     {
         public static MemDb open(FilePath store)
-            => open(store,0);
+            => open(store, store.Size);
 
         public static MemDb open(FilePath store, ByteSize capacity)
             => Opened.GetOrAdd(store, s =>  new MemDb(s, capacity));

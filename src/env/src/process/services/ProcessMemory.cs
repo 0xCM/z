@@ -107,7 +107,7 @@ namespace Z0
                 entry.MethodIndex = i;
                 entry.EntryPoint = address;
                 entry.SegSelector = selector;
-                entry.Uri = method.Uri;
+                entry.Uri = text.utf8(method.Uri.Format());
                 var bases = src.Bases((ushort)index);
                 var match = address.Lo();
                 var matched = false;

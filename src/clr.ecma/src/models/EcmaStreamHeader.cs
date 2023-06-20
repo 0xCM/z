@@ -9,7 +9,7 @@ namespace Z0
     {
         public Hex32 Offset;
 
-        public uint Size;
+        public Size32 Size;
 
         public string Name;
 

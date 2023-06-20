@@ -31,14 +31,6 @@ namespace Z0
         public static string Format<T>(this TernaryBitLogicKind kind, T arg1, T arg2, T arg3)
             => $"{kind.Format()}({arg1}, {arg2}, {arg3})";
 
-        public static string Format(this Type src)
-            => src.Name.Replace("`1", EmptyString).Replace("`2", EmptyString);
-
-        public static string Format(this MethodInfo src)
-            => src.ToString().Replace("`1", EmptyString).Replace("`2", EmptyString);
-
-        public static string Format(this Assembly src)
-            => src.GetSimpleName();
 
        [Op]
        public static string Format(this ApiUriScheme src)
