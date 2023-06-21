@@ -139,6 +139,16 @@ namespace Z0
                 => vstore_u(src, ref dst);
 
         [MethodImpl(Inline), Op, Closures(AllNumeric)]
+        public static void vstore<T>(Vector128<T> src, ref Cell128 dst)
+            where T : unmanaged
+                => vstore(src, ref Cells.to<T>(dst));
+
+        [MethodImpl(Inline), Op, Closures(AllNumeric)]
+        public static void vstore<T>(Vector256<T> src, ref Cell256 dst)
+            where T : unmanaged
+                => vstore(src, ref Cells.to<T>(dst));
+
+        [MethodImpl(Inline), Op, Closures(AllNumeric)]
         public static void vstore<T>(Vector512<T> src, ref T dst, int offset = 0)
             where T : unmanaged
         {

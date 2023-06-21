@@ -11,19 +11,16 @@ public record ProcessImageMap
     /// <summary>
     /// Specfies the images mapped into the process
     /// </summary>
-    public readonly DelimitedSeq<ImageLocation> Images;
+    public readonly ReadOnlySeq<ImageLocation> Images;
 
-    public readonly DelimitedSeq<MemoryAddress> Addresses;
-
-    public readonly DelimitedSeq<ProcessModuleRow> Modules;
+    public readonly ReadOnlySeq<ProcessModuleRow> Modules;
 
     [MethodImpl(Inline)]
-    public ProcessImageMap(ProcessMemoryState state, ReadOnlySeq<ImageLocation> locations, ReadOnlySeq<MemoryAddress> addresses, ReadOnlySeq<ProcessModuleRow> modules)
+    public ProcessImageMap(ProcessMemoryState state, ReadOnlySeq<ImageLocation> locations, ReadOnlySeq<ProcessModuleRow> modules)
     {
         MemoryState = state;
-        Images = Delimiting.seq(locations, Chars.NL, RP.Embraced);
-        Addresses = Delimiting.seq(addresses, Chars.Comma, RP.Embraced);
-        Modules =  Delimiting.seq(modules, Chars.NL, RP.Embraced);
+        Images = locations.Sort();
+        Modules =  modules.Sort();
     }
 
     public string Format()

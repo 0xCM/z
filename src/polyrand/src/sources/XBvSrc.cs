@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+     using static sys;
 
     public static class XBvSrc
     {
@@ -138,7 +138,7 @@ namespace Z0
             where T : unmanaged
         {
             var v = source.Next<T>();
-            var clamp = core.width<T>() - math.min(core.width<T>(), wmax);
+            var clamp = width<T>() - math.min(width<T>(), wmax);
             return gmath.srl(v,(byte)clamp);
         }
 
@@ -155,7 +155,7 @@ namespace Z0
             where N : unmanaged, ITypeNat
         {
             var v = source.Next<T>();
-            var clamp = (byte)(core.width<T>() - math.min(core.width<T>(), nat32u(n)));
+            var clamp = (byte)(width<T>() - math.min(width<T>(), nat32u(n)));
             return gmath.srl(v,clamp);
         }
 

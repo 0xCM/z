@@ -74,7 +74,7 @@ namespace Z0.dsl.intel
 
         [MethodImpl(Inline)]
         public static implicit operator __m128i<T>(T src)
-            => gcpu.vbroadcast(w128,src);
+            => vgcpu.vbroadcast(w128,src);
 
         [MethodImpl(Inline)]
         public static implicit operator Vector128<T>(__m128i<T> src)

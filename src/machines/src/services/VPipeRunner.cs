@@ -31,7 +31,7 @@ namespace Z0
         {
             var mask = BitMasks.even<byte>(n2,n1);
             var bcast = vcpu.vbroadcast(w128, mask);
-            return cpu.vand(a, bcast);
+            return vcpu.vand(a, bcast);
         }
     }
 

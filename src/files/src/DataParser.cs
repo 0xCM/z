@@ -170,7 +170,5 @@ namespace Z0
         }
 
         static MsgPattern<string> ParsingBytesFailed => "Parsing bytes from {0} failed";
-        // public static Outcome parse(string src, out OpUri dst)
-        //     => ApiIdentity.parse(src, out dst);
      }
 }

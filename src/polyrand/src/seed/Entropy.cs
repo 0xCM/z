@@ -62,7 +62,7 @@ namespace Z0
         {
             var count = size<T>();
             var storage = default(T);
-            fill(core.bytes(storage));
+            fill(sys.bytes(storage));
             return storage;
         }
     }

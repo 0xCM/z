@@ -67,6 +67,11 @@ namespace Z0
             return dst;
         }
 
+        [MethodImpl(Inline), Op, Closures(AllNumeric)]
+        static bool nonzero<T>(T src)
+            where T : unmanaged
+                => bw64(src) != 0;
+ 
         /// <summary>
         /// Allocates and produces a punctured span populated with nonzero random values
         /// </summary>
@@ -77,7 +82,7 @@ namespace Z0
         /// <typeparam name="T">The primal random value type</typeparam>
         public static Span<T> NonZeroSpan<T>(this IBoundSource src, int length, Interval<T> domain)
             where T : unmanaged
-                => src.Span<T>(length, domain, x => core.nonzero(x));
+                => src.Span<T>(length, domain, x => nonzero(x));
 
         /// <summary>
         /// Allocates and produces a punctured span populated with nonzero random values
@@ -89,7 +94,7 @@ namespace Z0
         /// <typeparam name="T">The primal random value type</typeparam>
         public static Span<T> NonZeroSpan<T>(this IBoundSource source, int length)
             where T : unmanaged, IEquatable<T>
-                => source.Span<T>(length, ClosedInterval<T>.Full, x => core.nonzero(x));
+                => source.Span<T>(length, ClosedInterval<T>.Full, x => nonzero(x));
 
         [Op, Closures(Closure)]
         public static Span<T> polyspan<T>(IBoundSource src, int length, Interval<T> domain, Func<T,bool> filter = null)

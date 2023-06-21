@@ -7,7 +7,7 @@ namespace Z0
     using System;
     using System.Linq;
 
-    using static core;
+    using static sys;
 
     public static class PolyFill
     {

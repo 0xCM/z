@@ -6,7 +6,7 @@ namespace Z0
 {
     using System.Linq;
 
-    using static core;
+    using static sys;
 
     [ApiHost]
     public static class PolyStreams
@@ -185,7 +185,7 @@ namespace Z0
         /// <typeparam name="T">The element type</typeparam>
         public static ISourceStream<T> NonZStream<T>(this IBoundSource source, Interval<T> domain)
             where T : unmanaged
-                => create<T>(source, domain, x => core.nonzero(x));
+                => create<T>(source, domain, x => bw64(x) != 0);
 
         /// <summary>
         /// Queries the source for the next nonzero value within a range

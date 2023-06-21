@@ -16,9 +16,6 @@ namespace Z0
         string IExpr.Format()
             => string.Format("{0}: {1}", Timestamp, Root);
 
-        IImmArchive ImmArchive()
-            => new ImmArchive(Root + FS.folder("imm"));
-
         DbArchive Context()
             => Targets("context");
 

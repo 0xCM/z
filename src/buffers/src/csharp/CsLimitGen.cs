@@ -4,14 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
-    public class AsmGenCmd : WfAppCmd<AsmGenCmd>
+    public class CsLimitGen
     {
-        SymGen SymGen => Channel.Channeled<SymGen>();
-
-        [CmdOp("gen/limits")]
-        Outcome XedCheck(CmdArgs args)
+        public void GenLimits(IWfChannel channel, IDbArchive dst)
         {
             const string CommentPattern = "Specifies the maximum value of a {0}-bit number, {1:#,#}";
             const string NamePattern = "Max{0}u";
@@ -40,10 +35,7 @@ namespace Z0
             emitter.CloseStruct(offset);
             offset-=4;
 
-            Channel.FileEmit(emitter.Emit(), AppDb.CgStage().Path("limit", FileKind.Cs));
-
-            return true;
+            channel.FileEmit(emitter.Emit(), dst.Path("limit", FileKind.Cs));
         }
-
     }
 }

@@ -9,7 +9,7 @@ namespace Z0
         public static Index<T> numeric<E,T>()
             where E : unmanaged, Enum
             where T : unmanaged
-                => typeof(E).Fields().Select(f => ClrLiterals.value<T>(f));
+                => typeof(E).Fields().Select(f => (T)f.GetRawConstantValue());
 
         [MethodImpl(Inline)]
         public static unsafe V numeric<E,V>(E src)

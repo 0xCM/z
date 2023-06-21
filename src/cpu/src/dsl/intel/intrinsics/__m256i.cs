@@ -22,7 +22,7 @@ namespace Z0.dsl.intel
         public uint CellWidth
         {
             [MethodImpl(Inline)]
-            get => core.width<T>();
+            get => sys.width<T>();
         }
 
         public uint CellCount
@@ -64,7 +64,7 @@ namespace Z0.dsl.intel
 
         [MethodImpl(Inline)]
         public static implicit operator __m256i<T>(T src)
-            => gcpu.vbroadcast(w256,src);
+            => vgcpu.vbroadcast(w256,src);
 
         [MethodImpl(Inline)]
         public static implicit operator Vector256<T>(__m256i<T> src)

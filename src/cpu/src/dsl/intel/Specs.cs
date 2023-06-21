@@ -19,7 +19,7 @@ namespace Z0.dsl.intel
         {
             var count = (uint)src.Length;
             for(var i=0; i<count; i++)
-                core.seek(dst,i) = Specs.mm256_cvtepi16_epi8(core.skip(src,i));
+                sys.seek(dst,i) = Specs.mm256_cvtepi16_epi8(sys.skip(src,i));
             return count;
         }
 

@@ -17,7 +17,7 @@ namespace Z0
             var parts = @readonly(s.Split('x'));
             if(parts.Length == 2)
             {
-                if(DataParser.parse(skip(parts,0), out uint m) && DataParser.parse(skip(parts,1), out n))
+                if(uint.TryParse(skip(parts,0), out uint m) && uint.TryParse(skip(parts,1), out n))
                 {
                     dst = new GridDim(m, n);
                     return true;

@@ -16,12 +16,15 @@ namespace Z0.Asm
 
         readonly AsmFormatConfig Config;
 
+        static IImmArchive ImmArchive(FolderPath root)
+            => new ImmArchive(root + FS.folder("imm"));
+
         [MethodImpl(Inline)]
         public AsmImmWriter(IWfRuntime wf, in ApiHostUri host, IApiPack dst)
         {
             Wf = wf;
             Uri = host;
-            Target = dst.ImmArchive();
+            Target = ImmArchive(dst.Root);
             Config = AsmFormatConfig.@default(out var _);
         }
 

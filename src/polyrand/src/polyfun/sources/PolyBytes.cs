@@ -51,7 +51,7 @@ namespace Z0
             {
                 var u64 = source.Next<ulong>();
                 for(byte i=0; i<8; i++)
-                    yield return core.@byte(u64, i);
+                    yield return sys.@byte(u64, i);
             }
         }
 
@@ -68,7 +68,7 @@ namespace Z0
             for(var j=0; j<count; j+=8)
             {
                 var src = source.Next<ulong>();
-                core.deposit(src, bytes);
+                sys.deposit(src, bytes);
                 for(var k=0; k<8; k++, counter++)
                 {
                     if(counter == count)

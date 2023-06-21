@@ -63,8 +63,8 @@ namespace Z0
         {
             if(Position < CellCount - 1)
             {
-                a = gcpu.vload(w128, Left(w));
-                b = gcpu.vload(w128, Right(w));
+                a = vgcpu.vload(w128, Left(w));
+                b = vgcpu.vload(w128, Right(w));
                 Position++;
                 return true;
             }
@@ -86,16 +86,16 @@ namespace Z0
         [MethodImpl(Inline), Op]
         void Process(Vector128<byte> a, Vector128<byte> b)
         {
-            var c = cpu.vand(a,b);
-            var d = cpu.vxor(a,b);
-            var e = cpu.vor(c,d);
+            var c = vcpu.vand(a,b);
+            var d = vcpu.vxor(a,b);
+            var e = vcpu.vor(c,d);
             Deposit(e);
         }
 
         [MethodImpl(Inline), Op]
         void Deposit(Vector128<byte> src)
         {
-            gcpu.vstore<byte>(src, ref Target());
+            vgcpu.vstore<byte>(src, ref Target());
         }
 
         [MethodImpl(Inline), Op]

@@ -1,7 +1,5 @@
 <Project>
   <ItemGroup>
     <ProjectReference Include="$(Native)" />
-    <ProjectReference Include="$(Stitch)" />
-    <ProjectReference Include="$(SFx)" />
   </ItemGroup>
 </Project>

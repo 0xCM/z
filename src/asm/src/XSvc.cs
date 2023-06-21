@@ -56,9 +56,6 @@ namespace Z0
             public NasmCatalog NasmCatalog(IWfRuntime wf)
                 => Service<NasmCatalog>(wf);
 
-            public AsmGenCmd AsmGenCmd(IWfRuntime wf)
-                => Service<AsmGenCmd>(wf);
-
         }
 
         static Svc Services => Svc.Instance;
@@ -107,8 +104,5 @@ namespace Z0
 
          public static NasmCatalog NasmCatalog(this IWfRuntime wf)
             => Services.NasmCatalog(wf);
-
-        public static AsmGenCmd AsmGenCmd(this IWfRuntime wf)
-            => Services.AsmGenCmd(wf);             
     }
 }

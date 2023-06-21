@@ -36,7 +36,7 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => alg.hash.combine(Min.Hash, Max.Hash);
+            get => sys.hash(Min.Hash, Max.Hash);
         }
 
         public override int GetHashCode()

@@ -190,7 +190,7 @@ namespace Z0
             var count = dst.Count;
             var values = pairings<S,T>(src).Take(count).Array();
             for(var i=0; i<count; i++)
-                dst[i] = core.skip(values,i);
+                dst[i] = sys.skip(values,i);
         }
 
         /// <summary>

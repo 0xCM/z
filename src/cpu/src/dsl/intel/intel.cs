@@ -15,11 +15,11 @@ namespace Z0.dsl.intel
 
         [MethodImpl(Inline), Op]
         public static __m128i<byte> calc(in mm_delta_epu8 src)
-            => cpu.vor(cpu.vsubs(src.A, src.B), cpu.vsubs(src.B, src.A));
+            => vcpu.vor(vcpu.vsubs(src.A, src.B), vcpu.vsubs(src.B, src.A));
 
         [MethodImpl(Inline), Op]
         public static __m256i<byte> calc(in mm256_min_epu8 src)
-            => cpu.vmin(src.A,src.B);
+            => vcpu.vmin(src.A,src.B);
 
         [MethodImpl(Inline)]
         public static CmpPred128<T> eq<T>(__m128i<T> a, __m128i<T> b)

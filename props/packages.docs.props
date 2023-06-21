@@ -1,0 +1,6 @@
+<Project>
+    <ItemGroup>    
+        <PackageReference Include="YamlDotNet" Version="$(YamlDotNetVersion)"/>
+        <PackageReference Include="MessagePack" Version="$(MessagePackVersion)"/>
+    </ItemGroup>
+</Project>

@@ -1,8 +1,0 @@
-<Project>
-  <Import Project="$(SlnProps)\diagnostics.props"/>
-  <ItemGroup>
-    <ProjectReference Include="$(Text)" />
-    <ProjectReference Include="$(Files)" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="$(MsExtVer)" />
-  </ItemGroup>
-</Project>

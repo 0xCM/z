@@ -41,7 +41,7 @@ namespace Z0
                 {
                     var x = Random.CpuVector(w,t);
                     var y = Random.CpuVector(w,t);
-                    gcpu.veq(f(x,y), g.Apply(x,y));
+                    vgcpu.veq(f(x,y), g.Apply(x,y));
                 }
             }
 

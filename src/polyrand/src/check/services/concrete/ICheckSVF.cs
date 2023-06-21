@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static cpu;
+    using static vcpu;
 
     using K = OperatorClasses;
 
@@ -58,7 +58,7 @@ namespace Z0
             where T : unmanaged
             where F : IBinaryOp128D<T>
         {
-            var cells = cpu.vcount<T>(n128);
+            var cells = vcpu.vcount<T>(n128);
             var succeeded = true;
             var casename = SFxIdentity.name(f);
             var count = Time.counter();
@@ -89,7 +89,7 @@ namespace Z0
             where T : unmanaged
             where F : IBinaryOp256D<T>
         {
-            var cells = cpu.vcount<T>(n256);
+            var cells = vcpu.vcount<T>(n256);
             var succeeded = true;
             var casename = SFxIdentity.name(f);
             var count = Time.counter();
@@ -123,7 +123,7 @@ namespace Z0
             var casename = name ?? SFxIdentity.name(f);
             var w = n128;
             var t = default(T);
-            var cells = cpu.vcount(w,t);
+            var cells = vcpu.vcount(w,t);
             var succeeded = true;
             var blocks = left.BlockCount;
             var count = Time.counter();
@@ -158,7 +158,7 @@ namespace Z0
             var casename = name ?? SFxIdentity.name(f);
             var w = n256;
             var t = default(T);
-            var cells = cpu.vcount(w,t);
+            var cells = vcpu.vcount(w,t);
             var succeeded = true;
             var blocks = left.BlockCount;
             var count = Time.counter();

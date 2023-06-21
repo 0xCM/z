@@ -86,7 +86,7 @@ namespace Z0
             where T : unmanaged
         {
             VerifyIndex<T>(offset* Unsafe.SizeOf<T>() + length* Unsafe.SizeOf<T>());
-            return core.recover<T>(Bytes, offset, length);
+            return recover<T>(Bytes, offset, length);
         }
 
         /// <summary>

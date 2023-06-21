@@ -4,11 +4,49 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using Windows;
+
     using static sys;
+    using static ImageRegions;
 
     [ApiHost,Free]
     public class ImageMemory
     {
+        [Op, MethodImpl(Inline)]
+        public static Traverser traverser(ReadOnlySpan<ProcessMemoryRegion> src, bool live)
+            => new Traverser(src, live);
+
+        [Op, MethodImpl(Inline)]
+        public static unsafe ByteSize run(Traverser traverser, delegate* unmanaged<in ProcessMemoryRegion,void> dst)
+            => traverser.Traverse(dst);
+
+        [Op]
+        public static unsafe Index<ProcessMemoryRegion> filter(ReadOnlySpan<ProcessMemoryRegion> src, PageProtection protect)
+        {
+            var dst  = alloc<ProcessMemoryRegion>((uint)src.Length);
+            var filter = new MemoryRegionFilter(dst, protect);
+            var size = traverser(src,false).Traverse(filter);
+            return filter.Emit();
+        }
+
+        [Op]
+        public static ReadOnlySeq<ProcessPartition> partitions(ReadOnlySeq<ImageLocation> src)
+        {
+            var count = src.Count;
+            var buffer = Seq.create<ProcessPartition>(count);
+            for(var i=0u; i<count; i++)
+            {
+                ref readonly var image = ref src[i];
+                ref var dst = ref buffer[i];
+                dst.MinAddress = image.BaseAddress;
+                dst.MaxAddress = image.MaxAddress;
+                dst.Size = image.Size;
+                dst.ImageName = image.ImageName;
+            }
+
+            return buffer.Sort();
+        }
+
         public static void dump(IWfChannel channel, CmdArgs args, IDbArchive dst)
         {
             var ids = sys.list<ProcessId>();
@@ -51,7 +89,7 @@ namespace Z0
         {
             var dst = bag<ImageLocation>();
             iter(src.Modules, m => dst.Add(location(m)), AppData.get().PllExec());
-            return dst.ToArray();
+            return dst.Array().Sort();
         }
 
         [Op]
@@ -98,13 +136,13 @@ namespace Z0
         public static ProcessImageMap map(ProcessAdapter process)
         {
             var src = loaded(process);
-            var count = src.Count;
-            var addresses = alloc<MemoryAddress>(count);
-            for(var i=0u; i<count; i++)
-                seek(addresses, i) = src[i].BaseAddress;
+            //var count = src.Count;
+            // var addresses = alloc<MemoryAddress>(count);
+            // for(var i=0u; i<count; i++)
+            //     seek(addresses, i) = src[i].BaseAddress;
             var state = new ProcessMemoryState();
             fill(process, ref state);
-            return new ProcessImageMap(state, src, addresses.Sort(), modules(process));
+            return new ProcessImageMap(state, src, modules(process));
         }
 
         public static Task<ExecToken> modules(IWfChannel channel, CmdArgs args, IDbArchive dst)

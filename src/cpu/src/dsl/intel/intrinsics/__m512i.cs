@@ -49,7 +49,7 @@ namespace Z0.dsl.intel
 
         [MethodImpl(Inline)]
         public static implicit operator __m512i<T>(T src)
-            => gcpu.vbroadcast(w512,src);
+            => vgcpu.vbroadcast(w512,src);
 
         [MethodImpl(Inline)]
         public static implicit operator Vector512<T>(__m512i<T> src)

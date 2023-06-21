@@ -38,7 +38,7 @@ namespace Z0
         public static Span<T> shuffle<T>(IBoundSource src, Span<T> dst)
         {
             for (var i = 0u; i<dst.Length; i++)
-                Swaps.swap(ref core.seek(dst,i), ref core.seek(dst,(uint)(i + src.Next(0, dst.Length - i))));
+                Swaps.swap(ref sys.seek(dst,i), ref sys.seek(dst,(uint)(i + src.Next(0, dst.Length - i))));
             return dst;
         }
     }

@@ -11,8 +11,7 @@ namespace Z0
     using System.Collections.Concurrent;
     using System.Threading.Tasks;
 
-    using static Root;
-    using static core;
+    using static sys;
 
     [ApiHost]
     public static class TimeSeries
@@ -103,7 +102,7 @@ namespace Z0
                     let status = evolution.ContinueWith(t => receiver(t.Result))
                     select evolution;
 
-            await core.start(() => Task.WaitAll(variations.ToArray()));
+            await sys.start(() => Task.WaitAll(variations.ToArray()));
         }
 
         [Op,Closures(Closure)]

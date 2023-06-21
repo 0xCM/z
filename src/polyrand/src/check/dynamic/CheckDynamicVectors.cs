@@ -31,7 +31,7 @@ namespace Z0
             => Dynops.Dynexus;
 
         uint PointCount<T>()
-            => core.size<T>()/Buffer.BufferSize;
+            => sys.size<T>()/Buffer.BufferSize;
 
         public TestCaseRecord Match<T>(BinaryOp<Vector128<T>> f, ApiCodeBlock bits)
             where T : unmanaged
@@ -60,7 +60,7 @@ namespace Z0
             {
                 var x = Source.CpuVector(w,t);
                 var y = Source.CpuVector(w,t);
-                success &= gcpu.vtestc(gcpu.veq(f(x,y), g.Apply(x,y)));
+                success &= vgcpu.vtestc(vgcpu.veq(f(x,y), g.Apply(x,y)));
             }
 
             return TestCaseRecord.define(TestCaseIdentity.NumericName<T>(Host, id), success, clock);
@@ -79,7 +79,7 @@ namespace Z0
             {
                 var x = Source.CpuVector(w,t);
                 var y = Source.CpuVector(w,t);
-                success &= gcpu.vtestc(gcpu.veq(f(x,y), g.Apply(x,y)));
+                success &= vgcpu.vtestc(vgcpu.veq(f(x,y), g.Apply(x,y)));
             }
 
             return TestCaseRecord.define(TestCaseIdentity.NumericName<T>(Host, id), success, clock);

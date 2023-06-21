@@ -4,30 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Windows;
-
     using static sys;
-    using static ImageRegions;
 
     public class ProcessMemory : Channeled<ProcessMemory>
     {
-        [Op, MethodImpl(Inline)]
-        public static Traverser traverser(ReadOnlySpan<ProcessMemoryRegion> src, bool live)
-            => new Traverser(src, live);
-
-        [Op, MethodImpl(Inline)]
-        public static unsafe ByteSize run(Traverser traverser, delegate* unmanaged<in ProcessMemoryRegion,void> dst)
-            => traverser.Traverse(dst);
-
-        [Op]
-        public static unsafe Index<ProcessMemoryRegion> filter(ReadOnlySpan<ProcessMemoryRegion> src, PageProtection protect)
-        {
-            var dst  = alloc<ProcessMemoryRegion>((uint)src.Length);
-            var filter = new MemoryRegionFilter(dst, protect);
-            var size = ProcessMemory.traverser(src,false).Traverse(filter);
-            return filter.Emit();
-        }
-
         static MsgPattern<Address16> SegSelectorNotFound => "Selector {0} not found";
 
         static MsgPattern<Count> LocatingSegments => "Locating segments for {0} methods";
@@ -140,23 +120,6 @@ namespace Z0
             return locations.Array().Sort();
         }
 
-        [Op]
-        public static ReadOnlySeq<ProcessPartition> partitions(ReadOnlySeq<ImageLocation> src)
-        {
-            var count = src.Count;
-            var buffer = Seq.create<ProcessPartition>(count);
-            for(var i=0u; i<count; i++)
-            {
-                ref readonly var image = ref src[i];
-                ref var dst = ref buffer[i];
-                dst.MinAddress = image.BaseAddress;
-                dst.MaxAddress = image.MaxAddress;
-                dst.Size = image.Size;
-                dst.ImageName = image.ImageName;
-            }
-
-            return buffer.Sort();
-        }
 
         public ReadOnlySpan<AddressBankEntry> LoadContextAddresses(IApiPack src)
         {
@@ -193,7 +156,7 @@ namespace Z0
 
         public ReadOnlySeq<ProcessPartition> EmitPartitions(Process process, IApiPack dst)
         {
-            var summaries = partitions(ImageMemory.loaded(process));
+            var summaries = ImageMemory.partitions(ImageMemory.loaded(process));
             Channel.TableEmit(summaries, dst.PartitionPath());
             return summaries;
         }
@@ -253,7 +216,7 @@ namespace Z0
                 if(line.IsEmpty)
                     continue;
 
-                var result = ProcessMemory.parse(line.Content, out seek(dst,i));
+                var result = parse(line.Content, out seek(dst,i));
                 if(!result)
                     return result;
 

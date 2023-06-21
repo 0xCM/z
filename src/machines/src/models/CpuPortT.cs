@@ -33,7 +33,7 @@ namespace Z0
         public DataWidth Width
         {
             [MethodImpl(Inline)]
-            get => core.width<T>();
+            get => sys.width<T>();
         }
 
         public string Format()

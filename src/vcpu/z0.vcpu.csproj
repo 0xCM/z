@@ -3,6 +3,7 @@
     <ProjectReference Include="$(Math)" />
     <ProjectReference Include="$(Hex)" />
     <ProjectReference Include="$(Symbols)" />
+    <ProjectReference Include="$(Cells)" />
   </ItemGroup>
   <Import Project="$(ProjectProps)\usings.props"/>
   <PropertyGroup>

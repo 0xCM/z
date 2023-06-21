@@ -105,7 +105,7 @@ namespace Z0
             return sys.start(Run);
         }
 
-         [Op]
+        [Op]
         public static Task<ExecToken> start(IWfChannel channel, FilePath tool, CmdArgs args, ToolCmdSpec? spec = null)
         {
             var ctx = spec ?? ToolCmdSpec.Default;
@@ -129,7 +129,7 @@ namespace Z0
                 {
                     using var process = sys.process(psi);
                     var channeled = channel.ChannelProcess(process, ctx);
-                    token = channeled.Run(channel.Running($"Executing '{tool}' with arguments '{args}"));
+                    token = channeled.Run(channel.Running($"Executing '{tool}' with arguments '{args}'"));
                     term.cmd();
                 }
                 catch(Exception e)

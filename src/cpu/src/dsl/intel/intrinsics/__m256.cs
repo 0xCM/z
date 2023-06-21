@@ -63,7 +63,7 @@ namespace Z0.dsl.intel
 
         [MethodImpl(Inline)]
         public static implicit operator __m256(float src)
-            => gcpu.vbroadcast(w256,src);
+            => vgcpu.vbroadcast(w256,src);
 
         [MethodImpl(Inline)]
         public static implicit operator Vector256<float>(__m256 src)

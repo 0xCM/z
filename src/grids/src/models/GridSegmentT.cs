@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
     using static CharText;
 
     [StructLayout(StructLayout, Pack=1)]
