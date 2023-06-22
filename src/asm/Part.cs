@@ -2,12 +2,12 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+[assembly: PartId("asm")]
+
+namespace Z0.Parts
 {
-    partial class XTend
+    public sealed class Asm : Part<Asm>
     {
-        [Op]
-        public static Index<Imm8R> ToImm8Values(this byte[] src, ImmRefinementKind kind)
-            => src.Map(x => new Imm8R(x));
     }
 }
+

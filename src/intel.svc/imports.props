@@ -1,6 +1,6 @@
 <Project>
   <ItemGroup>
-    <ProjectReference Include="$(Asm)" />
+    <ProjectReference Include="$(AsmV1)" />
     <ProjectReference Include="$(Cpu)" />
     <ProjectReference Include="$(ZXml)" />
     <ProjectReference Include="$(Tools)" />

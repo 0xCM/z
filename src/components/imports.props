@@ -4,7 +4,7 @@
     <ProjectReference Include="$(ApiCode)" />
     <ProjectReference Include="$(ApiMd)" />
     <ProjectReference Include="$(Alloc)" />
-    <ProjectReference Include="$(Asm)" />
+    <ProjectReference Include="$(AsmV1)" />
     <ProjectReference Include="$(AsmPrototypes)" />
     <ProjectReference Include="$(AsmSvc)" />
     <ProjectReference Include="$(Assets)" />

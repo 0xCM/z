@@ -42,7 +42,7 @@ namespace Z0
             return channel.Ran(running);
         }
 
-        public static EnvReport load(IEnvDb src, EnvId id)
+        public static EnvReport load(IDbArchive src, EnvId id)
         {
             var _vars = vars(cfgpath(src, id));
             return new EnvReport(id, _vars, tools(toolpath(src, id)), rows(_vars, Env.id()));

@@ -1,4 +1,5 @@
-<Project>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(ProjectProps)\usings.props"/>
   <ItemGroup>
     <ProjectReference Include="$(AsmCore)" />
     <ProjectReference Include="$(ClrEcma)" />
@@ -7,5 +8,7 @@
     <ProjectReference Include="$(ApiCode)" />
     <PackageReference Include="Iced" Version="1.4.0" />
   </ItemGroup>
-
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
 </Project>

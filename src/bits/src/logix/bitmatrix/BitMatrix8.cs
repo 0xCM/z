@@ -59,7 +59,7 @@ namespace Z0
         /// </summary>
         public unsafe ref byte Head
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref seek(Bytes,0);
         }
 
@@ -93,7 +93,7 @@ namespace Z0
         /// <param name="index">The row index</param>
         public ref BitVector8 this[int index]
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline),UnscopedRef]
             get => ref Unsafe.As<byte,BitVector8>(ref seek(Head, index));
         }
 
