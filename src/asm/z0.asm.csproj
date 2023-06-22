@@ -6,6 +6,7 @@
     <ProjectReference Include="$(Dynamic)" />
     <ProjectReference Include="$(Buffers)" />
     <ProjectReference Include="$(BitFields)" />
+    <ProjectReference Include="$(Containers)" />
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>

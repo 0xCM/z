@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
     using static XedRules;
     using CK = XedRules.RuleCellKind;
 
@@ -28,11 +28,11 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public static implicit operator uint(RuleFieldBits src)
-                => core.@as<RuleFieldBits,uint>(src);
+                => @as<RuleFieldBits,uint>(src);
 
             [MethodImpl(Inline)]
             public static explicit operator RuleFieldBits(uint src)
-                => core.@as<RuleFieldBits>(src);
+                => @as<RuleFieldBits>(src);
 
             public static RuleFieldBits Empty => default;
         }
@@ -86,7 +86,7 @@ namespace Z0
             dst |= (uint)field << (int)Dataset.Offset(Segment.Field);
             dst |= (uint)op << (int)Dataset.Offset(Segment.Operator);
             dst |= (uint)kind << (int)Dataset.Offset(Segment.DataKind);
-            dst |= (uint)core.@as<T,ushort>(value) << (int)Dataset.Offset(Segment.Value);
+            dst |= (uint)sys.@as<T,ushort>(value) << (int)Dataset.Offset(Segment.Value);
             return (RuleFieldBits)dst;
         }
 

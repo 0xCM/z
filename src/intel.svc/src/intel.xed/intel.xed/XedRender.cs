@@ -13,7 +13,7 @@ namespace Z0
     using static XedDisasm;
     using static XedDisasmModels;
     using static XedLiterals;
-    using static core;
+    using static sys;
 
     using OC = XedModels.OpAttribKind;
 

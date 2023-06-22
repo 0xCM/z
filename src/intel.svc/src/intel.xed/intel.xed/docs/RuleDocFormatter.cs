@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static XedRules;
-    using static core;
+    using static sys;
 
     partial class XedDocs
     {

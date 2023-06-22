@@ -9,10 +9,8 @@ namespace Z0
 
     using static XedModels;
     using static XedRules;
-    using static XedImport;
-    using static XedLiterals;
 
-    using static core;
+    using static sys;
 
     using R = XedRules;
 
