@@ -26,7 +26,7 @@ namespace Z0.Asm
             K Kind {get;}
 
             byte IEncodingRule.RuleId
-                => core.bw8(Kind);
+                => sys.bw8(Kind);
         }
     }
 }

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static gcpu;
+    using static vgcpu;
 
     using K = ApiClasses;
 

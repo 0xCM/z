@@ -175,7 +175,7 @@ namespace Z0
             [MethodImpl(Inline)]
             static FieldValue value<T>(FieldKind kind, T value)
                 where T : unmanaged
-                    => new FieldValue(kind, core.bw64(value));
+                    => new FieldValue(kind, sys.bw64(value));
 
             [Op]
             public static FieldValue parse(string src, FieldKind kind, ref OperandState dst)

@@ -15,7 +15,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public Vector128<T> Invoke(Vector128<T> x, byte count)
-                => gcpu.vsrl(x,count);
+                => vgcpu.vsrl(x,count);
 
             [MethodImpl(Inline)]
             public T Invoke(T a, byte count)
@@ -28,7 +28,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public Vector256<T> Invoke(Vector256<T> x, byte count)
-                => gcpu.vsrl(x,count);
+                => vgcpu.vsrl(x,count);
 
             [MethodImpl(Inline)]
             public T Invoke(T a, byte count)
@@ -40,7 +40,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public Vector128<T> Invoke(Vector128<T> x, Vector128<T> count)
-                => gcpu.vsrl(x,count);
+                => vgcpu.vsrl(x,count);
 
             [MethodImpl(Inline)]
             public T Invoke(T a, T count)
@@ -53,7 +53,7 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public Vector256<T> Invoke(Vector256<T> x, Vector256<T> count)
-                => gcpu.vsrl(x,count);
+                => vgcpu.vsrl(x,count);
 
             [MethodImpl(Inline)]
             public T InvokeScalar(T a, T offset)

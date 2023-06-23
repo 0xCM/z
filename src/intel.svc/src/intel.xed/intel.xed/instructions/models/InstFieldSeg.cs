@@ -22,7 +22,7 @@ namespace Z0
                 Field = field;
                 Type = InstSegTypes.type(src.Width, src.Value);
                 Pad = default;
-                core.@as<BitNumber<byte>>(Pad.First) = src;
+                sys.@as<BitNumber<byte>>(Pad.First) = src;
             }
 
             [MethodImpl(Inline)]

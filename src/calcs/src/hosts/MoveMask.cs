@@ -14,7 +14,7 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public ushort Invoke(Vector128<T> x)
-                => cpu.vmovemask(cpu.v8u(x));
+                => vcpu.vmovemask(vcpu.v8u(x));
         }
 
         public readonly struct VMoveMask256<T> : ISVUnaryScalarFunc256<T,uint>
@@ -22,7 +22,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public uint Invoke(Vector256<T> x)
-                => cpu.vmovemask(cpu.v8u(x));
+                => vcpu.vmovemask(vcpu.v8u(x));
         }
     }
 }

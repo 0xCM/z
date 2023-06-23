@@ -5,8 +5,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static SFx;
-
     partial struct CalcHosts
     {
         [Closures(AllNumeric), TestZ]
@@ -15,7 +13,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public bit Invoke(Vector128<T> x,Vector128<T> y)
-                => gcpu.vtestz(x,y);
+                => vgcpu.vtestz(x,y);
 
             [MethodImpl(Inline)]
             public bit Invoke(T a, T b)
@@ -28,7 +26,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public bit Invoke(Vector256<T> x,Vector256<T> y)
-                => gcpu.vtestz(x,y);
+                => vgcpu.vtestz(x,y);
 
             [MethodImpl(Inline)]
             public bit InvokeScalar(T a, T b)

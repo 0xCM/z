@@ -115,7 +115,7 @@ namespace Z0
             where S : unmanaged
             where T : unmanaged
         {
-            var length = core.min(dst.CellCount, width<S>());
+            var length = sys.min(dst.CellCount, width<S>());
             for(var i=0; i<length; i++)
                 dst[i] = gbits.test(src, (byte)i) ? enabled : default;
             return dst;
@@ -134,7 +134,7 @@ namespace Z0
             where S : unmanaged
             where T : unmanaged
         {
-            var length = core.min(dst.CellCount, width<S>());
+            var length = sys.min(dst.CellCount, width<S>());
             for(var i=0; i<length; i++)
                 dst[i] = gbits.test(src,(byte)i) ? enabled : default;
             return dst;

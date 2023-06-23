@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static gcpu;
+    using static vgcpu;
 
     partial struct vmask
     {
@@ -18,7 +18,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Integers)]
         public static Vector128<T> vdisable<T>(Vector128<T> src, byte start, byte count)
             where T : unmanaged
-                => gcpu.vand(vbroadcast(w128, eraser<T>(start, count)), src);
+                => vgcpu.vand(vbroadcast(w128, eraser<T>(start, count)), src);
 
         /// <summary>
         /// Clears a sequence of bits from each component
@@ -30,6 +30,6 @@ namespace Z0
         [MethodImpl(Inline),Op, Closures(Integers)]
         public static Vector256<T> vdisable<T>(Vector256<T> src, byte start, byte count)
             where T : unmanaged
-                => gcpu.vand(vbroadcast(w256, eraser<T>(start,count)), src);
+                => vgcpu.vand(vbroadcast(w256, eraser<T>(start,count)), src);
     }
 }

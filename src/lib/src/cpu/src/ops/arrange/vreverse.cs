@@ -12,7 +12,7 @@ namespace Z0
         /// <param name="src">The source vector</param>
         [MethodImpl(Inline), Op]
         public static Vector128<byte> vreverse(Vector128<byte> src)
-            => vshuf16x8(src, gcpu.vdec<byte>(w128));
+            => vshuf16x8(src, vgcpu.vdec<byte>(w128));
 
         /// <summary>
         /// Reverses the source vector components
@@ -20,7 +20,7 @@ namespace Z0
         /// <param name="src">The source vector</param>
         [MethodImpl(Inline), Op]
         public static Vector128<sbyte> vreverse(Vector128<sbyte> src)
-            => vshuf16x8(src, gcpu.vdec<sbyte>(w128));
+            => vshuf16x8(src, vgcpu.vdec<sbyte>(w128));
 
         /// <summary>
         /// Reverses the source vector components

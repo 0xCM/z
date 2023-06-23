@@ -45,7 +45,7 @@ namespace Z0
         {
             int count = 0;
             for(var i=0u; i<src.Length; i++)
-                if(f(core.skip(src,i)))
+                if(f(sys.skip(src,i)))
                     count++;
             return count;
         }

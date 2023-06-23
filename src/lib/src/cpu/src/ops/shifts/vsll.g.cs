@@ -17,7 +17,7 @@ namespace Z0
         [MethodImpl(Inline), Sll, Closures(Integers)]
         public static Vector128<T> vsll<T>(Vector128<T> x, [Imm] byte count)
             where T : unmanaged
-            => vsll_u(x,count);
+                => vsll_u(x,count);
 
         /// <summary>
         /// Shifts each source vector component leftwards by a specified number of bits

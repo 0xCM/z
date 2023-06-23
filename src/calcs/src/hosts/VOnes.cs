@@ -11,7 +11,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public Vector128<T> Invoke()
-                => gcpu.vones<T>(w128);
+                => vgcpu.vones<T>(w128);
         }
 
         public readonly struct VOnes256<T> : IEmitter256<T>
@@ -19,7 +19,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public Vector256<T> Invoke()
-                => gcpu.vones<T>(w256);
+                => vgcpu.vones<T>(w256);
         }
     }
 }

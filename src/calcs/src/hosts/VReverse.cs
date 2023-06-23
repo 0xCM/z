@@ -12,7 +12,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public Vector128<T> Invoke(Vector128<T> x)
-                => gcpu.vreverse(x);
+                => vgcpu.vreverse(x);
         }
 
         [Closures(Integers), Reverse]
@@ -21,7 +21,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public Vector256<T> Invoke(Vector256<T> x)
-                => gcpu.vreverse(x);
+                => vgcpu.vreverse(x);
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public Vector128<T> Invoke(Vector128<T> x, Vector128<T> y)
-                => gcpu.vnand(x,y);
+                => vgcpu.vnand(x,y);
 
             [MethodImpl(Inline)]
             public T Invoke(T a, T b)
@@ -54,7 +54,7 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public Vector256<T> Invoke(Vector256<T> x, Vector256<T> y)
-                => gcpu.vnand(x,y);
+                => vgcpu.vnand(x,y);
 
             [MethodImpl(Inline)]
             public T Invoke(T a, T b)

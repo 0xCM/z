@@ -23,13 +23,13 @@ namespace Z0
             public ReadOnlySpan<CellValue> Layout
             {
                 [MethodImpl(Inline)]
-                get => IsEmpty ? default : core.slice(Data.View, 0, LayoutCount);
+                get => IsEmpty ? default : sys.slice(Data.View, 0, LayoutCount);
             }
 
             public ReadOnlySpan<CellValue> Expr
             {
                 [MethodImpl(Inline)]
-                get => IsEmpty ?  default :core.slice(Data.View, LayoutCount);
+                get => IsEmpty ?  default : sys.slice(Data.View, LayoutCount);
             }
 
             public CellValue[] Storage

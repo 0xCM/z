@@ -498,9 +498,9 @@ namespace Z0
         static Vector128<T> VBF<T>(Vector128<T> x, Vector128<T> mask, byte shift)
             where T : unmanaged
         {
-            var y = gcpu.vand(x, mask);
-            y = gcpu.vxors(y, shift);
-            y = gcpu.vxor(gcpu.vand(y, mask), x);
+            var y = vgcpu.vand(x, mask);
+            y = vgcpu.vxors(y, shift);
+            y = vgcpu.vxor(vgcpu.vand(y, mask), x);
             return y;
         }
 
@@ -514,9 +514,9 @@ namespace Z0
         static Vector256<T> VBF<T>(Vector256<T> x, Vector256<T> mask, byte shift)
             where T : unmanaged
         {
-            var y = gcpu.vand(x, mask);
-            y = gcpu.vxors(y, shift);
-            y = gcpu.vxor(gcpu.vand(y, mask), x);
+            var y = vgcpu.vand(x, mask);
+            y = vgcpu.vxors(y, shift);
+            y = vgcpu.vxor(vgcpu.vand(y, mask), x);
             return y;
         }
 

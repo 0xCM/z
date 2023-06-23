@@ -4,13 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-    using System.Runtime.Intrinsics;
-
-    using static Root;
-    using static SFx;
-
     partial struct CalcHosts
     {
         public readonly struct VSwapHiLo128<T> : IUnaryOp128<T>
@@ -18,7 +11,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public Vector128<T> Invoke(Vector128<T> x)
-                => gcpu.vswaphl(x);
+                => vgcpu.vswaphl(x);
         }
 
         public readonly struct VSwapHiLo256<T> : IUnaryOp256<T>
@@ -26,7 +19,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public Vector256<T> Invoke(Vector256<T> x)
-                => gcpu.vswaphl(x);
+                => vgcpu.vswaphl(x);
         }
     }
 }

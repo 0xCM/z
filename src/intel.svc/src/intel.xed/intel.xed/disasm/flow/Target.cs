@@ -32,7 +32,7 @@ namespace Z0
             public Target()
             {
                 Counter = 0;
-                Exclusions = core.hashset(K.TZCNT,K.LZCNT,K.MAX_BYTES);
+                Exclusions = sys.hashset(K.TZCNT,K.LZCNT,K.MAX_BYTES);
                 Running += Nothing;
                 Ran += Nothing;
                 OpDetailComputed += Nothing;

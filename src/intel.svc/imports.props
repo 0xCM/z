@@ -1,8 +1,2 @@
 <Project>
-  <ItemGroup>
-    <ProjectReference Include="$(AsmV1)" />
-    <ProjectReference Include="$(ZXml)" />
-    <ProjectReference Include="$(Tools)" />
-    <ProjectReference Include="$(Containers)" />
-  </ItemGroup>
 </Project>

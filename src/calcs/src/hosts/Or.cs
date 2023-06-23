@@ -53,7 +53,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public Vector256<T> Invoke(Vector256<T> x, Vector256<T> y)
-                => gcpu.vor(x,y);
+                => vgcpu.vor(x,y);
 
             [MethodImpl(Inline)]
             public T Invoke(T a, T b)

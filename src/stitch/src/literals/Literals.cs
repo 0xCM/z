@@ -68,7 +68,7 @@ namespace Z0
             where T : IEquatable<T>, IComparable<T>
         {
             var dst = text.buffer();
-            var w = core.width<T>();
+            var w = sys.width<T>();
             var count = src.Count;
             var offset = 0u;
             dst.AppendLine(string.Format("LiteralSeq<{0}> {1} = new ({1}, new {0}[{2}]", typeof(T).Name, src.Name, src.Count));

@@ -11,7 +11,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public Vector128<T> Invoke(Vector128<T> x)
-                => gcpu.vbyteswap(x);
+                => vgcpu.vbyteswap(x);
 
             [MethodImpl(Inline)]
             public T Invoke(T a)
@@ -23,7 +23,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public Vector256<T> Invoke(Vector256<T> x)
-                => gcpu.vbyteswap(x);
+                => vgcpu.vbyteswap(x);
 
             [MethodImpl(Inline)]
             public T Invoke(T a)

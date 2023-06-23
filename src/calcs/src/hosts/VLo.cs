@@ -11,7 +11,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public Vector128<T> Invoke(Vector128<T> x)
-                => gcpu.vlo(x);
+                => vgcpu.vlo(x);
         }
 
         public readonly struct VLo256<T> : IReducer256<T>
@@ -19,7 +19,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public Vector128<T> Invoke(Vector256<T> x)
-                => gcpu.vlo(x);
+                => vgcpu.vlo(x);
         }
     }
 }

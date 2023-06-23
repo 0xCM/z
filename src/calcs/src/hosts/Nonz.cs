@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static SFx;
-
     partial struct CalcHosts
     {
         [Closures(AllNumeric), Nonz]
@@ -14,7 +12,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public bit Invoke(Vector128<T> x)
-                => gcpu.vnonz(x);
+                => vgcpu.vnonz(x);
 
             [MethodImpl(Inline)]
             public bit Invoke(T a)
@@ -27,7 +25,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public bit Invoke(Vector256<T> x)
-                => gcpu.vnonz(x);
+                => vgcpu.vnonz(x);
 
             [MethodImpl(Inline)]
             public bit Invoke(T a)

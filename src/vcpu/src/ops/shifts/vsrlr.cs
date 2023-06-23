@@ -6,23 +6,23 @@ namespace Z0
 {
     partial class vcpu 
     {
-        // /// <summary>
-        // /// Promotes the offset scalar to a vector and applies the register-based right shift operator
-        // /// </summary>
-        // /// <param name="src">The source vector</param>
-        // /// <param name="count">The offset amount</param>
-        // [MethodImpl(Inline), Op]
-        // public static Vector128<sbyte> vsrlr(Vector128<sbyte> src, sbyte count)
-        //     => vsrl(src, vscalar(w128,count));
+        /// <summary>
+        /// Promotes the offset scalar to a vector and applies the register-based right shift operator
+        /// </summary>
+        /// <param name="src">The source vector</param>
+        /// <param name="count">The offset amount</param>
+        [MethodImpl(Inline), Op]
+        public static Vector128<sbyte> vsrlr(Vector128<sbyte> src, sbyte count)
+            => vsrl(src, vscalar(w128,count));
 
-        // /// <summary>
-        // /// Promotes the offset scalar to a vector and applies the register-based right shift operator
-        // /// </summary>
-        // /// <param name="src">The source vector</param>
-        // /// <param name="count">The offset amount</param>
-        // [MethodImpl(Inline), Op]
-        // public static Vector128<byte> vsrlr(Vector128<byte> src, byte count)
-        //     => vsrl(src, vscalar(w128,count));
+        /// <summary>
+        /// Promotes the offset scalar to a vector and applies the register-based right shift operator
+        /// </summary>
+        /// <param name="src">The source vector</param>
+        /// <param name="count">The offset amount</param>
+        [MethodImpl(Inline), Op]
+        public static Vector128<byte> vsrlr(Vector128<byte> src, byte count)
+            => vsrl(src, vscalar(w128,count));
 
         /// <summary>
         /// Promotes the offset scalar to a vector and applies the register-based right shift operator
@@ -78,23 +78,23 @@ namespace Z0
         public static Vector128<ulong> vsrlr(Vector128<ulong> src, ulong count)
             => vsrl(src, vscalar(w128,count));
 
-        // /// <summary>
-        // /// Promotes the offset scalar to a vector and applies the register-based right shift operator
-        // /// </summary>
-        // /// <param name="src">The source vector</param>
-        // /// <param name="count">The offset amount</param>
-        // [MethodImpl(Inline), Op]
-        // public static Vector256<sbyte> vsrlr(Vector256<sbyte> src, sbyte count)
-        //     => vsrl(src, vscalar(w128,count));
+        /// <summary>
+        /// Promotes the offset scalar to a vector and applies the register-based right shift operator
+        /// </summary>
+        /// <param name="src">The source vector</param>
+        /// <param name="count">The offset amount</param>
+        [MethodImpl(Inline), Op]
+        public static Vector256<sbyte> vsrlr(Vector256<sbyte> src, sbyte count)
+            => vsrl(src, vscalar(w128,count));
 
-        // /// <summary>
-        // /// Promotes the offset scalar to a vector and applies the register-based right shift operator
-        // /// </summary>
-        // /// <param name="src">The source vector</param>
-        // /// <param name="count">The offset amount</param>
-        // [MethodImpl(Inline), Op]
-        // public static Vector256<byte> vsrlr(Vector256<byte> src, byte count)
-        //     => vsrl(src, vscalar(w128,count));
+        /// <summary>
+        /// Promotes the offset scalar to a vector and applies the register-based right shift operator
+        /// </summary>
+        /// <param name="src">The source vector</param>
+        /// <param name="count">The offset amount</param>
+        [MethodImpl(Inline), Op]
+        public static Vector256<byte> vsrlr(Vector256<byte> src, byte count)
+            => vsrl(src, vscalar(w128,count));
 
         /// <summary>
         /// Promotes the offset scalar to a vector and applies the register-based right shift operator

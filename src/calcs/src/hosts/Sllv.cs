@@ -13,7 +13,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public Vector128<T> Invoke(Vector128<T> x, Vector128<T> offsets)
-                => gcpu.vsllv(x,offsets);
+                => vgcpu.vsllv(x,offsets);
 
             [MethodImpl(Inline)]
             public T Invoke(T a, T offset)
@@ -25,7 +25,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public Vector256<T> Invoke(Vector256<T> x, Vector256<T> offsets)
-                => gcpu.vsllv(x,offsets);
+                => vgcpu.vsllv(x,offsets);
 
             [MethodImpl(Inline)]
             public T Invoke(T a, T offset)

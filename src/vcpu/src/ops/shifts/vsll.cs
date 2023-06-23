@@ -9,7 +9,7 @@ namespace Z0
     using static sys;
 
     partial class vcpu 
-    {
+    {        
         /// <summary>
         /// Defines the unfortunately missing _mm_slli_epi8 that shifts each vector component leftward by a common number of bits
         /// </summary>
@@ -175,31 +175,31 @@ namespace Z0
         public static Vector256<ulong> vsll(Vector256<ulong> src, [Imm] byte count)
             => ShiftLeftLogical(src, (byte)count);
 
-        // /// <summary>
-        // /// Shifts each source vector component leftwards by an amount specified in the first component of the offset vector
-        // /// </summary>
-        // /// <param name="src">The source vector</param>
-        // /// <param name="count">The offset vector</param>
-        // [MethodImpl(Inline), Sll]
-        // public static Vector128<byte> vsll(Vector128<byte> src, Vector128<byte> count)
-        // {
-        //     var y = v16u(count);
-        //     var dst = vsll(vpack.vinflate256x16u(src), y);
-        //     return vpack.vpack128x8u(dst);
-        // }
+        /// <summary>
+        /// Shifts each source vector component leftwards by an amount specified in the first component of the offset vector
+        /// </summary>
+        /// <param name="src">The source vector</param>
+        /// <param name="count">The offset vector</param>
+        [MethodImpl(Inline), Sll]
+        public static Vector128<byte> vsll(Vector128<byte> src, Vector128<byte> count)
+        {
+            var y = v16u(count);
+            var dst = vsll(vpack.vinflate256x16u(src), y);
+            return vpack.vpack128x8u(dst);
+        }
 
-        // /// <summary>
-        // /// Shifts each source vector component leftwards by an amount specified in the first component of the offset vector
-        // /// </summary>
-        // /// <param name="src">The source vector</param>
-        // /// <param name="count">The offset vector</param>
-        // [MethodImpl(Inline), Sll]
-        // public static Vector128<sbyte> vsll(Vector128<sbyte> src, Vector128<sbyte> count)
-        // {
-        //     var y = v16i(count);
-        //     var dst = vsll(vpack.vinflate256x16i(src), y);
-        //     return vpack.vpack128x8i(dst);
-        // }
+        /// <summary>
+        /// Shifts each source vector component leftwards by an amount specified in the first component of the offset vector
+        /// </summary>
+        /// <param name="src">The source vector</param>
+        /// <param name="count">The offset vector</param>
+        [MethodImpl(Inline), Sll]
+        public static Vector128<sbyte> vsll(Vector128<sbyte> src, Vector128<sbyte> count)
+        {
+            var y = v16i(count);
+            var dst = vsll(vpack.vinflate256x16i(src), y);
+            return vpack.vpack128x8i(dst);
+        }
 
         /// <summary>
         ///  __m128i _mm_sll_epi16 (__m128i a, __m128i count) PSRLW xmm, xmm/m128
@@ -260,33 +260,33 @@ namespace Z0
         public static Vector128<ulong> vsll(Vector128<ulong> src, Vector128<ulong> count)
             => ShiftLeftLogical(src, count);
 
-        // /// <summary>
-        // /// Shifts each source vector component leftwards by an amount specified in the first component of the offset vector
-        // /// </summary>
-        // /// <param name="src">The source vector</param>
-        // /// <param name="count">The offset vector</param>
-        // [MethodImpl(Inline), Sll]
-        // public static Vector256<sbyte> vsll(Vector256<sbyte> src, Vector128<sbyte> count)
-        // {
-        //     var y = v16i(count);
-        //     var lo = vsll(vpack.vinflate256x16i(vlo(src)), y);
-        //     var hi = vsll(vpack.vinflate256x16i(vhi(src)), y);
-        //     return vpack.vpack256x8i(lo,hi);
-        // }
+        /// <summary>
+        /// Shifts each source vector component leftwards by an amount specified in the first component of the offset vector
+        /// </summary>
+        /// <param name="src">The source vector</param>
+        /// <param name="count">The offset vector</param>
+        [MethodImpl(Inline), Sll]
+        public static Vector256<sbyte> vsll(Vector256<sbyte> src, Vector128<sbyte> count)
+        {
+            var y = v16i(count);
+            var lo = vsll(vpack.vinflate256x16i(vlo(src)), y);
+            var hi = vsll(vpack.vinflate256x16i(vhi(src)), y);
+            return vpack.vpack256x8i(lo,hi);
+        }
 
-        // /// <summary>
-        // /// Shifts each source vector component leftwards by an amount specified in the first component of the offset vector
-        // /// </summary>
-        // /// <param name="src">The source vector</param>
-        // /// <param name="count">The offset vector</param>
-        // [MethodImpl(Inline), Sll]
-        // public static Vector256<byte> vsll(Vector256<byte> src, Vector128<byte> count)
-        // {
-        //     var y = v16u(count);
-        //     var lo = vsll(vpack.vinflate256x16u(vlo(src)), y);
-        //     var hi = vsll(vpack.vinflate256x16u(vhi(src)), y);
-        //     return vpack.vpack256x8u(lo, hi);
-        // }
+        /// <summary>
+        /// Shifts each source vector component leftwards by an amount specified in the first component of the offset vector
+        /// </summary>
+        /// <param name="src">The source vector</param>
+        /// <param name="count">The offset vector</param>
+        [MethodImpl(Inline), Sll]
+        public static Vector256<byte> vsll(Vector256<byte> src, Vector128<byte> count)
+        {
+            var y = v16u(count);
+            var lo = vsll(vpack.vinflate256x16u(vlo(src)), y);
+            var hi = vsll(vpack.vinflate256x16u(vhi(src)), y);
+            return vpack.vpack256x8u(lo, hi);
+        }
 
         /// <summary>
         /// __m256i _mm256_sll_epi16 (__m256i a, __m128i count) VPSRLW ymm, ymm, xmm/m128

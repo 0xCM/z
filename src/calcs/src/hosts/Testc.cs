@@ -13,7 +13,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public bit Invoke(Vector128<T> x, Vector128<T> y)
-                => gcpu.vtestc(x,y);
+                => vgcpu.vtestc(x,y);
 
             [MethodImpl(Inline)]
             public bit Invoke(T a, T b)
@@ -26,7 +26,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public bit Invoke(Vector256<T> x, Vector256<T> y)
-                => gcpu.vtestc(x,y);
+                => vgcpu.vtestc(x,y);
 
             [MethodImpl(Inline)]
             public bit Invoke(T a, T b)

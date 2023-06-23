@@ -26,23 +26,23 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public Vector256<T> and(Vector256<T> a, Vector256<T> b)
-                => gcpu.vand(a,b);
+                => vgcpu.vand(a,b);
 
             [MethodImpl(Inline)]
             public Vector256<T> or(Vector256<T> a, Vector256<T> b)
-                => gcpu.vor(a,b);
+                => vgcpu.vor(a,b);
 
             [MethodImpl(Inline)]
             public Vector256<T> xor(Vector256<T> a, Vector256<T> b)
-                => gcpu.vxor(a,b);
+                => vgcpu.vxor(a,b);
 
             [MethodImpl(Inline)]
             public Vector256<T> cimpl(Vector256<T> a, Vector256<T> b)
-                => gcpu.vcimpl(a,b);
+                => vgcpu.vcimpl(a,b);
 
             [MethodImpl(Inline)]
             public Vector256<T> cnonimpl(Vector256<T> a, Vector256<T> b)
-                => gcpu.vcnonimpl(a,b);
+                => vgcpu.vcnonimpl(a,b);
 
             [MethodImpl(Inline)]
             public Vector256<T> @false()
@@ -54,35 +54,35 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public Vector256<T> impl(Vector256<T> a, Vector256<T> b)
-                => gcpu.vimpl(a,b);
+                => vgcpu.vimpl(a,b);
 
             [MethodImpl(Inline)]
             public Vector256<T> nand(Vector256<T> a, Vector256<T> b)
-                => gcpu.vnand(a,b);
+                => vgcpu.vnand(a,b);
 
             [MethodImpl(Inline)]
             public Vector256<T> nonimpl(Vector256<T> a, Vector256<T> b)
-                => gcpu.vnonimpl(a,b);
+                => vgcpu.vnonimpl(a,b);
 
             [MethodImpl(Inline)]
             public Vector256<T> nor(Vector256<T> a, Vector256<T> b)
-                => gcpu.vnor(a,b);
+                => vgcpu.vnor(a,b);
 
             [MethodImpl(Inline)]
             public Vector256<T> not(Vector256<T> a)
-                => gcpu.vnot(a);
+                => vgcpu.vnot(a);
 
             [MethodImpl(Inline)]
             public Vector256<T> select(Vector256<T> a, Vector256<T> b, Vector256<T> c)
-                => gcpu.vselect(a,b,c);
+                => vgcpu.vselect(a,b,c);
 
             [MethodImpl(Inline)]
             public Vector256<T> @true()
-                => gcpu.vones<T>(n256);
+                => vgcpu.vones<T>(n256);
 
             [MethodImpl(Inline)]
             public Vector256<T> xnor(Vector256<T> a, Vector256<T> b)
-                => gcpu.vxnor(a,b);
+                => vgcpu.vxnor(a,b);
 
             [MethodImpl(Inline)]
             public Vector256<T> eval<K>(Vector256<T> a, K f = default)

@@ -21,7 +21,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static DisasmToken token()
-            => (uint)core.inc(ref DisasmTokens);
+            => (uint)sys.inc(ref DisasmTokens);
 
         public static DisasmDetail detail(ProjectContext context, in FileRef src)
             => detail(context, datafile(context, src));
