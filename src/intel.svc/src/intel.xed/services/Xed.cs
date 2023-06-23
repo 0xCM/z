@@ -8,7 +8,7 @@ namespace Z0
     using static XedModels;
     using static XedRules;
 
-    public class Xed : WfSvc<Xed>
+    public partial class Xed : WfSvc<Xed>
     {
         public static Index<FieldUsage> fields(CellTables src)
         {

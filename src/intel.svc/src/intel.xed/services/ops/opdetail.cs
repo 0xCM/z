@@ -54,7 +54,7 @@ namespace Z0
             dst.BitWidth = info.BitWidth;
             if(wcode !=0)
             {
-                dst.SegInfo =  describe(wcode).SegType;
+                dst.SegInfo =  Xed.describe(wcode).SegType;
                 dst.ElementCount = dst.SegInfo.CellCount;
             }
             if(info.RegLit.IsNonEmpty && dst.BitWidth == 0)

@@ -24,7 +24,7 @@ namespace Z0
 
         InstBlockImporter BlockImporter => Wf.BlockImporter();
 
-        XedRuntime Xed => Wf.XedRuntime();
+        XedRuntime XedRuntime => Wf.XedRuntime();
 
         public void Run()
         {
@@ -39,7 +39,7 @@ namespace Z0
                 EmitChips,
                 () => Emit(CalcFieldImports()),
                 () => Emit(XedOps.PointerWidthInfo),
-                () => Emit(Xed.Views.OpWidths)
+                () => Emit(XedRuntime.Views.OpWidths)
             );
         }
 
@@ -56,19 +56,19 @@ namespace Z0
             => TableEmit(XedImport.BroadcastDefs, Targets().Table<AsmBroadcast>());
 
         void EmitIsaImports()
-            => TableEmit(Xed.Views.IsaImport, Targets().Table<IsaImport>());
+            => TableEmit(XedRuntime.Views.IsaImport, Targets().Table<IsaImport>());
 
         void EmitCpuIdImports()
-            => TableEmit(Xed.Views.CpuIdImport, Targets().Table<CpuIdImport>());
+            => TableEmit(XedRuntime.Views.CpuIdImport, Targets().Table<CpuIdImport>());
 
         void EmitFormImports()
-            => Emit(Xed.Views.FormImports);
+            => Emit(XedRuntime.Views.FormImports);
 
         void Emit(ReadOnlySpan<FormImport> src)
             => TableEmit(src, Targets().Table<FormImport>());
 
         void ImportInstBlocks()
-            => BlockImporter.Import(Xed.Views.InstImports);
+            => BlockImporter.Import(XedRuntime.Views.InstImports);
 
         void Emit(ReadOnlySpan<FieldImport> src)
             => TableEmit(src, XedPaths.Imports().Table<FieldImport>());
@@ -85,7 +85,7 @@ namespace Z0
         void EmitChipMap()
         {
             const string RowFormat = "{0,-12} | {1,-24} | {2}";
-            var map = Xed.Views.ChipMap;
+            var map = XedRuntime.Views.ChipMap;
             var dst = text.emitter();
             var counter = 0u;
             dst.WriteLine(string.Format(RowFormat, "Sequence", "ChipCode", "Isa"));
@@ -103,8 +103,8 @@ namespace Z0
         void EmitIsaForms()
         {
             var codes = Symbols.index<ChipCode>();
-            var forms = Xed.Views.FormImports;
-            var map = Xed.Views.ChipMap;
+            var forms = XedRuntime.Views.FormImports;
+            var map = XedRuntime.Views.ChipMap;
             var formisa = forms.Select(x => (x.InstForm.Kind, x.IsaKind)).ToDictionary();
             var isakinds = formisa.Values.ToHashSet();
             var isaforms = cdict<InstIsaKind,HashSet<FormImport>>();
@@ -126,6 +126,6 @@ namespace Z0
 
         static Symbols<XedFieldType> FieldTypes = Symbols.index<XedFieldType>();
 
-        static Index<AsmBroadcast> _BroadcastDefs = XedOps.broadcasts(Symbols.kinds<BCastKind>());
+        static Index<AsmBroadcast> _BroadcastDefs = Xed.broadcasts(Symbols.kinds<BCastKind>());
     }
 }

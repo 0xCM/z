@@ -5,11 +5,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
-    using static XedRules;
     using static XedModels;
 
-    partial class XedOps
+    partial class Xed
     {
         [MethodImpl(Inline), Op]
         public static bool visibility(in PatternOp src, out Visibility dst)

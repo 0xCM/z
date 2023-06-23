@@ -11,7 +11,7 @@ namespace Z0
 
     using W = XedModels.OpWidthCode;
 
-    partial class XedOps
+    partial class Xed
     {
         [Op]
         public static NativeClass nclass(OpWidthCode src)

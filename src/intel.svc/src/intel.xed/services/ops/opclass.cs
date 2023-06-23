@@ -8,7 +8,7 @@ namespace Z0
     using static XedModels;
     using static XedRules;
 
-    partial class XedOps
+    partial class Xed
     {
         [MethodImpl(Inline), Op]
         public static bit IsRegLit(OpType src)
@@ -37,7 +37,7 @@ namespace Z0
 
         public static InstOpClass opclass(MachineMode mode, in OpSpec spec)
         {
-            var desc = describe(spec.WidthCode);
+            var desc = Xed.describe(spec.WidthCode);
             var width = XedOps.width(mode, spec.WidthCode);
             var dst =  new InstOpClass {
                         Kind = spec.Kind,

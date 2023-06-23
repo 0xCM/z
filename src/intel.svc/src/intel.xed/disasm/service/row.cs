@@ -79,7 +79,7 @@ namespace Z0
                     Errors.Throw(result.Message);
 
                 var spec = operand.Spec;
-                var winfo = XedOps.describe(spec.WidthCode);
+                var winfo = Xed.describe(spec.WidthCode);
                 operand.OpWidth = winfo;
                 operand.OpName = spec.Name;
                 var optxt = EmptyString;

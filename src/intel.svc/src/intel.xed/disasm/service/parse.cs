@@ -91,7 +91,7 @@ namespace Z0
             if(result.Fail)
                 return result;
 
-            var width = XedOps.describe(dst.WidthCode);
+            var width = Xed.describe(dst.WidthCode);
             dst.BitWidth = width.Width64;
             dst.ElementType = width.ElementType;
             dst.ElementWidth = width.ElementWidth;

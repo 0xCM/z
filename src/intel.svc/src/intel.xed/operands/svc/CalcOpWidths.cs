@@ -91,7 +91,7 @@ namespace Z0
                     break;
                 }
 
-                dst.SegType = BitSegType.define(XedOps.nclass(dst.Code), dst.Width64, dst.ElementWidth);
+                dst.SegType = BitSegType.define(Xed.nclass(dst.Code), dst.Width64, dst.ElementWidth);
                 buffer.TryAdd(dst.Code, dst);
             }
 

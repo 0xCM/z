@@ -11,7 +11,7 @@ namespace Z0
     using static BroadcastClass;
     using static AsmBroadcast;
 
-    partial class XedOps
+    partial class Xed
     {
         [MethodImpl(Inline), Op]
         public static bool broadcast(in PatternOp src, out BCastKind dst)

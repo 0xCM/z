@@ -7,7 +7,7 @@ namespace Z0
 {
     using static XedModels;
 
-    partial class XedOps
+    partial class Xed
     {
         [MethodImpl(Inline), Op]
         public static bool etype(in PatternOp src, out XedModels.ElementType dst)

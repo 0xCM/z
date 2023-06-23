@@ -55,12 +55,12 @@ namespace Z0
             public bool IsNonTerminal
             {
                 [MethodImpl(Inline)]
-                get => XedOps.nonterm(this, out _);
+                get => Xed.nonterm(this, out _);
             }
 
             [MethodImpl(Inline)]
             public bool Nonterminal(out Nonterminal dst)
-                => XedOps.nonterm(this, out dst);
+                => Xed.nonterm(this, out dst);
 
             [MethodImpl(Inline)]
             public bool RegLiteral(out Register dst)
@@ -72,15 +72,15 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public bool ElementType(out ElementType dst)
-                => XedOps.etype(this, out dst);
+                => Xed.etype(this, out dst);
 
             [MethodImpl(Inline)]
             public bool Visibility(out Visibility dst)
-                => XedOps.visibility(this, out dst);
+                => Xed.visibility(this, out dst);
 
             [MethodImpl(Inline)]
             public bool Action(out OpAction dst)
-                => XedOps.action(this, out dst);
+                => Xed.action(this, out dst);
 
             [MethodImpl(Inline)]
             public bool Scale(out MemoryScale dst)
@@ -88,7 +88,7 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public bool Broadcast(out BCastKind dst)
-                => XedOps.broadcast(this, out dst);
+                => Xed.broadcast(this, out dst);
 
             public string Format()
                 => XedRender.format(this);

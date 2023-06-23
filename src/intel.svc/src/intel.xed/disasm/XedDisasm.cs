@@ -6,9 +6,9 @@ namespace Z0
 {
     public partial class XedDisasm : WfSvc<XedDisasm>
     {
-        XedRuntime Xed => Wf.XedRuntime();        
+        XedRuntime XedRuntime => Wf.XedRuntime();        
 
-        XedPaths XedPaths => Xed.Paths;
+        XedPaths XedPaths => XedRuntime.Paths;
 
         const string disasm = "xed.disasm";
 

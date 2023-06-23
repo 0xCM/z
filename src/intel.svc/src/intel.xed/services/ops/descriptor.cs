@@ -7,7 +7,7 @@ namespace Z0
 {
     using static XedModels;
 
-    public partial class XedOps
+    public partial class Xed
     {
         [MethodImpl(Inline)]
         public static OpWidthRecord describe(OpWidthCode code)

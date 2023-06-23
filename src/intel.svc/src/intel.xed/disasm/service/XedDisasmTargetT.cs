@@ -141,7 +141,7 @@ public class XedDisasmTarget<T> : WfSvc<T>, IXedDisasmTarget
             if(Exclusions.Contains(kind))
                 continue;
 
-            var cell = XedOps.extract(state, skip(fields,i));
+            var cell = Xed.extract(state, skip(fields,i));
             inc(ref Counter);
         }
     }

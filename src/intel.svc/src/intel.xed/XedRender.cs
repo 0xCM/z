@@ -441,7 +441,7 @@ namespace Z0
             if(src.Kind == OpKind.Bcast)
             {
                 src.Broadcast(out var kind);
-                var def = XedOps.broadcast(kind);
+                var def = Xed.broadcast(kind);
                 return def.Symbol.Format();
             }
             else

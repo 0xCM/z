@@ -29,7 +29,5 @@ namespace Z0
             _PointerWidths = map(Symbols.index<PointerWidthKind>().View, s => (PointerWidth)s.Kind);
             _PointerWidthInfo = mapi(PointerWidths.Where(x => x.Kind != 0), (i,w) => w.ToRecord((byte)i));
         }
-
-
     }
 }

@@ -6,7 +6,6 @@
 namespace Z0
 {
     using static XedModels;
-    using static XedRules;
 
     public partial class XedOps
     {
@@ -22,7 +21,7 @@ namespace Z0
             dst.RegLit = src.RegLit;
             dst.Rule = src.Rule;
             dst.GprWidth = src.GrpWidth;
-            var wi = XedOps.describe(src.WidthCode);
+            var wi = Xed.describe(src.WidthCode);
             if(wi.SegType.CellCount > 1)
                 dst.Seg = new InstOpSpec.Segmentation(wi.SegType.DataWidth, wi.SegType.CellWidth, src.ElementType.Indicator, wi.SegType.CellCount);
             return dst;

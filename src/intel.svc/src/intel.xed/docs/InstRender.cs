@@ -26,7 +26,7 @@ namespace Z0
                 src.ElementType(out var et);
                 src.WidthCode(out var w);
                 var bw = XedOps.width(mode,w).Bits;
-                var wi = XedOps.describe(w);
+                var wi = Xed.describe(w);
                 if(XedOps.reglit(src, out Register reg))
                     bw = XedOps.width(reg);
 

@@ -42,7 +42,7 @@ namespace Z0
                 state = parse(src, out Index<FieldKind> parsed);
                 for(var i=0; i<parsed.Count; i++)
                 {
-                    var field = extract(state, parsed[i]);
+                    var field = Xed.extract(state, parsed[i]);
                     convert(field, out fields[field.Field]);
                 }
                 return parsed;

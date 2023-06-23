@@ -4,14 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IMachine : IDisposable
+    public interface IXedMachine : IDisposable
     {
         uint MachineId {get;}
 
         void Reset();
     }
     
-    public interface IMachine<S> : IMachine
+    public interface IXedMachine<S> : IXedMachine
     {
         void Run(S spec);
 

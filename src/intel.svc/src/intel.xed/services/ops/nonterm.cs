@@ -8,7 +8,7 @@ namespace Z0
     using static XedRules;
     using static XedModels;
 
-    partial class XedOps
+    partial class Xed
     {
         [MethodImpl(Inline), Op]
         public static bool nonterm(in PatternOp src, out Nonterminal dst)

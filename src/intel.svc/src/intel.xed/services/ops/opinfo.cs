@@ -17,16 +17,16 @@ namespace Z0
             dst.Name = src.Name;
             var wc = OpWidthCode.INVALID;
             ref readonly var attribs = ref src.Attribs;
-            nonterm(src, out dst.NonTerminal);
-            visibility(src, out dst.Visibility);
-            action(src, out dst.Action);
-            modifier(src, out dst.Modifier);
+            Xed.nonterm(src, out dst.NonTerminal);
+            Xed.visibility(src, out dst.Visibility);
+            Xed.action(src, out dst.Action);
+            Xed.modifier(src, out dst.Modifier);
             if(widthcode(src, out wc))
             {
                 dst.WidthCode = wc;
                 var w = width(mode,wc);
                 dst.BitWidth = w.Bits;
-                var wi = describe(wc);
+                var wi = Xed.describe(wc);
                 dst.SegType = wi.SegType;
                 dst.ElementType = wi.ElementType;
                 dst.ElementWidth = wi.ElementWidth;

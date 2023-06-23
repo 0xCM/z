@@ -17,7 +17,7 @@ namespace Z0
             Index<InstOpClass> Calc()
             {
                 var buffer = sys.bag<InstOpClass>();
-                iter(src, op => buffer.Add(XedOps.opclass(op)), true);
+                iter(src, op => buffer.Add(Xed.opclass(op)), true);
                 var dst = buffer.Array().Distinct().Sort();
                 for(var i=0u; i<dst.Length; i++)
                     seek(dst,i).Seq = i;

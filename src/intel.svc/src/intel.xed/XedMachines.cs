@@ -15,7 +15,7 @@ namespace Z0
 
     public class XedMachines : IDisposable
     {        
-        static IMachine allocate(XedRuntime xed)
+        static IXedMachine allocate(XedRuntime xed)
             => new MachineState(xed);
 
         XedRuntime Xed;
@@ -24,16 +24,16 @@ namespace Z0
 
         int Counter = 0;
 
-        ConcurrentDictionary<uint, IMachine> Allocations = new();
+        ConcurrentDictionary<uint, IXedMachine> Allocations = new();
 
         const byte Capacity = uint6.MaxValue + 1;
 
         bool Allocated = false;
 
-        public bool Machine(uint id, out IMachine dst)
+        public bool Machine(uint id, out IXedMachine dst)
             => Allocations.TryGetValue(id, out dst);
 
-        public IMachine Machine()
+        public IXedMachine Machine()
         {
             var m =  XedMachines.allocate(Xed);
             Allocations.TryAdd(m.MachineId,m);
@@ -68,9 +68,9 @@ namespace Z0
             iter(Allocations.Values, machine => machine.Reset());
         }
 
-        public void Run(bool rent, Action<IMachine> f)
+        public void Run(bool rent, Action<IXedMachine> f)
         {
-            var machine = default(IMachine);
+            var machine = default(IXedMachine);
             if(rent)
             {
                 Current = (byte)inc(ref Counter);
@@ -84,7 +84,7 @@ namespace Z0
             f(machine);
         }
 
-        internal class MachineState : IMachine<InstPattern>
+        internal class MachineState : IXedMachine<InstPattern>
         {
             InstPattern Pattern;
 
@@ -435,7 +435,7 @@ namespace Z0
             public Index<InstPattern> ClassPatterns
                 => _ClassPatternLookup.Find(InstClass, out var x) ? x : sys.empty<InstPattern>();
 
-            uint IMachine.MachineId
+            uint IXedMachine.MachineId
                 => Id;
 
             void LoadLookups()
