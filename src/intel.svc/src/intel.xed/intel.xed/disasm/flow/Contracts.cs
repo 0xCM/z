@@ -6,8 +6,11 @@
 namespace Z0
 {
     using static XedRules;
-    using static XedModels;
-    using static XedDisasmModels;
+
+    public interface IXedDisasmFlow
+    {
+        XedDisasmToken Run(in FileRef src, IXedDisasmTarget dst);
+    }
 
     partial class XedDisasm
     {
@@ -18,58 +21,5 @@ namespace Z0
         public delegate void FieldReceiver(uint seq, in Fields src);
 
         public delegate void FileReceiver(ProjectContext context, in FileRef src);
-
-        public interface IFlow
-        {
-            DisasmToken Run(in FileRef src, ITarget dst);
-        }
-
-        public interface ITarget
-        {
-            DisasmToken Starting(ProjectContext context, in FileRef src);
-
-            void Finished(DisasmToken token);
-
-            void Computing(uint seq, in Instruction src);
-
-            void Computed(uint seq, in OpDetails src);
-
-            void Computed(uint seq, in OperandState src);
-
-            void Computed(uint seq, in AsmInfo src);
-
-            void Computed(uint seq, in Fields src);
-
-            void Computed(uint seq, ReadOnlySpan<FieldKind> src);
-
-            void Computed(uint seq, in EncodingExtract src);
-
-            void Computed(uint seq, in InstFieldValues src);
-
-            void Computed(uint seq, in Instruction src);
-        }
-
-        public interface IContextBuffer
-        {
-            ref DisasmDataFile DataFile();
-
-            ref DisasmDetailBlock Block();
-
-            ref DisasmSummary Summary();
-
-            ref AsmInfo AsmInfo();
-
-            ref EncodingExtract Encoding();
-
-            ref InstFieldValues Props();
-
-            uint FieldCount {get;}
-
-            ref readonly FileRef Source {get;}
-
-            void Cache(ReadOnlySpan<FieldKind> src);
-
-            void State(uint seq, in OperandState state, OpStateReceiver receiver);
-        }
     }
 }

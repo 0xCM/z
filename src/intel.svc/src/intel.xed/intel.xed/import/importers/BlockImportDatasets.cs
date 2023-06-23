@@ -166,7 +166,7 @@ namespace Z0
                             split(line, out _, out value);
                             try
                             {
-                                InstParser.parse(value, out import.Pattern);
+                                XedInstParser.parse(value, out import.Pattern);
                                 var fields = InstCells.sort(import.Pattern.Cells);
                                 import.Pattern = new (fields);
                                 XedPatterns.mode(import.Pattern, out import.Mode);

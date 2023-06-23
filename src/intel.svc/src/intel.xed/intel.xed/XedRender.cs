@@ -6,18 +6,14 @@
 namespace Z0
 {
     using Asm;
-    using global;
 
     using static XedModels;
     using static XedRules;
-    using static XedDisasm;
-    using static XedDisasmModels;
-    using static XedLiterals;
     using static sys;
 
     using OC = XedModels.OpAttribKind;
 
-    public partial class XedRender
+    public class XedRender
     {
         static EnumRender<Asm.FlagEffectKind> FlagEffects = new();
 
@@ -352,7 +348,7 @@ namespace Z0
                 _ => '\0',
             };
 
-        public static void describe(in DisasmDetailBlockRow src, ITextEmitter dst)
+        public static void describe(in XedDisasmDetailRow src, ITextEmitter dst)
         {
             const sbyte Pad = -XedFields.FieldRender.ColWidth;
             var pattern = RP.slot(0,Pad) + " | " + RP.slot(1);
@@ -365,7 +361,7 @@ namespace Z0
             dst.AppendLineFormat(pattern, nameof(src.OpCode), src.OpCode);
         }
 
-        public static void describe(in DisasmFieldBuffer src, ITextEmitter dst)
+        public static void describe(in XedDisasmFields src, ITextEmitter dst)
         {
             const string RenderPattern = XedFields.FieldRender.Columns;
             dst.AppendLineFormat(RenderPattern, nameof(src.Summary.InstructionId), src.Summary.InstructionId);

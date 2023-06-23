@@ -8,14 +8,13 @@ namespace Z0
     using static sys;
     using static XedDisasm;
     using static XedModels;
-    using static XedDisasmModels;
 
-    partial class XedDisasmSvc
+    partial class XedDisasm
     {
-        public void EmitOpsReport(ProjectContext context, DisasmDoc src)
+        public void EmitOpsReport(ProjectContext context, XedDisasmDoc src)
             => EmitOpsReport(context, src.Detail);
 
-        void EmitOpsReport(ProjectContext context, DisasmDetail doc)
+        void EmitOpsReport(ProjectContext context, XedDisasmDetail doc)
         {
             var outpath = XedPaths.DisasmOpsPath(context.Project.Name, doc.DataFile.Source);
             var emitting = EmittingFile(outpath);

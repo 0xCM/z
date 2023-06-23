@@ -7,7 +7,7 @@ namespace Z0
 {
     using static sys;
 
-    partial class XedDisasmSvc
+    partial class XedDisasm
     {
         public void Collect(ProjectContext context)
         {

@@ -32,29 +32,26 @@ namespace Z0
             public XedChecks XedChecks(IWfRuntime wf)
                 => Service<XedChecks>(wf);
 
-            public XedCmd XedCmd(IWfRuntime wf)
-                => Service<XedCmd>(wf);
-
             public IntelSdm IntelSdm(IWfRuntime wf)
                 => Service<IntelSdm>(wf);
 
-            public XedImport XedImport(IWfRuntime wf, XedRuntime xed)
-                => Service<XedImport>(wf).With(xed);
+            public XedImport XedImport(IWfRuntime wf)
+                => Service<XedImport>(wf);
 
-            public XedRules XedRules(IWfRuntime wf, XedRuntime xed)
-                => Service<XedRules>(wf).With(xed);
+            public XedRules XedRules(IWfRuntime wf)
+                => Service<XedRules>(wf);
 
-            public XedOps XedOps(IWfRuntime wf, XedRuntime xed)
-                => Service<XedOps>(wf).With(xed);
+            public XedOps XedOps(IWfRuntime wf)
+                => Service<XedOps>(wf);
 
-            public XedDb XedDb(IWfRuntime wf, XedRuntime xed)
-                => Service<XedDb>(wf).With(xed);
+            public XedDb XedDb(IWfRuntime wf)
+                => Service<XedDb>(wf);
 
-            public XedDisasmSvc XedDisasm(IWfRuntime wf, XedRuntime xed)
-                => Service<XedDisasmSvc>(wf).With(xed);
+            public XedDisasm XedDisasm(IWfRuntime wf)
+                => Service<XedDisasm>(wf);
 
-            public XedDocs XedDocs(IWfRuntime wf, XedRuntime xed)
-                => Service<XedDocs>(wf).With(xed);
+            public XedDocs XedDocs(IWfRuntime wf)
+                => Service<XedDocs>(wf);
 
             public XedPaths XedPaths(IWfRuntime wf)
                 => Z0.XedPaths.Service;
@@ -62,8 +59,8 @@ namespace Z0
             public InstBlockImporter BlockImporter(IWfRuntime wf)
                 => Service<InstBlockImporter>(wf);
 
-            public XedDisasm.Analyzer DisasmAnalyzer(IWfRuntime wf)
-                => Service<XedDisasm.Analyzer>(wf);
+            public XedDisasmAnalyzer DisasmAnalyzer(IWfRuntime wf)
+                => Service<XedDisasmAnalyzer>(wf);
 
             public IntelSdmPaths SdmPaths(IWfRuntime wf)
                 => Service<IntelSdmPaths>(wf);
@@ -80,6 +77,8 @@ namespace Z0
             public XedProject XedProject(IWfRuntime wf)
                 => Service<XedProject>(wf);
 
+            public XedRuntime XedRuntime(IWfRuntime wf)
+                => Service<XedRuntime>(wf);
         }
 
         static ServiceCache Services => ServiceCache.Instance;
@@ -96,37 +95,34 @@ namespace Z0
         public static XedChecks XedChecks(this IWfRuntime xed)
             => Services.XedChecks(xed);
 
-        public static XedCmd XedCmd(this IWfRuntime xed)
-            => Services.XedCmd(xed);
-
         public static IntelSdm IntelSdm(this IWfRuntime wf)
             => Services.IntelSdm(wf);
 
         public static XedRuntime XedRuntime(this IWfRuntime wf)
-            => GlobalServices.Instance.Service<XedRuntime>(wf);
+            => Services.XedRuntime(wf);
 
-        public static XedImport XedImport(this IWfRuntime wf, XedRuntime xed)
-            => Services.XedImport(wf, xed);
+        public static XedImport XedImport(this IWfRuntime wf)
+            => Services.XedImport(wf);
 
-        public static XedRules XedRules(this IWfRuntime wf, XedRuntime xed)
-            => Services.XedRules(wf, xed);
+        public static XedRules XedRules(this IWfRuntime wf)
+            => Services.XedRules(wf);
 
-        public static XedOps XedOps(this IWfRuntime wf, XedRuntime xed)
-            => Services.XedOps(wf, xed);
+        public static XedOps XedOps(this IWfRuntime wf)
+            => Services.XedOps(wf);
 
-        public static XedDb XedDb(this IWfRuntime wf, XedRuntime xed)
-            => Services.XedDb(wf, xed);
+        public static XedDb XedDb(this IWfRuntime wf)
+            => Services.XedDb(wf);
 
-        public static XedDisasmSvc XedDisasm(this IWfRuntime wf, XedRuntime xed)
-            => Services.XedDisasm(wf, xed);
+        public static XedDisasm XedDisasm(this IWfRuntime wf)
+            => Services.XedDisasm(wf);
 
-        public static XedDocs XedDocs(this IWfRuntime wf, XedRuntime xed)
-            => Services.XedDocs(wf, xed);
+        public static XedDocs XedDocs(this IWfRuntime wf)
+            => Services.XedDocs(wf);
 
         public static InstBlockImporter BlockImporter(this IWfRuntime wf)
             => Services.BlockImporter(wf);
 
-        public static XedDisasm.Analyzer DisasmAnalyser(this IWfRuntime wf)
+        public static XedDisasmAnalyzer DisasmAnalyser(this IWfRuntime wf)
             => Services.DisasmAnalyzer(wf);
 
         public static XedPaths XedPaths(this IWfRuntime wf)
@@ -147,9 +143,6 @@ namespace Z0
         public static XedToolCmd XedToolCmd(this IWfRuntime wf)
             => Services.XedToolCmd(wf);
 
-        public static XedDisasmSvc XedDisasmSvc(this IWfRuntime wf)
-            => GlobalServices.Instance.Service<XedRuntime>(wf).Disasm;
- 
         public static IntelCmd IntelCmd(this IWfRuntime wf)
             => Services.IntelCmd(wf);
 
@@ -158,7 +151,6 @@ namespace Z0
 
         public static CpuIdSvc CpuId(this IWfRuntime wf)
             => Services.CpuId(wf);
-
     }
 
     partial struct Msg

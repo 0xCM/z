@@ -25,7 +25,7 @@
     <SlnLibs>$(SlnRoot)\src</SlnLibs>
     <SlnSrc>$(SlnRoot)\src</SlnSrc>
     <SlnDeps>$(SlnRoot)\deps</SlnDeps>
-    <SlnBuild>$(SlnRoot)\artifacts</SlnBuild>
+    <SlnBuild>$(SlnRoot)\build</SlnBuild>
     <SlnBin>$(SlnBuild)\bin</SlnBin>
     <LogRoot>$(SlnBuild)\logs</LogRoot>
     <ProjectProps>$(SlnRoot)\props</ProjectProps>

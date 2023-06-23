@@ -6,15 +6,14 @@
 namespace Z0
 {
     using static XedDisasm;
-    using static XedDisasmModels;
 
-    partial class XedDisasmSvc
+    partial class XedDisasm
     {
-        public void EmitDetailReport(ProjectContext context, DisasmDoc doc)
+        public void EmitDetailReport(ProjectContext context, XedDisasmDoc doc)
         {
             var target = XedPaths.DisasmDetailPath(context.Project.Name, doc.DataSource);
             var dst = text.emitter();
-            DisasmRender.render(doc.DetailBlocks, dst);
+            XedDisasmRender.render(doc.DetailBlocks, dst);
             var emitting = Channel.EmittingFile(target);
             using var emitter = target.AsciEmitter();
             emitter.Write(dst.Emit());

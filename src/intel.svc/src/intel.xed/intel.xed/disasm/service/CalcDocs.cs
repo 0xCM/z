@@ -5,11 +5,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XedDisasmModels;
-
-    partial class XedDisasmSvc
+    partial class XedDisasm
     {
-        public Index<DisasmDoc> CalcDocs(ProjectContext context)
+        public Index<XedDisasmDoc> CalcDocs(ProjectContext context)
             => Data(nameof(CalcDocs), () => XedDisasm.docs(context));
     }
 }

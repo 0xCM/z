@@ -1,4 +1,2 @@
-@echo off
-call %~dp0..\config.cmd
-set ShellPath=%Artifacts%\bin\%BuildPrefix%.%ProjectName%\%ConfigName%\%FrameworkMoniker%\%RuntimeMoniker%\%ToolName%.exe
-call %ShellPath%
+set ShellPath=D:\env\dev\z0\build\bin\z0.intel.shell\Release\net8.0\win-x64\intel.exe
+%ShellPath% %*

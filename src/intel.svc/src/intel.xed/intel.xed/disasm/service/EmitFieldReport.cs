@@ -5,14 +5,13 @@
 namespace Z0
 {
     using static XedDisasm;
-    using static XedDisasmModels;
 
-    partial class XedDisasmSvc
+    partial class XedDisasm
     {
-        public void EmitFieldReport(ProjectContext context, DisasmDoc src)
+        public void EmitFieldReport(ProjectContext context, XedDisasmDoc src)
             => EmitFieldReport(context, src.Detail);
 
-        void EmitFieldReport(ProjectContext context, DisasmDetail src)
+        void EmitFieldReport(ProjectContext context, XedDisasmDetail src)
         {
             var emitter = new FieldEmitter();
             var dst = text.emitter();

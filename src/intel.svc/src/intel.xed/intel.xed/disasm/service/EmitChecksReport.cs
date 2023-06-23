@@ -8,15 +8,14 @@ namespace Z0
     using static XedRules;
     using static XedModels;
     using static XedDisasm;
-    using static XedDisasmModels;
     using static XedOps;
 
-    partial class XedDisasmSvc
+    partial class XedDisasm
     {
-        public void EmitChecksReport(ProjectContext context, DisasmDoc src)
+        public void EmitChecksReport(ProjectContext context, XedDisasmDoc src)
             => EmitChecksReport(context, src.Detail);
 
-        void EmitChecksReport(ProjectContext context, DisasmDetail doc)
+        void EmitChecksReport(ProjectContext context, XedDisasmDetail doc)
         {
             const string RenderPattern = "{0,-24} | {1}";
             ref readonly var file = ref doc.DataFile;
@@ -236,7 +235,7 @@ namespace Z0
                     dst.AppendLineFormat(RenderPattern, nameof(state.OUTREG), XedRegMap.map(state.OUTREG));
                 }
 
-                DisasmRender.render(ops, buffer);
+                XedDisasmRender.render(ops, buffer);
                 dst.WriteLine(buffer.Emit());
             }
 

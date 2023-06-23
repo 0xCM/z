@@ -5,11 +5,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XedDisasmModels;
-
-    partial class XedDisasmSvc
+    partial class XedDisasm
     {
-        public void EmitSummaryReport(ProjectContext context, DisasmDoc doc)
+        public void EmitSummaryReport(ProjectContext context, XedDisasmDoc doc)
         {
             var outdir = FolderPath.Empty;
             ref readonly var summary = ref doc.Summary;

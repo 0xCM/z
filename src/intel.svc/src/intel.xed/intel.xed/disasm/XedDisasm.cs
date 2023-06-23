@@ -6,12 +6,11 @@ namespace Z0
 {
     public partial class XedDisasm : WfSvc<XedDisasm>
     {
-        // XedRuntime Xed;
+        XedRuntime Xed => Wf.XedRuntime();        
 
-        // public XedDisasm With(XedRuntime xed)
-        // {
-        //     Xed = xed;
-        //     return this;
-        // }
+        XedPaths XedPaths => Xed.Paths;
+
+        const string disasm = "xed.disasm";
+
     }
 }

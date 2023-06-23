@@ -25,19 +25,24 @@ namespace Z0
 
         IMemDb _Store;
 
-        XedRuntime Xed;
+        XedRuntime Xed => Wf.XedRuntime();
 
-        public XedDb With(XedRuntime xed)
-        {
-            Xed = xed;
-            _Store = MemDb.open(AppDb.DbTargets("memdb").Path("runtime", FileKind.Bin), new Gb(1));
-            return this;
-        }
-
+        object _StoreLock = new();
+        
         public IMemDb Store
         {
             [MethodImpl(Inline)]
-            get => _Store;
+            get 
+            {
+                lock(_StoreLock)
+                {
+                    if(_Store == null)
+                    {
+                        _Store = MemDb.open(AppDb.DbTargets("memdb").Path("runtime", FileKind.Bin), new Gb(1));
+                    }
+                }
+                return _Store;
+            }
         }
 
         ref readonly CellTables CellTables => ref Xed.Views.CellTables;

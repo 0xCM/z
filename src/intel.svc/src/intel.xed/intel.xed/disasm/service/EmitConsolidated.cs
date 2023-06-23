@@ -8,14 +8,13 @@ namespace Z0
     using static sys;
     using static XedDisasm;
     using static XedRules;
-    using static XedDisasmModels;
 
-    partial class XedDisasmSvc
+    partial class XedDisasm
     {
-        void EmitConsolidated(ProjectContext context, Index<DisasmDoc> src)
+        void EmitConsolidated(ProjectContext context, Index<XedDisasmDoc> src)
         {
             var summaries = sys.bag<XedDisasmRow>();
-            var details = sys.bag<DisasmDetailBlock>();
+            var details = sys.bag<XedDisasmDetailBlock>();
             iter(src, pair =>{
                 iter(pair.Summary.Rows, r => summaries.Add(r));
                 iter(pair.Detail.Blocks, b => details.Add(b));
@@ -27,17 +26,17 @@ namespace Z0
                 () => EmitConsolidated(context, summaries.ToArray()));
         }
 
-        void EmitOpClasses(ProjectContext context, Index<DisasmDoc> src)
+        void EmitOpClasses(ProjectContext context, Index<XedDisasmDoc> src)
         {
             var target = EtlContext.table<InstOpClass>(context.Project.Name, disasm);
             Channel.TableEmit(opclasses(src).View, target);
         }
 
-        void EmitConsolidated(ProjectContext context, Index<DisasmDetailBlock> src)
+        void EmitConsolidated(ProjectContext context, Index<XedDisasmDetailBlock> src)
         {
-            var target = EtlContext.table<DisasmDetailBlockRow>(context.Project.Name);
+            var target = EtlContext.table<XedDisasmDetailRow>(context.Project.Name);
             var buffer = text.buffer();
-            DisasmRender.render(resequence(src), buffer);
+            XedDisasmRender.render(resequence(src), buffer);
             var emitting = Channel.EmittingFile(target);
             using var emitter = target.AsciEmitter();
             emitter.Write(buffer.Emit());

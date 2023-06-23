@@ -24,13 +24,7 @@ namespace Z0
 
         InstBlockImporter BlockImporter => Wf.BlockImporter();
 
-        XedRuntime Xed;
-
-        public XedImport With(XedRuntime xed)
-        {
-            Xed = xed;
-            return this;
-        }
+        XedRuntime Xed => Wf.XedRuntime();
 
         public void Run()
         {

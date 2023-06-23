@@ -6,14 +6,13 @@
 namespace Z0
 {
     using static sys;
-    using static XedDisasmModels;
 
-    partial class XedDisasmSvc
+    partial class XedDisasm
     {
-        public void EmitBreakdowns(ProjectContext context, Index<DisasmDoc> docs)
+        public void EmitBreakdowns(ProjectContext context, Index<XedDisasmDoc> docs)
             => iter(docs, doc => EmitBreakdowns(context, doc), PllExec);
 
-        public void EmitBreakdowns(ProjectContext context, DisasmDoc doc)
+        public void EmitBreakdowns(ProjectContext context, XedDisasmDoc doc)
         {
             exec(PllExec,
                     () => EmitDetailReport(context, doc),
