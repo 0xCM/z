@@ -1796,5 +1796,4 @@ public enum XedInstKind : ushort
     XSTORE,
     XSUSLDTRK,
     XTEST,
-
 }

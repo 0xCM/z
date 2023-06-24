@@ -7,6 +7,9 @@ namespace Z0
 {
     partial class XedModels
     {
+        /// <summary>
+        /// D:\env\sdks\intel\xed\kit\include\xed\xed-extension-enum.h
+        /// </summary>
         [SymSource(xed), DataWidth(num7.Width)]
         public enum ExtensionKind : byte
         {
@@ -19,6 +22,7 @@ namespace Z0
             AES,
             AMD_INVLPGB,
             AMX_BF16,
+            AMX_FP16,
             AMX_INT8,
             AMX_TILE,
             AVX,
@@ -27,7 +31,10 @@ namespace Z0
             AVX512EVEX,
             AVX512VEX,
             AVXAES,
+            AVX_IFMA,
+            AVX_NE_CONVERT,
             AVX_VNNI,
+            AVX_VNNI_INT8,
             BASE,
             BMI1,
             BMI2,
@@ -37,12 +44,14 @@ namespace Z0
             CLFSH,
             CLWB,
             CLZERO,
+            CMPCCXADD,
             ENQCMD,
             F16C,
             FMA,
             FMA4,
             GFNI,
             HRESET,
+            ICACHE_PREFETCH,
             INVPCID,
             KEYLOCKER,
             KEYLOCKER_WIDE,
@@ -55,12 +64,14 @@ namespace Z0
             MOVBE,
             MOVDIR,
             MPX,
+            MSRLIST,
             PAUSE,
             PCLMULQDQ,
             PCONFIG,
             PKU,
             PREFETCHWT1,
             PTWRITE,
+            RAO_INT,
             RDPID,
             RDPRU,
             RDRAND,
@@ -79,7 +90,7 @@ namespace Z0
             SSE2,
             SSE3,
             SSE4,
-            SSE4a,
+            SSE4A,
             SSSE3,
             SVM,
             TBM,
@@ -96,6 +107,7 @@ namespace Z0
             VTX,
             WAITPKG,
             WBNOINVD,
+            WRMSRNS,
             X87,
             XOP,
             XSAVE,

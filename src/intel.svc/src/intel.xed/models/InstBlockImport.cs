@@ -5,8 +5,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XedRules;
-
     partial class XedModels
     {
         [StructLayout(StructLayout,Pack=1), Record(TableId)]

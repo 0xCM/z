@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XedModels;
-
     partial class XedModels
     {
         public sealed class InstBlockLines : ConcurrentDictionary<XedInstForm,InstBlockLineSpec>
