@@ -40,6 +40,11 @@ namespace Z0
         public override int GetHashCode()
             => Hash;
 
+        public string Format()
+            => $"{Path.FileName}={Key.Path}";
+
+        public override string ToString()
+            => Format();
         public int CompareTo(LocatedTool src)
             => Key.CompareTo(src.Key);
         

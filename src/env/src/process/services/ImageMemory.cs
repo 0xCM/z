@@ -136,10 +136,6 @@ namespace Z0
         public static ProcessImageMap map(ProcessAdapter process)
         {
             var src = loaded(process);
-            //var count = src.Count;
-            // var addresses = alloc<MemoryAddress>(count);
-            // for(var i=0u; i<count; i++)
-            //     seek(addresses, i) = src[i].BaseAddress;
             var state = new ProcessMemoryState();
             fill(process, ref state);
             return new ProcessImageMap(state, src, modules(process));

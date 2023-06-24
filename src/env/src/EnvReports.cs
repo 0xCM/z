@@ -8,6 +8,43 @@ namespace Z0
 
     public class EnvReports : Stateless<EnvReports>
     {
+        readonly struct EnvCfg : IEnvCfg
+        {
+            public FolderPath Root {get;}
+
+            public EnvCfg(FolderPath root)
+            {
+                Root = root;
+            }            
+
+            public EnvId EnvName
+                => Root.FolderName.Format();
+
+            public EnvReport Report(EnvVarKind kind = EnvVarKind.Process)
+                => load(EnvName, kind);
+        }
+
+        public static IEnumerable<IEnvCfg> GetEnvConfigs()
+            => EnvDb.Scoped("cfg").Folders().Map(x => (IEnvCfg)new EnvCfg(x.DbArchive().Root));
+
+        public static IEnvCfg GetEnvConfig(EnvId name)
+            => new EnvCfg(EnvDb.Scoped("cfg").Folder(name));
+
+        public static IDbArchive GetCfgRoot(EnvId env)
+            => EnvDb.Scoped("cfg").Scoped(env);
+
+        public static FilePath GetSettingsPath(IDbArchive src, EnvId name, EnvVarKind kind)
+            => src.Path(FS.file($"{name}.{kind}.settings",FileKind.Csv));
+
+        public static FilePath GetToolCsvPath(IDbArchive src, EnvId name, EnvVarKind kind)
+            => src.Path(FS.file($"{name}.{kind}.tools", FileKind.Csv));
+
+        public static FilePath GetToolListPath(IDbArchive src, EnvId name, EnvVarKind kind)
+            => src.Path(FS.file($"{name}.{kind}.tools", FileKind.List));
+
+        public static FilePath GetCfgPath(IDbArchive src, EnvId name, EnvVarKind kind)
+            => src.Path(FS.file($"{name}.{kind}", FileKind.Cfg));
+
         public static EnvReport process()
         {
             var vars = Env.vars(EnvVarKind.Process);
@@ -26,7 +63,7 @@ namespace Z0
         public static ExecToken emit(IWfChannel channel)
         {
             var running = channel.Running();
-            var targets = cfgroot(EnvDb).Scoped(Env.id());
+            var targets = GetCfgRoot(Env.id());
             emit(channel, targets);
             return channel.Ran(running);
         }
@@ -37,15 +74,18 @@ namespace Z0
             var name = Env.id();
             emit(channel, name, EnvVarKind.User, dst);
             emit(channel, name, EnvVarKind.Machine, dst);
-            save(channel, name, Env.tools(),dst);            
+            emit(channel, Env.tools(), name, EnvVarKind.Process, dst);            
             emit(channel, name, EnvVarKind.Process, dst);
             return channel.Ran(running);
         }
 
-        public static EnvReport load(IDbArchive src, EnvId id)
+        public static EnvReport load(EnvId name, EnvVarKind kind)
+            => load(EnvDb.Scoped($"cfg/{name}"), name, kind);
+
+        public static EnvReport load(IDbArchive src, EnvId name, EnvVarKind kind)
         {
-            var _vars = vars(cfgpath(src, id));
-            return new EnvReport(id, _vars, tools(toolpath(src, id)), rows(_vars, Env.id()));
+            var _vars = vars(GetCfgPath(src, name, kind));
+            return new EnvReport(name, _vars, tools(GetToolCsvPath(src, name, kind)), rows(_vars, Env.id()));
         }
 
         public static EnvVars vars(FilePath src)
@@ -95,18 +135,18 @@ namespace Z0
             return token;
         }
 
-        public static void emit(IWfChannel channel, ToolCatalog src, IDbArchive dst)
-        {
-            var emitter = text.emitter();
-            foreach(var tool in src)
-            {               
-                var info = string.Format("{0:D5} | {1,-48} | {2}", tool.Seq, tool.Name, tool.Path); 
-                emitter.AppendLine(info);
-                channel.Row(info);
-            }
+        // public static void emit(IWfChannel channel, ToolCatalog src, EnvId name, EnvVarKind kind,  IDbArchive dst)
+        // {
+        //     var emitter = text.emitter();
+        //     foreach(var tool in src)
+        //     {               
+        //         var info = string.Format("{0:D5} | {1,-48} | {2}", tool.Seq, tool.Name, tool.Path); 
+        //         emitter.AppendLine(string.Format("{0:D5} | {1,-48} | {2}", tool.Seq, tool.Name, tool.Path));
+        //         channel.Row(info);
+        //     }
 
-            channel.FileEmit(emitter.Emit(), dst.Path(FS.file("tools", FileKind.Csv)));
-        }
+        //     channel.FileEmit(emitter.Emit(), GetToolCsvPath(dst, name, kind));
+        // }
 
         static ExecToken emit(IWfChannel channel, ProcessAdapter src, Timestamp ts, IDbArchive dst)
         {
@@ -122,29 +162,22 @@ namespace Z0
         static ExecToken modules(IWfChannel channel, Process src, IDbArchive dst)
             => channel.TableEmit(ImageMemory.modules(src), dst.Scoped("context").Path("process.modules",FileKind.Csv));
 
-        static void save(IWfChannel channel, EnvId name, ToolCatalog catalog, IDbArchive dst)
+        static void emit(IWfChannel channel, ToolCatalog catalog, EnvId name, EnvVarKind kind, IDbArchive dst)
         {
             var counter = 0u;
-            var emitter = text.emitter();
+            var list = text.emitter();
+            var csv = text.emitter();
             foreach(var tool in catalog)
             {               
-                var info = string.Format("{0,-36} {1}", tool.Name, tool.Path); 
-                emitter.AppendLine(info);
-                channel.Row(info);
+                list.AppendLine(string.Format("{0,-36} {1}", tool.Name, tool.Path));
+                var row = string.Format("{0:D5} | {1,-48} | {2}", tool.Seq, tool.Name, tool.Path);
+                csv.AppendLine(row);
+                channel.Row(row);
             }
 
-            channel.FileEmit(emitter.Emit(), dst.Path(FS.file("tools", FileKind.List)));
-            emit(channel, catalog, dst);
+            channel.FileEmit(list.Emit(), GetToolListPath(dst, name, kind));
+            channel.FileEmit(csv.Emit(), GetToolCsvPath(dst, name, kind));            
         }
-
-        static IDbArchive cfgroot(IDbArchive src)
-            => src.Scoped("cfg");
-
-        static FilePath cfgpath(IDbArchive src, EnvId name)
-            => cfgroot(src).Scoped(name).Path("process", FileKind.Cfg);
-
-        static FilePath toolpath(IDbArchive src, EnvId name)
-            => cfgroot(src).Scoped(name).Path("tools", FileKind.Csv);
 
         static ExecToken emit(IWfChannel channel, EnvId name, EnvVarKind kind, IDbArchive dst)
         {
@@ -169,8 +202,8 @@ namespace Z0
 
         static ExecToken emit(IWfChannel channel, EnvId name, EnvVarKind kind, EnvVars src, FolderPath dst)
         {
-            var table = dst + FS.file($"{name}.settings",FileKind.Csv);
-            var env = dst + FS.file($"{name}", FileKind.Cfg);
+            var table = dst + FS.file($"{name}.{kind}.settings",FileKind.Csv);
+            var env = dst + FS.file($"{name}.{kind}", FileKind.Cfg);
             using var writer = env.AsciWriter();
             for(var i=0; i<src.Count; i++)
                 writer.WriteLine(src[i].Format());

@@ -76,6 +76,7 @@ namespace Z0
 
         public override string ToString()
             => Format();
+            
         public override string Format()
             => format(this);
         

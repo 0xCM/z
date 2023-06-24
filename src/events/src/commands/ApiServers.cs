@@ -82,6 +82,8 @@ namespace Z0
                     term.emit(Events.babble(factory, ConfiguredEmissionLogs.Format(dst.EmissionLog)));
 
                 var wf = new WfRuntime(dst);
+                term.announce($"ClrVersion: {FileVersionInfo.GetVersionInfo(typeof(object).Assembly.Location).ProductVersion}");
+
                 if(verbose)
                     term.emit(Events.ran(factory, AppMsg.status(InitializedRuntime.Format(clock.Elapsed()))));
                 return wf;
