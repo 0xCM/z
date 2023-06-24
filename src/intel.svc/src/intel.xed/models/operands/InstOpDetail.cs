@@ -55,7 +55,7 @@ namespace Z0
             public OpAction Action;
 
             [Render(12)]
-            public XedWidthCode WidthCode;
+            public WidthCode WidthCode;
 
             [Render(12)]
             public GprWidth GrpWidth;

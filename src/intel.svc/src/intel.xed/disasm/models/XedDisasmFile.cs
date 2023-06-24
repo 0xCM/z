@@ -10,30 +10,15 @@ using static XedDisasm;
 
 public readonly record struct XedDisasmFile : IComparable<XedDisasmFile>
 {
-    public readonly FileRef Origin;
-
-    public readonly FileRef Source;
+    public readonly FilePath Source;
 
     public readonly Index<XedDisasmBlock> Blocks;
 
     [MethodImpl(Inline)]
-    public XedDisasmFile(in FileRef origin, in FileRef src, XedDisasmBlock[] blocks)
+    public XedDisasmFile(FilePath src, XedDisasmBlock[] blocks)
     {
-        Origin = origin;
         Source = src;
         Blocks = blocks;
-    }
-
-    public uint Seq
-    {
-        [MethodImpl(Inline)]
-        get => Source.Seq;
-    }
-
-    public Hex32 DocId
-    {
-        [MethodImpl(Inline)]
-        get => Source.DocId;
     }
 
     public uint LineCount
@@ -58,8 +43,8 @@ public readonly record struct XedDisasmFile : IComparable<XedDisasmFile>
         => states(this);
 
     public int CompareTo(XedDisasmFile src)
-        => Seq.CompareTo(src.Seq);
+        => Source.CompareTo(src.Source);
 
-    public static XedDisasmFile Empty => new XedDisasmFile(FileRef.Empty, FileRef.Empty, sys.empty<XedDisasmBlock>());
+    public static XedDisasmFile Empty => new XedDisasmFile(FilePath.Empty, sys.empty<XedDisasmBlock>());
 }
 

@@ -10,15 +10,15 @@ namespace Z0
 
     partial class XedDisasm
     {
-        public static XedDisasmSummary summary(ProjectContext context, in XedDisasmFile src)
+        public static XedDisasmSummary summary(in XedDisasmFile src)
         {
             var lines = sys.bag<XedDisasmLines>();
-            summary(src.Source, context.Root(src.Source.Path), src.Blocks, lines).Require();
+            summary(src.Source, src.Blocks, lines).Require();
             var sorted = lines.ToArray().Sort();
-            return new XedDisasmSummary(src, src.Origin, resequence(sorted.Select(line => line.Row)), sorted);
+            return new XedDisasmSummary(src, resequence(sorted.Select(line => line.Row)), sorted);
         }
 
-        static Outcome summary(in FileRef src, in FileRef origin, Index<XedDisasmBlock> blocks, ConcurrentBag<XedDisasmLines> dst)
+        static Outcome summary(FilePath src, Index<XedDisasmBlock> blocks, ConcurrentBag<XedDisasmLines> dst)
         {
             var lines = NumberedLines(blocks);
             var expr = expressions(blocks);
@@ -35,8 +35,8 @@ namespace Z0
                     return result;
 
                 record.DocSeq = seq++;
-                record.OriginId = origin.DocId;
-                record.OriginName = origin.DocName;
+                // record.OriginId = origin.DocId;
+                // record.OriginName = origin.DocName;
                 result = XedDisasmParse.parse(line.Content, out record.IP);
                 if(result.Fail)
                     break;
@@ -44,7 +44,7 @@ namespace Z0
                 record.InstructionId = asm.instid(record.OriginId, record.IP, sys.bytes(record.Encoded));
                 record.EncodingId = record.InstructionId.EncodingId;
                 record.Asm = expr[i];
-                record.Source = src.Path;
+                record.Source = src;
                 record.Source = record.Source.LineRef(line.LineNumber);
                 record.Size = record.Encoded.Size;
                 dst.Add(new (blocks[i], record));

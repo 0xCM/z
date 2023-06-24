@@ -17,7 +17,7 @@ namespace Z0
     public class XedCode
     {
         [Op]
-        public static ref OperandState update(in EncodingOffsets src, AsmHexCode code, ref OperandState dst)
+        public static ref XedOperandState update(in EncodingOffsets src, AsmHexCode code, ref XedOperandState dst)
         {
             if(src.HasOpCode)
             {
@@ -53,7 +53,7 @@ namespace Z0
         }
 
         [Op]
-        public static EncodingOffsets offsets(in OperandState src)
+        public static EncodingOffsets offsets(in XedOperandState src)
         {
             var offsets = EncodingOffsets.Empty;
             offsets.OpCode = (sbyte)(src.POS_NOMINAL_OPCODE);
@@ -71,7 +71,7 @@ namespace Z0
         }
 
         [Op]
-        public static Imm imm0(in OperandState state, in AsmHexCode code)
+        public static Imm imm0(in XedOperandState state, in AsmHexCode code)
         {
             var dst = Imm.Empty;
             if(state.IMM0)
@@ -80,7 +80,7 @@ namespace Z0
         }
 
         [Op]
-        public static Imm imm1(in OperandState state, in AsmHexCode code)
+        public static Imm imm1(in XedOperandState state, in AsmHexCode code)
         {
             var dst = Imm.Empty;
             if(state.IMM1)
@@ -89,7 +89,7 @@ namespace Z0
         }
 
         [Op]
-        public static Disp disp(in OperandState state, in AsmHexCode code)
+        public static Disp disp(in XedOperandState state, in AsmHexCode code)
         {
             var val = Disp.Zero;
             if(state.DISP_WIDTH != 0)
@@ -118,7 +118,7 @@ namespace Z0
         }
 
         [Op]
-        public static EncodingExtract encoding(in OperandState state, AsmHexCode code)
+        public static EncodingExtract encoding(in XedOperandState state, AsmHexCode code)
         {
             var dst = EncodingExtract.Empty;
             dst.Code = code;
@@ -141,7 +141,7 @@ namespace Z0
             return dst;
         }
 
-        public static Index<OpValue> ops(in OperandState state, in AsmHexCode code)
+        public static Index<OpValue> ops(in XedOperandState state, in AsmHexCode code)
         {
             var _ops = list<OpValue>();
             if(state.IMM0)

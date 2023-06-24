@@ -18,7 +18,7 @@ namespace Z0
     {
         static readonly EnumParser<InstBlockField> BlockFields = new();
 
-        static readonly EnumParser<XedWidthCode> OpWidthParser = new();
+        static readonly EnumParser<WidthCode> OpWidthParser = new();
 
         static readonly EnumParser<OpAction> OpActions = new();
 
@@ -539,9 +539,9 @@ namespace Z0
             return result;
         }
 
-        public static bool parse(string src, out XedWidthCode dst)
+        public static bool parse(string src, out WidthCode dst)
         {
-            if(src == nameof(XedWidthCode.INVALID))
+            if(src == nameof(WidthCode.INVALID))
             {
                 dst = 0;
                 return true;

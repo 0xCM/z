@@ -12,7 +12,7 @@ namespace Z0
 
     partial class XedOps
     {
-        public static ref OperandState update(in Fields src, ReadOnlySpan<FieldKind> fields, ref OperandState dst)
+        public static ref XedOperandState update(in Fields src, ReadOnlySpan<FieldKind> fields, ref XedOperandState dst)
         {
             var count = fields.Length;
             for(var i=0; i<count; i++)
@@ -20,20 +20,20 @@ namespace Z0
             return ref dst;
         }
 
-        public static Dictionary<FieldKind,FieldValue> update(Index<FieldValue> src, ref OperandState state)
+        public static Dictionary<FieldKind,FieldValue> update(Index<FieldValue> src, ref XedOperandState state)
         {
             update(src.View, ref state);
             return src.Map(x => (x.Field, x)).ToDictionary();
         }
 
-        static ref OperandState update(ReadOnlySpan<FieldValue> src, ref OperandState dst)
+        static ref XedOperandState update(ReadOnlySpan<FieldValue> src, ref XedOperandState dst)
         {
             for(var i=0; i<src.Length; i++)
                 update(skip(src,i), ref dst);
             return ref dst;
         }
 
-        static ref OperandState update(in FieldValue src, ref OperandState dst)
+        static ref XedOperandState update(in FieldValue src, ref XedOperandState dst)
         {
             var result = Outcome.Success;
             switch(src.Field)
@@ -538,7 +538,7 @@ namespace Z0
             return ref dst;
         }
 
-        static ref OperandState update(in Field src, ref OperandState dst)
+        static ref XedOperandState update(in Field src, ref XedOperandState dst)
         {
             switch(src.Kind)
             {

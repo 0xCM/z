@@ -10,12 +10,12 @@ namespace Z0
         [StructLayout(LayoutKind.Sequential,Pack=1)]
         public readonly struct OpWidth : IComparable<OpWidth>
         {
-            public readonly XedWidthCode Code;
+            public readonly WidthCode Code;
 
             public readonly ushort Bits;
 
             [MethodImpl(Inline)]
-            public OpWidth(XedWidthCode code, ushort bits)
+            public OpWidth(WidthCode code, ushort bits)
             {
                 Code = code;
                 Bits = bits;

@@ -37,7 +37,7 @@ namespace Z0
                 return counter;
             }
 
-            public static Index<FieldKind> parse(IReadOnlyDictionary<string,string> src, Fields fields, out OperandState state)
+            public static Index<FieldKind> parse(IReadOnlyDictionary<string,string> src, Fields fields, out XedOperandState state)
             {
                 state = parse(src, out Index<FieldKind> parsed);
                 for(var i=0; i<parsed.Count; i++)
@@ -63,7 +63,7 @@ namespace Z0
                     Errors.Throw($"Unsupported size {size}");
             }
 
-            public static uint parse(IReadOnlyDictionary<string,string> src, Span<FieldValue> fields, out OperandState state)
+            public static uint parse(IReadOnlyDictionary<string,string> src, Span<FieldValue> fields, out XedOperandState state)
             {
                 state = FieldParser.parse(src, out Index<FieldKind> _);
                 var names = src.Keys.Array();
@@ -81,7 +81,7 @@ namespace Z0
                 return (uint)count;
             }
 
-            public static Index<FieldValue> parse(IReadOnlyDictionary<string,string> src, out OperandState dst)
+            public static Index<FieldValue> parse(IReadOnlyDictionary<string,string> src, out XedOperandState dst)
             {
                 var count = (uint)src.Count;
                 var fields = alloc<FieldValue>(count);
@@ -148,12 +148,12 @@ namespace Z0
                 return counter;
             }
 
-            public static OperandState parse(IReadOnlyDictionary<string,string> src, out Index<FieldKind> fields)
+            public static XedOperandState parse(IReadOnlyDictionary<string,string> src, out Index<FieldKind> fields)
             {
                 var parsed = list<FieldKind>();
                 var failed = dict<FieldKind,string>();
                 var count = src.Count;
-                var dst = OperandState.Empty;
+                var dst = XedOperandState.Empty;
                 var names = src.Keys.Index();
                 for(var i=0; i<count; i++)
                 {
@@ -178,7 +178,7 @@ namespace Z0
                     => new FieldValue(kind, sys.bw64(value));
 
             [Op]
-            public static FieldValue parse(string src, FieldKind kind, ref OperandState dst)
+            public static FieldValue parse(string src, FieldKind kind, ref XedOperandState dst)
             {
                 var result = true;
                 var fieldval = R.FieldValue.Empty;

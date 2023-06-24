@@ -15,7 +15,7 @@ namespace Z0
 
         static ReadOnlySeq<OpWidthRecord> _Widths;
 
-        static ConstLookup<XedWidthCode,OpWidthRecord> _WidthLookup;
+        static ConstLookup<WidthCode,OpWidthRecord> _WidthLookup;
 
         static Index<PointerWidth> _PointerWidths;
 

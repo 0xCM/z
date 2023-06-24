@@ -11,7 +11,7 @@ namespace Z0
     {
         public sealed class ReflectedState : PairedLookup<FieldKind,FieldInfo>
         {
-            static FieldInfo[] fields = typeof(OperandState).DeclaredInstanceFields().Tagged<RuleFieldAttribute>();
+            static FieldInfo[] fields = typeof(XedOperandState).DeclaredInstanceFields().Tagged<RuleFieldAttribute>();
 
             static Dictionary<FieldKind,FieldInfo> kinds = fields.Select(f => (f.Tag<RuleFieldAttribute>().Require().Kind,f)).ToDictionary();
 
@@ -21,7 +21,7 @@ namespace Z0
 
             }
 
-            public ConstLookup<FieldKind,object> Values<T>(in OperandState src)
+            public ConstLookup<FieldKind,object> Values<T>(in XedOperandState src)
                 where T : unmanaged
             {
                 var dst = dict<FieldKind,object>();

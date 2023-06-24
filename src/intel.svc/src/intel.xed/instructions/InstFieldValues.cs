@@ -31,7 +31,7 @@ namespace Z0
                 InstForm = form;
             }
 
-            public Index<FieldValue> ParseFields(out OperandState state)
+            public Index<FieldValue> ParseFields(out XedOperandState state)
                 => FieldParser.parse(this, out state);
 
             public static InstFieldValues Empty

@@ -19,7 +19,7 @@ namespace Z0
         public readonly struct View
         {
             [MethodImpl(Inline), Op]
-            public static AsmOpCodeIndex ocindex(in OperandState state)
+            public static AsmOpCodeIndex ocindex(in XedOperandState state)
             {
                 var dst = AsmOpCodeIndex.Amd3dNow;
                 ref readonly var map = ref state.MAP;
@@ -44,30 +44,30 @@ namespace Z0
             }
 
             [MethodImpl(Inline), Op]
-            public static ref readonly XedVexKind vexkind(in OperandState src)
+            public static ref readonly XedVexKind vexkind(in XedOperandState src)
                 => ref @as<XedVexKind>(src.VEX_PREFIX);
 
             [MethodImpl(Inline), Op]
-            public static ref readonly XedVexClass vexclass(in OperandState src)
+            public static ref readonly XedVexClass vexclass(in XedOperandState src)
                 => ref @as<XedVexClass>(src.VEXVALID);
 
             [MethodImpl(Inline), Op]
-            public static ref readonly XedInstClass iclass(in OperandState src)
+            public static ref readonly XedInstClass iclass(in XedOperandState src)
                 => ref @as<XedInstKind,XedInstClass>(src.ICLASS);
 
             [MethodImpl(Inline), Op]
-            public static ref readonly BCastKind broadcast(in OperandState src)
+            public static ref readonly BCastKind broadcast(in XedOperandState src)
                 => ref @as<BCastKind>(src.BCAST);
 
             [MethodImpl(Inline), Op]
-            public static ref readonly Hex8 ocbyte(in OperandState src)
+            public static ref readonly Hex8 ocbyte(in XedOperandState src)
                 => ref @as<Hex8>(src.NOMINAL_OPCODE);
 
             [MethodImpl(Inline), Op]
-            public static ref readonly AsmVL vl(in OperandState src)
+            public static ref readonly AsmVL vl(in XedOperandState src)
                 => ref @as<AsmVL>(src.VL);
             [Op]
-            public static XedRegs regs(in OperandState src)
+            public static XedRegs regs(in XedOperandState src)
             {
                 var storage = ByteBlock32.Empty;
                 var dst = recover<XedRegId>(storage.Bytes);
@@ -97,38 +97,38 @@ namespace Z0
             }
 
             [MethodImpl(Inline), Op]
-            public static ref readonly RoundingKind rounding(in OperandState src)
+            public static ref readonly RoundingKind rounding(in XedOperandState src)
                 => ref @as<RoundingKind>(src.ROUNDC);
 
             [MethodImpl(Inline), Op]
-            public static Sib sib(in OperandState src)
+            public static Sib sib(in XedOperandState src)
                 => new Sib(src.SIBBASE, src.SIBINDEX, src.SIBSCALE);
 
             [MethodImpl(Inline), Op]
-            public static ref readonly ModRm modrm(in OperandState src)
+            public static ref readonly ModRm modrm(in XedOperandState src)
                 => ref @as<Hex8,ModRm>(src.MODRM_BYTE);
 
             [MethodImpl(Inline), Op]
-            public static RexPrefix rex(in OperandState src)
+            public static RexPrefix rex(in XedOperandState src)
                 => new RexPrefix(src.REXB, src.REXX, src.REXR, src.REXW);
 
             [MethodImpl(Inline), Op]
-            public static ref readonly HintKind hint(in OperandState src)
+            public static ref readonly HintKind hint(in XedOperandState src)
                 => ref @as<HintKind>(src.HINT);
 
             [MethodImpl(Inline), Op]
-            public static ref readonly M.RepPrefix rep(in OperandState src)
+            public static ref readonly M.RepPrefix rep(in XedOperandState src)
                 => ref @as<M.RepPrefix>(src.REP);
 
             [MethodImpl(Inline), Op]
-            public static ref readonly EASZ easz(in OperandState src)
+            public static ref readonly EASZ easz(in XedOperandState src)
                 => ref @as<EASZ>(src.EASZ);
 
             [MethodImpl(Inline), Op]
-            public static ref readonly EOSZ eosz(in OperandState src)
+            public static ref readonly EOSZ eosz(in XedOperandState src)
                 => ref @as<EOSZ>(src.EOSZ);
             [MethodImpl(Inline), Op]
-            public static ref readonly MachineMode mode(in OperandState src)
+            public static ref readonly MachineMode mode(in XedOperandState src)
                 => ref @as<MachineMode>(src.MODE);
         }
     }

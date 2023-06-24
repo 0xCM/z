@@ -6,7 +6,7 @@ namespace Z0
 {
     partial class XedDisasm
     {
-        public static Index<FileRef> sources(ProjectContext context)
-            => context.Docs(FileKind.XedRawDisasm);
+        public static IEnumerable<FilePath> sources(IDbArchive src)
+            => src.Files(FileKind.XedRawDisasm);        
     }
 }

@@ -7,7 +7,6 @@ namespace Z0;
 using static sys;
 using static XedRules;
 using static XedModels;
-using static XedDisasm;
 
 public sealed class XedDisasmAnalyzer : XedDisasmTarget<XedDisasmAnalyzer>
 {
@@ -56,7 +55,7 @@ public sealed class XedDisasmAnalyzer : XedDisasmTarget<XedDisasmAnalyzer>
         Output.AppendLineFormat(PaddedSlots, src.Kind, Render[src.Kind](src));
     }
 
-    void Handle(FieldKind kind, in OperandState src)
+    void Handle(FieldKind kind, in XedOperandState src)
     {
 
     }
@@ -67,24 +66,23 @@ public sealed class XedDisasmAnalyzer : XedDisasmTarget<XedDisasmAnalyzer>
         XedDisasmRender.render(src, Output);
     }
 
-    void Handle(uint seq, in OperandState state, ReadOnlySpan<FieldKind> fields)
+    void Handle(uint seq, in XedOperandState state, ReadOnlySpan<FieldKind> fields)
     {
         for(var i=0; i<fields.Length; i++)
             Handle(skip(fields,i), state);
     }
 
-    void OnBegin(ProjectContext context, in FileRef src)
+    void OnBegin(FilePath src)
     {
         Output.Clear();
     }
 
     FileName TargetFile()
-        => FS.file(string.Format("{0}.{1}", text.left(CurrentFile.Path.FileName.Format(), Chars.Dot), "xed.disasm.flow"), FS.Txt);
+        => FS.file(string.Format("{0}.{1}", text.left(CurrentFile.FileName.Format(), Chars.Dot), "xed.disasm.flow"), FS.Txt);
 
     FilePath TargetPath()
         => FolderPath.Empty + FS.folder("xed.disasm") + TargetFile();
 
     void OnEnd(XedDisasmToken src)
         => FileEmit(Output.Emit(), 0, TargetPath());
-
 }

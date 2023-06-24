@@ -38,11 +38,11 @@ namespace Z0
         }
 
         static Type[] CalcEffectiveTypes()
-            => typeof(OperandState).InstanceFields().Tagged<RuleFieldAttribute>().Select(x => x.Tag<RuleFieldAttribute>().Value.EffectiveType);
+            => typeof(XedOperandState).InstanceFields().Tagged<RuleFieldAttribute>().Select(x => x.Tag<RuleFieldAttribute>().Value.EffectiveType);
 
         static FieldDefs CalcFieldDefs()
         {
-            var fields = typeof(OperandState).InstanceFields().Tagged<RuleFieldAttribute>();
+            var fields = typeof(XedOperandState).InstanceFields().Tagged<RuleFieldAttribute>();
             var count = fields.Length;
             var defs = new FieldDefs(sys.alloc<FieldDef>(FieldCount), sys.alloc<FieldDef>(FieldCount));
             var positioned = defs.ByPos;

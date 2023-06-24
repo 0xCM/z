@@ -12,8 +12,8 @@ partial class Xed
 {
     public static Index<OpWidthRecord> CalcOpWidths()
     {
-        var buffer = dict<XedWidthCode,OpWidthRecord>();
-        var symbols = Symbols.index<XedWidthCode>();
+        var buffer = dict<WidthCode,OpWidthRecord>();
+        var symbols = Symbols.index<WidthCode>();
         var src = XedPaths.Service.DocSource(XedDocKind.Widths);
         using var reader = src.Utf8LineReader();
         var result = Outcome.Success;
@@ -95,8 +95,8 @@ partial class Xed
             buffer.TryAdd(dst.Code, dst);
         }
 
-        if(result.Fail)
-            Errors.Throw(result.Message);
+        // if(result.Fail)
+        //     Errors.Throw(result.Message);
 
         return buffer.Values.Array().Sort();
     }

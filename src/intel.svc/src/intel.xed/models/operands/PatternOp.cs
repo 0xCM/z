@@ -67,7 +67,7 @@ namespace Z0
                 => XedOps.reglit(this, out dst);
 
             [MethodImpl(Inline)]
-            public bool WidthCode(out XedWidthCode dst)
+            public bool WidthCode(out WidthCode dst)
                 => XedOps.widthcode(this, out dst);
 
             [MethodImpl(Inline)]

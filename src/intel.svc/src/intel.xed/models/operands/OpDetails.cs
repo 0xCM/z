@@ -49,7 +49,7 @@ namespace Z0
                 get => ref Data[i];
             }
 
-            public bool Search(XedWidthCode match, byte offset, out OpDetail dst)
+            public bool Search(WidthCode match, byte offset, out OpDetail dst)
             {
                 var result = false;
                 dst = default;
@@ -66,7 +66,7 @@ namespace Z0
                 return result;
             }
 
-            public bool Search(XedWidthCode match, out OpDetail dst)
+            public bool Search(WidthCode match, out OpDetail dst)
                 => Search(match,0,out dst);
             public string Format()
                 => XedRender.format(this);

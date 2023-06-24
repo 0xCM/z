@@ -24,9 +24,7 @@ public class XedDisasmTarget<T> : WfSvc<T>, IXedDisasmTarget
 
     readonly FieldRender _Render;
 
-    FileRef _CurrentFile;
-
-    ProjectContext _Context;
+    FilePath _CurrentFile;
 
     public XedDisasmTarget()
     {
@@ -65,17 +63,12 @@ public class XedDisasmTarget<T> : WfSvc<T>, IXedDisasmTarget
 
     protected event FieldReceiver FieldsComputed;
 
-    protected ref readonly FileRef CurrentFile
+    protected ref readonly FilePath CurrentFile
     {
         [MethodImpl(Inline)]
         get => ref _CurrentFile;
     }
 
-    protected ref readonly ProjectContext Context
-    {
-        [MethodImpl(Inline)]
-        get => ref _Context;
-    }
 
     protected ref readonly FieldRender Render
     {
@@ -92,7 +85,7 @@ public class XedDisasmTarget<T> : WfSvc<T>, IXedDisasmTarget
     void IXedDisasmTarget.Computed(uint seq, in Instruction src)
         => ComputedInst(seq, src);
 
-    void IXedDisasmTarget.Computed(uint seq, in OperandState src)
+    void IXedDisasmTarget.Computed(uint seq, in XedOperandState src)
         => Buffer.State(seq, src, OpStateComputed);
 
     void IXedDisasmTarget.Computed(uint seq, in AsmInfo src)
@@ -119,21 +112,20 @@ public class XedDisasmTarget<T> : WfSvc<T>, IXedDisasmTarget
         PropsComputed(seq,src);
     }
 
-    public XedDisasmToken Starting(ProjectContext context, in FileRef src)
+    public XedDisasmToken Starting(FilePath src)
     {
         _CurrentFile = src;
-        _Context = context;
         XedDisasmToken t = token();
         Counter = 0;
-        Buffer = buffer(context, src);
-        Running(context, src);
+        Buffer = buffer(src);
+        Running(src);
         return t;
     }
 
     void IXedDisasmTarget.Finished(XedDisasmToken token)
         => Ran(token);
 
-    void StateComputed(uint seq, in OperandState state, ReadOnlySpan<FieldKind> fields)
+    void StateComputed(uint seq, in XedOperandState state, ReadOnlySpan<FieldKind> fields)
     {
         for(var i=0; i<fields.Length; i++)
         {
@@ -146,7 +138,7 @@ public class XedDisasmTarget<T> : WfSvc<T>, IXedDisasmTarget
         }
     }
 
-    static void Nothing(ProjectContext context, in FileRef src) {}
+    static void Nothing(FilePath src) {}
 
     static void Nothing(XedDisasmToken src) {}
 

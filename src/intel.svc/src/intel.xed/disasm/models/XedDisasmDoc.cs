@@ -18,22 +18,12 @@ public class XedDisasmDoc
         Detail = detail;
     }
 
-    public ref readonly FileRef Origin
-    {
-        [MethodImpl(Inline)]
-        get => ref Detail.Origin;
-    }
+    public FilePath SourcePath => Summary.DataSource;
 
     public ref readonly Index<XedDisasmDetailBlock> DetailBlocks
     {
         [MethodImpl(Inline)]
         get => ref Detail.Blocks;
-    }
-
-    public ref readonly FileRef DataSource
-    {
-        [MethodImpl(Inline)]
-        get => ref Summary.DataFile.Source;
     }
 
     [MethodImpl(Inline)]

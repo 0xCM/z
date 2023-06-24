@@ -8,10 +8,10 @@ namespace Z0
 
     partial class XedDisasm
     {
-        public static XedDisasmFile datafile(ProjectContext context, in FileRef src)
+        public static XedDisasmFile datafile(FilePath src)
         {
             var dst = list<XedDisasmBlock>();
-            var lines = src.Path.ReadNumberedLines();
+            var lines = src.ReadNumberedLines();
             var count = lines.Length;
             var blocklines = list<TextLine>();
             var imax = count-1;
@@ -40,7 +40,7 @@ namespace Z0
                     }
                 }
             }
-            return new XedDisasmFile(context.Root(src.Path), src,dst.ToArray());
+            return new XedDisasmFile(src, dst.ToArray());
         }
     }
 }

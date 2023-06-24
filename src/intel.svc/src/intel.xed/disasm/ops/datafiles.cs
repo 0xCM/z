@@ -8,11 +8,11 @@ namespace Z0
 
     partial class XedDisasm
     {
-        public static Index<XedDisasmFile> datafiles(ProjectContext context, bool pll = true)
+        public static Index<XedDisasmFile> datafiles(IDbArchive context, bool pll = true)
         {
             var src = sources(context);
             var dst = sys.bag<XedDisasmFile>();
-            iter(src, file => dst.Add(datafile(context,file)), pll);
+            iter(src, file => dst.Add(datafile(file)), pll);
             return dst.Index().Sort();
         }
     }

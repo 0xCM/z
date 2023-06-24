@@ -152,7 +152,7 @@ namespace Z0
             {
                 var count = props.Count;
                 var action = OpAction.None;
-                var width = XedWidthCode.INVALID;
+                var width = WidthCode.INVALID;
                 Span<OpAttrib> buffer = stackalloc OpAttrib[4];
                 var i=0;
 
@@ -174,7 +174,7 @@ namespace Z0
             {
                 var count = props.Count;
                 var action = OpAction.None;
-                var width = XedWidthCode.INVALID;
+                var width = WidthCode.INVALID;
                 Span<OpAttrib> buffer = stackalloc OpAttrib[4];
                 var i=0;
                 if(count >= 1)
@@ -217,7 +217,7 @@ namespace Z0
                 var count = props.Count;
                 var type = ElementType.Empty;
                 var action = OpAction.None;
-                var width = XedWidthCode.INVALID;
+                var width = WidthCode.INVALID;
                 Span<OpAttrib> buffer = stackalloc OpAttrib[4];
                 var i=0;
                 if(count >= 1)
@@ -247,7 +247,7 @@ namespace Z0
                 Span<OpAttrib> buffer = stackalloc OpAttrib[6];
                 var i=0;
                 var k=0;
-                var width = XedWidthCode.INVALID;
+                var width = WidthCode.INVALID;
                 var action = OpAction.None;
                 var vis = OpVisibility.None;
                 var type = ElementType.Empty;
@@ -286,7 +286,7 @@ namespace Z0
             {
                 var count = props.Count;
                 var result = Outcome.Success;
-                var width = XedWidthCode.INVALID;
+                var width = WidthCode.INVALID;
                 var type = ElementType.Empty;
                 var vis = OpVisibility.None;
                 var action = OpAction.None;
@@ -329,7 +329,7 @@ namespace Z0
                 var result = Outcome.Success;
                 var counter = 0;
                 var count = props.Count;
-                var width = XedWidthCode.INVALID;
+                var width = WidthCode.INVALID;
                 var type = ElementType.Empty;
                 var vis = OpVisibility.None;
                 var action = OpAction.None;

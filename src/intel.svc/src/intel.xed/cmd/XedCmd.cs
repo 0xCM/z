@@ -205,13 +205,13 @@ namespace Z0
         }
 
         [CmdOp("xed/disasm/flow")]
-        void RunDisasmFlow()
+        void RunDisasmFlow(CmdArgs args)
         {
-            var context = ProjectContext();
-            var flow = XedDisasm.flow(context);
+            var src = FS.archive(args[0]);
+            var flow = XedDisasm.flow();
             var targets = sys.bag<IXedDisasmTarget>();
-            var sources = XedDisasm.sources(context);
-            iter(XedDisasm.sources(context), src => {
+            var sources = XedDisasm.sources(src);
+            iter(XedDisasm.sources(src), src => {
                 var dst = Wf.DisasmAnalyser();
                 flow.Run(src,dst);
                 targets.Add(dst);

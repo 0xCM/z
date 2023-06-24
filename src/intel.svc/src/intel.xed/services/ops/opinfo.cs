@@ -15,7 +15,7 @@ namespace Z0
             dst.Index = src.Index;
             dst.Kind = src.Kind;
             dst.Name = src.Name;
-            var wc = XedWidthCode.INVALID;
+            var wc = WidthCode.INVALID;
             ref readonly var attribs = ref src.Attribs;
             Xed.nonterm(src, out dst.NonTerminal);
             Xed.visibility(src, out dst.Visibility);

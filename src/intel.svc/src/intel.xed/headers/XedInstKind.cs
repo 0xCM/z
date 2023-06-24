@@ -7,6 +7,9 @@ namespace Z0;
 
 using static ApiAtomic;
 
+/// <summary>
+/// D:\env\sdks\intel\xed\kit\include\xed\xed-iclass-enum.h
+/// </summary>
 [SymSource(asm), DataWidth(11)]
 public enum XedInstKind : ushort
 {
@@ -1793,4 +1796,5 @@ public enum XedInstKind : ushort
     XSTORE,
     XSUSLDTRK,
     XTEST,
+
 }

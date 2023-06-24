@@ -11,20 +11,12 @@ using static XedOps;
 
 readonly struct XedDisasmFlow : IXedDisasmFlow
 {
-    readonly ProjectContext Context;
-
-    [MethodImpl(Inline)]
-    public XedDisasmFlow(ProjectContext context)
+    public XedDisasmToken Run(FilePath src, IXedDisasmTarget dst)
     {
-        Context = context;
-    }
-
-    public XedDisasmToken Run(in FileRef src, IXedDisasmTarget dst)
-    {
-        var token = dst.Starting(Context,src);
+        var token = dst.Starting(src);
         if(token.IsNonEmpty)
         {
-            var doc = XedDisasm.detail(Context, src);
+            var doc = XedDisasm.detail(src);
             var lookup = doc.Blocks.Select(x => (x.DetailRow.IP, x)).ToDictionary();
             var keys = lookup.Keys.Array().Sort().Index();
             var blocks = alloc<XedDisasmDetailBlock>(keys.Count);
@@ -71,7 +63,7 @@ readonly struct XedDisasmFlow : IXedDisasmFlow
         dst.Computed(seq, kinds);
         dst.Computed(seq, ops);
 
-        var state = OperandState.Empty;
+        var state = XedOperandState.Empty;
         XedOps.update(fields, kinds, ref state);
         dst.Computed(seq, state);
 

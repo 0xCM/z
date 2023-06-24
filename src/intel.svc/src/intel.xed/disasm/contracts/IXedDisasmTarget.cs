@@ -10,7 +10,7 @@ namespace Z0
 
     public interface IXedDisasmTarget
     {
-        XedDisasmToken Starting(ProjectContext context, in FileRef src);
+        XedDisasmToken Starting(FilePath src);
 
         void Finished(XedDisasmToken token);
 
@@ -18,7 +18,7 @@ namespace Z0
 
         void Computed(uint seq, in OpDetails src);
 
-        void Computed(uint seq, in OperandState src);
+        void Computed(uint seq, in XedOperandState src);
 
         void Computed(uint seq, in AsmInfo src);
 

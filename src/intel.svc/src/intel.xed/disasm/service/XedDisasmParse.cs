@@ -7,7 +7,7 @@ namespace Z0;
 using static sys;
 using static XedModels;
 
-internal partial class XedDisasmParse
+partial class XedDisasmParse
 {
     internal const string XDIS = "XDIS ";
 

@@ -9,16 +9,16 @@ namespace Z0
 
     partial class XedDisasm
     {
-        public static Index<XedDisasmDoc> docs(ProjectContext context, bool pll = true)
+        public static Index<XedDisasmDoc> docs(IDbArchive src, bool pll = true)
         {
             var dst = sys.bag<XedDisasmDoc>();
-            iter(sources(context), src => dst.Add(doc(context,src)), pll);
+            iter(sources(src), path => dst.Add(doc(path)), pll);
             return dst.Index();
         }
 
-        public static XedDisasmDoc doc(ProjectContext context, in FileRef src)
+        public static XedDisasmDoc doc(FilePath src)
         {
-            var summary = XedDisasm.summary(context, datafile(context, src));
+            var summary = XedDisasm.summary(datafile(src));
             return new XedDisasmDoc(summary, detail(summary));
         }
     }

@@ -25,10 +25,10 @@ namespace Z0
 
         uint FieldCount {get;}
 
-        ref readonly FileRef Source {get;}
+        ref readonly FilePath Source {get;}
 
         void Cache(ReadOnlySpan<FieldKind> src);
 
-        void State(uint seq, in OperandState state, OpStateReceiver receiver);
+        void State(uint seq, in XedOperandState state, OpStateReceiver receiver);
     }
 }

@@ -30,7 +30,7 @@ namespace Z0
             get => ref _PointerWidths;
         }
 
-        public static ref readonly ConstLookup<XedWidthCode,OpWidthRecord> WidthLookup
+        public static ref readonly ConstLookup<WidthCode,OpWidthRecord> WidthLookup
         {
             [MethodImpl(Inline)]
             get => ref _WidthLookup;

@@ -18,7 +18,7 @@ public record struct XedDisasmState
 
     public asci32 MEM1Val;
 
-    public OperandState RuleState;
+    public XedOperandState RuleState;
 
     public static XedDisasmState Empty => default;
 }

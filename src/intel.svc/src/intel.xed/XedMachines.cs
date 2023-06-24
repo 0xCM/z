@@ -88,7 +88,7 @@ namespace Z0
         {
             InstPattern Pattern;
 
-            OperandState OpState;
+            XedOperandState OpState;
 
             MachineMode MachineMode;
 
@@ -134,7 +134,7 @@ namespace Z0
 
             public void Reset()
             {
-                OpState = OperandState.Empty;
+                OpState = XedOperandState.Empty;
                 Pattern = XedRules.InstPattern.Empty;
                 MachineMode = default;
                 Form = XedInstForm.Empty;
@@ -255,7 +255,7 @@ namespace Z0
                 get => ref Id;
             }
 
-            public ref readonly OperandState Operands
+            public ref readonly XedOperandState Operands
             {
                 [MethodImpl(Inline)]
                 get => ref OpState;

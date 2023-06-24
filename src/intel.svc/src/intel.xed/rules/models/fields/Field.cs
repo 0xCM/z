@@ -12,7 +12,7 @@ namespace Z0
     partial class XedRules
     {
         /// <summary>
-        /// Specifies the value of a <see cref='OperandState'/> field for a specified <see cref='FieldKind'/>
+        /// Specifies the value of a <see cref='XedOperandState'/> field for a specified <see cref='FieldKind'/>
         /// </summary>
         [StructLayout(LayoutKind.Sequential,Pack=1)]
         public readonly struct Field

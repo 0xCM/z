@@ -13,11 +13,11 @@ namespace Z0
     using static XedModels.DispWidth;
 
     using EK = XedModels.ElementKind;
-    using WC = XedWidthCode;
+    using WC = XedModels.WidthCode;
 
     partial class XedOps
     {
-        public static OpWidth width(MachineMode mode, XedWidthCode code)
+        public static OpWidth width(MachineMode mode, WidthCode code)
         {
             var dst = OpWidth.Empty;
             if(code == 0)
@@ -44,7 +44,7 @@ namespace Z0
             return dst;
         }
 
-        public static ushort width(XedWidthCode code, ElementKind ekind)
+        public static ushort width(WidthCode code, ElementKind ekind)
         {
             var result = width(code);
             if(result != 0)
@@ -168,7 +168,7 @@ namespace Z0
                 _ => 0,
             };
 
-        static ushort width(XedWidthCode code)
+        static ushort width(WidthCode code)
         {
             var result = z16;
             switch(code)

@@ -5,17 +5,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
-    partial class XedDisasm
+    public interface IXedDisasmFlow
     {
-        public void Collect(ProjectContext context)
-        {
-            var docs = CalcDocs(context);
-            exec(PllExec,
-                () => EmitConsolidated(context, docs),
-                () => EmitBreakdowns(context, docs)
-                );
-        }
+        XedDisasmToken Run(FilePath src, IXedDisasmTarget dst);
     }
 }

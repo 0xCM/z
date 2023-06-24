@@ -10,22 +10,19 @@ public class XedDisasmSummary
 
     public readonly XedDisasmFile DataFile;
 
-    public readonly FileRef Origin;
-
     public readonly Index<XedDisasmRow> Rows;
 
     public readonly Index<XedDisasmLines> LineIndex;
 
-    internal XedDisasmSummary(in XedDisasmFile src, in FileRef origin, Index<XedDisasmRow> rows, XedDisasmLines[] lines)
+    internal XedDisasmSummary(in XedDisasmFile src, Index<XedDisasmRow> rows, XedDisasmLines[] lines)
     {
         DataFile = src;
-        Origin = origin;
         Rows = rows;
         LineIndex = lines;
         RowCount = Rows.Count;
     }
 
-    public FileRef DataSource
+    public FilePath DataSource
     {
         [MethodImpl(Inline)]
         get => DataFile.Source;
@@ -47,6 +44,6 @@ public class XedDisasmSummary
         => DataFile.Source.GetHashCode();
 
     public static XedDisasmSummary Empty
-        => new XedDisasmSummary(XedDisasmFile.Empty, FileRef.Empty, sys.empty<XedDisasmRow>(),  sys.empty<XedDisasmLines>());
+        => new XedDisasmSummary(XedDisasmFile.Empty, sys.empty<XedDisasmRow>(),  sys.empty<XedDisasmLines>());
 }
 

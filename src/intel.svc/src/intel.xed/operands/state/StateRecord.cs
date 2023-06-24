@@ -3,46 +3,46 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
-{
+namespace Z0;
+
     using static XedModels;
-    partial class XedRules
+
+partial class XedRules
+{
+    partial class OperandStates
     {
-        partial class OperandStates
+        [StructLayout(LayoutKind.Sequential,Pack=1)]
+        public record struct StateRecord : IComparable<StateRecord>
         {
-            [StructLayout(LayoutKind.Sequential,Pack=1)]
-            public record struct StateRecord : IComparable<StateRecord>
+            public XedOperandState State;
+
+            public Index<OpSpec> Ops;
+
+            public AsmInfo Asm;
+
+            public Index<FieldValue> Fields;
+
+            [MethodImpl(Inline)]
+            public bool Field(FieldKind kind, out FieldValue dst)
             {
-                public OperandState State;
-
-                public Index<OpSpec> Ops;
-
-                public AsmInfo Asm;
-
-                public Index<FieldValue> Fields;
-
-                [MethodImpl(Inline)]
-                public bool Field(FieldKind kind, out FieldValue dst)
+                dst = FieldValue.Empty;
+                for(var i=0; i<Fields.Count; i++)
                 {
-                    dst = FieldValue.Empty;
-                    for(var i=0; i<Fields.Count; i++)
+                    ref readonly var f = ref Fields[i];
+                    if(f.Field == kind)
                     {
-                        ref readonly var f = ref Fields[i];
-                        if(f.Field == kind)
-                        {
-                            dst = f;
-                            break;
-                        }
+                        dst = f;
+                        break;
                     }
-                    return dst.IsNonEmpty;
                 }
-
-                [MethodImpl(Inline)]
-                public int CompareTo(StateRecord src)
-                    => Asm.IP.CompareTo(src.Asm.IP);
-
-                public static StateRecord Empty => default;
+                return dst.IsNonEmpty;
             }
+
+            [MethodImpl(Inline)]
+            public int CompareTo(StateRecord src)
+                => Asm.IP.CompareTo(src.Asm.IP);
+
+            public static StateRecord Empty => default;
         }
     }
 }

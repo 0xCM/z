@@ -17,7 +17,7 @@ public ref struct XedDisasmFields
     XedDisasmFields(Fields fields)
     {
         Fields = fields;
-        State = OperandState.Empty;
+        State = XedOperandState.Empty;
         Summary = XedDisasmRow.Empty;
         Lines = XedDisasmBlock.Empty;
         Asm = AsmInfo.Empty;
@@ -30,7 +30,7 @@ public ref struct XedDisasmFields
     public void Clear()
     {
         Fields.Clear();
-        State = OperandState.Empty;
+        State = XedOperandState.Empty;
         Summary = XedDisasmRow.Empty;
         Lines = XedDisasmBlock.Empty;
         Asm = AsmInfo.Empty;
@@ -52,7 +52,7 @@ public ref struct XedDisasmFields
 
     public InstFieldValues Props;
 
-    public OperandState State;
+    public XedOperandState State;
 
     public EncodingExtract Encoding;
 

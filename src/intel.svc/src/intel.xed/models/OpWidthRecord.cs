@@ -13,7 +13,7 @@ namespace Z0
             public const string TableId = "xed.widths";
 
             [Render(12)]
-            public XedWidthCode Code;
+            public WidthCode Code;
 
             [Render(12)]
             public asci16 Name;

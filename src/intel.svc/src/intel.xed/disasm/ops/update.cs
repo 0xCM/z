@@ -10,7 +10,7 @@ namespace Z0
 
     partial class XedDisasm
     {
-        public static Index<FieldValue> update(in XedDisasmBlock src, ref OperandState dst)
+        public static Index<FieldValue> update(in XedDisasmBlock src, ref XedOperandState dst)
         {
             var fields = values(src);
             XedOps.update(fields, ref dst);
@@ -20,7 +20,7 @@ namespace Z0
         static Index<FieldValue> values(in XedDisasmBlock src)
         {
             parse(src, out InstFieldValues props);
-            var state = OperandState.Empty;
+            var state = XedOperandState.Empty;
             var names = props.Keys.Array();
             var count = names.Length;
             var dst = alloc<FieldValue>(count - 2);

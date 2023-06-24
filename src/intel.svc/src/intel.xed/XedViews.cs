@@ -143,10 +143,10 @@ namespace Z0
             get => ref Load<Index<InstOpSpec>>(XedRecordType.InstOpSpecs);
         }
 
-        public ref readonly ConstLookup<XedWidthCode,OpWidthRecord> OpWidthLookup
+        public ref readonly ConstLookup<WidthCode,OpWidthRecord> OpWidthLookup
         {
             [MethodImpl(Inline)]
-            get => ref Load<ConstLookup<XedWidthCode,OpWidthRecord>>(XedRecordType.WidthLookup);
+            get => ref Load<ConstLookup<WidthCode,OpWidthRecord>>(XedRecordType.WidthLookup);
         }
     }
 }

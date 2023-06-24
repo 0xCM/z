@@ -9,12 +9,12 @@ namespace Z0
     using static XedModels;
     using static NativeClass;
 
-    using W = XedWidthCode;
+    using W = XedModels.WidthCode;
 
     partial class Xed
     {
         [Op]
-        public static NativeClass nclass(XedWidthCode src)
+        public static NativeClass nclass(WidthCode src)
         {
             var dst = NativeClass.None;
             switch(src)
@@ -143,7 +143,6 @@ namespace Z0
                 case W.MEM16INT:
                 case W.MEM32INT:
                 case W.M64INT:
-
                     dst = I;
                     break;
 
@@ -169,6 +168,8 @@ namespace Z0
                 case W.MEM32REAL:
                 case W.M64REAL:
                 case W.MEM80REAL:
+                case W.ZF16:
+                case W.Z2F16:
                     dst = F;
                     break;
             }

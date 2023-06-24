@@ -7,19 +7,14 @@ namespace Z0
 {
     using static XedRules;
 
-    public interface IXedDisasmFlow
-    {
-        XedDisasmToken Run(in FileRef src, IXedDisasmTarget dst);
-    }
-
     partial class XedDisasm
     {
         public delegate void DisasmReceiver<T>(uint seq, in T src);
 
-        public delegate void OpStateReceiver(uint seq, in OperandState state, ReadOnlySpan<FieldKind> fields);
+        public delegate void OpStateReceiver(uint seq, in XedOperandState state, ReadOnlySpan<FieldKind> fields);
 
         public delegate void FieldReceiver(uint seq, in Fields src);
 
-        public delegate void FileReceiver(ProjectContext context, in FileRef src);
+        public delegate void FileReceiver(FilePath src);
     }
 }
