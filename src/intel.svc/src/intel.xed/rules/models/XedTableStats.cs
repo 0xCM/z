@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static XedRules;
+    using static XedModels;
 
     [StructLayout(LayoutKind.Sequential,Pack=1), Record(TableId)]
     public record struct XedTableStats : IComparable<XedTableStats>

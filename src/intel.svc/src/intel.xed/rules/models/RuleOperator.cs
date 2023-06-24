@@ -101,7 +101,7 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public int CompareTo(RuleOperator src)
-                => XedRules.cmp(Kind,src.Kind);
+                => Xed.cmp(Kind,src.Kind);
 
             [MethodImpl(Inline)]
             public static implicit operator RuleOperator(OperatorKind kind)

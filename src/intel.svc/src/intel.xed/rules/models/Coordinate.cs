@@ -6,6 +6,7 @@
 namespace Z0
 {
     using static RenderStyle;
+    using static XedModels;
 
     using S = RenderStyle;
 

@@ -24,7 +24,7 @@ namespace Z0
                     ref var dst = ref rows[i];
                     Require.invariant(detail.InstClass.Kind != 0);
                     dst.Pattern = detail.Pattern;
-                    dst.InstClass = classifier(detail.InstClass);
+                    dst.InstClass = Xed.classifier(detail.InstClass);
                     dst.OpCode = detail.OpCode;
                     dst.Mode = detail.Mode;
                     dst.Lock = detail.Lock;

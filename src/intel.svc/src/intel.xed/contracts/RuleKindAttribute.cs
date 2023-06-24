@@ -5,16 +5,15 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class XedRules
-    {
-        public class RuleKindAttribute : Attribute
-        {
-            public RuleKindAttribute(RuleKind kind)
-            {
-                Kind = kind;
-            }
+    using static XedRules;
 
-            public RuleKind Kind {get;}
+    public class XedRuleKindAttribute : Attribute
+    {
+        public XedRuleKindAttribute(RuleKind kind)
+        {
+            Kind = kind;
         }
+
+        public RuleKind Kind {get;}
     }
 }

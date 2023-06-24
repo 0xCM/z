@@ -45,7 +45,7 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public int CompareTo(RepIndicator src)
-                => XedRules.cmp(Kind, src.Kind);
+                => Xed.cmp(Kind, src.Kind);
 
             public string Format()
                 => IsEmpty ? EmptyString : XedRender.format(Kind);

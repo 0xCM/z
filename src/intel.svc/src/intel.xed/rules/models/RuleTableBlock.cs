@@ -5,6 +5,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static XedModels;
+
     partial class XedRules
     {
         public readonly struct RuleTableBlock : IComparable<RuleTableBlock>
@@ -43,7 +45,7 @@ namespace Z0
 
             public int CompareTo(RuleTableBlock src)
             {
-                var result = cmp(TableKind,src.TableKind);
+                var result = Xed.cmp(TableKind,src.TableKind);
                 if(result == 0)
                     result = Offset.CompareTo(src.Offset);
                 return result;

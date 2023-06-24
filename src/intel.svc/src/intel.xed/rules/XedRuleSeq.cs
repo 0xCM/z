@@ -7,6 +7,7 @@ namespace Z0
 {
     using static sys;
     using static XedRules;
+    using static XedModels;
 
     [ApiHost,Free]
     public unsafe partial class XedRuleSeq

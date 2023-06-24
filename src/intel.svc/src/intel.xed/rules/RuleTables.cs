@@ -6,17 +6,18 @@
 namespace Z0
 {
     using static sys;
-
+    using static XedModels;
     using CK = XedRules.RuleCellKind;
+
 
     partial class XedRules
     {
-        internal class RuleBuffers
+        internal class XedRuleBuffers
         {
             public readonly ConcurrentDictionary<RuleTableKind,Index<TableCriteria>> Target = new();
         }
 
-        internal static RuleTables tables(RuleBuffers buffers)
+        internal static XedRuleTables tables(XedRuleBuffers buffers)
         {
             ref readonly var src = ref buffers.Target;
             var enc = src[RuleTableKind.ENC];
@@ -24,12 +25,12 @@ namespace Z0
             var dst = enc.Append(dec).Where(x => x.IsNonEmpty).Sort();
             for(var i=0u; i<dst.Count; i++)
                 dst[i] = dst[i].WithId(i);
-            return new RuleTables(dst, RuleSpecs.tables(dst));
+            return new XedRuleTables(dst, XedRuleSpecs.tables(dst));
         }
 
-        public class RuleTables
+        public class XedRuleTables
         {
-            public static CellDatasets datasets(RuleTables tables)
+            public static CellDatasets datasets(XedRuleTables tables)
             {
                 var lix = z16;
                 var emitter = text.emitter();
@@ -117,7 +118,7 @@ namespace Z0
                                     }
                                     else
                                     {
-                                        result = RuleSpecs.ruleop(data, out RuleOperator value);
+                                        result = XedRuleSpecs.ruleop(data, out RuleOperator value);
                                         cell = new RuleCell(key, value, size);
                                     }
                                 }
@@ -195,16 +196,16 @@ namespace Z0
             public ref readonly TableSpecs Specs()
                 => ref _Specs;
 
-            public RuleTables()
+            public XedRuleTables()
             {
                 _Criteria = sys.empty<TableCriteria>();
                 _Specs = TableSpecs.Empty;
             }
 
-            public static RuleTables Empty
-                => new RuleTables();
+            public static XedRuleTables Empty
+                => new XedRuleTables();
 
-            public RuleTables(Index<TableCriteria> criteria, TableSpecs specs)
+            public XedRuleTables(Index<TableCriteria> criteria, TableSpecs specs)
             {
                 _Criteria = criteria;
                 _Specs = specs;

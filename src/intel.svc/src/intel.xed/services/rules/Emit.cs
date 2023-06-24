@@ -39,7 +39,7 @@ namespace Z0
         void EmitRuleDeps()
             => Emit(CalcFieldDeps());
 
-        public void EmitCatalog(Index<InstPattern> patterns, RuleTables rules)
+        public void EmitCatalog(Index<InstPattern> patterns, XedRuleTables rules)
         {
             exec(PllExec,
                 EmitRuleBlocks,
@@ -54,7 +54,7 @@ namespace Z0
             Emit(patterns, rules);
         }
 
-        public void Emit(Index<InstPattern> patterns, RuleTables rules)
+        public void Emit(Index<InstPattern> patterns, XedRuleTables rules)
         {
             exec(PllExec,
                 () => EmitPatternData(patterns),
@@ -92,12 +92,12 @@ namespace Z0
             return src;
         }
 
-        public void EmitRuleData(RuleTables src)
+        public void EmitRuleData(XedRuleTables src)
         {
             exec(PllExec,
                 () => Emit(XedRuntime.Views.CellDatasets),
                 () => EmitRuleExpr(XedRuntime.Views.CellTables),
-                () => Emit(RuleTables.records(XedRuntime.Views.CellTables)),
+                () => Emit(XedRuleTables.records(XedRuntime.Views.CellTables)),
                 () => EmitTableSpecs(XedRuntime.Views.RuleTables),
                 EmitSeq,
                 () => EmitRulePages(XedRuntime.Views.RuleTables)

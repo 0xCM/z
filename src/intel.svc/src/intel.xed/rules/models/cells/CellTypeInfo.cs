@@ -57,7 +57,7 @@ namespace Z0
                 var result = Type.CompareTo(src.Type);
                 if(result == 0)
                 {
-                    result = XedRules.cmp(Field,src.Field);
+                    result = Xed.cmp(Field,src.Field);
                     if(result == 0)
                         result = Operator.CompareTo(src.Operator);
                 }

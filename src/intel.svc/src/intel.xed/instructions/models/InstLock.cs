@@ -51,7 +51,7 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public int CompareTo(LockIndicator src)
-                => new LockSort(this).CompareTo(new LockSort(src));
+                => new XedLockSort(this).CompareTo(new XedLockSort(src));
 
             public static LockIndicator Empty => default;
 

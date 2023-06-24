@@ -7,6 +7,7 @@ namespace Z0
 {
     using static sys;
     using static XedRules.LayoutCellKind;
+    using static XedModels;
 
     using K = XedRules.RuleCellKind;
 

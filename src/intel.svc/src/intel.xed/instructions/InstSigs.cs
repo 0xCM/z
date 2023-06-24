@@ -113,7 +113,7 @@ namespace Z0
             {
                 ref readonly var pattern = ref src[i].Left;
                 ref readonly var sig = ref src[i].Right;
-                var @class = classifier(pattern.InstClass);
+                var @class = Xed.classifier(pattern.InstClass);
                 dst.AppendLineFormat(RenderPattern,
                     @class,
                     pattern.Lock,

@@ -10,7 +10,7 @@ namespace Z0
         void EmitRuleExpr(CellTables src)
             => Emit(CalcRuleExpr(src));
 
-        public void EmitTableSpecs(RuleTables src)
+        public void EmitTableSpecs(XedRuleTables src)
         {
             var formatter = CsvTables.formatter<TableDefRow>();
             ref readonly var specs = ref src.Specs();

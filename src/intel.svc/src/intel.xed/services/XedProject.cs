@@ -4,21 +4,27 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class XedProject : WfSvc<XedProject>
+    using System.Linq;
+
+    public class XedKit
     {
-        public IDbArchive Root() 
-            => AppSettings.Sdks().Scoped("intel.xed");
-        
+        readonly IDbArchive XedRoot;
+
+        public XedKit(IDbArchive root)
+        {
+            XedRoot = root;
+        }
+
         public IDbArchive Build()
-            => Root().Scoped("build");
+            => XedRoot.Scoped("build");
 
-        public IEnumerable<FilePath> Artifacts()
-            => Build().Enumerate(true);
-
-        public IDbArchive Kit()
+        public IDbArchive Distribution()        
             => Build().Scoped("wkit");
 
-        public IEnumerable<FilePath> KitHeaders()
-            => Kit().Scoped("include/xed").Enumerate(true,FileKind.H);
+        public ParallelQuery<FilePath> Artifacts()
+            => Build().Enumerate(true).AsParallel();
+        
+        public ParallelQuery<FilePath> Headers()
+            => Distribution().Scoped("include/xed").Enumerate(true, FileKind.H).AsParallel();
     }
 }

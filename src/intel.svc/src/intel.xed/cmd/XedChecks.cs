@@ -8,6 +8,6 @@ namespace Z0
     {
         XedPaths XedPaths => Wf.XedPaths();
 
-        XedRuntime Xed => GlobalServices.Instance.Service<XedRuntime>(Wf);
+        XedRuntime XedRuntime => Wf.XedRuntime();
    }
 }

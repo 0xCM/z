@@ -74,9 +74,6 @@ namespace Z0
             public Xed Xed(IWfRuntime wf)
                 => Service<Xed>(wf);
 
-            public XedProject XedProject(IWfRuntime wf)
-                => Service<XedProject>(wf);
-
             public XedRuntime XedRuntime(IWfRuntime wf)
                 => Service<XedRuntime>(wf);
         }
@@ -146,8 +143,6 @@ namespace Z0
         public static IntelCmd IntelCmd(this IWfRuntime wf)
             => Services.IntelCmd(wf);
 
-        public static XedProject XedProject(this IWfRuntime wf)
-            => Services.XedProject(wf);
 
         public static CpuIdSvc CpuId(this IWfRuntime wf)
             => Services.CpuId(wf);

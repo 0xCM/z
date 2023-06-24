@@ -58,6 +58,6 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public int CompareTo(XedInstOpCode src)
-            => XedRules.cmp(this, src);
+            => Xed.cmp(this, src);
     }
 }

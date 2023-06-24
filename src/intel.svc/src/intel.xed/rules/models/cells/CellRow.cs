@@ -29,7 +29,7 @@ namespace Z0
                 TableSig = sig;
                 Cells = Require.notnull(src);
                 CellCount = (uint)src.Length;
-                Expression = expr(src);
+                Expression = Xed.expr(src);
             }
 
             byte AntecedantCount

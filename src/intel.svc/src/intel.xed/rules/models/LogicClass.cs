@@ -35,7 +35,7 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public int CompareTo(LogicClass src)
-                => XedRules.cmp(Kind,src.Kind);
+                => Xed.cmp(Kind,src.Kind);
 
             [MethodImpl(Inline)]
             public static implicit operator LogicClass(LogicKind src)

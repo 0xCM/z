@@ -9,7 +9,7 @@ namespace Z0
 
     partial class XedRules
     {
-        public Index<TableDefRow> CalcDefRows(RuleTables src)
+        public Index<TableDefRow> CalcDefRows(XedRuleTables src)
         {
             return Data(nameof(CalcDefRows), Calc);
 

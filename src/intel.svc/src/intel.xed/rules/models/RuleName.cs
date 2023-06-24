@@ -84,60 +84,60 @@ namespace Z0
 
             CR_R = 35,
 
-            [RuleKind(K.MODE)]
+            [XedRuleKind(K.MODE)]
             CR_WIDTH = 36,
 
             DF64 = 37,
 
             DISP_NT = 38,
 
-            [RuleKind(K.DISP_WIDTH)]
+            [XedRuleKind(K.DISP_WIDTH)]
             DISP_WIDTH_0 = 39,
 
-            [RuleKind(K.DISP_WIDTH)]
+            [XedRuleKind(K.DISP_WIDTH)]
             DISP_WIDTH_0_8_16 = 40,
 
-            [RuleKind(K.DISP_WIDTH)]
+            [XedRuleKind(K.DISP_WIDTH)]
             DISP_WIDTH_0_8_32 = 41,
 
-            [RuleKind(K.DISP_WIDTH)]
+            [XedRuleKind(K.DISP_WIDTH)]
             DISP_WIDTH_16 = 42,
 
-            [RuleKind(K.DISP_WIDTH)]
+            [XedRuleKind(K.DISP_WIDTH)]
             DISP_WIDTH_32 = 43,
 
-            [RuleKind(K.DISP_WIDTH)]
+            [XedRuleKind(K.DISP_WIDTH)]
             DISP_WIDTH_8 = 44,
 
-            [RuleKind(K.DISP_WIDTH)]
+            [XedRuleKind(K.DISP_WIDTH)]
             DISP_WIDTH_8_32 = 45,
 
             DR_R = 46,
 
             ERROR = 47,
 
-            [RuleKind(K.REX)]
+            [XedRuleKind(K.REX)]
             ESIZE_1_BITS = 48,
 
-            [RuleKind(K.REX)]
+            [XedRuleKind(K.REX)]
             ESIZE_128_BITS = 49,
 
-            [RuleKind(K.REX)]
+            [XedRuleKind(K.REX)]
             ESIZE_16_BITS = 50,
 
-            [RuleKind(K.REX)]
+            [XedRuleKind(K.REX)]
             ESIZE_2_BITS = 51,
 
-            [RuleKind(K.REX)]
+            [XedRuleKind(K.REX)]
             ESIZE_32_BITS = 52,
 
-            [RuleKind(K.REX)]
+            [XedRuleKind(K.REX)]
             ESIZE_4_BITS = 53,
 
-            [RuleKind(K.REX)]
+            [XedRuleKind(K.REX)]
             ESIZE_64_BITS = 54,
 
-            [RuleKind(K.REX)]
+            [XedRuleKind(K.REX)]
             ESIZE_8_BITS = 55,
 
             EVEX_62_REXR_ENC = 56,

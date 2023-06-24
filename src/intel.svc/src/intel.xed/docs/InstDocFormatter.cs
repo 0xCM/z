@@ -101,7 +101,7 @@ namespace Z0
                     if(op.Nonterminal(out var nt))
                     {
                         var uri = XedPaths.CheckedTableDef(nt.Name, true, out var sig);
-                        if(uri.Path.Exists)
+                        if(uri.Exists)
                             dst.Append(Link(sig).Format());
                     }
 

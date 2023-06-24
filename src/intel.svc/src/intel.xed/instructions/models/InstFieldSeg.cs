@@ -63,7 +63,7 @@ namespace Z0
 
             public int CompareTo(InstFieldSeg src)
             {
-                var result = XedRules.cmp(Field,src.Field);
+                var result = Xed.cmp(Field,src.Field);
                 if(result == 0)
                 {
                     if(IsLiteral && src.IsLiteral)

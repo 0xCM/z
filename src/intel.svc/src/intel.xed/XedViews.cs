@@ -47,10 +47,10 @@ namespace Z0
             get => ref Load<Index<InstPattern>>(XedRecordType.InstPattern);
         }
 
-        public ref readonly RuleTables RuleTables
+        public ref readonly XedRuleTables RuleTables
         {
             [MethodImpl(Inline)]
-            get => ref Load<RuleTables>(XedRecordType.RuleTables);
+            get => ref Load<XedRuleTables>(XedRecordType.RuleTables);
         }
 
         public ref readonly Index<InstFieldRow> InstFields

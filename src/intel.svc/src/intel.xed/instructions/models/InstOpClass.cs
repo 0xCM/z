@@ -42,7 +42,7 @@ namespace Z0
             public bit IsRule;
 
             public int CompareTo(InstOpClass src)
-                => XedRules.cmp(this,src);
+                => Xed.cmp(this,src);
 
             public static InstOpClass Empty => default;
         }

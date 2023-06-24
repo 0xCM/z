@@ -18,7 +18,7 @@ namespace Z0
             get => ref _PointerWidthInfo;
         }
 
-        public static ref readonly Index<OpWidthRecord> Widths
+        public static ref readonly ReadOnlySeq<OpWidthRecord> Widths
         {
             [MethodImpl(Inline)]
             get => ref _Widths;

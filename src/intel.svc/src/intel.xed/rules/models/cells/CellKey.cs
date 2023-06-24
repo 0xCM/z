@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static XedModels;
+
     partial class XedRules
     {
         [StructLayout(LayoutKind.Sequential,Pack = 1)]
@@ -98,7 +100,7 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public int CompareTo(CellKey src)
-                => cmp(this,src);
+                => Xed.cmp(this,src);
 
             public static bool operator==(CellKey a, CellKey b)
                 => a.Equals(b);

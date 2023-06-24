@@ -16,17 +16,14 @@ namespace Z0
             DbBuilder.check(Channel);
             var size = 1073741824ul;
             var mb = size/1024;
-            var db = Xed.XedDb.Store;
+            var db = XedRuntime.XedDb.Store;
 
             var src = XedDb.InstDumpFile();
             var data = src.View();
             var token = db.Store(data);
-        }
 
-        public void CheckRules()
-        {
-           CheckRuleNames();
-           CheckInstDefs();
+            CheckRuleNames();
+            CheckInstDefs();
         }
 
         void CheckInstDefs()

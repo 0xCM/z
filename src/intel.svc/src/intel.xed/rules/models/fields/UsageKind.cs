@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XedRules.RuleTableKind;
+    using static XedModels.RuleTableKind;
 
     partial class XedRules
     {

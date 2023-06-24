@@ -42,7 +42,7 @@ namespace Z0
                 => Kind == src.Kind;
 
             public int CompareTo(RuleField src)
-                => cmp(Kind,src.Kind);
+                => Xed.cmp(Kind,src.Kind);
 
             public string Format()
                 => XedRender.format(Kind);

@@ -5,6 +5,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static XedModels;
+
     partial class XedRules
     {
         [DataWidth(PackedWidth)]
@@ -77,11 +79,11 @@ namespace Z0
             [MethodImpl(Inline)]
             public NontermCall<T> CallFrom<T>(T src)
                 where T : unmanaged, IComparable<T>
-                    => call(src,this);
+                    => Xed.call(src,this);
 
             [MethodImpl(Inline)]
             public NontermCall CallTo(RuleSig dst)
-                => call(this, dst);
+                => Xed.call(this, dst);
 
             public override int GetHashCode()
                 => Hash;
@@ -89,9 +91,9 @@ namespace Z0
             [MethodImpl(Inline)]
             public int CompareTo(RuleSig src)
             {
-                var result = cmp(TableName,src.TableName);
+                var result = Xed.cmp(TableName,src.TableName);
                 if(result == 0)
-                    result = cmp(TableKind, src.TableKind);
+                    result = Xed.cmp(TableKind, src.TableKind);
                 return result;
             }
 

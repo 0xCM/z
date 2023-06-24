@@ -56,5 +56,23 @@ namespace Z0
         [Op]
         public static void AppendLines(this FilePath dst, string src, Encoding encoding)
             => File.AppendAllLines(dst.EnsureParentExists().Name, sys.array(src), encoding);
+
+        [Op]
+        public static StreamWriter Writer(this FileUri dst, TextEncodingKind encoding, bool append = false)
+            => encoding switch {
+                TextEncodingKind.Asci => FileWriters.asci(dst, append ? FileWriteMode.Append : FileWriteMode.Overwrite),
+                TextEncodingKind.Utf8 => FileWriters.utf8(dst, append ? FileWriteMode.Append : FileWriteMode.Overwrite),
+                TextEncodingKind.Unicode => FileWriters.unicode(dst, append ? FileWriteMode.Append : FileWriteMode.Overwrite),
+                _ => FileWriters.unicode(dst, append ? FileWriteMode.Append : FileWriteMode.Overwrite)
+            };
+
+        [Op]
+        public static StreamWriter Writer(this FileUri dst, bool append)
+            => FS.writer(dst, append ? FileWriteMode.Append : FileWriteMode.Overwrite, Encoding.UTF8);
+
+        [Op]
+        public static StreamWriter Writer(this FileUri dst, Encoding encoding, bool append)
+            => FS.writer(dst, append ? FileWriteMode.Append : FileWriteMode.Overwrite, encoding);
+
     }
 }

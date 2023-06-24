@@ -17,7 +17,7 @@ namespace Z0
         public void Etl(IProject project)
         {
             var context = ApiCmd.context(project);
-            Xed.Disasm.Collect(context);
+            XedRuntime.Disasm.Collect(context);
         }
                 
         [CmdOp("xed/disasm/check")]

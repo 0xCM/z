@@ -5,7 +5,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class XedRules
+    using static XedRules;
+    
+    partial class XedModels
     {
         /// <summary>
         /// Defines the content of a <see cref='FieldKind'/> int the context of a bitfield
@@ -78,6 +80,7 @@ namespace Z0
                 => Format();
 
             public static FieldSeg Empty => default;
-        }
+        }        
     }
+
 }

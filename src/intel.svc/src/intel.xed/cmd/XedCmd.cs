@@ -7,7 +7,6 @@ namespace Z0
     using Asm;
 
     using static sys;
-    using static XedDisasm;
     using static XedRules;
 
     public partial class XedCmd : WfAppCmd<XedCmd>
@@ -16,22 +15,24 @@ namespace Z0
 
         SdmCodeGen SdmCodeGen => Wf.SdmCodeGen();
 
-        XedPaths XedPaths => Xed.Paths;
+        XedRuntime XedRuntime => Wf.XedRuntime();
 
-        XedDb XedDb => Xed.XedDb;
+        XedPaths XedPaths => XedRuntime.Paths;
+
+        XedDb XedDb => XedRuntime.XedDb;
 
         IntelSdm Sdm => Wf.IntelSdm();
-
-        XedProject XedProject => Wf.XedProject();
 
         public IDbArchive LlvmModels(string scope)
             => AppDb.Dev($"llvm.models/{scope}");
 
-        [CmdOp("xed/headers")]
+        [CmdOp("xed/kit")]
         void XedHeaders()
         {
-            var src = XedProject.KitHeaders();
-            iter(src, file => Channel.Row(file));
+            var kit = Xed.kit();
+            piter(kit.Headers(), header => Channel.Row(header.ToUri()));
+            // var src = XedProject.KitHeaders();
+            // iter(src, file => Channel.Row(file));
         }
         
         [CmdOp("asm/gen/specs")]
@@ -165,41 +166,39 @@ namespace Z0
             => SdmCodeGen.Emit(AppDb.CgStage(CgTarget.Intel.ToString()));
 
         ref readonly Index<InstPattern> Patterns
-            => ref Xed.Views.Patterns;
-
-        XedRuntime Xed => Wf.XedRuntime();
+            => ref XedRuntime.Views.Patterns;
 
         [CmdOp("project/xed/etl")]
         void XedCollect()
-            => Xed.Disasm.Collect(ProjectContext());
+            => XedRuntime.Disasm.Collect(ProjectContext());
 
         [CmdOp("xed/start")]
         void StartRuntime()
         {
-            if(!Xed.Running)
-                Xed.Start();
+            if(!XedRuntime.Running)
+                XedRuntime.Start();
         }
 
         [CmdOp("xed/emit/types")]
         Outcome CheckXedDb(CmdArgs args)
         {
-            var rows = Xed.Views.TypeTables.SelectMany(x => x.Rows).Sort().Resequence();
+            var rows = XedRuntime.Views.TypeTables.SelectMany(x => x.Rows).Sort().Resequence();
             Channel.TableEmit(rows, XedPaths.DbTable<TypeTableRow>());
             return true;
         }
 
         [CmdOp("xed/emit/sigs")]
         void EmitInstSig()
-            => Xed.Rules.EmitInstSigs(Xed.Views.Patterns);
+            => XedRuntime.Rules.EmitInstSigs(XedRuntime.Views.Patterns);
 
         [CmdOp("xed/import")]
         void RunImport()
-            => Xed.Import.Run();
+            => XedRuntime.Import.Run();
 
         [CmdOp("xed/import/check")]
         void CheckXedImports()
         {
-            var blocks = Xed.Views.InstImports;
+            var blocks = XedRuntime.Views.InstImports;
             ref readonly var lines = ref blocks.BlockLines;
             var forms = lines.Keys.Index().Sort();
             ref readonly var source = ref blocks.DataSource;
@@ -221,49 +220,49 @@ namespace Z0
 
         [CmdOp("xed/emit/seq")]
         void EmitSeq()
-            => Xed.Rules.EmitSeq();
+            => XedRuntime.Rules.EmitSeq();
 
         [CmdOp("xed/emit/patterns")]
         void EmitPatterns()
-            => Xed.Rules.EmitPatternData(Xed.Views.Patterns);
+            => XedRuntime.Rules.EmitPatternData(XedRuntime.Views.Patterns);
 
         [CmdOp("xed/emit/expr")]
         void EmitRuleExpr()
-            => Xed.Rules.Emit(Xed.Views.RuleExpr);
+            => XedRuntime.Rules.Emit(XedRuntime.Views.RuleExpr);
 
         [CmdOp("xed/db/emit")]
         void DbEmit()
-            => Xed.XedDb.EmitArtifacts();
+            => XedRuntime.XedDb.EmitArtifacts();
 
         [CmdOp("xed/emit/rules/tables")]
         void EmitRuleTables()
-            => Xed.Rules.EmitRuleData(Xed.Views.RuleTables);
+            => XedRuntime.Rules.EmitRuleData(XedRuntime.Views.RuleTables);
 
         [CmdOp("xed/emit/rules/pages")]
         void EmitTableDefs()
-            => Xed.Rules.EmitRulePages(Xed.Views.RuleTables);
+            => XedRuntime.Rules.EmitRulePages(XedRuntime.Views.RuleTables);
 
         [CmdOp("xed/emit/rules/specs")]
         void EmitTableCells()
-            => Xed.Rules.EmitTableSpecs(Xed.Views.RuleTables);
+            => XedRuntime.Rules.EmitTableSpecs(XedRuntime.Views.RuleTables);
 
         [CmdOp("xed/emit/docs")]
         void EmitDocs()
-            => Xed.Docs.Emit();
+            => XedRuntime.Docs.Emit();
 
         [CmdOp("xed/emit/attribs")]
         void EmitInstAttribs()
-            => Xed.Rules.EmitInstAttribs(Xed.Views.Patterns);
+            => XedRuntime.Rules.EmitInstAttribs(XedRuntime.Views.Patterns);
 
         [CmdOp("xed/emit/groups")]
         void EmitInstGroups()
-            => Xed.Rules.EmitInstGroups(Xed.Rules.CalcInstGroups(Xed.Views.Patterns));
+            => XedRuntime.Rules.EmitInstGroups(XedRuntime.Rules.CalcInstGroups(XedRuntime.Views.Patterns));
 
         [CmdOp("xed/etl")]
         void EmitXedCat()
         {
-            Xed.Start();
-            Xed.RunEtl();
+            XedRuntime.Start();
+            XedRuntime.RunEtl();
         }
 
         void GenRuleNames(FilePath path)
@@ -271,7 +270,7 @@ namespace Z0
             var assets = IntrinsicAssets.create();
             var header = assets.XedFileHeader().Utf8();
 
-            var rules = Xed.Views.RuleTables;
+            var rules = XedRuntime.Views.RuleTables;
             ref readonly var specs = ref rules.Specs();
             var rulenames = specs.Keys.Select(x => x.TableName.ToString()).ToHashSet();
             var names = rulenames.Index().Sort();

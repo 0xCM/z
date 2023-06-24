@@ -33,7 +33,7 @@ namespace Z0
             dst.Lock = src.Lock;
             dst.Scalable = src.Scalable;
             Require.invariant(src.InstClass.Kind != 0);
-            dst.InstClass = classifier(src.InstClass);
+            dst.InstClass = Xed.classifier(src.InstClass);
             dst.InstForm = src.InstForm;
             dst.Body = body;
             return dst;

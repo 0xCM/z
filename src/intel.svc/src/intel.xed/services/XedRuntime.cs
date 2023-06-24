@@ -62,13 +62,13 @@ namespace Z0
             });
         }
 
-        static RuleTables CalcRuleTables()
+        static XedRuleTables CalcRuleTables()
         {
-            var tables = new RuleTables();
-            var dst = new RuleBuffers();
+            var tables = new XedRuleTables();
+            var dst = new XedRuleBuffers();
             exec(AppData.get().PllExec(),
-                () => dst.Target.TryAdd(RuleTableKind.ENC, RuleSpecs.criteria(RuleTableKind.ENC)),
-                () => dst.Target.TryAdd(RuleTableKind.DEC, RuleSpecs.criteria(RuleTableKind.DEC))
+                () => dst.Target.TryAdd(RuleTableKind.ENC, XedRuleSpecs.criteria(RuleTableKind.ENC)),
+                () => dst.Target.TryAdd(RuleTableKind.DEC, XedRuleSpecs.criteria(RuleTableKind.DEC))
                 );
             return XedRules.tables(dst);
         }
@@ -88,7 +88,7 @@ namespace Z0
             exec(PllExec,
                 CalcTypeTables,
                 CalcCpuIdImports,
-                () => defs = InstDefParser.parse(Paths.DocSource(XedDocKind.EncInstDef)),
+                () => defs = XedInstDefParser.parse(Paths.DocSource(XedDocKind.EncInstDef)),
                 () => Views.Store(I.AsmBroadcastDefs, Import.CalcBroadcastDefs()),
                 () => Views.Store(I.OpWidths, XedOps.Widths),
                 () => Import.CalcInstImports(data => blocks = data),
@@ -100,7 +100,7 @@ namespace Z0
             Views.Store(I.FormImports, forms);
             Views.Store(I.ChipMap, chips);
 
-            var tables = RuleTables.Empty;
+            var tables = XedRuleTables.Empty;
             var patterns = sys.empty<InstPattern>();
             exec(PllExec,
                 () => tables = CalcRuleTables(),
@@ -128,7 +128,7 @@ namespace Z0
             var opSpecs = sys.empty<InstOpSpec>();
             exec(PllExec,
                 () => opSpecs = XedOps.CalcSpecs(opdetail),
-                () => cd = RuleTables.datasets(tables)
+                () => cd = XedRuleTables.datasets(tables)
                 );
             Views.Store(I.CellDatasets, cd);
             Views.Store(I.InstOpSpecs, opSpecs);

@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class XedRules
+    partial class XedModels
     {
         [DataWidth(num2.Width)]
         public enum RuleTableKind : byte

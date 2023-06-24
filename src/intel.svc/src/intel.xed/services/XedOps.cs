@@ -13,7 +13,7 @@ namespace Z0
     {
         static Index<XedRegId> Regs;
 
-        static Index<OpWidthRecord> _Widths;
+        static ReadOnlySeq<OpWidthRecord> _Widths;
 
         static ConstLookup<OpWidthCode,OpWidthRecord> _WidthLookup;
 
@@ -24,7 +24,7 @@ namespace Z0
         static XedOps()
         {
             Regs = Symbols.index<XedRegId>().Kinds.ToArray();
-            _Widths = CalcOpWidths();
+            _Widths = Xed.CalcOpWidths();
             _WidthLookup = _Widths.Select(x => (x.Code,x)).ToDictionary();
             _PointerWidths = map(Symbols.index<PointerWidthKind>().View, s => (PointerWidth)s.Kind);
             _PointerWidthInfo = mapi(PointerWidths.Where(x => x.Kind != 0), (i,w) => w.ToRecord((byte)i));

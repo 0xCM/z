@@ -7,6 +7,7 @@ namespace Z0
     using static sys;
 
     using CK = XedRules.RuleCellKind;
+    using static XedModels;
 
     partial class XedRules
     {

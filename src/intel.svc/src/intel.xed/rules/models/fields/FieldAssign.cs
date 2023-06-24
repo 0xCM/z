@@ -35,7 +35,7 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public CellExpr Expression()
-                => expr(OperatorKind.Eq, Value);
+                => Xed.expr(OperatorKind.Eq, Value);
 
             public string Format()
                 => XedRender.format(Expression());

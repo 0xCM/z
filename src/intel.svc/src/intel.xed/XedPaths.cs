@@ -23,31 +23,31 @@ namespace Z0
         public FolderPath Output()
             => State.XedTargets;
 
-        public DbArchive Targets()
+        public IDbArchive Targets()
             => new DbArchive(State.XedTargets);
 
-        public DbArchive Targets(string scope)
+        public IDbArchive Targets(string scope)
             => new DbArchive(State.XedTargets, scope);
 
-        public DbArchive DbTargets()
+        public IDbArchive DbTargets()
             => Targets().Targets("db");
 
-        public DbArchive Imports()
+        public IDbArchive Imports()
             => Targets("imports");
 
-        public DbArchive RuleTargets()
+        public IDbArchive RuleTargets()
             => Targets("rules");
 
-        public DbArchive Refs()
+        public IDbArchive Refs()
             => Targets("refs");
 
-        public DbArchive InstTargets()
+        public IDbArchive InstTargets()
             => Targets("instructions");
 
-        public DbArchive InstPages()
+        public IDbArchive InstPages()
             => InstTargets().Targets("pages");
 
-        public DbArchive RulePages()
+        public IDbArchive RulePages()
             => RuleTargets().Targets("pages");
 
         public FilePath Table<T>()
@@ -114,18 +114,18 @@ namespace Z0
         public FilePath DisasmOpsPath(string project, in FileRef src)
             => DisasmTargets(project).Path(FS.file(string.Format("{0}.ops", src.Path.FileName.WithoutExtension.Format()), FS.Txt));
 
-        public _FileUri RulePage(RuleSig sig)
+        public FileUri RulePage(RuleSig sig)
             => RulePages().Path(FS.file(sig.Format(), FS.Csv));
 
-        public _FileUri CheckedRulePage(RuleSig sig)
+        public FileUri CheckedRulePage(RuleSig sig)
         {
             var uri = RulePage(sig);
-            return uri.Path.Exists ? uri : _FileUri.Empty;
+            return uri.Exists ? uri : FileUri.Empty;
         }
 
-        public _FileUri CheckedTableDef(RuleName rule, bit decfirst, out RuleSig sig)
+        public FileUri CheckedTableDef(RuleName rule, bit decfirst, out RuleSig sig)
         {
-            var dst = _FileUri.Empty;
+            var dst = FileUri.Empty;
             if(decfirst)
             {
                 sig = new RuleSig(RuleTableKind.DEC, rule);
