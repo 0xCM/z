@@ -75,7 +75,7 @@ namespace Z0
 
         static EnumRender<OpAction> OpActions = new();
 
-        static EnumRender<OpWidthCode> OpWidthKinds = new();
+        static EnumRender<XedWidthCode> OpWidthKinds = new();
 
         static EnumRender<ElementKind> ElementTypes = new();
 
@@ -333,7 +333,7 @@ namespace Z0
         public static string format(VexMapKind src)
             => VexMap.Format(src);
 
-        public static string format(OpWidthCode src)
+        public static string format(XedWidthCode src)
             => src == 0 ? EmptyString : OpWidthKinds.Format(src);
 
         public static string format(OpType src)

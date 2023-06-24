@@ -75,7 +75,7 @@ public partial class Xed : WfSvc<Xed>
     }
 
     [MethodImpl(Inline), Op]
-    public static int cmp(OpWidthCode a, OpWidthCode b)
+    public static int cmp(XedWidthCode a, XedWidthCode b)
         => ((byte)a).CompareTo((byte)b);
 
     public static int cmp(InstOpClass a, InstOpClass b)

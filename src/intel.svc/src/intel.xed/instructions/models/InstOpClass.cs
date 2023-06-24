@@ -27,7 +27,7 @@ namespace Z0
             public ushort BitWidth;
 
             [Render(12)]
-            public EmptyZero<OpWidthCode> WidthCode;
+            public EmptyZero<XedWidthCode> WidthCode;
 
             [Render(12)]
             public ElementType ElementType;

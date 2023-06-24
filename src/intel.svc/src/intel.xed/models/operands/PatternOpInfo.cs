@@ -20,7 +20,7 @@ namespace Z0
 
             public OpAction Action;
 
-            public OpWidthCode WidthCode;
+            public XedWidthCode WidthCode;
 
             public GprWidth GprWidth;
 

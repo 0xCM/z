@@ -51,7 +51,7 @@ namespace Z0
             public EnumFormat<OpAction> Action;
 
             [Render(10)]
-            public EnumFormat<OpWidthCode> WidthCode;
+            public EnumFormat<XedWidthCode> WidthCode;
 
             [Render(10)]
             public GprWidth GprWidth;

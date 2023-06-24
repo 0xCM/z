@@ -9,7 +9,7 @@ namespace Z0
     {
         public class OpWidthSpecs
         {
-            readonly Index<OpWidthCode,OpWidthSpec> Data;
+            readonly Index<XedWidthCode,OpWidthSpec> Data;
 
             [MethodImpl(Inline)]
             public OpWidthSpecs(OpWidthSpec[] src)
@@ -17,7 +17,7 @@ namespace Z0
                 Data = src;
             }
 
-            public ref readonly OpWidthSpec this[OpWidthCode code]
+            public ref readonly OpWidthSpec this[XedWidthCode code]
             {
                 [MethodImpl(Inline)]
                 get => ref Data[code];

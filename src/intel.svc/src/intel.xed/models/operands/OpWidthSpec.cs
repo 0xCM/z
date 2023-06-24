@@ -37,7 +37,7 @@ namespace Z0
             }
 
             [MethodImpl(Inline)]
-            OpWidthSpec(OpWidthCode code, MachineMode mode, asci16 name, BitSegType seg, ushort n, ElementType t, ushort cw, ushort bw)
+            OpWidthSpec(XedWidthCode code, MachineMode mode, asci16 name, BitSegType seg, ushort n, ElementType t, ushort cw, ushort bw)
             {
                 Code = code;
                 Mode = mode;
@@ -51,7 +51,7 @@ namespace Z0
             }
 
             [MethodImpl(Inline)]
-            OpWidthSpec(OpWidthCode code, MachineMode mode, GprWidth gpr, ElementType ct, ushort n)
+            OpWidthSpec(XedWidthCode code, MachineMode mode, GprWidth gpr, ElementType ct, ushort n)
             {
                 Code = code;
                 Gpr = gpr;
@@ -64,7 +64,7 @@ namespace Z0
                 Name = default;
             }
 
-            public readonly OpWidthCode Code;
+            public readonly XedWidthCode Code;
 
             public readonly GprWidth Gpr;
 

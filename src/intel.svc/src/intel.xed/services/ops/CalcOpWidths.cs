@@ -12,8 +12,8 @@ partial class Xed
 {
     public static Index<OpWidthRecord> CalcOpWidths()
     {
-        var buffer = dict<OpWidthCode,OpWidthRecord>();
-        var symbols = Symbols.index<OpWidthCode>();
+        var buffer = dict<XedWidthCode,OpWidthRecord>();
+        var symbols = Symbols.index<XedWidthCode>();
         var src = XedPaths.Service.DocSource(XedDocKind.Widths);
         using var reader = src.Utf8LineReader();
         var result = Outcome.Success;

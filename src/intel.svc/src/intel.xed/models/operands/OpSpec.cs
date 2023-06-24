@@ -44,7 +44,7 @@ namespace Z0
 
             public Visibility Visibility;
 
-            public OpWidthCode WidthCode;
+            public XedWidthCode WidthCode;
 
             public ushort BitWidth;
 

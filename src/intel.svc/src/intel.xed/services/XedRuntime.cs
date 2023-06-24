@@ -66,7 +66,7 @@ namespace Z0
         {
             var tables = new XedRuleTables();
             var dst = new XedRuleBuffers();
-            exec(AppData.get().PllExec(),
+            exec(PllExec,
                 () => dst.Target.TryAdd(RuleTableKind.ENC, XedRuleSpecs.criteria(RuleTableKind.ENC)),
                 () => dst.Target.TryAdd(RuleTableKind.DEC, XedRuleSpecs.criteria(RuleTableKind.DEC))
                 );

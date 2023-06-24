@@ -73,8 +73,8 @@ namespace Z0
                 => (OpAction)Data;
 
             [MethodImpl(Inline)]
-            public OpWidthCode ToWidthCode()
-                => (OpWidthCode)Data;
+            public XedWidthCode ToWidthCode()
+                => (XedWidthCode)Data;
 
             [MethodImpl(Inline)]
             public XedRegId ToRegLiteral()
@@ -101,7 +101,7 @@ namespace Z0
                 => new OpAttrib(K.Action, (ushort)src);
 
             [MethodImpl(Inline)]
-            public static implicit operator OpAttrib(OpWidthCode src)
+            public static implicit operator OpAttrib(XedWidthCode src)
                 => new OpAttrib(K.Width, (ushort)src);
 
             [MethodImpl(Inline)]

@@ -9,12 +9,12 @@ namespace Z0
     using static XedModels;
     using static NativeClass;
 
-    using W = XedModels.OpWidthCode;
+    using W = XedWidthCode;
 
     partial class Xed
     {
         [Op]
-        public static NativeClass nclass(OpWidthCode src)
+        public static NativeClass nclass(XedWidthCode src)
         {
             var dst = NativeClass.None;
             switch(src)

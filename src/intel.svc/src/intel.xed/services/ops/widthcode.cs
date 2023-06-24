@@ -11,13 +11,13 @@ namespace Z0
     partial class XedOps
     {
         [MethodImpl(Inline), Op]
-        public static bool widthcode(in PatternOp src, out OpWidthCode dst)
+        public static bool widthcode(in PatternOp src, out XedWidthCode dst)
         {
             var result = XedPatterns.first(src.Attribs, OpAttribKind.Width, out var attrib);
             if(result)
                 dst= attrib.ToWidthCode();
             else
-                dst = OpWidthCode.INVALID;;
+                dst = XedWidthCode.INVALID;;
             return result;
         }
     }
