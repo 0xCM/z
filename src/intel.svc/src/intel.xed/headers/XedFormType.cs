@@ -5,6 +5,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+/// <summary>
+/// D:\env\sdks\intel\xed\kit\include\xed\xed-iform-enum.h
+/// </summary>
 [SymSource("asm"), DataWidth(13)]
 public enum XedFormType : ushort
 {
