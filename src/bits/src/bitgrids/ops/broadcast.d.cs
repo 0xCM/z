@@ -19,7 +19,7 @@ namespace Z0
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
             where T : unmanaged
-                => gcpu.broadcast<T,uint>(cell);
+                => vgcpu.broadcast<T,uint>(cell);
 
         /// <summary>
         /// Transmits the content of a single cell to all cells in a grid
@@ -34,7 +34,7 @@ namespace Z0
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
             where T : unmanaged
-                => gcpu.broadcast<T,ulong>(cell);
+                => vgcpu.broadcast<T,ulong>(cell);
 
         /// <summary>
         /// Transmits the content of a single cell to all cells in a grid
@@ -49,7 +49,7 @@ namespace Z0
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
             where T : unmanaged
-                => gcpu.vbroadcast(n128,cell);
+                => vgcpu.vbroadcast(n128,cell);
 
         /// <summary>
         /// Transmits the content of a single cell to all cells in a grid
@@ -64,7 +64,7 @@ namespace Z0
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
             where T : unmanaged
-                => gcpu.vbroadcast(n256,cell);
+                => vgcpu.vbroadcast(n256,cell);
 
         /// <summary>
         /// Fills a caller-allocated natural grid

@@ -10,6 +10,9 @@ namespace Z0
 
     public class ApiCmd
     {
+        public static CmdEffectors effectors(IWfRuntime wf, Assembly[] parts)
+            => new CmdEffectors(methods(wf, parts), handlers(wf, parts));
+
         [MethodImpl(Inline), Op]
         public static CmdUri uri(CmdKind kind, string? part, string? host, string? name)
             => new CmdUri(kind, part, host, name);
@@ -27,8 +30,8 @@ namespace Z0
 
         internal static IApiCmdRunner runner(IWfRuntime wf, Assembly[] parts)
         {
-            var _parts = parts.Length == 0 ? ApiAssemblies.Components : parts;
-            var runner = (IApiCmdRunner)new ApiCmdRunner(wf.Channel, ApiCmd.methods(wf, _parts), ApiCmd.handlers(wf, _parts));
+            var _parts = parts.Length == 0 ? ApiAssemblies.Components.Union(array(Assembly.GetEntryAssembly())).Array() : parts;
+            var runner = (IApiCmdRunner)new ApiCmdRunner(wf.Channel, effectors(wf,_parts));
             AppService.AppData.Value(nameof(IApiCmdRunner), runner);
             return runner;
         }

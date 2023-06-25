@@ -7,6 +7,6 @@ namespace Z0
     partial class XTend
     {
         public static TextFileStats FileStats(this FilePath src)
-            => TextFile.stats(src);
+            => FS.stats(src);
     }
 }

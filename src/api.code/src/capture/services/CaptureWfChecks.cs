@@ -8,18 +8,6 @@ namespace Z0
 
     public class CaptureWfChecks : WfAppCmd<CaptureWfChecks>
     {
-        [CmdOp("asm/check/hex")]
-        void Hello()
-        {
-            var input = "66 66 2e 0f 1f 84 00 00 00 00 00 00";
-            var buffer = ByteBlock16.Empty;
-            var size = (byte)Hex.parse(input, buffer.Bytes).Require();
-            var data = slice(buffer.Bytes,0,size);
-            buffer[15] = size;
-            var dst = new AsmHexCode(@as<ByteBlock16,Cell128>(buffer));
-            Write(dst.Format());
-
-        }
 
         public static void run(IApiPack src, IWfChannel channel)
         {

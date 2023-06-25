@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static sys;
-    using static cpu;
+    using static vcpu;
 
     partial struct BitPack
     {
@@ -18,7 +18,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static ushort pack16x8x1<T>(in T src)
             where T : unmanaged
-                => vmovemask(gcpu.v8u(gcpu.vsll(vload(w128, u64(src)),7)));
+                => vmovemask(v8u(vgcpu.vsll(vload(w128, u64(src)),7)));
 
         /// <summary>
         /// Pack 16 1-bit values taken from the least significant bit of each source byte

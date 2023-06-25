@@ -4,16 +4,24 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using static core;
+    using static sys;
 
     partial struct AsmPrototypes2
     {
         [ApiComplete]
         public readonly struct ResourceBuffers
         {
+            /// <summary>
+            /// Covers the content of a readonly span with an editable span
+            /// </summary>
+            /// <param name="src">The memory source</param>
+            /// <param name="count">The number of source cells to read</param>
+            /// <typeparam name="T">The cell type</typeparam>
+            /// <returns>Obviously, this trick could be particularly dangerous</returns>
+            [MethodImpl(Inline)]
+            static Span<T> edit<T>(ReadOnlySpan<T> src)
+                => sys.cover(sys.edit(sys.first(src)), src.Length);
+
             public static Span<byte> buffer(int index)
                 => edit(Buffer_2688);
 

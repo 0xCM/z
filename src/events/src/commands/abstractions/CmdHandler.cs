@@ -27,10 +27,7 @@ namespace Z0
         public virtual ReadOnlySeq<@string> SubCommands {get;} 
             = sys.empty<@string>();
 
-        public ReadOnlySeq<ApiCmdRoute> Routes
-            => _Routes;
-
-        ApiCmdRoute ICmdHandler.Route
+        ApiCmdRoute ICmdEffector.Route
             => Route;        
 
         public abstract void Run(CmdArgs args);

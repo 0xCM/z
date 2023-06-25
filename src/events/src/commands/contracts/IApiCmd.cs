@@ -4,18 +4,19 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     [Free]
     public interface IApiCmd : ICmd
     {
         CmdUri Uri {get;}
+
+        ApiCmdRoute Route {get;}
     }
 
     [Free]
     public interface IApiCmd<T> : IApiCmd
         where T : IApiCmd<T>, new()
     {
-        ApiCmdRoute Route
+        ApiCmdRoute IApiCmd.Route
             => ApiCmd.route(typeof(T));
         
         CmdId ICmd.CmdId
@@ -44,7 +45,6 @@ namespace Z0
                     dst.Append(", ");
             }
         }                            
-
         string IExpr.Format()
             => format((T)this);
 

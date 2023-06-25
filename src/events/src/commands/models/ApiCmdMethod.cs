@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public sealed class ApiCmdMethod : IComparable<ApiCmdMethod>
+    public sealed class ApiCmdMethod : IComparable<ApiCmdMethod>, ICmdMethod
     {
         public readonly ApiCmdRoute Route;
 
@@ -31,6 +31,9 @@ namespace Z0
             [MethodImpl(Inline)]
             get => Host.GetType();
         }
+
+        ApiCmdRoute ICmdEffector.Route
+            => Route;
 
         public int CompareTo(ApiCmdMethod src)
             => Format().CompareTo(src.Format());

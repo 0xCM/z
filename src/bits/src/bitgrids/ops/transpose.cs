@@ -11,11 +11,11 @@ namespace Z0
             where T : unmanaged
         {
             var dst = z64<N8,N8,byte>();
-            var src = cpu.vscalar(w128,g.Data);
+            var src = vcpu.vscalar(w128,g.Data);
             for(var i=7; i>= 0; i--)
             {
-                dst.Cell(i) = (byte)cpu.vmovemask(cpu.v8u(src));
-                src = cpu.vsll(src,1);
+                dst.Cell(i) = (byte)vcpu.vmovemask(vcpu.v8u(src));
+                src = vcpu.vsll(src,1);
             }
             return dst.As<T>();
         }
@@ -61,7 +61,7 @@ namespace Z0
             const uint E = BitMaskLiterals.Even32;
             const uint O = BitMaskLiterals.Odd32;
 
-            var mask = gcpu.vmask32u(src, (byte)i);
+            var mask = vcpu.vmask32u(src, (byte)i);
             var gT = gcell(g0, i, Numeric.force<T>(bits.gather(mask, E)));
             gT = gcell(gT, j, Numeric.force<T>(bits.gather(mask, O)));
             return gT;

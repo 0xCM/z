@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface ICmdHandler
+    public interface ICmdHandler : ICmdEffector
     {
         /// <summary>
         /// Invokes the command
@@ -16,11 +16,6 @@ namespace Z0
         void Run(CmdArgs args);
         
         /// <summary>
-        /// Identifies a command or related group of commands as specified by the <see cref='SubCommands'/> attribute
-        /// </summary>
-        ApiCmdRoute Route {get;}
-
-        /// <summary>
         /// The subcommands, if any
         /// </summary>
         ReadOnlySeq<@string> SubCommands {get;}
@@ -29,8 +24,6 @@ namespace Z0
         /// Prepares a handler for command execution
         /// </summary>
         /// <param name="wf">The context in which execution will occur</param>
-        void Initialize(IWfRuntime wf);
-
-        ReadOnlySeq<ApiCmdRoute> Routes {get;}
+        void Initialize(IWfRuntime wf);        
     }
 }

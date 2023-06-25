@@ -23,18 +23,5 @@ namespace Z0
 
         public static ITextEmitter Utf8Emitter(this FilePath dst, bool append = false)
             => dst.Utf8Writer(append).Emitter();
-
-        public static ITextEmitter Emitter(this FileUri dst, TextEncodingKind encoding, bool append = false)
-            => dst.Writer(encoding, append).Emitter();
-
-        public static ITextEmitter Emitter(this FileUri dst, Encoding encoding, bool append = false)
-            => dst.Writer(encoding, append).Emitter();
-
-        public static ITextEmitter AsciEmitter(this FileUri dst, bool append = false)
-            => dst.AsciWriter(append).Emitter();
-
-        public static ITextEmitter Utf8Emitter(this FileUri dst, bool append = false)
-            => dst.Utf8Writer(append).Emitter();
-
     }
 }

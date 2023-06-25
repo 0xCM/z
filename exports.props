@@ -26,7 +26,6 @@
    <Import Project="$(MsBuildThisFileDirectory)src/commands/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/cells/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/cpu/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/cmd/exports.props"/>
 

@@ -10,7 +10,7 @@ namespace Z0
     public class ApiServers : AppService
     {        
         public static ApiCmdCatalog catalog()
-            => ApiCmdRunner.Service().Catalog;
+            => ApiCmdRunner.Service().CmdCatalog;
 
         public static IApiShell app<T>(string[] args)
             where T : IApiShell,new()
@@ -94,7 +94,6 @@ namespace Z0
                 throw;
             }
         }
-
  
         const string InitializingRuntime = "Initializing runtime";
         

@@ -24,7 +24,7 @@ namespace Z0
 
         readonly IEventSink EventSink;
 
-        WfChannel(IWfRuntime wf, Type host)
+        protected WfChannel(IWfRuntime wf, Type host)
         {
             Wf = wf;
             EventSink = wf.EventSink;
@@ -38,155 +38,145 @@ namespace Z0
 
         ExecToken NextExecToken() => Wf.NextExecToken();
 
-        ExecFlow<T> Flow<T>(T data)
-            => new ExecFlow<T>(this, data, NextExecToken());
-
-        TableFlow<T> TableFlow<T>(FilePath dst)
-            => new TableFlow<T>(this, dst, NextExecToken());
-
-        FileEmission Flow(FilePath dst)
-            => new FileEmission(NextExecToken(), dst, 0);
-
         public ExecToken Completed(ExecFlow src, bool success = true)
             => TokenDispenser.close(src, success);
 
-        public EventId Raise<E>(E e)
+        public void Raise<E>(E e)
             where E : IEvent
         {
             EventSink.Deposit(e);
-            return e.EventId;
         }
 
-        public void Babble<T>(T content)
+        public virtual void Babble<T>(T content)
             => signal(EventSink, Host).Raise(babble(Host,content));
 
-        public void Babble(string pattern, params object[] args)
+        public virtual void Babble(string pattern, params object[] args)
             => Wf.Babble(Host, string.Format(pattern, args));
 
-        public void Status<T>(T content, FlairKind flair = FlairKind.Status)
+        public virtual void Status<T>(T content, FlairKind flair = FlairKind.Status)
             => Wf.Status(Host, content, flair);
 
-        public void Status(ReadOnlySpan<char> src, FlairKind flair = FlairKind.Status)
+        public virtual void Status(ReadOnlySpan<char> src, FlairKind flair = FlairKind.Status)
             => Wf.Status(Host, new string(src), flair);
 
-        public void Status(FlairKind flair, string pattern, params object[] args)
+        public virtual void Status(FlairKind flair, string pattern, params object[] args)
             => Wf.Status(Host, string.Format(pattern, args));
 
-        public void Status(string pattern, params object[] args)
+        public virtual void Status(string pattern, params object[] args)
             => Wf.Status(Host, string.Format(pattern, args));
 
-        public void Warn<T>(T content, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
+        public virtual void Warn<T>(T content, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
             => Wf.Warn(content, caller, file, line);
 
-        public void Error<T>(T content, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
+        public virtual void Error<T>(T content, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
             => signal(EventSink, Host).Error(content, Events.originate("WorkflowError", caller, file, line));
 
-        public void Write<T>(T content)
+        public virtual void Write<T>(T content)
             => Wf.Data(Host, content);
 
-        public void Write<T>(T content, FlairKind flair)
+        public virtual void Write<T>(T content, FlairKind flair)
             => Wf.Data(Host, content, flair);
 
-        public void Row<T>(T content)
+        public virtual void Row<T>(T content)
             => Wf.Row(content);
 
-        public void Row<T>(T content, FlairKind flair)
+        public virtual void Row<T>(T content, FlairKind flair)
             => Wf.Row(content, flair);
 
-        public void Write(string content, FlairKind flair)
+        public virtual void Write(string content, FlairKind flair)
             => Wf.Data(Host, content, flair);
 
-        public void Write<T>(string name, T value, FlairKind flair)
+        public virtual void Write<T>(string name, T value, FlairKind flair)
             => Wf.Data(Host, text.attrib(name, value), flair);
 
-        public void Write<T>(string name, T value)
+        public virtual void Write<T>(string name, T value)
             => Wf.Data(Host, text.attrib(name, value));
 
-        public ExecFlow<Type> Creating(Type service)
+        public virtual ExecFlow<Type> Creating(Type service)
             => Wf.Creating(service);
 
-        public ExecToken Created(ExecFlow<Type> flow)
+        public virtual ExecToken Created(ExecFlow<Type> flow)
             => Wf.Created(flow, Host);
 
-        public ExecToken Completed<T>(ExecFlow<T> flow, Type host, Exception e, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
+        public virtual ExecToken Completed<T>(ExecFlow<T> flow, Type host, Exception e, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
             => Wf.Completed(flow, host, e, caller, file, line);
 
-        public ExecToken Completed<T>(ExecFlow<T> flow, Type host, Exception e, EventOrigin origin)
+        public virtual ExecToken Completed<T>(ExecFlow<T> flow, Type host, Exception e, EventOrigin origin)
             => Wf.Completed(flow, host, e, origin);
 
-        public ExecFlow<T> Running<T>(T msg)
+        public virtual ExecFlow<T> Running<T>(T msg)
             => Wf.Running(Host, msg);
 
-        public ExecFlow<string> Running([CallerName] string caller = null)
+        public virtual ExecFlow<string> Running([CallerName] string caller = null)
             => Wf.Running(Host, caller);
 
-        public ExecToken Ran<T>(ExecFlow<T> flow, [CallerName] string caller = null)
+        public virtual ExecToken Ran<T>(ExecFlow<T> flow, [CallerName] string caller = null)
             => Wf.Ran(Host, flow.WithMsg(caller));
 
-        public ExecToken Ran<T>(ExecFlow<T> flow, string msg, FlairKind flair = FlairKind.Ran)
+        public virtual ExecToken Ran<T>(ExecFlow<T> flow, string msg, FlairKind flair = FlairKind.Ran)
             => Wf.Ran(Host, flow.WithMsg(msg), flair);
 
-        public ExecToken<D> Ran<D>(ExecFlow src, D data, FlairKind flair = FlairKind.Ran)
+        public virtual ExecToken<D> Ran<D>(ExecFlow src, D data, FlairKind flair = FlairKind.Ran)
         {
             var token = Completed(src);
             signal(Wf.EventSink).Ran(data);
             return (token,data);
         }
 
-        public FileEmission EmittingFile(FilePath dst)
+        public virtual FileEmission EmittingFile(FilePath dst)
             => Wf.EmittingFile(Host, dst);
 
-        public ExecToken EmittedFile(FileEmission flow, Count count)
+        public virtual ExecToken EmittedFile(FileEmission flow, Count count)
             => Wf.EmittedFile(Host, flow, count);
 
-        public ExecToken EmittedFile(FileEmission flow, int count)
+        public virtual ExecToken EmittedFile(FileEmission flow, int count)
             => Wf.EmittedFile(Host, flow, count);
 
-        public ExecToken EmittedFile(FileEmission flow, uint count)
+        public virtual ExecToken EmittedFile(FileEmission flow, uint count)
             => Wf.EmittedFile(Host, flow, count);
 
-        public ExecToken EmittedFile<T>(FileEmission flow, T msg)
+        public virtual ExecToken EmittedFile<T>(FileEmission flow, T msg)
             => Wf.EmittedFile(flow, msg);
 
-        public ExecToken EmittedFile(FileEmission flow)
+        public virtual ExecToken EmittedFile(FileEmission flow)
             => Wf.EmittedFile(flow);
 
-        public ExecToken Ran(ExecFlow flow, bool success = true)
+        public virtual ExecToken Ran(ExecFlow flow, bool success = true)
             => Wf.Ran(flow, success);
 
-        public ExecToken EmittedBytes(FileEmission flow, ByteSize size)
+        public virtual ExecToken EmittedBytes(FileEmission flow, ByteSize size)
             => EmittedFile(flow, AppMsg.EmittedBytes.Capture(size, flow.Target));
 
-        public TableFlow<T> EmittingTable<T>(FilePath dst)
+        public virtual TableFlow<T> EmittingTable<T>(FilePath dst)
             => Wf.EmittingTable<T>(Host, dst);
 
-        public ExecToken EmittedTable<T>(TableFlow<T> flow, Count count, FilePath? dst = null)
+        public virtual ExecToken EmittedTable<T>(TableFlow<T> flow, Count count, FilePath? dst = null)
             => Wf.EmittedTable(Host, flow, count, dst);
 
-        public ExecToken TableEmit<T>(ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
+        public virtual ExecToken TableEmit<T>(ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
                 => CsvTables.emit(Wf.Channel, rows, dst, encoding, rowpad, fk);
 
-        public ExecToken TableEmit<T>(Index<T> rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
+        public virtual ExecToken TableEmit<T>(Index<T> rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
                 => TableEmit(rows.View, dst, encoding, rowpad, fk);
 
-        public ExecToken TableEmit<T>(T[] rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
+        public virtual ExecToken TableEmit<T>(T[] rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
                 => TableEmit(@readonly(rows), dst, encoding, rowpad, fk);
 
-        public ExecToken TableEmit<T>(ReadOnlySeq<T> src, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
+        public virtual ExecToken TableEmit<T>(ReadOnlySeq<T> src, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
                 => TableEmit(src.View, dst, encoding, rowpad, fk);
 
-        public ExecToken TableEmit<T>(Seq<T> src, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
+        public virtual ExecToken TableEmit<T>(Seq<T> src, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
                 => TableEmit(src.View, dst, encoding, rowpad, fk);
 
-        public ExecToken TableEmit<T>(ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding)
+        public virtual ExecToken TableEmit<T>(ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding)
             => CsvTables.emit(Wf.Channel, rows, dst, encoding);
  
-        public ExecToken TableEmit<T>(ReadOnlySpan<T> src, ReadOnlySpan<byte> widths, TextEncodingKind encoding, FilePath dst)
+        public virtual ExecToken TableEmit<T>(ReadOnlySpan<T> src, ReadOnlySpan<byte> widths, TextEncodingKind encoding, FilePath dst)
         {
             var flow = Wf.EmittingTable<T>(Host, dst);
             var spec = CsvTables.rowspec<T>(widths, z16);
@@ -194,7 +184,7 @@ namespace Z0
             return Wf.EmittedTable(Host, flow, count);
         }
 
-        public ExecToken FileEmit<T>(T src, Count count, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)
+        public virtual ExecToken FileEmit<T>(T src, Count count, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)
         {
             var emitting = EmittingFile(dst);
             using var emitter = dst.Writer(encoding);
@@ -202,7 +192,7 @@ namespace Z0
             return EmittedFile(emitting, count);
         }
 
-        public ExecToken FileEmit<T>(T src, FilePath dst, ByteSize size, TextEncodingKind encoding = TextEncodingKind.Asci)
+        public virtual ExecToken FileEmit<T>(T src, FilePath dst, ByteSize size, TextEncodingKind encoding = TextEncodingKind.Asci)
         {
             var emitting = EmittingFile(dst);
             using var emitter = dst.Writer(encoding);
@@ -210,7 +200,7 @@ namespace Z0
             return EmittedFile(emitting, size);
         }
 
-        public ExecToken FileEmit<T>(T src, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)
+        public virtual ExecToken FileEmit<T>(T src, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)
         {
             var emitting = EmittingFile(dst);
             using var emitter = dst.Writer(encoding);
@@ -218,7 +208,7 @@ namespace Z0
             return EmittedFile(emitting, 0);
         }
 
-        public ExecToken FileEmit<T>(T src, string msg, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)
+        public virtual ExecToken FileEmit<T>(T src, string msg, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)
         {
             var emitting = EmittingFile(dst);
             Write(string.Format("{0,-12} | {1}", "Emitting", dst.ToUri()), FlairKind.Running);
@@ -229,7 +219,7 @@ namespace Z0
             return EmittedFile(emitting, 0);
         }
 
-        public ExecToken FileEmit<T>(ReadOnlySpan<T> lines, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)
+        public virtual ExecToken FileEmit<T>(ReadOnlySpan<T> lines, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci)
         {
             var emitting = EmittingFile(dst);
             using var writer = dst.Writer(encoding);
@@ -239,7 +229,7 @@ namespace Z0
             return EmittedFile(emitting, count);
         }
 
-        public ExecToken FileEmit(string src, Count count, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Utf8)
+        public virtual ExecToken FileEmit(string src, Count count, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Utf8)
         {
             var emitting = EmittingFile(dst);
             using var writer = dst.Writer(encoding);

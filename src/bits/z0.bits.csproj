@@ -2,10 +2,14 @@
   <Import Project="$(ProjectProps)\usings.props"/>
   <Import Project="$(SlnProps)\graphs.props"/>
   <ItemGroup>
-    <ProjectReference Include="$(Calcs)" />
     <ProjectReference Include="$(Graphs)" />
     <ProjectReference Include="$(Grids)" />
     <ProjectReference Include="$(BitFields)" />
+    <ProjectReference Include="$(SFx)" />
+    <ProjectReference Include="$(VCpu)" />
+    <ProjectReference Include="$(Polyrand)" />
+    <ProjectReference Include="$(Calcs)" />
+
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>

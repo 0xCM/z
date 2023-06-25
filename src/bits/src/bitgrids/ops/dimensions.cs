@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
     using static grids;
 
     partial class BitGrid
@@ -118,12 +118,12 @@ namespace Z0
             {
                 while(--failsafe >= 0)
                 {
-                    yield return pair(m,n);
+                    yield return Tuples.pair(m,n);
 
                     if(m == n)
                         break;
 
-                    yield return pair(n,m);
+                    yield return Tuples.pair(n,m);
 
                     m <<= 1;
 

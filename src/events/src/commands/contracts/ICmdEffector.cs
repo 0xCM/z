@@ -2,12 +2,13 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-
-
 namespace Z0
 {
-    public static partial class XTend
+    public interface ICmdEffector
     {
-        const NumericKind Closure = UnsignedInts;
+        /// <summary>
+        /// Identifies a command or related group of commands as specified by the <see cref='SubCommands'/> attribute
+        /// </summary>
+        ApiCmdRoute Route {get;}
     }
 }

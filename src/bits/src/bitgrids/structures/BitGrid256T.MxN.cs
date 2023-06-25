@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     /// <summary>
     /// A grid of natural dimensions M and N such that M*N = W := 256

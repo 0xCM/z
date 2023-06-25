@@ -103,7 +103,7 @@ namespace Z0
             => src is SubGrid128<M,N,T> x ? Equals(x) : false;
 
         public override int GetHashCode()
-            => (int)alg.ghash.calc(Data);
+            => (int)sys.hash(Data);
 
         [MethodImpl(Inline)]
         public static implicit operator Vector128<T>(in SubGrid128<M,N,T> src)

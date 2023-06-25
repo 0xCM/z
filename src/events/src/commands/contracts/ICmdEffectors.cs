@@ -4,10 +4,15 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class XTend
-    {
-        public static FileInfo FileInfo(this FilePath src)
-            => FS.info(src);
+    using static sys;
+    using static ApiActorKind;
 
+    public interface ICmdEffectors
+    {
+        bool Handler(ApiCmdRoute route, out ICmdHandler dst);
+
+        bool Method(ApiCmdRoute route, out ApiCmdMethod dst);
+
+        ApiCmdCatalog Catalog {get;}
     }
 }

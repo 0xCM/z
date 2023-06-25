@@ -6,7 +6,7 @@ namespace Z0
 {
     public interface IEventChannel
     {
-        EventId Raise<E>(E e) 
+        void Raise<E>(E e) 
             where E : IEvent;
 
         ExecFlow<Type> Creating(Type service);
@@ -32,6 +32,5 @@ namespace Z0
         ExecToken Executed<T>(ExecFlow<T> flow, [CallerName] string msg = null)
             where T : ICmd, new()
                 => Ran(flow, msg);
-
     }
 }

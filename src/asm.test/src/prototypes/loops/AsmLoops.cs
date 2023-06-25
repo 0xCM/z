@@ -4,9 +4,141 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static sys;
     [ApiHost]
     public unsafe readonly partial struct AsmLoops
     {
+        /// <summary>
+        /// isl/test_inputs/codegen/isolate5.c
+        /// </summary>
+        [Op]
+        public static void isolate5(ref Receiver2 A, ref Receiver2 B)
+        {
+            for (int c0 = 0; c0 <= 9; c0 += 1)
+            {
+                if ((c0 + 1) % 2 == 0)
+                {
+                    for (int c1 = 0; c1 <= 1; c1 += 1)
+                        B.Receive((c0 - 1) / 2, c1);
+                }
+                else
+                {
+                    for (int c1 = 0; c1 <= 1; c1 += 1)
+                        A.Receive(c0 / 2, c1);
+                }
+            }
+            for (int c0 = 10; c0 <= 89; c0 += 1)
+            {
+                if ((c0 + 1) % 2 == 0)
+                {
+                    for (int c1 = 0; c1 <= 1; c1 += 1)
+                        B.Receive((c0 - 1) / 2, c1);
+                }
+                else
+                {
+                    for (int c1 = 0; c1 <= 1; c1 += 1)
+                        A.Receive(c0 / 2, c1);
+                }
+            }
+            for (int c0 = 90; c0 <= 199; c0 += 1)
+            {
+                if ((c0 + 1) % 2 == 0)
+                {
+                    for (int c1 = 0; c1 <= 1; c1 += 1)
+                        B.Receive((c0 - 1) / 2, c1);
+                }
+                else
+                {
+                    for (int c1 = 0; c1 <= 1; c1 += 1)
+                        A.Receive(c0 / 2, c1);
+                }
+            }
+        }        
+        /// <summary>
+        /// isl/test_inputs/codegen/gemm.c
+        /// </summary>
+        public static void gemm(in AsmLoopLimits n, ref Receiver2 S_2, ref Receiver3 S_4)
+        {
+            for(int c0 = 0; c0 < n.I; c0 += 1)
+            for(int c1 = 0; c1 < n.J; c1 += 1)
+            {
+                S_2.Receive(c0, c1);
+                for (int c2 = 0; c2<n.K; c2 += 1)
+                    S_4.Receive(c0, c1, c2);
+            }
+        }
+
+        public static void gemm(in AsmLoopLimits n, int* pDst00, int* pDst01,  int* pDst10, int* pDst11, int* pDst13)
+        {
+            var S_2 = LoopReceivers.r2(pDst00, pDst01);
+            var S_4 = LoopReceivers.r3(pDst10, pDst11, pDst13);
+            gemm(n, ref S_2, ref S_4);
+        }
+
+        public static void gemm(in AsmLoopLimits n, Span<int> dst00, Span<int> dst01, Span<int> dst10, Span<int> dst11, Span<int> dst12)
+        {
+            var S_2 = LoopReceivers.r2(pfirst(dst00), pfirst(dst01));
+            var S_4 = LoopReceivers.r3(pfirst(dst10), pfirst(dst11), pfirst(dst12));
+            gemm(n, ref S_2, ref S_4);
+        }
+
+
+        [Op]
+        public static void code_gen_0(ref Receiver2 s0, ref Receiver2 s1)
+        {
+            for(int c0 = 1; c0 <= 8; c0 += 1)
+            for(int c1 = 0; c1 <= 7; c1 += 1)
+            {
+                if(c0 >= 2 && c0 <= 6 && c1 <= 4)
+                    s0.Receive(c0, c1);
+                if(c1 + 1 >= c0)
+                    s0.Receive(c0, c1);
+            }
+        }
+
+        [Op]
+        public static void code_gen_0(int* pDst00, int* pDst01, int* pDst10, int* pDst11)
+        {
+            var s0 = LoopReceivers.r2(pDst00, pDst01);
+            var s1 = LoopReceivers.r2(pDst10, pDst11);
+            code_gen_0(ref s0, ref s1);
+        }
+
+        /// <summary>
+        /// isl/test_inputs/codegen/omega/basics-0.c
+        /// </summary>
+        /// <param name="s0"></param>
+        [Op]
+        public static void basics_0(ref Receiver1 s0)
+        {
+            for (int c0 = 5; c0 <= 8; c0 += 1)
+                s0.Receive(c0);
+            for (int c0 = 10; c0 <= 16; c0 += 2)
+                s0.Receive(c0);
+            for (int c0 = 20; c0 <= 25; c0 += 1)
+                s0.Receive(c0);
+        }
+
+        [Op]
+        public static int basics_0(int* pDst0)
+        {
+            var receiver = LoopReceivers.r1(pDst0);
+            basics_0(ref receiver);
+            return receiver.ReceiptCount;
+        }
+
+        [Op]
+        public static void atomic(ref Receiver1 a, ref Receiver1 b)
+        {
+            for (int c0 = 0; c0 <= 10; c0 += 1)
+            {
+                if(c0 <= 9)
+                    a.Receive(c0);
+                if(c0 >= 1)
+                    b.Receive(c0 - 1);
+            }
+        }
+
         [Op]
         public static void loop1(Action<uint> f)
         {

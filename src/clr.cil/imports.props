@@ -1,8 +1,0 @@
-<Project>
-  <ItemGroup>
-    <ProjectReference Include="$(Cells)" />
-    <ProjectReference Include="$(Files)" />
-    <ProjectReference Include="$(Events)" />
-    <ProjectReference Include="$(ClrQuery)" />
-</ItemGroup>
-</Project>

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
     using static gmath;
 
     partial class BitGrid
@@ -20,7 +20,7 @@ namespace Z0
         {
             var points = mul(rows, cols);
             var module = mod(points, Numeric.force<T>(8));
-            var remains = nonz(module) ? one<T>() : core.zero<T>();
+            var remains = nonz(module) ? one<T>() : sys.zero<T>();
             return add(gmath.srl(points, 3), remains);
         }
 

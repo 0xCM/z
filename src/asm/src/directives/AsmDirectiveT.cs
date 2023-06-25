@@ -22,7 +22,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public AsmDirective(asci16 name, AsmDirectiveOp op0 = default, AsmDirectiveOp op1 = default, AsmDirectiveOp op2 = default, AsmDirectiveOp op3 = default)
         {
-            Name = new(name.IsNonEmpty ? (name[0] == AsciCode.Dot ? sys.slice(sys.bytes(name),1) : sys.bytes(name)) : default(ReadOnlySpan<byte>));
+            Name = name;
             Op0 = op0;
             Op1 = op1;
             Op2 = op2;

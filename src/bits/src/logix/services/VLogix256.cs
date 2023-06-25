@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static LogicSig;
-    using static gcpu;
+    using static vgcpu;
 
     using ULK = UnaryBitLogicKind;
     using BLK = BinaryBitLogicKind;

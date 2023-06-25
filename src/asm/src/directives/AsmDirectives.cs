@@ -153,7 +153,7 @@ namespace Z0.Asm
             where T : IAsmDirective
         {
             var dst = text.buffer();
-            dst.AppendFormat(".{0}", src.Name);
+            dst.AppendFormat("{0}", src.Name.Format().Trim());
             if(src.Op0.IsNonEmpty)
             {
                 dst.AppendFormat(" {0}", src.Op0.Format());
@@ -183,7 +183,7 @@ namespace Z0.Asm
         public static string format(CoffSectionFlags src)
         {
             var symbols = Symbols.index<CoffSectionFlags>();
-            Span<char> dst = stackalloc char[16];
+            Span<char> dst = stackalloc char[64];
             var count = symbols.Count;
             var k = 0;
             for(var i=0u; i<count; i++)

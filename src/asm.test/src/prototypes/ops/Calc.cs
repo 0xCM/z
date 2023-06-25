@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-
     partial struct AsmPrototypes
     {
         [Free]

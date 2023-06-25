@@ -4,32 +4,36 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct AsmLoopLimits
+    partial struct AsmLoops
     {
-        public readonly int I;
-
-        public readonly int J;
-
-        public readonly int K;
-
-        [MethodImpl(Inline)]
-        public AsmLoopLimits(int i, int j, int k)
+        public readonly struct AsmLoopLimits
         {
-            I = i;
-            J = j;
-            K = k;
-        }
+            public readonly int I;
 
-        [MethodImpl(Inline)]
-        public void Destrucuture(out int i, out int j, out int k)
-        {
-            i = I;
-            j = J;
-            k = K;
-        }
+            public readonly int J;
 
-        [MethodImpl(Inline)]
-        public static implicit operator AsmLoopLimits((int i, int j, int k) src)
-            => new AsmLoopLimits(src.i,src.j,src.k);
-    }    
+            public readonly int K;
+
+            [MethodImpl(Inline)]
+            public AsmLoopLimits(int i, int j, int k)
+            {
+                I = i;
+                J = j;
+                K = k;
+            }
+
+            [MethodImpl(Inline)]
+            public void Destrucuture(out int i, out int j, out int k)
+            {
+                i = I;
+                j = J;
+                k = K;
+            }
+
+            [MethodImpl(Inline)]
+            public static implicit operator AsmLoopLimits((int i, int j, int k) src)
+                => new AsmLoopLimits(src.i,src.j,src.k);
+        }    
+
+    }
 }

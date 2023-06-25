@@ -16,7 +16,7 @@ namespace Z0.alg
         /// </summary>
         [MethodImpl(Inline), Op]
         public static uint marvin(ReadOnlySpan<byte> src, ulong seed = DefaultMarvivSeed)
-            => (uint)ComputeHash32(ref sys.edit(src), (uint)src.Length, (uint)seed, (uint)(seed >> 32));
+            => (uint)ComputeHash32(ref sys.edit(sys.first(src)), (uint)src.Length, (uint)seed, (uint)(seed >> 32));
 
         /// <summary>
         /// Compute a Marvin hash and collapse it into a 32-bit hash.

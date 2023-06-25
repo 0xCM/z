@@ -7,7 +7,7 @@ namespace Z0
     /// <summary>
     /// Partitions types into manageable pieces in various ways, hopefully sensible, with 16 bits
     /// </summary>
-    public readonly struct TypeIndicator : ITextual
+    public readonly struct TypeIndicator : IExpr
     {
         readonly char Value;
 

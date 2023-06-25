@@ -2,10 +2,10 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-[assembly: PartId(PartId.Cpu)]
-namespace Z0.Parts
+namespace Z0
 {
-    public sealed class Cpu : Part<Cpu>
+    public interface ICmdMethod : ICmdEffector
     {
+
     }
 }

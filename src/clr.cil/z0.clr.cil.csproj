@@ -1,6 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="imports.props"/>
   <Import Project="$(ProjectProps)\usings.props"/>
+  <ItemGroup>
+    <ProjectReference Include="$(Cells)" />
+    <ProjectReference Include="$(Files)" />
+    <ProjectReference Include="$(Events)" />
+    <ProjectReference Include="$(ClrQuery)" />
+  </ItemGroup>
+  
   <PropertyGroup>
     <OutputType>Library</OutputType>
   </PropertyGroup>

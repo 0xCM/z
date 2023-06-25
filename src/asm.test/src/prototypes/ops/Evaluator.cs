@@ -8,7 +8,7 @@ namespace Z0.Asm
 
     using static BinaryBitLogicKind;
     using static math;
-    using static core;
+    using static sys;
 
     partial struct AsmPrototypes
     {

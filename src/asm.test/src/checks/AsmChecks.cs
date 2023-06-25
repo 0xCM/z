@@ -10,11 +10,416 @@ namespace Z0
     using static AsmRegTokens;
 
     using gp32 = AsmRegTokens.Gp32Reg;
+    using K = AsmOcTokenKind;
+    using P = Pow2x32;
+
+    class AsmCheckNames
+    {
+        public const string CheckDirectives = "asm/check/directives";        
+
+        public const string CheckExec = "asm/check/exec";
+
+        public const string CheckVex = "asm/check/vex";
+    }
 
     class AsmChecks : WfAppCmd<AsmChecks>
     {
         AsmRegSets Regs => Service(AsmRegSets.create);
 
+        ReadOnlySpan<byte> Input => new byte[]{0x44, 0x01, 0x58,0x04};
+
+        const string InputBitsA = "0100 0100 0000 0001 0101 1000 0000 0100";
+
+        const uint InputBitsB = 0b0100_0100_0000_0001_0101_1000_0000_0100;
+
+       static ReadOnlySpan<byte> x7ffaa76f0ae0
+            => new byte[32]{0x0f,0x1f,0x44,0x00,0x00,0x48,0x8b,0xd1,0x48,0xb9,0x50,0x0f,0x24,0xa5,0xfa,0x7f,0x00,0x00,0x48,0xb8,0x30,0xdd,0x99,0xa6,0xfa,0x7f,0x00,0x00,0x48,0xff,0xe0,0};
+
+        void RunCheck(string name)
+        {
+            var events = list<IEvent>();
+            var checker = AsmChecker.create(Wf, GetType(), CmdRunner);
+            checker.RunCheck(name, e => events.Add(e));
+            iter(events, e => Channel.Raise(e));            
+        }
+
+        [CmdOp("asm/check/all")]
+        void CheckAll()
+        {
+            RunCheck(AsmCheckNames.CheckDirectives);
+            RunCheck(AsmCheckNames.CheckVex);
+        }
+
+        [CmdOp(AsmCheckNames.CheckVex)]
+        Outcome Vex(CmdArgs args)
+        {
+            var segments = VexPrefixC4.segments();
+
+            var vp0 = VexPrefixC4.define(byte.MaxValue, byte.MaxValue);
+            Channel.Write(vp0.FormatSemantic());
+            segments.Fill(vp0);
+            Channel.Write(segments.ToBitstring());
+
+            var vp1 = VexPrefixC4.init(VexRXB.L0_V0F38, VexM.x0F3A, bit.On, 0b1111, VexLengthCode.L1, VexOpCodeExtension.F3);
+            Channel.Write(vp1.FormatSemantic());
+            segments.Fill(vp1);
+            Channel.Write(segments.ToBitstring());
+
+            var vp2 = VexPrefixC4.define(0xe3, 0x69);
+            Channel.Write(vp2.FormatSemantic());
+            segments.Fill(vp2);
+            Channel.Write(segments.ToBitstring());
+
+            return true;
+        }
+
+        void CheckHex1()
+        {
+            var input = "66 66 2e 0f 1f 84 00 00 00 00 00 00";
+            var buffer = ByteBlock16.Empty;
+            var size = (byte)Hex.parse(input, buffer.Bytes).Require();
+            var data = slice(buffer.Bytes,0,size);
+            buffer[15] = size;
+            var dst = new AsmHexCode(@as<ByteBlock16,Cell128>(buffer));
+            Write(dst.Format());
+        }
+
+        [CmdOp("asm/check/tokens")]
+        void CheckAsmTokens()
+        {
+            AsmSigs.parse("adc r16, r16", out var sig);
+            SdmOpCodes.parse("11 /r", out var oc1);
+            SdmOpCodes.parse("13 /r", out var oc2);
+            // var count = min(oc1.TokenCount, oc2.TokenCount);
+            // var token = AsmOcToken.Empty;
+            // for(var i=0; i<count; i++)
+            // {
+            //     ref readonly var ta = ref oc1[i];
+            //     ref readonly var tb = ref oc2[i];
+            //     if(ta.Kind == AsmOcTokenKind.Sep && tb.Kind == AsmOcTokenKind.Sep)
+            //         continue;
+
+            //     if(ta != tb)
+            //     {
+            //         token = tb;
+            //         break;
+            //     }
+            // }
+
+            // if(SdmOpCodes.diff(oc1, oc2, out token))
+            //     Write(token.Format());
+
+            var sigs = AsmSigTokens.create();
+            var src = sigs;
+            var types = src.TokenTypes;
+            for(var i=0; i<types.Length; i++)
+            {
+                var sigTokens = src.TokensByType(skip(types,i));
+                for(var j=0;j<sigTokens.Count; j++)
+                {
+                    Write(sigTokens[j].Format());
+                }
+            }
+        }
+
+        [CmdOp("asm/check/res")]
+        void CheckStringRes()
+        {
+            var resources = TextAssets.strings(typeof(AsciText)).View;
+            iter(resources, r => Write(r.Format()));
+        }
+
+        [CmdOp("asm/check/bitparser")]
+        Outcome CheckBitParser()
+        {
+            var count = 0;
+            var a0 = "0b10111";
+            var a1 = (byte)0b10111;
+            Span<bit> a2 = array<bit>(1,1,1,0,1);
+            count = BitParser.parse(a0, out Span<bit> a3);
+            if(count < 0)
+                return false;
+
+            Outcome result = a3.Length == a2.Length;
+            if(result.Fail)
+                return (false, string.Format("Unexpected length: {0} != {1}", a3.Length, a2.Length));
+
+            for(var i=0; i<a3.Length; i++)
+            {
+                result = skip(a2, i) == skip(a3,i);
+                if(result.Fail)
+                    break;
+            }
+
+            if(result.Fail)
+                return (false, string.Format("Parsed bitstring value incorrect: {0} != {1}", a2.FormatPacked(), a3.FormatPacked()));
+
+            var a4 = BitPack.scalar<byte>(a3);
+            result = (a4 == a1);
+            if(result.Fail)
+                return (false, string.Format("Incorrect scalar extracted: {0} != {1}", a4, a1));
+
+
+            return result;
+        }
+
+        [CmdOp("asm/check/vfind")]
+        Outcome CheckV(CmdArgs args)
+        {
+            const byte count = 32;
+            const byte Target = 0x48;
+            var input = vcpu.vload(w256,x7ffaa76f0ae0);
+            var mask = vcpu.vindices(input, Target);
+            var bits = recover<bit>(bytes(new Cell256<byte>()));
+            BitPack.unpack1x32x8(mask, bits);
+            var buffer = ByteBlock32.Empty;
+            var j=z8;
+            for(byte i=0; i<count; i++)
+            {
+                if(skip(bits,i))
+                    buffer[j++] = i;
+            }
+
+            var indices = slice(buffer.Bytes, 0, j);
+            Require.equal(skip(indices,0), 5);
+            Require.equal(skip(indices,1), 8);
+            Require.equal(skip(indices,2), 18);
+            Require.equal(skip(indices,3), 28);
+            return true;
+        }
+
+        [CmdOp("asm/check/seqprod")]
+        Outcome SeqProd(CmdArgs args)
+        {
+            var a = Intervals.closed(2u, 12u).Partition().ToSeq();
+            var b = Intervals.closed(33u, 41u).Partition().ToSeq();
+            var c = Seq.product(a,b);
+            Channel.Write(c.Format());
+            return true;
+        }
+
+        public static Index<ushort> serialize(PointMapper<K,P> src)
+        {
+            var dst = alloc<ushort>(src.PointCount);
+            serialize(src,dst);
+            return dst;
+        }
+
+        [Op]
+        public static uint serialize(PointMapper<K,P> src, Span<ushort> dst)
+        {
+            var points = src.Points;
+            var count = points.Length;
+            var j=0;
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var point = ref seek(points,i);
+                ref var t0 = ref @as<byte>(seek(dst,i));
+                ref var t1 = ref @as<Log2x32>(seek(t0,1));
+                t0 = u8(point.Left);
+                t1 = Pow2.log(point.Right);
+            }
+
+            return 0;
+        }
+
+        [Free]
+        public interface ICalc64
+        {
+            ulong Add(ulong a, ulong b);
+
+            ulong Sub(ulong a, ulong b);
+
+            ulong Mul(ulong a, ulong b);
+
+            ulong Mod(ulong a, ulong b);
+        }
+
+        public readonly struct Calc64 : ICalc64
+        {
+            [Op]
+            public ulong Add(ulong a, ulong b)
+                => math.add(a,b);
+
+            [Op]
+            public ulong Mod(ulong a, ulong b)
+                => math.mod(a,b);
+
+            [Op]
+            public ulong Mul(ulong a, ulong b)
+                => math.mul(a,b);
+
+            [Op]
+            public ulong Sub(ulong a, ulong b)
+                => math.sub(a,b);
+        }
+
+        [CmdOp("asm/check/impl")]
+        void FindImplMaps(CmdArgs args)
+        {
+            var impl = Clr.impl(typeof(Calc64),typeof(ICalc64));
+            Write(impl.Format());
+        }
+
+        Parsers Parsers => new();
+
+        [CmdOp("check/api/parsers")]
+        Outcome CheckApiParsers(CmdArgs args)
+        {
+            var x = 32u;
+            if(Parsers.Parse(x.ToString(), out uint dst))
+            {
+                Require.equal(x,dst);
+            }
+            return true;
+        }
+
+        [CmdOp("check/expr/scopes")]
+        Outcome TestScopes(CmdArgs args)
+        {
+            var result = Outcome.Success;
+
+            ExprScope a = "a";
+
+            Require.invariant(a.IsRoot);
+
+            ExprScope b = "b";
+            Require.invariant(b.IsRoot);
+
+            var c = a + b;
+            Require.equal(c, "a.b");
+
+            var d = ExprScope.root("d");
+            var e = c + d;
+            Require.equal(e, "a.b.d");
+
+            var fg = ExprScope.root("f") + ExprScope.root("g");
+            var h = e + fg;
+            Require.equal(h, "a.b.d.f.g");
+
+            return result;
+        }
+
+        [CmdOp("check/lookups")]
+        Outcome TestKeys(CmdArgs args)
+        {
+            var outcome = Outcome.Success;
+            ushort rows = Pow2.T13;
+            ushort cols = Pow2.T13;
+            var keys = LookupTables.keys(rows,cols);
+            var range = Intervals.closed(z16, (ushort)(rows - 1)).Partition();
+            iter(range,i =>{
+            for(var j=z16; j<cols; j++)
+            {
+                ref readonly var key = ref keys[i,j];
+                LookupKey expect = (i,j);
+                Require.invariant(expect.Equals(key));
+            }
+            },true);
+
+            Channel.Status(string.Format("Verifified {0} lookup operations", rows*cols));
+
+            return true;
+        }
+
+        [CmdOp("check/range")]
+        Outcome CheckRange(CmdArgs args)
+        {
+            Span<byte> buffer = stackalloc byte[32];
+            var emitter = text.buffer();
+            points(new BitRange(0, 2), buffer,emitter);
+            Channel.Write(emitter.Emit());
+            points(new BitRange(5, 3), buffer,emitter);
+            Channel.Write(emitter.Emit());
+            points(new BitRange(6, 7), buffer,emitter);
+            Channel.Write(emitter.Emit());
+            points(new BitRange(1, 4), buffer,emitter);
+            Channel.Write(emitter.Emit());
+            return true;
+        }
+
+        static BitRange points(BitRange src, Span<byte> dst, ITextEmitter emitter)
+        {
+            var count = src.Values(dst,true);
+            emitter.Append(src.Format());
+            emitter.Append(Chars.LBrace);
+            for(var i=0;i<count; i++)
+            {
+                if(i != 0)
+                    emitter.Append(Chars.Comma);
+                emitter.Append(skip(dst,i).ToString());
+            }
+            emitter.Append(Chars.RBrace);
+            return src;
+        }
+        [Op]
+        public static uint bitstring(ReadOnlySpan<byte> src, Span<char> dst)
+        {
+            var i=0u;
+            return BitRender.render8x4(src, ref i, dst);
+        }
+
+        // [CmdOp("asm/check/vmask")]
+        // unsafe void TestVCpu()
+        // {
+        //     var v0 = vmask.veven<byte>(w128, n2, n2);
+        //     var v0bits = v0.ToBitSpan();
+        //     var options = BitFormatter.configure();
+        //     options.BlockWidth = 8;
+        //     Write(v0bits.Format(options));
+        //     var v1 = vmask.veven<byte>(w256, n2, n2);
+        //     var v1bits = v1.ToBitSpan();
+        //     Write(v1bits.Format(options));
+        // }
+
+        [CmdOp("asm/check/bitstrings")]
+        Outcome CheckBitstrings(CmdArgs args)
+        {
+            var block1 = CharBlock128.Null;
+            var count = bitstring(Input, block1.Data);
+            var chars = slice(block1.Data,0,count);
+            var bits = text.format(chars);
+            Write(InputBitsA);
+            Write(bits);
+
+            var block2 = CharBlock128.Null;
+            count = bitstring(bytes(InputBitsB), block2.Data);
+            bits = text.format(chars);
+            Write(bits);
+
+            var v = vpack.vunpack32x8(0xF0F0F0F0);
+            Write(v.FormatBlockedBits(8));
+
+            //CheckBitSpans();
+            CheckBitFormatter();
+            return true;
+        }
+
+        // void CheckBitSpans()
+        // {
+        //     var result = Outcome.Success;
+        //     var options = BitFormat.Default.WithBlockWidth(8);
+        //     var v1 = vmask.vmsb<byte>(w128, n8, n7);
+        //     var b1 = v1.ToBitSpan();
+        //     Write(b1.Format(options));
+        // }
+
+        void CheckBitFormatter()
+        {
+            var block = CharBlock128.Null;
+            var buffer = block.Data;
+            var input = 0b1100_0111_0101u;
+            var n = 12u;
+            var data = bytes(input);
+            ref readonly var b0 = ref skip(data,0);
+            ref readonly var b1 = ref skip(data,1);
+            var i=0u;
+            BitRender.render(b0, ref i, 8, buffer);
+            seek(buffer,i++) = Chars.Underscore;
+            BitRender.render(b1, ref i, 4, buffer);
+            Write(block.Format());
+        }
+ 
         [CmdOp("asm/regs/query")]
         Outcome RegQuery(CmdArgs args)
         {
@@ -419,8 +824,7 @@ c5 f8 99 c8";
             }
         }
 
-        [CmdOp("asm/check/hex")]
-        unsafe Outcome CheckHex(CmdArgs args)
+        void CheckHex2()
         {
             const string Data = "38D10F9FC00FB6C0C338D10F97C00FB6C0C36639D10F9FC00FB6C0C36639D10F97C00FB6C0C339D10F9FC00FB6C0C339D10F97C0C34839D10F9FC00FB6C0C34839D10F97C00FB6C0C3";
             var result = Outcome.Success;
@@ -429,19 +833,32 @@ c5 f8 99 c8";
             var dst = alloc<HexDigitValue>(count);
             result = Hex.map(Data,dst);
             if(result.Fail)
-                return result;
-
+            {
+                Channel.Row(result.Message, FlairKind.Error);
+                return;
+            }
+            
             for(var i=0; i<count; i++)
             {
                 if(Hex.upper(skip(dst,i)) != skip(input,i))
-                    return (false, "Not Equal");
+                {
+                    Channel.Row($"NotEqual", FlairKind.Error);
+                    // (false, "Not Equal");
+
+                }
             }
 
             var buffer = alloc<byte>(count/2);
             var size = Digital.pack(dst,buffer);
             var output = buffer.FormatHex(HexOptionData.CompactHexOptions);
             Channel.Write(Require.equal(Data,output));
-            return result;
+        }
+
+        [CmdOp("asm/check/hex")]
+        unsafe void CheckHex(CmdArgs args)
+        {
+            CheckHex1();
+            CheckHex2();
         }
 
         [CmdOp("asm/check/mem")]
@@ -624,28 +1041,6 @@ c5 f8 99 c8";
             return (same, string.Format("{0} {1} {2}", a, same ? "==" : "!=", b));
         }
 
-        [CmdOp("asm/check/vex")]
-        Outcome Vex(CmdArgs args)
-        {
-            var segments = VexPrefixC4.segments();
-
-            var vp0 = VexPrefixC4.define(byte.MaxValue, byte.MaxValue);
-            Channel.Write(vp0.FormatSemantic());
-            segments.Fill(vp0);
-            Channel.Write(segments.ToBitstring());
-
-            var vp1 = VexPrefixC4.init(VexRXB.L0_V0F38, VexM.x0F3A, bit.On, 0b1111, VexLengthCode.L1, VexOpCodeExtension.F3);
-            Channel.Write(vp1.FormatSemantic());
-            segments.Fill(vp1);
-            Channel.Write(segments.ToBitstring());
-
-            var vp2 = VexPrefixC4.define(0xe3, 0x69);
-            Channel.Write(vp2.FormatSemantic());
-            segments.Fill(vp2);
-            Channel.Write(segments.ToBitstring());
-
-            return true;
-        }
 
         [CmdOp("asm/check/flags")]
         Outcome CheckAsmFlags(CmdArgs args)
@@ -658,18 +1053,27 @@ c5 f8 99 c8";
             return result;
         }
 
-        [CmdOp("asm/check/directives")]
-        Outcome CheckDirectives(CmdArgs args)
+        [CmdOp("asm/check/shapes")]
+        void CheckShapes()
         {
             var data = array<byte>(1,2,3,4,5,6);
             var actual = NativeShape.calc(data);
             var expect = NativeShape.define(n4:1, n2:1);
             Require.equal(actual,expect);
+        }
 
-            var a = AsmDirectives.section(CoffSectionKind.ReadOnlyData, CoffSectionFlags.d | CoffSectionFlags.r, CoffComDatKind.Discard, "block, vpmuldq_1, sdm/opcode, vpmuldq");
-            var x = ".section .rdata, \"dr\", discard, \"block, vpmuldq_1, sdm/opcode, vpmuldq\"";
-            Require.equal(a.Format(),x);
-            return true;
+        [CmdOp(AsmCheckNames.CheckDirectives)]
+        void CheckDirectives(CmdArgs args)
+        {
+            var actual = AsmDirectives.section(CoffSectionKind.ReadOnlyData, CoffSectionFlags.d | CoffSectionFlags.r, CoffComDatKind.Discard, "block, vpmuldq_1, sdm/opcode, vpmuldq");
+            var expect = ".section .rdata, \"dr\", discard, \"block, vpmuldq_1, sdm/opcode, vpmuldq\"";
+            if(actual.Format() != expect)
+                Channel.Row($"{text.squote(actual)} != {text.squote(expect)}", FlairKind.Error);
+            else
+                Channel.Row($"{text.squote(actual)} == {text.squote(expect)}", FlairKind.Data);
+
+            //Require.equal(a.Format(),x);
+            
         }
 
         [CmdOp("asm/stubs/check")]
@@ -681,7 +1085,7 @@ c5 f8 99 c8";
             // Write(encoded.FormatHexData());
         }
 
-        [CmdOp("asm/check/exec")]
+        [CmdOp(AsmCheckNames.CheckExec)]
         void CheckCodeExec()
         {
             AsmCheckExec.run(Emitter);        
@@ -718,7 +1122,7 @@ c5 f8 99 c8";
             }           
         }
 
-        [CmdOp("parsers/check")]
+        [CmdOp("asm/check/parsers")]
         void CheckParsers()
         {
             CheckDigitParsers();

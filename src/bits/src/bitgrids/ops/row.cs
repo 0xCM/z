@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static sys;
-    using static cpu;
+    using static vcpu;
 
     partial class BitGrid
     {

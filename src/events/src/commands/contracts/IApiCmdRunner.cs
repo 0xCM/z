@@ -11,7 +11,7 @@ namespace Z0
         ExecToken RunCommand(string action);
 
         ExecToken RunScript(FilePath src);
-        
-        ApiCmdCatalog Catalog {get;}       
+
+        ApiCmdCatalog CmdCatalog {get;}        
     }    
 }

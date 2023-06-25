@@ -5,7 +5,6 @@
 namespace Z0
 {
     using static sys;
-    using static ReflectionFlags;
     using static TypeAttributes;
     using System.Linq;
  
@@ -167,15 +166,15 @@ namespace Z0
         }
 
         /// <summary>
-        /// Queries the host type for a <see cref='ClrImplMap'/>
+        /// Queries the host type for a <see cref='ImplMap'/>
         /// </summary>
         /// <param name="host">The reifying type</param>
         /// <param name="contract">The contract type</param>
         [MethodImpl(Inline), Op]
-        public static ClrImplMap impl(Type host, Type contract)
+        public static ImplMap impl(Type host, Type contract)
         {
             var src = host.InterfaceMap(contract);
-            var dst = new ClrImplMap();
+            var dst = new ImplMap();
             dst.Specs = src.InterfaceMethods;
             dst.SpecType = src.InterfaceType;
             dst.Impl = src.TargetMethods;
@@ -183,11 +182,11 @@ namespace Z0
             return dst;
         }
 
-        public static ClrImplMap impl<H,C>()
+        public static ImplMap impl<H,C>()
             where C : class
                 => impl(typeof(H), typeof(C));
 
-        public static ReadOnlySeq<ClrImplMap> impls(Assembly defs, Assembly hosts)
+        public static ReadOnlySeq<ImplMap> impls(Assembly defs, Assembly hosts)
         {
             var contrats = defs.Interfaces().ToHashSet();
             var maps = from host in hosts.Types().Concrete()

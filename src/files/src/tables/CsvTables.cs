@@ -233,7 +233,7 @@ namespace Z0
             var count = src.Length;
             dst.WriteLine(formatter.FormatHeader());
             for(var i=0; i<count; i++)
-            dst.WriteLine(formatter.Format(skip(src,i)));
+                dst.WriteLine(formatter.Format(skip(src,i)));
             return count;
         }
 

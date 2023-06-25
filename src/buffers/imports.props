@@ -1,7 +1,0 @@
-<Project>
-  <Import Project="$(SlnProps)\usings.props"/>
-
-  <ItemGroup>
-    <ProjectReference Include="$(Numbers)" />
-  </ItemGroup>
-</Project>
