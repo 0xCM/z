@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static sys;
-    using static AsmOcTokens;
+    using static Asm.AsmOcTokens;
 
     using Asm;
 

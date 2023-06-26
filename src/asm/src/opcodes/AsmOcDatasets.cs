@@ -14,7 +14,7 @@ namespace Z0.Asm
         {
             var dst = new AsmOcDatasets();
             dst.TokenKinds = Symbols.index<AsmOcTokenKind>();
-            var src = AsmOcTokens.create();
+            var src = AsmOcTokenTokenGroup.create();
             var types = src.TokenTypes;
             var tokenExpr = dict<uint,string>();
             var names = dict<uint,string>();

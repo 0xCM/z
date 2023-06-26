@@ -5,6 +5,7 @@
 namespace Z0.Asm
 {
     using static AsmOcTokens;
+    
     /// <summary>
     /// [Index:[00000] | Token:[000]]
     /// </summary>

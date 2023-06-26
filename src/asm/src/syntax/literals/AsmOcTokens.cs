@@ -2,19 +2,14 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0.Asm
 {
     using TK = AsmOcTokenKind;
     using T = AsmOcSymbols;
-    using G = AsmOcTokens;
 
-    [ApiHost]
-    public class AsmOcTokens : TokenGroup<G,TK>
+    public class AsmOcTokens
     {
         const string Group = "asm.opcodes";
-
-        public override string GroupName
-            => Group;
 
         [SymSource(Group), TokenKind(TK.Hex16)]
         public enum Hex16Token : byte
@@ -824,6 +819,6 @@ namespace Z0
             xFE,
             [Symbol("FF")]
             xFF,
-        }
+        }        
     }
 }

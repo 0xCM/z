@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class AsmOcTableTokens
+    public class AsmOcTables
     {
         public const string Group = "asm.oct";
 

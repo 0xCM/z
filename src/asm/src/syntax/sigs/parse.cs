@@ -17,7 +17,7 @@ namespace Z0.Asm
             else
                 dst = sys.empty<AsmSigOpExpr>();
 
-            return AsmMnemonic.parse(input, out _);
+            return AsmMnemonic.parse(input);
         }
 
         [Parser]
