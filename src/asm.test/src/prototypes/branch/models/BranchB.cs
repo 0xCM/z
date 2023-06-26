@@ -40,6 +40,7 @@ namespace Z0.Asm
                     return 0;
             }
         }        
+
         public readonly struct Branch02
         {
             public const byte C0 = 0xf3;

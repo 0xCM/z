@@ -94,7 +94,7 @@ namespace Z0
 
         Task Dispatcher;
 
-        ConcurrentQueue<AsmCodeRecord> Queue;
+        ConcurrentQueue<AsmHexCode> Queue;
 
         bool Verbose;
 
@@ -117,15 +117,11 @@ namespace Z0
             rip() = CodeBase;
         }
 
-        public void Submit(AsmCodeRecord cmd)
+        public void Submit(AsmHexCode cmd)
         {
             Queue.Enqueue(cmd);
         }
 
-        void Execute(AsmCodeRecord cmd)
-        {
-
-        }
 
         void Spin()
         {
@@ -136,7 +132,9 @@ namespace Z0
             void Receiver(long t)
             {
                 while(Queue.TryDequeue(out var cmd))
-                    Execute(cmd);
+                {
+
+                }
 
                 counter++;
                 ticks += t;
