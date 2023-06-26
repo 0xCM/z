@@ -2,14 +2,10 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+[assembly: PartId("asm.shell")]
+namespace Z0.Parts
 {
-    public sealed class AsmSyntaxDoc : TableDoc<AsmSyntaxRow>
+    public sealed class AsmShell : Part<AsmShell>
     {
-        public AsmSyntaxDoc(FilePath src, AsmSyntaxRow[] rows)
-            : base(src,rows)
-        {
-
-        }
     }
 }

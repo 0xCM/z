@@ -5,6 +5,7 @@
 namespace Z0
 {
     using Asm;
+    
     using static sys;
     using static AsmPrefixCodes;
     using static AsmRegTokens;

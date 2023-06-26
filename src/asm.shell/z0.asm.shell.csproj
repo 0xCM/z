@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(ProjectProps)\usings.props"/>
+  <ItemGroup>
+    <ProjectReference Include="$(Asm)" />
+    <ProjectReference Include="../env/z0.env.csproj" />
+    <ProjectReference Include="../asm.test/z0.asm.test.csproj" />
+    <ProjectReference Include="../intel.shell/z0.intel.shell.csproj" />
+  </ItemGroup>
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>asm</AssemblyName>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <PublishSingleFile>true</PublishSingleFile>
+  </PropertyGroup>
+</Project>
