@@ -5,6 +5,8 @@
     <ProjectReference Include="$(ZXml)" />
     <ProjectReference Include="$(Containers)" />
     <ProjectReference Include="$(Bits)" />
+    <ProjectReference Include="$(Stitch)" />
+    <ProjectReference Include="$(Assets)" />
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Exe</OutputType>

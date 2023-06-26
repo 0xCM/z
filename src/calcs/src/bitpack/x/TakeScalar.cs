@@ -12,7 +12,7 @@ namespace Z0
         /// </summary>
         /// <param name="src">The source span</param>
         /// <typeparam name="T">The target type</typeparam>
-        [MethodImpl(Inline), Op, Closures(Closure)]
+        [MethodImpl(Inline), Op, Closures(UnsignedInts)]
         public static T TakeScalar<T>(this ReadOnlySpan<bit> src)
             where T : unmanaged
                 => BitPack.scalar<T>(src);

@@ -7,5 +7,8 @@
      <ProjectReference Include="$(Binary)" />
      <ProjectReference Include="$(ClrEcma)" />
      <ProjectReference Include="$(ApiCode)" />
+     <ProjectReference Include="$(Calcs)" />
+     <ProjectReference Include="$(Bits)" />
+
   </ItemGroup>
 </Project>

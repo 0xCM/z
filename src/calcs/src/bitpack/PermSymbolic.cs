@@ -86,19 +86,19 @@ namespace Z0
             var pad = 2;
             var sym0 = PermSymbolic.symbols(p0).ToString();
             var sym1 = PermSymbolic.symbols(p1).ToString();
-            return $"{src.Format()} |> {sym0}{sym1} = {gcpu.vperm2x128(src, p0, p1).Format()}";
+            return $"{src.Format()} |> {sym0}{sym1} = {vgcpu.vperm2x128(src, p0, p1).Format()}";
         }
 
-        [MethodImpl(Inline), Op]
-        public static Span<char> letters(N4 n, BitSpan src, Span<char> dst)
-        {
-            int i=0, j=0;
-            seek(dst,i++) = letter(n4, src[j++], src[j++]);
-            seek(dst,i++) = letter(n4, src[j++], src[j++]);
-            seek(dst,i++) = letter(n4, src[j++], src[j++]);
-            seek(dst,i++) = letter(n4, src[j++], src[j++]);
-            return dst;
-        }
+        // [MethodImpl(Inline), Op]
+        // public static Span<char> letters(N4 n, BitSpan src, Span<char> dst)
+        // {
+        //     int i=0, j=0;
+        //     seek(dst,i++) = letter(n4, src[j++], src[j++]);
+        //     seek(dst,i++) = letter(n4, src[j++], src[j++]);
+        //     seek(dst,i++) = letter(n4, src[j++], src[j++]);
+        //     seek(dst,i++) = letter(n4, src[j++], src[j++]);
+        //     return dst;
+        // }
 
         static ReadOnlySpan<AsciCode> Perm4Codes
             => new AsciCode[4]{AsciCode.A, AsciCode.B, AsciCode.C, AsciCode.D,};

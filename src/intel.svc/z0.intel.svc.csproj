@@ -5,6 +5,7 @@
     <ProjectReference Include="$(ZXml)" />
     <ProjectReference Include="$(Containers)" />
     <ProjectReference Include="$(Bits)" />
+    <ProjectReference Include="$(Stitch)" />
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>

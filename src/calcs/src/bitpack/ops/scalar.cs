@@ -40,7 +40,7 @@ namespace Z0
             where T : unmanaged
         {
             var len = min((count == null ? (int)width<T>() : count.Value), src.Length - offset);
-            return scalar<T>(core.slice(src,offset, len));;
+            return scalar<T>(sys.slice(src,offset, len));;
         }
 
         /// <summary>

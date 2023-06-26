@@ -3,6 +3,8 @@
   <ItemGroup>
     <ProjectReference Include="$(BitVectors)" />
     <ProjectReference Include="$(SFx)" />
+    <ProjectReference Include="$(Numbers)" />
+    <ProjectReference Include="$(BitFields)" />
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>
