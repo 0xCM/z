@@ -9,7 +9,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static BitSpan sll(in BitSpan a, uint offset, in BitSpan dst)
         {
-            core.slice(a.Storage, 0, offset).CopyTo(dst.Storage, (int)offset);
+            sys.slice(a.Storage, 0, offset).CopyTo(dst.Storage, (int)offset);
             for(var i=0; i<offset; i++)
                 dst[i] = bit.Off;
             return dst;
