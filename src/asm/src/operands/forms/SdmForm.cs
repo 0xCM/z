@@ -13,10 +13,10 @@ namespace Z0
 
         public readonly AsmSig Sig;
 
-        public readonly SdmOpCode OpCode;
+        public readonly AsmOpCodeSpec OpCode;
 
         [MethodImpl(Inline)]
-        public SdmForm(asci64 name, AsmSig sig, SdmOpCode oc)
+        public SdmForm(asci64 name, AsmSig sig, AsmOpCodeSpec oc)
         {
             Id = name.Hash | sig.Hash | oc.Hash;
             Name = name;

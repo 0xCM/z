@@ -112,7 +112,7 @@ namespace Z0.Asm
                     {
                         case "Opcode":
                         var octext = text.despace(text.trim(ocfixups.Apply(content)));
-                        var oc = SdmOpCode.Empty;
+                        var oc = AsmOpCodeSpec.Empty;
                         target.OpCodeExpr = octext;
                         if(empty(octext))
                             valid = false;

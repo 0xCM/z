@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static BroadcastSymbols;
+    using static AsmBroadcastSymbols;
 
     partial class XedModels
     {

@@ -17,7 +17,7 @@ namespace Z0.Asm
             return RP.Error;
         }
 
-        public static string format(in SdmOpCode src)
+        public static string format(in AsmOpCodeSpec src)
         {
             if(src.IsEmpty)
                 return EmptyString;

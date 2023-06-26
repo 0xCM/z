@@ -125,9 +125,9 @@ public struct XedInstDefParser
                                     InstPatternSpec.FixIsa(ref spec);
                                     spec.RawBody = rawbody;
                                     XedInstParser.parse(rawbody, out spec.Body);
-                                    spec.Mode = InstCells.mode(spec.Body.Cells);
+                                    spec.Mode = XedCells.mode(spec.Body.Cells);
                                     PatternOpParser.parse(spec.Seq, opexpr, out spec.Ops);
-                                    spec.OpCode = InstCells.opcode(spec.Body.Cells);
+                                    spec.OpCode = XedCells.opcode(spec.Body.Cells);
                                     specs.Add(spec);
                                 }
                                 break;

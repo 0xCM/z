@@ -16,7 +16,7 @@ namespace Z0.Asm
         public AsmMnemonic Mnemonic;
 
         [Render(32)]
-        public SdmOpCode OpCode;
+        public AsmOpCodeSpec OpCode;
 
         [Render(64)]
         public AsmSig Sig;

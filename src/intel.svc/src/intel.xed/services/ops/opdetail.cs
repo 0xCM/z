@@ -32,10 +32,10 @@ namespace Z0
             dst.InstClass = pattern.InstClass;
             dst.OpCode = pattern.OpCode;
             dst.Mode = pattern.Mode;
-            dst.Lock = InstCells.@lock(fields);
-            dst.Mod = InstCells.mod(fields);
-            dst.RexW = InstCells.rexw(fields);
-            dst.Rep = InstCells.rep(fields);
+            dst.Lock = XedCells.@lock(fields);
+            dst.Mod = XedCells.mod(fields);
+            dst.RexW = XedCells.rexw(fields);
+            dst.Rep = XedCells.rep(fields);
             dst.Attribs = op.Attribs;
             dst.OpCount = opcount;
             dst.Index = info.Index;

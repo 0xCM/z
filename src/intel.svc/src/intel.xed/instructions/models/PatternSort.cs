@@ -37,9 +37,9 @@ namespace Z0
                 OpCode = src.OpCode;
                 Mode = src.Mode;
                 Lock = src.Lock;
-                Mod = InstCells.mod(fields);
-                RexW = InstCells.rexw(fields);
-                Rep = InstCells.rep(fields);
+                Mod = XedCells.mod(fields);
+                RexW = XedCells.rexw(fields);
+                Rep = XedCells.rep(fields);
                 OpCodeFirst = ocfirst;
             }
 
@@ -51,10 +51,10 @@ namespace Z0
                 OpCode = src.OpCode;
                 Mode = src.Mode;
                 Lock = src.Lock;
-                Mod = InstCells.mod(fields);
-                RexW = InstCells.rexw(fields);
+                Mod = XedCells.mod(fields);
+                RexW = XedCells.rexw(fields);
                 Rep = RepIndicator.Empty;
-                Rep = InstCells.rep(fields);
+                Rep = XedCells.rep(fields);
                 OpCodeFirst = ocfirst;
             }
 
@@ -65,11 +65,11 @@ namespace Z0
                 InstClass = src.InstClass;
                 OpCode = src.OpCode;
                 Mode = src.Mode;
-                Lock = InstCells.@lock(fields);
-                Mod = InstCells.mod(fields);
-                RexW = InstCells.rexw(fields);
+                Lock = XedCells.@lock(fields);
+                Mod = XedCells.mod(fields);
+                RexW = XedCells.rexw(fields);
                 Rep = RepIndicator.Empty;
-                Rep = InstCells.rep(fields);
+                Rep = XedCells.rep(fields);
                 OpCodeFirst = ocfirst;
            }
 

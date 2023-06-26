@@ -17,10 +17,10 @@ namespace Z0
         // and r32, imm32 | 81 /4 id
         [MethodImpl(Inline), Op]
         public static AsmInstruction and(r32 a, Imm32 b)
-            => inst("and", SdmOpCode.Empty, a, b);
+            => inst("and", AsmOpCodeSpec.Empty, a, b);
 
         [Op]
-        public static AsmInstruction inst(in AsmMnemonic mnemonic, in SdmOpCode opcode, params AsmOperand[] ops)
+        public static AsmInstruction inst(in AsmMnemonic mnemonic, in AsmOpCodeSpec opcode, params AsmOperand[] ops)
         {
             var count = ops.Length;
             switch(count)
@@ -40,18 +40,18 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static AsmInstruction inst(in AsmMnemonic mnemonic, in SdmOpCode opcode, in AsmOperands ops)
+        public static AsmInstruction inst(in AsmMnemonic mnemonic, in AsmOpCodeSpec opcode, in AsmOperands ops)
             => new AsmInstruction(mnemonic, opcode, ops);
 
         [MethodImpl(Inline), Op]
-        public static AsmInstruction inst(in AsmMnemonic mnemonic, in SdmOpCode opcode, out AsmInstruction dst)
+        public static AsmInstruction inst(in AsmMnemonic mnemonic, in AsmOpCodeSpec opcode, out AsmInstruction dst)
         {
             dst = inst(mnemonic, opcode, AsmOperands.Empty);
             return dst;
         }
 
         [MethodImpl(Inline), Op]
-        public static AsmInstruction inst(in AsmMnemonic mnemonic, in SdmOpCode opcode, in AsmOperand op0, out AsmInstruction dst)
+        public static AsmInstruction inst(in AsmMnemonic mnemonic, in AsmOpCodeSpec opcode, in AsmOperand op0, out AsmInstruction dst)
         {
             dst.Mnemonic = mnemonic;
             dst.OpCode = opcode;
@@ -61,7 +61,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static AsmInstruction inst(in AsmMnemonic mnemonic, in SdmOpCode opcode, in AsmOperand op0, in AsmOperand op1, out AsmInstruction dst)
+        public static AsmInstruction inst(in AsmMnemonic mnemonic, in AsmOpCodeSpec opcode, in AsmOperand op0, in AsmOperand op1, out AsmInstruction dst)
         {
             dst.Mnemonic = mnemonic;
             dst.OpCode = opcode;
@@ -71,7 +71,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static AsmInstruction inst(in AsmMnemonic mnemonic, in SdmOpCode opcode, in AsmOperand op0, in AsmOperand op1, in AsmOperand op2, out AsmInstruction dst)
+        public static AsmInstruction inst(in AsmMnemonic mnemonic, in AsmOpCodeSpec opcode, in AsmOperand op0, in AsmOperand op1, in AsmOperand op2, out AsmInstruction dst)
         {
             dst.Mnemonic = mnemonic;
             dst.OpCode = opcode;
@@ -81,7 +81,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static AsmInstruction inst(in AsmMnemonic mnemonic, in SdmOpCode opcode, in AsmOperand op0, in AsmOperand op1, in AsmOperand op2, in AsmOperand op3, out AsmInstruction dst)
+        public static AsmInstruction inst(in AsmMnemonic mnemonic, in AsmOpCodeSpec opcode, in AsmOperand op0, in AsmOperand op1, in AsmOperand op2, in AsmOperand op3, out AsmInstruction dst)
         {
             dst.Mnemonic = mnemonic;
             dst.OpCode = opcode;

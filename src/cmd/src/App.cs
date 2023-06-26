@@ -27,11 +27,12 @@ namespace Z0
             }
             return result;
         }
- 
+
+        sealed class ShellCmd : WfAppCmd<ShellCmd>
+        {
+
+        } 
     }
 
-    sealed class AppShellCmd : WfAppCmd<AppShellCmd>
-    {
 
-    }
 }

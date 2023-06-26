@@ -3,15 +3,14 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+using static XedRules;
+
+partial struct XedCells
 {
-    partial class XedRules
-    {
-        partial struct InstCells
-        {
-            [MethodImpl(Inline), Op]
-            public static LockIndicator @lock(in InstCells src)
-                => new (lockable(src), locked(src));
-        }
-    }
+    [MethodImpl(Inline), Op]
+    public static LockIndicator @lock(in XedCells src)
+        => new (lockable(src), locked(src));
 }
+

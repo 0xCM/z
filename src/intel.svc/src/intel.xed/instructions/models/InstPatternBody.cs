@@ -11,16 +11,16 @@ namespace Z0
     {
         public readonly struct InstPatternBody : IIndex<CellValue>
         {
-            public readonly InstCells Cells;
+            public readonly XedCells Cells;
 
             [MethodImpl(Inline)]
             public InstPatternBody(CellValue[] src)
             {
-                Cells = new InstCells(src,0);
+                Cells = new XedCells(src,0);
             }
 
             [MethodImpl(Inline)]
-            public InstPatternBody(InstCells fields)
+            public InstPatternBody(XedCells fields)
             {
                 Cells = fields;
             }

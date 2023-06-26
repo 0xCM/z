@@ -3,29 +3,27 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
-{
-    using static XedModels;
+namespace Z0;
 
-    partial class XedRules
+using static XedModels;
+using static XedRules;
+
+partial struct XedCells
+{
+    [MethodImpl(Inline), Op]
+    public static RepIndicator @rep(in XedCells src)
     {
-        partial struct InstCells
+        var dst = RepIndicator.Empty;
+        for(var i=0; i<src.Count; i++)
         {
-            [MethodImpl(Inline), Op]
-            public static RepIndicator @rep(in InstCells src)
+            ref readonly var field = ref src[i];
+            if(field.Field == FieldKind.REP)
             {
-                var dst = RepIndicator.Empty;
-                for(var i=0; i<src.Count; i++)
-                {
-                    ref readonly var field = ref src[i];
-                    if(field.Field == FieldKind.REP)
-                    {
-                        dst = (RepPrefix)field.ToCellExpr().Value;
-                        break;
-                    }
-                }
-                return dst;
+                dst = (RepPrefix)field.ToCellExpr().Value;
+                break;
             }
         }
+        return dst;
     }
 }
+

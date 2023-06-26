@@ -31,7 +31,7 @@ namespace Z0
                 get => ref Pattern.InstForm;
             }
 
-            public ref readonly InstCells Fields
+            public ref readonly XedCells Fields
             {
                 [MethodImpl(Inline)]
                 get => ref Pattern.Cells;

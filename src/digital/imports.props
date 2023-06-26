@@ -1,6 +1,0 @@
-<Project>
-  <ItemGroup>
-    <ProjectReference Include="$(Symbols)" />
-    <ProjectReference Include="$(Math)" />
-  </ItemGroup>
-</Project>

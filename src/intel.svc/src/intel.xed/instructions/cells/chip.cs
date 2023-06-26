@@ -3,30 +3,28 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+using static XedModels;
+using static XedRules;
+
+partial struct XedCells
 {
-    using static XedModels;
-
-    partial class XedRules
+    [MethodImpl(Inline), Op]
+    public static ChipCode chip(in XedCells src)
     {
-        partial struct InstCells
+        var dst = ChipCode.INVALID;
+        for(var i=0; i<src.Count; i++)
         {
-            [MethodImpl(Inline), Op]
-            public static ChipCode chip(in InstCells src)
-            {
-                var dst = ChipCode.INVALID;
-                for(var i=0; i<src.Count; i++)
-                {
-                    ref readonly var f = ref src[i];
+            ref readonly var f = ref src[i];
 
-                    if(f.IsExpr && f.Field == FieldKind.CHIP)
-                    {
-                        dst = f.ToCellExpr().Value;
-                        break;
-                    }
-                }
-                return dst;
+            if(f.IsExpr && f.Field == FieldKind.CHIP)
+            {
+                dst = f.ToCellExpr().Value;
+                break;
             }
         }
+        return dst;
     }
 }
+

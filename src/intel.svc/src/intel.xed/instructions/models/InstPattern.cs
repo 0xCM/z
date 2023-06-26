@@ -30,9 +30,9 @@ namespace Z0
 
             static InstPattern load(ref InstPatternSpec spec)
             {
-                var fields = InstCells.sort(spec.Body.Cells);
+                var fields = XedCells.sort(spec.Body.Cells);
                 spec.Body = new (fields);
-                return new InstPattern(spec, InstCells.usage(fields));
+                return new InstPattern(spec, XedCells.usage(fields));
             }
 
             public readonly InstPatternSpec Spec;
@@ -45,9 +45,9 @@ namespace Z0
 
             public readonly Index<InstOpDetail> OpDetails;
 
-            public readonly InstCells Layout;
+            public readonly XedCells Layout;
 
-            public readonly InstCells Expr;
+            public readonly XedCells Expr;
 
             public readonly bit Scalable;
 
@@ -59,11 +59,11 @@ namespace Z0
                 Spec = spec;
                 OpNames = spec.Ops.Names;
                 FieldDeps = deps;
-                Lock = InstCells.@lock(fields);
+                Lock = XedCells.@lock(fields);
                 OpDetails = XedOps.opdetails(this);
                 Scalable = OpDetails.Any(x => x.Scalable);
-                Layout = new InstCells(layout.ToArray(), (byte)layout.Length);
-                Expr  = new InstCells(expr.ToArray(), 0);
+                Layout = new XedCells(layout.ToArray(), (byte)layout.Length);
+                Expr  = new XedCells(expr.ToArray(), 0);
             }
 
             public ref readonly InstPatternBody Body
@@ -72,7 +72,7 @@ namespace Z0
                 get => ref Spec.Body;
             }
 
-            public ref readonly InstCells Cells
+            public ref readonly XedCells Cells
             {
                 [MethodImpl(Inline)]
                 get => ref Body.Cells;

@@ -123,6 +123,14 @@ namespace Z0
             }
         }
 
+        [CmdOp("hex/gen/blocks")]
+        void GenHexStrings()
+        {
+            var dst = text.emitter();
+            HexBlocks.render(dst);
+            Channel.Row(dst.Emit());
+        }
+
         [CmdOp("asm/check/res")]
         void CheckStringRes()
         {
@@ -709,6 +717,7 @@ c5 f8 99 c8";
             CheckJmp32(n2);
         }
 
+
         [CmdOp("asm/check/specs")]
         void CheckAsmSpecs()
         {
@@ -718,10 +727,11 @@ c5 f8 99 c8";
             var asm0 = AsmSpecs.and(gp32.edx, 0xC1C1);
             Channel.Write($"{asm0}");
 
-            var opcode = SdmOpCode.Empty;
+            var opcode = AsmOpCodeSpec.Empty;
             var result = SdmOpCodes.parse(Oc0, out opcode);
             Channel.Write($"{Oc0} -> {opcode}");
         }
+
 
         void CheckJmp32(N0 n)
         {

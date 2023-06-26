@@ -74,7 +74,7 @@ namespace Z0
             get => ref Form.Sig;
         }
 
-        public ref readonly SdmOpCode OpCode
+        public ref readonly AsmOpCodeSpec OpCode
         {
             [MethodImpl(Inline)]
             get => ref Form.OpCode;

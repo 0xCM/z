@@ -80,9 +80,9 @@ namespace Z0
                     OpCode = opcode,
                     OpCodeBytes = opcode.Value,
                     Mode = pattern.Mode,
-                    Mod = InstCells.mod(fields),
-                    RexW = InstCells.rexw(fields),
-                    Rep = InstCells.rep(fields),
+                    Mod = XedCells.mod(fields),
+                    RexW = XedCells.rexw(fields),
+                    Rep = XedCells.rep(fields),
                     Form = pattern.InstForm,
                     };
 

@@ -156,5 +156,10 @@ namespace Z0
         [MethodImpl(Inline)]
         public static implicit operator H(Hex3Kind src)
             => new H((byte)src);
+
+        [MethodImpl(Inline)]
+        public static explicit operator HexDigitValue(Hex4 src)
+            => (HexDigitValue)src.Value;
+
     }
 }

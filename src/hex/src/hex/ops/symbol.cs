@@ -42,6 +42,14 @@ namespace Z0
             => symbol(casing, (HexDigitValue)src);
 
         [MethodImpl(Inline), Op]
+        public static HexDigitSym symbol(LowerCased casing, Hex4 src)
+            => symbol(casing, (HexDigitValue)src);
+
+        [MethodImpl(Inline), Op]
+        public static HexDigitSym symbol(UpperCased casing, Hex4 src)
+            => symbol(casing, (HexDigitValue)src);
+
+        [MethodImpl(Inline), Op]
         public static HexDigitSym symbol(UpperCased @case, HexDigitValue src)
             => (HexDigitSym)code(@case, src);
 

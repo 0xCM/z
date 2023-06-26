@@ -23,7 +23,7 @@ namespace Z0.Asm
             if(result.Fail)
                 Errors.Throw(result.Message);
 
-            result = SdmOpCodes.parse(src.OpCodeExpr, out SdmOpCode opcode);
+            result = SdmOpCodes.parse(src.OpCodeExpr, out AsmOpCodeSpec opcode);
             if(result.Fail)
                 Errors.Throw(result.Message);
 

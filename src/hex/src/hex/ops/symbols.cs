@@ -10,6 +10,19 @@ namespace Z0
 
     partial struct Hex
     {
+        [MethodImpl(Inline), Op]
+        public static uint symbols(ReadOnlySpan<byte> src, UpperCased @case, Span<AsciSymbol> dst)
+        {
+            var j=0u;
+            for(var i=0u; i<src.Length; i++, j+=2)
+            {
+                ref readonly var data = ref skip(src, i);
+                seek(dst, j) = (AsciSymbol)(byte)code(@case, (HexDigitValue)(data >> 4));
+                seek(dst, j + 1) = (AsciSymbol)(byte)code(@case, (HexDigitValue)(0xF & data));
+            }
+            return j;
+        }
+
         /// <summary>
         /// Presents the source value as a sequence of hex symbols
         /// </summary>

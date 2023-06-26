@@ -3,26 +3,23 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
-{
-    using static MachineModes;
+namespace Z0;
 
-    partial class XedRules
+using static MachineModes;
+using static XedRules;
+
+partial struct XedCells
+{
+    [MethodImpl(Inline), Op]
+    public static MachineMode mode(in XedCells src)
     {
-        partial struct InstCells
+        var result = MachineModeClass.Default;
+        for(var i=0; i<src.Count; i++)
         {
-            [MethodImpl(Inline), Op]
-            public static MachineMode mode(in InstCells src)
-            {
-                var result = MachineModeClass.Default;
-                for(var i=0; i<src.Count; i++)
-                {
-                    ref readonly var f = ref src[i];
-                    if(f.IsExpr && f.Field == FieldKind.MODE)
-                        result = f.ToCellExpr().Value;
-                }
-                return result;
-            }
+            ref readonly var f = ref src[i];
+            if(f.IsExpr && f.Field == FieldKind.MODE)
+                result = f.ToCellExpr().Value;
         }
+        return result;
     }
 }

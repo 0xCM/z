@@ -5,7 +5,7 @@
 namespace Z0
 {
     using TK = AsmOcTokenKind;
-    using T = AsmOcTokens.AsmOcSymbols;
+    using T = AsmOcSymbols;
     using G = AsmOcTokens;
 
     [ApiHost]
@@ -15,146 +15,6 @@ namespace Z0
 
         public override string GroupName
             => Group;
-
-        [LiteralProvider(Group)]
-        public readonly struct AsmOcSymbols
-        {
-            public const string W0 = "W0";
-
-            public const string W1 = "W1";
-
-            public const string Rex = "REX";
-
-            public const string RexR = "REX.R";
-
-            public const string RexW = "REX.W";
-
-            public const string Vex = "VEX";
-
-            public const string Evex = "EVEX";
-
-            public const string NP = "NP";
-
-            public const string x66 = "66";
-
-            public const string x67 = "67";
-
-            public const string F2 = "F2";
-
-            public const string F3 = "F3";
-
-            public const string x0F = "0F";
-
-            public const string x0F38 = x0F + "38";
-
-            public const string x0F3A = x0F + "3A";
-
-            public const string xF0 = "F0";
-
-            public const string n1 = "1";
-
-            public const string n128 = "128";
-
-            public const string n256 = "256";
-
-            public const string n512 = "512";
-
-            public const string L0 = "L0";
-
-            public const string L1 = "L1";
-
-            public const string L2 = "L2";
-
-            public const string LZ = "LZ";
-
-            public const string Vsib = "/vsib";
-
-            public const string Sep = " ";
-
-            public const string Plus = "+";
-
-            public const string Dot = ".";
-
-            public const string W = "W";
-
-            public const string LIG = "LIG";
-
-            public const string WIG = "WIG";
-
-            public const string R = "R";
-
-            public const string B = "B";
-
-            public const string X = "X";
-
-            public const string cb = "cb";
-
-            public const string cw = "cw";
-
-            public const string cd = "cd";
-
-            public const string cp = "cp";
-
-            public const string co = "co";
-
-            public const string ib = "ib";
-
-            public const string iw = "iw";
-
-            public const string id = "id";
-
-            public const string io = "io";
-
-            public const string ST0 = "+0";
-
-            public const string ST1 = "+1";
-
-            public const string ST2 = "+2";
-
-            public const string ST3 = "+3";
-
-            public const string ST4 = "+4";
-
-            public const string ST5 = "+5";
-
-            public const string ST6 = "+6";
-
-            public const string ST7 = "+7";
-
-            public const string RRM = "/r";
-
-            public const string rd0 = "/0";
-
-            public const string rd1 = "/1";
-
-            public const string rd2 = "/2";
-
-            public const string rd3 = "/3";
-
-            public const string rd4 = "/4";
-
-            public const string rd5 = "/5";
-
-            public const string rd6 = "/6";
-
-            public const string rd7 = "/7";
-
-            public const string mmmmm = "mmmmm";
-
-            public const string vvvv = "vvvv";
-
-            public const string pp = "pp";
-
-            public const string gs = "gs";
-
-            public const string fs = "fs";
-
-            public const string k1 = "{k1}";
-
-            public const string z = "{z}";
-
-            public const string k1z= "{k1}{z}";
-        }
 
         [SymSource(Group), TokenKind(TK.Hex16)]
         public enum Hex16Token : byte
@@ -275,23 +135,23 @@ namespace Z0
             [Symbol(T.co, "Indicates an 8-byte value follows the opcode to specify a code offset and/or new value for the code segment register")]
             co,
 
-            [Symbol("ct", "Indicates a 10-byte value follows the opcode to specify a code offset and/or new value for the code segment register")]
+            [Symbol(T.ct, "Indicates a 10-byte value follows the opcode to specify a code offset and/or new value for the code segment register")]
             ct,
         }
 
         [SymSource(Group), TokenKind(TK.SegOverride)]
         public enum SegOverrideToken : byte
         {
-            [Symbol("cs", "CS segment override")]
+            [Symbol(T.cs, "CS segment override")]
             CS,
 
-            [Symbol("ss", "SS segment override")]
+            [Symbol(T.ss, "SS segment override")]
             SS,
 
-            [Symbol("ds", "DS segment override")]
+            [Symbol(T.ds, "DS segment override")]
             DS,
 
-            [Symbol("es", "ES segment override")]
+            [Symbol(T.es, "ES segment override")]
             ES,
 
             [Symbol(T.fs, "FS segment override")]
@@ -346,16 +206,16 @@ namespace Z0
         [SymSource(Group), TokenKind(TK.RexB)]
         public enum RexBToken : byte
         {
-            [Symbol("+rb", "For an 8-bit register, indicates the four bit field of REX.b and opcode[2:0] field encodes the register operand of the instruction")]
+            [Symbol(T.rb, "For an 8-bit register, indicates the four bit field of REX.b and opcode[2:0] field encodes the register operand of the instruction")]
             rb,
 
-            [Symbol("+rw", "For a 16-bit register, indicates the four bit field of REX.b and opcode[2:0] field encodes the register operand of the instruction")]
+            [Symbol(T.rw, "For a 16-bit register, indicates the four bit field of REX.b and opcode[2:0] field encodes the register operand of the instruction")]
             rw,
 
-            [Symbol("+rd", "For a 32-bit register, indicates the four bit field of REX.b and opcode[2:0] field encodes the register operand of the instruction")]
+            [Symbol(T.rd, "For a 32-bit register, indicates the four bit field of REX.b and opcode[2:0] field encodes the register operand of the instruction")]
             rd,
 
-            [Symbol("+ro", "For a 64-bit register, indicates the four bit field of REX.b and opcode[2:0] field encodes the register operand of the instruction")]
+            [Symbol(T.ro, "For a 64-bit register, indicates the four bit field of REX.b and opcode[2:0] field encodes the register operand of the instruction")]
             ro,
         }
 
@@ -412,10 +272,10 @@ namespace Z0
             [Symbol(T.NP, "Indicates the use of 66/F2/F3 prefixes are not allowed with the instruction")]
             NP,
 
-            [Symbol("NFx", "Indicates the use of F2/F3 prefixes are not allowed with the instruction")]
+            [Symbol(T.NFx, "Indicates the use of F2/F3 prefixes are not allowed with the instruction")]
             NFx,
 
-            [Symbol("NDS")]
+            [Symbol(T.NDS)]
             NDS,
         }
 

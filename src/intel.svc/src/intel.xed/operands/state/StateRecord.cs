@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-    using static XedModels;
+using static XedModels;
 
 partial class XedRules
 {

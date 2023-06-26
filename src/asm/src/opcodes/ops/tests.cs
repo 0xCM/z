@@ -5,14 +5,13 @@
 namespace Z0.Asm
 {
     using static sys;
-    using static AsmOcTokens;
 
     using K = AsmOcTokenKind;
 
     partial class SdmOpCodes
     {
         [MethodImpl(Inline), Op]
-        public static bool rex(in SdmOpCode src)
+        public static bool rex(in AsmOpCodeSpec src)
         {
             var result = false;
             var count = min(src.TokenCount,(byte)4);
@@ -31,7 +30,7 @@ namespace Z0.Asm
         }
 
         [MethodImpl(Inline), Op]
-        public static bool evex(in SdmOpCode src)
+        public static bool evex(in AsmOpCodeSpec src)
         {
             var result = false;
             if(src.IsNonEmpty)
@@ -40,7 +39,7 @@ namespace Z0.Asm
         }
 
         [MethodImpl(Inline), Op]
-        public static bool vex(in SdmOpCode src)
+        public static bool vex(in AsmOpCodeSpec src)
         {
             var result = false;
             if(src.IsNonEmpty)
@@ -49,31 +48,31 @@ namespace Z0.Asm
         }
 
         [MethodImpl(Inline), Op]
-        public static bool hex8(in SdmOpCode src, out AsmOcToken dst)
+        public static bool hex8(in AsmOpCodeSpec src, out AsmOcToken dst)
             => query(src, t => t.Kind == K.Hex8, out dst);
 
         [MethodImpl(Inline), Op]
-        public static bool rex(in SdmOpCode src, out AsmOcToken dst)
+        public static bool rex(in AsmOpCodeSpec src, out AsmOcToken dst)
             => query(src, t => t.Kind == K.Rex || t.Kind == K.RexB, out dst);
 
         [MethodImpl(Inline), Op]
-        public static bool imm(in SdmOpCode src, out AsmOcToken dst)
+        public static bool imm(in AsmOpCodeSpec src, out AsmOcToken dst)
             => query(src, t => t.Kind == K.ImmSize, out dst);
 
         [MethodImpl(Inline), Op]
-        public static bool vex(in SdmOpCode src, out AsmOcToken dst)
+        public static bool vex(in AsmOpCodeSpec src, out AsmOcToken dst)
             => query(src, t => t.Kind == K.Vex, out dst);
 
         [MethodImpl(Inline), Op]
-        public static bool evex(in SdmOpCode src, out AsmOcToken dst)
+        public static bool evex(in AsmOpCodeSpec src, out AsmOcToken dst)
             => query(src, t => t.Kind == K.Evex, out dst);
 
         [MethodImpl(Inline), Op]
-        public static bool regdigit(in SdmOpCode src, out AsmOcToken dst)
+        public static bool regdigit(in AsmOpCodeSpec src, out AsmOcToken dst)
             => query(src, t => t.Kind == K.RegDigit, out dst);
 
         [MethodImpl(Inline), Op]
-        public static bool query(in SdmOpCode src, Func<AsmOcToken,bool> predicate, out AsmOcToken dst)
+        public static bool query(in AsmOpCodeSpec src, Func<AsmOcToken,bool> predicate, out AsmOcToken dst)
         {
             var count = src.TokenCount;
             var result = false;

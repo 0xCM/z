@@ -5,7 +5,6 @@
 namespace Z0.Asm
 {
     using static sys;
-    using static AsmOcTokens;
 
     partial class SdmOpCodes
     {

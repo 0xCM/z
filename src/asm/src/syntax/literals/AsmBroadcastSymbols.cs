@@ -5,7 +5,7 @@
 namespace Z0
 {
     [LiteralProvider]
-    public readonly struct BroadcastSymbols
+    public readonly struct AsmBroadcastSymbols
     {
         public const string N1to2 = "{1to2}";
 

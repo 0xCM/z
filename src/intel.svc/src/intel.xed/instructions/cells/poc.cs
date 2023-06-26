@@ -59,11 +59,11 @@ namespace Z0
             dst.MapName = AsmOpCodeMaps.name(src.OpCode.Kind);
             dst.Value = src.OpCode.Value;
             dst.InstClass = src.InstClass.Classifier;
-            dst.Mode = InstCells.mode(src.Cells);
-            dst.Lock = InstCells.@lock(src.Cells);
-            dst.Mod = InstCells.mod(src.Cells);
-            dst.RexW = InstCells.rexw(src.Cells);
-            dst.Rep = InstCells.rep(src.Cells);
+            dst.Mode = XedCells.mode(src.Cells);
+            dst.Lock = XedCells.@lock(src.Cells);
+            dst.Mod = XedCells.mod(src.Cells);
+            dst.RexW = XedCells.rexw(src.Cells);
+            dst.Rep = XedCells.rep(src.Cells);
             dst.Layout = src.Layout;
             dst.Expr = src.Expr;
             dst.OpCode = src.OpCode;

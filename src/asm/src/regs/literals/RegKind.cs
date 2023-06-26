@@ -804,6 +804,5 @@ namespace Z0.Asm
 
         [Symbol("tmm7")]
         TMM7 = TMM.TMM7,
-
     }
 }

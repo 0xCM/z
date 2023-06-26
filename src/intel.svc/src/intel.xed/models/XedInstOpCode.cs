@@ -48,10 +48,10 @@ namespace Z0
         public RepIndicator Rep;
 
         [Render(112)]
-        public InstCells Layout;
+        public XedCells Layout;
 
         [Render(1)]
-        public InstCells Expr;
+        public XedCells Expr;
 
         [Ignore]
         public XedOpCode OpCode;

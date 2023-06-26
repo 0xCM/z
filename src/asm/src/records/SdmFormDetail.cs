@@ -24,7 +24,7 @@ namespace Z0
         public AsmSig Sig;
 
         [Render(42)]
-        public SdmOpCode OpCode;
+        public AsmOpCodeSpec OpCode;
 
         [Render(8)]
         public bit Mode64;

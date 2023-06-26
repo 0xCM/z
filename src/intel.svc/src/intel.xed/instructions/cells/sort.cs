@@ -3,41 +3,38 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial struct XedCells
 {
-    partial class XedRules
+    [MethodImpl(Inline), Op]
+    public static XedCells sort(in XedCells src)
     {
-        partial struct InstCells
+        var data = src.Data;
+        var count = (byte)data.Count;
+        var eCount = z8;
+        var lCount = z8;
+        for(var i=z8; i<count; i++)
         {
-            [MethodImpl(Inline), Op]
-            public static InstCells sort(in InstCells src)
-            {
-                var data = src.Data;
-                var count = (byte)data.Count;
-                var eCount = z8;
-                var lCount = z8;
-                for(var i=z8; i<count; i++)
-                {
-                    ref var field = ref data[i];
-                    if(field.IsExpr)
-                        eCount++;
-                    else
-                        lCount++;
-                }
-
-                var lIx = z8;
-                var eIx = lCount;
-                for(var i=z8; i<count; i++)
-                {
-                    ref var field = ref data[i];
-                    if(field.IsExpr)
-                        field = field.WithPosition(eIx++);
-                    else
-                        field = field.WithPosition(lIx++);
-                }
-
-                return new InstCells(data.Sort(), lCount);
-            }
+            ref var field = ref data[i];
+            if(field.IsExpr)
+                eCount++;
+            else
+                lCount++;
         }
+
+        var lIx = z8;
+        var eIx = lCount;
+        for(var i=z8; i<count; i++)
+        {
+            ref var field = ref data[i];
+            if(field.IsExpr)
+                field = field.WithPosition(eIx++);
+            else
+                field = field.WithPosition(lIx++);
+        }
+
+        return new XedCells(data.Sort(), lCount);
     }
 }
+

@@ -7,7 +7,6 @@ namespace Z0
     using static sys;
     using static HexOptionData;
 
-
     partial struct Hex
     {
         [MethodImpl(Inline), Op]

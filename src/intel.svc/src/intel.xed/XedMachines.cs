@@ -177,7 +177,7 @@ namespace Z0
 
             }
 
-            void Load(in InstCells src)
+            void Load(in XedCells src)
             {
                 for(var i=z8; i<src.Count; i++)
                 {
@@ -237,13 +237,13 @@ namespace Z0
                 Pattern = src;
             }
 
-            public ref readonly InstCells Layout
+            public ref readonly XedCells Layout
             {
                 [MethodImpl(Inline)]
                 get => ref Pattern.Layout;
             }
 
-            public ref readonly InstCells Expr
+            public ref readonly XedCells Expr
             {
                 [MethodImpl(Inline)]
                 get => ref Pattern.Layout;
@@ -313,9 +313,9 @@ namespace Z0
             }
 
             /// <summary>
-            /// Specifies the expression-related <see cref='R.InstCells'/>  of the current <see cref='P'/>
+            /// Specifies the expression-related <see cref='R.XedCells'/>  of the current <see cref='P'/>
             /// </summary>
-            public ref readonly InstCells InstExpr
+            public ref readonly XedCells InstExpr
             {
                 [MethodImpl(Inline)]
                 get => ref Pattern.Expr;
@@ -367,9 +367,9 @@ namespace Z0
             }
 
             /// <summary>
-            /// Specifies layout <see cref='R.InstCells'/> associated with the current <see cref='P'/>
+            /// Specifies layout <see cref='R.XedCells'/> associated with the current <see cref='P'/>
             /// </summary>
-            public ref readonly InstCells LayoutFields
+            public ref readonly XedCells LayoutFields
             {
                 [MethodImpl(Inline)]
                 get => ref Pattern.Layout;

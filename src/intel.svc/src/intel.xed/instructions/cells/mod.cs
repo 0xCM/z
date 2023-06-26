@@ -3,41 +3,38 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
-{
-    using static XedModels;
+namespace Z0;
 
-    partial class XedRules
+using static XedModels;
+using static XedRules;
+
+partial struct XedCells
+{
+    [MethodImpl(Inline), Op]
+    public static ModIndicator mod(in XedCells src)
     {
-        partial struct InstCells
+        var result = false;
+        var dst = ModIndicator.Empty;
+        for(var i=0; i<src.Count; i++)
         {
-            [MethodImpl(Inline), Op]
-            public static ModIndicator mod(in InstCells src)
+            ref readonly var field = ref src[i];
+            if(field.Field == FieldKind.MOD && field.IsExpr)
             {
-                var result = false;
-                var dst = ModIndicator.Empty;
-                for(var i=0; i<src.Count; i++)
+                var expr = field.ToCellExpr();
+                if(expr.Operator == OperatorKind.Ne)
                 {
-                    ref readonly var field = ref src[i];
-                    if(field.Field == FieldKind.MOD && field.IsExpr)
-                    {
-                        var expr = field.ToCellExpr();
-                        if(expr.Operator == OperatorKind.Ne)
-                        {
-                            dst = ModKind.NE3;
-                            result = true;
-                            break;
-                        }
-                        else if(expr.Operator == OperatorKind.Eq)
-                        {
-                            dst = ModKind.MOD3;
-                            result = true;
-                            break;
-                        }
-                    }
+                    dst = ModKind.NE3;
+                    result = true;
+                    break;
                 }
-                return dst;
+                else if(expr.Operator == OperatorKind.Eq)
+                {
+                    dst = ModKind.MOD3;
+                    result = true;
+                    break;
+                }
             }
         }
+        return dst;
     }
 }

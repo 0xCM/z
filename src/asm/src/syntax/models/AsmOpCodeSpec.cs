@@ -8,20 +8,20 @@ namespace Z0
 
     using Asm;
 
-    public struct SdmOpCode : IEquatable<SdmOpCode>
+    public struct AsmOpCodeSpec : IEquatable<AsmOpCodeSpec>
     {
         public const byte TokenCapacity = 31;
 
         Cell512 Data;
 
         [MethodImpl(Inline)]
-        public SdmOpCode(Cell512 data)
+        public AsmOpCodeSpec(Cell512 data)
         {
             Data = data;
         }
 
         [MethodImpl(Inline)]
-        public SdmOpCode(ReadOnlySpan<AsmOcToken> tokens)
+        public AsmOpCodeSpec(ReadOnlySpan<AsmOcToken> tokens)
         {
             Data = first(recover<AsmOcToken,Cell512>(tokens));
             ref var _tokens = ref @as<Cell512,AsmOcToken>(Data);
@@ -121,11 +121,11 @@ namespace Z0
             => Data.GetHashCode();
 
         [MethodImpl(Inline)]
-        public bool Equals(SdmOpCode src)
+        public bool Equals(AsmOpCodeSpec src)
             => Data.Equals(src.Data);
 
         public override bool Equals(object src)
-            => src is SdmOpCode x && Equals(x);
+            => src is AsmOpCodeSpec x && Equals(x);
 
         public override int GetHashCode()
             => (int)Hash;
@@ -137,13 +137,13 @@ namespace Z0
             => Format();
 
         [MethodImpl(Inline)]
-        public static bool operator ==(SdmOpCode a, SdmOpCode b)
+        public static bool operator ==(AsmOpCodeSpec a, AsmOpCodeSpec b)
             => a.Equals(b);
 
         [MethodImpl(Inline)]
-        public static bool operator !=(SdmOpCode a, SdmOpCode b)
+        public static bool operator !=(AsmOpCodeSpec a, AsmOpCodeSpec b)
             => !a.Equals(b);
 
-        public static SdmOpCode Empty => new SdmOpCode(sys.empty<AsmOcToken>());
+        public static AsmOpCodeSpec Empty => new AsmOpCodeSpec(sys.empty<AsmOcToken>());
     }
 }

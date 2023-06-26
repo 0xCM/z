@@ -6,13 +6,6 @@ namespace Z0.Asm
 {
     public class AsmGenContext
     {
-        [MethodImpl(Inline)]
-        public static ImmOpRange imm(Imm min, Imm max)
-            => new ImmOpRange(min,max);
-
-        [MethodImpl(Inline)]
-        public static RegOpRange regs(RegClass @class, NativeSize size, RegIndex min, RegIndex max)
-            => new RegOpRange(@class, size, min, max);
 
         RegOpRange RegOps;
 

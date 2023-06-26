@@ -3,32 +3,27 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
-{
-    using static XedLiterals;
+namespace Z0;
 
-    partial class XedRules
+partial struct XedCells
+{
+    public static XedVexClass vex(in XedCells src)
     {
-        partial struct InstCells
+        var result = XedVexClass.None;
+        if(src.Count != 0)
         {
-            public static XedVexClass vex(in InstCells src)
+            var k = (XedVexClass)src.First.AsByte();
+            switch(k)
             {
-                var result = XedVexClass.None;
-                if(src.Count != 0)
-                {
-                    var k = (XedVexClass)src.First.AsByte();
-                    switch(k)
-                    {
-                        case XedVexClass.VV1:
-                        case XedVexClass.EVV:
-                        case XedVexClass.XOPV:
-                        case XedVexClass.KVV:
-                            result = k;
-                        break;
-                    }
-                }
-                return result;
+                case XedVexClass.VV1:
+                case XedVexClass.EVV:
+                case XedVexClass.XOPV:
+                case XedVexClass.KVV:
+                    result = k;
+                break;
             }
         }
+        return result;
     }
 }
+
