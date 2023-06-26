@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
 
     public class ApiKeyChecks : Checker<ApiKeyChecks>
     {

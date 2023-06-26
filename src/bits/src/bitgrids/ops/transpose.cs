@@ -61,7 +61,7 @@ namespace Z0
             const uint E = BitMaskLiterals.Even32;
             const uint O = BitMaskLiterals.Odd32;
 
-            var mask = vcpu.vmask32u(src, (byte)i);
+            var mask = vgcpu.vmask32u(src, (byte)i);
             var gT = gcell(g0, i, Numeric.force<T>(bits.gather(mask, E)));
             gT = gcell(gT, j, Numeric.force<T>(bits.gather(mask, O)));
             return gT;

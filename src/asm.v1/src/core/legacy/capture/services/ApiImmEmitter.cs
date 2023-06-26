@@ -260,7 +260,7 @@ namespace Z0.Asm
         Index<AsmRoutine> EmitUnrefinedBinary(in CaptureExchange exchange, OpIdentity gid, Index<ApiMethodNG> methods, Index<Imm8R> imm8, IAsmImmWriter dst)
         {
             var generic = false;
-            var routines = core.list<AsmRoutine>();
+            var routines = sys.list<AsmRoutine>();
             foreach(var f in methods)
             {
                 var host = f.Host;

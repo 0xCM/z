@@ -9,7 +9,7 @@ namespace Z0.Asm
     {
         [Op]
         public static ref byte range_check(byte[] src)
-            => ref core.seek(src,3);
+            => ref sys.seek(src,3);
 
         const string dot = ".";
 

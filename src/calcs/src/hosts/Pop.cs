@@ -28,7 +28,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public uint Invoke(Vector128<T> x,Vector128<T> y,Vector128<T> z)
-                => gcpu.vpop(x,y,z);
+                => vgcpu.vpop(x,y,z);
 
             [MethodImpl(Inline)]
             public uint Invoke(T a, T b, T c)
@@ -41,7 +41,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public uint Invoke(Vector256<T> x, Vector256<T> y, Vector256<T> z)
-                => gcpu.vpop(x,y,z);
+                => vgcpu.vpop(x,y,z);
 
             [MethodImpl(Inline)]
             public uint Invoke(T a, T b, T c)

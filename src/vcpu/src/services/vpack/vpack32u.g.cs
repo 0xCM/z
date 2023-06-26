@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static vcpu;
-
     partial struct vpack
     {
         /// <summary>
@@ -16,6 +14,6 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static uint vpack32u<T>(Vector256<T> src, byte index)
             where T : unmanaged
-                => vmask32u(src, index);
+                => vgcpu.vmask32u(src, index);
     }
 }

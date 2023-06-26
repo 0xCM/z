@@ -8,15 +8,6 @@ namespace Z0
     [ApiHost]
     public readonly partial struct BitPack
     {
-        // /// <summary>
-        // /// Partitions the source into 64 segments, each of effective width 1
-        // /// </summary>
-        // /// <param name="src">The source value</param>
-        // /// <param name="dst">The target span</param>
-        // [MethodImpl(Inline), Op]
-        // public static void unpack64x1(ulong src, Span<bit> dst)
-        //     => BitPack.upack64x1(src, dst);
-
         /// <summary>
         /// Unpacks 8 source bits over 8 32-bit target segments
         /// </summary>

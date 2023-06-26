@@ -4,12 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using System;
-    using System.Runtime.Intrinsics;
-
-    using static core;
-    using static Root;
-
     partial struct AsmPrototypes
     {
         [ApiHost(prototypes + "mov")]

@@ -8,13 +8,9 @@ namespace Z0
     {
         sealed class Svc : AppServices<Svc>
         {
-            public Machines Machines(IWfRuntime wf)
-                => Service<Machines>(wf);
         }
 
         static Svc Services => Svc.Instance;
 
-        public static IApiService Machines(this IWfRuntime wf)
-            => Services.Machines(wf);
     }
 }

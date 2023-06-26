@@ -80,7 +80,7 @@ namespace Z0.Asm
 
         [MethodImpl(Inline), Op]
         public static IceOpAccess[] access(Iced.InstructionInfo src)
-            => core.array(
+            => sys.array(
                     Thaw(src.Op0Access),
                     Thaw(src.Op0Access),
                     Thaw(src.Op2Access),

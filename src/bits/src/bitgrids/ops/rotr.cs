@@ -47,13 +47,13 @@ namespace Z0
             where T : unmanaged
             where N : unmanaged, ITypeNat
             where M : unmanaged, ITypeNat
-                => gcpu.vrotr<T>(g,(byte)offset);
+                => vgcpu.vrotr<T>(g,(byte)offset);
 
         [MethodImpl(Inline)]
         public static BitGrid256<M,N,T> rotr<M,N,T>(in BitGrid256<M,N,T> g, byte offset)
             where T : unmanaged
             where N : unmanaged, ITypeNat
             where M : unmanaged, ITypeNat
-                => gcpu.vrotr<T>(g,(byte)offset);
+                => vgcpu.vrotr<T>(g,(byte)offset);
     }
 }

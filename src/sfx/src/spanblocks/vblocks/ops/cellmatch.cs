@@ -14,13 +14,13 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static int cellmatch(SpanBlock128<byte> src, byte match)
         {
-            var ones = gcpu.vones<byte>(w128);
+            var ones = vgcpu.vones<byte>(w128);
             for(var i=0; i<src.BlockCount; i++)
             {
                 var a = vload(src,i);
                 var b = vcpu.vbroadcast(w128, match);
-                var c = cpu.veq(a,b);
-                var d = cpu.vtestz(c,ones);
+                var c = vcpu.veq(a,b);
+                var d = vcpu.vtestz(c,ones);
                 if(!d)
                     return i;
             }
@@ -38,13 +38,13 @@ namespace Z0
             where T : unmanaged
         {
             var w = w128;
-            var ones = gcpu.vones<T>(w);
+            var ones = vgcpu.vones<T>(w);
             for(var i=0; i<src.BlockCount; i++)
             {
                 var a = SpanBlocks.vload(src,i);
-                var b = gcpu.vbroadcast(w, match);
-                var c = gcpu.veq(a,b);
-                var d = gcpu.vtestz(c, ones);
+                var b = vgcpu.vbroadcast(w, match);
+                var c = vgcpu.veq(a,b);
+                var d = vgcpu.vtestz(c, ones);
                 if(!d)
                     return i;
             }
@@ -62,13 +62,13 @@ namespace Z0
             where T : unmanaged
         {
             var w = w256;
-            var ones = gcpu.vones<T>(w);
+            var ones = vgcpu.vones<T>(w);
             for(var i=0; i<src.BlockCount; i++)
             {
                 var a = SpanBlocks.vload(src,i);
-                var b = gcpu.vbroadcast(w, match);
-                var c = gcpu.veq(a,b);
-                var d = gcpu.vtestz(c, ones);
+                var b = vgcpu.vbroadcast(w, match);
+                var c = vgcpu.veq(a,b);
+                var d = vgcpu.vtestz(c, ones);
                 if(!d)
                     return i;
             }

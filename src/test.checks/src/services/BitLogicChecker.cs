@@ -4,8 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
-    using static cpu;
+    using static sys;
+    using static vcpu;
 
     using K = ApiClasses;
 
@@ -229,12 +229,12 @@ namespace Z0
             var vSvc = Calcs.vbitlogic<T>(w);
             var buffer = Cells.alloc(w);
             ref var dst = ref Cells.to<T>(buffer);
-            var cells = cpu.vcount<T>(w);
+            var cells = vcpu.vcount<T>(w);
             for(byte i=0; i<cells; i++)
                 seek(dst, i) = mSvc.eval(vcell(a,i), vcell(b,i), f);
-            var v1 = gcpu.vload(w, dst);
+            var v1 = vgcpu.vload(w, dst);
             var v2 = vSvc.eval(a,b,f);
-            return gcpu.vsame(v2,v1);
+            return vgcpu.vsame(v2,v1);
         }
 
         [MethodImpl(Inline)]
@@ -250,9 +250,9 @@ namespace Z0
             var cells = vcpu.vcount<T>(w);
             for(byte i=0; i<cells; i++)
                 seek(dst, i) = mSvc.eval(vcell(a,i), vcell(b,i), f);
-            var v1 = gcpu.vload(w, dst);
+            var v1 = vgcpu.vload(w, dst);
             var v2 = vSvc.eval(a,b,f);
-            return gcpu.vsame(v2,v1);
+            return vgcpu.vsame(v2,v1);
         }
     }
 }

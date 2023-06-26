@@ -12,8 +12,8 @@ namespace Z0
         [Op]
         public static BitMatrix<N16,N8,uint> transpose(in BitMatrix<N8,N16,uint> A)
         {
-            var vec = gcpu.vload(n128,A.Bytes);
-            cpu.vstore(cpu.vshuf16x8(vec, Tr8x16Mask), ref first(A.Bytes));
+            var vec = vgcpu.vload(n128,A.Bytes);
+            vcpu.vstore(vcpu.vshuf16x8(vec, Tr8x16Mask), ref first(A.Bytes));
             return BitMatrix.load<N16,N8,uint>(A.Content);
         }
 
@@ -32,11 +32,11 @@ namespace Z0
         [MethodImpl(Inline)]
         public static ref BitMatrix8 transpose_v1(in BitMatrix8 A, ref BitMatrix8 Z)
         {
-            var x = cpu.vscalar(n128,(ulong)A);
+            var x = vcpu.vscalar(n128,(ulong)A);
             for(var i=7; i>= 0; i--)
             {
-                Z[i] = (byte)cpu.vmovemask(cpu.v8u(x));
-                x = cpu.vsll(x,1);
+                Z[i] = (byte)vcpu.vmovemask(vcpu.v8u(x));
+                x = vcpu.vsll(x,1);
             }
             return ref Z;
         }
@@ -131,7 +131,7 @@ namespace Z0
         static Vector128<byte> Tr8x16Mask
         {
             [MethodImpl(Inline)]
-            get => cpu.vload(n128, core.first(Tr8x16MaskBytes));
+            get => vcpu.vload(n128, sys.first(Tr8x16MaskBytes));
         }
 
         /// <summary>

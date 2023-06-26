@@ -4,9 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using Z0.Asm;
-
-    using static core;
+    using static sys;
 
     [Record(TableId), StructLayout(LayoutKind.Sequential)]
     public struct AsmDetailRow : IComparable<AsmDetailRow>

@@ -11,7 +11,7 @@ namespace Z0
             const string CommentPattern = "Specifies the maximum value of a {0}-bit number, {1:#,#}";
             const string NamePattern = "Max{0}u";
             var max = 0ul;
-            var emitter = CsGen.emitter();
+            var emitter = CsEmitter.create();
             var offset = 0u;
             emitter.Namespace(offset, "Z0");
             emitter.LiteralProvider(offset);

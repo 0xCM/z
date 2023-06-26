@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
-    <ZSysVer>0.0.122</ZSysVer>
-    <ZVer>0.0.454</ZVer>
+    <ZSysVer>0.0.123</ZSysVer>
+    <ZVer>0.0.455</ZVer>
     <ZFxVer>0.0.1003</ZFxVer>
     <MsBuildVer>17.6.0-preview-23174-01</MsBuildVer>
     <NugetVersion>6.6.0-preview.3.57</NugetVersion>

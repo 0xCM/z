@@ -11,7 +11,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public ushort Invoke(Vector128<T> x, byte index)
-                => gcpu.vmask16u(x,index);
+                => vgcpu.vmask16u(x,index);
         }
 
         public readonly struct VMoveIMask256<T>  : IUnaryScalarImm8Op256<T,uint>
@@ -19,7 +19,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public uint Invoke(Vector256<T> x,byte index)
-                => gcpu.vmask32u(x,index);
+                => vgcpu.vmask32u(x,index);
         }
     }
 }

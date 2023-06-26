@@ -2,9 +2,9 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-// global using gcpu = Z0.vgcpu;
-// global using cpu = Z0.vcpu;
-// global using core = Z0.sys;
+global using gcpu = Z0.vgcpu;
+global using cpu = Z0.vcpu;
+global using core = Z0.sys;
 
 [assembly: PartId(PartId.Bits)]
 namespace Z0.Parts

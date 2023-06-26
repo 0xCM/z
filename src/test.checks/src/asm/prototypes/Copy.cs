@@ -22,11 +22,11 @@ namespace Z0.Asm
                 var v3 = vblocks.vload(Source,3);
                 var v4 = vblocks.vload(Source,4);
 
-                cpu.vstore(v0, ref Target.BlockLead(0));
-                cpu.vstore(v1, ref Target.BlockLead(1));
-                cpu.vstore(v2, ref Target.BlockLead(2));
-                cpu.vstore(v3, ref Target.BlockLead(3));
-                cpu.vstore(v4, ref Target.BlockLead(4));
+                vcpu.vstore(v0, ref Target.BlockLead(0));
+                vcpu.vstore(v1, ref Target.BlockLead(1));
+                vcpu.vstore(v2, ref Target.BlockLead(2));
+                vcpu.vstore(v3, ref Target.BlockLead(3));
+                vcpu.vstore(v4, ref Target.BlockLead(4));
             }
 
             [Op]
@@ -34,7 +34,7 @@ namespace Z0.Asm
             {
                 var count = src.BlockCount;
                 for(var i=0; i<count; i++)
-                    cpu.vstore(vblocks.vload(src,i), ref dst.BlockLead(i));
+                    vcpu.vstore(vblocks.vload(src,i), ref dst.BlockLead(i));
             }
         }
     }

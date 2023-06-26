@@ -9,8 +9,9 @@ namespace Z0
     using static System.Runtime.Intrinsics.X86.Avx2;
 
     using static sys;
-
-    partial class vcpu
+    using static vcpu;
+    
+    partial class vgcpu
     {
         /// <summary>
         /// Distributes each bit of the source to the hi bit of each byte a 256-bit target vector

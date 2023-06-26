@@ -8,6 +8,9 @@ namespace Z0
 
     public class CsEmitter
     {
+        public static CsEmitter create()
+            => new();
+            
         List<string> Dst;
 
         public CsEmitter()

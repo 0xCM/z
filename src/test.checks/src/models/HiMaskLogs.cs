@@ -10,7 +10,7 @@ namespace Z0
 
         public ReadOnlySpan<HiMaskLog<S>> Review<S>()
             where S : unmanaged
-                => core.recover<HiMaskLog<T>,HiMaskLog<S>>(Storage);
+                => sys.recover<HiMaskLog<T>,HiMaskLog<S>>(Storage);
 
         public ref HiMaskLog<T> this[uint i]
         {

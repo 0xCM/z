@@ -48,6 +48,6 @@ namespace Z0.Asm
         }
 
         public static IceInstructions Empty
-            => new IceInstructions(core.list<IceInstruction>(), CodeBlock.Empty);
+            => new IceInstructions(sys.list<IceInstruction>(), CodeBlock.Empty);
     }
 }

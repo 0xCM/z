@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class XTend
+    public static partial class XTend
     {
         [MethodImpl(Inline)]
         public static BitString ToBitString<N,T>(this BitBlock<N,T> src)

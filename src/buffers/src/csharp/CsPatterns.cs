@@ -125,8 +125,8 @@ namespace Z0
         public static string PublicStaticOneLineFunc(string ret, string name, string ops, string body)
             => string.Format(L.PublicStaticOneLineFunc, ret, name, ops, body);
 
-        public static string Call(string method, params object[] args)
-            => string.Format("{0}({1})", method, args.Delimit());
+        public static string Call(string target, params object[] args)
+            => string.Format("{0}({1})", target, args.Delimit());
 
         public static RenderPattern<string> ReadOnlySpanTypePattern => "ReadOnlySpan<{0}>";
 

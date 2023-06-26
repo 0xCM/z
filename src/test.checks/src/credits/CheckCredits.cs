@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
     using static BitChecks;
 
     using static CreditModel;
@@ -24,25 +24,25 @@ namespace Z0
         [Op]
         public static bit encode()
         {
-            var result = eq(CreditBits.vendor(Intel).Vendor, Intel);
-            result &= eq(CreditBits.vendor(Amd).Vendor, Amd);
-            result &= eq(CreditBits.volume(Vol1).Volume, Vol1);
-            result &= eq(CreditBits.volume(Vol2A).Volume, Vol2A);
-            result &= eq(CreditBits.volume(Vol2B).Volume, Vol2B);
-            result &= eq(CreditBits.volume(Vol2C).Volume, Vol2C);
-            result &= eq(CreditBits.chapter(Chapter3).Chapter, Chapter3);
-            result &= eq(CreditBits.chapter(Chapter4).Chapter, Chapter4);
-            result &= eq(CreditBits.chapter(Chapter14).Chapter, Chapter14);
-            result &= eq(CreditBits.chapter(Chapter8).Chapter, Chapter8);
-            result &= eq(CreditBits.appendix(AppendixA).Appendix, AppendixA);
-            result &= eq(CreditBits.appendix(AppendixB).Appendix, AppendixB);
-            result &= eq(CreditBits.appendix(AppendixD).Appendix, AppendixD);
-            result &= eq(CreditBits.section(Section2).Section, Section2);
-            result &= eq(CreditBits.section(Section3).Section, Section3);
-            result &= eq(CreditBits.section(Section10).Section, Section10);
-            result &= eq(CreditBits.topic(Topic4).Topic, Topic4);
-            result &= eq(CreditBits.topic(Topic7).Topic, Topic7);
-            result &= eq(CreditBits.topic(Topic7).Topic, Topic7);
+            var result = BitChecks.eq(CreditBits.vendor(Intel).Vendor, Intel);
+            result &= BitChecks.eq(CreditBits.vendor(Amd).Vendor, Amd);
+            result &= BitChecks.eq(CreditBits.volume(Vol1).Volume, Vol1);
+            result &= BitChecks.eq(CreditBits.volume(Vol2A).Volume, Vol2A);
+            result &= BitChecks.eq(CreditBits.volume(Vol2B).Volume, Vol2B);
+            result &= BitChecks.eq(CreditBits.volume(Vol2C).Volume, Vol2C);
+            result &= BitChecks.eq(CreditBits.chapter(Chapter3).Chapter, Chapter3);
+            result &= BitChecks.eq(CreditBits.chapter(Chapter4).Chapter, Chapter4);
+            result &= BitChecks.eq(CreditBits.chapter(Chapter14).Chapter, Chapter14);
+            result &= BitChecks.eq(CreditBits.chapter(Chapter8).Chapter, Chapter8);
+            result &= BitChecks.eq(CreditBits.appendix(AppendixA).Appendix, AppendixA);
+            result &= BitChecks.eq(CreditBits.appendix(AppendixB).Appendix, AppendixB);
+            result &= BitChecks.eq(CreditBits.appendix(AppendixD).Appendix, AppendixD);
+            result &= BitChecks.eq(CreditBits.section(Section2).Section, Section2);
+            result &= BitChecks.eq(CreditBits.section(Section3).Section, Section3);
+            result &= BitChecks.eq(CreditBits.section(Section10).Section, Section10);
+            result &= BitChecks.eq(CreditBits.topic(Topic4).Topic, Topic4);
+            result &= BitChecks.eq(CreditBits.topic(Topic7).Topic, Topic7);
+            result &= BitChecks.eq(CreditBits.topic(Topic7).Topic, Topic7);
             return result;
         }
 
@@ -50,11 +50,11 @@ namespace Z0
         public static bit encode_refs()
         {
             var docref = CreditBits.credit(Intel, Vol2A, Chapter3, Section4, Topic5);
-            var result = eq(docref.Vendor, Intel);
-            result &= eq(docref.Volume, Vol2A);
-            result &= eq(docref.Chapter, Chapter3);
-            result &= eq(docref.Section, Section4);
-            result &= eq(docref.Topic, Topic5);
+            var result = BitChecks.eq(docref.Vendor, Intel);
+            result &= BitChecks.eq(docref.Volume, Vol2A);
+            result &= BitChecks.eq(docref.Chapter, Chapter3);
+            result &= BitChecks.eq(docref.Section, Section4);
+            result &= BitChecks.eq(docref.Topic, Topic5);
             return result;
         }
 
@@ -62,10 +62,10 @@ namespace Z0
         public static bit encode_table_refs()
         {
             var tr = CreditBits.table(d2, d3, d1);
-            var result = eq(tr.Level0, d2);
-            result &= eq(tr.Level1, d3);
-            result &= eq(tr.Level2, d1);
-            result &= eq(tr.ContentType, CreditModel.CreditContentType.Table);
+            var result = BitChecks.eq(tr.Level0, d2);
+            result &= BitChecks.eq(tr.Level1, d3);
+            result &= BitChecks.eq(tr.Level2, d1);
+            result &= BitChecks.eq(tr.ContentType, CreditModel.CreditContentType.Table);
             return result;
         }
 

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using static core;
+    using static sys;
 
     using Iced = Iced.Intel;
 
@@ -257,7 +257,7 @@ namespace Z0.Asm
                 var decoder = Iced.Decoder.Create(IntPtr.Size*8, reader);
                 var @base = src.Address;
                 decoder.IP = @base;
-                var buffer = list<Asm.IceInstruction>(decoded.Count);
+                var buffer = new List<Asm.IceInstruction>(decoded.Count);
                 var position = 0u;
                 while (reader.CanReadByte)
                 {
@@ -342,7 +342,7 @@ namespace Z0.Asm
         {
             var length = size(src);
             if(length != src.Encoded.Length)
-                core.@throw(BadBlockLength(src,length));
+                sys.@throw(BadBlockLength(src,length));
         }
 
         static AppException BadBlockLength(in ApiBlockAsm src, uint computedLength)
