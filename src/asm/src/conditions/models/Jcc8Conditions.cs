@@ -4,24 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    [StructLayout(LayoutKind.Sequential, Pack=1), DataTypeAttributeD("asm.conditions.jcc32")]
-    public struct Jcc32Conditions : IConditional
+    [StructLayout(LayoutKind.Sequential, Pack=1), DataTypeAttributeD("asm.conditions.jcc8")]
+    public struct Jcc8Conditions : IConditional
     {
-        [Op]
-        public static string format(in Jcc32Conditions src, bit alt)
-        {
-            const string Pattern = "{0,-4} rel{1} [{2}:{3}b] => {4}";
-            var dst = EmptyString;
-            if(alt)
-                dst =  string.Format(Pattern, src.Alt.Name, src.Alt.Size.Width, HexFormatter.asmhex(src.Alt.Encoding), BitRender.format8x4(src.Alt.Encoding), src.AltInfo);
-            else
-                dst = string.Format(Pattern, src.Primary.Name, src.RelWidth, HexFormatter.asmhex(src.Encoding), text.format(src.Bitstring), src.PrimaryInfo);
-            return dst;
-        }
+        public JccInfo<Jcc8Code> Primary;
 
-        public JccInfo<Jcc32Code> Primary;
-
-        public JccInfo<Jcc32AltCode> Alt;
+        public JccInfo<Jcc8AltCode> Alt;
 
         public CharBlock64 PrimaryInfo;
 
@@ -52,7 +40,7 @@ namespace Z0.Asm
         }
 
         public string Format(bit alt)
-            => format(this,alt);
+            => Conditions.format(this,alt);
 
         public override string ToString()
             => Format(false);

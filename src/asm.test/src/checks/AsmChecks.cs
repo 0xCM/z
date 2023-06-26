@@ -11,7 +11,7 @@ namespace Z0
     using static AsmRegTokens;
 
     using gp32 = AsmRegTokens.Gp32Reg;
-    using K = AsmOcTokenKind;
+    using K = Asm.AsmOcTokenKind;
     using P = Pow2x32;
 
     class AsmCheckNames
@@ -110,7 +110,7 @@ namespace Z0
             // if(SdmOpCodes.diff(oc1, oc2, out token))
             //     Write(token.Format());
 
-            var sigs = AsmSigTokens.create();
+            var sigs = AsmSigTokenGroup.create();
             var src = sigs;
             var types = src.TokenTypes;
             for(var i=0; i<types.Length; i++)

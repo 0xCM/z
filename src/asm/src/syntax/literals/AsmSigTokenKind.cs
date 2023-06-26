@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using Asm;
+    
     /// <summary>
     /// Classifes <see cref='AsmSigTokens'/> members
     /// </summary>

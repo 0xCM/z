@@ -2,9 +2,8 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0;
+namespace Z0.Asm;
 
-using Asm;
 using static Asm.AsmOcTokens;
 
 /// <summary>

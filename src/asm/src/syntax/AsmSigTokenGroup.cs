@@ -4,15 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using TK = Asm.AsmOcTokenKind;
-    using G = AsmOcTokenTokenGroup;
-
-    [ApiHost]
-    public class AsmOcTokenTokenGroup : TokenGroup<G,TK>
+    public class AsmSigTokenGroup : TokenGroup<AsmSigTokenGroup,AsmSigTokenKind>
     {
-        const string Group = "asm.opcodes";
+        const string Group = "asm.sigs";
 
         public override string GroupName
             => Group;
+
+
+
     }
 }

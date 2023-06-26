@@ -2,16 +2,13 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0.Asm
 {
     using TK = AsmSigTokenKind;
 
-    public class AsmSigTokens : TokenGroup<AsmSigTokens,AsmSigTokenKind>
+    public class AsmSigTokens
     {
         const string Group = "asm.sigs";
-
-        public override string GroupName
-            => Group;
 
         [SymSource(Group), TokenKind(TK.IntLiteral)]
         public enum IntLiteral : byte
@@ -635,6 +632,6 @@ namespace Z0
 
             [Symbol("SRC3", "Denotes the third source operand in the instruction syntax of an instruction encoded with the VEX/EVEX prefix and having three source operands")]
             SRC3,
-        }
+        }        
     }
 }

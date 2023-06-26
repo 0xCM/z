@@ -75,7 +75,7 @@ namespace Z0.Asm
         static AsmSigDatasets load()
         {
             var dst = new AsmSigDatasets();
-            var src = AsmSigTokens.create();
+            var src = AsmSigTokenGroup.create();
             var types = src.TokenTypes;
             var tokenExpr = dict<uint,string>();
             var exprToken = dict<string,AsmSigOp>();

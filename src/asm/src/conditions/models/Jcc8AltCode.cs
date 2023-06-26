@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using E = ConditionCodes.FlagExpressions;
+    using E = ConditionExpressions;
 
     using static JccAltNames;
 
