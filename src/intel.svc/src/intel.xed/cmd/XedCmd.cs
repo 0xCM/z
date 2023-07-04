@@ -13,8 +13,6 @@ namespace Z0
     {
         CsLang CsLang => Channel.Channeled<CsLang>();
 
-        SdmCodeGen SdmCodeGen => Wf.SdmCodeGen();
-
         XedRuntime XedRuntime => Wf.XedRuntime();
 
         XedPaths XedPaths => XedRuntime.Paths;
@@ -22,6 +20,10 @@ namespace Z0
         XedDb XedDb => XedRuntime.XedDb;
 
         IntelSdm Sdm => Wf.IntelSdm();
+
+        Xed Xed => Wf.Xed();
+
+        XedDataFlow DataFlow => Wf.XedImport();
 
         public IDbArchive LlvmModels(string scope)
             => AppDb.Dev($"llvm.models/{scope}");
@@ -161,9 +163,9 @@ namespace Z0
             return true;
         }
 
-        [CmdOp("gen/sdm/code")]
-        void GenAmsCode()
-            => SdmCodeGen.Emit(AppDb.CgStage(CgTarget.Intel.ToString()));
+        // [CmdOp("gen/sdm/code")]
+        // void GenAmsCode()
+        //     => SdmCodeGen.Emit(AppDb.CgStage(CgTarget.Intel.ToString()));
 
         ref readonly Index<InstPattern> Patterns
             => ref XedRuntime.Views.Patterns;
@@ -187,13 +189,25 @@ namespace Z0
             return true;
         }
 
+        [CmdOp("xed/inst/parse")]
+        void ParseInstructions()
+        {
+            var src = XedDb.DocSource(XedDocKind.EncInstDef);
+            if(!src.Exists)
+            {
+                Channel.Error(FS.missing(src));
+            }
+            else
+            {
+                var running = Channel.Running($"Parsing {src}");
+                var defs = XedInstDefParser.parse(src);
+                Channel.Ran(running);
+            }
+        }
+
         [CmdOp("xed/emit/sigs")]
         void EmitInstSig()
             => XedRuntime.Rules.EmitInstSigs(XedRuntime.Views.Patterns);
-
-        [CmdOp("xed/import")]
-        void RunImport()
-            => XedRuntime.Import.Run();
 
         [CmdOp("xed/import/check")]
         void CheckXedImports()
@@ -201,7 +215,6 @@ namespace Z0
             var blocks = XedRuntime.Views.InstImports;
             ref readonly var lines = ref blocks.BlockLines;
             var forms = lines.Keys.Index().Sort();
-            ref readonly var source = ref blocks.DataSource;
         }
 
         [CmdOp("xed/disasm/flow")]

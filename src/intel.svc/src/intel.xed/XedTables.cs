@@ -9,7 +9,7 @@ namespace Z0
     using static XedModels;
     using static sys;
 
-    public class XedViews
+    public class XedTables : Channeled<XedTables>
     {
         [MethodImpl(Inline)]
         public ref readonly T Load<T>(XedRecordType index)
@@ -19,20 +19,14 @@ namespace Z0
         internal void Store<T>(XedRecordType kind, T data)
         {
             @as<object,T>(DataStores[(byte)kind]) = data;
-            Emit.Row($"Computed {kind}", FlairKind.StatusData);
+            Channel.Row($"Computed {kind}", FlairKind.StatusData);
         }
 
         readonly Index<object> DataStores;
 
-        readonly XedRuntime Xed;
-
-        readonly IWfChannel Emit;
-
-        internal XedViews(XedRuntime xed, Func<IWfChannel> svc)
+        public XedTables()
         {
-            Emit = svc();
-            Xed = xed;
-            DataStores = alloc<object>(32);
+            DataStores = alloc<object>(64);
         }
 
         public ref readonly Index<InstOpDetail> InstOpDetails
@@ -83,16 +77,16 @@ namespace Z0
             get => ref Load<Index<XedInstOpCode>>(XedRecordType.OpCodes);
         }
 
-        public ref readonly Index<IsaImport> IsaImport
+        public ref readonly Index<InstIsaSpec> IsaImport
         {
             [MethodImpl(Inline)]
-            get => ref Load<Index<IsaImport>>(XedRecordType.IsaImport);
+            get => ref Load<Index<InstIsaSpec>>(XedRecordType.IsaImport);
         }
 
-        public ref readonly Index<CpuIdImport> CpuIdImport
+        public ref readonly Index<CpuIdSpec> CpuIdImport
         {
             [MethodImpl(Inline)]
-            get => ref Load<Index<CpuIdImport>>(XedRecordType.CpuIdImport);
+            get => ref Load<Index<CpuIdSpec>>(XedRecordType.CpuIdImport);
         }
 
         public ref readonly Index<DbTypeTable> TypeTables
@@ -119,10 +113,10 @@ namespace Z0
             get => ref Load<Index<FormImport>>(XedRecordType.FormImports);
         }
 
-        public ref readonly InstImportBlocks InstImports
+        public ref readonly XedInstDump InstImports
         {
             [MethodImpl(Inline)]
-            get => ref Load<InstImportBlocks>(XedRecordType.InstImports);
+            get => ref Load<XedInstDump>(XedRecordType.InstImports);
         }
 
         public ref readonly Index<AsmBroadcast> AsmBroadcastDefs

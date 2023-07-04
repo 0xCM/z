@@ -19,7 +19,7 @@ namespace Z0
             var dec = EmitRuleBlocks(RuleTableKind.DEC);
             iter(dec, table => names.Add(table.TableName));
 
-            var known = Symbols.kinds<RuleName>().Where(x => x != 0).ToArray().Map(x => x.ToString()).ToHashSet();
+            var known = Symbols.kinds<NonterminalKind>().Where(x => x != 0).ToArray().Map(x => x.ToString()).ToHashSet();
             foreach(var name in names)
             {
                 if(!known.Contains(name))

@@ -23,7 +23,7 @@ namespace Z0
             readonly ushort Data;
 
             [MethodImpl(Inline)]
-            public RuleSig(RuleTableKind kind, RuleName name)
+            public RuleSig(RuleTableKind kind, NonterminalKind name)
             {
                 Data = (ushort)((ushort)name | ((ushort)kind << KindOffset));
             }
@@ -40,10 +40,10 @@ namespace Z0
                 get => Data;
             }
 
-            public RuleName TableName
+            public NonterminalKind TableName
             {
                 [MethodImpl(Inline)]
-                get => (RuleName)(Data & NameMask);
+                get => (NonterminalKind)(Data & NameMask);
             }
 
             public RuleTableKind TableKind
@@ -112,7 +112,7 @@ namespace Z0
                 => new RuleSig(src);
 
             [MethodImpl(Inline)]
-            public static implicit operator RuleSig((RuleTableKind kind, RuleName name) src)
+            public static implicit operator RuleSig((RuleTableKind kind, NonterminalKind name) src)
                 => new RuleSig(src.kind,src.name);
 
             public static RuleSig Empty => default;

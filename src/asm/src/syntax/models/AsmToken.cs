@@ -4,30 +4,21 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [Record(TableId)]
-    public struct AsmToken
+    public readonly record struct AsmToken
     {
-        const string TableId = "asm.tokens";
+        public readonly uint Key;
 
-        [Render(12)]
-        public uint Seq;
+        public readonly Label Name;
 
-        [Render(16)]
-        public string Group;
+        public readonly Label Expression;
 
-        [Render(24)]
-        public string Kind;
+        [MethodImpl(Inline)]
+        public AsmToken(uint key, Label name, Label expression)
+        {
+            Key = key;
+            Name = name;
+            Expression = expression;
+        }
 
-        [Render(12)]
-        public uint Index;
-
-        [Render(24)]
-        public string Name;
-
-        [Render(16)]
-        public SymVal Value;
-
-        [Render(16)]
-        public SymExpr Expr;
     }
 }

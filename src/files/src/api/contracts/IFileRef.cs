@@ -4,8 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface IFileRef : IFile
+    public interface IFileRef : IExpr
     {
-        FileKind Kind {get;}
+        FilePath Path {get;}
     }
 }

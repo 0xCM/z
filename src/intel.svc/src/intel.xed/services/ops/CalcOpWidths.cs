@@ -14,7 +14,7 @@ partial class Xed
     {
         var buffer = dict<WidthCode,OpWidthRecord>();
         var symbols = Symbols.index<WidthCode>();
-        var src = XedPaths.Service.DocSource(XedDocKind.Widths);
+        var src = XedDb.DocSource(XedDocKind.Widths);
         using var reader = src.Utf8LineReader();
         var result = Outcome.Success;
         while(reader.Next(out var line))

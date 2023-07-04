@@ -314,7 +314,7 @@ namespace Z0
                             counter++;
                         break;
                         case CK.NtExpr:
-                            var rule = (RuleName)cv;
+                            var rule = (NonterminalKind)cv;
                             counter++;
                         break;
                     }
@@ -341,7 +341,7 @@ namespace Z0
                             counter++;
                         break;
                         case CK.NtCall:
-                            var rule = (RuleName)cv;
+                            var rule = (NonterminalKind)cv;
                             counter++;
                         break;
                         case CK.SegVar:

@@ -6,11 +6,12 @@
 namespace Z0
 {
     using static XedRules;
-    using static XedRules.RuleName;
+    using static XedModels;
+    using static XedModels.NonterminalKind;
 
     partial class XedRuleSeq
     {
-        public static SeqDef VMODRM_XMM_EMIT() => emit(nameof(VMODRM_XMM_EMIT), new RuleName[]{
+        public static SeqDef VMODRM_XMM_EMIT() => emit(nameof(VMODRM_XMM_EMIT), new NonterminalKind[]{
             VSIB_ENC,
             DISP_NT,
             });

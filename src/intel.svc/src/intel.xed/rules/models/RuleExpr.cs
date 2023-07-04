@@ -23,7 +23,7 @@ namespace Z0
             public readonly byte Row;
 
             [Render(28)]
-            public readonly RuleName Name;
+            public readonly NonterminalKind Name;
 
             [Render(1)]
             public readonly StringRef Body;

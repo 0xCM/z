@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
+
     [AttributeUsage(AttributeTargets.Enum)]
     public class RegCodeAttribute : Attribute
     {
@@ -12,11 +13,11 @@ namespace Z0.Asm
 
         }
 
-        public RegCodeAttribute(AsmRegTokens.RegTokenKind kind)
+        public RegCodeAttribute(AsmRegTokenKind kind)
         {
             RegKind = kind;
         }
 
-        public AsmRegTokens.RegTokenKind RegKind {get;}
+        public AsmRegTokenKind RegKind {get;}
     }
 }

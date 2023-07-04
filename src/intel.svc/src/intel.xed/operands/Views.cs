@@ -10,6 +10,7 @@ namespace Z0
     using M = XedModels;
     using R = XedRules;
 
+
     partial class XedOps
     {
         public static ref readonly Index<PointerWidthInfo> PointerWidthInfo
@@ -84,7 +85,7 @@ namespace Z0
             get => Bytes.sequential<M.SegPrefixKind>(0, (byte)MaxSegPrefixKind);
         }
 
-        public static ReadOnlySpan<R.RuleName> RuleNames
+        public static ReadOnlySpan<NonterminalKind> RuleNames
         {
             [MethodImpl(Inline), Op]
             get => R.RuleNames.View;

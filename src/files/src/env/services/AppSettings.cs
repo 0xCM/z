@@ -81,6 +81,9 @@ namespace Z0
         public IDbArchive BuildKits(string scope)
             => BuildKits().Scoped(scope);
 
+        public IDbArchive IntelKits()
+            => Instance.Setting(SettingNames.IntelKits).DbArchive();
+
         public IDbArchive DevPacks(string scope)
             => DevPacks().Scoped(scope);
             

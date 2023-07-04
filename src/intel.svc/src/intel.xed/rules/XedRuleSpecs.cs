@@ -23,7 +23,7 @@ public readonly struct XedRuleSpecs
         => new CellInfo(op);
 
     public static Index<TableCriteria> criteria(RuleTableKind kind)
-        => criteria(XedPaths.Service.RuleSource(kind));
+        => criteria(XedDb.RuleSource(kind));
 
     public static Index<TableCriteria> criteria(FilePath src)
     {
@@ -58,7 +58,7 @@ public readonly struct XedRuleSpecs
                 {
                     if(!skip.Contains(name))
                     {
-                        XedParsers.parse(name, out RuleName rn);
+                        XedParsers.parse(name, out NonterminalKind rn);
                         dst.Add(new (new (tkind,rn), statements.ToArray()));
                     }
 

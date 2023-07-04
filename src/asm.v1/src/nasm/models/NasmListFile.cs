@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct NasmListFile : IFile
+    public readonly struct NasmListFile
     {
         public FilePath Path {get;}
 

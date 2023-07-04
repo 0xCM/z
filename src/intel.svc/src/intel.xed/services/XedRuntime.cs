@@ -32,22 +32,11 @@ namespace Z0
 
         public XedDisasm Disasm => Wf.XedDisasm();
 
-        public XedImport Import => Wf.XedImport();
+        public XedDataFlow XedImport => Wf.XedImport();
 
         CompositeBuffers _Alloc;
 
-        XedViews _Views;
-
-        public ref readonly XedViews Views
-        {
-            [MethodImpl(Inline)]
-            get => ref _Views;
-        }
-
-        protected override void Initialized()
-        {
-            _Views = new(this, () => Emitter);
-        }
+        public XedTables Views => Channel.XedViews();
 
         public XedRuntime()
         {
@@ -56,9 +45,9 @@ namespace Z0
 
         void CalcCpuIdImports()
         {
-            Import.CalcCpuIdImports(data => {
-                Views.Store(I.CpuIdImport, data.CpuIdRecords);
-                Views.Store(I.IsaImport, data.IsaRecords);
+            XedImport.CalcCpuIdImports(data => {
+                Views.Store(I.CpuIdImport, data.CpuIdSpecs);
+                Views.Store(I.IsaImport, data.IsaSpecs);
             });
         }
 
@@ -82,21 +71,21 @@ namespace Z0
         void RunCalcs()
         {
             var defs = sys.empty<InstDef>();
-            var blocks = InstImportBlocks.Empty;
+            //var blocks = XedInstDump.Empty;
             var forms = sys.empty<FormImport>();
-            var chips = ChipMap.Empty;
+            var chips = XedImport.CalcChipMap(XedDb.DocSource(XedDocKind.ChipMap));
+
             exec(PllExec,
                 CalcTypeTables,
                 CalcCpuIdImports,
-                () => defs = XedInstDefParser.parse(Paths.DocSource(XedDocKind.EncInstDef)),
-                () => Views.Store(I.AsmBroadcastDefs, Import.CalcBroadcastDefs()),
+                () => defs = XedInstDefParser.parse(XedDb.DocSource(XedDocKind.EncInstDef)),
+                () => Views.Store(I.AsmBroadcastDefs, XedImport.CalcBroadcastDefs()),
                 () => Views.Store(I.OpWidths, XedOps.Widths),
-                () => Import.CalcInstImports(data => blocks = data),
-                () => Import.CalcFormImports(data => forms = data),
-                () => Xed.chips(data => chips = data)
+                //() => XedImport.CalcInstImports(data => blocks = data),
+                () => XedImport.CalcFormImports(data => forms = data)
                 );
 
-            Views.Store(I.InstImports, blocks);
+            //Views.Store(I.InstImports, blocks);
             Views.Store(I.FormImports, forms);
             Views.Store(I.ChipMap, chips);
 
@@ -169,12 +158,12 @@ namespace Z0
 
         public void RunEtl()
         {
-            Paths.Output().Delete();
+            Paths.Targets().Delete();
             var tables = Views.RuleTables;
             var patterns = Views.Patterns;
             Emit(XedFields.Defs.Positioned);
             exec(PllExec,
-                () => Import.Run(),
+                () => XedImport.Run(),
                 () => EmitRegmaps(),
                 () => Rules.EmitCatalog(patterns, tables)
                 );

@@ -10,11 +10,15 @@ namespace Z0
         public static int Main(params string[] args)
         {
             var result = 0;
-            var wf = ApiServers.runtime(false);
-            using var app = ApiServers.shell(wf, args);
+            var runtime = ApiServers.runtime();
+            var spec = ApiCmd.spec(args);
+            using var shell = ApiServers.shell(runtime, args);
             try
             {
-                app.Run();
+                if(args.Length == 0)
+                    shell.Run();
+                else
+                    shell.Runner.RunCommand(spec);
             }
             catch(Exception e)
             {
@@ -23,15 +27,5 @@ namespace Z0
             }
             return result;
         }
-    }
-
-    sealed class AppCmd : WfAppCmd<AppCmd>
-    {
-        void CmdServices()
-        {
-            //var src = FS.path(ExecutingPart.Assembly.Location).FolderPath;
-            
-        }
-
     }
 }

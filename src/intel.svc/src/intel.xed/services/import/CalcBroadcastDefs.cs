@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class XedImport
+    partial class XedDataFlow
     {
         public Index<AsmBroadcast> CalcBroadcastDefs()
             => _BroadcastDefs;

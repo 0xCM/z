@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static XedRules;
+    using static XedModels;
 
     partial class XedGrids
     {
@@ -18,7 +19,7 @@ namespace Z0
             public readonly T Value;
 
             [MethodImpl(Inline)]
-            public RuleOp(RuleName rule, RuleOperator op, T value)
+            public RuleOp(NonterminalKind rule, RuleOperator op, T value)
             {
                 Rule = rule;
                 Operator = op;

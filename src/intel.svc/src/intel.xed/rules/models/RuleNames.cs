@@ -9,7 +9,8 @@ namespace Z0
 
     using Bv128 = BitVector128<ulong>;
     using Bv256 = BitVector256<ulong>;
-
+    using static XedModels;
+    
     partial class XedRules
     {
         [StructLayout(LayoutKind.Sequential,Pack=1)]
@@ -24,11 +25,11 @@ namespace Z0
                 => new RuleNames(Bv256.Ones, Bv128.Ones);
 
             [MethodImpl(Inline), Op]
-            public static RuleNames init(params RuleName[] src)
+            public static RuleNames init(params NonterminalKind[] src)
                 => init(@readonly(src));
 
             [MethodImpl(Inline), Op]
-            public static RuleNames init(ReadOnlySpan<RuleName> src)
+            public static RuleNames init(ReadOnlySpan<NonterminalKind> src)
             {
                 var dst = Empty;
                 for(var i=0; i<src.Length; i++)
@@ -36,16 +37,16 @@ namespace Z0
                 return dst;
             }
 
-            public const RuleName FirstName = RuleName.None;
+            public const NonterminalKind FirstName = NonterminalKind.None;
 
-            public const RuleName LastName = RuleName.ZMM_R3_64;
+            public const NonterminalKind LastName = NonterminalKind.ZMM_R3_64;
 
             public const uint MaxCount = (uint)(LastName - FirstName) + 1;
 
-            public static ReadOnlySpan<RuleName> View
+            public static ReadOnlySpan<NonterminalKind> View
             {
                 [MethodImpl(Inline), Op]
-                get => recover<RuleName>(slice(Bytes.B512x16u, 0, MaxCount));
+                get => recover<NonterminalKind>(slice(Bytes.B512x16u, 0, MaxCount));
             }
 
             [MethodImpl(Inline)]
@@ -60,11 +61,11 @@ namespace Z0
             Bv128 SegB;
 
             [MethodImpl(Inline)]
-            public bit Contains(RuleName src)
+            public bit Contains(NonterminalKind src)
                 => (IsSegA(src) && SegA.Test(SegAPos(src))) || (IsSegB(src) && SegB.Test(SegBPos(src)));
 
             [MethodImpl(Inline)]
-            public bool Include(RuleName src)
+            public bool Include(NonterminalKind src)
             {
                 var result = false;
                 if(IsSegA(src))
@@ -81,7 +82,7 @@ namespace Z0
             }
 
             [MethodImpl(Inline)]
-            public RuleNames Include(params RuleName[] src)
+            public RuleNames Include(params NonterminalKind[] src)
             {
                 for(var i=0; i<src.Length; i++)
                     Include(skip(src,i));
@@ -89,7 +90,7 @@ namespace Z0
             }
 
             [MethodImpl(Inline)]
-            public RuleNames Include(ReadOnlySpan<RuleName> src)
+            public RuleNames Include(ReadOnlySpan<NonterminalKind> src)
             {
                 for(var i=0; i<src.Length; i++)
                     Include(skip(src,i));
@@ -97,19 +98,19 @@ namespace Z0
             }
 
             [MethodImpl(Inline)]
-            public uint Members(Span<RuleName> dst)
+            public uint Members(Span<NonterminalKind> dst)
             {
                 var counter = 0u;
                 for(var i=0; i<MaxCount; i++)
                 {
                     if(Contains(ToName(i)))
-                        seek(dst,counter++) = (RuleName)i;
+                        seek(dst,counter++) = (NonterminalKind)i;
                 }
                 return counter;
             }
 
             [MethodImpl(Inline)]
-            public uint Members(Action<RuleName> f)
+            public uint Members(Action<NonterminalKind> f)
             {
                 var counter = 0u;
                 for(var i=0; i<MaxCount; i++)
@@ -187,32 +188,32 @@ namespace Z0
                 => !a.Equals(b);
 
             [MethodImpl(Inline)]
-            static byte SegAPos(RuleName src)
+            static byte SegAPos(NonterminalKind src)
                 => (byte)src;
 
             [MethodImpl(Inline)]
-            static byte SegBPos(RuleName src)
+            static byte SegBPos(NonterminalKind src)
                 => (byte)((short)src - (short)SegBFirstName);
 
             public static RuleNames Empty => default;
 
             [MethodImpl(Inline)]
-            static bit IsSegA(RuleName src)
+            static bit IsSegA(NonterminalKind src)
                 => src <= SegALastName;
 
             [MethodImpl(Inline)]
-            static bit IsSegB(RuleName src)
+            static bit IsSegB(NonterminalKind src)
                 => src >= SegBFirstName && src <= SegBLastName;
 
             [MethodImpl(Inline)]
-            static RuleName ToName(int index)
-                => (RuleName)index;
+            static NonterminalKind ToName(int index)
+                => (NonterminalKind)index;
 
-            const RuleName SegALastName = RuleName.VEX_REG_ENC;
+            const NonterminalKind SegALastName = NonterminalKind.VEX_REG_ENC;
 
-            const RuleName SegBFirstName = RuleName.VEX_REXR_ENC;
+            const NonterminalKind SegBFirstName = NonterminalKind.VEX_REXR_ENC;
 
-            const RuleName SegBLastName = LastName;
+            const NonterminalKind SegBLastName = LastName;
         }
     }
 }

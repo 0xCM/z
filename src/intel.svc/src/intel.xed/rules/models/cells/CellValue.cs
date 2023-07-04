@@ -122,7 +122,7 @@ namespace Z0
                 var dst = ByteBlock16.Empty;
                 if(src.IsNonterm)
                 {
-                    @as<RuleName>(dst.First) = src.Value.ToRuleName();
+                    @as<NonterminalKind>(dst.First) = src.Value.ToRuleName();
                     dst[ClassIndex] = (byte)CK.NtExpr;
                     dst[OpIndex] = (byte)src.Operator;
                     dst[FieldIndex] = (byte)src.Field;

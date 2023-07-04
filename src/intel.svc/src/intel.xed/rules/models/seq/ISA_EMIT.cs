@@ -6,7 +6,8 @@
 namespace Z0
 {
     using static XedRules;
-    using static XedRules.RuleName;
+    using static XedModels;
+    using static XedModels.NonterminalKind;
 
     partial class XedRuleSeq
     {
@@ -16,7 +17,7 @@ namespace Z0
             REX_PREFIX_ENC_EMIT() | VEXED_REX_EMIT()
             INSTRUCTIONS_EMIT()
         */
-        public static SeqDef ISA_EMIT() => emit(nameof(ISA_EMIT), new RuleName[]{
+        public static SeqDef ISA_EMIT() => emit(nameof(ISA_EMIT), new NonterminalKind[]{
             PREFIX_ENC,
             VEXED_REX,
             INSTRUCTIONS

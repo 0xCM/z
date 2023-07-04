@@ -6,7 +6,8 @@
 namespace Z0
 {
     using static XedRules;
-    using static XedRules.RuleName;
+    using static XedModels;
+    using static XedModels.NonterminalKind;
     using static sys;
 
     using I = XedModels.GprWidthIndex;

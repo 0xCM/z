@@ -5,27 +5,26 @@
 namespace Z0
 {
     using static sys;
-    using static XedRules;
     using static XedModels;
 
-    partial class XedImport
-    {
-        public class CpuIdImporter
+    partial class XedDataFlow
+    {        
+        public class CpuIdImportCalcs
         {
-            public static CpuIdImporter.Output calc()
+            public static CpuIdImportCalcs.Output calc()
             {
-                var parser = new CpuIdImporter();
-                parser.Run(XedPaths.Service.CpuIdSource().ReadLines().Where(text.nonempty));
+                var parser = new CpuIdImportCalcs();
+                parser.Run(XedDb.DocSource(XedDocKind.CpuId).ReadLines().Where(text.nonempty));
                 return parser.Parsed;
             }
 
             ConcurrentBag<string> IsaBuffer = new();
 
-            ConcurrentBag<CpuIdImport> CpuIdBuffer = new();
+            ConcurrentBag<CpuIdSpec> CpuIdBuffer = new();
 
-            Index<CpuIdImport> CpuIdFinal = sys.empty<CpuIdImport>();
+            Index<CpuIdSpec> CpuIdFinal = sys.empty<CpuIdSpec>();
 
-            Index<IsaImport> IsaFinal = sys.empty<IsaImport>();
+            Index<InstIsaSpec> IsaFinal = sys.empty<InstIsaSpec>();
 
             public Output Parsed => new Output(this);
 
@@ -33,7 +32,7 @@ namespace Z0
             {
                 var sorted = IsaBuffer.ToHashSet().Map(x => x).Where(text.nonempty).Sort().Index();
                 var count = sorted.Count;
-                IsaFinal = alloc<IsaImport>(count);
+                IsaFinal = alloc<InstIsaSpec>(count);
                 for(var i=z8; i<count; i++)
                 {
                     ref readonly var src = ref sorted[i];
@@ -59,8 +58,8 @@ namespace Z0
             uint CpuIdSeq;
 
             [MethodImpl(Inline)]
-            CpuIdImport CpuIdRecord(asci64 spec, asci32 isa)
-                => new CpuIdImport((ushort)inc(ref CpuIdSeq), spec, isa);
+            CpuIdSpec CpuIdRecord(asci64 spec, asci32 isa)
+                => new CpuIdSpec((ushort)inc(ref CpuIdSeq), spec, isa);
 
             void Parse(string src)
             {
@@ -118,20 +117,21 @@ namespace Z0
                 return output;
             }
 
+
             public readonly struct Output
             {
-                readonly CpuIdImporter Parser;
+                readonly CpuIdImportCalcs Parser;
 
                 [MethodImpl(Inline)]
-                internal Output(CpuIdImporter parser)
+                internal Output(CpuIdImportCalcs parser)
                 {
                     Parser = parser;
                 }
 
-                public ref readonly Index<CpuIdImport> CpuIdRecords
+                public ref readonly Index<CpuIdSpec> CpuIdSpecs
                     => ref Parser.CpuIdFinal;
 
-                public ref readonly Index<IsaImport> IsaRecords
+                public ref readonly Index<InstIsaSpec> IsaSpecs
                     => ref Parser.IsaFinal;
             }
         }

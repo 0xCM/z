@@ -7,7 +7,7 @@ namespace Z0
 {
     using static XedModels;
     using static XedRules;
-    using static XedRules.RuleName;
+    using static XedModels.NonterminalKind;
 
     partial class XedRuleSeq
     {

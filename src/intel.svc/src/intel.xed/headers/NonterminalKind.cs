@@ -7,10 +7,10 @@ namespace Z0
 {
     using K = XedRules.RuleKind;
 
-    partial class XedRules
+    partial class XedModels
     {
         [DataWidth(num9.Width)]
-        public enum RuleName : ushort
+        public enum NonterminalKind : ushort
         {
             None = 0,
 
@@ -84,60 +84,44 @@ namespace Z0
 
             CR_R = 35,
 
-            [XedRuleKind(K.MODE)]
             CR_WIDTH = 36,
 
             DF64 = 37,
 
             DISP_NT = 38,
 
-            [XedRuleKind(K.DISP_WIDTH)]
             DISP_WIDTH_0 = 39,
 
-            [XedRuleKind(K.DISP_WIDTH)]
             DISP_WIDTH_0_8_16 = 40,
 
-            [XedRuleKind(K.DISP_WIDTH)]
             DISP_WIDTH_0_8_32 = 41,
 
-            [XedRuleKind(K.DISP_WIDTH)]
             DISP_WIDTH_16 = 42,
 
-            [XedRuleKind(K.DISP_WIDTH)]
             DISP_WIDTH_32 = 43,
 
-            [XedRuleKind(K.DISP_WIDTH)]
             DISP_WIDTH_8 = 44,
 
-            [XedRuleKind(K.DISP_WIDTH)]
             DISP_WIDTH_8_32 = 45,
 
             DR_R = 46,
 
             ERROR = 47,
 
-            [XedRuleKind(K.REX)]
             ESIZE_1_BITS = 48,
 
-            [XedRuleKind(K.REX)]
             ESIZE_128_BITS = 49,
 
-            [XedRuleKind(K.REX)]
             ESIZE_16_BITS = 50,
 
-            [XedRuleKind(K.REX)]
             ESIZE_2_BITS = 51,
 
-            [XedRuleKind(K.REX)]
             ESIZE_32_BITS = 52,
 
-            [XedRuleKind(K.REX)]
             ESIZE_4_BITS = 53,
 
-            [XedRuleKind(K.REX)]
             ESIZE_64_BITS = 54,
 
-            [XedRuleKind(K.REX)]
             ESIZE_8_BITS = 55,
 
             EVEX_62_REXR_ENC = 56,

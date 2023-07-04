@@ -13,15 +13,15 @@ namespace Z0
     public unsafe partial class XedRuleSeq
     {
         [MethodImpl(Inline), Op]
-        public static SeqDef bind(asci32 name, RuleName[] rules)
+        public static SeqDef bind(asci32 name, NonterminalKind[] rules)
             => new SeqDef(name, SeqEffect.BIND, rules, RuleTableKind.ENC);
 
         [MethodImpl(Inline), Op]
-        public static SeqDef emit(asci32 name, RuleName[] rules)
+        public static SeqDef emit(asci32 name, NonterminalKind[] rules)
             => new SeqDef(name, SeqEffect.EMIT, rules, RuleTableKind.ENC);
 
         [MethodImpl(Inline), Op]
-        public static SeqDef def(asci32 name, RuleTableKind kind, params RuleName[] rules)
+        public static SeqDef def(asci32 name, RuleTableKind kind, params NonterminalKind[] rules)
             => new SeqDef(name, SeqEffect.None, rules, kind);
 
         [MethodImpl(Inline), Op]

@@ -15,19 +15,23 @@ namespace Z0
 
         static AppDb AppDb => AppDb.Service;
 
-        readonly XedPathSettings State;
+        public IDbArchive XedKit()
+            => IntelPaths.paths().Kit("xed");
 
-        public FolderPath Sources()
-            => State.XedSources;
+        public IDbArchive XedDb()
+            => XedKit().Scoped("xed.db");
 
-        public FolderPath Output()
-            => State.XedTargets;
+        public IDbArchive XedBuild()
+            => XedKit().Scoped("build");
+
+        public IDbArchive Sources()
+            => XedDb().Scoped("sources");
 
         public IDbArchive Targets()
-            => new DbArchive(State.XedTargets);
+            => XedDb().Targets();
 
         public IDbArchive Targets(string scope)
-            => new DbArchive(State.XedTargets, scope);
+            => Targets().Scoped(scope);
 
         public IDbArchive DbTargets()
             => Targets().Targets("db");
@@ -64,16 +68,6 @@ namespace Z0
 
         public FilePath FormCatalogPath()
             => Imports().Path(FS.file(Tables.identify<FormImport>().Format(), FS.Csv));
-
-        static FileName EncInstDef = FS.file("all-enc-instructions", FS.Txt);
-
-        static FileName DecInstDef = FS.file("all-dec-instructions", FS.Txt);
-
-        static FileName EncRuleTable = FS.file("all-enc-patterns", FS.Txt);
-
-        static FileName DecRuleTable = FS.file("all-dec-patterns", FS.Txt);
-
-        static FileName EncDecRuleTable = FS.file("all-enc-dec-patterns", FS.Txt);
 
         static FileName Suffixed<T>(string suffix)
             where T : struct
@@ -123,7 +117,7 @@ namespace Z0
             return uri.Exists ? uri : FileUri.Empty;
         }
 
-        public FileUri CheckedTableDef(RuleName rule, bit decfirst, out RuleSig sig)
+        public FileUri CheckedTableDef(NonterminalKind rule, bit decfirst, out RuleSig sig)
         {
             var dst = FileUri.Empty;
             if(decfirst)
@@ -166,31 +160,29 @@ namespace Z0
         public FilePath InstPagePath(InstIsa src)
             => InstPages().Path(FS.file(text.ifempty(src.Format(), "UNKNOWN"), FS.Txt));
 
-        public FilePath RuleSource(RuleTableKind kind)
-        {
-            var name = kind switch
-            {
-                RuleTableKind.ENC => EncRuleTable,
-                RuleTableKind.DEC => DecRuleTable,
-                _ => FileName.Empty
-            };
-
-            return Sources() + name;
-        }
-
         public FilePath RuleTarget(string name, FileExt ext)
             => RuleTargets().Path(FS.file("xed.rules." + name, ext));
 
         public FilePath Target(string name, FileExt ext)
-            => Output() + FS.file(name, ext);
+            => Targets().Path(FS.file(name, ext));
 
-        public FolderPath DocTargets()
-            => Output() + FS.folder("docs");
+        public IDbArchive DocTargets()
+            => Targets().Scoped("docs");
 
         public FilePath DocTarget(string name, FileKind kind)
-            => DocTargets() + FS.file(string.Format("xed.docs.{0}", name), kind.Ext());
+            => DocTargets().Path(FS.file(string.Format("xed.docs.{0}", name), kind.Ext()));
 
-        public static XedDocKind srckind(FileName src)
+        static FileName EncInstDef = FS.file("all-enc-instructions", FS.Txt);
+
+        static FileName DecInstDef = FS.file("all-dec-instructions", FS.Txt);
+
+        static FileName EncRuleTable = FS.file("all-enc-patterns", FS.Txt);
+
+        static FileName DecRuleTable = FS.file("all-dec-patterns", FS.Txt);
+
+        static FileName EncDecRuleTable = FS.file("all-enc-dec-patterns", FS.Txt);
+
+        static XedDocKind srckind(FileName src)
         {
             if(src == EncInstDef)
                 return XedDocKind.EncInstDef;
@@ -206,38 +198,7 @@ namespace Z0
                 return 0;
         }
 
-        public FilePath SourcePath(string name, FileKind kind)
-            => Sources() + FS.file(name,kind.Ext());
-
-        public FilePath CpuIdSource()
-            => SourcePath("all-cpuid", FileKind.Txt);
-
-        public FilePath ChipMapSource()
-            => SourcePath("xed-cdata", FileKind.Txt);
-
-        public FilePath DocSource(XedDocKind kind)
-            => Sources() + (kind switch{
-                XedDocKind.EncInstDef => EncInstDef,
-                XedDocKind.DecInstDef => DecInstDef,
-                XedDocKind.EncRuleTable => EncRuleTable,
-                XedDocKind.DecRuleTable => DecRuleTable,
-                XedDocKind.EncDecRuleTable => EncDecRuleTable,
-                XedDocKind.Widths => FS.file("all-widths", FS.Txt),
-                XedDocKind.PointerWidths => FS.file("all-pointer-names", FS.Txt),
-                XedDocKind.Fields => FS.file("all-fields", FS.Txt),
-                XedDocKind.FormData => FS.file("xed-idata", FS.Txt),
-                XedDocKind.ChipData => FS.file("xed-cdata", FS.Txt),
-                XedDocKind.RuleSeq => FS.file("all-enc-patterns", FS.Txt),
-                _ => FileName.Empty
-            });
-
-        static AppSettings AppSettings => AppSettings.Default;
-        
-        XedPaths()
-        {
-            State = new (AppSettings.XedDb().Scoped("sources"), AppSettings.XedDb().Scoped("targets"));
-        }
-
+ 
         static XedPaths Instance = new();
     }
 }

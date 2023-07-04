@@ -8,9 +8,9 @@ namespace Z0
     
     using static sys;
     using static AsmPrefixCodes;
-    using static AsmRegTokens;
+    using static Asm.AsmRegTokens;
 
-    using gp32 = AsmRegTokens.Gp32Reg;
+    using gp32 = Asm.AsmRegTokens.Gp32Reg;
     using K = Asm.AsmOcTokenKind;
     using P = Pow2x32;
 

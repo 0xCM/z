@@ -10,16 +10,17 @@ namespace Z0
 
     public class AsmTokens
     {
+        
         [MethodImpl(Inline), Op]
         public static ref readonly AsmTokens tokens()
             => ref Instance;
 
         [MethodImpl(Inline), Op]
-        public static AsmSigToken sig(in AsmToken src)
+        public static AsmSigToken sig(in AsmTokenRecord src)
             => new AsmSigToken((AsmSigTokenKind)src.Index, (byte)src.Value);
 
         [MethodImpl(Inline), Op]
-        public static AsmOcToken opcode(in AsmToken src)
+        public static AsmOcToken opcode(in AsmTokenRecord src)
             => new AsmOcToken((AsmOcTokenKind)src.Index, (byte)src.Value);
 
         public static bool parse(string expr, out AsmSigToken dst)
@@ -28,25 +29,25 @@ namespace Z0
         public static bool parse(string expr, out AsmOcToken dst)
             => Instance.OpCodeToken(expr, out dst);
 
-        public static ref readonly ReadOnlySeq<AsmToken> SigTokenDefs => ref Instance._SigTokenDefs;
+        public static ref readonly ReadOnlySeq<AsmTokenRecord> SigTokenDefs => ref Instance._SigTokenDefs;
 
-        public static ref readonly ReadOnlySeq<AsmToken> OcTokenDefs => ref Instance._OcTokenDefs;
+        public static ref readonly ReadOnlySeq<AsmTokenRecord> OcTokenDefs => ref Instance._OcTokenDefs;
 
         public static ReadOnlySpan<string> SigTokenValues => Instance.SigTokens.Keys;
 
         public static ReadOnlySpan<string> OcTokenValues => Instance.OcTokens.Keys;
 
-        ReadOnlySeq<AsmToken> _SigTokenDefs;
+        ReadOnlySeq<AsmTokenRecord> _SigTokenDefs;
 
-        ReadOnlySeq<AsmToken> _OcTokenDefs;
+        ReadOnlySeq<AsmTokenRecord> _OcTokenDefs;
 
-        SortedLookup<string,AsmToken> SigTokens;
+        SortedLookup<string,AsmTokenRecord> SigTokens;
 
-        SortedLookup<string,AsmToken> OcTokens;
+        SortedLookup<string,AsmTokenRecord> OcTokens;
 
-        Index<AsmToken> Data;
+        Index<AsmTokenRecord> Data;
 
-        public static ref readonly Index<AsmToken> TokenDefs
+        public static ref readonly Index<AsmTokenRecord> TokenDefs
         {
             [MethodImpl(Inline)]
             get => ref Instance.Data;
@@ -99,7 +100,7 @@ namespace Z0
             var sigcount = sigs.Length;
             var occount = opcodes.Length;
             var count = sigcount + occount;
-            dst.Data = alloc<AsmToken>(count);
+            dst.Data = alloc<AsmTokenRecord>(count);
             var j=0u;
             for(var i=0u; i<occount; i++,j++)
             {

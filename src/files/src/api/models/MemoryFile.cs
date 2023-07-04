@@ -10,7 +10,7 @@ namespace Z0
 
     using api = MemoryFiles;
 
-    public unsafe class MemoryFile : IMemoryFile<MemoryFile>
+    public unsafe class MemoryFile : IDisposable, IComparable<MemoryFile>
     {
         public readonly FilePath Path;
 
@@ -85,19 +85,6 @@ namespace Z0
             [MethodImpl(Inline)]
             get => ref Description.EndAddress;
         }
-
-        // public void Accessor(Action<MemoryMappedViewAccessor> f)
-        // {
-        //     using var accessor = File.CreateViewAccessor();
-        //     f(accessor);
-        // }
-
-        // public void Accessor(Action<MemoryMappedViewAccessor> f, uint offset)
-        // {
-        //     var size = EndAddress - (BaseAddress + offset);
-        //     using var accessor = File.CreateViewAccessor(offset,size);
-        //     f(accessor);
-        // }
 
         public ref readonly MemoryMappedViewStream Stream
         {
@@ -204,14 +191,5 @@ namespace Z0
 
         public Hash128 ContentHash()
             => api.hash(this);
-
-        MemoryAddress IMemoryFile.BaseAddress
-            => BaseAddress;
-
-        ByteSize ISized.ByteCount
-            => FileSize;
-
-        BitWidth ISized.BitWidth
-            => FileSize.Bits;
     }
 }

@@ -7,8 +7,8 @@ namespace Z0
 {
     using static sys;
     using static XedModels;
-    using CK = XedRules.RuleCellKind;
 
+    using CK = XedRules.RuleCellKind;
 
     partial class XedRules
     {

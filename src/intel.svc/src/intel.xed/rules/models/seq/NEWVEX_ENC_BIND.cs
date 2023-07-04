@@ -6,7 +6,8 @@
 namespace Z0
 {
     using static XedRules;
-    using static XedRules.RuleName;
+    using static XedModels;
+    using static XedModels.NonterminalKind;
 
     partial class XedRuleSeq
     {
@@ -20,7 +21,7 @@ namespace Z0
             VEX_ESCVL_ENC_BIND
         */
 
-        public static SeqDef NEWVEX_ENC_BIND() => bind(nameof(NEWVEX_ENC_BIND), new RuleName[]{
+        public static SeqDef NEWVEX_ENC_BIND() => bind(nameof(NEWVEX_ENC_BIND), new NonterminalKind[]{
             VEX_TYPE_ENC,
             VEX_REXR_ENC,
             VEX_REXXB_ENC,

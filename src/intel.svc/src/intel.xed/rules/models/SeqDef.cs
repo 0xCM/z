@@ -18,7 +18,7 @@ namespace Z0
             public readonly Index<RuleSig> Rules;
 
             [MethodImpl(Inline)]
-            public SeqDef(asci32 name, SeqEffect effect, RuleName[] rules, RuleTableKind kind = RuleTableKind.ENC)
+            public SeqDef(asci32 name, SeqEffect effect, NonterminalKind[] rules, RuleTableKind kind = RuleTableKind.ENC)
             {
                 SeqName = name;
                 Effect = effect;

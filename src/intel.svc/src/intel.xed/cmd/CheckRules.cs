@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static XedRules;
+    using static XedModels;
     using static Markdown;
     using static sys;
 
@@ -18,7 +19,7 @@ namespace Z0
             var mb = size/1024;
             var db = XedRuntime.XedDb.Store;
 
-            var src = XedDb.InstDumpFile();
+            var src = XedDb.RuleDumpFile();
             var data = src.View();
             var token = db.Store(data);
 
@@ -104,7 +105,7 @@ namespace Z0
         void CheckRuleNames()
         {
             const uint RuleCount = RuleNames.MaxCount;
-            var src = Symbols.index<RuleName>();
+            var src = Symbols.index<NonterminalKind>();
             var names = src.Kinds;
             for(var i=0; i<names.Length; i++)
             {
@@ -115,7 +116,7 @@ namespace Z0
             Require.equal(RuleCount, (uint)names.Length);
 
             var dst = RuleNames.init(names);
-            var buffer = alloc<RuleName>(RuleCount);
+            var buffer = alloc<NonterminalKind>(RuleCount);
             var count = Require.equal(dst.Members(buffer), (uint)names.Length);
 
             for(var i=0; i<count; i++)
@@ -132,7 +133,7 @@ namespace Z0
             {
                 var min = skip(smaller,0);
                 var max = skip(smaller,smaller.Length - 1);
-                var kind = (RuleName)i;
+                var kind = (NonterminalKind)i;
                 if(kind != 0)
                 {
                     if(kind >= min & kind<= max)

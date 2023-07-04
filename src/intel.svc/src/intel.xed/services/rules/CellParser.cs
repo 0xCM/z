@@ -7,6 +7,7 @@ namespace Z0
 {
     using static sys;
     using static XedRules.SyntaxLiterals;
+    using static XedModels;
 
     using RF = XedRules.RuleFormKind;
 
@@ -16,7 +17,7 @@ namespace Z0
         public class CellParser
         {
             public static Index<RuleSeq> ruleseq()
-                => ruleseq(XedPaths.Service.DocSource(XedDocKind.RuleSeq));
+                => ruleseq(XedDb.DocSource(XedDocKind.RuleSeq));
 
             public static Index<RuleSeq> ruleseq(FilePath src)
                 => ruleseq(src.ReadNumberedLines());
@@ -190,9 +191,9 @@ namespace Z0
 
                     var k = text.index(right, Chars.LParen);
                     var name = text.left(right, k);
-                    var result = Enum.TryParse(name, out RuleName rule);
+                    var result = Enum.TryParse(name, out NonterminalKind rule);
                     if(!result)
-                        Errors.Throw(AppMsg.ParseFailure.Format(nameof(RuleName), name));
+                        Errors.Throw(AppMsg.ParseFailure.Format(nameof(NonterminalKind), name));
 
                     dst = new CellExpr(op, new FieldValue(fk, rule));
                 }

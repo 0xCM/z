@@ -40,7 +40,7 @@ namespace Z0
             AssemblyName = name;
         }
 
-        FilePath IFile.Path 
+        FilePath IBinaryModule.Path 
             => Path;
 
         public VersionedName Identifier

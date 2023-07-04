@@ -8,17 +8,19 @@ namespace Z0
     [SymSource("xed")]
     public enum XedDocKind : byte
     {
+        None,
+
         EncInstDef,
 
         DecInstDef,
 
         EncRuleTable,
 
-        DecRulePatterns,
+        //DecRulePatterns,
 
         DecRuleTable,
 
-        RulePatterns,
+        //RulePatterns,
 
         EncDecRuleTable,
 
@@ -30,20 +32,25 @@ namespace Z0
 
         FormData,
 
-        ChipData,
+        ChipMap,
 
-        OpCodeKinds,
+        CpuId,
 
-        PatternInfo,
+        // OpCodeKinds,
 
-        PatternDetail,
+        // PatternInfo,
 
-        PatternOps,
+        // PatternDetail,
+
+        // PatternOps,
 
         RuleSeq,
 
-        MacroDefs,
+        // MacroDefs,
 
-        RuleSigs
+        // RuleSigs,
+
+        RuleDump
+
     }
 }

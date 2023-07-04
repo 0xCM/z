@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static XedRules;
-
+    using static XedModels;
     partial class XedGrids
     {
         public readonly record struct RuleOp : ILogicOperand<Value>
@@ -17,7 +17,7 @@ namespace Z0
             public readonly Value Value;
 
             [MethodImpl(Inline)]
-            public RuleOp(RuleName rule, RuleOperator op, Value value)
+            public RuleOp(NonterminalKind rule, RuleOperator op, Value value)
             {
                 Rule = rule;
                 Operator = op;

@@ -20,7 +20,7 @@ namespace Z0.Asm
             var names = dict<uint,string>();
             var exprToken = dict<string,AsmOcToken>();
             var _tokens = alloc<AsmOcToken>(src.TokenCount);
-            var _records = alloc<AsmToken>(src.TokenCount);
+            var _records = alloc<AsmTokenRecord>(src.TokenCount);
             dst.TypeKinds = src.TypeKinds;
             var k=0u;
             for(var i=0; i<types.Length; i++)
@@ -62,9 +62,9 @@ namespace Z0.Asm
 
         ReadOnlySeq<AsmOcToken> _Tokens;
 
-        ReadOnlySeq<AsmToken> _Records;
+        ReadOnlySeq<AsmTokenRecord> _Records;
 
-        public ref readonly ReadOnlySeq<AsmToken> Records
+        public ref readonly ReadOnlySeq<AsmTokenRecord> Records
         {
             [MethodImpl(Inline)]
             get => ref _Records;

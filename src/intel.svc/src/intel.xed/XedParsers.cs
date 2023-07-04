@@ -86,17 +86,17 @@ namespace Z0
 
         static readonly EnumParser<SMODE> SModes = new();
 
-        static readonly EnumParser<RuleName> RuleNames = new();
+        static readonly EnumParser<NonterminalKind> RuleNames = new();
 
         static XedParsers Instance = new();
 
-        static ConcurrentDictionary<string,RuleName> NontermUppers
+        static ConcurrentDictionary<string,NonterminalKind> NontermUppers
             = uppers();
 
-        static ConcurrentDictionary<string,RuleName> uppers()
+        static ConcurrentDictionary<string,NonterminalKind> uppers()
         {
-            var dst = cdict<string,RuleName>();
-            var kinds =  Symbols.index<RuleName>().Kinds;
+            var dst = cdict<string,NonterminalKind>();
+            var kinds =  Symbols.index<NonterminalKind>().Kinds;
             for(var i=0; i<kinds.Length; i++)
             {
                 ref readonly var kind = ref skip(kinds,i);
@@ -129,11 +129,11 @@ namespace Z0
             return i> 0 && j > i;
         }
 
-        public static bool parse(string src, out RuleName dst)
+        public static bool parse(string src, out NonterminalKind dst)
         {
             dst = Nonterminal.Empty;
             var input = text.trim(src.Remove(":").Remove("()"));
-            var result = RuleNames.Parse(input, out RuleName rule);
+            var result = RuleNames.Parse(input, out NonterminalKind rule);
             if(result)
                 dst = rule;
             else
@@ -569,7 +569,7 @@ namespace Z0
 
         public static bool parse(string src, out Nonterminal dst)
         {
-            var result = parse(src, out RuleName rn);
+            var result = parse(src, out NonterminalKind rn);
             dst = rn;
             return result;
         }
@@ -618,7 +618,7 @@ namespace Z0
             dst = R.FieldValue.Empty;
             if(IsNonterm(value))
             {
-                result = parse(value, out RuleName name);
+                result = parse(value, out NonterminalKind name);
                 dst = new(field, name);
             }
             else if(parse(value, out XedRegId reg))

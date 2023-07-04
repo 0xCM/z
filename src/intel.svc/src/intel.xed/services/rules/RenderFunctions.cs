@@ -128,7 +128,7 @@ namespace Z0
                                 Lookup[kind] = render<FieldSeg>(x => XedRender.format((FieldSeg)x));
                                 break;
                             case CK.NtCall:
-                                Lookup[kind] = render<Nonterminal>(x => x is Nonterminal nt ? XedRender.format(nt) : XedRender.format((RuleName)x));
+                                Lookup[kind] = render<Nonterminal>(x => x is Nonterminal nt ? XedRender.format(nt) : XedRender.format((NonterminalKind)x));
                                 break;
                             case CK.IntVal:
                                 Lookup[kind] = render<int>(x => x.ToString());

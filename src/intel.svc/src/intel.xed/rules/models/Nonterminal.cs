@@ -5,6 +5,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static XedModels;
+
     partial class XedRules
     {
         [StructLayout(LayoutKind.Sequential,Pack=1), DataWidth(Width)]
@@ -12,11 +14,11 @@ namespace Z0
         {
             public const byte Width = num9.Width;
 
-            public static DataSize DataSize => (Width,sys.width<RuleName>());
+            public static DataSize DataSize => (Width,sys.width<NonterminalKind>());
 
-            public readonly RuleName Name;
+            public readonly NonterminalKind Name;
 
-            public Nonterminal(RuleName name)
+            public Nonterminal(NonterminalKind name)
             {
                 Name = name;
             }
@@ -57,14 +59,14 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public static explicit operator Nonterminal(ushort src)
-                => new Nonterminal((RuleName)src);
+                => new Nonterminal((NonterminalKind)src);
 
             [MethodImpl(Inline)]
-            public static implicit operator RuleName(Nonterminal src)
+            public static implicit operator NonterminalKind(Nonterminal src)
                 => src.Name;
 
             [MethodImpl(Inline)]
-            public static implicit operator Nonterminal(RuleName src)
+            public static implicit operator Nonterminal(NonterminalKind src)
                 => new Nonterminal(src);
 
             [MethodImpl(Inline)]

@@ -107,7 +107,7 @@ namespace Z0
 
         static EnumRender<XedRegId> XedRegs = new();
 
-        static EnumRender<RuleName> RuleNames = new();
+        static EnumRender<NonterminalKind> RuleNames = new();
 
         static EnumRender<RuleCellKind> RuleCellKinds = new();
 
@@ -236,7 +236,7 @@ namespace Z0
         public static string format(DispWidth src)
             => DispWidthKinds.Format(src);
 
-        public static string format(RuleName src)
+        public static string format(NonterminalKind src)
             => RuleNames.Format(src);
 
         public static string format(ModKind src)
@@ -556,7 +556,7 @@ namespace Z0
         {
             if(src == 0)
                 return EmptyString;
-            var bcasts = XedImport.BroadcastDefs;
+            var bcasts = XedDataFlow.BroadcastDefs;
             var index = (byte)src;
             if(index < bcasts.Length)
                 return bcasts[index].Symbol.Format();
@@ -764,7 +764,7 @@ namespace Z0
             var counter = 0u;
             for(var i=0; i<XedRules.RuleNames.MaxCount; i++)
             {
-                var kind = (RuleName)i;
+                var kind = (NonterminalKind)i;
                 if(src.Contains(kind))
                 {
                     if(counter != 0)

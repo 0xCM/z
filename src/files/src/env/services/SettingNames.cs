@@ -52,6 +52,7 @@ namespace Z0
         public const string DevPacks = nameof(DevPacks);
 
         public const string BuildKits = nameof(BuildKits);
-        
+
+        public const string IntelKits = nameof(IntelKits);        
     }
 }

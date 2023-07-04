@@ -5,8 +5,19 @@
 namespace Z0
 {
     [Free]
-    public interface IBinaryModule : IFile
+    public interface IBinaryModule : IExpr
     {
+        FilePath Path {get;}
+
+        string IExpr.Format()
+            => $"{Path}";
+
+        bool INullity.IsEmpty
+            => Path.IsEmpty;
+
+        bool INullity.IsNonEmpty
+            => Path.IsNonEmpty;
+
         FileModuleKind ModuleKind {get;}
     }
 

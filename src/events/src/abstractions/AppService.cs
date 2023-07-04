@@ -14,8 +14,6 @@ namespace Z0
 
         public IWfChannel Channel {get; private set;}
 
-        //public virtual Type HostType {get;}
-
         public WfChannel Emitter {get; private set;}
 
         public virtual T Service<T>(Func<T> factory)

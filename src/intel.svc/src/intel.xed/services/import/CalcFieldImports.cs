@@ -7,11 +7,11 @@ namespace Z0
     using static XedModels;
     using static sys;
 
-    partial class XedImport
+    partial class XedDataFlow
     {
         public Index<FieldImport> CalcFieldImports()
         {
-            var src = XedPaths.DocSource(XedDocKind.Fields);
+            var src = XedDb.DocSource(XedDocKind.Fields);
             var dst = list<FieldImport>();
             var result = Outcome.Success;
             var line = EmptyString;

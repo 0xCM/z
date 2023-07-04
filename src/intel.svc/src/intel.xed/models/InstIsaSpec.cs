@@ -7,7 +7,7 @@ namespace Z0
     partial class XedModels
     {
         [StructLayout(StructLayout,Pack=1), Record(TableId)]
-        public record struct IsaImport : ISequential<IsaImport>, IComparable<IsaImport>
+        public record struct InstIsaSpec : ISequential<InstIsaSpec>, IComparable<InstIsaSpec>
         {
             public const string TableId = "xed.isa";
 
@@ -35,7 +35,7 @@ namespace Z0
             public override int GetHashCode()
                 => Hash;
 
-            public int CompareTo(IsaImport src)
+            public int CompareTo(InstIsaSpec src)
                 => IsaName.CompareTo(src.IsaName);
         }
     }

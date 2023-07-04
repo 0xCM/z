@@ -76,12 +76,9 @@ namespace Z0
             set => Seq = value;
         }
 
-        FileKind IFileRef.Kind
-            => Kind;
-
         public static FileRef Empty => default;
 
-        FilePath IFile.Path 
+        FilePath IFileRef.Path 
             => Path;
     }
 }

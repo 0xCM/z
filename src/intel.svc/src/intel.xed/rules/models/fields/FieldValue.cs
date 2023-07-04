@@ -99,7 +99,7 @@ partial class XedRules
         }
 
         [MethodImpl(Inline)]
-        public FieldValue(FieldKind kind, RuleName data)
+        public FieldValue(FieldKind kind, NonterminalKind data)
         {
             Field = kind;
             Data = (ushort)data;
@@ -252,12 +252,12 @@ partial class XedRules
             => (uint5)Data;
 
         [MethodImpl(Inline)]
-        public RuleName ToRuleName()
-            => (RuleName)Data;
+        public NonterminalKind ToRuleName()
+            => (NonterminalKind)Data;
 
         [MethodImpl(Inline)]
         public Nonterminal ToNonterm()
-            => (RuleName)Data;
+            => (NonterminalKind)Data;
 
         [MethodImpl(Inline)]
         public InstFieldSeg ToInstSeg()

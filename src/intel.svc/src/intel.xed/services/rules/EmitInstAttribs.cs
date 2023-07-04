@@ -80,7 +80,7 @@ namespace Z0
 
             }
 
-            Channel.FileEmit(dst.Emit(), src.Count, XedPaths.Output() + FS.file("xed.inst.attributes", FS.Csv));
+            Channel.FileEmit(dst.Emit(), src.Count, XedPaths.Targets().Path(FS.file("xed.inst.attributes", FS.Csv)));
         }
     }
 }
