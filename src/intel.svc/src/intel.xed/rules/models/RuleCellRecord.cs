@@ -39,7 +39,7 @@ namespace Z0
             public RuleTableKind Kind;
 
             [Render(32)]
-            public NonterminalKind Rule;
+            public RuleName Rule;
 
             [Render(32)]
             public asci32 Expression;

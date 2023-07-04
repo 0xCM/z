@@ -58,7 +58,7 @@ namespace Z0
                 get => Sig.TableKind;
             }
 
-            public NonterminalKind TableName
+            public RuleName TableName
             {
                 [MethodImpl(Inline)]
                 get => SigKey.TableName;

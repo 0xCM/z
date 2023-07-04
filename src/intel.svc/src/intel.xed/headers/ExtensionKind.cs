@@ -90,7 +90,7 @@ partial class XedModels
         SSE2,
         SSE3,
         SSE4,
-        SSE4A,
+        SSE4a,
         SSSE3,
         SVM,
         TBM,

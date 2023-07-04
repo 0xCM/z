@@ -58,7 +58,7 @@ public readonly struct XedRuleSpecs
                 {
                     if(!skip.Contains(name))
                     {
-                        XedParsers.parse(name, out NonterminalKind rn);
+                        XedParsers.parse(name, out RuleName rn);
                         dst.Add(new (new (tkind,rn), statements.ToArray()));
                     }
 

@@ -19,7 +19,7 @@ namespace Z0
         public RuleTableKind Kind;
 
         [Render(32)]
-        public NonterminalKind Rule;
+        public RuleName Rule;
 
         [Render(12)]
         public DataSize TableSize;

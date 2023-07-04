@@ -13,24 +13,6 @@ namespace Z0
 
     partial class XedOps
     {
-        public static ref readonly Index<PointerWidthInfo> PointerWidthInfo
-        {
-            [MethodImpl(Inline)]
-            get => ref _PointerWidthInfo;
-        }
-
-        public static ref readonly ReadOnlySeq<OpWidthRecord> Widths
-        {
-            [MethodImpl(Inline)]
-            get => ref _Widths;
-        }
-
-        public static ref readonly Index<PointerWidth> PointerWidths
-        {
-            [MethodImpl(Inline)]
-            get => ref _PointerWidths;
-        }
-
         public static ref readonly ConstLookup<WidthCode,OpWidthRecord> WidthLookup
         {
             [MethodImpl(Inline)]
@@ -85,7 +67,7 @@ namespace Z0
             get => Bytes.sequential<M.SegPrefixKind>(0, (byte)MaxSegPrefixKind);
         }
 
-        public static ReadOnlySpan<NonterminalKind> RuleNames
+        public static ReadOnlySpan<RuleName> RuleNames
         {
             [MethodImpl(Inline), Op]
             get => R.RuleNames.View;

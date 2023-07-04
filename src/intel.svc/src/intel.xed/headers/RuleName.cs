@@ -5,12 +5,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using K = XedRules.RuleKind;
-
     partial class XedModels
     {
         [DataWidth(num9.Width)]
-        public enum NonterminalKind : ushort
+        public enum RuleName : ushort
         {
             None = 0,
 
@@ -701,6 +699,10 @@ namespace Z0
             ZMM_R3_32 = 343,
 
             ZMM_R3_64 = 344,
+
+            XSAVE,
+
+            NELEM_QUARTER,
         }
     }
 }

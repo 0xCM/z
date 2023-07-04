@@ -9,8 +9,10 @@ namespace Z0
     using static XedModels;
     using static sys;
 
-    public class XedTables : Channeled<XedTables>
+    public class XedTables : WfSvc<XedTables>
     {
+        XedFlows XedFlows => Wf.XedFlows();
+
         [MethodImpl(Inline)]
         public ref readonly T Load<T>(XedRecordType index)
             => ref @as<object,T>(DataStores[(byte)index]);
@@ -22,11 +24,24 @@ namespace Z0
             Channel.Row($"Computed {kind}", FlairKind.StatusData);
         }
 
-        readonly Index<object> DataStores;
+        readonly object[] DataStores;
 
         public XedTables()
         {
             DataStores = alloc<object>(64);
+        }
+
+        public ref readonly XedWidths Widths
+        {
+            get
+            {
+            lock(DataStores)   
+            {
+                if(skip(DataStores,(uint)XedRecordType.WidthLookup) == null)
+                seek(DataStores, (uint)XedRecordType.WidthLookup) = XedFlows.CalcOpWidths(XedDb.DocSource(XedDocKind.Widths));
+            }
+            return ref Load<XedWidths>(XedRecordType.WidthLookup);
+            }
         }
 
         public ref readonly Index<InstOpDetail> InstOpDetails
@@ -125,11 +140,11 @@ namespace Z0
             get => ref Load<Index<AsmBroadcast>>(XedRecordType.AsmBroadcastDefs);
         }
 
-        public ref readonly Index<OpWidthRecord> OpWidths
-        {
-            [MethodImpl(Inline)]
-            get => ref Load<Index<OpWidthRecord>>(XedRecordType.OpWidths);
-        }
+        // public ref readonly Index<OpWidthRecord> OpWidths
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => ref Load<Index<OpWidthRecord>>(XedRecordType.OpWidths);
+        // }
 
         public ref readonly Index<InstOpSpec> InstOpSpecs
         {

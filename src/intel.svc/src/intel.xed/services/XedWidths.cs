@@ -5,29 +5,33 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
     using static XedModels;
+    using static sys;
 
-    [ApiHost]
-    public partial class XedOps : AppService<XedOps>
+    public class XedWidths
     {
-        static Index<XedRegId> Regs;
-
-        static ReadOnlySeq<OpWidthRecord> _Widths;
-
-        static ConstLookup<WidthCode,OpWidthRecord> _WidthLookup;
-
-        static Index<PointerWidth> _PointerWidths;
-
-        static Index<PointerWidthInfo> _PointerWidthInfo;
-
-        static XedOps()
+        internal XedWidths(ReadOnlySeq<OpWidthRecord> widths)
         {
-            Regs = Symbols.index<XedRegId>().Kinds.ToArray();
-            _Widths = Xed.CalcOpWidths();
+            _Widths = widths;
             _WidthLookup = _Widths.Select(x => (x.Code,x)).ToDictionary();
             _PointerWidths = map(Symbols.index<PointerWidthKind>().View, s => (PointerWidth)s.Kind);
             _PointerWidthInfo = mapi(_PointerWidths.Where(x => x.Kind != 0), (i,w) => w.ToRecord((byte)i));
         }
+
+        ReadOnlySeq<OpWidthRecord> _Widths;
+
+        ConstLookup<WidthCode,OpWidthRecord> _WidthLookup;
+
+        ReadOnlySeq<PointerWidth> _PointerWidths;
+
+        ReadOnlySeq<PointerWidthInfo> _PointerWidthInfo;
+
+        public ref readonly ReadOnlySeq<OpWidthRecord> OpWidths => ref _Widths;
+
+        public ref readonly ReadOnlySeq<PointerWidth> PointerWidths => ref _PointerWidths;
+
+        public ref readonly ReadOnlySeq<PointerWidthInfo> PointerWidthDescriptions => ref _PointerWidthInfo;
+
+
     }
 }

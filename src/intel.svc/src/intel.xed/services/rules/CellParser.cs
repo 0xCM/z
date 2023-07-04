@@ -191,9 +191,9 @@ namespace Z0
 
                     var k = text.index(right, Chars.LParen);
                     var name = text.left(right, k);
-                    var result = Enum.TryParse(name, out NonterminalKind rule);
+                    var result = Enum.TryParse(name, out RuleName rule);
                     if(!result)
-                        Errors.Throw(AppMsg.ParseFailure.Format(nameof(NonterminalKind), name));
+                        Errors.Throw(AppMsg.ParseFailure.Format(nameof(RuleName), name));
 
                     dst = new CellExpr(op, new FieldValue(fk, rule));
                 }

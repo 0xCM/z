@@ -123,7 +123,7 @@ namespace Z0
                 get => Rule.TableKind;
             }
 
-            public NonterminalKind TableName
+            public RuleName TableName
             {
                 [MethodImpl(Inline)]
                 get => Rule.TableName;

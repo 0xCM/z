@@ -25,7 +25,7 @@ namespace Z0
                 Rows = rows;
             }
 
-            public NonterminalKind Name
+            public RuleName Name
             {
                 [MethodImpl(Inline)]
                 get => Sig.TableName;

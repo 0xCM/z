@@ -117,7 +117,7 @@ namespace Z0
             return uri.Exists ? uri : FileUri.Empty;
         }
 
-        public FileUri CheckedTableDef(NonterminalKind rule, bit decfirst, out RuleSig sig)
+        public FileUri CheckedTableDef(RuleName rule, bit decfirst, out RuleSig sig)
         {
             var dst = FileUri.Empty;
             if(decfirst)

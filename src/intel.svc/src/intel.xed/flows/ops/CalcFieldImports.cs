@@ -7,7 +7,7 @@ namespace Z0
     using static XedModels;
     using static sys;
 
-    partial class XedDataFlow
+    partial class XedFlows
     {
         public Index<FieldImport> CalcFieldImports()
         {

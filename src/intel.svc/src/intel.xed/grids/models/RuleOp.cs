@@ -17,7 +17,7 @@ namespace Z0
             public readonly Value Value;
 
             [MethodImpl(Inline)]
-            public RuleOp(NonterminalKind rule, RuleOperator op, Value value)
+            public RuleOp(RuleName rule, RuleOperator op, Value value)
             {
                 Rule = rule;
                 Operator = op;

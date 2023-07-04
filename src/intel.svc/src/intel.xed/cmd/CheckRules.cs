@@ -105,7 +105,7 @@ namespace Z0
         void CheckRuleNames()
         {
             const uint RuleCount = RuleNames.MaxCount;
-            var src = Symbols.index<NonterminalKind>();
+            var src = Symbols.index<RuleName>();
             var names = src.Kinds;
             for(var i=0; i<names.Length; i++)
             {
@@ -116,7 +116,7 @@ namespace Z0
             Require.equal(RuleCount, (uint)names.Length);
 
             var dst = RuleNames.init(names);
-            var buffer = alloc<NonterminalKind>(RuleCount);
+            var buffer = alloc<RuleName>(RuleCount);
             var count = Require.equal(dst.Members(buffer), (uint)names.Length);
 
             for(var i=0; i<count; i++)
@@ -133,7 +133,7 @@ namespace Z0
             {
                 var min = skip(smaller,0);
                 var max = skip(smaller,smaller.Length - 1);
-                var kind = (NonterminalKind)i;
+                var kind = (RuleName)i;
                 if(kind != 0)
                 {
                     if(kind >= min & kind<= max)

@@ -181,7 +181,7 @@ partial class XedModels
         SSE3X87,
         SSE4,
         SSE42,
-        SSE4A,
+        SSE4a,
         SSEMXCSR,
         SSE_PREFETCH,
         SSSE3,

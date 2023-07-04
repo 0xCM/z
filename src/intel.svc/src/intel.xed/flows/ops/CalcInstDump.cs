@@ -8,7 +8,7 @@ using static XedRules;
 using static XedModels;
 using static sys;
 
-partial class XedDataFlow
+partial class XedFlows
 {
     public XedInstDump CalcInstDump(FilePath path)
     {

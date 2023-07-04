@@ -7,17 +7,10 @@ namespace Z0
     using static sys;
     using static XedModels;
 
-    partial class XedDataFlow
+    partial class XedFlows
     {        
         public class CpuIdImportCalcs
         {
-            public static CpuIdImportCalcs.Output calc()
-            {
-                var parser = new CpuIdImportCalcs();
-                parser.Run(XedDb.DocSource(XedDocKind.CpuId).ReadLines().Where(text.nonempty));
-                return parser.Parsed;
-            }
-
             ConcurrentBag<string> IsaBuffer = new();
 
             ConcurrentBag<CpuIdSpec> CpuIdBuffer = new();
@@ -116,7 +109,6 @@ namespace Z0
                     output = text.trim(text.left(input,i));
                 return output;
             }
-
 
             public readonly struct Output
             {

@@ -7,7 +7,7 @@ namespace Z0
 {
     using static XedRules;
     using static XedModels;
-    using static XedModels.NonterminalKind;
+    using static XedModels.RuleName;
 
     partial class XedRuleSeq
     {
@@ -22,7 +22,7 @@ namespace Z0
             REX_PREFIX_ENC_BIND()   | REX_PREFIX_ENC
 
         */
-        public static SeqDef ISA_BINDINGS() => bind(nameof(ISA_BINDINGS), new NonterminalKind[]{
+        public static SeqDef ISA_BINDINGS() => bind(nameof(ISA_BINDINGS), new RuleName[]{
                 FIXUP_EOSZ_ENC,
                 FIXUP_EASZ_ENC,
                 ASZ_NONTERM,

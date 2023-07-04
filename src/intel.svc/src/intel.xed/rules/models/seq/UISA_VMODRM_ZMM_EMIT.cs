@@ -7,7 +7,7 @@ namespace Z0
 {
     using static XedRules;
     using static XedModels;
-    using static XedModels.NonterminalKind;
+    using static XedModels.RuleName;
 
     partial class XedRuleSeq
     {
@@ -17,7 +17,7 @@ namespace Z0
                 DISP_NT_EMIT()
         */
 
-        public static SeqDef UISA_VMODRM_ZMM_EMIT() => emit(nameof(UISA_VMODRM_ZMM_EMIT), new NonterminalKind[]{
+        public static SeqDef UISA_VMODRM_ZMM_EMIT() => emit(nameof(UISA_VMODRM_ZMM_EMIT), new RuleName[]{
                 VSIB_ENC,
                 DISP_NT,
             });

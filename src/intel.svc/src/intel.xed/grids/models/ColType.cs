@@ -30,7 +30,7 @@ namespace Z0
                 => this = Bitfields.join((byte)ColKind.Expr, Bitfields.join((byte)field, (byte)op));
 
             [MethodImpl(Inline)]
-            public ColType(FieldKind field, OperatorKind op, NonterminalKind rule)
+            public ColType(FieldKind field, OperatorKind op, RuleName rule)
                 => this = Bitfields.join((byte)ColKind.RuleExpr, (byte)field, (ushort)PolyBits.pack(num3.force(op),num9.force(rule)));
 
             [MethodImpl(Inline)]
@@ -38,7 +38,7 @@ namespace Z0
                 => this = Bitfields.join((byte)ColKind.RuleExpr, (byte)field, (ushort)PolyBits.pack(num3.force(op), width));
 
             [MethodImpl(Inline)]
-            public ColType(NonterminalKind src)
+            public ColType(RuleName src)
                 => this = Bitfields.join((byte)ColKind.Rule, (ushort)src);
 
             [MethodImpl(Inline)]
@@ -90,11 +90,11 @@ namespace Z0
                 => new ColType(left, op, width);
 
             [MethodImpl(Inline)]
-            public static ColType nonterm(NonterminalKind rule)
+            public static ColType nonterm(RuleName rule)
                 => new ColType(rule);
 
             [MethodImpl(Inline)]
-            public static ColType expr(FieldKind field, OperatorKind op, NonterminalKind rule)
+            public static ColType expr(FieldKind field, OperatorKind op, RuleName rule)
                 => new ColType(field, op, rule);
 
             [MethodImpl(Inline)]
@@ -106,8 +106,8 @@ namespace Z0
                 => (FieldKind)(Upper & uint7.MaxValue);
 
             [MethodImpl(Inline)]
-            public NonterminalKind ToRule()
-                => (NonterminalKind)Upper;
+            public RuleName ToRule()
+                => (RuleName)Upper;
 
             [MethodImpl(Inline)]
             RuleOperator Op()
@@ -171,11 +171,11 @@ namespace Z0
                 => src.Field();
 
             [MethodImpl(Inline)]
-            public static implicit operator ColType(NonterminalKind src)
+            public static implicit operator ColType(RuleName src)
                 => new (src);
 
             [MethodImpl(Inline)]
-            public static explicit operator NonterminalKind(ColType src)
+            public static explicit operator RuleName(ColType src)
                 => src.ToRule();
 
             [MethodImpl(Inline)]

@@ -7,7 +7,7 @@ namespace Z0
 {
     using static XedRules;
     using static XedModels;
-    using static XedModels.NonterminalKind;
+    using static XedModels.RuleName;
 
     partial class XedRuleSeq
     {
@@ -21,7 +21,7 @@ namespace Z0
             VEX_ESCVL_ENC_EMIT
         */
 
-        public static SeqDef NEWVEX3_ENC_EMIT() => emit(nameof(NEWVEX3_ENC_EMIT), new NonterminalKind[]{
+        public static SeqDef NEWVEX3_ENC_EMIT() => emit(nameof(NEWVEX3_ENC_EMIT), new RuleName[]{
             VEX_TYPE_ENC,
             VEX_REXR_ENC,
             VEX_REXXB_ENC,

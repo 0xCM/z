@@ -27,7 +27,7 @@ namespace Z0
             public RuleTableKind Kind;
 
             [Render(32)]
-            public NonterminalKind Name;
+            public RuleName Name;
 
             [Render(1)]
             public TextBlock Statement;

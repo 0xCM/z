@@ -31,10 +31,10 @@ namespace Z0
             public readonly RuleTableKind Kind;
 
             [Render(1)]
-            public readonly NonterminalKind Name;
+            public readonly RuleName Name;
 
             [MethodImpl(Inline)]
-            public Coordinate(ushort index, num9 table, num8 row, num4 col, RuleTableKind kind, NonterminalKind name)
+            public Coordinate(ushort index, num9 table, num8 row, num4 col, RuleTableKind kind, RuleName name)
             {
                 Seq = index;
                 Table = table;

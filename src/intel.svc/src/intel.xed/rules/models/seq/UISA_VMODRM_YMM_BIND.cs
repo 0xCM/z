@@ -7,7 +7,7 @@ namespace Z0
 {
     using static XedRules;
     using static XedModels;
-    using static XedModels.NonterminalKind;
+    using static XedModels.RuleName;
 
     partial class XedRuleSeq
     {
@@ -23,7 +23,7 @@ namespace Z0
             DISP_NT_BIND()          # FROM BASE ISA
 
         */
-        public static SeqDef UISA_VMODRM_YMM_BIND() => bind(nameof(UISA_VMODRM_YMM_BIND), new NonterminalKind[]{
+        public static SeqDef UISA_VMODRM_YMM_BIND() => bind(nameof(UISA_VMODRM_YMM_BIND), new RuleName[]{
             VMODRM_MOD_ENCODE,
             VSIB_ENC_BASE,
             UISA_ENC_INDEX_YMM,

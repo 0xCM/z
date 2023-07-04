@@ -32,7 +32,7 @@ namespace Z0
 
         public XedDisasm Disasm => Wf.XedDisasm();
 
-        public XedDataFlow XedImport => Wf.XedImport();
+        public XedFlows XedImport => Wf.XedFlows();
 
         CompositeBuffers _Alloc;
 
@@ -43,13 +43,13 @@ namespace Z0
             _Alloc = Z0.CompositeBuffers.create();
         }
 
-        void CalcCpuIdImports()
-        {
-            XedImport.CalcCpuIdImports(data => {
-                Views.Store(I.CpuIdImport, data.CpuIdSpecs);
-                Views.Store(I.IsaImport, data.IsaSpecs);
-            });
-        }
+        // void CalcCpuIdImports()
+        // {
+        //     XedImport.CalcCpuIdImports(data => {
+        //         Views.Store(I.CpuIdImport, data.CpuIdSpecs);
+        //         Views.Store(I.IsaImport, data.IsaSpecs);
+        //     });
+        // }
 
         static XedRuleTables CalcRuleTables()
         {
@@ -70,19 +70,23 @@ namespace Z0
 
         void RunCalcs()
         {
-            var defs = sys.empty<InstDef>();
+            var defs = XedInstDefParser.parse(XedDb.DocSource(XedDocKind.EncInstDef));
             //var blocks = XedInstDump.Empty;
-            var forms = sys.empty<FormImport>();
+            var blocks = XedImport.CalcInstDump(XedDb.DocSource(XedDocKind.RuleDump));
+            var forms = XedImport.CalcFormImports(XedDb.DocSource(XedDocKind.FormData));
             var chips = XedImport.CalcChipMap(XedDb.DocSource(XedDocKind.ChipMap));
+            var cpu = XedImport.CalcCpuIdDataset(XedDb.DocSource(XedDocKind.CpuId));
+            var brodcasts = XedImport.CalcBroadcastDefs();
+
 
             exec(PllExec,
-                CalcTypeTables,
-                CalcCpuIdImports,
-                () => defs = XedInstDefParser.parse(XedDb.DocSource(XedDocKind.EncInstDef)),
-                () => Views.Store(I.AsmBroadcastDefs, XedImport.CalcBroadcastDefs()),
-                () => Views.Store(I.OpWidths, XedOps.Widths),
+                CalcTypeTables
+                
+                //CalcCpuIdImports,
+                //() => Views.Store(I.AsmBroadcastDefs, XedImport.CalcBroadcastDefs()),
+                //() => Views.Store(I.OpWidths, XedOps.Widths)
                 //() => XedImport.CalcInstImports(data => blocks = data),
-                () => XedImport.CalcFormImports(data => forms = data)
+                //() => XedImport.CalcFormImports(data => forms = data)
                 );
 
             //Views.Store(I.InstImports, blocks);

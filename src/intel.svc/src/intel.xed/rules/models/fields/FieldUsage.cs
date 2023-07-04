@@ -21,12 +21,12 @@ namespace Z0
 
             public readonly UsageKind Kind;
 
-            public readonly NonterminalKind RuleName;
+            public readonly RuleName RuleName;
 
             public readonly RuleField Field;
 
             [MethodImpl(Inline)]
-            public FieldUsage(UsageKind kind, NonterminalKind rule, RuleField field)
+            public FieldUsage(UsageKind kind, RuleName rule, RuleField field)
             {
                 Kind = kind;
                 RuleName = rule;

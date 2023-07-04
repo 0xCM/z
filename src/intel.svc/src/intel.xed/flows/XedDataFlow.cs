@@ -7,7 +7,7 @@ namespace Z0;
 using static XedModels;
 using static sys;
 
-public partial class XedDataFlow : WfSvc<XedDataFlow>
+public partial class XedFlows : WfSvc<XedFlows>
 {
     public static ref readonly Index<AsmBroadcast> BroadcastDefs
     {
@@ -16,8 +16,6 @@ public partial class XedDataFlow : WfSvc<XedDataFlow>
     }
 
     XedPaths XedPaths => Wf.XedPaths();
-
-    Xed Xed => Wf.Xed();
 
     IDbArchive Targets() => XedPaths.Imports();
 
@@ -44,45 +42,42 @@ public partial class XedDataFlow : WfSvc<XedDataFlow>
         EmitCpuIdSpecs(src.CpuIdSpecs);
     }
 
+    public void EmitChipCodes()
+        => Channel.TableEmit(Symbols.symkinds<ChipCode>(), XedDb.Targets().Path("xed.chips", FileKind.Csv));
+
     public void Run()
     {            
         exec(PllExec,
             () => EmitCpuIdDataset(CalcCpuIdDataset(XedDb.DocSource(XedDocKind.CpuId))),
             //ImportInstBlocks,
             () => EmitChipMap(CalcChipMap(XedDb.DocSource(XedDocKind.ChipMap))),
-            EmitFormImports,
+            () => EmitFormImports(CalcFormImports(XedDb.DocSource(XedDocKind.FormData))),
             EmitIsaForms,
             EmitBroadcastDefs,
-            () => Xed.EmitChipCodes(),
-            () => Emit(CalcFieldImports()),
-            () => Emit(XedOps.PointerWidthInfo),
-            () => Emit(XedRuntime.Views.OpWidths)
+            () => EmitChipCodes(),
+            () => Emit(CalcFieldImports())
+            //() => EmitPointerWidths(XedOps.PointerWidthInfo),
+            //() => EmitOpWidths(XedRuntime.Views.OpWidths.OpWidths)
         );
     }
 
-    public void CalcCpuIdImports(Action<CpuIdImportCalcs.Output> f)
-        => f(CpuIdImportCalcs.calc());
-
-    public void CalcFormImports(Action<Index<FormImport>> f)
-        => f(FormImporter.calc(XedDb.DocSource(XedDocKind.FormData)));
+    public ReadOnlySeq<FormImport> CalcFormImports(FilePath src)
+        => FormImporter.calc(src);
 
     void EmitBroadcastDefs()
-        => Channel.TableEmit(XedDataFlow.BroadcastDefs, Targets().Table<AsmBroadcast>());
+        => Channel.TableEmit(XedFlows.BroadcastDefs, Targets().Table<AsmBroadcast>());
 
-    void EmitFormImports()
-        => Emit(XedRuntime.Views.FormImports);
-
-    void Emit(ReadOnlySpan<FormImport> src)
+    public void EmitFormImports(ReadOnlySeq<FormImport> src)
         => Channel.TableEmit(src, Targets().Table<FormImport>());
 
     void Emit(ReadOnlySpan<FieldImport> src)
         => Channel.TableEmit(src, XedPaths.Imports().Table<FieldImport>());
 
-    void Emit(ReadOnlySpan<PointerWidthInfo> src)
-        => Channel.TableEmit(src, XedPaths.Imports().Table<PointerWidthInfo>());
+    public void EmitPointerWidths(ReadOnlySpan<PointerWidthInfo> src)
+        => Channel.TableEmit(src, Targets().Table<PointerWidthInfo>());
 
-    void Emit(ReadOnlySpan<OpWidthRecord> src)
-        => Channel.TableEmit(src, XedPaths.Imports().Table<OpWidthRecord>());
+    public void EmitOpWidths(ReadOnlySpan<OpWidthRecord> src)
+        => Channel.TableEmit(src, Targets().Table<OpWidthRecord>());
 
     public ChipMap CalcChipMap(FilePath src)
     {

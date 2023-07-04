@@ -82,7 +82,7 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public Nonterminal ToNonTerm()
-                => (NonterminalKind)Data;
+                => (RuleName)Data;
 
             [MethodImpl(Inline)]
             public MemoryScale ToScale()

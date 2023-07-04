@@ -8,7 +8,7 @@ namespace Z0
     using static sys;
     using static XedModels;
 
-    partial class XedDataFlow
+    partial class XedFlows
     {
         public readonly struct FormImporter
         {
@@ -31,7 +31,7 @@ namespace Z0
                 {
                     var result = parse(skip(src,i), i, out seek(dst,i));
                     if(result.Fail)
-                        term.warn(Events.warn(typeof(XedDataFlow), result.Message).Format());
+                        term.warn(Events.warn(typeof(XedFlows), result.Message).Format());
                 }
             }
 

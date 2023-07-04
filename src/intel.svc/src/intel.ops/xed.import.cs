@@ -36,19 +36,25 @@ namespace Z0
         void ImportInstDump()
         {
             var path = XedDb.DocSource(XedDocKind.RuleDump);
-            // using var src = MemoryFiles.map(path);
-            // var stats = AsciLines.stats(src.Bytes, 400000);
-            // //iter(stats, stat => Channel.Row(stat));
-            // var lines = Lines.lines(src);
-            // var count = lines.Length;
-            // for(var i=0; i<count; i++)
-            // {
-            //     ref readonly var line = ref skip(lines,i);
-            //     Channel.Row(line);
-            // }
-
             var data = DataFlow.CalcInstDump(path);
             DataFlow.EmitInstDump(data);
+        }
+
+        [CmdOp("xed/import/widths")]
+        void ImportWidths()
+        {
+            var path = XedDb.DocSource(XedDocKind.Widths);
+            var data = DataFlow.CalcOpWidths(path);
+            DataFlow.EmitOpWidths(data.OpWidths);
+            DataFlow.EmitPointerWidths(data.PointerWidthDescriptions);
+        }
+
+        [CmdOp("xed/import/forms")]
+        void ImportInstForms()
+        {
+            var path = XedDb.DocSource(XedDocKind.FormData);
+            var data = DataFlow.CalcFormImports(path);
+            DataFlow.EmitFormImports(data);
         }
 
     }

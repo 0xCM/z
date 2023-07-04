@@ -7,7 +7,7 @@ namespace Z0;
 
 using Asm;
 
-using static XedDataFlow;
+using static XedFlows;
 using static XedModels;
 
 public static class XSvc
@@ -41,8 +41,8 @@ public static class XSvc
         public IntelSdm IntelSdm(IWfRuntime wf)
             => Service<IntelSdm>(wf);
 
-        public XedDataFlow XedImport(IWfRuntime wf)
-            => Service<XedDataFlow>(wf);
+        public XedFlows XedFlows(IWfRuntime wf)
+            => Service<XedFlows>(wf);
 
         public XedRules XedRules(IWfRuntime wf)
             => Service<XedRules>(wf);
@@ -61,9 +61,6 @@ public static class XSvc
 
         public XedPaths XedPaths(IWfRuntime wf)
             => Z0.XedPaths.Service;
-
-        public InstBlockImporter BlockImporter(IWfRuntime wf)
-            => Service<InstBlockImporter>(wf);
 
         public XedDisasmAnalyzer DisasmAnalyzer(IWfRuntime wf)
             => Service<XedDisasmAnalyzer>(wf);
@@ -107,8 +104,8 @@ public static class XSvc
     public static XedRuntime XedRuntime(this IWfRuntime wf)
         => Services.XedRuntime(wf);
 
-    public static XedDataFlow XedImport(this IWfRuntime wf)
-        => Services.XedImport(wf);
+    public static XedFlows XedFlows(this IWfRuntime wf)
+        => Services.XedFlows(wf);
 
     public static XedRules XedRules(this IWfRuntime wf)
         => Services.XedRules(wf);
@@ -124,9 +121,6 @@ public static class XSvc
 
     public static XedDocs XedDocs(this IWfRuntime wf)
         => Services.XedDocs(wf);
-
-    public static InstBlockImporter BlockImporter(this IWfRuntime wf)
-        => Services.BlockImporter(wf);
 
     public static XedDisasmAnalyzer DisasmAnalyser(this IWfRuntime wf)
         => Services.DisasmAnalyzer(wf);

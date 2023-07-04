@@ -20,8 +20,6 @@ public partial class Xed : WfSvc<Xed>
         where T : unmanaged, IComparable<T>
             => new NontermCall<T>(src,dst);
 
-    public void EmitChipCodes()
-        => Channel.TableEmit(Symbols.symkinds<ChipCode>(), XedDb.Targets().Path("xed.chips", FileKind.Csv));
 
     public static XedInstClass classifier(XedInstClass src)
     {
@@ -50,7 +48,7 @@ public partial class Xed : WfSvc<Xed>
         => ((byte)a).CompareTo((byte)b);
 
     [MethodImpl(Inline), Op]
-    public static int cmp(NonterminalKind a, NonterminalKind b)
+    public static int cmp(RuleName a, RuleName b)
         => ((ushort)a).CompareTo((ushort)b);
 
     [MethodImpl(Inline), Op]
@@ -193,7 +191,7 @@ public partial class Xed : WfSvc<Xed>
     }
 
     [Op]
-    public static Index<RuleSig> sigs(params (RuleTableKind kind, NonterminalKind rule)[] src)
+    public static Index<RuleSig> sigs(params (RuleTableKind kind, RuleName rule)[] src)
         => src.Select(x => new RuleSig(x.kind,x.rule));
 
     [MethodImpl(Inline), Op]

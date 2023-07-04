@@ -19,7 +19,7 @@ namespace Z0
             public readonly T Value;
 
             [MethodImpl(Inline)]
-            public RuleOp(NonterminalKind rule, RuleOperator op, T value)
+            public RuleOp(RuleName rule, RuleOperator op, T value)
             {
                 Rule = rule;
                 Operator = op;

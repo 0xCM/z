@@ -5,7 +5,8 @@
 namespace Z0
 {
     using static XedModels;
-    partial class XedDataFlow
+    
+    partial class XedFlows
     {
         class FormImportDatasets
         {

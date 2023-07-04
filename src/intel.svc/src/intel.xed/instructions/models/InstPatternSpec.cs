@@ -103,8 +103,8 @@ namespace Z0
                         case ExtensionKind.VTX:
                             src.Isa = InstIsaKind.VTX;
                         break;
-                        case ExtensionKind.SSE4A:
-                            src.Isa = InstIsaKind.SSE4A;
+                        case ExtensionKind.SSE4a:
+                            src.Isa = InstIsaKind.SSE4a;
                         break;
                         case ExtensionKind.SSSE3:
                             src.Isa = InstIsaKind.SSSE3;

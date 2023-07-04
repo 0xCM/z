@@ -7,6 +7,9 @@ namespace Z0;
 
 partial class XedModels
 {
+    /// <summary>
+    ///  D:\env\sdks\intel\xed\kit\include\xed\xed-category-enum.h
+    /// </summary>
     [SymSource(xed), DataWidth(7)]
     public enum CategoryKind : byte
     {
@@ -25,6 +28,7 @@ partial class XedModels
         AVX512_BITALG,
         AVX512_VBMI,
         AVX512_VP2INTERSECT,
+        AVX_IFMA,
         BINARY,
         BITBYTE,
         BLEND,
@@ -68,6 +72,7 @@ partial class XedModels
         MMX,
         MOVDIR,
         MPX,
+        MSRLIST,
         NOP,
         PCLMULQDQ,
         PCONFIG,
@@ -112,9 +117,10 @@ partial class XedModels
         VTX,
         WAITPKG,
         WIDENOP,
+        WRMSRNS,
         X87_ALU,
         XOP,
         XSAVE,
-        XSAVEOPT,
+        XSAVEOPT,     
     }
 }

@@ -14,11 +14,11 @@ namespace Z0
         {
             public const byte Width = num9.Width;
 
-            public static DataSize DataSize => (Width,sys.width<NonterminalKind>());
+            public static DataSize DataSize => (Width,sys.width<RuleName>());
 
-            public readonly NonterminalKind Name;
+            public readonly RuleName Name;
 
-            public Nonterminal(NonterminalKind name)
+            public Nonterminal(RuleName name)
             {
                 Name = name;
             }
@@ -59,14 +59,14 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public static explicit operator Nonterminal(ushort src)
-                => new Nonterminal((NonterminalKind)src);
+                => new Nonterminal((RuleName)src);
 
             [MethodImpl(Inline)]
-            public static implicit operator NonterminalKind(Nonterminal src)
+            public static implicit operator RuleName(Nonterminal src)
                 => src.Name;
 
             [MethodImpl(Inline)]
-            public static implicit operator Nonterminal(NonterminalKind src)
+            public static implicit operator Nonterminal(RuleName src)
                 => new Nonterminal(src);
 
             [MethodImpl(Inline)]

@@ -23,7 +23,7 @@ namespace Z0
 
         Xed Xed => Wf.Xed();
 
-        XedDataFlow DataFlow => Wf.XedImport();
+        XedFlows DataFlow => Wf.XedFlows();
 
         public IDbArchive LlvmModels(string scope)
             => AppDb.Dev($"llvm.models/{scope}");

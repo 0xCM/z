@@ -7,7 +7,7 @@ namespace Z0
 {
     using static XedRules;
     using static XedModels;
-    using static XedModels.NonterminalKind;
+    using static XedModels.RuleName;
 
     partial class XedRuleSeq
     {
@@ -24,7 +24,7 @@ namespace Z0
             SIB_NT_BIND()
             DISP_NT_BIND()
         */
-        public static SeqDef MODRM_BIND() => bind(nameof(MODRM_BIND), new NonterminalKind[]{
+        public static SeqDef MODRM_BIND() => bind(nameof(MODRM_BIND), new RuleName[]{
             SIB_REQUIRED_ENCODE,
             SIBSCALE_ENCODE,
             SIBINDEX_ENCODE,
