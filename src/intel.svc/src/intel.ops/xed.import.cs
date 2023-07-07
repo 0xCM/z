@@ -8,54 +8,42 @@ namespace Z0
 
     using static sys;
     using static XedRules;
-
+    using static XedModels;
     partial class XedCmd
     {
         [CmdOp("xed/import")]
         void RunImport()
-            => XedRuntime.XedImport.Run();
-
-        
-        [CmdOp("xed/import/cpuid")]
-        void ImportCpuId()
         {
-            var source = XedDb.DocSource(XedDocKind.CpuId);
-            var dataset = DataFlow.CalcCpuIdDataset(source);
-            DataFlow.EmitCpuIdDataset(dataset);           
-        }
-
-        [CmdOp("xed/import/chipmap")]
-        void ImportChipMap()
-        {
-            var src = XedDb.DocSource(XedDocKind.ChipMap);
-            var chips = DataFlow.CalcChipMap(src);
+            var cpuid = DataFlow.CalcCpuIdDataset(XedDb.DocSource(XedDocKind.CpuId));
+            DataFlow.EmitCpuIdDataset(cpuid);       
+            var codes = Symbols.symkinds<ChipCode>();  
+            DataFlow.EmitChipCodes(codes);
+            
+            var chips = DataFlow.CalcChipMap(XedDb.DocSource(XedDocKind.ChipMap));
             DataFlow.EmitChipMap(chips);
-        }
+            var dump = DataFlow.CalcInstDump(XedDb.DocSource(XedDocKind.RuleDump));
+            DataFlow.EmitInstDump(dump);
+            var widths = DataFlow.CalcWidths(XedDb.DocSource(XedDocKind.Widths));
+            DataFlow.EmitOpWidths(widths.OpWidths);
+            DataFlow.EmitPointerWidths(widths.PointerWidthDescriptions);
+            var forms = DataFlow.CalcFormImports(XedDb.DocSource(XedDocKind.FormData));
+            DataFlow.EmitFormImports(forms);
+            var inst = DataFlow.CalcChipInstructions(forms, chips);
+            DataFlow.EmitChipInstructions(inst);
+            var bcastkinds = Symbols.kinds<BCastKind>();
+            var broadacasts = Xed.broadcasts(bcastkinds);
+            DataFlow.EmitBroadcastDefs(broadacasts);
 
-        [CmdOp("xed/import/instdump")]
-        void ImportInstDump()
-        {
-            var path = XedDb.DocSource(XedDocKind.RuleDump);
-            var data = DataFlow.CalcInstDump(path);
-            DataFlow.EmitInstDump(data);
-        }
+            var dec = XedRuleSpecs.CalcTableCriteria(XedDb.RuleSource(RuleTableKind.DEC), status => Channel.Row(status));
 
-        [CmdOp("xed/import/widths")]
-        void ImportWidths()
-        {
-            var path = XedDb.DocSource(XedDocKind.Widths);
-            var data = DataFlow.CalcOpWidths(path);
-            DataFlow.EmitOpWidths(data.OpWidths);
-            DataFlow.EmitPointerWidths(data.PointerWidthDescriptions);
-        }
+            // var dec = XedRuleSpecs.criteria(RuleTableKind.DEC);
+            // var rules = new XedRuleTables();
+            // var buffers = new XedRuleBuffers();
+            // buffers.Target.TryAdd(RuleTableKind.ENC, enc);
+            // buffers.Target.TryAdd(RuleTableKind.DEC, dec);
+            // var rt = XedRules.tables(buffers);
 
-        [CmdOp("xed/import/forms")]
-        void ImportInstForms()
-        {
-            var path = XedDb.DocSource(XedDocKind.FormData);
-            var data = DataFlow.CalcFormImports(path);
-            DataFlow.EmitFormImports(data);
-        }
 
+        }
     }
 }

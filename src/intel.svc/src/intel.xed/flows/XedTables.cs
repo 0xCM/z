@@ -35,12 +35,12 @@ namespace Z0
         {
             get
             {
-            lock(DataStores)   
-            {
-                if(skip(DataStores,(uint)XedRecordType.WidthLookup) == null)
-                seek(DataStores, (uint)XedRecordType.WidthLookup) = XedFlows.CalcOpWidths(XedDb.DocSource(XedDocKind.Widths));
-            }
-            return ref Load<XedWidths>(XedRecordType.WidthLookup);
+                lock(DataStores)   
+                {
+                    if(skip(DataStores,(uint)XedRecordType.WidthLookup) == null)
+                    seek(DataStores, (uint)XedRecordType.WidthLookup) = XedFlows.CalcWidths(XedDb.DocSource(XedDocKind.Widths));
+                }
+                return ref Load<XedWidths>(XedRecordType.WidthLookup);
             }
         }
 
@@ -139,12 +139,6 @@ namespace Z0
             [MethodImpl(Inline)]
             get => ref Load<Index<AsmBroadcast>>(XedRecordType.AsmBroadcastDefs);
         }
-
-        // public ref readonly Index<OpWidthRecord> OpWidths
-        // {
-        //     [MethodImpl(Inline)]
-        //     get => ref Load<Index<OpWidthRecord>>(XedRecordType.OpWidths);
-        // }
 
         public ref readonly Index<InstOpSpec> InstOpSpecs
         {

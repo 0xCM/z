@@ -15,6 +15,29 @@ namespace Z0
 
         const BindingFlags BF = ReflectionFlags.BF_All;
 
+        public static MemberValues values<T>(T src)
+        {
+            var props = @readonly(typeof(T).DeclaredInstanceProperties());
+            var fields = @readonly(typeof(T).DeclaredInstanceFields());
+            var propcount = props.Length;
+            var fieldcount = fields.Length;
+            var count = propcount + fieldcount;
+            var dst = alloc<MemberValue>(count);
+            var j=0u;
+            for(var i=0; i<propcount; i++)
+            {
+                ref readonly var prop = ref skip(props,i);
+                seek(dst,j++) = new MemberValue(prop.Name, prop.GetValue(src));
+            }
+            for(var i=0; i<fieldcount; i++)
+            {
+                ref readonly var field = ref skip(fields,i);
+                seek(dst,j++) = new MemberValue(field.Name, field.GetValue(src));
+            }
+
+            return dst;
+        }
+
         [MethodImpl(Inline), Op]
         public static AssemblyVersion version(AssemblyName src)
         {
@@ -41,7 +64,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static MemberAddress address(ClrMember member, MemoryAddress address)
-            => new MemberAddress(member,address);
+            => new (member,address);
 
         /// <summary>
         /// Computes the <see cref='MemberAddress'/> of a specified <see cref='MethodInfo'/>

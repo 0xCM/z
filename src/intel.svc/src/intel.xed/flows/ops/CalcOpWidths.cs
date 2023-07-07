@@ -10,7 +10,7 @@ using static XedModels;
 
 partial class XedFlows
 {
-    public XedWidths CalcOpWidths(FilePath src)
+    public XedWidths CalcWidths(FilePath src)
     {
         var buffer = dict<WidthCode,OpWidthRecord>();
         var symbols = Symbols.index<WidthCode>();

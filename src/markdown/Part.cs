@@ -2,11 +2,11 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+[assembly: PartId("markdown")]
+namespace Z0.Parts
 {
-    [Free, ApiHost]
-    public partial class Cells
+    public sealed class Markdown : Part<Markdown>
     {
-        const NumericKind Closure = UnsignedInts;
+
     }
 }

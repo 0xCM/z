@@ -1,11 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(ProjectProps)\usings.props"/>
   <ItemGroup>
-    <ProjectReference Include="$(Hex)" />
-    <ProjectReference Include="$(ClrQuery)" />
+    <ProjectReference Include="../files/z0.files.csproj" />
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <NoWarn>$(NoWarn);CA1857</NoWarn>
   </PropertyGroup>
 </Project>

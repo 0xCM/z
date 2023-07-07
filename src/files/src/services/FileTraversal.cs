@@ -5,7 +5,8 @@
 namespace Z0
 {
     using static sys;
-    
+    using System.Linq;
+
     public class FileTraversal : Channeled<FileTraversal>, ITraversal<IFsEntry,FileTraversal.Options>
     {    
         public enum TraversalKind : byte

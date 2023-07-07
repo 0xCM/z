@@ -8,30 +8,36 @@ namespace Z0
     /// Defines a key for output rule indexing/lookup
     /// </summary>
     /// <typeparam name="S">The state type</typeparam>
-    public readonly struct FsmOutputRuleKey<E,S> : IFsmRuleKey<E,S>
+    public readonly record struct FsmOutputRuleKey<E,S> : IFsmRuleKey<E,S>
     {
-        public E Trigger {get;}
+        public  readonly E Trigger;
 
-        public S Source {get;}
-
-        /// <summary>
-        /// The invariant hash
-        /// </summary>
-        public Hash32 Hash {get;}
+        public readonly S Source;
 
         [MethodImpl(Inline)]
         public FsmOutputRuleKey(E trigger, S target)
         {
             Trigger = trigger;
             Source = target;
-            Hash = HashCode.Combine(trigger,target);
         }
+
+        /// <summary>
+        /// The invariant hash
+        /// </summary>
+        public readonly Hash32 Hash
+            => sys.hash(Trigger) | sys.hash(Source);
+
+        E IFsmRuleKey<E, S>.Trigger
+            => Trigger;
+
+        S IFsmRuleKey<E, S>.Source
+            => Source;
 
         public override string ToString()
             => $"({Trigger}, {Source})";
 
         [MethodImpl(Inline)]
         public static implicit operator FsmOutputRuleKey<E,S>((E trigger, S source) x)
-            => new FsmOutputRuleKey<E,S>(x.trigger, x.source);
+            => new (x.trigger, x.source);
     }
 }

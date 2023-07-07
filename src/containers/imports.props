@@ -1,6 +1,0 @@
-<Project>
-  <ItemGroup>
-    <ProjectReference Include="$(Cells)" />
-    <ProjectReference Include="$(Files)" />
-  </ItemGroup>
-</Project>

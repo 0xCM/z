@@ -7,7 +7,7 @@ namespace Z0
     /// <summary>
     /// Describes/models a literal text resource
     /// </summary>
-    public readonly struct StringRes
+    public readonly record struct StringRes
     {
         /// <summary>
         /// The resource identifier

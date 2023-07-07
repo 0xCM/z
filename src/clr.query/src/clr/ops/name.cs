@@ -8,30 +8,30 @@ namespace Z0
     {
         [MethodImpl(Inline), Op]
         public static ClrMemberName membername(string src)
-            => new ClrMemberName(src);
+            => new (src);
 
         [MethodImpl(Inline), Op]
         public static ClrAssemblyName name(Assembly src)
-            => new ClrAssemblyName(src);
+            => new (src);
 
         [MethodImpl(Inline), Op]
         public static ClrMemberName name(FieldInfo src)
-            => new ClrMemberName(src);
+            => new (src);
 
         [MethodImpl(Inline), Op]
         public static ClrMemberName name(PropertyInfo src)
-            => new ClrMemberName(src);
+            => new (src);
 
         [MethodImpl(Inline), Op]
         public static ClrMemberName name(MethodInfo src)
-            => new ClrMemberName(src);
+            => new (src);
 
         [MethodImpl(Inline), Op]
         public static ClrMemberName name(EventInfo src)
-            => new ClrMemberName(src);
+            => new (src);
 
         [MethodImpl(Inline), Op]
         public static ClrTypeName name(Type src)
-            => new ClrTypeName(src);
+            => new (src);
     }
 }

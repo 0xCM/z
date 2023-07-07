@@ -24,7 +24,7 @@ namespace Z0
         public class Job
         {
             public static Job create(Action worker, Action finished)
-                => new Job(worker,finished);
+                => new (worker,finished);
 
             public Action Worker {get;}
 

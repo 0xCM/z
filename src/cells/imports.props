@@ -1,6 +1,0 @@
-<Project>
-  <ItemGroup>
-    <ProjectReference Include="$(Hex)" />
-    <ProjectReference Include="$(ClrQuery)" />
-  </ItemGroup>
-</Project>

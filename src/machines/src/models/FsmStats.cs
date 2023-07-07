@@ -8,7 +8,7 @@ namespace Z0
     /// Captures state machine execution metrics
     /// </summary>
     [Record(TableId)]
-    public struct FsmStats
+    public record struct FsmStats
     {
         public const string TableId = "fsm.stats";
 
@@ -41,8 +41,5 @@ namespace Z0
         /// The time spent during active execution
         /// </summary>
         public Duration Runtime;
-
-        public override int GetHashCode()
-            => MachineId.GetHashCode();
     }
 }

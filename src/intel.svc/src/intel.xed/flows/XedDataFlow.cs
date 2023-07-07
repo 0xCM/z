@@ -17,11 +17,11 @@ public partial class XedFlows : WfSvc<XedFlows>
 
     XedPaths XedPaths => Wf.XedPaths();
 
-    IDbArchive Targets() => XedPaths.Imports();
+    IDbArchive Targets()
+        => XedPaths.Imports();
 
-    IDbArchive Targets(string scope) => Targets().Targets(scope);
-
-    XedRuntime XedRuntime => Wf.XedRuntime();
+    IDbArchive Targets(string scope)
+        => Targets().Targets(scope);
 
     public CpuIdDataset CalcCpuIdDataset(FilePath src)
     {
@@ -33,39 +33,27 @@ public partial class XedFlows : WfSvc<XedFlows>
     void EmitIsaSpecs(ReadOnlySeq<InstIsaSpec> src)
         => Channel.TableEmit(src, Targets().Table<InstIsaSpec>());
 
-    void EmitCpuIdSpecs(ReadOnlySeq<CpuIdSpec> src)
-        => Channel.TableEmit(src, Targets().Table<CpuIdSpec>());
-
     public void EmitCpuIdDataset(CpuIdDataset src)
     {
         EmitIsaSpecs(src.InstIsaSpecs);
-        EmitCpuIdSpecs(src.CpuIdSpecs);
+        Channel.TableEmit(src.CpuIdSpecs, Targets().Table<CpuIdSpec>());
     }
 
-    public void EmitChipCodes()
-        => Channel.TableEmit(Symbols.symkinds<ChipCode>(), XedDb.Targets().Path("xed.chips", FileKind.Csv));
+    public void EmitChipCodes(ReadOnlySeq<SymKindRow> src)
+        => Channel.TableEmit(src, Targets().Path("xed.chips", FileKind.Csv));
 
     public void Run()
     {            
         exec(PllExec,
-            () => EmitCpuIdDataset(CalcCpuIdDataset(XedDb.DocSource(XedDocKind.CpuId))),
-            //ImportInstBlocks,
-            () => EmitChipMap(CalcChipMap(XedDb.DocSource(XedDocKind.ChipMap))),
-            () => EmitFormImports(CalcFormImports(XedDb.DocSource(XedDocKind.FormData))),
-            EmitIsaForms,
-            EmitBroadcastDefs,
-            () => EmitChipCodes(),
             () => Emit(CalcFieldImports())
-            //() => EmitPointerWidths(XedOps.PointerWidthInfo),
-            //() => EmitOpWidths(XedRuntime.Views.OpWidths.OpWidths)
         );
     }
 
     public ReadOnlySeq<FormImport> CalcFormImports(FilePath src)
         => FormImporter.calc(src);
 
-    void EmitBroadcastDefs()
-        => Channel.TableEmit(XedFlows.BroadcastDefs, Targets().Table<AsmBroadcast>());
+    public void EmitBroadcastDefs(ReadOnlySeq<AsmBroadcast> src)
+        => Channel.TableEmit(src, Targets().Table<AsmBroadcast>());
 
     public void EmitFormImports(ReadOnlySeq<FormImport> src)
         => Channel.TableEmit(src, Targets().Table<FormImport>());
@@ -78,53 +66,6 @@ public partial class XedFlows : WfSvc<XedFlows>
 
     public void EmitOpWidths(ReadOnlySpan<OpWidthRecord> src)
         => Channel.TableEmit(src, Targets().Table<OpWidthRecord>());
-
-    public ChipMap CalcChipMap(FilePath src)
-    {
-        var kinds = Symbols.index<InstIsaKind>();
-        var chip = ChipCode.INVALID;
-        var chips = dict<ChipCode,ChipIsaKinds>();
-        using var reader = src.LineReader(TextEncodingKind.Asci);
-        while(reader.Next(out var line))
-        {
-            if(line.StartsWith(Chars.Hash))
-                continue;
-
-            var i = line.Index(Chars.Colon);
-            if(i != -1)
-            {
-                var name = line.Left(i).Trim();
-                if(blank(name))
-                    continue;
-
-                if(XedParsers.parse(name, out chip))
-                {
-                    if(!chips.TryAdd(chip, new ChipIsaKinds(chip)))
-                        Errors.Throw(Msg.DuplicateChipCode.Format(chip));
-                }
-                else
-                    Errors.Throw(Msg.ChipCodeNotFound.Format(name));
-            }
-            else
-            {
-                var isaKinds = line.Content.SplitClean(Chars.Tab).Trim().Select(x => Enums.parse<InstIsaKind>(x,0)).Where(x => x != 0).Array();
-                chips[chip].Add(isaKinds);
-                if(chips.TryGetValue(chip, out var entry))
-                    entry.Add(isaKinds);
-            }
-        }
-        var codes = Symbols.index<ChipCode>();
-        var buffer = dict<ChipCode,InstIsaKinds>();
-        for(var i=0; i<codes.Count; i++)
-        {
-            var code = codes[i].Kind;
-            if(chips.TryGetValue(code, out var entry))
-                buffer[code] = entry.Kinds;
-            else
-                buffer[code] = XedModels.InstIsaKinds.Empty;
-        }
-        return new ChipMap(buffer);
-    }
 
     public void EmitChipMap(ChipMap  map)
     {
@@ -143,26 +84,9 @@ public partial class XedFlows : WfSvc<XedFlows>
         Channel.FileEmit(dst.Emit(), counter, Targets().Path(FS.file("xed.chipmap", FS.Csv)));
     }
 
-    void EmitIsaForms()
+    public void EmitChipInstructions(ChipInstructions src)
     {
-        var codes = Symbols.index<ChipCode>();
-        var forms = XedRuntime.Views.FormImports;
-        var map = XedRuntime.Views.ChipMap;
-        var formisa = forms.Select(x => (x.InstForm.Kind, x.IsaKind)).ToDictionary();
-        var isakinds = formisa.Values.ToHashSet();
-        var isaforms = cdict<InstIsaKind,HashSet<FormImport>>();
-        iter(isakinds, k => isaforms[k] = new());
-        iter(forms, f => isaforms[f.IsaKind].Add(f));
-        iter(codes.Kinds, chip => {
-            var kinds = map[chip];
-            var dst = Targets("isaforms").Path(FS.file(string.Format("xed.isa.{0}", chip), FS.Csv));
-            var matches = sys.bag<FormImport>();
-            iter(kinds, k => {
-                if(isaforms.TryGetValue(k, out var forms))
-                    matches.AddRange(forms);
-                });
-            TableEmit(matches.ToArray().Sort().Resequence(), dst);
-        },PllExec);
+        piter(src.Query(), kv => TableEmit(kv.Right, Targets("isaforms").Path(FS.file(string.Format("xed.isa.{0}", kv.Left), FS.Csv))));                    
     }
 
     static Symbols<VisibilityKind> Visibilities = Symbols.index<VisibilityKind>();

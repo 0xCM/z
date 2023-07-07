@@ -70,6 +70,6 @@ namespace Z0
         /// <typeparam name="O">The output type</typeparam>
         [MethodImpl(Inline)]
         public static implicit operator FsmOutputRule<E,S,O>((E trigger, S source, O output) x)
-            => new FsmOutputRule<E,S,O>(x.trigger, x.source, x.output);
+            => new (x.trigger, x.source, x.output);
     }
 }

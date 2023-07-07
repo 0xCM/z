@@ -49,7 +49,7 @@ namespace Z0
         /// <typeparam name="S">The state type</typeparam>
         [MethodImpl(Inline)]
         public static FsmTransitionRule<E,S> transition<E,S>(E trigger, S source, S target)
-            => new FsmTransitionRule<E,S>(trigger,source,target);
+            => new (trigger,source,target);
 
         /// <summary>
         /// Defines a machine transition function (trigger : E, source: S) -> target : S
@@ -60,7 +60,7 @@ namespace Z0
         /// <typeparam name="S">The state type</typeparam>
         [MethodImpl(Inline)]
         public static FsmTransitionFunc<E,S> transition<E,S>(IEnumerable<IFsmTransitionRule<E,S>> rules)
-            => new FsmTransitionFunc<E,S>(rules);
+            => new (rules);
 
         /// <summary>
         /// Defines an output rule of the form (trigger : E, source : S) -> output : O
@@ -84,7 +84,7 @@ namespace Z0
         /// <typeparam name="S">The state type</typeparam>
         [MethodImpl(Inline)]
         public static FsmOutputFunc<E,S,O> output<E,S,O>(IEnumerable<IFsmOutputRule<E,S,O>> rules)
-            => new FsmOutputFunc<E, S, O>(rules);
+            => new (rules);
 
         /// <summary>
         /// Defines an action that fires upon state entry
@@ -95,7 +95,7 @@ namespace Z0
         /// <typeparam name="A">The action type</typeparam>
         [MethodImpl(Inline)]
         public static FsmActionRule<S,A> entry<S,A>(S source, A action)
-            => new FsmActionRule<S,A>(source,action);
+            => new (source,action);
 
         /// <summary>
         /// Defines an entry action function
@@ -105,7 +105,7 @@ namespace Z0
         /// <typeparam name="A">The action type</typeparam>
         [MethodImpl(Inline)]
         public static FsmEntryFunc<S,A> entry<S,A>(IEnumerable<IFsmActionRule<S,A>> rules)
-            => new FsmEntryFunc<S,A>(rules);
+            => new (rules);
 
         /// <summary>
         /// Defines an action that fires upon state exit
@@ -116,7 +116,7 @@ namespace Z0
         /// <typeparam name="A">The action type</typeparam>
         [MethodImpl(Inline)]
         public static FsmActionRule<S,A> exit<S,A>(S source, A action)
-            => new FsmActionRule<S,A>(source,action);
+            => new (source,action);
 
         /// <summary>
         /// Defines an exit action function
@@ -126,7 +126,7 @@ namespace Z0
         /// <typeparam name="A">The action type</typeparam>
         [MethodImpl(Inline)]
         public static FsmExitFunc<S,A> exit<S,A>(IEnumerable<IFsmActionRule<S,A>> rules)
-            => new FsmExitFunc<S,A>(rules);
+            => new (rules);
 
         /// <summary>
         /// Defines the most basic FSM, predicated only on ground-state, end-state and transition function
@@ -139,7 +139,7 @@ namespace Z0
         /// <typeparam name="S">The state type</typeparam>
         [MethodImpl(Inline)]
         public static Fsm<E,S> machine<E,S>(string id, IFsmContext context, S s0, S sZ, FsmTransitionFunc<E,S> f)
-            => new Fsm<E,S>(id, context, s0, sZ, f);
+            => new (id, context, s0, sZ, f);
 
         /// <summary>
         /// Defines the most basic FSM, predicated only on ground-state, end-state and transition function
@@ -152,7 +152,7 @@ namespace Z0
         /// <typeparam name="S">The state type</typeparam>
         [MethodImpl(Inline)]
         public static Fsm<E,S> machine<E,S>(string id, S s0, S sZ, FsmTransitionFunc<E,S> f, ulong? limit = null)
-            => new Fsm<E,S>(id, s0, sZ, f, limit);
+            => new (id, s0, sZ, f, limit);
 
         /// <summary>
         /// Defines an output rule key
@@ -211,7 +211,7 @@ namespace Z0
         /// <typeparam name="A">The entry action type</typeparam>
         [MethodImpl(Inline)]
         public static Fsm<E,S,A> machine<E,S,A>(string id, S s0, S sZ, FsmTransitionFunc<E,S> t, FsmEntryFunc<S,A> entry, FsmExitFunc<S,A> exit, ulong? limit = null)
-            => new Fsm<E,S,A>(id, s0, sZ, t, entry,exit, limit);
+            => new (id, s0, sZ, t, entry,exit, limit);
 
         /// <summary>
         /// Creates a default machine observer
@@ -262,6 +262,6 @@ namespace Z0
         /// <typeparam name="S">The state type</typeparam>
         [MethodImpl(Inline)]
         public static FsmTransitionFunc<E,S> transition<E,S>(params FsmTransitionRule<E,S>[] rules)
-            => new FsmTransitionFunc<E,S>(rules);
+            => new (rules);
     }
 }

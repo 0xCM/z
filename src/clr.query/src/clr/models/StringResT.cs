@@ -7,7 +7,7 @@ namespace Z0
     /// <summary>
     /// Represents an identified string resource
     /// </summary>
-    public readonly struct StringRes<E>
+    public readonly record struct StringRes<E>
         where E : unmanaged
     {
         /// <summary>

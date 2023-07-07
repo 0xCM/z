@@ -71,7 +71,6 @@ namespace Z0
         void RunCalcs()
         {
             var defs = XedInstDefParser.parse(XedDb.DocSource(XedDocKind.EncInstDef));
-            //var blocks = XedInstDump.Empty;
             var blocks = XedImport.CalcInstDump(XedDb.DocSource(XedDocKind.RuleDump));
             var forms = XedImport.CalcFormImports(XedDb.DocSource(XedDocKind.FormData));
             var chips = XedImport.CalcChipMap(XedDb.DocSource(XedDocKind.ChipMap));

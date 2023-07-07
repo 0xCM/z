@@ -9,7 +9,7 @@ namespace Z0
     /// </summary>
     /// <typeparam name="E">The input event type</typeparam>
     /// <typeparam name="S">The state type</typeparam>
-    public readonly struct FsmTransitionRule<E,S> : IFsmTransitionRule<E,S>
+    public readonly record struct FsmTransitionRule<E,S> : IFsmTransitionRule<E,S>
     {
         /// <summary>
         /// The transition event trigger

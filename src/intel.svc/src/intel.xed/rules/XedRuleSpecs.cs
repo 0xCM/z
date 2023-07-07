@@ -23,9 +23,9 @@ public readonly struct XedRuleSpecs
         => new CellInfo(op);
 
     public static Index<TableCriteria> criteria(RuleTableKind kind)
-        => criteria(XedDb.RuleSource(kind));
+        => CalcTableCriteria(XedDb.RuleSource(kind));
 
-    public static Index<TableCriteria> criteria(FilePath src)
+    public static Index<TableCriteria> CalcTableCriteria(FilePath src, Action<object> status = null)
     {
         var skip = hashset("XED_RESET");
         using var reader = src.Utf8LineReader();
@@ -36,6 +36,8 @@ public readonly struct XedRuleSpecs
         var name = EmptyString;
         while(reader.Next(out var line))
         {
+            status?.Invoke(line);
+            
             if(CellParser.RuleForm(line.Content) == RuleFormKind.SeqDecl)
             {
                 while(reader.Next(out line))
@@ -351,4 +353,3 @@ public readonly struct XedRuleSpecs
         return dst;
     }
 }
-

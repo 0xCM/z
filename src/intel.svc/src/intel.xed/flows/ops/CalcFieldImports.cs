@@ -2,48 +2,47 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+using static XedModels;
+using static sys;
+
+partial class XedFlows
 {
-    using static XedModels;
-    using static sys;
-
-    partial class XedFlows
+    public Index<FieldImport> CalcFieldImports()
     {
-        public Index<FieldImport> CalcFieldImports()
+        var src = XedDb.DocSource(XedDocKind.Fields);
+        var dst = list<FieldImport>();
+        var result = Outcome.Success;
+        var line = EmptyString;
+        var lines = src.ReadLines().Reader();
+        while(lines.Next(out line))
         {
-            var src = XedDb.DocSource(XedDocKind.Fields);
-            var dst = list<FieldImport>();
-            var result = Outcome.Success;
-            var line = EmptyString;
-            var lines = src.ReadLines().Reader();
-            while(lines.Next(out line))
-            {
-                var content = line.Trim();
-                if(text.empty(content) || text.begins(content,Chars.Hash))
-                    continue;
+            var content = line.Trim();
+            if(text.empty(content) || text.begins(content,Chars.Hash))
+                continue;
 
-                var cells = text.split(text.despace(content), Chars.Space).Reader();
-                var record = FieldImport.Empty;
-                record.Name = cells.Next();
+            var cells = text.split(text.despace(content), Chars.Space).Reader();
+            var record = FieldImport.Empty;
+            record.Name = cells.Next();
 
-                cells.Next();
-                result = FieldTypes.ExprKind(cells.Next(), out XedFieldType ft);
-                if(result.Fail)
-                    Errors.Throw(AppMsg.ParseFailure.Format(nameof(record.FieldType), cells.Prior()));
-                else
-                    record.FieldType = ft;
+            cells.Next();
+            result = FieldTypes.ExprKind(cells.Next(), out XedFieldType ft);
+            if(result.Fail)
+                Errors.Throw(AppMsg.ParseFailure.Format(nameof(record.FieldType), cells.Prior()));
+            else
+                record.FieldType = ft;
 
-                result = DataParser.parse(cells.Next(), out record.Width);
-                if(result.Fail)
-                    Errors.Throw(AppMsg.ParseFailure.Format(nameof(record.Width), cells.Prior()));
+            result = DataParser.parse(cells.Next(), out record.Width);
+            if(result.Fail)
+                Errors.Throw(AppMsg.ParseFailure.Format(nameof(record.Width), cells.Prior()));
 
-                if(!Visibilities.ExprKind(cells.Next(), out record.Visibility))
-                    Errors.Throw(AppMsg.ParseFailure.Format(nameof(record.Visibility), cells.Prior()));
+            if(!Visibilities.ExprKind(cells.Next(), out record.Visibility))
+                Errors.Throw(AppMsg.ParseFailure.Format(nameof(record.Visibility), cells.Prior()));
 
-                dst.Add(record);
-            }
-
-            return dst.ToArray().Sort();
+            dst.Add(record);
         }
+
+        return dst.ToArray().Sort();
     }
 }

@@ -12,6 +12,7 @@ namespace Z0
     [ApiHost]
     public partial class Ecma : WfSvc<Ecma>
     {   
+
         [MethodImpl(Inline)]
         public static EcmaHandleData data(Handle src)
             => EcmaHandleData.from(src);
@@ -76,12 +77,6 @@ namespace Z0
 
         public static AssemblyKey key(Assembly src)
             => Ecma.reader(src).AssemblyKey();
-
-        public static MemberKey key(CompositeDispenser dispenser, MethodDef src)
-            => new (src.AssemblyName, src.Token, dispenser.String(src.Namespace), dispenser.String(src.DeclaringType), dispenser.String(src.Name));
-
-        public static MemberKey key(CompositeDispenser dispenser, EcmaMember src)
-            => new (src.AssemblyName, src.Token, dispenser.String(src.Namespace), dispenser.String(src.DeclaringType), dispenser.String(src.Name));
 
         public static EcmaReader reader(EcmaFile src)
             => EcmaReader.create(src);

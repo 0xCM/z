@@ -9,13 +9,13 @@ namespace Z0
     [ApiHost]
     public class BinaryProcessor
     {
-        ISource Source;
+        readonly ISource Source;
 
-        Index<Cell128> LeftBuffer;
+        readonly Index<Cell128> LeftBuffer;
 
-        Index<Cell128> RightBuffer;
+        readonly Index<Cell128> RightBuffer;
 
-        Index<Cell128> TargetBuffer;
+        readonly Index<Cell128> TargetBuffer;
 
         uint Position;
 
@@ -95,7 +95,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         void Deposit(Vector128<byte> src)
         {
-            vgcpu.vstore<byte>(src, ref Target());
+            vgcpu.vstore(src, ref Target());
         }
 
         [MethodImpl(Inline), Op]

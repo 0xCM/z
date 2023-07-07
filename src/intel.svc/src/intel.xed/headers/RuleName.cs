@@ -12,21 +12,21 @@ namespace Z0
         {
             None = 0,
 
-            A_GPR_B = 1,
+            A_GPR_B,
 
-            A_GPR_R = 2,
+            A_GPR_R,
 
-            Ar10 = 3,
+            Ar10,
 
-            Ar11 = 4,
+            Ar11,
 
-            Ar12 = 5,
+            Ar12,
 
-            Ar13 = 6,
+            Ar13,
 
-            Ar14 = 7,
+            Ar14,
 
-            Ar15 = 8,
+            Ar15,
 
             Ar8 = 9,
 
@@ -670,35 +670,35 @@ namespace Z0
 
             YMM_R_64 = 329,
 
-            YMM_R3 = 330,
+            YMM_R3,
 
-            YMM_R3_32 = 331,
+            YMM_R3_32,
 
-            YMM_R3_64 = 332,
+            YMM_R3_64,
 
-            YMM_SE = 333,
+            YMM_SE,
 
-            YMM_SE32 = 334,
+            YMM_SE32,
 
-            YMM_SE64 = 335,
+            YMM_SE64,
 
-            ZMM_B3 = 336,
+            ZMM_B3,
 
-            ZMM_B3_32 = 337,
+            ZMM_B3_32,
 
-            ZMM_B3_64 = 338,
+            ZMM_B3_64,
 
-            ZMM_N3 = 339,
+            ZMM_N3,
 
-            ZMM_N3_32 = 340,
+            ZMM_N3_32,
 
-            ZMM_N3_64 = 341,
+            ZMM_N3_64,
 
-            ZMM_R3 = 342,
+            ZMM_R3,
 
-            ZMM_R3_32 = 343,
+            ZMM_R3_32,
 
-            ZMM_R3_64 = 344,
+            ZMM_R3_64,
 
             XSAVE,
 

@@ -9,7 +9,7 @@ namespace Z0
     /// <summary>
     /// Captures the content of a <see cref="InterfaceMapping"/>
     /// </summary>
-    public struct ImplMap : IExpr
+    public record struct ImplMap : IExpr
     {
         /// <summary>
         /// The methods declared by an interface

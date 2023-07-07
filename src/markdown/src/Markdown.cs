@@ -11,20 +11,20 @@ namespace Z0
     {
         [MethodImpl(Inline), Op]
         public static Doc doc(ISection[] src)
-            => new Doc(src);
+            => new (src);
 
         public static Doc doc(uint sections)
-            => new Doc(alloc<ISection>(sections));
+            => new (alloc<ISection>(sections));
 
         [MethodImpl(Inline), Op]
         public static Section section(uint index, SectionHeader header, string content)
-            => new Section(index, header,content);
+            => new (index, header,content);
 
         [MethodImpl(Inline), Op]
         public static ListItem item<T>(Level level, T content)
-            => new ListItem(level, content.ToString());
+            => new (level, content.ToString());
 
-        public List list(ReadOnlySpan<string> src, DepthIndicator style)
+        public static List list(ReadOnlySpan<string> src, DepthIndicator style)
         {
             var count = src.Length;
             var dst = new ListItem[count];
@@ -35,7 +35,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static Level level(byte depth, DepthIndicator indicator)
-            => new Level(depth, indicator);
+            => new (depth, indicator);
 
         [MethodImpl(Inline), Op]
         public static LinkTarget<T> target<T>(T dst)
@@ -43,7 +43,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static PageTitle title(string name, string content)
-            => new PageTitle(name,content);
+            => new (name,content);
 
         [MethodImpl(Inline), Op]
         public static Label label(string content)
@@ -59,11 +59,11 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static SectionLink link(Label label, Name dst)
-            => new SectionLink(label, dst);
+            => new (label, dst);
 
         [MethodImpl(Inline), Op]
         public static SectionLink link(Name dst)
-            => new SectionLink(label(dst.Content), dst);
+            => new (label(dst.Content), dst);
 
         public static Index<RelativeLink> links(FolderPath @base, Files files)
         {
@@ -80,22 +80,22 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static RelativeLink link(Label label, RelativeFilePath src)
-            => new RelativeLink(label, src);
+            => new (label, src);
 
         [MethodImpl(Inline), Op]
         public static RelativeLink link(RelativeFilePath src)
-            => new RelativeLink(src.File.Format(), src);
+            => new (src.File.Format(), src);
 
         [MethodImpl(Inline), Op]
         public static AbsoluteLink link(Label label, FilePath dst)
-            => new AbsoluteLink(label, dst.ToUri(), false);
+            => new (label, dst.ToUri(), false);
 
         [MethodImpl(Inline), Op]
         public static AbsoluteLink link(Label label, _FileUri dst)
-            => new AbsoluteLink(label, dst, false);
+            => new (label, dst, false);
 
         [MethodImpl(Inline), Op]
         public static AbsoluteLink link(FilePath dst, bool bare = true)
-            => new AbsoluteLink(dst.FileName.WithoutExtension.Format(), dst.ToUri(), bare);
+            => new (dst.FileName.WithoutExtension.Format(), dst.ToUri(), bare);
     }
 }

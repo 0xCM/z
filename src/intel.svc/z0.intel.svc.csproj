@@ -1,11 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(ProjectProps)\usings.props"/>
   <ItemGroup>
-    <ProjectReference Include="$(Asm)" />
-    <ProjectReference Include="$(ZXml)" />
-    <ProjectReference Include="$(Containers)" />
-    <ProjectReference Include="$(Bits)" />
-    <ProjectReference Include="$(Stitch)" />
+    <ProjectReference Include="../asm/z0.asm.csproj" />
+    <ProjectReference Include="../xml/z0.xml.csproj" />
+    <ProjectReference Include="../containers/z0.containers.csproj" />
+    <ProjectReference Include="../bits/z0.bits.csproj" />
+    <ProjectReference Include="../stitch/z0.stitch.csproj" />
+    <ProjectReference Include="../markdown/z0.markdown.csproj" />
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>

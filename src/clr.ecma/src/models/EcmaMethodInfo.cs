@@ -24,7 +24,7 @@ namespace Z0
         [Render(32)]
         public @string MethodName;
 
-        [Render(8)]
+        [Render(16)]
         public Address32 Rva;
 
         [Render(32)]
