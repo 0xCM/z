@@ -1,5 +1,4 @@
 <Project>
-  <Import Project="versions.props"/>
   <PropertyGroup>
     <FrameworkMoniker>net8.0</FrameworkMoniker>
     <ConfigName>Release</ConfigName>
@@ -8,8 +7,9 @@
     <SlnName>z0</SlnName>
     <SlnRoot>$(MsBuildThisFileDirectory)..\$(SlnName)</SlnRoot>
     <SlnProps>$(SlnRoot)\props</SlnProps>
-    <Version>$(ZFxVer)</Version>
   </PropertyGroup>
   <Import Project="props\common.props"/>
   <Import Project="exports.props"/>
+  <Import Project="versions.props"/>
+
 </Project>

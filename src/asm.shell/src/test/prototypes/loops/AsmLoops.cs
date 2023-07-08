@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    
     [ApiHost]
     public unsafe readonly partial struct AsmLoops
     {

@@ -89,8 +89,11 @@ namespace Z0
         void CheckAsmTokens()
         {
             AsmSigs.parse("adc r16, r16", out var sig);
-            SdmOpCodes.parse("11 /r", out var oc1);
-            SdmOpCodes.parse("13 /r", out var oc2);
+            Channel.Row(sig);
+            // SdmOpCodes.parse("11 /r", out var oc1);
+            // Channel.Row(oc1);
+            // SdmOpCodes.parse("13 /r", out var oc2);
+            // Channel.Row(oc2);
             // var count = min(oc1.TokenCount, oc2.TokenCount);
             // var token = AsmOcToken.Empty;
             // for(var i=0; i<count; i++)
@@ -110,17 +113,17 @@ namespace Z0
             // if(SdmOpCodes.diff(oc1, oc2, out token))
             //     Write(token.Format());
 
-            var sigs = AsmSigTokenGroup.create();
-            var src = sigs;
-            var types = src.TokenTypes;
-            for(var i=0; i<types.Length; i++)
-            {
-                var sigTokens = src.TokensByType(skip(types,i));
-                for(var j=0;j<sigTokens.Count; j++)
-                {
-                    Write(sigTokens[j].Format());
-                }
-            }
+            // var sigs = AsmSigTokenGroup.create();
+            // var src = sigs;
+            // var types = src.TokenTypes;
+            // for(var i=0; i<types.Length; i++)
+            // {
+            //     var sigTokens = src.TokensByType(skip(types,i));
+            //     for(var j=0;j<sigTokens.Count; j++)
+            //     {
+            //         Write(sigTokens[j].Format());
+            //     }
+            // }
         }
 
         [CmdOp("hex/gen/blocks")]
