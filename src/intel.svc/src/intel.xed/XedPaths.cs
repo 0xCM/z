@@ -16,7 +16,7 @@ namespace Z0
         static AppDb AppDb => AppDb.Service;
 
         public IDbArchive XedKit()
-            => IntelPaths.paths().Kit("xed");
+            => IntelPaths.service().XedKit();
 
         public IDbArchive XedDb()
             => XedKit().Scoped("xed.db");

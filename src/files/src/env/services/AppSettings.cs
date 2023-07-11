@@ -117,21 +117,12 @@ namespace Z0
         public DbArchive Control(string scope)
             => Control().Scoped(scope);
 
-        public DbArchive XedDb()
-            => Instance.Setting(SettingNames.XedDb).Folder();
-
-        public DbArchive SdeDb()
-            => Instance.Setting(SettingNames.SdeDb).Folder();
-
         public DbArchive Sdks()
             => Instance.Setting(SettingNames.SdkRoot).Folder();
 
         public DbArchive Sdk(string name)
             => Sdks().Scoped(name);
         
-        public DbArchive InxDb()
-            => Instance.Setting(SettingNames.InxDb).Folder();
-
         public DbArchive SdmDb()
             => Instance.Setting(SettingNames.SdmDb).Folder();
 

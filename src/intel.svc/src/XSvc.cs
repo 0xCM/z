@@ -20,8 +20,8 @@ public static class XSvc
 
     sealed class ServiceCache : AppServices<ServiceCache>
     {
-        public CpuIdSvc CpuId(IWfRuntime wf)
-            => Service<CpuIdSvc>(wf);
+        public SdeCpuid CpuId(IWfRuntime wf)
+            => Service<SdeCpuid>(wf);
 
         public IntelIntrinsics IntelInx(IWfRuntime wf)
             => Service<IntelIntrinsics>(wf);
@@ -146,7 +146,7 @@ public static class XSvc
     public static XedTables XedViews(this IWfChannel channel)
         => Channeled.XedViews(channel);
 
-    public static CpuIdSvc CpuId(this IWfRuntime wf)
+    public static SdeCpuid CpuId(this IWfRuntime wf)
         => Services.CpuId(wf);
 }
 

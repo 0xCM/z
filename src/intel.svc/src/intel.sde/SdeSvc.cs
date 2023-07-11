@@ -5,19 +5,31 @@
 
 namespace Z0
 {
+    using static sys;
+
     public class SdeSvc : WfSvc<SdeSvc>
     {
-        CpuIdSvc CpuId => Wf.CpuId();
+        SdeCpuid SdeCpuid => Wf.CpuId();
+
+        ReadOnlySeq<CpuIdRow> VerifyEquality(ReadOnlySeq<CpuIdRow> left, ReadOnlySeq<CpuIdRow> right)
+        {
+            var running = Channel.Running($"Verifying import process");
+            var count = Require.equal(left.Count, right.Count);
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var a = ref left[i];
+                ref readonly var b = ref right[i];
+                var record = Require.equal(a,b);
+            }
+            Channel.Ran(running,$"Verified import process for {count} records");
+            return left;
+        }
 
         public void RunEtl()
         {
-            var sources = AppDb.DbIn("intel").Sources("sde.cpuid");
-            var targets = AppDb.AsmDb("sde");
-            var src = CpuId.Import(
-            sources.Root,
-            targets.Path("sde.cpuid.records", FileKind.Csv),
-            targets.Path("sde.cpuid.bits", FileKind.Csv)
-            );
+            var import = SdeCpuid.Import();
+            var imported = SdeCpuid.Imported();
+            var verified = VerifyEquality(import,imported);
         }
     }
 }

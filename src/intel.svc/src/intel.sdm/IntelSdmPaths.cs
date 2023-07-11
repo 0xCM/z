@@ -11,7 +11,7 @@ namespace Z0.Asm
 
     public class IntelSdmPaths : WfSvc<IntelSdmPaths>
     {
-        IDbArchive SdmDb()
+        static IDbArchive SdmDb()
             => AppSettings.SdmDb();
         
         public IDbArchive Sources()

@@ -1,5 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <AsmTest>$(MsBuildThisFileDirectory)z0.asm.test.csproj</AsmTest>
-  </PropertyGroup>
-</Project>

@@ -9,6 +9,7 @@ namespace Z0
     using static sys;
     using static XedRules;
     using static XedModels;
+    
     partial class XedCmd
     {
         [CmdOp("xed/import")]
@@ -17,8 +18,7 @@ namespace Z0
             var cpuid = DataFlow.CalcCpuIdDataset(XedDb.DocSource(XedDocKind.CpuId));
             DataFlow.EmitCpuIdDataset(cpuid);       
             var codes = Symbols.symkinds<ChipCode>();  
-            DataFlow.EmitChipCodes(codes);
-            
+            DataFlow.EmitChipCodes(codes);            
             var chips = DataFlow.CalcChipMap(XedDb.DocSource(XedDocKind.ChipMap));
             DataFlow.EmitChipMap(chips);
             var dump = DataFlow.CalcInstDump(XedDb.DocSource(XedDocKind.RuleDump));

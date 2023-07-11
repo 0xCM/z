@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Record(TableId), StructLayout(StructLayout,Pack=1)]
-    public struct CpuIdRow
+    public record struct CpuIdRow
     {
         public const string TableId = "asm.cpuid";
 

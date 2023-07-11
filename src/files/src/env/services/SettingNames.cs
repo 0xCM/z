@@ -53,6 +53,6 @@ namespace Z0
 
         public const string BuildKits = nameof(BuildKits);
 
-        public const string IntelKits = nameof(IntelKits);        
+        public const string IntelKits = nameof(IntelKits);
     }
 }

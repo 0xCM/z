@@ -4,15 +4,22 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using System.Linq;
+
     using static sys;
 
-    public class CpuIdSvc : AppService<CpuIdSvc>
+    public class SdeCpuid : AppService<SdeCpuid>
     {
-        AppDb AppDb => AppDb.Service;
-        
+        static IDbArchive Sources => IntelPaths.service().SdeKit().Scoped("kit/misc/cpuid");
+
+        static IDbArchive Targets => IntelPaths.service().SdeDb();
+
+        public static ParallelQuery<FilePath> defs(IDbArchive src)
+            => src.Files(FS.ext("def")).AsParallel();
+
         public void EmitRecords(ReadOnlySpan<CpuIdRow> src, FilePath dst)
             => Channel.TableEmit(src,dst);
-
+        
         public void EmitBits(ReadOnlySpan<CpuIdRow> src, FilePath dst)
         {
             var buffer = text.emitter();
@@ -20,7 +27,7 @@ namespace Z0
             Channel.FileEmit(buffer.Emit(), src.Length, dst);
         }
 
-        public static Index<CpuIdRow> import(FolderPath srcdir)
+        public static ReadOnlySeq<CpuIdRow> ParseSources(IDbArchive src)
         {
             //2 space-separated 32-bit hex numbers
             const byte InLength = 2*8 + 1;
@@ -30,8 +37,8 @@ namespace Z0
 
             const string Imply = " => ";
 
-            var srcfiles = srcdir.Files(FS.Def, true).ToReadOnlySpan();
-            var count = srcfiles.Length;
+            var paths = src.Files(FS.Def).ToReadOnlySpan();
+            var count = paths.Length;
             var outcome = Outcome.Success;
             var records = list<CpuIdRow>();
 
@@ -40,7 +47,7 @@ namespace Z0
                 if(outcome.Fail)
                     break;
 
-                ref readonly var file = ref skip(srcfiles,i);
+                ref readonly var file = ref skip(paths,i);
                 var chip = file.FolderName.Format();
                 using var reader = file.LineReader(TextEncodingKind.Asci);
                 while(reader.Next(out var line))
@@ -149,7 +156,7 @@ namespace Z0
             dst.AppendLine();
         }
 
-        public static Outcome row(TextRow src, out CpuIdRow dst)
+        static Outcome row(TextRow src, out CpuIdRow dst)
         {
             var input = src.Cells;
             var i = 0;
@@ -164,7 +171,10 @@ namespace Z0
             return outcome;
         }
 
-        public static Index<CpuIdRow> LoadImports(FilePath src)
+        public ReadOnlySeq<CpuIdRow> Imported()
+            => LoadImports(Targets.Path("sde.cpuid.records", FileKind.Csv));
+
+        static Index<CpuIdRow> LoadImports(FilePath src)
         {
             const byte FieldCount = CpuIdRow.FieldCount;
             const char Delimiter = Chars.Pipe;
@@ -183,7 +193,7 @@ namespace Z0
                 if(data.CellCount != FieldCount)
                     Errors.Throw(Tables.FieldCountMismatch.Format(FieldCount, data.CellCount));
 
-                result = CpuIdSvc.row(data, out CpuIdRow cpuid);
+                result = row(data, out CpuIdRow cpuid);
                 if(result.Fail)
                     Errors.Throw(result.Message);
 
@@ -194,37 +204,21 @@ namespace Z0
             return dst.Index();
         }
 
-        public Index<CpuIdRow> Import(FolderPath src, FilePath records, FilePath bits)
+        public ReadOnlySeq<CpuIdRow> Import()
         {
-            var data = CpuIdSvc.import(src);
+            var rows = Import(
+            Sources,
+            Targets.Path("sde.cpuid.records", FileKind.Csv),
+            Targets.Path("sde.cpuid.bits", FileKind.Csv)
+            );
+            return rows;
+        }
+        public ReadOnlySeq<CpuIdRow> Import(IDbArchive src, FilePath records, FilePath bits)
+        {
+            var data = ParseSources(src);
             EmitRecords(data, records);
             EmitBits(data, bits);
             return data;
-        }
-
-        public void ImportSources()
-            => Emit(CpuIdSvc.import(AppDb.DbSources("intel").Root));
-
-        void EmitBits(ReadOnlySpan<CpuIdRow> src)
-        {
-            var result = Outcome.Success;
-            var dst = AppDb.DbTargets("sde").Path("sde.cpuid.bits", FileKind.Csv);
-            var emitting = EmittingFile(dst);
-            EmitBits(src,dst);
-            EmittedFile(emitting,src.Length);
-        }
-
-        void EmitRows(ReadOnlySpan<CpuIdRow> src)
-        {
-            var result = Outcome.Success;
-            var dst = AppDb.DbTargets("sde").Table<CpuIdRow>("records");
-            EmitRecords(src,dst);
-        }
-
-        void Emit(ReadOnlySpan<CpuIdRow> src)
-        {
-            EmitRows(src);
-            EmitBits(src);
         }
     }
 }

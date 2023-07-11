@@ -19,6 +19,12 @@ namespace Z0
         SdeSvc Sde => Wf.SdeSvc();
 
 
+        [CmdOp("sde/etl")]
+        void RunSdeEtl()
+        {
+            Sde.RunEtl();
+        }
+
         [CmdOp("intel/etl")]
         void ImportIntrinsics()
         {
@@ -29,8 +35,6 @@ namespace Z0
             Xed.RunEtl();
         }
 
-        public static TextEncoding encoding()
-            => new TextEncoding(Encoding.UTF8);
 
     }
 }
