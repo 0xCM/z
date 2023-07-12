@@ -3,8 +3,11 @@
     <ZSysVer>0.0.126</ZSysVer>
     <ZVer>0.0.467</ZVer>
     <ZFxVer>0.0.1003</ZFxVer>
-    <MsBuildVer>17.6.0-preview-23174-01</MsBuildVer>
-    <NugetVersion>6.6.0-preview.3.57</NugetVersion>
+    <LLVMToolsVersion>16</LLVMToolsVersion>
+
+    <MsBuildVer>17.6.3</MsBuildVer>
+    <NugetVersion>6.6.0</NugetVersion>
+    
     <SystemCommandLineVersion>2.0.0-beta4.22272.1</SystemCommandLineVersion>
     <CodeAnalysisVersion>4.7.0-1</CodeAnalysisVersion>
 
@@ -20,6 +23,7 @@
     <EfCoreVer>7.0.0</EfCoreVer>
     <ClangSharpVer>15.0.2</ClangSharpVer>
     <MsProseVersion>8.20.0</MsProseVersion>
+
     <WinSdkContractVersion>10.0.25314-preview</WinSdkContractVersion>
     <YamlDotNetVersion>13.0.2</YamlDotNetVersion>
     <MarkdigVersion>0.31.0</MarkdigVersion>

@@ -6,6 +6,7 @@ namespace Z0
 {
     public class ToolCatalog : ReadOnlySeq<ToolCatalog,LocatedTool>
     {
+            
         public ToolCatalog()
         {
         }
@@ -14,6 +15,8 @@ namespace Z0
             : base(src)
         {
         }
+
+
 
         public static implicit operator ToolCatalog(LocatedTool[] src)
             => new ToolCatalog(src);

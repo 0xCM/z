@@ -1,5 +1,6 @@
 <Project>
   <PropertyGroup>  
+    <LLVMInstallDir>D:\env\dev\llvm\vendor\kit</LLVMInstallDir>
     <ProjectProps>$(SlnRoot)\props</ProjectProps>
     <SlnBuild>$(SlnRoot)\build</SlnBuild>
     <SlnLibs>$(SlnRoot)\lib</SlnLibs>

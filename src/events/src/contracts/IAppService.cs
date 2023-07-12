@@ -13,7 +13,6 @@ namespace Z0
 
         void Init(IWfRuntime wf);
 
-
         void IDisposable.Dispose() {}
 
         void IChanneled.Init(IWfChannel channel)
