@@ -8,6 +8,7 @@ namespace Z0
 
     using static sys;
 
+    
     /// <summary>
     /// Extends the semantics of <see cref='SpinWait'/> to form a run loop
     /// </summary>

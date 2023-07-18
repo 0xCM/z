@@ -135,19 +135,6 @@ namespace Z0
             return token;
         }
 
-        // public static void emit(IWfChannel channel, ToolCatalog src, EnvId name, EnvVarKind kind,  IDbArchive dst)
-        // {
-        //     var emitter = text.emitter();
-        //     foreach(var tool in src)
-        //     {               
-        //         var info = string.Format("{0:D5} | {1,-48} | {2}", tool.Seq, tool.Name, tool.Path); 
-        //         emitter.AppendLine(string.Format("{0:D5} | {1,-48} | {2}", tool.Seq, tool.Name, tool.Path));
-        //         channel.Row(info);
-        //     }
-
-        //     channel.FileEmit(emitter.Emit(), GetToolCsvPath(dst, name, kind));
-        // }
-
         static ExecToken emit(IWfChannel channel, ProcessAdapter src, Timestamp ts, IDbArchive dst)
         {
             var running = channel.Running($"Emiting context for process {src.Id} based at {src.BaseAddress} from {src.Path}");
