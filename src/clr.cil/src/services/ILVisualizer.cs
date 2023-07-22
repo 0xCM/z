@@ -89,7 +89,6 @@ namespace System.Reflection.Metadata
             }
         }
 
-
         public enum HandlerKind
         {
             Try,

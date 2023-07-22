@@ -78,7 +78,7 @@ namespace Z0
         /// <param name="w">The target component width</param>
         [MethodImpl(Inline), Op]
         public static unsafe Vector512<uint> vmove16x32u(in ushort src)
-            => (v32u(ConvertToVector256Int32(gptr(src))),
+            => Vector512.Create(v32u(ConvertToVector256Int32(gptr(src))),
                 v32u(ConvertToVector256Int32(gptr(src, 8))));
     }
 }

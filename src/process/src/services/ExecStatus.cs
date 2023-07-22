@@ -2,27 +2,26 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+[Record(TableId), StructLayout(StructLayout)]
+public record struct ExecStatus
 {
-    [Record(TableId), StructLayout(StructLayout)]
-    public record struct ExecStatus
-    {
-        public const string TableId = "cmd.status";
+    public const string TableId = "cmd.status";
 
-        public ProcessId Id;
+    public ProcessId Id;
 
-        public ExecToken Token;
+    public ExecToken Token;
 
-        public Timestamp StartTime;
+    public Timestamp StartTime;
 
-        public bool HasExited;
+    public bool HasExited;
 
-        public Timestamp ExitTime;
+    public Timestamp ExitTime;
 
-        public Duration Duration;
+    public Duration Duration;
 
-        public int ExitCode;
+    public int ExitCode;
 
-        public static ExecStatus Empty => default;
-    }
+    public static ExecStatus Empty => default;
 }

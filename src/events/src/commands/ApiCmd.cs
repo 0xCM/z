@@ -11,11 +11,11 @@ namespace Z0
     public class ApiCmd
     {
         public static CmdEffectors effectors(IWfRuntime wf, Assembly[] parts)
-            => new CmdEffectors(methods(wf, parts), handlers(wf, parts));
+            => new (methods(wf, parts), handlers(wf, parts));
 
         [MethodImpl(Inline), Op]
         public static CmdUri uri(CmdKind kind, string? part, string? host, string? name)
-            => new CmdUri(kind, part, host, name);
+            => new (kind, part, host, name);
 
         public static CmdUri uri(ApiCmdRoute route, object host)
             => new(CmdKind.App, host.GetType().Assembly.PartName().Format(), host.GetType().DisplayName(), route.Format());
@@ -209,7 +209,7 @@ namespace Z0
         }
 
         public static ProjectContext context(IProject src)
-            => new ProjectContext(src, CmdFlows.flows(src));
+            => new (src, CmdFlows.flows(src));
 
         public static ApiCmdScript script(FilePath src)
         {
@@ -250,10 +250,10 @@ namespace Z0
         public static CmdResult<C,P> result<C,P>(C spec, ExecToken token, bool suceeded, P payload = default)
             where C : ICmd, new()
             where P : INullity, new()
-                => new CmdResult<C, P>(spec,token,suceeded,payload);
+                => new (spec,token,suceeded,payload);
 
         static CmdArg arg(object src)
-            => new CmdArg(src?.ToString() ?? EmptyString);
+            => new (src?.ToString() ?? EmptyString);
 
         static CmdArgs args(params object[] src)
         {

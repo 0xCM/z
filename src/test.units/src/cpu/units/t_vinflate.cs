@@ -34,27 +34,6 @@ namespace Z0
                 Claim.eq(vcell(v128x8u, i), vcell(v128x16u_a,i));
         }
 
-        public void vinflate_256x8_1024x32()
-        {
-            var w = w256;
 
-            var a0 = gcpu.vinc<uint>(w,0);
-            var b0 = gcpu.vinc<uint>(w,8);
-            var c0 = gcpu.vinc<uint>(w,16);
-            var d0 = gcpu.vinc<uint>(w,24);
-
-            var u16inc = gcpu.vinc<ushort>(w,0);
-            var u8inc = gcpu.vinc<byte>(w,0);
-
-            var c8 = vpack.vpack256x8u(a0, b0, c0, d0);
-            var c16 = vpack.vpack256x16u(a0, b0);
-            vpack.vinflate1024x32u(c8, out var x0, out var y0);
-            Claim.veq(u16inc, c16);
-            Claim.veq(u8inc, c8);
-            Claim.veq(a0, x0.Lo);
-            Claim.veq(b0, x0.Hi);
-            Claim.veq(c0, y0.Lo);
-            Claim.veq(d0, y0.Hi);
-        }
     }
 }

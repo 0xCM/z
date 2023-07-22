@@ -30,23 +30,6 @@ namespace Z0
             case2();
         }
 
-        public void vpack_128()
-        {
-            var w = w128;
-            var a = gcpu.vinc<uint>(w,0);
-            var b = gcpu.vinc<uint>(w,4);
-            var c = gcpu.vinc<uint>(w,8);
-            var d = gcpu.vinc<uint>(w,12);
-            Vector512<uint> v512 = (a,b,c,d);
-            var abActual = vpack.vpack128x16u(a,b);
-            var abExpect = gcpu.vinc<ushort>(w);
-            Claim.veq(abExpect, abActual);
-
-            var abcdActual = vpack.vpack128x8u(a, b, c, d);
-            var abcdExpect = gcpu.vinc<byte>(w);
-            Claim.veq(abcdExpect, abcdActual);
-        }
-
         public void vpack_128x16x2_128x8()
         {
             var w = w128;

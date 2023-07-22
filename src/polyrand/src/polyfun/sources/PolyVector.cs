@@ -22,7 +22,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static VEmitter128<T> vemitter<T>(N128 w, ISource src)
             where T : unmanaged
-                => new VEmitter128<T>(src);
+                => new (src);
 
         /// <summary>
         /// Creates a 256-bit vectorized emitter predicated an a specified source
@@ -34,7 +34,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static VEmitter256<T> vemitter<T>(N256 w, ISource src)
             where T : unmanaged
-                => new VEmitter256<T>(src);
+                => new (src);
 
         /// <summary>
         /// Creates a 256-bit vectorized emitter predicated an a specified source
@@ -46,7 +46,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static VEmitter512<T> vemitter<T>(N512 w, ISource src)
             where T : unmanaged
-                => new VEmitter512<T>(src);
+                => new (src);
 
         /// <summary>
         /// Produces a blocked vector
@@ -57,7 +57,7 @@ namespace Z0
         public static RowVector256<T> VectorBlock<T>(this IPolyrand random, int len, Interval<T>? domain = null)
             where T : unmanaged
         {
-            var dst = Z0.RowVectors.blockalloc<T>(len);
+            var dst = RowVectors.blockalloc<T>(len);
             if(domain != null)
                 random.Fill(domain.Value, len, ref dst[0]);
             else
@@ -78,7 +78,7 @@ namespace Z0
         public static RowVector256<T> VectorBlock<S,T>(this IPolyrand random, int len, Interval<S>? domain = null)
             where S: unmanaged
             where T : unmanaged
-                => random.VectorBlock<S>(len,domain).Convert<T>();
+                => random.VectorBlock(len,domain).Convert<T>();
 
         /// <summary>
         /// Allocates and populates a vector of natural length
@@ -92,7 +92,7 @@ namespace Z0
             where T : unmanaged
             where N : unmanaged, ITypeNat
         {
-            var dst = Z0.RowVectors.blockalloc<N, T>();
+            var dst = RowVectors.blockalloc<N, T>();
             random.Fill(domain, ref dst);
             return dst;
         }
@@ -124,7 +124,7 @@ namespace Z0
             where T : unmanaged
             where N : unmanaged, ITypeNat
         {
-            var dst = Z0.RowVectors.blockalloc<N,T>();
+            var dst = RowVectors.blockalloc<N,T>();
             random.Fill(ref dst);
             return dst;
         }

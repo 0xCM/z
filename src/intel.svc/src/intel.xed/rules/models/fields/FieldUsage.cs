@@ -13,11 +13,11 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public static FieldUsage left(RuleSig rule, RuleField field)
-                => new FieldUsage(rule.IsEncTable ? UsageKind.EncLeft : UsageKind.DecLeft, rule.TableName, field);
+                => new (rule.IsEncTable ? UsageKind.EncLeft : UsageKind.DecLeft, rule.TableName, field);
 
             [MethodImpl(Inline)]
             public static FieldUsage right(RuleSig rule, RuleField field)
-                => new FieldUsage(rule.IsEncTable ? UsageKind.EncRight : UsageKind.DecRight, rule.TableName, field);
+                => new (rule.IsEncTable ? UsageKind.EncRight : UsageKind.DecRight, rule.TableName, field);
 
             public readonly UsageKind Kind;
 

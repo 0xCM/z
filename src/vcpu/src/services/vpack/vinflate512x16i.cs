@@ -16,7 +16,7 @@ namespace Z0
         /// <param name="x1">The second target vector</param>
         [MethodImpl(Inline), Op]
         public static Vector512<short> vinflate512x16i(Vector256<sbyte> src)
-            => (vlo256x16i(src), vhi256x16i(src));
+            => Vector512.Create(vlo256x16i(src), vhi256x16i(src));
 
         /// <summary>
         /// 32x8w -> 32x16i
@@ -26,6 +26,6 @@ namespace Z0
         /// <param name="hi">The second target vector</param>
         [MethodImpl(Inline), Op]
         public static Vector512<short> vinflate512x16i(Vector256<byte> src)
-            => (vlo256x16i(src), vhi256x16i(src));
+            => Vector512.Create(vlo256x16i(src), vhi256x16i(src));
     }
 }

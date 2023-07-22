@@ -14,7 +14,7 @@ namespace Z0
         /// <typeparam name="T">The sample element type</typeparam>
         public static BernoulliDist<T> Distribution<T>(this BernoulliSpec<T> spec, IPolyrand random)
             where T : unmanaged
-                => new BernoulliDist<T>(random, spec);
+                => new (random, spec);
 
         /// <summary>
         /// Produces a stream of random values conforming to a Bernoulli distribution

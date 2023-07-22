@@ -33,7 +33,7 @@ namespace Z0
         void Disposed()
         {
             if(Verbosity.IsBabble())
-                Raise(Events.disposed(EventSink.Host));
+                Raise(disposed(EventSink.Host));
         }
 
         ExecFlow<T> Running<T>(T data)
@@ -68,10 +68,10 @@ namespace Z0
             return token;
         }
 
-        ExecToken Ran<T>(Type host, ExecFlow<T> src, FlairKind flair = FlairKind.Ran)
+        ExecToken Ran<T>(Type host, ExecFlow<T> flow, FlairKind flair = FlairKind.Ran)
         {
-            var token = Completed(src);
-            signal(EventSink, host).Ran(src.Data);
+            var token = Completed(flow);
+            signal(EventSink, host).Ran(flow.Data);
             return token;
         }
 
@@ -86,13 +86,13 @@ namespace Z0
             => AppName.Format();
 
         ExecFlow<T> Flow<T>(T data)
-            => new ExecFlow<T>(Channel, data, NextExecToken());
+            => new (Channel, data, NextExecToken());
 
         TableFlow<T> TableFlow<T>(FilePath dst)
-            => new TableFlow<T>(Channel, dst, NextExecToken());
+            => new (Channel, dst, NextExecToken());
 
         FileEmission Flow(FilePath dst)
-            => new FileEmission(NextExecToken(), dst, 0);
+            => new (NextExecToken(), dst, 0);
 
         EventId Raise<E>(in E e)
             where E : IEvent

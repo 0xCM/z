@@ -277,11 +277,11 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static unsafe Vector512<byte> vload(W512 w, in byte src)
-            => (vload(n256, in src), vload(n256, add(src, 32)));
+            => Vector512.Create(vload(n256, in src), vload(n256, add(src, 32)));
 
         [MethodImpl(Inline), Op]
         public static unsafe Vector512<ushort> vload(W512 w, in ushort src)
-            => (vload(n256, in src), vload(n256, add(src, 16)));
+            => Vector512.Create(vload(n256, in src), vload(n256, add(src, 16)));
 
         /// <summary>
         ///  __m256i _mm256_lddqu_si256 (__m256i const * mem_addr) VLDDQU ymm, m256

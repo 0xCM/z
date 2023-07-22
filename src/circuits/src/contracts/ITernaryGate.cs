@@ -35,9 +35,5 @@ namespace Z0
 
     }
 
-    public interface ITernaryGate512<T> : ITernaryGate<Vector512<T>>
-        where T : unmanaged
-    {
 
-    }
 }

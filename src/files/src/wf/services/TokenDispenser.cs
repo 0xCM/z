@@ -24,6 +24,9 @@ namespace Z0
         public static ExecToken close(FileEmission src)
             => Service.Close(src.Token, src.Succeeded);
 
+        public static ExecToken close<T>(TableFlow<T> src, bool success = true)
+            => Service.Close(src.Token, success);
+
         public static ExecToken close<T>(ExecFlow<T> src, bool success = true)
             => Service.Close(src.Token, success);
 

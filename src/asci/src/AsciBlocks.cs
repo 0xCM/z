@@ -118,10 +118,6 @@ namespace Z0
             => encode(span(src), out dst);
 
         [MethodImpl(Inline), Op]
-        public static AsciBlock128 encode(string src, out AsciBlock128 dst)
-            => encode(span(src), out dst);
-
-        [MethodImpl(Inline), Op]
         public static AsciBlock4 encode(ReadOnlySpan<char> src, out AsciBlock4 dst)
         {
             dst = default;
@@ -229,14 +225,6 @@ namespace Z0
                 return new (slice(chars, 0, length));
         }
  
-        [MethodImpl(Inline), Op]
-        public static AsciBlock128 encode(ReadOnlySpan<char> src, out AsciBlock128 dst)
-        {
-            dst = AsciBlock128.Empty;
-            var count = min(ByteBlock128.N, src.Length);
-            encode(src, slice(dst.Bytes,0,count));
-            return dst;
-       }
 
         [MethodImpl(Inline), Op]
         public static int encode(ReadOnlySpan<char> src, Span<byte> dst)
@@ -246,27 +234,5 @@ namespace Z0
                 seek(dst,i) = (byte)skip(src,i);
             return count;
         }
-
-        [MethodImpl(Inline), Op]
-        public static string format(in AsciBlock128 src)
-        {
-            ref var storage = ref src.First;
-            var v1 = vcpu.vload(w256, storage);
-            var v2 = vcpu.vload(w256, sys.seek(storage, 32*1));
-            var v3 = vcpu.vload(w256, sys.seek(storage, 32*2));
-            var v4 = vcpu.vload(w256, sys.seek(storage, 32*3));
-            var x0 = vpack.vinflatelo256x16u(v1);
-            var x1 = vpack.vinflatehi256x16u(v1);
-            var x2 = vpack.vinflatelo256x16u(v2);
-            var x3 = vpack.vinflatehi256x16u(v2);
-            var x4 = vpack.vinflatelo256x16u(v3);
-            var x5 = vpack.vinflatehi256x16u(v3);
-            var x6 = vpack.vinflatelo256x16u(v4);
-            var x7 = vpack.vinflatehi256x16u(v4);
-            var chars = recover<char>(sys.bytes(new V512x4(x0,x1,x2,x3,x4,x5,x6,x7)));
-            var length = text.index(chars, '\0');
-            var data = length == NotFound ? chars : slice(chars, 0, length);
-            return new string(data);
-        }       
     }
 }

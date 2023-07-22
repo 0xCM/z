@@ -16,16 +16,12 @@ namespace Z0
 
         ConstPair<Vector256<T>> Invoke<T>(Vector256<T> a, Vector256<T> b)
             where T : unmanaged;
-
-        ConstPair<Vector512<T>> Invoke<T>(in Vector512<T> a, in Vector512<T> b)
-            where T : unmanaged;
     }
 
     public interface IHalfAdder<T> :
         IHalfAdder64<T>,
         IHalfAdder128<T>,
-        IHalfAdder256<T>,
-        IHalfAdder512<T>
+        IHalfAdder256<T>
             where T : unmanaged
     {
 
@@ -66,9 +62,5 @@ namespace Z0
 
     }
 
-    public interface IHalfAdder512<T> : IHalfAdderIn<Vector512<T>>
-        where T : unmanaged
-    {
 
-    }
 }

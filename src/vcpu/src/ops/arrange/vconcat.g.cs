@@ -12,12 +12,7 @@ namespace Z0
         [MethodImpl(Inline), Concat, Closures(Closure)]
         public static Vector512<T> vconcat<T>(Vector256<T> a, Vector256<T> b)
             where T : unmanaged
-                => new Vector512<T>(a,b);
-
-        [MethodImpl(Inline), Concat, Closures(Closure)]
-        public static Vector512<T> vconcat<T>(Vector128<T> a, Vector128<T> b, Vector128<T> c, Vector128<T> d)
-            where T : unmanaged
-                => new Vector512<T>(a,b,c,d);
+                => Vector512.Create(a,b);
 
         /// <summary>
         /// Creates a 256-bit vector from two 128-bit vectors

@@ -31,7 +31,7 @@ namespace Z0
             [MethodImpl(Inline)]
             public FieldSet(BitVector64 src)
             {
-                Data = cpu.vscalar(w128,src);
+                Data = vcpu.vscalar(w128,src);
             }
 
             [MethodImpl(Inline)]
@@ -49,7 +49,7 @@ namespace Z0
             [MethodImpl(Inline)]
             public FieldSet Clear()
             {
-                Data = cpu.vscalar(w128,0ul);
+                Data = vcpu.vscalar(w128,0ul);
                 return this;
             }
 

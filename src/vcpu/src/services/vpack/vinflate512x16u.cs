@@ -23,6 +23,6 @@ namespace Z0
         /// <param name="src">The source vector</param>
         [MethodImpl(Inline), Op]
         public static Vector512<ushort> vinflate512x16u(Vector256<byte> src)
-             => (vlo256x16u(src), vhi256x16u(src));
+             => Vector512.Create(vlo256x16u(src), vhi256x16u(src));
     }
 }

@@ -51,12 +51,12 @@ namespace Z0
             row3 = v32u(Shuffle(tmp2, tmp3, 0xDD));
         }
 
-        [MethodImpl(Inline), Op]
-        public static Vector512<uint> vtranspose(Vector512<uint> src)
-        {
-            var x = Shuffle(v32f(src.Lo), v32f(src.Hi), 0x44);
-            var y = Shuffle(v32f(src.Lo), v32f(src.Hi), 0xEE);
-            return(v32u(Shuffle(x,y, 0x88)), v32u(Shuffle(x,y, 0xDD)));
-        }
+        // [MethodImpl(Inline), Op]
+        // public static Vector512<uint> vtranspose(Vector512<uint> src)
+        // {
+        //     var x = Shuffle(v32f(src.Lo), v32f(src.Hi), 0x44);
+        //     var y = Shuffle(v32f(src.Lo), v32f(src.Hi), 0xEE);
+        //     return(v32u(Shuffle(x,y, 0x88)), v32u(Shuffle(x,y, 0xDD)));
+        // }
     }
 }

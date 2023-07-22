@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static cpu;
-    using static Root;
+    using static vcpu;
 
     public class t_vmovemask : t_inx<t_vmovemask>
     {

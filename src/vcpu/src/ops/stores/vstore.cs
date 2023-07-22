@@ -7,6 +7,7 @@ namespace Z0
     using static System.Runtime.Intrinsics.X86.Sse;
     using static System.Runtime.Intrinsics.X86.Sse2;
     using static System.Runtime.Intrinsics.X86.Avx;
+    using static System.Runtime.Intrinsics.X86.Avx512F;
     using static sys;
 
     partial class vcpu
@@ -416,10 +417,11 @@ namespace Z0
 
         [MethodImpl(Inline), Store]
         public static unsafe void vstore(Vector512<byte> src, ref byte dst)
-        {
-            vstore(src.Lo, ref dst);
-            vstore(src.Hi, ref Unsafe.Add(ref dst, 32));
-        }
+            => Store(refptr(ref dst), src);
+        // {
+        //     vstore(src.Lo, ref dst);
+        //     vstore(src.Hi, ref Unsafe.Add(ref dst, 32));
+        // }
 
         [MethodImpl(Inline), Store]
         public static unsafe void vstore(Vector128<byte> src, Span<byte> dst)

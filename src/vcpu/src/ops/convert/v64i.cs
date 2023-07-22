@@ -34,6 +34,6 @@ namespace Z0
         [MethodImpl(Inline), Concretizer, Closures(Closure)]
         public static Vector512<long> v64i<T>(Vector512<T> x)
             where T : unmanaged
-                => x.As<long>();
+                => x.AsInt64();
     }
 }

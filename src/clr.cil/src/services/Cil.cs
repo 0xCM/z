@@ -15,7 +15,6 @@ namespace Z0
         public static MetadataVisualizer mdv(MetadataReader src, StreamWriter dst)
             => new MetadataVisualizer(src,dst);
 
-
         static ReadOnlySeq<MsilOpCode> _OpCodes;
 
         static uint OpCodeCount;

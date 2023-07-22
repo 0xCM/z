@@ -23,16 +23,5 @@ namespace Z0
             X3 = x3;
         }
 
-        [MethodImpl(Inline), Op]
-        public V512x4(
-            Vector256<ushort> x0, Vector256<ushort> x1, Vector256<ushort> x2, Vector256<ushort> x3,
-            Vector256<ushort> x4, Vector256<ushort> x5, Vector256<ushort> x6, Vector256<ushort> x7
-        )
-        {
-            X0 = (x0,x1);
-            X1 = (x2,x3);
-            X2 = (x4,x5);
-            X3 = (x6,x7);
-        }
     }
 }

@@ -33,17 +33,17 @@ namespace Z0
             where T : unmanaged
                 => veq_u(x,y);
 
-        /// <summary>
-        /// Compares corresponding components in each vector for equality. For equal
-        /// components, the corresponding component the result vector has all bits
-        /// enabled; otherwise, all bits the component are disabled
-        /// </summary>
-        /// <param name="x">The left vector</param>
-        /// <param name="y">The right vector</param>
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static Vector512<T> veq<T>(in Vector512<T> x, in Vector512<T> y)
-            where T : unmanaged
-                => (veq(x.Lo, y.Lo), veq(x.Hi, y.Hi));
+        // /// <summary>
+        // /// Compares corresponding components in each vector for equality. For equal
+        // /// components, the corresponding component the result vector has all bits
+        // /// enabled; otherwise, all bits the component are disabled
+        // /// </summary>
+        // /// <param name="x">The left vector</param>
+        // /// <param name="y">The right vector</param>
+        // [MethodImpl(Inline), Op, Closures(Closure)]
+        // public static Vector512<T> veq<T>(in Vector512<T> x, in Vector512<T> y)
+        //     where T : unmanaged
+        //         => (veq(x.Lo, y.Lo), veq(x.Hi, y.Hi));
 
         [MethodImpl(Inline)]
         static Vector128<T> veq_u<T>(Vector128<T> x, Vector128<T> y)

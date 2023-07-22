@@ -28,30 +28,30 @@ namespace Z0
         //     return recover<char>(sys.bytes(new V256x2(lo,hi)));
         // }
 
-        public static unsafe void decode(MemoryFile src, Action<CharBlock32> receiver)
-        {
-            var size = src.FileSize;
-            var blocks = (uint)size/32;
-            var remainder = (uint)size%32;
-            decode(src, blocks, remainder, receiver);
-        }
+        // public static unsafe void decode(MemoryFile src, Action<CharBlock32> receiver)
+        // {
+        //     var size = src.FileSize;
+        //     var blocks = (uint)size/32;
+        //     var remainder = (uint)size%32;
+        //     decode(src, blocks, remainder, receiver);
+        // }
 
-        public static unsafe void decode(MemoryFile src, uint blocks, uint remainder, Action<CharBlock32> receiver)
-        {
-            const uint BlockSize = 32;
-            var counter = 0u;
-            var seg = src.Segment();
-            var offset = src.BaseAddress;
-            var dst = CharBlock32.Null;
-            for(var i=0u; i<blocks; i++)
-            {
-                vtext.decode(offset, BlockSize, out dst);
-                receiver(dst);
-                offset = offset + BlockSize;
-            }
-            vtext.decode(offset, remainder, out dst);
-            receiver(dst);
-        }
+        // public static unsafe void decode(MemoryFile src, uint blocks, uint remainder, Action<CharBlock32> receiver)
+        // {
+        //     const uint BlockSize = 32;
+        //     var counter = 0u;
+        //     var seg = src.Segment();
+        //     var offset = src.BaseAddress;
+        //     var dst = CharBlock32.Null;
+        //     for(var i=0u; i<blocks; i++)
+        //     {
+        //         vtext.decode(offset, BlockSize, out dst);
+        //         receiver(dst);
+        //         offset = offset + BlockSize;
+        //     }
+        //     vtext.decode(offset, remainder, out dst);
+        //     receiver(dst);
+        // }
          
         [MethodImpl(Inline), Op]
         public static unsafe void copy<A>(ReadOnlySpan<A> src, Span<byte> dst)

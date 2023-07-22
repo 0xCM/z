@@ -26,14 +26,5 @@ namespace Z0
             where T : unmanaged
                 => vgcpu.vspan(src);
 
-        /// <summary>
-        /// Allocates and deposits vector content to a span
-        /// </summary>
-        /// <param name="src">The source span</param>
-        /// <typeparam name="T">The component type</typeparam>
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static Span<T> ToSpan<T>(this Vector512<T> src)
-            where T : unmanaged
-                => vgcpu.vspan(src);
     }
 }

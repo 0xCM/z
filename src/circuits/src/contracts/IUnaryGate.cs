@@ -33,10 +33,4 @@ namespace Z0
     {
 
     }
-
-    public interface IUnaryGate512<T> : IUnaryGate<Vector512<T>>
-        where T : unmanaged
-    {
-
-    }
 }

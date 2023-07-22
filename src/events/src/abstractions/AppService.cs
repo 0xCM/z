@@ -6,7 +6,6 @@ namespace Z0
 {
     using static sys;
 
-
     [WfService]
     public abstract class AppService :  IAppService
     {
@@ -25,7 +24,7 @@ namespace Z0
         public void Init(IWfRuntime wf)
         {
             Wf = wf;
-            Emitter = WfChannel.create(wf, GetType());  
+            Emitter = WfChannel.create(wf.EventBroker, wf.Emissions, GetType());  
             Channel = Emitter;          
             var flow = Channel.Creating(GetType());
             OnInit();

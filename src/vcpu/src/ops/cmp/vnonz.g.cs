@@ -62,7 +62,7 @@ namespace Z0
         [MethodImpl(Inline), Nonz, Closures(AllNumeric)]
         public static bool vnonz<T>(in Vector512<T> src)
             where T : unmanaged
-                => vnonz(src.Lo) || vnonz(src.Hi);
+                => vnonz(vlo(src)) || vnonz(vhi(src));
 
         [MethodImpl(Inline)]
         static bool vnonz_i<T>(Vector128<T> src)

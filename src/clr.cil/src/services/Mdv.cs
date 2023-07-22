@@ -99,7 +99,6 @@ namespace System.Reflection.Metadata
             _writer.WriteLine(line, args);
         }
 
-
         static bool IsPEStream(Stream stream)
         {
             long oldPosition = stream.Position;

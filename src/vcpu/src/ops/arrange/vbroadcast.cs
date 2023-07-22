@@ -286,12 +286,12 @@ namespace Z0
         public static Vector256<ulong> vbroadcast(W256 w, ulong lo, ulong hi)
             => vconcat(vbroadcast(w128, lo), vbroadcast(w128, hi));
 
-        [MethodImpl(Inline), Broadcast]
-        public static unsafe Vector512<byte> vbroadcast(W512 w, byte src)
-            => (BroadcastScalarToVector256(&src), BroadcastScalarToVector256(&src));
+        // [MethodImpl(Inline), Broadcast]
+        // public static unsafe Vector512<byte> vbroadcast(W512 w, byte src)
+        //     => (BroadcastScalarToVector256(&src), BroadcastScalarToVector256(&src));
 
-        [MethodImpl(Inline), Broadcast]
-        public static unsafe Vector512<ushort> vbroadcast(W512 w, ushort src)
-            => (BroadcastScalarToVector256(&src), BroadcastScalarToVector256(&src));
+        // [MethodImpl(Inline), Broadcast]
+        // public static unsafe Vector512<ushort> vbroadcast(W512 w, ushort src)
+        //     => (BroadcastScalarToVector256(&src), BroadcastScalarToVector256(&src));
     }
 }

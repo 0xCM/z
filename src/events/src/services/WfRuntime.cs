@@ -17,17 +17,14 @@ namespace Z0
 
         public IWfChannel Channel {get;}
 
-        TokenDispenser Tokens;
-
         [MethodImpl(Inline)]
         public WfRuntime(WfInit init)
         {
-            Tokens = init.Tokens;
             EventBroker = init.EventBroker;
             Verbosity = init.Verbosity;
             AppName = ExecutingPart.Assembly.PartName();
             Emissions = init.EmissionLog;           
-            Channel = WfChannel.create(this, init.Host);
+            Channel = WfChannel.create(init);
         }
 
         public IEventSink EventSink

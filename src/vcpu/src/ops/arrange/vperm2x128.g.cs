@@ -9,11 +9,6 @@ namespace Z0
 
     partial class vgcpu
     {
-        [MethodImpl(Inline), Op, Closures(AllNumeric)]
-        public static Vector512<T> vperm2x128<T>(in Vector512<T> src, [Imm] Perm2x4 lo, [Imm] Perm2x4 hi)
-            where T : unmanaged
-                => (vperm2x128(src.Lo, src.Hi, lo), vperm2x128(src.Lo, src.Hi, hi));
-
         /// <summary>
         /// Permutes 4 128-bit source lanes from 2 256-bit vectors as described by the perm spec
         /// </summary>

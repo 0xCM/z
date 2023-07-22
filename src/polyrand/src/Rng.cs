@@ -64,7 +64,7 @@ namespace Z0
         /// <param name="index">The stream index</param>
         [MethodImpl(Inline), Op]
         public static WyHash16 wyhash16(ushort state, ushort? index = null)
-            => new WyHash16(state,index);
+            => new (state,index);
 
         /// <summary>
         /// Creates a new WyHash16 generator

@@ -17,7 +17,7 @@ namespace Z0
             where E : unmanaged, Enum
         {
             var names = Enum.GetNames(typeof(E)).Mapi((index, name) => (index, name)).ToDictionary();
-            var domain = Z0.Intervals.closed(0, names.Count);
+            var domain = Intervals.closed(0, names.Count);
             var stream = src.Stream(domain);
 
             while(true)

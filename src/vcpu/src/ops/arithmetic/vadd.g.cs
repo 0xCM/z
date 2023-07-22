@@ -32,17 +32,6 @@ namespace Z0
                 => vadd_u(x,y);
 
         /// <summary>
-        /// Computes the component-wise sum of two vectors
-        /// </summary>
-        /// <param name="x">The left vector</param>
-        /// <param name="y">The right vector</param>
-        /// <typeparam name="T">The cell type</typeparam>
-        [MethodImpl(Inline), Add, Closures(AllNumeric)]
-        public static Vector512<T> vadd<T>(in Vector512<T> x, in Vector512<T> y)
-            where T : unmanaged
-                => (vadd(x.Lo,y.Lo),vadd(x.Hi, y.Hi));
-
-        /// <summary>
         /// Adds a constant value to each source vector component
         /// </summary>
         /// <param name="x">The source vector</param>
@@ -64,16 +53,6 @@ namespace Z0
             where T : unmanaged
                 => vadd(x, vgcpu.vbroadcast(n256,a));
 
-        /// <summary>
-        /// Adds a constant value to each source vector component
-        /// </summary>
-        /// <param name="x">The source vector</param>
-        /// <param name="a">The value to add to each component</param>
-        /// <typeparam name="T">The cell type</typeparam>
-        [MethodImpl(Inline), Add, Closures(AllNumeric)]
-        public static Vector512<T> vadd<T>(Vector512<T> x, T a)
-            where T : unmanaged
-                => vadd(x, vgcpu.vbroadcast(n512,a));
 
         [MethodImpl(Inline)]
         static Vector128<T> vadd_u<T>(Vector128<T> x, Vector128<T> y)

@@ -23,7 +23,7 @@ namespace Z0
         public static HashSet<T> Distinct<T>(this IBoundSource source, T pool, int count)
             where T : unmanaged
         {
-            var src = source.DataStream(default(T), pool);
+            var src = source.DataStream(default, pool);
             var set = src.Take(count).ToHashSet();
             while(set.Count < count)
                 set.WithItems(src.Take(count / 2));
@@ -33,7 +33,7 @@ namespace Z0
         public static HashSet<T> Distinct<T>(this IBoundSource source, T pool, T count)
             where T : unmanaged
         {
-            var src = source.DataStream(default(T), pool);
+            var src = source.DataStream(default, pool);
             var _count = force<T,int>(count);
             var set = src.Take(_count).ToHashSet();
             while(set.Count < _count)

@@ -12,6 +12,9 @@ namespace Z0
         public static ApiCmdCatalog catalog()
             => ApiCmdRunner.Service().CmdCatalog;
 
+        public static Task loop(IWfChannel channel, IApiCmdRunner runner)
+            => ApiCmdLoop.start(channel, runner);
+
         public static IApiShell app<T>(string[] args)
             where T : IApiShell,new()
         {
@@ -20,6 +23,9 @@ namespace Z0
             dst.Init(wf, args);
             return dst;
         }
+
+        public static IWfChannel channel()
+            => WfChannel.create(initializer());
 
         public static IApiShell shell(IWfRuntime wf, string[] args, params Assembly[] parts)
         {
@@ -45,6 +51,20 @@ namespace Z0
             return shell;
         }
 
+        public static WfInit initializer()
+        {
+            var dst = new WfInit();
+            var control = ExecutingPart.Assembly;
+            dst.Verbosity = LogLevel.Status;
+            dst.LogConfig = Loggers.configure(control.Id(), AppSettings.Default.Logs());
+            dst.LogConfig.ErrorPath.CreateParentIfMissing();
+            dst.LogConfig.StatusPath.CreateParentIfMissing();
+            dst.EventBroker = Events.broker(dst.LogConfig);                
+            dst.Host = typeof(WfRuntime);
+            dst.EmissionLog = Loggers.emission(control, timestamp());
+            return dst;
+        }
+
         public static IWfRuntime runtime(bool verbose = true)
         {
             var factory = typeof(ApiServers);
@@ -56,27 +76,27 @@ namespace Z0
                     term.emit(Events.running(factory, InitializingRuntime));
                 var control = ExecutingPart.Assembly;
                 var id = control.Id();
-                var dst = new WfInit();
-                dst.Verbosity = verbose ? LogLevel.Babble : LogLevel.Status;
-                dst.LogConfig = Loggers.configure(id, AppSettings.Default.Logs());
-                dst.LogConfig.ErrorPath.CreateParentIfMissing();
-                dst.LogConfig.StatusPath.CreateParentIfMissing();
+                var dst = initializer();
+                // dst.Verbosity = verbose ? LogLevel.Babble : LogLevel.Status;
+                // dst.LogConfig = Loggers.configure(id, AppSettings.Default.Logs());
+                // dst.LogConfig.ErrorPath.CreateParentIfMissing();
+                // dst.LogConfig.StatusPath.CreateParentIfMissing();
 
                 if(verbose)
                     term.emit(Events.babble(factory, ConfiguredAppLogs.Format(dst.LogConfig)));
 
-                dst.Tokens = TokenDispenser.Service;
-                dst.EventBroker = Events.broker(dst.LogConfig);
+                //dst.Tokens = TokenDispenser.Service;
+                //dst.EventBroker = Events.broker(dst.LogConfig);
                 
                 if(verbose)
                     term.emit(Events.babble(factory, "Created event broker"));
 
-                dst.Host = typeof(WfRuntime);
+                //dst.Host = typeof(WfRuntime);
                 
                 if(verbose)
                     term.emit(Events.babble(factory, "Created host"));
 
-                dst.EmissionLog = Loggers.emission(control, timestamp());
+                //dst.EmissionLog = Loggers.emission(control, timestamp());
 
                 if(verbose)
                     term.emit(Events.babble(factory, ConfiguredEmissionLogs.Format(dst.EmissionLog)));
@@ -102,7 +122,6 @@ namespace Z0
         static RenderPattern<LogSettings> ConfiguredAppLogs => "Configured app logs:{0}";
 
         static RenderPattern<IWfEmissions> ConfiguredEmissionLogs => "Configured emisson logs:{0}";
-
      }
 
     partial class XSvc

@@ -34,6 +34,6 @@ namespace Z0
         [MethodImpl(Inline), Concretizer, Closures(Closure)]
         public static Vector512<short> v16i<T>(Vector512<T> x)
             where T : unmanaged
-                => x.As<short>();
+                => x.AsInt16();
     }
 }

@@ -102,7 +102,7 @@ namespace Z0
         {
             vload(pSrc, out Vector256<T> a);
             vload((T*)Unsafe.Add<T>(pSrc, Vector256<T>.Count), out Vector256<T> b);
-            dst = new Vector512<T>(a,b);
+            dst = Vector512.Create(a,b);
             return dst;
         }
 

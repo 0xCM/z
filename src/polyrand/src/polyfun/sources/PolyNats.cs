@@ -19,7 +19,7 @@ namespace Z0
         public static NatSpan<N,T> NatSpan<N,T>(this IBoundSource src, Interval<T> domain, N n = default, Func<T,bool> filter = null)
             where T : unmanaged
             where N : unmanaged, ITypeNat
-                => TypeNats.span(src.Span<T>((int)Typed.value(n), domain, filter), n);
+                => TypeNats.span(src.Span((int)Typed.value(n), domain, filter), n);
 
         /// <summary>
         /// Allocates a table span of natural dimensions and populates the cells with random values

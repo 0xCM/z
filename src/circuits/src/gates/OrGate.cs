@@ -13,7 +13,7 @@ namespace Z0
                 => (x | y);
         }
 
-        public readonly struct OrGate<T> : IBinaryGate<T>,  IBinaryGate<Vector128<T>>, IBinaryGate<Vector256<T>>, IBinaryGate<Vector512<T>>
+        public readonly struct OrGate<T> : IBinaryGate<T>,  IBinaryGate<Vector128<T>>, IBinaryGate<Vector256<T>>
             where T : unmanaged
         {
             [MethodImpl(Inline)]
@@ -30,10 +30,6 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public Vector256<T> Invoke(Vector256<T> a, Vector256<T> b)
-                => vgcpu.vor(a, b);
-
-            [MethodImpl(Inline)]
-            public Vector512<T> Invoke(Vector512<T> a, Vector512<T> b)
                 => vgcpu.vor(a, b);
         }
     }

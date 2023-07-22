@@ -43,16 +43,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(AllNumeric)]
         public static Vector256<T> vlo<T>(Vector512<T> src)
             where T : unmanaged
-                => src.Lo;
-
-        /// <summary>
-        /// Extracts the lower 256-bits from the source vector
-        /// </summary>
-        /// <param name="src">The source vector</param>
-        [MethodImpl(Inline), Closures(AllNumeric)]
-        public static Vector512<T> vlo<T>(Vector1024<T> src)
-            where T : unmanaged
-                => src.Lo;
+                => @as<Vector512<T>,Vector256<T>>(src);
 
         /// <summary>
         /// Extracts the lo 128-bit lane of the source vector

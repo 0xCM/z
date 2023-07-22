@@ -39,7 +39,7 @@ namespace Z0
         [MethodImpl(Inline), TestC, Closures(AllNumeric)]
         public static bit vtestc<T>(in Vector512<T> src, in Vector512<T> mask)
             where T : unmanaged
-                => vtestc(src.Lo, mask.Lo) && vtestc(src.Hi, mask.Lo);
+                => vtestc(vlo(src), vlo(mask)) && vtestc(vhi(src), vhi(mask));
 
         /// <summary>
         /// Returns 1 if all source bits are enabled and 0 otherwise
@@ -62,15 +62,15 @@ namespace Z0
             where T : unmanaged
                 => vtestc(src, vones<T>(w256));
 
-        /// <summary>
-        /// Returns 1 if all source bits are enabled and 0 otherwise
-        /// </summary>
-        /// <param name="src">The source bits</param>
-        /// <typeparam name="T">The primal component type</typeparam>
-        [MethodImpl(Inline), TestC, Closures(AllNumeric)]
-        public static bit vtestc<T>(Vector512<T> src)
-            where T : unmanaged
-                => vtestc(src, vones<T>(w512));
+        // /// <summary>
+        // /// Returns 1 if all source bits are enabled and 0 otherwise
+        // /// </summary>
+        // /// <param name="src">The source bits</param>
+        // /// <typeparam name="T">The primal component type</typeparam>
+        // [MethodImpl(Inline), TestC, Closures(AllNumeric)]
+        // public static bit vtestc<T>(Vector512<T> src)
+        //     where T : unmanaged
+        //         => vtestc(src, vones<T>(w512));
 
         [MethodImpl(Inline)]
         static bit vtestc_u<T>(Vector128<T> src, Vector128<T> mask)

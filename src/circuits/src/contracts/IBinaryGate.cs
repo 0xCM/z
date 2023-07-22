@@ -49,10 +49,4 @@ namespace Z0
     {
 
     }
-
-    public interface IBinaryGate512<T> : IBinaryGateIn<Vector512<T>>
-        where T : unmanaged
-    {
-
-    }
 }

@@ -20,10 +20,10 @@ namespace Z0
             where T : unmanaged
                 => vlt_u(x,y);
 
-        [MethodImpl(Inline), Op, Closures(Integers)]
-        public static Vector512<T> vlt<T>(in Vector512<T> x, in Vector512<T> y)
-            where T : unmanaged
-                => (vlt(x.Lo, y.Lo), vlt(x.Hi, y.Hi));
+        // [MethodImpl(Inline), Op, Closures(Integers)]
+        // public static Vector512<T> vlt<T>(in Vector512<T> x, in Vector512<T> y)
+        //     where T : unmanaged
+        //         => (vlt(x.Lo, y.Lo), vlt(x.Hi, y.Hi));
 
         [MethodImpl(Inline)]
         static Vector128<T> vlt_u<T>(Vector128<T> x, Vector128<T> y)

@@ -114,17 +114,6 @@ namespace Z0
             where T : unmanaged
                 => vgcpu.vadd(vinc<T>(w), x0);
 
-        /// <summary>
-        /// Creates a 256-bit vector with components that increase by unit step from an initial value
-        /// </summary>
-        /// <param name="x0">The value of the first component</param>
-        /// <param name="step">The distance between adjacent components</param>
-        /// <typeparam name="T">The primal component type</typeparam>
-        [MethodImpl(Inline)]
-        public static Vector512<T> vinc<T>(W512 w, T x0)
-            where T : unmanaged
-                => vgcpu.vadd(vinc<T>(w), x0);
-
         [MethodImpl(Inline)]
         static Vector128<T> vinc_u<T>(Vector128<T> src)
             where T : unmanaged

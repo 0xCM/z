@@ -15,19 +15,19 @@ namespace Z0
     {
         const NumericKind Closure = UInt64k;
 
-        public static unsafe void decode(MemoryAddress src, uint size, out CharBlock32 dst)
-        {
-            var input = sys.cover(src.Pointer<byte>(), size);
-            dst = CharBlock32.Null;
-            var buffer = recover<ushort>(dst.Data);
-            if(size == 32)
-                vgcpu.vstore(vtext.decode(vcpu.vload(w256, input)), buffer);
-            else
-            {
-                for(var i=0; i<size; i++)
-                    seek(buffer,i) = skip(input,i);
-            }
-        }            
+        // public static unsafe void decode(MemoryAddress src, uint size, out CharBlock32 dst)
+        // {
+        //     var input = sys.cover(src.Pointer<byte>(), size);
+        //     dst = CharBlock32.Null;
+        //     var buffer = recover<ushort>(dst.Data);
+        //     if(size == 32)
+        //         vgcpu.vstore(vtext.decode(vcpu.vload(w256, input)), buffer);
+        //     else
+        //     {
+        //         for(var i=0; i<size; i++)
+        //             seek(buffer,i) = skip(input,i);
+        //     }
+        // }            
 
         [MethodImpl(Inline), Op]
         public static void decode(N48 n, ReadOnlySpan<byte> src, Span<char> dst)
@@ -206,15 +206,15 @@ namespace Z0
             vcpu.vstore(vpack128x8u(vload(w256, c3)), ref b3);
         }
 
-        [MethodImpl(Inline), Op]
-        public static void unpack(N32 n, ReadOnlySpan<byte> src, Span<char> dst)
-        {
-            var packed = vload(w256, src);
-            var unpacked = new Vector512<ushort>(vinflatelo256x16u(packed), vinflatehi256x16u(packed));
-            var source = v8u(unpacked);
-            var target = bytes(dst);
-            vcpu.vstore(source, target);
-        }
+        // [MethodImpl(Inline), Op]
+        // public static void unpack(N32 n, ReadOnlySpan<byte> src, Span<char> dst)
+        // {
+        //     var packed = vload(w256, src);
+        //     var unpacked = new Vector512<ushort>(vinflatelo256x16u(packed), vinflatehi256x16u(packed));
+        //     var source = v8u(unpacked);
+        //     var target = bytes(dst);
+        //     vcpu.vstore(source, target);
+        // }
 
         [MethodImpl(Inline), Op]
         public static void bits(Vector128<byte> src, Span<char> dst)
@@ -250,10 +250,10 @@ namespace Z0
             where T : unmanaged
             => dst.Append(vgcpu.vspan(src).FormatHex(Chars.Space, false));
 
-        [Op, Closures(Closure)]
-        public static void asmhex<T>(Vector512<T> src, ITextBuffer dst)
-            where T : unmanaged
-                => dst.Append(vgcpu.vspan(src).FormatHex(Chars.Space, false));
+        // [Op, Closures(Closure)]
+        // public static void asmhex<T>(Vector512<T> src, ITextBuffer dst)
+        //     where T : unmanaged
+        //         => dst.Append(vgcpu.vspan(src).FormatHex(Chars.Space, false));
 
         [Op, Closures(Closure)]
         public static void hex<T>(Vector128<T> src, ITextBuffer dst,  char sep = Chars.Comma, bool specifier = false)

@@ -148,8 +148,14 @@ namespace Z0
         [MethodImpl(Inline), Srlv]
         public static Vector256<sbyte> vsrlv(Vector256<sbyte> src, Vector256<sbyte> counts)
         {
-            (var x0, var x1) = vpack.vinflate512x16i(src);
-            (var s0, var s1) = vpack.vinflate512x16i(counts);
+            var x = vpack.vinflate512x16i(src);
+            var s = vpack.vinflate512x16i(counts);
+            var x0 = vgcpu.vlo(x);
+            var x1 = vgcpu.vhi(x);
+            var s0 = vgcpu.vlo(s);
+            var s1 = vgcpu.vhi(s);
+            // (var x0, var x1) = vpack.vinflate512x16i(src);
+            // (var s0, var s1) = vpack.vinflate512x16i(counts);
             return vpack.vpack256x8i(vsrlv(x0,s0), vsrlv(x1,s1));
         }
 
@@ -161,8 +167,12 @@ namespace Z0
         [MethodImpl(Inline), Srlv]
         public static Vector256<byte> vsrlv(Vector256<byte> src, Vector256<byte> counts)
         {
-            (var x0, var x1) = vpack.vinflate512x16u(src);
-            (var s0, var s1) = vpack.vinflate512x16u(counts);
+            var x = vpack.vinflate512x16u(src);
+            var s = vpack.vinflate512x16u(counts);
+            var x0 = vgcpu.vlo(x);
+            var x1 = vgcpu.vhi(x);
+            var s0 = vgcpu.vlo(s);
+            var s1 = vgcpu.vhi(s);
             return vpack.vpack256x8u(vsrlv(x0,s0), vsrlv(x1,s1));
         }
 
@@ -174,8 +184,12 @@ namespace Z0
         [MethodImpl(Inline), Srlv]
         public static Vector256<short> vsrlv(Vector256<short> src, Vector256<short> counts)
         {
-            (var x0, var x1) = vpack.vinflate512x32i(src);
-            (var s0, var s1) = vpack.vinflate512x32i(counts);
+            var x = vpack.vinflate512x32i(src);
+            var s = vpack.vinflate512x32i(counts);
+            var x0 = vgcpu.vlo(x);
+            var x1 = vgcpu.vhi(x);
+            var s0 = vgcpu.vlo(s);
+            var s1 = vgcpu.vhi(s);
             return vpack.vpack256x16i(vsrlv(x0,s0), vsrlv(x1,s1));
         }
 
@@ -187,8 +201,12 @@ namespace Z0
         [MethodImpl(Inline), Srlv]
         public static Vector256<ushort> vsrlv(Vector256<ushort> src, Vector256<ushort> counts)
         {
-            (var x0, var x1) = vpack.vinflate512x32u(src);
-            (var s0, var s1) = vpack.vinflate512x32u(counts);
+            var x = vpack.vinflate512x32u(src);
+            var s = vpack.vinflate512x32u(counts);
+            var x0 = vgcpu.vlo(x);
+            var x1 = vgcpu.vhi(x);
+            var s0 = vgcpu.vlo(s);
+            var s1 = vgcpu.vhi(s);
             return vpack.vpack256x16u(vsrlv(x0,s0), vsrlv(x1,s1));
         }
     }

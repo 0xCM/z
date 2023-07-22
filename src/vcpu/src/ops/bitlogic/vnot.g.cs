@@ -31,16 +31,16 @@ namespace Z0
             where T : unmanaged
                 => vnot_u(x);
 
-        /// <summary>
-        /// Computes the bitwise complement ~x for a vector x
-        /// </summary>
-        /// <param name="x">The left vector</param>
-        /// <param name="y">The right vector</param>
-        /// <typeparam name="T">The component type</typeparam>
-        [MethodImpl(Inline), Not, Closures(Integers)]
-        public static Vector512<T> vnot<T>(in Vector512<T> x)
-            where T : unmanaged
-                => (vnot(x.Lo), vnot(x.Hi));
+        // /// <summary>
+        // /// Computes the bitwise complement ~x for a vector x
+        // /// </summary>
+        // /// <param name="x">The left vector</param>
+        // /// <param name="y">The right vector</param>
+        // /// <typeparam name="T">The component type</typeparam>
+        // [MethodImpl(Inline), Not, Closures(Integers)]
+        // public static Vector512<T> vnot<T>(in Vector512<T> x)
+        //     where T : unmanaged
+        //         => (vnot(x.Lo), vnot(x.Hi));
 
         [MethodImpl(Inline)]
         static Vector128<T> vnot_u<T>(Vector128<T> x)

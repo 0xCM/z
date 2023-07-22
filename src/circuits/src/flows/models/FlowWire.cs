@@ -16,11 +16,11 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator FlowWire(uint width)
-            => new FlowWire((byte)width);
+            => new ((byte)width);
 
         [MethodImpl(Inline)]
         public static implicit operator FlowWire(byte width)
-            => new FlowWire(width);
+            => new (width);
 
         public string Format()
             => Width.ToString();

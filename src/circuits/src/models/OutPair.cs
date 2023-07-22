@@ -32,10 +32,10 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator OutPair<T> ((T x, T y) src)
-            => new OutPair<T>(src.x, src.y);
+            => new (src.x, src.y);
 
         [MethodImpl(Inline)]
         public static implicit operator OutPair<T>(InPair<T> src)
-            => new OutPair<T>(src.A,src.B);
+            => new (src.A,src.B);
     }
 }

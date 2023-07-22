@@ -6,7 +6,7 @@ namespace Z0
 {
     partial class Gated
     {
-        public readonly struct NandGate<T> : IBinaryGate<T>, IBinaryGate<Vector128<T>>, IBinaryGate<Vector256<T>>, IBinaryGate<Vector512<T>>
+        public readonly struct NandGate<T> : IBinaryGate<T>, IBinaryGate<Vector128<T>>, IBinaryGate<Vector256<T>>
             where T : unmanaged
         {
             [MethodImpl(Inline)]
@@ -24,12 +24,6 @@ namespace Z0
             [MethodImpl(Inline)]
             public Vector256<T> Invoke(Vector256<T> x, Vector256<T> y)
                 => vgcpu.vnand(x, y);
-
-            [MethodImpl(Inline)]
-            public Vector512<T> Invoke(Vector512<T> x, Vector512<T> y)
-                => vgcpu.vnand(x, y);
         }
-
     }
-
 }

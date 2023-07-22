@@ -34,6 +34,6 @@ namespace Z0
         [MethodImpl(Inline), Concretizer, Closures(Closure)]
         public static Vector512<ulong> v64u<T>(Vector512<T> x)
             where T : unmanaged
-                => x.As<ulong>();
+                => x.AsUInt64();
     }
 }

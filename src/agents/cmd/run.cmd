@@ -1,4 +1,4 @@
 @echo off
 call %~dp0..\config.cmd
-set ShellPath=%Artifacts%\bin\%BuildPrefix%.%ProjectName%\%ConfigName%\%FrameworkMoniker%\%RuntimeMoniker%\%ToolName%.exe
-call %ShellPath%
+set ShellPath=%SlnBuild%\bin\z0.agents\Release\net8.0\win-x64\agents.exe
+%ShellPath% %*

@@ -36,7 +36,7 @@ namespace Z0
         [MethodImpl(Inline), TestZ, Closures(AllNumeric)]
         public static bit vtestz<T>(in Vector512<T> src, in Vector512<T> mask)
             where T : unmanaged
-                => vtestz(src.Lo,mask.Lo) && vtestz(src.Hi,mask.Hi);
+                => vtestz(vlo(src), vlo(mask)) && vtestz(vhi(src), vhi(mask));
 
         [MethodImpl(Inline)]
         static bit vtestz_u<T>(Vector128<T> src, Vector128<T> mask)

@@ -13,7 +13,7 @@ namespace Z0
                 => (x & y);
         }
 
-        public readonly struct AndGate<T> : IBinaryGate<T>, IBinaryGate128<T>, IBinaryGate256<T>, IBinaryGate512<T>
+        public readonly struct AndGate<T> : IBinaryGate<T>, IBinaryGate128<T>, IBinaryGate256<T>
             where T : unmanaged
         {
             /// <summary>
@@ -50,15 +50,6 @@ namespace Z0
             /// <param name="y">The right operands</param>
             [MethodImpl(Inline)]
             public Vector256<T> Invoke(Vector256<T> a, Vector256<T> b)
-                => vgcpu.vand<T>(a,b);
-
-            /// <summary>
-            /// Computes 512 boolean OR functions simultaneously
-            /// </summary>
-            /// <param name="x">The left operands</param>
-            /// <param name="y">The right operands</param>
-            [MethodImpl(Inline)]
-            public Vector512<T> Invoke(in Vector512<T> a, in Vector512<T> b)
                 => vgcpu.vand<T>(a,b);
         }
     }

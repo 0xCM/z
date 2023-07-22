@@ -81,16 +81,16 @@ namespace Z0
             where T : unmanaged
                 => vstore(src, ref first(dst));
 
-        /// <summary>
-        /// Stores vector content to the front of a span
-        /// </summary>
-        /// <param name="src">The source vector</param>
-        /// <param name="dst">The target block</param>
-        /// <typeparam name="T">The vector cell type</typeparam>
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static void vstore<T>(Vector512<T> src, Span<T> dst)
-            where T : unmanaged
-                => vstore(src, ref first(dst));
+        // /// <summary>
+        // /// Stores vector content to the front of a span
+        // /// </summary>
+        // /// <param name="src">The source vector</param>
+        // /// <param name="dst">The target block</param>
+        // /// <typeparam name="T">The vector cell type</typeparam>
+        // [MethodImpl(Inline), Op, Closures(Closure)]
+        // public static void vstore<T>(Vector512<T> src, Span<T> dst)
+        //     where T : unmanaged
+        //         => vstore(src, ref first(dst));
 
         /// <summary>
         /// Stores vector content to a span
@@ -116,17 +116,17 @@ namespace Z0
             where T : unmanaged
                 => vstore(src, ref first(dst), offset);
 
-        /// <summary>
-        /// Stores vector content to a span
-        /// </summary>
-        /// <param name="src">The source vector</param>
-        /// <param name="dst">The target block</param>
-        /// <param name="offset">The target offset at which storage should begin</param>
-        /// <typeparam name="T">The vector cell type</typeparam>
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static void vstore<T>(Vector512<T> src, Span<T> dst, int offset)
-            where T : unmanaged
-                => vstore(src, ref first(dst), offset);
+        // /// <summary>
+        // /// Stores vector content to a span
+        // /// </summary>
+        // /// <param name="src">The source vector</param>
+        // /// <param name="dst">The target block</param>
+        // /// <param name="offset">The target offset at which storage should begin</param>
+        // /// <typeparam name="T">The vector cell type</typeparam>
+        // [MethodImpl(Inline), Op, Closures(Closure)]
+        // public static void vstore<T>(Vector512<T> src, Span<T> dst, int offset)
+        //     where T : unmanaged
+        //         => vstore(src, ref first(dst), offset);
 
         [MethodImpl(Inline), Op, Closures(AllNumeric)]
         public static void vstore<T>(Vector128<T> src, ref T dst)
@@ -148,13 +148,13 @@ namespace Z0
             where T : unmanaged
                 => vstore(src, ref Cells.to<T>(dst));
 
-        [MethodImpl(Inline), Op, Closures(AllNumeric)]
-        public static void vstore<T>(Vector512<T> src, ref T dst, int offset = 0)
-            where T : unmanaged
-        {
-            vstore(src.Lo, ref dst, offset);
-            vstore(src.Hi, ref dst, offset + vcount<T>(w256));
-        }
+        // [MethodImpl(Inline), Op, Closures(AllNumeric)]
+        // public static void vstore<T>(Vector512<T> src, ref T dst, int offset = 0)
+        //     where T : unmanaged
+        // {
+        //     vstore(src.Lo, ref dst, offset);
+        //     vstore(src.Hi, ref dst, offset + vcount<T>(w256));
+        // }
 
         [MethodImpl(Inline)]
         static unsafe void vstore_u<T>(Vector128<T> src, ref T dst)

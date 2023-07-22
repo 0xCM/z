@@ -46,32 +46,32 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static NotGate<T> not<T>()
             where T : unmanaged
-                => default(NotGate<T>);
+                => default;
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static NandGate<T> nand<T>()
             where T : unmanaged
-                => default(NandGate<T>);
+                => default;
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static NorGate<T> nor<T>()
             where T : unmanaged
-                => default(NorGate<T>);
+                => default;
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static XnorGate<T> xnor<T>()
             where T : unmanaged
-                => default(XnorGate<T>);
+                => default;
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static MuxGate<T> mux<T>()
             where T : unmanaged
-                => default(MuxGate<T>);
+                => default;
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static HalfAdder<T> half<T>()
             where T : unmanaged
-                => default(HalfAdder<T>);
+                => default;
 
         /// <summary>
         /// Implements a carry-save adder that deposits the bitwise sum of three input scalars into two output scalars
@@ -115,7 +115,7 @@ namespace Z0
             var u = vgcpu.vxor(a,b);
             var lo = vgcpu.vxor(u,c);
             var hi = vgcpu.vor(vgcpu.vand(a,b), vgcpu.vand(u,c));
-            return(lo,hi);
+            return Vector512.Create(lo,hi);
         }
     }
 }

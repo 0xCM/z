@@ -31,16 +31,16 @@ namespace Z0
             where T : unmanaged
                 => vor_u(x,y);
 
-        /// <summary>
-        /// Computes the bitwise or x | y for vectors x and y
-        /// </summary>
-        /// <param name="x">The left vector</param>
-        /// <param name="y">The right vector</param>
-        /// <typeparam name="T">The component type</typeparam>
-        [MethodImpl(Inline), Or, Closures(Integers)]
-        public static Vector512<T> vor<T>(in Vector512<T> x, in Vector512<T> y)
-            where T : unmanaged
-                => (vor(x.Lo,y.Lo), (vor(x.Hi, y.Hi)));
+        // /// <summary>
+        // /// Computes the bitwise or x | y for vectors x and y
+        // /// </summary>
+        // /// <param name="x">The left vector</param>
+        // /// <param name="y">The right vector</param>
+        // /// <typeparam name="T">The component type</typeparam>
+        // [MethodImpl(Inline), Or, Closures(Integers)]
+        // public static Vector512<T> vor<T>(in Vector512<T> x, in Vector512<T> y)
+        //     where T : unmanaged
+        //         => (vor(x.Lo,y.Lo), (vor(x.Hi, y.Hi)));
 
         [MethodImpl(Inline)]
         static Vector128<T> vor_u<T>(Vector128<T> x, Vector128<T> y)

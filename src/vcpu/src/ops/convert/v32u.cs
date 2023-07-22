@@ -34,6 +34,6 @@ namespace Z0
         [MethodImpl(Inline), Concretizer, Closures(Closure)]
         public static Vector512<uint> v32u<T>(Vector512<T> x)
             where T : unmanaged
-                => x.As<uint>();
+                => x.AsUInt32();
     }
 }

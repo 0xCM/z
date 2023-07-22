@@ -19,9 +19,9 @@ namespace Z0
         public static Vector256<byte> vduplicate(N1 parity, W32 w, Vector256<byte> src)
             => v8u(vdup32(parity, v32f(src)));
 
-        [MethodImpl(Inline), Op]
-        public static Vector512<byte> vduplicate(Vector256<byte> lo, Vector256<byte> hi)
-            => (vduplicate(n0, w32, lo), vduplicate(n0, w32, hi));
+        // [MethodImpl(Inline), Op]
+        // public static Vector512<byte> vduplicate(Vector256<byte> lo, Vector256<byte> hi)
+        //     => (vduplicate(n0, w32, lo), vduplicate(n0, w32, hi));
 
         // [0,1,2, ... ,E,F] -> [0,1, 0,1, ..., C,D, C,D]
         [MethodImpl(Inline), Op]

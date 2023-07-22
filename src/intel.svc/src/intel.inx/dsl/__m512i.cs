@@ -38,7 +38,7 @@ namespace Z0.dsl.intel
             => ref Data[i];
 
         public string Format()
-            => string.Format("<{0}>", Data.ToVector().FormatHex());
+            => string.Format("<{0}>", Data.ToVector());
 
         public override string ToString()
             => Format();
@@ -47,9 +47,6 @@ namespace Z0.dsl.intel
         public static implicit operator __m512i<T>(Vector512<T> src)
             => new __m512i<T>(src);
 
-        [MethodImpl(Inline)]
-        public static implicit operator __m512i<T>(T src)
-            => vgcpu.vbroadcast(w512,src);
 
         [MethodImpl(Inline)]
         public static implicit operator Vector512<T>(__m512i<T> src)

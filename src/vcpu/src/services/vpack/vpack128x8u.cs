@@ -43,14 +43,6 @@ namespace Z0
             => vpack128x8u(vpack128x16u(src));
 
         /// <summary>
-        /// 16x32u -> 16x8u
-        /// </summary>
-        /// <param name="src">The source vector</param>
-        [MethodImpl(Inline), Op]
-        public static Vector128<byte> vpack128x8u(in Vector512<uint> src)
-            => vpack128x8u(src.Lo, src.Hi);
-
-        /// <summary>
         /// (8x16i,8x16i) -> 16x8u
         /// </summary>
         /// <param name="x">The first source vector</param>

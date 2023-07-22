@@ -45,20 +45,20 @@ namespace Z0
             return cover(storage, vcpu.vcount<T>(w));
         }
 
-        /// <summary>
-        /// Deposits source vector content to a span without heap allocation
-        /// </summary>
-        /// <param name="src">The source span</param>
-        /// <typeparam name="T">The component type</typeparam>
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static Span<T> vspan<T>(Vector512<T> src)
-            where T : unmanaged
-        {
-            var w = w512;
-            var dst = vcpu.vzero<T>(w);
-            ref var storage = ref vfirst(dst);
-            vgcpu.vstore(src, ref storage);
-            return cover(storage, vcpu.vcount<T>(w));
-        }
+        // /// <summary>
+        // /// Deposits source vector content to a span without heap allocation
+        // /// </summary>
+        // /// <param name="src">The source span</param>
+        // /// <typeparam name="T">The component type</typeparam>
+        // [MethodImpl(Inline), Op, Closures(Closure)]
+        // public static Span<T> vspan<T>(Vector512<T> src)
+        //     where T : unmanaged
+        // {
+        //     var w = w512;
+        //     var dst = vcpu.vzero<T>(w);
+        //     ref var storage = ref vfirst(dst);
+        //     vgcpu.vstore(src, ref storage);
+        //     return cover(storage, vcpu.vcount<T>(w));
+        // }
     }
 }

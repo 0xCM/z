@@ -125,16 +125,6 @@ namespace Z0
             where T : unmanaged
                 => vgcpu.vstore(src, ref dst.First);
 
-        /// <summary>
-        /// Stores the source vector to a blocked container
-        /// </summary>
-        /// <param name="src">The source vector</param>
-        /// <param name="dst">The target block</param>
-        /// <typeparam name="T">The vector component type</typeparam>
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static void vstore<T>(Vector512<T> src, in SpanBlock512<T> dst)
-            where T : unmanaged
-                => vgcpu.vstore(src, ref dst.First);
 
         /// <summary>
         /// Stores the source vector to a specified block in a blocked container
@@ -145,18 +135,6 @@ namespace Z0
         /// <typeparam name="T">The vector component type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static void vstore<T>(Vector256<T> src, SpanBlock256<T> dst, int block)
-            where T : unmanaged
-                => vgcpu.vstore(src, ref dst.BlockLead(block));
-
-        /// <summary>
-        /// Stores the source vector to a specified block in a blocked container
-        /// </summary>
-        /// <param name="src">The source vector</param>
-        /// <param name="dst">The target block</param>
-        /// <param name="block">The 0-based block index at which storage should begin</param>
-        /// <typeparam name="T">The vector component type</typeparam>
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static void vstore<T>(Vector512<T> src, in SpanBlock512<T> dst, int block)
             where T : unmanaged
                 => vgcpu.vstore(src, ref dst.BlockLead(block));
 
@@ -284,7 +262,7 @@ namespace Z0
         /// <param name="hi">The upper target</param>
         [MethodImpl(Inline), Op]
         public static unsafe Vector512<ulong> vinflate512x64u(SpanBlock256<uint> src, uint offset)
-            => (v64u(ConvertToVector256Int64(gptr(src[offset]))),
+            => Vector512.Create(v64u(ConvertToVector256Int64(gptr(src[offset]))),
                 v64u(ConvertToVector256Int64(gptr(src[offset],4))));
 
         /// <summary>
@@ -296,7 +274,7 @@ namespace Z0
         /// <param name="hi">The upper target</param>
         [MethodImpl(Inline), Op]
         public static unsafe Vector512<ulong> vinflate512x64u(SpanBlock128<ushort> src, uint offset)
-            => (v64u(ConvertToVector256Int64(gptr(src[offset]))),
+            => Vector512.Create(v64u(ConvertToVector256Int64(gptr(src[offset]))),
                 v64u(ConvertToVector256Int64(gptr(src[offset],4))));
 
         /// <summary>
@@ -306,7 +284,7 @@ namespace Z0
         /// <param name="src">The blocked memory source</param>
         [MethodImpl(Inline), Op]
         public static unsafe Vector512<uint> vinflate512x32u(SpanBlock256<ushort> src, uint offset)
-            => (v32u(ConvertToVector256Int32(gptr(src[offset]))),
+            => Vector512.Create(v32u(ConvertToVector256Int32(gptr(src[offset]))),
                 v32u(ConvertToVector256Int32(gptr(src[offset], 8))));
 
         /// <summary>
@@ -348,7 +326,7 @@ namespace Z0
         /// <param name="dst">The target vector</param>
         [MethodImpl(Inline), Op]
         public static unsafe Vector512<int> vinflate512x32i(SpanBlock128<short> src, uint offset)
-            => (ConvertToVector256Int32(gptr(src[offset])),
+            => Vector512.Create(ConvertToVector256Int32(gptr(src[offset])),
                 ConvertToVector256Int32(gptr(src[offset], 8)));
 
         /// <summary>

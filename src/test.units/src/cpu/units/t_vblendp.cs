@@ -4,14 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
     using System.Runtime.Intrinsics;
 
     using static BitMaskLiterals;
-    using static Root;
-    using static core;
-
-    using Caller = System.Runtime.CompilerServices.CallerMemberNameAttribute;
+    using static sys;
 
     public class t_vblendp : t_inx<t_vblendp>
     {
@@ -93,175 +89,12 @@ namespace Z0
             var sep = Chars.Comma;
             var pad = 2;
             description.AppendLine(header);
-            description.AppendLine($"{indent}source: {source.Format()}");
-            description.AppendLine($"{indent}target: {target.Format()}");
+            description.AppendLine($"{indent}source: {source.AsByte()}");
+            description.AppendLine($"{indent}target: {target.AsByte()}");
             return description.ToString();
         }
 
-        /// <summary>
-        /// 512x64, msb, f:2, d:1, t:64u, 0b10101010
-        /// source: [ 0,  1,  2,  3,  4,  5,  6,  7]
-        /// target: [ 0,  5,  2,  7,  4,  1,  6,  3]
-        /// </summary>
-        public void vblendp_512x64_Msb2x1()
-        {
-            var w = w512;
-            var t = z64;
-            var maskspec = BitMasks.msbspec(n2,n1,t);
 
-            var source = gcpu.vinc(w,t);
-            var blendspec = vbroadcast(w256, BitMasks.create(maskspec), Limits.maxval<ulong>());
-            var target = gcpu.vblendp(source, blendspec);
-            var expect = cpu.vparts(w,0,5,2,7,4,1,6,3);
-            Claim.require(gcpu.vsame(expect,target));
-
-            var descrition = format(maskspec, BitMasks.create(maskspec.As(z8)), source,target);
-            if(EmitInfo)
-                Notify(descrition);
-        }
-
-        /// <summary>
-        /// 512x64, msb, f:4, d:1, t:64u, 0b10001000
-        /// source: [ 0,  1,  2,  3,  4,  5,  6,  7]
-        /// target: [ 0,  1,  2,  7,  4,  5,  6,  3]
-        /// </summary>
-        public void vblendp_512x64_Msb4x1()
-        {
-            var w = w512;
-            var t = z64;
-            var maskspec = BitMasks.msbspec(n4,n1,t);
-            var source = gcpu.vinc(w,t);
-            var blendspec = vbroadcast(w256, BitMasks.create(maskspec), Limits.maxval(t));
-            var target = gcpu.vblendp(source, blendspec);
-            var expect = cpu.vparts(w,0,1,2,7,4,5,6,3);
-            Claim.require(gcpu.vsame(expect, target));
-
-            var descrition = format(maskspec, BitMasks.create(maskspec.As(z8)), source, target);
-            if(EmitInfo)
-                Notify(descrition);
-        }
-
-        /// <summary>
-        /// 512x64, lsb, f:2, d:1, t:64u, 0b01010101
-        /// source: [ 0,  1,  2,  3,  4,  5,  6,  7]
-        /// target: [ 4,  1,  6,  3,  0,  5,  2,  7]
-        /// </summary>
-        public void vblendp_512x64_Lsb2x1()
-        {
-            var w = w512;
-            var t = z64;
-            var maskspec = BitMasks.lsbspec(n2,n1,t);
-
-            var source = gcpu.vinc(w,t);
-            var blendspec = vbroadcast(w256, BitMasks.create(maskspec), Limits.maxval(t));
-            var target = gcpu.vblendp(source, blendspec);
-            var expect = cpu.vparts(w,4,1,6,3,0,5,2,7);
-            Claim.require(gcpu.vsame(expect,target));
-
-            var descrition = format(maskspec, BitMasks.create(maskspec.As(z8)), source,target);
-            if(EmitInfo)
-                Notify(descrition);
-        }
-
-        /// <summary>
-        /// 512x64, jsb, f:8, d:2, t:64u, 0b11000011
-        /// source: [ 0,  1,  2,  3,  4,  5,  6,  7]
-        /// target: [ 4,  5,  2,  3,  0,  1,  6,  7]
-        /// </summary>
-        public void vblendp_512x64_Jsb8x2()
-        {
-            var w = n512;
-            var t = z64;
-            var maskspec = BitMasks.jsbspec(n8,n2,t);
-
-            var source = gcpu.vinc(w,t);
-            var blendspec = vbroadcast(w256, BitMasks.create(maskspec), Limits.maxval(t));
-            var target = gcpu.vblendp(source, blendspec);
-            var expect = cpu.vparts(w,4,5,2,3,0,1,6,7);
-            Claim.require(gcpu.vsame(expect,target));
-
-            var descrition = format(maskspec, BitMasks.create(maskspec.As(z8)), source,target);
-            if(EmitInfo)
-                Notify(descrition);
-        }
-
-        /// <summary>
-        /// 512x32, jsb, f:8, d:2, t:32u, 0b1100001111000011
-        /// source: [ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15]
-        /// target: [ 8,  9,  2,  3,  4,  5, 14, 15,  0,  1, 10, 11, 12, 13,  6,  7]
-        /// </summary>
-        public void vblendp_512x32_Jsb8x2()
-        {
-            var w = n512;
-            var t = z32;
-            var maskspec = BitMasks.jsbspec(n8,n2,t);
-            var source = gcpu.vinc(w,t);
-            var blendspec = vbroadcast(w256, BitMasks.create(maskspec), Limits.maxval(t));
-            var target = gcpu.vblendp(source, blendspec);
-            var expect = cpu.vparts(w,8,  9,  2,  3,  4,  5, 14, 15,  0,  1, 10, 11, 12, 13,  6,  7);
-            Claim.require(gcpu.vsame(expect,target));
-
-            var descrition = format(maskspec, BitMasks.create(maskspec.As(z16)), source,target);
-            if(EmitInfo)
-                Notify(descrition);
-        }
-
-        /// <summary>
-        /// 512x16, jsb, f:8, d:2, t:16u, 0b11000011110000111100001111000011
-        /// source: [ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
-        /// target: [16, 17,  2,  3,  4,  5, 22, 23, 24, 25, 10, 11, 12, 13, 30, 31,  0,  1, 18, 19, 20, 21,  6,  7,  8,  9, 26, 27, 28, 29, 14, 15]
-        /// </summary>
-        public void vblendp_512x16_Jsb8x2()
-        {
-            var w = n512;
-            var t = z16;
-            var maskspec = BitMasks.jsbspec(n8,n2,t);
-
-            var source = gcpu.vinc(w,t);
-            var blendspec = vbroadcast(w256, BitMasks.create(maskspec), Limits.maxval(t));
-            var target = gcpu.vblendp(source, blendspec);
-            var expect = cpu.vparts(w,16, 17,  2,  3,  4,  5, 22, 23, 24, 25, 10, 11, 12, 13, 30, 31,  0,  1, 18, 19, 20, 21,  6,  7,  8,  9, 26, 27, 28, 29, 14, 15);
-            Claim.eq(expect,target);
-
-            var descrition = format(maskspec, BitMasks.create(maskspec.As(z32)), source,target);
-            if(EmitInfo)
-                Notify(descrition);
-        }
-
-        /// <summary>
-        /// 512x8, jsb, f:8, d:2, t:8u, 0b1100001111000011110000111100001111000011110000111100001111000011
-        /// source: [ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63]
-        /// target: [32, 33,  2,  3,  4,  5, 38, 39,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,  0,  1, 34, 35, 36, 37,  6,  7, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63]
-        /// </summary>
-        public void vblendp_512x8_Jsb8x2_outline()
-        {
-            var w = n512;
-            var t = z8;
-            var maskspec = BitMasks.jsbspec(n8,n2,t);
-
-            var source = gcpu.vinc(w,t);
-            var blendspec = vbroadcast(w256, BitMasks.create(maskspec), Limits.maxval(t));
-            var target = gcpu.vblendp(source, blendspec);
-
-            var descrition = format(maskspec, BitMasks.create(maskspec.As(z64)), source,target);
-            if(EmitInfo)
-                Notify(descrition);
-        }
-
-        public void vblendp_512x8_Jsb8x2()
-        {
-            var w = w512;
-            var t = z8;
-            var maskspec = BitMasks.jsbspec(n8,n2,t);
-            var blendspec = vbroadcast(w256, BitMasks.create(maskspec), Limits.maxval(t));
-            var maskbits = BitMasks.create(maskspec.As(z64));
-
-            for(var samples=0; samples< RepCount; samples++)
-            {
-                var source = Random.CpuVector(w,t);
-                var target = gcpu.vblendp(source,blendspec);
-            }
-        }
 
         public void vblendp_perm64_256x8u()
         {
@@ -444,27 +277,27 @@ namespace Z0
             where S : unmanaged
             where P : unmanaged, ITypeNat
         {
-            var spec = cpu.@as(gcpu.vbroadcast(w, pattern), t);
-            var a = gcpu.vinc(w, t);
-            var b = gcpu.vadd(a, gmath.add(a.LastCell(), one<T>()));
-            var c = gcpu.vblendp(a,b,spec);
+            // var spec = cpu.@as(gcpu.vbroadcast(w, pattern), t);
+            // var a = gcpu.vinc(w, t);
+            // var b = gcpu.vadd(a, gmath.add(a.LastCell(), one<T>()));
+            // var c = gcpu.vblendp(a,b,spec);
 
-            var dst = SpanBlocks.alloc<T>(w,2);
-            gcpu.vlo(c).StoreTo(dst,0);
-            gcpu.vhi(c).StoreTo(dst,1);
+            // var dst = SpanBlocks.alloc<T>(w,2);
+            // gcpu.vlo(c).StoreTo(dst,0);
+            // gcpu.vhi(c).StoreTo(dst,1);
 
-            var perm = Permute.init(dst.Storage);
-            for(var i=0; i<perm.Length; i++)
-            {
-                var identity = gmath.eq(Numeric.force<T>(i), perm[i]);
-                if(!identity)
-                {
-                    var j = perm[i];
-                    var k = perm[j];
+            // var perm = Permute.init(dst.Storage);
+            // for(var i=0; i<perm.Length; i++)
+            // {
+            //     var identity = gmath.eq(Numeric.force<T>(i), perm[i]);
+            //     if(!identity)
+            //     {
+            //         var j = perm[i];
+            //         var k = perm[j];
 
-                    Claim.require(gmath.eq(Numeric.force<T>(i),k));
-                }
-            }
+            //         Claim.require(gmath.eq(Numeric.force<T>(i),k));
+            //     }
+            // }
         }
 
         protected void vblendp_check<P,S,T>(N256 w, P np, S pattern, T t = default)
@@ -472,27 +305,27 @@ namespace Z0
             where S : unmanaged
             where P : unmanaged, ITypeNat
         {
-            var spec = cpu.@as(gcpu.vbroadcast(w, pattern),t);
-            var a = gcpu.vinc(w, t);
-            var b = gcpu.vadd(a, gmath.add(a.LastCell(), one<T>()));
-            var c = gcpu.vblendp(a,b,spec);
+            // var spec = cpu.@as(gcpu.vbroadcast(w, pattern),t);
+            // var a = gcpu.vinc(w, t);
+            // var b = gcpu.vadd(a, gmath.add(a.LastCell(), one<T>()));
+            // var c = gcpu.vblendp(a,b,spec);
 
-            var dst = SpanBlocks.alloc<T>(w,2);
-            c.Lo.StoreTo(dst,0);
-            c.Hi.StoreTo(dst,1);
+            // var dst = SpanBlocks.alloc<T>(w,2);
+            // c.Lo.StoreTo(dst,0);
+            // c.Hi.StoreTo(dst,1);
 
-            var perm = Permute.init(dst.Storage);
-            for(var i=0; i< perm.Length; i++)
-            {
-                var identity = gmath.eq(Numeric.force<T>(i), perm[i]);
-                if(!identity)
-                {
-                    var j = perm[i];
-                    var k = perm[j];
+            // var perm = Permute.init(dst.Storage);
+            // for(var i=0; i< perm.Length; i++)
+            // {
+            //     var identity = gmath.eq(Numeric.force<T>(i), perm[i]);
+            //     if(!identity)
+            //     {
+            //         var j = perm[i];
+            //         var k = perm[j];
 
-                    Claim.require(gmath.eq(Numeric.force<T>(i),k));
-                }
-            }
+            //         Claim.require(gmath.eq(Numeric.force<T>(i),k));
+            //     }
+            // }
         }
     }
 }

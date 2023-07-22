@@ -79,27 +79,6 @@ namespace Z0
             seek(dst,i++) = letter(n4, skip(src,j++), skip(src,j++));
         }
 
-        public static string fPerm2x128<T>(Vector512<T> src, Perm2x4 p0, Perm2x4 p1)
-            where T : unmanaged
-        {
-            var sep = Chars.Comma;
-            var pad = 2;
-            var sym0 = PermSymbolic.symbols(p0).ToString();
-            var sym1 = PermSymbolic.symbols(p1).ToString();
-            return $"{src.Format()} |> {sym0}{sym1} = {vgcpu.vperm2x128(src, p0, p1).Format()}";
-        }
-
-        // [MethodImpl(Inline), Op]
-        // public static Span<char> letters(N4 n, BitSpan src, Span<char> dst)
-        // {
-        //     int i=0, j=0;
-        //     seek(dst,i++) = letter(n4, src[j++], src[j++]);
-        //     seek(dst,i++) = letter(n4, src[j++], src[j++]);
-        //     seek(dst,i++) = letter(n4, src[j++], src[j++]);
-        //     seek(dst,i++) = letter(n4, src[j++], src[j++]);
-        //     return dst;
-        // }
-
         static ReadOnlySpan<AsciCode> Perm4Codes
             => new AsciCode[4]{AsciCode.A, AsciCode.B, AsciCode.C, AsciCode.D,};
 

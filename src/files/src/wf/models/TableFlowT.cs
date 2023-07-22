@@ -25,14 +25,14 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public TableFlow<T> WithCount(Count count)
-            => new TableFlow<T>(Channel, Target, Token, count);
+            => new (Channel, Target, Token, count);
 
         [MethodImpl(Inline)]
         public TableFlow<T> WithToken(ExecToken token)
-            => new TableFlow<T>(Channel, Target, token, EmissionCount);
+            => new (Channel, Target, token, EmissionCount);
 
         [MethodImpl(Inline)]
         public static implicit operator ExecFlow(TableFlow<T> src)
-            => new ExecFlow(src.Channel, src.Token);
+            => new (src.Channel, src.Token);
     }
 }

@@ -31,16 +31,16 @@ namespace Z0
             where T : unmanaged
                 => vcimpl_u(x,y);
 
-        /// <summary>
-        /// Computes the converse implication, ~x | y for vectors x and y
-        /// </summary>
-        /// <param name="x">The left vector</param>
-        /// <param name="y">The right vector</param>
-        /// <typeparam name="T">The component type</typeparam>
-        [MethodImpl(Inline), CImpl, Closures(Integers)]
-        public static Vector512<T> vcimpl<T>(in Vector512<T> x, in Vector512<T> y)
-            where T : unmanaged
-                => (vcimpl(x.Lo,y.Lo), (vcimpl(x.Hi, y.Hi)));
+        // /// <summary>
+        // /// Computes the converse implication, ~x | y for vectors x and y
+        // /// </summary>
+        // /// <param name="x">The left vector</param>
+        // /// <param name="y">The right vector</param>
+        // /// <typeparam name="T">The component type</typeparam>
+        // [MethodImpl(Inline), CImpl, Closures(Integers)]
+        // public static Vector512<T> vcimpl<T>(in Vector512<T> x, in Vector512<T> y)
+        //     where T : unmanaged
+        //         => (vcimpl(x.Lo,y.Lo), (vcimpl(x.Hi, y.Hi)));
 
         [MethodImpl(Inline)]
         static Vector128<T> vcimpl_u<T>(Vector128<T> x, Vector128<T> y)

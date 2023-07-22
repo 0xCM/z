@@ -7,7 +7,6 @@ namespace Z0
     using System.Threading;
 
     using static sys;
-
     
     /// <summary>
     /// Extends the semantics of <see cref='SpinWait'/> to form a run loop

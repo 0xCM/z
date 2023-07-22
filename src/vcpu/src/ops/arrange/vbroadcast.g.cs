@@ -44,16 +44,16 @@ namespace Z0
             where T : unmanaged
                 => vbroadcast_u(w, src);
 
-        /// <summary>
-        /// Projects a scalar value onto each component of a 512-bit vector
-        /// </summary>
-        /// <param name="w">The bitness selector</param>
-        /// <param name="src">The source value</param>
-        /// <typeparam name="T">The vector component type</typeparam>
-        [MethodImpl(Inline), Op, Closures(AllNumeric)]
-        public static Vector512<T> vbroadcast<T>(W512 w, T src)
-            where T : unmanaged
-                => (vbroadcast(w256,src), vbroadcast(w256,src));
+        // /// <summary>
+        // /// Projects a scalar value onto each component of a 512-bit vector
+        // /// </summary>
+        // /// <param name="w">The bitness selector</param>
+        // /// <param name="src">The source value</param>
+        // /// <typeparam name="T">The vector component type</typeparam>
+        // [MethodImpl(Inline), Op, Closures(AllNumeric)]
+        // public static Vector512<T> vbroadcast<T>(W512 w, T src)
+        //     where T : unmanaged
+        //         => (vbroadcast(w256,src), vbroadcast(w256,src));
 
         [MethodImpl(Inline)]
         static Vector128<T> vbroadcast_u<T>(W128 w, T src)

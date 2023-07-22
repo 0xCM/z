@@ -27,16 +27,6 @@ namespace Z0
                 => vgcpu.vstore(src,dst,offset);
 
         /// <summary>
-        /// Stores vector content to a caller-supplied span
-        /// </summary>
-        /// <param name="src">The source vector</param>
-        /// <param name="dst">The target memory</param>
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static void StoreTo<T>(this Vector512<T> src, Span<T> dst, int offset = 0)
-            where T : unmanaged
-                => vgcpu.vstore(src,dst,offset);
-
-        /// <summary>
         /// Stores vector content to a memory reference
         /// </summary>
         /// <param name="src">The source vector</param>

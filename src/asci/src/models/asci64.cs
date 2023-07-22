@@ -9,7 +9,7 @@ namespace Z0
     using N = N64;
     using W = W512;
     using A = asci64;
-    using S = Vector512<byte>;
+    using S = Cell512;
     using api = Asci;
 
     [DataWidth(512)]
@@ -25,27 +25,19 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public asci64(Vector256<byte> a)
-            => Storage = Vector512<byte>.from(a);
+            => Storage = Vector512.Create(a, default);
 
         [MethodImpl(Inline)]
         public asci64(Vector256<byte> a, Vector256<byte> b)
-            => Storage = Vector512<byte>.from(a,b);
+            => Storage = Vector512.Create(a,b);
 
         [MethodImpl(Inline)]
         public asci64(Vector128<byte> a)
-            => Storage = Vector512<byte>.from(a);
+            : this(Vector256.Create(a,default))
+            {
 
-        [MethodImpl(Inline)]
-        public asci64(Vector128<byte> a, Vector128<byte> b)
-            => Storage = Vector512<byte>.from(a, b);
+            }
 
-        [MethodImpl(Inline)]
-        public asci64(Vector128<byte> a, Vector128<byte> b, Vector128<byte> c)
-            => Storage = Vector512<byte>.from(a, b, c);
-
-        [MethodImpl(Inline)]
-        public asci64(Vector128<byte> a, Vector128<byte> b, Vector128<byte> c, Vector128<byte> d)
-            => Storage = Vector512<byte>.from(a, b, c, d);
 
         [MethodImpl(Inline)]
         public asci64(string src)
@@ -106,13 +98,13 @@ namespace Z0
         public asci32 Lo
         {
             [MethodImpl(Inline)]
-            get => new asci32(Storage.Lo);
+            get => new (Storage.Lo);
         }
 
         public asci32 Hi
         {
             [MethodImpl(Inline)]
-            get => new asci32(Storage.Hi);
+            get => new (Storage.Hi);
         }
 
         public ReadOnlySpan<char> Decoded
@@ -139,21 +131,21 @@ namespace Z0
         public Vector256<byte> EncodedVector(N1 n)
             => Storage.Hi;
 
-        [MethodImpl(Inline)]
-        public Vector128<byte> EncodedVector(N0 n, W128 w)
-            => Storage[n];
+        // [MethodImpl(Inline)]
+        // public Vector128<byte> EncodedVector(N0 n, W128 w)
+        //     => Storage[n];
 
-        [MethodImpl(Inline)]
-        public Vector128<byte> EncodedVector(N1 n, W128 w)
-            => Storage[n];
+        // [MethodImpl(Inline)]
+        // public Vector128<byte> EncodedVector(N1 n, W128 w)
+        //     => Storage[n];
 
-        [MethodImpl(Inline)]
-        public Vector128<byte> EncodedVector(N2 n, W128 w)
-            => Storage[n];
+        // [MethodImpl(Inline)]
+        // public Vector128<byte> EncodedVector(N2 n, W128 w)
+        //     => Storage[n];
 
-        [MethodImpl(Inline)]
-        public Vector128<byte> EncodedVector(N3 n, W128 w)
-            => Storage[n];
+        // [MethodImpl(Inline)]
+        // public Vector128<byte> EncodedVector(N3 n, W128 w)
+        //     => Storage[n];
 
         [MethodImpl(Inline)]
         public void CopyTo(Span<byte> dst)
@@ -183,37 +175,46 @@ namespace Z0
         public bool Equals(A src)
             => Storage.Equals(src.Storage);
 
-
         public override bool Equals(object src)
             => src is A j && Equals(j);
 
         public static A Spaced
         {
             [MethodImpl(Inline)]
-            get => api.init(n);
+            get => first(recover<AsciCode,A>(_Spaced));
         }
 
+        static ReadOnlySpan<AsciCode> _Spaced => new AsciCode[64]{
+            AsciCode.Space, AsciCode.Space, AsciCode.Space, AsciCode.Space,AsciCode.Space, AsciCode.Space, AsciCode.Space, AsciCode.Space,
+            AsciCode.Space, AsciCode.Space, AsciCode.Space, AsciCode.Space,AsciCode.Space, AsciCode.Space, AsciCode.Space, AsciCode.Space,
+            AsciCode.Space, AsciCode.Space, AsciCode.Space, AsciCode.Space,AsciCode.Space, AsciCode.Space, AsciCode.Space, AsciCode.Space,
+            AsciCode.Space, AsciCode.Space, AsciCode.Space, AsciCode.Space,AsciCode.Space, AsciCode.Space, AsciCode.Space, AsciCode.Space,
+            AsciCode.Space, AsciCode.Space, AsciCode.Space, AsciCode.Space,AsciCode.Space, AsciCode.Space, AsciCode.Space, AsciCode.Space,
+            AsciCode.Space, AsciCode.Space, AsciCode.Space, AsciCode.Space,AsciCode.Space, AsciCode.Space, AsciCode.Space, AsciCode.Space,
+            AsciCode.Space, AsciCode.Space, AsciCode.Space, AsciCode.Space,AsciCode.Space, AsciCode.Space, AsciCode.Space, AsciCode.Space,
+            AsciCode.Space, AsciCode.Space, AsciCode.Space, AsciCode.Space,AsciCode.Space, AsciCode.Space, AsciCode.Space, AsciCode.Space,
+        };
         public static A Null => default;
 
         [MethodImpl(Inline)]
         public static implicit operator A(string src)
-            => new A(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator A(asci32 src)
-            => new A(src.EncodedVector());
+            => new (src.EncodedVector());
 
         [MethodImpl(Inline)]
         public static implicit operator A(asci16 src)
-            => new A(src.EncodedVector());
+            => new (src.EncodedVector());
 
         [MethodImpl(Inline)]
         public static implicit operator A(asci8 src)
-            => new A(src.EncodedVector());
+            => new (src.EncodedVector());
 
         [MethodImpl(Inline)]
         public static implicit operator A(TextBlock src)
-            => new A(src.Format());
+            => new (src.Format());
 
         [MethodImpl(Inline)]
         public static implicit operator string(A src)

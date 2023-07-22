@@ -28,7 +28,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Vector256<T> vhi<T>(Vector512<T> src)
             where T : unmanaged
-                => src.Hi;
+                => skip(@as<Vector512<T>,Vector256<T>>(src), 1);
 
         /// <summary>
         /// Extracts the hi 128-bit lane of the source vector to scalar targets
@@ -48,13 +48,5 @@ namespace Z0
             where T : unmanaged
                 => ref vcpu.vhi(v64u(src), ref dst);
 
-        /// <summary>
-        /// Extracts the lower 256-bits from the source vector
-        /// </summary>
-        /// <param name="src">The source vector</param>
-        [MethodImpl(Inline), Closures(AllNumeric)]
-        public static Vector512<T> vhi<T>(Vector1024<T> src)
-            where T : unmanaged
-                => src.Hi;
     }
 }

@@ -27,10 +27,5 @@ namespace Z0
         public ConstPair<Vector256<T>> Invoke<T>(Vector256<T> a, Vector256<T> b)
             where T : unmanaged
                 => half<T>().Invoke(a,b);
-
-        [MethodImpl(Inline), Op, Closures(UnsignedInts)]
-        public ConstPair<Vector512<T>> Invoke<T>(in Vector512<T> a, in Vector512<T> b)
-            where T : unmanaged
-                => half<T>().Invoke(a,b);
     }
 }

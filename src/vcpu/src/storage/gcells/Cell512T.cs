@@ -11,11 +11,11 @@ namespace Z0
     {
         [MethodImpl(Inline)]
         public static Cell512<T> init(Vector512<T> src)
-            => new Cell512<T>(src.As<byte>());
+            => @as<Vector512<T>,Cell512<T>>(src);
 
         [MethodImpl(Inline)]
         public static Cell512<T> init(ByteBlock64 src)
-            => new Cell512<T>(src);
+            => new (src);
 
         public const uint Size = 64;
 
@@ -68,65 +68,59 @@ namespace Z0
             get => Empty;
         }
 
-        public Vector512<byte> V8u
-        {
-            [MethodImpl(Inline)]
-            get => ToVector().As<byte>();
-        }
+        // public Vector512<sbyte> V8i
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => ToVector().As<sbyte>();
+        // }
 
-        public Vector512<sbyte> V8i
-        {
-            [MethodImpl(Inline)]
-            get => ToVector().As<sbyte>();
-        }
+        // public Vector512<ushort> V16u
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => ToVector().As<ushort>();
+        // }
 
-        public Vector512<ushort> V16u
-        {
-            [MethodImpl(Inline)]
-            get => ToVector().As<ushort>();
-        }
+        // public Vector512<short> V16i
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => ToVector().As<short>();
+        // }
 
-        public Vector512<short> V16i
-        {
-            [MethodImpl(Inline)]
-            get => ToVector().As<short>();
-        }
+        // public Vector512<uint> V32u
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => ToVector().As<uint>();
+        // }
 
-        public Vector512<uint> V32u
-        {
-            [MethodImpl(Inline)]
-            get => ToVector().As<uint>();
-        }
+        // public Vector512<int> V32i
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => ToVector().As<int>();
+        // }
 
-        public Vector512<int> V32i
-        {
-            [MethodImpl(Inline)]
-            get => ToVector().As<int>();
-        }
+        // public Vector512<float> V32f
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => ToVector().As<float>();
+        // }
 
-        public Vector512<float> V32f
-        {
-            [MethodImpl(Inline)]
-            get => ToVector().As<float>();
-        }
+        // public Vector512<ulong> V64u
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => ToVector().As<ulong>();
+        // }
 
-        public Vector512<ulong> V64u
-        {
-            [MethodImpl(Inline)]
-            get => ToVector().As<ulong>();
-        }
+        // public Vector512<long> V64i
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => ToVector().As<long>();
+        // }
 
-        public Vector512<long> V64i
-        {
-            [MethodImpl(Inline)]
-            get => ToVector().As<long>();
-        }
-
-        public Vector512<double> V64f
-        {
-            [MethodImpl(Inline)]
-            get => ToVector().As<double>();
-        }
+        // public Vector512<double> V64f
+        // {
+        //     [MethodImpl(Inline)]
+        //     get => ToVector().As<double>();
+        // }
 
         [MethodImpl(Inline)]
         public Vector512<T> ToVector()
@@ -137,7 +131,7 @@ namespace Z0
             => ToVector().Equals(src.ToVector());
 
         public string Format()
-            => V8u.ToString();
+            => bytes(this).FormatHex();
 
         public override string ToString()
             => Format();

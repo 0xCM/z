@@ -101,22 +101,6 @@ namespace Z0
             => new asci64(recover<AsciCode,byte>(src));
 
         [MethodImpl(Inline), Op]
-        public static asci64 init(N64 n, AsciCode fill = AsciCode.Space)
-            => new asci64(vcpu.vbroadcast(w512, (byte)fill));
-
-        [MethodImpl(Inline), Op]
-        public static C code(in asci64 src, Hex6Kind index)
-            => (C)skip(bytes(src), (byte)index);
-
-        /// <summary>
-        /// Presents the source content as a bytespan
-        /// </summary>
-        /// <param name="src">The data source</param>
-        [MethodImpl(Inline), Op]
-        public static Span<byte> bytes(in asci64 src)
-            => src.Storage.ToSpan();
-
-        [MethodImpl(Inline), Op]
         public static bool contains(in asci64 src, char match)
             => AsciSymbols.contains(src, (AsciCharSym)match);
 

@@ -18,7 +18,7 @@ namespace Z0
         /// <param name="t">A target cell type representative</param>
         [MethodImpl(Inline), Op]
         public static Vector512<int> vinflate512x32i(Vector128<sbyte> src)
-            => (vlo256x32i(src), vhi256x32i(src));
+            => Vector512.Create(vlo256x32i(src), vhi256x32i(src));
 
         /// <summary>
         /// 16x16i -> 16x32i
@@ -28,6 +28,6 @@ namespace Z0
         /// <param name="t">A target type representative</param>
         [MethodImpl(Inline), Op]
         public static Vector512<int> vinflate512x32i(Vector256<short> src)
-            => (vlo256x32i(src), vhi256x32i(src));
+            => Vector512.Create(vlo256x32i(src), vhi256x32i(src));
     }
 }

@@ -8,7 +8,7 @@ namespace Z0
     {
         public LogSettings LogConfig;
 
-        public TokenDispenser Tokens;
+        //public TokenDispenser Tokens;
 
         public IEventBroker EventBroker;
 
