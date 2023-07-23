@@ -1,22 +1,21 @@
-//-----------------------------------------------------------------------------
-// Copyright   :  (c) Chris Moore, 2020
-// License     :  MIT
-//-----------------------------------------------------------------------------
-namespace Z0
-{
-    [Flags]
-    public enum ProcessContextFlag : byte
-    {
-        None,
+// //-----------------------------------------------------------------------------
+// // Copyright   :  (c) Chris Moore, 2020
+// // License     :  MIT
+// //-----------------------------------------------------------------------------
+// namespace Z0;
 
-        Summary = 1,
+// [Flags]
+// public enum ProcessContextFlag : byte
+// {
+//     None,
 
-        Detail = 2,
+//     Summary = 1,
 
-        Dump = 4,
+//     Detail = 2,
 
-        Hashes = 8,
+//     Dump = 4,
 
-        All = Summary | Detail | Dump | Hashes
-    }
-}
+//     Hashes = 8,
+
+//     All = Summary | Detail | Dump | Hashes
+// }

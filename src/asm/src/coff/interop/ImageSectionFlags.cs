@@ -1,37 +1,99 @@
+//-----------------------------------------------------------------------------
+// Copyright   :  (c) Microsoft
+// License     :  MIT
+//-----------------------------------------------------------------------------
 namespace Windows
 {
     [Flags, SymSource("images")]
     public enum ImageSectionFlags : uint
     {
+        /// <summary>
+        /// Reserved
+        /// </summary>
+        RESERVED_1 = 0x1,
+
+        /// <summary>
+        /// Reserved
+        /// </summary>
+        RESERVED_2 = 0x2,
+
+        /// <summary>
+        /// Reserved
+        /// </summary>
+        RESERVED_3 = 0x4,
+
         TYPE_NO_PAD = 0x8u,
 
+        /// <summary>
+        /// Reserved
+        /// </summary>
+        Reserved_4 = 0x10u,
+
+        /// <summary>
+        /// The section contains executable code.
+        /// </summary>
         CNT_CODE = 0x20u,
 
+        /// <summary>
+        /// The section contains initialized data.
+        /// </summary>
         CNT_INITIALIZED_DATA = 0x40u,
 
+        /// <summary>
+        /// The section contains uninitialized data.
+        /// The section contains comments or other information. This is valid only for object files.
+        /// </summary>
         CNT_UNINITIALIZED_DATA = 0x80u,
 
+        /// <summary>
+        /// Reserved
+        /// </summary>
         LNK_OTHER = 0x100u,
 
+        /// <summary>
+        /// The section contains comments or other information. This is valid only for object files.
+        /// The section will not become part of the image. This is valid only for object files.
+        /// </summary>
         LNK_INFO = 0x200u,
 
+        /// <summary>
+        /// The section will not become part of the image. This is valid only for object files.
+        /// </summary>
         LNK_REMOVE = 0x800u,
 
+        /// <summary>
+        /// The section contains COMDAT data. This is valid only for object files.
+        /// </summary>
         LNK_COMDAT = 0x1000u,
 
+        /// <summary>
+        /// Reserved
+        /// </summary>
+        RESERVED_5 = 0x2000,
+
+        /// <summary>
+        /// Reset speculative exceptions handling bits in the TLB entries for this section.
+        /// </summary>
         NO_DEFER_SPEC_EXC = 0x4000u,
 
+        /// <summary>
+        /// The section contains data referenced through the global pointer.
+        /// </summary>
         GPREL = 0x8000u,
 
-        MEM_FARDATA = 0x8000u,
+        RESERVED_6 = 0x10000,
 
-        MEM_PURGEABLE = 0x20000u,
+        /// <summary>
+        /// 
+        /// </summary>
+        MEM_PURGEABLE = 0x20000,
 
         MEM_16BIT = 0x20000u,
 
         MEM_LOCKED = 0x40000u,
 
         MEM_PRELOAD = 0x80000u,
+
 
         ALIGN_1BYTES = 0x100000u,
 
@@ -61,8 +123,6 @@ namespace Windows
 
         ALIGN_8192BYTES = 0xE00000u,
 
-        ALIGN_MASK = 0xF00000u,
-
         LNK_NRELOC_OVFL = 0x1000000u,
 
         MEM_DISCARDABLE = 0x2000000u,
@@ -77,8 +137,6 @@ namespace Windows
 
         MEM_READ = 0x40000000u,
 
-        MEM_WRITE = 0x80000000u,
-
-        SCALE_INDEX = 0x1u
+        MEM_WRITE = 0x80000000u,     
     }
 }

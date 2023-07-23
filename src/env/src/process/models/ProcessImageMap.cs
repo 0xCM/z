@@ -13,10 +13,10 @@ public record ProcessImageMap
     /// </summary>
     public readonly ReadOnlySeq<ImageLocation> Images;
 
-    public readonly ReadOnlySeq<ProcessModuleRow> Modules;
+    public readonly ReadOnlySeq<ProcessModuleRef> Modules;
 
     [MethodImpl(Inline)]
-    public ProcessImageMap(ProcessMemoryState state, ReadOnlySeq<ImageLocation> locations, ReadOnlySeq<ProcessModuleRow> modules)
+    public ProcessImageMap(ProcessMemoryState state, ReadOnlySeq<ImageLocation> locations, ReadOnlySeq<ProcessModuleRef> modules)
     {
         MemoryState = state;
         Images = locations.Sort();

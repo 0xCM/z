@@ -2,22 +2,21 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+[Free]
+public interface INativeModule : IDisposable
 {
-    [Free]
-    public interface INativeModule : IDisposable
-    {
-        string Name {get;}
+    string Name {get;}
 
-        IntPtr Handle {get;}
+    IntPtr Handle {get;}
 
-        bool Owner {get;}
-    }
+    bool Owner {get;}
+}
 
-    [Free]
-    public interface INativeModule<T> : INativeModule
-        where T : unmanaged
-    {
+[Free]
+public interface INativeModule<T> : INativeModule
+    where T : unmanaged
+{
 
-    }
 }

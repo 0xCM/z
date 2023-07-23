@@ -8,13 +8,15 @@ namespace Z0
 
     using static sys;
     using static ImageRegions;
+    using System.Linq;
+    using System.Reflection;
 
     [ApiHost,Free]
     public class ImageMemory
     {
         [Op, MethodImpl(Inline)]
         public static Traverser traverser(ReadOnlySpan<ProcessMemoryRegion> src, bool live)
-            => new Traverser(src, live);
+            => new (src, live);
 
         [Op, MethodImpl(Inline)]
         public static unsafe ByteSize run(Traverser traverser, delegate* unmanaged<in ProcessMemoryRegion,void> dst)
@@ -70,7 +72,7 @@ namespace Z0
             var map = ImageMemory.map(src);
             var targets = dst.Scoped($"{src.ProcessName}.{src.Id}");
             channel.FileEmit(map.ToString(), targets.Path("process.image", FileKind.Map));            
-            channel.TableEmit(ImageMemory.modules(src), dst.Table<ProcessModuleRow>());
+            channel.TableEmit(ImageMemory.modules(src), dst.Table<ProcessModuleRef>());
             return dump(channel, src, targets.Path("process",FileKind.Dmp));
         }
 
@@ -104,10 +106,10 @@ namespace Z0
         }
 
         public static FileUri uri(ProcessAdapter src, IDbArchive dst)
-            => new FileUri($"{dst.Root.Format(PathSeparator.FS)}/{src.ProcessName}.{src.Id}.{sys.timestamp()}.modules.{FileKind.Csv.Format()}");
+            => new ($"{dst.Root.Format(PathSeparator.FS)}/{src.ProcessName}.{src.Id}.{sys.timestamp()}.modules.{FileKind.Csv.Format()}");
 
         public static PEReader pe(Stream src)
-            => new PEReader(src);
+            => new (src);
 
         static ExecToken dump(IWfChannel channel, ProcessAdapter src, FilePath dst)
         {
@@ -148,7 +150,7 @@ namespace Z0
                 var flow = channel.Running();
                 var buffer = bag<ProcessId>();
                 if(args.Count != 0)
-                    iter(args, arg =>  ProcessId.parse(args, buffer));                    
+                    iter(args, arg =>  ProcessId.parse(args, buffer));
                 else
                     buffer.Add(ExecutingPart.Process.Id);
 
@@ -163,11 +165,11 @@ namespace Z0
             => channel.TableEmit(modules(src), uri(src, dst));
 
         [Op]
-        public static ReadOnlySeq<ProcessModuleRow> modules(ProcessAdapter src)
+        public static ReadOnlySeq<ProcessModuleRef> modules(ProcessAdapter src)
         {
             var modules = src.Modules;
             var count = modules.Count;
-            var buffer = Seq.create<ProcessModuleRow>(count);
+            var buffer = Seq.create<ProcessModuleRef>(count);
             for(var i=0u; i<count; i++)
             {
                 ref readonly var module = ref modules[i];

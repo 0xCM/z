@@ -60,6 +60,6 @@ public record struct ImageLocation : IComparable<ImageLocation>
     }
 
     [MethodImpl(Inline)]
-    public int CompareTo(ImageLocation src)
+    public readonly int CompareTo(ImageLocation src)
         => BaseAddress.CompareTo(src.BaseAddress);
 }

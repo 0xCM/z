@@ -4,10 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using Windows;
+
 [Record(TableId), StructLayout(LayoutKind.Sequential)]
-public record struct ProcessModuleRow : IComparable<ProcessModuleRow>, ISequential<ProcessModuleRow>
+public record struct ProcessMemoryRegion : IComparable<ProcessMemoryRegion>, ISequential<ProcessMemoryRegion>
 {
-    const string TableId = "process.modules";
+    const string TableId = "image.regions";
+
+    public const byte FieldCount = 9;
 
     [Render(8)]
     public uint Seq;
@@ -19,16 +23,19 @@ public record struct ProcessModuleRow : IComparable<ProcessModuleRow>, ISequenti
     public MemoryAddress BaseAddress;
 
     [Render(16)]
-    public MemoryAddress EntryAddress;
-
-    [Render(16)]
     public MemoryAddress MaxAddress;
 
     [Render(16)]
     public ByteSize Size;
 
     [Render(12)]
-    public Version128 Version;
+    public MemType Type;
+
+    [Render(16)]
+    public PageProtection Protection;
+
+    [Render(16)]
+    public MemState State;
 
     [Render(1)]
     public FileUri ImagePath;
@@ -39,12 +46,12 @@ public record struct ProcessModuleRow : IComparable<ProcessModuleRow>, ISequenti
         set => Seq = value;
     }
 
-    [MethodImpl(Inline)]
-    public int CompareTo(ProcessModuleRow src)
-    {
-        var result = BaseAddress.CompareTo(src.BaseAddress);
-        if(result == 0)
-            result = EntryAddress.CompareTo(src.EntryAddress);
-        return result;
-    }
+    public readonly int CompareTo(ProcessMemoryRegion src)
+        => BaseAddress.CompareTo(src.BaseAddress);
+
+    public readonly string Describe()
+        => string.Format("[{0},{1}]({2})", BaseAddress, BaseAddress + Size, (ByteSize)Size);
+
+    public override string ToString()
+        => Describe();
 }

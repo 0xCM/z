@@ -2,27 +2,26 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
-{   
-    [StructLayout(LayoutKind.Sequential)]
-    public record struct ProcessContext
-    {
-        public int ProcessId;
+namespace Z0;
 
-        public string ProcessName;
+[StructLayout(LayoutKind.Sequential)]
+public record struct ProcessContext
+{
+    public int ProcessId;
 
-        public string Subject;
+    public string ProcessName;
 
-        public Timestamp Timestamp;
+    public string Subject;
 
-        public ReadOnlySeq<ProcessPartition> Partitions;
+    public Timestamp Timestamp;
 
-        public @string PartitionPath;
+    public ReadOnlySeq<ProcessPartition> Partitions;
 
-        public ReadOnlySeq<ProcessMemoryRegion> Regions;
+    public @string PartitionPath;
 
-        public @string RegionPath;
+    public ReadOnlySeq<ProcessMemoryRegion> Regions;
 
-        public @string DumpPath;
-    }
+    public @string RegionPath;
+
+    public @string DumpPath;
 }

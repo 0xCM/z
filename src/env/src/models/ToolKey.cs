@@ -6,9 +6,9 @@ namespace Z0
 {
     public readonly record struct ToolKey : IDataType<ToolKey>
     {
-        public readonly FilePath Path;
-
         public readonly uint Seq;
+
+        public readonly FilePath Path;
 
         public ToolKey(uint seq, FilePath path)
         {

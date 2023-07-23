@@ -63,6 +63,6 @@ namespace Z0
             get => Key.IsNonEmpty;
         }
 
-        public static LocatedTool Empty => new LocatedTool(ToolKey.Empty);
+        public static LocatedTool Empty => new (ToolKey.Empty);
     }
 }

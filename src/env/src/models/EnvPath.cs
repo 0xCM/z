@@ -82,7 +82,7 @@ namespace Z0
         
         [MethodImpl(Inline)]
         public static implicit operator EnvPath(FolderPath[] src)
-            => new EnvPath(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator FolderPath[](EnvPath src)

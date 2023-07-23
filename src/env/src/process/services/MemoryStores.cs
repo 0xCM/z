@@ -117,10 +117,10 @@ namespace Z0
         }
 
         public static MemoryStores create(uint capacity)
-            => new MemoryStores(capacity);
+            => new (capacity);
 
         public static MemoryStores create(int capacity)
-            => new MemoryStores((uint)capacity);
+            => new ((uint)capacity);
 
         [MethodImpl(Inline), Op]
         public static uint bucket(MemoryAddress src, uint capacity)
