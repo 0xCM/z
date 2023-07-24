@@ -21,11 +21,11 @@ namespace Z0
         }
 
         [Op]
-        public static MemorySeg data(SpanResAccessor src)
+        public static MemorySegment data(SpanResAccessor src)
             => AccessorData(AsmBytes.stub(src.Member.Location, out _));
 
         [Op]
-        public static MemorySeg code(SpanResAccessor src)
+        public static MemorySegment code(SpanResAccessor src)
             => new (AsmBytes.stub(src.Member.Location, out _), 24);
 
         /// <summary>
@@ -63,11 +63,11 @@ namespace Z0
         // 2 | 13 | mov r/m32, imm32    # 7         | [c7 41 08] 20 00 00 00
         // 3 | 20 | mov r64, r/m64      # 3         | 48 8b c1
         // 4 | 23 ret                   # 1         | c3
-        static MemorySeg AccessorData(MemoryAddress dst)
+        static MemorySegment AccessorData(MemoryAddress dst)
         {
             var data = cover(dst.Pointer<byte>(), 24);
             var address = @as<MemoryAddress>(slice(data,2,8));
-            return new MemorySeg(address, @as<uint>(slice(data, 13 + 3, 4)));
+            return new (address, @as<uint>(slice(data, 13 + 3, 4)));
         }
     }
 }

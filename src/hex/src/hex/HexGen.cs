@@ -11,7 +11,7 @@ namespace Z0
         const string ArrayPackLine = "x{0:x}[{1:D5}:{2:D5}]={3}";
 
         [Op]
-        public static string hexarray(in MemorySeg src, uint index, Span<char> dst)
+        public static string hexarray(MemorySegment src, uint index, Span<char> dst)
         {
             var memory = src.ToSpan();
             var count = Hex.convert(memory.View, dst);

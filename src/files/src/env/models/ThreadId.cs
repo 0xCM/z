@@ -36,7 +36,13 @@ namespace Z0
         {
             Value = value;
         }
-        
+
+        [MethodImpl(Inline)]
+        public ThreadId(uint value)
+        {
+            Value = (int)value;
+        }
+
         public bool IsEmpty
         {
             [MethodImpl(Inline)]

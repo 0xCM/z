@@ -681,8 +681,6 @@ namespace System.Reflection.Metadata
         {
             int length = blob.Length;
             string suffix = "";
-
-
             return BitConverter.ToString(blob, 0, length) + suffix;
         }
 

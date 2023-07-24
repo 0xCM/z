@@ -22,9 +22,9 @@ namespace Z0
             sys.iter(Allocators.Values, a => a.Dispose());
         }
 
-        public MemorySeg Memory(ByteSize size)
+        public MemorySegment Memory(ByteSize size)
         {
-            var dst = MemorySeg.Empty;
+            var dst = MemorySegment.Empty;
             lock(Locker)
             {
                 var allocator = Allocators[Seq];

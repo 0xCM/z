@@ -9,17 +9,13 @@ namespace Z0
     {
         const NumericKind Closure = UnsignedInts;
 
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static CpuCore<T> core<T>(uint id)
-            where T : unmanaged
-                => new CpuCore<T>(id);
 
         public static FixedStack<T> stack<T>(uint capacity)
             where T : unmanaged
                 => new FixedStack<T>(sys.alloc<T>(capacity));
 
-        public static CpuModel<T> cpu<T>(uint cores)
-            where T : unmanaged
-                => new CpuModel<T>(sys.alloc<CpuCore<T>>(cores));
+        // public static CpuModel<T> cpu<T>(uint cores)
+        //     where T : unmanaged
+        //         => new CpuModel<T>(sys.alloc<CpuCore<T>>(cores));
     }
 }

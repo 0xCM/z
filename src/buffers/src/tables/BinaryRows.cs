@@ -87,7 +87,7 @@ namespace Z0
         }
  
         [Op]
-        public static string pack(in MemorySeg src, uint index, Span<char> dst)
+        public static string pack(MemorySegment src, uint index, Span<char> dst)
         {
             var memspan = src.ToSpan();
             var count = Hex.pack(memspan.View, dst);

@@ -6,10 +6,10 @@ namespace Z0
 {
     using static sys;
 
-    public class ApiMemberCode : IDisposable
+    public sealed class ApiMemberCode : IDisposable
     {
         public static ApiMemberCode own(EncodingData data)
-            => new ApiMemberCode(data);
+            => new (data);
 
         EncodingData Data;
 
@@ -38,11 +38,11 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public unsafe MemorySeg Segment(uint i)
-            => new MemorySeg(Data.CodeBuffer.BaseAddress + Data.Offsets[i], Data.Members[i].CodeSize);
+        public unsafe MemorySegment Segment(uint i)
+            => new (Data.CodeBuffer.BaseAddress + Data.Offsets[i], Data.Members[i].CodeSize);
 
         [MethodImpl(Inline), Op]
-        public unsafe MemorySeg Segment(int i)
+        public unsafe MemorySegment Segment(int i)
             => Segment((uint)i);
 
         [MethodImpl(Inline), Op]
@@ -73,7 +73,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public MemberEncoding Encoding(int i)
-            => new MemberEncoding(Token(i), Data.Members[i].CodeSize);
+            => new (Token(i), Data.Members[i].CodeSize);
 
         public uint MemberCount
         {
@@ -81,7 +81,7 @@ namespace Z0
             get => Data.Tokens.Count;
         }
 
-        public class EncodingData : IDisposable
+        public sealed class EncodingData : IDisposable
         {
             public ICompositeDispenser Symbols;
 

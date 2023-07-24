@@ -7,6 +7,6 @@ namespace Z0
     [Free]
     public interface IPageDispenser : IAllocDispenser
     {
-        MemorySeg Page();
+        MemorySegment Page();
     }
 }

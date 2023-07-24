@@ -8,10 +8,10 @@ namespace Z0
 
     public readonly record struct HexRef
     {
-        readonly MemorySeg Seg;
+        readonly MemorySegment Seg;
 
         [MethodImpl(Inline)]
-        public HexRef(MemorySeg seg)
+        public HexRef(MemorySegment seg)
         {
             Seg = seg;
             Require.invariant(seg.IsNonEmpty);
@@ -71,7 +71,7 @@ namespace Z0
             => Hash;
 
         [MethodImpl(Inline)]
-        public static implicit operator HexRef(MemorySeg src)
+        public static implicit operator HexRef(MemorySegment src)
             => new HexRef(src);
     }
 }

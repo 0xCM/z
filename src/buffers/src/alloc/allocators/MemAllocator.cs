@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class MemAllocator : IBufferAllocator<ByteSize,MemorySeg>, IBufferAllocator<ByteSize,SegRef>
+    public class MemAllocator : IBufferAllocator<ByteSize,MemorySegment>
     {
         public static MemAllocator alloc(ByteSize capacity)
-            => new MemAllocator(capacity);
+            => new (capacity);
 
         NativeBuffer Buffer;
 
@@ -43,34 +43,18 @@ namespace Z0
             get => Buffer.BaseAddress;
         }
 
-        public bool Alloc(ByteSize size, out MemorySeg dst)
+        public bool Alloc(ByteSize size, out MemorySegment dst)
         {
             var right = Buffer.Address(Offset + size);
             if(right > MaxAddress)
             {
-                dst = MemorySeg.Empty;
+                dst = MemorySegment.Empty;
                 return false;
             }
             else
             {
                 var left = Buffer.Address(Offset);
                 dst = (left,right);
-                Offset += (size + 1);
-                return true;
-            }
-        }
-
-        public bool Alloc(ByteSize size, out SegRef dst)
-        {
-            var max = Buffer.Address(Offset + size);
-            if(max > MaxAddress)
-            {
-                dst = default;
-                return false;
-            }
-            else
-            {
-                dst = new SegRef(Buffer.Address(Offset), size);
                 Offset += (size + 1);
                 return true;
             }

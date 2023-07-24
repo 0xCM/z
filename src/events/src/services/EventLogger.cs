@@ -62,22 +62,6 @@ namespace Z0
             }
         }
 
-        void Emit(IEvent e)
-        {
-            Display(e);
-
-            try
-            {
-                if(e.IsError)
-                    ErrorPath.AppendLines(e.Format());
-                FS.write(e.Format(), Status);
-            }
-            catch(Exception error)
-            {
-                term.errlabel(error, "EventLogError");
-            }
-        }
-
         [MethodImpl(Inline)]
         public void Deposit(IEvent e)
         {

@@ -51,11 +51,11 @@ namespace Z0
         public static ProcessId pid() 
             => ProcessId.current();
 
-        public static uint cpucore()
-            => Kernel32.GetCurrentProcessorNumber();
+        public static CpuCore cpucore()
+            => new(Kernel32.GetCurrentProcessorNumber());
 
-        public static uint tid()
-            => Kernel32.GetCurrentThreadId();
+        public static ThreadId tid()
+            => new(Kernel32.GetCurrentThreadId());
 
         public static FolderPath cd()
             => new(text.ifempty(Environment.CurrentDirectory, AppSettings.Control().Root.Format()));

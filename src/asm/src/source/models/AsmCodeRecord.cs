@@ -19,10 +19,10 @@ namespace Z0
 
         public readonly MemoryAddress IP;
 
-        public readonly HexRef Encoded;
+        public readonly MemorySegment Encoded;
 
         [MethodImpl(Inline)]
-        public AsmCodeRecord(EncodingId id, uint seq, uint docseq, Hex32 origin, SourceText asm, MemoryAddress ip, HexRef code)
+        public AsmCodeRecord(EncodingId id, uint seq, uint docseq, Hex32 origin, SourceText asm, MemoryAddress ip, MemorySegment code)
         {
             Seq = seq;
             DocSeq = docseq;
@@ -36,7 +36,7 @@ namespace Z0
         public byte EncodingSize
         {
             [MethodImpl(Inline)]
-            get => Encoded.Size;
+            get => (byte)Encoded.Size;
         }
 
         public ReadOnlySpan<byte> Encoding
@@ -51,7 +51,6 @@ namespace Z0
             dst.AppendFormat("{0,-48} # {1,-18} | {2,-12} | {3,-8} | {4,-24}", Asm, EncodingId, IP, EncodingSize, Encoded.Format());
             return dst.Emit();
         }
-
 
         public override string ToString()
             => Format();

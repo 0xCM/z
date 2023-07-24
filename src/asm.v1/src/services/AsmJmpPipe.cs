@@ -28,7 +28,7 @@ namespace Z0.Asm
                 var count = src.Length;
                 for(var i=0u; i<count; i++)
                     writer.WriteLine(formatter.Format(skip(src,i)));
-                Wf.EmittedTable<AsmJmpRow>(flow, count, dst);
+                Channel.EmittedTable(flow, count, dst);
             }
         }
 

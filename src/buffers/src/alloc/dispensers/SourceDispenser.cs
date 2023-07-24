@@ -25,7 +25,7 @@ namespace Z0
         }
 
         public SourceLine SourceLine(TextLine src)
-            => new SourceLine(src.LineNumber, SourceText(src.Content));
+            => new (src.LineNumber, SourceText(src.Content));
 
         public SourceText SourceText(string src)
         {

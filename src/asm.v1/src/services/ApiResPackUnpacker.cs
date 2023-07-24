@@ -10,7 +10,7 @@ namespace Z0.Asm
     {
         ApiResProvider ApiResProvider => Service(Wf.ApiResProvider);
 
-        public ReadOnlySpan<MemorySeg> Emit(FolderPath dst)
+        public ReadOnlySpan<MemorySegment> Emit(FolderPath dst)
         {
             var asmpath = dst + FS.file("respack",FS.Asm);
             var hexpath = asmpath.ChangeExtension(FS.Hex);
@@ -21,7 +21,7 @@ namespace Z0.Asm
             var decoder = Wf.AsmDecoder();
             var buffer = text.buffer();
             var sequence = 0u;
-            var segments = new List<MemorySeg>(30000);
+            var segments = new List<MemorySegment>(30000);
             var asmFlow = EmittingFile(asmpath);
             var hexFlow = EmittingFile(hexpath);
             using var asmwriter = asmpath.Writer();
@@ -75,7 +75,7 @@ namespace Z0.Asm
             return deposited;
         }
 
-        void EmitHexPack(ReadOnlySpan<MemorySeg> src, FilePath dst)
+        void EmitHexPack(ReadOnlySpan<MemorySegment> src, FilePath dst)
         {
             var flow= EmittingFile(dst);
             var count = src.Length;
@@ -90,7 +90,7 @@ namespace Z0.Asm
             EmittedFile(flow, count);
         }
 
-        void EmitHexArrays(ReadOnlySpan<MemorySeg> src, FilePath dst)
+        void EmitHexArrays(ReadOnlySpan<MemorySegment> src, FilePath dst)
         {
             var flow = EmittingFile(dst);
             var count = src.Length;

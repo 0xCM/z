@@ -7,10 +7,10 @@ namespace Z0
     public class LabelAllocator : IStringAllocator<Label>
     {
         public static LabelAllocator alloc(ByteSize capacity)
-            => new LabelAllocator(StringBuffers.buffer(capacity/2));
+            => new (StringBuffers.buffer(capacity/2));
 
         public static LabelAllocator cover(StringBuffer src)
-            => new LabelAllocator(src);
+            => new (src);
 
         StringBuffer Buffer;
 

@@ -8,17 +8,17 @@ namespace Z0
 
     public class CompositeDispenser : Dispenser<CompositeDispenser>, ICompositeDispenser
     {
-        SymbolDispenser Symbols;
+        readonly SymbolDispenser Symbols;
 
-        SourceDispenser Sources;
+        readonly SourceDispenser Sources;
 
-        MemoryDispenser Memories;
+        readonly MemoryDispenser Memories;
 
-        LabelDispenser Labels;
+        readonly LabelDispenser Labels;
 
-        NativeSigDispenser Sigs;
+        readonly NativeSigDispenser Sigs;
 
-        StringDispenser Strings;
+        readonly StringDispenser Strings;
 
         internal CompositeDispenser(MemoryDispenser memory, StringDispenser strings, LabelDispenser labels, SymbolDispenser symbols, SourceDispenser source)
             : base(false)
@@ -68,7 +68,7 @@ namespace Z0
             => Symbols.Symbol(location,name);
 
         [MethodImpl(Inline)]
-        public MemorySeg Memory(ByteSize size)
+        public MemorySegment Memory(ByteSize size)
             => Memories.Memory(size);
 
         [MethodImpl(Inline)]
@@ -92,17 +92,14 @@ namespace Z0
             => Sources.SourceText(src);
 
         [MethodImpl(Inline)]
-        public HexRef Store(ReadOnlySpan<byte> src)
+        public MemorySegment Store(ReadOnlySpan<byte> src)
         {
             var size = src.Length;
-            var hex = Memory(size);
-            var dst = hex.Edit;
+            var dst = Memory(size);
+            var edit = dst.Edit;
             for(var j=0; j<size; j++)
-                seek(dst,j) = skip(src,j);
-            return hex;
+                seek(edit,j) = skip(src,j);
+            return dst;
         }
-
-        MemorySeg IMemoryDispenser.Memory(ByteSize size)
-            => Memories.Memory(size);
     }
 }

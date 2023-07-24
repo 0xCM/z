@@ -22,7 +22,7 @@ namespace Z0
             Allocators[Seq] = PageAllocator.alloc(DefaultPageCount);
         }
 
-        public MemorySeg Page()
+        public MemorySegment Page()
         {
             var address = MemoryAddress.Zero;
             lock(locker)
@@ -35,7 +35,7 @@ namespace Z0
                     address = allocator.Alloc();
                 }
             }
-            return new MemorySeg(address, PageSize);
+            return new MemorySegment(address, PageSize);
         }
 
         protected override void Dispose()

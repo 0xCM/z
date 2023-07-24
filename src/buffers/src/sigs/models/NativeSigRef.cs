@@ -33,10 +33,10 @@ namespace Z0
 
         public readonly Hex64 Id;
 
-        readonly MemorySeg DataRef;
+        readonly MemorySegment DataRef;
 
         [MethodImpl(Inline)]
-        public NativeSigRef(Hex64 id, MemorySeg data)
+        public NativeSigRef(Hex64 id, MemorySegment data)
         {
             Id = id;
             DataRef = data;
