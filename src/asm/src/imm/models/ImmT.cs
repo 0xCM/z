@@ -7,10 +7,10 @@ namespace Z0
     using static Numeric;
     using static sys;
 
-    public readonly struct Imm<T> : IImm<Imm<T>,T>
+    public readonly record struct Imm<T> : IImm<Imm<T>,T>
         where T : unmanaged
     {
-        public T Value {get;}
+        public readonly T Value;
 
         [MethodImpl(Inline)]
 
@@ -113,17 +113,15 @@ namespace Z0
             get => Imm8u != 0;
         }
 
+        T IImm<Imm<T>, T>.Value
+            => Value;
 
         public override int GetHashCode()
             => (int)Hash;
 
-
         [MethodImpl(Inline)]
         public bool Equals(Imm<T> src)
             => Imm64u == src.Imm64u;
-
-        public override bool Equals(object obj)
-            => obj is Imm<T> x && Equals(x);
 
         public string Format()
             => Imm.format(this);
@@ -137,22 +135,22 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator Imm<T>(byte src)
-            => new Imm<T>(force<byte,T>(src));
+            => new (force<byte,T>(src));
 
         [MethodImpl(Inline)]
         public static implicit operator Imm<T>(ushort src)
-            => new Imm<T>(force<ushort,T>(src));
+            => new (force<ushort,T>(src));
 
         [MethodImpl(Inline)]
         public static implicit operator Imm<T>(uint src)
-            => new Imm<T>(force<uint,T>(src));
+            => new (force<uint,T>(src));
 
         [MethodImpl(Inline)]
         public static implicit operator Imm<T>(ulong src)
-            => new Imm<T>(force<ulong,T>(src));
+            => new (force<ulong,T>(src));
 
         [MethodImpl(Inline)]
         public static implicit operator Imm(Imm<T> src)
-            => new Imm(src.ImmKind, bw64(src.Value));
+            => new (src.ImmKind, bw64(src.Value));
     }
 }

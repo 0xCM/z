@@ -5,8 +5,9 @@
 namespace Z0.Asm;
 
 using static Asm.RegIndexCode;
+
 using TK = AsmRegTokenKind;
-using I = Asm.RegIndexCode;
+using I = RegIndexCode;
 using G = AsmRegTokens;
 
 public class AsmRegTokens : TokenGroup<G,TK>
@@ -15,7 +16,6 @@ public class AsmRegTokens : TokenGroup<G,TK>
 
     public override string GroupName
         => Group;
-
 
     /// <summary>
     /// Clasifies the gp reg codes

@@ -10,7 +10,7 @@ namespace Z0
     /// <summary>
     /// Describes an 8-bit immediate that is potentially refined
     /// </summary>
-    public readonly struct Imm8R : IImm<Imm8R,byte>
+    public readonly struct Imm8R : IImm<I,byte>
     {
         public const ImmKind Kind = ImmKind.Imm8u;
 
@@ -44,7 +44,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator Imm(I src)
-            => new Imm(src.ImmKind, src.Value);
+            => new (src.ImmKind, src.Value);
 
        public static W W => default;
     }

@@ -206,7 +206,7 @@ namespace Z0
             return ecma.EcmaReader().ReadAssemblyRefRows();            
         }
 
-        public static ReadOnlySeq<AssemblyRefRow> refs(Assembly src)
+        public static ParallelQuery<AssemblyRefRow> refs(Assembly src)
             => EcmaReader.create(src).ReadAssemblyRefRows();
 
         [Op]

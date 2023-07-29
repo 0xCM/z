@@ -65,8 +65,8 @@ namespace Msil
         {
             object item = this[token];
 
-            if (item is RuntimeFieldHandle)
-                return FieldInfo.GetFieldFromHandle((RuntimeFieldHandle)item);
+            if (item is RuntimeFieldHandle fh)
+                return FieldInfo.GetFieldFromHandle(fh);
 
             if (item.GetType() == s_genFieldInfoType)
             {

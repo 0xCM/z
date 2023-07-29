@@ -6,7 +6,6 @@ namespace Z0
 {
     using static sys;
 
-    using Asm;
     public class DecodedAsmParser
     {
         public static DecodedAsmParser create(CompositeDispenser dispenser)

@@ -15,6 +15,6 @@ namespace Z0
             => iter(ApiAssemblies.Components, c => EmitBlobs(c, dst.PrefixedTable<EcmaBlobInfo>(c.GetSimpleName())), PllExec);
 
         public void EmitBlobs(Assembly src, FilePath dst)
-            => Channel.TableEmit(EcmaReader.create(src).ReadBlobRows(), dst);
+            => Channel.TableEmit(EcmaReader.create(src).ReadBlobRows().Array().Sort(), dst);
     }
 }

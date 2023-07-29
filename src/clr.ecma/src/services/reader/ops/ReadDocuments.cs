@@ -8,7 +8,10 @@ namespace Z0
 
     partial class EcmaReader
     {
-        public EcmaDocInfo ReadDocInfo(DocumentHandle handle)
+        public ParallelQuery<EcmaDocInfo> ReadDocInfo()
+            => from handle in MD.Documents.AsParallel()
+                select ReadDocInfo(handle);
+        EcmaDocInfo ReadDocInfo(DocumentHandle handle)
         {
             var src = MD.GetDocument(handle);
             var dst = new EcmaDocInfo();
@@ -16,8 +19,5 @@ namespace Z0
             dst.ContentHash = Blob(src.Hash);
             return dst;
         }
-
-        public IEnumerable<EcmaDocInfo> ReadDocInfo()
-            => MD.Documents.Select(ReadDocInfo);
     }
 }

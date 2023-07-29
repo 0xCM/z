@@ -29,7 +29,7 @@ namespace Z0
         {
             try
             {
-                var refs = Ecma.refs(src);
+                var refs = Ecma.refs(src).Array();
                 var count = refs.Length;
                 if(count == 0)
                 {

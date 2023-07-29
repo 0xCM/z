@@ -5,7 +5,7 @@
 namespace Z0.Asm
 {
     /// <summary>
-    /// Characterizes a memory operand representation
+    /// Characterizes a memory operand
     /// </summary>
     [Free]
     public interface IMemOp : IAsmOp

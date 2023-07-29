@@ -28,11 +28,33 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
+        public Imm Prior()
+        {
+            Next(out var dst);
+            return dst;
+        }
+
+        [MethodImpl(Inline)]
         public bool Next(out Imm dst)
         {
             if(Current < Max)
             {
                 dst = Current++;
+                return true;
+            }
+            else
+            {
+                dst = Imm.Empty;
+                return false;
+            }
+        }
+
+        [MethodImpl(Inline)]
+        public bool Prior(out Imm dst)
+        {
+            if(Current > Min)
+            {
+                dst = Current--;
                 return true;
             }
             else

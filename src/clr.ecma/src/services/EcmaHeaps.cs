@@ -9,7 +9,7 @@ namespace Z0
     public class EcmaHeaps
     {
         [Op]
-        public static ExecToken emit(IWfChannel channel, MemorySeg src, FilePath dst, byte bpl = HexCsvRow.BPL)
+        public static ExecToken emit(IWfChannel channel, MemorySegment src, FilePath dst, byte bpl = HexCsvRow.BPL)
         {
             var reader = MemoryReader.create<byte>(src.Range);
             var flow = channel.EmittingTable<HexCsvRow>(dst);

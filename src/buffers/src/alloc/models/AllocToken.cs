@@ -21,7 +21,7 @@ namespace Z0
             Size = size;
         }
 
-        public MemorySeg Segment
+        public MemorySegment Segment
         {
             [MethodImpl(Inline)]
             get => new (Base + Offset, Size);

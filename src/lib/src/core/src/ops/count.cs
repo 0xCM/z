@@ -55,7 +55,7 @@ namespace Z0
         /// </summary>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Op, Closures(Closure)]
-        public static uint count<T>(MemorySeg src)
+        public static uint count<T>(MemorySegment src)
             => (uint)(src.Length/size<T>());
     }
 }

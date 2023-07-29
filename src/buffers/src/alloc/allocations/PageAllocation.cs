@@ -6,12 +6,12 @@ namespace Z0
 {
     using static sys;
 
-    public class PageAllocation : Allocation<MemorySeg>
+    public class PageAllocation : Allocation<MemorySegment>
     {
         public const uint PageSize = Pow2.T12;
 
         public static PageAllocation alloc(uint pages)
-            => new PageAllocation(pages);
+            => new (pages);
 
         readonly NativeBuffer Buffer;
 
@@ -47,10 +47,10 @@ namespace Z0
             get => Buffer.Width;
         }
 
-        protected override Span<MemorySeg> Data
+        protected override Span<MemorySegment> Data
         {
             [MethodImpl(Inline)]
-            get => cover<MemorySeg>(BaseAddress, PageCount);
+            get => cover<MemorySegment>(BaseAddress, PageCount);
         }
 
         [MethodImpl(Inline)]
@@ -69,13 +69,13 @@ namespace Z0
         static MemoryAddress address(NativeBuffer src,  uint index)
             => sys.address(first(page(src,index)));
 
-        static Index<MemorySeg> segments(NativeBuffer src, uint count)
+        static Index<MemorySegment> segments(NativeBuffer src, uint count)
         {
-            var dst = sys.alloc<MemorySeg>(count);
+            var dst = sys.alloc<MemorySegment>(count);
             for(var i=0u; i<count; i++)
             {
                 var a = address(src,i);
-                seek(dst,i) = new MemorySeg(address(src,i), PageSize);
+                seek(dst,i) = new MemorySegment(address(src,i), PageSize);
             }
             return dst;
         }

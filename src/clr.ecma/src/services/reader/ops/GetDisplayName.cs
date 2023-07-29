@@ -35,11 +35,11 @@ namespace Z0
 
             sb.Append(", Version=");
             sb.Append(version.Major);
-            sb.Append(".");
+            sb.Append(Chars.Dot);
             sb.Append(version.Minor);
-            sb.Append(".");
+            sb.Append(Chars.Dot);
             sb.Append(version.Build);
-            sb.Append(".");
+            sb.Append(Chars.Dot);
             sb.Append(version.Revision);
 
             sb.Append(", Culture=");

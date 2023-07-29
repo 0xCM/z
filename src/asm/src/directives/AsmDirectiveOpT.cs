@@ -19,10 +19,10 @@ namespace Z0.Asm
 
         [MethodImpl(Inline)]
         public static implicit operator AsmDirectiveOp<T>(T src)
-            => new AsmDirectiveOp<T>(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator AsmDirectiveOp(AsmDirectiveOp<T> src)
-            => new AsmDirectiveOp(src.Format());
+            => new (src.Format());
     }
 }

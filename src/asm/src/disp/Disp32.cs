@@ -20,13 +20,13 @@ namespace Z0
         public NativeSize Size
             => NativeSizeCode.W32;
 
-        public bool Positive
+        public bool IsPositive
         {
             [MethodImpl(Inline)]
             get => Value > 0;
         }
 
-        public bool Negative
+        public bool IsNegative
         {
             [MethodImpl(Inline)]
             get => Value < 0;

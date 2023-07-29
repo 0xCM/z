@@ -27,7 +27,7 @@ namespace Z0
 
         [Op]
         public static ApiMsil msil(MemoryAddress @base, OpUri uri, MethodInfo src)
-            => new ApiMsil(src.MetadataToken, @base, src.DisplaySig(), uri, src.ResolveSignature(), src.GetMethodBody().GetILAsByteArray(), src.GetMethodImplementationFlags());
+            => new (src.MetadataToken, @base, src.DisplaySig(), uri, src.ResolveSignature(), src.GetMethodBody().GetILAsByteArray(), src.GetMethodImplementationFlags());
 
         [MethodImpl(Inline), Op]
         public static MethodBase method(RuntimeMethodHandle src)
@@ -35,7 +35,7 @@ namespace Z0
 
         [Op]
         public static MsilCompilation compilation(DynamicMethod src)
-            => new MsilCompilation(MsilCode.define(default, src.ResolveSignature(), msildata(src), src.GetMethodImplementationFlags()), _pointer(src));
+            => new (MsilCode.define(default, src.ResolveSignature(), msildata(src), src.GetMethodImplementationFlags()), _pointer(src));
 
         [Op]
         public static MsilCompilation compilation(DynamicDelegate src)
@@ -43,7 +43,7 @@ namespace Z0
 
         [Op]
         public static MsilCompilation compilation(MemoryAddress @base, MethodInfo src)
-            => new MsilCompilation(MsilCode.define(default, src.ResolveSignature(), src.GetMethodBody().GetILAsByteArray(), src.GetMethodImplementationFlags()), @base);
+            => new (MsilCode.define(default, src.ResolveSignature(), src.GetMethodBody().GetILAsByteArray(), src.GetMethodImplementationFlags()), @base);
 
         [Op]
         public static RuntimeMethodHandle handle(DynamicMethod src)
@@ -63,7 +63,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static DynamicPointer pointer(DynamicDelegate src, IntPtr handle)
-            => new DynamicPointer(src, handle);
+            => new (src, handle);
 
         /// <summary>
         /// Creates a dynamic pointer from a generic dynamic delegate

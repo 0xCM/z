@@ -24,14 +24,8 @@ namespace Z0
         }
 
         [Op]
-        public ReadOnlySeq<AssemblyRefRow> ReadAssemblyRefRows()
-        {
-            var src = AssemblyRefHandles();
-            var buffer = alloc<AssemblyRefRow>(src.Length);
-            for(var i=0; i<src.Length; i++)
-                seek(buffer,i) = ReadAssemblyRefRow(skip(src,i));            
-            return buffer;
-        }
+        public ParallelQuery<AssemblyRefRow> ReadAssemblyRefRows()
+            => from handle in AssemblyRefHandles() select ReadAssemblyRefRow(handle);
 
         public AssemblyRef ReadAssemblyRef(AssemblyReferenceHandle handle)
         {
@@ -47,13 +41,8 @@ namespace Z0
             return dst;
         }
 
-        public ReadOnlySeq<AssemblyRef> ReadAssemblyRefs()
-        {
-            var src = AssemblyRefHandles();
-            var dst = alloc<AssemblyRef>(src.Length);
-            for(var i=0; i<src.Length; i++)
-                seek(dst,i) = ReadAssemblyRef(skip(src,i));
-            return dst;
-        }
+        public ParallelQuery<AssemblyRef> ReadAssemblyRefs()
+            =>from handle in AssemblyRefHandles() select ReadAssemblyRef(handle);
+
     }
 }

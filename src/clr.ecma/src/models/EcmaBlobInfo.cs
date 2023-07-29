@@ -5,11 +5,9 @@
 namespace Z0
 {    
     [Record(TableId), StructLayout(LayoutKind.Sequential)]
-    public struct EcmaBlobInfo
+    public struct EcmaBlobInfo : IComparable<EcmaBlobInfo>
     {
         public const string TableId = "ecma.blob";
-
-        public Count Seq;
 
         public ByteSize HeapSize;
 
@@ -18,5 +16,9 @@ namespace Z0
         public ByteSize DataSize;
 
         public BinaryCode Data;
+
+        public readonly int CompareTo(EcmaBlobInfo other)
+            => Offset.CompareTo(other.Offset);
+
     }
 }

@@ -7,7 +7,7 @@ namespace Z0
     public record struct ApiDecoderStats : IExpr
     {
         public static ApiDecoderStats init()
-            => new ApiDecoderStats();
+            => new ();
 
         public uint MemberCount;
 

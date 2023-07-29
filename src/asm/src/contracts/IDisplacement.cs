@@ -11,9 +11,11 @@ namespace Z0
 
         long Value {get;}
 
-        bool Positive => Value > 0;
+        bool IsNonZero => Value != 0;
+        
+        bool IsPositive => Value > 0;
 
-        bool Negative => Value < 0;
+        bool IsNegative => Value < 0;
     }
 
     [Free]

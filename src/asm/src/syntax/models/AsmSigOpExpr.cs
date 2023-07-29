@@ -7,7 +7,7 @@ namespace Z0
     /// <summary>
     /// Represents an operand in the context of an instruction signature
     /// </summary>
-    public readonly struct AsmSigOpExpr : IEquatable<AsmSigOpExpr>
+    public readonly record struct AsmSigOpExpr
     {
         readonly string Content;
 
@@ -59,17 +59,14 @@ namespace Z0
         public override int GetHashCode()
             => (int)Hash;
 
-        public override bool Equals(object src)
-            => src is AsmSigOpExpr x && Equals(x);
-
         [MethodImpl(Inline)]
         public static implicit operator AsmSigOpExpr(string src)
-            => new AsmSigOpExpr(src);
+            => new (src);
 
         public static AsmSigOpExpr Empty
         {
             [MethodImpl(Inline)]
-            get => new AsmSigOpExpr(EmptyString);
+            get => new (EmptyString);
         }
     }
 }

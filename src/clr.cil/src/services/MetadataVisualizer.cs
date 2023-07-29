@@ -428,7 +428,6 @@ namespace System.Reflection.Metadata
         public string VisualizeMethodBody(MethodBodyBlock body, MethodDefinitionHandle methodHandle)
         {
             var builder = new StringBuilder();
-
             var token = Token(methodHandle, displayTable: false);
             builder.AppendLine($"Method '{StringUtilities.EscapeNonPrintableCharacters(QualifiedMethodName(methodHandle))}' ({token})");
 

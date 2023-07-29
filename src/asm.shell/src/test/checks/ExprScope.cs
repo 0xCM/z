@@ -15,7 +15,7 @@ namespace Z0
             => define(name);
 
         public static ExprScope define(string src)
-            => new ExprScope(src);
+            => new (src);
 
         readonly string Data;
 

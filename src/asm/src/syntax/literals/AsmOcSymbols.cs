@@ -23,21 +23,13 @@ public readonly struct AsmOcSymbols
 
     public const string NP = "NP";
 
-    //public const string x66 = "66";
-
-    //public const string x67 = "67";
-
     public const string F2 = "F2";
 
     public const string F3 = "F3";
 
-    //public const string x0F = "0F";
-
     public const string x0F38 = x0F + "38";
 
     public const string x0F3A = x0F + "3A";
-
-    //public const string xF0 = "F0";
 
     public const string n1 = "1";
 

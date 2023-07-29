@@ -10,12 +10,12 @@ namespace Z0
     {
         [MethodImpl(Inline), Op]
         public static ByteSpanReader create()
-            => new ByteSpanReader(new ByteSpanProvider());
+            => new (new ByteSpanProvider());
 
         readonly ByteSpanProvider Data;
 
         [MethodImpl(Inline), Op]
-        public static MemorySeg segment(ByteSpanProvider src, byte n)
+        public static MemorySegment segment(ByteSpanProvider src, byte n)
         {
             if(n == 0)
                 return segment(src, n0);
@@ -38,12 +38,12 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public static unsafe MemorySeg segment<N>(ByteSpanProvider src, N n = default)
+        public static unsafe MemorySegment segment<N>(ByteSpanProvider src, N n = default)
             where N : unmanaged, ITypeNat
         {
             var buffer = span<N>(src, n);
             var pSrc = gptr(sys.first(buffer));
-            return new MemorySeg(pSrc, buffer.Length);
+            return new MemorySegment(pSrc, buffer.Length);
          }
 
         [MethodImpl(Inline), Op]
@@ -139,7 +139,7 @@ namespace Z0
             => src.SegLeads();
 
         [Op]
-        public static void addresses(ReadOnlySpan<MemorySeg> src, Span<MemoryAddress> dst)
+        public static void addresses(ReadOnlySpan<MemorySegment> src, Span<MemoryAddress> dst)
         {
             var count = src.Length;
             for(var i=0u; i<count; i++)
@@ -164,7 +164,7 @@ namespace Z0
         }
 
         [Op]
-        public static ReadOnlySpan<MemoryAddress> addresses(ByteSpanProvider src, Index<MemorySeg> store)
+        public static ReadOnlySpan<MemoryAddress> addresses(ByteSpanProvider src, Index<MemorySegment> store)
         {
             var sources = store.View;
             var results = sys.alloc<MemoryAddress>(sources.Length);
@@ -197,7 +197,7 @@ namespace Z0
             => leads(Data);
 
         [Op]
-        public ReadOnlySpan<MemoryAddress> Locations(Index<MemorySeg> store)
+        public ReadOnlySpan<MemoryAddress> Locations(Index<MemorySegment> store)
             => addresses(Data, store);
 
         [MethodImpl(Inline)]
@@ -205,7 +205,7 @@ namespace Z0
             => span(Data, n);
 
         [MethodImpl(Inline)]
-        public MemorySeg Segment(byte n)
+        public MemorySegment Segment(byte n)
             => segment(Data, n);
 
         [MethodImpl(Inline)]
@@ -228,7 +228,7 @@ namespace Z0
                 => ref cell(Data, n, i);
 
         [MethodImpl(Inline)]
-        public unsafe MemorySeg Segment<N>(N n = default)
+        public unsafe MemorySegment Segment<N>(N n = default)
             where N : unmanaged, ITypeNat
                 => segment(Data, n);
     }

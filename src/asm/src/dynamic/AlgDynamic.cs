@@ -8,11 +8,242 @@ namespace Z0
     using static AlgDynamic.CalcBytes;
     using static ApiClasses;
 
+    using C = AlgDynamic.CalcBytes;
     using I = AlgDynamic.OpIndex;
     using K = ApiClasses;
 
-    public partial class AlgDynamic
+    public class AlgDynamic
     {
+        [ApiHost]
+        public readonly struct CSlots
+        {
+            [Op]
+            public static byte exec(byte a, byte b)
+            {
+                var s0 = new Slots_n16x8x8x8();
+                var s1 = new Slots_n16x8x8x8();
+                var x = s0.Slot0(a,b);
+                var y = s1.Slot0(a,b);
+                var z = s0.Slot1(x,y);
+                x = s1.Slot1(x,y);
+                y = s0.Slot2(z,y);
+                x = s0.Slot3(x,y);
+                y = s1.Slot4(z,y);
+                x = s0.Slot5(x,y);
+                y = s1.Slot6(z,y);
+                x = s0.Slot7(x,y);
+                y = s1.Slot8(z,y);
+                x = s0.Slot9(x,y);
+                y = s1.SlotA(z,y);
+                x = s0.SlotB(x,y);
+                y = s1.SlotC(z,y);
+                x = s0.SlotD(x,y);
+                y = s1.SlotE(z,y);
+                z = s0.SlotF(z, s1.SlotF(z,b));
+                return z;
+            }
+
+            [ApiComplete]
+            public readonly struct Slots_n16x8x8x8
+            {
+                [Op]
+                public static byte exec1(byte a, byte b)
+                {
+                    var s0 = new Slots_n16x8x8x8();
+                    var s1 = new Slots_n16x8x8x8();
+                    var x = s0.Slot0(a,b);
+                    var y = s0.Slot1(x,b);
+                    var z = s0.Slot2(y,a);
+                    y = s0.Slot3(z,y);
+                    x = s0.Slot4(x,y);
+                    x = s0.Slot5(x,z);
+                    x = s0.Slot6(x,y);
+                    x = s0.Slot7(x,y);
+                    x = s0.Slot8(x,z);
+                    x = s0.Slot9(x,y);
+                    x = s0.SlotA(x,y);
+                    x = s0.SlotB(x,y);
+                    x = s0.SlotC(x,z);
+                    x = s0.SlotD(y,x);
+                    x = s0.SlotE(x,y);
+                    z = s0.SlotF(z,b);
+                    return z;
+                }
+
+                [MethodImpl(NotInline)]
+                public byte Slot0(byte a, byte b)
+                    => filler(a,b);
+
+                [MethodImpl(NotInline)]
+                public byte Slot1(byte a, byte b)
+                    => filler(a,b);
+
+                [MethodImpl(NotInline)]
+                public byte Slot2(byte a, byte b)
+                    => filler(a,b);
+
+                [MethodImpl(NotInline)]
+                public byte Slot3(byte a, byte b)
+                    => filler(a,b);
+
+                [MethodImpl(NotInline)]
+                public byte Slot4(byte a, byte b)
+                    => filler(a,b);
+
+                [MethodImpl(NotInline)]
+                public byte Slot5(byte a, byte b)
+                    => filler(a,b);
+
+                [MethodImpl(NotInline)]
+                public byte Slot6(byte a, byte b)
+                    => filler(a,b);
+
+                [MethodImpl(NotInline)]
+                public byte Slot7(byte a, byte b)
+                    => filler(a,b);
+
+                [MethodImpl(NotInline)]
+                public byte Slot8(byte a, byte b)
+                    => filler(a,b);
+
+                [MethodImpl(NotInline)]
+                public byte Slot9(byte a, byte b)
+                    => filler(a,b);
+
+                [MethodImpl(NotInline)]
+                public byte SlotA(byte a, byte b)
+                    => filler(a,b);
+
+                [MethodImpl(NotInline)]
+                public byte SlotB(byte a, byte b)
+                    => filler(a,b);
+
+                [MethodImpl(NotInline)]
+                public byte SlotC(byte a, byte b)
+                    => filler(a,b);
+
+                [MethodImpl(NotInline)]
+                public byte SlotD(byte a, byte b)
+                    => filler(a,b);
+
+                [MethodImpl(NotInline)]
+                public byte SlotE(byte a, byte b)
+                    => filler(a,b);
+
+                [MethodImpl(NotInline)]
+                public byte SlotF(byte a, byte b)
+                    => filler(a,b);
+
+                [MethodImpl(Inline)]
+                static byte filler(byte a, byte b)
+                {
+                    var x = Bytes.add(a, b);
+                    var y = Bytes.xor(x, b);
+                    var z = Bytes.xnor(y,a);
+                    return Bytes.cnonimpl(x,z);
+                }
+            }
+        }
+         
+        internal readonly struct CalcBytes
+        {
+            /// <summary>
+            /// X86-executable code obtained by disassembling <see cref="eval(Add, byte, byte)"/>
+            /// </summary>
+            public static ReadOnlySpan<byte> add_ᐤ8iㆍ8iᐤ
+                => new byte[20]{0x0f,0x1f,0x44,0x00,0x00,0x48,0x0f,0xbe,0xc1,0x48,0x0f,0xbe,0xd2,0x03,0xc2,0x48,0x0f,0xbe,0xc0,0xc3};
+
+            /// <summary>
+            /// X86-executable code obtained by disassembling <see cref="eval(Sub, byte, byte)"/>
+            /// </summary>
+            public static ReadOnlySpan<byte> sub_ᐤ8uㆍ8uᐤ
+                => new byte[17]{0x0f,0x1f,0x44,0x00,0x00,0x0f,0xb6,0xc1,0x0f,0xb6,0xd2,0x2b,0xc2,0x0f,0xb6,0xc0,0xc3};
+
+            /// <summary>
+            /// X86-executable code obtained by disassembling <see cref="eval(Mul, byte, byte)"/>
+            /// </summary>
+            public static ReadOnlySpan<byte> mul_ᐤ8uㆍ8uᐤ
+                => new byte[18]{0x0f,0x1f,0x44,0x00,0x00,0x0f,0xb6,0xc1,0x0f,0xb6,0xd2,0x0f,0xaf,0xc2,0x0f,0xb6,0xc0,0xc3};
+
+            /// <summary>
+            /// X86-executable code obtained by disassembling <see cref="eval(Div, byte, byte)"/>
+            /// </summary>
+            public static ReadOnlySpan<byte> div_ᐤ8uㆍ8uᐤ
+                => new byte[18]{0x0f,0x1f,0x44,0x00,0x00,0x0f,0xb6,0xc1,0x0f,0xb6,0xca,0x99,0xf7,0xf9,0x0f,0xb6,0xc0,0xc3};
+
+            /// <summary>
+            /// X86-executable code obtained by disassembling <see cref="eval(BLK.And, byte, byte)"/>
+            /// </summary>
+            public static ReadOnlySpan<byte> and_ᐤ8uㆍ8uᐤ
+                => new byte[17]{0x0f,0x1f,0x44,0x00,0x00,0x0f,0xb6,0xc1,0x0f,0xb6,0xd2,0x23,0xc2,0x0f,0xb6,0xc0,0xc3};
+        }
+
+        public static void runA(Action<string> emitter)
+        {
+            var src = dynops();
+            var count = src.Count;
+            var buffer = alloc<MsilCompilation>(count);
+            ref var dst = ref first(buffer);
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var op = ref src[i];
+                ref var result = ref seek(dst,i);
+                result = ClrDynamic.compilation(op.Definition);
+                emitter(string.Format("{0}: {1}", result.EntryPoint, result.Msil.Encoded.Format()));
+            }
+        }
+
+        public static void runB(Action<string> emitter)
+        {
+            var name = nameof(mul_8u_8u_8u);
+            var code = mul_8u_8u_8u;
+            var dynop = BinaryOpDynamics.dynop<byte>(name, code);
+            var fx = dynop.Delegate;
+            var il = ClrDynamic.compilation(dynop.Definition);
+            emitter(string.Format("{0}: {1}", il.EntryPoint, il.Msil.Encoded.Format()));
+            for(byte i=0; i<20; i++)
+            {
+                var a = i;
+                var b = (byte)(a*2);
+                var c = fx(a,b);
+                emitter(string.Format("{0}({1},{2})={3}", name, a, b, c));
+            }
+        }
+
+        public static void runC(Action<string> emitter)
+        {
+            compute();
+            var dst = text.buffer();
+            run(dst);
+            emitter(dst.Emit());
+        }
+
+        static ReadOnlySpan<byte> mul_8u_8u_8u
+            => new byte[18]{0x0f,0x1f,0x44,0x00,0x00,0x0f,0xb6,0xc1,0x0f,0xb6,0xd2,0x0f,0xaf,0xc2,0x0f,0xb6,0xc0,0xc3};
+
+        public static BinaryOperators<T> index<T>()
+            => new (new BinaryOp<T>[256]);
+
+        public static BinaryOperators<byte> arithmetic()
+        {
+            var dst = index<byte>();
+            dst[I.Add] = BinaryOpDynamics.create<byte>(OpIdentity.define(nameof(C.add_ᐤ8iㆍ8iᐤ)), C.add_ᐤ8iㆍ8iᐤ);
+            dst[I.Sub] = BinaryOpDynamics.create<byte>(OpIdentity.define(nameof(C.sub_ᐤ8uㆍ8uᐤ)), C.sub_ᐤ8uㆍ8uᐤ);
+            dst[I.Mul] = BinaryOpDynamics.create<byte>(OpIdentity.define(nameof(C.mul_ᐤ8uㆍ8uᐤ)), C.mul_ᐤ8uㆍ8uᐤ);
+            dst[I.Div] = BinaryOpDynamics.create<byte>(OpIdentity.define(nameof(C.div_ᐤ8uㆍ8uᐤ)), C.div_ᐤ8uㆍ8uᐤ);
+            return dst;
+        }
+
+        public static Index<DynamicOp<BinaryOp<byte>>> dynops()
+        {
+            var dst = alloc<DynamicOp<BinaryOp<byte>>>(4);
+            dst[0] = BinaryOpDynamics.dynop<byte>(nameof(C.add_ᐤ8iㆍ8iᐤ), C.add_ᐤ8iㆍ8iᐤ);
+            dst[1] = BinaryOpDynamics.dynop<byte>(nameof(C.sub_ᐤ8uㆍ8uᐤ), C.sub_ᐤ8uㆍ8uᐤ);
+            dst[2] = BinaryOpDynamics.dynop<byte>(nameof(C.mul_ᐤ8uㆍ8uᐤ), C.mul_ᐤ8uㆍ8uᐤ);
+            dst[3] = BinaryOpDynamics.dynop<byte>(nameof(C.div_ᐤ8uㆍ8uᐤ), C.div_ᐤ8uㆍ8uᐤ);
+            return dst;
+        }
+
         public ref struct BinaryOperators<T>
         {
             readonly Span<BinaryOp<T>> Operators;
@@ -148,17 +379,14 @@ namespace Z0
                 => (byte)(x&y);
         }
 
-
         void Display1()
         {
             var x = ScalarCast.uint8(4);
             var y = ScalarCast.uint8(16);
             var f = K.mul();
-
             var expect = Managed.eval(f, x, y);
             var actual = Native.eval(f, x, y);
             var message = describe(f, x,y, expect, actual);
-
             term.print(message);
         }
 
@@ -171,7 +399,6 @@ namespace Z0
                 term.print(slot);
             }
         }
-
 
         public static string apply<K,T>(K k, T x, T y)
             where K : IApiClass
@@ -194,7 +421,6 @@ namespace Z0
             where K : IApiClass
             where T : IEquatable<T>
                 => expect.Equals(actual) ? success(k, x, y, actual) : failure(k, x, y, expect, actual);
-
 
         public static byte compute()
         {

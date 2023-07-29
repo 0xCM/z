@@ -9,7 +9,6 @@ namespace Z0.Asm
     {
         AsmOpClass IAsmOpClass.OpClass
             => AsmOpClass.Mem;
-
     }
 
     [Free]

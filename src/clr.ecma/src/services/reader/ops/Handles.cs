@@ -4,40 +4,38 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     partial class EcmaReader
     {
         [Op]
-        public ReadOnlySpan<ManifestResourceHandle> ResourceHandles()
-            => MD.ManifestResources.ToReadOnlySpan();
+        public ParallelQuery<ManifestResourceHandle> ResourceHandles()
+            => MD.ManifestResources.AsParallel();
         
         [MethodImpl(Inline), Op]
-        public ReadOnlySpan<TypeDefinitionHandle> TypeDefHandles()
-            => MD.TypeDefinitions.ToReadOnlySpan();
+        public ParallelQuery<TypeDefinitionHandle> TypeDefHandles()
+            => MD.TypeDefinitions.AsParallel();
 
         [Op]
-        public ReadOnlySpan<TypeReferenceHandle> TypeRefHandles()
-            => MD.TypeReferences.ToReadOnlySpan();
+        public ParallelQuery<TypeReferenceHandle> TypeRefHandles()
+            => MD.TypeReferences.AsParallel();
 
         [Op]
-        public ReadOnlySpan<AssemblyReferenceHandle> AssemblyRefHandles()
-            => MD.AssemblyReferences.ToReadOnlySpan();
+        public ParallelQuery<AssemblyReferenceHandle> AssemblyRefHandles()
+            => MD.AssemblyReferences.AsParallel();
 
         [Op]
-        public ReadOnlySpan<MethodDefinitionHandle> MethodDefHandles()
-            => MD.MethodDefinitions.ToReadOnlySpan();
+        public ParallelQuery<MethodDefinitionHandle> MethodDefHandles()
+            => MD.MethodDefinitions.AsParallel();
 
         [Op]
-        public ReadOnlySpan<FieldDefinitionHandle> FieldDefHandles()
-            => MD.FieldDefinitions.ToReadOnlySpan();
+        public ParallelQuery<FieldDefinitionHandle> FieldDefHandles()
+            => MD.FieldDefinitions.AsParallel();
 
         [Op]
-        public ReadOnlySpan<PropertyDefinitionHandle> PropertyDefHandles()
-            => MD.PropertyDefinitions.ToReadOnlySpan();
+        public ParallelQuery<PropertyDefinitionHandle> PropertyDefHandles()
+            => MD.PropertyDefinitions.AsParallel();
 
         [Op]
-        public ReadOnlySpan<MethodDebugInformationHandle> MethodDebugInfoHandles()
-            => MD.MethodDebugInformation.ToReadOnlySpan();
+        public ParallelQuery<MethodDebugInformationHandle> MethodDebugInfoHandles()
+            => MD.MethodDebugInformation.AsParallel();
     }
 }

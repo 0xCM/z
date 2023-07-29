@@ -5,7 +5,7 @@
 namespace Z0
 {    
     [StructLayout(StructLayout,Pack=1)]
-    public struct MemorySymbol : IComparable<MemorySymbol>, IEquatable<MemorySymbol>
+    public record struct MemorySymbol : IComparable<MemorySymbol>, IEquatable<MemorySymbol>
     {
         [Render(6)]
         public uint Key;
@@ -32,33 +32,33 @@ namespace Z0
             Expr = expr;
         }
 
-        public bool IsEmpty
+        public readonly bool IsEmpty
         {
             [MethodImpl(Inline)]
             get => Address.IsEmpty && Size == 0;
         }
 
-        public bool IsNonEmpty
+        public readonly bool IsNonEmpty
         {
             [MethodImpl(Inline)]
             get => !IsEmpty;
         }
 
         [MethodImpl(Inline)]
-        public int CompareTo(MemorySymbol src)
+        public readonly int CompareTo(MemorySymbol src)
             => Address.CompareTo(src.Address);
 
         [MethodImpl(Inline)]
-        public bool Equals(MemorySymbol src)
+        public readonly bool Equals(MemorySymbol src)
             => Address.Equals(src.Address);
 
-        public override int GetHashCode()
-            => (int)HashCode;
+        public readonly override int GetHashCode()
+            => HashCode;
 
         public static MemorySymbol Empty
         {
             [MethodImpl(Inline)]
-            get => new MemorySymbol(0u, 0u, 0u, 0u, SymExpr.Empty);
+            get => new (0u, 0u, 0u, 0u, SymExpr.Empty);
         }
     }
 }

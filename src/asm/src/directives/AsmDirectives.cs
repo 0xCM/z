@@ -11,15 +11,15 @@ namespace Z0.Asm
     {
         [MethodImpl(Inline), Op]
         public static AsmSectionDirective section(asci16 name, CoffSectionFlags flags, CoffComDatKind comdat, AsmDirectiveOp data)
-            => new AsmSectionDirective(name, flags, comdat, data);
+            => new (name, flags, comdat, data);
 
         [MethodImpl(Inline), Op]
         public static AsmSectionDirective section(asci16 name, CoffSectionFlags flags, CoffComDatKind comdat, string data)
-            => new AsmSectionDirective(name,flags,comdat, operand(data));
+            => new (name,flags,comdat, operand(data));
 
         [MethodImpl(Inline), Op]
         public static AsmSectionDirective section(asci16 name, CoffSectionFlags flags, CoffComDatKind comdat, AsmLabel label)
-            => new AsmSectionDirective(name, flags,comdat, label.Name.Format());
+            => new (name, flags,comdat, label.Name.Format());
 
         [Op]
         public static AsmSectionDirective section(CoffSectionKind kind, CoffSectionFlags flags, CoffComDatKind comdat, AsmDirectiveOp data)

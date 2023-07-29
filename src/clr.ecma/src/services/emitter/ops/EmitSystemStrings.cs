@@ -20,7 +20,7 @@ namespace Z0
             {
                 var path = dst.Metadata(EcmaSections.SystemStrings).PrefixedTable<EcmaStringDetail>(src.GetSimpleName());
                 var reader = EcmaReader.create(src);
-                Channel.TableEmit(reader.ReadSystemStringDetail(), path, UTF16);
+                Channel.TableEmit(reader.ReadSystemStringDetail().Array(), path, UTF16);
             }
             Try(Exec);
         }
@@ -32,7 +32,7 @@ namespace Z0
         public void EmitSystemStrings(EcmaReader src, IDbArchive dst)
         {
             var name = src.AssemblyName().SimpleName();
-            Channel.TableEmit(src.ReadSystemStringDetail(), dst.Path($"{name}.ecma.strings.system", FileKind.Csv), UTF16);
+            Channel.TableEmit(src.ReadSystemStringDetail().Array(), dst.Path($"{name}.ecma.strings.system", FileKind.Csv), UTF16);
         }
 
         public void EmitSystemStrings(Assembly src, IDbArchive dst)

@@ -312,19 +312,19 @@ namespace Z0.Asm
 
         [MethodImpl(Inline)]
         public static implicit operator AsmOperand(Imm8 src)
-            => new AsmOperand(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator AsmOperand(Imm16 src)
-            => new AsmOperand(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator AsmOperand(Imm32 src)
-            => new AsmOperand(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator AsmOperand(Imm64 src)
-            => new AsmOperand(src);
+            => new (src);
 
         public static AsmOperand Empty => default;
     }

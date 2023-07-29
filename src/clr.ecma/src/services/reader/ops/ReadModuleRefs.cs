@@ -10,7 +10,6 @@ namespace Z0
 
     partial class EcmaReader
     {
-
         [Op]
         public ReadOnlySpan<ModuleReferenceHandle> ModuleRefHandles()
         {
@@ -20,15 +19,5 @@ namespace Z0
                 seek(dst,i-1) = MetadataTokens.ModuleReferenceHandle(i);
             return dst;
         }
-
-        // public ReadOnlySeq<ModuleRefRow> ReadModuleRefs()
-        // {
-        //     var count = MD.GetTableRowCount(TableIndex.ModuleRef);
-        //     var dst = sys.alloc<ModuleRefRow>(count);
-
-            
-        //     // var handles = ModuleRefHandles();
-        //     // from h in ModuleRefHandles() select new ModuleRefRow(h, MD.GetModuleReference(h).Name);
-        // }
     }
 }

@@ -13,7 +13,6 @@ namespace Z0
             var value = MD.GetBlobBytes(handle) ?? sys.array<byte>();
             var size = (uint)MD.GetHeapSize(HeapIndex.Blob);
             var row = new EcmaBlobInfo();
-            row.Seq = seq;
             row.HeapSize = (uint)MD.GetHeapSize(HeapIndex.Blob);
             row.Offset = (Address32)MD.GetHeapOffset(handle);
             row.Data = value;

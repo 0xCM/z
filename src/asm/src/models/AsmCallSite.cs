@@ -8,7 +8,7 @@ namespace Z0
     {
         [MethodImpl(Inline), Op]
         public static AsmCallSite define(LocatedSymbol caller, Address16 offset, uint4 size)
-            => new AsmCallSite(caller, offset, size);
+            => new (caller, offset, size);
 
         public readonly LocatedSymbol Block;
 

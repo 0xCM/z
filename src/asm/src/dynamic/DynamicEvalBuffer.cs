@@ -7,7 +7,7 @@ namespace Z0
     public readonly struct DynamicEvalBuffer : IDisposable
     {
         public static DynamicEvalBuffer create(ByteSize length, byte count)
-            => new DynamicEvalBuffer(length,count);
+            => new (length,count);
 
         readonly NativeBuffers _Buffers;
 

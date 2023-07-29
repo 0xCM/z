@@ -88,6 +88,6 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public SdmFormDescriptor WithName(in asci64 name)
-            => new SdmFormDescriptor(Form.WithName(name), OcDetail);
+            => new (Form.WithName(name), OcDetail);
     }
 }

@@ -7,13 +7,22 @@ namespace Z0.Asm
     [StructLayout(LayoutKind.Sequential, Pack=1)]
     public readonly struct MemOp : IMemOp
     {
+        public static AsmPointerKind ptr(NativeSizeCode src)
+            => src switch {
+            NativeSizeCode.W8 => AsmPointerKind.@byte,
+            NativeSizeCode.W16 => AsmPointerKind.word,
+            NativeSizeCode.W32 => AsmPointerKind.dword,
+            NativeSizeCode.W64 => AsmPointerKind.qword,
+            NativeSizeCode.W128 => AsmPointerKind.xmmword,
+            NativeSizeCode.W256 => AsmPointerKind.ymmword,
+            NativeSizeCode.W512 => AsmPointerKind.zmmword,
+                _ => AsmPointerKind.@byte
+            };
         public static string format<T>(T src)
             where T : unmanaged, IMemOp
         {
             var dst = text.buffer();
-            var ptrKind = (AsmPointerKind)(byte)src.TargetSize;
-            var ptr = string.Format("{0} ptr [", expr(ptrKind));
-            dst.Append(ptr);
+            dst.Append(string.Format("{0} ptr [", expr(ptr(src.TargetSize))));
             dst.Append(src.Address.Format());
             dst.Append(Chars.RBracket);
             return dst.Emit();

@@ -20,19 +20,19 @@ namespace Z0
 
         [Op]
         public static EcmaReader create(Assembly src)
-            => new EcmaReader(src);
+            => new (src);
 
         [Op]
         public static EcmaReader create(MetadataReader src)
-            => new EcmaReader(src);
+            => new (src);
 
         [Op]
         public static EcmaReader create(MemorySegment src)
-            => new EcmaReader(src);
+            => new (src);
 
         [Op]
         public static EcmaReader create(PEMemoryBlock src)
-            => new EcmaReader(src);
+            => new (src);
 
         [MethodImpl(Inline), Op]
         public static Address32 offset(MetadataReader reader, UserStringHandle handle)
@@ -44,7 +44,7 @@ namespace Z0
             {
                 using var ecma = Ecma.file(file.Path);
                 var reader = Ecma.reader(ecma);
-                var refs = reader.ReadAssemblyRefRows().Storage;
+                var refs = reader.ReadAssemblyRefRows();
                 foreach(var r in refs)
                     yield return r;                
             }
@@ -103,6 +103,58 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public BinaryCode Blob(BlobHandle src)
             => MD.GetBlobBytes(src);
+
+        public object? Constant(ConstantHandle handle)
+        {
+            var @const = MD.GetConstant(handle);            
+            var bytes = MD.GetBlobBytes(@const.Value);
+            var view = @readonly(bytes);
+            var dst = default(object);
+            switch(@const.TypeCode)
+            {
+                case ConstantTypeCode.Boolean:
+                    dst = @bool(view);
+                break;   
+                case ConstantTypeCode.Char:
+                    dst = c16(first(view));
+                break;
+                case ConstantTypeCode.SByte:
+                    dst = i8(view);
+                break;
+                case ConstantTypeCode.Byte:
+                    dst = u8(view);
+                break;
+                case ConstantTypeCode.Int16:
+                    dst = i16(first(view));
+                break;
+                case ConstantTypeCode.UInt16:
+                    dst = u16(view);
+                break;
+                case ConstantTypeCode.Int32:
+                    dst = i32(view);
+                break;
+                case ConstantTypeCode.UInt32:
+                    dst = u32(view);
+                break;
+                case ConstantTypeCode.Int64:
+                    dst = i64(view);
+                break;
+                case ConstantTypeCode.UInt64:
+                    dst = u64(view);
+                break;
+                case ConstantTypeCode.Single:
+                    dst = f32(view);
+                break;
+                case ConstantTypeCode.Double:
+                    dst = f64(view);
+                break;
+                case ConstantTypeCode.String:
+                    dst = text.utf8(view);
+                break;
+            }
+
+            return dst;                        
+        }
 
         [Op]
         public string String(UserStringHandle handle)

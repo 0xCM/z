@@ -136,19 +136,15 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator Imm<byte>(I src)
-            => new Imm<byte>(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator I(byte src)
-            => new I(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator Imm(I src)
-            => new Imm(src.ImmKind, src.Value);
-
-        // [MethodImpl(Inline)]
-        // public static implicit operator AsmOperand(Imm8 src)
-        //     => new AsmOperand(src);
+            => new (src.ImmKind, src.Value);
 
         public static W W => default;
     }

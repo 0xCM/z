@@ -29,13 +29,13 @@ namespace Z0
             get => Value == 0;
         }
 
-        public bool Positive
+        public bool IsPositive
         {
             [MethodImpl(Inline)]
             get => Value > 0;
         }
 
-        public bool Negative
+        public bool IsNegative
         {
             [MethodImpl(Inline)]
             get => Value < 0;

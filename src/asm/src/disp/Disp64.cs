@@ -26,13 +26,13 @@ namespace Z0
             get => Value == 0;
         }
 
-        public bool Positive
+        public bool IsPositive
         {
             [MethodImpl(Inline)]
             get => Value > 0;
         }
 
-        public bool Negative
+        public bool IsNegative
         {
             [MethodImpl(Inline)]
             get => Value < 0;
@@ -64,20 +64,20 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator Disp(Disp64 src)
-            => new Disp(src.Value, src.Size);
+            => new (src.Value, src.Size);
 
         [MethodImpl(Inline)]
         public static implicit operator Disp64(ulong src)
-            => new Disp64((long)src);
+            => new ((long)src);
 
         [MethodImpl(Inline)]
         public static implicit operator Disp64(long src)
-            => new Disp64((int)src);
+            => new ((int)src);
 
         public static Disp64 Empty
         {
             [MethodImpl(Inline)]
-            get => new Disp64(0);
+            get => new (0);
         }
     }
 }

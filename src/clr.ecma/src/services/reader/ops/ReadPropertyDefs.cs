@@ -9,20 +9,12 @@ namespace Z0
 
     partial class EcmaReader
     {
-        public ReadOnlySeq<PropertyDef> ReadPropertyDefs()
+        public IEnumerable<PropertyDef> ReadPropertyDefs()
         {
-            var name = AssemblyKey().AssemblyName;
             var handles = PropertyDefHandles();
-            var count = handles.Length;
-            var buffer = sys.alloc<PropertyDef>(count);
-            for(var i=0; i<count; i++)
+            foreach(var handle in handles)
             {
-                var handle = skip(handles,i);
                 var def = ReadPropertyDef(handle);
-                ref var dst = ref seek(buffer, i);
-                dst.Index = handle;
-                dst.Name = def.Name;
-                dst.Attributes = def.Attributes;
                 var accessors = def.GetAccessors();
                 var declarer = default(TypeDefinition);
                 var declhandle = default(TypeDefinitionHandle);
@@ -38,10 +30,15 @@ namespace Z0
                     declhandle = setter.GetDeclaringType();                
                     declarer = MD.GetTypeDefinition(declhandle);
                 }
-                dst.DeclaringType = declhandle;
-                dst.Namespace = declarer.Namespace;            
+
+                yield return new PropertyDef{
+                    Index = handle,
+                    Name = def.Name,
+                    Attributes = def.Attributes,
+                    DeclaringType = declhandle,
+                    Namespace = declarer.Namespace
+                };
             }
-            return buffer;
         }
         
         [MethodImpl(Inline), Op]

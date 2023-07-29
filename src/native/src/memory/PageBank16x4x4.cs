@@ -26,23 +26,23 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public MemoryPage Block(byte index)
-            => new MemoryPage(BlockIndex[index]);
+            => new (BlockIndex[index]);
 
         [MethodImpl(Inline), Op]
         public MemoryPage Block(N0 n)
-            => new MemoryPage(BlockIndex[0]);
+            => new (BlockIndex[0]);
 
         [MethodImpl(Inline), Op]
         public MemoryPage Block(N1 n)
-            => new MemoryPage(BlockIndex[1]);
+            => new (BlockIndex[1]);
 
         [MethodImpl(Inline), Op]
         public MemoryPage Block(N2 n)
-            => new MemoryPage(BlockIndex[2]);
+            => new (BlockIndex[2]);
 
         [MethodImpl(Inline), Op]
         public MemoryPage Block(N3 n)
-            => new MemoryPage(BlockIndex[3]);
+            => new (BlockIndex[3]);
 
         [MethodImpl(Inline), Op]
         public ref readonly PageBankInfo Describe()

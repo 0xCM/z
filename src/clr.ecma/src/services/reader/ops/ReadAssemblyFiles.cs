@@ -20,7 +20,7 @@ namespace Z0
             return dst;
         }
 
-        public IEnumerable<AssemblyFileInfo> ReadAssemblyFiles()
-            => MD.AssemblyFiles.Select(ReadAssemblyFile);
+        public ParallelQuery<AssemblyFileInfo> ReadAssemblyFiles()
+            => MD.AssemblyFiles.Select(ReadAssemblyFile).AsParallel();
     }
 }

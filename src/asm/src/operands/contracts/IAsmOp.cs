@@ -8,7 +8,7 @@ namespace Z0
     /// Characterizes an asm operand representation
     /// </summary>
     [Free]
-    public interface IAsmOp
+    public interface IAsmOp : IExpr
     {
         AsmOpKind OpKind {get;}
 
@@ -16,7 +16,13 @@ namespace Z0
 
         NativeSize Size {get;}
 
-        string Format()
+        bool INullity.IsEmpty
+            => OpKind == 0;
+
+        bool INullity.IsNonEmpty
+            => OpKind != 0;
+
+        string IExpr.Format()
             => "<unimplemented>";
     }
 

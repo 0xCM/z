@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Free]
-    public interface IImmOp : IAsmOp, ITextual
+    public interface IImmOp : IAsmOp, IExpr
     {
         ImmKind ImmKind {get;}
 
@@ -13,6 +13,7 @@ namespace Z0
 
         AsmOpClass IAsmOp.OpClass
             => AsmOpClass.Imm;
+        
     }
 
     [Free]

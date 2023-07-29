@@ -11,7 +11,7 @@ namespace Z0
     {
         public ReadOnlySeq<MethodDebugInfo> ReadMethodDebugInfo()
         {
-            var handles = MethodDebugInfoHandles();
+            var handles = MethodDebugInfoHandles().Array();
             var count = handles.Length;
             var buffer = alloc<MethodDebugInfo>(count);
             for(var i=0; i<count; i++)

@@ -89,7 +89,7 @@ namespace Z0
         public static MemorySymbol symbol(uint key, StringAddress address)
         {
             var dst = new MemorySymbol();
-            var chars = address.Chars;
+            var chars = address.View;
             dst.Key = key;
             dst.Address = address;
             dst.HashCode = sys.hash(chars);

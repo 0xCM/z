@@ -14,7 +14,7 @@ namespace Z0
         where N : unmanaged, ITypeNat
     {
         public static PageAllocation<N> alloc()
-            => new PageAllocation<N>();
+            => new ();
 
         public const uint PageSize = Pow2.T12;
 
@@ -54,10 +54,10 @@ namespace Z0
             get => Buffer.Width;
         }
 
-        public ReadOnlySpan<MemorySeg> Allocated
+        public ReadOnlySpan<MemorySegment> Allocated
         {
             [MethodImpl(Inline)]
-            get => cover<MemorySeg>(BaseAddress, PageCount);
+            get => cover<MemorySegment>(BaseAddress, PageCount);
         }
 
         [MethodImpl(Inline)]

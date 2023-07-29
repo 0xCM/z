@@ -23,7 +23,7 @@ namespace Z0.Asm
         RegClassCode RegClassCode {get;}
 
         NativeSize IAsmOp.Size
-            => new NativeSize(Size);
+            => new (Size);
 
         RegClass RegClass
             => RegClassCode;

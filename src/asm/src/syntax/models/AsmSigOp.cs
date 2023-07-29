@@ -26,7 +26,7 @@ namespace Z0
         public AsmSigToken Token
         {
             [MethodImpl(Inline)]
-            get => new AsmSigToken(Kind, Value);
+            get => new (Kind, Value);
         }
 
         public ushort Id

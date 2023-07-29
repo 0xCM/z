@@ -104,8 +104,8 @@ namespace Z0
             => new SegRef(api.address<byte>(Base,index),Size);
 
         [MethodImpl(Inline)]
-        public MemorySeg Segment()
-            => new MemorySeg(Base,FileSize);
+        public MemorySegment Segment()
+            => new (Base,FileSize);
 
         [MethodImpl(Inline)]
         public Span<byte> Edit(ulong offset, ByteSize size)

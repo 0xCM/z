@@ -17,7 +17,7 @@ namespace Z0
             {
                 using var file = Ecma.file(src.Path);
                 var reader = file.EcmaReader();
-                Channel.TableEmit(reader.ReadMethodInfo(), dst.PrefixedTable<EcmaMethodInfo>(src.AssemblyName.Name));
+                Channel.TableEmit(reader.ReadMethodInfo().Array().Sort(), dst.PrefixedTable<EcmaMethodInfo>(src.AssemblyName.Name));
             }
 
             Try(Exec);

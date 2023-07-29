@@ -57,15 +57,15 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static PrimalType primitive(NativeKind kind, Label name, AlignedWidth width)
-            => new PrimalType(kind, name,width);
+            => new (kind, name,width);
 
         [MethodImpl(Inline), Op]
         public static LiteralType literal(TypeKey key, Label name, PrimalType @base, DataSize size)
-            => new LiteralType(key, name, @base, size);
+            => new (key, name, @base, size);
 
         [MethodImpl(Inline), Op]
         public static LiteralType literal(TypeKey key, Label name, PrimalType @base, byte size)
-            => new LiteralType(key, name, @base, (size,size));
+            => new (key, name, @base, (size,size));
 
         [MethodImpl(Inline)]
         public static LiteralValue literal<T>(TypeKey type, T value)
@@ -79,7 +79,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static TypedLiteral typed(Label name, TypeKey @base, DataSize size)
-            => new TypedLiteral(name, @base, size);
+            => new (name, @base, size);
 
         [MethodImpl(Inline), Op]
         public static TypedLiteral typed(Label name, LiteralType @base, DataSize size)
@@ -87,11 +87,11 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static NumericType numeric(TypeKey key, Label name, DataSize size)
-            => new NumericType(key, name, size);
+            => new (key, name, size);
 
         [MethodImpl(Inline), Op]
         public static NumericType numeric(TypeKey key, Label name, byte width)
-            => new NumericType(key, name, width);
+            => new (key, name, width);
 
         [MethodImpl(Inline), Op]
         public static NumericType numeric(PrimalType key, Label name, NumWidth width)
@@ -139,9 +139,9 @@ namespace Z0
             else if(src == typeof(void))
                 return PrimalType.Intrinsic.Void;
             else if(src.IsPrimalNumeric())
-                return type(DataTypes.primitive(src.NumericKind()));
+                return type(primitive(src.NumericKind()));
             else if(src.IsEnum)
-                return type(DataTypes.primitive(src.EnumScalarKind()));
+                return type(primitive(src.EnumScalarKind()));
             else if(src == typeof(Null))
                 return PrimalType.Intrinsic.Empty;
             else

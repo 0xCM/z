@@ -9,12 +9,12 @@ namespace Z0
     {
         public readonly ApiEncoded Member;
 
-        public readonly MemorySeg DataSegment;
+        public readonly MemorySegment DataSegment;
 
         public readonly SpanResKind ResKind;
 
         [MethodImpl(Inline)]
-        public CapturedAccessor(ApiEncoded member, MemorySeg data, SpanResKind kind)
+        public CapturedAccessor(ApiEncoded member, MemorySegment data, SpanResKind kind)
         {
             Member = member;
             DataSegment = data;

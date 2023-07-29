@@ -91,18 +91,14 @@ namespace Z0.Asm
 
         [MethodImpl(Inline)]
         public static implicit operator Imm<ushort>(I src)
-            => new Imm<ushort>(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator I(ushort src)
-            => new I(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator Imm(I src)
-            => new Imm(src.ImmKind, src.Value);
-
-        // [MethodImpl(Inline)]
-        // public static implicit operator AsmOperand(Imm16u src)
-        //     => new AsmOperand(src);
+            => new (src.ImmKind, src.Value);
      }
 }

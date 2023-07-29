@@ -23,9 +23,9 @@ namespace Z0.Asm
     public class AsmSigDatasets
     {
         [MethodImpl(Inline)]
-        public static AsmSigToken token<T>(AsmSigTokenKind kind, T value)
+        public static AsmSigToken token<T>(K kind, T value)
             where T : unmanaged
-                => new AsmSigToken(kind, u8(value));
+                => new (kind, u8(value));
 
         public static ConstLookup<uint,AsmSigNonterminal> nonterminals()
         {

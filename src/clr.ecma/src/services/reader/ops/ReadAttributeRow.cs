@@ -9,7 +9,7 @@ namespace Z0
     partial class EcmaReader
     {
         [MethodImpl(Inline), Op]
-        public CustomAttribRow ReadAttributeRow(System.Reflection.Metadata.CustomAttribute src)
+        public CustomAttribRow ReadAttributeRow(CustomAttribute src)
         {
             var dst = default(CustomAttribRow);
             dst.Parent = src.Parent;

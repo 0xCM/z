@@ -18,6 +18,6 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator SdmFormSeq(SdmForm[] src)
-            => new SdmFormSeq(src);
+            => new (src);
     }
 }

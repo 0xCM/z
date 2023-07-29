@@ -98,35 +98,6 @@ namespace Z0
             return channel.TableEmit(index.Sorted(), target);
         }
 
-        public static LineMap<string> map<T>(Index<TextLine> lines, Index<T> relations)
-            where T : struct, ILineRelations<T>
-        {
-            const uint BufferLength = 256;
-            var count = relations.Length;
-            var buffer = span<TextLine>(BufferLength);
-            var intervals = sys.list<LineInterval<string>>();
-            for(var i=0;i<count; i++)
-            {
-                ref readonly var relation = ref relations[i];
-                var k=0;
-                buffer.Clear();
-                var index = relation.SourceLine.Value;
-                for(var j=index; j<lines.Count && k<BufferLength; j++)
-                {
-                    ref readonly var line = ref lines[j];
-                    if(SQ.index(line.Content, Chars.RBrace) != 0)
-                        seek(buffer,k++) = line;
-                    else
-                        break;
-                }
-
-                if(k>0)
-                    intervals.Add(Lines.interval(relation.Name, first(buffer).LineNumber, skip(buffer,k-1).LineNumber));
-            }
-
-            return Lines.map(intervals.ToArray());
-        }
-
         public static ListedFile listing(FilePath src)
         {
             var dst = new ListedFile();

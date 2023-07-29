@@ -68,7 +68,7 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => (Hash32)(Op0.Hash | Op1.Hash) | (Hash32)(Op2.Hash | Op3.Hash | Op4.Hash);
+            get => Op0.Hash | Op1.Hash | Op2.Hash | Op3.Hash | Op4.Hash;
         }
 
         public override int GetHashCode()

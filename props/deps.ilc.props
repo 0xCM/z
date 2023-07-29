@@ -1,5 +1,5 @@
 <Project>
-  <ItemGroup>
+  <!-- <ItemGroup>
     <Reference Include="$(GlobalDeps)/ILCompiler.Reflection.ReadyToRun.dll"/>
     <Reference Include="$(GlobalDeps)/ILCompiler.TypeSystem.dll"/>
     <Reference Include="$(GlobalDeps)/ilc.dll"/>
@@ -20,9 +20,10 @@
       <BuildOutputInPackage Include="$(GlobalDeps)/ILCompiler.RyuJit.dll"/>
     </ItemGroup>
   </Target>
+ -->
 
-  <PropertyGroup>
+  <!-- <PropertyGroup>
     <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);IlcLibs</TargetsForTfmSpecificBuildOutput>
-  </PropertyGroup>
+  </PropertyGroup> -->
 
 </Project>

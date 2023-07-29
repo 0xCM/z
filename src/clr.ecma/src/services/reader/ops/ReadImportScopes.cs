@@ -8,10 +8,8 @@ namespace Z0
     
     partial class EcmaReader
     {
-        public ImportScope ReadImportScope(ImportScopeHandle handle)
-            => MD.GetImportScope(handle);
-
-        public IEnumerable<ImportScope> ReadImportScopes()
-            => MD.ImportScopes.Select(ReadImportScope);
+        public ParallelQuery<ImportScope> ReadImportScopes()
+            => from scope in MD.ImportScopes.AsParallel() 
+                select MD.GetImportScope(scope);
     }
 }

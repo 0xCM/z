@@ -65,7 +65,7 @@ namespace Z0
             => selector(Kind);
 
         public AsmOpCodeMap Map
-            => new AsmOpCodeMap(Kind, Class, index(Kind), Symbol, Selector);
+            => new (Kind, Class, index(Kind), Symbol, Selector);
 
         static string minimal(AsmOcValue src)
         {

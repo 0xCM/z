@@ -68,10 +68,10 @@ namespace Z0
             public AsmRowKey Key
             {
                 [MethodImpl(Inline)]
-                get => (Seq,DocSeq,OriginId);
+                get => (Seq, DocSeq, OriginId);
             }
 
-            public int CompareTo(InstDetail src)
+            public readonly int CompareTo(InstDetail src)
             {
                 var result = SourceName.CompareTo(src.SourceName);
                 if(result == 0)

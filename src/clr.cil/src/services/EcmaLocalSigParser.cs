@@ -7,9 +7,9 @@ namespace Z0
 
     public class EcmaLocalSigParser : EcmaSigParser
     {
-        readonly System.Collections.Generic.Stack<Type> _types = new System.Collections.Generic.Stack<Type>();
+        readonly Stack<Type> _types = new ();
 
-        readonly System.Collections.Generic.Stack<TypeCreator> _creators = new System.Collections.Generic.Stack<TypeCreator>();
+        readonly Stack<TypeCreator> _creators = new ();
 
         readonly ICilTokenResolver _tokenResolver;
 

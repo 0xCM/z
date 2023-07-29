@@ -47,9 +47,9 @@ namespace Z0
 
         MetadataReader _MD;
 
-        MemorySeg _Image;
+        MemorySegment _Image;
 
-        public ref readonly MemorySeg GetImage()
+        public ref readonly MemorySegment GetImage()
         {
             if(_Image.IsEmpty)
                 _Image = new (PE.GetEntireImage().Pointer, PE.GetEntireImage().Length);

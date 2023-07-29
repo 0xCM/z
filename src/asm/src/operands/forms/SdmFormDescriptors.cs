@@ -57,6 +57,6 @@ namespace Z0
         }
 
         public static implicit operator SdmFormDescriptors(Dictionary<string,SdmFormDescriptor> src)
-            => new SdmFormDescriptors(src);
+            => new (src);
     }
 }

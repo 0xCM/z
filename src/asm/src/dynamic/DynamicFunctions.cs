@@ -7,13 +7,13 @@ namespace Z0
     readonly struct DynamicFunctions
     {
         public static DynamicFunctions create(N1 n)
-            => new DynamicFunctions(new UnaryFuncEmitter());
+            => new (new UnaryFuncEmitter());
 
         public static DynamicFunctions create(N2 n)
-            => new DynamicFunctions(new BinaryFuncEmitter());
+            => new (new BinaryFuncEmitter());
 
         public static DynamicFunctions create(N3 n)
-            => new DynamicFunctions(new TernaryFuncEmitter());
+            => new (new TernaryFuncEmitter());
 
         readonly IMethodBodyEmitter BodyEmitter;
 
