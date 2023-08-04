@@ -312,7 +312,6 @@ namespace Z0
              + (@case == LetterCaseKind.Lower ? src.ToString(Hex64Spec) : src.ToString(Hex64SpecUC))
              + (postspec ? PostSpec : EmptyString);
 
-
         [Op]
         public static string format(W8 w, byte src, NumericSpecifier spec, LetterCaseKind @case)
             => (spec == NumericSpecifier.PreSpec ? PreSpec : EmptyString)

@@ -32,17 +32,16 @@ namespace Z0.Asm.Operands
         public override string ToString()
             => Format();
 
-
         public NativeSizeCode Size
         {
             [MethodImpl(Inline)]
             get => NativeSizeCode.W128;
         }
 
-        public RegClassCode RegClassCode
+        public C RegClassCode
         {
             [MethodImpl(Inline)]
-            get => RegClassCode.XMM;
+            get => C.XMM;
         }
 
         public RegClass RegClass

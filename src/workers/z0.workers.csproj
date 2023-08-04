@@ -1,6 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk.Worker">
   <Import Project="$(ProjectProps)\usings.props" />
-  <Import Project="imports.props" />
+  <Import Project="$(ProjectProps)\packages.microsoft.extensions.hosting.props" />
+  <ItemGroup>
+    <ProjectReference Include="$(Workflow)" />
+  </ItemGroup>
   <PropertyGroup>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <AssemblyName>workers</AssemblyName>

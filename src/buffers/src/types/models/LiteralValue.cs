@@ -20,6 +20,6 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator LiteralValue<ulong>(LiteralValue src)
-            => new LiteralValue<ulong>(src.Type, src.Value);
+            => new (src.Type, src.Value);
     }
 }

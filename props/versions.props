@@ -1,14 +1,14 @@
 <Project>
   <PropertyGroup>
-    <ZSysVer>0.0.138</ZSysVer>
-    <ZVer>0.0.495</ZVer>
+    <ZSysVer>0.0.142</ZSysVer>
+    <ZVer>0.0.501</ZVer>
     <ZFxVer>0.0.1016</ZFxVer>
     <ClrRuntimeVersion>8.0.0-dev</ClrRuntimeVersion>
     <LLVMToolsVersion>16</LLVMToolsVersion>
 
     <MsBuildVer>17.6.3</MsBuildVer>
     <NugetVersion>6.6.1</NugetVersion>
-    
+    <MonoCecilVersion>0.11.5</MonoCecilVersion>
     <SystemCommandLineVersion>2.0.0-beta4.22272.1</SystemCommandLineVersion>
     <CodeAnalysisVersion>4.7.0-1</CodeAnalysisVersion>
 
@@ -20,9 +20,12 @@
     <MsDiaVer>1.6.0</MsDiaVer>
     <MsDiaRuntimeVer>2.2.332302</MsDiaRuntimeVer>
     <FxVer>7.0.0</FxVer>
-    <MsExtVer>7.0.0</MsExtVer>
+    <MicrosoftExtensionsVersion>7.0.0</MicrosoftExtensionsVersion>
     <EfCoreVer>7.0.0</EfCoreVer>
-    <ClangSharpVer>15.0.2</ClangSharpVer>
+    <ClangSharpVersion>16.0.1-rc1</ClangSharpVersion>
+    <LlvmSharpVersion>16.0.0-rc1</LlvmSharpVersion>
+    <PerfViewVersion>3.1.4</PerfViewVersion>
+
     <MsProseVersion>8.20.0</MsProseVersion>
 
     <WinSdkContractVersion>10.0.25314-preview</WinSdkContractVersion>

@@ -10,7 +10,7 @@ namespace Z0.Asm
     {
         [MethodImpl(Inline), Op]
         public static AsmSigToken token(AsmSigTokenKind kind, byte value)
-            => new AsmSigToken(kind,value);
+            => new (kind,value);
 
         public static Index<AsmSigToken> tokenize(in AsmSig src)
         {

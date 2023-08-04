@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    [StructLayout(LayoutKind.Sequential,Pack =1)]
+    [StructLayout(LayoutKind.Sequential, Pack=1)]
     public record class ToolHelp
     {
         public @string ToolName;

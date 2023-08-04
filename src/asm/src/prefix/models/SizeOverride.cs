@@ -7,7 +7,7 @@ namespace Z0.Asm
     using static AsmPrefixCodes;
     using static AsmPrefixCodes.SizeOverrideCode;
 
-    public readonly struct SizeOverride
+    public readonly record struct SizeOverride
     {
         public readonly SizeOverrideCode Code;
 
@@ -32,7 +32,7 @@ namespace Z0.Asm
 
         [MethodImpl(Inline)]
         public static implicit operator SizeOverride(SizeOverrideCode src)
-            => new SizeOverride(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator SizeOverrideCode(SizeOverride src)

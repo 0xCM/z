@@ -14,27 +14,28 @@ namespace Z0
         public PulseEmitter(IAgentContext context, AgentIdentity identity, PulseEmitterConfig config)
             : base(context,identity)
         {
-            Timer = new Timer(config.Frequency.TotalMilliseconds);
+            Timer = sys.timer(config.Frequency.TotalMilliseconds);
             Timer.AutoReset = true;
             Timer.Elapsed += OnPulse;
         }
 
         void OnPulse(object sender, ElapsedEventArgs args)
-            => Context.EventLog.Receive(SourcedEvents.pulse(Part, HostId, Time.timestamp()));
+            => Context.Sink.Receive(SourcedEvents.pulse(Part, HostId, Time.timestamp()));
 
-        Timer Timer {get;}
+        readonly System.Timers.Timer Timer;
 
-        protected override void OnStart()
+        protected override async Task Starting()
         {
-            Timer.Start();
+            await sys.start(() => Timer.Start());
         }
 
-        protected override void OnStop()
+        protected override async Task Stopping()
         {
-            Timer.Stop();
+            await sys.start(() => {
+                Timer.Stop();
+                Timer.Dispose();
+            });
         }
 
-        protected override void OnTerminate()
-            => Timer.Dispose();
     }
 }

@@ -34,11 +34,11 @@ namespace Z0.Asm
     {
         [MethodImpl(Inline), Op]
         public static VexPrefix define(K kind, byte b1)
-            => new VexPrefix(kind, b1);
+            => new (kind, b1);
 
         [MethodImpl(Inline), Op]
         public static VexPrefix define(K kind, byte b1, byte b2)
-            => new VexPrefix(kind, b1, b2);
+            => new (kind, b1, b2);
 
         [MethodImpl(Inline)]
         public static VexPrefixC4 c4(VexPrefix src)

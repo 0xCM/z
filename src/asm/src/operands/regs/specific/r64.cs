@@ -24,7 +24,7 @@ namespace Z0.Asm.Operands
 
         [MethodImpl(Inline)]
         public O Untyped()
-            => new O(this);
+            => new (this);
 
         public string Format()
             => ((K)Index).ToString();

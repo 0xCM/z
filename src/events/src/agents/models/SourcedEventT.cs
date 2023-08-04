@@ -10,13 +10,6 @@ namespace Z0
     public readonly struct SourcedEvent<T>
         where T : unmanaged
     {
-        public readonly AgentEventId EventId;
-
-        /// <summary>
-        /// Data specific to an event class
-        /// </summary>
-        public readonly T Payload;
-
         /// <summary>
         /// Reconstitutes an event from a sequence of bytes
         /// </summary>
@@ -24,15 +17,23 @@ namespace Z0
         public static SourcedEvent<T> materialize(Span<byte> src)
             => MemoryMarshal.Read<SourcedEvent<T>>(src);
 
-        [MethodImpl(Inline)]
-        public static implicit operator SourcedEvent(SourcedEvent<T> src)
-            => new SourcedEvent(src.EventId);
+
+        public readonly AgentEventKey EventId;
+
+        /// <summary>
+        /// Data specific to an event class
+        /// </summary>
+        public readonly T Payload;
 
         [MethodImpl(Inline)]
-        public SourcedEvent(AgentEventId id, T data)
+        public SourcedEvent(AgentEventKey id, T data)
         {
             EventId = id;
             Payload = data;
         }
+
+        [MethodImpl(Inline)]
+        public static implicit operator SourcedEvent(SourcedEvent<T> src)
+            => new (src.EventId);        
     }
 }

@@ -6,9 +6,9 @@ namespace Z0.Asm
 {
     using static AsmPrefixCodes;
 
-    public struct BndPrefix : IAsmPrefix<BndPrefixCode>
+    public readonly record struct BndPrefix : IAsmPrefix<BndPrefixCode>
     {
-        public BndPrefixCode _Code;
+        readonly BndPrefixCode _Code;
 
         [MethodImpl(Inline)]
         public BndPrefix(BndPrefixCode src)
@@ -25,10 +25,6 @@ namespace Z0.Asm
         [MethodImpl(Inline)]
         public BndPrefixCode Code()
             => _Code;
-
-        [MethodImpl(Inline)]
-        public void Code(BndPrefixCode src)
-            => _Code = src;
 
         public bool IsEmpty
         {
@@ -50,7 +46,7 @@ namespace Z0.Asm
 
         [MethodImpl(Inline)]
         public static implicit operator BndPrefix(BndPrefixCode src)
-            => new BndPrefix(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator byte(BndPrefix src)

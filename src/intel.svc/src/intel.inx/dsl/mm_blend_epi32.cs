@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0.dsl.intel
 {
+    using Asm;
+
     [StructLayout(StructLayout,Pack=1)]
     public readonly struct mm_blend_epi32
     {

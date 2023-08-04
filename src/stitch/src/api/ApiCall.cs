@@ -68,7 +68,7 @@ namespace Z0
     /// <summary>
     /// Rpresents a ternary function invocation
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, Pack=0)]
+    [StructLayout(LayoutKind.Sequential, Pack=1)]
     public record struct ApiCall<A0,A1,A2,R> : IApiCall<ApiCall<A0,A1,A2,R>,R>
         where A0 : unmanaged
         where A1 : unmanaged

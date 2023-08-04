@@ -15,10 +15,10 @@ namespace Z0.Asm.Operands
 
     public readonly struct zmm : IRegOp256<zmm>
     {
-        public RegIndexCode Index {get;}
+        public I Index {get;}
 
         [MethodImpl(Inline)]
-        public zmm(RegIndexCode index)
+        public zmm(I index)
         {
             Index = index;
         }
@@ -35,10 +35,10 @@ namespace Z0.Asm.Operands
             get => NativeSizeCode.W512;
         }
 
-        public RegClassCode RegClassCode
+        public C RegClassCode
         {
             [MethodImpl(Inline)]
-            get => RegClassCode.ZMM;
+            get => C.ZMM;
         }
 
         public RegClass RegClass
@@ -49,8 +49,8 @@ namespace Z0.Asm.Operands
 
 
         [MethodImpl(Inline)]
-        public AsmOperand Untyped()
-            => new AsmOperand(this);
+        public O Untyped()
+            => new (this);
 
         [MethodImpl(Inline)]
         public static implicit operator RegOp(G src)

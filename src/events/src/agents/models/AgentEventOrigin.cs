@@ -8,6 +8,7 @@ namespace Z0
     /// Captures an instant in time with respect to a server/agent,
     /// real or simulated
     /// </summary>
+    [StructLayout(LayoutKind.Sequential,Pack=1)]
     public readonly struct AgentEventOrigin
     {
         /// <summary>
@@ -60,7 +61,7 @@ namespace Z0
         /// <param name="time">The time of occurrence</param>
         [MethodImpl(Inline)]
         public static implicit operator AgentEventOrigin((ulong loc, Timestamp time) src)
-            => new AgentEventOrigin(src.loc,src.time);
+            => new (src.loc,src.time);
 
         /// <summary>
         /// Constructs an origin from an ordered triple of server, agent and timestamp

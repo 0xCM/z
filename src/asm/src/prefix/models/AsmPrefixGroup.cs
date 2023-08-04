@@ -2,19 +2,18 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Asm
+namespace Z0.Asm;
+
+[Flags]
+public enum AsmPrefixGroup : byte
 {
-    [Flags]
-    public enum AsmPrefixGroup : byte
-    {
-        None,
+    None,
 
-        Group1 = 1,
+    Group1 = 1,
 
-        Group2 = 2,
+    Group2 = 2,
 
-        Group3 = 4,
+    Group3 = 4,
 
-        Group4 = 8,
-    }
+    Group4 = 8,
 }

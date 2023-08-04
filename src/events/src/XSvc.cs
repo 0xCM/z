@@ -8,8 +8,6 @@ namespace Z0
     {
         internal partial class ChannelCache : AppChannels<ChannelCache>
         {
-            public ProcessTracer ProcessMonitor(IWfChannel channel)
-                => service<ProcessTracer>(channel);
         }
 
         internal partial class ServiceCache : AppServices<ServiceCache>
@@ -20,7 +18,5 @@ namespace Z0
 
         static ChannelCache Channels => ChannelCache.Instance;
 
-        public static ProcessTracer ProcessMonitor(this IWfChannel channel)
-            => Channels.ProcessMonitor(channel);
     }
 }

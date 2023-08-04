@@ -17,7 +17,7 @@ namespace Z0.Asm
         /// <param name="src"></param>
         [Op]
         public static AsmRegQuery query(ReadOnlySpan<RegOp> src)
-            => new AsmRegQuery(src);
+            => new (src);
 
         readonly ReadOnlySpan<RegOp> Regs;
 

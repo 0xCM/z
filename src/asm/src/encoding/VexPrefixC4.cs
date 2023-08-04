@@ -20,7 +20,7 @@ namespace Z0.Asm
         const byte RXB_Width = RXB_Max - RXB_Min + 1;
 
         public static Segments segments()
-            => new Segments();
+            => new ();
 
         public class Segments
         {

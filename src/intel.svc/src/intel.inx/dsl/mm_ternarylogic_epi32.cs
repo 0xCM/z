@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0.dsl.intel
 {
+    using Asm;
+
     [StructLayout(StructLayout,Pack=1)]
     public struct mm_ternarylogic_epi32
     {

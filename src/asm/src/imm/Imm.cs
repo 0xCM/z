@@ -2,7 +2,7 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0.Asm
 {
     [StructLayout(LayoutKind.Sequential, Pack=1), ApiComplete]
     public readonly struct Imm : IImm<Imm,ulong>

@@ -1,9 +1,5 @@
 <Project>
     <ItemGroup>
-      <Reference Include="$(GlobalDeps)/Mono.Cecil.dll"/>
-      <Reference Include="$(GlobalDeps)/Mono.Cecil.Mdb.dll"/>
-      <Reference Include="$(GlobalDeps)/Mono.Cecil.Pdb.dll"/>
-      <Reference Include="$(GlobalDeps)/Mono.Cecil.Rocks.dll"/>
       <Reference Include="$(GlobalDeps)/AsmResolver.dll"/>
       <Reference Include="$(GlobalDeps)/AsmResolver.DotNet.dll"/>
       <Reference Include="$(GlobalDeps)/AsmResolver.DotNet.Dynamic.dll"/>
@@ -16,10 +12,6 @@
 
     <Target Name="AssemblyMetadataLibs">
       <ItemGroup>
-          <BuildOutputInPackage Include="$(OutputPath)Mono.Cecil.dll" />
-          <BuildOutputInPackage Include="$(OutputPath)Mono.Cecil.Mdb.dll" />
-          <BuildOutputInPackage Include="$(OutputPath)Mono.Cecil.Pdb.dll" />
-          <BuildOutputInPackage Include="$(OutputPath)Mono.Cecil.Rocks.dll" />
           <BuildOutputInPackage Include="$(OutputPath)AsmResolver.dll" />
           <BuildOutputInPackage Include="$(OutputPath)AsmResolver.DotNet.dll" />
           <BuildOutputInPackage Include="$(OutputPath)AsmResolver.DotNet.Dynamic.dll" />

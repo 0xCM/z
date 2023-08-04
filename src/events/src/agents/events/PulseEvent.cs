@@ -7,11 +7,11 @@ namespace Z0
     /// <summary>
     /// Represents a pulse/tick/heartbeat relative to some frequency
     /// </summary>
-    public readonly struct PulseEvent : IAgentEvent
+    public readonly struct PulseEvent
     {
-        public AgentEventId Identity {get;}
+        public AgentEventKey Identity {get;}
 
-        internal PulseEvent(AgentEventId id)
+        internal PulseEvent(AgentEventKey id)
             => Identity = id;
     }
 }

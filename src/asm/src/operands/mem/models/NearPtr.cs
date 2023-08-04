@@ -2,12 +2,12 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Asm
-{
+namespace Z0.Asm;
+
     [DataTypeAttributeD("asm.nearptr")]
     public readonly struct NearPtr
     {
-        public MemoryAddress Address {get;}
+        public readonly MemoryAddress Address;
 
         [MethodImpl(Inline)]
         public NearPtr(MemoryAddress address)
@@ -23,6 +23,5 @@ namespace Z0.Asm
 
         [MethodImpl(Inline)]
         public static implicit operator NearPtr(MemoryAddress src)
-            => new NearPtr(src);
+            => new (src);
     }
-}

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Windows
 {
-    [StructLayout(StructLayout,Pack =1)]
+    [StructLayout(StructLayout, Pack=1)]
     public struct IMAGE_FILE_HEADER
     {
         public ushort Machine;

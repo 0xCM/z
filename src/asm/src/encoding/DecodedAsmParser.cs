@@ -9,7 +9,7 @@ namespace Z0
     public class DecodedAsmParser
     {
         public static DecodedAsmParser create(CompositeDispenser dispenser)
-            => new DecodedAsmParser(dispenser);
+            => new (dispenser);
 
         List<DecodedAsmBlock> Target;
 

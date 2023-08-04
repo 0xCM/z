@@ -11,7 +11,7 @@ namespace Z0
 
     partial class XedRules
     {
-        [StructLayout(LayoutKind.Sequential,Pack =1), Record(TableId)]
+        [StructLayout(LayoutKind.Sequential, Pack=1), Record(TableId)]
         public record struct InstGroupSeq : IComparable<InstGroupSeq>
         {
             public const string TableId = "xed.inst.groups";

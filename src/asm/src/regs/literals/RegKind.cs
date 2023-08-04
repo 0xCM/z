@@ -2,807 +2,806 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Asm
+namespace Z0.Asm;
+
+using static NumericBaseKind;
+
+using SR = SegRegKind;
+using F = FlagRegKind;
+using X = XmmRegKind;
+using Y = YmmRegKind;
+using Z = ZmmRegKind;
+using G8 = Gp8Kind;
+using G16 = Gp16Kind;
+using G32 = Gp32Kind;
+using G64 = Gp64Kind;
+using M = MaskRegKind;
+using C = ControlRegKind;
+using XCR = XControlRegKind;
+using D = DebugRegKind;
+using I = IpRegKind;
+using B = BndRegKind;
+using ST = FpuRegKind;
+using MM = MmxRegKind;
+using TR = TestRegKind;
+using SPTR = SysPtrRegKind;
+using TMM = TmmRegKind;
+
+[SymSource("asm.regs.bits", Base16)]
+public enum RegKind : ushort
 {
-    using static NumericBaseKind;
+    // ~ FLAGS registers
+    // ~ ------------------------------------------------------------------
 
-    using SR = SegRegKind;
-    using F = FlagRegKind;
-    using X = XmmRegKind;
-    using Y = YmmRegKind;
-    using Z = ZmmRegKind;
-    using G8 = Gp8Kind;
-    using G16 = Gp16Kind;
-    using G32 = Gp32Kind;
-    using G64 = Gp64Kind;
-    using M = MaskRegKind;
-    using C = ControlRegKind;
-    using XCR = XControlRegKind;
-    using D = DebugRegKind;
-    using I = IpRegKind;
-    using B = BndRegKind;
-    using ST = FpuRegKind;
-    using MM = MmxRegKind;
-    using TR = TestRegKind;
-    using SPTR = SysPtrRegKind;
-    using TMM = TmmRegKind;
+    [Symbol("flags")]
+    FLAGS = F.Flags,
 
-    [SymSource("asm.regs.bits", Base16)]
-    public enum RegKind : ushort
-    {
-        // ~ FLAGS registers
-        // ~ ------------------------------------------------------------------
+    [Symbol("eflags")]
+    EFLAGS = F.EFlags,
 
-        [Symbol("flags")]
-        FLAGS = F.Flags,
+    [Symbol("rflags")]
+    RFLAGS = F.RFlags,
 
-        [Symbol("eflags")]
-        EFLAGS = F.EFlags,
+    // ~ 16-bit segment registers
+    // ~ ------------------------------------------------------------------
+    [Symbol("cs")]
+    CS = SR.CS,
 
-        [Symbol("rflags")]
-        RFLAGS = F.RFlags,
+    [Symbol("ds")]
+    DS = SR.DS,
 
-        // ~ 16-bit segment registers
-        // ~ ------------------------------------------------------------------
-        [Symbol("cs")]
-        CS = SR.CS,
+    [Symbol("ss")]
+    SS = SR.SS,
 
-        [Symbol("ds")]
-        DS = SR.DS,
+    [Symbol("es")]
+    ES = SR.ES,
 
-        [Symbol("ss")]
-        SS = SR.SS,
+    [Symbol("fs")]
+    FS = SR.FS,
 
-        [Symbol("es")]
-        ES = SR.ES,
+    [Symbol("gs")]
+    GS = SR.GS,
 
-        [Symbol("fs")]
-        FS = SR.FS,
+    // ~ 8-bit general-purpose registers
+    // ~ ------------------------------------------------------------------
 
-        [Symbol("gs")]
-        GS = SR.GS,
+    [Symbol("al")]
+    AL = G8.AL,
 
-        // ~ 8-bit general-purpose registers
-        // ~ ------------------------------------------------------------------
+    [Symbol("ah")]
+    AH = G8.AH,
 
-        [Symbol("al")]
-        AL = G8.AL,
+    [Symbol("cl")]
+    CL = G8.CL,
 
-        [Symbol("ah")]
-        AH = G8.AH,
+    [Symbol("ch")]
+    CH = G8.CH,
 
-        [Symbol("cl")]
-        CL = G8.CL,
+    [Symbol("dl")]
+    DL = G8.DL,
 
-        [Symbol("ch")]
-        CH = G8.CH,
+    [Symbol("dh")]
+    DH = G8.DH,
 
-        [Symbol("dl")]
-        DL = G8.DL,
+    [Symbol("bl")]
+    BL = G8.BL,
 
-        [Symbol("dh")]
-        DH = G8.DH,
+    [Symbol("bh")]
+    BH = G8.BH,
 
-        [Symbol("bl")]
-        BL = G8.BL,
+    [Symbol("spl")]
+    SPL = G8.SPL,
 
-        [Symbol("bh")]
-        BH = G8.BH,
+    [Symbol("bpl")]
+    BPL = G8.BPL,
 
-        [Symbol("spl")]
-        SPL = G8.SPL,
+    [Symbol("sil")]
+    SIL = G8.SIL,
 
-        [Symbol("bpl")]
-        BPL = G8.BPL,
+    [Symbol("dil")]
+    DIL = G8.DIL,
 
-        [Symbol("sil")]
-        SIL = G8.SIL,
+    [Symbol("r8b")]
+    R8B = G8.R8B,
 
-        [Symbol("dil")]
-        DIL = G8.DIL,
+    [Symbol("r9b")]
+    R9B = G8.R9B,
 
-        [Symbol("r8b")]
-        R8B = G8.R8B,
+    [Symbol("r10b")]
+    R10B = G8.R10B,
 
-        [Symbol("r9b")]
-        R9B = G8.R9B,
+    [Symbol("r11b")]
+    R11B = G8.R11B,
 
-        [Symbol("r10b")]
-        R10B = G8.R10B,
+    [Symbol("r12b")]
+    R12B = G8.R12B,
 
-        [Symbol("r11b")]
-        R11B = G8.R11B,
+    [Symbol("r13b")]
+    R13B = G8.R13B,
 
-        [Symbol("r12b")]
-        R12B = G8.R12B,
+    [Symbol("r14b")]
+    R14B = G8.R14B,
 
-        [Symbol("r13b")]
-        R13B = G8.R13B,
+    [Symbol("r15b")]
+    R15B = G8.R15B,
 
-        [Symbol("r14b")]
-        R14B = G8.R14B,
+    // ~ 16-bit general-purpose registers
+    // ~ ------------------------------------------------------------------
 
-        [Symbol("r15b")]
-        R15B = G8.R15B,
+    [Symbol("ax")]
+    AX = G16.AX,
 
-        // ~ 16-bit general-purpose registers
-        // ~ ------------------------------------------------------------------
+    [Symbol("cx")]
+    CX = G16.CX,
 
-        [Symbol("ax")]
-        AX = G16.AX,
+    [Symbol("dx")]
+    DX = G16.DX,
 
-        [Symbol("cx")]
-        CX = G16.CX,
+    [Symbol("bx")]
+    BX = G16.BX,
 
-        [Symbol("dx")]
-        DX = G16.DX,
+    [Symbol("sp")]
+    SP = G16.SP,
 
-        [Symbol("bx")]
-        BX = G16.BX,
+    [Symbol("bp")]
+    BP = G16.BP,
 
-        [Symbol("sp")]
-        SP = G16.SP,
+    [Symbol("si")]
+    SI = G16.SI,
 
-        [Symbol("bp")]
-        BP = G16.BP,
+    [Symbol("di")]
+    DI = G16.DI,
 
-        [Symbol("si")]
-        SI = G16.SI,
+    [Symbol("r8w")]
+    R8W = G16.R8W,
 
-        [Symbol("di")]
-        DI = G16.DI,
+    [Symbol("r9w")]
+    R9W = G16.R9W,
 
-        [Symbol("r8w")]
-        R8W = G16.R8W,
+    [Symbol("r10w")]
+    R10W = G16.R10W,
 
-        [Symbol("r9w")]
-        R9W = G16.R9W,
+    [Symbol("r11w")]
+    R11W = G16.R11W,
 
-        [Symbol("r10w")]
-        R10W = G16.R10W,
+    [Symbol("r12w")]
+    R12W = G16.R12W,
 
-        [Symbol("r11w")]
-        R11W = G16.R11W,
+    [Symbol("r13w")]
+    R13W = G16.R13W,
 
-        [Symbol("r12w")]
-        R12W = G16.R12W,
+    [Symbol("r14w")]
+    R14W = G16.R14W,
 
-        [Symbol("r13w")]
-        R13W = G16.R13W,
+    [Symbol("r15w")]
+    R15W = G16.R15W,
 
-        [Symbol("r14w")]
-        R14W = G16.R14W,
+    // ~ 32-bit general-purpose registers
+    // ~ ------------------------------------------------------------------
 
-        [Symbol("r15w")]
-        R15W = G16.R15W,
+    [Symbol("eax")]
+    EAX = G32.EAX,
 
-        // ~ 32-bit general-purpose registers
-        // ~ ------------------------------------------------------------------
+    [Symbol("ecx")]
+    ECX = G32.ECX,
 
-        [Symbol("eax")]
-        EAX = G32.EAX,
+    [Symbol("edx")]
+    EDX = G32.EDX,
 
-        [Symbol("ecx")]
-        ECX = G32.ECX,
+    [Symbol("ebx")]
+    EBX = G32.EBX,
 
-        [Symbol("edx")]
-        EDX = G32.EDX,
+    [Symbol("esp")]
+    ESP = G32.ESP,
 
-        [Symbol("ebx")]
-        EBX = G32.EBX,
+    [Symbol("ebp")]
+    EBP = G32.EBP,
 
-        [Symbol("esp")]
-        ESP = G32.ESP,
+    [Symbol("esi")]
+    ESI = G32.ESI,
 
-        [Symbol("ebp")]
-        EBP = G32.EBP,
+    [Symbol("edi")]
+    EDI = G32.EDI,
 
-        [Symbol("esi")]
-        ESI = G32.ESI,
+    [Symbol("r8d")]
+    R8D = G32.R8D,
 
-        [Symbol("edi")]
-        EDI = G32.EDI,
+    [Symbol("r9d")]
+    R9D = G32.R9D,
 
-        [Symbol("r8d")]
-        R8D = G32.R8D,
+    [Symbol("r10d")]
+    R10D = G32.R10D,
 
-        [Symbol("r9d")]
-        R9D = G32.R9D,
+    [Symbol("r11d")]
+    R11D = G32.R11D,
 
-        [Symbol("r10d")]
-        R10D = G32.R10D,
+    [Symbol("r12d")]
+    R12D = G32.R12D,
 
-        [Symbol("r11d")]
-        R11D = G32.R11D,
+    [Symbol("r13d")]
+    R13D = G32.R13D,
 
-        [Symbol("r12d")]
-        R12D = G32.R12D,
+    [Symbol("r14d")]
+    R14D = G32.R14D,
 
-        [Symbol("r13d")]
-        R13D = G32.R13D,
+    [Symbol("r15d")]
+    R15D = G32.R15D,
 
-        [Symbol("r14d")]
-        R14D = G32.R14D,
+    // ~ 64-bit general-purpose registers
+    // ~ ------------------------------------------------------------------
 
-        [Symbol("r15d")]
-        R15D = G32.R15D,
+    [Symbol("rax")]
+    RAX = G64.RAX,
 
-        // ~ 64-bit general-purpose registers
-        // ~ ------------------------------------------------------------------
+    [Symbol("rcx")]
+    RCX = G64.RCX,
 
-        [Symbol("rax")]
-        RAX = G64.RAX,
+    [Symbol("rdx")]
+    RDX = G64.RDX,
 
-        [Symbol("rcx")]
-        RCX = G64.RCX,
+    [Symbol("rbx")]
+    RBX = G64.RBX,
 
-        [Symbol("rdx")]
-        RDX = G64.RDX,
+    [Symbol("rsp")]
+    RSP = G64.RSP,
 
-        [Symbol("rbx")]
-        RBX = G64.RBX,
+    [Symbol("rbp")]
+    RBP = G64.RBP,
 
-        [Symbol("rsp")]
-        RSP = G64.RSP,
+    [Symbol("rsi")]
+    RSI = G64.RSI,
 
-        [Symbol("rbp")]
-        RBP = G64.RBP,
+    [Symbol("rdi")]
+    RDI = G64.RDI,
 
-        [Symbol("rsi")]
-        RSI = G64.RSI,
+    [Symbol("r8")]
+    R8Q = G64.R8Q,
 
-        [Symbol("rdi")]
-        RDI = G64.RDI,
+    [Symbol("r9")]
+    R9Q = G64.R9Q,
 
-        [Symbol("r8")]
-        R8Q = G64.R8Q,
+    [Symbol("r10")]
+    R10Q = G64.R10Q,
 
-        [Symbol("r9")]
-        R9Q = G64.R9Q,
+    [Symbol("r11")]
+    R11Q = G64.R11Q,
 
-        [Symbol("r10")]
-        R10Q = G64.R10Q,
+    [Symbol("r12")]
+    R12Q = G64.R12Q,
 
-        [Symbol("r11")]
-        R11Q = G64.R11Q,
+    [Symbol("r13")]
+    R13Q = G64.R13Q,
 
-        [Symbol("r12")]
-        R12Q = G64.R12Q,
+    [Symbol("r14")]
+    R14Q = G64.R14Q,
 
-        [Symbol("r13")]
-        R13Q = G64.R13Q,
+    [Symbol("r15")]
+    R15Q = G64.R15Q,
 
-        [Symbol("r14")]
-        R14Q = G64.R14Q,
+    // ~ 128-bit vectorized registers
+    // ~ ------------------------------------------------------------------
 
-        [Symbol("r15")]
-        R15Q = G64.R15Q,
+    [Symbol("xmm0")]
+    XMM0 = X.XMM0,
 
-        // ~ 128-bit vectorized registers
-        // ~ ------------------------------------------------------------------
+    [Symbol("xmm1")]
+    XMM1 = X.XMM1,
 
-        [Symbol("xmm0")]
-        XMM0 = X.XMM0,
+    [Symbol("xmm2")]
+    XMM2 = X.XMM2,
 
-        [Symbol("xmm1")]
-        XMM1 = X.XMM1,
+    [Symbol("xmm3")]
+    XMM3 = X.XMM3,
 
-        [Symbol("xmm2")]
-        XMM2 = X.XMM2,
+    [Symbol("xmm4")]
+    XMM4 = X.XMM4,
 
-        [Symbol("xmm3")]
-        XMM3 = X.XMM3,
+    [Symbol("xmm5")]
+    XMM5 = X.XMM5,
 
-        [Symbol("xmm4")]
-        XMM4 = X.XMM4,
+    [Symbol("xmm6")]
+    XMM6 = X.XMM6,
 
-        [Symbol("xmm5")]
-        XMM5 = X.XMM5,
+    [Symbol("xmm7")]
+    XMM7 = X.XMM7,
 
-        [Symbol("xmm6")]
-        XMM6 = X.XMM6,
+    [Symbol("xmm8")]
+    XMM8 = X.XMM8,
 
-        [Symbol("xmm7")]
-        XMM7 = X.XMM7,
+    [Symbol("xmm9")]
+    XMM9 = X.XMM9,
 
-        [Symbol("xmm8")]
-        XMM8 = X.XMM8,
+    [Symbol("xmm10")]
+    XMM10 = X.XMM10,
 
-        [Symbol("xmm9")]
-        XMM9 = X.XMM9,
+    [Symbol("xmm11")]
+    XMM11 = X.XMM11,
 
-        [Symbol("xmm10")]
-        XMM10 = X.XMM10,
+    [Symbol("xmm12")]
+    XMM12 = X.XMM12,
 
-        [Symbol("xmm11")]
-        XMM11 = X.XMM11,
+    [Symbol("xmm13")]
+    XMM13 = X.XMM13,
 
-        [Symbol("xmm12")]
-        XMM12 = X.XMM12,
+    [Symbol("xmm14")]
+    XMM14 = X.XMM14,
 
-        [Symbol("xmm13")]
-        XMM13 = X.XMM13,
+    [Symbol("xmm15")]
+    XMM15 = X.XMM15,
 
-        [Symbol("xmm14")]
-        XMM14 = X.XMM14,
+    [Symbol("xmm16")]
+    XMM16 = X.XMM16,
 
-        [Symbol("xmm15")]
-        XMM15 = X.XMM15,
+    [Symbol("xmm17")]
+    XMM17 = X.XMM17,
 
-        [Symbol("xmm16")]
-        XMM16 = X.XMM16,
+    [Symbol("xmm18")]
+    XMM18 = X.XMM18,
 
-        [Symbol("xmm17")]
-        XMM17 = X.XMM17,
+    [Symbol("xmm19")]
+    XMM19 = X.XMM19,
 
-        [Symbol("xmm18")]
-        XMM18 = X.XMM18,
+    [Symbol("xmm20")]
+    XMM20 = X.XMM20,
 
-        [Symbol("xmm19")]
-        XMM19 = X.XMM19,
+    [Symbol("xmm21")]
+    XMM21 = X.XMM21,
 
-        [Symbol("xmm20")]
-        XMM20 = X.XMM20,
+    [Symbol("xmm22")]
+    XMM22 = X.XMM22,
 
-        [Symbol("xmm21")]
-        XMM21 = X.XMM21,
+    [Symbol("xmm23")]
+    XMM23 = X.XMM23,
 
-        [Symbol("xmm22")]
-        XMM22 = X.XMM22,
+    [Symbol("xmm24")]
+    XMM24 = X.XMM24,
 
-        [Symbol("xmm23")]
-        XMM23 = X.XMM23,
+    [Symbol("xmm25")]
+    XMM25 = X.XMM25,
 
-        [Symbol("xmm24")]
-        XMM24 = X.XMM24,
+    [Symbol("xmm26")]
+    XMM26 = X.XMM26,
 
-        [Symbol("xmm25")]
-        XMM25 = X.XMM25,
+    [Symbol("xmm27")]
+    XMM27 = X.XMM27,
 
-        [Symbol("xmm26")]
-        XMM26 = X.XMM26,
+    [Symbol("xmm28")]
+    XMM28 = X.XMM28,
 
-        [Symbol("xmm27")]
-        XMM27 = X.XMM27,
+    [Symbol("xmm29")]
+    XMM29 = X.XMM29,
 
-        [Symbol("xmm28")]
-        XMM28 = X.XMM28,
+    [Symbol("xmm30")]
+    XMM30 = X.XMM30,
 
-        [Symbol("xmm29")]
-        XMM29 = X.XMM29,
+    [Symbol("xmm31")]
+    XMM31 = X.XMM31,
 
-        [Symbol("xmm30")]
-        XMM30 = X.XMM30,
+    // ~ 256-bit vectorized registers
+    // ~ ------------------------------------------------------------------
 
-        [Symbol("xmm31")]
-        XMM31 = X.XMM31,
+    [Symbol("ymm0")]
+    YMM0 = Y.YMM0,
 
-        // ~ 256-bit vectorized registers
-        // ~ ------------------------------------------------------------------
+    [Symbol("ymm1")]
+    YMM1 = Y.YMM1,
 
-        [Symbol("ymm0")]
-        YMM0 = Y.YMM0,
+    [Symbol("ymm2")]
+    YMM2 = Y.YMM2,
 
-        [Symbol("ymm1")]
-        YMM1 = Y.YMM1,
+    [Symbol("ymm3")]
+    YMM3 = Y.YMM3,
 
-        [Symbol("ymm2")]
-        YMM2 = Y.YMM2,
+    [Symbol("ymm4")]
+    YMM4 = Y.YMM4,
 
-        [Symbol("ymm3")]
-        YMM3 = Y.YMM3,
+    [Symbol("ymm5")]
+    YMM5 = Y.YMM5,
 
-        [Symbol("ymm4")]
-        YMM4 = Y.YMM4,
+    [Symbol("ymm6")]
+    YMM6 = Y.YMM6,
 
-        [Symbol("ymm5")]
-        YMM5 = Y.YMM5,
+    [Symbol("ymm7")]
+    YMM7 = Y.YMM7,
 
-        [Symbol("ymm6")]
-        YMM6 = Y.YMM6,
+    [Symbol("ymm8")]
+    YMM8 = Y.YMM8,
 
-        [Symbol("ymm7")]
-        YMM7 = Y.YMM7,
+    [Symbol("ymm9")]
+    YMM9 = Y.YMM9,
 
-        [Symbol("ymm8")]
-        YMM8 = Y.YMM8,
+    [Symbol("ymm10")]
+    YMM10 = Y.YMM10,
 
-        [Symbol("ymm9")]
-        YMM9 = Y.YMM9,
+    [Symbol("ymm11")]
+    YMM11 = Y.YMM11,
 
-        [Symbol("ymm10")]
-        YMM10 = Y.YMM10,
+    [Symbol("ymm12")]
+    YMM12 = Y.YMM12,
 
-        [Symbol("ymm11")]
-        YMM11 = Y.YMM11,
+    [Symbol("ymm13")]
+    YMM13 = Y.YMM13,
 
-        [Symbol("ymm12")]
-        YMM12 = Y.YMM12,
+    [Symbol("ymm14")]
+    YMM14 = Y.YMM14,
 
-        [Symbol("ymm13")]
-        YMM13 = Y.YMM13,
+    [Symbol("ymm15")]
+    YMM15 = Y.YMM15,
 
-        [Symbol("ymm14")]
-        YMM14 = Y.YMM14,
+    [Symbol("ymm16")]
+    YMM16 = Y.YMM16,
 
-        [Symbol("ymm15")]
-        YMM15 = Y.YMM15,
+    [Symbol("ymm17")]
+    YMM17 = Y.YMM16,
 
-        [Symbol("ymm16")]
-        YMM16 = Y.YMM16,
+    [Symbol("ymm18")]
+    YMM18 = Y.YMM18,
 
-        [Symbol("ymm17")]
-        YMM17 = Y.YMM16,
+    [Symbol("ymm19")]
+    YMM19 = Y.YMM19,
 
-        [Symbol("ymm18")]
-        YMM18 = Y.YMM18,
+    [Symbol("ymm20")]
+    YMM20 = Y.YMM20,
 
-        [Symbol("ymm19")]
-        YMM19 = Y.YMM19,
+    [Symbol("ymm21")]
+    YMM21 = Y.YMM21,
 
-        [Symbol("ymm20")]
-        YMM20 = Y.YMM20,
+    [Symbol("ymm22")]
+    YMM22 = Y.YMM22,
 
-        [Symbol("ymm21")]
-        YMM21 = Y.YMM21,
+    [Symbol("ymm23")]
+    YMM23 = Y.YMM23,
 
-        [Symbol("ymm22")]
-        YMM22 = Y.YMM22,
+    [Symbol("ymm24")]
+    YMM24 = Y.YMM24,
 
-        [Symbol("ymm23")]
-        YMM23 = Y.YMM23,
+    [Symbol("ymm25")]
+    YMM25 = Y.YMM25,
 
-        [Symbol("ymm24")]
-        YMM24 = Y.YMM24,
+    [Symbol("ymm26")]
+    YMM26 = Y.YMM26,
 
-        [Symbol("ymm25")]
-        YMM25 = Y.YMM25,
+    [Symbol("ymm27")]
+    YMM27 = Y.YMM27,
 
-        [Symbol("ymm26")]
-        YMM26 = Y.YMM26,
+    [Symbol("ymm28")]
+    YMM28 = Y.YMM28,
 
-        [Symbol("ymm27")]
-        YMM27 = Y.YMM27,
+    [Symbol("ymm29")]
+    YMM29 = Y.YMM29,
 
-        [Symbol("ymm28")]
-        YMM28 = Y.YMM28,
+    [Symbol("ymm30")]
+    YMM30 = Y.YMM30,
 
-        [Symbol("ymm29")]
-        YMM29 = Y.YMM29,
+    [Symbol("ymm31")]
+    YMM31 = Y.YMM31,
 
-        [Symbol("ymm30")]
-        YMM30 = Y.YMM30,
+    // ~ 512-bit vectorized registers
+    // ~ ------------------------------------------------------------------
 
-        [Symbol("ymm31")]
-        YMM31 = Y.YMM31,
+    [Symbol("zmm0")]
+    ZMM0 = Z.ZMM0,
 
-        // ~ 512-bit vectorized registers
-        // ~ ------------------------------------------------------------------
+    [Symbol("zmm1")]
+    ZMM1 = Z.ZMM1,
 
-        [Symbol("zmm0")]
-        ZMM0 = Z.ZMM0,
+    [Symbol("zmm2")]
+    ZMM2 = Z.ZMM2,
 
-        [Symbol("zmm1")]
-        ZMM1 = Z.ZMM1,
+    [Symbol("zmm3")]
+    ZMM3 = Z.ZMM3,
 
-        [Symbol("zmm2")]
-        ZMM2 = Z.ZMM2,
+    [Symbol("zmm4")]
+    ZMM4 = Z.ZMM4,
 
-        [Symbol("zmm3")]
-        ZMM3 = Z.ZMM3,
+    [Symbol("zmm5")]
+    ZMM5 = Z.ZMM5,
 
-        [Symbol("zmm4")]
-        ZMM4 = Z.ZMM4,
+    [Symbol("zmm6")]
+    ZMM6 = Z.ZMM6,
 
-        [Symbol("zmm5")]
-        ZMM5 = Z.ZMM5,
+    [Symbol("zmm7")]
+    ZMM7 = Z.ZMM7,
 
-        [Symbol("zmm6")]
-        ZMM6 = Z.ZMM6,
+    [Symbol("zmm8")]
+    ZMM8 = Z.ZMM8,
 
-        [Symbol("zmm7")]
-        ZMM7 = Z.ZMM7,
+    [Symbol("zmm9")]
+    ZMM9 = Z.ZMM9,
 
-        [Symbol("zmm8")]
-        ZMM8 = Z.ZMM8,
+    [Symbol("zmm10")]
+    ZMM10 = Z.ZMM10,
 
-        [Symbol("zmm9")]
-        ZMM9 = Z.ZMM9,
+    [Symbol("zmm11")]
+    ZMM11 = Z.ZMM11,
 
-        [Symbol("zmm10")]
-        ZMM10 = Z.ZMM10,
+    [Symbol("zmm12")]
+    ZMM12 = Z.ZMM12,
 
-        [Symbol("zmm11")]
-        ZMM11 = Z.ZMM11,
+    [Symbol("zmm13")]
+    ZMM13 = Z.ZMM13,
 
-        [Symbol("zmm12")]
-        ZMM12 = Z.ZMM12,
+    [Symbol("zmm14")]
+    ZMM14 = Z.ZMM14,
 
-        [Symbol("zmm13")]
-        ZMM13 = Z.ZMM13,
+    [Symbol("zmm15")]
+    ZMM15 = Z.ZMM15,
 
-        [Symbol("zmm14")]
-        ZMM14 = Z.ZMM14,
+    [Symbol("zmm16")]
+    ZMM16 = Z.ZMM16,
 
-        [Symbol("zmm15")]
-        ZMM15 = Z.ZMM15,
+    [Symbol("zmm17")]
+    ZMM17 = Z.ZMM17,
 
-        [Symbol("zmm16")]
-        ZMM16 = Z.ZMM16,
+    [Symbol("zmm18")]
+    ZMM18 = Z.ZMM18,
 
-        [Symbol("zmm17")]
-        ZMM17 = Z.ZMM17,
+    [Symbol("zmm19")]
+    ZMM19 = Z.ZMM19,
 
-        [Symbol("zmm18")]
-        ZMM18 = Z.ZMM18,
+    [Symbol("zmm20")]
+    ZMM20 = Z.ZMM20,
 
-        [Symbol("zmm19")]
-        ZMM19 = Z.ZMM19,
+    [Symbol("zmm21")]
+    ZMM21 = Z.ZMM21,
 
-        [Symbol("zmm20")]
-        ZMM20 = Z.ZMM20,
+    [Symbol("zmm22")]
+    ZMM22 = Z.ZMM22,
 
-        [Symbol("zmm21")]
-        ZMM21 = Z.ZMM21,
+    [Symbol("zmm23")]
+    ZMM23 = Z.ZMM23,
 
-        [Symbol("zmm22")]
-        ZMM22 = Z.ZMM22,
+    [Symbol("zmm24")]
+    ZMM24 = Z.ZMM24,
 
-        [Symbol("zmm23")]
-        ZMM23 = Z.ZMM23,
+    [Symbol("zmm25")]
+    ZMM25 = Z.ZMM25,
 
-        [Symbol("zmm24")]
-        ZMM24 = Z.ZMM24,
+    [Symbol("zmm26")]
+    ZMM26 = Z.ZMM26,
 
-        [Symbol("zmm25")]
-        ZMM25 = Z.ZMM25,
+    [Symbol("zmm27")]
+    ZMM27 = Z.ZMM27,
 
-        [Symbol("zmm26")]
-        ZMM26 = Z.ZMM26,
+    [Symbol("zmm28")]
+    ZMM28 = Z.ZMM28,
 
-        [Symbol("zmm27")]
-        ZMM27 = Z.ZMM27,
+    [Symbol("zmm29")]
+    ZMM29 = Z.ZMM29,
 
-        [Symbol("zmm28")]
-        ZMM28 = Z.ZMM28,
+    [Symbol("zmm30")]
+    ZMM30 = Z.ZMM30,
 
-        [Symbol("zmm29")]
-        ZMM29 = Z.ZMM29,
+    [Symbol("zmm31")]
+    ZMM31 = Z.ZMM31,
 
-        [Symbol("zmm30")]
-        ZMM30 = Z.ZMM30,
+    // ~ 64-bit mask registers
+    // ~ ------------------------------------------------------------------
 
-        [Symbol("zmm31")]
-        ZMM31 = Z.ZMM31,
+    [Symbol("k0")]
+    K0 = M.K0,
 
-        // ~ 64-bit mask registers
-        // ~ ------------------------------------------------------------------
+    [Symbol("k1")]
+    K1 = M.K1,
 
-        [Symbol("k0")]
-        K0 = M.K0,
+    [Symbol("k2")]
+    K2 = M.K2,
 
-        [Symbol("k1")]
-        K1 = M.K1,
+    [Symbol("k3")]
+    K3 = M.K3,
 
-        [Symbol("k2")]
-        K2 = M.K2,
+    [Symbol("k4")]
+    K4 = M.K4,
 
-        [Symbol("k3")]
-        K3 = M.K3,
+    [Symbol("k5")]
+    K5 = M.K5,
 
-        [Symbol("k4")]
-        K4 = M.K4,
+    [Symbol("k6")]
+    K6 = M.K6,
 
-        [Symbol("k5")]
-        K5 = M.K5,
+    [Symbol("k7")]
+    K7 = M.K7,
 
-        [Symbol("k6")]
-        K6 = M.K6,
+    // ~ Control registers
+    // ~ ------------------------------------------------------------------
 
-        [Symbol("k7")]
-        K7 = M.K7,
+    [Symbol("cr0")]
+    CR0 = C.CR0,
 
-        // ~ Control registers
-        // ~ ------------------------------------------------------------------
+    [Symbol("cr1")]
+    CR1 = C.CR1,
 
-        [Symbol("cr0")]
-        CR0 = C.CR0,
+    [Symbol("cr2")]
+    CR2 = C.CR2,
 
-        [Symbol("cr1")]
-        CR1 = C.CR1,
+    [Symbol("cr3")]
+    CR3 = C.CR3,
 
-        [Symbol("cr2")]
-        CR2 = C.CR2,
+    [Symbol("cr4")]
+    CR4 = C.CR4,
 
-        [Symbol("cr3")]
-        CR3 = C.CR3,
+    [Symbol("cr5")]
+    CR5 = C.CR5,
 
-        [Symbol("cr4")]
-        CR4 = C.CR4,
+    [Symbol("cr6")]
+    CR6 = C.CR6,
 
-        [Symbol("cr5")]
-        CR5 = C.CR5,
+    [Symbol("cr7")]
+    CR7 = C.CR7,
 
-        [Symbol("cr6")]
-        CR6 = C.CR6,
+    // ~ Debug registers
+    // ~ ------------------------------------------------------------------
 
-        [Symbol("cr7")]
-        CR7 = C.CR7,
+    [Symbol("dr0")]
+    DR0 = D.DR0,
 
-        // ~ Debug registers
-        // ~ ------------------------------------------------------------------
+    [Symbol("dr1")]
+    DR1 = D.DR1,
 
-        [Symbol("dr0")]
-        DR0 = D.DR0,
+    [Symbol("dr2")]
+    DR2 = D.DR2,
 
-        [Symbol("dr1")]
-        DR1 = D.DR1,
+    [Symbol("dr3")]
+    DR3 = D.DR3,
 
-        [Symbol("dr2")]
-        DR2 = D.DR2,
+    [Symbol("dr4")]
+    DR4 = D.DR4,
 
-        [Symbol("dr3")]
-        DR3 = D.DR3,
+    [Symbol("dr5")]
+    DR5 = D.DR5,
 
-        [Symbol("dr4")]
-        DR4 = D.DR4,
+    [Symbol("dr6")]
+    DR6 = D.DR6,
 
-        [Symbol("dr5")]
-        DR5 = D.DR5,
+    [Symbol("dr7")]
+    DR7 = D.DR7,
 
-        [Symbol("dr6")]
-        DR6 = D.DR6,
+    // ~ Test registers
+    // ~ ------------------------------------------------------------------
 
-        [Symbol("dr7")]
-        DR7 = D.DR7,
+    [Symbol("tr0")]
+    TR0 = TR.TR0,
 
-        // ~ Test registers
-        // ~ ------------------------------------------------------------------
+    [Symbol("tr1")]
+    TR1 = TR.TR1,
 
-        [Symbol("tr0")]
-        TR0 = TR.TR0,
+    [Symbol("tr2")]
+    TR2 = TR.TR2,
 
-        [Symbol("tr1")]
-        TR1 = TR.TR1,
+    [Symbol("tr3")]
+    TR3 = TR.TR3,
 
-        [Symbol("tr2")]
-        TR2 = TR.TR2,
+    [Symbol("tr4")]
+    TR4 = TR.TR4,
 
-        [Symbol("tr3")]
-        TR3 = TR.TR3,
+    [Symbol("tr5")]
+    TR5 = TR.TR5,
 
-        [Symbol("tr4")]
-        TR4 = TR.TR4,
+    [Symbol("tr6")]
+    TR6 = TR.TR6,
 
-        [Symbol("tr5")]
-        TR5 = TR.TR5,
+    [Symbol("tr7")]
+    TR7 = TR.TR7,
 
-        [Symbol("tr6")]
-        TR6 = TR.TR6,
+    // ~ BND registers
+    // ~ ------------------------------------------------------------------
 
-        [Symbol("tr7")]
-        TR7 = TR.TR7,
+    [Symbol("bnd0")]
+    BND0 = B.BND0,
 
-        // ~ BND registers
-        // ~ ------------------------------------------------------------------
+    [Symbol("bnd1")]
+    BND1 = B.BND1,
 
-        [Symbol("bnd0")]
-        BND0 = B.BND0,
+    [Symbol("bnd2")]
+    BND2 = B.BND2,
 
-        [Symbol("bnd1")]
-        BND1 = B.BND1,
+    [Symbol("bnd3")]
+    BND3 = B.BND3,
 
-        [Symbol("bnd2")]
-        BND2 = B.BND2,
+    // ~ FP registers
+    // ~ ------------------------------------------------------------------
 
-        [Symbol("bnd3")]
-        BND3 = B.BND3,
+    [Symbol("st0")]
+    ST0 = ST.ST0,
 
-        // ~ FP registers
-        // ~ ------------------------------------------------------------------
+    [Symbol("st1")]
+    ST1 = ST.ST1,
 
-        [Symbol("st0")]
-        ST0 = ST.ST0,
+    [Symbol("st2")]
+    ST2 = ST.ST2,
 
-        [Symbol("st1")]
-        ST1 = ST.ST1,
+    [Symbol("st3")]
+    ST3 = ST.ST3,
 
-        [Symbol("st2")]
-        ST2 = ST.ST2,
+    [Symbol("st4")]
+    ST4 = ST.ST4,
 
-        [Symbol("st3")]
-        ST3 = ST.ST3,
+    [Symbol("st5")]
+    ST5 = ST.ST5,
 
-        [Symbol("st4")]
-        ST4 = ST.ST4,
+    [Symbol("st6")]
+    ST6 = ST.ST6,
 
-        [Symbol("st5")]
-        ST5 = ST.ST5,
+    [Symbol("st7")]
+    ST7 = ST.ST7,
 
-        [Symbol("st6")]
-        ST6 = ST.ST6,
+    // ~ MMX registers
+    // ~ ------------------------------------------------------------------
 
-        [Symbol("st7")]
-        ST7 = ST.ST7,
+    [Symbol("mm0")]
+    MM0 = MM.MM0,
 
-        // ~ MMX registers
-        // ~ ------------------------------------------------------------------
+    [Symbol("mm1")]
+    MM1 = MM.MM1,
 
-        [Symbol("mm0")]
-        MM0 = MM.MM0,
+    [Symbol("mm2")]
+    MM2 = MM.MM2,
 
-        [Symbol("mm1")]
-        MM1 = MM.MM1,
+    [Symbol("mm3")]
+    MM3 = MM.MM3,
 
-        [Symbol("mm2")]
-        MM2 = MM.MM2,
+    [Symbol("mm4")]
+    MM4 = MM.MM4,
 
-        [Symbol("mm3")]
-        MM3 = MM.MM3,
+    [Symbol("mm5")]
+    MM5 = MM.MM5,
 
-        [Symbol("mm4")]
-        MM4 = MM.MM4,
+    [Symbol("mm6")]
+    MM6 = MM.MM6,
 
-        [Symbol("mm5")]
-        MM5 = MM.MM5,
+    [Symbol("mm7")]
+    MM7 = MM.MM7,
 
-        [Symbol("mm6")]
-        MM6 = MM.MM6,
+    // ~ Intruction pointer registers
+    // ~ ------------------------------------------------------------------
 
-        [Symbol("mm7")]
-        MM7 = MM.MM7,
+    [Symbol("ip")]
+    IP = I.IP,
 
-        // ~ Intruction pointer registers
-        // ~ ------------------------------------------------------------------
+    [Symbol("eip")]
+    EIP = I.EIP,
 
-        [Symbol("ip")]
-        IP = I.IP,
+    [Symbol("rip")]
+    RIP = I.RIP,
 
-        [Symbol("eip")]
-        EIP = I.EIP,
+    // ~ System pointer registers
 
-        [Symbol("rip")]
-        RIP = I.RIP,
+    [Symbol("gdtr")]
+    GDTR = SPTR.GDTR,
 
-        // ~ System pointer registers
+    [Symbol("ldtr")]
+    LDTR = SPTR.LDTR,
 
-        [Symbol("gdtr")]
-        GDTR = SPTR.GDTR,
+    [Symbol("idtr")]
+    IDTR = SPTR.IDTR,
 
-        [Symbol("ldtr")]
-        LDTR = SPTR.LDTR,
+    [Symbol("xcr0")]
+    XCR0 = XCR.XCR0,
 
-        [Symbol("idtr")]
-        IDTR = SPTR.IDTR,
+    // ~ TMM registers
+    // ~ ------------------------------------------------------------------
 
-        [Symbol("xcr0")]
-        XCR0 = XCR.XCR0,
+    [Symbol("tmm0")]
+    TMM0 = TMM.TMM0,
 
-        // ~ TMM registers
-        // ~ ------------------------------------------------------------------
+    [Symbol("tmm1")]
+    TMM1 = TMM.TMM1,
 
-        [Symbol("tmm0")]
-        TMM0 = TMM.TMM0,
+    [Symbol("tmm2")]
+    TMM2 = TMM.TMM2,
 
-        [Symbol("tmm1")]
-        TMM1 = TMM.TMM1,
+    [Symbol("tmm3")]
+    TMM3 = TMM.TMM3,
 
-        [Symbol("tmm2")]
-        TMM2 = TMM.TMM2,
+    [Symbol("tmm4")]
+    TMM4 = TMM.TMM4,
 
-        [Symbol("tmm3")]
-        TMM3 = TMM.TMM3,
+    [Symbol("tmm5")]
+    TMM5 = TMM.TMM5,
 
-        [Symbol("tmm4")]
-        TMM4 = TMM.TMM4,
+    [Symbol("tmm6")]
+    TMM6 = TMM.TMM6,
 
-        [Symbol("tmm5")]
-        TMM5 = TMM.TMM5,
-
-        [Symbol("tmm6")]
-        TMM6 = TMM.TMM6,
-
-        [Symbol("tmm7")]
-        TMM7 = TMM.TMM7,
-    }
+    [Symbol("tmm7")]
+    TMM7 = TMM.TMM7,
 }

@@ -18,7 +18,7 @@ namespace Z0.Asm
     {
         [MethodImpl(Inline), Op]
         public static Vsib define(byte src)
-            => new Vsib(src);
+            => new (src);
 
         /// <summary>
         /// Effective address computation with vsib addressing

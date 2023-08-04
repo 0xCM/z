@@ -44,7 +44,6 @@ namespace Z0
             get => Location != 0;
         }
 
-
         public Hash32 Hash
         {
             [MethodImpl(Inline)]

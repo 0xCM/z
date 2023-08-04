@@ -7,28 +7,28 @@ namespace Z0
     /// <summary>
     /// Defines a shared context for a set of agents
     /// </summary>
-    public class AgentContext : IAgentContext
+    public sealed class AgentContext : IAgentContext
     {
-        public IAgentEventSink EventLog {get;}
+        public IAgentEventSink Sink {get;}
 
-        ConcurrentDictionary<ulong,IAgent> Agents {get;}
-            = new ConcurrentDictionary<ulong, IAgent>();
+        ConcurrentBag<IAgentMachine> Agents {get;}
+            = new();
 
         [MethodImpl(Inline)]
         public AgentContext(IAgentEventSink sink)
         {
-            EventLog = sink;
+            Sink = sink;
         }
 
-        public void Register(IAgent agent)
-            => Agents.TryAdd(agent.Identity, agent);
+        public void Register(IAgentMachine agent)
+            => Agents.Add(agent);
 
         public void Dispose()
         {
-            EventLog.Dispose();
+            Sink.Dispose();
         }
 
-        public IEnumerable<IAgent> Members
-            => Agents.Values;
+        public IEnumerable<IAgentMachine> Members
+            => Agents;
     }
 }

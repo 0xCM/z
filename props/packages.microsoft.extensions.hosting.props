@@ -1,0 +1,6 @@
+<Project>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="$(MicrosoftExtensionsVersion)"/>
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="$(MicrosoftExtensionsVersion)"/>
+  </ItemGroup>
+</Project>

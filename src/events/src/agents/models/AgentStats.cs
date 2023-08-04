@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public struct AgentStats
+    public readonly struct AgentStats
     {
         public readonly int AgentCount;
 

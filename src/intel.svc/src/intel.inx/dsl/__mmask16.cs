@@ -25,7 +25,6 @@ namespace Z0.dsl.intel
         public int CompareTo(D src)
             => Data.CompareTo(src.Data);
 
-
         public override int GetHashCode()
             => Data;
 

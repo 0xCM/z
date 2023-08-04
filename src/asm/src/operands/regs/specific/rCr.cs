@@ -24,8 +24,8 @@ namespace Z0.Asm.Operands
         }
 
         [MethodImpl(Inline)]
-        public AsmOperand Untyped()
-            => new AsmOperand(this);
+        public O Untyped()
+            => new (this);
 
         public string Format()
             => ((K)Index).ToString();
@@ -39,10 +39,10 @@ namespace Z0.Asm.Operands
             get => NativeSizeCode.W64;
         }
 
-        public RegClassCode RegClassCode
+        public C RegClassCode
         {
             [MethodImpl(Inline)]
-            get => RegClassCode.CR;
+            get => C.CR;
         }
 
         public RegClass RegClass
@@ -56,7 +56,7 @@ namespace Z0.Asm.Operands
             => reg(src.Size, src.RegClassCode, src.Index);
 
         [MethodImpl(Inline)]
-        public static implicit operator AsmOperand(G src)
+        public static implicit operator O(G src)
             => src.Untyped();
 
         [MethodImpl(Inline)]

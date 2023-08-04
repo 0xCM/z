@@ -6,7 +6,7 @@ namespace Z0
 {
     partial class Ecma
     {
-        [EcmaRow(TableIndex.GenericParamConstraint), StructLayout(LayoutKind.Sequential,Pack =1)]
+        [EcmaRow(TableIndex.GenericParamConstraint), StructLayout(LayoutKind.Sequential, Pack=1)]
         public struct GenericParamConstraintRow : IEcmaRow<GenericParamConstraintRow>
         {
             /// <summary>

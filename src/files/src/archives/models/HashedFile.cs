@@ -66,7 +66,6 @@ namespace Z0
         public override string ToString()
             => Format();
 
-
         public static HashedFile Empty => new();
     }
 }

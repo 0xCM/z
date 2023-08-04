@@ -6,6 +6,7 @@ namespace Z0.dsl.intel
 {
     using static math;
     using static BitNumbers;
+    using Asm;
 
     [ApiHost]
     public class Specs

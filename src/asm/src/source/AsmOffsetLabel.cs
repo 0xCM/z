@@ -21,7 +21,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static AsmOffsetLabel define(byte width, ulong value)
-            => new AsmOffsetLabel(width, value);
+            => new (width, value);
 
         const ulong OffsetMask = 0xFF_FF_FF_FF_FF_FF_FF;
 

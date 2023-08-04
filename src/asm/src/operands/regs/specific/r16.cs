@@ -25,10 +25,9 @@ namespace Z0.Asm.Operands
             Index = index;
         }
 
-
         [MethodImpl(Inline)]
-        public AsmOperand Untyped()
-            => new AsmOperand(this);
+        public O Untyped()
+            => new (this);
 
         public string Format()
             => ((K)Index).ToString();

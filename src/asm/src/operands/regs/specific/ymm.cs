@@ -15,10 +15,10 @@ namespace Z0.Asm.Operands
 
     public readonly struct ymm : IRegOp256<ymm>
     {
-        public RegIndexCode Index {get;}
+        public I Index {get;}
 
         [MethodImpl(Inline)]
-        public ymm(RegIndexCode index)
+        public ymm(I index)
         {
             Index = index;
         }
@@ -35,10 +35,10 @@ namespace Z0.Asm.Operands
             get => NativeSizeCode.W256;
         }
 
-        public RegClassCode RegClassCode
+        public C RegClassCode
         {
             [MethodImpl(Inline)]
-            get => RegClassCode.YMM;
+            get => C.YMM;
         }
 
         public RegClass RegClass
@@ -49,8 +49,8 @@ namespace Z0.Asm.Operands
 
 
         [MethodImpl(Inline)]
-        public AsmOperand Untyped()
-            => new AsmOperand(this);
+        public O Untyped()
+            => new (this);
 
         [MethodImpl(Inline)]
         public static implicit operator RegOp(G src)
@@ -415,7 +415,7 @@ namespace Z0.Asm.Operands
 
         [MethodImpl(Inline)]
         public static implicit operator G(ymm24 src)
-            => new G(src.Index);
+            => new (src.Index);
 
         [MethodImpl(Inline)]
         public static implicit operator K(ymm24 src)
@@ -428,7 +428,7 @@ namespace Z0.Asm.Operands
 
         [MethodImpl(Inline)]
         public static implicit operator G(ymm25 src)
-            => new G(src.Index);
+            => new (src.Index);
 
         [MethodImpl(Inline)]
         public static implicit operator K(ymm25 src)
@@ -441,7 +441,7 @@ namespace Z0.Asm.Operands
 
         [MethodImpl(Inline)]
         public static implicit operator G(ymm26 src)
-            => new G(src.Index);
+            => new (src.Index);
 
         [MethodImpl(Inline)]
         public static implicit operator K(ymm26 src)
@@ -480,7 +480,7 @@ namespace Z0.Asm.Operands
 
         [MethodImpl(Inline)]
         public static implicit operator G(ymm29 src)
-            => new G(src.Index);
+            => new (src.Index);
 
         [MethodImpl(Inline)]
         public static implicit operator K(ymm29 src)
@@ -493,7 +493,7 @@ namespace Z0.Asm.Operands
 
         [MethodImpl(Inline)]
         public static implicit operator G(ymm30 src)
-            => new G(src.Index);
+            => new (src.Index);
 
         [MethodImpl(Inline)]
         public static implicit operator K(ymm30 src)
@@ -506,7 +506,7 @@ namespace Z0.Asm.Operands
 
         [MethodImpl(Inline)]
         public static implicit operator G(ymm31 src)
-            => new G(src.Index);
+            => new (src.Index);
 
         [MethodImpl(Inline)]
         public static implicit operator K(ymm31 src)

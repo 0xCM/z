@@ -8,7 +8,7 @@ namespace Z0.Asm
     {
         [MethodImpl(Inline), Op]
         public static AsmExprOffset define(string asm, MemoryAddress offset)
-            => new AsmExprOffset(asm, offset);
+            => new (asm, offset);
 
         public readonly AsmExpr Asm;
 
@@ -53,26 +53,26 @@ namespace Z0.Asm
 
         [MethodImpl(Inline)]
         public static implicit operator AsmExprOffset((AsmExpr expr, MemoryAddress offset) src)
-            => new AsmExprOffset(src.expr, src.offset);
+            => new (src.expr, src.offset);
 
         [MethodImpl(Inline)]
         public static implicit operator AsmExprOffset((string expr, MemoryAddress offset) src)
-            => new AsmExprOffset(src.expr, src.offset);
+            => new (src.expr, src.offset);
 
         [MethodImpl(Inline)]
         public static implicit operator AsmExprOffset((AsmExpr expr, Address32 offset) src)
-            => new AsmExprOffset(src.expr, src.offset);
+            => new (src.expr, src.offset);
 
         [MethodImpl(Inline)]
         public static implicit operator AsmExprOffset((string expr, Address32 offset) src)
-            => new AsmExprOffset(src.expr, src.offset);
+            => new (src.expr, src.offset);
 
         [MethodImpl(Inline)]
         public static implicit operator AsmExprOffset((AsmExpr expr, Address16 offset) src)
-            => new AsmExprOffset(src.expr, src.offset);
+            => new (src.expr, src.offset);
 
         [MethodImpl(Inline)]
         public static implicit operator AsmExprOffset((string expr, Address16 offset) src)
-            => new AsmExprOffset(src.expr, src.offset);
+            => new (src.expr, src.offset);
     }
 }

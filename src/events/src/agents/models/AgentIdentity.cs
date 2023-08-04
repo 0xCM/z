@@ -26,13 +26,6 @@ namespace Z0
             HostId = agent;
         }
 
-        [MethodImpl(Inline)]
-        public AgentIdentity(ulong id)
-        {
-            PartId = (uint)(id >> 32);
-            HostId = (uint)(id);
-        }
-
         /// <summary>
         /// Uniquely identifies an agent by composing the host on which it resides
         /// and the host-relative identifier
@@ -56,7 +49,7 @@ namespace Z0
         /// <param name="time">The time of occurrence</param>
         [MethodImpl(Inline)]
         public static implicit operator AgentIdentity((uint server, uint agent) src)
-            => new AgentIdentity(src.server,src.agent);
+            => new (src.server,src.agent);
 
         [MethodImpl(Inline)]
         public static implicit operator ulong(AgentIdentity identity)

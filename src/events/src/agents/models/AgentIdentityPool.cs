@@ -26,7 +26,7 @@ namespace Z0
 
         int LastServerId = (int)(FirstServerId - 1);
 
-        static AgentIdentityPool TheOnly = new AgentIdentityPool();
+        static readonly AgentIdentityPool TheOnly = new ();
 
         ConcurrentDictionary<uint,uint> Agents {get;}
             = new ConcurrentDictionary<uint, uint>();

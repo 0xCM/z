@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(ProjectProps)\usings.props" />
-  <Import Project="$(SlnProps)\diagnostics.props"/>
+  <Import Project="$(SlnProps)\packages.perfview.props"/>
+  <Import Project="$(SlnProps)\packages.microsoft.extensions.hosting.props"/>
   <PropertyGroup>
     <OutputType>Library</OutputType>
   </PropertyGroup>
@@ -8,7 +9,6 @@
     <ProjectReference Include="$(Text)" />
     <ProjectReference Include="$(Files)" />
     <ProjectReference Include="$(ClrQuery)" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="$(MsExtVer)" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.CommandLine" Version="2.0.0-dev" />

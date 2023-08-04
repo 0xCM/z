@@ -13,14 +13,14 @@ namespace Z0.Asm.Operands
     using api = AsmRegs;
     using C = RegClassCode;
 
-    public readonly struct r8 : IRegOp8<r8>
+    public readonly struct r8 : IRegOp8<G>
     {
         internal const NativeSizeCode W = NativeSizeCode.W8;
 
-        public RegIndexCode Index {get;}
+        public I Index {get;}
 
         [MethodImpl(Inline)]
-        public r8(RegIndexCode index)
+        public r8(I index)
         {
             Index = index;
         }

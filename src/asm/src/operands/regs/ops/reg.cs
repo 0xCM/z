@@ -65,11 +65,11 @@ namespace Z0.Asm
 
         [MethodImpl(Inline), Op]
         public static RegOp reg(RegKind kind)
-            => new RegOp((ushort)kind);
+            => new ((ushort)kind);
 
         [MethodImpl(Inline), Op]
         public static RegOp reg(in AsmOperand src)
-            => new RegOp(first(span16u(src.Data)));
+            => new (first(span16u(src.Data)));
 
         [MethodImpl(Inline), Op]
         public static RegOp sptr(RegIndexCode r)

@@ -17,11 +17,11 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static AsmSigToken sig(in AsmTokenRecord src)
-            => new AsmSigToken((AsmSigTokenKind)src.Index, (byte)src.Value);
+            => new ((AsmSigTokenKind)src.Index, (byte)src.Value);
 
         [MethodImpl(Inline), Op]
         public static AsmOcToken opcode(in AsmTokenRecord src)
-            => new AsmOcToken((AsmOcTokenKind)src.Index, (byte)src.Value);
+            => new ((AsmOcTokenKind)src.Index, (byte)src.Value);
 
         public static bool parse(string expr, out AsmSigToken dst)
             => Instance.SigToken(expr, out dst);

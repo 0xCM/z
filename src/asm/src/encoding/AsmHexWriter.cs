@@ -13,7 +13,7 @@ namespace Z0
     {
         [MethodImpl(Inline)]
         public static AsmHexWriter create()
-            => new AsmHexWriter();
+            => new ();
 
         [MethodImpl(Inline), Op, Closures(Int8x64k)]
         static ref T cell<T>(Span<byte> src, uint offset)

@@ -7,7 +7,7 @@ namespace Z0.Asm
     using static sys;
     using static AsmPrefixCodes;
 
-    public readonly struct SizeOverrides
+    public readonly record struct SizeOverrides
     {
         readonly byte Code;
 

@@ -2,36 +2,33 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0.Asm;
+
+public readonly record struct AsmOpMask
 {
-    using Asm;
+    public readonly RegMaskKind MaskKind;
 
-    public readonly struct AsmOpMask
+    public readonly RegOp Source;
+
+    public readonly RegOp Target;
+
+    [MethodImpl(Inline)]
+    public AsmOpMask(RegMaskKind kind, RegOp src, RegOp dst)
     {
-        public readonly RegMaskKind MaskKind;
+        MaskKind = kind;
+        Source = src;
+        Target = dst;
+    }
 
-        public readonly RegOp Source;
-
-        public readonly RegOp Target;
-
+    public bool IsEmpty
+    {
         [MethodImpl(Inline)]
-        public AsmOpMask(RegMaskKind kind, RegOp src, RegOp dst)
-        {
-            MaskKind = kind;
-            Source = src;
-            Target = dst;
-        }
+        get => MaskKind == 0 && Source.IsEmpty && Target.IsEmpty;
+    }
 
-        public bool IsEmpty
-        {
-            [MethodImpl(Inline)]
-            get => MaskKind == 0 && Source.IsEmpty && Target.IsEmpty;
-        }
-
-        public bool IsNonEmpty
-        {
-            [MethodImpl(Inline)]
-            get => !IsEmpty;
-        }
+    public bool IsNonEmpty
+    {
+        [MethodImpl(Inline)]
+        get => !IsEmpty;
     }
 }

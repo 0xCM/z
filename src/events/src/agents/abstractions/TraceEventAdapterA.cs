@@ -11,8 +11,8 @@ namespace Z0
     {
         public TraceEvent Subject {get; set;}
 
-        public AgentEventId EventIdentity
-            => api.identify(Subject);
+        public AgentEventKey EventIdentity
+            => Agents.key(Subject);
 
         public T Field<T>(string Name)
             => api.payload<T>(Subject, Name);

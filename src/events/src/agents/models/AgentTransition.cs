@@ -7,7 +7,7 @@ namespace Z0
     /// <summary>
     /// Specifies a transition that occurred
     /// </summary>
-    public readonly struct AgentTransition
+    public readonly record struct AgentTransition
     {
         /// <summary>
         /// Specifies the agent that experienced the transition
@@ -17,7 +17,7 @@ namespace Z0
         /// <summary>
         /// Indicates the relative time at which the transition ocurred
         /// </summary>
-        public readonly ulong Timestamp;
+        public readonly Timestamp Timestamp;
 
         /// <summary>
         /// Specifies the state of the agent before the transition
@@ -30,7 +30,7 @@ namespace Z0
         public readonly AgentStatus TargetState;
 
         [MethodImpl(Inline)]
-        public AgentTransition(AgentIdentity id, ulong timestamp, AgentStatus src, AgentStatus dst)
+        public AgentTransition(AgentIdentity id, Timestamp timestamp, AgentStatus src, AgentStatus dst)
         {
             Agent = id;
             Timestamp = timestamp;

@@ -15,10 +15,10 @@ namespace Z0.Asm.Operands
 
     public readonly struct rK : IRegOp64<rK>
     {
-        public RegIndexCode Index {get;}
+        public I Index {get;}
 
         [MethodImpl(Inline)]
-        public rK(RegIndexCode index)
+        public rK(I index)
         {
             Index = index;
         }
@@ -35,10 +35,10 @@ namespace Z0.Asm.Operands
             get => NativeSizeCode.W64;
         }
 
-        public RegClassCode RegClassCode
+        public C RegClassCode
         {
             [MethodImpl(Inline)]
-            get => RegClassCode.MASK;
+            get => C.MASK;
         }
 
         public RegClass RegClass
@@ -50,7 +50,7 @@ namespace Z0.Asm.Operands
 
         [MethodImpl(Inline)]
         public O Untyped()
-            => new O(this);
+            => new (this);
 
         [MethodImpl(Inline)]
         public static implicit operator RegOp(G src)
@@ -228,5 +228,4 @@ namespace Z0.Asm.Operands
         public static implicit operator K(k7 src)
             => (K)src.Index;
     }
-
 }

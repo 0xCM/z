@@ -7,10 +7,10 @@ namespace Z0
     [Free]
     public interface IAgentContext : IDisposable
     {
-        IEnumerable<IAgent> Members {get;}
+        IEnumerable<IAgentMachine> Members {get;}
 
-        IAgentEventSink EventLog {get;}
+        IAgentEventSink Sink {get;}
 
-        void Register(IAgent agent);
+        void Register(IAgentMachine agent);
     }
 }

@@ -36,19 +36,19 @@ namespace Z0.Asm
 
         [MethodImpl(Inline), Op]
         public JccInfo Describe(Jcc8Code code)
-            => new JccInfo(code, Name(code));
+            => new (code, Name(code));
 
         [MethodImpl(Inline), Op]
         public JccInfo Describe(Jcc8AltCode code)
-            => new JccInfo(code, Name(code));
+            => new (code, Name(code));
 
         [MethodImpl(Inline), Op]
         public JccInfo Describe(Jcc32Code code)
-            => new JccInfo(code,Name(code));
+            => new (code,Name(code));
 
         [MethodImpl(Inline), Op]
         public JccInfo Describe(Jcc32AltCode code)
-            => new JccInfo(code,Name(code));
+            => new (code,Name(code));
 
         [MethodImpl(Inline)]
         public ref readonly asci8 Name(Jcc8Code src)

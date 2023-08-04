@@ -77,26 +77,15 @@ namespace Z0
                 var control = ExecutingPart.Assembly;
                 var id = control.Id();
                 var dst = initializer();
-                // dst.Verbosity = verbose ? LogLevel.Babble : LogLevel.Status;
-                // dst.LogConfig = Loggers.configure(id, AppSettings.Default.Logs());
-                // dst.LogConfig.ErrorPath.CreateParentIfMissing();
-                // dst.LogConfig.StatusPath.CreateParentIfMissing();
 
                 if(verbose)
                     term.emit(Events.babble(factory, ConfiguredAppLogs.Format(dst.LogConfig)));
 
-                //dst.Tokens = TokenDispenser.Service;
-                //dst.EventBroker = Events.broker(dst.LogConfig);
-                
                 if(verbose)
                     term.emit(Events.babble(factory, "Created event broker"));
 
-                //dst.Host = typeof(WfRuntime);
-                
                 if(verbose)
                     term.emit(Events.babble(factory, "Created host"));
-
-                //dst.EmissionLog = Loggers.emission(control, timestamp());
 
                 if(verbose)
                     term.emit(Events.babble(factory, ConfiguredEmissionLogs.Format(dst.EmissionLog)));

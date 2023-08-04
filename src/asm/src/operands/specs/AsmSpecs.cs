@@ -41,7 +41,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static AsmInstruction inst(in AsmMnemonic mnemonic, in AsmOpCodeSpec opcode, in AsmOperands ops)
-            => new AsmInstruction(mnemonic, opcode, ops);
+            => new (mnemonic, opcode, ops);
 
         [MethodImpl(Inline), Op]
         public static AsmInstruction inst(in AsmMnemonic mnemonic, in AsmOpCodeSpec opcode, out AsmInstruction dst)

@@ -11,9 +11,6 @@ namespace Z0
     {
         sealed class Svc : AppServices<Svc>
         {
-            public AsmEtl AsmEtl(IWfRuntime wf)
-                => Service<AsmEtl>(wf);
-
             public HostAsmEmitter HostAsmEmitter(IWfRuntime wf)
                 => Service<HostAsmEmitter>(wf);
 
@@ -59,9 +56,6 @@ namespace Z0
         }
 
         static Svc Services => Svc.Instance;
-
-        public static AsmEtl AsmEtl(this IWfRuntime wf)
-            => Services.AsmEtl(wf);
 
         public static AsmRowBuilder AsmRowBuilder(this IWfRuntime wf)
             => Services.AsmRowBuilder(wf);

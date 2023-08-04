@@ -51,14 +51,14 @@ namespace Z0.Asm.Operands
 
         [MethodImpl(Inline)]
         public static implicit operator m256(AsmAddress src)
-            => new m256(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator AsmOperand(m256 src)
-            => new AsmOperand(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator MemOp(m256 src)
-            => new MemOp(src.TargetSize, src.Address);
+            => new (src.TargetSize, src.Address);
     }
 }

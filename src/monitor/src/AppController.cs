@@ -11,14 +11,15 @@ namespace Z0
 
     class AppController : BackgroundService
     {
-        readonly IMonitor Monitor;
+        readonly IAgent Monitor;
         
         public AppController(ILogger<AppController> logger, string[] args)
         {
             var src = FS.dir(args[0]);
             var dst = AppDb.Service.Catalogs("fs.change");
             Require.invariant(src.Exists);
-            Monitor = DirectoryMonitor.start(new DbArchive(src), dst);
+            Monitor = DirectoryMonitor.create(new DbArchive(src), dst);
+            Monitor.Start();
         }
 
         public override void Dispose()

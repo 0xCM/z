@@ -101,6 +101,8 @@ namespace Z0
         [MethodImpl(Inline)]
         public NativeSeq<S> As<S>()
             where S : unmanaged
-                => new NativeSeq<S>(new SegRef<S>(Source.BaseAddress, Source.SegSize));
+                => new (new SegRef<S>(Source.BaseAddress, Source.SegSize));
+
+        public static new NativeSeq<T> Empty => default;
     }
 }

@@ -1,0 +1,10 @@
+<Project>
+  <ItemGroup>
+    <PackageReference Include="ClangSharp" Version="$(ClangSharpVersion)"/>
+    <PackageReference Include="ClangSharp.Interop" Version="$(ClangSharpVersion)"/>
+    <PackageReference Include="LlvmSharp" Version="$(LlvmSharpVersion)"/>
+    <PackageReference Include="LlvmSharp.Interop" Version="$(LlvmSharpVersion)"/>
+    <PackageReference Include="ClangSharp.PInvokeGenerator" Version="$(ClangSharpVersion)"/>
+  </ItemGroup>
+
+</Project>
