@@ -34,7 +34,7 @@ namespace Z0
             }
             catch(Exception e)
             {
-                Wf.Error(e, $"Harness execution failed while running {unit.GetType().Name}");
+                Wf.Channel.Error(e, $"Harness execution failed while running {unit.GetType().Name}");
             }
             finally
             {

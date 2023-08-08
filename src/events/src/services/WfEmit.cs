@@ -50,7 +50,7 @@ namespace Z0
         TableFlow<T> TableFlow<T>(FilePath dst)
             => new (this, dst, NextExecToken());
 
-        FileEmission Flow(FilePath dst)
+        static FileEmission Flow(FilePath dst)
             => new (NextExecToken(), dst, 0);
 
         public void Raise<E>(E e)
@@ -134,23 +134,23 @@ namespace Z0
             return Flow(msg);
         }
 
-        public ExecFlow<string> Running([CallerName] string caller = null)
+        public ExecFlow<string> Running([CallerName] string msg = null)
         {
-            signal(EventSink, Host).Running(caller);
-            return Flow(caller);
+            signal(EventSink, Host).Running(msg);
+            return Flow(msg);
         }
 
-        public ExecToken Ran<T>(ExecFlow<T> flow, [CallerName] string caller = null)
+        public ExecToken Ran<T>(ExecFlow<T> flow, string msg = null)
         {
             var token = Completed(flow);
-            signal(EventSink, Host).Ran(flow.Data);
+            signal(EventSink, Host).Ran(nonempty(msg) ? msg : $"{flow.Data}");
             return token;
         }
 
         public ExecToken Ran<T>(ExecFlow<T> flow, string msg, FlairKind flair = FlairKind.Ran)
         {
             var token = Completed(flow);
-            signal(EventSink, Host).Ran(flow.Data);
+            signal(EventSink, Host).Ran(nonempty(msg) ? msg : $"{flow.Data}");
             return token;
         }
 
@@ -236,15 +236,6 @@ namespace Z0
             return completed;
         }
 
-        ExecToken<TableFlow<T>> EmittedTable<T>(AppEventSource host, TableFlow<T> flow, Count count, FilePath? dst = null)
-        {
-            var completed = Completed(flow);
-            var counted = flow.WithCount(count).WithToken(completed);
-            signal(EventSink, host).EmittedTable<T>(count, counted.Target);
-            Emissions.LogEmission(counted);
-            return (completed, counted);
-        }
-
         public ExecToken TableEmit<T>(ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
                 => CsvTables.emit(this, rows, dst, encoding, rowpad, fk);
@@ -268,7 +259,6 @@ namespace Z0
         public ExecToken TableEmit<T>(ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding)
             => CsvTables.emit(this, rows, dst, encoding);
  
-
         public ExecToken TableEmit<T>(ReadOnlySpan<T> src, ReadOnlySpan<byte> widths, TextEncodingKind encoding, FilePath dst)
         {
             signal(EventSink, Host).EmittingTable<T>(dst);

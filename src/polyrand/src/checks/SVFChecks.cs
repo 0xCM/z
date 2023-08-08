@@ -51,11 +51,13 @@ namespace Z0
             RepCount = Pow2.T10;
         }
 
+        IWfChannel Channel => Wf.Channel;
+
         void ReportCaseResult(string casename, bool succeeded, TimeSpan duration)
         {
-            var record = SVFChecks.TestCase(casename, succeeded, duration);
+            var record = TestCase(casename, succeeded, duration);
             var content = Formatter(record);
-            Wf.Data(content);
+            Channel.Row(content);
         }
 
         [MethodImpl(Inline)]
@@ -88,7 +90,7 @@ namespace Z0
             }
             catch(Exception e)
             {
-                Wf.Error(e, casename);
+                Channel.Error(e, casename);
                 succeeded = false;
             }
             finally
@@ -129,7 +131,7 @@ namespace Z0
         void ReportCaseResult(string casename, bool succeeded, TimeSpan duration)
         {
             var record = SVFChecks.TestCase(casename, succeeded, duration);
-            Wf.Data(TestCaseRecords.format(record));
+            Wf.Channel.Row(TestCaseRecords.format(record));
         }
 
         public bit CheckSVF(IBinaryOp128D<T> f)
@@ -155,7 +157,7 @@ namespace Z0
             }
             catch(Exception e)
             {
-                Wf.Error(e, casename);
+                Wf.Channel.Error(e, casename);
                 succeeded = false;
             }
             finally
@@ -178,7 +180,7 @@ namespace Z0
             }
             catch(Exception e)
             {
-                Wf.Error(e, casename);
+                Wf.Channel.Error(e, casename);
             }
             finally
             {

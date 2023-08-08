@@ -10,10 +10,6 @@ namespace Z0
 
     partial class XedCmd
     {
-        [CmdOp("project/etl")]
-        void Etl()
-            => Etl(Project());
-
         public void Etl(IProject project)
         {
             var context = ApiCmd.context(project);

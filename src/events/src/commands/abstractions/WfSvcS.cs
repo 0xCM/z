@@ -17,56 +17,19 @@ namespace Z0
 
         protected static IApiCmdRunner CmdRunner => ApiCmdRunner.Service();
         
-        ConcurrentDictionary<string, ProjectContext> _Context = new();
+        // public new void Babble(string pattern, params object[] args)
+        //     => Channel.Babble(pattern, args);
 
-        [MethodImpl(Inline)]
-        public IProject Project()
-            => ProjectCache.project();
+        // public new void Status<T>(T content, FlairKind flair = FlairKind.Status)
+        //     => Channel.Status(content, flair);
 
-        protected ProjectContext ProjectContext()
-        {
-            var project = Project();
-            return _Context.GetOrAdd(project.Name, _ => ApiCmd.context(project));
-        }
+        // public void Warn<T>(T content, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
+        //     => Channel.Warn(content, caller, file, line);
 
-        [CmdOp("project/home")]
-        protected void ProjectHome()
-            => Channel.Write(ProjectContext().Project.Root);
-
-        [CmdOp("project/files")]
-        protected void ListProjectFiles()
-        {
-            iter(ProjectContext().Files.Docs(), member => Channel.Row(member.Path));                
-        }
-
-        [CmdOp("project/load")]
-        public void LoadProject(CmdArgs args)
-        {
-            var root = FS.dir(args[0]);
-            LoadProjectSources(new DevProject(root));
-        }
-
-        void LoadProjectSources(IProject src)
-        {
-            var loading = Channel.Running($"Loading project from {src.Root}");
-            ProjectCache.project(src);
-            Files(src.Files().Array().Sort());
-            Channel.Ran(loading, $"Project={ProjectCache.project().Root.Name}");
-        }
-
-        public new void Babble(string pattern, params object[] args)
-            => Channel.Babble(pattern, args);
-
-        public new void Status<T>(T content, FlairKind flair = FlairKind.Status)
-            => Channel.Status(content, flair);
-
-        public void Warn<T>(T content, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
-            => Channel.Warn(content, caller, file, line);
-
-        public new void Error<T>(T content, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
+        public void Error<T>(T content, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
             => Channel.Error(content, caller, file, line);
 
-        public new void Write<T>(T content)
+        public void Write<T>(T content)
             => Channel.Write(content);
 
         public void Write<T>(T content, FlairKind flair)
@@ -87,16 +50,16 @@ namespace Z0
         public ExecFlow<T> Running<T>(T msg)
             => Channel.Running(msg);
 
-        public new ExecFlow<string> Running([CallerName] string msg = null)
+        public ExecFlow<string> Running([CallerName] string msg = null)
             => Channel.Running(msg);
 
-        public new ExecToken Ran<T>(ExecFlow<T> flow, [CallerName] string msg = null)
+        public ExecToken Ran<T>(ExecFlow<T> flow, [CallerName] string msg = null)
             => Channel.Ran(flow, msg);
 
         public ExecToken Ran<T,D>(ExecFlow<T> src, D data)
             => Channel.Ran(src, data);
 
-        public new FileEmission EmittingFile(FilePath dst)
+        public FileEmission EmittingFile(FilePath dst)
             => Channel.EmittingFile(dst);
 
         public ExecToken EmittedFile(FileEmission flow, int count)
@@ -108,11 +71,11 @@ namespace Z0
         public ExecToken EmittedBytes(FileEmission flow, ByteSize size)
             => Channel.EmittedBytes(flow, size);
 
-        public new TableFlow<T> EmittingTable<T>(FilePath dst)
+        public TableFlow<T> EmittingTable<T>(FilePath dst)
             where T : struct
                 => Channel.EmittingTable<T>(dst);
 
-        public new ExecToken EmittedTable<T>(TableFlow<T> flow, Count count, FilePath? dst = null)
+        public ExecToken EmittedTable<T>(TableFlow<T> flow, Count count, FilePath? dst = null)
             where T : struct
                 => Channel.EmittedTable(flow, count, dst);
 

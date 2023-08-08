@@ -801,7 +801,7 @@ c5 f8 99 c8";
 
             var box = new RipBox(Base, uint.MaxValue);
             if(!box.IP(Source))
-                Error("Ip out of range");
+                Channel.Error("Ip out of range");
 
             box.Advance(InstSize, dx, out var target1);
 

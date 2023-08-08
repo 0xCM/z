@@ -134,7 +134,7 @@ namespace Z0.Asm
                 return decoded;
             else
             {
-                Wf.Error(outcome.Message);
+                Channel.Error(outcome.Message);
                 return AsmInstructionBlock.Empty;
             }
         }

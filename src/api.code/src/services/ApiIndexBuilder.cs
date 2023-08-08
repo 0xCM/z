@@ -68,7 +68,7 @@ namespace Z0
             IndexStatus = Status();
             Product = Freeze();
 
-            Wf.Ran(flow, Product.CalcMetrics());
+            Channel.Ran(flow, Product.CalcMetrics());
             return Product;
         }
 
@@ -76,13 +76,13 @@ namespace Z0
         {
             if(src.Address.IsEmpty)
             {
-                Wf.Warn(Msg.Unbased.Format(src.Uri));
+                Channel.Warn(Msg.Unbased.Format(src.Uri));
                 return;
             }
 
             var inclusion = Include(new ApiCodeBlock(src.Address, src.Uri, src.Data));
             if(inclusion.Any(x => x == false))
-                Wf.Warn(Msg.DuplicateUri.Format(src.Uri));
+                Channel.Warn(Msg.DuplicateUri.Format(src.Uri));
         }
 
         Triple<bool> Include(in ApiCodeBlock src)

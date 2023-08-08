@@ -1,0 +1,5 @@
+<Project>
+    <ItemGroup>    
+        <PackageReference Include="terrafx.interop.windows" Version="10.0.22621.2-rc3" />
+    </ItemGroup>
+</Project>

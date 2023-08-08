@@ -4,7 +4,6 @@
         <Reference Include="$(GlobalDeps)/Microsoft.Interop.LibraryImportGenerator.dll" />
         <Reference Include="$(GlobalDeps)/Microsoft.Windows.SDK.Win32Docs.dll" />
         <Reference Include="$(GlobalDeps)/NtApiDotNet.dll"/>
-        <Reference Include="$(GlobalDeps)/TerraFX.Interop.Windows.dll"/>
     </ItemGroup>
 
     <Target Name="InteropLibs">
@@ -13,7 +12,6 @@
         <BuildOutputInPackage Include="$(GlobalDeps)/Microsoft.Interop.LibraryImportGenerator.dll" />
         <BuildOutputInPackage Include="$(GlobalDeps)/Microsoft.Windows.SDK.Win32Docs.dll" />
         <BuildOutputInPackage Include="$(GlobalDeps)/NtApiDotNet.dll"/>
-        <BuildOutputInPackage Include="$(GlobalDeps)/TerraFX.Interop.Windows.dll"/>
       </ItemGroup>
     </Target>
 

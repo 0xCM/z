@@ -13,7 +13,6 @@ namespace Z0
         public static CmdEffectors effectors(IWfRuntime wf, Assembly[] parts)
             => new (methods(wf, parts), handlers(wf, parts));
 
-        [MethodImpl(Inline), Op]
         public static CmdUri uri(CmdKind kind, string? part, string? host, string? name)
             => new (kind, part, host, name);
 
@@ -45,7 +44,7 @@ namespace Z0
 
         static ICmdHandler handler(IWfRuntime wf, Type tHandler)
         {
-            var handler = (ICmdHandler)Activator.CreateInstance(tHandler, new object[]{});
+            var handler = (ICmdHandler)Activator.CreateInstance(tHandler, sys.empty<object>());
             handler.Initialize(wf);
             return handler;
         }
@@ -67,30 +66,49 @@ namespace Z0
             return new ApiCmdCatalog(dst);
         }
 
+        internal static IEnumerable<IApiService> services(IWfRuntime wf, Assembly[] parts)
+        {
+            var types = parts.Types().Concrete().Tagged<CmdProviderAttribute>();
+            return from t in types.Tagged<CmdProviderAttribute>().Concrete()
+                    let method = t.StaticMethods().Public().Where(m => m.Name == "create").First()
+                    select (IApiService)method.Invoke(null, new object[]{wf});
+        }
+
         internal static ApiCmdMethods methods(IWfRuntime wf, Assembly[] parts)
         {
             var types = parts.Types().Concrete().Tagged<CmdProviderAttribute>();
             var dst = dict<string,ApiCmdMethod>();
-            iter(types.Tagged<CmdProviderAttribute>().Concrete(), t => {
-                var method = t.StaticMethods().Public().Where(m => m.Name == "create").First();
-                var service = (IApiService)method.Invoke(null, new object[]{wf});
-                iter(methods(service).Defs, m => dst.TryAdd(m.Route.Format(), m));
+            var services = ApiCmd.services(wf,parts).Array();
+            
+            iter(services,service => {
+                iter(methods(service), m => dst.TryAdd(m.Route.Format(), m));
             });
-            return new ApiCmdMethods(dst);
+
+            // iter(types.Tagged<CmdProviderAttribute>().Concrete(), t => {
+            //     var method = t.StaticMethods().Public().Where(m => m.Name == "create").First();
+            //     var service = (IApiService)method.Invoke(null, new object[]{wf});
+            //     iter(methods(service).Defs, m => dst.TryAdd(m.Route.Format(), m));
+            // });
+            return new ApiCmdMethods(services,dst);
         }
 
-        static ApiCmdMethods methods(IApiService host)
+        static IEnumerable<ApiCmdMethod> methods(IApiService host)
         {
             var src = host.GetType().DeclaredInstanceMethods().Tagged<CmdOpAttribute>();
-            var dst = dict<string,ApiCmdMethod>();
-            var count = src.Length;
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var mi = ref skip(src,i);
-                var tag = mi.Tag<CmdOpAttribute>().Require();
-                dst.TryAdd(tag.Name, new ApiCmdMethod(tag.Name, classify(mi),  mi, host));                
-            }
-            return new ApiCmdMethods(dst);
+            return from mi in src
+                    let tag = mi.Tag<CmdOpAttribute>().Require()
+                    select new ApiCmdMethod(tag.Name, classify(mi),  mi, host);
+
+            // var dst = dict<string,ApiCmdMethod>();
+            // var count = src.Length;
+            // for(var i=0; i<count; i++)
+            // {
+            //     ref readonly var mi = ref skip(src,i);
+            //     var tag = mi.Tag<CmdOpAttribute>().Require();
+            //     dst.TryAdd(tag.Name, new ApiCmdMethod(tag.Name, classify(mi),  mi, host));                
+            // }
+            // return dst.Values;
+            //return new ApiCmdMethods(dst);
         }
 
         static ApiActorKind classify(MethodInfo src)

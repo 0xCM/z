@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public class CmdEffectors : ICmdEffectors
+    public sealed class CmdEffectors : ICmdEffectors
     {
         readonly ApiCmdMethods Methods;
 
@@ -20,6 +20,11 @@ namespace Z0
             Methods = methods;
             Handlers = handlers;
             Catalog = ApiCmd.catalog(methods);
+        }
+
+        public void Dispose()
+        {
+            Methods.Dispose();
         }
 
         public bool Handler(ApiCmdRoute route, out ICmdHandler dst)

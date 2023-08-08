@@ -112,10 +112,10 @@ namespace Z0.Asm
                             if(functions.Length != 0)
                             {
                                 var hex = dst.SaveHexImm(gid, functions, Append, true);
-                                Wf.Raise(E.refined(Host, uri, generic, rft, hex.Location));
+                                Channel.Raise(E.refined(Host, uri, generic, rft, hex.Location));
 
                                 dst.SaveAsmImm(gid, functions, Append, true)
-                                    .OnSome(path => Wf.Raise(E.refined(Host, uri, generic, rft, path)));
+                                    .OnSome(path => Channel.Raise(E.refined(Host, uri, generic, rft, path)));
 
                                 routines.AddRange(functions);
                             }
@@ -131,10 +131,10 @@ namespace Z0.Asm
                             if(functions.Length != 0)
                             {
                                 var hex = dst.SaveHexImm(gid, functions, Append, true);
-                                Wf.Raise(E.refined(Host, uri, generic, rft, hex.Location));
+                                Channel.Raise(E.refined(Host, uri, generic, rft, hex.Location));
 
                                 dst.SaveAsmImm(gid, functions, Append, true)
-                                    .OnSome(path => Wf.Raise(E.refined(Host, uri, generic, rft, path)));
+                                    .OnSome(path => Channel.Raise(E.refined(Host, uri, generic, rft, path)));
 
                                 routines.AddRange(functions);
                             }
@@ -248,9 +248,9 @@ namespace Z0.Asm
                 if(functions.Length != 0)
                 {
                     var hex = dst.SaveHexImm(gid, functions, Append, false);
-                    Wf.Raise(E.literal(Host, uri, generic, hex.Location));
+                    Channel.Raise(E.literal(Host, uri, generic, hex.Location));
 
-                    dst.SaveAsmImm(gid, functions, Append, false).OnSome(path => Wf.Raise(E.literal(Host, uri, generic, path)));
+                    dst.SaveAsmImm(gid, functions, Append, false).OnSome(path => Channel.Raise(E.literal(Host, uri, generic, path)));
                     routines.AddRange(functions);
                 }
             }
@@ -269,9 +269,9 @@ namespace Z0.Asm
                 if(functions.Length != 0)
                 {
                     var hex = dst.SaveHexImm(gid, functions, Append, false);
-                    Wf.Raise(E.literal(Host, uri, generic, hex.Location));
+                    Channel.Raise(E.literal(Host, uri, generic, hex.Location));
 
-                    dst.SaveAsmImm(gid, functions, Append, false).OnSome(path => Wf.Raise(E.literal(Host, uri, generic, path)));
+                    dst.SaveAsmImm(gid, functions, Append, false).OnSome(path => Channel.Raise(E.literal(Host, uri, generic, path)));
                     routines.AddRange(functions);
                 }
             }
@@ -292,9 +292,9 @@ namespace Z0.Asm
                 if(functions.Length != 0)
                 {
                     var hex = dst.SaveHexImm(gid, functions, Append, refinement != null);
-                    Wf.Raise(E.literal(Host, uri, generic, hex.Location));
+                    Channel.Raise(E.literal(Host, uri, generic, hex.Location));
 
-                    dst.SaveAsmImm(gid, functions, Append, refinement != null).OnSome(path => Wf.Raise(E.define(Host, uri, generic, path, refinement)));
+                    dst.SaveAsmImm(gid, functions, Append, refinement != null).OnSome(path => Channel.Raise(E.define(Host, uri, generic, path, refinement)));
                     routines.AddRange(functions);
                 }
             }
@@ -316,9 +316,9 @@ namespace Z0.Asm
                 if(functions.Length != 0)
                 {
                     var hex = dst.SaveHexImm(gid, functions, Append, refinement != null);
-                    Wf.Raise(E.define(Host, host, generic, hex.Location, refinement));
+                    Channel.Raise(E.define(Host, host, generic, hex.Location, refinement));
 
-                    dst.SaveAsmImm(gid, functions, Append, refinement != null).OnSome(path => Wf.Raise(E.define(Host, host, generic, path, refinement)));
+                    dst.SaveAsmImm(gid, functions, Append, refinement != null).OnSome(path => Channel.Raise(E.define(Host, host, generic, path, refinement)));
                     routines.AddRange(functions);
                 }
             }

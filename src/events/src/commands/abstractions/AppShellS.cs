@@ -20,10 +20,16 @@ namespace Z0
             Channel.Status("Application Exit", FlairKind.Ran);
         }
 
-        protected sealed override void Disposing()
+        protected AppShell()
+        {
+            Disposing += HandleDispose;
+        }
+
+        void HandleDispose()
         {
             OnExit();
             AppGlobals.Dispose(Channel);            
+
         }
 
         protected abstract void Run();

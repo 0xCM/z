@@ -60,8 +60,8 @@ namespace Z0.Asm
             }
             catch(Exception e)
             {
-                Error("Capture service failure");
-                Error(e);
+                Channel.Error("Capture service failure");
+                Channel.Error(e);
                 return Option.none<ApiCaptureBlock>();
             }
         }

@@ -8,11 +8,11 @@ namespace Z0
     public abstract class AppServices<T>
         where T : AppServices<T>, new()
     {
-        public static T Instance = new();
+        public static readonly T Instance = new();
 
-        static ConcurrentDictionary<string,object> Lookup = new();
+        static readonly ConcurrentDictionary<string,object> Lookup = new();
 
-        static object ServiceLock = new();
+        static readonly object ServiceLock = new();
 
         protected static string svcid(Type host)
             => host.DisplayName();

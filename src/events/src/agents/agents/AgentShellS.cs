@@ -4,17 +4,35 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using System.Linq;
+    
     [Free]
     public abstract class AgentShell<S> : ApiShell<S>
         where S : AgentShell<S>, new()
     {
-        ReadOnlySeq<IAgent> Agents;
-        
+        IAgent[] Agents;
+
+        protected virtual async Task Start()
+        {
+            await sys.start(() => sys.piter(Agents.AsParallel(), agent => agent.Start().Wait()));
+        }
+
+        protected virtual async Task Stop()
+        {
+            await sys.start(() => sys.piter(Agents.AsParallel(), agent => agent.Stop().Wait()));
+        }
+
+        async Task RunAsync()
+        {
+            await Start();
+            await ApiCmdLoop.start(Channel, CmdRunner);
+            await Stop();
+        }
+
         protected override void Run()
         {
             Agents = CreateAgents(Wf).Array();
-            sys.iter(Agents, agent => agent.Start());
-            ApiCmdLoop.start(Channel, CmdRunner).Wait();
+            RunAsync().Wait();
         }
 
         protected abstract IEnumerable<IAgent> CreateAgents(IWfRuntime wf);
@@ -27,6 +45,8 @@ namespace Z0
             try
             {
                 app.Run();
+
+
             }
             catch(Exception e)
             {

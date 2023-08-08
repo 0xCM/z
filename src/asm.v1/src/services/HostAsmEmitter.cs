@@ -14,10 +14,10 @@ namespace Z0.Asm
 
         public AsmHostRoutines EmitHostRoutines(ApiHostUri host, ReadOnlySpan<MemberCodeBlock> src, FilePath dst)
         {
-            var flow = Running(Msg.EmittingHostRoutines.Format(host));
+            var flow = Channel.Running(Msg.EmittingHostRoutines.Format(host));
             var decoded = Decoder.Decode(host, src);
             var emitted = Emit(host, decoded.Storage, dst);
-            Ran(flow, Msg.EmittedHostRoutines.Format(emitted, host, dst.ToUri()));
+            Channel.Ran(flow, Msg.EmittedHostRoutines.Format(emitted, host, dst.ToUri()));
             return decoded;
         }
 
@@ -45,7 +45,7 @@ namespace Z0.Asm
             root.Delete();
 
             var count = src.Length;
-            var flow = Running(string.Format("Emitting statements for {0} host block sets", count));
+            var flow = Channel.Running(string.Format("Emitting statements for {0} host block sets", count));
             var records = list<HostAsmRecord>();
             var buffer = list<HostAsmRecord>();
             var counter = 0u;
@@ -65,20 +65,20 @@ namespace Z0.Asm
                 records.AddRange(buffer);
             }
 
-            Ran(flow, string.Format("Emitted {0} total statements", counter));
+            Channel.Ran(flow, string.Format("Emitted {0} total statements", counter));
             return records.ViewDeposited();
         }
 
         public Index<HostAsmRecord> EmitHostAsm(ReadOnlySpan<AsmRoutine> src, IApiPackArchive dst)
         {
             var total = ApiInstructions.count(src);
-            var running = Running(Msg.CreatingStatements.Format(total));
+            var running = Channel.Running(Msg.CreatingStatements.Format(total));
             Index<HostAsmRecord> buffer = alloc<HostAsmRecord>(total);
             var count = src.Length;
             var offset = 0u;
             for(var i=0; i<count; i++)
                 offset += ApiInstructions.hostasm(skip(src,i), slice(buffer.Edit, offset));
-            Ran(running, Msg.CreatedStatements.Format(total));
+            Channel.Ran(running, Msg.CreatedStatements.Format(total));
             EmitHostAsm(buffer, dst.Tables().Root);
             return buffer;
         }
@@ -113,30 +113,30 @@ namespace Z0.Asm
                     tableWriter = tablePath.Writer();
                     tableWriter.WriteLine(formatter.FormatHeader());
 
-                    tableFlow = EmittingTable<HostAsmRecord>(tablePath);
+                    tableFlow = Channel.EmittingTable<HostAsmRecord>(tablePath);
                     asmPath = AsmSrcPath(host, root);
                     asmWriter = asmPath.Writer();
-                    asmFlow = EmittingFile(asmPath);
+                    asmFlow = Channel.EmittingFile(asmPath);
                 }
 
                 if(uri.Host != host)
                 {
                     tableWriter.Dispose();
-                    EmittedTable<HostAsmRecord>(tableFlow, counter);
+                    Channel.EmittedTable<HostAsmRecord>(tableFlow, counter);
 
                     asmWriter.Dispose();
-                    EmittedFile(asmFlow, counter);
+                    Channel.EmittedFile(asmFlow, counter);
 
                     host = statement.OpUri.Host;
                     tablePath = FilePath.Empty;
 
                     tableWriter = tablePath.Writer();
                     tableWriter.WriteLine(formatter.FormatHeader());
-                    tableFlow = EmittingTable<HostAsmRecord>(tablePath);
+                    tableFlow = Channel.EmittingTable<HostAsmRecord>(tablePath);
 
                     asmPath =  FilePath.Empty;
                     asmWriter = asmPath.Writer();
-                    asmFlow = EmittingFile(asmPath);
+                    asmFlow = Channel.EmittingFile(asmPath);
 
                     counter = 0;
                 }
@@ -151,16 +151,16 @@ namespace Z0.Asm
             }
 
             tableWriter.Dispose();
-            EmittedTable(tableFlow, counter);
+            Channel.EmittedTable(tableFlow, counter);
 
             asmWriter.Dispose();
-            EmittedFile(asmFlow, counter);
+            Channel.EmittedFile(asmFlow, counter);
         }
 
         void EmitHostAsmDoc(ApiHostUri host, ReadOnlySpan<HostAsmRecord> src)
         {
             var dst = FilePath.Empty;
-            var flow = EmittingFile(dst);
+            var flow = Channel.EmittingFile(dst);
             var count = src.Length;
             using var asmwriter = dst.Writer();
 
@@ -173,14 +173,14 @@ namespace Z0.Asm
                 asmwriter.WriteLine(statement.Format());
             }
 
-            EmittedFile(flow, count);
+            Channel.EmittedFile(flow, count);
         }
 
         void EmitHostAsmRecords(ApiHostUri host, ReadOnlySpan<HostAsmRecord> src)
         {
             var dst = FilePath.Empty;
-            var flow = EmittingTable<HostAsmRecord>(dst);
-            EmittedTable(flow, CsvTables.emit(src, HostAsmRecord.RenderWidths, dst));
+            var flow = Channel.EmittingTable<HostAsmRecord>(dst);
+            Channel.EmittedTable(flow, CsvTables.emit(src, HostAsmRecord.RenderWidths, dst));
         }
 
         AsmInstructionBlock Decode(in ApiCodeBlock src)
@@ -190,7 +190,7 @@ namespace Z0.Asm
                 return decoded;
             else
             {
-                Wf.Error(outcome.Message);
+                Channel.Error(outcome.Message);
                 return AsmInstructionBlock.Empty;
             }
         }

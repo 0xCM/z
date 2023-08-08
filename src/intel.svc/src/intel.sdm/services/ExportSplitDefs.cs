@@ -94,13 +94,13 @@ namespace Z0.Asm
 
         void Emit(in LineRange src, FilePath dst)
         {
-            var emitting = Wf.EmittingFile(dst);
+            var emitting = Channel.EmittingFile(dst);
             using var writer = dst.Writer(TextEncodingKind.Unicode);
             var data = src.View;
             var count = data.Length;
             for(var i=0; i<count; i++)
                 writer.WriteLine(skip(data,i));
-            Wf.EmittedFile(emitting, count);
+            Channel.EmittedFile(emitting, count);
         }
     }
 }

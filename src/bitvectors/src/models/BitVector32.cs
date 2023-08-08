@@ -89,6 +89,15 @@ namespace Z0
             get => (MaxValue & Data) == MaxValue;
         }
 
+        /// <summary>
+        /// Computes the vector's population count
+        /// </summary>
+        public byte PopCount
+        {
+            [MethodImpl(Inline)]
+            get => (byte)BitVectors.pop(this);
+        }
+
         public Hash32 Hash
         {
             [MethodImpl(Inline)]

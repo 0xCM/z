@@ -44,7 +44,7 @@ namespace Z0
                     }
                     else
                     {
-                        Wf.Warn($"The content {line} could not be parsed");
+                        Channel.Warn($"The content {line} could not be parsed");
                     }
                 }
             }
@@ -56,7 +56,7 @@ namespace Z0
 
         public Index<MsilRow> LoadMetadata(FilePath src)
         {
-            var flow = Wf.Running(src.ToUri());
+            var flow = Channel.Running(src.ToUri());
             var dst = Lists.list<MsilRow>();
             using var reader = src.Utf8Reader();
             var fields = reader.ReadLine().SplitClean(Chars.Pipe);
@@ -88,7 +88,7 @@ namespace Z0
                 return;
 
             var builder = text.build();
-            var flow = Wf.EmittingFile(dst);
+            var flow = Channel.EmittingFile(dst);
             using var writer = dst.Writer();
             for(var i=0; i<count; i++)
             {
@@ -113,7 +113,7 @@ namespace Z0
             var builder = text.build();
             if(count != 0)
             {
-                var flow = Wf.EmittingFile(path);
+                var flow = Channel.EmittingFile(path);
                 var view = src.View;
                 using var dst = path.Writer();
                 for(var i=0u; i<count; i++)
@@ -166,7 +166,7 @@ namespace Z0
             if(count != 0)
             {
                 ref var target = ref first(buffer);
-                var flow = Wf.EmittingTable<MsilCapture>(dst);
+                var flow = Channel.EmittingTable<MsilCapture>(dst);
                 var view = src.View;
                 var formatter = CsvTables.formatter<MsilCapture>();
                 using var writer = dst.Writer();

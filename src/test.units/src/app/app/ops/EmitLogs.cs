@@ -22,7 +22,7 @@ namespace Z0
             {
                 var timing = results.Sum(x => x.Duration.TimeSpan.TotalSeconds);
                 var dst = CaseLogSummary();
-                Wf.Status($"Emitting case log to {dst.ToUri()} with execution time of {timing} seconds");
+                Wf.Channel.Status($"Emitting case log to {dst.ToUri()} with execution time of {timing} seconds");
                 EmitTestCaseLog(dst, results);
             }
         }

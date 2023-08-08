@@ -79,19 +79,19 @@ namespace Z0
          [Op]
         public NasmListing ReadListing(FilePath src)
         {
-            var flow = Wf.Running(ReadingNasmListing.Format(src));
+            var flow = Channel.Running(ReadingNasmListing.Format(src));
             var dst = list<NasmListLine>();
             using var reader = src.Utf8Reader();
             var i = 1u;
             while(!reader.EndOfStream)
                 dst.Add(new NasmListLine(new TextLine(i++, reader.ReadLine())));
             var lines = dst.ToArray();
-            Wf.Ran(flow, ReadNasmListing.Format(lines.Length, src));
+            Channel.Ran(flow, ReadNasmListing.Format(lines.Length, src));
             return new NasmListing(src, lines);
         }
         public uint ParseListing(NasmListing src, Span<NasmListEntry> dst)
         {
-            var flow = Wf.Running(ParsingNasmListEntries.Format(src.LineCount));
+            var flow = Channel.Running(ParsingNasmListEntries.Format(src.LineCount));
             var j = 0u;
             var lines = src.Lines.View;
             var count = lines.Length;
@@ -102,10 +102,10 @@ namespace Z0
                 if(outcome)
                     seek(dst, j++) = entry;
                 else
-                    Wf.Warn(outcome.Message);
+                    Channel.Warn(outcome.Message);
             }
 
-            Wf.Ran(flow, ParsedNasmListEntries.Format(j));
+            Channel.Ran(flow, ParsedNasmListEntries.Format(j));
             return j;
         }
  
@@ -180,11 +180,11 @@ namespace Z0
         {
             if(!path.Exists)
             {
-                Wf.Error(FS.Msg.DoesNotExist.Format(path));
+                Channel.Error(FS.Msg.DoesNotExist.Format(path));
                 return Index<NasmCodeBlock>.Empty;
             }
 
-            var flow = Wf.Running(string.Format("Listing blocks from {0}", path.ToUri()));
+            var flow = Channel.Running(string.Format("Listing blocks from {0}", path.ToUri()));
             var listing = ReadListing(path);
             var buffer = alloc<NasmListEntry>(listing.LineCount);
             var count = ParseListing(listing, buffer);
@@ -216,7 +216,7 @@ namespace Z0
             if(collector.IsNonEmpty)
                 blocks.Add(collector);
             var results = blocks.Map(x => x.ToBlock());
-            Wf.Ran(flow, string.Format("Constructed {0} blocks from {1}", results.Length, path.ToUri()));
+            Channel.Ran(flow, string.Format("Constructed {0} blocks from {1}", results.Length, path.ToUri()));
             return results;
         }
 

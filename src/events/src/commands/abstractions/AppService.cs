@@ -30,6 +30,7 @@ namespace Z0
             OnInit();
             Initialized();
             Channel.Created(flow);
+            Disposing += () => {};
         }
 
         Files _Files;
@@ -47,16 +48,18 @@ namespace Z0
 
         protected virtual void OnInit()
         {
-
+            
         }
 
         protected virtual void Initialized() { }
 
-        protected virtual void Disposing() { }
+        protected event Action Disposing;
+        //protected virtual void Disposing() { }
+
 
         public void Dispose()
         {
-            Disposing();
+            Disposing.Invoke();
             Wf.Disposed();
         }
 

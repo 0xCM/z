@@ -170,10 +170,6 @@ namespace Z0
         ref readonly Index<InstPattern> Patterns
             => ref XedRuntime.Views.Patterns;
 
-        [CmdOp("project/xed/etl")]
-        void XedCollect()
-            => XedRuntime.Disasm.Collect(ProjectContext());
-
         [CmdOp("xed/start")]
         void StartRuntime()
         {

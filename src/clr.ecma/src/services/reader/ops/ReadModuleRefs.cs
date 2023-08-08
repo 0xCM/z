@@ -7,7 +7,6 @@ namespace Z0
 {
     using static sys;
 
-
     partial class EcmaReader
     {
         [Op]

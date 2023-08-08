@@ -16,4 +16,10 @@ namespace Z0
         /// </summary>
         Task Stop();
     }
+
+    public interface IAgent<A> : IAgent
+        where A : IAgent<A>, new()
+    {
+        static abstract A create(IWfRuntime wf);
+    }
 }

@@ -26,12 +26,13 @@ namespace Z0
             BufferSize = bufferSize;
         }
 
+        IWfChannel Channel => Wf.Channel;
 
         uint PointCount<T>()
             => size<T>()/BufferSize;
 
-        ApiMemberEvaluator Evaluator(BufferTokens buffers)
-            => new ApiMemberEvaluator(buffers);
+        static ApiMemberEvaluator Evaluator(BufferTokens buffers)
+            => new (buffers);
 
         Pair<string> Labels => ("method", "asm");
 
@@ -45,7 +46,7 @@ namespace Z0
 
         void error(Exception e)
         {
-            Wf.Error(e);
+            Wf.Channel.Error(e);
         }
 
         UnaryEvaluations<T> eval<T>(BufferTokens buffers, in MemberCodeBlock code, UnaryOperatorClass<T> k)
@@ -66,7 +67,7 @@ namespace Z0
             return ApiEvaluate.compute(context, error);
         }
 
-        ApiMemberEvaluator Evaluator<E,T>(BufferTokens buffers, IOperationClass<E,T> k)
+        static ApiMemberEvaluator Evaluator<E,T>(BufferTokens buffers, IOperationClass<E,T> k)
             where T : unmanaged
             where E : unmanaged, Enum
                 => Evaluator(buffers);
@@ -232,7 +233,7 @@ namespace Z0
             }
             catch(Exception e)
             {
-                Wf.Error(e);
+                Channel.Error(e);
             }
         }
 
@@ -284,7 +285,7 @@ namespace Z0
             }
             catch(Exception e)
             {
-                Wf.Error(e);
+                Channel.Error(e);
             }
         }
 
@@ -296,7 +297,7 @@ namespace Z0
         /// <param name="index">The index of the target buffer</param>
         /// <param name="src">The executable source that conforms to a fixed binary operator</param>
         /// <typeparam name="F">The operand type</typeparam>
-        BinaryOp<F> LoadFixedinaryOp<F>(BufferTokens buffers, BufferSeqId index, MemberCodeBlock src)
+        static BinaryOp<F> LoadFixedinaryOp<F>(BufferTokens buffers, BufferSeqId index, MemberCodeBlock src)
             where F : unmanaged, IDataCell
                 => buffers[index].EmitBinaryCellOp<F>(src.Encoded);
 
@@ -309,11 +310,11 @@ namespace Z0
         /// <param name="x">The first operand</param>
         /// <param name="y">The second operand</param>
         /// <typeparam name="F">The operand type</typeparam>
-        F ExecBinaryOp<F>(BufferTokens buffers, BufferSeqId index, MemberCodeBlock src, F x, F y)
+        static F ExecBinaryOp<F>(BufferTokens buffers, BufferSeqId index, MemberCodeBlock src, F x, F y)
             where F : unmanaged, IDataCell
                 => LoadFixedinaryOp<F>(buffers, index, src)(x,y);
 
-        void Analyze(in Pairs<byte> src, in Triples<byte> dst, in MemberCodeBlock api)
+        static void Analyze(in Pairs<byte> src, in Triples<byte> dst, in MemberCodeBlock api)
         {
             for(var i=0; i< 10; i++)
             {
@@ -324,7 +325,7 @@ namespace Z0
             }
         }
 
-        bit Dispatch(BufferTokens buffers, in Pairs<byte> src, in MemberCodeBlock api)
+        static bit Dispatch(BufferTokens buffers, in Pairs<byte> src, in MemberCodeBlock api)
         {
 
             var dst = Evaluator(buffers).Eval(api, K.binary(), src);
@@ -332,7 +333,7 @@ namespace Z0
             return 1;
         }
 
-        void Analyze(in Pairs<Cell8> src, in Triples<Cell8> dst, in MemberCodeBlock api)
+        static void Analyze(in Pairs<Cell8> src, in Triples<Cell8> dst, in MemberCodeBlock api)
         {
             for(var i=0; i< 10; i++)
             {
@@ -343,7 +344,7 @@ namespace Z0
             }
         }
 
-        Bit32 Dispatch(BufferTokens buffers, in Pairs<Cell8> src, in MemberCodeBlock api)
+        static Bit32 Dispatch(BufferTokens buffers, in Pairs<Cell8> src, in MemberCodeBlock api)
         {
 
             var dst = Evaluator(buffers).EvalCellular(api, K.binary(), src);
@@ -359,13 +360,13 @@ namespace Z0
             return 1;
         }
 
-        void Analyze<T>(in Pairs<T> src, in Triples<T> dst, in MemberCodeBlock api)
+        static void Analyze<T>(in Pairs<T> src, in Triples<T> dst, in MemberCodeBlock api)
             where T : unmanaged
         {
 
         }
 
-        Triples<T> Dispatch<E,T>(BufferTokens buffers, in MemberCodeBlock api, IOperationClass<E,T> k, in Pairs<T> src)
+        static Triples<T> Dispatch<E,T>(BufferTokens buffers, in MemberCodeBlock api, IOperationClass<E,T> k, in Pairs<T> src)
             where E : unmanaged, Enum
             where T : unmanaged
         {

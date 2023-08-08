@@ -159,7 +159,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         void StatusWriter(object message)
-            => Xed.Wf.Row(message,FlairKind.StatusData);
+            => Xed.Wf.Channel.Row(message,FlairKind.StatusData);
 
         public void Reset()
         {

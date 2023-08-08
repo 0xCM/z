@@ -71,6 +71,15 @@ namespace Z0
         }
 
         /// <summary>
+        /// Computes the vector's population count
+        /// </summary>
+        public byte PopCount
+        {
+            [MethodImpl(Inline)]
+            get => (byte)BitVectors.pop(this);
+        }
+
+        /// <summary>
         /// The vector's 4 most significant bits
         /// </summary>
         public readonly BitVector4 Hi

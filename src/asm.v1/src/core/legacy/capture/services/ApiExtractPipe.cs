@@ -43,7 +43,7 @@ namespace Z0
         {
             var lines = src.ReadLines().View;
             var count = lines.Length;
-            var flow = Running(string.Format("Reading extracts from {0}", src.ToUri()));
+            var flow = Channel.Running(string.Format("Reading extracts from {0}", src.ToUri()));
             var counter = 0u;
             var result = Outcome.Success;
             for(var i=1u; i<count; i++)
@@ -56,10 +56,10 @@ namespace Z0
                     counter++;
                 }
                 else
-                    Warn(result.Message);
+                    Channel.Warn(result.Message);
 
             }
-            Ran(flow, string.Format("Read {0} extract blocks from {1}", counter, src.ToUri()));
+            Channel.Ran(flow, string.Format("Read {0} extract blocks from {1}", counter, src.ToUri()));
             return counter;
         }
 

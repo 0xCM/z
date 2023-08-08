@@ -40,7 +40,7 @@ namespace Z0
             }
 
             dst.Sort();
-            iter(dst.ViewDeposited(), x => Wf.Data(x));
+            iter(dst.ViewDeposited(), x => Channel.Row(x));
 
             return true;
         }

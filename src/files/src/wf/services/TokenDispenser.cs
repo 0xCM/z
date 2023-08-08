@@ -47,7 +47,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public ExecToken Open()
-            => new ExecToken((ulong)inc(ref StartToken));
+            => new ((ulong)inc(ref StartToken));
 
         [MethodImpl(Inline), Op]
         public ExecToken Close(ExecToken src, bool success = true)

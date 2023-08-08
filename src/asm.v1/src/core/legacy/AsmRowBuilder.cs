@@ -54,7 +54,7 @@ namespace Z0.Asm
             var dst = list<AsmDetailRow>();
             for(var i=0u; i<count; i++)
                 dst.AddRange(BuildRows(skip(src,i)));
-            Wf.Ran(flow,Msg.CreatedAsmRowsFromBlocks.Format(dst.Count));
+            Channel.Ran(flow,Msg.CreatedAsmRowsFromBlocks.Format(dst.Count));
             return dst.ToArray();
         }
 
@@ -91,7 +91,7 @@ namespace Z0.Asm
                 return BuildRows(src.Code, block);
             else
             {
-                Wf.Error(outcome.Message);
+                Channel.Error(outcome.Message);
                 return array<AsmDetailRow>();
             }
         }

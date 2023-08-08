@@ -10,6 +10,10 @@ namespace Z0
     {
         Machines M;
 
+        public MachineHost()
+        {
+            Disposing += HandleDispose;
+        }
         public void Run(string[] args)
         {
             var count = args.Length;
@@ -17,7 +21,7 @@ namespace Z0
                 Run(skip(args,i));
         }
 
-        protected override void Disposing()
+        void HandleDispose()
         {
             M.Dispose();
         }

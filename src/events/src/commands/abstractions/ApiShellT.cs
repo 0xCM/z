@@ -15,9 +15,19 @@ namespace Z0
             CmdRunner = runner;
         }
 
+        protected ApiShell()
+        {
+            Disposing += HandleDispose;
+        }
+
+        void HandleDispose()
+        {
+            CmdRunner?.Dispose();
+        }
+
         IApiCmdRunner IApiShell.Runner
             => CmdRunner;
-            
+                        
         protected override void Run()
             => ApiCmdLoop.start(Channel, CmdRunner).Wait();
     }

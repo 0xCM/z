@@ -280,10 +280,10 @@ namespace Z0.Asm
             var src = FS.dir(@"C:\Dev\z0");
             var dst = AppDb.Logs().Path("create-sln", FileKind.Cmd);
             var projects = src.Files(FS.CsProj, true);
-            var flow = Wf.EmittingFile(dst);
+            var flow = Channel.EmittingFile(dst);
             using var writer = dst.Writer();
             iter(projects,project => writer.WriteLine(string.Format(Pattern, project.Format(PathSeparator.BS))));
-            Wf.EmittedFile(flow,projects.Length);
+            Channel.EmittedFile(flow,projects.Length);
         }
 
         void CheckFlags()
@@ -294,7 +294,7 @@ namespace Z0.Asm
             var details = summary.LiteralDetails;
 
             if(count == 0)
-                Wf.Error("No flags");
+                Channel.Error("No flags");
 
             for(var i=0; i<count; i++)
             {
@@ -307,7 +307,7 @@ namespace Z0.Asm
 
         public void RunPipes()
         {
-            using var flow = Wf.Running(nameof(RunPipes));
+            using var flow = Channel.Running(nameof(RunPipes));
             // var data = Wf.Polysource.Span<ushort>(2400);
 
             // var input = Pipes.pipe<ushort>();
@@ -349,7 +349,7 @@ namespace Z0.Asm
                 if(result)
                 {
                     var location = address - (uint)delta;
-                    Wf.Status($"Jmp RAX found at {location.Format()}");
+                    Channel.Status($"Jmp RAX found at {location.Format()}");
                     break;
                 }
                 address++;

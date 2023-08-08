@@ -31,11 +31,6 @@ namespace Z0
 
         public static W W => default;
 
-        // [MethodImpl(Inline)]
-        // public static V FromEnum<T>(T src)
-        //     where T : unmanaged, Enum
-        //         => Enums.scalar<T,uint>(src);
-
         internal D Data;
 
         /// <summary>

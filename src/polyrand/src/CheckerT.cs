@@ -30,6 +30,7 @@ namespace Z0
             MethodLookup = methods;
             CheckSpecs = MethodLookup.Keys.ToArray();
             Queue = EventQueue.allocate(GetType(), EventRaised);
+            Disposing += HandleDispose;            
         }
 
         FileName FileName(string suffix, FileKind kind)
@@ -55,7 +56,7 @@ namespace Z0
 
         }
 
-        protected override sealed void Disposing()
+        void HandleDispose()
         {
             Queue.Dispose();
         }

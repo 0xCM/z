@@ -38,9 +38,9 @@ namespace Z0
         {
             var count = src.Length;
             var blocks = src.Map(x => x.Block);
-            var flow = Wf.EmittingTable<ApiExtractRow>(dst);
+            var flow = Channel.EmittingTable<ApiExtractRow>(dst);
             var emitted = Emit(blocks, dst);
-            Wf.EmittedTable(flow, count);
+            Channel.EmittedTable(flow, count);
             return emitted;
         }
 
@@ -80,33 +80,33 @@ namespace Z0
         {
             try
             {
-                var flow = Wf.Running(string.Format("Attempting to match <{0}> routine addresses", extracted.Length));
+                var flow = Channel.Running(string.Format("Attempting to match <{0}> routine addresses", extracted.Length));
                 var a = extracted.Select(x => x.BaseAddress).ToHashSet();
                 if(a.Count != extracted.Length)
                 {
-                    Wf.Error($"count(Extracted) = {extracted.Length} != {a.Count} = count(set(Extracted))");
+                    Channel.Error($"count(Extracted) = {extracted.Length} != {a.Count} = count(set(Extracted))");
                     return;
                 }
 
                 var b = decoded.Select(f => f.BaseAddress).ToHashSet();
                 if(b.Count != decoded.Length)
                 {
-                    Wf.Error($"count(Decoded) = {decoded.Length} != {b.Count} = count(set(Decoded))");
+                    Channel.Error($"count(Decoded) = {decoded.Length} != {b.Count} = count(set(Decoded))");
                     return;
                 }
 
                 b.IntersectWith(a);
                 if(b.Count != decoded.Length)
                 {
-                    Wf.Error($"count(Decoded) = {decoded.Length} != {b.Count} = count(intersect(Decoded,Extracted))");
+                    Channel.Error($"count(Decoded) = {decoded.Length} != {b.Count} = count(intersect(Decoded,Extracted))");
                     return;
                 }
 
-                Wf.Ran(flow, string.Format("Matched <{0}> routine addresses", extracted.Length));
+                Channel.Ran(flow, string.Format("Matched <{0}> routine addresses", extracted.Length));
             }
             catch(Exception e)
             {
-                Wf.Error(e);
+                Channel.Error(e);
             }
         }
     }

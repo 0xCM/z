@@ -10,15 +10,13 @@ namespace Z0
         public static int Main(params string[] args)
         {
             var result = 0;
-            var runtime = ApiServers.runtime();
-            var spec = ApiCmd.spec(args);
-            using var shell = ApiServers.shell(runtime, args);
+            using var shell = ApiServers.shell(ApiServers.runtime(), args);
             try
             {
                 if(args.Length == 0)
                     shell.Run();
                 else
-                    shell.Runner.RunCommand(spec);
+                    shell.Runner.RunCommand(ApiCmd.spec(args));
             }
             catch(Exception e)
             {

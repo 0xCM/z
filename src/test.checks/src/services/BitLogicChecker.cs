@@ -56,7 +56,7 @@ namespace Z0
             var f = K.and();
             var name = ApiClasses.format(f);
             var msg = string.Format("Validating {0} over {1} samples", name, SampleCount);
-            var running = Wf.Running(msg);
+            var running = Wf.Channel.Running(msg);
             var success = 0u;
             for(var i=0; i<SampleCount; i++)
             {
@@ -72,7 +72,7 @@ namespace Z0
                 success += (uint)Check128x64i(x, y, f);
             }
 
-            Wf.Ran(running, string.Format("{0} validation steps succeeded", success));
+            Channel.Ran(running, string.Format("{0} validation steps succeeded", success));
         }
 
         [Op]

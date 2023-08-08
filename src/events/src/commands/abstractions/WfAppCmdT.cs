@@ -25,14 +25,12 @@ namespace Z0
         {
         }
 
-
         [CmdOp(CCN.db)]
         protected void SetDbContext(CmdArgs args)
         {
             const string Name = CCN.db;
             if(args.Count != 0)
                 ContextValue(Name, args.First);
-            Channel.Write($"{Name}={ContextValue(Name)}");
         }
 
         [CmdOp(CCN.fs)]
@@ -41,7 +39,6 @@ namespace Z0
             const string Name = CCN.fs;
             if(args.Count != 0)
                 ContextValue(Name, args.First);
-            Channel.Write($"{Name}={ContextValue(Name)}");
         }
 
         [CmdOp(CCN.sln)]
@@ -50,7 +47,6 @@ namespace Z0
             const string Name = CCN.sln;
             if(args.Count != 0)
                 ContextValue(Name, args.First);
-            Channel.Write($"{Name}={ContextValue(Name)}");
         }
 
         public virtual void Loop()

@@ -16,7 +16,7 @@ namespace Z0
     {
         bool Started = false;
 
-        object StartLocker = new();
+        readonly object StartLocker = new();
 
         public ref readonly CompositeBuffers Alloc => ref _Alloc;
 
@@ -34,13 +34,14 @@ namespace Z0
 
         public XedFlows XedImport => Wf.XedFlows();
 
-        CompositeBuffers _Alloc;
+        readonly CompositeBuffers _Alloc;
 
         public XedTables Views => Channel.XedViews();
 
         public XedRuntime()
         {
-            _Alloc = Z0.CompositeBuffers.create();
+            _Alloc = CompositeBuffers.create();
+            Disposing += HandleDispose;
         }
 
         // void CalcCpuIdImports()
@@ -154,7 +155,7 @@ namespace Z0
             get => Started;
         }
 
-        protected override void Disposing()
+        void HandleDispose()
         {
             _Alloc?.Dispose();
         }

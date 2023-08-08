@@ -4,12 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface ICmdEffectors : IDisposable
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
+    public class AgentAttribute : Attribute
     {
-        bool Handler(ApiCmdRoute route, out ICmdHandler dst);
 
-        bool Method(ApiCmdRoute route, out ApiCmdMethod dst);
-
-        ApiCmdCatalog Catalog {get;}
     }
 }

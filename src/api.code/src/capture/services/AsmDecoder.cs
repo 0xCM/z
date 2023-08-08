@@ -69,7 +69,7 @@ namespace Z0.Asm
             var stats = ApiDecoderStats.init();
             var partCount = src.Length;
             var parts = src;
-            var flow = Wf.Running(Msg.DecodingParts.Format(partCount));
+            var flow = Channel.Running(Msg.DecodingParts.Format(partCount));
             for(var i=0; i<partCount; i++)
             {
                 hostFx.Clear();
@@ -83,7 +83,7 @@ namespace Z0.Asm
                     continue;
                 }
 
-                var decoding = Wf.Running(Msg.DecodingPartRoutines.Format(kHosts, part.Part));
+                var decoding = Channel.Running(Msg.DecodingPartRoutines.Format(kHosts, part.Part));
                 for(var j = 0; j<kHosts; j++)
                 {
                     ref readonly var host = ref skip(hostBlocks,j);
@@ -100,10 +100,10 @@ namespace Z0.Asm
 
                 seek(dst,i) = new ApiPartRoutines(part.Part, hostFx.ToArray());
 
-                Wf.Ran(decoding,  Msg.DecodedPartRoutines.Format(hostFx.Count, part.Part, stats));
+                Channel.Ran(decoding,  Msg.DecodedPartRoutines.Format(hostFx.Count, part.Part, stats));
             }
 
-            Wf.Ran(flow, Msg.DecodedMachine.Format(src.Length, parts.Length));
+            Channel.Ran(flow, Msg.DecodedMachine.Format(src.Length, parts.Length));
         }
 
         public ReadOnlySpan<ApiPartRoutines> Decode(ReadOnlySpan<ApiCodeBlock> src)
@@ -129,7 +129,7 @@ namespace Z0.Asm
         {
             try
             {
-                var flow = Wf.Running(uri);
+                var flow = Channel.Running(uri);
                 var count = src.Length;
                 var buffer = alloc<AsmMemberRoutine>(count);
                 ref var dst = ref first(buffer);
@@ -139,19 +139,19 @@ namespace Z0.Asm
                     var outcome = DecodeRoutine(code, out var decoded);
                     if(!outcome)
                     {
-                        Wf.Error($"Could not decode {code}");
+                        Channel.Error($"Could not decode {code}");
                         seek(dst,i) = AsmMemberRoutine.Empty;
                     }
                     else
                         seek(dst, i) = new AsmMemberRoutine(code.Member, decoded);
                 }
 
-                Wf.Ran(flow, Msg.DecodedHostMembers.Format(buffer.Length, uri));
+                Channel.Ran(flow, Msg.DecodedHostMembers.Format(buffer.Length, uri));
                 return buffer;
             }
             catch(Exception e)
             {
-                Wf.Error($"{uri}: {e}");
+                Channel.Error($"{uri}: {e}");
                 return sys.empty<AsmMemberRoutine>();
             }
         }

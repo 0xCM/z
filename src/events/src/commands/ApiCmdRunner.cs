@@ -166,5 +166,10 @@ namespace Z0
 
         public ExecToken RunCommand(string action)
             => RunCommand(new ApiCmdSpec(action, CmdArgs.Empty));
+        
+        public void Dispose()
+        {
+            Effectors.Dispose();
+        }
     }
 }

@@ -21,7 +21,7 @@ namespace Z0.Asm
         {
             if(src.Length != 0)
             {
-                var flow = Wf.EmittingTable<AsmJmpRow>(dst);
+                var flow = Channel.EmittingTable<AsmJmpRow>(dst);
                 var formatter = CsvTables.formatter<AsmJmpRow>(AsmJmpRow.RenderWidths);
                 using var writer = dst.Writer();
                 writer.WriteLine(formatter.FormatHeader());

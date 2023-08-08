@@ -56,7 +56,6 @@ public class ProcessTracer : IAgent
                 {
                     Channel.RowFormat("Process {0,16} image load 0x{1,8:x} {2}", data.ProcessName, data.ImageBase, data.FileName);
                 };
-                //  Subscribe to more events (process start) 
                 session.Source.Kernel.ProcessStart += delegate (ProcessTraceData data)
                 {                        
                     var e = new ProcessStartEvent(data.ProcessID, data.ParentID, data.TimeStamp, data.ProcessName, data.CommandLine);
@@ -74,8 +73,8 @@ public class ProcessTracer : IAgent
                 session.Source.Process();
             });
         }
-
     }
+
     public Task Start()
         => sys.start(StartAgent);
 

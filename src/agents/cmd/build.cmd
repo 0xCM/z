@@ -1,4 +1,4 @@
 @echo off
 call %~dp0..\config.cmd
-call %~dp0deploy.cmd
+dotnet build %~dp0..\z0.%ProjectName%.csproj -c Release
 : %ShellBuildCmd%

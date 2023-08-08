@@ -10,7 +10,7 @@ namespace Z0
         [Op]
         public static void test(IWfRuntime wf)
         {
-            var flow = wf.Running(nameof(VPipeTests));
+            var flow = wf.Channel.Running(nameof(VPipeTests));
             var w = w128;
             var blocks = Pow2.T08;
             var random = Rng.@default();
@@ -20,7 +20,7 @@ namespace Z0
             var dst = new BlockSink01(signal);
             var pipeline = Pipelines.create(w, src, mapper, dst, z8, z8);
             var processed = pipeline.Run();
-            wf.Ran(flow, string.Format("Processed {0} blocks", processed));
+            wf.Channel.Ran(flow, string.Format("Processed {0} blocks", processed));
         }
     }
 

@@ -33,7 +33,7 @@ namespace Z0
                 dst.AppendLineFormat(RenderPattern, i, j, u.TableKind, u.Consequent, u.RuleName, u.Field);
             }
 
-            FileEmit(dst.Emit(), XedPaths.RuleTargets().Path("xed.rules.fields.deps", FileKind.Csv));
+            Channel.FileEmit(dst.Emit(), XedPaths.RuleTargets().Path("xed.rules.fields.deps", FileKind.Csv));
         }
 
         void EmitRuleDeps()

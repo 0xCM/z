@@ -31,11 +31,11 @@ namespace Z0
             try
             {
                 var clock = counter(true);
-                var flow = Wf.Running(typeof(A).Name + " tests");
+                var flow = Wf.Channel.Running(typeof(A).Name + " tests");
                 RunUnits(units, false);
                 EmitLogs();
                 var runtime = clock.Stop();
-                Wf.Ran(flow, $"Test run required {runtime.TimeSpan.TotalSeconds} seconds");
+                Wf.Channel.Ran(flow, $"Test run required {runtime.TimeSpan.TotalSeconds} seconds");
             }
             catch (Exception e)
             {

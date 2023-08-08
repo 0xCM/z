@@ -22,8 +22,8 @@ namespace Z0.Asm
             var buffer = text.buffer();
             var sequence = 0u;
             var segments = new List<MemorySegment>(30000);
-            var asmFlow = EmittingFile(asmpath);
-            var hexFlow = EmittingFile(hexpath);
+            var asmFlow = Channel.EmittingFile(asmpath);
+            var hexFlow = Channel.EmittingFile(hexpath);
             using var asmwriter = asmpath.Writer();
             using var hexwriter = hexpath.Writer();
             for(var i=0; i<count; i++)
@@ -67,8 +67,8 @@ namespace Z0.Asm
                 sequence++;
             }
 
-            EmittedFile(asmFlow, sequence);
-            EmittedFile(hexFlow, sequence);
+            Channel.EmittedFile(asmFlow, sequence);
+            Channel.EmittedFile(hexFlow, sequence);
             var deposited = segments.ViewDeposited();
             EmitHexPack(deposited, dst + FS.file("respack", FS.XPack));
             EmitHexArrays(deposited, dst + FS.file("respack", FS.ext("xarray")));
@@ -77,7 +77,7 @@ namespace Z0.Asm
 
         void EmitHexPack(ReadOnlySpan<MemorySegment> src, FilePath dst)
         {
-            var flow= EmittingFile(dst);
+            var flow= Channel.EmittingFile(dst);
             var count = src.Length;
             var buffer = alloc<char>(Pow2.T16);
             using var writer = dst.Writer();
@@ -87,12 +87,12 @@ namespace Z0.Asm
                 buffer.Clear();
                 writer.WriteLine(BinaryRows.pack(seg, i, buffer));
             }
-            EmittedFile(flow, count);
+            Channel.EmittedFile(flow, count);
         }
 
         void EmitHexArrays(ReadOnlySpan<MemorySegment> src, FilePath dst)
         {
-            var flow = EmittingFile(dst);
+            var flow = Channel.EmittingFile(dst);
             var count = src.Length;
             var buffer = alloc<char>(Pow2.T16);
             using var writer = dst.Writer();
@@ -102,7 +102,7 @@ namespace Z0.Asm
                 buffer.Clear();
                 writer.WriteLine(HexGen.hexarray(seg, i, buffer));
             }
-            EmittedFile(flow, count);
+            Channel.EmittedFile(flow, count);
         }
     }
 }

@@ -21,6 +21,7 @@ namespace Z0
         public Machines()
         {
             Verbose = true;
+            Disposing += HandleDispose;
         }
 
         void EventRaised(IEvent e)
@@ -36,7 +37,7 @@ namespace Z0
             Machine = X86Machine.create(Signal);
         }
 
-        protected override void Disposing()
+        void HandleDispose()
         {
             EmptyQueue();
             Queue.Dispose();
@@ -46,7 +47,7 @@ namespace Z0
         void EmptyQueue()
         {
             while(Queue.Next(out var e))
-                Wf.Raise(e);
+                Channel.Raise(e);
         }
 
         void DumpRegs()
@@ -81,7 +82,7 @@ namespace Z0
         void Calc()
         {
             var w = w128;
-            var flow = Wf.Running(w.ToString());
+            var flow = Channel.Running(w.ToString());
             var size = RunCalc(w);
             Channel.Ran(flow, size);
         }
@@ -311,7 +312,7 @@ namespace Z0
                 ref readonly var a = ref skip(lCell,i);
                 ref readonly var b = ref skip(rCell,i);
                 ref readonly var result = ref skip(target,i);
-                Wf.Data(string.Format("{0:D6} {1}([{2}],[{3}]) = {4}", i, "or", a.V32u.FormatHex(), b.V32u.FormatHex(), result.V32u.FormatHex()));
+                Channel.Row(string.Format("{0:D6} {1}([{2}],[{3}]) = {4}", i, "or", a.V32u.FormatHex(), b.V32u.FormatHex(), result.V32u.FormatHex()));
             }
         }
 
