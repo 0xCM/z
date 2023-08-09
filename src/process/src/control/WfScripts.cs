@@ -10,8 +10,8 @@ namespace Z0
     {
         OmniScript OmniScript => Wf.OmniScript();
 
-        public void CleanOutDir(IProject project)
-            => project.Build().Clear();
+        public void CleanTargets(IProject project)
+            => project.Targets().Clear();
 
         public void BuildAsm(IProject src)
             => RunScripts(src, FileKind.Asm, src.CmdScript("build-asm"), false);

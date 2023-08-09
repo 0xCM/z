@@ -19,12 +19,6 @@ namespace Z0
         [Render(W.DocSeq)]
         public uint DocSeq;
 
-        [Render(W.OriginId)]
-        public Hex32 OriginId;
-
-        [Render(W.OriginName)]
-        public @string OriginName;
-
         [Render(W.EncodingId)]
         public EncodingId EncodingId;
 
@@ -44,13 +38,21 @@ namespace Z0
         public AsmExpr Asm;
 
         [Render(1)]
-        public _FileUri Source;
+        public FileUri Source;
 
-        public int CompareTo(XedDisasmRow src)
+        public readonly int CompareTo(XedDisasmRow src)
         {
-            var result = OriginName.CompareTo(src.OriginName);
-            if(result == 0)
+            var result = -1;
+            if(DocSeq != 0)
+            {
+                result = DocSeq.CompareTo(src.DocSeq);
+                if(result == 0)
+                    result = IP.CompareTo(src.IP);
+            }
+            else
+            {
                 result = IP.CompareTo(src.IP);
+            }
             return result;
         }
 

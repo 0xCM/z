@@ -84,11 +84,6 @@ namespace Z0
                 iter(methods(service), m => dst.TryAdd(m.Route.Format(), m));
             });
 
-            // iter(types.Tagged<CmdProviderAttribute>().Concrete(), t => {
-            //     var method = t.StaticMethods().Public().Where(m => m.Name == "create").First();
-            //     var service = (IApiService)method.Invoke(null, new object[]{wf});
-            //     iter(methods(service).Defs, m => dst.TryAdd(m.Route.Format(), m));
-            // });
             return new ApiCmdMethods(services,dst);
         }
 
@@ -98,17 +93,6 @@ namespace Z0
             return from mi in src
                     let tag = mi.Tag<CmdOpAttribute>().Require()
                     select new ApiCmdMethod(tag.Name, classify(mi),  mi, host);
-
-            // var dst = dict<string,ApiCmdMethod>();
-            // var count = src.Length;
-            // for(var i=0; i<count; i++)
-            // {
-            //     ref readonly var mi = ref skip(src,i);
-            //     var tag = mi.Tag<CmdOpAttribute>().Require();
-            //     dst.TryAdd(tag.Name, new ApiCmdMethod(tag.Name, classify(mi),  mi, host));                
-            // }
-            // return dst.Values;
-            //return new ApiCmdMethods(dst);
         }
 
         static ApiActorKind classify(MethodInfo src)
@@ -227,7 +211,7 @@ namespace Z0
         }
 
         public static ProjectContext context(IProject src)
-            => new (src, CmdFlows.flows(src));
+            => new (src);
 
         public static ApiCmdScript script(FilePath src)
         {

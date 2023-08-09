@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using System.Linq;
+
 using static sys;
 using static XedModels;
 using static XedRules;
@@ -14,52 +16,53 @@ using K = XedRules.FieldKind;
 
 public partial class XedDisasm : WfSvc<XedDisasm>
 {
-    XedRuntime XedRuntime => Wf.XedRuntime();        
-
-    XedPaths XedPaths => XedRuntime.Paths;
-
     const string disasm = "xed.disasm";
 
     static long DisasmTokens;
 
     [MethodImpl(Inline)]
     public static XedDisasmToken token()
-        => (uint)sys.inc(ref DisasmTokens);
+        => (uint)inc(ref DisasmTokens);
 
-    public void EmitBreakdowns(ProjectContext context, Index<XedDisasmDoc> docs)
-        => iter(docs, doc => EmitBreakdowns(context, doc), PllExec);
+    public void EmitBreakdowns(IProject project, ParallelQuery<XedDisasmDoc> docs)
+        => iter(docs, doc => EmitBreakdowns(project, doc), PllExec);
 
-    public void EmitBreakdowns(ProjectContext context, XedDisasmDoc doc)
+    public void EmitBreakdowns(IProject project, XedDisasmDoc doc)
     {
         exec(PllExec,
-                () => EmitDetailReport(context, doc),
-                () => EmitOpsReport(context, doc),
-                () => EmitChecksReport(context, doc),
-                () => EmitFieldReport(context, doc)
+                () => EmitDetails(project, doc),
+                () => EmitOps(project, doc),
+                () => EmitChecks(project, doc)
                 );
     }
 
-    public Index<XedDisasmDoc> CalcDocs(IDbArchive src)
-        => Data(nameof(CalcDocs), () => XedDisasm.docs(src));
-
-    public void Collect(ProjectContext context)
+    public void EmitDetails(IProject project, XedDisasmDoc doc)
     {
-        var docs = CalcDocs(context.Project.Root);
+        var target = XedPaths.DisasmDetailPath(project, doc.SourcePath);
+        var emitting = Channel.EmittingFile(target);
+        var dst = text.emitter();
+        XedDisasmRender.render(doc.DetailBlocks, dst);
+        using var emitter = target.AsciEmitter();
+        emitter.Write(dst.Emit());
+        Channel.EmittedFile(emitting, doc.DetailBlocks.Count);
+    }
+
+    public void Collect(IProject project)
+    {
+        var docs = XedDisasm.docs(project.Root);
         exec(PllExec,
-            () => EmitConsolidated(context, docs),
-            () => EmitBreakdowns(context, docs)
+            () => Consolidate(project, docs),
+            () => EmitBreakdowns(project, docs)
             );
     }
 
-    public void EmitSummaryReport(XedDisasmDoc doc, IDbArchive dst)
-        => Channel.TableEmit(doc.Summary.Rows, dst.Path(doc.SourcePath.FileName.WithoutExtension + FS.ext("xed.disasm.summary.csv")));
+    public void EmitSummaries(IProject project, XedDisasmDoc doc)
+        => Channel.TableEmit(doc.Summary.Rows, XedPaths.DisasmSummaryPath(project, doc.SourcePath));
 
-    public void EmitOpsReport(ProjectContext context, XedDisasmDoc src)
-        => EmitOpsReport(context, src.Detail);
-
-    void EmitOpsReport(ProjectContext context, XedDisasmDetail doc)
+    public void EmitOps(IProject project, XedDisasmDoc src)
     {
-        var outpath = XedPaths.DisasmOpsPath(context.Project.Name, doc.DataFile.Source);
+        var doc = src.Detail;
+        var outpath = XedPaths.DisasmOpsPath(project, doc.DataFile.Source);
         var emitting = EmittingFile(outpath);
         using var dst = outpath.AsciEmitter();
         dst.AppendLineFormat(RenderCol2, "DataSource", doc.Source.ToUri().Format());
@@ -82,22 +85,22 @@ public partial class XedDisasm : WfSvc<XedDisasm>
 
         EmittedFile(emitting,counter);
     }
+    
+    public void EmitFields(IProject project, XedDisasmDoc src)
+        => EmitFieldReport(project, src.Detail);
 
-    public void EmitFieldReport(ProjectContext context, XedDisasmDoc src)
-        => EmitFieldReport(context, src.Detail);
-
-    void EmitFieldReport(ProjectContext context, XedDisasmDetail src)
+    void EmitFieldReport(IProject project, XedDisasmDetail src)
     {
         var emitter = new FieldEmitter();
         var dst = text.emitter();
         var count = emitter.EmitFields(src, dst);
-        Channel.FileEmit(dst.Emit(), count, XedPaths.DisasmFieldsPath(context.Project.Name, src.Path));
+        Channel.FileEmit(dst.Emit(), count, XedPaths.DisasmFieldsPath(project, src.Path));
     }
 
-    public Index<XedDisasmRow> LoadSummary(string name)
+    public static ReadOnlySeq<XedDisasmRow> summaries(IProject project, string name)
     {
         const byte FieldCount = XedDisasmRow.FieldCount;
-        var src = EtlContext.table<XedDisasmRow>(name);
+        var src = project.TablePath<XedDisasmRow>(name);
         var lines = slice(src.ReadNumberedLines().View,1);
         var count = lines.Length;
         var buffer = alloc<XedDisasmRow>(count);
@@ -116,8 +119,6 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             var j = 0;
             result = DataParser.parse(skip(cells, j++), out dst.Seq);
             result = DataParser.parse(skip(cells, j++), out dst.DocSeq);
-            result = HexParser.parse(skip(cells, j++), out dst.OriginId);
-            result = DataParser.parse(skip(cells, j++), out dst.OriginName);
             result = EncodingId.parse(skip(cells, j++), out dst.EncodingId);
             result = AsmParsers.parse(skip(cells, j++), out dst.InstructionId);
             result = DataParser.parse(skip(cells, j++), out dst.IP);
@@ -129,52 +130,39 @@ public partial class XedDisasm : WfSvc<XedDisasm>
         return buffer;
     }
 
-    void EmitConsolidated(ProjectContext context, Index<XedDisasmDoc> src)
+    public void Consolidate(IProject project, ParallelQuery<XedDisasmDoc> src)
     {
-        var summaries = sys.bag<XedDisasmRow>();
-        var details = sys.bag<XedDisasmDetailBlock>();
-        iter(src, pair =>{
+        var summaries = bag<XedDisasmRow>();
+        var details = bag<XedDisasmDetailBlock>();
+        piter(src, pair => {
             iter(pair.Summary.Rows, r => summaries.Add(r));
             iter(pair.Detail.Blocks, b => details.Add(b));
         });
 
         exec(PllExec,
-            () => EmitOpClasses(context, src),
-            () => EmitConsolidated(context, details.ToArray()),
-            () => EmitConsolidated(context, summaries.ToArray()));
+            () => EmitOpClasses(project, src),
+            () => EmitConsolidated(project, details.ToArray()),
+            () => EmitConsolidated(project, summaries.ToArray()));
     }
 
-    void EmitOpClasses(ProjectContext context, Index<XedDisasmDoc> src)
+    void EmitOpClasses(IProject project, ParallelQuery<XedDisasmDoc> src)
     {
-        var target = EtlContext.table<InstOpClass>(context.Project.Name, disasm);
-        Channel.TableEmit(opclasses(src).View, target);
+        Channel.TableEmit(opclasses(src).View, XedPaths.DisasmTargets(project).Table<InstOpClass>());
     }
 
-    void EmitConsolidated(ProjectContext context, Index<XedDisasmDetailBlock> src)
+    void EmitConsolidated(IProject project, Index<XedDisasmDetailBlock> src)
     {
-        var target = EtlContext.table<XedDisasmDetailRow>(context.Project.Name);
+        var dst = XedPaths.DisasmTargets(project).Table<XedDisasmDetailRow>();
         var buffer = text.buffer();
         XedDisasmRender.render(resequence(src), buffer);
-        var emitting = Channel.EmittingFile(target);
-        using var emitter = target.AsciEmitter();
+        var emitting = Channel.EmittingFile(dst);
+        using var emitter = dst.AsciEmitter();
         emitter.Write(buffer.Emit());
         Channel.EmittedFile(emitting, src.Count);
     }
 
-    void EmitConsolidated(ProjectContext context, Index<XedDisasmRow> src)
-        => Channel.TableEmit(resequence(src), EtlContext.table<XedDisasmRow>(context.Project.Name));
-
-
-    public void EmitDetailReport(ProjectContext context, XedDisasmDoc doc)
-    {
-        var target = XedPaths.DisasmDetailPath(context.Project.Name, doc.SourcePath);
-        var dst = text.emitter();
-        XedDisasmRender.render(doc.DetailBlocks, dst);
-        var emitting = Channel.EmittingFile(target);
-        using var emitter = target.AsciEmitter();
-        emitter.Write(dst.Emit());
-        Channel.EmittedFile(emitting, doc.DetailBlocks.Count);
-    }
+    void EmitConsolidated(IProject project, Index<XedDisasmRow> src)
+        => Channel.TableEmit(resequence(src), XedPaths.DisasmTargets(project).Table<XedDisasmRow>());
 
 
     public const string RenderCol2 = FieldRender.Columns;
@@ -229,17 +217,14 @@ public partial class XedDisasm : WfSvc<XedDisasm>
         }
     }
 
-
-    public void EmitChecksReport(ProjectContext context, XedDisasmDoc src)
-        => EmitChecksReport(context, src.Detail);
-
-    void EmitChecksReport(ProjectContext context, XedDisasmDetail doc)
+    public void EmitChecks(IProject project, XedDisasmDoc src)
     {
         const string RenderPattern = "{0,-24} | {1}";
+        var doc = src.Detail;
         ref readonly var file = ref doc.DataFile;
         var buffer = text.buffer();
         var count = doc.Count;
-        var outpath = XedPaths.DisasmChecksPath(context.Project.Name, file.Source);
+        var outpath = XedPaths.DisasmChecksPath(project, file.Source);
         using var dst = outpath.AsciWriter();
         var emitting = EmittingFile(outpath);
         dst.AppendLineFormat(RenderCol2, "DataSource", doc.Source.ToUri().Format());
@@ -258,7 +243,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             ref readonly var asmhex = ref summary.Encoded;
             ref readonly var asmtxt = ref summary.Asm;
             ref readonly var ip = ref summary.IP;
-            var cells = XedDisasm.update(lines, ref state);
+            var cells = update(lines, ref state);
             var ocindex = XedOps.View.ocindex(state);
             var ockind = AsmOpCodeMaps.kind(ocindex);
             var encoding  = XedCode.encoding(state, asmhex);

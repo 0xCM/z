@@ -6,7 +6,7 @@
 namespace Z0
 {
     using static XedRules;
-    using static core;
+    using static sys;
 
     using K = XedRules.FieldKind;
 

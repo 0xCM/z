@@ -14,6 +14,9 @@ namespace Z0
 
         readonly AppSettings Data;
 
+        public IEnvDb EnvDb
+            => Data.EnvDb();
+
         public DbArchive DbRoot()
             => Data.DbRoot();
 

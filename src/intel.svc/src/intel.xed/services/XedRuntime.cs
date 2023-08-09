@@ -44,14 +44,6 @@ namespace Z0
             Disposing += HandleDispose;
         }
 
-        // void CalcCpuIdImports()
-        // {
-        //     XedImport.CalcCpuIdImports(data => {
-        //         Views.Store(I.CpuIdImport, data.CpuIdSpecs);
-        //         Views.Store(I.IsaImport, data.IsaSpecs);
-        //     });
-        // }
-
         static XedRuleTables CalcRuleTables()
         {
             var tables = new XedRuleTables();
@@ -78,18 +70,8 @@ namespace Z0
             var cpu = XedImport.CalcCpuIdDataset(XedDb.DocSource(XedDocKind.CpuId));
             var brodcasts = XedImport.CalcBroadcastDefs();
 
+            CalcTypeTables();
 
-            exec(PllExec,
-                CalcTypeTables
-                
-                //CalcCpuIdImports,
-                //() => Views.Store(I.AsmBroadcastDefs, XedImport.CalcBroadcastDefs()),
-                //() => Views.Store(I.OpWidths, XedOps.Widths)
-                //() => XedImport.CalcInstImports(data => blocks = data),
-                //() => XedImport.CalcFormImports(data => forms = data)
-                );
-
-            //Views.Store(I.InstImports, blocks);
             Views.Store(I.FormImports, forms);
             Views.Store(I.ChipMap, chips);
 

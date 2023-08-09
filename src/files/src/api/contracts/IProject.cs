@@ -10,31 +10,32 @@ namespace Z0
 
         IDbArchive Root {get;}
         
+        IDbArchive Targets()
+            => Root.Scoped("build");
+
+        IDbArchive Targets(string scope)
+            => Targets().Scoped(scope);
+
         IEnumerable<FilePath> Files() 
             => Root.Files();
 
-        IDbArchive Build() 
-            => Root.Scoped("build");
-
-        IEnumerable<FilePath> BuildFiles(FileKind kind) 
-            => Build().Files(kind);
-
-        IDbArchive Source() 
+        IDbArchive Sources() 
             => Root.Scoped("src");
 
-        IEnumerable<FilePath> SourceFiles() 
-            => Source().Files();
-
         IEnumerable<FilePath> SourceFiles(FileKind kind, bool recursive = true) 
-            => Source().Files(kind, recursive);
-
-        IDbArchive Vendor() 
-            => Root.Scoped("vendor");
+            => Sources().Files(kind, recursive);
 
         IDbArchive Cmd() 
             => Root.Scoped("cmd");
 
         FilePath CmdScript(string name) 
             => Cmd().Path(FS.file(name, FileKind.Cmd));
+
+        public FilePath TablePath<T>()
+            => Targets().Path(FS.file(string.Format("{0}.{1}", Name, TableId.identify<T>()),FS.Csv));
+
+        public FilePath TablePath<T>(string scope)
+            => Targets().Path(FS.file(string.Format("{0}.{1}", Name, TableId.identify<T>()),FS.Csv));
+
     }
 }

@@ -35,5 +35,5 @@ public class XedDisasmDoc
 
     [MethodImpl(Inline)]
     public static implicit operator XedDisasmDoc((XedDisasmSummary s, XedDisasmDetail d) src)
-        => new XedDisasmDoc(src.s,src.d);
+        => new (src.s,src.d);
 }

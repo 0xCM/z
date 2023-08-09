@@ -12,8 +12,6 @@ namespace Z0
     {
         static XedPaths Paths => XedPaths.Service;
 
-        public XedPaths XedPaths
-            => XedPaths.Service;
 
         static ConcurrentDictionary<FilePath,MemoryFile> _MemoryFiles = new();
 
@@ -142,7 +140,6 @@ namespace Z0
                 XedDocKind.RuleSeq => FS.file("all-enc-patterns", FS.Txt),
                 _ => FileName.Empty
             });
-
 
         public XedRules Rules => Xed.Rules;
     }

@@ -14,15 +14,11 @@ public record struct XedDisasmDetailRow : IComparable<XedDisasmDetailRow>
 {
     public const string TableName = "xed.disasm.detail";
 
-    public const byte FieldCount = 26;
+    public const byte FieldCount = 24;
 
     public uint Seq;
 
     public uint DocSeq;
-
-    public Hex32 OriginId;
-
-    public @string OriginName;
 
     public EncodingId EncodingId;
 
@@ -79,8 +75,6 @@ public record struct XedDisasmDetailRow : IComparable<XedDisasmDetailRow>
     public static ReadOnlySpan<byte> RenderWidths => new byte[FieldCount]{
         AsmColWidths.Seq,
         AsmColWidths.DocSeq,
-        AsmColWidths.OriginId,
-        AsmColWidths.OriginName,
         AsmColWidths.EncodingId,
         AsmColWidths.InstructionId,
         AsmColWidths.IP,

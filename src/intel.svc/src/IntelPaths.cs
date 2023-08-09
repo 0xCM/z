@@ -7,6 +7,8 @@ namespace Z0
 {
     public readonly struct IntelPaths
     {
+        public static IntelPaths Service => new();
+
         public static IntelPaths service()
             => new();
 
@@ -23,17 +25,19 @@ namespace Z0
         IDbArchive Kit(string name)
             => Kits().Scoped(name);
         
+        static IEnvDb EnvDb => AppSettings.Default.EnvDb();
+
         public DbArchive XedDb()
-            => AppSettings.Default.Setting(SettingNames.XedDb).Folder();
+            => EnvDb.Scoped(SettingNames.XedDb);
 
         public DbArchive SdmDb()
-            => AppSettings.Default.Setting(SettingNames.SdmDb).Folder();
+            => EnvDb.Scoped(SettingNames.SdmDb);
 
         public DbArchive SdeDb()
-            => AppSettings.Default.Setting(SettingNames.SdeDb).Folder();
+            => EnvDb.Scoped(SettingNames.SdeDb);
 
         public DbArchive InxDb()
-            => AppSettings.Default.Setting(SettingNames.InxDb).Folder();
+            => EnvDb.Scoped(SettingNames.InxDb);
 
         public IDbArchive XedKit()
             => Kit("xed");

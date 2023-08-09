@@ -2,11 +2,10 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+using System.Linq;
+partial class XedDisasm
 {
-    partial class XedDisasm
-    {
-        public static IEnumerable<FilePath> sources(IDbArchive src)
-            => src.Files(FileKind.XedRawDisasm);        
-    }
+    public static ParallelQuery<FilePath> sources(IDbArchive src)
+        => src.Files(FileKind.XedRawDisasm).AsParallel();        
 }

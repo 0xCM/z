@@ -6,15 +6,13 @@
 namespace Z0
 {
     using static sys;
+    using System.Linq;
 
     partial class XedDisasm
     {
-        public static Index<XedDisasmDoc> docs(IDbArchive src, bool pll = true)
-        {
-            var dst = sys.bag<XedDisasmDoc>();
-            iter(sources(src), path => dst.Add(doc(path)), pll);
-            return dst.Index();
-        }
+        public static ParallelQuery<XedDisasmDoc> docs(IDbArchive src)
+            => from path in sources(src)
+                select doc(path);
 
         public static XedDisasmDoc doc(FilePath src)
         {

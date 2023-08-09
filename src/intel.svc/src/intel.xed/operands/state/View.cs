@@ -101,7 +101,7 @@ partial class XedOps
 
         [MethodImpl(Inline), Op]
         public static Sib sib(in XedOperandState src)
-            => new Sib(src.SIBBASE, src.SIBINDEX, src.SIBSCALE);
+            => new (src.SIBBASE, src.SIBINDEX, src.SIBSCALE);
 
         [MethodImpl(Inline), Op]
         public static ref readonly ModRm modrm(in XedOperandState src)
@@ -109,7 +109,7 @@ partial class XedOps
 
         [MethodImpl(Inline), Op]
         public static RexPrefix rex(in XedOperandState src)
-            => new RexPrefix(src.REXB, src.REXX, src.REXR, src.REXW);
+            => new (src.REXB, src.REXX, src.REXR, src.REXW);
 
         [MethodImpl(Inline), Op]
         public static ref readonly HintKind hint(in XedOperandState src)

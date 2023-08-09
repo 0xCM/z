@@ -6,11 +6,12 @@ namespace Z0
 {
     using static sys;
     using static XedRules;
+    using System.Linq;
     using static MachineModes;
 
     partial class XedDisasm
     {
-        public static Index<InstOpClass> opclasses(Index<XedDisasmDoc> src)
+        public static Index<InstOpClass> opclasses(ParallelQuery<XedDisasmDoc> src)
         {
             var buffer = hashset<InstOpClass>();
             foreach(var (summary,detail) in src)

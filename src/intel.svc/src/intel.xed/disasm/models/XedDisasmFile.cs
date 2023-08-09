@@ -45,6 +45,6 @@ public readonly record struct XedDisasmFile : IComparable<XedDisasmFile>
     public int CompareTo(XedDisasmFile src)
         => Source.CompareTo(src.Source);
 
-    public static XedDisasmFile Empty => new XedDisasmFile(FilePath.Empty, sys.empty<XedDisasmBlock>());
+    public static XedDisasmFile Empty => new (FilePath.Empty, sys.empty<XedDisasmBlock>());
 }
 

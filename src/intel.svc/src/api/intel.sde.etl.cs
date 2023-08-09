@@ -2,12 +2,17 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Asm
+namespace Z0;
+
+using Asm;
+
+using System.Text;
+
+partial class IntelCmd
 {
-    partial struct asm
+    [CmdOp("intel/sde/etl")]
+    void RunSdeEtl()
     {
-        [MethodImpl(Inline), Op]
-        public static InstructionId instid(uint docid, MemoryAddress ip, ReadOnlySpan<byte> encoding)
-            => new (docid, EncodingId.from(ip, encoding));
+        Sde.RunEtl();
     }
 }

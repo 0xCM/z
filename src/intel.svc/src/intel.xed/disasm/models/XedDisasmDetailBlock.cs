@@ -28,7 +28,7 @@ public class XedDisasmDetailBlock : IComparable<XedDisasmDetailBlock>
 
     [MethodImpl(Inline)]
     public XedDisasmDetailBlock WithRow(in XedDisasmDetailRow src)
-        => new XedDisasmDetailBlock(src, SummaryLines, Instruction);
+        => new (src, SummaryLines, Instruction);
 
     public ref readonly OpDetails Ops
     {

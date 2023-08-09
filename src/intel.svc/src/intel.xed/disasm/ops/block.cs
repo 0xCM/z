@@ -10,7 +10,7 @@ namespace Z0
     {
         [MethodImpl(Inline)]
         public static XedDisasmBlock block(TextLine[] src)
-            => new XedDisasmBlock(src);
+            => new (src);
 
         static XedDisasmDetailBlock block(in XedDisasmLines src)
         {

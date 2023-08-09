@@ -12,7 +12,7 @@ namespace Z0
     public class IntelIntrinsics : WfSvc<IntelIntrinsics>
     {
         public IntelIntrinsicPaths Paths()
-            => new IntelIntrinsicPaths(AppDb.DbIn("intel"), AppDb.AsmDb("intrinsics"));
+            => new (AppDb.DbIn("intel.intrinsics/sources"), AppDb.AsmDb("intel.intrinsics/targets"));
 
         public ExecToken RunEtl()
         {

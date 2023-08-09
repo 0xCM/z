@@ -8,29 +8,10 @@ namespace Z0
     {
         public readonly IProject Project;
 
-        public readonly FileCatalog Files;
-
-        public readonly CmdFlows Flows;
-
-        public ProjectContext(IProject project, CmdFlows flows)
+        public ProjectContext(IProject project)
         {
             Project = project;
-            Files = flows.Files;
-            Flows = flows;
         }
 
-        public Index<FileRef> Docs(FileKind kind)
-            => Files.Docs(kind);
-
-        public FileRef Doc(FilePath path)
-            => Files[path];
-
-        public FileRef Root(FilePath dst)
-        {
-            if(Flows.Root(dst, out var src))
-                return src;
-            else
-                return Z0.FileRef.Empty;
-        }
     }
 }

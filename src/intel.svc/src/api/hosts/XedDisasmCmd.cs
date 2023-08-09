@@ -10,39 +10,8 @@ using static XedFields;
 
 partial class XedDisasmCmd : WfAppCmd<XedDisasmCmd>
 {
-    XedRuntime XedRuntime => Wf.XedRuntime();
+    XedDisasm XedDisasm => Wf.XedDisasm();
 
-    public void Etl(IProject project)
-    {
-        var context = ApiCmd.context(project);
-        XedRuntime.Disasm.Collect(context);
-    }
-
-    [CmdOp("xed/disasm/files")]
-    void DataFiles(CmdArgs args)
-    {
-        var src = FS.archive(args[0]);
-        var files = XedDisasm.datafiles(src);
-        iter(files, file => {
-            var path = file.Source;
-            Channel.Row(path.ToUri());
-            var states = file.ParseStates();
-            for(var i=0; i< states.Count; i++)
-            {
-                ref readonly var state = ref states[i];
-                Channel.Row(state.Asm);
-                var ops = state.Ops;
-                for(var j=0; j<ops.Count; j++)
-                {
-                    ref readonly var op = ref ops[j];
-                    Channel.Row(op.Format());
-                }
-            }
-            
-            
-        });
-
-    }
     [CmdOp("xed/disasm/check")]
     Outcome DisasmCheck(CmdArgs args)
     {

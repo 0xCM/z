@@ -43,7 +43,7 @@ namespace Z0
         }
 
         public static FilePath flowpath(IProject src)
-            => src.Build().Path(FS.file($"{src.Name}.build.flows",FileKind.Csv));
+            => src.Targets().Path(FS.file($"{src.Name}.build.flows",FileKind.Csv));
 
         [MethodImpl(Inline)]
         public static FileFlow flow(in CmdFlow src)

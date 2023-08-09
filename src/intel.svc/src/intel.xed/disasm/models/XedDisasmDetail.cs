@@ -17,23 +17,11 @@ public class XedDisasmDetail : IComparable<XedDisasmDetail>
         Blocks = data;
     }
 
-    // public ref readonly FileRef Origin
-    // {
-    //     [MethodImpl(Inline)]
-    //     get => ref DataFile.Origin;
-    // }
-
     public ref readonly FilePath Source
     {
         [MethodImpl(Inline)]
         get => ref DataFile.Source;
     }
-
-    // public uint Seq
-    // {
-    //     [MethodImpl(Inline)]
-    //     get => DataFile.Source.Seq;
-    // }
 
     public ref XedDisasmDetailBlock this[int i]
     {
@@ -62,6 +50,6 @@ public class XedDisasmDetail : IComparable<XedDisasmDetail>
     public int CompareTo(XedDisasmDetail src)
         => Path.CompareTo(src.Path);
 
-    public static XedDisasmDetail Empty => new XedDisasmDetail(XedDisasmFile.Empty, sys.empty<XedDisasmDetailBlock>());
+    public static XedDisasmDetail Empty => new (XedDisasmFile.Empty, sys.empty<XedDisasmDetailBlock>());
 }
 

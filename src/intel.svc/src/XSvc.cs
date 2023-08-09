@@ -79,7 +79,6 @@ public static class XSvc
 
         public XedRuntime XedRuntime(IWfRuntime wf)
             => Service<XedRuntime>(wf);
-
     }
 
     static ServiceCache Services => ServiceCache.Instance;
