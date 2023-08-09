@@ -31,6 +31,7 @@ namespace Z0
             DataStores = alloc<object>(64);
         }
 
+
         public ref readonly XedWidths Widths
         {
             get
@@ -38,7 +39,7 @@ namespace Z0
                 lock(DataStores)   
                 {
                     if(skip(DataStores,(uint)XedRecordType.WidthLookup) == null)
-                    seek(DataStores, (uint)XedRecordType.WidthLookup) = XedFlows.CalcWidths(XedDb.DocSource(XedDocKind.Widths));
+                        seek(DataStores, (uint)XedRecordType.WidthLookup) = XedFlows.CalcWidths(XedDb.DocSource(XedDocKind.Widths));
                 }
                 return ref Load<XedWidths>(XedRecordType.WidthLookup);
             }

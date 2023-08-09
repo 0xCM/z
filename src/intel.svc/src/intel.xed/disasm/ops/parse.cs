@@ -34,7 +34,7 @@ partial class XedDisasm
             {
                 var kv = text.split(prop,Chars.Colon);
                 Demand.eq(kv.Length,2);
-                seek(facets,k) = ((skip(kv,0), skip(kv,1)));
+                seek(facets,k) = (skip(kv,0), skip(kv,1));
             }
             else
                 seek(facets,k) = ((prop, "1"));

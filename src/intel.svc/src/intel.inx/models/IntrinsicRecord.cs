@@ -9,7 +9,7 @@ namespace Z0
     [Record(TableId)]
     public struct IntelIntrinsicRecord : IComparable<IntelIntrinsicRecord>, ISequential<IntelIntrinsicRecord>
     {
-        const string TableId = "intrinsics";
+        const string TableId = "intel.intrinsics";
 
         [Render(8)]
         public uint Key;

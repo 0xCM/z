@@ -15,11 +15,9 @@ namespace Z0
         const string xed = nameof(xed);
 
         public static FieldRender render()
-            => new FieldRender();
+            => new ();
 
-        static FieldDefs _Defs;
-
-        static Type[] EffectiveFieldTypes;
+        static readonly FieldDefs _Defs;
 
         public static DataSize size(FieldKind fk, RuleCellKind ck)
         {
@@ -51,8 +49,7 @@ namespace Z0
 
         static XedFields()
         {
-            _Defs = CalcFieldDefs();
-            EffectiveFieldTypes = CalcEffectiveTypes();
+            _Defs = CalcFieldDefs();            
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public static CellTypeInfo @operator(RuleOperator op)
-                => new CellTypeInfo(0, RuleCellKind.Operator, op, asci16.Null,default(DataSize));
+                => new (0, RuleCellKind.Operator, op, asci16.Null, default);
 
             public readonly FieldKind Field;
 
@@ -65,7 +65,7 @@ namespace Z0
             }
 
             public static CellTypeInfo Empty
-                => new CellTypeInfo(FieldKind.INVALID, RuleCellType.Empty, RuleOperator.None, asci16.Null, default(DataSize));
+                => new (FieldKind.INVALID, RuleCellType.Empty, RuleOperator.None, asci16.Null, default);
         }
     }
 }

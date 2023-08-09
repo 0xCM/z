@@ -3,30 +3,28 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
-{
-    using static XedRules;
-    using static XedModels;
+namespace Z0;
 
-    partial class XedPatterns
+using static XedModels;
+
+partial class XedPatterns
+{
+    [MethodImpl(Inline), Op]
+    public static bool first(in OpAttribs src, OpAttribKind @class, out OpAttrib dst)
     {
-        [MethodImpl(Inline), Op]
-        public static bool first(in OpAttribs src, OpAttribKind @class, out OpAttrib dst)
+        var result = false;
+        dst = OpAttrib.Empty;
+        var count = src.Count;
+        for(var i=0; i<count; i++)
         {
-            var result = false;
-            dst = OpAttrib.Empty;
-            var count = src.Count;
-            for(var i=0; i<count; i++)
+            ref readonly var a = ref src[i];
+            if(a.Class == @class)
             {
-                ref readonly var a = ref src[i];
-                if(a.Class == @class)
-                {
-                    dst = a;
-                    result = true;
-                    break;
-                }
+                dst = a;
+                result = true;
+                break;
             }
-            return result;
         }
+        return result;
     }
 }

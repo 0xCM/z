@@ -9,7 +9,6 @@ namespace Z0
 
     using static XedRules;
     using static XedModels;
-    using static XedLiterals;
     using static XedRender;
     using static sys;
 
@@ -20,7 +19,7 @@ namespace Z0
         public class FieldRender
         {
             public static FieldRender create()
-                => new FieldRender();
+                => new ();
 
             public const string Columns = "{0,-24} | {1}";
 
@@ -85,7 +84,7 @@ namespace Z0
                         break;
 
                         case K.SMODE:
-                            r.Functions[kind] = (x => format((SMODE)x,DataFormatCode.BitWidth));
+                            r.Functions[kind] = x => format((SMODE)x,DataFormatCode.BitWidth);
                         break;
 
                         case K.EASZ:
@@ -93,11 +92,11 @@ namespace Z0
                         break;
 
                         case K.EOSZ:
-                            r.Functions[kind] = (x => format((EOSZ)x, DataFormatCode.BitWidth));
+                            r.Functions[kind] = x => format((EOSZ)x, DataFormatCode.BitWidth);
                         break;
 
                         case K.ESRC:
-                            r.Functions[kind] = (x => format((ESRC)x));
+                            r.Functions[kind] = x => format((ESRC)x);
                         break;
 
                         case K.ICLASS:
@@ -163,16 +162,16 @@ namespace Z0
                         break;
                         case K.VEXDEST4:
                         case K.VEXDEST3:
-                            r.Functions[kind] = (x => format((uint1)x));
+                            r.Functions[kind] = x => format((uint1)x);
                         break;
                         case K.VEXVALID:
-                            r.Functions[kind] = (x => format((XedVexClass)x));
+                            r.Functions[kind] = x => format((XedVexClass)x);
                         break;
                         case K.VEX_PREFIX:
-                            r.Functions[kind] = (x => format((XedVexKind)x));
+                            r.Functions[kind] = x => format((XedVexKind)x);
                         break;
                         case K.VL:
-                            r.Functions[kind] = (x => format((AsmVL)x, DataFormatCode.BitWidth));
+                            r.Functions[kind] = x => format((AsmVL)x, DataFormatCode.BitWidth);
                         break;
 
                         case K.BASE0:

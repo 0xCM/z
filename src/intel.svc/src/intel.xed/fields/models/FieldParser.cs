@@ -29,17 +29,17 @@ partial class XedOps
             {
                 var name = skip(keys,i);
                 var value = src[name];
-                result = XedParsers.parse(name, out FieldKind kind);
+                result = XedParsers.parse(name, out K kind);
                 result.Require();
-                dst.Update(FieldParser.pack(value, kind));
+                dst.Update(pack(value, kind));
                 counter++;
             }
             return counter;
         }
 
-        public static Index<FieldKind> parse(IReadOnlyDictionary<string,string> src, Fields fields, out XedOperandState state)
+        public static Index<K> parse(IReadOnlyDictionary<string,string> src, Fields fields, out XedOperandState state)
         {
-            state = parse(src, out Index<FieldKind> parsed);
+            state = parse(src, out Index<K> parsed);
             for(var i=0; i<parsed.Count; i++)
             {
                 var field = Xed.extract(state, parsed[i]);
@@ -65,14 +65,14 @@ partial class XedOps
 
         public static uint parse(IReadOnlyDictionary<string,string> src, Span<FieldValue> fields, out XedOperandState state)
         {
-            state = FieldParser.parse(src, out Index<FieldKind> _);
+            state = parse(src, out Index<K> _);
             var names = src.Keys.Array();
             var count = names.Length;
             for(var i=0; i<count; i++)
             {
                 var name = skip(names,i);
-                if(XedParsers.parse(name, out FieldKind kind))
-                    seek(fields,i) = FieldParser.parse(src[name], kind, ref state);
+                if(XedParsers.parse(name, out K kind))
+                    seek(fields,i) = parse(src[name], kind, ref state);
                 else
                     Errors.Throw(AppMsg.ParseFailure.Format(nameof(FieldKind), name));
             }
@@ -89,12 +89,12 @@ partial class XedOps
             return fields;
         }
 
-        public static FieldKind kind(string src)
+        public static K kind(string src)
         {
             var i = text.index(src, Chars.Eq);
             var j = text.index(src, Chars.LBracket);
             var k = text.index(src, "!=");
-            var result = FieldKind.INVALID;
+            var result = K.INVALID;
 
             if(j>0)
             {
@@ -140,7 +140,7 @@ partial class XedOps
             {
                 var name = skip(keys,i);
                 var value = src[name];
-                result = XedParsers.parse(name, out FieldKind kind);
+                result = XedParsers.parse(name, out K kind);
                 result.Require();
                 dst.Update(pack(value, kind));
                 counter++;
@@ -148,17 +148,17 @@ partial class XedOps
             return counter;
         }
 
-        public static XedOperandState parse(IReadOnlyDictionary<string,string> src, out Index<FieldKind> fields)
+        public static XedOperandState parse(IReadOnlyDictionary<string,string> src, out Index<K> fields)
         {
-            var parsed = list<FieldKind>();
-            var failed = dict<FieldKind,string>();
+            var parsed = list<K>();
+            var failed = dict<K,string>();
             var count = src.Count;
             var dst = XedOperandState.Empty;
             var names = src.Keys.Index();
             for(var i=0; i<count; i++)
             {
                 ref readonly var name = ref names[i];
-                var kind = FieldKind.INVALID;
+                var kind = K.INVALID;
                 if(XedParsers.parse(name, out kind))
                 {
                     var value = parse(src[name], kind,  ref dst);
@@ -173,12 +173,12 @@ partial class XedOps
         }
 
         [MethodImpl(Inline)]
-        static FieldValue value<T>(FieldKind kind, T value)
+        static FieldValue value<T>(K kind, T value)
             where T : unmanaged
-                => new FieldValue(kind, sys.bw64(value));
+                => new (kind, bw64(value));
 
         [Op]
-        public static FieldValue parse(string src, FieldKind kind, ref XedOperandState dst)
+        public static FieldValue parse(string src, K kind, ref XedOperandState dst)
         {
             var result = true;
             var fieldval = R.FieldValue.Empty;
@@ -795,7 +795,7 @@ partial class XedOps
         }
 
         [Op]
-        public static FieldPack pack(string src, FieldKind kind)
+        public static FieldPack pack(string src, K kind)
         {
             var result = true;
             var dst = FieldPack.Empty;

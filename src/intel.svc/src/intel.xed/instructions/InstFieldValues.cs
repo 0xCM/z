@@ -35,7 +35,7 @@ namespace Z0
                 => FieldParser.parse(this, out state);
 
             public static InstFieldValues Empty
-                => new InstFieldValues(XedInstClass.Empty, XedInstForm.Empty, dict<string,string>());
+                => new (XedInstClass.Empty, XedInstForm.Empty, dict<string,string>());
         }
     }
 }

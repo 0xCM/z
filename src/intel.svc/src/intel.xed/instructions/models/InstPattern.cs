@@ -177,9 +177,9 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public PatternSort Sort()
-                => new PatternSort(this);
+                => new (this);
 
-            public static InstPattern Empty => new InstPattern(InstPatternSpec.Empty, FieldSet.create());
+            public static InstPattern Empty => new (InstPatternSpec.Empty, FieldSet.create());
         }
     }
 }

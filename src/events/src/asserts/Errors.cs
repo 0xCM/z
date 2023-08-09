@@ -13,7 +13,7 @@ namespace Z0
 
         [Op]
         static AppException originate([CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
-            => new AppException(AppMsg.error("Mystery Error", caller, file, line));
+            => new (AppMsg.error("Mystery Error", caller, file, line));
 
         [Op]
         public static void Throw(string msg)

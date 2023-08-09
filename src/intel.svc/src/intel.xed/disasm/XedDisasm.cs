@@ -47,12 +47,25 @@ public partial class XedDisasm : WfSvc<XedDisasm>
         Channel.EmittedFile(emitting, doc.DetailBlocks.Count);
     }
 
+    void CollectIndividuals(IProject project, ParallelQuery<XedDisasmDoc> docs)
+    {
+        piter(docs, doc => {
+            var path = doc.SourcePath;
+            var flow = Channel.Running($"Collecting disassembly content from {path.ToUri()}");
+            EmitDetails(project, doc);
+            EmitOps(project, doc);
+            EmitSummaries(project, doc);
+            EmitChecks(project,doc);
+            Channel.Ran(flow,$"Collected disassembly content from {path.ToUri()}");
+        });
+
+    }
     public void Collect(IProject project)
     {
         var docs = XedDisasm.docs(project.Root);
         exec(PllExec,
             () => Consolidate(project, docs),
-            () => EmitBreakdowns(project, docs)
+            () => CollectIndividuals(project, docs)
             );
     }
 

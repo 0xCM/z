@@ -4,10 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using Asm;
-
-using System.Text;
-
 partial class IntelCmd
 {
     [CmdOp("intel/sde/etl")]

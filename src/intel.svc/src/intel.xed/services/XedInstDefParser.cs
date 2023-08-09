@@ -167,7 +167,7 @@ public struct XedInstDefParser
         return defs;
     }
 
-    static Index<InstPartKind,string> PartKindNames = new string[]{ICLASS,IFORM,ATTRIBUTES,CATEGORY,EXTENSION,FLAGS,PATTERN,OPERANDS,ISA_SET,COMMENT};
+    static readonly Index<InstPartKind,string> PartKindNames = new string[]{ICLASS,IFORM,ATTRIBUTES,CATEGORY,EXTENSION,FLAGS,PATTERN,OPERANDS,ISA_SET,COMMENT};
 
     static bool parse(string src, out InstPartKind kind)
     {

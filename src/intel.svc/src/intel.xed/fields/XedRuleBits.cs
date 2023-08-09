@@ -13,7 +13,8 @@ namespace Z0
     public class XedRuleBits
     {
         public static XedRuleBits create()
-            => new XedRuleBits(PolyBits.dataset<Segment,RuleFieldBits>("Rules", RuleFieldBits.NativeSize,
+            => new (
+                PolyBits.dataset<Segment,RuleFieldBits>("Rules", RuleFieldBits.NativeSize,
                 FieldKindWidth,
                 OperatorWidth,
                 DataKindWidth,

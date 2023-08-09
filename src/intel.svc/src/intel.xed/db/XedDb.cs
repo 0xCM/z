@@ -13,7 +13,7 @@ namespace Z0
         static XedPaths Paths => XedPaths.Service;
 
 
-        static ConcurrentDictionary<FilePath,MemoryFile> _MemoryFiles = new();
+        static readonly ConcurrentDictionary<FilePath,MemoryFile> _MemoryFiles = new();
 
         public static MemoryFile MemoryFile(FilePath src)
             => _MemoryFiles.GetOrAdd(src, path => path.MemoryMap(true));
@@ -75,15 +75,15 @@ namespace Z0
         public static FilePath DocTarget(string name, FileKind kind)
             => DocTargets().Path(FS.file(string.Format("xed.docs.{0}", name), kind.Ext()));
 
-        static FileName EncInstDef = FS.file("all-enc-instructions", FS.Txt);
+        static readonly FileName EncInstDef = FS.file("all-enc-instructions", FS.Txt);
 
-        static FileName DecInstDef = FS.file("all-dec-instructions", FS.Txt);
+        static readonly FileName DecInstDef = FS.file("all-dec-instructions", FS.Txt);
 
-        static FileName EncRuleTable = FS.file("all-enc-patterns", FS.Txt);
+        static readonly FileName EncRuleTable = FS.file("all-enc-patterns", FS.Txt);
 
-        static FileName DecRuleTable = FS.file("all-dec-patterns", FS.Txt);
+        static readonly FileName DecRuleTable = FS.file("all-dec-patterns", FS.Txt);
 
-        static FileName EncDecRuleTable = FS.file("all-enc-dec-patterns", FS.Txt);
+        static readonly FileName EncDecRuleTable = FS.file("all-enc-dec-patterns", FS.Txt);
 
         public static FilePath RuleSource(RuleTableKind kind)
         {

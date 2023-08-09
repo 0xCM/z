@@ -230,7 +230,7 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public static explicit operator WidthVar(byte src)
-                => new WidthVar((num6)src);
+                => new ((num6)src);
 
             [DataWidth(num2.Width)]
             public enum Kind : byte

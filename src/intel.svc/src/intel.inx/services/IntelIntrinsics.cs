@@ -11,24 +11,31 @@ namespace Z0
 
     public class IntelIntrinsics : WfSvc<IntelIntrinsics>
     {
-        public IntelIntrinsicPaths Paths()
-            => new (AppDb.DbIn("intel.intrinsics/sources"), AppDb.AsmDb("intel.intrinsics/targets"));
+        static IDbArchive Sources => IntelPaths.Service.InxDb().Scoped("sources");
+
+        static IDbArchive Targets => IntelPaths.Service.InxDb().Scoped("targets");
+
+        static FileName AlgFile => FS.file("intel.intrinsics", FS.ext("alg"));
+
+        static FileName XmlFile => FS.file("intel.intrinsics", FS.Xml);
+
+        static FileName DeclFile => FS.file("intel.intrinsics", FS.H);
 
         public ExecToken RunEtl()
         {
-            var paths = Paths();
+            var db = IntelPaths.Service.InxDb();
             var running = Channel.Running();
-            paths.Targets().Clear();
-            var xml = LoadSourceDoc(paths);
+            db.Targets().Clear();
+            var xml = LoadSourceDoc();
             var parsed = ParseSouceDoc(xml);
-            EmitAlgorithms(paths,parsed);
-            var records = EmitRecords(paths, parsed);
-            EmitDeclarations(paths, parsed);
+            EmitAlgorithms(parsed);
+            var records = EmitRecords(parsed);
+            EmitDeclarations(parsed);
             return Channel.Ran(running);
         }
 
-        public XmlDoc LoadSourceDoc(IntelIntrinsicPaths paths)
-            => paths.XmlSource().ReadUtf8();
+        public XmlDoc LoadSourceDoc()
+            => Sources.Path(XmlFile).ReadUtf8();
 
         public ReadOnlySeq<IntrinsicDef> ParseSouceDoc(XmlDoc src)
         {
@@ -38,16 +45,16 @@ namespace Z0
             return defs;
         }
 
-        public void EmitAlgorithms(IntelIntrinsicPaths paths, ReadOnlySpan<IntrinsicDef> src)
+        public void EmitAlgorithms(ReadOnlySpan<IntrinsicDef> src)
         {
             var dst = text.emitter();
             render(src, dst);
-            Channel.FileEmit(dst.Emit(), paths.AlgTarget(), TextEncodingKind.Utf8);
+            Channel.FileEmit(dst.Emit(), Targets.Path(AlgFile), TextEncodingKind.Utf8);
         }
 
-        public void EmitDeclarations(IntelIntrinsicPaths paths, ReadOnlySpan<IntrinsicDef> src)
+        public void EmitDeclarations(ReadOnlySpan<IntrinsicDef> src)
         {
-            var dst = paths.DeclTarget();
+            var dst = Targets.Path(DeclFile);
             var flow = Channel.EmittingFile(dst);
             var count = src.Length;
             using var writer = dst.Writer();
@@ -56,14 +63,14 @@ namespace Z0
             EmittedFile(flow, count);
         }
 
-        public ReadOnlySeq<IntelIntrinsicRecord> EmitRecords(IntelIntrinsicPaths paths, ReadOnlySeq<IntrinsicDef> src)
+        public ReadOnlySeq<IntelIntrinsicRecord> EmitRecords(ReadOnlySeq<IntrinsicDef> src)
         {
             var dst = alloc<IntelIntrinsicRecord>(src.Count);
             for(var i=0; i<src.Length; i++)
                 record(src[i], Channel, out seek(dst,i));            
             dst.Sort();
             dst.Resequence();
-            Channel.TableEmit(dst, paths.ExportTable<IntelIntrinsicRecord>());            
+            Channel.TableEmit(dst, Targets.Table<IntelIntrinsicRecord>());            
             return dst;
         }
 

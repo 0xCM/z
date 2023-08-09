@@ -18,7 +18,7 @@ public partial class Xed : WfSvc<Xed>
     [MethodImpl(Inline), Op]
     public static NontermCall<T> call<T>(T src, RuleSig dst)
         where T : unmanaged, IComparable<T>
-            => new NontermCall<T>(src,dst);
+            => new (src,dst);
 
 
     public static XedInstClass classifier(XedInstClass src)

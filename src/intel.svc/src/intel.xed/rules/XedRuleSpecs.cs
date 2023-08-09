@@ -16,11 +16,11 @@ public readonly struct XedRuleSpecs
 {
     [MethodImpl(Inline)]
     static CellInfo cellinfo(in CellTypeInfo type, LogicClass logic, string data)
-        => new CellInfo(type, logic, data);
+        => new (type, logic, data);
 
     [MethodImpl(Inline)]
     static CellInfo cellinfo(RuleOperator op)
-        => new CellInfo(op);
+        => new (op);
 
     public static Index<TableCriteria> criteria(RuleTableKind kind)
         => CalcTableCriteria(XedDb.RuleSource(kind));
@@ -217,7 +217,7 @@ public readonly struct XedRuleSpecs
     static CellInfo cellinfo(string src)
     {
         parse(src, out CellTypeInfo t);
-        return XedRuleSpecs.cellinfo(t, LogicKind.None, src);
+        return cellinfo(t, LogicKind.None, src);
     }
 
     public static string normalize(string src)
@@ -291,7 +291,7 @@ public readonly struct XedRuleSpecs
     static RuleCellType celltype(FieldKind field, string data)
     {
         var result = false;
-        var input = XedRuleSpecs.normalize(data);
+        var input = normalize(data);
         var dst = RuleCellType.Empty;
         var isNonTerm = text.contains(input, "()");
         if(XedParsers.IsExpr(input))

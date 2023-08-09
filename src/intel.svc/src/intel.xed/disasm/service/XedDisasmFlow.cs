@@ -35,7 +35,7 @@ readonly struct XedDisasmFlow : IXedDisasmFlow
         return token;
     }
 
-    void Step(uint seq, in XedDisasmDetailBlock src, IXedDisasmTarget dst)
+    static void Step(uint seq, in XedDisasmDetailBlock src, IXedDisasmTarget dst)
     {
         ref readonly var detail = ref src.DetailRow;
         ref readonly var block = ref src.SummaryLines;
