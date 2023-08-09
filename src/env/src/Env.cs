@@ -131,20 +131,19 @@ namespace Z0
             if(_Tools == null || reload)
             {
                 var paths = Env.path(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL);
-                var buffer = dict<ToolKey,LocatedTool>();
+                var buffer = hashset<LocatedTool>();
                 iter(paths, dir => {
                     iter(FS.files(dir, false, FileKind.Exe, FileKind.Cmd, FileKind.Bat), path => {                
                         var include = path.FolderPath != FS.dir("C:/WINDOWS/System32/");
                         include &= (path.FolderPath != FS.dir("C:/WINDOWS"));
                         if(include)
                         {
-                            var k = key(path);
-                            buffer.TryAdd(k, new LocatedTool(k));
+                            buffer.Add(located(path));
                         }
                     });
                 });
 
-                _Tools = new (buffer.Values.Array().Sort());
+                _Tools = new (buffer.Array().Sort());
             }
             return _Tools;
         }       
@@ -170,7 +169,7 @@ namespace Z0
 
         static uint KeySeq = 0;
         
-        static ToolKey key(FilePath path)
-            => new (inc(ref KeySeq), path);
+        static LocatedTool located(FilePath path)
+            => new(inc(ref KeySeq), path);
     }
 }

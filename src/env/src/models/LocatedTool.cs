@@ -6,23 +6,14 @@ namespace Z0
 {
     public sealed record class LocatedTool : IDataType<LocatedTool>
     {    
-        public ToolKey Key;
+        public readonly uint Seq;
 
-        public LocatedTool(ToolKey key)
-        {
-            Key = key;
-        }
+        public readonly FilePath Path;
 
-        public uint Seq
+        public LocatedTool(uint seq, FilePath path)
         {
-            [MethodImpl(Inline)]
-            get => Key.Seq;
-        }
-
-        public FilePath Path
-        {
-            [MethodImpl(Inline)]
-            get => Key.Path;
+            Seq = seq;
+            Path = path;
         }
         
         public string Name
@@ -34,35 +25,41 @@ namespace Z0
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => Key.Hash | Path.Hash;
+            get => (Hash32)Seq | Path.Hash;
         }
 
         public override int GetHashCode()
             => Hash;
 
         public string Format()
-            => $"{Path.FileName}={Key.Path}";
+            => Path.Format();
 
         public override string ToString()
             => Format();
         public int CompareTo(LocatedTool src)
-            => Key.CompareTo(src.Key);
+        {
+            var result = Path.CompareTo(src.Path);
+
+            if(result == 0)
+                result = Seq.CompareTo(src.Seq);
+            return result;
+        }
         
         public bool Equals(LocatedTool src)
-            => Key == src.Key && Path == src.Path;
+            => Seq == src.Seq && Path == src.Path;
 
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => Key.IsEmpty;
+            get => Path.IsEmpty;
         }
 
         public bool IsNonEmpty
         {
             [MethodImpl(Inline)]
-            get => Key.IsNonEmpty;
+            get => Path.IsNonEmpty;
         }
 
-        public static LocatedTool Empty => new (ToolKey.Empty);
+        public static LocatedTool Empty => new (0u,FilePath.Empty);
     }
 }

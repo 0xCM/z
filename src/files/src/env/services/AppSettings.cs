@@ -157,7 +157,7 @@ namespace Z0
         public string Format()
         {
             var dst = text.emitter();            
-            iter(Lookup.Keys, key => dst.AppendLine(Setting(key).ValueText));
+            iter(Lookup.Keys, key => dst.AppendLine(Setting(key)));
             return dst.Emit();
         }
 

@@ -109,7 +109,7 @@ namespace Z0
         public static ToolCatalog tools(FilePath src)
         {
             using var reader = src.LineReader(TextEncodingKind.Utf8);
-            var keys = list<ToolKey>();
+            var keys = list<LocatedTool>();
             reader.Next(out var header);
             var line = TextLine.Empty;
             while(reader.Next(out line))
@@ -119,9 +119,9 @@ namespace Z0
                 DataParser.parse(row[i++], out uint seq);
                 DataParser.parse(row[i++], out @string name);
                 DataParser.parse(row[i++], out FilePath path);
-                keys.Add(new ToolKey(seq, path));            
+                keys.Add(new LocatedTool(seq, path));            
             }
-            return keys.Map(x => new LocatedTool(x));            
+            return keys.Array();
         }
 
         public static ExecToken emit(IWfChannel channel, EnvId name, EnvVarKind kind, EnvVars vars, IDbArchive dst)
