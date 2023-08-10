@@ -40,7 +40,6 @@ namespace Z0.Asm
             CombineDocs(src, dst, encoding);            
         }
 
-
         public Outcome EmitTocRecords()
         {
             var result = Outcome.Success;

@@ -123,6 +123,22 @@ public readonly struct AsmOcSymbols
 
     public const string mmmmm = "mmmmm";
 
+    public const string mmmm = "mmmm";
+
+    public const string RPrime = "R'";
+
+    public const string b = "b";
+
+    public const string VPrime = "V'";
+
+    public const string LPrimeL = "L'L";
+
+    public const string RXB = "RXB";
+
+    public const string vvv = "vvv";
+
+    public const string aaa = "aaa";
+
     public const string vvvv = "vvvv";
 
     public const string pp = "pp";

@@ -8,15 +8,16 @@ namespace Z0
     using K = Hex4Kind;
 
     [DataWidth(Width)]
-    public readonly struct Hex4
+    public readonly record struct Hex4
     {
         [MethodImpl(Inline), Op]
-        public static char hexchar(UpperCased @case, Hex4 src)
+        public static char hexchar(UpperCased @case, H src)
             => (char)Hex.symbol(@case, src.Value);
 
         [MethodImpl(Inline), Op]
-        public static char hexchar(LowerCased @case, Hex4 src)
+        public static char hexchar(LowerCased @case, H src)
             => (char)Hex.symbol(@case, src.Value);
+
 
         public const byte Width = 4;
 
@@ -72,9 +73,6 @@ namespace Z0
 
         public override int GetHashCode()
             => Hash;
-
-        public override bool Equals(object src)
-            => src is H c && Equals(c);
 
         public string Text
         {
@@ -135,31 +133,30 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static explicit operator H(Hex16 src)
-            => new H((byte)src.Value);
+            => new ((byte)src.Value);
 
         [MethodImpl(Inline)]
         public static explicit operator H(Hex32 src)
-            => new H((byte)src.Value);
+            => new ((byte)src.Value);
 
         [MethodImpl(Inline)]
         public static explicit operator H(Hex64 src)
-            => new H((byte)src.Value);
+            => new ((byte)src.Value);
 
         [MethodImpl(Inline)]
         public static implicit operator H(Hex1Kind src)
-            => new H((byte)src);
+            => new ((byte)src);
 
         [MethodImpl(Inline)]
         public static implicit operator H(Hex2Kind src)
-            => new H((byte)src);
+            => new ((byte)src);
 
         [MethodImpl(Inline)]
         public static implicit operator H(Hex3Kind src)
-            => new H((byte)src);
+            => new ((byte)src);
 
         [MethodImpl(Inline)]
         public static explicit operator HexDigitValue(Hex4 src)
             => (HexDigitValue)src.Value;
-
     }
 }

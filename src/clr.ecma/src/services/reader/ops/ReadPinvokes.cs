@@ -10,11 +10,11 @@ namespace Z0
     {
         public ParallelQuery<EcmaPinvoke> ReadPinvokes()
         {
-            var buffer = list<EcmaPinvoke>();
             var handles = MethodDefHandles();
             var key = AssemblyKey();
-            return from handle in handles
+            return from handle in handles                    
                     let method = MD.GetMethodDefinition(handle)
+                    where IsPinvoke(method)
                     select new EcmaPinvoke {
                         Token = EcmaTokens.token(handle),
                         Assembly = key,

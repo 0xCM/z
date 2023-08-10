@@ -1,4 +1,3 @@
 @echo off
 call %~dp0..\config.cmd
-cd %ProjectRoot%
-dotnet build
+dotnet build %~dp0../z0.cmd.csproj -c Release

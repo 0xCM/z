@@ -10,40 +10,6 @@ namespace Z0
     {
         const byte ZeroLimit = 10;
 
-        static ConcurrentDictionary<ApiToken,ApiEncoded> parse(IWfChannel channel, ReadOnlySpan<RawMemberCode> src)
-        {
-            var count = src.Length;
-            var buffer = span<byte>(Pow2.T16);
-            var host = ApiHostUri.Empty;
-            var dst = dict<ApiHostUri,CollectedCodeExtracts>();
-            var max = ByteSize.Zero;
-            for(var i=0; i<count; i++)
-            {
-                buffer.Clear();
-                var extracted = CollectedCodeExtract.Empty;
-                var extracts = CollectedCodeExtracts.Empty;
-                ref readonly var raw = ref skip(src,i);
-                var result = ApiCode.gather(raw, buffer, out extracted);
-                if(result.Fail)
-                {
-                    Errors.Throw($"StubCodeMismatch:{result.Message}");
-                }
-                else
-                {
-                    ref readonly var uri = ref raw.Uri;
-                    if(uri.Host != host)
-                        host = uri.Host;
-
-                    if(dst.TryGetValue(host, out extracts))
-                        extracts.Include(extracted);
-                    else
-                        dst[host] = new CollectedCodeExtracts(extracted);
-                }
-            }
-
-            return parse(dst, channel);
-        }
-
         static ConcurrentDictionary<ApiToken,ApiEncoded> parse(Dictionary<ApiHostUri,CollectedCodeExtracts> src, IWfChannel log)
         {
             var flow = log.Running(Msg.ParsingHosts.Format(src.Count));

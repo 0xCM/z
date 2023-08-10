@@ -9,20 +9,30 @@ namespace Z0
     using static Asm.SdmModels;
     using static sys;
 
-    public class IntelSdmCmd : WfAppCmd<IntelSdmCmd>
+    partial class IntelSdmCmd : WfAppCmd<IntelSdmCmd>
     {
         IntelSdm Sdm => Wf.IntelSdm();
+
+        IntelSdmPaths SdmPaths => Wf.SdmPaths();
 
         [CmdOp("sdm/export/tokens")]
         void ExportTokens()
         {
-            Sdm.ExportTokens();
+            new SymbolGroup(typeof(AsmOcTokens), typeof(AsmOcTokenKind)).ExportTokens(Channel,SdmPaths.Targets());
+            new SymbolGroup(typeof(AsmRegTokens), typeof(AsmRegTokenKind)).ExportTokens(Channel,SdmPaths.Targets());
+            new SymbolGroup(typeof(AsmSigTokens), typeof(AsmSigTokenKind)).ExportTokens(Channel,SdmPaths.Targets());
         }
 
         [CmdOp("sdm/export/charmaps")]
         void ExportCharMaps()
         {
             Sdm.ExportCharMaps();
+        }
+
+        [CmdOp("sdm/export/splits")]
+        void ExportSplits()
+        {
+            Sdm.ExportSplitDefs();
         }
 
         [CmdOp("sdm/export/opcodes")]
@@ -44,28 +54,34 @@ namespace Z0
             Sdm.ImportForms();
         }
 
-        [CmdOp("sdm/check/opcodes")]
-        void CheckAsmOpCodes()
-        {
-            var result = Outcome.Success;
-            var src = Sdm.LoadOcDetails();
-            var count = src.Count;
-            var tokens = list<string>();
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var detail = ref src[i];
-                ref readonly var input = ref detail.OpCodeExpr;
-                tokens.Clear();
-                SdmOpCodes.tokenize(detail.OpCodeExpr, tokens);
-                var expr = tokens.Join(EmptyString);
-                if(expr != detail.OpCodeExpr)
-                {
-                    Channel.Error($"Equality failure: {expr} != {detail.OpCodeExpr}");
-                    break;
-                }
 
-                Channel.Row(tokens.Join(EmptyString));
-            }            
+        [CmdOp("sdm/opcodes")]
+        void CheckAsmOpCodes()
+        {            
+            var src = Sdm.CalcOpCodes();
+            var formatter = CsvTables.formatter<SdmOpCodeDetail>();
+            iter(src, oc => {
+                Channel.Row(formatter.Format(oc));
+            });
+            // var result = Outcome.Success;
+            // var src = Sdm.LoadOcDetails();
+            // var count = src.Count;
+            // var tokens = list<string>();
+            // for(var i=0; i<count; i++)
+            // {
+            //     ref readonly var detail = ref src[i];
+            //     ref readonly var input = ref detail.OpCodeExpr;
+            //     tokens.Clear();
+            //     SdmOpCodes.tokenize(detail.OpCodeExpr, tokens);
+            //     var expr = tokens.Join(EmptyString);
+            //     if(expr != detail.OpCodeExpr)
+            //     {
+            //         Channel.Error($"Equality failure: {expr} != {detail.OpCodeExpr}");
+            //         break;
+            //     }
+
+            //     Channel.Row(tokens.Join(EmptyString));
+            // }            
         }
 
         [CmdOp("sdm/check/sigs")]

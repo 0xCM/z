@@ -1,4 +1,3 @@
 @echo off
 call %~dp0..\config.cmd
-echo ShellPath=%ShellPath%
-call %ShellPath%
+%SlnRoot%\build\bin\z0.cmd\Release\net8.0\win-x64\zcmd.exe %*

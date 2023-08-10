@@ -175,13 +175,13 @@ namespace Z0
             Bitfields.pack4x2(skip(offsets,4), skip(offsets,5), ref seek(dst,4));
         }
          
-        public static string format<T>(T src)
-            where T : unmanaged, IAsmByte
-                => src.IsEmpty ? EmptyString : src.Value().FormatHex(zpad:true, specifier:true, uppercase:true);
+        // public static string format<T>(T src)
+        //     where T : unmanaged, IAsmByte
+        //         => src.IsEmpty ? EmptyString : src.Value().FormatHex(zpad:true, specifier:true, uppercase:true);
 
         [MethodImpl(Inline), Op]
         public static ModRm modrm(byte mod, byte reg, byte rm)
-            => new ModRm(join((rm, 0), (reg, 3), (mod, 6)));
+            => new (join((rm, 0), (reg, 3), (mod, 6)));
 
         [MethodImpl(Inline), Op]
         public static ModRm modrm(RegIndex reg, RegIndex rm)
@@ -193,7 +193,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static Sib sib(uint3 @base, uint3 index, uint2 scale)
-            => new Sib(join((scale, 0), (index, 2), (@base, 6)));
+            => new (join((scale, 0), (index, 2), (@base, 6)));
 
         public static string bitstring(Sib src)
             => string.Format("{0} {1} {2}", BitRender.format2(src.Scale), BitRender.format3(src.Index), BitRender.format3(src.Base));

@@ -9,8 +9,24 @@ namespace Z0
     using W = W3;
 
     [DataWidth(Width,StorageWidth)]
-    public readonly struct Hex3
+    public readonly record struct Hex3
     {
+        [Parser]
+        public static bool parse(ReadOnlySpan<char> src, out Hex3 dst)
+        {
+            var outcome = Hex.parse8u(src, out var x);
+            dst = new Hex3((Hex3Kind)(x & 0b111));
+            return outcome;
+        }
+
+        [Parser]
+        public static bool parse(string src, out Hex3 dst)
+        {
+            var outcome = Hex.parse8u(src, out var x);
+            dst = new Hex3((Hex3Kind)(x & 0b111));
+            return outcome;
+        }
+
         [MethodImpl(Inline), Op]
         public static char hexchar(UpperCased @case, Hex3 src)
             => (char)Hex.symbol(@case, (Hex3Kind)src.Value);
@@ -63,9 +79,6 @@ namespace Z0
 
         public override int GetHashCode()
             => Hash;
-
-        public override bool Equals(object src)
-            => src is H c && Equals(c);
 
         public string Text
         {

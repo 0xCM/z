@@ -11,8 +11,7 @@ namespace Z0
     using C = AsciCode;
 
     public class HexParser
-    {
-        
+    {        
         [Parser]
         public static bool parse(string src, out HexArray dst)
         {
@@ -46,7 +45,6 @@ namespace Z0
             dst = buffer;
             return true;
         }
-
 
         /// <summary>
         /// Removes leading or trailing hex specifiers
@@ -107,29 +105,14 @@ namespace Z0
             return outcome;
         }
 
-        [Parser]
         public static bool parse(ReadOnlySpan<char> src, out Hex2 dst)
-        {
-            var outcome = Hex.parse8u(src, out var x);
-            dst = new Hex2((Hex2Kind)(x & 0b11));
-            return outcome;
-        }
+            => Hex2.parse(src, out dst);
 
-        [Parser]
         public static bool parse(string src, out Hex3 dst)
-        {
-            var outcome = Hex.parse8u(src, out var x);
-            dst = new Hex3((Hex3Kind)(x & 0b111));
-            return outcome;
-        }
+            => Hex3.parse(src, out dst);
 
-        [Parser]
         public static bool parse(ReadOnlySpan<char> src, out Hex3 dst)
-        {
-            var outcome = Hex.parse8u(src, out var x);
-            dst = new Hex3((Hex3Kind)(x & 0b111));
-            return outcome;
-        }
+            => Hex3.parse(src, out dst);
 
         [Parser]
         public static bool parse(string src, out Hex4 dst)
@@ -147,81 +130,34 @@ namespace Z0
             return outcome;
         }
 
-        [Parser]
         public static bool parse(string src, out Hex8 dst)
-        {
-            var outcome = parse(src, out byte x);
-            dst = x;
-            return outcome;
-        }
+            => Hex8.parse(src, out dst);
 
-        [Parser]
         public static bool parse(ReadOnlySpan<char> src, out Hex8 dst)
-        {
-            var outcome = parse(src, out byte x);
-            dst = x;
-            return outcome;
-        }
+            => Hex8.parse(src, out dst);
 
-        [Parser]
         public static bool parse(ReadOnlySpan<char> src, out Hex12 dst)
-        {
-            dst = Hex12.Zero;
-            var storage = z32;
-            var buffer = bytes(storage);
-            var result = Hex.parse(src, buffer);
-            if(result && storage <= Hex12.MaxValue)
-                dst = (Hex12)storage;
-            return result;
-        }
+            => Hex12.parse(src, out dst);
 
-        [Parser]
+        public static bool parse(ReadOnlySpan<char> src, out Hex14 dst)
+            => Hex14.parse(src, out dst);
         public static bool parse(string src, out Hex16 dst)
-        {
-            var outcome = parse(src, out ushort x);
-            dst = x;
-            return outcome;
-        }
+            => Hex16.parse(src, out dst);
 
-        [Parser]
         public static bool parse(ReadOnlySpan<char> src, out Hex16 dst)
-        {
-            var outcome = parse(src, out ushort x);
-            dst = x;
-            return outcome;
-        }
+            => Hex16.parse(src, out dst);
 
-        [Parser]
         public static bool parse(string src, out Hex32 dst)
-        {
-            var outcome = parse(src, out uint x);
-            dst = x;
-            return outcome;
-        }
+            => Hex32.parse(src, out dst);
 
-        [Parser]
         public static bool parse(ReadOnlySpan<char> src, out Hex32 dst)
-        {
-            var outcome = parse(src, out uint x);
-            dst = x;
-            return outcome;
-        }
+            => Hex32.parse(src, out dst);
 
-        [Parser]
         public static bool parse(string src, out Hex64 dst)
-        {
-            var outcome = parse(src, out ulong x);
-            dst = x;
-            return outcome;
-        }
+            => Hex64.parse(src, out dst);
 
-        [Parser]
         public static bool parse(ReadOnlySpan<char> src, out Hex64 dst)
-        {
-            var outcome = parse(src, out ulong x);
-            dst = x;
-            return outcome;
-        }
+            => Hex64.parse(src, out dst);
 
         [Parser]
         public static bool parse(string src, out sbyte dst)
@@ -282,17 +218,5 @@ namespace Z0
         [Parser]
         public static bool parse64u(ReadOnlySpan<char> src, out ulong dst)
             => ulong.TryParse(clear(src), NumberStyles.HexNumber, null,  out dst);
-
-        [Parser]
-        public static bool parse(ReadOnlySpan<char> src, out Hex14 dst)
-        {
-            dst = Hex14.Zero;
-            var storage = z32;
-            var buffer = bytes(storage);
-            var result = Hex.parse(src, buffer);
-            if(result && storage <= Hex14.MaxValue)
-                dst = (Hex14)storage;
-            return result;
-        }
     }
 }

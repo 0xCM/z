@@ -12,10 +12,16 @@ namespace Z0.Asm
     public class IntelSdmPaths : WfSvc<IntelSdmPaths>
     {
         static IDbArchive SdmDb()
-            => AppSettings.SdmDb();
+            => IntelPaths.Service.SdmDb();
         
         public IDbArchive Sources()
             => SdmDb().Scoped("sources");
+
+        public IDbArchive SourceDocs()
+            => Sources("documents");
+
+        public IDbArchive CsvSources()
+            => Sources().Sources("instructions");
 
         public IDbArchive Targets()
             => SdmDb().Scoped("targets");
@@ -46,7 +52,7 @@ namespace Z0.Asm
             => Settings().Path(FS.file("sdm.splits", FS.Csv));
 
         public FilePath SdmSrcVol(byte vol)
-            => Sources().Path(FS.file(string.Format("intel-sdm-vol{0}", vol), FS.Txt));
+            => SourceDocs().Path(FS.file(string.Format("intel-sdm-vol{0}", vol), FS.Txt));
 
         public FilePath SdmDstVol(byte vol)
             => Targets().Path(FS.file(string.Format("intel-sdm-vol{0}-{1}", vol, "lined"), FS.Txt));
@@ -66,17 +72,14 @@ namespace Z0.Asm
         public FilePath FormDetailDst()
             => Targets().Table<SdmFormDetail>(sdm);
 
-        public FilePath CharMapDst()
-            => Targets().Path(FS.file("sdm.charmap", FS.Config));
+        public FilePath CharMapSettings()
+            => Settings().Path(FS.file("sdm.charmap", FS.Config));
 
         public FilePath UnmappedCharLog()
             => Logs().Path("sdm.unmapped", FileKind.Log);
 
         public FilePath SdmSrcPath()
-            => Sources().Path(FS.file("intel-sdm", FS.Txt));
-
-        public IDbArchive CsvSources()
-            => Sources().Sources("sdm.instructions");
+            => SourceDocs().Path(FS.file("intel-sdm", FS.Txt));
 
         public FilePath TokensDst(string sort)
             => Targets().Path(sort,FileKind.Csv);

@@ -7,6 +7,7 @@ namespace Z0.Asm;
 using TK = AsmOcTokenKind;
 using T = AsmOcSymbols;
 
+[LiteralProvider(Group)]
 public class AsmOcTokens
 {
     const string Group = "asm.opcodes";
@@ -102,14 +103,60 @@ public class AsmOcTokens
         Vsib,
     }
 
+    /// <summary>
+    /// Table 2-30, EVEX Prefix Bit Field Functional Grouping
+    /// </summary>
     [SymSource(Group), TokenKind(TK.Evex)]
     public enum EvexToken : byte
     {
-        [Symbol(T.Evex)]
-        EVEX,
+        [Symbol(T.mmmm, "Access to up to eight decoding maps")]
+        mmmm,
 
-        [Symbol(T.n512)]
+        [Symbol(T.RPrime, "High-16 register specifier modifier")]
+        RPrime,
+
+        [Symbol(T.RXB, "Next-8 register specifier modifier")]
+        RXB,
+
+        [Symbol(T.X, "High-16 register specifier modifier")]
+        X,
+
+        [Symbol(T.pp, "Compressed legacy prefix")]
+        pp,
+
+        [Symbol(T.vvv, "VVVV register specifier")]
+        vvvv,
+
+        [Symbol(T.W, "Operand size promotion/Opcode extension")]
+        W,
+
+        [Symbol(T.aaa, "Embedded opmask register specifier")]
+        aaa,
+
+        [Symbol(T.VPrime, "High-16 VVVV/VIDX register specifier")]
+        VPrime,
+
+        [Symbol(T.b, "Broadcast/RC/SAE Context")]
+        b,
+
+        [Symbol(T.LPrimeL, "Vector length/RC")]
+        LPrimeL,
+        
+        [Symbol(T.z, "Zeroing/Merging")]
+        z,
+
+        [Symbol(T.n128)]
+        W128,
+
+        [Symbol(T.n256)]
+        W256,
+
+        [Symbol(T.n512, "zmm register")]
         W512,
+
+        [Symbol(T.W0)]
+        W0,
+
     }
 
     [SymSource(Group), TokenKind(TK.Disp)]

@@ -77,7 +77,7 @@ namespace Z0
 
         public static MethodSlots<I> slots<I>(Type src)
             where I : unmanaged
-                => new MethodSlots<I>(slots(src));
+                => new (slots(src));
 
         [Op]
         public static ReadOnlySeq<MethodSlot> slots(Type src)

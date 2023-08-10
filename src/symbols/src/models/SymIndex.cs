@@ -21,18 +21,21 @@ namespace Z0
 
         readonly Index<SymVal> _Values;
 
-        SymIndex()
-        {
-            Data = array<Sym>();
-            _Kinds = array<ulong>();
-            _SymbolMap = new();
-            _ValueMap = new();
-            _Values = Index<SymVal>.Empty;
-        }
+        public readonly Type RuntimeType;
+
+        // SymIndex()
+        // {
+        //     Data = array<Sym>();
+        //     _Kinds = array<ulong>();
+        //     _SymbolMap = new();
+        //     _ValueMap = new();
+        //     _Values = Index<SymVal>.Empty;
+        // }
 
         [MethodImpl(Inline)]
-        internal SymIndex(Index<Sym> src, Dictionary<string,Sym> symMap, Dictionary<SymVal,Sym> valMap)
+        internal SymIndex(Type type, Index<Sym> src, Dictionary<string,Sym> symMap, Dictionary<SymVal,Sym> valMap)
         {
+            RuntimeType = type;
             Data = src;
             _Kinds = src.Select(x => x.Kind);
             _SymbolMap = symMap;
@@ -41,6 +44,10 @@ namespace Z0
 
         }
 
+        Type ISymIndex.RuntimeType
+            => RuntimeType;
+
+            
         [MethodImpl(Inline)]
         public SymIndex Untyped()
             => this;

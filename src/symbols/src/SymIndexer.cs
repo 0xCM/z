@@ -49,7 +49,7 @@ namespace Z0
                 seek(dst,i) = new Sym(lit.Identity, lit.Group, lit.Index, lit.Type, lit.Value, lit.Name, lit.Symbol.Text, lit.Description, lit.Hidden, lit.FieldValue, lit.Size);
             }
 
-            return new SymIndex(symbols, luString(symbols), luValue(symbols));
+            return new SymIndex(t, symbols, luString(symbols), luValue(symbols));
         }
 
         [Op, Closures(Closure)]
@@ -61,7 +61,7 @@ namespace Z0
             where E : unmanaged
         {
             var symbols = src.Select(x => untype(x));
-            return new SymIndex(symbols, luString(symbols), luValue(symbols));
+            return new SymIndex(typeof(E), symbols, luString(symbols), luValue(symbols));
         }
 
         [Op]

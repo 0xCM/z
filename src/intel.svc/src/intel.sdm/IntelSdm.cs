@@ -30,7 +30,6 @@ namespace Z0.Asm
             try
             {
                 Clear();
-                ExportTokens();
                 ExportOpCodes();
                 ExportCharMaps();
                 ImportVolumes();

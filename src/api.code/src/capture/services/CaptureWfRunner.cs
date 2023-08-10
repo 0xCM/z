@@ -27,7 +27,6 @@ namespace Z0
             Settings = settings;
             Channel = wf.Channel;
             Transport = transport;
-            Wf.RedirectEmissions(Loggers.emission(Target.Path("capture.emissions", FileKind.Csv)));
         }
 
         public ReadOnlySeq<ApiEncoded> Run(IApiCatalog src)

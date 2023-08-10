@@ -67,6 +67,6 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         static MemoryBlock memory(in ApiCodeRow src)
-            => new MemoryBlock(new MemoryRange(src.Address, src.Address + src.Data.Size), src.Data);
+            => new (new MemoryRange(src.Address, src.Address + src.Data.Size), src.Data);
     }
 }

@@ -10,7 +10,7 @@ namespace Z0.Asm
     partial class IntelSdm
     {
         public Index<SdmOpCodeDetail> CalcOpCodes()
-            => CalcOpCodes(SdmPaths.Sources("sdm.instructions").Files(FS.Csv).ToReadOnlySpan());
+            => CalcOpCodes(SdmPaths.Sources("instructions").Files(FS.Csv).ToReadOnlySpan());
 
         Index<SdmOpCodeDetail> CalcOpCodes(ReadOnlySpan<FilePath> src)
         {

@@ -71,9 +71,6 @@ public static class XSvc
         public XedToolCmd XedToolCmd(IWfRuntime wf)
             => Service<XedToolCmd>(wf);
 
-        public IApiService SdmCmd(IWfRuntime wf)
-            => Service<IntelSdmCmd>(wf);
-
         public Xed Xed(IWfRuntime wf)
             => Service<Xed>(wf);
 
@@ -129,9 +126,6 @@ public static class XSvc
 
     public static IntelSdmPaths SdmPaths(this IWfRuntime wf)
         => Services.SdmPaths(wf);
-
-    public static IApiService SdmCmd(this IWfRuntime wf)
-        => Services.SdmCmd(wf);
 
     public static Xed Xed(this IWfRuntime wf)
         => Services.Xed(wf);

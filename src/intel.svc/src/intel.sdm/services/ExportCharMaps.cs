@@ -6,12 +6,11 @@ namespace Z0.Asm
 {
     partial class IntelSdm
     {
-        public Outcome ExportCharMaps()
+        public void ExportCharMaps()
         {
             var map = CharMaps.create(TextEncodings.Unicode, TextEncodings.Asci);
-            CharMaps.emit(Channel, map, SdmPaths.CharMapDst());
+            CharMaps.emit(Channel, map, SdmPaths.CharMapSettings());
             CharMaps.unmapped(Channel, map, SdmPaths.SdmSrcPath(), SdmPaths.UnmappedCharLog());
-            return true;
         }
     }
 }

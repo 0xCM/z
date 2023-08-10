@@ -11,9 +11,25 @@ namespace Z0
     [DataWidth(Width)]
     public readonly struct Hex16 : IHexNumber<H,W,K>
     {
+        [Parser]
+        public static bool parse(string src, out H dst)
+        {
+            var result = K.TryParse(HexParser.clear(src), NumberStyles.HexNumber, null, out K _dst);
+            dst = _dst;
+            return result;
+        }
+
+        [Parser]
+        public static bool parse(ReadOnlySpan<char> src, out H dst)
+        {
+            var result = K.TryParse(HexParser.clear(src), NumberStyles.HexNumber, null, out K _dst);
+            dst = _dst;
+            return result;
+        }
+
         public const K MaxValue = Pow2.T16m1;
 
-        public static H Max => new H(MaxValue);
+        public static H Max => new (MaxValue);
 
         public const byte Width = 16;
 

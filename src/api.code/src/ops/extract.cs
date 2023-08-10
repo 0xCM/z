@@ -30,12 +30,12 @@ namespace Z0
             return new ApiMemberExtract(src, new ApiExtractBlock(@base, src.OpUri.Format(), extracted));
         }
 
-        [Op]
-        public static unsafe ApiMemberExtract extract(in ResolvedMethod src, Span<byte> buffer)
-        {
-            var size = Bytes.readz(MaxZeroCount, src.EntryPoint, buffer);
-            var block = new ApiExtractBlock(src.EntryPoint, src.Uri.Format(), slice(buffer,0, size).ToArray());
-            return new ApiMemberExtract(member(src), block);
-        }
+        // [Op]
+        // public static unsafe ApiMemberExtract extract(in ResolvedMethod src, Span<byte> buffer)
+        // {
+        //     var size = Bytes.readz(MaxZeroCount, src.EntryPoint, buffer);
+        //     var block = new ApiExtractBlock(src.EntryPoint, src.Uri.Format(), slice(buffer,0, size).ToArray());
+        //     return new ApiMemberExtract(member(src), block);
+        // }
     }
 }

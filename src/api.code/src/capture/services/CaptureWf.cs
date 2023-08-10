@@ -14,7 +14,8 @@ namespace Z0
         }
 
         static CaptureWfRunner runner(IWfRuntime wf, CaptureWfSettings settings, IApiPack dst, CaptureTransport transport)
-            => new CaptureWfRunner(wf, settings, dst, transport);
+            => new (wf, settings, dst, transport);
+
 
         public static ReadOnlySeq<ApiEncoded> run(IWfRuntime wf, CmdArgs args)
         {
@@ -33,8 +34,8 @@ namespace Z0
                         channel.Warn($"{arg.Value} is not a part");
                 });
 
-                settings.Parts = parts.ToSeq();
-                catalog = ApiCatalog.catalog();
+                settings.Parts = parts.ToSeq();                
+                catalog = ApiCatalog.catalog(ApiAssemblies.Components.Where(c => parts.Contains(c.PartName())));
             }
             else
             {

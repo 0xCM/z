@@ -15,6 +15,14 @@ namespace Z0
         public static char hexchar(UpperCased @case, Hex2 src)
             => (char)Hex.symbol(@case, (Hex2Kind)src.Value);
 
+        [Parser]
+        public static bool parse(ReadOnlySpan<char> src, out Hex2 dst)
+        {
+            var outcome = Hex.parse8u(src, out var x);
+            dst = new Hex2((Hex2Kind)(x & 0b11));
+            return outcome;
+        }
+
         public readonly K Value;
 
         public const byte Width = 2;
@@ -143,6 +151,6 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator H(Hex1Kind src)
-            => new H((byte)src);
+            => new ((byte)src);
     }
 }

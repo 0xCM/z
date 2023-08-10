@@ -6,6 +6,8 @@ namespace Z0
 {
     public interface ISymIndex
     {
+        Type RuntimeType {get;}
+
         SymIndex Untyped();
 
         ReadOnlySpan<SymVal> Values {get;}
@@ -32,6 +34,9 @@ namespace Z0
     public interface ISymIndex<K> : ISymIndex
         where K : unmanaged
     {
+        Type ISymIndex.RuntimeType
+            => typeof(K);
+            
         ReadOnlySpan<K> Kinds {get;}
 
         ReadOnlySpan<Sym<K>> View {get;}

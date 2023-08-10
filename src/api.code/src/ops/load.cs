@@ -76,14 +76,14 @@ namespace Z0
             src.Sort(EncodedMember.comparer(EncodedMember.CmpKind.Target));
             var offset = 0u;
             var count = src.Count;
-            var offsets = sys.alloc<uint>(count);
-            var tokens = sys.alloc<ApiToken>(count);
+            var offsets = alloc<uint>(count);
+            var tokens = alloc<ApiToken>(count);
             for(var i=0; i<count; i++)
             {
                 ref readonly var info = ref src[i];
                 ref readonly var size = ref info.CodeSize;
                 if(offset + size > code.Length)
-                    sys.@throw(string.Format("Offset exceeded at {0} for {1}", i, info.Uri));
+                    @throw(string.Format("Offset exceeded at {0} for {1}", i, info.Uri));
 
                 seek(offsets,i) = offset;
                 ApiIdentity.parse(info.Uri, out var uri).Require();

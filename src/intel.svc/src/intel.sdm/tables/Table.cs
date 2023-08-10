@@ -10,11 +10,11 @@ namespace Z0
     {
         [MethodImpl(Inline), Op]
         public static TableCell cell(object content)
-            => new TableCell(content);
+            => new (content);
 
         [MethodImpl(Inline), Op]
         public static TableColumn column(string name, string type, ushort length)
-            => new TableColumn(name, type, length);
+            => new (name, type, length);
 
         public static TableColumn column<K>(string name)
             where K : unmanaged, Enum

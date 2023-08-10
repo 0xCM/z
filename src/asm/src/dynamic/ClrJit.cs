@@ -28,7 +28,7 @@ namespace Z0
 
         [Op]
         public static ApiMember member(in ResolvedMethod src)
-            => new ApiMember(src.Uri, src.Method, src.EntryPoint, ClrDynamic.msil(src.EntryPoint, src.Uri, src.Method));
+            => new (src.Uri, src.Method, src.EntryPoint, ClrDynamic.msil(src.EntryPoint, src.Uri, src.Method));
 
         [Op]
         static Index<ApiMember> members(JittedMethod[] src)
@@ -166,7 +166,6 @@ namespace Z0
 
         static ApiMember[] generic(IApiHost src, IWfChannel emitter)
             => generic(src.HostType, emitter);
-
 
         [Op]
         static ApiMember[] generic(JittedMethod src, IWfChannel channel)

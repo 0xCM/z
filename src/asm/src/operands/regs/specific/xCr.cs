@@ -15,7 +15,7 @@ namespace Z0.Asm.Operands
 
     public readonly struct xCr : IRegOp64<xCr>
     {
-        public RegIndexCode Index {get;}
+        public I Index {get;}
 
         [MethodImpl(Inline)]
         public xCr(I index)
@@ -49,15 +49,15 @@ namespace Z0.Asm.Operands
 
 
         [MethodImpl(Inline)]
-        public AsmOperand Untyped()
-            => new AsmOperand(this);
+        public O Untyped()
+            => new (this);
 
         [MethodImpl(Inline)]
         public static implicit operator RegOp(G src)
             => reg(src.Size, src.RegClassCode, src.Index);
 
         [MethodImpl(Inline)]
-        public static implicit operator AsmOperand(G src)
+        public static implicit operator O(G src)
             => src.Untyped();
 
         [MethodImpl(Inline)]
@@ -66,15 +66,15 @@ namespace Z0.Asm.Operands
 
         [MethodImpl(Inline)]
         public static implicit operator G(K src)
-            => new G((I)src);
+            => new ((I)src);
 
         [MethodImpl(Inline)]
         public static implicit operator G(uint4 src)
-            => new G((I)(byte)src);
+            => new ((I)(byte)src);
 
         [MethodImpl(Inline)]
         public static implicit operator G(I src)
-            => new G(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator I(G src)
@@ -86,10 +86,10 @@ namespace Z0.Asm.Operands
 
         [MethodImpl(Inline)]
         public static implicit operator G(Sym<K> src)
-            => new G((I)src.Kind);
+            => new ((I)src.Kind);
 
         [MethodImpl(Inline)]
         public static implicit operator G(RegKind src)
-            => new G(index(src));
+            => new (index(src));
     }
 }

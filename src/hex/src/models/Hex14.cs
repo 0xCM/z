@@ -8,8 +8,20 @@ namespace Z0
     using K = UInt16;
 
     [DataWidth(Width,StorageWidth)]
-    public readonly struct Hex14 : IEquatable<Hex14>, IComparable<Hex14>
+    public readonly record struct Hex14 : IEquatable<H>, IComparable<H>
     {
+        [Parser]
+        public static bool parse(ReadOnlySpan<char> src, out H dst)
+        {
+            dst = Zero;
+            var storage = z32;
+            var buffer = sys.bytes(storage);
+            var result = Hex.parse(src, buffer);
+            if(result && storage <= H.MaxValue)
+                dst = (H)storage;
+            return result;
+        }
+
         public const byte Width = 14;
 
         const byte StorageWidth = 16;
@@ -71,9 +83,6 @@ namespace Z0
         public override int GetHashCode()
             => Hash;
 
-        public override bool Equals(object src)
-            => src is H c && Equals(c);
-
         public string Text
         {
             [MethodImpl(Inline)]
@@ -94,23 +103,23 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static H operator + (H x, H y)
-            => new H(x.Value + y.Value);
+            => new (x.Value + y.Value);
 
         [MethodImpl(Inline)]
         public static H operator - (H x, H y)
-            => new H(x.Value - y.Value);
+            => new (x.Value - y.Value);
 
         [MethodImpl(Inline)]
         public static H operator * (H x, H y)
-            => new H(x.Value * y.Value);
+            => new (x.Value * y.Value);
 
         [MethodImpl(Inline)]
         public static H operator / (H x, H y)
-            => new H(x.Value / y.Value);
+            => new (x.Value / y.Value);
 
         [MethodImpl(Inline)]
         public static H operator % (H x, H y)
-            => new H(x.Value % y.Value);
+            => new (x.Value % y.Value);
 
         [MethodImpl(Inline)]
         public static H operator &(H x, H y)
@@ -144,13 +153,6 @@ namespace Z0
         public static H operator --(H x)
             => new H(~x.Value);
 
-        [MethodImpl(Inline)]
-        public static bool operator ==(H x, H y)
-            => x.Value == y.Value;
-
-        [MethodImpl(Inline)]
-        public static bool operator !=(H x, H y)
-            => x.Value != y.Value;
 
         [MethodImpl(Inline)]
         public static bool operator < (H x, H y)

@@ -10,7 +10,7 @@ namespace Z0
     {
         [Op]
         public static ApiMember member(in ResolvedMethod src)
-            => new ApiMember(src.Uri, src.Method, src.EntryPoint, ClrDynamic.msil(src.EntryPoint, src.Uri, src.Method));
+            => new (src.Uri, src.Method, src.EntryPoint, ClrDynamic.msil(src.EntryPoint, src.Uri, src.Method));
 
     }
 }

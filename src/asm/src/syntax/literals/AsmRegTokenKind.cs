@@ -9,6 +9,9 @@ public enum AsmRegTokenKind
 {
     None,
 
+    [Symbol("gp")]
+    Gp,
+
     [Symbol("gp8lo")]
     Gp8Lo,
 

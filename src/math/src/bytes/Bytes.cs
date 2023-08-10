@@ -19,6 +19,38 @@ namespace Z0
         const NumericKind Closure = UnsignedInts;
 
         [MethodImpl(Inline), Op]
+        public unsafe static Vector128<byte> vload(W128 w, byte* pSrc)
+            => LoadDquVector128(pSrc);
+
+        [MethodImpl(Inline), Op]
+        public unsafe static Vector128<sbyte> vload(W128 w, sbyte* pSrc)
+            => LoadDquVector128(pSrc);
+
+        [MethodImpl(Inline), Op]
+        public unsafe static Vector128<short> vload(W128 w, short* pSrc)
+            => LoadDquVector128(pSrc);
+
+        [MethodImpl(Inline), Op]
+        public unsafe static Vector128<ushort> vload(W128 w, ushort* pSrc)
+            => LoadDquVector128(pSrc);
+
+        [MethodImpl(Inline), Op]
+        public unsafe static Vector128<uint> vload(W128 w, uint* pSrc)
+            => LoadDquVector128(pSrc);
+
+        [MethodImpl(Inline), Op]
+        public unsafe static Vector128<int> vload(W128 w, int* pSrc)
+            => LoadDquVector128(pSrc);
+
+        [MethodImpl(Inline), Op]
+        public unsafe static Vector128<long> vload(W128 w, long* pSrc)
+            => LoadDquVector128(pSrc);
+
+        [MethodImpl(Inline), Op]
+        public unsafe static Vector128<ulong> vload(W128 w, ulong* pSrc)
+            => LoadDquVector128(pSrc);
+
+        [MethodImpl(Inline), Op]
         public unsafe static Vector256<byte> vload(W256 w, byte* pSrc)
             => LoadDquVector256(pSrc);
 
@@ -73,6 +105,10 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static unsafe void vstore(Vector256<byte> src, ref byte dst, int offset)
+            => Store(refptr(ref dst, offset), src);
+
+        [MethodImpl(Inline), Op]
+        public static unsafe void vstore(Vector128<byte> src, ref byte dst, int offset)
             => Store(refptr(ref dst, offset), src);
 
         [MethodImpl(Inline), Store]

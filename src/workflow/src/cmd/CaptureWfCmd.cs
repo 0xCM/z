@@ -14,7 +14,10 @@ namespace Z0
 
         [CmdOp("capture")]
         void Capture(CmdArgs args)
-            => CaptureWf.run(Wf,args);
+        {
+            
+            CaptureWf.run(Wf,args);
+        }
 
         [CmdOp("capture/check")]
         void RunCaptureChecks(CmdArgs args)

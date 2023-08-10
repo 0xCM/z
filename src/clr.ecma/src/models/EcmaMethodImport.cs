@@ -28,13 +28,16 @@ namespace Z0
 
         public MethodSignature<string> MethodSignature;
 
-        public override string ToString()
-            => $"{Library}::{MethodName} -> ${TargetName}";
+        public readonly override string ToString()
+            => Format();
 
-        public override int GetHashCode()
-            => this.ToString().GetHashCode();
+        public readonly override int GetHashCode()
+            => Format().GetHashCode();
 
-        public int CompareTo(EcmaMethodImport src)
+        public readonly string Format()
+            => $"{Library}::{DeclaringType}.{MethodName} -> ${TargetName}";
+
+        public readonly int CompareTo(EcmaMethodImport src)
         {
             var result = Library.CompareTo(src.Library);
             if(result == 0)
@@ -45,6 +48,7 @@ namespace Z0
             }
             return result;
         }
+
         public static EcmaMethodImport Empty => new();
     }
 }

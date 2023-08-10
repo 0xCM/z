@@ -11,23 +11,27 @@ namespace Z0
         public static TextReplacements load(FilePath src)
         {
             const string Sep = " -> ";
+            
             var dst = dict<string,string>();
-            using var reader = src.Utf8LineReader();
-            while(reader.Next(out var line))
+            if(src.Exists)
             {
-                if(line.IsEmpty)
-                    continue;
+                using var reader = src.Utf8LineReader();
+                while(reader.Next(out var line))
+                {
+                    if(line.IsEmpty)
+                        continue;
 
-                var i = line.Index(Sep);
-                if(i == NotFound)
-                    continue;
+                    var i = line.Index(Sep);
+                    if(i == NotFound)
+                        continue;
 
-                var source = text.left(line.Content,i);
-                var target = text.right(line.Content,i + Sep.Length - 1);
-                if(Fenced.test(target, Fenced.SQuote))
-                    dst[source] = Fenced.unfence(target, Fenced.SQuote);
-                else
-                    dst[source] = target;
+                    var source = text.left(line.Content,i);
+                    var target = text.right(line.Content,i + Sep.Length - 1);
+                    if(Fenced.test(target, Fenced.SQuote))
+                        dst[source] = Fenced.unfence(target, Fenced.SQuote);
+                    else
+                        dst[source] = target;
+                }
             }
             return new TextReplacements(dst);
         }

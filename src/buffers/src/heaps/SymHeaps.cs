@@ -5,7 +5,8 @@
 namespace Z0
 {
     using static sys;
-    using System.Runtime.Intrinsics.X86;
+    
+    using System.Runtime.Intrinsics.X86;    
     
     public class SymHeaps
     {        
@@ -129,7 +130,7 @@ namespace Z0
             where K : unmanaged
             where O : unmanaged
             where L : unmanaged
-                => new SymHeap<K,O,L>(recover<HeapEntry<K,O,L>>(entries), data);
+                => new (recover<HeapEntry<K,O,L>>(entries), data);
 
         public static SymHeap<K,byte,byte> heap<K>(W8 wO, W8 wL)
             where K : unmanaged, Enum

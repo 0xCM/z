@@ -17,7 +17,7 @@ namespace Z0
         string Source;
         
         public static TableBuilder create()
-            => new TableBuilder(0);
+            => new (0);
 
         public TableBuilder(uint kind)
         {

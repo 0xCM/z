@@ -75,7 +75,7 @@ namespace Z0
             => catalog(components());
 
         public static ApiPartCatalog catalog(Assembly src)
-            => new ApiPartCatalog(src.PartName(), src, complete(src), hosts(src), SvcHostTypes(src));
+            => new (src.PartName(), src, complete(src), hosts(src), SvcHostTypes(src));
 
         public static ApiMemberIndex index(ApiHostCatalog src)
         {
@@ -95,7 +95,7 @@ namespace Z0
 
         [Op]
         public static ApiMember member(in ResolvedMethod src)
-            => new ApiMember(src.Uri, src.Method, src.EntryPoint, ClrDynamic.msil(src.EntryPoint, src.Uri, src.Method));
+            => new (src.Uri, src.Method, src.EntryPoint, ClrDynamic.msil(src.EntryPoint, src.Uri, src.Method));
 
         [Op, Closures(UInt64k)]
         public static ApiOpIndex<ApiMember> index(IEnumerable<(OpIdentity,ApiMember)> src)

@@ -32,6 +32,6 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static ApiCodeParser parser(byte[] buffer)
-            => new ApiCodeParser(EncodingPatterns.Default, buffer);        
+            => new (EncodingPatterns.Default, buffer);        
     }
 }

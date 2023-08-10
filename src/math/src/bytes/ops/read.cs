@@ -36,6 +36,23 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
+        public static void read16(byte* pSrc, ref byte dst, int offset)
+        {
+            vstore(vload(w128, pSrc), ref dst, offset);
+            pSrc +=16;
+            offset+= 16;
+        }
+
+        [MethodImpl(Inline), Op]
+        public static void read16(ref byte* pSrc, ref MemoryPage dst, ref ushort offset)
+        {
+            ref var target = ref u8(dst);
+            vstore(vload(w128, pSrc), ref target, offset);
+            pSrc +=16;
+            offset+= 16;
+        }
+
+        [MethodImpl(Inline), Op]
         public static void read32(ref byte* pSrc, ref MemoryPage dst, ref ushort offset)
         {
             ref var target = ref u8(dst);

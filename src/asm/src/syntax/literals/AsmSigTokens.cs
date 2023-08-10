@@ -6,6 +6,7 @@ namespace Z0.Asm;
 
 using TK = AsmSigTokenKind;
 
+[LiteralProvider(Group)]
 public class AsmSigTokens
 {
     const string Group = "asm.sigs";

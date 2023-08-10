@@ -9,8 +9,7 @@ namespace Z0
     using static sys;
 
     public class AsmTokens
-    {
-        
+    {        
         [MethodImpl(Inline), Op]
         public static ref readonly AsmTokens tokens()
             => ref Instance;
@@ -33,9 +32,6 @@ namespace Z0
 
         public static ref readonly ReadOnlySeq<AsmTokenRecord> OcTokenDefs => ref Instance._OcTokenDefs;
 
-        public static ReadOnlySpan<string> SigTokenValues => Instance.SigTokens.Keys;
-
-        public static ReadOnlySpan<string> OcTokenValues => Instance.OcTokens.Keys;
 
         ReadOnlySeq<AsmTokenRecord> _SigTokenDefs;
 
@@ -81,7 +77,7 @@ namespace Z0
             }
         }
 
-        static AsmTokens Instance;
+        static readonly AsmTokens Instance;
 
         static AsmTokens()
         {

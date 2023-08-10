@@ -11,6 +11,22 @@ namespace Z0
     [DataWidth(Width)]
     public readonly struct Hex8 : IHexNumber<H,W,K>
     {
+        [Parser]
+        public static bool parse(string src, out H dst)
+        {
+            var result = byte.TryParse(HexParser.clear(src), NumberStyles.HexNumber, null, out byte _dst);
+            dst = _dst;
+            return result;
+        }
+
+        [Parser]
+        public static bool parse(ReadOnlySpan<char> src, out H dst)
+        {
+            var result = byte.TryParse(HexParser.clear(src), NumberStyles.HexNumber, null, out byte _dst);
+            dst = _dst;
+            return result;
+        }
+
         public const byte Width = 8;
 
         public const byte MaxValue = Pow2.T08m1;
@@ -106,7 +122,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator H(byte src)
-            => new Hex8((Hex8Kind)src);
+            => new ((Hex8Kind)src);
 
         [MethodImpl(Inline)]
         public static implicit operator byte(H src)
@@ -130,42 +146,42 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator H(Hex1Kind src)
-            => new H((byte)src);
+            => new ((byte)src);
 
         [MethodImpl(Inline)]
         public static implicit operator H(Hex2Kind src)
-            => new H((byte)src);
+            => new ((byte)src);
 
         [MethodImpl(Inline)]
         public static implicit operator H(Hex3Kind src)
-            => new H((byte)src);
+            => new ((byte)src);
 
         [MethodImpl(Inline)]
         public static implicit operator H(Hex4Kind src)
-            => new H((byte)src);
+            => new ((byte)src);
 
         [MethodImpl(Inline)]
         public static implicit operator H(Hex5Kind src)
-            => new H((byte)src);
+            => new ((byte)src);
 
         [MethodImpl(Inline)]
         public static implicit operator H(Address8 src)
-            => new H((byte)src);
+            => new ((byte)src);
 
         [MethodImpl(Inline)]
         public static implicit operator Address8(H src)
-            => new Address8(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static explicit operator H(Hex16 src)
-            => new H((byte)src.Value);
+            => new ((byte)src.Value);
 
         [MethodImpl(Inline)]
         public static explicit operator H(Hex32 src)
-            => new H((byte)src.Value);
+            => new ((byte)src.Value);
 
         [MethodImpl(Inline)]
         public static explicit operator H(Hex64 src)
-            => new H((byte)src.Value);
+            => new ((byte)src.Value);
     }
 }

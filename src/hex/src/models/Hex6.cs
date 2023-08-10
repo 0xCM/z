@@ -9,7 +9,7 @@ namespace Z0
     using W = W6;
 
     [DataWidth(Width,StorageWidth)]
-    public readonly struct Hex6
+    public readonly record struct Hex6
     {
         public const byte Width = 6;
 
@@ -41,15 +41,9 @@ namespace Z0
         public Hex6(byte src)
             => Value = (K)src & KMax;
 
-        // K IHexNumber<K>.Value
-        //     => Value;
-
         [MethodImpl(Inline)]
         public bool Equals(H src)
             => Value == src.Value;
-
-        public override bool Equals(object src)
-            => src is H c && Equals(c);
 
         public bool IsZero
         {
