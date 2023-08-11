@@ -17,7 +17,7 @@ namespace Z0
 
         readonly Index<E> _Values;
 
-        readonly Index<ClrEnumFieldAdapter<E>> _EnumFields;
+        readonly Index<ClrEnumMember<E>> _EnumFields;
 
         readonly Index<EnumLiteralDetail<E>> _Details;
 
@@ -32,7 +32,7 @@ namespace Z0
             get => _Details.Storage;
         }
 
-        public Index<ClrEnumFieldAdapter<E>> EnumFields
+        public Index<ClrEnumMember<E>> EnumFields
         {
             [MethodImpl(Inline)]
             get => _EnumFields;
@@ -81,11 +81,11 @@ namespace Z0
             return buffer;
         }
 
-        Index<ClrEnumFieldAdapter<E>> fields()
+        Index<ClrEnumMember<E>> fields()
         {
             var values = _Values.View;
             var defs = _FieldDefs.View;
-            var buffer = alloc<ClrEnumFieldAdapter<E>>(_FieldCount);
+            var buffer = alloc<ClrEnumMember<E>>(_FieldCount);
             ref var dst = ref first(buffer);
             for(var i=0u; i<_FieldCount; i++)
                 seek(dst,i) = Enums.field(i, skip(defs,i),  skip(values,i));

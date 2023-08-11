@@ -46,30 +46,26 @@ namespace Z0
             Channel.EmittedFile(flow,count);
         }
 
-        public uint Emit(uint margin, string name, ReadOnlySpan<Type> enums, ITextBuffer dst)
+        public static uint Emit(uint margin, string name, ReadOnlySpan<Type> enums, ITextBuffer dst)
         {
             dst.IndentLine(margin, PublicReadonlyStruct(name));
             dst.IndentLine(margin, Open());
             margin +=4;
             var counter = 0u;
             for(var i=0; i<enums.Length; i++)
-            {
-                ref readonly var type = ref skip(enums,i);
-                var adapted = Enums.adapt(type);
-                counter += Emit(margin, adapted, dst);
-            }
+                counter += Emit(margin, ClrEnumType.from(skip(enums,i)), dst);
             margin -=4;
             dst.IndentLine(margin, Close());
             return counter;
         }
 
-        public uint Emit(uint margin, ClrEnumAdapter src, ITextBuffer dst)
+        public static uint Emit(uint margin, ClrEnumType src, ITextBuffer dst)
         {
             var counter = 0u;
             var members = src.Members;
             for(var j=0; j<members.Length; j++)
             {
-                ref readonly var member = ref skip(members,j);
+                ref readonly var member = ref members[j];
                 var name = member.Name;
                 var tag = member.Definition.Tag<SymbolAttribute>();
                 var symbol = text.ifempty(tag.MapValueOrDefault(t => t.Symbol, name),name);

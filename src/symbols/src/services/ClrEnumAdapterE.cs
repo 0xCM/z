@@ -13,7 +13,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public ClrEnumInfo<E> Describe()
-            => new ClrEnumInfo<E>(address(_Details), address(_Literals), address(_Fields), FieldCount);
+            => new (address(_Details), address(_Literals), address(_Fields), FieldCount);
 
         public Count FieldCount
         {
@@ -27,19 +27,13 @@ namespace Z0
             get => Definition.MetadataToken;
         }
 
-        public ClrEnumAdapter Untyped
-        {
-            [MethodImpl(Inline)]
-            get => new ClrEnumAdapter(Definition);
-        }
-
         public ReadOnlySpan<E> Literals
         {
             [MethodImpl(Inline)]
             get => _Literals.View;
         }
 
-        public ReadOnlySpan<ClrEnumFieldAdapter<E>> Fields
+        public ReadOnlySpan<ClrEnumMember<E>> Fields
         {
             [MethodImpl(Inline)]
             get => _Fields.View;
@@ -64,10 +58,6 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public static implicit operator ClrEnumAdapter(ClrEnumAdapter<E> src)
-            => src.Untyped;
-
-        [MethodImpl(Inline)]
         public static implicit operator Type(ClrEnumAdapter<E> src)
             => src.Definition;
 
@@ -83,9 +73,9 @@ namespace Z0
         static readonly Index<EnumLiteralDetail<E>> _Details = Provider.Details;
 
         [FixedAddressValueType]
-        static Index<E> _Literals = Provider.LiteralValues;
+        static readonly Index<E> _Literals = Provider.LiteralValues;
 
         [FixedAddressValueType]
-        static Index<ClrEnumFieldAdapter<E>> _Fields = Provider.EnumFields;
+        static readonly Index<ClrEnumMember<E>> _Fields = Provider.EnumFields;
     }
 }

@@ -7,8 +7,8 @@ namespace Z0
     partial struct Enums
     {
         [MethodImpl(Inline)]
-        public static ClrEnumFieldAdapter<E> field<E>(uint index, FieldInfo src, E value)
+        public static ClrEnumMember<E> field<E>(uint index, FieldInfo src, E value)
             where E : unmanaged, Enum
-                => new ClrEnumFieldAdapter<E>(index,src,value);
+                => new (index,src,value);
     }
 }

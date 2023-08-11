@@ -13,8 +13,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static ClrEnumAdapter<E> @enum<E>()
-            where E : unmanaged, Enum
-     
+            where E : unmanaged, Enum    
                 => default;
 
         [MethodImpl(Inline), Op, Closures(UInt64k)]

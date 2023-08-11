@@ -2,55 +2,54 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+[ApiComplete]
+public sealed class ApiSets : IApiSets
 {
-    [ApiComplete]
-    public sealed class ApiSets : IApiSets
+    public ReadOnlySeq<ApiSets> apisets(ReadOnlySeq<Assembly> src)
+        => src.Select(apiset);
+
+    public static ApiSets apiset(Assembly src)
+        => new (src);
+
+    [MethodImpl(Inline)]
+    static ReadOnlySeq<Type> hosts(Assembly src)
+        => src.Types().Tagged<ApiSetAttribute>();
+
+    [MethodImpl(Inline)]
+    static ReadOnlySeq<MethodInfo> ops(ReadOnlySeq<Type> src)
+        => src.Storage.Methods().Tagged<ApiAttribute>();
+
+    readonly Assembly _Source;
+
+    readonly ReadOnlySeq<Type> _Hosts;
+
+    readonly ReadOnlySeq<MethodInfo> _Ops;
+
+    [MethodImpl(Inline)]
+    public ApiSets(Assembly src)
     {
-        public ReadOnlySeq<ApiSets> apisets(ReadOnlySeq<Assembly> src)
-            => src.Select(apiset);
+        _Source = src;
+        _Hosts = hosts(src);
+        _Ops = ops(_Hosts);
+    }
 
-        public static ApiSets apiset(Assembly src)
-            => new (src);
-
+    public ref readonly Assembly Source
+    {
         [MethodImpl(Inline)]
-        static ReadOnlySeq<Type> hosts(Assembly src)
-            => src.Types().Tagged<ApiSetAttribute>();
+        get => ref _Source;
+    }
 
+    public ref readonly ReadOnlySeq<Type> Hosts
+    {
         [MethodImpl(Inline)]
-        static ReadOnlySeq<MethodInfo> ops(ReadOnlySeq<Type> src)
-            => src.Storage.Methods().Tagged<ApiAttribute>();
+        get => ref _Hosts;
+    }
 
-        readonly Assembly _Source;
-
-        readonly ReadOnlySeq<Type> _Hosts;
-
-        readonly ReadOnlySeq<MethodInfo> _Ops;
-
+    public ref readonly ReadOnlySeq<MethodInfo> Ops
+    {
         [MethodImpl(Inline)]
-        public ApiSets(Assembly src)
-        {
-            _Source = src;
-            _Hosts = hosts(src);
-            _Ops = ops(_Hosts);
-        }
-
-        public ref readonly Assembly Source
-        {
-            [MethodImpl(Inline)]
-            get => ref _Source;
-        }
-
-        public ref readonly ReadOnlySeq<Type> Hosts
-        {
-            [MethodImpl(Inline)]
-            get => ref _Hosts;
-        }
-
-        public ref readonly ReadOnlySeq<MethodInfo> Ops
-        {
-            [MethodImpl(Inline)]
-            get => ref _Ops;
-        }
+        get => ref _Ops;
     }
 }
