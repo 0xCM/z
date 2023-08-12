@@ -2,29 +2,31 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class IntrinsicsDoc
 {
-    partial class IntrinsicsDoc
+    public record struct Parameter
     {
-        public record struct Parameter
-        {
-            public const string ElementName = "parameter";
+        public const string ElementName = "parameter";
 
-            public @string varname;
+        public @string varname;
 
-            public @string type;
+        public @string type;
 
-            public @string etype;
+        public @string etype;
 
-            public @string memwidth;
+        public @string memwidth;
 
-            public @string immwidth;
+        public @string immwidth;
 
-            public string Format()
-                => string.Format("{0} {1}", type, varname);
+        public bool IsPointer
+            => type.Contains("*");
+            
+        public string Format()
+            => format(this);
 
-            public override string ToString()
-                => Format();
-        }
+        public override string ToString()
+            => Format();
     }
 }

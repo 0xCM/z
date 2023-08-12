@@ -14,15 +14,28 @@ using N = N6;
 [DataWidth(Width), ApiComplete]
 public readonly struct num6 : INumber<T>
 {
+    [Parser]
+    public static bool parse(string src, out T dst)
+    {
+        var outcome = D.TryParse(src, out D x);
+        dst = new T((D)(x & MaxValue));
+        return outcome;
+    }
+
+    [Parser]
+    public static bool parse(ReadOnlySpan<char> src, out T dst)
+    {
+        var result = D.TryParse(src, out D x);
+        dst = new T((D)(x & MaxValue));
+        return result;
+    }
+
+
     public readonly D Value;
 
     [MethodImpl(Inline)]
     public num6(D src)
         => Value = crop(src);
-
-    [MethodImpl(Inline)]
-    num6(ulong src)
-        => Value = (D)src;
 
     byte INumber.PackedWidth
         => Width;
@@ -55,11 +68,11 @@ public readonly struct num6 : INumber<T>
 
     [MethodImpl(Inline)]
     public static T create(D src)
-        => new T(src);
+        => new (src);
 
     [MethodImpl(Inline)]
     public static T create(ulong src)
-        => new T((D)src);
+        => new ((D)src);
 
     [MethodImpl(Inline)]
     static T cover(D src)
@@ -108,7 +121,7 @@ public readonly struct num6 : INumber<T>
 
     [MethodImpl(Inline)]
     public static T invert(T src)
-        => cover((D)(math.and(math.not(src.Value), MaxValue)));
+        => cover(math.and(math.not(src.Value), MaxValue));
 
     [MethodImpl(Inline), Op]
     public static T or(T a, T b)
@@ -168,36 +181,20 @@ public readonly struct num6 : INumber<T>
     public static T mod(T a, T b)
         => cover(math.mod(a.Value, b.Value));
 
-    [Parser]
-    public static bool parse(string src, out T dst)
-    {
-        var outcome = D.TryParse(src, out D x);
-        dst = new T((D)(x & MaxValue));
-        return outcome;
-    }
-
-    [Parser]
-    public static bool parse(ReadOnlySpan<char> src, out T dst)
-    {
-        var result = D.TryParse(src, out D x);
-        dst = new T((D)(x & MaxValue));
-        return result;
-    }
-
     [MethodImpl(Inline)]
     public bool Equals(T src)
         => eq(this, src);
 
     public bit IsZero
     {
-            [MethodImpl(Inline)]
-            get => Value == 0;
+        [MethodImpl(Inline)]
+        get => Value == 0;
     }
 
     public bit IsNonZero
     {
-            [MethodImpl(Inline)]
-            get => Value != 0;
+        [MethodImpl(Inline)]
+        get => Value != 0;
     }
 
     public bit IsMax

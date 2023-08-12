@@ -18,6 +18,18 @@ namespace Z0
 
         bool Verbose;
 
+        [CmdOp("spin")]
+        void Spin()
+        {
+            bool OnTick(SpinStats stats)
+            {
+                Channel.Row($"{stats.Count} {stats.Ticks}");
+                return stats.Count <= 10;
+            }
+
+            Spinners.spin(TimeSpan.FromSeconds(1), OnTick);
+        }
+
         public Machines()
         {
             Verbose = true;

@@ -2,38 +2,37 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class IntrinsicsDoc
 {
-    partial class IntrinsicsDoc
+    public struct Operation
     {
-        public struct Operation
+        public const string ElementName = "operation";
+
+        public List<TextLine> Content;
+
+        public Operation()
         {
-            public const string ElementName = "operation";
+            Content = new();
+        }
 
-            public List<TextLine> Content;
+        [MethodImpl(Inline)]
+        public Operation(List<TextLine> src)
+        {
+            Content = src;
+        }
 
-            public Operation()
-            {
-                Content = new();
-            }
-
+        public uint Count
+        {
             [MethodImpl(Inline)]
-            public Operation(List<TextLine> src)
-            {
-                Content = src;
-            }
+            get => (uint)(Content?.Count ?? 0);
+        }
 
-            public uint Count
-            {
-                [MethodImpl(Inline)]
-                get => (uint)(Content?.Count ?? 0);
-            }
-
-            public bool IsNonEmpty
-            {
-                [MethodImpl(Inline)]
-                get => Count != 0;
-            }
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Count != 0;
         }
     }
 }

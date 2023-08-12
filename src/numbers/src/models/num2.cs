@@ -20,10 +20,6 @@ namespace Z0
         public num2(D src)
             => Value = crop(src);
 
-        [MethodImpl(Inline)]
-        num2(uint src)
-            => Value = (byte)src;
-
         public const byte Width = 2;
 
         public const D MaxValue = Limit.Max2u;
@@ -46,7 +42,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static T create(ulong src)
-            => new T((D)src);
+            => new ((D)src);
 
         [MethodImpl(Inline)]
         static T cover(D src)

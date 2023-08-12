@@ -5,7 +5,7 @@
 namespace Z0
 {
     using static sys;
-    using static ApiActorKind;
+    using static CmdMethodType;
 
     public class ApiCmdRunner : IApiCmdRunner
     {
@@ -41,25 +41,31 @@ namespace Z0
             var host = method.Host;
             try
             {
-                switch(method.Kind)
+                switch(method.MethodType)
                 {
                     case Pure:
-                        method.Definition.Invoke(host, new object[]{});
+                        method.Definition.Invoke(host, sys.empty<object>());
                     break;
                     case Receiver:
                         method.Definition.Invoke(host, new object[1]{args});
                     break;
-                    case ApiActorKind.Emitter:
-                        output = method.Definition.Invoke(host, new object[]{});
+                    case Emitter:
+                        output = method.Definition.Invoke(host, sys.empty<object>());
                     break;
                     case Func:
                         output = method.Definition.Invoke(host, new object[1]{args});
                     break;
-                    case ContextReceiver:
-                        method.Definition.Invoke(host, new object[2]{context, args});
+                    case DiscriminatedReceiver:
+                        if(args.IsNonEmpty)
+                            method.Definition.Invoke(host, new object[2]{args, args.Last.Value.Format()});
+                        else
+                            @throw("Discriminated receiver requires a discriminator!");
                     break;
-                    case ContextFunc:
-                        output = method.Definition.Invoke(host, new object[2]{context,args});
+                    case DiscriminatedFunc:
+                        if(args.IsNonEmpty)
+                            output = method.Definition.Invoke(host, new object[2]{args, args.Last.Value.Format()});
+                        else
+                            @throw("Discriminated function requires a discriminator!");
                     break;
                     default:
                         result = new Outcome(false, $"Unsupported {method.Definition}");

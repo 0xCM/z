@@ -129,10 +129,10 @@ namespace Z0
             get => ref Load<Index<FormImport>>(XedRecordType.FormImports);
         }
 
-        public ref readonly XedInstDump InstImports
+        public ref readonly XedRuleBlocks InstImports
         {
             [MethodImpl(Inline)]
-            get => ref Load<XedInstDump>(XedRecordType.InstImports);
+            get => ref Load<XedRuleBlocks>(XedRecordType.InstImports);
         }
 
         public ref readonly Index<AsmBroadcast> AsmBroadcastDefs

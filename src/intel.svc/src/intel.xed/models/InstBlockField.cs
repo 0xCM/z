@@ -114,6 +114,7 @@ namespace Z0
             vl,
 
             exceptions,
+ 
             memop_width,
 
             memop_width_code,

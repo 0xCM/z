@@ -39,7 +39,6 @@ namespace Z0
         public int CompareTo(XedInstForm src)
             => ((ushort)Kind).CompareTo((ushort)src.Kind);
 
-
         public override int GetHashCode()
             =>(int)Kind;
 
@@ -54,7 +53,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator XedInstForm(XedFormType src)
-            => new XedInstForm(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator XedFormType(XedInstForm src)
@@ -66,7 +65,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static explicit operator XedInstForm(ushort src)
-            => new XedInstForm((XedFormType)src);
+            => new ((XedFormType)src);
 
         public static XedInstForm Empty => default;    
     }

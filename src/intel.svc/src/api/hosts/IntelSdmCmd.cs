@@ -15,6 +15,12 @@ namespace Z0
 
         IntelSdmPaths SdmPaths => Wf.SdmPaths();
 
+        [CmdOp("intel/sdm/etl")]
+        void RunEtl()
+        {
+            Sdm.RunEtl();
+        }
+
         [CmdOp("sdm/export/tokens")]
         void ExportTokens()
         {

@@ -62,7 +62,6 @@ public class XedRuntime : WfSvc<XedRuntime>
     void RunCalcs()
     {
         var defs = XedInstDefParser.parse(XedDb.DocSource(XedDocKind.EncInstDef));
-        var blocks = XedImport.CalcInstDump(XedDb.DocSource(XedDocKind.RuleDump));
         var forms = XedImport.CalcFormImports(XedDb.DocSource(XedDocKind.FormData));
         var chips = XedImport.CalcChipMap(XedDb.DocSource(XedDocKind.ChipMap));
         var cpu = XedImport.CalcCpuIdDataset(XedDb.DocSource(XedDocKind.CpuId));

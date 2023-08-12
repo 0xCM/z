@@ -16,11 +16,9 @@ namespace Z0
 
         EncRuleTable,
 
-        //DecRulePatterns,
 
         DecRuleTable,
 
-        //RulePatterns,
 
         EncDecRuleTable,
 
@@ -36,21 +34,11 @@ namespace Z0
 
         CpuId,
 
-        // OpCodeKinds,
-
-        // PatternInfo,
-
-        // PatternDetail,
-
-        // PatternOps,
-
+ 
         RuleSeq,
 
-        // MacroDefs,
 
-        // RuleSigs,
-
-        RuleDump
+        RuleBlocks
 
     }
 }

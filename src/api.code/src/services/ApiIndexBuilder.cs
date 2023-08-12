@@ -27,7 +27,7 @@ namespace Z0
             var dst = alloc<ApiCodeRow>(count);
             for(var i=0; i<count; i++)
             {
-                var result = ApiCode.parse(skip(data, i + 1), out seek(dst,i));
+                var result = ApiCodeRows.parse(skip(data, i + 1), out seek(dst,i));
                 if(result.Fail)
                     Errors.Throw(string.Format("{0}:{1}", src.ToUri(), result.Message));
             }

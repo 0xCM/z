@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public enum ApiActorKind : byte
+    public enum CmdMethodType : byte
     {
         None,
 
@@ -16,8 +16,8 @@ namespace Z0
 
         Func,
 
-        ContextReceiver,
+        DiscriminatedReceiver,
 
-        ContextFunc,
+        DiscriminatedFunc,
     }
 }

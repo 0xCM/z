@@ -71,7 +71,7 @@ namespace Z0.Asm
             Channel.EmittedFile(hexFlow, sequence);
             var deposited = segments.ViewDeposited();
             EmitHexPack(deposited, dst + FS.file("respack", FS.XPack));
-            EmitHexArrays(deposited, dst + FS.file("respack", FS.ext("xarray")));
+            //EmitHexArrays(deposited, dst + FS.file("respack", FS.ext("xarray")));
             return deposited;
         }
 
@@ -90,19 +90,6 @@ namespace Z0.Asm
             Channel.EmittedFile(flow, count);
         }
 
-        void EmitHexArrays(ReadOnlySpan<MemorySegment> src, FilePath dst)
-        {
-            var flow = Channel.EmittingFile(dst);
-            var count = src.Length;
-            var buffer = alloc<char>(Pow2.T16);
-            using var writer = dst.Writer();
-            for(var i=0u; i<count; i++)
-            {
-                ref readonly var seg = ref skip(src,i);
-                buffer.Clear();
-                writer.WriteLine(HexGen.hexarray(seg, i, buffer));
-            }
-            Channel.EmittedFile(flow, count);
-        }
+
     }
 }

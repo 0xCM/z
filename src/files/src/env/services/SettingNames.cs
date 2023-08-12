@@ -37,13 +37,13 @@ namespace Z0
 
         public const string Dashboard = nameof(Dashboard);
 
-        public const string XedDb = "intel.xed";
+        public const string XedDb = nameof(XedDb);
 
-        public const string SdmDb = "intel.sdm";
+        public const string SdmDb = nameof(SdmDb);
 
-        public const string SdeDb = "intel.sde";
+        public const string SdeDb = nameof(SdeDb);
 
-        public const string InxDb = "intel.intrinsics";
+        public const string InxDb = nameof(InxDb);
 
         public const string EnvDb = nameof(EnvDb);
 

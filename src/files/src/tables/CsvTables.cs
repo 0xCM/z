@@ -121,8 +121,9 @@ namespace Z0
         {
             var fields = src.PublicInstanceFields();
             var count = fields.Length;
+            var tableid = TableId.identify(src);
             if(count == 0)
-                return new CsvTableDef(TableId.identify(src), src.Name, sys.empty<ColumDef>());
+                return new CsvTableDef(tableid, src.Name, sys.empty<ColumDef>());
             var specs = alloc<ColumDef>(count);
             for(var i=z16; i<count; i++)
             {
@@ -130,7 +131,7 @@ namespace Z0
                 seek(specs,i) = new ColumDef(i, ClrTableCol.name(field), field.FieldType.CodeName());
             }
 
-            return new CsvTableDef(TableId.identify(src), src.Name, specs);
+            return new CsvTableDef(tableid, src.Name, specs);
         }
 
         [Op]

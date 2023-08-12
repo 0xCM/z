@@ -17,8 +17,8 @@ namespace Z0
         }
 
         public ApiCmdScript With(params ApiCmdSpec[] src)
-            => new ApiCmdScript(Path,src);        
+            => new (Path,src);        
 
-        public static ApiCmdScript Empty => new ApiCmdScript(FileUri.Empty, sys.empty<ApiCmdSpec>());
+        public static ApiCmdScript Empty => new (FileUri.Empty, sys.empty<ApiCmdSpec>());
     }
 }

@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
-    <ZSysVer>0.0.145</ZSysVer>
-    <ZVer>0.0.515</ZVer>
+    <ZSysVer>0.0.146</ZSysVer>
+    <ZVer>0.0.519</ZVer>
     <ZFxVer>0.0.1020</ZFxVer>
     <ClrRuntimeVersion>8.0.0-dev</ClrRuntimeVersion>
     <LLVMToolsVersion>16</LLVMToolsVersion>

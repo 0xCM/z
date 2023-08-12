@@ -48,6 +48,10 @@ namespace System
     [DataTypeAttributeD("date")]
     public struct Date : IEquatable<Date>, IComparable<Date>, IComparable, IFormattable, IXmlSerializable
     {
+        // Number of whole days since 0001-01-01 (which is day 0)
+        // NOTE: This is the only field in this structure.
+        readonly int _dayNumber;
+
         /// <summary>
         /// Defines a <see cref="DateRange"/> bounded below by <paramref name="MinDate"/>
         /// and above by <paramref name="MaxDate"/>
@@ -243,10 +247,6 @@ namespace System
         private const int DatePartMonth = 2;
 
         private const int DatePartDay = 3;
-
-        // Number of whole days since 0001-01-01 (which is day 0)
-        // NOTE: This is the only field in this structure.
-        private readonly int _dayNumber;
 
         /// <summary>
         /// Initializes a new instance of a <see cref="Date"/> structure to a specified number of days.

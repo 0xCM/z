@@ -14,8 +14,6 @@ public partial class IntelCmd : WfAppCmd<IntelCmd>
 
     IntelSdm Sdm => Wf.IntelSdm();
 
-    XedRuntime Xed => GlobalServices.Instance.Injected<XedRuntime>();
-
     SdeSvc Sde => Wf.SdeSvc();
 
 
@@ -23,8 +21,6 @@ public partial class IntelCmd : WfAppCmd<IntelCmd>
     void ImportIntrinsics()
     {
         Sdm.RunEtl();
-        Xed.Start();
-        Xed.RunEtl();
     }
 
 }

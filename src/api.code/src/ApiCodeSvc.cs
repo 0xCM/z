@@ -48,7 +48,7 @@ namespace Z0
             {
                 var buffer = alloc<ApiCodeRow>(count);
                 for(var i=0u; i<count; i++)
-                    seek(buffer, i) = ApiCode.apicode(skip(src, i), i);
+                    seek(buffer, i) = ApiCodeRows.apicode(skip(src, i), i);
 
                 Channel.TableEmit(buffer, dst);
                 return buffer;
@@ -81,7 +81,7 @@ namespace Z0
         {
             var count = src.Count;
             var emitting = Channel.EmittingFile(dst);
-            var size = ApiCode.hexdat(src, dst);
+            var size = ApiCodeRows.hexdat(src, dst);
             Channel.EmittedFile(emitting,count);
             return size;
         }

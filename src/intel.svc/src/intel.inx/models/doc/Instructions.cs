@@ -2,12 +2,11 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class IntrinsicsDoc
 {
-    partial class IntrinsicsDoc
+    public class Instructions : List<Instruction>
     {
-        public class Instructions : List<Instruction>
-        {
-        }
     }
 }

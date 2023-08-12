@@ -12,7 +12,7 @@ namespace Z0
     
     partial class XedCmd
     {
-        [CmdOp("xed/import")]
+        [CmdOp("xed/etl")]
         void RunImport()
         {
             var cpuid = DataFlow.CalcCpuIdDataset(XedDb.DocSource(XedDocKind.CpuId));
@@ -21,8 +21,8 @@ namespace Z0
             DataFlow.EmitChipCodes(codes);            
             var chips = DataFlow.CalcChipMap(XedDb.DocSource(XedDocKind.ChipMap));
             DataFlow.EmitChipMap(chips);
-            var dump = DataFlow.CalcInstDump(XedDb.DocSource(XedDocKind.RuleDump));
-            DataFlow.EmitInstDump(dump);
+            var rules = DataFlow.CalcRuleBlocks(XedDb.DocSource(XedDocKind.RuleBlocks));
+            DataFlow.EmitRules(rules);
             var widths = DataFlow.CalcWidths(XedDb.DocSource(XedDocKind.Widths));
             DataFlow.EmitOpWidths(widths.OpWidths);
             DataFlow.EmitPointerWidths(widths.PointerWidthDescriptions);
@@ -34,7 +34,7 @@ namespace Z0
             var broadacasts = Xed.broadcasts(bcastkinds);
             DataFlow.EmitBroadcastDefs(broadacasts);
 
-            var dec = XedRuleSpecs.CalcTableCriteria(XedDb.RuleSource(RuleTableKind.DEC), status => Channel.Row(status));
+            //var dec = XedRuleSpecs.CalcTableCriteria(XedDb.RuleSource(RuleTableKind.DEC), status => Channel.Row(status));
 
             // var dec = XedRuleSpecs.criteria(RuleTableKind.DEC);
             // var rules = new XedRuleTables();

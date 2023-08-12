@@ -19,13 +19,13 @@ namespace Z0
         public static CmdUri uri(ApiCmdRoute route, object host)
             => new(CmdKind.App, host.GetType().Assembly.PartName().Format(), host.GetType().DisplayName(), route.Format());
 
-        [Op]
-        public static CmdUri uri(MethodInfo src)
-        {
-            var host = src.DeclaringType;
-            var name = src.Tag<CmdOpAttribute>().MapValueOrElse(a => a.Name, () => src.DisplayName());
-            return uri(CmdKind.App, host.Assembly.PartName().Format(), host.DisplayName(), name);        
-        }
+        // [Op]
+        // public static CmdUri uri(MethodInfo src)
+        // {
+        //     var host = src.DeclaringType;
+        //     var name = src.Tag<CmdOpAttribute>().MapValueOrElse(a => a.Name, () => src.DisplayName());
+        //     return uri(CmdKind.App, host.Assembly.PartName().Format(), host.DisplayName(), name);        
+        // }
 
         internal static IApiCmdRunner runner(IWfRuntime wf, Assembly[] parts)
         {
@@ -38,7 +38,7 @@ namespace Z0
         internal static CmdHandlers handlers(IWfRuntime wf, Assembly[] src)
         {
             var dst = src.Types().Concrete().Tagged<CmdHandlerAttribute>().Select(x => handler(wf,x)).Map(x => (x.Route,x)).ToDictionary();
-            dst.TryAdd(Z0.Handlers.DevNul.Route, handler(wf, typeof(Handlers.DevNul)));
+            dst.TryAdd(Handlers.DevNul.Route, handler(wf, typeof(Handlers.DevNul)));
             return new (dst);
         }        
 
@@ -90,26 +90,27 @@ namespace Z0
         static IEnumerable<ApiCmdMethod> methods(IApiService host)
         {
             var src = host.GetType().DeclaredInstanceMethods().Tagged<CmdOpAttribute>();
-            return from mi in src
-                    let tag = mi.Tag<CmdOpAttribute>().Require()
-                    select new ApiCmdMethod(tag.Name, classify(mi),  mi, host);
+            return from method in src
+                    let tag = method.Tag<CmdOpAttribute>().Require()
+                    let route = (ApiCmdRoute)tag.Name
+                    select new ApiCmdMethod(route, classify(route, method),  method, host);
         }
 
-        static ApiActorKind classify(MethodInfo src)
+        static CmdMethodType classify(ApiCmdRoute route, MethodInfo method)
         {
-            var dst = ApiActorKind.None;
-            var arity = src.ArityValue();
-            var @void = src.HasVoidReturn();
+            var dst = CmdMethodType.None;
+            var arity = method.ArityValue();
+            var @void = method.HasVoidReturn();
             switch(arity)
             {
                 case 0:
                     switch(@void)
                     {
                         case false:
-                            dst = ApiActorKind.Pure;
+                            dst = CmdMethodType.Pure;
                         break;
                         case true:
-                            dst = ApiActorKind.Emitter;
+                            dst = CmdMethodType.Emitter;
                         break;
                     }
                 break;
@@ -117,23 +118,26 @@ namespace Z0
                     switch(@void)
                     {
                         case true:
-                            dst = ApiActorKind.Receiver;
+                            dst = CmdMethodType.Receiver;
                         break;
                         case false:
-                            dst = ApiActorKind.Func;
+                            dst = CmdMethodType.Func;
                         break;
                     }
                 break;
                 case 2:
                 {
-                    switch(@void)
+                    if(route.IsPartial)
                     {
-                        case false:
-                            dst = ApiActorKind.ContextReceiver;
-                        break;
-                        case true:
-                            dst = ApiActorKind.ContextFunc;
-                        break;
+                        switch(@void)
+                        {
+                            case false:
+                                dst = CmdMethodType.DiscriminatedReceiver;
+                            break;
+                            case true:
+                                dst = CmdMethodType.DiscriminatedFunc;
+                            break;
+                        }
                     }
 
                     break;

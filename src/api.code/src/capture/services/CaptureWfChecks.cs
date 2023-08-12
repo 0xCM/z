@@ -63,7 +63,7 @@ namespace Z0
 
         void CheckReloaded(CaptureTransport transport, IApiPack src)
         {
-            var members = transport.Reloaded(ApiCode.load(Channel, src, PartId.AsmCore));
+            var members = transport.Reloaded(ApiCodeRows.load(Channel, src, PartId.AsmCore));
             for(var i=0; i<members.MemberCount; i++)
             {
                 ref readonly var member = ref members.Member(i);
@@ -98,7 +98,7 @@ namespace Z0
         void PackHex(FolderPath src, ApiHostUri host)
         {
             var counter = 0u;
-            var memory = ApiCode.memory( src + FS.hostfile(host,FileKind.Csv));
+            var memory = ApiCodeRows.memory( src + FS.hostfile(host,FileKind.Csv));
             var blocks = memory.Sort().View;
             var buffer = span<char>(Pow2.T16);
             var dir = AppDb.ApiTargets("capture.test").Targets(string.Format("{0}.{1}", host.Part.Format(), host.HostName)).Root;
@@ -132,7 +132,7 @@ namespace Z0
                     continue;
 
                 var uri = ApiIdentity.host(id, skip(elements,1));
-                hex.Add(new (uri, ApiCode.memory(file)));
+                hex.Add(new (uri, ApiCodeRows.memory(file)));
             }
         }
 

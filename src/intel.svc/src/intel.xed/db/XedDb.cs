@@ -19,7 +19,7 @@ namespace Z0
             => _MemoryFiles.GetOrAdd(src, path => path.MemoryMap(true));
 
         public static MemoryFile RuleDumpFile()
-            => MemoryFile(DocSource(XedDocKind.RuleDump));
+            => MemoryFile(DocSource(XedDocKind.RuleBlocks));
         
         //public IDbArchive Sources() => Paths.DbTargets
         IMemDb _Store;
@@ -125,7 +125,7 @@ namespace Z0
 
         public static FilePath DocSource(XedDocKind kind)
             => Sources().Path(kind switch{
-                XedDocKind.RuleDump => FS.file("xed-dump",FileKind.Txt),
+                XedDocKind.RuleBlocks => FS.file("xed-dump",FileKind.Txt),
                 XedDocKind.EncInstDef => FS.file("all-enc-instructions", FS.Txt),
                 XedDocKind.DecInstDef => FS.file("all-dec-instructions", FS.Txt),
                 XedDocKind.EncRuleTable => FS.file("all-enc-patterns", FS.Txt),

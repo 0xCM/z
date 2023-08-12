@@ -46,13 +46,40 @@ namespace Z0
 
             var vars = alloc<WidthVar>(Count);
             for(var i=0; i<Count; i++)
-                seek(vars,i) = new WidthVar(skip(names,i), skip(kinds,i), skip(widths,i));
-            for(var i=0; i<Count; i++)
-                Require.equal(skip(vars,i).Format(), skip(expr,i));
+            {
+                ref var target = ref seek(vars,i);
+                ref readonly var w = ref skip(widths,i);
+                ref readonly var k = ref skip(kinds,i);
+                ref readonly var n = ref skip(names,i);
+                target = new WidthVar(n, k, w);
+                Require.equal((uint)w, (uint)target.Value);
+                Require.equal((uint)k, (uint)target.Sort);
+                Require.equal((uint)n, (uint)target.Name);
+
+            }
+
             for(var i=0; i<Count; i++)
             {
-                parse(skip(expr,i), out WidthVar wv);
-                Require.equal(wv, skip(vars,i));
+                ref readonly var v = ref skip(vars,i);
+                ref readonly var expect = ref skip(expr,i);
+                var formatted = v.Format();
+                if(formatted != expect)
+                {
+                    @throw($"format({v.Value}:({v.Name}:{v.Sort}) = '{formatted}' != '{expect}'");                    
+                }
+
+                Require.equal(formatted, expect);
+            }
+
+            for(var i=0; i<Count; i++)
+            {
+                ref readonly var input = ref skip(expr,i);
+                parse(input, out WidthVar wv);
+                ref readonly var expect = ref skip(vars,i);
+                if(wv != expect)
+                {
+                    @throw($"parse('{input}') = '{wv}' != '{expect}'");
+                }
             }
             return true;
         }
