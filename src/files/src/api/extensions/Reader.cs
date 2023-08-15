@@ -7,7 +7,7 @@ namespace Z0
     partial class XTend
     {
         public static BinaryReader BinaryReader(this FilePath src)
-            => new BinaryReader(File.Open(src.Format(), FileMode.Open, FileAccess.Read, FileShare.Read));
+            => new BinaryReader(System.IO.File.Open(src.Format(), FileMode.Open, FileAccess.Read, FileShare.Read));
 
         [Op]
         public static AsciLineReader AsciLineReader(this FilePath src)

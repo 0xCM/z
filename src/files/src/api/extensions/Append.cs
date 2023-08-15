@@ -22,6 +22,6 @@ namespace Z0
         }
 
         public static void Append(this FilePath dst, string src)
-            => File.AppendAllText(dst.Name, src);
+            => System.IO.File.AppendAllText(dst.Name, src);
     }
 }

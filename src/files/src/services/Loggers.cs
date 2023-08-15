@@ -53,11 +53,11 @@ namespace Z0
             => new WorkerLog(config);
 
         [MethodImpl(Inline), Op]
-        public static LogSettings configure(string name, FolderPath dst)
-            => new LogSettings(ExecutingPart.Name, dst, name);
+        public static LogSettings configure(string name, IDbArchive dst)
+            => new LogSettings(ExecutingPart.Name, dst.Root, name);
 
         [MethodImpl(Inline), Op]
-        public static LogSettings configure(PartId part, FolderPath dst)
-            => new LogSettings(part, dst, EmptyString);
+        public static LogSettings configure(PartId part, IDbArchive dst)
+            => new LogSettings(part, dst.Root, EmptyString);
     }
 }

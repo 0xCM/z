@@ -9,19 +9,6 @@ namespace Z0
 
     partial class XedModels
     {
-        public enum OpDataKind : byte
-        {
-            None,
-
-            Scale,
-
-            Reg,
-
-            Imm,
-
-            Disp,
-        }
-
         public struct OpValue
         {
             public OpNameKind Name

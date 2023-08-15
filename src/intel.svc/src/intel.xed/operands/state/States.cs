@@ -8,10 +8,10 @@ namespace Z0;
 using static MachineModes;
 
 using M = XedModels;
-using B = System.ReadOnlySpan<bit>;
-using U2 = System.ReadOnlySpan<uint2>;
-using U3 = System.ReadOnlySpan<uint3>;
-using REGS = System.ReadOnlySpan<XedRegId>;
+using B = ReadOnlySpan<bit>;
+using U2 = ReadOnlySpan<uint2>;
+using U3 = ReadOnlySpan<uint3>;
+using REGS = ReadOnlySpan<XedRegId>;
 
 partial class XedOps
 {

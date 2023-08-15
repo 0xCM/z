@@ -3,53 +3,52 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+using Asm;
+
+partial class XedModels
 {
-    using Asm;
-
-    partial class XedModels
+    public readonly struct XedFlagEffect
     {
-        public readonly struct XedFlagEffect
+        public readonly XedRegFlag Flag;
+
+        public readonly FlagEffectKind Effect;
+
+        [MethodImpl(Inline)]
+        public XedFlagEffect(XedRegFlag f, FlagEffectKind k)
         {
-            public readonly XedRegFlag Flag;
+            Flag = f;
+            Effect = k;
+        }
 
-            public readonly FlagEffectKind Effect;
-
+        public bool IsEmpty
+        {
             [MethodImpl(Inline)]
-            public XedFlagEffect(XedRegFlag f, FlagEffectKind k)
-            {
-                Flag = f;
-                Effect = k;
-            }
+            get => Flag == 0;
+        }
 
-            public bool IsEmpty
-            {
-                [MethodImpl(Inline)]
-                get => Flag == 0;
-            }
-
-            public bool IsNonEmpty
-            {
-                [MethodImpl(Inline)]
-                get => Flag != 0;
-            }
-
-            public string Format()
-                => XedRender.format(this);
-
-            public override string ToString()
-                => Format();
-
+        public bool IsNonEmpty
+        {
             [MethodImpl(Inline)]
-            public static implicit operator XedFlagEffect((XedRegFlag f, FlagEffectKind k) src)
-                => new XedFlagEffect(src.f, src.k);
+            get => Flag != 0;
+        }
 
-            [MethodImpl(Inline)]
-            public static implicit operator FlagEffect(XedFlagEffect src)
-            {
-                Xed.convert(src, out FlagEffect dst);
-                return dst;
-            }
+        public string Format()
+            => XedRender.format(this);
+
+        public override string ToString()
+            => Format();
+
+        [MethodImpl(Inline)]
+        public static implicit operator XedFlagEffect((XedRegFlag f, FlagEffectKind k) src)
+            => new XedFlagEffect(src.f, src.k);
+
+        [MethodImpl(Inline)]
+        public static implicit operator FlagEffect(XedFlagEffect src)
+        {
+            Xed.convert(src, out FlagEffect dst);
+            return dst;
         }
     }
 }

@@ -3,7 +3,9 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class XedModels
 {
     [DataWidth(Width)]
     public struct XedInstForm : IDataType<XedInstForm>
@@ -70,3 +72,4 @@ namespace Z0
         public static XedInstForm Empty => default;    
     }
 }
+

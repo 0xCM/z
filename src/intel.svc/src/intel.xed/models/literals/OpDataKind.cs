@@ -2,15 +2,21 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0;
-
-using static XedModels;
-
-partial class XedDisasm
+namespace Z0
 {
-    public static AsmInfo asminfo(in XedDisasmBlock src)
+    partial class XedModels
     {
-        XedDisasmParse.parse(src.XDis.Content, out AsmInfo dst).Require();
-        return dst;
+        public enum OpDataKind : byte
+        {
+            None,
+
+            Scale,
+
+            Reg,
+
+            Imm,
+
+            Disp,
+        }
     }
 }

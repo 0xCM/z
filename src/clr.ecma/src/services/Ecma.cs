@@ -12,6 +12,8 @@ namespace Z0
     [ApiHost]
     public partial class Ecma : WfSvc<Ecma>
     {   
+        public static EcmaFile file(FilePath src)
+            => EcmaFile.open(src);
 
         [MethodImpl(Inline)]
         public static EcmaHandleData data(Handle src)
@@ -196,9 +198,6 @@ namespace Z0
 
         public static AssemblyIndex index(IWfChannel channel, AssemblyFiles src)
             => AssemblyIndex.create(channel, src);
-
-        public static EcmaFile file(FilePath src)
-            => EcmaFile.open(src);
 
         public static IEnumerable<AssemblyRefRow> refs(FilePath src)
         {

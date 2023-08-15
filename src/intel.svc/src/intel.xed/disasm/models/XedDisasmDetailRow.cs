@@ -8,6 +8,7 @@ namespace Z0;
 using Asm;
 
 using static XedRules;
+using static XedModels;
 
 [StructLayout(LayoutKind.Sequential, Pack=1), Record(TableName)]
 public record struct XedDisasmDetailRow : IComparable<XedDisasmDetailRow>

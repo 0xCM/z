@@ -6,6 +6,7 @@
 namespace Z0;
 
 using static XedRules;
+
 partial struct XedCells
 {
     [MethodImpl(Inline), Op]

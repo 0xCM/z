@@ -7,6 +7,7 @@ namespace Z0
     using static sys;
     using static XedRules;
     using static XedOps;
+    using static XedModels;
 
     partial class XedDisasm
     {

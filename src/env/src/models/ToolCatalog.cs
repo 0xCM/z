@@ -16,8 +16,6 @@ namespace Z0
         {
         }
 
-
-
         public static implicit operator ToolCatalog(LocatedTool[] src)
             => new (src);
     }

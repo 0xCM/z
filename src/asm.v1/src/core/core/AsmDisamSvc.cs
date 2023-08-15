@@ -70,58 +70,6 @@ namespace Z0
             return result;
         }
 
-        // public void ParseDisassembly(FilePath src, FilePath dst)
-        // {
-        //     using var map = MemoryFiles.map(src);
-        //     var flow = EmittingFile(dst);
-        //     var outcome = TransformData(map.View<byte>(), dst);
-        //     EmittedFile(flow, 0);
-        // }
 
-        // Outcome TransformData(ReadOnlySpan<byte> src, FilePath dst)
-        // {
-        //     var lines = LineCount(src);
-        //     var size = (ByteSize)src.Length;
-        //     var max = MaxLineLength(src);
-        //     using var writer = dst.Writer(Encoding.ASCII);
-        //     Span<char> buffer = alloc<char>(max);
-        //     var pos = 0u;
-        //     var length = 0u;
-        //     var offset = 0u;
-        //     var number = 0u;
-        //     while(pos++ < size -1)
-        //     {
-        //         ref readonly var a0 = ref skip(src, pos);
-        //         ref readonly var a1 = ref skip(src, pos + 1);
-        //         if(SQ.eol(a0,a1))
-        //         {
-        //             var line = AsciLines.asci(src, offset, length + 1);
-        //             number++;
-        //             if(!SQ.contains(line.Codes, C.Colon) || number < 4)
-        //             {
-        //                 pos++;
-        //                 length = 0;
-        //                 offset = pos;
-        //                 continue;
-        //             }
-
-        //             var outcome = _D.ProcessLine(ref line, out var content);
-        //             if(outcome.Fail)
-        //             {
-        //                 Wf.Error(string.Format("Error processing line {0}:{1} - {2}", number, line.Format(), outcome.Message));
-        //                 break;
-        //             }
-        //             buffer.Clear();
-        //             writer.WriteLine(AsmDisasm.format(content,buffer));
-        //             pos++;
-        //             length = 0;
-        //             offset = pos;
-        //         }
-        //         else
-        //             length++;
-        //     }
-
-        //     return true;
-        // }
     }
 }

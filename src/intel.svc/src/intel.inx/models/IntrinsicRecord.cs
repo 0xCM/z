@@ -24,7 +24,7 @@ public struct IntelIntrinsicRecord : IComparable<IntelIntrinsicRecord>, ISequent
     public ushort FormId;
 
     [Render(64)]
-    public XedInstForm InstForm;
+    public XedModels.XedInstForm InstForm;
 
     [Render(18)]
     public XedInstClass InstClass;
@@ -62,7 +62,7 @@ public struct IntelIntrinsicRecord : IComparable<IntelIntrinsicRecord>, ISequent
         dst.Name = EmptyString;
         dst.CpuId = CpuIdMembership.Empty;
         dst.FormId = 0;
-        dst.InstForm = XedInstForm.Empty;
+        dst.InstForm = XedModels.XedInstForm.Empty;
         dst.InstClass = XedInstClass.Empty;
         dst.InstSig = Instruction.Empty;
         dst.Types = InstructionTypes.Empty;

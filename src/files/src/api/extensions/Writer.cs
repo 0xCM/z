@@ -10,7 +10,7 @@ namespace Z0
     partial class XTend
     {
         public static BinaryWriter BinaryWriter(this FilePath dst)
-            => new BinaryWriter(File.Open(dst.EnsureParentExists().Name, FileMode.Create), Encoding.ASCII);
+            => new BinaryWriter(System.IO.File.Open(dst.EnsureParentExists().Name, FileMode.Create), Encoding.ASCII);
 
         [Op]
         public static StreamWriter Writer(this FilePath dst, bool append)
@@ -51,11 +51,11 @@ namespace Z0
 
         [Op]
         public static void AppendLines(this FilePath dst, string src)
-            => File.AppendAllLines(dst.EnsureParentExists().Name, sys.array(src), Encoding.UTF8);
+            => System.IO.File.AppendAllLines(dst.EnsureParentExists().Name, sys.array(src), Encoding.UTF8);
 
         [Op]
         public static void AppendLines(this FilePath dst, string src, Encoding encoding)
-            => File.AppendAllLines(dst.EnsureParentExists().Name, sys.array(src), encoding);
+            => System.IO.File.AppendAllLines(dst.EnsureParentExists().Name, sys.array(src), encoding);
 
         [Op]
         public static StreamWriter Writer(this FileUri dst, TextEncodingKind encoding, bool append = false)

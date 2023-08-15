@@ -19,14 +19,4 @@ namespace Z0
         public override string ToString()
             => Format();
     }
-
-    // public class CpuCore<T> : CpuCore
-    //     where T : unmanaged
-    // {
-    //     public CpuCore(uint id)
-    //         : base(id)
-    //     {
-
-    //     }
-    // }
 }

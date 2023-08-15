@@ -6,7 +6,7 @@ namespace Z0
 {
     public class FileStamps
     {
-        public static IDbArchive archive(Timestamp ts, DbArchive dst)
+        public static IDbArchive archive(Timestamp ts, IDbArchive dst)
             => dst.Scoped(ts.Format());
 
         public static FileName timestamped(string name, FileExt ext)

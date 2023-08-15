@@ -9,8 +9,6 @@ namespace Z0
 
     public partial class AsmCoreCmd : WfAppCmd<AsmCoreCmd>
     {
-        OmniScript OmniScript => Wf.OmniScript();
-        
         StanfordAsmCatalog StanfordCatalog => Wf.StanfordCatalog();
 
         [CmdOp("hexify")]
@@ -20,7 +18,7 @@ namespace Z0
             var pattern = arg(args,1).Value;
             var files = FS.files(FS.dir(src), pattern, true);
             var dst = AppDb.DbTargets("hexify");
-            AsmBytes.hexify(Channel, files, dst);
+            AsmBytes.hexify(Channel, files, dst.Root);
         }
 
         Outcome LoadStanfordForms()

@@ -26,7 +26,7 @@ namespace Z0
     using V = XedVexKind;
     using X = XopMapKind;
 
-    using static core;
+    using static sys;
 
     partial class XedRules
     {

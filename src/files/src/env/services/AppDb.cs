@@ -17,130 +17,130 @@ namespace Z0
         public IEnvDb EnvDb
             => Data.EnvDb();
 
-        public DbArchive DbRoot()
+        public IDbArchive DbRoot()
             => Data.DbRoot();
 
-        public DbArchive Dev()
+        public IDbArchive Dev()
             => Data.DevRoot();
 
-        public DbArchive DevOps()
+        public IDbArchive DevOps()
             => Data.DevOps();
 
-        public DbArchive Capture()
+        public IDbArchive Capture()
             => Data.Capture();
 
-        public DbArchive Archives()
+        public IDbArchive Archives()
             => Data.Archives();
 
-        public DbArchive Tools()
-            => folder(Data.Setting(SettingNames.DevTools));
+        public IDbArchive Tools()
+            => Data.Setting(SettingNames.DevTools).DbArchive();
 
-        public DbArchive DbSources()
+        public IDbArchive DbSources()
             => DbRoot().Scoped("sources");
 
-        public DbArchive DbSources(string scope)
+        public IDbArchive DbSources(string scope)
             => DbSources().Scoped(scope);
 
-        public DbArchive DbTargets()
+        public IDbArchive DbTargets()
             => DbRoot().Scoped("targets");
 
-        public DbArchive DbTargets(string scope)
+        public IDbArchive DbTargets(string scope)
             => DbTargets().Scoped(scope);
 
-        public DbArchive DbIn()
+        public IDbArchive DbIn()
             => DbRoot().Scoped("sources");
 
-        public DbArchive DbOut()
+        public IDbArchive DbOut()
             => DbRoot().Scoped("targets");
 
-        public DbArchive DbOut(string scope)
+        public IDbArchive DbOut(string scope)
             => DbTargets().Scoped(scope);
 
-        public DbArchive Logs()
+        public IDbArchive Logs()
             => DbRoot().Scoped("logs");
 
-        public DbArchive AsmDb()
+        public IDbArchive AsmDb()
             => DbTargets().Scoped("asm.db");
 
-        public DbArchive AsmDb(string scope)
+        public IDbArchive AsmDb(string scope)
             => AsmDb().Scoped(scope);
 
         // public IEnvDb EnvDb()
         //     => new (Data.EnvDb());
 
-        public DbArchive EnvSpecs()
+        public IDbArchive EnvSpecs()
             => DbRoot().Scoped("env");
 
-        public DbArchive DevOps(string scope)
+        public IDbArchive DevOps(string scope)
             => DevOps().Scoped(scope);
 
-        public DbArchive AppData()
+        public IDbArchive AppData()
             => DbRoot().Scoped("apps").Scoped(ExecutingPart.Name.Format());
 
-        public DbArchive AppData(string scope)
+        public IDbArchive AppData(string scope)
             => AppData().Scoped(scope);
 
-        public DbArchive Settings()
+        public IDbArchive Settings()
             => DbRoot().Scoped("settings");
 
-        public DbArchive Catalogs()
+        public IDbArchive Catalogs()
             => DbRoot().Scoped("catalogs");
 
-        public DbArchive ApiTargets()
+        public IDbArchive ApiTargets()
             => DbTargets().Scoped("api");
 
-        public DbArchive ApiTargets(string scope)
+        public IDbArchive ApiTargets(string scope)
             => DbTargets($"api/{scope}");
 
-        public DbArchive EtlTargets(string name)
+        public IDbArchive EtlTargets(string name)
             => DbTargets().Scoped("projects").Scoped(name);
 
-        public DbArchive SlnRoot()
+        public IDbArchive SlnRoot()
             => Dev().Scoped("z0");
 
-        public DbArchive Jobs()
+        public IDbArchive Jobs()
             => DbRoot().Scoped("jobs");
 
-        public DbArchive Jobs(string scope)
+        public IDbArchive Jobs(string scope)
             => Jobs().Scoped(scope);
 
-        public DbArchive Env()
+        public IDbArchive Env()
             => DbRoot().Scoped("env");
 
         public FilePath Settings(string name, FileKind kind)
             => Settings().Path(name,kind);
 
-        public DbArchive Archive(string name)
+        public IDbArchive Archive(string name)
             => Archives().Scoped(name);
 
-        public DbArchive ProjectRoot<T>(string area, T name)
+        public IDbArchive ProjectRoot<T>(string area, T name)
             => SlnRoot().Scoped($"{area}/{name}");
 
-        public DbArchive ProjectLib<T>(T name)
+        public IDbArchive ProjectLib<T>(T name)
             => ProjectRoot("libs", name);
 
-        public DbArchive Catalogs(string scope)
+        public IDbArchive Catalogs(string scope)
             => Catalogs().Scoped(scope);
 
-        public DbArchive DbIn(string scope)
+        public IDbArchive DbIn(string scope)
             => DbSources().Scoped(scope);
 
-        public DbArchive Logs(string scope)
+        public IDbArchive Logs(string scope)
             => Logs().Scoped(scope);
 
-        public DbArchive Dev(string scope)
+        public IDbArchive Dev(string scope)
             => Dev().Scoped(scope);
 
-        public DbArchive Tools(string scope)
+        public IDbArchive Tools(string scope)
             => Tools().Scoped(scope);
             
-        public DbArchive CgRoot()
+        public IDbArchive CgRoot()
             => Dev().Scoped("z0/cg");
 
-        public DbArchive CgStage()
+        public IDbArchive CgStage()
             => DbTargets("cgstage");
 
-        public DbArchive CgStage(string scope)
+        public IDbArchive CgStage(string scope)
             => DbTargets("cgstage").Scoped(scope);
 
         public FilePath EtlTable<T>(string name)
@@ -150,14 +150,14 @@ namespace Z0
         public FilePath EtlTable(string scope, string name)
             => EtlTargets(scope).Path($"{scope}.{name}", FileKind.Csv);
 
-        public DbArchive Toolbase()
-            => folder(Data.Setting(Names.Toolbase));  
+        public IDbArchive Toolbase()
+            => Data.Setting(Names.Toolbase).DbArchive();  
 
-        public DbArchive Toolbase(string scope)
+        public IDbArchive Toolbase(string scope)
             => Toolbase().Sources(scope);
 
-        public DbArchive LlvmRoot()
-            => folder(Data.Setting(Names.LlvmRoot));
+        public IDbArchive LlvmRoot()
+            => Data.Setting(Names.LlvmRoot).DbArchive();
 
         [MethodImpl(Inline)]
         static FolderPath folder(in Setting src)

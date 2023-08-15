@@ -19,7 +19,7 @@ namespace Z0
 
         static readonly FieldDefs _Defs;
 
-        public static DataSize size(FieldKind fk, RuleCellKind ck)
+        public static DataSize size(FieldKind fk, CK ck)
         {
             var dst = field(fk).Size;
             switch(ck)

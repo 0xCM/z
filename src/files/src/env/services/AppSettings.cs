@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
     
-    public static class XSettings
+    public partial class XTend
     {
         public static FolderPath Folder(this Setting src)
             => FS.dir(src.ValueText);
@@ -57,17 +57,17 @@ namespace Z0
         public static LlvmSettings LlvmSettings()
             => new (Instance.Setting(SettingNames.LlvmRoot).Folder());
 
-        public DbArchive Control()
-            => Instance.Setting(SettingNames.Control).Folder();
+        public IDbArchive Control()
+            => Instance.Setting(SettingNames.Control).DbArchive();
 
-        public DbArchive WinKits()
-            => Instance.Setting(SettingNames.WinKits).Folder();
+        public IDbArchive WinKits()
+            => Instance.Setting(SettingNames.WinKits).DbArchive();
 
-        public DbArchive DbRoot()
-            => Instance.Setting(SettingNames.DbRoot).Folder();
+        public IDbArchive DbRoot()
+            => Instance.Setting(SettingNames.DbRoot).DbArchive();
 
-        public DbArchive DevRoot()
-            => Instance.Setting(SettingNames.DevRoot).Folder();
+        public IDbArchive DevRoot()
+            => Instance.Setting(SettingNames.DevRoot).DbArchive();
 
         public DbArchive DevOps()
             => Instance.Setting(SettingNames.DevOps).Folder();
@@ -93,8 +93,8 @@ namespace Z0
         public IEnvDb EnvDb()
             => new EnvDb(Instance.Setting(SettingNames.EnvDb).Folder());
 
-        public DbArchive Capture()
-            => Instance.Setting(SettingNames.Capture).Folder();
+        public IDbArchive Capture()
+            => Instance.Setting(SettingNames.Capture).DbArchive();
 
         public IDbArchive PkgRoot()
             => new DbArchive(Instance.Setting(SettingNames.PkgRoot).Folder());
@@ -108,23 +108,23 @@ namespace Z0
         public FileUri Dashboard()
             => Instance.Setting(SettingNames.Dashboard).File();
         
-        public DbArchive Archives()
-            => Instance.Setting(SettingNames.Archives).Folder();
+        public IDbArchive Archives()
+            => Instance.Setting(SettingNames.Archives).DbArchive();
 
-        public DbArchive Logs() 
+        public IDbArchive Logs() 
             => DbRoot().Scoped(logs);
 
-        public DbArchive Control(string scope)
+        public IDbArchive Control(string scope)
             => Control().Scoped(scope);
 
-        public DbArchive Sdks()
-            => Instance.Setting(SettingNames.SdkRoot).Folder();
+        public IDbArchive Sdks()
+            => Instance.Setting(SettingNames.SdkRoot).DbArchive();
 
-        public DbArchive Sdk(string name)
+        public IDbArchive Sdk(string name)
             => Sdks().Scoped(name);
         
-        public DbArchive SdmDb()
-            => Instance.Setting(SettingNames.SdmDb).Folder();
+        public IDbArchive SdmDb()
+            => Instance.Setting(SettingNames.SdmDb).DbArchive();
 
         public string Find(@string name, string @default)
         {
@@ -165,7 +165,7 @@ namespace Z0
             => Format();
 
         static DbArchive _EnvRoot()
-            => FS.dir(System.Environment.GetEnvironmentVariable(SettingNames.EnvRoot));
+            => FS.dir(Environment.GetEnvironmentVariable(SettingNames.EnvRoot));
 
         static DbArchive _SettingsRoot()
             => _EnvRoot().Scoped(settings);

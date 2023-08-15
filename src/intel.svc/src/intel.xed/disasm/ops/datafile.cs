@@ -3,6 +3,7 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0;
+
 using System.Linq;
 
 using static sys;

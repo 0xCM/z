@@ -17,7 +17,6 @@ public partial class XedFlows : WfSvc<XedFlows>
 
     XedPaths XedPaths => Wf.XedPaths();
 
-
     IDbArchive Targets()
         => XedPaths.Imports();
 
@@ -90,9 +89,9 @@ public partial class XedFlows : WfSvc<XedFlows>
         piter(src.Query(), kv => Channel.TableEmit(kv.Right, Targets("isaforms").Path(FS.file(string.Format("xed.isa.{0}", kv.Left), FS.Csv))));                    
     }
 
-    static Symbols<VisibilityKind> Visibilities = Symbols.index<VisibilityKind>();
+    static readonly Symbols<VisibilityKind> Visibilities = Symbols.index<VisibilityKind>();
 
-    static Symbols<XedFieldType> FieldTypes = Symbols.index<XedFieldType>();
+    static readonly Symbols<XedFieldType> FieldTypes = Symbols.index<XedFieldType>();
 
-    static Index<AsmBroadcast> _BroadcastDefs = Xed.broadcasts(Symbols.kinds<BCastKind>());
+    static readonly Index<AsmBroadcast> _BroadcastDefs = Xed.broadcasts(Symbols.kinds<BCastKind>());
 }

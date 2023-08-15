@@ -9,6 +9,7 @@ using System.Xml;
 using static IntrinsicsDoc;
 using static sys;
 
+
 public class IntelIntrinsics : WfSvc<IntelIntrinsics>
 {
     static IDbArchive Sources => IntelPaths.Service.InxDb().Scoped("sources");
