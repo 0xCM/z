@@ -8,6 +8,10 @@ namespace Z0
     using static System.Runtime.Intrinsics.X86.Sse2;
     using static System.Runtime.Intrinsics.X86.Avx2;
     using static System.Runtime.Intrinsics.X86.Avx;
+    using static System.Runtime.Intrinsics.X86.Avx512F;
+    using static System.Runtime.Intrinsics.X86.Avx512BW;
+    using static System.Runtime.Intrinsics.X86.Avx512CD;
+    using static System.Runtime.Intrinsics.X86.Avx512DQ;
 
     partial class vcpu 
     {
@@ -245,5 +249,16 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static Vector256<double> vxor(in Vector256<double> x, in Vector256<double> y)
             => Xor(x, y);
+
+        /// <summary>
+        /// Computes the bitwise XOR between operands
+        /// __m128i _mm_xor_si128 (__m128i a, __m128i b) PXOR xmm, xmm/m128
+        /// </summary>
+        /// <param name="x">The left operand</param>
+        /// <param name="y">The right operand</param>
+        [MethodImpl(Inline), Xor]
+        public static Vector512<sbyte> vxor(Vector512<sbyte> x, Vector512<sbyte> y)
+            => Xor(x, y);
+
     }
 }

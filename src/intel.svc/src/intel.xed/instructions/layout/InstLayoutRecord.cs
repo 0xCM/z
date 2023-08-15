@@ -21,34 +21,49 @@ namespace Z0
 
             public const byte CellWidth = LayoutCell.RenderWidth;
 
+            [Render(12)]
             public ushort PatternId;
 
+            [Render(18)]
             public XedInstClass Instruction;
 
+            [Render(18)]
             public XedOpCode OpCode;
 
+            [Render(6)]
             public byte Count;
 
+            [Render(CellWidth)]
             public LayoutCell Cell0;
 
+            [Render(CellWidth)]
             public LayoutCell Cell1;
 
+            [Render(CellWidth)]
             public LayoutCell Cell2;
 
+            [Render(CellWidth)]
             public LayoutCell Cell3;
 
+            [Render(CellWidth)]
             public LayoutCell Cell4;
 
+            [Render(CellWidth)]
             public LayoutCell Cell5;
 
+            [Render(CellWidth)]
             public LayoutCell Cell6;
 
+            [Render(CellWidth)]
             public LayoutCell Cell7;
 
+            [Render(CellWidth)]
             public LayoutCell Cell8;
 
+            [Render(CellWidth)]
             public LayoutCell Cell9;
 
+            [Render(CellWidth)]
             public LayoutCell Cell10;
 
             public LayoutCell this[byte i]
@@ -124,13 +139,6 @@ namespace Z0
 
             public int CompareTo(InstLayoutRecord src)
                 => PatternId.CompareTo(src.PatternId);
-
-            public static ReadOnlySpan<byte> RenderWidths => new byte[TotalCount]{
-                12,18,18,6,
-                CellWidth,CellWidth,CellWidth,CellWidth,
-                CellWidth,CellWidth,CellWidth,CellWidth,
-                CellWidth,CellWidth,CellWidth,
-                };
 
             public static InstLayoutRecord Empty => default;
         }

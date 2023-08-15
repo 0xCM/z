@@ -83,7 +83,7 @@ namespace Z0.Asm
             var src = SdmPaths.Sources().Path(FS.file(spec.DocId, FS.Txt));
             if(!src.Exists)
             {
-                Error(FS.missing(src));
+                Channel.Error(FS.missing(src));
                 return;
             }
 

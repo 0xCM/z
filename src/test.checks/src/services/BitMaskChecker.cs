@@ -277,7 +277,7 @@ namespace Z0
                 log.Check3 = log.Count == log.PackedWidth;
             }
 
-            TableEmit(dst.View, AppDb.ApiTargets().Table<HiMaskLog<T>>());
+            Channel.TableEmit(dst.View, AppDb.ApiTargets().Table<HiMaskLog<T>>());
         }
     }
 }

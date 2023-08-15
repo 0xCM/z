@@ -2,39 +2,44 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0.Asm
 {
     using static sys;
+
     using static Asm.AsmOcTokens;
 
-    using Asm;
-
-    class AsmDocsCmd : WfAppCmd<AsmDocsCmd>
+    class AsmCmd : WfAppCmd<AsmCmd>
     {
+        IDbArchive Db => EnvDb.Scoped("asm.db");
+
         AsmRegSets Regs => Service(AsmRegSets.create);
 
+        [CmdOp("asm/emit/tokens")]
+        void EmitTokens()
+        {
+            var groups = AsmTokens.groups();
+            foreach(var g in groups)
+                g.ExportTokens(Channel, Db.Scoped("tokens"));
+
+        }
+
         [CmdOp("asm/emit/docs")]
-        public void Emit()
+        void EmitDocs()
         {
-            EmitRexDocs();
-            EmitSibDocs();
-            EmitModRmDocs();
-            EmitConditionDocs();
-            EmitRegDocs();
-            EmitRexBDocs();
-            EmitAsmTokens();
-        }
+            exec(true, 
+                EmitRexDocs,
+                EmitTokens,
+                EmitSibDocs,
+                EmitModRmDocs,
+                EmitConditionDocs,
+                EmitRexBDocs,
+                EmitRegDocs
+                );
 
-        void EmitAsmTokens()
-        {
-            TableEmit(AsmTokens.OcTokenDefs.View, AppDb.ApiTargets().Path("api.asm.tokens.opcodes", FileKind.Csv), UTF16);
-            TableEmit(AsmTokens.SigTokenDefs.View, AppDb.ApiTargets().Path("api.asm.tokens.sigs", FileKind.Csv), UTF16);
-            TableEmit(AsmTokens.TokenDefs.View, AppDb.ApiTargets().Path("api.asm.tokens", FileKind.Csv), UTF16);
         }
-
         void EmitRegDocs()
         {
-            var dst = AppDb.ApiTargets("asm.docs").Path("asm.regs.strings", FileKind.Cs);
+            var dst = Db.Scoped("docs").Path("asm.regs.strings", FileKind.Cs);
             var emitting = Channel.EmittingFile(dst);
             using var writer = dst.Writer();
             writer.WriteLine(Regs.Gp8LoRegs().ToNameArray("Gp8LoRegs"));
@@ -52,40 +57,39 @@ namespace Z0
             writer.WriteLine(Regs.CrRegs().ToNameArray("CrRegs"));
             writer.WriteLine(Regs.DbRegs().ToNameArray("DbRegs"));
             writer.WriteLine(Regs.FpuRegs().ToNameArray("FpuRegs"));
-            EmittedFile(emitting,4);
+            Channel.EmittedFile(emitting,4);
         }
 
         void EmitRexDocs()
         {
-            var dst = AppDb.ApiTargets("asm.docs").Path("rex.bits", FileKind.Csv);
+            var dst = Db.Scoped("docs").Path("rex.bits", FileKind.Csv);
             var emitting = Channel.EmittingFile(dst);
             var bits = RexPrefix.Range();
             using var writer = dst.AsciWriter();
             var buffer = text.buffer();
             var count = RexPrefix.table(buffer);
             writer.Write(buffer.Emit());
-            EmittedFile(emitting,count);
+            Channel.EmittedFile(emitting,count);
         }
 
         void EmitSibDocs()
         {
             var rows = AsmBytes.SibRows().View;
-            TableEmit(rows, AppDb.ApiTargets("asm.docs").Path("asm.docs.sib.bits", FileKind.Csv));
-
+            Channel.TableEmit(rows, Db.Scoped("docs").Path("asm.docs.sib.bits", FileKind.Csv));
             var codes = AsmBytes.SibRegCodes();
-            TableEmit(codes.View, AppDb.ApiTargets("asm.docs").Path("asm.docs.sib.regs", FileKind.Csv));
+            Channel.TableEmit(codes.View, Db.Scoped("docs").Path("asm.docs.sib.regs", FileKind.Csv));
         }
 
         void EmitModRmDocs()
         {
-            var path = AppDb.ApiTargets("asm.docs").Path("asm.docs.modrm.bits", FileKind.Csv);
+            var path = Db.Scoped("docs").Path("asm.docs.modrm.bits", FileKind.Csv);
             var flow = Channel.EmittingFile(path);
             using var writer = path.AsciWriter();
             var dst = span<char>(256*128);
             var count = AsmBytes.ModRmTable(dst);
             var rendered = slice(dst,0,count);
             writer.Write(rendered);
-            EmittedFile(flow, count);
+            Channel.EmittedFile(flow, count);
         }
 
         void EmitRexBDocs()
@@ -106,8 +110,8 @@ namespace Z0
 
         void EmitConditionDocs()
         {
-            EmitConditionDocs(Conditions.jcc8(), AppDb.ApiTargets("asm.docs").Path("jcc8", FileKind.Txt));
-            EmitConditionDocs(Conditions.jcc32(), AppDb.ApiTargets("asm.docs").Path("jcc32", FileKind.Txt));
+            EmitConditionDocs(Conditions.jcc8(), Db.Scoped("docs").Path("jcc8", FileKind.Txt));
+            EmitConditionDocs(Conditions.jcc32(), Db.Scoped("docs").Path("jcc32", FileKind.Txt));
         }
 
         uint EmitConditionDocs<T>(ReadOnlySpan<T> src, FilePath dst)
@@ -128,8 +132,10 @@ namespace Z0
                     counter++;
                 }
             }
-            EmittedFile(emitting,counter);
+            Channel.EmittedFile(emitting,counter);
             return counter;
         }
+ 
     }
+
 }

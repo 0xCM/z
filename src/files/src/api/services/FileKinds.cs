@@ -2,7 +2,6 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-global using Microsoft.Extensions.FileProviders;
 namespace Z0
 {
     public class FileKinds

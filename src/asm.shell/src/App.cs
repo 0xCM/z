@@ -12,9 +12,9 @@ namespace Z0
         public static int Main(params string[] args)
         {
             var result = 0;
-            var runtime = ApiServers.runtime();
-            var spec = ApiCmd.spec(args);
-            using var shell = ApiServers.shell(runtime, args);
+            var runtime = ApiServer.runtime();
+            var spec = ApiServer.spec(args);
+            using var shell = ApiServer.shell(runtime, args);
             try
             {
                 if(args.Length == 0)

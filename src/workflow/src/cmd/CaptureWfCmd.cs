@@ -28,7 +28,7 @@ namespace Z0
         {
             var src = ApiPacks.Current();
             var files = ApiPartFiles.create(src,PartId.AsmCore);
-            iter(files.Hex(), path => Write(path.ToUri()));            
+            iter(files.Hex(), path => Channel.Write(path.ToUri()));            
         }
 
         [CmdOp("capture/settings")]
@@ -39,8 +39,8 @@ namespace Z0
                 var settings = CaptureWfSettings.Default;
                 var dst = AppDb.Settings("capture", FileKind.Toml);
                 var data = settings.Format();
-                Row(data);
-                FileEmit(data,dst);
+                Channel.Row(data);
+                Channel.FileEmit(data,dst);
             }
         }
     }

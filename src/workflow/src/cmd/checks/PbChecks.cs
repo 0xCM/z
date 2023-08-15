@@ -96,7 +96,7 @@ namespace Z0
             var bf = dataset(n);
             var formatter = CsvTables.formatter<BfSegModel>();
             var segs = PolyBits.segs(bf);
-            TableEmit(segs, AppDb.DbTargets("pb").PrefixedTable<BfSegModel>($"{bf.Name}"));
+            Channel.TableEmit(segs, AppDb.DbTargets("pb").PrefixedTable<BfSegModel>($"{bf.Name}"));
             var intervals = bf.Intervals;
             Write(formatter.FormatHeader());
             iter(segs, seg => Write(formatter.Format(seg)));

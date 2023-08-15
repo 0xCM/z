@@ -8,16 +8,6 @@ namespace Z0
 
     partial class XedChecks
     {
-        [CmdOp("xed/check/bits")]
-        void CheckBitfields()
-            => EmitInstBits();
 
-        void EmitInstBits()
-        {
-            var calcs = InstFieldBits.Calcs;
-            Write(calcs.Description().Format());
-            Write(calcs.Descriptor());
-            Write(calcs.Model().Format());
-        }
     }
 }

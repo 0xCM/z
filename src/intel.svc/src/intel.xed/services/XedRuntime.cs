@@ -128,7 +128,7 @@ public class XedRuntime : WfSvc<XedRuntime>
         }
     }
 
-    public new bool Running
+    public bool Running
     {
         [MethodImpl(Inline)]
         get => Started;
@@ -175,7 +175,7 @@ public class XedRuntime : WfSvc<XedRuntime>
     }
 
     void Emit(ReadOnlySpan<FieldDef> src)
-        => TableEmit(src, Paths.Table<FieldDef>());
+        => Channel.TableEmit(src, Paths.Table<FieldDef>());
 
     void EmitRegmaps()
     {

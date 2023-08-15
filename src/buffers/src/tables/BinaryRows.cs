@@ -123,7 +123,6 @@ namespace Z0
             return total;
         }
 
-
         [MethodImpl(Inline), Op]
         public static ByteSize size(ReadOnlySpan<HexDataRow> src)
         {

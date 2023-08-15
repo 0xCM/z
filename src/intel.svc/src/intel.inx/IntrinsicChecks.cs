@@ -6,6 +6,7 @@ namespace Z0
 {
     using dsl.intel;
     using dsl.intel.intrinsics;
+    using static NativeSigs;
 
     using static sys;
 
@@ -168,7 +169,7 @@ namespace Z0
 
         public void CheckSigs()
         {
-            var specs = new NativeOpDef[3];
+            var specs = new Operand[3];
             using var dispenser = CompositeBuffers.create();
 
             var intrinsics = new Sigs();
@@ -196,9 +197,9 @@ namespace Z0
             var f3x = dispenser.Sig(f3);
             Channel.Write(f3x.Format(SigFormatStyle.C));
 
-            seek(specs,0) = NativeTypes.op("op0", NativeTypes.u8());
-            seek(specs,1) = NativeTypes.op("op1", NativeTypes.i16());
-            seek(specs,2) = NativeTypes.op("op2", NativeTypes.u32());
+            seek(specs,0) = NativeSigs.op("op0", NativeSigs.u8());
+            seek(specs,1) = NativeSigs.op("op1", NativeSigs.i16());
+            seek(specs,2) = NativeSigs.op("op2", NativeSigs.u32());
         }
 
         void Segments()

@@ -32,7 +32,7 @@ namespace Z0
             var src = Xed.Views.Patterns;
             var dst = XedPaths.DocTarget("instructions", FileKind.Md);
             var inst = new InstDoc(src.Map(x => new InstDocPart(x)));
-            FileEmit(inst.Format(), inst.Parts.Count, dst, TextEncodingKind.Asci);
+            Channel.FileEmit(inst.Format(), inst.Parts.Count, dst, TextEncodingKind.Asci);
         }
 
         void EmitDetails()
@@ -44,10 +44,10 @@ namespace Z0
             using var writer = dst.AsciWriter();
             for(var j=0; j<src.Count; j++)
                 writer.Write(formatter.Format(src[j]));
-            EmittedFile(emitting, src.Count);
+            Channel.EmittedFile(emitting, src.Count);
         }
 
         void EmitRuleDocs()
-            => FileEmit(RuleDocFormatter.create(Xed.Views.CellTables).Format(), 1, XedPaths.DocTarget("rules", FileKind.Md), TextEncodingKind.Asci);
+            => Channel.FileEmit(RuleDocFormatter.create(Xed.Views.CellTables).Format(), 1, XedPaths.DocTarget("rules", FileKind.Md), TextEncodingKind.Asci);
     }
 }

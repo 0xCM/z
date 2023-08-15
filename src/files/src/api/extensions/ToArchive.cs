@@ -11,5 +11,6 @@ namespace Z0
 
         public static int CompareTo(this FileUri left, FileUri right)
             => left.ToFilePath().CompareTo(right.ToFilePath());
+
     }
 }

@@ -35,7 +35,7 @@ namespace Z0
                     {
                         if(records.Count != 0)
                         {
-                            iter(records, r => Write(formatter.Format(r)));
+                            iter(records, r => Channel.Write(formatter.Format(r)));
                             records.Clear();
                         }
                         parsing = false;

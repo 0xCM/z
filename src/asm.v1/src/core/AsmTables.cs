@@ -128,7 +128,7 @@ namespace Z0.Asm
 
         public void EmitBlocks(ReadOnlySpan<AsmDataBlock> src, FilePath dst)
         {
-            TableEmit(src, dst);
+            Channel.TableEmit(src, dst);
         }
 
         public Index<HostAsmRecord> LoadHostAsmRows(Files src, bool pll = true, bool sort = true)
@@ -156,7 +156,7 @@ namespace Z0.Asm
                 }
             }
 
-            Ran(flow, string.Format("Parsed {0} {1} records", counter, TableId));
+            Channel.Ran(flow, string.Format("Parsed {0} {1} records", counter, TableId));
 
             var records = dst.ToArray();
             if(sort)
@@ -182,7 +182,7 @@ namespace Z0.Asm
                     counter += result.Data;
             }
 
-            Ran(flow, string.Format("Loaded {0} total asm instruction rows", counter));
+            Channel.Ran(flow, string.Format("Loaded {0} total asm instruction rows", counter));
             return records.Emit();
         }
 
@@ -219,14 +219,14 @@ namespace Z0.Asm
                     var loaded = AsmDetailRow.parse(src, out var detail);
                     if(!loaded)
                     {
-                        Error(loaded.Message);
+                        Channel.Error(loaded.Message);
                         return false;
                     }
 
                     dst.Add(detail);
                 }
 
-                Ran(flow, string.Format("Loaded {0} {1} rows from {2}", kRows, rowtype, path.ToUri()));
+                Channel.Ran(flow, string.Format("Loaded {0} {1} rows from {2}", kRows, rowtype, path.ToUri()));
             }
             else
             {

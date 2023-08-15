@@ -54,9 +54,7 @@ namespace Z0
         }
 
         public FolderPath Absolute
-        {
-            get => FS.absolute(this);
-        }
+            => FS.absolute(this);
 
         public Files Files(FileExt ext, bool recurse = false)
             => Files(this, ext, recurse);

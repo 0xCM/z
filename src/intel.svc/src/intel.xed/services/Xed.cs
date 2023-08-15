@@ -20,7 +20,6 @@ public partial class Xed : WfSvc<Xed>
         where T : unmanaged, IComparable<T>
             => new (src,dst);
 
-
     public static XedInstClass classifier(XedInstClass src)
     {
         var dst = src;

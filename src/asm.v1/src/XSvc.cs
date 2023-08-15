@@ -32,9 +32,6 @@ namespace Z0
             public ApiImmEmitter ImmEmitter(IWfRuntime wf)
                 => Service<ApiImmEmitter>(wf);
 
-            public AsmCmdService AsmCmdSvc(IWfRuntime wf)
-                => Service<AsmCmdService>(wf);
-
             public AsmTables AsmTables(IWfRuntime wf)
                 => Service<AsmTables>(wf);
 
@@ -78,9 +75,6 @@ namespace Z0
         public static ICaptureCore CaptureCore(this IWfRuntime wf)
             => Asm.CaptureCore.create(wf);
  
-        public static AsmCmdService AsmCmdSvc(this IWfRuntime wf)
-            => Services.AsmCmdSvc(wf);
-
         public static AsmCoreCmd AsmCoreCmd(this IWfRuntime wf)
             => Services.AsmCoreCmd(wf);
 
@@ -92,9 +86,6 @@ namespace Z0
 
          public static CultProcessor CultProcessor(this IWfRuntime wf)
             => Services.CultProcessor(wf);
-
-         public static AsmDbCmd AsmDbCmd(this IWfRuntime wf)
-            => Services.AsmDbCmd(wf);
 
          public static NasmCatalog NasmCatalog(this IWfRuntime wf)
             => Services.NasmCatalog(wf);

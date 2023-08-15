@@ -157,10 +157,10 @@ namespace Z0
             {
                 var x2 = x1.Format();
                 if(x0 != x2)
-                    Error(string.Format("'{0}' != '{1}'", x2, x0));
+                    Channel.Error(string.Format("'{0}' != '{1}'", x2, x0));
             }
             else
-                Error(result.Message);
+                Channel.Error(result.Message);
         }
 
         void RunValidators(IEventTarget log)
@@ -210,7 +210,7 @@ namespace Z0
                         Run(n30);
                     break;
                     default:
-                     Error(string.Format("Command '{0}' unrecognized", spec));
+                     Channel.Error(string.Format("Command '{0}' unrecognized", spec));
                     break;
                 }
             }

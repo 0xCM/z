@@ -9,6 +9,8 @@ namespace Z0
     using static sys;
     using static AsmPrefixCodes;
     using static Asm.AsmRegTokens;
+    using static XedRules;
+    using static NativeSigs;
 
     using gp32 = Asm.AsmRegTokens.Gp32Reg;
     using K = Asm.AsmOcTokenKind;
@@ -42,6 +44,15 @@ namespace Z0
             var checker = AsmChecker.create(Wf, GetType(), CmdRunner);
             checker.RunCheck(name, e => events.Add(e));
             iter(events, e => Channel.Raise(e));            
+        }
+
+        [CmdOp("xed/check/bits")]
+        void CheckBitfields()
+        {
+            var calcs = InstFieldBits.Calcs;
+            Channel.Write(calcs.Description().Format());
+            Channel.Write(calcs.Descriptor());
+            Channel.Write(calcs.Model().Format());
         }
 
         [CmdOp("asm/check/all")]
@@ -82,7 +93,7 @@ namespace Z0
             var data = slice(buffer.Bytes,0,size);
             buffer[15] = size;
             var dst = new AsmHexCode(@as<ByteBlock16,Cell128>(buffer));
-            Write(dst.Format());
+            Channel.Write(dst.Format());
         }
 
         [CmdOp("asm/check/tokens")]
@@ -138,7 +149,7 @@ namespace Z0
         void CheckStringRes()
         {
             var resources = TextAssets.strings(typeof(AsciText)).View;
-            iter(resources, r => Write(r.Format()));
+            iter(resources, r => Channel.Write(r.Format()));
         }
 
         [CmdOp("asm/check/bitparser")]
@@ -270,7 +281,7 @@ namespace Z0
         void FindImplMaps(CmdArgs args)
         {
             var impl = Clr.impl(typeof(Calc64),typeof(ICalc64));
-            Write(impl.Format());
+            Channel.Write(impl.Format());
         }
 
         // Parsers Parsers => new();
@@ -391,16 +402,16 @@ namespace Z0
             var count = bitstring(Input, block1.Data);
             var chars = slice(block1.Data,0,count);
             var bits = text.format(chars);
-            Write(InputBitsA);
-            Write(bits);
+            Channel.Write(InputBitsA);
+            Channel.Write(bits);
 
             var block2 = CharBlock128.Null;
             count = bitstring(bytes(InputBitsB), block2.Data);
             bits = text.format(chars);
-            Write(bits);
+            Channel.Write(bits);
 
             var v = vpack.vunpack32x8(0xF0F0F0F0);
-            Write(v.FormatBlockedBits(8));
+            Channel.Write(v.FormatBlockedBits(8));
 
             //CheckBitSpans();
             CheckBitFormatter();
@@ -429,7 +440,7 @@ namespace Z0
             BitRender.render(b0, ref i, 8, buffer);
             seek(buffer,i++) = Chars.Underscore;
             BitRender.render(b1, ref i, 4, buffer);
-            Write(block.Format());
+            Channel.Write(block.Format());
         }
  
         [CmdOp("asm/regs/query")]
@@ -470,7 +481,7 @@ namespace Z0
 
             var buffer = text.buffer();
             iter(selected, reg => buffer.AppendLine(string.Format("{0}:[{1}]", reg.Name, reg.Format())));
-            Write(buffer.Emit());
+            Channel.Write(buffer.Emit());
 
             return result;
         }
@@ -499,7 +510,7 @@ namespace Z0
             }
             indent-=4;
             dst.IndentLine(indent,"}");
-            Write(dst.Emit());
+            Channel.Write(dst.Emit());
         }
 
         [CmdOp("asm/check/ccv")]
@@ -513,7 +524,7 @@ namespace Z0
             Require.invariant(r2 == Gp64Reg.r8);
             var r3 = Win64Ccv.reg(w64,3);
             Require.invariant(r3 == Gp64Reg.r9);
-            Write(string.Format("{0} | {1} | {2} | {3}", r0, r1, r2, r3));
+            Channel.Write(string.Format("{0} | {1} | {2} | {3}", r0, r1, r2, r3));
         }         
 
         void vlut(W128 w)
@@ -547,7 +558,7 @@ namespace Z0
             {
                 ref readonly var line = ref skip(lines,i);
                 AsmBytes.parse(line, out var code);
-                Write(code.Format());
+                Channel.Write(code.Format());
             }
         }
 
@@ -565,13 +576,13 @@ c5 f8 99 c8";
         Outcome CheckSigs(CmdArgs args)
         {
             using var dispenser = CompositeBuffers.create();
-            var specs = new NativeOpDef[3];
-            seek(specs,0) = NativeTypes.ptr("op0", NativeTypes.u8());
-            seek(specs,1) = NativeTypes.@const("op1", NativeTypes.i16());
-            seek(specs,2) = NativeTypes.@out("op2", NativeTypes.u32());
-            var sig = dispenser.Sig("funcs","f2", NativeTypes.i32(), specs);
-            Write(sig.Format(SigFormatStyle.C));
-            sig = dispenser.Sig("funcs","f1", NativeTypes.i32(), specs);
+            var specs = new Operand[3];
+            seek(specs,0) = NativeSigs.ptr("op0", NativeSigs.u8());
+            seek(specs,1) = NativeSigs.@const("op1", NativeSigs.i16());
+            seek(specs,2) = NativeSigs.@out("op2", NativeSigs.u32());
+            var sig = dispenser.Sig("funcs","f2", NativeSigs.i32(), specs);
+            Channel.Write(sig.Format(SigFormatStyle.C));
+            sig = dispenser.Sig("funcs","f1", NativeSigs.i32(), specs);
 
             ref readonly var ret = ref sig.Return;
             ref readonly var op0 = ref sig[0];
@@ -583,7 +594,7 @@ c5 f8 99 c8";
             var x0 = string.Format("{0}:{1}", op0.Name, op0.Type);
             var x1 = string.Format("{0}:{1}", op1.Name, op1.Type);
             var x2 = string.Format("{0}:{1}", op2.Name, op2.Type);
-            Write(sig.Format(SigFormatStyle.C));
+            Channel.Write(sig.Format(SigFormatStyle.C));
 
             return true;
         }
@@ -608,7 +619,7 @@ c5 f8 99 c8";
         Outcome EmitAsmCases(CmdArgs args)
         {
             var src = AsmCases.mov();
-            TableEmit(src, AppDb.ApiTargets().Table<AsmEncodingCase>());
+            Channel.TableEmit(src, AppDb.ApiTargets().Table<AsmEncodingCase>());
             return true;
         }
 
@@ -628,7 +639,7 @@ c5 f8 99 c8";
                 if(cell != 0)
                 {
                     var seg = BitfieldSeg.define(cell, offset, segwidth);
-                    Write(seg.Format());
+                    Channel.Write(seg.Format());
                 }
             }            
         }
@@ -665,13 +676,13 @@ c5 f8 99 c8";
                         MemoryAddress loc = pCurrent;
                         var a = *pCurrent++;
                         Require.equal(a, (ulong)(i*j));
-                        Write(string.Format("{0} {1} {2}x{3}={4}", loc, loc - @base, i, j, a));
+                        Channel.Write(string.Format("{0} {1} {2}x{3}={4}", loc, loc - @base, i, j, a));
                     }
                 }
             }
 
             var dst = Unsafe.As<TableInfo>(data);
-            Write(string.Format("{0}={1}x{2}", dst.Count, dst.M, dst.N));
+            Channel.Write(string.Format("{0}={1}x{2}", dst.Count, dst.M, dst.N));
         }
 
 
@@ -707,9 +718,9 @@ c5 f8 99 c8";
         void CheckBlockPartitions()
         {
             var formatter = CsvTables.formatter<BlockPartition>();
-            Write(formatter.FormatHeader());
-            Write(formatter.Format(BlockPartition.calc(1024, 256, 11)));
-            Write(formatter.Format(BlockPartition.calc(9591191, 256, 128)));
+            Channel.Write(formatter.FormatHeader());
+            Channel.Write(formatter.Format(BlockPartition.calc(1024, 256, 11)));
+            Channel.Write(formatter.Format(BlockPartition.calc(9591191, 256, 128)));
         }
 
         [CmdOp("asm/check/jmp")]
@@ -936,7 +947,7 @@ c5 f8 99 c8";
                 test.Input = input;
                 pass = check(ref test);
                 result &= pass;
-                Write(test, pass ? FlairKind.Status : FlairKind.Error);
+                Channel.Write(test, pass ? FlairKind.Status : FlairKind.Error);
             }
 
             BitWidth w8 = 8;
@@ -1007,7 +1018,7 @@ c5 f8 99 c8";
                 }
                 else
                 {
-                    Error("Computed target did not match expected target");
+                    Channel.Error("Computed target did not match expected target");
                 }
             }
 
@@ -1161,7 +1172,7 @@ c5 f8 99 c8";
             var buffer = CharBlock32.Null;
             var count = parser.Parse(input, buffer.Data);
             var parsed = slice(buffer.Data,0,count);
-            Write(text.format(Demand.eq(input,parsed)));
+            Channel.Write(text.format(Demand.eq(input,parsed)));
         }
 
         void CheckDigitParser(Base16 @base)
@@ -1171,7 +1182,7 @@ c5 f8 99 c8";
             var buffer = CharBlock32.Null;
             var count = parser.Parse(input, buffer.Data);
             var parsed = slice(buffer.Data,0,count);
-            Write(text.format(Demand.eq(input,parsed)));
+            Channel.Write(text.format(Demand.eq(input,parsed)));
         }
 
         void CheckDigitParser(Base2 @base)
@@ -1181,7 +1192,7 @@ c5 f8 99 c8";
             var buffer = CharBlock32.Null;
             var count = parser.Parse(input, buffer.Data);
             var parsed = slice(buffer.Data,0,count);
-            Write(text.format(Demand.eq(input,parsed)));
+            Channel.Write(text.format(Demand.eq(input,parsed)));
         }        
 
 

@@ -10,6 +10,14 @@ namespace Z0
 
     public class AsmTokens
     {        
+
+        public static IEnumerable<SymbolGroup> groups()
+        {
+            yield return new SymbolGroup(typeof(AsmOcTokens), typeof(AsmOcTokenKind));
+            yield return new SymbolGroup(typeof(AsmRegTokens), typeof(AsmRegTokenKind));
+            yield return new SymbolGroup(typeof(AsmSigTokens), typeof(AsmSigTokenKind));
+        }
+
         [MethodImpl(Inline), Op]
         public static ref readonly AsmTokens tokens()
             => ref Instance;

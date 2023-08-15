@@ -17,6 +17,7 @@ public partial class XedFlows : WfSvc<XedFlows>
 
     XedPaths XedPaths => Wf.XedPaths();
 
+
     IDbArchive Targets()
         => XedPaths.Imports();
 
@@ -67,7 +68,7 @@ public partial class XedFlows : WfSvc<XedFlows>
     public void EmitOpWidths(ReadOnlySpan<OpWidthRecord> src)
         => Channel.TableEmit(src, Targets().Table<OpWidthRecord>());
 
-    public void EmitChipMap(ChipMap  map)
+    public void EmitChipMap(ChipMap map)
     {
         const string RowFormat = "{0,-12} | {1,-24} | {2}";
         var dst = text.emitter();
@@ -86,7 +87,7 @@ public partial class XedFlows : WfSvc<XedFlows>
 
     public void EmitChipInstructions(ChipInstructions src)
     {
-        piter(src.Query(), kv => TableEmit(kv.Right, Targets("isaforms").Path(FS.file(string.Format("xed.isa.{0}", kv.Left), FS.Csv))));                    
+        piter(src.Query(), kv => Channel.TableEmit(kv.Right, Targets("isaforms").Path(FS.file(string.Format("xed.isa.{0}", kv.Left), FS.Csv))));                    
     }
 
     static Symbols<VisibilityKind> Visibilities = Symbols.index<VisibilityKind>();

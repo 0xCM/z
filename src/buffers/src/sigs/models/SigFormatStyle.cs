@@ -2,7 +2,9 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class NativeSigs
 {
     public enum SigFormatStyle : byte
     {
@@ -12,5 +14,6 @@ namespace Z0
 
         CSharp
     }
+    
 }
 

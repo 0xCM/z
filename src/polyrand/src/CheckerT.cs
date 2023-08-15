@@ -39,7 +39,7 @@ namespace Z0
         FilePath EventLogPath
             => AppDb.Logs("checks").Path(FileName("logs", FileKind.Log));
 
-        protected new void Write<X>(X src, FlairKind flair = FlairKind.Data)
+        protected void Write<X>(X src, FlairKind flair = FlairKind.Data)
             => Raise(Events.data(src, flair));
 
         protected Action<object> Log

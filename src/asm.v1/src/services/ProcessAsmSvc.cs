@@ -64,7 +64,7 @@ namespace Z0.Asm
         }
 
         public void EmitProcessAsm(SortedReadOnlySpan<ProcessAsmRecord> src, FilePath dst)
-            => TableEmit(src.View, dst, rowpad: ProcessAsmRecord.RowPad);
+            => Channel.TableEmit(src.View, dst, rowpad: ProcessAsmRecord.RowPad);
 
         public ReadOnlySpan<ProcessAsmRecord> EmitProcessAsm(ReadOnlySpan<AsmRoutine> src, FilePath dst)
         {

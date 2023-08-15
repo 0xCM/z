@@ -12,21 +12,21 @@ namespace Z0
         {
             None = 0,
 
-            A_GPR_B,
+            A_GPR_B = 1,
 
-            A_GPR_R,
+            A_GPR_R = 2,
 
-            Ar10,
+            Ar10 = 3,
 
-            Ar11,
+            Ar11 = 4,
 
-            Ar12,
+            Ar12 = 5,
 
-            Ar13,
+            Ar13 = 6,
 
-            Ar14,
+            Ar14 = 7,
 
-            Ar15,
+            Ar15 = 8,
 
             Ar8 = 9,
 
@@ -670,17 +670,17 @@ namespace Z0
 
             YMM_R_64 = 329,
 
-            YMM_R3,
+            YMM_R3 = 330,
 
-            YMM_R3_32,
+            YMM_R3_32 = 331,
 
-            YMM_R3_64,
+            YMM_R3_64 = 332,
 
-            YMM_SE,
+            YMM_SE = 333,
 
-            YMM_SE32,
+            YMM_SE32 = 334,
 
-            YMM_SE64,
+            YMM_SE64 = 335,
 
             ZMM_B3,
 

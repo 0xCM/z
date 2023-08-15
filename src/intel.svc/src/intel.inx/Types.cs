@@ -6,7 +6,7 @@ namespace Z0.dsl
 {
     using static sys;
     using static intel.TypeNames;
-    using static NativeTypes;
+    using static NativeSigs;
     
     public readonly struct Types
     {

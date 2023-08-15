@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using static NativeSigs;
 
     public class Alloc : IDisposable
     {
@@ -69,14 +70,14 @@ namespace Z0
             => (CompositeDispenser)Data.GetOrAdd(AllocationKind.Composite, 
                 _ => Dispense.composite(Memory(), Strings(), Labels(), Symbols(), Source()));
 
-        public NativeSigDispenser Sigs()
-            => (NativeSigDispenser)Data.GetOrAdd(AllocationKind.NativeSig, 
+        public SigDispenser Sigs()
+            => (SigDispenser)Data.GetOrAdd(AllocationKind.NativeSig, 
                 _ => Dispense.sigs(Memory(), Strings(), Labels()));
 
-        public NativeSigRef Sig(string scope, string name, NativeType ret, params NativeOpDef[] ops)
+        public NativeSigRef Sig(string scope, string name, NativeType ret, params Operand[] ops)
             => Sigs().Sig(scope, name,ret,ops);
 
-        public NativeSigRef Sig(NativeSigSpec spec)
+        public NativeSigRef Sig(NativeSig spec)
             => Sigs().Sig(spec);
 
         public void Dispose()

@@ -155,7 +155,7 @@ public partial class XedCmd : WfAppCmd<XedCmd>
         {
             var file = AsmFileSpec.define(mnemonic.Format(), sources[mnemonic].ToArray());
             var dst = file.Path(LlvmModels("mc.models.g").Scoped("asm"));
-            EmittedFile(EmittingFile(dst), file.Save(dst));
+            Channel.EmittedFile(Channel.EmittingFile(dst), file.Save(dst));
         }
 
         return true;

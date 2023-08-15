@@ -23,7 +23,7 @@ namespace Z0.Asm
             iter(src, routine => instructions.AddRange(routine.Instructions));
             var calls = BuildRows(instructions.ViewDeposited());
             var count = calls.Length;
-            TableEmit(calls.View, dst);
+            Channel.TableEmit(calls.View, dst);
             return calls;
         }
 
@@ -31,7 +31,7 @@ namespace Z0.Asm
         {
             var calls = BuildRows(src.Instructions());
             iter(calls, call => dst.Add(call));
-            TableEmit(calls, path);
+            Channel.TableEmit(calls, path);
         }
 
         [MethodImpl(Inline), Op]

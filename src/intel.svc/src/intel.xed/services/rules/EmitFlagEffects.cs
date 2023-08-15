@@ -11,7 +11,7 @@ namespace Z0
         {
             const string RenderPattern = "{0,-16} | {1,-4} | {2, -4}";
             var path = XedPaths.RuleTarget("flags", FS.Csv);
-            var emitting = EmittingFile(path);
+            var emitting = Channel.EmittingFile(path);
             using var writer = path.AsciWriter();
             writer.AppendLineFormat(RenderPattern, "Instruction",  "F", "E");
             var counter = 0u;
@@ -32,7 +32,7 @@ namespace Z0
                 }
             }
 
-            EmittedFile(emitting,counter);
+            Channel.EmittedFile(emitting,counter);
         }
     }
 }

@@ -4,11 +4,17 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using System.Linq;
+
     using static sys;
 
     [ApiHost]
     public class DataTypes
     {
+        [MethodImpl(Inline), Op]
+        public static NativeType seg(NativeSegKind kind)
+            => new NativeType(kind);
+
         public static DataSize measure(Type src)
         {
             var dst = DataSize.Empty;
@@ -56,26 +62,17 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static PrimalType primitive(NativeKind kind, Label name, AlignedWidth width)
-            => new (kind, name,width);
+        public static LiteralType literal(Label name, PrimalType @base, DataSize size)
+            => new (name, @base, size);
 
         [MethodImpl(Inline), Op]
-        public static LiteralType literal(TypeKey key, Label name, PrimalType @base, DataSize size)
-            => new (key, name, @base, size);
-
-        [MethodImpl(Inline), Op]
-        public static LiteralType literal(TypeKey key, Label name, PrimalType @base, byte size)
-            => new (key, name, @base, (size,size));
+        public static LiteralType literal(Label name, PrimalType @base, byte size)
+            => new (name, @base, (size,size));
 
         [MethodImpl(Inline)]
-        public static LiteralValue literal<T>(TypeKey type, T value)
+        public static LiteralValue<T> literal<T>(LiteralType type, T value)
             where T : unmanaged
-                => new LiteralValue<T>(type, value);
-
-        [MethodImpl(Inline)]
-        public static LiteralValue literal<T>(LiteralType type, T value)
-            where T : unmanaged
-                => literal(type.Key,value);
+                => new(type,value);
 
         [MethodImpl(Inline), Op]
         public static TypedLiteral typed(Label name, TypeKey @base, DataSize size)
@@ -83,19 +80,15 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static TypedLiteral typed(Label name, LiteralType @base, DataSize size)
-            => typed(name, @base.Key, size);
+            => typed(name, @base, size);
 
         [MethodImpl(Inline), Op]
-        public static NumericType numeric(TypeKey key, Label name, DataSize size)
-            => new (key, name, size);
+        public static NumericType numeric(Label name, DataSize size)
+            => new (name, size);
 
         [MethodImpl(Inline), Op]
-        public static NumericType numeric(TypeKey key, Label name, byte width)
-            => new (key, name, width);
-
-        [MethodImpl(Inline), Op]
-        public static NumericType numeric(PrimalType key, Label name, NumWidth width)
-            => numeric(key, name, width);
+        public static NumericType numeric(Label name, byte width)
+            => new (name, width);
 
         public static TypeKey NextKey(DataTypeKind kind)
         {
@@ -117,7 +110,7 @@ namespace Z0
             var packed = width;
             if(tag)
                 packed = (byte)((NativeSize)tag.Require().TypeWidth).Width;
-            return literal(key, name, @base, new DataSize(packed, @base.Size.NativeWidth));
+            return literal(name, @base, new DataSize(packed, @base.Size.NativeWidth));
         }
 
         public static PrimalType type(NativeKind kind)

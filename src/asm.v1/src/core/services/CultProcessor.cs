@@ -44,7 +44,7 @@ namespace Z0
                    Emitter.Error(e);
                 }
 
-                Ran(running);
+                Channel.Ran(running);
             }
         }
 
@@ -91,14 +91,14 @@ namespace Z0
         }
 
         void EmitSummary(FilePath dst)
-            => TableEmit(Summaries.ViewDeposited(), dst);
+            => Channel.TableEmit(Summaries.ViewDeposited(), dst);
 
         void Process(uint batch, uint counter, ReadOnlySpan<TextLine> src, Span<CultRecord> dst)
         {
             var processing = Channel.Running(ProcessingBatch.Format(batch, counter));
             var parsed = slice(dst, 0, Parse(src, dst));
             Process(parsed);
-            Ran(processing, ProcessedBatch.Format(batch, counter, parsed.Length, BatchSize));
+            Channel.Ran(processing, ProcessedBatch.Format(batch, counter, parsed.Length, BatchSize));
         }
 
         void Process(ReadOnlySpan<CultRecord> src)

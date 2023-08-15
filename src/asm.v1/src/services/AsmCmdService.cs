@@ -6,7 +6,7 @@ namespace Z0.Asm
 {
     using static sys;
 
-    public sealed class AsmCmdService : WfAppCmd<AsmCmdService>
+    sealed class AsmCmdService : WfAppCmd<AsmCmdService>
     {
         AsmCallPipe AsmCalls => Wf.AsmCallPipe();
 
@@ -48,7 +48,7 @@ namespace Z0.Asm
             var count = AsmPrefixTests.rex(src, ref i, buffer);
             var filtered = slice(buffer,0,count);
             var dst = AppDb.AppData().Path(FS.file("asm.rex", FS.Csv));
-            TableEmit(@readonly(filtered), dst);
+            Channel.TableEmit(@readonly(filtered), dst);
             return result;
         }
 
@@ -73,7 +73,7 @@ namespace Z0.Asm
             {
                 ref readonly var mask = ref src[i];
                 Channel.Row(formatter.Format(mask));
-                Write(mask.Text);
+                Channel.Write(mask.Text);
             }
             Channel.TableEmit(src,dst,TextEncodingKind.Unicode);
 
@@ -109,7 +109,7 @@ namespace Z0.Asm
             seek(spec,j++) = Chars.Null;
 
             var ts = Tokens.count(spec);
-            Write(ts);
+            Channel.Write(ts);
 
             return result;
         }
@@ -134,7 +134,7 @@ namespace Z0.Asm
             }
             writer.WriteLine("};");
             writer.WriteLine("    }");
-            EmittedFile(flow, CellCount);
+            Channel.EmittedFile(flow, CellCount);
             return true;
         }
 
@@ -175,7 +175,7 @@ namespace Z0.Asm
                 writer.WriteLine(asm);
                 counter++;
             }
-            Write(EmittedInstructions.Format(counter,dst));
+            Channel.Write(EmittedInstructions.Format(counter,dst));
             return true;
         }
 
@@ -259,7 +259,7 @@ namespace Z0.Asm
             }
 
             var dst = ItemLists.list(buffer.ToArray());
-            iter(dst, item => Write(item.Value));
+            iter(dst, item => Channel.Write(item.Value));
 
             return result;
         }
@@ -270,7 +270,7 @@ namespace Z0.Asm
             var provider = Wf.ApiResProvider();
             var path = provider.ResPackPath();
             var accessors = provider.ResPackAccessors();
-            Write(string.Format("Count:{0}", accessors.Length));
+            Channel.Write(string.Format("Count:{0}", accessors.Length));
             return result;
         }
 

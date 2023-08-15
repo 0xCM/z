@@ -2,10 +2,12 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class NativeSigs
 {
     [Flags]
-    public enum NativeOpMods : byte
+    public enum ModifierKind : byte
     {
         None,
 
@@ -20,6 +22,5 @@ namespace Z0
         Out = Pow2x8.P2ᐞ04,
 
         Unsigned = Pow2x8.P2ᐞ05,
-    }
+    }    
 }
-

@@ -15,25 +15,35 @@ namespace Z0
         [CmdOp("xed/etl")]
         void RunImport()
         {
-            var cpuid = DataFlow.CalcCpuIdDataset(XedDb.DocSource(XedDocKind.CpuId));
-            DataFlow.EmitCpuIdDataset(cpuid);       
-            var codes = Symbols.symkinds<ChipCode>();  
-            DataFlow.EmitChipCodes(codes);            
-            var chips = DataFlow.CalcChipMap(XedDb.DocSource(XedDocKind.ChipMap));
-            DataFlow.EmitChipMap(chips);
-            var rules = DataFlow.CalcRuleBlocks(XedDb.DocSource(XedDocKind.RuleBlocks));
-            DataFlow.EmitRules(rules);
-            var widths = DataFlow.CalcWidths(XedDb.DocSource(XedDocKind.Widths));
-            DataFlow.EmitOpWidths(widths.OpWidths);
-            DataFlow.EmitPointerWidths(widths.PointerWidthDescriptions);
-            var forms = DataFlow.CalcFormImports(XedDb.DocSource(XedDocKind.FormData));
-            DataFlow.EmitFormImports(forms);
-            var inst = DataFlow.CalcChipInstructions(forms, chips);
-            DataFlow.EmitChipInstructions(inst);
-            var bcastkinds = Symbols.kinds<BCastKind>();
-            var broadacasts = Xed.broadcasts(bcastkinds);
-            DataFlow.EmitBroadcastDefs(broadacasts);
-
+            exec(true, 
+                () => Channel.TableEmit(XedRegMap.Service.REntries, XedDb.Targets().Table<RegMapEntry>("rmap")),
+                () => Channel.TableEmit(XedRegMap.Service.XEntries, XedDb.Targets().Table<RegMapEntry>("xmap")),
+                () => DataFlow.EmitChipCodes(Symbols.symkinds<ChipCode>()),
+                () => DataFlow.EmitBroadcastDefs(Xed.broadcasts(Symbols.kinds<BCastKind>())),
+                () => {
+                    var cpuid = DataFlow.CalcCpuIdDataset(XedDb.DocSource(XedDocKind.CpuId));
+                    DataFlow.EmitCpuIdDataset(cpuid);       
+                },
+                () => {
+                    var chips = DataFlow.CalcChipMap(XedDb.DocSource(XedDocKind.ChipMap));
+                    DataFlow.EmitChipMap(chips);
+                    var forms = DataFlow.CalcFormImports(XedDb.DocSource(XedDocKind.FormData));
+                    DataFlow.EmitFormImports(forms);
+                    var inst = DataFlow.CalcChipInstructions(forms, chips);
+                    DataFlow.EmitChipInstructions(inst);
+                },
+                () => {
+                    var rules = DataFlow.CalcRuleBlocks(XedDb.DocSource(XedDocKind.RuleBlocks));
+                    DataFlow.EmitRules(rules);
+                },
+                () => {
+                    var widths = DataFlow.CalcWidths(XedDb.DocSource(XedDocKind.Widths));
+                    DataFlow.EmitOpWidths(widths.OpWidths);
+                    DataFlow.EmitPointerWidths(widths.PointerWidthDescriptions);
+                }
+            );
+             
+            
             //var dec = XedRuleSpecs.CalcTableCriteria(XedDb.RuleSource(RuleTableKind.DEC), status => Channel.Row(status));
 
             // var dec = XedRuleSpecs.criteria(RuleTableKind.DEC);

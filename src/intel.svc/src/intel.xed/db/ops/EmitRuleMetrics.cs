@@ -14,7 +14,7 @@ namespace Z0
             var dst = text.emitter();
             for(var i=0; i<src.TableCount; i++)
                 dst.AppendLine(CalcTableMetrics(src[i]));
-            FileEmit(dst.Emit(), src.TableCount, Paths.DbTarget("rules.metrics", FileKind.Txt));
+            Channel.FileEmit(dst.Emit(), src.TableCount, Paths.DbTarget("rules.metrics", FileKind.Txt));
         }
 
         string CalcTableMetrics(in CellTable table)

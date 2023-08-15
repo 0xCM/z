@@ -9,6 +9,7 @@ namespace Z0
 
     using Bv128 = BitVector128<ulong>;
     using Bv256 = BitVector256<ulong>;
+
     using static XedModels;
     
     partial class XedRules

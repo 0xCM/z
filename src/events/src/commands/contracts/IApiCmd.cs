@@ -17,7 +17,7 @@ namespace Z0
         where T : IApiCmd<T>, new()
     {
         ApiCmdRoute IApiCmd.Route
-            => ApiCmd.route(typeof(T));
+            => ApiServer.route(typeof(T));
         
         CmdId ICmd.CmdId
             => CmdId.identify<T>();

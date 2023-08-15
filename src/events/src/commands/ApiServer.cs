@@ -8,8 +8,111 @@ namespace Z0
 
     using static sys;
 
-    public class ApiCmd
+    public sealed class ApiServer : AppService<ApiServer>
     {
+        public static ApiCmdCatalog catalog()
+            => ApiCmdRunner.Service().CmdCatalog;
+
+        public static Task loop(IWfChannel channel, IApiCmdRunner runner)
+            => ApiCmdLoop.start(channel, runner);
+
+        public static IApiShell app<T>(string[] args)
+            where T : IApiShell,new()
+        {
+            var dst = new T();
+            var wf = runtime();
+            dst.Init(wf, args);
+            return dst;
+        }
+
+        public static IWfChannel channel()
+            => WfChannel.create(initializer());
+
+        public static IApiShell shell(IWfRuntime wf, string[] args, params Assembly[] parts)
+        {
+            var shell = new ApiShell();
+            shell.Init(wf, args, ApiServer.runner(wf, parts));
+            return shell;
+        }
+
+        public static IApiShell shell(string[] args, params Assembly[] parts)
+        {
+            var wf = runtime(false);
+            var shell = new ApiShell();
+            shell.Init(wf, args, ApiServer.runner(wf, parts));
+            return shell;
+        }
+
+        public static A shell<A>(string[] args, params Assembly[] parts)
+            where A : IApiShell, new()
+        {
+            var wf = runtime();
+            var shell = new A();
+            shell.Init(wf, args, ApiServer.runner(wf, parts));
+            return shell;
+        }
+
+        public static WfInit initializer()
+        {
+            var dst = new WfInit();
+            var control = ExecutingPart.Assembly;
+            dst.Verbosity = LogLevel.Status;
+            dst.LogConfig = Loggers.configure(control.Id(), AppSettings.Default.Logs());
+            dst.LogConfig.ErrorPath.CreateParentIfMissing();
+            dst.LogConfig.StatusPath.CreateParentIfMissing();
+            dst.EventBroker = Events.broker(dst.LogConfig);                
+            dst.Host = typeof(WfRuntime);
+            dst.EmissionLog = Loggers.emission(control, timestamp());
+            return dst;
+        }
+
+        public static IWfRuntime runtime(bool verbose = true)
+        {
+            var factory = typeof(ApiServer);
+            try
+            {
+                var ts = now();
+                var clock = Time.counter(true);
+                if(verbose)
+                    term.emit(Events.running(factory, InitializingRuntime));
+                var control = ExecutingPart.Assembly;
+                var id = control.Id();
+                var dst = initializer();
+
+                if(verbose)
+                    term.emit(Events.babble(factory, ConfiguredAppLogs.Format(dst.LogConfig)));
+
+                if(verbose)
+                    term.emit(Events.babble(factory, "Created event broker"));
+
+                if(verbose)
+                    term.emit(Events.babble(factory, "Created host"));
+
+                if(verbose)
+                    term.emit(Events.babble(factory, ConfiguredEmissionLogs.Format(dst.EmissionLog)));
+
+                var wf = new WfRuntime(dst);
+                term.announce($"ClrVersion: {FileVersionInfo.GetVersionInfo(typeof(object).Assembly.Location).ProductVersion}");
+
+                if(verbose)
+                    term.emit(Events.ran(factory, AppMsg.status(InitializedRuntime.Format(clock.Elapsed()))));
+                return wf;
+            }
+            catch(Exception e)
+            {
+                term.emit(Events.error(factory, e));
+                throw;
+            }
+        }
+ 
+        const string InitializingRuntime = "Initializing runtime";
+        
+        static RenderPattern<Duration> InitializedRuntime => "Initialized runtime:{0}";
+
+        static RenderPattern<LogSettings> ConfiguredAppLogs => "Configured app logs:{0}";
+
+        static RenderPattern<IWfEmissions> ConfiguredEmissionLogs => "Configured emisson logs:{0}";
+
         public static CmdEffectors effectors(IWfRuntime wf, Assembly[] parts)
             => new (methods(wf, parts), handlers(wf, parts));
 
@@ -19,17 +122,9 @@ namespace Z0
         public static CmdUri uri(ApiCmdRoute route, object host)
             => new(CmdKind.App, host.GetType().Assembly.PartName().Format(), host.GetType().DisplayName(), route.Format());
 
-        // [Op]
-        // public static CmdUri uri(MethodInfo src)
-        // {
-        //     var host = src.DeclaringType;
-        //     var name = src.Tag<CmdOpAttribute>().MapValueOrElse(a => a.Name, () => src.DisplayName());
-        //     return uri(CmdKind.App, host.Assembly.PartName().Format(), host.DisplayName(), name);        
-        // }
-
         internal static IApiCmdRunner runner(IWfRuntime wf, Assembly[] parts)
         {
-            var _parts = parts.Length == 0 ? ApiAssemblies.Components.Union(array(Assembly.GetEntryAssembly())).Array() : parts;
+            var _parts = parts.Length == 0 ?  ApiAssemblies.Components.WithEntryAssembly().Array() : parts;
             var runner = (IApiCmdRunner)new ApiCmdRunner(wf.Channel, effectors(wf,_parts));
             AppService.AppData.Value(nameof(IApiCmdRunner), runner);
             return runner;
@@ -53,14 +148,15 @@ namespace Z0
         {
             var defs = methods.Defs;
             var count = defs.Count;
-            var dst = sys.alloc<ApiCmdInfo>(count);
+            var dst = alloc<ApiCmdInfo>(count);
             for(var i=0; i<count; i++)
             {
-                ref readonly var uri = ref defs[i].Uri;
+                ref readonly var method = ref defs[i];
                 ref var entry = ref seek(dst,i);
-                entry.Uri = uri;
-                entry.Hash = uri.Hash;
-                entry.Name = uri.Name;
+                entry.Uri = method.Uri;
+                entry.MethodType = method.MethodType;
+                entry.Hash = method.Uri.Hash;
+                entry.Name = method.Uri.Name;
             }
 
             return new ApiCmdCatalog(dst);
@@ -77,23 +173,29 @@ namespace Z0
         internal static ApiCmdMethods methods(IWfRuntime wf, Assembly[] parts)
         {
             var types = parts.Types().Concrete().Tagged<CmdProviderAttribute>();
-            var dst = dict<string,ApiCmdMethod>();
-            var services = ApiCmd.services(wf,parts).Array();
+            var dst = dict<ApiCmdRoute,ApiCmdMethod>();
+            var services = ApiServer.services(wf,parts).Array();
             
             iter(services,service => {
-                iter(methods(service), m => dst.TryAdd(m.Route.Format(), m));
+                iter(methods(service), m => dst.TryAdd(m.Route, m));
             });
 
             return new ApiCmdMethods(services,dst);
         }
 
+        static ApiCmdMethod method(IApiService host, MethodInfo def, ApiCmdRoute route, CmdMethodType @class)
+        {
+            return new (route, @class, def, host);
+        }
+
         static IEnumerable<ApiCmdMethod> methods(IApiService host)
         {
             var src = host.GetType().DeclaredInstanceMethods().Tagged<CmdOpAttribute>();
-            return from method in src
-                    let tag = method.Tag<CmdOpAttribute>().Require()
+            return from def in src
+                    let tag = def.Tag<CmdOpAttribute>().Require()
                     let route = (ApiCmdRoute)tag.Name
-                    select new ApiCmdMethod(route, classify(route, method),  method, host);
+                    let @class = classify(route, def)
+                    select method(host, def, route, @class);
         }
 
         static CmdMethodType classify(ApiCmdRoute route, MethodInfo method)
@@ -131,10 +233,10 @@ namespace Z0
                     {
                         switch(@void)
                         {
-                            case false:
+                            case true:
                                 dst = CmdMethodType.DiscriminatedReceiver;
                             break;
-                            case true:
+                            case false:
                                 dst = CmdMethodType.DiscriminatedFunc;
                             break;
                         }

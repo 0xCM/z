@@ -47,7 +47,7 @@ public class XedDisasmTarget<T> : WfSvc<T>, IXedDisasmTarget
 
     protected event DisasmReceiver<Instruction> ComputedInst;
 
-    protected new event FileReceiver Running;
+    protected event FileReceiver Running;
 
     protected event Action<XedDisasmToken> Ran;
 

@@ -35,7 +35,5 @@ namespace global
             parse(src.Trim(), out dst);
             return dst;
         }
-
- 
     }
 }

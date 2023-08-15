@@ -18,16 +18,11 @@ namespace Z0
         [CmdOp("intel/sdm/etl")]
         void RunEtl()
         {
-            Sdm.RunEtl();
+            var groups = AsmTokens.groups();
+            foreach(var g in groups)
+                g.ExportTokens(Channel, SdmPaths.Targets());
         }
 
-        [CmdOp("sdm/export/tokens")]
-        void ExportTokens()
-        {
-            new SymbolGroup(typeof(AsmOcTokens), typeof(AsmOcTokenKind)).ExportTokens(Channel,SdmPaths.Targets());
-            new SymbolGroup(typeof(AsmRegTokens), typeof(AsmRegTokenKind)).ExportTokens(Channel,SdmPaths.Targets());
-            new SymbolGroup(typeof(AsmSigTokens), typeof(AsmSigTokenKind)).ExportTokens(Channel,SdmPaths.Targets());
-        }
 
         [CmdOp("sdm/export/charmaps")]
         void ExportCharMaps()
@@ -114,7 +109,7 @@ namespace Z0
                     buffer.Append(">");
                 }
 
-                Write(buffer.Emit());
+                Channel.Write(buffer.Emit());
             }
 
             return true;
@@ -130,7 +125,7 @@ namespace Z0
                 ref readonly var form = ref forms[i];
                 ref readonly var opcode = ref details[i];
 
-                Write(string.Format("{0,-16} | {1,-64} | {2}", form.Mnemonic, form.Sig, form.OpCode));
+                Channel.Write(string.Format("{0,-16} | {1,-64} | {2}", form.Mnemonic, form.Sig, form.OpCode));
             }
         }
 
@@ -153,8 +148,8 @@ namespace Z0
         void DisplayMatches(ReadOnlySpan<UnicodeLine> src, TextMarker marker, ReadOnlySpan<TextMatch> matches)
         {
             foreach(var m in matches)
-                Write(skip(src, m.Match.Line.Value - 1));
-            Write(string.Format("Matched {0} {1} markers", matches.Length, marker.Name));
+                Channel.Write(skip(src, m.Match.Line.Value - 1));
+            Channel.Write(string.Format("Matched {0} {1} markers", matches.Length, marker.Name));
         }
 
         ReadOnlySpan<TextMatch> SdmMarkers(N5 n, ReadOnlySpan<UnicodeLine> src, TextMarker marker)

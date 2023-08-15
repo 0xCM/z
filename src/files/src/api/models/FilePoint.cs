@@ -6,7 +6,6 @@ namespace Z0
 {
     public readonly record struct FilePoint
     {
-
         [Parser]
         public static bool parse(string src, out FilePoint dst)
         {

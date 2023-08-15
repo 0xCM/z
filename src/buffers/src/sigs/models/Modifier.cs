@@ -2,48 +2,50 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
-{
-    using static NativeOpMods;
+namespace Z0;
 
-    public readonly record struct NativeOpMod
+using static NativeSigs.ModifierKind;
+
+partial class NativeSigs
+{
+    public readonly record struct Modifier
     {
-        readonly NativeOpMods Data;
+        readonly ModifierKind Kind;
 
         [MethodImpl(Inline)]
-        public NativeOpMod(NativeOpMods src)
+        public Modifier(ModifierKind src)
         {
-            Data = src;
+            Kind = src;
         }
 
         public bool IsPointer
         {
             [MethodImpl(Inline)]
-            get => (Data & Pointer) != 0;
+            get => (Kind & Pointer) != 0;
         }
 
         public bool IsConst
         {
             [MethodImpl(Inline)]
-            get => (Data & Const) != 0;
+            get => (Kind & Const) != 0;
         }
 
         public bool IsRef
         {
             [MethodImpl(Inline)]
-            get => (Data & Ref) != 0;
+            get => (Kind & Ref) != 0;
         }
 
         public bool IsIn
         {
             [MethodImpl(Inline)]
-            get => (Data & In) != 0;
+            get => (Kind & In) != 0;
         }
 
         public bool IsOut
         {
             [MethodImpl(Inline)]
-            get => (Data & Out) != 0;
+            get => (Kind & Out) != 0;
         }
 
         public bool IsConstPointer
@@ -67,30 +69,31 @@ namespace Z0
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => Data == 0;
+            get => Kind == 0;
         }
 
         public override int GetHashCode()
-            => (int)Data;
+            => (int)Kind;
 
         [MethodImpl(Inline)]
-        public bool Equals(NativeOpMod src)
-            => Data == src.Data;
+        public bool Equals(Modifier src)
+            => Kind == src.Kind;
 
         public string Format()
-            => Data.ToString();
+            => Kind.ToString();
 
         public override string ToString()
             => Format();
 
         [MethodImpl(Inline)]
-        public static implicit operator NativeOpMod(NativeOpMods src)
-            => new NativeOpMod(src);
+        public static implicit operator Modifier(ModifierKind src)
+            => new Modifier(src);
 
         [MethodImpl(Inline)]
-        public static implicit operator NativeOpMods(NativeOpMod src)
-            => (NativeOpMods)src.Data;
+        public static implicit operator ModifierKind(Modifier src)
+            => src.Kind;
 
-        public static NativeOpMod Empty => default;
-    }
+        public static Modifier Empty => default;
+    }       
 }
+

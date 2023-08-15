@@ -91,7 +91,7 @@ namespace Z0
                 emitter.AppendLine(routine.AsmRender(routine));
             }
 
-            FileEmit(emitter.Emit(), src.Count, dst.AsmExtractPath(part));
+            Channel.FileEmit(emitter.Emit(), src.Count, dst.AsmExtractPath(part));
         }
     }
 }

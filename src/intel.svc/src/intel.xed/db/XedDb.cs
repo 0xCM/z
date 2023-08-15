@@ -53,8 +53,8 @@ namespace Z0
 
         void Emit(InstLayouts src)
         {
-            FileEmit(src.Format(), 0, Paths.InstTarget("layouts.vectors", FileKind.Csv));
-            TableEmit(src.Records.View, InstLayoutRecord.RenderWidths, Paths.InstTable<InstLayoutRecord>());
+            Channel.FileEmit(src.Format(), 0, Paths.InstTarget("layouts.vectors", FileKind.Csv));
+            Channel.TableEmit(src.Records.View, Paths.InstTable<InstLayoutRecord>(), TextEncodingKind.Asci);
         }
 
         public InstLayouts CalcLayouts(Index<InstPattern> src)

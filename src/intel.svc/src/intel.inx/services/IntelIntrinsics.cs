@@ -60,7 +60,7 @@ public class IntelIntrinsics : WfSvc<IntelIntrinsics>
         using var writer = dst.Writer();
         for(var i=0; i<count; i++)
             writer.WriteLine(string.Format("{0};", skip(src,i).Sig()));
-        EmittedFile(flow, count);
+        Channel.EmittedFile(flow, count);
     }
 
     public ReadOnlySeq<IntelIntrinsicRecord> EmitRecords(ReadOnlySeq<IntrinsicDef> src)
@@ -167,7 +167,7 @@ public class IntelIntrinsics : WfSvc<IntelIntrinsics>
 
     static void read(XmlReader reader, Parameters dst)
     {
-        var target = new IntrinsicsDoc.Parameter();
+        var target = new Parameter();
         target.varname = reader[nameof(target.varname)] ?? EmptyString;
         target.etype = reader[nameof(target.etype)] ?? EmptyString;
         target.type = reader[nameof(target.type)] ?? EmptyString;

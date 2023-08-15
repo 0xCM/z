@@ -20,7 +20,7 @@ public partial class IntelCmd : WfAppCmd<IntelCmd>
     [CmdOp("intel/etl")]
     void ImportIntrinsics()
     {
-        Sdm.RunEtl();
+        Sde.RunEtl();
     }
 
 }

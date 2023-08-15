@@ -21,8 +21,8 @@ namespace Z0
             for(var i=0; i<src.Count; i++)
             {
                 ref readonly var mask = ref src[i];
-                Write(formatter.Format(mask));
-                Write(mask.Text);
+                Channel.Write(formatter.Format(mask));
+                Channel.Write(mask.Text);
             }
         }
     }

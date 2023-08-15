@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using static NativeSigs;
 
     public abstract class Dispense<T>
         where T : Dispense<T>, new()
@@ -41,11 +42,11 @@ namespace Z0
         public static PageDispenser pages(uint count = PageDispenser.DefaultPageCount)
             => dispenser(() => new PageDispenser(count));
 
-        public static NativeSigDispenser sigs()
-            => dispenser(() => new NativeSigDispenser());
+        public static SigDispenser sigs()
+            => dispenser(() => new SigDispenser());
 
-        public static NativeSigDispenser sigs(MemoryDispenser mem, StringDispenser strings, LabelDispenser labels)
-            => dispenser(() => new NativeSigDispenser(mem, strings));
+        public static SigDispenser sigs(MemoryDispenser mem, StringDispenser strings, LabelDispenser labels)
+            => dispenser(() => new SigDispenser(mem, strings));
 
         public static D dispenser<D>(Func<D> f)
             where D : IAllocDispenser

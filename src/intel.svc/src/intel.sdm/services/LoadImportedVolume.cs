@@ -14,18 +14,18 @@ namespace Z0.Asm
             var path = SdmPaths.SdmDstVol((byte)digit);
             if(!path.Exists)
             {
-                Error(FS.missing(path));
+                Channel.Error(FS.missing(path));
                 return default;
             }
 
-            var flow = Running(string.Format("Reading {0}", path.ToUri()));
+            var flow = Channel.Running(string.Format("Reading {0}", path.ToUri()));
             var stats = path.FileStats();
             var dst = span<UnicodeLine>(stats.LineCount);
             var counter = 0u;
             using var reader = path.UnicodeLineReader();
             while(reader.Next(out var line))
                 seek(dst, counter++) = line;
-            Ran(flow, string.Format("Read {0} lines from {1}", counter, path.ToUri()));
+            Channel.Ran(flow, string.Format("Read {0} lines from {1}", counter, path.ToUri()));
             return dst;
         }
     }

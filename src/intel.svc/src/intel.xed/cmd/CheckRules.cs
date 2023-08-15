@@ -39,33 +39,7 @@ namespace Z0
                     dst.Append(Chars.Space);
                 dst.Append(cell.Format());
             }
-            Write(dst.Emit());
-        }
-
-        static void collect(in CellTable src, out HashSet<FieldKind> left, out HashSet<FieldKind> right)
-        {
-            ref readonly var rows = ref src.Rows;
-            left = new();
-            right = new();
-            for(var i=0; i<rows.Count; i++)
-            {
-                ref readonly var row = ref rows[i];
-                var antecedants = row.Antecedants();
-                for(var j=0; j<antecedants.Length; j++)
-                {
-                    ref readonly var antecedant = ref skip(antecedants,j);
-                    if(antecedant.Field != 0)
-                        left.Include(antecedant.Field);
-                }
-
-                var consequents = row.Consequents();
-                for(var j=0; j<consequents.Length; j++)
-                {
-                    ref readonly var consequent = ref skip(consequents,j);
-                    if(consequent.Field != 0)
-                        right.Include(consequent.Field);
-                }
-            }
+            Channel.Write(dst.Emit());
         }
 
         SectionHeader header(RuleCaller target)
@@ -111,10 +85,20 @@ namespace Z0
             {
                 var name = names[i];
                 if((ushort)name != i)
-                    Errors.Throw(name);
+                {
+                    Channel.Error($"(ushort){name} != {i}");
+                    return;
+                    //Errors.Throw(name);
+                }
             }
-            Require.equal(RuleCount, (uint)names.Length);
 
+            if(RuleCount != names.Length)
+            {
+                Channel.Error($"RuleCount={RuleCount} != {names.Length}");
+                return;
+            }
+
+            
             var dst = RuleNames.init(names);
             var buffer = alloc<RuleName>(RuleCount);
             var count = Require.equal(dst.Members(buffer), (uint)names.Length);

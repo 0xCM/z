@@ -2,10 +2,12 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
-{
-    using static sys;
+namespace Z0;
 
+using static sys;
+
+partial class NativeSigs
+{
     [StructLayout(LayoutKind.Sequential,Pack=1)]
     public readonly record struct NativeSigRef
     {
@@ -19,7 +21,7 @@ namespace Z0
 
         const uint NameSize = StringSize;
 
-        const uint OperandSize = NativeOp.StorageSize;
+        const uint OperandSize = Operand.StorageSize;
 
         const uint ReturnSize = OperandSize;
 
@@ -66,37 +68,37 @@ namespace Z0
             get => ref @as<StringRef>(seek(Data,NameOffset));
         }
 
-        public ref NativeOp Return
+        public ref Operand Return
         {
             [MethodImpl(Inline)]
-            get => ref @as<NativeOp>(seek(Data,ReturnOffset));
+            get => ref @as<Operand>(seek(Data,ReturnOffset));
         }
 
-        public Span<NativeOp> Operands
+        public Span<Operand> Operands
         {
             [MethodImpl(Inline)]
-            get => recover<NativeOp>(slice(Data,OperandsOffset, OperandCount*OperandSize));
+            get => recover<Operand>(slice(Data,OperandsOffset, OperandCount*OperandSize));
         }
 
-        public ref NativeOp this[uint i]
+        public ref Operand this[uint i]
         {
             [MethodImpl(Inline)]
             get => ref seek(Operands,i);
         }
 
-        public ref NativeOp this[int i]
+        public ref Operand this[int i]
         {
             [MethodImpl(Inline)]
             get => ref seek(Operands,i);
         }
 
         public string Format()
-            => NativeSigs.format(this);
+            => format(this);
 
         public string Format(SigFormatStyle style)
-            => NativeSigs.format(this, style);
+            => format(this, style);
 
         public override string ToString()
             => Format();
-    }
+    }    
 }

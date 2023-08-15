@@ -10,10 +10,10 @@ namespace Z0
     {
         [CmdOp("commands")]
         void Run(CmdArgs args)
-            => emit(Channel, ApiServers.catalog(), EnvDb);
+            => emit(Channel, ApiServer.catalog(), EnvDb);
 
         [CmdOp("env/reports")]
-        void EmitEnv(IApiContext context, CmdArgs args)
+        void EmitEnv(CmdArgs args)
         {
             if(args.IsNonEmpty)
             {

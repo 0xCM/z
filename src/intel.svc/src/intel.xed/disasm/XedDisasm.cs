@@ -76,7 +76,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
     {
         var doc = src.Detail;
         var outpath = XedPaths.DisasmOpsPath(project, doc.DataFile.Source);
-        var emitting = EmittingFile(outpath);
+        var emitting = Channel.EmittingFile(outpath);
         using var dst = outpath.AsciEmitter();
         dst.AppendLineFormat(RenderCol2, "DataSource", doc.Source.ToUri().Format());
         var counter = 0u;
@@ -96,7 +96,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             dst.WriteLine();
         }
 
-        EmittedFile(emitting,counter);
+        Channel.EmittedFile(emitting,counter);
     }
     
     public void EmitFields(IProject project, XedDisasmDoc src)
@@ -239,7 +239,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
         var count = doc.Count;
         var outpath = XedPaths.DisasmChecksPath(project, file.Source);
         using var dst = outpath.AsciWriter();
-        var emitting = EmittingFile(outpath);
+        var emitting = Channel.EmittingFile(outpath);
         dst.AppendLineFormat(RenderCol2, "DataSource", doc.Source.ToUri().Format());
 
         var counter = 0;
@@ -455,6 +455,6 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             dst.WriteLine(buffer.Emit());
         }
 
-        EmittedFile(emitting,counter);
+        Channel.EmittedFile(emitting,counter);
     }
 }

@@ -41,7 +41,7 @@ namespace Z0.Asm
                 Emitter.Error(e);
             }
 
-            Ran(running);
+            Channel.Ran(running);
         }
    }
 }

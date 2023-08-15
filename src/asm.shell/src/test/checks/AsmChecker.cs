@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Events;
-
     public interface IAsmChecker
     {
         ExecToken RunCheck(string name, EventReceiver dst);

@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using static NativeSigs;
 
     public class CompositeDispenser : Dispenser<CompositeDispenser>, ICompositeDispenser
     {
@@ -16,7 +17,7 @@ namespace Z0
 
         readonly LabelDispenser Labels;
 
-        readonly NativeSigDispenser Sigs;
+        readonly SigDispenser Sigs;
 
         readonly StringDispenser Strings;
 
@@ -52,11 +53,11 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public NativeSigRef Sig(string scope, string name, NativeType ret, params NativeOpDef[] ops)
+        public NativeSigRef Sig(string scope, string name, NativeType ret, params Operand[] ops)
             => Sigs.Sig(scope, name, ret, ops);
 
         [MethodImpl(Inline)]
-        public NativeSigRef Sig(NativeSigSpec spec)
+        public NativeSigRef Sig(NativeSig spec)
             => Sigs.Sig(spec);
 
         [MethodImpl(Inline)]

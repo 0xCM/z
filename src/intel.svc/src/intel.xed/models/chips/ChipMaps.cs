@@ -35,7 +35,7 @@ namespace Z0
                 get => Data.Values;
             }
 
-            public static ChipMap Empty => new ChipMap(sys.dict<ChipCode,InstIsaKinds>());
+            public static ChipMap Empty => new (sys.dict<ChipCode,InstIsaKinds>());
         }
     }
 }

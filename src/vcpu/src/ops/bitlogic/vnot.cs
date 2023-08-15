@@ -78,6 +78,14 @@ namespace Z0
         public static Vector128<ulong> vnot(Vector128<ulong> a)
             => vnot(a.AsUInt32()).AsUInt64();
 
+        [MethodImpl(Inline), Op]
+        public static Vector128<float> vnot(Vector128<float> a)
+            => Xor(a, CompareEqual(a, a));
+
+        [MethodImpl(Inline), Op]
+        public static Vector128<double> vnot(Vector128<double> a)
+            => Xor(a, CompareEqual(a, a));
+
         /// <summary>
         /// Computes the bitwise negation of the source vector
         /// </summary>
@@ -140,14 +148,6 @@ namespace Z0
         /// <param name="a">The source vector</param>
         [MethodImpl(Inline), Not]
         public static Vector256<ulong> vnot(Vector256<ulong> a)
-            => Xor(a, CompareEqual(a, a));
-
-        [MethodImpl(Inline), Op]
-        public static Vector128<float> vnot(Vector128<float> a)
-            => Xor(a, CompareEqual(a, a));
-
-        [MethodImpl(Inline), Op]
-        public static Vector128<double> vnot(Vector128<double> a)
             => Xor(a, CompareEqual(a, a));
 
         [MethodImpl(Inline), Op]

@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static NativeSigs;
+    
     [Free]
     public interface ICompositeDispenser :
         ISigDispenser,

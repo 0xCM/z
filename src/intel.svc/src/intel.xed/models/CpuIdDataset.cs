@@ -17,5 +17,7 @@ partial class XedModels
             CpuIdSpecs = cpuid;
             InstIsaSpecs = instisa;
         }
+
+        public static CpuIdDataset Empty => new(sys.empty<CpuIdSpec>(), sys.empty<InstIsaSpec>());
     }
 }

@@ -16,7 +16,7 @@ namespace Z0
                 if(deleteExising)
                     src.Delete();
 
-                var outcome = Kernel32.CreateSymLink(src.Name, dst.Name, SymLinkKind.Directory);
+                var outcome = Kernel32.CreateSymLink(src.Absolute().Format(), dst.Absolute().Format(), SymLinkKind.Directory);
                 if(outcome)
                     return new Symlink(SymLinkKind.Directory, src, dst);
                 else
@@ -38,7 +38,7 @@ namespace Z0
 
                 src.FolderPath.Create();
 
-                var outcome = Kernel32.CreateSymLink(src.Name, dst.Name, SymLinkKind.File);
+                var outcome = Kernel32.CreateSymLink(src.Absolute().Format(), dst.Absolute().Format(), SymLinkKind.File);
                 if(outcome)
                     return new Symlink(SymLinkKind.File, src, dst);
                 else

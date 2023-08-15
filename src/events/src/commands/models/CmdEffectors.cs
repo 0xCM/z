@@ -19,7 +19,7 @@ namespace Z0
         {
             Methods = methods;
             Handlers = handlers;
-            Catalog = ApiCmd.catalog(methods);
+            Catalog = ApiServer.catalog(methods);
         }
 
         public void Dispose()
@@ -31,6 +31,6 @@ namespace Z0
             => Handlers.Handler(route, out dst);
         
         public bool Method(ApiCmdRoute route, out ApiCmdMethod dst)
-            => Methods.Find(route.Format(), out dst);
+            => Methods.Find(route, out dst);
     }
 }

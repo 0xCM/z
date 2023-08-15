@@ -19,7 +19,7 @@ namespace Z0
     public abstract class WfAppCmd<T> : WfSvc<T>, IApiService
         where T : WfAppCmd<T>, new()
     {
-        protected ApiServers ApiServers => Wf.ApiServers();
+        protected ApiServer ApiServer => Wf.ApiServer();
 
         protected WfAppCmd()
         {

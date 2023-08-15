@@ -45,7 +45,7 @@ namespace Z0
             if(build)
                 RunScripts();
 
-            Ran(running);
+            Channel.Ran(running);
 
             return buffer;
         }
@@ -53,9 +53,9 @@ namespace Z0
         ApiHostRes Emit(in ApiHostBlocks src, FolderPath dst)
         {
             var target = dst + ApiFiles.filename(src.Host, FS.Cs);
-            var flow = EmittingFile(target);
+            var flow = Channel.EmittingFile(target);
             var emission = Emit(src, target);
-            EmittedFile(flow, emission.Count);
+            Channel.EmittedFile(flow, emission.Count);
             return emission;
         }
 

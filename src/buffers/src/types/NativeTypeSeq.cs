@@ -21,7 +21,7 @@ namespace Z0
         public byte Count
         {
             [MethodImpl(Inline)]
-            get => NativeTypes.nonempty(this);
+            get => NativeSigs.nonempty(this);
         }
 
         public Span<NativeType> Edit

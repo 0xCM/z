@@ -111,7 +111,7 @@ namespace Z0.Asm
             }
 
             if(result.Ok)
-                TableEmit(entries.ViewDeposited(), SdmPaths.TocDst(), encoding);
+                Channel.TableEmit(entries.ViewDeposited(), SdmPaths.TocDst(), encoding);
             return result;
         }
 

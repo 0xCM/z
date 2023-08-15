@@ -36,6 +36,9 @@ public readonly record struct ApiCmdRoute : IDataType<ApiCmdRoute>, IDataString<
     public bool IsPartial
         => IsNonEmpty && Data.Last == "*";
 
+    public ApiCmdRoute Complete()
+        => IsPartial ? new ApiCmdRoute(Data.View.Slice(0, Data.Length - 2).ToArray()) : this;
+
     public uint PartCount
     {
         [MethodImpl(Inline)]

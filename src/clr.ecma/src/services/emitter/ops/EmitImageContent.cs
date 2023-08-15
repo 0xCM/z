@@ -12,7 +12,7 @@ namespace Z0
         {
             var flow = Channel.Running();
             iter(ApiAssemblies.Components, c => EmitImageContent(c, dst), PllExec);
-            Ran(flow);
+            Channel.Ran(flow);
         }
 
         [Op]

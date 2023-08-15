@@ -14,6 +14,7 @@ namespace Z0
         {
             public static InstLayouts layouts(Index<InstPattern> src)
             {
+                Require.invariant(src.IsNonEmpty);
                 var count = src.Count;
                 var blocks = NativeCells.alloc<InstLayoutBlock>(count, out var id);
                 var size = InstLayoutBlock.Size;

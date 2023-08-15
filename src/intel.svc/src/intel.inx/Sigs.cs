@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0.dsl.intel.intrinsics
 {
+    using static NativeSigs;
+
     /*
     _mm_add_epi16  | __m128i _mm_add_epi16(__m128i a, __m128i b)  | PADDW xmm, xmm | PADDW_XMMdq_XMMdq
     _mm_add_epi32  | __m128i _mm_add_epi32(__m128i a, __m128i b)  | PADDD xmm, xmm | PADDD_XMMdq_XMMdq
@@ -30,19 +32,19 @@ namespace Z0.dsl.intel.intrinsics
             => TypeMap[name].Target;
 
         [MethodImpl(Inline)]
-        NativeOpDef Op(string name, string type, NativeOpMod mod = default)
-            => NativeTypes.op(name, Type(type), mod);
+        Operand Op(string name, string type, Modifier mod = default)
+            => op(name, Type(type), mod);
 
-        public NativeSigSpec _mm_add_epi8()
-            => NativeTypes.sig(Scope, nameof(_mm_add_epi8), Type(__m128i), Op("a", __m128i), Op("b", __m128i));
+        public NativeSig _mm_add_epi8()
+            => sig(Scope, nameof(_mm_add_epi8), Type(__m128i), Op("a", __m128i), Op("b", __m128i));
 
-        public NativeSigSpec _mm_add_epi16()
-            => NativeTypes.sig(Scope, nameof(_mm_add_epi16), Type(__m128i), Op("a", __m128i), Op("b", __m128i));
+        public NativeSig _mm_add_epi16()
+            => sig(Scope, nameof(_mm_add_epi16), Type(__m128i), Op("a", __m128i), Op("b", __m128i));
 
-        public NativeSigSpec _mm_add_epi32()
-            => NativeTypes.sig(Scope, nameof(_mm_add_epi32), Type(__m128i), Op("a", __m128i), Op("b", __m128i));
+        public NativeSig _mm_add_epi32()
+            => sig(Scope, nameof(_mm_add_epi32), Type(__m128i), Op("a", __m128i), Op("b", __m128i));
 
-        public NativeSigSpec _mm_add_epi64()
-            => NativeTypes.sig(Scope, nameof(_mm_add_epi64), Type(__m128i), Op("a", __m128i), Op("b", __m128i));
+        public NativeSig _mm_add_epi64()
+            => sig(Scope, nameof(_mm_add_epi64), Type(__m128i), Op("a", __m128i), Op("b", __m128i));
     }
 }

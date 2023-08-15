@@ -16,7 +16,7 @@ namespace Z0
             if(args.Length == 0)
                 term.print($"Usage: {Assembly.GetEntryAssembly().GetSimpleName()} <path>");
             else
-                CreateHostBuilder(ApiServers.runtime(), args).Build().Run();
+                CreateHostBuilder(ApiServer.runtime(), args).Build().Run();
             return result;
         }
 

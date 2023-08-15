@@ -157,55 +157,55 @@ namespace Z0
 
         static void classify_block_32()
         {
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock32<byte>)), NativeSegKind.Seg32x8u);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock32<sbyte>)), NativeSegKind.Seg32x8i);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock32<ushort>)), NativeSegKind.Seg32x16u);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock32<short>)), NativeSegKind.Seg32x16i);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock32<uint>)), NativeSegKind.Seg32u);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock32<int>)), NativeSegKind.Seg32i);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock32<float>)), NativeSegKind.Seg32f);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock32<byte>)), NativeSegKind.Seg32x8u);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock32<sbyte>)), NativeSegKind.Seg32x8i);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock32<ushort>)), NativeSegKind.Seg32x16u);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock32<short>)), NativeSegKind.Seg32x16i);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock32<uint>)), NativeSegKind.Seg32u);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock32<int>)), NativeSegKind.Seg32i);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock32<float>)), NativeSegKind.Seg32f);
         }
 
         static void classify_block_64()
         {
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock64<byte>)), NativeSegKind.Seg64x8u);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock64<sbyte>)), NativeSegKind.Seg64x8i);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock64<ushort>)), NativeSegKind.Seg64x16u);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock64<short>)), NativeSegKind.Seg64x16i);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock64<uint>)), NativeSegKind.Seg64x32u);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock64<int>)), NativeSegKind.Seg64x32i);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock64<ulong>)), NativeSegKind.Seg64u);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock64<long>)), NativeSegKind.Seg64i);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock64<float>)), NativeSegKind.Seg64x32f);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock64<double>)), NativeSegKind.Seg64f);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock64<byte>)), NativeSegKind.Seg64x8u);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock64<sbyte>)), NativeSegKind.Seg64x8i);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock64<ushort>)), NativeSegKind.Seg64x16u);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock64<short>)), NativeSegKind.Seg64x16i);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock64<uint>)), NativeSegKind.Seg64x32u);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock64<int>)), NativeSegKind.Seg64x32i);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock64<ulong>)), NativeSegKind.Seg64u);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock64<long>)), NativeSegKind.Seg64i);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock64<float>)), NativeSegKind.Seg64x32f);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock64<double>)), NativeSegKind.Seg64f);
         }
 
         static void classify_block_128()
         {
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock128<byte>)), NativeSegKind.Seg128x8u);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock128<sbyte>)), NativeSegKind.Seg128x8i);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock128<ushort>)), NativeSegKind.Seg128x16u);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock128<short>)), NativeSegKind.Seg128x16i);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock128<uint>)), NativeSegKind.Seg128x32u);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock128<int>)), NativeSegKind.Seg128x32i);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock128<ulong>)), NativeSegKind.Seg128x64u);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock128<long>)), NativeSegKind.Seg128x64i);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock128<float>)), NativeSegKind.Seg128x32f);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock128<double>)), NativeSegKind.Seg128x64f);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock128<byte>)), NativeSegKind.Seg128x8u);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock128<sbyte>)), NativeSegKind.Seg128x8i);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock128<ushort>)), NativeSegKind.Seg128x16u);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock128<short>)), NativeSegKind.Seg128x16i);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock128<uint>)), NativeSegKind.Seg128x32u);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock128<int>)), NativeSegKind.Seg128x32i);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock128<ulong>)), NativeSegKind.Seg128x64u);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock128<long>)), NativeSegKind.Seg128x64i);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock128<float>)), NativeSegKind.Seg128x32f);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock128<double>)), NativeSegKind.Seg128x64f);
         }
 
         static void classify_block_256()
         {
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock256<byte>)), NativeSegKind.Seg256x8u);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock256<sbyte>)), NativeSegKind.Seg256x8i);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock256<ushort>)), NativeSegKind.Seg256x16u);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock256<short>)), NativeSegKind.Seg256x16i);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock256<uint>)), NativeSegKind.Seg256x32u);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock256<int>)), NativeSegKind.Seg256x32i);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock256<ulong>)), NativeSegKind.Seg256x64u);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock256<long>)), NativeSegKind.Seg256x64i);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock256<float>)), NativeSegKind.Seg256x32f);
-            NumericClaims.eq(NativeTypes.segkind(typeof(SpanBlock256<double>)), NativeSegKind.Seg256x64f);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock256<byte>)), NativeSegKind.Seg256x8u);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock256<sbyte>)), NativeSegKind.Seg256x8i);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock256<ushort>)), NativeSegKind.Seg256x16u);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock256<short>)), NativeSegKind.Seg256x16i);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock256<uint>)), NativeSegKind.Seg256x32u);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock256<int>)), NativeSegKind.Seg256x32i);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock256<ulong>)), NativeSegKind.Seg256x64u);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock256<long>)), NativeSegKind.Seg256x64i);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock256<float>)), NativeSegKind.Seg256x32f);
+            NumericClaims.eq(NativeSigs.segkind(typeof(SpanBlock256<double>)), NativeSegKind.Seg256x64f);
         }
 
     }

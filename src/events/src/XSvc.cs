@@ -12,11 +12,17 @@ namespace Z0
 
         internal partial class ServiceCache : AppServices<ServiceCache>
         {
+            public ApiServer ApiServer(IWfRuntime wf)
+                => Service<ApiServer>(wf);            
+        
         }
 
         static ServiceCache Services => ServiceCache.Instance;
 
         static ChannelCache Channels => ChannelCache.Instance;
+
+        public static ApiServer ApiServer(this IWfRuntime wf)
+            => Services.ApiServer(wf);
 
     }
 }

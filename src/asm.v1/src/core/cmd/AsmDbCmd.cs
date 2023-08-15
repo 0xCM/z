@@ -6,7 +6,7 @@ namespace Z0
 {
     using Asm;
     
-    public class AsmDbCmd : WfAppCmd<AsmDbCmd>
+    class AsmDbCmd : WfAppCmd<AsmDbCmd>
     {
         CultProcessor Cult => Wf.CultProcessor();
 

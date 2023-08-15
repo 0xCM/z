@@ -23,7 +23,7 @@ public sealed class ApiCmdMethod : IComparable<ApiCmdMethod>, ICmdMethod
         MethodType = kind;
         Host = Require.notnull(host);
         Definition = Require.notnull(method);
-        Uri = ApiCmd.uri(route, host);
+        Uri = ApiServer.uri(route, host);
     }
 
     public bool Discriminated

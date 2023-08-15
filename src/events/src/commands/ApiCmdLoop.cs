@@ -1,4 +1,3 @@
-
 //-----------------------------------------------------------------------------
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
@@ -23,7 +22,7 @@ namespace Z0
         ApiCmdSpec Next()
         {
             var input = term.prompt(string.Format("{0}> ", "cmd"));
-            return ApiCmd.spec(input);
+            return ApiServer.spec(input);
         }
 
         void Run()

@@ -12,6 +12,9 @@ namespace Z0
         [Render(8)]
         public uint Seq;
 
+        [Render(16)]
+        public CmdMethodType MethodType;
+
         [Render(32)]
         public @string Name;
 

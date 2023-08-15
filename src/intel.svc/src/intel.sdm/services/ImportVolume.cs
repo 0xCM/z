@@ -29,7 +29,7 @@ namespace Z0.Asm
                 writer.WriteLine(line.Format());
                 counter++;
             }
-            EmittedFile(emitting,counter);
+            Channel.EmittedFile(emitting,counter);
         }
     }
 }

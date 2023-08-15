@@ -67,9 +67,9 @@ namespace Z0.Asm
                 case SEG:
                     names = SegRegNames();
                 break;
-                case RegClassCode.CR:
+                case CR:
                 break;
-                case RegClassCode.DB:
+                case DB:
                 break;
 
             }

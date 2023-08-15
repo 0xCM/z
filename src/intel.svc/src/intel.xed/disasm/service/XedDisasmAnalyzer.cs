@@ -84,5 +84,5 @@ public sealed class XedDisasmAnalyzer : XedDisasmTarget<XedDisasmAnalyzer>
         => FolderPath.Empty + FS.folder("xed.disasm") + TargetFile();
 
     void OnEnd(XedDisasmToken src)
-        => FileEmit(Output.Emit(), 0, TargetPath());
+        => Channel.FileEmit(Output.Emit(), 0, TargetPath());
 }

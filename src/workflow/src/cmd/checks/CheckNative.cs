@@ -11,10 +11,10 @@ namespace Z0
         [CmdOp("native/checks")]
         void RunNativeChecks()
         {
-            var t0 = NativeTypes.seg(NativeSegKind.Seg128x16i);
+            var t0 = DataTypes.seg(NativeSegKind.Seg128x16i);
             Channel.Write(t0.Format());
 
-            var t1 = NativeTypes.seg(NativeSegKind.Seg16u);
+            var t1 = DataTypes.seg(NativeSegKind.Seg16u);
             Channel.Write(t1.Format());
             CheckNativeAlloc();
         }

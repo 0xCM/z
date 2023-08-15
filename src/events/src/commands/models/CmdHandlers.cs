@@ -18,10 +18,13 @@ public class CmdHandlers
         Empty = Lookup[DevNul.Route];
     }
 
-    public bool Handler(ApiCmdRoute name, out ICmdHandler dst)
+    public bool Handler(ApiCmdRoute route, out ICmdHandler dst)
     {
         dst = Empty;
-        return Lookup.TryGetValue(name, out dst);
+        if(route.IsPartial)
+            return Lookup.TryGetValue(route.Complete(), out dst);
+        else 
+            return Lookup.TryGetValue(route, out dst);
     }
 
     public ICollection<ApiCmdRoute> Routes 

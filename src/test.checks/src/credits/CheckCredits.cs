@@ -71,7 +71,7 @@ namespace Z0
 
         protected override void Execute(IEventTarget log)
         {
-            var flow = Running();
+            var flow = Channel.Running();
             try
             {
                 Exec(CheckCreditFields);

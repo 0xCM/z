@@ -2,45 +2,54 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+using System.Linq;
+
+public class ApiCmdMethods : IDisposable
 {
-    public class ApiCmdMethods : IDisposable
+    readonly Dictionary<ApiCmdRoute,ApiCmdMethod> Complete;
+
+    readonly Dictionary<ApiCmdRoute,ApiCmdMethod> Partial;
+
+    readonly ReadOnlySeq<ApiCmdMethod> CmdDefs;
+
+    readonly ReadOnlySeq<IApiService> Services;
+
+    public ApiCmdMethods(ReadOnlySeq<IApiService> services, Dictionary<ApiCmdRoute,ApiCmdMethod> src)
     {
-        readonly Dictionary<string,ApiCmdMethod> Lookup;
+        Complete = src.Keys.Where(route => !route.IsPartial).Select(route => (route, src[route])).ToDictionary();
+        Partial = src.Keys.Where(route => route.IsPartial).Select(route => (route.Complete(), src[route])).ToDictionary();
+        Services = services;
+        CmdDefs = src.Values.ToSeq();
+    }
 
-        readonly ReadOnlySeq<ApiCmdMethod> CmdDefs;
+    public bool Find(ApiCmdRoute route, out ApiCmdMethod runner)
+    {
+        var result = Complete.TryGetValue(route, out runner);
+        if(!result)
+            result = Partial.TryGetValue(route, out runner);
+        return result;
+    }
 
-        readonly ReadOnlySeq<IApiService> Services;
-
-        public ApiCmdMethods(ReadOnlySeq<IApiService> services, Dictionary<string,ApiCmdMethod> src)
+    public void Dispose()
+    {
+        foreach(var svc in Services)
         {
-            Lookup = src;
-            Services = services;
-            CmdDefs = src.Values.ToSeq();
-        }
-
-        public bool Find(string spec, out ApiCmdMethod runner)
-            => Lookup.TryGetValue(spec, out runner);
-
-        public void Dispose()
-        {
-            foreach(var svc in Services)
+            try
             {
-                try
-                {
-                    svc.Dispose();
-                }
-                catch(Exception e)
-                {
-                    term.error(e);
-                }
+                svc.Dispose();
+            }
+            catch(Exception e)
+            {
+                term.error(e);
             }
         }
+    }
 
-        public ref readonly ReadOnlySeq<ApiCmdMethod> Defs
-        {
-            [MethodImpl(Inline)]
-            get => ref CmdDefs;
-        }
+    public ref readonly ReadOnlySeq<ApiCmdMethod> Defs
+    {
+        [MethodImpl(Inline)]
+        get => ref CmdDefs;
     }
 }

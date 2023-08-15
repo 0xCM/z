@@ -43,7 +43,7 @@ namespace Z0
         {
             exec(PllExec,
                 EmitRuleBlocks,
-                () => TableEmit(XedOpCodeKinds.Instance.Records, XedPaths.Table<XedMapKind>()),
+                () => Channel.TableEmit(XedOpCodeKinds.Instance.Records, XedPaths.Table<XedMapKind>()),
                 () => Emit(mapi(RuleMacros.matches().Values.ToArray().Sort(), (i,m) => m.WithSeq((uint)i))),
                 () => Emit(CalcMacroDefs().View),
                 () => Emit(XedFields.Defs.Positioned),
@@ -105,7 +105,7 @@ namespace Z0
         }
 
         void Emit(AsmOpCodeClass @class, ReadOnlySpan<InstGroupSeq> src)
-            => TableEmit(src, XedPaths.InstTable<InstGroupSeq>(@class.ToString().ToLower()));
+            => Channel.TableEmit(src, XedPaths.InstTable<InstGroupSeq>(@class.ToString().ToLower()));
 
         public void EmitSeq()
         {

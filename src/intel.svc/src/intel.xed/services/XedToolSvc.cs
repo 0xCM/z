@@ -21,7 +21,7 @@ namespace Z0
 
         [CmdOp("xed/tools")]
         void ListDeployed()
-            => iter(Deployment.Files(FS.Exe), file => Write(file.ToUri()));
+            => iter(Deployment.Files(FS.Exe), file => Channel.Write(file.ToUri()));
 
         [CmdOp("xed/tool/case")]
         void DefineCaseScript(CmdArgs args)

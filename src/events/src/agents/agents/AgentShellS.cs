@@ -40,7 +40,7 @@ namespace Z0
         public static int run(params string[] args)
         {
             var result = 0;
-            using var app = ApiServers.shell<S>(args);
+            using var app = ApiServer.shell<S>(args);
             var channel = app.Channel;
             try
             {
