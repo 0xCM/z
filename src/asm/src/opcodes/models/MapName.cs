@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class AsmOpCodeMaps
+    partial class AsmOpCodes
     {
         [StructLayout(LayoutKind.Sequential,Pack=1)]
         public readonly struct MapName

@@ -7,6 +7,7 @@ namespace Z0.Asm;
 using static sys;
 using static RuntimeModeKind;
 using static OpszKind;
+using static AsmOpCodes;
 
 using SZ = AsmPrefixCodes.SizeOverrideCode;
 
@@ -18,7 +19,7 @@ public readonly struct AsmPrefixTests
     const byte MaxRexCode = 0x4F;
 
     [MethodImpl(Inline), Op]
-    public static bit rex(in AsmOpCodeString src)
+    public static bit rex(in OpCodeString src)
         => src.Data.Contains("REX", StringComparison.InvariantCultureIgnoreCase);
 
     [MethodImpl(Inline), Op]

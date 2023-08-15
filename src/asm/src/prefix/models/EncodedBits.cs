@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
+using static AsmOpCodes;
+
 [StructLayout(LayoutKind.Sequential,Pack=1)]
 public struct EncodedBits
 {
@@ -21,7 +23,7 @@ public struct EncodedBits
 
     public EvexPrefix Evex;
 
-    public AsmOcValue OpCode;
+    public OpCodeValue OpCode;
 
     public ModRm ModRm;
 

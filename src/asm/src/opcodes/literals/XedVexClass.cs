@@ -5,9 +5,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using N = AsmOpCodeMaps.Literals;
+using N = AsmOpCodes.Literals;
 
-[SymSource(AsmOpCodeMaps.group), DataWidth(3)]
+[SymSource(AsmOpCodes.group), DataWidth(3)]
 public enum XedVexClass : byte
 {
     [Symbol("", "VEXVALID=0")]

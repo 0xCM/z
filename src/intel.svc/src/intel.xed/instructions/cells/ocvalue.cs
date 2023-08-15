@@ -7,10 +7,11 @@ namespace Z0;
 
 using static sys;
 using static XedRules;
+using static AsmOpCodes;
 
 partial struct XedCells
 {
-    public static AsmOcValue ocvalue(in XedCells src)
+    public static OpCodeValue ocvalue(in XedCells src)
     {
         var count = src.Count;
         var storage = ByteBlock4.Empty;
@@ -22,6 +23,6 @@ partial struct XedCells
             if(seg.CellKind == RuleCellKind.HexLit)
                 seek(dst,j++) = seg.AsHexLit();
         }
-        return new AsmOcValue(slice(dst,0,j));
+        return new OpCodeValue(slice(dst,0,j));
     }
 }

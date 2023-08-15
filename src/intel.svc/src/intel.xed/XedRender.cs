@@ -9,6 +9,7 @@ using Asm;
 
 using static XedModels;
 using static XedRules;
+using static AsmOpCodes;
 using static sys;
 
 using OC = XedModels.OpAttribKind;
@@ -242,8 +243,8 @@ public class XedRender
     public static string format(ModKind src)
         => ModIndicators.Format(src);
 
-    public static string format(AsmOcValue src)
-        => AsmOcValue.format(src);
+    public static string format(OpCodeValue src)
+        => OpCodeValue.format(src);
 
     public static string format(EvexMapKind src)
         => EvexMap.Format(src);
@@ -586,7 +587,7 @@ public class XedRender
         => OpVis.Format(src);
 
     public static string format(XedOpCodeKind src)
-        => format(AsmOpCodeMaps.index(src));
+        => format(AsmOpCodes.index(src));
 
     public static string format(in RuleKeyword src)
         => src.ToAsci().Format();

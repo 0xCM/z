@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static AsmOpCodeMaps;
+    using static AsmOpCodes;
     using static sys;
 
     [StructLayout(LayoutKind.Sequential,Pack=1), DataWidth(64)]
@@ -15,12 +15,12 @@ namespace Z0
 
         public readonly XedOpCodeKind Kind;
 
-        public readonly AsmOcValue Value;
+        public readonly OpCodeValue Value;
 
         readonly byte Pad;
 
         [MethodImpl(Inline)]
-        public XedOpCode(MachineMode mode, XedOpCodeKind kind, AsmOcValue value)
+        public XedOpCode(MachineMode mode, XedOpCodeKind kind, OpCodeValue value)
         {
             Mode = mode;
             Kind = kind;
@@ -67,7 +67,7 @@ namespace Z0
         public AsmOpCodeMap Map
             => new (Kind, Class, index(Kind), Symbol, Selector);
 
-        static string minimal(AsmOcValue src)
+        static string minimal(OpCodeValue src)
         {
             var size = src.TrimmedSize;
             ref readonly var b0 = ref src[0];

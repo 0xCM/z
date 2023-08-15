@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using N = AsmOpCodeMaps.Literals;
+using N = AsmOpCodes.Literals;
 
 [SymSource("asm.opcodes"), DataWidth(5)]
 public enum AsmOpCodeClass : byte

@@ -8,7 +8,7 @@ namespace Z0;
 using Asm;
 
 using static XedModels;
-using static AsmOpCodeMaps;
+using static AsmOpCodes;
 using static sys;
 
 using M = XedModels;

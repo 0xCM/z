@@ -4,9 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using static sys;
-
 using Asm;
+
+using static sys;
+using static AsmOpCodes;
 
 public struct AsmOpCodeSpec : IEquatable<AsmOpCodeSpec>
 {
@@ -55,24 +56,24 @@ public struct AsmOpCodeSpec : IEquatable<AsmOpCodeSpec>
     public Span<AsmOcToken> Tokens(AsmOcTokenKind kind)
         => Tokens().Where(t => t.Kind == kind);
 
-    public AsmOcValue OcValue()
+    public OpCodeValue OcValue()
     {
         var hex = Tokens(AsmOcTokenKind.Hex8);
         var count = hex.Length;
-        var dst = AsmOcValue.Empty;
+        var dst = OpCodeValue.Empty;
         switch(count)
         {
             case 1:
-                dst = new AsmOcValue((byte)skip(hex, 0));
+                dst = new OpCodeValue((byte)skip(hex, 0));
             break;
             case 2:
-                dst = new AsmOcValue((byte)skip(hex, 0), (byte)skip(hex, 1));
+                dst = new OpCodeValue((byte)skip(hex, 0), (byte)skip(hex, 1));
             break;
             case 3:
-                dst = new AsmOcValue((byte)skip(hex, 0), (byte)skip(hex, 1), (byte)skip(hex, 2));
+                dst = new OpCodeValue((byte)skip(hex, 0), (byte)skip(hex, 1), (byte)skip(hex, 2));
             break;
             case 4:
-                dst = new AsmOcValue((byte)skip(hex, 0), (byte)skip(hex, 1), (byte)skip(hex, 2), (byte)skip(hex, 3));
+                dst = new OpCodeValue((byte)skip(hex, 0), (byte)skip(hex, 1), (byte)skip(hex, 2), (byte)skip(hex, 3));
             break;
         }
         return dst;

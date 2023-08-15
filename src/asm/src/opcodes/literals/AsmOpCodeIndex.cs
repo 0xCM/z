@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using S = AsmOpCodeMaps.Literals;
+using S = AsmOpCodes.Literals;
 
 [SymSource("asm.opcodes"), DataWidth(4)]
 public enum AsmOpCodeIndex : sbyte

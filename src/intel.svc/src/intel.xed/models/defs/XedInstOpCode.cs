@@ -6,7 +6,7 @@
 namespace Z0
 {
     using static XedModels;
-    using static AsmOpCodeMaps;
+    using static AsmOpCodes;
     using static XedRules;
 
     [Record(TableId), StructLayout(StructLayout,Pack=1)]
@@ -30,7 +30,7 @@ namespace Z0
         public MapName MapName;
 
         [Render(16)]
-        public AsmOcValue Value;
+        public OpCodeValue Value;
 
         [Render(6)]
         public MachineMode Mode;

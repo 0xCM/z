@@ -258,7 +258,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             ref readonly var ip = ref summary.IP;
             var cells = update(lines, ref state);
             var ocindex = XedOps.View.ocindex(state);
-            var ockind = AsmOpCodeMaps.kind(ocindex);
+            var ockind = AsmOpCodes.kind(ocindex);
             var encoding  = XedCode.encoding(state, asmhex);
             var ocbyte = View.ocbyte(state);
             var ochex = XedRender.format(ocbyte);

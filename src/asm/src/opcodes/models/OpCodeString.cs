@@ -2,14 +2,16 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Asm
+namespace Z0;
+
+partial class AsmOpCodes
 {
-    public readonly struct AsmOpCodeString : IComparable<AsmOpCodeString>
+    public readonly struct OpCodeString : IComparable<OpCodeString>
     {
         readonly TextBlock _Data;
 
         [MethodImpl(Inline)]
-        public AsmOpCodeString(string src)
+        public OpCodeString(string src)
             => _Data = src;
 
         public TextBlock Content
@@ -59,24 +61,24 @@ namespace Z0.Asm
             => Format();
 
         public override bool Equals(object src)
-            => src is AsmOpCodeString x && Equals(x);
+            => src is OpCodeString x && Equals(x);
 
         [MethodImpl(Inline)]
-        public bool Equals(AsmOpCodeString src)
+        public bool Equals(OpCodeString src)
             => _Data.Equals(src._Data);
 
-        public int CompareTo(AsmOpCodeString src)
+        public int CompareTo(OpCodeString src)
             => _Data.CompareTo(src._Data);
 
         [MethodImpl(Inline)]
-        public static bool operator ==(AsmOpCodeString a, AsmOpCodeString b)
+        public static bool operator ==(OpCodeString a, OpCodeString b)
             => a.Equals(b);
 
         [MethodImpl(Inline)]
-        public static bool operator !=(AsmOpCodeString a, AsmOpCodeString b)
+        public static bool operator !=(OpCodeString a, OpCodeString b)
             => !a.Equals(b);
 
-        public static AsmOpCodeString Empty
-            => new AsmOpCodeString(EmptyString);
+        public static OpCodeString Empty
+            => new (EmptyString);
     }
 }

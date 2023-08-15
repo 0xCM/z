@@ -5,6 +5,7 @@
 namespace Z0.Asm
 {
     using static sys;
+    using static AsmOpCodes;
 
     public sealed class ProcessAsmSvc : WfSvc<ProcessAsmSvc>
     {
@@ -35,7 +36,7 @@ namespace Z0.Asm
                 for(var j=0; j<icount; j++)
                 {
                     var instruction = skip(instructions,j).Instruction;
-                    var opcode = new AsmOpCodeString(instruction.OpCode.ToString());
+                    var opcode = new OpCodeString(instruction.OpCode.ToString());
                     if(!opcode.IsValid)
                         break;
 
@@ -99,7 +100,7 @@ namespace Z0.Asm
                 for(var j=0; j<icount; j++)
                 {
                     var instruction = skip(instructions,j);
-                    var opcode = new AsmOpCodeString(instruction.OpCode.ToString());
+                    var opcode = new OpCodeString(instruction.OpCode.ToString());
                     if(!opcode.IsValid)
                         break;
 

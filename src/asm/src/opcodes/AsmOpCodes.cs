@@ -18,11 +18,22 @@ namespace Z0
     using X = XopMapKind;
     using K = XedOpCodeKind;
     using N = XedMapNumber;
-    using S = AsmOpCodeMaps.Literals;
+    using S = AsmOpCodes.Literals;
 
-    public partial class AsmOpCodeMaps
+    public partial class AsmOpCodes
     {
         public const string group = "asm.opcodes";
+
+        [Parser]
+        public static Outcome parse(string src, out OpCodeValue dst)
+        {
+            var storage = Cells.alloc(w32);
+            var result = Hex.parse(src, bytes(storage));
+            dst = OpCodeValue.Empty;
+            if(result)
+                dst = new OpCodeValue(slice(bytes(storage),0, result.Data));
+            return result;
+        }
 
         public static ulong convert(XedOpCode src, out ulong dst)
         {
@@ -36,11 +47,11 @@ namespace Z0
             return dst;
         }
 
-        public static int cmp(XedOpCodeKind a, XedOpCodeKind b)
+        public static int cmp(K a, K b)
         {
             return order(a).CompareTo(order(b));
 
-            static int order(XedOpCodeKind src)
+            static int order(K src)
                 => src switch
                 {   Base00 => 0,
                     Base0F => 1,
@@ -70,9 +81,9 @@ namespace Z0
                 _ => (char)0
             };
 
-        public static MapName name(XedOpCodeKind kind)
+        public static MapName name(K kind)
         {
-            var symbol = AsmOpCodeMaps.symbol(kind);
+            var symbol = AsmOpCodes.symbol(kind);
             return new (symbol, selector(kind), $"{symbol}[{value(kind)}]");
         }
 
@@ -81,20 +92,20 @@ namespace Z0
             => code <= 4? (AsmBaseMapKind)code : null;
 
         [MethodImpl(Inline), Op]
-        public static AsmBaseMapKind basemap(AsmOcValue value)
+        public static AsmBaseMapKind basemap(OpCodeValue value)
         {
             var dst = default(AsmBaseMapKind);
             if(value[0] == 0x0F)
             {
                 if(value[1] == 0x38)
-                    dst = AsmBaseMapKind.BaseMap2;
+                    dst = BaseMap2;
                 else if(value[1] == 0x3A)
-                    dst = AsmBaseMapKind.BaseMap3;
+                    dst = BaseMap3;
                 else
-                    dst = AsmBaseMapKind.BaseMap1;
+                    dst = BaseMap1;
             }
             else
-                dst = AsmBaseMapKind.BaseMap0;
+                dst = BaseMap0;
             return dst;
         }
 
@@ -171,18 +182,18 @@ namespace Z0
             };
 
         [Op]
-        public static I? index(XedVexClass @class, byte map)
+        public static I? index(V @class, byte map)
         {
-            var dst = default(AsmOpCodeIndex?);
+            var dst = default(I?);
             switch(@class)
             {
-                case XedVexClass.VV1:
+                case V.VV1:
                     dst = index((VexMapKind)map);
                 break;
-                case XedVexClass.EVV:
+                case V.EVV:
                     dst = index((EvexMapKind)map);
                 break;
-                case XedVexClass.XOPV:
+                case V.XOPV:
                     dst = index((XopMapKind)map);
                 break;
                 default:
@@ -243,41 +254,41 @@ namespace Z0
             => (AsmOpCodeClass)(byte)src;
 
         [MethodImpl(Inline), Op]
-        public static VexMapKind? vexmap(XedVexClass kind, byte code)
-            => kind == XedVexClass.VV1 ? (VexMapKind)code : null;
+        public static VexMapKind? vexmap(V kind, byte code)
+            => kind == V.VV1 ? (VexMapKind)code : null;
 
         [MethodImpl(Inline), Op]
-        public static EvexMapKind? evexmap(XedVexClass kind, byte code)
-            => kind == XedVexClass.EVV ? (EvexMapKind)code : null;
+        public static EvexMapKind? evexmap(V kind, byte code)
+            => kind == V.EVV ? (EvexMapKind)code : null;
 
         [MethodImpl(Inline), Op]
-        public static XopMapKind? xopmap(XedVexClass kind, byte code)
-            => kind == XedVexClass.XOPV ? (XopMapKind)code : null;
+        public static XopMapKind? xopmap(V kind, byte code)
+            => kind == V.XOPV ? (XopMapKind)code : null;
 
         [Op]
-        public static XedVexClass vexclass(AsmOpCodeIndex src)
+        public static V vexclass(AsmOpCodeIndex src)
             => vexclass(@class(src));
 
         [Op]
-        public static XedVexClass vexclass(AsmOpCodeClass src)
+        public static V vexclass(AsmOpCodeClass src)
         {
-            var vc = XedVexClass.None;
+            var vc = V.None;
             switch(src)
             {
                 case AsmOpCodeClass.Vex:
-                    vc = XedVexClass.VV1;
+                    vc = V.VV1;
                 break;
                 case AsmOpCodeClass.Evex:
-                    vc = XedVexClass.VV1;
+                    vc = V.VV1;
                 break;
                 case AsmOpCodeClass.Xop:
-                    vc = XedVexClass.XOPV;
+                    vc = V.XOPV;
                 break;
             }
             return vc;
         }
 
-        public static asci4 selector(XedOpCodeKind src)
+        public static asci4 selector(K src)
             => src switch {
                 Base00 => "0000",
                 Base0F => "000F",
@@ -296,7 +307,7 @@ namespace Z0
                 _ => asci4.Null,
             };
 
-        public static Hex16 value(XedOpCodeKind src)
+        public static Hex16 value(K src)
             => src switch {
                 Base00 => 0x0000,
                 Base0F => 0x000F,
@@ -316,7 +327,7 @@ namespace Z0
             };
 
         [Op]
-        public static asci2 symbol(XedOpCodeKind src)
+        public static asci2 symbol(K src)
             => src switch
             {
                 Base00 => S.B0,
@@ -368,22 +379,22 @@ namespace Z0
                 break;
 
                 case I.Vex0F:
-                    dst = (N)VexMapKind.VEX_MAP_0F;
+                    dst = (N)VEX_MAP_0F;
                 break;
                 case I.Vex0F38:
-                    dst = (N)VexMapKind.VEX_MAP_0F38;
+                    dst = (N)VEX_MAP_0F38;
                 break;
                 case I.Vex0F3A:
-                    dst = (N)VexMapKind.VEX_MAP_0F3A;
+                    dst = (N)VEX_MAP_0F3A;
                 break;
                 case I.Evex0F:
-                    dst = (N)EvexMapKind.EVEX_MAP_0F;
+                    dst = (N)EVEX_MAP_0F;
                 break;
                 case I.Evex0F38:
-                    dst = (N)EvexMapKind.EVEX_MAP_0F38;
+                    dst = (N)EVEX_MAP_0F38;
                 break;
                 case I.Evex0F3A:
-                    dst = (N)EvexMapKind.EVEX_MAP_0F3A;
+                    dst = (N)EVEX_MAP_0F3A;
                 break;
 
                 case I.Xop8:
@@ -402,7 +413,6 @@ namespace Z0
             }
             return result;
         }
-
 
          static string hex(byte src)
             => "0x" + src.ToString("X2");

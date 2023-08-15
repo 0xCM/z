@@ -28,17 +28,17 @@ partial struct XedCells
         switch(vc)
         {
             case XedVexClass.VV1:
-                ock = AsmOpCodeMaps.kind(AsmOpCodeMaps.index((VexMapKind)number));
+                ock = AsmOpCodes.kind(AsmOpCodes.index((VexMapKind)number));
             break;
             case XedVexClass.XOPV:
-                ock = AsmOpCodeMaps.kind(AsmOpCodeMaps.index((XopMapKind)number));
+                ock = AsmOpCodes.kind(AsmOpCodes.index((XopMapKind)number));
             break;
             case XedVexClass.EVV:
             case XedVexClass.KVV:
-                ock = AsmOpCodeMaps.kind(AsmOpCodeMaps.index((EvexMapKind)number));
+                ock = AsmOpCodes.kind(AsmOpCodes.index((EvexMapKind)number));
             break;
             default:
-                ock = AsmOpCodeMaps.kind((AsmOpCodeIndex)AsmOpCodeMaps.basemap(ocv));
+                ock = AsmOpCodes.kind((AsmOpCodeIndex)AsmOpCodes.basemap(ocv));
             break;
         }
 

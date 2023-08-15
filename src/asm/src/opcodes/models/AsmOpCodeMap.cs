@@ -3,10 +3,10 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
-{
-    using static AsmOpCodeMaps;
+namespace Z0;
 
+partial class AsmOpCodes
+{
     [StructLayout(StructLayout,Pack=1)]
     public readonly record struct AsmOpCodeMap : IComparable<AsmOpCodeMap>
     {

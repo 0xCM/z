@@ -25,7 +25,7 @@ namespace Z0.Asm
 
             dst.Mnemonic = skip(cells, i++).ToUpperInvariant();
             dst.OpCodeExpr = skip(cells, i++).Trim();
-            AsmOcValue.parse(skip(cells, i++), out dst.OpCodeValue);
+            AsmOpCodes.parse(skip(cells, i++), out dst.OpCodeValue);
             dst.AsmSig = skip(cells, i++);            
             dst.EncXRef = skip(cells, i++);
             dst.Mode64 = skip(cells, i++);

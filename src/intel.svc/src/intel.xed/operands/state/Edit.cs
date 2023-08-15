@@ -167,9 +167,9 @@ partial class XedOps
         [MethodImpl(Inline), Op]
         public static ref XedOperandState set(AsmOpCodeIndex src, ref XedOperandState dst)
         {
-            AsmOpCodeMaps.map(src, out var map);
+            AsmOpCodes.map(src, out var map);
             dst.MAP = (byte)map;
-            dst.VEXVALID = (byte)AsmOpCodeMaps.vexclass(src);
+            dst.VEXVALID = (byte)AsmOpCodes.vexclass(src);
             return ref dst;
         }
     }

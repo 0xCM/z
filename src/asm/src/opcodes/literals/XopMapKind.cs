@@ -3,20 +3,19 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+using N = AsmOpCodes.Literals;
+
+[SymSource(AsmOpCodes.group), DataWidth(4)]
+public enum XopMapKind : byte
 {
-    using N = AsmOpCodeMaps.Literals;
+    [Symbol(N.X8)]
+    Xop8=8,
 
-    [SymSource(AsmOpCodeMaps.group), DataWidth(4)]
-    public enum XopMapKind : byte
-    {
-        [Symbol(N.X8)]
-        Xop8=8,
+    [Symbol(N.X9)]
+    Xop9=9,
 
-        [Symbol(N.X9)]
-        Xop9=9,
-
-        [Symbol(N.XA)]
-        XopA=10,
-    }
+    [Symbol(N.XA)]
+    XopA=10,
 }

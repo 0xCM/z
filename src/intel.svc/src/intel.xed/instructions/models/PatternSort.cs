@@ -117,7 +117,7 @@ namespace Z0
                 var result = 0;
                 if(OpCodeFirst)
                 {
-                    result = AsmOpCodeMaps.cmp(OpCode.Kind,src.OpCode.Kind);
+                    result = AsmOpCodes.cmp(OpCode.Kind,src.OpCode.Kind);
                     if(result == 0)
                         result = OpCode.Value.CompareTo(src.OpCode.Value);
                     if(result == 0)

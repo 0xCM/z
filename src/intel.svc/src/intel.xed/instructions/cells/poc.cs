@@ -56,7 +56,7 @@ namespace Z0
             dst.Seq = 0u;
             dst.Index = z8;
             dst.PatternId = (ushort)src.PatternId;
-            dst.MapName = AsmOpCodeMaps.name(src.OpCode.Kind);
+            dst.MapName = AsmOpCodes.name(src.OpCode.Kind);
             dst.Value = src.OpCode.Value;
             dst.InstClass = src.InstClass.Classifier;
             dst.Mode = XedCells.mode(src.Cells);
