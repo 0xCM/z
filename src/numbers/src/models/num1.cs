@@ -212,6 +212,8 @@ namespace Z0
         public string Format()
             => Value.ToString();
 
+        public string Bitstring()
+            => bitstring(this);
         public override string ToString()
             => Format();
 

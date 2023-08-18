@@ -6,6 +6,7 @@ namespace Z0.dsl.intel
 {
     using static sys;
 
+    
     public struct __m512i<T>
         where T : unmanaged
     {

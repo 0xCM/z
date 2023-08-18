@@ -87,7 +87,7 @@ public record struct Sib : IAsmByte<Sib>
     public static Sib Empty
         => default;
 
-    public string ToBitString()
+    public string Bitstring()
     {
         Span<char> dst = stackalloc char[RenderWidth];
 

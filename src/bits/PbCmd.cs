@@ -19,13 +19,5 @@ namespace Z0
             return result;
         }
 
-        [CmdOp("pb/emit")]
-        Outcome Emit(CmdArgs args)
-        {
-            PolyBits.EmitPatterns();
-            return true;
-        }
-
-        PolyBits PolyBits => Service(Wf.PolyBits);
     }
 }

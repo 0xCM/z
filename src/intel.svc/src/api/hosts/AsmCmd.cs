@@ -14,7 +14,21 @@ namespace Z0.Asm
 
         AsmRegSets Regs => Service(AsmRegSets.create);
 
-        [CmdOp("asm/emit/tokens")]
+        PolyBits PolyBits => Wf.PolyBits();
+
+        
+        [CmdOp("asm/check/modrm")]
+        void CheckModRm()
+        {
+            var a = new ModRm2(0b11_000_000);
+            Channel.Row(a.Bitstring());
+
+        }
+        void EmitPatterns()
+        {
+            PolyBits.EmitPatterns(typeof(AsmBitPatterns), Db.Scoped("patterns"));
+        }
+
         void EmitTokens()
         {
             var groups = AsmTokens.groups();
@@ -29,14 +43,15 @@ namespace Z0.Asm
             exec(true, 
                 EmitRexDocs,
                 EmitTokens,
+                EmitPatterns,
                 EmitSibDocs,
                 EmitModRmDocs,
                 EmitConditionDocs,
                 EmitRexBDocs,
                 EmitRegDocs
                 );
-
         }
+
         void EmitRegDocs()
         {
             var dst = Db.Scoped("docs").Path("asm.regs.strings", FileKind.Cs);
@@ -86,7 +101,7 @@ namespace Z0.Asm
             var flow = Channel.EmittingFile(path);
             using var writer = path.AsciWriter();
             var dst = span<char>(256*128);
-            var count = AsmBytes.ModRmTable(dst);
+            var count = ModRmTable.render(dst);
             var rendered = slice(dst,0,count);
             writer.Write(rendered);
             Channel.EmittedFile(flow, count);
@@ -135,7 +150,5 @@ namespace Z0.Asm
             Channel.EmittedFile(emitting,counter);
             return counter;
         }
- 
     }
-
 }

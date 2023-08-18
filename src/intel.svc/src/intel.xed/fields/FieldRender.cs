@@ -80,7 +80,7 @@ namespace Z0
                         break;
 
                         case K.MODE:
-                            r.Functions[kind] = (x => format((MachineMode)x));
+                            r.Functions[kind] = x => format((MachineMode)x);
                         break;
 
                         case K.SMODE:
@@ -100,15 +100,15 @@ namespace Z0
                         break;
 
                         case K.ICLASS:
-                            r.Functions[kind] = (x => format((XedInstClass)x));
+                            r.Functions[kind] = x => format((XedInstClass)x);
                         break;
 
                         case K.MASK:
-                            r.Functions[kind] = (x => format((MaskReg)x));
+                            r.Functions[kind] = x => format((MaskReg)x);
                         break;
 
                         case K.OSZ:
-                            r.Functions[kind] = (x => format((OSZ)x, DataFormatCode.BitWidth));
+                            r.Functions[kind] = x => format((OSZ)x, DataFormatCode.BitWidth);
                         break;
 
                         case K.MAP:
@@ -116,11 +116,11 @@ namespace Z0
                         break;
 
                         case K.ELEMENT_SIZE:
-                            r.Functions[kind] = (x => format((ushort)x));
+                            r.Functions[kind] = x => format((ushort)x);
                         break;
 
                         case K.MODRM_BYTE:
-                            r.Functions[kind] = (x => string.Format("0x{0:X2} [{1}]", (byte)x, ((ModRm)x).ToBitString()));
+                            r.Functions[kind] = x => string.Format("0x{0:X2} [{1}]", (byte)x, ((ModRm2)x).Bitstring());
                         break;
 
                         case K.NOMINAL_OPCODE:

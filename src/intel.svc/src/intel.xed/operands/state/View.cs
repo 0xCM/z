@@ -104,8 +104,8 @@ partial class XedOps
             => new (src.SIBBASE, src.SIBINDEX, src.SIBSCALE);
 
         [MethodImpl(Inline), Op]
-        public static ref readonly ModRm modrm(in XedOperandState src)
-            => ref @as<Hex8,ModRm>(src.MODRM_BYTE);
+        public static ref readonly ModRm2 modrm(in XedOperandState src)
+            => ref @as<Hex8,ModRm2>(src.MODRM_BYTE);
 
         [MethodImpl(Inline), Op]
         public static RexPrefix rex(in XedOperandState src)

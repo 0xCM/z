@@ -7,7 +7,7 @@ namespace Z0.Asm;
 using static AsmOpCodes;
 
 [StructLayout(LayoutKind.Sequential,Pack=1)]
-public struct EncodedBits
+public record struct EncodedBits
 {
     public RepPrefix Rep;
 
@@ -25,7 +25,7 @@ public struct EncodedBits
 
     public OpCodeValue OpCode;
 
-    public ModRm ModRm;
+    public ModRm2 ModRm;
 
     public Sib Sib;
 

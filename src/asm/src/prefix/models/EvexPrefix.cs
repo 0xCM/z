@@ -18,7 +18,7 @@ public readonly record struct EvexPrefix
         var count = min(src.Length,4);
         var data = 0u;
         for(var i=0; i<count; i++)
-            data |= ((uint)skip(src,i) << (i*8));
+            data |= (uint)skip(src,i) << (i*8);
         return new EvexPrefix(data);
     }
 

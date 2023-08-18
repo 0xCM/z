@@ -41,7 +41,7 @@ public record struct XedDisasmDetailRow : IComparable<XedDisasmDetailRow>
 
     public EvexPrefix Evex;
 
-    public ModRm ModRm;
+    public ModRm2 ModRm;
 
     public Sib Sib;
 

@@ -107,8 +107,8 @@ partial class XedOps
             => ref @as<HintKind>(src.HINT);
 
         [MethodImpl(Inline), Op]
-        public static ref ModRm modrm(ref XedOperandState dst)
-            => ref @as<Hex8,ModRm>(dst.MODRM_BYTE);
+        public static ref ModRm2 modrm(ref XedOperandState dst)
+            => ref @as<Hex8,ModRm2>(dst.MODRM_BYTE);
 
         [MethodImpl(Inline), Op]
         public static ref M.RepPrefix rep(ref XedOperandState src)

@@ -1,6 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(ProjectProps)\usings.props"/>
   <ItemGroup>
+    <EmbeddedResource Include="assets/**/*.*" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="../asm/z0.asm.csproj" />
     <ProjectReference Include="../xml/z0.xml.csproj" />
     <ProjectReference Include="../containers/z0.containers.csproj" />
@@ -11,7 +14,4 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
   </PropertyGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="assets/**/*.*" />
-  </ItemGroup>
 </Project>

@@ -20,6 +20,7 @@
     <Using Include="System.Diagnostics.CodeAnalysis"/>
     <Using Include="System.Text" />
     <Using Include="System.Threading" />
+    <Using Include="System.Runtime.InteropServices.Marshalling" />
     <Using Include="System.Threading.Tasks" />
     <Using Include="Z0" />
     

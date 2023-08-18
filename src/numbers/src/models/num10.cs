@@ -189,14 +189,14 @@ public readonly struct num10 : INumber<T>
 
     public bit IsZero
     {
-            [MethodImpl(Inline)]
-            get => Value == 0;
+        [MethodImpl(Inline)]
+        get => Value == 0;
     }
 
     public bit IsNonZero
     {
-            [MethodImpl(Inline)]
-            get => Value != 0;
+        [MethodImpl(Inline)]
+        get => Value != 0;
     }
 
     public bit IsMax
@@ -213,6 +213,9 @@ public readonly struct num10 : INumber<T>
     [MethodImpl(Inline)]
     public string Format()
         => Value.ToString();
+
+    public string Bitstring()
+        => bitstring(this);
 
     public override string ToString()
         => Format();

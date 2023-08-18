@@ -57,7 +57,7 @@ namespace Z0
         public BfInterval Interval
         {
             [MethodImpl(Inline)]
-            get => new BfInterval(MinPos,Width);
+            get => new (MinPos,Width);
         }
 
         public string Format()

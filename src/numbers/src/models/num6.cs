@@ -212,6 +212,9 @@ public readonly struct num6 : INumber<T>
     public string Format()
         => Value.ToString();
 
+    public string Bitstring()
+        => bitstring(this);
+
     public override string ToString()
         => Format();
 

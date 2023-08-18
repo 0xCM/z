@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    public readonly struct BfModel<T>
+    public readonly record struct BfModel<T>
         where T : unmanaged
     {
         /// <summary>

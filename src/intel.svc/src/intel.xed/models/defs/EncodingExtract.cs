@@ -18,7 +18,7 @@ namespace Z0
 
             public Hex8 OpCode;
 
-            public ModRm ModRm;
+            public ModRm2 ModRm;
 
             public Sib Sib;
 

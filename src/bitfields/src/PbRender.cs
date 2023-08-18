@@ -38,9 +38,7 @@ namespace Z0
             }
 
             public static string format(in BfSegExpr src)
-                => src.SegWidth == 1
-                ? string.Format("{0}[{1}]", src.SegName, src.MaxPos)
-                : string.Format("{0}[{1}:{2}]", src.SegName, src.MaxPos, src.MinPos);
+                => src.SegWidth == 1 ? string.Format("{0}[{1}]", src.SegName, src.MaxPos) : string.Format("{0}[{1}:{2}]", src.SegName, src.MaxPos, src.MinPos);
         }
     }
 }

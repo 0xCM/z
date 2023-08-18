@@ -5,7 +5,7 @@
 namespace Z0
 {
     [StructLayout(StructLayout,Pack=1), Doc("Describes a bitfield")]
-    public readonly struct BfModel
+    public readonly record struct BfModel
     {
         /// <summary>
         /// Specifies the source of the model definition

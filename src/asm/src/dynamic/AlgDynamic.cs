@@ -12,6 +12,7 @@ namespace Z0
     using I = AlgDynamic.OpIndex;
     using K = ApiClasses;
 
+
     public class AlgDynamic
     {
         [ApiHost]

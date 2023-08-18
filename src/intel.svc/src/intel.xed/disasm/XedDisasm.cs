@@ -324,13 +324,13 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             if(state.HAS_MODRM)
             {
                 var modrm = View.modrm(state);
-                dst.AppendLineFormat(RenderPattern, "ModRm", string.Format("{0} [{1}]", modrm.Format(), modrm.ToBitString()));
+                dst.AppendLineFormat(RenderPattern, "ModRm", string.Format("{0} [{1}]", modrm.Format(), modrm.Bitstring()));
             }
 
             if(state.HAS_SIB)
             {
                 var sib = View.sib(state);
-                dst.AppendLineFormat(RenderPattern, "Sib", string.Format("{0} [{1}]",  sib.Format(), sib.ToBitString()));
+                dst.AppendLineFormat(RenderPattern, "Sib", string.Format("{0} [{1}]",  sib.Format(), sib.Bitstring()));
             }
 
             if(state.FIRST_F2F3 != 0)

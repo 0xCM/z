@@ -16,7 +16,7 @@ namespace Z0
     /// Represents the value of a type-level octet and thus is an integer in the range [0,255]
     /// </summary>
     [DataWidth(Width)]
-    public readonly struct uint8b : IBitNumber<U,W,K,T>
+    public readonly record struct uint8b : IBitNumber<U,W,K,T>
     {
         [Parser]
         public static bool parse(string src, out U dst)
@@ -37,10 +37,6 @@ namespace Z0
         [MethodImpl(Inline)]
         public uint8b(K x)
             => Value =(byte)x;
-
-        [MethodImpl(Inline)]
-        internal uint8b(BitState src)
-            => Value = (byte)src;
 
         byte IBits<byte>.Value
             => Value;
@@ -105,9 +101,6 @@ namespace Z0
             get => Value;
         }
 
-        [MethodImpl(Inline)]
-        public int CompareTo(U src)
-            => Value.CompareTo(src.Value);
         public uint4 Lo
         {
             [MethodImpl(Inline)]
@@ -121,23 +114,23 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public uint8b WithLo(uint4 src)
+        public U WithLo(uint4 src)
             => movlo(src, this);
 
         [MethodImpl(Inline)]
-        public uint8b WithHi(uint4 src)
+        public U WithHi(uint4 src)
             => movhi(src, this);
 
         [MethodImpl(Inline)]
         public bool Equals(U y)
             => Value == y.Value;
 
+        [MethodImpl(Inline)]
+        public int CompareTo(U src)
+            => Value.CompareTo(src.Value);
 
         public override int GetHashCode()
             => (int)Hash;
-
-        public override bool Equals(object y)
-            => Value.Equals(y);
 
          public string Format()
              => format(this);
@@ -148,9 +141,9 @@ namespace Z0
         public override string ToString()
             => Format();
 
-       [MethodImpl(Inline)]
+        [MethodImpl(Inline)]
         public static implicit operator U(K src)
-            => new U(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator K(U src)
@@ -170,7 +163,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static explicit operator bit(U src)
-            => new bit(src.Value & 1);
+            => new (src.Value & 1);
 
         [MethodImpl(Inline)]
         public static explicit operator U(bit src)
@@ -178,7 +171,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator U(byte src)
-            => new U(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator byte(U src)
@@ -221,12 +214,8 @@ namespace Z0
             => src.Value;
 
         [MethodImpl(Inline)]
-        public static U operator == (U x, U y)
-            => @bool(x.Value == y.Value);
-
-        [MethodImpl(Inline)]
-        public static U operator != (U x, U y)
-            => @bool(x.Value != y.Value);
+        public static implicit operator Hex8(U src)
+            => src.Value;
 
         [MethodImpl(Inline)]
         public static U operator + (U x, U y)
@@ -325,7 +314,7 @@ namespace Z0
         public static U Min
         {
             [MethodImpl(Inline)]
-            get => new U(MinLiteral);
+            get => new (MinLiteral);
         }
 
         /// <summary>
@@ -334,7 +323,7 @@ namespace Z0
         public static U Max
         {
             [MethodImpl(Inline)]
-            get => new U(MaxValue);
+            get => new (MaxValue);
         }
 
         [MethodImpl(Inline)]

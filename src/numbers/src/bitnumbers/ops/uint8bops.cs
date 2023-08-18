@@ -12,11 +12,11 @@ namespace Z0
     partial struct BitNumbers
     {
         [MethodImpl(Inline), Op]
-        public static uint4 lo(uint8b src)
+        public static uint4 lo(U src)
             => Bytes.and(src.Value, 0xF);
 
         [MethodImpl(Inline), Op]
-        public static uint4 hi(uint8b src)
+        public static uint4 hi(U src)
             => Bytes.srl(src.Value, 4);
 
         [MethodImpl(Inline), Op]
