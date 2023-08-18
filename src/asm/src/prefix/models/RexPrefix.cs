@@ -16,31 +16,6 @@ using static AsmPrefixCodes;
 [ApiComplete]
 public struct RexPrefix : IAsmPrefix<RexPrefix>, IAsmByte<RexPrefix>
 {
-    [MethodImpl(Inline), Op]
-    public static uint render(RexPrefix src, ref uint i, Span<char> dst)
-    {
-        var i0 = i;
-        BitRender.render8x4(src.Encoded, ref  i, dst);
-        return i-i0;
-    }
-
-    public static uint table(ITextBuffer dst)
-    {
-        static string describe(RexPrefix src)
-        {
-            const string RexFieldPattern = "[W:{0} | R:{1} | X:{2} | B:{3}]";
-            var bits = text.format(BitRender.render8x4(src.Encoded));
-            var bitfield = string.Format(RexFieldPattern, src.W, src.R, src.X, src.B);
-            return $"{src.Encoded.FormatAsmHex()} | [{bits}] => {bitfield}";
-        }
-
-        var bits = RexPrefix.Range();
-        var count = bits.Length;
-        for(var i=0; i<count; i++)
-            dst.AppendLine(describe(skip(bits,i)));
-        return (uint)count;
-    }
-
     [MethodImpl(Inline)]
     public static RexPrefix init()
         => new (0x40);

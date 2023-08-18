@@ -3,56 +3,55 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class XedModels
 {
-    partial class XedModels
+    [SymSource(xed), DataWidth(num5.Width)]
+    public enum BaseTypeKind : byte
     {
-        [SymSource(xed), DataWidth(num5.Width)]
-        public enum BaseTypeKind : byte
-        {
-            INVALID,
+        INVALID,
 
-            B80,
+        B80,
 
-            BF16,
+        BF16,
 
-            F16,
+        F16,
 
-            F32,
+        F32,
 
-            F64,
+        F64,
 
-            F80,
+        F80,
 
-            I1,
+        I1,
 
-            I16,
+        I16,
 
-            I32,
+        I32,
 
-            I64,
+        I64,
 
-            I8,
+        I8,
 
-            INT,
+        INT,
 
-            STRUCT,
+        STRUCT,
 
-            U128,
+        U128,
 
-            U16,
+        U16,
 
-            U256,
+        U256,
 
-            U32,
+        U32,
 
-            U64,
+        U64,
 
-            U8,
+        U8,
 
-            UINT,
+        UINT,
 
-            VAR,
-        }
+        VAR,
     }
 }

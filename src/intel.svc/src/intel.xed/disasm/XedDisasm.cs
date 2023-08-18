@@ -24,18 +24,6 @@ public partial class XedDisasm : WfSvc<XedDisasm>
     public static XedDisasmToken token()
         => (uint)inc(ref DisasmTokens);
 
-    public void EmitBreakdowns(IProject project, ParallelQuery<XedDisasmDoc> docs)
-        => iter(docs, doc => EmitBreakdowns(project, doc), PllExec);
-
-    public void EmitBreakdowns(IProject project, XedDisasmDoc doc)
-    {
-        exec(PllExec,
-                () => EmitDetails(project, doc),
-                () => EmitOps(project, doc),
-                () => EmitChecks(project, doc)
-                );
-    }
-
     public void EmitDetails(IProject project, XedDisasmDoc doc)
     {
         var target = XedPaths.DisasmDetailPath(project, doc.SourcePath);
@@ -58,8 +46,8 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             EmitChecks(project,doc);
             Channel.Ran(flow,$"Collected disassembly content from {path.ToUri()}");
         });
-
     }
+
     public void Collect(IProject project)
     {
         var docs = XedDisasm.docs(project.Root);
@@ -92,7 +80,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             dst.AppendLine("Operands");
             var specs = ops.Map(x => x.Spec);
             for(var j=0; j<specs.Length; j++)
-                dst.AppendLine(OpSpec.specifier(skip(specs,j)));
+                dst.AppendLine(XedOps.specifier(skip(specs,j)));
             dst.WriteLine();
         }
 
@@ -265,7 +253,9 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             var ocbits = BitRender.format8x4(ocbyte);
 
             dst.WriteLine(RP.PageBreak240);
-            dst.AppendLine(lines.Format());
+            for(var i=0; i<lines.Lines.Count; i++)
+                dst.AppendLineFormat("# {0}", lines.Lines[i].Content);
+            //dst.AppendLine(lines.Format());
             dst.WriteLine(RP.PageBreak80);
 
             dst.AppendLineFormat(RenderPattern, nameof(detail.Instruction), detail.Instruction);

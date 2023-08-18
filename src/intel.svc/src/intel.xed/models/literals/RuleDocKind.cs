@@ -3,38 +3,37 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+[SymSource("xed")]
+public enum XedDocKind : byte
 {
-    [SymSource("xed")]
-    public enum XedDocKind : byte
-    {
-        None,
+    None,
 
-        EncInstDef,
+    EncInstDef,
 
-        DecInstDef,
+    DecInstDef,
 
-        EncRuleTable,
+    EncRuleTable,
 
-        DecRuleTable,
+    DecRuleTable,
 
-        EncDecRuleTable,
+    EncDecRuleTable,
 
-        Widths,
+    Widths,
 
-        PointerWidths,
+    PointerWidths,
 
-        Fields,
+    Fields,
 
-        FormData,
+    FormData,
 
-        ChipMap,
+    ChipMap,
 
-        CpuId,
- 
-        RuleSeq,
+    CpuId,
 
-        RuleBlocks
+    RuleSeq,
 
-    }
+    RuleBlocks
+
 }

@@ -3,218 +3,217 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class XedModels
 {
-    partial class XedModels
+    [SymSource(xed)]
+    public enum CpuidBit : ushort
     {
-        [SymSource(xed)]
-        public enum CpuidBit : ushort
-        {
-            INVALID,
+        INVALID,
 
-            ADOXADCX,
+        ADOXADCX,
 
-            AES,
+        AES,
 
-            AMX_BF16,
+        AMX_BF16,
 
-            AMX_INT8,
+        AMX_INT8,
 
-            AMX_TILES,
+        AMX_TILES,
 
-            AVX,
+        AVX,
 
-            AVX2,
+        AVX2,
 
-            AVX512BW,
+        AVX512BW,
 
-            AVX512CD,
+        AVX512CD,
 
-            AVX512DQ,
+        AVX512DQ,
 
-            AVX512ER,
+        AVX512ER,
 
-            AVX512F,
+        AVX512F,
 
-            AVX512IFMA,
+        AVX512IFMA,
 
-            AVX512PF,
+        AVX512PF,
 
-            AVX512VBMI,
+        AVX512VBMI,
 
-            AVX512VL,
+        AVX512VL,
 
-            AVX512_4FMAPS,
+        AVX512_4FMAPS,
 
-            AVX512_4VNNIW,
+        AVX512_4VNNIW,
 
-            AVX512_BITALG,
+        AVX512_BITALG,
 
-            AVX512_VBMI2,
+        AVX512_VBMI2,
 
-            AVX512_VNNI,
+        AVX512_VNNI,
 
-            AVX512_VP2INTERSECT,
+        AVX512_VP2INTERSECT,
 
-            AVX512_VPOPCNTDQ,
+        AVX512_VPOPCNTDQ,
 
-            AVX_VNNI,
+        AVX_VNNI,
 
-            BF16,
+        BF16,
 
-            BMI1,
+        BMI1,
 
-            BMI2,
+        BMI2,
 
-            CET,
+        CET,
 
-            CLDEMOTE,
+        CLDEMOTE,
 
-            CLFLUSH,
+        CLFLUSH,
 
-            CLFLUSHOPT,
+        CLFLUSHOPT,
 
-            CLWB,
+        CLWB,
 
-            CMPXCHG16B,
+        CMPXCHG16B,
 
-            ENQCMD,
+        ENQCMD,
 
-            F16C,
+        F16C,
 
-            FMA,
+        FMA,
 
-            FXSAVE,
+        FXSAVE,
 
-            GFNI,
+        GFNI,
 
-            HRESET,
+        HRESET,
 
-            INTEL64,
+        INTEL64,
 
-            INTELPT,
+        INTELPT,
 
-            INVPCID,
+        INVPCID,
 
-            KLENABLED,
+        KLENABLED,
 
-            KLSUPPORTED,
+        KLSUPPORTED,
 
-            KLWIDE,
+        KLWIDE,
 
-            LAHF,
+        LAHF,
 
-            LZCNT,
+        LZCNT,
 
-            MCOMMIT,
+        MCOMMIT,
 
-            MONITOR,
+        MONITOR,
 
-            MONITORX,
+        MONITORX,
 
-            MOVDIR64B,
+        MOVDIR64B,
 
-            MOVDIRI,
+        MOVDIRI,
 
-            MOVEBE,
+        MOVEBE,
 
-            MPX,
+        MPX,
 
-            OSPKU,
+        OSPKU,
 
-            OSXSAVE,
+        OSXSAVE,
 
-            PCLMULQDQ,
+        PCLMULQDQ,
 
-            PCONFIG,
+        PCONFIG,
 
-            PKU,
+        PKU,
 
-            POPCNT,
+        POPCNT,
 
-            PREFETCHW,
+        PREFETCHW,
 
-            PREFETCHWT1,
+        PREFETCHWT1,
 
-            PTWRITE,
+        PTWRITE,
 
-            RDP,
+        RDP,
 
-            RDPRU,
+        RDPRU,
 
-            RDRAND,
+        RDRAND,
 
-            RDSEED,
+        RDSEED,
 
-            RDTSCP,
+        RDTSCP,
 
-            RDWRFSGS,
+        RDWRFSGS,
 
-            RTM,
+        RTM,
 
-            SERIALIZE,
+        SERIALIZE,
 
-            SGX,
+        SGX,
 
-            SHA,
+        SHA,
 
-            SMAP,
+        SMAP,
 
-            SMX,
+        SMX,
 
-            SNP,
+        SNP,
 
-            SSE,
+        SSE,
 
-            SSE2,
+        SSE2,
 
-            SSE3,
+        SSE3,
 
-            SSE4,
+        SSE4,
 
-            SSE42,
+        SSE42,
 
-            SSE4A,
+        SSE4A,
 
-            SSSE3,
+        SSSE3,
 
-            TSX_LDTRK,
+        TSX_LDTRK,
 
-            UINTR,
+        UINTR,
 
-            VAES,
+        VAES,
 
-            VIA_PADLOCK_AES,
+        VIA_PADLOCK_AES,
 
-            VIA_PADLOCK_AES_EN,
+        VIA_PADLOCK_AES_EN,
 
-            VIA_PADLOCK_PMM,
+        VIA_PADLOCK_PMM,
 
-            VIA_PADLOCK_PMM_EN,
+        VIA_PADLOCK_PMM_EN,
 
-            VIA_PADLOCK_RNG,
+        VIA_PADLOCK_RNG,
 
-            VIA_PADLOCK_RNG_EN,
+        VIA_PADLOCK_RNG_EN,
 
-            VIA_PADLOCK_SHA,
+        VIA_PADLOCK_SHA,
 
-            VIA_PADLOCK_SHA_EN,
+        VIA_PADLOCK_SHA_EN,
 
-            VMX,
+        VMX,
 
-            VPCLMULQDQ,
+        VPCLMULQDQ,
 
-            WAITPKG,
+        WAITPKG,
 
-            WBNOINVD,
+        WBNOINVD,
 
-            XSAVE,
+        XSAVE,
 
-            XSAVEC,
+        XSAVEC,
 
-            XSAVEOPT,
+        XSAVEOPT,
 
-            XSAVES,
-        }
+        XSAVES,
     }
 }

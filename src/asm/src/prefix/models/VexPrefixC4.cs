@@ -339,7 +339,7 @@ namespace Z0.Asm
            get => VexPrefix.size(PrefixCode);
         }
 
-        public string ToBitstring()
+        public string Bitstring()
         {
             var storage = CharBlock64.Empty;
             var dst = storage.Data;
@@ -369,7 +369,7 @@ namespace Z0.Asm
         }
 
         public string FormatSemantic()
-            => string.Format(SemanticFormat, Format(), AsmBitPatterns.VexC4, ToBitstring());
+            => string.Format(SemanticFormat, Format(), AsmBitPatterns.VexC4, Bitstring());
 
         public string Format()
         {

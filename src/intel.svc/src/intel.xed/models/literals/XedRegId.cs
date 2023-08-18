@@ -3,585 +3,584 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
-{    
-    [SymSource("xed"), DataWidth(num9.Width)]
-    public enum XedRegId : ushort
-    {
-        INVALID = 0,
+namespace Z0;
 
-        BNDCFGU = 2,
+[SymSource("xed"), DataWidth(num9.Width)]
+public enum XedRegId : ushort
+{
+    INVALID = 0,
 
-        BNDSTATUS = 2,
+    BNDCFGU = 1,
 
-        BND0 = 3,
+    BNDSTATUS = 2,
 
-        BND1 = 4,
+    BND0 = 3,
 
-        BND2 = 5,
+    BND1 = 4,
 
-        BND3,
+    BND2 = 5,
 
-        CR0,
+    BND3,
 
-        CR1,
+    CR0,
 
-        CR2,
+    CR1,
 
-        CR3,
+    CR2,
 
-        CR4,
+    CR3,
 
-        CR5,
+    CR4,
 
-        CR6,
+    CR5,
 
-        CR7,
+    CR6,
 
-        CR8,
+    CR7,
 
-        CR9,
+    CR8,
 
-        CR10,
+    CR9,
 
-        CR11,
+    CR10,
 
-        CR12,
+    CR11,
 
-        CR13,
+    CR12,
 
-        CR14,
+    CR13,
 
-        CR15,
+    CR14,
 
-        DR0,
+    CR15,
 
-        DR1,
+    DR0,
 
-        DR2,
+    DR1,
 
-        DR3,
+    DR2,
 
-        DR4,
+    DR3,
 
-        DR5,
+    DR4,
 
-        DR6,
+    DR5,
 
-        DR7,
+    DR6,
 
-        FLAGS,
+    DR7,
 
-        EFLAGS,
+    FLAGS,
 
-        RFLAGS,
+    EFLAGS,
 
-        AX,
+    RFLAGS,
 
-        CX,
+    AX,
 
-        DX,
+    CX,
 
-        BX,
+    DX,
 
-        SP,
+    BX,
 
-        BP,
+    SP,
 
-        SI,
+    BP,
 
-        DI,
+    SI,
 
-        R8W,
+    DI,
 
-        R9W,
+    R8W,
 
-        R10W,
+    R9W,
 
-        R11W,
+    R10W,
 
-        R12W,
+    R11W,
 
-        R13W,
+    R12W,
 
-        R14W,
+    R13W,
 
-        R15W,
+    R14W,
 
-        EAX,
+    R15W,
 
-        ECX,
+    EAX,
 
-        EDX,
+    ECX,
 
-        EBX,
+    EDX,
 
-        ESP,
+    EBX,
 
-        EBP,
+    ESP,
 
-        ESI,
+    EBP,
 
-        EDI,
+    ESI,
 
-        R8D,
+    EDI,
 
-        R9D,
+    R8D,
 
-        R10D,
+    R9D,
 
-        R11D,
+    R10D,
 
-        R12D,
+    R11D,
 
-        R13D,
+    R12D,
 
-        R14D,
+    R13D,
 
-        R15D,
+    R14D,
 
-        RAX,
+    R15D,
 
-        RCX,
+    RAX,
 
-        RDX,
+    RCX,
 
-        RBX,
+    RDX,
 
-        RSP,
+    RBX,
 
-        RBP,
+    RSP,
 
-        RSI,
+    RBP,
 
-        RDI,
+    RSI,
 
-        R8,
+    RDI,
 
-        R9,
+    R8,
 
-        R10,
+    R9,
 
-        R11,
+    R10,
 
-        R12,
+    R11,
 
-        R13,
+    R12,
 
-        R14,
+    R13,
 
-        R15,
+    R14,
 
-        AL,
+    R15,
 
-        CL,
+    AL,
 
-        DL,
+    CL,
 
-        BL,
+    DL,
 
-        SPL,
+    BL,
 
-        BPL,
+    SPL,
 
-        SIL,
+    BPL,
 
-        DIL,
+    SIL,
 
-        R8B,
+    DIL,
 
-        R9B,
+    R8B,
 
-        R10B,
+    R9B,
 
-        R11B,
+    R10B,
 
-        R12B,
+    R11B,
 
-        R13B,
+    R12B,
 
-        R14B,
+    R13B,
 
-        R15B,
+    R14B,
 
-        AH,
+    R15B,
 
-        CH,
+    AH,
 
-        DH,
+    CH,
 
-        BH,
+    DH,
 
-        ERROR,
+    BH,
 
-        RIP,
+    ERROR,
 
-        EIP,
+    RIP,
 
-        IP,
+    EIP,
 
-        K0,
+    IP,
 
-        K1,
+    K0,
 
-        K2,
+    K1,
 
-        K3,
+    K2,
 
-        K4,
+    K3,
 
-        K5,
+    K4,
 
-        K6,
+    K5,
 
-        K7,
+    K6,
 
-        MMX0,
+    K7,
 
-        MMX1,
+    MMX0,
 
-        MMX2,
+    MMX1,
 
-        MMX3,
+    MMX2,
 
-        MMX4,
+    MMX3,
 
-        MMX5,
+    MMX4,
 
-        MMX6,
+    MMX5,
 
-        MMX7,
+    MMX6,
 
-        SSP,
+    MMX7,
 
-        IA32_U_CET,
+    SSP,
 
-        MXCSR,
+    IA32_U_CET,
 
-        STACKPUSH,
+    MXCSR,
 
-        STACKPOP,
+    STACKPUSH,
 
-        GDTR,
+    STACKPOP,
 
-        LDTR,
+    GDTR,
 
-        IDTR,
+    LDTR,
 
-        TR,
+    IDTR,
 
-        TSC,
+    TR,
 
-        TSCAUX,
+    TSC,
 
-        MSRS,
+    TSCAUX,
 
-        FSBASE,
+    MSRS,
 
-        GSBASE,
+    FSBASE,
 
-        TILECONFIG,
+    GSBASE,
 
-        X87CONTROL,
+    TILECONFIG,
 
-        X87STATUS,
+    X87CONTROL,
 
-        X87TAG,
+    X87STATUS,
 
-        X87PUSH,
+    X87TAG,
 
-        X87POP,
+    X87PUSH,
 
-        X87POP2,
+    X87POP,
 
-        X87OPCODE,
+    X87POP2,
 
-        X87LASTCS,
+    X87OPCODE,
 
-        X87LASTIP,
+    X87LASTCS,
 
-        X87LASTDS,
+    X87LASTIP,
 
-        X87LASTDP,
+    X87LASTDS,
 
-        ES,
+    X87LASTDP,
 
-        CS,
+    ES,
 
-        SS,
+    CS,
 
-        DS,
+    SS,
 
-        FS,
+    DS,
 
-        GS,
+    FS,
 
-        TMP0,
+    GS,
 
-        TMP1,
+    TMP0,
 
-        TMP2,
+    TMP1,
 
-        TMP3,
+    TMP2,
 
-        TMP4,
+    TMP3,
 
-        TMP5,
+    TMP4,
 
-        TMP6,
+    TMP5,
 
-        TMP7,
+    TMP6,
 
-        TMP8,
+    TMP7,
 
-        TMP9,
+    TMP8,
 
-        TMP10,
+    TMP9,
 
-        TMP11,
+    TMP10,
 
-        TMP12,
+    TMP11,
 
-        TMP13,
+    TMP12,
 
-        TMP14,
+    TMP13,
 
-        TMP15,
+    TMP14,
 
-        TMM0,
+    TMP15,
 
-        TMM1,
+    TMM0,
 
-        TMM2,
+    TMM1,
 
-        TMM3,
+    TMM2,
 
-        TMM4,
+    TMM3,
 
-        TMM5,
+    TMM4,
 
-        TMM6,
+    TMM5,
 
-        TMM7,
+    TMM6,
 
-        UIF,
+    TMM7,
 
-        [Symbol("ST0")]
-        ST0,
+    UIF,
 
-        [Symbol("ST1")]
-        ST1,
+    [Symbol("ST0")]
+    ST0,
 
-        [Symbol("ST2")]
-        ST2,
+    [Symbol("ST1")]
+    ST1,
 
-        [Symbol("ST3")]
-        ST3,
+    [Symbol("ST2")]
+    ST2,
 
-        [Symbol("ST4")]
-        ST4,
+    [Symbol("ST3")]
+    ST3,
 
-        [Symbol("ST5")]
-        ST5,
+    [Symbol("ST4")]
+    ST4,
 
-        [Symbol("ST6")]
-        ST6,
+    [Symbol("ST5")]
+    ST5,
 
-        [Symbol("ST7")]
-        ST7,
+    [Symbol("ST6")]
+    ST6,
 
-        XCR0,
+    [Symbol("ST7")]
+    ST7,
 
-        XMM0,
+    XCR0,
 
-        XMM1,
+    XMM0,
 
-        XMM2,
+    XMM1,
 
-        XMM3,
+    XMM2,
 
-        XMM4,
+    XMM3,
 
-        XMM5,
+    XMM4,
 
-        XMM6,
+    XMM5,
 
-        XMM7,
+    XMM6,
 
-        XMM8,
+    XMM7,
 
-        XMM9,
+    XMM8,
 
-        XMM10,
+    XMM9,
 
-        XMM11,
+    XMM10,
 
-        XMM12,
+    XMM11,
 
-        XMM13,
+    XMM12,
 
-        XMM14,
+    XMM13,
 
-        XMM15,
+    XMM14,
 
-        XMM16,
+    XMM15,
 
-        XMM17,
+    XMM16,
 
-        XMM18,
+    XMM17,
 
-        XMM19,
+    XMM18,
 
-        XMM20,
+    XMM19,
 
-        XMM21,
+    XMM20,
 
-        XMM22,
+    XMM21,
 
-        XMM23,
+    XMM22,
 
-        XMM24,
+    XMM23,
 
-        XMM25,
+    XMM24,
 
-        XMM26,
+    XMM25,
 
-        XMM27,
+    XMM26,
 
-        XMM28,
+    XMM27,
 
-        XMM29,
+    XMM28,
 
-        XMM30,
+    XMM29,
 
-        XMM31,
+    XMM30,
 
-        YMM0,
+    XMM31,
 
-        YMM1,
+    YMM0,
 
-        YMM2,
+    YMM1,
 
-        YMM3,
+    YMM2,
 
-        YMM4,
+    YMM3,
 
-        YMM5,
+    YMM4,
 
-        YMM6,
+    YMM5,
 
-        YMM7,
+    YMM6,
 
-        YMM8,
+    YMM7,
 
-        YMM9,
+    YMM8,
 
-        YMM10,
+    YMM9,
 
-        YMM11,
+    YMM10,
 
-        YMM12,
+    YMM11,
 
-        YMM13,
+    YMM12,
 
-        YMM14,
+    YMM13,
 
-        YMM15,
+    YMM14,
 
-        YMM16,
+    YMM15,
 
-        YMM17,
+    YMM16,
 
-        YMM18,
+    YMM17,
 
-        YMM19,
+    YMM18,
 
-        YMM20,
+    YMM19,
 
-        YMM21,
+    YMM20,
 
-        YMM22,
+    YMM21,
 
-        YMM23,
+    YMM22,
 
-        YMM24,
+    YMM23,
 
-        YMM25,
+    YMM24,
 
-        YMM26,
+    YMM25,
 
-        YMM27,
+    YMM26,
 
-        YMM28,
+    YMM27,
 
-        YMM29,
+    YMM28,
 
-        YMM30,
+    YMM29,
 
-        YMM31,
+    YMM30,
 
-        ZMM0,
+    YMM31,
 
-        ZMM1,
+    ZMM0,
 
-        ZMM2,
+    ZMM1,
 
-        ZMM3,
+    ZMM2,
 
-        ZMM4,
+    ZMM3,
 
-        ZMM5,
+    ZMM4,
 
-        ZMM6,
+    ZMM5,
 
-        ZMM7,
+    ZMM6,
 
-        ZMM8,
+    ZMM7,
 
-        ZMM9,
+    ZMM8,
 
-        ZMM10,
+    ZMM9,
 
-        ZMM11,
+    ZMM10,
 
-        ZMM12,
+    ZMM11,
 
-        ZMM13,
+    ZMM12,
 
-        ZMM14,
+    ZMM13,
 
-        ZMM15,
+    ZMM14,
 
-        ZMM16,
+    ZMM15,
 
-        ZMM17,
+    ZMM16,
 
-        ZMM18,
+    ZMM17,
 
-        ZMM19,
+    ZMM18,
 
-        ZMM20,
+    ZMM19,
 
-        ZMM21,
+    ZMM20,
 
-        ZMM22,
+    ZMM21,
 
-        ZMM23,
+    ZMM22,
 
-        ZMM24,
+    ZMM23,
 
-        ZMM25,
+    ZMM24,
 
-        ZMM26,
+    ZMM25,
 
-        ZMM27,
+    ZMM26,
 
-        ZMM28,
+    ZMM27,
 
-        ZMM29,
+    ZMM28,
 
-        ZMM30,
+    ZMM29,
 
-        ZMM31,
-    }
+    ZMM30,
+
+    ZMM31,
 }

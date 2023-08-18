@@ -79,10 +79,9 @@ namespace Z0.Asm
         {
             var dst = Db.Scoped("docs").Path("rex.bits", FileKind.Csv);
             var emitting = Channel.EmittingFile(dst);
-            var bits = RexPrefix.Range();
             using var writer = dst.AsciWriter();
             var buffer = text.buffer();
-            var count = RexPrefix.table(buffer);
+            var count = RexPrefixTable.render(buffer);
             writer.Write(buffer.Emit());
             Channel.EmittedFile(emitting,count);
         }

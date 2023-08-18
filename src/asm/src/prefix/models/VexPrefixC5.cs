@@ -165,7 +165,7 @@ namespace Z0.Asm
             get => (RegIndex)math.not(VVVV);
         }
 
-        public string ToBitstring()
+        public string Bitstring()
         {
             var storage = CharBlock32.Empty;
             var dst = storage.Data;
@@ -190,7 +190,7 @@ namespace Z0.Asm
         const string SemanticFormat = "{0}\n{1}\n{2}";
 
         public string FormatSemantic()
-            => string.Format(SemanticFormat, Format(), AsmBitPatterns.VexC5, ToBitstring());
+            => string.Format(SemanticFormat, Format(), AsmBitPatterns.VexC5, Bitstring());
 
         public string Format()
         {

@@ -3,36 +3,35 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class XedModels
 {
-    partial class XedModels
+    [SymSource(xed)]
+    public enum OpType : byte
     {
-        [SymSource(xed)]
-        public enum OpType : byte
-        {
-            [Symbol("")]
-            INVALID,
+        [Symbol("")]
+        INVALID,
 
-            [Symbol("ERROR")]
-            ERROR,
+        [Symbol("ERROR")]
+        ERROR,
 
-            [Symbol("IMM")]
-            IMM,
+        [Symbol("IMM")]
+        IMM,
 
-            [Symbol("IMM_CONST")]
-            IMM_CONST,
+        [Symbol("IMM_CONST")]
+        IMM_CONST,
 
-            [Symbol("NT_LOOKUP_FN")]
-            NT_LOOKUP_FN,
+        [Symbol("NT_LOOKUP_FN")]
+        NT_LOOKUP_FN,
 
-            [Symbol("NT_LOOKUP_FN2")]
-            NT_LOOKUP_FN2,
+        [Symbol("NT_LOOKUP_FN2")]
+        NT_LOOKUP_FN2,
 
-            [Symbol("NT_LOOKUP_FN4")]
-            NT_LOOKUP_FN4,
+        [Symbol("NT_LOOKUP_FN4")]
+        NT_LOOKUP_FN4,
 
-            [Symbol("REG")]
-            REG,
-        }
+        [Symbol("REG")]
+        REG,
     }
 }

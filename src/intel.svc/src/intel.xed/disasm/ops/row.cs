@@ -96,7 +96,7 @@ partial class XedDisasm
                 spec.Visibility,
                 winfo.Width64,
                 winfo.Name,
-                OpSpec.specifier(spec)
+                XedOps.specifier(spec)
                 );
         }
 

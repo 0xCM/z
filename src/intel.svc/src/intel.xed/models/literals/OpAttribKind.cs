@@ -3,30 +3,29 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class XedModels
 {
-    partial class XedModels
+    [SymSource(xed), DataWidth(OpAttrib.KindWidth)]
+    public enum OpAttribKind : byte
     {
-        [SymSource(xed), DataWidth(OpAttrib.KindWidth)]
-        public enum OpAttribKind : byte
-        {
-            None,
+        None,
 
-            Action,
+        Action,
 
-            Width,
+        Width,
 
-            Visibility,
+        Visibility,
 
-            Nonterminal,
+        Nonterminal,
 
-            RegLiteral,
+        RegLiteral,
 
-            Scale,
+        Scale,
 
-            ElementType,
+        ElementType,
 
-            Modifier,
-        }
+        Modifier,
     }
 }

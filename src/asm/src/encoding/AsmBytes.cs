@@ -8,7 +8,6 @@ using static sys;
 
 using Asm;
 
-
 [ApiHost]
 public class AsmBytes
 {

@@ -3,36 +3,35 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class XedModels
 {
-    partial class XedModels
+    [SymSource(xed), DataWidth(num2.Width)]
+    public enum OpAction : byte
     {
-        [SymSource(xed), DataWidth(num2.Width)]
-        public enum OpAction : byte
-        {
-            [Symbol("")]
-            None = 0,
+        [Symbol("")]
+        None = 0,
 
-            [Symbol("rw", "Read and written (must write)")]
-            RW,
+        [Symbol("rw", "Read and written (must write)")]
+        RW,
 
-            [Symbol("r", "Read-only")]
-            R,
+        [Symbol("r", "Read-only")]
+        R,
 
-            [Symbol("w", "Write-only (must write)")]
-            W,
+        [Symbol("w", "Write-only (must write)")]
+        W,
 
-            [Symbol("rcw", "Read and conditionlly written (may write)")]
-            RCW,
+        [Symbol("rcw", "Read and conditionlly written (may write)")]
+        RCW,
 
-            [Symbol("cw", "Conditionlly written (may write)")]
-            CW,
+        [Symbol("cw", "Conditionlly written (may write)")]
+        CW,
 
-            [Symbol("crw", "Conditionlly read, always written (must write)")]
-            CRW,
+        [Symbol("crw", "Conditionlly read, always written (must write)")]
+        CRW,
 
-            [Symbol("cr", "Conditional read")]
-            CR
-        }
+        [Symbol("cr", "Conditional read")]
+        CR
     }
 }

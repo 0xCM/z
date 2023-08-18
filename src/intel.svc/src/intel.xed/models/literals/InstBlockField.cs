@@ -2,136 +2,135 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class XedModels
 {
-    partial class XedModels
+    [SymSource("xed")]
+    public enum InstBlockField : byte
     {
-        [SymSource("xed")]
-        public enum InstBlockField : byte
-        {
-            amd_3dnow_opcode,
+        amd_3dnow_opcode,
 
-            attributes,
+        attributes,
 
-            avx512_tuple,
+        avx512_tuple,
 
-            avx512_vsib,
+        avx512_vsib,
 
-            avx_vsib,
+        avx_vsib,
 
-            broadcast_allowed,
+        broadcast_allowed,
 
-            category,
+        category,
 
-            cpl,
+        cpl,
 
-            cpuid,
+        cpuid,
 
-            default_64b,
+        default_64b,
 
-            easz,
+        easz,
 
-            element_size,
+        element_size,
 
-            eosz,
+        eosz,
 
-            explicit_operands,
+        explicit_operands,
 
-            extension,
+        extension,
 
-            f2_required,
+        f2_required,
 
-            f3_required,
+        f3_required,
 
-            flags,
+        flags,
 
-            has_imm8,
+        has_imm8,
 
-            has_imm8_2,
+        has_imm8_2,
 
-            has_immz,
+        has_immz,
 
-            has_modrm,
+        has_modrm,
 
-            iclass,
+        iclass,
 
-            iform,
+        iform,
 
-            imm_sz,
+        imm_sz,
 
-            implicit_operands,
+        implicit_operands,
 
-            isa_set,
+        isa_set,
 
-            lower_nibble,
+        lower_nibble,
 
-            map,
+        map,
 
-            memop_rw,
+        memop_rw,
 
-            mod_required,
+        mod_required,
 
-            mode_restriction,
+        mode_restriction,
 
-            no_prefixes_allowed,
+        no_prefixes_allowed,
 
-            ntname,
+        ntname,
 
-            opcode,
+        opcode,
 
-            opcode_base10,
+        opcode_base10,
 
-            operand_list,
+        operand_list,
 
-            operands,
+        operands,
 
-            osz_required,
+        osz_required,
 
-            parsed_operands,
+        parsed_operands,
 
-            partial_opcode,
+        partial_opcode,
 
-            pattern,
+        pattern,
 
-            real_opcode,
+        real_opcode,
 
-            reg_required,
+        reg_required,
 
-            rexw_prefix,
+        rexw_prefix,
 
-            rm_required,
+        rm_required,
 
-            scalar,
+        scalar,
 
-            sibmem,
+        sibmem,
 
-            space,
+        space,
 
-            undocumented,
+        undocumented,
 
-            upper_nibble,
+        upper_nibble,
 
-            vl,
+        vl,
 
-            exceptions,
- 
-            memop_width,
+        exceptions,
 
-            memop_width_code,
+        memop_width,
 
-            disasm,
+        memop_width_code,
 
-            disasm_intel,
+        disasm,
 
-            disasm_attsv,
+        disasm_intel,
 
-            uname,
+        disasm_attsv,
 
-            version,
+        uname,
 
-            comment,
+        version,
 
-            EOSZ_LIST,
-        }
+        comment,
+
+        EOSZ_LIST,
     }
 }

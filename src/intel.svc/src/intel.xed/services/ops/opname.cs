@@ -7,12 +7,14 @@ namespace Z0
 {
     using static XedModels;
     using static XedRules;
+    using static XedRender;
 
     using K = XedRules.FieldKind;
     using N = XedModels.OpNameKind;
 
     partial class XedOps
     {
+
         [Op]
         public static OpName opname(FieldKind src)
         {

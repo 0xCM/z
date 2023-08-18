@@ -3,24 +3,23 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class XedModels
 {
-    partial class XedModels
+    [SymSource(xed)]
+    public enum OSZ : byte
     {
-        [SymSource(xed)]
-        public enum OSZ : byte
-        {
-            [Symbol("")]
-            None = 0,
+        [Symbol("")]
+        None = 0,
 
-            [Symbol("o16")]
-            o16 = NativeSizeCode.W16,
+        [Symbol("o16")]
+        o16 = NativeSizeCode.W16,
 
-            [Symbol("o32")]
-            o32 = NativeSizeCode.W32,
+        [Symbol("o32")]
+        o32 = NativeSizeCode.W32,
 
-            [Symbol("o64")]
-            o64 = NativeSizeCode.W64,
-        }
+        [Symbol("o64")]
+        o64 = NativeSizeCode.W64,
     }
 }

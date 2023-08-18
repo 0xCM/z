@@ -3,69 +3,68 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class XedModels
 {
-    partial class XedModels
+    [SymSource(xed), DataWidth(num5.Width)]
+    public enum RegClass : byte
     {
-        [SymSource(xed), DataWidth(num5.Width)]
-        public enum RegClass : byte
-        {
-            [Symbol("")]
-            INVALID,
+        [Symbol("")]
+        INVALID,
 
-            BNDCFG,
+        BNDCFG,
 
-            BNDSTAT,
+        BNDSTAT,
 
-            BOUND,
+        BOUND,
 
-            CR,
+        CR,
 
-            DR,
+        DR,
 
-            FLAGS,
+        FLAGS,
 
-            GPR,
+        GPR,
 
-            GPR16,
+        GPR16,
 
-            GPR32,
+        GPR32,
 
-            GPR64,
+        GPR64,
 
-            GPR8,
+        GPR8,
 
-            IP,
+        IP,
 
-            MASK,
+        MASK,
 
-            MMX,
+        MMX,
 
-            MSR,
+        MSR,
 
-            MXCSR,
+        MXCSR,
 
-            PSEUDO,
+        PSEUDO,
 
-            PSEUDOX87,
+        PSEUDOX87,
 
-            SR,
+        SR,
 
-            TMP,
+        TMP,
 
-            TREG,
+        TREG,
 
-            UIF,
+        UIF,
 
-            X87,
+        X87,
 
-            XCR,
+        XCR,
 
-            XMM,
+        XMM,
 
-            YMM,
+        YMM,
 
-            ZMM,
-        }
+        ZMM,
     }
 }

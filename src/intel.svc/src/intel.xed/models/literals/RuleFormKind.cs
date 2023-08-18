@@ -3,23 +3,22 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class XedRules
 {
-    partial class XedRules
+    public enum RuleFormKind : byte
     {
-        public enum RuleFormKind : byte
-        {
-            None,
+        None,
 
-            RuleDecl,
+        RuleDecl,
 
-            SeqDecl,
+        SeqDecl,
 
-            EncodeStep,
+        EncodeStep,
 
-            DecodeStep,
+        DecodeStep,
 
-            Invocation,
-        }
+        Invocation,
     }
 }

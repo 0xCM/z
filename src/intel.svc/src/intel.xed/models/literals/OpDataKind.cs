@@ -2,21 +2,20 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class XedModels
 {
-    partial class XedModels
+    public enum OpDataKind : byte
     {
-        public enum OpDataKind : byte
-        {
-            None,
+        None,
 
-            Scale,
+        Scale,
 
-            Reg,
+        Reg,
 
-            Imm,
+        Imm,
 
-            Disp,
-        }
+        Disp,
     }
 }

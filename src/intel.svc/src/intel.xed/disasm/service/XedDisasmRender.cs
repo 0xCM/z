@@ -20,7 +20,7 @@ class XedDisasmRender
             dst.AppendLine(FormatDetailHeader(formatter));
 
         for(var i=0; i<src.Count; i++)
-            render(formatter, src[i].DetailRow, dst);
+            dst.AppendLine(formatter.Format(src[i].DetailRow));
     }
 
     public static string FormatDetailHeader(ICsvFormatter<XedDisasmDetailRow> formatter)
@@ -32,7 +32,7 @@ class XedDisasmRender
         for(var k=0; k<6; k++)
         {
             opheader.Append("| ");
-            opheader.Append(XedDisasmRender.OpDetailHeader(k));
+            opheader.Append(OpDetailHeader(k));
         }
 
         return string.Format("{0}{1}", headerBase, opheader.Emit());
@@ -52,9 +52,6 @@ class XedDisasmRender
         }
         return dst.Emit();
     }
-
-    public static void render(ICsvFormatter<XedDisasmDetailRow> formatter, in XedDisasmDetailRow src, ITextEmitter dst)
-        => dst.AppendLine(formatter.Format(src));
 
     public static string OpDetailHeader(int index)
         => string.Format(OpDetailPattern, OpColPatterns.Select(x => string.Format(x, index)));
