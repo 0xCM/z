@@ -2,44 +2,64 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+[StructLayout(LayoutKind.Sequential, Pack=1)]
+public readonly record struct Token : IToken, IComparable<Token>
 {
-    [StructLayout(LayoutKind.Sequential, Pack=1)]
-    public readonly record struct Token : IToken
+    public readonly uint Index;
+
+    public readonly string Group;
+
+    public readonly string Name;
+
+    public readonly string Expr;
+
+    public readonly string Info;
+    
+    public Token()
     {
-        public readonly uint Index;
-
-        readonly string _Name;
-
-        readonly string _Expr;
-
-        public Token()
-        {
-            Index = 0;
-            _Name = EmptyString;
-            _Expr = EmptyString;
-        }
-
-        [MethodImpl(Inline)]
-        public Token(uint key, string name, string expr)
-        {
-            Index = key;
-            _Name = name;
-            _Expr = expr;
-        }
-
-        public ReadOnlySpan<char> Name
-        {
-            [MethodImpl(Inline)]
-            get => _Name;
-        }
-
-        public ReadOnlySpan<char> Expr
-        {
-            [MethodImpl(Inline)]
-            get => _Expr;
-        }
-
-        public static Token Empty => new Token();
+        Index = 0;
+        Group = EmptyString;
+        Name = EmptyString;            
+        Expr = EmptyString;
+        Info = EmptyString;
     }
+
+    [MethodImpl(Inline)]
+    public Token(uint index, string group, string name, string expr, string info)
+    {
+        Index = index;
+        Group = group;
+        Name = name;
+        Expr = expr;
+        Info = info;
+    }
+
+    public int CompareTo(Token src)
+    {
+        var result = Group.CompareTo(src.Group);
+        if(result == 0)
+        {
+            result = Index.CompareTo(src.Index);
+        }
+        return result;
+    }
+
+    string IToken.Group
+        => Group;
+
+    uint IToken.Index
+        => Index;
+
+    string IToken.Name
+        => Name;
+
+    string IToken.Expr
+        => Expr;
+
+    string IToken.Info
+        => Info;
+
+    public static Token Empty => new ();
 }

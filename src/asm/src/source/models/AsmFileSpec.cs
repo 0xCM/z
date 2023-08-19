@@ -8,7 +8,7 @@ namespace Z0
     {
         [MethodImpl(Inline), Op]
         public static AsmFileSpec define(Identifier name, params IAsmSourcePart[] parts)
-            => new AsmFileSpec(name, parts);
+            => new (name, parts);
 
         public static string format(in AsmFileSpec src)
         {

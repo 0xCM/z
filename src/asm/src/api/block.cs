@@ -10,14 +10,14 @@ namespace Z0.Asm
     {
         [MethodImpl(Inline), Op]
         public static AsmBlockSpec block(AsmBlockLabel label)
-            => new AsmBlockSpec(AsmComment.Empty, label, sys.empty<AsmInstruction>());
+            => new (AsmComment.Empty, label, sys.empty<AsmInstruction>());
 
         [MethodImpl(Inline), Op]
         public static AsmBlockSpec block(AsmBlockLabel label, params AsmInstruction[] content)
-            => new AsmBlockSpec(AsmComment.Empty, label, content);
+            => new (AsmComment.Empty, label, content);
 
         [MethodImpl(Inline), Op]
         public static AsmBlockSpec block(AsmComment comment, AsmBlockLabel label, params AsmInstruction[] content)
-            => new AsmBlockSpec(comment, label, content);
+            => new (comment, label, content);
     }
 }

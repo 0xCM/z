@@ -3,32 +3,31 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+using static XedRules;
+using static XedModels;
+using static XedDisasm;
+
+public interface IXedDisasmBuffer
 {
-    using static XedRules;
-    using static XedModels;
-    using static XedDisasm;
+    ref XedDisasmFile DataFile();
 
-    public interface IXedDisasmBuffer
-    {
-        ref XedDisasmFile DataFile();
+    ref XedDisasmDetailBlock Block();
 
-        ref XedDisasmDetailBlock Block();
+    ref XedDisasmSummary Summary();
 
-        ref XedDisasmSummary Summary();
+    ref AsmInfo AsmInfo();
 
-        ref AsmInfo AsmInfo();
+    ref EncodingExtract Encoding();
 
-        ref EncodingExtract Encoding();
+    ref InstFieldValues Props();
 
-        ref InstFieldValues Props();
+    uint FieldCount {get;}
 
-        uint FieldCount {get;}
+    ref readonly FilePath Source {get;}
 
-        ref readonly FilePath Source {get;}
+    void Cache(ReadOnlySpan<FieldKind> src);
 
-        void Cache(ReadOnlySpan<FieldKind> src);
-
-        void State(uint seq, in XedOperandState state, OpStateReceiver receiver);
-    }
+    void State(uint seq, in XedOperandState state, OpStateReceiver receiver);
 }

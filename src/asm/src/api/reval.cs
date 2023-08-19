@@ -9,6 +9,6 @@ namespace Z0.Asm
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static AsmRegValue<T> regval<T>(AsmRegName name, T value)
             where T : unmanaged
-                => new AsmRegValue<T>(name, value);
+                => new (name, value);
     }
 }

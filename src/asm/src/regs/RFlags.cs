@@ -9,7 +9,6 @@ using static sys;
 using F = RFlagBits;
 using I = RFlagIndex;
 
-
 [ApiComplete]
 public record struct RFlags : IEquatable<RFlags>
 {

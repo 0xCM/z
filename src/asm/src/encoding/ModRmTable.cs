@@ -11,10 +11,10 @@ using Asm;
 public class ModRmTable
 {
     [MethodImpl(Inline), Op]
-    static ModRm2 entry(byte mod, byte reg, byte rm)
+    static ModRm entry(byte mod, byte reg, byte rm)
         => new (AsmBytes.join((rm, 0), (reg, 3), (mod, 6)));
 
-    static uint render(ModRm2 src, ref uint i, Span<char> dst)
+    static uint render(ModRm src, ref uint i, Span<char> dst)
     {
         const string FieldSep = " | ";
         var i0 = i;

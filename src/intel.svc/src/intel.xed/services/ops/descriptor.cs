@@ -10,7 +10,7 @@ namespace Z0
     public partial class Xed
     {
         [MethodImpl(Inline)]
-        public static OpWidthRecord describe(WidthCode code)
-            => code == 0 ? OpWidthRecord.Empty : XedOps.WidthLookup[code];
+        public static OpWidthDetail describe(WidthCode code)
+            => code == 0 ? OpWidthDetail.Empty : XedOps.WidthLookup[code];
     }
 }

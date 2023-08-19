@@ -2,24 +2,23 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class XedModels
 {
-    partial class XedModels
+    [StructLayout(LayoutKind.Sequential,Pack=1)]
+    public record struct AsmInfo
     {
-        [StructLayout(LayoutKind.Sequential,Pack=1)]
-        public record struct AsmInfo
-        {
-            public asci64 Asm;
+        public asci64 Asm;
 
-            public MemoryAddress IP;
+        public MemoryAddress IP;
 
-            public AsmHexCode Encoded;
+        public AsmHexCode Encoded;
 
-            public CategoryKind Category;
+        public CategoryKind Category;
 
-            public ExtensionKind Extension;
+        public ExtensionKind Extension;
 
-            public static AsmInfo Empty => default;
-        }
+        public static AsmInfo Empty => default;
     }
 }

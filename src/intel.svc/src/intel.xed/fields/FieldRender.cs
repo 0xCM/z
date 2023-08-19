@@ -120,7 +120,7 @@ namespace Z0
                         break;
 
                         case K.MODRM_BYTE:
-                            r.Functions[kind] = x => string.Format("0x{0:X2} [{1}]", (byte)x, ((ModRm2)x).Bitstring());
+                            r.Functions[kind] = x => string.Format("0x{0:X2} [{1}]", (byte)x, ((ModRm)x).Bitstring());
                         break;
 
                         case K.NOMINAL_OPCODE:

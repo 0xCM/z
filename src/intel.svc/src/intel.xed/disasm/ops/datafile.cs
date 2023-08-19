@@ -14,7 +14,6 @@ partial class XedDisasm
         => from path in sources(src) select datafile(path);
 
     public static XedDisasmFile datafile(FilePath src)
-
     {
         var dst = list<XedDisasmBlock>();
         var lines = src.ReadNumberedLines();

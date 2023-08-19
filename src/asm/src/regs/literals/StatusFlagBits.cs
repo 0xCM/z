@@ -2,31 +2,30 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Asm
+namespace Z0.Asm;
+
+using static NumericBaseKind;
+
+using RF = RFlagBits;
+
+[Flags,SymSource("asm.regs.flags", Base16)]
+public enum StatusFlagBits : ushort
 {
-    using static NumericBaseKind;
+    [Symbol("cf", "Carry Flag")]
+    CF = (ushort)RF.CF,
 
-    using RF = RFlagBits;
+    [Symbol("pf", "Parity Flag")]
+    PF = (ushort)RF.PF,
 
-    [Flags,SymSource("asm.regs.flags", Base16)]
-    public enum StatusFlagBits : ushort
-    {
-        [Symbol("cf", "Carry Flag")]
-        CF = (ushort)RF.CF,
+    [Symbol("af", "Aux Carry Flag")]
+    AF = (ushort)RF.AF,
 
-        [Symbol("pf", "Parity Flag")]
-        PF = (ushort)RF.PF,
+    [Symbol("zf", "Zero Flag")]
+    ZF = (ushort)RF.ZF,
 
-        [Symbol("af", "Aux Carry Flag")]
-        AF = (ushort)RF.AF,
+    [Symbol("sf", "Sign Flag")]
+    SF = (ushort)RF.SF,
 
-        [Symbol("zf", "Zero Flag")]
-        ZF = (ushort)RF.ZF,
-
-        [Symbol("sf", "Sign Flag")]
-        SF = (ushort)RF.SF,
-
-        [Symbol("of", "Overflow Flag")]
-        OF = (ushort)RF.OF,
-    }
+    [Symbol("of", "Overflow Flag")]
+    OF = (ushort)RF.OF,
 }

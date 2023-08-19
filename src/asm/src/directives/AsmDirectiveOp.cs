@@ -42,11 +42,11 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator AsmDirectiveOp(string src)
-            => new AsmDirectiveOp(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator AsmCell(AsmDirectiveOp src)
-            => new AsmCell(AsmCellKind.DirectiveOp, src.Value);
+            => new (AsmCellKind.DirectiveOp, src.Value);
 
         public static AsmDirectiveOp Empty => new AsmDirectiveOp(EmptyString);
     }

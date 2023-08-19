@@ -8,7 +8,7 @@ namespace Z0.Asm;
 /// ModRM[mod[7:6] | reg[5:3] | r/m[2:0]]
 /// </summary>
 [StructLayout(LayoutKind.Sequential,Size=1)]
-public record struct ModRm2 : IAsmByte<ModRm2>
+public record struct ModRm : IAsmByte<ModRm>
 {
     const uint mmMask=0b11000000;
     const byte mmMinPos=6;
@@ -22,11 +22,11 @@ public record struct ModRm2 : IAsmByte<ModRm2>
     ref byte Value
     {
         [UnscopedRef, MethodImpl(Inline)]
-        get => ref sys.@as<ModRm2,byte>(this);
+        get => ref sys.@as<ModRm,byte>(this);
     }
 
     [MethodImpl(Inline)]
-    public ModRm2(byte value)
+    public ModRm(byte value)
     {
         Value = value;
     }
@@ -103,7 +103,7 @@ public record struct ModRm2 : IAsmByte<ModRm2>
         => Hash;
 
     [MethodImpl(Inline)]
-    public bool Equals(ModRm2 src)
+    public bool Equals(ModRm src)
         => Value == src.Value;
 
     public string Bitstring()
@@ -119,10 +119,10 @@ public record struct ModRm2 : IAsmByte<ModRm2>
         => Format();
 
     [MethodImpl(Inline)]
-    public static implicit operator ModRm2(byte src)
+    public static implicit operator ModRm(byte src)
         => new(src);
 
     [MethodImpl(Inline)]
-    public static implicit operator byte(ModRm2 src)
+    public static implicit operator byte(ModRm src)
         => src.Value;
 }

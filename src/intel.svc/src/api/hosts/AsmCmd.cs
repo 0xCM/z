@@ -17,13 +17,6 @@ namespace Z0.Asm
         PolyBits PolyBits => Wf.PolyBits();
 
         
-        [CmdOp("asm/check/modrm")]
-        void CheckModRm()
-        {
-            var a = new ModRm2(0b11_000_000);
-            Channel.Row(a.Bitstring());
-
-        }
         void EmitPatterns()
         {
             PolyBits.EmitPatterns(typeof(AsmBitPatterns), Db.Scoped("patterns"));
@@ -32,10 +25,38 @@ namespace Z0.Asm
         void EmitTokens()
         {
             var groups = AsmTokens.groups();
+            var dst = Db.Scoped("tokens");
             foreach(var g in groups)
-                g.ExportTokens(Channel, Db.Scoped("tokens"));
+                g.ExportTokens(Channel, dst);
 
+            var jcc = Tokens.tokenize(typeof(Jcc32Code), typeof(Jcc8Code), typeof(Jcc32AltCode), typeof(Jcc8AltCode));
+            var path = dst.Path("jcc.codes",FS.ext("ts"));
+            using var writer = path.Writer();
+            var indent = 0u;
+            Emit(ref indent, jcc, writer);
         }
+
+        void Emit(ref uint indent, TokenSeq src, StreamWriter dst)
+        {
+            var groups = src.Groups();
+            foreach(var (g, tokens) in groups)
+            {
+                dst.AppendLine();
+                dst.IndentLineFormat(indent, "export type {0} =", g);
+                indent+=4;
+                for(var i=0; i<tokens.Count; i++)
+                {
+                    ref readonly var token = ref tokens[i];
+                    if(nonempty(token.Info))
+                        dst.IndentLineFormat(indent, "// {0}", token.Info);
+
+
+                    dst.IndentLine(indent, $"| {text.dquote(token.Expr)}");
+                }
+                indent-=4;
+            }
+        }
+
 
         [CmdOp("asm/emit/docs")]
         void EmitDocs()

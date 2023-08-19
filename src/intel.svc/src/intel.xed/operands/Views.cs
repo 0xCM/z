@@ -13,7 +13,7 @@ using R = XedRules;
 
 partial class XedOps
 {
-    public static ref readonly ConstLookup<WidthCode,OpWidthRecord> WidthLookup
+    public static ref readonly ConstLookup<WidthCode,OpWidthDetail> WidthLookup
     {
         [MethodImpl(Inline)]
         get => ref _WidthLookup;

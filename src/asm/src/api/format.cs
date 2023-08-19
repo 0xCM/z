@@ -11,9 +11,10 @@ namespace Z0.Asm
         [Op]
         public static string format(in AsmHexCode src)
         {
+            var size = src.Size;
             Span<char> dst = stackalloc char[64];
-            var count = render(src, dst);
-            return sys.@string(slice(dst,0, count));
+            var count = HexRender.render(LowerCase, src.Bytes, dst);
+            return sys.@string(slice(dst, 0, count));
         }
 
         public static string format(in EncodingOffsets src)
@@ -37,6 +38,5 @@ namespace Z0.Asm
             dst.Append(Chars.RBrace);
             return dst.Emit();
         }
-
     }
 }

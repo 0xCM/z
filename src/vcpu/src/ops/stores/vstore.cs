@@ -418,10 +418,6 @@ namespace Z0
         [MethodImpl(Inline), Store]
         public static unsafe void vstore(Vector512<byte> src, ref byte dst)
             => Store(refptr(ref dst), src);
-        // {
-        //     vstore(src.Lo, ref dst);
-        //     vstore(src.Hi, ref Unsafe.Add(ref dst, 32));
-        // }
 
         [MethodImpl(Inline), Store]
         public static unsafe void vstore(Vector128<byte> src, Span<byte> dst)

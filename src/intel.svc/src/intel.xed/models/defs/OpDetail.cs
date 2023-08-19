@@ -12,7 +12,7 @@ partial class XedModels
     {
         public OpSpec Spec;
 
-        public OpWidthRecord OpWidth;
+        public OpWidthDetail OpWidth;
 
         public OpName OpName;
 

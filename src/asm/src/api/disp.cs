@@ -47,6 +47,5 @@ namespace Z0.Asm
         [MethodImpl(Inline)]
         public static Disp32 disp64(int value)
             => new Disp32(value);
-
     }
 }

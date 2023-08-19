@@ -3,45 +3,44 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class XedModels
 {
-    partial class XedModels
+    public readonly struct ChipIsaKinds
     {
-        public readonly struct ChipIsaKinds
+        public readonly ChipCode Chip;
+
+        public readonly InstIsaKinds Kinds;
+
+        [MethodImpl(Inline)]
+        public ChipIsaKinds(ChipCode chip, InstIsaKinds kinds)
         {
-            public readonly ChipCode Chip;
+            Chip = chip;
+            Kinds = kinds;
+        }
 
-            public readonly InstIsaKinds Kinds;
+        public ChipIsaKinds(ChipCode chip)
+        {
+            Chip = chip;
+            Kinds = new();
+        }
 
+        public void Add(InstIsaKind kind)
+        {
+            Kinds.Add(kind);
+        }
+
+        public void Add(InstIsaKind[] kinds)
+        {
+            foreach(var k in kinds)
+                Kinds.Add(k);
+        }
+
+        public uint Count
+        {
             [MethodImpl(Inline)]
-            public ChipIsaKinds(ChipCode chip, InstIsaKinds kinds)
-            {
-                Chip = chip;
-                Kinds = kinds;
-            }
-
-            public ChipIsaKinds(ChipCode chip)
-            {
-                Chip = chip;
-                Kinds = new();
-            }
-
-            public void Add(InstIsaKind kind)
-            {
-                Kinds.Add(kind);
-            }
-
-            public void Add(InstIsaKind[] kinds)
-            {
-                foreach(var k in kinds)
-                    Kinds.Add(k);
-            }
-
-            public uint Count
-            {
-                [MethodImpl(Inline)]
-                get => (uint)Kinds.Count;
-            }
+            get => (uint)Kinds.Count;
         }
     }
 }

@@ -12,6 +12,6 @@ namespace Z0.Asm
 
         [MethodImpl(Inline), Op]
         public static RegMask regmask(RegOp target, RegIndex mask, RegMaskKind kind)
-            => new RegMask(target,mask,kind);
+            => new (target,mask,kind);
     }
 }

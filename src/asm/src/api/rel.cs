@@ -20,6 +20,15 @@ namespace Z0.Asm
 
         [MethodImpl(Inline), Op]
         public static Rel rel(uint value, NativeSize size)
-            => new Rel(size, value);
+            => new (size, value);
+
+        [MethodImpl(Inline), Op]
+        public static RelAddress rel(MemoryAddress @base, MemoryAddress offset)
+            => new (@base, offset);
+
+        [MethodImpl(Inline)]
+        public static RelAddress<T> rel<T>(MemoryAddress @base, T offset)
+            where T : unmanaged, IAddress
+                    => new (@base, offset);
     }
 }

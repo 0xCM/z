@@ -25,7 +25,7 @@ public record struct EncodedBits
 
     public OpCodeValue OpCode;
 
-    public ModRm2 ModRm;
+    public ModRm ModRm;
 
     public Sib Sib;
 

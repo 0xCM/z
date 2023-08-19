@@ -25,8 +25,26 @@ public class AsmOcTokens
     [SymSource(Group), TokenKind(TK.Integer)]
     public enum IntegerToken : byte
     {
+        [Symbol(T.n0)]
+        n0,
+
         [Symbol(T.n1)]
-        x1,
+        n1,
+
+        [Symbol(T.n2)]
+        n2,
+
+        [Symbol(T.n3)]
+        n3,
+
+        [Symbol(T.n4)]
+        n4,
+
+        [Symbol(T.n5)]
+        n5,
+
+        [Symbol(T.n6)]
+        n6,
     }
 
     [SymSource(Group), TokenKind(TK.Rex)]

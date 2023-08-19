@@ -285,7 +285,7 @@ public class XedMachines : IDisposable
         public ref readonly XedInstClass InstClass
         {
             [MethodImpl(Inline)]
-            get => ref View.iclass(Operands);
+            get => ref XedOps.iclass(Operands);
         }
 
         /// <summary>

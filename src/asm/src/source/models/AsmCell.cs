@@ -8,7 +8,7 @@ namespace Z0
     {
         [MethodImpl(Inline)]
         public static AsmCell define(string content, AsmCellKind kind)
-            => new AsmCell(kind, content);
+            => new (kind, content);
 
         public readonly @string Content;
 

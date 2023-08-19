@@ -64,8 +64,8 @@ public partial class XedFlows : WfSvc<XedFlows>
     public void EmitPointerWidths(ReadOnlySpan<PointerWidthInfo> src)
         => Channel.TableEmit(src, Targets().Table<PointerWidthInfo>());
 
-    public void EmitOpWidths(ReadOnlySpan<OpWidthRecord> src)
-        => Channel.TableEmit(src, Targets().Table<OpWidthRecord>());
+    public void EmitOpWidths(ReadOnlySpan<OpWidthDetail> src)
+        => Channel.TableEmit(src, Targets().Table<OpWidthDetail>());
 
     public void EmitChipMap(ChipMap map)
     {

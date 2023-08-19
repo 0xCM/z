@@ -4,13 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using static sys;
 using Asm;
+
+using static sys;
 
 public record struct AsmHexCode 
 {     
-    const byte SizeIndex = 15;
-
+    public const byte MaxSize = 15;
+    
     Cell128 Data;
 
     [MethodImpl(Inline)]
@@ -22,19 +23,25 @@ public record struct AsmHexCode
     public Span<byte> Bytes
     {
         [MethodImpl(Inline), UnscopedRef]
-        get => bytes(Data);
+        get => slice(Data.Bytes, 0, Size);
     }
 
     public ref byte Size
     {
         [MethodImpl(Inline), UnscopedRef]
-        get => ref seek(Bytes, SizeIndex);
+        get => ref seek(Data.Bytes, MaxSize);
     }
 
     public bool IsEmpty
     {
         [MethodImpl(Inline)]
         get => Data.IsEmpty;
+    }
+
+    public bool IsNonEmpty
+    {
+        [MethodImpl(Inline)]
+        get => Data.IsNonEmpty;
     }
 
     public ref byte this[byte index]

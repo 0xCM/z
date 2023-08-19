@@ -96,7 +96,7 @@ partial class XedDisasm
                 spec.Visibility,
                 winfo.Width64,
                 winfo.Name,
-                XedOps.specifier(spec)
+                specifier(spec)
                 );
         }
 
@@ -123,11 +123,11 @@ partial class XedDisasm
         }
 
         if(state.REX)
-            dst.Rex = View.rex(state);
+            dst.Rex = XedOps.rex(state);
 
         if(state.HAS_MODRM)
         {
-            var modrm = View.modrm(state);
+            var modrm = XedOps.modrm(state);
             dst.ModRm = modrm;
             if(modrm != code[state.POS_MODRM])
             {
@@ -138,7 +138,7 @@ partial class XedDisasm
 
         if(state.HAS_SIB)
         {
-            var sib = View.sib(state);
+            var sib = XedOps.sib(state);
             dst.Sib = sib;
             var sibenc = Sib.init(code[state.POS_SIB]);
             if(sibenc.Value() != sib)

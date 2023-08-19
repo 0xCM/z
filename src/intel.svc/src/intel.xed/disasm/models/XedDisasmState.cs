@@ -5,8 +5,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using static XedRules;
-
 [StructLayout(LayoutKind.Sequential,Pack=1)]
 public record struct XedDisasmState
 {

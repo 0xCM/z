@@ -63,37 +63,6 @@ namespace Z0
             return dst;
         }
 
-        [Op]
-        public static uint traverse<T>(ReadOnlySpan<char> src, Action<TokenExpr<T>> receiver)
-            where T : unmanaged, ICharBlock<T>
-        {
-            var counter = 0u;
-            var data = src;
-            var count = api.count(src);
-            var expr = new T();
-            var dst = expr.Data;
-            var j=0u;
-            for(var i=0u; i<count; i++)
-            {
-                ref readonly var c = ref skip(data,i);
-                if(i == count - 1)
-                {
-                    seek(dst,j++) = c;
-                    if(j != 0)
-                        receiver(new TokenExpr<T>(counter++, expr));
-                }
-                else if(SQ.@null(c))
-                {
-                    receiver(new TokenExpr<T>(counter++, expr));
-                    expr = new T();
-                    j=0u;
-                }
-                else
-                    seek(dst,j++) = c;
-            }
-            return counter;
-        }
-
         [MethodImpl(Inline), Op]
         public static uint count(ReadOnlySpan<char> src)
         {
@@ -110,21 +79,26 @@ namespace Z0
             return counter;
         }
 
-        public static Index<Token> tokenize(Type src)
+        public static TokenSeq tokenize(params Type[] src)
         {
-            var symbols = api.symbols(src);
-            var count = symbols.Length;
-            var dst = alloc<Token>(count);
-            for(var i=0u; i<count; i++)
+            var tokens = list<Token>();
+            foreach(var type in src)
             {
-                ref readonly var symbol = ref symbols[i];
-                seek(dst,i) = new Token(
-                    symbol.Key,
-                    symbol.Name,
-                    text.ifempty(symbol.Expr.Text,symbol.Name)
-                    );
+                var symbols = api.symbols(type);
+                for(var i=0u; i<symbols.Length; i++)
+                {
+                    ref readonly var symbol = ref symbols[i];
+                    tokens.Add(new Token(
+                        symbol.Key,
+                        type.Name,
+                        symbol.Name,
+                        text.ifempty(symbol.Expr.Text, symbol.Name),
+                        symbol.Description
+                        ));
+                }
+
             }
-            return dst;
+            return new(tokens.ToArray());
         }
 
         public static Index<Token<K>> tokenize<K>()
@@ -141,7 +115,7 @@ namespace Z0
                     Kind = symbol.Kind,
                     Name = symbol.Name,
                     Expr = text.ifempty(symbol.Expr.Text, symbol.Name),
-                    Description = symbol.Description
+                    Info = symbol.Description
                 };
             }
             return dst;

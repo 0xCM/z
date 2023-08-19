@@ -4,10 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public interface ITokenizer<S,T,V>
-        where S : ITokenSource<V>
-        where V : new()
+    public interface ITokenSeq
     {
-        IEnumerable<T> Tokenize(S src);
+        ReadOnlySeq<Token> Tokens {get;}
     }
 }

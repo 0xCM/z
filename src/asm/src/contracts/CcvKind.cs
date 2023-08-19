@@ -8,8 +8,8 @@ namespace Z0
     {
         None,
 
-        WinX64,
+        Win64,
 
-        RegCall64
+        RegCall
     }
 }

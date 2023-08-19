@@ -7,9 +7,15 @@ namespace Z0
     [Free]
     public interface IToken
     {
-        ReadOnlySpan<char> Name {get;}
+        string Group {get;}
 
-        ReadOnlySpan<char> Expr {get;}
+        uint Index {get;}
+
+        string Name {get;}
+
+        string Expr {get;}
+
+        string Info {get;}
     }
 
     [Free]

@@ -2,41 +2,40 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class XedModels
 {
-    partial class XedModels
+    [StructLayout(StructLayout,Pack=1), Record(TableId)]
+    public record struct InstIsaSpec : ISequential<InstIsaSpec>, IComparable<InstIsaSpec>
     {
-        [StructLayout(StructLayout,Pack=1), Record(TableId)]
-        public record struct InstIsaSpec : ISequential<InstIsaSpec>, IComparable<InstIsaSpec>
+        public const string TableId = "xed.isa";
+
+        [Render(6)]
+        public byte Seq;
+
+        [Render(48)]
+        public asci64 XedName;
+
+        [Render(32)]
+        public asci32 IsaName;
+
+        uint ISequential.Seq
         {
-            public const string TableId = "xed.isa";
-
-            [Render(6)]
-            public byte Seq;
-
-            [Render(48)]
-            public asci64 XedName;
-
-            [Render(32)]
-            public asci32 IsaName;
-
-            uint ISequential.Seq
-            {
-                get => Seq;
-                set => Seq = (byte)value;
-            }
-
-            public Hash32 Hash
-            {
-                [MethodImpl(Inline)]
-                get => Seq;
-            }
-
-            public override int GetHashCode()
-                => Hash;
-
-            public int CompareTo(InstIsaSpec src)
-                => IsaName.CompareTo(src.IsaName);
+            get => Seq;
+            set => Seq = (byte)value;
         }
+
+        public Hash32 Hash
+        {
+            [MethodImpl(Inline)]
+            get => Seq;
+        }
+
+        public override int GetHashCode()
+            => Hash;
+
+        public int CompareTo(InstIsaSpec src)
+            => IsaName.CompareTo(src.IsaName);
     }
 }

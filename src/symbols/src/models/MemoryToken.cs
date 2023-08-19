@@ -7,7 +7,7 @@ namespace Z0
     using static sys;
 
     [StructLayout(LayoutKind.Sequential, Pack=1)]
-    public unsafe readonly record struct MemoryToken : IToken
+    public unsafe readonly record struct MemoryToken
     {
         public readonly uint Index;
 

@@ -1,8 +1,0 @@
-<Project>
-  <ItemGroup>
-    <ProjectReference Include="$(AsmV1)" />
-    <ProjectReference Include="$(ClrEcma)" />
-    <ProjectReference Include="$(Polyrand)" />
-    <ProjectReference Include="$(IntelSvc)" />
-  </ItemGroup>
-</Project>

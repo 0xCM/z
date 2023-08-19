@@ -17,7 +17,7 @@ namespace Z0.Asm
         /// <param name="disp">The displacement</param>
         [MethodImpl(Inline), Op]
         public static AsmAddress address(RegOp @base, RegOp index, MemoryScale scale, Disp disp = default)
-            => new AsmAddress(@base, index, scale,disp);
+            => new (@base, index, scale,disp);
 
         /// <summary>
         /// Specifies an effective adress for 8-bit operands
@@ -28,7 +28,7 @@ namespace Z0.Asm
         /// <param name="disp">The displacement</param>
         [MethodImpl(Inline), Op]
         public static AsmAddress address(r8 @base, r8 index, MemoryScale scale, Disp8 disp = default)
-            => new AsmAddress(@base, index, scale, disp);
+            => new (@base, index, scale, disp);
 
         /// <summary>
         /// Specifies an effective adress for 16-bit operands
@@ -50,7 +50,7 @@ namespace Z0.Asm
         /// <param name="disp">The displacement</param>
         [MethodImpl(Inline), Op]
         public static AsmAddress address(r32 @base, r32 index, MemoryScale scale, Disp32 disp = default)
-            => new AsmAddress(@base,index, scale, disp);
+            => new (@base,index, scale, disp);
 
         /// <summary>
         /// Specifies an effective adress for 64-bit operands
@@ -61,7 +61,7 @@ namespace Z0.Asm
         /// <param name="disp">The displacement</param>
         [MethodImpl(Inline), Op]
         public static AsmAddress address(r64 @base, r64 index, MemoryScale scale, Disp32 disp = default)
-            => new AsmAddress(@base, index, scale, disp);
+            => new (@base, index, scale, disp);
 
         /// <summary>
         /// Specifies an effective address for 8-bit operands

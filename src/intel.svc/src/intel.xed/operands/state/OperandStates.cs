@@ -5,9 +5,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using static XedOps;
+
 partial class XedRules
 {
-    public partial class OperandStates : IIndex<OperandStates.StateRecord>
+    public partial class OperandStates : IIndex<StateRecord>
     {
         readonly Index<StateRecord> Data;
 

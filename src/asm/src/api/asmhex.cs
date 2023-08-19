@@ -12,12 +12,13 @@ namespace Z0.Asm
         public static AsmHexCode asmhex(ReadOnlySpan<byte> src)
         {
             var cell = Cells.alloc(w128);
-            var count = (byte)min(src.Length, 15);
+            var size = (byte)min(src.Length, 15);
             var dst = bytes(cell);
-            for(var i=0; i<count; i++)
-                seek(dst,i) = skip(src,i);
-            BitNumbers.cell8(cell, 15) = count;
-            return new AsmHexCode(cell);
+            for(var i=0; i<size; i++)
+                seek(dst,i) = skip(src,i);            
+            var code = new AsmHexCode(cell);
+            code.Size = size;
+            return code;
         }
 
         [MethodImpl(Inline), Op]
@@ -38,6 +39,5 @@ namespace Z0.Asm
             parse(src.Trim(), out dst);
             return dst;
         }
-
     }
 }

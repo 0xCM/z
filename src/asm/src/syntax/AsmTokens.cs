@@ -10,17 +10,14 @@ namespace Z0
 
     public class AsmTokens
     {        
-
         public static IEnumerable<SymbolGroup> groups()
         {
             yield return new SymbolGroup(typeof(AsmOcTokens), typeof(AsmOcTokenKind));
             yield return new SymbolGroup(typeof(AsmRegTokens), typeof(AsmRegTokenKind));
             yield return new SymbolGroup(typeof(AsmSigTokens), typeof(AsmSigTokenKind));
+            yield return new SymbolGroup(typeof(ConditionCodes), typeof(ConditionTokenKind));
         }
 
-        [MethodImpl(Inline), Op]
-        public static ref readonly AsmTokens tokens()
-            => ref Instance;
 
         [MethodImpl(Inline), Op]
         public static AsmSigToken sig(in AsmTokenRecord src)
@@ -36,10 +33,6 @@ namespace Z0
         public static bool parse(string expr, out AsmOcToken dst)
             => Instance.OpCodeToken(expr, out dst);
 
-        public static ref readonly ReadOnlySeq<AsmTokenRecord> SigTokenDefs => ref Instance._SigTokenDefs;
-
-        public static ref readonly ReadOnlySeq<AsmTokenRecord> OcTokenDefs => ref Instance._OcTokenDefs;
-
 
         ReadOnlySeq<AsmTokenRecord> _SigTokenDefs;
 
@@ -51,11 +44,6 @@ namespace Z0
 
         Index<AsmTokenRecord> Data;
 
-        public static ref readonly Index<AsmTokenRecord> TokenDefs
-        {
-            [MethodImpl(Inline)]
-            get => ref Instance.Data;
-        }
 
         public bool SigToken(string expr, out AsmSigToken dst)
         {

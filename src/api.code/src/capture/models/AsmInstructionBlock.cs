@@ -33,6 +33,12 @@ namespace Z0
 
         public OpUri Uri => Code.OpUri;
 
+        public ref readonly IceInstruction First
+        {
+            [MethodImpl(Inline)]
+            get => ref _Instructions.First;
+        }        
+
         public ReadOnlySpan<IceInstruction> Instructions
         {
             [MethodImpl(Inline)]
@@ -48,13 +54,13 @@ namespace Z0
             get => Code.BaseAddress;
         }
 
-        public ref readonly IceInstruction this[long index]
+        public ref readonly IceInstruction this[int index]
         {
             [MethodImpl(Inline)]
             get => ref _Instructions[index];
         }
 
-        public ref readonly IceInstruction this[ulong index]
+        public ref readonly IceInstruction this[uint index]
         {
             [MethodImpl(Inline)]
             get => ref _Instructions[index];

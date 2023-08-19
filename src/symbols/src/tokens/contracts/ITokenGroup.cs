@@ -21,7 +21,6 @@ namespace Z0
 
         ConstLookup<Type,K> TypeKinds {get;}
 
-
         K Kind(Type src)
             => TypeKinds[src];
 

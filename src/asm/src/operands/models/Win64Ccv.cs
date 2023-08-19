@@ -10,7 +10,7 @@ namespace Z0.Asm
     [ApiHost("ccv.win64")]
     public readonly struct Win64Ccv : ICallCv<Win64Ccv>
     {
-        public CcvKind Kind => CcvKind.WinX64;
+        public CcvKind Kind => CcvKind.Win64;
 
         [MethodImpl(Inline)]
         public static implicit operator Win64Ccv(CcvKind src)
@@ -22,19 +22,19 @@ namespace Z0.Asm
 
         [MethodImpl(Inline), Op]
         public static ReadOnlySpan<Gp8LoReg> regs(W8 w)
-            => recover<Gp8LoReg>(slice(WinX64Data,0,Win64MaxReg + 1));
+            => recover<Gp8LoReg>(slice(Data,0,Win64MaxReg + 1));
 
         [MethodImpl(Inline), Op]
         public static ReadOnlySpan<Gp16Reg> regs(W16 w)
-            => recover<Gp16Reg>(slice(WinX64Data,0,Win64MaxReg + 1));
+            => recover<Gp16Reg>(slice(Data,0,Win64MaxReg + 1));
 
         [MethodImpl(Inline), Op]
         public static ReadOnlySpan<Gp32Reg> regs(W32 w)
-            => recover<Gp32Reg>(slice(WinX64Data,0,Win64MaxReg + 1));
+            => recover<Gp32Reg>(slice(Data,0,Win64MaxReg + 1));
 
         [MethodImpl(Inline), Op]
         public static ReadOnlySpan<Gp64Reg> regs(W64 w)
-            => recover<Gp64Reg>(slice(WinX64Data,0,Win64MaxReg + 1));
+            => recover<Gp64Reg>(slice(Data,0,Win64MaxReg + 1));
 
         [MethodImpl(Inline), Op]
         public static ref readonly Gp8LoReg reg(W8 w, byte index)
@@ -93,7 +93,7 @@ namespace Z0.Asm
         const byte Win64MaxReg = 3;
 
         // rax=0, rcx=1, rdx=2, rbx=3, rsp=4, rbp=5, rsi=6, rdi=7, r8=8, r9=9, r10=10, r11, r12, r13, r14, r15
-        static ReadOnlySpan<byte> WinX64Data
+        static ReadOnlySpan<byte> Data
             => new byte[CcvSize]{
                 1,2,8,9,0,0,0,0,
                 0,0,0,0,0,0,0,0,

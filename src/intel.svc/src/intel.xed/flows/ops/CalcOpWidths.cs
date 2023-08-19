@@ -12,7 +12,7 @@ partial class XedFlows
 {
     public XedWidths CalcWidths(FilePath src)
     {
-        var buffer = dict<WidthCode,OpWidthRecord>();
+        var buffer = dict<WidthCode,OpWidthDetail>();
         var symbols = Symbols.index<WidthCode>();
         using var reader = src.Utf8LineReader();
         var result = Outcome.Success;
@@ -37,7 +37,7 @@ partial class XedFlows
             ref readonly var xtype = ref skip(cells,1);
             ref readonly var wdefault = ref skip(cells,2);
 
-            var dst = OpWidthRecord.Empty;
+            var dst = OpWidthDetail.Empty;
             result = XedParsers.parse(code, out dst.Code);
 
             if(result.Fail)

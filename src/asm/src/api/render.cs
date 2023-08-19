@@ -9,10 +9,6 @@ namespace Z0.Asm
     partial struct asm
     {
         [Op]
-        public static byte render(AsmHexCode src, Span<char> dst)
-            => (byte)HexRender.render(LowerCase, src.Bytes, dst);
-
-        [Op]
         public static uint render(AsmHexCode src, ref uint i, Span<char> dst)
         {
             var i0 = i;

@@ -176,15 +176,15 @@ public class AsmBytes
     }
         
     [MethodImpl(Inline), Op]
-    public static ModRm2 modrm(byte mod, byte reg, byte rm)
+    public static ModRm modrm(byte mod, byte reg, byte rm)
         => new (join((rm, 0), (reg, 3), (mod, 6)));
 
     [MethodImpl(Inline), Op]
-    public static ModRm2 modrm(RegIndex reg, RegIndex rm)
+    public static ModRm modrm(RegIndex reg, RegIndex rm)
         => modrm(0b11, (byte)reg, (byte)rm);
 
     [MethodImpl(Inline), Op]
-    public static ModRm2 modrm(byte mod, RegIndex reg, RegIndex rm)
+    public static ModRm modrm(byte mod, RegIndex reg, RegIndex rm)
         => modrm(mod, (byte)reg, (byte)rm);
 
     [MethodImpl(Inline), Op]

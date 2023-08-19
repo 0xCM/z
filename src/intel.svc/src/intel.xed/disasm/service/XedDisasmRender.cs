@@ -9,9 +9,18 @@ using static XedRules;
 
 class XedDisasmRender
 {
-    public const string OpDetailPattern = "{0,-4} | {1,-8} | {2,-24} | {3,-10} | {4,-12} | {5,-12} | {6,-12} | {7,-12}";
+    public const string OpDetailPattern = " {0,-12} | {1,-12} | {2,-24} | {3,-16} | {4,-16} | {5,-16} | {6,-16} | {7,-48}";
 
-    public static string[] OpColPatterns = new string[]{"Op{0}", "Op{0}Name", "Op{0}Val", "Op{0}Action", "Op{0}Vis", "Op{0}Width", "Op{0}WKind", "Op{0}Selector"};
+    public static string[] OpColPatterns = new string[]{
+        "Op[{0}].Id", 
+        "Op[{0}].Name", 
+        "Op[{0}].Val", 
+        "Op[{0}].Action", 
+        "Op[{0}].Vis",
+        "Op[{0}].Width", 
+        "Op[{0}].WKind", 
+        "Op[{0}].Specifier"
+        };
 
     public static void render(Index<XedDisasmDetailBlock> src, ITextEmitter dst, bool header = true)
     {

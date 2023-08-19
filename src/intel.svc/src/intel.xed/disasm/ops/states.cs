@@ -6,7 +6,7 @@ namespace Z0;
 
 using static sys;
 using static XedRules;
-using static XedRules.OperandStates;
+using static XedOps;
 
 partial class XedDisasm
 {

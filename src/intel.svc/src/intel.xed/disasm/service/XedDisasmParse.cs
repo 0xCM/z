@@ -113,7 +113,7 @@ partial class XedDisasmParse
     internal static Outcome parse(string src, out AsmInfo dst)
     {
         var result = Outcome.Success;
-        dst = default;
+        dst = AsmInfo.Empty;
         if(!text.contains(src,XDIS))
             return (false, $"'{XDIS}' marker not found");
 
@@ -123,13 +123,19 @@ partial class XedDisasmParse
         var parts = right.Split(Chars.Space);
         Demand.gt(parts.Length,3);
         result = XedParsers.parse(skip(parts,0), out dst.Category);
-        if(!result)
-            result = (false,AppMsg.ParseFailure.Format(nameof(dst.Category), skip(parts,0)));
+        if(result.Fail)
+        {
+            result = (false, AppMsg.ParseFailure.Format(nameof(dst.Category), skip(parts,0)));
+            return result;
+        }
 
         if(result)
             result = XedParsers.parse(skip(parts,1), out dst.Extension);
-        if(!result)
-            result = (false,AppMsg.ParseFailure.Format(nameof(dst.Extension), skip(parts,1)));
+        if(result.Fail)
+        {
+            result = (false, AppMsg.ParseFailure.Format(nameof(dst.Extension), skip(parts,1)));
+            return result;
+        }
 
         ref readonly var enc = ref skip(parts,2);
         var j = text.index(right, enc);
@@ -138,13 +144,19 @@ partial class XedDisasmParse
 
         if(result)
             result = parse(src, out dst.IP);
-        if(!result)
+        if(result.Fail)
+        {
             result = (false,AppMsg.ParseFailure.Format(nameof(dst.IP), src));
+            return result;
+        }
 
         if(result)
             result = parse(src, out dst.Encoded);
-        if(!result)
+        if(result.Fail)
+        {
             result = (false,AppMsg.ParseFailure.Format(nameof(dst.Encoded), src));
+            return result;
+        }
 
         return result;
     }

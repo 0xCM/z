@@ -116,6 +116,7 @@ namespace Z0.Asm
             return dst;
         }
 
+
         public AsmRoutine Decode(ApiEncoded src)
         {
             ApiIdentity.parse(src.Token.Uri.Format(), out var uri).Require();
@@ -197,31 +198,6 @@ namespace Z0.Asm
             }
             return buffer;
         }
-
-        // public Outcome DecodeRoutine(in MemberEncoding src, out AsmRoutine dst)
-        // {
-        //     var result = ApiIdentity.parse(src.Uri.Format(), out var uri);
-        //     dst = AsmRoutine.Empty;
-        //     if(result.Fail)
-        //         return result;
-
-        //     var cb = new ApiCodeBlock(src.TargetAddress, uri, src.Data.ToArray());
-        //     result = Decode(cb, out var instructions);
-        //     if(result.Fail)
-        //         return result;
-
-        //     dst = routine(uri, src.Sig.Format(), new ApiBlockAsm(cb, instructions, ExtractTermCode.None));
-        //     return result;
-        // }
-
-        // public Outcome DecodeAsm(in MemberEncoding src, out string dst)
-        // {
-        //     dst = EmptyString;
-        //     var result = DecodeRoutine(src, out var routine);
-        //     if(result)
-        //         dst = AsmFormatter.format(routine, AsmFormatter.header(src), AsmFormat);
-        //     return result;
-        // }
 
         public Outcome DecodeRoutine(in MemberCodeBlock src, out AsmRoutine dst)
         {

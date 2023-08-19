@@ -78,17 +78,6 @@ namespace Z0
             get => Target.Name;
         }
 
-        // public ApiHostUri Host
-        // {
-        //     get
-        //     {
-        //         if(ApiIdentity.parse(Uri.Format(), out var uri))
-        //             return uri.Host;
-        //         else
-        //             return ApiHostUri.Empty;
-        //     }
-        // }
-
         public bool IsStubbed
         {
             [MethodImpl(Inline)]

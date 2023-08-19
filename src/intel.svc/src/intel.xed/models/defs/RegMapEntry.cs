@@ -2,29 +2,28 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class XedModels
 {
-    partial class XedModels
+    [StructLayout(StructLayout, Pack=1), Record(TableId)]
+    public struct RegMapEntry
     {
-        [StructLayout(StructLayout, Pack=1), Record(TableId)]
-        public struct RegMapEntry
-        {
-            public const string TableId = "xed.regs.map";
+        public const string TableId = "xed.regs.map";
 
-            [Render(8)]
-            public ushort XedRegId;
+        [Render(8)]
+        public ushort XedRegId;
 
-            [Render(8)]
-            public Asm.RegClass RegClass;
+        [Render(8)]
+        public Asm.RegClass RegClass;
 
-            [Render(8)]
-            public NativeSize RegSize;
+        [Render(8)]
+        public NativeSize RegSize;
 
-            [Render(8)]
-            public asci8 RegName;
+        [Render(8)]
+        public asci8 RegName;
 
-            [Render(8)]
-            public byte RegIndex;
-        }
+        [Render(8)]
+        public byte RegIndex;
     }
 }

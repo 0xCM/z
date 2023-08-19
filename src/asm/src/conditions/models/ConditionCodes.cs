@@ -6,9 +6,19 @@ namespace Z0.Asm;
 
 using static BitSeq;
 
-using TK = ConditionCodes.TokenKind;
+using TK = ConditionTokenKind;
 using G = ConditionCodes;
 
+public enum ConditionTokenKind : byte
+{
+    None = 0,
+
+    Condition,
+
+    Alt,
+}
+
+[LiteralProvider(Group)]
 public class ConditionCodes : TokenGroup<G,TK>
 {
     public const string Group = "asm.cc";
@@ -16,14 +26,6 @@ public class ConditionCodes : TokenGroup<G,TK>
     public override string GroupName
         => Group;
 
-    public enum TokenKind : byte
-    {
-        None = 0,
-
-        Condition,
-
-        Alt,
-    }
 
     [LiteralProvider(Group)]
     public readonly struct ConditionFacets

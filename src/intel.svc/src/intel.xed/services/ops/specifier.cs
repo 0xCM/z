@@ -12,21 +12,18 @@ partial class XedOps
 {
     public static string specifier(in OpSpec src)
     {
-        const string OpSepSlot = "/{0}";
-        const sbyte Pad = -XedFields.FieldRender.ColWidth;
-
+        const string Pattern = "/{0}";
         var dst = text.buffer();
-        dst.AppendFormat(RP.slot(0, Pad), src.Index);
-        dst.Append(" | ");
-        dst.AppendFormat("{0,-4}", format(src.Name));
-        dst.AppendFormat(OpSepSlot, format(src.Action));
-        dst.AppendFormat(OpSepSlot, format(src.WidthCode));
-        dst.AppendFormat(OpSepSlot, format(src.Visibility));
-        dst.AppendFormat(OpSepSlot, format(src.OpType));
+        dst.AppendFormat("{0}", src.Index);
+        dst.AppendFormat(Pattern, format(src.Name));
+        dst.AppendFormat(Pattern, format(src.Action));
+        dst.AppendFormat(Pattern, format(src.WidthCode));
+        dst.AppendFormat(Pattern, format(src.Visibility));
+        dst.AppendFormat(Pattern, format(src.OpType));
         if(src.Rule.IsNonEmpty)
-            dst.AppendFormat(OpSepSlot, src.Rule.Name.ToString().ToUpper());
+            dst.AppendFormat(Pattern, src.Rule.Name.ToString().ToUpper());
         else if(src.ElementType.IsNumber)
-            dst.AppendFormat(OpSepSlot, src.ElementType);
+            dst.AppendFormat(Pattern, src.ElementType);
 
         return dst.Emit();
     }

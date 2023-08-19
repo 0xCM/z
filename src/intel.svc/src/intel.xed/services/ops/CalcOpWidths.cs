@@ -10,9 +10,9 @@ using static XedModels;
 
 partial class Xed
 {
-    public static Index<OpWidthRecord> CalcOpWidths()
+    public static Index<OpWidthDetail> CalcOpWidths()
     {
-        var buffer = dict<WidthCode,OpWidthRecord>();
+        var buffer = dict<WidthCode,OpWidthDetail>();
         var symbols = Symbols.index<WidthCode>();
         var src = XedDb.DocSource(XedDocKind.Widths);
         using var reader = src.Utf8LineReader();
@@ -38,7 +38,7 @@ partial class Xed
             ref readonly var xtype = ref skip(cells,1);
             ref readonly var wdefault = ref skip(cells,2);
 
-            var dst = OpWidthRecord.Empty;
+            var dst = OpWidthDetail.Empty;
             result = XedParsers.parse(code, out dst.Code);
 
             if(result.Fail)

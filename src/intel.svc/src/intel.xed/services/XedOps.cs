@@ -13,9 +13,9 @@ public partial class XedOps : AppService<XedOps>
 {
     static readonly Index<XedRegId> Regs;
 
-    static readonly ReadOnlySeq<OpWidthRecord> _Widths;
+    static readonly ReadOnlySeq<OpWidthDetail> _Widths;
 
-    static readonly ConstLookup<WidthCode,OpWidthRecord> _WidthLookup;
+    static readonly ConstLookup<WidthCode,OpWidthDetail> _WidthLookup;
 
     static readonly Index<PointerWidth> _PointerWidths;
 

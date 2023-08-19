@@ -10,6 +10,16 @@ using static sys;
 
 public class AsmRender
 {
+    public static string format(in RegMask src)
+    {
+        var dst = EmptyString;
+        if(src.MaskKind == RegMaskKind.k1)
+            dst = string.Format("{0} {{1}}", src.Target, AsmRegs.rK(src.Mask));
+        else if(src.MaskKind == RegMaskKind.k1z)
+            dst = string.Format("{0} {{{1}}{{2}}", src.Target, AsmRegs.rK(src.Mask), Chars.z);
+        return dst;
+    }
+
     [Op]
     public static string format(in AsmOperand src)
     {

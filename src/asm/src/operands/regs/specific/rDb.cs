@@ -13,17 +13,17 @@ namespace Z0.Asm.Operands
     using api = AsmRegs;
     public readonly struct rDb : IRegOp64<rDb>
     {
-        public RegIndexCode Index {get;}
+        public I Index {get;}
 
         [MethodImpl(Inline)]
-        public rDb(RegIndexCode index)
+        public rDb(I index)
         {
             Index = index;
         }
 
         [MethodImpl(Inline)]
-        public AsmOperand Untyped()
-            => new AsmOperand(this);
+        public O Untyped()
+            => new (this);
 
         public string Format()
             => ((K)Index).ToString();

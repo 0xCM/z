@@ -8,7 +8,7 @@ namespace Z0.Asm
 
     public readonly struct AsmFormatter
     {
-        public static void render(ReadOnlySpan<byte> block, ReadOnlySpan<IceInstruction> instructions, ITextBuffer dst)
+        public static void render(ReadOnlySpan<byte> block, ReadOnlySpan<IceInstruction> instructions, ITextEmitter dst)
         {
             Address16 offset = z16;
             var count = instructions.Length;

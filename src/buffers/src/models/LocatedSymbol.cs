@@ -9,7 +9,7 @@ namespace Z0
     {
         [MethodImpl(Inline)]
         public static LocatedSymbol anonymous(MemoryAddress location)
-            => new LocatedSymbol(new SymAddress(0,location), Label.Empty);
+            => new (new SymAddress(0,location), Label.Empty);
 
         public readonly SymAddress Location;
 

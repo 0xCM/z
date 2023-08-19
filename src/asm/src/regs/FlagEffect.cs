@@ -1,45 +1,41 @@
 //-----------------------------------------------------------------------------
-// Derivative Work based on https://github.com/intelxed/xed
-// Author : Chris Moore
-// License: https://github.com/intelxed/xed/blob/main/LICENSE
+// Copyright   :  (c) Chris Moore, 2020
+// License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0.Asm;
+
+public readonly record struct FlagEffect : IComparable<FlagEffect>
 {
-    using Asm;
+    public readonly RFlagBits Flag;
 
-    public readonly struct FlagEffect : IComparable<FlagEffect>
+    public readonly FlagEffectKind Kind;
+
+    [MethodImpl(Inline)]
+    public FlagEffect(RFlagBits f, FlagEffectKind k)
     {
-        public readonly RFlagBits Flag;
+        Flag = f;
+        Kind = k;
+    }
 
-        public readonly FlagEffectKind Kind;
-
+    public bool IsEmpty
+    {
         [MethodImpl(Inline)]
-        public FlagEffect(RFlagBits f, FlagEffectKind k)
-        {
-            Flag = f;
-            Kind = k;
-        }
+        get => Flag == 0;
+    }
 
-        public bool IsEmpty
-        {
-            [MethodImpl(Inline)]
-            get => Flag == 0;
-        }
-
-        public bool IsNonEmpty
-        {
-            [MethodImpl(Inline)]
-            get => Flag != 0;
-        }
-
+    public bool IsNonEmpty
+    {
         [MethodImpl(Inline)]
-        public int CompareTo(FlagEffect src)
-        {
-            var result = ((ulong)Flag).CompareTo(src.Flag);
-            if(result == 0)
-                result = ((byte)Kind).CompareTo(src.Kind);
+        get => Flag != 0;
+    }
 
-            return result;
-        }
+    [MethodImpl(Inline)]
+    public int CompareTo(FlagEffect src)
+    {
+        var result = ((ulong)Flag).CompareTo(src.Flag);
+        if(result == 0)
+            result = ((byte)Kind).CompareTo(src.Kind);
+
+        return result;
     }
 }

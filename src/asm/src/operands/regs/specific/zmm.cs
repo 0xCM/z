@@ -13,7 +13,7 @@ namespace Z0.Asm.Operands
     using C = RegClassCode;
     using api = AsmRegs;
 
-    public readonly struct zmm : IRegOp256<zmm>
+    public readonly struct zmm : IRegOp256<G>
     {
         public I Index {get;}
 

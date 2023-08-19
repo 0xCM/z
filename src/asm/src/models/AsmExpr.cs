@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     public readonly struct AsmExpr : IEquatable<AsmExpr>, IComparable<AsmExpr>
     {
         [Parser]

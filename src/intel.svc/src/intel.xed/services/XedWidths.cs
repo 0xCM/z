@@ -10,7 +10,7 @@ namespace Z0
 
     public class XedWidths
     {
-        internal XedWidths(ReadOnlySeq<OpWidthRecord> widths)
+        internal XedWidths(ReadOnlySeq<OpWidthDetail> widths)
         {
             _Widths = widths;
             _WidthLookup = _Widths.Select(x => (x.Code,x)).ToDictionary();
@@ -18,15 +18,15 @@ namespace Z0
             _PointerWidthInfo = mapi(_PointerWidths.Where(x => x.Kind != 0), (i,w) => w.ToRecord((byte)i));
         }
 
-        ReadOnlySeq<OpWidthRecord> _Widths;
+        ReadOnlySeq<OpWidthDetail> _Widths;
 
-        ConstLookup<WidthCode,OpWidthRecord> _WidthLookup;
+        ConstLookup<WidthCode,OpWidthDetail> _WidthLookup;
 
         ReadOnlySeq<PointerWidth> _PointerWidths;
 
         ReadOnlySeq<PointerWidthInfo> _PointerWidthInfo;
 
-        public ref readonly ReadOnlySeq<OpWidthRecord> OpWidths => ref _Widths;
+        public ref readonly ReadOnlySeq<OpWidthDetail> OpWidths => ref _Widths;
 
         public ref readonly ReadOnlySeq<PointerWidth> PointerWidths => ref _PointerWidths;
 

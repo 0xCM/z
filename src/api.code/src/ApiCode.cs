@@ -5,44 +5,71 @@
 namespace Z0
 {
     using static sys;
+    using System.Linq;
 
     [ApiHost("api")]
-    public partial class ApiCode
+    public class ApiCode
     {
-        [Op]
-        public static unsafe Index<ApiMemberExtract> extract(ReadOnlySpan<ApiMember> src, Span<byte> buffer)
+        const byte MaxZeroCount = 8;
+
+        public static IApiCatalog catalog(CmdArgs args)
         {
-            var count = src.Length;
-            var dst = alloc<ApiMemberExtract>(count);
-            ref var target = ref first(dst);
-            for(var i=0u; i<count; i++)
-                seek(target, i) = extract(skip(src, i), sys.clear(buffer));
-            return dst;
+            var assemblies = list<Assembly>();
+            var parts = hashset<PartName>();
+            var catalog = default(IApiCatalog);
+            if(args.Count != 0)
+            {
+                iter(args, arg => {
+                    if(PartNames.parse(arg.Value, out var name))
+                        parts.Add(name);
+                });
+
+                catalog = ApiCatalog.catalog(ApiAssemblies.Components.Where(c => parts.Contains(c.PartName())));
+            }
+            else
+            {
+                foreach(var a in ApiCatalog.components())
+                {
+                    if(ApiCatalog.part(a, out IPart part))
+                    {
+                        parts.Add(part.Name);
+                        assemblies.Add(a);
+                    }
+                }
+                catalog = ApiCatalog.catalog(assemblies.ToArray());
+            }
+            return catalog;
         }
 
         [Op]
-        public static unsafe ApiMemberExtract extract(ApiMember src, Span<byte> buffer)
-        {
-            var @base = src.BaseAddress;
-            var size = Bytes.readz(MaxZeroCount, @base, buffer);
-            var extracted = sys.array(slice(buffer,0,size));
-            return new ApiMemberExtract(src, new ApiExtractBlock(@base, src.OpUri.Format(), extracted));
-        }
+        public static void gather(IWfChannel channel, IApiPartCatalog src, ICompositeDispenser dispenser, ConcurrentBag<CollectedHost> dst, bool pll)
+            => iter(jit(channel, src), member => dst.Add(gather(channel, member, dispenser)), pll);
 
-        // [Op]
-        // public static unsafe ApiMemberExtract extract(in ResolvedMethod src, Span<byte> buffer)
-        // {
-        //     var size = Bytes.readz(MaxZeroCount, src.EntryPoint, buffer);
-        //     var block = new ApiExtractBlock(src.EntryPoint, src.Uri.Format(), slice(buffer,0, size).ToArray());
-        //     return new ApiMemberExtract(member(src), block);
-        // }
+        [Op]
+        public static ReadOnlySeq<ApiEncoded> gather(IWfChannel channel, ReadOnlySpan<MethodEntryPoint> src, ICompositeDispenser dispenser)
+            => extract(channel, raw(channel, dispenser, src)).Values.Array().Sort();
+
+        [Op]
+        public static IEnumerable<ApiHostMembers> jit(IWfChannel channel, IApiPartCatalog src)
+        {
+            var members = bag<ApiHostMembers>();
+            iter(src.ApiHosts, host => ClrJit.jit(host, members, channel));
+            iter(src.ApiTypes, type => ClrJit.jit(type, members, channel));      
+            return members;          
+        }     
+
+        public static ParallelQuery<MethodEntryPoint> entries(IWfChannel channel, IApiCatalog catalog)
+            => from part in catalog.PartCatalogs.AsParallel()
+                from host in jit(channel, part)
+                from member in host.Members
+                select entry(member);
 
         [Op]
         public static MethodEntryPoint entries(MethodInfo src)
             => new (ClrJit.jit(src), src.Uri(), src.DisplaySig().Format());
 
         [Op]
-        public static MethodEntryPoint entries(ApiMember src)
+        public static MethodEntryPoint entry(ApiMember src)
             => new (src.BaseAddress, src.Method.Uri(), src.Method.DisplaySig().Format());
 
         [Op]
@@ -50,10 +77,8 @@ namespace Z0
         {
             var count = src.Length;
             var buffer = alloc<MethodEntryPoint>(count);
-            ref var dst = ref first(buffer);
-            var view = src.View;
             for(var i=0; i<count; i++)
-                seek(dst,i) = entries(skip(view,i));
+                seek(buffer,i) = entry(src[i]);
             return buffer;
         }
 
@@ -69,18 +94,14 @@ namespace Z0
                 symbols.Symbol(entry.Location, text.ifempty(entry.Uri.Format(), EmptyString)),
                 symbols.Symbol(entry.Location, entry.Sig.Format())
                 );
-        [Op]
-        public static ApiMember member(in ResolvedMethod src)
-            => new (src.Uri, src.Method, src.EntryPoint, ClrDynamic.msil(src.EntryPoint, src.Uri, src.Method));
-
 
         [Op]
         public static ReadOnlySeq<ApiEncoded> collect(IWfChannel channel, Assembly src, ICompositeDispenser symbols)
             => gather(channel, entries(ClrJit.jit(ApiCatalog.catalog(src), channel)), symbols);
 
-        [Op]
-        public static ReadOnlySeq<ApiEncoded> collect(IWfChannel channel, IPart src, ICompositeDispenser symbols)
-            => collect(channel, src.Owner, symbols);
+        // [Op]
+        // public static ReadOnlySeq<ApiEncoded> collect(IWfChannel channel, IPart src, ICompositeDispenser symbols)
+        //     => collect(channel, src.Owner, symbols);
 
         [Op]
         public static ApiHostRes hostres(ApiHostBlocks src)
@@ -97,38 +118,117 @@ namespace Z0
             return new ApiHostRes(src.Host, buffer);
         }        
 
-        static bool PllExec
-        {
-            [MethodImpl(Inline)]
-            get => AppData.get().PllExec();
-        }
-
         [MethodImpl(Inline), Op]
         public static ApiCodeParser parser(byte[] buffer)
-            => new (EncodingPatterns.Default, buffer);        
+            => new (EncodingPatterns.Default, buffer);
 
-        // [Op]
-        // public static ReadOnlySeq<ApiHostBlocks> apiblocks(FolderPath src, ReadOnlySpan<ApiHostUri> hosts)
-        // {
-        //     var dst = bag<ApiHostBlocks>();
-        //     iter(hosts, host => dst.Add(apiblocks(host, src + FS.hostfile(host,FileKind.Csv))), AppData.get().PllExec());
-        //     return dst.ToIndex();
-        // }
+        const byte ZeroLimit = 10;
 
-        // [Op]
-        // public static ApiHostBlocks apiblocks(ApiHostUri host, FilePath src)
-        //     => new (host, apiblocks(src));
+        static ConcurrentDictionary<ApiToken,ApiEncoded> parse(Dictionary<ApiHostUri,CollectedCodeExtracts> src, IWfChannel log)
+        {
+            var flow = log.Running(Msg.ParsingHosts.Format(src.Count));
+            var buffer = sys.alloc<byte>(Pow2.T14);
+            var parser = ApiCode.parser(buffer);
+            var dst = new ConcurrentDictionary<ApiToken,ApiEncoded>();
+            var counter = 0u;
+            foreach(var host in src.Keys)
+            {
+                var running = log.Running(Msg.ParsingHostMembers.Format(host));
+                var extracts = src[host];
+                foreach(var extract in extracts)
+                {
+                    parser.Parse(extract.TargetExtract);
+                    if(!dst.TryAdd(extract.Token,new ApiEncoded(extract.Token, parser.Parsed)))
+                        log.Warn($"Duplicate:{extract.Token}");
+                    else
+                        counter++;
+                }
+                log.Ran(running, Msg.ParsedHostMembers.Format(extracts.Count, host));
+            }
 
+            log.Ran(flow, Msg.ParsedHosts.Format(counter, src.Keys.Count));
+            return dst;
+        }
 
-        // [Op]
-        // public static Index<ApiCodeBlock> apiblocks(FilePath src)
-        // {
-        //     var rows = apirows(src);
-        //     var count = rows.Count;
-        //     var dst = sys.alloc<ApiCodeBlock>(count);
-        //     for(var j=0; j<count; j++)
-        //         seek(dst,j) = apiblock(rows[j]);
-        //     return dst;
-        // }            
+        [Op]
+        static CollectedHost gather(IWfChannel channel, ApiHostMembers src, ICompositeDispenser dst)
+            => new (src, gather(channel, entries(src.Members), dst));
+
+        static ConcurrentDictionary<ApiToken,ApiEncoded> extract(IWfChannel channel, ReadOnlySpan<RawMemberCode> src)
+        {
+            var count = src.Length;
+            var buffer = span<byte>(Pow2.T16);
+            var host = ApiHostUri.Empty;
+            var dst = dict<ApiHostUri,CollectedCodeExtracts>();
+            var max = ByteSize.Zero;
+            for(var i=0; i<count; i++)
+            {
+                buffer.Clear();
+                var extracted = CollectedCodeExtract.Empty;
+                var extracts = CollectedCodeExtracts.Empty;
+                ref readonly var raw = ref skip(src,i);
+                var result = extract(raw, buffer, out extracted);
+                if(result.Fail)
+                {
+                    Errors.Throw($"StubCodeMismatch:{result.Message}");
+                }
+                else
+                {
+                    ref readonly var uri = ref raw.Uri;
+                    if(uri.Host != host)
+                        host = uri.Host;
+
+                    if(dst.TryGetValue(host, out extracts))
+                        extracts.Include(extracted);
+                    else
+                        dst[host] = new CollectedCodeExtracts(extracted);
+                }
+            }
+
+            return parse(dst, channel);
+        }
+
+        [Op]
+        static unsafe Outcome extract(in RawMemberCode raw, Span<byte> buffer, out CollectedCodeExtract dst)
+        {
+            var pStart = (raw.Entry - 8u).Pointer<byte>();
+            Bytes.read16(pStart, ref first(buffer), 0);
+            var code = slice(buffer,0,16);
+            dst = new CollectedCodeExtract(raw, code.ToArray());
+            return true;
+        }
+
+        [Op]
+        static Index<RawMemberCode> raw(IWfChannel channel, ICompositeDispenser dispenser, ReadOnlySpan<MethodEntryPoint> src)
+        {
+            var code = sys.alloc<RawMemberCode>(src.Length);
+            for(var i=0; i<src.Length; i++)
+            {
+                ref readonly var entry = ref skip(src,i);
+                var buffer = sys.bytes(Cells.alloc(w64));
+                ByteReader.read5(entry.Location.Ref<byte>(), buffer);
+                seek(code, i) = raw(channel, entry, dispenser);
+            }
+            return code;
+        }
+
+        [Op]
+        static RawMemberCode raw(IWfChannel channel, MethodEntryPoint src, ICompositeDispenser dispenser)
+        {
+            var dst = new RawMemberCode();
+            dst.Entry = src.Location;
+            dst.Uri = src.Uri;
+            var target = AsmBytes.stub(src.Location, out dst.StubCode);
+            dst.Target = target;
+            if(target != src.Location)
+            {
+                dst.Disp = AsmRel.disp32(dst.StubCode.Bytes);
+                dst.Stub = AsmRel.stub32(src.Location, target);
+                dst.Token = token(dispenser, src, target);
+            }
+            else
+                dst.Token = token(dispenser, src);
+            return dst;
+        }        
     }
 }

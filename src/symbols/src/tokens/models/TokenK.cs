@@ -16,15 +16,23 @@ namespace Z0
 
         public string Expr;
 
-        public string Description;
+        public string Info;
 
+        string IToken.Group
+            => typeof(K).Name;
+
+        uint IToken.Index
+            => Index;
         K IToken<K>.Kind 
             => Kind;
 
-        ReadOnlySpan<char> IToken.Name
+        string IToken.Name
             => Name;
 
-        ReadOnlySpan<char> IToken.Expr
+        string IToken.Expr
             => Name;     
+
+        string IToken.Info
+            => Info;
     }
 }

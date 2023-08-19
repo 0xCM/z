@@ -35,26 +35,34 @@ public partial class XedDisasm : WfSvc<XedDisasm>
         Channel.EmittedFile(emitting, doc.DetailBlocks.Count);
     }
 
-    void CollectIndividuals(IProject project, ParallelQuery<XedDisasmDoc> docs)
+    bool Collect(IProject project, XedDisasmDoc doc)
     {
-        piter(docs, doc => {
-            var path = doc.SourcePath;
-            var flow = Channel.Running($"Collecting disassembly content from {path.ToUri()}");
-            EmitDetails(project, doc);
-            EmitOps(project, doc);
-            EmitSummaries(project, doc);
-            EmitChecks(project,doc);
-            Channel.Ran(flow,$"Collected disassembly content from {path.ToUri()}");
-        });
+        var path = doc.SourcePath;
+        var flow = Channel.Running($"Collecting disassembly content from {path.ToUri()}");
+        EmitDetails(project, doc);
+        EmitOps(project, doc);
+        EmitSummaries(project, doc);
+        EmitChecks(project,doc);
+        Channel.Ran(flow,$"Collected disassembly content from {path.ToUri()}");
+        return true;
     }
+
+    static XedDisasmDoc LoadDocument(FilePath src)
+    {
+        var summary = XedDisasm.summary(datafile(src));
+        return new XedDisasmDoc(summary, detail(summary));
+    }
+
+    ParallelQuery<XedDisasmDoc> CollectDisasm(IProject src)
+        => from path in sources(src.Root)
+            let d = LoadDocument(path)
+            let success = Collect(src,d)
+            where success
+            select d;
 
     public void Collect(IProject project)
     {
-        var docs = XedDisasm.docs(project.Root);
-        exec(PllExec,
-            () => Consolidate(project, docs),
-            () => CollectIndividuals(project, docs)
-            );
+        Consolidate(project, CollectDisasm(project));
     }
 
     public void EmitSummaries(IProject project, XedDisasmDoc doc)
@@ -62,6 +70,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
 
     public void EmitOps(IProject project, XedDisasmDoc src)
     {
+        const string OperandFormat = "{0} | {1,-20} | {2}";
         var doc = src.Detail;
         var outpath = XedPaths.DisasmOpsPath(project, doc.DataFile.Source);
         var emitting = Channel.EmittingFile(outpath);
@@ -79,8 +88,15 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             ref readonly var ops = ref detail.Ops;
             dst.AppendLine("Operands");
             var specs = ops.Map(x => x.Spec);
-            for(var j=0; j<specs.Length; j++)
-                dst.AppendLine(XedOps.specifier(skip(specs,j)));
+            for(var j=0; j<ops.Count; j++)
+            {
+                ref readonly var op = ref ops[j];
+                dst.AppendLineFormat(OperandFormat, j, nameof(op.Spec), specifier(op.Spec));
+                dst.AppendLineFormat(OperandFormat, j, nameof(op.OpName), op.OpName);
+                dst.AppendLineFormat(OperandFormat, j, nameof(op.OpWidth), op.OpWidth);
+                dst.AppendLineFormat(OperandFormat, j, nameof(op.Def.Value), op.Def.Value);
+
+            }
             dst.WriteLine();
         }
 
@@ -121,7 +137,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             result = DataParser.parse(skip(cells, j++), out dst.Seq);
             result = DataParser.parse(skip(cells, j++), out dst.DocSeq);
             result = EncodingId.parse(skip(cells, j++), out dst.EncodingId);
-            result = AsmParsers.parse(skip(cells, j++), out dst.InstructionId);
+            result = InstructionId.parse(skip(cells, j++), out dst.InstructionId);
             result = DataParser.parse(skip(cells, j++), out dst.IP);
             result = AsmBytes.parse(skip(cells, j++), out dst.Encoded);
             result = DataParser.parse(skip(cells, j++), out dst.Size);
@@ -242,29 +258,24 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             ref readonly var summary = ref block.Row;
             ref readonly var lines = ref block.Block;
             ref readonly var asmhex = ref summary.Encoded;
-            ref readonly var asmtxt = ref summary.Asm;
             ref readonly var ip = ref summary.IP;
             var cells = update(lines, ref state);
-            var ocindex = XedOps.View.ocindex(state);
-            var ockind = AsmOpCodes.kind(ocindex);
-            var encoding  = XedCode.encoding(state, asmhex);
-            var ocbyte = View.ocbyte(state);
-            var ochex = XedRender.format(ocbyte);
-            var ocbits = BitRender.format8x4(ocbyte);
 
             dst.WriteLine(RP.PageBreak240);
             for(var i=0; i<lines.Lines.Count; i++)
                 dst.AppendLineFormat("# {0}", lines.Lines[i].Content);
-            //dst.AppendLine(lines.Format());
             dst.WriteLine(RP.PageBreak80);
 
             dst.AppendLineFormat(RenderPattern, nameof(detail.Instruction), detail.Instruction);
             dst.AppendLineFormat(RenderPattern, nameof(summary.InstructionId), summary.InstructionId);
             dst.AppendLineFormat(RenderPattern, nameof(detail.Form), detail.Form);
-            dst.AppendLineFormat("{0,-24} | {1,-5} {2}", asmhex, ip, asmtxt);
-            dst.AppendLineFormat(RenderPattern, "OcMap", ockind);
-            dst.AppendLine(encoding.Format());
-            dst.WriteLine(RP.PageBreak80);
+            dst.AppendLineFormat(RenderPattern, nameof(summary.IP), summary.IP);
+            dst.AppendLineFormat(RenderPattern, nameof(summary.Asm), summary.Asm);
+            dst.AppendLineFormat(RenderPattern, nameof(summary.Encoded), summary.Encoded);
+            dst.AppendLineFormat(RenderPattern, "OcMap", AsmOpCodes.kind(XedOps.ocindex(state)));
+
+            var encoding  = XedCode.encoding(state, asmhex);
+            dst.AppendLineFormat(RenderPattern, nameof(encoding.OpCode), encoding.OpCode);
 
             if(state.OSZ)
             {
@@ -288,10 +299,10 @@ public partial class XedDisasm : WfSvc<XedDisasm>
                 dst.AppendLineFormat(RenderPattern, nameof(state.NSEG_PREFIXES), state.NSEG_PREFIXES);
 
             if(state.HINT != 0)
-                dst.AppendLineFormat(RenderPattern, nameof(state.HINT), XedRender.format(View.hint(state)));
+                dst.AppendLineFormat(RenderPattern, nameof(state.HINT), XedRender.format(XedOps.hint(state)));
 
             if(state.REP != 0)
-                dst.AppendLineFormat(RenderPattern, nameof(state.REP), XedRender.format(View.rep(state)));
+                dst.AppendLineFormat(RenderPattern, nameof(state.REP), XedRender.format(XedOps.rep(state)));
 
             if(state.LOCK)
                 dst.AppendLineFormat(RenderPattern, nameof(state.LOCK), state.LOCK);
@@ -299,10 +310,11 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             if(state.BRDISP_WIDTH != 0)
                 dst.AppendLineFormat(RenderPattern, nameof(state.BRDISP_WIDTH), state.BRDISP_WIDTH);
 
-            dst.AppendLineFormat(RenderPattern, nameof(state.EASZ), XedRender.format(View.easz(state)));
-            dst.AppendLineFormat(RenderPattern, nameof(state.EOSZ), XedRender.format(View.eosz(state)));
-            dst.AppendLineFormat(RenderPattern, nameof(state.MODE), MachineModes.format(View.mode(state)));
-            dst.AppendLineFormat(RenderPattern, "OpCode", string.Format("{0} [{1}]", ochex, ocbits));
+            var ocbyte = XedOps.ocbyte(state);
+            dst.AppendLineFormat(RenderPattern, nameof(state.EASZ), XedRender.format(XedOps.easz(state)));
+            dst.AppendLineFormat(RenderPattern, nameof(state.EOSZ), XedRender.format(XedOps.eosz(state)));
+            dst.AppendLineFormat(RenderPattern, nameof(state.MODE), MachineModes.format(XedOps.mode(state)));
+            dst.AppendLineFormat(RenderPattern, "OpCode", string.Format("{0} [{1}]", XedRender.format(ocbyte), BitRender.format8x4(ocbyte)));
 
             if(state.SRM != 0)
             {
@@ -313,13 +325,13 @@ public partial class XedDisasm : WfSvc<XedDisasm>
 
             if(state.HAS_MODRM)
             {
-                var modrm = View.modrm(state);
+                var modrm = XedOps.modrm(state);
                 dst.AppendLineFormat(RenderPattern, "ModRm", string.Format("{0} [{1}]", modrm.Format(), modrm.Bitstring()));
             }
 
             if(state.HAS_SIB)
             {
-                var sib = View.sib(state);
+                var sib = XedOps.sib(state);
                 dst.AppendLineFormat(RenderPattern, "Sib", string.Format("{0} [{1}]",  sib.Format(), sib.Bitstring()));
             }
 
@@ -337,7 +349,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
 
             if(state.REX)
             {
-                var rex = View.rex(state);
+                var rex = XedOps.rex(state);
                 Require.invariant(state.NREXES != 0);
                 dst.AppendLineFormat(RenderPattern, "Rex", string.Format("{0} [{1}]", rex, rex.ToBitString()));
                 dst.AppendLineFormat(RenderPattern, "RexBits", string.Format("[0100 | W:{0} | R:{1} | X:{2} | B:{3}]", state.REXW, state.REXR, state.REXX, state.REXB));
@@ -377,7 +389,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
                 dst.AppendLineFormat(RenderPattern, nameof(state.ESRC), XedRender.format((Hex8)state.ESRC));
 
             if(state.ROUNDC != 0)
-                dst.AppendLineFormat(RenderPattern, nameof(state.ROUNDC), XedRender.format(View.rounding(state)));
+                dst.AppendLineFormat(RenderPattern, nameof(state.ROUNDC), XedRender.format(XedOps.rounding(state)));
 
             var rc = (RoundingKind)state.ROUNDC;
             if(rc == 0 && state.LLRC != 0)
@@ -408,10 +420,10 @@ public partial class XedDisasm : WfSvc<XedDisasm>
                 }
             }
 
-            var vc = XedOps.View.vexclass(state);
+            var vc = XedOps.vexclass(state);
             if(vc != 0)
             {
-                var vk = XedOps.View.vexkind(state);
+                var vk = XedOps.vexkind(state);
                 var vex5 = BitNumbers.join((uint3)state.VEXDEST210, state.VEXDEST4, state.VEXDEST3);
                 var vexBits = string.Format("[{0} {1} {2}]", state.VEXDEST4, state.VEXDEST3, (uint3)state.VEXDEST210);
                 var vexHex = XedRender.format((Hex8)(byte)vex5);
@@ -425,13 +437,13 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             }
 
             if(state.ELEMENT_SIZE != 0)
-                dst.AppendLineFormat(RenderPattern, "VexSize", string.Format("{0}x{1}", XedRender.format(View.vl(state)), XedRender.format(state.ELEMENT_SIZE)));
+                dst.AppendLineFormat(RenderPattern, "VexSize", string.Format("{0}x{1}", XedRender.format(XedOps.vl(state)), XedRender.format(state.ELEMENT_SIZE)));
 
             if(state.NELEM != 0)
                 dst.AppendLineFormat(RenderPattern, nameof(state.NELEM), state.NELEM);
 
             if(state.BCAST != 0)
-                dst.AppendLineFormat(RenderPattern, nameof(state.BCAST), View.broadcast(state));
+                dst.AppendLineFormat(RenderPattern, nameof(state.BCAST), XedOps.broadcast(state));
 
             if(state.REXRR)
                 dst.AppendLineFormat(RenderPattern, nameof(state.REXRR), state.REXRR);

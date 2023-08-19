@@ -33,6 +33,12 @@ namespace Z0
         public CellKind Kind
             => CellKind.Cell128;
 
+        public Span<byte> Bytes
+        {
+            [MethodImpl(Inline), UnscopedRef]
+            get => bytes(this);
+        }
+
         public Vector128<ulong> Content
         {
             [MethodImpl(Inline)]

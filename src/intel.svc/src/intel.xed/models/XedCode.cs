@@ -136,7 +136,7 @@ public class XedCode
         if(state.HAS_SIB)
             dst.Sib = (Sib)code[state.POS_SIB];
         if(state.HAS_MODRM)
-            dst.ModRm = (ModRm2)code[state.POS_MODRM];
+            dst.ModRm = (ModRm)code[state.POS_MODRM];
 
         return dst;
     }

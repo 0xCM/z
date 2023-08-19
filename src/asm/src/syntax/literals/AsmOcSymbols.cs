@@ -31,7 +31,19 @@ public readonly struct AsmOcSymbols
 
     public const string x0F3A = x0F + "3A";
 
+    public const string n0 = "0";
+
     public const string n1 = "1";
+
+    public const string n2 = "2";
+
+    public const string n3 = "3";
+
+    public const string n4 = "4";
+
+    public const string n5 = "5";
+
+    public const string n6 = "6";
 
     public const string n128 = "128";
 
