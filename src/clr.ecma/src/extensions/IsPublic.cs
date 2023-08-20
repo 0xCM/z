@@ -3,8 +3,7 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0
-{
-    
+{    
     partial class XTend
     {
         const TypeAttributes VisibilityMask = TypeAttributes.VisibilityMask;

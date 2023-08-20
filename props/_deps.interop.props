@@ -1,10 +1,14 @@
 <Project>
     <ItemGroup>
+        <Reference Include="$(GlobalDeps)/Microsoft.Interop.SourceGeneration.dll" />
+        <Reference Include="$(GlobalDeps)/Microsoft.Interop.LibraryImportGenerator.dll" />
         <Reference Include="$(GlobalDeps)/NtApiDotNet.dll"/>
     </ItemGroup>
 
     <Target Name="InteropLibs">
       <ItemGroup>
+        <BuildOutputInPackage Include="$(GlobalDeps)/Microsoft.Interop.SourceGeneration.dll" />
+        <BuildOutputInPackage Include="$(GlobalDeps)/Microsoft.Interop.LibraryImportGenerator.dll" />
         <BuildOutputInPackage Include="$(GlobalDeps)/NtApiDotNet.dll"/>
       </ItemGroup>
     </Target>

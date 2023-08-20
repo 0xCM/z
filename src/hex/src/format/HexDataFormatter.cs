@@ -36,7 +36,7 @@ namespace Z0
 
         public string FormatLine(ReadOnlySpan<byte> data, ulong offset, char delimiter)
         {
-            var line = TextFormat.buffer();
+            var line = text.emitter();
             var count = data.Length;
             if(LineConfig.LineLabels)
             {
@@ -52,7 +52,7 @@ namespace Z0
 
         public void FormatLines(ReadOnlySpan<byte> data, Action<string> receiver)
         {
-            var line = TextFormat.buffer();
+            var line = text.emitter();
             var count = data.Length;
             var offset = MemoryAddress.Zero;
             for(var i=0u; i<count; i++)
@@ -90,7 +90,7 @@ namespace Z0
         {
             const char delimiter = Chars.Space;
             var dst = list<string>();
-            var line = TextFormat.buffer();
+            var line = text.emitter();
             var count = src.Length;
 
             for(var i=0; i<count; i++)

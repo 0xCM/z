@@ -74,12 +74,6 @@ namespace Z0
             return ref src;
         }
 
-        [MethodImpl(Inline)]
-        public void Captured(IApiPartCatalog src)
-        {
-
-        }
-
 
         void IDisposable.Dispose()
         {

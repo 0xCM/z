@@ -184,6 +184,9 @@ namespace Z0
         public FilePath PrefixedTable<T>(string prefix)
             => Root + filename<T>(prefix);
 
+        public FilePath SuffixedTable<T>(string suffix)
+            => Root + FS.file(string.Format("{0}.{1}", TableId.identify<T>(), suffix), FS.Csv);
+
         public static FileName file(string @class, string name, FileKind kind)
             => FS.file(string.Format("{0}.{1}", @class, name), kind.Ext());
 

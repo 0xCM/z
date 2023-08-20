@@ -4,11 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public struct Evaluation : IEvaluation
+    public readonly struct Evaluation : IEvaluation
     {
-        public dynamic Input {get;}
+        public readonly dynamic Input {get;}
 
-        public dynamic Output {get;}
+        public readonly dynamic Output {get;}
 
         [MethodImpl(Inline)]
         public Evaluation(dynamic input, dynamic output)

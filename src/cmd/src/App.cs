@@ -48,10 +48,16 @@ namespace Z0
         [CmdOp("asm/entries")]
         unsafe void FindEntries()
         {
+                // Parts.Bit.Assembly,
+                // Parts.SysApi.Assembly, 
+
             var decoder = Wf.AsmDecoder();
             var dst = text.emitter();
             var catalog = ApiCatalog.catalog(new Assembly[]{
-                Parts.Math.Assembly, Parts.VCpu.Assembly, Parts.Bits.Assembly, Parts.Asm.Assembly
+                Parts.Asm.Assembly,
+                Parts.Bits.Assembly, 
+                Parts.Math.Assembly, 
+                Parts.VCpu.Assembly, 
                 });
             piter(ApiCode.entries(Channel,catalog), 
                 entry => {
@@ -67,6 +73,8 @@ namespace Z0
                 });
 
             Channel.FileEmit(dst.Emit(), Env.cd() + FS.file("entries", FileKind.Asm));
+
+            
         }
         
         [CmdOp("asm/find")]

@@ -1,6 +1,6 @@
 <Project>
-    <ItemGroup>
+    <!-- <ItemGroup>
       <PackageReference Include="runtime.win-x64.Microsoft.DotNet.ILCompiler" Version="$(IlcVersion)"/>
       <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="$(IlcVersion)"/>
-    </ItemGroup>
+    </ItemGroup> -->
 </Project>

@@ -1,5 +1,5 @@
 <Project>
     <ItemGroup>    
-        <PackageReference Include="Mono.Cecil" Version="$(MonoCecilVersion)" />
+        <PackageReference Include="ICSharpCode.Decompiler" Version="8.1.0.7455" />        
     </ItemGroup>
 </Project>

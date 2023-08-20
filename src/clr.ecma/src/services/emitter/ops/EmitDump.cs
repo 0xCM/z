@@ -51,7 +51,7 @@ namespace Z0
             {
                 var flow = Channel.EmittingFile(dst);
                 using var target = dst.Writer();
-                Cil.mdv(reader, target).Visualize();
+                Ecma.mdv(reader, target).Visualize();
                 token = Emitter.EmittedFile(flow);
             }
             catch(Exception e)
@@ -69,7 +69,7 @@ namespace Z0
                 var flow = channel.EmittingFile(dst);
                 using var target = dst.Writer();
                 var reader = EcmaReader.create(src);
-                Cil.mdv(reader.MetadataReader, target).Visualize();
+                Ecma.mdv(reader.MetadataReader, target).Visualize();
                 token = channel.EmittedFile(flow);
             }
             catch(Exception e)

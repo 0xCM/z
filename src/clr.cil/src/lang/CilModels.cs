@@ -9,10 +9,6 @@ namespace Z0
     [ApiHost]
     public readonly partial struct CilModels
     {
-        public static MetadataVisualizer mdv(MetadataReader src, StreamWriter dst)
-            => new MetadataVisualizer(src,dst);
-        [Op]
-        public static string format(EcmaSig src)
-            => DefaultMsilFormatProvider.Instance.SigByteArrayToString(src);
+
     }
 }

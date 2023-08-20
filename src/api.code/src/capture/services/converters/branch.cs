@@ -17,15 +17,15 @@ namespace Z0.Asm
 
         [MethodImpl(Inline), Op]
         public static AsmBranchTarget target(BranchTargetKind kind, MemoryAddress dst, BranchTargetWidth size, Address16 selector)
-            => new AsmBranchTarget(dst, kind, size, selector);
+            => new (dst, kind, size, selector);
 
         [MethodImpl(Inline), Op]
         public static AsmBranchTarget target(BranchTargetKind kind, MemoryAddress dst, BranchTargetWidth size)
-            => new AsmBranchTarget(dst,kind, size);
+            => new (dst,kind, size);
 
         [MethodImpl(Inline), Op]
         public static AsmBranchInfo branch(MemoryAddress @base, in IceInstruction src, in AsmBranchTarget target)
-            => new AsmBranchInfo(@base, src.IP, target, (MemoryAddress)(long)disp64(src.IP, (byte)src.ByteLength, target.Address));
+            => new (@base, src.IP, target, (MemoryAddress)(long)disp64(src.IP, (byte)src.ByteLength, target.Address));
 
         [MethodImpl(Inline), Op]
         public static AsmBranchInfo branch(MemoryAddress @base, in IceInstruction src, byte index)
