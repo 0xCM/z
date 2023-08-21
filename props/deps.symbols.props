@@ -5,6 +5,8 @@
         <Reference Include="$(GlobalDeps)/Microsoft.DiaSymReader.PortablePdb.dll"/>
         <Reference Include="$(GlobalDeps)/Microsoft.FileFormats.dll"/>
         <Reference Include="$(GlobalDeps)/Microsoft.SymbolStore.dll"/>
+        <Reference Include="$(GlobalDeps)/SOS.dll" CopyToOutputDirectory="PreserveNewest"/>
+
     </ItemGroup>
 
     <Target Name="SymbolLibs">
@@ -17,8 +19,14 @@
       </ItemGroup>
     </Target>
 
+    <Target Name="SosLibs">
+      <ItemGroup>
+          <BuildOutputInPackage Include="$(GlobalDeps)/SOS.dll"/>
+      </ItemGroup>
+    </Target>
+
     <PropertyGroup>
-      <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);SymbolLibs</TargetsForTfmSpecificBuildOutput>
+      <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);SymbolLibs;SosLibs</TargetsForTfmSpecificBuildOutput>
     </PropertyGroup>
 
 </Project>
